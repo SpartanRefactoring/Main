@@ -12,8 +12,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * 
  */
 public enum _ {
-	// No values in an 'enum' used for faking a module which is just
-	// a collection of 'static' functions.
+	// No values in an 'enum' a name space for a collection of 'static' functions.
 	;
 	/**
 	 * This function is used to remove the @Nullable annotation placed on the type
