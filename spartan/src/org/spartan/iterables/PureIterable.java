@@ -35,7 +35,7 @@ public interface PureIterable<T> extends Iterable<T> {
    * <li>This fixed size can be computed efficiently, specifically without
    * exhausting the sequence items that this iterable may yield.
    * </ol>
-   * Concretely,
+   *
    * 
    * @author Yossi Gil
    * @since 2014-06-20
