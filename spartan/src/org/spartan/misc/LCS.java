@@ -107,7 +107,7 @@ public class LCS {
 	   * @param s
 	   * @return
 	   */
-	  public static String[] chars2Lines(final String s) {
+	  private static String[] chars2Lines(final String s) {
 	    final StringBuilder $ = new StringBuilder();
 	    for (final char c : s.toCharArray())
 	      $.append(c).append('\n');
