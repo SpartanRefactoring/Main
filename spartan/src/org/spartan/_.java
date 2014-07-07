@@ -23,6 +23,68 @@ public enum _ {
 	// No values in an 'enum' used as name space for a collection of 'static'
 	// functions.
 	;
+	public static FoundHandleForInt found(int i) {
+		return new FoundHandleForInt(i);
+	}
+	
+	public static <T> FoundHandleForT<T> found(T t) {
+		return new FoundHandleForT<T>(t);
+	}
+
+	public static class FoundHandleForInt {
+		final int candidate;
+		/**
+		 * Instantiates this class. 
+		 * @param candidate 	 * @param candidate
+		 *          what to search for
+		 */
+		public FoundHandleForInt(int candidate) {
+			this.candidate = candidate;
+		}
+		/**
+		 * Determine if an integer can be found in a list of values
+		 * 
+		 * @param candidate
+		 *          what to search for
+		 * @param is
+		 *          where to search
+		 * @return true if the the item is found in the list
+		 */
+		@SafeVarargs public final boolean in(final int... is) {
+			for (final int i : is)
+				if (i == candidate)
+					return true;
+			return false;
+		}
+	}
+	
+	public static class FoundHandleForT<T> {
+		final T candidate;
+		/**
+		 * Instantiates this class. 
+		 * @param candidate 	 * @param candidate
+		 *          what to search for
+		 */
+		public FoundHandleForT(final T candidate) {
+			this.candidate = candidate;
+		}
+		/**
+		 * Determine if an integer can be found in a list of values
+		 * 
+		 * @param candidate
+		 *          what to search for
+		 * @param is
+		 *          where to search
+		 * @return true if the the item is found in the list
+		 */
+		@SafeVarargs public final boolean in(final T... ts) {
+			for (final T t : ts)
+				if (t != null && t.equals(candidate))
+					return true;
+			return false;
+		}
+	}
+
 	/**
 	 * Counts the number of items in an {@link Iterable}.
 	 * 
@@ -157,14 +219,13 @@ public enum _ {
 				assertTrue(true);
 			}
 		}
-
 		@Test public void isNullTypical() {
-		  try {
-		    assertNull(mustBeNull(null));
-		    fail("AssertionError expected prior to this line.");
-		  } catch (final AssertionError e) {
-		    assertTrue(true);
-		  }
+			try {
+				assertNull(mustBeNull(null));
+				fail("AssertionError expected prior to this line.");
+			} catch (final AssertionError e) {
+				assertTrue(true);
+			}
 		}
 	}
 }
