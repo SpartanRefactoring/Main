@@ -41,7 +41,7 @@ public enum _ {
 		return $;
 	}
 	/**
-	 * Determine whether a <code><b>null</b></code> is found in a sequence of
+	 * Determine whether a <code><b>null</b></code> occurs in a sequence of
 	 * objects
 	 * 
 	 * @param os
