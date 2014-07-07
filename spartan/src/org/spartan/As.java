@@ -47,5 +47,18 @@ public enum As {
 	public static int bit(final boolean b) {
 		return b ? 1 : 0;
 	}
+	/**
+	 * Converts a sequence of literals into an array.
+	 * 
+	 * @param <T>
+	 *          some arbitrary type
+	 * @param $
+	 *          some sequence of values of the type parameter
+	 * @return the parameters, organized as an array with entries whose type is
+	 *         the type parameter
+	 */
+	@SafeVarargs public static <T> T[] array(final T... $) {
+		return $;
+	}
 	public static final String NULL = "(null)";
 }
