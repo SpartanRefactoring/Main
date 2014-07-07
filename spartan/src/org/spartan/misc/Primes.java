@@ -3,6 +3,8 @@
 package org.spartan.misc;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -31,6 +33,12 @@ public class Primes {
 	 * @return <code><b>true</b></code> <i>iff</i> the parameter is prime.
 	 */
 	public static boolean isPrime(final int c) {
+		return //
+				 c < 0  ? isPrime(-c) //
+		    : c <= 1 ? false //
+		        : isPrimeCore(c);
+	}
+	public static boolean isPrimeCore(final int c) {
 		for (int d = 2; d * d <= c; d++)
 			if (c % d == 0)
 				return false;
@@ -51,6 +59,31 @@ public class Primes {
 			p.next();
 			p.next();
 			assertEquals(5, p.next());
+		}
+		@Test public void selfConsistentUntil1000() {
+			final Primes ps = new Primes();
+			for (int c = 0; c < 1000; ++c) {
+				if (isPrime(c))
+					assertEquals(c, ps.next());
+			}
+		}
+		@Test public void isPrimeOf0() {
+			assertFalse(isPrime(0));
+		}
+		@Test public void isPrimeOf1() {
+			assertFalse(isPrime(1));
+		}
+		@Test public void isPrimeOf_1() {
+			assertFalse(isPrime(-1));
+		}
+		@Test public void isPrimeOf_2() {
+			assertTrue(isPrime(-2));
+		}
+		@Test public void isPrimeOf_3() {
+			assertTrue(isPrime(-3));
+		}
+		@Test public void isPrimeOf_4() {
+			assertFalse(isPrime(-4));
 		}
 	}
 }
