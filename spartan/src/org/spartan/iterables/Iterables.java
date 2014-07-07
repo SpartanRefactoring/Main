@@ -1,5 +1,6 @@
 package org.spartan.iterables;
 
+/** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 import static org.junit.Assert.assertEquals;
 
 import org.eclipse.jdt.annotation.Nullable;
@@ -10,7 +11,6 @@ import org.spartan.As;
 
 public enum Iterables {
 	;
-
 	public static <T> PureIterable.Sized<T> singletonIterable(final T t) {
 		return As.iterable(t);
 	}
