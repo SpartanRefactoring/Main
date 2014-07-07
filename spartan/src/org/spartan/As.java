@@ -88,5 +88,15 @@ public enum As {
 		@Test public void asBitOfTrue() {
 			assertEquals(1, As.bit(true));
 		}
+		@Test public void stringOfNull() {
+			assertEquals(NULL, As.string(null));
+		}
+		@Test public void stringWhenToStringReturnsNull() {
+			assertEquals(NULL, As.string(new Object() {
+				@Override public @Nullable String toString() {
+					return null;
+				}
+			}));
+		}
 	}
 }
