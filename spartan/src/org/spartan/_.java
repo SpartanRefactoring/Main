@@ -1,15 +1,18 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package org.spartan;
 
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+import org.spartan._.FoundHandleForT.FoundHandleForInt;
 
 /**
  * A collection of <code><b>static</b></code> functions with no appropriate
@@ -23,6 +26,19 @@ public enum _ {
 	// No values in an 'enum' used as name space for a collection of 'static'
 	// functions.
 	;
+  @SafeVarargs public static <T, C extends Collection<T>> C add(final C $, final T... ts) {
+    for (final T t : ts)
+      if (t != null)
+        $.add(t);
+    return $;
+  }
+
+  @SafeVarargs public static <T> Collection<T> addAll(final Collection<T> $, final Collection<? extends T>... tss) {
+    for (final Collection<? extends T> ts : tss)
+      if (ts != null)
+        $.addAll(ts);
+    return $;
+  }
 	/**
 	 * Removes the @Nullable annotation present on the type of a value. This
 	 * function is mainly used to make <code><b>null</b></code<]> checkers happy.
@@ -58,24 +74,6 @@ public enum _ {
 		return $;
 	}
 	
-	/**
-	 * Counts the number of items in an {@link Iterable}.
-	 * 
-	 * @param <T>
-	 *          some arbitrary type
-	 * @param ts
-	 *          some iterable over items whose type is the type parameter
-	 * @return the number of items the given iterable yields.
-	 */
-	public static <T> int count(final @Nullable Iterable<T> ts) {
-		int $ = 0;
-		if (ts != null)
-			for (final @Nullable
-			T t : ts)
-				$ += As.bit(t != null);
-		return $;
-	}
-
 	public static FoundHandleForInt found(int i) {
 		return new FoundHandleForInt(i);
 	}
@@ -161,32 +159,6 @@ public enum _ {
   public static double sqr(final double d) {
     return d * d;
   }
-	public static class FoundHandleForInt {
-		final int candidate;
-		/**
-		 * Instantiates this class. 
-		 * @param candidate 	 * @param candidate
-		 *          what to search for
-		 */
-		public FoundHandleForInt(int candidate) {
-			this.candidate = candidate;
-		}
-		/**
-		 * Determine if an integer can be found in a list of values
-		 * 
-		 * @param candidate
-		 *          what to search for
-		 * @param is
-		 *          where to search
-		 * @return true if the the item is found in the list
-		 */
-		@SafeVarargs public final boolean in(final int... is) {
-			for (final int i : is)
-				if (i == candidate)
-					return true;
-			return false;
-		}
-	}
 	public static class FoundHandleForT<T> {
 		final T candidate;
 		/**
@@ -212,6 +184,32 @@ public enum _ {
 					return true;
 			return false;
 		}
+		public static class FoundHandleForInt {
+			final int candidate;
+			/**
+			 * Instantiates this class. 
+			 * @param candidate 	 * @param candidate
+			 *          what to search for
+			 */
+			public FoundHandleForInt(int candidate) {
+				this.candidate = candidate;
+			}
+			/**
+			 * Determine if an integer can be found in a list of values
+			 * 
+			 * @param candidate
+			 *          what to search for
+			 * @param is
+			 *          where to search
+			 * @return true if the the item is found in the list
+			 */
+			@SafeVarargs public final boolean in(final int... is) {
+				for (final int i : is)
+					if (i == candidate)
+						return true;
+				return false;
+			}
+		}
 	}
 	/**
 	 * A static nested class hosting unit tests for the nesting class Unit test
@@ -225,6 +223,26 @@ public enum _ {
 	@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 	@SuppressWarnings("static-method")//
 	public static class TEST {
+		
+	  @Test public void addAllTypical() {
+	    final Set<String> ss = new HashSet<>();
+	    addAll(ss, As.set("A", "B"), null, As.set("B", "C", "D"));
+	    assertFalse(ss.contains("E"));
+	    assertFalse(ss.contains(null));
+	    assertEquals(4, ss.size());
+	    for (final String s : ss)
+	      assertTrue(ss.contains(s));
+	  }
+
+	  @Test public void addTypical() {
+	    final Set<String> ss = new HashSet<>();
+	    add(ss, null, "A", null, "B", "B", null, "C", "D", null);
+	    assertFalse(ss.contains("E"));
+	    assertFalse(ss.contains(null));
+	    assertEquals(4, ss.size());
+	    for (final String s : ss)
+	      assertTrue(ss.contains(s));
+	  }
 		@Test public void isNullOfNonNull() {
 			try {
 				mustBeNull(new Object());
@@ -241,5 +259,7 @@ public enum _ {
 				assertTrue(true);
 			}
 		}
+   
 	}
+	
 }

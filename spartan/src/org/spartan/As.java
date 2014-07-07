@@ -2,12 +2,17 @@
 package org.spartan;
 
 import static org.junit.Assert.assertEquals;
+import static org.spartan._.add;
+
+import java.util.*;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+import org.spartan.iterables.PureIterable;
+import org.spartan.iterables.PureIterator;
 
 /**
  * A collection of <code><b>static</b></code> functions whose most appropriate
@@ -82,6 +87,76 @@ public enum As {
 	public static String string(@Nullable final String $) {
 		return $ != null ? $ : NULL;
 	}
+	 /**
+   * Return a compact representation of a list of {@link Integer}s as an array
+   * of type <code>int</code>.
+   * 
+   * @param is
+   *          the list to be converted, none of the elements in it can be
+   *          <code>null</code>
+   * @return an array of code>int</code>. representing the input.
+   */
+  public static int[] intArray(final List<Integer> is) {
+    final int[] $ = new int[is.size()];
+    for (int i = 0; i < $.length; i++)
+      $[i] = is.get(i).intValue();
+    return $;
+  }
+
+  /**
+   * Creates an iterable for an array of objects
+   * 
+   * @param <T>
+   *          an arbitrary type
+   * @param ts
+   *          what to iterate on
+   * @return an {@link Iterable} over the parameter
+   */
+  @SafeVarargs public static <T> PureIterable.Sized<T> iterable(final T... ts) {
+    return new PureIterable.Sized<T>() {
+      @Override public int size() {
+        return ts.length;
+      }
+
+      @Override public PureIterator<T> iterator() {
+        return new PureIterator<T>() {
+          int current = 0;
+
+          @Override public boolean hasNext() {
+            return current < ts.length;
+          }
+
+          @Override public @Nullable T next() {
+            return ts[current++];
+          }
+        };
+      }
+    };
+  }
+
+  /**
+   * Creates an iterable for an array of objects
+   * 
+   * @param <T>
+   *          an arbitrary type
+   * @param ts
+   *          what to iterate on
+   * @return an {@link Iterable} over the parameter
+   */
+  @SafeVarargs public static <T> PureIterator<T> iterator(final T... ts) {
+    return iterable(ts).iterator();
+  }
+
+  public static List<Integer> list(final int... is) {
+    final List<Integer> $ = new ArrayList<>();
+    for (final int i : is)
+      $.add(Box.it(i));
+    return $;
+  }
+
+  @SafeVarargs public static <T> Set<? extends T> set(final T... ts) {
+    return add(new HashSet<T>(), ts);
+  }
 	/**
 	 * A static nested class hosting unit tests for the nesting class Unit test
 	 * for the containing class. Note the naming convention: a) names of test
