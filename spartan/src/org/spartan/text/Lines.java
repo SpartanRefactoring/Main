@@ -1,3 +1,5 @@
+/** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
+
 package org.spartan.text;
 import static org.spartan._.nonNull;
 
@@ -35,7 +37,7 @@ public enum Lines {
     final StringBuilder $ = new StringBuilder();
     for (final String line : lines)
       $.append(line).append(END_OF_LINE_MARKER);
-    return As.nonNulString($);
+    return As.string($);
   }
 	/**
 	 * A longer and more meaningful name for the array of length zero with {@String} elements.

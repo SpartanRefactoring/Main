@@ -23,8 +23,8 @@ public enum As {
 	 *          some value
 	 * @return the parameter, after bing to a non-null string.
 	 */
-	public static String nonNulString(@Nullable final Object $) {
-		return $ == null ? NULL : nonNulString($.toString());
+	public static String string(@Nullable final Object $) {
+		return $ == null ? NULL : string($.toString());
 	}
 	/**
 	 * Converts a {@link String}, which can be either a <code><b>null</b></code>
@@ -34,7 +34,7 @@ public enum As {
 	 *          some value
 	 * @return the parameter, after bing to a non-null string.
 	 */
-	public static String nonNulString(@Nullable final String $) {
+	public static String string(@Nullable final String $) {
 		return $ != null ? $ : NULL;
 	}
 	public static final String NULL = "(null)";
