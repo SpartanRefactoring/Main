@@ -40,4 +40,34 @@ public enum _ {
 		assert $ != null;
 		return $;
 	}
+	/**
+	 * Computes the maximum of two or more integers.
+	 * 
+	 * @param a
+	 *          some integer
+	 * @param is additional
+	 *          
+	 * @return the largest of the parameters
+	 */
+	public static int max(final int a, final int ...is) {
+		int $ = a;
+		for (int i: is)
+			$ = Math.max($,i);
+		return $;
+	}
+	/**
+	 * Computes the minimum of two or more integers
+	 * 
+	 * @param a
+	 *          some integer
+	 * @param is additional
+	 *          
+	 * @return the smallest of the parameters
+	 */
+	public static int min(final int a, final int ...is) {
+		int $ = a;
+		for (int i: is)
+			$ = Math.min($,i);
+		return $;
+	}
 }
