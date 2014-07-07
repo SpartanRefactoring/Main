@@ -60,5 +60,8 @@ public enum As {
 	@SafeVarargs public static <T> T[] array(final T... $) {
 		return $;
 	}
+	/**
+	 * The string returned when 'conversion to string' is applied to a <code><b>null</b></code> value. 
+	 */
 	public static final String NULL = "(null)";
 }
