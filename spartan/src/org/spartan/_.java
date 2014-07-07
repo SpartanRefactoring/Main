@@ -32,7 +32,7 @@ public enum _ {
 	 * @param <T>
 	 *          some arbitrary type
 	 * @param $
-	 *          an instance of this type
+	 *          an instance of the type parameter
 	 * @return its parameter, after verifying that it is not
 	 *         <code><b>null</b></code<]>
 	 */
