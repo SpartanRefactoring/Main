@@ -1,8 +1,14 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package org.spartan;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.junit.FixMethodOrder;
+import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  * A collection of <code><b>static</b></code> functions with no appropriate
@@ -107,10 +113,45 @@ public enum _ {
 	 * @param $
 	 *          an instance of the type parameter
 	 * @return its parameter, after verifying that it is not
-	 *         <code><b>null</b></code<]>
+	 *         <code><b>null</b></code>
+	 * @see #mustBeNull(Object)
 	 */
-	public static <T> T nonNull(final @Nullable T $) {
+	public static <T> T cantBeNull(final @Nullable T $) {
 		assert $ != null;
 		return $;
+	}
+	/**
+	 * Aborts in case a given value is <code><b>null</b></code>.
+	 * <p>
+	 * This function is the lesser used dual of {@link #cantBeNull(Object)}.
+	 * @param <T>
+	 *          some arbitrary type
+	 * @param $ an instance of the type parameter which is required to be <code><b>null</b></code<]>. 
+	 * @return
+	 */
+	public static @Nullable <T> Void mustBeNull(final @Nullable T $) {
+		assert $ == null;
+		return null;
+	}
+	/**
+	 * A static nested class hosting unit tests for the nesting class Unit test
+	 * for the containing class. Note the naming convention: a) names of test
+	 * methods do not use are not prefixed by "test". This prefix is redundant. b)
+	 * test methods begin with the name of the method they check.
+	 * 
+	 * @author Yossi Gil
+	 * @since 2014-05-31
+	 */
+	@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
+	@SuppressWarnings("static-method")//
+	public static class TEST {
+	@Test public void isNullOfNonNull() {
+		try {
+			mustBeNull(new Object());
+			fail("AssertionError expected prior to this line.");
+		} catch (final AssertionError e) {
+			assertTrue(true);
+		}
+	}
 	}
 }
