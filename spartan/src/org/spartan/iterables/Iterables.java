@@ -10,6 +10,8 @@ import org.junit.runners.MethodSorters;
 import org.spartan.As;
 
 public enum Iterables {
+	// No values in an 'enum' used as name space for a collection of 'static'
+	// functions.
 	;
 	public static <T> PureIterable.Sized<T> singletonIterable(final T t) {
 		return As.iterable(t);
