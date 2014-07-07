@@ -45,8 +45,20 @@ public enum As {
 	 *          some boolean value
 	 * @return 1 if the parameter is true, 0 otherwise
 	 */
-	public static int bit(final boolean b) {
-		return b ? 1 : 0;
+	public static int bit(final boolean $) {
+		return $ ? 1 : 0;
+	}
+/**
+	 * C like conversion of a reference to an {@link Object} into a 0/1 bit.
+	 * 
+	 * @param o
+	 *          an arbitrary object
+	 * @return <code>0</code> if the parameter is <code><b>null/b></code>.
+	 *         <code>1</code> otherwise.
+	 *         @see As#
+	 */
+	public static int bit(final @Nullable Object o) {
+		return o == null ? 0 : 1;
 	}
 	/**
 	 * Converts a value, which can be either a <code><b>null</b></code> or
@@ -57,7 +69,7 @@ public enum As {
 	 * @return the parameter, after bing to a non-null string.
 	 */
 	public static String string(@Nullable final Object $) {
-		return $ == null ? NULL : string($.toString());
+		return $ == null ? NULL : As.string($.toString());
 	}
 	/**
 	 * Converts a {@link String}, which can be either a <code><b>null</b></code>
