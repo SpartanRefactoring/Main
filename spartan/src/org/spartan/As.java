@@ -42,7 +42,7 @@ public enum As {
 	 * 
 	 * @param $
 	 *          some boolean value
-	 * @return 1 if the parameter is true,0 otherwise
+	 * @return 1 if the parameter is true, 0 otherwise
 	 */
 	public static int bit(final boolean b) {
 		return b ? 1 : 0;
