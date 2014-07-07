@@ -16,7 +16,7 @@ package org.spartan.collections;
  */
 public class Integers {
 	/**
-	 * Instantiates this class
+	 * Instantiate this class
 	 */
 	public Integers() {
 		this(MIN_CAPACITY);
@@ -29,7 +29,12 @@ public class Integers {
 	 *          of two.
 	 */
 	public Integers(final int initialCapacity) {
-		reset(Math.max(MIN_CAPACITY, roundUp(initialCapacity)));
+		int capacity = Math.max(MIN_CAPACITY, roundUp(initialCapacity));
+		data = new int[capacity];
+		occupied = new boolean[capacity];
+		placeholder = new boolean[capacity];
+		size = removed = 0;
+		subclassReset(capacity);
 	}
 	/**
 	 * How many elements are there in this set?
