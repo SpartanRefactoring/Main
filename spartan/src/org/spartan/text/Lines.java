@@ -1,7 +1,7 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 
 package org.spartan.text;
-import static org.spartan._.nonNull;
+import static org.spartan._.cantBeNull;
 
 import org.eclipse.jdt.annotation.Nullable;
 import org.spartan.As;
@@ -31,7 +31,7 @@ public enum Lines {
    * @return
    */
   public static String[] scatter(final @Nullable String text) {
-		return text == null || text.isEmpty() ? NO_LINES : nonNull(text.split(END_OF_LINE_MARKER));
+		return text == null || text.isEmpty() ? NO_LINES : cantBeNull(text.split(END_OF_LINE_MARKER));
   }
   public static String gather(final String... lines) {
     final StringBuilder $ = new StringBuilder();

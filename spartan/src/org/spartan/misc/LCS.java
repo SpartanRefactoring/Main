@@ -3,7 +3,7 @@ package org.spartan.misc;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.spartan._.max;
-import static org.spartan._.nonNull;
+import static org.spartan._.cantBeNull;
 
 import java.util.Arrays;
 
@@ -60,7 +60,7 @@ public class LCS {
   private static int[] hash(final String[] ss) {
     final int[] $ = new int[ss.length];
     for (int i = 0; i < $.length; ++i)
-      $[i] = hash(nonNull(ss[i]));
+      $[i] = hash(cantBeNull(ss[i]));
     return $;
   }
 
