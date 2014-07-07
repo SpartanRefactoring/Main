@@ -149,15 +149,21 @@ public enum _ {
    * @param i some integer
    * @return the square of the parameter
    */
-  public static int sqr(final int i) {
-    return i * i;
+  public static double sqr(final double d) {
+    return d * d;
   }
+  
   /** Computes the square
    * @param i some integer
    * @return the square of the parameter
    */
-  public static double sqr(final double d) {
-    return d * d;
+  public static int sqr(final int i) {
+    return i * i;
+  }
+  public static <T> void swap(final T[] ts, final int i, final int j) {
+    final T t = ts[i];
+    ts[i] = ts[j];
+    ts[j] = t;
   }
 	public static class FoundHandleForT<T> {
 		final T candidate;
@@ -223,8 +229,22 @@ public enum _ {
 	@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 	@SuppressWarnings("static-method")//
 	public static class TEST {
-		
-	  @Test public void addAllTypical() {
+	  public static Integer[] intToIntegers(final int... is) {
+	    final Integer[] $ = new Integer[is.length];
+	    for (int i = 0; i < is.length; i++)
+	      $[i] = Box.it(is[i]);
+	    return $;
+	  }
+	  @Test public void addTypical() {
+		  final Set<String> ss = new HashSet<>();
+		  add(ss, null, "A", null, "B", "B", null, "C", "D", null);
+		  assertFalse(ss.contains("E"));
+		  assertFalse(ss.contains(null));
+		  assertEquals(4, ss.size());
+		  for (final String s : ss)
+		    assertTrue(ss.contains(s));
+		}
+		@Test public void addAllTypical() {
 	    final Set<String> ss = new HashSet<>();
 	    addAll(ss, As.set("A", "B"), null, As.set("B", "C", "D"));
 	    assertFalse(ss.contains("E"));
@@ -234,16 +254,7 @@ public enum _ {
 	      assertTrue(ss.contains(s));
 	  }
 
-	  @Test public void addTypical() {
-	    final Set<String> ss = new HashSet<>();
-	    add(ss, null, "A", null, "B", "B", null, "C", "D", null);
-	    assertFalse(ss.contains("E"));
-	    assertFalse(ss.contains(null));
-	    assertEquals(4, ss.size());
-	    for (final String s : ss)
-	      assertTrue(ss.contains(s));
-	  }
-		@Test public void isNullOfNonNull() {
+	  @Test public void isNullOfNonNull() {
 			try {
 				mustBeNull(new Object());
 				fail("AssertionError expected prior to this line.");
@@ -259,7 +270,23 @@ public enum _ {
 				assertTrue(true);
 			}
 		}
-   
+    @Test public void swapDegenerate() {
+      final String[] ss = As.array("A", "B", "C", "D");
+      swap(ss, 1, 1);
+      assertArrayEquals(As.array("A", "B", "C", "D"), ss);
+    }
+
+    @Test public void swapTypical() {
+      final String[] ss = As.array("A", "B", "C", "D");
+      swap(ss, 1, 2);
+      assertArrayEquals(As.array("A", "C", "B", "D"), ss);
+    }
+
+    @Test public void swapTypicalCase() {
+      final Integer[] $ = intToIntegers(29, 1, 60);
+      swap($, 0, 1);
+      assertArrayEquals(intToIntegers(1, 29, 60), $);
+    }
 	}
 	
 }
