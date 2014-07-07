@@ -37,5 +37,15 @@ public enum As {
 	public static String string(@Nullable final String $) {
 		return $ != null ? $ : NULL;
 	}
+	/**
+	 * Converts a boolean into a bit value
+	 * 
+	 * @param $
+	 *          some boolean value
+	 * @return 1 if the parameter is true,0 otherwise
+	 */
+	public static int bit(final boolean b) {
+		return b ? 1 : 0;
+	}
 	public static final String NULL = "(null)";
 }
