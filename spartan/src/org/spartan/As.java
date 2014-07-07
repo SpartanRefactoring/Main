@@ -31,7 +31,7 @@ public enum As {
 	 */
 	public static final String NULL = "(null)";
 	/**
-	 * Converts a sequence of literals into an array.
+	 * Converts a sequence of values into an array.
 	 * 
 	 * @param <T>
 	 *          some arbitrary type
@@ -43,6 +43,19 @@ public enum As {
 	@SafeVarargs public static <T> T[] array(final T... $) {
 		return $;
 	}
+	/**
+	 * Converts a sequence of integer values into an array.
+	 * 
+	 * @param <T>
+	 *          some arbitrary type
+	 * @param $
+	 *          some sequence of values of the type parameter
+	 * @return the parameters, organized as an array with entries whose type is
+	 *         the type parameter
+	 */
+  public static int[] intArray(final int... $) {
+    return $;
+  }
 	/**
 	 * Converts a boolean into a bit value
 	 * 
