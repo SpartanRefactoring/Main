@@ -6,7 +6,7 @@ package org.spartan.collections;
  * , {@link #contains} and {@link #remove}.
  * <p>
  * Implementation is with a linear hash table s, with quadratic probes (i.e.,
- * +1, +3, +6, +10, ... modulo the table size). Array capacity is always a power
+ * +1, +3, +6, +10, +15, ... modulo the table size). Array capacity is always a power
  * of two, and is doubled when the load goes above {@link #MAX_LOAD}; capacity
  * is halved when the load drops below {@value #MIN_LOAD}. When the fraction of
  * removed keys goes below {@link #REMOVE_LOAD}, the table is rehashed.
@@ -16,7 +16,7 @@ package org.spartan.collections;
  */
 public class Integers {
 	/**
-	 * Instantiate this class
+	 * Instantiates this class
 	 */
 	public Integers() {
 		this(MIN_CAPACITY);
