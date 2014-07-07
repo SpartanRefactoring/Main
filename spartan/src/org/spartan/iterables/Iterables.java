@@ -10,9 +10,7 @@ import org.spartan.As;
 
 public enum Iterables {
 	;
-	public static <T> PureIterable.Sized<T> empty() {
-		return As.iterable();
-	}
+
 	public static <T> PureIterable.Sized<T> singletonIterable(final T t) {
 		return As.iterable(t);
 	}
@@ -35,6 +33,9 @@ public enum Iterables {
 			T t : ts)
 				$ += As.bit(t != null);
 		return $;
+	}
+	public static <T> PureIterable.Sized<T> empty() {
+		return As.iterable();
 	}
 	/**
 	 * A static nested class hosting unit tests for the nesting class Unit test
