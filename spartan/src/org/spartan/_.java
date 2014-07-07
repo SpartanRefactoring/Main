@@ -1,6 +1,7 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package org.spartan;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -112,8 +113,8 @@ public enum _ {
 	 *          some arbitrary type
 	 * @param $
 	 *          an instance of the type parameter
-	 * @return its parameter, after verifying that it is not
-	 *         <code><b>null</b></code>
+	 * @return its parameter, after verifying that it is not <code><b>null</b>
+	 *         </code>
 	 * @see #mustBeNull(Object)
 	 */
 	public static <T> T cantBeNull(final @Nullable T $) {
@@ -124,9 +125,12 @@ public enum _ {
 	 * Aborts in case a given value is <code><b>null</b></code>.
 	 * <p>
 	 * This function is the lesser used dual of {@link #cantBeNull(Object)}.
+	 * 
 	 * @param <T>
 	 *          some arbitrary type
-	 * @param $ an instance of the type parameter which is required to be <code><b>null</b></code<]>. 
+	 * @param $
+	 *          an instance of the type parameter which is required to be
+	 *          <code><b>null</b></code<]>.
 	 * @return
 	 */
 	public static @Nullable <T> Void mustBeNull(final @Nullable T $) {
@@ -145,13 +149,22 @@ public enum _ {
 	@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 	@SuppressWarnings("static-method")//
 	public static class TEST {
-	@Test public void isNullOfNonNull() {
-		try {
-			mustBeNull(new Object());
-			fail("AssertionError expected prior to this line.");
-		} catch (final AssertionError e) {
-			assertTrue(true);
+		@Test public void isNullOfNonNull() {
+			try {
+				mustBeNull(new Object());
+				fail("AssertionError expected prior to this line.");
+			} catch (final AssertionError e) {
+				assertTrue(true);
+			}
 		}
-	}
+
+		@Test public void isNullTypical() {
+		  try {
+		    assertNull(mustBeNull(null));
+		    fail("AssertionError expected prior to this line.");
+		  } catch (final AssertionError e) {
+		    assertTrue(true);
+		  }
+		}
 	}
 }
