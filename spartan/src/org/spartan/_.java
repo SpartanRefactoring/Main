@@ -70,4 +70,15 @@ public enum _ {
 			$ = Math.min($,i);
 		return $;
 	}
+	/** Determine whether a <code><b>null</b></code> is found in a sequence of objects
+	 * @param os
+	 *            an unknown number of objects
+	 * @return <code><b>null</b></code>  <i>iff</i>one of the parameters is <code><b>null</b></code>
+	 */
+	public static boolean hasNull(final Object... os) {
+		for (final Object o : os)
+			if (o == null)
+				return true;
+		return false;
+	}
 }
