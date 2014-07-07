@@ -12,7 +12,8 @@ import org.eclipse.jdt.annotation.Nullable;
  * 
  */
 public enum _ {
-	// No values in an 'enum' used as name space for a collection of 'static' functions.
+	// No values in an 'enum' used as name space for a collection of 'static'
+	// functions.
 	;
 	/**
 	 * This function is used to remove the @Nullable annotation placed on the type
@@ -45,14 +46,15 @@ public enum _ {
 	 * 
 	 * @param a
 	 *          some integer
-	 * @param is additional
-	 *          
+	 * @param is
+	 *          additional
+	 * 
 	 * @return the largest of the parameters
 	 */
-	public static int max(final int a, final int ...is) {
+	public static int max(final int a, final int... is) {
 		int $ = a;
-		for (int i: is)
-			$ = Math.max($,i);
+		for (int i : is)
+			$ = Math.max($, i);
 		return $;
 	}
 	/**
@@ -60,25 +62,46 @@ public enum _ {
 	 * 
 	 * @param a
 	 *          some integer
-	 * @param is additional
-	 *          
+	 * @param is
+	 *          additional
+	 * 
 	 * @return the smallest of the parameters
 	 */
-	public static int min(final int a, final int ...is) {
+	public static int min(final int a, final int... is) {
 		int $ = a;
-		for (int i: is)
-			$ = Math.min($,i);
+		for (int i : is)
+			$ = Math.min($, i);
 		return $;
 	}
-	/** Determine whether a <code><b>null</b></code> is found in a sequence of objects
+	/**
+	 * Determine whether a <code><b>null</b></code> is found in a sequence of
+	 * objects
+	 * 
 	 * @param os
-	 *            an unknown number of objects
-	 * @return <code><b>null</b></code>  <i>iff</i>one of the parameters is <code><b>null</b></code>
+	 *          an unknown number of objects
+	 * @return <code><b>null</b></code> <i>iff</i>one of the parameters is
+	 *         <code><b>null</b></code>
 	 */
 	public static boolean hasNull(final Object... os) {
 		for (final Object o : os)
 			if (o == null)
 				return true;
 		return false;
+	}
+	/**
+	 * Counts the number of items in an {@link Iterable}.
+	 * 
+	 * @param <T>
+	 *          some arbitrary type
+	 * @param ts
+	 *          some iterable over items whose type is the type parameter
+	 * @return the number of items the given iterable yields.
+	 */
+	public static <T> int count(final @Nullable Iterable<T> ts) {
+		int $ = 0;
+		if (ts != null)
+			for (final @Nullable T t : ts)
+				$ += As.bit(t != null);
+		return $;
 	}
 }
