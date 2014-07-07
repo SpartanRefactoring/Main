@@ -1,8 +1,13 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package org.spartan;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.junit.FixMethodOrder;
+import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  * A collection of <code><b>static</b></code> functions whose most appropriate
@@ -64,4 +69,24 @@ public enum As {
 	 * The string returned when 'conversion to string' is applied to a <code><b>null</b></code> value. 
 	 */
 	public static final String NULL = "(null)";
+	/**
+	 * A static nested class hosting unit tests for the nesting class Unit test for
+	 * the containing class. Note the naming convention: a) names of test methods do not use
+	 * are not prefixed by "test". This prefix is redundant. b) test methods begin with the name of the
+	 * method they check.
+	 * 
+	 * @author Yossi Gil
+	 * @since 2014-05-31
+	 */
+	@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
+	@SuppressWarnings("static-method")//
+	public static class TEST {
+    @Test public void asBitOfFalse() {
+      assertEquals(0, As.bit(false));
+    }
+
+    @Test public void asBitOfTrue() {
+      assertEquals(1, As.bit(true));
+    }
+	}
 }
