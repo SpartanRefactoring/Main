@@ -23,68 +23,41 @@ public enum _ {
 	// No values in an 'enum' used as name space for a collection of 'static'
 	// functions.
 	;
-	public static FoundHandleForInt found(int i) {
-		return new FoundHandleForInt(i);
+	/**
+	 * Removes the @Nullable annotation present on the type of a value. This
+	 * function is mainly used to make <code><b>null</b></code<]> checkers happy.
+	 * <p>
+	 * The parameter is an instance of an arbitrary type, T. The hidden assumption
+	 * is that a @Nullable annotation is present on T. 
+	 * Thus, the parameter may be either 
+	 * <code><b>null</b></code<]>, or an actual instance of T.
+	 * <p>
+	 * The function returns the same instance it received as a parameter, except that
+	 * this instance is returned as an instance of the type T <i>without</i> the @Nullable 
+	 * annotation. Execution is aborted with an {@link AssertionError} if the parameter is null.
+	 * <p>
+	 * As it turns out, this function is a (slow) logical no-op, but still applicable to 
+	 * arguments of type T, where T does not have the @Nullable annotation present on it.
+	 *  <p>
+	 * For reasons related to the way non-nullability is managed in Java, the compiler will 
+	 * not warn you from doing applying this function to a {@link NonNull} type. However, 
+	 * there is absolutely no point in removing a @Nullable  annotation if the type that 
+	 * does not have it. Doing so a is plain clutter. Since the compiler cannot assist you,
+	 * you will have to be on the guard.
+	 * 
+	 * @param <T>
+	 *          some arbitrary type
+	 * @param $
+	 *          an instance of the type parameter
+	 * @return its parameter, after verifying that it is not <code><b>null</b>
+	 *         </code>
+	 * @see #mustBeNull(Object)
+	 */
+	public static <T> T cantBeNull(final @Nullable T $) {
+		assert $ != null;
+		return $;
 	}
 	
-	public static <T> FoundHandleForT<T> found(T t) {
-		return new FoundHandleForT<T>(t);
-	}
-
-	public static class FoundHandleForInt {
-		final int candidate;
-		/**
-		 * Instantiates this class. 
-		 * @param candidate 	 * @param candidate
-		 *          what to search for
-		 */
-		public FoundHandleForInt(int candidate) {
-			this.candidate = candidate;
-		}
-		/**
-		 * Determine if an integer can be found in a list of values
-		 * 
-		 * @param candidate
-		 *          what to search for
-		 * @param is
-		 *          where to search
-		 * @return true if the the item is found in the list
-		 */
-		@SafeVarargs public final boolean in(final int... is) {
-			for (final int i : is)
-				if (i == candidate)
-					return true;
-			return false;
-		}
-	}
-	
-	public static class FoundHandleForT<T> {
-		final T candidate;
-		/**
-		 * Instantiates this class. 
-		 * @param candidate 	 * @param candidate
-		 *          what to search for
-		 */
-		public FoundHandleForT(final T candidate) {
-			this.candidate = candidate;
-		}
-		/**
-		 * Determine if an integer can be found in a list of values
-		 * 
-		 * @param candidate
-		 *          what to search for
-		 * @param is
-		 *          where to search
-		 * @return true if the the item is found in the list
-		 */
-		@SafeVarargs public final boolean in(final T... ts) {
-			for (final T t : ts)
-				if (t != null && t.equals(candidate))
-					return true;
-			return false;
-		}
-	}
-
 	/**
 	 * Counts the number of items in an {@link Iterable}.
 	 * 
@@ -102,6 +75,15 @@ public enum _ {
 				$ += As.bit(t != null);
 		return $;
 	}
+
+	public static FoundHandleForInt found(int i) {
+		return new FoundHandleForInt(i);
+	}
+	
+	public static <T> FoundHandleForT<T> found(T t) {
+		return new FoundHandleForT<T>(t);
+	}
+
 	/**
 	 * Determine whether a <code><b>null</b></code> occurs in a sequence of
 	 * objects
@@ -150,40 +132,6 @@ public enum _ {
 		return $;
 	}
 	/**
-	 * Removes the @Nullable annotation present on the type of a value. This
-	 * function is mainly used to make <code><b>null</b></code<]> checkers happy.
-	 * <p>
-	 * The parameter is an instance of an arbitrary type, T. The hidden assumption
-	 * is that a @Nullable annotation is present on T. 
-	 * Thus, the parameter may be either 
-	 * <code><b>null</b></code<]>, or an actual instance of T.
-	 * <p>
-	 * The function returns the same instance it received as a parameter, except that
-	 * this instance is returned as an instance of the type T <i>without</i> the @Nullable 
-	 * annotation. Execution is aborted with an {@link AssertionError} if the parameter is null.
-	 * <p>
-	 * As it turns out, this function is a (slow) logical no-op, but still applicable to 
-	 * arguments of type T, where T does not have the @Nullable annotation present on it.
-	 *  <p>
-	 * For reasons related to the way non-nullability is managed in Java, the compiler will 
-	 * not warn you from doing applying this function to a {@link NonNull} type. However, 
-	 * there is absolutely no point in removing a @Nullable  annotation if the type that 
-	 * does not have it. Doing so a is plain clutter. Since the compiler cannot assist you,
-	 * you will have to be on the guard.
-	 * 
-	 * @param <T>
-	 *          some arbitrary type
-	 * @param $
-	 *          an instance of the type parameter
-	 * @return its parameter, after verifying that it is not <code><b>null</b>
-	 *         </code>
-	 * @see #mustBeNull(Object)
-	 */
-	public static <T> T cantBeNull(final @Nullable T $) {
-		assert $ != null;
-		return $;
-	}
-	/**
 	 * Aborts in case a given value is <code><b>null</b></code>.
 	 * <p>
 	 * This function is the lesser used dual of {@link #cantBeNull(Object)}.
@@ -198,6 +146,72 @@ public enum _ {
 	public static @Nullable <T> Void mustBeNull(final @Nullable T $) {
 		assert $ == null;
 		return null;
+	}
+  /** Computes the square
+   * @param i some integer
+   * @return the square of the parameter
+   */
+  public static int sqr(final int i) {
+    return i * i;
+  }
+  /** Computes the square
+   * @param i some integer
+   * @return the square of the parameter
+   */
+  public static double sqr(final double d) {
+    return d * d;
+  }
+	public static class FoundHandleForInt {
+		final int candidate;
+		/**
+		 * Instantiates this class. 
+		 * @param candidate 	 * @param candidate
+		 *          what to search for
+		 */
+		public FoundHandleForInt(int candidate) {
+			this.candidate = candidate;
+		}
+		/**
+		 * Determine if an integer can be found in a list of values
+		 * 
+		 * @param candidate
+		 *          what to search for
+		 * @param is
+		 *          where to search
+		 * @return true if the the item is found in the list
+		 */
+		@SafeVarargs public final boolean in(final int... is) {
+			for (final int i : is)
+				if (i == candidate)
+					return true;
+			return false;
+		}
+	}
+	public static class FoundHandleForT<T> {
+		final T candidate;
+		/**
+		 * Instantiates this class. 
+		 * @param candidate 	 * @param candidate
+		 *          what to search for
+		 */
+		public FoundHandleForT(final T candidate) {
+			this.candidate = candidate;
+		}
+		/**
+		 * Determine if an integer can be found in a list of values
+		 * 
+		 * @param candidate
+		 *          what to search for
+		 * @param is
+		 *          where to search
+		 * @return true if the the item is found in the list
+		 */
+		@SafeVarargs public final boolean in(final T... ts) {
+			for (final T t : ts)
+				if (t != null && t.equals(candidate))
+					return true;
+			return false;
+		}
 	}
 	/**
 	 * A static nested class hosting unit tests for the nesting class Unit test
