@@ -1,6 +1,7 @@
+/** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package org.spartan.iterables;
 
-/** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
+
 import static org.junit.Assert.assertEquals;
 
 import org.eclipse.jdt.annotation.Nullable;
