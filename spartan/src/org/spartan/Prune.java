@@ -12,22 +12,89 @@ import org.junit.Test;
  * A <b>Utility class</b> providing functions to remove <code><b>null</b></code>
  * elements from arrays and iterable collections. For example, to process the
  * non-<code><b>null</b></code> elements of an array:
- * 
+ *
  * <pre>
  * void f(String ss[]) {
  *     for (String s: Prune.nulls(ss))
  *     		// ... s is not null.
  * }
  * </pre>
- * 
+ *
  * @author Yossi Gil
  * @since 27/08/2008
  */
 public enum Prune {
 	;
+	private static void addNonEmpty(final Collection<String> ss, final String s) {
+		if (s.length() > 0)
+			ss.add(s);
+	}
+	public static <T, C extends Collection<T>> C nulls(final C ts) {
+		for (final Iterator<T> i = ts.iterator(); i.hasNext();)
+			if (i.next() == null)
+				i.remove();
+		return ts;
+	}
+	/**
+	 * Prune <code><b>null</b></code> elements from a given collection.
+	 *
+	 * @param <T>
+	 *          type of elements in the collection.
+	 * @param ts
+	 *          a collection of values.
+	 * @return a new collection, containing only those non-
+	 *         <code><b>null</b></code> elements of the parameter, and in the same
+	 *         order. No <code><b>null</b></code> elements are present on this
+	 *         returned collection.
+	 */
+	public static <T> List<T> nulls(final Iterable<T> ts) {
+		final ArrayList<T> $ = new ArrayList<>();
+		for (final T t : ts)
+			if (t != null)
+				$.add(t);
+		return $;
+	}
+	/**
+	 * Prune <code><b>null</b></code> elements from a given array.
+	 *
+	 * @param <T>
+	 *          type of elements in the array.
+	 * @param ts
+	 *          an array of values.
+	 * @return a new array, containing precisely those non-
+	 *         <code><b>null</b></code> elements of the parameter, and in the same
+	 *         order. No <code><b>null</b></code> elements are present on this
+	 *         returned collection.
+	 */
+	public static <T> T[] nulls(final T[] ts) {
+		final List<T> $ = new ArrayList<>();
+		for (final T t : ts)
+			if (t != null)
+				$.add(t);
+		return cantBeNull($.toArray(shrink(ts)));
+	}
+	/**
+	 * Shrink an array size to zero.
+	 *
+	 * @param <T>
+	 *          type of elements in the input array.
+	 * @param ts
+	 *          an array of values.
+	 * @return an array of size 0 of elements of type <code>T</code>.
+	 */
+	private static <T> T[] shrink(final T[] ts) {
+		return cantBeNull(Arrays.copyOf(ts, 0));
+	}
+	@SafeVarargs public static <T> String[] whites(final T... ts) {
+		final List<String> $ = new ArrayList<>();
+		for (final T t : ts)
+			if (t != null)
+				addNonEmpty($, cantBeNull(As.string(t).trim()));
+		return cantBeNull($.toArray(new String[0]));
+	}
 	/**
 	 * A JUnit test class for the enclosing class.
-	 * 
+	 *
 	 * @author Yossi Gil, the Technion.
 	 * @since 27/08/2008
 	 */
@@ -59,6 +126,9 @@ public enum Prune {
 		};
 		@Test public void shrinkArray() {
 			assertEquals(0, shrink(new Object[10]).length);
+		}
+		@Test public void whitesEmptyArray() {
+			assertEquals(0, Prune.whites().length);
 		}
 		@Test public void shrinkEmptyArray() {
 			assertEquals(0, shrink(new Object[0]).length);
@@ -92,72 +162,5 @@ public enum Prune {
 		@Test public void nullsPrunNotNull() {
 			assertNotNull(nulls(sparseCollection.value()));
 		}
-	}
-	private static void addNonEmpty(final Collection<String> ss, final String s) {
-		if (s.length() > 0)
-			ss.add(s);
-	}
-	public static <T, C extends Collection<T>> C nulls(final C ts) {
-		for (final Iterator<T> i = ts.iterator(); i.hasNext();)
-			if (i.next() == null)
-				i.remove();
-		return ts;
-	}
-	/**
-	 * Prune <code><b>null</b></code> elements from a given collection.
-	 * 
-	 * @param <T>
-	 *          type of elements in the collection.
-	 * @param ts
-	 *          a collection of values.
-	 * @return a new collection, containing only those non-
-	 *         <code><b>null</b></code> elements of the parameter, and in the same
-	 *         order. No <code><b>null</b></code> elements are present on this
-	 *         returned collection.
-	 */
-	public static <T> List<T> nulls(final Iterable<T> ts) {
-		final ArrayList<T> $ = new ArrayList<>();
-		for (final T t : ts)
-			if (t != null)
-				$.add(t);
-		return $;
-	}
-	/**
-	 * Prune <code><b>null</b></code> elements from a given array.
-	 * 
-	 * @param <T>
-	 *          type of elements in the array.
-	 * @param ts
-	 *          an array of values.
-	 * @return a new array, containing precisely those non-
-	 *         <code><b>null</b></code> elements of the parameter, and in the same
-	 *         order. No <code><b>null</b></code> elements are present on this
-	 *         returned collection.
-	 */
-	public static <T> T[] nulls(final T[] ts) {
-		final List<T> $ = new ArrayList<>();
-		for (final T t : ts)
-			if (t != null)
-				$.add(t);
-		return cantBeNull($.toArray(shrink(ts)));
-	}
-	/**
-	 * Shrink an array size to zero.
-	 * 
-	 * @param <T>
-	 *          type of elements in the input array.
-	 * @param ts
-	 *          an array of values.
-	 * @return an array of size 0 of elements of type <code>T</code>.
-	 */
-	private static <T> T[] shrink(final T[] ts) {
-		return cantBeNull(Arrays.copyOf(ts, 0));
-	}
-	@SafeVarargs public static <T> String[] whites(final T... ts) {
-		final List<String> $ = new ArrayList<>();
-		for (final T t : ts)
-			if (t != null)
-				addNonEmpty($, cantBeNull(As.string(t).trim()));
-		return cantBeNull($.toArray(new String[0]));
 	}
 }
