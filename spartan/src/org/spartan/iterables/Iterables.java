@@ -1,7 +1,5 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package org.spartan.iterables;
-
-
 import static org.junit.Assert.assertEquals;
 
 import org.eclipse.jdt.annotation.Nullable;
@@ -32,8 +30,7 @@ public enum Iterables {
 	public static <T> int count(final @Nullable Iterable<T> ts) {
 		int $ = 0;
 		if (ts != null)
-			for (final @Nullable
-			T t : ts)
+			for (final @Nullable T t : ts)
 				$ += As.bit(t != null);
 		return $;
 	}
@@ -50,7 +47,7 @@ public enum Iterables {
 	 * @since 2014-05-31
 	 */
 	@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
-	@SuppressWarnings("static-method")//
+	@SuppressWarnings({ "static-method", "javadoc" })//
 	public static class TEST {
 		@Test public void countDoesNotIncludeNull() {
 			assertEquals(3, count(As.iterable(null, "One", null, "Two", null, "Three")));

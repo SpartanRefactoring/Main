@@ -1,18 +1,16 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package org.spartan;
-
 import static org.junit.Assert.*;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Function;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import org.spartan._.FoundHandleForT.FoundHandleForInt;
+import org.spartan.__.FoundHandleForT.FoundHandleForInt;
 
 /**
  * A collection of <code><b>static</b></code> functions with no appropriate
@@ -22,23 +20,57 @@ import org.spartan._.FoundHandleForT.FoundHandleForInt;
  * @since Jul 7, 2014
  * 
  */
-public enum _ {
+public enum __ {
 	// No values in an 'enum' used as name space for a collection of 'static'
 	// functions.
 	;
-  @SafeVarargs public static <T, C extends Collection<T>> C add(final C $, final T... ts) {
-    for (final T t : ts)
-      if (t != null)
-        $.add(t);
-    return $;
-  }
-
-  @SafeVarargs public static <T> Collection<T> addAll(final Collection<T> $, final Collection<? extends T>... tss) {
-    for (final Collection<? extends T> ts : tss)
-      if (ts != null)
-        $.addAll(ts);
-    return $;
-  }
+	public static <F, T> Applicator<F, T> apply(Function<F, T> f) {
+		return new Applicator<>(f);
+	}
+	public static class Applicator<F, T> {
+		public Applicator(Function<F, T> function) {
+			this.function = function;
+		}
+		public <FS extends Iterable<F>> Iterable<T> to(final FS fs) {
+			final List<T> $ = new ArrayList<>();
+			for (final F f : fs)
+				if (f != null)
+					$.add(function.apply(f));
+			return $;
+		}
+		@SafeVarargs public final Iterable<T> to(final F... fs) {
+			final List<T> $ = new ArrayList<>();
+			for (final F f : fs)
+				if (f != null)
+					$.add(function.apply(f));
+			return $;
+		}
+		private Function<F, T> function;
+	}
+	@SafeVarargs public static <T, C extends Collection<T>> C add(final C $, final T... ts) {
+		for (final T t : ts)
+			if (t != null)
+				$.add(t);
+		return $;
+	}
+	public static <T, C extends Collection<T>> C add(final C $, final Iterable<? extends T> ts) {
+		for (final T t : ts)
+			if (t != null)
+				$.add(t);
+		return $;
+	}
+	@SafeVarargs public static <T, C extends Collection<T>> C addAll(final C $, final Collection<? extends T>... tss) {
+		for (final Collection<? extends T> ts : tss)
+			if (ts != null)
+				$.addAll(ts);
+		return $;
+	}
+	@SafeVarargs public static <T, C extends Collection<T>> C addAll(final C $, final Iterable<? extends T>... tss) {
+		for (final Iterable<? extends T> ts : tss)
+			if (ts != null)
+				add($, ts);
+		return $;
+	}
 	/**
 	 * Removes the @Nullable annotation present on the type of a value. This
 	 * function is mainly used to make <code><b>null</b></code<]> checkers happy.
@@ -73,15 +105,12 @@ public enum _ {
 		assert $ != null;
 		return $;
 	}
-	
 	public static FoundHandleForInt found(int i) {
 		return new FoundHandleForInt(i);
 	}
-	
 	public static <T> FoundHandleForT<T> found(T t) {
-		return new FoundHandleForT<T>(t);
+		return new FoundHandleForT<>(t);
 	}
-
 	/**
 	 * Determine whether a <code><b>null</b></code> occurs in a sequence of
 	 * objects
@@ -145,32 +174,37 @@ public enum _ {
 		assert $ == null;
 		return null;
 	}
-  /** Computes the square
-   * @param i some integer
-   * @return the square of the parameter
-   */
-  public static double sqr(final double d) {
-    return d * d;
-  }
-  
-  /** Computes the square
-   * @param i some integer
-   * @return the square of the parameter
-   */
-  public static int sqr(final int i) {
-    return i * i;
-  }
-  public static <T> void swap(final T[] ts, final int i, final int j) {
-    final T t = ts[i];
-    ts[i] = ts[j];
-    ts[j] = t;
-  }
+	/**
+	 * Computes the square
+	 * 
+	 * @param i
+	 *          some integer
+	 * @return the square of the parameter
+	 */
+	public static double sqr(final double d) {
+		return d * d;
+	}
+	/**
+	 * Computes the square
+	 * 
+	 * @param i
+	 *          some integer
+	 * @return the square of the parameter
+	 */
+	public static int sqr(final int i) {
+		return i * i;
+	}
+	public static <T> void swap(final T[] ts, final int i, final int j) {
+		final T t = ts[i];
+		ts[i] = ts[j];
+		ts[j] = t;
+	}
 	public static class FoundHandleForT<T> {
 		final T candidate;
 		/**
-		 * Instantiates this class. 
-		 * @param candidate 	 * @param candidate
-		 *          what to search for
+		 * Instantiates this class.
+		 * 
+		 * * @param candidate what to search for
 		 */
 		public FoundHandleForT(final T candidate) {
 			this.candidate = candidate;
@@ -193,9 +227,9 @@ public enum _ {
 		public static class FoundHandleForInt {
 			final int candidate;
 			/**
-			 * Instantiates this class. 
-			 * @param candidate 	 * @param candidate
-			 *          what to search for
+			 * Instantiates this class.
+			 * 
+			 *        @param candidate what to search for
 			 */
 			public FoundHandleForInt(int candidate) {
 				this.candidate = candidate;
@@ -203,8 +237,6 @@ public enum _ {
 			/**
 			 * Determine if an integer can be found in a list of values
 			 * 
-			 * @param candidate
-			 *          what to search for
 			 * @param is
 			 *          where to search
 			 * @return true if the the item is found in the list
@@ -227,34 +259,33 @@ public enum _ {
 	 * @since 2014-05-31
 	 */
 	@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
-	@SuppressWarnings("static-method")//
+	@SuppressWarnings({ "static-method", "javadoc" })//
 	public static class TEST {
-	  public static Integer[] intToIntegers(final int... is) {
-	    final Integer[] $ = new Integer[is.length];
-	    for (int i = 0; i < is.length; i++)
-	      $[i] = Box.it(is[i]);
-	    return $;
-	  }
-	  @Test public void addTypical() {
-		  final Set<String> ss = new HashSet<>();
-		  add(ss, null, "A", null, "B", "B", null, "C", "D", null);
-		  assertFalse(ss.contains("E"));
-		  assertFalse(ss.contains(null));
-		  assertEquals(4, ss.size());
-		  for (final String s : ss)
-		    assertTrue(ss.contains(s));
+		public static Integer[] intToIntegers(final int... is) {
+			final Integer[] $ = new Integer[is.length];
+			for (int i = 0; i < is.length; i++)
+				$[i] = Box.it(is[i]);
+			return $;
+		}
+		@Test public void addTypical() {
+			final Set<String> ss = new HashSet<>();
+			add(ss, null, "A", null, "B", "B", null, "C", "D", null);
+			assertFalse(ss.contains("E"));
+			assertFalse(ss.contains(null));
+			assertEquals(4, ss.size());
+			for (final String s : ss)
+				assertTrue(ss.contains(s));
 		}
 		@Test public void addAllTypical() {
-	    final Set<String> ss = new HashSet<>();
-	    addAll(ss, As.set("A", "B"), null, As.set("B", "C", "D"));
-	    assertFalse(ss.contains("E"));
-	    assertFalse(ss.contains(null));
-	    assertEquals(4, ss.size());
-	    for (final String s : ss)
-	      assertTrue(ss.contains(s));
-	  }
-
-	  @Test public void isNullOfNonNull() {
+			final Set<String> ss = new HashSet<>();
+			addAll(ss, As.set("A", "B"), null, As.set("B", "C", "D"));
+			assertFalse(ss.contains("E"));
+			assertFalse(ss.contains(null));
+			assertEquals(4, ss.size());
+			for (final String s : ss)
+				assertTrue(ss.contains(s));
+		}
+		@Test public void isNullOfNonNull() {
 			try {
 				mustBeNull(new Object());
 				fail("AssertionError expected prior to this line.");
@@ -270,23 +301,20 @@ public enum _ {
 				assertTrue(true);
 			}
 		}
-    @Test public void swapDegenerate() {
-      final String[] ss = As.array("A", "B", "C", "D");
-      swap(ss, 1, 1);
-      assertArrayEquals(As.array("A", "B", "C", "D"), ss);
-    }
-
-    @Test public void swapTypical() {
-      final String[] ss = As.array("A", "B", "C", "D");
-      swap(ss, 1, 2);
-      assertArrayEquals(As.array("A", "C", "B", "D"), ss);
-    }
-
-    @Test public void swapTypicalCase() {
-      final Integer[] $ = intToIntegers(29, 1, 60);
-      swap($, 0, 1);
-      assertArrayEquals(intToIntegers(1, 29, 60), $);
-    }
+		@Test public void swapDegenerate() {
+			final String[] ss = As.array("A", "B", "C", "D");
+			swap(ss, 1, 1);
+			assertArrayEquals(As.array("A", "B", "C", "D"), ss);
+		}
+		@Test public void swapTypical() {
+			final String[] ss = As.array("A", "B", "C", "D");
+			swap(ss, 1, 2);
+			assertArrayEquals(As.array("A", "C", "B", "D"), ss);
+		}
+		@Test public void swapTypicalCase() {
+			final Integer[] $ = intToIntegers(29, 1, 60);
+			swap($, 0, 1);
+			assertArrayEquals(intToIntegers(1, 29, 60), $);
+		}
 	}
-	
 }

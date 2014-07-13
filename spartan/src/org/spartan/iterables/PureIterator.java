@@ -1,12 +1,8 @@
-/**
- * Copyright (c) 2014: The Software and Systems Development Laboratory,
- * Department of Computer Science, The Technion---IIT
- */
+/** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package org.spartan.iterables;
-
 import static org.junit.Assert.assertFalse;
-import static org.spartan._.cantBeNull;
-import static org.spartan._.mustBeNull;
+import static org.spartan.__.cantBeNull;
+import static org.spartan.__.mustBeNull;
 
 import java.util.Iterator;
 
@@ -28,53 +24,47 @@ import org.junit.Test;
  *          an arbitrary type
  */
 public abstract class PureIterator<T> implements Iterator<T> {
-  /**
-   * This <code><b>final</b></code> implementation of the method, prevents
-   * descendants from giving {link #remove} semantics other than immediately
-   * throwing a fresh instance of {@link IllegalArgumentException}.
-   * 
-   * @see java.util.Iterator#remove()
-   */
-  @Override public final void remove() {
-    throw new IllegalArgumentException();
-  }
-
-  public abstract static class Staged<T> extends PureIterator<T> {
-    /**
-     * Stores the next value that this iterator returns. It has non-null content
-     * only after {@link #hasNext} returned true.
-     */
-    private @Nullable T next = null;
-
-    protected final boolean setNext(final T next) {
-      mustBeNull(this.next);
-      this.next = next;
-      return true;
-    }
-
-    protected final void clearNext() {
-      cantBeNull(next);
-      next = null;
-    }
-
-    @Override public final T next() {
-      final T $ = cantBeNull(next);
-      clearNext();
-      return $;
-    }
-  }
-
-  public static class TEST extends PureIterator.Staged<String> {
-    @Override public boolean hasNext() {
-      return false;
-    }
-
-    @Test public void isEmpty() {
-      assertFalse(hasNext());
-    }
-
-    @Test(expected = IllegalArgumentException.class) public void tryToRemove() {
-      remove();
-    }
-  }
+	/**
+	 * This <code><b>final</b></code> implementation of the method, prevents
+	 * descendants from giving {link #remove} semantics other than immediately
+	 * throwing a fresh instance of {@link IllegalArgumentException}.
+	 * 
+	 * @see java.util.Iterator#remove()
+	 */
+	@Override public final void remove() {
+		throw new IllegalArgumentException();
+	}
+	public abstract static class Staged<T> extends PureIterator<T> {
+		/**
+		 * Stores the next value that this iterator returns. It has non-null content
+		 * only after {@link #hasNext} returned true.
+		 */
+		private @Nullable T next = null;
+		protected final boolean setNext(final T next) {
+			mustBeNull(this.next);
+			this.next = next;
+			return true;
+		}
+		protected final void clearNext() {
+			cantBeNull(next);
+			next = null;
+		}
+		@Override public final T next() {
+			final T $ = cantBeNull(next);
+			clearNext();
+			return $;
+		}
+	}
+	@SuppressWarnings({ "javadoc" })//
+	public static class TEST extends PureIterator.Staged<String> {
+		@Override public boolean hasNext() {
+			return false;
+		}
+		@Test public void isEmpty() {
+			assertFalse(hasNext());
+		}
+		@Test(expected = IllegalArgumentException.class) public void tryToRemove() {
+			remove();
+		}
+	}
 }

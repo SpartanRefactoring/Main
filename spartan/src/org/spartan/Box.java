@@ -1,7 +1,6 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package org.spartan;
-
-import static org.spartan._.cantBeNull;
+import static org.spartan.__.cantBeNull;
 
 /**
  * A utility class, with a collection of function to box primitive types in
@@ -9,7 +8,7 @@ import static org.spartan._.cantBeNull;
  * functions to box arrays of primitive types into their reference type
  * equivalent.
  * 
- * @author Yossi Gil, the Technion.
+ * @author Yossi Gil
  * @since 2008/06/21
  */
 public enum Box {

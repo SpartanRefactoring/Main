@@ -1,7 +1,6 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package org.spartan.misc;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -34,7 +33,7 @@ public class Primes {
 	 */
 	public static boolean isPrime(final int c) {
 		return //
-				 c < 0  ? isPrime(-c) //
+		c < 0 ? isPrime(-c) //
 		    : c <= 1 ? false //
 		        : isPrimeCore(c);
 	}
@@ -44,7 +43,7 @@ public class Primes {
 				return false;
 		return true;
 	}
-	@SuppressWarnings("static-method")//
+	@SuppressWarnings({ "static-method", "javadoc" })//
 	public static class TEST {
 		@Test public void firstIsTwo() {
 			assertEquals(2, new Primes().next());
