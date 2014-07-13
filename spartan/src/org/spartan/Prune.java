@@ -85,11 +85,11 @@ public enum Prune {
 	private static <T> T[] shrink(final T[] ts) {
 		return cantBeNull(Arrays.copyOf(ts, 0));
 	}
-	@SafeVarargs public static <T> String[] whites(final T... ts) {
+	@SafeVarargs public static String[] whites(final String... ss) {
 		final List<String> $ = new ArrayList<>();
-		for (final T t : ts)
-			if (t != null)
-				addNonEmpty($, cantBeNull(As.string(t).trim()));
+		for (final String s : ss)
+			if (s != null)
+				addNonEmpty($, cantBeNull(As.string(s).trim()));
 		return cantBeNull($.toArray(new String[0]));
 	}
 	/**
@@ -159,8 +159,11 @@ public enum Prune {
 		@Test public void shrinkEmptyArray() {
 			assertEquals(0, shrink(new Object[0]).length);
 		}
-		@Test public void whitesEmptyArray() {
+		@Test public void whitesEmptyList() {
 			assertEquals(0, Prune.whites().length);
+		}
+		@Test public void whitesEmptyArray() {
+			assertEquals(0, Prune.whites(new String[] {}).length);
 		}
 	}
 }
