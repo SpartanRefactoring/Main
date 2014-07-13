@@ -124,22 +124,13 @@ public enum Prune {
 				return $;
 			}
 		};
-		@Test public void shrinkArray() {
-			assertEquals(0, shrink(new Object[10]).length);
-		}
-		@Test public void whitesEmptyArray() {
-			assertEquals(0, Prune.whites().length);
-		}
-		@Test public void shrinkEmptyArray() {
-			assertEquals(0, shrink(new Object[0]).length);
+		@Test public void nullsNonNullArrayLength() {
+			assertEquals(nonNullArray.length, nulls(nonNullArray).length);
 		}
 		@Test public void nullsNullArrayItems() {
 			assertEquals("1", nulls(nonNullArray)[0]);
 			assertEquals("2", nulls(nonNullArray)[1]);
 			assertEquals("4", nulls(nonNullArray)[2]);
-		}
-		@Test public void nullsNonNullArrayLength() {
-			assertEquals(nonNullArray.length, nulls(nonNullArray).length);
 		}
 		@Test public void nullsPruneArrayAltenatingItems() {
 			assertEquals("A", nulls(alternatingArray)[0]);
@@ -161,6 +152,15 @@ public enum Prune {
 		}
 		@Test public void nullsPrunNotNull() {
 			assertNotNull(nulls(sparseCollection.value()));
+		}
+		@Test public void shrinkArray() {
+			assertEquals(0, shrink(new Object[10]).length);
+		}
+		@Test public void shrinkEmptyArray() {
+			assertEquals(0, shrink(new Object[0]).length);
+		}
+		@Test public void whitesEmptyArray() {
+			assertEquals(0, Prune.whites().length);
 		}
 	}
 }
