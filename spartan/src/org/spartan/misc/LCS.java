@@ -20,7 +20,7 @@ import org.spartan.text.Lines;
  * line and then converting it to lower case; further, we use the hashCode of
  * the line, so that in certain cases, the LCS may be a bit inaccurate. These
  * case are extremely rare.
- * 
+ *
  * @author Yossi Gil
  * @since 2014-06-17
  */
@@ -70,7 +70,7 @@ public class LCS {
 	 * <code>as[0]...as[i]</code>, and <code>as[0]...as[i]</code>, i (respectively
 	 * j) must be a valid index of array a (respectively b), or else, the
 	 * substring of a (respectively b) are empty.
-	 * 
+	 *
 	 * @param i
 	 * @param j
 	 * @return
@@ -89,7 +89,7 @@ public class LCS {
 	public static class TEST {
 		/**
 		 * Dumb implementation, yeah, I know. --yg.
-		 * 
+		 *
 		 */
 		private static String[] chars2Lines(final String s) {
 			final StringBuilder $ = new StringBuilder();
@@ -125,37 +125,37 @@ public class LCS {
 		@Test public void lengthStringAbraCadabra() {
 			// Common string is: "ABRA"
 			assertEquals(4, length( //
-			    chars2Lines("ABRA"), //
-			    chars2Lines("CADABRA") //
-			    ));
+					chars2Lines("ABRA"), //
+					chars2Lines("CADABRA") //
+					));
 		}
 		@Test public void lengthStringAlmostTrivial() {
 			// Common string is: "ABRA"
 			assertEquals(4, length( //
-			    "A\nB\nR\nA", //
-			    "C\nA\nD\nA\nB\nR\nA\n" //
-			));
+					"A\nB\nR\nA", //
+					"C\nA\nD\nA\nB\nR\nA\n" //
+					));
 		}
 		@Test public void lengthStringMiddle() {
 			// Common string is: "ABC"
 			assertEquals(4, length( //
-			    chars2Lines("bcde"), //
-			    chars2Lines("abcdef") //
-			    ));
+					chars2Lines("bcde"), //
+					chars2Lines("abcdef") //
+					));
 		}
 		@Test public void lengthStringPrefix() {
 			// Common string is: "ABC"
 			assertEquals(3, length( //
-			    chars2Lines("abc"), //
-			    chars2Lines("abcdef") //
-			    ));
+					chars2Lines("abc"), //
+					chars2Lines("abcdef") //
+					));
 		}
 		@Test public void lengthStringSimple() {
 			// Common string is: "A"
 			assertEquals(1, length(//
-			    chars2Lines("A"), //
-			    chars2Lines("A") //
-			    ));
+					chars2Lines("A"), //
+					chars2Lines("A") //
+					));
 		}
 		@SuppressWarnings("synthetic-access")//
 		@Test public void lengthStringSimpleA() {
@@ -195,16 +195,16 @@ public class LCS {
 		@Test public void lengthStringSimpleFalse() {
 			// Common string is: "ABC"
 			assertEquals(1, length(//
-			    chars2Lines("A"), //
-			    chars2Lines("A") //
-			    ));
+					chars2Lines("A"), //
+					chars2Lines("A") //
+					));
 		}
 		@Test public void lengthStringSuffix() {
 			// Common string is: "ABC"
 			assertEquals(2, length(//
-			    chars2Lines("ABCD"), //
-			    chars2Lines("CD") //
-			    ));
+					chars2Lines("ABCD"), //
+					chars2Lines("CD") //
+					));
 		}
 		@Test public void lengthStringTrivial() {
 			assertEquals(1, length("A", "C\nA\nD\nA\nB\nR\nA\n"));
@@ -212,156 +212,156 @@ public class LCS {
 		@Test public void lengthStringTypical() {
 			// Common string is: "ABC"
 			assertEquals(3, length(//
-			    chars2Lines(".A.B...C..."), //
-			    chars2Lines(",,,,A,,,,,B,,,,,,,,,C,,,") //
-			    ));
+					chars2Lines(".A.B...C..."), //
+					chars2Lines(",,,,A,,,,,B,,,,,,,,,C,,,") //
+					));
 		}
 		@Test public void lengthStringTypical_1() {
 			// Common string is: "ABC"
 			assertEquals(3, length(//
-			    chars2Lines(".A.B...C"), //
-			    chars2Lines(",,,,A,,,,,B,,,,,,,,,C,,,") //
-			    ));
+					chars2Lines(".A.B...C"), //
+					chars2Lines(",,,,A,,,,,B,,,,,,,,,C,,,") //
+					));
 		}
 		@Test public void lengthStringTypical_2() {
 			// Common string is: "ABC"
 			assertEquals(3, length(//
-			    chars2Lines(".A.B...C"), //
-			    chars2Lines(",,,,A,,,,,B,,,C,,,") //
-			    ));
+					chars2Lines(".A.B...C"), //
+					chars2Lines(",,,,A,,,,,B,,,C,,,") //
+					));
 		}
 		@Test public void lengthStringTypical_3() {
 			// Common string is: "ABC"
 			assertEquals(3, length(//
-			    chars2Lines(".A.B...C"), //
-			    chars2Lines(",A,,,,,B,,,C,,,") //
-			    ));
+					chars2Lines(".A.B...C"), //
+					chars2Lines(",A,,,,,B,,,C,,,") //
+					));
 		}
 		@Test public void lengthStringTypical_4() {
 			// Common string is: "ABC"
 			assertEquals(3, length(//
-			    chars2Lines(".A.B.C"), //
-			    chars2Lines(",A,,,,,B,,,C,,,") //
-			    ));
+					chars2Lines(".A.B.C"), //
+					chars2Lines(",A,,,,,B,,,C,,,") //
+					));
 		}
 		@Test public void lengthStringTypical_5() {
 			// Common string is: "ABC"
 			assertEquals(3, length(//
-			    chars2Lines(".A.B.C"), //
-			    chars2Lines(",A,,,B,,C,") //
-			    ));
+					chars2Lines(".A.B.C"), //
+					chars2Lines(",A,,,B,,C,") //
+					));
 		}
 		@Test public void lengthStringTypical_6() {
 			// Common string is: "ABC"
 			assertEquals(3, length(//
-			    chars2Lines(".A.B.C"), //
-			    chars2Lines(",A,B,,C,") //
-			    ));
+					chars2Lines(".A.B.C"), //
+					chars2Lines(",A,B,,C,") //
+					));
 		}
 		@Test public void lengthStringTypical_6A() {
 			// Common string is: "ABC"
 			assertEquals(1, length(//
-			    chars2Lines(".A."), //
-			    chars2Lines(",A,") //
-			    ));
+					chars2Lines(".A."), //
+					chars2Lines(",A,") //
+					));
 		}
 		@Test public void lengthStringTypical_6B() {
 			// Common string is: "ABC"
 			assertEquals(1, length(//
-			    chars2Lines(".A"), //
-			    chars2Lines(",A") //
-			    ));
+					chars2Lines(".A"), //
+					chars2Lines(",A") //
+					));
 		}
 		@Test public void lengthStringTypical_6C() {
 			// Common string is empty
 			assertEquals(0, length(//
-			    chars2Lines("."), //
-			    chars2Lines(",") //
-			    ));
+					chars2Lines("."), //
+					chars2Lines(",") //
+					));
 		}
 		@Test public void lengthStringTypical_6D() {
 			// Common string is empty
 			assertEquals(0, length(//
-			    chars2Lines("X"), //
-			    chars2Lines("Y") //
-			    ));
+					chars2Lines("X"), //
+					chars2Lines("Y") //
+					));
 		}
 		@Test public void lengthStringTypical_6E() {
 			// Common string is: "X"
 			assertEquals(1, length(//
-			    chars2Lines("X"), //
-			    chars2Lines("X") //
-			    ));
+					chars2Lines("X"), //
+					chars2Lines("X") //
+					));
 		}
 		@Test public void lengthStringTypical_7() {
 			// Common string is: "ABC"
 			assertEquals(3, length(//
-			    chars2Lines("A.B.C"), //
-			    chars2Lines(",A,B,,C,") //
-			    ));
+					chars2Lines("A.B.C"), //
+					chars2Lines(",A,B,,C,") //
+					));
 		}
 		@Test public void lengthStringTypical_7A() {
 			// Common string is: "ABC"
 			assertEquals(3, length(//
-			    chars2Lines("A.B.C"), //
-			    chars2Lines(",A,B,,C,,,,") //
-			    ));
+					chars2Lines("A.B.C"), //
+					chars2Lines(",A,B,,C,,,,") //
+					));
 		}
 		@Test public void lengthStringTypical_7B() {
 			// Common string is: "ABC"
 			assertEquals(3, length(//
-			    chars2Lines("A.B.C"), //
-			    chars2Lines(",,,,,A,B,,C,,,,,") //
-			    ));
+					chars2Lines("A.B.C"), //
+					chars2Lines(",,,,,A,B,,C,,,,,") //
+					));
 		}
 		@Test public void lengthStringTypical_7C() {
 			// Common string is: "ABC"
 			assertEquals(3, length(//
-			    chars2Lines(".A.B.C"), //
-			    chars2Lines(",A,B,,C,") //
-			    ));
+					chars2Lines(".A.B.C"), //
+					chars2Lines(",A,B,,C,") //
+					));
 		}
 		@Test public void lengthStringTypical_8() {
 			// Common string is: "ABC"
 			assertEquals(3, length(//
-			    chars2Lines("A.B.C"), //
-			    chars2Lines(",A,BC,") //
-			    ));
+					chars2Lines("A.B.C"), //
+					chars2Lines(",A,BC,") //
+					));
 		}
 		@Test public void lengthStringTypical_9() {
 			// Common string is: "ABC"
 			assertEquals(3, length(//
-			    chars2Lines("A.B.C"), //
-			    chars2Lines("ABC,") //
-			    ));
+					chars2Lines("A.B.C"), //
+					chars2Lines("ABC,") //
+					));
 		}
 		@Test public void lengthStringTypical_A() {
 			// Common string is: "ABC"
 			assertEquals(3, length(//
-			    chars2Lines("AB.C"), //
-			    chars2Lines("ABC,") //
-			    ));
+					chars2Lines("AB.C"), //
+					chars2Lines("ABC,") //
+					));
 		}
 		@Test public void lengthStringTypical_B() {
 			// Common string is: "ABC"
 			assertEquals(3, length(//
-			    chars2Lines("AB.C"), //
-			    chars2Lines("ABC") //
-			    ));
+					chars2Lines("AB.C"), //
+					chars2Lines("ABC") //
+					));
 		}
 		@Test public void lengthStringTypical_C() {
 			// Common string is: "ABC"
 			assertEquals(3, length(//
-			    chars2Lines("ABC"), //
-			    chars2Lines("ABC") //
-			    ));
+					chars2Lines("ABC"), //
+					chars2Lines("ABC") //
+					));
 		}
 		@Test public void lengthStringTypicalWithDigits() {
 			// Common string is: "ABC"
 			assertEquals(3, length(//
-			    chars2Lines(".A.B...C..."), //
-			    chars2Lines(",,,,A,,,,,B,,,,,,,,,C,,,") //
-			    ));
+					chars2Lines(".A.B...C..."), //
+					chars2Lines(",,,,A,,,,,B,,,,,,,,,C,,,") //
+					));
 		}
 	}
 }

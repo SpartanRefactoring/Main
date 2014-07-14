@@ -7,7 +7,7 @@ import org.junit.Test;
 
 /**
  * A class for lazy, memoizing evaluation of integers.
- * 
+ *
  * @author Yossi Gil
  * @since 2014-06-20
  */
@@ -20,14 +20,14 @@ public abstract class NonNegativeCache {
 	 * This function is to be implemented by clients, giving a method for
 	 * computing the cached value. It is guaranteed that this function will only
 	 * be called once.
-	 * 
+	 *
 	 * @return the value to be cached
 	 */
 	protected abstract int __();
 	/**
 	 * Compute the cached value, either by looking up memoization, or by actual
 	 * computation
-	 * 
+	 *
 	 * @return the cached value
 	 */
 	public int value() {

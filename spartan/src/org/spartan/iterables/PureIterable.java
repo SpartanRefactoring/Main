@@ -7,7 +7,7 @@ import java.util.Iterator;
  * {@link Iterator#remove} operation and saves the user, i.e., whoever chooses
  * to <code><b>implements</b></code> this class, the trouble of providing a
  * vacuous implementation of this function.
- * 
+ *
  * @see PureIterator
  * @author Yossi Gil
  * @since 2014-06-03
@@ -34,7 +34,7 @@ public interface PureIterable<T> extends Iterable<T> {
 	 * exhausting the sequence items that this iterable may yield.
 	 * </ol>
 	 *
-	 * 
+	 *
 	 * @author Yossi Gil
 	 * @since 2014-06-20
 	 * @param <T>

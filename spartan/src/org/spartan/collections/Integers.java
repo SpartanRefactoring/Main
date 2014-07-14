@@ -10,7 +10,7 @@ package org.spartan.collections;
  * capacity is halved when the load drops below {@value #MIN_LOAD}. When the
  * fraction of removed keys goes below {@link #REMOVE_LOAD}, the table is
  * rehashed.
- * 
+ *
  * @author Yossi Gil
  * @since December 2010
  */
@@ -23,13 +23,13 @@ public class Integers {
 	}
 	/**
 	 * Instantiate this class, using a given size for the hash table.
-	 * 
+	 *
 	 * @param initialCapacity
 	 *          suggests a hash table size, will be rounded up to the next power
 	 *          of two.
 	 */
 	public Integers(final int initialCapacity) {
-		int capacity = Math.max(MIN_CAPACITY, roundUp(initialCapacity));
+		final int capacity = Math.max(MIN_CAPACITY, roundUp(initialCapacity));
 		data = new int[capacity];
 		occupied = new boolean[capacity];
 		placeholder = new boolean[capacity];
@@ -38,7 +38,7 @@ public class Integers {
 	}
 	/**
 	 * How many elements are there in this set?
-	 * 
+	 *
 	 * @return the number of values in the set.
 	 */
 	public int size() {
@@ -46,7 +46,7 @@ public class Integers {
 	}
 	/**
 	 * Determine whether a given value is in this set.
-	 * 
+	 *
 	 * @param n
 	 *          an arbitrary integer
 	 * @return <code><b>true</b></code> if, and only if, the parameter is
@@ -57,7 +57,7 @@ public class Integers {
 	}
 	/**
 	 * Check whether an array of integers is contained in this set.
-	 * 
+	 *
 	 * @param ns
 	 *          an array of integers; ; must not be <code><b>null</b></code>.
 	 * @return <code><b>true</b></code> if, and only if, all elements in the array
@@ -71,7 +71,7 @@ public class Integers {
 	}
 	/**
 	 * Check whether this object is disjoint from an array of integers
-	 * 
+	 *
 	 * @param ns
 	 *          an array of of integers; must not be <code><b>null</b></code>.
 	 * @return <code><b>true</b></code> if, and only if, this object is disjoint
@@ -85,7 +85,7 @@ public class Integers {
 	}
 	/**
 	 * What are all values stored in this object?
-	 * 
+	 *
 	 * @return an array of all elements in this set.
 	 */
 	public int[] entries() {
@@ -97,7 +97,7 @@ public class Integers {
 	}
 	/**
 	 * Add an integer to the set, if it is not already there.
-	 * 
+	 *
 	 * @param n
 	 *          an arbitrary integer
 	 * @return <code><b>this</b>/code>
@@ -115,7 +115,7 @@ public class Integers {
 	}
 	/**
 	 * Add an array of integers to this set, if they are not already in it.
-	 * 
+	 *
 	 * @param ns
 	 *          an arbitrary array of integers; ; must not be
 	 *          <code><b>null</b></code>.
@@ -128,7 +128,7 @@ public class Integers {
 	}
 	/**
 	 * Remove an element from this set, it is in it
-	 * 
+	 *
 	 * @param n
 	 *          some integer to be removed from the set
 	 * @return <code><b>this</b>/code>
@@ -146,7 +146,7 @@ public class Integers {
 	}
 	/**
 	 * Remove an array of integers to this set, if they are in it.
-	 * 
+	 *
 	 * @param ns
 	 *          an array of integers; ; must not be <code><b>null</b></code>.
 	 * @return <code><b>this</b>/code>
@@ -158,7 +158,7 @@ public class Integers {
 	}
 	/**
 	 * Recreate the table, inserting all elements in it afresh.
-	 * 
+	 *
 	 * @return <code><b>this</b>/code>
 	 */
 	public Integers rehash() {
@@ -166,7 +166,7 @@ public class Integers {
 	}
 	/**
 	 * Remove all elements from this set, preserving capacity.
-	 * 
+	 *
 	 * @return <code><b>this</b>/code>
 	 */
 	public Integers clear() {
@@ -174,7 +174,7 @@ public class Integers {
 	}
 	/**
 	 * What's the underlying table size?
-	 * 
+	 *
 	 * @return the hash table size (always a power of two)
 	 */
 	public int capacity() {
@@ -186,7 +186,7 @@ public class Integers {
 	public static final int MIN_CAPACITY = 4;
 	/**
 	 * Find the index in the hash table of the parameter
-	 * 
+	 *
 	 * @param n
 	 *          some integer
 	 * @return index of the element if the parameter is in the table, otherwise,
@@ -206,7 +206,7 @@ public class Integers {
 	/**
 	 * Find the index in the hash table into which the parameter could be
 	 * inserted.
-	 * 
+	 *
 	 * @param n
 	 *          some integer
 	 * @return -1 if the parameter is in the table already, otherwise, the index
@@ -227,7 +227,7 @@ public class Integers {
 	/**
 	 * resize internal storage to the specified capacity, which must be a power of
 	 * two.
-	 * 
+	 *
 	 * @param newCapacity
 	 *          new initialCapacity for the internal array
 	 * @return <code><b>this</b>/code>

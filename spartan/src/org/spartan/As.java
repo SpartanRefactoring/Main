@@ -18,10 +18,10 @@ import org.spartan.iterables.PureIterator;
 /**
  * A collection of <code><b>static</b></code> functions whose most appropriate
  * 'sedoco' class is {@link As}. *
- * 
+ *
  * @author Yossi Gil
  * @since Jul 8, 2014
- * 
+ *
  */
 public enum As {
 	// No values in an 'enum' a name space for a collection of 'static' functions.
@@ -33,7 +33,7 @@ public enum As {
 	public static final String NULL = "(null)";
 	/**
 	 * Converts a sequence of values into an array.
-	 * 
+	 *
 	 * @param <T>
 	 *          some arbitrary type
 	 * @param $
@@ -46,8 +46,8 @@ public enum As {
 	}
 	/**
 	 * Converts a sequence of integer values into an array.
-	 * 
-	 * 
+	 *
+	 *
 	 * @param $
 	 *          some sequence of values of the type parameter
 	 * @return the parameters, organized as an array with entries whose type is
@@ -58,7 +58,7 @@ public enum As {
 	}
 	/**
 	 * Converts a boolean into a bit value
-	 * 
+	 *
 	 * @param $
 	 *          some boolean value
 	 * @return 1 if the parameter is true, 0 otherwise
@@ -68,7 +68,7 @@ public enum As {
 	}
 	/**
 	 * C like conversion of a reference to an {@link Object} into a 0/1 bit.
-	 * 
+	 *
 	 * @param o
 	 *          an arbitrary object
 	 * @return <code>0</code> if the parameter is <code><b>null/b></code>.
@@ -81,7 +81,7 @@ public enum As {
 	/**
 	 * Converts a value, which can be either a <code><b>null</b></code> or
 	 * references to valid instances, into a {@link NonNull}
-	 * 
+	 *
 	 * @param $
 	 *          some value
 	 * @return the parameter, after bing to a non-null string.
@@ -92,7 +92,7 @@ public enum As {
 	/**
 	 * Converts a {@link String}, which can be either a <code><b>null</b></code>
 	 * or an actual String, into a {@link NonNull} String.
-	 * 
+	 *
 	 * @param $
 	 *          some value
 	 * @return the parameter, after bing to a non-null string.
@@ -103,7 +103,7 @@ public enum As {
 	/**
 	 * Return a compact representation of a list of {@link Integer}s as an array
 	 * of type <code>int</code>.
-	 * 
+	 *
 	 * @param is
 	 *          the list to be converted, none of the elements in it can be
 	 *          <code>null</code>
@@ -115,12 +115,12 @@ public enum As {
 			$[i] = is.get(i).intValue();
 		return $;
 	}
-	public static <T> Object[] objectsArray(T[] $) {
+	public static <T> Object[] objectsArray(final T[] $) {
 		return $;
 	}
 	/**
 	 * Creates an iterable for an array of objects
-	 * 
+	 *
 	 * @param <T>
 	 *          an arbitrary type
 	 * @param ts
@@ -147,7 +147,7 @@ public enum As {
 	}
 	/**
 	 * Creates an iterable for an array of objects
-	 * 
+	 *
 	 * @param <T>
 	 *          an arbitrary type
 	 * @param ts
@@ -157,7 +157,7 @@ public enum As {
 	@SafeVarargs public static <T> PureIterator<T> iterator(final T... ts) {
 		return iterable(ts).iterator();
 	}
-	public static List<Integer> list(final int... is) {
+	public static List<Integer> ingeterList(final int... is) {
 		final List<Integer> $ = new ArrayList<>();
 		for (final int i : is)
 			$.add(Box.it(i));
@@ -169,18 +169,28 @@ public enum As {
 	public static <T> List<T> list(final Iterable<? extends T> ts) {
 		return addAll(new ArrayList<T>(), ts);
 	}
+	@SafeVarargs public static <T> List<T> list(final T... ts) {
+		return addAll(new ArrayList<T>(), ts);
+	}
 	/**
 	 * A static nested class hosting unit tests for the nesting class Unit test
 	 * for the containing class. Note the naming convention: a) names of test
 	 * methods do not use are not prefixed by "test". This prefix is redundant. b)
 	 * test methods begin with the name of the method they check.
-	 * 
+	 *
 	 * @author Yossi Gil
 	 * @since 2014-05-31
 	 */
 	@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
-	@SuppressWarnings({ "static-method", "javadoc" })//
+	@SuppressWarnings({ "static-method", "javadoc", "boxing" })//
 	public static class TEST {
+		@Test public void asListSimple() {
+			final List<Integer> is = As.list(12, 13, 14);
+			assertEquals(Box.it(12), is.get(0));
+			assertEquals(Box.it(13), is.get(1));
+			assertEquals(Box.it(14), is.get(2));
+			assertEquals(3, is.size());
+		}
 		@Test public void asBitOfFalse() {
 			assertEquals(0, As.bit(false));
 		}
@@ -192,7 +202,7 @@ public enum As {
 		}
 		@Test public void asIntArraySimple() {
 			final int[] is = As.intArray(100, 200, 200, 12, 13, 0);
-			assertArrayEquals(is, As.intArray(As.list(is)));
+			assertArrayEquals(is, As.intArray(As.ingeterList(is)));
 		}
 		@Test public void stringWhenToStringReturnsNull() {
 			assertEquals(NULL, As.string(new Object() {
@@ -201,5 +211,12 @@ public enum As {
 				}
 			}));
 		}
+	}
+	public static String[] strings(final Iterable<? extends Object> os) {
+		final List<String> $ = new ArrayList<>();
+		for (final Object o : os)
+			if (o != null)
+				$.add(o.toString());
+		return $.toArray(new String[$.size()]);
 	}
 }

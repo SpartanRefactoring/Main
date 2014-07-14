@@ -9,7 +9,7 @@ import org.junit.Test;
 
 /**
  * Primality testing and generation of primes.
- * 
+ *
  * @author Yossi Gil
  * @since Mar 1, 2012
  */
@@ -26,16 +26,16 @@ public class Primes {
 	}
 	/**
 	 * Tests for primality.
-	 * 
+	 *
 	 * @param c
 	 *          candidate to experience primality testing
 	 * @return <code><b>true</b></code> <i>iff</i> the parameter is prime.
 	 */
 	public static boolean isPrime(final int c) {
 		return //
-		c < 0 ? isPrime(-c) //
-		    : c <= 1 ? false //
-		        : isPrimeCore(c);
+				c < 0 ? isPrime(-c) //
+						: c <= 1 ? false //
+								: isPrimeCore(c);
 	}
 	public static boolean isPrimeCore(final int c) {
 		for (int d = 2; d * d <= c; d++)
@@ -61,10 +61,9 @@ public class Primes {
 		}
 		@Test public void selfConsistentUntil1000() {
 			final Primes ps = new Primes();
-			for (int c = 0; c < 1000; ++c) {
+			for (int c = 0; c < 1000; ++c)
 				if (isPrime(c))
 					assertEquals(c, ps.next());
-			}
 		}
 		@Test public void isPrimeOf0() {
 			assertFalse(isPrime(0));

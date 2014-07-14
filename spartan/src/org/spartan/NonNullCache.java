@@ -10,7 +10,7 @@ import org.junit.Test;
  * A class for lazy, memoizing evaluation of objects of arbitrary type. The
  * evaluation must never return <code><b>null</b>>
  * </b>.
- * 
+ *
  * @param <T>
  *          some arbitrary type
  * @author Yossi Gil
@@ -25,14 +25,14 @@ public abstract class NonNullCache<T> {
 	 * This function is to be implemented by clients, giving a method for
 	 * computing the cached value. This class protects this function, guaranteeing
 	 * that it would only be called once.
-	 * 
+	 *
 	 * @return the value to be cached
 	 */
 	protected abstract T __();
 	/**
 	 * Compute the cached value, either by looking up the memoized valued, or by
 	 * actual computation
-	 * 
+	 *
 	 * @return the cached value
 	 */
 	public T value() {

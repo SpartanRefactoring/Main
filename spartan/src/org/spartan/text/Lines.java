@@ -15,10 +15,10 @@ import org.spartan.As;
  * gathering obey the rule that a line is a {@link String} which does not
  * contain the end-of-line marker, while the text a strings in which all lines,
  * including the last, are terminated by the end-of-line marker.
- * 
+ *
  * @author Yossi Gil
  * @since Jul 7, 2014
- * 
+ *
  */
 public enum Lines {
 	// No enum values in this fake module
@@ -42,6 +42,9 @@ public enum Lines {
 			$.append(line).append(END_OF_LINE_MARKER);
 		return As.string($);
 	}
+	public static int count(final @Nullable String text) {
+		return Lines.scatter(text).length;
+	}
 	/**
 	 * A longer and more meaningful name for the array of length zero with
 	 * {@String} elements.
@@ -52,7 +55,7 @@ public enum Lines {
 	 * for the containing class. Note the naming convention: a) names of test
 	 * methods do not use are not prefixed by "test". This prefix is redundant. b)
 	 * test methods begin with the name of the method they check.
-	 * 
+	 *
 	 * @author Yossi Gil
 	 * @since 2014-05-31
 	 */
@@ -61,6 +64,21 @@ public enum Lines {
 	public static class TEST {
 		@Test public void scatterSanity() {
 			assertEquals(1, Lines.scatter("A").length);
+		}
+		@Test public void countEmpty() {
+			assertEquals(0, count(""));
+		}
+		@Test public void countNewLine() {
+			assertEquals(0, count("\n"));
+		}
+		@Test public void countOneLine() {
+			assertEquals(1, count("A"));
+		}
+		@Test public void countTwo() {
+			assertEquals(2, count("A\nB\n"));
+		}
+		@Test public void countTwoVariant() {
+			assertEquals(2, count("A\nB"));
 		}
 	}
 }
