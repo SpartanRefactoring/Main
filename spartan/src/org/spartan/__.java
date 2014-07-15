@@ -212,6 +212,13 @@ public enum __ {
 	}
 	public static class Applicator<F, T> {
 		private final Function<F, T> function;
+		/**
+		 * Instantiates this class
+		 *
+		 * @param function
+		 *          which function to apply?
+		 *
+		 */
 		public Applicator(final Function<F, T> function) {
 			this.function = function;
 		}
