@@ -24,7 +24,8 @@ import org.spartan.iterables.PureIterator;
  *
  */
 public enum As {
-	// No values in an 'enum' a name space for a collection of 'static' functions.
+	// No values in an 'enum' which serves as a name space for a collection of
+	// 'static' functions.
 	;
 	/**
 	 * The string returned when 'conversion to string' is applied to a
@@ -38,8 +39,8 @@ public enum As {
 	 *          some arbitrary type
 	 * @param $
 	 *          some sequence of values of the type parameter
-	 * @return the parameters, organized as an array with entries whose type is
-	 *         the type parameter
+	 * @return the parameter, organized as an array with entries whose type is the
+	 *         type parameter
 	 */
 	@SafeVarargs public static <T> T[] array(final T... $) {
 		return $;
@@ -113,9 +114,6 @@ public enum As {
 		final int[] $ = new int[is.size()];
 		for (int i = 0; i < $.length; i++)
 			$[i] = is.get(i).intValue();
-		return $;
-	}
-	public static <T> Object[] objectsArray(final T[] $) {
 		return $;
 	}
 	/**
@@ -212,6 +210,13 @@ public enum As {
 			}));
 		}
 	}
+	/**
+	 * Converts an {@link Iterable} into an array of {@link String}.
+	 *
+	 * @param os
+	 *          what needs to be converted
+	 * @return the parameter, each converted to a {@link String}
+	 */
 	public static String[] strings(final Iterable<? extends Object> os) {
 		final List<String> $ = new ArrayList<>();
 		for (final Object o : os)
