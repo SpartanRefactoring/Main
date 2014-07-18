@@ -210,6 +210,14 @@ public enum __ {
 		ts[i] = ts[j];
 		ts[j] = t;
 	}
+	/**
+	 * Reifies the notion of a function
+	 * 
+	 * @author Yossi Gil
+	 *
+	 * @param <F>
+	 * @param <T>
+	 */
 	public static class Applicator<F, T> {
 		private final Function<F, T> function;
 		/**
