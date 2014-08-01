@@ -89,7 +89,6 @@ public class LCS {
 	public static class TEST {
 		/**
 		 * Dumb implementation, yeah, I know. --yg.
-		 *
 		 */
 		private static String[] chars2Lines(final String s) {
 			final StringBuilder $ = new StringBuilder();

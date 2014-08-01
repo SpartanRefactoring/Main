@@ -20,8 +20,7 @@ import org.junit.Test;
  * @see PureIterator
  * @author Yossi Gil
  * @since 2014-06-03
- * @param <T>
- *          some arbitrary type
+ * @param <T> some arbitrary type
  */
 public abstract class PureIterator<T> implements Iterator<T> {
 	/**

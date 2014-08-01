@@ -27,8 +27,7 @@ public class Primes {
 	/**
 	 * Tests for primality.
 	 *
-	 * @param c
-	 *          candidate to experience primality testing
+	 * @param c candidate to experience primality testing
 	 * @return <code><b>true</b></code> <i>iff</i> the parameter is prime.
 	 */
 	public static boolean isPrime(final int c) {

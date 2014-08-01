@@ -21,7 +21,6 @@ import org.spartan.iterables.PureIterator;
  *
  * @author Yossi Gil
  * @since Jul 8, 2014
- *
  */
 public enum As {
 	// No values in an 'enum' which serves as a name space for a collection of
@@ -35,10 +34,8 @@ public enum As {
 	/**
 	 * Converts a sequence of values into an array.
 	 *
-	 * @param <T>
-	 *          some arbitrary type
-	 * @param $
-	 *          some sequence of values of the type parameter
+	 * @param <T> some arbitrary type
+	 * @param $ some sequence of values of the type parameter
 	 * @return the parameter, organized as an array with entries whose type is the
 	 *         type parameter
 	 */
@@ -48,8 +45,7 @@ public enum As {
 	/**
 	 * Converts a boolean into a bit value
 	 *
-	 * @param $
-	 *          some boolean value
+	 * @param $ some boolean value
 	 * @return 1 if the parameter is true, 0 otherwise
 	 */
 	public static int bit(final boolean $) {
@@ -58,8 +54,7 @@ public enum As {
 	/**
 	 * C like conversion of a reference to an {@link Object} into a 0/1 bit.
 	 *
-	 * @param o
-	 *          some object
+	 * @param o some object
 	 * @return <code>0</code> if the parameter is <code><b>null/b></code>.
 	 *         <code>1</code> otherwise.
 	 * @see As#bit(Object)
@@ -71,8 +66,7 @@ public enum As {
 	 * Converts a sequence of <code><b>int</b></code> values into a {@link List}
 	 * of non-<code><b>null</b></code> {@link Integer}s.
 	 *
-	 * @param is
-	 *          what to covert
+	 * @param is what to covert
 	 * @return the parameter, converted to the {@link List} of non-
 	 *         <code><b>int</b></code> {@link Integer}s form.
 	 */
@@ -85,9 +79,7 @@ public enum As {
 	/**
 	 * Converts a sequence of integer values into an array.
 	 *
-	 *
-	 * @param $
-	 *          some sequence of values of the type parameter
+	 * @param $ some sequence of values of the type parameter
 	 * @return the parameters, organized as an array with entries whose type is
 	 *         the type parameter
 	 */
@@ -98,8 +90,7 @@ public enum As {
 	 * Return a compact representation of a list of {@link Integer}s as an array
 	 * of type code><b>int</b></code>.
 	 *
-	 * @param is
-	 *          the list to be converted, none of the elements in it can be
+	 * @param is the list to be converted, none of the elements in it can be
 	 *          code><b>null</b></code>
 	 * @return an array of code><b>int</b></code>. representing the input.
 	 */
@@ -112,10 +103,8 @@ public enum As {
 	/**
 	 * Creates an iterable for an array of objects
 	 *
-	 * @param <T>
-	 *          an arbitrary type
-	 * @param ts
-	 *          what to iterate on
+	 * @param <T> an arbitrary type
+	 * @param ts what to iterate on
 	 * @return an {@link Iterable} over the parameter
 	 */
 	@SafeVarargs public static <T> PureIterable.Sized<T> iterable(final T... ts) {
@@ -139,10 +128,8 @@ public enum As {
 	/**
 	 * Creates an iterable for an array of objects
 	 *
-	 * @param <T>
-	 *          an arbitrary type
-	 * @param ts
-	 *          what to iterate on
+	 * @param <T> an arbitrary type
+	 * @param ts what to iterate on
 	 * @return an {@link Iterable} over the parameter
 	 */
 	@SafeVarargs public static <T> PureIterator<T> iterator(final T... ts) {
@@ -152,10 +139,8 @@ public enum As {
 	 * Converts an {@link Iterable} of a given type into a {@link List} of values
 	 * of this type.
 	 *
-	 * @param <T>
-	 *          type of items to be converted
-	 * @param $
-	 *          what to convert
+	 * @param <T> type of items to be converted
+	 * @param $ what to convert
 	 * @return the parameter, converted to the {@link List} of the given type
 	 */
 	public static <T> List<T> list(final Iterable<? extends T> $) {
@@ -165,10 +150,8 @@ public enum As {
 	 * Converts a sequence of objects of a given type into a {@link List} of
 	 * values
 	 *
-	 * @param <T>
-	 *          type of objects to be converted
-	 * @param $
-	 *          what to covert
+	 * @param <T> type of objects to be converted
+	 * @param $ what to covert
 	 * @return the parameter, converted into a {@link List}
 	 */
 	@SafeVarargs public static <T> List<T> list(final T... $) {
@@ -177,10 +160,8 @@ public enum As {
 	/**
 	 * Converts a sequence of objects of a given type into a {@link Set} of values
 	 *
-	 * @param <T>
-	 *          type of objects to be converted
-	 * @param $
-	 *          what to covert
+	 * @param <T> type of objects to be converted
+	 * @param $ what to covert
 	 * @return the parameter, converted into a {@link Set}
 	 */
 	@SafeVarargs public static <T> Set<? extends T> set(final T... $) {
@@ -190,8 +171,7 @@ public enum As {
 	 * Converts a value, which can be either a <code><b>null</b></code> or
 	 * references to valid instances, into a {@link NonNull}
 	 *
-	 * @param $
-	 *          some value
+	 * @param $ some value
 	 * @return the parameter, after bing to a non-null string.
 	 */
 	public static String string(@Nullable final Object $) {
@@ -201,8 +181,7 @@ public enum As {
 	 * Converts a {@link String}, which can be either a <code><b>null</b></code>
 	 * or an actual String, into a {@link NonNull} String.
 	 *
-	 * @param $
-	 *          some value
+	 * @param $ some value
 	 * @return the parameter, after bing to a non-null string.
 	 */
 	public static String string(@Nullable final String $) {
@@ -211,8 +190,7 @@ public enum As {
 	/**
 	 * Converts an {@link Iterable} into an array of {@link String}.
 	 *
-	 * @param os
-	 *          what to covert
+	 * @param os what to covert
 	 * @return an array of the parameter values, each converted to i
 	 *         {@link String}
 	 */

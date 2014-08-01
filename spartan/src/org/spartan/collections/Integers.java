@@ -24,9 +24,8 @@ public class Integers {
 	/**
 	 * Instantiate this class, using a given size for the hash table.
 	 *
-	 * @param initialCapacity
-	 *          suggests a hash table size, will be rounded up to the next power
-	 *          of two.
+	 * @param initialCapacity suggests a hash table size, will be rounded up to
+	 *          the next power of two.
 	 */
 	public Integers(final int initialCapacity) {
 		final int capacity = Math.max(MIN_CAPACITY, roundUp(initialCapacity));
@@ -47,8 +46,7 @@ public class Integers {
 	/**
 	 * Determine whether a given value is in this set.
 	 *
-	 * @param n
-	 *          an arbitrary integer
+	 * @param n an arbitrary integer
 	 * @return <code><b>true</b></code> if, and only if, the parameter is
 	 *         contained in this set.
 	 */
@@ -58,8 +56,7 @@ public class Integers {
 	/**
 	 * Check whether an array of integers is contained in this set.
 	 *
-	 * @param ns
-	 *          an array of integers; ; must not be <code><b>null</b></code>.
+	 * @param ns an array of integers; ; must not be <code><b>null</b></code>.
 	 * @return <code><b>true</b></code> if, and only if, all elements in the array
 	 *         are contained in this set
 	 */
@@ -72,8 +69,7 @@ public class Integers {
 	/**
 	 * Check whether this object is disjoint from an array of integers
 	 *
-	 * @param ns
-	 *          an array of of integers; must not be <code><b>null</b></code>.
+	 * @param ns an array of of integers; must not be <code><b>null</b></code>.
 	 * @return <code><b>true</b></code> if, and only if, this object is disjoint
 	 *         from the set of elements in the parameter
 	 */
@@ -98,8 +94,7 @@ public class Integers {
 	/**
 	 * Add an integer to the set, if it is not already there.
 	 *
-	 * @param n
-	 *          an arbitrary integer
+	 * @param n an arbitrary integer
 	 * @return <code><b>this</b>/code>
 	 */
 	public Integers add(final int n) {
@@ -116,8 +111,7 @@ public class Integers {
 	/**
 	 * Add an array of integers to this set, if they are not already in it.
 	 *
-	 * @param ns
-	 *          an arbitrary array of integers; ; must not be
+	 * @param ns an arbitrary array of integers; ; must not be
 	 *          <code><b>null</b></code>.
 	 * @return <code><b>this</b>/code>
 	 */
@@ -129,8 +123,7 @@ public class Integers {
 	/**
 	 * Remove an element from this set, it is in it
 	 *
-	 * @param n
-	 *          some integer to be removed from the set
+	 * @param n some integer to be removed from the set
 	 * @return <code><b>this</b>/code>
 	 */
 	public Integers remove(final int n) {
@@ -147,8 +140,7 @@ public class Integers {
 	/**
 	 * Remove an array of integers to this set, if they are in it.
 	 *
-	 * @param ns
-	 *          an array of integers; ; must not be <code><b>null</b></code>.
+	 * @param ns an array of integers; ; must not be <code><b>null</b></code>.
 	 * @return <code><b>this</b>/code>
 	 */
 	public Integers remove(final int... ns) {
@@ -187,8 +179,7 @@ public class Integers {
 	/**
 	 * Find the index in the hash table of the parameter
 	 *
-	 * @param n
-	 *          some integer
+	 * @param n some integer
 	 * @return index of the element if the parameter is in the table, otherwise,
 	 *         -1;
 	 */
@@ -207,8 +198,7 @@ public class Integers {
 	 * Find the index in the hash table into which the parameter could be
 	 * inserted.
 	 *
-	 * @param n
-	 *          some integer
+	 * @param n some integer
 	 * @return -1 if the parameter is in the table already, otherwise, the index
 	 *         at which it could be safely inserted.
 	 */
@@ -228,8 +218,7 @@ public class Integers {
 	 * resize internal storage to the specified capacity, which must be a power of
 	 * two.
 	 *
-	 * @param newCapacity
-	 *          new initialCapacity for the internal array
+	 * @param newCapacity new initialCapacity for the internal array
 	 * @return <code><b>this</b>/code>
 	 */
 	protected Integers rehash(final int newCapacity) {
@@ -251,8 +240,7 @@ public class Integers {
 		return this;
 	}
 	/**
-	 * @param capacity
-	 *          new hash table size
+	 * @param capacity new hash table size
 	 */
 	protected void subclassReset(final int capacity) {
 		//

@@ -18,7 +18,6 @@ import org.spartan.As;
  *
  * @author Yossi Gil
  * @since Jul 7, 2014
- *
  */
 public enum Lines {
 	// No enum values in this fake module
@@ -29,7 +28,6 @@ public enum Lines {
 	// TODO: Make this configurable?
 	// TODO: Default value should be computed from system properties
 	public static final String END_OF_LINE_MARKER = "\n";
-
 	public static String[] scatter(final @Nullable String text) {
 		return text == null || text.isEmpty() ? NO_LINES : cantBeNull(text.split(END_OF_LINE_MARKER));
 	}

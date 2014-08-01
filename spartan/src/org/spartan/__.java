@@ -18,7 +18,6 @@ import org.spartan.__.FoundHandleForT.FoundHandleForInt;
  *
  * @author Yossi Gil
  * @since Jul 7, 2014
- *
  */
 public enum __ {
 	// No values in an 'enum' used as name space for a collection of 'static'
@@ -79,10 +78,8 @@ public enum __ {
 	 * does not have it. Doing so a is plain clutter. Since the compiler cannot assist you,
 	 * you will have to be on the guard.
 	 *
-	 * @param <T>
-	 *          some arbitrary type
-	 * @param $
-	 *          an instance of the type parameter
+	 * @param <T> some arbitrary type
+	 * @param $ an instance of the type parameter
 	 * @return its parameter, after verifying that it is not <code><b>null</b>
 	 *         </code>
 	 * @see #mustBeNull(Object)
@@ -94,10 +91,8 @@ public enum __ {
 	/**
 	 * Determine if a string contains any of a list of patterns.
 	 *
-	 * @param text
-	 *          string to be tested
-	 * @param patterns
-	 *          a list of substrings
+	 * @param text string to be tested
+	 * @param patterns a list of substrings
 	 * @return tree iff the the first parameter contains any of the substrings
 	 *         found in the second parameter
 	 */
@@ -117,8 +112,7 @@ public enum __ {
 	 * Determine whether a <code><b>null</b></code> occurs in a sequence of
 	 * objects
 	 *
-	 * @param os
-	 *          an unknown number of objects
+	 * @param os an unknown number of objects
 	 * @return <code><b>null</b></code> <i>iff</i> one of the parameters is
 	 *         <code><b>null</b></code>
 	 */
@@ -131,11 +125,8 @@ public enum __ {
 	/**
 	 * Computes the maximum of two or more integers.
 	 *
-	 * @param a
-	 *          some integer
-	 * @param is
-	 *          additional
-	 *
+	 * @param a some integer
+	 * @param is additional
 	 * @return the largest of the parameters
 	 */
 	public static int max(final int a, final int... is) {
@@ -147,11 +138,8 @@ public enum __ {
 	/**
 	 * Computes the minimum of two or more integers
 	 *
-	 * @param a
-	 *          some integer
-	 * @param is
-	 *          additional
-	 *
+	 * @param a some integer
+	 * @param is additional
 	 * @return the smallest of the parameters
 	 */
 	public static int min(final int a, final int... is) {
@@ -165,10 +153,8 @@ public enum __ {
 	 * <p>
 	 * This function is the lesser used dual of {@link #cantBeNull(Object)}.
 	 *
-	 * @param <T>
-	 *          some arbitrary type
-	 * @param $
-	 *          an instance of the type parameter which is required to be
+	 * @param <T> some arbitrary type
+	 * @param $ an instance of the type parameter which is required to be
 	 *          <code><b>null</b></code<]>.
 	 * @return
 	 */
@@ -188,8 +174,7 @@ public enum __ {
 	/**
 	 * Computes the square
 	 *
-	 * @param d
-	 *          some number
+	 * @param d some number
 	 * @return the square of the parameter
 	 */
 	public static double sqr(final double d) {
@@ -198,8 +183,7 @@ public enum __ {
 	/**
 	 * Computes the square
 	 *
-	 * @param i
-	 *          some integer
+	 * @param i some integer
 	 * @return the square of the parameter
 	 */
 	public static int sqr(final int i) {
@@ -212,9 +196,8 @@ public enum __ {
 	}
 	/**
 	 * Reifies the notion of a function
-	 * 
-	 * @author Yossi Gil
 	 *
+	 * @author Yossi Gil
 	 * @param <F>
 	 * @param <T>
 	 */
@@ -223,9 +206,7 @@ public enum __ {
 		/**
 		 * Instantiates this class
 		 *
-		 * @param function
-		 *          which function to apply?
-		 *
+		 * @param function which function to apply?
 		 */
 		public Applicator(final Function<F, T> function) {
 			this.function = function;
@@ -248,9 +229,7 @@ public enum __ {
 	public static class FoundHandleForT<T> {
 		final T candidate;
 		/**
-		 * Instantiates this class.
-		 *
-		 * * @param candidate what to search for
+		 * Instantiates this class. * @param candidate what to search for
 		 */
 		public FoundHandleForT(final T candidate) {
 			this.candidate = candidate;
@@ -258,8 +237,7 @@ public enum __ {
 		/**
 		 * Determine if an integer can be found in a list of values
 		 *
-		 * @param ts
-		 *          where to search
+		 * @param ts where to search
 		 * @return true if the the item is found in the list
 		 */
 		@SafeVarargs public final boolean in(final T... ts) {
@@ -273,8 +251,7 @@ public enum __ {
 			/**
 			 * Instantiates this class.
 			 *
-			 * @param candidate
-			 *          what to search for
+			 * @param candidate what to search for
 			 */
 			public FoundHandleForInt(final int candidate) {
 				this.candidate = candidate;
@@ -282,8 +259,7 @@ public enum __ {
 			/**
 			 * Determine if an integer can be found in a list of values
 			 *
-			 * @param is
-			 *          where to search
+			 * @param is where to search
 			 * @return true if the the item is found in the list
 			 */
 			@SafeVarargs public final boolean in(final int... is) {

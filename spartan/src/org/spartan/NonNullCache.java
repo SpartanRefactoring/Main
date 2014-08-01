@@ -11,8 +11,7 @@ import org.junit.Test;
  * evaluation must never return <code><b>null</b>>
  * </b>.
  *
- * @param <T>
- *          some arbitrary type
+ * @param <T> some arbitrary type
  * @author Yossi Gil
  * @since 2014-06-20
  */

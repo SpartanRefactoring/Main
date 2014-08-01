@@ -20,10 +20,8 @@ public enum Iterables {
 	/**
 	 * Counts the number of items in an {@link Iterable}.
 	 *
-	 * @param <T>
-	 *          some arbitrary type
-	 * @param ts
-	 *          some iterable over items whose type is the type parameter
+	 * @param <T> some arbitrary type
+	 * @param ts some iterable over items whose type is the type parameter
 	 * @return the number of items the given iterable yields.
 	 */
 	public static <T> int count(final @Nullable Iterable<T> ts) {

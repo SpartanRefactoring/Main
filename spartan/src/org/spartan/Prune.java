@@ -38,10 +38,8 @@ public enum Prune {
 	/**
 	 * Prune <code><b>null</b></code> elements from a given collection.
 	 *
-	 * @param <T>
-	 *          type of elements in the collection.
-	 * @param ts
-	 *          a collection of values.
+	 * @param <T> type of elements in the collection.
+	 * @param ts a collection of values.
 	 * @return a new collection, containing only those non-
 	 *         <code><b>null</b></code> elements of the parameter, and in the same
 	 *         order. No <code><b>null</b></code> elements are present on this
@@ -57,10 +55,8 @@ public enum Prune {
 	/**
 	 * Prune <code><b>null</b></code> elements from a given array.
 	 *
-	 * @param <T>
-	 *          type of elements in the array.
-	 * @param ts
-	 *          an array of values.
+	 * @param <T> type of elements in the array.
+	 * @param ts an array of values.
 	 * @return a new array, containing precisely those non-
 	 *         <code><b>null</b></code> elements of the parameter, and in the same
 	 *         order. No <code><b>null</b></code> elements are present on this
@@ -76,10 +72,8 @@ public enum Prune {
 	/**
 	 * Shrink an array size to zero.
 	 *
-	 * @param <T>
-	 *          type of elements in the input array.
-	 * @param ts
-	 *          an array of values.
+	 * @param <T> type of elements in the input array.
+	 * @param ts an array of values.
 	 * @return an array of size 0 of elements of type <code>T</code>.
 	 */
 	private static <T> T[] shrink(final T[] ts) {
