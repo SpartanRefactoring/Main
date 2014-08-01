@@ -27,9 +27,14 @@ import org.spartan.iterables.Iterables;
  */
 public enum Separate {
 	;
-	public static String bySpaces(final String... $) {
-		return separateBySpaces(As.iterable($));
-	}
+	/** The comma character */
+	public static final String COMMA = ",";
+	/** The dot character */
+	public static final String DOT = ".";
+	/** The Unix line separator character */
+	public static final String NL = "\n";
+	/** The space character */
+	public static final String SPACE = " ";
 	/**
 	 * A simple program demonstrating the use of this class. This program prints a
 	 * comma separated list of its arguments, where special characters in each
@@ -40,16 +45,35 @@ public enum Separate {
 	public static void main(final String[] args) {
 		System.out.println("Arguments are: " + Separate.these(args).by(", "));
 	}
-	public static String separateBySpaces(final Iterable<String> ss) {
-		final StringBuilder $ = new StringBuilder();
-		for (final String s : ss)
-			$.append(0 == $.length() ? "" : " ").append(s);
-		return As.string($);
+	/**
+	 * Separates a sequence of strings by {@link #SPACE} characters
+	 *
+	 * @param $ what needs to be separated
+	 * @return the parameters, separated by {@link #SPACE}
+	 */
+	public static String bySpaces(final String... $) {
+		return bySpaces(As.iterable($));
 	}
-	public static String separateBySpaces(final Iterator<String> i) {
+	/**
+	 * Separates an {@link Iterable} strings by {@link #SPACE} characters
+	 *
+	 * @param $ what needs to be separated
+	 * @return the parameters, separated by {@link #SPACE}
+	 */
+	public static String bySpaces(final Iterable<String> $) {
+		return As.string($.iterator());
+	}
+	/**
+	 * Separates an {@link Iterable} strings (specified by an {@link Iterator}
+	 * over it by {@link #SPACE} characters
+	 *
+	 * @param ss what needs to be separated
+	 * @return the parameters, separated by {@link #SPACE}
+	 */
+	public static String bySpaces(final Iterator<String> ss) {
 		final StringBuilder $ = new StringBuilder();
-		while (i.hasNext())
-			$.append(0 == $.length() ? "" : " ").append(i.next());
+		while (ss.hasNext())
+			$.append(0 == $.length() ? "" : " ").append(ss.next());
 		return As.string($);
 	}
 	public static SeparationSubject these() {
@@ -124,7 +148,7 @@ public enum Separate {
 	 *         representation of the elements in <code>is</code> separated by
 	 *         <code>between</code>
 	 */
-	public static SeparationSubject these(final int[] is) {
+	private static SeparationSubject these(final int[] is) {
 		return these(Box.it(is));
 	}
 	/**
@@ -187,10 +211,7 @@ public enum Separate {
 		return new SeparationSubject(ts);
 	}
 	public static class SeparationSubject {
-		public static final String COMMA = ",";
-		public static final String DOT = ".";
-		public static final String NL = "\n";
-		public static final String SPACE = " ";
+
 		/**
 		 * Separate elements of a given {@link Iterable} collection by a given
 		 * {@String}
@@ -303,14 +324,14 @@ public enum Separate {
 		/**
 		 * Separates the objects in some order
 		 *
-		 * @return
+		 * @return the
 		 */
 		public String byNothing() {
 			return separateBy(Prune.whites(As.strings(os)), "");
 		}
 	}
 	@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
-	@SuppressWarnings({ "static-method", "javadoc", "boxing", "synthetic-access" })//
+	@SuppressWarnings({ "static-method", "javadoc", "synthetic-access" })//
 	public static class TEST {
 		private static final Function<Object, String> quote = t -> "'" + t + "'";
 		@Test public final void asArrayBetweenChar() {
@@ -447,28 +468,28 @@ public enum Separate {
 			assertEquals("", bySpaces());
 		}
 		@Test public void separateBySpaceEmptyIterator() {
-			assertEquals("", separateBySpaces(Iterables.<String> empty()));
+			assertEquals("", bySpaces(Iterables.<String> empty()));
 		}
 		@Test public void separateBySpaceMultipleIterator() {
-			assertEquals("X Y Z", separateBySpaces(As.iterable("X", "Y", "Z")));
+			assertEquals("X Y Z", bySpaces(As.iterable("X", "Y", "Z")));
 		}
 		@Test public void separateBySpaceOnIteator() {
-			assertEquals("Hello World ", separateBySpaces(As.iterable("Hello", "World ")));
+			assertEquals("Hello World ", bySpaces(As.iterable("Hello", "World ")));
 		}
 		@Test public void separateBySpaceOnSingletonIteator() {
-			assertEquals("Hello", separateBySpaces(Iterables.singleton("Hello")));
+			assertEquals("Hello", bySpaces(Iterables.singleton("Hello")));
 		}
 		@Test public void separateBySpaceSimple() {
 			assertEquals("A", bySpaces("A"));
 		}
 		@Test public void separateBySpaceSingletonIterator() {
-			assertEquals("X", separateBySpaces(Iterables.singleton("X")));
+			assertEquals("X", bySpaces(Iterables.singleton("X")));
 		}
 		@Test public void separateBySpaceTwoStrings() {
 			assertEquals("A B", bySpaces("A", "B"));
 		}
 		@Test public final void spaceIsSpace() {
-			assertEquals(" ", "" + SeparationSubject.SPACE);
+			assertEquals(" ", "" + SPACE);
 		}
 		@Test public final void theseArraySize0() {
 			assertEquals(0, Iterables.count(Separate.these(As.array()).os));
