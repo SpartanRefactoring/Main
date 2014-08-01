@@ -23,6 +23,7 @@ public enum __ {
 	// No values in an 'enum' used as name space for a collection of 'static'
 	// functions.
 	;
+	public static final String QUOTE = "'";
 	public static <T, C extends Collection<T>> C add(final C $, final Iterable<? extends T> ts) {
 		for (final T t : ts)
 			if (t != null)
@@ -162,17 +163,39 @@ public enum __ {
 		assert $ == null;
 		return null;
 	}
+	/**
+	 * Prepend a given <code><b>char</b></code> to a {@link StringBuilder}
+	 *
+	 * @param $ prepend to what
+	 * @param c what needs to be prepended
+	 * @return the {@link StringBuilder} parameter with the
+	 *         <code><b>char</b></code> parameter prepended to it
+	 */
 	public static StringBuilder prepend(final StringBuilder $, final char c) {
 		return cantBeNull($.insert(0, c));
 	}
+	/**
+	 * Prepend a given {@link String} to a {@link StringBuilder}
+	 *
+	 * @param $ prepend to what
+	 * @param s what needs to be prepended
+	 * @return the {@link StringBuilder} parameter with the {@link String}
+	 *         parameter prepended to it
+	 */
 	public static StringBuilder prepend(final StringBuilder $, final String s) {
 		return cantBeNull($.insert(0, s));
 	}
+	/**
+	 * Quote a given {@link String}
+	 *
+	 * @param $ some {@link String} to be quoted
+	 * @return the parameter, quoted
+	 */
 	public static String quote(final @Nullable String $) {
-		return $ != null ? "'" + $ + "'" : "<null reference>";
+		return $ != null ? QUOTE + $ + QUOTE : "<null reference>";
 	}
 	/**
-	 * Computes the square
+	 * Computes the square of a given number
 	 *
 	 * @param d some number
 	 * @return the square of the parameter
@@ -181,7 +204,7 @@ public enum __ {
 		return d * d;
 	}
 	/**
-	 * Computes the square
+	 * Computes the square of a given number
 	 *
 	 * @param i some integer
 	 * @return the square of the parameter
@@ -189,6 +212,14 @@ public enum __ {
 	public static int sqr(final int i) {
 		return i * i;
 	}
+	/**
+	 * Swap the contents of two cells in a given array
+	 *
+	 * @param <T> type of array elements
+	 * @param ts the given array
+	 * @param i index of one cell
+	 * @param j index of another cell
+	 */
 	public static <T> void swap(final T[] ts, final int i, final int j) {
 		final T t = ts[i];
 		ts[i] = ts[j];
