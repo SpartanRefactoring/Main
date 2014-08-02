@@ -20,7 +20,7 @@ import org.spartan.__.FoundHandleForT.FoundHandleForInt;
  * @since Jul 7, 2014
  */
 public enum __ {
-	// No values in an 'enum' used as name space for a collection of 'static'
+	// No values in an 'enum' used as a name space for a collection of 'static'
 	// functions.
 	;
 	public static final String QUOTE = "'";
@@ -127,7 +127,7 @@ public enum __ {
 	 * Computes the maximum of two or more integers.
 	 *
 	 * @param a some integer
-	 * @param is additional
+	 * @param is additional integers
 	 * @return the largest of the parameters
 	 */
 	public static int max(final int a, final int... is) {
@@ -157,7 +157,7 @@ public enum __ {
 	 * @param <T> some arbitrary type
 	 * @param $ an instance of the type parameter which is required to be
 	 *          <code><b>null</b></code<]>.
-	 * @return
+	 * @return the parameter
 	 */
 	public static @Nullable <T> Void mustBeNull(final @Nullable T $) {
 		assert $ == null;
@@ -229,8 +229,8 @@ public enum __ {
 	 * Reifies the notion of a function
 	 *
 	 * @author Yossi Gil
-	 * @param <F>
-	 * @param <T>
+	 * @param <F> the type of the function's argument
+	 * @param <T> the type of the function's result
 	 */
 	public static class Applicator<F, T> {
 		private final Function<F, T> function;
