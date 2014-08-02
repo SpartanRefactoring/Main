@@ -7,7 +7,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import org.spartan.As;
+import org.spartan.Separate;
 
 /**
  * A trivial utility module with functions to scatter a text into an array of
@@ -17,7 +17,7 @@ import org.spartan.As;
  * including the last, are terminated by the end-of-line marker.
  *
  * @author Yossi Gil
- * @since Jul 7, 2014
+ * @since 2014-7-31
  */
 public enum Lines {
 	// No enum values in this fake module
@@ -25,18 +25,33 @@ public enum Lines {
 	/**
 	 * The string which this module considers as line separator.
 	 */
-	// TODO: Make this configurable?
-	// TODO: Default value should be computed from system properties
 	public static final String END_OF_LINE_MARKER = "\n";
+	/**
+	 * Breaks text into lines
+	 *
+	 * @param text some string of characters
+	 * @return the parameter, split into an array if lines
+	 * @see #gather
+	 */
 	public static String[] scatter(final @Nullable String text) {
 		return text == null || text.isEmpty() ? NO_LINES : cantBeNull(text.split(END_OF_LINE_MARKER));
 	}
+	/**
+	 * Builds text from an array of lines
+	 *
+	 * @param lines what needs to be concatenated
+	 * @return the parameters, concatenated together, with
+	 *         {@link #END_OF_LINE_MARKER} separating consecutive arguments
+	 */
 	public static String gather(final String... lines) {
-		final StringBuilder $ = new StringBuilder();
-		for (final String line : lines)
-			$.append(line).append(END_OF_LINE_MARKER);
-		return As.string($);
+		return Separate.these(lines).by(END_OF_LINE_MARKER);
 	}
+	/**
+	 * Counts the number of liens in a given text
+	 *
+	 * @param text count the number of lines in this parameter
+	 * @return the number of lines in the parameter
+	 */
 	public static int count(final @Nullable String text) {
 		return Lines.scatter(text).length;
 	}
