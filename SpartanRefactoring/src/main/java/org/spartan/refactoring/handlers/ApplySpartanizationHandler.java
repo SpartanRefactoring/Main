@@ -26,7 +26,7 @@ public class ApplySpartanizationHandler extends BaseHandler {
     applySafeSpartanizationsTo(getCompilationUnit());
     return null;
   }
-  static void applySafeSpartanizationsTo(final ICompilationUnit cu) {
+  public static void applySafeSpartanizationsTo(final ICompilationUnit cu) {
     for (final Spartanization s : safeSpartanizations)
       try {
         s.setCompilationUnit(cu);

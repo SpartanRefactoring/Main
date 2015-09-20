@@ -761,7 +761,7 @@ public enum Funcs {
     return null;
   }
   private static String shortName(final SimpleType t) {
-    return new JavaTypeNameParser(t.getName().toString(), false).shortName();
+    return new JavaTypeNameParser(t.getName().toString()).shortName();
   }
   private static String shortName(final UnionType t) {
     // TODO Auto-generated method stub

@@ -11,33 +11,30 @@ import org.junit.runners.MethodSorters;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class JavaTypeNameParserTest {
   @Test public void alphaNumericMid() {
-    assertThat(new JavaTypeNameParser("Base64Parser", false).shortName(), is("p"));
+    assertThat(new JavaTypeNameParser("Base64Parser").shortName(), is("p"));
   }
   @Test public void alphaNumericPost() {
-    assertThat(new JavaTypeNameParser("Int32", false).shortName(), is("i"));
+    assertThat(new JavaTypeNameParser("Int32").shortName(), is("i"));
   }
   @Test public void astNode() {
-    assertThat(new JavaTypeNameParser("ASTNode", false).shortName(), is("n"));
+    assertThat(new JavaTypeNameParser("ASTNode").shortName(), is("n"));
   }
   @Test public void httpSecureConnection() {
-    assertThat(new JavaTypeNameParser("HTTPSecureConnection", false).shortName(), is("c"));
+    assertThat(new JavaTypeNameParser("HTTPSecureConnection").shortName(), is("c"));
   }
   @Test public void infixExpression() {
-    assertThat(new JavaTypeNameParser("InfixExpression", false).shortName(), is("e"));
+    assertThat(new JavaTypeNameParser("InfixExpression").shortName(), is("e"));
   }
   @Test public void jUnit() {
-    assertThat(new JavaTypeNameParser("JUnit", false).shortName(), is("u"));
+    assertThat(new JavaTypeNameParser("JUnit").shortName(), is("u"));
   }
   @Test public void onlyLowerCase() {
-    assertThat(new JavaTypeNameParser("onlylowercase", false).shortName(), is("o"));
+    assertThat(new JavaTypeNameParser("onlylowercase").shortName(), is("o"));
   }
   @Test public void onlyUpperCase() {
-    assertThat(new JavaTypeNameParser("ONLYUPPERCASE", false).shortName(), is("o"));
+    assertThat(new JavaTypeNameParser("ONLYUPPERCASE").shortName(), is("o"));
   }
   @Test public void singleChar() {
-    assertThat(new JavaTypeNameParser("Q", false).shortName(), is("q"));
-  }
-  @Test public void collection() {
-    assertThat(new JavaTypeNameParser("List<Expression>", true).shortName(), is("es"));
+    assertThat(new JavaTypeNameParser("Q").shortName(), is("q"));
   }
 }

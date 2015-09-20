@@ -16,7 +16,6 @@ package org.spartan.refactoring.utils;
 public class JavaTypeNameParser {
   /** The type name managed by this instance */
   public final String typeName;
-  private final boolean isCollection;
   /**
    * Instantiates this class
    *
@@ -24,9 +23,8 @@ public class JavaTypeNameParser {
    * @param isCollection denotes whether the type is a collection or a varargs
    *          parameter
    */
-  public JavaTypeNameParser(final String typeName, final boolean isCollection) {
+  public JavaTypeNameParser(final String typeName) {
     this.typeName = typeName;
-    this.isCollection = isCollection;
   }
   /**
    * Returns whether a variable name is a generic variable of the type name
@@ -44,7 +42,7 @@ public class JavaTypeNameParser {
    * @return the type's short name
    */
   public String shortName() {
-    return String.valueOf(Character.toLowerCase(lastName().charAt(0))) + (isCollection ? "s" : "");
+    return String.valueOf(Character.toLowerCase(lastName().charAt(0)));
   }
   @SuppressWarnings("static-method") private String toSingular(final String s) {
     return s == null ? null

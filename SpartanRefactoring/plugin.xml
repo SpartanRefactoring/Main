@@ -350,5 +350,13 @@
          id="id1"
          point="org.eclipse.core.resources.markers">
    </extension>
-   
+      <extension
+         id="org.spartan.refactoring.application"
+         name="Spartan Refactoring Application"
+         point="org.eclipse.core.runtime.applications"
+         class="org.spartan.refactoring.application.Application">
+         <application>
+         <run class="org.spartan.refactoring.application.Application"></run>
+         </application>
+   </extension>
 </plugin>

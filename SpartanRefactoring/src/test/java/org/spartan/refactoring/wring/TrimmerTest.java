@@ -1454,7 +1454,7 @@ import org.spartan.utils.Wrapper;
         .to("while (c) b[i] = f;");
   }
   @Test public void issue57a() {
-    trimming("void m(List<Expression>... expressions) { }").to("void m(List<Expression>... es) {}");
+    trimming("void m(List<Expression>... expressions) { }").to("void m(List<Expression>... ess) {}");
   }
   @Test public void issue57b() {
     trimming("void m(Expression... expression) { }").to("void m(Expression... es) {}");
@@ -1472,13 +1472,13 @@ import org.spartan.utils.Wrapper;
     trimming("X f(List<Expression>... expressions){}").to("X f(List<Expression>... ess){}");
   }
   @Test public void issue58e() {
-    trimming("X f(Expression[] ... expressions){}").to("X f(List<Expression>... ess){}");
+    trimming("X f(Expression[]... expressions){}").to("X f(Expression[]... ess){}");
   }
   @Test public void issue58f() {
-    trimming("X f(Expression[][] ... expressions){}").to("X f(List<Expression>... esss){}");
+    trimming("X f(Expression[][]... expressions){}").to("X f(Expression[][]... esss){}");
   }
   @Test public void issue58g() {
-    trimming("X f(List<Expression[][]> ... expressions){}").to("X f(List<Expression>... essss){}");
+    trimming("X f(List<Expression[][]>... expressions){}").to("X f(List<Expression[][]>... essss){}");
   }
   @Test public void linearTransformation() {
     trimming("plain * the + kludge").to("the*plain+kludge");

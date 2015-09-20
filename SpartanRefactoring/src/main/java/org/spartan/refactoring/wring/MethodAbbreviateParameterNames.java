@@ -9,9 +9,7 @@ import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
-import org.spartan.refactoring.utils.JavaTypeNameParser;
-import org.spartan.refactoring.utils.MethodExplorer;
-import org.spartan.refactoring.utils.Rewrite;
+import org.spartan.refactoring.utils.*;
 
 /**
  * A {@link Wring} that abbreviates the names of variables that have a generic
@@ -31,15 +29,15 @@ public class MethodAbbreviateParameterNames extends Wring<MethodDeclaration> {
     if (vd == null)
       return null;
     for (final SingleVariableDeclaration v : vd) {
-      final JavaTypeNameParser parser = new JavaTypeNameParser(v.getType().toString(), isCollection(v));
+      final JavaTypeNameParser parser = new JavaTypeNameParser(v.getType().toString());
       if (legal(v, d, parser, renameMap.values()))
-        renameMap.put(v.getName(), d.getAST().newSimpleName(parser.shortName()));
+        renameMap.put(v.getName(), d.getAST().newSimpleName(Funcs.shortName(v.getType()) + pluralVariadic(v)));
     }
     if (renameMap.isEmpty())
       return null;
     if (exclude != null)
       exclude.exclude(d);
-    return new Rewrite("Rename parameters in method " + d.getName().toString(), d) {
+    return new Rewrite("Abbreviate parameters in method " + d.getName().toString(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         for (final SimpleName key : renameMap.keySet())
           rename(key, renameMap.get(key), d, r, g);
@@ -55,23 +53,30 @@ public class MethodAbbreviateParameterNames extends Wring<MethodDeclaration> {
   }
   @SuppressWarnings("static-method") private boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m, final JavaTypeNameParser parser,
       final Collection<SimpleName> newNames) {
+    if (Funcs.shortName(d.getType()) == null)
+      return false;
     final MethodExplorer e = new MethodExplorer(m);
     for (final SimpleName n : e.localVariables())
-      if (n.getIdentifier().equals(parser.shortName()))
+      if (n.getIdentifier().equals(Funcs.shortName(d.getType())))
         return false;
     for (final SimpleName n : newNames)
-      if (n.getIdentifier().equals(parser.shortName()))
+      if (n.getIdentifier().equals(Funcs.shortName(d.getType())))
         return false;
     for (final SingleVariableDeclaration n : (List<SingleVariableDeclaration>) m.parameters())
-      if (n.getName().getIdentifier().equals(parser.shortName()))
+      if (n.getName().getIdentifier().equals(Funcs.shortName(d.getType())))
         return false;
-    return !m.getName().getIdentifier().equalsIgnoreCase(parser.shortName());
+    return !m.getName().getIdentifier().equalsIgnoreCase(Funcs.shortName(d.getType()));
   }
-  private boolean suitable(final SingleVariableDeclaration d) {
-    final JavaTypeNameParser parser = new JavaTypeNameParser(d.getType().toString(), isCollection(d));
-    return parser.isGenericVariation(d.getName().getIdentifier()) && !parser.isShort(d.getName().getIdentifier());
+  @SuppressWarnings("static-method") private boolean suitable(final SingleVariableDeclaration d) {
+    final JavaTypeNameParser parser = new JavaTypeNameParser(d.getType().toString());
+    return parser.isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
   }
-  @SuppressWarnings("static-method") private boolean isCollection(final SingleVariableDeclaration d) {
-    return d.isVarargs() || d.getType().isArrayType() || d.getType().isParameterizedType();
+  @SuppressWarnings("static-method") private boolean isShort(final SingleVariableDeclaration d) {
+    if (Funcs.shortName(d.getType()) == null)
+      return false;
+    return (Funcs.shortName(d.getType()) + pluralVariadic(d)).equals(d.getName().getIdentifier());
+  }
+  @SuppressWarnings("static-method") private String pluralVariadic(final SingleVariableDeclaration d) {
+    return d.isVarargs() ? "s" : "";
   }
 }
