@@ -84,7 +84,14 @@ public class CleanupHandler extends BaseHandler {
     }
     throw new ExecutionException("Too many iterations");
   }
-  private static int countSuggestions(final ICompilationUnit u) {
+  /**
+   * Returns the number of Spartanization suggestions available for this
+   * compilation unit
+   *
+   * @param u JD
+   * @return the number of suggestions
+   */
+  public static int countSuggestions(final ICompilationUnit u) {
     int $ = 0;
     for (final Spartanization s : ApplySpartanizationHandler.safeSpartanizations) {
       s.setMarker(null);

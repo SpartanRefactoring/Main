@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.PackageDeclaration;
 import org.spartan.refactoring.handlers.ApplySpartanizationHandler;
+import org.spartan.refactoring.handlers.CleanupHandler;
 import org.spartan.utils.FileUtils;
 
 /**
@@ -21,29 +22,84 @@ import org.spartan.utils.FileUtils;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015/09/19
  */
-public class Application implements IApplication {
+@SuppressWarnings("static-method") public class Application implements IApplication {
   IJavaProject javaProject;
   IPackageFragmentRoot srcRoot;
   IPackageFragment pack;
+  boolean optPrintBase64 = false, optDoNotOverwrite = false, optIndividualStatistics = false, optVerbose = false;
+  String optPath;
   @Override public Object start(final IApplicationContext arg0) throws Exception {
-    final String[] args = (String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS);
-    for (final String p : args)
-      System.out.println("Path: " + p + ", Java files found: " + FileUtils.findAllJavaFiles(p).size());
-    final List<String> javaFiles = FileUtils.findAllJavaFiles("/home/mittelman/Corpus/k-9/Current/src/com/fsck/k9/activity");
-    prepareTempIJavaProject();
-    final ICompilationUnit u = openCompilationUnit(javaFiles.get(0));
-    for (int i = 0; i < 20; i++)
-      ApplySpartanizationHandler.applySafeSpartanizationsTo(u);
-    FileUtils.writeSourceToFile(javaFiles.get(0), u.getSource());
-    discardTempIProject();
+    if (parseArguments((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS)))
+      return IApplication.EXIT_OK;
+    try {
+      final List<String> javaFiles = FileUtils.findAllJavaFiles(optPath);
+      prepareTempIJavaProject();
+      final int[] roundStats = new int[20];
+      for (final String f : javaFiles) {
+        final ICompilationUnit u = openCompilationUnit(f);
+        for (int i = 0; i < 20; ++i) {
+          final int n = CleanupHandler.countSuggestions(u);
+          if (n == 0)
+            break;
+          roundStats[i] += n;
+          ApplySpartanizationHandler.applySafeSpartanizationsTo(u);
+        }
+        FileUtils.writeSourceToFile(f, u.getSource());
+      }
+      System.out.println("Files processed: " + javaFiles.size());
+      System.out.println("\nTotal modifications made: ");
+      for (int i = 0; i < 20; ++i)
+        System.out.println("    Round #" + (i + 1) + ": " + (i < 9 ? " " : "") + roundStats[i]);
+    } catch (final Exception e) {
+      e.printStackTrace();
+    } finally {
+      discardTempIProject();
+    }
     return IApplication.EXIT_OK;
   }
   @Override public void stop() {
     // TODO Auto-generated method stub
   }
+  void printHelpPrompt() {
+    System.out.println("Spartan Refactoring plugin command line");
+    System.out.println("Usage: eclipse -application org.spartan.refactoring.application -nosplash [OPTIONS] PATH");
+    System.out.println("Executes the Spartan Refactoring Eclipse plug-in from the command line on all the Java source files "
+        + "within the given PATH. Files are spartanized in place by default.");
+    System.out.println("");
+    System.out.println("Options:");
+    System.out.println("  -b    Prints the output in base64");
+    System.out.println("  -n    Writes the spartanized source to a new file (in the same directory as the original source file)");
+    System.out.println("  -e    Display statistics for each file separately");
+    System.out.println("  -v    Be verbose");
+  }
+  boolean parseArguments(final String[] args) {
+    if (args == null || args.length == 0) {
+      printHelpPrompt();
+      return true;
+    }
+    for (final String a : args)
+      switch (a) {
+        case "-b":
+          optPrintBase64 = true;
+          break;
+        case "-n":
+          optDoNotOverwrite = true;
+          break;
+        case "-e":
+          optIndividualStatistics = true;
+          break;
+        case "-v":
+          optVerbose = true;
+          break;
+        default:
+          optPath = a;
+          break;
+      }
+    return optPath == null || false;
+  }
   void prepareTempIJavaProject() {
     try {
-      final IProject proj = ResourcesPlugin.getWorkspace().getRoot().getProject("spartanTemp7");
+      final IProject proj = ResourcesPlugin.getWorkspace().getRoot().getProject("spartanTemp");
       final boolean isNew = !proj.exists();
       if (isNew)
         proj.create(null);
@@ -84,7 +140,7 @@ public class Application implements IApplication {
       return null;
     }
   }
-  @SuppressWarnings("static-method") String getPackageNameFromSource(final String source) {
+  String getPackageNameFromSource(final String source) {
     final ASTParser p = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     p.setSource(source.toCharArray());
     final StringBuilder $ = new StringBuilder();
@@ -98,6 +154,7 @@ public class Application implements IApplication {
   }
   void discardTempIProject() {
     try {
+      javaProject.close();
       javaProject.getProject().delete(true, null);
     } catch (final CoreException e) {
       e.printStackTrace();
