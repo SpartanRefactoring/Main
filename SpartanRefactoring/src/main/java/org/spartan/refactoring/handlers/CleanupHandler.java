@@ -36,7 +36,7 @@ public class CleanupHandler extends BaseHandler {
   static final int MAX_PASSES = 20;
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent e) throws ExecutionException {
     final StringBuilder message = new StringBuilder();
-    final ICompilationUnit u = getCompilationUnit();
+    final ICompilationUnit u = currentCompilationUnit();
     final IJavaProject javaProject = u.getJavaProject();
     message.append("starting at " + u.getElementName() + "\n");
     final List<ICompilationUnit> compilationUnits = getAllCompilationUnits(u);
@@ -54,12 +54,15 @@ public class CleanupHandler extends BaseHandler {
           @Override public void run(final IProgressMonitor pm) {
             pm.beginTask("Spartanizing project '" + javaProject.getElementName() + "' - " + //
                 "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES, compilationUnits.size());
-            for (final ICompilationUnit u : compilationUnits) {
-              applySafeSpartanizationsTo(u);
-              pm.worked(1);
-              pm.subTask(u.getElementName());
-            }
+            run(compilationUnits, pm);
             pm.done();
+          }
+          private void run(final List<ICompilationUnit> us, final IProgressMonitor m) {
+            for (final ICompilationUnit u : us) {
+              applySafeSpartanizationsTo(u);
+              m.worked(1);
+              m.subTask(u.getElementName());
+            }
           }
         });
       } catch (final InvocationTargetException x) {

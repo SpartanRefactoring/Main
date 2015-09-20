@@ -79,7 +79,7 @@ public enum Collect {
       }
     };
   }
-  static ASTVisitor definitionsCollector(final List<SimpleName> into, final Expression e) {
+  static ASTVisitor definitionsCollector(final List<SimpleName> into, final ASTNode e) {
     return new MethodExplorer.IgnoreNestedMethods() {
       @Override public boolean visit(final Assignment a) {
         return consider(left(a));

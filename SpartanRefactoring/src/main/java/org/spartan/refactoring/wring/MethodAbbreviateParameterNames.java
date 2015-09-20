@@ -28,11 +28,9 @@ public class MethodAbbreviateParameterNames extends Wring<MethodDeclaration> {
     final Map<SimpleName, SimpleName> renameMap = new HashMap<>();
     if (vd == null)
       return null;
-    for (final SingleVariableDeclaration v : vd) {
-      final JavaTypeNameParser parser = new JavaTypeNameParser(v.getType().toString());
-      if (legal(v, d, parser, renameMap.values()))
+    for (final SingleVariableDeclaration v : vd)
+      if (legal(v, d, renameMap.values()))
         renameMap.put(v.getName(), d.getAST().newSimpleName(Funcs.shortName(v.getType()) + pluralVariadic(v)));
-    }
     if (renameMap.isEmpty())
       return null;
     if (exclude != null)
@@ -51,7 +49,7 @@ public class MethodAbbreviateParameterNames extends Wring<MethodDeclaration> {
         $.add(d);
     return $.size() != 0 ? $ : null;
   }
-  private static boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m, final JavaTypeNameParser p, final Collection<SimpleName> newNames) {
+  private static boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m, final Collection<SimpleName> newNames) {
     if (Funcs.shortName(d.getType()) == null)
       return false;
     final MethodExplorer e = new MethodExplorer(m);
