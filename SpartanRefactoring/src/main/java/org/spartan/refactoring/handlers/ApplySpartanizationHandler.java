@@ -23,7 +23,7 @@ public class ApplySpartanizationHandler extends BaseHandler {
   static final Spartanization[] safeSpartanizations = { //
       new Trimmer(), };
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent e) {
-    applySafeSpartanizationsTo(getCompilationUnit());
+    applySafeSpartanizationsTo(currentCompilationUnit());
     return null;
   }
   public static void applySafeSpartanizationsTo(final ICompilationUnit cu) {

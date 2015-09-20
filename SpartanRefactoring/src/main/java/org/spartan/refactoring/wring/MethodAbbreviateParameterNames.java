@@ -28,11 +28,9 @@ public class MethodAbbreviateParameterNames extends Wring<MethodDeclaration> {
     final Map<SimpleName, SimpleName> renameMap = new HashMap<>();
     if (vd == null)
       return null;
-    for (final SingleVariableDeclaration v : vd) {
-      final JavaTypeNameParser parser = new JavaTypeNameParser(v.getType().toString());
-      if (legal(v, d, parser, renameMap.values()))
+    for (final SingleVariableDeclaration v : vd)
+      if (legal(v, d, renameMap.values()))
         renameMap.put(v.getName(), d.getAST().newSimpleName(Funcs.shortName(v.getType()) + pluralVariadic(v)));
-    }
     if (renameMap.isEmpty())
       return null;
     if (exclude != null)
@@ -51,8 +49,7 @@ public class MethodAbbreviateParameterNames extends Wring<MethodDeclaration> {
         $.add(d);
     return $.size() != 0 ? $ : null;
   }
-  @SuppressWarnings("static-method") private boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m, final JavaTypeNameParser parser,
-      final Collection<SimpleName> newNames) {
+  private static boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m, final Collection<SimpleName> newNames) {
     if (Funcs.shortName(d.getType()) == null)
       return false;
     final MethodExplorer e = new MethodExplorer(m);
@@ -67,14 +64,12 @@ public class MethodAbbreviateParameterNames extends Wring<MethodDeclaration> {
         return false;
     return !m.getName().getIdentifier().equalsIgnoreCase(Funcs.shortName(d.getType()));
   }
-  @SuppressWarnings("static-method") private boolean suitable(final SingleVariableDeclaration d) {
-    final JavaTypeNameParser parser = new JavaTypeNameParser(d.getType().toString());
-    return parser.isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
+  private boolean suitable(final SingleVariableDeclaration d) {
+    return new JavaTypeNameParser(d.getType().toString()).isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
   }
-  @SuppressWarnings("static-method") private boolean isShort(final SingleVariableDeclaration d) {
-    if (Funcs.shortName(d.getType()) == null)
-      return false;
-    return (Funcs.shortName(d.getType()) + pluralVariadic(d)).equals(d.getName().getIdentifier());
+  private boolean isShort(final SingleVariableDeclaration d) {
+    final String n = Funcs.shortName(d.getType());
+    return n != null && (n + pluralVariadic(d)).equals(d.getName().getIdentifier());
   }
   @SuppressWarnings("static-method") private String pluralVariadic(final SingleVariableDeclaration d) {
     return d.isVarargs() ? "s" : "";

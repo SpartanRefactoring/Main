@@ -1,6 +1,7 @@
 package org.spartan.refactoring.application;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import org.eclipse.core.resources.*;
@@ -14,6 +15,7 @@ import org.eclipse.jdt.core.dom.PackageDeclaration;
 import org.spartan.refactoring.handlers.ApplySpartanizationHandler;
 import org.spartan.refactoring.handlers.CleanupHandler;
 import org.spartan.utils.FileUtils;
+import org.spartan.utils.Wrapper;
 
 /**
  * An {@link IApplication} extension entry point, allowing execution of this
@@ -128,25 +130,19 @@ import org.spartan.utils.FileUtils;
   void setPackage(final String name) throws JavaModelException {
     pack = srcRoot.createPackageFragment(name, false, null);
   }
-  ICompilationUnit openCompilationUnit(final String path) {
-    // TODO Check if source is empty
-    final String source = FileUtils.readSourceFromFile(path);
-    try {
-      final String packageName = getPackageNameFromSource(source);
-      setPackage(packageName);
-      return pack.createCompilationUnit(new File(path).getName(), source, false, null);
-    } catch (final JavaModelException e) {
-      e.printStackTrace();
-      return null;
-    }
+  ICompilationUnit openCompilationUnit(final String path) throws IOException, JavaModelException {
+    final String source = FileUtils.readFromFile(path);
+    final String packageName = getPackageNameFromSource(source);
+    setPackage(packageName);
+    return pack.createCompilationUnit(new File(path).getName(), source, false, null);
   }
   String getPackageNameFromSource(final String source) {
     final ASTParser p = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     p.setSource(source.toCharArray());
-    final StringBuilder $ = new StringBuilder();
+    final Wrapper<String> $ = new Wrapper<>("");
     p.createAST(null).accept(new ASTVisitor() {
       @Override public boolean visit(final PackageDeclaration node) {
-        $.append(node.getName().toString());
+        $.set(node.getName().toString());
         return false;
       }
     });

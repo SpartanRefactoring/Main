@@ -1,11 +1,10 @@
 package org.spartan.refactoring.wring;
 
-import static org.spartan.refactoring.utils.Extract.core;
 import static org.spartan.refactoring.utils.Funcs.*;
 
 import static org.eclipse.jdt.core.dom.Assignment.Operator.ASSIGN;
-import org.eclipse.jdt.core.dom.Assignment;
-import org.eclipse.jdt.core.dom.Statement;
+
+import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
 import org.spartan.refactoring.utils.Extract;
@@ -20,20 +19,28 @@ import org.spartan.refactoring.utils.Is;
  */
 public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assignment> {
   @Override ASTRewrite go(final ASTRewrite r, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
-    if (a.getOperator() != ASSIGN)
+    final ASTNode parent = a.getParent();
+    if (!(parent instanceof Statement))
+      return null;
+    final Expression right = getRight(a);
+    if (right == null)
       return null;
     final Assignment a1 = Extract.assignment(nextStatement);
     if (a1 == null)
       return null;
-    if (a1.getOperator() != ASSIGN)
+    final Expression right1 = getRight(a1);
+    if (right1 == null || !same(right, right1) || !Is.sideEffectFree(right))
       return null;
-    if (!same(core(right(a)), core(right(a1))))
-      return null;
-    if (!Is.sideEffectFree(right(a)))
-      return null;
-    r.remove(Extract.statement(a), g);
-    r.replace(right(a1), duplicate(a), g);
+    r.remove(parent, g);
+    r.replace(right1, duplicate(a), g);
     return r;
+  }
+  static Expression getRight(final Assignment a) {
+    return a.getOperator() != ASSIGN ? null : extractRight(a);
+  }
+  static Expression extractRight(final Assignment a) {
+    final Expression $ = Extract.core(right(a));
+    return !($ instanceof Assignment) || ((Assignment) $).getOperator() != ASSIGN ? $ : extractRight((Assignment) $);
   }
   @Override String description(final Assignment a) {
     return "Consolidate assignment to " + left(a) + " with subsequent similar assignment";

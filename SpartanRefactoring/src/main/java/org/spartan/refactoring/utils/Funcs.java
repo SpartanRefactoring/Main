@@ -488,22 +488,6 @@ public enum Funcs {
   public static ThrowStatement makeThrowStatement(final Expression e) {
     return Subject.operand(e).toThrow();
   }
-  /**
-   * @param t the AST who is to own the new variable declaration fragment
-   * @param r the ASTRewrite for the given AST
-   * @param varName the variable name for the new fragment
-   * @param initalizer the initial value for the new fragment (for the variable)
-   * @return the new variable declaration fragment or null if one of the given
-   *         parameters was null
-   */
-  public static VariableDeclarationFragment makeVariableDeclarationFragment(final AST a, final ASTRewrite r, final SimpleName varName, final Expression initalizer) {
-    if (hasNull(a, r, varName, initalizer))
-      return null;
-    final VariableDeclarationFragment $ = a.newVariableDeclarationFragment();
-    $.setInitializer(frugalDuplicate(initalizer));
-    $.setName(varName.getParent() == null ? varName : (SimpleName) r.createCopyTarget(varName));
-    return $;
-  }
   public static int negationLevel(final Expression e) {
     return e instanceof PrefixExpression ? negationLevel((PrefixExpression) e)
         : e instanceof ParenthesizedExpression ? negationLevel(((ParenthesizedExpression) e).getExpression())
@@ -691,9 +675,6 @@ public enum Funcs {
       if (Is.booleanLiteral($) && b == asBooleanLiteral($).booleanValue())
         return $;
     return null;
-  }
-  private static Expression frugalDuplicate(final Expression e) {
-    return e.getParent() == null ? e : (Expression) copySubtree(e.getAST(), e);
   }
   private static VariableDeclarationFragment getVarDeclFrag(final List<VariableDeclarationFragment> fs, final SimpleName n) {
     for (final VariableDeclarationFragment $ : fs)

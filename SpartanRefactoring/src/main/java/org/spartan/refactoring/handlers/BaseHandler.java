@@ -35,7 +35,7 @@ public abstract class BaseHandler extends AbstractHandler {
    */
   public static List<ICompilationUnit> compilationUnits() {
     try {
-      return Spartanization.getAllProjectCompilationUnits(getCompilationUnit(), new NullProgressMonitor());
+      return Spartanization.getAllProjectCompilationUnits(currentCompilationUnit(), new NullProgressMonitor());
     } catch (final JavaModelException e) {
       e.printStackTrace();
     }
@@ -46,7 +46,7 @@ public abstract class BaseHandler extends AbstractHandler {
    *
    * @return the current {@link ICompilationUnit}
    */
-  public static ICompilationUnit getCompilationUnit() {
+  public static ICompilationUnit currentCompilationUnit() {
     return getCompilationUnit(getCurrentWorkbenchWindow().getActivePage().getActiveEditor());
   }
   /**
@@ -83,7 +83,7 @@ public abstract class BaseHandler extends AbstractHandler {
     return !(s instanceof ITextSelection) ? null : execute((ITextSelection) s);
   }
   private Void execute(final ITextSelection s) throws InterruptedException {
-    return execute(new RefactoringWizardOpenOperation(getWizard(s, getCompilationUnit())));
+    return execute(new RefactoringWizardOpenOperation(getWizard(s, currentCompilationUnit())));
   }
   private Void execute(final RefactoringWizardOpenOperation wop) throws InterruptedException {
     wop.run(getCurrentWorkbenchWindow().getShell(), getDialogTitle());

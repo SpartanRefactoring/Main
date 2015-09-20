@@ -80,11 +80,31 @@ import org.spartan.utils.Wrapper;
   @Test public void actualExampleForSortAddition() {
     trimming("1 + b.statements().indexOf(declarationStmt)").to("");
   }
+  @Test public void assignmentAssignmentVanNew() {
+    trimming("a = new B(); b= new B();").to("");
+  }
   @Test public void assignmentAssignmentVanillaScopeIncludes() {
     included("a = null; b = null;", Assignment.class).in(new AssignmentAndAssignment());
   }
   @Test public void assignmentAssignmentVanilla() {
     trimming("a = null; b= null;").to("b = a = null;");
+  }
+  @Test public void assignmentAssignmentChain1() {
+    trimming("c = a = null; b = null;").to("b = c = a = null;");
+  }
+  @Test public void assignmentAssignmentChain2() {
+    trimming("a = null; b= c = null;").to("b = c = a = null;");
+  }
+  @Test public void assignmentAssignmentChain3() {
+    trimming("a = b = null; c = d = null;").to("c = d = a = b = null;");
+  }
+  @Test public void assignmentAssignmentChain4() {
+    trimming("a1 = a2 = a3 = a4 = null; b1 = b2 = b3 = b4 = b5 = null;")//
+        .to("b1 = b2 = b3 = b4 = b5 = a1 = a2 = a3 = a4 = null;");
+  }
+  @Test public void assignmentAssignmentChain5() {
+    trimming("a1 = (a2 = (a3 = (a4 = null))); b1 = b2 = b3 = ((((b4 = (b5 = null)))));")//
+        .to("b1=b2=b3=((((b4=(b5=a1=(a2=(a3=(a4=null))))))));");
   }
   @Test public void assignmentAssignmentVanilla0() {
     trimming("a = 0; b = 0;").to("b = a = 0;");
@@ -109,7 +129,7 @@ import org.spartan.utils.Wrapper;
       assertNotEquals("Simpification of " + from + " is just reformatting", compressSpaces(peeled), compressSpaces(from));
     assertSimilar(expected, peeled);
   }
-  @Test public void andWithCONSTANT() {
+  @Test public void andWithCLASS_CONSTANT() {
     trimming("(x >> 18) & MASK_BITS").to("");
     trimming("(x >> 18) & MASK_6BITS").to("");
   }
@@ -2826,8 +2846,9 @@ import org.spartan.utils.Wrapper;
         .to("int a=3,b;b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}") //
         .to("int a=3,b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}") //
         .to("int b=5;if(3==4)if(b==3)b=2;else{b=3;b=3;}else if(b==3)b=2;else{b=3*3;b=3;}") //
-        .to("")//
-        ;
+        .to("int b=5;if(3==4)if(b==3)b=2;else{b=b=3;}else if(b==3)b=2;else{b=3*3;b=3;}")//
+        .to("int b=5;if(3==4)b=b==3?2:(b=3);else if(b==3)b=2;else{b=3*3;b=3;}")//
+        .to("");
   }
   @Test public void ternarize45() {
     trimming("if (m.equals(f())==true) if (b==3){ return 3; return 7;}   else    if (b==3){ return 2;}     a=7; ")//
@@ -2922,7 +2943,7 @@ import org.spartan.utils.Wrapper;
     }
     Wrap findWrap() {
       final Wrap $ = Wrap.find(get());
-      assertThat("Cannot quite parse '" + get() + "'; did you forget a semicolon?", $, notNullValue());
+      assertThat("Cannot parse '" + get() + "'; did you forget a semicolon?", $, notNullValue());
       return $;
     }
     private void checkSame() {
@@ -2965,7 +2986,7 @@ import org.spartan.utils.Wrapper;
     private N firstInstance(final ASTNode n) {
       final Wrapper<N> $ = new Wrapper<>();
       n.accept(new ASTVisitor() {
-        @Override public boolean preVisit2(@SuppressWarnings("hiding") final ASTNode n) {
+        @SuppressWarnings("unchecked") @Override public boolean preVisit2(@SuppressWarnings("hiding") final ASTNode n) {
           if (!clazz.isAssignableFrom(n.getClass()))
             return true;
           $.set((N) n);

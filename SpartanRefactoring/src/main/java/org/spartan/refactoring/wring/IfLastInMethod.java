@@ -12,6 +12,14 @@ import org.spartan.refactoring.utils.Extract;
 import org.spartan.refactoring.utils.Is;
 import org.spartan.refactoring.utils.Rewrite;
 
+/**
+ * A {@link Wring} to convert <code><b>if</b> (a) { f(); g(); }</code> into
+ * <code><b>if</b> (!a) return f(); g();</code> provided that this
+ * <code><b>if</b></code> statement is the last statement in a method.
+ *
+ * @author Yossi Gil
+ * @since 2015-09-09
+ */
 public class IfLastInMethod extends Wring<IfStatement> {
   @Override String description(final IfStatement s) {
     return "Invert conditional " + s.getExpression() + " for early return";
