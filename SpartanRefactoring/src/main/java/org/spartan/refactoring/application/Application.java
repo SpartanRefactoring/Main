@@ -46,7 +46,7 @@ import org.spartan.utils.Wrapper;
           roundStats[i] += n;
           ApplySpartanizationHandler.applySafeSpartanizationsTo(u);
         }
-        FileUtils.writeSourceToFile(f, u.getSource());
+        FileUtils.writeToFile(f, u.getSource());
       }
       System.out.println("Files processed: " + javaFiles.size());
       System.out.println("\nTotal modifications made: ");
@@ -97,7 +97,7 @@ import org.spartan.utils.Wrapper;
           optPath = a;
           break;
       }
-    return optPath == null || false;
+    return optPath == null;
   }
   void prepareTempIJavaProject() {
     try {
@@ -146,7 +146,7 @@ import org.spartan.utils.Wrapper;
         return false;
       }
     });
-    return $.toString();
+    return $.get();
   }
   void discardTempIProject() {
     try {
