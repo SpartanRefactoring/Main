@@ -79,7 +79,7 @@ public enum Collect {
       }
     };
   }
-  static ASTVisitor definitionsCollector(final List<SimpleName> into, final ASTNode e) {
+  static ASTVisitor definitionsCollector(final List<SimpleName> into, final ASTNode n) {
     return new MethodExplorer.IgnoreNestedMethods() {
       @Override public boolean visit(final Assignment a) {
         return consider(left(a));
@@ -104,7 +104,7 @@ public enum Collect {
         return true;
       }
       boolean add(final SimpleName candidate) {
-        if (same(candidate, e))
+        if (same(candidate, n))
           into.add(candidate);
         return true;
       }
