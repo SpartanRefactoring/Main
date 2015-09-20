@@ -15,7 +15,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.Test;
 import org.spartan.refactoring.utils.Collect.Searcher;
 
-@SuppressWarnings({ "javadoc" }) public class SearchTest {
+@SuppressWarnings({ "javadoc", "static-method" }) public class SearchTest {
   private final SimpleName n = asSimpleName(e("n"));
   @Test public void awful() {
     assertThat(searcher().in(d("Object n() {\n" + //
@@ -219,7 +219,7 @@ import org.spartan.refactoring.utils.Collect.Searcher;
   @Test public void delarationAndDoLoopEmptyBody() {
     assertThat(nCount("int n; do {  } while (b[i] != n);"), is(0));
   }
-  @SuppressWarnings("static-method") @Test public void delarationAndDoLoopInMethod() {
+  @Test public void delarationAndDoLoopInMethod() {
     final String input = "void f() { int b = 3; do ; while(b != 0);  }";
     final MethodDeclaration d = d(input);
     assertThat(d, iz(input));
@@ -229,7 +229,7 @@ import org.spartan.refactoring.utils.Collect.Searcher;
     assertThat(b, iz("b"));
     assertThat(Collect.usesOf(b).in(d).size(), is(2));
   }
-  @SuppressWarnings("static-method") @Test public void delarationAndDoLoopInMethodWithoutTheDo() {
+  @Test public void delarationAndDoLoopInMethodWithoutTheDo() {
     final String input = "void f() { int b = 3;   }";
     final MethodDeclaration d = d(input);
     assertThat(d, iz(input));
@@ -279,7 +279,7 @@ import org.spartan.refactoring.utils.Collect.Searcher;
         "    S.out.println(n.j);\n" + //
         ""), is(1));
   }
-  @SuppressWarnings("static-method") @Test public void forEnhancedAsParemeter() {
+  @Test public void forEnhancedAsParemeter() {
     final Statement s = s("for (int a: as) return a; ");
     final Block b = (Block) s;
     final EnhancedForStatement s2 = (EnhancedForStatement) b.statements().get(0);
@@ -287,7 +287,7 @@ import org.spartan.refactoring.utils.Collect.Searcher;
     assertThat(a, iz("a"));
     assertThat(Collect.usesOf(a).in(s).size(), is(2));
   }
-  @SuppressWarnings("static-method") @Test public void forEnhancedAsParemeterInMethod() {
+  @Test public void forEnhancedAsParemeterInMethod() {
     final MethodDeclaration d = d("int f() { for (int a: as) return a;}");
     final Block b = d.getBody();
     final EnhancedForStatement s = (EnhancedForStatement) b.statements().get(0);
