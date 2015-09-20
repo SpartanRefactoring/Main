@@ -2986,7 +2986,7 @@ import org.spartan.utils.Wrapper;
     private N firstInstance(final ASTNode n) {
       final Wrapper<N> $ = new Wrapper<>();
       n.accept(new ASTVisitor() {
-        @Override public boolean preVisit2(@SuppressWarnings("hiding") final ASTNode n) {
+        @SuppressWarnings("unchecked") @Override public boolean preVisit2(@SuppressWarnings("hiding") final ASTNode n) {
           if (!clazz.isAssignableFrom(n.getClass()))
             return true;
           $.set((N) n);

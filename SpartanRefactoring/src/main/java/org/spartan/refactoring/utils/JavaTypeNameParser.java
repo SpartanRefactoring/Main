@@ -20,7 +20,7 @@ public class JavaTypeNameParser {
    * Instantiates this class
    *
    * @param typeName the Java type name to parse
-   * @param isCollection denotes whether the type is a collection or a varargs
+   * @param isCollection denotes whether the type is a collection or a variadic
    *          parameter
    */
   public JavaTypeNameParser(final String typeName) {

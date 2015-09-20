@@ -29,7 +29,7 @@ public enum Utils {
   /**
    * Determine whether an {@link Object} is the last in a {@link List}.
    *
-   * @param s JD
+   * @param o JD
    * @param os JD
    * @return <code><b>true</b></code> <i>iff</i> the {@link Object} parameter is
    *         the same as the last element of the {@link List} parameter

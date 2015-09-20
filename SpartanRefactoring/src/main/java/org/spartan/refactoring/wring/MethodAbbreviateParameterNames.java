@@ -51,8 +51,7 @@ public class MethodAbbreviateParameterNames extends Wring<MethodDeclaration> {
         $.add(d);
     return $.size() != 0 ? $ : null;
   }
-  @SuppressWarnings("static-method") private boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m, final JavaTypeNameParser p,
-      final Collection<SimpleName> newNames) {
+  private static boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m, final JavaTypeNameParser p, final Collection<SimpleName> newNames) {
     if (Funcs.shortName(d.getType()) == null)
       return false;
     final MethodExplorer e = new MethodExplorer(m);
@@ -68,10 +67,10 @@ public class MethodAbbreviateParameterNames extends Wring<MethodDeclaration> {
     return !m.getName().getIdentifier().equalsIgnoreCase(Funcs.shortName(d.getType()));
   }
   private boolean suitable(final SingleVariableDeclaration d) {
-    return (new JavaTypeNameParser(d.getType().toString())).isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
+    return new JavaTypeNameParser(d.getType().toString()).isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
   }
   private boolean isShort(final SingleVariableDeclaration d) {
-    String n = Funcs.shortName(d.getType());
+    final String n = Funcs.shortName(d.getType());
     return n != null && (n + pluralVariadic(d)).equals(d.getName().getIdentifier());
   }
   @SuppressWarnings("static-method") private String pluralVariadic(final SingleVariableDeclaration d) {

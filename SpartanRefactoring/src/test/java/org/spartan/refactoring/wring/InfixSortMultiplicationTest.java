@@ -29,7 +29,7 @@ import org.spartan.refactoring.spartanizations.Spartanization;
 import org.spartan.refactoring.utils.ExpressionComparator;
 import org.spartan.refactoring.utils.Extract;
 import org.spartan.refactoring.utils.LiteralParser;
-import org.spartan.refactoring.utils.LiteralParser.Kinds;
+import org.spartan.refactoring.utils.LiteralParser.Types;
 import org.spartan.refactoring.wring.AbstractWringTest.Noneligible;
 import org.spartan.utils.Utils;
 
@@ -65,7 +65,7 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
     assertEquals("f(a,b,c) * f(a,b,c,d)", replacement.toString());
   }
   @Test public void parseOfToken() {
-    assertThat(new LiteralParser(e(" 2  ").toString()).kind(), is(Kinds.INTEGER.ordinal()));
+    assertThat(new LiteralParser(e(" 2  ").toString()).type(), is(Types.INTEGER.ordinal()));
   }
   @Test public void scopeIncludesTrue1() {
     assertTrue(WRING.scopeIncludes(i("2*a")));
