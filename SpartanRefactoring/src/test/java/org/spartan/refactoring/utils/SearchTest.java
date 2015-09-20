@@ -13,7 +13,7 @@ import static org.spartan.refactoring.utils.Into.s;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.Test;
-import org.spartan.refactoring.utils.Collect.Searcher;
+import org.spartan.refactoring.utils.Collect.Collector;
 
 @SuppressWarnings({ "javadoc", "static-method" }) public class SearchTest {
   private final SimpleName n = asSimpleName(e("n"));
@@ -374,7 +374,7 @@ import org.spartan.refactoring.utils.Collect.Searcher;
     assertThat(nCount("final n n = new n(n);"), is(0));
   }
   @Test public void vanilla() {
-    final Searcher findUses = searcher();
+    final Collector findUses = searcher();
     assertThat(findUses, notNullValue());
     assertThat(findUses.in(s("b = n;")).size(), is(1));
   }
@@ -384,7 +384,7 @@ import org.spartan.refactoring.utils.Collect.Searcher;
   private int nCount(final String statement) {
     return searcher().in(s(statement)).size();
   }
-  private Searcher searcher() {
+  private Collector searcher() {
     return Collect.usesOf(n);
   }
 }

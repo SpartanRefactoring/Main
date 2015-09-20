@@ -36,13 +36,13 @@ public class CleanupHandler extends BaseHandler {
   static final int MAX_PASSES = 20;
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent e) throws ExecutionException {
     final StringBuilder message = new StringBuilder();
-    final ICompilationUnit u = currentCompilationUnit();
-    final IJavaProject javaProject = u.getJavaProject();
-    message.append("starting at " + u.getElementName() + "\n");
-    final List<ICompilationUnit> compilationUnits = getAllCompilationUnits(u);
-    message.append("found " + compilationUnits.size() + " compilation units \n");
+    ICompilationUnit currentCompilationUnit = currentCompilationUnit();
+    final IJavaProject javaProject = currentCompilationUnit.getJavaProject();
+    message.append("starting at " + currentCompilationUnit.getElementName() + "\n");
+    final List<ICompilationUnit> us = getAllCompilationUnits(currentCompilationUnit);
+    message.append("found " + us.size() + " compilation units \n");
     final IWorkbench wb = PlatformUI.getWorkbench();
-    final int initialCount = countSuggestions(u);
+    final int initialCount = countSuggestions(currentCompilationUnit);
     message.append("with " + initialCount + " suggestions");
     if (initialCount == 0)
       return announce("No suggestions for '" + javaProject.getElementName() + "' project\n" + message);
@@ -53,16 +53,14 @@ public class CleanupHandler extends BaseHandler {
         ps.busyCursorWhile(new IRunnableWithProgress() {
           @Override public void run(final IProgressMonitor pm) {
             pm.beginTask("Spartanizing project '" + javaProject.getElementName() + "' - " + //
-                "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES, compilationUnits.size());
-            run(compilationUnits, pm);
-            pm.done();
-          }
-          private void run(final List<ICompilationUnit> us, final IProgressMonitor m) {
+                "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES, us.size());
+            final int n = 0;
             for (final ICompilationUnit u : us) {
               applySafeSpartanizationsTo(u);
-              m.worked(1);
-              m.subTask(u.getElementName());
+              pm.worked(1);
+              pm.subTask(u.getElementName() + " " + n + "/" + us.size());
             }
+            pm.done();
           }
         });
       } catch (final InvocationTargetException x) {
@@ -70,7 +68,7 @@ public class CleanupHandler extends BaseHandler {
       } catch (final InterruptedException x) {
         x.printStackTrace();
       }
-      final int finalCount = countSuggestions(u);
+      final int finalCount = countSuggestions(currentCompilationUnit);
       if (finalCount <= 0)
         return announce("Spartanizing '" + javaProject.getElementName() + "' project \n" + //
             "Completed in " + (1 + i) + " passes. \n" + //

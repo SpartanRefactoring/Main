@@ -49,8 +49,8 @@ public enum Collect {
     }
   };
   static final ASTMatcher matcher = new ASTMatcher();
-  public static Searcher definitionsOf(final SimpleName n) {
-    return new Searcher(n) {
+  public static Collector definitionsOf(final SimpleName n) {
+    return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
         for (final ASTNode n : ns)
@@ -59,8 +59,8 @@ public enum Collect {
       }
     };
   }
-  public static Searcher forAllOccurencesExcludingDefinitions(final SimpleName n) {
-    return new Searcher(n) {
+  public static Collector forAllOccurencesExcludingDefinitions(final SimpleName n) {
+    return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
         for (final ASTNode n : ns)
@@ -69,8 +69,8 @@ public enum Collect {
       }
     };
   }
-  public static Searcher usesOf(final SimpleName n) {
-    return new Searcher(n) {
+  public static Collector usesOf(final SimpleName n) {
+    return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
         for (final ASTNode n : ns)
@@ -206,12 +206,12 @@ public enum Collect {
         if (e instanceof SimpleName)
           collectExpression((SimpleName) e);
       }
-      void collectExpression(final SimpleName e) {
-        if (!same(what, e))
+      void collectExpression(final SimpleName n) {
+        if (!same(what, n))
           return;
-        into.add(e);
+        into.add(n);
         if (repeated())
-          into.add(e);
+          into.add(n);
       }
       private boolean add(final Object o) {
         return collect((Expression) o);
@@ -321,10 +321,18 @@ public enum Collect {
     public abstract List<SimpleName> in(ASTNode... ns);
   }
 
-  public abstract static class Searcher {
+  /**
+   * An abstract class to carry out the collection process. Should not be
+   * instantiated or used directly by clients, other than the use as part of
+   * fluent API.
+   * 
+   * @author Yossi Gil
+   * @since 2015-09-06
+   */
+  public abstract static class Collector {
     protected final SimpleName name;
-    Searcher(final SimpleName n) {
-      name = n;
+    Collector(final SimpleName name) {
+      this.name = name;
     }
     public abstract List<SimpleName> in(final ASTNode... ns);
   }
