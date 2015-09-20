@@ -1,10 +1,18 @@
 package org.spartan.refactoring.application;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.File;
+import java.util.List;
 
+import org.eclipse.core.resources.*;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
+import org.eclipse.jdt.core.*;
+import org.eclipse.jdt.core.dom.ASTParser;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.PackageDeclaration;
+import org.spartan.refactoring.handlers.ApplySpartanizationHandler;
+import org.spartan.utils.FileUtils;
 
 /**
  * An {@link IApplication} extension entry point, allowing execution of this
@@ -14,18 +22,85 @@ import org.eclipse.equinox.app.IApplicationContext;
  * @since 2015/09/19
  */
 public class Application implements IApplication {
+  IJavaProject javaProject;
+  IPackageFragmentRoot srcRoot;
+  IPackageFragment pack;
   @Override public Object start(final IApplicationContext arg0) throws Exception {
-    final BufferedReader inpReader = new BufferedReader(new InputStreamReader(System.in));
-    String line;
-    while ((line = inpReader.readLine()) != null) {
-      // Echo the input until "exit" (placeholder code)
-      System.out.println(line);
-      if (line.equals("exit"))
-        break;
-    }
+    final String[] args = (String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS);
+    for (final String p : args)
+      System.out.println("Path: " + p + ", Java files found: " + FileUtils.findAllJavaFiles(p).size());
+    final List<String> javaFiles = FileUtils.findAllJavaFiles("/home/mittelman/Corpus/k-9/Current/src/com/fsck/k9/activity");
+    prepareTempIJavaProject();
+    final ICompilationUnit u = openCompilationUnit(javaFiles.get(0));
+    for (int i = 0; i < 20; i++)
+      ApplySpartanizationHandler.applySafeSpartanizationsTo(u);
+    FileUtils.writeSourceToFile(javaFiles.get(0), u.getSource());
+    discardTempIProject();
     return IApplication.EXIT_OK;
   }
   @Override public void stop() {
     // TODO Auto-generated method stub
+  }
+  void prepareTempIJavaProject() {
+    try {
+      final IProject proj = ResourcesPlugin.getWorkspace().getRoot().getProject("spartanTemp7");
+      final boolean isNew = !proj.exists();
+      if (isNew)
+        proj.create(null);
+      proj.open(null);
+      if (isNew) {
+        final IProjectDescription desc = proj.getDescription();
+        desc.setNatureIds(new String[] { JavaCore.NATURE_ID });
+        proj.setDescription(desc, null);
+      }
+      javaProject = JavaCore.create(proj);
+      final IFolder binFolder = proj.getFolder("bin");
+      final IFolder sourceFolder = proj.getFolder("src");
+      srcRoot = javaProject.getPackageFragmentRoot(sourceFolder);
+      if (isNew) {
+        binFolder.create(false, true, null);
+        sourceFolder.create(false, true, null);
+      }
+      javaProject.setOutputLocation(binFolder.getFullPath(), null);
+      final IClasspathEntry[] buildPath = new IClasspathEntry[1];
+      buildPath[0] = JavaCore.newSourceEntry(srcRoot.getPath());
+      javaProject.setRawClasspath(buildPath, null);
+    } catch (final CoreException e) {
+      e.printStackTrace();
+    }
+  }
+  void setPackage(final String name) throws JavaModelException {
+    pack = srcRoot.createPackageFragment(name, false, null);
+  }
+  ICompilationUnit openCompilationUnit(final String path) {
+    // TODO Check if source is empty
+    final String source = FileUtils.readSourceFromFile(path);
+    try {
+      final String packageName = getPackageNameFromSource(source);
+      setPackage(packageName);
+      return pack.createCompilationUnit(new File(path).getName(), source, false, null);
+    } catch (final JavaModelException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+  @SuppressWarnings("static-method") String getPackageNameFromSource(final String source) {
+    final ASTParser p = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
+    p.setSource(source.toCharArray());
+    final StringBuilder $ = new StringBuilder();
+    p.createAST(null).accept(new ASTVisitor() {
+      @Override public boolean visit(final PackageDeclaration node) {
+        $.append(node.getName().toString());
+        return false;
+      }
+    });
+    return $.toString();
+  }
+  void discardTempIProject() {
+    try {
+      javaProject.getProject().delete(true, null);
+    } catch (final CoreException e) {
+      e.printStackTrace();
+    }
   }
 }
