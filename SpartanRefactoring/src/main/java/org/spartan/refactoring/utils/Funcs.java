@@ -676,9 +676,6 @@ public enum Funcs {
         return $;
     return null;
   }
-  private static Expression frugalDuplicate(final Expression e) {
-    return e.getParent() == null ? e : (Expression) copySubtree(e.getAST(), e);
-  }
   private static VariableDeclarationFragment getVarDeclFrag(final List<VariableDeclarationFragment> fs, final SimpleName n) {
     for (final VariableDeclarationFragment $ : fs)
       if (same(n, $.getName()))
