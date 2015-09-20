@@ -51,7 +51,7 @@ public class MethodAbbreviateParameterNames extends Wring<MethodDeclaration> {
         $.add(d);
     return $.size() != 0 ? $ : null;
   }
-  @SuppressWarnings("static-method") private boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m, final JavaTypeNameParser parser,
+  @SuppressWarnings("static-method") private boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m, final JavaTypeNameParser p,
       final Collection<SimpleName> newNames) {
     if (Funcs.shortName(d.getType()) == null)
       return false;
@@ -67,14 +67,12 @@ public class MethodAbbreviateParameterNames extends Wring<MethodDeclaration> {
         return false;
     return !m.getName().getIdentifier().equalsIgnoreCase(Funcs.shortName(d.getType()));
   }
-  @SuppressWarnings("static-method") private boolean suitable(final SingleVariableDeclaration d) {
-    final JavaTypeNameParser parser = new JavaTypeNameParser(d.getType().toString());
-    return parser.isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
+  private boolean suitable(final SingleVariableDeclaration d) {
+    return (new JavaTypeNameParser(d.getType().toString())).isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
   }
-  @SuppressWarnings("static-method") private boolean isShort(final SingleVariableDeclaration d) {
-    if (Funcs.shortName(d.getType()) == null)
-      return false;
-    return (Funcs.shortName(d.getType()) + pluralVariadic(d)).equals(d.getName().getIdentifier());
+  private boolean isShort(final SingleVariableDeclaration d) {
+    String n = Funcs.shortName(d.getType());
+    return n != null && (n + pluralVariadic(d)).equals(d.getName().getIdentifier());
   }
   @SuppressWarnings("static-method") private String pluralVariadic(final SingleVariableDeclaration d) {
     return d.isVarargs() ? "s" : "";

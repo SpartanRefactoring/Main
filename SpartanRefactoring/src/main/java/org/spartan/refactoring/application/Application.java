@@ -34,7 +34,7 @@ public class Application implements IApplication {
     final List<String> javaFiles = FileUtils.findAllJavaFiles("/home/mittelman/Corpus/k-9/Current/src/com/fsck/k9/activity");
     prepareTempIJavaProject();
     final ICompilationUnit u = openCompilationUnit(javaFiles.get(0));
-    for (int i = 0; i < 20; i++)
+    for (int i = 0; i < 20; ++i)
       ApplySpartanizationHandler.applySafeSpartanizationsTo(u);
     FileUtils.writeToFile(javaFiles.get(0), u.getSource());
     discardTempIProject();

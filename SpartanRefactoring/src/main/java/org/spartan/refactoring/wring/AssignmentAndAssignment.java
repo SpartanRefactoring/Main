@@ -29,28 +29,18 @@ public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assign
     if (a1 == null)
       return null;
     final Expression right1 = getRight(a1);
-    if (right1 == null)
-      return null;
-    if (!same(right, right1))
-      return null;
-    if (!Is.sideEffectFree(right))
+    if (right1 == null || !same(right, right1) || !Is.sideEffectFree(right))
       return null;
     r.remove(parent, g);
     r.replace(right1, duplicate(a), g);
     return r;
   }
   static Expression getRight(final Assignment a) {
-    if (a.getOperator() != ASSIGN)
-      return null;
-    return extractRight(a);
+    return a.getOperator() != ASSIGN ? null : extractRight(a);
   }
   static Expression extractRight(final Assignment a) {
     final Expression $ = Extract.core(right(a));
-    if (!($ instanceof Assignment))
-      return $;
-    if (((Assignment) $).getOperator() != ASSIGN)
-      return $;
-    return extractRight((Assignment) $);
+    return !($ instanceof Assignment) || ((Assignment) $).getOperator() != ASSIGN ? $ : extractRight((Assignment) $);
   }
   @Override String description(final Assignment a) {
     return "Consolidate assignment to " + left(a) + " with subsequent similar assignment";

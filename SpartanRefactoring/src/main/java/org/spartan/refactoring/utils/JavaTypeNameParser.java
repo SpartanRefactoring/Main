@@ -75,7 +75,7 @@ public class JavaTypeNameParser {
   private boolean isUpper(final int i) {
     return Character.isUpperCase(typeName.charAt(i));
   }
-  @SuppressWarnings("static-method") private boolean lowerCaseContains(final String string, final String substring) {
-    return string.toLowerCase().contains(substring.toLowerCase());
+  @SuppressWarnings("static-method") private boolean lowerCaseContains(final String s, final String substring) {
+    return s.toLowerCase().contains(substring.toLowerCase());
   }
 }
