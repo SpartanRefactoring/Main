@@ -491,7 +491,7 @@ public enum Funcs {
   public static int negationLevel(final Expression e) {
     return e instanceof PrefixExpression ? negationLevel((PrefixExpression) e)
         : e instanceof ParenthesizedExpression ? negationLevel(((ParenthesizedExpression) e).getExpression())
-            : e instanceof NumberLiteral ? asBit(((NumberLiteral) e).getToken().startsWith("-")) : 0;
+            : asBit(e instanceof NumberLiteral && ((NumberLiteral) e).getToken().startsWith("-"));
   }
   /**
    * Retrieve next item in a list
@@ -675,6 +675,9 @@ public enum Funcs {
       if (Is.booleanLiteral($) && b == asBooleanLiteral($).booleanValue())
         return $;
     return null;
+  }
+  private static Expression frugalDuplicate(final Expression e) {
+    return e.getParent() == null ? e : (Expression) copySubtree(e.getAST(), e);
   }
   private static VariableDeclarationFragment getVarDeclFrag(final List<VariableDeclarationFragment> fs, final SimpleName n) {
     for (final VariableDeclarationFragment $ : fs)
