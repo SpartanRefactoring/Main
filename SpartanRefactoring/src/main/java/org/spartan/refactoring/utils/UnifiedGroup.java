@@ -127,16 +127,16 @@ class UnionFind {
     sizeOf[root] += sizeOf[child];
     return parentOf[child] = root;
   }
-  public int find(final int n) {
+  public int find(final int i) {
     final int size = parentOf.length;
-    if (n < 0 || n >= size)
-      throw new IndexOutOfBoundsException("Expected 0 to " + size + " but got " + n);
+    if (i < 0 || i >= size)
+      throw new IndexOutOfBoundsException("Expected 0 to " + size + " but got " + i);
     // get the root
-    int $ = n;
+    int $ = i;
     while ($ != parentOf[$])
       $ = parentOf[$];
     // squeeze the path to the root
-    for (int child = n; child != $; child = parentOf[child])
+    for (int child = i; child != $; child = parentOf[child])
       parentOf[child] = $;
     return $;
   }

@@ -18,8 +18,8 @@ import org.spartan.refactoring.utils.*;
  * @since 2015-07-17
  */
 public final class InfixSortAddition extends Wring.InfixSorting {
-  @Override boolean sort(final List<Expression> e) {
-    return ExpressionComparator.ADDITION.sort(e);
+  @Override boolean sort(final List<Expression> es) {
+    return ExpressionComparator.ADDITION.sort(es);
   }
   @Override boolean eligible(final InfixExpression e) {
     return Is.notString(e) && super.eligible(e);

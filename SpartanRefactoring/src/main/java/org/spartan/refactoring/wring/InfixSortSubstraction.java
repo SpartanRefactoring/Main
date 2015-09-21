@@ -19,8 +19,8 @@ import org.spartan.refactoring.utils.ExpressionComparator;
  * @since 2015-07-17
  */
 public final class InfixSortSubstraction extends Wring.InfixSortingOfCDR {
-  @Override boolean sort(final List<Expression> e) {
-    return ExpressionComparator.ADDITION.sort(e);
+  @Override boolean sort(final List<Expression> es) {
+    return ExpressionComparator.ADDITION.sort(es);
   }
   @Override boolean scopeIncludes(final InfixExpression e) {
     return in(e.getOperator(), MINUS);

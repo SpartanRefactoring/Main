@@ -79,23 +79,23 @@ class Aggressive extends AbstractRenamePolicy {
   public Aggressive(final MethodDeclaration inner) {
     super(inner);
   }
-  private static SimpleName bestCandidate(final List<SimpleName> ns, final List<ReturnStatement> rs) {
-    final int bestScore = bestScore(ns, rs);
+  private static SimpleName bestCandidate(final List<SimpleName> ns, final List<ReturnStatement> ss) {
+    final int bestScore = bestScore(ns, ss);
     if (bestScore > 0)
       for (final SimpleName $ : ns)
-        if (bestScore == score($, rs))
-          return noRivals($, ns, rs) ? $ : null;
+        if (bestScore == score($, ss))
+          return noRivals($, ns, ss) ? $ : null;
     return null;
   }
-  private static int bestScore(final List<SimpleName> ns, final List<ReturnStatement> rs) {
+  private static int bestScore(final List<SimpleName> ns, final List<ReturnStatement> ss) {
     int $ = 0;
     for (final SimpleName n : ns)
-      $ = Math.max($, score(n, rs));
+      $ = Math.max($, score(n, ss));
     return $;
   }
-  private static boolean noRivals(final SimpleName candidate, final List<SimpleName> ns, final List<ReturnStatement> rs) {
+  private static boolean noRivals(final SimpleName candidate, final List<SimpleName> ns, final List<ReturnStatement> ss) {
     for (final SimpleName rival : ns)
-      if (rival != candidate && score(rival, rs) >= score(candidate, rs))
+      if (rival != candidate && score(rival, ss) >= score(candidate, ss))
         return false;
     return true;
   }

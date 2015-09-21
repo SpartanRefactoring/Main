@@ -18,8 +18,8 @@ import org.eclipse.jdt.core.dom.*;
   public static Several operands(final Expression... e) {
     return new Several(Arrays.asList(e));
   }
-  public static Several operands(final List<Expression> e) {
-    return new Several(e);
+  public static Several operands(final List<Expression> es) {
+    return new Several(es);
   }
   public static Pair pair(final Expression left, final Expression right) {
     return new Pair(left, right);

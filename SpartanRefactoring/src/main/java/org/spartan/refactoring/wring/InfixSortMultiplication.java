@@ -19,8 +19,8 @@ import org.spartan.refactoring.utils.ExpressionComparator;
  * @since 2015-07-17
  */
 public final class InfixSortMultiplication extends Wring.InfixSorting {
-  @Override boolean sort(final List<Expression> e) {
-    return ExpressionComparator.MULTIPLICATION.sort(e);
+  @Override boolean sort(final List<Expression> es) {
+    return ExpressionComparator.MULTIPLICATION.sort(es);
   }
   @Override boolean scopeIncludes(final InfixExpression e) {
     return in(e.getOperator(), TIMES);

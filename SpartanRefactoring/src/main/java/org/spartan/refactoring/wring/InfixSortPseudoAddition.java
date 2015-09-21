@@ -23,8 +23,8 @@ import org.spartan.refactoring.utils.ExpressionComparator;
  * @since 2015-07-17
  */
 public final class InfixSortPseudoAddition extends Wring.InfixSorting {
-  @Override boolean sort(final List<Expression> e) {
-    return ExpressionComparator.ADDITION.sort(e);
+  @Override boolean sort(final List<Expression> es) {
+    return ExpressionComparator.ADDITION.sort(es);
   }
   @Override boolean scopeIncludes(final InfixExpression e) {
     return in(e.getOperator(), OR, XOR, AND);

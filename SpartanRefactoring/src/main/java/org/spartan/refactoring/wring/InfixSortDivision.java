@@ -18,8 +18,8 @@ import org.spartan.refactoring.utils.ExpressionComparator;
  * @since 2015-09-05
  */
 public final class InfixSortDivision extends Wring.InfixSortingOfCDR {
-  @Override boolean sort(final List<Expression> e) {
-    return ExpressionComparator.MULTIPLICATION.sort(e);
+  @Override boolean sort(final List<Expression> es) {
+    return ExpressionComparator.MULTIPLICATION.sort(es);
   }
   @Override boolean scopeIncludes(final InfixExpression e) {
     return in(e.getOperator(), DIVIDE);
