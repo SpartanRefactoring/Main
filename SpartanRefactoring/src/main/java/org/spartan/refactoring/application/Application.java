@@ -179,8 +179,7 @@ import org.spartan.utils.Wrapper;
   }
   ICompilationUnit openCompilationUnit(final String path) throws IOException, JavaModelException {
     final String source = FileUtils.readFromFile(path);
-    final String packageName = getPackageNameFromSource(source);
-    setPackage(packageName);
+    setPackage(getPackageNameFromSource(source));
     return pack.createCompilationUnit(new File(path).getName(), source, false, null);
   }
   String getPackageNameFromSource(final String source) {
