@@ -83,17 +83,17 @@ import org.spartan.utils.Wrapper;
     System.out.println("  -l       Show the number of lines before and after Spartanization");
     System.out.println("  -r       Show the number of Spartanizaion made in each round");
   }
-  void printLineStatistics(final List<FileStats> files) {
+  void printLineStatistics(final List<FileStats> ss) {
     System.out.println("\nLine differences:");
     if (optIndividualStatistics)
-      for (final FileStats f : files) {
+      for (final FileStats f : ss) {
         System.out.println("\n  " + f.getFileName());
         System.out.println("    Lines before: " + f.getLinesBefore());
         System.out.println("    Lines after: " + f.getLinesAfter());
       }
     else {
       int totalBefore = 0, totalAfter = 0;
-      for (final FileStats f : files) {
+      for (final FileStats f : ss) {
         totalBefore += f.getLinesBefore();
         totalAfter += f.getLinesAfter();
       }
@@ -101,10 +101,10 @@ import org.spartan.utils.Wrapper;
       System.out.println("  Lines after: " + totalAfter);
     }
   }
-  private void printChangeStatistics(final List<FileStats> files) {
+  private void printChangeStatistics(final List<FileStats> ss) {
     System.out.println("\nTotal changes made: ");
     if (optIndividualStatistics)
-      for (final FileStats f : files) {
+      for (final FileStats f : ss) {
         System.out.println("\n  " + f.getFileName());
         for (int i = 0; i < optRounds; ++i)
           System.out.println("    Round #" + (i + 1) + ": " + (i < 9 ? " " : "") + f.getRoundStat(i));
@@ -112,15 +112,13 @@ import org.spartan.utils.Wrapper;
     else
       for (int i = 0; i < optRounds; ++i) {
         int roundSum = 0;
-        for (final FileStats f : files)
+        for (final FileStats f : ss)
           roundSum += f.getRoundStat(i);
         System.out.println("    Round #" + (i + 1) + ": " + (i < 9 ? " " : "") + roundSum);
       }
   }
   String determineOutputFilename(final String path) {
-    if (optDoNotOverwrite)
-      return path.substring(0, path.lastIndexOf('.')) + "_new.java";
-    return path;
+    return !optDoNotOverwrite ? path : path.substring(0, path.lastIndexOf('.')) + "_new.java";
   }
   boolean parseArguments(final List<String> args) {
     if (args == null || args.size() == 0) {
