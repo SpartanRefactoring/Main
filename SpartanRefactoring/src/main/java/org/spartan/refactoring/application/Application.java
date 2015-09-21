@@ -65,7 +65,7 @@ import org.spartan.utils.Wrapper;
     return IApplication.EXIT_OK;
   }
   @Override public void stop() {
-    // TODO Auto-generated method stub
+    // Unused
   }
   void printHelpPrompt() {
     System.out.println("Spartan Refactoring plugin command line");
