@@ -24,6 +24,8 @@ public class MethodAbbreviateParameterNames extends Wring<MethodDeclaration> {
     return d.getName().toString();
   }
   @Override Rewrite make(final MethodDeclaration d, final ExclusionManager exclude) {
+    if (d.isConstructor())
+      return null;
     final List<SingleVariableDeclaration> vd = find(d.parameters());
     final Map<SimpleName, SimpleName> renameMap = new HashMap<>();
     if (vd == null)

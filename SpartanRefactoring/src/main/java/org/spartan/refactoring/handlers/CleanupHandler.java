@@ -87,7 +87,13 @@ public class CleanupHandler extends BaseHandler {
       return null;
     }
   }
-  private static int countSuggestions(final ICompilationUnit u) {
+  /**
+   * Returns the number of Spartanizaion suggestions for this compilation unit
+   * 
+   * @param u JD
+   * @return the number of suggesions available for the compilation unit
+   */
+  public static int countSuggestions(final ICompilationUnit u) {
     int $ = 0;
     for (final Spartanization s : ApplySpartanizationHandler.safeSpartanizations) {
       s.setMarker(null);
