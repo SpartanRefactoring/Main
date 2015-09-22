@@ -10,9 +10,7 @@ import static org.spartan.hamcrest.MatcherAssert.iz;
 import static org.spartan.refactoring.utils.Into.i;
 import static org.spartan.refactoring.utils.Into.s;
 
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.PostfixExpression;
-import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.*;
 import org.junit.Test;
 import org.spartan.refactoring.spartanizations.Wrap;
 

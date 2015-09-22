@@ -2981,7 +2981,8 @@ import org.spartan.utils.Wrapper;
       this.clazz = clazz;
     }
     public OperandToWring<N> in(final Wring<N> w) {
-      assertThat(w.scopeIncludes(findNode(w)), is(true));
+      final N findNode = findNode(w);
+      assertThat(w.scopeIncludes(findNode), is(true));
       return this;
     }
     public OperandToWring<N> notIn(final Wring<N> w) {
@@ -2998,10 +2999,23 @@ import org.spartan.utils.Wrapper;
       assertThat($, notNullValue());
       return $;
     }
-    private N firstInstance(final ASTNode n) {
+    private N firstInstance(final CompilationUnit u) {
       final Wrapper<N> $ = new Wrapper<>();
-      n.accept(new ASTVisitor() {
-        @SuppressWarnings("unchecked") @Override public boolean preVisit2(@SuppressWarnings("hiding") final ASTNode n) {
+      u.accept(new ASTVisitor() {
+        /**
+         * The implementation of the visitation procedure in the JDT seems to be
+         * buggy. Each time we find a node which is an instance of the sought
+         * class, we return false. Hence, we do not anticipate any further calls
+         * to this function after the first such node is found. However, this
+         * does not seem to be the case. So, in the case our wrapper is not
+         * null, we do not carry out any further tests.
+         *
+         * @param n
+         * @return
+         */
+        @SuppressWarnings("unchecked") @Override public boolean preVisit2(final ASTNode n) {
+          if ($.get() != null)
+            return false;
           if (!clazz.isAssignableFrom(n.getClass()))
             return true;
           $.set((N) n);
@@ -3011,4 +3025,14 @@ import org.spartan.utils.Wrapper;
       return $.get();
     }
   }
+  // @Test public void firstInstanceTest() {
+  // final String codeFragment = "a = null; b=null;";
+  // final Wrap w = Wrap.find(codeFragment);
+  // assertThat(w, notNullValue());
+  // final CompilationUnit u = w.intoCompilationUnit(codeFragment);
+  // assertThat(u, notNullValue());
+  // final N $ = firstInstance(u);
+  // assertThat($, notNullValue());
+  // return $;
+  // }
 }

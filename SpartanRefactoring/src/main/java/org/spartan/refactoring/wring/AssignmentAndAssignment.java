@@ -29,7 +29,7 @@ public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assign
     if (a1 == null)
       return null;
     final Expression right1 = getRight(a1);
-    if (right1 == null || !same(right, right1) || !Is.sideEffectFree(right))
+    if (right1 == null || !same(right, right1) || !Is.deterministic(right))
       return null;
     r.remove(parent, g);
     r.replace(right1, duplicate(a), g);
