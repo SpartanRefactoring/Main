@@ -36,7 +36,7 @@ public class CleanupHandler extends BaseHandler {
   static final int MAX_PASSES = 20;
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent e) throws ExecutionException {
     final StringBuilder message = new StringBuilder();
-    ICompilationUnit currentCompilationUnit = currentCompilationUnit();
+    final ICompilationUnit currentCompilationUnit = currentCompilationUnit();
     final IJavaProject javaProject = currentCompilationUnit.getJavaProject();
     message.append("starting at " + currentCompilationUnit.getElementName() + "\n");
     final List<ICompilationUnit> us = getAllCompilationUnits(currentCompilationUnit);
@@ -54,11 +54,11 @@ public class CleanupHandler extends BaseHandler {
           @Override public void run(final IProgressMonitor pm) {
             pm.beginTask("Spartanizing project '" + javaProject.getElementName() + "' - " + //
                 "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES, us.size());
-            final int n = 0;
+            int n = 0;
             for (final ICompilationUnit u : us) {
               applySafeSpartanizationsTo(u);
               pm.worked(1);
-              pm.subTask(u.getElementName() + " " + n + "/" + us.size());
+              pm.subTask(u.getElementName() + " " + ++n + "/" + us.size());
             }
             pm.done();
           }
@@ -89,7 +89,7 @@ public class CleanupHandler extends BaseHandler {
   }
   /**
    * Returns the number of Spartanizaion suggestions for this compilation unit
-   * 
+   *
    * @param u JD
    * @return the number of suggesions available for the compilation unit
    */

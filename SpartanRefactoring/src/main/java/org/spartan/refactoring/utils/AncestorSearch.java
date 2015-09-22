@@ -33,26 +33,6 @@ public abstract class AncestorSearch {
   public static <N extends ASTNode> AncestorSearch forClass(final Class<N> c) {
     return new ByNodeClass(c);
   }
-  public static Iterable<ASTNode> ancestors(final ASTNode n) {
-    return new Iterable<ASTNode>() {
-      @Override public Iterator<ASTNode> iterator() {
-        return new Iterator<ASTNode>() {
-          ASTNode current = n;
-          @Override public boolean hasNext() {
-            return current != null;
-          }
-          @Override public ASTNode next() {
-            final ASTNode $ = current;
-            current = current.getParent();
-            return $;
-          }
-          @Override public void remove() {
-            throw new UnsupportedOperationException();
-          }
-        };
-      }
-    };
-  }
   /**
    * @param n JD
    * @return the closest ancestor whose type matches the given type.

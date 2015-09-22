@@ -58,9 +58,9 @@ public class Range {
    * Find an including range
    *
    * @param rs some arbitrary {@link Range} objects
-   * @return the first {@link Range} object among the parameters that contains
-   *         <code><b>true</b></code>, or <code><b>true</b></code> <i>iff</i>
-   *         <code><b>null</b></code> if not such object can be found.
+   * @return the first {@link Range} object in the parameters that contains this
+   *         instance, or <code><b>null</b></code> if not such value can be
+   *         found.
    */
   public Range findIncludedIn(final Iterable<? extends Range> rs) {
     for (final Range $ : rs)
