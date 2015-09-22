@@ -22,6 +22,8 @@ public final class DeclarationInitializerReturnVariable extends Wring.VariableDe
       final TextEditGroup g) {
     if (initializer == null)
       return null;
+    if (hasAnnotation(f))
+      return null;
     final ReturnStatement s = asReturnStatement(nextStatement);
     if (s == null)
       return null;

@@ -141,7 +141,7 @@ public abstract class Wring<N extends ASTNode> {
   }
 
   static abstract class VariableDeclarationFragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
-    protected static InfixExpression.Operator asInfix(final Assignment.Operator o) {
+    static InfixExpression.Operator asInfix(final Assignment.Operator o) {
       return o == PLUS_ASSIGN ? PLUS
           : o == MINUS_ASSIGN ? MINUS
               : o == TIMES_ASSIGN ? TIMES
@@ -153,6 +153,18 @@ public abstract class Wring<N extends ASTNode> {
                                       : o == LEFT_SHIFT_ASSIGN ? LEFT_SHIFT //
                                           : o == RIGHT_SHIFT_SIGNED_ASSIGN ? RIGHT_SHIFT_SIGNED //
                                               : o == RIGHT_SHIFT_UNSIGNED_ASSIGN ? RIGHT_SHIFT_UNSIGNED : null;
+    }
+    static boolean hasAnnotation(final VariableDeclarationFragment f) {
+      return hasAnnotation((VariableDeclarationStatement) f.getParent());
+    }
+    static boolean hasAnnotation(final VariableDeclarationStatement n) {
+      return hasAnnotation(n.modifiers());
+    }
+    static boolean hasAnnotation(final List<IExtendedModifier> ms) {
+      for (final IExtendedModifier m : ms)
+        if (m.isAnnotation())
+          return true;
+      return false;
     }
     static Expression assignmentAsExpression(final Assignment a) {
       final Operator o = a.getOperator();

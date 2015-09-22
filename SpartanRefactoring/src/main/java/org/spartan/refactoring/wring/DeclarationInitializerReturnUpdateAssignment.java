@@ -23,6 +23,8 @@ public final class DeclarationInitializerReturnUpdateAssignment extends Wring.Va
       final TextEditGroup g) {
     if (initializer == null)
       return null;
+    if (hasAnnotation(f))
+      return null;
     final ReturnStatement s = asReturnStatement(nextStatement);
     if (s == null)
       return null;

@@ -27,6 +27,8 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
       final TextEditGroup g) {
     if (initializer == null)
       return null;
+    if (hasAnnotation(f))
+      return null;
     final Statement s = Extract.statement(f);
     if (s == null)
       return null;

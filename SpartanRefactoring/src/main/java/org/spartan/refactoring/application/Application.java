@@ -134,7 +134,8 @@ import org.spartan.utils.Wrapper;
         if (a.startsWith("-C"))
           optRounds = Integer.parseUnsignedInt(a.substring(2));
       } catch (final NumberFormatException e) {
-        /* Ignore */ }
+        // Ignore 
+      }
       if (a.equals("-V"))
         optVerbose = true;
       if (a.equals("-l"))
