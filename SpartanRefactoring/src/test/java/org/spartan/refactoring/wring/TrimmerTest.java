@@ -43,6 +43,19 @@ import org.spartan.utils.Wrapper;
   public static int countOpportunities(final Spartanization s, final CompilationUnit u) {
     return s.findOpportunities(u).size();
   }
+  @Test public void doNotInlineWithDeclaration() {
+    trimming("  private Class<? extends T> retrieveClazz() throws ClassNotFoundException {\n" + //
+        "    nonnull(className);\n" + //
+        "    @SuppressWarnings(\"unchecked\") final Class<T> $ = (Class<T>) findClass(className);\n" + //
+        "    return $;\n" + //
+        "  }").to("");
+  }
+  @Test public void doNotInlineDeclarationWithAnnotationSimplified() {
+    trimming("" + //
+        "    @SuppressWarnings() int $ = (Class<T>) findClass(className);\n" + //
+        "    return $;\n" + //
+        "  }").to("");
+  }
   @Test public void doNotConsolidateNewArrayActual() {
     trimming("" + //
         "occupied = new boolean[capacity];\n" + //
@@ -3010,8 +3023,8 @@ import org.spartan.utils.Wrapper;
          * does not seem to be the case. So, in the case our wrapper is not
          * null, we do not carry out any further tests.
          *
-         * @param n
-         * @return
+         * @param n the node currently being visited.
+         * @return <code><b>true</b></code> <i>iff</i> the sought node is found.
          */
         @SuppressWarnings("unchecked") @Override public boolean preVisit2(final ASTNode n) {
           if ($.get() != null)
