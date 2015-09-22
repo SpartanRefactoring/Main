@@ -43,6 +43,21 @@ import org.spartan.utils.Wrapper;
   public static int countOpportunities(final Spartanization s, final CompilationUnit u) {
     return s.findOpportunities(u).size();
   }
+  @Test public void doNotConsolidateNewArrayActual() {
+    trimming("" + //
+        "occupied = new boolean[capacity];\n" + //
+        "placeholder = new boolean[capacity];").to("");
+  }
+  @Test public void doNotConsolidateNewArraySimplifiedl() {
+    trimming("" + //
+        "a = new int[1];\n" + //
+        "b = new int[1];").to("");
+  }
+  @Test public void doNotConsolidatePlainNew() {
+    trimming("" + //
+        "a = new A();\n" + //
+        "b = new B();").to("");
+  }
   static String apply(final Trimmer t, final String from) {
     final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(from);
     assertNotNull(u);
