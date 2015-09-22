@@ -13,7 +13,7 @@ import org.spartan.refactoring.utils.Rewrite;
 
 public class IfLastInMethodElseEndingWithEmptyReturn extends Wring<IfStatement> {
   @SuppressWarnings("unused") @Override String description(final IfStatement _) {
-    return "Remove redundant in 'then' branch of last in method if statement ";
+    return "Remove redundant return statement in 'else' branch of if statement that terminates this method";
   }
   @Override Rewrite make(final IfStatement s) {
     final Block b = asBlock(s.getParent());
