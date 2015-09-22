@@ -43,34 +43,6 @@ import org.spartan.utils.Wrapper;
   public static int countOpportunities(final Spartanization s, final CompilationUnit u) {
     return s.findOpportunities(u).size();
   }
-  @Test public void doNotInlineWithDeclaration() {
-    trimming("  private Class<? extends T> retrieveClazz() throws ClassNotFoundException {\n" + //
-        "    nonnull(className);\n" + //
-        "    @SuppressWarnings(\"unchecked\") final Class<T> $ = (Class<T>) findClass(className);\n" + //
-        "    return $;\n" + //
-        "  }").to("");
-  }
-  @Test public void doNotInlineDeclarationWithAnnotationSimplified() {
-    trimming("" + //
-        "    @SuppressWarnings() int $ = (Class<T>) findClass(className);\n" + //
-        "    return $;\n" + //
-        "  }").to("");
-  }
-  @Test public void doNotConsolidateNewArrayActual() {
-    trimming("" + //
-        "occupied = new boolean[capacity];\n" + //
-        "placeholder = new boolean[capacity];").to("");
-  }
-  @Test public void doNotConsolidateNewArraySimplifiedl() {
-    trimming("" + //
-        "a = new int[1];\n" + //
-        "b = new int[1];").to("");
-  }
-  @Test public void doNotConsolidatePlainNew() {
-    trimming("" + //
-        "a = new A();\n" + //
-        "b = new B();").to("");
-  }
   static String apply(final Trimmer t, final String from) {
     final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(from);
     assertNotNull(u);
@@ -99,46 +71,14 @@ import org.spartan.utils.Wrapper;
       assertNotEquals("Simpification of " + from + " is just reformatting", compressSpaces(peeled), compressSpaces(from));
     assertSimilar(expected, peeled);
   }
-  private static Operand trimming(final String from) {
-    return new Operand(from);
-  }
   private static <N extends ASTNode> OperandToWring<N> included(final String from, final Class<N> clazz) {
     return new OperandToWring<>(from, clazz);
   }
+  private static Operand trimming(final String from) {
+    return new Operand(from);
+  }
   @Test public void actualExampleForSortAddition() {
     trimming("1 + b.statements().indexOf(declarationStmt)").to("");
-  }
-  @Test public void assignmentAssignmentVanNew() {
-    trimming("a = new B(); b= new B();").to("");
-  }
-  @Test public void assignmentAssignmentVanillaScopeIncludes() {
-    included("a = null; b = null;", Assignment.class).in(new AssignmentAndAssignment());
-  }
-  @Test public void assignmentAssignmentVanilla() {
-    trimming("a = null; b= null;").to("b = a = null;");
-  }
-  @Test public void assignmentAssignmentChain1() {
-    trimming("c = a = null; b = null;").to("b = c = a = null;");
-  }
-  @Test public void assignmentAssignmentChain2() {
-    trimming("a = null; b= c = null;").to("b = c = a = null;");
-  }
-  @Test public void assignmentAssignmentChain3() {
-    trimming("a = b = null; c = d = null;").to("c = d = a = b = null;");
-  }
-  @Test public void assignmentAssignmentChain4() {
-    trimming("a1 = a2 = a3 = a4 = null; b1 = b2 = b3 = b4 = b5 = null;")//
-        .to("b1 = b2 = b3 = b4 = b5 = a1 = a2 = a3 = a4 = null;");
-  }
-  @Test public void assignmentAssignmentChain5() {
-    trimming("a1 = (a2 = (a3 = (a4 = null))); b1 = b2 = b3 = ((((b4 = (b5 = null)))));")//
-        .to("b1=b2=b3=((((b4=(b5=a1=(a2=(a3=(a4=null))))))));");
-  }
-  @Test public void assignmentAssignmentVanilla0() {
-    trimming("a = 0; b = 0;").to("b = a = 0;");
-  }
-  @Test public void assignmentAssignmentSideEffect() {
-    trimming("a = f(); b= f();").to("");
   }
   @Test public void actualExampleForSortAdditionInContext() {
     final String from = "2 + a < b";
@@ -160,6 +100,38 @@ import org.spartan.utils.Wrapper;
   @Test public void andWithCLASS_CONSTANT() {
     trimming("(x >> 18) & MASK_BITS").to("");
     trimming("(x >> 18) & MASK_6BITS").to("");
+  }
+  @Test public void assignmentAssignmentChain1() {
+    trimming("c = a = null; b = null;").to("b = c = a = null;");
+  }
+  @Test public void assignmentAssignmentChain2() {
+    trimming("a = null; b= c = null;").to("b = c = a = null;");
+  }
+  @Test public void assignmentAssignmentChain3() {
+    trimming("a = b = null; c = d = null;").to("c = d = a = b = null;");
+  }
+  @Test public void assignmentAssignmentChain4() {
+    trimming("a1 = a2 = a3 = a4 = null; b1 = b2 = b3 = b4 = b5 = null;")//
+        .to("b1 = b2 = b3 = b4 = b5 = a1 = a2 = a3 = a4 = null;");
+  }
+  @Test public void assignmentAssignmentChain5() {
+    trimming("a1 = (a2 = (a3 = (a4 = null))); b1 = b2 = b3 = ((((b4 = (b5 = null)))));")//
+        .to("b1=b2=b3=((((b4=(b5=a1=(a2=(a3=(a4=null))))))));");
+  }
+  @Test public void assignmentAssignmentSideEffect() {
+    trimming("a = f(); b= f();").to("");
+  }
+  @Test public void assignmentAssignmentVanilla() {
+    trimming("a = null; b= null;").to("b = a = null;");
+  }
+  @Test public void assignmentAssignmentVanilla0() {
+    trimming("a = 0; b = 0;").to("b = a = 0;");
+  }
+  @Test public void assignmentAssignmentVanillaScopeIncludes() {
+    included("a = null; b = null;", Assignment.class).in(new AssignmentAndAssignment());
+  }
+  @Test public void assignmentAssignmentVanNew() {
+    trimming("a = new B(); b= new B();").to("");
   }
   @Test public void assignmentReturn0() {
     trimming("a = 3; return a;").to("return a = 3;");
@@ -729,6 +701,34 @@ import org.spartan.utils.Wrapper;
   }
   @Test public void delcartionIfAssignmentNotPlain() {
     trimming("int a=0;   if (y) a+=3; ").to("int a = y ? 0 + 3 : 0;");
+  }
+  @Test public void doNotConsolidateNewArrayActual() {
+    trimming("" + //
+        "occupied = new boolean[capacity];\n" + //
+        "placeholder = new boolean[capacity];").to("");
+  }
+  @Test public void doNotConsolidateNewArraySimplifiedl() {
+    trimming("" + //
+        "a = new int[1];\n" + //
+        "b = new int[1];").to("");
+  }
+  @Test public void doNotConsolidatePlainNew() {
+    trimming("" + //
+        "a = new A();\n" + //
+        "b = new B();").to("");
+  }
+  @Test public void doNotInlineDeclarationWithAnnotationSimplified() {
+    trimming("" + //
+        "    @SuppressWarnings() int $ = (Class<T>) findClass(className);\n" + //
+        "    return $;\n" + //
+        "  }").to("");
+  }
+  @Test public void doNotInlineWithDeclaration() {
+    trimming("  private Class<? extends T> retrieveClazz() throws ClassNotFoundException {\n" + //
+        "    nonnull(className);\n" + //
+        "    @SuppressWarnings(\"unchecked\") final Class<T> $ = (Class<T>) findClass(className);\n" + //
+        "    return $;\n" + //
+        "  }").to("");
   }
   @Test public void doNotIntroduceDoubleNegation() {
     trimming("!Y ? null :!Z ? null : F").to("Y&&Z?F:null");
@@ -1389,22 +1389,6 @@ import org.spartan.utils.Wrapper;
     trimming("int[] is = f(); for (int i: is) f(i);")//
         .to("for (int i: f()) f(i);");
   }
-  @Test public void noinliningIntoTryStatement() {
-    trimming("int a  = f(); try { int b = a; } catch (Exception E) {}")//
-        .to("");
-  }
-  @Test public void noinliningIntoTryStatementEvenWithoutSideEffect() {
-    trimming("int a  = f; try { int b = a; } catch (Exception E) {}")//
-        .to("");
-  }
-  @Test public void noinliningIntoSynchronizedStatement() {
-    trimming("int a  = f(); synchronized(this) { int b = a; }")//
-        .to("");
-  }
-  @Test public void noinliningIntoSynchronizedStatementEvenWithoutSideEffect() {
-    trimming("int a  = f; synchronized(this) { int b = a; }")//
-        .to("");
-  }
   @Test public void issue54DoNonSideEffect() {
     trimming("int a  = f; do { b[i] = a; } while (b[i] != a);")//
         .to("do { b[i] = f; } while (b[i] != f);");
@@ -1473,13 +1457,13 @@ import org.spartan.utils.Wrapper;
     trimming("int a  = f(); while (c) b[i] = a;")//
         .to("");
   }
-  @Test public void issue54WhileScopeDoesNotInclude() {
-    included("int a  = f(); while (c) b[i] = a;", VariableDeclarationFragment.class)//
-        .notIn(new DeclarationInitializerStatementTerminatingScope());
-  }
   @Test public void issue54WhileNonSideEffect() {
     trimming("int a  = f; while (c) b[i] = a;")//
         .to("while (c) b[i] = f;");
+  }
+  @Test public void issue54WhileScopeDoesNotInclude() {
+    included("int a  = f(); while (c) b[i] = a;", VariableDeclarationFragment.class)//
+        .notIn(new DeclarationInitializerStatementTerminatingScope());
   }
   @Test public void issue57a() {
     trimming("void m(List<Expression>... expressions) { }").to("void m(List<Expression>... ess) {}");
@@ -1604,6 +1588,22 @@ import org.spartan.utils.Wrapper;
   }
   @Test public void noChange2() {
     trimming("plain + kludge").to("");
+  }
+  @Test public void noinliningIntoSynchronizedStatement() {
+    trimming("int a  = f(); synchronized(this) { int b = a; }")//
+        .to("");
+  }
+  @Test public void noinliningIntoSynchronizedStatementEvenWithoutSideEffect() {
+    trimming("int a  = f; synchronized(this) { int b = a; }")//
+        .to("");
+  }
+  @Test public void noinliningIntoTryStatement() {
+    trimming("int a  = f(); try { int b = a; } catch (Exception E) {}")//
+        .to("");
+  }
+  @Test public void noinliningIntoTryStatementEvenWithoutSideEffect() {
+    trimming("int a  = f; try { int b = a; } catch (Exception E) {}")//
+        .to("");
   }
   @Test public void notOfAnd() {
     trimming("!(A && B)").to("!A || !B");
@@ -2956,6 +2956,11 @@ import org.spartan.utils.Wrapper;
         checkExpected(expected);
       return new Operand(expected);
     }
+    Wrap findWrap() {
+      final Wrap $ = Wrap.find(get());
+      assertThat("Cannot parse '" + get() + "'; did you forget a semicolon?", $, notNullValue());
+      return $;
+    }
     private void checkExpected(final String expected) {
       final Wrap w = findWrap();
       final String wrap = w.on(get());
@@ -2968,11 +2973,6 @@ import org.spartan.utils.Wrapper;
       if (compressSpaces(peeled).equals(compressSpaces(get())))
         assertNotEquals("Trimming of " + get() + "is just reformatting", compressSpaces(peeled), compressSpaces(get()));
       assertSimilar(expected, peeled);
-    }
-    Wrap findWrap() {
-      final Wrap $ = Wrap.find(get());
-      assertThat("Cannot parse '" + get() + "'; did you forget a semicolon?", $, notNullValue());
-      return $;
     }
     private void checkSame() {
       final Wrap w = findWrap();
