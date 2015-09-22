@@ -97,6 +97,18 @@ public class IsTest {
   @Test public void numericLiteralTrue() {
     assertThat(Is.numericLiteral(e("1")), is(true));
   }
+  @Test public void deterministicArray1() {
+    assertThat(Is.deterministic(e("new a[3]")), is(false));
+  }
+  @Test public void deterministicArray2() {
+    assertThat(Is.deterministic(e("new int[] {12,13}")), is(false));
+  }
+  @Test public void deterministicArray3() {
+    assertThat(Is.deterministic(e("new int[] {12,13, i++}")), is(false));
+  }
+  @Test public void deterministicArray4() {
+    assertThat(Is.deterministic(e("new int[f()]")), is(false));
+  }
   @Test public void sideEffectArray1() {
     assertThat(Is.sideEffectFree(e("new a[3]")), is(true));
   }

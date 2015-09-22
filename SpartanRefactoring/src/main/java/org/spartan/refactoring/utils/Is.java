@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
+import org.spartan.utils.Wrapper;
 
 /**
  * An empty <code><b>enum</b></code> for fluent programming. The name should say
@@ -49,31 +50,22 @@ public enum Is {
   public static boolean block(final ASTNode n) {
     return is(n, BLOCK);
   }
+  public static boolean blockEssential(final Statement s) {
+    return blockEssential(asIfStatement(s));
+  }
+  public static boolean blockRequired(final IfStatement s) {
+    return blockRequiredInReplacement(s, s);
+  }
+  public static boolean blockRequired(final Statement s) {
+    final IfStatement s1 = asIfStatement(s);
+    return blockRequiredInReplacement(s1, s1);
+  }
   public static boolean blockRequiredInReplacement(final IfStatement old, final IfStatement newIf) {
     if (newIf == null || old != newIf && elze(old) == null == (elze(newIf) == null))
       return false;
     final IfStatement parent = asIfStatement(parent(old));
     return parent != null && then(parent) == old && (elze(parent) == null || elze(newIf) == null)
         && (elze(parent) != null || elze(newIf) != null || blockRequiredInReplacement(parent, newIf));
-  }
-  public static boolean blockEssential(final Statement s) {
-    return blockEssential(asIfStatement(s));
-  }
-  static boolean blockEssential(final IfStatement s) {
-    if (s == null)
-      return false;
-    final Block b = asBlock(parent(s));
-    if (b == null)
-      return false;
-    final IfStatement parent = asIfStatement(parent(b));
-    return parent != null && then(parent) == b && (elze(parent) == null || elze(s) == null) && (elze(parent) != null || elze(s) != null || blockRequiredInReplacement(parent, s));
-  }
-  public static boolean blockRequired(final Statement s) {
-    final IfStatement s1 = asIfStatement(s);
-    return blockRequiredInReplacement(s1, s1);
-  }
-  public static boolean blockRequired(final IfStatement s) {
-    return blockRequiredInReplacement(s, s);
   }
   /**
    * Determine whether a node is a boolean literal
@@ -84,12 +76,6 @@ public enum Is {
    */
   public static boolean booleanLiteral(final ASTNode n) {
     return is(n, BOOLEAN_LITERAL);
-  }
-  public static boolean negative(final Expression e) {
-    return e.toString().startsWith("-") || e instanceof PrefixExpression && negative((PrefixExpression) e);
-  }
-  public static boolean negative(final PrefixExpression e) {
-    return e.getOperator() == PrefixExpression.Operator.MINUS;
   }
   /**
    * @param e JD
@@ -139,8 +125,8 @@ public enum Is {
    *         whose operator is
    *         {@link org.eclipse.jdt.core.dom.InfixExpression.Operator#CONDITIONAL_OR}
    */
-  public static boolean conditionalOr(final InfixExpression e) {
-    return e != null && e.getOperator() == CONDITIONAL_OR;
+  public static boolean conditionalOr(final Expression e) {
+    return conditionalOr(asInfixExpression(e));
   }
   /**
    * Check whether an expression is a "conditional or" (||)
@@ -150,8 +136,8 @@ public enum Is {
    *         whose operator is
    *         {@link org.eclipse.jdt.core.dom.InfixExpression.Operator#CONDITIONAL_OR}
    */
-  public static boolean conditionalOr(final Expression e) {
-    return conditionalOr(asInfixExpression(e));
+  public static boolean conditionalOr(final InfixExpression e) {
+    return e != null && e.getOperator() == CONDITIONAL_OR;
   }
   /**
    * Determine whether a node is a "specific", i.e., <code><b>null</b></code> or
@@ -195,37 +181,17 @@ public enum Is {
   public static boolean deMorgan(final Operator o) {
     return in(o, CONDITIONAL_AND, CONDITIONAL_OR);
   }
-  /**
-   * Determine whether the 'else' part of an {@link IfStatement} is vacuous.
-   *
-   * @param s JD
-   * @return <code><b>true</b></code> <i>iff</i> there are no non-empty
-   *         statements in the 'else' part of the parameter
-   */
-  public static boolean vacuousElse(final IfStatement s) {
-    return vacuous(elze(s));
-  }
-  /**
-   * Determine whether a statement is an {@link EmptyStatement} or has nothing
-   * but empty statements in it.
-   *
-   * @param s JD
-   * @return <code><b>true</b></code> <i>iff</i> there are no non-empty
-   *         statements in the parameter
-   */
-  public static boolean vacuousThen(final IfStatement s) {
-    return vacuous(then(s));
-  }
-  /**
-   * Determine whether a given {@link Statement} is an {@link EmptyStatement} or
-   * has nothing but empty statements in it.
-   *
-   * @param s JD
-   * @return <code><b>true</b></code> <i>iff</i> there are no non-empty
-   *         statements in the parameter
-   */
-  public static boolean vacuous(final Statement s) {
-    return Extract.statements(s).size() == 0;
+  public static boolean deterministic(final Expression e) {
+    if (!sideEffectFree(e))
+      return false;
+    final Wrapper<Boolean> $ = new Wrapper<>(Boolean.TRUE);
+    e.accept(new ASTVisitor() {
+      @Override public boolean visit(@SuppressWarnings("unused") final ArrayCreation _) {
+        $.set(Boolean.FALSE);
+        return false;
+      }
+    });
+    return $.get().booleanValue();
   }
   /**
    * Determine whether a node is an {@link EmptyStatement}
@@ -353,6 +319,12 @@ public enum Is {
    */
   public static boolean methodInvocation(final ASTNode n) {
     return is(n, METHOD_INVOCATION);
+  }
+  public static boolean negative(final Expression e) {
+    return e.toString().startsWith("-") || e instanceof PrefixExpression && negative((PrefixExpression) e);
+  }
+  public static boolean negative(final PrefixExpression e) {
+    return e.getOperator() == PrefixExpression.Operator.MINUS;
   }
   /**
    * Determine whether a node is an infix expression whose operator is
@@ -596,12 +568,53 @@ public enum Is {
     return Is.oneOf(e, NULL_LITERAL, THIS_EXPRESSION);
   }
   /**
+   * Determine whether a given {@link Statement} is an {@link EmptyStatement} or
+   * has nothing but empty statements in it.
+   *
+   * @param s JD
+   * @return <code><b>true</b></code> <i>iff</i> there are no non-empty
+   *         statements in the parameter
+   */
+  public static boolean vacuous(final Statement s) {
+    return Extract.statements(s).size() == 0;
+  }
+  /**
+   * Determine whether the 'else' part of an {@link IfStatement} is vacuous.
+   *
+   * @param s JD
+   * @return <code><b>true</b></code> <i>iff</i> there are no non-empty
+   *         statements in the 'else' part of the parameter
+   */
+  public static boolean vacuousElse(final IfStatement s) {
+    return vacuous(elze(s));
+  }
+  /**
+   * Determine whether a statement is an {@link EmptyStatement} or has nothing
+   * but empty statements in it.
+   *
+   * @param s JD
+   * @return <code><b>true</b></code> <i>iff</i> there are no non-empty
+   *         statements in the parameter
+   */
+  public static boolean vacuousThen(final IfStatement s) {
+    return vacuous(then(s));
+  }
+  /**
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a variable
    *         declaration statement.
    */
   public static boolean variableDeclarationStatement(final ASTNode n) {
     return is(n, VARIABLE_DECLARATION_STATEMENT);
+  }
+  static boolean blockEssential(final IfStatement s) {
+    if (s == null)
+      return false;
+    final Block b = asBlock(parent(s));
+    if (b == null)
+      return false;
+    final IfStatement parent = asIfStatement(parent(b));
+    return parent != null && then(parent) == b && (elze(parent) == null || elze(s) == null) && (elze(parent) != null || elze(s) != null || blockRequiredInReplacement(parent, s));
   }
   static boolean notStringDown(final Expression e) {
     return notStringSelf(e) || notStringDown(asInfixExpression(e));
