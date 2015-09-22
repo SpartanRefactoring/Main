@@ -1042,7 +1042,7 @@ import org.spartan.utils.Wrapper;
     trimming("  boolean f(final VariableDeclarationStatement n) {\n" + //
         "      return false;\n" + //
         "    }")
-            .to("  boolean hasAnnotation(final VariableDeclarationStatement s) {\n" + //
+            .to("  boolean f(final VariableDeclarationStatement s) {\n" + //
                 "      return false;\n" + //
                 "    }");
   }
