@@ -1025,6 +1025,31 @@ import org.spartan.utils.Wrapper;
   @Test public void ifWithCommonNotInBlockNothingLeft() {
     trimming("for (;;) if (a) {i++;j++;} else { i++;j++; }").to("for(;;){i++;j++;}");
   }
+  @Test public void infiniteLoopBug1() {
+    trimming("static boolean hasAnnotation(final VariableDeclarationFragment f) {\n" + //
+        "      return hasAnnotation((VariableDeclarationStatement) f.getParent());\n" + //
+        "    }").to("");
+  }
+  @Test public void infiniteLoopBug2() {
+    trimming(" static boolean hasAnnotation(final VariableDeclarationStatement n) {\n" + //
+        "      return hasAnnotation(n.modifiers());\n" + //
+        "    }")
+            .to(" static boolean hasAnnotation(final VariableDeclarationStatement s) {\n" + //
+                "      return hasAnnotation(s.modifiers());\n" + //
+                "    }");
+  }
+  @Test public void infiniteLoopBug3() {
+    trimming("  boolean f(final VariableDeclarationStatement n) {\n" + //
+        "      return false;\n" + //
+        "    }")
+            .to("  boolean hasAnnotation(final VariableDeclarationStatement s) {\n" + //
+                "      return false;\n" + //
+                "    }");
+  }
+  @Test public void infiniteLoopBug4() {
+    trimming("void f(final VariableDeclarationStatement n) {}")//
+        .to(" void f(final VariableDeclarationStatement s) { }");
+  }
   @Ignore @Test public void inline00() {
     trimming("" + //
         "  Object a() { " + //
