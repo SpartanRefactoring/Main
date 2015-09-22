@@ -157,8 +157,8 @@ public abstract class Wring<N extends ASTNode> {
     static boolean hasAnnotation(final VariableDeclarationFragment f) {
       return hasAnnotation((VariableDeclarationStatement) f.getParent());
     }
-    static boolean hasAnnotation(final VariableDeclarationStatement n) {
-      return hasAnnotation(n.modifiers());
+    static boolean hasAnnotation(final VariableDeclarationStatement s) {
+      return hasAnnotation(s.modifiers());
     }
     static boolean hasAnnotation(final List<IExtendedModifier> ms) {
       for (final IExtendedModifier m : ms)
