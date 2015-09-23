@@ -8,10 +8,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 import static org.spartan.hamcrest.CoreMatchers.is;
 import static org.spartan.hamcrest.MatcherAssert.assertThat;
-import static org.spartan.hamcrest.MatcherAssert.compressSpaces;
 import static org.spartan.refactoring.spartanizations.TESTUtils.asSingle;
 import static org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
 import static org.spartan.refactoring.utils.Funcs.asIfStatement;
+import static org.spartan.utils.Utils.compressSpaces;
 
 import java.util.Collection;
 

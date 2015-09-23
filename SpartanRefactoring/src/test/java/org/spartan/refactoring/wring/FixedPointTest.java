@@ -3,8 +3,8 @@ package org.spartan.refactoring.wring;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.fail;
-import static org.spartan.hamcrest.MatcherAssert.compressSpaces;
 import static org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
+import static org.spartan.utils.Utils.compressSpaces;
 
 import org.junit.FixMethodOrder;
 import org.junit.Test;

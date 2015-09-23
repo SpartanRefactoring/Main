@@ -1,6 +1,5 @@
 package org.spartan.refactoring.spartanizations;
 
-import static org.spartan.hamcrest.MatcherAssert.compressSpaces;
 import static org.spartan.utils.Utils.removePrefix;
 import static org.spartan.utils.Utils.removeSuffix;
 

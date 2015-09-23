@@ -5,11 +5,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.*;
 import static org.spartan.hamcrest.CoreMatchers.is;
 import static org.spartan.hamcrest.MatcherAssert.assertThat;
-import static org.spartan.hamcrest.MatcherAssert.compressSpaces;
 import static org.spartan.hamcrest.MatcherAssert.iz;
 import static org.spartan.hamcrest.OrderingComparison.greaterThan;
 import static org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
 import static org.spartan.refactoring.utils.Funcs.*;
+import static org.spartan.utils.Utils.compressSpaces;
 
 import java.util.Collection;
 import java.util.List;
