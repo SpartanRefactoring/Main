@@ -27,13 +27,13 @@ import org.eclipse.jdt.core.dom.*;
   public static StatementPair pair(final Statement s1, final Statement s2) {
     return new StatementPair(s1, s2);
   }
-  public static SeveralStatemens statement(final Statement s) {
+  public static SeveralStatements statement(final Statement s) {
     return statements(s);
   }
-  public static SeveralStatemens ss(final List<Statement> ss) {
-    return new SeveralStatemens(ss);
+  public static SeveralStatements ss(final List<Statement> ss) {
+    return new SeveralStatements(ss);
   }
-  public static SeveralStatemens statements(final Statement... ss) {
+  public static SeveralStatements statements(final Statement... ss) {
     return ss(Arrays.asList(ss));
   }
 
@@ -144,9 +144,9 @@ import org.eclipse.jdt.core.dom.*;
     }
   }
 
-  public static class SeveralStatemens extends Claimer {
+  public static class SeveralStatements extends Claimer {
     private final List<Statement> inner;
-    public SeveralStatemens(final List<Statement> inner) {
+    public SeveralStatements(final List<Statement> inner) {
       super(inner.isEmpty() ? null : inner.get(0));
       this.inner = new ArrayList<>();
       for (final Statement s : inner)
