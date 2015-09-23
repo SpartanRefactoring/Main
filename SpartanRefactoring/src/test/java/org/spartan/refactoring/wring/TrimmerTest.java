@@ -549,6 +549,9 @@ import org.spartan.utils.Wrapper;
   @Test public void commonPrefixIfBranchesInFor() {
     trimming("for (;;) if (a) {i++;j++;j++;} else { i++;j++; i++;}").to("for(;;){i++;j++;if(a)j++;else i++;}");
   }
+  @Test public void nestedTernaryAlignment() {
+    trimming("int b=3==4?5==3?2:3:5==3?2:3*3;").to("int b=3==4?5==3?2:3:5!=3?3*3:2;");
+  }
   @Test public void commonSuffixIfBranches() {
     trimming("if (a) { \n" + //
         "++i;\n" + //

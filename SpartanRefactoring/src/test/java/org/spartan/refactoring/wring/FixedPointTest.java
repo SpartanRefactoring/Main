@@ -115,7 +115,7 @@ import org.spartan.refactoring.spartanizations.Wrap;
   @Test(timeout = 2000) public void multipleIfDeclarationAssignment() {
     assertConvertsTo(//
         "int a, b;a = 3;b = 5;if (a == 4)  if (b == 3) b = 2;else b = a;else if (b == 3) b = 2;else b = a*a;", //
-        "int b=3==4?5==3?2:3:5==3?2:3*3;");
+        "int b = 3==4? 5==3 ? 2 :3:5!=3?3*3:2;");
   }
   @Test(timeout = 2000) public void multipleInline() {
     assertConvertsTo("int b=5,a = 2,c=4; return 3 * a * b * c; ", "return 2*3*4*5;");
