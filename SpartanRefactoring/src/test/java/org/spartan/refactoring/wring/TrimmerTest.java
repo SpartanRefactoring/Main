@@ -40,9 +40,108 @@ import org.spartan.utils.Wrapper;
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) public class TrimmerTest {
-  public static int countOpportunities(final Spartanization s, final CompilationUnit u) {
-    return s.findOpportunities(u).size();
+  static class Operand extends Wrapper<String> {
+    public Operand(final String inner) {
+      super(inner);
+    }
+    private void checkExpected(final String expected) {
+      final Wrap w = findWrap();
+      final String wrap = w.on(get());
+      final String unpeeled = apply(new Trimmer(), wrap);
+      if (wrap.equals(unpeeled))
+        fail("Nothing done on " + get());
+      final String peeled = w.off(unpeeled);
+      if (peeled.equals(get()))
+        assertNotEquals("No trimming of " + get(), get(), peeled);
+      if (compressSpaces(peeled).equals(compressSpaces(get())))
+        assertNotEquals("Trimming of " + get() + "is just reformatting", compressSpaces(peeled), compressSpaces(get()));
+      assertSimilar(expected, peeled);
+    }
+    private void checkSame() {
+      final Wrap w = findWrap();
+      final String wrap = w.on(get());
+      final String unpeeled = apply(new Trimmer(), wrap);
+      if (wrap.equals(unpeeled))
+        return;
+      final String peeled = w.off(unpeeled);
+      if (peeled.equals(get()) || compressSpaces(peeled).equals(compressSpaces(get())))
+        return;
+      assertSimilar(get(), peeled);
+    }
+    Wrap findWrap() {
+      final Wrap $ = Wrap.find(get());
+      assertThat("Cannot parse '" + get() + "'; did you forget a semicolon?", $, notNullValue());
+      return $;
+    }
+    public Operand to(final String expected) {
+      if (expected == null || expected.isEmpty())
+        checkSame();
+      else
+        checkExpected(expected);
+      return new Operand(expected);
+    }
   }
+  static class OperandToWring<N extends ASTNode> extends Operand {
+    final Class<N> clazz;
+    public OperandToWring(final String from, final Class<N> clazz) {
+      super(from);
+      this.clazz = clazz;
+    }
+    private N findNode(final Wring<N> w) {
+      assertThat(w, notNullValue());
+      final Wrap wrap = findWrap();
+      assertThat(wrap, notNullValue());
+      final CompilationUnit u = wrap.intoCompilationUnit(get());
+      assertThat(u, notNullValue());
+      final N $ = firstInstance(u);
+      assertThat($, notNullValue());
+      return $;
+    }
+    private N firstInstance(final CompilationUnit u) {
+      final Wrapper<N> $ = new Wrapper<>();
+      u.accept(new ASTVisitor() {
+        /**
+         * The implementation of the visitation procedure in the JDT seems to be
+         * buggy. Each time we find a node which is an instance of the sought
+         * class, we return false. Hence, we do not anticipate any further calls
+         * to this function after the first such node is found. However, this
+         * does not seem to be the case. So, in the case our wrapper is not
+         * null, we do not carry out any further tests.
+         *
+         * @param n the node currently being visited.
+         * @return <code><b>true</b></code> <i>iff</i> the sought node is found.
+         */
+        @SuppressWarnings("unchecked") @Override public boolean preVisit2(final ASTNode n) {
+          if ($.get() != null)
+            return false;
+          if (!clazz.isAssignableFrom(n.getClass()))
+            return true;
+          $.set((N) n);
+          return false;
+        }
+      });
+      return $.get();
+    }
+    public OperandToWring<N> in(final Wring<N> w) {
+      final N findNode = findNode(w);
+      assertThat(w.scopeIncludes(findNode), is(true));
+      return this;
+    }
+    public OperandToWring<N> notIn(final Wring<N> w) {
+      assertThat(w.scopeIncludes(findNode(w)), is(false));
+      return this;
+    }
+  }
+  // @Test public void firstInstanceTest() {
+  // final String codeFragment = "a = null; b=null;";
+  // final Wrap w = Wrap.find(codeFragment);
+  // assertThat(w, notNullValue());
+  // final CompilationUnit u = w.intoCompilationUnit(codeFragment);
+  // assertThat(u, notNullValue());
+  // final N $ = firstInstance(u);
+  // assertThat($, notNullValue());
+  // return $;
+  // }
   static String apply(final Trimmer t, final String from) {
     final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(from);
     assertNotNull(u);
@@ -70,6 +169,9 @@ import org.spartan.utils.Wrapper;
     if (compressSpaces(peeled).equals(compressSpaces(from)))
       assertNotEquals("Simpification of " + from + " is just reformatting", compressSpaces(peeled), compressSpaces(from));
     assertSimilar(expected, peeled);
+  }
+  public static int countOpportunities(final Spartanization s, final CompilationUnit u) {
+    return s.findOpportunities(u).size();
   }
   private static <N extends ASTNode> OperandToWring<N> included(final String from, final Class<N> clazz) {
     return new OperandToWring<>(from, clazz);
@@ -1274,6 +1376,14 @@ import org.spartan.utils.Wrapper;
     trimming("x/a*-b/-c*- - - d ")//
         .to("-x/a * b/ c * d")//
         ;
+  }
+  @Test public void issue06I() {
+    trimming("41 * - 19")//
+        .to("-19 * 41 * ");
+  }
+  @Test public void issue06J() {
+    trimming("41 * a * - 19")//
+        .to("-19 * 41 * -1");
   }
   @Test public void issue37Simplified() {
     trimming("" + //
@@ -2963,114 +3073,12 @@ import org.spartan.utils.Wrapper;
   @Test public void useOutcontextToManageStringAmbiguity() {
     trimming("1+2+s<3").to("s+1+2<3");
   }
+
   @Test public void vanillaShortestFirstConditionalNoChange() {
     trimming("literal ? CONDITIONAL_OR : CONDITIONAL_AND").to("");
   }
+
   @Test public void xorSortClassConstantsAtEnd() {
     trimming("f(a,b,c,d) ^ BOB").to("");
   }
-
-  static class Operand extends Wrapper<String> {
-    public Operand(final String inner) {
-      super(inner);
-    }
-    public Operand to(final String expected) {
-      if (expected == null || expected.isEmpty())
-        checkSame();
-      else
-        checkExpected(expected);
-      return new Operand(expected);
-    }
-    Wrap findWrap() {
-      final Wrap $ = Wrap.find(get());
-      assertThat("Cannot parse '" + get() + "'; did you forget a semicolon?", $, notNullValue());
-      return $;
-    }
-    private void checkExpected(final String expected) {
-      final Wrap w = findWrap();
-      final String wrap = w.on(get());
-      final String unpeeled = apply(new Trimmer(), wrap);
-      if (wrap.equals(unpeeled))
-        fail("Nothing done on " + get());
-      final String peeled = w.off(unpeeled);
-      if (peeled.equals(get()))
-        assertNotEquals("No trimming of " + get(), get(), peeled);
-      if (compressSpaces(peeled).equals(compressSpaces(get())))
-        assertNotEquals("Trimming of " + get() + "is just reformatting", compressSpaces(peeled), compressSpaces(get()));
-      assertSimilar(expected, peeled);
-    }
-    private void checkSame() {
-      final Wrap w = findWrap();
-      final String wrap = w.on(get());
-      final String unpeeled = apply(new Trimmer(), wrap);
-      if (wrap.equals(unpeeled))
-        return;
-      final String peeled = w.off(unpeeled);
-      if (peeled.equals(get()) || compressSpaces(peeled).equals(compressSpaces(get())))
-        return;
-      assertSimilar(get(), peeled);
-    }
-  }
-
-  static class OperandToWring<N extends ASTNode> extends Operand {
-    final Class<N> clazz;
-    public OperandToWring(final String from, final Class<N> clazz) {
-      super(from);
-      this.clazz = clazz;
-    }
-    public OperandToWring<N> in(final Wring<N> w) {
-      final N findNode = findNode(w);
-      assertThat(w.scopeIncludes(findNode), is(true));
-      return this;
-    }
-    public OperandToWring<N> notIn(final Wring<N> w) {
-      assertThat(w.scopeIncludes(findNode(w)), is(false));
-      return this;
-    }
-    private N findNode(final Wring<N> w) {
-      assertThat(w, notNullValue());
-      final Wrap wrap = findWrap();
-      assertThat(wrap, notNullValue());
-      final CompilationUnit u = wrap.intoCompilationUnit(get());
-      assertThat(u, notNullValue());
-      final N $ = firstInstance(u);
-      assertThat($, notNullValue());
-      return $;
-    }
-    private N firstInstance(final CompilationUnit u) {
-      final Wrapper<N> $ = new Wrapper<>();
-      u.accept(new ASTVisitor() {
-        /**
-         * The implementation of the visitation procedure in the JDT seems to be
-         * buggy. Each time we find a node which is an instance of the sought
-         * class, we return false. Hence, we do not anticipate any further calls
-         * to this function after the first such node is found. However, this
-         * does not seem to be the case. So, in the case our wrapper is not
-         * null, we do not carry out any further tests.
-         *
-         * @param n the node currently being visited.
-         * @return <code><b>true</b></code> <i>iff</i> the sought node is found.
-         */
-        @SuppressWarnings("unchecked") @Override public boolean preVisit2(final ASTNode n) {
-          if ($.get() != null)
-            return false;
-          if (!clazz.isAssignableFrom(n.getClass()))
-            return true;
-          $.set((N) n);
-          return false;
-        }
-      });
-      return $.get();
-    }
-  }
-  // @Test public void firstInstanceTest() {
-  // final String codeFragment = "a = null; b=null;";
-  // final Wrap w = Wrap.find(codeFragment);
-  // assertThat(w, notNullValue());
-  // final CompilationUnit u = w.intoCompilationUnit(codeFragment);
-  // assertThat(u, notNullValue());
-  // final N $ = firstInstance(u);
-  // assertThat($, notNullValue());
-  // return $;
-  // }
 }
