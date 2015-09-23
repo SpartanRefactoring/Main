@@ -36,11 +36,9 @@ public class TypeNamesCollector {
         return true;
       }
       private SimpleName last(final Name n) {
-        if (n.isSimpleName())
-          return (SimpleName) n;
-        if (n.isQualifiedName())
-          return ((QualifiedName) n).getName();
-        return null;
+        return n.isSimpleName() ? (SimpleName) n //
+            : n.isQualifiedName() ? ((QualifiedName) n).getName() //
+                : null;
       }
     });
   }
