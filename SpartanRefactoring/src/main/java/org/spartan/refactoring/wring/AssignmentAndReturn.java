@@ -3,9 +3,7 @@ package org.spartan.refactoring.wring;
 import static org.spartan.refactoring.utils.Extract.core;
 import static org.spartan.refactoring.utils.Funcs.*;
 
-import org.eclipse.jdt.core.dom.Assignment;
-import org.eclipse.jdt.core.dom.ReturnStatement;
-import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
 import org.spartan.refactoring.utils.Subject;
@@ -20,7 +18,7 @@ import org.spartan.refactoring.utils.Subject;
 public class AssignmentAndReturn extends Wring.ReplaceToNextStatement<Assignment> {
   @Override ASTRewrite go(final ASTRewrite r, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
     final Statement parent = asStatement(a.getParent());
-    if (parent == null)
+    if (parent == null || parent instanceof ForStatement)
       return null;
     final ReturnStatement s = asReturnStatement(nextStatement);
     if (s == null || !same(left(a), core(s.getExpression())))
