@@ -15,6 +15,27 @@ import org.eclipse.jdt.core.dom.Block;
 public enum Utils {
   ;
   /**
+   * Remove all non-essential spaces from a string that represents Java code.
+   *
+   * @param javaCodeFragment JD
+   * @return the parameter, with all redundant spaces removes from it
+   */
+  public static String compressSpaces(final String javaCodeFragment) {
+    String $ = javaCodeFragment//
+        .replaceAll("(?m)\\s+", " ") // Squeeze whites
+        .replaceAll("^\\s", "") // Opening whites
+        .replaceAll("\\s$", "") // Closing whites
+        ;
+    for (final String operator : new String[] { ":", "/", "%", ",", "\\{", "\\}", "=", ":", "\\?", ";", "\\+", ">", ">=", "!=", "==", "<", "<=", "-", "\\*", "\\|", "\\&", "%",
+        "\\(", "\\)", "[\\^]" })
+      $ = $ //
+          .replaceAll(WHITES + operator, operator) // Preceding whites
+          .replaceAll(operator + WHITES, operator) // Trailing whites
+          ;
+    return $;
+  }
+  static final String WHITES = "(?m)\\s+";
+  /**
    * Appends an element to an array, by reallocating an array whose size is
    * greater by one and placing the element at the last position.
    *

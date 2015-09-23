@@ -5,7 +5,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.*;
 import static org.spartan.hamcrest.CoreMatchers.is;
 import static org.spartan.hamcrest.MatcherAssert.assertThat;
-import static org.spartan.hamcrest.MatcherAssert.compressSpaces;
 import static org.spartan.hamcrest.MatcherAssert.iz;
 import static org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
 import static org.spartan.refactoring.utils.ExpressionComparator.NODES_THRESHOLD;
@@ -14,6 +13,7 @@ import static org.spartan.refactoring.utils.Funcs.left;
 import static org.spartan.refactoring.utils.Funcs.right;
 import static org.spartan.refactoring.utils.Into.i;
 import static org.spartan.refactoring.utils.Into.s;
+import static org.spartan.utils.Utils.compressSpaces;
 import static org.spartan.utils.Utils.hasNull;
 import static org.spartan.utils.Utils.in;
 
@@ -81,6 +81,7 @@ import org.spartan.utils.Wrapper;
       return new Operand(expected);
     }
   }
+
   static class OperandToWring<N extends ASTNode> extends Operand {
     final Class<N> clazz;
     public OperandToWring(final String from, final Class<N> clazz) {
@@ -2434,6 +2435,23 @@ import org.spartan.utils.Wrapper;
   @Test public void sequencerFirstInElse() {
     trimming("if (a) {b++; c++; ++d;} else { f++; g++; return x;}").to("if (!a) {f++; g++; return x;} b++; c++; ++d; ");
   }
+  @Test public void shortestFirstAlignment() {
+    trimming("n.isSimpleName() ? (SimpleName) n //\n" + //
+        "            : n.isQualifiedName() ? ((QualifiedName) n).getName() //\n" + //
+        "                : null").to("");//
+  }
+  @Test public void shortestFirstAlignmentShortened() {
+    trimming("n.isF() ? (SimpleName) n \n" + //
+        "            : n.isG() ? ((QualifiedName) n).getName() \n" + //
+        "                : null").to("");//
+  }
+  @Test public void shortestFirstAlignmentShortenedFurther() {
+    trimming("n.isF() ? (A) n : n.isG() ? ((B) n).f() \n" + //
+        "                : null").to("");//
+  }
+  @Test public void shortestFirstAlignmentShortenedFurtherAndFurther() {
+    trimming("n.isF() ? (A) n : n.isG() ? (B) n :  null").to("");//
+  }
   @Test public void shorterChainParenthesisComparison() {
     trimming("a == b == c").to("");
   }
@@ -3073,11 +3091,9 @@ import org.spartan.utils.Wrapper;
   @Test public void useOutcontextToManageStringAmbiguity() {
     trimming("1+2+s<3").to("s+1+2<3");
   }
-
   @Test public void vanillaShortestFirstConditionalNoChange() {
     trimming("literal ? CONDITIONAL_OR : CONDITIONAL_AND").to("");
   }
-
   @Test public void xorSortClassConstantsAtEnd() {
     trimming("f(a,b,c,d) ^ BOB").to("");
   }
