@@ -328,7 +328,7 @@ public abstract class Spartanization extends Refactoring {
     return !isSelected(n.getStartPosition());
   }
   /**
-   * @param u
+   * @param u JD
    * @throws CoreException
    */
   protected void scanCompilationUnit(final ICompilationUnit u, final IProgressMonitor m) throws CoreException {
@@ -343,7 +343,6 @@ public abstract class Spartanization extends Refactoring {
     totalChanges += findOpportunities(cu).size();
     m.done();
   }
-  // TODO: Do not add new public methods without JavaDoc!
   protected void scanCompilationUnitForMarkerFix(final IMarker m, final IProgressMonitor pm, final boolean preview) throws CoreException {
     pm.beginTask("Creating change(s) for a single compilation unit...", 2);
     final ICompilationUnit u = As.iCompilationUnit(m);

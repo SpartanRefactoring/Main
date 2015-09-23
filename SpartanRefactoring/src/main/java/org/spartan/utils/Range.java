@@ -2,8 +2,6 @@ package org.spartan.utils;
 
 import java.util.List;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-
 /**
  * An immutable integral range, representing all integers between {@link #from},
  * up to, but not including, {@link #to}, i.e.,
@@ -90,15 +88,6 @@ public class Range {
    */
   public boolean overlapping(final Range r) {
     return from >= r.from || to <= r.to;
-  }
-  /**
-   * Instantiates from beginning and end ASTNodes
-   *
-   * @param from the beginning ASTNode (inclusive)
-   * @param to the end ASTNode (inclusive)
-   */
-  public Range(final ASTNode from, final ASTNode to) {
-    this(from.getStartPosition(), to.getStartPosition() + to.getLength());
   }
   @Override public int hashCode() {
     // Cantor pairing function

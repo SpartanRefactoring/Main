@@ -204,37 +204,46 @@ import org.spartan.utils.Wrapper;
     trimming("(x >> 18) & MASK_BITS").to("");
     trimming("(x >> 18) & MASK_6BITS").to("");
   }
+  @Test public void assignmentAssignmentNull() {
+    trimming("c = a = null; b = null;").to("");
+  }
   @Test public void assignmentAssignmentChain1() {
-    trimming("c = a = null; b = null;").to("b = c = a = null;");
+    trimming("c = a = 13; b = 13;").to("b = c = a = 13;");
   }
   @Test public void assignmentAssignmentChain2() {
-    trimming("a = null; b= c = null;").to("b = c = a = null;");
+    trimming("a = 13; b= c = 13;").to("b = c = a = 13;");
   }
   @Test public void assignmentAssignmentChain3() {
-    trimming("a = b = null; c = d = null;").to("c = d = a = b = null;");
+    trimming("a = b = 13; c = d = 13;").to("c = d = a = b = 13;");
   }
   @Test public void assignmentAssignmentChain4() {
-    trimming("a1 = a2 = a3 = a4 = null; b1 = b2 = b3 = b4 = b5 = null;")//
-        .to("b1 = b2 = b3 = b4 = b5 = a1 = a2 = a3 = a4 = null;");
+    trimming("a1 = a2 = a3 = a4 = 13; b1 = b2 = b3 = b4 = b5 = 13;")//
+        .to("b1 = b2 = b3 = b4 = b5 = a1 = a2 = a3 = a4 = 13;");
   }
   @Test public void assignmentAssignmentChain5() {
-    trimming("a1 = (a2 = (a3 = (a4 = null))); b1 = b2 = b3 = ((((b4 = (b5 = null)))));")//
-        .to("b1=b2=b3=((((b4=(b5=a1=(a2=(a3=(a4=null))))))));");
+    trimming("a1 = (a2 = (a3 = (a4 = 13))); b1 = b2 = b3 = ((((b4 = (b5 = 13)))));")//
+        .to("b1=b2=b3=((((b4=(b5=a1=(a2=(a3=(a4=13))))))));");
   }
   @Test public void assignmentAssignmentSideEffect() {
     trimming("a = f(); b= f();").to("");
   }
   @Test public void assignmentAssignmentVanilla() {
-    trimming("a = null; b= null;").to("b = a = null;");
+    trimming("a = 13; b= 13;").to("b = a = 13;");
   }
   @Test public void assignmentAssignmentVanilla0() {
     trimming("a = 0; b = 0;").to("b = a = 0;");
   }
   @Test public void assignmentAssignmentVanillaScopeIncludes() {
-    included("a = null; b = null;", Assignment.class).in(new AssignmentAndAssignment());
+    included("a = 3; b = 3;", Assignment.class).in(new AssignmentAndAssignment());
   }
-  @Test public void assignmentAssignmentVanNew() {
+  @Test public void assignmentAssignmentVanillaScopeIncludesNull() {
+    included("a = null; b = null;", Assignment.class).notIn(new AssignmentAndAssignment());
+  }
+  @Test public void assignmentAssignmentNew() {
     trimming("a = new B(); b= new B();").to("");
+  }
+  @Test public void assignmentAssignmentNewArray() {
+    trimming("a = new A[3]; b= new A[3];").to("");
   }
   @Test public void assignmentReturn0() {
     trimming("a = 3; return a;").to("return a = 3;");
