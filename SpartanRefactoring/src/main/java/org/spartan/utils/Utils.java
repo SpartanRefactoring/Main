@@ -14,39 +14,6 @@ import org.eclipse.jdt.core.dom.Block;
  */
 public enum Utils {
   ;
-  /**
-   * Computes the maximum of two or more integers.
-   *
-   * @param a some integer
-   * @param is additional integers
-   * @return the largest of the parameters
-   */
-  public static int max(final int a, final int... is) {
-    int $ = a;
-    for (final int i : is)
-      $ = Math.max($, i);
-    return $;
-  }
-  /**
-   * Remove all non-essential spaces from a string that represents Java code.
-   *
-   * @param javaCodeFragment JD
-   * @return the parameter, with all redundant spaces removes from it
-   */
-  public static String compressSpaces(final String javaCodeFragment) {
-    String $ = javaCodeFragment//
-        .replaceAll("(?m)\\s+", " ") // Squeeze whites
-        .replaceAll("^\\s", "") // Opening whites
-        .replaceAll("\\s$", "") // Closing whites
-        ;
-    for (final String operator : new String[] { ":", "/", "%", ",", "\\{", "\\}", "=", ":", "\\?", ";", "\\+", ">", ">=", "!=", "==", "<", "<=", "-", "\\*", "\\|", "\\&", "%",
-        "\\(", "\\)", "[\\^]" })
-      $ = $ //
-          .replaceAll(WHITES + operator, operator) // Preceding whites
-          .replaceAll(operator + WHITES, operator) // Trailing whites
-          ;
-    return $;
-  }
   static final String WHITES = "(?m)\\s+";
   /**
    * Appends an element to an array, by reallocating an array whose size is
@@ -60,28 +27,6 @@ public enum Utils {
     final T[] $ = Arrays.copyOf(ts, 1 + ts.length);
     $[ts.length] = t;
     return $;
-  }
-  /**
-   * Determine whether an {@link Object} is the last in a {@link List}.
-   *
-   * @param o JD
-   * @param os JD
-   * @return <code><b>true</b></code> <i>iff</i> the {@link Object} parameter is
-   *         the same as the last element of the {@link List} parameter
-   */
-  public static boolean lastIn(final Object o, final List<?> os) {
-    return last(os) == o;
-  }
-  /**
-   * Determine whether an {@link Object} is penultimate in its {@link Block}.
-   *
-   * @param o JD
-   * @param os JD
-   * @return <code><b>true</b></code> <i>iff</i> the an {@link Object} parameter
-   *         occurs as the penultimate element of the {@link List} parameter
-   */
-  public static boolean penultimateIn(final Object o, final List<?> os) {
-    return penultimate(os) == o;
   }
   /**
    * Convert multiple arguments into an array
@@ -118,6 +63,26 @@ public enum Utils {
    */
   public static int compare(final boolean b1, final boolean b2) {
     return b1 == b2 ? 0 : b1 ? 1 : -1;
+  }
+  /**
+   * Remove all non-essential spaces from a string that represents Java code.
+   *
+   * @param javaCodeFragment JD
+   * @return the parameter, with all redundant spaces removes from it
+   */
+  public static String compressSpaces(final String javaCodeFragment) {
+    String $ = javaCodeFragment//
+        .replaceAll("(?m)\\s+", " ") // Squeeze whites
+        .replaceAll("^\\s", "") // Opening whites
+        .replaceAll("\\s$", "") // Closing whites
+        ;
+    for (final String operator : new String[] { ":", "/", "%", ",", "\\{", "\\}", "=", ":", "\\?", ";", "\\+", ">", ">=", "!=", "==", "<", "<=", "-", "\\*", "\\|", "\\&", "%",
+        "\\(", "\\)", "[\\^]" })
+      $ = $ //
+          .replaceAll(WHITES + operator, operator) // Preceding whites
+          .replaceAll(operator + WHITES, operator) // Trailing whites
+          ;
+    return $;
   }
   /**
    * Deletes a specified element from an array, by reallocating an array whose
@@ -190,12 +155,28 @@ public enum Utils {
     return ts == null || ts.isEmpty() ? null : ts.get(ts.size() - 1);
   }
   /**
-   * @param ts a list
-   * @return the last item in a list or <code><b>null</b></code> if the
-   *         parameter is <code><b>null</b></code> or empty
+   * Determine whether an {@link Object} is the last in a {@link List}.
+   *
+   * @param o JD
+   * @param os JD
+   * @return <code><b>true</b></code> <i>iff</i> the {@link Object} parameter is
+   *         the same as the last element of the {@link List} parameter
    */
-  public static <T> T penultimate(final List<T> ts) {
-    return ts == null || ts.size() < 2 ? null : ts.get(ts.size() - 2);
+  public static boolean lastIn(final Object o, final List<?> os) {
+    return last(os) == o;
+  }
+  /**
+   * Computes the maximum of two or more integers.
+   *
+   * @param a some integer
+   * @param is additional integers
+   * @return the largest of the parameters
+   */
+  public static int max(final int a, final int... is) {
+    int $ = a;
+    for (final int i : is)
+      $ = Math.max($, i);
+    return $;
   }
   /**
    * Convert variadic list of arguments into an array
@@ -205,6 +186,25 @@ public enum Utils {
    */
   public static Object[] objects(final Object... os) {
     return os;
+  }
+  /**
+   * @param ts a list
+   * @return the last item in a list or <code><b>null</b></code> if the
+   *         parameter is <code><b>null</b></code> or empty
+   */
+  public static <T> T penultimate(final List<T> ts) {
+    return ts == null || ts.size() < 2 ? null : ts.get(ts.size() - 2);
+  }
+  /**
+   * Determine whether an {@link Object} is penultimate in its {@link Block}.
+   *
+   * @param o JD
+   * @param os JD
+   * @return <code><b>true</b></code> <i>iff</i> the an {@link Object} parameter
+   *         occurs as the penultimate element of the {@link List} parameter
+   */
+  public static boolean penultimateIn(final Object o, final List<?> os) {
+    return penultimate(os) == o;
   }
   /**
    * Remove any duplicates that may be present in a given {@link List}
@@ -260,18 +260,26 @@ public enum Utils {
     return is;
   }
   /**
-   * Determine whether a string ends with any one of the supplied suffixes.
+   * Determine whether a file name ends with any one of the supplied extensions.
    *
-   * @param s a string to examine
-   * @param suffixes a list of potential suffixes
-   * @return <code><b>true</b></code> <em>iff</em> <code>s</code> ends with any
-   *         one of the supplied suffixes.
+   * @param f a file to examine
+   * @param suffixes a list of potential extensions.
+   * @return <code><b>true</b></code> <em>iff</em>the file name ends with any
+   *         one of the supplied extensions.
    */
-  public static boolean suffixedBy(final String s, final String... suffixes) {
-    for (final String end : suffixes)
-      if (s.endsWith(end))
-        return true;
-    return false;
+  public static boolean suffixedBy(final File f, final Iterable<String> suffixes) {
+    return suffixedBy(f.getName(), suffixes);
+  }
+  /**
+   * Determine whether a file name ends with any one of the supplied extensions.
+   *
+   * @param f a file to examine
+   * @param suffixes a list of potential extensions.
+   * @return <code><b>true</b></code> <em>iff</em>the file name ends with any
+   *         one of the supplied extensions.
+   */
+  public static boolean suffixedBy(final File f, final String... suffixes) {
+    return suffixedBy(f.getName(), suffixes);
   }
   /**
    * Determine whether a string ends with any one of the supplied suffixes.
@@ -288,25 +296,17 @@ public enum Utils {
     return false;
   }
   /**
-   * Determine whether a file name ends with any one of the supplied extensions.
+   * Determine whether a string ends with any one of the supplied suffixes.
    *
-   * @param f a file to examine
-   * @param suffixes a list of potential extensions.
-   * @return <code><b>true</b></code> <em>iff</em>the file name ends with any
-   *         one of the supplied extensions.
+   * @param s a string to examine
+   * @param suffixes a list of potential suffixes
+   * @return <code><b>true</b></code> <em>iff</em> <code>s</code> ends with any
+   *         one of the supplied suffixes.
    */
-  public static boolean suffixedBy(final File f, final String... suffixes) {
-    return suffixedBy(f.getName(), suffixes);
-  }
-  /**
-   * Determine whether a file name ends with any one of the supplied extensions.
-   *
-   * @param f a file to examine
-   * @param suffixes a list of potential extensions.
-   * @return <code><b>true</b></code> <em>iff</em>the file name ends with any
-   *         one of the supplied extensions.
-   */
-  public static boolean suffixedBy(final File f, final Iterable<String> suffixes) {
-    return suffixedBy(f.getName(), suffixes);
+  public static boolean suffixedBy(final String s, final String... suffixes) {
+    for (final String end : suffixes)
+      if (s.endsWith(end))
+        return true;
+    return false;
   }
 }
