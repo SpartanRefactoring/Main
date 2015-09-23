@@ -81,7 +81,7 @@ public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpre
       exclude.exclude(e);
     return new Rewrite(description(e), e) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        final Expression first = totalNegation % 2 != 1 ? null : es.get(0);
+        final Expression first = totalNegation % 2 == 0 ? null : es.get(0);
         for (final Expression e : es)
           if (e != first && negationLevel(e) > 0)
             r.replace(e, new Plant(duplicate(peelNegation(e))).into(e.getParent()), g);

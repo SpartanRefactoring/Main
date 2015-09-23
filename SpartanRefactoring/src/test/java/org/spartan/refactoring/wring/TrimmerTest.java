@@ -1425,7 +1425,7 @@ import org.spartan.utils.Wrapper;
         "    return false;\n" + //
         "return true;").to(""); //
   }
-  @Test(timeout = 100) public void issue39baseDual() {
+  public void issue39baseDual() {
     trimming("if (name != null) {\n" + //
         "    if (!name.equals(other.name))\n" + //
         "        return false;\n" + //

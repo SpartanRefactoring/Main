@@ -7,6 +7,7 @@ import static org.spartan.refactoring.utils.Funcs.logicalNot;
 import org.eclipse.jdt.core.dom.*;
 import org.spartan.refactoring.utils.Is;
 import org.spartan.refactoring.utils.Subject;
+import org.spartan.utils.LongestCommonSubsequence;
 
 /**
  * A {@link Wring} to convert <code>a ? (f,g,h) : c(d,e)</code> into
@@ -27,16 +28,16 @@ public final class TernaryShortestFirst extends Wring.ReplaceCurrentNode<Conditi
     final ConditionalExpression parent = asConditionalExpression(e.getParent());
     if (parent != null && parent.getElseExpression() == e && compatibleCondition(parent.getExpression(), e.getExpression())) {
       final Expression alignTo = parent.getThenExpression();
-      final int a1 = align(elze, alignTo);
-      final int a2 = align(then, alignTo);
-      if (a1 != a2)
+      final double a1 = align(elze, alignTo);
+      final double a2 = align(then, alignTo);
+      if (Math.abs(a1 - a2) > 0.1)
         return a1 > a2 ? $ : null;
     }
     final Expression condition = logicalNot($.getExpression());
     return Wrings.length(condition, then) > Wrings.length(logicalNot(condition), elze) ? $ : null;
   }
-  private static int align(final Expression e1, final Expression e2) {
-    return e1.getNodeType() == e2.getNodeType() ? 1 : 0;
+  private static double align(final Expression e1, final Expression e2) {
+    return new LongestCommonSubsequence(e1.toString(), e2.toString()).similarity();
   }
   private static boolean compatibleCondition(final Expression e1, final Expression e2) {
     return compatible(e1, e2) || compatible(e1, logicalNot(e2));
