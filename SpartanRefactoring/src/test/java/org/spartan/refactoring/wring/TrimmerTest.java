@@ -40,99 +40,10 @@ import org.spartan.utils.Wrapper;
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) public class TrimmerTest {
-  static class Operand extends Wrapper<String> {
-    public Operand(final String inner) {
-      super(inner);
-    }
-    private void checkExpected(final String expected) {
-      final Wrap w = findWrap();
-      final String wrap = w.on(get());
-      final String unpeeled = apply(new Trimmer(), wrap);
-      if (wrap.equals(unpeeled))
-        fail("Nothing done on " + get());
-      final String peeled = w.off(unpeeled);
-      if (peeled.equals(get()))
-        assertNotEquals("No trimming of " + get(), get(), peeled);
-      if (compressSpaces(peeled).equals(compressSpaces(get())))
-        assertNotEquals("Trimming of " + get() + "is just reformatting", compressSpaces(peeled), compressSpaces(get()));
-      assertSimilar(expected, peeled);
-    }
-    private void checkSame() {
-      final Wrap w = findWrap();
-      final String wrap = w.on(get());
-      final String unpeeled = apply(new Trimmer(), wrap);
-      if (wrap.equals(unpeeled))
-        return;
-      final String peeled = w.off(unpeeled);
-      if (peeled.equals(get()) || compressSpaces(peeled).equals(compressSpaces(get())))
-        return;
-      assertSimilar(get(), peeled);
-    }
-    Wrap findWrap() {
-      final Wrap $ = Wrap.find(get());
-      assertThat("Cannot parse '" + get() + "'; did you forget a semicolon?", $, notNullValue());
-      return $;
-    }
-    public Operand to(final String expected) {
-      if (expected == null || expected.isEmpty())
-        checkSame();
-      else
-        checkExpected(expected);
-      return new Operand(expected);
-    }
+  public static int countOpportunities(final Spartanization s, final CompilationUnit u) {
+    return s.findOpportunities(u).size();
   }
 
-  static class OperandToWring<N extends ASTNode> extends Operand {
-    final Class<N> clazz;
-    public OperandToWring(final String from, final Class<N> clazz) {
-      super(from);
-      this.clazz = clazz;
-    }
-    private N findNode(final Wring<N> w) {
-      assertThat(w, notNullValue());
-      final Wrap wrap = findWrap();
-      assertThat(wrap, notNullValue());
-      final CompilationUnit u = wrap.intoCompilationUnit(get());
-      assertThat(u, notNullValue());
-      final N $ = firstInstance(u);
-      assertThat($, notNullValue());
-      return $;
-    }
-    private N firstInstance(final CompilationUnit u) {
-      final Wrapper<N> $ = new Wrapper<>();
-      u.accept(new ASTVisitor() {
-        /**
-         * The implementation of the visitation procedure in the JDT seems to be
-         * buggy. Each time we find a node which is an instance of the sought
-         * class, we return false. Hence, we do not anticipate any further calls
-         * to this function after the first such node is found. However, this
-         * does not seem to be the case. So, in the case our wrapper is not
-         * null, we do not carry out any further tests.
-         *
-         * @param n the node currently being visited.
-         * @return <code><b>true</b></code> <i>iff</i> the sought node is found.
-         */
-        @SuppressWarnings("unchecked") @Override public boolean preVisit2(final ASTNode n) {
-          if ($.get() != null)
-            return false;
-          if (!clazz.isAssignableFrom(n.getClass()))
-            return true;
-          $.set((N) n);
-          return false;
-        }
-      });
-      return $.get();
-    }
-    public OperandToWring<N> in(final Wring<N> w) {
-      final N findNode = findNode(w);
-      assertThat(w.scopeIncludes(findNode), is(true));
-      return this;
-    }
-    public OperandToWring<N> notIn(final Wring<N> w) {
-      assertThat(w.scopeIncludes(findNode(w)), is(false));
-      return this;
-    }
-  }
   // @Test public void firstInstanceTest() {
   // final String codeFragment = "a = null; b=null;";
   // final Wrap w = Wrap.find(codeFragment);
@@ -171,9 +82,6 @@ import org.spartan.utils.Wrapper;
       assertNotEquals("Simpification of " + from + " is just reformatting", compressSpaces(peeled), compressSpaces(from));
     assertSimilar(expected, peeled);
   }
-  public static int countOpportunities(final Spartanization s, final CompilationUnit u) {
-    return s.findOpportunities(u).size();
-  }
   private static <N extends ASTNode> OperandToWring<N> included(final String from, final Class<N> clazz) {
     return new OperandToWring<>(from, clazz);
   }
@@ -204,9 +112,6 @@ import org.spartan.utils.Wrapper;
     trimming("(x >> 18) & MASK_BITS").to("");
     trimming("(x >> 18) & MASK_6BITS").to("");
   }
-  @Test public void assignmentAssignmentNull() {
-    trimming("c = a = null; b = null;").to("");
-  }
   @Test public void assignmentAssignmentChain1() {
     trimming("c = a = 13; b = 13;").to("b = c = a = 13;");
   }
@@ -224,6 +129,15 @@ import org.spartan.utils.Wrapper;
     trimming("a1 = (a2 = (a3 = (a4 = 13))); b1 = b2 = b3 = ((((b4 = (b5 = 13)))));")//
         .to("b1=b2=b3=((((b4=(b5=a1=(a2=(a3=(a4=13))))))));");
   }
+  @Test public void assignmentAssignmentNew() {
+    trimming("a = new B(); b= new B();").to("");
+  }
+  @Test public void assignmentAssignmentNewArray() {
+    trimming("a = new A[3]; b= new A[3];").to("");
+  }
+  @Test public void assignmentAssignmentNull() {
+    trimming("c = a = null; b = null;").to("");
+  }
   @Test public void assignmentAssignmentSideEffect() {
     trimming("a = f(); b= f();").to("");
   }
@@ -238,12 +152,6 @@ import org.spartan.utils.Wrapper;
   }
   @Test public void assignmentAssignmentVanillaScopeIncludesNull() {
     included("a = null; b = null;", Assignment.class).notIn(new AssignmentAndAssignment());
-  }
-  @Test public void assignmentAssignmentNew() {
-    trimming("a = new B(); b= new B();").to("");
-  }
-  @Test public void assignmentAssignmentNewArray() {
-    trimming("a = new A[3]; b= new A[3];").to("");
   }
   @Test public void assignmentReturn0() {
     trimming("a = 3; return a;").to("return a = 3;");
@@ -548,23 +456,6 @@ import org.spartan.utils.Wrapper;
   }
   @Test public void commonPrefixIfBranchesInFor() {
     trimming("for (;;) if (a) {i++;j++;j++;} else { i++;j++; i++;}").to("for(;;){i++;j++;if(a)j++;else i++;}");
-  }
-  @Test public void nestedTernaryAlignment() {
-    trimming("int b=3==4?5==3?2:3:5==3?2:3*3;").to("int b=3==4?5==3?2:3:5!=3?3*3:2;");
-  }
-  @Test public void issue64a() {
-    trimming("void f() {" + //
-        "    final int a = f();\n" + //
-        "    new Object() {\n" + //
-        "      @Override public int hashCode() { return a; }\n" + //
-        "    };" + "}").to("");
-  }
-  @Test public void issue64b() {
-    trimming("void f() {" + //
-        "    final int a = 3;\n" + //
-        "    new Object() {\n" + //
-        "      @Override public int hashCode() { return a; }\n" + //
-        "    };" + "}").to("");
   }
   @Test public void commonSuffixIfBranches() {
     trimming("if (a) { \n" + //
@@ -1666,6 +1557,20 @@ import org.spartan.utils.Wrapper;
   @Test public void issue62c() {
     trimming("int f(int i) { while(++i > 999) if(i>99) break; return i;}").to("");
   }
+  @Test public void issue64a() {
+    trimming("void f() {" + //
+        "    final int a = f();\n" + //
+        "    new Object() {\n" + //
+        "      @Override public int hashCode() { return a; }\n" + //
+        "    };" + "}").to("");
+  }
+  @Test public void issue64b() {
+    trimming("void f() {" + //
+        "    final int a = 3;\n" + //
+        "    new Object() {\n" + //
+        "      @Override public int hashCode() { return a; }\n" + //
+        "    };" + "}").to("");
+  }
   @Test public void linearTransformation() {
     trimming("plain * the + kludge").to("the*plain+kludge");
   }
@@ -1747,6 +1652,9 @@ import org.spartan.utils.Wrapper;
         .to("if(x)if(a&&b)i++;else;else{++y;f();g();z();}") //
         .to("if(x){if(a&&b)i++;}else{++y;f();g();z();}") //
         ;
+  }
+  @Test public void nestedTernaryAlignment() {
+    trimming("int b=3==4?5==3?2:3:5==3?2:3*3;").to("int b=3==4?5==3?2:3:5!=3?3*3:2;");
   }
   @Test public void noChange() {
     trimming("12").to("");
@@ -2473,23 +2381,6 @@ import org.spartan.utils.Wrapper;
   @Test public void sequencerFirstInElse() {
     trimming("if (a) {b++; c++; ++d;} else { f++; g++; return x;}").to("if (!a) {f++; g++; return x;} b++; c++; ++d; ");
   }
-  @Test public void shortestFirstAlignment() {
-    trimming("n.isSimpleName() ? (SimpleName) n //\n" + //
-        "            : n.isQualifiedName() ? ((QualifiedName) n).getName() //\n" + //
-        "                : null").to("");//
-  }
-  @Test public void shortestFirstAlignmentShortened() {
-    trimming("n.isF() ? (SimpleName) n \n" + //
-        "            : n.isG() ? ((QualifiedName) n).getName() \n" + //
-        "                : null").to("");//
-  }
-  @Test public void shortestFirstAlignmentShortenedFurther() {
-    trimming("n.isF() ? (A) n : n.isG() ? ((B) n).f() \n" + //
-        "                : null").to("");//
-  }
-  @Test public void shortestFirstAlignmentShortenedFurtherAndFurther() {
-    trimming("n.isF() ? (A) n : n.isG() ? (B) n :  null").to("");//
-  }
   @Test public void shorterChainParenthesisComparison() {
     trimming("a == b == c").to("");
   }
@@ -2528,6 +2419,23 @@ import org.spartan.utils.Wrapper;
         "     a=3;\n" + //
         "   }\n" + //
         "").to("int a=0; if(!s.equals(known))a=3;else S.console();");
+  }
+  @Test public void shortestFirstAlignment() {
+    trimming("n.isSimpleName() ? (SimpleName) n //\n" + //
+        "            : n.isQualifiedName() ? ((QualifiedName) n).getName() //\n" + //
+        "                : null").to("");//
+  }
+  @Test public void shortestFirstAlignmentShortened() {
+    trimming("n.isF() ? (SimpleName) n \n" + //
+        "            : n.isG() ? ((QualifiedName) n).getName() \n" + //
+        "                : null").to("");//
+  }
+  @Test public void shortestFirstAlignmentShortenedFurther() {
+    trimming("n.isF() ? (A) n : n.isG() ? ((B) n).f() \n" + //
+        "                : null").to("");//
+  }
+  @Test public void shortestFirstAlignmentShortenedFurtherAndFurther() {
+    trimming("n.isF() ? (A) n : n.isG() ? (B) n :  null").to("");//
   }
   @Test public void shortestIfBranchFirst01() {
     trimming(""//
@@ -3134,5 +3042,97 @@ import org.spartan.utils.Wrapper;
   }
   @Test public void xorSortClassConstantsAtEnd() {
     trimming("f(a,b,c,d) ^ BOB").to("");
+  }
+  static class Operand extends Wrapper<String> {
+    public Operand(final String inner) {
+      super(inner);
+    }
+    public Operand to(final String expected) {
+      if (expected == null || expected.isEmpty())
+        checkSame();
+      else
+        checkExpected(expected);
+      return new Operand(expected);
+    }
+    Wrap findWrap() {
+      final Wrap $ = Wrap.find(get());
+      assertThat("Cannot parse '" + get() + "'; did you forget a semicolon?", $, notNullValue());
+      return $;
+    }
+    private void checkExpected(final String expected) {
+      final Wrap w = findWrap();
+      final String wrap = w.on(get());
+      final String unpeeled = apply(new Trimmer(), wrap);
+      if (wrap.equals(unpeeled))
+        fail("Nothing done on " + get());
+      final String peeled = w.off(unpeeled);
+      if (peeled.equals(get()))
+        assertNotEquals("No trimming of " + get(), get(), peeled);
+      if (compressSpaces(peeled).equals(compressSpaces(get())))
+        assertNotEquals("Trimming of " + get() + "is just reformatting", compressSpaces(peeled), compressSpaces(get()));
+      assertSimilar(expected, peeled);
+    }
+    private void checkSame() {
+      final Wrap w = findWrap();
+      final String wrap = w.on(get());
+      final String unpeeled = apply(new Trimmer(), wrap);
+      if (wrap.equals(unpeeled))
+        return;
+      final String peeled = w.off(unpeeled);
+      if (peeled.equals(get()) || compressSpaces(peeled).equals(compressSpaces(get())))
+        return;
+      assertSimilar(get(), peeled);
+    }
+  }
+  static class OperandToWring<N extends ASTNode> extends Operand {
+    final Class<N> clazz;
+    public OperandToWring(final String from, final Class<N> clazz) {
+      super(from);
+      this.clazz = clazz;
+    }
+    public OperandToWring<N> in(final Wring<N> w) {
+      final N findNode = findNode(w);
+      assertThat(w.scopeIncludes(findNode), is(true));
+      return this;
+    }
+    public OperandToWring<N> notIn(final Wring<N> w) {
+      assertThat(w.scopeIncludes(findNode(w)), is(false));
+      return this;
+    }
+    private N findNode(final Wring<N> w) {
+      assertThat(w, notNullValue());
+      final Wrap wrap = findWrap();
+      assertThat(wrap, notNullValue());
+      final CompilationUnit u = wrap.intoCompilationUnit(get());
+      assertThat(u, notNullValue());
+      final N $ = firstInstance(u);
+      assertThat($, notNullValue());
+      return $;
+    }
+    private N firstInstance(final CompilationUnit u) {
+      final Wrapper<N> $ = new Wrapper<>();
+      u.accept(new ASTVisitor() {
+        /**
+         * The implementation of the visitation procedure in the JDT seems to be
+         * buggy. Each time we find a node which is an instance of the sought
+         * class, we return false. Hence, we do not anticipate any further calls
+         * to this function after the first such node is found. However, this
+         * does not seem to be the case. So, in the case our wrapper is not
+         * null, we do not carry out any further tests.
+         *
+         * @param n the node currently being visited.
+         * @return <code><b>true</b></code> <i>iff</i> the sought node is found.
+         */
+        @SuppressWarnings("unchecked") @Override public boolean preVisit2(final ASTNode n) {
+          if ($.get() != null)
+            return false;
+          if (!clazz.isAssignableFrom(n.getClass()))
+            return true;
+          $.set((N) n);
+          return false;
+        }
+      });
+      return $.get();
+    }
   }
 }
