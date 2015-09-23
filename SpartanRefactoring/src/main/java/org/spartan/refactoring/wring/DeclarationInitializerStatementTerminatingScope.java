@@ -25,39 +25,39 @@ import org.spartan.refactoring.wring.LocalInliner.LocalInlineWithValue;
 public final class DeclarationInitializerStatementTerminatingScope extends Wring.VariableDeclarationFragementAndStatement {
   @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer, final Statement nextStatement,
       final TextEditGroup g) {
-        if (initializer == null || hasAnnotation(f))
+    if (initializer == null || hasAnnotation(f))
+      return null;
+    final Statement s = Extract.statement(f);
+    if (s == null)
+      return null;
+    final Block parent = asBlock(s.getParent());
+    if (parent == null)
+      return null;
+    final List<Statement> ss = parent.statements();
+    if (!lastIn(nextStatement, ss) || !penultimateIn(s, ss) || !Collect.definitionsOf(n).in(nextStatement).isEmpty())
+      return null;
+    final List<SimpleName> uses = Collect.usesOf(f.getName()).in(nextStatement);
+    if (!Is.sideEffectFree(initializer)) {
+      if (uses.size() > 1)
+        return null;
+      for (final SimpleName use : uses)
+        if (forbidden(use, nextStatement))
           return null;
-        final Statement s = Extract.statement(f);
-        if (s == null)
-          return null;
-        final Block parent = asBlock(s.getParent());
-        if (parent == null)
-          return null;
-        final List<Statement> ss = parent.statements();
-        if (!lastIn(nextStatement, ss) || !penultimateIn(s, ss) || !Collect.definitionsOf(n).in(nextStatement).isEmpty())
-          return null;
-        final List<SimpleName> uses = Collect.usesOf(f.getName()).in(nextStatement);
-        if (!Is.sideEffectFree(initializer)) {
-          if (uses.size() > 1)
-            return null;
-          for (final SimpleName use : uses)
-            if (forbidden(use, nextStatement))
-              return null;
-        }
-        for (final SimpleName use : uses)
-          if (never(use, nextStatement))
-            return null;
-        final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
-        final Statement newStatement = duplicate(nextStatement);
-        final int addedSize = i.addedSize(newStatement);
-        final int removalSaving = removalSaving(f);
-        if (addedSize - removalSaving > 0)
-          return null;
-        r.replace(nextStatement, newStatement, g);
-        i.inlineInto(newStatement);
-        remove(f, r, g);
-        return r;
-      }
+    }
+    for (final SimpleName use : uses)
+      if (never(use, nextStatement))
+        return null;
+    final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
+    final Statement newStatement = duplicate(nextStatement);
+    final int addedSize = i.addedSize(newStatement);
+    final int removalSaving = removalSaving(f);
+    if (addedSize - removalSaving > 0)
+      return null;
+    r.replace(nextStatement, newStatement, g);
+    i.inlineInto(newStatement);
+    remove(f, r, g);
+    return r;
+  }
   private static boolean never(final SimpleName n, final Statement s) {
     for (final ASTNode ancestor : AncestorSearch.until(s).ancestors(n))
       if (intIsIn(ancestor.getNodeType(), TRY_STATEMENT, SYNCHRONIZED_STATEMENT))
@@ -70,6 +70,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
       switch (ancestor.getNodeType()) {
         case WHILE_STATEMENT:
         case DO_STATEMENT:
+        case ANONYMOUS_CLASS_DECLARATION:
           return true;
         case FOR_STATEMENT:
           if (((ForStatement) ancestor).initializers().indexOf(child) != -1)
