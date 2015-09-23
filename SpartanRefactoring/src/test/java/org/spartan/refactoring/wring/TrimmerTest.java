@@ -1380,11 +1380,14 @@ import org.spartan.utils.Wrapper;
   }
   @Test public void issue06I() {
     trimming("41 * - 19")//
-        .to("-19 * 41 * ");
+        .to("-41 * 19 ") //
+        ;
   }
   @Test public void issue06J() {
     trimming("41 * a * - 19")//
-        .to("-19 * 41 * -1");
+        .to("-41*a*19")//
+        .to("-41*19*a") //
+        ;
   }
   @Test public void issue37Simplified() {
     trimming("" + //
