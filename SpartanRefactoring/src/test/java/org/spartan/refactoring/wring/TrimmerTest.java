@@ -552,6 +552,20 @@ import org.spartan.utils.Wrapper;
   @Test public void nestedTernaryAlignment() {
     trimming("int b=3==4?5==3?2:3:5==3?2:3*3;").to("int b=3==4?5==3?2:3:5!=3?3*3:2;");
   }
+  @Test public void issue64a() {
+    trimming("void f() {" + //
+        "    final int a = f();\n" + //
+        "    new Object() {\n" + //
+        "      @Override public int hashCode() { return a; }\n" + //
+        "    };" + "}").to("");
+  }
+  @Test public void issue64b() {
+    trimming("void f() {" + //
+        "    final int a = 3;\n" + //
+        "    new Object() {\n" + //
+        "      @Override public int hashCode() { return a; }\n" + //
+        "    };" + "}").to("");
+  }
   @Test public void commonSuffixIfBranches() {
     trimming("if (a) { \n" + //
         "++i;\n" + //
