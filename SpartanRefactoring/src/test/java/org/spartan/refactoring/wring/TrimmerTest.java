@@ -1632,10 +1632,13 @@ import org.spartan.utils.Wrapper;
     trimming("X f(List<Expression[][]>... expressions){}").to("X f(List<Expression[][]>... essss){}");
   }
   @Test public void issue62a() {
-    trimming("int f(int i) { for(;;++i) { if(false) break;} return i; }").to("");
+    trimming("int f(int i) { for(;;++i) if(false) break; return i; }").to("");
   }
   @Test public void issue62b() {
-    trimming("int f(int i) { for(;i<100;i=i+1) { if(false) break;} return i; }").to("");
+    trimming("int f(int i) { for(;i<100;i=i+1) if(false) break; return i; }").to("");
+  }
+  @Test public void issue62c() {
+    trimming("int f(int i) { while(++i > 999) if(i>99) break; return i;}").to("");
   }
   @Test public void linearTransformation() {
     trimming("plain * the + kludge").to("the*plain+kludge");

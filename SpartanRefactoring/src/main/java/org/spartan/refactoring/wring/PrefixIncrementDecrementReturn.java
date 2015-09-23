@@ -8,9 +8,7 @@ import static org.spartan.refactoring.utils.Funcs.asStatement;
 import static org.spartan.refactoring.utils.Funcs.same;
 import static org.spartan.utils.Utils.in;
 
-import org.eclipse.jdt.core.dom.PrefixExpression;
-import org.eclipse.jdt.core.dom.ReturnStatement;
-import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
 import org.spartan.refactoring.utils.Subject;
@@ -27,7 +25,7 @@ public class PrefixIncrementDecrementReturn extends Wring.ReplaceToNextStatement
     if (!in(e.getOperator(), INCREMENT, DECREMENT))
       return null;
     final Statement parent = asStatement(e.getParent());
-    if (parent == null)
+    if (parent == null || parent instanceof ForStatement)
       return null;
     final ReturnStatement s = asReturnStatement(nextStatement);
     if (s == null || !same(e.getOperand(), core(s.getExpression())))
