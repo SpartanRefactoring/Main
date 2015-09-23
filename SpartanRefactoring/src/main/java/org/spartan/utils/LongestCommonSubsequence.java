@@ -34,7 +34,7 @@ public class LongestCommonSubsequence {
     return i < 0 || j < 0 ? 0 : threeWayDynamicProgramingStep(i, j);
   }
   private int length() {
-    return 0 >= as.length || 0 >= bs.length ? 0 : length(as.length - 1, bs.length - 1); //
+    return as.length <= 0 || bs.length <= 0 ? 0 : length(as.length - 1, bs.length - 1); //
   }
   /**
    * Returns the length of the LCS of two prefixes of the current strings,
