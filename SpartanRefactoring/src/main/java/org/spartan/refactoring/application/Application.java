@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.PackageDeclaration;
+import org.spartan.files.FilesGenerator;
 import org.spartan.refactoring.handlers.ApplySpartanizationHandler;
 import org.spartan.refactoring.handlers.CleanupHandler;
 import org.spartan.utils.FileUtils;
@@ -34,11 +35,16 @@ import org.spartan.utils.Wrapper;
   @Override public Object start(final IApplicationContext arg0) {
     if (parseArguments(Arrays.asList((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS))))
       return IApplication.EXIT_OK;
+    final List<FileStats> fileStats = new ArrayList<>();
     try {
-      final List<String> javaFiles = FileUtils.findAllJavaFiles(optPath);
-      final List<FileStats> fileStats = new ArrayList<>();
       prepareTempIJavaProject();
-      for (final String f : javaFiles) {
+    } catch (final CoreException e) {
+      System.err.println(e.getMessage());
+      return IApplication.EXIT_OK;
+    }
+    int done = 0, failed = 0;
+    for (final File f : new FilesGenerator(".java", ".JAVA").from(optPath))
+      try {
         final ICompilationUnit u = openCompilationUnit(f);
         final FileStats s = new FileStats(f);
         for (int i = 0; i < optRounds; ++i) {
@@ -48,20 +54,19 @@ import org.spartan.utils.Wrapper;
           s.addRoundStat(n);
           ApplySpartanizationHandler.applySafeSpartanizationsTo(u);
         }
-        FileUtils.writeToFile(determineOutputFilename(f), u.getSource());
+        FileUtils.writeToFile(determineOutputFilename(f.getName()), u.getSource());
         s.countLinesAfter();
         fileStats.add(s);
+        ++done;
+      } catch (final JavaModelException | IOException e) {
+        System.err.println(f + ": " + e.getMessage());
+        ++failed;
       }
-      System.out.println("Files processed: " + javaFiles.size());
-      if (optStatsChanges)
-        printChangeStatistics(fileStats);
-      if (optStatsLines)
-        printLineStatistics(fileStats);
-    } catch (final Exception e) {
-      e.printStackTrace();
-    } finally {
-      discardTempIProject();
-    }
+    System.out.println(done + " files processed. " + (failed == 0 ? "." : failed + " failed."));
+    if (optStatsChanges)
+      printChangeStatistics(fileStats);
+    if (optStatsLines)
+      printLineStatistics(fileStats);
     return IApplication.EXIT_OK;
   }
   @Override public void stop() {
@@ -87,7 +92,7 @@ import org.spartan.utils.Wrapper;
     System.out.println("\nLine differences:");
     if (optIndividualStatistics)
       for (final FileStats f : ss) {
-        System.out.println("\n  " + f.getFileName());
+        System.out.println("\n  " + f.fileName());
         System.out.println("    Lines before: " + f.getLinesBefore());
         System.out.println("    Lines after: " + f.getLinesAfter());
       }
@@ -105,7 +110,7 @@ import org.spartan.utils.Wrapper;
     System.out.println("\nTotal changes made: ");
     if (optIndividualStatistics)
       for (final FileStats f : ss) {
-        System.out.println("\n  " + f.getFileName());
+        System.out.println("\n  " + f.fileName());
         for (int i = 0; i < optRounds; ++i)
           System.out.println("    Round #" + (i + 1) + ": " + (i < 9 ? " " : "") + f.getRoundStat(i));
       }
@@ -134,7 +139,7 @@ import org.spartan.utils.Wrapper;
         if (a.startsWith("-C"))
           optRounds = Integer.parseUnsignedInt(a.substring(2));
       } catch (final NumberFormatException e) {
-        // Ignore 
+        // Ignore
       }
       if (a.equals("-V"))
         optVerbose = true;
@@ -147,41 +152,37 @@ import org.spartan.utils.Wrapper;
     }
     return optPath == null;
   }
-  void prepareTempIJavaProject() {
-    try {
-      final IProject proj = ResourcesPlugin.getWorkspace().getRoot().getProject("spartanTemp");
-      final boolean isNew = !proj.exists();
-      if (isNew)
-        proj.create(null);
-      proj.open(null);
-      if (isNew) {
-        final IProjectDescription desc = proj.getDescription();
-        desc.setNatureIds(new String[] { JavaCore.NATURE_ID });
-        proj.setDescription(desc, null);
-      }
-      javaProject = JavaCore.create(proj);
-      final IFolder binFolder = proj.getFolder("bin");
-      final IFolder sourceFolder = proj.getFolder("src");
-      srcRoot = javaProject.getPackageFragmentRoot(sourceFolder);
-      if (isNew) {
-        binFolder.create(false, true, null);
-        sourceFolder.create(false, true, null);
-      }
-      javaProject.setOutputLocation(binFolder.getFullPath(), null);
-      final IClasspathEntry[] buildPath = new IClasspathEntry[1];
-      buildPath[0] = JavaCore.newSourceEntry(srcRoot.getPath());
-      javaProject.setRawClasspath(buildPath, null);
-    } catch (final CoreException e) {
-      e.printStackTrace();
+  void prepareTempIJavaProject() throws CoreException {
+    final IProject p = ResourcesPlugin.getWorkspace().getRoot().getProject("spartanTemp");
+    final boolean isNew = !p.exists();
+    if (isNew)
+      p.create(null);
+    p.open(null);
+    if (isNew) {
+      final IProjectDescription d = p.getDescription();
+      d.setNatureIds(new String[] { JavaCore.NATURE_ID });
+      p.setDescription(d, null);
     }
+    javaProject = JavaCore.create(p);
+    final IFolder binFolder = p.getFolder("bin");
+    final IFolder sourceFolder = p.getFolder("src");
+    srcRoot = javaProject.getPackageFragmentRoot(sourceFolder);
+    if (isNew) {
+      binFolder.create(false, true, null);
+      sourceFolder.create(false, true, null);
+    }
+    javaProject.setOutputLocation(binFolder.getFullPath(), null);
+    final IClasspathEntry[] buildPath = new IClasspathEntry[1];
+    buildPath[0] = JavaCore.newSourceEntry(srcRoot.getPath());
+    javaProject.setRawClasspath(buildPath, null);
   }
   void setPackage(final String name) throws JavaModelException {
     pack = srcRoot.createPackageFragment(name, false, null);
   }
-  ICompilationUnit openCompilationUnit(final String path) throws IOException, JavaModelException {
-    final String source = FileUtils.readFromFile(path);
+  ICompilationUnit openCompilationUnit(final File f) throws IOException, JavaModelException {
+    final String source = FileUtils.read(f);
     setPackage(getPackageNameFromSource(source));
-    return pack.createCompilationUnit(new File(path).getName(), source, false, null);
+    return pack.createCompilationUnit(f.getName(), source, false, null);
   }
   String getPackageNameFromSource(final String source) {
     final ASTParser p = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
@@ -209,30 +210,28 @@ import org.spartan.utils.Wrapper;
    * file, in order to produce statistics when completed execution
    */
   private class FileStats {
-    String fileName, path;
-    int linesBefore, linesAfter;
-    List<Integer> roundStats;
-    public FileStats(final String path) {
-      this.path = path;
-      fileName = new File(path).getName();
-      linesBefore = countLines(path);
-      roundStats = new ArrayList<>();
+    final File file;
+    final int linesBefore;
+    int linesAfter;
+    final List<Integer> roundStats = new ArrayList<>();
+    public FileStats(final File file) throws IOException {
+      linesBefore = countLines((this.file = file).getName());
     }
-    public void countLinesAfter() {
-      linesAfter = countLines(determineOutputFilename(path));
+    public String fileName() {
+      return file.getName();
+    }
+    public void countLinesAfter() throws IOException {
+      linesAfter = countLines(determineOutputFilename(file.getName()));
     }
     public void addRoundStat(final int i) {
-      roundStats.add(i);
+      roundStats.add(Integer.valueOf(i));
     }
-    @SuppressWarnings("boxing") public int getRoundStat(final int r) {
+    public int getRoundStat(final int r) {
       try {
-        return roundStats.get(r);
+        return roundStats.get(r).intValue();
       } catch (final IndexOutOfBoundsException e) {
         return 0;
       }
-    }
-    public String getFileName() {
-      return fileName;
     }
     public int getLinesBefore() {
       return linesBefore;
@@ -240,14 +239,14 @@ import org.spartan.utils.Wrapper;
     public int getLinesAfter() {
       return linesAfter;
     }
-    protected int countLines(final String p) {
-      try (LineNumberReader lr = new LineNumberReader(new FileReader(new File(p)))) {
-        lr.skip(Long.MAX_VALUE);
-        return lr.getLineNumber();
-      } catch (final IOException e) {
-        e.printStackTrace();
-        return -1;
-      }
+  }
+  static int countLines(final File f) throws IOException {
+    try (LineNumberReader lr = new LineNumberReader(new FileReader(f))) {
+      lr.skip(Long.MAX_VALUE);
+      return lr.getLineNumber();
     }
+  }
+  static int countLines(final String fileName) throws IOException {
+    return countLines(new File(fileName));
   }
 }
