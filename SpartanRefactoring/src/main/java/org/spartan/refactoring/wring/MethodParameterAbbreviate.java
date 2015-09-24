@@ -12,57 +12,45 @@ import org.eclipse.text.edits.TextEditGroup;
 import org.spartan.refactoring.utils.*;
 
 /**
- * A {@link Wring} that abbreviates the names of variables that have a generic
- * variation. The abbreviated name is the first character in the last word of
- * the variable's name.
+ * A {@link Wring} that abbreviates the name of the first method parameter that
+ * is a viable candidate for abbreviation (meaning that its name is suitable for
+ * renaming, and isn't the desired name). The abbreviated name is the first
+ * character in the last word of the variable's name. <br>
+ * <br>
+ * This wring is applied to all methods in the code, excluding constructors.
  *
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
- * @since 2015/08/24
+ * @since 2015/09/24
  */
-/* TODO This is a previous version of the MethodParameterAbbreviate wring that
- * replaces all parameter names in a method at once. If it is found to be
- * useless in the near future, delete this class. Otherwise, remove
- * the @Deprecated annotation */
-@Deprecated public class MethodAbbreviateParameterNames extends Wring<MethodDeclaration> {
+public class MethodParameterAbbreviate extends Wring<MethodDeclaration> {
   @Override String description(final MethodDeclaration d) {
     return d.getName().toString();
   }
   @Override Rewrite make(final MethodDeclaration d, final ExclusionManager exclude) {
     if (d.isConstructor())
       return null;
-    final List<SingleVariableDeclaration> vd = find(d.parameters());
-    final Map<SimpleName, SimpleName> renameMap = new HashMap<>();
-    if (vd == null)
-      return null;
-    for (final SingleVariableDeclaration v : vd)
-      if (legal(v, d, renameMap.values()))
-        renameMap.put(v.getName(), d.getAST().newSimpleName(Funcs.shortName(v.getType()) + pluralVariadic(v)));
-    if (renameMap.isEmpty())
+    final SingleVariableDeclaration v = candidate(d.parameters());
+    if (v == null || !legal(v, d))
       return null;
     if (exclude != null)
       exclude.exclude(d);
-    return new Rewrite("Abbreviate parameters in method " + d.getName().toString(), d) {
+    return new Rewrite("Abbreviate parameter " + v.getName().getIdentifier() + " in method " + d.getName().getIdentifier(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        for (final SimpleName key : renameMap.keySet())
-          rename(key, renameMap.get(key), d, r, g);
+        rename(v.getName(), d.getAST().newSimpleName(Funcs.shortName(v.getType())), d, r, g);
       }
     };
   }
-  private List<SingleVariableDeclaration> find(final List<SingleVariableDeclaration> ds) {
-    final List<SingleVariableDeclaration> $ = new ArrayList<>();
-    for (final SingleVariableDeclaration d : ds)
-      if (suitable(d))
-        $.add(d);
-    return $.size() != 0 ? $ : null;
+  private SingleVariableDeclaration candidate(final List<SingleVariableDeclaration> ds) {
+    for (final SingleVariableDeclaration $ : ds)
+      if (suitable($) && !isShort($))
+        return $;
+    return null;
   }
-  private static boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m, final Collection<SimpleName> newNames) {
+  private static boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m) {
     if (Funcs.shortName(d.getType()) == null)
       return false;
     final MethodExplorer e = new MethodExplorer(m);
     for (final SimpleName n : e.localVariables())
-      if (n.getIdentifier().equals(Funcs.shortName(d.getType())))
-        return false;
-    for (final SimpleName n : newNames)
       if (n.getIdentifier().equals(Funcs.shortName(d.getType())))
         return false;
     for (final SingleVariableDeclaration n : (List<SingleVariableDeclaration>) m.parameters())

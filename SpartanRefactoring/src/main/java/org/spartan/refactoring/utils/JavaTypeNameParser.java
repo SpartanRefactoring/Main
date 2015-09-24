@@ -1,5 +1,8 @@
 package org.spartan.refactoring.utils;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * A utility parser that resolves a variable's short name, and determines
  * whether a pre-existing name is a generic variation of the type's name. <br>
@@ -13,7 +16,7 @@ package org.spartan.refactoring.utils;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-08-25
  */
-public class JavaTypeNameParser {
+@SuppressWarnings("static-method") public class JavaTypeNameParser {
   /** The type name managed by this instance */
   public final String typeName;
   /**
@@ -42,9 +45,16 @@ public class JavaTypeNameParser {
    * @return the type's short name
    */
   public String shortName() {
-    return String.valueOf(Character.toLowerCase(lastName().charAt(0)));
+    return shortAcronymOrNull() != null ? shortAcronymOrNull() : String.valueOf(Character.toLowerCase(lastName().charAt(0)));
   }
-  @SuppressWarnings("static-method") private String toSingular(final String s) {
+  private String shortAcronymOrNull() {
+    String a = "";
+    final Matcher m = Pattern.compile("[A-Z]").matcher(typeName);
+    while (m.find())
+      a += m.group();
+    return a.length() <= 2 ? a.toLowerCase() : null;
+  }
+  private String toSingular(final String s) {
     return s == null ? null
         : s.endsWith("ies") ? s.substring(0, s.length() - 3) + "y" : s.endsWith("es") ? s.substring(0, s.length() - 2) : s.endsWith("s") ? s.substring(0, s.length() - 1) : s;
   }
@@ -75,7 +85,7 @@ public class JavaTypeNameParser {
   private boolean isUpper(final int i) {
     return Character.isUpperCase(typeName.charAt(i));
   }
-  @SuppressWarnings("static-method") private boolean lowerCaseContains(final String s, final String substring) {
+  private boolean lowerCaseContains(final String s, final String substring) {
     return s.toLowerCase().contains(substring.toLowerCase());
   }
 }

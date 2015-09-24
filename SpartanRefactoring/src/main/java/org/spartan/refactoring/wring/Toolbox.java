@@ -64,7 +64,10 @@ public class Toolbox {
           new InfixSortDivision(), //
           new InfixConditionalCommon(), //
           null)
-      .add(MethodDeclaration.class, new MethodRenameReturnToDollar(), new MethodAbbreviateParameterNames()) //
+      .add(MethodDeclaration.class, //
+          new MethodRenameReturnToDollar(), //
+          new MethodParameterAbbreviate(), //
+          null)
       .add(VariableDeclarationFragment.class, //
           new DeclarationAssignment(), //
           new DeclarationInitialiazerAssignment(), //
