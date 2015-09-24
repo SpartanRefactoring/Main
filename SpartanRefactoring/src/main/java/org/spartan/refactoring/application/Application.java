@@ -43,9 +43,10 @@ import org.spartan.utils.Wrapper;
       return IApplication.EXIT_OK;
     }
     int done = 0, failed = 0;
-    for (final File f : new FilesGenerator(".java", ".JAVA").from(optPath))
+    for (final File f : new FilesGenerator(".java", ".JAVA").from(optPath)) {
+      ICompilationUnit u = null;
       try {
-        final ICompilationUnit u = openCompilationUnit(f);
+        u = openCompilationUnit(f);
         final FileStats s = new FileStats(f);
         for (int i = 0; i < optRounds; ++i) {
           final int n = CleanupHandler.countSuggestions(u);
@@ -54,15 +55,18 @@ import org.spartan.utils.Wrapper;
           s.addRoundStat(n);
           ApplySpartanizationHandler.applySafeSpartanizationsTo(u);
         }
-        FileUtils.writeToFile(determineOutputFilename(f.getName()), u.getSource());
+        FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
         s.countLinesAfter();
         fileStats.add(s);
         ++done;
       } catch (final JavaModelException | IOException e) {
         System.err.println(f + ": " + e.getMessage());
         ++failed;
+      } finally {
+        discardCompilationUnit(u);
       }
-    System.out.println(done + " files processed. " + (failed == 0 ? "." : failed + " failed."));
+    }
+    System.out.println(done + " files processed. " + (failed == 0 ? "" : failed + " failed."));
     if (optStatsChanges)
       printChangeStatistics(fileStats);
     if (optStatsLines)
@@ -154,23 +158,19 @@ import org.spartan.utils.Wrapper;
   }
   void prepareTempIJavaProject() throws CoreException {
     final IProject p = ResourcesPlugin.getWorkspace().getRoot().getProject("spartanTemp");
-    final boolean isNew = !p.exists();
-    if (isNew)
-      p.create(null);
+    if (p.exists())
+      p.delete(true, null);
+    p.create(null);
     p.open(null);
-    if (isNew) {
-      final IProjectDescription d = p.getDescription();
-      d.setNatureIds(new String[] { JavaCore.NATURE_ID });
-      p.setDescription(d, null);
-    }
+    final IProjectDescription d = p.getDescription();
+    d.setNatureIds(new String[] { JavaCore.NATURE_ID });
+    p.setDescription(d, null);
     javaProject = JavaCore.create(p);
     final IFolder binFolder = p.getFolder("bin");
     final IFolder sourceFolder = p.getFolder("src");
     srcRoot = javaProject.getPackageFragmentRoot(sourceFolder);
-    if (isNew) {
-      binFolder.create(false, true, null);
-      sourceFolder.create(false, true, null);
-    }
+    binFolder.create(false, true, null);
+    sourceFolder.create(false, true, null);
     javaProject.setOutputLocation(binFolder.getFullPath(), null);
     final IClasspathEntry[] buildPath = new IClasspathEntry[1];
     buildPath[0] = JavaCore.newSourceEntry(srcRoot.getPath());
@@ -183,6 +183,15 @@ import org.spartan.utils.Wrapper;
     final String source = FileUtils.read(f);
     setPackage(getPackageNameFromSource(source));
     return pack.createCompilationUnit(f.getName(), source, false, null);
+  }
+  void discardCompilationUnit(final ICompilationUnit u) {
+    try {
+      u.delete(true, null);
+    } catch (final JavaModelException e) {
+      e.printStackTrace();
+    } catch (final NullPointerException e) {
+      // Ignore
+    }
   }
   String getPackageNameFromSource(final String source) {
     final ASTParser p = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
@@ -215,13 +224,13 @@ import org.spartan.utils.Wrapper;
     int linesAfter;
     final List<Integer> roundStats = new ArrayList<>();
     public FileStats(final File file) throws IOException {
-      linesBefore = countLines((this.file = file).getName());
+      linesBefore = countLines(this.file = file);
     }
     public String fileName() {
       return file.getName();
     }
     public void countLinesAfter() throws IOException {
-      linesAfter = countLines(determineOutputFilename(file.getName()));
+      linesAfter = countLines(determineOutputFilename(file.getAbsolutePath()));
     }
     public void addRoundStat(final int i) {
       roundStats.add(Integer.valueOf(i));
