@@ -4,9 +4,7 @@ import static org.spartan.utils.Utils.append;
 
 import java.util.Arrays;
 
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IProjectDescription;
-import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -30,6 +28,7 @@ public class Plugin extends AbstractUIPlugin {
   @Override public void start(final BundleContext c) throws Exception {
     super.start(c);
     applyPluginToAllProjects();
+    refreshAllProjects(); // TODO See if this improves the plugin's execution
   }
   @Override public void stop(final BundleContext c) throws Exception {
     plugin = null;
@@ -71,5 +70,14 @@ public class Plugin extends AbstractUIPlugin {
       return; // Already got the nature
     description.setNatureIds(append(natures, Nature.NATURE_ID));
     p.setDescription(description, null);
+  }
+  private static void refreshAllProjects() {
+    for (final IProject p : ResourcesPlugin.getWorkspace().getRoot().getProjects())
+      try {
+        if (p.isOpen())
+          p.build(IncrementalProjectBuilder.CLEAN_BUILD, null);
+      } catch (final CoreException e) {
+        e.printStackTrace();
+      }
   }
 }

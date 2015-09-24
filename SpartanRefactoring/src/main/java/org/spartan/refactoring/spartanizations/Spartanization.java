@@ -197,7 +197,7 @@ public abstract class Spartanization extends Refactoring {
      */
     return new IMarkerResolution() {
       @Override public String getLabel() {
-        return "Do it! " + s;
+        return "Spartanize!";
       }
       @Override public void run(final IMarker m) {
         try {
@@ -227,7 +227,7 @@ public abstract class Spartanization extends Refactoring {
        *         (v2)
        */
       @Override public String getLabel() {
-        return Spartanization.this + "Show me a preview of '" + s + "' first";
+        return "Show spartanization preview";
       }
       @Override public void run(final IMarker m) {
         setMarker(m);
