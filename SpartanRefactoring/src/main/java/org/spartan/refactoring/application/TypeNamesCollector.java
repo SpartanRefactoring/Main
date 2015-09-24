@@ -6,6 +6,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.spartan.files.FilesGenerator;
 import org.spartan.refactoring.utils.As;
+import org.spartan.refactoring.utils.Funcs;
 import org.spartan.utils.FileUtils;
 
 public class TypeNamesCollector {
@@ -13,7 +14,7 @@ public class TypeNamesCollector {
   public static void main(final String[] where) {
     collect(where.length != 0 ? where : new String[] { "." });
     for (final String s : basket)
-      System.out.println(s);
+      System.out.println(s + " --> " + Funcs.shortName(s));
   }
   private static void collect(final String[] where) {
     for (final File f : new FilesGenerator(".java").from(where))
