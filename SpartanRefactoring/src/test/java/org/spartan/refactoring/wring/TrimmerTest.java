@@ -43,7 +43,6 @@ import org.spartan.utils.Wrapper;
   public static int countOpportunities(final Spartanization s, final CompilationUnit u) {
     return s.findOpportunities(u).size();
   }
-
   // @Test public void firstInstanceTest() {
   // final String codeFragment = "a = null; b=null;";
   // final Wrap w = Wrap.find(codeFragment);
@@ -1874,9 +1873,9 @@ import org.spartan.utils.Wrapper;
     trimming("int m(StringBuilder builder) {" + //
         "if(builder.exec())" + //
         "builder.clear();")
-            .to("int m(StringBuilder b) {" + //
-                "if(b.exec())" + //
-                "b.clear();");
+            .to("int m(StringBuilder sb) {" + //
+                "if(sb.exec())" + //
+                "sb.clear();");
   }
   @Test public void paramAbbreviateCollision() {
     trimming("void m(Expression exp, Expression expresssion) { }").to("void m(Expression e, Expression expresssion) { }");
@@ -1908,17 +1907,19 @@ import org.spartan.utils.Wrapper;
   }
   @Test public void paramAbbreviateConflictingWithMethodName() {
     trimming("void m(BitmapManipulator bitmapManipulator) {" + //
-        "bitmapManipulator.x().y();").to("");
+        "bitmapManipulator.x().y();")
+            .to("void m(BitmapManipulator bm) {" + //
+                "bm.x().y();");
   }
   @Test public void paramAbbreviateMultiple() {
     trimming("void m(StringBuilder stringBuilder, XMLDocument xmlDocument, Dog dog, Dog cat) {" + //
         "stringBuilder.clear();" + //
         "xmlDocument.open(stringBuilder.toString());" + //
         "dog.eat(xmlDocument.asEdible(cat));}")
-            .to("void m(StringBuilder b, XMLDocument d, Dog dog, Dog cat) {" + //
-                "b.clear();" + //
-                "d.open(b.toString());" + //
-                "dog.eat(d.asEdible(cat));}");
+            .to("void m(StringBuilder sb, XMLDocument xmlDocument, Dog dog, Dog cat) {" + //
+                "sb.clear();" + //
+                "xmlDocument.open(sb.toString());" + //
+                "dog.eat(xmlDocument.asEdible(cat));}");
   }
   @Test public void paramAbbreviateNestedMethod() {
     trimming("void f(Iterator iterator) {" + //
@@ -3043,6 +3044,7 @@ import org.spartan.utils.Wrapper;
   @Test public void xorSortClassConstantsAtEnd() {
     trimming("f(a,b,c,d) ^ BOB").to("");
   }
+
   static class Operand extends Wrapper<String> {
     public Operand(final String inner) {
       super(inner);
@@ -3084,6 +3086,7 @@ import org.spartan.utils.Wrapper;
       assertSimilar(get(), peeled);
     }
   }
+
   static class OperandToWring<N extends ASTNode> extends Operand {
     final Class<N> clazz;
     public OperandToWring(final String from, final Class<N> clazz) {
