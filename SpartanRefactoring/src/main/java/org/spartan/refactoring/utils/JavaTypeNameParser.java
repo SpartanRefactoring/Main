@@ -71,6 +71,8 @@ import java.util.regex.Pattern;
     return typeName.substring(lastNameIndex());
   }
   int lastNameIndex() {
+    if (isUpper(typeName.length() - 1))
+      return typeName.length() - 1;
     for (int $ = typeName.length() - 1; $ > 0; --$) {
       if (isLower($) && isUpper($ - 1))
         return $ - 1;
