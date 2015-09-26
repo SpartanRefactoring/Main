@@ -52,7 +52,7 @@ import java.util.regex.Pattern;
     final Matcher m = Pattern.compile("[A-Z]").matcher(typeName);
     while (m.find())
       a += m.group();
-    return a.length() <= 2 && !a.isEmpty() ? a.toLowerCase() : null;
+    return a.length() > 2 || a.isEmpty() ? null : a.toLowerCase();
   }
   private String toSingular(final String s) {
     return s == null ? null
