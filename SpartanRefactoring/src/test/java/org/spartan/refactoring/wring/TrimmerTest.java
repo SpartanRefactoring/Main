@@ -43,16 +43,6 @@ import org.spartan.utils.Wrapper;
   public static int countOpportunities(final Spartanization s, final CompilationUnit u) {
     return s.findOpportunities(u).size();
   }
-  // @Test public void firstInstanceTest() {
-  // final String codeFragment = "a = null; b=null;";
-  // final Wrap w = Wrap.find(codeFragment);
-  // assertThat(w, notNullValue());
-  // final CompilationUnit u = w.intoCompilationUnit(codeFragment);
-  // assertThat(u, notNullValue());
-  // final N $ = firstInstance(u);
-  // assertThat($, notNullValue());
-  // return $;
-  // }
   static String apply(final Trimmer t, final String from) {
     final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(from);
     assertNotNull(u);
