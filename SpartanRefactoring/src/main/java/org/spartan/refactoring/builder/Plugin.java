@@ -25,14 +25,14 @@ public class Plugin extends AbstractUIPlugin {
   public Plugin() {
     plugin = this;
   }
-  @Override public void start(final BundleContext c) throws Exception {
-    super.start(c);
+  @Override public void start(final BundleContext bc) throws Exception {
+    super.start(bc);
     applyPluginToAllProjects();
     refreshAllProjects(); // TODO See if this improves the plugin's execution
   }
-  @Override public void stop(final BundleContext c) throws Exception {
+  @Override public void stop(final BundleContext bc) throws Exception {
     plugin = null;
-    super.stop(c);
+    super.stop(bc);
   }
   /**
    * @return the (single) instance of the plugin

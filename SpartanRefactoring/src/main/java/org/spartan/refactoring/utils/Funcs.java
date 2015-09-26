@@ -534,13 +534,13 @@ public enum Funcs {
    * Make a duplicate, suitable for tree rewrite, of the parameter
    *
    * @param n JD
-   * @param a JD
+   * @param t JD
    * @return a duplicate of the parameter, downcasted to the returned type.
    * @see ASTNode#copySubtree
    * @see ASTRewrite
    */
-  @SuppressWarnings("unchecked") public static <N extends ASTNode> N rebase(final N n, final AST a) {
-    return (N) copySubtree(a, n);
+  @SuppressWarnings("unchecked") public static <N extends ASTNode> N rebase(final N n, final AST t) {
+    return (N) copySubtree(t, n);
   }
   /**
    * Remove all occurrences of a boolean literal from a list of
