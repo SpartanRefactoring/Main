@@ -34,9 +34,11 @@ public class MethodParameterAbbreviate extends Wring<MethodDeclaration> {
       return null;
     if (exclude != null)
       exclude.exclude(d);
-    return new Rewrite("Abbreviate parameter " + v.getName().getIdentifier() + " in method " + d.getName().getIdentifier(), d) {
+    final SimpleName oldName = v.getName();
+    final String newName = Funcs.shortName(v.getType()) + pluralVariadic(v);
+    return new Rewrite("Rename parameter " + oldName + " to " + newName + " in method " + d.getName().getIdentifier(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        rename(v.getName(), d.getAST().newSimpleName(Funcs.shortName(v.getType()) + pluralVariadic(v)), d, r, g);
+        rename(oldName, d.getAST().newSimpleName(newName), d, r, g);
       }
     };
   }
