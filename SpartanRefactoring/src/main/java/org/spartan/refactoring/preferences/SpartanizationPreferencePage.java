@@ -14,7 +14,7 @@ import org.spartan.refactoring.preferences.PreferencesStrings.Strings;
 
 /**
  * This class represents a preference page that is contributed to the
- * Preferences dialog. By sub classing {@link FieldEditorPreferencePage} built
+ * Preferences dialog. By sub-classing {@link FieldEditorPreferencePage} built
  * into {@link org.eclipse.jface} that allows us to create a page that is small
  * and knows how to save, restore and apply itself.
  * <p>

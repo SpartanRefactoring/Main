@@ -11,8 +11,8 @@ import org.eclipse.text.edits.TextEditGroup;
 import org.spartan.refactoring.utils.*;
 
 /**
- * A {@link Wring} that abbreviates the name of the first method parameter that
- * is a viable candidate for abbreviation (meaning that its name is suitable for
+ * A {@link Wring} that abbreviates the name of a method parameter that is a
+ * viable candidate for abbreviation (meaning that its name is suitable for
  * renaming, and isn't the desired name). The abbreviated name is the first
  * character in the last word of the variable's name.
  * <p>
