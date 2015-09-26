@@ -2,7 +2,7 @@ package org.spartan.refactoring.wring;
 
 import static org.spartan.refactoring.wring.Wrings.rename;
 
-import java.util.*;
+import java.util.List;
 
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.SimpleName;

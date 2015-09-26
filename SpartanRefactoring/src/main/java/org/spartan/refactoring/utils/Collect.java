@@ -325,7 +325,7 @@ public enum Collect {
    * An abstract class to carry out the collection process. Should not be
    * instantiated or used directly by clients, other than the use as part of
    * fluent API.
-   * 
+   *
    * @author Yossi Gil
    * @since 2015-09-06
    */

@@ -20,18 +20,18 @@ import org.spartan.refactoring.utils.Subject;
 public final class DeclarationInitializerReturnVariable extends Wring.VariableDeclarationFragementAndStatement {
   @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer, final Statement nextStatement,
       final TextEditGroup g) {
-        if (initializer == null || hasAnnotation(f))
-          return null;
-        final ReturnStatement s = asReturnStatement(nextStatement);
-        if (s == null)
-          return null;
-        final Expression returnValue = Extract.expression(s);
-        if (returnValue == null || !same(n, returnValue))
-          return null;
-        eliminate(f, r, g);
-        r.replace(s, Subject.operand(initializer).toReturn(), g);
-        return r;
-      }
+    if (initializer == null || hasAnnotation(f))
+      return null;
+    final ReturnStatement s = asReturnStatement(nextStatement);
+    if (s == null)
+      return null;
+    final Expression returnValue = Extract.expression(s);
+    if (returnValue == null || !same(n, returnValue))
+      return null;
+    eliminate(f, r, g);
+    r.replace(s, Subject.operand(initializer).toReturn(), g);
+    return r;
+  }
   @Override String description(final VariableDeclarationFragment f) {
     return "Eliminate temporary " + f.getName() + " and return its value";
   }

@@ -1,7 +1,9 @@
 package org.spartan.refactoring.application;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.eclipse.jdt.core.dom.*;
 import org.spartan.files.FilesGenerator;

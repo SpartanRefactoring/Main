@@ -139,7 +139,7 @@ class UnionFind {
     squeeze(child, $);
     return $;
   }
-  private void squeeze(final int from, int root) {
+  private void squeeze(final int from, final int root) {
     for (int child = from; child != root; child = parentOf[child])
       parentOf[child] = root;
   }

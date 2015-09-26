@@ -1,9 +1,9 @@
 package org.spartan.refactoring.wring;
 
+import static org.eclipse.jdt.core.dom.ASTNode.NULL_LITERAL;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.ASSIGN;
 import static org.spartan.refactoring.utils.Funcs.*;
 
-import static org.eclipse.jdt.core.dom.Assignment.Operator.ASSIGN;
-import static org.eclipse.jdt.core.dom.ASTNode.NULL_LITERAL;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;

@@ -1,10 +1,11 @@
 package org.spartan.utils;
 
-import org.spartan.refactoring.utils.As;
 import static org.spartan.utils.Utils.compressSpaces;
 import static org.spartan.utils.Utils.max;
 
 import java.util.Arrays;
+
+import org.spartan.refactoring.utils.As;
 
 /**
  * Utility class for computing the "Longest Common Subsequence" of two strings.
