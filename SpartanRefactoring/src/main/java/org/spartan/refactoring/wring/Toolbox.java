@@ -66,7 +66,9 @@ public class Toolbox {
           null)
       .add(MethodDeclaration.class, //
           new MethodRenameReturnToDollar(), //
-          new MethodParameterAbbreviate(), //
+          null)
+      .add(SingleVariableDeclaration.class, //
+          new SingleVariableDeclarationAbbreviation(), //
           null)
       .add(VariableDeclarationFragment.class, //
           new DeclarationAssignment(), //

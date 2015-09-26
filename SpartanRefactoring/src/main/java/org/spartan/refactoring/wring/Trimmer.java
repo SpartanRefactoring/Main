@@ -86,6 +86,9 @@ public class Trimmer extends Spartanization {
     @Override public final boolean visit(final Block it) {
       return cautiousGo(it);
     }
+    @Override public final boolean visit(final SingleVariableDeclaration d) {
+      return cautiousGo(d);
+    }
     @Override public final boolean visit(final ConditionalExpression e) {
       return cautiousGo(e);
     }

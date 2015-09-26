@@ -21,24 +21,25 @@ import org.spartan.refactoring.utils.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015/09/24
  */
-public class MethodParameterAbbreviate extends Wring<MethodDeclaration> {
-  @Override String description(final MethodDeclaration d) {
+public class SingleVariableDeclarationAbbreviation extends Wring<SingleVariableDeclaration> {
+  @Override String description(final SingleVariableDeclaration d) {
     return d.getName().toString();
   }
-  @Override Rewrite make(final MethodDeclaration d, final ExclusionManager exclude) {
-    if (d.isConstructor())
+  @Override Rewrite make(final SingleVariableDeclaration d, final ExclusionManager exclude) {
+    final ASTNode parent = d.getParent();
+    if (parent == null || !(parent instanceof MethodDeclaration))
       return null;
-    final SingleVariableDeclaration v = firstCandidate(d.parameters());
-    if (v == null || !legal(v, d))
+    final MethodDeclaration m = (MethodDeclaration) parent;
+    if (m.isConstructor() || !suitable(d) || isShort(d) || !legal(d, m))
       return null;
     if (exclude != null)
-      exclude.exclude(d);
-    final SimpleName oldName = v.getName();
-    final String newName = Funcs.shortName(v.getType()) + pluralVariadic(v);
-    return new Rewrite("Rename parameter " + oldName + " to " + newName + " in method " + d.getName().getIdentifier(), d) {
+      exclude.exclude(m);
+    final SimpleName oldName = d.getName();
+    final String newName = Funcs.shortName(d.getType()) + pluralVariadic(d);
+    return new Rewrite("Rename parameter " + oldName + " to " + newName + " in method " + m.getName().getIdentifier(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        rename(oldName, d.getAST().newSimpleName(newName), d, r, g);
-        final Javadoc j = d.getJavadoc();
+        rename(oldName, d.getAST().newSimpleName(newName), m, r, g);
+        final Javadoc j = m.getJavadoc();
         if (j == null)
           return;
         final List<TagElement> ts = j.tags();
@@ -50,19 +51,12 @@ public class MethodParameterAbbreviate extends Wring<MethodDeclaration> {
           for (final Object o : t.fragments()) {
             if (!(o instanceof SimpleName))
               continue;
-            final SimpleName n = (SimpleName) o;
-            if (same(n, oldName))
-              r.replace(n, d.getAST().newSimpleName(newName), g);
+            if (same((SimpleName) o, oldName))
+              r.replace((SimpleName) o, d.getAST().newSimpleName(newName), g);
           }
         }
       }
     };
-  }
-  private static SingleVariableDeclaration firstCandidate(final List<SingleVariableDeclaration> ds) {
-    for (final SingleVariableDeclaration $ : ds)
-      if (suitable($) && !isShort($))
-        return $;
-    return null;
   }
   private static boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m) {
     if (Funcs.shortName(d.getType()) == null)
