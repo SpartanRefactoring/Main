@@ -48,12 +48,11 @@ public class SingleVariableDeclarationAbbreviation extends Wring<SingleVariableD
         for (final TagElement t : ts) {
           if (!TagElement.TAG_PARAM.equals(t.getTagName()))
             continue;
-          for (final Object o : t.fragments()) {
-            if (!(o instanceof SimpleName))
-              continue;
-            if (same((SimpleName) o, oldName))
+          for (final Object o : t.fragments())
+            if (o instanceof SimpleName && same((SimpleName) o, oldName)) {
               r.replace((SimpleName) o, d.getAST().newSimpleName(newName), g);
-          }
+              return;
+            }
         }
       }
     };
