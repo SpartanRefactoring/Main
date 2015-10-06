@@ -119,7 +119,7 @@ public class FuncsTest {
     assertThat(shortName(t("int _;")), equalTo("i"));
   }
   @Test public void shortNameQualifiedType() {
-    assertThat(shortName(t("org.eclipse.jdt.core.dom.InfixExpression _;")), equalTo("ie"));
+    assertThat(shortName(t("org.eclipse.jdt.core.dom.InfixExpression _;")), equalTo("e"));
   }
   private Type t(final String codeFragment) {
     return Extract.firstType(s(codeFragment));

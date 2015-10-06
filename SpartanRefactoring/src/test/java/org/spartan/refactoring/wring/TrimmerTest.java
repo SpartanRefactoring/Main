@@ -1560,6 +1560,15 @@ import org.spartan.utils.Wrapper;
         "      @Override public int hashCode() { return a; }\n" + //
         "    };" + "}").to("");
   }
+  @Test public void issue73a() {
+    trimming("void foo(StringBuilder sb) {}").to("void foo(StringBuilder b) {}");
+  }
+  @Test public void issue73b() {
+    trimming("void foo(DataOutput dataOutput) {}").to("void foo(DataOutput o) {}");
+  }
+  @Test public void issue73c() {
+    trimming("void foo(Integer integer, ASTNode astn) {}").to("void foo(Integer i, ASTNode n) {}");
+  }
   @Test public void linearTransformation() {
     trimming("plain * the + kludge").to("the*plain+kludge");
   }

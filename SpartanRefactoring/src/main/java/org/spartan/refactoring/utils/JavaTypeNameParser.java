@@ -30,14 +30,19 @@ import java.util.regex.Pattern;
     this.typeName = typeName;
   }
   /**
-   * Returns whether a variable name is a generic variable of the type name
+   * Returns whether a variable name is a generic variation of its type name. A
+   * variable name is considered to be a generic variation of its type name if
+   * the variable name is equal to the type name, either one of them is
+   * contained within the other, or it is an abbreviation of the type name (For
+   * example: <code>sb</code> is a generic variation of {@link StringBuilder})
    *
    * @param variableName the name of the variable
    * @return true if the variable name is a generic variation of the type name,
    *         false otherwise
    */
   public boolean isGenericVariation(final String variableName) {
-    return typeName.equalsIgnoreCase(variableName) || lowerCaseContains(typeName, variableName) || lowerCaseContains(typeName, toSingular(variableName));
+    return typeName.equalsIgnoreCase(variableName) || lowerCaseContains(typeName, variableName) || lowerCaseContains(typeName, toSingular(variableName))
+        || variableName.equals(abbreviate());
   }
   /**
    * Returns the calculated short name for the type
@@ -45,14 +50,17 @@ import java.util.regex.Pattern;
    * @return the type's short name
    */
   public String shortName() {
-    return shortAcronymOrNull() != null ? shortAcronymOrNull() : String.valueOf(Character.toLowerCase(lastName().charAt(0)));
+    return String.valueOf(Character.toLowerCase(lastName().charAt(0)));
   }
-  private String shortAcronymOrNull() {
+  /**
+   * Returns an abbreviation of the type name
+   */
+  public String abbreviate() {
     String a = "";
     final Matcher m = Pattern.compile("[A-Z]").matcher(typeName);
     while (m.find())
       a += m.group();
-    return a.length() > 2 || a.isEmpty() ? null : a.toLowerCase();
+    return a.toLowerCase();
   }
   private String toSingular(final String s) {
     return s == null ? null
