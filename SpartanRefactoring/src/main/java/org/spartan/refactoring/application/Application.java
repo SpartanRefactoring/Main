@@ -58,6 +58,8 @@ import org.spartan.utils.Wrapper;
           ApplySpartanizationHandler.applySafeSpartanizationsTo(u);
         }
         FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
+        if (optVerbose)
+          System.out.println("Spartanized file " + f.getAbsolutePath());
         s.countLinesAfter();
         fileStats.add(s);
         ++done;
