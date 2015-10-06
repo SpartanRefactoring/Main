@@ -64,6 +64,10 @@ import org.spartan.utils.Wrapper;
       } catch (final JavaModelException | IOException e) {
         System.err.println(f + ": " + e.getMessage());
         ++failed;
+      } catch (final Exception e) {
+        System.err.println("An unexpected error has occurred on file " + f + ": " + e.getMessage());
+        e.printStackTrace();
+        ++failed;
       } finally {
         discardCompilationUnit(u);
       }
