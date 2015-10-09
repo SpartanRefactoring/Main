@@ -317,7 +317,7 @@ public abstract class Spartanization extends Refactoring {
     return name;
   }
   protected abstract ASTVisitor collect(final List<Rewrite> $);
-  protected abstract void fillRewrite(ASTRewrite r, CompilationUnit cu, IMarker m);
+  protected abstract void fillRewrite(ASTRewrite r, CompilationUnit u, IMarker m);
   /**
    * Determines if the node is outside of the selected text.
    *
@@ -369,11 +369,11 @@ public abstract class Spartanization extends Refactoring {
       scanCompilationUnit(cu, new SubProgressMonitor(pm, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL));
     pm.done();
   }
-  private ASTRewrite createRewrite(final SubProgressMonitor pm, final CompilationUnit cu, final IMarker m) {
+  private ASTRewrite createRewrite(final SubProgressMonitor pm, final CompilationUnit u, final IMarker m) {
     if (pm != null)
       pm.beginTask("Creating rewrite operation...", 1);
-    final ASTRewrite $ = ASTRewrite.create(cu.getAST());
-    fillRewrite($, cu, m);
+    final ASTRewrite $ = ASTRewrite.create(u.getAST());
+    fillRewrite($, u, m);
     if (pm != null)
       pm.done();
     return $;

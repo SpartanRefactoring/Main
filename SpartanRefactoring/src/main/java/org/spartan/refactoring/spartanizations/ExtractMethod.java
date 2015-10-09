@@ -43,26 +43,26 @@ public class ExtractMethod extends Spartanization {
   }
   final int MinimumGroupSizeForExtraction = 3;
   final int MaximunGroupRelativeToMethodSize = 3;
-  @Override protected final void fillRewrite(@SuppressWarnings("unused") final ASTRewrite r, final CompilationUnit cu, @SuppressWarnings("unused") final IMarker m) {
-    cu.accept(new ASTVisitor() {
-      @SuppressWarnings("boxing") @Override public boolean visit(final MethodDeclaration md) {
-        final Block b = md.getBody();
+  @Override protected final void fillRewrite(@SuppressWarnings("unused") final ASTRewrite r, final CompilationUnit u, @SuppressWarnings("unused") final IMarker m) {
+    u.accept(new ASTVisitor() {
+      @SuppressWarnings("boxing") @Override public boolean visit(final MethodDeclaration d) {
+        final Block b = d.getBody();
         final UnifiedGroup ug = new UnifiedGroup(40);
         b.accept(new ASTVisitor() {
-          @Override public boolean visit(final SimpleName sn) {
+          @Override public boolean visit(final SimpleName n) {
             // if (sn.isDeclaration()) return true; // could be added
-            final int line = cu.getLineNumber(sn.getStartPosition());
-            ug.add(sn.toString(), line); // Add all simple names to the queue
+            final int line = u.getLineNumber(n.getStartPosition());
+            ug.add(n.toString(), line); // Add all simple names to the queue
             return true;
           }
         });
         final List<LinkedList<Integer>> groups = new LinkedList<>();
         for (final LinkedList<Integer> group : ug)
-          if (group.size() >= MinimumGroupSizeForExtraction && group.size() <= md.getBody().statements().size() - MaximunGroupRelativeToMethodSize)
+          if (group.size() >= MinimumGroupSizeForExtraction && group.size() <= d.getBody().statements().size() - MaximunGroupRelativeToMethodSize)
             groups.add(0, group);
         // TODO Ofir: random method name for now - will be changed later on
         for (final LinkedList<Integer> group : groups) {
-          extract(cu.getPosition(group.getFirst(), 0), cu.getPosition(group.getLast() + 1, 0));
+          extract(u.getPosition(group.getFirst(), 0), u.getPosition(group.getLast() + 1, 0));
           break; // TODO Ofir: support multiple groups future, Only the first
                  // group for now,
         }
@@ -72,7 +72,7 @@ public class ExtractMethod extends Spartanization {
       }
       private void extract(final int begin, final int end) {
         // final Random rand = new Random();
-        final CompilationUnit newCu = cu; // This line does nothing right now
+        final CompilationUnit newCu = u; // This line does nothing right now
         // - but it will perform deep clone
         // of the computation unit in order
         // to preserve its initial state

@@ -53,7 +53,7 @@ import java.util.regex.Pattern;
     return String.valueOf(Character.toLowerCase(lastName().charAt(0)));
   }
   /**
-   * Returns an abbreviation of the type name
+   * @return an abbreviation of the type name
    */
   public String abbreviate() {
     String a = "";

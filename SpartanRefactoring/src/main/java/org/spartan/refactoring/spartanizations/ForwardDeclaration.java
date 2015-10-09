@@ -43,8 +43,8 @@ public class ForwardDeclaration extends Spartanization {
   public ForwardDeclaration() {
     super("Forward declaration");
   }
-  @Override protected final void fillRewrite(final ASTRewrite r, final CompilationUnit cu, final IMarker m) {
-    cu.accept(new ASTVisitor() {
+  @Override protected final void fillRewrite(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
+    u.accept(new ASTVisitor() {
       @Override public boolean visit(final VariableDeclarationFragment f) {
         if (!inRange(m, f))
           return true;
@@ -72,9 +72,9 @@ public class ForwardDeclaration extends Spartanization {
         }
         return true;
       }
-      private void rewrite(final int beginingOfDeclarationsBlockIdx, final ASTNode n, final ListRewrite lr) {
-        lr.remove(n, null);
-        lr.insertAt(duplicate(n), 1 + beginingOfDeclarationsBlockIdx, null);
+      private void rewrite(final int beginingOfDeclarationsBlockIdx, final ASTNode n, final ListRewrite r) {
+        r.remove(n, null);
+        r.insertAt(duplicate(n), 1 + beginingOfDeclarationsBlockIdx, null);
       }
     });
   }

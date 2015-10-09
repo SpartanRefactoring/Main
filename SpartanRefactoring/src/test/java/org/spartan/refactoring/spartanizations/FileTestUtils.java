@@ -73,13 +73,13 @@ public abstract class FileTestUtils {
   /**
    * Creates a temporary file - including lazy deletion.
    * 
-   * @param sb
+   * @param b
    * @param d
    * @param f
    * @return
    */
-  static File createTempFile(final StringBuilder sb, final TestDirection td, final File f) {
-    return createTemporaryRandomAccessFile(createTempFile(td, f), sb.toString());
+  static File createTempFile(final StringBuilder b, final TestDirection d, final File f) {
+    return createTemporaryRandomAccessFile(createTempFile(d, f), b.toString());
   }
   static Spartanization makeSpartanizationObject(final File f) {
     return makeSpartanizationObject(f.getName());

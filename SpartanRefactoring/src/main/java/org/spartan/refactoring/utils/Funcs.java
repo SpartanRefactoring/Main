@@ -636,8 +636,8 @@ public enum Funcs {
                                 : t instanceof ParameterizedType ? shortName((ParameterizedType) t)//
                                     : t instanceof UnionType ? shortName((UnionType) t) : null;
   }
-  public static String shortName(final String n) {
-    return new JavaTypeNameParser(n).shortName();
+  public static String shortName(final String s) {
+    return new JavaTypeNameParser(s).shortName();
   }
   /**
    * Shorthand for {@link ConditionalExpression#getThenExpression()}
