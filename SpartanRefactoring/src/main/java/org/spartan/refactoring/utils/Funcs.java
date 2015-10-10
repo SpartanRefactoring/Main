@@ -18,7 +18,7 @@ import org.spartan.utils.Utils;
  */
 public enum Funcs {
   ;
-  private static Map<Operator, Operator> conjugate = makeConjeguates();
+  private static Map<Operator, Operator> conjugate = makeConjugates();
   /**
    * Convert an {@link Expression} into {@link InfixExpression} whose operator
    * is either {@link org.eclipse.jdt.core.dom.InfixExpression.Operator#AND} or
@@ -688,7 +688,7 @@ public enum Funcs {
   private static boolean is(final ASTNode n, final int type) {
     return n != null && type == n.getNodeType();
   }
-  private static Map<Operator, Operator> makeConjeguates() {
+  private static Map<Operator, Operator> makeConjugates() {
     final Map<Operator, Operator> $ = new HashMap<>();
     $.put(GREATER, LESS);
     $.put(LESS, GREATER);
@@ -719,8 +719,7 @@ public enum Funcs {
     return ts.size() != 1 ? null : shortName(ts.get(0));
   }
   private static String shortName(final NameQualifiedType t) {
-    // TODO Auto-generated method stub
-    return null;
+    return shortName(t.getName());
   }
   private static String shortName(final ParameterizedType t) {
     switch (t.getType().toString()) {
@@ -741,18 +740,20 @@ public enum Funcs {
     return t.getPrimitiveTypeCode().toString().substring(0, 1);
   }
   private static String shortName(final QualifiedType t) {
-    // TODO Auto-generated method stub
-    return null;
+    return shortName(t.getName());
   }
   private static String shortName(final SimpleType t) {
-    return shortName(t.getName().toString());
+    return shortName(t.getName());
   }
-  private static String shortName(final UnionType t) {
-    // TODO Auto-generated method stub
+  private static String shortName(final Name n) {
+    return n instanceof SimpleName ? shortName(n.toString()) //
+        : n instanceof QualifiedName ? shortName(((QualifiedName) n).getName()) //
+            : null;
+  }
+  private static String shortName(@SuppressWarnings("unused") final UnionType _) {
     return null;
   }
   private static String shortName(final WildcardType t) {
-    // TODO Auto-generated method stub
-    return null;
+    return shortName(t.getBound());
   }
 }

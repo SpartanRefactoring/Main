@@ -37,8 +37,8 @@ public abstract class Spartanization extends Refactoring {
    * @param u A compilation unit for reference - you give me an arbitrary
    *          compilation unit from the project and I'll find the root of the
    *          project and do my magic.
-   * @param pm A standard ProgressMonitor - if you don't care about operation
-   *          times put a "new NullProgressMonitor()"
+   * @param pm A standard {@link IProgressMonitor} - if you don't care about
+   *          operation times put a "new NullProgressMonitor()"
    * @return List of all compilation units in the current project
    * @throws JavaModelException don't forget to catch
    */
