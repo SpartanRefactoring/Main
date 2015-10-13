@@ -194,6 +194,7 @@ import org.spartan.utils.Wrapper;
   }
   void discardCompilationUnit(final ICompilationUnit u) {
     try {
+      u.close();
       u.delete(true, null);
     } catch (final JavaModelException e) {
       e.printStackTrace();
