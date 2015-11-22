@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<site>
-   <feature url="features/SpartanRefactoringFeature_1.0.0.qualifier.jar" id="SpartanRefactoringFeature" version="1.0.0.qualifier">
-      <category name="org.spartan.Category"/>
-   </feature>
-   <category-def name="org.spartan.Category" label="Spartanization Category"/>
-</site>
