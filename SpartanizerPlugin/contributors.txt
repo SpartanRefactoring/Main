@@ -1,0 +1,14 @@
+#
+# This file holds the complete list of people who contributed to this repository.
+# Please keep this file maintained, and new contributors should be added
+# in an alphabetical order.
+#
+# Contributions can be found in individual files by the @author annotation.
+#
+
+Artium Nihamkin <artium [at] nihamkin.com>
+Boris van Sosin <boris.van.sosin [at] gmail.com>
+Daniel Mittelman <daniel [at] mittelman.co.il>
+Ofir Elmakias <elmakias [at] outlook.com>
+Tomer Zeltzer <tomerr90 [at] gmail.com>
+Yossi Gil <yossi.gil [at] gmail.com>
