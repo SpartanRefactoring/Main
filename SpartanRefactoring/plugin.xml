@@ -71,6 +71,10 @@
             categoryId="org.spartan.commands.category"
             id="org.spartan.commands.ToggleCommand"
             name="Toggle Automatic Spartanization Suggestion">
+            <state
+           		class="org.eclipse.ui.handlers.RegistryToggleState:true"
+           		id="org.eclipse.ui.commands.toggleState">
+            </state>
       </command>
       <category
             id="org.spartan.refactoring.category"
@@ -170,42 +174,9 @@
             <command
                   commandId="org.spartan.commands.ToggleCommand"
                   id="org.spartan.menus.toggleCommand"
-                  label="Disable Spartanization Suggestions"
+                  label="Enable Spartanization Suggestions"
+                  style="toggle"
                   mnemonic="S">
-               <visibleWhen>
-                  <iterate
-                        ifEmpty="false"
-                        operator="or">
-                     <adapt
-                           type="org.eclipse.core.resources.IResource">
-                        <test
-                              property="org.eclipse.core.resources.projectNature"
-                              value="org.spartan.Nature">
-                        </test>
-                     </adapt>
-                  </iterate>
-               </visibleWhen>
-            </command>
-            <command
-                  commandId="org.spartan.commands.ToggleCommand"
-                  id="org.spartan.menus.toggleCommand"
-                  label="Toggle Spartanization Suggestions"
-                  mnemonic="S">
-               <visibleWhen>
-                  <not>
-                     <iterate
-                           ifEmpty="true"
-                           operator="and">
-                        <adapt
-                              type="org.eclipse.core.resources.IResource">
-                           <test
-                                 property="org.eclipse.core.resources.projectNature"
-                                 value="org.spartan.Nature">
-                           </test>
-                        </adapt>
-                     </iterate>
-                  </not>
-               </visibleWhen>
             </command>
             <visibleWhen>
                <iterate
