@@ -1,6 +1,7 @@
 package org.spartan.refactoring.utils;
 
 import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
 import org.spartan.utils.Range;
@@ -15,6 +16,7 @@ import org.spartan.utils.Range;
 public abstract class Rewrite extends Range {
   /** A textual description of the action to be performed. */
   public final String description;
+  public int lineNumber = -1;
   /**
    * Instantiates this class
    *
@@ -25,6 +27,7 @@ public abstract class Rewrite extends Range {
    */
   public Rewrite(final String description, final ASTNode n, final ASTNode... ns) {
     this(description, range(n, ns));
+    lineNumber = ((CompilationUnit) AncestorSearch.forClass(CompilationUnit.class).from(n)).getLineNumber(from);
   }
   Rewrite(final String description, final Range other) {
     super(other);
