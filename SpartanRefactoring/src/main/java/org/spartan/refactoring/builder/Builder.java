@@ -89,6 +89,7 @@ public class Builder extends IncrementalProjectBuilder {
     m.setAttribute(IMarker.CHAR_START, r.from);
     m.setAttribute(IMarker.CHAR_END, r.to);
     m.setAttribute(IMarker.TRANSIENT, false);
+    m.setAttribute(IMarker.LINE_NUMBER, r.lineNumber);
   }
   /**
    * deletes all spartanization suggestion markers
