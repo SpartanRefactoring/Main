@@ -14,8 +14,9 @@ import org.spartan.utils.Range;
  * @since 2015-08-28
  */
 public abstract class Rewrite extends Range {
-  /** A textual description of the action to be performed. */
+  /** A textual description of the action to be performed **/
   public final String description;
+  /** The line number of the first character to be rewritten **/
   public int lineNumber = -1;
   /**
    * Instantiates this class
