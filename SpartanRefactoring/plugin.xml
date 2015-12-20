@@ -25,6 +25,18 @@
             id="org.spartan.refactoring.BuilderID">
       </builder>
    </extension>
+     <extension
+     id="org.spartan.refactoring.application"
+     name="Spartan Refactoring Application"
+     point="org.eclipse.core.runtime.applications">
+     <application>
+     <run class="org.spartan.refactoring.application.Application"></run>
+     </application>
+   </extension>
+  <extension
+        id="org.spartan.refactoring.startupExtension"
+        point="org.eclipse.ui.startup">
+  </extension>
 <extension
     id="org.spartan.refactoring.spartanizationSuggestion"
     name="Spartanization Suggestion"
@@ -320,13 +332,5 @@
    <extension
          id="id1"
          point="org.eclipse.core.resources.markers">
-   </extension>
-      <extension
-         id="org.spartan.refactoring.application"
-         name="Spartan Refactoring Application"
-         point="org.eclipse.core.runtime.applications">
-         <application>
-         <run class="org.spartan.refactoring.application.Application"></run>
-         </application>
    </extension>
 </plugin>
