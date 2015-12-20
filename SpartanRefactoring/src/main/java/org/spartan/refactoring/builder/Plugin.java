@@ -8,6 +8,7 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.ui.IStartup;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -17,7 +18,7 @@ import org.osgi.framework.BundleContext;
  * @author Ofir Elmakias
  * @since 2015/09/06 (Updated - auto initialization of the plugin)
  */
-public class Plugin extends AbstractUIPlugin {
+public class Plugin extends AbstractUIPlugin implements IStartup {
   private static Plugin plugin;
   /**
    * an empty c'tor. creates an instance of the plugin.
@@ -25,14 +26,24 @@ public class Plugin extends AbstractUIPlugin {
   public Plugin() {
     plugin = this;
   }
+  /**
+   * Called whenever the plugin is first loaded into the workbench
+   */
+  @Override public void earlyStartup() {
+    System.out.println("Loaded Spartan Refactoring plugin");
+    startSpartan();
+  }
   @Override public void start(final BundleContext c) throws Exception {
     super.start(c);
-    applyPluginToAllProjects();
-    refreshAllProjects(); // TODO See if this improves the plugin's execution
+    startSpartan();
   }
   @Override public void stop(final BundleContext c) throws Exception {
     plugin = null;
     super.stop(c);
+  }
+  private void startSpartan() {
+    applyPluginToAllProjects();
+    refreshAllProjects();
   }
   /**
    * @return the (single) instance of the plugin
