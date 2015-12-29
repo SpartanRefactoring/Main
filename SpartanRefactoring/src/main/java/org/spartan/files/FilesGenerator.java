@@ -5,6 +5,8 @@ import static org.spartan.utils.Utils.asList;
 import java.io.File;
 import java.util.*;
 
+import org.spartan.refactoring.utils.as;
+
 /**
  * Provides, employing fluent API, a {@link Iterable} interface for iteration
  * over files in the file system.
@@ -53,9 +55,19 @@ public class FilesGenerator {
    *         {@link Iterable} <code><b>interface</b></code>
    */
   public From from(final String... from) {
+    return from(as.iterable(from));
+  }
+  /**
+   * @param from an array of names of directories from which the traversal
+   *          should begin
+   * @return an instance of an internal (yet <code><b>public</b></code>)
+   *         <code><b>class</b></code> which <code><b>implements</b></code> the
+   *         {@link Iterable} <code><b>interface</b></code>
+   */
+  public From from(final Iterable<String> from) {
     return new From(asFiles(from));
   }
-  private static Iterable<File> asFiles(final String... fileNames) {
+  private static Iterable<File> asFiles(final Iterable<String> fileNames) {
     final List<File> $ = new ArrayList<>();
     for (final String fileName : fileNames)
       $.add(new File(fileName));

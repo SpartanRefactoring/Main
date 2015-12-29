@@ -32,8 +32,8 @@ public class Plant {
    *
    * @param host the destined parent
    * @return either the expression itself, or the expression wrapped in
-   *         parenthesis, depending on the relative precedences of the exprssion
-   *         and its host.
+   *         parenthesis, depending on the relative precedences of the
+   *         expression and its host.
    */
   public Expression into(final ASTNode host) {
     return noParenthesisRequiredIn(host) ? inner : parenthesize(inner);
