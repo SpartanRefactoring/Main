@@ -5,8 +5,6 @@ import static org.spartan.utils.Utils.asList;
 import java.io.File;
 import java.util.*;
 
-import org.spartan.refactoring.utils.as;
-
 /**
  * Provides, employing fluent API, a {@link Iterable} interface for iteration
  * over files in the file system.
@@ -25,6 +23,26 @@ import org.spartan.refactoring.utils.as;
  * @since 2015-09-23.
  */
 public class FilesGenerator {
+  public static class as {
+    public static <T> Iterable<T> iterable(final T... ts) {
+      return new Iterable<T>() {
+        @Override public Iterator<T> iterator() {
+          return new Iterator<T>() {
+            private int next = 0;
+            @Override public boolean hasNext() {
+              return next < ts.length;
+            }
+            @Override public T next() {
+              return ts[next++];
+            }
+            @Override public void remove() {
+              throw new UnsupportedOperationException("Cannot remove an element of an array.");
+            }
+          };
+        }
+      };
+    }
+  }
   public static void main(final String[] args) {
     for (final File f : new FilesGenerator(".java").from("."))
       System.out.println(f);
