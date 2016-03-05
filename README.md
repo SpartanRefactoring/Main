@@ -25,7 +25,7 @@ A *wring*, in the context of this project, is a small object responsible for con
 2. Both forms are semantically equivalent, meaning that both versions do exactly the same thing (yet the latter may perform more efficiently).
 
 Consider this basic programmers' mistake:
-```
+```java
 if(myString.length() < 5) {
     return true;
 } else {
@@ -33,13 +33,13 @@ if(myString.length() < 5) {
 }
 ```
 Which can be shortened to:
-```
+```java
 if(myString.length() < 5)
     return true;
 return false;
 ```
 Or even:
-```
+```java
 return myString.length() < 5;
 ```
 Spartan Refactoring first detects this problem by finding a matching wring, then notifies the user that a spartanization can be made, and finally (when the user asks the plugin to perform the action), revises the `if` block all the way to the last example, while preserving the programmer's intention.
