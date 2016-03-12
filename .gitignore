@@ -1,5 +1,1 @@
-*.class
-bin/
-*.swp
-*.log
-*~
+/bin/
