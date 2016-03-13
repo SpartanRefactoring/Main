@@ -5,9 +5,18 @@ Spartan Refactoring is a plugin for Eclipse that automatically applies the princ
 This project was initially conceived as an academic project in the [Technion - Israel Institute of Technology], and was later developed for several years by different students and members of the Computer Science faculty.
 
 ## Compiling from source
-Compiling the plug-in from source is done through Eclipse:
+#### Using Maven (recommended)
+After cloning the repository, go into the SpartanRefactoring directory and execute:
 
-1. Open Eclipse and go to "*Install New Software...*". From the list of install sites, pick *The Eclipse Project Updates* and make sure you've installed all the items from the categories **Eclipse Platform**, **Eclipse Platform SDK**, **Eclipse Plugin Development Tools** and **Eclipse SDK**. Failure to install one of these will result in import errors.
+```
+mvn package
+```
+
+The packaged plug-in (.jar file) will be created in the `target/` directory.
+
+#### From inside Eclipse
+
+1. Open Eclipse and go to "*Install New Software...*". From the list of install sites, pick *The Eclipse Project Updates* and make sure you've installed all the items from the categories **Eclipse Platform**, **Eclipse Platform SDK** and **Eclipse Plugin Development Tools**. Failure to install one of these will result in import errors.
 
 2. Create a *run configuration* by running the project (Ctrl+F11), then elect to run it as an Eclipse Application.
     * If a new instance of Eclipse doesn't launch, open the run configurations for the project and make sure that in the *Program to Run* box, "Run a product" is selected and the box next to it says "org.eclipse.platform.ide".
