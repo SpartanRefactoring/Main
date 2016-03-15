@@ -7,7 +7,7 @@ import org.spartan.refactoring.utils.Have;
 import org.spartan.refactoring.utils.Is;
 
 /**
- * A {@link Wring} to covert <code>b && true</code> to <code>b</code>
+ * A {@link Wring} to convert <code>b && true</code> to <code>b</code>
  *
  * @author Yossi Gil
  * @since 2015-07-20
