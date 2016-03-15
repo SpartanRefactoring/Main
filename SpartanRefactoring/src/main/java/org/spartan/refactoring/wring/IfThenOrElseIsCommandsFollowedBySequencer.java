@@ -27,7 +27,7 @@ import org.spartan.refactoring.utils.Rewrite;
      j++;
      k++;
   }
-}</code> }</code> into <code>if (x) {
+}</code> into <code>if (x) {
  *   f();
  *   return a;
  * }

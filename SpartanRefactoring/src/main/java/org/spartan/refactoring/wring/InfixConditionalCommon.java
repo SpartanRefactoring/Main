@@ -16,7 +16,7 @@ import org.spartan.refactoring.utils.Is;
 import org.spartan.refactoring.utils.Subject;
 
 /**
- * A {@link Wring} to covert <code>b && true</code> to <code>b</code>
+ * A {@link Wring} to convert <code>b && true</code> to <code>b</code>
  *
  * @author Yossi Gil
  * @since 2015-07-20
