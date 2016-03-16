@@ -8,7 +8,7 @@
       <builder
             hasNature="true">
          <run
-               class="org.spartan.refactoring.builder.Builder">
+               class="il.org.spartan.refactoring.builder.Builder">
          </run>
       </builder>
    </extension>
@@ -18,7 +18,7 @@
          point="org.eclipse.core.resources.natures">
       <runtime>
          <run
-               class="org.spartan.refactoring.builder.Nature">
+               class="il.org.spartan.refactoring.builder.Nature">
          </run>
       </runtime>
       <builder
@@ -30,7 +30,7 @@
      name="Spartan Refactoring Application"
      point="org.eclipse.core.runtime.applications">
      <application>
-     <run class="org.spartan.refactoring.application.Application"></run>
+     <run class="il.org.spartan.refactoring.application.Application"></run>
      </application>
    </extension>
   <extension
@@ -47,7 +47,7 @@
    <extension point="org.eclipse.ui.ide.markerResolution">
       <markerResolutionGenerator 
                markerType="org.spartan.refactoring.spartanizationSuggestion"
-         class="org.spartan.refactoring.builder.QuickFixer"/>
+         class="il.org.spartan.refactoring.builder.QuickFixer"/>
    </extension>
 
    <extension point="org.eclipse.ui.editors.annotationTypes">
@@ -135,34 +135,33 @@
    </extension>
    <extension point="org.eclipse.ui.handlers">
       <handler
-            class="org.spartan.refactoring.handlers.ToggleSpartanizationHandler"
+            class="il.org.spartan.refactoring.handlers.ToggleSpartanizationHandler"
             commandId="org.spartan.commands.ToggleCommand">
       </handler>
 
       <handler
-            class="org.spartan.refactoring.handlers.ExtractMethodHandler"
+            class="il.org.spartan.refactoring.handlers.ExtractMethodHandler"
             commandId="org.spartan.refactoring.commands.ExtractMethod">
       </handler>
       <handler
-            class="org.spartan.refactoring.handlers.ForwardDeclarationHandler"
+            class="il.org.spartan.refactoring.handlers.ForwardDeclarationHandler"
             commandId="org.spartan.refactoring.commands.ForwardDeclaraion">
       </handler>
       <handler
-            class="org.spartan.refactoring.handlers.InlineSingleUseHandler"
+            class="il.org.spartan.refactoring.handlers.InlineSingleUseHandler"
             commandId="org.spartan.refactoring.commands.InlineSingleUse">
       </handler>
       <handler
-            class="org.spartan.refactoring.handlers.CleanupHandler"
+            class="il.org.spartan.refactoring.handlers.CleanupHandler"
             commandId="org.spartan.refactoring.commands.Cleanup">
       </handler>
       <handler
-            class="org.spartan.refactoring.handlers.ApplySpartanizationHandler"
+            class="il.org.spartan.refactoring.handlers.ApplySpartanizationHandler"
             commandId="org.spartan.refactoring.commands.ApplySpartanization">
       </handler>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
-         
       <menuContribution
             locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
          <toolbar
@@ -317,7 +316,7 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            class="org.spartan.refactoring.preferences.SpartanizationPreferencePage"
+            class="il.org.spartan.refactoring.preferences.SpartanizationPreferencePage"
             id="org.spartan.refactoring.preferences.SpartanizationPreferencePage"
             name="Spartanization"
             category="org.eclipse.jdt.ui.preferences.CompliancePreferencePage">
@@ -326,7 +325,7 @@
    <extension
          point="org.eclipse.core.runtime.preferences">
       <initializer
-            class="org.spartan.refactoring.preferences.PreferenceInitializer">
+            class="il.org.spartan.refactoring.preferences.PreferenceInitializer">
       </initializer>
    </extension>
    <extension
