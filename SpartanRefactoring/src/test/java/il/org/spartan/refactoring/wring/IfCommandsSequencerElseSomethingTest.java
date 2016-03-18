@@ -2,6 +2,8 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.hamcrest.CoreMatchers.is;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.asSingle;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
 import static il.org.spartan.refactoring.utils.Funcs.asIfStatement;
 import static il.org.spartan.utils.Utils.compressSpaces;
 import static org.hamcrest.CoreMatchers.*;
@@ -10,8 +12,6 @@ import static org.hamcrest.text.IsEqualIgnoringWhiteSpace.equalToIgnoringWhiteSp
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.asSingle;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
 
 import java.util.Collection;
 
@@ -29,18 +29,14 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import il.org.spartan.refactoring.spartanizations.Wrap;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 
+import il.org.spartan.refactoring.spartanizations.Wrap;
 import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Rewrite;
-import il.org.spartan.refactoring.wring.IfThenOrElseIsCommandsFollowedBySequencer;
-import il.org.spartan.refactoring.wring.Toolbox;
-import il.org.spartan.refactoring.wring.Trimmer;
-import il.org.spartan.refactoring.wring.Wring;
-import il.org.spartan.refactoring.wring.Wrings;
+import il.org.spartan.refactoring.wring.*;
+import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
+import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 import il.org.spartan.utils.Utils;
 
 /**

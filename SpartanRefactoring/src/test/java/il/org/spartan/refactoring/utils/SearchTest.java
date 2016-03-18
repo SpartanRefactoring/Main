@@ -4,12 +4,12 @@ import static il.org.spartan.hamcrest.CoreMatchers.is;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
 import static il.org.spartan.hamcrest.MatcherAssert.iz;
 import static il.org.spartan.refactoring.utils.Funcs.asSimpleName;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertNotNull;
 import static il.org.spartan.refactoring.utils.Into.d;
 import static il.org.spartan.refactoring.utils.Into.e;
 import static il.org.spartan.refactoring.utils.Into.s;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertNotNull;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.Test;

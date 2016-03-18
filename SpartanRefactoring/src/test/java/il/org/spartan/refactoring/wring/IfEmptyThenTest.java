@@ -9,9 +9,9 @@ import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.Statement;
 import org.junit.Test;
-import il.org.spartan.refactoring.utils.Into;
 
 import il.org.spartan.refactoring.utils.Extract;
+import il.org.spartan.refactoring.utils.Into;
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.wring.IfEmptyThen;
 

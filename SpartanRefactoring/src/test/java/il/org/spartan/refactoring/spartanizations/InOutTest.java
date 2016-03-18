@@ -1,10 +1,10 @@
 package il.org.spartan.refactoring.spartanizations;
 
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
+import static il.org.spartan.refactoring.wring.TrimmerTest.countOpportunities;
 import static il.org.spartan.utils.Utils.objects;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
-import static il.org.spartan.refactoring.wring.TrimmerTest.countOpportunities;
 
 import java.io.File;
 import java.util.Collection;

@@ -14,9 +14,9 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.Operator;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
+import il.org.spartan.misc.Wrapper;
 
 import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.utils.Wrapper;
 
 /**
  * A wring is a transformation that works on an AstNode. Such a transformation

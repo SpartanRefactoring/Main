@@ -2,13 +2,13 @@ package il.org.spartan.refactoring.spartanizations;
 
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
 import static il.org.spartan.hamcrest.OrderingComparison.greaterThanOrEqualTo;
+import static il.org.spartan.refactoring.wring.TrimmerTest.countOpportunities;
 import static il.org.spartan.utils.Utils.compressSpaces;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
-import static il.org.spartan.refactoring.wring.TrimmerTest.countOpportunities;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;

@@ -1,10 +1,10 @@
 package il.org.spartan.refactoring.spartanizations;
 
 import static il.org.spartan.hamcrest.CoreMatchers.is;
+import static il.org.spartan.refactoring.spartanizations.Wrap.essence;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
-import static il.org.spartan.refactoring.spartanizations.Wrap.essence;
 
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jface.text.Document;
