@@ -8,11 +8,11 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 
 import il.org.spartan.refactoring.wring.TernaryPushdown;
 import il.org.spartan.refactoring.wring.Wring;
 import il.org.spartan.refactoring.wring.Wrings;
+import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.utils.Utils;
 
 /**

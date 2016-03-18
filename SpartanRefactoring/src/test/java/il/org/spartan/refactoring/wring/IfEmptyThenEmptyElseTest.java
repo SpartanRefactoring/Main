@@ -15,9 +15,8 @@ import org.eclipse.jface.text.Document;
 import org.eclipse.text.edits.MalformedTreeException;
 import org.eclipse.text.edits.TextEdit;
 import org.junit.Test;
-import il.org.spartan.refactoring.spartanizations.Wrap;
-import il.org.spartan.refactoring.utils.Into;
 
+import il.org.spartan.refactoring.spartanizations.Wrap;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.IfEmptyThenEmptyElse;
 

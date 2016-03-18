@@ -5,11 +5,11 @@ import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
 import static il.org.spartan.refactoring.utils.Extract.core;
 import static il.org.spartan.refactoring.utils.Funcs.asBooleanLiteral;
 import static il.org.spartan.refactoring.utils.Funcs.asNot;
+import static il.org.spartan.refactoring.utils.Into.p;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertNotNull;
-import static il.org.spartan.refactoring.utils.Into.p;
 
 import java.util.Collection;
 
@@ -21,12 +21,12 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.wring.PrefixNotPushdown;
 import il.org.spartan.refactoring.wring.Wring;
 import il.org.spartan.refactoring.wring.Wrings;
+import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.utils.Utils;
 
 /**

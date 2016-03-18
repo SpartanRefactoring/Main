@@ -4,15 +4,15 @@ import static il.org.spartan.hamcrest.CoreMatchers.is;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
 import static il.org.spartan.hamcrest.MatcherAssert.iz;
 import static il.org.spartan.refactoring.utils.Funcs.duplicate;
+import static il.org.spartan.refactoring.utils.Into.e;
+import static il.org.spartan.refactoring.utils.Into.i;
+import static il.org.spartan.refactoring.utils.Into.s;
 import static il.org.spartan.refactoring.utils.Restructure.flatten;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static il.org.spartan.refactoring.utils.Into.e;
-import static il.org.spartan.refactoring.utils.Into.i;
-import static il.org.spartan.refactoring.utils.Into.s;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +20,7 @@ import java.util.List;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.Test;
 
-import il.org.spartan.refactoring.utils.ExpressionComparator;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Funcs;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.Subject;
+import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.utils.Subject.Pair;
 
 @SuppressWarnings({ "javadoc", "static-method" }) public class SubjectTest {

@@ -3,19 +3,19 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.hamcrest.CoreMatchers.is;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
 import static il.org.spartan.hamcrest.MatcherAssert.iz;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
 import static il.org.spartan.refactoring.utils.ExpressionComparator.NODES_THRESHOLD;
 import static il.org.spartan.refactoring.utils.ExpressionComparator.nodesCount;
 import static il.org.spartan.refactoring.utils.Funcs.left;
 import static il.org.spartan.refactoring.utils.Funcs.right;
+import static il.org.spartan.refactoring.utils.Into.i;
+import static il.org.spartan.refactoring.utils.Into.s;
 import static il.org.spartan.utils.Utils.compressSpaces;
 import static il.org.spartan.utils.Utils.hasNull;
 import static il.org.spartan.utils.Utils.in;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.*;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
-import static il.org.spartan.refactoring.utils.Into.i;
-import static il.org.spartan.refactoring.utils.Into.s;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
@@ -24,22 +24,13 @@ import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import il.org.spartan.refactoring.spartanizations.TESTUtils;
-import il.org.spartan.refactoring.spartanizations.Wrap;
+import il.org.spartan.misc.Wrapper;
 
 import il.org.spartan.refactoring.spartanizations.Spartanization;
+import il.org.spartan.refactoring.spartanizations.TESTUtils;
+import il.org.spartan.refactoring.spartanizations.Wrap;
 import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.wring.AsSpartanization;
-import il.org.spartan.refactoring.wring.AssignmentAndAssignment;
-import il.org.spartan.refactoring.wring.BlockSimplify;
-import il.org.spartan.refactoring.wring.DeclarationInitializerStatementTerminatingScope;
-import il.org.spartan.refactoring.wring.InfixComparisonSpecific;
-import il.org.spartan.refactoring.wring.InfixSortMultiplication;
-import il.org.spartan.refactoring.wring.PostfixToPrefix;
-import il.org.spartan.refactoring.wring.Toolbox;
-import il.org.spartan.refactoring.wring.Trimmer;
-import il.org.spartan.refactoring.wring.Wring;
-import il.org.spartan.utils.Wrapper;
+import il.org.spartan.refactoring.wring.*;
 
 /**
  * * Unit tests for the nesting class Unit test for the containing class. Note

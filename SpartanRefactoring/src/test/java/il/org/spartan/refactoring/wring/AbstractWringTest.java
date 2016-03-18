@@ -3,8 +3,11 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.hamcrest.CoreMatchers.is;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
 import static il.org.spartan.hamcrest.OrderingComparison.greaterThanOrEqualTo;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.asSingle;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
 import static il.org.spartan.refactoring.utils.Funcs.asBlock;
 import static il.org.spartan.refactoring.utils.Funcs.asIfStatement;
+import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.flatten;
 import static il.org.spartan.utils.Utils.compressSpaces;
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -12,9 +15,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.*;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.asSingle;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
-import static il.org.spartan.refactoring.utils.Into.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
@@ -24,18 +24,18 @@ import org.eclipse.text.edits.MalformedTreeException;
 import org.eclipse.text.edits.TextEdit;
 import org.junit.Test;
 import org.junit.runners.Parameterized.Parameter;
-import il.org.spartan.refactoring.spartanizations.TESTUtils;
-import il.org.spartan.refactoring.spartanizations.Wrap;
-import il.org.spartan.refactoring.wring.AbstractWringTest.WringedExpression.Conditional;
-import il.org.spartan.refactoring.wring.AbstractWringTest.WringedExpression.Infix;
 
 import il.org.spartan.refactoring.spartanizations.Spartanization;
+import il.org.spartan.refactoring.spartanizations.TESTUtils;
+import il.org.spartan.refactoring.spartanizations.Wrap;
 import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Funcs;
 import il.org.spartan.refactoring.wring.Toolbox;
 import il.org.spartan.refactoring.wring.Trimmer;
 import il.org.spartan.refactoring.wring.Wring;
+import il.org.spartan.refactoring.wring.AbstractWringTest.WringedExpression.Conditional;
+import il.org.spartan.refactoring.wring.AbstractWringTest.WringedExpression.Infix;
 
 /**
  * @author Yossi Gil

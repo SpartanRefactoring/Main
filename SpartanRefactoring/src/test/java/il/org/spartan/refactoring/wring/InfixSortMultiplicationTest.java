@@ -4,12 +4,12 @@ import static il.org.spartan.hamcrest.CoreMatchers.is;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
 import static il.org.spartan.hamcrest.OrderingComparison.greaterThanOrEqualTo;
 import static il.org.spartan.refactoring.utils.Funcs.right;
+import static il.org.spartan.refactoring.utils.Into.e;
+import static il.org.spartan.refactoring.utils.Into.i;
 import static il.org.spartan.refactoring.utils.Restructure.flatten;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.*;
-import static il.org.spartan.refactoring.utils.Into.e;
-import static il.org.spartan.refactoring.utils.Into.i;
 
 import java.util.Collection;
 import java.util.List;
@@ -25,17 +25,14 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import il.org.spartan.refactoring.wring.AbstractWringTest.Noneligible;
 
 import il.org.spartan.refactoring.spartanizations.Spartanization;
 import il.org.spartan.refactoring.utils.ExpressionComparator;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.LiteralParser;
 import il.org.spartan.refactoring.utils.LiteralParser.Types;
-import il.org.spartan.refactoring.wring.InfixSortMultiplication;
-import il.org.spartan.refactoring.wring.Toolbox;
-import il.org.spartan.refactoring.wring.Wring;
-import il.org.spartan.refactoring.wring.Wrings;
+import il.org.spartan.refactoring.wring.*;
+import il.org.spartan.refactoring.wring.AbstractWringTest.Noneligible;
 import il.org.spartan.utils.Utils;
 
 /**

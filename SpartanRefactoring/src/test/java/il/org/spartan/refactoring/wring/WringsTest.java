@@ -5,9 +5,9 @@ import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
 import static il.org.spartan.hamcrest.MatcherAssert.iz;
 import static il.org.spartan.refactoring.utils.Funcs.left;
 import static il.org.spartan.refactoring.utils.Funcs.right;
+import static il.org.spartan.refactoring.utils.Into.es;
 import static il.org.spartan.refactoring.wring.Wrings.mixedLiteralKind;
 import static org.junit.Assert.assertNotNull;
-import static il.org.spartan.refactoring.utils.Into.es;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.Operator;
@@ -17,9 +17,8 @@ import org.eclipse.jface.text.Document;
 import org.eclipse.text.edits.MalformedTreeException;
 import org.eclipse.text.edits.TextEdit;
 import org.junit.Test;
-import il.org.spartan.refactoring.spartanizations.Wrap;
-import il.org.spartan.refactoring.utils.Into;
 
+import il.org.spartan.refactoring.spartanizations.Wrap;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.LocalInliner;
 import il.org.spartan.refactoring.wring.Wring;

@@ -3,9 +3,9 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.refactoring.utils.Extract.core;
 import static il.org.spartan.refactoring.utils.Funcs.asConditionalExpression;
 import static il.org.spartan.refactoring.utils.Funcs.same;
+import static il.org.spartan.refactoring.utils.Into.c;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static il.org.spartan.refactoring.utils.Into.c;
 
 import java.util.Collection;
 
@@ -17,11 +17,11 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 
 import il.org.spartan.refactoring.wring.TernaryCollapse;
 import il.org.spartan.refactoring.wring.Wring;
 import il.org.spartan.refactoring.wring.Wrings;
+import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.utils.Utils;
 
 /**
