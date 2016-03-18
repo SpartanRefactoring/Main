@@ -3,11 +3,11 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.hamcrest.CoreMatchers.is;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
 import static il.org.spartan.hamcrest.OrderingComparison.greaterThanOrEqualTo;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
 import static il.org.spartan.refactoring.utils.Restructure.flatten;
 import static il.org.spartan.utils.Utils.compressSpaces;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.*;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
 
 import java.util.Collection;
 import java.util.List;
@@ -26,9 +26,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import il.org.spartan.refactoring.spartanizations.Wrap;
 
 import il.org.spartan.refactoring.spartanizations.Spartanization;
+import il.org.spartan.refactoring.spartanizations.Wrap;
 import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.refactoring.utils.ExpressionComparator;
 import il.org.spartan.refactoring.utils.Extract;

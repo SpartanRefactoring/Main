@@ -2,8 +2,8 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.hamcrest.CoreMatchers.is;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static il.org.spartan.refactoring.utils.Into.e;
+import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import org.junit.Test;
 

@@ -4,10 +4,10 @@ import static il.org.spartan.hamcrest.CoreMatchers.is;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
 import static il.org.spartan.hamcrest.OrderingComparison.comparesEqualTo;
 import static il.org.spartan.hamcrest.OrderingComparison.greaterThanOrEqualTo;
+import static il.org.spartan.refactoring.utils.Into.*;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.refactoring.utils.Into.*;
 
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.FieldAccess;

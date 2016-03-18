@@ -4,8 +4,7 @@ import static il.org.spartan.hamcrest.CoreMatchers.is;
 import static il.org.spartan.utils.Utils.compressSpaces;
 
 import org.hamcrest.Matcher;
-
-import il.org.spartan.utils.Wrapper;
+import il.org.spartan.misc.Wrapper;
 
 /**
  * Non-auto-boxing version for all primitive types of the family of Hamcrest

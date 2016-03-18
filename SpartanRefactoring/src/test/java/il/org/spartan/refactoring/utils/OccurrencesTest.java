@@ -16,8 +16,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import il.org.spartan.refactoring.spartanizations.Wrap;
 
+import il.org.spartan.refactoring.spartanizations.Wrap;
 import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.refactoring.utils.Collect;
 import il.org.spartan.refactoring.utils.Extract;

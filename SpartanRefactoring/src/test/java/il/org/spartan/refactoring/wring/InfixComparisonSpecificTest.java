@@ -3,16 +3,16 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.hamcrest.CoreMatchers.is;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
 import static il.org.spartan.hamcrest.OrderingComparison.greaterThanOrEqualTo;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertNoChange;
 import static il.org.spartan.refactoring.utils.Funcs.flip;
 import static il.org.spartan.refactoring.utils.Funcs.left;
+import static il.org.spartan.refactoring.utils.Into.i;
 import static il.org.spartan.refactoring.utils.Restructure.flatten;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertNoChange;
-import static il.org.spartan.refactoring.utils.Into.i;
 
 import java.util.Collection;
 import java.util.List;
@@ -26,12 +26,12 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import il.org.spartan.refactoring.wring.AbstractWringTest.Noneligible;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.InfixComparisonSpecific;
 import il.org.spartan.refactoring.wring.Wrings;
+import il.org.spartan.refactoring.wring.AbstractWringTest.Noneligible;
+import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.utils.Utils;
 
 /**

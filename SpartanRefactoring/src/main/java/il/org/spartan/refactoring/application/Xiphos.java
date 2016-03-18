@@ -1,19 +1,19 @@
 package il.org.spartan.refactoring.application;
 
+import static il.org.spartan.external.External.Introspector.extract;
+
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.equinox.app.IApplication;
-import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.PackageDeclaration;
 import il.org.spartan.misc.Wrapper;
+import il.org.spartan.external.External;
 
 import il.org.spartan.files.FilesGenerator;
 import il.org.spartan.refactoring.handlers.ApplySpartanizationHandler;
@@ -21,37 +21,48 @@ import il.org.spartan.refactoring.handlers.CleanupHandler;
 import il.org.spartan.utils.FileUtils;
 
 /**
- * An {@link IApplication} extension entry point, allowing execution of this
- * plug-in from the command line.
+ * Command line version of this plug-in
  *
- * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
- * @since 2015/09/19
+ * @author Yossi Gil
+ * @since 2015/10/10
  */
-@SuppressWarnings("static-method") public class Application implements IApplication {
+public class Xiphos {
+  @External(alias = "r") int rounds = 20;
+  @External(alias = "v") boolean verbose = false;
+  boolean optIndividualStatistics = false;
+  boolean optStatsLines = false;
   IJavaProject javaProject;
   IPackageFragmentRoot srcRoot;
   IPackageFragment pack;
-  boolean optDoNotOverwrite = false, optIndividualStatistics = false, optVerbose = false;
-  boolean optStatsLines = false, optStatsChanges = false;
-  int optRounds = 20;
-  String optPath;
-  @Override public Object start(final IApplicationContext arg0) {
-    if (parseArguments(Arrays.asList((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS))))
-      return IApplication.EXIT_OK;
+  boolean optDoNotOverwrite = false;
+  boolean optStatsChanges = false;
+  private final List<String> remaining;
+  /**
+   * main function, to which command line arguments are passed.
+   *
+   * @param args command line arguments
+   */
+  public static void main(final String[] args) {
+    new Xiphos(args).go();
+  }
+  private Xiphos(final String[] args) {
+    remaining = extract(args, this);
+  }
+  private void go() {
     final List<FileStats> fileStats = new ArrayList<>();
     try {
       prepareTempIJavaProject();
     } catch (final CoreException e) {
       System.err.println(e.getMessage());
-      return IApplication.EXIT_OK;
+      System.exit(1);
     }
     int done = 0, failed = 0;
-    for (final File f : new FilesGenerator(".java", ".JAVA").from(optPath)) {
+    for (final File f : new FilesGenerator(".java", ".JAVA").from(remaining)) {
       ICompilationUnit u = null;
       try {
         u = openCompilationUnit(f);
         final FileStats s = new FileStats(f);
-        for (int i = 0; i < optRounds; ++i) {
+        for (int i = 0; i < rounds; ++i) {
           final int n = CleanupHandler.countSuggestions(u);
           if (n == 0)
             break;
@@ -59,7 +70,7 @@ import il.org.spartan.utils.FileUtils;
           ApplySpartanizationHandler.applySafeSpartanizationsTo(u);
         }
         FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
-        if (optVerbose)
+        if (verbose)
           System.out.println("Spartanized file " + f.getAbsolutePath());
         s.countLinesAfter();
         fileStats.add(s);
@@ -80,10 +91,6 @@ import il.org.spartan.utils.FileUtils;
       printChangeStatistics(fileStats);
     if (optStatsLines)
       printLineStatistics(fileStats);
-    return IApplication.EXIT_OK;
-  }
-  @Override public void stop() {
-    // Unused
   }
   void printHelpPrompt() {
     System.out.println("Spartan Refactoring plugin command line");
@@ -124,11 +131,11 @@ import il.org.spartan.utils.FileUtils;
     if (optIndividualStatistics)
       for (final FileStats f : ss) {
         System.out.println("\n  " + f.fileName());
-        for (int i = 0; i < optRounds; ++i)
+        for (int i = 0; i < rounds; ++i)
           System.out.println("    Round #" + (i + 1) + ": " + (i < 9 ? " " : "") + f.getRoundStat(i));
       }
     else
-      for (int i = 0; i < optRounds; ++i) {
+      for (int i = 0; i < rounds; ++i) {
         int roundSum = 0;
         for (final FileStats f : ss)
           roundSum += f.getRoundStat(i);
@@ -138,32 +145,19 @@ import il.org.spartan.utils.FileUtils;
   String determineOutputFilename(final String path) {
     return !optDoNotOverwrite ? path : path.substring(0, path.lastIndexOf('.')) + "_new.java";
   }
-  boolean parseArguments(final List<String> args) {
-    if (args == null || args.size() == 0) {
-      printHelpPrompt();
-      return true;
-    }
+  private void parseArguments(final List<String> args) {
     for (final String a : args) {
       if (a.equals("-N"))
         optDoNotOverwrite = true;
       if (a.equals("-E"))
         optIndividualStatistics = true;
-      try {
-        if (a.startsWith("-C"))
-          optRounds = Integer.parseUnsignedInt(a.substring(2));
-      } catch (final NumberFormatException e) {
-        // Ignore
-      }
       if (a.equals("-V"))
-        optVerbose = true;
+        verbose = true;
       if (a.equals("-l"))
         optStatsLines = true;
       if (a.equals("-r"))
         optStatsChanges = true;
-      if (!a.startsWith("-"))
-        optPath = a;
     }
-    return optPath == null;
   }
   void prepareTempIJavaProject() throws CoreException {
     final IProject p = ResourcesPlugin.getWorkspace().getRoot().getProject("spartanTemp");
@@ -193,9 +187,8 @@ import il.org.spartan.utils.FileUtils;
     setPackage(getPackageNameFromSource(source));
     return pack.createCompilationUnit(f.getName(), source, false, null);
   }
-  void discardCompilationUnit(final ICompilationUnit u) {
+  static void discardCompilationUnit(final ICompilationUnit u) {
     try {
-      u.close();
       u.delete(true, null);
     } catch (final JavaModelException e) {
       e.printStackTrace();
@@ -203,7 +196,7 @@ import il.org.spartan.utils.FileUtils;
       // Ignore
     }
   }
-  String getPackageNameFromSource(final String source) {
+  static String getPackageNameFromSource(final String source) {
     final ASTParser p = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     p.setSource(source.toCharArray());
     final Wrapper<String> $ = new Wrapper<>("");

@@ -11,8 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.*;
-
-import il.org.spartan.utils.Wrapper;
+import il.org.spartan.misc.Wrapper;
 
 /**
  * An empty <code><b>enum</b></code> for fluent programming. The name should say
@@ -116,7 +115,7 @@ public enum Extract {
    *         or <code><b>null</b> if there is no such statement.
    */
   public static PostfixExpression findFirstPostfix(final ASTNode n) {
-    final Wrapper<PostfixExpression> $ = new Wrapper<>();
+    final Wrapper<PostfixExpression> $ = new Wrapper<PostfixExpression>();
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final PostfixExpression e) {
         if ($.get() == null)
