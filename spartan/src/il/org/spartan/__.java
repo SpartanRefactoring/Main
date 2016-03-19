@@ -60,30 +60,32 @@ public enum __ {
 	}
 	/**
 	 * Removes the @Nullable annotation present on the type of a value. This
-	 * function is mainly used to make <code><b>null</b></code<]> checkers happy.
+	 * function is mainly used to make <code><b>null</b></code> checkers happy.
 	 * <p>
 	 * The parameter is an instance of an arbitrary type, T. The hidden assumption
-	 * is that a @Nullable annotation is present on T.
-	 * Thus, the parameter may be either
-	 * <code><b>null</b></code<]>, or an actual instance of T.
+	 * is that a @Nullable annotation is present on T. Thus, the parameter may be
+	 * either <code><b>null</b></code>, or an actual instance of T.
 	 * <p>
-	 * The function returns the same instance it received as a parameter, except that
-	 * this instance is returned as an instance of the type T <i>without</i> the @Nullable
-	 * annotation. Execution is aborted with an {@link AssertionError} if the parameter is null.
+	 * The function returns the same instance it received as a parameter, except
+	 * that this instance is returned as an instance of the type T <i>without</i>
+	 * the @Nullable annotation. Execution is aborted with an
+	 * {@link AssertionError} if the parameter is null.
 	 * <p>
-	 * As it turns out, this function is a (slow) logical no-op, but still applicable to
-	 * arguments of type T, where T does not have the @Nullable annotation present on it.
-	 *  <p>
-	 * For reasons related to the way non-nullability is managed in Java, the compiler will
-	 * not warn you from doing applying this function to a {@link NonNull} type. However,
-	 * there is absolutely no point in removing a @Nullable  annotation if the type that
-	 * does not have it. Doing so a is plain clutter. Since the compiler cannot assist you,
-	 * you will have to be on the guard.
+	 * As it turns out, this function is a (slow) logical no-op, but still
+	 * applicable to arguments of type T, where T does not have the @Nullable
+	 * annotation present on it.
+	 * <p>
+	 * For reasons related to the way non-nullability is managed in Java, the
+	 * compiler will not warn you from doing applying this function to a
+	 * {@link NonNull} type. However, there is absolutely no point in removing
+	 * a @Nullable annotation if the type that does not have it. Doing so a is
+	 * plain clutter. Since the compiler cannot assist you, you will have to be on
+	 * the guard.
 	 *
-	 * @param <T> some arbitrary type
+	 * @param <T> an arbitrary type
 	 * @param $ an instance of the type parameter
-	 * @return its parameter, after verifying that it is not <code><b>null</b>
-	 *         </code>
+	 * @return its parameter, after verifying that it is not
+	 *         <code><b>null</b></code>
 	 * @see #mustBeNull(Object)
 	 */
 	public static <T> T cantBeNull(final @Nullable T $) {
@@ -157,7 +159,7 @@ public enum __ {
 	 *
 	 * @param <T> some arbitrary type
 	 * @param $ an instance of the type parameter which is required to be
-	 *          <code><b>null</b></code<]>.
+	 *          <code><b>null</b></code>.
 	 * @return the parameter
 	 */
 	public static @Nullable <T> Void mustBeNull(final @Nullable T $) {
@@ -261,7 +263,9 @@ public enum __ {
 	public static class FoundHandleForT<T> {
 		final T candidate;
 		/**
-		 * Instantiates this class. * @param candidate what to search for
+		 * Instantiates this class. *
+		 * 
+		 * @param candidate what to search for
 		 */
 		public FoundHandleForT(final T candidate) {
 			this.candidate = candidate;

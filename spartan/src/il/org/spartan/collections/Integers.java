@@ -95,7 +95,7 @@ public class Integers {
 	 * Add an integer to the set, if it is not already there.
 	 *
 	 * @param n an arbitrary integer
-	 * @return <code><b>this</b>/code>
+	 * @return <code><b>this</b></code>
 	 */
 	public Integers add(final int n) {
 		final int i = find(n);
@@ -113,7 +113,7 @@ public class Integers {
 	 *
 	 * @param ns an arbitrary array of integers; ; must not be
 	 *          <code><b>null</b></code>.
-	 * @return <code><b>this</b>/code>
+	 * @return <code><b>this</b></code>
 	 */
 	public Integers add(final int... ns) {
 		for (final int n : ns)
@@ -124,7 +124,7 @@ public class Integers {
 	 * Remove an element from this set, it is in it
 	 *
 	 * @param n some integer to be removed from the set
-	 * @return <code><b>this</b>/code>
+	 * @return <code><b>this</b></code>
 	 */
 	public Integers remove(final int n) {
 		final int i = location(n);
@@ -141,7 +141,7 @@ public class Integers {
 	 * Remove an array of integers to this set, if they are in it.
 	 *
 	 * @param ns an array of integers; ; must not be <code><b>null</b></code>.
-	 * @return <code><b>this</b>/code>
+	 * @return <code><b>this</b></code>
 	 */
 	public Integers remove(final int... ns) {
 		for (final int n : ns)
@@ -151,7 +151,7 @@ public class Integers {
 	/**
 	 * Recreate the table, inserting all elements in it afresh.
 	 *
-	 * @return <code><b>this</b>/code>
+	 * @return <code><b>this</b></code>
 	 */
 	public Integers rehash() {
 		return rehash(capacity());
@@ -159,7 +159,7 @@ public class Integers {
 	/**
 	 * Remove all elements from this set, preserving capacity.
 	 *
-	 * @return <code><b>this</b>/code>
+	 * @return <code><b>this</b></code>
 	 */
 	public Integers clear() {
 		return reset(capacity());
@@ -219,7 +219,7 @@ public class Integers {
 	 * two.
 	 *
 	 * @param newCapacity new initialCapacity for the internal array
-	 * @return <code><b>this</b>/code>
+	 * @return <code><b>this</b></code>
 	 */
 	protected Integers rehash(final int newCapacity) {
 		assert 0 == (newCapacity & newCapacity - 1);

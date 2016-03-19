@@ -8,8 +8,7 @@ import org.junit.Test;
 
 /**
  * A class for lazy, memoizing evaluation of objects of arbitrary type. The
- * evaluation must never return <code><b>null</b>>
- * </b>.
+ * evaluation must never return <code><b>null</b></code>.
  *
  * @param <T> some arbitrary type
  * @author Yossi Gil

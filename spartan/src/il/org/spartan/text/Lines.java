@@ -58,7 +58,7 @@ public enum Lines {
 	}
 	/**
 	 * A longer and more meaningful name for the array of length zero with
-	 * {@String} elements.
+	 * {@link String} elements.
 	 */
 	public static final String[] NO_LINES = new String[0];
 	/**

@@ -56,7 +56,7 @@ public enum As {
 	 * C like conversion of a reference to an {@link Object} into a 0/1 bit.
 	 *
 	 * @param o some object
-	 * @return <code>0</code> if the parameter is <code><b>null/b></code>.
+	 * @return <code>0</code> if the parameter is <code><b>null</b></code>.
 	 *         <code>1</code> otherwise.
 	 * @see As#bit(Object)
 	 */
@@ -89,11 +89,11 @@ public enum As {
 	}
 	/**
 	 * Return a compact representation of a list of {@link Integer}s as an array
-	 * of type code><b>int</b></code>.
+	 * of type <code><b>int</b></code>.
 	 *
 	 * @param is the list to be converted, none of the elements in it can be
-	 *          code><b>null</b></code>
-	 * @return an array of code><b>int</b></code>. representing the input.
+	 *          <code><b>null</b></code>
+	 * @return an array of <code><b>int</b></code>. representing the input.
 	 */
 	public static int[] intArray(final List<Integer> is) {
 		final int[] $ = new int[is.size()];

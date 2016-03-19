@@ -92,7 +92,7 @@ public enum Separate {
 	 * given <code><b>char</b></code>
 	 *
 	 * @param bs an array of elements to be separated
-	 * @return a {@String} obtained by concatenating the textual
+	 * @return a {@link String} obtained by concatenating the textual
 	 *         representation of the elements in <code>bs</code> separated by
 	 *         <code>between</code>
 	 */
@@ -104,7 +104,7 @@ public enum Separate {
 	 * <code><b>char</b></code>
 	 *
 	 * @param bs an array of elements to be separated
-	 * @return a {@String} obtained by concatenating the textual
+	 * @return a {@link String} obtained by concatenating the textual
 	 *         representation of the elements in <code>bs</code> separated by
 	 *         <code>between</code>
 	 */
@@ -116,7 +116,7 @@ public enum Separate {
 	 * <code><b>char</b></code>
 	 *
 	 * @param cs an array of elements to be separated
-	 * @return a {@String} obtained by concatenating the textual
+	 * @return a {@link String} obtained by concatenating the textual
 	 *         representation of the elements in <code>cs</code> separated by
 	 *         <code>between</code>
 	 */
@@ -128,7 +128,7 @@ public enum Separate {
 	 * given <code><b>char</b></code>
 	 *
 	 * @param ds an array of elements to be separated
-	 * @return a {@String} obtained by concatenating the textual
+	 * @return a {@link String} obtained by concatenating the textual
 	 *         representation of the elements in <code>ds</code> separated by
 	 *         <code>between</code>
 	 */
@@ -140,7 +140,7 @@ public enum Separate {
 	 * <code><b>char</b></code>
 	 *
 	 * @param fs an array of elements to be separated
-	 * @return a {@String} obtained by concatenating the textual
+	 * @return a {@link String} obtained by concatenating the textual
 	 *         representation of the elements in <code>fs</code> separated by
 	 *         <code>between</code>
 	 */
@@ -152,7 +152,7 @@ public enum Separate {
 	 * <code><b>char</b></code>
 	 *
 	 * @param is an array of elements to be separated
-	 * @return a {@String} obtained by concatenating the textual
+	 * @return a {@link String} obtained by concatenating the textual
 	 *         representation of the elements in <code>is</code> separated by
 	 *         <code>between</code>
 	 */
@@ -163,6 +163,7 @@ public enum Separate {
 	 * Separate a variable length list of arguments by a comma character.
 	 *
 	 * @param os the objects to be separated.
+	 * @return the items, separated by commas
 	 */
 	public static SeparationSubject these(final Iterable<? extends Object> os) {
 		return new SeparationSubject(os);
@@ -202,7 +203,7 @@ public enum Separate {
 	 * <code><b>char</b></code>
 	 *
 	 * @param ss an array of elements to be separated
-	 * @return a {@String} obtained by concatenating the textual
+	 * @return a {@link String} obtained by concatenating the textual
 	 *         representation of the elements in <code>ss</code> separated by
 	 *         <code>between</code>
 	 */
@@ -214,6 +215,7 @@ public enum Separate {
 	 *
 	 * @param <T> type of items
 	 * @param ts the objects to be separated.
+	 * @return the items, separated by commas
 	 */
 	@SafeVarargs public static <T> SeparationSubject these(final T... ts) {
 		return new SeparationSubject(ts);
@@ -222,12 +224,12 @@ public enum Separate {
 
 		/**
 		 * Separate elements of a given {@link Iterable} collection by a given
-		 * {@String}
+		 * {@link String}
 		 *
 		 * @param ts an {@link Iterable} collection of elements to be separated
 		 * @param <T> type of elements in the {@link Iterable} collection parameter
 		 * @param between what should be used for separating these elements
-		 * @return a {@String} obtained by concatenating the textual
+		 * @return a {@link String} obtained by concatenating the textual
 		 *         representation of the elements in <code>ts</code> separated by
 		 *         <code>between</code>
 		 */
@@ -239,11 +241,11 @@ public enum Separate {
 			return As.string($);
 		}
 		/**
-		 * Separate a list of elements by a given {@String}
+		 * Separate a list of elements by a given {@link String}
 		 *
 		 * @param os what needs to be separated
 		 * @param between what should be used for separating these elements
-		 * @return a {@String} obtained by concatenating the textual
+		 * @return a {@link String} obtained by concatenating the textual
 		 *         representation of the elements in <code>ts</code> separated by
 		 *         <code>between</code>
 		 */
@@ -282,10 +284,10 @@ public enum Separate {
 		}
 		/**
 		 * Separate elements of a given array of <code><b>boolean</b></code>s by a
-		 * given {@String}
+		 * given {@link String}
 		 *
 		 * @param between what should be used for separating these elements
-		 * @return a {@String} obtained by concatenating the textual
+		 * @return a {@link String} obtained by concatenating the textual
 		 *         representation of the elements in <code>bs</code> separated by
 		 *         <code>between</code>
 		 */
