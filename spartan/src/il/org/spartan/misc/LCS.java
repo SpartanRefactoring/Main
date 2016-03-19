@@ -1,17 +1,18 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
-package org.spartan.misc;
+package il.org.spartan.misc;
+import static il.org.spartan.__.cantBeNull;
+import static il.org.spartan.__.max;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.spartan.__.cantBeNull;
-import static org.spartan.__.max;
 
 import java.util.Arrays;
 
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import org.spartan.As;
-import org.spartan.text.Lines;
+
+import il.org.spartan.As;
+import il.org.spartan.text.Lines;
 
 /**
  * Utility functions for computing the "Longest Common Subsequence" for two

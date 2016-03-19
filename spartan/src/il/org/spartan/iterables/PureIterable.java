@@ -1,5 +1,5 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
-package org.spartan.iterables;
+package il.org.spartan.iterables;
 import java.util.Iterator;
 
 /**

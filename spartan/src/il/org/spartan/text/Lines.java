@@ -1,13 +1,14 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
-package org.spartan.text;
+package il.org.spartan.text;
+import static il.org.spartan.__.cantBeNull;
 import static org.junit.Assert.assertEquals;
-import static org.spartan.__.cantBeNull;
 
 import org.eclipse.jdt.annotation.Nullable;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import org.spartan.Separate;
+
+import il.org.spartan.Separate;
 
 /**
  * A trivial utility module with functions to scatter a text into an array of

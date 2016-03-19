@@ -1,5 +1,5 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
-package org.spartan.collections;
+package il.org.spartan.collections;
 /**
  * An unsorted set of integers supporting the basic set operations: {@link #add}
  * , {@link #contains} and {@link #remove}.

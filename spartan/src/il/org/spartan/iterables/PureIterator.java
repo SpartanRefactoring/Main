@@ -1,8 +1,8 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
-package org.spartan.iterables;
+package il.org.spartan.iterables;
+import static il.org.spartan.__.cantBeNull;
+import static il.org.spartan.__.mustBeNull;
 import static org.junit.Assert.assertFalse;
-import static org.spartan.__.cantBeNull;
-import static org.spartan.__.mustBeNull;
 
 import java.util.Iterator;
 

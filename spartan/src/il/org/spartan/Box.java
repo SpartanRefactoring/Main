@@ -1,6 +1,6 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
-package org.spartan;
-import static org.spartan.__.cantBeNull;
+package il.org.spartan;
+import static il.org.spartan.__.cantBeNull;
 
 /**
  * A utility class, with a collection of function to box primitive types in

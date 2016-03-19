@@ -1,9 +1,9 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
-package org.spartan;
+package il.org.spartan;
+import static il.org.spartan.__.add;
+import static il.org.spartan.__.addAll;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.spartan.__.add;
-import static org.spartan.__.addAll;
 
 import java.util.*;
 
@@ -12,8 +12,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import org.spartan.iterables.PureIterable;
-import org.spartan.iterables.PureIterator;
+
+import il.org.spartan.iterables.PureIterable;
+import il.org.spartan.iterables.PureIterator;
 
 /**
  * A collection of <code><b>static</b></code> functions for converting from one

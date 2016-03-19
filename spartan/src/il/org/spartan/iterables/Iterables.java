@@ -1,9 +1,9 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
-package org.spartan.iterables;
+package il.org.spartan.iterables;
+import static il.org.spartan.__.contains;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.spartan.__.contains;
 
 import java.util.Iterator;
 
@@ -11,7 +11,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import org.spartan.As;
+
+import il.org.spartan.As;
 
 public enum Iterables {
 	// No values in an 'enum' used as name space for a collection of 'static'

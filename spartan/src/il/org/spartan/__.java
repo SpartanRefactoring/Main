@@ -1,5 +1,5 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
-package org.spartan;
+package il.org.spartan;
 import static org.junit.Assert.*;
 
 import java.util.*;
@@ -10,7 +10,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import org.spartan.__.FoundHandleForT.FoundHandleForInt;
+
+import il.org.spartan.__.FoundHandleForT.FoundHandleForInt;
 
 /**
  * A collection of <code><b>static</b></code> functions with no appropriate

@@ -1,6 +1,6 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
-package org.spartan.misc;
+package il.org.spartan.misc;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

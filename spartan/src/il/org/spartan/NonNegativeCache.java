@@ -1,7 +1,7 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
-package org.spartan;
+package il.org.spartan;
+import static il.org.spartan.__.sqr;
 import static org.junit.Assert.assertEquals;
-import static org.spartan.__.sqr;
 
 import org.junit.Test;
 

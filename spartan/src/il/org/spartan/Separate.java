@@ -1,12 +1,12 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
-package org.spartan;
+package il.org.spartan;
+import static il.org.spartan.Assert.assertEquals;
+import static il.org.spartan.Assert.assertZero;
+import static il.org.spartan.__.apply;
+import static il.org.spartan.__.cantBeNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.spartan.Assert.assertEquals;
-import static org.spartan.Assert.assertZero;
-import static org.spartan.__.apply;
-import static org.spartan.__.cantBeNull;
 
 import java.util.*;
 import java.util.function.Function;
@@ -14,8 +14,9 @@ import java.util.function.Function;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import org.spartan.__.Applicator;
-import org.spartan.iterables.Iterables;
+
+import il.org.spartan.__.Applicator;
+import il.org.spartan.iterables.Iterables;
 
 /**
  * A utility class providing library functions that take an array or a
