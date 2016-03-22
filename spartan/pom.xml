@@ -3,7 +3,41 @@
   <groupId>il.org.spartan</groupId>
   <artifactId>spartan</artifactId>
   <version>1.0</version>
+  <packaging>jar</packaging>
+
   <name>Spartan</name>
+  <description>A base library for Java source code analysis</description>
+  <url>https://github.com/SpartanRefactoring/spartan</url>
+
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>http://www.opensource.org/licenses/mit-license.php</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <scm>
+    <url>https://github.com/SpartanRefactoring/spartan</url>
+    <connection>scm:git:git@github.com:SpartanRefactoring/spartan.git</connection>
+    <developerConnection>scm:git:git@github.com:SpartanRefactoring/spartan.git</developerConnection>
+  </scm>
+
+  <developers>
+    <developer>
+      <email>yossi.gil@gmail.com</email>
+      <name>Yossi Gil</name>
+      <url>https://github.com/yossigil</url>
+      <id>yossigil</id>
+    </developer>
+  </developers>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
   
   <dependencies>
     <dependency>
@@ -61,6 +95,46 @@
           <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.3</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.3</version>
+        <extensions>true</extensions>
+        <configuration>
+           <serverId>ossrh</serverId>
+           <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+           <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
+
+
     </plugins>
   </build>
 </project>
