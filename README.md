@@ -1,1 +1,1 @@
-# Spartan [![Build Status](https://travis-ci.org/SpartanRefactoring/spartan.svg?branch=master)](https://travis-ci.org/SpartanRefactoring/spartan)
+# Spartan [![Build Status](https://travis-ci.org/SpartanRefactoring/spartan.svg?branch=master)](https://travis-ci.org/SpartanRefactoring/spartan) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/il.org.spartan/spartan/badge.svg)](https://maven-badges.herokuapp.com/maven-central/il.org.spartan/spartan/)
