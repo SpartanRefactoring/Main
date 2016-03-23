@@ -21,6 +21,7 @@
       <layout>p2</layout>
     </repository>
   </repositories>
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -28,7 +29,18 @@
       <version>4.12</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>il.org.spartan</groupId>
+      <artifactId>spartan</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>il.org.spartan</groupId>
+      <artifactId>cli</artifactId>
+      <version>1.0</version>
+    </dependency>
   </dependencies>
+  
   <build>
     <plugins>
       <plugin>
