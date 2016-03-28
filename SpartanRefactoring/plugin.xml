@@ -316,17 +316,11 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            class="il.org.spartan.refactoring.preferences.SpartanizationPreferencePage"
-            id="org.spartan.refactoring.preferences.SpartanizationPreferencePage"
+            class="il.org.spartan.refactoring.preferences.PluginPreferencesPage"
+            id="il.org.spartan.refactoring.preferences.PluginPreferencesPage"
             name="Spartanization"
-            category="org.eclipse.jdt.ui.preferences.CompliancePreferencePage">
+            category="org.eclipse.jdt.ui.preferences.JavaBasePreferencePage">
       </page>
-   </extension>
-   <extension
-         point="org.eclipse.core.runtime.preferences">
-      <initializer
-            class="il.org.spartan.refactoring.preferences.PreferenceInitializer">
-      </initializer>
    </extension>
    <extension
          id="id1"
