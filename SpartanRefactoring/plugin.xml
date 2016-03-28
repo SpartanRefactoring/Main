@@ -326,4 +326,11 @@
          id="id1"
          point="org.eclipse.core.resources.markers">
    </extension>
+   <extension
+	         point="org.eclipse.core.runtime.preferences">
+	         <scope name="PluginPreferencesPage" class="il.org.spartan.refactoring.preferences.PluginPreferencesPage"/>
+	      <initializer
+	            class="il.org.spartan.refactoring.preferences.PluginPreferencesDefaultValuesInitializer">
+	      </initializer>
+	</extension>
 </plugin>
