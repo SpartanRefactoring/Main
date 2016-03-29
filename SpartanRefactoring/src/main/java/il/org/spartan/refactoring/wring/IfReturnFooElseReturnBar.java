@@ -6,6 +6,8 @@ import static il.org.spartan.refactoring.utils.Funcs.then;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.Statement;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Subject;
 
@@ -30,5 +32,8 @@ public final class IfReturnFooElseReturnBar extends Wring.ReplaceCurrentNode<IfS
   }
   @Override String description(@SuppressWarnings("unused") final IfStatement _) {
     return "Replace if with a return of a conditional statement";
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.IF_TO_TERNARY;
   }
 }

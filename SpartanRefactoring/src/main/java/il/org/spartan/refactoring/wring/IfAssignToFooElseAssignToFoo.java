@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.Statement;
 
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Subject;
 
@@ -29,5 +30,8 @@ public final class IfAssignToFooElseAssignToFoo extends Wring.ReplaceCurrentNode
   }
   @Override String description(final IfStatement s) {
     return "Consolidate assignments to " + left(Extract.assignment(then(s)));
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.IF_TO_TERNARY;
   }
 }

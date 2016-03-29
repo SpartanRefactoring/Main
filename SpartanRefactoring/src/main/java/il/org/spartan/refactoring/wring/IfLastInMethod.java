@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
 
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.Rewrite;
@@ -39,5 +40,8 @@ public class IfLastInMethod extends Wring<IfStatement> {
         r.replace(s, newIf, g);
       }
     };
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

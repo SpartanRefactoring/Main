@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.Assignment.Operator;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
 
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.wring.LocalInliner.LocalInlineWithValue;
 
@@ -44,5 +45,8 @@ public final class DeclarationInitializerReturnUpdateAssignment extends Wring.Va
   }
   @Override String description(final VariableDeclarationFragment f) {
     return "Eliminate temporary " + f.getName() + " and inline its value into the expression of the subsequent return statement";
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.ELIMINATE_TEMP;
   }
 }

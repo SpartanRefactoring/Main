@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
 
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Subject;
 
 /**
@@ -30,5 +31,8 @@ public class AssignmentAndReturn extends Wring.ReplaceToNextStatement<Assignment
   }
   @Override String description(final Assignment a) {
     return "Inline assignment to " + left(a) + " with its subsequent 'return'";
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }

@@ -5,6 +5,8 @@ import static il.org.spartan.refactoring.utils.Funcs.asConditionalExpression;
 import static il.org.spartan.refactoring.utils.Funcs.logicalNot;
 
 import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.Subject;
 import il.org.spartan.utils.LongestCommonSubsequence;
@@ -47,5 +49,8 @@ public final class TernaryShortestFirst extends Wring.ReplaceCurrentNode<Conditi
   }
   @Override String description(@SuppressWarnings("unused") final ConditionalExpression _) {
     return "Invert logical condition and exhange order of '?' and ':' operands to conditional expression";
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.REORDER_EXPRESSIONS;
   }
 }

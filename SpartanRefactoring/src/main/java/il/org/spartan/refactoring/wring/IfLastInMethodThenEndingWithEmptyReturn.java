@@ -8,6 +8,8 @@ import static il.org.spartan.utils.Utils.lastIn;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Rewrite;
 
@@ -39,5 +41,8 @@ public class IfLastInMethodThenEndingWithEmptyReturn extends Wring<IfStatement> 
         r.replace(deleteMe, s.getAST().newEmptyStatement(), g);
       }
     };
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

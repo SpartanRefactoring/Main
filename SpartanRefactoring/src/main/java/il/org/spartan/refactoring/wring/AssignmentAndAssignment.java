@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
 
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Is;
 
@@ -45,5 +46,8 @@ public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assign
   }
   @Override String description(final Assignment a) {
     return "Consolidate assignment to " + left(a) + " with subsequent similar assignment";
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }

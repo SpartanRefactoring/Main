@@ -9,6 +9,8 @@ import static il.org.spartan.refactoring.utils.Funcs.logicalNot;
 
 import org.eclipse.jdt.core.dom.ConditionalExpression;
 import org.eclipse.jdt.core.dom.Expression;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Have;
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.Subject;
@@ -57,5 +59,8 @@ public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<Condit
   }
   @Override String description(@SuppressWarnings("unused") final ConditionalExpression _) {
     return "Convert conditional expression into logical expression";
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.IF_TO_TERNARY;
   }
 }

@@ -11,6 +11,8 @@ import java.util.List;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.Subject;
@@ -49,5 +51,8 @@ public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<Infix
   }
   @Override String description(@SuppressWarnings("unused") final InfixExpression _) {
     return "Factor out common logical component of ||";
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

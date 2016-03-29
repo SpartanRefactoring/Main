@@ -10,6 +10,8 @@ import static il.org.spartan.refactoring.utils.Restructure.parenthesize;
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
 
 final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpression> {
@@ -146,5 +148,8 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
   }
   @Override String description(@SuppressWarnings("unused") final ConditionalExpression _) {
     return "Pushdown ?: into expression";
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.REORDER_EXPRESSIONS;
   }
 }

@@ -7,6 +7,8 @@ import static il.org.spartan.refactoring.wring.TernaryPushdown.pushdown;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.Statement;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Subject;
 
@@ -32,5 +34,8 @@ public final class IfExpressionStatementElseSimilarExpressionStatement extends W
   }
   @Override String description(@SuppressWarnings("unused") final IfStatement _) {
     return "Consolidate two branches of an 'if' into a single ";
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }

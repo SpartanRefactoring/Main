@@ -16,6 +16,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
 
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Plant;
 import il.org.spartan.refactoring.utils.Rewrite;
 import il.org.spartan.refactoring.utils.Subject;
@@ -90,5 +91,8 @@ public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpre
           r.replace(first, new Plant(Subject.operand(peelNegation(first)).to(MINUS)).into(first.getParent()), g);
       }
     };
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.REORDER_EXPRESSIONS;
   }
 }
