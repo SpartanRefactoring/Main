@@ -5,6 +5,8 @@ import static il.org.spartan.refactoring.utils.Funcs.then;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.Subject;
@@ -31,6 +33,9 @@ public final class IfThrowNoElseThrow extends Wring.ReplaceToNextStatement<IfSta
     return $ == null ? null : Extract.core($.getExpression());
   }
   @Override String description(@SuppressWarnings("unused") final IfStatement _) {
-    return "Consolidate into a single 'trhow  '";
+    return "Consolidate into a single 'throw'";
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.IF_TO_TERNARY;
   }
 }

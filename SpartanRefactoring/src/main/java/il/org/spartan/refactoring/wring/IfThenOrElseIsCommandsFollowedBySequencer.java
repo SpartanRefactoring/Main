@@ -14,6 +14,8 @@ import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.Rewrite;
@@ -64,5 +66,8 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
   }
   @Override boolean scopeIncludes(final IfStatement s) {
     return elze(s) != null && (endsWithSequencer(then(s)) || endsWithSequencer(elze(s)));
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.SIMPLIFY_NESTED_BLOCKS;
   }
 }

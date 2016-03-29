@@ -12,6 +12,8 @@ import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.jdt.core.dom.rewrite.ListRewrite;
 import org.eclipse.text.edits.TextEditGroup;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.Subject;
@@ -63,5 +65,8 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends Wring.Rep
       lr.remove(nextStatement, g);
     }
     return r;
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }

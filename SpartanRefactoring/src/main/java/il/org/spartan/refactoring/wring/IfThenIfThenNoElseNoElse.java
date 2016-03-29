@@ -9,6 +9,8 @@ import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
 
 /**
@@ -47,5 +49,8 @@ public final class IfThenIfThenNoElseNoElse extends Wring<IfStatement> {
   }
   @Override Rewrite make(final IfStatement s) {
     return make(s, null);
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.SIMPLIFY_NESTED_BLOCKS;
   }
 }

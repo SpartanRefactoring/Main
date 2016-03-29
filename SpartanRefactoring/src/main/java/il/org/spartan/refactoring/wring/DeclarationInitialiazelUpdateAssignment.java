@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.Assignment.Operator;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
 
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Subject;
 import il.org.spartan.refactoring.wring.LocalInliner.LocalInlineWithValue;
@@ -44,5 +45,8 @@ public final class DeclarationInitialiazelUpdateAssignment extends Wring.Variabl
   }
   @Override String description(final VariableDeclarationFragment f) {
     return "Consolidate declaration of " + f.getName() + " with its subsequent initialization";
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }

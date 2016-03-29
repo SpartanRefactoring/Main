@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.BooleanLiteral;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.InfixExpression;
 
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.Plant;
 
@@ -46,5 +47,8 @@ public final class InfixComparisonBooleanLiteral extends Wring.ReplaceCurrentNod
     final BooleanLiteral literal = literal(e);
     final Expression nonliteral = core(nonLiteral(e));
     return new Plant(!negating(e, literal) ? nonliteral : logicalNot(nonliteral)).into(e.getParent());
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

@@ -9,6 +9,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import il.org.spartan.refactoring.builder.Plugin;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 
 public class PluginPreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 	private SpartanPropertyListener listener;
@@ -25,27 +26,27 @@ public class PluginPreferencesPage extends FieldEditorPreferencePage implements 
 	public void createFieldEditors() {
 		// Add the startup behavior combo box
 		addField(new ComboFieldEditor(
-					PluginPreferencesStrings.PLUGIN_STARTUP_BEHAVIOR_ID, 
-					PluginPreferencesStrings.PLUGIN_STARTUP_BEHAVIOR_TEXT, 
-					PluginPreferencesStrings.PLUGIN_STARTUP_BEHAVIOR_OPTIONS, 
+					PluginPreferencesResources.PLUGIN_STARTUP_BEHAVIOR_ID, 
+					PluginPreferencesResources.PLUGIN_STARTUP_BEHAVIOR_TEXT, 
+					PluginPreferencesResources.PLUGIN_STARTUP_BEHAVIOR_OPTIONS, 
 					getFieldEditorParent())
 				);
 		
 		// Add the enabled for new projects checkbox
 		addField(new BooleanFieldEditor(
-					PluginPreferencesStrings.NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, 
-					PluginPreferencesStrings.NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT, 
+					PluginPreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, 
+					PluginPreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT, 
 					getFieldEditorParent())
 				);
 		
 		// Create and fill the "enabled spartanizations" group box
 		GroupFieldEditor gr = new GroupFieldEditor("Enabled spartanizations", getFieldEditorParent());		
 		
-		for(String[] wring : PluginPreferencesStrings.getAllWringComboOptions()) {
+		for(WringGroup wring : WringGroup.values()) {
 			ComboFieldEditor cfe = new ComboFieldEditor(
-					wring[0], 
-					wring[1], 
-					PluginPreferencesStrings.WRING_COMBO_OPTIONS, 
+					wring.getId(), 
+					wring.getLabel(), 
+					PluginPreferencesResources.WRING_COMBO_OPTIONS, 
 					gr.getFieldEditor());
 			
 			cfe.setPropertyChangeListener(listener);
@@ -56,10 +57,9 @@ public class PluginPreferencesPage extends FieldEditorPreferencePage implements 
 		gr.init();
 	}
 
-	@Override
-	public void init(IWorkbench workbench) {
+	@Override public void init(IWorkbench workbench) {
 		setPreferenceStore(Plugin.getDefault().getPreferenceStore());
-		setDescription(PluginPreferencesStrings.PAGE_DESCRIPTION);
+		setDescription(PluginPreferencesResources.PAGE_DESCRIPTION);
 	}
 	
 	/**

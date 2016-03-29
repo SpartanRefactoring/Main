@@ -14,6 +14,8 @@ import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.jdt.core.dom.rewrite.ListRewrite;
 import org.eclipse.text.edits.TextEditGroup;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
 
 /**
@@ -78,5 +80,8 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> {
   }
   @Override boolean scopeIncludes(final IfStatement s) {
     return make(s) != null;
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

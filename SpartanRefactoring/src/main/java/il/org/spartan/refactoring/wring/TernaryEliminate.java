@@ -4,6 +4,8 @@ import static il.org.spartan.refactoring.utils.Funcs.same;
 
 import org.eclipse.jdt.core.dom.ConditionalExpression;
 import org.eclipse.jdt.core.dom.Expression;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Plant;
 
@@ -22,5 +24,8 @@ public final class TernaryEliminate extends Wring.ReplaceCurrentNode<Conditional
   }
   @Override String description(@SuppressWarnings("unused") final ConditionalExpression _) {
     return "Eliminate conditional exprssion with identical branches";
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

@@ -7,6 +7,8 @@ import static il.org.spartan.refactoring.utils.Funcs.then;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.Statement;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Subject;
 
@@ -31,5 +33,8 @@ public final class IfThrowFooElseThrowBar extends Wring.ReplaceCurrentNode<IfSta
   }
   @Override String description(@SuppressWarnings("unused") final IfStatement _) {
     return "Consolidate 'if' into a 'throw' statement of a conditional expression";
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.IF_TO_TERNARY;
   }
 }

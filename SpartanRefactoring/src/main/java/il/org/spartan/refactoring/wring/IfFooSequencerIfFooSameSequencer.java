@@ -13,6 +13,8 @@ import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.Subject;
@@ -49,5 +51,8 @@ public final class IfFooSequencerIfFooSameSequencer extends Wring.ReplaceToNextS
   }
   @Override String description(@SuppressWarnings("unused") final IfStatement _) {
     return "Consolidate two 'if' statements with identical body";
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }
