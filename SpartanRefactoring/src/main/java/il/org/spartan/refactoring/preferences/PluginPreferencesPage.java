@@ -1,5 +1,8 @@
 package il.org.spartan.refactoring.preferences;
 
+import org.eclipse.core.resources.IncrementalProjectBuilder;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.ComboFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
@@ -8,12 +11,13 @@ import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
+import il.org.spartan.refactoring.builder.Builder;
 import il.org.spartan.refactoring.builder.Plugin;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
+import il.org.spartan.refactoring.wring.Toolbox;
 
 public class PluginPreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 	private SpartanPropertyListener listener;
-	
 	
 	public PluginPreferencesPage() {
 		super(GRID);
@@ -49,7 +53,6 @@ public class PluginPreferencesPage extends FieldEditorPreferencePage implements 
 					PluginPreferencesResources.WRING_COMBO_OPTIONS, 
 					gr.getFieldEditor());
 			
-			cfe.setPropertyChangeListener(listener);
 			gr.add(cfe);
 		}
 		
@@ -60,6 +63,7 @@ public class PluginPreferencesPage extends FieldEditorPreferencePage implements 
 	@Override public void init(IWorkbench workbench) {
 		setPreferenceStore(Plugin.getDefault().getPreferenceStore());
 		setDescription(PluginPreferencesResources.PAGE_DESCRIPTION);
+		Plugin.getDefault().getPreferenceStore().addPropertyChangeListener(listener);
 	}
 	
 	/**
@@ -68,8 +72,13 @@ public class PluginPreferencesPage extends FieldEditorPreferencePage implements 
 	 */
 	private static class SpartanPropertyListener implements IPropertyChangeListener {
 		@Override public void propertyChange(PropertyChangeEvent event) {
-			// TODO actually implement this
-			System.out.println("Detected change in wring settings");
+			// Recreate the toolbox's internal instance, adding only enabled wrings
+			Toolbox.generate();
+			try {
+				Plugin.refreshAllProjects();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }
