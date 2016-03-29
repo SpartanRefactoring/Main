@@ -137,6 +137,8 @@ public class Toolbox {
       for (final Wring<N> w : ws) {
         if (w == null)
           break;
+        if(!w.wringGroup().isEnabled())
+        	continue;
         l.add(w);
       }
       return this;

@@ -61,6 +61,7 @@ import il.org.spartan.refactoring.utils.Subject;
  *
  * @param <N> type of node which triggers the transformation.
  * @author Yossi Gil
+ * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-07-09
  */
 public abstract class Wring<N extends ASTNode> {
@@ -83,7 +84,7 @@ public abstract class Wring<N extends ASTNode> {
     return make(n);
   }
   /**
-   * Returns the preference group to which the wrings belongs to.
+   * Returns the preference group to which the wring belongs to.
    * This method should be overriden for each wring and should return
    * one of the values of {@link WringGroup}
    * @return the preference group this wring belongs to
