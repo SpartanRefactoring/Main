@@ -82,11 +82,11 @@ public class Plugin extends AbstractUIPlugin implements IStartup {
     description.setNatureIds(append(natures, Nature.NATURE_ID));
     p.setDescription(description, null);
   }
-  private static void refreshAllProjects() {
+  public static void refreshAllProjects() {
     for (final IProject p : ResourcesPlugin.getWorkspace().getRoot().getProjects())
       try {
         if (p.isOpen())
-          p.build(IncrementalProjectBuilder.CLEAN_BUILD, null);
+          p.build(IncrementalProjectBuilder.FULL_BUILD, null);
       } catch (final CoreException e) {
         e.printStackTrace();
       }

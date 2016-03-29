@@ -105,7 +105,7 @@ public class Builder extends IncrementalProjectBuilder {
   public static void deleteMarkers(final IFile f) throws CoreException {
     f.deleteMarkers(MARKER_TYPE, false, IResource.DEPTH_ONE);
   }
-  protected static void incrementalBuild(final IResourceDelta d) throws CoreException {
+  public static void incrementalBuild(final IResourceDelta d) throws CoreException {
     d.accept(new IResourceDeltaVisitor() {
       @Override public boolean visit(final IResourceDelta internalDelta) throws CoreException {
         switch (internalDelta.getKind()) {

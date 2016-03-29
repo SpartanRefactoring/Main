@@ -51,6 +51,7 @@ public class Trimmer extends Spartanization {
   /** Instantiates this class */
   public Trimmer() {
     super("Trimmer");
+    Toolbox.generate();
   }
   @Override protected ASTVisitor collect(final List<Rewrite> $) {
     return new DispatchingVisitor() {
