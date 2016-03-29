@@ -6,6 +6,8 @@ import static il.org.spartan.refactoring.utils.Funcs.right;
 
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.InfixExpression;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.Specificity;
 
@@ -30,5 +32,8 @@ public final class InfixComparisonSpecific extends Wring.ReplaceCurrentNode<Infi
   }
   @Override String description(@SuppressWarnings("unused") final InfixExpression _) {
     return "Exchange left and right operands of comparison";
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.REORDER_EXPRESSIONS;
   }
 }

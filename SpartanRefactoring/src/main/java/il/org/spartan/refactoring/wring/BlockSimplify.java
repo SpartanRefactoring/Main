@@ -6,6 +6,8 @@ import static il.org.spartan.refactoring.utils.Restructure.duplicateInto;
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.Subject;
@@ -64,5 +66,8 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
   }
   @Override String description(@SuppressWarnings("unused") final Block _) {
     return "Simplify block";
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.REMOVE_REDUNDANT_PUNCTUATION;
   }
 }

@@ -18,17 +18,13 @@ public class PluginPreferencesDefaultValuesInitializer extends AbstractPreferenc
 	public void initializeDefaultPreferences() {
 		IPreferenceStore ps = Plugin.getDefault().getPreferenceStore();
 		
-		ps.setDefault(PluginPreferencesStrings.PLUGIN_STARTUP_BEHAVIOR_ID, "remember");
-		ps.setDefault(PluginPreferencesStrings.NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, true);
+		ps.setDefault(PluginPreferencesResources.PLUGIN_STARTUP_BEHAVIOR_ID, "remember");
+		ps.setDefault(PluginPreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, true);
 		
-		ps.setDefault(PluginPreferencesStrings.CONSOLIDATE_ASSIGNMENTS_STATEMENTS_ID, "on");
-		ps.setDefault(PluginPreferencesStrings.SIMPLIFY_NESTED_BLOCKS_ID, "on");
-		ps.setDefault(PluginPreferencesStrings.ELIMINATE_TEMP_ID, "on");
-		ps.setDefault(PluginPreferencesStrings.REMOVE_REDUNDANT_PUNCTUATION_ID, "on");
-		ps.setDefault(PluginPreferencesStrings.IF_TO_TERNARY_ID, "on");
-		ps.setDefault(PluginPreferencesStrings.REFACTOR_INEFFECTIVE_ID, "on");
-		ps.setDefault(PluginPreferencesStrings.REORDER_EXPRESSIONS_ID, "on");
-		ps.setDefault(PluginPreferencesStrings.RENAME_PARAMETERS_ID, "on");
-		ps.setDefault(PluginPreferencesStrings.RENAME_RETURN_VARIABLE_ID, "on");
+		
+		for(PluginPreferencesResources.WringGroup wr : 
+			PluginPreferencesResources.WringGroup.values()) {
+			ps.setDefault(wr.getId(), "on");
+		}
 	}
 }

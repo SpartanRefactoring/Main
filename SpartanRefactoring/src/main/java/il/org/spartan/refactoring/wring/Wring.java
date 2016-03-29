@@ -4,19 +4,55 @@ import static il.org.spartan.refactoring.utils.Funcs.duplicate;
 import static il.org.spartan.refactoring.utils.Funcs.left;
 import static il.org.spartan.refactoring.utils.Funcs.right;
 import static il.org.spartan.refactoring.wring.Wrings.size;
-import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.BIT_AND_ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.BIT_OR_ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.BIT_XOR_ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.DIVIDE_ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.LEFT_SHIFT_ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.MINUS_ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.PLUS_ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.REMAINDER_ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.RIGHT_SHIFT_SIGNED_ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.RIGHT_SHIFT_UNSIGNED_ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.TIMES_ASSIGN;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.AND;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.DIVIDE;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.LEFT_SHIFT;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.MINUS;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.OR;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.PLUS;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.REMAINDER;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.RIGHT_SHIFT_SIGNED;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.RIGHT_SHIFT_UNSIGNED;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.TIMES;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.XOR;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.Assignment.Operator;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.IExtendedModifier;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.PrefixExpression;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
-import il.org.spartan.misc.Wrapper;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.misc.Wrapper;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
+import il.org.spartan.refactoring.utils.Collect;
+import il.org.spartan.refactoring.utils.Extract;
+import il.org.spartan.refactoring.utils.Is;
+import il.org.spartan.refactoring.utils.Plant;
+import il.org.spartan.refactoring.utils.Rewrite;
+import il.org.spartan.refactoring.utils.Subject;
 
 /**
  * A wring is a transformation that works on an AstNode. Such a transformation
@@ -46,6 +82,13 @@ public abstract class Wring<N extends ASTNode> {
   Rewrite make(final N n, @SuppressWarnings("unused") final ExclusionManager exclude) {
     return make(n);
   }
+  /**
+   * Returns the preference group to which the wrings belongs to.
+   * This method should be overriden for each wring and should return
+   * one of the values of {@link WringGroup}
+   * @return the preference group this wring belongs to
+   */
+  abstract WringGroup wringGroup();
   /**
    * Determines whether this {@link Wring} object is not applicable for a given
    * {@link PrefixExpression} is within the "scope" of this . Note that a

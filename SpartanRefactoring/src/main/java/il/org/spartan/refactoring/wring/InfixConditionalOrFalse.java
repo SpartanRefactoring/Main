@@ -2,6 +2,8 @@ package il.org.spartan.refactoring.wring;
 
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.InfixExpression;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Have;
 import il.org.spartan.refactoring.utils.Is;
@@ -21,5 +23,8 @@ public final class InfixConditionalOrFalse extends Wring.ReplaceCurrentNode<Infi
   }
   @Override String description(@SuppressWarnings("unused") final InfixExpression _) {
     return "Remove 'false' argument to '||'";
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

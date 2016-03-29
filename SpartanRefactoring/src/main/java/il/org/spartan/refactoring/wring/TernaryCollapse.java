@@ -8,6 +8,8 @@ import static il.org.spartan.refactoring.utils.Funcs.same;
 
 import org.eclipse.jdt.core.dom.ConditionalExpression;
 import org.eclipse.jdt.core.dom.Expression;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Subject;
 
 /**
@@ -55,5 +57,8 @@ public class TernaryCollapse extends Wring.ReplaceCurrentNode<ConditionalExpress
   }
   @Override String description(@SuppressWarnings("unused") final ConditionalExpression _) {
     return "Eliminate nested conditional expression";
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.IF_TO_TERNARY;
   }
 }

@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
 
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
 
 /**
@@ -79,5 +80,8 @@ public class SingleVariableDeclarationAbbreviation extends Wring<SingleVariableD
   }
   private static String pluralVariadic(final SingleVariableDeclaration d) {
     return d.isVarargs() ? "s" : "";
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.RENAME_PARAMETERS;
   }
 }

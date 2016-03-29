@@ -6,6 +6,8 @@ import static il.org.spartan.refactoring.utils.Funcs.then;
 
 import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.Statement;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.Subject;
 
@@ -33,5 +35,8 @@ public final class IfDegenerateElse extends Wring.ReplaceCurrentNode<IfStatement
   }
   static boolean degenerateElse(final IfStatement s) {
     return elze(s) != null && Is.vacuousElse(s);
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

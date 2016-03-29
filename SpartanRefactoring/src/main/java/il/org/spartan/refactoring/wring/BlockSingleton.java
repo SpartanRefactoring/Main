@@ -6,6 +6,8 @@ import static il.org.spartan.refactoring.utils.Funcs.parent;
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Is;
 
 /**
@@ -28,5 +30,8 @@ public class BlockSingleton extends Wring.ReplaceCurrentNode<Block> {
   }
   @Override String description(@SuppressWarnings("unused") final Block _) {
     return "Remove redundant curly braces.";
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.REMOVE_REDUNDANT_PUNCTUATION;
   }
 }

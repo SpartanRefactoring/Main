@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
 
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
 
 /**
@@ -39,6 +40,9 @@ public class MethodRenameReturnToDollar extends Wring<MethodDeclaration> {
         return d.getAST().newSimpleName("$");
       }
     };
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.RENAME_RETURN_VARIABLE;
   }
 }
 

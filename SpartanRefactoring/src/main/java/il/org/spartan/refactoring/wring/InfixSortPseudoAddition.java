@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.ExpressionComparator;
 
 /**
@@ -29,5 +30,8 @@ public final class InfixSortPseudoAddition extends Wring.InfixSorting {
   }
   @Override boolean scopeIncludes(final InfixExpression e) {
     return in(e.getOperator(), OR, XOR, AND);
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.REORDER_EXPRESSIONS;
   }
 }

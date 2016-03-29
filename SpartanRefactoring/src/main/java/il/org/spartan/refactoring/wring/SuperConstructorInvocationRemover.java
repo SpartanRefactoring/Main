@@ -3,6 +3,8 @@ package il.org.spartan.refactoring.wring;
 import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Rewrite;
 
 /**
@@ -25,5 +27,8 @@ public class SuperConstructorInvocationRemover extends Wring<SuperConstructorInv
   }
   @Override String description(@SuppressWarnings("unused") final SuperConstructorInvocation _) {
     return "Remove empty 'super()' invocation";
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

@@ -117,7 +117,7 @@ public class GroupFieldEditor extends FieldEditor {
 		groupLayout.marginHeight = GROUP_PADDING;
 		groupLayout.marginWidth = GROUP_PADDING;
 		groupLayout.numColumns = numColumns;
-		this.group.setLayout( groupLayout );
+		this.group.setLayout(groupLayout);
 			
 		for(FieldEditor editor : members)
 			editor.fillIntoGrid(parentParam, numColumns);
@@ -133,7 +133,7 @@ public class GroupFieldEditor extends FieldEditor {
 	 */
 	@Override
 	protected void doLoad() {
-		for(FieldEditor editor : members )
+		for(FieldEditor editor : members)
 			editor.load();
 	}
 	
@@ -186,14 +186,14 @@ public class GroupFieldEditor extends FieldEditor {
 	 * @see FieldEditor.setEnabled
 	 */
 	@Override
-	public void setEnabled( boolean enabled, Composite parentParam )
+	public void setEnabled(boolean enabled, Composite parentParam)
 	{
 		for(FieldEditor editor : members)
 			editor.setEnabled(enabled, parentParam);
 	}
 	
 	@Override
-	public void setPreferenceStore( IPreferenceStore store ) {
+	public void setPreferenceStore(IPreferenceStore store) {
 		super.setPreferenceStore(store);
 
 		for(FieldEditor editor : members)
@@ -201,20 +201,18 @@ public class GroupFieldEditor extends FieldEditor {
 	}
 	
 	@Override
-	public void setPage( DialogPage dialogPage )
+	public void setPage(DialogPage dialogPage)
 	{
 		for(FieldEditor editor : members)
 			editor.setPage(dialogPage);
 	}
 	
 	@Override
-	public boolean isValid()
-	{
+	public boolean isValid() {
 		for(FieldEditor editor : members) {
 			if(!editor.isValid())
 				return false;
 		}
-		
 		return true;
 	}
 }

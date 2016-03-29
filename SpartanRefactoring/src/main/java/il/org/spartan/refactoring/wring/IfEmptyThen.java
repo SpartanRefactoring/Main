@@ -4,6 +4,8 @@ import static il.org.spartan.refactoring.utils.Funcs.elze;
 
 import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.Statement;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.Subject;
 
@@ -24,5 +26,8 @@ public final class IfEmptyThen extends Wring.ReplaceCurrentNode<IfStatement> {
   }
   @Override String description(@SuppressWarnings("unused") final IfStatement _) {
     return "Invert conditional and remove vacuous 'then' branch";
+  }
+  @Override WringGroup wringGroup() {
+	return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }
