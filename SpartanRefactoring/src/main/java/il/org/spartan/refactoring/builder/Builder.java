@@ -18,6 +18,7 @@ import il.org.spartan.refactoring.utils.Rewrite;
  *         2014/6/16 (v3)
  * @author Tomer Zeltzer <code><tomerr90 [at] gmail.com></code>
  * @since 2013/07/01
+ * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  */
 public class Builder extends IncrementalProjectBuilder {
   /** Long prefix to be used in front of all suggestions */
