@@ -37,38 +37,6 @@ public class ApplySpartanizationHandler extends BaseHandler {
   }
   public static void applySafeSpartanizationsTo(final ICompilationUnit cu) {
 	applySafeSpartanizationsTo(cu, new Range(0, 0));
-<<<<<<< fa39403371519f20d9d18731f2b67477468e1b0c
-=======
-  }
-  public static void applySafeSpartanizationsTo(final ICompilationUnit cu, final Range r) {
-	ITextSelection sel = (r == null || r.size() <= 0) ? new TextSelection(0, 0) : new TextSelection(r.from, r.size());
-	applySafeSpartanizationsTo(cu, sel);
-  }
-  public static void applySafeSpartanizationsTo(final ICompilationUnit cu, final ITextSelection t) {
-	    for (final Spartanization s : safeSpartanizations)
-	      try {
-	        s.setCompilationUnit(cu);
-	        // TODO We might want a real ProgressMonitor for large projects - I
-	        // think that since there is a progress monitor for the whole project we
-	        // don't really need it for each file.
-	        if(t.getLength() > 0 && !t.isEmpty())
-	        	s.setSelection(t);
-	        s.performRule(cu, new NullProgressMonitor());
-	      } catch (final CoreException x) {
-	        x.printStackTrace();
-	      }
-	  }
-  private static ITextSelection getSelectedText() {
-	IEditorPart ep = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-	ISelection s = ep.getEditorSite().getSelectionProvider().getSelection();
-	
-	if(s instanceof ITextSelection) {
-		ITextSelection ts = (ITextSelection)s;
-		return ts;
-	}
-
-	return null;  
->>>>>>> aba3abd7407930d9c2fbcff136a017be89314917
   }
   public static void applySafeSpartanizationsTo(final ICompilationUnit cu, final Range r) {
 	ITextSelection sel = (r == null || r.size() <= 0) ? new TextSelection(0, 0) : new TextSelection(r.from, r.size());
