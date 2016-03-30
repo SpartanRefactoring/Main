@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.spartanizations;
 
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
-import static il.org.spartan.refactoring.wring.TrimmerTest.countOpportunities;
+import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.countOpportunities;
 import static il.org.spartan.utils.Utils.objects;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -19,6 +19,8 @@ import org.junit.runners.Parameterized.Parameters;
 
 import il.org.spartan.refactoring.spartanizations.Spartanization;
 import il.org.spartan.refactoring.utils.As;
+import il.org.spartan.refactoring.wring.TrimmerTestsUtils;
+import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.countOpportunities;
 
 /**
  * Run tests in which a specific transformation is not supposed to change the
@@ -51,7 +53,7 @@ public class InOutTest {
   }
   protected static void go(final Spartanization s, final File from, final File to) {
     final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(FileTestUtils.makeInFile(from));
-    assertEquals(u.toString(), 1, countOpportunities(s, u));
+    assertEquals(u.toString(), 1, TrimmerTestsUtils.countOpportunities(s, u));
     TESTUtils.assertOneOpportunity(s, As.string(from));
     final String expected;
     final Document rewrite;
