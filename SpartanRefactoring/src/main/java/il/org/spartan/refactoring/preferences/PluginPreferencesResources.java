@@ -76,6 +76,8 @@ public class PluginPreferencesResources {
 			return label; 
 		}
 		public boolean isEnabled() {
+			if(Plugin.getDefault() == null) // Necessary for unit tests
+				return true;
 			return Plugin.getDefault().getPreferenceStore().getString(id).equals("on");
 		}
 	}

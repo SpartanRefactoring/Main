@@ -2,7 +2,7 @@ package il.org.spartan.refactoring.spartanizations;
 
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
 import static il.org.spartan.hamcrest.OrderingComparison.greaterThanOrEqualTo;
-import static il.org.spartan.refactoring.wring.TrimmerTest.countOpportunities;
+import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.countOpportunities;
 import static il.org.spartan.utils.Utils.compressSpaces;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -21,6 +21,8 @@ import il.org.spartan.refactoring.spartanizations.Spartanization;
 import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.wring.Trimmer;
+import il.org.spartan.refactoring.wring.TrimmerTestsUtils;
+import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.countOpportunities;
 
 /**
  * @author Yossi Gil
@@ -81,7 +83,7 @@ import il.org.spartan.refactoring.wring.Trimmer;
   }
   static void assertNoOpportunity(final Spartanization s, final String from) {
     final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(from);
-    assertEquals(u.toString(), 0, countOpportunities(s, u));
+    assertEquals(u.toString(), 0, TrimmerTestsUtils.countOpportunities(s, u));
   }
   static void assertNotEvenSimilar(final String expected, final String actual) {
     assertNotEquals(compressSpaces(expected), compressSpaces(actual));
@@ -89,6 +91,6 @@ import il.org.spartan.refactoring.wring.Trimmer;
   static void assertOneOpportunity(final Spartanization s, final String from) {
     final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(from);
     assertThat(u, notNullValue());
-    assertThat(countOpportunities(s, u), greaterThanOrEqualTo(1));
+    assertThat(TrimmerTestsUtils.countOpportunities(s, u), greaterThanOrEqualTo(1));
   }
 }
