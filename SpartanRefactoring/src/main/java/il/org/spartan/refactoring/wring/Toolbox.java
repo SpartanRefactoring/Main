@@ -143,10 +143,8 @@ public class Toolbox {
       for (final Wring<N> w : ws) {
         if (w == null)
           break;
-        if(!w.wringGroup().isEnabled()) {
-        	System.out.println("Skipping wring " + w.getClass().getSimpleName());
+        if(!w.wringGroup().isEnabled())
         	continue;
-        }
         l.add(w);
       }
       return this;
