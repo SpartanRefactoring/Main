@@ -46,21 +46,15 @@ public class PluginPreferencesPage extends FieldEditorPreferencePage implements 
 		// Create and fill the "enabled spartanizations" group box
 		GroupFieldEditor gr = new GroupFieldEditor("Enabled spartanizations", getFieldEditorParent());		
 		
-		for(WringGroup wring : WringGroup.values()) {
-			ComboFieldEditor cfe = new ComboFieldEditor(
-					wring.getId(), 
-					wring.getLabel(), 
-					PluginPreferencesResources.WRING_COMBO_OPTIONS, 
-					gr.getFieldEditor());
-			
-			gr.add(cfe);
-		}
+		for(WringGroup wring : WringGroup.values())
+			gr.add((new ComboFieldEditor(wring.getId(), wring.getLabel(),
+					PluginPreferencesResources.WRING_COMBO_OPTIONS, gr.getFieldEditor())));
 		
 		addField(gr);
 		gr.init();
 	}
 
-	@Override public void init(IWorkbench workbench) {
+	@Override public void init(IWorkbench w) {
 		setPreferenceStore(Plugin.getDefault().getPreferenceStore());
 		setDescription(PluginPreferencesResources.PAGE_DESCRIPTION);
 		Plugin.getDefault().getPreferenceStore().addPropertyChangeListener(listener);
