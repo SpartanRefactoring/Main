@@ -23,8 +23,7 @@ public class PluginPreferencesDefaultValuesInitializer extends AbstractPreferenc
 		
 		
 		for(PluginPreferencesResources.WringGroup wr : 
-			PluginPreferencesResources.WringGroup.values()) {
+			PluginPreferencesResources.WringGroup.values())
 			ps.setDefault(wr.getId(), "on");
-		}
 	}
 }

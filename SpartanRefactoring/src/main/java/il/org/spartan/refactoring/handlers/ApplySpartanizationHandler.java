@@ -39,8 +39,8 @@ public class ApplySpartanizationHandler extends BaseHandler {
 	applySafeSpartanizationsTo(cu, new Range(0, 0));
   }
   public static void applySafeSpartanizationsTo(final ICompilationUnit cu, final Range r) {
-	ITextSelection sel = (r == null || r.size() <= 0) ? new TextSelection(0, 0) : new TextSelection(r.from, r.size());
-	applySafeSpartanizationsTo(cu, sel);
+	applySafeSpartanizationsTo(cu,
+			((r == null || r.size() <= 0) ? new TextSelection(0, 0) : new TextSelection(r.from, r.size())));
   }
   public static void applySafeSpartanizationsTo(final ICompilationUnit cu, final ITextSelection t) {
 	    for (final Spartanization s : safeSpartanizations)
@@ -59,12 +59,6 @@ public class ApplySpartanizationHandler extends BaseHandler {
   private static ITextSelection getSelectedText() {
 	IEditorPart ep = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 	ISelection s = ep.getEditorSite().getSelectionProvider().getSelection();
-	
-	if(s instanceof ITextSelection) {
-		ITextSelection ts = (ITextSelection)s;
-		return ts;
-	}
-
-	return null;  
+	return !(s instanceof ITextSelection) ? null : (ITextSelection) s;
   }
 }
