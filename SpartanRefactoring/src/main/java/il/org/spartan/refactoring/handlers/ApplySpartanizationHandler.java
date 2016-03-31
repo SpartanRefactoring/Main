@@ -43,7 +43,6 @@ public class ApplySpartanizationHandler extends BaseHandler {
 			((r == null || r.size() <= 0) ? new TextSelection(0, 0) : new TextSelection(r.from, r.size())));
   }
   public static void applySafeSpartanizationsTo(final ICompilationUnit cu, final ITextSelection t) {
-	  System.out.println("Selection is " + (t == null ? "null" : t.getText()));  
 	  for (final Spartanization s : safeSpartanizations)
 	      try {
 	        s.setCompilationUnit(cu);
