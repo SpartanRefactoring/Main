@@ -46,10 +46,7 @@ public class ApplySpartanizationHandler extends BaseHandler {
 	  for (final Spartanization s : safeSpartanizations)
 	      try {
 	        s.setCompilationUnit(cu);
-	        if(t.getLength() > 0 && !t.isEmpty())
-	        	s.setSelection(t);
-	        else
-	        	s.setSelection(null); // Clear selection - spartanize entire compilation unit
+	        s.setSelection(t.getLength() > 0 && !t.isEmpty() ? t : null);
 	        s.performRule(cu, new NullProgressMonitor());
 	      } catch (final CoreException x) {
 	        x.printStackTrace();
