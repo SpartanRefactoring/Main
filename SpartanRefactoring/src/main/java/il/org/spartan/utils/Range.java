@@ -96,6 +96,9 @@ public class Range {
   @Override public boolean equals(final Object o) {
     return o instanceof Range && from == ((Range) o).from && to == ((Range) o).to;
   }
+  @Override public String toString() {
+	  return String.format("[%d, %d]", from, to);
+  }
   /**
    * Merge with another record
    *
