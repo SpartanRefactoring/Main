@@ -43,14 +43,14 @@ public class ApplySpartanizationHandler extends BaseHandler {
 			((r == null || r.size() <= 0) ? new TextSelection(0, 0) : new TextSelection(r.from, r.size())));
   }
   public static void applySafeSpartanizationsTo(final ICompilationUnit cu, final ITextSelection t) {
-	    for (final Spartanization s : safeSpartanizations)
+	  System.out.println("Selection is " + (t == null ? "null" : t.getText()));  
+	  for (final Spartanization s : safeSpartanizations)
 	      try {
 	        s.setCompilationUnit(cu);
-	        // TODO We might want a real ProgressMonitor for large projects - I
-	        // think that since there is a progress monitor for the whole project we
-	        // don't really need it for each file.
 	        if(t.getLength() > 0 && !t.isEmpty())
 	        	s.setSelection(t);
+	        else
+	        	s.setSelection(null); // Clear selection - spartanize entire compilation unit
 	        s.performRule(cu, new NullProgressMonitor());
 	      } catch (final CoreException x) {
 	        x.printStackTrace();
