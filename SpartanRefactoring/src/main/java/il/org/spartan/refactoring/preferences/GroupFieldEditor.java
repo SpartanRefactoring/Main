@@ -69,21 +69,21 @@ public class GroupFieldEditor extends FieldEditor {
 	 * Adds a new {@link FieldEditor} object to the group.
 	 * Controls must be added before the group is drawn to the parent.
 	 */
-	public void add(FieldEditor fieldEditor) {
+	public void add(FieldEditor e) {
 		if(initialized)
 			throw new RuntimeException("The GroupFieldEditor has already been drawn, new fields cannot be added at this time");
 		
-		members.add(fieldEditor);
+		members.add(e);
 	}
 	
 	/**
 	 * Initializes using the currently added field editors. 
 	 */
 	public void init() {
-		if(!initialized) {
-			doFillIntoGrid(getFieldEditor(), numColumns);
-			initialized = true;
-		}
+		if (initialized)
+			return;
+		doFillIntoGrid(getFieldEditor(), numColumns);
+		initialized = true;
 	}
 	
 	/*
@@ -102,10 +102,9 @@ public class GroupFieldEditor extends FieldEditor {
 		if(members == null || members.isEmpty())
 			return;
 		
-		if(numColumns == 0) {
-			for(FieldEditor fe : members)
+		if(numColumns == 0)
+			for (FieldEditor fe : members)
 				numColumns = Math.max(numColumns, fe.getNumberOfControls());
-		}
 		
 		GridData data = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		data.horizontalIndent = 2;
@@ -114,8 +113,7 @@ public class GroupFieldEditor extends FieldEditor {
 		this.group.setLayoutData(data);
 		
 		GridLayout groupLayout = new GridLayout();
-		groupLayout.marginHeight = GROUP_PADDING;
-		groupLayout.marginWidth = GROUP_PADDING;
+		groupLayout.marginWidth = groupLayout.marginHeight = GROUP_PADDING;
 		groupLayout.numColumns = numColumns;
 		this.group.setLayout(groupLayout);
 			
@@ -193,26 +191,25 @@ public class GroupFieldEditor extends FieldEditor {
 	}
 	
 	@Override
-	public void setPreferenceStore(IPreferenceStore store) {
-		super.setPreferenceStore(store);
+	public void setPreferenceStore(IPreferenceStore s) {
+		super.setPreferenceStore(s);
 
 		for(FieldEditor editor : members)
-			editor.setPreferenceStore(store);
+			editor.setPreferenceStore(s);
 	}
 	
 	@Override
-	public void setPage(DialogPage dialogPage)
+	public void setPage(DialogPage p)
 	{
 		for(FieldEditor editor : members)
-			editor.setPage(dialogPage);
+			editor.setPage(p);
 	}
 	
 	@Override
 	public boolean isValid() {
-		for(FieldEditor editor : members) {
-			if(!editor.isValid())
+		for(FieldEditor editor : members)
+			if (!editor.isValid())
 				return false;
-		}
 		return true;
 	}
 }
