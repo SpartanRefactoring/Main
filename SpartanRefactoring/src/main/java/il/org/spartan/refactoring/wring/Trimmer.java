@@ -112,6 +112,9 @@ public class Trimmer extends Spartanization {
     @Override public final boolean visit(final ReturnStatement it) {
       return cautiousGo(it);
     }
+    @Override public final boolean visit(final NormalAnnotation it) {
+      return cautiousGo(it);
+    }
     @Override public final boolean visit(final SuperConstructorInvocation it) {
       return cautiousGo(it);
     }
