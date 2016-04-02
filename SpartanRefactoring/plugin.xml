@@ -333,4 +333,10 @@
 	            class="il.org.spartan.refactoring.preferences.PluginPreferencesDefaultValuesInitializer">
 	      </initializer>
 	</extension>
+	
+	<extension point="org.eclipse.ui.bindings">
+		<key sequence="Shift+Ctrl+Alt+S"
+			commandId="org.spartan.refactoring.commands.ApplySpartanization"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+	</extension>
 </plugin>
