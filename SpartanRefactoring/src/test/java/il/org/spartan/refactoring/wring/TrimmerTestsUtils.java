@@ -10,7 +10,12 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
+import java.util.Map;
+
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jface.text.Document;
@@ -20,7 +25,6 @@ import il.org.spartan.refactoring.spartanizations.Spartanization;
 import il.org.spartan.refactoring.spartanizations.TESTUtils;
 import il.org.spartan.refactoring.spartanizations.Wrap;
 import il.org.spartan.refactoring.utils.As;
-import il.org.spartan.refactoring.wring.TrimmerTestsUtils.Operand;
 
 public class TrimmerTestsUtils {
 
@@ -77,20 +81,47 @@ public class TrimmerTestsUtils {
 	  }
 
 	static class Operand extends Wrapper<String> {
+		public static enum OperandType {
+			STATEMENT, EXPRESSION, METHOD, COMPILATION_UNIT
+		};
 	    public Operand(final String inner) {
 	      super(inner);
 	    }
 	    public Operand to(final String expected) {
-	      if (expected == null || expected.isEmpty())
-	        checkSame();
-	      else
-	        checkExpected(expected);
-	      return new Operand(expected);
+		      if (expected == null || expected.isEmpty())
+			        checkSame();
+			      else
+			        checkExpected(expected);
+			      return new Operand(expected);
+	    }
+	    public Operand toCompilationUnit(final String expected) {
+		      if (expected == null || expected.isEmpty())
+			        checkSame();
+			      else
+			        checkExpectedCompilationUnit(expected);
+			      return new Operand(expected);
 	    }
 	    Wrap findWrap() {
 	      final Wrap $ = Wrap.find(get());
 	      assertThat("Cannot parse '" + get() + "'; did you forget a semicolon?", $, notNullValue());
 	      return $;
+	    }
+	    private void checkExpectedCompilationUnit(final String expected) {
+	      String wrap;
+	      Wrap w;
+
+	    	w = Wrap.ComplilationUnit; // Fix this
+	    	wrap = w.on(get());
+
+	      final String unpeeled = TrimmerTestsUtils.applyCompilationUnit(new Trimmer(), wrap);
+	      if (wrap.equals(unpeeled))
+	        fail("Nothing done on " + get());
+	      final String peeled = w.off(unpeeled);
+	      if (peeled.equals(get()))
+	        assertNotEquals("No trimming of " + get(), get(), peeled);
+	      if (compressSpaces(peeled).equals(compressSpaces(get())))
+	        assertNotEquals("Trimming of " + get() + "is just reformatting", compressSpaces(peeled), compressSpaces(get()));
+	      assertSimilar(expected, peeled);
 	    }
 	    private void checkExpected(final String expected) {
 	      final Wrap w = findWrap();
@@ -122,6 +153,21 @@ public class TrimmerTestsUtils {
 	    return s.findOpportunities(u).size();
 	  }
 
+	static String applyCompilationUnit(final Trimmer t, final String from) {
+		ASTParser p = ASTParser.newParser(AST.JLS8);
+		Map options = JavaCore.getOptions();
+		JavaCore.setComplianceOptions(JavaCore.VERSION_1_8, options);
+		p.setCompilerOptions(options);
+		p.setSource(from.toCharArray());
+		CompilationUnit u = (CompilationUnit)p.createAST(null);
+		assertNotNull(u);
+		final Document d = new Document(from);
+		assertNotNull(d);
+	    final Document $ = TESTUtils.rewrite(t, u, d);
+	    assertNotNull($);
+	    return $.get();
+	}
+	
 	static String apply(final Trimmer t, final String from) {
 	    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(from);
 	    assertNotNull(u);

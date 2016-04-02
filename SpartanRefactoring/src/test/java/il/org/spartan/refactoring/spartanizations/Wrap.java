@@ -44,6 +44,7 @@ public enum Wrap {
           ") patrick();\n" + //
           Statement.after + //
           ""), //
+  ComplilationUnit("", ""),//
   //
   ;
   /**
@@ -54,7 +55,7 @@ public enum Wrap {
    *         parsed appropriately.
    */
   public static Wrap find(final String codeFragment) {
-    for (final Wrap $ : new Wrap[] { Statement, Expression, Statement, Method })
+    for (final Wrap $ : new Wrap[] { Statement, Expression, Method })
       if ($.contains($.intoCompilationUnit(codeFragment).toString(), codeFragment))
         return $;
     return null;
@@ -101,6 +102,8 @@ public enum Wrap {
    * @return the unwrapped phrase
    */
   public final String off(final String codeFragment) {
+	  if(before.isEmpty() || after.isEmpty())
+		  return codeFragment;
     return removeSuffix(removePrefix(codeFragment, before), after);
   }
   /**
