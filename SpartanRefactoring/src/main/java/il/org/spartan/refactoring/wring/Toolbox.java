@@ -114,8 +114,8 @@ public class Toolbox {
             new TernaryPushdown(), //
             null) //
         .add(NormalAnnotation.class, //
-            new NormalAnnotationDiscardValueName(), //
-            new NormalAnnotationRemoveEmptyParentheses(), //
+            new AnnotationDiscardValueName(), //
+            new AnnotationRemoveEmptyParentheses(), //
             null) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
         .add(ReturnStatement.class, new ReturnLastInMethod()) //

@@ -15,7 +15,7 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGr
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-02
  */
-public class NormalAnnotationDiscardValueName extends Wring.ReplaceCurrentNode<NormalAnnotation> {
+public class AnnotationDiscardValueName extends Wring.ReplaceCurrentNode<NormalAnnotation> {
   @Override ASTNode replacement(final NormalAnnotation n) {
     if (n.values().size() != 1)
       return null;
