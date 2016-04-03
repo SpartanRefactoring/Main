@@ -115,7 +115,7 @@
       <command
             categoryId="org.spartan.refactoring.category"
             id="org.spartan.refactoring.commands.RedundantEquality"
-            name="Redandant equality">
+            name="Redundant equality">
       </command>
       <command
             categoryId="org.spartan.refactoring.category"
