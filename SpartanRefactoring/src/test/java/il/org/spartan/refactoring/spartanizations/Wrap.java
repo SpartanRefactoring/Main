@@ -102,9 +102,7 @@ public enum Wrap {
    * @return the unwrapped phrase
    */
   public final String off(final String codeFragment) {
-	  if(before.isEmpty() || after.isEmpty())
-		  return codeFragment;
-    return removeSuffix(removePrefix(codeFragment, before), after);
+    return before.isEmpty() || after.isEmpty() ? codeFragment : removeSuffix(removePrefix(codeFragment, before), after);
   }
   /**
    * Place a wrap around a phrase

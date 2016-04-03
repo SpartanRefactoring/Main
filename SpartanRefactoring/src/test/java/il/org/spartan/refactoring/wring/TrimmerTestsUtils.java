@@ -108,9 +108,8 @@ public class TrimmerTestsUtils {
 	    }
 	    private void checkExpectedCompilationUnit(final String expected) {
 	      String wrap;
-	      Wrap w;
+	      Wrap w = Wrap.ComplilationUnit;
 
-	    	w = Wrap.ComplilationUnit; // Fix this
 	    	wrap = w.on(get());
 
 	      final String unpeeled = TrimmerTestsUtils.applyCompilationUnit(new Trimmer(), wrap);

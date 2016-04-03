@@ -17,15 +17,15 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGr
  * @since 2016-04-02
  */
 public class AnnotationRemoveEmptyParentheses extends Wring.ReplaceCurrentNode<NormalAnnotation> {
-  @Override ASTNode replacement(final NormalAnnotation n) {
-    if (n.values().size() > 0)
+  @Override ASTNode replacement(final NormalAnnotation a) {
+    if (a.values().size() > 0)
       return null;
-    final MarkerAnnotation $ = n.getAST().newMarkerAnnotation();
-    $.setTypeName(duplicate(n.getTypeName()));
+    final MarkerAnnotation $ = a.getAST().newMarkerAnnotation();
+    $.setTypeName(duplicate(a.getTypeName()));
     return $;
   }
-  @Override String description(final NormalAnnotation n) {
-    return "Remove redundant parentheses from the @" + n.getTypeName().getFullyQualifiedName() + " annotation";
+  @Override String description(final NormalAnnotation a) {
+    return "Remove redundant parentheses from the @" + a.getTypeName().getFullyQualifiedName() + " annotation";
   }
   @Override WringGroup wringGroup() {
     return WringGroup.OPTIMIZE_ANNOTATIONS;
