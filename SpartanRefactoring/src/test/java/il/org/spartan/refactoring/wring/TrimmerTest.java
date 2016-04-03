@@ -61,9 +61,13 @@ import il.org.spartan.refactoring.utils.*;
     TrimmerTestsUtils.trimming("(x >> 18) & MASK_BITS").to("");
     TrimmerTestsUtils.trimming("(x >> 18) & MASK_6BITS").to("");
   }
-  @Test public void annotationRemoveValueMember() {
+  @Test public void annotationRemoveValueMemberSingleValue() {
     TrimmerTestsUtils.trimming("@SuppressWarnings(value = \"something\") void m() {}") //
         .to("@SuppressWarnings(\"something\") void m() {}");
+  }
+  @Test public void annotationRemoveValueMemberArrayValue() {
+    TrimmerTestsUtils.trimming("@SuppressWarnings(value = { \"something\", \"something else\" }) void m() {}") //
+        .to("@SuppressWarnings({ \"something\", \"something else\" }) void m() {}");
   }
   @Test public void annotationDoNotRemoveValueAndSomethingElse() {
     TrimmerTestsUtils.trimming("@SuppressWarnings(value = \"something\", x = 2) void m() {}").to("");
