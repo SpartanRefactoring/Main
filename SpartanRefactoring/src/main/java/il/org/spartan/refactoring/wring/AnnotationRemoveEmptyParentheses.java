@@ -25,10 +25,9 @@ public class AnnotationRemoveEmptyParentheses extends Wring.ReplaceCurrentNode<N
     return $;
   }
   @Override String description(final NormalAnnotation n) {
-    return "Remove redundant parentheses from the " + n.getTypeName().getFullyQualifiedName().toLowerCase() + " annotation";
+    return "Remove redundant parentheses from the @" + n.getTypeName().getFullyQualifiedName() + " annotation";
   }
   @Override WringGroup wringGroup() {
-    return WringGroup.REFACTOR_INEFFECTIVE; // TODO this should go in a new
-                                            // category
+    return WringGroup.OPTIMIZE_ANNOTATIONS;
   }
 }

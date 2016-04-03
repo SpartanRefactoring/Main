@@ -28,10 +28,9 @@ public class AnnotationDiscardValueName extends Wring.ReplaceCurrentNode<NormalA
     return $;
   }
   @Override String description(final NormalAnnotation n) {
-    return "Discard the \"value\" member from the " + n.getTypeName().getFullyQualifiedName().toLowerCase() + " annotation";
+    return "Discard the \"value\" member from the @" + n.getTypeName().getFullyQualifiedName() + " annotation";
   }
   @Override WringGroup wringGroup() {
-    return WringGroup.REFACTOR_INEFFECTIVE; // TODO this should go in a new
-                                            // category
+    return WringGroup.OPTIMIZE_ANNOTATIONS;
   }
 }
