@@ -144,6 +144,10 @@ import il.org.spartan.refactoring.utils.*;
   @Test public void blockSimplifyVanillaSimplified() {
     TrimmerTestsUtils.trimming(" {f(); }").to("f();");
   }
+  @Test public void booleanChangeValueOfToConstant() {
+    TrimmerTestsUtils.trimming("Boolean b = Boolean.valueOf(true);").to("Boolean b = Boolean.TRUE;");
+    TrimmerTestsUtils.trimming("Boolean b = Boolean.valueOf(false);").to("Boolean b = Boolean.FALSE;");
+  }
   @Test public void bugInLastIfInMethod() {
     TrimmerTestsUtils
         .trimming("" + //
