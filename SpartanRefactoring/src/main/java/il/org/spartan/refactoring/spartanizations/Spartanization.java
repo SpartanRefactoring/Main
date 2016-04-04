@@ -274,17 +274,22 @@ public abstract class Spartanization extends Refactoring {
    * @param cu the compilation to Spartanize
    * @param pm progress monitor for long operations (could be
    *          {@link NullProgressMonitor} for light operations)
+   * @return whether any changes have been made to the compilation unit
    * @throws CoreException exception from the <code>pm</code>
    */
-  public void performRule(final ICompilationUnit cu, final IProgressMonitor pm) throws CoreException {
+  public boolean performRule(final ICompilationUnit cu, final IProgressMonitor pm) throws CoreException {
     pm.beginTask("Creating change for a single compilation unit...", 2);
     final TextFileChange textChange = new TextFileChange(cu.getElementName(), (IFile) cu.getResource());
     textChange.setTextType("java");
     final SubProgressMonitor spm = new SubProgressMonitor(pm, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL);
     textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILIATION_UNIT.parser(cu).createAST(spm), spm).rewriteAST());
-    if (textChange.getEdit().getLength() != 0)
+    boolean $ = false;
+    if (textChange.getEdit().getLength() != 0) {
       textChange.perform(pm);
+      $ = true;
+    }
     pm.done();
+    return $;
   }
   /**
    * @param pm a progress monitor in which to display the progress of the
