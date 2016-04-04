@@ -719,7 +719,7 @@ import il.org.spartan.refactoring.utils.*;
   }
   @Test public void doNotInlineDeclarationWithAnnotationSimplified() {
     TrimmerTestsUtils.trimming("" + //
-        "    @SuppressWarnings() int $ = (Class<T>) findClass(className);\n" + //
+        "    @SuppressWarnings int $ = (Class<T>) findClass(className);\n" + //
         "    return $;\n" + //
         "  }").to("");
   }
@@ -889,6 +889,12 @@ import il.org.spartan.refactoring.utils.*;
   @Test public void ifDegenerateThenInIf() {
     TrimmerTestsUtils.trimming("if (a) if (b) {} else f(); x();")//
         .to(" if (a) if (!b) f(); x();");
+  }
+  @Test public void ifDoNotRemoveBracesWithVariableDeclarationStatement() {
+    TrimmerTestsUtils.trimming("if(a) { int i = 3; }").to("");
+  }
+  @Test public void ifDoNotRemoveBracesWithVariableDeclarationStatement2() {
+    TrimmerTestsUtils.trimming("if(a) { Object o; }").to("");
   }
   @Test public void ifEmptyElsewWithinIf() {
     TrimmerTestsUtils.trimming("if (a) if (b) {;;;f();} else {;}")//
