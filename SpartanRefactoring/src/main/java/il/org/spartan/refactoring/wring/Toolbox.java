@@ -66,6 +66,7 @@ public class Toolbox {
             null)
         .add(MethodDeclaration.class, //
             new MethodRenameReturnToDollar(), //
+            new MethodRemoveDegenerateOverride(), //
             null)
         .add(MethodInvocation.class, //
             new BooleanConstants(), //
@@ -122,6 +123,7 @@ public class Toolbox {
             null) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
         .add(ReturnStatement.class, new ReturnLastInMethod()) //
+        .add(ClassInstanceCreation.class, new WrapperReplaceWithFactory()) //
         .seal();
   }
   public static Toolbox instance() {
