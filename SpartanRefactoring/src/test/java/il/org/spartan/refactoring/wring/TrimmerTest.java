@@ -2375,6 +2375,15 @@ import il.org.spartan.refactoring.utils.*;
     TrimmerTestsUtils.trimming("int f() { for (int a: as) return a; }")//
         .to(" int f() {for(int $:as)return $;}");
   }
+  @Test public void replaceClassInstanceCreationWithFactoryInfixExpression() {
+    TrimmerTestsUtils.trimming("Integer x = new Integer(1 + 9);").to("Integer x = Integer.valueOf(1 + 9);");
+  }
+  @Test public void replaceClassInstanceCreationWithFactoryInvokeMethode() {
+    TrimmerTestsUtils.trimming("String x = new String(f());").to("String x = String.valueOf(f());");
+  }
+  @Ignore @Test public void replaceClassInstanceCreationWithFactoryClassInstanceCreation() {
+    TrimmerTestsUtils.trimming("Character x = new Character(new Character(f()));").to("Character x = Character.valueOf(Character.valueOf(f()));");
+  }
   @Test public void replaceInitializationInReturn() {
     TrimmerTestsUtils.trimming("int a = 3; return a + 4;").to("return 3 + 4;");
   }
