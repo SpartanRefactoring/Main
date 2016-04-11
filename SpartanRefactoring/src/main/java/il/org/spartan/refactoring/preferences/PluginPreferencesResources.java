@@ -36,6 +36,8 @@ public class PluginPreferencesResources {
   public static final String RENAME_RETURN_VARIABLE_TEXT = "Rename return variable to $";
   public static final String REPLACE_CLASS_INSTANCE_CREATION_ID = "pref_wrings_replace_class_instance_creation";
   public static final String REPLACE_CLASS_INSTANCE_CREATION_TEXT = "Replace class instance creation with recommended form";
+  public static final String CHANGE_TO_NEW_API_ID = "pref_wrings_change_to_new_api";
+  public static final String CHANGE_TO_NEW_API_TEXT = "Use new API";
   public static final String WRING_COMBO_OPTIONS[][] = { { "Enabled", "on" }, { "Disabled", "off" } };
 
   /**
@@ -43,9 +45,9 @@ public class PluginPreferencesResources {
    * allowing to get the set preference value for each of them
    */
   public enum WringGroup {
-    CONSOLIDATE_ASSIGNMENTS_STATEMENTS(CONSOLIDATE_ASSIGNMENTS_STATEMENTS_ID,
-        CONSOLIDATE_ASSIGNMENTS_STATEMENTS_TEXT), SIMPLIFY_NESTED_BLOCKS(SIMPLIFY_NESTED_BLOCKS_ID,
-            SIMPLIFY_NESTED_BLOCKS_TEXT), ELIMINATE_TEMP(ELIMINATE_TEMP_ID,
+    CHANGE_TO_NEW_API(CHANGE_TO_NEW_API_ID, CHANGE_TO_NEW_API_TEXT), CONSOLIDATE_ASSIGNMENTS_STATEMENTS(
+        CONSOLIDATE_ASSIGNMENTS_STATEMENTS_ID, CONSOLIDATE_ASSIGNMENTS_STATEMENTS_TEXT), SIMPLIFY_NESTED_BLOCKS(
+            SIMPLIFY_NESTED_BLOCKS_ID, SIMPLIFY_NESTED_BLOCKS_TEXT), ELIMINATE_TEMP(ELIMINATE_TEMP_ID,
                 ELIMINATE_TEMP_TEXT), REMOVE_REDUNDANT_PUNCTUATION(REMOVE_REDUNDANT_PUNCTUATION_ID,
                     REMOVE_REDUNDANT_PUNCTUATION_TEXT), IF_TO_TERNARY(IF_TO_TERNARY_ID,
                         IF_TO_TERNARY_TEXT), REFACTOR_INEFFECTIVE(REFACTOR_INEFFECTIVE_ID,
