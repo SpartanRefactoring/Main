@@ -70,6 +70,7 @@ public class Toolbox {
             null)
         .add(MethodInvocation.class, //
             new BooleanConstants(), //
+            new StringFromStringBuilder(), //
             null) //
         .add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //

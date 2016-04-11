@@ -2844,6 +2844,15 @@ import il.org.spartan.refactoring.utils.*;
   @Test public void sortTwoOperands4() {
     TrimmerTestsUtils.trimming("2L*1").to("1*2L");
   }
+  @Test public void stringFromBuilderGeneral() {
+    TrimmerTestsUtils.trimming("new StringBuilder(myName).append(\"\'s grade is \").append(100).toString()").to("myName + \"\'s grade is \" + 100");
+  }
+  @Test public void stringFromBuilderNoStringComponents() {
+    TrimmerTestsUtils.trimming("new StringBuilder(0).append(1).toString()").to("\"\" + 0 + 1");
+  }
+  @Test public void stringFromBuilderAddParenthesis() {
+    TrimmerTestsUtils.trimming("new StringBuilder(f()).append(1+1).toString()").to("\"\" + f() + (1+1)");
+  }
   @Test public void synchronizedBraces() {
     TrimmerTestsUtils.trimming("" //
         + "    synchronized (variables) {\n" //
