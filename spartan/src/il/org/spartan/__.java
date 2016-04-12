@@ -254,7 +254,7 @@ public enum __ {
 		}
 		public <FS extends Iterable<? extends F>> Iterable<T> to(final FS fs) {
 			final List<T> $ = new ArrayList<>();
-			for (final F f : fs)
+			for (final @Nullable F f : fs)
 				if (f != null)
 					$.add(function.apply(f));
 			return $;
@@ -264,7 +264,7 @@ public enum __ {
 		final T candidate;
 		/**
 		 * Instantiates this class. *
-		 * 
+		 *
 		 * @param candidate what to search for
 		 */
 		public FoundHandleForT(final T candidate) {
@@ -316,7 +316,7 @@ public enum __ {
 	 * @since 2014-05-31
 	 */
 	@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
-	@SuppressWarnings({ "static-method", "javadoc" })//
+	@SuppressWarnings({ "static-method", "javadoc", "unused" }) //
 	public static class TEST {
 		public static Integer[] intToIntegers(final int... is) {
 			final Integer[] $ = new Integer[is.length];
