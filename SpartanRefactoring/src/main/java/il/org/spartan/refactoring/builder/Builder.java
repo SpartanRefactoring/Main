@@ -1,5 +1,6 @@
 package il.org.spartan.refactoring.builder;
 
+import java.io.IOException;
 import java.util.Map;
 
 import org.eclipse.core.resources.*;
@@ -11,6 +12,7 @@ import il.org.spartan.refactoring.spartanizations.Spartanization;
 import il.org.spartan.refactoring.spartanizations.Spartanizations;
 import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.refactoring.utils.Rewrite;
+import il.org.spartan.utils.FileUtils;
 
 /**
  * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
@@ -69,12 +71,23 @@ public class Builder extends IncrementalProjectBuilder {
       e.printStackTrace();
     }
   }
+  // TODO changed by Ori Roth
   static void addMarkers(final IResource r) throws CoreException {
-    if (r instanceof IFile && r.getName().endsWith(".java"))
+    if (r instanceof IFile && r.getName().endsWith(".java")) {
+      Spartanizations.reset();
+      for (Spartanization s : Spartanizations.all()) {
+        try {
+          s.setSource(FileUtils.readFromFile(r.getLocation().toString()));
+        } catch (IOException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
+      }
       addMarkers((IFile) r);
+    }
   }
+  //TODO changed by Ori Roth
   private static void addMarkers(final IFile f) throws CoreException {
-    Spartanizations.reset();
     deleteMarkers(f);
     addMarkers(f, (CompilationUnit) As.COMPILIATION_UNIT.ast(f));
   }

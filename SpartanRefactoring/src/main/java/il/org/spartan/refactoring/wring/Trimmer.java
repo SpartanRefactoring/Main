@@ -56,6 +56,8 @@ public class Trimmer extends Spartanization {
   @Override protected ASTVisitor collect(final List<Rewrite> $) {
     return new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
+        if (isSpartanizationDisabled(n))
+          return false;
         final Wring<N> w = Toolbox.instance().find(n);
         return w == null || w.nonEligible(n) || prune(w.make(n, exclude), $);
       }
@@ -66,6 +68,8 @@ public class Trimmer extends Spartanization {
       @Override <N extends ASTNode> boolean go(final N n) {
         if (!inRange(m, n))
           return true;
+        if (isSpartanizationDisabled(n))
+          return false;
         final Wring<N> w = Toolbox.instance().find(n);
         if (w != null) {
           final Rewrite make = w.make(n, exclude);
@@ -125,6 +129,9 @@ public class Trimmer extends Spartanization {
       return cautiousGo(it);
     }
     @Override public final boolean visit(final VariableDeclarationFragment it) {
+      return cautiousGo(it);
+    }
+    @Override public final boolean visit(final TypeDeclaration it) {
       return cautiousGo(it);
     }
     abstract <N extends ASTNode> boolean go(final N n);
