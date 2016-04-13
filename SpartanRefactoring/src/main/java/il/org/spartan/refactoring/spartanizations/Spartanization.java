@@ -437,6 +437,28 @@ public abstract class Spartanization extends Refactoring {
    */
   public final String dsi = "@DisableSpartanization";
   /**
+   * Match row indexes of comment and a node, to see if a dsi inside the comment
+   * would disable the node.
+   * 
+   * @param nln node row index
+   * @param cer comment row index
+   * @param t comment type
+   * @return true iff a dsi in the comment disables the node
+   */
+  private boolean matchRowIndexes(int nln, int cer, int t) {
+    switch (t) {
+    case ASTNode.LINE_COMMENT:
+      return nln == cer;
+    case ASTNode.BLOCK_COMMENT:
+      return nln == cer || nln == cer + 1;
+    case ASTNode.JAVADOC:
+      System.out.println(nln + " " + cer);
+      return nln == cer || nln == cer + 1;
+    default:
+      return nln == cer;
+    }
+  }
+  /**
    * Checks whether or not the spartanization of the current node is disabled.
    * There are two options: first, one should look at the parents of any node to determine
    * its status (implemented as isSpartanizationDisabledInAncestor). Second, the go
@@ -458,7 +480,7 @@ public abstract class Spartanization extends Refactoring {
 //      System.out.println("cer = " + cer);
       if (cer > nln)
         break;
-      if (cer == nln && cv.getContent().contains(dsi)) {
+      if (matchRowIndexes(nln, cer, c.getNodeType()) && cv.getContent().contains(dsi)) {
 //        System.out.println("accepted");
         return true;
       }
