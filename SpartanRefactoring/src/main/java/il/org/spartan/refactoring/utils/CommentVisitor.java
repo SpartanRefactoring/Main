@@ -17,11 +17,11 @@ import org.eclipse.jdt.core.dom.LineComment;
 public class CommentVisitor extends ASTVisitor {
 
   private CompilationUnit compilationUnit;
-  private String[] source;
+  private String source;
   private String content;
   private int endRow;
 
-  public CommentVisitor(CompilationUnit compilationUnit, String[] source) {
+  public CommentVisitor(CompilationUnit compilationUnit, String source) {
 
     super();
     this.compilationUnit = compilationUnit;
@@ -31,7 +31,7 @@ public class CommentVisitor extends ASTVisitor {
   public boolean visit(LineComment node) {
 
     int startLineNumber = compilationUnit.getLineNumber(node.getStartPosition()) - 1;
-    String lineComment = source[startLineNumber].replaceFirst(".*//", "//");
+    String lineComment = source.split("\n", -1)[startLineNumber].replaceFirst(".*//", "//");
 
     content = lineComment;
     endRow = startLineNumber;
@@ -41,59 +41,21 @@ public class CommentVisitor extends ASTVisitor {
 
   public boolean visit(BlockComment node) {
 
-    int startLineNumber = compilationUnit.getLineNumber(node.getStartPosition()) - 1;
-    int endLineNumber = compilationUnit.getLineNumber(node.getStartPosition() + node.getLength()) - 1;
-
-    StringBuffer blockComment = new StringBuffer();
-
-    for (int lineCount = startLineNumber; lineCount <= endLineNumber; lineCount++) {
-      String blockCommentLine = source[lineCount];
-      if (lineCount == startLineNumber) {
-        blockCommentLine = blockCommentLine.replaceFirst(".*/\\*", "/\\*");
-      }
-      if (lineCount == endLineNumber) {
-        blockCommentLine = new StringBuilder(
-            new StringBuilder(blockCommentLine).reverse().toString().replaceFirst(".*/\\*", "/\\*")).reverse()
-                .toString();
-      }
-      blockComment.append(blockCommentLine);
-      if (lineCount != endLineNumber) {
-        blockComment.append("\n");
-      }
-    }
-
-    content = blockComment.toString();
-    endRow = endLineNumber;
-
+    int sp = node.getStartPosition();
+    int ep = sp + node.getLength();
+    content = new StringBuilder(source).substring(sp, ep).toString();
+    endRow = compilationUnit.getLineNumber(node.getStartPosition() + node.getLength()) - 1;;
+  
     return true;
   }
 
   public boolean visit(Javadoc node) {
 
-    int startLineNumber = compilationUnit.getLineNumber(node.getStartPosition()) - 1;
-    int endLineNumber = compilationUnit.getLineNumber(node.getStartPosition() + node.getLength()) - 1;
-
-    StringBuffer blockComment = new StringBuffer();
-
-    for (int lineCount = startLineNumber; lineCount <= endLineNumber; lineCount++) {
-      String blockCommentLine = source[lineCount];
-      if (lineCount == startLineNumber) {
-        blockCommentLine = blockCommentLine.replaceFirst(".*/\\*\\*", "/\\*");
-      }
-      if (lineCount == endLineNumber) {
-        blockCommentLine = new StringBuilder(
-            new StringBuilder(blockCommentLine).reverse().toString().replaceFirst(".*/\\*", "/\\*")).reverse()
-                .toString();
-      }
-      blockComment.append(blockCommentLine);
-      if (lineCount != endLineNumber) {
-        blockComment.append("\n");
-      }
-    }
-
-    content = blockComment.toString();
-    endRow = endLineNumber;
-
+    int sp = node.getStartPosition();
+    int ep = sp + node.getLength();
+    content = new StringBuilder(source).substring(sp, ep).toString();
+    endRow = compilationUnit.getLineNumber(node.getStartPosition() + node.getLength()) - 1;;
+  
     return true;
   }
 
@@ -104,7 +66,7 @@ public class CommentVisitor extends ASTVisitor {
   public String getContent() {
     return content;
   }
-  
+
   public int getEndRow() {
     return endRow;
   }

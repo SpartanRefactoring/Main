@@ -503,7 +503,6 @@ public abstract class Spartanization extends Refactoring {
     case ASTNode.BLOCK_COMMENT:
       return nln == cer || nln == cer + 1;
     case ASTNode.JAVADOC:
-      System.out.println(nln + " " + cer);
       return nln == cer || nln == cer + 1;
     default:
       return nln == cer;
@@ -527,17 +526,12 @@ public abstract class Spartanization extends Refactoring {
     }
     CompilationUnit cu = ((CompilationUnit) n.getRoot());
     int nln = cu.getLineNumber(n.getStartPosition()) - 1;
-    // System.out.println("nsp = " + nln + "\trow = " + source.split("\n",
-    // -1)[nln] + n.toString());
       for (Comment c : (List<Comment>) cu.getCommentList()) {
-        CommentVisitor cv = new CommentVisitor(cu, source.split("\n", -1));
+        CommentVisitor cv = new CommentVisitor(cu, source);
         c.accept(cv);
         int cer = cv.getEndRow();
-        // System.out.println("cer = " + cer);
-        if (cer > nln)
-          break;
+//        System.out.println(nln + "\t" + cer + "\t" + cv.getContent() + "\t" + cu.getCommentList().size());
         if (matchRowIndexes(nln, cer, c.getNodeType()) && cv.getContent().contains(dsi)) {
-          // System.out.println("accepted");
           return true;
         }
       }
