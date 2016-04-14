@@ -8,6 +8,8 @@ import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jface.text.Document;
 
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources;
+
 /**
  * An empty <code><b>enum</b></code> for fluent programming. The name should say
  * it all: The name, followed by a dot, followed by a method name, should read
@@ -112,7 +114,7 @@ public enum Make {
   private ASTParser parser() {
     final ASTParser $ = ASTParser.newParser(AST.JLS8);
     $.setKind(kind);
-    $.setResolveBindings(false);
+    $.setResolveBindings(PluginPreferencesResources.getResolveBindingEnabled());
     return $;
   }
 }
