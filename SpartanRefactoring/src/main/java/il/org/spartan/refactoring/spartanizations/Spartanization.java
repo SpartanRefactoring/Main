@@ -522,11 +522,13 @@ public abstract class Spartanization extends Refactoring {
    * @return true iff the spartanization is disabled for this node and its sons.
    */
   protected <N extends ASTNode> boolean isSpartanizationDisabled(N n) {
+    if (source == null) {
+      return false;
+    }
     CompilationUnit cu = ((CompilationUnit) n.getRoot());
     int nln = cu.getLineNumber(n.getStartPosition()) - 1;
     // System.out.println("nsp = " + nln + "\trow = " + source.split("\n",
     // -1)[nln] + n.toString());
-    if (source != null) {
       for (Comment c : (List<Comment>) cu.getCommentList()) {
         CommentVisitor cv = new CommentVisitor(cu, source.split("\n", -1));
         c.accept(cv);
@@ -539,7 +541,6 @@ public abstract class Spartanization extends Refactoring {
           return true;
         }
       }
-    }
     return false;
   }
   /**
