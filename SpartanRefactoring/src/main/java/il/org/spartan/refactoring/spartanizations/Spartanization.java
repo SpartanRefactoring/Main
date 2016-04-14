@@ -74,7 +74,6 @@ public abstract class Spartanization extends Refactoring {
     pm.done();
     return $;
   }
-
   protected static boolean isNodeOutsideMarker(final ASTNode n, final IMarker m) {
     try {
       return n.getStartPosition() < ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue()
@@ -83,14 +82,12 @@ public abstract class Spartanization extends Refactoring {
       return true;
     }
   }
-
   private ITextSelection selection = null;
   private ICompilationUnit compilationUnit = null;
   private IMarker marker = null;
   final Collection<TextFileChange> changes = new ArrayList<>();
   private final String name;
   private int totalChanges;
-
   /***
    * Instantiates this class, with message identical to name
    *
@@ -100,7 +97,6 @@ public abstract class Spartanization extends Refactoring {
   protected Spartanization(final String name) {
     this.name = name;
   }
-
   @Override
   public RefactoringStatus checkFinalConditions(final IProgressMonitor pm)
       throws CoreException, OperationCanceledException {
@@ -115,7 +111,6 @@ public abstract class Spartanization extends Refactoring {
     pm.done();
     return new RefactoringStatus();
   }
-
   @Override
   public RefactoringStatus checkInitialConditions(@SuppressWarnings("unused") final IProgressMonitor pm) {
     final RefactoringStatus $ = new RefactoringStatus();
@@ -123,7 +118,6 @@ public abstract class Spartanization extends Refactoring {
       $.merge(RefactoringStatus.createFatalErrorStatus("Nothing to refactor."));
     return $;
   }
-
   /**
    * Count the number of suggestions offered by this instance.
    * <p>
@@ -142,7 +136,6 @@ public abstract class Spartanization extends Refactoring {
     }
     return totalChanges;
   }
-
   /**
    * Count the number files that would change after Spartanization.
    * <p>
@@ -163,13 +156,11 @@ public abstract class Spartanization extends Refactoring {
     }
     return changes.size();
   }
-
   @Override
   public final Change createChange(@SuppressWarnings("unused") final IProgressMonitor pm)
       throws OperationCanceledException {
     return new CompositeChange(getName(), changes.toArray(new Change[changes.size()]));
   }
-
   /**
    * creates an ASTRewrite which contains the changes
    *
@@ -183,7 +174,6 @@ public abstract class Spartanization extends Refactoring {
   public final ASTRewrite createRewrite(final CompilationUnit u, final SubProgressMonitor pm) {
     return createRewrite(pm, u, (IMarker) null);
   }
-
   /**
    * Checks a Compilation Unit (outermost ASTNode in the Java Grammar) for
    * spartanization suggestions
@@ -198,21 +188,18 @@ public abstract class Spartanization extends Refactoring {
     u.accept(collect($));
     return $;
   }
-
   /**
    * @return the compilationUnit
    */
   public ICompilationUnit getCompilationUnit() {
     return compilationUnit;
   }
-
   /**
    * @return a quick fix for this instance
    */
   public IMarkerResolution getFix() {
     return getFix(getName());
   }
-
   /**
    * @param s
    *          Spartanization's name
@@ -241,14 +228,12 @@ public abstract class Spartanization extends Refactoring {
       }
     };
   }
-
   /**
    * @return a quick fix with a preview for this instance.
    */
   public IMarkerResolution getFixWithPreview() {
     return getFixWithPreview(getName());
   }
-
   /**
    * @param s
    *          Text for the preview dialog
@@ -279,19 +264,16 @@ public abstract class Spartanization extends Refactoring {
       }
     };
   }
-
   @Override
   public final String getName() {
     return name;
   }
-
   /**
    * @return the selection
    */
   public ITextSelection getSelection() {
     return selection;
   }
-
   /**
    * .
    *
@@ -301,7 +283,6 @@ public abstract class Spartanization extends Refactoring {
   public boolean haveSuggestions() {
     return countSuggestions() > 0;
   }
-
   /**
    * @param m
    *          marker which represents the range to apply the Spartanization
@@ -314,7 +295,6 @@ public abstract class Spartanization extends Refactoring {
   public final boolean inRange(final IMarker m, final ASTNode n) {
     return m != null ? !isNodeOutsideMarker(n, m) : !isTextSelected() || !isNodeOutsideSelection(n);
   }
-
   /**
    * Performs the current Spartanization on the provided compilation unit
    *
@@ -342,7 +322,6 @@ public abstract class Spartanization extends Refactoring {
     pm.done();
     return $;
   }
-
   /**
    * @param pm
    *          a progress monitor in which to display the progress of the
@@ -356,7 +335,6 @@ public abstract class Spartanization extends Refactoring {
   public RefactoringStatus runAsMarkerFix(final IProgressMonitor pm, final IMarker m) throws CoreException {
     return innerRunAsMarkerFix(pm, m, false);
   }
-
   /**
    * @param u
    *          the compilationUnit to set
@@ -364,7 +342,6 @@ public abstract class Spartanization extends Refactoring {
   public void setCompilationUnit(final ICompilationUnit u) {
     compilationUnit = u;
   }
-
   /**
    * @param m
    *          the marker to set for the refactoring
@@ -372,7 +349,6 @@ public abstract class Spartanization extends Refactoring {
   public final void setMarker(final IMarker m) {
     marker = m;
   }
-
   /**
    * @param s
    *          the selection to set
@@ -380,16 +356,12 @@ public abstract class Spartanization extends Refactoring {
   public void setSelection(final ITextSelection s) {
     selection = s;
   }
-
   @Override
   public String toString() {
     return name;
   }
-
   protected abstract ASTVisitor collect(final List<Rewrite> $);
-
   protected abstract void fillRewrite(ASTRewrite r, CompilationUnit u, IMarker m);
-
   /**
    * Determines if the node is outside of the selected text.
    *
@@ -399,7 +371,6 @@ public abstract class Spartanization extends Refactoring {
   protected boolean isNodeOutsideSelection(final ASTNode n) {
     return !isSelected(n.getStartPosition());
   }
-
   /**
    * @param u
    *          JD
@@ -418,7 +389,6 @@ public abstract class Spartanization extends Refactoring {
     totalChanges += findOpportunities(cu).size();
     m.done();
   }
-
   protected void scanCompilationUnitForMarkerFix(final IMarker m, final IProgressMonitor pm, final boolean preview)
       throws CoreException {
     pm.beginTask("Creating change(s) for a single compilation unit...", 2);
@@ -434,7 +404,6 @@ public abstract class Spartanization extends Refactoring {
         changes.add(textChange);
     pm.done();
   }
-
   /**
    * Creates a change from each compilation unit and stores it in the changes
    * array
@@ -449,7 +418,6 @@ public abstract class Spartanization extends Refactoring {
       scanCompilationUnit(cu, new SubProgressMonitor(pm, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL));
     pm.done();
   }
-
   private ASTRewrite createRewrite(final SubProgressMonitor pm, final CompilationUnit u, final IMarker m) {
     if (pm != null)
       pm.beginTask("Creating rewrite operation...", 1);
@@ -459,7 +427,6 @@ public abstract class Spartanization extends Refactoring {
       pm.done();
     return $;
   }
-
   /**
    * creates an ASTRewrite, under the context of a text marker, which contains
    * the changes
@@ -474,7 +441,6 @@ public abstract class Spartanization extends Refactoring {
   private final ASTRewrite createRewrite(final SubProgressMonitor pm, final IMarker m) {
     return createRewrite(pm, (CompilationUnit) As.COMPILIATION_UNIT.ast(m, pm), m);
   }
-
   private List<ICompilationUnit> getUnits(final IProgressMonitor pm) throws JavaModelException {
     if (!isTextSelected())
       return getAllProjectCompilationUnits(
@@ -484,7 +450,6 @@ public abstract class Spartanization extends Refactoring {
     $.add(compilationUnit);
     return $;
   }
-
   private RefactoringStatus innerRunAsMarkerFix(final IProgressMonitor pm, final IMarker m, final boolean preview)
       throws CoreException {
     marker = m;
@@ -494,21 +459,17 @@ public abstract class Spartanization extends Refactoring {
     pm.done();
     return new RefactoringStatus();
   }
-
   private boolean isSelected(final int offset) {
     return isTextSelected() && offset >= selection.getOffset()
         && offset < selection.getLength() + selection.getOffset();
   }
-
   private final boolean isTextSelected() {
     return selection != null && !selection.isEmpty() && selection.getLength() != 0;
   }
-
   private void runAsManualCall(final IProgressMonitor pm) throws JavaModelException, CoreException {
     pm.beginTask("Checking preconditions...", 2);
     scanCompilationUnits(getUnits(pm), new SubProgressMonitor(pm, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL));
   }
-
   /**
    * Source of current code
    */
@@ -517,7 +478,6 @@ public abstract class Spartanization extends Refactoring {
   public void setSource(String s) {
     source = s;
   }
-
   /**
    * Disable Spartanization identifier, used by the programmer to indicate a
    * method/class/code line to not be spartanized
@@ -549,7 +509,6 @@ public abstract class Spartanization extends Refactoring {
       return nln == cer;
     }
   }
-
   /**
    * Checks whether or not the spartanization of the current node is disabled.
    * There are two options: first, one should look at the parents of any node to
@@ -583,7 +542,6 @@ public abstract class Spartanization extends Refactoring {
     }
     return false;
   }
-
   /**
    * Unused - returning false in go method of DispatchVisitior will prevent the
    * visitor visit a son of a disable node, so no need to check for disablers in
