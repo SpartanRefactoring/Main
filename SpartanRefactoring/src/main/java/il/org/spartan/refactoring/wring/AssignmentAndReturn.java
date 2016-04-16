@@ -3,11 +3,14 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.refactoring.utils.Extract.core;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 
+import java.util.List;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
+import il.org.spartan.refactoring.utils.Rewrite;
 import il.org.spartan.refactoring.utils.Subject;
 
 /**
@@ -26,7 +29,10 @@ public class AssignmentAndReturn extends Wring.ReplaceToNextStatement<Assignment
     if (s == null || !same(left(a), core(s.getExpression())))
       return null;
     r.remove(parent, g);
-    r.replace(s, Subject.operand(a).toReturn(), g);
+    List<ASTNode> nl = Rewrite.getComments(parent, r);
+    nl.addAll(Rewrite.getComments(nextStatement, r));
+    nl.add(Subject.operand(a).toReturn());
+    r.replace(s, r.createGroupNode(nl.toArray(new ASTNode[nl.size()])), g);
     return r;
   }
   @Override String description(final Assignment a) {

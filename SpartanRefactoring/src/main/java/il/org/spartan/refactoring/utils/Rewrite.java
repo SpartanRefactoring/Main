@@ -1,10 +1,16 @@
 package il.org.spartan.refactoring.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Comment;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.jdt.core.dom.rewrite.TargetSourceRangeComputer.SourceRange;
 import org.eclipse.text.edits.TextEditGroup;
 
+import il.org.spartan.refactoring.spartanizations.Spartanizations;
 import il.org.spartan.utils.Range;
 
 /**
@@ -62,4 +68,34 @@ public abstract class Rewrite extends Range {
    * @param g to be associated with these changes
    */
   public abstract void go(ASTRewrite r, TextEditGroup g);
+  /**
+   * Returns all comments associated with a {@link ASTNode}. More precise, gets all
+   * the comments about to be eradicated when replacing this node.
+   * 
+   * Written by Ori Roth
+   * 
+   * @param n
+   *          original node
+   * @param rew
+   *          rewriter
+   * @return list of comments
+   */
+  static public List<ASTNode> getComments(ASTNode n, ASTRewrite rew) {
+    String s = Spartanizations.all().iterator().next().getSource();
+    SourceRange t = rew.getExtendedSourceRangeComputer().computeSourceRange(n);
+    int sp = t.getStartPosition();
+    int ep = sp + t.getLength();
+    CompilationUnit cu = (CompilationUnit) n.getRoot();
+    List<ASTNode> cl = new ArrayList<>();
+    for (Comment c : (List<Comment>) cu.getCommentList()) {
+      int csp = c.getStartPosition();
+      if (csp < sp) {
+        continue;
+      } else if (csp >= ep) {
+        break;
+      }
+      cl.add((Comment) rew.createStringPlaceholder(s.substring(csp, csp + c.getLength()) + "\n", c.getNodeType()));
+    }
+    return cl;
+  }
 }

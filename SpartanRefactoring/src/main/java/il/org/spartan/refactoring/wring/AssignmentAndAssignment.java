@@ -4,6 +4,8 @@ import static il.org.spartan.refactoring.utils.Funcs.*;
 import static org.eclipse.jdt.core.dom.ASTNode.NULL_LITERAL;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.ASSIGN;
 
+import java.util.List;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
@@ -11,6 +13,7 @@ import org.eclipse.text.edits.TextEditGroup;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Is;
+import il.org.spartan.refactoring.utils.Rewrite;
 
 /**
  * A {@link Wring} to convert <code>a = 3; b = 3;</code> to
@@ -35,6 +38,10 @@ public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assign
       return null;
     r.remove(parent, g);
     r.replace(right1, duplicate(a), g);
+    List<ASTNode> nl = Rewrite.getComments(parent, r);
+    nl.addAll(Rewrite.getComments(nextStatement, r));
+    nl.add(a1);
+    r.replace(a1, r.createGroupNode(nl.toArray(new ASTNode[nl.size()])), g);
     return r;
   }
   static Expression getRight(final Assignment a) {

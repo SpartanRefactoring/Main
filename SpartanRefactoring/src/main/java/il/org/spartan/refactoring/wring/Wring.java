@@ -163,26 +163,9 @@ public abstract class Wring<N extends ASTNode> {
     @Override final Rewrite make(final N n) {
       return !eligible(n) ? null : new Rewrite(description(n), n) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-          // TODO changed by Ori Roth
-          String s = Spartanizations.all().iterator().next().getSource();
-          SourceRange t = r.getExtendedSourceRangeComputer().computeSourceRange(n);
-          int sp = t.getStartPosition();
-          int ep = sp + t.getLength();
-          CompilationUnit cu = (CompilationUnit) n.getRoot();
-          List<Comment> cl = new ArrayList<>();
-          for (Comment c : (List<Comment>) cu.getCommentList()) {
-            int csp = c.getStartPosition();
-            if (csp < sp) {
-              continue;
-            } else if (csp >= ep) {
-              break;
-            }
-            cl.add((Comment) r.createStringPlaceholder(s.substring(csp, csp + c.getLength()), c.getNodeType()));
-          }
-          List<ASTNode> rnl = new ArrayList<ASTNode>();
-          rnl.addAll(cl);
-          rnl.add(replacement(n));
-          r.replace(n, r.createGroupNode(rnl.toArray(new ASTNode[rnl.size()])), g);
+          List<ASTNode> nl = getComments(n, r);
+          nl.add(replacement(n));
+          r.replace(n, r.createGroupNode(nl.toArray(new ASTNode[nl.size()])), g);
         }
       };
     }
@@ -192,6 +175,15 @@ public abstract class Wring<N extends ASTNode> {
     }
   }
 
+  /*
+   * TODO the Wrings extending ReplaceToNextStatement were added the fix comments
+   * mechanism. When so, the results appearance seems to change, need to be fixed.
+   * TODO check comments for IfCommandsSequencerNoElseSingletonSequencer wring
+   * TODO complete modifying IfFooSequencerIfFooSameSequencer
+   * TODO complete modifying IfReturnNoElseReturn
+   * TODO complete modifying IfThrowNoElseThrow
+   * TODO complete modifying PrefixIncrementDecrementReturn
+   */
   static abstract class ReplaceToNextStatement<N extends ASTNode> extends Wring<N> {
     abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g);
     @Override Rewrite make(final N n, final ExclusionManager exclude) {
