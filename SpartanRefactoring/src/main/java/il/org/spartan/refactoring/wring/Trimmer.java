@@ -11,6 +11,7 @@ import org.eclipse.text.edits.MalformedTreeException;
 import org.eclipse.text.edits.TextEdit;
 
 import il.org.spartan.refactoring.spartanizations.Spartanization;
+import il.org.spartan.refactoring.spartanizations.Spartanizations;
 import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.refactoring.utils.Rewrite;
 
@@ -72,6 +73,7 @@ public class Trimmer extends Spartanization {
           return false;
         final Wring<N> w = Toolbox.instance().find(n);
         if (w != null) {
+          // TODO changed by Ori Roth
           final Rewrite make = w.make(n, exclude);
           if (make != null)
             make.go(r, null);

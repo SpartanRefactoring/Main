@@ -474,7 +474,9 @@ public abstract class Spartanization extends Refactoring {
    * Source of current code
    */
   private String source = null;
-
+  public String getSource() {
+    return source;
+  }
   public void setSource(String s) {
     source = s;
   }
