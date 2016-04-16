@@ -164,7 +164,12 @@ public abstract class Wring<N extends ASTNode> {
       return !eligible(n) ? null : new Rewrite(description(n), n) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
           List<ASTNode> nl = getComments(n, r);
-          nl.add(replacement(n));
+          if (nl.size() == 1) {
+            // TODO is it always valid? probably yes
+            nl.add(0, replacement(n));
+          } else {
+            nl.add(replacement(n));
+          }
           r.replace(n, r.createGroupNode(nl.toArray(new ASTNode[nl.size()])), g);
         }
       };

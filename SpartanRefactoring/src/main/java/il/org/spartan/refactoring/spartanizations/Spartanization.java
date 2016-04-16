@@ -524,7 +524,10 @@ public abstract class Spartanization extends Refactoring {
    */
   protected <N extends ASTNode> boolean isSpartanizationDisabled(N n) {
     if (source == null) {
-      return false;
+      source = Spartanizations.all().iterator().next().getSource();
+      if (source == null) {
+        return false;
+      }
     }
     CompilationUnit cu = ((CompilationUnit) n.getRoot());
     int nln = cu.getLineNumber(n.getStartPosition()) - 1;
