@@ -69,10 +69,9 @@ public abstract class Rewrite extends Range {
    */
   public abstract void go(ASTRewrite r, TextEditGroup g);
   /**
-   * Returns all comments associated with a {@link ASTNode}. More precise, gets all
-   * the comments about to be eradicated when replacing this node.
-   * 
-   * Written by Ori Roth
+   * Returns all comments associated with an {@link ASTNode}. More precise, gets
+   * all the comments about to be eradicated when replacing this node.
+   * @author Ori Roth
    * 
    * @param n
    *          original node
@@ -80,13 +79,14 @@ public abstract class Rewrite extends Range {
    *          rewriter
    * @return list of comments
    */
+  @SuppressWarnings("unchecked")
   static public List<ASTNode> getComments(ASTNode n, ASTRewrite rew) {
-    String s = Spartanizations.all().iterator().next().getSource();
+    String s = Source.get();
     SourceRange t = rew.getExtendedSourceRangeComputer().computeSourceRange(n);
     int sp = t.getStartPosition();
     int ep = sp + t.getLength();
     CompilationUnit cu = (CompilationUnit) n.getRoot();
-    List<ASTNode> cl = new ArrayList<>();
+    List<ASTNode> $ = new ArrayList<>();
     for (Comment c : (List<Comment>) cu.getCommentList()) {
       int csp = c.getStartPosition();
       if (csp < sp) {
@@ -94,8 +94,8 @@ public abstract class Rewrite extends Range {
       } else if (csp >= ep) {
         break;
       }
-      cl.add((Comment) rew.createStringPlaceholder(s.substring(csp, csp + c.getLength()) + "\n", c.getNodeType()));
+      $.add((Comment) rew.createStringPlaceholder(s.substring(csp, csp + c.getLength()) + "\n", c.getNodeType()));
     }
-    return cl;
+    return $;
   }
 }

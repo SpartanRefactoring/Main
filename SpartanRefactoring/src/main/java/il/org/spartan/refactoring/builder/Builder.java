@@ -12,6 +12,7 @@ import il.org.spartan.refactoring.spartanizations.Spartanization;
 import il.org.spartan.refactoring.spartanizations.Spartanizations;
 import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.refactoring.utils.Rewrite;
+import il.org.spartan.refactoring.utils.Source;
 import il.org.spartan.utils.FileUtils;
 
 /**
@@ -40,7 +41,7 @@ public class Builder extends IncrementalProjectBuilder {
    * spartanization is stored
    */
   public static final String SPARTANIZATION_TYPE_KEY = "org.spartan.refactoring.spartanizationType";
-  @Override protected IProject[] build(final int kind, @SuppressWarnings({ "unused", "rawtypes" }) final Map args, final IProgressMonitor m) throws CoreException {
+  @Override protected IProject[] build(final int kind, @SuppressWarnings("rawtypes") final Map args, final IProgressMonitor m) throws CoreException {
     if (m != null)
       m.beginTask("Checking for spartanization opportunities", IProgressMonitor.UNKNOWN);
     build(kind);
@@ -71,23 +72,18 @@ public class Builder extends IncrementalProjectBuilder {
       e.printStackTrace();
     }
   }
-  // TODO changed by Ori Roth
   static void addMarkers(final IResource r) throws CoreException {
     if (r instanceof IFile && r.getName().endsWith(".java")) {
-      Spartanizations.reset();
-      for (Spartanization s : Spartanizations.all()) {
-        try {
-          s.setSource(FileUtils.readFromFile(r.getLocation().toString()));
-        } catch (IOException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        }
+      try {
+        Source.set(FileUtils.readFromFile(r.getLocation().toString()));
+      } catch (IOException e) {
+        e.printStackTrace();
       }
       addMarkers((IFile) r);
     }
   }
-  //TODO changed by Ori Roth
   private static void addMarkers(final IFile f) throws CoreException {
+    Spartanizations.reset();
     deleteMarkers(f);
     addMarkers(f, (CompilationUnit) As.COMPILIATION_UNIT.ast(f));
   }

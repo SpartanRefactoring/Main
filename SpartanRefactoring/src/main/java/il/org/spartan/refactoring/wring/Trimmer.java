@@ -73,7 +73,6 @@ public class Trimmer extends Spartanization {
           return false;
         final Wring<N> w = Toolbox.instance().find(n);
         if (w != null) {
-          // TODO changed by Ori Roth
           final Rewrite make = w.make(n, exclude);
           if (make != null)
             make.go(r, null);

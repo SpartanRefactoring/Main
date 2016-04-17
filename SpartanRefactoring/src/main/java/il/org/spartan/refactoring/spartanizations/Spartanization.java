@@ -24,6 +24,7 @@ import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.refactoring.utils.CommentVisitor;
 import il.org.spartan.refactoring.utils.Make;
 import il.org.spartan.refactoring.utils.Rewrite;
+import il.org.spartan.refactoring.utils.Source;
 
 /**
  * the base class for all Spartanization Refactoring classes, contains common
@@ -471,21 +472,10 @@ public abstract class Spartanization extends Refactoring {
     scanCompilationUnits(getUnits(pm), new SubProgressMonitor(pm, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL));
   }
   /**
-   * Source of current code
-   */
-  private String source = null;
-  public String getSource() {
-    return source;
-  }
-  public void setSource(String s) {
-    source = s;
-  }
-  /**
    * Disable Spartanization identifier, used by the programmer to indicate a
    * method/class/code line to not be spartanized
    */
-  public final String dsi = "@DisableSpartanization";
-
+  public final String dsi = "@DisableSpartan";
   /**
    * Match row indexes of comment and a node, to see if a dsi inside the comment
    * would disable the node.
@@ -516,42 +506,28 @@ public abstract class Spartanization extends Refactoring {
    * determine its status (implemented as isSpartanizationDisabledInAncestor).
    * Second, the go method of the visitor should return false upon reaching a
    * dsi, what wuld stop it from reaching the the nodes sons (currently
-   * implemented in fillRewrite and collect in Trimmer) TODO remove debug prints
+   * implemented in fillRewrite and collect in Trimmer)
    * 
    * @param n
    *          ASTNode
    * @return true iff the spartanization is disabled for this node and its sons.
    */
   protected <N extends ASTNode> boolean isSpartanizationDisabled(N n) {
-    if (source == null) {
-      source = Spartanizations.all().iterator().next().getSource();
-      if (source == null) {
-        return false;
-      }
+    String s = Source.get();
+    if (s == null) {
+      // In a failure case, allow all spartanizations
+      return false;
     }
     CompilationUnit cu = ((CompilationUnit) n.getRoot());
     int nln = cu.getLineNumber(n.getStartPosition()) - 1;
       for (Comment c : (List<Comment>) cu.getCommentList()) {
-        CommentVisitor cv = new CommentVisitor(cu, source);
+        CommentVisitor cv = new CommentVisitor(cu, s);
         c.accept(cv);
         int cer = cv.getEndRow();
-//        System.out.println(nln + "\t" + cer + "\t" + cv.getContent() + "\t" + cu.getCommentList().size());
         if (matchRowIndexes(nln, cer, c.getNodeType()) && cv.getContent().contains(dsi)) {
           return true;
         }
       }
     return false;
-  }
-  /**
-   * Unused - returning false in go method of DispatchVisitior will prevent the
-   * visitor visit a son of a disable node, so no need to check for disablers in
-   * parents
-   * 
-   * @param n
-   * @return
-   */
-  protected <N extends ASTNode> boolean isSpartanizationDisabledInAncestor(N n) {
-    return isSpartanizationDisabled(n)
-        || (n.getParent() == null ? false : isSpartanizationDisabledInAncestor(n.getParent()));
   }
 }
