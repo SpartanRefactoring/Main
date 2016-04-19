@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.Comment;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.jdt.core.dom.rewrite.TargetSourceRangeComputer.SourceRange;
+import org.eclipse.text.edits.TextEditGroup;
 
 /**
  * An accessible container for the source code
@@ -105,9 +106,8 @@ public class Source {
       c.accept(cv);
       int cer = cv.getEndRow();
 //      System.out.println("nln=" + nln + "\tcer=" + cer + "\td?=" + cv.getContent().contains(dsi));
-      if (matchRowIndexes(nln, cer, c.getNodeType()) && cv.getContent().contains(dsi)) {
+      if (matchRowIndexes(nln, cer, c.getNodeType()) && cv.getContent().contains(dsi))
         return true;
-      }
     }
     return false;
   }
@@ -142,12 +142,40 @@ public class Source {
     int ep = sp + t.getLength();
     for (Comment c : (List<Comment>) cu.getCommentList()) {
       int csp = c.getStartPosition();
-      if (csp < sp) {
+      if (csp < sp)
         continue;
-      } else if (csp >= ep) {
+      else if (csp >= ep)
         break;
-      }
       $.add((Comment) r.createStringPlaceholder(s.substring(csp, csp + c.getLength()) + "\n", c.getNodeType()));
+    }
+    return $;
+  }
+  @SuppressWarnings("unchecked")
+  public static String getCommentsAsString(ASTNode n) {
+    String $ = "";
+    // In a failure case, allow all spartanizations
+    if (s == null) {
+      System.err.println("Null Source");
+      return $;
+    }
+    if (cu == null) {
+      System.err.println("Null CompilationUnit");
+      return $;
+    }
+    if (r == null) {
+      System.err.println("Null ASTRewriter");
+      return $;
+    }
+    SourceRange t = r.getExtendedSourceRangeComputer().computeSourceRange(n);
+    int sp = t.getStartPosition();
+    int ep = sp + t.getLength();
+    for (Comment c : (List<Comment>) cu.getCommentList()) {
+      int csp = c.getStartPosition();
+      if (csp < sp)
+        continue;
+      else if (csp >= ep)
+        break;
+      $ += s.substring(csp, csp + c.getLength()) + "\n";
     }
     return $;
   }
@@ -157,5 +185,9 @@ public class Source {
    */
   public static SourceRange getExtendedSourceRange(ASTNode n) {
     return r.getExtendedSourceRangeComputer().computeSourceRange(n);
+  }
+  public static String get(ASTNode n) {
+    SourceRange t = r.getExtendedSourceRangeComputer().computeSourceRange(n);
+    return s.substring(t.getStartPosition(), t.getStartPosition() + t.getLength());
   }
 }
