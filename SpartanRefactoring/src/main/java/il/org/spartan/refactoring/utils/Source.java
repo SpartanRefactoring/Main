@@ -92,14 +92,16 @@ public class Source {
       return false;
     }
     int nln = cu.getLineNumber(n.getStartPosition()) - 1;
-      for (Comment c : (List<Comment>) cu.getCommentList()) {
-        CommentVisitor cv = new CommentVisitor(cu, s);
-        c.accept(cv);
-        int cer = cv.getEndRow();
-        if (matchRowIndexes(nln, cer, c.getNodeType()) && cv.getContent().contains(dsi)) {
-          return true;
-        }
+    for (Comment c : (List<Comment>) cu.getCommentList()) {
+      CommentVisitor cv = new CommentVisitor();
+      c.accept(cv);
+      int cer = cv.getEndRow();
+      System.out.println("nln=" + nln + "\tcer=" + cer + "\td?=" + cv.getContent().contains(dsi));
+      if (matchRowIndexes(nln, cer, c.getNodeType()) && cv.getContent().contains(dsi)) {
+        System.out.println("good");
+        return true;
       }
+    }
     return false;
   }
   /**

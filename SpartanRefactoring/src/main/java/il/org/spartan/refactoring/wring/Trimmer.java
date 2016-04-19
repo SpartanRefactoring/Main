@@ -70,9 +70,9 @@ public class Trimmer extends Spartanization {
       @Override <N extends ASTNode> boolean go(final N n) {
         if (!inRange(m, n))
           return true;
+        Source.setASTRewrite(r);
         if (Source.isSpartanizationDisabled(n))
           return false;
-        Source.setASTRewrite(r);
         final Wring<N> w = Toolbox.instance().find(n);
         if (w != null) {
           final Rewrite make = w.make(n, exclude);

@@ -1,5 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
+import java.io.IOException;
+
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.BlockComment;
@@ -7,6 +9,8 @@ import org.eclipse.jdt.core.dom.Comment;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Javadoc;
 import org.eclipse.jdt.core.dom.LineComment;
+
+import il.org.spartan.utils.FileUtils;
 
 /**
  * A visitor for {@link Comment} nodes. Preserves the comment content (using the source code)
@@ -20,11 +24,10 @@ public class CommentVisitor extends ASTVisitor {
   private String s;             // source code
   private String c;             // comment content
   private int er;               // comment end row
-  public CommentVisitor(CompilationUnit compilationUnit, String source) {
-
+  public CommentVisitor() {
     super();
-    this.cu = compilationUnit;
-    this.s = source;
+    this.cu = Source.getCompilationUnit();
+    this.s = Source.getSource();
   }
   public boolean visit(LineComment node) {
 
