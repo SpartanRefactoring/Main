@@ -72,6 +72,7 @@ public class Trimmer extends Spartanization {
           return true;
         if (Source.isSpartanizationDisabled(n))
           return false;
+        Source.setASTRewrite(r);
         final Wring<N> w = Toolbox.instance().find(n);
         if (w != null) {
           final Rewrite make = w.make(n, exclude);

@@ -75,7 +75,7 @@ public class Builder extends IncrementalProjectBuilder {
   static void addMarkers(final IResource r) throws CoreException {
     if (r instanceof IFile && r.getName().endsWith(".java")) {
       try {
-        Source.set(FileUtils.readFromFile(r.getLocation().toString()));
+        Source.setSource(FileUtils.readFromFile(r.getLocation().toString()));
       } catch (IOException e) {
         e.printStackTrace();
       }
@@ -88,6 +88,7 @@ public class Builder extends IncrementalProjectBuilder {
     addMarkers(f, (CompilationUnit) As.COMPILIATION_UNIT.ast(f));
   }
   private static void addMarkers(final IFile f, final CompilationUnit u) throws CoreException {
+    Source.setCompilationUnit(u);
     for (final Spartanization s : Spartanizations.all())
       for (final Rewrite r : s.findOpportunities(u))
         if (r != null)

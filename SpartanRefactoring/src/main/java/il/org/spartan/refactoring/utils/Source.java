@@ -17,13 +17,28 @@ import org.eclipse.jdt.core.dom.rewrite.TargetSourceRangeComputer.SourceRange;
  */
 public class Source {
 
-  static private String s = null;
-  static public String get() {
+  private static String s = null;
+  private static CompilationUnit cu = null;
+  private static ASTRewrite r;
+  public static String getSource() {
     return s;
   }
-  static public void set(String content) {
+  public static void setSource(String content) {
     s = content;
   }
+  public static CompilationUnit getCompilationUnit() {
+    return cu;
+  }
+  public static void setCompilationUnit(CompilationUnit u) {
+    cu = u;
+  }
+  public static ASTRewrite getASTRewrite() {
+    return r;
+  }
+  public static void setASTRewrite(ASTRewrite rew) {
+    r = rew;
+  }
+  
   /**
    * Disable Spartanization identifier, used by the programmer to indicate a
    * method/class/code line to not be spartanized
@@ -41,7 +56,7 @@ public class Source {
    *          comment type
    * @return true iff a dsi in the comment disables the node
    */
-  static private boolean matchRowIndexes(int nln, int cer, int t) {
+  private static boolean matchRowIndexes(int nln, int cer, int t) {
     switch (t) {
     case ASTNode.LINE_COMMENT:
       return nln == cer;
@@ -65,13 +80,17 @@ public class Source {
    *          ASTNode
    * @return true iff the spartanization is disabled for this node and its sons.
    */
+  @SuppressWarnings("unchecked")
   public static <N extends ASTNode> boolean isSpartanizationDisabled(N n) {
-    String s = Source.get();
+    // In a failure case, allow all spartanizations
     if (s == null) {
-      // In a failure case, allow all spartanizations
+      System.err.println("Null Source");
       return false;
     }
-    CompilationUnit cu = ((CompilationUnit) n.getRoot());
+    if (cu == null) {
+      System.err.println("Null CompilationUnit");
+      return false;
+    }
     int nln = cu.getLineNumber(n.getStartPosition()) - 1;
       for (Comment c : (List<Comment>) cu.getCommentList()) {
         CommentVisitor cv = new CommentVisitor(cu, s);
@@ -86,7 +105,6 @@ public class Source {
   /**
    * Returns all comments associated with an {@link ASTNode}. More precise, gets
    * all the comments about to be eradicated when replacing this node.
-   * @author Ori Roth
    * 
    * @param n
    *          original node
@@ -95,13 +113,24 @@ public class Source {
    * @return list of comments
    */
   @SuppressWarnings("unchecked")
-  static public List<ASTNode> getComments(ASTNode n, ASTRewrite rew) {
-    String s = Source.get();
-    SourceRange t = rew.getExtendedSourceRangeComputer().computeSourceRange(n);
+  public static List<ASTNode> getComments(ASTNode n) {
+    List<ASTNode> $ = new ArrayList<>();
+    // In a failure case, allow all spartanizations
+    if (s == null) {
+      System.err.println("Null Source");
+      return $;
+    }
+    if (cu == null) {
+      System.err.println("Null CompilationUnit");
+      return $;
+    }
+    if (r == null) {
+      System.err.println("Null ASTRewriter");
+      return $;
+    }
+    SourceRange t = r.getExtendedSourceRangeComputer().computeSourceRange(n);
     int sp = t.getStartPosition();
     int ep = sp + t.getLength();
-    CompilationUnit cu = (CompilationUnit) n.getRoot();
-    List<ASTNode> $ = new ArrayList<>();
     for (Comment c : (List<Comment>) cu.getCommentList()) {
       int csp = c.getStartPosition();
       if (csp < sp) {
@@ -109,8 +138,15 @@ public class Source {
       } else if (csp >= ep) {
         break;
       }
-      $.add((Comment) rew.createStringPlaceholder(s.substring(csp, csp + c.getLength()) + "\n", c.getNodeType()));
+      $.add((Comment) r.createStringPlaceholder(s.substring(csp, csp + c.getLength()) + "\n", c.getNodeType()));
     }
     return $;
+  }
+  /**
+   * @param n
+   * @return
+   */
+  public static SourceRange getExtendedSourceRange(ASTNode n) {
+    return r.getExtendedSourceRangeComputer().computeSourceRange(n);
   }
 }

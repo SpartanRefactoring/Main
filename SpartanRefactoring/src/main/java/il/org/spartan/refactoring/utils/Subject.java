@@ -11,7 +11,6 @@ import java.util.List;
 import org.eclipse.jdt.core.dom.*;
 
 // TODO: document this class
-// edited by Ori Roth
 @SuppressWarnings("javadoc") public class Subject {
   public static Operand operand(final Expression inner) {
     return new Operand(inner);

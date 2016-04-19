@@ -56,6 +56,7 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGr
 import il.org.spartan.refactoring.spartanizations.Spartanizations;
 import il.org.spartan.refactoring.utils.Collect;
 import il.org.spartan.refactoring.utils.Extract;
+import il.org.spartan.refactoring.utils.Funcs;
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.Plant;
 import il.org.spartan.refactoring.utils.Rewrite;
@@ -164,7 +165,7 @@ public abstract class Wring<N extends ASTNode> {
     @Override final Rewrite make(final N n) {
       return !eligible(n) ? null : new Rewrite(description(n), n) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-          List<ASTNode> nl = Source.getComments(n, r);
+          List<ASTNode> nl = Source.getComments(n);
           nl.add(replacement(n));
           r.replace(n, r.createGroupNode(nl.toArray(new ASTNode[nl.size()])), g);
         }

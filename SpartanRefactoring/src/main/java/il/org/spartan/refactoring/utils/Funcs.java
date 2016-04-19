@@ -358,6 +358,7 @@ public enum Funcs {
    * @return the fragment if such with the given name exists or null otherwise
    *         (or if s or name are null)
    */
+  @SuppressWarnings("unchecked")
   public static VariableDeclarationFragment getVarDeclFrag(final ASTNode n, final Expression name) {
     return hasNull(n, name) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || name.getNodeType() != SIMPLE_NAME ? null
         : getVarDeclFrag(((VariableDeclarationStatement) n).fragments(), (SimpleName) name);
@@ -750,7 +751,7 @@ public enum Funcs {
         : n instanceof QualifiedName ? shortName(((QualifiedName) n).getName()) //
             : null;
   }
-  private static String shortName(@SuppressWarnings("unused") final UnionType _) {
+  private static String shortName(final UnionType _) {
     return null;
   }
   private static String shortName(final WildcardType t) {
