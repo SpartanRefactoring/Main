@@ -14,6 +14,7 @@ import il.org.spartan.refactoring.spartanizations.Spartanization;
 import il.org.spartan.refactoring.spartanizations.Spartanizations;
 import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.refactoring.utils.Rewrite;
+import il.org.spartan.refactoring.utils.Source;
 
 /**
  * @author Yossi Gil
@@ -57,7 +58,7 @@ public class Trimmer extends Spartanization {
   @Override protected ASTVisitor collect(final List<Rewrite> $) {
     return new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
-        if (isSpartanizationDisabled(n))
+        if (Source.isSpartanizationDisabled(n))
           return false;
         final Wring<N> w = Toolbox.instance().find(n);
         return w == null || w.nonEligible(n) || prune(w.make(n, exclude), $);
@@ -69,7 +70,7 @@ public class Trimmer extends Spartanization {
       @Override <N extends ASTNode> boolean go(final N n) {
         if (!inRange(m, n))
           return true;
-        if (isSpartanizationDisabled(n))
+        if (Source.isSpartanizationDisabled(n))
           return false;
         final Wring<N> w = Toolbox.instance().find(n);
         if (w != null) {

@@ -14,6 +14,7 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGr
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.Rewrite;
+import il.org.spartan.refactoring.utils.Source;
 
 /**
  * A {@link Wring} to convert <code>a = 3; b = 3;</code> to
@@ -38,8 +39,8 @@ public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assign
       return null;
     r.remove(parent, g);
     r.replace(right1, duplicate(a), g);
-    List<ASTNode> nl = Rewrite.getComments(parent, r);
-    nl.addAll(Rewrite.getComments(nextStatement, r));
+    List<ASTNode> nl = Source.getComments(parent, r);
+    nl.addAll(Source.getComments(nextStatement, r));
     nl.add(a1);
     r.replace(a1, r.createGroupNode(nl.toArray(new ASTNode[nl.size()])), g);
     return r;

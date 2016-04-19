@@ -68,34 +68,4 @@ public abstract class Rewrite extends Range {
    * @param g to be associated with these changes
    */
   public abstract void go(ASTRewrite r, TextEditGroup g);
-  /**
-   * Returns all comments associated with an {@link ASTNode}. More precise, gets
-   * all the comments about to be eradicated when replacing this node.
-   * @author Ori Roth
-   * 
-   * @param n
-   *          original node
-   * @param rew
-   *          rewriter
-   * @return list of comments
-   */
-  @SuppressWarnings("unchecked")
-  static public List<ASTNode> getComments(ASTNode n, ASTRewrite rew) {
-    String s = Source.get();
-    SourceRange t = rew.getExtendedSourceRangeComputer().computeSourceRange(n);
-    int sp = t.getStartPosition();
-    int ep = sp + t.getLength();
-    CompilationUnit cu = (CompilationUnit) n.getRoot();
-    List<ASTNode> $ = new ArrayList<>();
-    for (Comment c : (List<Comment>) cu.getCommentList()) {
-      int csp = c.getStartPosition();
-      if (csp < sp) {
-        continue;
-      } else if (csp >= ep) {
-        break;
-      }
-      $.add((Comment) rew.createStringPlaceholder(s.substring(csp, csp + c.getLength()) + "\n", c.getNodeType()));
-    }
-    return $;
-  }
 }

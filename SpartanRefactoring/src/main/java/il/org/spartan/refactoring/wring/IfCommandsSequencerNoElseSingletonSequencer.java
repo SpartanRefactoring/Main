@@ -18,6 +18,7 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGr
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.Rewrite;
+import il.org.spartan.refactoring.utils.Source;
 import il.org.spartan.refactoring.utils.Subject;
 
 /**
@@ -69,9 +70,8 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends Wring.Rep
       lr.replace(s, rep, g);
       lr.remove(nextStatement, g);
     }
-    System.out.println("enter");
-    List<ASTNode> nl = Rewrite.getComments(s, r);
-    nl.addAll(Rewrite.getComments(nextStatement, r));
+    List<ASTNode> nl = Source.getComments(s, r);
+    nl.addAll(Source.getComments(nextStatement, r));
     nl.add(rep);
     r.replace(rep, r.createGroupNode(nl.toArray(new ASTNode[nl.size()])), g);
     return r;
