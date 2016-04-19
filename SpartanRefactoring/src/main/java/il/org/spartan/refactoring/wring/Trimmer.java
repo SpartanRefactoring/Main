@@ -1,5 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.eclipse.core.resources.IMarker;
@@ -15,6 +16,7 @@ import il.org.spartan.refactoring.spartanizations.Spartanizations;
 import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.refactoring.utils.Rewrite;
 import il.org.spartan.refactoring.utils.Source;
+import il.org.spartan.utils.FileUtils;
 
 /**
  * @author Yossi Gil
@@ -66,11 +68,18 @@ public class Trimmer extends Spartanization {
     };
   }
   @Override protected final void fillRewrite(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
+    Source.setASTRewrite(r);
+    Source.setCompilationUnit(u);
+    try {
+      Source.setSource(FileUtils.readFromFile(Source.getIPath().toString()));
+    } catch (IOException e) {
+      e.printStackTrace();
+      Source.setSource(null);
+    }
     u.accept(new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
         if (!inRange(m, n))
           return true;
-        Source.setASTRewrite(r);
         if (Source.isSpartanizationDisabled(n))
           return false;
         final Wring<N> w = Toolbox.instance().find(n);

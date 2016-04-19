@@ -10,7 +10,6 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
-import org.eclipse.jdt.core.dom.Comment;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.jface.text.ITextSelection;
@@ -21,10 +20,8 @@ import org.eclipse.ui.IMarkerResolution;
 
 import il.org.spartan.refactoring.handlers.BaseHandler;
 import il.org.spartan.refactoring.utils.As;
-import il.org.spartan.refactoring.utils.CommentVisitor;
 import il.org.spartan.refactoring.utils.Make;
 import il.org.spartan.refactoring.utils.Rewrite;
-import il.org.spartan.refactoring.utils.Source;
 
 /**
  * the base class for all Spartanization Refactoring classes, contains common

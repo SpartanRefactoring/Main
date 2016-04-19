@@ -3,6 +3,7 @@ package il.org.spartan.refactoring.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Comment;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -17,14 +18,21 @@ import org.eclipse.jdt.core.dom.rewrite.TargetSourceRangeComputer.SourceRange;
  */
 public class Source {
 
-  private static String s = null;
-  private static CompilationUnit cu = null;
+  private static String s;
+  private static IPath p;
+  private static CompilationUnit cu;
   private static ASTRewrite r;
   public static String getSource() {
     return s;
   }
-  public static void setSource(String content) {
-    s = content;
+  public static void setSource(String c) {
+    s = c;
+  }
+  public static IPath getIPath() {
+    return p;
+  }
+  public static void setIPath(IPath ip) {
+    p = ip;
   }
   public static CompilationUnit getCompilationUnit() {
     return cu;
@@ -96,9 +104,8 @@ public class Source {
       CommentVisitor cv = new CommentVisitor();
       c.accept(cv);
       int cer = cv.getEndRow();
-      System.out.println("nln=" + nln + "\tcer=" + cer + "\td?=" + cv.getContent().contains(dsi));
+//      System.out.println("nln=" + nln + "\tcer=" + cer + "\td?=" + cv.getContent().contains(dsi));
       if (matchRowIndexes(nln, cer, c.getNodeType()) && cv.getContent().contains(dsi)) {
-        System.out.println("good");
         return true;
       }
     }
