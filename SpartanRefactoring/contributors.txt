@@ -10,5 +10,6 @@ Artium Nihamkin <artium [at] nihamkin.com>
 Boris van Sosin <boris.van.sosin [at] gmail.com>
 Daniel Mittelman <daniel [at] mittelman.co.il>
 Ofir Elmakias <elmakias [at] outlook.com>
+Ori Roth <ori.rothh [at] gmail.com>
 Tomer Zeltzer <tomerr90 [at] gmail.com>
 Yossi Gil <yossi.gil [at] gmail.com>
