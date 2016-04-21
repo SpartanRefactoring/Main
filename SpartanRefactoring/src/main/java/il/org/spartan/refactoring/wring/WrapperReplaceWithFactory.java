@@ -42,7 +42,7 @@ public class WrapperReplaceWithFactory extends Wring.ReplaceCurrentNode<ClassIns
     return $;
   }
   @Override String description(final ClassInstanceCreation c) {
-    return "Use factory method" + c.getType() + ".valueOf() instead of initialization";
+    return "Use factory method " + c.getType() + ".valueOf() instead of initialization";
   }
   @Override WringGroup wringGroup() {
     return WringGroup.REPLACE_CLASS_INSTANCE_CREATION;
