@@ -55,7 +55,7 @@ public class PluginPreferencesPage extends FieldEditorPreferencePage implements 
       try {
         Plugin.refreshAllProjects();
       } catch (final Exception e) {
-        e.printStackTrace();
+        new Exception(event.toString(), e).printStackTrace();
       }
     }
   }
