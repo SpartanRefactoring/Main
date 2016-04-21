@@ -37,7 +37,8 @@ import il.org.spartan.refactoring.utils.Into;
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.Subject;
 
-@SuppressWarnings({ "javadoc", "static-method" }) public class WringsTest {
+@SuppressWarnings({ "javadoc", "static-method" }) //
+public class WringsTest {
   @Test public void renameIntoDoWhile() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = "void f() { int b = 3; do ; while(b != 0); }";
     final Document d = Wrap.Method.intoDocument(input);
