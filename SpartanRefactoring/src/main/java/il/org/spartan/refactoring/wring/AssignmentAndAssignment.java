@@ -35,6 +35,7 @@ public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assign
       return null;
     r.remove(parent, g);
     r.replace(right1, duplicate(a), g);
+    replaced = a1;
     return r;
   }
   static Expression getRight(final Assignment a) {

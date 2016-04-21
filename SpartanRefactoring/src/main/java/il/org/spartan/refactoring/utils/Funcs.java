@@ -10,8 +10,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.jdt.core.dom.rewrite.TargetSourceRangeComputer.SourceRange;
-
 import il.org.spartan.refactoring.wring.PrefixNotPushdown;
 import il.org.spartan.utils.Utils;
 
@@ -303,34 +301,12 @@ public enum Funcs {
   }
   /**
    * Make a duplicate, suitable for tree rewrite, of the parameter
-   * TODO complete
    *
    * @param n JD
    * @return a duplicate of the parameter, downcasted to the returned type.
    */
-  @SuppressWarnings({ "unchecked", "rawtypes" }) public static <N extends ASTNode> N duplicate(final N n) {
-    ASTRewrite r = Source.getASTRewrite();
-    if (n.getStartPosition() < 0 || r == null || true)
-      return (N) copySubtree(n.getAST(), n);
-    List<ASTNode> cl = Source.getComments(n);
-    cl.add(copySubtree(n.getAST(), n));
-    N $ = (N) r.createStringPlaceholder(r.createGroupNode(cl.toArray(new ASTNode[cl.size()])).toString(), n.getNodeType());
-    // copy structural properties TODO copy regular properties if needed
-    for (StructuralPropertyDescriptor spd : (List<StructuralPropertyDescriptor>) n.structuralPropertiesForType()) {
-      Object o = n.getStructuralProperty(spd);
-      if (spd.isSimpleProperty())
-          $.setStructuralProperty(spd, o);
-      else if (spd.isChildProperty()) {
-          ASTNode c = ASTNode.copySubtree(n.getAST(), (ASTNode) o);
-          System.out.println(c.getClass());
-          $.setStructuralProperty(spd, c);
-      } else if (spd.isChildListProperty()) {
-          List l = (List) $.getStructuralProperty(spd);
-          List c = ASTNode.copySubtrees(n.getAST(), l);
-          l.addAll(c);
-      }
-    }
-    return $;
+  @SuppressWarnings("unchecked") public static <N extends ASTNode> N duplicate(final N n) {
+    return (N) copySubtree(n.getAST(), n);
   }
   /**
    * Shorthand for {@link ConditionalExpression#getElseExpression()}
@@ -382,7 +358,6 @@ public enum Funcs {
    * @return the fragment if such with the given name exists or null otherwise
    *         (or if s or name are null)
    */
-  @SuppressWarnings("unchecked")
   public static VariableDeclarationFragment getVarDeclFrag(final ASTNode n, final Expression name) {
     return hasNull(n, name) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || name.getNodeType() != SIMPLE_NAME ? null
         : getVarDeclFrag(((VariableDeclarationStatement) n).fragments(), (SimpleName) name);
@@ -564,8 +539,7 @@ public enum Funcs {
    * @see ASTNode#copySubtree
    * @see ASTRewrite
    */
-  @SuppressWarnings("unchecked")
-  public static <N extends ASTNode> N rebase(final N n, final AST t) {
+  @SuppressWarnings("unchecked") public static <N extends ASTNode> N rebase(final N n, final AST t) {
     return (N) copySubtree(t, n);
   }
   /**
@@ -776,7 +750,7 @@ public enum Funcs {
         : n instanceof QualifiedName ? shortName(((QualifiedName) n).getName()) //
             : null;
   }
-  private static String shortName(final UnionType _) {
+  private static String shortName(@SuppressWarnings("unused") final UnionType _) {
     return null;
   }
   private static String shortName(final WildcardType t) {

@@ -168,7 +168,6 @@ public abstract class Wring<N extends ASTNode> {
           List<ASTNode> nl = Source.getComments(n);
           nl.add(replacement(n));
           r.replace(n, r.createGroupNode(nl.toArray(new ASTNode[nl.size()])), g);
-//          r.replace(n, replacement(n), g);
         }
       };
     }
@@ -178,15 +177,14 @@ public abstract class Wring<N extends ASTNode> {
     }
   }
   /*
-   * TODO the Wrings extending ReplaceToNextStatement were added the fix comments
-   * mechanism. When so, the results appearance seems to change, need to be fixed.
-   * TODO check comments for IfCommandsSequencerNoElseSingletonSequencer wring
-   * TODO complete modifying IfFooSequencerIfFooSameSequencer
-   * TODO complete modifying IfReturnNoElseReturn
-   * TODO complete modifying IfThrowNoElseThrow
-   * TODO complete modifying PrefixIncrementDecrementReturn
+   * TODO complete every successor comment preservation
    */
   static abstract class ReplaceToNextStatement<N extends ASTNode> extends Wring<N> {
+    final private Integer[] finalParents = {ASTNode.EXPRESSION_STATEMENT, ASTNode.IF_STATEMENT};
+    protected ASTNode replaced;
+    protected ASTNode fixReplaced(ASTNode n, ASTRewrite r) {
+      return r.createStringPlaceholder(n.toString().trim(), n.getNodeType());
+    }
     abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g);
     @Override Rewrite make(final N n, final ExclusionManager exclude) {
       final Statement nextStatement = Extract.nextStatement(n);
@@ -195,7 +193,17 @@ public abstract class Wring<N extends ASTNode> {
       exclude.exclude(nextStatement);
       return new Rewrite(description(n), n, nextStatement) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+          replaced = null;
+          ASTNode p = n;
+          while (!Arrays.asList(finalParents).contains(p.getNodeType()))
+            p = p.getParent();
+          List<ASTNode> nl = Source.getComments(p);
+          nl.addAll(Source.getComments(nextStatement));
           ReplaceToNextStatement.this.go(r, n, nextStatement, g);
+          if (replaced == null)
+            return;
+          nl.add(fixReplaced(replaced, r));
+          r.replace(replaced, r.createGroupNode(nl.toArray(new ASTNode[nl.size()])), g);
         }
       };
     }
@@ -222,6 +230,7 @@ public abstract class Wring<N extends ASTNode> {
     static boolean hasAnnotation(final VariableDeclarationFragment f) {
       return hasAnnotation((VariableDeclarationStatement) f.getParent());
     }
+    @SuppressWarnings("unchecked")
     static boolean hasAnnotation(final VariableDeclarationStatement s) {
       return hasAnnotation(s.modifiers());
     }
@@ -241,6 +250,7 @@ public abstract class Wring<N extends ASTNode> {
           return true;
       return false;
     }
+    @SuppressWarnings("unchecked")
     static List<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
       final List<VariableDeclarationFragment> $ = new ArrayList<>();
       boolean collecting = false;
@@ -263,6 +273,7 @@ public abstract class Wring<N extends ASTNode> {
       newParent.fragments().remove(parent.fragments().indexOf(f));
       return $ - size(newParent);
     }
+    @SuppressWarnings("unchecked")
     static int eliminationSaving(final VariableDeclarationFragment f) {
       final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
       final List<VariableDeclarationFragment> live = live(f, parent.fragments());
@@ -297,6 +308,7 @@ public abstract class Wring<N extends ASTNode> {
      * @param r
      * @param g
      */
+    @SuppressWarnings("unchecked")
     static void eliminate(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
       final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
       final List<VariableDeclarationFragment> live = live(f, parent.fragments());

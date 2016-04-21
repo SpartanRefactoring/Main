@@ -105,7 +105,6 @@ public class Source {
       CommentVisitor cv = new CommentVisitor();
       c.accept(cv);
       int cer = cv.getEndRow();
-//      System.out.println("nln=" + nln + "\tcer=" + cer + "\td?=" + cv.getContent().contains(dsi));
       if (matchRowIndexes(nln, cer, c.getNodeType()) && cv.getContent().contains(dsi))
         return true;
     }

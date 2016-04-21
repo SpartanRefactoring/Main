@@ -46,7 +46,8 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends Wring.Rep
       return null;
     final IfStatement asVirtualIf = Subject.pair(then(s), nextStatement).toIf(s.getExpression());
     if (same(then(asVirtualIf), elze(asVirtualIf))) {
-      r.replace(s, then(asVirtualIf), g);
+      replaced = then(asVirtualIf);
+      r.replace(s, replaced, g);
       r.remove(nextStatement, g);
       return r;
     }

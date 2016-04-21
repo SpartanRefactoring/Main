@@ -45,9 +45,11 @@ public final class IfFooSequencerIfFooSameSequencer extends Wring.ReplaceToNextS
       return null;
     final Statement then = then(s);
     final List<Statement> ss1 = Extract.statements(then);
-    return !same(ss1, Extract.statements(then(s2))) || !Is.sequencer(last(ss1)) ? null
-        : Wrings.replaceTwoStatements(r, s,
-            makeIfWithoutElse(BlockSimplify.reorganizeNestedStatement(then), Subject.pair(s.getExpression(), s2.getExpression()).to(CONDITIONAL_OR)), g);
+    if (!same(ss1, Extract.statements(then(s2))) || !Is.sequencer(last(ss1)))
+      return null;
+    replaced = Wrings.replaceTwoStatements(r, s, makeIfWithoutElse(BlockSimplify.reorganizeNestedStatement(then),
+        Subject.pair(s.getExpression(), s2.getExpression()).to(CONDITIONAL_OR)), g);
+    return r;
   }
   @Override String description(@SuppressWarnings("unused") final IfStatement _) {
     return "Consolidate two 'if' statements with identical body";
