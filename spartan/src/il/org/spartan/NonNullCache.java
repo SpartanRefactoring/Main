@@ -49,7 +49,7 @@ public abstract class NonNullCache<T> {
 		@Test public void restReturnsFirstOffset() {
 			value();
 			assertEquals(SOME_OFFSET + "x0", value());
-			for (int i = 0; i < 10; i++)
+			for (int i = 0; i < 10; ++i)
 				assertEquals(SOME_OFFSET + "x0", value());
 		}
 	}

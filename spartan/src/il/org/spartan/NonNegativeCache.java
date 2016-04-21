@@ -46,7 +46,7 @@ public abstract class NonNegativeCache {
 		@Test public void restReturnsFirstOffset() {
 			value();
 			assertEquals(SOME_OFFSET, value());
-			for (int i = 0; i < 10; i++)
+			for (int i = 0; i < 10; ++i)
 				assertEquals(SOME_OFFSET, value());
 		}
 	}

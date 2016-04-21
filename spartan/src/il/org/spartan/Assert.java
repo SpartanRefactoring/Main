@@ -3,17 +3,16 @@ package il.org.spartan;
 import static il.org.spartan.__.cantBeNull;
 
 import org.hamcrest.Matcher;
-
 @SuppressWarnings({ "javadoc" })//
 public class Assert extends org.junit.Assert {
 	public static void assertEquals(final int expected, final int actual) {
 		assertEquals(Box.it(expected), Box.it(actual));
 	}
-	public static void assertPositive(final int n) {
-		assertTrue(n > 0);
+	public static void assertPositive(final int i) {
+		assertTrue(i > 0);
 	}
-	public static void assertZero(final int n) {
-		assertEquals(0, n);
+	public static void assertZero(final int i) {
+		assertEquals(0, i);
 	}
 	public static void assertThat(final byte b, final Matcher<Byte> m) {
 		org.junit.Assert.assertThat(new Byte(b), cantBeNull(m));

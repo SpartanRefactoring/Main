@@ -15,7 +15,7 @@ import il.org.spartan.__.FoundHandleForT.FoundHandleForInt;
 
 /**
  * A collection of <code><b>static</b></code> functions with no appropriate
- * 'sedoco' class name was found.
+ *  class name was found.
  *
  * @author Yossi Gil
  * @since Jul 7, 2014
@@ -88,7 +88,7 @@ public enum __ {
 	 *         <code><b>null</b></code>
 	 * @see #mustBeNull(Object)
 	 */
-	public static <T> T cantBeNull(final @Nullable T $) {
+	public static <T> @NonNull T cantBeNull(final @Nullable T $) {
 		assert $ != null;
 		return $;
 	}
@@ -102,7 +102,7 @@ public enum __ {
 	 */
 	public static boolean contains(final String text, final String... patterns) {
 		for (final String pattern : patterns)
-			if (null != pattern && text.contains(pattern))
+			if (pattern != null && text.contains(pattern))
 				return true;
 		return false;
 	}
@@ -252,9 +252,9 @@ public enum __ {
 					$.add(function.apply(f));
 			return $;
 		}
-		public <FS extends Iterable<? extends F>> Iterable<T> to(final FS fs) {
+		public <FS extends Iterable<? extends F>> Iterable<T> to(final FS s) {
 			final List<T> $ = new ArrayList<>();
-			for (final @Nullable F f : fs)
+			for (final @Nullable F f : s)
 				if (f != null)
 					$.add(function.apply(f));
 			return $;
@@ -320,7 +320,7 @@ public enum __ {
 	public static class TEST {
 		public static Integer[] intToIntegers(final int... is) {
 			final Integer[] $ = new Integer[is.length];
-			for (int i = 0; i < is.length; i++)
+			for (int i = 0; i < is.length; ++i)
 				$[i] = Box.it(is[i]);
 			return $;
 		}

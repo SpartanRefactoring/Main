@@ -35,11 +35,10 @@ public class Primes {
 	public static boolean isPrime(final int c) {
 		return //
 				c < 0 ? isPrime(-c) // deal with negative values
-						: c <= 1 ? false // deal with zero or one
-								: isPrimeCore(c); // any integer >- 2
+						: c > 1 && isPrimeCore(c); // any integer >- 2
 	}
 	private static boolean isPrimeCore(final int c) {
-		for (int d = 2; d * d <= c; d++)
+		for (int d = 2; d * d <= c; ++d)
 			if (c % d == 0)
 				return false;
 		return true;

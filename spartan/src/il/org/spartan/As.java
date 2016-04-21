@@ -97,7 +97,7 @@ public enum As {
 	 */
 	public static int[] intArray(final List<Integer> is) {
 		final int[] $ = new int[is.size()];
-		for (int i = 0; i < $.length; i++)
+		for (int i = 0; i < $.length; ++i)
 			$[i] = is.get(i).intValue();
 		return $;
 	}
@@ -116,7 +116,7 @@ public enum As {
 					@Override public boolean hasNext() {
 						return current < ts.length;
 					}
-					@Override public @Nullable T next() {
+			    @Override public T next() {
 						return ts[current++];
 					}
 				};

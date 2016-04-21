@@ -46,22 +46,22 @@ public class Integers {
 	/**
 	 * Determine whether a given value is in this set.
 	 *
-	 * @param n an arbitrary integer
+	 * @param i an arbitrary integer
 	 * @return <code><b>true</b></code> if, and only if, the parameter is
 	 *         contained in this set.
 	 */
-	public boolean contains(final int n) {
-		return 0 <= location(n);
+	public boolean contains(final int i) {
+		return location(i) >= 0;
 	}
 	/**
 	 * Check whether an array of integers is contained in this set.
 	 *
-	 * @param ns an array of integers; ; must not be <code><b>null</b></code>.
+	 * @param is an array of integers; ; must not be <code><b>null</b></code>.
 	 * @return <code><b>true</b></code> if, and only if, all elements in the array
 	 *         are contained in this set
 	 */
-	public boolean contains(final int... ns) {
-		for (final int n : ns)
+	public boolean contains(final int... is) {
+		for (final int n : is)
 			if (!contains(n))
 				return false;
 		return true;
@@ -69,12 +69,12 @@ public class Integers {
 	/**
 	 * Check whether this object is disjoint from an array of integers
 	 *
-	 * @param ns an array of of integers; must not be <code><b>null</b></code>.
+	 * @param is an array of of integers; must not be <code><b>null</b></code>.
 	 * @return <code><b>true</b></code> if, and only if, this object is disjoint
 	 *         from the set of elements in the parameter
 	 */
-	public boolean disjoint(final int... ns) {
-		for (final int n : ns)
+	public boolean disjoint(final int... is) {
+		for (final int n : is)
 			if (contains(n))
 				return false;
 		return true;
@@ -86,7 +86,7 @@ public class Integers {
 	 */
 	public int[] entries() {
 		final int[] $ = new int[size];
-		for (int i = 0, j = 0; i < capacity(); i++)
+		for (int i = 0, j = 0; i < capacity(); ++i)
 			if (occupied[i] && !placeholder[i])
 				$[j++] = data[i];
 		return $;
@@ -104,19 +104,19 @@ public class Integers {
 			return this;
 		data[i] = n;
 		occupied[i] = true;
-		if (++size > capacity() * MAX_LOAD)
+		if (++size > MAX_LOAD * capacity())
 			rehash(data.length << 1);
 		return this;
 	}
 	/**
 	 * Add an array of integers to this set, if they are not already in it.
 	 *
-	 * @param ns an arbitrary array of integers; ; must not be
+	 * @param is an arbitrary array of integers; ; must not be
 	 *          <code><b>null</b></code>.
 	 * @return <code><b>this</b></code>
 	 */
-	public Integers add(final int... ns) {
-		for (final int n : ns)
+	public Integers add(final int... is) {
+		for (final int n : is)
 			add(n);
 		return this;
 	}
@@ -133,18 +133,17 @@ public class Integers {
 			return this;
 		assert occupied[i] && n == data[i];
 		placeholder[i] = true;
-		if (--size < capacity() * MIN_LOAD && capacity() > MIN_CAPACITY)
-			return rehash(data.length >> 1);
-		return ++removed <= capacity() * REMOVE_LOAD ? this : rehash();
+		return --size < MIN_LOAD * capacity() && capacity() > MIN_CAPACITY ? rehash(data.length >> 1)
+		    : ++removed > REMOVE_LOAD * capacity() ? rehash() : this;
 	}
 	/**
 	 * Remove an array of integers to this set, if they are in it.
 	 *
-	 * @param ns an array of integers; ; must not be <code><b>null</b></code>.
+	 * @param is an array of integers; ; must not be <code><b>null</b></code>.
 	 * @return <code><b>this</b></code>
 	 */
-	public Integers remove(final int... ns) {
-		for (final int n : ns)
+	public Integers remove(final int... is) {
+		for (final int n : is)
 			remove(n);
 		return this;
 	}
@@ -179,19 +178,19 @@ public class Integers {
 	/**
 	 * Find the index in the hash table of the parameter
 	 *
-	 * @param n some integer
+	 * @param i some integer
 	 * @return index of the element if the parameter is in the table, otherwise,
 	 *         -1;
 	 */
-	private int location(final int n) {
-		for (int i = hash(n), t = 0;; i += ++t) {
-			i &= data.length - 1;
-			if (!occupied[i])
+	private int location(final int i) {
+		for (int $ = hash(i), t = 0;; $ += ++t) {
+			$ &= data.length - 1;
+			if (!occupied[$])
 				return -1;
-			if (placeholder[i])
+			if (placeholder[$])
 				continue;
-			if (n == data[i])
-				return i;
+			if (i == data[$])
+				return $;
 		}
 	}
 	/**
@@ -222,7 +221,7 @@ public class Integers {
 	 * @return <code><b>this</b></code>
 	 */
 	protected Integers rehash(final int newCapacity) {
-		assert 0 == (newCapacity & newCapacity - 1);
+		assert (newCapacity & newCapacity - 1) == 0;
 		assert newCapacity >= MIN_CAPACITY;
 		return reset(newCapacity).add(entries());
 	}
@@ -245,14 +244,13 @@ public class Integers {
 	protected void subclassReset(final int capacity) {
 		//
 	}
-	static int hash(final int n) {
-		int $ = n;
-		$ ^= $ >>> 20 ^ $ >>> 12;
-		return $ ^ $ >>> 7 ^ $ >>> 4;
+	static int hash(final int i) {
+		int $ = i ^ i >>> 12 ^ i >>> 20;
+		return $ ^ $ >>> 4 ^ $ >>> 7;
 	}
-	private static int roundUp(final int n) {
+	private static int roundUp(final int i) {
 		int $ = 1;
-		while ($ < n)
+		while ($ < i)
 			$ <<= 1;
 		return $;
 	}

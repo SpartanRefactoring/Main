@@ -67,12 +67,12 @@ public enum Box {
 	/**
 	 * Box an <code><b>int</b></code> into an {@link Integer} object.
 	 *
-	 * @param n some <code><b>int</b></code> value
+	 * @param i some <code><b>int</b></code> value
 	 * @return a non-<code><b>null</b></code> {@link Integer} with the value of
 	 *         <code>n</code>
 	 */
-	public static Integer it(final int n) {
-		return cantBeNull(Integer.valueOf(n));
+	public static Integer it(final int i) {
+		return cantBeNull(Integer.valueOf(i));
 	}
 	/**
 	 * Box a <code><b>long</b></code> into a {@link Long} object.
@@ -98,74 +98,74 @@ public enum Box {
 	 * Box an array of <code><b>boolean</b></code>s into an array of
 	 * {@link Boolean}s.
 	 *
-	 * @param bs an array of <code><b>boolean</b></code>s
+	 * @param b an array of <code><b>boolean</b></code>s
 	 * @return an array of {@link Boolean} of the same length as that of the
 	 *         parameter, and such that it in its <tt>i</tt><em>th</em> position
 	 *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter
 	 */
-	public static Boolean[] it(final boolean bs[]) {
-		final Boolean[] $ = new Boolean[bs.length];
-		for (int i = 0; i < $.length; i++)
-			$[i] = it(bs[i]);
+	public static Boolean[] it(final boolean b[]) {
+		final Boolean[] $ = new Boolean[b.length];
+		for (int i = 0; i < $.length; ++i)
+			$[i] = it(b[i]);
 		return $;
 	}
 	/**
 	 * Box an array of <code><b>byte</b></code>s into an array of {@link Byte}s.
 	 *
-	 * @param bs an array of <code><b>byte</b></code>s
+	 * @param b an array of <code><b>byte</b></code>s
 	 * @return an array of {@link Byte} of the same length as that of the
 	 *         parameter, and such that it in its <tt>i</tt><em>th</em> position
 	 *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter
 	 */
-	public static Byte[] it(final byte bs[]) {
-		final Byte[] $ = new Byte[bs.length];
-		for (int i = 0; i < $.length; i++)
-			$[i] = it(bs[i]);
+	public static Byte[] it(final byte b[]) {
+		final Byte[] $ = new Byte[b.length];
+		for (int i = 0; i < $.length; ++i)
+			$[i] = it(b[i]);
 		return $;
 	}
 	/**
 	 * Box an array of <code><b>byte</b></code>s into an array of
 	 * {@link Character}s.
 	 *
-	 * @param cs an array of <code><b>long</b></code>s
+	 * @param c an array of <code><b>long</b></code>s
 	 * @return an array of {@link Character} of the same length as that of the
 	 *         parameter, and such that it in its <tt>i</tt><em>th</em> position
 	 *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter
 	 */
-	public static Character[] it(final char cs[]) {
-		final Character[] $ = new Character[cs.length];
-		for (int i = 0; i < $.length; i++)
-			$[i] = it(cs[i]);
+	public static Character[] it(final char c[]) {
+		final Character[] $ = new Character[c.length];
+		for (int i = 0; i < $.length; ++i)
+			$[i] = it(c[i]);
 		return $;
 	}
 	/**
 	 * Box an array of <code><b>double</b></code>s into an array of {@link Double}
 	 * s.
 	 *
-	 * @param ds an array of <code><b>double</b></code>s
+	 * @param d an array of <code><b>double</b></code>s
 	 * @return an array of {@link Double} of the same length as that of the
 	 *         parameter, and such that it in its <tt>i</tt><em>th</em> position
 	 *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter
 	 */
-	public static Double[] it(final double ds[]) {
-		final Double[] $ = new Double[ds.length];
-		for (int i = 0; i < $.length; i++)
-			$[i] = it(ds[i]);
+	public static Double[] it(final double d[]) {
+		final Double[] $ = new Double[d.length];
+		for (int i = 0; i < $.length; ++i)
+			$[i] = it(d[i]);
 		return $;
 	}
 	/**
 	 * Box an array of <code><b>float</b></code>s into an array of {@link Float}
 	 * s.
 	 *
-	 * @param fs an array of <code><b>float</b></code>s
+	 * @param f an array of <code><b>float</b></code>s
 	 * @return an array of {@link Float} of the same length as that of the
 	 *         parameter, and such that it in its <tt>i</tt><em>th</em> position
 	 *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter
 	 */
-	public static Float[] it(final float fs[]) {
-		final Float[] $ = new Float[fs.length];
-		for (int i = 0; i < $.length; i++)
-			$[i] = it(fs[i]);
+	public static Float[] it(final float f[]) {
+		final Float[] $ = new Float[f.length];
+		for (int i = 0; i < $.length; ++i)
+			$[i] = it(f[i]);
 		return $;
 	}
 	/**
@@ -179,37 +179,37 @@ public enum Box {
 	 */
 	public static Integer[] it(final int is[]) {
 		final Integer[] $ = new Integer[is.length];
-		for (int i = 0; i < $.length; i++)
+		for (int i = 0; i < $.length; ++i)
 			$[i] = it(is[i]);
 		return $;
 	}
 	/**
 	 * Box an array of <code><b>long</b></code>s into an array of {@link Long}s.
 	 *
-	 * @param ls an array of <code><b>long</b></code>s
+	 * @param l an array of <code><b>long</b></code>s
 	 * @return an array of {@link Long} of the same length as that of the
 	 *         parameter, and such that it in its <tt>i</tt><em>th</em> position
 	 *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter
 	 */
-	public static Long[] it(final long ls[]) {
-		final Long[] $ = new Long[ls.length];
-		for (int i = 0; i < $.length; i++)
-			$[i] = it(ls[i]);
+	public static Long[] it(final long l[]) {
+		final Long[] $ = new Long[l.length];
+		for (int i = 0; i < $.length; ++i)
+			$[i] = it(l[i]);
 		return $;
 	}
 	/**
 	 * Box an array of <code><b>short</b></code>s into an array of {@link Short}
 	 * s.
 	 *
-	 * @param ss an array of <code><b>short</b></code>s
+	 * @param s an array of <code><b>short</b></code>s
 	 * @return an array of {@link Short} of the same length as that of the
 	 *         parameter, and such that it in its <tt>i</tt><em>th</em> position
 	 *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter
 	 */
-	public static Short[] it(final short ss[]) {
-		final Short[] $ = new Short[ss.length];
-		for (int i = 0; i < $.length; i++)
-			$[i] = it(ss[i]);
+	public static Short[] it(final short s[]) {
+		final Short[] $ = new Short[s.length];
+		for (int i = 0; i < $.length; ++i)
+			$[i] = it(s[i]);
 		return $;
 	}
 }
