@@ -13,11 +13,25 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGr
 import il.org.spartan.refactoring.wring.Toolbox;
 
 public class PluginPreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
-  private final SpartanPropertyListener listener;
+  /**
+   * An event handler used to re-initialize the Trimmer spartanization once a
+   * wring preference was modified.
+   */
+  private final IPropertyChangeListener listener = new IPropertyChangeListener() {
+    @Override public void propertyChange(final PropertyChangeEvent event) {
+      // Recreate the toolbox's internal instance, adding only enabled wrings
+      Toolbox.generate();
+      try {
+        Plugin.refreshAllProjects();
+      } catch (final Exception e) {
+        new Exception(event.toString(), e).printStackTrace();
+      }
+    }
+  };
 
+  /** Instantiates this class */
   public PluginPreferencesPage() {
     super(GRID);
-    listener = new SpartanPropertyListener();
   }
   /**
    * Build the preferences page by adding controls
@@ -42,21 +56,5 @@ public class PluginPreferencesPage extends FieldEditorPreferencePage implements 
     setPreferenceStore(Plugin.getDefault().getPreferenceStore());
     setDescription(PluginPreferencesResources.PAGE_DESCRIPTION);
     Plugin.getDefault().getPreferenceStore().addPropertyChangeListener(listener);
-  }
-
-  /**
-   * An event handler used to re-initialize the Trimmer spartanization once a
-   * wring preference was modified.
-   */
-  private static class SpartanPropertyListener implements IPropertyChangeListener {
-    @Override public void propertyChange(final PropertyChangeEvent event) {
-      // Recreate the toolbox's internal instance, adding only enabled wrings
-      Toolbox.generate();
-      try {
-        Plugin.refreshAllProjects();
-      } catch (final Exception e) {
-        new Exception(event.toString(), e).printStackTrace();
-      }
-    }
   }
 }
