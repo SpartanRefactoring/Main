@@ -87,7 +87,7 @@ import il.org.spartan.refactoring.utils.Rewrite;
     final String n = Funcs.shortName(d.getType());
     return n != null && (n + pluralVariadic(d)).equals(d.getName().getIdentifier());
   }
-  @SuppressWarnings("static-method") private String pluralVariadic(final SingleVariableDeclaration d) {
+  static private String pluralVariadic(final SingleVariableDeclaration d) {
     return d.isVarargs() ? "s" : "";
   }
   @Override WringGroup wringGroup() {
