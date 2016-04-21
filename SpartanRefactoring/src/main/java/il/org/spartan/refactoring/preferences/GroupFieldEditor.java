@@ -30,7 +30,7 @@ import org.eclipse.swt.widgets.Group;
  */
 public class GroupFieldEditor extends FieldEditor {
   private final String title;
-  private int numColumns;
+  private int numColumns = 0;
   private final List<FieldEditor> members = new ArrayList<>();
   private final Group group;
   private final Composite parent;
@@ -40,17 +40,16 @@ public class GroupFieldEditor extends FieldEditor {
   /**
    * Create a group of {@link FieldEditor} objects
    *
-   * @param labelText
+   * @param title
    *          (optional) the text that will appear in the top label. For no
    *          label, pass {@code null}
-   * @param fieldEditorParent
+   * @param parent
    *          the widget's parent, usually
    *          {@link FieldEditorPreferencePage#getFieldEditorParent()}
    */
-  public GroupFieldEditor(final String labelText, final Composite fieldEditorParent) {
-    title = labelText == null ? "" : labelText;
-    parent = fieldEditorParent;
-    numColumns = 0;
+  public GroupFieldEditor(final String title, final Composite parent) {
+    this.title = title == null ? "" : title;
+    this.parent = parent;
     group = new Group(parent, SWT.SHADOW_OUT);
     group.setText(title);
   }
