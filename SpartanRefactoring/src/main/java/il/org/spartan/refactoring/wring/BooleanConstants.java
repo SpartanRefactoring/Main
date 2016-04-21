@@ -1,5 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
+import static il.org.spartan.refactoring.utils.Funcs.newSimpleName;
+
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.BooleanLiteral;
 import org.eclipse.jdt.core.dom.MethodInvocation;
@@ -9,17 +11,17 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGr
 /**
  * A {@link Wring} to remove unnecessary uses of Boolean.valueOf, for example by
  * converting <code>
- * 
+ *
  * <pre>
  * Boolean b = Boolean.valueOf(true)
  * </pre>
- * 
+ *
  * <code> into <code>
- * 
+ *
  * <pre>
  * Boolean b = Boolean.TRUE
  * </pre>
- * 
+ *
  * <code>
  *
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
@@ -31,7 +33,7 @@ public class BooleanConstants extends Wring.ReplaceCurrentNode<MethodInvocation>
     return i.getExpression() == null || !i.getExpression().toString().equals("Boolean")
         || !i.getName().getIdentifier().equals("valueOf") || i.arguments().size() != 1 ? null
             : i.getAST().newQualifiedName(i.getAST().newName("Boolean"),
-                i.getAST().newSimpleName(((BooleanLiteral) i.arguments().get(0)).booleanValue() ? "TRUE" : "FALSE"));
+                newSimpleName(i, ((BooleanLiteral) i.arguments().get(0)).booleanValue() ? "TRUE" : "FALSE"));
   }
   @Override String description(final MethodInvocation i) {
     return "Use built-in boolean constant instead of valueOf()";

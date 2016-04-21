@@ -73,8 +73,7 @@ public class ForwardDeclaration extends Spartanization {
         if (((VariableDeclarationStatement) declarationNode).fragments().size() == 1)
           rewrite(i, declarationNode, listRewrite);
         else {
-          final VariableDeclarationFragment copySubtree = duplicate(f);
-          listRewrite.insertAt(b.getAST().newVariableDeclarationStatement(copySubtree), 1 + i, null);
+          listRewrite.insertAt(b.getAST().newVariableDeclarationStatement(duplicate(f)), 1 + i, null);
           r.remove(f, null);
         }
         return true;

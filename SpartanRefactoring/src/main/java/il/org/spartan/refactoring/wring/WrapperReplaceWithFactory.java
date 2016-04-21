@@ -1,6 +1,8 @@
 package il.org.spartan.refactoring.wring;
 
-import java.util.Arrays;
+import static il.org.spartan.refactoring.utils.Funcs.duplicate;
+import static il.org.spartan.refactoring.utils.Funcs.newSimpleName;
+import static il.org.spartan.utils.Utils.asList;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
@@ -28,17 +30,14 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGr
  * @since 2016-04-06
  */
 public class WrapperReplaceWithFactory extends Wring.ReplaceCurrentNode<ClassInstanceCreation> {
-  // String array contains all primitive class (and String) identifiers
-  final String[] pi = { "Byte", "Short", "Integer", "Long", "Float", "Double", "Character", "String", "Boolean" };
-
   @Override ASTNode replacement(final ClassInstanceCreation c) {
     final String tn = c.getType().toString();
-    if (!Arrays.asList(pi).contains(tn))
+    if (!asList("Byte", "Short", "Integer", "Long", "Float", "Double", "Character", "String", "Boolean").contains(tn))
       return null;
     final MethodInvocation $ = c.getAST().newMethodInvocation();
-    $.setExpression(c.getAST().newSimpleName(tn));
-    $.setName(c.getAST().newSimpleName("valueOf"));
-    $.arguments().add(ASTNode.copySubtree(c.getAST(), (ASTNode) c.arguments().get(0)));
+    $.setExpression(newSimpleName(c, tn));
+    $.setName(newSimpleName(c, "valueOf"));
+    $.arguments().add(duplicate((ASTNode) c.arguments().get(0)));
     return $;
   }
   @Override String description(final ClassInstanceCreation c) {

@@ -1,5 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
+import static il.org.spartan.refactoring.utils.Funcs.newSimpleName;
 import static il.org.spartan.refactoring.wring.Wrings.rename;
 
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ import il.org.spartan.refactoring.utils.Rewrite;
       return null;
     for (final SingleVariableDeclaration v : vd)
       if (legal(v, d, renameMap.values()))
-        renameMap.put(v.getName(), d.getAST().newSimpleName(Funcs.shortName(v.getType()) + pluralVariadic(v)));
+        renameMap.put(v.getName(), newSimpleName(d, Funcs.shortName(v.getType()) + pluralVariadic(v)));
     if (renameMap.isEmpty())
       return null;
     if (exclude != null)

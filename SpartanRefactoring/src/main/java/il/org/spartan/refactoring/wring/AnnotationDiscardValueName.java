@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.duplicate;
+import static il.org.spartan.refactoring.utils.Funcs.newSimpleName;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.MemberValuePair;
@@ -26,7 +27,7 @@ public class AnnotationDiscardValueName extends Wring.ReplaceCurrentNode<NormalA
     if (!p.getName().toString().equals("value"))
       return null;
     final SingleMemberAnnotation $ = a.getAST().newSingleMemberAnnotation();
-    $.setTypeName(a.getAST().newSimpleName(a.getTypeName().getFullyQualifiedName()));
+    $.setTypeName(newSimpleName(a, a.getTypeName().getFullyQualifiedName()));
     $.setValue(duplicate(p.getValue()));
     return $;
   }

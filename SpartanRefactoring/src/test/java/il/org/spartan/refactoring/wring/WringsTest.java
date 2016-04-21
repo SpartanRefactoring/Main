@@ -4,6 +4,7 @@ import static il.org.spartan.hamcrest.CoreMatchers.is;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
 import static il.org.spartan.hamcrest.MatcherAssert.iz;
 import static il.org.spartan.refactoring.utils.Funcs.left;
+import static il.org.spartan.refactoring.utils.Funcs.newSimpleName;
 import static il.org.spartan.refactoring.utils.Funcs.right;
 import static il.org.spartan.refactoring.utils.Into.es;
 import static il.org.spartan.refactoring.wring.Wrings.mixedLiteralKind;
@@ -50,7 +51,7 @@ public class WringsTest {
     final SimpleName b = f.getName();
     assertThat(Collect.usesOf(b).in(m).size(), is(2));
     final ASTRewrite r = ASTRewrite.create(b.getAST());
-    Wrings.rename(b, b.getAST().newSimpleName("c"), m, r, null);
+    Wrings.rename(b, newSimpleName(b, "c"), m, r, null);
     final TextEdit e = r.rewriteAST(d, null);
     e.apply(d);
     assertThat(Wrap.Method.off(d.get()), iz("void f() { int c = 3; do ; while(c != 0); }"));
@@ -81,7 +82,7 @@ public class WringsTest {
     assertNotNull(p);
     final SimpleName n = p.getName();
     final ASTRewrite r = ASTRewrite.create(b.getAST());
-    Wrings.rename(n, n.getAST().newSimpleName("$"), m, r, null);
+    Wrings.rename(n, newSimpleName(n, "$"), m, r, null);
     final TextEdit e = r.rewriteAST(d, null);
     e.apply(d);
     final String output = Wrap.Method.off(d.get());

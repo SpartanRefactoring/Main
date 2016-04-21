@@ -1,5 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
+import static il.org.spartan.refactoring.utils.Funcs.newSimpleName;
 import static il.org.spartan.refactoring.utils.Funcs.same;
 import static il.org.spartan.refactoring.wring.Wrings.rename;
 
@@ -44,12 +45,12 @@ public class MethodRenameReturnToDollar extends Wring<MethodDeclaration> {
         rename(n, $(), d, r, g);
       }
       SimpleName $() {
-        return d.getAST().newSimpleName("$");
+        return newSimpleName(d, "$");
       }
     };
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.RENAME_RETURN_VARIABLE;
+    return WringGroup.RENAME_RETURN_VARIABLE;
   }
 }
 
@@ -73,9 +74,11 @@ abstract class AbstractRenamePolicy {
     }
     return $;
   }
+
   final MethodDeclaration inner;
   final List<SimpleName> localVariables;
   final List<ReturnStatement> returnStatements;
+
   public AbstractRenamePolicy(final MethodDeclaration inner) {
     final MethodExplorer explorer = new MethodExplorer(this.inner = inner);
     localVariables = explorer.localVariables();
@@ -83,7 +86,8 @@ abstract class AbstractRenamePolicy {
   }
   abstract SimpleName innerSelectReturnVariable();
   final SimpleName selectReturnVariable() {
-    return returnStatements == null || localVariables == null || localVariables.isEmpty() || hasDollar(localVariables) ? null : innerSelectReturnVariable();
+    return returnStatements == null || localVariables == null || localVariables.isEmpty() || hasDollar(localVariables) ? null
+        : innerSelectReturnVariable();
   }
 }
 

@@ -1,5 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
+import static il.org.spartan.refactoring.utils.Funcs.newSimpleName;
 import static il.org.spartan.refactoring.utils.Funcs.same;
 import static il.org.spartan.refactoring.wring.Wrings.rename;
 
@@ -24,8 +25,9 @@ import il.org.spartan.refactoring.utils.Rewrite;
  * A {@link Wring} that abbreviates the name of a method parameter that is a
  * viable candidate for abbreviation (meaning that its name is suitable for
  * renaming, and isn't the desired name). The abbreviated name is the first
- * character in the last word of the variable's name. <p> This wring is applied
- * to all methods in the code, excluding constructors.
+ * character in the last word of the variable's name.
+ * <p>
+ * This wring is applied to all methods in the code, excluding constructors.
  *
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015/09/24
@@ -47,7 +49,7 @@ public class SingleVariableDeclarationAbbreviation extends Wring<SingleVariableD
     final String newName = Funcs.shortName(d.getType()) + pluralVariadic(d);
     return new Rewrite("Rename parameter " + oldName + " to " + newName + " in method " + m.getName().getIdentifier(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        rename(oldName, d.getAST().newSimpleName(newName), m, r, g);
+        rename(oldName, newSimpleName(d, newName), m, r, g);
         final Javadoc j = m.getJavadoc();
         if (j == null)
           return;
@@ -59,7 +61,7 @@ public class SingleVariableDeclarationAbbreviation extends Wring<SingleVariableD
             continue;
           for (final Object o : t.fragments())
             if (o instanceof SimpleName && same((SimpleName) o, oldName)) {
-              r.replace((SimpleName) o, d.getAST().newSimpleName(newName), g);
+              r.replace((SimpleName) o, newSimpleName(d, newName), g);
               return;
             }
         }
