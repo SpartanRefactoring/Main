@@ -83,26 +83,26 @@ public class TrimmerTest {
     trimming("(x >> 18) & MASK_BITS").to("");
     trimming("(x >> 18) & MASK_6BITS").to("");
   }
-  @Test public void annotationRemoveValueMemberSingleValue() {
-    trimming("@SuppressWarnings(value = \"something\") void m() {}") //
-        .to("@SuppressWarnings(\"something\") void m() {}");
-  }
-  @Test public void annotationRemoveValueMemberArrayValue() {
-    trimming("@SuppressWarnings(value = { \"something\", \"something else\" }) void m() {}") //
-        .to("@SuppressWarnings({ \"something\", \"something else\" }) void m() {}");
+  @Test public void annotationDoNotRemoveSingleMemberNotCalledValue() {
+    trimming("@SuppressWarnings(sky = \"blue\") void m() {}").to("");
   }
   @Test public void annotationDoNotRemoveValueAndSomethingElse() {
     trimming("@SuppressWarnings(value = \"something\", x = 2) void m() {}").to("");
   }
-  @Test public void annotationDoNotRemoveSingleMemberNotCalledValue() {
-    trimming("@SuppressWarnings(sky = \"blue\") void m() {}").to("");
+  @Test public void annotationRemoveEmptyParentheses() {
+    trimming("@Override() void m() {}").to("@Override void m() {}");
   }
   @Test public void annotationRemoveValueFromMultipleAnnotations() {
     trimming("@SuppressWarnings(value = \"javadoc\") @TargetApi(value = 23) void m() {}") //
         .to("@SuppressWarnings(\"javadoc\") @TargetApi(23) void m() {}");
   }
-  @Test public void annotationRemoveEmptyParentheses() {
-    trimming("@Override() void m() {}").to("@Override void m() {}");
+  @Test public void annotationRemoveValueMemberArrayValue() {
+    trimming("@SuppressWarnings(value = { \"something\", \"something else\" }) void m() {}") //
+        .to("@SuppressWarnings({ \"something\", \"something else\" }) void m() {}");
+  }
+  @Test public void annotationRemoveValueMemberSingleValue() {
+    trimming("@SuppressWarnings(value = \"something\") void m() {}") //
+        .to("@SuppressWarnings(\"something\") void m() {}");
   }
   @Test public void assignmentAssignmentChain1() {
     trimming("c = a = 13; b = 13;").to("b = c = a = 13;");
@@ -1334,6 +1334,15 @@ public class TrimmerTest {
         .to("-41*19*a") //
     ;
   }
+  @Test public void issue21a() {
+    trimming("a.equals(\"a\")").to("\"a\".equals(a)");
+  }
+  @Test public void issue21b() {
+    trimming("a.equals(\"ab\")").to("\"ab\".equals(a)");
+  }
+  @Test public void issue21c() {
+    trimming("\"a\".equals(a)").to("\"ab\".equals(a)");
+  }
   @Test public void issue37Simplified() {
     trimming("" + //
         "    int a = 3;\n" + //
@@ -2406,14 +2415,14 @@ public class TrimmerTest {
     trimming("int f() { for (int a: as) return a; }")//
         .to(" int f() {for(int $:as)return $;}");
   }
+  @Ignore @Test public void replaceClassInstanceCreationWithFactoryClassInstanceCreation() {
+    trimming("Character x = new Character(new Character(f()));").to("Character x = Character.valueOf(Character.valueOf(f()));");
+  }
   @Test public void replaceClassInstanceCreationWithFactoryInfixExpression() {
     trimming("Integer x = new Integer(1 + 9);").to("Integer x = Integer.valueOf(1 + 9);");
   }
   @Test public void replaceClassInstanceCreationWithFactoryInvokeMethode() {
     trimming("String x = new String(f());").to("String x = String.valueOf(f());");
-  }
-  @Ignore @Test public void replaceClassInstanceCreationWithFactoryClassInstanceCreation() {
-    trimming("Character x = new Character(new Character(f()));").to("Character x = Character.valueOf(Character.valueOf(f()));");
   }
   @Test public void replaceInitializationInReturn() {
     trimming("int a = 3; return a + 4;").to("return 3 + 4;");
