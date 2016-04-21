@@ -106,7 +106,7 @@ public class Xiphos {
     if (optStatsLines)
       printLineStatistics(fileStats);
   }
-  void printHelpPrompt() {
+  private static void printHelpPrompt() {
     System.out.println("Spartan Refactoring plugin command line");
     System.out.println("Usage: eclipse -application il.org.spartan.refactoring.application -nosplash [OPTIONS] PATH");
     System.out.println("Executes the Spartan Refactoring Eclipse plug-in from the command line on all the Java source files "

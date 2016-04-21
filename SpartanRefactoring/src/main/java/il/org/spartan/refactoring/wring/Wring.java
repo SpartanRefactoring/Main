@@ -59,7 +59,8 @@ import il.org.spartan.refactoring.utils.Subject;
  * make a single simplification of the tree. A wring is so small that it is
  * idempotent: Applying a wring to the output of itself is the empty operation.
  *
- * @param <N> type of node which triggers the transformation.
+ * @param <N>
+ *          type of node which triggers the transformation.
  * @author Yossi Gil
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-07-09
@@ -70,7 +71,8 @@ public abstract class Wring<N extends ASTNode> {
    * Determine whether the parameter is "eligible" for application of this
    * instance. The parameter must be within the scope of the current instance.
    *
-   * @param n JD
+   * @param n
+   *          JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is eligible for
    *         the simplification offered by this object.
    */
@@ -84,9 +86,10 @@ public abstract class Wring<N extends ASTNode> {
     return make(n);
   }
   /**
-   * Returns the preference group to which the wring belongs to.
-   * This method should be overriden for each wring and should return
-   * one of the values of {@link WringGroup}
+   * Returns the preference group to which the wring belongs to. This method
+   * should be overridden for each wring and should return one of the values of
+   * {@link WringGroup}
+   * 
    * @return the preference group this wring belongs to
    */
   abstract WringGroup wringGroup();
@@ -96,7 +99,8 @@ public abstract class Wring<N extends ASTNode> {
    * {@link Wring} is applicable in principle to an object, but that actual
    * application will be vacuous.
    *
-   * @param e JD
+   * @param e
+   *          JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is noneligible for
    *         the simplification offered by this object.
    * @see #eligible(InfixExpression)
@@ -110,7 +114,8 @@ public abstract class Wring<N extends ASTNode> {
    * be the case that a {@link Wring} is applicable in principle to an object,
    * but that actual application will be vacuous.
    *
-   * @param n JD
+   * @param n
+   *          JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is within the
    *         scope of this object
    */
@@ -224,7 +229,8 @@ public abstract class Wring<N extends ASTNode> {
     static List<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
       final List<VariableDeclarationFragment> $ = new ArrayList<>();
       boolean collecting = false;
-      for (final VariableDeclarationFragment brother : (List<VariableDeclarationFragment>) ((VariableDeclarationStatement) f.getParent()).fragments()) {
+      for (final VariableDeclarationFragment brother : (List<VariableDeclarationFragment>) ((VariableDeclarationStatement) f
+          .getParent()).fragments()) {
         if (brother == f) {
           collecting = true;
           continue;
@@ -289,15 +295,18 @@ public abstract class Wring<N extends ASTNode> {
       newParent.fragments().addAll(live);
       r.replace(parent, newParent, g);
     }
-    private static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final List<VariableDeclarationFragment> fs) {
+    private static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f,
+        final List<VariableDeclarationFragment> fs) {
       final List<VariableDeclarationFragment> $ = new ArrayList<>();
       for (final VariableDeclarationFragment brother : fs)
         if (brother != null && brother != f && brother.getInitializer() != null)
           $.add(duplicate(brother));
       return $;
     }
-    abstract ASTRewrite go(ASTRewrite r, VariableDeclarationFragment f, SimpleName n, Expression initializer, Statement nextStatement, TextEditGroup g);
-    @Override final ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
+    abstract ASTRewrite go(ASTRewrite r, VariableDeclarationFragment f, SimpleName n, Expression initializer,
+        Statement nextStatement, TextEditGroup g);
+    @Override final ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement,
+        final TextEditGroup g) {
       if (!Is.variableDeclarationStatement(f.getParent()))
         return null;
       final SimpleName n = f.getName();
@@ -320,9 +329,11 @@ final class LocalInliner {
       $[i++] = new Wrapper<>(t);
     return $;
   }
+
   final SimpleName name;
   final ASTRewrite rewriter;
   final TextEditGroup editGroup;
+
   LocalInliner(final SimpleName n) {
     this(n, null, null);
   }
@@ -349,7 +360,8 @@ final class LocalInliner {
     /**
      * Computes the total number of AST nodes in the replaced parameters
      *
-     * @param es JD
+     * @param es
+     *          JD
      * @return A non-negative integer, computed from original size of the
      *         parameters, the number of occurrences of {@link #name} in the
      *         operands, and the size of the replacement.
@@ -361,7 +373,8 @@ final class LocalInliner {
      * Computes the number of AST nodes added as a result of the replacement
      * operation.
      *
-     * @param es JD
+     * @param es
+     *          JD
      * @return A non-negative integer, computed from the number of occurrences
      *         of {@link #name} in the operands, and the size of the
      *         replacement.
@@ -381,7 +394,8 @@ final class LocalInliner {
       ns.set(newExpression);
       rewriter.replace(oldExpression, newExpression, editGroup);
       for (final ASTNode use : Collect.forAllOccurencesExcludingDefinitions(name).in(newExpression))
-        rewriter.replace(use, !(use instanceof Expression) ? replacement : new Plant((Expression) replacement).into(use.getParent()), editGroup);
+        rewriter.replace(use,
+            !(use instanceof Expression) ? replacement : new Plant((Expression) replacement).into(use.getParent()), editGroup);
     }
   }
 }

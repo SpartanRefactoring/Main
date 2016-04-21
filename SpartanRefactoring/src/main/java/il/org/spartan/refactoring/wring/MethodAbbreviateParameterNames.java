@@ -62,9 +62,10 @@ import il.org.spartan.refactoring.utils.Rewrite;
     for (final SingleVariableDeclaration d : ds)
       if (suitable(d))
         $.add(d);
-    return $.size() != 0 ? $ : null;
+    return !$.isEmpty() ? $ : null;
   }
-  private static boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m, final Collection<SimpleName> newNames) {
+  private static boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m,
+      final Collection<SimpleName> newNames) {
     if (Funcs.shortName(d.getType()) == null)
       return false;
     final MethodExplorer e = new MethodExplorer(m);
@@ -90,6 +91,6 @@ import il.org.spartan.refactoring.utils.Rewrite;
     return d.isVarargs() ? "s" : "";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.RENAME_PARAMETERS;
+    return WringGroup.RENAME_PARAMETERS;
   }
 }

@@ -56,14 +56,16 @@ public enum Extract {
   /**
    * Retrieve all operands, including parenthesized ones, under an expression
    *
-   * @param e JD
+   * @param e
+   *          JD
    * @return a {@link List} of all operands to the parameter
    */
   public static List<Expression> allOperands(final InfixExpression e) {
     return Extract.operands(flatten(e));
   }
   /**
-   * @param n a statement or block to extract the assignment from
+   * @param n
+   *          a statement or block to extract the assignment from
    * @return null if the block contains more than one statement or if the
    *         statement is not an assignment or the assignment if it exists
    */
@@ -75,7 +77,8 @@ public enum Extract {
    * Find the "core" of a given {@link Expression}, by peeling of any
    * parenthesis that may wrap it.
    *
-   * @param $ JD
+   * @param $
+   *          JD
    * @return the parameter itself, if not parenthesized, or the result of
    *         applying this function (@link {@link #getClass()}) to whatever is
    *         wrapped in these parenthesis.
@@ -89,7 +92,8 @@ public enum Extract {
    * perhaps along with any number of empty statements, then its essence is this
    * single non-empty statement.
    *
-   * @param s JD
+   * @param s
+   *          JD
    * @return the essence of the parameter, or <code><b>null</b></code>, if there
    *         are no non-empty statements within the parameter. If, however there
    *         are multiple non-empty statements inside the parameter then the
@@ -107,7 +111,8 @@ public enum Extract {
     }
   }
   /**
-   * @param n a node to extract an expression from
+   * @param n
+   *          a node to extract an expression from
    * @return null if the statement is not an expression, nor a return statement,
    *         nor a throw statement. Otherwise, the expression in these.
    */
@@ -128,7 +133,8 @@ public enum Extract {
   /**
    * Convert, is possible, an {@link ASTNode} to a {@link ExpressionStatement}
    *
-   * @param n a statement or a block to extract the expression statement from
+   * @param n
+   *          a statement or a block to extract the expression statement from
    * @return the expression statement if n is a block or an expression statement
    *         or null if it not an expression statement or if the block contains
    *         more than one statement
@@ -140,12 +146,13 @@ public enum Extract {
    * Search for a {@link PrefixExpression} in the tree rooted at an
    * {@link ASTNode}.
    *
-   * @param n JD
+   * @param n
+   *          JD
    * @return the first {@link PrefixExpression} found in an {@link ASTNode n},
    *         or <code><b>null</b> if there is no such statement.
    */
   public static PostfixExpression findFirstPostfix(final ASTNode n) {
-    final Wrapper<PostfixExpression> $ = new Wrapper<PostfixExpression>();
+    final Wrapper<PostfixExpression> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final PostfixExpression e) {
         if ($.get() == null)
@@ -158,7 +165,8 @@ public enum Extract {
   /**
    * Search for an {@link IfStatement} in the tree rooted at an {@link ASTNode}.
    *
-   * @param n JD
+   * @param n
+   *          JD
    * @return the first {@link IfStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement.
    */
@@ -179,7 +187,8 @@ public enum Extract {
    * Search for an {@link MethodDeclaration} in the tree rooted at an
    * {@link ASTNode}.
    *
-   * @param n JD
+   * @param n
+   *          JD
    * @return the first {@link IfStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement.
    */
@@ -198,7 +207,8 @@ public enum Extract {
    * Find the first {@link InfixExpression} representing an addition, under a
    * given node, as found in the usual visitation order.
    *
-   * @param n JD
+   * @param n
+   *          JD
    * @return the first {@link InfixExpression} representing an addition under
    *         the parameter given node, or <code><b>null</b></code> if no such
    *         value could be found.
@@ -233,7 +243,8 @@ public enum Extract {
    * Return the first {@link VariableDeclarationFragment} encountered in a visit
    * of the tree rooted a the parameter.
    *
-   * @param n JD
+   * @param n
+   *          JD
    * @return the first such node encountered in a visit of the tree rooted a the
    *         parameter, or <code><b>null</b></code>
    */
@@ -253,7 +264,8 @@ public enum Extract {
   /**
    * Extract the single {@link ReturnStatement} embedded in a node.
    *
-   * @param n JD
+   * @param n
+   *          JD
    * @return the single {@link IfStatement} embedded in the parameter or
    *         <code><b>null</b></code> if not such statements exists.
    */
@@ -263,7 +275,8 @@ public enum Extract {
   /**
    * Find the last statement residing under a given {@link Statement}
    *
-   * @param s JD
+   * @param s
+   *          JD
    * @return the last statement residing under a given {@link Statement}, or
    *         <code><b>null</b></code> if not such statements exists.
    */
@@ -273,7 +286,8 @@ public enum Extract {
   /**
    * Extract the {@link MethodDeclaration} that contains a given node.
    *
-   * @param n JD
+   * @param n
+   *          JD
    * @return the inner most {@link MethodDeclaration} in which the parameter is
    *         nested, or <code><b>null</b></code>, if no such statement exists.
    */
@@ -284,7 +298,8 @@ public enum Extract {
     return null;
   }
   /**
-   * @param n JD
+   * @param n
+   *          JD
    * @return the method invocation if it exists or null if it doesn't or if the
    *         block contains more than one statement
    */
@@ -294,7 +309,8 @@ public enum Extract {
   /**
    * Find the {@link Assignment} that follows a given node.
    *
-   * @param n JD
+   * @param n
+   *          JD
    * @return the {@link Assignment} that follows the parameter, or
    *         <code><b>null</b></code> if not such value exists.
    */
@@ -304,7 +320,8 @@ public enum Extract {
   /**
    * Extract the {@link IfStatement} that immediately follows a given node
    *
-   * @param n JD
+   * @param n
+   *          JD
    * @return the {@link IfStatement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists.
    */
@@ -314,7 +331,8 @@ public enum Extract {
   /**
    * Extract the {@link ReturnStatement} that immediately follows a given node
    *
-   * @param n JD
+   * @param n
+   *          JD
    * @return the {@link ReturnStatement} that immediately follows the parameter,
    *         or <code><b>null</b></code>, if no such statement exists.
    */
@@ -324,7 +342,8 @@ public enum Extract {
   /**
    * Extract the {@link Statement} that immediately follows a given node.
    *
-   * @param n JD
+   * @param n
+   *          JD
    * @return the {@link Statement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists.
    */
@@ -334,7 +353,8 @@ public enum Extract {
   /**
    * Extract the {@link Statement} that immediately follows a given statement
    *
-   * @param s JD
+   * @param s
+   *          JD
    * @return the {@link Statement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists.
    */
@@ -348,7 +368,8 @@ public enum Extract {
    * Makes a list of all operands of an expression, comprising the left operand,
    * the right operand, followed by extra operands when they exist.
    *
-   * @param e JD
+   * @param e
+   *          JD
    * @return a list of all operands of an expression
    */
   public static List<Expression> operands(final InfixExpression e) {
@@ -364,7 +385,8 @@ public enum Extract {
   /**
    * Finds the expression returned by a return statement
    *
-   * @param n a node to extract an expression from
+   * @param n
+   *          a node to extract an expression from
    * @return null if the statement is not an expression or return statement or
    *         the expression if they are
    */
@@ -375,7 +397,8 @@ public enum Extract {
   /**
    * Extract the single {@link ReturnStatement} embedded in a node.
    *
-   * @param n JD
+   * @param n
+   *          JD
    * @return the single {@link ReturnStatement} embedded in the parameter, and
    *         return it; <code><b>null</b></code> if not such statements exists.
    */
@@ -386,7 +409,8 @@ public enum Extract {
    * Finds the single statement in the <code><b>else</b></code> branch of an
    * {@link IfStatement}
    *
-   * @param s JD
+   * @param s
+   *          JD
    * @return the single statement in the <code><b>else</b></code> branch of the
    *         parameter, or <code><b>null</b></code>, if no such statement
    *         exists.
@@ -395,7 +419,8 @@ public enum Extract {
     return Extract.singleStatement(elze(s));
   }
   /**
-   * @param n JD
+   * @param n
+   *          JD
    * @return if b is a block with just 1 statement it returns that statement, if
    *         b is statement it returns b and if b is null it returns a null
    */
@@ -406,7 +431,8 @@ public enum Extract {
   /**
    * Finds the single statement in the "then" branch of an {@link IfStatement}
    *
-   * @param s JD
+   * @param s
+   *          JD
    * @return the single statement in the "then" branch of the parameter, or
    *         <code><b>null</b></code>, if no such statement exists.
    */
@@ -416,7 +442,8 @@ public enum Extract {
   /**
    * Extract the {@link Statement} that contains a given node.
    *
-   * @param n JD
+   * @param n
+   *          JD
    * @return the inner most {@link Statement} in which the parameter is nested,
    *         or <code><b>null</b></code>, if no such statement exists.
    */
@@ -430,7 +457,8 @@ public enum Extract {
    * Extract the list of non-empty statements embedded in node (nesting within
    * control structure such as <code><b>if</b></code> are not removed.)
    *
-   * @param n JD
+   * @param n
+   *          JD
    * @return the list of such statements.
    */
   public static List<Statement> statements(final ASTNode n) {
@@ -438,7 +466,8 @@ public enum Extract {
     return n == null || !(n instanceof Statement) ? $ : Extract.statementsInto((Statement) n, $);
   }
   /**
-   * @param n a node to extract an expression from
+   * @param n
+   *          a node to extract an expression from
    * @return null if the statement is not an expression or return statement or
    *         the expression if they are
    */
@@ -449,7 +478,8 @@ public enum Extract {
   /**
    * Extract the single {@link ThrowStatement} embedded in a node.
    *
-   * @param n JD
+   * @param n
+   *          JD
    * @return the single {@link ThrowStatement} embedded in the parameter, and
    *         return it; <code><b>null</b></code> if not such statements exists.
    */

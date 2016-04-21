@@ -153,7 +153,7 @@ import il.org.spartan.utils.FileUtils;
     return !optDoNotOverwrite ? path : path.substring(0, path.lastIndexOf('.')) + "_new.java";
   }
   boolean parseArguments(final List<String> args) {
-    if (args == null || args.size() == 0) {
+    if (args == null || args.isEmpty()) {
       printHelpPrompt();
       return true;
     }
