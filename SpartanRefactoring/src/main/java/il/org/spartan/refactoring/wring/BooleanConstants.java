@@ -1,13 +1,26 @@
 package il.org.spartan.refactoring.wring;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.BooleanLiteral;
+import org.eclipse.jdt.core.dom.MethodInvocation;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 
 /**
  * A {@link Wring} to remove unnecessary uses of Boolean.valueOf, for example by
- * converting
- * <code><pre>Boolean b = Boolean.valueOf(true)</pre><code> into <code><pre>Boolean b = Boolean.TRUE</pre><code>
+ * converting <code>
+ * 
+ * <pre>
+ * Boolean b = Boolean.valueOf(true)
+ * </pre>
+ * 
+ * <code> into <code>
+ * 
+ * <pre>
+ * Boolean b = Boolean.TRUE
+ * </pre>
+ * 
+ * <code>
  *
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  *
@@ -21,7 +34,7 @@ public class BooleanConstants extends Wring.ReplaceCurrentNode<MethodInvocation>
                 i.getAST().newSimpleName(((BooleanLiteral) i.arguments().get(0)).booleanValue() ? "TRUE" : "FALSE"));
   }
   @Override String description(final MethodInvocation i) {
-    return "Use the built-in boolean constant instead of valueOf()";
+    return "Use built-in boolean constant instead of valueOf()";
   }
   @Override WringGroup wringGroup() {
     return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS; // TODO fix this
