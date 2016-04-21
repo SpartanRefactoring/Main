@@ -6,7 +6,9 @@ import static il.org.spartan.utils.Utils.delete;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.resources.*;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.viewers.ISelection;
@@ -36,7 +38,8 @@ public class ToggleSpartanizationHandler extends AbstractHandler {
     return null;
   }
   private static IProject extractProject(final Object o) {
-    return o instanceof IProject ? (IProject) o : o instanceof IAdaptable ? (IProject) ((IAdaptable) o).getAdapter(IProject.class) : null;
+    return o instanceof IProject ? (IProject) o
+        : o instanceof IAdaptable ? (IProject) ((IAdaptable) o).getAdapter(IProject.class) : null;
   }
   private static void toggleNature(final IProject p, final boolean state) throws CoreException {
     // NOTE: In order to ensure that we're not adding the nature when it's
@@ -53,12 +56,10 @@ public class ToggleSpartanizationHandler extends AbstractHandler {
       if (Nature.NATURE_ID.equals(natures[i])) {
         description.setNatureIds(delete(natures, i));
         p.setDescription(description, null);
-        p.accept(new IResourceVisitor() {
-          @Override public boolean visit(final IResource r) throws CoreException {
-            if (r instanceof IFile && r.getName().endsWith(".java"))
-              Builder.deleteMarkers((IFile) r);
-            return true;
-          }
+        p.accept(r -> {
+          if (r instanceof IFile && r.getName().endsWith(".java"))
+            Builder.deleteMarkers((IFile) r);
+          return true;
         });
       }
   }

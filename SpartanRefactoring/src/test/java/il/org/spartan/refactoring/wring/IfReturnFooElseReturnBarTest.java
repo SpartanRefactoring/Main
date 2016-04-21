@@ -9,9 +9,6 @@ import org.junit.runners.MethodSorters;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import il.org.spartan.refactoring.wring.IfReturnFooElseReturnBar;
-import il.org.spartan.refactoring.wring.Wring;
-import il.org.spartan.refactoring.wring.Wrings;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 import il.org.spartan.utils.Utils;
@@ -33,6 +30,7 @@ public enum IfReturnFooElseReturnBarTest {
     static String[][] cases = Utils.asArray(//
         new String[] { "Return only on one side", "if (a) return b; else c;" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -58,6 +56,7 @@ public enum IfReturnFooElseReturnBarTest {
         new String[] { "Simply nested if return", "{if (a)  return b; else return c;}", " if(a)return b;else return c;" }, //
         new String[] { "Nested if return", "if (a) {;{{;;return b; }}} else {{{;return c;};;};}", "return a ? b : c;" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *

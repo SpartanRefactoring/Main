@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.spartanizations;
 
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
-import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.countOpportunities;
 import static il.org.spartan.utils.Utils.objects;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -17,10 +16,8 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
-import il.org.spartan.refactoring.spartanizations.Spartanization;
 import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.refactoring.wring.TrimmerTestsUtils;
-import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.countOpportunities;
 
 /**
  * Run tests in which a specific transformation is not supposed to change the

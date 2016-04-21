@@ -4,7 +4,10 @@ import static il.org.spartan.utils.Utils.append;
 
 import java.util.Arrays;
 
-import org.eclipse.core.resources.*;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.IncrementalProjectBuilder;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -20,6 +23,7 @@ import org.osgi.framework.BundleContext;
  */
 public class Plugin extends AbstractUIPlugin implements IStartup {
   private static Plugin plugin;
+
   /**
    * an empty c'tor. creates an instance of the plugin.
    */
@@ -54,7 +58,8 @@ public class Plugin extends AbstractUIPlugin implements IStartup {
   /**
    * logs an error in the plugin
    *
-   * @param t an error
+   * @param t
+   *          an error
    */
   public static void log(final Throwable t) {
     getDefault().getLog().log(new Status(IStatus.ERROR, "org.spartan.refactoring", 0, t.getMessage(), t));

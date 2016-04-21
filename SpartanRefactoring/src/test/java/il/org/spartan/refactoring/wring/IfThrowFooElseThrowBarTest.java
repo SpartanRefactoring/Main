@@ -9,9 +9,6 @@ import org.junit.runners.MethodSorters;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import il.org.spartan.refactoring.wring.IfThrowFooElseThrowBar;
-import il.org.spartan.refactoring.wring.Wring;
-import il.org.spartan.refactoring.wring.Wrings;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 import il.org.spartan.utils.Utils;
@@ -36,6 +33,7 @@ public enum IfThrowFooElseThrowBarTest {
         new String[] { "Simply nested if return", "{if (a)  return b; else return c;}" }, //
         new String[] { "Nested if return", "if (a) {;{{;;return b; }}} else {{{;return c;};;};}" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -61,6 +59,7 @@ public enum IfThrowFooElseThrowBarTest {
         new String[] { "Simply nested if throw", "{if (a)  throw b; else throw c;}", "if(a)throw b;else throw c;" }, //
         new String[] { "Nested if throw", "if (a) {;{{;;throw b; }}} else {{{;throw c;};;};}", "throw a ? b : c;" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *

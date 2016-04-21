@@ -6,7 +6,11 @@ import static il.org.spartan.refactoring.spartanizations.TESTUtils.asSingle;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
 import static il.org.spartan.refactoring.utils.Funcs.asIfStatement;
 import static il.org.spartan.utils.Utils.compressSpaces;
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.text.IsEqualIgnoringWhiteSpace.equalToIgnoringWhiteSpace;
 import static org.junit.Assert.assertNotEquals;
@@ -34,7 +38,6 @@ import il.org.spartan.refactoring.spartanizations.Wrap;
 import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Rewrite;
-import il.org.spartan.refactoring.wring.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 import il.org.spartan.utils.Utils;
@@ -49,6 +52,7 @@ import il.org.spartan.utils.Utils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class IfCommandsSequencerElseSomethingTest {
   static final IfThenOrElseIsCommandsFollowedBySequencer WRING = new IfThenOrElseIsCommandsFollowedBySequencer();
+
   @Test public void checkSteps() {
     final Statement s = asSingle("if (a) return a = b; else a = c;");
     assertNotNull(s);
@@ -139,6 +143,7 @@ public class IfCommandsSequencerElseSomethingTest {
         new String[] { "Simple if plus assign", "if (a) a += b; else a += c;" }, //
         new String[] { "Simple if plus assign", "if (a) a *= b; else a *= c;" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -163,9 +168,11 @@ public class IfCommandsSequencerElseSomethingTest {
         new String[] { "Vanilla: sequencer in else", "if (a) return b; else a();", "if(a)return b;a();" }, //
         new String[] { "Plant two statements", "if (a) return b; else a(); f();", "if(a)return b;a(); f();" }, //
         null, //
-        new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}", "if (x) {;f();;;return a;;;}\n g();" }, //
+        new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}",
+            "if (x) {;f();;;return a;;;}\n g();" }, //
         null, //
-        new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}", "  if(x){;f();;;return a;;;} g();" }, //
+        new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}",
+            "  if(x){;f();;;return a;;;} g();" }, //
         new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}",
             "" + //
                 " if (x) {\n" + //
@@ -196,6 +203,7 @@ public class IfCommandsSequencerElseSomethingTest {
                 " g();\n" + //
                 "" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *

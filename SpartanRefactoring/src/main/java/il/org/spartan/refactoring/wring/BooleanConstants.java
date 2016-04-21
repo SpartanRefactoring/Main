@@ -14,13 +14,11 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGr
  * @since 2016-04-04
  */
 public class BooleanConstants extends Wring.ReplaceCurrentNode<MethodInvocation> {
-  @Override ASTNode replacement(final MethodInvocation n) {
-    if (n.getExpression() == null || !n.getExpression().toString().equals("Boolean"))
-      return null;
-    if (!(n.getName().getIdentifier().equals("valueOf") && n.arguments().size() == 1))
-      return null;
-    final BooleanLiteral l = (BooleanLiteral) n.arguments().get(0);
-    return n.getAST().newQualifiedName(n.getAST().newName("Boolean"), n.getAST().newSimpleName(l.booleanValue() ? "TRUE" : "FALSE"));
+  @Override ASTNode replacement(final MethodInvocation i) {
+    return i.getExpression() == null || !i.getExpression().toString().equals("Boolean")
+        || !i.getName().getIdentifier().equals("valueOf") || i.arguments().size() != 1 ? null
+            : i.getAST().newQualifiedName(i.getAST().newName("Boolean"),
+                i.getAST().newSimpleName(((BooleanLiteral) i.arguments().get(0)).booleanValue() ? "TRUE" : "FALSE"));
   }
   @Override String description(final MethodInvocation i) {
     return "Use the built-in boolean constant instead of valueOf()";

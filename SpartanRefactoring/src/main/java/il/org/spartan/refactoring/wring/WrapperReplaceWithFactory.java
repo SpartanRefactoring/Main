@@ -18,19 +18,18 @@ public class WrapperReplaceWithFactory extends Wring.ReplaceCurrentNode<ClassIns
   // String array contains all primitive class (and String) identifiers
   final String[] pi = { "Byte", "Short", "Integer", "Long", "Float", "Double", "Character", "String", "Boolean" };
   @Override
-  ASTNode replacement(final ClassInstanceCreation n) {
-    String tn = n.getType().toString();
-    if (!Arrays.asList(pi).contains(tn)) {
+  ASTNode replacement(final ClassInstanceCreation c) {
+    String tn = c.getType().toString();
+    if (!Arrays.asList(pi).contains(tn))
       return null;
-    }
-    final MethodInvocation $ = n.getAST().newMethodInvocation();
-    $.setExpression(n.getAST().newSimpleName(tn));
-    $.setName(n.getAST().newSimpleName("valueOf"));
-    $.arguments().add(Expression.copySubtree(n.getAST(), (ASTNode) n.arguments().get(0)));
+    final MethodInvocation $ = c.getAST().newMethodInvocation();
+    $.setExpression(c.getAST().newSimpleName(tn));
+    $.setName(c.getAST().newSimpleName("valueOf"));
+    $.arguments().add(Expression.copySubtree(c.getAST(), (ASTNode) c.arguments().get(0)));
     return $;
   }
   @Override
-  String description(final ClassInstanceCreation n) {
+  String description(final ClassInstanceCreation c) {
     return "Use Java's built-in factory constructor valueOf() instead of initialization";
   }
   @Override

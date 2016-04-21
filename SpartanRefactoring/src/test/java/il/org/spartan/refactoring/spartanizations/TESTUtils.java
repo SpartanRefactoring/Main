@@ -2,7 +2,6 @@ package il.org.spartan.refactoring.spartanizations;
 
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
 import static il.org.spartan.hamcrest.OrderingComparison.greaterThanOrEqualTo;
-import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.countOpportunities;
 import static il.org.spartan.utils.Utils.compressSpaces;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -17,12 +16,10 @@ import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.Document;
 import org.eclipse.text.edits.MalformedTreeException;
 
-import il.org.spartan.refactoring.spartanizations.Spartanization;
 import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.wring.Trimmer;
 import il.org.spartan.refactoring.wring.TrimmerTestsUtils;
-import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.countOpportunities;
 
 /**
  * @author Yossi Gil

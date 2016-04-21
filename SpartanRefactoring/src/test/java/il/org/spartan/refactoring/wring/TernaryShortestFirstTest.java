@@ -19,10 +19,10 @@ import org.junit.runners.MethodSorters;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.wring.TernaryShortestFirst;
-import il.org.spartan.refactoring.wring.Wring;
-import il.org.spartan.refactoring.wring.Wrings;
+import il.org.spartan.refactoring.utils.Extract;
+import il.org.spartan.refactoring.utils.Into;
+import il.org.spartan.refactoring.utils.Is;
+import il.org.spartan.refactoring.utils.Subject;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.utils.Utils;
 
@@ -36,8 +36,10 @@ import il.org.spartan.utils.Utils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class TernaryShortestFirstTest {
   static final Wring<ConditionalExpression> WRING = new TernaryShortestFirst();
+
   @Test public void cyclicBug() {
-    final ConditionalExpression e = Into.c("length(not(notConditional)) + length(then) < length(notConditional) + length(elze) ? null : $");
+    final ConditionalExpression e = Into
+        .c("length(not(notConditional)) + length(then) < length(notConditional) + length(elze) ? null : $");
     assertThat(e, notNullValue());
     final Expression elze = Extract.core(e.getElseExpression());
     final Expression then = Extract.core(e.getThenExpression());
@@ -50,7 +52,8 @@ public class TernaryShortestFirstTest {
   @Test public void trace1() {
     final ConditionalExpression e = Into.c("a?f(b,c,d):a");
     assertThat(e, notNullValue());
-    assertThat(Subject.pair(Extract.core(e.getElseExpression()), Extract.core(e.getThenExpression())).toCondition(logicalNot(e.getExpression())), iz("!a?a:f(b,c,d)"));
+    assertThat(Subject.pair(Extract.core(e.getElseExpression()), Extract.core(e.getThenExpression()))
+        .toCondition(logicalNot(e.getExpression())), iz("!a?a:f(b,c,d)"));
   }
   @Test public void trace2() {
     final ConditionalExpression e = Into.c("!f(o) ? null : x.f(a).to(e.g())");
@@ -67,7 +70,8 @@ public class TernaryShortestFirstTest {
   @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Exprezzion<ConditionalExpression> {
     static String[][] cases = Utils.asArray(//
-        new String[] { "Strange cyclic buc", "length(not(notConditional))+length(then)>=length(notConditional)+length(elze)?$:null", }, //
+        new String[] { "Strange cyclic buc",
+            "length(not(notConditional))+length(then)>=length(notConditional)+length(elze)?$:null", }, //
         new String[] { "Actual simplified 3", "!f(o) ? null : x.f(a).to(e.g())" }, //
         new String[] { "Actual simplified 2", "!f(o) ? null : Subject.operands(operands).to(e.getOperator())" }, //
         new String[] { "Actual simplified 1", "!f(operands) ? null : Subject.operands(operands).to(e.getOperator())" }, //
@@ -100,6 +104,7 @@ public class TernaryShortestFirstTest {
         new String[] { "almost identical 4 addition second", "a ? b+x+e+f:b+y+e+f", }, //
         new String[] { "different target field refernce", "a ? 1 + x.a : 1 + y.a" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -124,8 +129,9 @@ public class TernaryShortestFirstTest {
         new String[] { "Bug of being cyclice", //
             "length(not(notConditional)) + length(then) < length(notConditional) + length(elze) ? null : $", //
             "length(not(notConditional))+length(then)>=length(notConditional)+length(elze)?$:null",//
-    }, //
+        }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *

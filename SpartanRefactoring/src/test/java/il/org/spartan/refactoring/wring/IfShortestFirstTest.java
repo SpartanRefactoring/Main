@@ -18,9 +18,6 @@ import org.junit.runners.Parameterized.Parameters;
 
 import il.org.spartan.refactoring.spartanizations.Wrap;
 import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.wring.IfShortestFirst;
-import il.org.spartan.refactoring.wring.Wring;
-import il.org.spartan.refactoring.wring.Wrings;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 import il.org.spartan.utils.Utils;
@@ -34,6 +31,7 @@ import il.org.spartan.utils.Utils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) public class IfShortestFirstTest {
   static final Wring<IfStatement> WRING = new IfShortestFirst();
+
   @Test public void statmentCount() {
     final CompilationUnit u = Wrap.Statement.intoCompilationUnit("" + //
         "if (name == null) {\n" + //
@@ -59,8 +57,9 @@ import il.org.spartan.utils.Utils;
         new String[] { "No else", "if (a) {;{{;;return b; }}}" }, //
         new String[] { "Two statemens are greater than one", //
             "if (a) {i++;j++;} else b(asdf,as,as,asdf,adfasd,adadfadf,asfasdfasdf);", //
-    }, //
+        }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -106,7 +105,8 @@ import il.org.spartan.utils.Utils;
                 "      c = f().charAt(3);\n" + //
                 "    }\n" + //
                 ""//
-    }, null);
+        }, null);
+
     /**
      * Generate test cases for this parameterized class.
      *

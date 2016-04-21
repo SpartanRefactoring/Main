@@ -2,7 +2,13 @@ package il.org.spartan.refactoring.builder;
 
 import java.util.Map;
 
-import org.eclipse.core.resources.*;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceChangeEvent;
+import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -27,9 +33,11 @@ public class Builder extends IncrementalProjectBuilder {
   public static final String SPARTANIZATION_SHORT_PREFIX = "Spartanize: ";
   /** Empty prefix for brevity */
   public static final String EMPTY_PREFIX = "";
+
   private static String prefix() {
     return SPARTANIZATION_SHORT_PREFIX;
   }
+
   /** the ID under which this builder is registered */
   public static final String BUILDER_ID = "org.spartan.refactoring.BuilderID";
   private static final String MARKER_TYPE = "org.spartan.refactoring.spartanizationSuggestion";
@@ -38,7 +46,9 @@ public class Builder extends IncrementalProjectBuilder {
    * spartanization is stored
    */
   public static final String SPARTANIZATION_TYPE_KEY = "org.spartan.refactoring.spartanizationType";
-  @Override protected IProject[] build(final int kind, @SuppressWarnings({ "unused", "rawtypes" }) final Map args, final IProgressMonitor m) throws CoreException {
+
+  @Override protected IProject[] build(final int kind, @SuppressWarnings({ "unused", "rawtypes" }) final Map args,
+      final IProgressMonitor m) throws CoreException {
     if (m != null)
       m.beginTask("Checking for spartanization opportunities", IProgressMonitor.UNKNOWN);
     build(kind);
@@ -59,11 +69,9 @@ public class Builder extends IncrementalProjectBuilder {
   }
   protected void fullBuild() {
     try {
-      getProject().accept(new IResourceVisitor() {
-        @Override public boolean visit(final IResource r) throws CoreException {
-          addMarkers(r);
-          return true; // to continue visiting children.
-        }
+      getProject().accept(r -> {
+        addMarkers(r);
+        return true; // to continue visiting children.
       });
     } catch (final CoreException e) {
       e.printStackTrace();
@@ -96,34 +104,34 @@ public class Builder extends IncrementalProjectBuilder {
   /**
    * deletes all spartanization suggestion markers
    *
-   * @param f the file from which to delete the markers
-   * @throws CoreException if this method fails. Reasons include: This resource
-   *           does not exist. This resource is a project that is not open.
-   *           Resource changes are disallowed during certain types of resource
-   *           change event notification. See {@link IResourceChangeEvent} for
-   *           more details.
+   * @param f
+   *          the file from which to delete the markers
+   * @throws CoreException
+   *           if this method fails. Reasons include: This resource does not
+   *           exist. This resource is a project that is not open. Resource
+   *           changes are disallowed during certain types of resource change
+   *           event notification. See {@link IResourceChangeEvent} for more
+   *           details.
    */
   public static void deleteMarkers(final IFile f) throws CoreException {
     f.deleteMarkers(MARKER_TYPE, false, IResource.DEPTH_ONE);
   }
   public static void incrementalBuild(final IResourceDelta d) throws CoreException {
-    d.accept(new IResourceDeltaVisitor() {
-      @Override public boolean visit(final IResourceDelta internalDelta) throws CoreException {
-        switch (internalDelta.getKind()) {
-          case IResourceDelta.ADDED:
-          case IResourceDelta.CHANGED:
-            // handle added and changed resource
-            addMarkers(internalDelta.getResource());
-            break;
-          case IResourceDelta.REMOVED:
-            // handle removed resource
-            break;
-          default:
-            break;
-        }
-        // return true to continue visiting children.
-        return true;
+    d.accept(internalDelta -> {
+      switch (internalDelta.getKind()) {
+        case IResourceDelta.ADDED:
+        case IResourceDelta.CHANGED:
+          // handle added and changed resource
+          addMarkers(internalDelta.getResource());
+          break;
+        case IResourceDelta.REMOVED:
+          // handle removed resource
+          break;
+        default:
+          break;
       }
+      // return true to continue visiting children.
+      return true;
     });
   }
 }

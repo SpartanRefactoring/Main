@@ -9,8 +9,19 @@ import static il.org.spartan.refactoring.utils.Into.es;
 import static il.org.spartan.refactoring.wring.Wrings.mixedLiteralKind;
 import static org.junit.Assert.assertNotNull;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.Assignment.Operator;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.EnhancedForStatement;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.ReturnStatement;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.Document;
@@ -19,10 +30,12 @@ import org.eclipse.text.edits.TextEdit;
 import org.junit.Test;
 
 import il.org.spartan.refactoring.spartanizations.Wrap;
-import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.wring.LocalInliner;
-import il.org.spartan.refactoring.wring.Wring;
-import il.org.spartan.refactoring.wring.Wrings;
+import il.org.spartan.refactoring.utils.As;
+import il.org.spartan.refactoring.utils.Collect;
+import il.org.spartan.refactoring.utils.Extract;
+import il.org.spartan.refactoring.utils.Into;
+import il.org.spartan.refactoring.utils.Is;
+import il.org.spartan.refactoring.utils.Subject;
 
 @SuppressWarnings({ "javadoc", "static-method" }) public class WringsTest {
   @Test public void renameIntoDoWhile() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
@@ -95,7 +108,8 @@ import il.org.spartan.refactoring.wring.Wrings;
     final Assignment a = (Assignment) returnStatement.getExpression();
     final Operator o = a.getOperator();
     assertThat(o, iz("+="));
-    final InfixExpression alternateInitializer = Subject.pair(left(a), right(a)).to(Wring.VariableDeclarationFragementAndStatement.asInfix(o));
+    final InfixExpression alternateInitializer = Subject.pair(left(a), right(a))
+        .to(Wring.VariableDeclarationFragementAndStatement.asInfix(o));
     assertThat(alternateInitializer, iz("a + 2 * a"));
     assertThat(Is.sideEffectFree(initializer), is(false));
     assertThat(Collect.usesOf(n).in(alternateInitializer).size(), is(2));

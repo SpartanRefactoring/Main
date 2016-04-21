@@ -18,9 +18,6 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.wring.IfDegenerateElse;
-import il.org.spartan.refactoring.wring.Wring;
-import il.org.spartan.refactoring.wring.Wrings;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 import il.org.spartan.utils.Utils;
@@ -44,6 +41,7 @@ public class IfEmptyElseTest {
         new String[] { "Simply nested if return", "{if (a)  return b; else return c;}" }, //
         new String[] { "Nested if return", "if (a) {;{{;;return b; }}} else {{{;return c;};;};}" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -68,6 +66,7 @@ public class IfEmptyElseTest {
         new String[] { "Vanilla ; ", "if (a) f(); else ;", "if (a) f();" }, //
         new String[] { "Vanilla {;{;;};} ", "if (a) f(); else {;{;{};};{;{}}}", "if (a) f();" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *

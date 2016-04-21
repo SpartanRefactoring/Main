@@ -28,12 +28,15 @@ public class ApplySpartanizationHandler extends BaseHandler {
    * Sets the maximum number of repetitions made when applying a spartanization
    */
   private static final int MAX_SPARTANIZATION_REPETITIONS = 16;
+
   /** Instantiates this class */
   public ApplySpartanizationHandler() {
     super(null);
   }
+
   static final Spartanization[] safeSpartanizations = { //
       new Trimmer() };
+
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent e) {
     applySafeSpartanizationsTo(currentCompilationUnit(), getSelectedText());
     return null;
@@ -49,9 +52,9 @@ public class ApplySpartanizationHandler extends BaseHandler {
       try {
         s.setCompilationUnit(cu);
         s.setSelection(t.getLength() > 0 && !t.isEmpty() ? t : null);
-        int i = MAX_SPARTANIZATION_REPETITIONS;
-        while (s.performRule(cu, new NullProgressMonitor()) && --i >= 0) {
-        }
+        for (int i = 0; i < MAX_SPARTANIZATION_REPETITIONS; ++i)
+          if (!s.performRule(cu, new NullProgressMonitor()))
+            break;
       } catch (final CoreException x) {
         x.printStackTrace();
       }

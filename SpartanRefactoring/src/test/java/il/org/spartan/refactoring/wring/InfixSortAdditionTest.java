@@ -23,10 +23,12 @@ import org.junit.runners.MethodSorters;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.wring.InfixSortAddition;
-import il.org.spartan.refactoring.wring.Wring;
-import il.org.spartan.refactoring.wring.Wrings;
+import il.org.spartan.refactoring.utils.Are;
+import il.org.spartan.refactoring.utils.ExpressionComparator;
+import il.org.spartan.refactoring.utils.Extract;
+import il.org.spartan.refactoring.utils.Into;
+import il.org.spartan.refactoring.utils.Is;
+import il.org.spartan.refactoring.utils.Subject;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Noneligible;
 import il.org.spartan.utils.Utils;
 
@@ -41,6 +43,7 @@ import il.org.spartan.utils.Utils;
 public class InfixSortAdditionTest {
   static final Wring<InfixExpression> WRING = new InfixSortAddition();
   static final ExpressionComparator COMPARATOR = ExpressionComparator.ADDITION;
+
   @Test public void subjectOperandsWithParenthesis() {
     final Expression e = Into.e("(2 + a) * b");
     assertTrue(Is.notString(e));
@@ -63,6 +66,7 @@ public class InfixSortAdditionTest {
         new String[] { "Plain addition plus constant", "5*a+b*c+12" }, //
         new String[] { "Literal addition", "2+3" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -118,6 +122,7 @@ public class InfixSortAdditionTest {
         new String[] { "Literals of distinct length", "123+12+1", "1+12+123" }, //
         new String[] { "Sort expressions by size", "1*f(a,b,c,d) + 2*f(a,b) + 3*f()", "3*f() +2*f(a,b)+ 1*f(a,b,c,d)" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *

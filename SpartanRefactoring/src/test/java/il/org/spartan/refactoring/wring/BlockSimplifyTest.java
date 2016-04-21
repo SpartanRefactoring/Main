@@ -9,9 +9,6 @@ import org.junit.runners.MethodSorters;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import il.org.spartan.refactoring.wring.BlockSimplify;
-import il.org.spartan.refactoring.wring.Wring;
-import il.org.spartan.refactoring.wring.Wrings;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 import il.org.spartan.utils.Utils;
@@ -36,6 +33,7 @@ public enum BlockSimplifyTest {
         new String[] { "Nested if return", "if (a) {;{{;;return b; }}} else {{{;return c;};;};}" }, //
         new String[] { "Simple block", "{a(); b(); c();}" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -64,6 +62,7 @@ public enum BlockSimplifyTest {
         new String[] { "Complex singleton", "{;{{;;return b; }}}", " return b;" }, //
         new String[] { "Three statements ", "{i++;{{;;return b; }}j++;}", " i++;return b;j++;" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *

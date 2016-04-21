@@ -20,9 +20,6 @@ import org.junit.runners.Parameterized.Parameters;
 
 import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.wring.IfReturnNoElseReturn;
-import il.org.spartan.refactoring.wring.Wring;
-import il.org.spartan.refactoring.wring.Wrings;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 import il.org.spartan.utils.Utils;
@@ -38,6 +35,7 @@ import il.org.spartan.utils.Utils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class IfReturnNoElseReturnTest {
   static final Wring<IfStatement> WRING = new IfReturnNoElseReturn();
+
   @Test public void checkFirstIfStatement1() {
     final String s = "if (a) return b; return a();";
     final IfStatement i = Extract.firstIfStatement(As.STATEMENTS.ast(s));
@@ -84,6 +82,7 @@ public class IfReturnNoElseReturnTest {
         new String[] { "Simple if plus assign", "if (a) a *= b; else a *= c;" }, //
         new String[] { "Simple if return empty else", "if (a) return b; else ;" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -108,9 +107,11 @@ public class IfReturnNoElseReturnTest {
         new String[] { "Vanilla ; ", "if (a) return b; return a(); b(); c();", "return a ? b: a(); b(); c();" }, //
         new String[] { "Vanilla {;{;;};} ", "if (a) return b; else {;{;{};};{;{}}} return c;", "return a?b:c;" }, //
         null, //
-        new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}", "if (x) {;f();;;return a;;;}\n g();" }, //
+        new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}",
+            "if (x) {;f();;;return a;;;}\n g();" }, //
         null, //
-        new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}", "  if(x){;f();;;return a;;;} g();" }, //
+        new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}",
+            "  if(x){;f();;;return a;;;} g();" }, //
         new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}",
             "" + //
                 " if (x) {\n" + //
@@ -141,6 +142,7 @@ public class IfReturnNoElseReturnTest {
                 " g();\n" + //
                 "" }, //
         null };
+
     /**
      * Generate test cases for this parameterized class.
      *

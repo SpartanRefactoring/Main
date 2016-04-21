@@ -81,9 +81,9 @@ public class TrimmerTestsUtils {
 	  }
 
 	static class Operand extends Wrapper<String> {
-		public static enum OperandType {
+		public enum OperandType {
 			STATEMENT, EXPRESSION, METHOD, COMPILATION_UNIT
-		};
+		}
 	    public Operand(final String inner) {
 	      super(inner);
 	    }

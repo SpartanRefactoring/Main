@@ -5,7 +5,12 @@ import java.io.IOException;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.Name;
+import org.eclipse.jdt.core.dom.QualifiedName;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.SimpleType;
 
 import il.org.spartan.files.FilesGenerator;
 import il.org.spartan.refactoring.utils.As;
@@ -14,6 +19,7 @@ import il.org.spartan.utils.FileUtils;
 
 public class TypeNamesCollector {
   private static Set<String> basket = new TreeSet<>();
+
   public static void main(final String[] where) {
     collect(where.length != 0 ? where : new String[] { "." });
     for (final String s : basket)

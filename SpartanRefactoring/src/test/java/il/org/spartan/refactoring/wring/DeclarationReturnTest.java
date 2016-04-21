@@ -16,14 +16,11 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Subject;
-import il.org.spartan.refactoring.wring.DeclarationInitializerReturnVariable;
-import il.org.spartan.refactoring.wring.Wring;
-import il.org.spartan.refactoring.wring.Wrings;
+import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
+import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 import il.org.spartan.utils.Utils;
 
 /**
@@ -36,6 +33,7 @@ import il.org.spartan.utils.Utils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class DeclarationReturnTest {
   static final Wring<VariableDeclarationFragment> WRING = new DeclarationInitializerReturnVariable();
+
   @Test public void placeHolder() {
     assertNotNull(WRING);
   }
@@ -49,6 +47,7 @@ public class DeclarationReturnTest {
         new String[] { "Vanilla", "int a = 2; if (b) a =3;", }, //
         new String[] { "Vanilla", "int a = 3, b; return;", }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -78,6 +77,7 @@ public class DeclarationReturnTest {
                 + "   return $;", //
             "return messageRead?!messageFlagged?mReadColorChip:mFlaggedReadColorChip:!messageFlagged?mUnreadColorChip:mFlaggedUnreadColorChip;" },
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *

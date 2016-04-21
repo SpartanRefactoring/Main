@@ -64,11 +64,14 @@ public abstract class BaseHandler extends AbstractHandler {
   private static ICompilationUnit getCompilationUnit(final IResource r) {
     return r == null ? null : JavaCore.createCompilationUnitFrom((IFile) r);
   }
+
   private final Spartanization inner;
+
   /**
    * Instantiates this class
    *
-   * @param inner JD
+   * @param inner
+   *          JD
    */
   protected BaseHandler(final Spartanization inner) {
     this.inner = inner;

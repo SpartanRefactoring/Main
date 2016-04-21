@@ -7,7 +7,10 @@ import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar
 import static il.org.spartan.refactoring.utils.Restructure.flatten;
 import static il.org.spartan.utils.Utils.compressSpaces;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 import java.util.Collection;
 import java.util.List;
@@ -32,9 +35,6 @@ import il.org.spartan.refactoring.spartanizations.Wrap;
 import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.refactoring.utils.ExpressionComparator;
 import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.wring.InfixComparisonBooleanLiteral;
-import il.org.spartan.refactoring.wring.Trimmer;
-import il.org.spartan.refactoring.wring.Wrings;
 import il.org.spartan.utils.Utils;
 
 /**
@@ -47,6 +47,7 @@ import il.org.spartan.utils.Utils;
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixExpression> {
   static final InfixComparisonBooleanLiteral WRING = new InfixComparisonBooleanLiteral();
+
   public InfixComparisonBooleanLiteralTest() {
     super(WRING);
   }
@@ -97,6 +98,7 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
         new String[] { "", "true != false", "true" }, //
         new String[] { "", "true != true", "false" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *

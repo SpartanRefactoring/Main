@@ -36,7 +36,8 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2014-07-10
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@SuppressWarnings({ "static-method", "javadoc" }) public class TrimmerTest {
+@SuppressWarnings({ "static-method", "javadoc" }) //
+public class TrimmerTest {
   @Test public void actualExampleForSortAddition() {
     TrimmerTestsUtils.trimming("1 + b.statements().indexOf(declarationStmt)").to("");
   }

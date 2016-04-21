@@ -20,8 +20,6 @@ import org.junit.runners.Parameterized.Parameters;
 
 import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.wring.IfFooSequencerIfFooSameSequencer;
-import il.org.spartan.refactoring.wring.Wring;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 import il.org.spartan.utils.Utils;
@@ -36,6 +34,7 @@ import il.org.spartan.utils.Utils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class IfCommandsSequencerIfSameCommandsSequencerTest {
   static final Wring<IfStatement> WRING = new IfFooSequencerIfFooSameSequencer();
+
   @Test public void checkFirstIfStatement1() {
     final String s = "if (a) return b; if (b) return b;";
     final ASTNode n = As.STATEMENTS.ast(s);
@@ -104,6 +103,7 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
                 " }\n" + //
                 "" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -131,13 +131,16 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
         new String[] { "Continue expression", "if (a) continue a; if (b) continue a;", "if (a || b) continue a;" }, //
         new String[] { "Continue empty", "if (a) continue; if (b) continue;", "if (a || b) continue;" }, //
         new String[] { "Throw expression", "if (a) throw e; if (b) throw e;", "if (a || b) throw e;" }, //
-        new String[] { "Single statement is nested", "if (a) {{{; return a; }}} if (b) {;{;return a;};;}", "if (a || b) return a;" }, //
+        new String[] { "Single statement is nested", "if (a) {{{; return a; }}} if (b) {;{;return a;};;}",
+            "if (a || b) return a;" }, //
         new String[] { "Parenthesis where necesary", "if (a=b) return a; if (b=a) return a;", "if ((a=b) || (b =a)) return a;" }, //
         new String[] { "No parenthesis for == ", "if (a==b) return a; if (b==a) return a;", "if (a==b || b ==a) return a;" }, //
         new String[] { "No parenthesis for  && and ||", "if (a&&b) return a; if (b||a) return a;", "if (a&&b || b ||a) return a;" }, //
-        new String[] { "No parenthesis for OR", "if (a||b||c) return a; if (a||b||c||d) return a;", "if (a||b||c||a||b||c||d) return a;" }, //
+        new String[] { "No parenthesis for OR", "if (a||b||c) return a; if (a||b||c||d) return a;",
+            "if (a||b||c||a||b||c||d) return a;" }, //
         new String[] { "Two statements", "if (a) { f(); return a; } if (b) {f(); return a;}", "if (a || b) {f(); return a;}" }, //
         null };
+
     /**
      * Generate test cases for this parameterized class.
      *
