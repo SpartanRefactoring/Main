@@ -13,16 +13,15 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGr
 import il.org.spartan.refactoring.utils.Rewrite;
 
 /**
- * A {@link Wring} that removes empty return statements, provided that 
- * they are last in method.
+ * A {@link Wring} that removes empty return statements, provided that they are
+ * last in method.
  *
  * @author Yossi Gil
  * @since 2015-7-17
  */
-
 public final class ReturnLastInMethod extends Wring<ReturnStatement> {
-  @Override String description(@SuppressWarnings("unused") final ReturnStatement _) {
-    return "Remove redundant return statement";
+  @Override String description(final ReturnStatement s) {
+    return "Remove redundant return statement: " + s;
   }
   @Override Rewrite make(final ReturnStatement s) {
     if (s.getExpression() != null)
@@ -36,6 +35,6 @@ public final class ReturnLastInMethod extends Wring<ReturnStatement> {
         };
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REFACTOR_INEFFECTIVE;
+    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }
