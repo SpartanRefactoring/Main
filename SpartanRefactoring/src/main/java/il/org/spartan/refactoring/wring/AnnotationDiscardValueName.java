@@ -13,8 +13,8 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGr
 /**
  * A {@link Wring} to remove the "value" member from annotations that only have
  * a single member, converting
- * <code><pre>@SuppressWarnings(value = "javadoc")</pre></code> to
- * <code><pre>@SuppressWarnings("javadoc")</pre></code>
+ * <code><pre>@SuppressWarnings(value = "unchecked")</pre></code> to
+ * <code><pre>@SuppressWarnings("unchecked")</pre></code>
  *
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-02
