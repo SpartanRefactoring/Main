@@ -180,9 +180,10 @@ public abstract class Wring<N extends ASTNode> {
    * TODO complete every successor comment preservation
    */
   static abstract class ReplaceToNextStatement<N extends ASTNode> extends Wring<N> {
-    final private Integer[] finalParents = {ASTNode.EXPRESSION_STATEMENT, ASTNode.IF_STATEMENT};
+    final private Integer[] finalParents = {ASTNode.EXPRESSION_STATEMENT, ASTNode.IF_STATEMENT, ASTNode.VARIABLE_DECLARATION_STATEMENT};
     protected ASTNode replaced;
     protected ASTNode fixReplaced(ASTNode n, ASTRewrite r) {
+//      return n;
       return r.createStringPlaceholder(n.toString().trim(), n.getNodeType());
     }
     abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g);
@@ -200,7 +201,7 @@ public abstract class Wring<N extends ASTNode> {
           List<ASTNode> nl = Source.getComments(p);
           nl.addAll(Source.getComments(nextStatement));
           ReplaceToNextStatement.this.go(r, n, nextStatement, g);
-          if (replaced == null)
+          if (replaced == null || nl.size() == 0)
             return;
           nl.add(fixReplaced(replaced, r));
           r.replace(replaced, r.createGroupNode(nl.toArray(new ASTNode[nl.size()])), g);

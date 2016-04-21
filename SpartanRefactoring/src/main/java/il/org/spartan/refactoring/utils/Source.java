@@ -92,14 +92,10 @@ public class Source {
   @SuppressWarnings("unchecked")
   public static <N extends ASTNode> boolean isSpartanizationDisabled(N n) {
     // In a failure case, allow all spartanizations
-    if (s == null) {
-      System.err.println("Null Source");
+    if (s == null)
       return false;
-    }
-    if (cu == null) {
-      System.err.println("Null CompilationUnit");
+    if (cu == null)
       return false;
-    }
     int nln = cu.getLineNumber(n.getStartPosition()) - 1;
     for (Comment c : (List<Comment>) cu.getCommentList()) {
       CommentVisitor cv = new CommentVisitor();
@@ -124,18 +120,12 @@ public class Source {
   public static List<ASTNode> getComments(ASTNode n) {
     List<ASTNode> $ = new ArrayList<>();
     // In a failure case, allow all spartanizations
-    if (s == null) {
-      System.err.println("Null Source");
+    if (s == null)
       return $;
-    }
-    if (cu == null) {
-      System.err.println("Null CompilationUnit");
+    if (cu == null)
       return $;
-    }
-    if (r == null) {
-      System.err.println("Null ASTRewriter");
+    if (r == null)
       return $;
-    }
     SourceRange t = r.getExtendedSourceRangeComputer().computeSourceRange(n);
     int sp = t.getStartPosition();
     int ep = sp + t.getLength();
@@ -153,18 +143,12 @@ public class Source {
   public static String getCommentsAsString(ASTNode n) {
     String $ = "";
     // In a failure case, allow all spartanizations
-    if (s == null) {
-      System.err.println("Null Source");
+    if (s == null)
       return $;
-    }
-    if (cu == null) {
-      System.err.println("Null CompilationUnit");
+    if (cu == null)
       return $;
-    }
-    if (r == null) {
-      System.err.println("Null ASTRewriter");
+    if (r == null)
       return $;
-    }
     SourceRange t = r.getExtendedSourceRangeComputer().computeSourceRange(n);
     int sp = t.getStartPosition();
     int ep = sp + t.getLength();
