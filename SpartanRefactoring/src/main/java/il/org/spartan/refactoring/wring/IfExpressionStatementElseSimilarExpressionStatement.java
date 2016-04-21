@@ -13,10 +13,8 @@ import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Subject;
 
 /**
- * A {@link Wring} to convert <code>if (x)
- *   f(a);
- * else
- *   f(b);</code> into <code>f(x ? a : b);</code>
+ * A {@link Wring} to convert <code>if (x) f(a); else f(b);</code> into
+ * <code>f(x ? a : b);</code>
  *
  * @author Yossi Gil
  * @since 2015-07-29
@@ -32,10 +30,10 @@ public final class IfExpressionStatementElseSimilarExpressionStatement extends W
     final Expression e = pushdown(Subject.pair(then, elze).toCondition(s.getExpression()));
     return e == null ? null : Subject.operand(e).toStatement();
   }
-  @Override String description(@SuppressWarnings("unused") final IfStatement _) {
-    return "Consolidate two branches of an 'if' into a single ";
+  @Override String description(@SuppressWarnings("unused") final IfStatement s) {
+    return "Consolidate two branches of 'if(" + s.getExpression() + ") ... into one";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
+    return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }

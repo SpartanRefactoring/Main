@@ -12,10 +12,8 @@ import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Subject;
 
 /**
- * A {@link Wring} to convert <code>if (x)
- *   return b;
- * else
- *   return c;</code> into <code>return  x? b : c</code>
+ * A {@link Wring} to convert <code>if (x) return b; else return c;</code> into
+ * <code>return x? b : c</code>
  *
  * @author Yossi Gil
  * @since 2015-07-29
@@ -30,10 +28,10 @@ public final class IfReturnFooElseReturnBar extends Wring.ReplaceCurrentNode<IfS
   @Override boolean scopeIncludes(final IfStatement s) {
     return s != null && Extract.returnExpression(then(s)) != null && Extract.returnExpression(elze(s)) != null;
   }
-  @Override String description(@SuppressWarnings("unused") final IfStatement _) {
-    return "Replace if with a return of a conditional statement";
+  @Override String description(final IfStatement s) {
+    return "Replace if(" + s.getExpression() + ") ... with a return of a conditional statement";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.IF_TO_TERNARY;
+    return WringGroup.IF_TO_TERNARY;
   }
 }

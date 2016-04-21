@@ -10,8 +10,8 @@ import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.Subject;
 
 /**
- * A {@link Wring} to convert <code>if (x) ; else  {a;}</code> into
- * <code>if (!x) a;</code>.
+ * A {@link Wring} to convert <code>if (x) ; else {a;}</code> into <code>if (!x)
+ * a;</code>.
  *
  * @author Yossi Gil
  * @since 2015-08-26
@@ -24,10 +24,10 @@ public final class IfEmptyThen extends Wring.ReplaceCurrentNode<IfStatement> {
   @Override boolean scopeIncludes(final IfStatement s) {
     return s != null && Is.vacuousThen(s) && !Is.vacuousElse(s);
   }
-  @Override String description(@SuppressWarnings("unused") final IfStatement _) {
-    return "Invert conditional and remove vacuous 'then' branch";
+  @Override String description(final IfStatement s) {
+    return "Invert conditional and remove vacuous 'then' branch of if(" + s.getExpression() + ") ...";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REFACTOR_INEFFECTIVE;
+    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

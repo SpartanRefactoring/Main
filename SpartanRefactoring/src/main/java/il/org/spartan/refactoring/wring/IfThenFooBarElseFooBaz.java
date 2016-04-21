@@ -22,16 +22,15 @@ import il.org.spartan.refactoring.utils.Rewrite;
 import il.org.spartan.refactoring.utils.Subject;
 
 /**
- * A {@link Wring} to convert
- * <code>if (X) {foo(); bar();} else {foo(); baz();}</code> into
- * <code>foo(); if (X) bar(); else baz();</code>
+ * A {@link Wring} to convert <code>if (X) {foo(); bar();} else {foo();
+ * baz();}</code> into <code>foo(); if (X) bar(); else baz();</code>
  *
  * @author Yossi Gil
  * @since 2015-07-29
  */
 public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> {
-  @Override String description(@SuppressWarnings("unused") final IfStatement _) {
-    return "Condolidate commmon prefix of then and else branches to just before if statement";
+  @Override String description(final IfStatement s) {
+    return "Condolidate commmon prefix of then and else branches to just before if(" + s.getExpression() + ") ...";
   }
   @Override Rewrite make(final IfStatement s) {
     final List<Statement> then = Extract.statements(then(s));
@@ -85,6 +84,6 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> {
     return make(s) != null;
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REFACTOR_INEFFECTIVE;
+    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

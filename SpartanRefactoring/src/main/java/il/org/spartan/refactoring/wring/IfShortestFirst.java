@@ -8,8 +8,8 @@ import org.eclipse.jdt.core.dom.Statement;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 
 /**
- * A {@link Wring} to convert <code>a ? (f,g,h) : c(d,e)</code> into
- * <code>a ? c(d,e) : f(g,h)</code>
+ * A {@link Wring} to convert <code>a ? (f,g,h) : c(d,e)</code> into <code>a ?
+ * c(d,e) : f(g,h)</code>
  *
  * @author Yossi Gil
  * @since 2015-08-15
@@ -18,10 +18,10 @@ public final class IfShortestFirst extends Wring.ReplaceCurrentNode<IfStatement>
   @Override Statement replacement(final IfStatement s) {
     return Wrings.thenIsShorter(s) ? null : invert(s);
   }
-  @Override String description(@SuppressWarnings("unused") final IfStatement _) {
-    return "Invert logical conditiona and swap branches of 'if' to make the shortest branch first";
+  @Override String description(final IfStatement s) {
+    return "Invert logical conditiona and swap branches of if(" + s.getExpression() + ") ... to make the shortest branch first";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REORDER_EXPRESSIONS;
+    return WringGroup.REORDER_EXPRESSIONS;
   }
 }

@@ -17,15 +17,15 @@ import il.org.spartan.refactoring.utils.Rewrite;
 import il.org.spartan.refactoring.utils.Subject;
 
 /**
- * A {@link Wring} to convert <code>if (x) if (a) f();</code> into
- * <code>if (x && a) f();</code>
+ * A {@link Wring} to convert <code>if (x) if (a) f();</code> into <code>if (x
+ * && a) f();</code>
  *
  * @author Yossi Gil
  * @since 2015-09-01
  */
 public final class IfThenIfThenNoElseNoElse extends Wring<IfStatement> {
-  @Override String description(@SuppressWarnings("unused") final IfStatement _) {
-    return "Merge conditionals of nested if staement";
+  @Override String description(final IfStatement s) {
+    return "Merge conditionals of if(" + s.getExpression() + ") ... with its nested if";
   }
   @Override boolean scopeIncludes(final IfStatement s) {
     return make(s) != null;
@@ -54,6 +54,6 @@ public final class IfThenIfThenNoElseNoElse extends Wring<IfStatement> {
     return make(s, null);
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.SIMPLIFY_NESTED_BLOCKS;
+    return WringGroup.SIMPLIFY_NESTED_BLOCKS;
   }
 }

@@ -35,15 +35,16 @@ public final class IfReturnNoElseReturn extends Wring.ReplaceToNextStatement<IfS
     if (r2 == null)
       return null;
     final Expression e2 = Extract.core(r2.getExpression());
-    return e2 == null ? null : Wrings.replaceTwoStatements(r, s, Subject.operand(Subject.pair(e1, e2).toCondition(s.getExpression())).toReturn(), g);
+    return e2 == null ? null
+        : Wrings.replaceTwoStatements(r, s, Subject.operand(Subject.pair(e1, e2).toCondition(s.getExpression())).toReturn(), g);
   }
   @Override boolean scopeIncludes(final IfStatement s) {
     return Is.vacuousElse(s) && Extract.returnStatement(then(s)) != null && Extract.nextReturn(s) != null;
   }
-  @Override String description(@SuppressWarnings("unused") final IfStatement _) {
-    return "Consolidate into a single 'return'";
+  @Override String description(final IfStatement s) {
+    return "Consolidate if(" + s.getExpression() + ") ... inot a single 'return'";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.IF_TO_TERNARY;
+    return WringGroup.IF_TO_TERNARY;
   }
 }

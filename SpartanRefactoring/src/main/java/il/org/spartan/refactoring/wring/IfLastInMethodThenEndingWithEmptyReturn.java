@@ -18,17 +18,17 @@ import il.org.spartan.refactoring.utils.Rewrite;
 
 /**
  * A {@link Wring} to convert <code>if (a) { return x; } </code> into
- * <code>return x;</code> provided that this
- * <code><b>if</b></code> statement is the last statement in a method.
+ * <code>return x;</code> provided that this <code><b>if</b></code> statement is
+ * the last statement in a method.
  *
  * @author Yossi Gil
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-09-09
  */
-
 public class IfLastInMethodThenEndingWithEmptyReturn extends Wring<IfStatement> {
-  @Override String description(@SuppressWarnings("unused") final IfStatement _) {
-    return "Remove redundant return statement in 'then' branch of if statement that terminates this method";
+  @Override String description(final IfStatement s) {
+    return "Remove redundant return statement in 'then' branch of if(" + s.getExpression()
+        + ") ... statement that terminates this method";
   }
   @Override Rewrite make(final IfStatement s, final ExclusionManager exclude) {
     final Block b = asBlock(s.getParent());
@@ -46,6 +46,6 @@ public class IfLastInMethodThenEndingWithEmptyReturn extends Wring<IfStatement> 
     };
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REFACTOR_INEFFECTIVE;
+    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

@@ -22,27 +22,15 @@ import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.Subject;
 
 /**
- * A {@link Wring} to convert <code>if (x) {
- *   ;
- *   f();
- *   return a;
- * } else {
- *   ;
- *   g();
- *   {
- *   }
- * }</code> into <code>if (x) {
- *   f();
- *   return a;
- * }
- * g();</code>
+ * A {@link Wring} to convert <code>if (x) { ; f(); return a; } else { ; g(); {
+ * } }</code> into <code>if (x) { f(); return a; } g();</code>
  *
  * @author Yossi Gil
  * @since 2015-07-29
  */
 public final class IfCommandsSequencerNoElseSingletonSequencer extends Wring.ReplaceToNextStatement<IfStatement> {
-  @Override String description(@SuppressWarnings("unused") final IfStatement _) {
-    return "Invert conditional and use next statement)";
+  @Override String description(final IfStatement s) {
+    return "Invert conditional and use next statement of if(" + s.getExpression() + ") ...";
   }
   @Override ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!Is.vacuousElse(s) || !Is.sequencer(nextStatement) || !endsWithSequencer(then(s)))
@@ -70,6 +58,6 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends Wring.Rep
     return r;
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
+    return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }

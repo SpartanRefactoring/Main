@@ -9,8 +9,8 @@ import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.Rewrite;
 
 /**
- * A {@link Wring} to eliminate degenerate if statements such as
- * <code>if (x) ; else ;</code>
+ * A {@link Wring} to eliminate degenerate if statements such as <code>if (x) ;
+ * else ;</code>
  *
  * @author Yossi Gil
  * @since 2015-08-26
@@ -27,10 +27,10 @@ public final class IfEmptyThenEmptyElse extends Wring<IfStatement> {
   @Override boolean scopeIncludes(final IfStatement s) {
     return s != null && Is.vacuousThen(s) && Is.vacuousElse(s);
   }
-  @Override String description(@SuppressWarnings("unused") final IfStatement _) {
-    return "Remove 'if' statement with vacous 'then' and 'else' parts";
+  @Override String description(final IfStatement s) {
+    return "Remove if(" + s.getExpression() + ") with vacous 'then' and 'else' parts";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REFACTOR_INEFFECTIVE;
+    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }
