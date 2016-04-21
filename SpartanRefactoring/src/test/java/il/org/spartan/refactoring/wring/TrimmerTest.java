@@ -1343,6 +1343,15 @@ public class TrimmerTest {
   @Test public void issue21c() {
     trimming("\"a\".equals(a)").to("\"ab\".equals(a)");
   }
+  @Test public void issue21d() {
+    trimming("a.equalsIgnoreCase(\"a\")").to("\"a\".equalsIgnoreCase(a)");
+  }
+  @Test public void issue21e() {
+    trimming("a.equalsIgnoreCase(\"ab\")").to("\"ab\".equalsIgnoreCase(a)");
+  }
+  @Test public void issue21f() {
+    trimming("\"a\".equalsIgnoreCase(a)").to("\"ab\".equalsIgnoreCase(a)");
+  }
   @Test public void issue37Simplified() {
     trimming("" + //
         "    int a = 3;\n" + //
