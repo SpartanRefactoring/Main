@@ -11,8 +11,6 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
-import il.org.spartan.refactoring.spartanizations.Spartanization;
-
 /**
  * Tests that each directory in our test suite is a name of valid
  * {@link Spartanization} class.

@@ -5,12 +5,20 @@ import static il.org.spartan.refactoring.wring.Wrings.rename;
 
 import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Javadoc;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
+import org.eclipse.jdt.core.dom.TagElement;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.utils.Funcs;
+import il.org.spartan.refactoring.utils.JavaTypeNameParser;
+import il.org.spartan.refactoring.utils.MethodExplorer;
+import il.org.spartan.refactoring.utils.Rewrite;
 
 /**
  * A {@link Wring} that abbreviates the name of a method parameter that is a

@@ -3,7 +3,10 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.refactoring.utils.Funcs.elze;
 import static il.org.spartan.refactoring.utils.Funcs.same;
 import static il.org.spartan.refactoring.utils.Funcs.then;
-import static il.org.spartan.refactoring.wring.Wrings.*;
+import static il.org.spartan.refactoring.wring.Wrings.endsWithSequencer;
+import static il.org.spartan.refactoring.wring.Wrings.insertAfter;
+import static il.org.spartan.refactoring.wring.Wrings.invert;
+import static il.org.spartan.refactoring.wring.Wrings.shoudlInvert;
 
 import java.util.List;
 

@@ -1,10 +1,10 @@
 package il.org.spartan.refactoring.wring;
 
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.CONDITIONAL_OR;
 import static il.org.spartan.refactoring.utils.Funcs.asIfStatement;
 import static il.org.spartan.refactoring.utils.Funcs.same;
 import static il.org.spartan.refactoring.utils.Funcs.then;
 import static il.org.spartan.utils.Utils.last;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.CONDITIONAL_OR;
 
 import java.util.List;
 

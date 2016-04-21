@@ -2,7 +2,11 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.wring.Wrings.rename;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.SimpleName;
@@ -11,7 +15,10 @@ import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.utils.Funcs;
+import il.org.spartan.refactoring.utils.JavaTypeNameParser;
+import il.org.spartan.refactoring.utils.MethodExplorer;
+import il.org.spartan.refactoring.utils.Rewrite;
 
 /**
  * A {@link Wring} that abbreviates the names of variables that have a generic

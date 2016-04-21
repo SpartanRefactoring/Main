@@ -5,7 +5,10 @@ import static il.org.spartan.refactoring.utils.Funcs.asReturnStatement;
 import static il.org.spartan.refactoring.utils.Funcs.then;
 import static il.org.spartan.utils.Utils.lastIn;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.ReturnStatement;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
 

@@ -1,6 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Funcs.asBlock;
+import static il.org.spartan.refactoring.utils.Funcs.duplicate;
+import static il.org.spartan.refactoring.utils.Funcs.logicalNot;
+import static il.org.spartan.refactoring.utils.Funcs.then;
 import static il.org.spartan.utils.Utils.lastIn;
 
 import org.eclipse.jdt.core.dom.Block;

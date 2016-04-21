@@ -2,7 +2,11 @@ package il.org.spartan.refactoring.wring;
 
 import java.util.Arrays;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ClassInstanceCreation;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.MethodInvocation;
+
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 
 /**
