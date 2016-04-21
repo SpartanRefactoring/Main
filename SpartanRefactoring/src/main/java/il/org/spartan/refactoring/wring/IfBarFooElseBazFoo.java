@@ -22,16 +22,15 @@ import il.org.spartan.refactoring.utils.Rewrite;
 import il.org.spartan.refactoring.utils.Subject;
 
 /**
- * A {@link Wring} to convert
- * <code>if (X) {bar(); foo();} else {baz(); foo();}</code> into
- * <code>if (X) bar(); else baz(); foo();</code>
+ * A {@link Wring} to convert <code>if (X) {bar(); foo();} else {baz();
+ * foo();}</code> into <code>if (X) bar(); else baz(); foo();</code>
  *
  * @author Yossi Gil
  * @since 2015-09-05
  */
 public final class IfBarFooElseBazFoo extends Wring<IfStatement> {
-  @Override String description(@SuppressWarnings("unused") final IfStatement _) {
-    return "Consolidate commmon suffix of then and else branches to just after if statement";
+  @Override String description(final IfStatement s) {
+    return "Consolidate commmon suffix of then and else branches of if(" + s.getExpression() + ") to just after if statement";
   }
   @Override Rewrite make(final IfStatement s) {
     final List<Statement> then = Extract.statements(then(s));
@@ -59,7 +58,8 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> {
       }
       private IfStatement replacement(final Expression condition, final Statement trimmedThen, final Statement trimmedElse) {
         return trimmedThen == null && trimmedElse == null ? null
-            : trimmedThen == null ? Subject.pair(trimmedElse, null).toNot(condition) : Subject.pair(trimmedThen, trimmedElse).toIf(condition);
+            : trimmedThen == null ? Subject.pair(trimmedElse, null).toNot(condition)
+                : Subject.pair(trimmedThen, trimmedElse).toIf(condition);
       }
     };
   }
@@ -80,6 +80,6 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> {
     return super.make(s, exclude);
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
+    return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }
