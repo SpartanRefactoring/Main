@@ -791,6 +791,8 @@ public enum Is {
     return vacuous(then(s));
   }
   /**
+   * Determine whether a node is a {@link VariableDeclarationStatement}
+   *
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a variable
    *         declaration statement.
