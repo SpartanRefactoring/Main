@@ -166,7 +166,7 @@ import il.org.spartan.utils.FileUtils;
         if (a.startsWith("-C"))
           optRounds = Integer.parseUnsignedInt(a.substring(2));
       } catch (final NumberFormatException e) {
-        // Ignore
+        throw e; // TODO: Do we want to do something else?
       }
       if (a.equals("-V"))
         optVerbose = true;
