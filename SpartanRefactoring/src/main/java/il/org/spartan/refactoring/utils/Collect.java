@@ -114,8 +114,9 @@ public enum Collect {
         return consider(left(a));
       }
       @Override public boolean visit(final ForStatement s) {
-        return consider(s.initializers());
+        return consider(expose.initializers(s));
       }
+
       @Override public boolean visit(final PostfixExpression it) {
         return !in(it.getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT) || consider(it.getOperand());
       }
@@ -123,8 +124,9 @@ public enum Collect {
         return consider(it.getOperand());
       }
       @Override public boolean visit(final TryStatement s) {
-        return consider(s.resources());
+        return consider(expose.resources(s));
       }
+
       @Override public boolean visit(final VariableDeclarationFragment f) {
         return add(f.getName());
       }
@@ -258,7 +260,7 @@ public enum Collect {
         final List<VariableDeclarationFragment> $ = new ArrayList<>();
         classNode.accept(new ASTVisitor() {
           @Override public boolean visit(final FieldDeclaration d) {
-            $.addAll(d.fragments());
+            $.addAll(expose.fragments(d));
             return false;
           }
         });
