@@ -53,6 +53,7 @@ import org.eclipse.jdt.core.dom.ThrowStatement;
 
   public static class Claimer {
     protected final AST ast;
+
     public Claimer(final ASTNode n) {
       ast = n == null ? null : n.getAST();
     }
@@ -67,6 +68,7 @@ import org.eclipse.jdt.core.dom.ThrowStatement;
 
   public static class Operand extends Claimer {
     private final Expression inner;
+
     Operand(final Expression inner) {
       super(inner);
       this.inner = claim(inner);
@@ -110,6 +112,7 @@ import org.eclipse.jdt.core.dom.ThrowStatement;
 
   public static class Pair extends Claimer {
     final Expression left, right;
+
     Pair(final Expression left, final Expression right) {
       super(left);
       this.left = claim(left);
@@ -143,6 +146,7 @@ import org.eclipse.jdt.core.dom.ThrowStatement;
 
   public static class Several extends Claimer {
     private final List<Expression> operands;
+
     public Several(final List<Expression> operands) {
       super(operands.get(0));
       this.operands = new ArrayList<>();
@@ -153,13 +157,14 @@ import org.eclipse.jdt.core.dom.ThrowStatement;
       assert operands.size() >= 2;
       final InfixExpression $ = Subject.pair(operands.get(0), operands.get(1)).to(o);
       for (int i = 2; i < operands.size(); ++i)
-        $.extendedOperands().add(new Plant(operands.get(i)).into($));
+        get.extendedOperands($).add(new Plant(operands.get(i)).into($));
       return $;
     }
   }
 
   public static class SeveralStatements extends Claimer {
     private final List<Statement> inner;
+
     public SeveralStatements(final List<Statement> inner) {
       super(inner.isEmpty() ? null : inner.get(0));
       this.inner = new ArrayList<>();
@@ -168,7 +173,7 @@ import org.eclipse.jdt.core.dom.ThrowStatement;
     }
     public Block toBlock() {
       final Block $ = ast.newBlock();
-      $.statements().addAll(inner);
+      get.statements($).addAll(inner);
       return $;
     }
     public Statement toOptionalBlock() {
@@ -189,6 +194,7 @@ import org.eclipse.jdt.core.dom.ThrowStatement;
   public static class StatementPair extends Claimer {
     private final Statement elze;
     private final Statement then;
+
     StatementPair(final Statement then, final Statement elze) {
       super(then);
       this.then = claim(then);

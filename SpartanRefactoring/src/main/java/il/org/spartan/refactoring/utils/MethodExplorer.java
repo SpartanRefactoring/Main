@@ -28,6 +28,7 @@ import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
  */
 public class MethodExplorer {
   final MethodDeclaration inner;
+
   /**
    * Instantiate this class
    *
@@ -62,13 +63,13 @@ public class MethodExplorer {
         return add(s.resources());
       }
       @Override public boolean visit(final VariableDeclarationStatement s) {
-        addFragments(s.fragments());
+        addFragments(get.fragments(s));
         return true;
       }
       private boolean add(final List<VariableDeclarationExpression> initializers) {
         for (final Object o : initializers)
           if (o instanceof VariableDeclarationExpression)
-            addFragments(((VariableDeclarationExpression) o).fragments());
+            addFragments(get.fragments((VariableDeclarationExpression) o));
         return true;
       }
       private boolean add(final SingleVariableDeclaration d) {

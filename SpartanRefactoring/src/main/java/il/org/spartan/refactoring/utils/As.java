@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Scanner;
 
 import org.eclipse.core.resources.IFile;
@@ -22,6 +23,7 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.ReturnStatement;
 import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jface.text.Document;
 
 /**
@@ -92,6 +94,9 @@ public enum As {
         return null;
     }
   }
+  private static ReturnStatement asReturn(final Block b) {
+    return b.statements().size() != 1 ? null : asReturn((Statement) b.statements().get(0));
+  }
   /**
    * Converts a boolean into a bit value
    *
@@ -151,10 +156,9 @@ public enum As {
       return new StringBuilder("");
     }
   }
-  private static ReturnStatement asReturn(final Block b) {
-    return b.statements().size() != 1 ? null : asReturn((Statement) b.statements().get(0));
-  }
+
   final int kind;
+
   private As(final int kind) {
     this.kind = kind;
   }
@@ -202,6 +206,12 @@ public enum As {
   public ASTNode ast(final String s) {
     return makeParser(s).createAST(null);
   }
+  private ASTParser makeParser() {
+    final ASTParser $ = ASTParser.newParser(AST.JLS8);
+    $.setKind(kind);
+    $.setResolveBindings(false);
+    return $;
+  }
   /**
    * Creates a no-binding parser for a given text
    *
@@ -233,10 +243,35 @@ public enum As {
   public ASTParser makeParser(final String text) {
     return makeParser(text.toCharArray());
   }
-  private ASTParser makeParser() {
-    final ASTParser $ = ASTParser.newParser(AST.JLS8);
-    $.setKind(kind);
-    $.setResolveBindings(false);
-    return $;
+  /**
+   * Downcast <code>List<?></code> into <code>List<Expression></code>
+   *
+   * @param es JD
+   * @return the parameter, properly downcasted
+   *
+   */
+  @SuppressWarnings("unchecked") public static List<Expression> expressions(final List<?> es) {
+    return (List<Expression>) es;
+  }
+  /**
+   * Downcast <code>List<?></code> into
+   * <code>List<VariableDeclarationFragment></code>
+   *
+   * @param fs JD
+   * @return the parameter, properly downcasted
+   *
+   */
+  @SuppressWarnings("unchecked") public static List<VariableDeclarationFragment> fragments(final List<?> fs) {
+    return (List<VariableDeclarationFragment>) fs;
+  }
+  /**
+   * Downcast <code>List<?></code> into <code>List<Statement></code>
+   *
+   * @param ss JD
+   * @return the parameter, properly downcasted
+   *
+   */
+  @SuppressWarnings("unchecked") public static List<Statement> statements(final List<?> ss) {
+    return (List<Statement>) ss;
   }
 }

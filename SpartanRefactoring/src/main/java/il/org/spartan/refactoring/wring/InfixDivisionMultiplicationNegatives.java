@@ -25,6 +25,7 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGr
 import il.org.spartan.refactoring.utils.Plant;
 import il.org.spartan.refactoring.utils.Rewrite;
 import il.org.spartan.refactoring.utils.Subject;
+import il.org.spartan.refactoring.utils.get;
 
 /**
  * A {@link Wring} that sorts the arguments of a {@link Operator#DIVIDE}
@@ -59,7 +60,7 @@ public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpre
     gather(core(left(e)), $);
     gather(core(right(e)), $);
     if (e.hasExtendedOperands())
-      gather(e.extendedOperands(), $);
+      gather(get.extendedOperands(e), $);
     return $;
   }
   private static List<Expression> gather(final List<Expression> es, final List<Expression> $) {

@@ -19,6 +19,7 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGr
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.Rewrite;
+import il.org.spartan.refactoring.utils.get;
 
 /**
  * A {@link Wring} to convert <code> f() {
@@ -53,12 +54,13 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
         shorterIf.setElseStatement(null);
         final Block parent = asBlock(s.getParent());
         final Block newParent = s.getAST().newBlock();
+        final List<Statement> ss = get.statements(newParent);
         if (parent != null) {
-          addAllReplacing(newParent.statements(), parent.statements(), s, shorterIf, remainder);
+          addAllReplacing(ss, get.statements(parent), s, shorterIf, remainder);
           r.replace(parent, newParent, g);
         } else {
-          newParent.statements().add(shorterIf);
-          duplicateInto(remainder, newParent.statements());
+          ss.add(shorterIf);
+          duplicateInto(remainder, ss);
           r.replace(s, newParent, g);
         }
       }
@@ -68,6 +70,6 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
     return elze(s) != null && (endsWithSequencer(then(s)) || endsWithSequencer(elze(s)));
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.SIMPLIFY_NESTED_BLOCKS;
+    return WringGroup.SIMPLIFY_NESTED_BLOCKS;
   }
 }

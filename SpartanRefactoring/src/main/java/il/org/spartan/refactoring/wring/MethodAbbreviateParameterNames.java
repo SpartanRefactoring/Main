@@ -58,7 +58,7 @@ import il.org.spartan.refactoring.utils.Rewrite;
       }
     };
   }
-  private List<SingleVariableDeclaration> find(final List<SingleVariableDeclaration> ds) {
+  private static List<SingleVariableDeclaration> find(final List<SingleVariableDeclaration> ds) {
     final List<SingleVariableDeclaration> $ = new ArrayList<>();
     for (final SingleVariableDeclaration d : ds)
       if (suitable(d))
@@ -81,10 +81,10 @@ import il.org.spartan.refactoring.utils.Rewrite;
         return false;
     return !m.getName().getIdentifier().equalsIgnoreCase(Funcs.shortName(d.getType()));
   }
-  private boolean suitable(final SingleVariableDeclaration d) {
+  private static boolean suitable(final SingleVariableDeclaration d) {
     return new JavaTypeNameParser(d.getType().toString()).isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
   }
-  private boolean isShort(final SingleVariableDeclaration d) {
+  private static boolean isShort(final SingleVariableDeclaration d) {
     final String n = Funcs.shortName(d.getType());
     return n != null && (n + pluralVariadic(d)).equals(d.getName().getIdentifier());
   }

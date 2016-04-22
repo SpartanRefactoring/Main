@@ -53,14 +53,14 @@ import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.Plant;
 import il.org.spartan.refactoring.utils.Rewrite;
 import il.org.spartan.refactoring.utils.Subject;
+import il.org.spartan.refactoring.utils.get;
 
 /**
  * A wring is a transformation that works on an AstNode. Such a transformation
  * make a single simplification of the tree. A wring is so small that it is
  * idempotent: Applying a wring to the output of itself is the empty operation.
  *
- * @param <N>
- *          type of node which triggers the transformation.
+ * @param <N> type of node which triggers the transformation.
  * @author Yossi Gil
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-07-09
@@ -71,8 +71,7 @@ public abstract class Wring<N extends ASTNode> {
    * Determine whether the parameter is "eligible" for application of this
    * instance. The parameter must be within the scope of the current instance.
    *
-   * @param n
-   *          JD
+   * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is eligible for
    *         the simplification offered by this object.
    */
@@ -89,7 +88,7 @@ public abstract class Wring<N extends ASTNode> {
    * Returns the preference group to which the wring belongs to. This method
    * should be overridden for each wring and should return one of the values of
    * {@link WringGroup}
-   * 
+   *
    * @return the preference group this wring belongs to
    */
   abstract WringGroup wringGroup();
@@ -99,8 +98,7 @@ public abstract class Wring<N extends ASTNode> {
    * {@link Wring} is applicable in principle to an object, but that actual
    * application will be vacuous.
    *
-   * @param e
-   *          JD
+   * @param e JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is noneligible for
    *         the simplification offered by this object.
    * @see #eligible(InfixExpression)
@@ -114,8 +112,7 @@ public abstract class Wring<N extends ASTNode> {
    * be the case that a {@link Wring} is applicable in principle to an object,
    * but that actual application will be vacuous.
    *
-   * @param n
-   *          JD
+   * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is within the
    *         scope of this object
    */
@@ -229,8 +226,7 @@ public abstract class Wring<N extends ASTNode> {
     static List<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
       final List<VariableDeclarationFragment> $ = new ArrayList<>();
       boolean collecting = false;
-      for (final VariableDeclarationFragment brother : (List<VariableDeclarationFragment>) ((VariableDeclarationStatement) f
-          .getParent()).fragments()) {
+      for (final VariableDeclarationFragment brother : get.fragments((VariableDeclarationStatement) f.getParent())) {
         if (brother == f) {
           collecting = true;
           continue;
@@ -251,13 +247,14 @@ public abstract class Wring<N extends ASTNode> {
     }
     static int eliminationSaving(final VariableDeclarationFragment f) {
       final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-      final List<VariableDeclarationFragment> live = live(f, parent.fragments());
+      final List<VariableDeclarationFragment> live = live(f, get.fragments(parent));
       final int $ = size(parent);
       if (live.isEmpty())
         return $;
       final VariableDeclarationStatement newParent = duplicate(parent);
-      newParent.fragments().clear();
-      newParent.fragments().addAll(live);
+      final List<VariableDeclarationFragment> fs = get.fragments(newParent);
+      fs.clear();
+      fs.addAll(live);
       return $ - size(newParent);
     }
     /**
@@ -285,14 +282,15 @@ public abstract class Wring<N extends ASTNode> {
      */
     static void eliminate(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
       final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-      final List<VariableDeclarationFragment> live = live(f, parent.fragments());
+      final List<VariableDeclarationFragment> live = live(f, get.fragments(parent));
       if (live.isEmpty()) {
         r.remove(parent, g);
         return;
       }
       final VariableDeclarationStatement newParent = duplicate(parent);
-      newParent.fragments().clear();
-      newParent.fragments().addAll(live);
+      final List<VariableDeclarationFragment> fs = get.fragments(newParent);
+      fs.clear();
+      fs.addAll(live);
       r.replace(parent, newParent, g);
     }
     private static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f,
@@ -360,8 +358,7 @@ final class LocalInliner {
     /**
      * Computes the total number of AST nodes in the replaced parameters
      *
-     * @param es
-     *          JD
+     * @param es JD
      * @return A non-negative integer, computed from original size of the
      *         parameters, the number of occurrences of {@link #name} in the
      *         operands, and the size of the replacement.
@@ -373,8 +370,7 @@ final class LocalInliner {
      * Computes the number of AST nodes added as a result of the replacement
      * operation.
      *
-     * @param es
-     *          JD
+     * @param es JD
      * @return A non-negative integer, computed from the number of occurrences
      *         of {@link #name} in the operands, and the size of the
      *         replacement.

@@ -86,6 +86,7 @@ abstract class ScopeManager extends ASTVisitor {
 abstract class HidingDepth extends ScopeManager {
   private int depth = 0;
   private int hideDepth = Integer.MAX_VALUE;
+
   boolean hidden() {
     return depth >= hideDepth;
   }
@@ -105,6 +106,7 @@ abstract class HidingDepth extends ScopeManager {
 class UsesCollector extends HidingDepth {
   private final List<SimpleName> result;
   private final SimpleName focus;
+
   UsesCollector(final List<SimpleName> result, final SimpleName focus) {
     this.result = result;
     this.focus = focus;
@@ -127,7 +129,7 @@ class UsesCollector extends HidingDepth {
   @Override public boolean visit(final MethodInvocation i) {
     ingore(i.getName());
     recurse(i.getExpression());
-    return recurse(i.arguments());
+    return recurse(get.arguments(i));
   }
   @Override public boolean visit(final QualifiedName n) {
     return recurse(n.getQualifier());
@@ -138,7 +140,7 @@ class UsesCollector extends HidingDepth {
   }
   @Override public boolean visit(final SuperMethodInvocation i) {
     ingore(i.getName());
-    return recurse(i.arguments());
+    return recurse(get.arguments(i));
   }
   @Override public boolean visit(final VariableDeclarationFragment f) {
     return !declaredIn(f) && recurse(f.getInitializer());
@@ -228,7 +230,7 @@ class UsesCollector extends HidingDepth {
   private void ingore(@SuppressWarnings("unused") final SimpleName _) {
     // We simply ignore the parameter
   }
-  private boolean recurse(final List<ASTNode> ns) {
+  private boolean recurse(final Iterable<? extends ASTNode> ns) {
     for (final ASTNode n : ns)
       recurse(n);
     return false;
@@ -236,6 +238,7 @@ class UsesCollector extends HidingDepth {
 
   private final class DeclaredInFields extends ASTVisitor {
     private final ASTNode parent;
+
     DeclaredInFields(final ASTNode parent) {
       this.parent = parent;
     }

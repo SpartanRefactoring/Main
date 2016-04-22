@@ -30,6 +30,7 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGr
 import il.org.spartan.refactoring.utils.AncestorSearch;
 import il.org.spartan.refactoring.utils.Collect;
 import il.org.spartan.refactoring.utils.Extract;
+import il.org.spartan.refactoring.utils.get;
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.wring.LocalInliner.LocalInlineWithValue;
 
@@ -41,8 +42,8 @@ import il.org.spartan.refactoring.wring.LocalInliner.LocalInlineWithValue;
  * @since 2015-08-07
  */
 public final class DeclarationInitializerStatementTerminatingScope extends Wring.VariableDeclarationFragementAndStatement {
-  @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer, final Statement nextStatement,
-      final TextEditGroup g) {
+  @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+      final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || hasAnnotation(f))
       return null;
     final Statement s = Extract.statement(f);
@@ -51,7 +52,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
     final Block parent = asBlock(s.getParent());
     if (parent == null)
       return null;
-    final List<Statement> ss = parent.statements();
+    final List<Statement> ss = get.statements(parent);
     if (!lastIn(nextStatement, ss) || !penultimateIn(s, ss) || !Collect.definitionsOf(n).in(nextStatement).isEmpty())
       return null;
     final List<SimpleName> uses = Collect.usesOf(f.getName()).in(nextStatement);
@@ -109,6 +110,6 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
     return "Inline local " + f.getName() + " into subsequent statement";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
+    return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }

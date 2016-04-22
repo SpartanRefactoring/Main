@@ -14,6 +14,7 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGr
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.Subject;
+import il.org.spartan.refactoring.utils.get;
 
 /**
  * A {@link Wring} to convert <code>{;; g(); {}{;{;{;}};} }</code> into
@@ -45,12 +46,12 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
   private static Block reorganizeStatement(final Statement s) {
     final List<Statement> ss = Extract.statements(s);
     final Block $ = s.getAST().newBlock();
-    duplicateInto(ss, $.statements());
+    duplicateInto(ss, get.statements($));
     return $;
   }
   @Override Statement replacement(final Block b) {
     final List<Statement> ss = Extract.statements(b);
-    if (identical(ss, b.statements()))
+    if (identical(ss, get.statements(b)))
       return null;
     final ASTNode parent = b.getParent();
     if (!(parent instanceof Statement) || parent instanceof TryStatement)
@@ -71,6 +72,6 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
     return "Simplify block";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REMOVE_REDUNDANT_PUNCTUATION;
+    return WringGroup.REMOVE_REDUNDANT_PUNCTUATION;
   }
 }

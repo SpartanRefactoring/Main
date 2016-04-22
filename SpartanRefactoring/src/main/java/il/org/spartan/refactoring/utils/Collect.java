@@ -132,7 +132,7 @@ public enum Collect {
         return add(f.getName());
       }
       @Override public boolean visit(final VariableDeclarationStatement s) {
-        addFragments(s.fragments());
+        addFragments(get.fragments(s));
         return true;
       }
       boolean add(final SimpleName candidate) {
@@ -150,7 +150,7 @@ public enum Collect {
       private boolean consider(final List<VariableDeclarationExpression> initializers) {
         for (final Object o : initializers)
           if (o instanceof VariableDeclarationExpression)
-            addFragments(((VariableDeclarationExpression) o).fragments());
+            addFragments((get.fragments((VariableDeclarationExpression) o)));
         return true;
       }
     };

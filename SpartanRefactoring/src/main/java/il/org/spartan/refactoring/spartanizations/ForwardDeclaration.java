@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
@@ -18,6 +19,7 @@ import org.eclipse.text.edits.TextEditGroup;
 
 import il.org.spartan.refactoring.utils.Collect;
 import il.org.spartan.refactoring.utils.Rewrite;
+import il.org.spartan.refactoring.utils.get;
 
 /**
  * @author Artium Nihamkin (original)
@@ -62,13 +64,14 @@ public class ForwardDeclaration extends Spartanization {
         final int firstUseIdx = findFirstUse(b, f.getName());
         if (firstUseIdx < 0)
           return true;
-        final int declaredIdx = b.statements().indexOf(f.getParent());
+        final List<Statement> ss = get.statements(b);
+        final int declaredIdx = ss.indexOf(f.getParent());
         if (nextNodeIsAlreadyFixed(b, f, declaredIdx))
           return true;
         final int i = findBeginingOfDeclarationBlock(b, declaredIdx, firstUseIdx);
         if (declaredIdx >= i)
           return true;
-        final ASTNode declarationNode = (ASTNode) b.statements().get(declaredIdx);
+        final ASTNode declarationNode = ss.get(declaredIdx);
         final ListRewrite listRewrite = r.getListRewrite(b, Block.STATEMENTS_PROPERTY);
         if (((VariableDeclarationStatement) declarationNode).fragments().size() == 1)
           rewrite(i, declarationNode, listRewrite);
@@ -92,7 +95,7 @@ public class ForwardDeclaration extends Spartanization {
     final ASTNode nextN = (ASTNode) b.statements().get(1 + declaredIdx);
     final int nextDeclaredIdx = 1 + declaredIdx;
     if (nextN.getNodeType() == ASTNode.VARIABLE_DECLARATION_STATEMENT)
-      for (final VariableDeclarationFragment f : (List<VariableDeclarationFragment>) ((VariableDeclarationStatement) nextN).fragments())
+      for (final VariableDeclarationFragment f : get.fragments((VariableDeclarationStatement) nextN))
         if (nextDeclaredIdx + 1 == findFirstUse(b, f.getName()) && nextDeclaredIdx == beginingOfDeclarationsIdx)
           return true;
     return false;
@@ -122,17 +125,19 @@ public class ForwardDeclaration extends Spartanization {
   }
   static int findFirstUse(final Block b, final SimpleName n) {
     final ASTNode whereDeclared = n.getParent().getParent();
-    for (int $ = 1 + b.statements().indexOf(whereDeclared); $ < b.statements().size(); ++$)
-      if (Collect.BOTH_LEXICAL.of(n).in((ASTNode) b.statements().get($)).size() > 0)
+    final List<Statement> ss = get.statements(b);
+    for (int $ = 1 + ss.indexOf(whereDeclared); $ < ss.size(); ++$)
+      if (Collect.BOTH_LEXICAL.of(n).in((ASTNode) ss.get($)).size() > 0)
         return $; // first use!
     return -1; // that means unused
   }
   static int findBeginingOfDeclarationBlock(final Block b, final int declaredIdx, final int firstUseIdx) {
     int $ = firstUseIdx - 1;
     for (int i = firstUseIdx - 1; i > declaredIdx; --i) {
-      if (!(b.statements().get(i) instanceof VariableDeclarationStatement))
+      final List<Statement> ss = get.statements(b);
+      if (!(ss.get(i) instanceof VariableDeclarationStatement))
         break;
-      final VariableDeclarationStatement declarations = (VariableDeclarationStatement) b.statements().get(i);
+      final VariableDeclarationStatement declarations = (VariableDeclarationStatement) ss.get(i);
       boolean foundUsedVariable = false;
       for (final Object item : declarations.fragments())
         if (firstUseIdx == findFirstUse(b, ((VariableDeclarationFragment) item).getName())) {

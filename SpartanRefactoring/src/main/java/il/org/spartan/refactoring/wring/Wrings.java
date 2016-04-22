@@ -32,6 +32,7 @@ import org.eclipse.text.edits.TextEditGroup;
 import il.org.spartan.refactoring.utils.Collect;
 import il.org.spartan.refactoring.utils.ExpressionComparator;
 import il.org.spartan.refactoring.utils.Extract;
+import il.org.spartan.refactoring.utils.get;
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.LiteralParser;
 import il.org.spartan.refactoring.utils.Subject;
@@ -44,11 +45,13 @@ import il.org.spartan.refactoring.utils.Subject;
  */
 public enum Wrings {
   ;
-  static void rename(final SimpleName oldName, final SimpleName newName, final MethodDeclaration d, final ASTRewrite r, final TextEditGroup g) {
+  static void rename(final SimpleName oldName, final SimpleName newName, final MethodDeclaration d, final ASTRewrite r,
+      final TextEditGroup g) {
     new LocalInliner(oldName, r, g).byValue(newName)//
         .inlineInto(Collect.usesOf(oldName).in(d).toArray(new Expression[] {}));
   }
-  static void addAllReplacing(final List<Statement> to, final List<Statement> from, final Statement substitute, final Statement by1, final List<Statement> by2) {
+  static void addAllReplacing(final List<Statement> to, final List<Statement> from, final Statement substitute, final Statement by1,
+      final List<Statement> by2) {
     for (final Statement s : from)
       if (s != substitute)
         duplicateInto(s, to);
@@ -142,7 +145,7 @@ public enum Wrings {
     siblings.remove(i);
     siblings.add(i, by);
     final Block $ = parent.getAST().newBlock();
-    duplicateInto(siblings, $.statements());
+    duplicateInto(siblings, get.statements($));
     r.replace(parent, $, g);
     return r;
   }

@@ -436,7 +436,7 @@ public enum Funcs {
    */
   public static VariableDeclarationFragment getVarDeclFrag(final ASTNode n, final Expression name) {
     return hasNull(n, name) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || name.getNodeType() != SIMPLE_NAME ? null
-        : getVarDeclFrag(((VariableDeclarationStatement) n).fragments(), (SimpleName) name);
+        : getVarDeclFrag(get.fragments((VariableDeclarationStatement) n), (SimpleName) name);
   }
   /**
    * Determine whether a node is a return statement
