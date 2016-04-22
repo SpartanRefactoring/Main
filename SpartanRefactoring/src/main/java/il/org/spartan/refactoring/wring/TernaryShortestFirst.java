@@ -24,7 +24,8 @@ import il.org.spartan.utils.LongestCommonSubsequence;
  */
 public final class TernaryShortestFirst extends Wring.ReplaceCurrentNode<ConditionalExpression> {
   @Override ConditionalExpression replacement(final ConditionalExpression e) {
-    final ConditionalExpression $ = Subject.pair(core(e.getElseExpression()), core(e.getThenExpression())).toCondition(logicalNot(e.getExpression()));
+    final ConditionalExpression $ = Subject.pair(core(e.getElseExpression()), core(e.getThenExpression()))
+        .toCondition(logicalNot(e.getExpression()));
     final Expression then = $.getElseExpression();
     final Expression elze = $.getThenExpression();
     if (!Is.conditional(then) && Is.conditional(elze))
@@ -49,12 +50,13 @@ public final class TernaryShortestFirst extends Wring.ReplaceCurrentNode<Conditi
     return compatible(e1, e2) || compatible(e1, logicalNot(e2));
   }
   private static boolean compatible(final Expression e1, final Expression e2) {
-    return e1.getNodeType() == e2.getNodeType() && (e1 instanceof InstanceofExpression || e1 instanceof InfixExpression || e1 instanceof MethodInvocation);
+    return e1.getNodeType() == e2.getNodeType()
+        && (e1 instanceof InstanceofExpression || e1 instanceof InfixExpression || e1 instanceof MethodInvocation);
   }
   @Override String description(@SuppressWarnings("unused") final ConditionalExpression _) {
     return "Invert logical condition and exhange order of '?' and ':' operands to conditional expression";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REORDER_EXPRESSIONS;
+    return WringGroup.REORDER_EXPRESSIONS;
   }
 }

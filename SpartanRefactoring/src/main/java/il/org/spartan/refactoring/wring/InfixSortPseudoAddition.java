@@ -32,6 +32,6 @@ public final class InfixSortPseudoAddition extends Wring.InfixSorting {
     return in(e.getOperator(), OR, XOR, AND);
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REORDER_EXPRESSIONS;
+    return WringGroup.REORDER_EXPRESSIONS;
   }
 }

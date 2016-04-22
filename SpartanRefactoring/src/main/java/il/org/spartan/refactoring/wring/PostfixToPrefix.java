@@ -40,6 +40,6 @@ public final class PostfixToPrefix extends Wring.ReplaceCurrentNode<PostfixExpre
     return o == PostfixExpression.Operator.DECREMENT ? "decrement" : "increment";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REORDER_EXPRESSIONS;
+    return WringGroup.REORDER_EXPRESSIONS;
   }
 }

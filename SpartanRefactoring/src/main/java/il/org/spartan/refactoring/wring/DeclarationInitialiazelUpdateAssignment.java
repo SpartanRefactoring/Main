@@ -29,8 +29,8 @@ import il.org.spartan.refactoring.wring.LocalInliner.LocalInlineWithValue;
  * @since 2015-08-07
  */
 public final class DeclarationInitialiazelUpdateAssignment extends Wring.VariableDeclarationFragementAndStatement {
-  @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer, final Statement nextStatement,
-      final TextEditGroup g) {
+  @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+      final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
       return null;
     final Assignment a = Extract.assignment(nextStatement);
@@ -52,6 +52,6 @@ public final class DeclarationInitialiazelUpdateAssignment extends Wring.Variabl
     return "Consolidate declaration of " + f.getName() + " with its subsequent initialization";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
+    return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }

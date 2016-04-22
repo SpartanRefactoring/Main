@@ -39,6 +39,6 @@ public final class InfixSortAddition extends Wring.InfixSorting {
     return e.getOperator() == PLUS;
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REORDER_EXPRESSIONS;
+    return WringGroup.REORDER_EXPRESSIONS;
   }
 }

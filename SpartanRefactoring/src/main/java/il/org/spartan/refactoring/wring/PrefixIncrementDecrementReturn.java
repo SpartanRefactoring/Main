@@ -43,6 +43,6 @@ public class PrefixIncrementDecrementReturn extends Wring.ReplaceToNextStatement
     return "Consolidate " + e + " with subsequent 'return' of " + e.getOperand();
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
+    return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }

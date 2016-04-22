@@ -39,6 +39,6 @@ public class AssignmentAndReturn extends Wring.ReplaceToNextStatement<Assignment
     return "Inline assignment to " + left(a) + " with its subsequent 'return'";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
+    return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }

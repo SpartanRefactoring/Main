@@ -25,6 +25,6 @@ public final class InfixConditionalOrFalse extends Wring.ReplaceCurrentNode<Infi
     return "Remove 'false' argument to '||'";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REFACTOR_INEFFECTIVE;
+    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

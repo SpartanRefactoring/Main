@@ -27,6 +27,6 @@ public final class InfixSortDivision extends Wring.InfixSortingOfCDR {
     return in(e.getOperator(), DIVIDE);
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REORDER_EXPRESSIONS;
+    return WringGroup.REORDER_EXPRESSIONS;
   }
 }

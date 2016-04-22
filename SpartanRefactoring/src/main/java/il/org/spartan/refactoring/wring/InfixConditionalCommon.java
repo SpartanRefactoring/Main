@@ -40,7 +40,8 @@ public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<Infix
     if (right == null || right.getOperator() != conjugate)
       return null;
     final Expression leftLeft = left(left);
-    return !Is.sideEffectFree(leftLeft) || !same(leftLeft, left(right)) ? null : Subject.pair(leftLeft, Subject.pair(chopHead(left), chopHead(right)).to(o)).to(conjugate);
+    return !Is.sideEffectFree(leftLeft) || !same(leftLeft, left(right)) ? null
+        : Subject.pair(leftLeft, Subject.pair(chopHead(left), chopHead(right)).to(o)).to(conjugate);
   }
   private static Operator conjugate(final Operator o) {
     return o == null ? null
@@ -57,6 +58,6 @@ public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<Infix
     return "Factor out common logical component of ||";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REFACTOR_INEFFECTIVE;
+    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

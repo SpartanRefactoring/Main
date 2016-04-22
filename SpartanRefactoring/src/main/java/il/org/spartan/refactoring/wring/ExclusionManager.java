@@ -9,6 +9,7 @@ import il.org.spartan.refactoring.utils.Ancestors;
 
 class ExclusionManager {
   final Set<ASTNode> inner = new HashSet<>();
+
   boolean isExcluded(final ASTNode n) {
     for (final ASTNode ancestor : new Ancestors(n))
       if (inner.contains(ancestor))

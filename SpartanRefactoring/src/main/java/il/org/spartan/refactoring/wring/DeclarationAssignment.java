@@ -24,8 +24,8 @@ import il.org.spartan.refactoring.utils.Extract;
  * @since 2015-08-07
  */
 public final class DeclarationAssignment extends Wring.VariableDeclarationFragementAndStatement {
-  @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer, final Statement nextStatement,
-      final TextEditGroup g) {
+  @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+      final Statement nextStatement, final TextEditGroup g) {
     if (initializer != null)
       return null;
     final Assignment a = Extract.assignment(nextStatement);
@@ -35,7 +35,8 @@ public final class DeclarationAssignment extends Wring.VariableDeclarationFragem
     r.remove(Extract.statement(a), g);
     return r;
   }
-  private static VariableDeclarationFragment makeVariableDeclarationFragement(final VariableDeclarationFragment f, final Expression e) {
+  private static VariableDeclarationFragment makeVariableDeclarationFragement(final VariableDeclarationFragment f,
+      final Expression e) {
     final VariableDeclarationFragment $ = duplicate(f);
     $.setInitializer(duplicate(e));
     return $;
@@ -44,6 +45,6 @@ public final class DeclarationAssignment extends Wring.VariableDeclarationFragem
     return "Consolidate declaration of " + f.getName() + " with its subsequent initialization";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
+    return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }

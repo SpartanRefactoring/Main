@@ -26,6 +26,7 @@ import il.org.spartan.refactoring.utils.Rewrite;
  */
 public class AsSpartanization extends Spartanization {
   final Wring<ASTNode> inner;
+
   /**
    * Instantiates this class
    *

@@ -52,6 +52,6 @@ public final class InfixComparisonBooleanLiteral extends Wring.ReplaceCurrentNod
     return new Plant(!negating(e, literal) ? nonliteral : logicalNot(nonliteral)).into(e.getParent());
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REFACTOR_INEFFECTIVE;
+    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

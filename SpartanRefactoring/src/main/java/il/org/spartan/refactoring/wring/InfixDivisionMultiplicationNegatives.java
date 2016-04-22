@@ -99,6 +99,6 @@ public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpre
     };
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REORDER_EXPRESSIONS;
+    return WringGroup.REORDER_EXPRESSIONS;
   }
 }

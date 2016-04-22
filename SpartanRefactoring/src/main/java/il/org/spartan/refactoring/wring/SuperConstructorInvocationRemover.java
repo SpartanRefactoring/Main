@@ -29,6 +29,6 @@ public class SuperConstructorInvocationRemover extends Wring<SuperConstructorInv
     return "Remove empty 'super()' invocation";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REFACTOR_INEFFECTIVE;
+    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

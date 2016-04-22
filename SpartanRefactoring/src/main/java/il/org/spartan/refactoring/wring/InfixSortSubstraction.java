@@ -28,6 +28,6 @@ public final class InfixSortSubstraction extends Wring.InfixSortingOfCDR {
     return in(e.getOperator(), MINUS);
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REORDER_EXPRESSIONS;
+    return WringGroup.REORDER_EXPRESSIONS;
   }
 }

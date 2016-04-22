@@ -26,6 +26,6 @@ public final class TernaryEliminate extends Wring.ReplaceCurrentNode<Conditional
     return "Eliminate conditional exprssion with identical branches";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REFACTOR_INEFFECTIVE;
+    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

@@ -61,6 +61,6 @@ public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<Condit
     return "Convert conditional expression into logical expression";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.IF_TO_TERNARY;
+    return WringGroup.IF_TO_TERNARY;
   }
 }

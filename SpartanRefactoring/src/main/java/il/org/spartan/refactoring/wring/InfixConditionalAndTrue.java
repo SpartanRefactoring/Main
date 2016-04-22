@@ -25,6 +25,6 @@ public final class InfixConditionalAndTrue extends Wring.ReplaceCurrentNode<Infi
     return "Remove 'true' argument to '&&'";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REFACTOR_INEFFECTIVE;
+    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

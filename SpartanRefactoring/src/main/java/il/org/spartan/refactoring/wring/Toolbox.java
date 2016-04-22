@@ -36,7 +36,9 @@ public class Toolbox {
         return $;
     return null;
   }
+
   private final Map<Class<? extends ASTNode>, List<Object>> inner = new HashMap<>();
+
   /**
    * Find the first {@link Wring} appropriate for an {@link ASTNode}
    *
@@ -147,6 +149,7 @@ public class Toolbox {
   public static Toolbox instance() {
     return instance;
   }
+
   /** The default instance of this class */
   static Toolbox instance;
 

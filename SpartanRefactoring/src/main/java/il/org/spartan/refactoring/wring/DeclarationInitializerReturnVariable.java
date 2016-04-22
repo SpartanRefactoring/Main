@@ -24,8 +24,8 @@ import il.org.spartan.refactoring.utils.Subject;
  * @since 2015-08-07
  */
 public final class DeclarationInitializerReturnVariable extends Wring.VariableDeclarationFragementAndStatement {
-  @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer, final Statement nextStatement,
-      final TextEditGroup g) {
+  @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+      final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || hasAnnotation(f))
       return null;
     final ReturnStatement s = asReturnStatement(nextStatement);
@@ -42,6 +42,6 @@ public final class DeclarationInitializerReturnVariable extends Wring.VariableDe
     return "Eliminate temporary " + f.getName() + " and return its value";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.ELIMINATE_TEMP;
+    return WringGroup.ELIMINATE_TEMP;
   }
 }

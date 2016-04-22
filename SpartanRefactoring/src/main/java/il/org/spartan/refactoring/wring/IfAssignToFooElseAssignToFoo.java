@@ -27,7 +27,9 @@ public final class IfAssignToFooElseAssignToFoo extends Wring.ReplaceCurrentNode
   @Override Statement replacement(final IfStatement s) {
     final Assignment then = Extract.assignment(then(s));
     final Assignment elze = Extract.assignment(elze(s));
-    return !compatible(then, elze) ? null : Subject.pair(left(then), Subject.pair(right(then), right(elze)).toCondition(s.getExpression())).toStatement(then.getOperator());
+    return !compatible(then, elze) ? null
+        : Subject.pair(left(then), Subject.pair(right(then), right(elze)).toCondition(s.getExpression()))
+            .toStatement(then.getOperator());
   }
   @Override boolean scopeIncludes(final IfStatement s) {
     return s != null && compatible(Extract.assignment(then(s)), Extract.assignment(elze(s)));
@@ -36,6 +38,6 @@ public final class IfAssignToFooElseAssignToFoo extends Wring.ReplaceCurrentNode
     return "Consolidate assignments to " + left(Extract.assignment(then(s)));
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.IF_TO_TERNARY;
+    return WringGroup.IF_TO_TERNARY;
   }
 }

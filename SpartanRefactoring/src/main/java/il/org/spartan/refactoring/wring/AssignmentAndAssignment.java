@@ -54,6 +54,6 @@ public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assign
     return "Consolidate assignment to " + left(a) + " with subsequent similar assignment";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
+    return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }
