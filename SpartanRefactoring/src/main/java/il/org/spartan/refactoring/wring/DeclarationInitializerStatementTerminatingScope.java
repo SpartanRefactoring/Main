@@ -30,8 +30,8 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGr
 import il.org.spartan.refactoring.utils.AncestorSearch;
 import il.org.spartan.refactoring.utils.Collect;
 import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.get;
 import il.org.spartan.refactoring.utils.Is;
+import il.org.spartan.refactoring.utils.get;
 import il.org.spartan.refactoring.wring.LocalInliner.LocalInlineWithValue;
 
 /**

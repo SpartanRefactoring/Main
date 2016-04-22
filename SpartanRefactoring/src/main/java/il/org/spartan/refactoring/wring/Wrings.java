@@ -32,10 +32,10 @@ import org.eclipse.text.edits.TextEditGroup;
 import il.org.spartan.refactoring.utils.Collect;
 import il.org.spartan.refactoring.utils.ExpressionComparator;
 import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.get;
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.LiteralParser;
 import il.org.spartan.refactoring.utils.Subject;
+import il.org.spartan.refactoring.utils.get;
 
 /**
  * A number of utility functions common to all wrings.
