@@ -104,10 +104,7 @@ public enum Collect {
   public static Collector usesOf(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
-        final List<SimpleName> $ = new ArrayList<>();
-        for (final ASTNode n : ns)
-          n.accept(new UsesCollector($, name));
-        return $;
+        return this.usesOf(new ArrayList<>(), ns);
       }
     };
   }
@@ -150,7 +147,7 @@ public enum Collect {
       private boolean consider(final List<VariableDeclarationExpression> initializers) {
         for (final Object o : initializers)
           if (o instanceof VariableDeclarationExpression)
-            addFragments((get.fragments((VariableDeclarationExpression) o)));
+            addFragments(get.fragments((VariableDeclarationExpression) o));
         return true;
       }
     };
@@ -367,5 +364,10 @@ public enum Collect {
       this.name = name;
     }
     public abstract List<SimpleName> in(final ASTNode... ns);
+    protected List<SimpleName> usesOf(final List<SimpleName> $, final ASTNode... ns) {
+      for (final ASTNode n : ns)
+        n.accept(new UsesCollector($, name));
+      return $;
+    }
   }
 }
