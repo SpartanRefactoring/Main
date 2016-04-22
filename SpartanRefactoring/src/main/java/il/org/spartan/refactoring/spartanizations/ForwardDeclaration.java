@@ -19,7 +19,7 @@ import org.eclipse.text.edits.TextEditGroup;
 
 import il.org.spartan.refactoring.utils.Collect;
 import il.org.spartan.refactoring.utils.Rewrite;
-import il.org.spartan.refactoring.utils.get;
+import il.org.spartan.refactoring.utils.expose;
 
 /**
  * @author Artium Nihamkin (original)
@@ -64,7 +64,7 @@ public class ForwardDeclaration extends Spartanization {
         final int firstUseIdx = findFirstUse(b, f.getName());
         if (firstUseIdx < 0)
           return true;
-        final List<Statement> ss = get.statements(b);
+        final List<Statement> ss = expose.statements(b);
         final int declaredIdx = ss.indexOf(f.getParent());
         if (nextNodeIsAlreadyFixed(b, f, declaredIdx))
           return true;
@@ -95,7 +95,7 @@ public class ForwardDeclaration extends Spartanization {
     final ASTNode nextN = (ASTNode) b.statements().get(1 + declaredIdx);
     final int nextDeclaredIdx = 1 + declaredIdx;
     if (nextN.getNodeType() == ASTNode.VARIABLE_DECLARATION_STATEMENT)
-      for (final VariableDeclarationFragment f : get.fragments((VariableDeclarationStatement) nextN))
+      for (final VariableDeclarationFragment f : expose.fragments((VariableDeclarationStatement) nextN))
         if (nextDeclaredIdx + 1 == findFirstUse(b, f.getName()) && nextDeclaredIdx == beginingOfDeclarationsIdx)
           return true;
     return false;
@@ -125,7 +125,7 @@ public class ForwardDeclaration extends Spartanization {
   }
   static int findFirstUse(final Block b, final SimpleName n) {
     final ASTNode whereDeclared = n.getParent().getParent();
-    final List<Statement> ss = get.statements(b);
+    final List<Statement> ss = expose.statements(b);
     for (int $ = 1 + ss.indexOf(whereDeclared); $ < ss.size(); ++$)
       if (Collect.BOTH_LEXICAL.of(n).in((ASTNode) ss.get($)).size() > 0)
         return $; // first use!
@@ -134,7 +134,7 @@ public class ForwardDeclaration extends Spartanization {
   static int findBeginingOfDeclarationBlock(final Block b, final int declaredIdx, final int firstUseIdx) {
     int $ = firstUseIdx - 1;
     for (int i = firstUseIdx - 1; i > declaredIdx; --i) {
-      final List<Statement> ss = get.statements(b);
+      final List<Statement> ss = expose.statements(b);
       if (!(ss.get(i) instanceof VariableDeclarationStatement))
         break;
       final VariableDeclarationStatement declarations = (VariableDeclarationStatement) ss.get(i);

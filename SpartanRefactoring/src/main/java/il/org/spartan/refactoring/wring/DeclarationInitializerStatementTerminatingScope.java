@@ -31,7 +31,7 @@ import il.org.spartan.refactoring.utils.AncestorSearch;
 import il.org.spartan.refactoring.utils.Collect;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.get;
+import il.org.spartan.refactoring.utils.expose;
 import il.org.spartan.refactoring.wring.LocalInliner.LocalInlineWithValue;
 
 /**
@@ -52,7 +52,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
     final Block parent = asBlock(s.getParent());
     if (parent == null)
       return null;
-    final List<Statement> ss = get.statements(parent);
+    final List<Statement> ss = expose.statements(parent);
     if (!lastIn(nextStatement, ss) || !penultimateIn(s, ss) || !Collect.definitionsOf(n).in(nextStatement).isEmpty())
       return null;
     final List<SimpleName> uses = Collect.usesOf(f.getName()).in(nextStatement);

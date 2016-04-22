@@ -53,7 +53,7 @@ import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.Plant;
 import il.org.spartan.refactoring.utils.Rewrite;
 import il.org.spartan.refactoring.utils.Subject;
-import il.org.spartan.refactoring.utils.get;
+import il.org.spartan.refactoring.utils.expose;
 
 /**
  * A wring is a transformation that works on an AstNode. Such a transformation
@@ -226,7 +226,7 @@ public abstract class Wring<N extends ASTNode> {
     static List<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
       final List<VariableDeclarationFragment> $ = new ArrayList<>();
       boolean collecting = false;
-      for (final VariableDeclarationFragment brother : get.fragments((VariableDeclarationStatement) f.getParent())) {
+      for (final VariableDeclarationFragment brother : expose.fragments((VariableDeclarationStatement) f.getParent())) {
         if (brother == f) {
           collecting = true;
           continue;
@@ -247,12 +247,12 @@ public abstract class Wring<N extends ASTNode> {
     }
     static int eliminationSaving(final VariableDeclarationFragment f) {
       final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-      final List<VariableDeclarationFragment> live = live(f, get.fragments(parent));
+      final List<VariableDeclarationFragment> live = live(f, expose.fragments(parent));
       final int $ = size(parent);
       if (live.isEmpty())
         return $;
       final VariableDeclarationStatement newParent = duplicate(parent);
-      final List<VariableDeclarationFragment> fs = get.fragments(newParent);
+      final List<VariableDeclarationFragment> fs = expose.fragments(newParent);
       fs.clear();
       fs.addAll(live);
       return $ - size(newParent);
@@ -282,13 +282,13 @@ public abstract class Wring<N extends ASTNode> {
      */
     static void eliminate(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
       final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-      final List<VariableDeclarationFragment> live = live(f, get.fragments(parent));
+      final List<VariableDeclarationFragment> live = live(f, expose.fragments(parent));
       if (live.isEmpty()) {
         r.remove(parent, g);
         return;
       }
       final VariableDeclarationStatement newParent = duplicate(parent);
-      final List<VariableDeclarationFragment> fs = get.fragments(newParent);
+      final List<VariableDeclarationFragment> fs = expose.fragments(newParent);
       fs.clear();
       fs.addAll(live);
       r.replace(parent, newParent, g);

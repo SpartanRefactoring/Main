@@ -29,7 +29,7 @@ import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Plant;
 import il.org.spartan.refactoring.utils.Precedence;
 import il.org.spartan.refactoring.utils.Subject;
-import il.org.spartan.refactoring.utils.get;
+import il.org.spartan.refactoring.utils.expose;
 
 final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpression> {
   private static int findSingleDifference(final List<Expression> es1, final List<Expression> es2) {
@@ -57,7 +57,7 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
     if (i < 0)
       return null;
     final ClassInstanceCreation $ = duplicate(e1);
-    final List<Expression> es = get.arguments($);
+    final List<Expression> es = expose.arguments($);
     es.remove(i);
     es.add(i, Subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression()));
     return $;
@@ -88,8 +88,8 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
   private static Expression pushdown(final ConditionalExpression e, final MethodInvocation e1, final MethodInvocation e2) {
     if (!same(e1.getName(), e2.getName()))
       return null;
-    final List<Expression> es1 = get.arguments(e1);
-    final List<Expression> es2 = get.arguments(e2);
+    final List<Expression> es1 = expose.arguments(e1);
+    final List<Expression> es2 = expose.arguments(e2);
     final Expression receiver1 = e1.getExpression();
     final Expression receiver2 = e2.getExpression();
     if (!same(receiver1, receiver2)) {
@@ -106,24 +106,24 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
     if (i < 0)
       return null;
     final MethodInvocation $ = duplicate(e1);
-    get.arguments($).remove(i);
-    get.arguments($).add(i, Subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression()));
+    expose.arguments($).remove(i);
+    expose.arguments($).add(i, Subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression()));
     return $;
   }
   private static Expression pushdown(final ConditionalExpression e, final SuperMethodInvocation e1,
       final SuperMethodInvocation e2) {
     if (!same(e1.getName(), e2.getName()))
       return null;
-    final List<Expression> es1 = get.arguments(e1);
-    final List<Expression> es2 = get.arguments(e2);
+    final List<Expression> es1 = expose.arguments(e1);
+    final List<Expression> es2 = expose.arguments(e2);
     if (es1.size() != es2.size())
       return null;
     final int i = findSingleDifference(es1, es2);
     if (i < 0)
       return null;
     final SuperMethodInvocation $ = duplicate(e1);
-    get.arguments($).remove(i);
-    get.arguments($).add(i, Subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression()));
+    expose.arguments($).remove(i);
+    expose.arguments($).add(i, Subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression()));
     return $;
   }
   static Expression pushdown(final ConditionalExpression e, final Assignment a1, final Assignment a2) {

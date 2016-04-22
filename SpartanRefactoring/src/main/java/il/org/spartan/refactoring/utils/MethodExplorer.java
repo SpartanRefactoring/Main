@@ -63,13 +63,13 @@ public class MethodExplorer {
         return add(s.resources());
       }
       @Override public boolean visit(final VariableDeclarationStatement s) {
-        addFragments(get.fragments(s));
+        addFragments(expose.fragments(s));
         return true;
       }
       private boolean add(final List<VariableDeclarationExpression> initializers) {
         for (final Object o : initializers)
           if (o instanceof VariableDeclarationExpression)
-            addFragments(get.fragments((VariableDeclarationExpression) o));
+            addFragments(expose.fragments((VariableDeclarationExpression) o));
         return true;
       }
       private boolean add(final SingleVariableDeclaration d) {

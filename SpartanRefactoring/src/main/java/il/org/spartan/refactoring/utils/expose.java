@@ -21,7 +21,7 @@ import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
  * @author Yossi Gil
  * @since 2015-07-16
  */
-public enum get {
+public enum expose {
   ;
   /**
    * Get the list of arguments in a {@link ClassInstanceCreation}

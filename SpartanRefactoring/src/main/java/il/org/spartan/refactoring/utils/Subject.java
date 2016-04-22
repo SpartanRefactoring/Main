@@ -157,7 +157,7 @@ import org.eclipse.jdt.core.dom.ThrowStatement;
       assert operands.size() >= 2;
       final InfixExpression $ = Subject.pair(operands.get(0), operands.get(1)).to(o);
       for (int i = 2; i < operands.size(); ++i)
-        get.extendedOperands($).add(new Plant(operands.get(i)).into($));
+        expose.extendedOperands($).add(new Plant(operands.get(i)).into($));
       return $;
     }
   }
@@ -173,7 +173,7 @@ import org.eclipse.jdt.core.dom.ThrowStatement;
     }
     public Block toBlock() {
       final Block $ = ast.newBlock();
-      get.statements($).addAll(inner);
+      expose.statements($).addAll(inner);
       return $;
     }
     public Statement toOptionalBlock() {

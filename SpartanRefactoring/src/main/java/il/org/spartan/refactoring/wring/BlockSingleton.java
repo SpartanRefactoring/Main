@@ -14,7 +14,7 @@ import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.get;
+import il.org.spartan.refactoring.utils.expose;
 
 /**
  * A {@link Wring} to convert <code>if (a) (g();}</code> into
@@ -25,7 +25,7 @@ import il.org.spartan.refactoring.utils.get;
  */
 public class BlockSingleton extends Wring.ReplaceCurrentNode<Block> {
   @Override Statement replacement(final Block b) {
-    final List<Statement> ss = get.statements(b);
+    final List<Statement> ss = expose.statements(b);
     final ASTNode parent = parent(b);
     if (!(parent instanceof Statement) || parent instanceof TryStatement || parent instanceof SynchronizedStatement
         || ss.size() == 1 && ss.get(0) instanceof VariableDeclarationStatement || ss.size() != 1)

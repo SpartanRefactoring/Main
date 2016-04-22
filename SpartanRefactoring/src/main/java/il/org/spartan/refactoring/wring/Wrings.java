@@ -35,7 +35,7 @@ import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.LiteralParser;
 import il.org.spartan.refactoring.utils.Subject;
-import il.org.spartan.refactoring.utils.get;
+import il.org.spartan.refactoring.utils.expose;
 
 /**
  * A number of utility functions common to all wrings.
@@ -145,7 +145,7 @@ public enum Wrings {
     siblings.remove(i);
     siblings.add(i, by);
     final Block $ = parent.getAST().newBlock();
-    duplicateInto(siblings, get.statements($));
+    duplicateInto(siblings, expose.statements($));
     r.replace(parent, $, g);
     return r;
   }

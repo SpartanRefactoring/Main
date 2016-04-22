@@ -19,7 +19,7 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGr
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.Rewrite;
-import il.org.spartan.refactoring.utils.get;
+import il.org.spartan.refactoring.utils.expose;
 
 /**
  * A {@link Wring} to convert <code> f() {
@@ -54,9 +54,9 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
         shorterIf.setElseStatement(null);
         final Block parent = asBlock(s.getParent());
         final Block newParent = s.getAST().newBlock();
-        final List<Statement> ss = get.statements(newParent);
+        final List<Statement> ss = expose.statements(newParent);
         if (parent != null) {
-          addAllReplacing(ss, get.statements(parent), s, shorterIf, remainder);
+          addAllReplacing(ss, expose.statements(parent), s, shorterIf, remainder);
           r.replace(parent, newParent, g);
         } else {
           ss.add(shorterIf);

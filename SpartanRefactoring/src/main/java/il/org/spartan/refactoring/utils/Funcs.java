@@ -429,14 +429,14 @@ public enum Funcs {
     return !conjugate.containsKey(o) ? o : conjugate.get(o);
   }
   /**
-   * @param n the node from which to extract the proper fragment
+   * @param n the node from which to expose the proper fragment
    * @param name the name by which to look for the fragment
    * @return the fragment if such with the given name exists or null otherwise
    *         (or if s or name are null)
    */
   public static VariableDeclarationFragment getVarDeclFrag(final ASTNode n, final Expression name) {
     return hasNull(n, name) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || name.getNodeType() != SIMPLE_NAME ? null
-        : getVarDeclFrag(get.fragments((VariableDeclarationStatement) n), (SimpleName) name);
+        : getVarDeclFrag(expose.fragments((VariableDeclarationStatement) n), (SimpleName) name);
   }
   /**
    * Determine whether a node is a return statement

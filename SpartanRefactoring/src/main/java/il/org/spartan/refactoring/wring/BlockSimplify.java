@@ -14,7 +14,7 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGr
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.Subject;
-import il.org.spartan.refactoring.utils.get;
+import il.org.spartan.refactoring.utils.expose;
 
 /**
  * A {@link Wring} to convert <code>{;; g(); {}{;{;{;}};} }</code> into
@@ -46,12 +46,12 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
   private static Block reorganizeStatement(final Statement s) {
     final List<Statement> ss = Extract.statements(s);
     final Block $ = s.getAST().newBlock();
-    duplicateInto(ss, get.statements($));
+    duplicateInto(ss, expose.statements($));
     return $;
   }
   @Override Statement replacement(final Block b) {
     final List<Statement> ss = Extract.statements(b);
-    if (identical(ss, get.statements(b)))
+    if (identical(ss, expose.statements(b)))
       return null;
     final ASTNode parent = b.getParent();
     if (!(parent instanceof Statement) || parent instanceof TryStatement)

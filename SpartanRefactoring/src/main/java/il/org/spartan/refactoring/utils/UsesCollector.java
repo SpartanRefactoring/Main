@@ -129,7 +129,7 @@ class UsesCollector extends HidingDepth {
   @Override public boolean visit(final MethodInvocation i) {
     ingore(i.getName());
     recurse(i.getExpression());
-    return recurse(get.arguments(i));
+    return recurse(expose.arguments(i));
   }
   @Override public boolean visit(final QualifiedName n) {
     return recurse(n.getQualifier());
@@ -140,7 +140,7 @@ class UsesCollector extends HidingDepth {
   }
   @Override public boolean visit(final SuperMethodInvocation i) {
     ingore(i.getName());
-    return recurse(get.arguments(i));
+    return recurse(expose.arguments(i));
   }
   @Override public boolean visit(final VariableDeclarationFragment f) {
     return !declaredIn(f) && recurse(f.getInitializer());
