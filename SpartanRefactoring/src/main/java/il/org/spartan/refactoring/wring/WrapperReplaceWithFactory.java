@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
@@ -20,13 +21,13 @@ public class WrapperReplaceWithFactory extends Wring.ReplaceCurrentNode<ClassIns
   @Override
   ASTNode replacement(final ClassInstanceCreation n) {
     String tn = n.getType().toString();
-    if (!Arrays.asList(pi).contains(tn)) {
+    if (!Arrays.asList(pi).contains(tn))
       return null;
-    }
     final MethodInvocation $ = n.getAST().newMethodInvocation();
     $.setExpression(n.getAST().newSimpleName(tn));
     $.setName(n.getAST().newSimpleName("valueOf"));
-    $.arguments().add(Expression.copySubtree(n.getAST(), (ASTNode) n.arguments().get(0)));
+    for (ASTNode e : ((List<ASTNode>) n.arguments()))
+      $.arguments().add(Expression.copySubtree(n.getAST(), e));
     return $;
   }
   @Override

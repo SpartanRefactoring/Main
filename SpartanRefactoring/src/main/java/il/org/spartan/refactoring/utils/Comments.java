@@ -6,9 +6,13 @@ import java.util.List;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.BodyDeclaration;
 import org.eclipse.jdt.core.dom.Comment;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.jdt.core.dom.rewrite.TargetSourceRangeComputer.SourceRange;
 import org.eclipse.text.edits.TextEditGroup;
@@ -45,23 +49,26 @@ public class Comments {
    * Match row indexes of comment and a node, to see if a dsi inside the comment
    * would disable the node.
    * 
-   * @param nlns
+   * @param nln
    *          start of node row index
-   * @param nlne
-   *          end of node row index
+   * @param csr
+   *          comment start row index
    * @param cer
-   *          comment row index
+   *          comment end row index
    * @param t
    *          comment type
    * @return true iff a dsi in the comment disables the node
    */
-  private static boolean matchRowIndexes(int nln, int cer, int t) {
-    switch (t) {
+  private static boolean matchRowIndexes(int nln, int csr, int cer, int ct, ASTNode n) {
+    switch (ct) {
     case ASTNode.LINE_COMMENT:
       return nln == cer;
     case ASTNode.BLOCK_COMMENT:
       return nln == cer || nln - 1 == cer;
     case ASTNode.JAVADOC:
+      if (n instanceof BodyDeclaration)
+        // need spacial care because Javadoc is in BodyDeclaration's regular expression
+        return nln == csr;
       return nln == cer || nln - 1 == cer;
     default:
       return false;
@@ -72,7 +79,7 @@ public class Comments {
    * There are two options: first, one should look at the parents of any node to
    * determine its status (implemented as isSpartanizationDisabledInAncestor).
    * Second, the go method of the visitor should return false upon reaching a
-   * dsi, what wuld stop it from reaching the the nodes sons (currently
+   * dsi, what would stop it from reaching the the nodes sons (currently
    * implemented in fillRewrite and collect in Trimmer)
    * 
    * @param n
@@ -91,8 +98,8 @@ public class Comments {
     for (Comment c : (List<Comment>) cu.getCommentList()) {
       CommentVisitor cv = new CommentVisitor();
       c.accept(cv);
-      int cer = cv.getEndRow();
-      if (matchRowIndexes(nln, cer, c.getNodeType()) && cv.getContent().contains(dsi))
+      if (matchRowIndexes(nln, cv.getStartRow(), cv.getEndRow(), c.getNodeType(), n)
+          && cv.getContent().contains(dsi))
         return true;
     }
     return false;
@@ -214,7 +221,8 @@ public class Comments {
           c.getNodeType()));
     } else {
       for (Comment c : cl)
-        nl.add(r.createStringPlaceholder(s.substring(c.getStartPosition(), c.getStartPosition() + c.getLength()) + "\n",
+        nl.add(r.createStringPlaceholder(s.substring(c.getStartPosition(), c.getStartPosition() + c.getLength())
+            + ((cr instanceof Expression && !c.isLineComment()) ? "" : "\n"),
             c.getNodeType()));
       nl.add(cr);
     }
