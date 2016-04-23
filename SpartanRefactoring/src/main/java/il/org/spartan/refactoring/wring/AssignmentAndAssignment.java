@@ -36,8 +36,7 @@ public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assign
     r.remove(parent, g);
     Assignment $ = duplicate(a1);
     setRight($, duplicate(a));
-    r.replace(a1, $, null);
-    replaced = $;
+    comments.setCore(r.getAST().newExpressionStatement($));
     return r;
   }
   static Expression getRight(final Assignment a) {

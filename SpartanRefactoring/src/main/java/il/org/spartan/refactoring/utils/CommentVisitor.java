@@ -27,7 +27,7 @@ public class CommentVisitor extends ASTVisitor {
   public CommentVisitor() {
     super();
     this.cu = Source.getCompilationUnit();
-    this.s = Source.getSource();
+    this.s = Source.get();
   }
   public boolean visit(LineComment node) {
 

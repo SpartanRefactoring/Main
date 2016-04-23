@@ -34,7 +34,9 @@ public final class IfReturnNoElseReturn extends Wring.ReplaceToNextStatement<IfS
     final Expression e2 = Extract.core(r2.getExpression());
     if (e2 == null)
       return null;
-    replaced = Wrings.replaceTwoStatements(r, s, Subject.operand(Subject.pair(e1, e2).toCondition(s.getExpression())).toReturn(), g);
+    r.remove(nextStatement, g);
+    comments.setBase(s);
+    comments.setCore(Subject.operand(Subject.pair(e1, e2).toCondition(s.getExpression())).toReturn());
     return r;
   }
   @Override boolean scopeIncludes(final IfStatement s) {

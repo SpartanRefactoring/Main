@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.eclipse.core.resources.IMarker;
@@ -12,8 +11,8 @@ import org.eclipse.text.edits.MalformedTreeException;
 import org.eclipse.text.edits.TextEdit;
 
 import il.org.spartan.refactoring.spartanizations.Spartanization;
-import il.org.spartan.refactoring.spartanizations.Spartanizations;
 import il.org.spartan.refactoring.utils.As;
+import il.org.spartan.refactoring.utils.Comments;
 import il.org.spartan.refactoring.utils.Rewrite;
 import il.org.spartan.refactoring.utils.Source;
 import il.org.spartan.utils.FileUtils;
@@ -60,7 +59,7 @@ public class Trimmer extends Spartanization {
   @Override protected ASTVisitor collect(final List<Rewrite> $) {
     return new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
-        if (Source.isSpartanizationDisabled(n))
+        if (Comments.isSpartanizationDisabled(n))
           return false;
         final Wring<N> w = Toolbox.instance().find(n);
         return w == null || w.nonEligible(n) || prune(w.make(n, exclude), $);
@@ -71,13 +70,13 @@ public class Trimmer extends Spartanization {
     Source.setASTRewrite(r);
     Source.setCompilationUnit(u);
     try {
-      Source.setSource(FileUtils.readFromFile(Source.getIPath().toString()));
+      Source.set(FileUtils.readFromFile(Source.getPath().toString()));
     } catch (Exception e) {
-      Source.setSource(null);
+      Source.set(null);
     }
     u.accept(new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
-        if (Source.isSpartanizationDisabled(n))
+        if (Comments.isSpartanizationDisabled(n))
           return false;
         if (!inRange(m, n))
           return true;

@@ -35,6 +35,7 @@ import java.util.List;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.Assignment.Operator;
+import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.Comment;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
@@ -55,6 +56,7 @@ import il.org.spartan.misc.Wrapper;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.spartanizations.Spartanizations;
 import il.org.spartan.refactoring.utils.Collect;
+import il.org.spartan.refactoring.utils.Comments;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Funcs;
 import il.org.spartan.refactoring.utils.Is;
@@ -74,6 +76,7 @@ import il.org.spartan.refactoring.utils.Subject;
  * @since 2015-07-09
  */
 public abstract class Wring<N extends ASTNode> {
+  protected Comments comments;
   abstract String description(N n);
   /**
    * Determine whether the parameter is "eligible" for application of this
@@ -162,12 +165,13 @@ public abstract class Wring<N extends ASTNode> {
   }
 
   static abstract class ReplaceCurrentNode<N extends ASTNode> extends Wring<N> {
-    @Override final Rewrite make(final N n) {
+    @Override
+    final Rewrite make(final N n) {
       return !eligible(n) ? null : new Rewrite(description(n), n) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-          List<ASTNode> nl = Source.getComments(n);
-          nl.add(replacement(n));
-          r.replace(n, r.createGroupNode(nl.toArray(new ASTNode[nl.size()])), g);
+          comments = new Comments();
+          comments.add(n);
+          comments.mash(n, replacement(n), g);
         }
       };
     }
@@ -178,14 +182,9 @@ public abstract class Wring<N extends ASTNode> {
   }
   /*
    * TODO complete every successor comment preservation
+   * TODO complete cases 1 and 2 of IfCommandsSequencerNoElseSingletonSequencer
    */
   static abstract class ReplaceToNextStatement<N extends ASTNode> extends Wring<N> {
-    final private Integer[] finalParents = {ASTNode.EXPRESSION_STATEMENT, ASTNode.IF_STATEMENT, ASTNode.VARIABLE_DECLARATION_STATEMENT};
-    protected ASTNode replaced;
-    protected ASTNode fixReplaced(ASTNode n, ASTRewrite r) {
-//      return n;
-      return r.createStringPlaceholder(n.toString().trim(), n.getNodeType());
-    }
     abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g);
     @Override Rewrite make(final N n, final ExclusionManager exclude) {
       final Statement nextStatement = Extract.nextStatement(n);
@@ -194,21 +193,20 @@ public abstract class Wring<N extends ASTNode> {
       exclude.exclude(nextStatement);
       return new Rewrite(description(n), n, nextStatement) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-          replaced = null;
+          comments = new Comments();
           ASTNode p = n;
-          while (!Arrays.asList(finalParents).contains(p.getNodeType()))
+          while (!(p instanceof Statement))
             p = p.getParent();
-          List<ASTNode> nl = Source.getComments(p);
-          nl.addAll(Source.getComments(nextStatement));
+          comments.add(p);
+          comments.add(nextStatement);
+          comments.setBase(nextStatement);
           ReplaceToNextStatement.this.go(r, n, nextStatement, g);
-          if (replaced == null || nl.size() == 0)
-            return;
-          nl.add(fixReplaced(replaced, r));
-          r.replace(replaced, r.createGroupNode(nl.toArray(new ASTNode[nl.size()])), g);
+          comments.mash(g);
         }
       };
     }
     @Override boolean scopeIncludes(final N n) {
+      comments = new Comments();
       final Statement nextStatement = Extract.nextStatement(n);
       return nextStatement != null && go(ASTRewrite.create(n.getAST()), n, nextStatement, null) != null;
     }

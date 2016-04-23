@@ -113,25 +113,17 @@ public enum Wrings {
       }
     return false;
   }
-  /*
-   * Changed by Ori Roth - now used to return the final node replacing the two statements, so it can be
-   * used in order to apply comments later on
-   */
-  static ASTNode replaceTwoStatements(final ASTRewrite r, final Statement what, final Statement by, final TextEditGroup g) {
+  static ASTRewrite replaceTwoStatements(final ASTRewrite r, final Statement what, final Statement by, final TextEditGroup g) {
     final Block parent = asBlock(what.getParent());
     final List<Statement> siblings = Extract.statements(parent);
     final int i = siblings.indexOf(what);
-//    List<ASTNode> nl = Rewrite.getComments(what, r);
     siblings.remove(i);
-//    nl.addAll(Rewrite.getComments(siblings.get(i), r));
     siblings.remove(i);
-//    nl.add(by);
-//    siblings.add(i, (Statement) r.createGroupNode(nl.toArray(new ASTNode[nl.size()])));
     siblings.add(i, by);
-    final Block b = parent.getAST().newBlock();
-    duplicateInto(siblings, b.statements());
-    r.replace(parent, b, g);
-    return (ASTNode) b.statements().get(i);
+    final Block $ = parent.getAST().newBlock();
+    duplicateInto(siblings, $.statements());
+    r.replace(parent, $, g);
+    return r;
   }
   static boolean shoudlInvert(final IfStatement s) {
     final int rankThen = sequencerRank(Extract.lastStatement(then(s)));

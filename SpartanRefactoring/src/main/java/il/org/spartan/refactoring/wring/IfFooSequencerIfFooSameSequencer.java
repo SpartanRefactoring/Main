@@ -47,8 +47,9 @@ public final class IfFooSequencerIfFooSameSequencer extends Wring.ReplaceToNextS
     final List<Statement> ss1 = Extract.statements(then);
     if (!same(ss1, Extract.statements(then(s2))) || !Is.sequencer(last(ss1)))
       return null;
-    replaced = Wrings.replaceTwoStatements(r, s, makeIfWithoutElse(BlockSimplify.reorganizeNestedStatement(then),
-        Subject.pair(s.getExpression(), s2.getExpression()).to(CONDITIONAL_OR)), g);
+    r.remove(s, g);
+    comments.setCore(makeIfWithoutElse(BlockSimplify.reorganizeNestedStatement(then),
+        Subject.pair(s.getExpression(), s2.getExpression()).to(CONDITIONAL_OR)));
     return r;
   }
   @Override String description(@SuppressWarnings("unused") final IfStatement _) {
