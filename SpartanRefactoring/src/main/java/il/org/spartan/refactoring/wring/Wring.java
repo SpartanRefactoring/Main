@@ -181,7 +181,6 @@ public abstract class Wring<N extends ASTNode> {
     }
   }
   /*
-   * TODO complete every successor comment preservation
    * TODO complete cases 1 and 2 of IfCommandsSequencerNoElseSingletonSequencer
    */
   static abstract class ReplaceToNextStatement<N extends ASTNode> extends Wring<N> {
@@ -197,6 +196,7 @@ public abstract class Wring<N extends ASTNode> {
           ASTNode p = n;
           while (!(p instanceof Statement))
             p = p.getParent();
+          // getting comments from parent - ReplaceToNextStatement Wrings replace whole parent statement
           comments.add(p);
           comments.add(nextStatement);
           comments.setBase(nextStatement);
@@ -211,7 +211,52 @@ public abstract class Wring<N extends ASTNode> {
       return nextStatement != null && go(ASTRewrite.create(n.getAST()), n, nextStatement, null) != null;
     }
   }
-
+  /**
+   * MultipleReplaceToNextStatement replaces multiple nodes (or a single node)
+   * in current statement with multiple nodes (or a single node) in next statement.
+   * 
+   * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
+   * @since 2016-04-25
+   */
+  static abstract class MultipleReplaceToNextStatement<N extends ASTNode> extends Wring<N> {
+    abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g, List<ASTNode> bss,
+        List<ASTNode> crs);
+    @Override
+    Rewrite make(final N n, final ExclusionManager exclude) {
+      final Statement nextStatement = Extract.nextStatement(n);
+      if (nextStatement == null || !eligible(n))
+        return null;
+      exclude.exclude(nextStatement);
+      return new Rewrite(description(n), n, nextStatement) {
+        @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+          comments = new Comments();
+          List<ASTNode> bss = new ArrayList<>();
+          List<ASTNode> crs = new ArrayList<>();
+          MultipleReplaceToNextStatement.this.go(r, n, nextStatement, g, bss, crs);
+          if (bss.size() != crs.size() && bss.size() != 1 && crs.size() != 1)
+            return; // indicates bad wring design
+          boolean ubs = bss.size() == 1;
+          boolean ucr = crs.size() == 1;
+          int s = ubs ? crs.size() : bss.size();
+          for (int i=0 ; i<s ; ++i) {
+            comments.add(bss.get(ubs ? 0 : i));
+            comments.add(crs.get(ucr ? 0 : i));
+            comments.setBase(bss.get(ubs ? 0 : i));
+            comments.setCore(crs.get(ucr ? 0 : i));
+            comments.mash(g);
+            comments.clear();
+          }
+        }
+      };
+    }
+    @Override boolean scopeIncludes(final N n) {
+      comments = new Comments();
+      final Statement nextStatement = Extract.nextStatement(n);
+      return nextStatement != null
+          && go(ASTRewrite.create(n.getAST()), n, nextStatement, null,
+              new ArrayList<>(), new ArrayList<>()) != null;
+    }
+  }
   static abstract class VariableDeclarationFragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
     static InfixExpression.Operator asInfix(final Assignment.Operator o) {
       return o == PLUS_ASSIGN ? PLUS

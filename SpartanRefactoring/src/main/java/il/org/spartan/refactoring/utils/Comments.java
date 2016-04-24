@@ -41,6 +41,12 @@ public class Comments {
     cu = Source.getCompilationUnit();
     r = Source.getASTRewrite();
   }
+  public void clear() {
+    refresh();
+    bs = null;
+    cr = null;
+    cl.clear();
+  }
   /**
    * Disable Spartanization identifier, used by the programmer to indicate a
    * method/class/code line to not be spartanized

@@ -41,6 +41,8 @@ public class PluginPreferencesResources {
 	public static final String REPLACE_CLASS_INSTANCE_CREATION_TEXT = "Replace class instance creation with recommended form";
 	public static final String DISCARD_METHOD_INVOCATION_ID = "pref_wrings_discard_method_invocation";
 	public static final String DISCARD_METHOD_INVOCATION_TEXT = "Replace method invocation with proper replacement";
+	   public static final String REPLACE_SEQUENSER_ID = "pref_wrings_replace_sequencer";
+	    public static final String REPLACE_SEQUENSER_TEXT = "Replace a sequencer with proper replacement";
 	public static final String WRING_COMBO_OPTIONS[][] = { { "Enabled", "on" }, { "Disabled", "off" } };
 
 	//
@@ -90,6 +92,9 @@ public class PluginPreferencesResources {
 		REPLACE_CLASS_INSTANCE_CREATION( //
 				REPLACE_CLASS_INSTANCE_CREATION_ID, //
 				REPLACE_CLASS_INSTANCE_CREATION_TEXT), //
+		REPLACE_SEQUENSER( //
+		    REPLACE_SEQUENSER_ID, //
+		    REPLACE_SEQUENSER_TEXT), //
 		;
 		private final String id, label;
 

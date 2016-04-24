@@ -42,6 +42,7 @@ public class Toolbox {
    */
   public static void generate() {
     instance = new Maker()//
+        .add(SwitchStatement.class, new SwitchBreakReturn()) //
         .add(Assignment.class, //
             new AssignmentAndAssignment(), //
             new AssignmentAndReturn(), //
