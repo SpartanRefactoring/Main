@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,16 +11,16 @@ import org.eclipse.jdt.core.dom.BodyDeclaration;
 import org.eclipse.jdt.core.dom.Comment;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.jdt.core.dom.rewrite.TargetSourceRangeComputer.SourceRange;
 import org.eclipse.text.edits.TextEditGroup;
+import org.eclipse.ui.dialogs.ListSelectionDialog;
 
 /**
  * Center of comments analysis and manipulation.
- * Supports @DisableSpartanization option.
+ * Supports DisableSpartanization option.
  * Supports comments mash into nodes.
  * 
  * @author Ori Roth
@@ -114,11 +115,7 @@ public class Comments {
   @SuppressWarnings("unchecked")
   public void add(ASTNode n) {
     // In a failure case, allow all spartanizations
-    if (s == null)
-      return;
-    if (cu == null)
-      return;
-    if (r == null)
+    if (s == null || cu == null || r == null)
       return;
     SourceRange t = r.getExtendedSourceRangeComputer().computeSourceRange(n);
     int sp = t.getStartPosition();
@@ -191,6 +188,17 @@ public class Comments {
     return true;
   }
   /**
+   * @param i
+   *          code character index
+   * @return index of the start of i's row
+   */
+  public int rowStartIndex(int i) {
+    int j = i;
+    while (j > 0 && s.charAt(j - 1) != '\n')
+      --j;
+    return j;
+  }
+  /**
    * Mashing the comments with the previously declared node
    * 
    * @return placeholder node
@@ -201,31 +209,39 @@ public class Comments {
       r.replace(b, cr, g);
       return;
     }
+    SourceRange sr = r.getExtendedSourceRangeComputer().computeSourceRange(b);
     List<ASTNode> nl = new ArrayList<>();
-    if (cl.size() == 1 && shouldMoveComentToEnd(b, cr, cl.get(0))) {
-      Comment c = cl.get(0);
-      String f = "";
-      SourceRange sr = r.getExtendedSourceRangeComputer().computeSourceRange(b);
-      int ep = sr.getStartPosition() + sr.getLength();
-      String l = s.substring(ep).split("\n")[0];
-      // new line fix after line comment
-      f = (!c.isLineComment() || allWhiteSpaces(l)) ? "" : "\n";
-      // gather whitespaces before the comment
-      StringBuilder w = new StringBuilder("");
-      int i = c.getStartPosition() - 1;
-      while (Character.isWhitespace(s.charAt(i)))
-        w.append(s.charAt(i--));
-      nl.add(cr);
-      nl.add(r.createStringPlaceholder(
-          w.reverse().toString() + s.substring(c.getStartPosition(), c.getStartPosition() + c.getLength()) + f,
-          c.getNodeType()));
-    } else {
+    if (cr instanceof Block) {
+      Block bl = (Block) cr;
+      Collections.reverse(cl);
       for (Comment c : cl)
-        nl.add(r.createStringPlaceholder(s.substring(c.getStartPosition(), c.getStartPosition() + c.getLength())
-            + ((cr instanceof Expression && !c.isLineComment()) ? "" : "\n"),
-            c.getNodeType()));
-      nl.add(cr);
+        bl.statements().add(0,
+            r.createStringPlaceholder(s.substring(c.getStartPosition(), c.getStartPosition() + c.getLength())
+                , ASTNode.BLOCK));
+      nl.add(bl);
+    } else {
+      if (cl.size() == 1 && shouldMoveComentToEnd(b, cr, cl.get(0))) {
+        Comment c = cl.get(0);
+        String f = "";
+        // new line fix after line comment
+        f = (!c.isLineComment() || allWhiteSpaces(s.substring(sr.getStartPosition() + sr.getLength()).split("\n")[0]))
+            ? "" : "\n";
+        nl.add(cr);
+        nl.add(r.createStringPlaceholder(
+            " " + s.substring(c.getStartPosition(), c.getStartPosition() + c.getLength()) + f, c.getNodeType()));
+      } else {
+        for (Comment c : cl)
+          nl.add(r.createStringPlaceholder(s.substring(c.getStartPosition(), c.getStartPosition() + c.getLength())
+              + ((cr instanceof Expression && !c.isLineComment()) ? "" : "\n"), c.getNodeType()));
+        nl.add(cr);
+      }
+      if (cr instanceof Statement && !allWhiteSpaces(s.substring(rowStartIndex(sr.getStartPosition()), sr.getStartPosition())))
+        nl.add(0, r.createStringPlaceholder("", ASTNode.BLOCK));
     }
+//      TODO ctrl+shift+f it
+//      if (!allWhiteSpaces(s.substring(sr.getStartPosition() + sr.getLength()).split("\n")[0])
+//        && b instanceof Statement)
+//      nl.add(r.createStringPlaceholder("", ASTNode.BLOCK));
     r.replace(b, r.createGroupNode(nl.toArray(new ASTNode[nl.size()])), g);
   }
   public void mash(TextEditGroup g) {

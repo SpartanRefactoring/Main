@@ -95,7 +95,8 @@ public class StringFromStringBuilder extends Wring.ReplaceCurrentNode<MethodInvo
         }
         return null;
       } else if (e instanceof MethodInvocation) {
-        if (!((MethodInvocation) e).getName().toString().equals("append")) {
+        if (!((MethodInvocation) e).getName().toString().equals("append")
+            || ((MethodInvocation) e).arguments().size() == 0) {
           return null;
         }
         Expression a = (Expression) ((MethodInvocation) e).arguments().get(0);

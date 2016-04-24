@@ -11,7 +11,6 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.jdt.core.dom.rewrite.ListRewrite;
 import org.eclipse.text.edits.TextEditGroup;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
@@ -40,7 +39,7 @@ import il.org.spartan.refactoring.utils.Subject;
  */
 public final class IfCommandsSequencerNoElseSingletonSequencer extends Wring.ReplaceToNextStatement<IfStatement> {
   @Override String description(@SuppressWarnings("unused") final IfStatement _) {
-    return "Invert conditional and use next statement)";
+    return "Invert conditional and use next statement";
   }
   @Override ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!Is.vacuousElse(s) || !Is.sequencer(nextStatement) || !endsWithSequencer(then(s)))

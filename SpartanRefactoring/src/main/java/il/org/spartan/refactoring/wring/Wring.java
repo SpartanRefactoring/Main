@@ -136,7 +136,6 @@ public abstract class Wring<N extends ASTNode> {
     }
     abstract boolean sort(List<Expression> operands);
   }
-
   static abstract class InfixSorting extends AbstractSorting {
     @Override boolean eligible(final InfixExpression e) {
       final List<Expression> es = Extract.allOperands(e);
@@ -147,7 +146,6 @@ public abstract class Wring<N extends ASTNode> {
       return !sort(operands) ? null : Subject.operands(operands).to(e.getOperator());
     }
   }
-
   static abstract class InfixSortingOfCDR extends AbstractSorting {
     @Override boolean eligible(final InfixExpression e) {
       final List<Expression> es = Extract.allOperands(e);
@@ -163,7 +161,9 @@ public abstract class Wring<N extends ASTNode> {
       return Subject.operands(operands).to(e.getOperator());
     }
   }
-
+  /*
+   * TODO change SimplifyBlock to work with comments
+   */
   static abstract class ReplaceCurrentNode<N extends ASTNode> extends Wring<N> {
     @Override
     final Rewrite make(final N n) {
