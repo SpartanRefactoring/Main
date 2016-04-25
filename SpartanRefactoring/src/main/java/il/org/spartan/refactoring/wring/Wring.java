@@ -212,8 +212,8 @@ public abstract class Wring<N extends ASTNode> {
     }
   }
   /**
-   * MultipleReplaceToNextStatement replaces multiple nodes (or a single node)
-   * in current statement with multiple nodes (or a single node) in next statement.
+   * MultipleReplaceToNextStatement replaces multiple nodes in current statement
+   * with multiple nodes (or a single node) in next statement.
    * 
    * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
    * @since 2016-04-25
@@ -233,15 +233,14 @@ public abstract class Wring<N extends ASTNode> {
           List<ASTNode> bss = new ArrayList<>();
           List<ASTNode> crs = new ArrayList<>();
           MultipleReplaceToNextStatement.this.go(r, n, nextStatement, g, bss, crs);
-          if (bss.size() != crs.size() && bss.size() != 1 && crs.size() != 1)
+          if (bss.size() != crs.size() && crs.size() != 1)
             return; // indicates bad wring design
-          boolean ubs = bss.size() == 1;
           boolean ucr = crs.size() == 1;
-          int s = ubs ? crs.size() : bss.size();
+          int s = bss.size();
           for (int i=0 ; i<s ; ++i) {
-            comments.add(bss.get(ubs ? 0 : i));
+            comments.add(bss.get(i));
             comments.add(crs.get(ucr ? 0 : i));
-            comments.setBase(bss.get(ubs ? 0 : i));
+            comments.setBase(bss.get(i));
             comments.setCore(crs.get(ucr ? 0 : i));
             comments.mash(g);
             comments.clear();
