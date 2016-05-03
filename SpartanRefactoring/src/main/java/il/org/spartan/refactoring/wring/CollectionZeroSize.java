@@ -6,7 +6,6 @@ import java.util.List;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.IMethodBinding;
-import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 import org.eclipse.jdt.core.dom.MethodInvocation;
@@ -37,9 +36,9 @@ public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression
     NumberLiteral nl = (NumberLiteral) n.getRightOperand();
     if (Integer.parseInt(nl.getToken()) != 0 || !mi.getName().getIdentifier().equals("size"))
       return null;
-    ITypeBinding b = mi.getExpression().resolveTypeBinding();
-    // TODO get accessible methods
-    IMethodBinding iemb = BindingUtils.getPublicMethod(b, "isEmpty", new ITypeBinding[0]);
+    Expression mie = mi.getExpression();
+    IMethodBinding iemb = BindingUtils
+        .getVisibleMethod(mie != null ? mie.resolveTypeBinding() : BindingUtils.getClass(n), "isEmpty", null, n);
     if (iemb == null || !(iemb.getReturnType().toString().equals("boolean")
         || iemb.getReturnType().getBinaryName().equals("java.lang.Boolean")))
       return null;
@@ -56,12 +55,11 @@ public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression
     }
     return $;
   }
-
   @Override
   String description(final InfixExpression n) {
-    return "Use !" + ((MethodInvocation) n.getLeftOperand()).getExpression().toString() + ".isEmpty()";
+    Expression e = ((MethodInvocation) n.getLeftOperand()).getExpression();
+    return e == null ? "Use isEmpty()" : "Use " + e.toString() + ".isEmpty()";
   }
-
   @Override
   WringGroup wringGroup() {
     // TODO maybe change WringGroup

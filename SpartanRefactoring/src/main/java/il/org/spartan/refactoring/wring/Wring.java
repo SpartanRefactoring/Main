@@ -29,40 +29,30 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.TIMES;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.XOR;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.Assignment.Operator;
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.Comment;
-import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.IExtendedModifier;
 import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.PrefixExpression;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.StructuralPropertyDescriptor;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.jdt.core.dom.rewrite.TargetSourceRangeComputer;
-import org.eclipse.jdt.core.dom.rewrite.TargetSourceRangeComputer.SourceRange;
 import org.eclipse.text.edits.TextEditGroup;
 
 import il.org.spartan.misc.Wrapper;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.spartanizations.Spartanizations;
 import il.org.spartan.refactoring.utils.Collect;
 import il.org.spartan.refactoring.utils.Comments;
 import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Funcs;
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.Plant;
 import il.org.spartan.refactoring.utils.Rewrite;
-import il.org.spartan.refactoring.utils.Source;
 import il.org.spartan.refactoring.utils.Subject;
 
 /**
@@ -86,13 +76,13 @@ public abstract class Wring<N extends ASTNode> {
    * @return <code><b>true</b></code> <i>iff</i> the argument is eligible for
    *         the simplification offered by this object.
    */
-  boolean eligible(@SuppressWarnings("unused") final N n) {
+  boolean eligible(final N n) {
     return true;
   }
   Rewrite make(final N n) {
     return make(n, null);
   }
-  Rewrite make(final N n, @SuppressWarnings("unused") final ExclusionManager exclude) {
+  Rewrite make(final N n, final ExclusionManager exclude) {
     return make(n);
   }
   /**
