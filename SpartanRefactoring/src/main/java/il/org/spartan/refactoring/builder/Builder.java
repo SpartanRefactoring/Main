@@ -86,7 +86,6 @@ public class Builder extends IncrementalProjectBuilder {
   static void addMarkers(final IResource r) throws CoreException {
     if (r instanceof IFile && r.getName().endsWith(".java")) {
       try {
-        Source.setPath(r.getLocation());
         Source.set(FileUtils.readFromFile(r.getLocation().toString()));
       } catch (final IOException e) {
         e.printStackTrace();

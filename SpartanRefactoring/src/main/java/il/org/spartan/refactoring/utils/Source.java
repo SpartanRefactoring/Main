@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.utils;
 
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
@@ -14,7 +13,6 @@ import org.eclipse.jdt.core.dom.rewrite.TargetSourceRangeComputer.SourceRange;
  */
 public class Source {
   private static String s;
-  private static IPath p;
   private static CompilationUnit cu;
   private static ASTRewrite r;
 
@@ -33,22 +31,6 @@ public class Source {
    */
   public static void set(String c) {
     s = c;
-  }
-  /**
-   * Get code file path, used mainly to update source code
-   *
-   * @return current code file path
-   */
-  public static IPath getPath() {
-    return p;
-  }
-  /**
-   * Set code file path
-   *
-   * @param ip code file path
-   */
-  public static void setPath(IPath ip) {
-    p = ip;
   }
   /**
    * Get current {@link CompilationUnit}

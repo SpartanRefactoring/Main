@@ -62,6 +62,11 @@ public class TrimmerTest {
   @Test public void actualExampleForSortAddition() {
     trimming("1 + b.statements().indexOf(declarationStmt)").to("");
   }
+  /* TODO Ori: add comments preservation tests
+   * 
+   * @Test public void preserve000() { trimmingPreservingComments(
+   * "if (a) return true; // true!\n else return false;").to(
+   * "return a; // true!"); } */
   @Test public void actualExampleForSortAdditionInContext() {
     final String from = "2 + a < b";
     final String expected = "a + 2 < b";
@@ -479,12 +484,13 @@ public class TrimmerTest {
         "} else {\n" + //
         "++j;\n" + //
         "f();\n" + //
-        "}").to("if (a)  \n" + //
-            "++i;\n" + //
-            "else \n" + //
-            "++j;\n" + //
-            "\n" + //
-            "f();");//
+        "}").to(
+            "if (a)  \n" + //
+                "++i;\n" + //
+                "else \n" + //
+                "++j;\n" + //
+                "\n" + //
+                "f();");//
   }
   @Test public void commonSuffixIfBranchesDisappearingElse() {
     trimming("if (a) { \n" + //
@@ -492,10 +498,11 @@ public class TrimmerTest {
         "f();\n" + //
         "} else {\n" + //
         "f();\n" + //
-        "}").to("if (a)  \n" + //
-            "++i;\n" + //
-            "\n" + //
-            "f();");//
+        "}").to(
+            "if (a)  \n" + //
+                "++i;\n" + //
+                "\n" + //
+                "f();");//
   }
   @Test public void commonSuffixIfBranchesDisappearingThen() {
     trimming("if (a) { \n" + //
@@ -503,10 +510,11 @@ public class TrimmerTest {
         "} else {\n" + //
         "++j;\n" + //
         "f();\n" + //
-        "}").to("if (!a)  \n" + //
-            "++j;\n" + //
-            "\n" + //
-            "f();");//
+        "}").to(
+            "if (!a)  \n" + //
+                "++j;\n" + //
+                "\n" + //
+                "f();");//
   }
   @Test public void commonSuffixIfBranchesDisappearingThenWithinIf() {
     trimming("if (x)  if (a) { \n" + //
@@ -514,10 +522,11 @@ public class TrimmerTest {
         "} else {\n" + //
         "++j;\n" + //
         "f();\n" + //
-        "} else { h(); ++i; ++j; ++k; if (a) f(); else g(); }").to("if (x) { if (!a)  \n" + //
-            "++j;\n" + //
-            "\n" + //
-            "f(); } else { h(); ++i; ++j; ++k;  if (a) f(); else g();}");//
+        "} else { h(); ++i; ++j; ++k; if (a) f(); else g(); }")
+            .to("if (x) { if (!a)  \n" + //
+                "++j;\n" + //
+                "\n" + //
+                "f(); } else { h(); ++i; ++j; ++k;  if (a) f(); else g();}");//
   }
   @Test public void compareWithBoolean00() {
     trimming("a == true").to("a");
@@ -633,9 +642,10 @@ public class TrimmerTest {
         "    String res = s;\n" + //
         "    if (s.equals(y))\n" + //
         "      res = s + blah;\n" + //
-        "    S.out.println(res);").to("" + //
-            "    String res = s.equals(y) ? s + blah :s;\n" + //
-            "    S.out.println(res);");
+        "    S.out.println(res);")
+            .to("" + //
+                "    String res = s.equals(y) ? s + blah :s;\n" + //
+                "    S.out.println(res);");
   }
   @Test public void declarationIfAssignment3() {
     trimming("int a =2; if (a != 2) a = 3;").to("int a = 2 != 2 ? 3 : 2;");
@@ -648,9 +658,10 @@ public class TrimmerTest {
         "    String res = s;\n" + //
         "    if (s.equals(y))\n" + //
         "      res += s + blah;\n" + //
-        "    S.out.println(res);").to("" + //
-            "    String res = s.equals(y) ? s + s + blah :s;\n" + //
-            "    S.out.println(res);");
+        "    S.out.println(res);")
+            .to("" + //
+                "    String res = s.equals(y) ? s + s + blah :s;\n" + //
+                "    S.out.println(res);");
   }
   @Test public void declarationIfUsesLaterVariable() {
     trimming("int a=0, b=0;if (b==3)   a=4;")//
@@ -785,13 +796,14 @@ public class TrimmerTest {
         "      f();\n" + //
         "      g();\n" + //
         "      --i;\n" + //
-        "    }").to("" + ////
-            "   f();\n" + //
-            "   g();\n" + //
-            "    if (a) \n" + //
-            "      ++i;\n" + //
-            "    else \n" + //
-            "      --i;");
+        "    }")
+            .to("" + ////
+                "   f();\n" + //
+                "   g();\n" + //
+                "    if (a) \n" + //
+                "      ++i;\n" + //
+                "    else \n" + //
+                "      --i;");
   }
   @Test public void emptyElse() {
     trimming("if (x) b = 3; else ;").to("if (x) b = 3;");
@@ -876,17 +888,18 @@ public class TrimmerTest {
         "      c = f().charAt(3);\n" + //
         "    } else if (Character.digit(c, 16) == -1)\n" + //
         "      return null;\n" + //
-        "    return null;").to("" + //
-            "    final int c = 2;\n" + //
-            "    if (c != c + 1) {\n" + //
-            "      if (Character.digit(c, 16) == -1)\n" + //
-            "        return null;\n" + //
-            "    } else {\n" + //
-            "      if (c == c + 2)\n" + //
-            "        return null;\n" + //
-            "      c = f().charAt(3);\n" + //
-            "    }\n" + //
-            "    return null;");//
+        "    return null;")
+            .to("" + //
+                "    final int c = 2;\n" + //
+                "    if (c != c + 1) {\n" + //
+                "      if (Character.digit(c, 16) == -1)\n" + //
+                "        return null;\n" + //
+                "    } else {\n" + //
+                "      if (c == c + 2)\n" + //
+                "        return null;\n" + //
+                "      c = f().charAt(3);\n" + //
+                "    }\n" + //
+                "    return null;");//
   }
   @Test public void ifBugSimplified() {
     trimming("" + //
@@ -896,16 +909,17 @@ public class TrimmerTest {
         "      c = f().charAt(3);\n" + //
         "    } else if (y)\n" + //
         "      return;\n" + //
-        "").to("" + //
-            "    if (!x) {\n" + //
-            "      if (y)\n" + //
-            "        return;\n" + //
-            "    } else {\n" + //
-            "      if (z)\n" + //
-            "        return null;\n" + //
-            "      c = f().charAt(3);\n" + //
-            "    }\n" + //
-            "");//
+        "").to(
+            "" + //
+                "    if (!x) {\n" + //
+                "      if (y)\n" + //
+                "        return;\n" + //
+                "    } else {\n" + //
+                "      if (z)\n" + //
+                "        return null;\n" + //
+                "      c = f().charAt(3);\n" + //
+                "    }\n" + //
+                "");//
   }
   @Test public void ifBugWithPlainEmptyElse() {
     trimming("" + //
@@ -913,10 +927,11 @@ public class TrimmerTest {
         "        f();\n" + //
         "      else\n" + //
         "         ; \n" + //
-        "").to("" + //
-            "      if (z)\n" + //
-            "        f();\n" + //
-            "");//
+        "").to(
+            "" + //
+                "      if (z)\n" + //
+                "        f();\n" + //
+                "");//
   }
   @Test public void ifDegenerateThenInIf() {
     trimming("if (a) if (b) {} else f(); x();")//
@@ -1074,16 +1089,18 @@ public class TrimmerTest {
   @Test public void infiniteLoopBug2() {
     trimming(" static boolean hasAnnotation(final VariableDeclarationStatement n) {\n" + //
         "      return hasAnnotation(n.modifiers());\n" + //
-        "    }").to(" static boolean hasAnnotation(final VariableDeclarationStatement s) {\n" + //
-            "      return hasAnnotation(s.modifiers());\n" + //
-            "    }");
+        "    }")
+            .to(" static boolean hasAnnotation(final VariableDeclarationStatement s) {\n" + //
+                "      return hasAnnotation(s.modifiers());\n" + //
+                "    }");
   }
   @Test public void infiniteLoopBug3() {
     trimming("  boolean f(final VariableDeclarationStatement n) {\n" + //
         "      return false;\n" + //
-        "    }").to("  boolean f(final VariableDeclarationStatement s) {\n" + //
-            "      return false;\n" + //
-            "    }");
+        "    }")
+            .to("  boolean f(final VariableDeclarationStatement s) {\n" + //
+                "      return false;\n" + //
+                "    }");
   }
   @Test public void infiniteLoopBug4() {
     trimming("void f(final VariableDeclarationStatement n) {}")//
@@ -1213,12 +1230,12 @@ public class TrimmerTest {
         .to(" int $=1,yj=0;                 if(0>0==0>yj)$++;else $--;") //
         .to(" int $=1;                      if(0>0==0>0)$++;else $--;") //
         .to(" int $=1;                      if(0>0==0>0)++$;else--$;") //
-    ;
+        ;
   }
   @Test public void inlineSingleUseTrivial() {
     trimming(" int $=1,yj=0;                 if(0>0==yj<0)++$;else--$;") //
         .to("  int $=1;                      if(0>0==0<0)++$;else--$;") //
-    ;
+        ;
   }
   @Test public void inlineSingleUseVanilla() {
     trimming("int a = f(); if (a) f();").to("if (f()) f();");
@@ -1233,7 +1250,7 @@ public class TrimmerTest {
   @Test public void inliningWithVariableAssignedTo() {
     trimming("int a=3,b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}") //
         .to("int b=5;if(3==4)if(b==3)b=2;else{b=3;b=3;}else if(b==3)b=2;else{b=3*3;b=3;}") //
-    ;
+        ;
   }
   @Test public void isGreaterTrue() {
     final InfixExpression e = i("f(a,b,c,d,e) * f(a,b,c)");
@@ -1319,18 +1336,18 @@ public class TrimmerTest {
   @Test public void issue06H() {
     trimming("x/a*-b/-c*- - - d ")//
         .to("-x/a * b/ c * d")//
-    ;
+        ;
   }
   @Test public void issue06I() {
     trimming("41 * - 19")//
         .to("-41 * 19 ") //
-    ;
+        ;
   }
   @Test public void issue06J() {
     trimming("41 * a * - 19")//
         .to("-41*a*19")//
         .to("-41*19*a") //
-    ;
+        ;
   }
   @Test public void issue21a() {
     trimming("a.equals(\"a\")").to("\"a\".equals(a)");
@@ -1392,13 +1409,14 @@ public class TrimmerTest {
         "        return false;\n" + //
         "} else if (other.name != null)\n" + //
         "    return false;\n" + //
-        "return true;").to("" + //
-            "if (name == null) {\n" + //
-            "    if (other.name != null)\n" + //
-            "        return false;\n" + //
-            "} else if (!name.equals(other.name))\n" + //
-            "    return false;\n" + //
-            "return true;");
+        "return true;")
+            .to("" + //
+                "if (name == null) {\n" + //
+                "    if (other.name != null)\n" + //
+                "        return false;\n" + //
+                "} else if (!name.equals(other.name))\n" + //
+                "    return false;\n" + //
+                "return true;");
   }
   @Test(timeout = 100) public void issue39versionA() {
     trimming("" + //
@@ -1408,14 +1426,15 @@ public class TrimmerTest {
         "    }\n" + //
         "} else if (parameterTypes.length != argumentTypes.length) {\n" + //
         "    return false;\n" + //
-        "}").to("" + //
-            "if (!varArgs) {\n" + //
-            "    if (parameterTypes.length != argumentTypes.length) {\n" + //
-            "        return false;\n" + //
-            "    }\n" + //
-            "} else if (argumentTypes.length < parameterTypes.length - 1) {\n" + //
-            "    return false;\n" + //
-            "}");
+        "}").to(
+            "" + //
+                "if (!varArgs) {\n" + //
+                "    if (parameterTypes.length != argumentTypes.length) {\n" + //
+                "        return false;\n" + //
+                "    }\n" + //
+                "} else if (argumentTypes.length < parameterTypes.length - 1) {\n" + //
+                "    return false;\n" + //
+                "}");
   }
   public void issue39versionAdual() {
     trimming("" + //
@@ -1665,7 +1684,7 @@ public class TrimmerTest {
         .to(" if(x)if(a&&b)i++;else;else{++y;f();g();}")//
         .to(" if(x){if(a&&b)i++;}else{++y;f();g();}")//
         .to(" if(x){if(a&&b)++i;}else{++y;f();g();}")//
-    ;
+        ;
   }
   @Test public void nestedIf33a() {
     trimming("if (x) { if (a && b) i++; } else { y++; f(); g(); }")//
@@ -1684,7 +1703,7 @@ public class TrimmerTest {
         .to("if(x)if(a&&b)i++;else; else{++y;f();g();z();}") //
         .to("if(x){if(a&&b)i++;} else{++y;f();g();z();}") //
         .to("if(x){if(a&&b)++i;} else{++y;f();g();z();}") //
-    ;
+        ;
   }
   @Test public void nestedIf3e() {
     trimming("if (x) if (a) if (b) i++; else ; else ; else { y++; f(); g(); z();}")//
@@ -1704,7 +1723,7 @@ public class TrimmerTest {
     trimming("if (x) if (a) if (b) i++; else ; else ; else { y++; f(); g(); z();}")//
         .to("if(x)if(a&&b)i++;else;else{++y;f();g();z();}") //
         .to("if(x){if(a&&b)i++;}else{++y;f();g();z();}") //
-    ;
+        ;
   }
   @Test public void nestedTernaryAlignment() {
     trimming("int b=3==4?5==3?2:3:5==3?2:3*3;").to("int b=3==4?5==3?2:3:5!=3?3*3:2;");
@@ -1919,15 +1938,17 @@ public class TrimmerTest {
   }
   @Test public void paramAbbreviateBasic1() {
     trimming("void m(XMLDocument xmlDocument) {" + //
-        "xmlDocument.exec(p);}").to("void m(XMLDocument d) {" + //
-            "d.exec(p);}");
+        "xmlDocument.exec(p);}")
+            .to("void m(XMLDocument d) {" + //
+                "d.exec(p);}");
   }
   @Test public void paramAbbreviateBasic2() {
     trimming("int m(StringBuilder builder) {" + //
         "if(builder.exec())" + //
-        "builder.clear();").to("int m(StringBuilder sb) {" + //
-            "if(sb.exec())" + //
-            "sb.clear();");
+        "builder.clear();")
+            .to("int m(StringBuilder sb) {" + //
+                "if(sb.exec())" + //
+                "sb.clear();");
   }
   @Test public void paramAbbreviateCollision() {
     trimming("void m(Expression exp, Expression expresssion) { }").to("void m(Expression e, Expression expresssion) { }");
@@ -1951,35 +1972,39 @@ public class TrimmerTest {
     trimming("TCPConnection conn(TCPConnection tcpCon) {" + //
         " UDPConnection c = new UDPConnection(57);" + //
         " if(tcpCon.isConnected()) " + //
-        "   c.disconnect();}").to("TCPConnection conn(TCPConnection tcpCon){" //
-            + " if(tcpCon.isConnected())" //
-            + "   (new UDPConnection(57)).disconnect();"//
-            + "}");
+        "   c.disconnect();}")
+            .to("TCPConnection conn(TCPConnection tcpCon){" //
+                + " if(tcpCon.isConnected())" //
+                + "   (new UDPConnection(57)).disconnect();"//
+                + "}");
   }
   @Test public void paramAbbreviateConflictingWithMethodName() {
     trimming("void m(BitmapManipulator bitmapManipulator) {" + //
-        "bitmapManipulator.x().y();").to("void m(BitmapManipulator bm) {" + //
-            "bm.x().y();");
+        "bitmapManipulator.x().y();")
+            .to("void m(BitmapManipulator bm) {" + //
+                "bm.x().y();");
   }
   @Test public void paramAbbreviateMultiple() {
     trimming("void m(StringBuilder stringBuilder, XMLDocument xmlDocument, Dog dog, Dog cat) {" + //
         "stringBuilder.clear();" + //
         "xmlDocument.open(stringBuilder.toString());" + //
-        "dog.eat(xmlDocument.asEdible(cat));}").to("void m(StringBuilder sb, XMLDocument xmlDocument, Dog dog, Dog cat) {" + //
-            "sb.clear();" + //
-            "xmlDocument.open(sb.toString());" + //
-            "dog.eat(xmlDocument.asEdible(cat));}");
+        "dog.eat(xmlDocument.asEdible(cat));}")
+            .to("void m(StringBuilder sb, XMLDocument xmlDocument, Dog dog, Dog cat) {" + //
+                "sb.clear();" + //
+                "xmlDocument.open(sb.toString());" + //
+                "dog.eat(xmlDocument.asEdible(cat));}");
   }
   @Test public void paramAbbreviateNestedMethod() {
     trimming("void f(Iterator iterator) {" + //
         "iterator = new Iterator<Object>() {" + //
         "int i = 0;" + //
         "@Override public boolean hasNext() { return false; }" + //
-        "@Override public Object next() { return null; } };").to("void f(Iterator i) {" + //
-            "i = new Iterator<Object>() {" + //
-            "int i = 0;" + //
-            "@Override public boolean hasNext() { return false; }" + //
-            "@Override public Object next() { return null; } };");
+        "@Override public Object next() { return null; } };")
+            .to("void f(Iterator i) {" + //
+                "i = new Iterator<Object>() {" + //
+                "int i = 0;" + //
+                "@Override public boolean hasNext() { return false; }" + //
+                "@Override public Object next() { return null; } };");
   }
   @Test public void parenthesizeOfpushdownTernary() {
     trimming("a ? b+x+e+f:b+y+e+f").to("b+(a ? x : y)+e+f");
@@ -2577,17 +2602,18 @@ public class TrimmerTest {
         "      return res;\n" + //
         "    }\n" + //
         "    return 8;" + //
-        "").to(" if (s.equals(0xDEAD)) "//
-            + "return 8; " + //
-            "      int res = 0;\n" + //
-            "      for (int i = 0;i < s.length();++i)\n" + //
-            "       if (s.charAt(i) == 'a')\n" + //
-            "          res += 2;\n" + //
-            "        else "//
-            + "       if (s.charAt(i) == 'd')\n" + //
-            "          res -= 1;\n" + //
-            "      return res;\n" + //
-            "");
+        "").to(
+            " if (s.equals(0xDEAD)) "//
+                + "return 8; " + //
+                "      int res = 0;\n" + //
+                "      for (int i = 0;i < s.length();++i)\n" + //
+                "       if (s.charAt(i) == 'a')\n" + //
+                "          res += 2;\n" + //
+                "        else "//
+                + "       if (s.charAt(i) == 'd')\n" + //
+                "          res -= 1;\n" + //
+                "      return res;\n" + //
+                "");
   }
   @Test public void shortestIfBranchFirst02b() {
     trimming("" + //
@@ -2632,13 +2658,14 @@ public class TrimmerTest {
         " h();" + //
         " return a;" + //
         "}\n" + //
-        "return c;").to("" + //
-            "if (!a) return c;" + //
-            "f();" + //
-            "g();" + //
-            "h();" + //
-            "return a;" + //
-            "");
+        "return c;")
+            .to("" + //
+                "if (!a) return c;" + //
+                "f();" + //
+                "g();" + //
+                "h();" + //
+                "return a;" + //
+                "");
   }
   @Test public void shortestOperand01() {
     trimming("x + y > z").to("");
@@ -2897,7 +2924,8 @@ public class TrimmerTest {
     trimming("2L*1").to("1*2L");
   }
   @Test public void stringFromBuilderGeneral() {
-    TrimmerTestsUtils.trimming("new StringBuilder(myName).append(\"\'s grade is \").append(100).toString()").to("myName + \"\'s grade is \" + 100");
+    TrimmerTestsUtils.trimming("new StringBuilder(myName).append(\"\'s grade is \").append(100).toString()")
+        .to("myName + \"\'s grade is \" + 100");
   }
   @Test public void stringFromBuilderNoStringComponents() {
     TrimmerTestsUtils.trimming("new StringBuilder(0).append(1).toString()").to("\"\" + 0 + 1");
@@ -2906,82 +2934,88 @@ public class TrimmerTest {
     TrimmerTestsUtils.trimming("new StringBuilder(f()).append(1+1).toString()").to("\"\" + f() + (1+1)");
   }
   @Test public void switchBrakesToReturnAllCases() {
-    TrimmerTestsUtils.trimming("" //
-        + " switch (x) {\n" //
-        + "     case 1:\n"//
-        + "         System.out.println(\"1\");\n" //
-        + "         break;\n" //
-        + "     case 2:\n"//
-        + "         System.out.println(\"2\");\n" //
-        + "         return 1;\n" //
-        + "     case 3:\n"//
-        + "         System.out.println(\"3\");\n" //
-        + " }\n"//
-        + " return 3;").to("" //
-        + " switch (x) {\n" //
-        + "     case 1:\n"//
-        + "         System.out.println(\"1\");\n" //
-        + "         return 3;\n" //
-        + "     case 2:\n"//
-        + "         System.out.println(\"2\");\n" //
-        + "         return 1;\n" //
-        + "     case 3:\n"//
-        + "         System.out.println(\"3\");\n" //
-        + " }\n"//
-        + " return 3;");
+    TrimmerTestsUtils
+        .trimming("" //
+            + " switch (x) {\n" //
+            + "     case 1:\n"//
+            + "         System.out.println(\"1\");\n" //
+            + "         break;\n" //
+            + "     case 2:\n"//
+            + "         System.out.println(\"2\");\n" //
+            + "         return 1;\n" //
+            + "     case 3:\n"//
+            + "         System.out.println(\"3\");\n" //
+            + " }\n"//
+            + " return 3;")
+        .to("" //
+            + " switch (x) {\n" //
+            + "     case 1:\n"//
+            + "         System.out.println(\"1\");\n" //
+            + "         return 3;\n" //
+            + "     case 2:\n"//
+            + "         System.out.println(\"2\");\n" //
+            + "         return 1;\n" //
+            + "     case 3:\n"//
+            + "         System.out.println(\"3\");\n" //
+            + " }\n"//
+            + " return 3;");
   }
   @Test public void switchBrakesToReturnDefaultWithSequencer() {
-    TrimmerTestsUtils.trimming("" //
-        + " switch (x) {\n" //
-        + "     case 1:\n"//
-        + "         System.out.println(\"1\");\n" //
-        + "         break;\n" //
-        + "     case 2:\n"//
-        + "         System.out.println(\"2\");\n" //
-        + "         return 1;\n" //
-        + "     case 3:\n"//
-        + "         System.out.println(\"3\");\n" //
-        + "     default:\n"//
-        + "         return 2;\n" //
-        + " }\n"//
-        + " return 3;").to("" //
-        + " switch (x) {\n" //
-        + "     case 1:\n"//
-        + "         System.out.println(\"1\");\n" //
-        + "         return 3;\n" //
-        + "     case 2:\n"//
-        + "         System.out.println(\"2\");\n" //
-        + "         return 1;\n" //
-        + "     case 3:\n"//
-        + "         System.out.println(\"3\");\n" //
-        + "     default:\n"//
-        + "         return 2;\n" //
-        + " }");
+    TrimmerTestsUtils
+        .trimming("" //
+            + " switch (x) {\n" //
+            + "     case 1:\n"//
+            + "         System.out.println(\"1\");\n" //
+            + "         break;\n" //
+            + "     case 2:\n"//
+            + "         System.out.println(\"2\");\n" //
+            + "         return 1;\n" //
+            + "     case 3:\n"//
+            + "         System.out.println(\"3\");\n" //
+            + "     default:\n"//
+            + "         return 2;\n" //
+            + " }\n"//
+            + " return 3;")
+        .to("" //
+            + " switch (x) {\n" //
+            + "     case 1:\n"//
+            + "         System.out.println(\"1\");\n" //
+            + "         return 3;\n" //
+            + "     case 2:\n"//
+            + "         System.out.println(\"2\");\n" //
+            + "         return 1;\n" //
+            + "     case 3:\n"//
+            + "         System.out.println(\"3\");\n" //
+            + "     default:\n"//
+            + "         return 2;\n" //
+            + " }");
   }
   @Test public void switchBrakesToReturnCaseWithoutSequencer() {
-    TrimmerTestsUtils.trimming("" //
-        + " switch (x) {\n" //
-        + "     case 1:\n"//
-        + "         System.out.println(\"1\");\n" //
-        + "         break;\n" //
-        + "     case 2:\n"//
-        + "         System.out.println(\"2\");\n" //
-        + "         return 1;\n" //
-        + "     case 3:\n"//
-        + "         System.out.println(\"3\");\n" //
-        + " }\n"//
-        + " return 2;").to("" //
-        + " switch (x) {\n" //
-        + "     case 1:\n"//
-        + "         System.out.println(\"1\");\n" //
-        + "         return 2;\n" //
-        + "     case 2:\n"//
-        + "         System.out.println(\"2\");\n" //
-        + "         return 1;\n" //
-        + "     case 3:\n"//
-        + "         System.out.println(\"3\");\n" //
-        + " }\n"//
-        + " return 2;\n");
+    TrimmerTestsUtils
+        .trimming("" //
+            + " switch (x) {\n" //
+            + "     case 1:\n"//
+            + "         System.out.println(\"1\");\n" //
+            + "         break;\n" //
+            + "     case 2:\n"//
+            + "         System.out.println(\"2\");\n" //
+            + "         return 1;\n" //
+            + "     case 3:\n"//
+            + "         System.out.println(\"3\");\n" //
+            + " }\n"//
+            + " return 2;")
+        .to("" //
+            + " switch (x) {\n" //
+            + "     case 1:\n"//
+            + "         System.out.println(\"1\");\n" //
+            + "         return 2;\n" //
+            + "     case 2:\n"//
+            + "         System.out.println(\"2\");\n" //
+            + "         return 1;\n" //
+            + "     case 3:\n"//
+            + "         System.out.println(\"3\");\n" //
+            + " }\n"//
+            + " return 2;\n");
   }
   @Test public void synchronizedBraces() {
     trimming("" //
