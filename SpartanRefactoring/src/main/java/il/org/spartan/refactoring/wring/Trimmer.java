@@ -90,7 +90,6 @@ public class Trimmer extends Spartanization {
     Source.setASTRewrite(r);
     Source.setCompilationUnit(u);
     try {
-      // Source.set(FileUtils.readFromFile(Source.getPath().toString()));
       Source.set(FileUtils.readFromFile(u.getJavaElement().getPath().toString()));
     } catch (final Exception x) {
       Source.set(null);
