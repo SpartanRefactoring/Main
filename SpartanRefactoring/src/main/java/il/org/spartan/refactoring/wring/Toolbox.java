@@ -62,6 +62,7 @@ public class Toolbox {
    */
   public static void generate() {
     instance = new Maker()//
+        .add(SwitchStatement.class, new SwitchBreakReturn()) //
         .add(Assignment.class, //
             new AssignmentAndAssignment(), //
             new AssignmentAndReturn(), //
@@ -72,6 +73,7 @@ public class Toolbox {
             null) //
         .add(PostfixExpression.class, new PostfixToPrefix()) //
         .add(InfixExpression.class, //
+            new CollectionZeroSize(), //
             new InfixDivisionMultiplicationNegatives(), //
             new InfixSortAddition(), //
             new InfixComparisonBooleanLiteral(), //
@@ -90,6 +92,7 @@ public class Toolbox {
             null)
         .add(MethodInvocation.class, //
             new BooleanConstants(), //
+            new StringFromStringBuilder(), //
             null) //
         .add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //

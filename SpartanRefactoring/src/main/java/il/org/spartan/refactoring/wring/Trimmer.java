@@ -29,7 +29,10 @@ import org.eclipse.text.edits.TextEdit;
 
 import il.org.spartan.refactoring.spartanizations.Spartanization;
 import il.org.spartan.refactoring.utils.As;
+import il.org.spartan.refactoring.utils.Comments;
 import il.org.spartan.refactoring.utils.Rewrite;
+import il.org.spartan.refactoring.utils.Source;
+import il.org.spartan.utils.FileUtils;
 
 /**
  * @author Yossi Gil
@@ -73,14 +76,25 @@ public class Trimmer extends Spartanization {
   @Override protected ASTVisitor collect(final List<Rewrite> $) {
     return new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
+        if (Comments.isSpartanizationDisabled(n))
+          return false;
         final Wring<N> w = Toolbox.instance().find(n);
         return w == null || w.nonEligible(n) || prune(w.make(n, exclude), $);
       }
     };
   }
   @Override protected final void fillRewrite(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
+    Source.setASTRewrite(r);
+    Source.setCompilationUnit(u);
+    try {
+      Source.set(FileUtils.readFromFile(Source.getPath().toString()));
+    } catch (Exception e) {
+      Source.set(null);
+    }
     u.accept(new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
+        if (Comments.isSpartanizationDisabled(n))
+          return false;
         if (!inRange(m, n))
           return true;
         final Wring<N> w = Toolbox.instance().find(n);
@@ -115,6 +129,9 @@ public class Trimmer extends Spartanization {
     @Override public final boolean visit(final ConditionalExpression e) {
       return cautiousGo(e);
     }
+    @Override public final boolean visit(final EnumDeclaration it) {
+      return cautiousGo(it);
+    }
     @Override public final boolean visit(final IfStatement it) {
       return cautiousGo(it);
     }
@@ -143,6 +160,12 @@ public class Trimmer extends Spartanization {
       return cautiousGo(it);
     }
     @Override public final boolean visit(final VariableDeclarationFragment it) {
+      return cautiousGo(it);
+    }
+    @Override public final boolean visit(final TypeDeclaration it) {
+      return cautiousGo(it);
+    }
+    @Override public final boolean visit(final SwitchStatement it) {
       return cautiousGo(it);
     }
     abstract <N extends ASTNode> boolean go(final N n);

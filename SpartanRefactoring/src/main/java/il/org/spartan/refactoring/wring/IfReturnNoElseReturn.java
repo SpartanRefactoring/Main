@@ -35,8 +35,12 @@ public final class IfReturnNoElseReturn extends Wring.ReplaceToNextStatement<IfS
     if (r2 == null)
       return null;
     final Expression e2 = Extract.core(r2.getExpression());
-    return e2 == null ? null
-        : Wrings.replaceTwoStatements(r, s, Subject.operand(Subject.pair(e1, e2).toCondition(s.getExpression())).toReturn(), g);
+    if (e2 == null)
+      return null;
+    r.remove(nextStatement, g);
+    comments.setBase(s);
+    comments.setCore(Subject.operand(Subject.pair(e1, e2).toCondition(s.getExpression())).toReturn());
+    return r;
   }
   @Override boolean scopeIncludes(final IfStatement s) {
     return Is.vacuousElse(s) && Extract.returnStatement(then(s)) != null && Extract.nextReturn(s) != null;

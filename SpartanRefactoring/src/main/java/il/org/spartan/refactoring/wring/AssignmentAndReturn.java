@@ -32,7 +32,8 @@ public class AssignmentAndReturn extends Wring.ReplaceToNextStatement<Assignment
     if (s == null || !same(left(a), core(s.getExpression())))
       return null;
     r.remove(parent, g);
-    r.replace(s, Subject.operand(a).toReturn(), g);
+    ASTNode $ = Subject.operand(a).toReturn();
+    comments.setCore($);
     return r;
   }
   @Override String description(final Assignment a) {

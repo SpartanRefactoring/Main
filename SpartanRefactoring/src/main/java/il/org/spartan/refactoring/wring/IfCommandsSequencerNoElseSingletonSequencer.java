@@ -10,10 +10,10 @@ import static il.org.spartan.refactoring.wring.Wrings.shoudlInvert;
 
 import java.util.List;
 
+import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.jdt.core.dom.rewrite.ListRewrite;
 import org.eclipse.text.edits.TextEditGroup;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
@@ -36,7 +36,7 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends Wring.Rep
     if (!Is.vacuousElse(s) || !Is.sequencer(nextStatement) || !endsWithSequencer(then(s)))
       return null;
     final IfStatement asVirtualIf = Subject.pair(then(s), nextStatement).toIf(s.getExpression());
-    if (same(then(asVirtualIf), elze(asVirtualIf))) {
+    if (same(then(asVirtualIf), elze(asVirtualIf))) { // case 1
       r.replace(s, then(asVirtualIf), g);
       r.remove(nextStatement, g);
       return r;
@@ -46,14 +46,14 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends Wring.Rep
     final IfStatement canonicalIf = invert(asVirtualIf);
     final List<Statement> ss = Extract.statements(elze(canonicalIf));
     canonicalIf.setElseStatement(null);
-    if (!Is.block(s.getParent())) {
+    if (!Is.block(s.getParent())) { // case 2
       ss.add(0, canonicalIf);
       r.replace(s, Subject.ss(ss).toBlock(), g);
       r.remove(nextStatement, g);
-    } else {
-      final ListRewrite lr = insertAfter(s, ss, r, g);
-      lr.replace(s, canonicalIf, g);
-      lr.remove(nextStatement, g);
+    } else { // case 3
+      r.replace(nextStatement, r.createGroupNode(ss.toArray(new ASTNode[ss.size()])), g);
+      comments.setBase(s);
+      comments.setCore(canonicalIf);
     }
     return r;
   }

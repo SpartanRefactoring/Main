@@ -40,7 +40,9 @@ public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assign
     if (right1 == null || !same(right, right1) || !Is.deterministic(right))
       return null;
     r.remove(parent, g);
-    r.replace(right1, duplicate(a), g);
+    Assignment $ = duplicate(a1);
+    setRight($, duplicate(a));
+    comments.setCore(r.getAST().newExpressionStatement($));
     return r;
   }
   static Expression getRight(final Assignment a) {
@@ -49,6 +51,13 @@ public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assign
   static Expression extractRight(final Assignment a) {
     final Expression $ = Extract.core(right(a));
     return !($ instanceof Assignment) || ((Assignment) $).getOperator() != ASSIGN ? $ : extractRight((Assignment) $);
+  }
+  static void setRight(Assignment a, Expression e) {
+    final Expression $ = Extract.core(right(a));
+    if (!($ instanceof Assignment) || ((Assignment) $).getOperator() != ASSIGN)
+      a.setRightHandSide(e);
+    else
+      setRight((Assignment) $, e);    
   }
   @Override String description(final Assignment a) {
     return "Consolidate assignment to " + left(a) + " with subsequent similar assignment";
