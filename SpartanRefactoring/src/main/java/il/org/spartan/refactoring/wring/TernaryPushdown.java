@@ -33,6 +33,8 @@ import il.org.spartan.refactoring.utils.expose;
 
 final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpression> {
   private static int findSingleDifference(final List<Expression> es1, final List<Expression> es2) {
+    if (es1.size() != es2.size())
+      return -1;
     int $ = -1;
     for (int i = 0; i < es1.size(); ++i)
       if (!same(es1.get(i), es2.get(i))) {
@@ -49,10 +51,8 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
       final ClassInstanceCreation e2) {
     if (!same(e1.getType(), e2.getType()) || !same(e1.getExpression(), e2.getExpression()))
       return null;
-    @SuppressWarnings("unchecked") final List<Expression> es1 = e1.arguments();
-    @SuppressWarnings("unchecked") final List<Expression> es2 = e2.arguments();
-    if (es1.size() != es2.size())
-      return null;
+    final List<Expression> es1 = expose.arguments(e1);
+    final List<Expression> es2 = expose.arguments(e2);
     final int i = findSingleDifference(es1, es2);
     if (i < 0)
       return null;
@@ -74,8 +74,6 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
       return null;
     final List<Expression> es1 = Extract.operands(e1);
     final List<Expression> es2 = Extract.operands(e2);
-    if (es1.size() != es2.size())
-      return null;
     final int i = findSingleDifference(es1, es2);
     if (i < 0)
       return null;
@@ -88,10 +86,10 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
   private static Expression pushdown(final ConditionalExpression e, final MethodInvocation e1, final MethodInvocation e2) {
     if (!same(e1.getName(), e2.getName()))
       return null;
-    final List<Expression> es1 = expose.arguments(e1);
-    final List<Expression> es2 = expose.arguments(e2);
     final Expression receiver1 = e1.getExpression();
     final Expression receiver2 = e2.getExpression();
+    final List<Expression> es1 = expose.arguments(e1);
+    final List<Expression> es2 = expose.arguments(e2);
     if (!same(receiver1, receiver2)) {
       if (receiver1 == null || !same(es1, es2))
         return null;
@@ -100,8 +98,6 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
       $.setExpression(parenthesize(c));
       return $;
     }
-    if (es1.size() != es2.size())
-      return null;
     final int i = findSingleDifference(es1, es2);
     if (i < 0)
       return null;
@@ -116,14 +112,13 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
       return null;
     final List<Expression> es1 = expose.arguments(e1);
     final List<Expression> es2 = expose.arguments(e2);
-    if (es1.size() != es2.size())
-      return null;
     final int i = findSingleDifference(es1, es2);
     if (i < 0)
       return null;
     final SuperMethodInvocation $ = duplicate(e1);
-    expose.arguments($).remove(i);
-    expose.arguments($).add(i, Subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression()));
+    final List<Expression> as = expose.arguments($);
+    as.remove(i);
+    as.add(i, Subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression()));
     return $;
   }
   static Expression pushdown(final ConditionalExpression e, final Assignment a1, final Assignment a2) {
