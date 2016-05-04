@@ -16,12 +16,14 @@ import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.jdt.core.dom.rewrite.TargetSourceRangeComputer.SourceRange;
 import org.eclipse.text.edits.TextEditGroup;
-import org.eclipse.ui.dialogs.ListSelectionDialog;
 
 /**
- * Center of comments analysis and manipulation.
- * Supports DisableSpartanization option.
- * Supports comments mash into nodes.
+ * Center of comments analysis and manipulation. Supports DisableSpartanization
+ * option. Supports comments mash into nodes. Each Comments object gather: 1)
+ * base - an {@ilnk ASTNode} about to be replaced 2) core - the {@link ASTNode}
+ * that would come in its place 3) a list of comments meant to be added to the
+ * core node. Then, by calling mash method, a final {@link ASTNode} is created
+ * from the core and the comments, and base is replaced by it
  * 
  * @author Ori Roth
  * @since 2016-04-20
@@ -33,6 +35,10 @@ public class Comments {
   private ASTNode bs;
   private ASTNode cr;
   private List<Comment> cl = new LinkedList<>();
+  /**
+   * Create a Comments object, with up to date source code and current
+   * {@link CompilationUnit} in use
+   */
   public Comments() {
     refresh();
   }
@@ -41,6 +47,9 @@ public class Comments {
     cu = Source.getCompilationUnit();
     r = Source.getASTRewrite();
   }
+  /**
+   * Clear base, core and comments
+   */
   public void clear() {
     refresh();
     bs = null;
@@ -173,7 +182,7 @@ public class Comments {
   /**
    * Assuming c is the only comment associated with cr, check whether it should
    * be at the end of cr or at its start.
-   * TODO complete all cases
+   * TODO Ori: complete all cases
    * 
    * @param b
    *          base node
@@ -207,8 +216,14 @@ public class Comments {
   /**
    * Mashing the comments with the previously declared node
    * 
-   * @return placeholder node
+   * @param b
+   *          base node
+   * @param cr
+   *          core node
+   * @param g
+   *          current {@link TextEditGroup}
    */
+  @SuppressWarnings("unchecked")
   public void mash(ASTNode b, ASTNode cr, TextEditGroup g) {
     // Assumes b is original node with real position
     if (cl.size() == 0 || b.getStartPosition() < 0) {
@@ -244,17 +259,26 @@ public class Comments {
       if (cr instanceof Statement && !allWhiteSpaces(s.substring(rowStartIndex(sr.getStartPosition()), sr.getStartPosition())))
         nl.add(0, r.createStringPlaceholder("", ASTNode.BLOCK));
     }
-//      TODO ctrl+shift+f it
-//      if (!allWhiteSpaces(s.substring(sr.getStartPosition() + sr.getLength()).split("\n")[0])
-//        && b instanceof Statement)
-//      nl.add(r.createStringPlaceholder("", ASTNode.BLOCK));
     r.replace(b, r.createGroupNode(nl.toArray(new ASTNode[nl.size()])), g);
   }
+  /**
+   * Mashing the comments with the previously declared node, using predefined
+   * base and core
+   * 
+   * @param g
+   *          current {@link TextEditGroup}
+   */
   public void mash(TextEditGroup g) {
     if (bs == null || cr == null)
       return;
     mash(bs, cr, g);
   }
+  /**
+   * Get current number of comment saved in this object (and about to be mashed
+   * with the core)
+   * 
+   * @return Comments count
+   */
   public int commentsCount() {
     return cl.size();
   }

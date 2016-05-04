@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.utils;
 
-import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.BlockComment;
 import org.eclipse.jdt.core.dom.Comment;
@@ -21,47 +20,80 @@ public class CommentVisitor extends ASTVisitor {
   private String c;             // comment content
   private int sr;               // comment start row
   private int er;               // comment end row
+  /**
+   * Create a new comment visitor with up to date source code reference
+   */
   public CommentVisitor() {
     super();
     this.cu = Source.getCompilationUnit();
     this.s = Source.get();
   }
-  public boolean visit(LineComment node) {
-
-    int sp = node.getStartPosition();
-    int ep = sp + node.getLength();
+  /**
+   * visit {@link LineComment}, get it's source
+   * 
+   * @param cm
+   *          a {@link LineComment}
+   * @return true iff visit inner comment nodes
+   */
+  public boolean visit(LineComment cm) {
+    return commentVisit(cm);
+  }
+  /**
+   * visit {@link BlockComment}, get it's source
+   * 
+   * @param cm
+   *          a {@link BlockComment}
+   * @return true iff visit inner comment nodes
+   */
+  public boolean visit(BlockComment cm) {
+    return commentVisit(cm);
+  }
+  /**
+   * visit {@link Javadoc}, get it's source
+   * 
+   * @param cm
+   *          a {@link Javadoc}
+   * @return true iff visit inner comment nodes
+   */
+  public boolean visit(Javadoc cm) {
+    return commentVisit(cm);
+  }
+  /**
+   * visit {@link Comment}, get it's source
+   * 
+   * @param cm
+   *          a {@link Comment}
+   * @return true iff visit inner comment nodes
+   */
+  private <C extends Comment> boolean commentVisit(C cm) {
+    int sp = cm.getStartPosition();
+    int ep = sp + cm.getLength();
     c = new StringBuilder(s).substring(sp, ep).toString();
-    sr = cu.getLineNumber(node.getStartPosition()) - 1;
-    er = cu.getLineNumber(node.getStartPosition() + node.getLength()) - 1;
-  
+    sr = cu.getLineNumber(cm.getStartPosition()) - 1;
+    er = cu.getLineNumber(cm.getStartPosition() + cm.getLength()) - 1;
     return true;
   }
-  public boolean visit(BlockComment node) {
-    int sp = node.getStartPosition();
-    int ep = sp + node.getLength();
-    c = new StringBuilder(s).substring(sp, ep).toString();
-    sr = cu.getLineNumber(node.getStartPosition()) - 1;
-    er = cu.getLineNumber(node.getStartPosition() + node.getLength()) - 1;
-  
-    return true;
-  }
-  public boolean visit(Javadoc node) {
-    int sp = node.getStartPosition();
-    int ep = sp + node.getLength();
-    c = new StringBuilder(s).substring(sp, ep).toString();
-    sr = cu.getLineNumber(node.getStartPosition()) - 1;
-    er = cu.getLineNumber(node.getStartPosition() + node.getLength()) - 1;
-  
-    return true;
-  }
-  public void preVisit(ASTNode node) {
-  }
+  /**
+   * Aftermath result of the visit - comment source
+   * 
+   * @return visited comment's source
+   */
   public String getContent() {
     return c;
   }
+  /**
+   * Get comment's start row
+   * 
+   * @return comment start row index (starting 0)
+   */
   public int getStartRow() {
     return sr;
   }
+  /**
+   * Get comment's end row
+   * 
+   * @return comment end row index (starting 0)
+   */
   public int getEndRow() {
     return er;
   }
