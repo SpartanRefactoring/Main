@@ -146,28 +146,38 @@ public class Comments {
   public void setBase(ASTNode n) {
     bs = n;
   }
+  /**
+   * Get current base, or null if no base defined
+   *
+   * @return current base {@link ASTNode}
+   */
   public ASTNode base() {
     return bs;
   }
   /**
    * Sets core - node to be mashed with the comments in cl
    *
-   * @param n
+   * @param cr core node
    */
   public void setCore(ASTNode cr) {
     this.cr = cr;
   }
+  /**
+   * Get current core, or null if no core defined
+   *
+   * @return current core {@link ASTNode}
+   */
   public ASTNode core() {
     return cr;
   }
   /**
    * Checks for whitespaces only string
    *
-   * @param s a String
+   * @param str a String
    * @return true iff s contains only whitespaces
    */
-  public boolean allWhiteSpaces(String s) {
-    for (final char c : s.toCharArray())
+  public static boolean allWhiteSpaces(String str) {
+    for (final char c : str.toCharArray())
       if (!Character.isWhitespace(c))
         return false;
     return true;
@@ -181,13 +191,15 @@ public class Comments {
    * @param c comment
    * @return true iff c should be placed at the end of cr
    */
-  public boolean shouldMoveComentToEnd(ASTNode b, ASTNode cr, Comment c) {
+  public static boolean shouldMoveComentToEnd(ASTNode b, ASTNode cr, Comment c) {
     if (!c.isLineComment())
       return false;
     switch (cr.getNodeType()) {
       case ASTNode.IF_STATEMENT:
         final IfStatement is = (IfStatement) cr;
         return Is.vacuous(is.getElseStatement()) && !(is.getThenStatement() instanceof Block);
+      default:
+        break;
     }
     return true;
   }
@@ -195,7 +207,7 @@ public class Comments {
    * @param i code character index
    * @return index of the start of i's row
    */
-  public int rowStartIndex(int i) {
+  public static int rowStartIndex(int i) {
     int j = i;
     while (j > 0 && s.charAt(j - 1) != '\n')
       --j;
@@ -205,40 +217,40 @@ public class Comments {
    * Mashing the comments with the previously declared node
    *
    * @param b base node
-   * @param cr core node
+   * @param c core node
    * @param g current {@link TextEditGroup}
    */
-  @SuppressWarnings("unchecked") public void mash(ASTNode b, ASTNode cr, TextEditGroup g) {
+  @SuppressWarnings("unchecked") public void mash(ASTNode b, ASTNode c, TextEditGroup g) {
     // Assumes b is original node with real position
     if (cl.size() == 0 || b.getStartPosition() < 0) {
-      r.replace(b, cr, g);
+      r.replace(b, c, g);
       return;
     }
     final SourceRange sr = r.getExtendedSourceRangeComputer().computeSourceRange(b);
     final List<ASTNode> nl = new ArrayList<>();
-    if (cr instanceof Block) {
-      final Block bl = (Block) cr;
+    if (c instanceof Block) {
+      final Block bl = (Block) c;
       Collections.reverse(cl);
-      for (final Comment c : cl)
+      for (final Comment cm : cl)
         bl.statements().add(0,
-            r.createStringPlaceholder(s.substring(c.getStartPosition(), c.getStartPosition() + c.getLength()), ASTNode.BLOCK));
+            r.createStringPlaceholder(s.substring(cm.getStartPosition(), cm.getStartPosition() + cm.getLength()), ASTNode.BLOCK));
       nl.add(bl);
     } else {
-      if (cl.size() == 1 && shouldMoveComentToEnd(b, cr, cl.get(0))) {
-        final Comment c = cl.get(0);
+      if (cl.size() == 1 && shouldMoveComentToEnd(b, c, cl.get(0))) {
+        final Comment cm = cl.get(0);
         String f = "";
         // new line fix after line comment
-        f = !c.isLineComment() || allWhiteSpaces(s.substring(sr.getStartPosition() + sr.getLength()).split("\n")[0]) ? "" : "\n";
-        nl.add(cr);
-        nl.add(r.createStringPlaceholder(" " + s.substring(c.getStartPosition(), c.getStartPosition() + c.getLength()) + f,
-            c.getNodeType()));
+        f = !cm.isLineComment() || allWhiteSpaces(s.substring(sr.getStartPosition() + sr.getLength()).split("\n")[0]) ? "" : "\n";
+        nl.add(c);
+        nl.add(r.createStringPlaceholder(" " + s.substring(cm.getStartPosition(), cm.getStartPosition() + cm.getLength()) + f,
+            cm.getNodeType()));
       } else {
-        for (final Comment c : cl)
-          nl.add(r.createStringPlaceholder(s.substring(c.getStartPosition(), c.getStartPosition() + c.getLength())
-              + (cr instanceof Expression && !c.isLineComment() ? "" : "\n"), c.getNodeType()));
-        nl.add(cr);
+        for (final Comment cm : cl)
+          nl.add(r.createStringPlaceholder(s.substring(cm.getStartPosition(), cm.getStartPosition() + cm.getLength())
+              + (c instanceof Expression && !cm.isLineComment() ? "" : "\n"), cm.getNodeType()));
+        nl.add(c);
       }
-      if (cr instanceof Statement && !allWhiteSpaces(s.substring(rowStartIndex(sr.getStartPosition()), sr.getStartPosition())))
+      if (c instanceof Statement && !allWhiteSpaces(s.substring(rowStartIndex(sr.getStartPosition()), sr.getStartPosition())))
         nl.add(0, r.createStringPlaceholder("", ASTNode.BLOCK));
     }
     r.replace(b, r.createGroupNode(nl.toArray(new ASTNode[nl.size()])), g);
