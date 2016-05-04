@@ -90,9 +90,10 @@ public class Trimmer extends Spartanization {
     Source.setASTRewrite(r);
     Source.setCompilationUnit(u);
     try {
-      Source.set(FileUtils.readFromFile(u.getJavaElement().getPath().toString()));
+      Source.set(FileUtils.readFromFile(u.getJavaElement().getResource().getLocation().toString()));
     } catch (final Exception x) {
       Source.set(null);
+      x.printStackTrace();
     }
     u.accept(new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {

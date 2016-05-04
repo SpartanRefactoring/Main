@@ -109,7 +109,13 @@ public class Comments {
     if (cu == null)
       return false;
     final int nln = cu.getLineNumber(n.getStartPosition()) - 1;
+    cu.lastTrailingCommentIndex(n);
     for (final Comment c : (List<Comment>) cu.getCommentList()) {
+      final int csr = cu.getLineNumber(c.getStartPosition()) - 1;
+      if (csr < nln - 1)
+        continue;
+      else if (csr > nln)
+        break;
       final CommentVisitor cv = new CommentVisitor();
       c.accept(cv);
       if (matchRowIndexes(nln, cv.getStartRow(), cv.getEndRow(), c.getNodeType(), n) && cv.getContent().contains(dsi))
