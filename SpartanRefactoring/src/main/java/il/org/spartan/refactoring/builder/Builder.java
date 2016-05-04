@@ -9,6 +9,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -73,8 +74,10 @@ public class Builder extends IncrementalProjectBuilder {
   protected void fullBuild() {
     try {
       getProject().accept(new IResourceVisitor() {
-        addMarkers(r);
-        return true; // to continue visiting children.
+        @Override public boolean visit(final IResource r) throws CoreException {
+          addMarkers(r);
+          return true;
+        }
       });
     } catch (final CoreException e) {
       e.printStackTrace();
@@ -85,7 +88,7 @@ public class Builder extends IncrementalProjectBuilder {
       try {
         Source.setPath(r.getLocation());
         Source.set(FileUtils.readFromFile(r.getLocation().toString()));
-      } catch (IOException e) {
+      } catch (final IOException e) {
         e.printStackTrace();
       }
       addMarkers((IFile) r);
@@ -115,14 +118,12 @@ public class Builder extends IncrementalProjectBuilder {
   /**
    * deletes all spartanization suggestion markers
    *
-   * @param f
-   *          the file from which to delete the markers
-   * @throws CoreException
-   *           if this method fails. Reasons include: This resource does not
-   *           exist. This resource is a project that is not open. Resource
-   *           changes are disallowed during certain types of resource change
-   *           event notification. See {@link IResourceChangeEvent} for more
-   *           details.
+   * @param f the file from which to delete the markers
+   * @throws CoreException if this method fails. Reasons include: This resource
+   *           does not exist. This resource is a project that is not open.
+   *           Resource changes are disallowed during certain types of resource
+   *           change event notification. See {@link IResourceChangeEvent} for
+   *           more details.
    */
   public static void deleteMarkers(final IFile f) throws CoreException {
     f.deleteMarkers(MARKER_TYPE, false, IResource.DEPTH_ONE);
