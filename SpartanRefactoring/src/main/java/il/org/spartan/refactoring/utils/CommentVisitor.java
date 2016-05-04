@@ -24,10 +24,10 @@ public class CommentVisitor extends ASTVisitor {
   /**
    * Create a new comment visitor with up to date source code reference
    */
-  public CommentVisitor() {
+  public CommentVisitor(CompilationUnit u) {
     super();
-    cu = Source.getCompilationUnit();
-    s = Source.get();
+    cu = u;
+    s = Source.get(u.getJavaElement().getPath());
   }
   /**
    * visit {@link LineComment}, get it's source

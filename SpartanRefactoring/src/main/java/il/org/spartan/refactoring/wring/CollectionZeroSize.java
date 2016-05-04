@@ -18,31 +18,31 @@ import il.org.spartan.refactoring.utils.BindingUtils;
 /**
  * A {@link Wring} to change emptiness check from
  * <code><pre>x.size() != 0</pre></code> or <code><pre>x.size() > 0</pre></code>
- * to <code><pre>!x.isEmpty()</pre></code>.
- * TODO add tests
+ * to <code><pre>!x.isEmpty()</pre></code>. TODO add tests
  *
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-24
  */
 public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression> {
   // list of accepted operators
-  final List<InfixExpression.Operator> ao = Arrays.asList(new Operator[] { InfixExpression.Operator.EQUALS,
-      InfixExpression.Operator.NOT_EQUALS, InfixExpression.Operator.GREATER });
+  final List<InfixExpression.Operator> ao = Arrays.asList(
+      new Operator[] { InfixExpression.Operator.EQUALS, InfixExpression.Operator.NOT_EQUALS, InfixExpression.Operator.GREATER });
+
   @Override ASTNode replacement(final InfixExpression n) {
     if (!n.getAST().hasResolvedBindings() || !(n.getLeftOperand() instanceof MethodInvocation)
         || !(n.getRightOperand() instanceof NumberLiteral) || !ao.contains(n.getOperator()))
       return null;
-    MethodInvocation mi = (MethodInvocation) n.getLeftOperand();
-    NumberLiteral nl = (NumberLiteral) n.getRightOperand();
+    final MethodInvocation mi = (MethodInvocation) n.getLeftOperand();
+    final NumberLiteral nl = (NumberLiteral) n.getRightOperand();
     if (Integer.parseInt(nl.getToken()) != 0 || !mi.getName().getIdentifier().equals("size"))
       return null;
-    Expression mie = mi.getExpression();
-    IMethodBinding iemb = BindingUtils
-        .getVisibleMethod(mie != null ? mie.resolveTypeBinding() : BindingUtils.getClass(n), "isEmpty", null, n);
-    if (iemb == null || !(iemb.getReturnType().toString().equals("boolean")
-        || iemb.getReturnType().getBinaryName().equals("java.lang.Boolean")))
+    final Expression mie = mi.getExpression();
+    final IMethodBinding iemb = BindingUtils.getVisibleMethod(mie != null ? mie.resolveTypeBinding() : BindingUtils.getClass(n),
+        "isEmpty", null, n, cu);
+    if (iemb == null
+        || !(iemb.getReturnType().toString().equals("boolean") || iemb.getReturnType().getBinaryName().equals("java.lang.Boolean")))
       return null;
-    MethodInvocation ie = n.getAST().newMethodInvocation();
+    final MethodInvocation ie = n.getAST().newMethodInvocation();
     ie.setExpression((Expression) ASTNode.copySubtree(n.getAST(), mi.getExpression()));
     ie.setName(n.getAST().newSimpleName("isEmpty"));
     ASTNode $;
@@ -55,13 +55,11 @@ public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression
     }
     return $;
   }
-  @Override
-  String description(final InfixExpression n) {
-    Expression e = ((MethodInvocation) n.getLeftOperand()).getExpression();
+  @Override String description(final InfixExpression n) {
+    final Expression e = ((MethodInvocation) n.getLeftOperand()).getExpression();
     return e == null ? "Use isEmpty()" : "Use " + e.toString() + ".isEmpty()";
   }
-  @Override
-  WringGroup wringGroup() {
+  @Override WringGroup wringGroup() {
     // TODO maybe change WringGroup
     return WringGroup.DISCARD_METHOD_INVOCATION;
   }

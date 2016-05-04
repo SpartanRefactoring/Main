@@ -67,7 +67,7 @@ public class InlineSingleUse extends Spartanization {
       }
     });
   }
-  @Override protected ASTVisitor collect(final List<Rewrite> $) {
+  @Override protected ASTVisitor collect(final List<Rewrite> $, CompilationUnit u) {
     return new ASTVisitor() {
       @Override public boolean visit(final VariableDeclarationFragment node) {
         if (!(node.getParent() instanceof VariableDeclarationStatement))

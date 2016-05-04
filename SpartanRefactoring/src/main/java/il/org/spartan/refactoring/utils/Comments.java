@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.BodyDeclaration;
@@ -29,9 +30,9 @@ import org.eclipse.text.edits.TextEditGroup;
  * @since 2016-04-20
  */
 public class Comments {
-  private static String s;
-  private static CompilationUnit cu;
-  private static ASTRewrite r;
+  private String s;
+  private final CompilationUnit cu;
+  private final ASTRewrite r;
   private ASTNode bs;
   private ASTNode cr;
   private final List<Comment> cl = new LinkedList<>();
@@ -39,20 +40,24 @@ public class Comments {
   /**
    * Create a Comments object, with up to date source code and current
    * {@link CompilationUnit} in use
+   *
+   * @param u current compilation unit
+   * @param rew current rewriter
    */
-  public Comments() {
-    refresh();
-  }
-  private static void refresh() {
-    s = Source.get();
-    cu = Source.getCompilationUnit();
-    r = Source.getASTRewrite();
+  public Comments(CompilationUnit u, ASTRewrite rew) {
+    cu = u;
+    s = null;
+    if (u != null) {
+      final IJavaElement je = u.getJavaElement();
+      if (je != null)
+        s = Source.get(u.getJavaElement().getPath());
+    }
+    r = rew;
   }
   /**
    * Clear base, core and comments
    */
   public void clear() {
-    refresh();
     bs = null;
     cr = null;
     cl.clear();
@@ -101,12 +106,9 @@ public class Comments {
    * @param n ASTNode
    * @return true iff the spartanization is disabled for this node and its sons.
    */
-  @SuppressWarnings("unchecked") public static <N extends ASTNode> boolean isSpartanizationDisabled(N n) {
-    refresh();
+  @SuppressWarnings("unchecked") public <N extends ASTNode> boolean isSpartanizationDisabled(N n) {
     // In a failure case, allow all spartanizations
-    if (s == null)
-      return false;
-    if (cu == null)
+    if (s == null || cu == null)
       return false;
     final int nln = cu.getLineNumber(n.getStartPosition()) - 1;
     cu.lastTrailingCommentIndex(n);
@@ -116,7 +118,7 @@ public class Comments {
         continue;
       else if (csr > nln)
         break;
-      final CommentVisitor cv = new CommentVisitor();
+      final CommentVisitor cv = new CommentVisitor(cu);
       c.accept(cv);
       if (matchRowIndexes(nln, cv.getStartRow(), cv.getEndRow(), c.getNodeType(), n) && cv.getContent().contains(dsi))
         return true;
@@ -213,7 +215,7 @@ public class Comments {
    * @param i code character index
    * @return index of the start of i's row
    */
-  public static int rowStartIndex(int i) {
+  public int rowStartIndex(int i) {
     int j = i;
     while (j > 0 && s.charAt(j - 1) != '\n')
       --j;

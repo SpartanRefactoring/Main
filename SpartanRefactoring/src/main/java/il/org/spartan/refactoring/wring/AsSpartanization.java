@@ -17,7 +17,6 @@ import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import il.org.spartan.refactoring.spartanizations.Spartanization;
 import il.org.spartan.refactoring.utils.Rewrite;
 import il.org.spartan.refactoring.utils.Source;
-import il.org.spartan.utils.FileUtils;
 
 /**
  * An adapter that converts the @{link Wring} protocol into that of
@@ -39,7 +38,8 @@ public class AsSpartanization extends Spartanization {
     super(name);
     this.inner = (Wring<ASTNode>) inner;
   }
-  @Override protected ASTVisitor collect(final List<Rewrite> $) {
+  @Override protected ASTVisitor collect(final List<Rewrite> $, CompilationUnit u) {
+    Source.set(u);
     return new ASTVisitor() {
       @Override public boolean visit(final Block it) {
         return process(it);
@@ -68,13 +68,7 @@ public class AsSpartanization extends Spartanization {
     };
   }
   @Override protected final void fillRewrite(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
-    Source.setASTRewrite(r);
-    Source.setCompilationUnit(u);
-    try {
-      Source.set(FileUtils.readFromFile(u.getJavaElement().getPath().toString()));
-    } catch (final Exception x) {
-      Source.set(null);
-    }
+    Source.set(u);
     u.accept(new ASTVisitor() {
       @Override public boolean visit(final Block e) {
         return go(e);

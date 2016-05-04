@@ -100,7 +100,7 @@ public class ForwardDeclaration extends Spartanization {
           return true;
     return false;
   }
-  @Override protected ASTVisitor collect(final List<Rewrite> $$) {
+  @Override protected ASTVisitor collect(final List<Rewrite> $$, CompilationUnit u) {
     return new ASTVisitor() {
       @Override public boolean visit(final VariableDeclarationFragment f) {
         final ASTNode $ = f.getParent().getParent();

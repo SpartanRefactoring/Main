@@ -63,7 +63,7 @@ public class TrimmerTest {
     trimming("1 + b.statements().indexOf(declarationStmt)").to("");
   }
   /* TODO Ori: add comments preservation tests
-   * 
+   *
    * @Test public void preserve000() { trimmingPreservingComments(
    * "if (a) return true; // true!\n else return false;").to(
    * "return a; // true!"); } */
@@ -174,6 +174,9 @@ public class TrimmerTest {
   @Test public void booleanChangeValueOfToConstant() {
     trimming("Boolean b = Boolean.valueOf(true);").to("Boolean b = Boolean.TRUE;");
     trimming("Boolean b = Boolean.valueOf(false);").to("Boolean b = Boolean.FALSE;");
+  }
+  @Test public void booleanChangeValueOfToConstantNotConstant() {
+    trimming("Boolean.valueOf(expected);").to(""); // from junit source
   }
   @Test public void bugInLastIfInMethod() {
     TrimmerTestsUtils

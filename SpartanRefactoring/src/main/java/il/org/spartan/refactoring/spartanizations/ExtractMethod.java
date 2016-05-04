@@ -31,8 +31,10 @@ public class ExtractMethod extends Spartanization {
   public ExtractMethod() {
     super("Split method");
   }
+
   CompilationUnit oldCu;
-  @Override protected ASTVisitor collect(final List<Rewrite> $) {
+
+  @Override protected ASTVisitor collect(final List<Rewrite> $, CompilationUnit u) {
     // TODO Ofir: No opportunities for now, if it's 2016 and not added yet,
     // blame
     return new ASTVisitor() {
@@ -46,9 +48,12 @@ public class ExtractMethod extends Spartanization {
       }
     };
   }
+
   final int MinimumGroupSizeForExtraction = 3;
   final int MaximunGroupRelativeToMethodSize = 3;
-  @Override protected final void fillRewrite(@SuppressWarnings("unused") final ASTRewrite r, final CompilationUnit u, @SuppressWarnings("unused") final IMarker m) {
+
+  @Override protected final void fillRewrite(@SuppressWarnings("unused") final ASTRewrite r, final CompilationUnit u,
+      @SuppressWarnings("unused") final IMarker m) {
     u.accept(new ASTVisitor() {
       @SuppressWarnings("boxing") @Override public boolean visit(final MethodDeclaration d) {
         final Block b = d.getBody();
@@ -63,7 +68,8 @@ public class ExtractMethod extends Spartanization {
         });
         final List<LinkedList<Integer>> groups = new LinkedList<>();
         for (final LinkedList<Integer> group : ug)
-          if (group.size() >= MinimumGroupSizeForExtraction && group.size() <= d.getBody().statements().size() - MaximunGroupRelativeToMethodSize)
+          if (group.size() >= MinimumGroupSizeForExtraction
+              && group.size() <= d.getBody().statements().size() - MaximunGroupRelativeToMethodSize)
             groups.add(0, group);
         // TODO Ofir: random method name for now - will be changed later on
         for (final LinkedList<Integer> group : groups) {

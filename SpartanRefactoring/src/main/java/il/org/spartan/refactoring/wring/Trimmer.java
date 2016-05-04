@@ -35,7 +35,6 @@ import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.refactoring.utils.Comments;
 import il.org.spartan.refactoring.utils.Rewrite;
 import il.org.spartan.refactoring.utils.Source;
-import il.org.spartan.utils.FileUtils;
 
 /**
  * @author Yossi Gil
@@ -76,10 +75,10 @@ public class Trimmer extends Spartanization {
     super("Trimmer");
     Toolbox.generate();
   }
-  @Override protected ASTVisitor collect(final List<Rewrite> $) {
+  @Override protected ASTVisitor collect(final List<Rewrite> $, CompilationUnit u) {
     return new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
-        if (Comments.isSpartanizationDisabled(n))
+        if (new Comments(u, null).isSpartanizationDisabled(n))
           return false;
         final Wring<N> w = Toolbox.instance().find(n);
         return w == null || w.nonEligible(n) || prune(w.make(n, exclude), $);
@@ -87,22 +86,16 @@ public class Trimmer extends Spartanization {
     };
   }
   @Override protected final void fillRewrite(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
-    Source.setASTRewrite(r);
-    Source.setCompilationUnit(u);
-    try {
-      Source.set(FileUtils.readFromFile(u.getJavaElement().getResource().getLocation().toString()));
-    } catch (final Exception x) {
-      Source.set(null);
-      x.printStackTrace();
-    }
+    Source.set(u);
     u.accept(new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
-        if (Comments.isSpartanizationDisabled(n))
+        if (new Comments(u, null).isSpartanizationDisabled(n))
           return false;
         if (!inRange(m, n))
           return true;
         final Wring<N> w = Toolbox.instance().find(n);
         if (w != null) {
+          w.initialize(u);
           final Rewrite make = w.make(n, exclude);
           if (make != null)
             make.go(r, null);
