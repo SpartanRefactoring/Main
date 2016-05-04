@@ -36,7 +36,7 @@ public class PrefixIncrementDecrementReturn extends Wring.ReplaceToNextStatement
     if (s == null || !same(e.getOperand(), core(s.getExpression())))
       return null;
     r.remove(parent, g);
-    r.replace(s, Subject.operand(e).toReturn(), g);
+    comments.setCore(Subject.operand(e).toReturn());
     return r;
   }
   @Override String description(final PrefixExpression e) {

@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.ConditionalExpression;
+import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
@@ -20,6 +21,8 @@ import org.eclipse.jdt.core.dom.PrefixExpression;
 import org.eclipse.jdt.core.dom.ReturnStatement;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
+import org.eclipse.jdt.core.dom.SwitchStatement;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.jface.text.BadLocationException;
@@ -29,7 +32,10 @@ import org.eclipse.text.edits.TextEdit;
 
 import il.org.spartan.refactoring.spartanizations.Spartanization;
 import il.org.spartan.refactoring.utils.As;
+import il.org.spartan.refactoring.utils.Comments;
 import il.org.spartan.refactoring.utils.Rewrite;
+import il.org.spartan.refactoring.utils.Source;
+import il.org.spartan.utils.FileUtils;
 
 /**
  * @author Yossi Gil
@@ -73,14 +79,25 @@ public class Trimmer extends Spartanization {
   @Override protected ASTVisitor collect(final List<Rewrite> $) {
     return new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
+        if (Comments.isSpartanizationDisabled(n))
+          return false;
         final Wring<N> w = Toolbox.instance().find(n);
         return w == null || w.nonEligible(n) || prune(w.make(n, exclude), $);
       }
     };
   }
   @Override protected final void fillRewrite(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
+    Source.setASTRewrite(r);
+    Source.setCompilationUnit(u);
+    try {
+      Source.set(FileUtils.readFromFile(Source.getPath().toString()));
+    } catch (final Exception e) {
+      Source.set(null);
+    }
     u.accept(new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
+        if (Comments.isSpartanizationDisabled(n))
+          return false;
         if (!inRange(m, n))
           return true;
         final Wring<N> w = Toolbox.instance().find(n);
@@ -115,6 +132,9 @@ public class Trimmer extends Spartanization {
     @Override public final boolean visit(final ConditionalExpression e) {
       return cautiousGo(e);
     }
+    @Override public final boolean visit(final EnumDeclaration it) {
+      return cautiousGo(it);
+    }
     @Override public final boolean visit(final IfStatement it) {
       return cautiousGo(it);
     }
@@ -143,6 +163,12 @@ public class Trimmer extends Spartanization {
       return cautiousGo(it);
     }
     @Override public final boolean visit(final VariableDeclarationFragment it) {
+      return cautiousGo(it);
+    }
+    @Override public final boolean visit(final TypeDeclaration it) {
+      return cautiousGo(it);
+    }
+    @Override public final boolean visit(final SwitchStatement it) {
       return cautiousGo(it);
     }
     abstract <N extends ASTNode> boolean go(final N n);

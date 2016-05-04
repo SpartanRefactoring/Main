@@ -1,5 +1,6 @@
 package il.org.spartan.refactoring.builder;
 
+import java.io.IOException;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
@@ -8,6 +9,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -17,6 +19,8 @@ import il.org.spartan.refactoring.spartanizations.Spartanization;
 import il.org.spartan.refactoring.spartanizations.Spartanizations;
 import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.refactoring.utils.Rewrite;
+import il.org.spartan.refactoring.utils.Source;
+import il.org.spartan.utils.FileUtils;
 
 /**
  * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
@@ -69,17 +73,26 @@ public class Builder extends IncrementalProjectBuilder {
   }
   protected void fullBuild() {
     try {
-      getProject().accept(r -> {
-        addMarkers(r);
-        return true; // to continue visiting children.
+      getProject().accept(new IResourceVisitor() {
+        @Override public boolean visit(final IResource r) throws CoreException {
+          addMarkers(r);
+          return true;
+        }
       });
     } catch (final CoreException e) {
       e.printStackTrace();
     }
   }
   static void addMarkers(final IResource r) throws CoreException {
-    if (r instanceof IFile && r.getName().endsWith(".java"))
+    if (r instanceof IFile && r.getName().endsWith(".java")) {
+      try {
+        Source.setPath(r.getLocation());
+        Source.set(FileUtils.readFromFile(r.getLocation().toString()));
+      } catch (final IOException e) {
+        e.printStackTrace();
+      }
       addMarkers((IFile) r);
+    }
   }
   private static void addMarkers(final IFile f) throws CoreException {
     Spartanizations.reset();
@@ -87,6 +100,7 @@ public class Builder extends IncrementalProjectBuilder {
     addMarkers(f, (CompilationUnit) As.COMPILIATION_UNIT.ast(f));
   }
   private static void addMarkers(final IFile f, final CompilationUnit u) throws CoreException {
+    Source.setCompilationUnit(u);
     for (final Spartanization s : Spartanizations.all())
       for (final Rewrite r : s.findOpportunities(u))
         if (r != null)
@@ -104,14 +118,12 @@ public class Builder extends IncrementalProjectBuilder {
   /**
    * deletes all spartanization suggestion markers
    *
-   * @param f
-   *          the file from which to delete the markers
-   * @throws CoreException
-   *           if this method fails. Reasons include: This resource does not
-   *           exist. This resource is a project that is not open. Resource
-   *           changes are disallowed during certain types of resource change
-   *           event notification. See {@link IResourceChangeEvent} for more
-   *           details.
+   * @param f the file from which to delete the markers
+   * @throws CoreException if this method fails. Reasons include: This resource
+   *           does not exist. This resource is a project that is not open.
+   *           Resource changes are disallowed during certain types of resource
+   *           change event notification. See {@link IResourceChangeEvent} for
+   *           more details.
    */
   public static void deleteMarkers(final IFile f) throws CoreException {
     f.deleteMarkers(MARKER_TYPE, false, IResource.DEPTH_ONE);

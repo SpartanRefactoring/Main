@@ -48,6 +48,7 @@ import org.eclipse.text.edits.TextEditGroup;
 import il.org.spartan.misc.Wrapper;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Collect;
+import il.org.spartan.refactoring.utils.Comments;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.Plant;
@@ -66,6 +67,7 @@ import il.org.spartan.refactoring.utils.expose;
  * @since 2015-07-09
  */
 public abstract class Wring<N extends ASTNode> {
+  protected Comments comments;
   abstract String description(N n);
   /**
    * Determine whether the parameter is "eligible" for application of this
@@ -75,13 +77,13 @@ public abstract class Wring<N extends ASTNode> {
    * @return <code><b>true</b></code> <i>iff</i> the argument is eligible for
    *         the simplification offered by this object.
    */
-  boolean eligible(@SuppressWarnings("unused") final N n) {
+  boolean eligible(final N n) {
     return true;
   }
   Rewrite make(final N n) {
     return make(n, null);
   }
-  Rewrite make(final N n, @SuppressWarnings("unused") final ExclusionManager exclude) {
+  Rewrite make(final N n, final ExclusionManager exclude) {
     return make(n);
   }
   /**
@@ -126,7 +128,6 @@ public abstract class Wring<N extends ASTNode> {
     }
     abstract boolean sort(List<Expression> operands);
   }
-
   static abstract class InfixSorting extends AbstractSorting {
     @Override boolean eligible(final InfixExpression e) {
       final List<Expression> es = Extract.allOperands(e);
@@ -137,7 +138,6 @@ public abstract class Wring<N extends ASTNode> {
       return !sort(operands) ? null : Subject.operands(operands).to(e.getOperator());
     }
   }
-
   static abstract class InfixSortingOfCDR extends AbstractSorting {
     @Override boolean eligible(final InfixExpression e) {
       final List<Expression> es = Extract.allOperands(e);
@@ -153,12 +153,17 @@ public abstract class Wring<N extends ASTNode> {
       return Subject.operands(operands).to(e.getOperator());
     }
   }
-
+  /*
+   * TODO change SimplifyBlock to work with comments
+   */
   static abstract class ReplaceCurrentNode<N extends ASTNode> extends Wring<N> {
-    @Override final Rewrite make(final N n) {
+    @Override
+    final Rewrite make(final N n) {
       return !eligible(n) ? null : new Rewrite(description(n), n) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-          r.replace(n, replacement(n), g);
+          comments = new Comments();
+          comments.add(n);
+          comments.mash(n, replacement(n), g);
         }
       };
     }
@@ -167,7 +172,9 @@ public abstract class Wring<N extends ASTNode> {
       return replacement(n) != null;
     }
   }
-
+  /*
+   * TODO complete cases 1 and 2 of IfCommandsSequencerNoElseSingletonSequencer
+   */
   static abstract class ReplaceToNextStatement<N extends ASTNode> extends Wring<N> {
     abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g);
     @Override Rewrite make(final N n, final ExclusionManager exclude) {
@@ -177,16 +184,70 @@ public abstract class Wring<N extends ASTNode> {
       exclude.exclude(nextStatement);
       return new Rewrite(description(n), n, nextStatement) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+          comments = new Comments();
+          ASTNode p = n;
+          while (!(p instanceof Statement))
+            p = p.getParent();
+          // getting comments from parent - ReplaceToNextStatement Wrings replace whole parent statement
+          comments.add(p);
+          comments.add(nextStatement);
+          comments.setBase(nextStatement);
           ReplaceToNextStatement.this.go(r, n, nextStatement, g);
+          comments.mash(g);
         }
       };
     }
     @Override boolean scopeIncludes(final N n) {
+      comments = new Comments();
       final Statement nextStatement = Extract.nextStatement(n);
       return nextStatement != null && go(ASTRewrite.create(n.getAST()), n, nextStatement, null) != null;
     }
   }
-
+  /**
+   * MultipleReplaceToNextStatement replaces multiple nodes in current statement
+   * with multiple nodes (or a single node) in next statement.
+   * 
+   * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
+   * @since 2016-04-25
+   */
+  static abstract class MultipleReplaceToNextStatement<N extends ASTNode> extends Wring<N> {
+    abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g, List<ASTNode> bss,
+        List<ASTNode> crs);
+    @Override
+    Rewrite make(final N n, final ExclusionManager exclude) {
+      final Statement nextStatement = Extract.nextStatement(n);
+      if (nextStatement == null || !eligible(n))
+        return null;
+      exclude.exclude(nextStatement);
+      return new Rewrite(description(n), n, nextStatement) {
+        @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+          comments = new Comments();
+          List<ASTNode> bss = new ArrayList<>();
+          List<ASTNode> crs = new ArrayList<>();
+          MultipleReplaceToNextStatement.this.go(r, n, nextStatement, g, bss, crs);
+          if (bss.size() != crs.size() && crs.size() != 1)
+            return; // indicates bad wring design
+          boolean ucr = crs.size() == 1;
+          int s = bss.size();
+          for (int i=0 ; i<s ; ++i) {
+            comments.add(bss.get(i));
+            comments.add(crs.get(ucr ? 0 : i));
+            comments.setBase(bss.get(i));
+            comments.setCore(crs.get(ucr ? 0 : i));
+            comments.mash(g);
+            comments.clear();
+          }
+        }
+      };
+    }
+    @Override boolean scopeIncludes(final N n) {
+      comments = new Comments();
+      final Statement nextStatement = Extract.nextStatement(n);
+      return nextStatement != null
+          && go(ASTRewrite.create(n.getAST()), n, nextStatement, null,
+              new ArrayList<>(), new ArrayList<>()) != null;
+    }
+  }
   static abstract class VariableDeclarationFragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
     static InfixExpression.Operator asInfix(final Assignment.Operator o) {
       return o == PLUS_ASSIGN ? PLUS
@@ -204,6 +265,7 @@ public abstract class Wring<N extends ASTNode> {
     static boolean hasAnnotation(final VariableDeclarationFragment f) {
       return hasAnnotation((VariableDeclarationStatement) f.getParent());
     }
+    @SuppressWarnings("unchecked")
     static boolean hasAnnotation(final VariableDeclarationStatement s) {
       return hasAnnotation(s.modifiers());
     }
@@ -223,6 +285,7 @@ public abstract class Wring<N extends ASTNode> {
           return true;
       return false;
     }
+    @SuppressWarnings("unchecked")
     static List<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
       final List<VariableDeclarationFragment> $ = new ArrayList<>();
       boolean collecting = false;
@@ -245,6 +308,7 @@ public abstract class Wring<N extends ASTNode> {
       newParent.fragments().remove(parent.fragments().indexOf(f));
       return $ - size(newParent);
     }
+    @SuppressWarnings("unchecked")
     static int eliminationSaving(final VariableDeclarationFragment f) {
       final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
       final List<VariableDeclarationFragment> live = live(f, expose.fragments(parent));
@@ -280,6 +344,7 @@ public abstract class Wring<N extends ASTNode> {
      * @param r
      * @param g
      */
+    @SuppressWarnings("unchecked")
     static void eliminate(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
       final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
       final List<VariableDeclarationFragment> live = live(f, expose.fragments(parent));

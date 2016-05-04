@@ -21,6 +21,7 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jface.text.Document;
 
 import il.org.spartan.misc.Wrapper;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources;
 import il.org.spartan.refactoring.spartanizations.Spartanization;
 import il.org.spartan.refactoring.spartanizations.TESTUtils;
 import il.org.spartan.refactoring.spartanizations.Wrap;
@@ -158,6 +159,7 @@ public class TrimmerTestsUtils {
 		JavaCore.setComplianceOptions(JavaCore.VERSION_1_8, options);
 		p.setCompilerOptions(options);
 		p.setSource(from.toCharArray());
+		p.setResolveBindings(PluginPreferencesResources.getResolveBindingEnabled());
 		CompilationUnit u = (CompilationUnit)p.createAST(null);
 		assertNotNull(u);
 		final Document d = new Document(from);

@@ -2896,6 +2896,93 @@ public class TrimmerTest {
   @Test public void sortTwoOperands4() {
     trimming("2L*1").to("1*2L");
   }
+  @Test public void stringFromBuilderGeneral() {
+    TrimmerTestsUtils.trimming("new StringBuilder(myName).append(\"\'s grade is \").append(100).toString()").to("myName + \"\'s grade is \" + 100");
+  }
+  @Test public void stringFromBuilderNoStringComponents() {
+    TrimmerTestsUtils.trimming("new StringBuilder(0).append(1).toString()").to("\"\" + 0 + 1");
+  }
+  @Test public void stringFromBuilderAddParenthesis() {
+    TrimmerTestsUtils.trimming("new StringBuilder(f()).append(1+1).toString()").to("\"\" + f() + (1+1)");
+  }
+  @Test public void switchBrakesToReturnAllCases() {
+    TrimmerTestsUtils.trimming("" //
+        + " switch (x) {\n" //
+        + "     case 1:\n"//
+        + "         System.out.println(\"1\");\n" //
+        + "         break;\n" //
+        + "     case 2:\n"//
+        + "         System.out.println(\"2\");\n" //
+        + "         return 1;\n" //
+        + "     case 3:\n"//
+        + "         System.out.println(\"3\");\n" //
+        + " }\n"//
+        + " return 3;").to("" //
+        + " switch (x) {\n" //
+        + "     case 1:\n"//
+        + "         System.out.println(\"1\");\n" //
+        + "         return 3;\n" //
+        + "     case 2:\n"//
+        + "         System.out.println(\"2\");\n" //
+        + "         return 1;\n" //
+        + "     case 3:\n"//
+        + "         System.out.println(\"3\");\n" //
+        + " }\n"//
+        + " return 3;");
+  }
+  @Test public void switchBrakesToReturnDefaultWithSequencer() {
+    TrimmerTestsUtils.trimming("" //
+        + " switch (x) {\n" //
+        + "     case 1:\n"//
+        + "         System.out.println(\"1\");\n" //
+        + "         break;\n" //
+        + "     case 2:\n"//
+        + "         System.out.println(\"2\");\n" //
+        + "         return 1;\n" //
+        + "     case 3:\n"//
+        + "         System.out.println(\"3\");\n" //
+        + "     default:\n"//
+        + "         return 2;\n" //
+        + " }\n"//
+        + " return 3;").to("" //
+        + " switch (x) {\n" //
+        + "     case 1:\n"//
+        + "         System.out.println(\"1\");\n" //
+        + "         return 3;\n" //
+        + "     case 2:\n"//
+        + "         System.out.println(\"2\");\n" //
+        + "         return 1;\n" //
+        + "     case 3:\n"//
+        + "         System.out.println(\"3\");\n" //
+        + "     default:\n"//
+        + "         return 2;\n" //
+        + " }");
+  }
+  @Test public void switchBrakesToReturnCaseWithoutSequencer() {
+    TrimmerTestsUtils.trimming("" //
+        + " switch (x) {\n" //
+        + "     case 1:\n"//
+        + "         System.out.println(\"1\");\n" //
+        + "         break;\n" //
+        + "     case 2:\n"//
+        + "         System.out.println(\"2\");\n" //
+        + "         return 1;\n" //
+        + "     case 3:\n"//
+        + "         System.out.println(\"3\");\n" //
+        + " }\n"//
+        + " return 2;").to("" //
+        + " switch (x) {\n" //
+        + "     case 1:\n"//
+        + "         System.out.println(\"1\");\n" //
+        + "         return 2;\n" //
+        + "     case 2:\n"//
+        + "         System.out.println(\"2\");\n" //
+        + "         return 1;\n" //
+        + "     case 3:\n"//
+        + "         System.out.println(\"3\");\n" //
+        + " }\n"//
+        + " return 2;\n");
+  }
   @Test public void synchronizedBraces() {
     trimming("" //
         + "    synchronized (variables) {\n" //

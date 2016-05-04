@@ -6,6 +6,7 @@ import static il.org.spartan.refactoring.utils.Funcs.asStatement;
 import static il.org.spartan.refactoring.utils.Funcs.left;
 import static il.org.spartan.refactoring.utils.Funcs.same;
 
+import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.ForStatement;
 import org.eclipse.jdt.core.dom.ReturnStatement;
@@ -32,7 +33,8 @@ public class AssignmentAndReturn extends Wring.ReplaceToNextStatement<Assignment
     if (s == null || !same(left(a), core(s.getExpression())))
       return null;
     r.remove(parent, g);
-    r.replace(s, Subject.operand(a).toReturn(), g);
+    final ASTNode $ = Subject.operand(a).toReturn();
+    comments.setCore($);
     return r;
   }
   @Override String description(final Assignment a) {
