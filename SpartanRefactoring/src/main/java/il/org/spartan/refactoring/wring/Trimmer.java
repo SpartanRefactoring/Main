@@ -1,6 +1,8 @@
 package il.org.spartan.refactoring.wring;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -41,6 +43,10 @@ import il.org.spartan.refactoring.utils.Source;
  * @since 2015/07/10
  */
 public class Trimmer extends Spartanization {
+  final Set<Integer> sds;
+  final Set<Integer> sde;
+  Comments sdc;
+
   /**
    * Apply trimming repeatedly, until no more changes
    *
@@ -74,11 +80,19 @@ public class Trimmer extends Spartanization {
   public Trimmer() {
     super("Trimmer");
     Toolbox.generate();
+    sds = new HashSet<>();
+    sde = new HashSet<>();
+    sdc = null;
   }
   @Override protected ASTVisitor collect(final List<Rewrite> $, CompilationUnit u) {
+    Source.set(u);
+    sdc = new Comments(u, null);
+    sds.clear();
+    sde.clear();
+    sdc.fillSpartanizationDisable(sds, sde);
     return new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
-        if (new Comments(u, null).isSpartanizationDisabled(n))
+        if (sdc.isSpartanizationDisabled(n, sds, sde))
           return false;
         final Wring<N> w = Toolbox.instance().find(n);
         return w == null || w.nonEligible(n) || prune(w.make(n, exclude), $);
@@ -87,9 +101,13 @@ public class Trimmer extends Spartanization {
   }
   @Override protected final void fillRewrite(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
     Source.set(u);
+    sdc = new Comments(u, null);
+    sds.clear();
+    sde.clear();
+    sdc.fillSpartanizationDisable(sds, sde);
     u.accept(new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
-        if (new Comments(u, null).isSpartanizationDisabled(n))
+        if (sdc.isSpartanizationDisabled(n, sds, sde))
           return false;
         if (!inRange(m, n))
           return true;

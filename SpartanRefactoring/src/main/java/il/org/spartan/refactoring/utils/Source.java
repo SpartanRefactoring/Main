@@ -24,12 +24,12 @@ public class Source {
    * @param pt project path
    */
   public static void setProjectPath(IPath pt) {
-    p = pt.removeLastSegments(1);
+    p = pt;
   }
   /**
    * Get source code which was set before. Updated source not guaranteed
    *
-   * @param cu current compilation unit
+   * @param pt current file path
    * @return source code of compilation unit
    */
   public static String get(IPath pt) {
@@ -46,8 +46,9 @@ public class Source {
       return;
     final IPath fp = je.getPath();
     try {
-      sm.put(fp.toString(), FileUtils.readFromFile(p.append(fp).toString()));
+      sm.put(fp.toString(), FileUtils.readFromFile(p.append(fp.removeFirstSegments(1)).toString()));
     } catch (final IOException x) {
+      // TODO Ori: check it out
       x.printStackTrace();
     }
   }

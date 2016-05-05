@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -13,6 +14,7 @@ import org.eclipse.jdt.core.dom.Comment;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.LineComment;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.jdt.core.dom.rewrite.TargetSourceRangeComputer.SourceRange;
@@ -21,7 +23,7 @@ import org.eclipse.text.edits.TextEditGroup;
 /**
  * Center of comments analysis and manipulation. Supports DisableSpartanization
  * option. Supports comments mash into nodes. Each Comments object gather: 1)
- * base - an {@ilnk ASTNode} about to be replaced 2) core - the {@link ASTNode}
+ * base - an {@link ASTNode} about to be replaced 2) core - the {@link ASTNode}
  * that would come in its place 3) a list of comments meant to be added to the
  * core node. Then, by calling mash method, a final {@link ASTNode} is created
  * from the core and the comments, and base is replaced by it
@@ -79,7 +81,7 @@ public class Comments {
    * @param t comment type
    * @return true iff a dsi in the comment disables the node
    */
-  private static boolean matchRowIndexes(int nln, int csr, int cer, int ct, ASTNode n) {
+  @Deprecated private static boolean matchRowIndexes(int nln, int csr, int cer, int ct, ASTNode n) {
     switch (ct) {
       case ASTNode.LINE_COMMENT:
         return nln == cer;
@@ -96,6 +98,26 @@ public class Comments {
     }
   }
   /**
+   * Fills set with code row indexes in which spartanization is disabled
+   *
+   * @param sds {@link Set} to fill with start of comments rows
+   * @param sde {@link Set} to fill with end of comments rows
+   */
+  @SuppressWarnings({ "unchecked", "boxing" }) public void fillSpartanizationDisable(Set<Integer> sds, Set<Integer> sde) {
+    sds.clear();
+    for (final Comment c : (List<Comment>) cu.getCommentList()) {
+      cu.getLineNumber(c.getStartPosition());
+      final CommentVisitor cv = new CommentVisitor(cu);
+      c.accept(cv);
+      if (cv.getContent().contains(dsi)) {
+        sds.add(cv.getStartRow());
+        sde.add(cv.getEndRow());
+        if (!(c instanceof LineComment))
+          sde.add(cv.getEndRow() + 1);
+      }
+    }
+  }
+  /**
    * Checks whether or not the spartanization of the current node is disabled.
    * There are two options: first, one should look at the parents of any node to
    * determine its status (implemented as isSpartanizationDisabledInAncestor).
@@ -106,12 +128,11 @@ public class Comments {
    * @param n ASTNode
    * @return true iff the spartanization is disabled for this node and its sons.
    */
-  @SuppressWarnings("unchecked") public <N extends ASTNode> boolean isSpartanizationDisabled(N n) {
+  @Deprecated @SuppressWarnings("unchecked") public <N extends ASTNode> boolean isSpartanizationDisabled(N n) {
     // In a failure case, allow all spartanizations
     if (s == null || cu == null)
       return false;
     final int nln = cu.getLineNumber(n.getStartPosition()) - 1;
-    cu.lastTrailingCommentIndex(n);
     for (final Comment c : (List<Comment>) cu.getCommentList()) {
       final int csr = cu.getLineNumber(c.getStartPosition()) - 1;
       if (csr < nln - 1)
@@ -124,6 +145,27 @@ public class Comments {
         return true;
     }
     return false;
+  }
+  /**
+   * Checks whether or not the spartanization of the current node is disabled.
+   * There are two options: first, one should look at the parents of any node to
+   * determine its status (implemented as isSpartanizationDisabledInAncestor).
+   * Second, the go method of the visitor should return false upon reaching a
+   * dsi, what would stop it from reaching the the nodes sons (currently
+   * implemented in fillRewrite and collect in Trimmer)
+   *
+   * @param n ASTNode
+   * @param sds start of comments rows indexes set
+   * @param sde end of comments rows indexes set
+   * @return true iff the spartanization is disabled for this node and its sons.
+   */
+  @SuppressWarnings("boxing") public <N extends ASTNode> boolean isSpartanizationDisabled(N n, Set<Integer> sds, Set<Integer> sde) {
+    if (s == null || cu == null)
+      return false;
+    final int nln = cu.getLineNumber(n.getStartPosition()) - 1;
+    if (n instanceof BodyDeclaration)
+      return sds.contains(nln);
+    return sde.contains(nln);
   }
   /**
    * Adds all comments associated with n to cl

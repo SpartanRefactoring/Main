@@ -1,5 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
+import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.BlockComment;
 import org.eclipse.jdt.core.dom.Comment;
@@ -23,11 +24,18 @@ public class CommentVisitor extends ASTVisitor {
 
   /**
    * Create a new comment visitor with up to date source code reference
+   *
+   * @param u current compilation unit
    */
   public CommentVisitor(CompilationUnit u) {
     super();
     cu = u;
-    s = Source.get(u.getJavaElement().getPath());
+    if (u != null) {
+      final IJavaElement je = u.getJavaElement();
+      s = je == null ? null : Source.get(u.getJavaElement().getPath());
+    } else
+      s = null;
+    c = "";
   }
   /**
    * visit {@link LineComment}, get it's source
@@ -63,6 +71,8 @@ public class CommentVisitor extends ASTVisitor {
    * @return true iff visit inner comment nodes
    */
   private <C extends Comment> boolean commentVisit(C cm) {
+    if (s == null)
+      return false;
     final int sp = cm.getStartPosition();
     final int ep = sp + cm.getLength();
     c = new StringBuilder(s).substring(sp, ep).toString();
