@@ -94,6 +94,7 @@ public class Toolbox {
         .add(MethodInvocation.class, //
             new BooleanConstants(), //
             new StringFromStringBuilder(), //
+            new StringEqualsConstant(), //
             null) //
         .add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //
