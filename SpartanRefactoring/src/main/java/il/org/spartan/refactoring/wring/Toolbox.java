@@ -97,6 +97,7 @@ public class Toolbox {
             null) //
         .add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //
+            new MethodRenameUnusedVariableToUnderscore(), //
             null)
         .add(VariableDeclarationFragment.class, //
             new DeclarationAssignment(), //
@@ -150,7 +151,7 @@ public class Toolbox {
         .add(ClassInstanceCreation.class, new WrapperReplaceWithFactory()) //
         .seal();
   }
-  public static Toolbox instance() {
+  @SuppressWarnings("javadoc") public static Toolbox instance() {
     return instance;
   }
 

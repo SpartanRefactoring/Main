@@ -96,7 +96,7 @@ public abstract class Wring<N extends ASTNode> {
   Rewrite make(final N n) {
     return make(n, null);
   }
-  Rewrite make(final N n, final ExclusionManager exclude) {
+  Rewrite make(final N n, @SuppressWarnings("unused") final ExclusionManager exclude) {
     return make(n);
   }
   /**
@@ -183,6 +183,62 @@ public abstract class Wring<N extends ASTNode> {
     abstract ASTNode replacement(N n);
     @Override boolean scopeIncludes(final N n) {
       return replacement(n) != null;
+    }
+  }
+
+  /**
+   * Similar to {@link ReplaceCurrentNode}, but with an {@link ExclusionManager}
+   */
+  static abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends Wring<N> {
+    @Override final Rewrite make(final N n, final ExclusionManager em) {
+      return !eligible(n) ? null : new Rewrite(description(n), n) {
+        @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+          comments = new Comments(cu, r);
+          comments.add(n);
+          comments.mash(n, replacement(n, em), g);
+        }
+      };
+    }
+    abstract ASTNode replacement(N n, final ExclusionManager em);
+    @Override boolean scopeIncludes(final N n) {
+      return replacement(n, null) != null;
+    }
+  }
+
+  /**
+   * MultipleReplaceCurrentNode replaces multiple nodes in current statement
+   * with multiple nodes (or a single node).
+   *
+   * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
+   * @since 2016-04-25
+   */
+  static abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends Wring<N> {
+    abstract ASTRewrite go(ASTRewrite r, N n, TextEditGroup g, List<ASTNode> bss, List<ASTNode> crs);
+    @Override Rewrite make(final N n) {
+      return new Rewrite(description(n), n) {
+        @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+          comments = new Comments(cu, ASTRewrite.create(n.getAST()));
+          final List<ASTNode> bss = new ArrayList<>();
+          final List<ASTNode> crs = new ArrayList<>();
+          MultipleReplaceCurrentNode.this.go(r, n, g, bss, crs);
+          if (bss.size() != crs.size() && crs.size() != 1)
+            return; // indicates bad wring design
+          final boolean ucr = crs.size() == 1;
+          final int s = bss.size();
+          for (int i = 0; i < s; ++i) {
+            comments.add(bss.get(i));
+            comments.add(crs.get(ucr ? 0 : i));
+            comments.setBase(bss.get(i));
+            comments.setCore(crs.get(ucr ? 0 : i));
+            comments.mash(g);
+            comments.clear();
+          }
+        }
+      };
+    }
+    @Override boolean scopeIncludes(final N n) {
+      comments = new Comments(cu, ASTRewrite.create(n.getAST()));
+      return go(ASTRewrite.create(n.getAST()), n, null, new ArrayList<>(), new ArrayList<>()) != null;
     }
   }
 
@@ -296,7 +352,7 @@ public abstract class Wring<N extends ASTNode> {
           return true;
       return false;
     }
-    @SuppressWarnings("unchecked") static List<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
+    static List<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
       final List<VariableDeclarationFragment> $ = new ArrayList<>();
       boolean collecting = false;
       for (final VariableDeclarationFragment brother : expose.fragments((VariableDeclarationStatement) f.getParent())) {
@@ -318,7 +374,7 @@ public abstract class Wring<N extends ASTNode> {
       newParent.fragments().remove(parent.fragments().indexOf(f));
       return $ - size(newParent);
     }
-    @SuppressWarnings("unchecked") static int eliminationSaving(final VariableDeclarationFragment f) {
+    static int eliminationSaving(final VariableDeclarationFragment f) {
       final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
       final List<VariableDeclarationFragment> live = live(f, expose.fragments(parent));
       final int $ = size(parent);
@@ -353,8 +409,7 @@ public abstract class Wring<N extends ASTNode> {
      * @param r
      * @param g
      */
-    @SuppressWarnings("unchecked") static void eliminate(final VariableDeclarationFragment f, final ASTRewrite r,
-        final TextEditGroup g) {
+    static void eliminate(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
       final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
       final List<VariableDeclarationFragment> live = live(f, expose.fragments(parent));
       if (live.isEmpty()) {

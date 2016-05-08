@@ -2358,6 +2358,18 @@ public class TrimmerTest {
   @Test public void pushdownTernaryXT() {
     trimming("a ? b : true").to("!a || b");
   }
+  @Test public void renameUnusedVariableToDoubleUnderscore1() {
+    TrimmerTestsUtils.trimming("void f(int x) {System.out.println(x);}").to("");
+  }
+  @Test public void renameUnusedVariableToDoubleUnderscore2() {
+    TrimmerTestsUtils.trimming("void f(int x) {}").to("");
+  }
+  @Test public void renameUnusedVariableToDoubleUnderscore3() {
+    TrimmerTestsUtils.trimming("void f(@SuppressWarnings(\"unused\") int x) {}").to("void f(int __) {}");
+  }
+  @Test public void renameUnusedVariableToDoubleUnderscore4() {
+    TrimmerTestsUtils.trimming("void f(int x, @SuppressWarnings(\"unused\") int y) {}").to("void f(int x, int __) {}");
+  }
   @Ignore @Test public void reanmeReturnVariableToDollar01() {
     TrimmerTestsUtils
         .trimming(

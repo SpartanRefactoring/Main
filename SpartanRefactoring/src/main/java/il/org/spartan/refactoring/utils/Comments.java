@@ -12,7 +12,6 @@ import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.BodyDeclaration;
 import org.eclipse.jdt.core.dom.Comment;
 import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.LineComment;
 import org.eclipse.jdt.core.dom.Statement;
@@ -297,7 +296,7 @@ public class Comments {
       } else {
         for (final Comment cm : cl)
           nl.add(r.createStringPlaceholder(s.substring(cm.getStartPosition(), cm.getStartPosition() + cm.getLength())
-              + (c instanceof Expression && !cm.isLineComment() ? "" : "\n"), cm.getNodeType()));
+              + (!(c instanceof Statement) && !cm.isLineComment() ? "" : "\n"), cm.getNodeType()));
         nl.add(c);
       }
       if (c instanceof Statement && !allWhiteSpaces(s.substring(rowStartIndex(sr.getStartPosition()), sr.getStartPosition())))
