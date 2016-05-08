@@ -98,6 +98,7 @@ public class Toolbox {
         .add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //
             new MethodRenameUnusedVariableToUnderscore(), //
+            new VariableRenameUnderscoreToDoubleUnderscore<SingleVariableDeclaration>(), //
             null)
         .add(VariableDeclarationFragment.class, //
             new DeclarationAssignment(), //
@@ -110,6 +111,7 @@ public class Toolbox {
             new DeclarationInitializerReturnAssignment(), //
             new DeclarationInitializerReturnUpdateAssignment(), //
             new DeclarationInitializerStatementTerminatingScope(), //
+            new VariableRenameUnderscoreToDoubleUnderscore<VariableDeclarationFragment>(), //
             null) //
         .add(IfStatement.class, //
             new IfLastInMethodThenEndingWithEmptyReturn(), //

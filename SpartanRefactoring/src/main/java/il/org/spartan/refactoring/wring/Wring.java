@@ -217,7 +217,7 @@ public abstract class Wring<N extends ASTNode> {
     @Override Rewrite make(final N n) {
       return new Rewrite(description(n), n) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-          comments = new Comments(cu, ASTRewrite.create(n.getAST()));
+          comments = new Comments(cu, r);
           final List<ASTNode> bss = new ArrayList<>();
           final List<ASTNode> crs = new ArrayList<>();
           MultipleReplaceCurrentNode.this.go(r, n, g, bss, crs);
@@ -289,7 +289,7 @@ public abstract class Wring<N extends ASTNode> {
       exclude.exclude(nextStatement);
       return new Rewrite(description(n), n, nextStatement) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-          comments = new Comments(cu, ASTRewrite.create(n.getAST()));
+          comments = new Comments(cu, r);
           final List<ASTNode> bss = new ArrayList<>();
           final List<ASTNode> crs = new ArrayList<>();
           MultipleReplaceToNextStatement.this.go(r, n, nextStatement, g, bss, crs);

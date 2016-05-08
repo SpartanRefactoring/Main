@@ -2358,18 +2358,6 @@ public class TrimmerTest {
   @Test public void pushdownTernaryXT() {
     trimming("a ? b : true").to("!a || b");
   }
-  @Test public void renameUnusedVariableToDoubleUnderscore1() {
-    TrimmerTestsUtils.trimming("void f(int x) {System.out.println(x);}").to("");
-  }
-  @Test public void renameUnusedVariableToDoubleUnderscore2() {
-    TrimmerTestsUtils.trimming("void f(int x) {}").to("");
-  }
-  @Test public void renameUnusedVariableToDoubleUnderscore3() {
-    TrimmerTestsUtils.trimming("void f(@SuppressWarnings({\"unused\"}) int x) {}").to("void f(int __) {}");
-  }
-  @Test public void renameUnusedVariableToDoubleUnderscore4() {
-    TrimmerTestsUtils.trimming("void f(int x, @SuppressWarnings(\"unused\") int y) {}").to("void f(int x, int __) {}");
-  }
   @Ignore @Test public void reanmeReturnVariableToDollar01() {
     TrimmerTestsUtils
         .trimming(
@@ -2429,6 +2417,24 @@ public class TrimmerTest {
   }
   @Ignore @Test public void reanmeReturnVariableToDollar11() {
     trimming("").to("");
+  }
+  @Test public void renameVariableUnderscore1() {
+    TrimmerTestsUtils.trimming("void f(int _) {System.out.println(_);}").to("void f(int __) {System.out.println(__);}");
+  }
+  @Test public void renameVariableUnderscore2() {
+    TrimmerTestsUtils.trimming("class A {int _; int f(int _) {return _;}}").to("class A {int __; int f(int __) {return __;}}");
+  }
+  @Test public void renameUnusedVariableToDoubleUnderscore1() {
+    TrimmerTestsUtils.trimming("void f(int x) {System.out.println(x);}").to("");
+  }
+  @Test public void renameUnusedVariableToDoubleUnderscore2() {
+    TrimmerTestsUtils.trimming("void f(int x) {}").to("");
+  }
+  @Test public void renameUnusedVariableToDoubleUnderscore3() {
+    TrimmerTestsUtils.trimming("void f(@SuppressWarnings({\"unused\"}) int x) {}").to("void f(int __) {}");
+  }
+  @Test public void renameUnusedVariableToDoubleUnderscore4() {
+    TrimmerTestsUtils.trimming("void f(int x, @SuppressWarnings(\"unused\") int y) {}").to("void f(int x, int __) {}");
   }
   @Test public void removeSuper() {
     trimming("class T { T() { super(); }").to("class T { T() { }");
