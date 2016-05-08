@@ -2365,7 +2365,7 @@ public class TrimmerTest {
     TrimmerTestsUtils.trimming("void f(int x) {}").to("");
   }
   @Test public void renameUnusedVariableToDoubleUnderscore3() {
-    TrimmerTestsUtils.trimming("void f(@SuppressWarnings(\"unused\") int x) {}").to("void f(int __) {}");
+    TrimmerTestsUtils.trimming("void f(@SuppressWarnings({\"unused\"}) int x) {}").to("void f(int __) {}");
   }
   @Test public void renameUnusedVariableToDoubleUnderscore4() {
     TrimmerTestsUtils.trimming("void f(int x, @SuppressWarnings(\"unused\") int y) {}").to("void f(int x, int __) {}");

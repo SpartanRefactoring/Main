@@ -56,7 +56,7 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNodeExclude;
         final Expression e = ((SingleMemberAnnotation) m).getValue();
         if (e instanceof StringLiteral)
           return "unused".equals(((StringLiteral) e).getLiteralValue());
-        for (final Expression x : (Iterable<Expression>) ((ArrayInitializer) m).expressions())
+        for (final Expression x : (Iterable<Expression>) ((ArrayInitializer) ((SingleMemberAnnotation) m).getValue()).expressions())
           return x instanceof StringLiteral && "unused".equals(((StringLiteral) x).getLiteralValue());
         break;
       }
