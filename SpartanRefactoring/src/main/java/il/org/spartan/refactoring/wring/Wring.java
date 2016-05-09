@@ -182,6 +182,7 @@ public abstract class Wring<N extends ASTNode> {
     }
     abstract ASTNode replacement(N n);
     @Override boolean scopeIncludes(final N n) {
+      comments = null;
       return replacement(n) != null;
     }
   }

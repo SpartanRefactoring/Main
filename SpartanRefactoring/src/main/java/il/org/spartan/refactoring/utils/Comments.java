@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -62,6 +63,39 @@ public class Comments {
     bs = null;
     cr = null;
     cl.clear();
+  }
+  /**
+   * Copy an {@link ASTNode} while preserving any comments and whitespaces
+   *
+   * @param n a node
+   * @return a new copy of the node, containing all previously owned comments
+   *         and whitespaces
+   */
+  public ASTNode duplicateWithComments(ASTNode n) {
+    final int sp = cu.getExtendedStartPosition(n);
+    return r.createStringPlaceholder(s.substring(sp, sp + cu.getExtendedLength(n)), n.getNodeType());
+  }
+  /**
+   * Copy an {@link ASTNode} while preserving any comments and whitespaces
+   *
+   * @param n a node
+   * @param t desired node type
+   * @return a new copy of the node, containing all previously owned comments
+   *         and whitespaces
+   */
+  public ASTNode duplicateWithComments(ASTNode n, int t) {
+    return r.createStringPlaceholder(s.substring(cu.getExtendedStartPosition(n), cu.getExtendedLength(n)), t);
+  }
+  /**
+   * Inserting node items from one list to another, while performing duplication
+   * with comments
+   *
+   * @param nl source list
+   * @param l destination list
+   */
+  public <N extends ASTNode> void duplicateWithCommentsInto(List<N> nl, List<ASTNode> l) {
+    for (final N n : nl)
+      l.add(duplicateWithComments(n));
   }
 
   /**
@@ -186,6 +220,49 @@ public class Comments {
         break;
       cl.add(c);
     }
+  }
+  /**
+   * Get all comments associated with n
+   *
+   * @param n original node
+   * @return comments associated with the node
+   */
+  @SuppressWarnings("unchecked") public <N extends ASTNode> List<Comment> get(N n) {
+    final List<Comment> $ = new ArrayList<>();
+    if (s == null || cu == null || r == null)
+      return $;
+    final SourceRange t = r.getExtendedSourceRangeComputer().computeSourceRange(n);
+    final int sp = t.getStartPosition();
+    final int ep = sp + t.getLength();
+    for (final Comment c : (List<Comment>) cu.getCommentList()) {
+      final int csp = c.getStartPosition();
+      if (csp < sp)
+        continue;
+      else if (csp >= ep)
+        break;
+      $.add(c);
+    }
+    return $;
+  }
+  /**
+   * Get all comments associated with nodes in a list
+   *
+   * @param nl nodes list
+   * @return comments associated with the nodes
+   */
+  public <N extends ASTNode> List<Comment> get(List<N> nl) {
+    final List<Comment> $ = new ArrayList<>();
+    for (final N n : nl)
+      $.addAll(get(n));
+    return $;
+  }
+  /**
+   * Removes comments from saved comments, about to be mashed into a node
+   *
+   * @param col a collection containing comments to be removed
+   */
+  public void remove(Collection<Comment> col) {
+    cl.removeAll(col);
   }
   /**
    * Sets base - original node to be replaced
