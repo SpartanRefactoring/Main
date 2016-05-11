@@ -45,7 +45,7 @@ public final class IfFooSequencerIfFooSameSequencer extends Wring.ReplaceToNextS
     if (!same(ss1, Extract.statements(then(s2))) || !Is.sequencer(last(ss1)))
       return null;
     r.remove(s, g);
-    comments.setCore(makeIfWithoutElse(BlockSimplify.reorganizeNestedStatement(then),
+    comments.setCore(makeIfWithoutElse(BlockSimplify.reorganizeNestedStatement(then, comments),
         Subject.pair(s.getExpression(), s2.getExpression()).to(CONDITIONAL_OR)));
     return r;
   }

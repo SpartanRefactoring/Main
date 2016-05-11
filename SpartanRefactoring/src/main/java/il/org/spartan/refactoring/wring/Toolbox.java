@@ -66,6 +66,7 @@ public class Toolbox {
         .add(SwitchStatement.class, //
             new SwitchBreakReturn(), //
             new SwitchFewCasesReplaceWithIf(), //
+            new SwitchSimplify(), //
             null) //
         .add(Assignment.class, //
             new AssignmentAndAssignment(), //
@@ -137,6 +138,7 @@ public class Toolbox {
             new IfDegenerateElse(), //
             new IfEmptyThen(), //
             new IfShortestFirst(), //
+            new IfToSwitch(), //
             null)//
         .add(PrefixExpression.class, //
             new PrefixIncrementDecrementReturn(), //

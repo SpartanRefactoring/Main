@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.duplicate;
 import static il.org.spartan.refactoring.utils.Funcs.parent;
 
 import java.util.List;
@@ -31,9 +30,9 @@ public class BlockSingleton extends Wring.ReplaceCurrentNode<Block> {
         || ss.size() == 1 && ss.get(0) instanceof VariableDeclarationStatement || ss.size() != 1)
       return null;
     final Statement $ = ss.get(0);
-    return Is.blockEssential($) ? null : duplicate($);
+    return Is.blockEssential($) ? null : comments.duplicateWithComments($);
   }
-  @Override String description(@SuppressWarnings("unused") final Block _) {
+  @Override String description(@SuppressWarnings("unused") final Block __) {
     return "Remove redundant curly braces.";
   }
   @Override WringGroup wringGroup() {

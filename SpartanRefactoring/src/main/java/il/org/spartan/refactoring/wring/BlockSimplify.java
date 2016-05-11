@@ -1,8 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.duplicate;
-import static il.org.spartan.refactoring.utils.Restructure.duplicateInto;
-
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -11,9 +8,9 @@ import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.TryStatement;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
+import il.org.spartan.refactoring.utils.Comments;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.Subject;
 import il.org.spartan.refactoring.utils.expose;
 
 /**
@@ -24,15 +21,15 @@ import il.org.spartan.refactoring.utils.expose;
  * @since 2015-07-29
  */
 public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
-  static Statement reorganizeNestedStatement(final Statement s) {
+  static Statement reorganizeNestedStatement(final Statement s, Comments comments) {
     final List<Statement> ss = Extract.statements(s);
     switch (ss.size()) {
       case 0:
         return s.getAST().newEmptyStatement();
       case 1:
-        return duplicate(ss.get(0));
+        return comments.duplicateWithComments(ss.get(0));
       default:
-        return reorganizeStatement(s);
+        return reorganizeStatement(s, comments);
     }
   }
   private static boolean identical(final List<Statement> os1, final List<Statement> os2) {
@@ -43,10 +40,10 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
         return false;
     return true;
   }
-  private static Block reorganizeStatement(final Statement s) {
+  private static Block reorganizeStatement(final Statement s, Comments comments) {
     final List<Statement> ss = Extract.statements(s);
     final Block $ = s.getAST().newBlock();
-    duplicateInto(ss, expose.statements($));
+    comments.duplicateWithCommentsInto(ss, expose.statements($));
     return $;
   }
   @Override Statement replacement(final Block b) {
@@ -55,20 +52,23 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
       return null;
     final ASTNode parent = b.getParent();
     if (!(parent instanceof Statement) || parent instanceof TryStatement)
-      return reorganizeStatement(b);
+      return reorganizeStatement(b, comments);
     switch (ss.size()) {
       case 0:
         return b.getAST().newEmptyStatement();
       case 1:
         final Statement s = ss.get(0);
-        if (Is.blockEssential(s))
-          return Subject.statement(s).toBlock();
-        return duplicate(s);
+        if (Is.blockEssential(s)) {
+          final Block $ = b.getAST().newBlock();
+          comments.duplicateWithCommentsInto(ss, expose.statements($));
+          return $;
+        }
+        return comments.duplicateWithComments(s);
       default:
-        return reorganizeNestedStatement(b);
+        return reorganizeNestedStatement(b, comments);
     }
   }
-  @Override String description(@SuppressWarnings("unused") final Block _) {
+  @Override String description(@SuppressWarnings("unused") final Block __) {
     return "Simplify block";
   }
   @Override WringGroup wringGroup() {

@@ -3038,6 +3038,27 @@ public class TrimmerTest {
             + " }\n"//
             + " return 2;\n");
   }
+  // TODO Ori: resolve binding for tests
+  @Ignore @Test public void SwitchFewCasesReplaceWithIf1() {
+    TrimmerTestsUtils
+        .trimming("" //
+            + " int x;\n" //
+            + " switch (x) {\n" //
+            + " case 1:\n"//
+            + "   System.out.println(\"1\");\n" //
+            + "   break;\n" //
+            + " default:\n"//
+            + "   System.out.println(\"error\");\n" //
+            + "   break;\n" //
+            + " }\n")
+        .to("" //
+            + " int x;\n" //
+            + " if (x == 1) {\n" //
+            + "   System.out.println(\"1\");\n" //
+            + "   return 2;\n" //
+            + " } else\n"//
+            + "   System.out.println(\"3\");\n");
+  }
   @Test public void synchronizedBraces() {
     trimming("" //
         + "    synchronized (variables) {\n" //

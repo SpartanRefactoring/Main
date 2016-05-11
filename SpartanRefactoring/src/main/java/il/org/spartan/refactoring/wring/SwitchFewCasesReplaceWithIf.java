@@ -45,7 +45,8 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
  * } else {
  *   System.out.println("error!");
  * }
- * </pre></code> TODO Ori: add tests
+ * </pre></code> TODO Ori: consider adding option for
+ * switch-case-nobreak-default to become if statement + default statements
  *
  * @author Ori Roth
  * @since 2016/05/09
@@ -68,16 +69,14 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
       $.setExpression(m);
     }
     final Block b = a.newBlock();
-    if (comments != null)
-      comments.duplicateWithCommentsInto(iss, b.statements());
+    comments.duplicateWithCommentsInto(iss, b.statements());
     $.setThenStatement(b);
     return $;
   }
   protected IfStatement buildIfStatement(AST a, List<Statement> iss, List<Statement> ess, Expression e, Expression t) {
     final IfStatement $ = buildIfStatement(a, iss, e, t);
     final Block b = a.newBlock();
-    if (comments != null)
-      comments.duplicateWithCommentsInto(ess, b.statements());
+    comments.duplicateWithCommentsInto(ess, b.statements());
     $.setElseStatement(b);
     return $;
   }
@@ -94,15 +93,19 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
       if (cs instanceof BreakStatement)
         break;
       if (cs instanceof SwitchCase)
-        if (t == null)
+        if (t == null) {
+          if (((SwitchCase) cs).isDefault())
+            return null;
           t = ((SwitchCase) cs).getExpression();
-        else
+        } else
           return null;
       else
         iss.add(cs);
       if (cs instanceof ReturnStatement || cs instanceof ThrowStatement)
         break;
     }
+    if (t == null)
+      return null;
     for (; si < sss.size(); ++si)
       if (sss.get(si) instanceof SwitchCase)
         break;
@@ -116,10 +119,6 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
         return null;
       if (!(cs instanceof BreakStatement))
         ess.add(cs);
-    }
-    if (comments != null) {
-      comments.remove(comments.get(iss));
-      comments.remove(comments.get(ess));
     }
     return buildIfStatement(n.getAST(), iss, ess, n.getExpression(), t);
   }

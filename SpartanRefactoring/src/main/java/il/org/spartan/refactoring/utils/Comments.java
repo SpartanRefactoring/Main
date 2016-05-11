@@ -66,14 +66,18 @@ public class Comments {
   }
   /**
    * Copy an {@link ASTNode} while preserving any comments and whitespaces
+   * remark: removes comments from cl
    *
    * @param n a node
    * @return a new copy of the node, containing all previously owned comments
    *         and whitespaces
    */
-  public ASTNode duplicateWithComments(ASTNode n) {
+  @SuppressWarnings("unchecked") public <N extends ASTNode> N duplicateWithComments(N n) {
+    if (cu == null || r == null || s == null)
+      return Funcs.duplicate(n);
+    remove(get(n));
     final int sp = cu.getExtendedStartPosition(n);
-    return r.createStringPlaceholder(s.substring(sp, sp + cu.getExtendedLength(n)), n.getNodeType());
+    return (N) r.createStringPlaceholder(s.substring(sp, sp + cu.getExtendedLength(n)), n.getNodeType());
   }
   /**
    * Copy an {@link ASTNode} while preserving any comments and whitespaces
@@ -88,13 +92,14 @@ public class Comments {
   }
   /**
    * Inserting node items from one list to another, while performing duplication
-   * with comments
+   * with comments. remark: removes any comments bound to statements in nl/l
+   * from this comments object automatically
    *
    * @param nl source list
    * @param l destination list
    */
-  public <N extends ASTNode> void duplicateWithCommentsInto(List<N> nl, List<ASTNode> l) {
-    for (final N n : nl)
+  public void duplicateWithCommentsInto(List<Statement> nl, List<Statement> l) {
+    for (final Statement n : nl)
       l.add(duplicateWithComments(n));
   }
 
@@ -324,6 +329,8 @@ public class Comments {
       case ASTNode.IF_STATEMENT:
         final IfStatement is = (IfStatement) cr;
         return Is.vacuous(is.getElseStatement()) && !(is.getThenStatement() instanceof Block);
+      case ASTNode.SWITCH_STATEMENT:
+        return false;
       default:
         break;
     }
