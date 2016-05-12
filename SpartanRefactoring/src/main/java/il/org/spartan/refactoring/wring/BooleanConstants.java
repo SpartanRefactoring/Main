@@ -36,7 +36,7 @@ public class BooleanConstants extends Wring.ReplaceCurrentNode<MethodInvocation>
             : i.getAST().newQualifiedName(i.getAST().newName("Boolean"),
                 newSimpleName(i, ((BooleanLiteral) i.arguments().get(0)).booleanValue() ? "TRUE" : "FALSE"));
   }
-  @Override String description(final MethodInvocation i) {
+  @Override String description(@SuppressWarnings("unused") final MethodInvocation i) {
     return "Use built-in boolean constant instead of valueOf()";
   }
   @Override WringGroup wringGroup() {

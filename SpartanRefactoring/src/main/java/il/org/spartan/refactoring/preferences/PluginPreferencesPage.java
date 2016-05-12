@@ -10,11 +10,12 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import il.org.spartan.refactoring.builder.Plugin;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.wring.Toolbox;
 
-@SuppressWarnings("javadoc") public class PluginPreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
+@SuppressWarnings("javadoc") public class PluginPreferencesPage extends FieldEditorPreferencePage
+    implements IWorkbenchPreferencePage {
   private final SpartanPropertyListener listener;
-  public PluginPreferencesPage() {
+
+  @SuppressWarnings("synthetic-access") public PluginPreferencesPage() {
     super(GRID);
     listener = new SpartanPropertyListener();
   }
@@ -43,11 +44,12 @@ import il.org.spartan.refactoring.wring.Toolbox;
     // Create and fill the "enabled spartanizations" group box
     final GroupFieldEditor gr = new GroupFieldEditor("Enabled spartanizations", getFieldEditorParent());
     for (final WringGroup wring : WringGroup.values())
-      gr.add(new ComboFieldEditor(wring.getId(), wring.getLabel(), PluginPreferencesResources.WRING_COMBO_OPTIONS, gr.getFieldEditor()));
+      gr.add(new ComboFieldEditor(wring.getId(), wring.getLabel(), PluginPreferencesResources.WRING_COMBO_OPTIONS,
+          gr.getFieldEditor()));
     addField(gr);
     gr.init();
   }
-  @Override public void init(final IWorkbench w) {
+  @Override public void init(@SuppressWarnings("unused") final IWorkbench w) {
     setPreferenceStore(Plugin.getDefault().getPreferenceStore());
     setDescription(PluginPreferencesResources.PAGE_DESCRIPTION);
     Plugin.getDefault().getPreferenceStore().addPropertyChangeListener(listener);
@@ -58,9 +60,9 @@ import il.org.spartan.refactoring.wring.Toolbox;
    * wring preference was modified.
    */
   private static class SpartanPropertyListener implements IPropertyChangeListener {
-    @Override public void propertyChange(final PropertyChangeEvent event) {
+    @Override public void propertyChange(@SuppressWarnings("unused") final PropertyChangeEvent event) {
       // Recreate the toolbox's internal instance, adding only enabled wrings
-      Toolbox.generate();
+      // TODO Ori: check if still working
       try {
         Plugin.refreshAllProjects();
       } catch (final Exception e) {

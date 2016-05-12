@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.ConditionalExpression;
 import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.InfixExpression;
@@ -59,10 +60,13 @@ public class Toolbox {
     return get(n.getClass());
   }
   /**
-   * Initialize this class' internal instance object
+   * Initialize this class' internal instance object in the non static approach
+   *
+   * @param u a {@link CompilationUnit}
+   * @return new {@link Maker} ready for use
    */
-  public static void generate() {
-    instance = new Maker()//
+  public static Toolbox generate(CompilationUnit u) {
+    return new Maker(u)//
         .add(SwitchStatement.class, //
             new SwitchBreakReturn(), //
             new SwitchFewCasesReplaceWithIf(), //
@@ -159,12 +163,9 @@ public class Toolbox {
         .add(ClassInstanceCreation.class, new WrapperReplaceWithFactory()) //
         .seal();
   }
-  @SuppressWarnings("javadoc") public static Toolbox instance() {
-    return instance;
-  }
 
   /** The default instance of this class */
-  static Toolbox instance;
+  static Toolbox instance = generate(null);
 
   /**
    * A builder for the enclosing class.
@@ -173,6 +174,14 @@ public class Toolbox {
    * @since 2015-08-22
    */
   public static class Maker extends Toolbox {
+    private final CompilationUnit cu;
+
+    /**
+     * @param u current {@link CompilationUnit}
+     */
+    public Maker(CompilationUnit u) {
+      cu = u;
+    }
     /**
      * Associate a bunch of{@link Wring} with a given sub-class of
      * {@link ASTNode}.
@@ -188,7 +197,7 @@ public class Toolbox {
           break;
         if (!w.wringGroup().isEnabled())
           continue;
-        l.add(w);
+        l.add(w.initialize(cu));
       }
       return this;
     }

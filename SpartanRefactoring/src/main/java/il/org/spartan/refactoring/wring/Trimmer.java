@@ -79,22 +79,18 @@ public class Trimmer extends Spartanization {
   /** Instantiates this class */
   public Trimmer() {
     super("Trimmer");
-    Toolbox.generate();
     sds = new HashSet<>();
     sde = new HashSet<>();
     sdc = null;
   }
   @Override protected ASTVisitor collect(final List<Rewrite> $, CompilationUnit u) {
-    Source.set(u);
     sdc = new Comments(u, null);
-    sds.clear();
-    sde.clear();
     sdc.fillSpartanizationDisable(sds, sde);
     return new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
         if (sdc.isSpartanizationDisabled(n, sds, sde))
           return false;
-        final Wring<N> w = Toolbox.instance().find(n);
+        final Wring<N> w = Toolbox.generate(u).find(n);
         return w == null || w.nonEligible(n) || prune(w.make(n, exclude), $);
       }
     };
@@ -102,8 +98,6 @@ public class Trimmer extends Spartanization {
   @Override protected final void fillRewrite(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
     Source.set(u);
     sdc = new Comments(u, null);
-    sds.clear();
-    sde.clear();
     sdc.fillSpartanizationDisable(sds, sde);
     u.accept(new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
@@ -111,9 +105,8 @@ public class Trimmer extends Spartanization {
           return false;
         if (!inRange(m, n))
           return true;
-        final Wring<N> w = Toolbox.instance().find(n);
+        final Wring<N> w = Toolbox.generate(u).find(n);
         if (w != null) {
-          w.initialize(u);
           final Rewrite make = w.make(n, exclude);
           if (make != null)
             make.go(r, null);

@@ -7,12 +7,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.BodyDeclaration;
 import org.eclipse.jdt.core.dom.Comment;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.ForStatement;
 import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.LineComment;
 import org.eclipse.jdt.core.dom.Statement;
@@ -32,9 +32,9 @@ import org.eclipse.text.edits.TextEditGroup;
  * @since 2016-04-20
  */
 public class Comments {
-  private String s;
   private final CompilationUnit cu;
   private final ASTRewrite r;
+  private final String s;
   private ASTNode bs;
   private ASTNode cr;
   private final List<Comment> cl = new LinkedList<>();
@@ -48,13 +48,8 @@ public class Comments {
    */
   public Comments(CompilationUnit u, ASTRewrite rew) {
     cu = u;
-    s = null;
-    if (u != null) {
-      final IJavaElement je = u.getJavaElement();
-      if (je != null)
-        s = Source.get(u.getJavaElement().getPath());
-    }
     r = rew;
+    s = Source.get(u);
   }
   /**
    * Clear base, core and comments
@@ -72,7 +67,6 @@ public class Comments {
     int l = sp - 1;
     while (l >= 0 && s.charAt(l) == '\t')
       --l;
-    System.out.println(sp - l - 1);
     return $.replaceAll("\n\t{" + (sp - l - 1) + "}", "\n");
   }
   /**
@@ -87,19 +81,8 @@ public class Comments {
     if (cu == null || r == null || s == null)
       return Funcs.duplicate(n);
     remove(get(n));
-    final int sp = cu.getExtendedStartPosition(n);
-    return (N) r.createStringPlaceholder(cut(s, sp, sp + cu.getExtendedLength(n)), n.getNodeType());
-  }
-  /**
-   * Copy an {@link ASTNode} while preserving any comments and whitespaces
-   *
-   * @param n a node
-   * @param t desired node type
-   * @return a new copy of the node, containing all previously owned comments
-   *         and whitespaces
-   */
-  public ASTNode duplicateWithComments(ASTNode n, int t) {
-    return r.createStringPlaceholder(s.substring(cu.getExtendedStartPosition(n), cu.getExtendedLength(n)), t);
+    final int sp = n.getStartPosition();
+    return (N) r.createStringPlaceholder(cut(s, sp, sp + n.getLength()), n.getNodeType());
   }
   /**
    * Inserting node items from one list to another, while performing duplication
@@ -154,6 +137,7 @@ public class Comments {
    */
   @SuppressWarnings({ "unchecked", "boxing" }) public void fillSpartanizationDisable(Set<Integer> sds, Set<Integer> sde) {
     sds.clear();
+    sde.clear();
     for (final Comment c : (List<Comment>) cu.getCommentList()) {
       cu.getLineNumber(c.getStartPosition());
       final CommentVisitor cv = new CommentVisitor(cu);
@@ -342,16 +326,20 @@ public class Comments {
         return Is.vacuous(is.getElseStatement()) && !(is.getThenStatement() instanceof Block);
       case ASTNode.SWITCH_STATEMENT:
         return false;
+      case ASTNode.FOR_STATEMENT:
+        final ForStatement fs = (ForStatement) cr;
+        return !(fs.getBody() instanceof Block);
       default:
         break;
     }
     return true;
   }
   /**
+   * @param s source code
    * @param i code character index
    * @return index of the start of i's row
    */
-  public int rowStartIndex(int i) {
+  public static int rowStartIndex(String s, int i) {
     int j = i;
     while (j > 0 && s.charAt(j - 1) != '\n')
       --j;
@@ -365,9 +353,9 @@ public class Comments {
    * @param g current {@link TextEditGroup}
    */
   @SuppressWarnings("unchecked") public void mash(ASTNode b, ASTNode c, TextEditGroup g) {
-    // Assumes b is original node with real position
     if (cl.size() == 0 || b.getStartPosition() < 0) {
-      r.replace(b, c, g);
+      if (r != null)
+        r.replace(b, c, g);
       return;
     }
     final SourceRange sr = r.getExtendedSourceRangeComputer().computeSourceRange(b);
@@ -394,7 +382,7 @@ public class Comments {
               + (!(c instanceof Statement) && !cm.isLineComment() ? "" : "\n"), cm.getNodeType()));
         nl.add(c);
       }
-      if (c instanceof Statement && !allWhiteSpaces(s.substring(rowStartIndex(sr.getStartPosition()), sr.getStartPosition())))
+      if (c instanceof Statement && !allWhiteSpaces(s.substring(rowStartIndex(s, sr.getStartPosition()), sr.getStartPosition())))
         nl.add(0, r.createStringPlaceholder("", ASTNode.BLOCK));
     }
     r.replace(b, r.createGroupNode(nl.toArray(new ASTNode[nl.size()])), g);

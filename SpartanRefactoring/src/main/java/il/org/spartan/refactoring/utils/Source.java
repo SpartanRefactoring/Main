@@ -21,9 +21,22 @@ public class Source {
   private static IPath p;
 
   /**
+   * Get up to date source code
+   *
+   * @param u current CompilationUnit
+   * @return source
+   */
+  public static String get(CompilationUnit u) {
+    if (u != null) {
+      final IJavaElement je = u.getJavaElement();
+      return je == null ? null : Source.get(je.getPath());
+    }
+    return null;
+  }
+  /**
    * @param pt project path
    */
-  public static void setProjectPath(IPath pt) {
+  public static synchronized void setProjectPath(IPath pt) {
     p = pt;
   }
   /**
@@ -32,7 +45,7 @@ public class Source {
    * @param pt current file path
    * @return source code of compilation unit
    */
-  public static String get(IPath pt) {
+  public static synchronized String get(IPath pt) {
     return sm.get(pt.toString());
   }
   /**
@@ -40,7 +53,7 @@ public class Source {
    *
    * @param cu current compilation unit
    */
-  public static void set(CompilationUnit cu) {
+  public static synchronized void set(CompilationUnit cu) {
     final IJavaElement je = cu.getJavaElement();
     if (je == null)
       return;

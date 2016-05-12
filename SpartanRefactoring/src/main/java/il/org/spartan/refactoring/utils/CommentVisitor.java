@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.utils;
 
-import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.BlockComment;
 import org.eclipse.jdt.core.dom.Comment;
@@ -30,11 +29,7 @@ public class CommentVisitor extends ASTVisitor {
   public CommentVisitor(CompilationUnit u) {
     super();
     cu = u;
-    if (u != null) {
-      final IJavaElement je = u.getJavaElement();
-      s = je == null ? null : Source.get(u.getJavaElement().getPath());
-    } else
-      s = null;
+    s = Source.get(u);
     c = "";
   }
   /**
