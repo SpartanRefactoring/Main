@@ -45,12 +45,13 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
  * </code>
  * </pre>
  *
- * TODO Ori: add tests
+ * TODO Ori: add binding if needed
  *
  * @author Ori Roth
  * @since 2016/05/11
  */
 public class IfToSwitch extends ReplaceCurrentNode<IfStatement> {
+  final static int MIN_CASES_THRESHOLD = 3;
   final static ASTMatcher m = new ASTMatcher();
 
   static boolean isSimpleComparison(Expression e) {
@@ -88,11 +89,13 @@ public class IfToSwitch extends ReplaceCurrentNode<IfStatement> {
     return null;
   }
   @SuppressWarnings("unchecked") protected void addStatements(SwitchStatement $, Statement s) {
+    final int i = $.statements().size();
     if (s instanceof Block)
       comments.duplicateWithCommentsInto(((Block) s).statements(), $.statements());
     else
       $.statements().add(comments.duplicateWithComments(s));
-    $.statements().add(s.getAST().newBreakStatement());
+    if (!SwitchBreakReturn.caseEndsWithSequencer($.statements(), i))
+      $.statements().add(s.getAST().newBreakStatement());
   }
   @SuppressWarnings("unchecked") protected SwitchStatement buildSwitch(SwitchStatement $, Statement s, Expression v) {
     if (s == null)
@@ -126,8 +129,10 @@ public class IfToSwitch extends ReplaceCurrentNode<IfStatement> {
     return c;
   }
   @Override ASTNode replacement(IfStatement n) {
+    if (n.getParent() instanceof IfStatement && !(((IfStatement) n.getParent()).getThenStatement() instanceof Block))
+      return null;
     Expression e = n.getExpression();
-    if (!n.getAST().hasResolvedBindings() || !isSimpleComparison(e))
+    if (!isSimpleComparison(e))
       return null;
     e = getLeftFromComparison(e);
     if (!BindingUtils.isSimple(e))
@@ -135,7 +140,7 @@ public class IfToSwitch extends ReplaceCurrentNode<IfStatement> {
     SwitchStatement $ = n.getAST().newSwitchStatement();
     $.setExpression(comments.duplicateWithComments(e));
     $ = buildSwitch($, n, e);
-    return $ == null || countCases($) <= 2 ? null : $;
+    return $ == null || countCases($) < MIN_CASES_THRESHOLD ? null : $;
   }
   @Override String description(@SuppressWarnings("unused") IfStatement __) {
     return "Replace if with switch";

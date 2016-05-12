@@ -1069,6 +1069,30 @@ public class TrimmerTest {
             + "throw (Error) e.getCause();")//
         .to(" throw !(e.getCause()instanceof Error)?e:(Error)e.getCause();");//
   }
+  @Test public void ifToSwitch1() {
+    TrimmerTestsUtils.trimming("" //
+        + "if (\"1\".equals(s))\n" // ))
+        + "  System.out.println(s);\n" //
+        + "else if (\"2\".equals(s))\n" //
+        + "  System.out.println(s + \"!\");\n" //
+        + "else {\n" //
+        + "  s += \"@\";\n" //
+        + "  System.out.println(s);\n" //
+        + "}\n" //
+    ).to("" //
+        + "switch (s) {\n" //
+        + "  case \"1\":\n" //
+        + "    System.out.println(s);\n" //
+        + "    break;\n" //
+        + "  case \"2\":\n" //
+        + "    System.out.println(s + \"!\");\n" //
+        + "    break;\n" //
+        + "  default:\n" //
+        + "    s += \"@\";\n" //
+        + "    System.out.println(s);\n" //
+        + "    break;\n" //
+        + "  }\n");
+  }
   @Test public void ifWithCommonNotInBlock() {
     trimming("for (;;) if (a) {i++;j++;f();} else { i++;j++; g();}").to("for(;;){i++;j++;if(a)f();else g();}");
   }

@@ -64,6 +64,17 @@ public class Comments {
     cr = null;
     cl.clear();
   }
+  /* TODO Ori: consider replacing correction with auto formatting */
+  private static String cut(String s, int sp, int ep) {
+    final String $ = s.substring(sp, ep);
+    if ($.indexOf('\n') < 0)
+      return $;
+    int l = sp - 1;
+    while (l >= 0 && s.charAt(l) == '\t')
+      --l;
+    System.out.println(sp - l - 1);
+    return $.replaceAll("\n\t{" + (sp - l - 1) + "}", "\n");
+  }
   /**
    * Copy an {@link ASTNode} while preserving any comments and whitespaces
    * remark: removes comments from cl
@@ -77,7 +88,7 @@ public class Comments {
       return Funcs.duplicate(n);
     remove(get(n));
     final int sp = cu.getExtendedStartPosition(n);
-    return (N) r.createStringPlaceholder(s.substring(sp, sp + cu.getExtendedLength(n)), n.getNodeType());
+    return (N) r.createStringPlaceholder(cut(s, sp, sp + cu.getExtendedLength(n)), n.getNodeType());
   }
   /**
    * Copy an {@link ASTNode} while preserving any comments and whitespaces
