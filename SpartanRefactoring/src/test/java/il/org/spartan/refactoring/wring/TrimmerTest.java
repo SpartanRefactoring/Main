@@ -1661,6 +1661,14 @@ public class TrimmerTest {
         "      @Override public int hashCode() { return a; }\n" + //
         "    };" + "}").to("");
   }
+  @Test public void issue64c() {
+    trimming("void f(int x) {" + //
+        "    ++x;\n" + //
+        "    final int a = x;\n" + //
+        "    new Object() {\n" + //
+        "      @Override public int hashCode() { return a; }\n" + //
+        "    };" + "}").to("");
+  }
   @Test public void issue73a() {
     trimming("void foo(StringBuilder sb) {}").to("void foo(StringBuilder b) {}");
   }

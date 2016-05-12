@@ -68,9 +68,9 @@ public class Toolbox {
   public static Toolbox generate(CompilationUnit u) {
     return new Maker(u)//
         .add(SwitchStatement.class, //
-            new SwitchBreakReturn(), //
-            new SwitchFewCasesReplaceWithIf(), //
             new SwitchSimplify(), //
+            new SwitchFewCasesReplaceWithIf(), //
+            new SwitchBreakReturn(), //
             null) //
         .add(Assignment.class, //
             new AssignmentAndAssignment(), //
