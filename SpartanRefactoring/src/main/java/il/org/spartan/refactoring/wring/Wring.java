@@ -54,7 +54,9 @@ import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.Plant;
 import il.org.spartan.refactoring.utils.Rewrite;
+import il.org.spartan.refactoring.utils.Source;
 import il.org.spartan.refactoring.utils.Subject;
+import il.org.spartan.refactoring.utils.Surgeon;
 import il.org.spartan.refactoring.utils.expose;
 
 /**
@@ -69,7 +71,8 @@ import il.org.spartan.refactoring.utils.expose;
  */
 public abstract class Wring<N extends ASTNode> {
   protected Comments comments;
-  protected CompilationUnit cu;
+  protected CompilationUnit u;
+  protected Surgeon surgeon;
 
   /**
    * Used in order to initialize wring with the current compilation unit
@@ -78,7 +81,7 @@ public abstract class Wring<N extends ASTNode> {
    * @return this
    */
   public Wring<N> initialize(CompilationUnit u) {
-    cu = u;
+    this.u = u;
     return this;
   }
   abstract String description(N n);
@@ -174,9 +177,7 @@ public abstract class Wring<N extends ASTNode> {
     @Override final Rewrite make(final N n) {
       return !eligible(n) ? null : new Rewrite(description(n), n) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-          comments = new Comments(cu, r);
-          comments.add(n);
-          comments.mash(n, replacement(n), g);
+          Source.getSurgeon(u, r, g).operate(n).replaceWith(replacement(n));
         }
       };
     }
@@ -194,7 +195,7 @@ public abstract class Wring<N extends ASTNode> {
     @Override final Rewrite make(final N n, final ExclusionManager em) {
       return !eligible(n) ? null : new Rewrite(description(n), n) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-          comments = new Comments(cu, r);
+          comments = new Comments(u, r);
           comments.add(n);
           comments.mash(n, replacement(n, em), g);
         }
@@ -218,7 +219,7 @@ public abstract class Wring<N extends ASTNode> {
     @Override Rewrite make(final N n) {
       return new Rewrite(description(n), n) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-          comments = new Comments(cu, r);
+          comments = new Comments(u, r);
           final List<ASTNode> bss = new ArrayList<>();
           final List<ASTNode> crs = new ArrayList<>();
           MultipleReplaceCurrentNode.this.go(r, n, g, bss, crs);
@@ -238,7 +239,7 @@ public abstract class Wring<N extends ASTNode> {
       };
     }
     @Override boolean scopeIncludes(final N n) {
-      comments = new Comments(cu, ASTRewrite.create(n.getAST()));
+      comments = new Comments(u, ASTRewrite.create(n.getAST()));
       return go(ASTRewrite.create(n.getAST()), n, null, new ArrayList<>(), new ArrayList<>()) != null;
     }
   }
@@ -253,7 +254,7 @@ public abstract class Wring<N extends ASTNode> {
       exclude.exclude(nextStatement);
       return new Rewrite(description(n), n, nextStatement) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-          comments = new Comments(cu, r);
+          comments = new Comments(u, r);
           ASTNode p = n;
           while (!(p instanceof Statement))
             p = p.getParent();
@@ -268,7 +269,7 @@ public abstract class Wring<N extends ASTNode> {
       };
     }
     @Override boolean scopeIncludes(final N n) {
-      comments = new Comments(cu, ASTRewrite.create(n.getAST()));
+      comments = new Comments(u, ASTRewrite.create(n.getAST()));
       final Statement nextStatement = Extract.nextStatement(n);
       return nextStatement != null && go(ASTRewrite.create(n.getAST()), n, nextStatement, null) != null;
     }
@@ -290,7 +291,7 @@ public abstract class Wring<N extends ASTNode> {
       exclude.exclude(nextStatement);
       return new Rewrite(description(n), n, nextStatement) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-          comments = new Comments(cu, r);
+          comments = new Comments(u, r);
           final List<ASTNode> bss = new ArrayList<>();
           final List<ASTNode> crs = new ArrayList<>();
           MultipleReplaceToNextStatement.this.go(r, n, nextStatement, g, bss, crs);
@@ -310,7 +311,7 @@ public abstract class Wring<N extends ASTNode> {
       };
     }
     @Override boolean scopeIncludes(final N n) {
-      comments = new Comments(cu, ASTRewrite.create(n.getAST()));
+      comments = new Comments(u, ASTRewrite.create(n.getAST()));
       final Statement nextStatement = Extract.nextStatement(n);
       return nextStatement != null
           && go(ASTRewrite.create(n.getAST()), n, nextStatement, null, new ArrayList<>(), new ArrayList<>()) != null;

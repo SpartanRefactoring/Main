@@ -38,7 +38,7 @@ public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression
       return null;
     final Expression mie = mi.getExpression();
     final IMethodBinding iemb = BindingUtils.getVisibleMethod(mie != null ? mie.resolveTypeBinding() : BindingUtils.getClass(n),
-        "isEmpty", null, n, cu);
+        "isEmpty", null, n, u);
     if (iemb == null
         || !(iemb.getReturnType().toString().equals("boolean") || iemb.getReturnType().getBinaryName().equals("java.lang.Boolean")))
       return null;

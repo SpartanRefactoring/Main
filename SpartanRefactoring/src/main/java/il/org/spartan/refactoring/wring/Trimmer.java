@@ -1,8 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -34,7 +32,7 @@ import org.eclipse.text.edits.TextEdit;
 
 import il.org.spartan.refactoring.spartanizations.Spartanization;
 import il.org.spartan.refactoring.utils.As;
-import il.org.spartan.refactoring.utils.Comments;
+import il.org.spartan.refactoring.utils.Disable;
 import il.org.spartan.refactoring.utils.Rewrite;
 import il.org.spartan.refactoring.utils.Source;
 
@@ -43,10 +41,6 @@ import il.org.spartan.refactoring.utils.Source;
  * @since 2015/07/10
  */
 public class Trimmer extends Spartanization {
-  final Set<Integer> sds;
-  final Set<Integer> sde;
-  Comments sdc;
-
   /**
    * Apply trimming repeatedly, until no more changes
    *
@@ -79,31 +73,27 @@ public class Trimmer extends Spartanization {
   /** Instantiates this class */
   public Trimmer() {
     super("Trimmer");
-    sds = new HashSet<>();
-    sde = new HashSet<>();
-    sdc = null;
   }
   @Override protected ASTVisitor collect(final List<Rewrite> $, CompilationUnit u) {
-    sdc = new Comments(u, null);
-    sdc.fillSpartanizationDisable(sds, sde);
-    final Toolbox tb = Toolbox.generate(u);
+    Source.set(u);
+    final Disable disable = Source.getDisable(u);
+    final Toolbox toolbox = Toolbox.generate(u);
     return new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
-        if (sdc.isSpartanizationDisabled(n, sds, sde))
+        if (disable.check(n))
           return false;
-        final Wring<N> w = tb.find(n);
+        final Wring<N> w = toolbox.find(n);
         return w == null || w.nonEligible(n) || prune(w.make(n, exclude), $);
       }
     };
   }
   @Override protected final void fillRewrite(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
     Source.set(u);
-    sdc = new Comments(u, null);
-    sdc.fillSpartanizationDisable(sds, sde);
+    final Disable disable = Source.getDisable(u);
     final Toolbox tb = Toolbox.generate(u);
     u.accept(new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
-        if (sdc.isSpartanizationDisabled(n, sds, sde))
+        if (disable.check(n))
           return false;
         if (!inRange(m, n))
           return true;
