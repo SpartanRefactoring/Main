@@ -34,7 +34,7 @@ import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 public class Toolbox {
   private static <N extends ASTNode> Wring<N> find(final N n, final List<Wring<N>> ws) {
     for (final Wring<N> $ : ws)
-      if ($.scopeIncludes(n))
+      if ($.createScalpel(null, null).scopeIncludes(n))
         return $;
     return null;
   }

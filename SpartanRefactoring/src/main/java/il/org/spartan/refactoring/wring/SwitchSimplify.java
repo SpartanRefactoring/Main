@@ -31,7 +31,7 @@ public class SwitchSimplify extends ReplaceCurrentNode<SwitchStatement> {
   }
   @SuppressWarnings("unchecked") @Override ASTNode replacement(SwitchStatement n) {
     final SwitchStatement s = n.getAST().newSwitchStatement();
-    s.setExpression(comments.duplicateWithComments(n.getExpression()));
+    s.setExpression(scalpel.duplicate(n.getExpression()));
     final boolean d = containsDefault(n.statements());
     for (final Iterator<Statement> it = n.statements().iterator(); it.hasNext();) {
       final Statement c = it.next();
@@ -46,7 +46,7 @@ public class SwitchSimplify extends ReplaceCurrentNode<SwitchStatement> {
         if (i == n.statements().size() - 2 && n.statements().get(i + 1) instanceof BreakStatement)
           break;
       }
-      s.statements().add(comments.duplicateWithComments(c));
+      s.statements().add(scalpel.duplicate(c));
     }
     return n.statements().size() == s.statements().size() ? null : s;
   }

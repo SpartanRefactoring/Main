@@ -69,14 +69,14 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
       $.setExpression(m);
     }
     final Block b = a.newBlock();
-    comments.duplicateWithCommentsInto(iss, b.statements());
+    scalpel.duplicateInto(iss, b.statements());
     $.setThenStatement(b);
     return $;
   }
   protected IfStatement buildIfStatement(AST a, List<Statement> iss, List<Statement> ess, Expression e, Expression t) {
     final IfStatement $ = buildIfStatement(a, iss, e, t);
     final Block b = a.newBlock();
-    comments.duplicateWithCommentsInto(ess, b.statements());
+    scalpel.duplicateInto(ess, b.statements());
     $.setElseStatement(b);
     return $;
   }

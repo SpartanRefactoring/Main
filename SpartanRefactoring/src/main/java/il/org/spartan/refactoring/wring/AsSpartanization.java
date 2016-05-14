@@ -60,7 +60,7 @@ public class AsSpartanization extends Spartanization {
         return process(it);
       }
       <N extends ASTNode> boolean process(final N n) {
-        if (!inner.scopeIncludes(n) || inner.nonEligible(n))
+        if (!inner.initialize(u).createScalpel(null, null).scopeIncludes(n) || inner.nonEligible(n))
           return true;
         $.add(inner.make(n));
         return true;
@@ -90,7 +90,7 @@ public class AsSpartanization extends Spartanization {
       }
       private <N extends ASTNode> boolean go(final N n) {
         if (inRange(m, n))
-          inner.make(n).go(r, null);
+          inner.initialize(u).createScalpel(r, null).make(n).go(r, null);
         return true;
       }
     });

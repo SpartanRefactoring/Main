@@ -27,9 +27,9 @@ public class Disable {
    */
   public final static String dsi = "@DisableSpartan";
 
-  @SuppressWarnings({ "unchecked", "boxing" }) protected Disable(CompilationUnit u) {
+  @SuppressWarnings({ "unchecked", "boxing" }) protected Disable(CompilationUnit u, String s) {
     this.u = u;
-    s = Source.get(u);
+    this.s = s;
     sds = new HashSet<>();
     sde = new HashSet<>();
     if (u == null || s == null)

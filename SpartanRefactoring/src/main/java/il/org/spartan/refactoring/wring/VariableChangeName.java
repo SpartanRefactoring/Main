@@ -23,7 +23,6 @@ import il.org.spartan.refactoring.wring.Wring.MultipleReplaceCurrentNode;
  * @param <N> either SingleVariableDeclaration or VariableDeclarationFragment
  */
 public abstract class VariableChangeName<N extends VariableDeclaration> extends MultipleReplaceCurrentNode<N> {
-  // TODO Ori: add more (?)
   final static Class<?>[] _cs = { MethodDeclaration.class, TypeDeclaration.class };
   final static List<Class<?>> cs = Arrays.asList(_cs);
 

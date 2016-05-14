@@ -26,7 +26,8 @@ import il.org.spartan.refactoring.utils.Subject;
  * @since 2015-08-28
  */
 public class PrefixIncrementDecrementReturn extends Wring.ReplaceToNextStatement<PrefixExpression> {
-  @Override ASTRewrite go(final ASTRewrite r, final PrefixExpression e, final Statement nextStatement, final TextEditGroup g) {
+  @Override ASTRewrite go(final ASTRewrite r, final PrefixExpression e, final Statement nextStatement,
+      @SuppressWarnings("unused") final TextEditGroup g) {
     if (!in(e.getOperator(), INCREMENT, DECREMENT))
       return null;
     final Statement parent = asStatement(e.getParent());
@@ -35,8 +36,7 @@ public class PrefixIncrementDecrementReturn extends Wring.ReplaceToNextStatement
     final ReturnStatement s = asReturnStatement(nextStatement);
     if (s == null || !same(e.getOperand(), core(s.getExpression())))
       return null;
-    r.remove(parent, g);
-    comments.setCore(Subject.operand(e).toReturn());
+    scalpel.operate(nextStatement, parent).replaceWith(Subject.operand(e).toReturn());
     return r;
   }
   @Override String description(final PrefixExpression e) {

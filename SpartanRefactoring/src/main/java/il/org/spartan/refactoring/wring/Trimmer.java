@@ -83,7 +83,7 @@ public class Trimmer extends Spartanization {
         if (disable.check(n))
           return false;
         final Wring<N> w = toolbox.find(n);
-        return w == null || w.nonEligible(n) || prune(w.make(n, exclude), $);
+        return w == null || w.nonEligible(n) || prune(w.createScalpel(null, null).make(n, exclude), $);
       }
     };
   }
@@ -99,7 +99,7 @@ public class Trimmer extends Spartanization {
           return true;
         final Wring<N> w = tb.find(n);
         if (w != null) {
-          final Rewrite make = w.make(n, exclude);
+          final Rewrite make = w.createScalpel(r, null).make(n, exclude);
           if (make != null)
             make.go(r, null);
         }

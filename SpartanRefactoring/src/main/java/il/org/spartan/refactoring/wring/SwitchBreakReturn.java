@@ -57,8 +57,8 @@ public class SwitchBreakReturn extends Wring.MultipleReplaceToNextStatement<Swit
     }
     return false;
   }
-  @Override ASTRewrite go(final ASTRewrite r, final SwitchStatement s, final Statement nextStatement, final TextEditGroup g,
-      List<ASTNode> bss, List<ASTNode> crs) {
+  @SuppressWarnings("unchecked") @Override ASTRewrite go(final ASTRewrite r, final SwitchStatement s, final Statement nextStatement,
+      final TextEditGroup g, List<ASTNode> bss, List<ASTNode> crs) {
     final ReturnStatement rt = As.asReturn(nextStatement);
     if (rt == null)
       return null;
@@ -89,7 +89,7 @@ public class SwitchBreakReturn extends Wring.MultipleReplaceToNextStatement<Swit
       r.remove(rt, g);
     return r;
   }
-  @Override String description(final SwitchStatement a) {
+  @Override String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "insert return statement into switch instead of break";
   }
   @Override WringGroup wringGroup() {

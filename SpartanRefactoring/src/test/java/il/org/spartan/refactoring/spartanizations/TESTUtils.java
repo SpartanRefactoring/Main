@@ -28,6 +28,7 @@ import il.org.spartan.refactoring.wring.TrimmerTestsUtils;
 @SuppressWarnings("javadoc") public enum TESTUtils {
   ;
   static final String WHITES = "(?m)\\s+";
+
   public static void assertNoChange(final String input) {
     assertSimilar(input, Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on(input))));
   }

@@ -30,7 +30,7 @@ public class BlockSingleton extends Wring.ReplaceCurrentNode<Block> {
         || ss.size() == 1 && ss.get(0) instanceof VariableDeclarationStatement || ss.size() != 1)
       return null;
     final Statement $ = ss.get(0);
-    return Is.blockEssential($) ? null : comments.duplicateWithComments($);
+    return Is.blockEssential($) ? null : scalpel.duplicate($);
   }
   @Override String description(@SuppressWarnings("unused") final Block __) {
     return "Remove redundant curly braces.";

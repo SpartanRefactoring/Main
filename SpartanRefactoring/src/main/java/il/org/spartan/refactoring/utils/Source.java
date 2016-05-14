@@ -15,7 +15,7 @@ import il.org.spartan.utils.FileUtils;
 
 /**
  * Give access to source code per file. Creates {@link Disable}rs and
- * {@link Surgeon}s to manipulate source code and change it.
+ * {@link Scalpel}s to manipulate source code and change it.
  *
  * @author Ori Roth
  * @since 2016-04-17
@@ -29,18 +29,6 @@ public class Source {
    */
   public static void setProjectPath(IPath p) {
     project = p;
-  }
-  /**
-   * @param u compilation unit
-   * @return source code of the compilation unit
-   */
-  public static String get(CompilationUnit u) {
-    if (u == null)
-      return null;
-    final IJavaElement je = u.getJavaElement();
-    if (je == null)
-      return null;
-    return sm.get(je.getPath().toString());
   }
   /**
    * @param u compilation unit
@@ -64,15 +52,24 @@ public class Source {
    *         spartanization disabled
    */
   public static Disable getDisable(CompilationUnit u) {
-    return new Disable(u);
+    return new Disable(u, get(u));
   }
   /**
    * @param u compilation unit
    * @param r rewriter
    * @param g text edit group
-   * @return surgeon for replacement operation
+   * @return scalpel for replacement operation
    */
-  public static Surgeon getSurgeon(CompilationUnit u, ASTRewrite r, TextEditGroup g) {
-    return new Surgeon(u, r, g);
+  public static Scalpel getScalpel(CompilationUnit u, ASTRewrite r, TextEditGroup g) {
+    return new Scalpel(u, get(u), r, g);
+  }
+  /* TODO Ori: change to private */
+  public static String get(CompilationUnit u) {
+    if (u == null)
+      return null;
+    final IJavaElement je = u.getJavaElement();
+    if (je == null)
+      return null;
+    return sm.get(je.getPath().toString());
   }
 }

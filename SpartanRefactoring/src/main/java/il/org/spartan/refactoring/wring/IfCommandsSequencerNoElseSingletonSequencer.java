@@ -4,10 +4,10 @@ import static il.org.spartan.refactoring.utils.Funcs.elze;
 import static il.org.spartan.refactoring.utils.Funcs.same;
 import static il.org.spartan.refactoring.utils.Funcs.then;
 import static il.org.spartan.refactoring.wring.Wrings.endsWithSequencer;
-import static il.org.spartan.refactoring.wring.Wrings.insertAfter;
 import static il.org.spartan.refactoring.wring.Wrings.invert;
 import static il.org.spartan.refactoring.wring.Wrings.shoudlInvert;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -51,9 +51,10 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends Wring.Rep
       r.replace(s, Subject.ss(ss).toBlock(), g);
       r.remove(nextStatement, g);
     } else { // case 3
-      r.replace(nextStatement, r.createGroupNode(ss.toArray(new ASTNode[ss.size()])), g);
-      comments.setBase(s);
-      comments.setCore(canonicalIf);
+      final List<Statement> $ = new LinkedList<>();
+      scalpel.duplicateInto(ss, $);
+      $.add(0, canonicalIf);
+      scalpel.operate(s, nextStatement).replaceWith($.toArray(new ASTNode[$.size()]));
     }
     return r;
   }

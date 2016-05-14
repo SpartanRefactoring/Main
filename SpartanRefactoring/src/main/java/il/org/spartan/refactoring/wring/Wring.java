@@ -49,14 +49,13 @@ import org.eclipse.text.edits.TextEditGroup;
 import il.org.spartan.misc.Wrapper;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Collect;
-import il.org.spartan.refactoring.utils.Comments;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.utils.Plant;
 import il.org.spartan.refactoring.utils.Rewrite;
+import il.org.spartan.refactoring.utils.Scalpel;
 import il.org.spartan.refactoring.utils.Source;
 import il.org.spartan.refactoring.utils.Subject;
-import il.org.spartan.refactoring.utils.Surgeon;
 import il.org.spartan.refactoring.utils.expose;
 
 /**
@@ -70,18 +69,24 @@ import il.org.spartan.refactoring.utils.expose;
  * @since 2015-07-09
  */
 public abstract class Wring<N extends ASTNode> {
-  protected Comments comments;
   protected CompilationUnit u;
-  protected Surgeon surgeon;
+  protected Scalpel scalpel;
 
   /**
-   * Used in order to initialize wring with the current compilation unit
-   *
    * @param u current compilation unit
-   * @return this
+   * @return this wring
    */
-  public Wring<N> initialize(CompilationUnit u) {
+  public Wring<N> initialize(@SuppressWarnings("hiding") CompilationUnit u) {
     this.u = u;
+    return this;
+  }
+  /**
+   * @param r rewriter
+   * @param g text edit group
+   * @return this wring
+   */
+  public Wring<N> createScalpel(ASTRewrite r, TextEditGroup g) {
+    scalpel = Source.getScalpel(u, r, g);
     return this;
   }
   abstract String description(N n);
@@ -172,18 +177,16 @@ public abstract class Wring<N extends ASTNode> {
     }
   }
 
-  /* TODO change SimplifyBlock to work with comments */
   static abstract class ReplaceCurrentNode<N extends ASTNode> extends Wring<N> {
     @Override final Rewrite make(final N n) {
       return !eligible(n) ? null : new Rewrite(description(n), n) {
-        @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-          Source.getSurgeon(u, r, g).operate(n).replaceWith(replacement(n));
+        @SuppressWarnings("unused") @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+          scalpel.operate(n).replaceWith(replacement(n));
         }
       };
     }
     abstract ASTNode replacement(N n);
     @Override boolean scopeIncludes(final N n) {
-      comments = new Comments(null, null);
       return replacement(n) != null;
     }
   }
@@ -194,10 +197,8 @@ public abstract class Wring<N extends ASTNode> {
   static abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends Wring<N> {
     @Override final Rewrite make(final N n, final ExclusionManager em) {
       return !eligible(n) ? null : new Rewrite(description(n), n) {
-        @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-          comments = new Comments(u, r);
-          comments.add(n);
-          comments.mash(n, replacement(n, em), g);
+        @SuppressWarnings("unused") @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+          scalpel.operate(n).replaceWith(replacement(n, em));
         }
       };
     }
@@ -219,7 +220,6 @@ public abstract class Wring<N extends ASTNode> {
     @Override Rewrite make(final N n) {
       return new Rewrite(description(n), n) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-          comments = new Comments(u, r);
           final List<ASTNode> bss = new ArrayList<>();
           final List<ASTNode> crs = new ArrayList<>();
           MultipleReplaceCurrentNode.this.go(r, n, g, bss, crs);
@@ -227,19 +227,12 @@ public abstract class Wring<N extends ASTNode> {
             return; // indicates bad wring design
           final boolean ucr = crs.size() == 1;
           final int s = bss.size();
-          for (int i = 0; i < s; ++i) {
-            comments.add(bss.get(i));
-            comments.add(crs.get(ucr ? 0 : i));
-            comments.setBase(bss.get(i));
-            comments.setCore(crs.get(ucr ? 0 : i));
-            comments.mash(g);
-            comments.clear();
-          }
+          for (int i = 0; i < s; ++i)
+            scalpel.operate(bss.get(i)).replaceWith(crs.get(ucr ? 0 : i));
         }
       };
     }
     @Override boolean scopeIncludes(final N n) {
-      comments = new Comments(u, ASTRewrite.create(n.getAST()));
       return go(ASTRewrite.create(n.getAST()), n, null, new ArrayList<>(), new ArrayList<>()) != null;
     }
   }
@@ -254,22 +247,15 @@ public abstract class Wring<N extends ASTNode> {
       exclude.exclude(nextStatement);
       return new Rewrite(description(n), n, nextStatement) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-          comments = new Comments(u, r);
           ASTNode p = n;
           while (!(p instanceof Statement))
             p = p.getParent();
-          // getting comments from parent - ReplaceToNextStatement Wrings
-          // replace whole parent statement
-          comments.add(p);
-          comments.add(nextStatement);
-          comments.setBase(nextStatement);
+          scalpel.operate(nextStatement, n);
           ReplaceToNextStatement.this.go(r, n, nextStatement, g);
-          comments.mash(g);
         }
       };
     }
     @Override boolean scopeIncludes(final N n) {
-      comments = new Comments(u, ASTRewrite.create(n.getAST()));
       final Statement nextStatement = Extract.nextStatement(n);
       return nextStatement != null && go(ASTRewrite.create(n.getAST()), n, nextStatement, null) != null;
     }
@@ -291,7 +277,6 @@ public abstract class Wring<N extends ASTNode> {
       exclude.exclude(nextStatement);
       return new Rewrite(description(n), n, nextStatement) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-          comments = new Comments(u, r);
           final List<ASTNode> bss = new ArrayList<>();
           final List<ASTNode> crs = new ArrayList<>();
           MultipleReplaceToNextStatement.this.go(r, n, nextStatement, g, bss, crs);
@@ -299,19 +284,12 @@ public abstract class Wring<N extends ASTNode> {
             return; // indicates bad wring design
           final boolean ucr = crs.size() == 1;
           final int s = bss.size();
-          for (int i = 0; i < s; ++i) {
-            comments.add(bss.get(i));
-            comments.add(crs.get(ucr ? 0 : i));
-            comments.setBase(bss.get(i));
-            comments.setCore(crs.get(ucr ? 0 : i));
-            comments.mash(g);
-            comments.clear();
-          }
+          for (int i = 0; i < s; ++i)
+            scalpel.operate(bss.get(i)).addComments(nextStatement).replaceWith(crs.get(ucr ? 0 : i));
         }
       };
     }
     @Override boolean scopeIncludes(final N n) {
-      comments = new Comments(u, ASTRewrite.create(n.getAST()));
       final Statement nextStatement = Extract.nextStatement(n);
       return nextStatement != null
           && go(ASTRewrite.create(n.getAST()), n, nextStatement, null, new ArrayList<>(), new ArrayList<>()) != null;

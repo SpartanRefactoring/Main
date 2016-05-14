@@ -23,7 +23,6 @@ public class VariableRenameUnderscoreToDoubleUnderscore<N extends VariableDeclar
     return "Use double underscore instead a single underscore";
   }
   @Override WringGroup wringGroup() {
-    // TODO Ori: cange wring group
     return WringGroup.RENAME_PARAMETERS;
   }
 }

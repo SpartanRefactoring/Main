@@ -34,7 +34,8 @@ public final class IfFooSequencerIfFooSameSequencer extends Wring.ReplaceToNextS
     $.setElseStatement(null);
     return $;
   }
-  @Override ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
+  @Override ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement,
+      @SuppressWarnings("unused") final TextEditGroup g) {
     if (!Is.vacuousElse(s))
       return null;
     final IfStatement s2 = asIfStatement(nextStatement);
@@ -44,8 +45,7 @@ public final class IfFooSequencerIfFooSameSequencer extends Wring.ReplaceToNextS
     final List<Statement> ss1 = Extract.statements(then);
     if (!same(ss1, Extract.statements(then(s2))) || !Is.sequencer(last(ss1)))
       return null;
-    r.remove(s, g);
-    comments.setCore(makeIfWithoutElse(BlockSimplify.reorganizeNestedStatement(then, comments),
+    scalpel.replaceWith(makeIfWithoutElse(BlockSimplify.reorganizeNestedStatement(then, scalpel),
         Subject.pair(s.getExpression(), s2.getExpression()).to(CONDITIONAL_OR)));
     return r;
   }

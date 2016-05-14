@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.duplicate;
 import static il.org.spartan.refactoring.utils.Funcs.left;
 import static il.org.spartan.refactoring.utils.Funcs.right;
 import static il.org.spartan.refactoring.utils.Funcs.same;
@@ -16,6 +15,7 @@ import org.eclipse.text.edits.TextEditGroup;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Extract;
+import il.org.spartan.refactoring.utils.Funcs;
 import il.org.spartan.refactoring.utils.Is;
 
 /**
@@ -26,7 +26,8 @@ import il.org.spartan.refactoring.utils.Is;
  * @since 2015-08-28
  */
 public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assignment> {
-  @Override ASTRewrite go(final ASTRewrite r, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
+  @SuppressWarnings("unused") @Override ASTRewrite go(final ASTRewrite r, final Assignment a, final Statement nextStatement,
+      final TextEditGroup g) {
     final ASTNode parent = a.getParent();
     if (!(parent instanceof Statement))
       return null;
@@ -39,10 +40,10 @@ public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assign
     final Expression right1 = getRight(a1);
     if (right1 == null || !same(right, right1) || !Is.deterministic(right))
       return null;
-    r.remove(parent, g);
-    Assignment $ = duplicate(a1);
-    setRight($, duplicate(a));
-    comments.setCore(r.getAST().newExpressionStatement($));
+    scalpel.operate(nextStatement, parent);
+    final Assignment $ = Funcs.duplicate(a1);
+    setRight(a1, Funcs.duplicate(a));
+    scalpel.replaceWith(r.getAST().newExpressionStatement($));
     return r;
   }
   static Expression getRight(final Assignment a) {
@@ -52,12 +53,12 @@ public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assign
     final Expression $ = Extract.core(right(a));
     return !($ instanceof Assignment) || ((Assignment) $).getOperator() != ASSIGN ? $ : extractRight((Assignment) $);
   }
-  static void setRight(Assignment a, Expression e) {
+  void setRight(Assignment a, Expression e) {
     final Expression $ = Extract.core(right(a));
     if (!($ instanceof Assignment) || ((Assignment) $).getOperator() != ASSIGN)
       a.setRightHandSide(e);
     else
-      setRight((Assignment) $, e);    
+      setRight((Assignment) $, e);
   }
   @Override String description(final Assignment a) {
     return "Consolidate assignment to " + left(a) + " with subsequent similar assignment";

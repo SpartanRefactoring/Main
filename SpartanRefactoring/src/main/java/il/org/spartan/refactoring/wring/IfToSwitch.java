@@ -91,9 +91,9 @@ public class IfToSwitch extends ReplaceCurrentNode<IfStatement> {
   @SuppressWarnings("unchecked") protected void addStatements(SwitchStatement $, Statement s) {
     final int i = $.statements().size();
     if (s instanceof Block)
-      comments.duplicateWithCommentsInto(((Block) s).statements(), $.statements());
+      scalpel.duplicateInto(((Block) s).statements(), $.statements());
     else
-      $.statements().add(comments.duplicateWithComments(s));
+      $.statements().add(scalpel.duplicate(s));
     if (!SwitchBreakReturn.caseEndsWithSequencer($.statements(), i))
       $.statements().add(s.getAST().newBreakStatement());
   }
@@ -106,7 +106,7 @@ public class IfToSwitch extends ReplaceCurrentNode<IfStatement> {
       if (!isSimpleComparison(e, v))
         return null;
       final SwitchCase c = s.getAST().newSwitchCase();
-      c.setExpression(comments.duplicateWithComments(getRightFromComparison(e)));
+      c.setExpression(scalpel.duplicate(getRightFromComparison(e)));
       $.statements().add(c);
       if (i.getThenStatement() instanceof Block && ((Block) i.getThenStatement()).statements().size() == 1)
         return null; // TODO Ori: check privilege over redundant braces removal
@@ -138,7 +138,7 @@ public class IfToSwitch extends ReplaceCurrentNode<IfStatement> {
     if (!BindingUtils.isSimple(e))
       return null;
     SwitchStatement $ = n.getAST().newSwitchStatement();
-    $.setExpression(comments.duplicateWithComments(e));
+    $.setExpression(scalpel.duplicate(e));
     $ = buildSwitch($, n, e);
     return $ == null || countCases($) < MIN_CASES_THRESHOLD ? null : $;
   }
