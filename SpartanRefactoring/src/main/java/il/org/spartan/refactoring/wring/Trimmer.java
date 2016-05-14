@@ -92,21 +92,9 @@ public class Trimmer extends Spartanization {
     final Disable disable = Source.getDisable(u);
     final Toolbox toolbox = Toolbox.generate(u);
     u.accept(new DispatchingPostVisitor() {
-      @Override <N extends ASTNode> boolean preGo(N n) {
-        if (disable.check(n))
-          return false;
-        if (!inRange(m, n))
-          return true;
-        final Wring<N> w = toolbox.find(n);
-        if (w != null)
-          w.exclusion(n, exclude);
-        return true;
-      }
-      @Override <N extends ASTNode> boolean postGo(N n) {
-        if (exclude.isExcluded(n))
-          return false;
-        if (!inRange(m, n))
-          return true;
+      @Override <N extends ASTNode> void postGo(N n) {
+        if (disable.check(n) || exclude.isExcluded(n) || !inRange(m, n))
+          return;
         final Wring<N> w = toolbox.find(n);
         if (w != null) {
           final Rewrite make = w.createScalpel(r, null).make(n, exclude);
@@ -119,7 +107,6 @@ public class Trimmer extends Spartanization {
             }
           }
         }
-        return true;
       }
     });
   }
@@ -193,64 +180,9 @@ public class Trimmer extends Spartanization {
   abstract class DispatchingPostVisitor extends ASTVisitor {
     final ExclusionManager exclude = makeExcluder();
 
-    @Override public final boolean visit(final Assignment it) {
-      return preGo(it);
-    }
-    @Override public final boolean visit(final Block it) {
-      return preGo(it);
-    }
-    @Override public final boolean visit(final SingleVariableDeclaration d) {
-      return preGo(d);
-    }
-    @Override public final boolean visit(final ClassInstanceCreation c) {
-      return preGo(c);
-    }
-    @Override public final boolean visit(final ConditionalExpression e) {
-      return preGo(e);
-    }
-    @Override public final boolean visit(final EnumDeclaration it) {
-      return preGo(it);
-    }
-    @Override public final boolean visit(final IfStatement it) {
-      return preGo(it);
-    }
-    @Override public final boolean visit(final InfixExpression it) {
-      return preGo(it);
-    }
-    @Override public final boolean visit(final MethodDeclaration it) {
-      return preGo(it);
-    }
-    @Override public final boolean visit(final MethodInvocation it) {
-      return preGo(it);
-    }
-    @Override public final boolean visit(final PostfixExpression it) {
-      return preGo(it);
-    }
-    @Override public final boolean visit(final PrefixExpression it) {
-      return preGo(it);
-    }
-    @Override public final boolean visit(final ReturnStatement it) {
-      return preGo(it);
-    }
-    @Override public final boolean visit(final NormalAnnotation it) {
-      return preGo(it);
-    }
-    @Override public final boolean visit(final SuperConstructorInvocation it) {
-      return preGo(it);
-    }
-    @Override public final boolean visit(final VariableDeclarationFragment it) {
-      return preGo(it);
-    }
-    @Override public final boolean visit(final TypeDeclaration it) {
-      return preGo(it);
-    }
-    @Override public final boolean visit(final SwitchStatement it) {
-      return preGo(it);
-    }
     @Override public void postVisit(ASTNode n) {
       postGo(n);
     }
-    abstract <N extends ASTNode> boolean preGo(final N n);
-    abstract <N extends ASTNode> boolean postGo(final N n);
+    abstract <N extends ASTNode> void postGo(final N n);
   }
 }

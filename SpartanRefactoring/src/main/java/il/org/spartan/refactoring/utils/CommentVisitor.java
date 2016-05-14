@@ -25,11 +25,12 @@ public class CommentVisitor extends ASTVisitor {
    * Create a new comment visitor with up to date source code reference
    *
    * @param u current compilation unit
+   * @param s source code
    */
-  public CommentVisitor(CompilationUnit u) {
+  public CommentVisitor(CompilationUnit u, String s) {
     super();
     cu = u;
-    s = Source.get(u);
+    this.s = s;
     c = "";
   }
   /**

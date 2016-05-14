@@ -63,8 +63,7 @@ public class Source {
   public static Scalpel getScalpel(CompilationUnit u, ASTRewrite r, TextEditGroup g) {
     return new Scalpel(u, get(u), r, g);
   }
-  /* TODO Ori: change to private */
-  public static String get(CompilationUnit u) {
+  private static String get(CompilationUnit u) {
     if (u == null)
       return null;
     final IJavaElement je = u.getJavaElement();

@@ -142,16 +142,6 @@ public abstract class Wring<N extends ASTNode> {
   boolean scopeIncludes(final N n) {
     return make(n, null) != null;
   }
-  /**
-   * All wrings should perform make associated exclusion operation in this
-   * method, then call it in make
-   *
-   * @param n node
-   * @param em exclusion manager
-   */
-  void exclusion(N n, ExclusionManager em) {
-    // empty default
-  }
 
   static abstract class AbstractSorting extends ReplaceCurrentNode<InfixExpression> {
     @Override final String description(final InfixExpression e) {
@@ -254,7 +244,7 @@ public abstract class Wring<N extends ASTNode> {
       final Statement nextStatement = Extract.nextStatement(n);
       if (nextStatement == null || !eligible(n))
         return null;
-      exclusion(n, exclude);
+      exclude.exclude(nextStatement);
       return new Rewrite(description(n), n, nextStatement) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
           ASTNode p = n;
@@ -268,12 +258,6 @@ public abstract class Wring<N extends ASTNode> {
     @Override boolean scopeIncludes(final N n) {
       final Statement nextStatement = Extract.nextStatement(n);
       return nextStatement != null && go(ASTRewrite.create(n.getAST()), n, nextStatement, null) != null;
-    }
-    @Override void exclusion(N n, ExclusionManager exclude) {
-      final Statement nextStatement = Extract.nextStatement(n);
-      if (nextStatement == null || !eligible(n))
-        return;
-      exclude.exclude(nextStatement);
     }
   }
 
@@ -290,7 +274,7 @@ public abstract class Wring<N extends ASTNode> {
       final Statement nextStatement = Extract.nextStatement(n);
       if (nextStatement == null || !eligible(n))
         return null;
-      exclusion(n, exclude);
+      exclude.exclude(nextStatement);
       return new Rewrite(description(n), n, nextStatement) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
           final List<ASTNode> bss = new ArrayList<>();
@@ -309,12 +293,6 @@ public abstract class Wring<N extends ASTNode> {
       final Statement nextStatement = Extract.nextStatement(n);
       return nextStatement != null
           && go(ASTRewrite.create(n.getAST()), n, nextStatement, null, new ArrayList<>(), new ArrayList<>()) != null;
-    }
-    @Override void exclusion(N n, ExclusionManager exclude) {
-      final Statement nextStatement = Extract.nextStatement(n);
-      if (nextStatement == null || !eligible(n))
-        return;
-      exclude.exclude(nextStatement);
     }
   }
 
