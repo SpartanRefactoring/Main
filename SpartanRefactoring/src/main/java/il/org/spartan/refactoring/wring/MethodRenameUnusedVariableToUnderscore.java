@@ -93,4 +93,6 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNodeExclude;
   @Override WringGroup wringGroup() {
     return WringGroup.RENAME_PARAMETERS;
   }
+  @Override void preExclude(SingleVariableDeclaration n, ExclusionManager em) {
+  }
 }

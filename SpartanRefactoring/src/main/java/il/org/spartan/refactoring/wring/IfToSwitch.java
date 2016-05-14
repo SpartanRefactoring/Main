@@ -15,7 +15,7 @@ import org.eclipse.jdt.core.dom.SwitchStatement;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.BindingUtils;
-import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
+import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNodeExclude;
 
 /**
  * A wring to replace if statements with switch statements.
@@ -50,7 +50,8 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
  * @author Ori Roth
  * @since 2016/05/11
  */
-public class IfToSwitch extends ReplaceCurrentNode<IfStatement> {
+public class IfToSwitch extends ReplaceCurrentNodeExclude<IfStatement> {
+  final static boolean PRIORITY = false;
   final static int MIN_CASES_THRESHOLD = 3;
   final static ASTMatcher m = new ASTMatcher();
 
@@ -108,15 +109,15 @@ public class IfToSwitch extends ReplaceCurrentNode<IfStatement> {
       final SwitchCase c = s.getAST().newSwitchCase();
       c.setExpression(scalpel.duplicate(getRightFromComparison(e)));
       $.statements().add(c);
-      if (i.getThenStatement() instanceof Block && ((Block) i.getThenStatement()).statements().size() == 1)
-        return null; // TODO Ori: check privilege over redundant braces removal
+      if (!PRIORITY && i.getThenStatement() instanceof Block && ((Block) i.getThenStatement()).statements().size() == 1)
+        return null;
       addStatements($, i.getThenStatement());
       return buildSwitch($, ((IfStatement) s).getElseStatement(), v);
     }
     final SwitchCase c = s.getAST().newSwitchCase();
     c.setExpression(null);
     $.statements().add(c);
-    if (s instanceof Block && ((Block) s).statements().size() == 1)
+    if (!PRIORITY && s instanceof Block && ((Block) s).statements().size() == 1)
       return null;
     addStatements($, s);
     return $;
@@ -128,8 +129,8 @@ public class IfToSwitch extends ReplaceCurrentNode<IfStatement> {
         ++c;
     return c;
   }
-  @Override ASTNode replacement(IfStatement n) {
-    if (n.getParent() instanceof IfStatement && !(((IfStatement) n.getParent()).getThenStatement() instanceof Block))
+  @Override ASTNode replacement(IfStatement n, ExclusionManager em) {
+    if (n.getParent() instanceof IfStatement)
       return null;
     Expression e = n.getExpression();
     if (!isSimpleComparison(e))
@@ -140,12 +141,24 @@ public class IfToSwitch extends ReplaceCurrentNode<IfStatement> {
     SwitchStatement $ = n.getAST().newSwitchStatement();
     $.setExpression(scalpel.duplicate(e));
     $ = buildSwitch($, n, e);
-    return $ == null || countCases($) < MIN_CASES_THRESHOLD ? null : $;
+    if ($ == null || countCases($) < MIN_CASES_THRESHOLD)
+      return null;
+    preExclude(n, em);
+    return $;
   }
   @Override String description(@SuppressWarnings("unused") IfStatement __) {
     return "Replace if with switch";
   }
   @Override WringGroup wringGroup() {
     return WringGroup.SWITCH_IF_CONVERTION;
+  }
+  @Override void preExclude(IfStatement n, ExclusionManager em) {
+    if (PRIORITY) {
+      em.exclude(n);
+      if (n.getThenStatement() != null)
+        em.exclude(n.getThenStatement());
+      if (n.getElseStatement() != null)
+        em.exclude(n.getElseStatement());
+    }
   }
 }
