@@ -15,7 +15,7 @@ import org.eclipse.jdt.core.dom.SwitchStatement;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.BindingUtils;
-import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNodeExclude;
+import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
 
 /**
  * A wring to replace if statements with switch statements.
@@ -50,7 +50,7 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNodeExclude;
  * @author Ori Roth
  * @since 2016/05/11
  */
-public class IfToSwitch extends ReplaceCurrentNodeExclude<IfStatement> {
+public class IfToSwitch extends ReplaceCurrentNode<IfStatement> {
   final static boolean PRIORITY = false;
   final static int MIN_CASES_THRESHOLD = 3;
   final static ASTMatcher m = new ASTMatcher();
@@ -129,7 +129,7 @@ public class IfToSwitch extends ReplaceCurrentNodeExclude<IfStatement> {
         ++c;
     return c;
   }
-  @Override ASTNode replacement(IfStatement n, ExclusionManager em) {
+  @Override ASTNode replacement(IfStatement n) {
     if (n.getParent() instanceof IfStatement)
       return null;
     Expression e = n.getExpression();
@@ -143,7 +143,6 @@ public class IfToSwitch extends ReplaceCurrentNodeExclude<IfStatement> {
     $ = buildSwitch($, n, e);
     if ($ == null || countCases($) < MIN_CASES_THRESHOLD)
       return null;
-    preExclude(n, em);
     return $;
   }
   @Override String description(@SuppressWarnings("unused") IfStatement __) {
@@ -151,14 +150,5 @@ public class IfToSwitch extends ReplaceCurrentNodeExclude<IfStatement> {
   }
   @Override WringGroup wringGroup() {
     return WringGroup.SWITCH_IF_CONVERTION;
-  }
-  @Override void preExclude(IfStatement n, ExclusionManager em) {
-    if (PRIORITY) {
-      em.exclude(n);
-      if (n.getThenStatement() != null)
-        em.exclude(n.getThenStatement());
-      if (n.getElseStatement() != null)
-        em.exclude(n.getElseStatement());
-    }
   }
 }

@@ -42,7 +42,7 @@ public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assign
       return null;
     scalpel.operate(nextStatement, parent);
     final Assignment $ = Funcs.duplicate(a1);
-    setRight(a1, Funcs.duplicate(a));
+    setRight($, Funcs.duplicate(a));
     scalpel.replaceWith(r.getAST().newExpressionStatement($));
     return r;
   }
