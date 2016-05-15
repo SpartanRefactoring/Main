@@ -28,7 +28,7 @@ public class SwitchDeductStatementsForCase extends ReplaceCurrentNode<SwitchStat
         if (ic)
           return true;
         ic = true;
-      } else if (Is.sequencer(n))
+      } else if (Is.sequencer(s))
         ic = false;
     return false;
   }
