@@ -55,8 +55,10 @@ public class Scalpel {
   @SuppressWarnings("unchecked") public <N extends ASTNode> N duplicate(N n) {
     if (u == null || r == null || s == null)
       return Funcs.duplicate(n);
-    used.addAll(extract(n));
     final int sp = u.getExtendedStartPosition(n);
+    if (sp < 0)
+      return Funcs.duplicate(n);
+    used.addAll(extract(n));
     return (N) r.createStringPlaceholder(cut(s, sp, sp + u.getExtendedLength(n)), n.getNodeType());
   }
   /**
@@ -133,28 +135,31 @@ public class Scalpel {
     comments.addAll(unique);
     final SourceRange sr = r.getExtendedSourceRangeComputer().computeSourceRange(base);
     final List<ASTNode> $ = new ArrayList<>();
-    $.add(replacement);
     if (replacement instanceof Block && !isCollapsed) {
+      final Block bl = (Block) replacement;
       Collections.reverse(comments);
       for (final Comment c : comments)
-        ((Block) replacement).statements().add(0,
+        bl.statements().add(0,
             r.createStringPlaceholder(s.substring(c.getStartPosition(), c.getStartPosition() + c.getLength()), ASTNode.BLOCK));
-    } else if (comments.size() == 1 && shouldMoveComentToEnd(comments.get(0))) {
-      final Comment c = comments.get(0);
-      String f = "";
-      f = !c.isLineComment() || allWhiteSpaces(s.substring(sr.getStartPosition() + sr.getLength()).split("\n")[0]) ? "" : "\n";
-      $.add(r.createStringPlaceholder(" " + s.substring(c.getStartPosition(), c.getStartPosition() + c.getLength()) + f,
-          c.getNodeType()));
-    } else
-      for (final Comment c : comments)
-        $.add(0, r.createStringPlaceholder(s.substring(c.getStartPosition(), c.getStartPosition() + c.getLength())
-            + (!(replacement instanceof Statement) && !c.isLineComment() ? "" : "\n"), c.getNodeType()));
-    if (replacement instanceof Statement
-        && !allWhiteSpaces(s.substring(rowStartIndex(sr.getStartPosition()), sr.getStartPosition())))
-      $.add(0, r.createStringPlaceholder("", ASTNode.BLOCK));
-    if (replacement instanceof Statement && !allWhiteSpaces(
-        s.substring(sr.getStartPosition() + sr.getLength(), rowEndIndex(sr.getStartPosition() + sr.getLength()))))
-      $.add(r.createStringPlaceholder("", ASTNode.BLOCK));
+      $.add(bl);
+    } else {
+      if (comments.size() == 1 && shouldMoveComentToEnd(comments.get(0), isCollapsed)) {
+        final Comment c = comments.get(0);
+        String f = "";
+        f = !c.isLineComment() || allWhiteSpaces(s.substring(sr.getStartPosition() + sr.getLength()).split("\n")[0]) ? "" : "\n";
+        $.add(replacement);
+        $.add(r.createStringPlaceholder(" " + s.substring(c.getStartPosition(), c.getStartPosition() + c.getLength()) + f,
+            c.getNodeType()));
+      } else {
+        for (final Comment c : comments)
+          $.add(r.createStringPlaceholder(s.substring(c.getStartPosition(), c.getStartPosition() + c.getLength())
+              + (!(replacement instanceof Statement) && !c.isLineComment() ? "" : "\n"), c.getNodeType()));
+        $.add(replacement);
+      }
+      if (replacement instanceof Statement
+          && !allWhiteSpaces(s.substring(rowStartIndex(sr.getStartPosition()), sr.getStartPosition())))
+        $.add(0, r.createStringPlaceholder("", ASTNode.BLOCK));
+    }
     r.replace(base, r.createGroupNode($.toArray(new ASTNode[$.size()])), g);
     for (final ASTNode a : additionals)
       r.remove(a, g);
@@ -164,11 +169,10 @@ public class Scalpel {
     final List<Comment> $ = new ArrayList<>();
     if (s == null || u == null || r == null)
       return $;
-    final SourceRange t = r.getExtendedSourceRangeComputer().computeSourceRange(n);
-    final int sp = t.getStartPosition();
-    final int ep = sp + t.getLength();
+    final int sp = u.getExtendedStartPosition(n);
+    final int ep = sp + u.getExtendedLength(n);
     for (final Comment c : (List<Comment>) u.getCommentList()) {
-      final int csp = c.getStartPosition();
+      final int csp = u.getExtendedStartPosition(c);
       if (csp < sp)
         continue;
       else if (csp >= ep)
@@ -186,8 +190,8 @@ public class Scalpel {
       --l;
     return $.replaceAll("\n\t{" + (sp - l - 1) + "}", "\n");
   }
-  private boolean shouldMoveComentToEnd(Comment c) {
-    if (!c.isLineComment() || replacement == null)
+  private boolean shouldMoveComentToEnd(Comment c, boolean isCollapsed) {
+    if (!c.isLineComment() || replacement == null || isCollapsed)
       return false;
     switch (replacement.getNodeType()) {
       case ASTNode.IF_STATEMENT:
@@ -209,7 +213,7 @@ public class Scalpel {
       --j;
     return j;
   }
-  private int rowEndIndex(int i) {
+  @SuppressWarnings("unused") private int rowEndIndex(int i) {
     int j = i;
     while (j < s.length() && s.charAt(j + 1) != '\n')
       ++j;

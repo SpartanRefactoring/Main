@@ -48,7 +48,7 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
   }
   @Override Rewrite make(final IfStatement s) {
     return new Rewrite(description(s), s) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @SuppressWarnings("unused") @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final IfStatement shorterIf = makeShorterIf(s);
         final List<Statement> remainder = Extract.statements(elze(shorterIf));
         shorterIf.setElseStatement(null);
@@ -57,11 +57,11 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
         final List<Statement> ss = expose.statements(newParent);
         if (parent != null) {
           addAllReplacing(ss, expose.statements(parent), s, shorterIf, remainder);
-          r.replace(parent, newParent, g);
+          scalpel.operate(parent).replaceWith(newParent);
         } else {
           ss.add(shorterIf);
           duplicateInto(remainder, ss);
-          r.replace(s, newParent, g);
+          scalpel.operate(s).replaceWith(newParent);
         }
       }
     };

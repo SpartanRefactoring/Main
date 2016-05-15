@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -9,7 +8,6 @@ import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnnotationTypeMemberDeclaration;
 import org.eclipse.jdt.core.dom.BodyDeclaration;
-import org.eclipse.jdt.core.dom.Comment;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.EnumConstantDeclaration;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
@@ -28,7 +26,6 @@ import org.eclipse.jdt.core.dom.TypeDeclaration;
  * @since 2016/05/13
  */
 public class Disable {
-  final Set<Javadoc> dcs;
   final Set<ASTNode> dns;
   /**
    * Disable spartanization identifier, used by the programmer to indicate a
@@ -36,53 +33,11 @@ public class Disable {
    */
   public final static String dsi = "@DisableSpartan";
 
-  @SuppressWarnings({ "unchecked" }) protected Disable(CompilationUnit u, String s) {
-    dcs = new HashSet<>();
+  protected Disable(CompilationUnit u, String s) {
     dns = new HashSet<>();
     if (u == null || s == null)
       return;
-    for (final Comment c : (List<Comment>) u.getCommentList()) {
-      if (!(c instanceof Javadoc))
-        continue;
-      u.getLineNumber(c.getStartPosition());
-      final CommentVisitor cv = new CommentVisitor(u, s);
-      c.accept(cv);
-      if (cv.getContent().contains(dsi))
-        dcs.add((Javadoc) c);
-    }
-    u.accept(new ASTVisitor() {
-      @Override public boolean visit(AnnotationTypeDeclaration n) {
-        return go(n);
-      }
-      @Override public boolean visit(EnumDeclaration n) {
-        return go(n);
-      }
-      @Override public boolean visit(TypeDeclaration n) {
-        return go(n);
-      }
-      @Override public boolean visit(AnnotationTypeMemberDeclaration n) {
-        return go(n);
-      }
-      @Override public boolean visit(EnumConstantDeclaration n) {
-        return go(n);
-      }
-      @Override public boolean visit(FieldDeclaration n) {
-        return go(n);
-      }
-      @Override public boolean visit(Initializer n) {
-        return go(n);
-      }
-      @Override public boolean visit(MethodDeclaration n) {
-        return go(n);
-      }
-      private boolean go(BodyDeclaration n) {
-        if (dcs.contains(n.getJavadoc())) {
-          dns.add(n);
-          return false;
-        }
-        return true;
-      }
-    });
+    u.accept(new BodyDeclarationVisitor(dns));
   }
   /**
    * @param n node
@@ -96,5 +51,47 @@ public class Disable {
       p = p.getParent();
     }
     return false;
+  }
+
+  private static class BodyDeclarationVisitor extends ASTVisitor {
+    Set<ASTNode> dns;
+
+    BodyDeclarationVisitor(Set<ASTNode> dns) {
+      this.dns = dns;
+    }
+    @Override public boolean visit(AnnotationTypeDeclaration n) {
+      return go(n);
+    }
+    @Override public boolean visit(EnumDeclaration n) {
+      return go(n);
+    }
+    @Override public boolean visit(TypeDeclaration n) {
+      return go(n);
+    }
+    @Override public boolean visit(AnnotationTypeMemberDeclaration n) {
+      return go(n);
+    }
+    @Override public boolean visit(EnumConstantDeclaration n) {
+      return go(n);
+    }
+    @Override public boolean visit(FieldDeclaration n) {
+      return go(n);
+    }
+    @Override public boolean visit(Initializer n) {
+      return go(n);
+    }
+    @Override public boolean visit(MethodDeclaration n) {
+      return go(n);
+    }
+    private boolean go(BodyDeclaration n) {
+      final Javadoc j = n.getJavadoc();
+      if (j == null)
+        return true;
+      if (j.toString().contains(dsi)) {
+        dns.add(n);
+        return false;
+      }
+      return true;
+    }
   }
 }
