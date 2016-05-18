@@ -20,7 +20,7 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
  * @author Ori Roth
  * @since 2016/05/16
  */
-public class SwitchDeductStatementsForCase extends ReplaceCurrentNode<SwitchStatement> {
+@Deprecated public class SwitchDeductStatementsForCase extends ReplaceCurrentNode<SwitchStatement> {
   @SuppressWarnings({ "javadoc", "unchecked" }) public static boolean containsCaseWithoutSequencer(SwitchStatement n) {
     boolean ic = false;
     for (final Statement s : (Iterable<Statement>) n.statements())

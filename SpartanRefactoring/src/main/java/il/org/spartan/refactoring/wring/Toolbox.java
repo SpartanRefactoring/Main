@@ -71,7 +71,6 @@ public class Toolbox {
             new SwitchSimplify(), //
             new SwitchFewCasesReplaceWithIf(), //
             new SwitchBreakReturn(), //
-            new SwitchDeductStatementsForCase(), //
             null) //
         .add(Assignment.class, //
             new AssignmentAndAssignment(), //

@@ -68,7 +68,7 @@ public class Scalpel {
    * @param src source list
    * @param dst destination list
    */
-  public void duplicateInto(List<Statement> src, List<Statement> dst) {
+  public <N extends Statement> void duplicateInto(List<N> src, List<Statement> dst) {
     for (final Statement n : src)
       dst.add(duplicate(n));
   }

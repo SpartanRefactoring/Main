@@ -66,7 +66,7 @@ import il.org.spartan.refactoring.wring.TrimmerTestsUtils;
   }
   public static Document rewrite(final Spartanization s, final CompilationUnit u, final Document $) {
     try {
-      s.createRewrite(u, null).rewriteAST($, null).apply($);
+      s.createRewriteForTest(u, null).rewriteAST($, null).apply($);
       return $;
     } catch (MalformedTreeException | BadLocationException e) {
       throw new AssertionError(e);

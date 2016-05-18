@@ -41,7 +41,7 @@ public class TrimmerTestsUtils {
       return this;
     }
     public OperandToWring<N> notIn(final Wring<N> w) {
-      assertThat(w.scopeIncludes(findNode(w)), is(false));
+      assertThat(w.createScalpel(null, null).scopeIncludes(findNode(w)), is(false));
       return this;
     }
     private N findNode(final Wring<N> w) {

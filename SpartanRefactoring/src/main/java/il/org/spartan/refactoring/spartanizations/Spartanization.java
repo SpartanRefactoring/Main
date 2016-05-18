@@ -181,6 +181,10 @@ public abstract class Spartanization extends Refactoring {
   public final ASTRewrite createRewrite(final CompilationUnit u, final SubProgressMonitor pm) {
     return createRewrite(pm, u, (IMarker) null);
   }
+  // TODO Ori: document
+  public final ASTRewrite createRewriteForTest(final CompilationUnit u, final SubProgressMonitor pm) {
+    return createRewriteForTest(pm, u, (IMarker) null);
+  }
   /**
    * Checks a Compilation Unit (outermost ASTNode in the Java Grammar) for
    * spartanization suggestions
@@ -346,6 +350,9 @@ public abstract class Spartanization extends Refactoring {
   }
   protected abstract ASTVisitor collect(final List<Rewrite> $, CompilationUnit u);
   protected abstract void fillRewrite(ASTRewrite r, CompilationUnit u, IMarker m);
+  protected void fillRewriteForTest(ASTRewrite r, CompilationUnit u, IMarker m) {
+    // empty default
+  }
   /**
    * Determines if the node is outside of the selected text.
    *
@@ -404,6 +411,15 @@ public abstract class Spartanization extends Refactoring {
       pm.beginTask("Creating rewrite operation...", 1);
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     fillRewrite($, u, m);
+    if (pm != null)
+      pm.done();
+    return $;
+  }
+  private ASTRewrite createRewriteForTest(final SubProgressMonitor pm, final CompilationUnit u, final IMarker m) {
+    if (pm != null)
+      pm.beginTask("Creating rewrite operation...", 1);
+    final ASTRewrite $ = ASTRewrite.create(u.getAST());
+    fillRewriteForTest($, u, m);
     if (pm != null)
       pm.done();
     return $;

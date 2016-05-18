@@ -1,14 +1,25 @@
 package il.org.spartan.refactoring.wring;
 
-import java.util.Iterator;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTMatcher;
 import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.BreakStatement;
+import org.eclipse.jdt.core.dom.ContinueStatement;
+import org.eclipse.jdt.core.dom.ReturnStatement;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.SwitchCase;
 import org.eclipse.jdt.core.dom.SwitchStatement;
+import org.eclipse.jdt.core.dom.ThrowStatement;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
+import il.org.spartan.refactoring.utils.Is;
 import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
 
 /**
@@ -19,41 +30,86 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
  * @since 2016/05/11
  */
 public class SwitchSimplify extends ReplaceCurrentNode<SwitchStatement> {
-  /**
-   * @param sl switch body statements
-   * @return true iff the statements contains a default statement
-   */
-  public static boolean containsDefault(Iterable<Statement> sl) {
-    for (final Statement s : sl)
-      if (s instanceof SwitchCase && ((SwitchCase) s).isDefault())
-        return true;
-    return false;
+  private final static boolean TRIM_AFTER_DEFAULT = true;
+  private final ASTMatcher matcher = new ASTMatcher();
+
+  @SuppressWarnings("javadoc") public static boolean compareStatementsLists(List<Statement> l1, List<Statement> l2,
+      ASTMatcher matcher) {
+    if (l1.size() != l2.size())
+      return false;
+    for (int i = 0; i < l1.size(); ++i)
+      if (!l1.get(i).subtreeMatch(matcher, l2.get(i)))
+        return false;
+    return true;
+  }
+  @SuppressWarnings("javadoc") public static void insertUntilSequencer(List<Statement> f, List<Statement> t, int i, AST a) {
+    int c = i;
+    while (c < f.size()) {
+      if (!(f.get(c) instanceof SwitchCase))
+        t.add(f.get(c));
+      if (Is.sequencer(f.get(c)))
+        return;
+      ++c;
+    }
+    t.add(a.newBreakStatement());
+  }
+  static int evaluate(Statement c) {
+    return c instanceof ThrowStatement ? 0 : c instanceof ReturnStatement ? 1 : c instanceof ContinueStatement ? 2 : 3;
   }
   @SuppressWarnings("unchecked") @Override ASTNode replacement(SwitchStatement n) {
-    final SwitchStatement s = n.getAST().newSwitchStatement();
-    s.setExpression(scalpel.duplicate(n.getExpression()));
-    final boolean d = containsDefault(n.statements());
-    for (final Iterator<Statement> it = n.statements().iterator(); it.hasNext();) {
-      final Statement c = it.next();
-      if (c instanceof SwitchCase) {
-        final int i = n.statements().indexOf(c);
-        if (i == n.statements().size() - 1)
-          continue;
-        if (!d && n.statements().get(i + 1) instanceof BreakStatement) {
-          it.next();
-          continue;
-        }
-        if (i == n.statements().size() - 2 && n.statements().get(i + 1) instanceof BreakStatement)
+    final List<Map.Entry<SwitchCase, List<Statement>>> m1 = new ArrayList<>();
+    for (final Statement s : (Iterable<Statement>) n.statements())
+      if (s instanceof SwitchCase) {
+        final List<Statement> l = new ArrayList<>();
+        m1.add(m1.size(), new AbstractMap.SimpleEntry<>((SwitchCase) s, l));
+        insertUntilSequencer(n.statements(), l, n.statements().indexOf(s) + 1, n.getAST());
+        if (TRIM_AFTER_DEFAULT && ((SwitchCase) s).isDefault())
           break;
       }
-      s.statements().add(scalpel.duplicate(c));
+    final Map<SwitchCase, List<Statement>> m2 = new HashMap<>();
+    for (final Map.Entry<SwitchCase, List<Statement>> c : m1)
+      m2.put(c.getKey(), c.getValue());
+    final List<List<SwitchCase>> m3 = new ArrayList<>();
+    for (final Map.Entry<SwitchCase, List<Statement>> c : m1) {
+      boolean a = true;
+      for (final List<SwitchCase> cl : m3)
+        if (compareStatementsLists(c.getValue(), m2.get(cl.get(0)), matcher)) {
+          if (c.getKey().isDefault()) {
+            cl.clear();
+            cl.add(c.getKey());
+          } else if (!cl.get(0).isDefault())
+            cl.add(cl.size(), c.getKey());
+          a = false;
+          break;
+        }
+      if (a) {
+        final List<SwitchCase> l = new ArrayList<>();
+        l.add(c.getKey());
+        m3.add(m3.size(), l);
+      }
     }
-    return n.statements().size() == s.statements().size() ? null : s;
+    Collections.sort(m3, new Comparator<List<SwitchCase>>() {
+      @Override public int compare(List<SwitchCase> o1, List<SwitchCase> o2) {
+        return o1.get(0).isDefault() ? 1
+            : o2.get(0).isDefault() ? -1
+                : evaluate(m2.get(o1.get(0)).get(m2.get(o1.get(0)).size() - 1))
+                    - evaluate(m2.get(o2.get(0)).get(m2.get(o2.get(0)).size() - 1));
+      }
+    });
+    final SwitchStatement $ = n.getAST().newSwitchStatement();
+    $.setExpression(scalpel.duplicate(n.getExpression()));
+    for (final List<SwitchCase> cl : m3) {
+      scalpel.duplicateInto(cl, $.statements());
+      scalpel.duplicateInto(m2.get(cl.get(0)), $.statements());
+    }
+    if (n.subtreeMatch(matcher, $))
+      return null;
+    return $;
   }
   @Override String description(@SuppressWarnings("unused") SwitchStatement __) {
     return "Simplify switch statement";
   }
   @Override WringGroup wringGroup() {
-    return WringGroup.REFACTOR_INEFFECTIVE;
+    return WringGroup.SWITCH_IF_CONVERTION; // TODO Ori: change wring group
   }
 }

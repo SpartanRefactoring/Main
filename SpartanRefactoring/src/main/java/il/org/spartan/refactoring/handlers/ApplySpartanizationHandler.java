@@ -27,7 +27,7 @@ public class ApplySpartanizationHandler extends BaseHandler {
   /**
    * Sets the maximum number of repetitions made when applying a spartanization
    */
-  private static final int MAX_SPARTANIZATION_REPETITIONS = 16;
+  public static final int MAX_SPARTANIZATION_REPETITIONS = 16;
 
   /** Instantiates this class */
   public ApplySpartanizationHandler() {

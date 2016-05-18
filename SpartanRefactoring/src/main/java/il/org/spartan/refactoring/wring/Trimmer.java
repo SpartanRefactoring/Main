@@ -110,6 +110,26 @@ public class Trimmer extends Spartanization {
       }
     });
   }
+  @Override protected final void fillRewriteForTest(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
+    Source.set(u);
+    final Disable disable = Source.getDisable(u);
+    final Toolbox toolbox = Toolbox.generate(u);
+    u.accept(new DispatchingVisitor() {
+      @Override <N extends ASTNode> boolean go(final N n) {
+        if (disable.check(n))
+          return false;
+        if (!inRange(m, n))
+          return true;
+        final Wring<N> w = toolbox.find(n);
+        if (w != null) {
+          final Rewrite make = w.createScalpel(r, null).make(n, exclude);
+          if (make != null)
+            make.go(r, null);
+        }
+        return true;
+      }
+    });
+  }
   @SuppressWarnings("static-method") ExclusionManager makeExcluder() {
     return new ExclusionManager();
   }
