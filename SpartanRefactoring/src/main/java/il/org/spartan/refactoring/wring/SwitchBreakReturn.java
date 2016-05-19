@@ -14,7 +14,7 @@ import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.As;
+import il.org.spartan.refactoring.utils.Is;
 
 /**
  * A {@link Wring} to replace break statements within a switch with following
@@ -59,10 +59,9 @@ public class SwitchBreakReturn extends Wring.MultipleReplaceToNextStatement<Swit
   }
   @SuppressWarnings("unchecked") @Override ASTRewrite go(final ASTRewrite r, final SwitchStatement s, final Statement nextStatement,
       final TextEditGroup g, List<ASTNode> bss, List<ASTNode> crs) {
-    final ReturnStatement rt = As.asReturn(nextStatement);
-    if (rt == null)
+    if (!Is.sequencer(nextStatement) || nextStatement instanceof BreakStatement)
       return null;
-    crs.add(rt);
+    crs.add(nextStatement);
     boolean cs = true; // true iff every case contain a sequencer
     boolean c = false; // true iff switch contains a case
     boolean ds = false; // true iff default statement ends with a sequencer
@@ -86,7 +85,7 @@ public class SwitchBreakReturn extends Wring.MultipleReplaceToNextStatement<Swit
     if (bss.isEmpty())
       return null;
     if (d && ds || c && cs)
-      r.remove(rt, g);
+      r.remove(nextStatement, g);
     return r;
   }
   @Override String description(@SuppressWarnings("unused") final SwitchStatement __) {

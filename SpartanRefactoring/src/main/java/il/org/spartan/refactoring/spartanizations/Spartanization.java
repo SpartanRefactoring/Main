@@ -181,10 +181,6 @@ public abstract class Spartanization extends Refactoring {
   public final ASTRewrite createRewrite(final CompilationUnit u, final SubProgressMonitor pm) {
     return createRewrite(pm, u, (IMarker) null);
   }
-  // TODO Ori: document
-  public final ASTRewrite createRewriteForTest(final CompilationUnit u, final SubProgressMonitor pm) {
-    return createRewriteForTest(pm, u, (IMarker) null);
-  }
   /**
    * Checks a Compilation Unit (outermost ASTNode in the Java Grammar) for
    * spartanization suggestions
