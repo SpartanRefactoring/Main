@@ -30,14 +30,15 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGr
  */
 public class WrapperReplaceWithFactory extends Wring.ReplaceCurrentNode<ClassInstanceCreation> {
   // String array contains all primitive class (and String) identifiers
-  final String[] pi = { "Byte", "Short", "Integer", "Long", "Float", "Double", "Character", "String", "Boolean" };
+  final String[] pi = { "java.lang.Byte", "java.lang.Short", "java.lang.Integer", "java.lang.Long", "java.lang.Float",
+      "java.lang.Double", "java.lang.Character", "java.lang.String", "java.lang.Boolean" };
 
   @Override ASTNode replacement(final ClassInstanceCreation n) {
-    final String tn = n.getType().toString();
-    if (!Arrays.asList(pi).contains(tn) || n.arguments().size() != 1)
+    if (!n.getAST().hasResolvedBindings() || !Arrays.asList(pi).contains(n.getType().resolveBinding().getBinaryName())
+        || n.arguments().size() != 1)
       return null;
     final MethodInvocation $ = n.getAST().newMethodInvocation();
-    $.setExpression(n.getAST().newSimpleName(tn));
+    $.setExpression(n.getAST().newSimpleName(n.getType().toString()));
     $.setName(n.getAST().newSimpleName("valueOf"));
     for (final ASTNode e : (List<ASTNode>) n.arguments())
       $.arguments().add(ASTNode.copySubtree(n.getAST(), e));

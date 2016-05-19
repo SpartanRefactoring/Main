@@ -8,11 +8,12 @@ import java.util.Set;
 
 class ChainStringToIntegerMap {
   public Map<String, Integer> inner = new HashMap<>();
+
   public boolean containsKey(final String key) {
     return inner.containsKey(key);
   }
   public boolean containsValue(final int value) {
-    return inner.containsValue(Integer.valueOf(value));
+    return inner.containsValue(new Integer(value));
   }
   public Set<Entry<String, Integer>> entrySet() {
     return inner.entrySet();
@@ -28,7 +29,7 @@ class ChainStringToIntegerMap {
   }
   public ChainStringToIntegerMap put(final String key, final int value) {
     assert!inner.containsKey(key);
-    inner.put(key, Integer.valueOf(value));
+    inner.put(key, new Integer(value));
     return this;
   }
   public ChainStringToIntegerMap putOn(final int value, final String... keys) {

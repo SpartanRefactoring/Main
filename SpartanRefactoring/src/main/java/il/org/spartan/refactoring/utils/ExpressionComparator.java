@@ -24,8 +24,6 @@ import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.Statement;
 
-import il.org.spartan.misc.Wrapper;
-
 /**
  * Various methods for comparing
  *
@@ -167,15 +165,17 @@ public enum ExpressionComparator implements Comparator<Expression> {
    * @param n JD
    * @return Number of abstract syntax tree nodes under the parameter.
    */
-  @SuppressWarnings("boxing") public static int nodesCount(final ASTNode n) {
-    final Wrapper<Integer> $ = new Wrapper<>();
-    $.set(Integer.valueOf(0));
+  public static int nodesCount(final ASTNode n) {
+    class Integer {
+      int inner = 0;
+    }
+    final Integer $ = new Integer();
     n.accept(new ASTVisitor() {
       @Override public void preVisit(@SuppressWarnings("unused") final ASTNode _) {
-        $.set($.get() + 1);
+        ++$.inner;
       }
     });
-    return $.get();
+    return $.inner;
   }
   /**
    * Counts the number of statements in a tree rooted at a given node
@@ -183,37 +183,38 @@ public enum ExpressionComparator implements Comparator<Expression> {
    * @param n JD
    * @return Number of abstract syntax tree nodes under the parameter.
    */
-  @SuppressWarnings("boxing") public static int lineCount(final ASTNode n) {
-    final Wrapper<Integer> $ = new Wrapper<>();
-    $.set(Integer.valueOf(0));
+  public static int lineCount(final ASTNode n) {
+    class Integer {
+      int inner = 0;
+    }
+    final Integer $ = new Integer();
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode child) {
         if (Statement.class.isAssignableFrom(child.getClass()))
           switch (child.getNodeType()) {
             case BLOCK:
               if (Extract.statements(child).size() > 1)
-                $.set($.get() + 1);
+                ++$.inner;
               return;
             case EMPTY_STATEMENT:
               return;
             case FOR_STATEMENT:
             case ENHANCED_FOR_STATEMENT:
             case DO_STATEMENT:
-              $.set($.get() + 4);
+              $.inner += 4;
               return;
             case IF_STATEMENT:
-              $.set($.get() + 4);
+              $.inner += 4;
               final IfStatement i = asIfStatement(child);
               if (elze(i) != null)
-                $.set($.get() + 1);
+                ++$.inner;
               return;
             default:
-              $.set($.get() + 3);
-              break;
+              $.inner += 3;
           }
       }
     });
-    return $.get();
+    return $.inner;
   }
   /**
    * Sorts the {@link Expression} list

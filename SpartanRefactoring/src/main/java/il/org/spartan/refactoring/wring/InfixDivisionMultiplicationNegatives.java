@@ -79,6 +79,11 @@ public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpre
     switch (totalNegation) {
       default:
         break;
+      case 0:
+        return null;
+      case 1:
+        if (negationLevel(es.get(0)) == 1)
+          return null;
     }
     if (exclude != null)
       exclude.exclude(e);
