@@ -122,14 +122,12 @@ public class Builder extends IncrementalProjectBuilder {
   }
   public static void incrementalBuild(final IResourceDelta d) throws CoreException {
     d.accept(internalDelta -> {
+      // handle removed resource
       switch (internalDelta.getKind()) {
         case IResourceDelta.ADDED:
         case IResourceDelta.CHANGED:
           // handle added and changed resource
-          addMarkers(internalDelta.getResource());
-          break;
-        case IResourceDelta.REMOVED:
-          // handle removed resource
+                    addMarkers(internalDelta.getResource());
           break;
         default:
           break;
