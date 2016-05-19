@@ -219,11 +219,6 @@ public enum Is {
       switch (e.getNodeType()) {
         default:
           break;
-        case CONDITIONAL_EXPRESSION:
-          return true;
-        case PARENTHESIZED_EXPRESSION:
-          if (((ParenthesizedExpression) e).getExpression().getNodeType() == CONDITIONAL_EXPRESSION)
-            return true;
       }
     }
     return false;

@@ -12,7 +12,7 @@ class ChainStringToIntegerMap {
     return inner.containsKey(key);
   }
   public boolean containsValue(final int value) {
-    return inner.containsValue(new Integer(value));
+    return inner.containsValue(Integer.valueOf(value));
   }
   public Set<Entry<String, Integer>> entrySet() {
     return inner.entrySet();
@@ -28,7 +28,7 @@ class ChainStringToIntegerMap {
   }
   public ChainStringToIntegerMap put(final String key, final int value) {
     assert!inner.containsKey(key);
-    inner.put(key, new Integer(value));
+    inner.put(key, Integer.valueOf(value));
     return this;
   }
   public ChainStringToIntegerMap putOn(final int value, final String... keys) {

@@ -169,6 +169,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
    */
   @SuppressWarnings("boxing") public static int nodesCount(final ASTNode n) {
     final Wrapper<Integer> $ = new Wrapper<>();
+    $.set(Integer.valueOf(0));
     n.accept(new ASTVisitor() {
       @Override public void preVisit(@SuppressWarnings("unused") final ASTNode _) {
         $.set($.get() + 1);
@@ -184,6 +185,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
    */
   @SuppressWarnings("boxing") public static int lineCount(final ASTNode n) {
     final Wrapper<Integer> $ = new Wrapper<>();
+    $.set(Integer.valueOf(0));
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode child) {
         if (Statement.class.isAssignableFrom(child.getClass()))
