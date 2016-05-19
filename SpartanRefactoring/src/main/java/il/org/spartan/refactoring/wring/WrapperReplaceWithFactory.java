@@ -34,7 +34,7 @@ public class WrapperReplaceWithFactory extends Wring.ReplaceCurrentNode<ClassIns
 
   @Override ASTNode replacement(final ClassInstanceCreation n) {
     final String tn = n.getType().toString();
-    if (!Arrays.asList(pi).contains(tn))
+    if (!Arrays.asList(pi).contains(tn) || n.arguments().size() == 0)
       return null;
     final MethodInvocation $ = n.getAST().newMethodInvocation();
     $.setExpression(n.getAST().newSimpleName(tn));
