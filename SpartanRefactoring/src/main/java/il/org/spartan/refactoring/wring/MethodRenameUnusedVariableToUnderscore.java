@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.StringLiteral;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
+import il.org.spartan.refactoring.utils.Funcs;
 import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNodeExclude;
 
 /**
@@ -52,8 +53,8 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNodeExclude;
     d.getBody().accept(u);
     return u.conclusion();
   }
-  @SuppressWarnings("unchecked") public static boolean suppressedUnused(SingleVariableDeclaration n) {
-    for (final IExtendedModifier m : (Iterable<IExtendedModifier>) n.modifiers())
+  @SuppressWarnings("unchecked") public static boolean suppressedUnused(SingleVariableDeclaration d) {
+    for (final IExtendedModifier m : (Iterable<IExtendedModifier>) d.modifiers())
       if (m instanceof SingleMemberAnnotation && "SuppressWarnings".equals(((SingleMemberAnnotation) m).getTypeName().toString())) {
         final Expression e = ((SingleMemberAnnotation) m).getValue();
         if (e instanceof StringLiteral)
@@ -64,7 +65,7 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNodeExclude;
       }
     return false;
   }
-  @SuppressWarnings("unchecked") @Override ASTNode replacement(SingleVariableDeclaration n, final ExclusionManager em) {
+  @SuppressWarnings("unchecked") @Override ASTNode replacement(SingleVariableDeclaration n, final ExclusionManager m) {
     final ASTNode p = n.getParent();
     if (p == null || !(p instanceof MethodDeclaration))
       return null;
@@ -76,19 +77,22 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNodeExclude;
       return null;
     if (isUsed(d, n.getName()))
       return null;
-    if (em != null)
+    if (m != null)
       for (final SingleVariableDeclaration svd : (Iterable<SingleVariableDeclaration>) d.parameters())
         if (!n.equals(svd))
-          em.exclude(svd);
+          m.exclude(svd);
     final SingleVariableDeclaration $ = n.getAST().newSingleVariableDeclaration();
     $.setName(n.getAST().newSimpleName(unusedVariableName()));
+    $.setFlags($.getFlags());
+    $.setInitializer($.getInitializer());
+    $.setType(Funcs.duplicate(n.getType()));
     return $;
   }
   private static String unusedVariableName() {
     return "__";
   }
-  @Override String description(SingleVariableDeclaration n) {
-    return "Change name of unused variable " + n.getName().getIdentifier() + " to __";
+  @Override String description(SingleVariableDeclaration d) {
+    return "Change name of unused variable " + d.getName().getIdentifier() + " to __";
   }
   @Override WringGroup wringGroup() {
     return WringGroup.RENAME_PARAMETERS;

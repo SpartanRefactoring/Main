@@ -33,7 +33,7 @@ public class WrapperReplaceWithFactory extends Wring.ReplaceCurrentNode<ClassIns
   final String[] pi = { "java.lang.Byte", "java.lang.Short", "java.lang.Integer", "java.lang.Long", "java.lang.Float",
       "java.lang.Double", "java.lang.Character", "java.lang.String", "java.lang.Boolean" };
 
-  @Override ASTNode replacement(final ClassInstanceCreation n) {
+  @SuppressWarnings("unchecked") @Override ASTNode replacement(final ClassInstanceCreation n) {
     if (!n.getAST().hasResolvedBindings() || !Arrays.asList(pi).contains(n.getType().resolveBinding().getBinaryName())
         || n.arguments().size() != 1)
       return null;

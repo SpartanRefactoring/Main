@@ -81,6 +81,7 @@ public enum Collect {
     }
   };
   static final ASTMatcher matcher = new ASTMatcher();
+
   public static Collector definitionsOf(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
@@ -116,9 +117,9 @@ public enum Collect {
       @Override public boolean visit(final ForStatement s) {
         return consider(expose.initializers(s));
       }
-
       @Override public boolean visit(final PostfixExpression it) {
-        return !in(it.getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT) || consider(it.getOperand());
+        return !in(it.getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT)
+            || consider(it.getOperand());
       }
       @Override public boolean visit(final PrefixExpression it) {
         return consider(it.getOperand());
@@ -126,7 +127,6 @@ public enum Collect {
       @Override public boolean visit(final TryStatement s) {
         return consider(expose.resources(s));
       }
-
       @Override public boolean visit(final VariableDeclarationFragment f) {
         return add(f.getName());
       }
@@ -160,6 +160,7 @@ public enum Collect {
   private static ASTVisitor usesCollector(final SimpleName what, final List<SimpleName> into, final boolean lexicalOnly) {
     return new ASTVisitor() {
       private int loopDepth = 0;
+
       @Override public void endVisit(@SuppressWarnings("unused") final DoStatement _) {
         --loopDepth;
       }
@@ -362,6 +363,7 @@ public enum Collect {
    */
   public abstract static class Collector {
     protected final SimpleName name;
+
     Collector(final SimpleName name) {
       this.name = name;
     }
