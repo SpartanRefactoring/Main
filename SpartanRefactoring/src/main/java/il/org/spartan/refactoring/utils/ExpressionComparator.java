@@ -24,6 +24,8 @@ import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.Statement;
 
+import il.org.spartan.misc.Wrapper;
+
 /**
  * Various methods for comparing
  *
@@ -40,7 +42,8 @@ public enum ExpressionComparator implements Comparator<Expression> {
   ADDITION {
     @Override public int compare(final Expression e1, final Expression e2) {
       int $;
-      return ($ = literalCompare(e1, e2)) != 0 || ($ = nodesCompare(e1, e2)) != 0 || ($ = characterCompare(e1, e2)) != 0 || ($ = alphabeticalCompare(e1, e2)) != 0 ? $ : 0;
+      return ($ = literalCompare(e1, e2)) != 0 || ($ = nodesCompare(e1, e2)) != 0 || ($ = characterCompare(e1, e2)) != 0
+          || ($ = alphabeticalCompare(e1, e2)) != 0 ? $ : 0;
     }
   },
   /**
@@ -65,10 +68,12 @@ public enum ExpressionComparator implements Comparator<Expression> {
   MULTIPLICATION {
     @Override public int compare(final Expression e1, final Expression e2) {
       int $;
-      return ($ = literalCompare(e2, e1)) == 0 && ($ = nodesCompare(e1, e2)) == 0 && ($ = characterCompare(e1, e2)) == 0 && ($ = alphabeticalCompare(e1, e2)) == 0 ? 0 : $;
+      return ($ = literalCompare(e2, e1)) == 0 && ($ = nodesCompare(e1, e2)) == 0 && ($ = characterCompare(e1, e2)) == 0
+          && ($ = alphabeticalCompare(e1, e2)) == 0 ? 0 : $;
     }
   };
   private static Specificity specificity = new Specificity();
+
   static int literalCompare(final Expression e1, final Expression e2) {
     return -specificity.compare(e1, e2);
   }
@@ -76,7 +81,8 @@ public enum ExpressionComparator implements Comparator<Expression> {
     return round(nodesCount(e1) - nodesCount(e2), NODES_THRESHOLD);
   }
   static int argumentsCompare(final Expression e1, final Expression e2) {
-    return !Is.methodInvocation(e1) || !Is.methodInvocation(e2) ? 0 : argumentsCompare((MethodInvocation) e1, (MethodInvocation) e2);
+    return !Is.methodInvocation(e1) || !Is.methodInvocation(e2) ? 0
+        : argumentsCompare((MethodInvocation) e1, (MethodInvocation) e2);
   }
   static int argumentsCompare(final MethodInvocation i1, final MethodInvocation i2) {
     return i1.arguments().size() - i2.arguments().size();
@@ -139,11 +145,13 @@ public enum ExpressionComparator implements Comparator<Expression> {
         nodesCount(e1) >= nodesCount(e2) && moreArguments(e1, e2)//
     );
   }
+
   /**
    * Threshold for comparing nodes; a difference in the number of nodes between
    * two nodes is considered zero, if it is the less than this value,
    */
   public static final int NODES_THRESHOLD = 1;
+
   /**
    * Counts the number of non-space characters in a tree rooted at a given node
    *
@@ -159,17 +167,14 @@ public enum ExpressionComparator implements Comparator<Expression> {
    * @param n JD
    * @return Number of abstract syntax tree nodes under the parameter.
    */
-  public static int nodesCount(final ASTNode n) {
-    class Integer {
-      int inner = 0;
-    }
-    final Integer $ = new Integer();
+  @SuppressWarnings("boxing") public static int nodesCount(final ASTNode n) {
+    final Wrapper<Integer> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
       @Override public void preVisit(@SuppressWarnings("unused") final ASTNode _) {
-        ++$.inner;
+        $.set($.get() + 1);
       }
     });
-    return $.inner;
+    return $.get();
   }
   /**
    * Counts the number of statements in a tree rooted at a given node
@@ -177,38 +182,36 @@ public enum ExpressionComparator implements Comparator<Expression> {
    * @param n JD
    * @return Number of abstract syntax tree nodes under the parameter.
    */
-  public static int lineCount(final ASTNode n) {
-    class Integer {
-      int inner = 0;
-    }
-    final Integer $ = new Integer();
+  @SuppressWarnings("boxing") public static int lineCount(final ASTNode n) {
+    final Wrapper<Integer> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode child) {
         if (Statement.class.isAssignableFrom(child.getClass()))
           switch (child.getNodeType()) {
             case BLOCK:
               if (Extract.statements(child).size() > 1)
-                ++$.inner;
+                $.set($.get() + 1);
               return;
             case EMPTY_STATEMENT:
               return;
             case FOR_STATEMENT:
             case ENHANCED_FOR_STATEMENT:
             case DO_STATEMENT:
-              $.inner += 4;
+              $.set($.get() + 4);
               return;
             case IF_STATEMENT:
-              $.inner += 4;
+              $.set($.get() + 4);
               final IfStatement i = asIfStatement(child);
               if (elze(i) != null)
-                ++$.inner;
+                $.set($.get() + 1);
               return;
             default:
-              $.inner += 3;
+              $.set($.get() + 3);
+              break;
           }
       }
     });
-    return $.inner;
+    return $.get();
   }
   /**
    * Sorts the {@link Expression} list
