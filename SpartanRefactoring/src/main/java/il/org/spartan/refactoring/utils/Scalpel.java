@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -45,7 +44,7 @@ public class Scalpel {
     this.g = g;
     base = replacement = null;
     additionals = null;
-    comments = new LinkedList<>();
+    comments = new ArrayList<>();
     used = new HashSet<>();
   }
   /**
@@ -64,6 +63,18 @@ public class Scalpel {
     return (N) r.createStringPlaceholder(cut(s, sp, sp + u.getExtendedLength(n)), n.getNodeType());
   }
   /**
+   * Duplicating statements from a list. The duplicated nodes have all original
+   * comments included
+   *
+   * @param src source list
+   * @return duplicated list
+   */
+  public <N extends ASTNode> List<N> duplicate(List<N> src) {
+    final List<N> $ = new ArrayList<>();
+    duplicateInto(src, $);
+    return $;
+  }
+  /**
    * Duplicating statements from one list to another. The duplicated nodes have
    * all original comments included
    *
@@ -75,16 +86,53 @@ public class Scalpel {
       dst.add(duplicate(n));
   }
   /**
-   * Duplicating statements from a list. The duplicated nodes have all original
-   * comments included
+   * Duplicates a node with comments from another node. Used in order to merge
+   * two equal nodes into one node, containing comments from both nodes
    *
-   * @param src source list
-   * @return duplicated list
+   * @param n1 extra node
+   * @param n2 base node
+   * @return duplication of n2 with comments from both n1 and n2
    */
-  public <N extends ASTNode> List<N> duplicate(List<N> src) {
-    final List<N> $ = new ArrayList<>();
-    duplicateInto(src, $);
-    return $;
+  @SuppressWarnings("unchecked") public <N extends ASTNode> N duplicateWith(N n1, N n2) {
+    if (n2 == null)
+      return null;
+    if (n1 == null)
+      return duplicate(n2);
+    if (u == null || r == null || s == null)
+      return Funcs.duplicate(n2);
+    final int sp2 = u.getExtendedStartPosition(n2);
+    if (sp2 < 0)
+      return Funcs.duplicate(n2);
+    used.addAll(extract(n2));
+    final List<Comment> n1cs = extract(n1);
+    used.addAll(n1cs);
+    final StringBuilder sb = new StringBuilder();
+    for (final Comment c : n1cs)
+      sb.append(cut(s, c.getStartPosition(), c.getStartPosition() + c.getLength())).append("\n");
+    return (N) r.createStringPlaceholder(sb.toString() + cut(s, sp2, sp2 + u.getExtendedLength(n2)), n2.getNodeType());
+  }
+  /**
+   * Duplicate src1 with src2 into dst (see duplicateWith)
+   *
+   * @param src1 first source list
+   * @param src2 second source list
+   * @param dst destination list
+   */
+  public <M extends ASTNode, N extends M> void duplicateWithInto(List<N> src1, List<N> src2, List<M> dst) {
+    for (int i = 0; i < src1.size(); ++i)
+      dst.add(duplicateWith(src1.get(i), src2.get(i)));
+  }
+  /**
+   * Merge comments of statements of equals lists
+   *
+   * @param l1 list
+   * @param l2 list
+   * @return l1 with comments from l2
+   */
+  public List<ASTNode> merge(List<ASTNode> l1, List<ASTNode> l2) {
+    for (int i = l1.size() - 1; i >= 0; --i)
+      l1.addAll(i, extract(l2.get(i)));
+    return l1;
   }
   /**
    * Prepare this scalpel to replace b. Remembers comments of both b and nodes
@@ -122,6 +170,29 @@ public class Scalpel {
    */
   public Scalpel replaceWith(ASTNode... ns) {
     return replaceWith(r == null ? null : r.createGroupNode(ns), true);
+  }
+  /**
+   * Ends operation without replacement, so the node is replaced with its
+   * comments
+   *
+   * @return this scalpel
+   */
+  public Scalpel remove() {
+    comments.removeAll(used);
+    final Set<Comment> unique = new LinkedHashSet<>(comments);
+    comments.clear();
+    comments.addAll(unique);
+    if (comments.isEmpty())
+      r.remove(base, g);
+    else {
+      final List<ASTNode> $ = new ArrayList<>();
+      for (final Comment c : comments)
+        $.add(0, r.createStringPlaceholder(s.substring(c.getStartPosition(), c.getStartPosition() + c.getLength()), ASTNode.BLOCK));
+      r.replace(base, r.createGroupNode($.toArray(new ASTNode[$.size()])), g);
+    }
+    for (final ASTNode a : additionals)
+      r.remove(a, g);
+    return this;
   }
   /**
    * Adding comments of node to preserved comments
