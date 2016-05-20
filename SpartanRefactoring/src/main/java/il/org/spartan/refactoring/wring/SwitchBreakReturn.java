@@ -79,7 +79,7 @@ public class SwitchBreakReturn extends Wring.MultipleReplaceToNextStatement<Swit
       } else if (n instanceof BreakStatement) {
         bss.add(n);
         ds = true;
-      } else if (n instanceof ReturnStatement || n instanceof ThrowStatement)
+      } else if (n instanceof ReturnStatement || n instanceof ThrowStatement || n instanceof ContinueStatement)
         ds = true;
     }
     if (bss.isEmpty())

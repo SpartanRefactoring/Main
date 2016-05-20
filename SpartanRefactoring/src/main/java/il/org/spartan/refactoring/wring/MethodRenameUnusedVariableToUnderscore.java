@@ -73,9 +73,7 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNodeExclude;
     for (final SingleVariableDeclaration svd : (Iterable<SingleVariableDeclaration>) d.parameters())
       if (unusedVariableName().equals(svd.getName().getIdentifier()))
         return null;
-    if (BY_ANNOTATION && !suppressedUnused(n))
-      return null;
-    if (isUsed(d, n.getName()))
+    if (BY_ANNOTATION && !suppressedUnused(n) || isUsed(d, n.getName()))
       return null;
     if (m != null)
       for (final SingleVariableDeclaration svd : (Iterable<SingleVariableDeclaration>) d.parameters())
@@ -86,6 +84,7 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNodeExclude;
     $.setFlags($.getFlags());
     $.setInitializer($.getInitializer());
     $.setType(Funcs.duplicate(n.getType()));
+    scalpel.duplicateInto(n.modifiers(), $.modifiers());
     return $;
   }
   private static String unusedVariableName() {

@@ -53,6 +53,8 @@ public class Scalpel {
    * @return duplicated node with all original comments included
    */
   @SuppressWarnings("unchecked") public <N extends ASTNode> N duplicate(N n) {
+    if (n == null)
+      return null;
     if (u == null || r == null || s == null)
       return Funcs.duplicate(n);
     final int sp = u.getExtendedStartPosition(n);
@@ -68,9 +70,21 @@ public class Scalpel {
    * @param src source list
    * @param dst destination list
    */
-  public <N extends Statement> void duplicateInto(List<N> src, List<Statement> dst) {
-    for (final Statement n : src)
+  public <M extends ASTNode, N extends M> void duplicateInto(List<N> src, List<M> dst) {
+    for (final M n : src)
       dst.add(duplicate(n));
+  }
+  /**
+   * Duplicating statements from a list. The duplicated nodes have all original
+   * comments included
+   *
+   * @param src source list
+   * @return duplicated list
+   */
+  public <N extends ASTNode> List<N> duplicate(List<N> src) {
+    final List<N> $ = new ArrayList<>();
+    duplicateInto(src, $);
+    return $;
   }
   /**
    * Prepare this scalpel to replace b. Remembers comments of both b and nodes
@@ -143,18 +157,18 @@ public class Scalpel {
             r.createStringPlaceholder(s.substring(c.getStartPosition(), c.getStartPosition() + c.getLength()), ASTNode.BLOCK));
       $.add(bl);
     } else {
-      if (comments.size() == 1 && shouldMoveComentToEnd(comments.get(0), isCollapsed)) {
+      if (comments.size() != 1 || !shouldMoveComentToEnd(comments.get(0), isCollapsed)) {
+        for (final Comment c : comments)
+          $.add(r.createStringPlaceholder(s.substring(c.getStartPosition(), c.getStartPosition() + c.getLength())
+              + (replacement instanceof Statement || c.isLineComment() ? "\n" : ""), c.getNodeType()));
+        $.add(replacement);
+      } else {
         final Comment c = comments.get(0);
-        String f = "";
-        f = !c.isLineComment() || allWhiteSpaces(s.substring(sr.getStartPosition() + sr.getLength()).split("\n")[0]) ? "" : "\n";
+        final String f = !c.isLineComment() || allWhiteSpaces(s.substring(sr.getStartPosition() + sr.getLength()).split("\n")[0])
+            ? "" : "\n";
         $.add(replacement);
         $.add(r.createStringPlaceholder(" " + s.substring(c.getStartPosition(), c.getStartPosition() + c.getLength()) + f,
             c.getNodeType()));
-      } else {
-        for (final Comment c : comments)
-          $.add(r.createStringPlaceholder(s.substring(c.getStartPosition(), c.getStartPosition() + c.getLength())
-              + (!(replacement instanceof Statement) && !c.isLineComment() ? "" : "\n"), c.getNodeType()));
-        $.add(replacement);
       }
       if (replacement instanceof Statement
           && !allWhiteSpaces(s.substring(rowStartIndex(sr.getStartPosition()), sr.getStartPosition())))
@@ -175,20 +189,14 @@ public class Scalpel {
       final int csp = u.getExtendedStartPosition(c);
       if (csp < sp)
         continue;
-      else if (csp >= ep)
+      if (csp >= ep)
         break;
       $.add(c);
     }
     return $;
   }
   private static String cut(String s, int sp, int ep) {
-    final String $ = s.substring(sp, ep);
-    if ($.indexOf('\n') < 0)
-      return $;
-    int l = sp - 1;
-    while (l >= 0 && s.charAt(l) == '\t')
-      --l;
-    return $.replaceAll("\n\t{" + (sp - l - 1) + "}", "\n");
+    return s.substring(sp, ep).replaceAll("\n(\t| )*", "\n");
   }
   private boolean shouldMoveComentToEnd(Comment c, boolean isCollapsed) {
     if (!c.isLineComment() || replacement == null || isCollapsed)
@@ -203,21 +211,20 @@ public class Scalpel {
         final ForStatement fs = (ForStatement) replacement;
         return !(fs.getBody() instanceof Block);
       default:
-        break;
+        return true;
     }
-    return true;
   }
   private int rowStartIndex(int i) {
-    int j = i;
-    while (j > 0 && s.charAt(j - 1) != '\n')
-      --j;
-    return j;
+    int $ = i;
+    while ($ > 0 && s.charAt($ - 1) != '\n')
+      --$;
+    return $;
   }
   @SuppressWarnings("unused") private int rowEndIndex(int i) {
-    int j = i;
-    while (j < s.length() && s.charAt(j + 1) != '\n')
-      ++j;
-    return j;
+    int $ = i;
+    while ($ < s.length() && s.charAt($ + 1) != '\n')
+      ++$;
+    return $;
   }
   private static boolean allWhiteSpaces(String s) {
     for (final char c : s.toCharArray())

@@ -92,7 +92,6 @@ public class Builder extends IncrementalProjectBuilder {
     addMarkers(f, (CompilationUnit) As.COMPILIATION_UNIT.ast(f));
   }
   private static void addMarkers(final IFile f, final CompilationUnit u) throws CoreException {
-    Source.set(u);
     for (final Spartanization s : Spartanizations.all())
       for (final Rewrite r : s.findOpportunities(u))
         if (r != null)

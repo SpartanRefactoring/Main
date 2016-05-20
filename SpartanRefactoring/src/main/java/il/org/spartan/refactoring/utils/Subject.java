@@ -169,7 +169,7 @@ import org.eclipse.jdt.core.dom.ThrowStatement;
       super(inner.isEmpty() ? null : inner.get(0));
       this.inner = new ArrayList<>();
       for (final Statement s : inner)
-        this.inner.add(claim(s));
+        this.inner.add(s.getStartPosition() < 0 ? s : claim(s));
     }
     public Block toBlock() {
       final Block $ = ast.newBlock();

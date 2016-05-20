@@ -12,7 +12,6 @@ import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.jdt.core.dom.rewrite.ListRewrite;
 import org.eclipse.text.edits.TextEditGroup;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
@@ -39,23 +38,25 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> {
     final List<Statement> elze = Extract.statements(elze(s));
     if (elze.isEmpty())
       return null;
-    final List<Statement> commonPrefix = commonPrefix(then, elze);
+    final List<Statement> commonPrefix = scalpel.duplicate(commonPrefix(then, elze));
     return commonPrefix.isEmpty() ? null : new Rewrite(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final IfStatement newIf = replacement();
         if (!Is.block(s.getParent())) {
           if (newIf != null)
             commonPrefix.add(newIf);
-          r.replace(s, Subject.ss(commonPrefix).toBlock(), g);
+          scalpel.operate(s).replaceWith(Subject.ss(commonPrefix).toBlock());
         } else {
-          final ListRewrite lr = insertBefore(s, commonPrefix, r, g);
+          insertBefore(s, commonPrefix, r, g);
           if (newIf != null)
-            lr.insertBefore(newIf, s, g);
-          lr.remove(s, g);
+            scalpel.operate(s).replaceWith(newIf);
+          else
+            scalpel.operate(s).replaceWith(s.getAST().newEmptyStatement());
         }
       }
       private IfStatement replacement() {
-        return replacement(s.getExpression(), Subject.ss(then).toOneStatementOrNull(), Subject.ss(elze).toOneStatementOrNull());
+        return replacement(s.getExpression(), Subject.ss(scalpel.duplicate(then)).toOneStatementOrNull(),
+            Subject.ss(scalpel.duplicate(elze)).toOneStatementOrNull());
       }
       private IfStatement replacement(final Expression condition, final Statement trimmedThen, final Statement trimmedElse) {
         return trimmedThen == null && trimmedElse == null ? null //

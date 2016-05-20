@@ -67,8 +67,6 @@ public class Source {
     if (u == null)
       return null;
     final IJavaElement je = u.getJavaElement();
-    if (je == null)
-      return null;
-    return sm.get(je.getPath().toString());
+    return je == null ? null : sm.get(je.getPath().toString());
   }
 }

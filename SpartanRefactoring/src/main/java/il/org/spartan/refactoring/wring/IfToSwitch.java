@@ -50,7 +50,7 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
  * @author Ori Roth
  * @since 2016/05/11
  */
-public class IfToSwitch extends ReplaceCurrentNode<IfStatement> {
+@Deprecated public class IfToSwitch extends ReplaceCurrentNode<IfStatement> {
   final static boolean PRIORITY = false;
   final static int MIN_CASES_THRESHOLD = 3;
   final static ASTMatcher m = new ASTMatcher();
@@ -80,21 +80,17 @@ public class IfToSwitch extends ReplaceCurrentNode<IfStatement> {
     return null;
   }
   static Expression getRightFromComparison(Expression e) {
-    if (e instanceof InfixExpression)
-      return ((InfixExpression) e).getRightOperand();
-    if (e instanceof MethodInvocation) {
-      if (((MethodInvocation) e).getExpression() instanceof StringLiteral)
-        return ((MethodInvocation) e).getExpression();
-      return (Expression) ((MethodInvocation) e).arguments().get(0);
-    }
-    return null;
+    return e instanceof InfixExpression ? ((InfixExpression) e).getRightOperand()
+        : !(e instanceof MethodInvocation) ? null
+            : ((MethodInvocation) e).getExpression() instanceof StringLiteral ? ((MethodInvocation) e).getExpression()
+                : (Expression) ((MethodInvocation) e).arguments().get(0);
   }
   @SuppressWarnings("unchecked") protected void addStatements(SwitchStatement $, Statement s) {
     final int i = $.statements().size();
-    if (s instanceof Block)
-      scalpel.duplicateInto(((Block) s).statements(), $.statements());
-    else
+    if (!(s instanceof Block))
       $.statements().add(scalpel.duplicate(s));
+    else
+      scalpel.duplicateInto(((Block) s).statements(), $.statements());
     if (!SwitchBreakReturn.caseEndsWithSequencer($.statements(), i))
       $.statements().add(s.getAST().newBreakStatement());
   }
@@ -123,11 +119,11 @@ public class IfToSwitch extends ReplaceCurrentNode<IfStatement> {
     return $;
   }
   @SuppressWarnings("unchecked") protected static int countCases(SwitchStatement s) {
-    int c = 0;
+    int $ = 0;
     for (final Statement i : (Iterable<Statement>) s.statements())
       if (i instanceof SwitchCase)
-        ++c;
-    return c;
+        ++$;
+    return $;
   }
   @Override ASTNode replacement(IfStatement n) {
     if (n.getParent() instanceof IfStatement)
