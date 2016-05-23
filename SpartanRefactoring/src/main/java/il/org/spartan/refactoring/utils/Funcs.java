@@ -382,7 +382,7 @@ public enum Funcs {
    */
   @SuppressWarnings("unchecked") //
   public static <N extends ASTNode> N duplicate(final N n) {
-    return (N) copySubtree(n.getAST(), n);
+    return Scalpel.isInaccessible(n) ? n : (N) copySubtree(n.getAST(), n);
   }
   /**
    * Shorthand for {@link ConditionalExpression#getElseExpression()}
@@ -617,7 +617,7 @@ public enum Funcs {
    * @see ASTRewrite
    */
   @SuppressWarnings("unchecked") public static <N extends ASTNode> N rebase(final N n, final AST t) {
-    return (N) copySubtree(t, n);
+    return Scalpel.isInaccessible(n) ? n : (N) copySubtree(t, n);
   }
   /**
    * Remove all occurrences of a boolean literal from a list of

@@ -53,6 +53,7 @@ import org.eclipse.jdt.core.dom.ThrowStatement;
 
   public static class Claimer {
     protected final AST ast;
+    protected boolean accessible = true;
 
     public Claimer(final ASTNode n) {
       ast = n == null ? null : n.getAST();
@@ -168,12 +169,17 @@ import org.eclipse.jdt.core.dom.ThrowStatement;
     public SeveralStatements(final List<Statement> inner) {
       super(inner.isEmpty() ? null : inner.get(0));
       this.inner = new ArrayList<>();
-      for (final Statement s : inner)
-        this.inner.add(s.getStartPosition() < 0 ? s : claim(s));
+      for (final Statement s : inner) {
+        this.inner.add(claim(s));
+        if (Scalpel.isInaccessible(s))
+          accessible = false;
+      }
     }
     public Block toBlock() {
       final Block $ = ast.newBlock();
       expose.statements($).addAll(inner);
+      if (!accessible)
+        Scalpel.mark($);
       return $;
     }
     public Statement toOptionalBlock() {

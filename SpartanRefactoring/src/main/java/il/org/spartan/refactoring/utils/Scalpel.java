@@ -51,7 +51,7 @@ public class Scalpel {
    * @param n node
    * @return duplicated node with all original comments included
    */
-  @SuppressWarnings("unchecked") public <N extends ASTNode> N duplicate(N n) {
+  @SuppressWarnings({ "unchecked" }) public <N extends ASTNode> N duplicate(N n) {
     if (n == null)
       return null;
     if (u == null || r == null || s == null)
@@ -60,7 +60,7 @@ public class Scalpel {
     if (sp < 0)
       return Funcs.duplicate(n);
     used.addAll(extract(n));
-    return (N) r.createStringPlaceholder(cut(s, sp, sp + u.getExtendedLength(n)), n.getNodeType());
+    return mark((N) r.createStringPlaceholder(cut(s, sp, sp + u.getExtendedLength(n)), n.getNodeType()));
   }
   /**
    * Duplicating statements from a list. The duplicated nodes have all original
@@ -86,41 +86,26 @@ public class Scalpel {
       dst.add(duplicate(n));
   }
   /**
-   * Duplicates a node with comments from another node. Used in order to merge
-   * two equal nodes into one node, containing comments from both nodes
+   * Duplicates a node with comments from other nodes. Used in order to merge
+   * multiple equal nodes into one node, containing comments from both nodes
    *
-   * @param n1 extra node
-   * @param n2 base node
-   * @return duplication of n2 with comments from both n1 and n2
+   * @param ns
+   * @return a duplicate node containing all comments
    */
-  @SuppressWarnings("unchecked") public <N extends ASTNode> N duplicateWith(N n1, N n2) {
-    if (n2 == null)
+  @SuppressWarnings("unchecked") public <N extends ASTNode> N duplicateWith(N... ns) {
+    if (ns == null)
       return null;
-    if (n1 == null)
-      return duplicate(n2);
     if (u == null || r == null || s == null)
-      return Funcs.duplicate(n2);
-    final int sp2 = u.getExtendedStartPosition(n2);
-    if (sp2 < 0)
-      return Funcs.duplicate(n2);
-    used.addAll(extract(n2));
-    final List<Comment> n1cs = extract(n1);
-    used.addAll(n1cs);
+      return Funcs.duplicate(ns[ns.length - 1]);
     final StringBuilder sb = new StringBuilder();
-    for (final Comment c : n1cs)
-      sb.append(cut(s, c.getStartPosition(), c.getStartPosition() + c.getLength())).append("\n");
-    return (N) r.createStringPlaceholder(sb.toString() + cut(s, sp2, sp2 + u.getExtendedLength(n2)), n2.getNodeType());
-  }
-  /**
-   * Duplicate src1 with src2 into dst (see duplicateWith)
-   *
-   * @param src1 first source list
-   * @param src2 second source list
-   * @param dst destination list
-   */
-  public <M extends ASTNode, N extends M> void duplicateWithInto(List<N> src1, List<N> src2, List<M> dst) {
-    for (int i = 0; i < src1.size(); ++i)
-      dst.add(duplicateWith(src1.get(i), src2.get(i)));
+    for (int i = 0; i < ns.length; ++i) {
+      final List<Comment> cl = extract(ns[i]);
+      used.addAll(cl);
+      for (final Comment c : cl)
+        sb.append(cut(s, c.getStartPosition(), c.getStartPosition() + c.getLength())).append("\n");
+    }
+    return mark(
+        (N) r.createStringPlaceholder(sb.append(ns[ns.length - 1].toString()).toString().trim(), ns[ns.length - 1].getNodeType()));
   }
   /**
    * Merge comments of statements of equals lists
@@ -203,6 +188,16 @@ public class Scalpel {
   public Scalpel addComments(ASTNode n) {
     comments.addAll(0, extract(n));
     return this;
+  }
+  /**
+   * Checks whether this node is inaccessible, i.e. created using this scalpel's
+   * duplication
+   *
+   * @param n node
+   * @return true iff n is artificial node created with this scalpel
+   */
+  public static boolean isInaccessible(ASTNode n) {
+    return n != null && Boolean.TRUE.equals(n.properties().get("inaccessible"));
   }
   @SuppressWarnings("unchecked") private Scalpel replaceWith(ASTNode n, boolean isCollapsed) {
     replacement = n;
@@ -302,5 +297,9 @@ public class Scalpel {
       if (!Character.isWhitespace(c))
         return false;
     return true;
+  }
+  @SuppressWarnings("boxing") static <N extends ASTNode> N mark(N n) {
+    n.setProperty("inaccessible", true);
+    return n;
   }
 }
