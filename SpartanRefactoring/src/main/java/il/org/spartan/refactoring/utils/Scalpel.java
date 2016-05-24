@@ -98,14 +98,36 @@ public class Scalpel {
     if (u == null || r == null || s == null)
       return Funcs.duplicate(ns[ns.length - 1]);
     final StringBuilder sb = new StringBuilder();
+    final N n = ns[ns.length - 1];
+    int cc = 0;
     for (int i = 0; i < ns.length; ++i) {
       final List<Comment> cl = extract(ns[i]);
       used.addAll(cl);
-      for (final Comment c : cl)
+      for (final Comment c : cl) {
         sb.append(cut(s, c.getStartPosition(), c.getStartPosition() + c.getLength())).append("\n");
+        ++cc;
+      }
     }
-    return mark(
-        (N) r.createStringPlaceholder(sb.append(ns[ns.length - 1].toString()).toString().trim(), ns[ns.length - 1].getNodeType()));
+    return mark(cc != 1 ? (N) r.createStringPlaceholder(sb.append(n.toString()).toString().trim(), n.getNodeType())
+        : (N) r.createStringPlaceholder(n.toString().trim() + " " + sb.toString().trim(), n.getNodeType()));
+  }
+  /**
+   * As duplicateWith, but for multiple lists of elements
+   *
+   * @param nls lists of equal statements
+   * @return list of statements with comments from all lists
+   */
+  @SuppressWarnings("unchecked") public <N extends ASTNode> List<N> duplicateWith(List<N>... nls) {
+    final List<N> $ = new ArrayList<>();
+    if (nls.length == 0)
+      return $;
+    for (int i = 0; i < nls[0].size(); ++i) {
+      final List<N> c = new ArrayList<>();
+      for (int j = 0; j < nls.length; ++j)
+        c.add(nls[j].get(i));
+      $.add((N) duplicateWith(c.toArray(new ASTNode[c.size()])));
+    }
+    return $;
   }
   /**
    * Merge comments of statements of equals lists
@@ -223,7 +245,7 @@ public class Scalpel {
             r.createStringPlaceholder(s.substring(c.getStartPosition(), c.getStartPosition() + c.getLength()), ASTNode.BLOCK));
       $.add(bl);
     } else {
-      if (comments.size() != 1 || !shouldMoveComentToEnd(comments.get(0), isCollapsed)) {
+      if (comments.size() != 1 || !shouldMoveCommentToEnd(comments.get(0), isCollapsed)) {
         for (final Comment c : comments)
           $.add(r.createStringPlaceholder(s.substring(c.getStartPosition(), c.getStartPosition() + c.getLength())
               + (replacement instanceof Statement || c.isLineComment() ? "\n" : ""), c.getNodeType()));
@@ -264,7 +286,7 @@ public class Scalpel {
   private static String cut(String s, int sp, int ep) {
     return s.substring(sp, ep).replaceAll("\n(\t| )*", "\n");
   }
-  private boolean shouldMoveComentToEnd(Comment c, boolean isCollapsed) {
+  private boolean shouldMoveCommentToEnd(Comment c, boolean isCollapsed) {
     if (!c.isLineComment() || replacement == null || isCollapsed)
       return false;
     switch (replacement.getNodeType()) {

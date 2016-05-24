@@ -112,11 +112,12 @@ public class SwitchSimplify extends ReplaceCurrentNode<SwitchStatement> {
     $.setExpression(scalpel.duplicate(n.getExpression()));
     for (final List<SwitchCase> cl : m3) {
       scalpel.duplicateInto(cl, $.statements());
-      scalpel.duplicateInto(m2.get(cl.get(0)), $.statements());
+      final List<Statement>[] ls = new List[cl.size()];
+      for (int i = 0; i < cl.size(); ++i)
+        ls[i] = m2.get(cl.get(i));
+      scalpel.duplicateInto(scalpel.duplicateWith(ls), $.statements());
     }
-    if (n.subtreeMatch(matcher, $))
-      return null;
-    return $;
+    return !n.subtreeMatch(matcher, $) ? $ : null;
   }
   @Override String description(@SuppressWarnings("unused") SwitchStatement __) {
     return "Simplify switch statement";

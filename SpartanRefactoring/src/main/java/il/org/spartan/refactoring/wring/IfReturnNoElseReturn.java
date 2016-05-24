@@ -46,7 +46,7 @@ public final class IfReturnNoElseReturn extends Wring.ReplaceToNextStatement<IfS
     return Is.vacuousElse(s) && Extract.returnStatement(then(s)) != null && Extract.nextReturn(s) != null;
   }
   @Override String description(final IfStatement s) {
-    return "Consolidate if(" + s.getExpression() + ") ... inot a single 'return'";
+    return "Consolidate if(" + s.getExpression() + ") ... into a single 'return'";
   }
   @Override WringGroup wringGroup() {
     return WringGroup.IF_TO_TERNARY;
