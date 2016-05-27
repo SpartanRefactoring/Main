@@ -161,16 +161,16 @@ public enum Collect {
     return new ASTVisitor() {
       private int loopDepth = 0;
 
-      @Override public void endVisit(@SuppressWarnings("unused") final DoStatement _) {
+      @Override public void endVisit(@SuppressWarnings("unused") final DoStatement __) {
         --loopDepth;
       }
-      @Override public void endVisit(@SuppressWarnings("unused") final EnhancedForStatement _) {
+      @Override public void endVisit(@SuppressWarnings("unused") final EnhancedForStatement __) {
         --loopDepth;
       }
-      @Override public void endVisit(@SuppressWarnings("unused") final ForStatement _) {
+      @Override public void endVisit(@SuppressWarnings("unused") final ForStatement __) {
         --loopDepth;
       }
-      @Override public void endVisit(@SuppressWarnings("unused") final WhileStatement _) {
+      @Override public void endVisit(@SuppressWarnings("unused") final WhileStatement __) {
         --loopDepth;
       }
       @Override public boolean visit(final AnonymousClassDeclaration d) {
@@ -193,7 +193,7 @@ public enum Collect {
         ++loopDepth;
         return collect(s.getExpression());
       }
-      @Override public boolean visit(@SuppressWarnings("unused") final EnhancedForStatement _) {
+      @Override public boolean visit(@SuppressWarnings("unused") final EnhancedForStatement __) {
         ++loopDepth;
         return true;
       }

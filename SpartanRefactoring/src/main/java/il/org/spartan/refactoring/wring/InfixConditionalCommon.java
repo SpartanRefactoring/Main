@@ -54,7 +54,7 @@ public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<Infix
     es.remove(0);
     return es.size() < 2 ? duplicate(es.get(0)) : Subject.operands(es).to(e.getOperator());
   }
-  @Override String description(@SuppressWarnings("unused") final InfixExpression _) {
+  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Factor out common logical component of ||";
   }
   @Override WringGroup wringGroup() {
