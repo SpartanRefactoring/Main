@@ -50,16 +50,16 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNodeExclude;
         c = false;
       return c;
     }
-    @Override public final boolean visit(@SuppressWarnings("unused") final AnnotationTypeDeclaration __) {
+    @Override public final boolean visit(@SuppressWarnings("unused") final AnnotationTypeDeclaration _) {
       return false;
     }
-    @Override public final boolean visit(@SuppressWarnings("unused") final AnonymousClassDeclaration __) {
+    @Override public final boolean visit(@SuppressWarnings("unused") final AnonymousClassDeclaration _) {
       return false;
     }
-    @Override public final boolean visit(@SuppressWarnings("unused") final EnumDeclaration __) {
+    @Override public final boolean visit(@SuppressWarnings("unused") final EnumDeclaration _) {
       return false;
     }
-    @Override public final boolean visit(@SuppressWarnings("unused") final TypeDeclaration __) {
+    @Override public final boolean visit(@SuppressWarnings("unused") final TypeDeclaration _) {
       return false;
     }
     @Override public boolean preVisit2(@SuppressWarnings("unused") ASTNode __) {

@@ -34,7 +34,7 @@ public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression
       return null;
     final MethodInvocation mi = (MethodInvocation) n.getLeftOperand();
     final NumberLiteral nl = (NumberLiteral) n.getRightOperand();
-    if (!mi.getName().getIdentifier().equals("size") || Double.parseDouble(nl.getToken()) != 0)
+    if (Integer.parseInt(nl.getToken()) != 0 || !mi.getName().getIdentifier().equals("size"))
       return null;
     final Expression mie = mi.getExpression();
     final IMethodBinding iemb = BindingUtils.getVisibleMethod(mie != null ? mie.resolveTypeBinding() : BindingUtils.getClass(n),

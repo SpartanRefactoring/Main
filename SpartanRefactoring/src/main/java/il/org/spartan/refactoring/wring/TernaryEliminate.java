@@ -22,7 +22,7 @@ public final class TernaryEliminate extends Wring.ReplaceCurrentNode<Conditional
   @Override boolean scopeIncludes(final ConditionalExpression e) {
     return e != null && same(e.getThenExpression(), e.getElseExpression());
   }
-  @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
+  @Override String description(@SuppressWarnings("unused") final ConditionalExpression _) {
     return "Eliminate conditional exprssion with identical branches";
   }
   @Override WringGroup wringGroup() {

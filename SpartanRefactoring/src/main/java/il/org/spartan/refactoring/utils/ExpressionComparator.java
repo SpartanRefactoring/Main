@@ -171,7 +171,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
     }
     final Integer $ = new Integer();
     n.accept(new ASTVisitor() {
-      @Override public void preVisit(@SuppressWarnings("unused") final ASTNode __) {
+      @Override public void preVisit(@SuppressWarnings("unused") final ASTNode _) {
         ++$.inner;
       }
     });
@@ -190,26 +190,28 @@ public enum ExpressionComparator implements Comparator<Expression> {
     final Integer $ = new Integer();
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode child) {
-        if (Statement.class.isAssignableFrom(child.getClass())) switch (child.getNodeType()) {
-          case BLOCK:
-            if (Extract.statements(child).size() > 1) ++$.inner;
-            return;
-          case EMPTY_STATEMENT:
-            return;
-          case FOR_STATEMENT:
-          case ENHANCED_FOR_STATEMENT:
-          case DO_STATEMENT:
-            $.inner+=4;
-            return;
-          case IF_STATEMENT:
-            $.inner+=4;
-            final IfStatement i=asIfStatement(child);
-            if (elze(i) != null) ++$.inner;
-            return;
-          default:
-            $.inner+=3;
-            break;
-        }
+        if (Statement.class.isAssignableFrom(child.getClass()))
+          switch (child.getNodeType()) {
+            case BLOCK:
+              if (Extract.statements(child).size() > 1)
+                ++$.inner;
+              return;
+            case EMPTY_STATEMENT:
+              return;
+            case FOR_STATEMENT:
+            case ENHANCED_FOR_STATEMENT:
+            case DO_STATEMENT:
+              $.inner += 4;
+              return;
+            case IF_STATEMENT:
+              $.inner += 4;
+              final IfStatement i = asIfStatement(child);
+              if (elze(i) != null)
+                ++$.inner;
+              return;
+            default:
+              $.inner += 3;
+          }
       }
     });
     return $.inner;

@@ -18,7 +18,7 @@ import il.org.spartan.refactoring.utils.Subject;
  * @since 2015-7-17
  */
 public final class PostfixToPrefix extends Wring.ReplaceCurrentNode<PostfixExpression> {
-  @Override boolean scopeIncludes(@SuppressWarnings("unused") final PostfixExpression __) {
+  @Override boolean scopeIncludes(@SuppressWarnings("unused") final PostfixExpression _) {
     return true;
   }
   @Override PrefixExpression replacement(final PostfixExpression e) {

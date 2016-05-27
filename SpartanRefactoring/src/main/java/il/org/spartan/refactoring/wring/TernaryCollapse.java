@@ -60,7 +60,7 @@ public class TernaryCollapse extends Wring.ReplaceCurrentNode<ConditionalExpress
   @Override boolean scopeIncludes(final ConditionalExpression e) {
     return collapse(e) != null;
   }
-  @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
+  @Override String description(@SuppressWarnings("unused") final ConditionalExpression _) {
     return "Eliminate nested conditional expression";
   }
   @Override WringGroup wringGroup() {

@@ -48,8 +48,7 @@ public class SingleVariableDeclarationAbbreviation extends Wring<SingleVariableD
     final SimpleName oldName = d.getName();
     final String newName = Funcs.shortName(d.getType()) + pluralVariadic(d);
     final MethodRenameUnusedVariableToUnderscore.IsUsed v = new MethodRenameUnusedVariableToUnderscore.IsUsed(newName);
-    if (m.getBody() != null)
-      m.getBody().accept(v);
+    m.getBody().accept(v);
     return v.conclusion() ? null
         : new Rewrite("Rename parameter " + oldName + " to " + newName + " in method " + m.getName().getIdentifier(), d) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {

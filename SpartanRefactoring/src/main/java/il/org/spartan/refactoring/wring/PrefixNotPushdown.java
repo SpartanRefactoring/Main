@@ -128,7 +128,7 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
   @Override Expression replacement(final PrefixExpression e) {
     return simplifyNot(e);
   }
-  @Override String description(@SuppressWarnings("unused") final PrefixExpression __) {
+  @Override String description(@SuppressWarnings("unused") final PrefixExpression _) {
     return "Pushdown logical negation ('!')";
   }
   @Override WringGroup wringGroup() {

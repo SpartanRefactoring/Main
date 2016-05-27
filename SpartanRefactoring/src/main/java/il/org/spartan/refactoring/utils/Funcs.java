@@ -783,7 +783,7 @@ public enum Funcs {
     return $.getOperator() != PrefixExpression.Operator.MINUS ? $ : peelNegation($.getOperand());
   }
   private static String repeat(final int i, final char c) {
-    return String.valueOf(new char[i]).replace('\0', c);
+    return new String(new char[i]).replace('\0', c);
   }
   private static String shortName(final ArrayType t) {
     return shortName(t.getElementType()) + repeat(t.getDimensions(), 's');
@@ -827,7 +827,7 @@ public enum Funcs {
         : n instanceof QualifiedName ? shortName(((QualifiedName) n).getName()) //
             : null;
   }
-  private static String shortName(@SuppressWarnings("unused") final UnionType __) {
+  private static String shortName(@SuppressWarnings("unused") final UnionType _) {
     return null;
   }
   private static String shortName(final WildcardType t) {

@@ -217,6 +217,13 @@ public enum Is {
       if (e == null)
         continue;
       switch (e.getNodeType()) {
+        default:
+          break;
+        case CONDITIONAL_EXPRESSION:
+          return true;
+        case PARENTHESIZED_EXPRESSION:
+          if (((ParenthesizedExpression) e).getExpression().getNodeType() == CONDITIONAL_EXPRESSION)
+            return true;
       }
     }
     return false;
@@ -301,7 +308,7 @@ public enum Is {
       return false;
     final Wrapper<Boolean> $ = new Wrapper<>(Boolean.TRUE);
     e.accept(new ASTVisitor() {
-      @Override public boolean visit(@SuppressWarnings("unused") final ArrayCreation __) {
+      @Override public boolean visit(@SuppressWarnings("unused") final ArrayCreation _) {
         $.set(Boolean.FALSE);
         return false;
       }

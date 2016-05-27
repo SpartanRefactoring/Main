@@ -25,7 +25,7 @@ public class SuperConstructorInvocationRemover extends Wring<SuperConstructorInv
       }
     };
   }
-  @Override String description(@SuppressWarnings("unused") final SuperConstructorInvocation __) {
+  @Override String description(@SuppressWarnings("unused") final SuperConstructorInvocation _) {
     return "Remove empty 'super()' invocation";
   }
   @Override WringGroup wringGroup() {
