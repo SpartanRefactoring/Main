@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.utils;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,9 +8,8 @@ import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.jface.text.IDocument;
 import org.eclipse.text.edits.TextEditGroup;
-
-import il.org.spartan.utils.FileUtils;
 
 /**
  * Give access to source code per file. Creates {@link Disable}rs and
@@ -33,18 +31,10 @@ public class Source {
   /**
    * @param u compilation unit
    */
-  public static void set(CompilationUnit u) {
-    if (u == null)
+  public static void set(IPath p, IDocument d) {
+    if (p == null || d == null)
       return;
-    final IJavaElement je = u.getJavaElement();
-    if (je == null)
-      return;
-    final IPath fp = je.getPath();
-    try {
-      sm.put(fp.toString(), FileUtils.readFromFile(project.append(fp.removeFirstSegments(1)).toString()));
-    } catch (final IOException x) {
-      x.printStackTrace();
-    }
+    sm.put(p.toString(), d.get());
   }
   /**
    * @param u compilation unit

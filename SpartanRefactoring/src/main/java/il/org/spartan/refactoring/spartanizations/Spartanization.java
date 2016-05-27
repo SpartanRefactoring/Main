@@ -38,6 +38,7 @@ import il.org.spartan.refactoring.handlers.BaseHandler;
 import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.refactoring.utils.Make;
 import il.org.spartan.refactoring.utils.Rewrite;
+import il.org.spartan.refactoring.utils.Source;
 
 /**
  * the base class for all Spartanization Refactoring classes, contains common
@@ -376,6 +377,7 @@ public abstract class Spartanization extends Refactoring {
     pm.beginTask("Creating change(s) for a single compilation unit...", 2);
     final ICompilationUnit u = As.iCompilationUnit(m);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
+    Source.set(u.getPath(), textChange.getCurrentDocument(null));
     textChange.setTextType("java");
     textChange.setEdit(createRewrite(new SubProgressMonitor(pm, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL), m).rewriteAST());
     if (textChange.getEdit().getLength() != 0)

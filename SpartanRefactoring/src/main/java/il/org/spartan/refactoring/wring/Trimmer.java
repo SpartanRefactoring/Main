@@ -74,8 +74,11 @@ public class Trimmer extends Spartanization {
   public Trimmer() {
     super("Trimmer");
   }
+  /**
+   * @DisableSpartan
+   */
   @Override protected ASTVisitor collect(final List<Rewrite> $, CompilationUnit u) {
-    Source.set(u);
+    // Source.set(u);
     final Disable disable = Source.getDisable(u);
     final Toolbox toolbox = Toolbox.generate(u);
     return new DispatchingVisitor() {
@@ -87,8 +90,11 @@ public class Trimmer extends Spartanization {
       }
     };
   }
+  /**
+   * @DisableSpartan
+   */
   @Override protected final void fillRewrite(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
-    Source.set(u);
+    // Source.set(u);
     final Disable disable = Source.getDisable(u);
     final Toolbox toolbox = Toolbox.generate(u);
     u.accept(new DispatchingVisitor() {

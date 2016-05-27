@@ -70,8 +70,7 @@ public abstract class BaseHandler extends AbstractHandler {
   /**
    * Instantiates this class
    *
-   * @param inner
-   *          JD
+   * @param inner JD
    */
   protected BaseHandler(final Spartanization inner) {
     this.inner = inner;
