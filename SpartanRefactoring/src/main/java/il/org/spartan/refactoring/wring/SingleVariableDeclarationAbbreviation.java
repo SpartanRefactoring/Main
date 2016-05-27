@@ -47,26 +47,29 @@ public class SingleVariableDeclarationAbbreviation extends Wring<SingleVariableD
       exclude.exclude(m);
     final SimpleName oldName = d.getName();
     final String newName = Funcs.shortName(d.getType()) + pluralVariadic(d);
-    return new Rewrite("Rename parameter " + oldName + " to " + newName + " in method " + m.getName().getIdentifier(), d) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        rename(oldName, newSimpleName(d, newName), m, r, g);
-        final Javadoc j = m.getJavadoc();
-        if (j == null)
-          return;
-        final List<TagElement> ts = j.tags();
-        if (ts == null)
-          return;
-        for (final TagElement t : ts) {
-          if (!TagElement.TAG_PARAM.equals(t.getTagName()))
-            continue;
-          for (final Object o : t.fragments())
-            if (o instanceof SimpleName && same((SimpleName) o, oldName)) {
-              r.replace((SimpleName) o, newSimpleName(d, newName), g);
+    final MethodRenameUnusedVariableToUnderscore.IsUsed v = new MethodRenameUnusedVariableToUnderscore.IsUsed(newName);
+    m.getBody().accept(v);
+    return v.conclusion() ? null
+        : new Rewrite("Rename parameter " + oldName + " to " + newName + " in method " + m.getName().getIdentifier(), d) {
+          @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+            rename(oldName, newSimpleName(d, newName), m, r, g);
+            final Javadoc j = m.getJavadoc();
+            if (j == null)
               return;
+            final List<TagElement> ts = j.tags();
+            if (ts == null)
+              return;
+            for (final TagElement t : ts) {
+              if (!TagElement.TAG_PARAM.equals(t.getTagName()))
+                continue;
+              for (final Object o : t.fragments())
+                if (o instanceof SimpleName && same((SimpleName) o, oldName)) {
+                  r.replace((SimpleName) o, newSimpleName(d, newName), g);
+                  return;
+                }
             }
-        }
-      }
-    };
+          }
+        };
   }
   private static boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m) {
     if (Funcs.shortName(d.getType()) == null)

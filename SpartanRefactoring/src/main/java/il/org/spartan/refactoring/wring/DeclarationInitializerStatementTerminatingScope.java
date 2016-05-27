@@ -21,9 +21,11 @@ import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.EnhancedForStatement;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.ForStatement;
+import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
 
@@ -45,7 +47,9 @@ import il.org.spartan.refactoring.wring.LocalInliner.LocalInlineWithValue;
 public final class DeclarationInitializerStatementTerminatingScope extends Wring.VariableDeclarationFragementAndStatement {
   @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
-    if (initializer == null || hasAnnotation(f) || initializer instanceof ArrayInitializer)
+    // TODO Ori: allow final consolidation
+    if (initializer == null || hasAnnotation(f) || initializer instanceof ArrayInitializer
+        || Modifier.isFinal(((VariableDeclarationStatement) f.getParent()).getModifiers()))
       return null;
     final Statement s = Extract.statement(f);
     if (s == null)
@@ -99,8 +103,6 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
         case ENHANCED_FOR_STATEMENT:
           if (((EnhancedForStatement) ancestor).getExpression() != child)
             return true;
-          break;
-        default:
           break;
       }
       child = ancestor;

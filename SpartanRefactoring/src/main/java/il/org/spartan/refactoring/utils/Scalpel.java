@@ -104,7 +104,7 @@ public class Scalpel {
       final List<Comment> cl = extract(ns[i]);
       used.addAll(cl);
       for (final Comment c : cl) {
-        sb.append(cut(s, c.getStartPosition(), c.getStartPosition() + c.getLength())).append("\n");
+        sb.append(cut(s, u.getExtendedStartPosition(c), u.getExtendedStartPosition(c) + u.getExtendedLength(c))).append("\n");
         ++cc;
       }
     }
@@ -225,7 +225,7 @@ public class Scalpel {
     replacement = n;
     if (r == null)
       return this;
-    if (s == null || base == null || replacement == null) {
+    if (s == null || base == null || replacement == null || u == null) {
       r.replace(base, replacement, g);
       for (final ASTNode a : additionals)
         r.remove(a, g);
@@ -241,21 +241,24 @@ public class Scalpel {
       final Block bl = (Block) replacement;
       Collections.reverse(comments);
       for (final Comment c : comments)
-        bl.statements().add(0,
-            r.createStringPlaceholder(s.substring(c.getStartPosition(), c.getStartPosition() + c.getLength()), ASTNode.BLOCK));
+        bl.statements().add(0, r.createStringPlaceholder(
+            s.substring(u.getExtendedStartPosition(c), u.getExtendedStartPosition(c) + u.getExtendedLength(c)), ASTNode.BLOCK));
       $.add(bl);
     } else {
       if (comments.size() != 1 || !shouldMoveCommentToEnd(comments.get(0), isCollapsed)) {
         for (final Comment c : comments)
-          $.add(r.createStringPlaceholder(s.substring(c.getStartPosition(), c.getStartPosition() + c.getLength())
-              + (replacement instanceof Statement || c.isLineComment() ? "\n" : ""), c.getNodeType()));
+          $.add(r.createStringPlaceholder(
+              s.substring(u.getExtendedStartPosition(c), u.getExtendedStartPosition(c) + u.getExtendedLength(c))
+                  + (replacement instanceof Statement || c.isLineComment() ? "\n" : ""),
+              c.getNodeType()));
         $.add(replacement);
       } else {
         final Comment c = comments.get(0);
         final String f = !c.isLineComment() || allWhiteSpaces(s.substring(sr.getStartPosition() + sr.getLength()).split("\n")[0])
             ? "" : "\n";
         $.add(replacement);
-        $.add(r.createStringPlaceholder(" " + s.substring(c.getStartPosition(), c.getStartPosition() + c.getLength()) + f,
+        final SourceRange csr = r.getExtendedSourceRangeComputer().computeSourceRange(c);
+        $.add(r.createStringPlaceholder(" " + s.substring(csr.getStartPosition(), csr.getStartPosition() + csr.getLength()) + f,
             c.getNodeType()));
       }
       if (replacement instanceof Statement

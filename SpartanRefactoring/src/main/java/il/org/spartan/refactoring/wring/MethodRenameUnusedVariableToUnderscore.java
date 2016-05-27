@@ -2,7 +2,10 @@ package il.org.spartan.refactoring.wring;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
+import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
 import org.eclipse.jdt.core.dom.ArrayInitializer;
+import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.IExtendedModifier;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
@@ -10,6 +13,7 @@ import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.SingleMemberAnnotation;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.StringLiteral;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Funcs;
@@ -30,18 +34,33 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNodeExclude;
 
   public static class IsUsed extends ASTVisitor {
     boolean c = true;
-    SimpleName n;
+    String n;
 
     public IsUsed(SimpleName sn) {
+      n = sn.getIdentifier();
+    }
+    public IsUsed(String sn) {
       n = sn;
     }
     public boolean conclusion() {
       return !c;
     }
     @Override public boolean visit(final SimpleName sn) {
-      if (n.getIdentifier().equals(sn.getIdentifier()))
+      if (n.equals(sn.getIdentifier()))
         c = false;
       return c;
+    }
+    @Override public final boolean visit(@SuppressWarnings("unused") final AnnotationTypeDeclaration _) {
+      return false;
+    }
+    @Override public final boolean visit(@SuppressWarnings("unused") final AnonymousClassDeclaration _) {
+      return false;
+    }
+    @Override public final boolean visit(@SuppressWarnings("unused") final EnumDeclaration _) {
+      return false;
+    }
+    @Override public final boolean visit(@SuppressWarnings("unused") final TypeDeclaration _) {
+      return false;
     }
     @Override public boolean preVisit2(@SuppressWarnings("unused") ASTNode __) {
       return c;
@@ -84,7 +103,7 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNodeExclude;
     $.setFlags($.getFlags());
     $.setInitializer($.getInitializer());
     $.setType(Funcs.duplicate(n.getType()));
-    scalpel.duplicateInto(n.modifiers(), $.modifiers());
+    // scalpel.duplicateInto(n.modifiers(), $.modifiers());
     return $;
   }
   private static String unusedVariableName() {

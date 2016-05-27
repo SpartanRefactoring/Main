@@ -70,14 +70,8 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
             && BindingUtils.isSimple(getRightFromComparison(e));
   }
   static Expression getLeftFromComparison(Expression e) {
-    if (e instanceof InfixExpression)
-      return ((InfixExpression) e).getLeftOperand();
-    if (e instanceof MethodInvocation) {
-      if (((MethodInvocation) e).getExpression() instanceof StringLiteral)
-        return (Expression) ((MethodInvocation) e).arguments().get(0);
-      return ((MethodInvocation) e).getExpression();
-    }
-    return null;
+    return e instanceof InfixExpression ? ((InfixExpression) e).getLeftOperand()
+        : !(e instanceof MethodInvocation)?null:!(((MethodInvocation)e).getExpression() instanceof StringLiteral)?((MethodInvocation)e).getExpression():(Expression)((MethodInvocation)e).arguments().get(0);
   }
   static Expression getRightFromComparison(Expression e) {
     return e instanceof InfixExpression ? ((InfixExpression) e).getRightOperand()
