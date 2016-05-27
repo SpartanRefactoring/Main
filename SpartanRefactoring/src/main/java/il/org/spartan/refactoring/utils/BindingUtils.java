@@ -75,6 +75,8 @@ import org.eclipse.jdt.internal.corext.dom.Bindings;
    * @return the method's binding if it is visible from context, else null
    */
   public static IMethodBinding getVisibleMethod(ITypeBinding t, String mn, ITypeBinding[] ps, ASTNode n, CompilationUnit u) {
+    if (t == null)
+      return null;
     final IMethodBinding $ = Bindings.findMethodInHierarchy(t, mn, ps);
     return $ == null || !isVisible($, n, u) ? null : $;
   }
