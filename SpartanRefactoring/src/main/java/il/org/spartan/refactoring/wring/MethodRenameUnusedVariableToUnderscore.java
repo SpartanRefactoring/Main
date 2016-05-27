@@ -103,7 +103,7 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNodeExclude;
     $.setFlags($.getFlags());
     $.setInitializer($.getInitializer());
     $.setType(Funcs.duplicate(n.getType()));
-    // scalpel.duplicateInto(n.modifiers(), $.modifiers());
+    scalpel.duplicateInto(n.modifiers(), $.modifiers());
     return $;
   }
   private static String unusedVariableName() {
