@@ -34,8 +34,8 @@ public class WrapperReplaceWithFactory extends Wring.ReplaceCurrentNode<ClassIns
       "java.lang.Double", "java.lang.Character", "java.lang.String", "java.lang.Boolean" };
 
   @SuppressWarnings("unchecked") @Override ASTNode replacement(final ClassInstanceCreation n) {
-    if (!n.getAST().hasResolvedBindings() || !Arrays.asList(pi).contains(n.getType().resolveBinding().getBinaryName())
-        || n.arguments().size() != 1)
+    if (!n.getAST().hasResolvedBindings() || n.getType().resolveBinding() == null
+        || !Arrays.asList(pi).contains(n.getType().resolveBinding().getBinaryName()) || n.arguments().size() != 1)
       return null;
     final MethodInvocation $ = n.getAST().newMethodInvocation();
     $.setExpression(n.getAST().newSimpleName(n.getType().toString()));

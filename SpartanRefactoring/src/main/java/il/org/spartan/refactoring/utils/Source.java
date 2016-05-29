@@ -24,7 +24,7 @@ public class Source {
    * @param p file path
    * @param s file source
    */
-  public static void set(IPath p, String s) {
+  public synchronized static void set(IPath p, String s) {
     if (p == null || s == null)
       return;
     sm.put(p.toString(), s);

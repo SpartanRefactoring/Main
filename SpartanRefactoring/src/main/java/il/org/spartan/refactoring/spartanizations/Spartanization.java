@@ -303,6 +303,7 @@ public abstract class Spartanization extends Refactoring {
   public boolean performRule(final ICompilationUnit cu, final IProgressMonitor pm) throws CoreException {
     pm.beginTask("Creating change for a single compilation unit...", 2);
     final TextFileChange textChange = new TextFileChange(cu.getElementName(), (IFile) cu.getResource());
+    Source.set(cu.getPath(), textChange.getCurrentDocument(null).get());
     textChange.setTextType("java");
     final SubProgressMonitor spm = new SubProgressMonitor(pm, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL);
     textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILIATION_UNIT.parser(cu).createAST(spm), spm).rewriteAST());
