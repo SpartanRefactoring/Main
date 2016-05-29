@@ -33,9 +33,9 @@ public class Disable {
    */
   public final static String dsi = "@DisableSpartan";
 
-  protected Disable(CompilationUnit u, String s) {
+  protected Disable(CompilationUnit u) {
     dns = new HashSet<>();
-    if (u == null || s == null)
+    if (u == null)
       return;
     u.accept(new BodyDeclarationVisitor(dns));
   }

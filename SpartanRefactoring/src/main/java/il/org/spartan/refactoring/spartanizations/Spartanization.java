@@ -363,6 +363,7 @@ public abstract class Spartanization extends Refactoring {
   protected void scanCompilationUnit(final ICompilationUnit u, final IProgressMonitor m) throws CoreException {
     m.beginTask("Creating change for a single compilation unit...", 2);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
+    Source.set(u.getPath(), textChange.getCurrentDocument(null).get());
     textChange.setTextType("java");
     final SubProgressMonitor subProgressMonitor = new SubProgressMonitor(m, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL);
     final CompilationUnit cu = (CompilationUnit) Make.COMPILIATION_UNIT.parser(u).createAST(subProgressMonitor);
@@ -377,7 +378,7 @@ public abstract class Spartanization extends Refactoring {
     pm.beginTask("Creating change(s) for a single compilation unit...", 2);
     final ICompilationUnit u = As.iCompilationUnit(m);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
-    Source.set(u.getPath(), textChange.getCurrentDocument(null));
+    Source.set(u.getPath(), textChange.getCurrentDocument(null).get());
     textChange.setTextType("java");
     textChange.setEdit(createRewrite(new SubProgressMonitor(pm, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL), m).rewriteAST());
     if (textChange.getEdit().getLength() != 0)

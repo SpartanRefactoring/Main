@@ -18,7 +18,6 @@ import il.org.spartan.refactoring.spartanizations.Spartanization;
 import il.org.spartan.refactoring.spartanizations.Spartanizations;
 import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.refactoring.utils.Rewrite;
-import il.org.spartan.refactoring.utils.Source;
 
 /**
  * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
@@ -71,7 +70,6 @@ public class Builder extends IncrementalProjectBuilder {
   }
   protected void fullBuild() {
     try {
-      Source.setProjectPath(getProject().getLocation());
       getProject().accept(new IResourceVisitor() {
         @Override public boolean visit(final IResource r) throws CoreException {
           addMarkers(r);

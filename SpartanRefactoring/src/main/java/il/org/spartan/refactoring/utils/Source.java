@@ -8,7 +8,6 @@ import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.jface.text.IDocument;
 import org.eclipse.text.edits.TextEditGroup;
 
 /**
@@ -20,21 +19,15 @@ import org.eclipse.text.edits.TextEditGroup;
  */
 public class Source {
   private static Map<String, String> sm = new HashMap<>();
-  private static IPath project;
 
   /**
-   * @param p project path
+   * @param p file path
+   * @param s file source
    */
-  public static void setProjectPath(IPath p) {
-    project = p;
-  }
-  /**
-   * @param u compilation unit
-   */
-  public static void set(IPath p, IDocument d) {
-    if (p == null || d == null)
+  public static void set(IPath p, String s) {
+    if (p == null || s == null)
       return;
-    sm.put(p.toString(), d.get());
+    sm.put(p.toString(), s);
   }
   /**
    * @param u compilation unit
@@ -42,7 +35,7 @@ public class Source {
    *         spartanization disabled
    */
   public static Disable getDisable(CompilationUnit u) {
-    return new Disable(u, get(u));
+    return new Disable(u);
   }
   /**
    * @param u compilation unit
