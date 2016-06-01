@@ -12,5 +12,5 @@ cd ~/Downloads &&
 touch eclipse &&
 mv eclipse  "/tmp/`date`.eclipse" 
 shopt -s extglob # likely already set in interactive shells
-tar xvfz eclipse-java-*.tar.gz
-eclipse/eclipse & 
+tar xfz eclipse-rcp-*.tar.gz
+eclipse/eclipse -clean -consoleLog -data ~/workspace/
