@@ -3087,6 +3087,72 @@ public class TrimmerTest {
             + " } else\n"//
             + "   System.out.println(\"3\");\n");
   }
+  @Test public void switchSimplifyNoDefault() {
+    TrimmerTestsUtils
+        .trimming("" //
+            + "switch (x) {" //
+            + "  case 1:" //
+            + "    System.out.println('!');" //
+            + "  case 2:" //
+            + "    break;" //
+            + "  case 3:" //
+            + "    System.out.println('!');" //
+            + "    break;" //
+            + "   case 4:" //
+            + "    break;" //
+            + "  }")
+        .to("" //
+            + "switch (x) {" //
+            + "  case 1:" //
+            + "  case 3:" //
+            + "    System.out.println('!');" //
+            + "    break;" //
+            + "  case 2:" //
+            + "  case 4:" //
+            + "    break;" //
+            + "  }");
+  }
+  @Test public void switchSimplifyWithDefault() {
+    TrimmerTestsUtils
+        .trimming("" //
+            + "switch (x) {" //
+            + "  case 1:" //
+            + "    System.out.println('!');" //
+            + "  case 2:" //
+            + "    break;" //
+            + "  case 3:" //
+            + "    System.out.println('!');" //
+            + "    break;" //
+            + "   default:" //
+            + "     break;" //
+            + "   case 4:" //
+            + "    break;" //
+            + "  }")
+        .to("" //
+            + "switch (x) {" //
+            + "  case 1:" //
+            + "  case 3:" //
+            + "    System.out.println('!');" //
+            + "    break;" //
+            + "  default:" //
+            + "    break;" //
+            + "  }");
+  }
+  @Test public void switchSimplifyCaseAfterDefault() {
+    TrimmerTestsUtils.trimming("" //
+        + "switch (n.getNodeType()) {" //
+        + "  default:" //
+        + "    return -1;" //
+        + "  case BREAK_STATEMENT:" //
+        + "    return 0;" //
+        + "  case CONTINUE_STATEMENT:" //
+        + "    return 1;" //
+        + "  case RETURN_STATEMENT:" //
+        + "    return 2;" //
+        + "  case THROW_STATEMENT:" //
+        + "    return 3;" //
+        + "  }").to("");
+  }
   @Test public void synchronizedBraces() {
     trimming("" //
         + "    synchronized (variables) {\n" //
