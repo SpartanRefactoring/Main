@@ -58,14 +58,14 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
   static boolean isSimpleComparison(Expression e) {
     return e instanceof InfixExpression && ((InfixExpression) e).getOperator().equals(Operator.EQUALS)
         && BindingUtils.isSimple(((InfixExpression) e).getRightOperand())
-        || e instanceof MethodInvocation && ((MethodInvocation) e).getName().getIdentifier().equals("equals")
+        || e instanceof MethodInvocation && "equals".equals(((MethodInvocation)e).getName().getIdentifier())
             && ((MethodInvocation) e).arguments().size() == 1
             && BindingUtils.isSimple((Expression) ((MethodInvocation) e).arguments().get(0));
   }
   static boolean isSimpleComparison(Expression e, Expression v) {
     return e instanceof InfixExpression && ((InfixExpression) e).getOperator().equals(Operator.EQUALS)
         && getLeftFromComparison(e).subtreeMatch(m, v) && BindingUtils.isSimple(getRightFromComparison(e))
-        || e instanceof MethodInvocation && ((MethodInvocation) e).getName().getIdentifier().equals("equals")
+        || e instanceof MethodInvocation && "equals".equals(((MethodInvocation)e).getName().getIdentifier())
             && getLeftFromComparison(e).subtreeMatch(m, v) && ((MethodInvocation) e).arguments().size() == 1
             && BindingUtils.isSimple(getRightFromComparison(e));
   }

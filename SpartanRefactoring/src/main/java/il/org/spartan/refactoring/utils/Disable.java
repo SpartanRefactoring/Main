@@ -77,8 +77,8 @@ public class Disable {
     @Override public boolean visit(FieldDeclaration n) {
       return go(n);
     }
-    @Override public boolean visit(Initializer n) {
-      return go(n);
+    @Override public boolean visit(Initializer i) {
+      return go(i);
     }
     @Override public boolean visit(MethodDeclaration n) {
       return go(n);

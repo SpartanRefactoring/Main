@@ -1,5 +1,11 @@
 package il.org.spartan.refactoring.application;
 
+import il.org.spartan.files.FilesGenerator;
+import il.org.spartan.misc.Wrapper;
+import il.org.spartan.refactoring.handlers.ApplySpartanizationHandler;
+import il.org.spartan.refactoring.handlers.CleanupHandler;
+import il.org.spartan.utils.FileUtils;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -25,12 +31,6 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.PackageDeclaration;
-
-import il.org.spartan.files.FilesGenerator;
-import il.org.spartan.misc.Wrapper;
-import il.org.spartan.refactoring.handlers.ApplySpartanizationHandler;
-import il.org.spartan.refactoring.handlers.CleanupHandler;
-import il.org.spartan.utils.FileUtils;
 
 /**
  * An {@link IApplication} extension entry point, allowing execution of this
@@ -158,24 +158,31 @@ import il.org.spartan.utils.FileUtils;
       return true;
     }
     for (final String a : args) {
-      if (a.equals("-N"))
-        optDoNotOverwrite = true;
-      if (a.equals("-E"))
-        optIndividualStatistics = true;
+      switch (a) {
+        case "-N":
+          optDoNotOverwrite = true;
+          break;
+        case "-E":
+          optIndividualStatistics = true;
+          break;
+        case "-V":
+          optVerbose = true;
+          break;
+        case "-l":
+          optStatsLines = true;
+          break;
+        case "-r":
+          optStatsChanges = true;
+          break;
+      }
+      if (!a.startsWith("-"))
+        optPath = a;
       try {
         if (a.startsWith("-C"))
           optRounds = Integer.parseUnsignedInt(a.substring(2));
       } catch (final NumberFormatException e) {
         throw e; // TODO: Do we want to do something else?
       }
-      if (a.equals("-V"))
-        optVerbose = true;
-      if (a.equals("-l"))
-        optStatsLines = true;
-      if (a.equals("-r"))
-        optStatsChanges = true;
-      if (!a.startsWith("-"))
-        optPath = a;
     }
     return optPath == null;
   }

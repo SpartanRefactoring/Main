@@ -139,9 +139,9 @@ public enum ExpressionComparator implements Comparator<Expression> {
   }
   private static boolean isLonger(final Expression e1, final Expression e2) {
     return !hasNull(e1, e2) && (//
-    nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD || //
+        nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD || //
         nodesCount(e1) >= nodesCount(e2) && moreArguments(e1, e2)//
-    );
+        );
   }
 
   /**
@@ -171,7 +171,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
     }
     final Integer $ = new Integer();
     n.accept(new ASTVisitor() {
-      @Override public void preVisit(@SuppressWarnings("unused") final ASTNode _) {
+      @Override public void preVisit(@SuppressWarnings("unused") final ASTNode __) {
         ++$.inner;
       }
     });
@@ -211,6 +211,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
               return;
             default:
               $.inner += 3;
+              break;
           }
       }
     });

@@ -80,10 +80,10 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
     $.setElseStatement(b);
     return $;
   }
-  @Override ASTNode replacement(SwitchStatement n) {
-    if (!n.getAST().hasResolvedBindings())
+  @Override ASTNode replacement(SwitchStatement s) {
+    if (!s.getAST().hasResolvedBindings())
       return null;
-    final List<Statement> sss = n.statements();
+    final List<Statement> sss = s.statements();
     final List<Statement> iss = new ArrayList<>();
     final List<Statement> ess = new ArrayList<>();
     int si = 0;
@@ -92,15 +92,13 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
       final Statement cs = sss.get(si);
       if (cs instanceof BreakStatement)
         break;
-      if (cs instanceof SwitchCase)
-        if (t == null) {
-          if (((SwitchCase) cs).isDefault())
-            return null;
-          t = ((SwitchCase) cs).getExpression();
-        } else
-          return null;
-      else
+      if (!(cs instanceof SwitchCase))
         iss.add(cs);
+      else {
+        if (t != null || ((SwitchCase) cs).isDefault())
+          return null;
+        t = ((SwitchCase) cs).getExpression();
+      }
       if (cs instanceof ReturnStatement || cs instanceof ThrowStatement)
         break;
     }
@@ -110,7 +108,7 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
       if (sss.get(si) instanceof SwitchCase)
         break;
     if (si == sss.size())
-      return buildIfStatement(n.getAST(), iss, n.getExpression(), t);
+      return buildIfStatement(s.getAST(), iss, s.getExpression(), t);
     if (!((SwitchCase) sss.get(si)).isDefault())
       return null;
     for (++si; si < sss.size(); ++si) {
@@ -120,7 +118,7 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
       if (!(cs instanceof BreakStatement))
         ess.add(cs);
     }
-    return buildIfStatement(n.getAST(), iss, ess, n.getExpression(), t);
+    return buildIfStatement(s.getAST(), iss, ess, s.getExpression(), t);
   }
   @Override String description(@SuppressWarnings("unused") SwitchStatement __) {
     return "Replace short switch statement with an if statement";

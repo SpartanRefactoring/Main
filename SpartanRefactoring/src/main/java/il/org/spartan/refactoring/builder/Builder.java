@@ -119,20 +119,20 @@ public class Builder extends IncrementalProjectBuilder {
   }
   public static void incrementalBuild(final IResourceDelta d) throws CoreException {
     d.accept(internalDelta -> {
+      // return true to continue visiting children.
+      // handle removed resource
       switch (internalDelta.getKind()) {
         case IResourceDelta.ADDED:
         case IResourceDelta.CHANGED:
           // handle added and changed resource
+          // handle added and changed resource
           addMarkers(internalDelta.getResource());
-          break;
-        case IResourceDelta.REMOVED:
-          // handle removed resource
-          break;
+          // return true to continue visiting children.
+          // return true to continue visiting children.
+          return true;
         default:
-          break;
+          return true; // return true to continue visiting children.
       }
-      // return true to continue visiting children.
-      return true;
     });
   }
 }

@@ -32,7 +32,7 @@ public class BooleanConstants extends Wring.ReplaceCurrentNode<MethodInvocation>
   @Override ASTNode replacement(final MethodInvocation i) {
     return i.getExpression() == null || !i.getExpression().toString().equals("Boolean")
         || !i.getName().getIdentifier().equals("valueOf") || i.arguments().size() != 1
-        || !(i.arguments().get(0).toString().equals("true") || i.arguments().get(0).toString().equals("false")) ? null
+        || !("true".equals(i.arguments().get(0).toString()) || i.arguments().get(0).toString().equals("false")) ? null
             : i.getAST().newQualifiedName(i.getAST().newName("Boolean"),
                 newSimpleName(i, ((BooleanLiteral) i.arguments().get(0)).booleanValue() ? "TRUE" : "FALSE"));
   }

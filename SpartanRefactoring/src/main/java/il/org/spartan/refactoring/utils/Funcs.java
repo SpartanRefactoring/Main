@@ -827,7 +827,7 @@ public enum Funcs {
         : n instanceof QualifiedName ? shortName(((QualifiedName) n).getName()) //
             : null;
   }
-  private static String shortName(@SuppressWarnings("unused") final UnionType _) {
+  private static String shortName(@SuppressWarnings("unused") final UnionType __) {
     return null;
   }
   private static String shortName(final WildcardType t) {
