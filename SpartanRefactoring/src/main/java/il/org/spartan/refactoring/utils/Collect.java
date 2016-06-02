@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jdt.core.dom.ASTMatcher;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
@@ -166,7 +167,7 @@ public enum Collect {
       @Override public void endVisit(@SuppressWarnings("unused") final EnhancedForStatement __) {
         --loopDepth;
       }
-      @Override public void endVisit(@SuppressWarnings("unused") final ForStatement __) {
+      @Override public void endVisit(@SuppressWarnings("unused") final @Nullable ForStatement __) {
         --loopDepth;
       }
       @Override public void endVisit(@SuppressWarnings("unused") final WhileStatement __) {
