@@ -162,7 +162,7 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
   @Override boolean scopeIncludes(final ConditionalExpression e) {
     return pushdown(e) != null;
   }
-  @Override String description(@SuppressWarnings("unused") final ConditionalExpression _) {
+  @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Pushdown ?: into expression";
   }
   @Override WringGroup wringGroup() {

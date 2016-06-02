@@ -52,7 +52,7 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
  * @since 2016/05/09
  */
 @SuppressWarnings("unchecked") public class SwitchFewCasesReplaceWithIf extends ReplaceCurrentNode<SwitchStatement> {
-  protected IfStatement buildIfStatement(AST a, List<Statement> iss, Expression e, Expression t) {
+  protected IfStatement buildIfStatement(AST a, List<Statement> ss, Expression e, Expression t) {
     final IfStatement $ = a.newIfStatement();
     final Expression de = Funcs.duplicate(e), dt = Funcs.duplicate(t);
     if (e.resolveTypeBinding().isPrimitive()) {
@@ -69,12 +69,12 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
       $.setExpression(m);
     }
     final Block b = a.newBlock();
-    scalpel.duplicateInto(iss, b.statements());
+    scalpel.duplicateInto(ss, b.statements());
     $.setThenStatement(b);
     return $;
   }
-  protected IfStatement buildIfStatement(AST a, List<Statement> iss, List<Statement> ess, Expression e, Expression t) {
-    final IfStatement $ = buildIfStatement(a, iss, e, t);
+  protected IfStatement buildIfStatement(AST a, List<Statement> ss, List<Statement> ess, Expression e, Expression t) {
+    final IfStatement $ = buildIfStatement(a, ss, e, t);
     final Block b = a.newBlock();
     scalpel.duplicateInto(ess, b.statements());
     $.setElseStatement(b);

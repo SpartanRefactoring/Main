@@ -53,7 +53,7 @@ public final class TernaryShortestFirst extends Wring.ReplaceCurrentNode<Conditi
     return e1.getNodeType() == e2.getNodeType()
         && (e1 instanceof InstanceofExpression || e1 instanceof InfixExpression || e1 instanceof MethodInvocation);
   }
-  @Override String description(@SuppressWarnings("unused") final ConditionalExpression _) {
+  @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Invert logical condition and exhange order of '?' and ':' operands to conditional expression";
   }
   @Override WringGroup wringGroup() {

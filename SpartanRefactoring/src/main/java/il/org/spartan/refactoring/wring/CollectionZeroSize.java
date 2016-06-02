@@ -28,28 +28,28 @@ public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression
   final List<InfixExpression.Operator> ao = Arrays.asList(
       new Operator[] { InfixExpression.Operator.EQUALS, InfixExpression.Operator.NOT_EQUALS, InfixExpression.Operator.GREATER });
 
-  @Override ASTNode replacement(final InfixExpression n) {
-    if (!n.getAST().hasResolvedBindings() || !(n.getLeftOperand() instanceof MethodInvocation)
-        || !(n.getRightOperand() instanceof NumberLiteral) || !ao.contains(n.getOperator()))
+  @Override ASTNode replacement(final InfixExpression e) {
+    if (!e.getAST().hasResolvedBindings() || !(e.getLeftOperand() instanceof MethodInvocation)
+        || !(e.getRightOperand() instanceof NumberLiteral) || !ao.contains(e.getOperator()))
       return null;
-    final MethodInvocation mi = (MethodInvocation) n.getLeftOperand();
-    final NumberLiteral nl = (NumberLiteral) n.getRightOperand();
-    if (!mi.getName().getIdentifier().equals("size") || Double.parseDouble(nl.getToken()) != 0)
+    final MethodInvocation mi = (MethodInvocation) e.getLeftOperand();
+    final NumberLiteral nl = (NumberLiteral) e.getRightOperand();
+    if (!"size".equals(mi.getName().getIdentifier()) || Double.parseDouble(nl.getToken()) != 0)
       return null;
     final Expression mie = mi.getExpression();
-    final IMethodBinding iemb = BindingUtils.getVisibleMethod(mie != null ? mie.resolveTypeBinding() : BindingUtils.getClass(n),
-        "isEmpty", null, n, u);
+    final IMethodBinding iemb = BindingUtils.getVisibleMethod(mie != null ? mie.resolveTypeBinding() : BindingUtils.getClass(e),
+        "isEmpty", null, e, u);
     if (iemb == null
-        || !(iemb.getReturnType().toString().equals("boolean") || iemb.getReturnType().getBinaryName().equals("java.lang.Boolean")))
+        || !"boolean".equals(iemb.getReturnType().toString()) && !"java.lang.Boolean".equals(iemb.getReturnType().getBinaryName()))
       return null;
-    final MethodInvocation ie = n.getAST().newMethodInvocation();
-    ie.setExpression((Expression) ASTNode.copySubtree(n.getAST(), mi.getExpression()));
-    ie.setName(n.getAST().newSimpleName("isEmpty"));
+    final MethodInvocation ie = e.getAST().newMethodInvocation();
+    ie.setExpression((Expression) ASTNode.copySubtree(e.getAST(), mi.getExpression()));
+    ie.setName(e.getAST().newSimpleName("isEmpty"));
     ASTNode $;
-    if (n.getOperator().equals(InfixExpression.Operator.EQUALS))
+    if (e.getOperator().equals(InfixExpression.Operator.EQUALS))
       $ = ie;
     else {
-      $ = n.getAST().newPrefixExpression();
+      $ = e.getAST().newPrefixExpression();
       ((PrefixExpression) $).setOperator(PrefixExpression.Operator.NOT);
       ((PrefixExpression) $).setOperand(ie);
     }

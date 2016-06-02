@@ -308,7 +308,7 @@ public enum Is {
       return false;
     final Wrapper<Boolean> $ = new Wrapper<>(Boolean.TRUE);
     e.accept(new ASTVisitor() {
-      @Override public boolean visit(@SuppressWarnings("unused") final ArrayCreation _) {
+      @Override public boolean visit(@SuppressWarnings("unused") final ArrayCreation __) {
         $.set(Boolean.FALSE);
         return false;
       }

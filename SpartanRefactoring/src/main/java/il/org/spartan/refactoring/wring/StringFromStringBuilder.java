@@ -1,12 +1,21 @@
 package il.org.spartan.refactoring.wring;
 
-import java.util.Vector;
-import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 
+import java.util.Vector;
+
+import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ClassInstanceCreation;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.ParenthesizedExpression;
+import org.eclipse.jdt.core.dom.StringLiteral;
+
 /**
- * A {@link Wring} to replace String appending using StringBuilder or StringBuffer with
- * appending using operator "+"
+ * A {@link Wring} to replace String appending using StringBuilder or
+ * StringBuffer with appending using operator "+"
  * <code><pre>String s = new StringBuilder(myName).append("'s grade is ").append(100).toString();</pre></code>
  * can be replaced with
  * <code><pre>String s = myName + "'s grade is " + 100;</pre></code>
@@ -18,12 +27,12 @@ public class StringFromStringBuilder extends Wring.ReplaceCurrentNode<MethodInvo
   // list of class extending Expression class, that need to be surrounded by
   // parenthesis
   // when put out of method arguments list
-  private Class<?>[] np = { InfixExpression.class };
+  private final Class<?>[] np = { InfixExpression.class };
+
   /**
    * Checks if an expression need parenthesis in order to interpreted correctly
-   * 
-   * @param e
-   *          an Expression
+   *
+   * @param e an Expression
    * @return whether or not this expression need parenthesis when put together
    *         with other expressions in infix expression. There could be non
    *         explicit parenthesis if the expression is located in an arguments
@@ -31,110 +40,96 @@ public class StringFromStringBuilder extends Wring.ReplaceCurrentNode<MethodInvo
    *         parenthesis
    */
   private boolean isParethesisNeeded(Expression e) {
-    for (Class<?> c : np) {
-      if (c.isInstance(e)) {
+    for (final Class<?> c : np)
+      if (c.isInstance(e))
         return true;
-      }
-    }
     return false;
   }
   /**
    * Adds parenthesis to expression if needed.
-   * 
-   * @param e
-   *          an Expression
+   *
+   * @param e an Expression
    * @return e itself if no parenthesis needed, otherwise a
    *         ParenthesisExpression containing e
    */
   private Expression addParenthesisIfNeeded(Expression e) {
-    AST a = e.getAST();
-    if (!isParethesisNeeded(e)) {
+    final AST a = e.getAST();
+    if (!isParethesisNeeded(e))
       return e;
-    }
-    ParenthesizedExpression pe = a.newParenthesizedExpression();
-    pe.setExpression((Expression) Expression.copySubtree(a, e));
-    return pe;
+    final ParenthesizedExpression $ = a.newParenthesizedExpression();
+    $.setExpression((Expression) ASTNode.copySubtree(a, e));
+    return $;
   }
   /**
-   * @param e
-   *          an Expression
+   * @param e an Expression
    * @return true iff e is a String
    */
   private boolean isString(Expression e) {
     return e instanceof StringLiteral;
   }
-  @Override
-  ASTNode replacement(final MethodInvocation n) {
-    if (!n.getName().toString().equals("toString")) {
+  @Override ASTNode replacement(final MethodInvocation i) {
+    if (!"toString".equals(i.getName().toString()))
       return null;
-    }
-    Vector<Expression> sll = new Vector<>();
-    MethodInvocation r = n;
+    final Vector<Expression> sll = new Vector<>();
+    MethodInvocation r = i;
     boolean hs = false;
     // collecting strings from append method arguments list and from class
     // instance creation arguments list
     while (true) {
-      Expression e = r.getExpression();
+      final Expression e = r.getExpression();
       if (e instanceof ClassInstanceCreation) {
-        String t = ((ClassInstanceCreation) e).getType().toString();
-        if (t.equals("StringBuffer") || t.equals("StringBuilder")) {
-          if (!((ClassInstanceCreation) e).arguments().isEmpty() && t.equals("StringBuilder")) {
-            Expression a = (Expression) ((ClassInstanceCreation) e).arguments().get(0);
-            sll.insertElementAt(addParenthesisIfNeeded(a), 0);
-            hs = isString(a) ? true : hs;
-          }
-          if (!hs) {
-            // creating a "" string literal to ensure final value interpreted as
-            // a string.
-            // this expression is created twice, maybe unnecessarily
-            StringLiteral es = n.getAST().newStringLiteral();
-            es.setLiteralValue("");
-            sll.insertElementAt(es, 0);
-          }
-          break;
-        }
-        return null;
-      } else if (e instanceof MethodInvocation) {
-        if (!((MethodInvocation) e).getName().toString().equals("append")
-            || ((MethodInvocation) e).arguments().size() == 0) {
+        final String t = ((ClassInstanceCreation) e).getType().toString();
+        if (!"StringBuffer".equals(t) && !"StringBuilder".equals(t))
           return null;
+        if (!((ClassInstanceCreation) e).arguments().isEmpty() && "StringBuilder".equals(t)) {
+          final Expression a = (Expression) ((ClassInstanceCreation) e).arguments().get(0);
+          sll.insertElementAt(addParenthesisIfNeeded(a), 0);
+          hs = isString(a) || hs;
         }
-        Expression a = (Expression) ((MethodInvocation) e).arguments().get(0);
-        sll.insertElementAt(addParenthesisIfNeeded(a), 0);
-        hs = isString(a) ? true : hs;
-        r = (MethodInvocation) e;
-      } else {
-        return null;
+        if (!hs) {
+          // creating a "" string literal to ensure final value interpreted as
+          // a string.
+          // this expression is created twice, maybe unnecessarily
+          final StringLiteral es = i.getAST().newStringLiteral();
+          es.setLiteralValue("");
+          sll.insertElementAt(es, 0);
+        }
+        break;
       }
+      if (!(e instanceof MethodInvocation) || !"append".equals(((MethodInvocation) e).getName().toString())
+          || ((MethodInvocation) e).arguments().size() == 0)
+        return null;
+      final Expression a = (Expression) ((MethodInvocation) e).arguments().get(0);
+      sll.insertElementAt(addParenthesisIfNeeded(a), 0);
+      hs = isString(a) || hs;
+      r = (MethodInvocation) e;
     }
     // building a replacement
     Expression $;
     if (sll.size() == 0) {
-      $ = n.getAST().newStringLiteral();
+      $ = i.getAST().newStringLiteral();
       ((StringLiteral) $).setLiteralValue("");
-    } else if (sll.size() == 1) {
-      $ = (Expression) Expression.copySubtree(n.getAST(), sll.get(0));
-    } else {
-      $ = n.getAST().newInfixExpression();
+    } else if (sll.size() == 1)
+      $ = (Expression) ASTNode.copySubtree(i.getAST(), sll.get(0));
+    else {
+      $ = i.getAST().newInfixExpression();
       InfixExpression t = (InfixExpression) $;
-      for (Expression e : sll.subList(0, sll.size() - 2)) {
-        t.setLeftOperand((Expression) Expression.copySubtree(n.getAST(), e));
+      for (final Expression e : sll.subList(0, sll.size() - 2)) {
+        t.setLeftOperand((Expression) ASTNode.copySubtree(i.getAST(), e));
         t.setOperator(InfixExpression.Operator.PLUS);
-        t.setRightOperand(n.getAST().newInfixExpression());
+        t.setRightOperand(i.getAST().newInfixExpression());
         t = (InfixExpression) t.getRightOperand();
       }
-      t.setLeftOperand((Expression) Expression.copySubtree(n.getAST(), sll.get(sll.size() - 2)));
+      t.setLeftOperand((Expression) ASTNode.copySubtree(i.getAST(), sll.get(sll.size() - 2)));
       t.setOperator(InfixExpression.Operator.PLUS);
-      t.setRightOperand((Expression) Expression.copySubtree(n.getAST(), sll.get(sll.size() - 1)));
+      t.setRightOperand((Expression) ASTNode.copySubtree(i.getAST(), sll.get(sll.size() - 1)));
     }
     return $;
   }
-  @Override
-  String description(final MethodInvocation n) {
+  @Override String description(final MethodInvocation i) {
     return "Use \"+\" operator in order to append strings";
   }
-  @Override
-  WringGroup wringGroup() {
+  @Override WringGroup wringGroup() {
     return WringGroup.REPLACE_CLASS_INSTANCE_CREATION;
   }
 }

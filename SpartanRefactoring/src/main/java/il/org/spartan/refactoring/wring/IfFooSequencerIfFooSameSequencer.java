@@ -35,7 +35,7 @@ public final class IfFooSequencerIfFooSameSequencer extends Wring.ReplaceToNextS
     return $;
   }
   @Override ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement,
-      @SuppressWarnings("unused") final TextEditGroup g) {
+      @SuppressWarnings("unused") final TextEditGroup __) {
     if (!Is.vacuousElse(s))
       return null;
     final IfStatement s2 = asIfStatement(nextStatement);

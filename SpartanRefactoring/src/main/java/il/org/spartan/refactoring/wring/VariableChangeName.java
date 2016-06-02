@@ -28,7 +28,7 @@ public abstract class VariableChangeName<N extends VariableDeclaration> extends 
 
   abstract boolean change(N n);
   abstract SimpleName replacement(N n);
-  @Override public ASTRewrite go(ASTRewrite r, N n, @SuppressWarnings("unused") TextEditGroup g, List<ASTNode> bss,
+  @Override public ASTRewrite go(ASTRewrite r, N n, @SuppressWarnings("unused") TextEditGroup __, List<ASTNode> bss,
       List<ASTNode> crs) {
     if (!change(n))
       return null;

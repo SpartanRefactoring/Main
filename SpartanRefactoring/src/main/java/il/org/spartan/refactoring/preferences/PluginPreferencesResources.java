@@ -117,7 +117,7 @@ import il.org.spartan.refactoring.builder.Plugin;
      * @return whether the group is enabled or not
      */
     public boolean isEnabled() {
-      return Plugin.getDefault() == null || Plugin.getDefault().getPreferenceStore().getString(id).equals("on");
+      return Plugin.getDefault() == null || "on".equals(Plugin.getDefault().getPreferenceStore().getString(id));
     }
   }
 }

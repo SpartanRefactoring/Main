@@ -32,19 +32,19 @@ public class StringEqualsConstant extends ReplaceCurrentNode<MethodInvocation> {
   final static String[] _mns = { "equals", "equalsIgnoreCase" };
   final static List<String> mns = Arrays.asList(_mns);
 
-  @SuppressWarnings("unchecked") @Override ASTNode replacement(MethodInvocation n) {
-    if (!mns.contains(n.getName().toString()) || n.arguments().size() != 1 || n.getExpression() == null
-        || n.getExpression() instanceof StringLiteral || !(n.arguments().get(0) instanceof StringLiteral))
+  @SuppressWarnings("unchecked") @Override ASTNode replacement(MethodInvocation i) {
+    if (!mns.contains(i.getName().toString()) || i.arguments().size() != 1 || i.getExpression() == null
+        || i.getExpression() instanceof StringLiteral || !(i.arguments().get(0) instanceof StringLiteral))
       return null;
-    final MethodInvocation $ = n.getAST().newMethodInvocation();
-    $.setExpression(Funcs.duplicate((Expression) n.arguments().get(0)));
-    $.setName(Funcs.duplicate(n.getName()));
-    $.arguments().add(Funcs.duplicate(n.getExpression()));
+    final MethodInvocation $ = i.getAST().newMethodInvocation();
+    $.setExpression(Funcs.duplicate((Expression) i.arguments().get(0)));
+    $.setName(Funcs.duplicate(i.getName()));
+    $.arguments().add(Funcs.duplicate(i.getExpression()));
     return $;
   }
-  @Override String description(MethodInvocation n) {
-    return "use " + n.arguments().get(0) + "." + n.getName().toString() + "(" + n.getExpression().toString() + ") instead of "
-        + n.toString();
+  @Override String description(MethodInvocation i) {
+    return "use " + i.arguments().get(0) + "." + i.getName().toString() + "(" + i.getExpression().toString() + ") instead of "
+        + i.toString();
   }
   @Override WringGroup wringGroup() {
     return WringGroup.REORDER_EXPRESSIONS;

@@ -52,22 +52,23 @@ abstract class HidingDepth extends ScopeManager {
 }
 
 abstract class ScopeManager extends ASTVisitor {
-  @Override public final void endVisit(@SuppressWarnings("unused") final AnnotationTypeDeclaration _) {
+  private static final String UNUSED = "unused";
+  @Override public final void endVisit(@SuppressWarnings(UNUSED) final AnnotationTypeDeclaration _) {
     pop();
   }
-  @Override public final void endVisit(@SuppressWarnings("unused") final AnonymousClassDeclaration _) {
+  @Override public final void endVisit(@SuppressWarnings(UNUSED) final AnonymousClassDeclaration _) {
     pop();
   }
-  @Override public final void endVisit(@SuppressWarnings("unused") final Block _) {
+  @Override public final void endVisit(@SuppressWarnings(UNUSED) final Block _) {
     pop();
   }
-  @Override public final void endVisit(@SuppressWarnings("unused") final EnhancedForStatement _) {
+  @Override public final void endVisit(@SuppressWarnings(UNUSED) final EnhancedForStatement _) {
     pop();
   }
-  @Override public final void endVisit(@SuppressWarnings("unused") final ForStatement _) {
+  @Override public final void endVisit(@SuppressWarnings(UNUSED) final ForStatement _) {
     pop();
   }
-  @Override public final void endVisit(@SuppressWarnings("unused") final TypeDeclaration _) {
+  @Override public final void endVisit(@SuppressWarnings(UNUSED) final TypeDeclaration __) {
     pop();
   }
   abstract boolean go(final AbstractTypeDeclaration ¤);
@@ -83,7 +84,7 @@ abstract class ScopeManager extends ASTVisitor {
     push();
     return go(¤d);
   }
-  @Override public final boolean visit(@SuppressWarnings("unused") final Block _) {
+  @Override public final boolean visit(@SuppressWarnings(UNUSED) final Block __) {
     return push();
   }
   @Override public final boolean visit(final EnhancedForStatement ¤s) {
@@ -94,7 +95,7 @@ abstract class ScopeManager extends ASTVisitor {
     push();
     return go(¤d);
   }
-  @Override public final boolean visit(@SuppressWarnings("unused") final ForStatement _) {
+  @Override public final boolean visit(@SuppressWarnings(UNUSED) final ForStatement __) {
     return push();
   }
   @Override public final boolean visit(final TypeDeclaration ¤d) {

@@ -46,39 +46,37 @@ import org.eclipse.jdt.internal.corext.dom.Bindings;
    * Determines whether an invocation of a method is legal in a specific
    * context.
    *
-   * @param m a method
+   * @param b a method
    * @param n the context in which the method is invoked
    * @param u current {@link CompilationUnit}
    * @return true iff method is visible from its context
    */
-  public static boolean isVisible(IMethodBinding m, ASTNode n, CompilationUnit u) {
-    final int ms = m.getModifiers();
+  public static boolean isVisible(IMethodBinding b, ASTNode n, CompilationUnit u) {
+    final int ms = b.getModifiers();
     if (Modifier.isPublic(ms))
       return true;
-    final ITypeBinding mc = m.getDeclaringClass();
+    final ITypeBinding mc = b.getDeclaringClass();
     if (Modifier.isProtected(ms) && mc.getPackage().equals(getPackage(u)))
       return true;
     final ITypeBinding nc = getClass(n);
-    if (nc != null && nc.equals(mc))
-      return true;
-    return false;
+    return nc != null && nc.equals(mc);
   }
   /**
    * Finds visible method in hierarchy.
    *
-   * @param t base type
+   * @param b base type
    * @param mn method name
-   * @param ps method parameters
+   * @param bs method parameters
    * @param n original {@link ASTNode} containing the method invocation. Used in
    *          order to determine the context in which the method is being used
    * @param u current {@link CompilationUnit}
    * @return the method's binding if it is visible from context, else null
    */
-  public static IMethodBinding getVisibleMethod(ITypeBinding t, String mn, ITypeBinding[] ps, ASTNode n, CompilationUnit u) {
-    if (t == null)
+  public static IMethodBinding getVisibleMethod(ITypeBinding b, String mn, ITypeBinding[] bs, ASTNode n, CompilationUnit u) {
+    if (b == null)
       return null;
-    final IMethodBinding $ = Bindings.findMethodInHierarchy(t, mn, ps);
-    return $ == null || !isVisible($, n, u) ? null : $;
+    final IMethodBinding $ = Bindings.findMethodInHierarchy(b, mn, bs);
+    return $ != null && isVisible($,n,u)?$:null;
   }
   /**
    * Checks if expression is simple.

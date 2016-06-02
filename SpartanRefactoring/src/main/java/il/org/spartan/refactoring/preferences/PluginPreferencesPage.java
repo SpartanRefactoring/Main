@@ -49,7 +49,7 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGr
     addField(gr);
     gr.init();
   }
-  @Override public void init(@SuppressWarnings("unused") final IWorkbench w) {
+  @Override public void init(@SuppressWarnings("unused") final IWorkbench __) {
     setPreferenceStore(Plugin.getDefault().getPreferenceStore());
     setDescription(PluginPreferencesResources.PAGE_DESCRIPTION);
     Plugin.getDefault().getPreferenceStore().addPropertyChangeListener(listener);
@@ -60,7 +60,7 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGr
    * wring preference was modified.
    */
   private static class SpartanPropertyListener implements IPropertyChangeListener {
-    @Override public void propertyChange(@SuppressWarnings("unused") final PropertyChangeEvent event) {
+    @Override public void propertyChange(@SuppressWarnings("unused") final PropertyChangeEvent __) {
       // Recreate the toolbox's internal instance, adding only enabled wrings
       // TODO Ori: check if still working
       try {

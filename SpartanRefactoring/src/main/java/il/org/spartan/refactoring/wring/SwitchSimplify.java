@@ -42,16 +42,16 @@ public class SwitchSimplify extends ReplaceCurrentNode<SwitchStatement> {
         return false;
     return true;
   }
-  @SuppressWarnings("javadoc") public static void insertUntilSequencer(List<Statement> f, List<Statement> t, int i, AST a) {
+  @SuppressWarnings("javadoc") public static void insertUntilSequencer(List<Statement> f, List<Statement> ss, int i, AST t) {
     int c = i;
     while (c < f.size()) {
       if (!(f.get(c) instanceof SwitchCase))
-        t.add(f.get(c));
+        ss.add(f.get(c));
       if (Is.sequencer(f.get(c)))
         return;
       ++c;
     }
-    t.add(a.newBreakStatement());
+    ss.add(t.newBreakStatement());
   }
   static int evaluate(Statement c) {
     return c instanceof ThrowStatement ? 0 : c instanceof ReturnStatement ? 1 : c instanceof ContinueStatement ? 2 : 3;

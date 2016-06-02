@@ -27,7 +27,7 @@ import il.org.spartan.refactoring.utils.Subject;
  */
 public class PrefixIncrementDecrementReturn extends Wring.ReplaceToNextStatement<PrefixExpression> {
   @Override ASTRewrite go(final ASTRewrite r, final PrefixExpression e, final Statement nextStatement,
-      @SuppressWarnings("unused") final TextEditGroup g) {
+      @SuppressWarnings("unused") final TextEditGroup __) {
     if (!in(e.getOperator(), INCREMENT, DECREMENT))
       return null;
     final Statement parent = asStatement(e.getParent());

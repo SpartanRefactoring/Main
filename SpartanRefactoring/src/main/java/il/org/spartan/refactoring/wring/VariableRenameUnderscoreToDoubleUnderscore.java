@@ -19,7 +19,7 @@ public class VariableRenameUnderscoreToDoubleUnderscore<N extends VariableDeclar
   @Override SimpleName replacement(N n) {
     return n.getAST().newSimpleName("__");
   }
-  @Override String description(@SuppressWarnings("unused") N n) {
+  @Override String description(@SuppressWarnings("unused") N __) {
     return "Use double underscore instead a single underscore";
   }
   @Override WringGroup wringGroup() {

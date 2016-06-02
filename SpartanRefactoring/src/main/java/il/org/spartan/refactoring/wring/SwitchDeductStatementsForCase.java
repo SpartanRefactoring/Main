@@ -23,20 +23,21 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
 @Deprecated public class SwitchDeductStatementsForCase extends ReplaceCurrentNode<SwitchStatement> {
   @SuppressWarnings({ "javadoc", "unchecked" }) public static boolean containsCaseWithoutSequencer(SwitchStatement n) {
     boolean ic = false;
-    for (final Statement s : (Iterable<Statement>) n.statements())
-      if (s instanceof SwitchCase) {
-        if (ic)
-          return true;
-        ic = true;
-      } else if (Is.sequencer(s))
+    for (final Statement s : (Iterable<Statement>) n.statements()) if (!(s instanceof SwitchCase)) {
+      if (Is.sequencer(s))
         ic = false;
+    } else {
+      if (ic)
+        return true;
+      ic = true;
+    }
     return false;
   }
-  @SuppressWarnings("javadoc") public static void insertUntilSequencer(List<Statement> f, List<Statement> t, int i,
-      Scalpel scalpel) {
+  @SuppressWarnings("javadoc") public static void insertUntilSequencer(List<Statement> f, List<Statement> ss, int i,
+      Scalpel s) {
     int c = i;
     while (c < f.size()) {
-      t.add(scalpel.duplicate(f.get(c)));
+      ss.add(s.duplicate(f.get(c)));
       if (Is.sequencer(f.get(c)))
         return;
       ++c;
@@ -51,12 +52,14 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
     if (!Is.sequencer((Statement) n.statements().get(n.statements().size() - 1)))
       n.statements().add(n.getAST().newBreakStatement());
     for (final Statement s : (Iterable<Statement>) n.statements()) {
-      if (s instanceof SwitchCase) {
+      if (!(s instanceof SwitchCase)) {
+        if (Is.sequencer(s))
+          ic = false;
+      } else {
         if (ic)
           insertUntilSequencer(n.statements(), $.statements(), n.statements().indexOf(s) + 1, scalpel);
         ic = true;
-      } else if (Is.sequencer(s))
-        ic = false;
+      }
       $.statements().add(scalpel.duplicate(s));
     }
     return $;

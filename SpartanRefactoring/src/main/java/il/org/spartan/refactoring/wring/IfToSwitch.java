@@ -119,21 +119,19 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
         ++$;
     return $;
   }
-  @Override ASTNode replacement(IfStatement n) {
-    if (n.getParent() instanceof IfStatement)
+  @Override ASTNode replacement(IfStatement s) {
+    if (s.getParent() instanceof IfStatement)
       return null;
-    Expression e = n.getExpression();
+    Expression e = s.getExpression();
     if (!isSimpleComparison(e))
       return null;
     e = getLeftFromComparison(e);
     if (!BindingUtils.isSimple(e))
       return null;
-    SwitchStatement $ = n.getAST().newSwitchStatement();
+    SwitchStatement $ = s.getAST().newSwitchStatement();
     $.setExpression(scalpel.duplicate(e));
-    $ = buildSwitch($, n, e);
-    if ($ == null || countCases($) < MIN_CASES_THRESHOLD)
-      return null;
-    return $;
+    $ = buildSwitch($, s, e);
+    return $ != null && countCases($) >= MIN_CASES_THRESHOLD?$:null;
   }
   @Override String description(@SuppressWarnings("unused") IfStatement __) {
     return "Replace if with switch";

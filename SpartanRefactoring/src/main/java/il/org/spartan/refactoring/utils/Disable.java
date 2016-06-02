@@ -59,39 +59,36 @@ public class Disable {
     BodyDeclarationVisitor(Set<ASTNode> dns) {
       this.dns = dns;
     }
-    @Override public boolean visit(AnnotationTypeDeclaration n) {
-      return go(n);
+    @Override public boolean visit(AnnotationTypeDeclaration d) {
+      return go(d);
     }
-    @Override public boolean visit(EnumDeclaration n) {
-      return go(n);
+    @Override public boolean visit(EnumDeclaration d) {
+      return go(d);
     }
-    @Override public boolean visit(TypeDeclaration n) {
-      return go(n);
+    @Override public boolean visit(TypeDeclaration d) {
+      return go(d);
     }
-    @Override public boolean visit(AnnotationTypeMemberDeclaration n) {
-      return go(n);
+    @Override public boolean visit(AnnotationTypeMemberDeclaration d) {
+      return go(d);
     }
-    @Override public boolean visit(EnumConstantDeclaration n) {
-      return go(n);
+    @Override public boolean visit(EnumConstantDeclaration d) {
+      return go(d);
     }
-    @Override public boolean visit(FieldDeclaration n) {
-      return go(n);
+    @Override public boolean visit(FieldDeclaration d) {
+      return go(d);
     }
     @Override public boolean visit(Initializer i) {
       return go(i);
     }
-    @Override public boolean visit(MethodDeclaration n) {
-      return go(n);
+    @Override public boolean visit(MethodDeclaration d) {
+      return go(d);
     }
-    private boolean go(BodyDeclaration n) {
-      final Javadoc j = n.getJavadoc();
-      if (j == null)
+    private boolean go(BodyDeclaration d) {
+      final Javadoc j = d.getJavadoc();
+      if (j == null || !j.toString().contains(dsi))
         return true;
-      if (j.toString().contains(dsi)) {
-        dns.add(n);
-        return false;
-      }
-      return true;
+      dns.add(d);
+      return false;
     }
   }
 }

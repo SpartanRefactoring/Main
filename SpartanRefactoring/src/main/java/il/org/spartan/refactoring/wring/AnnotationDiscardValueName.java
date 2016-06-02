@@ -24,7 +24,7 @@ public class AnnotationDiscardValueName extends Wring.ReplaceCurrentNode<NormalA
     if (a.values().size() != 1)
       return null;
     final MemberValuePair p = (MemberValuePair) a.values().get(0);
-    if (!p.getName().toString().equals("value"))
+    if (!"value".equals(p.getName().toString()))
       return null;
     final SingleMemberAnnotation $ = a.getAST().newSingleMemberAnnotation();
     $.setTypeName(newSimpleName(a, a.getTypeName().getFullyQualifiedName()));

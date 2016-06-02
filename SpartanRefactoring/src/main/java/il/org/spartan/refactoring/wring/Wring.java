@@ -104,7 +104,7 @@ public abstract class Wring<N extends ASTNode> {
   Rewrite make(final N n) {
     return make(n, null);
   }
-  Rewrite make(final N n, @SuppressWarnings("unused") final ExclusionManager exclude) {
+  Rewrite make(final N n, @SuppressWarnings("unused") final ExclusionManager __) {
     return make(n);
   }
   /**
@@ -195,14 +195,14 @@ public abstract class Wring<N extends ASTNode> {
    * Similar to {@link ReplaceCurrentNode}, but with an {@link ExclusionManager}
    */
   static abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends Wring<N> {
-    @Override final Rewrite make(final N n, final ExclusionManager em) {
+    @Override final Rewrite make(final N n, final ExclusionManager m) {
       return !eligible(n) ? null : new Rewrite(description(n), n) {
         @SuppressWarnings("unused") @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-          scalpel.operate(n).replaceWith(replacement(n, em));
+          scalpel.operate(n).replaceWith(replacement(n, m));
         }
       };
     }
-    abstract ASTNode replacement(N n, final ExclusionManager em);
+    abstract ASTNode replacement(N n, final ExclusionManager m);
     @Override boolean scopeIncludes(final N n) {
       return replacement(n, new ExclusionManager()) != null;
     }
