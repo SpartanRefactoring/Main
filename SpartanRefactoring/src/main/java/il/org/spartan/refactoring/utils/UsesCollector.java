@@ -52,23 +52,22 @@ abstract class HidingDepth extends ScopeManager {
 }
 
 abstract class ScopeManager extends ASTVisitor {
-  private static final String UNUSED = "unused";
-  @Override public final void endVisit(@SuppressWarnings(UNUSED) final AnnotationTypeDeclaration _) {
+  @Override public final void endVisit(@SuppressWarnings("unused") final AnnotationTypeDeclaration __) {
     pop();
   }
-  @Override public final void endVisit(@SuppressWarnings(UNUSED) final AnonymousClassDeclaration _) {
+  @Override public final void endVisit(@SuppressWarnings("unused") final AnonymousClassDeclaration __) {
     pop();
   }
-  @Override public final void endVisit(@SuppressWarnings(UNUSED) final Block _) {
+  @Override public final void endVisit(@SuppressWarnings("unused") final Block __) {
     pop();
   }
-  @Override public final void endVisit(@SuppressWarnings(UNUSED) final EnhancedForStatement _) {
+  @Override public final void endVisit(@SuppressWarnings("unused") final EnhancedForStatement __) {
     pop();
   }
-  @Override public final void endVisit(@SuppressWarnings(UNUSED) final ForStatement _) {
+  @Override public final void endVisit(@SuppressWarnings("unused") final ForStatement __) {
     pop();
   }
-  @Override public final void endVisit(@SuppressWarnings(UNUSED) final TypeDeclaration __) {
+  @Override public final void endVisit(@SuppressWarnings("unused") final TypeDeclaration __) {
     pop();
   }
   abstract boolean go(final AbstractTypeDeclaration ¤);
@@ -84,7 +83,7 @@ abstract class ScopeManager extends ASTVisitor {
     push();
     return go(¤d);
   }
-  @Override public final boolean visit(@SuppressWarnings(UNUSED) final Block __) {
+  @Override public final boolean visit(@SuppressWarnings("unused") final Block __) {
     return push();
   }
   @Override public final boolean visit(final EnhancedForStatement ¤s) {
@@ -95,7 +94,7 @@ abstract class ScopeManager extends ASTVisitor {
     push();
     return go(¤d);
   }
-  @Override public final boolean visit(@SuppressWarnings(UNUSED) final ForStatement __) {
+  @Override public final boolean visit(@SuppressWarnings("unused") final ForStatement __) {
     return push();
   }
   @Override public final boolean visit(final TypeDeclaration ¤d) {
@@ -199,7 +198,7 @@ class UsesCollector extends HidingDepth {
    *
    * @param _ JD
    */
-  private void ingore(@SuppressWarnings("unused") final SimpleName _) {
+  private void ingore(@SuppressWarnings("unused") final SimpleName __) {
     // We simply ignore the parameter
   }
   @Override public boolean preVisit2(final ASTNode ¤) {
@@ -269,7 +268,7 @@ class UsesCollectorIgnoreDefinitions extends UsesCollector {
   @Override public boolean visit(final Assignment ¤) {
     return recurse(right(¤));
   }
-  @Override public boolean visit(@SuppressWarnings("unused") final PostfixExpression _) {
+  @Override public boolean visit(@SuppressWarnings("unused") final PostfixExpression __) {
     return false;
   }
   @Override public boolean visit(final PrefixExpression it) {
