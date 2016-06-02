@@ -403,7 +403,7 @@ public enum Extract {
    */
   public static Statement singleStatement(final ASTNode n) {
     final List<Statement> $ = Extract.statements(n);
-    return $.size() != 1 ? null : (Statement) $.get(0);
+    return $.size() != 1 ? null : $.get(0);
   }
   /**
    * Finds the single statement in the "then" branch of an {@link IfStatement}
