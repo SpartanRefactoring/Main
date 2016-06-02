@@ -94,7 +94,7 @@ public class Range {
   }
   @Override public int hashCode() {
     // Cantor pairing function
-    return (int) (from + 0.5 * (to + from) * (to + from + 1));
+    return from + (to + from) * (to + from + 1) / 2;
   }
   @Override public boolean equals(final Object o) {
     return o instanceof Range && from == ((Range) o).from && to == ((Range) o).to;
