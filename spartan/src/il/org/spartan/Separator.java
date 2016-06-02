@@ -20,56 +20,56 @@ import il.org.spartan.iterables.Iterables;
  * @since 12/02/2006)
  */
 public final class Separator {
-	private final String s;
-	boolean first = true;
-	public Separator(final char c) {
-		s = "" + c;
-	}
-	public Separator(final String s) {
-		this.s = s;
-	}
-	@Override public String toString() {
-		if (!first)
-			return s;
-		first = false;
-		return "";
-	}
-	public static <T> String wrap(final String wrap, final Iterable<T> ts, final String between) {
-		return wrap(wrap, wrap, ts, between);
-	}
-	public static <T> String wrap(final String begin, final String end, final Iterable<T> ts, final String between) {
-		if (Iterables.isEmpty(ts))
-			return "";
-		final StringBuilder $ = new StringBuilder(begin);
-		final Separator s = new Separator(between);
-		for (final T t : ts)
-			$.append(s).append(t);
-		return As.string($.append(end));
-	}
-	public static <T> String wrap(final String begin, final String end, final T[] ts, final String between) {
-		if (ts.length == 0)
-			return "";
-		final StringBuilder $ = new StringBuilder(begin);
-		final Separator s = new Separator(between);
-		for (final T t : ts)
-			$.append(s).append(t);
-		return As.string($.append(end));
-	}
-	public static void main(final String[] args) {
-		final Separator s = new Separator(", ");
-		for (final String a : args)
-			System.out.print(s + a);
-	}
-	public static <T> String separateBy(final String between, final T[] ts) {
-		return wrap("", "", ts, between);
-	}
-	public static String separateBy(final int[] is, final String between) {
-		if (is.length == 0)
-			return "";
-		String $ = "";
-		final Separator s = new Separator(between);
-		for (final int i : is)
-			$ += s + new Integer(i).toString();
-		return $;
-	}
+  private final String s;
+  boolean first = true;
+  public Separator(final char c) {
+    this("" + c);
+  }
+  public Separator(final String s) {
+    this.s = s;
+  }
+  @Override public String toString() {
+    if (!first)
+      return s;
+    first = false;
+    return "";
+  }
+  public static <T> String wrap(final String wrap, final Iterable<T> ts, final String between) {
+    return wrap(wrap, wrap, ts, between);
+  }
+  public static <T> String wrap(final String begin, final String end, final Iterable<T> ts, final String between) {
+    if (Iterables.isEmpty(ts))
+      return "";
+    final StringBuilder $ = new StringBuilder(begin);
+    final Separator s = new Separator(between);
+    for (final T t : ts)
+      $.append(s).append(t);
+    return As.string($.append(end));
+  }
+  public static <T> String wrap(final String begin, final String end, final T[] ts, final String between) {
+    if (ts.length == 0)
+      return "";
+    final StringBuilder $ = new StringBuilder(begin);
+    final Separator s = new Separator(between);
+    for (final T t : ts)
+      $.append(s).append(t);
+    return As.string($.append(end));
+  }
+  public static void main(final String[] args) {
+    final Separator s = new Separator(", ");
+    for (final String a : args)
+      System.out.print(s + a);
+  }
+  public static <T> String separateBy(final String between, final T[] ts) {
+    return wrap("", "", ts, between);
+  }
+  public static String separateBy(final int[] is, final String between) {
+    if (is.length == 0)
+      return "";
+    String $ = "";
+    final Separator s = new Separator(between);
+    for (final int i : is)
+      $ += s + new Integer(i).toString();
+    return $;
+  }
 }
