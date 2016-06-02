@@ -1,6 +1,9 @@
 package il.org.spartan.refactoring.spartanizations;
 
 import static il.org.spartan.refactoring.utils.Funcs.duplicate;
+import il.org.spartan.refactoring.utils.Collect;
+import il.org.spartan.refactoring.utils.Rewrite;
+import il.org.spartan.refactoring.utils.expose;
 
 import java.util.List;
 
@@ -17,10 +20,6 @@ import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.jdt.core.dom.rewrite.ListRewrite;
 import org.eclipse.text.edits.TextEditGroup;
 
-import il.org.spartan.refactoring.utils.Collect;
-import il.org.spartan.refactoring.utils.Rewrite;
-import il.org.spartan.refactoring.utils.expose;
-
 /**
  * @author Artium Nihamkin (original)
  * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code> (v2)
@@ -32,12 +31,12 @@ import il.org.spartan.refactoring.utils.expose;
  *        warning in selected places. Consider this example:
  *
  *        <pre>
- *        public static &lt;T&gt; void swap(final T[] ts, final int i, final int j) {
- *          final T t = ts[i];
- *          ts[i] = ts[j];
- *          ts[j] = t;
- *        }
- *        </pre>
+ * public static &lt;T&gt; void swap(final T[] ts, final int i, final int j) {
+ *   final T t = ts[i];
+ *   ts[i] = ts[j];
+ *   ts[j] = t;
+ * }
+ * </pre>
  *
  *        Require comment
  *
@@ -45,7 +44,7 @@ import il.org.spartan.refactoring.utils.expose;
  *  public static &lt;T&gt; void swap(final T[] ts, final int i,
  *        final int j) { final T t = ts[i]; // Don't move! ts[i] = ts[j]; ts[j]
  *        = t; }
- *        </pre>
+ * </pre>
  */
 public class ForwardDeclaration extends Spartanization {
   /** Instantiates this class */
@@ -100,7 +99,7 @@ public class ForwardDeclaration extends Spartanization {
           return true;
     return false;
   }
-  @Override protected ASTVisitor collect(final List<Rewrite> $$, CompilationUnit u) {
+  @SuppressWarnings("unused") @Override protected ASTVisitor collect(final List<Rewrite> $$, CompilationUnit u) {
     return new ASTVisitor() {
       @Override public boolean visit(final VariableDeclarationFragment f) {
         final ASTNode $ = f.getParent().getParent();

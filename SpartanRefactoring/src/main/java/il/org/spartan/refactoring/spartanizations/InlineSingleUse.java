@@ -1,5 +1,9 @@
 package il.org.spartan.refactoring.spartanizations;
 
+import il.org.spartan.refactoring.utils.Collect;
+import il.org.spartan.refactoring.utils.Is;
+import il.org.spartan.refactoring.utils.Rewrite;
+
 import java.util.List;
 
 import org.eclipse.core.resources.IMarker;
@@ -11,10 +15,6 @@ import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
-
-import il.org.spartan.refactoring.utils.Collect;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.Rewrite;
 
 /**
  * @author Artium Nihamkin (original)
@@ -67,7 +67,7 @@ public class InlineSingleUse extends Spartanization {
       }
     });
   }
-  @Override protected ASTVisitor collect(final List<Rewrite> $, CompilationUnit u) {
+  @SuppressWarnings("unused") @Override protected ASTVisitor collect(final List<Rewrite> $, CompilationUnit u) {
     return new ASTVisitor() {
       @Override public boolean visit(final VariableDeclarationFragment node) {
         if (!(node.getParent() instanceof VariableDeclarationStatement))

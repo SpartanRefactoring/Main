@@ -26,6 +26,8 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.LESS;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.LESS_EQUALS;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.NOT_EQUALS;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.NOT;
+import il.org.spartan.refactoring.wring.PrefixNotPushdown;
+import il.org.spartan.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,9 +74,6 @@ import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WildcardType;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-
-import il.org.spartan.refactoring.wring.PrefixNotPushdown;
-import il.org.spartan.utils.Utils;
 
 /**
  * Useful Functions
@@ -380,7 +379,7 @@ public enum Funcs {
    * @param n JD
    * @return a duplicate of the parameter, downcasted to the returned type.
    */
-  @SuppressWarnings("unchecked") //
+  @SuppressWarnings("unchecked")//
   public static <N extends ASTNode> N duplicate(final N n) {
     return Scalpel.isInaccessible(n) ? n : (N) copySubtree(n.getAST(), n);
   }
@@ -499,8 +498,7 @@ public enum Funcs {
       case EXPRESSION_STATEMENT:
         return isNodeIncOrDecExp(((ExpressionStatement) n).getExpression());
       case POSTFIX_EXPRESSION:
-        return in(((PostfixExpression) n).getOperator(), PostfixExpression.Operator.INCREMENT,
-            PostfixExpression.Operator.DECREMENT);
+        return in(((PostfixExpression) n).getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
       case PREFIX_EXPRESSION:
         return in(asPrefixExpression(n).getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT);
       default:
@@ -704,14 +702,12 @@ public enum Funcs {
   }
   public static String shortName(final Type t) {
     return t instanceof NameQualifiedType ? shortName((NameQualifiedType) t)
-        : t instanceof PrimitiveType ? shortName((PrimitiveType) t)
-            : t instanceof QualifiedType ? shortName((QualifiedType) t)
-                : t instanceof SimpleType ? shortName((SimpleType) t)
-                    : t instanceof WildcardType ? shortName((WildcardType) t)
-                        : t instanceof ArrayType ? shortName((ArrayType) t)
-                            : t instanceof IntersectionType ? shortName((IntersectionType) t) //
-                                : t instanceof ParameterizedType ? shortName((ParameterizedType) t)//
-                                    : t instanceof UnionType ? shortName((UnionType) t) : null;
+        : t instanceof PrimitiveType ? shortName((PrimitiveType) t) : t instanceof QualifiedType ? shortName((QualifiedType) t)
+            : t instanceof SimpleType ? shortName((SimpleType) t) : t instanceof WildcardType ? shortName((WildcardType) t)
+                : t instanceof ArrayType ? shortName((ArrayType) t)
+                    : t instanceof IntersectionType ? shortName((IntersectionType) t) //
+                        : t instanceof ParameterizedType ? shortName((ParameterizedType) t)//
+                            : t instanceof UnionType ? shortName((UnionType) t) : null;
   }
   public static String shortName(final String s) {
     return new JavaTypeNameParser(s).shortName();
@@ -788,7 +784,7 @@ public enum Funcs {
   private static String shortName(final ArrayType t) {
     return shortName(t.getElementType()) + repeat(t.getDimensions(), 's');
   }
-  private static String shortName(final IntersectionType t) {
+  private static String shortName(@SuppressWarnings("unused") final IntersectionType __) {
     // TODO Auto-generated method stub
     return null;
   }

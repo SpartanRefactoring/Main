@@ -6,6 +6,7 @@ import static il.org.spartan.refactoring.utils.Funcs.right;
 import static il.org.spartan.refactoring.utils.Funcs.same;
 import static il.org.spartan.utils.Utils.asArray;
 import static il.org.spartan.utils.Utils.in;
+import il.org.spartan.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,8 +39,6 @@ import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
-
-import il.org.spartan.utils.Utils;
 
 /**
  * A utility class for finding occurrences of an {@link Expression} in an
@@ -201,7 +200,7 @@ public enum Collect {
         collect(n.getExpression());
         return false;
       }
-      @Override public boolean visit(final ForStatement s) {
+      @Override public boolean visit(@SuppressWarnings("unused") final ForStatement __) {
         ++loopDepth;
         return true;
       }
@@ -230,7 +229,7 @@ public enum Collect {
       @Override public boolean visit(final SimpleName n) {
         return collect(n);
       }
-      @Override public boolean visit(final WhileStatement s) {
+      @Override public boolean visit(@SuppressWarnings("unused") final WhileStatement __) {
         ++loopDepth;
         return true;
       }

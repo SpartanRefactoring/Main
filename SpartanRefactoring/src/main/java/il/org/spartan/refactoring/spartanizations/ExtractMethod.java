@@ -1,5 +1,8 @@
 package il.org.spartan.refactoring.spartanizations;
 
+import il.org.spartan.refactoring.utils.Rewrite;
+import il.org.spartan.refactoring.utils.UnifiedGroup;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,15 +17,12 @@ import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.jdt.internal.corext.refactoring.code.ExtractMethodRefactoring;
 import org.eclipse.text.edits.TextEditGroup;
 
-import il.org.spartan.refactoring.utils.Rewrite;
-import il.org.spartan.refactoring.utils.UnifiedGroup;
-
 /**
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code> (original /
  *         24.06.2015)
  * @since 2015/06/24
  */
-@SuppressWarnings("restriction") // "internal use only" for
+@SuppressWarnings("restriction")// "internal use only" for
 // "ExtractMethodRefactoring" import,
 // which is supposed to be fine due to the
 // fact that extract method API is internal.
@@ -34,7 +34,7 @@ public class ExtractMethod extends Spartanization {
 
   CompilationUnit oldCu;
 
-  @Override protected ASTVisitor collect(final List<Rewrite> $, CompilationUnit u) {
+  @SuppressWarnings("unused") @Override protected ASTVisitor collect(final List<Rewrite> $, CompilationUnit u) {
     // TODO Ofir: No opportunities for now, if it's 2016 and not added yet,
     // blame
     return new ASTVisitor() {

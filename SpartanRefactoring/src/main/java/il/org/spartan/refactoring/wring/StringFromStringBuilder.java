@@ -126,7 +126,7 @@ public class StringFromStringBuilder extends Wring.ReplaceCurrentNode<MethodInvo
     }
     return $;
   }
-  @Override String description(final MethodInvocation i) {
+  @Override String description(@SuppressWarnings("unused") final MethodInvocation __) {
     return "Use \"+\" operator in order to append strings";
   }
   @Override WringGroup wringGroup() {

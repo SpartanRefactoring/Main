@@ -157,7 +157,7 @@ import org.eclipse.jdt.core.dom.PackageDeclaration;
       printHelpPrompt();
       return true;
     }
-    for (final String a : args) {
+    for (final String a : args)
       switch (a) {
         case "-N":
           optDoNotOverwrite = true;
@@ -174,16 +174,16 @@ import org.eclipse.jdt.core.dom.PackageDeclaration;
         case "-r":
           optStatsChanges = true;
           break;
+        default:
+          if (!a.startsWith("-"))
+            optPath = a;
+          try {
+            if (a.startsWith("-C"))
+              optRounds = Integer.parseUnsignedInt(a.substring(2));
+          } catch (final NumberFormatException e) {
+            throw e; // TODO: Do we want to do something else?
+          }
       }
-      if (!a.startsWith("-"))
-        optPath = a;
-      try {
-        if (a.startsWith("-C"))
-          optRounds = Integer.parseUnsignedInt(a.substring(2));
-      } catch (final NumberFormatException e) {
-        throw e; // TODO: Do we want to do something else?
-      }
-    }
     return optPath == null;
   }
   void prepareTempIJavaProject() throws CoreException {
