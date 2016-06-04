@@ -44,7 +44,7 @@ public enum Wrap {
           ") patrick();\n" + //
           Statement.after + //
           ""), //
-  ComplilationUnit("", ""),//
+          ComplilationUnit("", ""),//
   //
   ;
   /**
@@ -68,8 +68,10 @@ public enum Wrap {
         .replaceAll("//.*?\n", "\n")//
         .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
   }
+
   private final String before;
   private final String after;
+
   Wrap(final String before, final String after) {
     this.before = before;
     this.after = after;
