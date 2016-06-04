@@ -118,7 +118,6 @@ public class TrimmerTestsUtils {
       final Set<String> csa = getComments(unpeeled);
       for (final String c : csb)
         assertTrue("Comment " + c + " not preserved", csa.contains(c));
-      System.out.println(csa);
       return new Operand(peeled);
     }
     public Operand toCompilationUnit(final String expected) {
