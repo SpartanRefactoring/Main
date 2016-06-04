@@ -8,15 +8,20 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.Comment;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jface.text.Document;
 
@@ -26,6 +31,7 @@ import il.org.spartan.refactoring.spartanizations.Spartanization;
 import il.org.spartan.refactoring.spartanizations.TESTUtils;
 import il.org.spartan.refactoring.spartanizations.Wrap;
 import il.org.spartan.refactoring.utils.As;
+import il.org.spartan.refactoring.utils.Source;
 
 public class TrimmerTestsUtils {
   static class OperandToWring<N extends ASTNode> extends TrimmerTestsUtils.Operand {
@@ -96,6 +102,24 @@ public class TrimmerTestsUtils {
         checkExpected(expected);
       return new Operand(expected);
     }
+    public Operand preservesComment() {
+      final Wrap w = findWrap();
+      final String wrap = w.on(get());
+      final Set<String> csb = getComments(wrap);
+      Source.set(Source.NONE_PATH, wrap);
+      final String unpeeled = TrimmerTestsUtils.apply(new Trimmer(), wrap);
+      if (wrap.equals(unpeeled))
+        fail("Nothing done on " + get());
+      final String peeled = w.off(unpeeled);
+      if (peeled.equals(get()))
+        assertNotEquals("No trimming of " + get(), get(), peeled);
+      if (compressSpaces(peeled).equals(compressSpaces(get())))
+        assertNotEquals("Trimming of " + get() + "is just reformatting", compressSpaces(peeled), compressSpaces(get()));
+      final Set<String> csa = getComments(unpeeled);
+      for (final String c : csb)
+        assertTrue("Comment " + c + " not preserved", csa.contains(c));
+      return new Operand(peeled);
+    }
     public Operand toCompilationUnit(final String expected) {
       if (expected == null || expected.isEmpty())
         checkSame();
@@ -145,6 +169,13 @@ public class TrimmerTestsUtils {
       if (peeled.equals(get()) || compressSpaces(peeled).equals(compressSpaces(get())))
         return;
       assertSimilar(get(), peeled);
+    }
+    @SuppressWarnings("unchecked") private static Set<String> getComments(String unpeeled) {
+      final List<Comment> cs = ((CompilationUnit) As.COMPILIATION_UNIT.ast(unpeeled)).getCommentList();
+      final Set<String> $ = new HashSet<>();
+      for (final Comment c : cs)
+        $.add(unpeeled.substring(c.getStartPosition(), c.getStartPosition() + c.getLength()));
+      return $;
     }
   }
 
@@ -198,6 +229,6 @@ public class TrimmerTestsUtils {
     return new OperandToWring<>(from, clazz);
   }
   static Operand trimming(final String from) {
-    return new Operand(from);
+    return new Operand(from + "\n");
   }
 }

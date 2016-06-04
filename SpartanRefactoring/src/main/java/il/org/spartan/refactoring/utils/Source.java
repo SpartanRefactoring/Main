@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -19,6 +20,10 @@ import org.eclipse.text.edits.TextEditGroup;
  */
 public class Source {
   private static Map<String, String> sm = new HashMap<>();
+  /**
+   * Path for java programs without file
+   */
+  public static final IPath NONE_PATH = new Path("");
 
   /**
    * @param p file path
@@ -50,6 +55,6 @@ public class Source {
     if (u == null)
       return null;
     final IJavaElement je = u.getJavaElement();
-    return je == null ? null : sm.get(je.getPath().toString());
+    return sm.get((je == null ? NONE_PATH : je.getPath()).toString());
   }
 }

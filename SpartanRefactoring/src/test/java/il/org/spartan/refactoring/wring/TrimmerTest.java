@@ -59,14 +59,17 @@ import il.org.spartan.refactoring.utils.Is;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class TrimmerTest {
+  @Test public void testCommentsPreservation1() {
+    trimming("if (x) {\n" //
+        + "  System.out.println(\"x is true\"); // c\n" //
+        + "}").preservesComment();
+  }
+  @Test public void testCommentsPreservation2() {
+    trimming("s.equals(/* c */\"s\")").preservesComment();
+  }
   @Test public void actualExampleForSortAddition() {
     trimming("1 + b.statements().indexOf(declarationStmt)").to("");
   }
-  /* TODO Ori: add comments preservation tests
-   *
-   * @Test public void preserve000() { trimmingPreservingComments(
-   * "if (a) return true; // true!\n else return false;").to(
-   * "return a; // true!"); } */
   @Test public void actualExampleForSortAdditionInContext() {
     final String from = "2 + a < b";
     final String expected = "a + 2 < b";
