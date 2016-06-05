@@ -3115,7 +3115,7 @@ public class TrimmerTest {
             + "    break;" //
             + "  }");
   }
-  @Test public void switchSimplifyWithDefault() {
+  @Test public void switchSimplifyWithDefault1() {
     TrimmerTestsUtils
         .trimming("" //
             + "switch (x) {" //
@@ -3141,7 +3141,49 @@ public class TrimmerTest {
             + "    break;" //
             + "  }");
   }
-  @Test public void switchSimplifyCaseAfterDefault() {
+  @Test public void switchSimplifyWithDefault2() {
+    trimming("" + "switch (a) {\n" //
+        + "case \"-N\":" //
+        + "  optDoNotOverwrite = true;" //
+        + "  break;" //
+        + "case \"-E\":" //
+        + "  optIndividualStatistics = true;" //
+        + "  break;" //
+        + "case \"-V\":" //
+        + "  optVerbose = true;" //
+        + "  break;" //
+        + "case \"-l\":" //
+        + "  optStatsLines = true;" //
+        + "  break;" //
+        + "case \"-r\":" //
+        + "  optStatsChanges = true;" //
+        + "  break;" //
+        + "default:" //
+        + "  if (!a.startsWith(\"-\"))" //
+        + "    optPath = a;" //
+        + "  try {" //
+        + "    if (a.startsWith(\"-C\"))" //
+        + "      optRounds = Integer.parseUnsignedInt(a.substring(2));" //
+        + "  } catch (final NumberFormatException e) {" //
+        + "    throw e;" //
+        + "  }" //
+        + "}").to("");
+  }
+  @Test public void switchSimplifyWithDefault() {
+    trimming("" + "switch (internalDelta.getKind()) {" //
+        + "case IResourceDelta.ADDED:" //
+        + "case IResourceDelta.CHANGED:" //
+        + "  // handle added and changed resource" //
+        + "  // handle added and changed resource" //
+        + "  addMarkers(internalDelta.getResource());" //
+        + "  // return true to continue visiting children." //
+        + "  // return true to continue visiting children." //
+        + "  return true;" //
+        + "default:" //
+        + "  return true; // return true to continue visiting children." //
+        + "}").to("");
+  }
+  @Test public void switchSimplifyCaseAfterDefault1() {
     TrimmerTestsUtils.trimming("" //
         + "switch (n.getNodeType()) {" //
         + "  default:" //
@@ -3155,6 +3197,65 @@ public class TrimmerTest {
         + "  case THROW_STATEMENT:" //
         + "    return 3;" //
         + "  }").to("");
+  }
+  @Test public void switchSimplifyCaseAfterDefault2() {
+    trimming("" //
+        + "switch (e.getNodeType()) {\n" //
+        + "default:\n" //
+        + "  break;\n" //
+        + "case CONDITIONAL_EXPRESSION:\n" //
+        + "  return true;\n" //
+        + "case PARENTHESIZED_EXPRESSION:\n" //
+        + "  if (((ParenthesizedExpression) e).getExpression().getNodeType() == CONDITIONAL_EXPRESSION)\n" //
+        + "    return true;\n" //
+        + "}")
+            .to("" //
+                + "switch (e.getNodeType()) {\n" //
+                + "case CONDITIONAL_EXPRESSION:\n" //
+                + "  return true;\n" //
+                + "default:\n" //
+                + "  break;\n" //
+                + "case PARENTHESIZED_EXPRESSION:\n" //
+                + "  if (((ParenthesizedExpression) e).getExpression().getNodeType() == CONDITIONAL_EXPRESSION)\n" //
+                + "    return true;\n" //
+                + "}");
+  }
+  @Test public void switchSimplifyCaseAfterefault3() {
+    trimming("" //
+        + "switch (totalNegation) {\n" //
+        + "default:\n" //
+        + "  break;\n" //
+        + "  case 0:\n" //
+        + "  return null;\n" //
+        + "case 1:\n" //
+        + "  if (negationLevel(es.get(0)) == 1)\n" //
+        + "    return null;\n" //
+        + "}")
+            .to("" //
+                + "switch (totalNegation) {\n" //
+                + "  case 0:\n" //
+                + "  return null;\n" //
+                + "default:\n" //
+                + "  break;\n" //
+                + "case 1:\n" //
+                + "  if (negationLevel(es.get(0)) == 1)\n" //
+                + "    return null;\n" //
+                + "}");
+  }
+  @Test public void switchSimplifyCaseAfterDefault() {
+    trimming("" //
+        + "switch (n.getNodeType()) {\n" //
+        + "default:\n" //
+        + "  return -1;\n" //
+        + "case BREAK_STATEMENT:\n" //
+        + "  return 0;\n" //
+        + "case CONTINUE_STATEMENT:\n" //
+        + "  return 1;\n" //
+        + "case RETURN_STATEMENT:\n" //
+        + "  return 2;\n" //
+        + "case THROW_STATEMENT:\n" //
+        + "  return 3;\n" //
+        + "}").to("");
   }
   @Test public void synchronizedBraces() {
     trimming("" //

@@ -49,7 +49,6 @@ public class SwitchSimplify extends ReplaceCurrentNode<SwitchStatement> {
         return;
       ++c;
     }
-    ss.add(t.newBreakStatement());
   }
   static int evaluate(Statement c) {
     return c instanceof ThrowStatement ? 0 : c instanceof ReturnStatement ? 1 : c instanceof ContinueStatement ? 2 : 3;
