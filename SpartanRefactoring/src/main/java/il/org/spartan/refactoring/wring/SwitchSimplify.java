@@ -1,10 +1,16 @@
 package il.org.spartan.refactoring.wring;
 
+import static il.org.spartan.refactoring.utils.Funcs.same;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
+import il.org.spartan.refactoring.utils.Is;
+import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
+
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,10 +24,6 @@ import org.eclipse.jdt.core.dom.SwitchCase;
 import org.eclipse.jdt.core.dom.SwitchStatement;
 import org.eclipse.jdt.core.dom.ThrowStatement;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
-
 /**
  * A wring to remove ineffective cases from a switch statement. TODO Ori: add
  * tests
@@ -32,14 +34,6 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
 public class SwitchSimplify extends ReplaceCurrentNode<SwitchStatement> {
   private final ASTMatcher matcher = new ASTMatcher();
 
-  @SuppressWarnings("javadoc") public static boolean compareStatementsLists(List<Statement> l1, List<Statement> l2, ASTMatcher m) {
-    if (l1.size() != l2.size())
-      return false;
-    for (int i = 0; i < l1.size(); ++i)
-      if (!l1.get(i).subtreeMatch(m, l2.get(i)))
-        return false;
-    return true;
-  }
   @SuppressWarnings("javadoc") public static void insertUntilSequencer(List<Statement> f, List<Statement> ss, int i, AST t) {
     int c = i;
     while (c < f.size()) {
@@ -50,17 +44,11 @@ public class SwitchSimplify extends ReplaceCurrentNode<SwitchStatement> {
       ++c;
     }
   }
-  static int evaluate(Statement c) {
+  static int escapeLevel(Statement c) {
     return c instanceof ThrowStatement ? 0 : c instanceof ReturnStatement ? 1 : c instanceof ContinueStatement ? 2 : 3;
   }
   @SuppressWarnings("unchecked") @Override ASTNode replacement(SwitchStatement n) {
-    final List<Map.Entry<SwitchCase, List<Statement>>> m1 = new ArrayList<>();
-    for (final Statement s : (Iterable<Statement>) n.statements())
-      if (s instanceof SwitchCase) {
-        final List<Statement> l = new ArrayList<>();
-        m1.add(m1.size(), new AbstractMap.SimpleEntry<>((SwitchCase) s, l));
-        insertUntilSequencer(n.statements(), l, n.statements().indexOf(s) + 1, n.getAST());
-      }
+    final List<Map.Entry<SwitchCase, List<Statement>>> m1 = branchesOf(n);
     final Map<SwitchCase, List<Statement>> m2 = new HashMap<>();
     for (final Map.Entry<SwitchCase, List<Statement>> c : m1)
       m2.put(c.getKey(), c.getValue());
@@ -68,7 +56,7 @@ public class SwitchSimplify extends ReplaceCurrentNode<SwitchStatement> {
     for (final Map.Entry<SwitchCase, List<Statement>> c : m1) {
       boolean a = true;
       for (final List<SwitchCase> cl : m3)
-        if (compareStatementsLists(c.getValue(), m2.get(cl.get(0)), matcher)) {
+        if (same(c.getValue(), m2.get(cl.get(0)))) {
           if (!c.getKey().isDefault()) {
             if (!cl.get(0).isDefault())
               cl.add(cl.size(), c.getKey());
@@ -87,8 +75,8 @@ public class SwitchSimplify extends ReplaceCurrentNode<SwitchStatement> {
     }
     Collections.sort(m3, new Comparator<List<SwitchCase>>() {
       @Override public int compare(List<SwitchCase> o1, List<SwitchCase> o2) {
-        return evaluate(m2.get(o1.get(0)).get(m2.get(o1.get(0)).size() - 1))
-            - evaluate(m2.get(o2.get(0)).get(m2.get(o2.get(0)).size() - 1));
+        return escapeLevel(m2.get(o1.get(0)).get(m2.get(o1.get(0)).size() - 1))
+            - escapeLevel(m2.get(o2.get(0)).get(m2.get(o2.get(0)).size() - 1));
       }
     });
     final SwitchStatement $ = n.getAST().newSwitchStatement();
@@ -101,6 +89,16 @@ public class SwitchSimplify extends ReplaceCurrentNode<SwitchStatement> {
       scalpel.duplicateInto(scalpel.duplicateWith(ls), $.statements());
     }
     return !n.subtreeMatch(matcher, $) ? $ : null;
+  }
+  private Map<SwitchCase, List<Statement>> branchesOf(SwitchStatement n) {
+    final LinkedHashMap<SwitchCase, List<Statement>> $ = new LinkedHashMap<SwitchCase, List<Statement>>();
+    for (final Statement s : (Iterable<Statement>) n.statements())
+      if (s instanceof SwitchCase) {
+        final List<Statement> l = new ArrayList<>();
+        $.add($.size(), new AbstractMap.SimpleEntry<>((SwitchCase) s, l));
+        insertUntilSequencer(n.statements(), l, n.statements().indexOf(s) + 1, n.getAST());
+      }
+    return $;
   }
   @Override String description(@SuppressWarnings("unused") SwitchStatement __) {
     return "Simplify switch statement";

@@ -500,19 +500,21 @@ public enum Is {
     );
   }
   private static boolean notStringUp(final Expression e) {
-    for (ASTNode context = e.getParent(); context != null; context = context.getParent()) switch (context.getNodeType()) {
-      default:
-        return false;
-      case ARRAY_ACCESS:
-      case PREFIX_EXPRESSION:
-      case POSTFIX_EXPRESSION:
-        return true;
-      case INFIX_EXPRESSION:
-        if (asInfixExpression(context).getOperator().equals(PLUS)) continue;
-        return true;
-      case PARENTHESIZED_EXPRESSION:
-        continue;
-    }
+    for (ASTNode context = e.getParent(); context != null; context = context.getParent())
+      switch (context.getNodeType()) {
+        default:
+          return false;
+        case ARRAY_ACCESS:
+        case PREFIX_EXPRESSION:
+        case POSTFIX_EXPRESSION:
+          return true;
+        case INFIX_EXPRESSION:
+          if (asInfixExpression(context).getOperator().equals(PLUS))
+            continue;
+          return true;
+        case PARENTHESIZED_EXPRESSION:
+          continue;
+      }
     return false;
   }
   /**
