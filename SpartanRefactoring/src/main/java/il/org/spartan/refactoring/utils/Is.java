@@ -61,6 +61,7 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.PLUS;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.REMAINDER;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.TIMES;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.XOR;
+import il.org.spartan.misc.Wrapper;
 
 import java.util.List;
 
@@ -103,8 +104,6 @@ import org.eclipse.jdt.core.dom.SuperMethodInvocation;
 import org.eclipse.jdt.core.dom.ThisExpression;
 import org.eclipse.jdt.core.dom.TypeLiteral;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
-
-import il.org.spartan.misc.Wrapper;
 
 /**
  * An empty <code><b>enum</b></code> for fluent programming. The name should say
@@ -217,13 +216,14 @@ public enum Is {
       if (e == null)
         continue;
       switch (e.getNodeType()) {
-        default:
-          break;
         case CONDITIONAL_EXPRESSION:
           return true;
+        default:
+          break;
         case PARENTHESIZED_EXPRESSION:
           if (((ParenthesizedExpression) e).getExpression().getNodeType() == CONDITIONAL_EXPRESSION)
             return true;
+          break;
       }
     }
     return false;
@@ -387,8 +387,7 @@ public enum Is {
       case EXPRESSION_STATEMENT:
         return isNodeIncOrDecExp(((ExpressionStatement) n).getExpression());
       case POSTFIX_EXPRESSION:
-        return in(((PostfixExpression) n).getOperator(), PostfixExpression.Operator.INCREMENT,
-            PostfixExpression.Operator.DECREMENT);
+        return in(((PostfixExpression) n).getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
       case PREFIX_EXPRESSION:
         return in(asPrefixExpression(n).getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT);
       default:
@@ -501,21 +500,19 @@ public enum Is {
     );
   }
   private static boolean notStringUp(final Expression e) {
-    for (ASTNode context = e.getParent(); context != null; context = context.getParent())
-      switch (context.getNodeType()) {
-        case INFIX_EXPRESSION:
-          if (asInfixExpression(context).getOperator().equals(PLUS))
-            continue;
-          return true;
-        case ARRAY_ACCESS:
-        case PREFIX_EXPRESSION:
-        case POSTFIX_EXPRESSION:
-          return true;
-        case PARENTHESIZED_EXPRESSION:
-          continue;
-        default:
-          return false;
-      }
+    for (ASTNode context = e.getParent(); context != null; context = context.getParent()) switch (context.getNodeType()) {
+      default:
+        return false;
+      case ARRAY_ACCESS:
+      case PREFIX_EXPRESSION:
+      case POSTFIX_EXPRESSION:
+        return true;
+      case INFIX_EXPRESSION:
+        if (asInfixExpression(context).getOperator().equals(PLUS)) continue;
+        return true;
+      case PARENTHESIZED_EXPRESSION:
+        continue;
+    }
     return false;
   }
   /**

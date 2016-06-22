@@ -16,6 +16,16 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import il.org.spartan.refactoring.spartanizations.TESTUtils;
+import il.org.spartan.refactoring.spartanizations.Wrap;
+import il.org.spartan.refactoring.utils.As;
+import il.org.spartan.refactoring.utils.Collect;
+import il.org.spartan.refactoring.utils.Collect.Of;
+import il.org.spartan.refactoring.utils.Extract;
+import il.org.spartan.refactoring.utils.Is;
+import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
+import il.org.spartan.refactoring.wring.Wring.VariableDeclarationFragementAndStatement;
+import il.org.spartan.utils.Utils;
 
 import java.util.Collection;
 import java.util.List;
@@ -39,23 +49,12 @@ import org.junit.runners.MethodSorters;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import il.org.spartan.refactoring.spartanizations.TESTUtils;
-import il.org.spartan.refactoring.spartanizations.Wrap;
-import il.org.spartan.refactoring.utils.As;
-import il.org.spartan.refactoring.utils.Collect;
-import il.org.spartan.refactoring.utils.Collect.Of;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.refactoring.wring.Wring.VariableDeclarationFragementAndStatement;
-import il.org.spartan.utils.Utils;
-
 /**
  * @author Yossi Gil
  * @since 2014-07-13
  */
-@SuppressWarnings({ "javadoc", "static-method" }) //
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@SuppressWarnings({ "javadoc", "static-method" })//
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 public class DeclarationIfAssginmentTest {
   static final DeclarationInitializerIfAssignment WRING = new DeclarationInitializerIfAssignment();
 
@@ -102,8 +101,9 @@ public class DeclarationIfAssginmentTest {
     assertThat(of.existIn(s.getExpression(), right(a)), is(true));
   }
 
-  @RunWith(Parameterized.class) //
+  @RunWith(Parameterized.class)//
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Declaration {
+    // Use asArray for more compact initialization of 2D array.
     static String[][] cases = Utils.asArray(//
         new String[] { "Vanilla", "int a; a =3;", }, //
         new String[] { "Not empty else", "int a; if (x) a = 3; else a++;", }, //
@@ -117,7 +117,7 @@ public class DeclarationIfAssginmentTest {
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file.
      */
-    @Parameters(name = DESCRIPTION) //
+    @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
@@ -127,8 +127,8 @@ public class DeclarationIfAssginmentTest {
     }
   }
 
-  @SuppressWarnings({ "javadoc" }) //
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+  @SuppressWarnings({ "javadoc" })//
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   public class Wringed extends AbstractWringTest<VariableDeclarationFragment> {
     public Wringed() {
       super(WRING);

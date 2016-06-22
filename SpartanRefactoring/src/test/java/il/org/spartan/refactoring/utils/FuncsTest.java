@@ -39,7 +39,7 @@ import org.junit.runners.MethodSorters;
  * @since 2015-07-18
  * @see Funcs
  */
-@SuppressWarnings({ "static-method", "javadoc" }) @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@SuppressWarnings({ "static-method", "javadoc" }) @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 public class FuncsTest {
   @Test public void arrayOfInts() {
     assertThat(shortName(t("int[][] _;")), equalTo("iss"));
@@ -103,6 +103,12 @@ public class FuncsTest {
   }
   @Test public void sameOfNulls() {
     assertTrue(Funcs.same((ASTNode) null, (ASTNode) null));
+  }
+  @Test public void negation0Trivial() {
+    assertThat(negationLevel(e("a")), is(0));
+  }
+  @Test public void negation1Trivial() {
+    assertThat(negationLevel(e("-a")), is(1));
   }
   @Test public void negationOfExpressionNoNegation() {
     assertThat(negationLevel(e("((((4))))")), is(0));
