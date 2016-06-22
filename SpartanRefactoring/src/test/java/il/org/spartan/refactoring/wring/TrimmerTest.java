@@ -3257,6 +3257,105 @@ public class TrimmerTest {
         + "  return 3;\n" //
         + "}").to("");
   }
+  @Test public void switchSimplifyCasesMergeWithDefault() {
+    trimming("" //
+        + "switch (n.getNodeType()) {\n" //
+        + "default:\n" //
+        + "  return -1;\n" //
+        + "case BREAK_STATEMENT:\n" //
+        + "  return 0;\n" //
+        + "case CONTINUE_STATEMENT:\n" //
+        + "  return 1;\n" //
+        + "case RETURN_STATEMENT:\n" //
+        + "  return 2;\n" //
+        + "case THROW_STATEMENT:\n" //
+        + "  return -1;\n" //
+        + "}")
+            .to("" //
+                + "switch (n.getNodeType()) {\n" //
+                + "default:\n" //
+                + "  return -1;\n" //
+                + "case BREAK_STATEMENT:\n" //
+                + "  return 0;\n" //
+                + "case CONTINUE_STATEMENT:\n" //
+                + "  return 1;\n" //
+                + "case RETURN_STATEMENT:\n" //
+                + "  return 2;\n" //
+                + "}");
+  }
+  @Test public void switchSimplifyParenthesizedCases() {
+    trimming("" //
+        + "switch (checkMatrix(A)) {\n" //
+        + "  case -1: {\n" //
+        + "    System.out.println(\"1\");\n" //
+        + "    System.exit(0);\n" //
+        + "  }\n" //
+        + "  case -2: {\n" //
+        + "    System.out.println(\"2\");\n" //
+        + "    System.exit(0);\n" //
+        + "  }\n" //
+        + "  case 0: {\n" //
+        + "    System.out.println(\"3\");\n" //
+        + "    break;\n" //
+        + "  }\n" //
+        + "}")
+            .to("" //
+                + "switch (checkMatrix(A)) {\n" //
+                + "case -1: {\n" //
+                + "  System.out.println(\"1\");\n" //
+                + "  System.exit(0);\n" //
+                + "} {\n" //
+                + "  System.out.println(\"2\");\n" //
+                + "  System.exit(0);\n" //
+                + "} {\n" //
+                + "  System.out.println(\"3\");\n" //
+                + "  break;\n" //
+                + "}\n" //
+                + "case -2: {\n" //
+                + "  System.out.println(\"2\");\n" //
+                + "  System.exit(0);\n" //
+                + "} {\n" //
+                + "  System.out.println(\"3\");\n" //
+                + "  break;\n" //
+                + "}\n" //
+                + "case 0: {\n" //
+                + "  System.out.println(\"3\");\n" //
+                + "  break;\n" //
+                + "}\n" //
+                + "}");
+    // switch (checkMatrix(A)) {
+    // case -1: {
+    // System.out.println("1");
+    // System.exit(0);
+    // }
+    // case -2: {
+    // System.out.println("2");
+    // System.exit(0);
+    // }
+    // case 0: {
+    // System.out.println("3");
+    // break;
+    // }
+    // }
+  }
+  @Test public void switchSimplifiyNoSequencer() {
+    trimming("" //
+        + "switch(x) {\n" //
+        + "case 1:\n" //
+        + "  System.out.println('!');\n" //
+        + "case 2:\n" //
+        + "  System.out.println('@');\n" //
+        + "}")
+            .to("" //
+                + "switch(x) {\n" //
+                + "case 1:\n" //
+                + "  System.out.println('!');\n" //
+                + "  System.out.println('@');\n" //
+                + "  break;\n" //
+                + "case 2:\n" //
+                + "  System.out.println('@');\n" //
+                + "}");
+  }
   @Test public void synchronizedBraces() {
     trimming("" //
         + "    synchronized (variables) {\n" //
