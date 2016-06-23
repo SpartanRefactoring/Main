@@ -1,6 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.same;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
+import il.org.spartan.refactoring.utils.Is;
+import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,10 +25,6 @@ import org.eclipse.jdt.core.dom.SwitchCase;
 import org.eclipse.jdt.core.dom.SwitchStatement;
 import org.eclipse.jdt.core.dom.ThrowStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
-
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
 
 /**
  * A wring to remove ineffective cases from a switch statement.
@@ -58,25 +57,27 @@ public class SwitchSimplify extends ReplaceCurrentNode<SwitchStatement> {
       if (cc.indexOf(cl) != cc.size() - 1 && !containsSequencer((Statement) $.statements().get($.statements().size() - 1), false))
         $.statements().add(s.getAST().newBreakStatement());
     }
-    return !s.subtreeMatch(matcher, $) ? $ : null;
+    return unless(s.subtreeMatch(matcher, $), $);
+  }
+  public static <T> T unless(boolean condition, final T $) {
+    return !condition ? $ : null;
   }
   static int escapeLevel(Statement s, boolean b) {
-    return !b && Is.sequencer(s) || s instanceof ThrowStatement || s instanceof ReturnStatement
-        ? s instanceof ThrowStatement ? 0 : s instanceof ReturnStatement ? 1 : s instanceof ContinueStatement ? 2 : 3
-        : s instanceof IfStatement
-            ? Math.max(escapeLevel(((IfStatement) s).getThenStatement(), b), escapeLevel(((IfStatement) s).getElseStatement(), b))
-            : s instanceof ForStatement ? escapeLevel(((ForStatement) s).getBody(), true)
-                : s instanceof WhileStatement ? escapeLevel(((WhileStatement) s).getBody(), true)
-                    : !(s instanceof Block) || ((Block) s).statements().isEmpty() ? 4
-                        : escapeLevel((Statement) ((Block) s).statements().get(((Block) s).statements().size() - 1), b);
+    return !b && Is.sequencer(s) || s instanceof ThrowStatement || s instanceof ReturnStatement ? s instanceof ThrowStatement ? 0
+        : s instanceof ReturnStatement ? 1 : s instanceof ContinueStatement ? 2 : 3 : s instanceof IfStatement ? Math.max(
+        escapeLevel(((IfStatement) s).getThenStatement(), b), escapeLevel(((IfStatement) s).getElseStatement(), b))
+        : s instanceof ForStatement ? escapeLevel(((ForStatement) s).getBody(), true) : s instanceof WhileStatement ? escapeLevel(
+            ((WhileStatement) s).getBody(), true) : !(s instanceof Block) || ((Block) s).statements().isEmpty() ? 4 : escapeLevel(
+            (Statement) ((Block) s).statements().get(((Block) s).statements().size() - 1), b);
   }
   @SuppressWarnings({ "javadoc" }) public static boolean containsSequencer(Statement s, boolean b) {
-    return !b && Is.sequencer(s) || s instanceof ThrowStatement || s instanceof ReturnStatement || (s instanceof IfStatement
-        ? containsSequencer(((IfStatement) s).getThenStatement(), b) && containsSequencer(((IfStatement) s).getElseStatement(), b)
-        : s instanceof ForStatement && containsSequencer(((ForStatement) s).getBody(), true)
-            || s instanceof WhileStatement && containsSequencer(((WhileStatement) s).getBody(), true)
-            || s instanceof Block && !((Block) s).statements().isEmpty()
-                && containsSequencer((Statement) ((Block) s).statements().get(((Block) s).statements().size() - 1), b));
+    return !b
+        && Is.sequencer(s)
+        || (s instanceof IfStatement ? containsSequencer(((IfStatement) s).getThenStatement(), b)
+            && containsSequencer(((IfStatement) s).getElseStatement(), b) : s instanceof ForStatement
+            && containsSequencer(((ForStatement) s).getBody(), true) || s instanceof WhileStatement
+            && containsSequencer(((WhileStatement) s).getBody(), true) || s instanceof Block && !((Block) s).statements().isEmpty()
+            && containsSequencer((Statement) ((Block) s).statements().get(((Block) s).statements().size() - 1), b));
   }
   @SuppressWarnings("javadoc") public static void insertUntilSequencer(List<Statement> f, List<Statement> ss, int i) {
     for (int c = i; c < f.size(); ++c) {
@@ -98,25 +99,19 @@ public class SwitchSimplify extends ReplaceCurrentNode<SwitchStatement> {
   }
   @SuppressWarnings("javadoc") public static List<List<SwitchCase>> consolidateCases(Map<SwitchCase, List<Statement>> bs) {
     final List<List<SwitchCase>> $ = new LinkedList<>();
-    for (final SwitchCase s : bs.keySet()) {
-      boolean a = true;
+    cases: for (final SwitchCase s : bs.keySet()) {
       for (final List<SwitchCase> cl : $)
         if (same(bs.get(s), bs.get(cl.get(0)))) {
-          if (!s.isDefault()) {
-            if (!cl.get(0).isDefault())
-              cl.add(s);
-          } else {
+          if (s.isDefault()) {
             cl.clear();
             cl.add(s);
-          }
-          a = false;
-          break;
+          } else if (!cl.get(0).isDefault())
+            cl.add(s);
+          continue cases;
         }
-      if (a) {
-        final List<SwitchCase> cl = new ArrayList<>();
-        cl.add(s);
-        $.add(cl);
-      }
+      final List<SwitchCase> cl = new ArrayList<>();
+      cl.add(s);
+      $.add(cl);
     }
     return $;
   }
