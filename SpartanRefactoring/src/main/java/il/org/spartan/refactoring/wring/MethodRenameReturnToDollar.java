@@ -2,7 +2,13 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.newSimpleName;
 import static il.org.spartan.refactoring.utils.Funcs.same;
+import static il.org.spartan.refactoring.utils.Utils.unless;
 import static il.org.spartan.refactoring.wring.Wrings.rename;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
+import il.org.spartan.refactoring.utils.Collect;
+import il.org.spartan.refactoring.utils.Is;
+import il.org.spartan.refactoring.utils.MethodExplorer;
+import il.org.spartan.refactoring.utils.Rewrite;
 
 import java.util.Iterator;
 import java.util.List;
@@ -14,12 +20,6 @@ import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
-
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Collect;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.MethodExplorer;
-import il.org.spartan.refactoring.utils.Rewrite;
 
 /**
  * @author Artium Nihamkin (original)
@@ -100,7 +100,7 @@ class Aggressive extends AbstractRenamePolicy {
     if (bestScore > 0)
       for (final SimpleName $ : ns)
         if (bestScore == score($, ss))
-          return noRivals($, ns, ss) ? $ : null;
+          return unless(noRivals($, ns, ss), $);
     return null;
   }
   private static int bestScore(final List<SimpleName> ns, final List<ReturnStatement> ss) {

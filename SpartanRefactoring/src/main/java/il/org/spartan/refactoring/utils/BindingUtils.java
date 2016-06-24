@@ -1,5 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
+import static il.org.spartan.refactoring.utils.Utils.unless;
+
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.BooleanLiteral;
 import org.eclipse.jdt.core.dom.CharacterLiteral;
@@ -76,7 +78,7 @@ import org.eclipse.jdt.internal.corext.dom.Bindings;
     if (b == null)
       return null;
     final IMethodBinding $ = Bindings.findMethodInHierarchy(b, mn, bs);
-    return $ != null && isVisible($,n,u)?$:null;
+    return unless(!isVisible($, n, u), $);
   }
   /**
    * Checks if expression is simple.
