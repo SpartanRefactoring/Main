@@ -1,17 +1,10 @@
 package il.org.spartan.refactoring.wring;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
+import il.org.spartan.refactoring.preferences.*;
 
-import java.util.Vector;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.AST;
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.ClassInstanceCreation;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.MethodInvocation;
-import org.eclipse.jdt.core.dom.ParenthesizedExpression;
-import org.eclipse.jdt.core.dom.StringLiteral;
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * A {@link Wring} to replace String appending using StringBuilder or
@@ -23,7 +16,8 @@ import org.eclipse.jdt.core.dom.StringLiteral;
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-11
  */
-public class StringFromStringBuilder extends Wring.ReplaceCurrentNode<MethodInvocation> {
+public class StringFromStringBuilder extends Wring.ReplaceCurrentNode<MethodInvocation> implements
+    Kind.REPLACE_CLASS_INSTANCE_CREATION {
   // list of class extending Expression class, that need to be surrounded by
   // parenthesis
   // when put out of method arguments list
@@ -39,7 +33,7 @@ public class StringFromStringBuilder extends Wring.ReplaceCurrentNode<MethodInvo
    *         list, so making it a part of infix expression require additional
    *         parenthesis
    */
-  private boolean isParethesisNeeded(Expression e) {
+  private boolean isParethesisNeeded(final Expression e) {
     for (final Class<?> c : np)
       if (c.isInstance(e))
         return true;
@@ -52,7 +46,7 @@ public class StringFromStringBuilder extends Wring.ReplaceCurrentNode<MethodInvo
    * @return e itself if no parenthesis needed, otherwise a
    *         ParenthesisExpression containing e
    */
-  private Expression addParenthesisIfNeeded(Expression e) {
+  private Expression addParenthesisIfNeeded(final Expression e) {
     final AST a = e.getAST();
     if (!isParethesisNeeded(e))
       return e;
@@ -64,7 +58,7 @@ public class StringFromStringBuilder extends Wring.ReplaceCurrentNode<MethodInvo
    * @param e an Expression
    * @return true iff e is a String
    */
-  private boolean isString(Expression e) {
+  private boolean isString(final Expression e) {
     return e instanceof StringLiteral;
   }
   @Override ASTNode replacement(final MethodInvocation i) {
@@ -127,9 +121,6 @@ public class StringFromStringBuilder extends Wring.ReplaceCurrentNode<MethodInvo
     return $;
   }
   @Override String description(@SuppressWarnings("unused") final MethodInvocation __) {
-    return "Use \"+\" operator in order to append strings";
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REPLACE_CLASS_INSTANCE_CREATION;
+    return "Use \"+\" operator to concatenate strings";
   }
 }

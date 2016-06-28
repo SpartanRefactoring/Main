@@ -1,21 +1,13 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Extract.core;
-import static il.org.spartan.refactoring.utils.Funcs.asBooleanLiteral;
-import static il.org.spartan.refactoring.utils.Funcs.left;
-import static il.org.spartan.refactoring.utils.Funcs.logicalNot;
-import static il.org.spartan.refactoring.utils.Funcs.right;
-import static il.org.spartan.utils.Utils.in;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.EQUALS;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.NOT_EQUALS;
+import static il.org.spartan.refactoring.utils.Extract.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.utils.Utils.*;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
 
-import org.eclipse.jdt.core.dom.BooleanLiteral;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.InfixExpression;
-
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.Plant;
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * A {@link Wring} that eliminates redundant comparison with the two boolean
@@ -24,7 +16,7 @@ import il.org.spartan.refactoring.utils.Plant;
  * @author Yossi Gil
  * @since 2015-07-17
  */
-public final class InfixComparisonBooleanLiteral extends Wring.ReplaceCurrentNode<InfixExpression> {
+public final class InfixComparisonBooleanLiteral extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.Simplify {
   private static BooleanLiteral literal(final InfixExpression e) {
     return asBooleanLiteral(core(literalOnLeft(e) ? left(e) : right(e)));
   }
@@ -50,8 +42,5 @@ public final class InfixComparisonBooleanLiteral extends Wring.ReplaceCurrentNod
     final BooleanLiteral literal = literal(e);
     final Expression nonliteral = core(nonLiteral(e));
     return new Plant(!negating(e, literal) ? nonliteral : logicalNot(nonliteral)).into(e.getParent());
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

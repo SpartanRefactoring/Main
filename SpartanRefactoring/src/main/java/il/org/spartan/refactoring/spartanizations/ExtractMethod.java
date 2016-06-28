@@ -1,21 +1,15 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import il.org.spartan.refactoring.utils.Rewrite;
-import il.org.spartan.refactoring.utils.UnifiedGroup;
+import il.org.spartan.refactoring.utils.*;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.core.resources.IMarker;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.jdt.core.dom.ASTVisitor;
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.SimpleName;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.jdt.internal.corext.refactoring.code.ExtractMethodRefactoring;
-import org.eclipse.text.edits.TextEditGroup;
+import org.eclipse.core.resources.*;
+import org.eclipse.core.runtime.*;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.jdt.internal.corext.refactoring.code.*;
+import org.eclipse.text.edits.*;
 
 /**
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code> (original /
@@ -34,7 +28,7 @@ public class ExtractMethod extends Spartanization {
 
   CompilationUnit oldCu;
 
-  @SuppressWarnings("unused") @Override protected ASTVisitor collect(final List<Rewrite> $, CompilationUnit u) {
+  @SuppressWarnings("unused") @Override protected ASTVisitor collect(final List<Rewrite> $, final CompilationUnit u) {
     // TODO Ofir: No opportunities for now, if it's 2016 and not added yet,
     // blame
     return new ASTVisitor() {
@@ -69,13 +63,13 @@ public class ExtractMethod extends Spartanization {
         final List<LinkedList<Integer>> groups = new LinkedList<>();
         for (final LinkedList<Integer> group : ug)
           if (group.size() >= MinimumGroupSizeForExtraction
-              && group.size() <= d.getBody().statements().size() - MaximunGroupRelativeToMethodSize)
+          && group.size() <= d.getBody().statements().size() - MaximunGroupRelativeToMethodSize)
             groups.add(0, group);
         // TODO Ofir: random method name for now - will be changed later on
         for (final LinkedList<Integer> group : groups) {
           extract(u.getPosition(group.getFirst(), 0), u.getPosition(group.getLast() + 1, 0));
           break; // TODO Ofir: support multiple groups future, Only the first
-                 // group for now,
+          // group for now,
         }
         return true;
         // TODO Note: there is a known bug right now - that simple name also

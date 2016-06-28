@@ -1,25 +1,15 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.newSimpleName;
-import static il.org.spartan.refactoring.utils.Funcs.same;
-import static il.org.spartan.refactoring.wring.Wrings.rename;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.wring.Wrings.*;
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
 
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Javadoc;
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.SimpleName;
-import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
-import org.eclipse.jdt.core.dom.TagElement;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
-
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Funcs;
-import il.org.spartan.refactoring.utils.JavaTypeNameParser;
-import il.org.spartan.refactoring.utils.MethodExplorer;
-import il.org.spartan.refactoring.utils.Rewrite;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 /**
  * A {@link Wring} that abbreviates the name of a method parameter that is a
@@ -32,7 +22,7 @@ import il.org.spartan.refactoring.utils.Rewrite;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015/09/24
  */
-public class SingleVariableDeclarationAbbreviation extends Wring<SingleVariableDeclaration> {
+public class SingleVariableDeclarationAbbreviation extends Wring<SingleVariableDeclaration> implements Kind.RENAME_PARAMETERS {
   @Override String description(final SingleVariableDeclaration d) {
     return d.getName().toString();
   }
@@ -50,27 +40,27 @@ public class SingleVariableDeclarationAbbreviation extends Wring<SingleVariableD
     final MethodRenameUnusedVariableToUnderscore.IsUsed v = new MethodRenameUnusedVariableToUnderscore.IsUsed(newName);
     if (m.getBody() != null)
       m.getBody().accept(v);
-    return v.conclusion() ? null
-        : new Rewrite("Rename parameter " + oldName + " to " + newName + " in method " + m.getName().getIdentifier(), d) {
-          @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-            rename(oldName, newSimpleName(d, newName), m, r, g);
-            final Javadoc j = m.getJavadoc();
-            if (j == null)
+    return v.conclusion() ? null : new Rewrite("Rename parameter " + oldName + " to " + newName + " in method "
+        + m.getName().getIdentifier(), d) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+        rename(oldName, newSimpleName(d, newName), m, r, g);
+        final Javadoc j = m.getJavadoc();
+        if (j == null)
+          return;
+        final List<TagElement> ts = j.tags();
+        if (ts == null)
+          return;
+        for (final TagElement t : ts) {
+          if (!TagElement.TAG_PARAM.equals(t.getTagName()))
+            continue;
+          for (final Object o : t.fragments())
+            if (o instanceof SimpleName && same((SimpleName) o, oldName)) {
+              r.replace((SimpleName) o, newSimpleName(d, newName), g);
               return;
-            final List<TagElement> ts = j.tags();
-            if (ts == null)
-              return;
-            for (final TagElement t : ts) {
-              if (!TagElement.TAG_PARAM.equals(t.getTagName()))
-                continue;
-              for (final Object o : t.fragments())
-                if (o instanceof SimpleName && same((SimpleName) o, oldName)) {
-                  r.replace((SimpleName) o, newSimpleName(d, newName), g);
-                  return;
-                }
             }
-          }
-        };
+        }
+      }
+    };
   }
   private static boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m) {
     if (Funcs.shortName(d.getType()) == null)
@@ -98,8 +88,5 @@ public class SingleVariableDeclarationAbbreviation extends Wring<SingleVariableD
   }
   private static String pluralVariadic(final SingleVariableDeclaration d) {
     return d.isVarargs() ? "s" : "";
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.RENAME_PARAMETERS;
   }
 }

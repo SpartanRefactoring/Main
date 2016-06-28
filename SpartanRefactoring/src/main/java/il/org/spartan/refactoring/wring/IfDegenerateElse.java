@@ -1,15 +1,10 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.duplicate;
-import static il.org.spartan.refactoring.utils.Funcs.elze;
-import static il.org.spartan.refactoring.utils.Funcs.then;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
 
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.Statement;
-
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.Subject;
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * /** A {@link Wring} to convert <code>if (x) return b; else { }</code> into
@@ -18,7 +13,7 @@ import il.org.spartan.refactoring.utils.Subject;
  * @author Yossi Gil
  * @since 2015-08-01
  */
-public final class IfDegenerateElse extends Wring.ReplaceCurrentNode<IfStatement> {
+public final class IfDegenerateElse extends Wring.ReplaceCurrentNode<IfStatement> implements Kind.Simplify {
   @Override Statement replacement(final IfStatement s) {
     final IfStatement $ = duplicate(s);
     $.setElseStatement(null);
@@ -32,8 +27,5 @@ public final class IfDegenerateElse extends Wring.ReplaceCurrentNode<IfStatement
   }
   static boolean degenerateElse(final IfStatement s) {
     return elze(s) != null && Is.vacuousElse(s);
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

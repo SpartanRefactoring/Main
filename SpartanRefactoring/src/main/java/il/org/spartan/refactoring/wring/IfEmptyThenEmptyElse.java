@@ -1,12 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.Rewrite;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 /**
  * A {@link Wring} to eliminate degenerate if statements such as <code>if (x) ;
@@ -15,7 +14,7 @@ import il.org.spartan.refactoring.utils.Rewrite;
  * @author Yossi Gil
  * @since 2015-08-26
  */
-public final class IfEmptyThenEmptyElse extends Wring<IfStatement> {
+public final class IfEmptyThenEmptyElse extends Wring<IfStatement> implements Kind.Simplify {
   @Override final Rewrite make(final IfStatement s) {
     return new Rewrite(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -29,8 +28,5 @@ public final class IfEmptyThenEmptyElse extends Wring<IfStatement> {
   }
   @Override String description(final IfStatement s) {
     return "Remove if(" + s.getExpression() + ") with vacous 'then' and 'else' parts";
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

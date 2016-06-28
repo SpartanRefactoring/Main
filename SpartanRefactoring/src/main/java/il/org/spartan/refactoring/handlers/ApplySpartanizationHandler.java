@@ -1,19 +1,15 @@
 package il.org.spartan.refactoring.handlers;
 
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.jdt.core.ICompilationUnit;
-import org.eclipse.jface.text.ITextSelection;
-import org.eclipse.jface.text.TextSelection;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.PlatformUI;
+import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.wring.*;
+import il.org.spartan.utils.*;
 
-import il.org.spartan.refactoring.spartanizations.Spartanization;
-import il.org.spartan.refactoring.spartanizations.Spartanizations;
-import il.org.spartan.refactoring.wring.Trimmer;
-import il.org.spartan.utils.Range;
+import org.eclipse.core.commands.*;
+import org.eclipse.core.runtime.*;
+import org.eclipse.jdt.core.*;
+import org.eclipse.jface.text.*;
+import org.eclipse.jface.viewers.*;
+import org.eclipse.ui.*;
 
 /**
  * A handler for {@link Spartanizations} This handler executes all safe
@@ -35,7 +31,7 @@ public class ApplySpartanizationHandler extends BaseHandler {
   }
 
   static final Spartanization[] safeSpartanizations = { //
-      new Trimmer() };
+  new Trimmer() };
 
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     applySafeSpartanizationsTo(currentCompilationUnit(), getSelectedText());

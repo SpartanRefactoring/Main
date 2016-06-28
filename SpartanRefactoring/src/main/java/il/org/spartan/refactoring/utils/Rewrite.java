@@ -1,11 +1,10 @@
 package il.org.spartan.refactoring.utils;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
+import il.org.spartan.utils.*;
 
-import il.org.spartan.utils.Range;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 /**
  * A function object representing a sequence of operations on an
@@ -19,6 +18,7 @@ public abstract class Rewrite extends Range {
   public final String description;
   /** The line number of the first character to be rewritten **/
   public int lineNumber = -1;
+
   /**
    * Instantiates this class
    *

@@ -1,36 +1,24 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.MatcherAssert.iz;
-import static il.org.spartan.hamcrest.OrderingComparison.greaterThanOrEqualTo;
-import static il.org.spartan.refactoring.utils.Restructure.flatten;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Collection;
-import java.util.List;
-
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.InfixExpression.Operator;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
-
-import il.org.spartan.refactoring.utils.Are;
-import il.org.spartan.refactoring.utils.ExpressionComparator;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Into;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.Subject;
+import static il.org.spartan.hamcrest.CoreMatchers.*;
+import static il.org.spartan.hamcrest.MatcherAssert.*;
+import static il.org.spartan.hamcrest.JunitHamcrestWrappper.*;
+import static il.org.spartan.refactoring.utils.Restructure.*;
+import static org.hamcrest.MatcherAssert.*;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import il.org.spartan.hamcrest.*;
+import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Noneligible;
 import il.org.spartan.utils.Utils;
+
+import java.util.*;
+
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.InfixExpression.Operator;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.Parameters;
 
 /**
  * Unit tests for {@link Wrings#ADDITION_SORTER}.
@@ -38,17 +26,17 @@ import il.org.spartan.utils.Utils;
  * @author Yossi Gil
  * @since 2014-07-13
  */
-@SuppressWarnings({ "javadoc", "static-method" }) //
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@SuppressWarnings({ "javadoc", "static-method" })//
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 public class InfixSortAdditionTest {
   static final Wring<InfixExpression> WRING = new InfixSortAddition();
   static final ExpressionComparator COMPARATOR = ExpressionComparator.ADDITION;
 
   @Test public void subjectOperandsWithParenthesis() {
     final Expression e = Into.e("(2 + a) * b");
-    assertTrue(Is.notString(e));
+    JunitHamcrestWrappper.assertTrue(Is.notString(e));
     final InfixExpression plus = Extract.firstPlus(e);
-    assertTrue(Is.notString(plus));
+    JunitHamcrestWrappper.assertTrue(Is.notString(plus));
     final List<Expression> operands = Extract.operands(flatten(plus));
     assertThat(operands.size(), is(2));
     final InfixExpression r = Subject.operands(operands).to(plus.getOperator());
@@ -56,7 +44,7 @@ public class InfixSortAdditionTest {
     assertThat(new InfixSortAddition().replacement(plus), iz("a+2"));
   }
 
-  @RunWith(Parameterized.class) //
+  @RunWith(Parameterized.class)//
   public static class Noneligible extends AbstractWringTest.Noneligible.Infix {
     static String[][] cases = Utils.asArray(//
         new String[] { "Add 1", "2*a+1" }, //
@@ -73,7 +61,7 @@ public class InfixSortAdditionTest {
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file.
      */
-    @Parameters(name = DESCRIPTION) //
+    @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
@@ -82,33 +70,33 @@ public class InfixSortAdditionTest {
       super(WRING);
     }
     @Test public void allNotStringArgument() {
-      assertTrue(Are.notString(Extract.operands(asInfixExpression())));
+      JunitHamcrestWrappper.assertTrue(Are.notString(Extract.operands(asInfixExpression())));
     }
     @Override @Test public void flattenIsIdempotentt() {
       final InfixExpression flatten = flatten(asInfixExpression());
       assertThat(flatten(flatten).toString(), is(flatten.toString()));
     }
     @Override @Test public void inputIsInfixExpression() {
-      assertNotNull(asInfixExpression());
+      JunitHamcrestWrappper.assertNotNull(asInfixExpression());
     }
     @Test public void isPlus() {
-      assertTrue(asInfixExpression().getOperator() == Operator.PLUS);
+      JunitHamcrestWrappper.assertTrue(asInfixExpression().getOperator() == Operator.PLUS);
     }
     @Test public void sortTest() {
-      assertFalse(COMPARATOR.sort(Extract.operands(flatten(asInfixExpression()))));
+      assertThat(COMPARATOR.sort(Extract.operands(flatten(asInfixExpression()))), is(false));
     }
     @Test public void sortTwice() {
       final List<Expression> operands = Extract.operands(flatten(asInfixExpression()));
-      assertFalse(COMPARATOR.sort(operands));
-      assertFalse(COMPARATOR.sort(operands));
+      assertThat(COMPARATOR.sort(operands), is(false));
+      assertThat(COMPARATOR.sort(operands), is(false));
     }
     @Test public void twoOrMoreArguments() {
       assertThat(Extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
     }
   }
 
-  @RunWith(Parameterized.class) //
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+  @RunWith(Parameterized.class)//
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   public static class Wringed extends AbstractWringTest.WringedExpression.Infix {
     private static String[][] cases = Utils.asArray(//
         new String[] { "Add 1 to 2*3", "1+2*3", "2*3+1" }, //
@@ -129,7 +117,7 @@ public class InfixSortAdditionTest {
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file.
      */
-    @Parameters(name = DESCRIPTION) //
+    @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
@@ -140,17 +128,17 @@ public class InfixSortAdditionTest {
       super(WRING);
     }
     @Test public void allNotStringArgument() {
-      assertTrue(Are.notString(Extract.operands(asInfixExpression())));
+      JunitHamcrestWrappper.assertTrue(Are.notString(Extract.operands(asInfixExpression())));
     }
     @Override @Test public void flattenIsIdempotentt() {
       final InfixExpression flatten = flatten(asInfixExpression());
       assertThat(flatten(flatten).toString(), is(flatten.toString()));
     }
     @Override @Test public void inputIsInfixExpression() {
-      assertNotNull(asInfixExpression());
+      JunitHamcrestWrappper.assertNotNull(asInfixExpression());
     }
     @Test public void isPlus() {
-      assertTrue(asInfixExpression().getOperator() == Operator.PLUS);
+      JunitHamcrestWrappper.assertTrue(asInfixExpression().getOperator() == Operator.PLUS);
     }
     @Test public void notString() {
       for (final Expression e : Extract.operands(flatten(asInfixExpression())))
@@ -162,14 +150,14 @@ public class InfixSortAdditionTest {
       assertThat(operands.size(), greaterThanOrEqualTo(2));
       assertThat(//
           "Before: " + Extract.operands(flatten(e)) + "\n" + //
-              "After: " + operands + "\n", //
+          "After: " + operands + "\n", //
           COMPARATOR.sort(operands), is(true));
     }
     @Test public void sortTwice() {
       final InfixExpression e = asInfixExpression();
       final List<Expression> operands = Extract.operands(flatten(e));
-      assertTrue(e.toString(), COMPARATOR.sort(operands));
-      assertFalse(e.toString(), COMPARATOR.sort(operands));
+      JunitHamcrestWrappper.assertTrue(e.toString(), COMPARATOR.sort(operands));
+      assertThat(e.toString(), COMPARATOR.sort(operands), is(false));
     }
     @Test public void twoOrMoreArguments() {
       assertThat(Extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));

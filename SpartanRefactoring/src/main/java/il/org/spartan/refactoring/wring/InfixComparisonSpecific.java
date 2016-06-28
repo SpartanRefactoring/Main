@@ -1,15 +1,10 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.flip;
-import static il.org.spartan.refactoring.utils.Funcs.left;
-import static il.org.spartan.refactoring.utils.Funcs.right;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
 
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.InfixExpression;
-
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.Specificity;
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * A {@link Wring} that reorder comparisons so that the specific value is placed
@@ -19,7 +14,7 @@ import il.org.spartan.refactoring.utils.Specificity;
  * @author Yossi Gil
  * @since 2015-07-17
  */
-public final class InfixComparisonSpecific extends Wring.ReplaceCurrentNode<InfixExpression> {
+public final class InfixComparisonSpecific extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.ReorganizeExpression {
   @Override boolean eligible(final InfixExpression e) {
     return specifity.compare(left(e), right(e)) < 0;
   }
@@ -34,8 +29,5 @@ public final class InfixComparisonSpecific extends Wring.ReplaceCurrentNode<Infi
   }
   @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Exchange left and right operands of comparison";
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REORDER_EXPRESSIONS;
   }
 }

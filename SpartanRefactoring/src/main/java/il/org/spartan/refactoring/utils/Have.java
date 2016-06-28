@@ -1,11 +1,11 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.refactoring.utils.Extract.core;
-import static il.org.spartan.refactoring.utils.Funcs.asBooleanLiteral;
+import static il.org.spartan.refactoring.utils.Extract.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
 
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * An empty <code><b>enum</b></code> for fluent programming. The name should say

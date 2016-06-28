@@ -1,8 +1,8 @@
 package il.org.spartan.utils;
 
-import il.org.spartan.Box;
+import il.org.spartan.*;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * An immutable integral range, representing all integers between {@link #from},

@@ -9,6 +9,7 @@ package il.org.spartan.refactoring.utils;
  */
 public class LiteralParser {
   final String literal;
+
   /**
    * Instantiates this class.
    *

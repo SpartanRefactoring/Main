@@ -1,17 +1,13 @@
 package il.org.spartan.refactoring.preferences;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
 
-import org.eclipse.jface.dialogs.DialogPage;
-import org.eclipse.jface.preference.FieldEditor;
-import org.eclipse.jface.preference.FieldEditorPreferencePage;
-import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Group;
+import org.eclipse.jface.dialogs.*;
+import org.eclipse.jface.preference.*;
+import org.eclipse.swt.*;
+import org.eclipse.swt.layout.*;
+import org.eclipse.swt.widgets.*;
 
 /**
  * A {@link FieldEditor} designed to store multiple controls within a group
@@ -34,7 +30,6 @@ import org.eclipse.swt.widgets.Group;
  *
  */
 public class GroupFieldEditor extends FieldEditor {
-  private final String title;
   private int numColumns = 0;
   private final List<FieldEditor> members = new ArrayList<>();
   private final Group group;
@@ -51,7 +46,6 @@ public class GroupFieldEditor extends FieldEditor {
    *          {@link FieldEditorPreferencePage#getFieldEditorParent()}
    */
   public GroupFieldEditor(final String title, final Composite parent) {
-    this.title = title == null ? "" : title;
     this.parent = parent;
     group = new Group(parent, SWT.SHADOW_OUT);
     group.setText(title);
@@ -68,7 +62,7 @@ public class GroupFieldEditor extends FieldEditor {
   /**
    * Adds a new {@link FieldEditor} object to the group. Controls must be added
    * before the group is drawn to the parent.
-   * 
+   *
    * @param e JD
    */
   public void add(final FieldEditor e) {

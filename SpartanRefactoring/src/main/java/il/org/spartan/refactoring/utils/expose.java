@@ -1,20 +1,8 @@
 package il.org.spartan.refactoring.utils;
 
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.ClassInstanceCreation;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.FieldDeclaration;
-import org.eclipse.jdt.core.dom.ForStatement;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.MethodInvocation;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.SuperMethodInvocation;
-import org.eclipse.jdt.core.dom.TryStatement;
-import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
-import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
-import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * An empty <code><b>enum</b></code> for fluent programming. The name should say
@@ -32,7 +20,7 @@ public enum expose {
    * @param c JD
    * @return a reference to the list of arguments in the argument
    */
-  public static List<Expression> arguments(ClassInstanceCreation c) {
+  public static List<Expression> arguments(final ClassInstanceCreation c) {
     return As.expressions(c.arguments());
   }
   /**
@@ -79,7 +67,7 @@ public enum expose {
    * @param e JD
    * @return a reference to the list of fragments in the argument
    */
-  public static List<VariableDeclarationFragment> fragments(VariableDeclarationExpression e) {
+  public static List<VariableDeclarationFragment> fragments(final VariableDeclarationExpression e) {
     return As.fragments(e.fragments());
   }
   /**
@@ -88,7 +76,7 @@ public enum expose {
    * @param s JD
    * @return a reference to the list of fragments in the argument
    */
-  public static List<VariableDeclarationFragment> fragments(VariableDeclarationStatement s) {
+  public static List<VariableDeclarationFragment> fragments(final VariableDeclarationStatement s) {
     return As.fragments(s.fragments());
   }
   /**
@@ -115,7 +103,7 @@ public enum expose {
    * @param b JD
    * @return a reference to the list of statements contained in the argument
    */
-  public static List<Statement> statements(Block b) {
+  public static List<Statement> statements(final Block b) {
     return As.statements(b.statements());
   }
 }

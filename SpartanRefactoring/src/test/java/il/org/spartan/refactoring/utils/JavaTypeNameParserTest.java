@@ -1,14 +1,13 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static il.org.spartan.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
 
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.junit.*;
+import org.junit.runners.*;
 
-@SuppressWarnings({ "javadoc", "static-method" }) //
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@SuppressWarnings({ "javadoc", "static-method" })//
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 public class JavaTypeNameParserTest {
   @Test public void alphaNumericMid() {
     assertThat(new JavaTypeNameParser("Base64Parser").shortName(), is("p"));

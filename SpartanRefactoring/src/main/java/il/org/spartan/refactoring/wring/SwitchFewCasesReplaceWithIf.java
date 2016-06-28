@@ -1,26 +1,13 @@
 package il.org.spartan.refactoring.wring;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.eclipse.jdt.core.dom.AST;
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.BreakStatement;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.InfixExpression.Operator;
-import org.eclipse.jdt.core.dom.MethodInvocation;
-import org.eclipse.jdt.core.dom.ReturnStatement;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.SwitchCase;
-import org.eclipse.jdt.core.dom.SwitchStatement;
-import org.eclipse.jdt.core.dom.ThrowStatement;
-
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Funcs;
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
+
+import java.util.*;
+
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 
 /**
  * Used to replace a switch statement containing a single case (+ optional
@@ -36,7 +23,9 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
  *   System.out.println("error!");
  *   break;
  * }
- * </pre></code> with
+ * </pre>
+ *
+ * </code> with
  *
  * <pre>
  * <code>
@@ -45,14 +34,17 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
  * } else {
  *   System.out.println("error!");
  * }
- * </pre></code> TODO Ori: consider adding option for
- * switch-case-nobreak-default to become if statement + default statements
+ * </pre>
+ *
+ * </code> TODO Ori: consider adding option for switch-case-nobreak-default to
+ * become if statement + default statements
  *
  * @author Ori Roth
  * @since 2016/05/09
  */
-@SuppressWarnings("unchecked") public class SwitchFewCasesReplaceWithIf extends ReplaceCurrentNode<SwitchStatement> {
-  protected IfStatement buildIfStatement(AST a, List<Statement> ss, Expression e, Expression t) {
+@SuppressWarnings("unchecked") public class SwitchFewCasesReplaceWithIf extends ReplaceCurrentNode<SwitchStatement> implements
+    Kind.SWITCH_IF_CONVERTION {
+  protected IfStatement buildIfStatement(final AST a, final List<Statement> ss, final Expression e, final Expression t) {
     final IfStatement $ = a.newIfStatement();
     final Expression de = Funcs.duplicate(e), dt = Funcs.duplicate(t);
     if (e.resolveTypeBinding().isPrimitive()) {
@@ -73,14 +65,15 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
     $.setThenStatement(b);
     return $;
   }
-  protected IfStatement buildIfStatement(AST a, List<Statement> ss, List<Statement> ess, Expression e, Expression t) {
+  protected IfStatement buildIfStatement(final AST a, final List<Statement> ss, final List<Statement> ess, final Expression e,
+      final Expression t) {
     final IfStatement $ = buildIfStatement(a, ss, e, t);
     final Block b = a.newBlock();
     scalpel.duplicateInto(ess, b.statements());
     $.setElseStatement(b);
     return $;
   }
-  @Override ASTNode replacement(SwitchStatement s) {
+  @Override ASTNode replacement(final SwitchStatement s) {
     if (!s.getAST().hasResolvedBindings())
       return null;
     final List<Statement> sss = s.statements();
@@ -120,10 +113,7 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
     }
     return buildIfStatement(s.getAST(), iss, ess, s.getExpression(), t);
   }
-  @Override String description(@SuppressWarnings("unused") SwitchStatement __) {
+  @Override String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Replace short switch statement with an if statement";
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.SWITCH_IF_CONVERTION;
   }
 }

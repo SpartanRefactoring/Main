@@ -1,28 +1,24 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.refactoring.utils.Funcs.elze;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertNotNull;
-
-import java.util.Collection;
-
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
-
-import il.org.spartan.refactoring.utils.As;
-import il.org.spartan.refactoring.utils.Extract;
+import static il.org.spartan.hamcrest.CoreMatchers.*;
+import static il.org.spartan.hamcrest.MatcherAssert.*;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
+import il.org.spartan.hamcrest.*;
+import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 import il.org.spartan.utils.Utils;
+
+import java.util.*;
+
+import org.eclipse.jdt.core.dom.*;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.Parameters;
 
 /**
  * Unit tests for {@link IfFooSequencerIfFooSameSequencer}.
@@ -30,15 +26,15 @@ import il.org.spartan.utils.Utils;
  * @author Yossi Gil
  * @since 2014-07-13
  */
-@SuppressWarnings({ "javadoc", "static-method" }) //
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@SuppressWarnings({ "javadoc", "static-method" })//
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 public class IfCommandsSequencerIfSameCommandsSequencerTest {
   static final Wring<IfStatement> WRING = new IfFooSequencerIfFooSameSequencer();
 
   @Test public void checkFirstIfStatement1() {
     final String s = "if (a) return b; if (b) return b;";
     final ASTNode n = As.STATEMENTS.ast(s);
-    assertNotNull(n);
+    JunitHamcrestWrappper.assertNotNull(n);
     final IfStatement i = Extract.firstIfStatement(n);
     assertThat(n.toString(), i, notNullValue());
     assertThat(i.toString(), WRING.scopeIncludes(i), is(true));
@@ -46,17 +42,17 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
   @Test public void checkFirstIfStatement2() {
     final String s = "if (a) return b; else return a();";
     final IfStatement i = Extract.firstIfStatement(As.STATEMENTS.ast(s));
-    assertNotNull(i);
+    JunitHamcrestWrappper.assertNotNull(i);
     assertThat(i.toString(), WRING.scopeIncludes(i), is(false));
   }
   @Test public void checkFirstIfStatement3() {
     final String s = "if (a) a= b; else a=c;";
     final IfStatement i = Extract.firstIfStatement(As.STATEMENTS.ast(s));
-    assertNotNull(i);
+    JunitHamcrestWrappper.assertNotNull(i);
     assertThat(i.toString(), WRING.scopeIncludes(i), is(false));
   }
 
-  @RunWith(Parameterized.class) //
+  @RunWith(Parameterized.class)//
   public static class OutOfScope extends AbstractWringTest.OutOfScope<IfStatement> {
     static String[][] cases = Utils.asArray(//
         new String[] { "Another distinct assignment", "if (a) a /= b; else a %= c;" }, //
@@ -89,19 +85,18 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
         new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}" }, //
         new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}" }, //
         new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}" }, //
-        new String[] { "Complex with many junk statements",
-            "" + //
-                " if (x) {\n" + //
-                "   ;\n" + //
-                "   f();\n" + //
-                "   return a;\n" + //
-                " } else {\n" + //
-                "   ;\n" + //
-                "   g();\n" + //
-                "   {\n" + //
-                "   }\n" + //
-                " }\n" + //
-                "" }, //
+        new String[] { "Complex with many junk statements", "" + //
+            " if (x) {\n" + //
+            "   ;\n" + //
+            "   f();\n" + //
+            "   return a;\n" + //
+            " } else {\n" + //
+            "   ;\n" + //
+            "   g();\n" + //
+            "   {\n" + //
+            "   }\n" + //
+            " }\n" + //
+            "" }, //
         null);
 
     /**
@@ -110,7 +105,7 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file.
      */
-    @Parameters(name = DESCRIPTION) //
+    @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
@@ -120,8 +115,8 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
     }
   }
 
-  @RunWith(Parameterized.class) //
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+  @RunWith(Parameterized.class)//
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   public static class Wringed extends AbstractWringTest.Wringed.IfStatementAndSurrounding {
     private static String[][] cases = new String[][] { //
         new String[] { "Return expression", "if (a) return a; if (b) return a;", "if (a || b) return a;" }, //
@@ -131,8 +126,7 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
         new String[] { "Continue expression", "if (a) continue a; if (b) continue a;", "if (a || b) continue a;" }, //
         new String[] { "Continue empty", "if (a) continue; if (b) continue;", "if (a || b) continue;" }, //
         new String[] { "Throw expression", "if (a) throw e; if (b) throw e;", "if (a || b) throw e;" }, //
-        new String[] { "Single statement is nested", "if (a) {{{; return a; }}} if (b) {;{;return a;};;}",
-            "if (a || b) return a;" }, //
+        new String[] { "Single statement is nested", "if (a) {{{; return a; }}} if (b) {;{;return a;};;}", "if (a || b) return a;" }, //
         new String[] { "Parenthesis where necesary", "if (a=b) return a; if (b=a) return a;", "if ((a=b) || (b =a)) return a;" }, //
         new String[] { "No parenthesis for == ", "if (a==b) return a; if (b==a) return a;", "if (a==b || b ==a) return a;" }, //
         new String[] { "No parenthesis for  && and ||", "if (a&&b) return a; if (b||a) return a;", "if (a&&b || b ||a) return a;" }, //
@@ -147,7 +141,7 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file.
      */
-    @Parameters(name = DESCRIPTION) //
+    @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
@@ -158,7 +152,7 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
       super(WRING);
     }
     @Test public void asMeNotNull() {
-      assertNotNull(asMe());
+      JunitHamcrestWrappper.assertNotNull(asMe());
     }
     @Test public void followedByReturn() {
       assertThat(Extract.nextIfStatement(asMe()), notNullValue());

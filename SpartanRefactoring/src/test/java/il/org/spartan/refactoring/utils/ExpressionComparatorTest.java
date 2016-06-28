@@ -1,15 +1,12 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.OrderingComparison.greaterThan;
-import static il.org.spartan.hamcrest.OrderingComparison.lessThan;
-import static il.org.spartan.refactoring.utils.Into.e;
-import static il.org.spartan.refactoring.utils.Into.s;
+import static il.org.spartan.hamcrest.CoreMatchers.*;
+import static il.org.spartan.hamcrest.MatcherAssert.*;
+import static il.org.spartan.hamcrest.JunitHamcrestWrappper.*;
+import static il.org.spartan.refactoring.utils.Into.*;
 
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.junit.*;
+import org.junit.runners.*;
 
 /**
  * Test class for {@link ExpressionComparator}
@@ -17,8 +14,8 @@ import org.junit.runners.MethodSorters;
  * @author Yossi Gil
  * @since 2015-07-17
  */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@SuppressWarnings({ "javadoc", "static-method" }) //
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
+@SuppressWarnings({ "javadoc", "static-method" })//
 public class ExpressionComparatorTest {
   @Test public void alphabeticalCompare() {
     assertThat(ExpressionComparator.alphabeticalCompare(e("1+2"), e("6+7")), lessThan(0));

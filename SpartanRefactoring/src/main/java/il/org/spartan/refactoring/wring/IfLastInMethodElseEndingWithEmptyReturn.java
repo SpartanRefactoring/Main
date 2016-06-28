@@ -1,20 +1,13 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.asBlock;
-import static il.org.spartan.refactoring.utils.Funcs.asReturnStatement;
-import static il.org.spartan.refactoring.utils.Funcs.elze;
-import static il.org.spartan.utils.Utils.lastIn;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.utils.Utils.*;
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
 
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.ReturnStatement;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
-
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Rewrite;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 /**
  * A {@link Wring} to convert <code>if (a) { return x; } else { return y;
@@ -25,7 +18,7 @@ import il.org.spartan.refactoring.utils.Rewrite;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-09-09
  */
-public class IfLastInMethodElseEndingWithEmptyReturn extends Wring<IfStatement> {
+public class IfLastInMethodElseEndingWithEmptyReturn extends Wring<IfStatement> implements Kind.Simplify {
   @Override String description(final IfStatement s) {
     return "Remove redundant return statement in 'else' branch of if(" + s.getExpression()
         + ") ... statement that terminates this method";
@@ -40,8 +33,5 @@ public class IfLastInMethodElseEndingWithEmptyReturn extends Wring<IfStatement> 
         r.replace(deleteMe, s.getAST().newEmptyStatement(), g);
       }
     };
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

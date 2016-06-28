@@ -1,20 +1,13 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.refactoring.utils.Extract.core;
-import static il.org.spartan.refactoring.utils.Funcs.asInfixExpression;
-import static il.org.spartan.refactoring.utils.Funcs.duplicate;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.CONDITIONAL_AND;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.CONDITIONAL_OR;
+import static il.org.spartan.refactoring.utils.Extract.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
-import org.eclipse.jdt.core.dom.ParenthesizedExpression;
-import org.eclipse.jdt.core.dom.Statement;
 
 /**
  * An empty <code><b>enum</b></code> with a variety of <code>public
@@ -67,7 +60,8 @@ public enum Restructure {
    * @return a duplicate of the argument, with the a flattened list of operands.
    */
   public static InfixExpression flatten(final InfixExpression $) {
-    return Subject.operands(flattenInto($.getOperator(), Extract.operands($), new ArrayList<Expression>())).to(duplicate($).getOperator());
+    return Subject.operands(flattenInto($.getOperator(), Extract.operands($), new ArrayList<Expression>())).to(
+        duplicate($).getOperator());
   }
   private static List<Expression> flattenInto(final Operator o, final List<Expression> es, final List<Expression> $) {
     for (final Expression e : es)
@@ -76,7 +70,8 @@ public enum Restructure {
   }
   private static List<Expression> flattenInto(final Operator o, final Expression e, final List<Expression> $) {
     final Expression core = core(e);
-    return !Is.infix(core) || asInfixExpression(core).getOperator() != o ? add(!Is.simple(core) ? e : core, $) : flattenInto(o, Extract.operands(asInfixExpression(core)), $);
+    return !Is.infix(core) || asInfixExpression(core).getOperator() != o ? add(!Is.simple(core) ? e : core, $) : flattenInto(o,
+        Extract.operands(asInfixExpression(core)), $);
   }
   private static List<Expression> add(final Expression e, final List<Expression> $) {
     $.add(e);

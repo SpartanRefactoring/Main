@@ -1,62 +1,19 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.duplicate;
-import static il.org.spartan.refactoring.utils.Funcs.left;
-import static il.org.spartan.refactoring.utils.Funcs.right;
-import static il.org.spartan.refactoring.wring.Wrings.size;
-import static org.eclipse.jdt.core.dom.Assignment.Operator.ASSIGN;
-import static org.eclipse.jdt.core.dom.Assignment.Operator.BIT_AND_ASSIGN;
-import static org.eclipse.jdt.core.dom.Assignment.Operator.BIT_OR_ASSIGN;
-import static org.eclipse.jdt.core.dom.Assignment.Operator.BIT_XOR_ASSIGN;
-import static org.eclipse.jdt.core.dom.Assignment.Operator.DIVIDE_ASSIGN;
-import static org.eclipse.jdt.core.dom.Assignment.Operator.LEFT_SHIFT_ASSIGN;
-import static org.eclipse.jdt.core.dom.Assignment.Operator.MINUS_ASSIGN;
-import static org.eclipse.jdt.core.dom.Assignment.Operator.PLUS_ASSIGN;
-import static org.eclipse.jdt.core.dom.Assignment.Operator.REMAINDER_ASSIGN;
-import static org.eclipse.jdt.core.dom.Assignment.Operator.RIGHT_SHIFT_SIGNED_ASSIGN;
-import static org.eclipse.jdt.core.dom.Assignment.Operator.RIGHT_SHIFT_UNSIGNED_ASSIGN;
-import static org.eclipse.jdt.core.dom.Assignment.Operator.TIMES_ASSIGN;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.AND;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.DIVIDE;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.LEFT_SHIFT;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.MINUS;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.OR;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.PLUS;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.REMAINDER;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.RIGHT_SHIFT_SIGNED;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.RIGHT_SHIFT_UNSIGNED;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.TIMES;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.XOR;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.wring.Wrings.*;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+import il.org.spartan.misc.*;
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.Operator;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.IExtendedModifier;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.PrefixExpression;
-import org.eclipse.jdt.core.dom.SimpleName;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
-import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
-
-import il.org.spartan.misc.Wrapper;
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Collect;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.Plant;
-import il.org.spartan.refactoring.utils.Rewrite;
-import il.org.spartan.refactoring.utils.Scalpel;
-import il.org.spartan.refactoring.utils.Source;
-import il.org.spartan.refactoring.utils.Subject;
-import il.org.spartan.refactoring.utils.expose;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 /**
  * A wring is a transformation that works on an AstNode. Such a transformation
@@ -68,16 +25,16 @@ import il.org.spartan.refactoring.utils.expose;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-07-09
  */
-public abstract class Wring<N extends ASTNode> {
-  protected CompilationUnit u;
+public abstract class Wring<N extends ASTNode> implements Kind {
+  protected CompilationUnit compilationUnit;
   protected Scalpel scalpel;
 
   /**
    * @param u current compilation unit
    * @return this wring
    */
-  public Wring<N> initialize(@SuppressWarnings("hiding") CompilationUnit u) {
-    this.u = u;
+  public Wring<N> initialize(@SuppressWarnings("hiding") final CompilationUnit compilationUnit) {
+    this.compilationUnit = compilationUnit;
     return this;
   }
   /**
@@ -85,8 +42,8 @@ public abstract class Wring<N extends ASTNode> {
    * @param g text edit group
    * @return this wring
    */
-  public Wring<N> createScalpel(ASTRewrite r, TextEditGroup g) {
-    scalpel = Source.getScalpel(u, r, g);
+  public Wring<N> createScalpel(final ASTRewrite r, final TextEditGroup g) {
+    scalpel = Source.getScalpel(compilationUnit, r, g);
     return this;
   }
   abstract String description(N n);
@@ -107,14 +64,6 @@ public abstract class Wring<N extends ASTNode> {
   Rewrite make(final N n, @SuppressWarnings("unused") final ExclusionManager __) {
     return make(n);
   }
-  /**
-   * Returns the preference group to which the wring belongs to. This method
-   * should be overridden for each wring and should return one of the values of
-   * {@link WringGroup}
-   *
-   * @return the preference group this wring belongs to
-   */
-  abstract WringGroup wringGroup();
   /**
    * Determines whether this {@link Wring} object is not applicable for a given
    * {@link PrefixExpression} is within the "scope" of this . Note that a
@@ -298,17 +247,11 @@ public abstract class Wring<N extends ASTNode> {
 
   static abstract class VariableDeclarationFragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
     static InfixExpression.Operator asInfix(final Assignment.Operator o) {
-      return o == PLUS_ASSIGN ? PLUS
-          : o == MINUS_ASSIGN ? MINUS
-              : o == TIMES_ASSIGN ? TIMES
-                  : o == DIVIDE_ASSIGN ? DIVIDE
-                      : o == BIT_AND_ASSIGN ? AND
-                          : o == BIT_OR_ASSIGN ? OR
-                              : o == BIT_XOR_ASSIGN ? XOR
-                                  : o == REMAINDER_ASSIGN ? REMAINDER
-                                      : o == LEFT_SHIFT_ASSIGN ? LEFT_SHIFT //
-                                          : o == RIGHT_SHIFT_SIGNED_ASSIGN ? RIGHT_SHIFT_SIGNED //
-                                              : o == RIGHT_SHIFT_UNSIGNED_ASSIGN ? RIGHT_SHIFT_UNSIGNED : null;
+      return o == PLUS_ASSIGN ? PLUS : o == MINUS_ASSIGN ? MINUS : o == TIMES_ASSIGN ? TIMES : o == DIVIDE_ASSIGN ? DIVIDE
+          : o == BIT_AND_ASSIGN ? AND : o == BIT_OR_ASSIGN ? OR : o == BIT_XOR_ASSIGN ? XOR : o == REMAINDER_ASSIGN ? REMAINDER
+              : o == LEFT_SHIFT_ASSIGN ? LEFT_SHIFT //
+                  : o == RIGHT_SHIFT_SIGNED_ASSIGN ? RIGHT_SHIFT_SIGNED //
+                      : o == RIGHT_SHIFT_UNSIGNED_ASSIGN ? RIGHT_SHIFT_UNSIGNED : null;
     }
     static boolean hasAnnotation(final VariableDeclarationFragment f) {
       return hasAnnotation((VariableDeclarationStatement) f.getParent());

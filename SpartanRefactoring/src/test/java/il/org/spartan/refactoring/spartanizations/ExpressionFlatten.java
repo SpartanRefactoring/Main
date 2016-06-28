@@ -1,27 +1,22 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.refactoring.utils.Funcs.left;
-import static il.org.spartan.refactoring.utils.Into.e;
-import static il.org.spartan.refactoring.utils.Into.i;
-import static il.org.spartan.refactoring.utils.Restructure.flatten;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static il.org.spartan.hamcrest.CoreMatchers.*;
+import static il.org.spartan.hamcrest.MatcherAssert.*;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Into.*;
+import static il.org.spartan.refactoring.utils.Restructure.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
+import il.org.spartan.hamcrest.*;
+import il.org.spartan.refactoring.utils.*;
 
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.eclipse.jdt.core.dom.*;
+import org.junit.*;
+import org.junit.runners.*;
 
-import il.org.spartan.refactoring.utils.Is;
-
-@SuppressWarnings({ "javadoc", "static-method" }) //
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@SuppressWarnings({ "javadoc", "static-method" })//
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 public class ExpressionFlatten {
   @Test public void flattenExists() {
     flatten(i("1+2"));
@@ -59,16 +54,16 @@ public class ExpressionFlatten {
     assertThat(i("1+2").hasExtendedOperands(), is(false));
   }
   @Test public void isNotStringInfixFalse() {
-    assertFalse(Is.notString(i("1+f")));
+    assertThat(Is.notString(i("1+f")), is(false));
   }
   @Test public void isNotStringInfixPlain() {
-    assertFalse(Is.notString(e("1+f")));
+    assertThat(Is.notString(e("1+f")), is(false));
   }
   @Test public void leftOperandIsNotString() {
-    assertTrue(Is.notString(left(i("1+2"))));
+    JunitHamcrestWrappper.assertTrue(Is.notString(left(i("1+2"))));
   }
   @Test public void leftOperandIsNumeric() {
-    assertTrue(Is.numericLiteral(left(i("1+2"))));
+    JunitHamcrestWrappper.assertTrue(Is.numericLiteral(left(i("1+2"))));
   }
   @Test public void leftOperandIsOne() {
     assertThat(left(i("1+2")).toString(), is("1"));

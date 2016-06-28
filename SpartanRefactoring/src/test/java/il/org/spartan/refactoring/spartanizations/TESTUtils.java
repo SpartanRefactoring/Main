@@ -1,25 +1,18 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.OrderingComparison.greaterThanOrEqualTo;
-import static il.org.spartan.utils.Utils.compressSpaces;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
+import static il.org.spartan.hamcrest.CoreMatchers.*;
+import static il.org.spartan.hamcrest.MatcherAssert.*;
+import static il.org.spartan.hamcrest.JunitHamcrestWrappper.*;
+import static il.org.spartan.utils.Utils.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
+import il.org.spartan.hamcrest.*;
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.Document;
-import org.eclipse.text.edits.MalformedTreeException;
-
-import il.org.spartan.refactoring.utils.As;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.wring.Trimmer;
-import il.org.spartan.refactoring.wring.TrimmerTestsUtils;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jface.text.*;
+import org.eclipse.text.edits.*;
 
 /**
  * @author Yossi Gil
@@ -27,8 +20,6 @@ import il.org.spartan.refactoring.wring.TrimmerTestsUtils;
  */
 @SuppressWarnings("javadoc") public enum TESTUtils {
   ;
-  static final String WHITES = "(?m)\\s+";
-
   public static void assertNoChange(final String input) {
     assertSimilar(input, Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on(input))));
   }
@@ -49,7 +40,7 @@ import il.org.spartan.refactoring.wring.TrimmerTestsUtils;
    */
   public static void assertSimilar(final String expected, final String actual) {
     if (!expected.equals(actual))
-      assertEquals(Wrap.essence(expected), Wrap.essence(actual));
+      assertThat(Wrap.essence(actual), is(Wrap.essence(expected)));
   }
   /**
    * Convert a given {@link String} into an {@link Statement}, or fail the
@@ -72,23 +63,25 @@ import il.org.spartan.refactoring.wring.TrimmerTestsUtils;
       throw new AssertionError(e);
     }
   }
-  static String apply(final Trimmer t, final String from) {
+  public static String apply(final Trimmer t, final String from) {
     final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(from);
-    assertNotNull(u);
+    assertThat(u, notNullValue());
     final Document d = new Document(from);
-    assertNotNull(d);
+    assertThat(d, notNullValue());
     return TESTUtils.rewrite(t, u, d).get();
   }
   static void assertNoOpportunity(final Spartanization s, final String from) {
     final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(from);
-    assertEquals(u.toString(), 0, TrimmerTestsUtils.countOpportunities(s, u));
+    assertThat(u.toString(), 0, equalTo(TrimmerTestsUtils.countOpportunities(s, u)));
   }
   static void assertNotEvenSimilar(final String expected, final String actual) {
-    assertNotEquals(compressSpaces(expected), compressSpaces(actual));
+    JunitHamcrestWrappper.assertNotEquals(compressSpaces(expected), compressSpaces(actual));
   }
   static void assertOneOpportunity(final Spartanization s, final String from) {
     final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(from);
     assertThat(u, notNullValue());
     assertThat(TrimmerTestsUtils.countOpportunities(s, u), greaterThanOrEqualTo(1));
   }
+
+  static final String WHITES = "(?m)\\s+";
 }

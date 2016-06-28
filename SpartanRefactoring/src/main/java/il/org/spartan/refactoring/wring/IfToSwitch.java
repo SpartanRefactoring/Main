@@ -1,21 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
-import org.eclipse.jdt.core.dom.ASTMatcher;
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.InfixExpression.Operator;
-import org.eclipse.jdt.core.dom.MethodInvocation;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.StringLiteral;
-import org.eclipse.jdt.core.dom.SwitchCase;
-import org.eclipse.jdt.core.dom.SwitchStatement;
-
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.BindingUtils;
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
+
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 
 /**
  * A wring to replace if statements with switch statements.
@@ -50,36 +40,35 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
  * @author Ori Roth
  * @since 2016/05/11
  */
-@Deprecated public class IfToSwitch extends ReplaceCurrentNode<IfStatement> {
+@Deprecated public class IfToSwitch extends ReplaceCurrentNode<IfStatement> implements Kind.SWITCH_IF_CONVERTION {
   final static boolean PRIORITY = false;
   final static int MIN_CASES_THRESHOLD = 3;
   final static ASTMatcher m = new ASTMatcher();
 
-  static boolean isSimpleComparison(Expression e) {
+  static boolean isSimpleComparison(final Expression e) {
     return e instanceof InfixExpression && ((InfixExpression) e).getOperator().equals(Operator.EQUALS)
-        && BindingUtils.isSimple(((InfixExpression) e).getRightOperand())
-        || e instanceof MethodInvocation && "equals".equals(((MethodInvocation)e).getName().getIdentifier())
-            && ((MethodInvocation) e).arguments().size() == 1
-            && BindingUtils.isSimple((Expression) ((MethodInvocation) e).arguments().get(0));
+        && BindingUtils.isSimple(((InfixExpression) e).getRightOperand()) || e instanceof MethodInvocation
+        && "equals".equals(((MethodInvocation) e).getName().getIdentifier()) && ((MethodInvocation) e).arguments().size() == 1
+        && BindingUtils.isSimple((Expression) ((MethodInvocation) e).arguments().get(0));
   }
-  static boolean isSimpleComparison(Expression e, Expression v) {
+  static boolean isSimpleComparison(final Expression e, final Expression v) {
     return e instanceof InfixExpression && ((InfixExpression) e).getOperator().equals(Operator.EQUALS)
         && getLeftFromComparison(e).subtreeMatch(m, v) && BindingUtils.isSimple(getRightFromComparison(e))
-        || e instanceof MethodInvocation && "equals".equals(((MethodInvocation)e).getName().getIdentifier())
-            && getLeftFromComparison(e).subtreeMatch(m, v) && ((MethodInvocation) e).arguments().size() == 1
-            && BindingUtils.isSimple(getRightFromComparison(e));
+        || e instanceof MethodInvocation && "equals".equals(((MethodInvocation) e).getName().getIdentifier())
+        && getLeftFromComparison(e).subtreeMatch(m, v) && ((MethodInvocation) e).arguments().size() == 1
+        && BindingUtils.isSimple(getRightFromComparison(e));
   }
-  static Expression getLeftFromComparison(Expression e) {
-    return e instanceof InfixExpression ? ((InfixExpression) e).getLeftOperand()
-        : !(e instanceof MethodInvocation)?null:!(((MethodInvocation)e).getExpression() instanceof StringLiteral)?((MethodInvocation)e).getExpression():(Expression)((MethodInvocation)e).arguments().get(0);
+  static Expression getLeftFromComparison(final Expression e) {
+    return e instanceof InfixExpression ? ((InfixExpression) e).getLeftOperand() : !(e instanceof MethodInvocation) ? null
+        : !(((MethodInvocation) e).getExpression() instanceof StringLiteral) ? ((MethodInvocation) e).getExpression()
+            : (Expression) ((MethodInvocation) e).arguments().get(0);
   }
-  static Expression getRightFromComparison(Expression e) {
-    return e instanceof InfixExpression ? ((InfixExpression) e).getRightOperand()
-        : !(e instanceof MethodInvocation) ? null
-            : ((MethodInvocation) e).getExpression() instanceof StringLiteral ? ((MethodInvocation) e).getExpression()
-                : (Expression) ((MethodInvocation) e).arguments().get(0);
+  static Expression getRightFromComparison(final Expression e) {
+    return e instanceof InfixExpression ? ((InfixExpression) e).getRightOperand() : !(e instanceof MethodInvocation) ? null
+        : ((MethodInvocation) e).getExpression() instanceof StringLiteral ? ((MethodInvocation) e).getExpression()
+            : (Expression) ((MethodInvocation) e).arguments().get(0);
   }
-  @SuppressWarnings("unchecked") protected void addStatements(SwitchStatement $, Statement s) {
+  @SuppressWarnings("unchecked") protected void addStatements(final SwitchStatement $, final Statement s) {
     final int i = $.statements().size();
     if (!(s instanceof Block))
       $.statements().add(scalpel.duplicate(s));
@@ -88,7 +77,8 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
     if (!SwitchBreakReturn.caseEndsWithSequencer($.statements(), i))
       $.statements().add(s.getAST().newBreakStatement());
   }
-  @SuppressWarnings("unchecked") protected SwitchStatement buildSwitch(SwitchStatement $, Statement s, Expression v) {
+  @SuppressWarnings("unchecked") protected SwitchStatement buildSwitch(final SwitchStatement $, final Statement s,
+      final Expression v) {
     if (s == null)
       return $;
     if (s instanceof IfStatement) {
@@ -112,14 +102,14 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
     addStatements($, s);
     return $;
   }
-  @SuppressWarnings("unchecked") protected static int countCases(SwitchStatement s) {
+  @SuppressWarnings("unchecked") protected static int countCases(final SwitchStatement s) {
     int $ = 0;
     for (final Statement i : (Iterable<Statement>) s.statements())
       if (i instanceof SwitchCase)
         ++$;
     return $;
   }
-  @Override ASTNode replacement(IfStatement s) {
+  @Override ASTNode replacement(final IfStatement s) {
     if (s.getParent() instanceof IfStatement)
       return null;
     Expression e = s.getExpression();
@@ -131,12 +121,9 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
     SwitchStatement $ = s.getAST().newSwitchStatement();
     $.setExpression(scalpel.duplicate(e));
     $ = buildSwitch($, s, e);
-    return $ != null && countCases($) >= MIN_CASES_THRESHOLD?$:null;
+    return $ != null && countCases($) >= MIN_CASES_THRESHOLD ? $ : null;
   }
-  @Override String description(@SuppressWarnings("unused") IfStatement __) {
+  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Replace if with switch";
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.SWITCH_IF_CONVERTION;
   }
 }

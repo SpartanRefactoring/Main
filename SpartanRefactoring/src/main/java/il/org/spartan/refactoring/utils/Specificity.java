@@ -1,14 +1,10 @@
 package il.org.spartan.refactoring.utils;
 
-import static org.eclipse.jdt.core.dom.ASTNode.PREFIX_EXPRESSION;
-import static org.eclipse.jdt.core.dom.ASTNode.SIMPLE_NAME;
+import static org.eclipse.jdt.core.dom.ASTNode.*;
 
-import java.util.Comparator;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.PrefixExpression;
-import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * @author Yossi Gil
@@ -68,7 +64,8 @@ public class Specificity implements Comparator<Expression> {
       @Override boolean includes(final ASTNode n) {
         return Is.this_(n);
       }
-    },;
+    },
+    ;
     static int of(final ASTNode n) {
       final Expression e = Extract.core((Expression) n);
       for (final Level l : values())

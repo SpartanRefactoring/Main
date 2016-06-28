@@ -1,16 +1,10 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.elze;
-import static il.org.spartan.refactoring.utils.Funcs.makeThrowStatement;
-import static il.org.spartan.refactoring.utils.Funcs.then;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
 
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.Statement;
-
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Subject;
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * A {@link Wring} to convert <code>if (x) throw b; else throw c;</code> into
@@ -19,7 +13,7 @@ import il.org.spartan.refactoring.utils.Subject;
  * @author Yossi Gil
  * @since 2015-07-29
  */
-public final class IfThrowFooElseThrowBar extends Wring.ReplaceCurrentNode<IfStatement> {
+public final class IfThrowFooElseThrowBar extends Wring.ReplaceCurrentNode<IfStatement> implements Kind.Ternarize {
   @Override Statement replacement(final IfStatement s) {
     final Expression condition = s.getExpression();
     final Expression then = Extract.throwExpression(then(s));
@@ -31,8 +25,5 @@ public final class IfThrowFooElseThrowBar extends Wring.ReplaceCurrentNode<IfSta
   }
   @Override String description(final IfStatement s) {
     return "Consolidate if(" + s.getExpression() + ") ... into a 'throw' statement of a conditional expression";
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.IF_TO_TERNARY;
   }
 }

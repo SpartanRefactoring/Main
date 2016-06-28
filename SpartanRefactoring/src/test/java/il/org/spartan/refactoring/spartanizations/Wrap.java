@@ -1,13 +1,10 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import static il.org.spartan.utils.Utils.compressSpaces;
-import static il.org.spartan.utils.Utils.removePrefix;
-import static il.org.spartan.utils.Utils.removeSuffix;
+import static il.org.spartan.utils.Utils.*;
+import il.org.spartan.refactoring.utils.*;
 
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jface.text.Document;
-
-import il.org.spartan.refactoring.utils.As;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jface.text.*;
 
 /**
  * An empty <code><b>enum</b></code> for fluent programming. The name should say
@@ -19,34 +16,29 @@ import il.org.spartan.refactoring.utils.As;
  */
 public enum Wrap {
   /** Algorithm for wrapping/unwrapping a method */
-  Method(
-      "" + //
-          "package p;\n" + //
-          "public class SpongeBob {\n" + //
-          "",
-      "" + //
-          "} // END OF PACKAGE\n" + //
-          ""), //
-          /** Algorithm for wrapping/unwrapping a statement */
-  Statement(
-      "" + Method.before + //
-          "public void squarePants(){\n" + //
-          "",
-      "" + //
-          "} // END OF METHOD \n" + //
-          "" + Method.after + //
-          ""), //
-          /** Algorithm for wrapping/unwrapping an expression */
-  Expression(
-      "" + Statement.before + //
-          "   if (", //
-      "" + //
-          ") patrick();\n" + //
-          Statement.after + //
-          ""), //
-          ComplilationUnit("", ""),//
-  //
-  ;
+  Method("" + //
+      "package p;\n" + //
+      "public class SpongeBob {\n" + //
+      "", "" + //
+      "} // END OF PACKAGE\n" + //
+      ""), //
+  /** Algorithm for wrapping/unwrapping a statement */
+      Statement("" + Method.before + //
+      "public void squarePants(){\n" + //
+      "", "" + //
+      "} // END OF METHOD \n" + //
+      "" + Method.after + //
+      ""), //
+  /** Algorithm for wrapping/unwrapping an expression */
+          Expression("" + Statement.before + //
+      "   if (", //
+              "" + //
+              ") patrick();\n" + //
+              Statement.after + //
+              ""), //
+  ComplilationUnit("", ""), //
+              //
+              ;
   /**
    * Finds the most appropriate Wrap for a given code fragment
    *

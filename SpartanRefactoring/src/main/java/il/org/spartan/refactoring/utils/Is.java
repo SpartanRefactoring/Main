@@ -1,109 +1,15 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.refactoring.utils.Funcs.asBlock;
-import static il.org.spartan.refactoring.utils.Funcs.asIfStatement;
-import static il.org.spartan.refactoring.utils.Funcs.asInfixExpression;
-import static il.org.spartan.refactoring.utils.Funcs.asPrefixExpression;
-import static il.org.spartan.refactoring.utils.Funcs.elze;
-import static il.org.spartan.refactoring.utils.Funcs.left;
-import static il.org.spartan.refactoring.utils.Funcs.parent;
-import static il.org.spartan.refactoring.utils.Funcs.then;
-import static il.org.spartan.utils.Utils.in;
-import static il.org.spartan.utils.Utils.intIsIn;
-import static org.eclipse.jdt.core.dom.ASTNode.ARRAY_ACCESS;
-import static org.eclipse.jdt.core.dom.ASTNode.ARRAY_CREATION;
-import static org.eclipse.jdt.core.dom.ASTNode.ARRAY_INITIALIZER;
-import static org.eclipse.jdt.core.dom.ASTNode.ASSIGNMENT;
-import static org.eclipse.jdt.core.dom.ASTNode.BLOCK;
-import static org.eclipse.jdt.core.dom.ASTNode.BOOLEAN_LITERAL;
-import static org.eclipse.jdt.core.dom.ASTNode.BREAK_STATEMENT;
-import static org.eclipse.jdt.core.dom.ASTNode.CAST_EXPRESSION;
-import static org.eclipse.jdt.core.dom.ASTNode.CHARACTER_LITERAL;
-import static org.eclipse.jdt.core.dom.ASTNode.CLASS_INSTANCE_CREATION;
-import static org.eclipse.jdt.core.dom.ASTNode.CONDITIONAL_EXPRESSION;
-import static org.eclipse.jdt.core.dom.ASTNode.CONTINUE_STATEMENT;
-import static org.eclipse.jdt.core.dom.ASTNode.EMPTY_STATEMENT;
-import static org.eclipse.jdt.core.dom.ASTNode.EXPRESSION_STATEMENT;
-import static org.eclipse.jdt.core.dom.ASTNode.FIELD_ACCESS;
-import static org.eclipse.jdt.core.dom.ASTNode.INFIX_EXPRESSION;
-import static org.eclipse.jdt.core.dom.ASTNode.INSTANCEOF_EXPRESSION;
-import static org.eclipse.jdt.core.dom.ASTNode.METHOD_DECLARATION;
-import static org.eclipse.jdt.core.dom.ASTNode.METHOD_INVOCATION;
-import static org.eclipse.jdt.core.dom.ASTNode.NULL_LITERAL;
-import static org.eclipse.jdt.core.dom.ASTNode.NUMBER_LITERAL;
-import static org.eclipse.jdt.core.dom.ASTNode.PARENTHESIZED_EXPRESSION;
-import static org.eclipse.jdt.core.dom.ASTNode.POSTFIX_EXPRESSION;
-import static org.eclipse.jdt.core.dom.ASTNode.PREFIX_EXPRESSION;
-import static org.eclipse.jdt.core.dom.ASTNode.QUALIFIED_NAME;
-import static org.eclipse.jdt.core.dom.ASTNode.RETURN_STATEMENT;
-import static org.eclipse.jdt.core.dom.ASTNode.SIMPLE_NAME;
-import static org.eclipse.jdt.core.dom.ASTNode.STRING_LITERAL;
-import static org.eclipse.jdt.core.dom.ASTNode.SUPER_CONSTRUCTOR_INVOCATION;
-import static org.eclipse.jdt.core.dom.ASTNode.SUPER_FIELD_ACCESS;
-import static org.eclipse.jdt.core.dom.ASTNode.SUPER_METHOD_INVOCATION;
-import static org.eclipse.jdt.core.dom.ASTNode.THIS_EXPRESSION;
-import static org.eclipse.jdt.core.dom.ASTNode.THROW_STATEMENT;
-import static org.eclipse.jdt.core.dom.ASTNode.TYPE_LITERAL;
-import static org.eclipse.jdt.core.dom.ASTNode.VARIABLE_DECLARATION_STATEMENT;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.AND;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.CONDITIONAL_AND;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.CONDITIONAL_OR;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.DIVIDE;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.EQUALS;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.GREATER;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.GREATER_EQUALS;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.LESS;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.LESS_EQUALS;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.MINUS;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.NOT_EQUALS;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.OR;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.PLUS;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.REMAINDER;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.TIMES;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.XOR;
-import il.org.spartan.misc.Wrapper;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.utils.Utils.*;
+import static org.eclipse.jdt.core.dom.ASTNode.*;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+import il.org.spartan.misc.*;
 
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.ASTVisitor;
-import org.eclipse.jdt.core.dom.ArrayAccess;
-import org.eclipse.jdt.core.dom.ArrayCreation;
-import org.eclipse.jdt.core.dom.ArrayInitializer;
-import org.eclipse.jdt.core.dom.Assignment;
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.BooleanLiteral;
-import org.eclipse.jdt.core.dom.CastExpression;
-import org.eclipse.jdt.core.dom.CharacterLiteral;
-import org.eclipse.jdt.core.dom.ClassInstanceCreation;
-import org.eclipse.jdt.core.dom.ConditionalExpression;
-import org.eclipse.jdt.core.dom.EmptyStatement;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.ExpressionStatement;
-import org.eclipse.jdt.core.dom.FieldAccess;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
-import org.eclipse.jdt.core.dom.InstanceofExpression;
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.MethodInvocation;
-import org.eclipse.jdt.core.dom.Modifier;
-import org.eclipse.jdt.core.dom.Name;
-import org.eclipse.jdt.core.dom.NullLiteral;
-import org.eclipse.jdt.core.dom.NumberLiteral;
-import org.eclipse.jdt.core.dom.ParenthesizedExpression;
-import org.eclipse.jdt.core.dom.PostfixExpression;
-import org.eclipse.jdt.core.dom.PrefixExpression;
-import org.eclipse.jdt.core.dom.QualifiedName;
-import org.eclipse.jdt.core.dom.ReturnStatement;
-import org.eclipse.jdt.core.dom.SimpleName;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.StringLiteral;
-import org.eclipse.jdt.core.dom.SuperFieldAccess;
-import org.eclipse.jdt.core.dom.SuperMethodInvocation;
-import org.eclipse.jdt.core.dom.ThisExpression;
-import org.eclipse.jdt.core.dom.TypeLiteral;
-import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
 /**
  * An empty <code><b>enum</b></code> for fluent programming. The name should say
@@ -422,7 +328,7 @@ public enum Is {
         NUMBER_LITERAL, //
         STRING_LITERAL, //
         BOOLEAN_LITERAL //
-    );
+        );
   }
   /**
    * @param s JD
@@ -496,8 +402,8 @@ public enum Is {
         NULL_LITERAL, // null + null is an error, not a string.
         NUMBER_LITERAL, //
         PREFIX_EXPRESSION //
-    //
-    );
+        //
+        );
   }
   private static boolean notStringUp(final Expression e) {
     for (ASTNode context = e.getParent(); context != null; context = context.getParent())

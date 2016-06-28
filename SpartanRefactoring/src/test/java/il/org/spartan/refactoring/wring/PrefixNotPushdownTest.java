@@ -1,30 +1,25 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.refactoring.utils.Extract.core;
-import static il.org.spartan.refactoring.utils.Funcs.asBooleanLiteral;
-import static il.org.spartan.refactoring.utils.Funcs.asNot;
-import static il.org.spartan.refactoring.utils.Into.p;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertNotNull;
-
-import java.util.Collection;
-
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.PrefixExpression;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
-
-import il.org.spartan.refactoring.utils.Is;
+import static il.org.spartan.hamcrest.CoreMatchers.*;
+import static il.org.spartan.hamcrest.MatcherAssert.*;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import static il.org.spartan.refactoring.utils.Extract.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Into.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
+import il.org.spartan.hamcrest.*;
+import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.utils.Utils;
+
+import java.util.*;
+
+import org.eclipse.jdt.core.dom.*;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.Parameters;
 
 /**
  * Unit tests for {@link Wrings#ADDITION_SORTER}.
@@ -32,8 +27,8 @@ import il.org.spartan.utils.Utils;
  * @author Yossi Gil
  * @since 2014-07-13
  */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@SuppressWarnings({ "javadoc", "static-method" }) //
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
+@SuppressWarnings({ "javadoc", "static-method" })//
 public class PrefixNotPushdownTest {
   /** The {@link Wring} under test */
   static final PrefixNotPushdown WRING = new PrefixNotPushdown();
@@ -56,7 +51,7 @@ public class PrefixNotPushdownTest {
     assertThat(WRING.replacement(e), is(notNullValue()));
   }
 
-  @RunWith(Parameterized.class) //
+  @RunWith(Parameterized.class)//
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Exprezzion<PrefixExpression> {
     static String[][] cases = Utils.asArray(//
         new String[] { "Simple not", "!a" }, //
@@ -70,7 +65,7 @@ public class PrefixNotPushdownTest {
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file.
      */
-    @Parameters(name = DESCRIPTION) //
+    @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
@@ -80,8 +75,8 @@ public class PrefixNotPushdownTest {
     }
   }
 
-  @RunWith(Parameterized.class) //
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+  @RunWith(Parameterized.class)//
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   public static class Wringed extends AbstractWringTest.WringedExpression<PrefixExpression> {
     private static String[][] cases = Utils.asArray(//
         new String[] { "2 level not of false", "!!false", "false" }, //
@@ -117,7 +112,7 @@ public class PrefixNotPushdownTest {
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file.
      */
-    @Parameters(name = DESCRIPTION) //
+    @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
@@ -128,7 +123,7 @@ public class PrefixNotPushdownTest {
       super(WRING);
     }
     @Test public void inputIsPrefixExpression() {
-      assertNotNull(asPrefixExpression());
+      JunitHamcrestWrappper.assertNotNull(asPrefixExpression());
     }
   }
 }

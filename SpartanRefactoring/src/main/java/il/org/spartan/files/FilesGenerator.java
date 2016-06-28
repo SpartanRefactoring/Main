@@ -1,16 +1,15 @@
 package il.org.spartan.files;
 
-import static il.org.spartan.utils.Utils.asList;
+import static il.org.spartan.utils.Utils.*;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Stack;
+import java.io.*;
+import java.util.*;
 
 /**
  * Provides, employing fluent API, a {@link Iterable} interface for iteration
- * over files in the file system. <p> Typical uses are<code>
+ * over files in the file system.
+ * <p>
+ * Typical uses are<code>
  *
  * <pre>
  *   <b>for</b> ({@link File} f: <b>new</b> {@link FilesGenerator}(".java").from("."))
@@ -63,8 +62,7 @@ public class FilesGenerator {
    * call chain that makes the fluent API. The second (and last) such step is
    * provided by function {@link #from(String...)}.
    *
-   * @param extensions
-   *          an array of non-<code><b>null</b></code> {@link String}s
+   * @param extensions an array of non-<code><b>null</b></code> {@link String}s
    *          specifying the allowed extensions for files that the iterator
    *          should yield, e.g., ".java", ".class", ".doc", etc. If this
    *          parameter is <code><b>null</b></code>, or of length 0, or contains
@@ -76,9 +74,8 @@ public class FilesGenerator {
     this.extensions = asList(extensions);
   }
   /**
-   * @param from
-   *          an array of names of directories from which the traversal should
-   *          begin
+   * @param from an array of names of directories from which the traversal
+   *          should begin
    * @return an instance of an internal (yet <code><b>public</b></code>)
    *         <code><b>class</b></code> which <code><b>implements</b></code> the
    *         {@link Iterable} <code><b>interface</b></code>
@@ -87,9 +84,8 @@ public class FilesGenerator {
     return from(as.iterable(from));
   }
   /**
-   * @param from
-   *          an array of names of directories from which the traversal should
-   *          begin
+   * @param from an array of names of directories from which the traversal
+   *          should begin
    * @return an instance of an internal (yet <code><b>public</b></code>)
    *         <code><b>class</b></code> which <code><b>implements</b></code> the
    *         {@link Iterable} <code><b>interface</b></code>
@@ -163,9 +159,8 @@ public class FilesGenerator {
   }
 
   /**
-   * @param directory
-   *          should be a directory, but we still need to account for weird
-   *          creatures such as "System Volume Information"
+   * @param directory should be a directory, but we still need to account for
+   *          weird creatures such as "System Volume Information"
    */
   static Iterator<File> directoryIterator(final File directory) {
     if (directory == null || !directory.isDirectory() || directory.list() == null)

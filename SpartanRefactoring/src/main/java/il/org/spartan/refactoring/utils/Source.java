@@ -1,15 +1,12 @@
 package il.org.spartan.refactoring.utils;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.jdt.core.IJavaElement;
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
+import org.eclipse.core.runtime.*;
+import org.eclipse.jdt.core.*;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 /**
  * Give access to source code per file. Creates {@link Disable}rs and
@@ -29,7 +26,7 @@ public class Source {
    * @param p file path
    * @param s file source
    */
-  public synchronized static void set(IPath p, String s) {
+  public synchronized static void set(final IPath p, final String s) {
     if (p == null || s == null)
       return;
     sm.put(p.toString(), s);
@@ -39,7 +36,7 @@ public class Source {
    * @return disabler, able of determining whether an {@link ASTNode} is
    *         spartanization disabled
    */
-  public static Disable getDisable(CompilationUnit u) {
+  public static Disable getDisable(final CompilationUnit u) {
     return new Disable(u);
   }
   /**
@@ -48,10 +45,10 @@ public class Source {
    * @param g text edit group
    * @return scalpel for replacement operation
    */
-  public static Scalpel getScalpel(CompilationUnit u, ASTRewrite r, TextEditGroup g) {
+  public static Scalpel getScalpel(final CompilationUnit u, final ASTRewrite r, final TextEditGroup g) {
     return new Scalpel(u, get(u), r, g);
   }
-  private static String get(CompilationUnit u) {
+  private static String get(final CompilationUnit u) {
     if (u == null)
       return null;
     final IJavaElement je = u.getJavaElement();

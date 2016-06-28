@@ -1,19 +1,12 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Extract.core;
-import static il.org.spartan.refactoring.utils.Funcs.asBooleanLiteral;
-import static il.org.spartan.refactoring.utils.Funcs.duplicate;
-import static il.org.spartan.refactoring.utils.Funcs.logicalNot;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.CONDITIONAL_AND;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.CONDITIONAL_OR;
+import static il.org.spartan.refactoring.utils.Extract.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
 
-import org.eclipse.jdt.core.dom.ConditionalExpression;
-import org.eclipse.jdt.core.dom.Expression;
-
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Have;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.Subject;
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * <code>a ? b : c</code> is the same as <code>(a && b) || (!a && c)</code> if b
@@ -27,7 +20,7 @@ import il.org.spartan.refactoring.utils.Subject;
  * @author Yossi Gil
  * @since 2015-07-20
  */
-public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<ConditionalExpression> {
+public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<ConditionalExpression> implements Kind.Ternarize {
   @Override Expression replacement(final ConditionalExpression e) {
     return simplifyTernary(e);
   }
@@ -59,8 +52,5 @@ public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<Condit
   }
   @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Convert conditional expression into logical expression";
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.IF_TO_TERNARY;
   }
 }

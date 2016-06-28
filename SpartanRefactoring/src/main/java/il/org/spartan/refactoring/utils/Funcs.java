@@ -1,79 +1,17 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.utils.Utils.hasNull;
-import static il.org.spartan.utils.Utils.in;
-import static il.org.spartan.utils.Utils.inRange;
-import static il.org.spartan.utils.Utils.last;
-import static org.eclipse.jdt.core.dom.ASTNode.ASSIGNMENT;
-import static org.eclipse.jdt.core.dom.ASTNode.BLOCK;
-import static org.eclipse.jdt.core.dom.ASTNode.BOOLEAN_LITERAL;
-import static org.eclipse.jdt.core.dom.ASTNode.EXPRESSION_STATEMENT;
-import static org.eclipse.jdt.core.dom.ASTNode.IF_STATEMENT;
-import static org.eclipse.jdt.core.dom.ASTNode.INFIX_EXPRESSION;
-import static org.eclipse.jdt.core.dom.ASTNode.METHOD_DECLARATION;
-import static org.eclipse.jdt.core.dom.ASTNode.METHOD_INVOCATION;
-import static org.eclipse.jdt.core.dom.ASTNode.NULL_LITERAL;
-import static org.eclipse.jdt.core.dom.ASTNode.POSTFIX_EXPRESSION;
-import static org.eclipse.jdt.core.dom.ASTNode.PREFIX_EXPRESSION;
-import static org.eclipse.jdt.core.dom.ASTNode.RETURN_STATEMENT;
-import static org.eclipse.jdt.core.dom.ASTNode.SIMPLE_NAME;
-import static org.eclipse.jdt.core.dom.ASTNode.VARIABLE_DECLARATION_STATEMENT;
-import static org.eclipse.jdt.core.dom.ASTNode.copySubtree;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.EQUALS;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.GREATER;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.GREATER_EQUALS;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.LESS;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.LESS_EQUALS;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.NOT_EQUALS;
-import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.NOT;
-import il.org.spartan.refactoring.wring.PrefixNotPushdown;
+import static il.org.spartan.utils.Utils.*;
+import static org.eclipse.jdt.core.dom.ASTNode.*;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
+import il.org.spartan.refactoring.wring.*;
 import il.org.spartan.utils.Utils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.AST;
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.ASTVisitor;
-import org.eclipse.jdt.core.dom.ArrayType;
-import org.eclipse.jdt.core.dom.Assignment;
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.BooleanLiteral;
-import org.eclipse.jdt.core.dom.CastExpression;
-import org.eclipse.jdt.core.dom.ConditionalExpression;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.ExpressionStatement;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
-import org.eclipse.jdt.core.dom.InstanceofExpression;
-import org.eclipse.jdt.core.dom.IntersectionType;
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.MethodInvocation;
-import org.eclipse.jdt.core.dom.Modifier;
-import org.eclipse.jdt.core.dom.Name;
-import org.eclipse.jdt.core.dom.NameQualifiedType;
-import org.eclipse.jdt.core.dom.NumberLiteral;
-import org.eclipse.jdt.core.dom.ParameterizedType;
-import org.eclipse.jdt.core.dom.ParenthesizedExpression;
-import org.eclipse.jdt.core.dom.PostfixExpression;
-import org.eclipse.jdt.core.dom.PrefixExpression;
-import org.eclipse.jdt.core.dom.PrimitiveType;
-import org.eclipse.jdt.core.dom.QualifiedName;
-import org.eclipse.jdt.core.dom.QualifiedType;
-import org.eclipse.jdt.core.dom.ReturnStatement;
-import org.eclipse.jdt.core.dom.SimpleName;
-import org.eclipse.jdt.core.dom.SimpleType;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.ThrowStatement;
-import org.eclipse.jdt.core.dom.Type;
-import org.eclipse.jdt.core.dom.UnionType;
-import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
-import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
-import org.eclipse.jdt.core.dom.WildcardType;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.jdt.core.dom.rewrite.*;
 
 /**
  * Useful Functions
@@ -332,7 +270,7 @@ public enum Funcs {
       return false;
     for (final Expression name : names)
       if (name == null || name.getNodeType() != SIMPLE_NAME
-          || !((SimpleName) name).getIdentifier().equals(((SimpleName) cmpTo).getIdentifier()))
+      || !((SimpleName) name).getIdentifier().equals(((SimpleName) cmpTo).getIdentifier()))
         return false;
     return true;
   }
@@ -590,9 +528,9 @@ public enum Funcs {
   }
   public static Expression peelNegation(final Expression $) {
     return //
-    $ instanceof PrefixExpression ? peelNegation((PrefixExpression) $) //
-        : $ instanceof ParenthesizedExpression ? peelNegation(((ParenthesizedExpression) $).getExpression()) //
-            : $ instanceof NumberLiteral ? peelNegation((NumberLiteral) $) : $;
+        $ instanceof PrefixExpression ? peelNegation((PrefixExpression) $) //
+            : $ instanceof ParenthesizedExpression ? peelNegation(((ParenthesizedExpression) $).getExpression()) //
+                : $ instanceof NumberLiteral ? peelNegation((NumberLiteral) $) : $;
   }
   /**
    * Retrieve previous item in a list
@@ -744,7 +682,7 @@ public enum Funcs {
         LESS_EQUALS, //
         EQUALS, //
         NOT_EQUALS //
-    ) ? e : null;
+        ) ? e : null;
   }
   private static Expression find(final boolean b, final List<Expression> es) {
     for (final Expression $ : es)

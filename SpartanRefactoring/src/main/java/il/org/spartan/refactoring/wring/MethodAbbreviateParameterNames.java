@@ -1,25 +1,16 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.newSimpleName;
-import static il.org.spartan.refactoring.utils.Utils.unless;
-import static il.org.spartan.refactoring.wring.Wrings.rename;
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Funcs;
-import il.org.spartan.refactoring.utils.JavaTypeNameParser;
-import il.org.spartan.refactoring.utils.MethodExplorer;
-import il.org.spartan.refactoring.utils.Rewrite;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Utils.*;
+import static il.org.spartan.refactoring.wring.Wrings.*;
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.SimpleName;
-import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 /**
  * A {@link Wring} that abbreviates the names of variables that have a generic
@@ -32,9 +23,9 @@ import org.eclipse.text.edits.TextEditGroup;
 /* TODO This is a previous version of the MethodParameterAbbreviate wring that
  * replaces all parameter names in a method at once. If it is found to be
  * useless in the near future, delete this class. Otherwise, remove the
- * 
+ *
  * @Deprecated annotation */
-@Deprecated public class MethodAbbreviateParameterNames extends Wring<MethodDeclaration> {
+@Deprecated public class MethodAbbreviateParameterNames extends Wring<MethodDeclaration> implements Kind.RENAME_PARAMETERS {
   @Override String description(final MethodDeclaration d) {
     return d.getName().toString();
   }
@@ -90,8 +81,5 @@ import org.eclipse.text.edits.TextEditGroup;
   }
   static private String pluralVariadic(final SingleVariableDeclaration d) {
     return d.isVarargs() ? "s" : "";
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.RENAME_PARAMETERS;
   }
 }

@@ -1,37 +1,17 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Extract.core;
-import static il.org.spartan.refactoring.utils.Funcs.duplicate;
-import static il.org.spartan.refactoring.utils.Funcs.left;
-import static il.org.spartan.refactoring.utils.Funcs.same;
-import static il.org.spartan.refactoring.utils.Restructure.parenthesize;
-import static org.eclipse.jdt.core.dom.ASTNode.ASSIGNMENT;
-import static org.eclipse.jdt.core.dom.ASTNode.CLASS_INSTANCE_CREATION;
-import static org.eclipse.jdt.core.dom.ASTNode.FIELD_ACCESS;
-import static org.eclipse.jdt.core.dom.ASTNode.INFIX_EXPRESSION;
-import static org.eclipse.jdt.core.dom.ASTNode.METHOD_INVOCATION;
-import static org.eclipse.jdt.core.dom.ASTNode.SUPER_METHOD_INVOCATION;
+import static il.org.spartan.refactoring.utils.Extract.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Restructure.*;
+import static org.eclipse.jdt.core.dom.ASTNode.*;
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
 
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Assignment;
-import org.eclipse.jdt.core.dom.ClassInstanceCreation;
-import org.eclipse.jdt.core.dom.ConditionalExpression;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.FieldAccess;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.MethodInvocation;
-import org.eclipse.jdt.core.dom.SuperMethodInvocation;
+import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Plant;
-import il.org.spartan.refactoring.utils.Precedence;
-import il.org.spartan.refactoring.utils.Subject;
-import il.org.spartan.refactoring.utils.expose;
-
-final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpression> {
+final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpression> implements Kind.ReorganizeExpression {
   private static int findSingleDifference(final List<Expression> es1, final List<Expression> es2) {
     if (es1.size() != es2.size())
       return -1;
@@ -47,8 +27,7 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
   @SuppressWarnings("unchecked") private static <T extends Expression> T p(final ASTNode n, final T $) {
     return !Precedence.Is.legal(Precedence.of(n)) || Precedence.of(n) >= Precedence.of($) ? $ : (T) parenthesize($);
   }
-  private static Expression pushdown(final ConditionalExpression e, final ClassInstanceCreation e1,
-      final ClassInstanceCreation e2) {
+  private static Expression pushdown(final ConditionalExpression e, final ClassInstanceCreation e1, final ClassInstanceCreation e2) {
     if (!same(e1.getType(), e2.getType()) || !same(e1.getExpression(), e2.getExpression()))
       return null;
     final List<Expression> es1 = expose.arguments(e1);
@@ -106,8 +85,7 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
     expose.arguments($).add(i, Subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression()));
     return $;
   }
-  private static Expression pushdown(final ConditionalExpression e, final SuperMethodInvocation e1,
-      final SuperMethodInvocation e2) {
+  private static Expression pushdown(final ConditionalExpression e, final SuperMethodInvocation e1, final SuperMethodInvocation e2) {
     if (!same(e1.getName(), e2.getName()))
       return null;
     final List<Expression> es1 = expose.arguments(e1);
@@ -122,9 +100,8 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
     return $;
   }
   static Expression pushdown(final ConditionalExpression e, final Assignment a1, final Assignment a2) {
-    return a1.getOperator() != a2.getOperator() || !same(left(a1), left(a2)) ? null
-        : new Plant(Subject.pair(left(a1), Subject.pair(right(a1), right(a2)).toCondition(e.getExpression())).to(a1.getOperator()))
-            .into(e.getParent());
+    return a1.getOperator() != a2.getOperator() || !same(left(a1), left(a2)) ? null : new Plant(Subject.pair(left(a1),
+        Subject.pair(right(a1), right(a2)).toCondition(e.getExpression())).to(a1.getOperator())).into(e.getParent());
   }
   public static Expression right(final Assignment a1) {
     return a1.getRightHandSide();
@@ -164,8 +141,5 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
   }
   @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Pushdown ?: into expression";
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REORDER_EXPRESSIONS;
   }
 }

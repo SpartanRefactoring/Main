@@ -1,12 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.InfixExpression;
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Have;
-import il.org.spartan.refactoring.utils.Is;
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * A {@link Wring} to convert <code>b && true</code> to <code>b</code>
@@ -14,7 +11,7 @@ import il.org.spartan.refactoring.utils.Is;
  * @author Yossi Gil
  * @since 2015-07-20
  */
-public final class InfixConditionalAndTrue extends Wring.ReplaceCurrentNode<InfixExpression> {
+public final class InfixConditionalAndTrue extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.Simplify {
   @Override Expression replacement(final InfixExpression e) {
     return Wrings.eliminateLiteral(e, true);
   }
@@ -23,8 +20,5 @@ public final class InfixConditionalAndTrue extends Wring.ReplaceCurrentNode<Infi
   }
   @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Remove 'true' argument to '&&'";
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

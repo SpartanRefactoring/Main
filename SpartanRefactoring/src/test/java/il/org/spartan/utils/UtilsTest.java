@@ -1,21 +1,18 @@
 package il.org.spartan.utils;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.OrderingComparison.greaterThan;
-import static il.org.spartan.hamcrest.OrderingComparison.lessThan;
-import static il.org.spartan.utils.Utils.in;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static il.org.spartan.hamcrest.CoreMatchers.*;
+import static il.org.spartan.hamcrest.MatcherAssert.*;
+import static il.org.spartan.hamcrest.JunitHamcrestWrappper.*;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import static il.org.spartan.utils.Utils.*;
+import static org.hamcrest.MatcherAssert.*;
+import il.org.spartan.hamcrest.*;
 
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.junit.*;
+import org.junit.runners.*;
 
-@FixMethodOrder(MethodSorters.JVM) //
-@SuppressWarnings({ "static-method", "javadoc", }) //
+@FixMethodOrder(MethodSorters.JVM)//
+@SuppressWarnings({ "static-method", "javadoc", })//
 public class UtilsTest {
   @Test public void compareFF() {
     assertThat(Utils.compare(false, false), is(0));
@@ -30,28 +27,28 @@ public class UtilsTest {
     assertThat(Utils.compare(true, true), is(0));
   }
   @Test public void inTypicalFalse() {
-    assertFalse(in("X", "A", "B", "C"));
+    assertThat(in("X", "A", "B", "C"), is(false));
   }
   @Test public void inTypicalTrue() {
-    assertTrue(in("A", "A", "B", "C"));
+    JunitHamcrestWrappper.assertTrue(in("A", "A", "B", "C"));
   }
   @Test public void removePrefiEmpty() {
-    assertEquals(Utils.removePrefix("BAAAAB", "A"), "BAAAAB");
+    assertThat("BAAAAB", is(Utils.removePrefix("BAAAAB", "A")));
   }
   @Test public void removePrefiExhaustive() {
-    assertEquals(Utils.removePrefix("AXAXAXAXAXAXAXAX", "AX"), "");
+    assertThat("", is(Utils.removePrefix("AXAXAXAXAXAXAXAX", "AX")));
   }
   @Test public void removePrefixTypical() {
-    assertEquals(Utils.removePrefix("AAAABC", "AA"), "BC");
+    assertThat("BC", is(Utils.removePrefix("AAAABC", "AA")));
   }
   @Test public void removeSuffiEmpty() {
-    assertEquals(Utils.removeSuffix("BAAAAB", "A"), "BAAAAB");
+    assertThat("BAAAAB", is(Utils.removeSuffix("BAAAAB", "A")));
   }
   @Test public void removeSuffiExhaustive() {
-    assertEquals(Utils.removeSuffix("AXAXAXAXAXAXAXAX", "AX"), "");
+    assertThat("", is(Utils.removeSuffix("AXAXAXAXAXAXAXAX", "AX")));
   }
   @Test public void removeSuffixTypical() {
-    assertEquals(Utils.removeSuffix("AAAABC", "BC"), "AAAA");
+    assertThat("AAAA", is(Utils.removeSuffix("AAAABC", "BC")));
   }
   @Test public void removeWhites() {
     assertThat(Utils.removeWhites("ABC"), is("ABC"));

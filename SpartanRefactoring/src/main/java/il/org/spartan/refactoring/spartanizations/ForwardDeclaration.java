@@ -1,24 +1,14 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import static il.org.spartan.refactoring.utils.Funcs.duplicate;
-import il.org.spartan.refactoring.utils.Collect;
-import il.org.spartan.refactoring.utils.Rewrite;
-import il.org.spartan.refactoring.utils.expose;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import il.org.spartan.refactoring.utils.*;
 
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.core.resources.IMarker;
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.ASTVisitor;
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.SimpleName;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
-import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.jdt.core.dom.rewrite.ListRewrite;
-import org.eclipse.text.edits.TextEditGroup;
+import org.eclipse.core.resources.*;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 /**
  * @author Artium Nihamkin (original)
@@ -99,7 +89,7 @@ public class ForwardDeclaration extends Spartanization {
           return true;
     return false;
   }
-  @SuppressWarnings("unused") @Override protected ASTVisitor collect(final List<Rewrite> $$, CompilationUnit u) {
+  @SuppressWarnings("unused") @Override protected ASTVisitor collect(final List<Rewrite> $$, final CompilationUnit u) {
     return new ASTVisitor() {
       @Override public boolean visit(final VariableDeclarationFragment f) {
         final ASTNode $ = f.getParent().getParent();

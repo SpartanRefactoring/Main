@@ -1,44 +1,22 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import static il.org.spartan.refactoring.spartanizations.DialogBoxes.announce;
+import static il.org.spartan.refactoring.spartanizations.DialogBoxes.*;
+import il.org.spartan.refactoring.handlers.*;
+import il.org.spartan.refactoring.utils.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.*;
 import java.util.List;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IMarker;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.jdt.core.ICompilationUnit;
-import org.eclipse.jdt.core.IJavaElement;
-import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.IPackageFragment;
-import org.eclipse.jdt.core.IPackageFragmentRoot;
-import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.ASTVisitor;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.jface.text.ITextSelection;
-import org.eclipse.ltk.core.refactoring.Change;
-import org.eclipse.ltk.core.refactoring.CompositeChange;
-import org.eclipse.ltk.core.refactoring.Refactoring;
-import org.eclipse.ltk.core.refactoring.RefactoringStatus;
-import org.eclipse.ltk.core.refactoring.TextFileChange;
-import org.eclipse.ltk.ui.refactoring.RefactoringWizardOpenOperation;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IMarkerResolution;
-
-import il.org.spartan.refactoring.handlers.BaseHandler;
-import il.org.spartan.refactoring.utils.As;
-import il.org.spartan.refactoring.utils.Make;
-import il.org.spartan.refactoring.utils.Rewrite;
-import il.org.spartan.refactoring.utils.Source;
+import org.eclipse.core.resources.*;
+import org.eclipse.core.runtime.*;
+import org.eclipse.jdt.core.*;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.jface.text.*;
+import org.eclipse.ltk.core.refactoring.*;
+import org.eclipse.ltk.ui.refactoring.*;
+import org.eclipse.swt.widgets.*;
+import org.eclipse.ui.*;
 
 /**
  * the base class for all Spartanization Refactoring classes, contains common
@@ -110,8 +88,8 @@ public abstract class Spartanization extends Refactoring {
   protected Spartanization(final String name) {
     this.name = name;
   }
-  @Override public RefactoringStatus checkFinalConditions(final IProgressMonitor pm)
-      throws CoreException, OperationCanceledException {
+  @Override public RefactoringStatus checkFinalConditions(final IProgressMonitor pm) throws CoreException,
+      OperationCanceledException {
     changes.clear();
     totalChanges = 0;
     if (marker == null)
@@ -396,8 +374,8 @@ public abstract class Spartanization extends Refactoring {
    * @throws IllegalArgumentException
    * @throws CoreException
    */
-  protected void scanCompilationUnits(final List<ICompilationUnit> cus, final IProgressMonitor pm)
-      throws IllegalArgumentException, CoreException {
+  protected void scanCompilationUnits(final List<ICompilationUnit> cus, final IProgressMonitor pm) throws IllegalArgumentException,
+      CoreException {
     pm.beginTask("Iterating over gathered compilation units...", cus.size());
     for (final ICompilationUnit cu : cus)
       scanCompilationUnit(cu, new SubProgressMonitor(pm, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL));

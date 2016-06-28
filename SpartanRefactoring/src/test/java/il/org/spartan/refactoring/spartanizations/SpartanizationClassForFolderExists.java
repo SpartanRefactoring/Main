@@ -1,13 +1,13 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import static il.org.spartan.utils.Utils.objects;
+import static il.org.spartan.utils.Utils.*;
 
-import java.io.File;
-import java.util.Collection;
+import java.io.*;
+import java.util.*;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
@@ -18,13 +18,13 @@ import org.junit.runners.Parameterized.Parameters;
  * @author Yossi Gil
  * @since 2014/05/24
  */
-@RunWith(Parameterized.class) //
+@RunWith(Parameterized.class)//
 public class SpartanizationClassForFolderExists extends FileTestUtils {
   /**
    * @return a collection of cases, where each case is an array of length 1
    *         containing the name of a in the test suite
    */
-  @Parameters(name = "{index}: {0}") //
+  @Parameters(name = "{index}: {0}")//
   public static Collection<Object[]> cases() {
     return new FileTestUtils.Directories() {
       @Override Object[] makeCase(final File folder) {
@@ -32,11 +32,13 @@ public class SpartanizationClassForFolderExists extends FileTestUtils {
       }
     }.go();
   }
+
   /**
    * A name of a folder whose name should represent a {@link Spartanization}
    * class
    */
   @Parameter(0) public String folderForClass;
+
   /**
    * Tests that {@link #folderForClass} is a valid class name
    */

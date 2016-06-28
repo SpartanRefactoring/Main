@@ -1,25 +1,23 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import static il.org.spartan.utils.Utils.objects;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static il.org.spartan.utils.Utils.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
+import static il.org.spartan.hamcrest.CoreMatchers.*;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import il.org.spartan.hamcrest.*;
+import il.org.spartan.refactoring.utils.*;
 
-import java.io.File;
-import java.util.Collection;
+import java.io.*;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jface.text.Document;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jface.text.*;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
-
-import il.org.spartan.refactoring.utils.As;
 
 /**
  * Test cases in which the transformation should not do anything
@@ -27,24 +25,25 @@ import il.org.spartan.refactoring.utils.As;
  * @author Yossi Gil
  * @since 2014/05/24
  */
-@RunWith(Parameterized.class) //
+@RunWith(Parameterized.class)//
 public class Unchanged {
   /**
    * @return a collection of cases, where each cases is an array of three
    *         objects, the spartanization, the test case name, and the input file
    */
-  @Parameters(name = "{index}: {0} {1}") //
+  @Parameters(name = "{index}: {0} {1}")//
   public static Collection<Object[]> cases() {
     return new FileTestUtils.Files() {
       @Override Object[] makeCase(final Spartanization s, final File d, final File f, final String name) {
-        return name.endsWith(testSuffix) && As.stringBuilder(f).indexOf(testKeyword) == -1 ? objects(s, name, makeInFile(f))
-            : name.endsWith(".in") && !dotOutExists(d, name) ? objects(name.replaceAll("\\.in$", ""), s, f) : null;
+        return name.endsWith(testSuffix) && As.stringBuilder(f).indexOf(testKeyword) == -1 ? objects(s, name, makeInFile(f)) : name
+            .endsWith(".in") && !dotOutExists(d, name) ? objects(name.replaceAll("\\.in$", ""), s, f) : null;
       }
       private boolean dotOutExists(final File d, final String name) {
         return new File(d, name.replaceAll("\\.in$", ".out")).exists();
       }
     }.go();
   }
+
   /**
    * An object describing the required transformation
    */
@@ -57,29 +56,30 @@ public class Unchanged {
    * Where the input text can be found
    */
   @Parameter(2) public File input;
+
   /**
    * Runs a parameterized test case, based on the instance variables of this
    * instance, and check that no matter what, even if the number of
    * opportunities is zero, the input does not change.
    */
   @Test public void checkNoChange() {
-    assertNotNull("Cannot instantiate Spartanization object", spartanization);
+    JunitHamcrestWrappper.assertNotNull("Cannot instantiate Spartanization object", spartanization);
     if (input.getName().indexOf(FileTestUtils.testSuffix) <= 0)
-      assertEquals(input(), TESTUtils.rewrite(spartanization, (CompilationUnit) As.COMPILIATION_UNIT.ast(input), new Document(input())).get());
+      assertThat(TESTUtils.rewrite(spartanization, (CompilationUnit) As.COMPILIATION_UNIT.ast(input), new Document(input())).get(), is(input()));
     else
-      assertEquals(As.string(FileTestUtils.makeInFile(input)),
-          TESTUtils.rewrite(spartanization, (CompilationUnit) As.COMPILIATION_UNIT.ast(input), new Document(As.string(FileTestUtils.makeInFile(input)))).get());
+      assertThat(TESTUtils.rewrite(spartanization, (CompilationUnit) As.COMPILIATION_UNIT.ast(input),
+      new Document(As.string(FileTestUtils.makeInFile(input)))).get(), is(As.string(FileTestUtils.makeInFile(input))));
   }
   /**
    * Runs a parameterized test case, based on the instance variables of this
    * instance, and check that no opportunities are found.
    */
   @Test public void checkNoOpportunities() {
-    assertNotNull("Cannot instantiate spartanization object", spartanization);
+    JunitHamcrestWrappper.assertNotNull("Cannot instantiate spartanization object", spartanization);
     final ASTNode n = As.COMPILIATION_UNIT.ast(input);
-    assertNotNull(n);
+    JunitHamcrestWrappper.assertNotNull(n);
     assertThat(n, is(instanceOf(CompilationUnit.class)));
-    assertEquals(0, spartanization.findOpportunities((CompilationUnit) n).size());
+    assertThat((Object) spartanization.findOpportunities((CompilationUnit) n).size(), is((Object) 0));
   }
   private String input() {
     return As.string(input);

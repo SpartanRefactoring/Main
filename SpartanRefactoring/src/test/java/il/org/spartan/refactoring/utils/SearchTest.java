@@ -1,28 +1,21 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.MatcherAssert.iz;
-import static il.org.spartan.refactoring.utils.Funcs.asSimpleName;
-import static il.org.spartan.refactoring.utils.Into.d;
-import static il.org.spartan.refactoring.utils.Into.e;
-import static il.org.spartan.refactoring.utils.Into.s;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertNotNull;
-
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.EnhancedForStatement;
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.SimpleName;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
-import org.junit.Test;
-
+import static il.org.spartan.hamcrest.CoreMatchers.*;
+import static il.org.spartan.hamcrest.MatcherAssert.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Into.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import il.org.spartan.hamcrest.*;
 import il.org.spartan.refactoring.utils.Collect.Collector;
+
+import org.eclipse.jdt.core.dom.*;
+import org.junit.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) public class SearchTest {
   private final SimpleName n = asSimpleName(e("n"));
+
   @Test public void awful() {
     assertThat(searcher().in(d("Object n() {\n" + //
         "    class n {\n" + //
@@ -230,7 +223,7 @@ import il.org.spartan.refactoring.utils.Collect.Collector;
     final MethodDeclaration d = d(input);
     assertThat(d, iz(input));
     final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(d);
-    assertNotNull(f);
+    JunitHamcrestWrappper.assertNotNull(f);
     final SimpleName b = f.getName();
     assertThat(b, iz("b"));
     assertThat(Collect.usesOf(b).in(d).size(), is(2));
@@ -240,7 +233,7 @@ import il.org.spartan.refactoring.utils.Collect.Collector;
     final MethodDeclaration d = d(input);
     assertThat(d, iz(input));
     final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(d);
-    assertNotNull(f);
+    JunitHamcrestWrappper.assertNotNull(f);
     final SimpleName b = f.getName();
     assertThat(b, iz("b"));
     assertThat(Collect.usesOf(b).in(d).size(), is(1));

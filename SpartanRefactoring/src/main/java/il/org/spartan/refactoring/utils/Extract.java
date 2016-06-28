@@ -1,47 +1,14 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.refactoring.utils.Funcs.asAssignment;
-import static il.org.spartan.refactoring.utils.Funcs.asBlock;
-import static il.org.spartan.refactoring.utils.Funcs.asExpressionStatement;
-import static il.org.spartan.refactoring.utils.Funcs.asIfStatement;
-import static il.org.spartan.refactoring.utils.Funcs.asMethodDeclaration;
-import static il.org.spartan.refactoring.utils.Funcs.asMethodInvocation;
-import static il.org.spartan.refactoring.utils.Funcs.asReturnStatement;
-import static il.org.spartan.refactoring.utils.Funcs.asStatement;
-import static il.org.spartan.refactoring.utils.Funcs.asThrowStatement;
-import static il.org.spartan.refactoring.utils.Funcs.elze;
-import static il.org.spartan.refactoring.utils.Funcs.left;
-import static il.org.spartan.refactoring.utils.Funcs.right;
-import static il.org.spartan.refactoring.utils.Funcs.then;
-import static il.org.spartan.refactoring.utils.Restructure.flatten;
-import static il.org.spartan.utils.Utils.last;
-import static org.eclipse.jdt.core.dom.ASTNode.BLOCK;
-import static org.eclipse.jdt.core.dom.ASTNode.EMPTY_STATEMENT;
-import static org.eclipse.jdt.core.dom.ASTNode.PARENTHESIZED_EXPRESSION;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Restructure.*;
+import static il.org.spartan.utils.Utils.*;
+import static org.eclipse.jdt.core.dom.ASTNode.*;
+import il.org.spartan.misc.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.ASTVisitor;
-import org.eclipse.jdt.core.dom.Assignment;
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.ExpressionStatement;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.MethodInvocation;
-import org.eclipse.jdt.core.dom.ParenthesizedExpression;
-import org.eclipse.jdt.core.dom.PostfixExpression;
-import org.eclipse.jdt.core.dom.PrefixExpression;
-import org.eclipse.jdt.core.dom.ReturnStatement;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.ThrowStatement;
-import org.eclipse.jdt.core.dom.Type;
-import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
-
-import il.org.spartan.misc.Wrapper;
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * An empty <code><b>enum</b></code> for fluent programming. The name should say

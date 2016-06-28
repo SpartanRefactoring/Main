@@ -1,10 +1,8 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.refactoring.utils.Funcs.duplicate;
+import static il.org.spartan.refactoring.utils.Funcs.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.ParenthesizedExpression;
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * A fluent API class that wraps an {@link Expression} with parenthesis, if the
@@ -19,6 +17,7 @@ import org.eclipse.jdt.core.dom.ParenthesizedExpression;
  */
 public class Plant {
   private final Expression inner;
+
   /**
    * Instantiates this class, recording the expression that might be wrapped.
    *

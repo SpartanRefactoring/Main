@@ -1,16 +1,16 @@
 package il.org.spartan.refactoring.wring;
 
-import static org.junit.Assert.assertEquals;
+import static il.org.spartan.hamcrest.CoreMatchers.*;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import static org.hamcrest.MatcherAssert.*;
+import il.org.spartan.refactoring.spartanizations.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runners.Parameterized.Parameter;
 
-import il.org.spartan.refactoring.spartanizations.Wrap;
-
-@SuppressWarnings({ "javadoc" }) //
+@SuppressWarnings({ "javadoc" })//
 public class AbstractTestBase {
   protected static Collection<Object[]> collect(final String[][] cases) {
     final Collection<Object[]> $ = new ArrayList<>(cases.length);
@@ -29,6 +29,6 @@ public class AbstractTestBase {
 
   @Test public void peelableinput() {
     if (input != null)
-      assertEquals(input, Wrap.Statement.off(Wrap.Statement.on(input)));
+      assertThat(Wrap.Statement.off(Wrap.Statement.on(input)), is(input));
   }
 }

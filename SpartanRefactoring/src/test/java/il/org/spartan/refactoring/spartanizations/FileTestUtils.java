@@ -1,16 +1,11 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import il.org.spartan.hamcrest.*;
+import il.org.spartan.refactoring.utils.*;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import il.org.spartan.refactoring.utils.As;
+import java.io.*;
+import java.util.*;
 
 /**
  * An abstract representation of our test suite, which is represented in
@@ -34,6 +29,7 @@ public abstract class FileTestUtils {
    * Folder in which all test cases are found
    */
   public static final File location = new File("src/test/resources");
+
   /**
    * Instantiates a {@link Class} object if possible, otherwise generate an
    * assertion failure
@@ -72,7 +68,7 @@ public abstract class FileTestUtils {
   }
   /**
    * Creates a temporary file - including lazy deletion.
-   * 
+   *
    * @param b
    * @param d
    * @param f
@@ -86,9 +82,9 @@ public abstract class FileTestUtils {
   }
   static Spartanization makeSpartanizationObject(final String folderForClass) {
     final Class<?> c = asClass(folderForClass);
-    assertNotNull(c);
+    JunitHamcrestWrappper.assertNotNull(c);
     final Object $ = getInstance(c);
-    assertNotNull($);
+    JunitHamcrestWrappper.assertNotNull($);
     return (Spartanization) $;
   }
   /**
@@ -103,7 +99,7 @@ public abstract class FileTestUtils {
     try {
       return Class.forName(name);
     } catch (final ClassNotFoundException e) {
-      fail(name + ": class not found. " + e.getMessage());
+      e.printStackTrace();
       return null;
     }
   }
@@ -189,8 +185,9 @@ public abstract class FileTestUtils {
    * il.org.spartan.refacoring.spartanizations.ExtractMethod: class not found.
    * il.org.spartan.refacoring.spartanizations.ExtractMethod at
    * org.junit.Assert.fail(Assert.java:88) at
-   * il.org.spartan.refactoring.spartanizations.FileTestUtils.asClass(FileTestUtils
-   * .java:84) at il.org.spartan.refactoring.spartanizations.FileTestUtils.
+   * il.org.spartan.refactoring.spartanizations
+   * .FileTestUtils.asClass(FileTestUtils .java:84) at
+   * il.org.spartan.refactoring.spartanizations.FileTestUtils.
    * makeSpartanizationObject(FileTestUtils.java:41) at
    * il.org.spartan.refactoring.spartanizations.FileTestUtils.
    * makeSpartanizationObject(FileTestUtils.java:38) at
@@ -198,16 +195,16 @@ public abstract class FileTestUtils {
    * FileTestUtils.java:161) at
    * il.org.spartan.refactoring.spartanizations.FileTestUtils$Traverse.go(
    * FileTestUtils.java:108) at
-   * il.org.spartan.refactoring.spartanizations.InOutTest.cases(InOutTest.java:85)
-   * at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) at
+   * il.org.spartan.refactoring.spartanizations.InOutTest
+   * .cases(InOutTest.java:85) at
+   * sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) at
    * sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:
    * 62) at sun.reflect.DelegatingMethodAccessorImpl.invoke(
    * DelegatingMethodAccessorImpl.java:43) at
    * java.lang.reflect.Method.invoke(Method.java:497) at
    * org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod
-   * .java:50) at
-   * org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.
-   * java:12) at
+   * .java:50) at org.junit.internal.runners.model.ReflectiveCallable.run(
+   * ReflectiveCallable. java:12) at
    * org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.
    * java:47) at
    * org.junit.runners.Parameterized.allParameters(Parameterized.java:280) at
@@ -257,11 +254,11 @@ public abstract class FileTestUtils {
      * @return a collection of all test cases generated in the traversal
      */
     public final Collection<Object[]> go() {
-      assertNotNull(location);
-      assertNotNull(location.listFiles());
+      JunitHamcrestWrappper.assertNotNull(location);
+      JunitHamcrestWrappper.assertNotNull(location.listFiles());
       final List<Object[]> $ = new ArrayList<>();
       for (final File f : location.listFiles()) {
-        assertNotNull(f);
+        JunitHamcrestWrappper.assertNotNull(f);
         go($, f);
       }
       return $;

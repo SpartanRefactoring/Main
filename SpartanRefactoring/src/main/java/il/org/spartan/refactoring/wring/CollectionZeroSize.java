@@ -1,19 +1,12 @@
 package il.org.spartan.refactoring.wring;
 
-import java.util.Arrays;
-import java.util.List;
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.IMethodBinding;
-import org.eclipse.jdt.core.dom.InfixExpression;
+import java.util.*;
+
+import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
-import org.eclipse.jdt.core.dom.MethodInvocation;
-import org.eclipse.jdt.core.dom.NumberLiteral;
-import org.eclipse.jdt.core.dom.PrefixExpression;
-
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.BindingUtils;
 
 /**
  * A {@link Wring} to change emptiness check from
@@ -23,10 +16,10 @@ import il.org.spartan.refactoring.utils.BindingUtils;
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-24
  */
-public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression> {
+public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.DiscardRedundant {
   // list of accepted operators
-  final List<InfixExpression.Operator> ao = Arrays.asList(
-      new Operator[] { InfixExpression.Operator.EQUALS, InfixExpression.Operator.NOT_EQUALS, InfixExpression.Operator.GREATER });
+  final List<InfixExpression.Operator> ao = Arrays.asList(new Operator[] { InfixExpression.Operator.EQUALS,
+      InfixExpression.Operator.NOT_EQUALS, InfixExpression.Operator.GREATER });
 
   @Override ASTNode replacement(final InfixExpression e) {
     if (!e.getAST().hasResolvedBindings() || !(e.getLeftOperand() instanceof MethodInvocation)
@@ -38,9 +31,9 @@ public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression
       return null;
     final Expression mie = mi.getExpression();
     final IMethodBinding iemb = BindingUtils.getVisibleMethod(mie != null ? mie.resolveTypeBinding() : BindingUtils.getClass(e),
-        "isEmpty", null, e, u);
-    if (iemb == null
-        || !"boolean".equals(iemb.getReturnType().toString()) && !"java.lang.Boolean".equals(iemb.getReturnType().getBinaryName()))
+        "isEmpty", null, e, compilationUnit);
+    if (iemb == null || !"boolean".equals(iemb.getReturnType().toString())
+        && !"java.lang.Boolean".equals(iemb.getReturnType().getBinaryName()))
       return null;
     final MethodInvocation ie = e.getAST().newMethodInvocation();
     ie.setExpression((Expression) ASTNode.copySubtree(e.getAST(), mi.getExpression()));
@@ -58,9 +51,5 @@ public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression
   @Override String description(final InfixExpression n) {
     final Expression e = ((MethodInvocation) n.getLeftOperand()).getExpression();
     return e == null ? "Use isEmpty()" : "Use " + e.toString() + ".isEmpty()";
-  }
-  @Override WringGroup wringGroup() {
-    // TODO maybe change WringGroup
-    return WringGroup.DISCARD_METHOD_INVOCATION;
   }
 }

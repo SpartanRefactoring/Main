@@ -1,14 +1,9 @@
 package il.org.spartan.utils;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.io.*;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * An empty <code><b>enum</b></code> with a variety of <code>public
@@ -20,6 +15,7 @@ import org.eclipse.jdt.core.dom.Block;
 public enum Utils {
   ;
   static final String WHITES = "(?m)\\s+";
+
   /**
    * Appends an element to an array, by reallocating an array whose size is
    * greater by one and placing the element at the last position.
@@ -80,13 +76,13 @@ public enum Utils {
         .replaceAll("(?m)\\s+", " ") // Squeeze whites
         .replaceAll("^\\s", "") // Opening whites
         .replaceAll("\\s$", "") // Closing whites
-        ;
-    for (final String operator : new String[] { ":", "/", "%", ",", "\\{", "\\}", "=", ":", "\\?", ";", "\\+", ">", ">=", "!=", "==", "<", "<=", "-", "\\*", "\\|", "\\&", "%",
-        "\\(", "\\)", "[\\^]" })
+    ;
+    for (final String operator : new String[] { ":", "/", "%", ",", "\\{", "\\}", "=", ":", "\\?", ";", "\\+", ">", ">=", "!=",
+        "==", "<", "<=", "-", "\\*", "\\|", "\\&", "%", "\\(", "\\)", "[\\^]" })
       $ = $ //
-          .replaceAll(WHITES + operator, operator) // Preceding whites
-          .replaceAll(operator + WHITES, operator) // Trailing whites
-          ;
+      .replaceAll(WHITES + operator, operator) // Preceding whites
+      .replaceAll(operator + WHITES, operator) // Trailing whites
+    ;
     return $;
   }
   /**

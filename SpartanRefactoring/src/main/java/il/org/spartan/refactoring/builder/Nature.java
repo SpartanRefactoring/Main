@@ -1,12 +1,9 @@
 package il.org.spartan.refactoring.builder;
 
-import org.eclipse.core.resources.ICommand;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IProjectDescription;
-import org.eclipse.core.resources.IProjectNature;
-import org.eclipse.core.runtime.CoreException;
+import il.org.spartan.utils.*;
 
-import il.org.spartan.utils.Utils;
+import org.eclipse.core.resources.*;
+import org.eclipse.core.runtime.*;
 
 /**
  * @author Artium Nihamkin
@@ -19,7 +16,7 @@ public class Nature implements IProjectNature {
   private IProject project;
 
   /* (non-Javadoc)
-   *
+   * 
    * @see org.eclipse.core.resources.IProjectNature#configure() */
   @Override public void configure() throws CoreException {
     final IProjectDescription d = project.getDescription();
@@ -33,7 +30,7 @@ public class Nature implements IProjectNature {
     project.setDescription(d, null);
   }
   /* (non-Javadoc)
-   *
+   * 
    * @see org.eclipse.core.resources.IProjectNature#deconfigure() */
   @Override public void deconfigure() throws CoreException {
     final IProjectDescription description = getProject().getDescription();

@@ -1,11 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
-import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Rewrite;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 /**
  * A wring to remove <code>super()</code> calls which take no arguments, as
@@ -14,7 +14,7 @@ import il.org.spartan.refactoring.utils.Rewrite;
  * @author Yossi Gil
  * @since 2015-08-26
  */
-public class SuperConstructorInvocationRemover extends Wring<SuperConstructorInvocation> {
+public class SuperConstructorInvocationRemover extends Wring<SuperConstructorInvocation> implements Kind.Simplify {
   @Override boolean scopeIncludes(final SuperConstructorInvocation i) {
     return i.arguments().isEmpty();
   }
@@ -27,8 +27,5 @@ public class SuperConstructorInvocationRemover extends Wring<SuperConstructorInv
   }
   @Override String description(@SuppressWarnings("unused") final SuperConstructorInvocation __) {
     return "Remove empty 'super()' invocation";
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

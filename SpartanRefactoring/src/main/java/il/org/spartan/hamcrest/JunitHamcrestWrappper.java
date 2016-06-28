@@ -1,7 +1,12 @@
 package il.org.spartan.hamcrest;
 
-import org.hamcrest.Factory;
-import org.hamcrest.Matcher;
+import static il.org.spartan.hamcrest.CoreMatchers.*;
+import static il.org.spartan.hamcrest.MatcherAssert.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
+import il.org.spartan.*;
+
+import org.hamcrest.*;
 
 /**
  * Non-auto-boxing version for all primitive types of Hamcrest number comparison
@@ -10,14 +15,13 @@ import org.hamcrest.Matcher;
  * @author Yossi Gil
  * @since 2015-07-18
  */
-public class OrderingComparison {
+public class JunitHamcrestWrappper {
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
    * {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} for
    * primitive type <code><b>boolean</b></code>.
    *
-   * @param b
-   *          JD
+   * @param b JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} to
    *         the parameter
@@ -30,8 +34,7 @@ public class OrderingComparison {
    * {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} for
    * primitive type <code><b>byte</b></code>.
    *
-   * @param b
-   *          JD
+   * @param b JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} to
    *         the parameter
@@ -44,8 +47,7 @@ public class OrderingComparison {
    * {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} for
    * primitive type <code><b>char</b></code>.
    *
-   * @param c
-   *          JD
+   * @param c JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} to
    *         the parameter
@@ -58,8 +60,7 @@ public class OrderingComparison {
    * {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} for
    * primitive type <code><b>double</b></code>.
    *
-   * @param d
-   *          JD
+   * @param d JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} to
    *         the parameter
@@ -72,8 +73,7 @@ public class OrderingComparison {
    * {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} for
    * primitive type <code><b>float</b></code>.
    *
-   * @param f
-   *          JD
+   * @param f JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} to
    *         the parameter
@@ -86,8 +86,7 @@ public class OrderingComparison {
    * {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} for
    * primitive type <code><b>int</b></code>.
    *
-   * @param i
-   *          JD
+   * @param i JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} to
    *         the parameter
@@ -100,8 +99,7 @@ public class OrderingComparison {
    * {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} for
    * primitive type <code><b>long</b></code>.
    *
-   * @param l
-   *          JD
+   * @param l JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} to
    *         the parameter
@@ -114,8 +112,7 @@ public class OrderingComparison {
    * {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} for
    * primitive type <code><b>short</b></code>.
    *
-   * @param s
-   *          JD
+   * @param s JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} to
    *         the parameter
@@ -128,8 +125,7 @@ public class OrderingComparison {
    * {@link org.hamcrest.number.OrderingComparison#greaterThan} for primitive
    * type <code><b>boolean</b></code>.
    *
-   * @param b
-   *          JD
+   * @param b JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#greaterThan} to the
    *         parameter
@@ -142,8 +138,7 @@ public class OrderingComparison {
    * {@link org.hamcrest.number.OrderingComparison#greaterThan} for primitive
    * type <code><b>byte</b></code>.
    *
-   * @param b
-   *          JD
+   * @param b JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#greaterThan} to the
    *         parameter
@@ -156,8 +151,7 @@ public class OrderingComparison {
    * {@link org.hamcrest.number.OrderingComparison#greaterThan} for primitive
    * type <code><b>char</b></code> .
    *
-   * @param c
-   *          JD
+   * @param c JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#greaterThan} to the
    *         parameter
@@ -170,8 +164,7 @@ public class OrderingComparison {
    * {@link org.hamcrest.number.OrderingComparison#greaterThan} for primitive
    * type <code><b>double</b></code> .
    *
-   * @param d
-   *          JD
+   * @param d JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#greaterThan} to the
    *         parameter
@@ -184,8 +177,7 @@ public class OrderingComparison {
    * {@link org.hamcrest.number.OrderingComparison#greaterThan} for primitive
    * type <code><b>float</b></code> .
    *
-   * @param f
-   *          JD
+   * @param f JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#greaterThan} to the
    *         parameter
@@ -198,8 +190,7 @@ public class OrderingComparison {
    * {@link org.hamcrest.number.OrderingComparison#greaterThan} for primitive
    * type <code><b>int</b></code>.
    *
-   * @param i
-   *          JD
+   * @param i JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#greaterThan} to the
    *         parameter
@@ -212,8 +203,7 @@ public class OrderingComparison {
    * {@link org.hamcrest.number.OrderingComparison#greaterThan} for primitive
    * type <code><b>long</b></code> .
    *
-   * @param l
-   *          JD
+   * @param l JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#greaterThan} to the
    *         parameter
@@ -226,8 +216,7 @@ public class OrderingComparison {
    * {@link org.hamcrest.number.OrderingComparison#greaterThan} for primitive
    * type <code><b>short</b></code> .
    *
-   * @param s
-   *          JD
+   * @param s JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#greaterThan} to the
    *         parameter
@@ -240,8 +229,7 @@ public class OrderingComparison {
    * {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo} for
    * primitive type <code><b>boolean</b></code>.
    *
-   * @param b
-   *          JD
+   * @param b JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
    *         to the parameter
@@ -254,8 +242,7 @@ public class OrderingComparison {
    * {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo} for
    * primitive type <code><b>byte</b></code>.
    *
-   * @param b
-   *          JD
+   * @param b JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
    *         to the parameter
@@ -268,8 +255,7 @@ public class OrderingComparison {
    * matcher {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
    * for primitive type <code><b>char</b></code> .
    *
-   * @param c
-   *          JD
+   * @param c JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
    *         to the parameter
@@ -282,8 +268,7 @@ public class OrderingComparison {
    * matcher {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
    * for primitive type <code><b>double</b></code> .
    *
-   * @param d
-   *          JD
+   * @param d JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
    *         to the parameter
@@ -296,8 +281,7 @@ public class OrderingComparison {
    * matcher {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
    * for primitive type <code><b>float</b></code> .
    *
-   * @param f
-   *          JD
+   * @param f JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
    *         to the parameter
@@ -310,8 +294,7 @@ public class OrderingComparison {
    * {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo} for
    * primitive type <code><b>int</b></code>.
    *
-   * @param i
-   *          JD
+   * @param i JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
    *         to the parameter
@@ -324,8 +307,7 @@ public class OrderingComparison {
    * matcher {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
    * for primitive type <code><b>long</b></code> .
    *
-   * @param l
-   *          JD
+   * @param l JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
    *         to the parameter
@@ -338,8 +320,7 @@ public class OrderingComparison {
    * matcher {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
    * for primitive type <code><b>short</b></code> .
    *
-   * @param s
-   *          JD
+   * @param s JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
    *         to the parameter
@@ -352,8 +333,7 @@ public class OrderingComparison {
    * {@link org.hamcrest.number.OrderingComparison#lessThan} for primitive type
    * <code><b>boolean</b></code>.
    *
-   * @param b
-   *          JD
+   * @param b JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#lessThan} to the
    *         parameter
@@ -366,8 +346,7 @@ public class OrderingComparison {
    * {@link org.hamcrest.number.OrderingComparison#lessThan} for primitive type
    * <code><b>byte</b></code>.
    *
-   * @param b
-   *          JD
+   * @param b JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#lessThan} to the
    *         parameter
@@ -380,8 +359,7 @@ public class OrderingComparison {
    * matcher {@link org.hamcrest.number.OrderingComparison#lessThan} for
    * primitive type <code><b>char</b></code>.
    *
-   * @param c
-   *          JD
+   * @param c JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#lessThan} to the
    *         parameter
@@ -394,8 +372,7 @@ public class OrderingComparison {
    * matcher {@link org.hamcrest.number.OrderingComparison#lessThan} for
    * primitive type <code><b>double</b></code> .
    *
-   * @param d
-   *          JD
+   * @param d JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#lessThan} to the
    *         parameter
@@ -408,8 +385,7 @@ public class OrderingComparison {
    * matcher {@link org.hamcrest.number.OrderingComparison#lessThan} for
    * primitive type <code><b>float</b></code>.
    *
-   * @param f
-   *          JD
+   * @param f JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#lessThan} to the
    *         parameter
@@ -422,8 +398,7 @@ public class OrderingComparison {
    * {@link org.hamcrest.number.OrderingComparison#lessThan} for primitive type
    * <code><b>int</b></code>.
    *
-   * @param i
-   *          JD
+   * @param i JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#lessThan} to the
    *         parameter
@@ -436,8 +411,7 @@ public class OrderingComparison {
    * matcher {@link org.hamcrest.number.OrderingComparison#lessThan} for
    * primitive type <code><b>long</b></code>.
    *
-   * @param l
-   *          JD
+   * @param l JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#lessThan} to the
    *         parameter
@@ -450,8 +424,7 @@ public class OrderingComparison {
    * matcher {@link org.hamcrest.number.OrderingComparison#lessThan} for
    * primitive type <code><b>short</b></code>.
    *
-   * @param s
-   *          JD
+   * @param s JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#lessThan} to the
    *         parameter
@@ -464,8 +437,7 @@ public class OrderingComparison {
    * {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} for
    * primitive type <code><b>boolean</b></code>.
    *
-   * @param b
-   *          JD
+   * @param b JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} to
    *         the parameter
@@ -478,8 +450,7 @@ public class OrderingComparison {
    * {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} for
    * primitive type <code><b>byte</b></code>.
    *
-   * @param b
-   *          JD
+   * @param b JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} to
    *         the parameter
@@ -492,8 +463,7 @@ public class OrderingComparison {
    * {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} for
    * primitive type <code><b>char</b></code>.
    *
-   * @param c
-   *          JD
+   * @param c JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} to
    *         the parameter
@@ -506,8 +476,7 @@ public class OrderingComparison {
    * {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} for
    * primitive type <code><b>double</b></code>.
    *
-   * @param d
-   *          JD
+   * @param d JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} to
    *         the parameter
@@ -520,8 +489,7 @@ public class OrderingComparison {
    * {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} for
    * primitive type <code><b>float</b></code>.
    *
-   * @param f
-   *          JD
+   * @param f JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} to
    *         the parameter
@@ -534,8 +502,7 @@ public class OrderingComparison {
    * {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} for
    * primitive type <code><b>int</b></code>.
    *
-   * @param i
-   *          JD
+   * @param i JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} to
    *         the parameter
@@ -548,8 +515,7 @@ public class OrderingComparison {
    * {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} for
    * primitive type <code><b>long</b></code>.
    *
-   * @param l
-   *          JD
+   * @param l JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} to
    *         the parameter
@@ -562,13 +528,45 @@ public class OrderingComparison {
    * {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} for
    * primitive type <code><b>short</b></code>.
    *
-   * @param s
-   *          JD
+   * @param s JD
    * @return the result of applying
    *         {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} to
    *         the parameter
    */
   @Factory public static Matcher<Short> lessThanOrEqualTo(final short s) {
     return org.hamcrest.number.OrderingComparison.lessThanOrEqualTo(Short.valueOf(s));
+  }
+  public static void assertEquals(Object exp, Object val) {
+    assertThat(val, is(exp));
+  }
+  public static void assertNotEquals(Object o1, Object o2) {
+    assertThat(o1, not(o2));
+  }
+  public static void assertNotEquals(String reason, Object o1, Object o2) {
+    assertThat(reason, o1, not(o2));
+  }
+  public static void assertEquals(String string, int i1, int i2) {
+    assertThat(string, Box.it(i1), equalTo(Box.it(i2)));
+  }
+  public static void assertFalse(String s, boolean b) {
+    assertThat(s, b, is(false));
+  }
+  public static void assertNotNull(Object o) {
+    assertThat(o, notNullValue());
+  }
+  public static void assertNotNull(String s, Object o) {
+    assertThat(s, o, notNullValue());
+  }
+  public static void assertNull(Object o) {
+    assertThat(o, nullValue());
+  }
+  static void assertNull(String reason, Object o1, Object o2) {
+    assertThat(reason, o1, nullValue());
+  }
+  public static void assertTrue(boolean b) {
+    assertThat(b, is(true));
+  }
+  public static void assertTrue(String s, boolean b) {
+    assertThat(s, b, is(true));
   }
 }

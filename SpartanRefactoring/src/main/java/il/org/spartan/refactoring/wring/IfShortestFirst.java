@@ -1,11 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.wring.Wrings.invert;
+import static il.org.spartan.refactoring.wring.Wrings.*;
+import il.org.spartan.refactoring.preferences.*;
 
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.Statement;
-
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * A {@link Wring} to convert <code>a ? (f,g,h) : c(d,e)</code> into <code>a ?
@@ -14,14 +12,11 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGr
  * @author Yossi Gil
  * @since 2015-08-15
  */
-public final class IfShortestFirst extends Wring.ReplaceCurrentNode<IfStatement> {
+public final class IfShortestFirst extends Wring.ReplaceCurrentNode<IfStatement> implements Kind.ReorganizeExpression {
   @Override Statement replacement(final IfStatement s) {
     return Wrings.thenIsShorter(s) ? null : invert(s);
   }
   @Override String description(final IfStatement s) {
     return "Invert logical conditiona and swap branches of if(" + s.getExpression() + ") ... to make the shortest branch first";
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REORDER_EXPRESSIONS;
   }
 }

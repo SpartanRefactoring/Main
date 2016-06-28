@@ -1,25 +1,15 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.elze;
-import static il.org.spartan.refactoring.utils.Funcs.same;
-import static il.org.spartan.refactoring.utils.Funcs.then;
-import static il.org.spartan.refactoring.wring.Wrings.insertAfter;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.wring.Wrings.*;
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.jdt.core.dom.rewrite.ListRewrite;
-import org.eclipse.text.edits.TextEditGroup;
-
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.Rewrite;
-import il.org.spartan.refactoring.utils.Subject;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 /**
  * A {@link Wring} to convert <code>if (X) {bar(); foo();} else {baz();
@@ -28,7 +18,7 @@ import il.org.spartan.refactoring.utils.Subject;
  * @author Yossi Gil
  * @since 2015-09-05
  */
-public final class IfBarFooElseBazFoo extends Wring<IfStatement> {
+public final class IfBarFooElseBazFoo extends Wring<IfStatement> implements Kind.ConsolidateStatements {
   @Override String description(final IfStatement s) {
     return "Consolidate commmon suffix of then and else branches of if(" + s.getExpression() + ") to just after if statement";
   }
@@ -57,9 +47,8 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> {
         return replacement(s.getExpression(), Subject.ss(then).toOneStatementOrNull(), Subject.ss(elze).toOneStatementOrNull());
       }
       private IfStatement replacement(final Expression condition, final Statement trimmedThen, final Statement trimmedElse) {
-        return trimmedThen == null && trimmedElse == null ? null
-            : trimmedThen == null ? Subject.pair(trimmedElse, null).toNot(condition)
-                : Subject.pair(trimmedThen, trimmedElse).toIf(condition);
+        return trimmedThen == null && trimmedElse == null ? null : trimmedThen == null ? Subject.pair(trimmedElse, null).toNot(
+            condition) : Subject.pair(trimmedThen, trimmedElse).toIf(condition);
       }
     };
   }
@@ -78,8 +67,5 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> {
   }
   @Override Rewrite make(final IfStatement s, final ExclusionManager exclude) {
     return super.make(s, exclude);
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }

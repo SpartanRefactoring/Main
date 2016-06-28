@@ -1,62 +1,32 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.OrderingComparison.greaterThanOrEqualTo;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.asSingle;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
-import static il.org.spartan.refactoring.utils.Funcs.asBlock;
-import static il.org.spartan.refactoring.utils.Funcs.asIfStatement;
-import static il.org.spartan.refactoring.utils.Into.c;
-import static il.org.spartan.refactoring.utils.Into.e;
-import static il.org.spartan.refactoring.utils.Into.i;
-import static il.org.spartan.refactoring.utils.Into.p;
-import static il.org.spartan.refactoring.utils.Into.s;
-import static il.org.spartan.refactoring.utils.Restructure.flatten;
-import static il.org.spartan.utils.Utils.compressSpaces;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.ConditionalExpression;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.PrefixExpression;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.Document;
-import org.eclipse.text.edits.MalformedTreeException;
-import org.eclipse.text.edits.TextEdit;
-import org.junit.Test;
-import org.junit.runners.Parameterized.Parameter;
-
-import il.org.spartan.refactoring.spartanizations.Spartanization;
-import il.org.spartan.refactoring.spartanizations.TESTUtils;
-import il.org.spartan.refactoring.spartanizations.Wrap;
-import il.org.spartan.refactoring.utils.As;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Funcs;
+import static il.org.spartan.hamcrest.CoreMatchers.*;
+import static il.org.spartan.hamcrest.MatcherAssert.*;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Into.*;
+import static il.org.spartan.refactoring.utils.Restructure.*;
+import static il.org.spartan.utils.Utils.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
+import il.org.spartan.hamcrest.*;
+import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.WringedExpression.Conditional;
 import il.org.spartan.refactoring.wring.AbstractWringTest.WringedExpression.Infix;
+
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.jface.text.*;
+import org.eclipse.text.edits.*;
+import org.junit.*;
+import org.junit.runners.Parameterized.Parameter;
 
 /**
  * @author Yossi Gil
  * @since 2015-07-18
  */
-@SuppressWarnings({ "javadoc", "unchecked" }) //
+@SuppressWarnings({ "javadoc", "unchecked" })//
 public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
   protected final Wring<N> inner;
 
@@ -66,8 +36,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
   /**
    * Instantiates the enclosing class ({@link AbstractWringTest})
    *
-   * @param inner
-   *          JD
+   * @param inner JD
    */
   AbstractWringTest(final Wring<N> inner) {
     this.inner = inner;
@@ -77,17 +46,17 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
   }
   protected ConditionalExpression asConditionalExpression() {
     final ConditionalExpression $ = c(input);
-    assertNotNull($);
+    assertThat($, notNullValue());
     return $;
   }
   protected Expression asExpression() {
     final Expression $ = e(input);
-    assertNotNull($);
+    assertThat($, notNullValue());
     return $;
   }
   protected InfixExpression asInfixExpression() {
     final InfixExpression $ = i(input);
-    assertNotNull($);
+    assertThat($, notNullValue());
     return $;
   }
   protected N asMe() {
@@ -95,11 +64,11 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
   }
   protected PrefixExpression asPrefixExpression() {
     final PrefixExpression $ = p(input);
-    assertNotNull($);
+    assertThat($, notNullValue());
     return $;
   }
   void assertLegible(final String expression) {
-    assertTrue(inner.eligible((N) As.EXPRESSION.ast(expression)));
+    JunitHamcrestWrappper.assertTrue(inner.eligible((N) As.EXPRESSION.ast(expression)));
   }
   void assertNotLegible(final Block b) {
     assertThat(inner.eligible((N) b), is(false));
@@ -111,7 +80,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     assertThat(inner.eligible((N) b), is(false));
   }
   void assertWithinScope(final Expression e) {
-    assertTrue(inner.scopeIncludes((N) e));
+    JunitHamcrestWrappper.assertTrue(inner.scopeIncludes((N) e));
   }
   void assertWithinScope(final String expression) {
     assertWithinScope(e(expression));
@@ -134,8 +103,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     /**
      * Instantiates the enclosing class ({@link Noneligible})
      *
-     * @param inner
-     *          JD
+     * @param inner JD
      */
     Noneligible(final Wring<N> inner) {
       super(inner);
@@ -148,21 +116,21 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     @Test public void eligible() {
       if (inner == null)
         return;
-      assertFalse(inner.eligible((N) asExpression()));
+      assertThat(inner.eligible((N) asExpression()), is(false));
     }
     @Override @Test public void findsSimplifier() {
       if (inner == null)
         return;
-      assertNotNull(Toolbox.instance.find(asExpression()));
+      assertThat(Toolbox.instance.find(asExpression()), notNullValue());
     }
     @Test public void noneligible() {
       if (inner == null)
         return;
-      assertTrue(inner.nonEligible((N) asExpression()));
+      JunitHamcrestWrappper.assertTrue(inner.nonEligible((N) asExpression()));
     }
     @Test public void noOpporunity() {
       final CompilationUnit u = asCompilationUnit();
-      assertEquals(u.toString() + wringer.findOpportunities(u), 0, wringer.findOpportunities(u).size());
+      assertThat(u.toString() + wringer.findOpportunities(u), 0, equalTo(wringer.findOpportunities(u).size()));
     }
     @Test public void simiplifies() throws MalformedTreeException, IllegalArgumentException, BadLocationException {
       if (input == null)
@@ -198,11 +166,11 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       @Test public void inputIsInfixExpression() {
         if (inner == null)
           return;
-        assertNotNull(asInfixExpression());
+        assertThat(asInfixExpression(), notNullValue());
       }
       @Override protected InfixExpression asMe() {
         final InfixExpression $ = i(input);
-        assertNotNull($);
+        assertThat($, notNullValue());
         return $;
       }
     }
@@ -253,7 +221,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       }
       @Override protected E asMe() {
         final E $ = (E) e(input);
-        assertNotNull($);
+        assertThat($, notNullValue());
         return $;
       }
 
@@ -267,7 +235,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
         }
         @Test public void inputIsInfixExpression() {
           if (input != null)
-            assertNotNull(asInfixExpression());
+            assertThat(asInfixExpression(), notNullValue());
         }
       }
     }
@@ -298,15 +266,14 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       /**
        * Instantiates the enclosing class ({@link Conditional})
        *
-       * @param w
-       *          JD
+       * @param w JD
        */
       Conditional(final Wring<ConditionalExpression> e) {
         super(e);
       }
       @Test public void inputIsConditionalExpression() {
         if (input != null)
-          assertNotNull(asConditionalExpression());
+          assertThat(asConditionalExpression(), notNullValue());
       }
       @Test public void isConditionalExpression() {
         if (input != null)
@@ -337,10 +304,8 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
         final String peeled = Wrap.Statement.off(excpected.get());
         if (expected.equals(peeled))
           return;
-        if (input.equals(peeled))
-          fail("Nothing done on " + input);
-        if (compressSpaces(peeled).equals(compressSpaces(input)))
-          assertNotEquals("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), compressSpaces(input));
+        JunitHamcrestWrappper.assertNotEquals("Nothing done on " + input, input, peeled);
+        JunitHamcrestWrappper.assertNotEquals("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), compressSpaces(input));
         assertSimilar(expected, peeled);
         assertSimilar(Wrap.Statement.on(expected), excpected);
       }
@@ -370,12 +335,12 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       @Test public void hasReplacementAsInfix() {
         if (inner == null)
           return;
-        assertNotNull(((Wring.ReplaceCurrentNode<InfixExpression>) inner).replacement(asInfixExpression()));
+        assertThat(((Wring.ReplaceCurrentNode<InfixExpression>) inner).replacement(asInfixExpression()), notNullValue());
       }
       @Test public void inputIsInfixExpression() {
         if (inner == null)
           return;
-        assertNotNull(asInfixExpression());
+        assertThat(asInfixExpression(), notNullValue());
       }
       @Override protected final CompilationUnit asCompilationUnit() {
         final String s = input;
@@ -417,39 +382,39 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     @Test public void eligible() {
       if (inner == null)
         return;
-      assertTrue(inner.eligible(asMe()));
+      JunitHamcrestWrappper.assertTrue(inner.eligible(asMe()));
     }
     @Test public void findsSimplifierAsBlock() {
       if (inner == null)
         return;
-      assertNotNull(Toolbox.instance.find(asMe()));
+      assertThat(Toolbox.instance.find(asMe()), notNullValue());
     }
     @Test public void hasOpportunity() {
       if (inner == null)
         return;
-      assertTrue(inner.scopeIncludes(asMe()));
+      JunitHamcrestWrappper.assertTrue(inner.scopeIncludes(asMe()));
       final CompilationUnit u = asCompilationUnit();
       assertThat(u.toString(), wringer.findOpportunities(u).size(), is(greaterThanOrEqualTo(0)));
     }
     @Test public void hasReplacement() {
       if (inner == null)
         return;
-      assertNotNull(((Wring.ReplaceCurrentNode<Block>) inner).replacement(asMe()));
+      assertThat(((Wring.ReplaceCurrentNode<Block>) inner).replacement(asMe()), notNullValue());
     }
     @Test public void noneligible() {
       if (inner == null)
         return;
-      assertFalse(inner.nonEligible(asMe()));
+      assertThat(inner.nonEligible(asMe()), is(false));
     }
     @Test public void peelableOutput() {
       if (inner == null)
         return;
-      assertEquals(expected, Wrap.Statement.off(Wrap.Statement.on(expected)));
+      assertThat(Wrap.Statement.off(Wrap.Statement.on(expected)), is(expected));
     }
     @Test public void scopeIncludes() {
       if (inner == null)
         return;
-      assertTrue(inner.scopeIncludes(asMe()));
+      JunitHamcrestWrappper.assertTrue(inner.scopeIncludes(asMe()));
     }
     @Test public void simiplifies() throws MalformedTreeException, IllegalArgumentException {
       if (inner == null)
@@ -460,18 +425,16 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       final String peeled = Wrap.Statement.off(output.get());
       if (expected.equals(peeled))
         return;
-      if (input.equals(peeled))
-        fail("Nothing done on " + input);
-      if (compressSpaces(peeled).equals(compressSpaces(input)))
-        assertNotEquals("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), compressSpaces(input));
+      JunitHamcrestWrappper.assertNotEquals("Nothing done on " + input, input, peeled);
+      JunitHamcrestWrappper.assertNotEquals("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), compressSpaces(input));
       assertSimilar(expected, peeled);
       assertSimilar(Wrap.Statement.on(expected), output);
     }
     @Override protected Block asMe() {
       final Statement s = s(input);
-      assertNotNull(s);
+      assertThat(s, notNullValue());
       final Block $ = asBlock(s);
-      assertNotNull($);
+      assertThat($, notNullValue());
       return $;
     }
   }
@@ -508,39 +471,39 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     @Test public void eligible() {
       if (inner == null)
         return;
-      assertTrue(inner.eligible((E) asExpression()));
+      JunitHamcrestWrappper.assertTrue(inner.eligible((E) asExpression()));
     }
     @Override @Test public void findsSimplifier() {
       if (inner == null)
         return;
-      assertNotNull(Toolbox.instance.find(asExpression()));
+      assertThat(Toolbox.instance.find(asExpression()), notNullValue());
     }
     @Test public void hasOpportunity() {
       if (inner == null)
         return;
-      assertTrue(inner.scopeIncludes((E) asExpression()));
+      JunitHamcrestWrappper.assertTrue(inner.scopeIncludes((E) asExpression()));
       final CompilationUnit u = asCompilationUnit();
       assertThat(u.toString(), wringer.findOpportunities(u).size(), is(greaterThanOrEqualTo(1)));
     }
     @Test public void hasReplacement() {
       if (inner == null)
         return;
-      assertNotNull(((Wring.ReplaceCurrentNode<E>) inner).replacement((E) asExpression()));
+      assertThat(((Wring.ReplaceCurrentNode<E>) inner).replacement((E) asExpression()), notNullValue());
     }
     @Test public void noneligible() {
       if (inner == null)
         return;
-      assertFalse(inner.nonEligible((E) asExpression()));
+      assertThat(inner.nonEligible((E) asExpression()), is(false));
     }
     @Test public void peelableOutput() {
       if (input == null)
         return;
-      assertEquals(expected, Wrap.Expression.off(Wrap.Expression.on(expected)));
+      assertThat(Wrap.Expression.off(Wrap.Expression.on(expected)), is(expected));
     }
     @Test public void scopeIncludes() {
       if (inner == null)
         return;
-      assertTrue(inner.scopeIncludes((E) asExpression()));
+      JunitHamcrestWrappper.assertTrue(inner.scopeIncludes((E) asExpression()));
     }
     @Test public void simiplifies() throws MalformedTreeException, IllegalArgumentException {
       if (inner == null)
@@ -550,40 +513,26 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       final String peeled = Wrap.Expression.off(actual.get());
       if (expected.equals(peeled))
         return;
-      if (input.equals(peeled))
-        fail("Nothing done on " + input);
-      if (compressSpaces(peeled).equals(compressSpaces(input)))
-        assertNotEquals("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), compressSpaces(input));
+      JunitHamcrestWrappper.assertNotEquals("Nothing done on " + input, input, peeled);
+      JunitHamcrestWrappper.assertNotEquals("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), compressSpaces(input));
       assertSimilar(expected, peeled);
       assertSimilar(Wrap.Expression.on(expected), actual);
     }
-    @Test public void simiplifiesExpanded() throws MalformedTreeException, IllegalArgumentException {
+    @Test public void simiplifiesExpanded() throws MalformedTreeException, IllegalArgumentException, BadLocationException {
       if (inner == null)
         return;
       final CompilationUnit u = asCompilationUnit();
       final Document d = asDocument();
       Document actual = null;
-      // TESTUtils.rewrite(wringer, u, d);
-      try {
-        wringer.createRewrite(u, null).rewriteAST(d, null).apply(d);
-        actual = d;
-      } catch (final MalformedTreeException e) {
-        fail(e.getMessage());
-      } catch (final IllegalArgumentException e) {
-        e.printStackTrace();
-        fail(e.getMessage());
-      } catch (final BadLocationException e) {
-        fail(e.getMessage());
-      }
+      wringer.createRewrite(u, null).rewriteAST(d, null).apply(d);
+      actual = d;
       if (actual == null)
         return;
       final String peeled = Wrap.Expression.off(actual.get());
       if (expected.equals(peeled))
         return;
-      if (input.equals(peeled))
-        fail("Nothing done on " + input);
-      if (compressSpaces(peeled).equals(compressSpaces(input)))
-        assertNotEquals("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), compressSpaces(input));
+      JunitHamcrestWrappper.assertNotEquals("Nothing done on " + input, input, peeled);
+      JunitHamcrestWrappper.assertNotEquals("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), compressSpaces(input));
       assertSimilar(expected, peeled);
       assertSimilar(Wrap.Expression.on(expected), actual);
     }
@@ -599,7 +548,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     }
     @Override protected E asMe() {
       final E $ = (E) e(input);
-      assertNotNull($);
+      assertThat($, notNullValue());
       return $;
     }
 
@@ -610,8 +559,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       /**
        * Instantiates the enclosing class ({@link Infix})
        *
-       * @param w
-       *          JD
+       * @param w JD
        */
       Conditional(final Wring<ConditionalExpression> e) {
         super(e);
@@ -620,12 +568,12 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
         if (inner == null)
           return;
         assertThat(asExpression(), instanceOf(ConditionalExpression.class));
-        assertNotNull(asConditionalExpression());
+        assertThat(asConditionalExpression(), notNullValue());
       }
       @Test public void scopeIncludesAsConditionalExpression() {
         if (inner == null)
           return;
-        assertTrue(inner.scopeIncludes(asConditionalExpression()));
+        JunitHamcrestWrappper.assertTrue(inner.scopeIncludes(asConditionalExpression()));
       }
     }
 
@@ -646,12 +594,12 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       @Test public void hasReplacementAsInfix() {
         if (input == null)
           return;
-        assertNotNull(((Wring.ReplaceCurrentNode<InfixExpression>) inner).replacement(asInfixExpression()));
+        assertThat(((Wring.ReplaceCurrentNode<InfixExpression>) inner).replacement(asInfixExpression()), notNullValue());
       }
       @Test public void inputIsInfixExpression() {
         if (input == null)
           return;
-        assertNotNull(asInfixExpression());
+        assertThat(asInfixExpression(), notNullValue());
       }
     }
   }
@@ -687,24 +635,24 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       if (input == null)
         return;
       final IfStatement s = asMe();
-      assertTrue(s.toString(), inner.eligible(s));
+      JunitHamcrestWrappper.assertTrue(s.toString(), inner.eligible(s));
     }
     @Override @Test public void findsSimplifier() {
       if (input == null)
         return;
-      assertNotNull(Toolbox.instance.find(asMe()));
+      assertThat(Toolbox.instance.find(asMe()), notNullValue());
     }
     @Test public void hasOpportunity() {
       if (inner == null)
         return;
-      assertTrue(inner.scopeIncludes(asMe()));
+      JunitHamcrestWrappper.assertTrue(inner.scopeIncludes(asMe()));
       final CompilationUnit u = asCompilationUnit();
       assertThat(u.toString(), wringer.findOpportunities(u).size(), is(greaterThanOrEqualTo(0)));
     }
     @Test public void hasReplacement() {
       if (inner == null)
         return;
-      assertNotNull(((Wring.ReplaceCurrentNode<IfStatement>) inner).replacement(asMe()));
+      assertThat(((Wring.ReplaceCurrentNode<IfStatement>) inner).replacement(asMe()), notNullValue());
     }
     @Test public void hasSimplifier() {
       if (inner == null)
@@ -714,12 +662,12 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     @Test public void noneligible() {
       if (input == null)
         return;
-      assertFalse(inner.nonEligible(asMe()));
+      assertThat(inner.nonEligible(asMe()), is(false));
     }
     @Test public void peelableOutput() {
       if (input == null)
         return;
-      assertEquals(expected, Wrap.Statement.off(Wrap.Statement.on(expected)));
+      assertThat(Wrap.Statement.off(Wrap.Statement.on(expected)), is(expected));
     }
     @Test public void scopeIncludesAsMe() {
       if (input == null)
@@ -735,16 +683,14 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       final String peeled = Wrap.Statement.off(excpected.get());
       if (expected.equals(peeled))
         return;
-      if (input.equals(peeled))
-        fail("Nothing done on " + input);
-      if (compressSpaces(peeled).equals(compressSpaces(input)))
-        assertNotEquals("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), compressSpaces(input));
+      JunitHamcrestWrappper.assertNotEquals(input, peeled);
+      JunitHamcrestWrappper.assertNotEquals("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), compressSpaces(input));
       assertSimilar(expected, peeled);
       assertSimilar(Wrap.Statement.on(expected), excpected);
     }
     @Override protected IfStatement asMe() {
       final Statement $ = asSingle(input);
-      assertNotNull($);
+      assertThat($, notNullValue());
       return asIfStatement($);
     }
   }
@@ -764,7 +710,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     @Override @Test public void findsSimplifier() {
       if (inner == null)
         return;
-      assertNotNull(Toolbox.instance.find(asMe()));
+      assertThat(Toolbox.instance.find(asMe()), notNullValue());
     }
     @Override protected final CompilationUnit asCompilationUnit() {
       final String s = input;
@@ -778,7 +724,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     }
     @Override protected N asMe() {
       final N $ = (N) s(input);
-      assertNotNull($);
+      assertThat($, notNullValue());
       return $;
     }
   }
@@ -807,17 +753,17 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       if (inner == null)
         return;
       final VariableDeclarationFragment s = asMe();
-      assertTrue(s.toString(), inner.eligible(s));
+      JunitHamcrestWrappper.assertTrue(s.toString(), inner.eligible(s));
     }
     @Override @Test public void findsSimplifier() {
       if (inner == null)
         return;
-      assertNotNull(Toolbox.instance.find(asMe()));
+      assertThat(Toolbox.instance.find(asMe()), notNullValue());
     }
     @Test public void hasOpportunity() {
       if (inner == null)
         return;
-      assertTrue(inner.scopeIncludes(asMe()));
+      JunitHamcrestWrappper.assertTrue(inner.scopeIncludes(asMe()));
       final CompilationUnit u = asCompilationUnit();
       assertThat(u.toString(), wringer.findOpportunities(u).size(), is(greaterThanOrEqualTo(1)));
     }
@@ -829,15 +775,15 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     @Test public void noneligible() {
       if (inner == null)
         return;
-      assertFalse(inner.nonEligible(asMe()));
+      assertThat(inner.nonEligible(asMe()), is(false));
     }
     @Test public void peelableOutput() {
       if (expected == null)
         return;
-      assertEquals(expected, Wrap.Statement.off(Wrap.Statement.on(expected)));
+      assertThat(Wrap.Statement.off(Wrap.Statement.on(expected)), is(expected));
     }
     @Test public void rewriteNotEmpty() throws MalformedTreeException, IllegalArgumentException {
-      assertNotNull(wringer.createRewrite(asCompilationUnit(), null));
+      assertThat(wringer.createRewrite(asCompilationUnit(), null), notNullValue());
     }
     @Test public void scopeIncludesAsMe() {
       if (inner == null)
@@ -853,16 +799,14 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       final String peeled = Wrap.Statement.off(actual.get());
       if (expected.equals(peeled))
         return;
-      if (input.equals(peeled))
-        fail("Nothing done on " + input);
-      if (compressSpaces(peeled).equals(compressSpaces(input)))
-        assertNotEquals("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), compressSpaces(input));
+      JunitHamcrestWrappper.assertNotEquals("Nothing done on " + input, input, peeled);
+      JunitHamcrestWrappper.assertNotEquals("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), compressSpaces(input));
       assertSimilar(expected, peeled);
       assertSimilar(Wrap.Statement.on(expected), actual);
     }
     @Override protected CompilationUnit asCompilationUnit() {
       final CompilationUnit $ = (CompilationUnit) As.COMPILIATION_UNIT.ast(Wrap.Statement.on(input));
-      assertNotNull($);
+      assertThat($, notNullValue());
       return $;
     }
     /**
@@ -893,11 +837,11 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     }
     @Test public void correctSimplifier() {
       if (inner != null)
-        assertEquals(inner, Toolbox.instance.find(asExpression()));
+        assertThat(Toolbox.instance.find(asExpression()), is(inner));
     }
     @Test public void findsSimplifier() {
       if (inner != null)
-        assertNotNull(Toolbox.instance.find(asExpression()));
+        assertThat(Toolbox.instance.find(asExpression()), notNullValue());
     }
     @SuppressWarnings("static-method") protected Document asDocument() {
       return null;
@@ -915,14 +859,10 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
         try {
           s.createRewrite(u, null).rewriteAST(d, null).apply(d);
           return d;
-        } catch (final MalformedTreeException e) {
-          fail(e.getMessage());
-        } catch (final IllegalArgumentException e) {
-          fail(e.getMessage());
-        } catch (final BadLocationException e) {
-          fail(e.getMessage());
+        } catch (MalformedTreeException | IllegalArgumentException | BadLocationException e) {
+          e.printStackTrace();
+          return null;
         }
-        return null;
       }
 
       /** Where the expected output can be found? */
@@ -932,14 +872,13 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       /**
        * Instantiates the enclosing class ({@link WringedExpression})
        *
-       * @param w
-       *          JD
+       * @param w JD
        */
       WringedInput(final Wring<N> w) {
         super(w);
       }
       @Test public void correctSimplifier() {
-        assertEquals(inner, Toolbox.instance.find(asExpression()));
+        assertThat(Toolbox.instance.find(asExpression()), is(inner));
       }
       @Test public void createRewrite() throws MalformedTreeException, IllegalArgumentException, BadLocationException {
         final String s = input;
@@ -947,27 +886,27 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
         assertThat(trimmer.createRewrite(asCompilationUnit(), null).rewriteAST(d, null).apply(d), is(notNullValue()));
       }
       @Test public void eligible() {
-        assertTrue(inner.eligible((N) asExpression()));
+        JunitHamcrestWrappper.assertTrue(inner.eligible((N) asExpression()));
       }
       @Test public void findsSimplifier() {
-        assertNotNull(Toolbox.instance.find(asExpression()));
+        assertThat(Toolbox.instance.find(asExpression()), notNullValue());
       }
       @Test public void hasReplacement() {
-        assertNotNull(((Wring.ReplaceCurrentNode<N>) inner).replacement((N) asExpression()));
+        assertThat(((Wring.ReplaceCurrentNode<N>) inner).replacement((N) asExpression()), notNullValue());
       }
       @Test public void noneligible() {
-        assertFalse(inner.nonEligible((N) asExpression()));
+        assertThat(inner.nonEligible((N) asExpression()), is(false));
       }
       @Test public void oneOpporunity() {
         final CompilationUnit u = asCompilationUnit();
-        assertEquals(u.toString(), 1, trimmer.findOpportunities(u).size());
-        assertTrue(inner.scopeIncludes((N) asExpression()));
+        assertThat(u.toString(), 1, equalTo(trimmer.findOpportunities(u).size()));
+        JunitHamcrestWrappper.assertTrue(inner.scopeIncludes((N) asExpression()));
       }
       @Test public void peelableOutput() {
-        assertEquals(output, Wrap.Expression.off(Wrap.Expression.on(output)));
+        assertThat(Wrap.Expression.off(Wrap.Expression.on(output)), is(output));
       }
       @Test public void scopeIncludes() {
-        assertFalse(inner.scopeIncludes((N) asExpression()));
+        assertThat(inner.scopeIncludes((N) asExpression()), is(false));
       }
       @Test public void simiplifies() throws MalformedTreeException, IllegalArgumentException {
         final CompilationUnit u = asCompilationUnit();
@@ -976,10 +915,8 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
         final String peeled = Wrap.Expression.off(excpected.get());
         if (output.equals(peeled))
           return;
-        if (input.equals(peeled))
-          fail("Nothing done on " + input);
-        if (compressSpaces(peeled).equals(compressSpaces(input)))
-          assertNotEquals("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), compressSpaces(input));
+        JunitHamcrestWrappper.assertNotEquals("Nothing done on " + input, input.equals(peeled));
+        JunitHamcrestWrappper.assertNotEquals("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), compressSpaces(input));
         assertSimilar(output, peeled);
         assertSimilar(Wrap.Expression.on(output), excpected);
       }

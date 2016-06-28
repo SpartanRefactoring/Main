@@ -1,20 +1,13 @@
 package il.org.spartan.refactoring.wring;
 
-import java.util.List;
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.BreakStatement;
-import org.eclipse.jdt.core.dom.ContinueStatement;
-import org.eclipse.jdt.core.dom.ReturnStatement;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.SwitchCase;
-import org.eclipse.jdt.core.dom.SwitchStatement;
-import org.eclipse.jdt.core.dom.ThrowStatement;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
+import java.util.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Is;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 /**
  * A {@link Wring} to replace break statements within a switch with following
@@ -44,8 +37,8 @@ import il.org.spartan.refactoring.utils.Is;
  * @author Ori Roth
  * @since 2016-04-25
  */
-public class SwitchBreakReturn extends Wring.MultipleReplaceToNextStatement<SwitchStatement> {
-  public static boolean caseEndsWithSequencer(List<Statement> ss, int i) {
+public class SwitchBreakReturn extends Wring.MultipleReplaceToNextStatement<SwitchStatement> implements Kind.ConsolidateStatements {
+  public static boolean caseEndsWithSequencer(final List<Statement> ss, int i) {
     if (i == ss.size() - 1)
       return false;
     Statement s = ss.get(++i);
@@ -57,8 +50,8 @@ public class SwitchBreakReturn extends Wring.MultipleReplaceToNextStatement<Swit
     }
     return false;
   }
-  @SuppressWarnings("unchecked") @Override ASTRewrite go(final ASTRewrite r, final SwitchStatement s, final Statement nextStatement,
-      final TextEditGroup g, List<ASTNode> bss, List<ASTNode> crs) {
+  @SuppressWarnings("unchecked") @Override ASTRewrite go(final ASTRewrite r, final SwitchStatement s,
+      final Statement nextStatement, final TextEditGroup g, final List<ASTNode> bss, final List<ASTNode> crs) {
     if (!Is.sequencer(nextStatement) || nextStatement instanceof BreakStatement)
       return null;
     crs.add(nextStatement);
@@ -94,8 +87,5 @@ public class SwitchBreakReturn extends Wring.MultipleReplaceToNextStatement<Swit
   }
   @Override String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "insert return statement into switch instead of break";
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }

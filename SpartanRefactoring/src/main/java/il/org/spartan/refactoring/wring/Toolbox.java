@@ -1,28 +1,8 @@
 package il.org.spartan.refactoring.wring;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Assignment;
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.ClassInstanceCreation;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.ConditionalExpression;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.MethodInvocation;
-import org.eclipse.jdt.core.dom.NormalAnnotation;
-import org.eclipse.jdt.core.dom.PostfixExpression;
-import org.eclipse.jdt.core.dom.PrefixExpression;
-import org.eclipse.jdt.core.dom.ReturnStatement;
-import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
-import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
-import org.eclipse.jdt.core.dom.SwitchStatement;
-import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * A class that contains a bunch of {@link Wring} objects, allowing selecting
@@ -65,102 +45,99 @@ public class Toolbox {
    * @param u a {@link CompilationUnit}
    * @return new {@link Maker} ready for use
    */
-  public static Toolbox generate(CompilationUnit u) {
+  public static Toolbox generate(final CompilationUnit u) {
     return new Maker(u)//
-        .add(SwitchStatement.class, //
-            new SwitchBreakReturn(), //
-            new SwitchSimplify(), //
-            new SwitchFewCasesReplaceWithIf(), //
-            null) //
+    .add(SwitchStatement.class, //
+        new SwitchBreakReturn(), //
+        new SwitchSimplify(), //
+        new SwitchFewCasesReplaceWithIf(), //
+        null) //
         .add(Assignment.class, //
             new AssignmentAndAssignment(), //
             new AssignmentAndReturn(), //
             null) //
-        .add(Block.class, //
-            new BlockSimplify(), //
-            new BlockSingleton(), //
-            null) //
-        .add(PostfixExpression.class, new PostfixToPrefix()) //
-        .add(InfixExpression.class, //
-            new CollectionZeroSize(), //
-            new InfixDivisionMultiplicationNegatives(), //
-            new InfixSortAddition(), //
-            new InfixComparisonBooleanLiteral(), //
-            new InfixConditionalAndTrue(), //
-            new InfixConditionalOrFalse(), //
-            new InfixComparisonSpecific(), //
-            new InfixSortMultiplication(), //
-            new InfixSortPseudoAddition(), //
-            new InfixSortSubstraction(), //
-            new InfixSortDivision(), //
-            new InfixConditionalCommon(), //
-            null)
-        .add(MethodDeclaration.class, //
-            new MethodRenameReturnToDollar(), //
-            new MethodRemoveDegenerateOverride(), //
-            null)
-        .add(MethodInvocation.class, //
-            new BooleanConstants(), //
-            new StringFromStringBuilder(), //
-            new StringEqualsConstant(), //
-            null) //
-        .add(SingleVariableDeclaration.class, //
-            new SingleVariableDeclarationAbbreviation(), //
-            new MethodRenameUnusedVariableToUnderscore(), //
-            new VariableRenameUnderscoreToDoubleUnderscore<SingleVariableDeclaration>(), //
-            null)
-        .add(VariableDeclarationFragment.class, //
-            new DeclarationAssignment(), //
-            new DeclarationInitialiazerAssignment(), //
-            new DeclarationInitialiazelUpdateAssignment(), //
-            new DeclarationInitializerIfAssignment(), //
-            new DeclarationInitializerIfUpdateAssignment(), //
-            new DeclarationInitializerReturnVariable(), //
-            new DeclarationInitializerReturnExpression(), //
-            new DeclarationInitializerReturnAssignment(), //
-            new DeclarationInitializerReturnUpdateAssignment(), //
-            new DeclarationInitializerStatementTerminatingScope(), //
-            new VariableRenameUnderscoreToDoubleUnderscore<VariableDeclarationFragment>(), //
-            null) //
-        .add(IfStatement.class, //
-            new IfLastInMethodThenEndingWithEmptyReturn(), //
-            new IfLastInMethodElseEndingWithEmptyReturn(), //
-            new IfLastInMethod(), //
-            new IfReturnFooElseReturnBar(), //
-            new IfReturnNoElseReturn(), //
-            new IfAssignToFooElseAssignToFoo(), //
-            new IfThenFooBarElseFooBaz(), //
-            new IfBarFooElseBazFoo(), //
-            new IfThrowFooElseThrowBar(), //
-            new IfThrowNoElseThrow(), //
-            new IfExpressionStatementElseSimilarExpressionStatement(), //
-            new IfThenOrElseIsCommandsFollowedBySequencer(), //
-            new IfFooSequencerIfFooSameSequencer(), //
-            new IfCommandsSequencerNoElseSingletonSequencer(), //
-            new IfThenIfThenNoElseNoElse(), //
-            new IfEmptyThenEmptyElse(), //
-            new IfDegenerateElse(), //
-            new IfEmptyThen(), //
-            new IfShortestFirst(), //
-            null)//
-        .add(PrefixExpression.class, //
-            new PrefixIncrementDecrementReturn(), //
-            new PrefixNotPushdown()) //
-        .add(ConditionalExpression.class, //
-            new TernaryBooleanLiteral(), //
-            new TernaryCollapse(), //
-            new TernaryEliminate(), //
-            new TernaryShortestFirst(), //
-            new TernaryPushdown(), //
-            null) //
-        .add(NormalAnnotation.class, //
-            new AnnotationDiscardValueName(), //
-            new AnnotationRemoveEmptyParentheses(), //
-            null) //
-        .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
-        .add(ReturnStatement.class, new ReturnLastInMethod()) //
-        .add(ClassInstanceCreation.class, new WrapperReplaceWithFactory()) //
-        .seal();
+            .add(Block.class, //
+                new BlockSimplify(), //
+                new BlockSingleton(), //
+                null) //
+                .add(PostfixExpression.class, new PostfixToPrefix()) //
+                .add(InfixExpression.class, //
+                    new CollectionZeroSize(), //
+                    new InfixDivisionMultiplicationNegatives(), //
+                    new InfixSortAddition(), //
+                    new InfixComparisonBooleanLiteral(), //
+                    new InfixConditionalAndTrue(), //
+                    new InfixConditionalOrFalse(), //
+                    new InfixComparisonSpecific(), //
+                    new InfixSortMultiplication(), //
+                    new InfixSortPseudoAddition(), //
+                    new InfixSortSubstraction(), //
+                    new InfixSortDivision(), //
+                    new InfixConditionalCommon(), //
+                    null).add(MethodDeclaration.class, //
+                        new MethodRenameReturnToDollar(), //
+                        new MethodRemoveDegenerateOverride(), //
+                        null).add(MethodInvocation.class, //
+                            new BooleanConstants(), //
+                            new StringFromStringBuilder(), //
+                            new StringEqualsConstant(), //
+                            null) //
+                            .add(SingleVariableDeclaration.class, //
+                                new SingleVariableDeclarationAbbreviation(), //
+                                new MethodRenameUnusedVariableToUnderscore(), //
+                                new VariableRenameUnderscoreToDoubleUnderscore<SingleVariableDeclaration>(), //
+                                null).add(VariableDeclarationFragment.class, //
+                                    new DeclarationAssignment(), //
+                                    new DeclarationInitialiazerAssignment(), //
+                                    new DeclarationInitialiazelUpdateAssignment(), //
+                                    new DeclarationInitializerIfAssignment(), //
+                                    new DeclarationInitializerIfUpdateAssignment(), //
+                                    new DeclarationInitializerReturnVariable(), //
+                                    new DeclarationInitializerReturnExpression(), //
+                                    new DeclarationInitializerReturnAssignment(), //
+                                    new DeclarationInitializerReturnUpdateAssignment(), //
+                                    new DeclarationInitializerStatementTerminatingScope(), //
+                                    new VariableRenameUnderscoreToDoubleUnderscore<VariableDeclarationFragment>(), //
+                                    null) //
+                                    .add(IfStatement.class, //
+                                        new IfLastInMethodThenEndingWithEmptyReturn(), //
+                                        new IfLastInMethodElseEndingWithEmptyReturn(), //
+                                        new IfLastInMethod(), //
+                                        new IfReturnFooElseReturnBar(), //
+                                        new IfReturnNoElseReturn(), //
+                                        new IfAssignToFooElseAssignToFoo(), //
+                                        new IfThenFooBarElseFooBaz(), //
+                                        new IfBarFooElseBazFoo(), //
+                                        new IfThrowFooElseThrowBar(), //
+                                        new IfThrowNoElseThrow(), //
+                                        new IfExpressionStatementElseSimilarExpressionStatement(), //
+                                        new IfThenOrElseIsCommandsFollowedBySequencer(), //
+                                        new IfFooSequencerIfFooSameSequencer(), //
+                                        new IfCommandsSequencerNoElseSingletonSequencer(), //
+                                        new IfThenIfThenNoElseNoElse(), //
+                                        new IfEmptyThenEmptyElse(), //
+                                        new IfDegenerateElse(), //
+                                        new IfEmptyThen(), //
+                                        new IfShortestFirst(), //
+                                        null)//
+                                        .add(PrefixExpression.class, //
+                                            new PrefixIncrementDecrementReturn(), //
+                                            new PrefixNotPushdown()) //
+                                            .add(ConditionalExpression.class, //
+                                                new TernaryBooleanLiteral(), //
+                                                new TernaryCollapse(), //
+                                                new TernaryEliminate(), //
+                                                new TernaryShortestFirst(), //
+                                                new TernaryPushdown(), //
+                                                null) //
+                                                .add(NormalAnnotation.class, //
+                                                    new AnnotationDiscardValueName(), //
+                                                    new AnnotationRemoveEmptyParentheses(), //
+                                                    null) //
+                                                    .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
+                                                    .add(ReturnStatement.class, new ReturnLastInMethod()) //
+                                                    .add(ClassInstanceCreation.class, new WrapperReplaceWithFactory()) //
+                                                    .seal();
   }
 
   /** The default instance of this class */
@@ -178,7 +155,7 @@ public class Toolbox {
     /**
      * @param u current {@link CompilationUnit}
      */
-    public Maker(CompilationUnit u) {
+    public Maker(final CompilationUnit u) {
       cu = u;
     }
     /**
@@ -194,7 +171,7 @@ public class Toolbox {
       for (final Wring<N> w : ws) {
         if (w == null)
           break;
-        if (!w.wringGroup().isEnabled())
+        if (!w.kind().isEnabled())
           continue;
         l.add(w.initialize(cu));
       }

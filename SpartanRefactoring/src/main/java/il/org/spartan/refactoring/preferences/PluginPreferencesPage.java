@@ -1,18 +1,14 @@
 package il.org.spartan.refactoring.preferences;
 
-import org.eclipse.jface.preference.BooleanFieldEditor;
-import org.eclipse.jface.preference.ComboFieldEditor;
-import org.eclipse.jface.preference.FieldEditorPreferencePage;
-import org.eclipse.jface.util.IPropertyChangeListener;
-import org.eclipse.jface.util.PropertyChangeEvent;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPreferencePage;
-
-import il.org.spartan.refactoring.builder.Plugin;
+import il.org.spartan.refactoring.builder.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 
-@SuppressWarnings("javadoc") public class PluginPreferencesPage extends FieldEditorPreferencePage
-    implements IWorkbenchPreferencePage {
+import org.eclipse.jface.preference.*;
+import org.eclipse.jface.util.*;
+import org.eclipse.ui.*;
+
+@SuppressWarnings("javadoc") public class PluginPreferencesPage extends FieldEditorPreferencePage implements
+    IWorkbenchPreferencePage {
   private final SpartanPropertyListener listener;
 
   @SuppressWarnings("synthetic-access") public PluginPreferencesPage() {
@@ -28,13 +24,13 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGr
         PluginPreferencesResources.PLUGIN_STARTUP_BEHAVIOR_TEXT, //
         PluginPreferencesResources.PLUGIN_STARTUP_BEHAVIOR_OPTIONS, //
         getFieldEditorParent()) //
-    );
+        );
     // Add the enabled for new projects checkbox
     addField(new BooleanFieldEditor( //
         PluginPreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, //
         PluginPreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT, //
         getFieldEditorParent()) //
-    );
+        );
     // Add the "resolve bindings" checkbox
     final BooleanFieldEditor bindingsCheckbox = new BooleanFieldEditor( //
         PluginPreferencesResources.ENABLE_BINDING_RESOLUTION_ID, //
@@ -44,8 +40,8 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGr
     // Create and fill the "enabled spartanizations" group box
     final GroupFieldEditor gr = new GroupFieldEditor("Enabled spartanizations", getFieldEditorParent());
     for (final WringGroup wring : WringGroup.values())
-      gr.add(new ComboFieldEditor(wring.getId(), wring.getLabel(), PluginPreferencesResources.WRING_COMBO_OPTIONS,
-          gr.getFieldEditor()));
+      gr.add(new ComboFieldEditor(wring.getId(), wring.getLabel(), PluginPreferencesResources.WRING_COMBO_OPTIONS, gr
+          .getFieldEditor()));
     addField(gr);
     gr.init();
   }

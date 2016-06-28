@@ -1,40 +1,15 @@
 package il.org.spartan.refactoring.wring;
 
-import java.util.List;
+import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.utils.*;
 
-import org.eclipse.core.resources.IMarker;
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.ASTVisitor;
-import org.eclipse.jdt.core.dom.Assignment;
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.ClassInstanceCreation;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.ConditionalExpression;
-import org.eclipse.jdt.core.dom.EnumDeclaration;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.MethodInvocation;
-import org.eclipse.jdt.core.dom.NormalAnnotation;
-import org.eclipse.jdt.core.dom.PostfixExpression;
-import org.eclipse.jdt.core.dom.PrefixExpression;
-import org.eclipse.jdt.core.dom.ReturnStatement;
-import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
-import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
-import org.eclipse.jdt.core.dom.SwitchStatement;
-import org.eclipse.jdt.core.dom.TypeDeclaration;
-import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.Document;
-import org.eclipse.text.edits.MalformedTreeException;
-import org.eclipse.text.edits.TextEdit;
+import java.util.*;
 
-import il.org.spartan.refactoring.spartanizations.Spartanization;
-import il.org.spartan.refactoring.utils.As;
-import il.org.spartan.refactoring.utils.Disable;
-import il.org.spartan.refactoring.utils.Rewrite;
-import il.org.spartan.refactoring.utils.Source;
+import org.eclipse.core.resources.*;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.jface.text.*;
+import org.eclipse.text.edits.*;
 
 /**
  * @author Yossi Gil
@@ -77,7 +52,7 @@ public class Trimmer extends Spartanization {
   /**
    * @DisableSpartan
    */
-  @Override protected ASTVisitor collect(final List<Rewrite> $, CompilationUnit u) {
+  @Override protected ASTVisitor collect(final List<Rewrite> $, final CompilationUnit u) {
     final Disable disable = Source.getDisable(u);
     final Toolbox toolbox = Toolbox.generate(u);
     return new DispatchingVisitor() {
@@ -181,7 +156,7 @@ public class Trimmer extends Spartanization {
   abstract class DispatchingPostVisitor extends ASTVisitor {
     final ExclusionManager exclude = makeExcluder();
 
-    @Override public void postVisit(ASTNode n) {
+    @Override public void postVisit(final ASTNode n) {
       postGo(n);
     }
     abstract <N extends ASTNode> void postGo(final N n);

@@ -1,28 +1,24 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.refactoring.spartanizations.Wrap.essence;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
+import static il.org.spartan.hamcrest.CoreMatchers.*;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import static il.org.spartan.refactoring.spartanizations.Wrap.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
 
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jface.text.Document;
-import org.junit.Test;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jface.text.*;
+import org.junit.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) public class WrapTest {
   @Test public void dealWithBothKindsOfComment() {
-    similar(
-        ""//
-            + "if (b) {\n"//
-            + " /* empty */"//
-            + "; \n"//
-            + "} { // no else \n"//
-            + " throw new Exception();\n"//
-            + "}", //
+    similar(""//
+        + "if (b) {\n"//
+        + " /* empty */"//
+        + "; \n"//
+        + "} { // no else \n"//
+        + " throw new Exception();\n"//
+        + "}", //
         "if (b) {;} { throw new Exception(); }");
   }
   @Test public void dealWithComment() {
@@ -34,7 +30,7 @@ import org.junit.Test;
         + "}"), is(Wrap.Statement));
   }
   @Test public void essenceTest() {
-    assertEquals(essence("if (b) {\n /* empty */; \n} // no else \n throw new Exception();\n"), "if(b){;}throw new Exception();");
+    assertThat("if(b){;}throw new Exception();", is(essence("if (b) {\n /* empty */; \n} // no else \n throw new Exception();\n")));
   }
   @Test public void expression() {
     assertThat(Wrap.Expression.off(Wrap.Expression.on("a+b")), is("a+b"));
@@ -87,15 +83,16 @@ import org.junit.Test;
     assertThat(Wrap.Method.off(Wrap.Method.on("int f() { return a; }")), is("int f() { return a; }"));
   }
   @Test public void offDivision() {
-    assertEquals(Wrap.Expression.off(Wrap.Expression.on("a/b")), "a/b");
+    assertThat("a/b", is(Wrap.Expression.off(Wrap.Expression.on("a/b"))));
   }
   @Test public void removeComments() {
-    similar(Wrap.removeComments("" + "if (b) {\n" + " /* empty */" + "} else {\n" + " throw new Exception();\n" + "}"), "if (b) {} else { throw new Exception(); }");
+    similar(Wrap.removeComments("" + "if (b) {\n" + " /* empty */" + "} else {\n" + " throw new Exception();\n" + "}"),
+        "if (b) {} else { throw new Exception(); }");
   }
   @Test public void statement() {
     assertThat(Wrap.Statement.off(Wrap.Statement.on("int a;")), is("int a;"));
   }
   private void similar(final String s1, final String s2) {
-    assertEquals(essence(s1), essence(s2));
+    assertThat(essence(s2), is(essence(s1)));
   }
 }

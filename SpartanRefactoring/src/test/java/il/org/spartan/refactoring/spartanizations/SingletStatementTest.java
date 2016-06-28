@@ -1,28 +1,23 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.refactoring.utils.Into.s;
-import static il.org.spartan.refactoring.utils.Restructure.singleStatement;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertNotNull;
+import static il.org.spartan.hamcrest.CoreMatchers.*;
+import static il.org.spartan.hamcrest.MatcherAssert.*;
+import static il.org.spartan.refactoring.utils.Into.*;
+import static il.org.spartan.refactoring.utils.Restructure.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import il.org.spartan.hamcrest.*;
+import il.org.spartan.refactoring.utils.*;
 
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Statement;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.eclipse.jdt.core.dom.*;
+import org.junit.*;
+import org.junit.runners.*;
 
-import il.org.spartan.refactoring.utils.As;
-import il.org.spartan.refactoring.utils.Extract;
-
-@SuppressWarnings({ "javadoc", "static-method" }) //
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@SuppressWarnings({ "javadoc", "static-method" })//
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 public class SingletStatementTest {
   @Test public void declarationAndStatementIsNull() {
     assertThat(singleStatement(s("{int a; a();}")), nullValue());
@@ -66,7 +61,7 @@ public class SingletStatementTest {
     final List<Statement> ss = Extract.statements(n);
     assertThat(ss, notNullValue());
     assertThat(ss.size(), is(1));
-    assertNotNull(Extract.singleStatement(n));
+    JunitHamcrestWrappper.assertNotNull(Extract.singleStatement(n));
   }
   @Test public void peelIPlusPlus() {
     final ASTNode n = As.STATEMENTS.ast("{i++;}");
@@ -74,7 +69,7 @@ public class SingletStatementTest {
     final List<Statement> ss = Extract.statements(n);
     assertThat(ss, notNullValue());
     assertThat(ss.size(), is(1));
-    assertNotNull(Extract.singleStatement(n));
+    JunitHamcrestWrappper.assertNotNull(Extract.singleStatement(n));
   }
   @Test public void twoFunctionCallsNullValue() {
     assertThat(singleStatement(s("{b(); a();}")), nullValue());

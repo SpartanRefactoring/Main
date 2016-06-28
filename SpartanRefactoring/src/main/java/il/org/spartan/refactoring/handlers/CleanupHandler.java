@@ -1,24 +1,18 @@
 package il.org.spartan.refactoring.handlers;
 
-import static il.org.spartan.refactoring.handlers.ApplySpartanizationHandler.applySafeSpartanizationsTo;
-import static il.org.spartan.refactoring.spartanizations.DialogBoxes.announce;
+import static il.org.spartan.refactoring.handlers.ApplySpartanizationHandler.*;
+import static il.org.spartan.refactoring.spartanizations.DialogBoxes.*;
+import il.org.spartan.refactoring.spartanizations.*;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.lang.reflect.*;
+import java.util.*;
+import java.util.concurrent.atomic.*;
 
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.jdt.core.ICompilationUnit;
-import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.progress.IProgressService;
-
-import il.org.spartan.refactoring.spartanizations.Spartanization;
-import il.org.spartan.refactoring.spartanizations.Spartanizations;
+import org.eclipse.core.commands.*;
+import org.eclipse.core.runtime.*;
+import org.eclipse.jdt.core.*;
+import org.eclipse.ui.*;
+import org.eclipse.ui.progress.*;
 
 /**
  * A handler for {@link Spartanizations}. This handler executes all safe
@@ -53,7 +47,7 @@ public class CleanupHandler extends BaseHandler {
       try {
         ps.busyCursorWhile(pm -> {
           pm.beginTask("Spartanizing project '" + javaProject.getElementName() + "' - " + //
-          "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES, us.size());
+              "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES, us.size());
           int n = 0;
           for (final ICompilationUnit u : us) {
             applySafeSpartanizationsTo(u);
@@ -89,8 +83,7 @@ public class CleanupHandler extends BaseHandler {
   /**
    * Returns the number of Spartanizaion suggestions for this compilation unit
    *
-   * @param u
-   *          JD
+   * @param u JD
    * @return the number of suggesions available for the compilation unit
    */
   public static int countSuggestions(final ICompilationUnit u) {

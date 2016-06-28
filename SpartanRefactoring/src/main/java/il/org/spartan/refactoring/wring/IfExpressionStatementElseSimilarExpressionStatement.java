@@ -1,16 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.elze;
-import static il.org.spartan.refactoring.utils.Funcs.then;
-import static il.org.spartan.refactoring.wring.TernaryPushdown.pushdown;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.wring.TernaryPushdown.*;
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
 
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.Statement;
-
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Subject;
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * A {@link Wring} to convert <code>if (x) f(a); else f(b);</code> into
@@ -19,7 +14,8 @@ import il.org.spartan.refactoring.utils.Subject;
  * @author Yossi Gil
  * @since 2015-07-29
  */
-public final class IfExpressionStatementElseSimilarExpressionStatement extends Wring.ReplaceCurrentNode<IfStatement> {
+public final class IfExpressionStatementElseSimilarExpressionStatement extends Wring.ReplaceCurrentNode<IfStatement> implements
+    Kind.ConsolidateStatements {
   @Override Statement replacement(final IfStatement s) {
     final Expression then = Extract.expression(Extract.expressionStatement(then(s)));
     if (then == null)
@@ -32,8 +28,5 @@ public final class IfExpressionStatementElseSimilarExpressionStatement extends W
   }
   @Override String description(final IfStatement s) {
     return "Consolidate two branches of 'if(" + s.getExpression() + ") ... into one";
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }

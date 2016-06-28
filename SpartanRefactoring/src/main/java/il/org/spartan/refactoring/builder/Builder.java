@@ -1,23 +1,13 @@
 package il.org.spartan.refactoring.builder;
 
-import java.util.Map;
+import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.utils.*;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IMarker;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IResourceChangeEvent;
-import org.eclipse.core.resources.IResourceDelta;
-import org.eclipse.core.resources.IResourceVisitor;
-import org.eclipse.core.resources.IncrementalProjectBuilder;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jdt.core.dom.CompilationUnit;
+import java.util.*;
 
-import il.org.spartan.refactoring.spartanizations.Spartanization;
-import il.org.spartan.refactoring.spartanizations.Spartanizations;
-import il.org.spartan.refactoring.utils.As;
-import il.org.spartan.refactoring.utils.Rewrite;
+import org.eclipse.core.resources.*;
+import org.eclipse.core.runtime.*;
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
@@ -70,11 +60,9 @@ public class Builder extends IncrementalProjectBuilder {
   }
   protected void fullBuild() {
     try {
-      getProject().accept(new IResourceVisitor() {
-        @Override public boolean visit(final IResource r) throws CoreException {
-          addMarkers(r);
-          return true;
-        }
+      getProject().accept(r -> {
+        addMarkers(r);
+        return true;
       });
     } catch (final CoreException e) {
       e.printStackTrace();

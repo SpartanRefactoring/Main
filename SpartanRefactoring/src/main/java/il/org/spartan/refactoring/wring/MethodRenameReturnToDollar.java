@@ -1,25 +1,16 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.newSimpleName;
-import static il.org.spartan.refactoring.utils.Funcs.same;
-import static il.org.spartan.refactoring.utils.Utils.unless;
-import static il.org.spartan.refactoring.wring.Wrings.rename;
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Collect;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.MethodExplorer;
-import il.org.spartan.refactoring.utils.Rewrite;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Utils.*;
+import static il.org.spartan.refactoring.wring.Wrings.*;
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
 
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.PrimitiveType;
-import org.eclipse.jdt.core.dom.ReturnStatement;
-import org.eclipse.jdt.core.dom.SimpleName;
-import org.eclipse.jdt.core.dom.Type;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 /**
  * @author Artium Nihamkin (original)
@@ -27,7 +18,7 @@ import org.eclipse.text.edits.TextEditGroup;
  * @author Yossi Gil (v3)
  * @since 2013/01/01
  */
-public class MethodRenameReturnToDollar extends Wring<MethodDeclaration> {
+public class MethodRenameReturnToDollar extends Wring<MethodDeclaration> implements Kind.RENAME_RETURN_VARIABLE {
   @Override String description(final MethodDeclaration d) {
     return d.getName().toString();
   }
@@ -48,9 +39,6 @@ public class MethodRenameReturnToDollar extends Wring<MethodDeclaration> {
         return newSimpleName(d, "$");
       }
     };
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.RENAME_RETURN_VARIABLE;
   }
 }
 

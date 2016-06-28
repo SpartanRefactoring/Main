@@ -1,18 +1,10 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.compatible;
-import static il.org.spartan.refactoring.utils.Funcs.elze;
-import static il.org.spartan.refactoring.utils.Funcs.left;
-import static il.org.spartan.refactoring.utils.Funcs.right;
-import static il.org.spartan.refactoring.utils.Funcs.then;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
 
-import org.eclipse.jdt.core.dom.Assignment;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.Statement;
-
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Subject;
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * A {@link Wring} to convert <code>if (x)
@@ -23,21 +15,17 @@ import il.org.spartan.refactoring.utils.Subject;
  * @author Yossi Gil
  * @since 2015-07-29
  */
-public final class IfAssignToFooElseAssignToFoo extends Wring.ReplaceCurrentNode<IfStatement> {
+public final class IfAssignToFooElseAssignToFoo extends Wring.ReplaceCurrentNode<IfStatement> implements Kind.Ternarize {
   @Override Statement replacement(final IfStatement s) {
     final Assignment then = Extract.assignment(then(s));
     final Assignment elze = Extract.assignment(elze(s));
-    return !compatible(then, elze) ? null
-        : Subject.pair(left(then), Subject.pair(right(then), right(elze)).toCondition(s.getExpression()))
-            .toStatement(then.getOperator());
+    return !compatible(then, elze) ? null : Subject.pair(left(then),
+        Subject.pair(right(then), right(elze)).toCondition(s.getExpression())).toStatement(then.getOperator());
   }
   @Override boolean scopeIncludes(final IfStatement s) {
     return s != null && compatible(Extract.assignment(then(s)), Extract.assignment(elze(s)));
   }
   @Override String description(final IfStatement s) {
     return "Consolidate assignments to " + left(Extract.assignment(then(s)));
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.IF_TO_TERNARY;
   }
 }

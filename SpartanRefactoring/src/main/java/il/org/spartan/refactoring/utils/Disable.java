@@ -1,21 +1,8 @@
 package il.org.spartan.refactoring.utils;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.ASTVisitor;
-import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
-import org.eclipse.jdt.core.dom.AnnotationTypeMemberDeclaration;
-import org.eclipse.jdt.core.dom.BodyDeclaration;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.EnumConstantDeclaration;
-import org.eclipse.jdt.core.dom.EnumDeclaration;
-import org.eclipse.jdt.core.dom.FieldDeclaration;
-import org.eclipse.jdt.core.dom.Initializer;
-import org.eclipse.jdt.core.dom.Javadoc;
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * Determines whether an {@link ASTNode} is spartanization disabled. In the
@@ -33,7 +20,7 @@ public class Disable {
    */
   public final static String dsi = "@DisableSpartan";
 
-  protected Disable(CompilationUnit u) {
+  protected Disable(final CompilationUnit u) {
     dns = new HashSet<>();
     if (u == null)
       return;
@@ -43,7 +30,7 @@ public class Disable {
    * @param n node
    * @return true iff spartanization is disabled for n
    */
-  public boolean check(ASTNode n) {
+  public boolean check(final ASTNode n) {
     ASTNode p = n;
     while (p != null) {
       if (dns.contains(p))
@@ -56,34 +43,34 @@ public class Disable {
   private static class BodyDeclarationVisitor extends ASTVisitor {
     Set<ASTNode> dns;
 
-    BodyDeclarationVisitor(Set<ASTNode> dns) {
+    BodyDeclarationVisitor(final Set<ASTNode> dns) {
       this.dns = dns;
     }
-    @Override public boolean visit(AnnotationTypeDeclaration d) {
+    @Override public boolean visit(final AnnotationTypeDeclaration d) {
       return go(d);
     }
-    @Override public boolean visit(EnumDeclaration d) {
+    @Override public boolean visit(final EnumDeclaration d) {
       return go(d);
     }
-    @Override public boolean visit(TypeDeclaration d) {
+    @Override public boolean visit(final TypeDeclaration d) {
       return go(d);
     }
-    @Override public boolean visit(AnnotationTypeMemberDeclaration d) {
+    @Override public boolean visit(final AnnotationTypeMemberDeclaration d) {
       return go(d);
     }
-    @Override public boolean visit(EnumConstantDeclaration d) {
+    @Override public boolean visit(final EnumConstantDeclaration d) {
       return go(d);
     }
-    @Override public boolean visit(FieldDeclaration d) {
+    @Override public boolean visit(final FieldDeclaration d) {
       return go(d);
     }
-    @Override public boolean visit(Initializer i) {
+    @Override public boolean visit(final Initializer i) {
       return go(i);
     }
-    @Override public boolean visit(MethodDeclaration d) {
+    @Override public boolean visit(final MethodDeclaration d) {
       return go(d);
     }
-    private boolean go(BodyDeclaration d) {
+    private boolean go(final BodyDeclaration d) {
       final Javadoc j = d.getJavadoc();
       if (j == null || !j.toString().contains(dsi))
         return true;

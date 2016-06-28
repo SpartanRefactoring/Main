@@ -1,25 +1,16 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.asBlock;
-import static il.org.spartan.refactoring.utils.Funcs.elze;
-import static il.org.spartan.refactoring.utils.Funcs.then;
-import static il.org.spartan.refactoring.utils.Restructure.duplicateInto;
-import static il.org.spartan.refactoring.wring.Wrings.addAllReplacing;
-import static il.org.spartan.refactoring.wring.Wrings.makeShorterIf;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Restructure.*;
+import static il.org.spartan.refactoring.wring.Wrings.*;
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
 
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
-
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.Rewrite;
-import il.org.spartan.refactoring.utils.expose;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 /**
  * A {@link Wring} to convert <code> f() {
@@ -39,7 +30,7 @@ import il.org.spartan.refactoring.utils.expose;
  * @author Yossi Gil
  * @since 2015-07-29
  */
-public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfStatement> {
+public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfStatement> implements Kind.SIMPLIFY_NESTED_BLOCK {
   static boolean endsWithSequencer(final Statement s) {
     return Is.sequencer(Extract.lastStatement(s));
   }
@@ -68,8 +59,5 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
   }
   @Override boolean scopeIncludes(final IfStatement s) {
     return elze(s) != null && (endsWithSequencer(then(s)) || endsWithSequencer(elze(s)));
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.SIMPLIFY_NESTED_BLOCKS;
   }
 }

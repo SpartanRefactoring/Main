@@ -1,23 +1,23 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
-import static il.org.spartan.utils.Utils.objects;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import static il.org.spartan.utils.Utils.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
+import il.org.spartan.hamcrest.*;
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.*;
 
-import java.io.File;
-import java.util.Collection;
+import java.io.*;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jface.text.Document;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jface.text.*;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
-
-import il.org.spartan.refactoring.utils.As;
-import il.org.spartan.refactoring.wring.TrimmerTestsUtils;
 
 /**
  * Run tests in which a specific transformation is not supposed to change the
@@ -26,7 +26,7 @@ import il.org.spartan.refactoring.wring.TrimmerTestsUtils;
  * @author Yossi Gil
  * @since 2014/05/24
  */
-@RunWith(Parameterized.class) //
+@RunWith(Parameterized.class)//
 public class InOutTest {
   /**
    * Generate test cases for this parameterized class.
@@ -35,7 +35,7 @@ public class InOutTest {
    *         the spartanization, the test case name, the input file, and the
    *         output file.
    */
-  @Parameters(name = "{index}) \"{0}\" =={2}==>> \"{1}\"") //
+  @Parameters(name = "{index}) \"{0}\" =={2}==>> \"{1}\"")//
   public static Collection<Object[]> cases() {
     return new FileTestUtils.Files() {
       @Override Object[] makeCase(final Spartanization s, final File folder, final File input, final String name) {
@@ -50,7 +50,7 @@ public class InOutTest {
   }
   protected static void go(final Spartanization s, final File from, final File to) {
     final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(FileTestUtils.makeInFile(from));
-    assertEquals(u.toString(), 1, TrimmerTestsUtils.countOpportunities(s, u));
+    assertThat(u.toString(), 1, equalTo(TrimmerTestsUtils.countOpportunities(s, u)));
     TESTUtils.assertOneOpportunity(s, As.string(from));
     final String expected;
     final Document rewrite;
@@ -63,6 +63,7 @@ public class InOutTest {
     }
     assertSimilar(expected, rewrite.get());
   }
+
   /** An object describing the required transformation */
   @Parameter(0) public Spartanization spartanization;
   /** The name of the specific test for this transformation */
@@ -71,12 +72,13 @@ public class InOutTest {
   @Parameter(2) public File input;
   /** Where the expected output can be found */
   @Parameter(3) public File output;
+
   /**
    * Runs a parameterized test case, based on the instance variables of this
    * instance
    */
   @Test public void go() {
-    assertNotNull("Cannot instantiate spartanization object", spartanization);
+    JunitHamcrestWrappper.assertNotNull("Cannot instantiate spartanization object", spartanization);
     go(spartanization, input, output);
   }
 }

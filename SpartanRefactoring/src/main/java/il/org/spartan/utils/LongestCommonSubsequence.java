@@ -1,11 +1,9 @@
 package il.org.spartan.utils;
 
-import static il.org.spartan.utils.Utils.compressSpaces;
-import static il.org.spartan.utils.Utils.max;
+import static il.org.spartan.utils.Utils.*;
+import il.org.spartan.refactoring.utils.*;
 
-import java.util.Arrays;
-
-import il.org.spartan.refactoring.utils.As;
+import java.util.*;
 
 /**
  * Utility class for computing the "Longest Common Subsequence" of two strings.
@@ -18,6 +16,7 @@ public class LongestCommonSubsequence {
   private final char[] as;
   private final char[] bs;
   private final int[][] length;
+
   public LongestCommonSubsequence(final String a, final String b) {
     as = compressSpaces(a).toCharArray();
     bs = compressSpaces(b).toCharArray();

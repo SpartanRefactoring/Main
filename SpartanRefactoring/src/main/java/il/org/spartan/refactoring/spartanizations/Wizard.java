@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import org.eclipse.ltk.core.refactoring.Refactoring;
-import org.eclipse.ltk.ui.refactoring.RefactoringWizard;
+import org.eclipse.ltk.core.refactoring.*;
+import org.eclipse.ltk.ui.refactoring.*;
 
 /**
  * @author Artium Nihamkin

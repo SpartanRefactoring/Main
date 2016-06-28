@@ -1,13 +1,10 @@
 package il.org.spartan.refactoring.wring;
 
-import java.util.Arrays;
-import java.util.List;
+import il.org.spartan.refactoring.preferences.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.ClassInstanceCreation;
-import org.eclipse.jdt.core.dom.MethodInvocation;
+import java.util.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * A {@link Wring} to replace primitive class (and String) instance creation
@@ -28,7 +25,8 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGr
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-06
  */
-public class WrapperReplaceWithFactory extends Wring.ReplaceCurrentNode<ClassInstanceCreation> {
+public class WrapperReplaceWithFactory extends Wring.ReplaceCurrentNode<ClassInstanceCreation> implements
+    Kind.REPLACE_CLASS_INSTANCE_CREATION {
   // String array contains all primitive class (and String) identifiers
   final String[] pi = { "java.lang.Byte", "java.lang.Short", "java.lang.Integer", "java.lang.Long", "java.lang.Float",
       "java.lang.Double", "java.lang.Character", "java.lang.String", "java.lang.Boolean" };
@@ -46,8 +44,5 @@ public class WrapperReplaceWithFactory extends Wring.ReplaceCurrentNode<ClassIns
   }
   @Override String description(final ClassInstanceCreation c) {
     return "Use factory method " + c.getType() + ".valueOf() instead of initialization";
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REPLACE_CLASS_INSTANCE_CREATION;
   }
 }

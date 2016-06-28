@@ -1,18 +1,13 @@
 package il.org.spartan.refactoring.wring;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.SimpleName;
-import org.eclipse.jdt.core.dom.TypeDeclaration;
-import org.eclipse.jdt.core.dom.VariableDeclaration;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
-
-import il.org.spartan.refactoring.utils.Collect;
+import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.Wring.MultipleReplaceCurrentNode;
+
+import java.util.*;
+
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 /**
  * A parent wring for changing variables names TODO Ori: check safety of
@@ -28,8 +23,8 @@ public abstract class VariableChangeName<N extends VariableDeclaration> extends 
 
   abstract boolean change(N n);
   abstract SimpleName replacement(N n);
-  @Override public ASTRewrite go(ASTRewrite r, N n, @SuppressWarnings("unused") TextEditGroup __, List<ASTNode> bss,
-      List<ASTNode> crs) {
+  @Override public ASTRewrite go(final ASTRewrite r, final N n, @SuppressWarnings("unused") final TextEditGroup __,
+      final List<ASTNode> bss, final List<ASTNode> crs) {
     if (!change(n))
       return null;
     ASTNode p = n;

@@ -1,19 +1,17 @@
 package il.org.spartan.refactoring.wring;
 
-import static org.junit.Assert.assertNotNull;
-
-import java.util.Collection;
-
-import org.eclipse.jdt.core.dom.ConditionalExpression;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
-
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import il.org.spartan.hamcrest.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.utils.Utils;
+import il.org.spartan.utils.*;
+
+import java.util.*;
+
+import org.eclipse.jdt.core.dom.*;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.Parameters;
 
 /**
  * Unit tests for {@link Wrings#ADDITION_SORTER}.
@@ -21,12 +19,12 @@ import il.org.spartan.utils.Utils;
  * @author Yossi Gil
  * @since 2014-07-13
  */
-@SuppressWarnings({ "javadoc", }) //
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@SuppressWarnings({ "javadoc", })//
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 public class TernaryEliminateTest {
   static final Wring<ConditionalExpression> WRING = new TernaryEliminate();
 
-  @RunWith(Parameterized.class) //
+  @RunWith(Parameterized.class)//
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Exprezzion<ConditionalExpression> {
     static String[][] cases = Utils.asArray(//
         new String[] { "No boolean", "a?b:c" }, //
@@ -52,7 +50,7 @@ public class TernaryEliminateTest {
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file.
      */
-    @Parameters(name = DESCRIPTION) //
+    @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
@@ -62,8 +60,8 @@ public class TernaryEliminateTest {
     }
   }
 
-  @RunWith(Parameterized.class) //
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+  @RunWith(Parameterized.class)//
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   public static class Wringed extends AbstractWringTest.WringedExpression.Conditional {
     private static String[][] cases = Utils.asArray(//
         new String[] { "identical method call", "a ? y.f(b) :y.f(b)", "y.f(b)" }, //
@@ -79,7 +77,7 @@ public class TernaryEliminateTest {
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file.
      */
-    @Parameters(name = DESCRIPTION) //
+    @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
@@ -88,7 +86,7 @@ public class TernaryEliminateTest {
       super(WRING);
     }
     @Test public void inputIsConditionalfixExpression() {
-      assertNotNull(asConditionalExpression());
+      JunitHamcrestWrappper.assertNotNull(asConditionalExpression());
     }
   }
 }

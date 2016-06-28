@@ -1,24 +1,9 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.refactoring.utils.Utils.unless;
+import static il.org.spartan.refactoring.utils.Utils.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.BooleanLiteral;
-import org.eclipse.jdt.core.dom.CharacterLiteral;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.IMethodBinding;
-import org.eclipse.jdt.core.dom.IPackageBinding;
-import org.eclipse.jdt.core.dom.ITypeBinding;
-import org.eclipse.jdt.core.dom.Modifier;
-import org.eclipse.jdt.core.dom.Name;
-import org.eclipse.jdt.core.dom.NullLiteral;
-import org.eclipse.jdt.core.dom.NumberLiteral;
-import org.eclipse.jdt.core.dom.StringLiteral;
-import org.eclipse.jdt.core.dom.ThisExpression;
-import org.eclipse.jdt.core.dom.TypeDeclaration;
-import org.eclipse.jdt.core.dom.TypeLiteral;
-import org.eclipse.jdt.internal.corext.dom.Bindings;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.internal.corext.dom.*;
 
 /**
  * Some useful utility functions used for binding manipulations.
@@ -31,14 +16,14 @@ import org.eclipse.jdt.internal.corext.dom.Bindings;
    * @param u current compilation unit
    * @return current package
    */
-  public static IPackageBinding getPackage(CompilationUnit u) {
+  public static IPackageBinding getPackage(final CompilationUnit u) {
     return u.getPackage().resolveBinding();
   }
   /**
    * @param n an {@link ASTNode}
    * @return the type in which n is placed, or null if there is none
    */
-  public static ITypeBinding getClass(ASTNode n) {
+  public static ITypeBinding getClass(final ASTNode n) {
     ASTNode p = n;
     while (p != null && !(p instanceof TypeDeclaration))
       p = p.getParent();
@@ -53,7 +38,7 @@ import org.eclipse.jdt.internal.corext.dom.Bindings;
    * @param u current {@link CompilationUnit}
    * @return true iff method is visible from its context
    */
-  public static boolean isVisible(IMethodBinding b, ASTNode n, CompilationUnit u) {
+  public static boolean isVisible(final IMethodBinding b, final ASTNode n, final CompilationUnit u) {
     final int ms = b.getModifiers();
     if (Modifier.isPublic(ms))
       return true;
@@ -74,7 +59,8 @@ import org.eclipse.jdt.internal.corext.dom.Bindings;
    * @param u current {@link CompilationUnit}
    * @return the method's binding if it is visible from context, else null
    */
-  public static IMethodBinding getVisibleMethod(ITypeBinding b, String mn, ITypeBinding[] bs, ASTNode n, CompilationUnit u) {
+  public static IMethodBinding getVisibleMethod(final ITypeBinding b, final String mn, final ITypeBinding[] bs, final ASTNode n,
+      final CompilationUnit u) {
     if (b == null)
       return null;
     final IMethodBinding $ = Bindings.findMethodInHierarchy(b, mn, bs);
@@ -86,7 +72,7 @@ import org.eclipse.jdt.internal.corext.dom.Bindings;
    * @param e an expression
    * @return true iff e is simple
    */
-  public static boolean isSimple(Expression e) {
+  public static boolean isSimple(final Expression e) {
     return e instanceof Name || e instanceof NumberLiteral || e instanceof BooleanLiteral || e instanceof CharacterLiteral
         || e instanceof NullLiteral || e instanceof StringLiteral || e instanceof ThisExpression || e instanceof TypeLiteral;
   }

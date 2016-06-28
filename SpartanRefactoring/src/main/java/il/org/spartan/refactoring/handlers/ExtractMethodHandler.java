@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.handlers;
 
-import il.org.spartan.refactoring.spartanizations.ExtractMethod;
+import il.org.spartan.refactoring.spartanizations.*;
 
 /**
  * a handler for {@link ExtractMethod}

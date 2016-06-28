@@ -1,14 +1,11 @@
 package il.org.spartan.refactoring.utils;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IMarker;
-import org.eclipse.jdt.core.ICompilationUnit;
-import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.core.dom.AST;
-import org.eclipse.jdt.core.dom.ASTParser;
-import org.eclipse.jface.text.Document;
+import il.org.spartan.refactoring.preferences.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources;
+import org.eclipse.core.resources.*;
+import org.eclipse.jdt.core.*;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jface.text.*;
 
 /**
  * An empty <code><b>enum</b></code> for fluent programming. The name should say
@@ -47,7 +44,9 @@ public enum Make {
         return null;
     }
   }
+
   private final int kind;
+
   private Make(final int kind) {
     this.kind = kind;
   }

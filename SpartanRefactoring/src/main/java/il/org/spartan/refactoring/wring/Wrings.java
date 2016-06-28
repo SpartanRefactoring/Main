@@ -1,41 +1,17 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.ExpressionComparator.nodesCount;
-import static il.org.spartan.refactoring.utils.Funcs.asBlock;
-import static il.org.spartan.refactoring.utils.Funcs.duplicate;
-import static il.org.spartan.refactoring.utils.Funcs.elze;
-import static il.org.spartan.refactoring.utils.Funcs.removeAll;
-import static il.org.spartan.refactoring.utils.Funcs.then;
-import static il.org.spartan.refactoring.utils.Restructure.duplicateInto;
-import static il.org.spartan.utils.Utils.last;
-import static org.eclipse.jdt.core.dom.ASTNode.BREAK_STATEMENT;
-import static org.eclipse.jdt.core.dom.ASTNode.CONTINUE_STATEMENT;
-import static org.eclipse.jdt.core.dom.ASTNode.RETURN_STATEMENT;
-import static org.eclipse.jdt.core.dom.ASTNode.THROW_STATEMENT;
+import static il.org.spartan.refactoring.utils.ExpressionComparator.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Restructure.*;
+import static il.org.spartan.utils.Utils.*;
+import static org.eclipse.jdt.core.dom.ASTNode.*;
+import il.org.spartan.refactoring.utils.*;
 
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.CharacterLiteral;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.NumberLiteral;
-import org.eclipse.jdt.core.dom.SimpleName;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.jdt.core.dom.rewrite.ListRewrite;
-import org.eclipse.text.edits.TextEditGroup;
-
-import il.org.spartan.refactoring.utils.Collect;
-import il.org.spartan.refactoring.utils.ExpressionComparator;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.LiteralParser;
-import il.org.spartan.refactoring.utils.Subject;
-import il.org.spartan.refactoring.utils.expose;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 /**
  * A number of utility functions common to all wrings.
@@ -48,10 +24,10 @@ public enum Wrings {
   static void rename(final SimpleName oldName, final SimpleName newName, final MethodDeclaration d, final ASTRewrite r,
       final TextEditGroup g) {
     new LocalInliner(oldName, r, g).byValue(newName)//
-        .inlineInto(Collect.usesOf(oldName).in(d).toArray(new Expression[] {}));
+    .inlineInto(Collect.usesOf(oldName).in(d).toArray(new Expression[] {}));
   }
-  static void addAllReplacing(final List<Statement> to, final List<Statement> from, final Statement substitute, final Statement by1,
-      final List<Statement> by2) {
+  static void addAllReplacing(final List<Statement> to, final List<Statement> from, final Statement substitute,
+      final Statement by1, final List<Statement> by2) {
     for (final Statement s : from)
       if (s != substitute)
         duplicateInto(s, to);

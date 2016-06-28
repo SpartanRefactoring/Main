@@ -1,11 +1,8 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import il.org.spartan.refactoring.wring.*;
 
-import il.org.spartan.refactoring.wring.Trimmer;
+import java.util.*;
 
 /**
  * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code> (v2)
@@ -17,11 +14,11 @@ import il.org.spartan.refactoring.wring.Trimmer;
  */
 public class Spartanizations {
   private static Spartanization[] all = { //
-      new Trimmer(), //
-      // new ForwardDeclaration(), //
-      // new InlineSingleUse(), //
+  new Trimmer(), //
+  // new ForwardDeclaration(), //
+  // new InlineSingleUse(), //
   };
-  @SuppressWarnings("synthetic-access") //
+  @SuppressWarnings("synthetic-access")//
   private static final Map<String, Spartanization> map = new HashMap<String, Spartanization>() {
     private static final long serialVersionUID = -8921699276699040030L;
     {
@@ -30,6 +27,7 @@ public class Spartanizations {
     }
   };
   private final Spartanization value;
+
   private Spartanizations(final Spartanization value) {
     this.value = value;
   }
@@ -43,7 +41,7 @@ public class Spartanizations {
    * @param c Spartanization rule
    * @return Spartanization class rule instance
    */
-  @SuppressWarnings("unchecked") //
+  @SuppressWarnings("unchecked")//
   public static <T extends Spartanization> T findInstance(final Class<? extends T> c) {
     for (final Spartanization $ : all)
       if ($.getClass().equals(c))
@@ -54,21 +52,17 @@ public class Spartanizations {
    * @return Iteration over all Spartanization class instances
    */
   public static Iterable<Spartanization> allAvailableSpartanizations() {
-    return new Iterable<Spartanization>() {
-      @SuppressWarnings("synthetic-access") //
-      @Override public Iterator<Spartanization> iterator() {
-        return new Iterator<Spartanization>() {
-          int next = 0;
-          @Override public boolean hasNext() {
-            return next < all.length;
-          }
-          @Override public Spartanization next() {
-            return all[next++];
-          }
-          @Override public final void remove() {
-            throw new IllegalArgumentException();
-          }
-        };
+    return () -> new Iterator<Spartanization>() {
+      int next = 0;
+
+      @Override public boolean hasNext() {
+        return next < all.length;
+      }
+      @Override public Spartanization next() {
+        return all[next++];
+      }
+      @Override public final void remove() {
+        throw new IllegalArgumentException();
       }
     };
   }

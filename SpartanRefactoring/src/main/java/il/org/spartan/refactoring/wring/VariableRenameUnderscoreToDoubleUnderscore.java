@@ -1,9 +1,8 @@
 package il.org.spartan.refactoring.wring;
 
-import org.eclipse.jdt.core.dom.SimpleName;
-import org.eclipse.jdt.core.dom.VariableDeclaration;
+import il.org.spartan.refactoring.preferences.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * Replaces name of variables named "_" into "__"
@@ -12,17 +11,15 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGr
  * @param <N> either SingleVariableDeclaration or VariableDeclarationFragment
  * @since 2016/05/08
  */
-public class VariableRenameUnderscoreToDoubleUnderscore<N extends VariableDeclaration> extends VariableChangeName<N> {
-  @Override boolean change(N n) {
+public class VariableRenameUnderscoreToDoubleUnderscore<N extends VariableDeclaration> extends VariableChangeName<N> implements
+    Kind.RENAME_PARAMETERS {
+  @Override boolean change(final N n) {
     return "_".equals(n.getName().toString());
   }
-  @Override SimpleName replacement(N n) {
+  @Override SimpleName replacement(final N n) {
     return n.getAST().newSimpleName("__");
   }
-  @Override String description(@SuppressWarnings("unused") N __) {
+  @Override String description(@SuppressWarnings("unused") final N __) {
     return "Use double underscore instead a single underscore";
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.RENAME_PARAMETERS;
   }
 }

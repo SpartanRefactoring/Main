@@ -1,22 +1,15 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Extract.core;
-import static il.org.spartan.refactoring.utils.Funcs.asReturnStatement;
-import static il.org.spartan.refactoring.utils.Funcs.asStatement;
-import static il.org.spartan.refactoring.utils.Funcs.same;
-import static il.org.spartan.utils.Utils.in;
-import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.DECREMENT;
-import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.INCREMENT;
+import static il.org.spartan.refactoring.utils.Extract.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.utils.Utils.*;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
 
-import org.eclipse.jdt.core.dom.ForStatement;
-import org.eclipse.jdt.core.dom.PrefixExpression;
-import org.eclipse.jdt.core.dom.ReturnStatement;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
-
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Subject;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 /**
  * A {@link Wring} to convert <code>a = 3;return a;</code> to
@@ -25,7 +18,8 @@ import il.org.spartan.refactoring.utils.Subject;
  * @author Yossi Gil
  * @since 2015-08-28
  */
-public class PrefixIncrementDecrementReturn extends Wring.ReplaceToNextStatement<PrefixExpression> {
+public class PrefixIncrementDecrementReturn extends Wring.ReplaceToNextStatement<PrefixExpression> implements
+    Kind.ConsolidateStatements {
   @Override ASTRewrite go(final ASTRewrite r, final PrefixExpression e, final Statement nextStatement,
       @SuppressWarnings("unused") final TextEditGroup __) {
     if (!in(e.getOperator(), INCREMENT, DECREMENT))
@@ -41,8 +35,5 @@ public class PrefixIncrementDecrementReturn extends Wring.ReplaceToNextStatement
   }
   @Override String description(final PrefixExpression e) {
     return "Consolidate " + e + " with subsequent 'return' of " + e.getOperand();
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }

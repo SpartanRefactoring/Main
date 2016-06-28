@@ -1,40 +1,36 @@
 package il.org.spartan.refactoring.wring;
 
-import org.eclipse.jdt.core.dom.ExpressionStatement;
-import org.eclipse.jdt.core.dom.MarkerAnnotation;
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.SuperMethodInvocation;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Rewrite;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 /**
  * A {@link Wring} to remove overriding methods that only call their counterpart
  * in the parent class, for example: <code>
- *
+ * 
  * <pre>
  * &#64;Override void foo() {
  *   super.foo();
  * }
  * </pre>
- *
+ * 
  * </code> will be completely removed.
  *
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-06
  */
-public class MethodRemoveDegenerateOverride extends Wring<MethodDeclaration> {
+public class MethodRemoveDegenerateOverride extends Wring<MethodDeclaration> implements Kind.Simplify {
   @Override Rewrite make(final MethodDeclaration d) {
     final ExpressionStatement s = Extract.expressionStatement(d);
     return s == null || !(s.getExpression() instanceof SuperMethodInvocation)
         || !shouldRemove(d, (SuperMethodInvocation) s.getExpression()) ? null : new Rewrite(description(d), d) {
-          @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-            r.remove(d, g);
-          }
-        };
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+        r.remove(d, g);
+      }
+    };
   }
   private static boolean shouldRemove(final MethodDeclaration d, final SuperMethodInvocation i) {
     for (final Object m : d.modifiers())
@@ -44,8 +40,5 @@ public class MethodRemoveDegenerateOverride extends Wring<MethodDeclaration> {
   }
   @Override String description(final MethodDeclaration d) {
     return "Remove useless '" + d.getName() + "' overriding method";
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

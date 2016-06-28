@@ -1,41 +1,17 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.asBlock;
-import static il.org.spartan.refactoring.utils.Funcs.duplicate;
-import static il.org.spartan.utils.Utils.intIsIn;
-import static il.org.spartan.utils.Utils.lastIn;
-import static il.org.spartan.utils.Utils.penultimateIn;
-import static org.eclipse.jdt.core.dom.ASTNode.ANONYMOUS_CLASS_DECLARATION;
-import static org.eclipse.jdt.core.dom.ASTNode.DO_STATEMENT;
-import static org.eclipse.jdt.core.dom.ASTNode.ENHANCED_FOR_STATEMENT;
-import static org.eclipse.jdt.core.dom.ASTNode.FOR_STATEMENT;
-import static org.eclipse.jdt.core.dom.ASTNode.SYNCHRONIZED_STATEMENT;
-import static org.eclipse.jdt.core.dom.ASTNode.TRY_STATEMENT;
-import static org.eclipse.jdt.core.dom.ASTNode.WHILE_STATEMENT;
-
-import java.util.List;
-
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.ArrayInitializer;
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.EnhancedForStatement;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.ForStatement;
-import org.eclipse.jdt.core.dom.Modifier;
-import org.eclipse.jdt.core.dom.SimpleName;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
-import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
-
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.AncestorSearch;
-import il.org.spartan.refactoring.utils.Collect;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.expose;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.utils.Utils.*;
+import static org.eclipse.jdt.core.dom.ASTNode.*;
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.LocalInliner.LocalInlineWithValue;
+
+import java.util.*;
+
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 /**
  * A {@link Wring} to convert <code>int a = 3;
@@ -44,9 +20,10 @@ import il.org.spartan.refactoring.wring.LocalInliner.LocalInlineWithValue;
  * @author Yossi Gil
  * @since 2015-08-07
  */
-public final class DeclarationInitializerStatementTerminatingScope extends Wring.VariableDeclarationFragementAndStatement {
-  @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
-      final Statement nextStatement, final TextEditGroup g) {
+public final class DeclarationInitializerStatementTerminatingScope extends Wring.VariableDeclarationFragementAndStatement implements
+    Kind.ConsolidateStatements {
+  @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n,
+      final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     // TODO Ori: allow final consolidation
     if (initializer == null || hasAnnotation(f) || initializer instanceof ArrayInitializer
         || Modifier.isFinal(((VariableDeclarationStatement) f.getParent()).getModifiers()))
@@ -111,8 +88,5 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
   }
   @Override String description(final VariableDeclarationFragment f) {
     return "Inline local " + f.getName() + " into subsequent statement";
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }

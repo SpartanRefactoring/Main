@@ -1,22 +1,11 @@
 package il.org.spartan.refactoring.utils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.Comment;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.ForStatement;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jdt.core.dom.rewrite.TargetSourceRangeComputer.SourceRange;
-import org.eclipse.text.edits.TextEditGroup;
+import org.eclipse.text.edits.*;
 
 /**
  * Does {@link ASTNode} replacement operation, by duplication of nodes,
@@ -37,7 +26,7 @@ public class Scalpel {
   private final List<Comment> comments;
   private final Set<Comment> used;
 
-  protected Scalpel(CompilationUnit u, String s, ASTRewrite r, TextEditGroup g) {
+  protected Scalpel(final CompilationUnit u, final String s, final ASTRewrite r, final TextEditGroup g) {
     this.u = u;
     this.s = s;
     this.r = r;
@@ -51,7 +40,7 @@ public class Scalpel {
    * @param n node
    * @return duplicated node with all original comments included
    */
-  @SuppressWarnings({ "unchecked" }) public <N extends ASTNode> N duplicate(N n) {
+  @SuppressWarnings({ "unchecked" }) public <N extends ASTNode> N duplicate(final N n) {
     if (n == null)
       return null;
     if (u == null || r == null || s == null)
@@ -69,7 +58,7 @@ public class Scalpel {
    * @param src source list
    * @return duplicated list
    */
-  public <N extends ASTNode> List<N> duplicate(List<N> src) {
+  public <N extends ASTNode> List<N> duplicate(final List<N> src) {
     final List<N> $ = new ArrayList<>();
     duplicateInto(src, $);
     return $;
@@ -81,7 +70,7 @@ public class Scalpel {
    * @param src source list
    * @param dst destination list
    */
-  public <M extends ASTNode, N extends M> void duplicateInto(List<N> src, List<M> dst) {
+  public <M extends ASTNode, N extends M> void duplicateInto(final List<N> src, final List<M> dst) {
     for (final M n : src)
       dst.add(duplicate(n));
   }
@@ -92,7 +81,7 @@ public class Scalpel {
    * @param ns
    * @return a duplicate node containing all comments
    */
-  @SuppressWarnings("unchecked") public <N extends ASTNode> N duplicateWith(N... ns) {
+  @SuppressWarnings("unchecked") public <N extends ASTNode> N duplicateWith(final N... ns) {
     if (ns == null)
       return null;
     if (u == null || r == null || s == null)
@@ -100,16 +89,16 @@ public class Scalpel {
     final StringBuilder sb = new StringBuilder();
     final N n = ns[ns.length - 1];
     int cc = 0;
-    for (int i = 0; i < ns.length; ++i) {
-      final List<Comment> cl = extract(ns[i]);
+    for (final N element : ns) {
+      final List<Comment> cl = extract(element);
       used.addAll(cl);
       for (final Comment c : cl) {
         sb.append(cut(s, u.getExtendedStartPosition(c), u.getExtendedStartPosition(c) + u.getExtendedLength(c))).append("\n");
         ++cc;
       }
     }
-    return mark(cc != 1 ? (N) r.createStringPlaceholder(sb.append(n.toString()).toString().trim(), n.getNodeType())
-        : (N) r.createStringPlaceholder(n.toString().trim() + " " + sb.toString().trim(), n.getNodeType()));
+    return mark(cc != 1 ? (N) r.createStringPlaceholder(sb.append(n.toString()).toString().trim(), n.getNodeType()) : (N) r
+        .createStringPlaceholder(n.toString().trim() + " " + sb.toString().trim(), n.getNodeType()));
   }
   /**
    * As duplicateWith, but for multiple lists of elements
@@ -117,14 +106,14 @@ public class Scalpel {
    * @param nls lists of equal statements
    * @return list of statements with comments from all lists
    */
-  @SuppressWarnings("unchecked") public <N extends ASTNode> List<N> duplicateWith(List<N>... nls) {
+  @SuppressWarnings("unchecked") public <N extends ASTNode> List<N> duplicateWith(final List<N>... nls) {
     final List<N> $ = new ArrayList<>();
     if (nls.length == 0)
       return $;
     for (int i = 0; i < nls[0].size(); ++i) {
       final List<N> c = new ArrayList<>();
-      for (int j = 0; j < nls.length; ++j)
-        c.add(nls[j].get(i));
+      for (final List<N> nl : nls)
+        c.add(nl.get(i));
       $.add((N) duplicateWith(c.toArray(new ASTNode[c.size()])));
     }
     return $;
@@ -136,7 +125,7 @@ public class Scalpel {
    * @param l2 list
    * @return l1 with comments from l2
    */
-  public List<ASTNode> merge(List<ASTNode> l1, List<ASTNode> l2) {
+  public List<ASTNode> merge(final List<ASTNode> l1, final List<ASTNode> l2) {
     for (int i = l1.size() - 1; i >= 0; --i)
       l1.addAll(i, extract(l2.get(i)));
     return l1;
@@ -149,7 +138,7 @@ public class Scalpel {
    * @param ns nodes
    * @return this scalpel
    */
-  public Scalpel operate(ASTNode b, ASTNode... ns) {
+  public Scalpel operate(final ASTNode b, final ASTNode... ns) {
     base = b;
     additionals = ns;
     comments.clear();
@@ -165,7 +154,7 @@ public class Scalpel {
    * @param n replacement node
    * @return this scalpel
    */
-  public Scalpel replaceWith(ASTNode n) {
+  public Scalpel replaceWith(final ASTNode n) {
     return replaceWith(n, false);
   }
   /**
@@ -175,7 +164,7 @@ public class Scalpel {
    * @param ns replacements nodes
    * @return this scalpel
    */
-  public Scalpel replaceWith(ASTNode... ns) {
+  public Scalpel replaceWith(final ASTNode... ns) {
     return replaceWith(r == null ? null : r.createGroupNode(ns), true);
   }
   /**
@@ -207,7 +196,7 @@ public class Scalpel {
    * @param n node
    * @return this scalpel
    */
-  public Scalpel addComments(ASTNode n) {
+  public Scalpel addComments(final ASTNode n) {
     comments.addAll(0, extract(n));
     return this;
   }
@@ -218,10 +207,10 @@ public class Scalpel {
    * @param n node
    * @return true iff n is artificial node created with this scalpel
    */
-  public static boolean isInaccessible(ASTNode n) {
+  public static boolean isInaccessible(final ASTNode n) {
     return n != null && Boolean.TRUE.equals(n.properties().get("inaccessible"));
   }
-  @SuppressWarnings("unchecked") private Scalpel replaceWith(ASTNode n, boolean isCollapsed) {
+  @SuppressWarnings("unchecked") private Scalpel replaceWith(final ASTNode n, final boolean isCollapsed) {
     replacement = n;
     if (r == null)
       return this;
@@ -241,21 +230,22 @@ public class Scalpel {
       final Block bl = (Block) replacement;
       Collections.reverse(comments);
       for (final Comment c : comments)
-        bl.statements().add(0, r.createStringPlaceholder(
-            s.substring(u.getExtendedStartPosition(c), u.getExtendedStartPosition(c) + u.getExtendedLength(c)), ASTNode.BLOCK));
+        bl.statements().add(
+            0,
+            r.createStringPlaceholder(
+                s.substring(u.getExtendedStartPosition(c), u.getExtendedStartPosition(c) + u.getExtendedLength(c)), ASTNode.BLOCK));
       $.add(bl);
     } else {
       if (comments.size() != 1 || !shouldMoveCommentToEnd(comments.get(0), isCollapsed)) {
         for (final Comment c : comments)
           $.add(r.createStringPlaceholder(
               s.substring(u.getExtendedStartPosition(c), u.getExtendedStartPosition(c) + u.getExtendedLength(c))
-                  + (replacement instanceof Statement || c.isLineComment() ? "\n" : ""),
-              c.getNodeType()));
+              + (replacement instanceof Statement || c.isLineComment() ? "\n" : ""), c.getNodeType()));
         $.add(replacement);
       } else {
         final Comment c = comments.get(0);
-        final String f = !c.isLineComment() || allWhiteSpaces(s.substring(sr.getStartPosition() + sr.getLength()).split("\n")[0])
-            ? "" : "\n";
+        final String f = !c.isLineComment() || allWhiteSpaces(s.substring(sr.getStartPosition() + sr.getLength()).split("\n")[0]) ? ""
+            : "\n";
         $.add(replacement);
         final SourceRange csr = r.getExtendedSourceRangeComputer().computeSourceRange(c);
         $.add(r.createStringPlaceholder(" " + s.substring(csr.getStartPosition(), csr.getStartPosition() + csr.getLength()) + f,
@@ -270,7 +260,7 @@ public class Scalpel {
       r.remove(a, g);
     return this;
   }
-  @SuppressWarnings("unchecked") private <N extends ASTNode> List<Comment> extract(N n) {
+  @SuppressWarnings("unchecked") private <N extends ASTNode> List<Comment> extract(final N n) {
     final List<Comment> $ = new ArrayList<>();
     if (s == null || u == null || r == null)
       return $;
@@ -286,10 +276,10 @@ public class Scalpel {
     }
     return $;
   }
-  private static String cut(String s, int sp, int ep) {
+  private static String cut(final String s, final int sp, final int ep) {
     return s.substring(sp, ep).replaceAll("\n(\t| )*", "\n");
   }
-  private boolean shouldMoveCommentToEnd(Comment c, boolean isCollapsed) {
+  private boolean shouldMoveCommentToEnd(final Comment c, final boolean isCollapsed) {
     if (!c.isLineComment() || replacement == null || isCollapsed)
       return false;
     switch (replacement.getNodeType()) {
@@ -305,25 +295,19 @@ public class Scalpel {
         return true;
     }
   }
-  private int rowStartIndex(int i) {
+  private int rowStartIndex(final int i) {
     int $ = i;
     while ($ > 0 && s.charAt($ - 1) != '\n')
       --$;
     return $;
   }
-  @SuppressWarnings("unused") private int rowEndIndex(int i) {
-    int $ = i;
-    while ($ < s.length() && s.charAt($ + 1) != '\n')
-      ++$;
-    return $;
-  }
-  private static boolean allWhiteSpaces(String s) {
+  private static boolean allWhiteSpaces(final String s) {
     for (final char c : s.toCharArray())
       if (!Character.isWhitespace(c))
         return false;
     return true;
   }
-  @SuppressWarnings("boxing") static <N extends ASTNode> N mark(N n) {
+  @SuppressWarnings("boxing") static <N extends ASTNode> N mark(final N n) {
     n.setProperty("inaccessible", true);
     return n;
   }

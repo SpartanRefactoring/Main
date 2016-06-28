@@ -1,30 +1,13 @@
 package il.org.spartan.refactoring.utils;
 
-import static org.junit.Assert.fail;
+import java.io.*;
+import java.util.*;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.List;
-import java.util.Scanner;
-
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IMarker;
-import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.jdt.core.ICompilationUnit;
-import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.core.dom.AST;
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.ASTParser;
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.ReturnStatement;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
-import org.eclipse.jface.text.Document;
+import org.eclipse.core.resources.*;
+import org.eclipse.core.runtime.*;
+import org.eclipse.jdt.core.*;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jface.text.*;
 
 /**
  * An empty <code><b>enum</b></code> for fluent programming. The name should say
@@ -130,6 +113,7 @@ public enum As {
    *
    * @param f a file
    * @return the entire contents of this file, as one string
+   * @throws IOException
    */
   public static String string(final File f) {
     try (final BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(f)))) {
@@ -138,8 +122,7 @@ public enum As {
         $.append(line).append(System.lineSeparator());
       return $.toString();
     } catch (final IOException e) {
-      fail(e.toString());
-      return null;
+      throw new RuntimeException(e);
     }
   }
   /**

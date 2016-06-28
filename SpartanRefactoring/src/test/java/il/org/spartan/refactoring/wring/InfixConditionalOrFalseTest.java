@@ -1,25 +1,23 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.OrderingComparison.greaterThanOrEqualTo;
-import static il.org.spartan.refactoring.utils.Restructure.flatten;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.CONDITIONAL_OR;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertNotNull;
-
-import java.util.Collection;
-
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
-
-import il.org.spartan.refactoring.utils.Extract;
+import static il.org.spartan.hamcrest.CoreMatchers.*;
+import static il.org.spartan.hamcrest.MatcherAssert.*;
+import static il.org.spartan.hamcrest.JunitHamcrestWrappper.*;
+import static il.org.spartan.refactoring.utils.Restructure.*;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+import static org.hamcrest.MatcherAssert.*;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import il.org.spartan.hamcrest.*;
+import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.utils.Utils;
+
+import java.util.*;
+
+import org.eclipse.jdt.core.dom.*;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.Parameters;
 
 /**
  * Unit tests for {@link Wrings#MULTIPLCATION_SORTER}.
@@ -27,13 +25,13 @@ import il.org.spartan.utils.Utils;
  * @author Yossi Gil
  * @since 2014-07-13
  */
-@SuppressWarnings("javadoc") //
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@SuppressWarnings("javadoc")//
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 public enum InfixConditionalOrFalseTest {
   ;
   static final Wring<InfixExpression> WRING = new InfixConditionalOrFalse();
 
-  @RunWith(Parameterized.class) //
+  @RunWith(Parameterized.class)//
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Exprezzion.Infix {
     static String[][] cases = Utils.asArray(//
         new String[] { "Product is not AND/OR", "2*a" }, //
@@ -63,7 +61,7 @@ public enum InfixConditionalOrFalseTest {
         new String[] { "AND of 6 without boolean", "a && b && c && false && d && e" }, //
         new String[] { "AND of 7 without boolean with parenthesis", "(a && b) && (c && (d && (e && false)))" }, //
         new String[] { "AND of 7 without boolean and multiple false value",
-            "(a && (b && false)) && (c && (d && (e && (false && false))))" }, //
+        "(a && (b && false)) && (c && (d && (e && (false && false))))" }, //
         new String[] { "true && true", "true && true" }, //
         new String[] { "AND of 3 with true", "a && b && true" }, //
         new String[] { "AND of 4 with true", "a && b && c && true" }, //
@@ -85,7 +83,7 @@ public enum InfixConditionalOrFalseTest {
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file.
      */
-    @Parameters(name = DESCRIPTION) //
+    @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
@@ -95,8 +93,8 @@ public enum InfixConditionalOrFalseTest {
     }
   }
 
-  @RunWith(Parameterized.class) //
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+  @RunWith(Parameterized.class)//
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   public static class Wringed extends AbstractWringTest.WringedExpression.Infix {
     static String[][] cases = Utils.asArray(//
         new String[] { "Many parenthesis", "a || (((false))) || b", "a || b" }, //
@@ -108,7 +106,7 @@ public enum InfixConditionalOrFalseTest {
         new String[] { "OR of 5 with false", "x || a || false || c || d", "x || a || c || d" }, //
         new String[] { "OR of 6 with false", "false || x || a || b || c || d || e", "x || a || b || c || d || e" }, //
         new String[] { "OR of 6 with false with parenthesis", "x || (a || (false) || b) || (c || (d || e))",
-            "x || a || b || c || d || e" }, //
+        "x || a || b || c || d || e" }, //
         new String[] { "OR false with something", "false || a || false", "a" }, //
         new String[] { "OR something with false", "false || a || false", "a" }, //
         new String[] { "OR of 3 with false", "false || a || b || false", "a || b" }, //
@@ -116,7 +114,7 @@ public enum InfixConditionalOrFalseTest {
         new String[] { "OR of 5 with false", "a || b || c || d || false", "a || b || c || d" }, //
         new String[] { "OR of 6 with two false", "a || false || b || false || c || d || e", "a || b || c || d || e" }, //
         new String[] { "OR of 6 with false with parenthesis", "(a || b) || false || (c || false || (d || e || false))",
-            "a || b || c || d || e" }, //
+        "a || b || c || d || e" }, //
         null);
 
     /**
@@ -125,7 +123,7 @@ public enum InfixConditionalOrFalseTest {
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the expected output
      */
-    @Parameters(name = DESCRIPTION) //
+    @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
@@ -138,7 +136,7 @@ public enum InfixConditionalOrFalseTest {
       assertThat(flatten(flatten).toString(), is(flatten.toString()));
     }
     @Override @Test public void inputIsInfixExpression() {
-      assertNotNull(asInfixExpression());
+      JunitHamcrestWrappper.assertNotNull(asInfixExpression());
     }
     @Test public void isANDorOR() {
       assertThat(asInfixExpression().getOperator(), is(CONDITIONAL_OR));

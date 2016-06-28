@@ -1,20 +1,13 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Extract.core;
-import static il.org.spartan.refactoring.utils.Funcs.asReturnStatement;
-import static il.org.spartan.refactoring.utils.Funcs.asStatement;
-import static il.org.spartan.refactoring.utils.Funcs.left;
-import static il.org.spartan.refactoring.utils.Funcs.same;
+import static il.org.spartan.refactoring.utils.Extract.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
 
-import org.eclipse.jdt.core.dom.Assignment;
-import org.eclipse.jdt.core.dom.ForStatement;
-import org.eclipse.jdt.core.dom.ReturnStatement;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
-
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Subject;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 /**
  * A {@link Wring} to convert <code>a = 3;return a;</code> to
@@ -23,7 +16,7 @@ import il.org.spartan.refactoring.utils.Subject;
  * @author Yossi Gil
  * @since 2015-08-28
  */
-public class AssignmentAndReturn extends Wring.ReplaceToNextStatement<Assignment> {
+public class AssignmentAndReturn extends Wring.ReplaceToNextStatement<Assignment> implements Kind.ConsolidateStatements {
   @SuppressWarnings("unused") @Override ASTRewrite go(final ASTRewrite r, final Assignment a, final Statement nextStatement,
       final TextEditGroup g) {
     final Statement parent = asStatement(a.getParent());
@@ -37,8 +30,5 @@ public class AssignmentAndReturn extends Wring.ReplaceToNextStatement<Assignment
   }
   @Override String description(final Assignment a) {
     return "Inline assignment to " + left(a) + " with its subsequent 'return'";
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }

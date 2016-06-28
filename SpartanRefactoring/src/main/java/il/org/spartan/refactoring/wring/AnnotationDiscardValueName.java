@@ -1,14 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.duplicate;
-import static il.org.spartan.refactoring.utils.Funcs.newSimpleName;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import il.org.spartan.refactoring.preferences.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.MemberValuePair;
-import org.eclipse.jdt.core.dom.NormalAnnotation;
-import org.eclipse.jdt.core.dom.SingleMemberAnnotation;
-
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * A {@link Wring} to remove the "value" member from annotations that only have
@@ -19,7 +14,7 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGr
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-02
  */
-public class AnnotationDiscardValueName extends Wring.ReplaceCurrentNode<NormalAnnotation> {
+public class AnnotationDiscardValueName extends Wring.ReplaceCurrentNode<NormalAnnotation> implements Kind.OPTIMIZE_ANNOTATIONS {
   @Override ASTNode replacement(final NormalAnnotation a) {
     if (a.values().size() != 1)
       return null;
@@ -33,8 +28,5 @@ public class AnnotationDiscardValueName extends Wring.ReplaceCurrentNode<NormalA
   }
   @Override String description(final NormalAnnotation a) {
     return "Discard the \"value\" member from the @" + a.getTypeName().getFullyQualifiedName() + " annotation";
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.OPTIMIZE_ANNOTATIONS;
   }
 }

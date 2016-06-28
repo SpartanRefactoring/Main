@@ -1,44 +1,23 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.MatcherAssert.iz;
-import static il.org.spartan.refactoring.utils.Funcs.left;
-import static il.org.spartan.refactoring.utils.Funcs.newSimpleName;
-import static il.org.spartan.refactoring.utils.Funcs.right;
-import static il.org.spartan.refactoring.utils.Into.es;
-import static il.org.spartan.refactoring.wring.Wrings.mixedLiteralKind;
-import static org.junit.Assert.assertNotNull;
+import static il.org.spartan.hamcrest.CoreMatchers.*;
+import static il.org.spartan.hamcrest.MatcherAssert.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Into.*;
+import static il.org.spartan.refactoring.wring.Wrings.*;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import il.org.spartan.hamcrest.*;
+import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.utils.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.Operator;
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.EnhancedForStatement;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.ReturnStatement;
-import org.eclipse.jdt.core.dom.SimpleName;
-import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
-import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.Document;
-import org.eclipse.text.edits.MalformedTreeException;
-import org.eclipse.text.edits.TextEdit;
-import org.junit.Test;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.jface.text.*;
+import org.eclipse.text.edits.*;
+import org.junit.*;
 
-import il.org.spartan.refactoring.spartanizations.Wrap;
-import il.org.spartan.refactoring.utils.As;
-import il.org.spartan.refactoring.utils.Collect;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Into;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.Subject;
-
-@SuppressWarnings({ "javadoc", "static-method" }) //
+@SuppressWarnings({ "javadoc", "static-method" })//
 public class WringsTest {
   @Test public void renameIntoDoWhile() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = "void f() { int b = 3; do ; while(b != 0); }";
@@ -47,7 +26,7 @@ public class WringsTest {
     final MethodDeclaration m = Extract.firstMethodDeclaration(u);
     assertThat(m, iz(input));
     final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(m);
-    assertNotNull(f);
+    JunitHamcrestWrappper.assertNotNull(f);
     final SimpleName b = f.getName();
     assertThat(Collect.usesOf(b).in(m).size(), is(2));
     final ASTRewrite r = ASTRewrite.create(b.getAST());
@@ -65,7 +44,7 @@ public class WringsTest {
     final Block b = m.getBody();
     final EnhancedForStatement s = (EnhancedForStatement) b.statements().get(0);
     final SingleVariableDeclaration p = s.getParameter();
-    assertNotNull(p);
+    JunitHamcrestWrappper.assertNotNull(p);
     final SimpleName a = p.getName();
     assertThat(a, iz("a"));
     assertThat(Collect.usesOf(a).in(m).size(), is(2));
@@ -79,14 +58,14 @@ public class WringsTest {
     final Block b = m.getBody();
     final EnhancedForStatement s = (EnhancedForStatement) b.statements().get(0);
     final SingleVariableDeclaration p = s.getParameter();
-    assertNotNull(p);
+    JunitHamcrestWrappper.assertNotNull(p);
     final SimpleName n = p.getName();
     final ASTRewrite r = ASTRewrite.create(b.getAST());
     Wrings.rename(n, newSimpleName(n, "$"), m, r, null);
     final TextEdit e = r.rewriteAST(d, null);
     e.apply(d);
     final String output = Wrap.Method.off(d.get());
-    assertNotNull(output);
+    JunitHamcrestWrappper.assertNotNull(output);
     assertThat(output, iz(" int f() {for(int $:as)return $;}"));
   }
   @Test public void inlineExpressionWithSideEffect() {
@@ -110,8 +89,8 @@ public class WringsTest {
     final Assignment a = (Assignment) returnStatement.getExpression();
     final Operator o = a.getOperator();
     assertThat(o, iz("+="));
-    final InfixExpression alternateInitializer = Subject.pair(left(a), right(a))
-        .to(Wring.VariableDeclarationFragementAndStatement.asInfix(o));
+    final InfixExpression alternateInitializer = Subject.pair(left(a), right(a)).to(
+        Wring.VariableDeclarationFragementAndStatement.asInfix(o));
     assertThat(alternateInitializer, iz("a + 2 * a"));
     assertThat(Is.sideEffectFree(initializer), is(false));
     assertThat(Collect.usesOf(n).in(alternateInitializer).size(), is(2));

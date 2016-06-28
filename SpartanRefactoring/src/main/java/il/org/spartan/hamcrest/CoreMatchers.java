@@ -1,6 +1,6 @@
 package il.org.spartan.hamcrest;
 
-import org.hamcrest.Matcher;
+import org.hamcrest.*;
 
 /**
  * @author Yossi Gil
@@ -10,8 +10,7 @@ public class CoreMatchers extends org.hamcrest.CoreMatchers {
   /**
    * A shortcut to the frequently used <code>is(new Byte(...))</code>.
    *
-   * @param b
-   *          JD
+   * @param b JD
    * @return a matcher for the value specified by the parameter
    */
   public static Matcher<Byte> is(final byte b) {
@@ -20,8 +19,7 @@ public class CoreMatchers extends org.hamcrest.CoreMatchers {
   /**
    * A shortcut to the frequently used <code>is(new Short(...))</code>.
    *
-   * @param s
-   *          JD
+   * @param s JD
    * @return a matcher for the value specified by the parameter
    */
   public static Matcher<Short> is(final short s) {
@@ -30,8 +28,7 @@ public class CoreMatchers extends org.hamcrest.CoreMatchers {
   /**
    * A shortcut to the frequently used <code>is(new Integer(...))</code>.
    *
-   * @param i
-   *          JD
+   * @param i JD
    * @return a matcher for the value specified by the parameter
    */
   public static Matcher<Integer> is(final int i) {
@@ -40,8 +37,7 @@ public class CoreMatchers extends org.hamcrest.CoreMatchers {
   /**
    * A shortcut to the frequently used <code>is(new Long(...))</code>.
    *
-   * @param l
-   *          JD
+   * @param l JD
    * @return a matcher for the value specified by the parameter
    */
   public static Matcher<Long> is(final long l) {
@@ -50,8 +46,7 @@ public class CoreMatchers extends org.hamcrest.CoreMatchers {
   /**
    * A shortcut to the frequently used <code>is(new Float(...))</code>.
    *
-   * @param f
-   *          JD
+   * @param f JD
    * @return a matcher for the value specified by the parameter
    */
   public static Matcher<Float> is(final float f) {
@@ -60,8 +55,7 @@ public class CoreMatchers extends org.hamcrest.CoreMatchers {
   /**
    * A shortcut to the frequently used <code>is(new Double(...))</code>.
    *
-   * @param d
-   *          JD
+   * @param d JD
    * @return a matcher for the value specified by the parameter
    */
   public static Matcher<Double> is(final double d) {
@@ -70,8 +64,7 @@ public class CoreMatchers extends org.hamcrest.CoreMatchers {
   /**
    * A shortcut to the frequently used <code>is(new Boolean(...))</code>.
    *
-   * @param b
-   *          JD
+   * @param b JD
    * @return a matcher for the value specified by the parameter
    */
   public static Matcher<Boolean> is(final boolean b) {
@@ -80,8 +73,7 @@ public class CoreMatchers extends org.hamcrest.CoreMatchers {
   /**
    * A shortcut to the frequently used <code>is(new Character(...))</code>.
    *
-   * @param c
-   *          JD
+   * @param c JD
    * @return a matcher for the value specified by the parameter
    */
   public static Matcher<Character> is(final char c) {

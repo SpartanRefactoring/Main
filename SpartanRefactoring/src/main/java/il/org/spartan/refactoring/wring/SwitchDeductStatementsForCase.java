@@ -1,16 +1,12 @@
 package il.org.spartan.refactoring.wring;
 
-import java.util.List;
-
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.SwitchCase;
-import org.eclipse.jdt.core.dom.SwitchStatement;
-
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.Scalpel;
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
+
+import java.util.*;
+
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * Inserts to every case within a {@link SwitchStatement} all the statements it
@@ -20,21 +16,23 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
  * @author Ori Roth
  * @since 2016/05/16
  */
-@Deprecated public class SwitchDeductStatementsForCase extends ReplaceCurrentNode<SwitchStatement> {
-  @SuppressWarnings({ "javadoc", "unchecked" }) public static boolean containsCaseWithoutSequencer(SwitchStatement n) {
+@Deprecated public class SwitchDeductStatementsForCase extends ReplaceCurrentNode<SwitchStatement> implements
+    Kind.SWITCH_IF_CONVERTION {
+  @SuppressWarnings({ "javadoc", "unchecked" }) public static boolean containsCaseWithoutSequencer(final SwitchStatement n) {
     boolean ic = false;
-    for (final Statement s : (Iterable<Statement>) n.statements()) if (!(s instanceof SwitchCase)) {
-      if (Is.sequencer(s))
-        ic = false;
-    } else {
-      if (ic)
-        return true;
-      ic = true;
-    }
+    for (final Statement s : (Iterable<Statement>) n.statements())
+      if (!(s instanceof SwitchCase)) {
+        if (Is.sequencer(s))
+          ic = false;
+      } else {
+        if (ic)
+          return true;
+        ic = true;
+      }
     return false;
   }
-  @SuppressWarnings("javadoc") public static void insertUntilSequencer(List<Statement> f, List<Statement> ss, int i,
-      Scalpel s) {
+  @SuppressWarnings("javadoc") public static void insertUntilSequencer(final List<Statement> f, final List<Statement> ss,
+      final int i, final Scalpel s) {
     int c = i;
     while (c < f.size()) {
       ss.add(s.duplicate(f.get(c)));
@@ -43,7 +41,7 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
       ++c;
     }
   }
-  @SuppressWarnings("unchecked") @Override ASTNode replacement(SwitchStatement n) {
+  @SuppressWarnings("unchecked") @Override ASTNode replacement(final SwitchStatement n) {
     if (!containsCaseWithoutSequencer(n))
       return null;
     final SwitchStatement $ = n.getAST().newSwitchStatement();
@@ -64,10 +62,7 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
     }
     return $;
   }
-  @Override String description(@SuppressWarnings("unused") SwitchStatement __) {
+  @Override String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "End cases with sequencers";
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.SWITCH_IF_CONVERTION; // TODO Ori: change wring group
   }
 }

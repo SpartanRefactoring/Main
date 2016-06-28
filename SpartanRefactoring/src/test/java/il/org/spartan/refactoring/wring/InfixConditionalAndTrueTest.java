@@ -1,25 +1,23 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.OrderingComparison.greaterThanOrEqualTo;
-import static il.org.spartan.refactoring.utils.Restructure.flatten;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.CONDITIONAL_AND;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertNotNull;
-
-import java.util.Collection;
-
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
-
-import il.org.spartan.refactoring.utils.Extract;
+import static il.org.spartan.hamcrest.CoreMatchers.*;
+import static il.org.spartan.hamcrest.MatcherAssert.*;
+import static il.org.spartan.hamcrest.JunitHamcrestWrappper.*;
+import static il.org.spartan.refactoring.utils.Restructure.*;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+import static org.hamcrest.MatcherAssert.*;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import il.org.spartan.hamcrest.*;
+import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.utils.Utils;
+
+import java.util.*;
+
+import org.eclipse.jdt.core.dom.*;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.Parameters;
 
 /**
  * Unit tests for {@link Wrings#MULTIPLCATION_SORTER}.
@@ -27,13 +25,13 @@ import il.org.spartan.utils.Utils;
  * @author Yossi Gil
  * @since 2014-07-13
  */
-@SuppressWarnings("javadoc") //
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@SuppressWarnings("javadoc")//
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 public enum InfixConditionalAndTrueTest {
   ;
   static final Wring<InfixExpression> WRING = new InfixConditionalAndTrue();
 
-  @RunWith(Parameterized.class) //
+  @RunWith(Parameterized.class)//
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Exprezzion.Infix {
     static String[][] cases = Utils.asArray(//
         new String[] { "F || F", "false ||false" }, //
@@ -78,7 +76,7 @@ public enum InfixConditionalAndTrueTest {
         new String[] { "AND of 6 without boolean", "a && b && c && false && d && e" }, //
         new String[] { "AND of 7 without boolean with parenthesis", "(a && b) && (c && (d && (e && false)))" }, //
         new String[] { "AND of 7 without boolean and multiple false value",
-            "(a && (b && false)) && (c && (d && (e && (false && false))))" }, //
+        "(a && (b && false)) && (c && (d && (e && (false && false))))" }, //
         null);
 
     /**
@@ -87,7 +85,7 @@ public enum InfixConditionalAndTrueTest {
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file.
      */
-    @Parameters(name = DESCRIPTION) //
+    @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
@@ -97,8 +95,8 @@ public enum InfixConditionalAndTrueTest {
     }
   }
 
-  @RunWith(Parameterized.class) //
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+  @RunWith(Parameterized.class)//
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   public static class Wringed extends AbstractWringTest.WringedExpression.Infix {
     static String[][] cases = Utils.asArray(//
         new String[] { "Many parenthesis", "a && (((true)))  && b", "a && b" }, //
@@ -108,16 +106,16 @@ public enum InfixConditionalAndTrueTest {
         new String[] { "AND of 5 with true", "x && a && b && c && true && true && true && d", "x && a && b && c && d" }, //
         new String[] { "AND of 6 with true", "x && a && true && b && c && d && e", "x && a && b && c && d && e" }, //
         new String[] { "AND of 6 with true with parenthesis", "x && (true && (a && b && true)) && (c && (d && e))",
-            "x && a && b && c && d && e" }, //
+        "x && a && b && c && d && e" }, //
         new String[] { "AND with true", "true && b && a", "b && a" }, //
         new String[] { "AND of 3 with true", "a && b && true", "a && b" }, //
         new String[] { "AND of 4 with true", "a && b && c && true", "a && b && c" }, //
         new String[] { "AND of 5 with true", "true && a && b && c && d", "a && b && c && d" }, //
         new String[] { "AND of 6 with true", "a && b && c && true && d && e", "a && b && c && d && e" }, //
         new String[] { "AND of 7 with true with parenthesis", "true && (a && b) && (c && (d && (e && true)))",
-            "a && b && c && d && e" }, //
+        "a && b && c && d && e" }, //
         new String[] { "AND of 7 with multiple true value", "(a && (b && true)) && (c && (d && (e && (true && true))))",
-            "a&&b&&c&&d&&e" }, //
+        "a&&b&&c&&d&&e" }, //
         null);
 
     /**
@@ -126,7 +124,7 @@ public enum InfixConditionalAndTrueTest {
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the expected output
      */
-    @Parameters(name = DESCRIPTION) //
+    @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
@@ -139,7 +137,7 @@ public enum InfixConditionalAndTrueTest {
       assertThat(flatten(flatten).toString(), is(flatten.toString()));
     }
     @Override @Test public void inputIsInfixExpression() {
-      assertNotNull(asInfixExpression());
+      JunitHamcrestWrappper.assertNotNull(asInfixExpression());
     }
     @Test public void isANDorOR() {
       assertThat(asInfixExpression().getOperator(), is(CONDITIONAL_AND));

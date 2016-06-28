@@ -1,36 +1,19 @@
 package il.org.spartan.refactoring.application;
 
-import static il.org.spartan.external.External.Introspector.extract;
+import static il.org.spartan.external.External.Introspector.*;
+import il.org.spartan.external.*;
+import il.org.spartan.files.*;
+import il.org.spartan.misc.*;
+import il.org.spartan.refactoring.handlers.*;
+import il.org.spartan.utils.*;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.LineNumberReader;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
-import org.eclipse.core.resources.IFolder;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IProjectDescription;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.jdt.core.IClasspathEntry;
-import org.eclipse.jdt.core.ICompilationUnit;
-import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.IPackageFragment;
-import org.eclipse.jdt.core.IPackageFragmentRoot;
-import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.jdt.core.dom.ASTParser;
-import org.eclipse.jdt.core.dom.ASTVisitor;
-import org.eclipse.jdt.core.dom.PackageDeclaration;
-
-import il.org.spartan.external.External;
-import il.org.spartan.files.FilesGenerator;
-import il.org.spartan.misc.Wrapper;
-import il.org.spartan.refactoring.handlers.ApplySpartanizationHandler;
-import il.org.spartan.refactoring.handlers.CleanupHandler;
-import il.org.spartan.utils.FileUtils;
+import org.eclipse.core.resources.*;
+import org.eclipse.core.runtime.*;
+import org.eclipse.jdt.core.*;
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * Command line version of this plug-in
@@ -53,8 +36,7 @@ public class Xiphos {
   /**
    * main function, to which command line arguments are passed.
    *
-   * @param args
-   *          command line arguments
+   * @param args command line arguments
    */
   public static void main(final String[] args) {
     new Xiphos(args).go();
@@ -105,23 +87,6 @@ public class Xiphos {
       printChangeStatistics(fileStats);
     if (optStatsLines)
       printLineStatistics(fileStats);
-  }
-  private static void printHelpPrompt() {
-    System.out.println("Spartan Refactoring plugin command line");
-    System.out.println("Usage: eclipse -application il.org.spartan.refactoring.application -nosplash [OPTIONS] PATH");
-    System.out.println("Executes the Spartan Refactoring Eclipse plug-in from the command line on all the Java source files "
-        + "within the given PATH. Files are spartanized in place by default.");
-    System.out.println("");
-    System.out.println("Options:");
-    System.out
-        .println("  -N       Do not overwrite existing files (writes the Spartanized output to a new file in the same directory)");
-    System.out.println("  -C<num>  Maximum number of Spartanizaion rounds for each file (default: 20)");
-    System.out.println("  -E       Display statistics for each file separately");
-    System.out.println("  -V       Be verbose");
-    System.out.println("");
-    System.out.println("Print statistics:");
-    System.out.println("  -l       Show the number of lines before and after Spartanization");
-    System.out.println("  -r       Show the number of Spartanizaion made in each round");
   }
   void printLineStatistics(final List<FileStats> ss) {
     System.out.println("\nLine differences:");

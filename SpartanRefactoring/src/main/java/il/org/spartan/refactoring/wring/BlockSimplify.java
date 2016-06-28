@@ -1,17 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
-import java.util.List;
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.TryStatement;
+import java.util.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.Scalpel;
-import il.org.spartan.refactoring.utils.expose;
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * A {@link Wring} to convert <code>{;; g(); {}{;{;{;}};} }</code> into
@@ -20,8 +14,8 @@ import il.org.spartan.refactoring.utils.expose;
  * @author Yossi Gil
  * @since 2015-07-29
  */
-public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
-  static Statement reorganizeNestedStatement(final Statement s, Scalpel scalpel) {
+public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> implements Kind.REMOVE_REDUNDANT_PUNCTUATION {
+  static Statement reorganizeNestedStatement(final Statement s, final Scalpel scalpel) {
     final List<Statement> ss = Extract.statements(s);
     switch (ss.size()) {
       case 0:
@@ -40,7 +34,7 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
         return false;
     return true;
   }
-  private static Block reorganizeStatement(final Statement s, Scalpel scalpel) {
+  private static Block reorganizeStatement(final Statement s, final Scalpel scalpel) {
     final List<Statement> ss = Extract.statements(s);
     final Block $ = s.getAST().newBlock();
     scalpel.duplicateInto(ss, expose.statements($));
@@ -70,8 +64,5 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
   }
   @Override String description(@SuppressWarnings("unused") final Block __) {
     return "Simplify block";
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REMOVE_REDUNDANT_PUNCTUATION;
   }
 }

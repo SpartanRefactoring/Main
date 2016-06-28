@@ -1,22 +1,13 @@
 package il.org.spartan.refactoring.handlers;
 
-import static il.org.spartan.utils.Utils.append;
-import static il.org.spartan.utils.Utils.delete;
+import static il.org.spartan.utils.Utils.*;
+import il.org.spartan.refactoring.builder.*;
 
-import org.eclipse.core.commands.AbstractHandler;
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IProjectDescription;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.ui.handlers.HandlerUtil;
-
-import il.org.spartan.refactoring.builder.Builder;
-import il.org.spartan.refactoring.builder.Nature;
+import org.eclipse.core.commands.*;
+import org.eclipse.core.resources.*;
+import org.eclipse.core.runtime.*;
+import org.eclipse.jface.viewers.*;
+import org.eclipse.ui.handlers.*;
 
 /**
  * A command handler which toggles the spartanization nature
@@ -38,8 +29,8 @@ public class ToggleSpartanizationHandler extends AbstractHandler {
     return null;
   }
   private static IProject extractProject(final Object o) {
-    return o instanceof IProject ? (IProject) o
-        : o instanceof IAdaptable ? (IProject) ((IAdaptable) o).getAdapter(IProject.class) : null;
+    return o instanceof IProject ? (IProject) o : o instanceof IAdaptable ? (IProject) ((IAdaptable) o).getAdapter(IProject.class)
+        : null;
   }
   private static void toggleNature(final IProject p, final boolean state) throws CoreException {
     // NOTE: In order to ensure that we're not adding the nature when it's
