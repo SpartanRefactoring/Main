@@ -1,13 +1,9 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.hamcrest.CoreMatchers.*;
-import static il.org.spartan.hamcrest.MatcherAssert.*;
+import static il.org.spartan.hamcrest.SpartanAssert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
-import il.org.spartan.hamcrest.*;
+import static org.junit.Assert.*;
 import il.org.spartan.refactoring.utils.Collect.Collector;
 
 import org.eclipse.jdt.core.dom.*;
@@ -223,7 +219,7 @@ import org.junit.*;
     final MethodDeclaration d = d(input);
     assertThat(d, iz(input));
     final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(d);
-    JunitHamcrestWrappper.assertNotNull(f);
+    assertThat("", f, notNullValue());
     final SimpleName b = f.getName();
     assertThat(b, iz("b"));
     assertThat(Collect.usesOf(b).in(d).size(), is(2));
@@ -233,7 +229,7 @@ import org.junit.*;
     final MethodDeclaration d = d(input);
     assertThat(d, iz(input));
     final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(d);
-    JunitHamcrestWrappper.assertNotNull(f);
+    assertThat("", f, notNullValue());
     final SimpleName b = f.getName();
     assertThat(b, iz("b"));
     assertThat(Collect.usesOf(b).in(d).size(), is(1));
@@ -374,7 +370,7 @@ import org.junit.*;
   }
   @Test public void vanilla() {
     final Collector findUses = searcher();
-    assertThat(findUses, notNullValue());
+    assertThat("", findUses, notNullValue());
     assertThat(findUses.in(s("b = n;")).size(), is(1));
   }
   @Test public void vanillaShortVersion() {

@@ -1,14 +1,11 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.hamcrest.CoreMatchers.*;
-import static il.org.spartan.hamcrest.MatcherAssert.*;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import static il.org.spartan.hamcrest.SpartanAssert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
-import il.org.spartan.hamcrest.*;
+import static org.junit.Assert.*;
+import il.org.spartan.Assert;
 import il.org.spartan.refactoring.utils.Subject.Pair;
 
 import java.util.*;
@@ -24,12 +21,12 @@ import org.junit.*;
   }
   @Test public void conditionalExtract() {
     final Pair pair = Subject.pair(e("a-B"), e("(c-d)"));
-    assertThat(pair, notNullValue());
+    assertThat("", pair, notNullValue());
     assertThat(pair.toCondition(e("(x)")), iz("x ? a-B : c-d"));
   }
   @Test public void conditionalSimple() {
     final Pair pair = Subject.pair(e("a-B"), e("(c-d)"));
-    assertThat(pair, notNullValue());
+    assertThat("", pair, notNullValue());
     assertThat(pair.toCondition(e("x")), iz("x ? a-B : c-d"));
   }
   @Test public void divisionDoesntAssociate() {
@@ -93,30 +90,30 @@ import org.junit.*;
     operands.add(duplicate(e("3*4")));
     operands.add(duplicate(e("5")));
     final InfixExpression refit = Subject.operands(operands).to(e.getOperator());
-    assertThat(refit, is(not(e)));
-    assertThat(refit.toString(), is("3 * 4 + 5"));
+    assertThat("", refit, is(not(e)));
+    assertThat("", refit.toString(), is("3 * 4 + 5"));
   }
   @Test public void refitWithSort() {
     final InfixExpression e = i("1 + 2 * 3");
     final List<Expression> operands = Extract.operands(flatten(e));
     assertThat(operands.size(), is(2));
-    assertThat(operands.get(0).toString(), is("1"));
-    assertThat(operands.get(1).toString(), is("2 * 3"));
-    JunitHamcrestWrappper.assertTrue(ExpressionComparator.ADDITION.sort(operands));
-    assertThat(operands.get(0).toString(), is("2 * 3"));
-    assertThat(operands.get(1).toString(), is("1"));
+    assertThat("", operands.get(0).toString(), is("1"));
+    assertThat("", operands.get(1).toString(), is("2 * 3"));
+    Assert.assertThat(ExpressionComparator.ADDITION.sort(operands), is(true));
+    assertThat("", operands.get(0).toString(), is("2 * 3"));
+    assertThat("", operands.get(1).toString(), is("1"));
     final InfixExpression refit = Subject.operands(operands).to(e.getOperator());
-    assertThat(refit, is(not(e)));
-    assertThat(refit.toString(), is("2 * 3 + 1"));
+    assertThat("", refit, is(not(e)));
+    assertThat("", refit.toString(), is("2 * 3 + 1"));
   }
   @Test public void remainderDoesntAssociate() {
     assertThat(Subject.pair(e("a*B"), e("c*d")).to(InfixExpression.Operator.REMAINDER), iz("(a * B) % (c * d)"));
   }
   @Test public void subjectOperands() {
     final Expression e = Into.e("2 + a < b");
-    JunitHamcrestWrappper.assertTrue(Is.notString(e));
+    Assert.assertThat(Is.notString(e), is(true));
     final InfixExpression plus = Extract.firstPlus(e);
-    JunitHamcrestWrappper.assertTrue(Is.notString(plus));
+    Assert.assertThat(Is.notString(plus), is(true));
     final List<Expression> operands = Extract.operands(flatten(plus));
     assertThat(operands.size(), is(2));
     final boolean b = ExpressionComparator.ADDITION.sort(operands);
@@ -129,20 +126,20 @@ import org.junit.*;
     final InfixExpression e = i("1+2");
     final InfixExpression refit = Subject.operands(operands).to(e.getOperator());
     assertThat(refit.hasExtendedOperands(), is(false));
-    assertThat(refit.toString(), is("a + b"));
+    assertThat("", refit.toString(), is("a + b"));
   }
   @Test public void subjectOperandsIsCorrect() {
-    assertThat(Subject.operands(Extract.operands(Funcs.duplicate(i("a*b*c")))).to(i("1+2+3").getOperator()).toString(),
+    assertThat("", Subject.operands(Extract.operands(Funcs.duplicate(i("a*b*c")))).to(i("1+2+3").getOperator()).toString(),
         is("a + b + c"));
   }
   @Test public void subjectOperandsNotNull() {
-    assertThat(Subject.operands(Extract.operands(Funcs.duplicate(i("a+b+c")))).to(i("1+2+3").getOperator()), notNullValue());
+    assertThat("", Subject.operands(Extract.operands(Funcs.duplicate(i("a+b+c")))).to(i("1+2+3").getOperator()), notNullValue());
   }
   @Test public void subjectOperandsWithParenthesis() {
     final Expression e = Into.e("(2 + a) * b");
-    JunitHamcrestWrappper.assertTrue(Is.notString(e));
+    Assert.assertThat(Is.notString(e), is(true));
     final InfixExpression plus = Extract.firstPlus(e);
-    JunitHamcrestWrappper.assertTrue(Is.notString(plus));
+    Assert.assertThat(Is.notString(plus), is(true));
     final List<Expression> operands = Extract.operands(flatten(plus));
     assertThat(operands.size(), is(2));
     final boolean b = ExpressionComparator.ADDITION.sort(operands);

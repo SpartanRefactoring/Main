@@ -1,10 +1,10 @@
 package il.org.spartan.refactoring.wring;
 
+import static il.org.spartan.hamcrest.SpartanAssert.*;
 import static il.org.spartan.refactoring.utils.Extract.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
-import il.org.spartan.hamcrest.*;
+import il.org.spartan.Assert;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.utils.*;
 
@@ -29,16 +29,16 @@ public class TernaryCollapseTest {
 
   @Test public void steps() {
     final ConditionalExpression e = c("a ? b ? x : z :z");
-    JunitHamcrestWrappper.assertNotNull(e);
+    assertThat("", e, notNullValue());
     final ConditionalExpression then = asConditionalExpression(core(e.getThenExpression()));
-    JunitHamcrestWrappper.assertNotNull(then);
+    assertThat("", then, notNullValue());
     final Expression elze = core(e.getElseExpression());
-    JunitHamcrestWrappper.assertNotNull(elze);
+    assertThat("", elze, notNullValue());
     final Expression thenThen = core(then.getThenExpression());
-    JunitHamcrestWrappper.assertNotNull(thenThen);
+    assertThat("", thenThen, notNullValue());
     final Expression thenElse = core(then.getElseExpression());
-    JunitHamcrestWrappper.assertNotNull(thenElse);
-    JunitHamcrestWrappper.assertTrue(same(thenElse, elze));
+    assertThat("", thenElse, notNullValue());
+    Assert.assertThat(same(thenElse, elze), is(true));
   }
 
   @RunWith(Parameterized.class)//

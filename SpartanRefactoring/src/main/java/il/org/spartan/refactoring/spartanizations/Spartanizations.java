@@ -13,12 +13,11 @@ import java.util.*;
  * @since 2013/07/01
  */
 public class Spartanizations {
-  private static Spartanization[] all = { //
+  static Spartanization[] all = { //
   new Trimmer(), //
   // new ForwardDeclaration(), //
   // new InlineSingleUse(), //
   };
-  @SuppressWarnings("synthetic-access")//
   private static final Map<String, Spartanization> map = new HashMap<String, Spartanization>() {
     private static final long serialVersionUID = -8921699276699040030L;
     {

@@ -1,12 +1,9 @@
 package il.org.spartan.utils;
 
-import static il.org.spartan.hamcrest.CoreMatchers.*;
-import static il.org.spartan.hamcrest.MatcherAssert.*;
-import static il.org.spartan.hamcrest.JunitHamcrestWrappper.*;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import static il.org.spartan.hamcrest.SpartanAssert.*;
 import static il.org.spartan.utils.Utils.*;
-import static org.hamcrest.MatcherAssert.*;
-import il.org.spartan.hamcrest.*;
+import static org.junit.Assert.*;
+import il.org.spartan.Assert;
 
 import org.junit.*;
 import org.junit.runners.*;
@@ -30,33 +27,33 @@ public class UtilsTest {
     assertThat(in("X", "A", "B", "C"), is(false));
   }
   @Test public void inTypicalTrue() {
-    JunitHamcrestWrappper.assertTrue(in("A", "A", "B", "C"));
+    Assert.assertThat(in("A", "A", "B", "C"), is(true));
   }
   @Test public void removePrefiEmpty() {
-    assertThat("BAAAAB", is(Utils.removePrefix("BAAAAB", "A")));
+    assertThat("", "BAAAAB", is(Utils.removePrefix("BAAAAB", "A")));
   }
   @Test public void removePrefiExhaustive() {
-    assertThat("", is(Utils.removePrefix("AXAXAXAXAXAXAXAX", "AX")));
+    assertThat("", "", is(Utils.removePrefix("AXAXAXAXAXAXAXAX", "AX")));
   }
   @Test public void removePrefixTypical() {
-    assertThat("BC", is(Utils.removePrefix("AAAABC", "AA")));
+    assertThat("", "BC", is(Utils.removePrefix("AAAABC", "AA")));
   }
   @Test public void removeSuffiEmpty() {
-    assertThat("BAAAAB", is(Utils.removeSuffix("BAAAAB", "A")));
+    assertThat("", "BAAAAB", is(Utils.removeSuffix("BAAAAB", "A")));
   }
   @Test public void removeSuffiExhaustive() {
-    assertThat("", is(Utils.removeSuffix("AXAXAXAXAXAXAXAX", "AX")));
+    assertThat("", "", is(Utils.removeSuffix("AXAXAXAXAXAXAXAX", "AX")));
   }
   @Test public void removeSuffixTypical() {
-    assertThat("AAAA", is(Utils.removeSuffix("AAAABC", "BC")));
+    assertThat("", "AAAA", is(Utils.removeSuffix("AAAABC", "BC")));
   }
   @Test public void removeWhites() {
-    assertThat(Utils.removeWhites("ABC"), is("ABC"));
-    assertThat(Utils.removeWhites("ABC\n"), is("ABC"));
-    assertThat(Utils.removeWhites(" ABC\n"), is("ABC"));
-    assertThat(Utils.removeWhites("A BC"), is("ABC"));
-    assertThat(Utils.removeWhites("AB\rC\n"), is("ABC"));
-    assertThat(Utils.removeWhites("A\fB\rC\n"), is("ABC"));
-    assertThat(Utils.removeWhites("\t\tA\fB\rC\n"), is("ABC"));
+    assertThat("", Utils.removeWhites("ABC"), is("ABC"));
+    assertThat("", Utils.removeWhites("ABC\n"), is("ABC"));
+    assertThat("", Utils.removeWhites(" ABC\n"), is("ABC"));
+    assertThat("", Utils.removeWhites("A BC"), is("ABC"));
+    assertThat("", Utils.removeWhites("AB\rC\n"), is("ABC"));
+    assertThat("", Utils.removeWhites("A\fB\rC\n"), is("ABC"));
+    assertThat("", Utils.removeWhites("\t\tA\fB\rC\n"), is("ABC"));
   }
 }

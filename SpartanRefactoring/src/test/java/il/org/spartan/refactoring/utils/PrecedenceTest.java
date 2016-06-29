@@ -1,11 +1,8 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.hamcrest.CoreMatchers.*;
-import static il.org.spartan.hamcrest.MatcherAssert.*;
-import static il.org.spartan.hamcrest.JunitHamcrestWrappper.*;
+import static il.org.spartan.hamcrest.SpartanAssert.*;
 import static il.org.spartan.refactoring.utils.Into.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
+import static org.junit.Assert.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
@@ -65,7 +62,7 @@ import org.junit.*;
     Precedence.of(c("A?b:c"));
   }
   @Test public void fieldAccess() {
-    assertThat(e("this.f"), instanceOf(FieldAccess.class));
+    assertThat("", e("this.f"), instanceOf(FieldAccess.class));
     assertThat(Precedence.of(e("this.f")), is(1));
   }
   @Test public void instanceofOperator() {

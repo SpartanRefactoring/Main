@@ -9,7 +9,7 @@ import il.org.spartan.refactoring.builder.*;
   public static final String PLUGIN_STARTUP_BEHAVIOR_ID = "pref_startup_behavior";
   public static final String PLUGIN_STARTUP_BEHAVIOR_TEXT = "Plugin startup behavior:";
   public static final String[][] PLUGIN_STARTUP_BEHAVIOR_OPTIONS = { { "Remember individual project settings", "remember" },
-    { "Enable for all projects", "always_on" }, { "Disable for all projects", "always_off" } };
+      { "Enable for all projects", "always_on" }, { "Disable for all projects", "always_off" } };
   public static final String NEW_PROJECTS_ENABLE_BY_DEFAULT_ID = "pref_enable_by_default_for_new_projects";
   public static final String NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT = "Enable by default for newly created projects";
   public static final String ENABLE_BINDING_RESOLUTION_ID = "pref_resolve_bindings";

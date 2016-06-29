@@ -1,12 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.*;
-import static il.org.spartan.hamcrest.MatcherAssert.*;
+import static il.org.spartan.hamcrest.SpartanAssert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
-import il.org.spartan.hamcrest.*;
+import static org.junit.Assert.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
@@ -32,13 +29,13 @@ public class IfAssignToFooElseAssignToFooTest {
   static final Wring<IfStatement> WRING = new IfAssignToFooElseAssignToFoo();
 
   @Test public void checkSteps() {
-    assertThat(asSingle("if (a) a = b; else a = c;"), notNullValue());
+    assertThat("", asSingle("if (a) a = b; else a = c;"), notNullValue());
     final IfStatement s = asIfStatement(asSingle("if (a) a = b; else a = c;"));
-    JunitHamcrestWrappper.assertNotNull(s);
+    assertThat("", s, notNullValue());
     final Assignment then = Extract.assignment(then(s));
-    JunitHamcrestWrappper.assertNotNull(then(s).toString(), then);
+    assertNotNull(then(s).toString(), then);
     final Assignment elze = Extract.assignment(elze(s));
-    JunitHamcrestWrappper.assertNotNull(elze);
+    assertThat("", elze, notNullValue());
     assertThat(compatible(then, elze), is(true));
     assertThat(WRING.scopeIncludes(s), is(true));
   }

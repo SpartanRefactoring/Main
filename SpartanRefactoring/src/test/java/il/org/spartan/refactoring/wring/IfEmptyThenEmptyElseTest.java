@@ -1,13 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.MatcherAssert.*;
-import static il.org.spartan.hamcrest.JunitHamcrestWrappper.*;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
-import il.org.spartan.hamcrest.*;
+import static il.org.spartan.hamcrest.SpartanAssert.*;
+import static org.junit.Assert.*;
+import il.org.spartan.Assert;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.utils.As;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -22,19 +20,19 @@ public class IfEmptyThenEmptyElseTest {
   private static final IfStatement IF = Extract.firstIfStatement(INPUT);
 
   @Test public void eligible() {
-    JunitHamcrestWrappper.assertTrue(WRING.eligible(IF));
+    Assert.assertThat(WRING.eligible(IF), is(true));
   }
   @Test public void emptyElse() {
-    JunitHamcrestWrappper.assertTrue(Is.vacuousElse(IF));
+    Assert.assertThat(Is.vacuousElse(IF), is(true));
   }
   @Test public void emptyThen() {
-    JunitHamcrestWrappper.assertTrue(Is.vacuousThen(IF));
+    Assert.assertThat(Is.vacuousThen(IF), is(true));
   }
   @Test public void extractFirstIf() {
-    JunitHamcrestWrappper.assertNotNull(IF);
+    assertThat("", IF, notNullValue());
   }
   @Test public void inputType() {
-    org.hamcrest.MatcherAssert.assertThat(INPUT, instanceOf(Block.class));
+    org.hamcrest.MatcherAssert.assertThat("", INPUT, instanceOf(Block.class));
   }
   @Test public void runGo() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = Wrap.Statement.on(INPUT + "");
@@ -46,12 +44,12 @@ public class IfEmptyThenEmptyElseTest {
     final Rewrite t = WRING.make(s);
     t.go(r, null);
     final TextEdit e = r.rewriteAST(d, null);
-    JunitHamcrestWrappper.assertNotNull(e);
+    assertThat("", e, notNullValue());
     assertThat(e.getChildren().length, greaterThan(0));
     e.apply(d);
     assertThat(d.get(), Extract.firstIfStatement(As.COMPILIATION_UNIT.ast(d.get())), nullValue());
   }
   @Test public void scopeIncludes() {
-    JunitHamcrestWrappper.assertTrue(WRING.scopeIncludes(IF));
+    Assert.assertThat(WRING.scopeIncludes(IF), is(true));
   }
 }

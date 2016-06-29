@@ -65,7 +65,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
         return true;
     return false;
   }
-  private static boolean forbidden(final SimpleName n, final Statement s) {
+  @SuppressWarnings("incomplete-switch") private static boolean forbidden(final SimpleName n, final Statement s) {
     ASTNode child = null;
     for (final ASTNode ancestor : AncestorSearch.until(s).ancestors(n)) {
       switch (ancestor.getNodeType()) {
@@ -80,7 +80,6 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
         case ENHANCED_FOR_STATEMENT:
           if (((EnhancedForStatement) ancestor).getExpression() != child)
             return true;
-          break;
       }
       child = ancestor;
     }

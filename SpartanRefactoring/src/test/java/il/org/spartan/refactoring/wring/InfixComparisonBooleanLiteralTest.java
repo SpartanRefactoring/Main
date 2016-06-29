@@ -1,14 +1,10 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.*;
-import static il.org.spartan.hamcrest.MatcherAssert.*;
-import static il.org.spartan.hamcrest.JunitHamcrestWrappper.*;
+import static il.org.spartan.hamcrest.SpartanAssert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static il.org.spartan.utils.Utils.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
-import il.org.spartan.hamcrest.*;
+import static org.junit.Assert.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.utils.Utils;
@@ -42,18 +38,18 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
     final String s = " (2) == true";
     final String wrap = Wrap.Expression.on(s);
     final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(wrap);
-    assertThat(u, notNullValue());
+    assertThat("", u, notNullValue());
     final Document d = new Document(wrap);
-    assertThat(d, notNullValue());
+    assertThat("", d, notNullValue());
     final Trimmer t = new Trimmer();
     final ASTRewrite r = t.createRewrite(u, null);
     final TextEdit x = r.rewriteAST(d, null);
     x.apply(d);
     final String unpeeled = d.get();
-    JunitHamcrestWrappper.assertNotEquals("Nothing done on " + s, wrap, unpeeled);
+    assertThat("Nothing done on " + s, wrap, not(unpeeled));
     final String peeled = Wrap.Expression.off(unpeeled);
-    JunitHamcrestWrappper.assertNotEquals("No similification of " + s, s, peeled);
-    JunitHamcrestWrappper.assertNotEquals("Simpification of " + s + " is just reformatting", compressSpaces(peeled), compressSpaces(s));
+    assertThat("No similification of " + s, s, not(peeled));
+    assertThat("Simpification of " + s + " is just reformatting", compressSpaces(peeled), not(compressSpaces(s)));
     assertSimilar(" 2 ", peeled);
   }
 
@@ -107,10 +103,10 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
     }
     @Override @Test public void flattenIsIdempotentt() {
       final InfixExpression flatten = flatten(asInfixExpression());
-      assertThat(flatten(flatten).toString(), is(flatten.toString()));
+      assertThat("", flatten(flatten).toString(), is(flatten.toString()));
     }
     @Override @Test public void inputIsInfixExpression() {
-      assertThat(asInfixExpression(), notNullValue());
+      assertThat("", asInfixExpression(), notNullValue());
     }
     @Test public void sortTwice() {
       final List<Expression> operands = Extract.operands(flatten(asInfixExpression()));

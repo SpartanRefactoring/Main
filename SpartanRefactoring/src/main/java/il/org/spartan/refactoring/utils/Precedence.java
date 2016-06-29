@@ -19,26 +19,26 @@ public enum Precedence {
   ;
   final static int UNDEFINED = -1;
   private static final ChainStringToIntegerMap of = new ChainStringToIntegerMap()//
-  .putOn(1, "[]", ".", "() invoke", "++ post", "-- post", "MethodInvocation", "PostfixExpression", "ArrayAccess",
+      .putOn(1, "[]", ".", "() invoke", "++ post", "-- post", "MethodInvocation", "PostfixExpression", "ArrayAccess",
           "FieldAccess", "QualifiedName") //
-  .putOn(2, "++ pre", "-- pre", "+ unary", "- unary", "!", "~", "PrefixExpression") //
-  .putOn(3, "() cast", "new", "ArrayCreation", "ClassInstanceCreation", "CastExpression") //
-  .putOn(4, "*", "/", "%") // multiplicative
-  .putOn(5, "+", "-") // additive
-  .putOn(6, ">>", "<<", ">>>") // shift
-  .putOn(7, "<", "<=", ">", ">=", "instanceof", "InstanceofExpression") // relational
-  .putOn(8, "==", "!=") // equality
-  .putOn(9, "&") // bitwise AND
-  .putOn(10, "^") // bitwise XOR
-  .putOn(11, "|") // bitwise OR
-  .putOn(12, "&&") // conditional AND
-  .putOn(13, "||") // conditional OR
-  .putOn(14, "?", ":", "ConditionalExpression") // conditional
-  .putOn(15, "=", // assignment
-      "+=", "-=", // assignment, additive
-      "*=", "/=", "%=", // assignment, multiplicative
-      "&=", "^=", "|=", // assignment, bitwise
-      "<<=", ">>=", ">>>="// assignment, shift
+      .putOn(2, "++ pre", "-- pre", "+ unary", "- unary", "!", "~", "PrefixExpression") //
+      .putOn(3, "() cast", "new", "ArrayCreation", "ClassInstanceCreation", "CastExpression") //
+      .putOn(4, "*", "/", "%") // multiplicative
+      .putOn(5, "+", "-") // additive
+      .putOn(6, ">>", "<<", ">>>") // shift
+      .putOn(7, "<", "<=", ">", ">=", "instanceof", "InstanceofExpression") // relational
+      .putOn(8, "==", "!=") // equality
+      .putOn(9, "&") // bitwise AND
+      .putOn(10, "^") // bitwise XOR
+      .putOn(11, "|") // bitwise OR
+      .putOn(12, "&&") // conditional AND
+      .putOn(13, "||") // conditional OR
+      .putOn(14, "?", ":", "ConditionalExpression") // conditional
+      .putOn(15, "=", // assignment
+          "+=", "-=", // assignment, additive
+          "*=", "/=", "%=", // assignment, multiplicative
+          "&=", "^=", "|=", // assignment, bitwise
+          "<<=", ">>=", ">>>="// assignment, shift
       );
 
   /**

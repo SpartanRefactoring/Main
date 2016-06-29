@@ -17,7 +17,8 @@ import org.eclipse.text.edits.*;
  * @since 2015/06/24
  */
 @SuppressWarnings("restriction")// "internal use only" for
-// "ExtractMethodRefactoring" import,
+// "ExtractMethodRefactoring" import static
+// il.org.spartan.hamcrest.SpartanAssert.*; import,
 // which is supposed to be fine due to the
 // fact that extract method API is internal.
 public class ExtractMethod extends Spartanization {
@@ -63,7 +64,7 @@ public class ExtractMethod extends Spartanization {
         final List<LinkedList<Integer>> groups = new LinkedList<>();
         for (final LinkedList<Integer> group : ug)
           if (group.size() >= MinimumGroupSizeForExtraction
-          && group.size() <= d.getBody().statements().size() - MaximunGroupRelativeToMethodSize)
+              && group.size() <= d.getBody().statements().size() - MaximunGroupRelativeToMethodSize)
             groups.add(0, group);
         // TODO Ofir: random method name for now - will be changed later on
         for (final LinkedList<Integer> group : groups) {

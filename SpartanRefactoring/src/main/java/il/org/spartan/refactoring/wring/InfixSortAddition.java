@@ -1,6 +1,13 @@
 package il.org.spartan.refactoring.wring;
 
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
+
+import java.util.*;
+
+import org.eclipse.jdt.core.dom.*;
+
 /**
  * A {@link Wring} that sorts the arguments of a {@link Operator#PLUS}
  * expression. Extra care is taken to leave intact the use of
@@ -9,13 +16,6 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
  * @author Yossi Gil
  * @since 2015-07-17
  */
-import il.org.spartan.refactoring.preferences.*;
-import il.org.spartan.refactoring.utils.*;
-
-import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
-
 public final class InfixSortAddition extends Wring.InfixSorting implements Kind.ReorganizeExpression {
   @Override boolean sort(final List<Expression> es) {
     return ExpressionComparator.ADDITION.sort(es);

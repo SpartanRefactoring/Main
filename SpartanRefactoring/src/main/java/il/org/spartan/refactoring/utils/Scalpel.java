@@ -2,6 +2,7 @@ package il.org.spartan.refactoring.utils;
 
 import java.util.*;
 
+import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jdt.core.dom.rewrite.TargetSourceRangeComputer.SourceRange;
@@ -40,7 +41,7 @@ public class Scalpel {
    * @param n node
    * @return duplicated node with all original comments included
    */
-  @SuppressWarnings({ "unchecked" }) public <N extends ASTNode> N duplicate(final N n) {
+  @SuppressWarnings({ "unchecked" }) public <@Nullable N extends ASTNode> N duplicate(final N n) {
     if (n == null)
       return null;
     if (u == null || r == null || s == null)
@@ -67,12 +68,13 @@ public class Scalpel {
    * Duplicating statements from one list to another. The duplicated nodes have
    * all original comments included
    *
-   * @param src source list
-   * @param dst destination list
+   * @param from source list
+   * @param to destination list
    */
-  public <M extends ASTNode, N extends M> void duplicateInto(final List<N> src, final List<M> dst) {
-    for (final M n : src)
-      dst.add(duplicate(n));
+  public <M extends ASTNode, N extends M> void duplicateInto(final List<N> from, final List<M> to) {
+    for (final @Nullable M n : from)
+      if (n != null)
+        to.add(duplicate(n));
   }
   /**
    * Duplicates a node with comments from other nodes. Used in order to merge
@@ -81,7 +83,7 @@ public class Scalpel {
    * @param ns
    * @return a duplicate node containing all comments
    */
-  @SuppressWarnings("unchecked") public <N extends ASTNode> N duplicateWith(final N... ns) {
+  @SuppressWarnings("unchecked") public <@Nullable N extends ASTNode> N duplicateWith(final N... ns) {
     if (ns == null)
       return null;
     if (u == null || r == null || s == null)
@@ -97,8 +99,11 @@ public class Scalpel {
         ++cc;
       }
     }
-    return mark(cc != 1 ? (N) r.createStringPlaceholder(sb.append(n.toString()).toString().trim(), n.getNodeType()) : (N) r
-        .createStringPlaceholder(n.toString().trim() + " " + sb.toString().trim(), n.getNodeType()));
+    assert n != null;
+    @Nullable final String string = n.toString();
+    assert string != null;
+    return mark(cc != 1 ? (N) r.createStringPlaceholder(sb.append(string).toString().trim(), n.getNodeType()) : (N) r
+        .createStringPlaceholder(string.trim() + " " + sb.toString().trim(), n.getNodeType()));
   }
   /**
    * As duplicateWith, but for multiple lists of elements
@@ -240,7 +245,7 @@ public class Scalpel {
         for (final Comment c : comments)
           $.add(r.createStringPlaceholder(
               s.substring(u.getExtendedStartPosition(c), u.getExtendedStartPosition(c) + u.getExtendedLength(c))
-              + (replacement instanceof Statement || c.isLineComment() ? "\n" : ""), c.getNodeType()));
+                  + (replacement instanceof Statement || c.isLineComment() ? "\n" : ""), c.getNodeType()));
         $.add(replacement);
       } else {
         final Comment c = comments.get(0);

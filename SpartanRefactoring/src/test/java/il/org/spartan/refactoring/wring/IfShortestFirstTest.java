@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.*;
-import static il.org.spartan.hamcrest.MatcherAssert.*;
+import static il.org.spartan.hamcrest.SpartanAssert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
@@ -36,7 +35,7 @@ import org.junit.runners.Parameterized.Parameters;
         "    return false;\n" + //
         "return true;" //
         + ""//
-        );
+    );
     final IfStatement s = Extract.firstIfStatement(u);
     assertThat(Extract.statements(then(s)).size(), is(1));
     assertThat(Extract.statements(elze(s)).size(), is(1));
@@ -79,17 +78,17 @@ import org.junit.runners.Parameterized.Parameters;
         new String[] { //
         "Two statemens are greater than one", //
             "if (a) {i++;j++;} else b(asdf,as,as,asdf,adfasd,adadfadf,asfasdfasdf);", //
-        "if (!a) b(asdf,as,as,asdf,adfasd,adadfadf,asfasdfasdf); else {i++;j++;} " }, //
+            "if (!a) b(asdf,as,as,asdf,adfasd,adadfadf,asfasdfasdf); else {i++;j++;} " }, //
         new String[] { //
         "If bug simplified", //
             "" + //
-            "    if (x) {\n" + //
-            "      if (z)\n" + //
-            "        return null;\n" + //
-            "      c = f().charAt(3);\n" + //
-            "    } else if (y)\n" + //
-            "      return;\n" + //
-            "", "" + //
+                "    if (x) {\n" + //
+                "      if (z)\n" + //
+                "        return null;\n" + //
+                "      c = f().charAt(3);\n" + //
+                "    } else if (y)\n" + //
+                "      return;\n" + //
+                "", "" + //
                 "    if (!x) {\n" + //
                 "      if (y)\n" + //
                 "        return;\n" + //

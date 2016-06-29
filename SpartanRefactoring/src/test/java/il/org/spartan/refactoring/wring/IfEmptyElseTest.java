@@ -1,12 +1,8 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.*;
-import static il.org.spartan.hamcrest.MatcherAssert.*;
+import static il.org.spartan.hamcrest.SpartanAssert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
-import il.org.spartan.hamcrest.*;
+import static org.junit.Assert.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
@@ -85,16 +81,16 @@ public class IfEmptyElseTest {
       assertThat(Extract.statements(asMe().getElseStatement()).size(), is(0));
     }
     @Test public void isfStatementElseNotNull() {
-      JunitHamcrestWrappper.assertNotNull(elze(asMe()));
+      assertThat("", elze(asMe()), notNullValue());
     }
     @Test public void isIfStatement() {
-      JunitHamcrestWrappper.assertNotNull(asMe());
+      assertThat("", asMe(), notNullValue());
     }
     @Test public void myScopeIncludes() {
       final IfStatement s = asMe();
-      assertThat(s, notNullValue());
-      assertThat(elze(s), notNullValue());
-      assertThat(Extract.statements(elze(s)), notNullValue());
+      assertThat("", s, notNullValue());
+      assertThat("", elze(s), notNullValue());
+      assertThat("", Extract.statements(elze(s)), notNullValue());
       assertThat(Extract.statements(elze(s)).size(), is(0));
     }
   }

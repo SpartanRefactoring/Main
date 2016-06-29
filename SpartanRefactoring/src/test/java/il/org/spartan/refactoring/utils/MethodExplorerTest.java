@@ -1,9 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.hamcrest.CoreMatchers.*;
-import static il.org.spartan.hamcrest.MatcherAssert.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
+import static il.org.spartan.hamcrest.SpartanAssert.*;
+import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -14,7 +12,7 @@ import org.junit.*;
   @Test public void localVariablesCatchExpression() {
     assertThat(new MethodExplorer(Into.d("" + "  void f() {\n" + "    try {\n" + "      f();\n"
         + "    } catch (final Exception|RuntimeException e) {\n" + "      f();\n" + "    }\n" + "  }")).localVariables().size(),
-    is(1));
+        is(1));
   }
   @Test public void localVariablesExtendedForLoop() {
     assertThat(new MethodExplorer(Into.d("" + "  int sum(final int is[]) {\n" + "    int $ = 0;\n" + "    for (final int i : is)\n"
@@ -60,13 +58,13 @@ import org.junit.*;
   @Test public void returnStatementsExists() {
     final MethodDeclaration d = Into.d("int f() { return a; }");
     final List<ReturnStatement> a = new MethodExplorer(d).returnStatements();
-    assertThat(a, notNullValue());
+    assertThat("", a, notNullValue());
     assertThat(a.size(), is(1));
   }
   @Test public void returnStatementsExistsNestedType() {
     final MethodDeclaration d = Into.d("int f() { class B {}; return a; }");
     final List<ReturnStatement> a = new MethodExplorer(d).returnStatements();
-    assertThat(a, notNullValue());
+    assertThat("", a, notNullValue());
     assertThat(a.size(), is(1));
   }
   @Test public void returnStatementsExistsNestedTypeAnnotation() {
@@ -77,13 +75,13 @@ import org.junit.*;
         "    return new B().g();\n" + //
         "  }"); //
     final List<ReturnStatement> a = new MethodExplorer(d).returnStatements();
-    assertThat(a, notNullValue());
+    assertThat("", a, notNullValue());
     assertThat(a.size(), is(2));
   }
   @Test public void returnStatementsExistsNestedTypeWithReturn() {
     final MethodDeclaration d = Into.d("int f() { class B {int g() { return c; } }; return a; }");
     final List<ReturnStatement> a = new MethodExplorer(d).returnStatements();
-    assertThat(a, notNullValue());
+    assertThat("", a, notNullValue());
     assertThat(a.size(), is(1));
   }
   @Test public void returnStatementsExistsNestedTypeWithReturn1() {
@@ -98,13 +96,13 @@ import org.junit.*;
         "    return new B().g();\n" + //
         "  }"); //
     final List<ReturnStatement> a = new MethodExplorer(d).returnStatements();
-    assertThat(a, notNullValue());
+    assertThat("", a, notNullValue());
     assertThat(a.size(), is(2));
   }
   @Test public void returnStatementsTwoReturns() {
     final MethodDeclaration d = Into.d("int f() { if (b) ; else return c; return a; }");
     final List<ReturnStatement> a = new MethodExplorer(d).returnStatements();
-    assertThat(a, notNullValue());
+    assertThat("", a, notNullValue());
     assertThat(a.size(), is(2));
   }
   @Test public void returnStatementsWithNestedEnum() {

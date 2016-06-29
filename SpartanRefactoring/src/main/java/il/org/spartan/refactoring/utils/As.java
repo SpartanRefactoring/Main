@@ -111,9 +111,8 @@ public enum As {
   /**
    * Convert file contents into a {@link String}
    *
-   * @param f a file
+   * @param f JD
    * @return the entire contents of this file, as one string
-   * @throws IOException
    */
   public static String string(final File f) {
     try (final BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(f)))) {

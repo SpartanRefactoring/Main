@@ -88,7 +88,7 @@ import org.eclipse.jdt.core.dom.*;
     System.out.println("");
     System.out.println("Options:");
     System.out
-    .println("  -N       Do not overwrite existing files (writes the Spartanized output to a new file in the same directory)");
+        .println("  -N       Do not overwrite existing files (writes the Spartanized output to a new file in the same directory)");
     System.out.println("  -C<num>  Maximum number of Spartanizaion rounds for each file (default: 20)");
     System.out.println("  -E       Display statistics for each file separately");
     System.out.println("  -V       Be verbose");

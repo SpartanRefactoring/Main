@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
-import il.org.spartan.hamcrest.*;
+import static il.org.spartan.hamcrest.SpartanAssert.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.utils.*;
 
@@ -86,7 +85,7 @@ public class TernaryEliminateTest {
       super(WRING);
     }
     @Test public void inputIsConditionalfixExpression() {
-      JunitHamcrestWrappper.assertNotNull(asConditionalExpression());
+      assertNotNull(asConditionalExpression());
     }
   }
 }

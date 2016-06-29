@@ -63,16 +63,8 @@ public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpre
     if (es.size() < 2)
       return null;
     final int totalNegation = countNegations(es);
-    switch (totalNegation) {
-      case 0:
-        return null;
-      default:
-        break;
-      case 1:
-        if (negationLevel(es.get(0)) == 1)
-          return null;
-        break;
-    }
+    if (totalNegation == 0 || totalNegation == 1 && negationLevel(es.get(0)) == 1)
+      return null;
     if (exclude != null)
       exclude.exclude(e);
     return new Rewrite(description(e), e) {
@@ -82,7 +74,8 @@ public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpre
           if (e != first && negationLevel(e) > 0)
             r.replace(e, new Plant(duplicate(peelNegation(e))).into(e.getParent()), g);
         if (first != null)
-          r.replace(first, new Plant(Subject.operand(peelNegation(first)).to(MINUS)).into(first.getParent()), g);
+          r.replace(first,
+              new Plant(Subject.operand(peelNegation(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
       }
     };
   }

@@ -212,9 +212,9 @@ public enum Is {
   public static boolean deterministic(final Expression e) {
     if (!sideEffectFree(e))
       return false;
-    final Wrapper<Boolean> $ = new Wrapper<>(Boolean.TRUE);
+    @SuppressWarnings("null") final Wrapper<Boolean> $ = new Wrapper<>(Boolean.TRUE);
     e.accept(new ASTVisitor() {
-      @Override public boolean visit(@SuppressWarnings("unused") final ArrayCreation __) {
+      @SuppressWarnings("null") @Override public boolean visit(@SuppressWarnings("unused") final ArrayCreation __) {
         $.set(Boolean.FALSE);
         return false;
       }
@@ -328,7 +328,7 @@ public enum Is {
         NUMBER_LITERAL, //
         STRING_LITERAL, //
         BOOLEAN_LITERAL //
-        );
+    );
   }
   /**
    * @param s JD
@@ -402,8 +402,8 @@ public enum Is {
         NULL_LITERAL, // null + null is an error, not a string.
         NUMBER_LITERAL, //
         PREFIX_EXPRESSION //
-        //
-        );
+    //
+    );
   }
   private static boolean notStringUp(final Expression e) {
     for (ASTNode context = e.getParent(); context != null; context = context.getParent())

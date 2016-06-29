@@ -1,14 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.*;
-import static il.org.spartan.hamcrest.MatcherAssert.*;
+import static il.org.spartan.hamcrest.SpartanAssert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.utils.Utils.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.text.IsEqualIgnoringWhiteSpace.*;
-import il.org.spartan.hamcrest.*;
+import static org.junit.Assert.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
@@ -39,62 +36,62 @@ public class IfCommandsSequencerElseSomethingTest {
 
   @Test public void checkSteps() {
     final Statement s = asSingle("if (a) return a = b; else a = c;");
-    assertThat(s, notNullValue());
-    assertThat(asIfStatement(s), notNullValue());
+    assertThat("", s, notNullValue());
+    assertThat("", asIfStatement(s), notNullValue());
   }
   @Test public void checkStepsFull() throws MalformedTreeException, BadLocationException {
     final IfStatement s = (IfStatement) asSingle("if (a) return b; else a();");
     assertThat(WRING.scopeIncludes(s), is(true));
     assertThat(WRING.eligible(s), is(true));
     final Rewrite m = WRING.make(s);
-    assertThat(m, notNullValue());
+    assertThat("", m, notNullValue());
     final Wring<IfStatement> w = Toolbox.instance.find(s);
-    assertThat(w, notNullValue());
-    assertThat(w, instanceOf(WRING.getClass()));
+    assertThat("", w, notNullValue());
+    assertThat("", w, instanceOf(WRING.getClass()));
     final String wrap = Wrap.Statement.on(s.toString());
     final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(wrap);
-    assertThat(u, notNullValue());
+    assertThat("", u, notNullValue());
     final Document d = new Document(wrap);
-    assertThat(d, notNullValue());
+    assertThat("", d, notNullValue());
     final Trimmer t = new Trimmer();
     final ASTRewrite r = t.createRewrite(u, null);
     final TextEdit x = r.rewriteAST(d, null);
     x.apply(d);
     final String unpeeled = d.get();
-    JunitHamcrestWrappper.assertNotEquals("Nothing done on " + s, wrap, unpeeled);
+    assertThat("Nothing done on " + s, wrap, not(unpeeled));
     final String peeled = Wrap.Statement.off(unpeeled);
-    JunitHamcrestWrappper.assertNotEquals("No similification of " + s, s, peeled);
-    JunitHamcrestWrappper.assertNotEquals("Simpification of " + s + " is just reformatting", compressSpaces(peeled), compressSpaces(s.toString()));
+    assertThat("No similification of " + s, s, not(peeled));
+    assertThat("Simpification of " + s + " is just reformatting", compressSpaces(peeled), not(compressSpaces(s.toString())));
     assertSimilar(" if(a)return b;a(); ", peeled);
   }
   @org.junit.Test public void checkStepsTrimmer() throws MalformedTreeException, BadLocationException {
     final String input = "if (a) return b; else a();";
     final String wrap = Wrap.Statement.on(input);
     final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(wrap);
-    assertThat(u, notNullValue());
+    assertThat("", u, notNullValue());
     final IfStatement s = Extract.firstIfStatement(u);
-    assertThat(s, notNullValue());
-    assertThat(s.toString(), equalToIgnoringWhiteSpace(input));
+    assertThat("", s, notNullValue());
+    assertThat("", s.toString(), equalToIgnoringWhiteSpace(input));
     final Wring<IfStatement> w = Toolbox.instance.find(s);
-    assertThat(w, notNullValue());
+    assertThat("", w, notNullValue());
     assertThat(w.scopeIncludes(s), is(true));
     assertThat(w.eligible(s), is(true));
-    assertThat(w, instanceOf(WRING.getClass()));
+    assertThat("", w, instanceOf(WRING.getClass()));
     final Rewrite m = w.make(s);
-    assertThat(m, notNullValue());
+    assertThat("", m, notNullValue());
     final ASTRewrite r = ASTRewrite.create(s.getAST());
     m.go(r, null);
-    assertThat(r.toString(), allOf(startsWith("Events:"), containsString("[replaced:"), containsString("]")));
+    assertThat("", r.toString(), allOf(startsWith("Events:"), containsString("[replaced:"), containsString("]")));
     final Document d = new Document(wrap);
-    assertThat(d, notNullValue());
-    assertThat(d.get(), equalToIgnoringWhiteSpace(wrap.toString()));
+    assertThat("", d, notNullValue());
+    assertThat("", d.get(), equalToIgnoringWhiteSpace(wrap.toString()));
     final TextEdit x = r.rewriteAST(d, null);
     x.apply(d);
     final String unpeeled = d.get();
-    JunitHamcrestWrappper.assertNotEquals("Nothing done on " + s, wrap, unpeeled);
+    assertThat("Nothing done on " + s, wrap, not(unpeeled));
     final String peeled = Wrap.Statement.off(unpeeled);
-    JunitHamcrestWrappper.assertNotEquals("No similification of " + s, s, peeled);
-    JunitHamcrestWrappper.assertNotEquals("Simpification of " + s + " is just reformatting", compressSpaces(peeled), compressSpaces(s.toString()));
+    assertThat("No similification of " + s, s, not(peeled));
+    assertThat("Simpification of " + s + " is just reformatting", compressSpaces(peeled), not(compressSpaces(s.toString())));
     assertSimilar(" if (a) return b; a(); ", peeled);
   }
   @Test public void checkStepsWRING() throws MalformedTreeException {
@@ -102,10 +99,10 @@ public class IfCommandsSequencerElseSomethingTest {
     assertThat(WRING.scopeIncludes(s), is(true));
     assertThat(WRING.eligible(s), is(true));
     final Rewrite m = WRING.make(s);
-    assertThat(m, notNullValue());
+    assertThat("", m, notNullValue());
     final ASTRewrite r = ASTRewrite.create(s.getAST());
     m.go(r, null);
-    assertThat(r.toString(), allOf(startsWith("Events:"), containsString("[replaced:"), containsString("]")));
+    assertThat("", r.toString(), allOf(startsWith("Events:"), containsString("[replaced:"), containsString("]")));
   }
 
   @RunWith(Parameterized.class)//

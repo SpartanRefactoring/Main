@@ -1,13 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.*;
-import static il.org.spartan.hamcrest.MatcherAssert.*;
-import static il.org.spartan.hamcrest.JunitHamcrestWrappper.*;
+import static il.org.spartan.hamcrest.SpartanAssert.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
-import static org.hamcrest.MatcherAssert.*;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
-import il.org.spartan.hamcrest.*;
+import static org.junit.Assert.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.utils.Utils;
 
@@ -76,7 +72,7 @@ public enum InfixConditionalAndTrueTest {
         new String[] { "AND of 6 without boolean", "a && b && c && false && d && e" }, //
         new String[] { "AND of 7 without boolean with parenthesis", "(a && b) && (c && (d && (e && false)))" }, //
         new String[] { "AND of 7 without boolean and multiple false value",
-        "(a && (b && false)) && (c && (d && (e && (false && false))))" }, //
+            "(a && (b && false)) && (c && (d && (e && (false && false))))" }, //
         null);
 
     /**
@@ -106,16 +102,16 @@ public enum InfixConditionalAndTrueTest {
         new String[] { "AND of 5 with true", "x && a && b && c && true && true && true && d", "x && a && b && c && d" }, //
         new String[] { "AND of 6 with true", "x && a && true && b && c && d && e", "x && a && b && c && d && e" }, //
         new String[] { "AND of 6 with true with parenthesis", "x && (true && (a && b && true)) && (c && (d && e))",
-        "x && a && b && c && d && e" }, //
+            "x && a && b && c && d && e" }, //
         new String[] { "AND with true", "true && b && a", "b && a" }, //
         new String[] { "AND of 3 with true", "a && b && true", "a && b" }, //
         new String[] { "AND of 4 with true", "a && b && c && true", "a && b && c" }, //
         new String[] { "AND of 5 with true", "true && a && b && c && d", "a && b && c && d" }, //
         new String[] { "AND of 6 with true", "a && b && c && true && d && e", "a && b && c && d && e" }, //
         new String[] { "AND of 7 with true with parenthesis", "true && (a && b) && (c && (d && (e && true)))",
-        "a && b && c && d && e" }, //
+            "a && b && c && d && e" }, //
         new String[] { "AND of 7 with multiple true value", "(a && (b && true)) && (c && (d && (e && (true && true))))",
-        "a&&b&&c&&d&&e" }, //
+            "a&&b&&c&&d&&e" }, //
         null);
 
     /**
@@ -134,13 +130,13 @@ public enum InfixConditionalAndTrueTest {
     }
     @Override @Test public void flattenIsIdempotentt() {
       final InfixExpression flatten = flatten(asInfixExpression());
-      assertThat(flatten(flatten).toString(), is(flatten.toString()));
+      assertThat("", flatten(flatten).toString(), is(flatten.toString()));
     }
     @Override @Test public void inputIsInfixExpression() {
-      JunitHamcrestWrappper.assertNotNull(asInfixExpression());
+      assertThat("", asInfixExpression(), notNullValue());
     }
     @Test public void isANDorOR() {
-      assertThat(asInfixExpression().getOperator(), is(CONDITIONAL_AND));
+      assertThat("", asInfixExpression().getOperator(), is(CONDITIONAL_AND));
     }
     @Test public void twoOrMoreArguments() {
       assertThat(Extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));

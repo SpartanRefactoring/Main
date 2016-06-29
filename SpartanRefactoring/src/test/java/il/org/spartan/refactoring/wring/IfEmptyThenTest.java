@@ -1,9 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
-import il.org.spartan.hamcrest.*;
+import static il.org.spartan.hamcrest.SpartanAssert.*;
+import il.org.spartan.Assert;
 import il.org.spartan.refactoring.utils.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -16,18 +14,18 @@ public class IfEmptyThenTest {
   private static final IfStatement IF = Extract.firstIfStatement(INPUT);
 
   @Test public void eligible() {
-    JunitHamcrestWrappper.assertTrue(WRING.eligible(IF));
+    Assert.assertThat(WRING.eligible(IF), is(true));
   }
   @Test public void emptyThen() {
-    JunitHamcrestWrappper.assertTrue(Is.vacuousThen(IF));
+    Assert.assertThat(Is.vacuousThen(IF), is(true));
   }
   @Test public void extractFirstIf() {
-    assertThat(IF, notNullValue());
+    assertThat("", IF, notNullValue());
   }
   @Test public void inputType() {
-    assertThat(INPUT, instanceOf(Block.class));
+    assertThat("", INPUT, instanceOf(Block.class));
   }
   @Test public void scopeIncludes() {
-    JunitHamcrestWrappper.assertTrue(WRING.scopeIncludes(IF));
+    Assert.assertThat(WRING.scopeIncludes(IF), is(true));
   }
 }

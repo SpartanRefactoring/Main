@@ -1,8 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.*;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
-import static org.hamcrest.MatcherAssert.*;
+import static il.org.spartan.hamcrest.SpartanAssert.*;
 import il.org.spartan.refactoring.spartanizations.*;
 
 import java.util.*;
@@ -29,6 +27,6 @@ public class AbstractTestBase {
 
   @Test public void peelableinput() {
     if (input != null)
-      assertThat(Wrap.Statement.off(Wrap.Statement.on(input)), is(input));
+      assertThat("", Wrap.Statement.off(Wrap.Statement.on(input)), is(input));
   }
 }

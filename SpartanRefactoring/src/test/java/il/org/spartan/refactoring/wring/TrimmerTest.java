@@ -1,16 +1,13 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.*;
-import static il.org.spartan.hamcrest.MatcherAssert.*;
+import static il.org.spartan.hamcrest.SpartanAssert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.ExpressionComparator.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
 import static il.org.spartan.utils.Utils.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
-import il.org.spartan.hamcrest.*;
+import static org.junit.Assert.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -46,13 +43,13 @@ public class TrimmerTest {
     final String expected = "a + 2 < b";
     final Wrap w = Wrap.Expression;
     final String wrap = w.on(from);
-    assertThat(w.off(wrap), is(from));
+    assertThat("", w.off(wrap), is(from));
     final Trimmer t = new Trimmer();
     final String unpeeled = TrimmerTestsUtils.apply(t, wrap);
-    JunitHamcrestWrappper.assertNotEquals("Nothing done on " + from, wrap, unpeeled);
+    assertThat("Nothing done on " + from, wrap, not(unpeeled));
     final String peeled = w.off(unpeeled);
-    JunitHamcrestWrappper.assertNotEquals("No similification of " + from, from, peeled);
-    JunitHamcrestWrappper.assertNotEquals("Simpification of " + from + " is just reformatting", compressSpaces(peeled), compressSpaces(from));
+    assertThat("No similification of " + from, from, not(peeled));
+    assertThat("Simpification of " + from + " is just reformatting", compressSpaces(peeled), not(compressSpaces(from)));
     assertSimilar(expected, peeled);
   }
   @Test public void andWithCLASS_CONSTANT() {
@@ -396,7 +393,7 @@ public class TrimmerTest {
   }
   @Test public void chainComparison() {
     final InfixExpression e = i("a == true == b == c");
-    assertThat(right(e).toString(), equals("c"));
+    assertThat(right(e).toString(), iz("c"));
     trimming("a == true == b == c").to("a == b == c");
   }
   @Test public void chainCOmparisonTrueLast() {
@@ -416,10 +413,10 @@ public class TrimmerTest {
   }
   @Test public void comaprisonWithSpecific0Legibiliy00() {
     final InfixExpression e = i("this != a");
-    JunitHamcrestWrappper.assertTrue(in(e.getOperator(), Operator.EQUALS, Operator.NOT_EQUALS));
+    assertThat(in(e.getOperator(), Operator.EQUALS, Operator.NOT_EQUALS), is(true));
     assertThat(Is.booleanLiteral(right(e)), is(false));
     assertThat(Is.booleanLiteral(left(e)), is(false));
-    JunitHamcrestWrappper.assertTrue(in(e.getOperator(), Operator.EQUALS, Operator.NOT_EQUALS));
+    assertThat(in(e.getOperator(), Operator.EQUALS, Operator.NOT_EQUALS), is(true));
   }
   @Test public void comaprisonWithSpecific1() {
     trimming("null != a").to("a != null");
@@ -1233,43 +1230,43 @@ public class TrimmerTest {
   }
   @Test public void isGreaterTrue() {
     final InfixExpression e = i("f(a,b,c,d,e) * f(a,b,c)");
-    assertThat(right(e).toString(), is("f(a,b,c)"));
-    assertThat(left(e).toString(), is("f(a,b,c,d,e)"));
+    assertThat("", right(e).toString(), is("f(a,b,c)"));
+    assertThat("", left(e).toString(), is("f(a,b,c,d,e)"));
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
-    assertThat(s, instanceOf(InfixSortMultiplication.class));
-    assertThat(s, notNullValue());
-    JunitHamcrestWrappper.assertTrue(s.scopeIncludes(e));
+    assertThat("", s, instanceOf(InfixSortMultiplication.class));
+    assertThat("", s, notNullValue());
+    assertThat(s.scopeIncludes(e), is(true));
     final Expression e1 = left(e);
     final Expression e2 = right(e);
     assertThat(hasNull(e1, e2), is(false));
     final boolean tokenWiseGreater = nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD;
-    JunitHamcrestWrappper.assertTrue(tokenWiseGreater);
-    JunitHamcrestWrappper.assertTrue(ExpressionComparator.moreArguments(e1, e2));
-    JunitHamcrestWrappper.assertTrue(ExpressionComparator.longerFirst(e));
-    JunitHamcrestWrappper.assertTrue(s.eligible(e));
+    assertThat(tokenWiseGreater, is(true));
+    assertThat(ExpressionComparator.moreArguments(e1, e2), is(true));
+    assertThat(ExpressionComparator.longerFirst(e), is(true));
+    assertThat(s.eligible(e), is(true));
     final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) s).replacement(e);
-    assertThat(replacement, notNullValue());
-    assertThat(replacement.toString(), is("f(a,b,c) * f(a,b,c,d,e)"));
+    assertThat("", replacement, notNullValue());
+    assertThat("", replacement.toString(), is("f(a,b,c) * f(a,b,c,d,e)"));
   }
   @Test public void isGreaterTrueButAlmostNot() {
     final InfixExpression e = i("f(a,b,c,d) * f(a,b,c)");
-    assertThat(right(e).toString(), is("f(a,b,c)"));
-    assertThat(left(e).toString(), is("f(a,b,c,d)"));
+    assertThat("", right(e).toString(), is("f(a,b,c)"));
+    assertThat("", left(e).toString(), is("f(a,b,c,d)"));
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
-    assertThat(s, instanceOf(InfixSortMultiplication.class));
-    assertThat(s, notNullValue());
-    JunitHamcrestWrappper.assertTrue(s.scopeIncludes(e));
+    assertThat("", s, instanceOf(InfixSortMultiplication.class));
+    assertThat("", s, notNullValue());
+    assertThat(s.scopeIncludes(e), is(true));
     final Expression e1 = left(e);
     final Expression e2 = right(e);
     assertThat(hasNull(e1, e2), is(false));
     final boolean tokenWiseGreater = nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD;
     assertThat(tokenWiseGreater, is(false));
-    JunitHamcrestWrappper.assertTrue(ExpressionComparator.moreArguments(e1, e2));
-    JunitHamcrestWrappper.assertTrue(ExpressionComparator.longerFirst(e));
-    JunitHamcrestWrappper.assertTrue(s.eligible(e));
+    assertThat(ExpressionComparator.moreArguments(e1, e2), is(true));
+    assertThat(ExpressionComparator.longerFirst(e), is(true));
+    assertThat(s.eligible(e), is(true));
     final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) s).replacement(e);
-    assertThat(replacement, notNullValue());
-    assertThat(replacement.toString(), is("f(a,b,c) * f(a,b,c,d)"));
+    assertThat("", replacement, notNullValue());
+    assertThat("", replacement.toString(), is("f(a,b,c) * f(a,b,c,d)"));
   }
   @Test public void issue06() {
     trimming("a*-b").to("-a * b");
@@ -2018,14 +2015,14 @@ public class TrimmerTest {
     final String from = "for (int i = 0; i < 100;  i--)  i--;";
     final Statement s = s(from);
     assertThat(s, iz("{" + from + "}"));
-    assertThat(s, notNullValue());
+    assertThat("", s, notNullValue());
     final PostfixExpression e = Extract.findFirstPostfix(s);
-    assertThat(e, notNullValue());
+    assertThat("", e, notNullValue());
     assertThat(e, iz("i--"));
     final ASTNode parent = e.getParent();
-    assertThat(parent, notNullValue());
+    assertThat("", parent, notNullValue());
     assertThat(parent, iz(from));
-    assertThat(parent, is(not(instanceOf(Expression.class))));
+    assertThat("", parent, is(not(instanceOf(Expression.class))));
     assertThat(new PostfixToPrefix().scopeIncludes(e), is(true));
     assertThat(new PostfixToPrefix().eligible(e), is(true));
     final Expression r = new PostfixToPrefix().replacement(e);
@@ -2452,15 +2449,15 @@ public class TrimmerTest {
   @Test public void rightSimplificatioForNulNNVariableReplacement() {
     final InfixExpression e = i("null != a");
     final Wring<InfixExpression> w = Toolbox.instance.find(e);
-    assertThat(w, notNullValue());
-    JunitHamcrestWrappper.assertTrue(w.scopeIncludes(e));
-    JunitHamcrestWrappper.assertTrue(w.eligible(e));
+    assertThat("", w, notNullValue());
+    assertThat(w.scopeIncludes(e), is(true));
+    assertThat(w.eligible(e), is(true));
     final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) w).replacement(e);
-    assertThat(replacement, notNullValue());
-    assertThat(replacement.toString(), is("a != null"));
+    assertThat("", replacement, notNullValue());
+    assertThat("", replacement.toString(), is("a != null"));
   }
   @Test public void rightSipmlificatioForNulNNVariable() {
-    assertThat(Toolbox.instance.find(i("null != a")), instanceOf(InfixComparisonSpecific.class));
+    assertThat("", Toolbox.instance.find(i("null != a")), instanceOf(InfixComparisonSpecific.class));
   }
   @Test public void sequencerFirstInElse() {
     trimming("if (a) {b++; c++; ++d;} else { f++; g++; return x;}").to("if (!a) {f++; g++; return x;} b++; c++; ++d; ");
@@ -2622,7 +2619,7 @@ public class TrimmerTest {
         ""//
     );
     final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(u);
-    assertThat(f, notNullValue());
+    assertThat("", f, notNullValue());
     assertThat(f, iz(" res = 0"));
     assertThat(Extract.nextStatement(f), iz(" for (int i = 0;i < s.length();++i)\n"//
         + "       if (s.charAt(i) == 'a')\n"//
@@ -3474,7 +3471,7 @@ public class TrimmerTest {
     trimming("a ? b.f():c.f()").to("(a?b:c).f()");
   }
   @Test public void testPeel() {
-    assertThat(Wrap.Expression.off(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge")),
+    assertThat("", Wrap.Expression.off(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge")),
         is("on * notion * of * no * nothion != the * plain + kludge"));
   }
   @Test public void twoMultiplication1() {

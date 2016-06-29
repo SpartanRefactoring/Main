@@ -23,22 +23,22 @@ public enum Wrap {
       "} // END OF PACKAGE\n" + //
       ""), //
   /** Algorithm for wrapping/unwrapping a statement */
-      Statement("" + Method.before + //
+  Statement("" + Method.before + //
       "public void squarePants(){\n" + //
       "", "" + //
       "} // END OF METHOD \n" + //
       "" + Method.after + //
       ""), //
   /** Algorithm for wrapping/unwrapping an expression */
-          Expression("" + Statement.before + //
+  Expression("" + Statement.before + //
       "   if (", //
-              "" + //
-              ") patrick();\n" + //
-              Statement.after + //
-              ""), //
+      "" + //
+          ") patrick();\n" + //
+          Statement.after + //
+          ""), //
   ComplilationUnit("", ""), //
-              //
-              ;
+  //
+  ;
   /**
    * Finds the most appropriate Wrap for a given code fragment
    *

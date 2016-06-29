@@ -1,11 +1,8 @@
 package il.org.spartan.refactoring.spartanizations;
 
+import static il.org.spartan.hamcrest.SpartanAssert.*;
 import static il.org.spartan.utils.Utils.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
-import static il.org.spartan.hamcrest.CoreMatchers.*;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
-import il.org.spartan.hamcrest.*;
+import static org.junit.Assert.*;
 import il.org.spartan.refactoring.utils.*;
 
 import java.io.*;
@@ -63,23 +60,26 @@ public class Unchanged {
    * opportunities is zero, the input does not change.
    */
   @Test public void checkNoChange() {
-    JunitHamcrestWrappper.assertNotNull("Cannot instantiate Spartanization object", spartanization);
+    assertNotNull("Cannot instantiate Spartanization object", spartanization);
     if (input.getName().indexOf(FileTestUtils.testSuffix) <= 0)
-      assertThat(TESTUtils.rewrite(spartanization, (CompilationUnit) As.COMPILIATION_UNIT.ast(input), new Document(input())).get(), is(input()));
+      assertThat("", TESTUtils.rewrite(spartanization, (CompilationUnit) As.COMPILIATION_UNIT.ast(input), new Document(input()))
+          .get(), is(input()));
     else
-      assertThat(TESTUtils.rewrite(spartanization, (CompilationUnit) As.COMPILIATION_UNIT.ast(input),
-      new Document(As.string(FileTestUtils.makeInFile(input)))).get(), is(As.string(FileTestUtils.makeInFile(input))));
+      assertThat(
+          "",
+          TESTUtils.rewrite(spartanization, (CompilationUnit) As.COMPILIATION_UNIT.ast(input),
+              new Document(As.string(FileTestUtils.makeInFile(input)))).get(), is(As.string(FileTestUtils.makeInFile(input))));
   }
   /**
    * Runs a parameterized test case, based on the instance variables of this
    * instance, and check that no opportunities are found.
    */
   @Test public void checkNoOpportunities() {
-    JunitHamcrestWrappper.assertNotNull("Cannot instantiate spartanization object", spartanization);
+    assertNotNull("Cannot instantiate spartanization object", spartanization);
     final ASTNode n = As.COMPILIATION_UNIT.ast(input);
-    JunitHamcrestWrappper.assertNotNull(n);
-    assertThat(n, is(instanceOf(CompilationUnit.class)));
-    assertThat((Object) spartanization.findOpportunities((CompilationUnit) n).size(), is((Object) 0));
+    assertThat("", n, notNullValue());
+    assertThat("", n, is(instanceOf(CompilationUnit.class)));
+    assertThat("", (Object) spartanization.findOpportunities((CompilationUnit) n).size(), is((Object) 0));
   }
   private String input() {
     return As.string(input);

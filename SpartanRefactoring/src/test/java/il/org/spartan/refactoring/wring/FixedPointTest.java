@@ -1,10 +1,8 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.*;
+import static il.org.spartan.hamcrest.SpartanAssert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.utils.Utils.*;
-import static org.hamcrest.MatcherAssert.*;
-import il.org.spartan.hamcrest.*;
 import il.org.spartan.refactoring.spartanizations.*;
 
 import org.junit.*;
@@ -28,12 +26,12 @@ import org.junit.runners.*;
   }
   private static void assertWrappedTranslation(final String from, final String expected, final Wrap w) {
     final String wrap = w.on(from);
-    assertThat(w.off(wrap), is(from));
+    assertThat("", w.off(wrap), is(from));
     final String unpeeled = Trimmer.fixedPoint(wrap);
-    JunitHamcrestWrappper.assertNotEquals("Nothing done on " + from, wrap, unpeeled);
+    assertThat("Nothing done on " + from, wrap, not(unpeeled));
     final String peeled = w.off(unpeeled);
-    JunitHamcrestWrappper.assertNotEquals("No similification of " + from, from, peeled);
-    JunitHamcrestWrappper.assertNotEquals("Simpification of " + from + "is just reformatting", compressSpaces(peeled), compressSpaces(from));
+    assertThat("No similification of " + from, from, not(peeled));
+    assertThat("Simpification of " + from + "is just reformatting", compressSpaces(peeled), not(compressSpaces(from)));
     assertSimilar(expected, peeled);
   }
   @Test(timeout = 2000) public void chainComparison() {

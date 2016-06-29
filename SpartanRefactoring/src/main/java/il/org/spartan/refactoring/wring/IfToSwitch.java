@@ -4,6 +4,7 @@ import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
 
+import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 
@@ -77,7 +78,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.Operator;
     if (!SwitchBreakReturn.caseEndsWithSequencer($.statements(), i))
       $.statements().add(s.getAST().newBreakStatement());
   }
-  @SuppressWarnings("unchecked") protected SwitchStatement buildSwitch(final SwitchStatement $, final Statement s,
+  @SuppressWarnings("unchecked") protected @Nullable SwitchStatement buildSwitch(final SwitchStatement $, final Statement s,
       final Expression v) {
     if (s == null)
       return $;

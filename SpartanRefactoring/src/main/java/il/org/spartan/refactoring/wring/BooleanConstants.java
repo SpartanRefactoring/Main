@@ -8,17 +8,17 @@ import org.eclipse.jdt.core.dom.*;
 /**
  * A {@link Wring} to remove unnecessary uses of Boolean.valueOf, for example by
  * converting <code>
- *
+ * 
  * <pre>
  * Boolean b = Boolean.valueOf(true)
  * </pre>
- *
+ * 
  * <code> into <code>
- *
+ * 
  * <pre>
  * Boolean b = Boolean.TRUE
  * </pre>
- *
+ * 
  * <code>
  *
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>

@@ -1,10 +1,8 @@
 package il.org.spartan.refactoring.spartanizations;
 
+import static il.org.spartan.Assert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.utils.Utils.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
-import il.org.spartan.hamcrest.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.*;
 
@@ -50,7 +48,7 @@ public class InOutTest {
   }
   protected static void go(final Spartanization s, final File from, final File to) {
     final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(FileTestUtils.makeInFile(from));
-    assertThat(u.toString(), 1, equalTo(TrimmerTestsUtils.countOpportunities(s, u)));
+    assertThat(u.toString(), TrimmerTestsUtils.countOpportunities(s, u), is(1));
     TESTUtils.assertOneOpportunity(s, As.string(from));
     final String expected;
     final Document rewrite;
@@ -78,7 +76,7 @@ public class InOutTest {
    * instance
    */
   @Test public void go() {
-    JunitHamcrestWrappper.assertNotNull("Cannot instantiate spartanization object", spartanization);
+    assertNotNull(spartanization);
     go(spartanization, input, output);
   }
 }

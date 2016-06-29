@@ -1,17 +1,15 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.*;
-import static il.org.spartan.hamcrest.MatcherAssert.*;
-import static il.org.spartan.hamcrest.JunitHamcrestWrappper.*;
+import static il.org.spartan.hamcrest.SpartanAssert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
-import il.org.spartan.hamcrest.*;
+import static org.junit.Assert.*;
+import il.org.spartan.Assert;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Noneligible;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.utils.Utils;
@@ -56,26 +54,35 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
     assertSimilar("a >= null", Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("a >= null"))));
   }
   @Test public void comparisonWithSpecificNoChangeWithLongEpxressions() {
-    assertSimilar("very(complicate,func,-ction,call) != this", Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("very(complicate,func,-ction,call) != this"))));
-    assertSimilar("very(complicate,func,-ction,call) != null", Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("very(complicate,func,-ction,call) != null"))));
-    assertSimilar("very(complicate,func,-ction,call) == this", Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("very(complicate,func,-ction,call) == this"))));
-    assertSimilar("very(complicate,func,-ction,call) == null", Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("very(complicate,func,-ction,call) == null"))));
-    assertSimilar("very(complicate,func,-ction,call) <= this", Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("very(complicate,func,-ction,call) <= this"))));
-    assertSimilar("very(complicate,func,-ction,call) <= null", Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("very(complicate,func,-ction,call) <= null"))));
-    assertSimilar("very(complicate,func,-ction,call) >= this", Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("very(complicate,func,-ction,call) >= this"))));
-    assertSimilar("very(complicate,func,-ction,call) >= null", Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("very(complicate,func,-ction,call) >= null"))));
+    assertSimilar("very(complicate,func,-ction,call) != this",
+        Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("very(complicate,func,-ction,call) != this"))));
+    assertSimilar("very(complicate,func,-ction,call) != null",
+        Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("very(complicate,func,-ction,call) != null"))));
+    assertSimilar("very(complicate,func,-ction,call) == this",
+        Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("very(complicate,func,-ction,call) == this"))));
+    assertSimilar("very(complicate,func,-ction,call) == null",
+        Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("very(complicate,func,-ction,call) == null"))));
+    assertSimilar("very(complicate,func,-ction,call) <= this",
+        Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("very(complicate,func,-ction,call) <= this"))));
+    assertSimilar("very(complicate,func,-ction,call) <= null",
+        Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("very(complicate,func,-ction,call) <= null"))));
+    assertSimilar("very(complicate,func,-ction,call) >= this",
+        Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("very(complicate,func,-ction,call) >= this"))));
+    assertSimilar("very(complicate,func,-ction,call) >= null",
+        Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("very(complicate,func,-ction,call) >= null"))));
   }
   @Test public void comparisonWithSpecificWithinScope() {
-    JunitHamcrestWrappper.assertTrue(Is.constant(left(i("this != a"))));
+    Assert.assertThat(Is.constant(left(i("this != a"))), is(true));
     final ASTNode n = As.EXPRESSION.ast("a != this");
-    assertThat(n, notNullValue());
+    assertThat("", n, notNullValue());
     assertWithinScope(Funcs.asExpression(n));
     correctScopeExpression(n);
   }
   @Test public void comparisonWithSpecificWithinScope1() {
     final InfixExpression e = i("this != a");
-    JunitHamcrestWrappper.assertTrue(Is.constant(left(e)));
-    JunitHamcrestWrappper.assertTrue(inner.scopeIncludes(e));
+    Assert.assertThat(Is.constant(left(e)), is(true));
+    assert inner != null;
+    Assert.assertThat(inner.scopeIncludes(e), is(true));
     assertLegible(e.toString());
   }
   @Test public void comparisonWithSpecificWithinScope2() {
@@ -86,7 +93,7 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
   }
   @Test public void scopeIncludesFalse1expanded() {
     final InfixExpression e = i("13455643294 * 22");
-    JunitHamcrestWrappper.assertTrue(!e.hasExtendedOperands());
+    Assert.assertThat(!e.hasExtendedOperands(), is(true));
     assertThat(Is.comparison(e), is(false));
   }
   @Test public void scopeIncludesFalse2() {
@@ -99,7 +106,7 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
     assertThat(WRING.scopeIncludes(i(" 6 - 7 < 2 + 1   ")), is(false));
   }
   @Test public void scopeIncludesFalse6() {
-    JunitHamcrestWrappper.assertTrue(WRING.scopeIncludes(i("1 < 102333")));
+    Assert.assertThat(WRING.scopeIncludes(i("1 < 102333")), is(true));
   }
   @Test public void scopeIncludesFalse7() {
     assertThat(WRING.scopeIncludes(i("1 + 2 < 3 & 7 + 4 > 2 + 1 || 6 - 7 < 2 + 1")), is(false));
@@ -111,25 +118,25 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
     assertThat(WRING.scopeIncludes(i(" 6 - 7 < 2 + 1   ")), is(false));
   }
   @Test public void scopeIncludesTrue1() {
-    JunitHamcrestWrappper.assertTrue(WRING.scopeIncludes(i("a == this")));
+    Assert.assertThat(WRING.scopeIncludes(i("a == this")), is(true));
   }
   @Test public void scopeIncludesTrue2() {
-    JunitHamcrestWrappper.assertTrue(WRING.scopeIncludes(i("this == null")));
+    Assert.assertThat(WRING.scopeIncludes(i("this == null")), is(true));
   }
   @Test public void scopeIncludesTrue3() {
-    JunitHamcrestWrappper.assertTrue(WRING.scopeIncludes(i("12 == this")));
+    Assert.assertThat(WRING.scopeIncludes(i("12 == this")), is(true));
   }
   @Test public void scopeIncludesTrue4() {
-    JunitHamcrestWrappper.assertTrue(WRING.scopeIncludes(i("a == 11")));
+    Assert.assertThat(WRING.scopeIncludes(i("a == 11")), is(true));
   }
   @Test public void scopeIncludesTrue5() {
-    JunitHamcrestWrappper.assertTrue(WRING.scopeIncludes(i("13455643294 < 22")));
+    Assert.assertThat(WRING.scopeIncludes(i("13455643294 < 22")), is(true));
   }
   @Test public void scopeIncludesTrue7() {
-    JunitHamcrestWrappper.assertTrue(WRING.scopeIncludes(i("1 < 102333")));
+    Assert.assertThat(WRING.scopeIncludes(i("1 < 102333")), is(true));
   }
   @Test public void scopeIncludesTrue8() {
-    JunitHamcrestWrappper.assertTrue(WRING.scopeIncludes(i("13455643294 < 22")));
+    Assert.assertThat(WRING.scopeIncludes(i("13455643294 < 22")), is(true));
   }
 
   @RunWith(Parameterized.class)//
@@ -183,10 +190,10 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
     }
     @Override @Test public void flattenIsIdempotentt() {
       final InfixExpression flatten = flatten(asInfixExpression());
-      assertThat(flatten(flatten).toString(), is(flatten.toString()));
+      assertThat("", flatten(flatten).toString(), is(flatten.toString()));
     }
     @Override @Test public void inputIsInfixExpression() {
-      assertThat(asInfixExpression(), notNullValue());
+      assertThat("", asInfixExpression(), notNullValue());
     }
     @Test public void twoOrMoreArguments() {
       assertThat(Extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
@@ -272,13 +279,13 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
     }
     @Override @Test public void flattenIsIdempotentt() {
       final InfixExpression flatten = flatten(asInfixExpression());
-      assertThat(flatten(flatten).toString(), is(flatten.toString()));
+      assertThat("", flatten(flatten).toString(), is(flatten.toString()));
     }
     @Test public void flipIsNotNull() {
-      assertThat(flip(asInfixExpression()), notNullValue());
+      assertThat("", flip(asInfixExpression()), notNullValue());
     }
     @Override @Test public void inputIsInfixExpression() {
-      assertThat(asInfixExpression(), notNullValue());
+      assertThat("", asInfixExpression(), notNullValue());
     }
     @Test public void sortTwiceADDITION() {
       final InfixExpression e = asInfixExpression();

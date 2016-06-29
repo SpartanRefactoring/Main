@@ -270,7 +270,7 @@ public enum Funcs {
       return false;
     for (final Expression name : names)
       if (name == null || name.getNodeType() != SIMPLE_NAME
-      || !((SimpleName) name).getIdentifier().equals(((SimpleName) cmpTo).getIdentifier()))
+          || !((SimpleName) name).getIdentifier().equals(((SimpleName) cmpTo).getIdentifier()))
         return false;
     return true;
   }
@@ -528,9 +528,9 @@ public enum Funcs {
   }
   public static Expression peelNegation(final Expression $) {
     return //
-        $ instanceof PrefixExpression ? peelNegation((PrefixExpression) $) //
-            : $ instanceof ParenthesizedExpression ? peelNegation(((ParenthesizedExpression) $).getExpression()) //
-                : $ instanceof NumberLiteral ? peelNegation((NumberLiteral) $) : $;
+    $ instanceof PrefixExpression ? peelNegation((PrefixExpression) $) //
+        : $ instanceof ParenthesizedExpression ? peelNegation(((ParenthesizedExpression) $).getExpression()) //
+            : $ instanceof NumberLiteral ? peelNegation((NumberLiteral) $) : $;
   }
   /**
    * Retrieve previous item in a list
@@ -682,7 +682,7 @@ public enum Funcs {
         LESS_EQUALS, //
         EQUALS, //
         NOT_EQUALS //
-        ) ? e : null;
+    ) ? e : null;
   }
   private static Expression find(final boolean b, final List<Expression> es) {
     for (final Expression $ : es)

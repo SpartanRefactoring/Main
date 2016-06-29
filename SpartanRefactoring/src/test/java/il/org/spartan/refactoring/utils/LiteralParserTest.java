@@ -1,11 +1,8 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.hamcrest.CoreMatchers.*;
-import static il.org.spartan.hamcrest.MatcherAssert.*;
-import static il.org.spartan.hamcrest.JunitHamcrestWrappper.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
+import static il.org.spartan.hamcrest.SpartanAssert.*;
 import static org.hamcrest.text.IsEqualIgnoringWhiteSpace.*;
+import static org.junit.Assert.*;
 import il.org.spartan.refactoring.utils.LiteralParser.Types;
 
 import org.junit.*;
@@ -34,13 +31,13 @@ import org.junit.*;
     assertThat(new LiteralParser("6.022137e+23f").type(), is(Types.FLOAT.ordinal()));
   }
   @Test public void hasConstructor() {
-    assertThat(new LiteralParser("a"), notNullValue());
+    assertThat("", new LiteralParser("a"), notNullValue());
   }
   @Test public void hasKind() {
     assertThat(new LiteralParser("2F").type(), greaterThanOrEqualTo(0));
   }
   @Test public void hasVisibleValue() {
-    assertThat(new LiteralParser("2F").literal, equalToIgnoringWhiteSpace("2F"));
+    assertThat("", new LiteralParser("2F").literal, equalToIgnoringWhiteSpace("2F"));
   }
   @Test public void kindCharacter() {
     assertThat(new LiteralParser("'l'").type(), is(Types.CHARACTER.ordinal()));

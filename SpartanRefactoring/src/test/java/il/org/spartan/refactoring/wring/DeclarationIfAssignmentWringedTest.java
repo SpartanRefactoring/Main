@@ -1,16 +1,14 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.*;
-import static il.org.spartan.hamcrest.MatcherAssert.*;
-import static il.org.spartan.hamcrest.JunitHamcrestWrappper.*;
+import static il.org.spartan.hamcrest.SpartanAssert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.utils.Utils.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
-import il.org.spartan.hamcrest.*;
+import static org.junit.Assert.*;
+import il.org.spartan.Assert;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.utils.Utils;
 
 import java.util.*;
@@ -68,7 +66,7 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
   }
   @Test public void checkIf() {
     final IfStatement s = findIf();
-    assertThat(s, notNullValue());
+    assertThat("", s, notNullValue());
     assertThat(Is.vacuousElse(s), is(true));
   }
   @Test public void correctSimplifier() {
@@ -80,18 +78,19 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     final CompilationUnit u = asCompilationUnit();
     final ASTRewrite r = new Trimmer().createRewrite(u, null);
     final TextEdit e = r.rewriteAST(d, null);
-    assertThat(e, notNullValue());
-    assertThat(e.apply(d), is(notNullValue()));
+    assertThat("", e, notNullValue());
+    assertThat("", e.apply(d), is(notNullValue()));
   }
   @Test public void eligible() {
     final VariableDeclarationFragment s = asMe();
-    JunitHamcrestWrappper.assertTrue(s.toString(), inner.eligible(s));
+    assert inner != null;
+    assertTrue(s.toString(), inner.eligible(s));
   }
   @Test public void findsSimplifier() {
-    assertThat(Toolbox.instance.find(asMe()), notNullValue());
+    assertThat("", Toolbox.instance.find(asMe()), notNullValue());
   }
   @Test public void hasOpportunity() {
-    JunitHamcrestWrappper.assertTrue(inner.scopeIncludes(asMe()));
+    Assert.assertThat(inner.scopeIncludes(asMe()), is(true));
     final CompilationUnit u = asCompilationUnit();
     assertThat(u.toString(), new Trimmer().findOpportunities(u).size(), is(greaterThanOrEqualTo(1)));
   }
@@ -102,10 +101,10 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     assertThat(inner.nonEligible(asMe()), is(false));
   }
   @Test public void peelableOutput() {
-    assertThat(Wrap.Statement.off(Wrap.Statement.on(expected)), is(expected));
+    assertThat("", Wrap.Statement.off(Wrap.Statement.on(expected)), is(expected));
   }
   @Test public void rewriteNotEmpty() throws MalformedTreeException, IllegalArgumentException {
-    assertThat(new Trimmer().createRewrite(asCompilationUnit(), null), notNullValue());
+    assertThat("", new Trimmer().createRewrite(asCompilationUnit(), null), notNullValue());
   }
   @Test public void scopeIncludesAsMe() {
     assertThat(asMe().toString(), inner.scopeIncludes(asMe()), is(true));
@@ -119,8 +118,8 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     final String peeled = Wrap.Statement.off(actual.get());
     if (expected.equals(peeled))
       return;
-    JunitHamcrestWrappper.assertNotEquals("Nothing done on " + input, input, peeled);
-    JunitHamcrestWrappper.assertNotEquals("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), compressSpaces(input));
+    assertThat("Nothing done on " + input, input, not(peeled));
+    assertThat("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), not(compressSpaces(input)));
     assertSimilar(expected, peeled);
     assertSimilar(Wrap.Statement.on(expected), actual);
   }
@@ -130,17 +129,17 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     final Expression initializer = f.getInitializer();
     assertThat(f.toString(), initializer, notNullValue());
     final IfStatement s = Extract.nextIfStatement(f);
-    assertThat(s, notNullValue());
+    assertThat("", s, notNullValue());
     assertThat(Extract.statements(elze(s)).size(), is(0));
     final Assignment a = Extract.assignment(then(s));
-    assertThat(a, notNullValue());
-    JunitHamcrestWrappper.assertTrue(same(left(a), f.getName()));
+    assertThat("", a, notNullValue());
+    Assert.assertThat(same(left(a), f.getName()), is(true));
     r.replace(initializer, Subject.pair(right(a), initializer).toCondition(s.getExpression()), null);
     r.remove(s, null);
   }
   @Override protected CompilationUnit asCompilationUnit() {
     final CompilationUnit $ = (CompilationUnit) As.COMPILIATION_UNIT.ast(Wrap.Statement.on(input));
-    assertThat($, notNullValue());
+    assertThat("", $, notNullValue());
     return $;
   }
   @Override protected VariableDeclarationFragment asMe() {

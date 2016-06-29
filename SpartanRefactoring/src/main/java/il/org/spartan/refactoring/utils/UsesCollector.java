@@ -114,10 +114,10 @@ class UsesCollector extends HidingDepth {
     hide();
     return true;
   }
-  private boolean declaredIn(final AbstractTypeDeclaration ¤) {
-    ¤.accept(new ASTVisitor() {
-      @Override public boolean visit(final FieldDeclaration ¤) {
-        return !hidden() && !declaredIn(¤);
+  private boolean declaredIn(final AbstractTypeDeclaration d) {
+    d.accept(new ASTVisitor() {
+      @Override public boolean visit(final FieldDeclaration ¢) {
+        return !hidden() && !declaredIn(¢);
       }
     });
     return hidden();
@@ -126,8 +126,8 @@ class UsesCollector extends HidingDepth {
     declaresField(¤);
     return hidden();
   }
-  boolean declaredIn(final FieldDeclaration ¤) {
-    for (final Object o : ¤.fragments())
+  boolean declaredIn(final FieldDeclaration d) {
+    for (final Object o : d.fragments())
       if (declaredIn((VariableDeclarationFragment) o))
         return true;
     return false;

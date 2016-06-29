@@ -1,12 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.*;
-import static il.org.spartan.hamcrest.MatcherAssert.*;
+import static il.org.spartan.hamcrest.SpartanAssert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.utils.Utils.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
-import il.org.spartan.hamcrest.*;
+import static org.junit.Assert.*;
 import il.org.spartan.misc.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.spartanizations.*;
@@ -14,6 +11,7 @@ import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;
 
+import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
@@ -36,17 +34,18 @@ public class TrimmerTestsUtils {
       return this;
     }
     private N findNode(final Wring<N> w) {
-      assertThat(w, notNullValue());
+      assertThat("", w, notNullValue());
       final Wrap wrap = findWrap();
-      assertThat(wrap, notNullValue());
+      assertThat("", wrap, notNullValue());
       final CompilationUnit u = wrap.intoCompilationUnit(get());
-      assertThat(u, notNullValue());
-      final N $ = firstInstance(u);
-      assertThat($, notNullValue());
+      assertThat("", u, notNullValue());
+      final @Nullable N $ = firstInstance(u);
+      assert $ != null;
+      assertThat("", $, notNullValue());
       return $;
     }
-    private N firstInstance(final CompilationUnit u) {
-      final Wrapper<N> $ = new Wrapper<>();
+    private @Nullable N firstInstance(final CompilationUnit u) {
+      final Maybe<@Nullable N> $ = Maybe.no();
       u.accept(new ASTVisitor() {
         /**
          * The implementation of the visitation procedure in the JDT seems to be
@@ -93,13 +92,13 @@ public class TrimmerTestsUtils {
       final Set<String> csb = getComments(wrap);
       Source.set(Source.NONE_PATH, wrap);
       final String unpeeled = TrimmerTestsUtils.apply(new Trimmer(), wrap);
-      JunitHamcrestWrappper.assertNotEquals("Nothing done on " + get(), wrap, unpeeled);
+      assertThat("Nothing done on " + get(), wrap, not(unpeeled));
       final String peeled = w.off(unpeeled);
-      JunitHamcrestWrappper.assertNotEquals("No trimming of " + get(), get(), peeled);
-      JunitHamcrestWrappper.assertNotEquals("Trimming of " + get() + "is just reformatting", compressSpaces(peeled), compressSpaces(get()));
+      assertThat("No trimming of " + get(), get(), not(peeled));
+      assertThat("Trimming of " + get() + "is just reformatting", compressSpaces(peeled), not(compressSpaces(get())));
       final Set<String> csa = getComments(unpeeled);
       for (final String c : csb)
-        JunitHamcrestWrappper.assertTrue("Comment " + c + " not preserved", csa.contains(c));
+        assertTrue("Comment " + c + " not preserved", csa.contains(c));
       return new Operand(peeled);
     }
     public Operand toCompilationUnit(final String expected) {
@@ -119,20 +118,20 @@ public class TrimmerTestsUtils {
       final Wrap w = Wrap.ComplilationUnit;
       wrap = w.on(get());
       final String unpeeled = TrimmerTestsUtils.applyCompilationUnit(new Trimmer(), wrap);
-      JunitHamcrestWrappper.assertNotEquals("Nothing done on " + get(), wrap, unpeeled);
+      assertThat("Nothing done on " + get(), wrap, not(unpeeled));
       final String peeled = w.off(unpeeled);
-      JunitHamcrestWrappper.assertNotEquals("No trimming of " + get(), get(), peeled);
-      JunitHamcrestWrappper.assertNotEquals("Trimming of " + get() + "is just reformatting", compressSpaces(peeled), compressSpaces(get()));
+      assertThat("No trimming of " + get(), get(), not(peeled));
+      assertThat("Trimming of " + get() + "is just reformatting", compressSpaces(peeled), not(compressSpaces(get())));
       assertSimilar(expected, peeled);
     }
     private void checkExpected(final String expected) {
       final Wrap w = findWrap();
       final String wrap = w.on(get());
       final String unpeeled = TrimmerTestsUtils.apply(new Trimmer(), wrap);
-      JunitHamcrestWrappper.assertNotEquals("Nothing done on " + get(), wrap, unpeeled);
+      assertThat("Nothing done on " + get(), wrap, not(unpeeled));
       final String peeled = w.off(unpeeled);
-      JunitHamcrestWrappper.assertNotEquals("No trimming of " + get(), get(), peeled);
-      JunitHamcrestWrappper.assertNotEquals("Trimming of " + get() + "is just reformatting", compressSpaces(peeled), compressSpaces(get()));
+      assertThat("No trimming of " + get(), get(), not(peeled));
+      assertThat("Trimming of " + get() + "is just reformatting", compressSpaces(peeled), not(compressSpaces(get())));
       assertSimilar(expected, peeled);
     }
     private void checkSame() {
@@ -160,42 +159,42 @@ public class TrimmerTestsUtils {
   }
   static String applyCompilationUnit(final Trimmer t, final String from) {
     final ASTParser p = ASTParser.newParser(AST.JLS8);
-    final Map options = JavaCore.getOptions();
+    @SuppressWarnings("unchecked") final Map<String, String> options = JavaCore.getOptions();
     JavaCore.setComplianceOptions(JavaCore.VERSION_1_8, options);
     p.setCompilerOptions(options);
     p.setSource(from.toCharArray());
     p.setResolveBindings(PluginPreferencesResources.getResolveBindingEnabled());
     final CompilationUnit u = (CompilationUnit) p.createAST(null);
-    assertThat(u, notNullValue());
+    assertThat("", u, notNullValue());
     final Document d = new Document(from);
-    assertThat(d, notNullValue());
+    assertThat("", d, notNullValue());
     final Document $ = TESTUtils.rewrite(t, u, d);
-    assertThat($, notNullValue());
+    assertThat("", $, notNullValue());
     return $.get();
   }
   static String apply(final Trimmer t, final String from) {
     final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(from);
-    assertThat(u, notNullValue());
+    assertThat("", u, notNullValue());
     final Document d = new Document(from);
-    assertThat(d, notNullValue());
+    assertThat("", d, notNullValue());
     final Document $ = TESTUtils.rewrite(t, u, d);
-    assertThat($, notNullValue());
+    assertThat("", $, notNullValue());
     return $.get();
   }
   static String apply(final Wring<? extends ASTNode> ns, final String from) {
     final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(from);
-    assertThat(u, notNullValue());
+    assertThat("", u, notNullValue());
     final Document d = new Document(from);
-    assertThat(d, notNullValue());
+    assertThat("", d, notNullValue());
     return TESTUtils.rewrite(new AsSpartanization(ns, "Tested Refactoring"), u, d).get();
   }
   static void assertSimplifiesTo(final String from, final String expected, final Wring<? extends ASTNode> ns, final Wrap wrapper) {
     final String wrap = wrapper.on(from);
     final String unpeeled = apply(ns, wrap);
-    JunitHamcrestWrappper.assertNotEquals("Nothing done on " + from, from, unpeeled);
+    assertThat("Nothing done on " + from, from, not(unpeeled));
     final String peeled = wrapper.off(unpeeled);
-    JunitHamcrestWrappper.assertNotEquals("No similification of " + from, from, peeled);
-    JunitHamcrestWrappper.assertNotEquals("Simpification of " + from + " is just reformatting", compressSpaces(peeled), compressSpaces(from));
+    assertThat("No similification of " + from, from, not(peeled));
+    assertThat("Simpification of " + from + " is just reformatting", compressSpaces(peeled), not(compressSpaces(from)));
     assertSimilar(expected, peeled);
   }
   static <N extends ASTNode> OperandToWring<N> included(final String from, final Class<N> clazz) {

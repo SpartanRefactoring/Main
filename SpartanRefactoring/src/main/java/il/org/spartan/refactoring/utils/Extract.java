@@ -4,7 +4,6 @@ import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
-import il.org.spartan.misc.*;
 
 import java.util.*;
 
@@ -114,11 +113,11 @@ public enum Extract {
    *         or <code><b>null</b> if there is no such statement.
    */
   public static PostfixExpression findFirstPostfix(final ASTNode n) {
-    final Wrapper<PostfixExpression> $ = new Wrapper<>();
+    final Maybe<PostfixExpression> $ = Maybe.no();
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final PostfixExpression e) {
-        if ($.get() == null)
-          $.set(e);
+      @Override public boolean visit(final PostfixExpression ¢) {
+        if ($.missing())
+          $.set(¢);
         return false;
       }
     });
@@ -134,10 +133,10 @@ public enum Extract {
   public static IfStatement firstIfStatement(final ASTNode n) {
     if (n == null)
       return null;
-    final Wrapper<IfStatement> $ = new Wrapper<>();
+    final Maybe<IfStatement> $ = Maybe.no();
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final IfStatement s) {
-        if ($.get() == null)
+        if ($.missing())
           $.set(s);
         return false;
       }
@@ -153,10 +152,10 @@ public enum Extract {
    *         <code><b>null</b> if there is no such statement.
    */
   public static MethodDeclaration firstMethodDeclaration(final ASTNode n) {
-    final Wrapper<MethodDeclaration> $ = new Wrapper<>();
+    final Maybe<MethodDeclaration> $ = Maybe.no();
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final MethodDeclaration d) {
-        if ($.get() == null)
+        if ($.missing())
           $.set(d);
         return false;
       }
@@ -173,10 +172,10 @@ public enum Extract {
    *         value could be found.
    */
   public static InfixExpression firstPlus(final ASTNode n) {
-    final Wrapper<InfixExpression> $ = new Wrapper<>();
+    final Maybe<InfixExpression> $ = Maybe.no();
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final InfixExpression e) {
-        if ($.get() != null)
+        if ($.present())
           return false;
         if (e.getOperator() != InfixExpression.Operator.PLUS)
           return true;
@@ -187,7 +186,7 @@ public enum Extract {
     return $.get();
   }
   public static Type firstType(final Statement s) {
-    final Wrapper<Type> $ = new Wrapper<>();
+    final Maybe<Type> $ = Maybe.no();
     s.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode n) {
         if (!(n instanceof Type))
@@ -209,10 +208,10 @@ public enum Extract {
   public static VariableDeclarationFragment firstVariableDeclarationFragment(final ASTNode n) {
     if (n == null)
       return null;
-    final Wrapper<VariableDeclarationFragment> $ = new Wrapper<>();
+    final Maybe<VariableDeclarationFragment> $ = Maybe.no();
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final VariableDeclarationFragment f) {
-        if ($.get() == null)
+        if ($.missing())
           $.set(f);
         return false;
       }

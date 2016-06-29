@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
+import static il.org.spartan.hamcrest.SpartanAssert.*;
 import il.org.spartan.refactoring.spartanizations.*;
 
 import java.util.*;
@@ -54,7 +53,7 @@ public enum Into {
    *         parameter.
    */
   public static MethodDeclaration d(final String methodDelclaration) {
-    assertThat(methodDelclaration, notNullValue());
+    assertThat("", methodDelclaration, notNullValue());
     return Extract.firstMethodDeclaration(Wrap.Method.intoCompilationUnit(methodDelclaration));
   }
   /**
@@ -113,7 +112,7 @@ public enum Into {
    * @return an {@link Statement} data structure representing the parameter.
    */
   public static Statement s(final String statement) {
-    assertThat(statement, notNullValue());
+    assertThat("", statement, notNullValue());
     final ASTNode n = As.STATEMENTS.ast(statement);
     assertThat(statement, n, notNullValue());
     assertThat(statement, n, instanceOf(Statement.class));

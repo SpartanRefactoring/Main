@@ -1,12 +1,8 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.*;
-import static il.org.spartan.hamcrest.MatcherAssert.*;
+import static il.org.spartan.hamcrest.SpartanAssert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
-import il.org.spartan.hamcrest.*;
+import static org.junit.Assert.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
@@ -35,19 +31,19 @@ public class IfReturnNoElseReturnTest {
   @Test public void checkFirstIfStatement1() {
     final String s = "if (a) return b; return a();";
     final IfStatement i = Extract.firstIfStatement(As.STATEMENTS.ast(s));
-    JunitHamcrestWrappper.assertNotNull(i);
+    assertThat("", i, notNullValue());
     assertThat(i.toString(), WRING.scopeIncludes(i), is(true));
   }
   @Test public void checkFirstIfStatement2() {
     final String s = "if (a) return b; else return a();";
     final IfStatement i = Extract.firstIfStatement(As.STATEMENTS.ast(s));
-    JunitHamcrestWrappper.assertNotNull(i);
+    assertThat("", i, notNullValue());
     assertThat(i.toString(), WRING.scopeIncludes(i), is(false));
   }
   @Test public void checkFirstIfStatement3() {
     final String s = "if (a) a= b; else a=c;";
     final IfStatement i = Extract.firstIfStatement(As.STATEMENTS.ast(s));
-    JunitHamcrestWrappper.assertNotNull(i);
+    assertThat("", i, notNullValue());
     assertThat(i.toString(), WRING.scopeIncludes(i), is(false));
   }
 
@@ -99,23 +95,23 @@ public class IfReturnNoElseReturnTest {
   @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   public static class Wringed extends AbstractWringTest.Wringed.IfStatementAndSurrounding {
     private static String[][] cases = new String[][] { //
-      new String[] { "Vanilla {}", "if (a) return b; return a();", "return a ? b: a();" }, //
-      new String[] { "Vanilla ; ", "if (a) return b; return a(); b(); c();", "return a ? b: a(); b(); c();" }, //
-      new String[] { "Vanilla {;{;;};} ", "if (a) return b; else {;{;{};};{;{}}} return c;", "return a?b:c;" }, //
-      null, //
-      new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}",
-      "if (x) {;f();;;return a;;;}\n g();" }, //
-      null, //
-      new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}",
-      "  if(x){;f();;;return a;;;} g();" }, //
-      new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}", "" + //
+        new String[] { "Vanilla {}", "if (a) return b; return a();", "return a ? b: a();" }, //
+        new String[] { "Vanilla ; ", "if (a) return b; return a(); b(); c();", "return a ? b: a(); b(); c();" }, //
+        new String[] { "Vanilla {;{;;};} ", "if (a) return b; else {;{;{};};{;{}}} return c;", "return a?b:c;" }, //
+        null, //
+        new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}",
+            "if (x) {;f();;;return a;;;}\n g();" }, //
+        null, //
+        new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}",
+            "  if(x){;f();;;return a;;;} g();" }, //
+        new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}", "" + //
             " if (x) {\n" + //
             "   f();\n" + //
             "   return a;\n" + //
             " }\n" + //
             " g();\n" + //
             "" }, null, //
-      new String[] { "Complex with many junk statements", "" + //
+        new String[] { "Complex with many junk statements", "" + //
             " if (x) {\n" + //
             "   ;\n" + //
             "   f();\n" + //
@@ -133,7 +129,7 @@ public class IfReturnNoElseReturnTest {
             " }\n" + //
             " g();\n" + //
             "" }, //
-      null };
+        null };
 
     /**
      * Generate test cases for this parameterized class.
@@ -152,10 +148,10 @@ public class IfReturnNoElseReturnTest {
       super(WRING);
     }
     @Test public void asMeNotNull() {
-      JunitHamcrestWrappper.assertNotNull(asMe());
+      assertThat("", asMe(), notNullValue());
     }
     @Test public void followedByReturn() {
-      assertThat(Extract.nextReturn(asMe()), notNullValue());
+      assertThat("", Extract.nextReturn(asMe()), notNullValue());
     }
     @Test public void isfStatementElseIsEmpty() {
       assertThat(Extract.statements(Extract.firstIfStatement(As.STATEMENTS.ast(input)).getElseStatement()).size(), is(0));
@@ -165,15 +161,15 @@ public class IfReturnNoElseReturnTest {
     }
     @Test public void myScopeIncludes() {
       final IfStatement s = asMe();
-      assertThat(s, notNullValue());
-      assertThat(Extract.statements(elze(s)), notNullValue());
+      assertThat("", s, notNullValue());
+      assertThat("", Extract.statements(elze(s)), notNullValue());
       assertThat(Extract.statements(elze(s)).size(), is(0));
     }
     @Test public void noElse() {
       assertThat(Extract.statements(elze(asMe())).size(), is(0));
     }
     @Test public void thenIsSingleReturn() {
-      assertThat(Extract.returnStatement(then(asMe())), notNullValue());
+      assertThat("", Extract.returnStatement(then(asMe())), notNullValue());
     }
   }
 }

@@ -1,8 +1,8 @@
 package il.org.spartan.refactoring.wring;
 
+import static il.org.spartan.hamcrest.SpartanAssert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
-import il.org.spartan.hamcrest.*;
+import static org.junit.Assert.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
@@ -29,7 +29,7 @@ public class DeclarationReturnTest {
   static final Wring<VariableDeclarationFragment> WRING = new DeclarationInitializerReturnVariable();
 
   @Test public void placeHolder() {
-    JunitHamcrestWrappper.assertNotNull(WRING);
+    assertThat("", WRING, notNullValue());
   }
 
   @RunWith(Parameterized.class)//
@@ -91,13 +91,14 @@ public class DeclarationReturnTest {
     }
     @Test public void traceLegiblity() {
       final VariableDeclarationFragment f = asMe();
+      assert f != null;
       final ASTRewrite r = ASTRewrite.create(f.getAST());
       final Expression initializer = f.getInitializer();
-      JunitHamcrestWrappper.assertNotNull(initializer);
-      JunitHamcrestWrappper.assertNotNull(Extract.nextStatement(f));
+      assertThat("", initializer, notNullValue());
+      assertThat("", Extract.nextStatement(f), notNullValue());
       final ReturnStatement s = Extract.nextReturn(f);
-      JunitHamcrestWrappper.assertNotNull(s);
-      JunitHamcrestWrappper.assertTrue(same(f.getName(), Extract.expression(s)));
+      assertThat("", s, notNullValue());
+      assertThat(same(f.getName(), Extract.expression(s)), is(true));
       r.remove(Extract.statement(f), null);
       r.replace(s, Subject.operand(initializer).toReturn(), null);
     }

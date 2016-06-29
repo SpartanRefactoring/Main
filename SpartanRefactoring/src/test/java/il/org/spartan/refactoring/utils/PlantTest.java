@@ -1,10 +1,8 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.hamcrest.CoreMatchers.*;
-import static il.org.spartan.hamcrest.MatcherAssert.*;
+import static il.org.spartan.hamcrest.SpartanAssert.*;
 import static il.org.spartan.refactoring.utils.Into.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
+import static org.junit.Assert.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
@@ -17,9 +15,9 @@ public class PlantTest {
   @Test public void plantIntoNull() {
     final String s = "a?b:c";
     final Expression e = e(s);
-    assertThat(e, notNullValue());
+    assertThat("", e, notNullValue());
     final Expression e1 = new Plant(e).into(null);
-    assertThat(e1, notNullValue());
+    assertThat("", e1, notNullValue());
     assertThat(e1, iz(s));
   }
   @Test public void plantIntoReturn() {

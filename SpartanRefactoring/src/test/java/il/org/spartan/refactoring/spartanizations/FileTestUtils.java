@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
-import il.org.spartan.hamcrest.*;
+import static il.org.spartan.hamcrest.SpartanAssert.*;
 import il.org.spartan.refactoring.utils.*;
 
 import java.io.*;
@@ -82,9 +81,9 @@ public abstract class FileTestUtils {
   }
   static Spartanization makeSpartanizationObject(final String folderForClass) {
     final Class<?> c = asClass(folderForClass);
-    JunitHamcrestWrappper.assertNotNull(c);
+    assertThat("", c, notNullValue());
     final Object $ = getInstance(c);
-    JunitHamcrestWrappper.assertNotNull($);
+    assertThat("", $, notNullValue());
     return (Spartanization) $;
   }
   /**
@@ -165,7 +164,7 @@ public abstract class FileTestUtils {
    */
   public static abstract class Files extends FileTestUtils.Traverse {
     /* (non-Javadoc)
-     *
+     * 
      * @see
      * il.ac.technion.cs.ssdl.spartan.refactoring.TestSuite.Traverse#go(java
      * .util.List, java.io.File) */
@@ -254,11 +253,11 @@ public abstract class FileTestUtils {
      * @return a collection of all test cases generated in the traversal
      */
     public final Collection<Object[]> go() {
-      JunitHamcrestWrappper.assertNotNull(location);
-      JunitHamcrestWrappper.assertNotNull(location.listFiles());
+      assertThat("", location, notNullValue());
+      assertThat("", location.listFiles(), notNullValue());
       final List<Object[]> $ = new ArrayList<>();
       for (final File f : location.listFiles()) {
-        JunitHamcrestWrappper.assertNotNull(f);
+        assertThat("", f, notNullValue());
         go($, f);
       }
       return $;

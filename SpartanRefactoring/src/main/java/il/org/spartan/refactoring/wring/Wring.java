@@ -33,7 +33,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
    * @param u current compilation unit
    * @return this wring
    */
-  public Wring<N> initialize(@SuppressWarnings("hiding") final CompilationUnit compilationUnit) {
+  public Wring<N> initialize(final CompilationUnit compilationUnit) {
     this.compilationUnit = compilationUnit;
     return this;
   }

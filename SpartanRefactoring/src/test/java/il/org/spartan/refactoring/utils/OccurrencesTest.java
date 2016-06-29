@@ -1,10 +1,8 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.hamcrest.CoreMatchers.*;
-import static il.org.spartan.hamcrest.MatcherAssert.*;
+import static il.org.spartan.hamcrest.SpartanAssert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
+import static org.junit.Assert.*;
 import il.org.spartan.refactoring.spartanizations.*;
 
 import java.util.*;
@@ -31,8 +29,8 @@ public class OccurrencesTest {
 
   @Test public void correctSettings() {
     assertThat(ab, iz("int a=2,b;"));
-    assertThat(b.toString(), is("b"));
-    assertThat(s, is(Extract.firstIfStatement(u)));
+    assertThat("", b.toString(), is("b"));
+    assertThat("", s, is(Extract.firstIfStatement(u)));
     assertThat(s, iz("if (a + b) a=3;"));
     assertThat(e, iz("a + b"));
   }
@@ -73,6 +71,6 @@ public class OccurrencesTest {
     assertThat(same(a, left(e)), is(true));
   }
   @Test public void sameTypeAandLeftOfE() {
-    assertThat(a, instanceOf(left(e).getClass()));
+    assertThat("", a, instanceOf(left(e).getClass()));
   }
 }

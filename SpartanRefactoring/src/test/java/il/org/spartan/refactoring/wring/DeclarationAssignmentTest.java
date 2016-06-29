@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
-import il.org.spartan.hamcrest.*;
+import static il.org.spartan.hamcrest.SpartanAssert.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 import il.org.spartan.utils.*;
@@ -27,7 +26,7 @@ public class DeclarationAssignmentTest {
 
   @Test public void placeHolder() {
     // Place holder for future tests
-    JunitHamcrestWrappper.assertNotNull(WRING);
+    assertThat("", WRING, notNullValue());
   }
 
   @RunWith(Parameterized.class)//
