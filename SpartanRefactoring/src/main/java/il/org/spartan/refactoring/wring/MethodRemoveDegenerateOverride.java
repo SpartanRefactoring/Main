@@ -10,13 +10,13 @@ import org.eclipse.text.edits.*;
 /**
  * A {@link Wring} to remove overriding methods that only call their counterpart
  * in the parent class, for example: <code>
- * 
+ *
  * <pre>
  * &#64;Override void foo() {
  *   super.foo();
  * }
  * </pre>
- * 
+ *
  * </code> will be completely removed.
  *
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
@@ -36,7 +36,7 @@ public class MethodRemoveDegenerateOverride extends Wring<MethodDeclaration> imp
     for (final Object m : d.modifiers())
       if (m instanceof MarkerAnnotation && ((MarkerAnnotation) m).getTypeName().toString().contains("Deprecated"))
         return false;
-    return i.getName().toString().equals(d.getName().toString()) && i.arguments().size() == d.parameters().size();
+    return i.getName().toString().equals(d.getName().toString()) && i.arguments().size() == expose.parameters(d).size();
   }
   @Override String description(final MethodDeclaration d) {
     return "Remove useless '" + d.getName() + "' overriding method";

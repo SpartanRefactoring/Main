@@ -180,7 +180,7 @@ public enum Collect {
          * anonymous classes in which the formal parameters hide variables in
          * the enclosing scope. We don't want to collect them as uses of the
          * variable */
-        for (final Object o : d.parameters())
+        for (final Object o : expose.parameters(d))
           if (((SingleVariableDeclaration) o).getName().subtreeMatch(matcher, what))
             return false;
         return true;

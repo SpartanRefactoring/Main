@@ -15,6 +15,17 @@ import org.eclipse.jdt.core.dom.*;
 public enum expose {
   ;
   /**
+   * Expose the list of parameters in a {@link MethodDeclaration}
+   *
+   * @param ¢ JD
+   *
+   * @return result of method {@link MethodDeclaration#parameters} downcasted to
+   *         its correct type
+   */
+  @SuppressWarnings("unchecked") public static List<SingleVariableDeclaration> parameters(final MethodDeclaration ¢) {
+    return ¢.parameters();
+  }
+  /**
    * Expose the list of arguments in a {@link ClassInstanceCreation}
    *
    * @param c JD

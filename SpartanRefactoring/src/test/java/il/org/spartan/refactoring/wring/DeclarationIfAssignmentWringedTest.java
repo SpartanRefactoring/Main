@@ -13,6 +13,7 @@ import il.org.spartan.utils.Utils;
 
 import java.util.*;
 
+import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
@@ -70,7 +71,9 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     assertThat(Is.vacuousElse(s), is(true));
   }
   @Test public void correctSimplifier() {
-    assertThat(asMe().toString(), Toolbox.instance.find(asMe()), instanceOf(inner.getClass()));
+    @Nullable final VariableDeclarationFragment asMe = asMe();
+    assert asMe != null;
+    assertThat(asMe.toString(), Toolbox.instance.find(asMe()), instanceOf(inner.getClass()));
   }
   @Test public void createRewrite() throws MalformedTreeException, IllegalArgumentException, BadLocationException {
     final String s = input;
@@ -84,6 +87,7 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
   @Test public void eligible() {
     final VariableDeclarationFragment s = asMe();
     assert inner != null;
+    assert s != null;
     assertTrue(s.toString(), inner.eligible(s));
   }
   @Test public void findsSimplifier() {
@@ -95,7 +99,9 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     assertThat(u.toString(), new Trimmer().findOpportunities(u).size(), is(greaterThanOrEqualTo(1)));
   }
   @Test public void hasSimplifier() {
-    assertThat(asMe().toString(), Toolbox.instance.find(asMe()), is(notNullValue()));
+    @Nullable final VariableDeclarationFragment asMe = asMe();
+    assert asMe != null;
+    assertThat(asMe.toString(), Toolbox.instance.find(asMe), is(notNullValue()));
   }
   @Test public void noneligible() {
     assertThat(inner.nonEligible(asMe()), is(false));
@@ -107,7 +113,9 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     assertThat("", new Trimmer().createRewrite(asCompilationUnit(), null), notNullValue());
   }
   @Test public void scopeIncludesAsMe() {
-    assertThat(asMe().toString(), inner.scopeIncludes(asMe()), is(true));
+    @Nullable final VariableDeclarationFragment asMe = asMe();
+    assert asMe != null;
+    assertThat(asMe.toString(), inner.scopeIncludes(asMe()), is(true));
   }
   @Test public void simiplifies() throws MalformedTreeException, IllegalArgumentException {
     if (inner == null)
@@ -125,6 +133,7 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
   }
   @Test public void traceLegiblity() {
     final VariableDeclarationFragment f = asMe();
+    assert f != null;
     final ASTRewrite r = ASTRewrite.create(f.getAST());
     final Expression initializer = f.getInitializer();
     assertThat(f.toString(), initializer, notNullValue());

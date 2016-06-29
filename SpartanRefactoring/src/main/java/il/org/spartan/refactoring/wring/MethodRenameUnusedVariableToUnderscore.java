@@ -76,13 +76,13 @@ import org.eclipse.jdt.core.dom.*;
     if (p == null || !(p instanceof MethodDeclaration))
       return null;
     final MethodDeclaration d = (MethodDeclaration) p;
-    for (final SingleVariableDeclaration svd : (Iterable<SingleVariableDeclaration>) d.parameters())
+    for (final SingleVariableDeclaration svd : expose.parameters(d))
       if (unusedVariableName().equals(svd.getName().getIdentifier()))
         return null;
     if (BY_ANNOTATION && !suppressedUnused(n) || isUsed(d, n.getName()))
       return null;
     if (m != null)
-      for (final SingleVariableDeclaration svd : (Iterable<SingleVariableDeclaration>) d.parameters())
+      for (final SingleVariableDeclaration svd : expose.parameters(d))
         if (!n.equals(svd))
           m.exclude(svd);
     final SingleVariableDeclaration $ = n.getAST().newSingleVariableDeclaration();

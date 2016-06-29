@@ -32,7 +32,7 @@ import org.eclipse.text.edits.*;
   @Override Rewrite make(final MethodDeclaration d, final ExclusionManager exclude) {
     if (d.isConstructor())
       return null;
-    final List<SingleVariableDeclaration> vd = find(d.parameters());
+    final List<SingleVariableDeclaration> vd = find(expose.parameters(d));
     final Map<SimpleName, SimpleName> renameMap = new HashMap<>();
     if (vd == null)
       return null;
@@ -67,7 +67,7 @@ import org.eclipse.text.edits.*;
     for (final SimpleName n : newNames)
       if (n.getIdentifier().equals(Funcs.shortName(d.getType())))
         return false;
-    for (final SingleVariableDeclaration n : (List<SingleVariableDeclaration>) m.parameters())
+    for (final SingleVariableDeclaration n : expose.parameters(m))
       if (n.getName().getIdentifier().equals(Funcs.shortName(d.getType())))
         return false;
     return !m.getName().getIdentifier().equalsIgnoreCase(Funcs.shortName(d.getType()));
