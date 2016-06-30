@@ -1,8 +1,8 @@
 package il.org.spartan.refactoring.wring;
 
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.utils.Extract.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.utils.*;

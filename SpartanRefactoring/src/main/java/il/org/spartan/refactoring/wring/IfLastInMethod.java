@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.utils.Utils.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.utils.*;
 

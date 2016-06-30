@@ -1,13 +1,13 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.SpartanAssert.*;
+import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
-import static il.org.spartan.utils.Utils.*;
 import static org.junit.Assert.*;
+import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.utils.Utils;
 
 import java.util.*;
 
@@ -37,7 +37,7 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
   @Test public void removeParenthesis() throws MalformedTreeException, BadLocationException {
     final String s = " (2) == true";
     final String wrap = Wrap.Expression.on(s);
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(wrap);
+    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(wrap);
     assertThat(u, notNullValue());
     final Document d = new Document(wrap);
     assertThat(d, notNullValue());
@@ -55,7 +55,7 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
 
   @RunWith(Parameterized.class)//
   public static class WringedInput extends AbstractWringTest.WringedExpression.Infix {
-    static String[][] cases = Utils.asArray(//
+    static String[][] cases = as.array(//
         new String[] { "", "a == b == c == true", "a == b == c" }, //
         new String[] { "", "a == true", "a" }, //
         new String[] { "", "a == false", "!a" }, //

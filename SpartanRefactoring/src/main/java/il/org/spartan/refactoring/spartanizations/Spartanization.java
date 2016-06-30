@@ -355,7 +355,7 @@ public abstract class Spartanization extends Refactoring {
   protected void scanCompilationUnitForMarkerFix(final IMarker m, final IProgressMonitor pm, final boolean preview)
       throws CoreException {
     pm.beginTask("Creating change(s) for a single compilation unit...", 2);
-    final ICompilationUnit u = As.iCompilationUnit(m);
+    final ICompilationUnit u = ast.iCompilationUnit(m);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     Source.set(u.getPath(), textChange.getCurrentDocument(null).get());
     textChange.setTextType("java");
@@ -400,7 +400,7 @@ public abstract class Spartanization extends Refactoring {
    * @return an ASTRewrite which contains the changes
    */
   private final ASTRewrite createRewrite(final SubProgressMonitor pm, final IMarker m) {
-    return createRewrite(pm, (CompilationUnit) As.COMPILIATION_UNIT.ast(m, pm), m);
+    return createRewrite(pm, (CompilationUnit) ast.COMPILIATION_UNIT.ast(m, pm), m);
   }
   private List<ICompilationUnit> getUnits(final IProgressMonitor pm) throws JavaModelException {
     if (!isTextSelected())

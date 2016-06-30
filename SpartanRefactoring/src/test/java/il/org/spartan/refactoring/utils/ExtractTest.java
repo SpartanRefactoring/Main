@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.hamcrest.SpartanAssert.*;
+import static il.org.spartan.SpartanAssert.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static org.junit.Assert.*;
 import il.org.spartan.refactoring.spartanizations.*;

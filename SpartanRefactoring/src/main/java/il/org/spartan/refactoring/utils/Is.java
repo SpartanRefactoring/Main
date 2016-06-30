@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import il.org.spartan.misc.*;
@@ -127,9 +127,7 @@ public enum Is {
         default:
           break;
         case PARENTHESIZED_EXPRESSION:
-          if (((ParenthesizedExpression) e).getExpression().getNodeType() == CONDITIONAL_EXPRESSION)
-            return true;
-          break;
+          return conditional(Extract.core(e));
       }
     }
     return false;
@@ -535,7 +533,7 @@ public enum Is {
       case PREFIX_EXPRESSION:
         return sideEffectFreePrefixExpression((PrefixExpression) e);
       case PARENTHESIZED_EXPRESSION:
-        return sideEffectFree(((ParenthesizedExpression) e).getExpression());
+        return sideEffectFree(Extract.core(e));
       case INFIX_EXPRESSION:
         return sideEffectsFree(Extract.allOperands((InfixExpression) e));
       case CONDITIONAL_EXPRESSION:

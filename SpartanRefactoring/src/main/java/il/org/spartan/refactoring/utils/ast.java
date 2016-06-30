@@ -17,7 +17,7 @@ import org.eclipse.jface.text.*;
  * @author Yossi Gil
  * @since 2015-07-16
  */
-public enum As {
+public enum ast {
   /**
    * Converts file, string or marker to compilation unit.
    */
@@ -141,7 +141,7 @@ public enum As {
 
   final int kind;
 
-  private As(final int kind) {
+  private ast(final int kind) {
     this.kind = kind;
   }
   /**
@@ -150,7 +150,7 @@ public enum As {
    * @param d JD
    * @return the {@link ASTNode} obtained by parsing
    */
-  public final ASTNode ast(final Document d) {
+  public final ASTNode from(final Document d) {
     return ast(d.get());
   }
   /**

@@ -1,16 +1,16 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.SpartanAssert.*;
+import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.utils.Utils.*;
 import static org.junit.Assert.*;
-import il.org.spartan.hamcrest.*;
+import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.utils.Collect.Of;
+import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.refactoring.wring.Wring.VariableDeclarationFragementAndStatement;
-import il.org.spartan.utils.Utils;
 
 import java.util.*;
 
@@ -36,7 +36,7 @@ public class DeclarationIfAssginmentTest {
     assertThat(WRING, notNullValue());
     final String from = "int a = 2,b; if (b) a =3;";
     final String wrap = Wrap.Statement.on(from);
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(wrap);
+    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(wrap);
     final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(u);
     assertThat(f, notNullValue());
     assertThat(WRING.scopeIncludes(f), is(false));
@@ -44,7 +44,7 @@ public class DeclarationIfAssginmentTest {
   @Test public void traceForbiddenSiblingsExpanded() {
     final String from = "int a = 2,b; if (a+b) a =3;";
     final String wrap = Wrap.Statement.on(from);
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(wrap);
+    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(wrap);
     final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(u);
     assertThat(f, notNullValue());
     final Expression initializer = f.getInitializer();
@@ -77,8 +77,8 @@ public class DeclarationIfAssginmentTest {
 
   @RunWith(Parameterized.class)//
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Declaration {
-    // Use asArray for more compact initialization of 2D array.
-    static String[][] cases = Utils.asArray(//
+    // Use as.array for more compact initialization of 2D array.
+    static String[][] cases = as.array(//
         new String[] { "Vanilla", "int a; a =3;", }, //
         new String[] { "Not empty else", "int a; if (x) a = 3; else a++;", }, //
         new String[] { "Not plain assignment", "int a = 2; if (b) a +=a+2;", }, //
@@ -111,7 +111,7 @@ public class DeclarationIfAssginmentTest {
       final String from = "int a = 2;\n if (b) a =3;";
       final String expected = "int a = b ? 3 : 2;";
       final Document d = new Document(Wrap.Statement.on(from));
-      final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(d);
+      final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(d);
       final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(u);
       assertThat(f, notNullValue());
       final ASTRewrite r = new Trimmer().createRewrite(u, null);
@@ -135,7 +135,7 @@ public class DeclarationIfAssginmentTest {
       final String from = "int a = 2; if (b) a =3;";
       final String expected = "int a = b ? 3 : 2;";
       final Document d = new Document(Wrap.Statement.on(from));
-      final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(d);
+      final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(d);
       final Document actual = TESTUtils.rewrite(new Trimmer(), u, d);
       final String peeled = Wrap.Statement.off(actual.get());
       if (expected.equals(peeled))

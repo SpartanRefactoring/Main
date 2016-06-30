@@ -1,5 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 import il.org.spartan.utils.*;
@@ -26,7 +27,7 @@ public enum IfReturnFooElseReturnBarTest {
 
   @RunWith(Parameterized.class)//
   public static class OutOfScope extends AbstractWringTest.OutOfScope<IfStatement> {
-    static String[][] cases = Utils.asArray(//
+    static String[][] cases = as.array(//
         new String[] { "Return only on one side", "if (a) return b; else c;" }, //
         null);
 
@@ -49,7 +50,7 @@ public enum IfReturnFooElseReturnBarTest {
   @RunWith(Parameterized.class)//
   @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   public static class Wringed extends AbstractWringTest.WringedIfStatement {
-    private static String[][] cases = Utils.asArray(//
+    private static String[][] cases = as.array(//
         // Literal
         new String[] { "Simple if return", "if (a) return b; else return c;", "return a ? b : c;" }, //
         new String[] { "Simply nested if return", "{if (a)  return b; else return c;}", " if(a)return b;else return c;" }, //

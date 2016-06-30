@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.SpartanAssert.*;
+import static il.org.spartan.SpartanAssert.*;
+import il.org.spartan.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.utils.*;
 
@@ -25,7 +26,7 @@ public class TernaryEliminateTest {
 
   @RunWith(Parameterized.class)//
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Exprezzion<ConditionalExpression> {
-    static String[][] cases = Utils.asArray(//
+    static String[][] cases = as.array(//
         new String[] { "No boolean", "a?b:c" }, //
         new String[] { "F X", "a ? false : c" }, //
         new String[] { "T X", "a ? true : c" }, //
@@ -62,7 +63,7 @@ public class TernaryEliminateTest {
   @RunWith(Parameterized.class)//
   @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   public static class Wringed extends AbstractWringTest.WringedExpression.Conditional {
-    private static String[][] cases = Utils.asArray(//
+    private static String[][] cases = as.array(//
         new String[] { "identical method call", "a ? y.f(b) :y.f(b)", "y.f(b)" }, //
         new String[] { "identical function call", "a ? f(b) :f(b)", "f(b)" }, //
         new String[] { "identical assignment", "a ? (b=c) :(b=c)", "b = c" }, //

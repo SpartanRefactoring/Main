@@ -1,13 +1,14 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.SpartanAssert.*;
+import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.ExpressionComparator.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
-import static il.org.spartan.utils.Utils.*;
 import static org.junit.Assert.*;
+import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -1238,7 +1239,7 @@ public class TrimmerTest {
     assertThat(s.scopeIncludes(e), is(true));
     final Expression e1 = left(e);
     final Expression e2 = right(e);
-    assertThat(hasNull(e1, e2), is(false));
+    assertThat(has.nulls(e1, e2), is(false));
     final boolean tokenWiseGreater = nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD;
     assertThat(tokenWiseGreater, is(true));
     assertThat(ExpressionComparator.moreArguments(e1, e2), is(true));
@@ -1258,7 +1259,7 @@ public class TrimmerTest {
     assertThat(s.scopeIncludes(e), is(true));
     final Expression e1 = left(e);
     final Expression e2 = right(e);
-    assertThat(hasNull(e1, e2), is(false));
+    assertThat(has.nulls(e1, e2), is(false));
     final boolean tokenWiseGreater = nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD;
     assertThat(tokenWiseGreater, is(false));
     assertThat(ExpressionComparator.moreArguments(e1, e2), is(true));
@@ -3479,10 +3480,10 @@ public class TrimmerTest {
   }
   @Test public void twoOpportunityExample() {
     assertThat(TrimmerTestsUtils.countOpportunities(new Trimmer(),
-        (CompilationUnit) As.COMPILIATION_UNIT.ast(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge"))),
+        (CompilationUnit) ast.COMPILIATION_UNIT.ast(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge"))),
         is(2));
     assertThat(TrimmerTestsUtils.countOpportunities(new Trimmer(),
-        (CompilationUnit) As.COMPILIATION_UNIT.ast(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge"))),
+        (CompilationUnit) ast.COMPILIATION_UNIT.ast(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge"))),
         is(2));
   }
   @Test public void useOutcontextToManageStringAmbiguity() {

@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.hamcrest.SpartanAssert.*;
+import static il.org.spartan.SpartanAssert.*;
 import il.org.spartan.refactoring.spartanizations.*;
 
 import java.util.*;
@@ -64,7 +64,7 @@ public enum Into {
    * @return an {@link Expression} data structure representing the parameter.
    */
   public static Expression e(final String expression) {
-    return (Expression) As.EXPRESSION.ast(expression);
+    return (Expression) ast.EXPRESSION.ast(expression);
   }
   /**
    * Convert an array of {@link String} into a {@link List} of
@@ -113,7 +113,7 @@ public enum Into {
    */
   public static Statement s(final String statement) {
     assertThat(statement, notNullValue());
-    final ASTNode n = As.STATEMENTS.ast(statement);
+    final ASTNode n = ast.STATEMENTS.ast(statement);
     assertThat(statement, n, notNullValue());
     assertThat(statement, n, instanceOf(Statement.class));
     return (Statement) n;

@@ -1,13 +1,13 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.SpartanAssert.*;
+import static il.org.spartan.SpartanAssert.*;
 import static il.org.spartan.refactoring.utils.Extract.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static org.junit.Assert.*;
+import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.utils.Utils;
 
 import java.util.*;
 
@@ -49,7 +49,7 @@ public class PrefixNotPushdownTest {
 
   @RunWith(Parameterized.class)//
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Exprezzion<PrefixExpression> {
-    static String[][] cases = Utils.asArray(//
+    static String[][] cases = as.array(//
         new String[] { "Simple not", "!a" }, //
         new String[] { "Simple not of function", "!f(a)" }, //
         new String[] { "Actual example", "!inRange(m, e)" }, //
@@ -74,7 +74,7 @@ public class PrefixNotPushdownTest {
   @RunWith(Parameterized.class)//
   @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   public static class Wringed extends AbstractWringTest.WringedExpression<PrefixExpression> {
-    private static String[][] cases = Utils.asArray(//
+    private static String[][] cases = as.array(//
         new String[] { "2 level not of false", "!!false", "false" }, //
         new String[] { "2 level not of true", "!!true", "true" }, //
         new String[] { "double not deeply nested", "!(((!f())))", "f()" }, //

@@ -32,7 +32,7 @@ public enum expose {
    * @return a reference to the list of arguments in the argument
    */
   public static List<Expression> arguments(final ClassInstanceCreation c) {
-    return As.expressions(c.arguments());
+    return ast.expressions(c.arguments());
   }
   /**
    * Expose the list of arguments in a {@link MethodInvocation}
@@ -41,7 +41,7 @@ public enum expose {
    * @return a reference to the list of arguments in the argument
    */
   public static List<Expression> arguments(final MethodInvocation i) {
-    return As.expressions(i.arguments());
+    return ast.expressions(i.arguments());
   }
   /**
    * Expose the list of arguments in a {@link SuperMethodInvocation}
@@ -50,7 +50,7 @@ public enum expose {
    * @return a reference to the list of arguments in the argument
    */
   public static List<Expression> arguments(final SuperMethodInvocation i) {
-    return As.expressions(i.arguments());
+    return ast.expressions(i.arguments());
   }
   /**
    * Expose the list of extended operands in an {@link InfixExpression}
@@ -70,7 +70,7 @@ public enum expose {
    * @return a reference to the list of fragments in the argument
    */
   public static List<VariableDeclarationFragment> fragments(final FieldDeclaration d) {
-    return As.fragments(d.fragments());
+    return ast.fragments(d.fragments());
   }
   /**
    * Expose the list of fragments in a {@link VariableDeclarationExpression}
@@ -79,7 +79,7 @@ public enum expose {
    * @return a reference to the list of fragments in the argument
    */
   public static List<VariableDeclarationFragment> fragments(final VariableDeclarationExpression e) {
-    return As.fragments(e.fragments());
+    return ast.fragments(e.fragments());
   }
   /**
    * Expose the list of fragments in a {@link VariableDeclarationStatement}
@@ -88,7 +88,7 @@ public enum expose {
    * @return a reference to the list of fragments in the argument
    */
   public static List<VariableDeclarationFragment> fragments(final VariableDeclarationStatement s) {
-    return As.fragments(s.fragments());
+    return ast.fragments(s.fragments());
   }
   /**
    * Expose the list of initializers contained in a {@link ForStatement}
@@ -115,6 +115,6 @@ public enum expose {
    * @return a reference to the list of statements contained in the argument
    */
   public static List<Statement> statements(final Block b) {
-    return As.statements(b.statements());
+    return ast.statements(b.statements());
   }
 }

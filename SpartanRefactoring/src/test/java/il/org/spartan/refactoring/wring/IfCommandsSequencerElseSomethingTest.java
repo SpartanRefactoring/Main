@@ -1,16 +1,16 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.SpartanAssert.*;
+import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.utils.Utils.*;
 import static org.hamcrest.text.IsEqualIgnoringWhiteSpace.*;
 import static org.junit.Assert.*;
+import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
-import il.org.spartan.utils.Utils;
 
 import java.util.*;
 
@@ -49,7 +49,7 @@ public class IfCommandsSequencerElseSomethingTest {
     assertThat(w, notNullValue());
     assertThat(w, instanceOf(WRING.getClass()));
     final String wrap = Wrap.Statement.on(s.toString());
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(wrap);
+    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(wrap);
     assertThat(u, notNullValue());
     final Document d = new Document(wrap);
     assertThat(d, notNullValue());
@@ -67,7 +67,7 @@ public class IfCommandsSequencerElseSomethingTest {
   @org.junit.Test public void checkStepsTrimmer() throws MalformedTreeException, BadLocationException {
     final String input = "if (a) return b; else a();";
     final String wrap = Wrap.Statement.on(input);
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(wrap);
+    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(wrap);
     assertThat(u, notNullValue());
     final IfStatement s = Extract.firstIfStatement(u);
     assertThat(s, notNullValue());
@@ -107,7 +107,7 @@ public class IfCommandsSequencerElseSomethingTest {
 
   @RunWith(Parameterized.class)//
   public static class OutOfScope extends AbstractWringTest.OutOfScope<IfStatement> {
-    static String[][] cases = Utils.asArray(//
+    static String[][] cases = as.array(//
         new String[] { "Literal vs. Literal", "if (a) return b; else c;" }, //
         new String[] { "Simple if return", "if (a) return b; else return c;" }, //
         new String[] { "Simply nested if return", "{if (a)  return b; else return c;}" }, //
@@ -138,7 +138,7 @@ public class IfCommandsSequencerElseSomethingTest {
   @RunWith(Parameterized.class)//
   @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   public static class Wringed extends AbstractWringTest.Wringed.IfStatementAndSurrounding {
-    private static String[][] cases = Utils.asArray(//
+    private static String[][] cases = as.array(//
         new String[] { "Vanilla: sequencer in then", "if (a) return b; else a();", "if(a)return b;a();" }, //
         new String[] { "Vanilla: sequencer in else", "if (a) return b; else a();", "if(a)return b;a();" }, //
         new String[] { "Plant two statements", "if (a) return b; else a(); f();", "if(a)return b;a(); f();" }, //

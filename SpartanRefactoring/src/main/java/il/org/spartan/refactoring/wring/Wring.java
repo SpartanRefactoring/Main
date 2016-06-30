@@ -10,6 +10,7 @@ import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;
 
+import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.Operator;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -372,7 +373,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
 }
 
 final class LocalInliner {
-  static Wrapper<ASTNode>[] wrap(final ASTNode[] ns) {
+  static Wrapper<ASTNode>[] wrap(final ASTNode @NonNull [] ns) {
     @SuppressWarnings("unchecked") final Wrapper<ASTNode>[] $ = new Wrapper[ns.length];
     int i = 0;
     for (final ASTNode t : ns)

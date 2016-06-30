@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import static il.org.spartan.hamcrest.SpartanAssert.*;
-import static il.org.spartan.utils.Utils.*;
+import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.Utils.*;
 import static org.junit.Assert.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.*;
@@ -47,7 +47,7 @@ import org.eclipse.text.edits.*;
    */
   public static Statement asSingle(final String statement) {
     assertThat(statement, notNullValue());
-    final ASTNode n = As.STATEMENTS.ast(statement);
+    final ASTNode n = ast.STATEMENTS.ast(statement);
     assertThat(n, notNullValue());
     return Extract.singleStatement(n);
   }
@@ -60,21 +60,21 @@ import org.eclipse.text.edits.*;
     }
   }
   public static String apply(final Trimmer t, final String from) {
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(from);
+    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(from);
     assertThat(u, notNullValue());
     final Document d = new Document(from);
     assertThat(d, notNullValue());
     return TESTUtils.rewrite(t, u, d).get();
   }
   static void assertNoOpportunity(final Spartanization s, final String from) {
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(from);
+    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(from);
     assertThat(u.toString(), TrimmerTestsUtils.countOpportunities(s, u), is(0));
   }
   static void assertNotEvenSimilar(final String expected, final String actual) {
     assertThat(compressSpaces(expected), not(compressSpaces(actual)));
   }
   static void assertOneOpportunity(final Spartanization s, final String from) {
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(from);
+    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(from);
     assertThat(u, notNullValue());
     assertThat(TrimmerTestsUtils.countOpportunities(s, u), greaterThanOrEqualTo(1));
   }

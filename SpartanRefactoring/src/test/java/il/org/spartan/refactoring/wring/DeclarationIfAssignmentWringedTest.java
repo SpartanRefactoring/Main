@@ -1,15 +1,14 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.SpartanAssert.*;
+import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.utils.Utils.*;
 import static org.junit.Assert.*;
+import il.org.spartan.*;
 import il.org.spartan.Assert;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.utils.As;
-import il.org.spartan.utils.Utils;
 
 import java.util.*;
 
@@ -31,7 +30,7 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
   final static DeclarationInitializerIfAssignment WRING = new DeclarationInitializerIfAssignment();
   /** Description of a test case for {@link Parameter} annotation */
   protected static final String DESCRIPTION = "Test #{index}. ({0}) \"{1}\" ==> \"{2}\"";
-  private static String[][] cases = Utils.asArray(//
+  private static String[][] cases = as.array(//
       new String[] { "Vanilla with newline", "int a = 2; \n if (b) a =3;", "int a= b?3:2;" }, //
       new String[] { "Empty else", "int a=2; if (x) a = 3; else ;", " int a = x ? 3 : 2;" }, //
       new String[] { "Vanilla", "int a = 2; if (b) a =3;", "int a= b?3:2;" }, //
@@ -121,7 +120,7 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     if (inner == null)
       return;
     final Document d = new Document(Wrap.Statement.on(input));
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(d);
+    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(d);
     final Document actual = TESTUtils.rewrite(new Trimmer(), u, d);
     final String peeled = Wrap.Statement.off(actual.get());
     if (expected.equals(peeled))
@@ -147,14 +146,14 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     r.remove(s, null);
   }
   @Override protected CompilationUnit asCompilationUnit() {
-    final CompilationUnit $ = (CompilationUnit) As.COMPILIATION_UNIT.ast(Wrap.Statement.on(input));
+    final CompilationUnit $ = (CompilationUnit) ast.COMPILIATION_UNIT.ast(Wrap.Statement.on(input));
     assertThat($, notNullValue());
     return $;
   }
   @Override protected VariableDeclarationFragment asMe() {
-    return Extract.firstVariableDeclarationFragment(As.STATEMENTS.ast(input));
+    return Extract.firstVariableDeclarationFragment(ast.STATEMENTS.ast(input));
   }
   private IfStatement findIf() {
-    return Extract.firstIfStatement(As.STATEMENTS.ast(input));
+    return Extract.firstIfStatement(ast.STATEMENTS.ast(input));
   }
 }

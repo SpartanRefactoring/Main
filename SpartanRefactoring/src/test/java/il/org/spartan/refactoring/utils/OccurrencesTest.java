@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.hamcrest.SpartanAssert.*;
+import static il.org.spartan.SpartanAssert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static org.junit.Assert.*;
 import il.org.spartan.refactoring.spartanizations.*;
@@ -20,7 +20,7 @@ import org.junit.runners.*;
 public class OccurrencesTest {
   private final String from = "int a = 2,b; if (a+b) a =3;";
   private final String wrap = Wrap.Statement.on(from);
-  private final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(wrap);
+  private final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(wrap);
   private final SimpleName a = Extract.firstVariableDeclarationFragment(u).getName();
   private final VariableDeclarationStatement ab = (VariableDeclarationStatement) a.getParent().getParent();
   private final SimpleName b = ((VariableDeclarationFragment) ab.fragments().get(1)).getName();

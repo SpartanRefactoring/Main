@@ -1,11 +1,10 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.SpartanAssert.*;
+import static il.org.spartan.SpartanAssert.*;
 import static org.junit.Assert.*;
 import il.org.spartan.Assert;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.utils.As;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -37,7 +36,7 @@ public class IfEmptyThenEmptyElseTest {
   @Test public void runGo() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = Wrap.Statement.on(INPUT + "");
     final Document d = new Document(input);
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(d.get());
+    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(d.get());
     final IfStatement s = Extract.firstIfStatement(u);
     assertThat(s, iz("if(b);else;"));
     final ASTRewrite r = ASTRewrite.create(u.getAST());
@@ -47,7 +46,7 @@ public class IfEmptyThenEmptyElseTest {
     assertThat(e, notNullValue());
     assertThat(e.getChildren().length, greaterThan(0));
     e.apply(d);
-    assertThat(d.get(), Extract.firstIfStatement(As.COMPILIATION_UNIT.ast(d.get())), nullValue());
+    assertThat(d.get(), Extract.firstIfStatement(ast.COMPILIATION_UNIT.ast(d.get())), nullValue());
   }
   @Test public void scopeIncludes() {
     Assert.assertThat(WRING.scopeIncludes(IF), is(true));

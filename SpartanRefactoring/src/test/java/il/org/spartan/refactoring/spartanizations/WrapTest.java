@@ -1,7 +1,8 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import static il.org.spartan.hamcrest.SpartanAssert.*;
+import static il.org.spartan.SpartanAssert.*;
 import static il.org.spartan.refactoring.spartanizations.Wrap.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 import org.junit.*;

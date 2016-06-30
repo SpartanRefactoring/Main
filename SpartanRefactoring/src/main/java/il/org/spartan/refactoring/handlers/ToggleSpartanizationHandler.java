@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.handlers;
 
-import static il.org.spartan.utils.Utils.*;
+import static il.org.spartan.Utils.*;
 import il.org.spartan.refactoring.builder.*;
 
 import org.eclipse.core.commands.*;

@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.SpartanAssert.*;
+import static il.org.spartan.SpartanAssert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
@@ -20,7 +20,7 @@ public class WringsTest {
   @Test public void renameIntoDoWhile() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = "void f() { int b = 3; do ; while(b != 0); }";
     final Document d = Wrap.Method.intoDocument(input);
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(d);
+    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(d);
     final MethodDeclaration m = Extract.firstMethodDeclaration(u);
     assertThat(m, iz(input));
     final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(m);
@@ -36,7 +36,7 @@ public class WringsTest {
   @Test public void countInEnhancedFor() throws IllegalArgumentException, MalformedTreeException {
     final String input = "int f() { for (int a: as) return a; }";
     final Document d = Wrap.Method.intoDocument(input);
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(d);
+    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(d);
     final MethodDeclaration m = Extract.firstMethodDeclaration(u);
     assertThat(m, iz(input));
     final Block b = m.getBody();
@@ -50,7 +50,7 @@ public class WringsTest {
   @Test public void renameInEnhancedFor() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = "int f() { for (int a: as) return a; }";
     final Document d = Wrap.Method.intoDocument(input);
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(d);
+    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(d);
     final MethodDeclaration m = Extract.firstMethodDeclaration(u);
     assertThat(m, iz(input));
     final Block b = m.getBody();

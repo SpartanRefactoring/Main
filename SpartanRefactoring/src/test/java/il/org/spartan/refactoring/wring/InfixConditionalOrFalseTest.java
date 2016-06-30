@@ -1,11 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.SpartanAssert.*;
+import static il.org.spartan.SpartanAssert.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.junit.Assert.*;
+import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.utils.Utils;
 
 import java.util.*;
 
@@ -29,7 +29,7 @@ public enum InfixConditionalOrFalseTest {
 
   @RunWith(Parameterized.class)//
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Exprezzion.Infix {
-    static String[][] cases = Utils.asArray(//
+    static String[][] cases = as.array(//
         new String[] { "Product is not AND/OR", "2*a" }, //
         new String[] { "AND without boolean", "b && a" }, //
         new String[] { "OR without boolean", "b || a" }, //
@@ -92,7 +92,7 @@ public enum InfixConditionalOrFalseTest {
   @RunWith(Parameterized.class)//
   @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   public static class Wringed extends AbstractWringTest.WringedExpression.Infix {
-    static String[][] cases = Utils.asArray(//
+    static String[][] cases = as.array(//
         new String[] { "Many parenthesis", "a || (((false))) || b", "a || b" }, //
         new String[] { "false || false", "false ||false", "false" }, //
         new String[] { "3 OR TRUE", "false || false || false", "false" }, //

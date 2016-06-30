@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import static il.org.spartan.hamcrest.SpartanAssert.*;
+import static il.org.spartan.SpartanAssert.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static org.junit.Assert.*;
@@ -52,7 +52,7 @@ public class SingletStatementTest {
     assertThat(singleStatement(s("{a();}")), notNullValue());
   }
   @Test public void peelIf() {
-    final ASTNode n = As.STATEMENTS.ast("{if (a) return b; else return c;}");
+    final ASTNode n = ast.STATEMENTS.ast("{if (a) return b; else return c;}");
     assertThat(n, notNullValue());
     final List<Statement> ss = Extract.statements(n);
     assertThat(ss, notNullValue());
@@ -60,7 +60,7 @@ public class SingletStatementTest {
     assertThat(Extract.singleStatement(n), notNullValue());
   }
   @Test public void peelIPlusPlus() {
-    final ASTNode n = As.STATEMENTS.ast("{i++;}");
+    final ASTNode n = ast.STATEMENTS.ast("{i++;}");
     assertThat(n, notNullValue());
     final List<Statement> ss = Extract.statements(n);
     assertThat(ss, notNullValue());

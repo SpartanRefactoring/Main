@@ -1,7 +1,7 @@
 package il.org.spartan.hamcrest;
 
-import static il.org.spartan.hamcrest.SpartanAssert.*;
-import static il.org.spartan.utils.Utils.*;
+import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.Utils.*;
 import il.org.spartan.misc.*;
 
 import org.hamcrest.*;

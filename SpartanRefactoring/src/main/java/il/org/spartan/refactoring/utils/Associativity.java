@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.utils.Utils.*;
+import static il.org.spartan.Utils.*;
 
 import org.eclipse.jdt.core.dom.*;
 

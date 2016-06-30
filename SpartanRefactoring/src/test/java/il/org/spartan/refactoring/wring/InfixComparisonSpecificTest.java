@@ -1,18 +1,17 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.SpartanAssert.*;
+import static il.org.spartan.SpartanAssert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static org.junit.Assert.*;
+import il.org.spartan.*;
 import il.org.spartan.Assert;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Noneligible;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.utils.Utils;
 
 import java.util.*;
 
@@ -73,7 +72,7 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
   }
   @Test public void comparisonWithSpecificWithinScope() {
     Assert.assertThat(Is.constant(left(i("this != a"))), is(true));
-    final ASTNode n = As.EXPRESSION.ast("a != this");
+    final ASTNode n = ast.EXPRESSION.ast("a != this");
     assertThat(n, notNullValue());
     assertWithinScope(Funcs.asExpression(n));
     correctScopeExpression(n);
@@ -141,7 +140,7 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
 
   @RunWith(Parameterized.class)//
   public static class Noneligible extends AbstractWringTest.Noneligible.Infix {
-    static String[][] cases = Utils.asArray(//
+    static String[][] cases = as.array(//
         // Literal
         new String[] { "LT/literal", "a<2" }, //
         new String[] { "LE/literal", "a<=2" }, //
@@ -202,7 +201,7 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
 
   @RunWith(Parameterized.class)//
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Exprezzion.Infix {
-    static String[][] cases = Utils.asArray(//
+    static String[][] cases = as.array(//
         new String[] { "Expression vs. Expression", " 6 - 7 < 2 + 1   " }, //
         new String[] { "Literal vs. Literal", "1 < 102333" }, //
         null);
@@ -226,7 +225,7 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
   @RunWith(Parameterized.class)//
   @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   public static class Wringed extends AbstractWringTest.WringedExpression.Infix {
-    private static String[][] cases = Utils.asArray(//
+    private static String[][] cases = as.array(//
         // Literal
         new String[] { "LT/literal", "2<a", "a>2" }, //
         new String[] { "LE/literal", "2<=a", "a>=2" }, //

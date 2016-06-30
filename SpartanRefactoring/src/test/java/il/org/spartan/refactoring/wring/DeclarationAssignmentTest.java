@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.SpartanAssert.*;
+import static il.org.spartan.SpartanAssert.*;
+import il.org.spartan.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 import il.org.spartan.utils.*;
@@ -31,7 +32,7 @@ public class DeclarationAssignmentTest {
 
   @RunWith(Parameterized.class)//
   public static class OutOfScope extends AbstractWringTest.OutOfScope<VariableDeclarationFragment> {
-    static String[][] cases = Utils.asArray(//
+    static String[][] cases = as.array(//
         new String[] { "Wrong assignnet", "int a = 0; if (x)  a+= 5" }, //
         new String[] { "Wrong assignnet", "int a = 0; if (a)  a= 5;" }, //
         null);
@@ -55,7 +56,7 @@ public class DeclarationAssignmentTest {
   @RunWith(Parameterized.class)//
   @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   public static class Wringed extends AbstractWringTest.Wringed.WringedVariableDeclarationFragmentAndSurrounding {
-    private static String[][] cases = Utils.asArray(//
+    private static String[][] cases = as.array(//
         new String[] { "Vanilla", "int a; a =3;", "int a=3;" }, //
         null);
 

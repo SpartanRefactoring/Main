@@ -1,9 +1,10 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.SpartanAssert.*;
+import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
-import static il.org.spartan.utils.Utils.*;
 import static org.junit.Assert.*;
+import il.org.spartan.*;
 import il.org.spartan.misc.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.spartanizations.*;
@@ -146,7 +147,7 @@ public class TrimmerTestsUtils {
       assertSimilar(get(), peeled);
     }
     @SuppressWarnings("unchecked") private static Set<String> getComments(final String unpeeled) {
-      final List<Comment> cs = ((CompilationUnit) As.COMPILIATION_UNIT.ast(unpeeled)).getCommentList();
+      final List<Comment> cs = ((CompilationUnit) ast.COMPILIATION_UNIT.ast(unpeeled)).getCommentList();
       final Set<String> $ = new HashSet<>();
       for (final Comment c : cs)
         $.add(unpeeled.substring(c.getStartPosition(), c.getStartPosition() + c.getLength()));
@@ -173,7 +174,7 @@ public class TrimmerTestsUtils {
     return $.get();
   }
   static String apply(final Trimmer t, final String from) {
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(from);
+    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(from);
     assertThat(u, notNullValue());
     final Document d = new Document(from);
     assertThat(d, notNullValue());
@@ -182,7 +183,7 @@ public class TrimmerTestsUtils {
     return $.get();
   }
   static String apply(final Wring<? extends ASTNode> ns, final String from) {
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(from);
+    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(from);
     assertThat(u, notNullValue());
     final Document d = new Document(from);
     assertThat(d, notNullValue());

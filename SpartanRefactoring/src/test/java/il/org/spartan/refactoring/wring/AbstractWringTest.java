@@ -1,11 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.SpartanAssert.*;
+import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
-import static il.org.spartan.utils.Utils.*;
 import static org.junit.Assert.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
@@ -68,7 +68,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
   }
   void assertLegible(final String expression) {
     if (inner != null)
-      assertThat(inner.eligible((N) As.EXPRESSION.ast(expression)), is(true));
+      assertThat(inner.eligible((N) ast.EXPRESSION.ast(expression)), is(true));
   }
   void assertNotLegible(final Block b) {
     if (inner != null)
@@ -216,7 +216,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
           assertThat(inner.scopeIncludes(asMe()), is(false));
       }
       @Override protected VariableDeclarationFragment asMe() {
-        return Extract.firstVariableDeclarationFragment(As.STATEMENTS.ast(input));
+        return Extract.firstVariableDeclarationFragment(ast.STATEMENTS.ast(input));
       }
     }
 
@@ -322,7 +322,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
        * first If statement in the input.
        */
       @Override protected IfStatement asMe() {
-        return Extract.firstIfStatement(As.STATEMENTS.ast(input));
+        return Extract.firstIfStatement(ast.STATEMENTS.ast(input));
       }
     }
 
@@ -352,7 +352,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
       }
       @Override protected final CompilationUnit asCompilationUnit() {
         final String s = input;
-        final ASTNode $ = As.COMPILIATION_UNIT.ast(Wrap.Statement.on(s));
+        final ASTNode $ = ast.COMPILIATION_UNIT.ast(Wrap.Statement.on(s));
         assertThat($, is(notNullValue()));
         assertThat($, is(instanceOf(CompilationUnit.class)));
         return (CompilationUnit) $;
@@ -546,7 +546,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
     }
     @Override protected CompilationUnit asCompilationUnit() {
       final String s = input;
-      final ASTNode $ = As.COMPILIATION_UNIT.ast(Wrap.Expression.on(s));
+      final ASTNode $ = ast.COMPILIATION_UNIT.ast(Wrap.Expression.on(s));
       assertThat($, is(notNullValue()));
       assertThat($, is(instanceOf(CompilationUnit.class)));
       return (CompilationUnit) $;
@@ -729,7 +729,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
     }
     @Override protected final CompilationUnit asCompilationUnit() {
       final String s = input;
-      final ASTNode $ = As.COMPILIATION_UNIT.ast(Wrap.Statement.on(s));
+      final ASTNode $ = ast.COMPILIATION_UNIT.ast(Wrap.Statement.on(s));
       assertThat($, is(notNullValue()));
       assertThat($, is(instanceOf(CompilationUnit.class)));
       return (CompilationUnit) $;
@@ -817,7 +817,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
       if (input == null)
         return;
       final Document d = new Document(Wrap.Statement.on(input));
-      final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(d);
+      final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(d);
       final Document actual = TESTUtils.rewrite(wringer, u, d);
       final String peeled = Wrap.Statement.off(actual.get());
       if (expected.equals(peeled))
@@ -828,7 +828,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
       assertSimilar(Wrap.Statement.on(expected), actual);
     }
     @Override protected CompilationUnit asCompilationUnit() {
-      final CompilationUnit $ = (CompilationUnit) As.COMPILIATION_UNIT.ast(Wrap.Statement.on(input));
+      final CompilationUnit $ = (CompilationUnit) ast.COMPILIATION_UNIT.ast(Wrap.Statement.on(input));
       assertThat($, notNullValue());
       return $;
     }
@@ -841,7 +841,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
       return new Document(Wrap.Statement.on(input));
     }
     @Override protected VariableDeclarationFragment asMe() {
-      return Extract.firstVariableDeclarationFragment(As.STATEMENTS.ast(input));
+      return Extract.firstVariableDeclarationFragment(ast.STATEMENTS.ast(input));
     }
   }
 

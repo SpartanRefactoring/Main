@@ -1,5 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.utils.*;
 
@@ -25,7 +26,7 @@ public class TernaryPushdownTest {
   @RunWith(Parameterized.class)//
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Exprezzion<ConditionalExpression> {
     static String[][] cases = Utils
-        .asArray(
+        .as.array(
             //
             new String[] { "Expression vs. Expression", " 6 - 7 < 2 + 1   " }, //
             new String[] { "Literal vs. Literal", "1 < 102333" }, //
@@ -82,7 +83,7 @@ public class TernaryPushdownTest {
   @RunWith(Parameterized.class)//
   @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   public static class Wringed extends AbstractWringTest.WringedExpression.Conditional {
-    private static String[][] cases = Utils.asArray(//
+    private static String[][] cases = as.array(//
         new String[] { "almost identical function call", "a ? f(b) :f(c)", "f(a ? b : c)" }, //
         new String[] { "almost identical method call", "a ? y.f(b) :y.f(c)", "y.f(a ? b : c)" }, //
         new String[] { "almost identical two arguments function call 1/2", "a ? f(b,x) :f(c,x)", "f(a ? b : c,x)" }, //

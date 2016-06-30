@@ -1,8 +1,8 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.SpartanAssert.*;
+import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
-import static il.org.spartan.utils.Utils.*;
 import il.org.spartan.refactoring.spartanizations.*;
 
 import org.junit.*;

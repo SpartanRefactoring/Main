@@ -1,8 +1,8 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import static il.org.spartan.Assert.*;
+import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
-import static il.org.spartan.utils.Utils.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.*;
 
@@ -37,7 +37,7 @@ public class InOutTest {
   public static Collection<Object[]> cases() {
     return new FileTestUtils.Files() {
       @Override Object[] makeCase(final Spartanization s, final File folder, final File input, final String name) {
-        if (name.endsWith(testSuffix) && As.stringBuilder(input).indexOf(testKeyword) > 0)
+        if (name.endsWith(testSuffix) && ast.stringBuilder(input).indexOf(testKeyword) > 0)
           return objects(s, name, input, makeOutFile(input));
         if (!name.endsWith(".in"))
           return null;
@@ -47,17 +47,17 @@ public class InOutTest {
     }.go();
   }
   protected static void go(final Spartanization s, final File from, final File to) {
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(FileTestUtils.makeInFile(from));
+    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(FileTestUtils.makeInFile(from));
     assertThat(u.toString(), TrimmerTestsUtils.countOpportunities(s, u), is(1));
-    TESTUtils.assertOneOpportunity(s, As.string(from));
+    TESTassertOneOpportunity(s, ast.string(from));
     final String expected;
     final Document rewrite;
     if (!from.getName().endsWith(FileTestUtils.testSuffix)) {
-      expected = As.string(to);
-      rewrite = TESTUtils.rewrite(s, u, new Document(As.string(from)));
+      expected = ast.string(to);
+      rewrite = TESTUtils.rewrite(s, u, new Document(ast.string(from)));
     } else {
-      expected = As.string(FileTestUtils.makeOutFile(to));
-      rewrite = TESTUtils.rewrite(s, u, new Document(As.string(FileTestUtils.makeInFile(from))));
+      expected = ast.string(FileTestUtils.makeOutFile(to));
+      rewrite = TESTUtils.rewrite(s, u, new Document(ast.string(FileTestUtils.makeInFile(from))));
     }
     assertSimilar(expected, rewrite.get());
   }

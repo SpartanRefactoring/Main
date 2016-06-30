@@ -1,12 +1,12 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.SpartanAssert.*;
+import static il.org.spartan.SpartanAssert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static org.junit.Assert.*;
+import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
-import il.org.spartan.utils.Utils;
 
 import java.util.*;
 
@@ -30,26 +30,26 @@ public class IfReturnNoElseReturnTest {
 
   @Test public void checkFirstIfStatement1() {
     final String s = "if (a) return b; return a();";
-    final IfStatement i = Extract.firstIfStatement(As.STATEMENTS.ast(s));
+    final IfStatement i = Extract.firstIfStatement(ast.STATEMENTS.ast(s));
     assertThat(i, notNullValue());
     assertThat(i.toString(), WRING.scopeIncludes(i), is(true));
   }
   @Test public void checkFirstIfStatement2() {
     final String s = "if (a) return b; else return a();";
-    final IfStatement i = Extract.firstIfStatement(As.STATEMENTS.ast(s));
+    final IfStatement i = Extract.firstIfStatement(ast.STATEMENTS.ast(s));
     assertThat(i, notNullValue());
     assertThat(i.toString(), WRING.scopeIncludes(i), is(false));
   }
   @Test public void checkFirstIfStatement3() {
     final String s = "if (a) a= b; else a=c;";
-    final IfStatement i = Extract.firstIfStatement(As.STATEMENTS.ast(s));
+    final IfStatement i = Extract.firstIfStatement(ast.STATEMENTS.ast(s));
     assertThat(i, notNullValue());
     assertThat(i.toString(), WRING.scopeIncludes(i), is(false));
   }
 
   @RunWith(Parameterized.class)//
   public static class OutOfScope extends AbstractWringTest.OutOfScope<IfStatement> {
-    static String[][] cases = Utils.asArray(//
+    static String[][] cases = as.array(//
         new String[] { "Another distinct assignment", "if (a) a /= b; else a %= c;" }, //
         new String[] { "Literal vs. Literal", "if (a) return b; else c;" }, //
         new String[] { "Nested if return", "if (a) {;{{;;return b; }}} else {{{;return c;};;};}" }, //
@@ -154,7 +154,7 @@ public class IfReturnNoElseReturnTest {
       assertThat(Extract.nextReturn(asMe()), notNullValue());
     }
     @Test public void isfStatementElseIsEmpty() {
-      assertThat(Extract.statements(Extract.firstIfStatement(As.STATEMENTS.ast(input)).getElseStatement()).size(), is(0));
+      assertThat(Extract.statements(Extract.firstIfStatement(ast.STATEMENTS.ast(input)).getElseStatement()).size(), is(0));
     }
     @Test public void isIfStatement() {
       assertThat(input, asMe(), notNullValue());

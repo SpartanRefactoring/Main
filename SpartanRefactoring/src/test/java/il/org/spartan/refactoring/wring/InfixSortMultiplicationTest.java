@@ -1,16 +1,16 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.SpartanAssert.*;
+import static il.org.spartan.SpartanAssert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static org.junit.Assert.*;
+import il.org.spartan.*;
 import il.org.spartan.Assert;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.utils.LiteralParser.Types;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Noneligible;
-import il.org.spartan.utils.Utils;
 
 import java.util.*;
 
@@ -68,7 +68,7 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
 
   @RunWith(Parameterized.class)//
   public static class Noneligible extends AbstractWringTest.Noneligible.Infix {
-    static String[][] cases = Utils.asArray(//
+    static String[][] cases = as.array(//
         new String[] { "Plain product of two, sorted", "2*a" }, //
         new String[] { "Plain product of two, no order", "a*b" }, //
         new String[] { "Plain product of three, sorted", "2*a*b" }, //
@@ -120,7 +120,7 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
   @RunWith(Parameterized.class)//
   @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   public static class Wringed extends AbstractWringTest.WringedExpression.Infix {
-    private static String[][] cases = Utils.asArray(//
+    private static String[][] cases = as.array(//
         new String[] { "Constant first", "a*2", "2*a" }, //
         new String[] { "Constant first two arguments", "a*2*b", "2*a*b" }, //
         new String[] { "Function with fewer arguments first", "f(a,b,c)*f(a,b)*f(a)", "f(a)*f(a,b)*f(a,b,c)" }, //

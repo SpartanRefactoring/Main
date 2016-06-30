@@ -1,8 +1,8 @@
 package il.org.spartan.refactoring.utils;
 
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.utils.Utils.*;
-import il.org.spartan.utils.Utils;
+import il.org.spartan.*;
 
 import java.util.*;
 
@@ -20,13 +20,13 @@ public enum Collect {
   /** collects semantic (multiple uses for loops) uses of an expression */
   USES_SEMANTIC {
     @Override ASTVisitor[] collectors(final SimpleName n, final List<SimpleName> into) {
-      return asArray(new UsesCollector(into, n));
+      return as.array(new UsesCollector(into, n));
     }
   },
   /** collects assignments of an expression */
   DEFINITIONS {
     @Override ASTVisitor[] collectors(final SimpleName n, final List<SimpleName> into) {
-      return asArray(definitionsCollector(into, n));
+      return as.array(definitionsCollector(into, n));
     }
   },
   /**
@@ -35,7 +35,7 @@ public enum Collect {
    */
   BOTH_SEMANTIC {
     @Override ASTVisitor[] collectors(final SimpleName n, final List<SimpleName> into) {
-      return asArray(new UsesCollector(into, n), lexicalUsesCollector(into, n), definitionsCollector(into, n));
+      return as.array(new UsesCollector(into, n), lexicalUsesCollector(into, n), definitionsCollector(into, n));
     }
   },
   /**
@@ -44,7 +44,7 @@ public enum Collect {
    */
   BOTH_LEXICAL {
     @Override ASTVisitor[] collectors(final SimpleName n, final List<SimpleName> into) {
-      return asArray(lexicalUsesCollector(into, n), definitionsCollector(into, n));
+      return as.array(lexicalUsesCollector(into, n), definitionsCollector(into, n));
     }
   };
   static final ASTMatcher matcher = new ASTMatcher();

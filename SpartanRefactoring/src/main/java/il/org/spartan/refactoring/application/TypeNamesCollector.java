@@ -29,7 +29,7 @@ public class TypeNamesCollector {
     }
   }
   private static void collect(final String javaCode) {
-    collect((CompilationUnit) As.COMPILIATION_UNIT.ast(javaCode));
+    collect((CompilationUnit) ast.COMPILIATION_UNIT.ast(javaCode));
   }
   private static void collect(final CompilationUnit u) {
     u.accept(new ASTVisitor() {

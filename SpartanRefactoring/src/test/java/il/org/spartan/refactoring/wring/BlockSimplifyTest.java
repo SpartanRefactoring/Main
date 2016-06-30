@@ -1,5 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 import il.org.spartan.utils.*;
@@ -26,7 +27,7 @@ public enum BlockSimplifyTest {
 
   @RunWith(Parameterized.class)//
   public static class OutOfScope extends AbstractWringTest.OutOfScope<Block> {
-    static String[][] cases = Utils.asArray(//
+    static String[][] cases = as.array(//
         new String[] { "Simply nested if return", "{if (a)  return b; else return c;}" }, //
         new String[] { "Simply nested if return", "{if (a)  return b; else return c;}" }, //
         new String[] { "Nested if return", "if (a) {;{{;;return b; }}} else {{{;return c;};;};}" }, //
@@ -52,7 +53,7 @@ public enum BlockSimplifyTest {
   @RunWith(Parameterized.class)//
   @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   public static class Wringed extends AbstractWringTest.WringedBlock {
-    private static String[][] cases = Utils.asArray(//
+    private static String[][] cases = as.array(//
         // Literal
         new String[] { "Empty", "{;;}", "" }, //
         new String[] { "Complex empty", "{;;{;{{}}}{;}{};}", "" }, //

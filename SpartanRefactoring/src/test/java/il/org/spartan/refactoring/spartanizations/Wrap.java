@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import static il.org.spartan.utils.Utils.*;
+import static il.org.spartan.Utils.*;
 import il.org.spartan.refactoring.utils.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -77,7 +77,7 @@ public enum Wrap {
    *         of the wrapped parameter.
    */
   public CompilationUnit intoCompilationUnit(final String codeFragment) {
-    return (CompilationUnit) As.COMPILIATION_UNIT.ast(on(codeFragment));
+    return (CompilationUnit) ast.COMPILIATION_UNIT.ast(on(codeFragment));
   }
   /**
    * Wrap a given code fragment, and converts it into a {@link Document}

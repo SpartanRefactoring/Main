@@ -1,9 +1,10 @@
 package il.org.spartan.refactoring.utils;
 
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
-import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
+import il.org.spartan.*;
 
 import java.util.*;
 
@@ -325,8 +326,10 @@ public enum Extract {
     final List<Expression> $ = new ArrayList<>();
     $.add(left(e));
     $.add(right(e));
-    if (e.hasExtendedOperands())
-      $.addAll(e.extendedOperands());
+    if (e.hasExtendedOperands()) {
+      @SuppressWarnings("unchecked") final List<Expression> extendedOperands = e.extendedOperands();
+      $.addAll(extendedOperands);
+    }
     return $;
   }
   /**

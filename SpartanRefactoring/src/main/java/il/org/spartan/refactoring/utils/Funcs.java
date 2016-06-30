@@ -1,14 +1,14 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
+import il.org.spartan.*;
 import il.org.spartan.refactoring.wring.*;
-import il.org.spartan.utils.Utils;
 
 import java.util.*;
 
+import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -251,7 +251,7 @@ public enum Funcs {
    *         the first one or false otherwise
    */
   public static boolean compatible(final Assignment base, final Assignment... as) {
-    if (hasNull(base, as))
+    if (has.nulls(base, as))
       return false;
     for (final Assignment a : as)
       if (a == null || !compatibleOps(base.getOperator(), a.getOperator()) || !compatibleNames(left(base), left(a)))
@@ -266,7 +266,7 @@ public enum Funcs {
    * @return true if all names are the same (string wise) or false otherwise
    */
   public static boolean compatibleNames(final Expression cmpTo, final Expression... names) {
-    if (hasNull(cmpTo, names) || cmpTo.getNodeType() != SIMPLE_NAME)
+    if (has.nulls(cmpTo, names) || cmpTo.getNodeType() != SIMPLE_NAME)
       return false;
     for (final Expression name : names)
       if (name == null || name.getNodeType() != SIMPLE_NAME
@@ -280,7 +280,7 @@ public enum Funcs {
    * @return true if all the operator are the same or false otherwise
    */
   public static boolean compatibleOps(final Assignment.Operator cmpTo, final Assignment.Operator... os) {
-    if (hasNull(cmpTo, os))
+    if (has.nulls(cmpTo, os))
       return false;
     for (final Assignment.Operator o : os)
       if (o == null || o != cmpTo)
@@ -372,7 +372,7 @@ public enum Funcs {
    *         (or if s or name are null)
    */
   public static VariableDeclarationFragment getVarDeclFrag(final ASTNode n, final Expression name) {
-    return hasNull(n, name) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || name.getNodeType() != SIMPLE_NAME ? null
+    return has.nulls(n, name) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || name.getNodeType() != SIMPLE_NAME ? null
         : getVarDeclFrag(expose.fragments((VariableDeclarationStatement) n), (SimpleName) name);
   }
   /**
@@ -501,9 +501,14 @@ public enum Funcs {
   public static ThrowStatement makeThrowStatement(final Expression e) {
     return Subject.operand(e).toThrow();
   }
+  /**
+   * @param e JD
+   * @return a non-negative integer, representing the negation level of the
+   *         parameter
+   */
   public static int negationLevel(final Expression e) {
-    return e instanceof PrefixExpression ? negationLevel((PrefixExpression) e)
-        : e instanceof ParenthesizedExpression ? negationLevel(((ParenthesizedExpression) e).getExpression())
+    return e instanceof PrefixExpression ? negationLevel((PrefixExpression) e) //
+        : e instanceof ParenthesizedExpression ? negationLevel(Extract.core(e)) //
             : asBit(e instanceof NumberLiteral && ((NumberLiteral) e).getToken().startsWith("-"));
   }
   /**
@@ -514,7 +519,7 @@ public enum Funcs {
    * @return the following item in the list, if such such an item exists,
    *         otherwise, the last node
    */
-  public static <T> T next(final int i, final List<T> ts) {
+  public static <@Nullable T> T next(final int i, final List<T> ts) {
     return !inRange(i + 1, ts) ? last(ts) : ts.get(i + 1);
   }
   /**
@@ -526,10 +531,16 @@ public enum Funcs {
   public static ASTNode parent(final ASTNode n) {
     return n.getParent();
   }
+  /**
+   * Peels all consecutive negations from an expression
+   *
+   * @param $ JD
+   * @return the parameter, thus peeled
+   */
   public static Expression peelNegation(final Expression $) {
     return //
     $ instanceof PrefixExpression ? peelNegation((PrefixExpression) $) //
-        : $ instanceof ParenthesizedExpression ? peelNegation(((ParenthesizedExpression) $).getExpression()) //
+        : $ instanceof ParenthesizedExpression ? peelNegation(Extract.core($)) //
             : $ instanceof NumberLiteral ? peelNegation((NumberLiteral) $) : $;
   }
   /**
@@ -577,7 +588,7 @@ public enum Funcs {
    * @return the textual representation of the parameter,
    */
   public static String removeWhites(final ASTNode n) {
-    return Utils.removeWhites(n.toString());
+    return removeWhites(n.toString());
   }
   /**
    * Shorthand for {@link Assignment#getRightHandSide()}

@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.hamcrest.SpartanAssert.*;
+import static il.org.spartan.SpartanAssert.*;
+
 import org.junit.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) public class IntoTest {

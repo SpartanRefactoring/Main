@@ -100,7 +100,7 @@ public class UnifiedGroup implements Iterable<LinkedList<Integer>> {
         unionFind.union(first, i);
     }
     final ChainedHash<Integer, Integer> hm = new ChainedHash<>();
-    for (int i = As.bit(base == Base.OneBased); i < size; ++i)
+    for (int i = ast.bit(base == Base.OneBased); i < size; ++i)
       hm.chain(unionFind.find(i), i);
     return hm.values().iterator();
   }

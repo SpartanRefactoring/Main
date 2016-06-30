@@ -1,12 +1,12 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.SpartanAssert.*;
+import static il.org.spartan.SpartanAssert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static org.junit.Assert.*;
+import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
-import il.org.spartan.utils.Utils;
 
 import java.util.*;
 
@@ -34,7 +34,7 @@ public class DeclarationReturnTest {
 
   @RunWith(Parameterized.class)//
   public static class OutOfScope extends AbstractWringTest.OutOfScope<VariableDeclarationFragment> {
-    static String[][] cases = Utils.asArray(//
+    static String[][] cases = as.array(//
         new String[] { "Simple if return TWO STATEMENTS", "if (a) return b; else a(); f();" }, //
         new String[] { "Vanilla", "int a; a =3;", }, //
         new String[] { "Vanilla", "int a; if (x) b = 3; else ;", }, //
@@ -62,7 +62,7 @@ public class DeclarationReturnTest {
   @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   public static class Wringed extends AbstractWringTest.Wringed.WringedVariableDeclarationFragmentAndSurrounding {
     private static String[][] cases = Utils
-        .asArray(
+        .as.array(
             //
             new String[] { "Vanilla", "int a = 3; return a;", "return 3;" }, //
             new String[] { "Vanilla", "int a = 3, b; return a;", "return 3;" }, //
