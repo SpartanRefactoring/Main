@@ -3,6 +3,7 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.hamcrest.SpartanAssert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.utils.Utils.*;
+import static org.junit.Assert.*;
 import il.org.spartan.refactoring.spartanizations.*;
 
 import org.junit.*;
@@ -269,14 +270,15 @@ import org.junit.runners.*;
         "      b = a;", "int b=5!=3?3:r();");
   }
   @Test(timeout = 2000) public void ternarize18() {
-    assertConvertsTo(//
+    assertSimplifiesTo(//
         "    final String s = X;\n" + //
             "    final String res = s;\n" + //
             "    final int a = 0;\n" + //
             "    if (s.equals(res))\n" + //
             "      System.out.println(tH3 + res);\n" + //
             "    else\n" + //
-            "      System.out.println(h2A+ res + a + s);", "System.out.println(X.equals(X)?tH3+X:h2A+X+0+X);");
+            "      System.out.println(h2A+ res + a + s);", //
+        "System.out.println(X.equals(X)?tH3+X:h2A+X+0+X);");
   }
   @Test(timeout = 2000) public void ternarize23() {
     assertConvertsTo(//

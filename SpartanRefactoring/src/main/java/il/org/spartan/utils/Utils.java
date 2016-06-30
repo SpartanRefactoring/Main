@@ -3,6 +3,7 @@ package il.org.spartan.utils;
 import java.io.*;
 import java.util.*;
 
+import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.core.dom.*;
 
 /**
@@ -193,7 +194,7 @@ public enum Utils {
    * @return the last item in a list or <code><b>null</b></code> if the
    *         parameter is <code><b>null</b></code> or empty
    */
-  public static <T> T penultimate(final List<T> ts) {
+  public static <@Nullable T> T penultimate(final List<T> ts) {
     return ts == null || ts.size() < 2 ? null : ts.get(ts.size() - 2);
   }
   /**
@@ -205,6 +206,7 @@ public enum Utils {
    *         occurs as the penultimate element of the {@link List} parameter
    */
   public static boolean penultimateIn(final Object o, final List<?> os) {
+    assert os != null;
     return penultimate(os) == o;
   }
   /**

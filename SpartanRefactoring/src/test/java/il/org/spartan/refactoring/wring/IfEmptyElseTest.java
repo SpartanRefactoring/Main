@@ -10,6 +10,7 @@ import il.org.spartan.utils.Utils;
 
 import java.util.*;
 
+import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runner.*;
@@ -78,7 +79,9 @@ public class IfEmptyElseTest {
       super(WRING);
     }
     @Test public void isfStatementElseIsEmpty() {
-      assertThat(Extract.statements(asMe().getElseStatement()).size(), is(0));
+      @Nullable final IfStatement asMe = asMe();
+      assert asMe != null;
+      assertThat(Extract.statements(asMe.getElseStatement()).size(), is(0));
     }
     @Test public void isfStatementElseNotNull() {
       assertThat("", elze(asMe()), notNullValue());

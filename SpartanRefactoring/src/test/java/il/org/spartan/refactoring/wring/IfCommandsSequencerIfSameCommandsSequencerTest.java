@@ -33,6 +33,7 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
     assertThat("", n, notNullValue());
     final IfStatement i = Extract.firstIfStatement(n);
     assertThat(n.toString(), i, notNullValue());
+    assert i != null;
     assertThat(i.toString(), WRING.scopeIncludes(i), is(true));
   }
   @Test public void checkFirstIfStatement2() {

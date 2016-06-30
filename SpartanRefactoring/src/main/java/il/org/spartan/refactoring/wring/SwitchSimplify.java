@@ -7,6 +7,7 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
 
 import java.util.*;
 
+import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.core.dom.*;
 
 /**
@@ -40,7 +41,7 @@ public class SwitchSimplify extends ReplaceCurrentNode<SwitchStatement> implemen
     }
     return unless(s.subtreeMatch(matcher, $), $);
   }
-  public static <T> T unless(final boolean condition, final T $) {
+  public static <@Nullable T> T unless(final boolean condition, final T $) {
     return !condition ? $ : null;
   }
   static int escapeLevel(final Statement s, final boolean b) {

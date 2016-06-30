@@ -4,6 +4,8 @@ import il.org.spartan.refactoring.wring.*;
 
 import java.util.*;
 
+import org.eclipse.jdt.annotation.*;
+
 /**
  * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code> (v2)
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code> (original /
@@ -41,7 +43,7 @@ public class Spartanizations {
    * @return Spartanization class rule instance
    */
   @SuppressWarnings("unchecked")//
-  public static <T extends Spartanization> T findInstance(final Class<? extends T> c) {
+  public static <@Nullable T extends Spartanization> T findInstance(final Class<? extends T> c) {
     for (final Spartanization $ : all)
       if ($.getClass().equals(c))
         return (T) $;
