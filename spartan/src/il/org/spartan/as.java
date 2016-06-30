@@ -1,9 +1,12 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
+
 import static il.org.spartan.__.add;
 import static il.org.spartan.__.addAll;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import il.org.spartan.iterables.PureIterable;
+import il.org.spartan.iterables.PureIterator;
 
 import java.util.*;
 
@@ -13,9 +16,6 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import il.org.spartan.iterables.PureIterable;
-import il.org.spartan.iterables.PureIterator;
-
 /**
  * A collection of <code><b>static</b></code> functions for converting from one
  * aggregate type to another.
@@ -23,25 +23,28 @@ import il.org.spartan.iterables.PureIterator;
  * @author Yossi Gil
  * @since Jul 8, 2014
  */
-public enum As {
+public enum as {
   // No values in an 'enum' which serves as a name space for a collection of
   // 'static' functions.
   ;
+
+
   /**
    * The string returned when 'conversion to string' is applied to a
    * <code><b>null</b></code> value.
    */
   public static final String NULL = "(null)";
+
+
   /**
-   * Converts a sequence of values into an array.
+   * Converts a sequence of arguments into an array
    *
-   * @param <T> some arbitrary type
-   * @param $ some sequence of values of the type parameter
-   * @return the parameter, organized as an array with entries whose type is the
-   *         type parameter
+   * @param <T>
+   * @param ts JD
+   * @return an array representation of the parameter
    */
-  @SafeVarargs public static <T> T[] array(final T... $) {
-    return $;
+  @SafeVarargs public static <T> T[] array(final T... ts) {
+    return ts;
   }
   /**
    * Converts a boolean into a bit value
@@ -58,7 +61,7 @@ public enum As {
    * @param o some object
    * @return <code>0</code> if the parameter is <code><b>null</b></code>.
    *         <code>1</code> otherwise.
-   * @see As#bit(Object)
+   * @see as#bit(Object)
    */
   public static int bit(final @Nullable Object o) {
     return o == null ? 0 : 1;
@@ -108,11 +111,12 @@ public enum As {
    * @param ts what to iterate on
    * @return an {@link Iterable} over the parameter
    */
-  @SafeVarargs public static <T> PureIterable.Sized<T> iterable(final T... ts) {
+  @SafeVarargs public static <@Nullable T> PureIterable.Sized<T> iterable(final T... ts) {
     return new PureIterable.Sized<T>() {
       @Override public PureIterator<T> iterator() {
         return new PureIterator<T>() {
           int current = 0;
+
           @Override public boolean hasNext() {
             return current < ts.length;
           }
@@ -176,7 +180,7 @@ public enum As {
    * @return the parameter, after bing to a non-null string.
    */
   public static String string(@Nullable final Object $) {
-    return $ == null ? NULL : As.string($.toString());
+    return $ == null ? NULL : as.string($.toString());
   }
   /**
    * Converts a {@link String}, which can be either a <code><b>null</b></code>
@@ -202,6 +206,7 @@ public enum As {
         $.add(__.cantBeNull(o.toString()));
     return __.cantBeNull($.toArray(new String[$.size()]));
   }
+
   /**
    * A static nested class hosting unit tests for the nesting class Unit test
    * for the containing class. Note the naming convention: a) names of test
@@ -215,27 +220,27 @@ public enum As {
   @SuppressWarnings({ "static-method", "javadoc", "boxing" })//
   public static class TEST {
     @Test public void asBitOfFalse() {
-      assertEquals(0, As.bit(false));
+      assertEquals(0, as.bit(false));
     }
     @Test public void asBitOfTrue() {
-      assertEquals(1, As.bit(true));
+      assertEquals(1, as.bit(true));
     }
     @Test public void asIntArraySimple() {
-      final int[] is = As.intArray(100, 200, 200, 12, 13, 0);
-      assertArrayEquals(is, As.intArray(As.ingeterList(is)));
+      final int[] is = as.intArray(100, 200, 200, 12, 13, 0);
+      assertArrayEquals(is, as.intArray(as.ingeterList(is)));
     }
     @Test public void asListSimple() {
-      final List<Integer> is = As.list(12, 13, 14);
+      final List<Integer> is = as.list(12, 13, 14);
       assertEquals(Box.it(12), is.get(0));
       assertEquals(Box.it(13), is.get(1));
       assertEquals(Box.it(14), is.get(2));
       assertEquals(3, is.size());
     }
     @Test public void stringOfNull() {
-      assertEquals(NULL, As.string(null));
+      assertEquals(NULL, as.string(null));
     }
     @Test public void stringWhenToStringReturnsNull() {
-      assertEquals(NULL, As.string(new Object() {
+      assertEquals(NULL, as.string(new Object() {
         @Override public @Nullable String toString() {
           return null;
         }

@@ -11,36 +11,38 @@ import org.eclipse.jdt.annotation.Nullable;
  * @param <T> JD
  */
 public class Wrapper<T> {
-	@Override public String toString() {
-		return "Wrapper of " + t;
-	}
-	private @Nullable T t = null;
-	/**
-	 * Instantiates this class
-	 *
-	 * @param t JD
-	 */
-	public Wrapper(final T t) {
-		this.t = t;
-	}
-	/**
-	 * Instantiates this class
-	 */
-	public Wrapper() {
-		//
-	}
-	/**
-	 * Set the value wrapped in this object.
-	 *
-	 * @param t JD
-	 */
-	public void set(final T t) {
-		this.t = t;
-	}
-	/**
-	 * @return the value wrapped in this object.
-	 */
-	public @Nullable T get() {
-		return t;
-	}
+  @Override public String toString() {
+    return "Wrapper of " + t;
+  }
+
+  private @Nullable T t = null;
+
+  /**
+   * Instantiates this class
+   *
+   * @param t JD
+   */
+  public Wrapper(final T t) {
+    this.t = t;
+  }
+  /**
+   * Instantiates this class
+   */
+  public Wrapper() {
+    //
+  }
+  /**
+   * Set the value wrapped in this object.
+   *
+   * @param t JD
+   */
+  public void set(final T t) {
+    this.t = t;
+  }
+  /**
+   * @return the value wrapped in this object.
+   */
+  public @Nullable T get() {
+    return t;
+  }
 }

@@ -1,5 +1,6 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
+
 import il.org.spartan.iterables.Iterables;
 
 /**
@@ -10,9 +11,9 @@ import il.org.spartan.iterables.Iterables;
  *
  * <pre>
  * static void main(String[] args) {
- * 	Separator s = new Separator(&quot;, &quot;);
- * 	for (String a : args)
- * 		System.out.print(s + a);
+ *   Separator s = new Separator(&quot;, &quot;);
+ *   for (String a : args)
+ *     System.out.print(s + a);
  * }
  * </pre>
  *
@@ -22,6 +23,7 @@ import il.org.spartan.iterables.Iterables;
 public final class Separator {
   private final String s;
   boolean first = true;
+
   public Separator(final char c) {
     this("" + c);
   }
@@ -44,7 +46,7 @@ public final class Separator {
     final Separator s = new Separator(between);
     for (final T t : ts)
       $.append(s).append(t);
-    return As.string($.append(end));
+    return as.string($.append(end));
   }
   public static <T> String wrap(final String begin, final String end, final T[] ts, final String between) {
     if (ts.length == 0)
@@ -53,7 +55,7 @@ public final class Separator {
     final Separator s = new Separator(between);
     for (final T t : ts)
       $.append(s).append(t);
-    return As.string($.append(end));
+    return as.string($.append(end));
   }
   public static void main(final String[] args) {
     final Separator s = new Separator(", ");

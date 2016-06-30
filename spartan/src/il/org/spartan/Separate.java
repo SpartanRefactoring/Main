@@ -1,5 +1,6 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
+
 import static il.org.spartan.Assert.assertEquals;
 import static il.org.spartan.Assert.assertZero;
 import static il.org.spartan.__.apply;
@@ -7,6 +8,8 @@ import static il.org.spartan.__.cantBeNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import il.org.spartan.__.Applicator;
+import il.org.spartan.iterables.Iterables;
 
 import java.util.*;
 import java.util.function.Function;
@@ -14,9 +17,6 @@ import java.util.function.Function;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-
-import il.org.spartan.__.Applicator;
-import il.org.spartan.iterables.Iterables;
 
 /**
  * A utility class providing library functions that take an array or a
@@ -36,6 +36,7 @@ public enum Separate {
   public static final String NL = "\n";
   /** The space character */
   public static final String SPACE = " ";
+
   /**
    * A simple program demonstrating the use of this class. This program prints a
    * comma separated list of its arguments, where special characters in each
@@ -53,7 +54,7 @@ public enum Separate {
    * @return the parameters, separated by {@link #SPACE}
    */
   public static String bySpaces(final String... $) {
-    return separateBySpaces(As.iterable($));
+    return separateBySpaces(as.iterable($));
   }
   /**
    * Separates an {@link Iterable} strings by {@link #SPACE} characters
@@ -62,6 +63,7 @@ public enum Separate {
    * @return the parameters, separated by {@link #SPACE}
    */
   public static String separateBySpaces(final Iterable<String> $) {
+    assert $ != null;
     return separateBySpaces($.iterator());
   }
   /**
@@ -76,7 +78,7 @@ public enum Separate {
     final Separator s = new Separator(SPACE);
     while (ss.hasNext())
       $.append(s).append(ss.next());
-    return As.string($);
+    return as.string($);
   }
   /**
    * Factory method for generating a {@link SeparationSubject}, to be used
@@ -220,8 +222,14 @@ public enum Separate {
   @SafeVarargs public static <T> SeparationSubject these(final T... ts) {
     return new SeparationSubject(ts);
   }
-  public static class SeparationSubject {
 
+  /**
+   * Should not be instantiated by client; created as part of the fluent API
+   *
+   * @author Yossi Gil <Yossi.Gil@GMail.COM>
+   * @since 2015
+   */
+  public static class SeparationSubject {
     /**
      * Separate elements of a given {@link Iterable} collection by a given
      * {@link String}
@@ -233,12 +241,12 @@ public enum Separate {
      *         representation of the elements in <code>ts</code> separated by
      *         <code>between</code>
      */
-    private static <T> String by(final Iterable<? extends T> ts, final String between) {
+    public static <T> String by(final Iterable<? extends T> ts, final String between) {
       final Separator s = new Separator(between);
       final StringBuilder $ = new StringBuilder();
       for (final T t : ts)
         $.append(s).append(t);
-      return As.string($);
+      return as.string($);
     }
     /**
      * Separate a list of elements by a given {@link String}
@@ -254,14 +262,14 @@ public enum Separate {
       final StringBuilder $ = new StringBuilder();
       for (final Object o : os)
         $.append(s).append(o);
-      return As.string($);
+      return as.string($);
     }
     private static String separateBy(final Object[] os, final String between) {
       final Separator s = new Separator(between);
       final StringBuilder $ = new StringBuilder();
       for (final Object o : os)
         $.append(s).append(o);
-      return As.string($);
+      return as.string($);
     }
 
     public final Iterable<Object> os;
@@ -270,7 +278,7 @@ public enum Separate {
       this.os = os;
     }
     public SeparationSubject(final Object[] os) {
-      this.os = As.iterable(os);
+      this.os = as.iterable(os);
     }
     /**
      * Separate elements of a given array of <code><b>boolean</b></code>s by a
@@ -312,7 +320,7 @@ public enum Separate {
      *         representations of the elements of saved objects
      */
     public String byDots() {
-      return separateBy(Prune.whites(As.strings(os)), DOT);
+      return separateBy(Prune.whites(as.strings(os)), DOT);
     }
     /**
      * Separate a variable length list of arguments by new lines.
@@ -322,7 +330,7 @@ public enum Separate {
      *         saved objects
      */
     public String byNLs() {
-      return separateBy(Prune.whites(As.strings(os)), NL);
+      return separateBy(Prune.whites(as.strings(os)), NL);
     }
     /**
      * Separate a variable length list of arguments by a space character.
@@ -331,7 +339,7 @@ public enum Separate {
      *         representations of the elements of saved objects
      */
     public String bySpaces() {
-      return separateBy(Prune.whites(As.strings(os)), SPACE);
+      return separateBy(Prune.whites(as.strings(os)), SPACE);
     }
     /**
      * Separates the objects in some order
@@ -339,21 +347,23 @@ public enum Separate {
      * @return the
      */
     public String byNothing() {
-      return separateBy(Prune.whites(As.strings(os)), "");
+      return separateBy(Prune.whites(as.strings(os)), "");
     }
   }
+
   @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
-  @SuppressWarnings({ "static-method", "javadoc", "synthetic-access", "null" }) //
+  @SuppressWarnings({ "static-method", "javadoc", "synthetic-access", "null" })//
   public static class TEST {
     private static final Function<Object, String> quote = t -> "'" + t + "'";
+
     @Test public final void asArrayBetweenChar() {
-      assertEquals("Hello,World", Separate.these(As.array("Hello", "World")).by(','));
+      assertEquals("Hello,World", Separate.these(as.array("Hello", "World")).by(','));
     }
     @Test public final void byArrayString() {
       assertEquals("Hello, World", Separate.these(new String[] { "Hello", "World" }).by(", "));
     }
     @Test public final void byArrayStringUsingLiterals() {
-      assertEquals("Hello, World", Separate.these(As.array("Hello", "World")).by(", "));
+      assertEquals("Hello, World", Separate.these(as.array("Hello", "World")).by(", "));
     }
     @Test public final void byBooleanArrayChar() {
       assertEquals("true:false", Separate.these(new boolean[] { true, false }).by(':'));
@@ -414,7 +424,7 @@ public enum Separate {
       assertEquals("-1; 2", Separate.these(new int[] { -1, 2 }).by("; "));
     }
     @Test public final void byIterableOfChar() {
-      assertEquals("Hello,World", Separate.these(As.array("Hello", "World")).by(','));
+      assertEquals("Hello,World", Separate.these(as.array("Hello", "World")).by(','));
     }
     @Test public final void byIterableOfString() {
       assertEquals("Hello, World", Separate.these(Arrays.asList("Hello", "World")).by(", "));
@@ -466,7 +476,7 @@ public enum Separate {
       final Iterable<Object> os = these.os;
       assertNotNull(os);
       assertTrue(Iterables.isEmpty(os));
-      final String[] ss = As.strings(os);
+      final String[] ss = as.strings(os);
       assertNotNull(ss);
       assertZero(ss.length);
       final String[] noWhites = Prune.whites(ss);
@@ -483,10 +493,10 @@ public enum Separate {
       assertEquals("", separateBySpaces(Iterables.<String> empty()));
     }
     @Test public void separateBySpaceMultipleIterator() {
-      assertEquals("X Y Z", separateBySpaces(As.iterable("X", "Y", "Z")));
+      assertEquals("X Y Z", separateBySpaces(as.iterable("X", "Y", "Z")));
     }
     @Test public void separateBySpaceOnIteator() {
-      assertEquals("Hello World ", separateBySpaces(As.iterable("Hello", "World ")));
+      assertEquals("Hello World ", separateBySpaces(as.iterable("Hello", "World ")));
     }
     @Test public void separateBySpaceOnSingletonIteator() {
       assertEquals("Hello", separateBySpaces(Iterables.singleton("Hello")));
@@ -504,16 +514,16 @@ public enum Separate {
       assertEquals(" ", "" + SPACE);
     }
     @Test public final void theseArraySize0() {
-      assertEquals(0, Iterables.count(Separate.these(As.array()).os));
+      assertEquals(0, Iterables.count(Separate.these(as.array()).os));
     }
     @Test public final void theseArraySize1() {
-      assertEquals(1, Iterables.count(Separate.these(As.array("Rosebud")).os));
+      assertEquals(1, Iterables.count(Separate.these(as.array("Rosebud")).os));
     }
     @Test public final void theseArraySize2() {
-      assertEquals(2, Iterables.count(Separate.these(As.array("Hello", "World")).os));
+      assertEquals(2, Iterables.count(Separate.these(as.array("Hello", "World")).os));
     }
     @Test public final void theseArraySize3() {
-      assertEquals(3, Iterables.count(Separate.these(As.array("A", "B", "C")).os));
+      assertEquals(3, Iterables.count(Separate.these(as.array("A", "B", "C")).os));
     }
     @Test public final void theseFromOneItem() {
       assertEquals(1, Iterables.count(Separate.these(Arrays.asList("Rosebud")).os));

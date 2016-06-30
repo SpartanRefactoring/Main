@@ -1,5 +1,6 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
+
 import static il.org.spartan.__.cantBeNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -77,16 +78,17 @@ public enum Prune {
    * @param ts an array of values.
    * @return an array of size 0 of elements of type <code>T</code>.
    */
-  private static <T> T[] shrink(final T[] ts) {
+  @SuppressWarnings("null") private static <T> T[] shrink(final T[] ts) {
     return cantBeNull(Arrays.copyOf(ts, 0));
   }
   @SafeVarargs public static String[] whites(final String... ss) {
     final List<String> $ = new ArrayList<>();
     for (final String s : ss)
       if (s != null)
-        addNonEmpty($, cantBeNull(As.string(s).trim()));
+        addNonEmpty($, cantBeNull(as.string(s).trim()));
     return cantBeNull($.toArray(new String[0]));
   }
+
   /**
    * A JUnit test class for the enclosing class.
    *
@@ -98,7 +100,7 @@ public enum Prune {
     final String[] alternatingArray = new String[] { null, "A", null, null, "B", null, null, null, "C", null };
     final String[] nonNullArray = { "1", "2", "4" };
     private final NonNullCache<List<String>> sparseCollection = new NonNullCache<List<String>>() {
-      @Override protected List<String> __() {
+      @Override protected List<@Nullable String> __() {
         final List<@Nullable String> $ = new ArrayList<>();
         $.add(null);
         $.add(null);
@@ -119,6 +121,7 @@ public enum Prune {
         return $;
       }
     };
+
     @Test public void nullsNonNullArrayLength() {
       assertEquals(nonNullArray.length, nulls(nonNullArray).length);
     }
