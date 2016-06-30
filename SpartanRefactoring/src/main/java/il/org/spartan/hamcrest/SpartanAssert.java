@@ -256,7 +256,7 @@ public class SpartanAssert extends org.junit.Assert {
     assertEquals(Box.it(expected), Box.it(actual));
   }
   public static void assertEquals(Object exp, Object val) {
-    assertThat("", val, is(exp));
+    assertThat(val, is(exp));
   }
   public static void assertEquals(String reason, int i1, int i2) {
     assertThat(reason, Box.it(i1), CoreMatchers.equalTo(Box.it(i2)));
@@ -265,19 +265,19 @@ public class SpartanAssert extends org.junit.Assert {
     assertThat(s, b, is(Boolean.FALSE));
   }
   public static void assertNotEquals(Object o1, Object o2) {
-    assertThat("", o1, CoreMatchers.not(o2));
+    assertThat(o1, CoreMatchers.not(o2));
   }
   public static void assertNotEquals(String reason, Object o1, Object o2) {
     assertThat(reason, o1, CoreMatchers.not(o2));
   }
   public static void assertNotNull(Object o) {
-    assertThat("", o, CoreMatchers.notNullValue());
+    assertThat(o, CoreMatchers.notNullValue());
   }
   public static void assertNotNull(String s, Object o) {
     assertThat(s, o, notNullValue());
   }
   public static void assertNull(Object o) {
-    assertThat("", o, nullValue());
+    assertThat(o, nullValue());
   }
   /**
    * assert that a given integer is positive
@@ -300,7 +300,7 @@ public class SpartanAssert extends org.junit.Assert {
    * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
    */
   public static void assertThat(final boolean b, final Matcher<? super Boolean> m) {
-    assertThat("", Boolean.valueOf(b), m);
+    assertThat(Boolean.valueOf(b), m);
   }
   /**
    * A non-auto-boxing version for the primitive type <code><b>byte</b></code>
@@ -315,7 +315,7 @@ public class SpartanAssert extends org.junit.Assert {
    * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
    */
   public static void assertThat(final byte b, final Matcher<? super Byte> m) {
-    assertThat("", Byte.valueOf(b), m);
+    assertThat(Byte.valueOf(b), m);
   }
   /**
    * A non-auto-boxing version for the primitive type <code><b>char</b></code>
@@ -330,7 +330,7 @@ public class SpartanAssert extends org.junit.Assert {
    * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
    */
   public static void assertThat(final char c, final Matcher<? super Character> m) {
-    assertThat("", Character.valueOf(c), m);
+    assertThat(Character.valueOf(c), m);
   }
   /**
    * A non-auto-boxing version for the primitive type <code><b>double</b></code>
@@ -345,7 +345,7 @@ public class SpartanAssert extends org.junit.Assert {
    * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
    */
   public static void assertThat(final double d, final Matcher<? super Double> m) {
-    assertThat("", Double.valueOf(d), m);
+    assertThat(Double.valueOf(d), m);
   }
   /**
    * A non-auto-boxing version for the primitive type <code><b>float</b></code>
@@ -360,7 +360,7 @@ public class SpartanAssert extends org.junit.Assert {
    * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
    */
   public static void assertThat(final float f, final Matcher<? super Float> m) {
-    assertThat("", Float.valueOf(f), m);
+    assertThat(Float.valueOf(f), m);
   }
   /**
    * A non-auto-boxing version for the primitive type <code><b>int</b></code> of
@@ -375,7 +375,7 @@ public class SpartanAssert extends org.junit.Assert {
    * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
    */
   public static void assertThat(final int i, final Matcher<? super Integer> m) {
-    assertThat("", Integer.valueOf(i), m);
+    assertThat(Integer.valueOf(i), m);
   }
   /**
    * A non-auto-boxing version for the primitive type <code><b>long</b></code>
@@ -390,7 +390,7 @@ public class SpartanAssert extends org.junit.Assert {
    * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
    */
   public static void assertThat(final long l, final Matcher<? super Long> m) {
-    assertThat("", Long.valueOf(l), m);
+    assertThat(Long.valueOf(l), m);
   }
   /**
    * A variant of {@link org.hamcrest.MatcherAssert#assertThat(Object, Matcher)}
@@ -402,7 +402,7 @@ public class SpartanAssert extends org.junit.Assert {
    * @param expected the expected textual representation of the first parameter
    */
   public static void assertThat(final Object actual, final Wrapper<String> expected) {
-    assertThat("", compressSpaces(actual + ""), is(compressSpaces(expected.get())));
+    assertThat(compressSpaces(actual + ""), is(compressSpaces(expected.get())));
   }
   /**
    * A non-auto-boxing version for the primitive type <code><b>short</b></code>
@@ -417,7 +417,7 @@ public class SpartanAssert extends org.junit.Assert {
    * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
    */
   public static void assertThat(final short s, final Matcher<? super Short> m) {
-    assertThat("", Short.valueOf(s), m);
+    assertThat(Short.valueOf(s), m);
   }
   /**
    * A non-auto-boxing version for the primitive type

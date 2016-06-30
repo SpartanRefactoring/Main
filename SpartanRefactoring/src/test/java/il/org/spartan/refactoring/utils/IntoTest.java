@@ -8,7 +8,7 @@ import org.junit.*;
     assertThat(Into.d("int f() { return a; }"), iz("int f() { return a; }"));
   }
   @Test public void dNotNull() {
-    assertThat("", Into.d("int f() { return a; }"), notNullValue());
+    assertThat(Into.d("int f() { return a; }"), notNullValue());
   }
   @Test(expected = AssertionError.class) public void dOnNull() {
     Into.d(null);

@@ -62,7 +62,7 @@ import org.junit.*;
     Precedence.of(c("A?b:c"));
   }
   @Test public void fieldAccess() {
-    assertThat("", e("this.f"), instanceOf(FieldAccess.class));
+    assertThat(e("this.f"), instanceOf(FieldAccess.class));
     assertThat(Precedence.of(e("this.f")), is(1));
   }
   @Test public void instanceofOperator() {

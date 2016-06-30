@@ -10,13 +10,13 @@ import org.eclipse.text.edits.*;
 /**
  * A {@link Wring} to remove overriding methods that only call their counterpart
  * in the parent class, for example: <code>
- *
+ * 
  * <pre>
  * &#64;Override void foo() {
  *   super.foo();
  * }
  * </pre>
- *
+ * 
  * </code> will be completely removed.
  *
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>

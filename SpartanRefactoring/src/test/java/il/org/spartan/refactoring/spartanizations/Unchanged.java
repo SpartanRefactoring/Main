@@ -62,8 +62,8 @@ public class Unchanged {
   @Test public void checkNoChange() {
     assertNotNull("Cannot instantiate Spartanization object", spartanization);
     if (input.getName().indexOf(FileTestUtils.testSuffix) <= 0)
-      assertThat("", TESTUtils.rewrite(spartanization, (CompilationUnit) As.COMPILIATION_UNIT.ast(input), new Document(input()))
-          .get(), is(input()));
+      assertThat(TESTUtils.rewrite(spartanization, (CompilationUnit) As.COMPILIATION_UNIT.ast(input), new Document(input())).get(),
+          is(input()));
     else
       assertThat(
           "",
@@ -77,9 +77,9 @@ public class Unchanged {
   @Test public void checkNoOpportunities() {
     assertNotNull("Cannot instantiate spartanization object", spartanization);
     final ASTNode n = As.COMPILIATION_UNIT.ast(input);
-    assertThat("", n, notNullValue());
-    assertThat("", n, is(instanceOf(CompilationUnit.class)));
-    assertThat("", (Object) spartanization.findOpportunities((CompilationUnit) n).size(), is((Object) 0));
+    assertThat(n, notNullValue());
+    assertThat(n, is(instanceOf(CompilationUnit.class)));
+    assertThat((Object) spartanization.findOpportunities((CompilationUnit) n).size(), is((Object) 0));
   }
   private String input() {
     return As.string(input);

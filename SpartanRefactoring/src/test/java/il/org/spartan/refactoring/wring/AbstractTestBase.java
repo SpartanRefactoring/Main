@@ -27,6 +27,6 @@ public class AbstractTestBase {
 
   @Test public void peelableinput() {
     if (input != null)
-      assertThat("", Wrap.Statement.off(Wrap.Statement.on(input)), is(input));
+      assertThat(Wrap.Statement.off(Wrap.Statement.on(input)), is(input));
   }
 }

@@ -34,14 +34,14 @@ public class TrimmerTestsUtils {
       return this;
     }
     private N findNode(final Wring<N> w) {
-      assertThat("", w, notNullValue());
+      assertThat(w, notNullValue());
       final Wrap wrap = findWrap();
-      assertThat("", wrap, notNullValue());
+      assertThat(wrap, notNullValue());
       final CompilationUnit u = wrap.intoCompilationUnit(get());
-      assertThat("", u, notNullValue());
+      assertThat(u, notNullValue());
       final @Nullable N $ = firstInstance(u);
       assert $ != null;
-      assertThat("", $, notNullValue());
+      assertThat($, notNullValue());
       return $;
     }
     private @Nullable N firstInstance(final CompilationUnit u) {
@@ -165,27 +165,27 @@ public class TrimmerTestsUtils {
     p.setSource(from.toCharArray());
     p.setResolveBindings(PluginPreferencesResources.getResolveBindingEnabled());
     final CompilationUnit u = (CompilationUnit) p.createAST(null);
-    assertThat("", u, notNullValue());
+    assertThat(u, notNullValue());
     final Document d = new Document(from);
-    assertThat("", d, notNullValue());
+    assertThat(d, notNullValue());
     final Document $ = TESTUtils.rewrite(t, u, d);
-    assertThat("", $, notNullValue());
+    assertThat($, notNullValue());
     return $.get();
   }
   static String apply(final Trimmer t, final String from) {
     final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(from);
-    assertThat("", u, notNullValue());
+    assertThat(u, notNullValue());
     final Document d = new Document(from);
-    assertThat("", d, notNullValue());
+    assertThat(d, notNullValue());
     final Document $ = TESTUtils.rewrite(t, u, d);
-    assertThat("", $, notNullValue());
+    assertThat($, notNullValue());
     return $.get();
   }
   static String apply(final Wring<? extends ASTNode> ns, final String from) {
     final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(from);
-    assertThat("", u, notNullValue());
+    assertThat(u, notNullValue());
     final Document d = new Document(from);
-    assertThat("", d, notNullValue());
+    assertThat(d, notNullValue());
     return TESTUtils.rewrite(new AsSpartanization(ns, "Tested Refactoring"), u, d).get();
   }
   static void assertSimplifiesTo(final String from, final String expected, final Wring<? extends ASTNode> ns, final Wrap wrapper) {

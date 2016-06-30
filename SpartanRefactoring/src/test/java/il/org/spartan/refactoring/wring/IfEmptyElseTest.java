@@ -84,16 +84,16 @@ public class IfEmptyElseTest {
       assertThat(Extract.statements(asMe.getElseStatement()).size(), is(0));
     }
     @Test public void isfStatementElseNotNull() {
-      assertThat("", elze(asMe()), notNullValue());
+      assertThat(elze(asMe()), notNullValue());
     }
     @Test public void isIfStatement() {
-      assertThat("", asMe(), notNullValue());
+      assertThat(asMe(), notNullValue());
     }
     @Test public void myScopeIncludes() {
       final IfStatement s = asMe();
-      assertThat("", s, notNullValue());
-      assertThat("", elze(s), notNullValue());
-      assertThat("", Extract.statements(elze(s)), notNullValue());
+      assertThat(s, notNullValue());
+      assertThat(elze(s), notNullValue());
+      assertThat(Extract.statements(elze(s)), notNullValue());
       assertThat(Extract.statements(elze(s)).size(), is(0));
     }
   }

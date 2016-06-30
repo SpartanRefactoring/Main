@@ -18,7 +18,7 @@ import org.junit.*;
         "if (b) {;} { throw new Exception(); }");
   }
   @Test public void dealWithComment() {
-    assertThat("", Wrap.find(""//
+    assertThat(Wrap.find(""//
         + "if (b) {\n"//
         + " /* empty */"//
         + "} else {\n"//
@@ -26,70 +26,69 @@ import org.junit.*;
         + "}"), is(Wrap.Statement));
   }
   @Test public void essenceTest() {
-    assertThat("", "if(b){;}throw new Exception();",
-        is(essence("if (b) {\n /* empty */; \n} // no else \n throw new Exception();\n")));
+    assertThat("if(b){;}throw new Exception();", is(essence("if (b) {\n /* empty */; \n} // no else \n throw new Exception();\n")));
   }
   @Test public void expression() {
-    assertThat("", Wrap.Expression.off(Wrap.Expression.on("a+b")), is("a+b"));
+    assertThat(Wrap.Expression.off(Wrap.Expression.on("a+b")), is("a+b"));
   }
   @Test public void findAddition() {
-    assertThat("", Wrap.find("a+b"), is(Wrap.Expression));
+    assertThat(Wrap.find("a+b"), is(Wrap.Expression));
   }
   @Test public void findDivision() {
-    assertThat("", Wrap.find("a/b"), is(Wrap.Expression));
+    assertThat(Wrap.find("a/b"), is(Wrap.Expression));
   }
   @Test public void findDivisionOfExpressions() {
-    assertThat("", Wrap.find("(a+b)/++b"), is(Wrap.Expression));
+    assertThat(Wrap.find("(a+b)/++b"), is(Wrap.Expression));
   }
   @Test public void findEmptyBlock() {
-    assertThat("", Wrap.find("{}"), is(Wrap.Statement));
+    assertThat(Wrap.find("{}"), is(Wrap.Statement));
   }
   @Test public void findError() {
-    assertThat("", Wrap.find("}} f() { a();} b();}"), is(nullValue()));
+    assertThat(Wrap.find("}} f() { a();} b();}"), is(nullValue()));
   }
   @Test public void findExpression() {
-    assertThat("", Wrap.find("i++"), is(Wrap.Expression));
+    assertThat(Wrap.find("i++"), is(Wrap.Expression));
   }
   @Test public void findMethod() {
-    assertThat("", Wrap.find("f() { a(); b();}"), is(Wrap.Method));
+    assertThat(Wrap.find("f() { a(); b();}"), is(Wrap.Method));
   }
   @Test public void findStatement() {
-    assertThat("", Wrap.find("for(;;);"), is(Wrap.Statement));
+    assertThat(Wrap.find("for(;;);"), is(Wrap.Statement));
   }
   @Test public void findTwoStatements() {
-    assertThat("", Wrap.find("a(); b();"), is(Wrap.Statement));
+    assertThat(Wrap.find("a(); b();"), is(Wrap.Statement));
   }
   @Test public void intMethod() {
-    assertThat("", Wrap.find("int f() { int s = 0; for (int i = 0; i < 10; ++i) s += i; return s;}"), is(Wrap.Method));
+    assertThat(Wrap.find("int f() { int s = 0; for (int i = 0; i < 10; ++i) s += i; return s;}"), is(Wrap.Method));
   }
   @Test public void intoCompilationUnit() {
     final Wrap w = Wrap.Expression;
     final String codeFragment = "a + b * c";
     final CompilationUnit u = w.intoCompilationUnit(codeFragment);
-    assertThat("", u, notNullValue());
-    assertThat("", w.off(u.toString()), containsString(codeFragment));
+    assertThat(u, notNullValue());
+    assertThat(w.off(u.toString()), containsString(codeFragment));
   }
   @Test public void intoDocument() {
     final Wrap w = Wrap.Expression;
     final String codeFragment = "a + b * c";
     final Document d = w.intoDocument(codeFragment);
-    assertThat("", d, notNullValue());
-    assertThat("", w.off(d.get()), containsString(codeFragment));
+    assertThat(d, notNullValue());
+    assertThat(w.off(d.get()), containsString(codeFragment));
   }
   @Test public void method() {
-    assertThat("", Wrap.Method.off(Wrap.Method.on("int f() { return a; }")), is("int f() { return a; }"));
+    assertThat(Wrap.Method.off(Wrap.Method.on("int f() { return a; }")), is("int f() { return a; }"));
   }
   @Test public void offDivision() {
-    assertThat("", "a/b", is(Wrap.Expression.off(Wrap.Expression.on("a/b"))));
+    assertThat("a/b", is(Wrap.Expression.off(Wrap.Expression.on("a/b"))));
   }
   @Test public void removeComments() {
     similar(Wrap.removeComments("" + "if (b) {\n" + " /* empty */" + "} else {\n" + " throw new Exception();\n" + "}"),
         "if (b) {} else { throw new Exception(); }");
   }
   @Test public void statement() {
-    assertThat("", Wrap.Statement.off(Wrap.Statement.on("int a;")), is("int a;"));
+    assertThat(Wrap.Statement.off(Wrap.Statement.on("int a;")), is("int a;"));
   }
   private void similar(final String s1, final String s2) {
-    assertThat("", essence(s2), is(essence(s1)));
+    assertThat(essence(s2), is(essence(s1)));
   }
 }

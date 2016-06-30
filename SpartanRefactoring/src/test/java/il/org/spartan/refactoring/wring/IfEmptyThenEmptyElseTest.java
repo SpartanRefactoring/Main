@@ -29,7 +29,7 @@ public class IfEmptyThenEmptyElseTest {
     Assert.assertThat(Is.vacuousThen(IF), is(true));
   }
   @Test public void extractFirstIf() {
-    assertThat("", IF, notNullValue());
+    assertThat(IF, notNullValue());
   }
   @Test public void inputType() {
     org.hamcrest.MatcherAssert.assertThat("", INPUT, instanceOf(Block.class));
@@ -44,7 +44,7 @@ public class IfEmptyThenEmptyElseTest {
     final Rewrite t = WRING.make(s);
     t.go(r, null);
     final TextEdit e = r.rewriteAST(d, null);
-    assertThat("", e, notNullValue());
+    assertThat(e, notNullValue());
     assertThat(e.getChildren().length, greaterThan(0));
     e.apply(d);
     assertThat(d.get(), Extract.firstIfStatement(As.COMPILIATION_UNIT.ast(d.get())), nullValue());

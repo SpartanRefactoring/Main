@@ -29,7 +29,7 @@ public class DeclarationReturnTest {
   static final Wring<VariableDeclarationFragment> WRING = new DeclarationInitializerReturnVariable();
 
   @Test public void placeHolder() {
-    assertThat("", WRING, notNullValue());
+    assertThat(WRING, notNullValue());
   }
 
   @RunWith(Parameterized.class)//
@@ -94,10 +94,10 @@ public class DeclarationReturnTest {
       assert f != null;
       final ASTRewrite r = ASTRewrite.create(f.getAST());
       final Expression initializer = f.getInitializer();
-      assertThat("", initializer, notNullValue());
-      assertThat("", Extract.nextStatement(f), notNullValue());
+      assertThat(initializer, notNullValue());
+      assertThat(Extract.nextStatement(f), notNullValue());
       final ReturnStatement s = Extract.nextReturn(f);
-      assertThat("", s, notNullValue());
+      assertThat(s, notNullValue());
       assertThat(same(f.getName(), Extract.expression(s)), is(true));
       r.remove(Extract.statement(f), null);
       r.replace(s, Subject.operand(initializer).toReturn(), null);

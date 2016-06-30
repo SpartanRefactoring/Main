@@ -9,7 +9,6 @@ import il.org.spartan.hamcrest.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.utils.Collect.Of;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.refactoring.wring.Wring.VariableDeclarationFragementAndStatement;
 import il.org.spartan.utils.Utils;
 
@@ -34,12 +33,12 @@ public class DeclarationIfAssginmentTest {
   static final DeclarationInitializerIfAssignment WRING = new DeclarationInitializerIfAssignment();
 
   @Test public void traceForbiddenSiblings() {
-    assertThat("", WRING, notNullValue());
+    assertThat(WRING, notNullValue());
     final String from = "int a = 2,b; if (b) a =3;";
     final String wrap = Wrap.Statement.on(from);
     final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(wrap);
     final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(u);
-    assertThat("", f, notNullValue());
+    assertThat(f, notNullValue());
     assertThat(WRING.scopeIncludes(f), is(false));
   }
   @Test public void traceForbiddenSiblingsExpanded() {
@@ -47,27 +46,27 @@ public class DeclarationIfAssginmentTest {
     final String wrap = Wrap.Statement.on(from);
     final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(wrap);
     final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(u);
-    assertThat("", f, notNullValue());
+    assertThat(f, notNullValue());
     final Expression initializer = f.getInitializer();
-    assertThat("", initializer, notNullValue());
+    assertThat(initializer, notNullValue());
     final IfStatement s = Extract.nextIfStatement(f);
-    assertThat("", s, is(Extract.firstIfStatement(u)));
-    assertThat("", s, notNullValue());
+    assertThat(s, is(Extract.firstIfStatement(u)));
+    assertThat(s, notNullValue());
     assertThat(s, iz("if (a + b) a=3;"));
     SpartanAssert.assertThat(Is.vacuousElse(s), is(true));
     final Assignment a = Extract.assignment(then(s));
-    assertThat("", a, notNullValue());
+    assertThat(a, notNullValue());
     assertThat(same(left(a), f.getName()), is(true));
-    assertThat("", a.getOperator(), is(Assignment.Operator.ASSIGN));
+    assertThat(a.getOperator(), is(Assignment.Operator.ASSIGN));
     final List<VariableDeclarationFragment> x = VariableDeclarationFragementAndStatement.forbiddenSiblings(f);
     assertThat(x.size(), greaterThan(0));
     assertThat(x.size(), is(1));
     final VariableDeclarationFragment b = x.get(0);
-    assertThat("", b.toString(), is("b"));
+    assertThat(b.toString(), is("b"));
     final Of of = Collect.BOTH_SEMANTIC.of(b);
-    assertThat("", of, notNullValue());
+    assertThat(of, notNullValue());
     final Expression e = s.getExpression();
-    assertThat("", e, notNullValue());
+    assertThat(e, notNullValue());
     assertThat(e, is("a + b"));
     final List<SimpleName> in = of.in(e);
     assertThat(in.size(), is(1));
@@ -105,7 +104,7 @@ public class DeclarationIfAssginmentTest {
   @SuppressWarnings({ "javadoc" })//
   @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   public class Wringed extends AbstractWringTest<VariableDeclarationFragment> {
-    public Wringed() {
+    @SuppressWarnings("null") public Wringed() {
       super(WRING);
     }
     @Test public void newlineBug() throws MalformedTreeException, BadLocationException {
@@ -114,12 +113,12 @@ public class DeclarationIfAssginmentTest {
       final Document d = new Document(Wrap.Statement.on(from));
       final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(d);
       final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(u);
-      assertThat("", f, notNullValue());
+      assertThat(f, notNullValue());
       final ASTRewrite r = new Trimmer().createRewrite(u, null);
       final TextEdit e = r.rewriteAST(d, null);
       assertThat(e.getChildrenSize(), greaterThan(0));
       final UndoEdit b = e.apply(d);
-      assertThat("", b, notNullValue());
+      assertThat(b, notNullValue());
       final String peeled = Wrap.Statement.off(d.get());
       if (expected.equals(peeled))
         return;
@@ -130,7 +129,7 @@ public class DeclarationIfAssginmentTest {
       assertSimilar(Wrap.Statement.on(expected), d);
     }
     @Test public void nonNullWring() {
-      assertThat("", WRING, notNullValue());
+      assertThat(WRING, notNullValue());
     }
     @Test public void vanilla() throws MalformedTreeException, IllegalArgumentException {
       final String from = "int a = 2; if (b) a =3;";

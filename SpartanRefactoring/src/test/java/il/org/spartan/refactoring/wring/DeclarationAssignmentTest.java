@@ -26,7 +26,7 @@ public class DeclarationAssignmentTest {
 
   @Test public void placeHolder() {
     // Place holder for future tests
-    assertThat("", WRING, notNullValue());
+    assertThat(WRING, notNullValue());
   }
 
   @RunWith(Parameterized.class)//

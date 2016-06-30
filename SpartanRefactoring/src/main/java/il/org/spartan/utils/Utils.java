@@ -4,7 +4,6 @@ import java.io.*;
 import java.util.*;
 
 import org.eclipse.jdt.annotation.*;
-import org.eclipse.jdt.core.dom.*;
 
 /**
  * An empty <code><b>enum</b></code> with a variety of <code>public
@@ -149,11 +148,11 @@ public enum Utils {
     return false;
   }
   /**
-   * @param ts a list
+   * @param ts JD
    * @return the last item in a list or <code><b>null</b></code> if the
    *         parameter is <code><b>null</b></code> or empty
    */
-  public static <T> T last(final List<T> ts) {
+  public static <@Nullable T> T last(final List<T> ts) {
     return ts == null || ts.isEmpty() ? null : ts.get(ts.size() - 1);
   }
   /**

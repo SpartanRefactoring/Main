@@ -28,9 +28,9 @@ public class IfExpressionStatementElseSimilarExpressionStatementTest {
 
   @Test public void checkSteps() {
     final Statement s = asSingle("if (a) f(b); else f(c);");
-    assertThat("", s, notNullValue());
+    assertThat(s, notNullValue());
     final IfStatement i = asIfStatement(s);
-    assertThat("", i, notNullValue());
+    assertThat(i, notNullValue());
     assertThat(WRING.scopeIncludes(i), is(true));
   }
 

@@ -15,9 +15,9 @@ public class PlantTest {
   @Test public void plantIntoNull() {
     final String s = "a?b:c";
     final Expression e = e(s);
-    assertThat("", e, notNullValue());
+    assertThat(e, notNullValue());
     final Expression e1 = new Plant(e).into(null);
-    assertThat("", e1, notNullValue());
+    assertThat(e1, notNullValue());
     assertThat(e1, iz(s));
   }
   @Test public void plantIntoReturn() {

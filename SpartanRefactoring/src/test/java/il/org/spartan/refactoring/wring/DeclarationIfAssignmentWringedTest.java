@@ -67,7 +67,7 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
   }
   @Test public void checkIf() {
     final IfStatement s = findIf();
-    assertThat("", s, notNullValue());
+    assertThat(s, notNullValue());
     assertThat(Is.vacuousElse(s), is(true));
   }
   @Test public void correctSimplifier() {
@@ -81,8 +81,8 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     final CompilationUnit u = asCompilationUnit();
     final ASTRewrite r = new Trimmer().createRewrite(u, null);
     final TextEdit e = r.rewriteAST(d, null);
-    assertThat("", e, notNullValue());
-    assertThat("", e.apply(d), is(notNullValue()));
+    assertThat(e, notNullValue());
+    assertThat(e.apply(d), is(notNullValue()));
   }
   @Test public void eligible() {
     final VariableDeclarationFragment s = asMe();
@@ -91,7 +91,7 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     assertTrue(s.toString(), inner.eligible(s));
   }
   @Test public void findsSimplifier() {
-    assertThat("", Toolbox.instance.find(asMe()), notNullValue());
+    assertThat(Toolbox.instance.find(asMe()), notNullValue());
   }
   @Test public void hasOpportunity() {
     Assert.assertThat(inner.scopeIncludes(asMe()), is(true));
@@ -107,10 +107,10 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     assertThat(inner.nonEligible(asMe()), is(false));
   }
   @Test public void peelableOutput() {
-    assertThat("", Wrap.Statement.off(Wrap.Statement.on(expected)), is(expected));
+    assertThat(Wrap.Statement.off(Wrap.Statement.on(expected)), is(expected));
   }
   @Test public void rewriteNotEmpty() throws MalformedTreeException, IllegalArgumentException {
-    assertThat("", new Trimmer().createRewrite(asCompilationUnit(), null), notNullValue());
+    assertThat(new Trimmer().createRewrite(asCompilationUnit(), null), notNullValue());
   }
   @Test public void scopeIncludesAsMe() {
     @Nullable final VariableDeclarationFragment asMe = asMe();
@@ -138,17 +138,17 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     final Expression initializer = f.getInitializer();
     assertThat(f.toString(), initializer, notNullValue());
     final IfStatement s = Extract.nextIfStatement(f);
-    assertThat("", s, notNullValue());
+    assertThat(s, notNullValue());
     assertThat(Extract.statements(elze(s)).size(), is(0));
     final Assignment a = Extract.assignment(then(s));
-    assertThat("", a, notNullValue());
+    assertThat(a, notNullValue());
     Assert.assertThat(same(left(a), f.getName()), is(true));
     r.replace(initializer, Subject.pair(right(a), initializer).toCondition(s.getExpression()), null);
     r.remove(s, null);
   }
   @Override protected CompilationUnit asCompilationUnit() {
     final CompilationUnit $ = (CompilationUnit) As.COMPILIATION_UNIT.ast(Wrap.Statement.on(input));
-    assertThat("", $, notNullValue());
+    assertThat($, notNullValue());
     return $;
   }
   @Override protected VariableDeclarationFragment asMe() {

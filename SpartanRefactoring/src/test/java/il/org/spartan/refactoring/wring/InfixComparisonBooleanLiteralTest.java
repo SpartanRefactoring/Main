@@ -38,9 +38,9 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
     final String s = " (2) == true";
     final String wrap = Wrap.Expression.on(s);
     final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(wrap);
-    assertThat("", u, notNullValue());
+    assertThat(u, notNullValue());
     final Document d = new Document(wrap);
-    assertThat("", d, notNullValue());
+    assertThat(d, notNullValue());
     final Trimmer t = new Trimmer();
     final ASTRewrite r = t.createRewrite(u, null);
     final TextEdit x = r.rewriteAST(d, null);
@@ -103,10 +103,10 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
     }
     @Override @Test public void flattenIsIdempotentt() {
       final InfixExpression flatten = flatten(asInfixExpression());
-      assertThat("", flatten(flatten).toString(), is(flatten.toString()));
+      assertThat(flatten(flatten).toString(), is(flatten.toString()));
     }
     @Override @Test public void inputIsInfixExpression() {
-      assertThat("", asInfixExpression(), notNullValue());
+      assertThat(asInfixExpression(), notNullValue());
     }
     @Test public void sortTwice() {
       final List<Expression> operands = Extract.operands(flatten(asInfixExpression()));

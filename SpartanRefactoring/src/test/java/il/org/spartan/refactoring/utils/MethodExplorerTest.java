@@ -58,13 +58,13 @@ import org.junit.*;
   @Test public void returnStatementsExists() {
     final MethodDeclaration d = Into.d("int f() { return a; }");
     final List<ReturnStatement> a = new MethodExplorer(d).returnStatements();
-    assertThat("", a, notNullValue());
+    assertThat(a, notNullValue());
     assertThat(a.size(), is(1));
   }
   @Test public void returnStatementsExistsNestedType() {
     final MethodDeclaration d = Into.d("int f() { class B {}; return a; }");
     final List<ReturnStatement> a = new MethodExplorer(d).returnStatements();
-    assertThat("", a, notNullValue());
+    assertThat(a, notNullValue());
     assertThat(a.size(), is(1));
   }
   @Test public void returnStatementsExistsNestedTypeAnnotation() {
@@ -75,13 +75,13 @@ import org.junit.*;
         "    return new B().g();\n" + //
         "  }"); //
     final List<ReturnStatement> a = new MethodExplorer(d).returnStatements();
-    assertThat("", a, notNullValue());
+    assertThat(a, notNullValue());
     assertThat(a.size(), is(2));
   }
   @Test public void returnStatementsExistsNestedTypeWithReturn() {
     final MethodDeclaration d = Into.d("int f() { class B {int g() { return c; } }; return a; }");
     final List<ReturnStatement> a = new MethodExplorer(d).returnStatements();
-    assertThat("", a, notNullValue());
+    assertThat(a, notNullValue());
     assertThat(a.size(), is(1));
   }
   @Test public void returnStatementsExistsNestedTypeWithReturn1() {
@@ -96,13 +96,13 @@ import org.junit.*;
         "    return new B().g();\n" + //
         "  }"); //
     final List<ReturnStatement> a = new MethodExplorer(d).returnStatements();
-    assertThat("", a, notNullValue());
+    assertThat(a, notNullValue());
     assertThat(a.size(), is(2));
   }
   @Test public void returnStatementsTwoReturns() {
     final MethodDeclaration d = Into.d("int f() { if (b) ; else return c; return a; }");
     final List<ReturnStatement> a = new MethodExplorer(d).returnStatements();
-    assertThat("", a, notNullValue());
+    assertThat(a, notNullValue());
     assertThat(a.size(), is(2));
   }
   @Test public void returnStatementsWithNestedEnum() {

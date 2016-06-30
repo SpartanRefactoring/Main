@@ -29,8 +29,8 @@ public class OccurrencesTest {
 
   @Test public void correctSettings() {
     assertThat(ab, iz("int a=2,b;"));
-    assertThat("", b.toString(), is("b"));
-    assertThat("", s, is(Extract.firstIfStatement(u)));
+    assertThat(b.toString(), is("b"));
+    assertThat(s, is(Extract.firstIfStatement(u)));
     assertThat(s, iz("if (a + b) a=3;"));
     assertThat(e, iz("a + b"));
   }
@@ -71,6 +71,6 @@ public class OccurrencesTest {
     assertThat(same(a, left(e)), is(true));
   }
   @Test public void sameTypeAandLeftOfE() {
-    assertThat("", a, instanceOf(left(e).getClass()));
+    assertThat(a, instanceOf(left(e).getClass()));
   }
 }

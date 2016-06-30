@@ -219,7 +219,7 @@ import org.junit.*;
     final MethodDeclaration d = d(input);
     assertThat(d, iz(input));
     final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(d);
-    assertThat("", f, notNullValue());
+    assertThat(f, notNullValue());
     final SimpleName b = f.getName();
     assertThat(b, iz("b"));
     assertThat(Collect.usesOf(b).in(d).size(), is(2));
@@ -229,7 +229,7 @@ import org.junit.*;
     final MethodDeclaration d = d(input);
     assertThat(d, iz(input));
     final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(d);
-    assertThat("", f, notNullValue());
+    assertThat(f, notNullValue());
     final SimpleName b = f.getName();
     assertThat(b, iz("b"));
     assertThat(Collect.usesOf(b).in(d).size(), is(1));
@@ -370,7 +370,7 @@ import org.junit.*;
   }
   @Test public void vanilla() {
     final Collector findUses = searcher();
-    assertThat("", findUses, notNullValue());
+    assertThat(findUses, notNullValue());
     assertThat(findUses.in(s("b = n;")).size(), is(1));
   }
   @Test public void vanillaShortVersion() {

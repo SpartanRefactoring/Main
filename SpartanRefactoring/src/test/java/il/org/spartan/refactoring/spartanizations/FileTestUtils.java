@@ -81,9 +81,9 @@ public abstract class FileTestUtils {
   }
   static Spartanization makeSpartanizationObject(final String folderForClass) {
     final Class<?> c = asClass(folderForClass);
-    assertThat("", c, notNullValue());
+    assertThat(c, notNullValue());
     final Object $ = getInstance(c);
-    assertThat("", $, notNullValue());
+    assertThat($, notNullValue());
     return (Spartanization) $;
   }
   /**
@@ -253,11 +253,11 @@ public abstract class FileTestUtils {
      * @return a collection of all test cases generated in the traversal
      */
     public final Collection<Object[]> go() {
-      assertThat("", location, notNullValue());
-      assertThat("", location.listFiles(), notNullValue());
+      assertThat(location, notNullValue());
+      assertThat(location.listFiles(), notNullValue());
       final List<Object[]> $ = new ArrayList<>();
       for (final File f : location.listFiles()) {
-        assertThat("", f, notNullValue());
+        assertThat(f, notNullValue());
         go($, f);
       }
       return $;

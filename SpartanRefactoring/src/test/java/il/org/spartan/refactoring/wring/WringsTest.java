@@ -24,7 +24,7 @@ public class WringsTest {
     final MethodDeclaration m = Extract.firstMethodDeclaration(u);
     assertThat(m, iz(input));
     final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(m);
-    assertThat("", f, notNullValue());
+    assertThat(f, notNullValue());
     final SimpleName b = f.getName();
     assertThat(Collect.usesOf(b).in(m).size(), is(2));
     final ASTRewrite r = ASTRewrite.create(b.getAST());
@@ -42,7 +42,7 @@ public class WringsTest {
     final Block b = m.getBody();
     final EnhancedForStatement s = (EnhancedForStatement) b.statements().get(0);
     final SingleVariableDeclaration p = s.getParameter();
-    assertThat("", p, notNullValue());
+    assertThat(p, notNullValue());
     final SimpleName a = p.getName();
     assertThat(a, iz("a"));
     assertThat(Collect.usesOf(a).in(m).size(), is(2));
@@ -56,14 +56,14 @@ public class WringsTest {
     final Block b = m.getBody();
     final EnhancedForStatement s = (EnhancedForStatement) b.statements().get(0);
     final SingleVariableDeclaration p = s.getParameter();
-    assertThat("", p, notNullValue());
+    assertThat(p, notNullValue());
     final SimpleName n = p.getName();
     final ASTRewrite r = ASTRewrite.create(b.getAST());
     Wrings.rename(n, newSimpleName(n, "$"), m, r, null);
     final TextEdit e = r.rewriteAST(d, null);
     e.apply(d);
     final String output = Wrap.Method.off(d.get());
-    assertThat("", output, notNullValue());
+    assertThat(output, notNullValue());
     assertThat(output, iz(" int f() {for(int $:as)return $;}"));
   }
   @Test public void inlineExpressionWithSideEffect() {

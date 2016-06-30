@@ -71,10 +71,10 @@ public class InfixSortAdditionTest {
     }
     @Override @Test public void flattenIsIdempotentt() {
       final InfixExpression flatten = flatten(asInfixExpression());
-      assertThat("", flatten(flatten).toString(), is(flatten.toString()));
+      assertThat(flatten(flatten).toString(), is(flatten.toString()));
     }
     @Override @Test public void inputIsInfixExpression() {
-      assertThat("", asInfixExpression(), notNullValue());
+      assertThat(asInfixExpression(), notNullValue());
     }
     @Test public void isPlus() {
       Assert.assertThat(asInfixExpression().getOperator() == Operator.PLUS, is(true));
@@ -129,10 +129,10 @@ public class InfixSortAdditionTest {
     }
     @Override @Test public void flattenIsIdempotentt() {
       final InfixExpression flatten = flatten(asInfixExpression());
-      assertThat("", flatten(flatten).toString(), is(flatten.toString()));
+      assertThat(flatten(flatten).toString(), is(flatten.toString()));
     }
     @Override @Test public void inputIsInfixExpression() {
-      assertThat("", asInfixExpression(), notNullValue());
+      assertThat(asInfixExpression(), notNullValue());
     }
     @Test public void isPlus() {
       Assert.assertThat(asInfixExpression().getOperator() == Operator.PLUS, is(true));

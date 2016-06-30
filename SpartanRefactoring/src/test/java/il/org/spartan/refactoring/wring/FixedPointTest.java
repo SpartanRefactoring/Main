@@ -3,7 +3,6 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.hamcrest.SpartanAssert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.utils.Utils.*;
-import static org.junit.Assert.*;
 import il.org.spartan.refactoring.spartanizations.*;
 
 import org.junit.*;
@@ -27,7 +26,7 @@ import org.junit.runners.*;
   }
   private static void assertWrappedTranslation(final String from, final String expected, final Wrap w) {
     final String wrap = w.on(from);
-    assertThat("", w.off(wrap), is(from));
+    assertThat(w.off(wrap), is(from));
     final String unpeeled = Trimmer.fixedPoint(wrap);
     assertThat("Nothing done on " + from, wrap, not(unpeeled));
     final String peeled = w.off(unpeeled);

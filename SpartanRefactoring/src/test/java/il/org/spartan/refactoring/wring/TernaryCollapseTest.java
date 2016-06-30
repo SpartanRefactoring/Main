@@ -29,15 +29,15 @@ public class TernaryCollapseTest {
 
   @Test public void steps() {
     final ConditionalExpression e = c("a ? b ? x : z :z");
-    assertThat("", e, notNullValue());
+    assertThat(e, notNullValue());
     final ConditionalExpression then = asConditionalExpression(core(e.getThenExpression()));
-    assertThat("", then, notNullValue());
+    assertThat(then, notNullValue());
     final Expression elze = core(e.getElseExpression());
-    assertThat("", elze, notNullValue());
+    assertThat(elze, notNullValue());
     final Expression thenThen = core(then.getThenExpression());
-    assertThat("", thenThen, notNullValue());
+    assertThat(thenThen, notNullValue());
     final Expression thenElse = core(then.getElseExpression());
-    assertThat("", thenElse, notNullValue());
+    assertThat(thenElse, notNullValue());
     Assert.assertThat(same(thenElse, elze), is(true));
   }
 

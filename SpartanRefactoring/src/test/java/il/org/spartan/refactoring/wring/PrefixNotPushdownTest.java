@@ -31,20 +31,20 @@ public class PrefixNotPushdownTest {
 
   @Test public void notOfFalse() {
     final PrefixExpression e = p("!false");
-    assertThat("", e, is(notNullValue()));
+    assertThat(e, is(notNullValue()));
     assertThat(WRING.scopeIncludes(e), is(true));
     assertThat(WRING.eligible(e), is(true));
-    assertThat("", asNot(e), is(notNullValue()));
+    assertThat(asNot(e), is(notNullValue()));
     final Expression inner = core(e.getOperand());
-    assertThat("", inner, is(notNullValue()));
-    assertThat("", inner.toString(), is("false"));
+    assertThat(inner, is(notNullValue()));
+    assertThat(inner.toString(), is("false"));
     assertThat(Is.booleanLiteral(inner), is(true));
-    assertThat("", PrefixNotPushdown.perhapsNotOfLiteral(inner), is(notNullValue()));
-    assertThat("", PrefixNotPushdown.notOfLiteral(asBooleanLiteral(inner)), is(notNullValue()));
-    assertThat("", PrefixNotPushdown.perhapsNotOfLiteral(inner), is(notNullValue()));
-    assertThat("", PrefixNotPushdown.pushdownNot(inner), is(notNullValue()));
-    assertThat("", PrefixNotPushdown.pushdownNot(asNot(e)), is(notNullValue()));
-    assertThat("", WRING.replacement(e), is(notNullValue()));
+    assertThat(PrefixNotPushdown.perhapsNotOfLiteral(inner), is(notNullValue()));
+    assertThat(PrefixNotPushdown.notOfLiteral(asBooleanLiteral(inner)), is(notNullValue()));
+    assertThat(PrefixNotPushdown.perhapsNotOfLiteral(inner), is(notNullValue()));
+    assertThat(PrefixNotPushdown.pushdownNot(inner), is(notNullValue()));
+    assertThat(PrefixNotPushdown.pushdownNot(asNot(e)), is(notNullValue()));
+    assertThat(WRING.replacement(e), is(notNullValue()));
   }
 
   @RunWith(Parameterized.class)//
@@ -119,7 +119,7 @@ public class PrefixNotPushdownTest {
       super(WRING);
     }
     @Test public void inputIsPrefixExpression() {
-      assertThat("", asPrefixExpression(), notNullValue());
+      assertThat(asPrefixExpression(), notNullValue());
     }
   }
 }

@@ -30,7 +30,7 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
   @Test public void checkFirstIfStatement1() {
     final String s = "if (a) return b; if (b) return b;";
     final ASTNode n = As.STATEMENTS.ast(s);
-    assertThat("", n, notNullValue());
+    assertThat(n, notNullValue());
     final IfStatement i = Extract.firstIfStatement(n);
     assertThat(n.toString(), i, notNullValue());
     assert i != null;
@@ -39,13 +39,13 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
   @Test public void checkFirstIfStatement2() {
     final String s = "if (a) return b; else return a();";
     final IfStatement i = Extract.firstIfStatement(As.STATEMENTS.ast(s));
-    assertThat("", i, notNullValue());
+    assertThat(i, notNullValue());
     assertThat(i.toString(), WRING.scopeIncludes(i), is(false));
   }
   @Test public void checkFirstIfStatement3() {
     final String s = "if (a) a= b; else a=c;";
     final IfStatement i = Extract.firstIfStatement(As.STATEMENTS.ast(s));
-    assertThat("", i, notNullValue());
+    assertThat(i, notNullValue());
     assertThat(i.toString(), WRING.scopeIncludes(i), is(false));
   }
 
@@ -149,10 +149,10 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
       super(WRING);
     }
     @Test public void asMeNotNull() {
-      assertThat("", asMe(), notNullValue());
+      assertThat(asMe(), notNullValue());
     }
     @Test public void followedByReturn() {
-      assertThat("", Extract.nextIfStatement(asMe()), notNullValue());
+      assertThat(Extract.nextIfStatement(asMe()), notNullValue());
     }
     @Test public void isfStatementElseIsEmpty() {
       assertThat(Extract.statements(elze(Extract.firstIfStatement(As.STATEMENTS.ast(input)))).size(), is(0));
@@ -162,8 +162,8 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
     }
     @Test public void myScopeIncludes() {
       final IfStatement s = asMe();
-      assertThat("", s, notNullValue());
-      assertThat("", Extract.statements(elze(s)), notNullValue());
+      assertThat(s, notNullValue());
+      assertThat(Extract.statements(elze(s)), notNullValue());
       assertThat(Extract.statements(elze(s)).size(), is(0));
     }
     @Test public void noElse() {

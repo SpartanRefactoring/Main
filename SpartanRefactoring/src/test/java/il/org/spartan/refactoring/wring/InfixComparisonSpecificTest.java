@@ -74,7 +74,7 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
   @Test public void comparisonWithSpecificWithinScope() {
     Assert.assertThat(Is.constant(left(i("this != a"))), is(true));
     final ASTNode n = As.EXPRESSION.ast("a != this");
-    assertThat("", n, notNullValue());
+    assertThat(n, notNullValue());
     assertWithinScope(Funcs.asExpression(n));
     correctScopeExpression(n);
   }
@@ -190,10 +190,10 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
     }
     @Override @Test public void flattenIsIdempotentt() {
       final InfixExpression flatten = flatten(asInfixExpression());
-      assertThat("", flatten(flatten).toString(), is(flatten.toString()));
+      assertThat(flatten(flatten).toString(), is(flatten.toString()));
     }
     @Override @Test public void inputIsInfixExpression() {
-      assertThat("", asInfixExpression(), notNullValue());
+      assertThat(asInfixExpression(), notNullValue());
     }
     @Test public void twoOrMoreArguments() {
       assertThat(Extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
@@ -279,13 +279,13 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
     }
     @Override @Test public void flattenIsIdempotentt() {
       final InfixExpression flatten = flatten(asInfixExpression());
-      assertThat("", flatten(flatten).toString(), is(flatten.toString()));
+      assertThat(flatten(flatten).toString(), is(flatten.toString()));
     }
     @Test public void flipIsNotNull() {
-      assertThat("", flip(asInfixExpression()), notNullValue());
+      assertThat(flip(asInfixExpression()), notNullValue());
     }
     @Override @Test public void inputIsInfixExpression() {
-      assertThat("", asInfixExpression(), notNullValue());
+      assertThat(asInfixExpression(), notNullValue());
     }
     @Test public void sortTwiceADDITION() {
       final InfixExpression e = asInfixExpression();

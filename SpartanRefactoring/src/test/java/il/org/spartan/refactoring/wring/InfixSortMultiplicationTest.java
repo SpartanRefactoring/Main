@@ -43,18 +43,18 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
   }
   @Test public void oneMultiplication0() {
     final InfixExpression e = i("f(a,b,c,d) * f(a,b,c)");
-    assertThat("", right(e).toString(), is("f(a,b,c)"));
+    assertThat(right(e).toString(), is("f(a,b,c)"));
     assert inner != null;
     assertThat(inner.scopeIncludes(e), is(true));
     assertThat(inner.eligible(e), is(true));
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
-    assertThat("", s, instanceOf(InfixSortMultiplication.class));
-    assertThat("", s, notNullValue());
+    assertThat(s, instanceOf(InfixSortMultiplication.class));
+    assertThat(s, notNullValue());
     Assert.assertThat(s.scopeIncludes(e), is(true));
     Assert.assertThat(s.eligible(e), is(true));
     final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) s).replacement(e);
-    assertThat("", replacement, notNullValue());
-    assertThat("", replacement.toString(), is("f(a,b,c) * f(a,b,c,d)"));
+    assertThat(replacement, notNullValue());
+    assertThat(replacement.toString(), is("f(a,b,c) * f(a,b,c,d)"));
   }
   @Test public void parseOfToken() {
     assertThat(new LiteralParser(e(" 2  ").toString()).type(), is(Types.INTEGER.ordinal()));
@@ -98,7 +98,7 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
       super(WRING);
     }
     @Override @Test public void inputIsInfixExpression() {
-      assertThat("", asInfixExpression(), notNullValue());
+      assertThat(asInfixExpression(), notNullValue());
     }
     @Test public void isTimes() {
       Assert.assertThat(asInfixExpression().getOperator() == Operator.TIMES, is(true));
@@ -148,10 +148,10 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
     }
     @Override @Test public void flattenIsIdempotentt() {
       final InfixExpression flatten = flatten(asInfixExpression());
-      assertThat("", flatten(flatten).toString(), is(flatten.toString()));
+      assertThat(flatten(flatten).toString(), is(flatten.toString()));
     }
     @Override @Test public void inputIsInfixExpression() {
-      assertThat("", asInfixExpression(), notNullValue());
+      assertThat(asInfixExpression(), notNullValue());
     }
     @Test public void isTimes() {
       Assert.assertThat(asInfixExpression().getOperator() == Operator.TIMES, is(true));
