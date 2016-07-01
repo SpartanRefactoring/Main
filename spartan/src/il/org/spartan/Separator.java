@@ -22,7 +22,7 @@ import il.org.spartan.iterables.*;
  */
 public final class Separator {
   private final String s;
-  boolean first = true;
+  private boolean first = true;
 
   /**
    * Instantiates this class.
