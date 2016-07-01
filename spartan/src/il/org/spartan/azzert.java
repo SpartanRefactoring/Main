@@ -15,13 +15,12 @@ public class azzert extends org.junit.Assert {
    * Creates a matcher that matches if the examined object matches <b>ALL</b> of
    * the specified matchers.
    * <p/>
-   * For example:
    *
    * <pre>
    * assertThat(&quot;myValue&quot;, allOf(startsWith(&quot;my&quot;), containsString(&quot;Val&quot;)))
    * </pre>
    */
-  public static <T> org.hamcrest.Matcher<T> allOf(final java.lang.Iterable<org.hamcrest.Matcher<? super T>> matchers) {
+  public static <T> Matcher<T> allOf(final java.lang.Iterable<Matcher<? super T>> matchers) {
     return org.hamcrest.core.AllOf.<T> allOf(matchers);
   }
   /**
@@ -37,7 +36,7 @@ public class azzert extends org.junit.Assert {
    * @param matchers JD
    * @return
    */
-  @SafeVarargs public static <T> org.hamcrest.Matcher<T> allOf(final org.hamcrest.Matcher<? super T>... matchers) {
+  @SafeVarargs public static <T> Matcher<T> allOf(final Matcher<? super T>... matchers) {
     return org.hamcrest.core.AllOf.<T> allOf(matchers);
   }
   /**
@@ -50,7 +49,7 @@ public class azzert extends org.junit.Assert {
    * assertThat(&quot;myValue&quot;, allOf(startsWith(&quot;my&quot;), containsString(&quot;Val&quot;)))
    * </pre>
    */
-  public static <T> org.hamcrest.Matcher<T> allOf(final org.hamcrest.Matcher<? super T> first, final org.hamcrest.Matcher<? super T> second) {
+  public static <T> Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second) {
     return org.hamcrest.core.AllOf.<T> allOf(first, second);
   }
   /**
@@ -63,8 +62,7 @@ public class azzert extends org.junit.Assert {
    * assertThat(&quot;myValue&quot;, allOf(startsWith(&quot;my&quot;), containsString(&quot;Val&quot;)))
    * </pre>
    */
-  public static <T> org.hamcrest.Matcher<T> allOf(final org.hamcrest.Matcher<? super T> first, final org.hamcrest.Matcher<? super T> second,
-      final org.hamcrest.Matcher<? super T> third) {
+  public static <T> Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second, final Matcher<? super T> third) {
     return org.hamcrest.core.AllOf.<T> allOf(first, second, third);
   }
   /**
@@ -77,8 +75,8 @@ public class azzert extends org.junit.Assert {
    * assertThat(&quot;myValue&quot;, allOf(startsWith(&quot;my&quot;), containsString(&quot;Val&quot;)))
    * </pre>
    */
-  public static <T> org.hamcrest.Matcher<T> allOf(final org.hamcrest.Matcher<? super T> first, final org.hamcrest.Matcher<? super T> second,
-      final org.hamcrest.Matcher<? super T> third, final org.hamcrest.Matcher<? super T> fourth) {
+  public static <T> Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second,
+      final Matcher<? super T> third, final Matcher<? super T> fourth) {
     return org.hamcrest.core.AllOf.<T> allOf(first, second, third, fourth);
   }
   /**
@@ -98,8 +96,8 @@ public class azzert extends org.junit.Assert {
    * @param fifth JD
    * @return
    */
-  public static <T> org.hamcrest.Matcher<T> allOf(final org.hamcrest.Matcher<? super T> first, final org.hamcrest.Matcher<? super T> second,
-      final org.hamcrest.Matcher<? super T> third, final org.hamcrest.Matcher<? super T> fourth, final org.hamcrest.Matcher<? super T> fifth) {
+  public static <T> Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second,
+      final Matcher<? super T> third, final Matcher<? super T> fourth, final Matcher<? super T> fifth) {
     return org.hamcrest.core.AllOf.<T> allOf(first, second, third, fourth, fifth);
   }
   /**
@@ -112,9 +110,9 @@ public class azzert extends org.junit.Assert {
    * assertThat(&quot;myValue&quot;, allOf(startsWith(&quot;my&quot;), containsString(&quot;Val&quot;)))
    * </pre>
    */
-  public static <T> org.hamcrest.Matcher<T> allOf(final org.hamcrest.Matcher<? super T> first, final org.hamcrest.Matcher<? super T> second,
-      final org.hamcrest.Matcher<? super T> third, final org.hamcrest.Matcher<? super T> fourth, final org.hamcrest.Matcher<? super T> fifth,
-      final org.hamcrest.Matcher<? super T> sixth) {
+  public static <T> Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second,
+      final Matcher<? super T> third, final Matcher<? super T> fourth, final Matcher<? super T> fifth,
+      final Matcher<? super T> sixth) {
     return org.hamcrest.core.AllOf.<T> allOf(first, second, third, fourth, fifth, sixth);
   }
   /**
@@ -136,7 +134,7 @@ public class azzert extends org.junit.Assert {
    * assertThat(new Canoe(), instanceOf(Canoe.class));
    * </pre>
    */
-  public static <T> org.hamcrest.Matcher<T> any(final java.lang.Class<T> type) {
+  public static <T> Matcher<T> any(final java.lang.Class<T> type) {
     return org.hamcrest.core.IsInstanceOf.<T> any(type);
   }
   /**
@@ -153,7 +151,7 @@ public class azzert extends org.junit.Assert {
    * @param <T> JD
    * @return
    */
-  public static <T> org.hamcrest.core.@Nullable AnyOf<T> anyOf(final java.lang.Iterable<org.hamcrest.Matcher<? super T>> matchers) {
+  public static <T> org.hamcrest.core.@Nullable AnyOf<T> anyOf(final java.lang.Iterable<Matcher<? super T>> matchers) {
     return org.hamcrest.core.AnyOf.<T> anyOf(matchers);
   }
   /**
@@ -166,7 +164,7 @@ public class azzert extends org.junit.Assert {
    * assertThat(&quot;myValue&quot;, anyOf(startsWith(&quot;foo&quot;), containsString(&quot;Val&quot;)))
    * </pre>
    */
-  @SafeVarargs public static <T> org.hamcrest.core.@Nullable AnyOf<T> anyOf(final org.hamcrest.Matcher<? super T>... matchers) {
+  @SafeVarargs public static <T> org.hamcrest.core.@Nullable AnyOf<T> anyOf(final Matcher<? super T>... matchers) {
     return org.hamcrest.core.AnyOf.<T> anyOf(matchers);
   }
   /**
@@ -179,8 +177,7 @@ public class azzert extends org.junit.Assert {
    * assertThat(&quot;myValue&quot;, anyOf(startsWith(&quot;foo&quot;), containsString(&quot;Val&quot;)))
    * </pre>
    */
-  public static <T> org.hamcrest.core.@Nullable AnyOf<T> anyOf(final org.hamcrest.Matcher<T> first,
-      final org.hamcrest.Matcher<? super T> second) {
+  public static <T> org.hamcrest.core.@Nullable AnyOf<T> anyOf(final Matcher<T> first, final Matcher<? super T> second) {
     return org.hamcrest.core.AnyOf.<T> anyOf(first, second);
   }
   /**
@@ -193,9 +190,8 @@ public class azzert extends org.junit.Assert {
    * assertThat(&quot;myValue&quot;, anyOf(startsWith(&quot;foo&quot;), containsString(&quot;Val&quot;)))
    * </pre>
    */
-  public static <T> org.hamcrest.core.@Nullable AnyOf<T> anyOf(final org.hamcrest.Matcher<T> first,
-      final org.hamcrest.Matcher<? super T> second,
-      final org.hamcrest.Matcher<? super T> third) {
+  public static <T> org.hamcrest.core.@Nullable AnyOf<T> anyOf(final Matcher<T> first, final Matcher<? super T> second,
+      final Matcher<? super T> third) {
     return org.hamcrest.core.AnyOf.<T> anyOf(first, second, third);
   }
   /**
@@ -208,9 +204,8 @@ public class azzert extends org.junit.Assert {
    * assertThat(&quot;myValue&quot;, anyOf(startsWith(&quot;foo&quot;), containsString(&quot;Val&quot;)))
    * </pre>
    */
-  public static <T> org.hamcrest.core.@Nullable AnyOf<T> anyOf(final org.hamcrest.Matcher<T> first,
-      final org.hamcrest.Matcher<? super T> second,
-      final org.hamcrest.Matcher<? super T> third, final org.hamcrest.Matcher<? super T> fourth) {
+  public static <T> org.hamcrest.core.@Nullable AnyOf<T> anyOf(final Matcher<T> first, final Matcher<? super T> second,
+      final Matcher<? super T> third, final Matcher<? super T> fourth) {
     return org.hamcrest.core.AnyOf.<T> anyOf(first, second, third, fourth);
   }
   /**
@@ -231,8 +226,8 @@ public class azzert extends org.junit.Assert {
    * @param fifth JD
    * @return a matcher
    */
-  public static <T> org.hamcrest.core.AnyOf<T> anyOf(final org.hamcrest.Matcher<T> first, final org.hamcrest.Matcher<? super T> second,
-      final org.hamcrest.Matcher<? super T> third, final org.hamcrest.Matcher<? super T> fourth, final org.hamcrest.Matcher<? super T> fifth) {
+  public static <T> org.hamcrest.core.AnyOf<T> anyOf(final Matcher<T> first, final Matcher<? super T> second,
+      final Matcher<? super T> third, final Matcher<? super T> fourth, final Matcher<? super T> fifth) {
     return org.hamcrest.core.AnyOf.<T> anyOf(first, second, third, fourth, fifth);
   }
   /**
@@ -245,16 +240,15 @@ public class azzert extends org.junit.Assert {
    * assertThat(&quot;myValue&quot;, anyOf(startsWith(&quot;foo&quot;), containsString(&quot;Val&quot;)))
    * </pre>
    */
-  public static <T> org.hamcrest.core.@Nullable AnyOf<T> anyOf(final org.hamcrest.Matcher<T> first,
-      final org.hamcrest.Matcher<? super T> second,
-      final org.hamcrest.Matcher<? super T> third, final org.hamcrest.Matcher<? super T> fourth, final org.hamcrest.Matcher<? super T> fifth,
-      final org.hamcrest.Matcher<? super T> sixth) {
+  public static <T> org.hamcrest.core.@Nullable AnyOf<T> anyOf(final Matcher<T> first, final Matcher<? super T> second,
+      final Matcher<? super T> third, final Matcher<? super T> fourth, final Matcher<? super T> fifth,
+      final Matcher<? super T> sixth) {
     return org.hamcrest.core.AnyOf.<T> anyOf(first, second, third, fourth, fifth, sixth);
   }
   /**
    * Creates a matcher that always matches, regardless of the examined object.
    */
-  public static org.hamcrest.Matcher<java.lang.Object> anything() {
+  public static @Nullable Matcher<java.lang.Object> anything() {
     return org.hamcrest.core.IsAnything.anything();
   }
   /**
@@ -262,30 +256,31 @@ public class azzert extends org.junit.Assert {
    * but describes itself with the specified {@link String}.
    *
    * @param description a meaningful {@link String} used when describing itself
+   * @return
    */
-  public static org.hamcrest.Matcher<java.lang.Object> anything(final java.lang.String description) {
+  public static org.hamcrest.@Nullable Matcher<@Nullable Object> anything(final java.lang.String description) {
     return org.hamcrest.core.IsAnything.anything(description);
   }
   public static void assertEquals(final int expected, final int actual) {
     assertEquals(box.it(expected), box.it(actual));
   }
   public static void assertEquals(final Object exp, final @Nullable Object val) {
-    assertThat(val, is(exp));
+    that(val, is(exp));
   }
   public static void assertEquals(final String reason, final int i1, final int i2) {
     assertThat(reason, box.it(i1), CoreMatchers.equalTo(box.it(i2)));
   }
   public static void assertFalse(final String s, final boolean b) {
-    assertThat(s, b, is(Boolean.FALSE));
+    that(s, b, is(Boolean.FALSE));
   }
   public static void assertNotEquals(final Object o1, final @Nullable Object o2) {
-    assertThat(o1, CoreMatchers.not(o2));
+    that(o1, CoreMatchers.not(o2));
   }
   public static void assertNotEquals(final String reason, final Object o1, final Object o2) {
     assertThat(reason, o1, CoreMatchers.not(o2));
   }
   public static void assertNotNull(final Object o) {
-    assertThat(o, CoreMatchers.notNullValue());
+    that(o, CoreMatchers.notNullValue());
   }
   public static void assertNotNull(final String s, final @Nullable Object o) {
     assertThat(s, o, notNullValue());
@@ -300,7 +295,7 @@ public class azzert extends org.junit.Assert {
       assertNotNull("" + os, o);
   }
   public static void assertNull(final @Nullable Object o) {
-    assertThat(o, nullValue());
+    that(o, nullValue());
   }
   /**
    * assert that a given integer is positive
@@ -313,280 +308,287 @@ public class azzert extends org.junit.Assert {
   /**
    * A non-auto-boxing version for the primitive type
    * <code><b>boolean</b></code> of the original Hamcrest function
-   * {@link org.hamcrest.MatcherAssert#assertThat(Object, Matcher)}; the boxing
-   * in the present function is explicit, and after it is being carried out,
+   * {@link MatcherAssert#assertThat(Object, Matcher)}; the boxing in the
+   * present function is explicit, and after it is being carried out,
    * computation is delegated to
-   * {@link org.hamcrest.MatcherAssert#assertThat(Object, Matcher)}.
+   * {@link MatcherAssert#assertThat(Object, Matcher)}.
    *
    * @param b JD
    * @param m JD
-   * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
+   * @see MatcherAssert#assertThat(Object, Matcher)
    */
-  public static void assertThat(final boolean b, final Matcher<? super @Nullable Boolean> m) {
-    assertThat(Boolean.valueOf(b), m);
+  public static void that(final boolean b, final Matcher<? super @Nullable Boolean> m) {
+    that(Boolean.valueOf(b), m);
   }
   /**
    * A non-auto-boxing version for the primitive type <code><b>byte</b></code>
    * of the original Hamcrest function
-   * {@link org.hamcrest.MatcherAssert#assertThat(Object, Matcher)}; the boxing
-   * in the present function is explicit, and after it is being carried out,
+   * {@link MatcherAssert#assertThat(Object, Matcher)}; the boxing in the
+   * present function is explicit, and after it is being carried out,
    * computation is delegated to
-   * {@link org.hamcrest.MatcherAssert#assertThat(Object, Matcher)}.
+   * {@link MatcherAssert#assertThat(Object, Matcher)}.
    *
    * @param b JD
    * @param m JD
-   * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
+   * @see MatcherAssert#assertThat(Object, Matcher)
    */
-  public static void assertThat(final byte b, final @Nullable Matcher<? super @Nullable Byte> m) {
-    assertThat(Byte.valueOf(b), m);
+  public static void that(final byte b, final @Nullable Matcher<? super @Nullable Byte> m) {
+    that(Byte.valueOf(b), m);
   }
   /**
    * A non-auto-boxing version for the primitive type <code><b>char</b></code>
    * of the original Hamcrest function
-   * {@link org.hamcrest.MatcherAssert#assertThat(Object, Matcher)}; the boxing
-   * in the present function is explicit, and after it is being carried out,
+   * {@link MatcherAssert#assertThat(Object, Matcher)}; the boxing in the
+   * present function is explicit, and after it is being carried out,
    * computation is delegated to
-   * {@link org.hamcrest.MatcherAssert#assertThat(Object, Matcher)}.
+   * {@link MatcherAssert#assertThat(Object, Matcher)}.
    *
    * @param c JD
    * @param m JD
-   * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
+   * @see MatcherAssert#assertThat(Object, Matcher)
    */
-  public static void assertThat(final char c, final Matcher<? super @Nullable Character> m) {
-    assertThat(Character.valueOf(c), m);
+  public static void that(final char c, final Matcher<? super @Nullable Character> m) {
+    that(Character.valueOf(c), m);
   }
   /**
    * A non-auto-boxing version for the primitive type <code><b>double</b></code>
    * of the original Hamcrest function
-   * {@link org.hamcrest.MatcherAssert#assertThat(Object, Matcher)}; the boxing
-   * in the present function is explicit, and after it is being carried out,
+   * {@link MatcherAssert#assertThat(Object, Matcher)}; the boxing in the
+   * present function is explicit, and after it is being carried out,
    * computation is delegated to
-   * {@link org.hamcrest.MatcherAssert#assertThat(Object, Matcher)}.
+   * {@link MatcherAssert#assertThat(Object, Matcher)}.
    *
    * @param d JD
    * @param m JD
-   * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
+   * @see MatcherAssert#assertThat(Object, Matcher)
    */
-  public static void assertThat(final double d, final Matcher<? super @Nullable Double> m) {
-    assertThat(Double.valueOf(d), m);
+  public static void that(final double d, final Matcher<? super @Nullable Double> m) {
+    that(Double.valueOf(d), m);
   }
   /**
    * A non-auto-boxing version for the primitive type <code><b>float</b></code>
    * of the original Hamcrest function
-   * {@link org.hamcrest.MatcherAssert#assertThat(Object, Matcher)}; the boxing
-   * in the present function is explicit, and after it is being carried out,
+   * {@link MatcherAssert#assertThat(Object, Matcher)}; the boxing in the
+   * present function is explicit, and after it is being carried out,
    * computation is delegated to
-   * {@link org.hamcrest.MatcherAssert#assertThat(Object, Matcher)}.
+   * {@link MatcherAssert#assertThat(Object, Matcher)}.
    *
    * @param f JD
    * @param m JD
-   * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
+   * @see MatcherAssert#assertThat(Object, Matcher)
    */
-  public static void assertThat(final float f, final Matcher<? super @Nullable Float> m) {
-    assertThat(Float.valueOf(f), m);
+  public static void that(final float f, final Matcher<? super @Nullable Float> m) {
+    that(Float.valueOf(f), m);
   }
   /**
    * A non-auto-boxing version for the primitive type <code><b>int</b></code> of
    * the original Hamcrest function
-   * {@link org.hamcrest.MatcherAssert#assertThat(Object, Matcher)}; the boxing
-   * in the present function is explicit, and after it is being carried out,
+   * {@link MatcherAssert#assertThat(Object, Matcher)}; the boxing in the
+   * present function is explicit, and after it is being carried out,
    * computation is delegated to
-   * {@link org.hamcrest.MatcherAssert#assertThat(Object, Matcher)}.
+   * {@link MatcherAssert#assertThat(Object, Matcher)}.
    *
    * @param i JD
    * @param m JD
-   * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
+   * @see MatcherAssert#assertThat(Object, Matcher)
    */
-  public static void assertThat(final int i, final Matcher<? super @Nullable Integer> m) {
-    assertThat(Integer.valueOf(i), m);
+  public static void that(final int i, final Matcher<? super @Nullable Integer> m) {
+    that(Integer.valueOf(i), m);
   }
   /**
    * A non-auto-boxing version for the primitive type <code><b>long</b></code>
    * of the original Hamcrest function
-   * {@link org.hamcrest.MatcherAssert#assertThat(Object, Matcher)}; the boxing
-   * in the present function is explicit, and after it is being carried out,
+   * {@link MatcherAssert#assertThat(Object, Matcher)}; the boxing in the
+   * present function is explicit, and after it is being carried out,
    * computation is delegated to
-   * {@link org.hamcrest.MatcherAssert#assertThat(Object, Matcher)}.
+   * {@link MatcherAssert#assertThat(Object, Matcher)}.
    *
    * @param l JD
    * @param m JD
-   * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
+   * @see MatcherAssert#assertThat(Object, Matcher)
    */
-  public static void assertThat(final long l, final Matcher<? super @Nullable Long> m) {
-    assertThat(Long.valueOf(l), m);
+  public static void that(final long l, final Matcher<? super @Nullable Long> m) {
+    that(Long.valueOf(l), m);
   }
   /**
-   * A variant of {@link org.hamcrest.MatcherAssert#assertThat(Object, Matcher)}
-   * which compares {link @String} representation of an object, with an expected
-   * such representation, while ignoring white space characters, unless these
-   * occur between identifiers.
+   * A variant of {@link MatcherAssert#assertThat(Object, Matcher)} which
+   * compares {link @String} representation of an object, with an expected such
+   * representation, while ignoring white space characters, unless these occur
+   * between identifiers.
    *
    * @param actual the actual object
    * @param expected the expected textual representation of the first parameter
    */
-  public static void assertThat(final Object actual, final Wrapper<@Nullable String> expected) {
-    assertThat(compressSpaces(actual + ""), is(compressSpaces(expected.get())));
+  public static void that(final Object actual, final Wrapper<@Nullable String> expected) {
+    that(compressSpaces(actual + ""), is(compressSpaces(expected.get())));
   }
   /**
    * A non-auto-boxing version for the primitive type <code><b>short</b></code>
    * of the original Hamcrest function
-   * {@link org.hamcrest.MatcherAssert#assertThat(Object, Matcher)}; the boxing
-   * in the present function is explicit, and after it is being carried out,
+   * {@link MatcherAssert#assertThat(Object, Matcher)}; the boxing in the
+   * present function is explicit, and after it is being carried out,
    * computation is delegated to
-   * {@link org.hamcrest.MatcherAssert#assertThat(Object, Matcher)}.
+   * {@link MatcherAssert#assertThat(Object, Matcher)}.
    *
    * @param s JD
    * @param m JD
-   * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
+   * @see MatcherAssert#assertThat(Object, Matcher)
    */
-  public static void assertThat(final short s, final Matcher<? super @Nullable Short> m) {
-    assertThat(Short.valueOf(s), m);
+  public static void that(final short s, final Matcher<? super @Nullable Short> m) {
+    that(Short.valueOf(s), m);
   }
 
   /**
    * A non-auto-boxing version for the primitive type
    * <code><b>boolean</b></code> of the original Hamcrest function
-   * {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}; the
-   * boxing in the present function is explicit, and after it is being carried
-   * out, computation is delegated to
-   * {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}.
+   * {@link MatcherAssert#assertThat(String, Object, Matcher)}; the boxing in
+   * the present function is explicit, and after it is being carried out,
+   * computation is delegated to
+   * {@link MatcherAssert#assertThat(String, Object, Matcher)}.
    *
    * @param reason as in the original Hamcrest function
-   *          {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}
+   *          {@link MatcherAssert#assertThat(String, Object, Matcher)}
    * @param b JD
    * @param m JD
-   * @see org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)
+   * @see MatcherAssert#assertThat(String, Object, Matcher)
    */
-  public static void assertThat(final String reason, final boolean b, final Matcher<? super Boolean> m) {
+  public static void that(final String reason, final boolean b, final Matcher<? super Boolean> m) {
     assertThat(reason, Boolean.valueOf(b), m);
   }
   /**
    * A non-auto-boxing version for the primitive type <code><b>byte</b></code>
    * of the original Hamcrest function
-   * {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}; the
-   * boxing in the present function is explicit, and after it is being carried
-   * out, computation is delegated to
-   * {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}.
+   * {@link MatcherAssert#assertThat(String, Object, Matcher)}; the boxing in
+   * the present function is explicit, and after it is being carried out,
+   * computation is delegated to
+   * {@link MatcherAssert#assertThat(String, Object, Matcher)}.
    *
    * @param reason as in the original Hamcrest function
-   *          {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}
+   *          {@link MatcherAssert#assertThat(String, Object, Matcher)}
    * @param b JD
    * @param m JD
-   * @see org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)
+   * @see MatcherAssert#assertThat(String, Object, Matcher)
    */
-  public static void assertThat(final String reason, final byte b, final Matcher<? super @Nullable Byte> m) {
+  public static void that(final String reason, final byte b, final Matcher<? super @Nullable Byte> m) {
     assertThat(reason, Byte.valueOf(b), m);
   }
   /**
    * A non-auto-boxing version for the primitive type <code><b>char</b></code>
    * of the original Hamcrest function
-   * {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}; the
-   * boxing in the present function is explicit, and after it is being carried
-   * out, computation is delegated to
-   * {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}.
+   * {@link MatcherAssert#assertThat(String, Object, Matcher)}; the boxing in
+   * the present function is explicit, and after it is being carried out,
+   * computation is delegated to
+   * {@link MatcherAssert#assertThat(String, Object, Matcher)}.
    *
    * @param reason as in
-   *          {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}
+   *          {@link MatcherAssert#assertThat(String, Object, Matcher)}
    * @param c JD
    * @param m JD
-   * @see org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)
+   * @see MatcherAssert#assertThat(String, Object, Matcher)
    */
-  public static void assertThat(final String reason, final char c, final Matcher<? super Character> m) {
+  public static void that(final String reason, final char c, final Matcher<? super Character> m) {
     assertThat(reason, Character.valueOf(c), m);
   }
   /**
    * A non-auto-boxing version for the primitive type <code><b>double</b></code>
    * of the original Hamcrest function
-   * {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}; the
-   * boxing in the present function is explicit, and after it is being carried
-   * out, computation is delegated to
-   * {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}.
+   * {@link MatcherAssert#assertThat(String, Object, Matcher)}; the boxing in
+   * the present function is explicit, and after it is being carried out,
+   * computation is delegated to
+   * {@link MatcherAssert#assertThat(String, Object, Matcher)}.
    *
    * @param reason as in the original Hamcrest function
-   *          {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}
+   *          {@link MatcherAssert#assertThat(String, Object, Matcher)}
    * @param d JD
    * @param m JD
-   * @see org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)
+   * @see MatcherAssert#assertThat(String, Object, Matcher)
    */
-  public static void assertThat(final String reason, final double d, final Matcher<? super @Nullable Double> m) {
+  public static void that(final String reason, final double d, final Matcher<? super @Nullable Double> m) {
     assertThat(reason, Double.valueOf(d), m);
   }
   /**
    * A non-auto-boxing version for the primitive type <code><b>float</b></code>
    * of the original Hamcrest function
-   * {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}; the
-   * boxing in the present function is explicit, and after it is being carried
-   * out, computation is delegated to
-   * {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}.
+   * {@link MatcherAssert#assertThat(String, Object, Matcher)}; the boxing in
+   * the present function is explicit, and after it is being carried out,
+   * computation is delegated to
+   * {@link MatcherAssert#assertThat(String, Object, Matcher)}.
    *
    * @param reason as in the original Hamcrest function
-   *          {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}
+   *          {@link MatcherAssert#assertThat(String, Object, Matcher)}
    * @param f JD
    * @param m JD
-   * @see org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)
+   * @see MatcherAssert#assertThat(String, Object, Matcher)
    */
-  public static void assertThat(final String reason, final float f, final Matcher<? super Float> m) {
+  public static void that(final String reason, final float f, final Matcher<? super Float> m) {
     assertThat(reason, Float.valueOf(f), m);
   }
   /**
    * A non-auto-boxing version for the primitive type <code><b>int</b></code> of
-   * function
-   * {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}; the
+   * function {@link MatcherAssert#assertThat(String, Object, Matcher)}; the
    * boxing in the present function is explicit, and after it is being carried
    * out, computation is delegated to
-   * {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}.
+   * {@link MatcherAssert#assertThat(String, Object, Matcher)}.
    *
    * @param reason as in the original Hamcrest function
-   *          {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}
+   *          {@link MatcherAssert#assertThat(String, Object, Matcher)}
    * @param i JD
    * @param m JD
-   * @see org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)
+   * @see MatcherAssert#assertThat(String, Object, Matcher)
    */
-  public static void assertThat(final String reason, final int i, final Matcher<? super Integer> m) {
+  public static void that(final String reason, final int i, final Matcher<? super Integer> m) {
     assertThat(reason, Integer.valueOf(i), m);
   }
   /**
    * A non-auto-boxing version for the primitive type <code><b>long</b></code>
    * of the original Hamcrest function
-   * {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}; the
-   * boxing in the present function is explicit, and after it is being carried
-   * out, computation is delegated to
-   * {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}.
+   * {@link MatcherAssert#assertThat(String, Object, Matcher)}; the boxing in
+   * the present function is explicit, and after it is being carried out,
+   * computation is delegated to
+   * {@link MatcherAssert#assertThat(String, Object, Matcher)}.
    *
    * @param reason as in the original Hamcrest function
-   *          {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}
+   *          {@link MatcherAssert#assertThat(String, Object, Matcher)}
    * @param l JD
    * @param m JD
-   * @see org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)
+   * @see MatcherAssert#assertThat(String, Object, Matcher)
    */
-  public static void assertThat(final String reason, final long l, final Matcher<? super @Nullable Long> m) {
+  public static void that(final String reason, final long l, final Matcher<? super @Nullable Long> m) {
     assertThat(reason, Long.valueOf(l), m);
   }
   /**
    * A non-auto-boxing version for the primitive type <code><b>short</b></code>
    * of the original Hamcrest function
-   * {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}; the
-   * boxing in the present function is explicit, and after it is being carried
-   * out, computation is delegated to
-   * {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}.
+   * {@link MatcherAssert#assertThat(String, Object, Matcher)}; the boxing in
+   * the present function is explicit, and after it is being carried out,
+   * computation is delegated to
+   * {@link MatcherAssert#assertThat(String, Object, Matcher)}.
    *
    * @param reason as in the original Hamcrest function
-   *          {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}
+   *          {@link MatcherAssert#assertThat(String, Object, Matcher)}
    * @param s JD
    * @param m JD
-   * @see org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)
+   * @see MatcherAssert#assertThat(String, Object, Matcher)
    */
-  public static void assertThat(final String reason, final short s, final Matcher<? super Short> m) {
+  public static void that(final String reason, final short s, final Matcher<? super Short> m) {
     assertThat(reason, Short.valueOf(s), m);
   }
-  public static <@Nullable T> void assertThat(final @Nullable T actual, final @Nullable Matcher<? super @Nullable T> matcher) {
+  /**
+   * @param <T> JD
+   * @param actual
+   * @param matcher
+   */
+  public static <@Nullable T> void that(final @Nullable T actual, final @Nullable Matcher<? super @Nullable T> matcher) {
     assertThat("", actual, matcher);
   }
+  /**
+   * @param b
+   */
   public static void assertTrue(final boolean b) {
-    azzert.assertThat(b, is(true));
+    assertTrue(b);
   }
   public static void assertTrue(final String s, final boolean b) {
-    org.junit.Assert.assertThat(s, Boolean.valueOf(b), is(Boolean.TRUE));
+    assertThat(s, Boolean.valueOf(b), is(Boolean.TRUE));
   }
   /**
    * Assert that an integer is zero
@@ -606,7 +608,7 @@ public class azzert extends org.junit.Assert {
    * assertThat(&quot;fab&quot;, both(containsString(&quot;a&quot;)).and(containsString(&quot;b&quot;)))
    * </pre>
    */
-  public static <LHS> org.hamcrest.core.CombinableMatcher.CombinableBothMatcher<LHS> both(final org.hamcrest.Matcher<? super LHS> matcher) {
+  public static <LHS> org.hamcrest.core.CombinableMatcher.CombinableBothMatcher<LHS> both(final Matcher<? super LHS> matcher) {
     return org.hamcrest.core.CombinableMatcher.<LHS> both(matcher);
   }
   /**
@@ -671,7 +673,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} to
    *         the parameter
    */
-  @Factory public static Matcher<Float> comparesEqualTo(final float f) {
+  @Factory public static @Nullable Matcher<Float> comparesEqualTo(final float f) {
     return org.hamcrest.number.OrderingComparison.comparesEqualTo(Float.valueOf(f));
   }
   /**
@@ -684,7 +686,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} to
    *         the parameter
    */
-  @Factory public static Matcher<Integer> comparesEqualTo(final int i) {
+  @Factory public static @Nullable Matcher<Integer> comparesEqualTo(final int i) {
     return org.hamcrest.number.OrderingComparison.comparesEqualTo(Integer.valueOf(i));
   }
   /**
@@ -697,7 +699,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} to
    *         the parameter
    */
-  @Factory public static Matcher<Long> comparesEqualTo(final long l) {
+  @Factory public static @Nullable Matcher<Long> comparesEqualTo(final long l) {
     return org.hamcrest.number.OrderingComparison.comparesEqualTo(Long.valueOf(l));
   }
   /**
@@ -710,7 +712,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} to
    *         the parameter
    */
-  @Factory public static Matcher<Short> comparesEqualTo(final short s) {
+  @Factory public static @Nullable Matcher<Short> comparesEqualTo(final short s) {
     return org.hamcrest.number.OrderingComparison.comparesEqualTo(Short.valueOf(s));
   }
   /**
@@ -726,7 +728,7 @@ public class azzert extends org.junit.Assert {
    * @param substring the substring that the returned matcher will expect to
    *          find within any examined string
    */
-  public static org.hamcrest.Matcher<java.lang.String> containsString(final java.lang.String substring) {
+  public static @Nullable Matcher<java.lang.String> containsString(final java.lang.String substring) {
     return org.hamcrest.core.StringContains.containsString(substring);
   }
   /**
@@ -744,7 +746,7 @@ public class azzert extends org.junit.Assert {
    * @param matcher the matcher to wrap
    * @param values optional values to insert into the tokenised description
    */
-  public static <T> org.hamcrest.Matcher<T> describedAs(final java.lang.String description, final org.hamcrest.Matcher<T> matcher,
+  public static <T> Matcher<T> describedAs(final java.lang.String description, final Matcher<T> matcher,
       final java.lang.Object... values) {
     return org.hamcrest.core.DescribedAs.<T> describedAs(description, matcher, values);
   }
@@ -759,7 +761,7 @@ public class azzert extends org.junit.Assert {
    * </pre>
    */
   public static <LHS> org.hamcrest.core.CombinableMatcher.CombinableEitherMatcher<LHS> either(
-      final org.hamcrest.Matcher<? super LHS> matcher) {
+      final Matcher<? super LHS> matcher) {
     return org.hamcrest.core.CombinableMatcher.<LHS> either(matcher);
   }
   /**
@@ -775,7 +777,7 @@ public class azzert extends org.junit.Assert {
    * @param suffix the substring that the returned matcher will expect at the
    *          end of any examined string
    */
-  public static org.hamcrest.Matcher<java.lang.String> endsWith(final java.lang.String suffix) {
+  public static @Nullable Matcher<java.lang.String> endsWith(final java.lang.String suffix) {
     return org.hamcrest.core.StringEndsWith.endsWith(suffix);
   }
   /**
@@ -807,7 +809,7 @@ public class azzert extends org.junit.Assert {
    * assertThat(new String[] { &quot;foo&quot;, &quot;bar&quot; }, equalTo(new String[] { &quot;foo&quot;, &quot;bar&quot; }));
    * </pre>
    */
-  public static <T> org.hamcrest.Matcher<T> equalTo(final T operand) {
+  public static <T> Matcher<T> equalTo(final T operand) {
     return org.hamcrest.core.IsEqual.<T> equalTo(operand);
   }
   /**
@@ -824,7 +826,7 @@ public class azzert extends org.junit.Assert {
    * @param itemMatcher the matcher to apply to every item provided by the
    *          examined {@link Iterable}
    */
-  public static <U> org.hamcrest.Matcher<java.lang.Iterable<U>> everyItem(final org.hamcrest.Matcher<U> itemMatcher) {
+  public static <U> Matcher<java.lang.Iterable<U>> everyItem(final Matcher<U> itemMatcher) {
     return org.hamcrest.core.Every.<U> everyItem(itemMatcher);
   }
   /**
@@ -837,7 +839,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#greaterThan} to the
    *         parameter
    */
-  @Factory public static Matcher<Boolean> greaterThan(final boolean b) {
+  @Factory public static @Nullable Matcher<Boolean> greaterThan(final boolean b) {
     return org.hamcrest.number.OrderingComparison.greaterThan(Boolean.valueOf(b));
   }
   /**
@@ -850,7 +852,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#greaterThan} to the
    *         parameter
    */
-  @Factory public static Matcher<Byte> greaterThan(final byte b) {
+  @Factory public static @Nullable Matcher<Byte> greaterThan(final byte b) {
     return org.hamcrest.number.OrderingComparison.greaterThan(Byte.valueOf(b));
   }
   /**
@@ -863,7 +865,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#greaterThan} to the
    *         parameter
    */
-  @Factory public static Matcher<Character> greaterThan(final char c) {
+  @Factory public static @Nullable Matcher<Character> greaterThan(final char c) {
     return org.hamcrest.number.OrderingComparison.greaterThan(Character.valueOf(c));
   }
   /**
@@ -876,7 +878,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#greaterThan} to the
    *         parameter
    */
-  @Factory public static Matcher<Double> greaterThan(final double d) {
+  @Factory public static @Nullable Matcher<Double> greaterThan(final double d) {
     return org.hamcrest.number.OrderingComparison.greaterThan(Double.valueOf(d));
   }
   /**
@@ -889,7 +891,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#greaterThan} to the
    *         parameter
    */
-  @Factory public static Matcher<Float> greaterThan(final float f) {
+  @Factory public static @Nullable Matcher<Float> greaterThan(final float f) {
     return org.hamcrest.number.OrderingComparison.greaterThan(Float.valueOf(f));
   }
   /**
@@ -902,7 +904,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#greaterThan} to the
    *         parameter
    */
-  @Factory public static Matcher<Integer> greaterThan(final int i) {
+  @Factory public static @Nullable Matcher<Integer> greaterThan(final int i) {
     return org.hamcrest.number.OrderingComparison.greaterThan(Integer.valueOf(i));
   }
   /**
@@ -915,7 +917,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#greaterThan} to the
    *         parameter
    */
-  @Factory public static Matcher<Long> greaterThan(final long l) {
+  @Factory public static @Nullable Matcher<Long> greaterThan(final long l) {
     return org.hamcrest.number.OrderingComparison.greaterThan(Long.valueOf(l));
   }
   /**
@@ -928,7 +930,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#greaterThan} to the
    *         parameter
    */
-  @Factory public static Matcher<Short> greaterThan(final short s) {
+  @Factory public static @Nullable Matcher<Short> greaterThan(final short s) {
     return org.hamcrest.number.OrderingComparison.greaterThan(Short.valueOf(s));
   }
   /**
@@ -941,7 +943,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
    *         to the parameter
    */
-  @Factory public static Matcher<Boolean> greaterThanOrEqualTo(final boolean b) {
+  @Factory public static @Nullable Matcher<Boolean> greaterThanOrEqualTo(final boolean b) {
     return org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo(Boolean.valueOf(b));
   }
   /**
@@ -954,7 +956,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
    *         to the parameter
    */
-  @Factory public static Matcher<Byte> greaterThanOrEqualTo(final byte b) {
+  @Factory public static @Nullable Matcher<Byte> greaterThanOrEqualTo(final byte b) {
     return org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo(Byte.valueOf(b));
   }
   /**
@@ -967,7 +969,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
    *         to the parameter
    */
-  @Factory public static Matcher<Character> greaterThanOrEqualTo(final char c) {
+  @Factory public static @Nullable Matcher<Character> greaterThanOrEqualTo(final char c) {
     return org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo(Character.valueOf(c));
   }
   /**
@@ -980,7 +982,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
    *         to the parameter
    */
-  @Factory public static Matcher<Double> greaterThanOrEqualTo(final double d) {
+  @Factory public static @Nullable Matcher<Double> greaterThanOrEqualTo(final double d) {
     return org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo(Double.valueOf(d));
   }
   /**
@@ -993,7 +995,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
    *         to the parameter
    */
-  @Factory public static Matcher<Float> greaterThanOrEqualTo(final float f) {
+  @Factory public static @Nullable Matcher<Float> greaterThanOrEqualTo(final float f) {
     return org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo(Float.valueOf(f));
   }
   /**
@@ -1006,7 +1008,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
    *         to the parameter
    */
-  @Factory public static Matcher<Integer> greaterThanOrEqualTo(final int i) {
+  @Factory public static @Nullable Matcher<Integer> greaterThanOrEqualTo(final int i) {
     return org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo(Integer.valueOf(i));
   }
   /**
@@ -1019,7 +1021,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
    *         to the parameter
    */
-  @Factory public static Matcher<Long> greaterThanOrEqualTo(final long l) {
+  @Factory public static @Nullable Matcher<Long> greaterThanOrEqualTo(final long l) {
     return org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo(Long.valueOf(l));
   }
   /**
@@ -1032,7 +1034,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
    *         to the parameter
    */
-  @Factory public static Matcher<Short> greaterThanOrEqualTo(final short s) {
+  @Factory public static @Nullable Matcher<Short> greaterThanOrEqualTo(final short s) {
     return org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo(Short.valueOf(s));
   }
   /**
@@ -1051,8 +1053,7 @@ public class azzert extends org.junit.Assert {
    * @param itemMatcher the matcher to apply to items provided by the examined
    *          {@link Iterable}
    */
-  public static <T> org.hamcrest.Matcher<java.lang.Iterable<? super @Nullable T>> hasItem(
-      final org.hamcrest.Matcher<? super @Nullable T> itemMatcher) {
+  public static <T> Matcher<java.lang.Iterable<? super @Nullable T>> hasItem(final Matcher<? super @Nullable T> itemMatcher) {
     return org.hamcrest.core.IsCollectionContaining.<T> hasItem(itemMatcher);
   }
   /**
@@ -1071,7 +1072,7 @@ public class azzert extends org.junit.Assert {
    * @param item the item to compare against the items provided by the examined
    *          {@link Iterable}
    */
-  public static <T> org.hamcrest.Matcher<java.lang.Iterable<? super @Nullable T>> hasItem(final T item) {
+  public static <T> Matcher<java.lang.Iterable<? super @Nullable T>> hasItem(final T item) {
     return org.hamcrest.core.IsCollectionContaining.<T> hasItem(item);
   }
   /**
@@ -1090,8 +1091,7 @@ public class azzert extends org.junit.Assert {
    * @param itemMatchers the matchers to apply to items provided by the examined
    *          {@link Iterable}
    */
-  @SafeVarargs public static <T> org.hamcrest.Matcher<java.lang.Iterable<T>> hasItems(
-      final org.hamcrest.Matcher<? super T>... itemMatchers) {
+  @SafeVarargs public static <T> Matcher<java.lang.Iterable<T>> hasItems(final Matcher<? super T>... itemMatchers) {
     return org.hamcrest.core.IsCollectionContaining.<T> hasItems(itemMatchers);
   }
   /**
@@ -1110,7 +1110,7 @@ public class azzert extends org.junit.Assert {
    * @param items the items to compare against the items provided by the
    *          examined {@link Iterable}
    */
-  @SafeVarargs public static <T> org.hamcrest.Matcher<java.lang.Iterable<T>> hasItems(final T... items) {
+  @SafeVarargs public static <T> Matcher<java.lang.Iterable<T>> hasItems(final T... items) {
     return org.hamcrest.core.IsCollectionContaining.<T> hasItems(items);
   }
   /**
@@ -1133,7 +1133,7 @@ public class azzert extends org.junit.Assert {
    * @param type JD
    * @return
    */
-  public static <T> org.hamcrest.Matcher<T> instanceOf(final java.lang.Class<?> type) {
+  public static <T> Matcher<T> instanceOf(final java.lang.Class<?> type) {
     return org.hamcrest.core.IsInstanceOf.<T> instanceOf(type);
   }
   /**
@@ -1142,7 +1142,7 @@ public class azzert extends org.junit.Assert {
    * @param b JD
    * @return a matcher for the value specified by the parameter
    */
-  public static Matcher<Boolean> is(final boolean b) {
+  public static @Nullable Matcher<Boolean> is(final boolean b) {
     return is(Boolean.valueOf(b));
   }
   /**
@@ -1151,7 +1151,7 @@ public class azzert extends org.junit.Assert {
    * @param b JD
    * @return a matcher for the value specified by the parameter
    */
-  public static Matcher<Byte> is(final byte b) {
+  public static @Nullable Matcher<Byte> is(final byte b) {
     return is(Byte.valueOf(b));
   }
   /**
@@ -1160,7 +1160,7 @@ public class azzert extends org.junit.Assert {
    * @param c JD
    * @return a matcher for the value specified by the parameter
    */
-  public static Matcher<Character> is(final char c) {
+  public static @Nullable Matcher<Character> is(final char c) {
     return is(Character.valueOf(c));
   }
   /**
@@ -1169,7 +1169,7 @@ public class azzert extends org.junit.Assert {
    * @param d JD
    * @return a matcher for the value specified by the parameter
    */
-  public static Matcher<Double> is(final double d) {
+  public static @Nullable Matcher<Double> is(final double d) {
     return is(Double.valueOf(d));
   }
   /**
@@ -1178,7 +1178,7 @@ public class azzert extends org.junit.Assert {
    * @param f JD
    * @return a matcher for the value specified by the parameter
    */
-  public static Matcher<Float> is(final float f) {
+  public static @Nullable Matcher<Float> is(final float f) {
     return is(Float.valueOf(f));
   }
   /**
@@ -1187,7 +1187,7 @@ public class azzert extends org.junit.Assert {
    * @param i JD
    * @return a matcher for the value specified by the parameter
    */
-  public static Matcher<Integer> is(final int i) {
+  public static @Nullable Matcher<Integer> is(final int i) {
     return is(Integer.valueOf(i));
   }
   /**
@@ -1196,7 +1196,7 @@ public class azzert extends org.junit.Assert {
    * @param l JD
    * @return a matcher for the value specified by the parameter
    */
-  public static Matcher<Long> is(final long l) {
+  public static @Nullable Matcher<Long> is(final long l) {
     return is(Long.valueOf(l));
   }
   /**
@@ -1213,7 +1213,7 @@ public class azzert extends org.junit.Assert {
    * assertThat(cheese, equalTo(smelly))
    * </pre>
    */
-  public static <T> org.hamcrest.Matcher<T> is(final org.hamcrest.Matcher<T> matcher) {
+  public static <T> Matcher<T> is(final Matcher<T> matcher) {
     return org.hamcrest.core.Is.<T> is(matcher);
   }
   /**
@@ -1222,7 +1222,7 @@ public class azzert extends org.junit.Assert {
    * @param s JD
    * @return a matcher for the value specified by the parameter
    */
-  public static Matcher<Short> is(final short s) {
+  public static @Nullable Matcher<Short> is(final short s) {
     return is(Short.valueOf(s));
   }
   /**
@@ -1240,7 +1240,7 @@ public class azzert extends org.junit.Assert {
    * assertThat(cheese, is(equalTo(smelly)))
    * </pre>
    */
-  public static <T> org.hamcrest.Matcher<T> is(final T value) {
+  public static <T> Matcher<T> is(final T value) {
     return org.hamcrest.core.Is.<T> is(value);
   }
   /**
@@ -1259,7 +1259,7 @@ public class azzert extends org.junit.Assert {
    * assertThat(cheese, is(instanceOf(Cheddar.class)))
    * </pre>
    */
-  public static <T> org.hamcrest.Matcher<T> isA(final java.lang.Class<T> type) {
+  public static <T> Matcher<T> isA(final java.lang.Class<T> type) {
     return org.hamcrest.core.Is.<T> isA(type);
   }
   /**
@@ -1281,7 +1281,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#lessThan} to the
    *         parameter
    */
-  @Factory public static Matcher<Boolean> lessThan(final boolean b) {
+  @Factory public static @Nullable Matcher<Boolean> lessThan(final boolean b) {
     return org.hamcrest.number.OrderingComparison.lessThan(Boolean.valueOf(b));
   }
   /**
@@ -1294,7 +1294,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#lessThan} to the
    *         parameter
    */
-  @Factory public static Matcher<Byte> lessThan(final byte b) {
+  @Factory public static @Nullable Matcher<Byte> lessThan(final byte b) {
     return org.hamcrest.number.OrderingComparison.lessThan(Byte.valueOf(b));
   }
   /**
@@ -1307,7 +1307,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#lessThan} to the
    *         parameter
    */
-  @Factory public static Matcher<Character> lessThan(final char c) {
+  @Factory public static @Nullable Matcher<Character> lessThan(final char c) {
     return org.hamcrest.number.OrderingComparison.lessThan(Character.valueOf(c));
   }
   /**
@@ -1320,7 +1320,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#lessThan} to the
    *         parameter
    */
-  @Factory public static Matcher<Double> lessThan(final double d) {
+  @Factory public static @Nullable Matcher<Double> lessThan(final double d) {
     return org.hamcrest.number.OrderingComparison.lessThan(Double.valueOf(d));
   }
   /**
@@ -1333,7 +1333,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#lessThan} to the
    *         parameter
    */
-  @Factory public static Matcher<Float> lessThan(final float f) {
+  @Factory public static @Nullable Matcher<Float> lessThan(final float f) {
     return org.hamcrest.number.OrderingComparison.lessThan(Float.valueOf(f));
   }
   /**
@@ -1346,7 +1346,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#lessThan} to the
    *         parameter
    */
-  @Factory public static Matcher<Integer> lessThan(final int i) {
+  @Factory public static @Nullable Matcher<Integer> lessThan(final int i) {
     return org.hamcrest.number.OrderingComparison.lessThan(Integer.valueOf(i));
   }
   /**
@@ -1359,7 +1359,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#lessThan} to the
    *         parameter
    */
-  @Factory public static Matcher<Long> lessThan(final long l) {
+  @Factory public static @Nullable Matcher<Long> lessThan(final long l) {
     return org.hamcrest.number.OrderingComparison.lessThan(Long.valueOf(l));
   }
   /**
@@ -1372,7 +1372,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#lessThan} to the
    *         parameter
    */
-  @Factory public static Matcher<Short> lessThan(final short s) {
+  @Factory public static @Nullable Matcher<Short> lessThan(final short s) {
     return org.hamcrest.number.OrderingComparison.lessThan(Short.valueOf(s));
   }
   /**
@@ -1385,7 +1385,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} to
    *         the parameter
    */
-  @Factory public static Matcher<Boolean> lessThanOrEqualTo(final boolean b) {
+  @Factory public static @Nullable Matcher<Boolean> lessThanOrEqualTo(final boolean b) {
     return org.hamcrest.number.OrderingComparison.lessThanOrEqualTo(Boolean.valueOf(b));
   }
   /**
@@ -1398,7 +1398,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} to
    *         the parameter
    */
-  @Factory public static Matcher<Byte> lessThanOrEqualTo(final byte b) {
+  @Factory public static @Nullable Matcher<Byte> lessThanOrEqualTo(final byte b) {
     return org.hamcrest.number.OrderingComparison.lessThanOrEqualTo(Byte.valueOf(b));
   }
   /**
@@ -1411,7 +1411,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} to
    *         the parameter
    */
-  @Factory public static Matcher<Character> lessThanOrEqualTo(final char c) {
+  @Factory public static @Nullable Matcher<Character> lessThanOrEqualTo(final char c) {
     return org.hamcrest.number.OrderingComparison.lessThanOrEqualTo(Character.valueOf(c));
   }
   /**
@@ -1424,7 +1424,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} to
    *         the parameter
    */
-  @Factory public static Matcher<Double> lessThanOrEqualTo(final double d) {
+  @Factory public static @Nullable Matcher<Double> lessThanOrEqualTo(final double d) {
     return org.hamcrest.number.OrderingComparison.lessThanOrEqualTo(Double.valueOf(d));
   }
   /**
@@ -1437,7 +1437,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} to
    *         the parameter
    */
-  @Factory public static Matcher<Float> lessThanOrEqualTo(final float f) {
+  @Factory public static @Nullable Matcher<Float> lessThanOrEqualTo(final float f) {
     return org.hamcrest.number.OrderingComparison.lessThanOrEqualTo(Float.valueOf(f));
   }
   /**
@@ -1450,7 +1450,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} to
    *         the parameter
    */
-  @Factory public static Matcher<Integer> lessThanOrEqualTo(final int i) {
+  @Factory public static @Nullable Matcher<Integer> lessThanOrEqualTo(final int i) {
     return org.hamcrest.number.OrderingComparison.lessThanOrEqualTo(Integer.valueOf(i));
   }
   /**
@@ -1463,7 +1463,7 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} to
    *         the parameter
    */
-  @Factory public static Matcher<Long> lessThanOrEqualTo(final long l) {
+  @Factory public static @Nullable Matcher<Long> lessThanOrEqualTo(final long l) {
     return org.hamcrest.number.OrderingComparison.lessThanOrEqualTo(Long.valueOf(l));
   }
   /**
@@ -1476,28 +1476,28 @@ public class azzert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} to
    *         the parameter
    */
-  @Factory public static Matcher<Short> lessThanOrEqualTo(final short s) {
+  @Factory public static @Nullable Matcher<Short> lessThanOrEqualTo(final short s) {
     return org.hamcrest.number.OrderingComparison.lessThanOrEqualTo(Short.valueOf(s));
   }
-  public static Matcher<Boolean> not(final boolean b) {
+  public static @Nullable Matcher<Boolean> not(final boolean b) {
     return cantBeNull(org.hamcrest.core.IsNot.not(new Boolean(b)));
   }
-  public static Matcher<Byte> not(final byte b) {
+  public static @Nullable Matcher<Byte> not(final byte b) {
     return cantBeNull(org.hamcrest.core.IsNot.not(new Byte(b)));
   }
-  public static Matcher<Character> not(final char i) {
+  public static @Nullable Matcher<Character> not(final char i) {
     return cantBeNull(org.hamcrest.core.IsNot.not(new Character(i)));
   }
-  public static Matcher<Double> not(final double d) {
+  public static @Nullable Matcher<Double> not(final double d) {
     return cantBeNull(org.hamcrest.core.IsNot.not(new Double(d)));
   }
-  public static Matcher<Float> not(final float f) {
+  public static @Nullable Matcher<Float> not(final float f) {
     return cantBeNull(org.hamcrest.core.IsNot.not(new Float(f)));
   }
-  public static Matcher<Integer> not(final int i) {
+  public static @Nullable Matcher<Integer> not(final int i) {
     return cantBeNull(org.hamcrest.core.IsNot.not(new Integer(i)));
   }
-  public static Matcher<Long> not(final long i) {
+  public static @Nullable Matcher<Long> not(final long i) {
     return cantBeNull(org.hamcrest.core.IsNot.not(new Long(i)));
   }
   /**
@@ -1512,10 +1512,10 @@ public class azzert extends org.junit.Assert {
    *
    * @param matcher the matcher whose sense should be inverted
    */
-  public static <T> org.hamcrest.Matcher<T> not(final org.hamcrest.Matcher<T> matcher) {
+  public static <T> Matcher<T> not(final Matcher<T> matcher) {
     return org.hamcrest.core.IsNot.<T> not(matcher);
   }
-  public static Matcher<Short> not(final short s) {
+  public static @Nullable Matcher<Short> not(final short s) {
     return cantBeNull(org.hamcrest.core.IsNot.not(new Short(s)));
   }
   /**
@@ -1535,7 +1535,7 @@ public class azzert extends org.junit.Assert {
    *
    * @param value the value that any examined object should <b>not</b> equal
    */
-  public static <T> org.hamcrest.Matcher<T> not(final T value) {
+  public static <T> Matcher<T> not(final T value) {
     return org.hamcrest.core.IsNot.<T> not(value);
   }
   /**
@@ -1553,7 +1553,7 @@ public class azzert extends org.junit.Assert {
    * assertThat(cheese, is(not(nullValue())))
    * </pre>
    */
-  public static org.hamcrest.Matcher<java.lang.Object> notNullValue() {
+  public static @Nullable Matcher<java.lang.Object> notNullValue() {
     return org.hamcrest.core.IsNull.notNullValue();
   }
   /**
@@ -1575,7 +1575,7 @@ public class azzert extends org.junit.Assert {
    * @param type dummy parameter used to infer the generic type of the returned
    *          matcher
    */
-  public static <T> org.hamcrest.Matcher<T> notNullValue(final java.lang.Class<T> type) {
+  public static <T> Matcher<T> notNullValue(final java.lang.Class<T> type) {
     return org.hamcrest.core.IsNull.<T> notNullValue(type);
   }
   /**
@@ -1587,7 +1587,7 @@ public class azzert extends org.junit.Assert {
    * assertThat(cheese, is(nullValue())
    * </pre>
    */
-  public static org.hamcrest.Matcher<@Nullable Object> nullValue() {
+  public static @Nullable Matcher<@Nullable Object> nullValue() {
     return org.hamcrest.core.IsNull.nullValue();
   }
   /**
@@ -1603,7 +1603,7 @@ public class azzert extends org.junit.Assert {
    * @param type dummy parameter used to infer the generic type of the returned
    *          matcher
    */
-  public static <T> org.hamcrest.Matcher<T> nullValue(final java.lang.Class<T> type) {
+  public static <T> Matcher<T> nullValue(final java.lang.Class<T> type) {
     return org.hamcrest.core.IsNull.<T> nullValue(type);
   }
   /**
@@ -1612,7 +1612,7 @@ public class azzert extends org.junit.Assert {
    *
    * @param target the target instance against which others should be assessed
    */
-  public static <T> org.hamcrest.Matcher<T> sameInstance(final T target) {
+  public static <T> Matcher<T> sameInstance(final T target) {
     return org.hamcrest.core.IsSame.<T> sameInstance(target);
   }
   /**
@@ -1628,7 +1628,7 @@ public class azzert extends org.junit.Assert {
    * @param prefix the substring that the returned matcher will expect at the
    *          start of any examined string
    */
-  public static org.hamcrest.Matcher<java.lang.String> startsWith(final java.lang.String prefix) {
+  public static @Nullable Matcher<java.lang.String> startsWith(final java.lang.String prefix) {
     return org.hamcrest.core.StringStartsWith.startsWith(prefix);
   }
   /**
@@ -1637,7 +1637,7 @@ public class azzert extends org.junit.Assert {
    *
    * @param target the target instance against which others should be assessed
    */
-  public static <T> org.hamcrest.Matcher<T> theInstance(final T target) {
+  public static <T> Matcher<T> theInstance(final T target) {
     return org.hamcrest.core.IsSame.<T> theInstance(target);
   }
 }

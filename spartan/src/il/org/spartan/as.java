@@ -25,7 +25,7 @@ public enum as {
   /**
    * Converts a sequence of arguments into an array
    *
-   * @param <T>
+   * @param <T> JD
    * @param ts JD
    * @return an array representation of the parameter
    */
@@ -127,7 +127,7 @@ public enum as {
    * @param ts what to iterate on
    * @return an {@link Iterable} over the parameter
    */
-  @SafeVarargs public static <T> PureIterator<T> iterator(final @Nullable T @Nullable... ts) {
+  @SafeVarargs public static <T> PureIterator<T> iterator(final T @Nullable... ts) {
     return nonNullIterable(ts).iterator();
   }
   /**
@@ -249,7 +249,7 @@ public enum as {
       assertEquals(1, as.bit(true));
     }
     @Test public void asIntArraySimple() {
-      final int[] is = as.intArray(100, 200, 200, 12, 13, 0);
+      final int @NonNull [] is = as.intArray(100, 200, 200, 12, 13, 0);
       assertArrayEquals(is, as.intArray(as.ingeterList(is)));
     }
     @Test public void asListSimple() {

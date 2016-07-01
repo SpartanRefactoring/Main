@@ -397,7 +397,7 @@ public enum Utils {
    *         one of the supplied extensions.
    */
   public static boolean suffixedBy(final File f, final String... suffixes) {
-    return suffixedBy(f.getName(), suffixes);
+    return suffixedBy(cantBeNull(f.getName()), suffixes);
   }
   /**
    * Determine whether a string ends with any one of the supplied suffixes.
@@ -468,6 +468,11 @@ public enum Utils {
           $.add(function.apply(f));
       return $;
     }
+    /**
+     * @param <FS> JD
+     * @param s JD
+     * @return
+     */
     public <FS extends Iterable<? extends F>> Iterable<T> to(final FS s) {
       final List<T> $ = new ArrayList<>();
       for (final @Nullable F f : s)
@@ -478,6 +483,11 @@ public enum Utils {
     private final Function<F, T> function;
   }
 
+  /**
+   * @author Yossi Gil <Yossi.Gil@GMail.COM>
+   * @param <T> JD
+   * @since 2016
+   */
   public static class FoundHandleForT<T> {
     /**
      * Instantiates this class. *
@@ -541,7 +551,7 @@ public enum Utils {
   @SuppressWarnings({ "static-method", "javadoc", })//
   public static class TEST {
     public static Integer[] intToIntegers(final int... is) {
-      final Integer @NonNull [] $ = new Integer[is.length];
+      final Integer @NonNull [] $ = new Integer @NonNull [is.length];
       for (int i = 0; i < is.length; ++i)
         $[i] = box.it(is[i]);
       return $;

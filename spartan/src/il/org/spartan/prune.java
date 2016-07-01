@@ -30,6 +30,12 @@ public enum prune {
     if (s.length() > 0)
       ss.add(s);
   }
+  /**
+   * @param <T> JD
+   * @param <C> JD
+   * @param ts JD
+   * @return
+   */
   public static <T, C extends Collection<T>> C nulls(final C ts) {
     for (final Iterator<T> i = ts.iterator(); i.hasNext();)
       if (i.next() == null)
@@ -84,8 +90,17 @@ public enum prune {
     final List<String> $ = new ArrayList<>();
     for (final String s : ss)
       if (s != null)
-        addNonEmpty($, cantBeNull(as.string(s).trim()));
-    return cantBeNull($.toArray(new String @NonNull [0]));
+        accumulate.to($).add(s.trim());
+    return asArrray($);
+  }
+  /**
+   * @param $
+   * @return
+   */
+  private static String[] asArrray(final List<String> $) {
+    @SuppressWarnings("null") @NonNull final String @NonNull [] $1 = $.toArray(new String @NonNull [0]);
+    @NonNull final String @NonNull [] $2 = cantBeNull($1);
+    return $2;
   }
 
   /**
