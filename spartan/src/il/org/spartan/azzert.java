@@ -664,6 +664,15 @@ public class azzert extends org.junit.Assert {
    * @param actual
    * @param matcher
    */
+  public static <@Nullable T> void that(final String reason, final @Nullable T actual,
+      final @Nullable Matcher<? super @Nullable T> matcher) {
+    assertThat(reason, actual, matcher);
+  }
+  /**
+   * @param <T> JD
+   * @param actual
+   * @param matcher
+   */
   public static <@Nullable T> void that(final @Nullable T actual, final @Nullable Matcher<? super @Nullable T> matcher) {
     assertThat("", actual, matcher);
   }
@@ -693,7 +702,7 @@ public class azzert extends org.junit.Assert {
    * <pre>
    * assertThat(&quot;fab&quot;, both(containsString(&quot;a&quot;)).and(containsString(&quot;b&quot;)))
    * </pre>
-   * 
+   *
    * @param matcher
    * @param <LHS>
    * @return
