@@ -41,6 +41,9 @@ public interface PureIterable<T> extends Iterable<T> {
    * @param <T> some arbitrary type
    */
   public abstract class Sized<T> implements PureIterable<T> {
+    /**
+     * @return TODO document return type
+     */
     public abstract int size();
   }
 

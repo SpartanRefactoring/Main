@@ -59,14 +59,14 @@ public interface accumulate<T, C extends Collection<T>> {
     return this;
   }
   /**
-   * @return
+   * @return TODO document return type
    */
   C elements();
   /**
    * @param <T> JD
    * @param <C> JD
    * @param c JD
-   * @return
+   * @return TODO document return type
    */
   public static <T, C extends Collection<T>> accumulate<T, C> to(final C c) {
     return new accumulate<T, C>() {

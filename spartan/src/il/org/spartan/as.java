@@ -1,5 +1,6 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
+
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 import static org.junit.Assert.*;
@@ -41,7 +42,6 @@ public enum as {
   public static int bit(final boolean $) {
     return $ ? 1 : 0;
   }
-
   /**
    * C like conversion of a reference to an {@link Object} into a 0/1 bit.
    *
@@ -53,7 +53,6 @@ public enum as {
   public static int bit(final @Nullable Object o) {
     return o == null ? 0 : 1;
   }
-
   /**
    * Converts a sequence of <code><b>int</b></code> values into a {@link List}
    * of non-<code><b>null</b></code> {@link Integer}s.
@@ -68,8 +67,6 @@ public enum as {
       $.add(box.it(i));
     return $;
   }
-
-
   /**
    * Converts a sequence of integer values into an array.
    *
@@ -108,10 +105,10 @@ public enum as {
           @Override public boolean hasNext() {
             return current < ts.length;
           }
-
           @Override public T next() {
             return ts[current++];
           }
+
           int current = 0;
         };
       }
@@ -141,7 +138,6 @@ public enum as {
   public static <T> List<T> list(final Iterable<? extends T> $) {
     return accumulate.to(new ArrayList<T>()).add($).elements();
   }
-
   /**
    * Converts a sequence of objects of some common type T into a {@link List} of
    * values
@@ -167,11 +163,11 @@ public enum as {
           @Override public boolean hasNext() {
             return current < ts.length;
           }
-
           @Override public @NonNull T next() {
             @SuppressWarnings("null") final @NonNull T $ = ts[current++];
             return $;
           }
+
           int current = 0;
         };
       }
@@ -224,6 +220,7 @@ public enum as {
         $.add("" + o);
     return cantBeNull($.toArray(new String @NonNull [$.size()]));
   }
+
   /**
    * The string returned when 'conversion to string' is applied to a
    * <code><b>null</b></code> value.

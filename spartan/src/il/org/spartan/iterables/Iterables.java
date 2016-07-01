@@ -1,8 +1,8 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.iterables;
 
-import static il.org.spartan.azzert.*;
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.azzert.*;
 import static org.junit.Assert.*;
 import il.org.spartan.*;
 
@@ -12,6 +12,12 @@ import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 import org.junit.runners.*;
 
+/**
+ * TODO
+ *
+ * @author Yossi Gil <Yossi.Gil@GMail.COM>
+ * @since 2016
+ */
 public enum Iterables {
   // No values in an 'enum' used as name space for a collection of 'static'
   // functions.
@@ -30,9 +36,17 @@ public enum Iterables {
         $ += as.bit(t != null);
     return $;
   }
+  /**
+   * @param <T> JD
+   * @return TODO document return type
+   */
   public static <T> PureIterable.Sized<T> empty() {
     return as.nonNullIterable();
   }
+  /**
+   * @param os JD
+   * @return TODO document return type
+   */
   public static boolean isEmpty(final Iterable<?> os) {
     for (final Iterator<?> i = os.iterator(); i.hasNext();)
       if (i.next() != null)
@@ -42,11 +56,16 @@ public enum Iterables {
   /**
    * @param <T> JD
    * @param t JD
-   * @return
+   * @return TODO
    */
   public static <T> PureIterable.Sized<T> singleton(final T t) {
     return as.nonNullIterable(t);
   }
+  /**
+   * @param <T> JD
+   * @param t JD
+   * @return TODO
+   */
   public static <T> PureIterator<T> singletonIterator(final T t) {
     return singleton(t).iterator();
   }

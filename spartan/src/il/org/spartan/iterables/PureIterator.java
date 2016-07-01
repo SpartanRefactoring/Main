@@ -34,6 +34,11 @@ public abstract class PureIterator<T> implements Iterator<T> {
     throw new IllegalArgumentException();
   }
 
+  /**
+   * @author Yossi Gil <Yossi.Gil@GMail.COM>
+   * @param <T> JD
+   * @since 2016
+   */
   public abstract static class Staged<T> extends PureIterator<T> {
     /**
      * Stores the next value that this iterator returns. It has non-null content

@@ -24,9 +24,19 @@ public final class Separator {
   private final String s;
   boolean first = true;
 
+  /**
+   * Instantiates this class.
+   *
+   * @param c
+   */
   public Separator(final char c) {
     this("" + c);
   }
+  /**
+   * Instantiates this class.
+   *
+   * @param s
+   */
   public Separator(final String s) {
     this.s = s;
   }
@@ -36,9 +46,22 @@ public final class Separator {
     first = false;
     return "";
   }
+  /**
+   * @param <T> JD* @param wrap
+   * @param ts
+   * @param between
+   * @return TODO document return type
+   */
   public static <T> String wrap(final String wrap, final Iterable<T> ts, final String between) {
     return wrap(wrap, wrap, ts, between);
   }
+  /**
+   * @param <T> JD* @param begin
+   * @param end
+   * @param ts
+   * @param between
+   * @return TODO document return type
+   */
   public static <T> String wrap(final String begin, final String end, final Iterable<T> ts, final String between) {
     if (Iterables.isEmpty(ts))
       return "";
@@ -48,6 +71,13 @@ public final class Separator {
       $.append(s).append(t);
     return as.string($.append(end));
   }
+  /**
+   * @param <T> JD* @param begin
+   * @param end
+   * @param ts
+   * @param between
+   * @return TODO document return type
+   */
   public static <T> String wrap(final String begin, final String end, final T[] ts, final String between) {
     if (ts.length == 0)
       return "";
@@ -57,14 +87,27 @@ public final class Separator {
       $.append(s).append(t);
     return as.string($.append(end));
   }
+  /**
+   * @param args
+   */
   public static void main(final String[] args) {
     final Separator s = new Separator(", ");
     for (final String a : args)
       System.out.print(s + a);
   }
+  /**
+   * @param <T> JD* @param between
+   * @param ts
+   * @return TODO document return type
+   */
   public static <T> String separateBy(final String between, final T[] ts) {
     return wrap("", "", ts, between);
   }
+  /**
+   * @param is TODO document this parameter
+   * @param between TODO document this parameter
+   * @return TODO document return type
+   */
   public static String separateBy(final int[] is, final String between) {
     if (is.length == 0)
       return "";

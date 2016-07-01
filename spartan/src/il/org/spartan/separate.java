@@ -276,8 +276,16 @@ public enum separate {
       return as.string($);
     }
 
+    /**
+     * TODO: document this member
+     */
     public final Iterable<Object> os;
 
+    /**
+     * Instantiates this class.
+     *
+     * @param os
+     */
     public SeparationSubject(final Iterable<Object> os) {
       this.os = os;
     }
@@ -293,11 +301,11 @@ public enum separate {
             @Override public boolean hasNext() {
               return current < os.length;
             }
-
             @Override public Object next() {
               @SuppressWarnings("null") final @NonNull Object $ = os[current++];
               return $;
             }
+
             int current = 0;
           };
         }

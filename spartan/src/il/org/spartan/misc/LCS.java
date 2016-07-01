@@ -56,9 +56,9 @@ public class LCS {
       Arrays.fill(length[i] = new int[bs.length], -1);
   }
   /**
-   * @param ia
-   * @param is2
-   * @return
+   * @param ia JD
+   * @param is2 JD
+   * @return TODO document return type
    */
   public static int length(final int[] ia, final int[] is2) {
     return new LCS(ia, is2).length();
@@ -66,7 +66,7 @@ public class LCS {
   /**
    * @param a JD
    * @param s2 JD
-   * @return
+   * @return TODO document return type
    */
   public static int length(final String a, final String s2) {
     return new LCS(a, s2).length();
@@ -74,14 +74,14 @@ public class LCS {
   /**
    * @param ssa JD
    * @param ssb JD
-   * @return
+   * @return TODO document return type
    */
   public static int length(final String[] ssa, final String[] ssb) {
     return new LCS(ssa, ssb).length();
   }
   /**
    * @param s
-   * @return
+   * @return TODO document return type
    */
   private static int hash(final String s) {
     return s.replaceAll("\\s+", "").toLowerCase().hashCode();
@@ -113,7 +113,7 @@ public class LCS {
    *
    * @param i
    * @param j
-   * @return
+   * @return TODO document return type
    */
   private int length(final int i, final int j) {
     return i < 0 || j < 0 ? 0 : obtainLength(i, j);
@@ -174,7 +174,7 @@ public class LCS {
       assertEquals(4, length( //
           "A\nB\nR\nA", //
           "C\nA\nD\nA\nB\nR\nA\n" //
-          ));
+      ));
     }
     @Test public void lengthStringMiddle() {
       // Common string is: "ABC"

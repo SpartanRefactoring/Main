@@ -1,7 +1,5 @@
 package il.org.spartan;
 
-
-
 import static il.org.spartan.azzert.*;
 import static org.junit.Assert.*;
 import il.org.spartan.Utils.FoundHandleForT.FoundHandleForInt;
@@ -27,6 +25,7 @@ public enum Utils {
    * Appends an element to an array, by reallocating an array whose size is
    * greater by one and placing the element at the last position.
    *
+   * @param <T> JD
    * @param ts an arbitrary array
    * @param t an element
    * @return the newly created array
@@ -37,10 +36,10 @@ public enum Utils {
     return $;
   }
   /**
-   * @param <F>
-   * @param <T>
-   * @param f
-   * @return
+   * @param <F> JD
+   * @param <T> JD
+   * @param f JD
+   * @return TODO document return type
    */
   public static <F, T> Applicator<F, T> apply(final Function<F, T> f) {
     return new Applicator<>(f);
@@ -104,14 +103,13 @@ public enum Utils {
         .replaceAll("(?m)\\s+", " ") // Squeeze whites
         .replaceAll("^\\s", "") // Opening whites
         .replaceAll("\\s$", "") // Closing whites
-        ;
+    ;
     for (final String operator : new String @NonNull [] { ":", "/", "%", ",", "\\{", "\\}", "=", ":", "\\?", ";", "\\+", ">", ">=",
-        "!=",
-        "==", "<", "<=", "-", "\\*", "\\|", "\\&", "%", "\\(", "\\)", "[\\^]" })
+        "!=", "==", "<", "<=", "-", "\\*", "\\|", "\\&", "%", "\\(", "\\)", "[\\^]" })
       $ = $ //
-      .replaceAll(WHITES + operator, operator) // Preceding whites
-      .replaceAll(operator + WHITES, operator) // Trailing whites
-      ;
+          .replaceAll(WHITES + operator, operator) // Preceding whites
+          .replaceAll(operator + WHITES, operator) // Trailing whites
+    ;
     return cantBeNull($);
   }
   /**
@@ -132,6 +130,7 @@ public enum Utils {
    * Deletes a specified element from an array, by reallocating an array whose
    * size is smaller by one and shifting the other elements down.
    *
+   * @param <T> JD
    * @param ts an arbitrary array
    * @param i position of element to be deleted
    * @return the newly created array
@@ -143,7 +142,7 @@ public enum Utils {
   }
   /**
    * @param i JD
-   * @return
+   * @return TODO document return type
    */
   public static FoundHandleForInt found(final int i) {
     return new FoundHandleForInt(i);
@@ -151,7 +150,7 @@ public enum Utils {
   /**
    * @param <T> JD
    * @param t JD
-   * @return
+   * @return TODO document return type
    */
   public static <T> FoundHandleForT<T> found(final T t) {
     return new FoundHandleForT<T>(t);
@@ -159,6 +158,7 @@ public enum Utils {
   /**
    * Determine if an item can be found in a list of values
    *
+   * @param <T> JD
    * @param candidate what to search for
    * @param ts where to search
    * @return true if the the item is found in the list
@@ -172,6 +172,7 @@ public enum Utils {
   /**
    * Determine whether an integer is a valid list index
    *
+   * @param <T> JD
    * @param i some integer
    * @param ts a list of things
    * @return <code><b>true</b></code> <i>iff</i> the index is valid index into
@@ -193,8 +194,8 @@ public enum Utils {
         return true;
     return false;
   }
-
   /**
+   * @param <T> JD
    * @param ts JD
    * @return the last item in a list or <code><b>null</b></code> if the
    *         parameter is <code><b>null</b></code> or empty
@@ -309,6 +310,7 @@ public enum Utils {
   /**
    * Remove any duplicates that may be present in a given {@link List}
    *
+   * @param <T> JD
    * @param ts JD
    */
   public static <T> void removeDuplicates(final List<T> ts) {
@@ -443,7 +445,6 @@ public enum Utils {
 
   static final String WHITES = "(?m)\\s+";
 
-
   /**
    * Reifies the notion of a function
    *
@@ -460,7 +461,10 @@ public enum Utils {
     public Applicator(final Function<F, T> function) {
       this.function = function;
     }
-
+    /**
+     * @param fs JD
+     * @return TODO document return type of this function
+     */
     @SafeVarargs public final Iterable<T> to(final F... fs) {
       final List<T> $ = new ArrayList<>();
       for (final F f : fs)
@@ -471,7 +475,7 @@ public enum Utils {
     /**
      * @param <FS> JD
      * @param s JD
-     * @return
+     * @return TODO document return type
      */
     public <FS extends Iterable<? extends F>> Iterable<T> to(final FS s) {
       final List<T> $ = new ArrayList<>();
@@ -480,6 +484,7 @@ public enum Utils {
           $.add(function.apply(f));
       return $;
     }
+
     private final Function<F, T> function;
   }
 
@@ -497,7 +502,6 @@ public enum Utils {
     public FoundHandleForT(final T candidate) {
       this.candidate = candidate;
     }
-
     /**
      * Determine if an integer can be found in a list of values
      *
@@ -510,8 +514,13 @@ public enum Utils {
           return true;
       return false;
     }
+
     final T candidate;
 
+    /**
+     * @author Yossi Gil <Yossi.Gil@GMail.COM>
+     * @since 2016
+     */
     public static class FoundHandleForInt {
       /**
        * Instantiates this class.
@@ -521,7 +530,6 @@ public enum Utils {
       public FoundHandleForInt(final int candidate) {
         this.candidate = candidate;
       }
-
       /**
        * Determine if an integer can be found in a list of values
        *
@@ -534,6 +542,7 @@ public enum Utils {
             return true;
         return false;
       }
+
       final int candidate;
     }
   }

@@ -29,8 +29,7 @@ public enum prune {
   /**
    * @param <T> JD
    * @param <C> JD
-   * @param ts JD
-   * @return
+   * @param ts JD * @return TODO document return type
    */
   public static <T, C extends Collection<T>> C nulls(final C ts) {
     for (final Iterator<T> i = ts.iterator(); i.hasNext();)
@@ -65,7 +64,7 @@ public enum prune {
    *         order. No <code><b>null</b></code> elements are present on this
    *         returned collection.
    */
-  public static <T> T[] nulls(final T[] ts) {
+  @SuppressWarnings("null") public static <T> T[] nulls(final T[] ts) {
     final List<T> $ = new ArrayList<>();
     for (final T t : ts)
       if (t != null)
@@ -82,6 +81,9 @@ public enum prune {
   @SuppressWarnings("null") private static <T> T[] shrink(final T @Nullable [] ts) {
     return cantBeNull(Arrays.copyOf(ts, 0));
   }
+  /**
+   * @param ss * @return TODO document return type
+   */
   @SafeVarargs public static String[] whites(final String... ss) {
     final List<String> $ = new ArrayList<>();
     for (final String s : ss)
@@ -90,8 +92,7 @@ public enum prune {
     return asArrray($);
   }
   /**
-   * @param $
-   * @return
+   * @param $ * @return TODO document return type
    */
   @SuppressWarnings("null") private static String[] asArrray(final List<String> $) {
     return cantBeNull($.toArray(new String @NonNull [0]));

@@ -1,4 +1,5 @@
 package il.org.spartan;
+
 import org.eclipse.jdt.annotation.*;
 
 /**
@@ -10,16 +11,16 @@ public class maybe<@Nullable T> {
   private @Nullable T inner;
 
   /**
-   * @param <T>
-   * @return
+   * @param <T> JD
+   * @return TODO document return type
    */
   public static <@Nullable T> maybe<T> no() {
     return new maybe<>();
   }
   /**
-   * @param <T>
-   * @param t
-   * @return
+   * @param <T> JD
+   * @param t JD
+   * @return TODO document return type
    */
   public static <@Nullable T> maybe<T> yes(final T t) {
     return new maybe<>(t);
@@ -36,30 +37,34 @@ public class maybe<@Nullable T> {
     this.inner = inner;
   }
   /**
-   * @return
+   * @return TODO document return type
    */
   public boolean present() {
     return inner != null;
   }
   /**
-   * @return
+   * @return TODO document return type
    */
   public boolean missing() {
     return inner == null;
   }
   /**
-   * @return
+   * @return TODO document return type
    */
   public @Nullable T get() {
     return inner;
   }
   /**
-   * @return
+   * @return TODO document return type
    */
   public maybe<@Nullable T> clear() {
     inner = null;
     return this;
   }
+  /**
+   * @param inner TODO document this parameter
+   * @return TODO document return type
+   */
   public maybe<@Nullable T> set(final T inner) {
     this.inner = inner;
     return this;

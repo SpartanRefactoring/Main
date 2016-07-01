@@ -23,11 +23,11 @@ public class azzert extends org.junit.Assert {
    * </pre>
    *
    * @param matchers
-   * @param <T>
-   * @return
+   * @param <T> JD
+   * @return TODO document return type
    */
   public static <T> @Nullable Matcher<T> allOf(final java.lang.Iterable<Matcher<? super T>> matchers) {
-    return org.hamcrest.core.AllOf.<T> allOf(matchers);
+    return AllOf.<T> allOf(matchers);
   }
   /**
    * Creates a matcher that matches if the examined object matches <b>ALL</b> of
@@ -40,10 +40,10 @@ public class azzert extends org.junit.Assert {
    * </pre>
    *
    * @param matchers JD
-   * @return
+   * @return TODO document return type
    */
   @SafeVarargs public static <T> @Nullable Matcher<T> allOf(final Matcher<? super T>... matchers) {
-    return org.hamcrest.core.AllOf.<T> allOf(matchers);
+    return AllOf.<T> allOf(matchers);
   }
   /**
    * Creates a matcher that matches if the examined object matches <b>ALL</b> of
@@ -54,9 +54,14 @@ public class azzert extends org.junit.Assert {
    * <pre>
    * assertThat(&quot;myValue&quot;, allOf(startsWith(&quot;my&quot;), containsString(&quot;Val&quot;)))
    * </pre>
+   *
+   * @param <T> JD
+   * @param first JD
+   * @param second JD
+   * @return TODO document return type
    */
   public static <T> @Nullable Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second) {
-    return org.hamcrest.core.AllOf.<T> allOf(first, second);
+    return AllOf.<T> allOf(first, second);
   }
   /**
    * Creates a matcher that matches if the examined object matches <b>ALL</b> of
@@ -67,10 +72,16 @@ public class azzert extends org.junit.Assert {
    * <pre>
    * assertThat(&quot;myValue&quot;, allOf(startsWith(&quot;my&quot;), containsString(&quot;Val&quot;)))
    * </pre>
+   *
+   * @param first
+   * @param second
+   * @param third
+   * @param <T> JD
+   * @return TODO document return type
    */
   public static <T> @Nullable Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second,
       final Matcher<? super T> third) {
-    return org.hamcrest.core.AllOf.<T> allOf(first, second, third);
+    return AllOf.<T> allOf(first, second, third);
   }
   /**
    * Creates a matcher that matches if the examined object matches <b>ALL</b> of
@@ -81,10 +92,16 @@ public class azzert extends org.junit.Assert {
    * <pre>
    * assertThat(&quot;myValue&quot;, allOf(startsWith(&quot;my&quot;), containsString(&quot;Val&quot;)))
    * </pre>
+   *
+   * @param first
+   * @param second
+   * @param third
+   * @param fourth
+   * @param <T> JD* * @return TODO document return type
    */
   public static <T> @Nullable Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second,
       final Matcher<? super T> third, final Matcher<? super T> fourth) {
-    return org.hamcrest.core.AllOf.<T> allOf(first, second, third, fourth);
+    return AllOf.<T> allOf(first, second, third, fourth);
   }
   /**
    * Creates a matcher that matches if the examined object matches <b>ALL</b> of
@@ -101,11 +118,11 @@ public class azzert extends org.junit.Assert {
    * @param third JD
    * @param fourth JD
    * @param fifth JD
-   * @return
+   * @return TODO document return type
    */
   public static <T> @Nullable Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second,
       final Matcher<? super T> third, final Matcher<? super T> fourth, final Matcher<? super T> fifth) {
-    return org.hamcrest.core.AllOf.<T> allOf(first, second, third, fourth, fifth);
+    return AllOf.<T> allOf(first, second, third, fourth, fifth);
   }
   /**
    * Creates a matcher that matches if the examined object matches <b>ALL</b> of
@@ -116,18 +133,25 @@ public class azzert extends org.junit.Assert {
    * <pre>
    * assertThat(&quot;myValue&quot;, allOf(startsWith(&quot;my&quot;), containsString(&quot;Val&quot;)))
    * </pre>
+   *
+   * @param first
+   * @param second
+   * @param third
+   * @param fourth
+   * @param fifth
+   * @param sixth
+   * @param <T> JD* * @return TODO document return type
    */
   public static <T> @Nullable Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second,
       final Matcher<? super T> third, final Matcher<? super T> fourth, final Matcher<? super T> fifth,
       final Matcher<? super T> sixth) {
-    return org.hamcrest.core.AllOf.<T> allOf(first, second, third, fourth, fifth, sixth);
+    return AllOf.<T> allOf(first, second, third, fourth, fifth, sixth);
   }
   /**
    * Creates a matcher that matches when the examined object is an instance of
    * the specified <code>type</code>, as determined by calling the
    * {@link java.lang.Class#isInstance(Object)} method on that type, passing the
    * the examined object.
-   *
    * <p>
    * The created matcher forces a relationship between specified type and the
    * examined object, and should be used when it is necessary to make generics
@@ -140,9 +164,12 @@ public class azzert extends org.junit.Assert {
    * <pre>
    * assertThat(new Canoe(), instanceOf(Canoe.class));
    * </pre>
+   *
+   * @param type
+   * @param <T> JD* * @return TODO document return type
    */
   public static <T> @Nullable Matcher<T> any(final java.lang.Class<T> type) {
-    return org.hamcrest.core.IsInstanceOf.<T> any(type);
+    return IsInstanceOf.<T> any(type);
   }
   /**
    * Creates a matcher that matches if the examined object matches <b>ANY</b> of
@@ -156,10 +183,10 @@ public class azzert extends org.junit.Assert {
    *
    * @param matchers
    * @param <T> JD
-   * @return
+   * @return TODO document return type
    */
-  public static <T> org.hamcrest.core.@Nullable AnyOf<T> anyOf(final java.lang.Iterable<Matcher<? super T>> matchers) {
-    return org.hamcrest.core.AnyOf.<T> anyOf(matchers);
+  public static <T> @Nullable AnyOf<T> anyOf(final java.lang.Iterable<Matcher<? super T>> matchers) {
+    return AnyOf.<T> anyOf(matchers);
   }
   /**
    * Creates a matcher that matches if the examined object matches <b>ANY</b> of
@@ -170,9 +197,12 @@ public class azzert extends org.junit.Assert {
    * <pre>
    * assertThat(&quot;myValue&quot;, anyOf(startsWith(&quot;foo&quot;), containsString(&quot;Val&quot;)))
    * </pre>
+   *
+   * @param matchers
+   * @param <T> JD* * @return TODO document return type
    */
-  @SafeVarargs public static <T> org.hamcrest.core.@Nullable AnyOf<T> anyOf(final Matcher<? super T>... matchers) {
-    return org.hamcrest.core.AnyOf.<T> anyOf(matchers);
+  @SafeVarargs public static <T> @Nullable AnyOf<T> anyOf(final Matcher<? super T>... matchers) {
+    return AnyOf.<T> anyOf(matchers);
   }
   /**
    * Creates a matcher that matches if the examined object matches <b>ANY</b> of
@@ -183,9 +213,13 @@ public class azzert extends org.junit.Assert {
    * <pre>
    * assertThat(&quot;myValue&quot;, anyOf(startsWith(&quot;foo&quot;), containsString(&quot;Val&quot;)))
    * </pre>
+   *
+   * @param first
+   * @param second
+   * @param <T> JD* * @return TODO document return type
    */
-  public static <T> org.hamcrest.core.@Nullable AnyOf<T> anyOf(final Matcher<T> first, final Matcher<? super T> second) {
-    return org.hamcrest.core.AnyOf.<T> anyOf(first, second);
+  public static <T> @Nullable AnyOf<T> anyOf(final Matcher<T> first, final Matcher<? super T> second) {
+    return AnyOf.<T> anyOf(first, second);
   }
   /**
    * Creates a matcher that matches if the examined object matches <b>ANY</b> of
@@ -196,10 +230,14 @@ public class azzert extends org.junit.Assert {
    * <pre>
    * assertThat(&quot;myValue&quot;, anyOf(startsWith(&quot;foo&quot;), containsString(&quot;Val&quot;)))
    * </pre>
+   *
+   * @param first
+   * @param second
+   * @param third
+   * @param <T> JD* * @return TODO document return type
    */
-  public static <T> org.hamcrest.core.@Nullable AnyOf<T> anyOf(final Matcher<T> first, final Matcher<? super T> second,
-      final Matcher<? super T> third) {
-    return org.hamcrest.core.AnyOf.<T> anyOf(first, second, third);
+  public static <T> @Nullable AnyOf<T> anyOf(final Matcher<T> first, final Matcher<? super T> second, final Matcher<? super T> third) {
+    return AnyOf.<T> anyOf(first, second, third);
   }
   /**
    * Creates a matcher that matches if the examined object matches <b>ANY</b> of
@@ -210,10 +248,16 @@ public class azzert extends org.junit.Assert {
    * <pre>
    * assertThat(&quot;myValue&quot;, anyOf(startsWith(&quot;foo&quot;), containsString(&quot;Val&quot;)))
    * </pre>
+   *
+   * @param first
+   * @param second
+   * @param third
+   * @param fourth
+   * @param <T> JD* * @return TODO document return type
    */
-  public static <T> org.hamcrest.core.@Nullable AnyOf<T> anyOf(final Matcher<T> first, final Matcher<? super T> second,
+  public static <T> @Nullable AnyOf<T> anyOf(final Matcher<T> first, final Matcher<? super T> second,
       final Matcher<? super T> third, final Matcher<? super T> fourth) {
-    return org.hamcrest.core.AnyOf.<T> anyOf(first, second, third, fourth);
+    return AnyOf.<T> anyOf(first, second, third, fourth);
   }
   /**
    * Creates a matcher that matches if the examined object matches <b>ANY</b> of
@@ -233,9 +277,9 @@ public class azzert extends org.junit.Assert {
    * @param fifth JD
    * @return a matcher
    */
-  public static <T> org.hamcrest.core.AnyOf<T> anyOf(final Matcher<T> first, final Matcher<? super T> second,
+  public static <T> @Nullable AnyOf<@Nullable T> anyOf(final Matcher<T> first, final Matcher<? super T> second,
       final Matcher<? super T> third, final Matcher<? super T> fourth, final Matcher<? super T> fifth) {
-    return org.hamcrest.core.AnyOf.<T> anyOf(first, second, third, fourth, fifth);
+    return AnyOf.<T> anyOf(first, second, third, fourth, fifth);
   }
   /**
    * Creates a matcher that matches if the examined object matches <b>ANY</b> of
@@ -246,24 +290,35 @@ public class azzert extends org.junit.Assert {
    * <pre>
    * assertThat(&quot;myValue&quot;, anyOf(startsWith(&quot;foo&quot;), containsString(&quot;Val&quot;)))
    * </pre>
+   *
+   * @param first
+   * @param second
+   * @param third
+   * @param fourth
+   * @param fifth
+   * @param sixth
+   * @param <T> JD
+   * @return TODO document return type
    */
-  public static <T> org.hamcrest.core.@Nullable AnyOf<T> anyOf(final Matcher<T> first, final Matcher<? super T> second,
+  public static <T> @Nullable AnyOf<T> anyOf(final Matcher<T> first, final Matcher<? super T> second,
       final Matcher<? super T> third, final Matcher<? super T> fourth, final Matcher<? super T> fifth,
       final Matcher<? super T> sixth) {
-    return org.hamcrest.core.AnyOf.<T> anyOf(first, second, third, fourth, fifth, sixth);
+    return AnyOf.<T> anyOf(first, second, third, fourth, fifth, sixth);
   }
   /**
    * Creates a matcher that always matches, regardless of the examined object.
+   *
+   * @return TODO document return type
    */
-  public static @Nullable Matcher<java.lang.Object> anything() {
-    return org.hamcrest.core.IsAnything.anything();
+  public static @Nullable Matcher<@Nullable Object> anything() {
+    return IsAnything.anything();
   }
   /**
    * Creates a matcher that always matches, regardless of the examined object,
    * but describes itself with the specified {@link String}.
    *
    * @param description a meaningful {@link String} used when describing itself
-   * @return
+   * @return TODO document return type
    */
   public static @Nullable Matcher<@Nullable Object> anything(final @Nullable String description) {
     return IsAnything.anything(description);
@@ -279,40 +334,40 @@ public class azzert extends org.junit.Assert {
     that(val, is(exp));
   }
   /**
-   * @param reason
-   * @param i1
-   * @param i2
+   * @param reason TODO document this parameter
+   * @param i1 JD
+   * @param i2 JD
    */
   public static void assertEquals(final String reason, final int i1, final int i2) {
     assertThat(reason, box.it(i1), CoreMatchers.equalTo(box.it(i2)));
   }
   /**
-   * @param s
-   * @param b
+   * @param s TODO document this parameter
+   * @param b TODO document this parameter
    */
   public static void assertFalse(final String s, final boolean b) {
     that(s, b, is(Boolean.FALSE));
   }
   /**
-   * @param o1
-   * @param o2
+   * @param o1 JD
+   * @param o2 JD
    */
   public static void assertNotEquals(final Object o1, final @Nullable Object o2) {
     that(o1, CoreMatchers.not(o2));
   }
   /**
-   * @param reason
-   * @param o1
-   * @param o2
+   * @param reason TODO document this parameter
+   * @param o1 JD
+   * @param o2 JD
    */
   public static void assertNotEquals(final String reason, final Object o1, final Object o2) {
     assertThat(reason, o1, CoreMatchers.not(o2));
   }
   /**
-   * @param o
+   * @param o JD
    */
-  public static void assertNotNull(final Object o) {
-    that(o, CoreMatchers.notNullValue());
+  public static void assertNotNull(final @Nullable Object o) {
+    that(o, notNullValue());
   }
   public static void assertNotNull(final String s, final @Nullable Object o) {
     assertThat(s, o, notNullValue());
@@ -332,7 +387,7 @@ public class azzert extends org.junit.Assert {
   /**
    * assert that a given integer is positive
    *
-   * @param i
+   * @param i TODO document this parameter
    */
   public static void assertPositive(final int i) {
     assertTrue(i > 0);
@@ -469,7 +524,6 @@ public class azzert extends org.junit.Assert {
   public static void that(final short s, final Matcher<? super @Nullable Short> m) {
     that(Short.valueOf(s), m);
   }
-
   /**
    * A non-auto-boxing version for the primitive type
    * <code><b>boolean</b></code> of the original Hamcrest function
@@ -614,7 +668,7 @@ public class azzert extends org.junit.Assert {
     assertThat("", actual, matcher);
   }
   /**
-   * @param b
+   * @param b JD
    */
   public static void assertTrue(final boolean b) {
     assertTrue(b);
@@ -639,9 +693,13 @@ public class azzert extends org.junit.Assert {
    * <pre>
    * assertThat(&quot;fab&quot;, both(containsString(&quot;a&quot;)).and(containsString(&quot;b&quot;)))
    * </pre>
+   * 
+   * @param matcher
+   * @param <LHS>
+   * @return
    */
-  public static <LHS> org.hamcrest.core.CombinableMatcher.CombinableBothMatcher<LHS> both(final Matcher<? super LHS> matcher) {
-    return org.hamcrest.core.CombinableMatcher.<LHS> both(matcher);
+  public static <LHS> CombinableMatcher.CombinableBothMatcher<LHS> both(final Matcher<? super LHS> matcher) {
+    return CombinableMatcher.<LHS> both(matcher);
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
@@ -664,7 +722,7 @@ public class azzert extends org.junit.Assert {
    * @return the result of applying {@link OrderingComparison#comparesEqualTo}
    *         to the parameter
    */
-  @Factory public static @Nullable Matcher<Byte> comparesEqualTo(final byte b) {
+  @Factory public static @Nullable Matcher<@Nullable Byte> comparesEqualTo(final byte b) {
     return OrderingComparison.comparesEqualTo(Byte.valueOf(b));
   }
   /**
@@ -676,7 +734,7 @@ public class azzert extends org.junit.Assert {
    * @return the result of applying {@link OrderingComparison#comparesEqualTo}
    *         to the parameter
    */
-  @Factory public static @Nullable Matcher<Character> comparesEqualTo(final char c) {
+  @Factory public static @Nullable Matcher<@Nullable Character> comparesEqualTo(final char c) {
     return OrderingComparison.comparesEqualTo(Character.valueOf(c));
   }
   /**
@@ -688,7 +746,7 @@ public class azzert extends org.junit.Assert {
    * @return the result of applying {@link OrderingComparison#comparesEqualTo}
    *         to the parameter
    */
-  @Factory public static @Nullable Matcher<Double> comparesEqualTo(final double d) {
+  @Factory public static @Nullable Matcher<@Nullable Double> comparesEqualTo(final double d) {
     return OrderingComparison.comparesEqualTo(Double.valueOf(d));
   }
   /**
@@ -751,9 +809,10 @@ public class azzert extends org.junit.Assert {
    *
    * @param substring the substring that the returned matcher will expect to
    *          find within any examined string
+   * @return TODO document return type
    */
   public static @Nullable Matcher<java.lang.String> containsString(final java.lang.String substring) {
-    return org.hamcrest.core.StringContains.containsString(substring);
+    return StringContains.containsString(substring);
   }
   /**
    * Wraps an existing matcher, overriding its description with that specified.
@@ -771,8 +830,8 @@ public class azzert extends org.junit.Assert {
    * @param values optional values to insert into the tokenised description
    */
   public static <T> @Nullable Matcher<T> describedAs(final java.lang.String description, final Matcher<T> matcher,
-      final java.lang.Object... values) {
-    return org.hamcrest.core.DescribedAs.<T> describedAs(description, matcher, values);
+      final Object... values) {
+    return DescribedAs.<T> describedAs(description, matcher, values);
   }
   /**
    * Creates a matcher that matches when either of the specified matchers match
@@ -783,10 +842,13 @@ public class azzert extends org.junit.Assert {
    * <pre>
    * assertThat(&quot;fan&quot;, either(containsString(&quot;a&quot;)).and(containsString(&quot;b&quot;)))
    * </pre>
+   *
+   * @param matcher
+   * @param <LHS>
+   * @return TODO document return type
    */
-  public static <LHS> org.hamcrest.core.CombinableMatcher.CombinableEitherMatcher<LHS> either(
-      final Matcher<? super LHS> matcher) {
-    return org.hamcrest.core.CombinableMatcher.<LHS> either(matcher);
+  public static <LHS> CombinableMatcher.CombinableEitherMatcher<LHS> either(final Matcher<? super LHS> matcher) {
+    return CombinableMatcher.<LHS> either(matcher);
   }
   /**
    * Creates a matcher that matches if the examined {@link String} ends with the
@@ -802,13 +864,12 @@ public class azzert extends org.junit.Assert {
    *          end of any examined string
    */
   public static @Nullable Matcher<java.lang.String> endsWith(final java.lang.String suffix) {
-    return org.hamcrest.core.StringEndsWith.endsWith(suffix);
+    return StringEndsWith.endsWith(suffix);
   }
   /**
    * Creates a matcher that matches when the examined object is logically equal
    * to the specified <code>operand</code>, as determined by calling the
-   * {@link java.lang.Object#equals} method on the <b>examined</b> object.
-   *
+   * {@link Object#equals} method on the <b>examined</b> object.
    * <p>
    * If the specified operand is <code>null</code> then the created matcher will
    * only match if the examined object's <code>equals</code> method returns
@@ -817,7 +878,6 @@ public class azzert extends org.junit.Assert {
    * itself is <code>null</code>, in which case the matcher will return a
    * positive match.
    * </p>
-   *
    * <p>
    * The created matcher provides a special behaviour when examining
    * <code>Array</code>s, whereby it will match if both the operand and the
@@ -832,9 +892,12 @@ public class azzert extends org.junit.Assert {
    * assertThat(&quot;foo&quot;, equalTo(&quot;foo&quot;));
    * assertThat(new String[] { &quot;foo&quot;, &quot;bar&quot; }, equalTo(new String[] { &quot;foo&quot;, &quot;bar&quot; }));
    * </pre>
+   *
+   * @param operand
+   * @param <T> JD* * @return TODO document return type
    */
   public static <T> @Nullable Matcher<T> equalTo(final T operand) {
-    return org.hamcrest.core.IsEqual.<T> equalTo(operand);
+    return IsEqual.<T> equalTo(operand);
   }
   /**
    * Creates a matcher for {@link Iterable}s that only matches when a single
@@ -849,9 +912,11 @@ public class azzert extends org.junit.Assert {
    *
    * @param itemMatcher the matcher to apply to every item provided by the
    *          examined {@link Iterable}
+   * @param <U>
+   * @return TODO document return type
    */
   public static <U> Matcher<java.lang.Iterable<U>> everyItem(final Matcher<U> itemMatcher) {
-    return org.hamcrest.core.Every.<U> everyItem(itemMatcher);
+    return Every.<U> everyItem(itemMatcher);
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
@@ -1062,7 +1127,7 @@ public class azzert extends org.junit.Assert {
    *          {@link Iterable}
    */
   public static <T> Matcher<java.lang.Iterable<? super @Nullable T>> hasItem(final Matcher<? super @Nullable T> itemMatcher) {
-    return org.hamcrest.core.IsCollectionContaining.<T> hasItem(itemMatcher);
+    return IsCollectionContaining.<T> hasItem(itemMatcher);
   }
   /**
    * Creates a matcher for {@link Iterable}s that only matches when a single
@@ -1081,7 +1146,7 @@ public class azzert extends org.junit.Assert {
    *          {@link Iterable}
    */
   public static <T> Matcher<java.lang.Iterable<? super @Nullable T>> hasItem(final T item) {
-    return org.hamcrest.core.IsCollectionContaining.<T> hasItem(item);
+    return IsCollectionContaining.<T> hasItem(item);
   }
   /**
    * Creates a matcher for {@link Iterable}s that matches when consecutive
@@ -1100,7 +1165,7 @@ public class azzert extends org.junit.Assert {
    *          {@link Iterable}
    */
   @SafeVarargs public static <T> Matcher<java.lang.Iterable<T>> hasItems(final Matcher<? super T>... itemMatchers) {
-    return org.hamcrest.core.IsCollectionContaining.<T> hasItems(itemMatchers);
+    return IsCollectionContaining.<T> hasItems(itemMatchers);
   }
   /**
    * Creates a matcher for {@link Iterable}s that matches when consecutive
@@ -1119,14 +1184,13 @@ public class azzert extends org.junit.Assert {
    *          examined {@link Iterable}
    */
   @SafeVarargs public static <T> Matcher<java.lang.Iterable<T>> hasItems(final T... items) {
-    return org.hamcrest.core.IsCollectionContaining.<T> hasItems(items);
+    return IsCollectionContaining.<T> hasItems(items);
   }
   /**
    * Creates a matcher that matches when the examined object is an instance of
    * the specified <code>type</code>, as determined by calling the
    * {@link java.lang.Class#isInstance(Object)} method on that type, passing the
    * the examined object.
-   *
    * <p>
    * The created matcher assumes no relationship between specified type and the
    * examined object.
@@ -1139,10 +1203,10 @@ public class azzert extends org.junit.Assert {
    * </pre>
    *
    * @param type JD
-   * @return
+   * @return TODO document return type
    */
   public static <T> @Nullable Matcher<T> instanceOf(final java.lang.Class<?> type) {
-    return org.hamcrest.core.IsInstanceOf.<T> instanceOf(type);
+    return IsInstanceOf.<T> instanceOf(type);
   }
   /**
    * A shortcut to the frequently used <code>is(new Boolean(...))</code>.
@@ -1222,7 +1286,7 @@ public class azzert extends org.junit.Assert {
    * </pre>
    */
   public static <T> @Nullable Matcher<T> is(final Matcher<T> matcher) {
-    return org.hamcrest.core.Is.<T> is(matcher);
+    return Is.<T> is(matcher);
   }
   /**
    * A shortcut to the frequently used <code>is(new Short(...))</code>.
@@ -1249,7 +1313,7 @@ public class azzert extends org.junit.Assert {
    * </pre>
    */
   public static <@Nullable T> Matcher<T> is(final @Nullable T value) {
-    return org.hamcrest.core.Is.<T> is(value);
+    return Is.<T> is(value);
   }
   /**
    * A shortcut to the frequently used
@@ -1268,7 +1332,7 @@ public class azzert extends org.junit.Assert {
    * </pre>
    */
   public static <T> @Nullable Matcher<T> isA(final java.lang.Class<T> type) {
-    return org.hamcrest.core.Is.<T> isA(type);
+    return Is.<T> isA(type);
   }
   /**
    * Wraps the provided {@link String}
@@ -1545,8 +1609,8 @@ public class azzert extends org.junit.Assert {
    * assertThat(cheese, is(not(nullValue())))
    * </pre>
    */
-  public static @Nullable Matcher<java.lang.Object> notNullValue() {
-    return org.hamcrest.core.IsNull.notNullValue();
+  public static @Nullable Matcher<@Nullable Object> notNullValue() {
+    return IsNull.notNullValue();
   }
   /**
    * A shortcut to the frequently used <code>not(nullValue(X.class)). Accepts a
@@ -1568,7 +1632,7 @@ public class azzert extends org.junit.Assert {
    *          matcher
    */
   public static <T> @Nullable Matcher<T> notNullValue(final java.lang.Class<T> type) {
-    return org.hamcrest.core.IsNull.<T> notNullValue(type);
+    return IsNull.<T> notNullValue(type);
   }
   /**
    * Creates a matcher that matches if examined object is <code>null</code>.
@@ -1580,7 +1644,7 @@ public class azzert extends org.junit.Assert {
    * </pre>
    */
   public static @Nullable Matcher<@Nullable Object> nullValue() {
-    return org.hamcrest.core.IsNull.nullValue();
+    return IsNull.nullValue();
   }
   /**
    * Creates a matcher that matches if examined object is <code>null</code>.
@@ -1596,7 +1660,7 @@ public class azzert extends org.junit.Assert {
    *          matcher
    */
   public static <T> @Nullable Matcher<T> nullValue(final java.lang.Class<T> type) {
-    return org.hamcrest.core.IsNull.<T> nullValue(type);
+    return IsNull.<T> nullValue(type);
   }
   /**
    * Creates a matcher that matches only when the examined object is the same
@@ -1605,7 +1669,7 @@ public class azzert extends org.junit.Assert {
    * @param target the target instance against which others should be assessed
    */
   public static <T> @Nullable Matcher<T> sameInstance(final T target) {
-    return org.hamcrest.core.IsSame.<T> sameInstance(target);
+    return IsSame.<T> sameInstance(target);
   }
   /**
    * Creates a matcher that matches if the examined {@link String} starts with
@@ -1621,7 +1685,7 @@ public class azzert extends org.junit.Assert {
    *          start of any examined string
    */
   public static @Nullable Matcher<java.lang.String> startsWith(final java.lang.String prefix) {
-    return org.hamcrest.core.StringStartsWith.startsWith(prefix);
+    return StringStartsWith.startsWith(prefix);
   }
   /**
    * Creates a matcher that matches only when the examined object is the same
@@ -1630,6 +1694,6 @@ public class azzert extends org.junit.Assert {
    * @param target the target instance against which others should be assessed
    */
   public static <T> @Nullable Matcher<T> theInstance(final T target) {
-    return org.hamcrest.core.IsSame.<T> theInstance(target);
+    return IsSame.<T> theInstance(target);
   }
 }

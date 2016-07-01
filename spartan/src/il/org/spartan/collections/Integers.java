@@ -175,9 +175,21 @@ public class Integers {
     return data.length;
   }
 
+  /**
+   * TODO
+   */
   public static final float MAX_LOAD = 0.75f;
+  /**
+   * TODO
+   */
   public static final float MIN_LOAD = 0.25f;
+  /**
+   * TODO
+   */
   public static final float REMOVE_LOAD = 0.20f;
+  /**
+   * TODO
+   */
   public static final int MIN_CAPACITY = 4;
 
   /**

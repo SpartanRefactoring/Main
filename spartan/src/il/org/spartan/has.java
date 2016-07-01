@@ -6,6 +6,7 @@ import static il.org.spartan.Utils.*;
 import java.util.*;
 
 import org.eclipse.jdt.annotation.*;
+
 /**
  * A collection of <code><b>static</b></code> functions for converting from one
  * aggregate type to another.
@@ -15,7 +16,6 @@ import org.eclipse.jdt.annotation.*;
  */
 public enum has {
   ;
-
   /**
    * Determine whether a <code><b>null</b></code> occurs in a sequence of
    * objects
@@ -46,8 +46,8 @@ public enum has {
   }
   /**
    * Retrieve next item in a list
-   *
-   * @param i an index of specific item in a list
+   * 
+   * @param <T> JD* @param i an index of specific item in a list
    * @param ts the indexed list
    * @return the following item in the list, if such such an item exists,
    *         otherwise, the last node
