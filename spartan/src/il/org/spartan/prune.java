@@ -1,14 +1,13 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
 
-import static il.org.spartan.__.cantBeNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.Utils.*;
 
 import java.util.*;
 
-import org.eclipse.jdt.annotation.Nullable;
-import org.junit.Test;
+import org.eclipse.jdt.annotation.*;
+import org.junit.*;
 
 /**
  * A <b>Utility class</b> providing functions to remove <code><b>null</b></code>
@@ -25,7 +24,7 @@ import org.junit.Test;
  * @author Yossi Gil
  * @since 27/08/2008
  */
-public enum Prune {
+public enum prune {
   ;
   private static void addNonEmpty(final Collection<String> ss, final String s) {
     if (s.length() > 0)
@@ -158,10 +157,10 @@ public enum Prune {
       assertEquals(0, shrink(new Object[0]).length);
     }
     @Test public void whitesEmptyList() {
-      assertEquals(0, Prune.whites().length);
+      assertEquals(0, prune.whites().length);
     }
     @Test public void whitesEmptyArray() {
-      assertEquals(0, Prune.whites(new String[] {}).length);
+      assertEquals(0, prune.whites(new String[] {}).length);
     }
   }
 }

@@ -1,14 +1,13 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.iterables;
 
-import static il.org.spartan.__.cantBeNull;
-import static il.org.spartan.__.mustBeNull;
-import static org.junit.Assert.assertFalse;
+import static il.org.spartan.Utils.*;
+import static org.junit.Assert.*;
 
-import java.util.Iterator;
+import java.util.*;
 
-import org.eclipse.jdt.annotation.Nullable;
-import org.junit.Test;
+import org.eclipse.jdt.annotation.*;
+import org.junit.*;
 
 /**
  * A kind of {@link Iterator} which does not support the rarely used

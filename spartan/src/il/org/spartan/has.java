@@ -1,9 +1,11 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
 
-import org.eclipse.jdt.annotation.Nullable;
+import static il.org.spartan.Utils.*;
 
+import java.util.*;
 
+import org.eclipse.jdt.annotation.*;
 /**
  * A collection of <code><b>static</b></code> functions for converting from one
  * aggregate type to another.
@@ -41,5 +43,16 @@ public enum has {
       if (o == null)
         return true;
     return false;
+  }
+  /**
+   * Retrieve next item in a list
+   *
+   * @param i an index of specific item in a list
+   * @param ts the indexed list
+   * @return the following item in the list, if such such an item exists,
+   *         otherwise, the last node
+   */
+  public static <@Nullable T> T next(final int i, final List<T> ts) {
+    return !inRange(i + 1, ts) ? last(ts) : ts.get(i + 1);
   }
 }

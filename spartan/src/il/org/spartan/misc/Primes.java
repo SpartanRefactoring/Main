@@ -2,11 +2,9 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.misc;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Primality testing and generation of primes.

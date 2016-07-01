@@ -1,7 +1,7 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
 
-import il.org.spartan.iterables.Iterables;
+import il.org.spartan.iterables.*;
 
 /**
  * A class representing a separator string, which can be used for separating

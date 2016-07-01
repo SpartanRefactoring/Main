@@ -1,9 +1,7 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
 
-import static il.org.spartan.__.cantBeNull;
-
-import org.eclipse.jdt.annotation.Nullable;
+import static il.org.spartan.Utils.*;
 
 /**
  * A utility class, with a collection of function to box primitive types in
@@ -14,7 +12,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Yossi Gil
  * @since 2008/06/21
  */
-public enum Box {
+public enum box {
   // A namespace: no values to this <code><b>enum</b></code>
   ;
   /**
@@ -194,7 +192,7 @@ public enum Box {
    *         parameter, and such that it in its <tt>i</tt><em>th</em> position
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter
    */
-  public static Long @Nullable [] it(final long l[]) {
+  public static Long[] it(final long l[]) {
     final Long[] $ = new Long[l.length];
     for (int i = 0; i < $.length; ++i)
       $[i] = it(l[i]);

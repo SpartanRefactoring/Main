@@ -1,7 +1,11 @@
 package il.org.spartan;
+import org.eclipse.jdt.annotation.*;
 
-import org.eclipse.jdt.annotation.Nullable;
-
+/**
+ * @author Yossi Gil <Yossi.Gil@GMail.COM>
+ * @param <T> JD
+ * @since @{year}-@{month}-@{day}
+ */
 public class Maybe<@Nullable T> {
   private @Nullable T inner;
 

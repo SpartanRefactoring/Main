@@ -1,18 +1,16 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.iterables;
 
-import static il.org.spartan.__.contains;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import il.org.spartan.as;
+import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.Utils.*;
+import static org.junit.Assert.*;
+import il.org.spartan.*;
 
-import java.util.Iterator;
+import java.util.*;
 
-import org.eclipse.jdt.annotation.Nullable;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.eclipse.jdt.annotation.*;
+import org.junit.*;
+import org.junit.runners.*;
 
 public enum Iterables {
   // No values in an 'enum' used as name space for a collection of 'static'
@@ -33,7 +31,7 @@ public enum Iterables {
     return $;
   }
   public static <T> PureIterable.Sized<T> empty() {
-    return as.iterable();
+    return as.nonNullIterable();
   }
   public static boolean isEmpty(final Iterable<?> os) {
     for (final Iterator<?> i = os.iterator(); i.hasNext();)
@@ -41,8 +39,13 @@ public enum Iterables {
         return false;
     return true;
   }
+  /**
+   * @param <T> JD
+   * @param t JD
+   * @return
+   */
   public static <T> PureIterable.Sized<T> singleton(final T t) {
-    return as.iterable(t);
+    return as.nonNullIterable(t);
   }
   public static <T> PureIterator<T> singletonIterator(final T t) {
     return singleton(t).iterator();

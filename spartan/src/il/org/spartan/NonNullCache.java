@@ -1,11 +1,11 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
 
-import static il.org.spartan.__.sqr;
-import static org.junit.Assert.assertEquals;
+import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.Utils.*;
 
-import org.eclipse.jdt.annotation.Nullable;
-import org.junit.Test;
+import org.eclipse.jdt.annotation.*;
+import org.junit.*;
 
 /**
  * A class for lazy, memoizing evaluation of objects of arbitrary type. The

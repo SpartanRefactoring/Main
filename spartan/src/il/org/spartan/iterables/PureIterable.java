@@ -1,7 +1,7 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.iterables;
 
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * A kind of {@link Iterable} which does not permit the rarely used

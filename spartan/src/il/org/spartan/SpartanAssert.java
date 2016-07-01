@@ -1,13 +1,10 @@
 package il.org.spartan;
 
-import static il.org.spartan.Utils.compressSpaces;
-import static il.org.spartan.__.cantBeNull;
-import il.org.spartan.misc.Wrapper;
+import static il.org.spartan.Utils.*;
+import il.org.spartan.misc.*;
 
-import org.eclipse.jdt.annotation.NonNull;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.Factory;
-import org.hamcrest.Matcher;
+import org.eclipse.jdt.annotation.*;
+import org.hamcrest.*;
 
 /**
  * @author Yossi Gil
@@ -254,13 +251,13 @@ public class SpartanAssert extends org.junit.Assert {
     return org.hamcrest.core.IsAnything.anything(description);
   }
   public static void assertEquals(final int expected, final int actual) {
-    assertEquals(Box.it(expected), Box.it(actual));
+    assertEquals(box.it(expected), box.it(actual));
   }
   public static void assertEquals(final Object exp, final Object val) {
     assertThat(val, is(exp));
   }
   public static void assertEquals(final String reason, final int i1, final int i2) {
-    assertThat(reason, Box.it(i1), CoreMatchers.equalTo(Box.it(i2)));
+    assertThat(reason, box.it(i1), CoreMatchers.equalTo(box.it(i2)));
   }
   public static void assertFalse(final String s, final boolean b) {
     assertThat(s, b, is(Boolean.FALSE));
@@ -277,8 +274,15 @@ public class SpartanAssert extends org.junit.Assert {
   public static void assertNotNull(final String s, final Object o) {
     assertThat(s, o, notNullValue());
   }
-  public static void assertNull(final Object o) {
+  public static void assertNotNulls(final Object... os) {
+    for (final Object o : os)
+      assertNotNull("" + os, o);
+  }
+  public static void assertNull(final @Nullable Object o) {
     assertThat(o, nullValue());
+  }
+  public static <@Nullable T> void assertThat(final T actual, final Matcher<? super T> matcher) {
+    assertThat("", actual, matcher);
   }
   /**
    * assert that a given integer is positive
@@ -1563,7 +1567,7 @@ public class SpartanAssert extends org.junit.Assert {
    * assertThat(cheese, is(nullValue())
    * </pre>
    */
-  public static org.hamcrest.Matcher<java.lang.Object> nullValue() {
+  public static org.hamcrest.Matcher<@Nullable Object> nullValue() {
     return org.hamcrest.core.IsNull.nullValue();
   }
   /**

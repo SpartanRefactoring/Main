@@ -1,20 +1,15 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
-
-import static il.org.spartan.__.add;
-import static il.org.spartan.__.addAll;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import il.org.spartan.iterables.PureIterable;
-import il.org.spartan.iterables.PureIterator;
+import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.Utils.*;
+import static org.junit.Assert.*;
+import il.org.spartan.iterables.*;
 
 import java.util.*;
 
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.eclipse.jdt.annotation.*;
+import org.junit.*;
+import org.junit.runners.*;
 
 /**
  * A collection of <code><b>static</b></code> functions for converting from one
@@ -27,15 +22,6 @@ public enum as {
   // No values in an 'enum' which serves as a name space for a collection of
   // 'static' functions.
   ;
-
-
-  /**
-   * The string returned when 'conversion to string' is applied to a
-   * <code><b>null</b></code> value.
-   */
-  public static final String NULL = "(null)";
-
-
   /**
    * Converts a sequence of arguments into an array
    *
@@ -55,6 +41,7 @@ public enum as {
   public static int bit(final boolean $) {
     return $ ? 1 : 0;
   }
+
   /**
    * C like conversion of a reference to an {@link Object} into a 0/1 bit.
    *
@@ -66,6 +53,7 @@ public enum as {
   public static int bit(final @Nullable Object o) {
     return o == null ? 0 : 1;
   }
+
   /**
    * Converts a sequence of <code><b>int</b></code> values into a {@link List}
    * of non-<code><b>null</b></code> {@link Integer}s.
@@ -77,9 +65,11 @@ public enum as {
   public static List<Integer> ingeterList(final int... is) {
     final List<Integer> $ = new ArrayList<>();
     for (final int i : is)
-      $.add(Box.it(i));
+      $.add(box.it(i));
     return $;
   }
+
+
   /**
    * Converts a sequence of integer values into an array.
    *
@@ -115,14 +105,14 @@ public enum as {
     return new PureIterable.Sized<T>() {
       @Override public PureIterator<T> iterator() {
         return new PureIterator<T>() {
-          int current = 0;
-
           @Override public boolean hasNext() {
             return current < ts.length;
           }
+
           @Override public T next() {
             return ts[current++];
           }
+          int current = 0;
         };
       }
       @Override public int size() {
@@ -151,16 +141,44 @@ public enum as {
   public static <T> List<T> list(final Iterable<? extends T> $) {
     return addAll(new ArrayList<T>(), $);
   }
+
   /**
-   * Converts a sequence of objects of a given type into a {@link List} of
+   * Converts a sequence of objects of some common type T into a {@link List} of
    * values
    *
    * @param <T> type of objects to be converted
    * @param $ what to covert
-   * @return the parameter, converted into a {@link List}
+   * @return the result parameter, converted into a {@link List}
    */
   @SafeVarargs public static <T> List<T> list(final T... $) {
     return addAll(new ArrayList<T>(), $);
+  }
+  /**
+   * Creates an iterable for an array of objects
+   *
+   * @param <T> an arbitrary type
+   * @param ts what to iterate on
+   * @return an {@link Iterable} over the parameter
+   */
+  @SafeVarargs public static <T> PureIterable.Sized<T> nonNullIterable(final T... ts) {
+    return new PureIterable.Sized<T>() {
+      @Override public PureIterator<T> iterator() {
+        return new PureIterator<T>() {
+          @Override public boolean hasNext() {
+            return current < ts.length;
+          }
+
+          @Override public @NonNull T next() {
+            @SuppressWarnings("null") final @NonNull T $ = ts[current++];
+            return $;
+          }
+          int current = 0;
+        };
+      }
+      @Override public int size() {
+        return ts.length;
+      }
+    };
   }
   /**
    * Converts a sequence of objects of a given type into a {@link Set} of values
@@ -203,9 +221,14 @@ public enum as {
     final List<String> $ = new ArrayList<>();
     for (final @Nullable Object o : os)
       if (o != null)
-        $.add(__.cantBeNull(o.toString()));
-    return __.cantBeNull($.toArray(new String[$.size()]));
+        $.add(cantBeNull("" + o));
+    return cantBeNull($.toArray(new String[$.size()]));
   }
+  /**
+   * The string returned when 'conversion to string' is applied to a
+   * <code><b>null</b></code> value.
+   */
+  public static final String NULL = "(null)";
 
   /**
    * A static nested class hosting unit tests for the nesting class Unit test
@@ -231,9 +254,9 @@ public enum as {
     }
     @Test public void asListSimple() {
       final List<Integer> is = as.list(12, 13, 14);
-      assertEquals(Box.it(12), is.get(0));
-      assertEquals(Box.it(13), is.get(1));
-      assertEquals(Box.it(14), is.get(2));
+      assertEquals(box.it(12), is.get(0));
+      assertEquals(box.it(13), is.get(1));
+      assertEquals(box.it(14), is.get(2));
       assertEquals(3, is.size());
     }
     @Test public void stringOfNull() {

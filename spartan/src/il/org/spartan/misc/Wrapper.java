@@ -1,6 +1,5 @@
 package il.org.spartan.misc;
 
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * A generic wrapper classes which can store and retrieve values of any type.
@@ -15,7 +14,7 @@ public class Wrapper<T> {
     return "Wrapper of " + t;
   }
 
-  private @Nullable T t = null;
+  private T t = null;
 
   /**
    * Instantiates this class
@@ -42,7 +41,7 @@ public class Wrapper<T> {
   /**
    * @return the value wrapped in this object.
    */
-  public @Nullable T get() {
+  public T get() {
     return t;
   }
 }

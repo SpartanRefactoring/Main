@@ -1,22 +1,17 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
 
-import static il.org.spartan.Assert.assertEquals;
-import static il.org.spartan.Assert.assertZero;
-import static il.org.spartan.__.apply;
-import static il.org.spartan.__.cantBeNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import il.org.spartan.__.Applicator;
-import il.org.spartan.iterables.Iterables;
+import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.Utils.*;
+import il.org.spartan.Utils.Applicator;
+import il.org.spartan.iterables.*;
 
 import java.util.*;
-import java.util.function.Function;
+import java.util.function.*;
 
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.eclipse.jdt.annotation.*;
+import org.junit.*;
+import org.junit.runners.*;
 
 /**
  * A utility class providing library functions that take an array or a
@@ -54,7 +49,17 @@ public enum Separate {
    * @return the parameters, separated by {@link #SPACE}
    */
   public static String bySpaces(final String... $) {
-    return separateBySpaces(as.iterable($));
+    return separateBySpaces(as.nonNullIterable($));
+  }
+  /**
+   * Separates an {@link Iterable} strings by {@link #SPACE} characters
+   *
+   * @param $ what needs to be separated
+   * @return the parameters, separated by {@link #SPACE}
+   */
+  public static String bySpaces(final Iterable<String> $) {
+    assert $ != null;
+    return separateBySpaces($.iterator());
   }
   /**
    * Separates an {@link Iterable} strings by {@link #SPACE} characters
@@ -99,7 +104,7 @@ public enum Separate {
    *         <code>between</code>
    */
   public static SeparationSubject these(final boolean[] bs) {
-    return these(Box.it(bs));
+    return these(box.it(bs));
   }
   /**
    * Separate elements of a given array of <code><b>byte</b></code>s by a given
@@ -111,7 +116,7 @@ public enum Separate {
    *         <code>between</code>
    */
   public static SeparationSubject these(final byte[] bs) {
-    return these(Box.it(bs));
+    return these(box.it(bs));
   }
   /**
    * Separate elements of a given array of <code><b>char</b></code>s by a given
@@ -123,7 +128,7 @@ public enum Separate {
    *         <code>between</code>
    */
   public static SeparationSubject these(final char[] cs) {
-    return these(Box.it(cs));
+    return these(box.it(cs));
   }
   /**
    * Separate elements of a given array of <code><b>double</b></code>s by a
@@ -135,7 +140,7 @@ public enum Separate {
    *         <code>between</code>
    */
   public static SeparationSubject these(final double[] ds) {
-    return these(Box.it(ds));
+    return these(box.it(ds));
   }
   /**
    * Separate elements of a given array of <code><b>float</b></code>s by a given
@@ -147,7 +152,7 @@ public enum Separate {
    *         <code>between</code>
    */
   public static SeparationSubject these(final float[] fs) {
-    return these(Box.it(fs));
+    return these(box.it(fs));
   }
   /**
    * Separate elements of a given array of <code><b>int</b></code>s by a given
@@ -159,7 +164,7 @@ public enum Separate {
    *         <code>between</code>
    */
   private static SeparationSubject these(final int[] is) {
-    return these(Box.it(is));
+    return these(box.it(is));
   }
   /**
    * Separate a variable length list of arguments by a comma character.
@@ -180,7 +185,7 @@ public enum Separate {
    *         <code>between</code>
    */
   public static SeparationSubject these(final long[] ls) {
-    return these(Box.it(ls));
+    return these(box.it(ls));
   }
   /**
    * A simple minded separation of members of a {@link Map} data type.
@@ -194,7 +199,6 @@ public enum Separate {
    *         separated from the value by <code>arrow</code>.
    */
   public static <Key, Value> SeparationSubject these(final Map<Key, Value> map) {
-    cantBeNull(map);
     final List<Object> $ = new ArrayList<>();
     for (final Key k : map.keySet())
       $.add(k + "->" + map.get(k));
@@ -210,7 +214,7 @@ public enum Separate {
    *         <code>between</code>
    */
   public static SeparationSubject these(final short[] ss) {
-    return these(Box.it(ss));
+    return these(box.it(ss));
   }
   /**
    * Separate a variable length list of arguments by a comma character.
@@ -277,8 +281,30 @@ public enum Separate {
     public SeparationSubject(final Iterable<Object> os) {
       this.os = os;
     }
+    /**
+     * Instantiates this class.
+     *
+     * @param os JD
+     */
     public SeparationSubject(final Object[] os) {
-      this.os = as.iterable(os);
+      this(new PureIterable.Sized<Object>() {
+        @Override public PureIterator<Object> iterator() {
+          return new PureIterator<@NonNull Object>() {
+            @Override public boolean hasNext() {
+              return current < os.length;
+            }
+
+            @Override public Object next() {
+              @SuppressWarnings("null") final @NonNull Object $ = os[current++];
+              return $;
+            }
+            int current = 0;
+          };
+        }
+        @Override public int size() {
+          return os.length;
+        }
+      });
     }
     /**
      * Separate elements of a given array of <code><b>boolean</b></code>s by a
@@ -320,7 +346,7 @@ public enum Separate {
      *         representations of the elements of saved objects
      */
     public String byDots() {
-      return separateBy(Prune.whites(as.strings(os)), DOT);
+      return separateBy(prune.whites(as.strings(os)), DOT);
     }
     /**
      * Separate a variable length list of arguments by new lines.
@@ -330,7 +356,7 @@ public enum Separate {
      *         saved objects
      */
     public String byNLs() {
-      return separateBy(Prune.whites(as.strings(os)), NL);
+      return separateBy(prune.whites(as.strings(os)), NL);
     }
     /**
      * Separate a variable length list of arguments by a space character.
@@ -339,7 +365,7 @@ public enum Separate {
      *         representations of the elements of saved objects
      */
     public String bySpaces() {
-      return separateBy(Prune.whites(as.strings(os)), SPACE);
+      return separateBy(prune.whites(as.strings(os)), SPACE);
     }
     /**
      * Separates the objects in some order
@@ -347,7 +373,7 @@ public enum Separate {
      * @return the
      */
     public String byNothing() {
-      return separateBy(Prune.whites(as.strings(os)), "");
+      return separateBy(prune.whites(as.strings(os)), "");
     }
   }
 
@@ -437,10 +463,10 @@ public enum Separate {
     }
     @Test public final void byMapOfKeyValueStringString() {
       final Map<String, Integer> map = new TreeMap<>();
-      map.put("One", Box.it(1));
-      map.put("Two", Box.it(2));
-      map.put("Three", Box.it(3));
-      map.put("Four", Box.it(4));
+      map.put("One", box.it(1));
+      map.put("Two", box.it(2));
+      map.put("Three", box.it(3));
+      map.put("Four", box.it(4));
       assertEquals("Four->4, One->1, Three->3, Two->2", Separate.these(map).by(", "));
     }
     @Test public final void byShortArrayChar() {
@@ -472,14 +498,14 @@ public enum Separate {
     }
     @Test public final void separateByNoItemslPruneWhitesSpaceSeparated() {
       final SeparationSubject these = Separate.these();
-      assertNotNull(these);
+      assertNotNulls(these);
       final Iterable<Object> os = these.os;
-      assertNotNull(os);
+      assertNotNulls(os);
       assertTrue(Iterables.isEmpty(os));
       final String[] ss = as.strings(os);
       assertNotNull(ss);
       assertZero(ss.length);
-      final String[] noWhites = Prune.whites(ss);
+      final String[] noWhites = prune.whites(ss);
       assertZero(noWhites.length);
       assertEquals("", SeparationSubject.separateBy(noWhites, " "));
     }
@@ -493,10 +519,10 @@ public enum Separate {
       assertEquals("", separateBySpaces(Iterables.<String> empty()));
     }
     @Test public void separateBySpaceMultipleIterator() {
-      assertEquals("X Y Z", separateBySpaces(as.iterable("X", "Y", "Z")));
+      assertEquals("X Y Z", bySpaces("X", "Y", "Z"));
     }
     @Test public void separateBySpaceOnIteator() {
-      assertEquals("Hello World ", separateBySpaces(as.iterable("Hello", "World ")));
+      assertEquals("Hello World ", separateBySpaces(as.nonNullIterable("Hello", "World ")));
     }
     @Test public void separateBySpaceOnSingletonIteator() {
       assertEquals("Hello", separateBySpaces(Iterables.singleton("Hello")));
