@@ -97,7 +97,7 @@ import org.junit.*;
     that(operands.size(), is(2));
     that(operands.get(0).toString(), is("1"));
     that(operands.get(1).toString(), is("2 * 3"));
-    Assert.assertThat(ExpressionComparator.ADDITION.sort(operands), is(true));
+    that(ExpressionComparator.ADDITION.sort(operands), is(true));
     that(operands.get(0).toString(), is("2 * 3"));
     that(operands.get(1).toString(), is("1"));
     final InfixExpression refit = Subject.operands(operands).to(e.getOperator());
@@ -109,9 +109,9 @@ import org.junit.*;
   }
   @Test public void subjectOperands() {
     final Expression e = Into.e("2 + a < b");
-    Assert.assertThat(Is.notString(e), is(true));
+    that(Is.notString(e), is(true));
     final InfixExpression plus = Extract.firstPlus(e);
-    Assert.assertThat(Is.notString(plus), is(true));
+    that(Is.notString(plus), is(true));
     final List<Expression> operands = Extract.operands(flatten(plus));
     that(operands.size(), is(2));
     final boolean b = ExpressionComparator.ADDITION.sort(operands);
@@ -134,9 +134,9 @@ import org.junit.*;
   }
   @Test public void subjectOperandsWithParenthesis() {
     final Expression e = Into.e("(2 + a) * b");
-    Assert.assertThat(Is.notString(e), is(true));
+    that(Is.notString(e), is(true));
     final InfixExpression plus = Extract.firstPlus(e);
-    Assert.assertThat(Is.notString(plus), is(true));
+    that(Is.notString(plus), is(true));
     final List<Expression> operands = Extract.operands(flatten(plus));
     that(operands.size(), is(2));
     final boolean b = ExpressionComparator.ADDITION.sort(operands);

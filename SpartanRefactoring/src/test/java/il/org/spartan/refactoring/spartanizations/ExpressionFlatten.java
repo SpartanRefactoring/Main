@@ -55,10 +55,10 @@ public class ExpressionFlatten {
     that(Is.notString(e("1+f")), is(false));
   }
   @Test public void leftOperandIsNotString() {
-    Assert.assertThat(Is.notString(left(i("1+2"))), is(true));
+    that(Is.notString(left(i("1+2"))), is(true));
   }
   @Test public void leftOperandIsNumeric() {
-    Assert.assertThat(Is.numericLiteral(left(i("1+2"))), is(true));
+    that(Is.numericLiteral(left(i("1+2"))), is(true));
   }
   @Test public void leftOperandIsOne() {
     that(left(i("1+2")).toString(), is("1"));

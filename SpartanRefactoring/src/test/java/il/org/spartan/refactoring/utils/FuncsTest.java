@@ -63,7 +63,7 @@ public class FuncsTest {
     that(t("int _;"), notNullValue());
   }
   @Test public void isDeMorganAND() {
-    Assert.assertThat(Is.deMorgan(CONDITIONAL_AND), is(true));
+    that(Is.deMorgan(CONDITIONAL_AND), is(true));
   }
   @Test public void isDeMorganGreater() {
     that(Is.deMorgan(GREATER), is(false));
@@ -72,7 +72,7 @@ public class FuncsTest {
     that(Is.deMorgan(GREATER_EQUALS), is(false));
   }
   @Test public void isDeMorganOR() {
-    Assert.assertThat(Is.deMorgan(CONDITIONAL_OR), is(true));
+    that(Is.deMorgan(CONDITIONAL_OR), is(true));
   }
   @Test public void listOfInts() {
     that(shortName(t("List<Set<Integer>> _;")), equalTo("iss"));
@@ -81,7 +81,7 @@ public class FuncsTest {
     that(Funcs.same(null, e("a")), is(false));
   }
   @Test public void sameOfNulls() {
-    Assert.assertThat(Funcs.same((ASTNode) null, (ASTNode) null), is(true));
+    that(Funcs.same((ASTNode) null, (ASTNode) null), is(true));
   }
   @Test public void negation0Trivial() {
     that(negationLevel(e("a")), is(0));
@@ -99,7 +99,7 @@ public class FuncsTest {
     that(Funcs.same(e("a"), null), is(false));
   }
   @Test public void sameOfTwoExpressionsIdentical() {
-    Assert.assertThat(Funcs.same(e("a+b"), e("a+b")), is(true));
+    that(Funcs.same(e("a+b"), e("a+b")), is(true));
   }
   @Test public void sameOfTwoExpressionsNotSame() {
     that(Funcs.same(e("a+b+c"), e("a+b")), is(false));

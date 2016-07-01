@@ -6,7 +6,6 @@ import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
-import static org.junit.Assert.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -136,7 +135,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
     }
     @Test public void noOpporunity() {
       final CompilationUnit u = asCompilationUnit();
-      assertThat(u.toString() + wringer.findOpportunities(u), 0, equalTo(wringer.findOpportunities(u).size()));
+      that(u.toString() + wringer.findOpportunities(u), wringer.findOpportunities(u).size(), is(0));
     }
     @Test public void simiplifies() throws MalformedTreeException, IllegalArgumentException, BadLocationException {
       if (input == null)
@@ -310,8 +309,8 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
         final String peeled = Wrap.Statement.off(excpected.get());
         if (expected.equals(peeled))
           return;
-        assertThat("Nothing done on " + input, input, not(peeled));
-        assertThat("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), not(compressSpaces(input)));
+        that("Nothing done on " + input, input, not(peeled));
+        that("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), not(compressSpaces(input)));
         assertSimilar(expected, peeled);
         assertSimilar(Wrap.Statement.on(expected), excpected);
       }
@@ -431,8 +430,8 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
       final String peeled = Wrap.Statement.off(output.get());
       if (expected.equals(peeled))
         return;
-      assertThat("Nothing done on " + input, input, not(peeled));
-      assertThat("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), not(compressSpaces(input)));
+      that("Nothing done on " + input, input, not(peeled));
+      that("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), not(compressSpaces(input)));
       assertSimilar(expected, peeled);
       assertSimilar(Wrap.Statement.on(expected), output);
     }
@@ -519,8 +518,8 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
       final String peeled = Wrap.Expression.off(actual.get());
       if (expected.equals(peeled))
         return;
-      assertThat("Nothing done on " + input, input, not(peeled));
-      assertThat("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), not(compressSpaces(input)));
+      that("Nothing done on " + input, input, not(peeled));
+      that("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), not(compressSpaces(input)));
       assertSimilar(expected, peeled);
       assertSimilar(Wrap.Expression.on(expected), actual);
     }
@@ -537,8 +536,8 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
       final String peeled = Wrap.Expression.off(actual.get());
       if (expected.equals(peeled))
         return;
-      assertThat("Nothing done on " + input, input, not(peeled));
-      assertThat("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), not(compressSpaces(input)));
+      that("Nothing done on " + input, input, not(peeled));
+      that("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), not(compressSpaces(input)));
       assertSimilar(expected, peeled);
       assertSimilar(Wrap.Expression.on(expected), actual);
     }
@@ -632,7 +631,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
         return;
       @Nullable final IfStatement me = asMe();
       assert me != null;
-      assertThat(me.toString(), Toolbox.instance.find(me), instanceOf(inner.getClass()));
+      that(me.toString(), Toolbox.instance.find(me), instanceOf(inner.getClass()));
     }
     @Test public void createRewrite() throws MalformedTreeException, IllegalArgumentException, BadLocationException {
       final String s = input;
@@ -668,7 +667,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
         return;
       @Nullable final IfStatement me = asMe();
       if (me != null)
-        assertThat(me.toString(), Toolbox.instance.find(asMe()), is(notNullValue()));
+        that(me.toString(), Toolbox.instance.find(asMe()), is(notNullValue()));
     }
     @Test public void noneligible() {
       if (input == null)
@@ -697,7 +696,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
       if (expected.equals(peeled))
         return;
       that(input, not(peeled));
-      assertThat("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), not(compressSpaces(input)));
+      that("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), not(compressSpaces(input)));
       assertSimilar(expected, peeled);
       assertSimilar(Wrap.Statement.on(expected), excpected);
     }
@@ -754,7 +753,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
       @Nullable final VariableDeclarationFragment me = asMe();
       assert me != null;
       assertNotNull(me);
-      assertThat(me.toString(), Toolbox.instance.find(me), instanceOf(inner.getClass()));
+      that(me.toString(), Toolbox.instance.find(me), instanceOf(inner.getClass()));
     }
     @Test public void createRewrite() throws MalformedTreeException, IllegalArgumentException, BadLocationException {
       final String s = input;
@@ -789,7 +788,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
         return;
       @Nullable final VariableDeclarationFragment me = asMe();
       assert me != null;
-      assertThat(me.toString(), Toolbox.instance.find(asMe()), is(notNullValue()));
+      that(me.toString(), Toolbox.instance.find(asMe()), is(notNullValue()));
     }
     @Test public void noneligible() {
       if (inner == null)
@@ -820,8 +819,8 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
       final String peeled = Wrap.Statement.off(actual.get());
       if (expected.equals(peeled))
         return;
-      assertThat("Nothing done on " + input, input, not(peeled));
-      assertThat("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), not(compressSpaces(input)));
+      that("Nothing done on " + input, input, not(peeled));
+      that("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), not(compressSpaces(input)));
       assertSimilar(expected, peeled);
       assertSimilar(Wrap.Statement.on(expected), actual);
     }
@@ -920,7 +919,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
       }
       @Test public void oneOpporunity() {
         final CompilationUnit u = asCompilationUnit();
-        assertThat(u.toString(), 1, equalTo(trimmer.findOpportunities(u).size()));
+        that("" + u, trimmer.findOpportunities(u).size(), is(1));
         that(inner.scopeIncludes((N) asExpression()), is(true));
       }
       @Test public void peelableOutput() {
@@ -938,7 +937,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
         if (output.equals(peeled))
           return;
         that("Nothing done on " + input, not((Object) input.equals(peeled)));
-        assertThat("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), not(compressSpaces(input)));
+        that("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), not(compressSpaces(input)));
         assertSimilar(output, peeled);
         assertSimilar(Wrap.Expression.on(output), excpected);
       }
