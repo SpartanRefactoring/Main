@@ -24,35 +24,74 @@ import org.junit.runners.*;
  * @since 2014-06-17
  */
 public class LCS {
+  /**
+   * Instantiates this class.
+   *
+   * @param a JD
+   * @param b JD
+   */
   public LCS(final String a, final String b) {
     this(Lines.scatter(a), Lines.scatter(b));
   }
+  /**
+   * TODO:Document this method Instantiates this class.
+   *
+   * @param as JD
+   * @param bs JD
+   */
   public LCS(final String[] as, final String[] bs) {
     this(hash(as), hash(bs));
   }
+  /**
+   * Instantiates this class. TODO: Document this method
+   *
+   * @param as JD
+   * @param bs JD
+   */
   public LCS(final int[] as, final int[] bs) {
     this.A_s = as;
     this.B_s = bs;
-    length = new int[as.length][];
+    length = new int @NonNull [as.length][];
     for (int i = 0; i < as.length; ++i)
       Arrays.fill(length[i] = new int[bs.length], -1);
   }
-  public static int length(final @Nullable int @Nullable [] ia, final @Nullable int @Nullable [] is2) {
+  /**
+   * @param ia
+   * @param is2
+   * @return
+   */
+  public static int length(final int[] ia, final int[] is2) {
     return new LCS(ia, is2).length();
   }
+  /**
+   * @param a JD
+   * @param s2 JD
+   * @return
+   */
   public static int length(final String a, final String s2) {
     return new LCS(a, s2).length();
   }
+  /**
+   * @param ssa JD
+   * @param ssb JD
+   * @return
+   */
   public static int length(final String[] ssa, final String[] ssb) {
     return new LCS(ssa, ssb).length();
   }
+  /**
+   * @param s
+   * @return
+   */
   private static int hash(final String s) {
     return s.replaceAll("\\s+", "").toLowerCase().hashCode();
   }
   private static int[] hash(final String[] ss) {
-    final int[] $ = new int[ss.length];
-    for (int i = 0; i < $.length; ++i)
-      $[i] = hash(cantBeNull(ss[i]));
+    final int @NonNull [] $ = new int @NonNull [ss.length];
+    for (int i = 0; i < $.length; ++i) {
+      @SuppressWarnings("null") final @NonNull String s = ss[i];
+      $[i] = hash(s);
+    }
     return $;
   }
 
@@ -105,22 +144,22 @@ public class LCS {
       assertEquals(0, chars2Lines("").length);
     }
     @Test public void length1StrgumentIsZero() {
-      assertEquals(0, length(new int[0], new int[10]));
+      assertEquals(0, length(new int @NonNull [0], new int @NonNull [10]));
     }
     @Test public void length2ndArgumentIsZero() {
-      assertEquals(0, length(new int[10], new int[0]));
+      assertEquals(0, length(new int @NonNull [10], new int @NonNull [0]));
     }
     @Test public void lengthArrayLengthOneDifferent() {
-      assertEquals(0, length(new int[] { 12 }, new int[] { 13 }));
+      assertEquals(0, length(new int @NonNull [] { 12 }, new int @NonNull [] { 13 }));
     }
     @Test public void lengthArrayLengthOneIdentical() {
-      assertEquals(1, length(new int[] { 12 }, new int[] { 12 }));
+      assertEquals(1, length(new int @NonNull [] { 12 }, new int @NonNull [] { 12 }));
     }
     @Test public void lengthExists() {
-      length(new int[0], new int[0]);
+      length(new int @NonNull [0], new int @NonNull [0]);
     }
     @Test public void lengthIdenticalIntegers() {
-      final int[] is = new int[] { 12, 13, 14, 8, 11, 60, 30 };
+      final int @NonNull [] is = new int @NonNull [] { 12, 13, 14, 8, 11, 60, 30 };
       assertEquals(is.length, length(is, is));
     }
     @Test public void lengthStringAbraCadabra() {

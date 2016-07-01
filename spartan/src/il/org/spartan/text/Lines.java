@@ -61,7 +61,7 @@ public enum Lines {
    * A longer and more meaningful name for the array of length zero with
    * {@link String} elements.
    */
-  public static final String[] NO_LINES = new String[0];
+  public static final String[] NO_LINES = new String @NonNull [0];
 
   /**
    * A static nested class hosting unit tests for the nesting class Unit test

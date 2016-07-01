@@ -181,7 +181,7 @@ public enum box {
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter
    */
   public static Integer[] it(final int is[]) {
-    final Integer[] $ = new Integer[is.length];
+    final Integer @NonNull [] $ = new Integer @NonNull [is.length];
     for (int i = 0; i < $.length; ++i)
       $[i] = it(is[i]);
     return $;
@@ -195,7 +195,7 @@ public enum box {
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter
    */
   public static Long[] it(final long l[]) {
-    final Long[] $ = new Long[l.length];
+    final Long @NonNull [] $ = new Long @NonNull [l.length];
     for (int i = 0; i < $.length; ++i)
       $[i] = it(l[i]);
     return $;
@@ -210,7 +210,7 @@ public enum box {
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter
    */
   public static Short[] it(final short s[]) {
-    final Short[] $ = new Short[s.length];
+    final Short @NonNull [] $ = new Short @NonNull [s.length];
     for (int i = 0; i < $.length; ++i)
       $[i] = it(s[i]);
     return $;

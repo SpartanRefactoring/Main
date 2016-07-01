@@ -287,18 +287,20 @@ public class azzert extends org.junit.Assert {
   public static void assertNotNull(final Object o) {
     assertThat(o, CoreMatchers.notNullValue());
   }
-  public static void assertNotNull(final String s, final Object o) {
+  public static void assertNotNull(final String s, final @Nullable Object o) {
     assertThat(s, o, notNullValue());
   }
-  public static void assertNotNulls(final Object... os) {
-    for (final Object o : os)
+  /**
+   * @param os JD
+   */
+  public static void assertNotNulls(final @Nullable Object @Nullable... os) {
+    assert os != null;
+    assertNotNull(os);
+    for (final @Nullable Object o : os)
       assertNotNull("" + os, o);
   }
   public static void assertNull(final @Nullable Object o) {
     assertThat(o, nullValue());
-  }
-  public static <@Nullable T> void assertThat(final @Nullable T actual, final @Nullable Matcher<? super @Nullable T> matcher) {
-    assertThat("", actual, matcher);
   }
   /**
    * assert that a given integer is positive
@@ -425,7 +427,6 @@ public class azzert extends org.junit.Assert {
   public static void assertThat(final Object actual, final Wrapper<@Nullable String> expected) {
     assertThat(compressSpaces(actual + ""), is(compressSpaces(expected.get())));
   }
-
   /**
    * A non-auto-boxing version for the primitive type <code><b>short</b></code>
    * of the original Hamcrest function
@@ -441,6 +442,7 @@ public class azzert extends org.junit.Assert {
   public static void assertThat(final short s, final Matcher<? super @Nullable Short> m) {
     assertThat(Short.valueOf(s), m);
   }
+
   /**
    * A non-auto-boxing version for the primitive type
    * <code><b>boolean</b></code> of the original Hamcrest function
@@ -576,6 +578,9 @@ public class azzert extends org.junit.Assert {
    */
   public static void assertThat(final String reason, final short s, final Matcher<? super Short> m) {
     assertThat(reason, Short.valueOf(s), m);
+  }
+  public static <@Nullable T> void assertThat(final @Nullable T actual, final @Nullable Matcher<? super @Nullable T> matcher) {
+    assertThat("", actual, matcher);
   }
   public static void assertTrue(final boolean b) {
     azzert.assertThat(b, is(true));
@@ -1137,7 +1142,7 @@ public class azzert extends org.junit.Assert {
    * @param b JD
    * @return a matcher for the value specified by the parameter
    */
-  public static Matcher<@Nullable Boolean> is(final boolean b) {
+  public static Matcher<Boolean> is(final boolean b) {
     return is(Boolean.valueOf(b));
   }
   /**
@@ -1146,7 +1151,7 @@ public class azzert extends org.junit.Assert {
    * @param b JD
    * @return a matcher for the value specified by the parameter
    */
-  public static Matcher<@Nullable Byte> is(final byte b) {
+  public static Matcher<Byte> is(final byte b) {
     return is(Byte.valueOf(b));
   }
   /**
@@ -1155,7 +1160,7 @@ public class azzert extends org.junit.Assert {
    * @param c JD
    * @return a matcher for the value specified by the parameter
    */
-  public static Matcher<@Nullable Character> is(final char c) {
+  public static Matcher<Character> is(final char c) {
     return is(Character.valueOf(c));
   }
   /**
@@ -1164,7 +1169,7 @@ public class azzert extends org.junit.Assert {
    * @param d JD
    * @return a matcher for the value specified by the parameter
    */
-  public static Matcher<@Nullable Double> is(final double d) {
+  public static Matcher<Double> is(final double d) {
     return is(Double.valueOf(d));
   }
   /**
@@ -1173,7 +1178,7 @@ public class azzert extends org.junit.Assert {
    * @param f JD
    * @return a matcher for the value specified by the parameter
    */
-  public static Matcher<@Nullable Float> is(final float f) {
+  public static Matcher<Float> is(final float f) {
     return is(Float.valueOf(f));
   }
   /**
@@ -1182,7 +1187,7 @@ public class azzert extends org.junit.Assert {
    * @param i JD
    * @return a matcher for the value specified by the parameter
    */
-  public static Matcher<@Nullable Integer> is(final int i) {
+  public static Matcher<Integer> is(final int i) {
     return is(Integer.valueOf(i));
   }
   /**
@@ -1191,7 +1196,7 @@ public class azzert extends org.junit.Assert {
    * @param l JD
    * @return a matcher for the value specified by the parameter
    */
-  public static Matcher<@Nullable Long> is(final long l) {
+  public static Matcher<Long> is(final long l) {
     return is(Long.valueOf(l));
   }
   /**
@@ -1217,7 +1222,7 @@ public class azzert extends org.junit.Assert {
    * @param s JD
    * @return a matcher for the value specified by the parameter
    */
-  public static Matcher<@Nullable Short> is(final short s) {
+  public static Matcher<Short> is(final short s) {
     return is(Short.valueOf(s));
   }
   /**
@@ -1235,7 +1240,7 @@ public class azzert extends org.junit.Assert {
    * assertThat(cheese, is(equalTo(smelly)))
    * </pre>
    */
-  public static <T> org.hamcrest.Matcher<T> is(final @Nullable T value) {
+  public static <T> org.hamcrest.Matcher<T> is(final T value) {
     return org.hamcrest.core.Is.<T> is(value);
   }
   /**
@@ -1264,7 +1269,7 @@ public class azzert extends org.junit.Assert {
    * @return a wrapped {@link String}
    */
   public static final Wrapper<String> iz(final @NonNull String s) {
-    return new Wrapper<>(s);
+    return new Wrapper<String>(s);
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher

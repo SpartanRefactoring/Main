@@ -92,7 +92,7 @@ public enum separate {
    * @return an empty {@link SeparationSubject}
    */
   public static SeparationSubject these() {
-    return new SeparationSubject(new String[] {});
+    return new SeparationSubject(new String @NonNull [] {});
   }
   /**
    * Separate elements of a given array of <code><b>boolean</b></code>s by a

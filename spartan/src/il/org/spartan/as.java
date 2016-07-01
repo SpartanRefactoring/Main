@@ -139,7 +139,7 @@ public enum as {
    * @return the parameter, converted to the {@link List} of the given type
    */
   public static <T> List<T> list(final Iterable<? extends T> $) {
-    return to(new ArrayList<T>()).add($).elements();
+    return accumulate.to(new ArrayList<T>()).add($).elements();
   }
 
   /**
@@ -151,7 +151,7 @@ public enum as {
    * @return the result parameter, converted into a {@link List}
    */
   @SafeVarargs public static <T> List<T> list(final T... $) {
-    return to(new ArrayList<T>()).add($).elements();
+    return accumulate.to(new ArrayList<T>()).add($).elements();
   }
   /**
    * Creates an iterable for an array of objects
@@ -188,7 +188,7 @@ public enum as {
    * @return the parameter, converted into a {@link Set}
    */
   @SafeVarargs public static <T> Set<? extends T> set(final @Nullable T @Nullable... ts) {
-    return to(new HashSet<T>()).add(ts).elements();
+    return accumulate.to(new HashSet<T>()).add(ts).elements();
   }
   /**
    * Converts a value, which can be either a <code><b>null</b></code> or

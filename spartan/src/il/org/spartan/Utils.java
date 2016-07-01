@@ -1,5 +1,7 @@
 package il.org.spartan;
 
+
+
 import static il.org.spartan.azzert.*;
 import static org.junit.Assert.*;
 import il.org.spartan.Utils.FoundHandleForT.FoundHandleForInt;
@@ -30,10 +32,16 @@ public enum Utils {
    * @return the newly created array
    */
   public static <T> T[] append(final T[] ts, final T t) {
-    final T[] $ = Arrays.copyOf(ts, 1 + ts.length);
+    @SuppressWarnings("null") final T @NonNull [] $ = Arrays.copyOf(ts, 1 + ts.length);
     $[ts.length] = t;
     return $;
   }
+  /**
+   * @param <F>
+   * @param <T>
+   * @param f
+   * @return
+   */
   public static <F, T> Applicator<F, T> apply(final Function<F, T> f) {
     return new Applicator<>(f);
   }
@@ -97,16 +105,17 @@ public enum Utils {
         .replaceAll("^\\s", "") // Opening whites
         .replaceAll("\\s$", "") // Closing whites
         ;
-    for (final String operator : new String[] { ":", "/", "%", ",", "\\{", "\\}", "=", ":", "\\?", ";", "\\+", ">", ">=", "!=",
+    for (final String operator : new String @NonNull [] { ":", "/", "%", ",", "\\{", "\\}", "=", ":", "\\?", ";", "\\+", ">", ">=",
+        "!=",
         "==", "<", "<=", "-", "\\*", "\\|", "\\&", "%", "\\(", "\\)", "[\\^]" })
       $ = $ //
       .replaceAll(WHITES + operator, operator) // Preceding whites
       .replaceAll(operator + WHITES, operator) // Trailing whites
       ;
-    return $;
+    return cantBeNull($);
   }
   /**
-   * Determine if a string contains any of a list of patterns.
+   * Determine whether a string contains any of a list of patterns.
    *
    * @param text string to be tested
    * @param patterns a list of substrings
@@ -128,13 +137,22 @@ public enum Utils {
    * @return the newly created array
    */
   public static <T> T[] delete(final T[] ts, final int i) {
-    final T[] $ = Arrays.copyOf(ts, ts.length - 1);
+    @SuppressWarnings("null") final T @NonNull [] $ = Arrays.copyOf(ts, ts.length - 1);
     System.arraycopy(ts, i + 1, $, i, $.length - i);
     return $;
   }
+  /**
+   * @param i JD
+   * @return
+   */
   public static FoundHandleForInt found(final int i) {
     return new FoundHandleForInt(i);
   }
+  /**
+   * @param <T> JD
+   * @param t JD
+   * @return
+   */
   public static <T> FoundHandleForT<T> found(final T t) {
     return new FoundHandleForT<T>(t);
   }
@@ -245,22 +263,24 @@ public enum Utils {
     return os;
   }
   /**
+   * @param <T> JD
    * @param ts a list
    * @return the last item in a list or <code><b>null</b></code> if the
    *         parameter is <code><b>null</b></code> or empty
    */
-  public static <@Nullable T> T penultimate(final @Nullable List<T> ts) {
+  public static <T> @Nullable T penultimate(final @Nullable List<T> ts) {
     return ts == null || ts.size() < 2 ? null : ts.get(ts.size() - 2);
   }
   /**
-   * Determine whether an {@link Object} is penultimate in its {@link Block}.
+   * Determine whether an {@link Object} is penultimate in its {@link List}.
    *
+   * @param <T> JD
    * @param o JD
    * @param os JD
    * @return <code><b>true</b></code> <i>iff</i> the an {@link Object} parameter
    *         occurs as the penultimate element of the {@link List} parameter
    */
-  public static boolean penultimateIn(final Object o, final List<?> os) {
+  public static <@Nullable T> boolean penultimateIn(final T o, final @Nullable List<T> os) {
     assert os != null;
     return penultimate(os) == o;
   }
@@ -327,7 +347,7 @@ public enum Utils {
    * @return the parameter after all such occurrences are removed.
    */
   public static String removeWhites(final String s) {
-    return s.replaceAll("\\s+", "");
+    return cantBeNull(s.replaceAll("\\s+", ""));
   }
   /**
    * Sorts an array
@@ -419,21 +439,6 @@ public enum Utils {
     final T t = ts[i];
     ts[i] = ts[j];
     ts[j] = t;
-  }
-
-  public static <T, C extends Collection<T>> accumulate<T, C> to(final C c) {
-    return new accumulate<T, C>() {
-      @Override public accumulate<T, C> add(final @Nullable T t) {
-        if (t == null)
-          return this;
-        assert t != null;
-        c.add(t);
-        return this;
-      }
-      @Override public C elements() {
-        return c;
-      }
-    };
   }
 
   static final String WHITES = "(?m)\\s+";
@@ -536,14 +541,14 @@ public enum Utils {
   @SuppressWarnings({ "static-method", "javadoc", })//
   public static class TEST {
     public static Integer[] intToIntegers(final int... is) {
-      final Integer[] $ = new Integer[is.length];
+      final Integer @NonNull [] $ = new Integer[is.length];
       for (int i = 0; i < is.length; ++i)
         $[i] = box.it(is[i]);
       return $;
     }
     @Test public void addAllTypical() {
       final Set<String> ss = new HashSet<>();
-      to(ss).addAll(as.set("A", "B"), null, as.set("B", "C", "D"));
+      accumulate.to(ss).addAll(as.set("A", "B"), null, as.set("B", "C", "D"));
       assertFalse(ss.contains("E"));
       assertFalse(ss.contains(null));
       assertEquals(4, ss.size());
@@ -552,7 +557,7 @@ public enum Utils {
     }
     @Test public void addTypical() {
       final Set<String> ss = new HashSet<>();
-      to(ss).add(null, "A", null, "B", "B", null, "C", "D", null);
+      accumulate.to(ss).add(null, "A", null, "B", "B", null, "C", "D", null);
       assertFalse(ss.contains("E"));
       assertFalse(ss.contains(null));
       assertEquals(4, ss.size());
@@ -596,17 +601,17 @@ public enum Utils {
       assertEquals("'A'", idiomatic.quote("A"));
     }
     @Test public void swapDegenerate() {
-      final String[] ss = as.array("A", "B", "C", "D");
+      final String @NonNull [] ss = as.array("A", "B", "C", "D");
       swap(ss, 1, 1);
       assertArrayEquals(as.array("A", "B", "C", "D"), ss);
     }
     @Test public void swapTypical() {
-      final String[] ss = as.array("A", "B", "C", "D");
+      final String @NonNull [] ss = as.array("A", "B", "C", "D");
       swap(ss, 1, 2);
       assertArrayEquals(as.array("A", "C", "B", "D"), ss);
     }
     @Test public void swapTypicalCase() {
-      final Integer[] $ = intToIntegers(29, 1, 60);
+      final Integer @NonNull [] $ = intToIntegers(29, 1, 60);
       swap($, 0, 1);
       assertArrayEquals(intToIntegers(1, 29, 60), $);
     }

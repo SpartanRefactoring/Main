@@ -77,7 +77,7 @@ public enum prune {
    * @param ts an array of values.
    * @return an array of size 0 of elements of type <code>T</code>.
    */
-  @SuppressWarnings("null") private static <T> T[] shrink(final T[] ts) {
+  @SuppressWarnings("null") private static <T> T[] shrink(final T @Nullable [] ts) {
     return cantBeNull(Arrays.copyOf(ts, 0));
   }
   @SafeVarargs public static String[] whites(final String... ss) {
@@ -85,7 +85,7 @@ public enum prune {
     for (final String s : ss)
       if (s != null)
         addNonEmpty($, cantBeNull(as.string(s).trim()));
-    return cantBeNull($.toArray(new String[0]));
+    return cantBeNull($.toArray(new String @NonNull [0]));
   }
 
   /**
@@ -96,8 +96,8 @@ public enum prune {
    */
   @SuppressWarnings({ "static-method", "javadoc", "synthetic-access" })//
   public static class TEST {
-    final String[] alternatingArray = new String[] { null, "A", null, null, "B", null, null, null, "C", null };
-    final String[] nonNullArray = { "1", "2", "4" };
+    final String @NonNull [] alternatingArray = new String @NonNull [] { null, "A", null, null, "B", null, null, null, "C", null };
+    final String @NonNull [] nonNullArray = { "1", "2", "4" };
     private final NonNullCache<List<String>> sparseCollection = new NonNullCache<List<String>>() {
       @Override protected List<@Nullable String> __() {
         final List<@Nullable String> $ = new ArrayList<>();
@@ -151,10 +151,10 @@ public enum prune {
       assertNotNull(nulls(sparseCollection.value()));
     }
     @Test public void shrinkArray() {
-      assertEquals(0, shrink(new Object[10]).length);
+      assertEquals(0, shrink(new Object @Nullable [10]).length);
     }
     @Test public void shrinkEmptyArray() {
-      assertEquals(0, shrink(new Object[0]).length);
+      assertEquals(0, shrink(new Object @Nullable [0]).length);
     }
     @Test public void whitesEmptyList() {
       assertEquals(0, prune.whites().length);

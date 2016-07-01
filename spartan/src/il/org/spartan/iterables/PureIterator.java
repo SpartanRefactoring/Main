@@ -51,7 +51,7 @@ public abstract class PureIterator<T> implements Iterator<T> {
       next = null;
     }
     @Override public final T next() {
-      final T $ = cantBeNull(next);
+      final @NonNull T $ = cantBeNull(next);
       clearNext();
       return $;
     }
