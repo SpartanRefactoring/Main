@@ -5,6 +5,8 @@ import il.org.spartan.misc.*;
 
 import org.eclipse.jdt.annotation.*;
 import org.hamcrest.*;
+import org.hamcrest.core.*;
+import org.hamcrest.number.*;
 
 /**
  * @author Yossi Gil
@@ -19,8 +21,12 @@ public class azzert extends org.junit.Assert {
    * <pre>
    * assertThat(&quot;myValue&quot;, allOf(startsWith(&quot;my&quot;), containsString(&quot;Val&quot;)))
    * </pre>
+   *
+   * @param matchers
+   * @param <T>
+   * @return
    */
-  public static <T> Matcher<T> allOf(final java.lang.Iterable<Matcher<? super T>> matchers) {
+  public static <T> @Nullable Matcher<T> allOf(final java.lang.Iterable<Matcher<? super T>> matchers) {
     return org.hamcrest.core.AllOf.<T> allOf(matchers);
   }
   /**
@@ -36,7 +42,7 @@ public class azzert extends org.junit.Assert {
    * @param matchers JD
    * @return
    */
-  @SafeVarargs public static <T> Matcher<T> allOf(final Matcher<? super T>... matchers) {
+  @SafeVarargs public static <T> @Nullable Matcher<T> allOf(final Matcher<? super T>... matchers) {
     return org.hamcrest.core.AllOf.<T> allOf(matchers);
   }
   /**
@@ -49,7 +55,7 @@ public class azzert extends org.junit.Assert {
    * assertThat(&quot;myValue&quot;, allOf(startsWith(&quot;my&quot;), containsString(&quot;Val&quot;)))
    * </pre>
    */
-  public static <T> Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second) {
+  public static <T> @Nullable Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second) {
     return org.hamcrest.core.AllOf.<T> allOf(first, second);
   }
   /**
@@ -62,7 +68,8 @@ public class azzert extends org.junit.Assert {
    * assertThat(&quot;myValue&quot;, allOf(startsWith(&quot;my&quot;), containsString(&quot;Val&quot;)))
    * </pre>
    */
-  public static <T> Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second, final Matcher<? super T> third) {
+  public static <T> @Nullable Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second,
+      final Matcher<? super T> third) {
     return org.hamcrest.core.AllOf.<T> allOf(first, second, third);
   }
   /**
@@ -75,7 +82,7 @@ public class azzert extends org.junit.Assert {
    * assertThat(&quot;myValue&quot;, allOf(startsWith(&quot;my&quot;), containsString(&quot;Val&quot;)))
    * </pre>
    */
-  public static <T> Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second,
+  public static <T> @Nullable Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second,
       final Matcher<? super T> third, final Matcher<? super T> fourth) {
     return org.hamcrest.core.AllOf.<T> allOf(first, second, third, fourth);
   }
@@ -96,7 +103,7 @@ public class azzert extends org.junit.Assert {
    * @param fifth JD
    * @return
    */
-  public static <T> Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second,
+  public static <T> @Nullable Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second,
       final Matcher<? super T> third, final Matcher<? super T> fourth, final Matcher<? super T> fifth) {
     return org.hamcrest.core.AllOf.<T> allOf(first, second, third, fourth, fifth);
   }
@@ -110,7 +117,7 @@ public class azzert extends org.junit.Assert {
    * assertThat(&quot;myValue&quot;, allOf(startsWith(&quot;my&quot;), containsString(&quot;Val&quot;)))
    * </pre>
    */
-  public static <T> Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second,
+  public static <T> @Nullable Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second,
       final Matcher<? super T> third, final Matcher<? super T> fourth, final Matcher<? super T> fifth,
       final Matcher<? super T> sixth) {
     return org.hamcrest.core.AllOf.<T> allOf(first, second, third, fourth, fifth, sixth);
@@ -134,7 +141,7 @@ public class azzert extends org.junit.Assert {
    * assertThat(new Canoe(), instanceOf(Canoe.class));
    * </pre>
    */
-  public static <T> Matcher<T> any(final java.lang.Class<T> type) {
+  public static <T> @Nullable Matcher<T> any(final java.lang.Class<T> type) {
     return org.hamcrest.core.IsInstanceOf.<T> any(type);
   }
   /**
@@ -258,27 +265,52 @@ public class azzert extends org.junit.Assert {
    * @param description a meaningful {@link String} used when describing itself
    * @return
    */
-  public static org.hamcrest.@Nullable Matcher<@Nullable Object> anything(final java.lang.String description) {
-    return org.hamcrest.core.IsAnything.anything(description);
+  public static @Nullable Matcher<@Nullable Object> anything(final @Nullable String description) {
+    return IsAnything.anything(description);
   }
+  /**
+   * @param expected
+   * @param actual
+   */
   public static void assertEquals(final int expected, final int actual) {
     assertEquals(box.it(expected), box.it(actual));
   }
   public static void assertEquals(final Object exp, final @Nullable Object val) {
     that(val, is(exp));
   }
+  /**
+   * @param reason
+   * @param i1
+   * @param i2
+   */
   public static void assertEquals(final String reason, final int i1, final int i2) {
     assertThat(reason, box.it(i1), CoreMatchers.equalTo(box.it(i2)));
   }
+  /**
+   * @param s
+   * @param b
+   */
   public static void assertFalse(final String s, final boolean b) {
     that(s, b, is(Boolean.FALSE));
   }
+  /**
+   * @param o1
+   * @param o2
+   */
   public static void assertNotEquals(final Object o1, final @Nullable Object o2) {
     that(o1, CoreMatchers.not(o2));
   }
+  /**
+   * @param reason
+   * @param o1
+   * @param o2
+   */
   public static void assertNotEquals(final String reason, final Object o1, final Object o2) {
     assertThat(reason, o1, CoreMatchers.not(o2));
   }
+  /**
+   * @param o
+   */
   public static void assertNotNull(final Object o) {
     that(o, CoreMatchers.notNullValue());
   }
@@ -588,7 +620,7 @@ public class azzert extends org.junit.Assert {
     assertTrue(b);
   }
   public static void assertTrue(final String s, final boolean b) {
-    assertThat(s, Boolean.valueOf(b), is(Boolean.TRUE));
+    that(s, Boolean.valueOf(b), is(Boolean.TRUE));
   }
   /**
    * Assert that an integer is zero
@@ -613,107 +645,99 @@ public class azzert extends org.junit.Assert {
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} for
-   * primitive type <code><b>boolean</b></code>.
+   * {@link OrderingComparison#comparesEqualTo} for primitive type
+   * <code><b>boolean</b></code>.
    *
    * @param b JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} to
-   *         the parameter
+   * @return the result of applying {@link OrderingComparison#comparesEqualTo}
+   *         to the parameter
    */
   @Factory public static @Nullable Matcher<Boolean> comparesEqualTo(final boolean b) {
-    return org.hamcrest.number.OrderingComparison.comparesEqualTo(Boolean.valueOf(b));
+    return OrderingComparison.comparesEqualTo(Boolean.valueOf(b));
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} for
-   * primitive type <code><b>byte</b></code>.
+   * {@link OrderingComparison#comparesEqualTo} for primitive type
+   * <code><b>byte</b></code>.
    *
    * @param b JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} to
-   *         the parameter
+   * @return the result of applying {@link OrderingComparison#comparesEqualTo}
+   *         to the parameter
    */
   @Factory public static @Nullable Matcher<Byte> comparesEqualTo(final byte b) {
-    return org.hamcrest.number.OrderingComparison.comparesEqualTo(Byte.valueOf(b));
+    return OrderingComparison.comparesEqualTo(Byte.valueOf(b));
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} for
-   * primitive type <code><b>char</b></code>.
+   * {@link OrderingComparison#comparesEqualTo} for primitive type
+   * <code><b>char</b></code>.
    *
    * @param c JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} to
-   *         the parameter
+   * @return the result of applying {@link OrderingComparison#comparesEqualTo}
+   *         to the parameter
    */
   @Factory public static @Nullable Matcher<Character> comparesEqualTo(final char c) {
-    return org.hamcrest.number.OrderingComparison.comparesEqualTo(Character.valueOf(c));
+    return OrderingComparison.comparesEqualTo(Character.valueOf(c));
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} for
-   * primitive type <code><b>double</b></code>.
+   * {@link OrderingComparison#comparesEqualTo} for primitive type
+   * <code><b>double</b></code>.
    *
    * @param d JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} to
-   *         the parameter
+   * @return the result of applying {@link OrderingComparison#comparesEqualTo}
+   *         to the parameter
    */
   @Factory public static @Nullable Matcher<Double> comparesEqualTo(final double d) {
-    return org.hamcrest.number.OrderingComparison.comparesEqualTo(Double.valueOf(d));
+    return OrderingComparison.comparesEqualTo(Double.valueOf(d));
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} for
-   * primitive type <code><b>float</b></code>.
+   * {@link OrderingComparison#comparesEqualTo} for primitive type
+   * <code><b>float</b></code>.
    *
    * @param f JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} to
-   *         the parameter
+   * @return the result of applying {@link OrderingComparison#comparesEqualTo}
+   *         to the parameter
    */
   @Factory public static @Nullable Matcher<Float> comparesEqualTo(final float f) {
-    return org.hamcrest.number.OrderingComparison.comparesEqualTo(Float.valueOf(f));
+    return OrderingComparison.comparesEqualTo(Float.valueOf(f));
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} for
-   * primitive type <code><b>int</b></code>.
+   * {@link OrderingComparison#comparesEqualTo} for primitive type
+   * <code><b>int</b></code>.
    *
    * @param i JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} to
-   *         the parameter
+   * @return the result of applying {@link OrderingComparison#comparesEqualTo}
+   *         to the parameter
    */
   @Factory public static @Nullable Matcher<Integer> comparesEqualTo(final int i) {
-    return org.hamcrest.number.OrderingComparison.comparesEqualTo(Integer.valueOf(i));
+    return OrderingComparison.comparesEqualTo(Integer.valueOf(i));
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} for
-   * primitive type <code><b>long</b></code>.
+   * {@link OrderingComparison#comparesEqualTo} for primitive type
+   * <code><b>long</b></code>.
    *
    * @param l JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} to
-   *         the parameter
+   * @return the result of applying {@link OrderingComparison#comparesEqualTo}
+   *         to the parameter
    */
   @Factory public static @Nullable Matcher<Long> comparesEqualTo(final long l) {
-    return org.hamcrest.number.OrderingComparison.comparesEqualTo(Long.valueOf(l));
+    return OrderingComparison.comparesEqualTo(Long.valueOf(l));
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} for
-   * primitive type <code><b>short</b></code>.
+   * {@link OrderingComparison#comparesEqualTo} for primitive type
+   * <code><b>short</b></code>.
    *
    * @param s JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} to
-   *         the parameter
+   * @return the result of applying {@link OrderingComparison#comparesEqualTo}
+   *         to the parameter
    */
   @Factory public static @Nullable Matcher<Short> comparesEqualTo(final short s) {
-    return org.hamcrest.number.OrderingComparison.comparesEqualTo(Short.valueOf(s));
+    return OrderingComparison.comparesEqualTo(Short.valueOf(s));
   }
   /**
    * Creates a matcher that matches if the examined {@link String} contains the
@@ -746,7 +770,7 @@ public class azzert extends org.junit.Assert {
    * @param matcher the matcher to wrap
    * @param values optional values to insert into the tokenised description
    */
-  public static <T> Matcher<T> describedAs(final java.lang.String description, final Matcher<T> matcher,
+  public static <T> @Nullable Matcher<T> describedAs(final java.lang.String description, final Matcher<T> matcher,
       final java.lang.Object... values) {
     return org.hamcrest.core.DescribedAs.<T> describedAs(description, matcher, values);
   }
@@ -809,7 +833,7 @@ public class azzert extends org.junit.Assert {
    * assertThat(new String[] { &quot;foo&quot;, &quot;bar&quot; }, equalTo(new String[] { &quot;foo&quot;, &quot;bar&quot; }));
    * </pre>
    */
-  public static <T> Matcher<T> equalTo(final T operand) {
+  public static <T> @Nullable Matcher<T> equalTo(final T operand) {
     return org.hamcrest.core.IsEqual.<T> equalTo(operand);
   }
   /**
@@ -831,211 +855,195 @@ public class azzert extends org.junit.Assert {
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link org.hamcrest.number.OrderingComparison#greaterThan} for primitive
-   * type <code><b>boolean</b></code>.
+   * {@link OrderingComparison#greaterThan} for primitive type
+   * <code><b>boolean</b></code>.
    *
    * @param b JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#greaterThan} to the
-   *         parameter
+   * @return the result of applying {@link OrderingComparison#greaterThan} to
+   *         the parameter
    */
   @Factory public static @Nullable Matcher<Boolean> greaterThan(final boolean b) {
-    return org.hamcrest.number.OrderingComparison.greaterThan(Boolean.valueOf(b));
+    return OrderingComparison.greaterThan(Boolean.valueOf(b));
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link org.hamcrest.number.OrderingComparison#greaterThan} for primitive
-   * type <code><b>byte</b></code>.
+   * {@link OrderingComparison#greaterThan} for primitive type
+   * <code><b>byte</b></code>.
    *
    * @param b JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#greaterThan} to the
-   *         parameter
+   * @return the result of applying {@link OrderingComparison#greaterThan} to
+   *         the parameter
    */
   @Factory public static @Nullable Matcher<Byte> greaterThan(final byte b) {
-    return org.hamcrest.number.OrderingComparison.greaterThan(Byte.valueOf(b));
+    return OrderingComparison.greaterThan(Byte.valueOf(b));
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link org.hamcrest.number.OrderingComparison#greaterThan} for primitive
-   * type <code><b>char</b></code> .
+   * {@link OrderingComparison#greaterThan} for primitive type
+   * <code><b>char</b></code> .
    *
    * @param c JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#greaterThan} to the
-   *         parameter
+   * @return the result of applying {@link OrderingComparison#greaterThan} to
+   *         the parameter
    */
   @Factory public static @Nullable Matcher<Character> greaterThan(final char c) {
-    return org.hamcrest.number.OrderingComparison.greaterThan(Character.valueOf(c));
+    return OrderingComparison.greaterThan(Character.valueOf(c));
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link org.hamcrest.number.OrderingComparison#greaterThan} for primitive
-   * type <code><b>double</b></code> .
+   * {@link OrderingComparison#greaterThan} for primitive type
+   * <code><b>double</b></code> .
    *
    * @param d JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#greaterThan} to the
-   *         parameter
+   * @return the result of applying {@link OrderingComparison#greaterThan} to
+   *         the parameter
    */
   @Factory public static @Nullable Matcher<Double> greaterThan(final double d) {
-    return org.hamcrest.number.OrderingComparison.greaterThan(Double.valueOf(d));
+    return OrderingComparison.greaterThan(Double.valueOf(d));
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link org.hamcrest.number.OrderingComparison#greaterThan} for primitive
-   * type <code><b>float</b></code> .
+   * {@link OrderingComparison#greaterThan} for primitive type
+   * <code><b>float</b></code> .
    *
    * @param f JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#greaterThan} to the
-   *         parameter
+   * @return the result of applying {@link OrderingComparison#greaterThan} to
+   *         the parameter
    */
   @Factory public static @Nullable Matcher<Float> greaterThan(final float f) {
-    return org.hamcrest.number.OrderingComparison.greaterThan(Float.valueOf(f));
+    return OrderingComparison.greaterThan(Float.valueOf(f));
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link org.hamcrest.number.OrderingComparison#greaterThan} for primitive
-   * type <code><b>int</b></code>.
+   * {@link OrderingComparison#greaterThan} for primitive type
+   * <code><b>int</b></code>.
    *
    * @param i JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#greaterThan} to the
-   *         parameter
+   * @return the result of applying {@link OrderingComparison#greaterThan} to
+   *         the parameter
    */
   @Factory public static @Nullable Matcher<Integer> greaterThan(final int i) {
-    return org.hamcrest.number.OrderingComparison.greaterThan(Integer.valueOf(i));
+    return OrderingComparison.greaterThan(Integer.valueOf(i));
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link org.hamcrest.number.OrderingComparison#greaterThan} for primitive
-   * type <code><b>long</b></code> .
+   * {@link OrderingComparison#greaterThan} for primitive type
+   * <code><b>long</b></code> .
    *
    * @param l JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#greaterThan} to the
-   *         parameter
+   * @return the result of applying {@link OrderingComparison#greaterThan} to
+   *         the parameter
    */
   @Factory public static @Nullable Matcher<Long> greaterThan(final long l) {
-    return org.hamcrest.number.OrderingComparison.greaterThan(Long.valueOf(l));
+    return OrderingComparison.greaterThan(Long.valueOf(l));
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link org.hamcrest.number.OrderingComparison#greaterThan} for primitive
-   * type <code><b>short</b></code> .
+   * {@link OrderingComparison#greaterThan} for primitive type
+   * <code><b>short</b></code> .
    *
    * @param s JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#greaterThan} to the
-   *         parameter
+   * @return the result of applying {@link OrderingComparison#greaterThan} to
+   *         the parameter
    */
   @Factory public static @Nullable Matcher<Short> greaterThan(final short s) {
-    return org.hamcrest.number.OrderingComparison.greaterThan(Short.valueOf(s));
+    return OrderingComparison.greaterThan(Short.valueOf(s));
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo} for
-   * primitive type <code><b>boolean</b></code>.
+   * {@link OrderingComparison#greaterThanOrEqualTo} for primitive type
+   * <code><b>boolean</b></code>.
    *
    * @param b JD
    * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
-   *         to the parameter
+   *         {@link OrderingComparison#greaterThanOrEqualTo} to the parameter
    */
   @Factory public static @Nullable Matcher<Boolean> greaterThanOrEqualTo(final boolean b) {
-    return org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo(Boolean.valueOf(b));
+    return OrderingComparison.greaterThanOrEqualTo(Boolean.valueOf(b));
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo} for
-   * primitive type <code><b>byte</b></code>.
+   * {@link OrderingComparison#greaterThanOrEqualTo} for primitive type
+   * <code><b>byte</b></code>.
    *
    * @param b JD
    * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
-   *         to the parameter
+   *         {@link OrderingComparison#greaterThanOrEqualTo} to the parameter
    */
   @Factory public static @Nullable Matcher<Byte> greaterThanOrEqualTo(final byte b) {
-    return org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo(Byte.valueOf(b));
+    return OrderingComparison.greaterThanOrEqualTo(Byte.valueOf(b));
   }
   /**
    * A non - auto - boxing wrapper of the original (auto-boxing) Hamcrest
-   * matcher {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
-   * for primitive type <code><b>char</b></code> .
+   * matcher {@link OrderingComparison#greaterThanOrEqualTo} for primitive type
+   * <code><b>char</b></code> .
    *
    * @param c JD
    * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
-   *         to the parameter
+   *         {@link OrderingComparison#greaterThanOrEqualTo} to the parameter
    */
   @Factory public static @Nullable Matcher<Character> greaterThanOrEqualTo(final char c) {
-    return org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo(Character.valueOf(c));
+    return OrderingComparison.greaterThanOrEqualTo(Character.valueOf(c));
   }
   /**
    * A non - auto - boxing wrapper of the original (auto-boxing) Hamcrest
-   * matcher {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
-   * for primitive type <code><b>double</b></code> .
+   * matcher {@link OrderingComparison#greaterThanOrEqualTo} for primitive type
+   * <code><b>double</b></code> .
    *
    * @param d JD
    * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
-   *         to the parameter
+   *         {@link OrderingComparison#greaterThanOrEqualTo} to the parameter
    */
   @Factory public static @Nullable Matcher<Double> greaterThanOrEqualTo(final double d) {
-    return org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo(Double.valueOf(d));
+    return OrderingComparison.greaterThanOrEqualTo(Double.valueOf(d));
   }
   /**
    * A non - auto - boxing wrapper of the original (auto-boxing) Hamcrest
-   * matcher {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
-   * for primitive type <code><b>float</b></code> .
+   * matcher {@link OrderingComparison#greaterThanOrEqualTo} for primitive type
+   * <code><b>float</b></code> .
    *
    * @param f JD
    * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
-   *         to the parameter
+   *         {@link OrderingComparison#greaterThanOrEqualTo} to the parameter
    */
   @Factory public static @Nullable Matcher<Float> greaterThanOrEqualTo(final float f) {
-    return org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo(Float.valueOf(f));
+    return OrderingComparison.greaterThanOrEqualTo(Float.valueOf(f));
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo} for
-   * primitive type <code><b>int</b></code>.
+   * {@link OrderingComparison#greaterThanOrEqualTo} for primitive type
+   * <code><b>int</b></code>.
    *
    * @param i JD
    * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
-   *         to the parameter
+   *         {@link OrderingComparison#greaterThanOrEqualTo} to the parameter
    */
   @Factory public static @Nullable Matcher<Integer> greaterThanOrEqualTo(final int i) {
-    return org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo(Integer.valueOf(i));
+    return OrderingComparison.greaterThanOrEqualTo(Integer.valueOf(i));
   }
   /**
    * A non - auto - boxing wrapper of the original (auto-boxing) Hamcrest
-   * matcher {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
-   * for primitive type <code><b>long</b></code> .
+   * matcher {@link OrderingComparison#greaterThanOrEqualTo} for primitive type
+   * <code><b>long</b></code> .
    *
    * @param l JD
    * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
-   *         to the parameter
+   *         {@link OrderingComparison#greaterThanOrEqualTo} to the parameter
    */
   @Factory public static @Nullable Matcher<Long> greaterThanOrEqualTo(final long l) {
-    return org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo(Long.valueOf(l));
+    return OrderingComparison.greaterThanOrEqualTo(Long.valueOf(l));
   }
   /**
    * A non - auto - boxing wrapper of the original (auto-boxing) Hamcrest
-   * matcher {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
-   * for primitive type <code><b>short</b></code> .
+   * matcher {@link OrderingComparison#greaterThanOrEqualTo} for primitive type
+   * <code><b>short</b></code> .
    *
    * @param s JD
    * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#greaterThanOrEqualTo}
-   *         to the parameter
+   *         {@link OrderingComparison#greaterThanOrEqualTo} to the parameter
    */
   @Factory public static @Nullable Matcher<Short> greaterThanOrEqualTo(final short s) {
-    return org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo(Short.valueOf(s));
+    return OrderingComparison.greaterThanOrEqualTo(Short.valueOf(s));
   }
   /**
    * Creates a matcher for {@link Iterable}s that only matches when a single
@@ -1133,7 +1141,7 @@ public class azzert extends org.junit.Assert {
    * @param type JD
    * @return
    */
-  public static <T> Matcher<T> instanceOf(final java.lang.Class<?> type) {
+  public static <T> @Nullable Matcher<T> instanceOf(final java.lang.Class<?> type) {
     return org.hamcrest.core.IsInstanceOf.<T> instanceOf(type);
   }
   /**
@@ -1142,7 +1150,7 @@ public class azzert extends org.junit.Assert {
    * @param b JD
    * @return a matcher for the value specified by the parameter
    */
-  public static @Nullable Matcher<Boolean> is(final boolean b) {
+  public static @Nullable Matcher<@Nullable Boolean> is(final boolean b) {
     return is(Boolean.valueOf(b));
   }
   /**
@@ -1151,7 +1159,7 @@ public class azzert extends org.junit.Assert {
    * @param b JD
    * @return a matcher for the value specified by the parameter
    */
-  public static @Nullable Matcher<Byte> is(final byte b) {
+  public static @Nullable Matcher<@Nullable Byte> is(final byte b) {
     return is(Byte.valueOf(b));
   }
   /**
@@ -1160,7 +1168,7 @@ public class azzert extends org.junit.Assert {
    * @param c JD
    * @return a matcher for the value specified by the parameter
    */
-  public static @Nullable Matcher<Character> is(final char c) {
+  public static @Nullable Matcher<@Nullable Character> is(final char c) {
     return is(Character.valueOf(c));
   }
   /**
@@ -1169,7 +1177,7 @@ public class azzert extends org.junit.Assert {
    * @param d JD
    * @return a matcher for the value specified by the parameter
    */
-  public static @Nullable Matcher<Double> is(final double d) {
+  public static @Nullable Matcher<@Nullable Double> is(final double d) {
     return is(Double.valueOf(d));
   }
   /**
@@ -1178,7 +1186,7 @@ public class azzert extends org.junit.Assert {
    * @param f JD
    * @return a matcher for the value specified by the parameter
    */
-  public static @Nullable Matcher<Float> is(final float f) {
+  public static @Nullable Matcher<@Nullable Float> is(final float f) {
     return is(Float.valueOf(f));
   }
   /**
@@ -1187,7 +1195,7 @@ public class azzert extends org.junit.Assert {
    * @param i JD
    * @return a matcher for the value specified by the parameter
    */
-  public static @Nullable Matcher<Integer> is(final int i) {
+  public static @Nullable Matcher<@Nullable Integer> is(final int i) {
     return is(Integer.valueOf(i));
   }
   /**
@@ -1196,7 +1204,7 @@ public class azzert extends org.junit.Assert {
    * @param l JD
    * @return a matcher for the value specified by the parameter
    */
-  public static @Nullable Matcher<Long> is(final long l) {
+  public static @Nullable Matcher<@Nullable Long> is(final long l) {
     return is(Long.valueOf(l));
   }
   /**
@@ -1213,7 +1221,7 @@ public class azzert extends org.junit.Assert {
    * assertThat(cheese, equalTo(smelly))
    * </pre>
    */
-  public static <T> Matcher<T> is(final Matcher<T> matcher) {
+  public static <T> @Nullable Matcher<T> is(final Matcher<T> matcher) {
     return org.hamcrest.core.Is.<T> is(matcher);
   }
   /**
@@ -1222,7 +1230,7 @@ public class azzert extends org.junit.Assert {
    * @param s JD
    * @return a matcher for the value specified by the parameter
    */
-  public static @Nullable Matcher<Short> is(final short s) {
+  public static @Nullable Matcher<@Nullable Short> is(final short s) {
     return is(Short.valueOf(s));
   }
   /**
@@ -1240,7 +1248,7 @@ public class azzert extends org.junit.Assert {
    * assertThat(cheese, is(equalTo(smelly)))
    * </pre>
    */
-  public static <T> Matcher<T> is(final T value) {
+  public static <@Nullable T> Matcher<T> is(final @Nullable T value) {
     return org.hamcrest.core.Is.<T> is(value);
   }
   /**
@@ -1259,7 +1267,7 @@ public class azzert extends org.junit.Assert {
    * assertThat(cheese, is(instanceOf(Cheddar.class)))
    * </pre>
    */
-  public static <T> Matcher<T> isA(final java.lang.Class<T> type) {
+  public static <T> @Nullable Matcher<T> isA(final java.lang.Class<T> type) {
     return org.hamcrest.core.Is.<T> isA(type);
   }
   /**
@@ -1273,232 +1281,216 @@ public class azzert extends org.junit.Assert {
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link org.hamcrest.number.OrderingComparison#lessThan} for primitive type
+   * {@link OrderingComparison#lessThan} for primitive type
    * <code><b>boolean</b></code>.
    *
    * @param b JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#lessThan} to the
+   * @return the result of applying {@link OrderingComparison#lessThan} to the
    *         parameter
    */
   @Factory public static @Nullable Matcher<Boolean> lessThan(final boolean b) {
-    return org.hamcrest.number.OrderingComparison.lessThan(Boolean.valueOf(b));
+    return OrderingComparison.lessThan(Boolean.valueOf(b));
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link org.hamcrest.number.OrderingComparison#lessThan} for primitive type
+   * {@link OrderingComparison#lessThan} for primitive type
    * <code><b>byte</b></code>.
    *
    * @param b JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#lessThan} to the
+   * @return the result of applying {@link OrderingComparison#lessThan} to the
    *         parameter
    */
   @Factory public static @Nullable Matcher<Byte> lessThan(final byte b) {
-    return org.hamcrest.number.OrderingComparison.lessThan(Byte.valueOf(b));
+    return OrderingComparison.lessThan(Byte.valueOf(b));
   }
   /**
    * A non - auto - boxing wrapper of the original (auto-boxing) Hamcrest
-   * matcher {@link org.hamcrest.number.OrderingComparison#lessThan} for
-   * primitive type <code><b>char</b></code>.
+   * matcher {@link OrderingComparison#lessThan} for primitive type
+   * <code><b>char</b></code>.
    *
    * @param c JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#lessThan} to the
+   * @return the result of applying {@link OrderingComparison#lessThan} to the
    *         parameter
    */
   @Factory public static @Nullable Matcher<Character> lessThan(final char c) {
-    return org.hamcrest.number.OrderingComparison.lessThan(Character.valueOf(c));
+    return OrderingComparison.lessThan(Character.valueOf(c));
   }
   /**
    * A non - auto - boxing wrapper of the original (auto-boxing) Hamcrest
-   * matcher {@link org.hamcrest.number.OrderingComparison#lessThan} for
-   * primitive type <code><b>double</b></code> .
+   * matcher {@link OrderingComparison#lessThan} for primitive type
+   * <code><b>double</b></code> .
    *
    * @param d JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#lessThan} to the
+   * @return the result of applying {@link OrderingComparison#lessThan} to the
    *         parameter
    */
   @Factory public static @Nullable Matcher<Double> lessThan(final double d) {
-    return org.hamcrest.number.OrderingComparison.lessThan(Double.valueOf(d));
+    return OrderingComparison.lessThan(Double.valueOf(d));
   }
   /**
    * A non - auto - boxing wrapper of the original (auto-boxing) Hamcrest
-   * matcher {@link org.hamcrest.number.OrderingComparison#lessThan} for
-   * primitive type <code><b>float</b></code>.
+   * matcher {@link OrderingComparison#lessThan} for primitive type
+   * <code><b>float</b></code>.
    *
    * @param f JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#lessThan} to the
+   * @return the result of applying {@link OrderingComparison#lessThan} to the
    *         parameter
    */
   @Factory public static @Nullable Matcher<Float> lessThan(final float f) {
-    return org.hamcrest.number.OrderingComparison.lessThan(Float.valueOf(f));
+    return OrderingComparison.lessThan(Float.valueOf(f));
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link org.hamcrest.number.OrderingComparison#lessThan} for primitive type
+   * {@link OrderingComparison#lessThan} for primitive type
    * <code><b>int</b></code>.
    *
    * @param i JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#lessThan} to the
+   * @return the result of applying {@link OrderingComparison#lessThan} to the
    *         parameter
    */
   @Factory public static @Nullable Matcher<Integer> lessThan(final int i) {
-    return org.hamcrest.number.OrderingComparison.lessThan(Integer.valueOf(i));
+    return OrderingComparison.lessThan(Integer.valueOf(i));
   }
   /**
    * A non - auto - boxing wrapper of the original (auto-boxing) Hamcrest
-   * matcher {@link org.hamcrest.number.OrderingComparison#lessThan} for
-   * primitive type <code><b>long</b></code>.
+   * matcher {@link OrderingComparison#lessThan} for primitive type
+   * <code><b>long</b></code>.
    *
    * @param l JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#lessThan} to the
+   * @return the result of applying {@link OrderingComparison#lessThan} to the
    *         parameter
    */
   @Factory public static @Nullable Matcher<Long> lessThan(final long l) {
-    return org.hamcrest.number.OrderingComparison.lessThan(Long.valueOf(l));
+    return OrderingComparison.lessThan(Long.valueOf(l));
   }
   /**
    * A non - auto - boxing wrapper of the original (auto-boxing) Hamcrest
-   * matcher {@link org.hamcrest.number.OrderingComparison#lessThan} for
-   * primitive type <code><b>short</b></code>.
+   * matcher {@link OrderingComparison#lessThan} for primitive type
+   * <code><b>short</b></code>.
    *
    * @param s JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#lessThan} to the
+   * @return the result of applying {@link OrderingComparison#lessThan} to the
    *         parameter
    */
   @Factory public static @Nullable Matcher<Short> lessThan(final short s) {
-    return org.hamcrest.number.OrderingComparison.lessThan(Short.valueOf(s));
+    return OrderingComparison.lessThan(Short.valueOf(s));
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} for
-   * primitive type <code><b>boolean</b></code>.
+   * {@link OrderingComparison#lessThanOrEqualTo} for primitive type
+   * <code><b>boolean</b></code>.
    *
    * @param b JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} to
-   *         the parameter
+   * @return the result of applying {@link OrderingComparison#lessThanOrEqualTo}
+   *         to the parameter
    */
   @Factory public static @Nullable Matcher<Boolean> lessThanOrEqualTo(final boolean b) {
-    return org.hamcrest.number.OrderingComparison.lessThanOrEqualTo(Boolean.valueOf(b));
+    return OrderingComparison.lessThanOrEqualTo(Boolean.valueOf(b));
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} for
-   * primitive type <code><b>byte</b></code>.
+   * {@link OrderingComparison#lessThanOrEqualTo} for primitive type
+   * <code><b>byte</b></code>.
    *
    * @param b JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} to
-   *         the parameter
+   * @return the result of applying {@link OrderingComparison#lessThanOrEqualTo}
+   *         to the parameter
    */
   @Factory public static @Nullable Matcher<Byte> lessThanOrEqualTo(final byte b) {
-    return org.hamcrest.number.OrderingComparison.lessThanOrEqualTo(Byte.valueOf(b));
+    return OrderingComparison.lessThanOrEqualTo(Byte.valueOf(b));
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} for
-   * primitive type <code><b>char</b></code>.
+   * {@link OrderingComparison#lessThanOrEqualTo} for primitive type
+   * <code><b>char</b></code>.
    *
    * @param c JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} to
-   *         the parameter
+   * @return the result of applying {@link OrderingComparison#lessThanOrEqualTo}
+   *         to the parameter
    */
   @Factory public static @Nullable Matcher<Character> lessThanOrEqualTo(final char c) {
-    return org.hamcrest.number.OrderingComparison.lessThanOrEqualTo(Character.valueOf(c));
+    return OrderingComparison.lessThanOrEqualTo(Character.valueOf(c));
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} for
-   * primitive type <code><b>double</b></code>.
+   * {@link OrderingComparison#lessThanOrEqualTo} for primitive type
+   * <code><b>double</b></code>.
    *
    * @param d JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} to
-   *         the parameter
+   * @return the result of applying {@link OrderingComparison#lessThanOrEqualTo}
+   *         to the parameter
    */
   @Factory public static @Nullable Matcher<Double> lessThanOrEqualTo(final double d) {
-    return org.hamcrest.number.OrderingComparison.lessThanOrEqualTo(Double.valueOf(d));
+    return OrderingComparison.lessThanOrEqualTo(Double.valueOf(d));
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} for
-   * primitive type <code><b>float</b></code>.
+   * {@link OrderingComparison#lessThanOrEqualTo} for primitive type
+   * <code><b>float</b></code>.
    *
    * @param f JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} to
-   *         the parameter
+   * @return the result of applying {@link OrderingComparison#lessThanOrEqualTo}
+   *         to the parameter
    */
   @Factory public static @Nullable Matcher<Float> lessThanOrEqualTo(final float f) {
-    return org.hamcrest.number.OrderingComparison.lessThanOrEqualTo(Float.valueOf(f));
+    return OrderingComparison.lessThanOrEqualTo(Float.valueOf(f));
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} for
-   * primitive type <code><b>int</b></code>.
+   * {@link OrderingComparison#lessThanOrEqualTo} for primitive type
+   * <code><b>int</b></code>.
    *
    * @param i JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} to
-   *         the parameter
+   * @return the result of applying {@link OrderingComparison#lessThanOrEqualTo}
+   *         to the parameter
    */
   @Factory public static @Nullable Matcher<Integer> lessThanOrEqualTo(final int i) {
-    return org.hamcrest.number.OrderingComparison.lessThanOrEqualTo(Integer.valueOf(i));
+    return OrderingComparison.lessThanOrEqualTo(Integer.valueOf(i));
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} for
-   * primitive type <code><b>long</b></code>.
+   * {@link OrderingComparison#lessThanOrEqualTo} for primitive type
+   * <code><b>long</b></code>.
    *
    * @param l JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} to
-   *         the parameter
+   * @return the result of applying {@link OrderingComparison#lessThanOrEqualTo}
+   *         to the parameter
    */
   @Factory public static @Nullable Matcher<Long> lessThanOrEqualTo(final long l) {
-    return org.hamcrest.number.OrderingComparison.lessThanOrEqualTo(Long.valueOf(l));
+    return OrderingComparison.lessThanOrEqualTo(Long.valueOf(l));
   }
   /**
    * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} for
-   * primitive type <code><b>short</b></code>.
+   * {@link OrderingComparison#lessThanOrEqualTo} for primitive type
+   * <code><b>short</b></code>.
    *
    * @param s JD
-   * @return the result of applying
-   *         {@link org.hamcrest.number.OrderingComparison#lessThanOrEqualTo} to
-   *         the parameter
+   * @return the result of applying {@link OrderingComparison#lessThanOrEqualTo}
+   *         to the parameter
    */
   @Factory public static @Nullable Matcher<Short> lessThanOrEqualTo(final short s) {
-    return org.hamcrest.number.OrderingComparison.lessThanOrEqualTo(Short.valueOf(s));
+    return OrderingComparison.lessThanOrEqualTo(Short.valueOf(s));
   }
   public static @Nullable Matcher<Boolean> not(final boolean b) {
-    return cantBeNull(org.hamcrest.core.IsNot.not(new Boolean(b)));
+    return cantBeNull(IsNot.not(new Boolean(b)));
   }
   public static @Nullable Matcher<Byte> not(final byte b) {
-    return cantBeNull(org.hamcrest.core.IsNot.not(new Byte(b)));
+    return cantBeNull(IsNot.not(new Byte(b)));
   }
   public static @Nullable Matcher<Character> not(final char i) {
-    return cantBeNull(org.hamcrest.core.IsNot.not(new Character(i)));
+    return cantBeNull(IsNot.not(new Character(i)));
   }
   public static @Nullable Matcher<Double> not(final double d) {
-    return cantBeNull(org.hamcrest.core.IsNot.not(new Double(d)));
+    return cantBeNull(IsNot.not(new Double(d)));
   }
   public static @Nullable Matcher<Float> not(final float f) {
-    return cantBeNull(org.hamcrest.core.IsNot.not(new Float(f)));
+    return cantBeNull(IsNot.not(new Float(f)));
   }
   public static @Nullable Matcher<Integer> not(final int i) {
-    return cantBeNull(org.hamcrest.core.IsNot.not(new Integer(i)));
+    return cantBeNull(IsNot.not(new Integer(i)));
   }
   public static @Nullable Matcher<Long> not(final long i) {
-    return cantBeNull(org.hamcrest.core.IsNot.not(new Long(i)));
+    return cantBeNull(IsNot.not(new Long(i)));
   }
   /**
    * Creates a matcher that wraps an existing matcher, but inverts the logic by
@@ -1512,11 +1504,11 @@ public class azzert extends org.junit.Assert {
    *
    * @param matcher the matcher whose sense should be inverted
    */
-  public static <T> Matcher<T> not(final Matcher<T> matcher) {
-    return org.hamcrest.core.IsNot.<T> not(matcher);
+  public static <T> @Nullable Matcher<T> not(final Matcher<T> matcher) {
+    return IsNot.<T> not(matcher);
   }
   public static @Nullable Matcher<Short> not(final short s) {
-    return cantBeNull(org.hamcrest.core.IsNot.not(new Short(s)));
+    return cantBeNull(IsNot.not(new Short(s)));
   }
   /**
    * A shortcut to the frequently used <code>not(equalTo(x))</code>.
@@ -1535,8 +1527,8 @@ public class azzert extends org.junit.Assert {
    *
    * @param value the value that any examined object should <b>not</b> equal
    */
-  public static <T> Matcher<T> not(final T value) {
-    return org.hamcrest.core.IsNot.<T> not(value);
+  public static <T> @Nullable Matcher<T> not(final T value) {
+    return IsNot.<T> not(value);
   }
   /**
    * A shortcut to the frequently used <code>not(nullValue())</code>.
@@ -1575,7 +1567,7 @@ public class azzert extends org.junit.Assert {
    * @param type dummy parameter used to infer the generic type of the returned
    *          matcher
    */
-  public static <T> Matcher<T> notNullValue(final java.lang.Class<T> type) {
+  public static <T> @Nullable Matcher<T> notNullValue(final java.lang.Class<T> type) {
     return org.hamcrest.core.IsNull.<T> notNullValue(type);
   }
   /**
@@ -1603,7 +1595,7 @@ public class azzert extends org.junit.Assert {
    * @param type dummy parameter used to infer the generic type of the returned
    *          matcher
    */
-  public static <T> Matcher<T> nullValue(final java.lang.Class<T> type) {
+  public static <T> @Nullable Matcher<T> nullValue(final java.lang.Class<T> type) {
     return org.hamcrest.core.IsNull.<T> nullValue(type);
   }
   /**
@@ -1612,7 +1604,7 @@ public class azzert extends org.junit.Assert {
    *
    * @param target the target instance against which others should be assessed
    */
-  public static <T> Matcher<T> sameInstance(final T target) {
+  public static <T> @Nullable Matcher<T> sameInstance(final T target) {
     return org.hamcrest.core.IsSame.<T> sameInstance(target);
   }
   /**
@@ -1637,7 +1629,7 @@ public class azzert extends org.junit.Assert {
    *
    * @param target the target instance against which others should be assessed
    */
-  public static <T> Matcher<T> theInstance(final T target) {
+  public static <T> @Nullable Matcher<T> theInstance(final T target) {
     return org.hamcrest.core.IsSame.<T> theInstance(target);
   }
 }

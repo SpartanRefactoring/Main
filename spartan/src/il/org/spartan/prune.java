@@ -26,10 +26,6 @@ import org.junit.*;
  */
 public enum prune {
   ;
-  private static void addNonEmpty(final Collection<String> ss, final String s) {
-    if (s.length() > 0)
-      ss.add(s);
-  }
   /**
    * @param <T> JD
    * @param <C> JD
@@ -97,10 +93,8 @@ public enum prune {
    * @param $
    * @return
    */
-  private static String[] asArrray(final List<String> $) {
-    @SuppressWarnings("null") @NonNull final String @NonNull [] $1 = $.toArray(new String @NonNull [0]);
-    @NonNull final String @NonNull [] $2 = cantBeNull($1);
-    return $2;
+  @SuppressWarnings("null") private static String[] asArrray(final List<String> $) {
+    return cantBeNull($.toArray(new String @NonNull [0]));
   }
 
   /**

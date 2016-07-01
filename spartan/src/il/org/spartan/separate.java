@@ -57,7 +57,7 @@ public enum separate {
    * @param $ what needs to be separated
    * @return the parameters, separated by {@link #SPACE}
    */
-  public static String bySpaces(final Iterable<String> $) {
+  @SuppressWarnings("null") public static String bySpaces(final Iterable<String> $) {
     assert $ != null;
     return separateBySpaces($.iterator());
   }

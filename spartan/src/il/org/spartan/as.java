@@ -217,12 +217,12 @@ public enum as {
    * @return an array of the parameter values, each converted to i
    *         {@link String}
    */
-  public static String[] strings(final Iterable<? extends @Nullable Object> os) {
-    final List<String> $ = new ArrayList<>();
+  @SuppressWarnings("null") public static String[] strings(final Iterable<? extends @Nullable Object> os) {
+    final List<@NonNull String> $ = new ArrayList<>();
     for (final @Nullable Object o : os)
       if (o != null)
-        $.add(cantBeNull("" + o));
-    return cantBeNull($.toArray(new String[$.size()]));
+        $.add("" + o);
+    return cantBeNull($.toArray(new String @NonNull [$.size()]));
   }
   /**
    * The string returned when 'conversion to string' is applied to a

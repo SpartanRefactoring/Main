@@ -23,7 +23,16 @@ public enum idiomatic {
   public static String quote(final @Nullable String $) {
     return $ != null ? QUOTE + $ + QUOTE : "<null reference>";
   }
+
+  /**
+   *
+   */
   public static final String QUOTE = "'";
+
+  /**
+   * @author Yossi Gil <Yossi.Gil@GMail.COM>
+   * @since 2016
+   */
   public interface Hold {
     <@Nullable T> T eval(final Supplier<T> t);
     default <@Nullable T> T eval(final T t) {
