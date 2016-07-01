@@ -1,13 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Extract.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
-import static org.junit.Assert.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 
 import java.util.*;
 
@@ -31,20 +29,20 @@ public class PrefixNotPushdownTest {
 
   @Test public void notOfFalse() {
     final PrefixExpression e = p("!false");
-    assertThat(e, is(notNullValue()));
-    assertThat(WRING.scopeIncludes(e), is(true));
-    assertThat(WRING.eligible(e), is(true));
-    assertThat(asNot(e), is(notNullValue()));
+    that(e, is(notNullValue()));
+    that(WRING.scopeIncludes(e), is(true));
+    that(WRING.eligible(e), is(true));
+    that(asNot(e), is(notNullValue()));
     final Expression inner = core(e.getOperand());
-    assertThat(inner, is(notNullValue()));
-    assertThat(inner.toString(), is("false"));
-    assertThat(Is.booleanLiteral(inner), is(true));
-    assertThat(PrefixNotPushdown.perhapsNotOfLiteral(inner), is(notNullValue()));
-    assertThat(PrefixNotPushdown.notOfLiteral(asBooleanLiteral(inner)), is(notNullValue()));
-    assertThat(PrefixNotPushdown.perhapsNotOfLiteral(inner), is(notNullValue()));
-    assertThat(PrefixNotPushdown.pushdownNot(inner), is(notNullValue()));
-    assertThat(PrefixNotPushdown.pushdownNot(asNot(e)), is(notNullValue()));
-    assertThat(WRING.replacement(e), is(notNullValue()));
+    that(inner, is(notNullValue()));
+    that(inner.toString(), is("false"));
+    that(Is.booleanLiteral(inner), is(true));
+    that(PrefixNotPushdown.perhapsNotOfLiteral(inner), is(notNullValue()));
+    that(PrefixNotPushdown.notOfLiteral(asBooleanLiteral(inner)), is(notNullValue()));
+    that(PrefixNotPushdown.perhapsNotOfLiteral(inner), is(notNullValue()));
+    that(PrefixNotPushdown.pushdownNot(inner), is(notNullValue()));
+    that(PrefixNotPushdown.pushdownNot(asNot(e)), is(notNullValue()));
+    that(WRING.replacement(e), is(notNullValue()));
   }
 
   @RunWith(Parameterized.class)//
@@ -119,7 +117,7 @@ public class PrefixNotPushdownTest {
       super(WRING);
     }
     @Test public void inputIsPrefixExpression() {
-      assertThat(asPrefixExpression(), notNullValue());
+      that(asPrefixExpression(), notNullValue());
     }
   }
 }

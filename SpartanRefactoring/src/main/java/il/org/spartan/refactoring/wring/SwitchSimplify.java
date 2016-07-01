@@ -1,5 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
+import static il.org.spartan.idiomatic.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.utils.*;
@@ -7,7 +8,6 @@ import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
 
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.core.dom.*;
 
 /**
@@ -39,10 +39,7 @@ public class SwitchSimplify extends ReplaceCurrentNode<SwitchStatement> implemen
       if (cc.indexOf(cl) != cc.size() - 1 && !containsSequencer((Statement) $.statements().get($.statements().size() - 1), false))
         $.statements().add(s.getAST().newBreakStatement());
     }
-    return unless(s.subtreeMatch(matcher, $), $);
-  }
-  public static <@Nullable T> T unless(final boolean condition, final T $) {
-    return !condition ? $ : null;
+    return unless(s.subtreeMatch(matcher, $)).eval($);
   }
   static int escapeLevel(final Statement s, final boolean b) {
     return !b && Is.sequencer(s) || s instanceof ThrowStatement || s instanceof ReturnStatement ? s instanceof ThrowStatement ? 0

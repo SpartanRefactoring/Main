@@ -1,5 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
+import static il.org.spartan.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
@@ -8,10 +9,8 @@ import il.org.spartan.refactoring.wring.*;
 
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
-import org.eclipse.jdt.core.dom.rewrite.*;
 
 /**
  * Useful Functions
@@ -509,18 +508,7 @@ public enum Funcs {
   public static int negationLevel(final Expression e) {
     return e instanceof PrefixExpression ? negationLevel((PrefixExpression) e) //
         : e instanceof ParenthesizedExpression ? negationLevel(Extract.core(e)) //
-            : asBit(e instanceof NumberLiteral && ((NumberLiteral) e).getToken().startsWith("-"));
-  }
-  /**
-   * Retrieve next item in a list
-   *
-   * @param i an index of specific item in a list
-   * @param ts the indexed list
-   * @return the following item in the list, if such such an item exists,
-   *         otherwise, the last node
-   */
-  public static <@Nullable T> T next(final int i, final List<T> ts) {
-    return !inRange(i + 1, ts) ? last(ts) : ts.get(i + 1);
+            : as.bit(e instanceof NumberLiteral && ((NumberLiteral) e).getToken().startsWith("-"));
   }
   /**
    * Shorthand for {@link ASTNode#getParent()}
@@ -587,8 +575,8 @@ public enum Funcs {
    * @param n JD
    * @return the textual representation of the parameter,
    */
-  public static String removeWhites(final ASTNode n) {
-    return removeWhites(n.toString());
+  public static String condense(final ASTNode n) {
+    return removeWhites(as.string(n));
   }
   /**
    * Shorthand for {@link Assignment#getRightHandSide()}
@@ -682,9 +670,6 @@ public enum Funcs {
   static PrefixExpression asNot(final PrefixExpression e) {
     return NOT.equals(e.getOperator()) ? e : null;
   }
-  private static int asBit(final boolean b) {
-    return b ? 1 : 0;
-  }
   private static InfixExpression asComparison(final InfixExpression e) {
     return in(e.getOperator(), //
         GREATER, //
@@ -719,7 +704,7 @@ public enum Funcs {
     return $;
   }
   private static int negationLevel(final PrefixExpression e) {
-    return asBit(e.getOperator() == PrefixExpression.Operator.MINUS) + negationLevel(e.getOperand());
+    return as.bit(e.getOperator() == PrefixExpression.Operator.MINUS) + negationLevel(e.getOperand());
   }
   private static Expression peelNegation(final NumberLiteral $) {
     return !$.getToken().startsWith("-") ? $ : $.getAST().newNumberLiteral($.getToken().substring(1));

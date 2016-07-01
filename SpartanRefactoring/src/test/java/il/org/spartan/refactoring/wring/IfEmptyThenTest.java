@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.SpartanAssert.*;
-import il.org.spartan.Assert;
+import static il.org.spartan.azzert.*;
 import il.org.spartan.refactoring.utils.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -20,10 +19,10 @@ public class IfEmptyThenTest {
     Assert.assertThat(Is.vacuousThen(IF), is(true));
   }
   @Test public void extractFirstIf() {
-    assertThat(IF, notNullValue());
+    that(IF, notNullValue());
   }
   @Test public void inputType() {
-    assertThat(INPUT, instanceOf(Block.class));
+    that(INPUT, instanceOf(Block.class));
   }
   @Test public void scopeIncludes() {
     Assert.assertThat(WRING.scopeIncludes(IF), is(true));

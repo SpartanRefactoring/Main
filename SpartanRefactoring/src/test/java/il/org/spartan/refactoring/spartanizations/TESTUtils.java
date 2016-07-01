@@ -1,8 +1,7 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import static il.org.spartan.SpartanAssert.*;
 import static il.org.spartan.Utils.*;
-import static org.junit.Assert.*;
+import static il.org.spartan.azzert.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.*;
 
@@ -36,7 +35,7 @@ import org.eclipse.text.edits.*;
    */
   public static void assertSimilar(final String expected, final String actual) {
     if (!expected.equals(actual))
-      assertThat(Wrap.essence(actual), is(Wrap.essence(expected)));
+      that(Wrap.essence(actual), is(Wrap.essence(expected)));
   }
   /**
    * Convert a given {@link String} into an {@link Statement}, or fail the
@@ -46,9 +45,9 @@ import org.eclipse.text.edits.*;
    * @return an {@link Statement} data structure representing the parameter.
    */
   public static Statement asSingle(final String statement) {
-    assertThat(statement, notNullValue());
+    that(statement, notNullValue());
     final ASTNode n = ast.STATEMENTS.ast(statement);
-    assertThat(n, notNullValue());
+    that(n, notNullValue());
     return Extract.singleStatement(n);
   }
   public static Document rewrite(final Spartanization s, final CompilationUnit u, final Document $) {
@@ -61,22 +60,22 @@ import org.eclipse.text.edits.*;
   }
   public static String apply(final Trimmer t, final String from) {
     final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(from);
-    assertThat(u, notNullValue());
+    that(u, notNullValue());
     final Document d = new Document(from);
-    assertThat(d, notNullValue());
+    that(d, notNullValue());
     return TESTUtils.rewrite(t, u, d).get();
   }
   static void assertNoOpportunity(final Spartanization s, final String from) {
     final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(from);
-    assertThat(u.toString(), TrimmerTestsUtils.countOpportunities(s, u), is(0));
+    that(u.toString(), TrimmerTestsUtils.countOpportunities(s, u), is(0));
   }
   static void assertNotEvenSimilar(final String expected, final String actual) {
-    assertThat(compressSpaces(expected), not(compressSpaces(actual)));
+    that(compressSpaces(expected), not(compressSpaces(actual)));
   }
   static void assertOneOpportunity(final Spartanization s, final String from) {
     final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(from);
-    assertThat(u, notNullValue());
-    assertThat(TrimmerTestsUtils.countOpportunities(s, u), greaterThanOrEqualTo(1));
+    that(u, notNullValue());
+    that(TrimmerTestsUtils.countOpportunities(s, u), greaterThanOrEqualTo(1));
   }
 
   static final String WHITES = "(?m)\\s+";

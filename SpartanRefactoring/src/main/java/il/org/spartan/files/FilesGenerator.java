@@ -1,6 +1,6 @@
 package il.org.spartan.files;
 
-import static il.org.spartan.Utils.*;
+import il.org.spartan.*;
 
 import java.io.*;
 import java.util.*;
@@ -31,7 +31,7 @@ import java.util.*;
  * @since 2015-09-23.
  */
 public class FilesGenerator {
-  public static class as {
+  public static class az {
     @SafeVarargs public static <T> Iterable<T> iterable(final T... ts) {
       return () -> new Iterator<T>() {
         private int next = 0;
@@ -71,7 +71,7 @@ public class FilesGenerator {
    * @see FilesGenerator#from
    */
   public FilesGenerator(final String... extensions) {
-    this.extensions = asList(extensions);
+    this.extensions = az.iterable(extensions);
   }
   /**
    * @param from an array of names of directories from which the traversal
@@ -81,7 +81,7 @@ public class FilesGenerator {
    *         {@link Iterable} <code><b>interface</b></code>
    */
   public From from(final String... from) {
-    return from(as.iterable(from));
+    return from(az.iterable(from));
   }
   /**
    * @param from an array of names of directories from which the traversal
@@ -165,7 +165,7 @@ public class FilesGenerator {
   static Iterator<File> directoryIterator(final File directory) {
     if (directory == null || !directory.isDirectory() || directory.list() == null)
       return null;
-    final Iterator<String> generator = asList(directory.list()).iterator();
+    final Iterator<String> generator = as.iterable(directory.list()).iterator();
     return new Iterator<File>() {
       private File next;
 
@@ -182,9 +182,6 @@ public class FilesGenerator {
       }
       @Override public File next() {
         return next;
-      }
-      @Override public void remove() {
-        throw new UnsupportedOperationException();
       }
     };
   }

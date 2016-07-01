@@ -1,9 +1,8 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
-import static org.junit.Assert.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -130,16 +129,16 @@ public enum InfixConditionalAndTrueTest {
     }
     @Override @Test public void flattenIsIdempotentt() {
       final InfixExpression flatten = flatten(asInfixExpression());
-      assertThat(flatten(flatten).toString(), is(flatten.toString()));
+      that(flatten(flatten).toString(), is(flatten.toString()));
     }
     @Override @Test public void inputIsInfixExpression() {
-      assertThat(asInfixExpression(), notNullValue());
+      that(asInfixExpression(), notNullValue());
     }
     @Test public void isANDorOR() {
-      assertThat(asInfixExpression().getOperator(), is(CONDITIONAL_AND));
+      that(asInfixExpression().getOperator(), is(CONDITIONAL_AND));
     }
     @Test public void twoOrMoreArguments() {
-      assertThat(Extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
+      that(Extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
     }
   }
 }

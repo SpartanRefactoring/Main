@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.azzert.*;
 import il.org.spartan.refactoring.spartanizations.*;
 
 import java.util.*;
@@ -27,6 +27,6 @@ public class AbstractTestBase {
 
   @Test public void peelableinput() {
     if (input != null)
-      assertThat(Wrap.Statement.off(Wrap.Statement.on(input)), is(input));
+      that(Wrap.Statement.off(Wrap.Statement.on(input)), is(input));
   }
 }

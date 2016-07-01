@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.refactoring.utils.Utils.*;
+import static il.org.spartan.idiomatic.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.internal.corext.dom.*;
@@ -64,7 +64,7 @@ import org.eclipse.jdt.internal.corext.dom.*;
     if (b == null)
       return null;
     final IMethodBinding $ = Bindings.findMethodInHierarchy(b, mn, bs);
-    return unless(!isVisible($, n, u), $);
+    return incase(isVisible($, n, u)).eval($);
   }
   /**
    * Checks if expression is simple.

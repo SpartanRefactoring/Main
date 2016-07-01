@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.azzert.*;
 import il.org.spartan.refactoring.spartanizations.*;
 
 import java.util.*;
@@ -53,7 +53,7 @@ public enum Into {
    *         parameter.
    */
   public static MethodDeclaration d(final String methodDelclaration) {
-    assertThat(methodDelclaration, notNullValue());
+    that(methodDelclaration, notNullValue());
     return Extract.firstMethodDeclaration(Wrap.Method.intoCompilationUnit(methodDelclaration));
   }
   /**
@@ -112,7 +112,7 @@ public enum Into {
    * @return an {@link Statement} data structure representing the parameter.
    */
   public static Statement s(final String statement) {
-    assertThat(statement, notNullValue());
+    that(statement, notNullValue());
     final ASTNode n = ast.STATEMENTS.ast(statement);
     assertThat(statement, n, notNullValue());
     assertThat(statement, n, instanceOf(Statement.class));

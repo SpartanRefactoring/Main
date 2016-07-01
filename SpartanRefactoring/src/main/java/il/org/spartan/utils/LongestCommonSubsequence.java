@@ -44,7 +44,7 @@ public class LongestCommonSubsequence {
    *
    * @param i
    * @param j
-   * @return
+   * @return TODO document return type
    */
   private int length(final int i, final int j) {
     return i < 0 || j < 0 ? 0 : obtainLength(i, j);

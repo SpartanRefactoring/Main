@@ -1,8 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
 import il.org.spartan.*;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.utils.*;
 
 import java.util.*;
 
@@ -25,8 +23,8 @@ public class TernaryPushdownTest {
 
   @RunWith(Parameterized.class)//
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Exprezzion<ConditionalExpression> {
-    static String[][] cases = Utils
-        .as.array(
+    static String[][] cases = as
+        .array(
             //
             new String[] { "Expression vs. Expression", " 6 - 7 < 2 + 1   " }, //
             new String[] { "Literal vs. Literal", "1 < 102333" }, //

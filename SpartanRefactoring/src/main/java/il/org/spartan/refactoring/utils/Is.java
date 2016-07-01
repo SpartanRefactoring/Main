@@ -210,9 +210,9 @@ public enum Is {
   public static boolean deterministic(final Expression e) {
     if (!sideEffectFree(e))
       return false;
-    @SuppressWarnings("null") final Wrapper<Boolean> $ = new Wrapper<>(Boolean.TRUE);
+    final Wrapper<Boolean> $ = new Wrapper<Boolean>(Boolean.TRUE);
     e.accept(new ASTVisitor() {
-      @SuppressWarnings("null") @Override public boolean visit(@SuppressWarnings("unused") final ArrayCreation __) {
+      @Override public boolean visit(@SuppressWarnings("unused") final ArrayCreation __) {
         $.set(Boolean.FALSE);
         return false;
       }
@@ -389,7 +389,7 @@ public enum Is {
     return notStringSelf(e) || notStringDown(asInfixExpression(e));
   }
   static boolean notStringDown(final InfixExpression e) {
-    return e != null && (e.getOperator() != PLUS || Are.notString(Extract.allOperands(e)));
+    return e != null && (e.getOperator() != PLUS || are.notString(Extract.allOperands(e)));
   }
   static boolean notStringSelf(final Expression e) {
     return intIsIn(e.getNodeType(), //

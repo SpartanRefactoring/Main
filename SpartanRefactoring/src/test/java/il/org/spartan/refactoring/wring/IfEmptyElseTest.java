@@ -1,12 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static org.junit.Assert.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 
 import java.util.*;
 
@@ -81,20 +78,20 @@ public class IfEmptyElseTest {
     @Test public void isfStatementElseIsEmpty() {
       @Nullable final IfStatement asMe = asMe();
       assert asMe != null;
-      assertThat(Extract.statements(asMe.getElseStatement()).size(), is(0));
+      that(Extract.statements(asMe.getElseStatement()).size(), is(0));
     }
     @Test public void isfStatementElseNotNull() {
-      assertThat(elze(asMe()), notNullValue());
+      that(elze(asMe()), notNullValue());
     }
     @Test public void isIfStatement() {
-      assertThat(asMe(), notNullValue());
+      that(asMe(), notNullValue());
     }
     @Test public void myScopeIncludes() {
       final IfStatement s = asMe();
-      assertThat(s, notNullValue());
-      assertThat(elze(s), notNullValue());
-      assertThat(Extract.statements(elze(s)), notNullValue());
-      assertThat(Extract.statements(elze(s)).size(), is(0));
+      that(s, notNullValue());
+      that(elze(s), notNullValue());
+      that(Extract.statements(elze(s)), notNullValue());
+      that(Extract.statements(elze(s)).size(), is(0));
     }
   }
 }

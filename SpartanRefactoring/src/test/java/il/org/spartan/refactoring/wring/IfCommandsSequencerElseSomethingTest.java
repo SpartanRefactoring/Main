@@ -1,16 +1,13 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.SpartanAssert.*;
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static org.hamcrest.text.IsEqualIgnoringWhiteSpace.*;
-import static org.junit.Assert.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 
 import java.util.*;
 
@@ -36,23 +33,23 @@ public class IfCommandsSequencerElseSomethingTest {
 
   @Test public void checkSteps() {
     final Statement s = asSingle("if (a) return a = b; else a = c;");
-    assertThat(s, notNullValue());
-    assertThat(asIfStatement(s), notNullValue());
+    that(s, notNullValue());
+    that(asIfStatement(s), notNullValue());
   }
   @Test public void checkStepsFull() throws MalformedTreeException, BadLocationException {
     final IfStatement s = (IfStatement) asSingle("if (a) return b; else a();");
-    assertThat(WRING.scopeIncludes(s), is(true));
-    assertThat(WRING.eligible(s), is(true));
+    that(WRING.scopeIncludes(s), is(true));
+    that(WRING.eligible(s), is(true));
     final Rewrite m = WRING.make(s);
-    assertThat(m, notNullValue());
+    that(m, notNullValue());
     final Wring<IfStatement> w = Toolbox.instance.find(s);
-    assertThat(w, notNullValue());
-    assertThat(w, instanceOf(WRING.getClass()));
+    that(w, notNullValue());
+    that(w, instanceOf(WRING.getClass()));
     final String wrap = Wrap.Statement.on(s.toString());
     final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(wrap);
-    assertThat(u, notNullValue());
+    that(u, notNullValue());
     final Document d = new Document(wrap);
-    assertThat(d, notNullValue());
+    that(d, notNullValue());
     final Trimmer t = new Trimmer();
     final ASTRewrite r = t.createRewrite(u, null);
     final TextEdit x = r.rewriteAST(d, null);
@@ -68,23 +65,23 @@ public class IfCommandsSequencerElseSomethingTest {
     final String input = "if (a) return b; else a();";
     final String wrap = Wrap.Statement.on(input);
     final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(wrap);
-    assertThat(u, notNullValue());
+    that(u, notNullValue());
     final IfStatement s = Extract.firstIfStatement(u);
-    assertThat(s, notNullValue());
-    assertThat(s.toString(), equalToIgnoringWhiteSpace(input));
+    that(s, notNullValue());
+    that(s.toString(), equalToIgnoringWhiteSpace(input));
     final Wring<IfStatement> w = Toolbox.instance.find(s);
-    assertThat(w, notNullValue());
-    assertThat(w.scopeIncludes(s), is(true));
-    assertThat(w.eligible(s), is(true));
-    assertThat(w, instanceOf(WRING.getClass()));
+    that(w, notNullValue());
+    that(w.scopeIncludes(s), is(true));
+    that(w.eligible(s), is(true));
+    that(w, instanceOf(WRING.getClass()));
     final Rewrite m = w.make(s);
-    assertThat(m, notNullValue());
+    that(m, notNullValue());
     final ASTRewrite r = ASTRewrite.create(s.getAST());
     m.go(r, null);
-    assertThat(r.toString(), allOf(startsWith("Events:"), containsString("[replaced:"), containsString("]")));
+    that(r.toString(), allOf(startsWith("Events:"), containsString("[replaced:"), containsString("]")));
     final Document d = new Document(wrap);
-    assertThat(d, notNullValue());
-    assertThat(d.get(), equalToIgnoringWhiteSpace(wrap.toString()));
+    that(d, notNullValue());
+    that(d.get(), equalToIgnoringWhiteSpace(wrap.toString()));
     final TextEdit x = r.rewriteAST(d, null);
     x.apply(d);
     final String unpeeled = d.get();
@@ -96,13 +93,13 @@ public class IfCommandsSequencerElseSomethingTest {
   }
   @Test public void checkStepsWRING() throws MalformedTreeException {
     final IfStatement s = (IfStatement) asSingle("if (a) return b; else a();");
-    assertThat(WRING.scopeIncludes(s), is(true));
-    assertThat(WRING.eligible(s), is(true));
+    that(WRING.scopeIncludes(s), is(true));
+    that(WRING.eligible(s), is(true));
     final Rewrite m = WRING.make(s);
-    assertThat(m, notNullValue());
+    that(m, notNullValue());
     final ASTRewrite r = ASTRewrite.create(s.getAST());
     m.go(r, null);
-    assertThat(r.toString(), allOf(startsWith("Events:"), containsString("[replaced:"), containsString("]")));
+    that(r.toString(), allOf(startsWith("Events:"), containsString("[replaced:"), containsString("]")));
   }
 
   @RunWith(Parameterized.class)//

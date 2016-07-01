@@ -78,7 +78,7 @@ public class StringFromStringBuilder extends Wring.ReplaceCurrentNode<MethodInvo
         if (!((ClassInstanceCreation) e).arguments().isEmpty() && "StringBuilder".equals(t)) {
           final Expression a = (Expression) ((ClassInstanceCreation) e).arguments().get(0);
           sll.insertElementAt(addParenthesisIfNeeded(a), 0);
-          hs = isString(a) || hs;
+          hs |= isString(a);
         }
         if (!hs) {
           // creating a "" string literal to ensure final value interpreted as

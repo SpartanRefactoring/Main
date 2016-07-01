@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import il.org.spartan.*;
@@ -104,7 +103,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
    *         order.
    */
   static int alphabeticalCompare(final Expression e1, final Expression e2) {
-    return removeWhites(e1).compareTo(removeWhites(e2));
+    return condense(e1).compareTo(condense(e2));
   }
   static int round(final int $, final int threshold) {
     return Math.abs($) > threshold ? $ : 0;
@@ -142,7 +141,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
    * @return Number of abstract syntax tree nodes under the parameter.
    */
   public static int countNonWhites(final ASTNode n) {
-    return removeWhites(n).length();
+    return condense(n).length();
   }
   /**
    * Counts the number of nodes in a tree rooted at a given node

@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.azzert.*;
 import il.org.spartan.refactoring.utils.*;
 
 import java.io.*;
@@ -71,7 +71,7 @@ public abstract class FileTestUtils {
    * @param b
    * @param d
    * @param f
-   * @return
+   * @return TODO document return type
    */
   static File createTempFile(final StringBuilder b, final TestDirection d, final File f) {
     return createTemporaryRandomAccessFile(createTempFile(d, f), b.toString());
@@ -81,9 +81,9 @@ public abstract class FileTestUtils {
   }
   static Spartanization makeSpartanizationObject(final String folderForClass) {
     final Class<?> c = asClass(folderForClass);
-    assertThat(c, notNullValue());
+    that(c, notNullValue());
     final Object $ = getInstance(c);
-    assertThat($, notNullValue());
+    that($, notNullValue());
     return (Spartanization) $;
   }
   /**
@@ -184,9 +184,8 @@ public abstract class FileTestUtils {
    * il.org.spartan.refacoring.spartanizations.ExtractMethod: class not found.
    * il.org.spartan.refacoring.spartanizations.ExtractMethod at
    * org.junit.Assert.fail(Assert.java:88) at
-   * il.org.spartan.refactoring.spartanizations
-   * .FileTestasClass(FileTestUtils .java:84) at
-   * il.org.spartan.refactoring.spartanizations.FileTestUtils.
+   * il.org.spartan.refactoring.spartanizations .FileTestasClass(FileTestUtils
+   * .java:84) at il.org.spartan.refactoring.spartanizations.FileTestUtils.
    * makeSpartanizationObject(FileTestUtils.java:41) at
    * il.org.spartan.refactoring.spartanizations.FileTestUtils.
    * makeSpartanizationObject(FileTestUtils.java:38) at
@@ -253,11 +252,11 @@ public abstract class FileTestUtils {
      * @return a collection of all test cases generated in the traversal
      */
     public final Collection<Object[]> go() {
-      assertThat(location, notNullValue());
-      assertThat(location.listFiles(), notNullValue());
+      that(location, notNullValue());
+      that(location.listFiles(), notNullValue());
       final List<Object[]> $ = new ArrayList<>();
       for (final File f : location.listFiles()) {
-        assertThat(f, notNullValue());
+        that(f, notNullValue());
         go($, f);
       }
       return $;

@@ -1,11 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static org.junit.Assert.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 
 import java.util.*;
 
@@ -29,32 +27,32 @@ public class TernaryShortestFirstTest {
   @Test public void cyclicBug() {
     final ConditionalExpression e = Into
         .c("length(not(notConditional)) + length(then) < length(notConditional) + length(elze) ? null : $");
-    assertThat(e, notNullValue());
+    that(e, notNullValue());
     final Expression elze = Extract.core(e.getElseExpression());
     final Expression then = Extract.core(e.getThenExpression());
     final Expression $ = Subject.pair(elze, then).toCondition(logicalNot(e.getExpression()));
-    assertThat(then.toString(), Is.conditional(then), is(false));
-    assertThat(elze.toString(), Is.conditional(elze), is(false));
-    assertThat($.toString().length(), greaterThan(0));
-    assertThat($, iz("length(not(notConditional)) + length(then) >= length(notConditional) + length(elze) ? $ : null"));
+    that(then.toString(), Is.conditional(then), is(false));
+    that(elze.toString(), Is.conditional(elze), is(false));
+    that($.toString().length(), greaterThan(0));
+    that($, iz("length(not(notConditional)) + length(then) >= length(notConditional) + length(elze) ? $ : null"));
   }
   @Test public void trace1() {
     final ConditionalExpression e = Into.c("a?f(b,c,d):a");
-    assertThat(e, notNullValue());
-    assertThat(
+    that(e, notNullValue());
+    that(
         Subject.pair(Extract.core(e.getElseExpression()), Extract.core(e.getThenExpression())).toCondition(
             logicalNot(e.getExpression())), iz("!a?a:f(b,c,d)"));
   }
   @Test public void trace2() {
     final ConditionalExpression e = Into.c("!f(o) ? null : x.f(a).to(e.g())");
-    assertThat(e, notNullValue());
+    that(e, notNullValue());
     final Expression elze = Extract.core(e.getElseExpression());
     final Expression then = Extract.core(e.getThenExpression());
     final Expression $ = Subject.pair(elze, then).toCondition(logicalNot(e.getExpression()));
-    assertThat(then.toString(), Is.conditional(then), is(false));
-    assertThat(elze.toString(), Is.conditional(elze), is(false));
-    assertThat($.toString().length(), greaterThan(0));
-    assertThat($, iz("f(o) ? x.f(a).to(e.g()) : null"));
+    that(then.toString(), Is.conditional(then), is(false));
+    that(elze.toString(), Is.conditional(elze), is(false));
+    that($.toString().length(), greaterThan(0));
+    that($, iz("f(o) ? x.f(a).to(e.g()) : null"));
   }
 
   @RunWith(Parameterized.class)//

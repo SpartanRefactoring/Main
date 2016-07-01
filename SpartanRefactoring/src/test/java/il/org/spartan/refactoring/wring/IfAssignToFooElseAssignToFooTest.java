@@ -1,13 +1,10 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static org.junit.Assert.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 
 import java.util.*;
 
@@ -29,15 +26,15 @@ public class IfAssignToFooElseAssignToFooTest {
   static final Wring<IfStatement> WRING = new IfAssignToFooElseAssignToFoo();
 
   @Test public void checkSteps() {
-    assertThat(asSingle("if (a) a = b; else a = c;"), notNullValue());
+    that(asSingle("if (a) a = b; else a = c;"), notNullValue());
     final IfStatement s = asIfStatement(asSingle("if (a) a = b; else a = c;"));
-    assertThat(s, notNullValue());
+    that(s, notNullValue());
     final Assignment then = Extract.assignment(then(s));
     assertNotNull(then(s).toString(), then);
     final Assignment elze = Extract.assignment(elze(s));
-    assertThat(elze, notNullValue());
-    assertThat(compatible(then, elze), is(true));
-    assertThat(WRING.scopeIncludes(s), is(true));
+    that(elze, notNullValue());
+    that(compatible(then, elze), is(true));
+    that(WRING.scopeIncludes(s), is(true));
   }
 
   @RunWith(Parameterized.class)//

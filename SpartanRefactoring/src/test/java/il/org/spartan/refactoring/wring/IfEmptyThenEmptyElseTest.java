@@ -1,8 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.SpartanAssert.*;
-import static org.junit.Assert.*;
-import il.org.spartan.Assert;
+import static il.org.spartan.azzert.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -19,16 +17,16 @@ public class IfEmptyThenEmptyElseTest {
   private static final IfStatement IF = Extract.firstIfStatement(INPUT);
 
   @Test public void eligible() {
-    Assert.assertThat(WRING.eligible(IF), is(true));
+    that(WRING.eligible(IF), is(true));
   }
   @Test public void emptyElse() {
-    Assert.assertThat(Is.vacuousElse(IF), is(true));
+    that(Is.vacuousElse(IF), is(true));
   }
   @Test public void emptyThen() {
-    Assert.assertThat(Is.vacuousThen(IF), is(true));
+    that(Is.vacuousThen(IF), is(true));
   }
   @Test public void extractFirstIf() {
-    assertThat(IF, notNullValue());
+    that(IF, notNullValue());
   }
   @Test public void inputType() {
     org.hamcrest.MatcherAssert.assertThat("", INPUT, instanceOf(Block.class));
@@ -38,17 +36,17 @@ public class IfEmptyThenEmptyElseTest {
     final Document d = new Document(input);
     final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(d.get());
     final IfStatement s = Extract.firstIfStatement(u);
-    assertThat(s, iz("if(b);else;"));
+    that(s, iz("if(b);else;"));
     final ASTRewrite r = ASTRewrite.create(u.getAST());
     final Rewrite t = WRING.make(s);
     t.go(r, null);
     final TextEdit e = r.rewriteAST(d, null);
-    assertThat(e, notNullValue());
-    assertThat(e.getChildren().length, greaterThan(0));
+    that(e, notNullValue());
+    that(e.getChildren().length, greaterThan(0));
     e.apply(d);
     assertThat(d.get(), Extract.firstIfStatement(ast.COMPILIATION_UNIT.ast(d.get())), nullValue());
   }
   @Test public void scopeIncludes() {
-    Assert.assertThat(WRING.scopeIncludes(IF), is(true));
+    that(WRING.scopeIncludes(IF), is(true));
   }
 }

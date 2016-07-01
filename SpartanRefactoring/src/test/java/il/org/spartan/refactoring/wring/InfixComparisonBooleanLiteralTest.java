@@ -1,10 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.SpartanAssert.*;
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
-import static org.junit.Assert.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
@@ -38,9 +37,9 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
     final String s = " (2) == true";
     final String wrap = Wrap.Expression.on(s);
     final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(wrap);
-    assertThat(u, notNullValue());
+    that(u, notNullValue());
     final Document d = new Document(wrap);
-    assertThat(d, notNullValue());
+    that(d, notNullValue());
     final Trimmer t = new Trimmer();
     final ASTRewrite r = t.createRewrite(u, null);
     final TextEdit x = r.rewriteAST(d, null);
@@ -103,18 +102,18 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
     }
     @Override @Test public void flattenIsIdempotentt() {
       final InfixExpression flatten = flatten(asInfixExpression());
-      assertThat(flatten(flatten).toString(), is(flatten.toString()));
+      that(flatten(flatten).toString(), is(flatten.toString()));
     }
     @Override @Test public void inputIsInfixExpression() {
-      assertThat(asInfixExpression(), notNullValue());
+      that(asInfixExpression(), notNullValue());
     }
     @Test public void sortTwice() {
       final List<Expression> operands = Extract.operands(flatten(asInfixExpression()));
       ExpressionComparator.ADDITION.sort(operands);
-      assertThat(ExpressionComparator.ADDITION.sort(operands), is(false));
+      that(ExpressionComparator.ADDITION.sort(operands), is(false));
     }
     @Test public void twoOrMoreArguments() {
-      assertThat(Extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
+      that(Extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
     }
   }
 }

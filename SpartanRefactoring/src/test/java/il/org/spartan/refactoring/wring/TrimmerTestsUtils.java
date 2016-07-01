@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.SpartanAssert.*;
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static org.junit.Assert.*;
 import il.org.spartan.*;
@@ -27,26 +27,26 @@ public class TrimmerTestsUtils {
     }
     public OperandToWring<N> in(final Wring<N> w) {
       final N findNode = findNode(w);
-      assertThat(w.createScalpel(null, null).scopeIncludes(findNode), is(true));
+      that(w.createScalpel(null, null).scopeIncludes(findNode), is(true));
       return this;
     }
     public OperandToWring<N> notIn(final Wring<N> w) {
-      assertThat(w.createScalpel(null, null).scopeIncludes(findNode(w)), is(false));
+      that(w.createScalpel(null, null).scopeIncludes(findNode(w)), is(false));
       return this;
     }
     private N findNode(final Wring<N> w) {
-      assertThat(w, notNullValue());
+      that(w, notNullValue());
       final Wrap wrap = findWrap();
-      assertThat(wrap, notNullValue());
+      that(wrap, notNullValue());
       final CompilationUnit u = wrap.intoCompilationUnit(get());
-      assertThat(u, notNullValue());
+      that(u, notNullValue());
       final @Nullable N $ = firstInstance(u);
       assert $ != null;
-      assertThat($, notNullValue());
+      that($, notNullValue());
       return $;
     }
     private @Nullable N firstInstance(final CompilationUnit u) {
-      final Maybe<@Nullable N> $ = Maybe.no();
+      final maybe<@Nullable N> $ = maybe.no();
       u.accept(new ASTVisitor() {
         /**
          * The implementation of the visitation procedure in the JDT seems to be
@@ -166,27 +166,27 @@ public class TrimmerTestsUtils {
     p.setSource(from.toCharArray());
     p.setResolveBindings(PluginPreferencesResources.getResolveBindingEnabled());
     final CompilationUnit u = (CompilationUnit) p.createAST(null);
-    assertThat(u, notNullValue());
+    that(u, notNullValue());
     final Document d = new Document(from);
-    assertThat(d, notNullValue());
+    that(d, notNullValue());
     final Document $ = TESTUtils.rewrite(t, u, d);
-    assertThat($, notNullValue());
+    that($, notNullValue());
     return $.get();
   }
   static String apply(final Trimmer t, final String from) {
     final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(from);
-    assertThat(u, notNullValue());
+    that(u, notNullValue());
     final Document d = new Document(from);
-    assertThat(d, notNullValue());
+    that(d, notNullValue());
     final Document $ = TESTUtils.rewrite(t, u, d);
-    assertThat($, notNullValue());
+    that($, notNullValue());
     return $.get();
   }
   static String apply(final Wring<? extends ASTNode> ns, final String from) {
     final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(from);
-    assertThat(u, notNullValue());
+    that(u, notNullValue());
     final Document d = new Document(from);
-    assertThat(d, notNullValue());
+    that(d, notNullValue());
     return TESTUtils.rewrite(new AsSpartanization(ns, "Tested Refactoring"), u, d).get();
   }
   static void assertSimplifiesTo(final String from, final String expected, final Wring<? extends ASTNode> ns, final Wrap wrapper) {

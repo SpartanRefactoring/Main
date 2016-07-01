@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
+import static il.org.spartan.idiomatic.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.Utils.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.utils.*;
@@ -88,7 +88,7 @@ class Aggressive extends AbstractRenamePolicy {
     if (bestScore > 0)
       for (final SimpleName $ : ns)
         if (bestScore == score($, ss))
-          return unless(noRivals($, ns, ss), $);
+          return unless(noRivals($, ns, ss)).eval(() -> $);
     return null;
   }
   private static int bestScore(final List<SimpleName> ns, final List<ReturnStatement> ss) {

@@ -1,12 +1,10 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 
 import java.util.*;
 
@@ -37,8 +35,8 @@ import org.junit.runners.Parameterized.Parameters;
         + ""//
     );
     final IfStatement s = Extract.firstIfStatement(u);
-    assertThat(Extract.statements(then(s)).size(), is(1));
-    assertThat(Extract.statements(elze(s)).size(), is(1));
+    that(Extract.statements(then(s)).size(), is(1));
+    that(Extract.statements(elze(s)).size(), is(1));
   }
 
   @RunWith(Parameterized.class)//

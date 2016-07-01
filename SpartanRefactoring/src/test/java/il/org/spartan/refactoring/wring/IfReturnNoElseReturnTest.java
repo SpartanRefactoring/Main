@@ -1,12 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static org.junit.Assert.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 
 import java.util.*;
 
@@ -31,20 +28,20 @@ public class IfReturnNoElseReturnTest {
   @Test public void checkFirstIfStatement1() {
     final String s = "if (a) return b; return a();";
     final IfStatement i = Extract.firstIfStatement(ast.STATEMENTS.ast(s));
-    assertThat(i, notNullValue());
-    assertThat(i.toString(), WRING.scopeIncludes(i), is(true));
+    that(i, notNullValue());
+    that(i.toString(), WRING.scopeIncludes(i), is(true));
   }
   @Test public void checkFirstIfStatement2() {
     final String s = "if (a) return b; else return a();";
     final IfStatement i = Extract.firstIfStatement(ast.STATEMENTS.ast(s));
-    assertThat(i, notNullValue());
-    assertThat(i.toString(), WRING.scopeIncludes(i), is(false));
+    that(i, notNullValue());
+    that(i.toString(), WRING.scopeIncludes(i), is(false));
   }
   @Test public void checkFirstIfStatement3() {
     final String s = "if (a) a= b; else a=c;";
     final IfStatement i = Extract.firstIfStatement(ast.STATEMENTS.ast(s));
-    assertThat(i, notNullValue());
-    assertThat(i.toString(), WRING.scopeIncludes(i), is(false));
+    that(i, notNullValue());
+    that(i.toString(), WRING.scopeIncludes(i), is(false));
   }
 
   @RunWith(Parameterized.class)//
@@ -148,28 +145,28 @@ public class IfReturnNoElseReturnTest {
       super(WRING);
     }
     @Test public void asMeNotNull() {
-      assertThat(asMe(), notNullValue());
+      that(asMe(), notNullValue());
     }
     @Test public void followedByReturn() {
-      assertThat(Extract.nextReturn(asMe()), notNullValue());
+      that(Extract.nextReturn(asMe()), notNullValue());
     }
     @Test public void isfStatementElseIsEmpty() {
-      assertThat(Extract.statements(Extract.firstIfStatement(ast.STATEMENTS.ast(input)).getElseStatement()).size(), is(0));
+      that(Extract.statements(Extract.firstIfStatement(ast.STATEMENTS.ast(input)).getElseStatement()).size(), is(0));
     }
     @Test public void isIfStatement() {
       assertThat(input, asMe(), notNullValue());
     }
     @Test public void myScopeIncludes() {
       final IfStatement s = asMe();
-      assertThat(s, notNullValue());
-      assertThat(Extract.statements(elze(s)), notNullValue());
-      assertThat(Extract.statements(elze(s)).size(), is(0));
+      that(s, notNullValue());
+      that(Extract.statements(elze(s)), notNullValue());
+      that(Extract.statements(elze(s)).size(), is(0));
     }
     @Test public void noElse() {
-      assertThat(Extract.statements(elze(asMe())).size(), is(0));
+      that(Extract.statements(elze(asMe())).size(), is(0));
     }
     @Test public void thenIsSingleReturn() {
-      assertThat(Extract.returnStatement(then(asMe())), notNullValue());
+      that(Extract.returnStatement(then(asMe())), notNullValue());
     }
   }
 }

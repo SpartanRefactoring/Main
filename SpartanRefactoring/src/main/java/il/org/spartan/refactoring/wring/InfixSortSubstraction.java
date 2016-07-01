@@ -8,7 +8,6 @@ import il.org.spartan.refactoring.utils.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 
 /**
  * A {@link Wring} that sorts the arguments of a {@link Operator#PLUS}

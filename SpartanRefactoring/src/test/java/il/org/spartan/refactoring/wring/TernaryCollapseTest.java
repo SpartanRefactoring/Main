@@ -1,13 +1,10 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Extract.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import il.org.spartan.*;
-import il.org.spartan.Assert;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.utils.*;
 
 import java.util.*;
 
@@ -30,22 +27,22 @@ public class TernaryCollapseTest {
 
   @Test public void steps() {
     final ConditionalExpression e = c("a ? b ? x : z :z");
-    assertThat(e, notNullValue());
+    that(e, notNullValue());
     final ConditionalExpression then = asConditionalExpression(core(e.getThenExpression()));
-    assertThat(then, notNullValue());
+    that(then, notNullValue());
     final Expression elze = core(e.getElseExpression());
-    assertThat(elze, notNullValue());
+    that(elze, notNullValue());
     final Expression thenThen = core(then.getThenExpression());
-    assertThat(thenThen, notNullValue());
+    that(thenThen, notNullValue());
     final Expression thenElse = core(then.getElseExpression());
-    assertThat(thenElse, notNullValue());
+    that(thenElse, notNullValue());
     Assert.assertThat(same(thenElse, elze), is(true));
   }
 
   @RunWith(Parameterized.class)//
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Exprezzion<ConditionalExpression> {
-    static String[][] cases = Utils
-        .as.array(
+    static String[][] cases = as
+        .array(
             //
             new String[] { "No boolean", "a?b:c" }, //
             new String[] { "F X", "a ? false : c" }, //

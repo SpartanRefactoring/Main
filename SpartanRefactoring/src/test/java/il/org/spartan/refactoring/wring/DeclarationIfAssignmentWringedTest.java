@@ -1,12 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.SpartanAssert.*;
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static org.junit.Assert.*;
 import il.org.spartan.*;
-import il.org.spartan.Assert;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -66,8 +65,8 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
   }
   @Test public void checkIf() {
     final IfStatement s = findIf();
-    assertThat(s, notNullValue());
-    assertThat(Is.vacuousElse(s), is(true));
+    that(s, notNullValue());
+    that(Is.vacuousElse(s), is(true));
   }
   @Test public void correctSimplifier() {
     @Nullable final VariableDeclarationFragment asMe = asMe();
@@ -80,8 +79,8 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     final CompilationUnit u = asCompilationUnit();
     final ASTRewrite r = new Trimmer().createRewrite(u, null);
     final TextEdit e = r.rewriteAST(d, null);
-    assertThat(e, notNullValue());
-    assertThat(e.apply(d), is(notNullValue()));
+    that(e, notNullValue());
+    that(e.apply(d), is(notNullValue()));
   }
   @Test public void eligible() {
     final VariableDeclarationFragment s = asMe();
@@ -90,12 +89,12 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     assertTrue(s.toString(), inner.eligible(s));
   }
   @Test public void findsSimplifier() {
-    assertThat(Toolbox.instance.find(asMe()), notNullValue());
+    that(Toolbox.instance.find(asMe()), notNullValue());
   }
   @Test public void hasOpportunity() {
-    Assert.assertThat(inner.scopeIncludes(asMe()), is(true));
+    that(inner.scopeIncludes(asMe()), is(true));
     final CompilationUnit u = asCompilationUnit();
-    assertThat(u.toString(), new Trimmer().findOpportunities(u).size(), is(greaterThanOrEqualTo(1)));
+    that(u.toString(), new Trimmer().findOpportunities(u).size(), is(greaterThanOrEqualTo(1)));
   }
   @Test public void hasSimplifier() {
     @Nullable final VariableDeclarationFragment asMe = asMe();
@@ -103,18 +102,18 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     assertThat(asMe.toString(), Toolbox.instance.find(asMe), is(notNullValue()));
   }
   @Test public void noneligible() {
-    assertThat(inner.nonEligible(asMe()), is(false));
+    that(inner.nonEligible(asMe()), is(false));
   }
   @Test public void peelableOutput() {
-    assertThat(Wrap.Statement.off(Wrap.Statement.on(expected)), is(expected));
+    that(Wrap.Statement.off(Wrap.Statement.on(expected)), is(expected));
   }
   @Test public void rewriteNotEmpty() throws MalformedTreeException, IllegalArgumentException {
-    assertThat(new Trimmer().createRewrite(asCompilationUnit(), null), notNullValue());
+    that(new Trimmer().createRewrite(asCompilationUnit(), null), notNullValue());
   }
   @Test public void scopeIncludesAsMe() {
     @Nullable final VariableDeclarationFragment asMe = asMe();
     assert asMe != null;
-    assertThat(asMe.toString(), inner.scopeIncludes(asMe()), is(true));
+    that(asMe.toString(), inner.scopeIncludes(asMe()), is(true));
   }
   @Test public void simiplifies() throws MalformedTreeException, IllegalArgumentException {
     if (inner == null)
@@ -137,17 +136,17 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     final Expression initializer = f.getInitializer();
     assertThat(f.toString(), initializer, notNullValue());
     final IfStatement s = Extract.nextIfStatement(f);
-    assertThat(s, notNullValue());
-    assertThat(Extract.statements(elze(s)).size(), is(0));
+    that(s, notNullValue());
+    that(Extract.statements(elze(s)).size(), is(0));
     final Assignment a = Extract.assignment(then(s));
-    assertThat(a, notNullValue());
-    Assert.assertThat(same(left(a), f.getName()), is(true));
+    that(a, notNullValue());
+    that(same(left(a), f.getName()), is(true));
     r.replace(initializer, Subject.pair(right(a), initializer).toCondition(s.getExpression()), null);
     r.remove(s, null);
   }
   @Override protected CompilationUnit asCompilationUnit() {
     final CompilationUnit $ = (CompilationUnit) ast.COMPILIATION_UNIT.ast(Wrap.Statement.on(input));
-    assertThat($, notNullValue());
+    assertNotNull($);
     return $;
   }
   @Override protected VariableDeclarationFragment asMe() {

@@ -1,12 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static org.junit.Assert.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 
 import java.util.*;
 
@@ -29,7 +26,7 @@ public class DeclarationReturnTest {
   static final Wring<VariableDeclarationFragment> WRING = new DeclarationInitializerReturnVariable();
 
   @Test public void placeHolder() {
-    assertThat(WRING, notNullValue());
+    that(WRING, notNullValue());
   }
 
   @RunWith(Parameterized.class)//
@@ -61,8 +58,8 @@ public class DeclarationReturnTest {
   @RunWith(Parameterized.class)//
   @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   public static class Wringed extends AbstractWringTest.Wringed.WringedVariableDeclarationFragmentAndSurrounding {
-    private static String[][] cases = Utils
-        .as.array(
+    private static String[][] cases = as
+        .array(
             //
             new String[] { "Vanilla", "int a = 3; return a;", "return 3;" }, //
             new String[] { "Vanilla", "int a = 3, b; return a;", "return 3;" }, //
@@ -94,11 +91,11 @@ public class DeclarationReturnTest {
       assert f != null;
       final ASTRewrite r = ASTRewrite.create(f.getAST());
       final Expression initializer = f.getInitializer();
-      assertThat(initializer, notNullValue());
-      assertThat(Extract.nextStatement(f), notNullValue());
+      that(initializer, notNullValue());
+      that(Extract.nextStatement(f), notNullValue());
       final ReturnStatement s = Extract.nextReturn(f);
-      assertThat(s, notNullValue());
-      assertThat(same(f.getName(), Extract.expression(s)), is(true));
+      that(s, notNullValue());
+      that(same(f.getName(), Extract.expression(s)), is(true));
       r.remove(Extract.statement(f), null);
       r.replace(s, Subject.operand(initializer).toReturn(), null);
     }

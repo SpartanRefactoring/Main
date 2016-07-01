@@ -1,9 +1,8 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
-import static org.junit.Assert.*;
 import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;
@@ -16,64 +15,64 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 public class SingletStatementTest {
   @Test public void declarationAndStatementIsNull() {
-    assertThat(singleStatement(s("{int a; a();}")), nullValue());
+    that(singleStatement(s("{int a; a();}")), nullValue());
   }
   @Test public void deeplyNestedOneInCurlyIsNull() {
-    assertThat(singleStatement(s("{{{{a();}}}}")), not(nullValue()));
+    that(singleStatement(s("{{{{a();}}}}")), not(nullValue()));
   }
   @Test public void emptyBlockIsNull() {
-    assertThat(singleStatement(s("{}")), nullValue());
+    that(singleStatement(s("{}")), nullValue());
   }
   @Test public void emptyStatementInBlockIsNull() {
-    assertThat(singleStatement(s("{;}")), nullValue());
+    that(singleStatement(s("{;}")), nullValue());
   }
   @Test public void emptyStatementIsNull() {
-    assertThat(singleStatement(s(";")), nullValue());
+    that(singleStatement(s(";")), nullValue());
   }
   @Test public void fiveIsCorrectSize() {
-    assertThat(singleStatement(s("{{a();b();}{a(); b(); {}{}{{}} c();}}")), nullValue());
+    that(singleStatement(s("{{a();b();}{a(); b(); {}{}{{}} c();}}")), nullValue());
   }
   @Test public void manyEmptyStatementInBlockIsNull() {
-    assertThat(singleStatement(s("{;};{;;{;;}};")), nullValue());
+    that(singleStatement(s("{;};{;;{;;}};")), nullValue());
   }
   @Test public void manyIsNull() {
-    assertThat(singleStatement(s("a(); b(); c();")), nullValue());
+    that(singleStatement(s("a(); b(); c();")), nullValue());
   }
   @Test public void nestedTwoIsCorrectSize() {
-    assertThat(singleStatement(s("{a();b();}")), nullValue());
+    that(singleStatement(s("{a();b();}")), nullValue());
   }
   @Test public void nullGivesNull() {
-    assertThat(singleStatement(null), nullValue());
+    that(singleStatement(null), nullValue());
   }
   @Test public void oneInCurlyIsNotNull() {
-    assertThat(singleStatement(s("{a();}")), notNullValue());
+    that(singleStatement(s("{a();}")), notNullValue());
   }
   @Test public void oneIsNotNull() {
-    assertThat(singleStatement(s("{a();}")), notNullValue());
+    that(singleStatement(s("{a();}")), notNullValue());
   }
   @Test public void peelIf() {
     final ASTNode n = ast.STATEMENTS.ast("{if (a) return b; else return c;}");
-    assertThat(n, notNullValue());
+    that(n, notNullValue());
     final List<Statement> ss = Extract.statements(n);
-    assertThat(ss, notNullValue());
-    assertThat(ss.size(), is(1));
-    assertThat(Extract.singleStatement(n), notNullValue());
+    that(ss, notNullValue());
+    that(ss.size(), is(1));
+    that(Extract.singleStatement(n), notNullValue());
   }
   @Test public void peelIPlusPlus() {
     final ASTNode n = ast.STATEMENTS.ast("{i++;}");
-    assertThat(n, notNullValue());
+    that(n, notNullValue());
     final List<Statement> ss = Extract.statements(n);
-    assertThat(ss, notNullValue());
-    assertThat(ss.size(), is(1));
-    assertThat(Extract.singleStatement(n), notNullValue());
+    that(ss, notNullValue());
+    that(ss.size(), is(1));
+    that(Extract.singleStatement(n), notNullValue());
   }
   @Test public void twoFunctionCallsNullValue() {
-    assertThat(singleStatement(s("{b(); a();}")), nullValue());
+    that(singleStatement(s("{b(); a();}")), nullValue());
   }
   @Test public void twoInCurlyIsNull() {
-    assertThat(singleStatement(s("{a();b();}")), nullValue());
+    that(singleStatement(s("{a();b();}")), nullValue());
   }
   @Test public void twoNullValue() {
-    assertThat(singleStatement(s("a();b();")), nullValue());
+    that(singleStatement(s("a();b();")), nullValue());
   }
 }

@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
+import static il.org.spartan.idiomatic.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.Utils.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.utils.*;
@@ -55,7 +55,7 @@ import org.eclipse.text.edits.*;
     for (final SingleVariableDeclaration d : ds)
       if (suitable(d))
         $.add(d);
-    return unless($.isEmpty(), $);
+    return unless($.isEmpty()).eval($);
   }
   private static boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m, final Collection<SimpleName> newNames) {
     if (Funcs.shortName(d.getType()) == null)

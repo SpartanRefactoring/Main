@@ -1,15 +1,13 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.SpartanAssert.*;
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static org.junit.Assert.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.utils.Collect.Of;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.refactoring.wring.Wring.VariableDeclarationFragementAndStatement;
 
 import java.util.*;
@@ -33,46 +31,46 @@ public class DeclarationIfAssginmentTest {
   static final DeclarationInitializerIfAssignment WRING = new DeclarationInitializerIfAssignment();
 
   @Test public void traceForbiddenSiblings() {
-    assertThat(WRING, notNullValue());
+    that(WRING, notNullValue());
     final String from = "int a = 2,b; if (b) a =3;";
     final String wrap = Wrap.Statement.on(from);
     final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(wrap);
     final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(u);
-    assertThat(f, notNullValue());
-    assertThat(WRING.scopeIncludes(f), is(false));
+    that(f, notNullValue());
+    that(WRING.scopeIncludes(f), is(false));
   }
   @Test public void traceForbiddenSiblingsExpanded() {
     final String from = "int a = 2,b; if (a+b) a =3;";
     final String wrap = Wrap.Statement.on(from);
     final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(wrap);
     final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(u);
-    assertThat(f, notNullValue());
+    that(f, notNullValue());
     final Expression initializer = f.getInitializer();
-    assertThat(initializer, notNullValue());
+    that(initializer, notNullValue());
     final IfStatement s = Extract.nextIfStatement(f);
-    assertThat(s, is(Extract.firstIfStatement(u)));
-    assertThat(s, notNullValue());
-    assertThat(s, iz("if (a + b) a=3;"));
-    SpartanAssert.assertThat(Is.vacuousElse(s), is(true));
+    that(s, is(Extract.firstIfStatement(u)));
+    that(s, notNullValue());
+    that(s, iz("if (a + b) a=3;"));
+    azzert.that(Is.vacuousElse(s), is(true));
     final Assignment a = Extract.assignment(then(s));
-    assertThat(a, notNullValue());
-    assertThat(same(left(a), f.getName()), is(true));
-    assertThat(a.getOperator(), is(Assignment.Operator.ASSIGN));
+    that(a, notNullValue());
+    that(same(left(a), f.getName()), is(true));
+    that(a.getOperator(), is(Assignment.Operator.ASSIGN));
     final List<VariableDeclarationFragment> x = VariableDeclarationFragementAndStatement.forbiddenSiblings(f);
-    assertThat(x.size(), greaterThan(0));
-    assertThat(x.size(), is(1));
+    that(x.size(), greaterThan(0));
+    that(x.size(), is(1));
     final VariableDeclarationFragment b = x.get(0);
-    assertThat(b.toString(), is("b"));
+    that(b.toString(), is("b"));
     final Of of = Collect.BOTH_SEMANTIC.of(b);
-    assertThat(of, notNullValue());
+    that(of, notNullValue());
     final Expression e = s.getExpression();
-    assertThat(e, notNullValue());
-    assertThat(e, is("a + b"));
+    that(e, notNullValue());
+    that(e, is("a + b"));
     final List<SimpleName> in = of.in(e);
-    assertThat(in.size(), is(1));
-    assertThat(!in.isEmpty(), is(true));
-    assertThat(Collect.BOTH_SEMANTIC.of(f).existIn(s.getExpression(), right(a)), is(true));
-    assertThat(of.existIn(s.getExpression(), right(a)), is(true));
+    that(in.size(), is(1));
+    that(!in.isEmpty(), is(true));
+    that(Collect.BOTH_SEMANTIC.of(f).existIn(s.getExpression(), right(a)), is(true));
+    that(of.existIn(s.getExpression(), right(a)), is(true));
   }
 
   @RunWith(Parameterized.class)//
@@ -113,12 +111,12 @@ public class DeclarationIfAssginmentTest {
       final Document d = new Document(Wrap.Statement.on(from));
       final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(d);
       final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(u);
-      assertThat(f, notNullValue());
+      that(f, notNullValue());
       final ASTRewrite r = new Trimmer().createRewrite(u, null);
       final TextEdit e = r.rewriteAST(d, null);
-      assertThat(e.getChildrenSize(), greaterThan(0));
+      that(e.getChildrenSize(), greaterThan(0));
       final UndoEdit b = e.apply(d);
-      assertThat(b, notNullValue());
+      that(b, notNullValue());
       final String peeled = Wrap.Statement.off(d.get());
       if (expected.equals(peeled))
         return;
@@ -129,7 +127,7 @@ public class DeclarationIfAssginmentTest {
       assertSimilar(Wrap.Statement.on(expected), d);
     }
     @Test public void nonNullWring() {
-      assertThat(WRING, notNullValue());
+      that(WRING, notNullValue());
     }
     @Test public void vanilla() throws MalformedTreeException, IllegalArgumentException {
       final String from = "int a = 2; if (b) a =3;";

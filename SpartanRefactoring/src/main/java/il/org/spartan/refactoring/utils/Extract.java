@@ -114,7 +114,7 @@ public enum Extract {
    *         or <code><b>null</b> if there is no such statement.
    */
   public static PostfixExpression findFirstPostfix(final ASTNode n) {
-    final Maybe<PostfixExpression> $ = Maybe.no();
+    final maybe<PostfixExpression> $ = maybe.no();
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final PostfixExpression ¢) {
         if ($.missing())
@@ -134,7 +134,7 @@ public enum Extract {
   public static IfStatement firstIfStatement(final ASTNode n) {
     if (n == null)
       return null;
-    final Maybe<IfStatement> $ = Maybe.no();
+    final maybe<IfStatement> $ = maybe.no();
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final IfStatement s) {
         if ($.missing())
@@ -153,7 +153,7 @@ public enum Extract {
    *         <code><b>null</b> if there is no such statement.
    */
   public static MethodDeclaration firstMethodDeclaration(final ASTNode n) {
-    final Maybe<MethodDeclaration> $ = Maybe.no();
+    final maybe<MethodDeclaration> $ = maybe.no();
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final MethodDeclaration d) {
         if ($.missing())
@@ -173,7 +173,7 @@ public enum Extract {
    *         value could be found.
    */
   public static InfixExpression firstPlus(final ASTNode n) {
-    final Maybe<InfixExpression> $ = Maybe.no();
+    final maybe<InfixExpression> $ = maybe.no();
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final InfixExpression e) {
         if ($.present())
@@ -187,7 +187,7 @@ public enum Extract {
     return $.get();
   }
   public static Type firstType(final Statement s) {
-    final Maybe<Type> $ = Maybe.no();
+    final maybe<Type> $ = maybe.no();
     s.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode n) {
         if (!(n instanceof Type))
@@ -209,7 +209,7 @@ public enum Extract {
   public static VariableDeclarationFragment firstVariableDeclarationFragment(final ASTNode n) {
     if (n == null)
       return null;
-    final Maybe<VariableDeclarationFragment> $ = Maybe.no();
+    final maybe<VariableDeclarationFragment> $ = maybe.no();
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final VariableDeclarationFragment f) {
         if ($.missing())

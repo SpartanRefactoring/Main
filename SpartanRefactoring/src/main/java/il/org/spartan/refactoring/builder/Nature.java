@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.builder;
 
 import il.org.spartan.*;
-import il.org.spartan.utils.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;

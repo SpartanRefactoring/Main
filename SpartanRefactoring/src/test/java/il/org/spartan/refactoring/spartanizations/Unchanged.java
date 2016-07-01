@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import static il.org.spartan.SpartanAssert.*;
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.azzert.*;
 import static org.junit.Assert.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -32,8 +32,8 @@ public class Unchanged {
   public static Collection<Object[]> cases() {
     return new FileTestUtils.Files() {
       @Override Object[] makeCase(final Spartanization s, final File d, final File f, final String name) {
-        return name.endsWith(testSuffix) && ast.stringBuilder(f).indexOf(testKeyword) == -1 ? objects(s, name, makeInFile(f)) : name
-            .endsWith(".in") && !dotOutExists(d, name) ? objects(name.replaceAll("\\.in$", ""), s, f) : null;
+        return name.endsWith(testSuffix) && ast.stringBuilder(f).indexOf(testKeyword) == -1 ? objects(s, name, makeInFile(f))
+            : name.endsWith(".in") && !dotOutExists(d, name) ? objects(name.replaceAll("\\.in$", ""), s, f) : null;
       }
       private boolean dotOutExists(final File d, final String name) {
         return new File(d, name.replaceAll("\\.in$", ".out")).exists();
@@ -62,7 +62,7 @@ public class Unchanged {
   @Test public void checkNoChange() {
     assertNotNull("Cannot instantiate Spartanization object", spartanization);
     if (input.getName().indexOf(FileTestUtils.testSuffix) <= 0)
-      assertThat(TESTUtils.rewrite(spartanization, (CompilationUnit) ast.COMPILIATION_UNIT.ast(input), new Document(input())).get(),
+      that(TESTUtils.rewrite(spartanization, (CompilationUnit) ast.COMPILIATION_UNIT.ast(input), new Document(input())).get(),
           is(input()));
     else
       assertThat(
@@ -77,9 +77,9 @@ public class Unchanged {
   @Test public void checkNoOpportunities() {
     assertNotNull("Cannot instantiate spartanization object", spartanization);
     final ASTNode n = ast.COMPILIATION_UNIT.ast(input);
-    assertThat(n, notNullValue());
-    assertThat(n, is(instanceOf(CompilationUnit.class)));
-    assertThat((Object) spartanization.findOpportunities((CompilationUnit) n).size(), is((Object) 0));
+    that(n, notNullValue());
+    that(n, is(instanceOf(CompilationUnit.class)));
+    that((Object) spartanization.findOpportunities((CompilationUnit) n).size(), is((Object) 0));
   }
   private String input() {
     return ast.string(input);

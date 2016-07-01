@@ -276,7 +276,7 @@ public enum Collect {
     for (final ASTNode n : ns)
       for (final ASTVisitor v : collectors(what, $))
         n.accept(v);
-    Utils.removeDuplicates($);
+    removeDuplicates($);
     Collections.sort($, (e1, e2) -> e1.getStartPosition() - e2.getStartPosition());
     return $;
   }

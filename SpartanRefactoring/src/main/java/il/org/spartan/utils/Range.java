@@ -100,7 +100,7 @@ public class Range {
     return o instanceof Range && from == ((Range) o).from && to == ((Range) o).to;
   }
   @Override public String toString() {
-    return String.format("[%d, %d]", Box.it(from), Box.it(to));
+    return String.format("[%d, %d]", box.it(from), box.it(to));
   }
   /**
    * Merge with another record

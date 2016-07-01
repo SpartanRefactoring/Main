@@ -1,10 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.azzert.*;
 import il.org.spartan.*;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
-import il.org.spartan.utils.*;
 
 import java.util.*;
 
@@ -27,7 +24,7 @@ public class DeclarationAssignmentTest {
 
   @Test public void placeHolder() {
     // Place holder for future tests
-    assertThat(WRING, notNullValue());
+    that(WRING, notNullValue());
   }
 
   @RunWith(Parameterized.class)//
