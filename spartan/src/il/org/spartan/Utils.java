@@ -1,6 +1,6 @@
 package il.org.spartan;
 
-import static il.org.spartan.SpartanAssert.*;
+import static il.org.spartan.azzert.*;
 import static org.junit.Assert.*;
 import il.org.spartan.Utils.FoundHandleForT.FoundHandleForInt;
 
@@ -21,6 +21,19 @@ import org.junit.runners.*;
  */
 public enum Utils {
   ;
+  /**
+   * Appends an element to an array, by reallocating an array whose size is
+   * greater by one and placing the element at the last position.
+   *
+   * @param ts an arbitrary array
+   * @param t an element
+   * @return the newly created array
+   */
+  public static <T> T[] append(final T[] ts, final T t) {
+    final T[] $ = Arrays.copyOf(ts, 1 + ts.length);
+    $[ts.length] = t;
+    return $;
+  }
   public static <F, T> Applicator<F, T> apply(final Function<F, T> f) {
     return new Applicator<>(f);
   }
@@ -162,6 +175,7 @@ public enum Utils {
         return true;
     return false;
   }
+
   /**
    * @param ts JD
    * @return the last item in a list or <code><b>null</b></code> if the
@@ -170,7 +184,6 @@ public enum Utils {
   public static <@Nullable T> T last(final List<T> ts) {
     return ts.isEmpty() ? null : ts.get(ts.size() - 1);
   }
-
   /**
    * Determine whether an {@link Object} is the last in a {@link List}.
    *
@@ -407,51 +420,24 @@ public enum Utils {
     ts[i] = ts[j];
     ts[j] = t;
   }
+
+  public static <T, C extends Collection<T>> accumulate<T, C> to(final C c) {
+    return new accumulate<T, C>() {
+      @Override public accumulate<T, C> add(final @Nullable T t) {
+        if (t == null)
+          return this;
+        assert t != null;
+        c.add(t);
+        return this;
+      }
+      @Override public C elements() {
+        return c;
+      }
+    };
+  }
+
   static final String WHITES = "(?m)\\s+";
 
-  public static <T, C extends Collection<T>> C add(final C $, final Iterable<? extends T> ts) {
-    for (final T t : ts)
-      if (t != null)
-        $.add(t);
-    return $;
-  }
-  @SafeVarargs public static <T, C extends Collection<T>> C add(final C $, final T... ts) {
-    for (final T t : ts)
-      if (t != null)
-        $.add(t);
-    return $;
-  }
-  @SafeVarargs public static <T, C extends Collection<T>> C addAll(final C $, final Collection<? extends T>... tss) {
-    for (final Collection<? extends T> ts : tss)
-      if (ts != null)
-        $.addAll(ts);
-    return $;
-  }
-  @SafeVarargs public static <T, C extends Collection<T>> C addAll(final C $, final Iterable<? extends T>... tss) {
-    for (final Iterable<? extends T> ts : tss)
-      if (ts != null)
-        add($, ts);
-    return $;
-  }
-  @SafeVarargs public static <T, C extends Collection<T>> C addAll(final C $, final T... ts) {
-    for (final T t : ts)
-      if (t != null)
-        add($, t);
-    return $;
-  }
-  /**
-   * Appends an element to an array, by reallocating an array whose size is
-   * greater by one and placing the element at the last position.
-   *
-   * @param ts an arbitrary array
-   * @param t an element
-   * @return the newly created array
-   */
-  public static <T> T[] append(final T[] ts, final T t) {
-    final T[] $ = Arrays.copyOf(ts, 1 + ts.length);
-    $[ts.length] = t;
-    return $;
-  }
 
   /**
    * Reifies the notion of a function
@@ -461,8 +447,6 @@ public enum Utils {
    * @param <T> the type of the function's result
    */
   public static class Applicator<F, T> {
-    private final Function<F, T> function;
-
     /**
      * Instantiates this class
      *
@@ -471,6 +455,7 @@ public enum Utils {
     public Applicator(final Function<F, T> function) {
       this.function = function;
     }
+
     @SafeVarargs public final Iterable<T> to(final F... fs) {
       final List<T> $ = new ArrayList<>();
       for (final F f : fs)
@@ -485,11 +470,10 @@ public enum Utils {
           $.add(function.apply(f));
       return $;
     }
+    private final Function<F, T> function;
   }
 
   public static class FoundHandleForT<T> {
-    final T candidate;
-
     /**
      * Instantiates this class. *
      *
@@ -498,6 +482,7 @@ public enum Utils {
     public FoundHandleForT(final T candidate) {
       this.candidate = candidate;
     }
+
     /**
      * Determine if an integer can be found in a list of values
      *
@@ -510,10 +495,9 @@ public enum Utils {
           return true;
       return false;
     }
+    final T candidate;
 
     public static class FoundHandleForInt {
-      final int candidate;
-
       /**
        * Instantiates this class.
        *
@@ -522,6 +506,7 @@ public enum Utils {
       public FoundHandleForInt(final int candidate) {
         this.candidate = candidate;
       }
+
       /**
        * Determine if an integer can be found in a list of values
        *
@@ -534,6 +519,7 @@ public enum Utils {
             return true;
         return false;
       }
+      final int candidate;
     }
   }
 
@@ -557,7 +543,7 @@ public enum Utils {
     }
     @Test public void addAllTypical() {
       final Set<String> ss = new HashSet<>();
-      addAll(ss, as.set("A", "B"), null, as.set("B", "C", "D"));
+      to(ss).addAll(as.set("A", "B"), null, as.set("B", "C", "D"));
       assertFalse(ss.contains("E"));
       assertFalse(ss.contains(null));
       assertEquals(4, ss.size());
@@ -566,7 +552,7 @@ public enum Utils {
     }
     @Test public void addTypical() {
       final Set<String> ss = new HashSet<>();
-      add(ss, null, "A", null, "B", "B", null, "C", "D", null);
+      to(ss).add(null, "A", null, "B", "B", null, "C", "D", null);
       assertFalse(ss.contains("E"));
       assertFalse(ss.contains(null));
       assertEquals(4, ss.size());

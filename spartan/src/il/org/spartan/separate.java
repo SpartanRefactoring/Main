@@ -1,8 +1,8 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
 
-import static il.org.spartan.SpartanAssert.*;
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.azzert.*;
 import il.org.spartan.Utils.Applicator;
 import il.org.spartan.iterables.*;
 
@@ -21,7 +21,7 @@ import org.junit.runners.*;
  * @author Yossi Gil
  * @since 07/08/2008
  */
-public enum Separate {
+public enum separate {
   ;
   /** The comma character */
   public static final String COMMA = ",";
@@ -40,7 +40,7 @@ public enum Separate {
    * @param args list of the command line arguments.
    */
   public static void main(final String[] args) {
-    System.out.println("Arguments are: " + Separate.these(args).by(", "));
+    System.out.println("Arguments are: " + separate.these(args).by(", "));
   }
   /**
    * Separates a sequence of strings by {@link #SPACE} characters
@@ -383,53 +383,53 @@ public enum Separate {
     private static final Function<Object, String> quote = t -> "'" + t + "'";
 
     @Test public final void asArrayBetweenChar() {
-      assertEquals("Hello,World", Separate.these(as.array("Hello", "World")).by(','));
+      assertEquals("Hello,World", separate.these(as.array("Hello", "World")).by(','));
     }
     @Test public final void byArrayString() {
-      assertEquals("Hello, World", Separate.these(new String[] { "Hello", "World" }).by(", "));
+      assertEquals("Hello, World", separate.these(new String[] { "Hello", "World" }).by(", "));
     }
     @Test public final void byArrayStringUsingLiterals() {
-      assertEquals("Hello, World", Separate.these(as.array("Hello", "World")).by(", "));
+      assertEquals("Hello, World", separate.these(as.array("Hello", "World")).by(", "));
     }
     @Test public final void byBooleanArrayChar() {
-      assertEquals("true:false", Separate.these(new boolean[] { true, false }).by(':'));
+      assertEquals("true:false", separate.these(new boolean[] { true, false }).by(':'));
     }
     @Test public final void byBooleanArrayString() {
-      assertEquals("true; false", Separate.these(new boolean[] { true, false }).by("; "));
+      assertEquals("true; false", separate.these(new boolean[] { true, false }).by("; "));
     }
     @Test public final void byByteArrayChar() {
-      assertEquals("3:-5", Separate.these(new byte[] { 3, -5 }).by(':'));
+      assertEquals("3:-5", separate.these(new byte[] { 3, -5 }).by(':'));
     }
     @Test public final void byByteArrayString() {
-      assertEquals("-1; 2", Separate.these(new byte[] { -1, 2 }).by("; "));
+      assertEquals("-1; 2", separate.these(new byte[] { -1, 2 }).by("; "));
     }
     @Test public final void byCharArrayChar() {
-      assertEquals("3:x", Separate.these(new char[] { '3', 'x' }).by(':'));
+      assertEquals("3:x", separate.these(new char[] { '3', 'x' }).by(':'));
     }
     @Test public final void byCharArrayString() {
-      assertEquals("a; x", Separate.these(new char[] { 'a', 'x' }).by("; "));
+      assertEquals("a; x", separate.these(new char[] { 'a', 'x' }).by("; "));
     }
     @Test public final void byCommasTypical() {
-      assertEquals("A,B,C", Separate.these("A", "B", "C").byCommas());
+      assertEquals("A,B,C", separate.these("A", "B", "C").byCommas());
     }
     @Test public final void byDoubleArrayChar() {
-      assertEquals("3.3:4.2", Separate.these(new double[] { 3.3, 4.2 }).by(':'));
+      assertEquals("3.3:4.2", separate.these(new double[] { 3.3, 4.2 }).by(':'));
     }
     @Test public final void byDoubleArrayString() {
-      assertEquals("-1.0; 2.0", Separate.these(new double[] { -1.0, 2.0 }).by("; "));
+      assertEquals("-1.0; 2.0", separate.these(new double[] { -1.0, 2.0 }).by("; "));
     }
     @Test public final void byFloatArrayChar() {
-      assertEquals("3.3:4.2", Separate.these(new float[] { 3.3F, 4.2F }).by(':'));
+      assertEquals("3.3:4.2", separate.these(new float[] { 3.3F, 4.2F }).by(':'));
     }
     @Test public final void byFloatArrayString() {
-      assertEquals("-1.0; 2.0", Separate.these(new float[] { -1F, 2F }).by("; "));
+      assertEquals("-1.0; 2.0", separate.these(new float[] { -1F, 2F }).by("; "));
     }
     @Test public final void byFOfTIterableOfTChar() {
-      assertEquals("<A> <B>", Separate.these(apply(a -> "<" + a + ">").to("A", "B")).by(' '));
+      assertEquals("<A> <B>", separate.these(apply(a -> "<" + a + ">").to("A", "B")).by(' '));
     }
     @Test public final void byFOfTIterableOfTString() {
       assertEquals("'Hello', 'World'", //
-          Separate.these(new Applicator<>(quote).to(Arrays.asList("Hello", "World"))).by(", "));
+          separate.these(new Applicator<>(quote).to(Arrays.asList("Hello", "World"))).by(", "));
     }
     @Test public final void byFOfTTArrayChar() {
       final Applicator<Object, String> f = new Applicator<>(a -> "'" + a + "'");
@@ -438,28 +438,28 @@ public enum Separate {
       assertEquals(2, c.size());
       final Iterable<String> ts = f.to(c);
       assertEquals(2, Iterables.count(ts));
-      assertEquals("'Hello' 'World'", Separate.these(ts).by(' '));
+      assertEquals("'Hello' 'World'", separate.these(ts).by(' '));
     }
     @Test public final void byFOfTTArrayString() {
-      assertEquals("'Hello', 'World'", Separate.these(apply(quote).to("Hello", "World")).by(", "));
+      assertEquals("'Hello', 'World'", separate.these(apply(quote).to("Hello", "World")).by(", "));
     }
     @Test public final void byIntArrayChar() {
-      assertEquals("3:4", Separate.these(new int[] { 3, 4 }).by(':'));
+      assertEquals("3:4", separate.these(new int[] { 3, 4 }).by(':'));
     }
     @Test public final void byIntArrayString() {
-      assertEquals("-1; 2", Separate.these(new int[] { -1, 2 }).by("; "));
+      assertEquals("-1; 2", separate.these(new int[] { -1, 2 }).by("; "));
     }
     @Test public final void byIterableOfChar() {
-      assertEquals("Hello,World", Separate.these(as.array("Hello", "World")).by(','));
+      assertEquals("Hello,World", separate.these(as.array("Hello", "World")).by(','));
     }
     @Test public final void byIterableOfString() {
-      assertEquals("Hello, World", Separate.these(Arrays.asList("Hello", "World")).by(", "));
+      assertEquals("Hello, World", separate.these(Arrays.asList("Hello", "World")).by(", "));
     }
     @Test public final void byLongArrayChar() {
-      assertEquals("3:4", Separate.these(new long[] { 3, 4 }).by(':'));
+      assertEquals("3:4", separate.these(new long[] { 3, 4 }).by(':'));
     }
     @Test public final void byLongArrayString() {
-      assertEquals("-1; 2", Separate.these(new long[] { -1L, 2L }).by("; "));
+      assertEquals("-1; 2", separate.these(new long[] { -1L, 2L }).by("; "));
     }
     @Test public final void byMapOfKeyValueStringString() {
       final Map<String, Integer> map = new TreeMap<>();
@@ -467,37 +467,37 @@ public enum Separate {
       map.put("Two", box.it(2));
       map.put("Three", box.it(3));
       map.put("Four", box.it(4));
-      assertEquals("Four->4, One->1, Three->3, Two->2", Separate.these(map).by(", "));
+      assertEquals("Four->4, One->1, Three->3, Two->2", separate.these(map).by(", "));
     }
     @Test public final void byShortArrayChar() {
-      assertEquals("3:4", Separate.these(new short[] { 3, 4 }).by(':'));
+      assertEquals("3:4", separate.these(new short[] { 3, 4 }).by(':'));
     }
     @Test public final void byShortArrayString() {
-      assertEquals("-1: 2", Separate.these(new short[] { (short) -1, (short) 2 }).by(": "));
+      assertEquals("-1: 2", separate.these(new short[] { (short) -1, (short) 2 }).by(": "));
     }
     @Test public final void bySpacesEmptyl() {
-      assertEquals("", Separate.these().bySpaces());
+      assertEquals("", separate.these().bySpaces());
     }
     @Test public final void bySpacesLengthLessThan2() {
-      assertTrue(Separate.these().bySpaces().length() < 2);
+      assertTrue(separate.these().bySpaces().length() < 2);
     }
     @Test public final void bySpacesLengthLessThan3() {
-      assertTrue(Separate.these().bySpaces().length() < 3);
+      assertTrue(separate.these().bySpaces().length() < 3);
     }
     @Test public final void bySpacesTypical() {
-      assertEquals("A B C", Separate.these("A", "B", "C").bySpaces());
+      assertEquals("A B C", separate.these("A", "B", "C").bySpaces());
     }
     @Test public final void byTArrayChar() {
-      assertEquals("Hello,World", Separate.these(new String[] { "Hello", "World" }).by(','));
+      assertEquals("Hello,World", separate.these(new String[] { "Hello", "World" }).by(','));
     }
     @Test public final void nlIterableOfString() {
-      assertEquals("Hello\nWorld", Separate.these(Arrays.asList("Hello", "World")).byNLs());
+      assertEquals("Hello\nWorld", separate.these(Arrays.asList("Hello", "World")).byNLs());
     }
     @Test public final void nlStringArray() {
-      assertEquals("Hello\nWorld", Separate.these("Hello", "World").byNLs());
+      assertEquals("Hello\nWorld", separate.these("Hello", "World").byNLs());
     }
     @Test public final void separateByNoItemslPruneWhitesSpaceSeparated() {
-      final SeparationSubject these = Separate.these();
+      final SeparationSubject these = separate.these();
       assertNotNulls(these);
       final Iterable<Object> os = these.os;
       assertNotNulls(os);
@@ -510,7 +510,7 @@ public enum Separate {
       assertEquals("", SeparationSubject.separateBy(noWhites, " "));
     }
     @Test public final void separateByNoItemslSpaceSeparated() {
-      assertEquals("", SeparationSubject.separateBy(Separate.these().os, " "));
+      assertEquals("", SeparationSubject.separateBy(separate.these().os, " "));
     }
     @Test public void separateBySpaceEmpty() {
       assertEquals("", bySpaces());
@@ -540,34 +540,34 @@ public enum Separate {
       assertEquals(" ", "" + SPACE);
     }
     @Test public final void theseArraySize0() {
-      assertEquals(0, Iterables.count(Separate.these(as.array()).os));
+      assertEquals(0, Iterables.count(separate.these(as.array()).os));
     }
     @Test public final void theseArraySize1() {
-      assertEquals(1, Iterables.count(Separate.these(as.array("Rosebud")).os));
+      assertEquals(1, Iterables.count(separate.these(as.array("Rosebud")).os));
     }
     @Test public final void theseArraySize2() {
-      assertEquals(2, Iterables.count(Separate.these(as.array("Hello", "World")).os));
+      assertEquals(2, Iterables.count(separate.these(as.array("Hello", "World")).os));
     }
     @Test public final void theseArraySize3() {
-      assertEquals(3, Iterables.count(Separate.these(as.array("A", "B", "C")).os));
+      assertEquals(3, Iterables.count(separate.these(as.array("A", "B", "C")).os));
     }
     @Test public final void theseFromOneItem() {
-      assertEquals(1, Iterables.count(Separate.these(Arrays.asList("Rosebud")).os));
+      assertEquals(1, Iterables.count(separate.these(Arrays.asList("Rosebud")).os));
     }
     @Test public final void theseFromThreeItems() {
-      assertEquals(3, Iterables.count(Separate.these(Arrays.asList("A", "B", "C")).os));
+      assertEquals(3, Iterables.count(separate.these(Arrays.asList("A", "B", "C")).os));
     }
     @Test public final void theseFromTwoItems() {
-      assertEquals(2, Iterables.count(Separate.these(Arrays.asList("Hello", "World")).os));
+      assertEquals(2, Iterables.count(separate.these(Arrays.asList("Hello", "World")).os));
     }
     @Test public final void theseFromZeroItems() {
-      assertEquals(0, Iterables.count(Separate.these(Arrays.asList()).os));
+      assertEquals(0, Iterables.count(separate.these(Arrays.asList()).os));
     }
     @Test public final void theseOfNoItemsl() {
-      assertTrue(Iterables.isEmpty(Separate.these(new String[] {}).os));
+      assertTrue(Iterables.isEmpty(separate.these(new String[] {}).os));
     }
     @Test public final void theseOfNoItemslSpaceSeparated() {
-      assertEquals("", Separate.these(new String[] {}).bySpaces());
+      assertEquals("", separate.these(new String[] {}).bySpaces());
     }
   }
 }

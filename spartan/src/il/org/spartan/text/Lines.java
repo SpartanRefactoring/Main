@@ -45,7 +45,7 @@ public enum Lines {
    *         {@link #END_OF_LINE_MARKER} separating consecutive arguments
    */
   public static String gather(final String... lines) {
-    return Separate.these(lines).by(END_OF_LINE_MARKER);
+    return separate.these(lines).by(END_OF_LINE_MARKER);
   }
   /**
    * Counts the number of liens in a given text

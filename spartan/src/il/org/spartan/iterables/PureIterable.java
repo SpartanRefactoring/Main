@@ -3,6 +3,8 @@ package il.org.spartan.iterables;
 
 import java.util.*;
 
+import org.eclipse.jdt.annotation.*;
+
 /**
  * A kind of {@link Iterable} which does not permit the rarely used
  * {@link Iterator#remove} operation and saves the user, i.e., whoever chooses
@@ -42,5 +44,5 @@ public interface PureIterable<T> extends Iterable<T> {
     public abstract int size();
   }
 
-  @Override public PureIterator<T> iterator();
+  @Override public PureIterator<@NonNull T> iterator();
 }

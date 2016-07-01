@@ -8,6 +8,7 @@ import il.org.spartan.text.*;
 
 import java.util.*;
 
+import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -36,7 +37,7 @@ public class LCS {
     for (int i = 0; i < as.length; ++i)
       Arrays.fill(length[i] = new int[bs.length], -1);
   }
-  public static int length(final int[] ia, final int[] is2) {
+  public static int length(final @Nullable int @Nullable [] ia, final @Nullable int @Nullable [] is2) {
     return new LCS(ia, is2).length();
   }
   public static int length(final String a, final String s2) {

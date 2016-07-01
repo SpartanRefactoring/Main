@@ -1,7 +1,7 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
-import static il.org.spartan.SpartanAssert.*;
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.azzert.*;
 import static org.junit.Assert.*;
 import il.org.spartan.iterables.*;
 
@@ -89,7 +89,7 @@ public enum as {
    * @return an array of <code><b>int</b></code>. representing the input.
    */
   public static int[] intArray(final List<Integer> is) {
-    final int[] $ = new int[is.size()];
+    final int @NonNull [] $ = new int @NonNull [is.size()];
     for (int i = 0; i < $.length; ++i)
       $[i] = is.get(i).intValue();
     return $;
@@ -127,8 +127,8 @@ public enum as {
    * @param ts what to iterate on
    * @return an {@link Iterable} over the parameter
    */
-  @SafeVarargs public static <T> PureIterator<T> iterator(final T... ts) {
-    return iterable(ts).iterator();
+  @SafeVarargs public static <T> PureIterator<T> iterator(final @Nullable T @Nullable... ts) {
+    return nonNullIterable(ts).iterator();
   }
   /**
    * Converts an {@link Iterable} of a given type into a {@link List} of values
@@ -139,7 +139,7 @@ public enum as {
    * @return the parameter, converted to the {@link List} of the given type
    */
   public static <T> List<T> list(final Iterable<? extends T> $) {
-    return addAll(new ArrayList<T>(), $);
+    return to(new ArrayList<T>()).add($).elements();
   }
 
   /**
@@ -151,7 +151,7 @@ public enum as {
    * @return the result parameter, converted into a {@link List}
    */
   @SafeVarargs public static <T> List<T> list(final T... $) {
-    return addAll(new ArrayList<T>(), $);
+    return to(new ArrayList<T>()).add($).elements();
   }
   /**
    * Creates an iterable for an array of objects
@@ -184,11 +184,11 @@ public enum as {
    * Converts a sequence of objects of a given type into a {@link Set} of values
    *
    * @param <T> type of objects to be converted
-   * @param $ what to covert
+   * @param ts what to covert
    * @return the parameter, converted into a {@link Set}
    */
-  @SafeVarargs public static <T> Set<? extends T> set(final T... $) {
-    return add(new HashSet<T>(), $);
+  @SafeVarargs public static <T> Set<? extends T> set(final @Nullable T @Nullable... ts) {
+    return to(new HashSet<T>()).add(ts).elements();
   }
   /**
    * Converts a value, which can be either a <code><b>null</b></code> or

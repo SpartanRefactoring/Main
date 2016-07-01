@@ -25,7 +25,10 @@ public enum idiomatic {
   }
   public static final String QUOTE = "'";
   public interface Hold {
-    public <@Nullable T> T eval(final Supplier<T> t);
+    <@Nullable T> T eval(final Supplier<T> t);
+    default <@Nullable T> T eval(final T t) {
+      return eval(() -> t);
+    }
   }
 
   private static final Hold ignore = new Hold() {

@@ -1,8 +1,8 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
 
-import static il.org.spartan.SpartanAssert.*;
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.azzert.*;
 
 import java.util.*;
 
@@ -160,7 +160,7 @@ public enum prune {
       assertEquals(0, prune.whites().length);
     }
     @Test public void whitesEmptyArray() {
-      assertEquals(0, prune.whites(new String[] {}).length);
+      assertEquals(0, prune.whites(new String @NonNull [] {}).length);
     }
   }
 }

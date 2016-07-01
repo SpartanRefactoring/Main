@@ -3,6 +3,8 @@ package il.org.spartan;
 
 import static il.org.spartan.Utils.*;
 
+import org.eclipse.jdt.annotation.*;
+
 /**
  * A utility class, with a collection of function to box primitive types in
  * their reference type equivalent representation. Similarly, this class offers
@@ -105,7 +107,7 @@ public enum box {
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter
    */
   public static Boolean[] it(final boolean b[]) {
-    final Boolean[] $ = new Boolean[b.length];
+    final Boolean @NonNull [] $ = new Boolean @NonNull [b.length];
     for (int i = 0; i < $.length; ++i)
       $[i] = it(b[i]);
     return $;
@@ -119,7 +121,7 @@ public enum box {
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter
    */
   public static Byte[] it(final byte b[]) {
-    final Byte[] $ = new Byte[b.length];
+    final Byte @NonNull [] $ = new Byte @NonNull [b.length];
     for (int i = 0; i < $.length; ++i)
       $[i] = it(b[i]);
     return $;
@@ -134,7 +136,7 @@ public enum box {
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter
    */
   public static Character[] it(final char c[]) {
-    final Character[] $ = new Character[c.length];
+    final Character @NonNull [] $ = new Character @NonNull [c.length];
     for (int i = 0; i < $.length; ++i)
       $[i] = it(c[i]);
     return $;
@@ -149,7 +151,7 @@ public enum box {
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter
    */
   public static Double[] it(final double d[]) {
-    final Double[] $ = new Double[d.length];
+    final Double @NonNull [] $ = new Double @NonNull [d.length];
     for (int i = 0; i < $.length; ++i)
       $[i] = it(d[i]);
     return $;
@@ -164,7 +166,7 @@ public enum box {
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter
    */
   public static Float[] it(final float f[]) {
-    final Float[] $ = new Float[f.length];
+    final Float @NonNull [] $ = new Float @NonNull [f.length];
     for (int i = 0; i < $.length; ++i)
       $[i] = it(f[i]);
     return $;

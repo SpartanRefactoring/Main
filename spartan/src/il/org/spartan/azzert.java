@@ -10,7 +10,7 @@ import org.hamcrest.*;
  * @author Yossi Gil
  * @since 2015-07-18
  */
-public class SpartanAssert extends org.junit.Assert {
+public class azzert extends org.junit.Assert {
   /**
    * Creates a matcher that matches if the examined object matches <b>ALL</b> of
    * the specified matchers.
@@ -148,8 +148,12 @@ public class SpartanAssert extends org.junit.Assert {
    * <pre>
    * assertThat(&quot;myValue&quot;, anyOf(startsWith(&quot;foo&quot;), containsString(&quot;Val&quot;)))
    * </pre>
+   *
+   * @param matchers
+   * @param <T> JD
+   * @return
    */
-  public static <T> org.hamcrest.core.AnyOf<T> anyOf(final java.lang.Iterable<org.hamcrest.Matcher<? super T>> matchers) {
+  public static <T> org.hamcrest.core.@Nullable AnyOf<T> anyOf(final java.lang.Iterable<org.hamcrest.Matcher<? super T>> matchers) {
     return org.hamcrest.core.AnyOf.<T> anyOf(matchers);
   }
   /**
@@ -162,7 +166,7 @@ public class SpartanAssert extends org.junit.Assert {
    * assertThat(&quot;myValue&quot;, anyOf(startsWith(&quot;foo&quot;), containsString(&quot;Val&quot;)))
    * </pre>
    */
-  @SafeVarargs public static <T> org.hamcrest.core.AnyOf<T> anyOf(final org.hamcrest.Matcher<? super T>... matchers) {
+  @SafeVarargs public static <T> org.hamcrest.core.@Nullable AnyOf<T> anyOf(final org.hamcrest.Matcher<? super T>... matchers) {
     return org.hamcrest.core.AnyOf.<T> anyOf(matchers);
   }
   /**
@@ -175,7 +179,8 @@ public class SpartanAssert extends org.junit.Assert {
    * assertThat(&quot;myValue&quot;, anyOf(startsWith(&quot;foo&quot;), containsString(&quot;Val&quot;)))
    * </pre>
    */
-  public static <T> org.hamcrest.core.AnyOf<T> anyOf(final org.hamcrest.Matcher<T> first, final org.hamcrest.Matcher<? super T> second) {
+  public static <T> org.hamcrest.core.@Nullable AnyOf<T> anyOf(final org.hamcrest.Matcher<T> first,
+      final org.hamcrest.Matcher<? super T> second) {
     return org.hamcrest.core.AnyOf.<T> anyOf(first, second);
   }
   /**
@@ -188,7 +193,8 @@ public class SpartanAssert extends org.junit.Assert {
    * assertThat(&quot;myValue&quot;, anyOf(startsWith(&quot;foo&quot;), containsString(&quot;Val&quot;)))
    * </pre>
    */
-  public static <T> org.hamcrest.core.AnyOf<T> anyOf(final org.hamcrest.Matcher<T> first, final org.hamcrest.Matcher<? super T> second,
+  public static <T> org.hamcrest.core.@Nullable AnyOf<T> anyOf(final org.hamcrest.Matcher<T> first,
+      final org.hamcrest.Matcher<? super T> second,
       final org.hamcrest.Matcher<? super T> third) {
     return org.hamcrest.core.AnyOf.<T> anyOf(first, second, third);
   }
@@ -202,7 +208,8 @@ public class SpartanAssert extends org.junit.Assert {
    * assertThat(&quot;myValue&quot;, anyOf(startsWith(&quot;foo&quot;), containsString(&quot;Val&quot;)))
    * </pre>
    */
-  public static <T> org.hamcrest.core.AnyOf<T> anyOf(final org.hamcrest.Matcher<T> first, final org.hamcrest.Matcher<? super T> second,
+  public static <T> org.hamcrest.core.@Nullable AnyOf<T> anyOf(final org.hamcrest.Matcher<T> first,
+      final org.hamcrest.Matcher<? super T> second,
       final org.hamcrest.Matcher<? super T> third, final org.hamcrest.Matcher<? super T> fourth) {
     return org.hamcrest.core.AnyOf.<T> anyOf(first, second, third, fourth);
   }
@@ -215,6 +222,14 @@ public class SpartanAssert extends org.junit.Assert {
    * <pre>
    * assertThat(&quot;myValue&quot;, anyOf(startsWith(&quot;foo&quot;), containsString(&quot;Val&quot;)))
    * </pre>
+   *
+   * @param <T> JD
+   * @param first JD
+   * @param second JD
+   * @param third JD
+   * @param fourth JD
+   * @param fifth JD
+   * @return a matcher
    */
   public static <T> org.hamcrest.core.AnyOf<T> anyOf(final org.hamcrest.Matcher<T> first, final org.hamcrest.Matcher<? super T> second,
       final org.hamcrest.Matcher<? super T> third, final org.hamcrest.Matcher<? super T> fourth, final org.hamcrest.Matcher<? super T> fifth) {
@@ -230,7 +245,8 @@ public class SpartanAssert extends org.junit.Assert {
    * assertThat(&quot;myValue&quot;, anyOf(startsWith(&quot;foo&quot;), containsString(&quot;Val&quot;)))
    * </pre>
    */
-  public static <T> org.hamcrest.core.AnyOf<T> anyOf(final org.hamcrest.Matcher<T> first, final org.hamcrest.Matcher<? super T> second,
+  public static <T> org.hamcrest.core.@Nullable AnyOf<T> anyOf(final org.hamcrest.Matcher<T> first,
+      final org.hamcrest.Matcher<? super T> second,
       final org.hamcrest.Matcher<? super T> third, final org.hamcrest.Matcher<? super T> fourth, final org.hamcrest.Matcher<? super T> fifth,
       final org.hamcrest.Matcher<? super T> sixth) {
     return org.hamcrest.core.AnyOf.<T> anyOf(first, second, third, fourth, fifth, sixth);
@@ -253,7 +269,7 @@ public class SpartanAssert extends org.junit.Assert {
   public static void assertEquals(final int expected, final int actual) {
     assertEquals(box.it(expected), box.it(actual));
   }
-  public static void assertEquals(final Object exp, final Object val) {
+  public static void assertEquals(final Object exp, final @Nullable Object val) {
     assertThat(val, is(exp));
   }
   public static void assertEquals(final String reason, final int i1, final int i2) {
@@ -262,7 +278,7 @@ public class SpartanAssert extends org.junit.Assert {
   public static void assertFalse(final String s, final boolean b) {
     assertThat(s, b, is(Boolean.FALSE));
   }
-  public static void assertNotEquals(final Object o1, final Object o2) {
+  public static void assertNotEquals(final Object o1, final @Nullable Object o2) {
     assertThat(o1, CoreMatchers.not(o2));
   }
   public static void assertNotEquals(final String reason, final Object o1, final Object o2) {
@@ -281,7 +297,7 @@ public class SpartanAssert extends org.junit.Assert {
   public static void assertNull(final @Nullable Object o) {
     assertThat(o, nullValue());
   }
-  public static <@Nullable T> void assertThat(final T actual, final Matcher<? super T> matcher) {
+  public static <@Nullable T> void assertThat(final @Nullable T actual, final @Nullable Matcher<? super @Nullable T> matcher) {
     assertThat("", actual, matcher);
   }
   /**
@@ -304,7 +320,7 @@ public class SpartanAssert extends org.junit.Assert {
    * @param m JD
    * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
    */
-  public static void assertThat(final boolean b, final Matcher<? super Boolean> m) {
+  public static void assertThat(final boolean b, final Matcher<? super @Nullable Boolean> m) {
     assertThat(Boolean.valueOf(b), m);
   }
   /**
@@ -319,7 +335,7 @@ public class SpartanAssert extends org.junit.Assert {
    * @param m JD
    * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
    */
-  public static void assertThat(final byte b, final Matcher<? super Byte> m) {
+  public static void assertThat(final byte b, final @Nullable Matcher<? super @Nullable Byte> m) {
     assertThat(Byte.valueOf(b), m);
   }
   /**
@@ -334,7 +350,7 @@ public class SpartanAssert extends org.junit.Assert {
    * @param m JD
    * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
    */
-  public static void assertThat(final char c, final Matcher<? super Character> m) {
+  public static void assertThat(final char c, final Matcher<? super @Nullable Character> m) {
     assertThat(Character.valueOf(c), m);
   }
   /**
@@ -349,7 +365,7 @@ public class SpartanAssert extends org.junit.Assert {
    * @param m JD
    * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
    */
-  public static void assertThat(final double d, final Matcher<? super Double> m) {
+  public static void assertThat(final double d, final Matcher<? super @Nullable Double> m) {
     assertThat(Double.valueOf(d), m);
   }
   /**
@@ -364,7 +380,7 @@ public class SpartanAssert extends org.junit.Assert {
    * @param m JD
    * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
    */
-  public static void assertThat(final float f, final Matcher<? super Float> m) {
+  public static void assertThat(final float f, final Matcher<? super @Nullable Float> m) {
     assertThat(Float.valueOf(f), m);
   }
   /**
@@ -379,7 +395,7 @@ public class SpartanAssert extends org.junit.Assert {
    * @param m JD
    * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
    */
-  public static void assertThat(final int i, final Matcher<? super Integer> m) {
+  public static void assertThat(final int i, final Matcher<? super @Nullable Integer> m) {
     assertThat(Integer.valueOf(i), m);
   }
   /**
@@ -394,7 +410,7 @@ public class SpartanAssert extends org.junit.Assert {
    * @param m JD
    * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
    */
-  public static void assertThat(final long l, final Matcher<? super Long> m) {
+  public static void assertThat(final long l, final Matcher<? super @Nullable Long> m) {
     assertThat(Long.valueOf(l), m);
   }
   /**
@@ -406,7 +422,7 @@ public class SpartanAssert extends org.junit.Assert {
    * @param actual the actual object
    * @param expected the expected textual representation of the first parameter
    */
-  public static void assertThat(final Object actual, final Wrapper<String> expected) {
+  public static void assertThat(final Object actual, final Wrapper<@Nullable String> expected) {
     assertThat(compressSpaces(actual + ""), is(compressSpaces(expected.get())));
   }
 
@@ -422,7 +438,7 @@ public class SpartanAssert extends org.junit.Assert {
    * @param m JD
    * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
    */
-  public static void assertThat(final short s, final Matcher<? super Short> m) {
+  public static void assertThat(final short s, final Matcher<? super @Nullable Short> m) {
     assertThat(Short.valueOf(s), m);
   }
   /**
@@ -456,7 +472,7 @@ public class SpartanAssert extends org.junit.Assert {
    * @param m JD
    * @see org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)
    */
-  public static void assertThat(final String reason, final byte b, final Matcher<? super Byte> m) {
+  public static void assertThat(final String reason, final byte b, final Matcher<? super @Nullable Byte> m) {
     assertThat(reason, Byte.valueOf(b), m);
   }
   /**
@@ -490,7 +506,7 @@ public class SpartanAssert extends org.junit.Assert {
    * @param m JD
    * @see org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)
    */
-  public static void assertThat(final String reason, final double d, final Matcher<? super Double> m) {
+  public static void assertThat(final String reason, final double d, final Matcher<? super @Nullable Double> m) {
     assertThat(reason, Double.valueOf(d), m);
   }
   /**
@@ -541,7 +557,7 @@ public class SpartanAssert extends org.junit.Assert {
    * @param m JD
    * @see org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)
    */
-  public static void assertThat(final String reason, final long l, final Matcher<? super Long> m) {
+  public static void assertThat(final String reason, final long l, final Matcher<? super @Nullable Long> m) {
     assertThat(reason, Long.valueOf(l), m);
   }
   /**
@@ -562,7 +578,7 @@ public class SpartanAssert extends org.junit.Assert {
     assertThat(reason, Short.valueOf(s), m);
   }
   public static void assertTrue(final boolean b) {
-    SpartanAssert.assertThat(b, is(true));
+    azzert.assertThat(b, is(true));
   }
   public static void assertTrue(final String s, final boolean b) {
     org.junit.Assert.assertThat(s, Boolean.valueOf(b), is(Boolean.TRUE));
@@ -598,7 +614,7 @@ public class SpartanAssert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} to
    *         the parameter
    */
-  @Factory public static Matcher<Boolean> comparesEqualTo(final boolean b) {
+  @Factory public static @Nullable Matcher<Boolean> comparesEqualTo(final boolean b) {
     return org.hamcrest.number.OrderingComparison.comparesEqualTo(Boolean.valueOf(b));
   }
   /**
@@ -611,7 +627,7 @@ public class SpartanAssert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} to
    *         the parameter
    */
-  @Factory public static Matcher<Byte> comparesEqualTo(final byte b) {
+  @Factory public static @Nullable Matcher<Byte> comparesEqualTo(final byte b) {
     return org.hamcrest.number.OrderingComparison.comparesEqualTo(Byte.valueOf(b));
   }
   /**
@@ -624,7 +640,7 @@ public class SpartanAssert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} to
    *         the parameter
    */
-  @Factory public static Matcher<Character> comparesEqualTo(final char c) {
+  @Factory public static @Nullable Matcher<Character> comparesEqualTo(final char c) {
     return org.hamcrest.number.OrderingComparison.comparesEqualTo(Character.valueOf(c));
   }
   /**
@@ -637,7 +653,7 @@ public class SpartanAssert extends org.junit.Assert {
    *         {@link org.hamcrest.number.OrderingComparison#comparesEqualTo} to
    *         the parameter
    */
-  @Factory public static Matcher<Double> comparesEqualTo(final double d) {
+  @Factory public static @Nullable Matcher<Double> comparesEqualTo(final double d) {
     return org.hamcrest.number.OrderingComparison.comparesEqualTo(Double.valueOf(d));
   }
   /**
@@ -1030,7 +1046,8 @@ public class SpartanAssert extends org.junit.Assert {
    * @param itemMatcher the matcher to apply to items provided by the examined
    *          {@link Iterable}
    */
-  public static <T> org.hamcrest.Matcher<java.lang.Iterable<? super T>> hasItem(final org.hamcrest.Matcher<? super T> itemMatcher) {
+  public static <T> org.hamcrest.Matcher<java.lang.Iterable<? super @Nullable T>> hasItem(
+      final org.hamcrest.Matcher<? super @Nullable T> itemMatcher) {
     return org.hamcrest.core.IsCollectionContaining.<T> hasItem(itemMatcher);
   }
   /**
@@ -1049,7 +1066,7 @@ public class SpartanAssert extends org.junit.Assert {
    * @param item the item to compare against the items provided by the examined
    *          {@link Iterable}
    */
-  public static <T> org.hamcrest.Matcher<java.lang.Iterable<? super T>> hasItem(final T item) {
+  public static <T> org.hamcrest.Matcher<java.lang.Iterable<? super @Nullable T>> hasItem(final T item) {
     return org.hamcrest.core.IsCollectionContaining.<T> hasItem(item);
   }
   /**
@@ -1120,7 +1137,7 @@ public class SpartanAssert extends org.junit.Assert {
    * @param b JD
    * @return a matcher for the value specified by the parameter
    */
-  public static Matcher<Boolean> is(final boolean b) {
+  public static Matcher<@Nullable Boolean> is(final boolean b) {
     return is(Boolean.valueOf(b));
   }
   /**
@@ -1129,7 +1146,7 @@ public class SpartanAssert extends org.junit.Assert {
    * @param b JD
    * @return a matcher for the value specified by the parameter
    */
-  public static Matcher<Byte> is(final byte b) {
+  public static Matcher<@Nullable Byte> is(final byte b) {
     return is(Byte.valueOf(b));
   }
   /**
@@ -1138,7 +1155,7 @@ public class SpartanAssert extends org.junit.Assert {
    * @param c JD
    * @return a matcher for the value specified by the parameter
    */
-  public static Matcher<Character> is(final char c) {
+  public static Matcher<@Nullable Character> is(final char c) {
     return is(Character.valueOf(c));
   }
   /**
@@ -1147,7 +1164,7 @@ public class SpartanAssert extends org.junit.Assert {
    * @param d JD
    * @return a matcher for the value specified by the parameter
    */
-  public static Matcher<Double> is(final double d) {
+  public static Matcher<@Nullable Double> is(final double d) {
     return is(Double.valueOf(d));
   }
   /**
@@ -1156,7 +1173,7 @@ public class SpartanAssert extends org.junit.Assert {
    * @param f JD
    * @return a matcher for the value specified by the parameter
    */
-  public static Matcher<Float> is(final float f) {
+  public static Matcher<@Nullable Float> is(final float f) {
     return is(Float.valueOf(f));
   }
   /**
@@ -1165,7 +1182,7 @@ public class SpartanAssert extends org.junit.Assert {
    * @param i JD
    * @return a matcher for the value specified by the parameter
    */
-  public static Matcher<Integer> is(final int i) {
+  public static Matcher<@Nullable Integer> is(final int i) {
     return is(Integer.valueOf(i));
   }
   /**
@@ -1174,14 +1191,12 @@ public class SpartanAssert extends org.junit.Assert {
    * @param l JD
    * @return a matcher for the value specified by the parameter
    */
-  public static Matcher<Long> is(final long l) {
+  public static Matcher<@Nullable Long> is(final long l) {
     return is(Long.valueOf(l));
   }
   /**
-   * Decorates another Matcher, retaining its behaviour, but allowing tests to
-   * be slightly more expressive.
-   * <p/>
-   * For example:
+   * Decorates another Matcher, retaining its behavior, but allowing tests to be
+   * slightly more expressive, e.g.,
    *
    * <pre>
    * assertThat(cheese, is(equalTo(smelly)))
@@ -1202,7 +1217,7 @@ public class SpartanAssert extends org.junit.Assert {
    * @param s JD
    * @return a matcher for the value specified by the parameter
    */
-  public static Matcher<Short> is(final short s) {
+  public static Matcher<@Nullable Short> is(final short s) {
     return is(Short.valueOf(s));
   }
   /**
@@ -1220,7 +1235,7 @@ public class SpartanAssert extends org.junit.Assert {
    * assertThat(cheese, is(equalTo(smelly)))
    * </pre>
    */
-  public static <T> org.hamcrest.Matcher<T> is(final T value) {
+  public static <T> org.hamcrest.Matcher<T> is(final @Nullable T value) {
     return org.hamcrest.core.Is.<T> is(value);
   }
   /**
