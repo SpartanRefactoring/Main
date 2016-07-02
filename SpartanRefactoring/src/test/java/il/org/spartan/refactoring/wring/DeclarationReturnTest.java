@@ -92,11 +92,11 @@ public class DeclarationReturnTest {
       final ASTRewrite r = ASTRewrite.create(f.getAST());
       final Expression initializer = f.getInitializer();
       that(initializer, notNullValue());
-      that(Extract.nextStatement(f), notNullValue());
-      final ReturnStatement s = Extract.nextReturn(f);
+      that(extract.nextStatement(f), notNullValue());
+      final ReturnStatement s = extract.nextReturn(f);
       that(s, notNullValue());
-      that(same(f.getName(), Extract.expression(s)), is(true));
-      r.remove(Extract.statement(f), null);
+      that(same(f.getName(), extract.expression(s)), is(true));
+      r.remove(extract.statement(f), null);
       r.replace(s, Subject.operand(initializer).toReturn(), null);
     }
   }

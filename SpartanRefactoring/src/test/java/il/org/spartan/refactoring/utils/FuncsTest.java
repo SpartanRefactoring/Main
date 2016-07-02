@@ -120,6 +120,6 @@ public class FuncsTest {
     that(shortName(t("org.eclipse.jdt.core.dom.InfixExpression _;")), equalTo("e"));
   }
   private Type t(final String codeFragment) {
-    return Extract.firstType(s(codeFragment));
+    return extract.firstType(s(codeFragment));
   }
 }

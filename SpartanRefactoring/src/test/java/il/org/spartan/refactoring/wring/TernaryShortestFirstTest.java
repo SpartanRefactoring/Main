@@ -28,8 +28,8 @@ public class TernaryShortestFirstTest {
     final ConditionalExpression e = Into
         .c("length(not(notConditional)) + length(then) < length(notConditional) + length(elze) ? null : $");
     that(e, notNullValue());
-    final Expression elze = Extract.core(e.getElseExpression());
-    final Expression then = Extract.core(e.getThenExpression());
+    final Expression elze = extract.core(e.getElseExpression());
+    final Expression then = extract.core(e.getThenExpression());
     final Expression $ = Subject.pair(elze, then).toCondition(logicalNot(e.getExpression()));
     that(then.toString(), Is.conditional(then), is(false));
     that(elze.toString(), Is.conditional(elze), is(false));
@@ -40,14 +40,14 @@ public class TernaryShortestFirstTest {
     final ConditionalExpression e = Into.c("a?f(b,c,d):a");
     that(e, notNullValue());
     that(
-        Subject.pair(Extract.core(e.getElseExpression()), Extract.core(e.getThenExpression())).toCondition(
+        Subject.pair(extract.core(e.getElseExpression()), extract.core(e.getThenExpression())).toCondition(
             logicalNot(e.getExpression())), iz("!a?a:f(b,c,d)"));
   }
   @Test public void trace2() {
     final ConditionalExpression e = Into.c("!f(o) ? null : x.f(a).to(e.g())");
     that(e, notNullValue());
-    final Expression elze = Extract.core(e.getElseExpression());
-    final Expression then = Extract.core(e.getThenExpression());
+    final Expression elze = extract.core(e.getElseExpression());
+    final Expression then = extract.core(e.getThenExpression());
     final Expression $ = Subject.pair(elze, then).toCondition(logicalNot(e.getExpression()));
     that(then.toString(), Is.conditional(then), is(false));
     that(elze.toString(), Is.conditional(elze), is(false));

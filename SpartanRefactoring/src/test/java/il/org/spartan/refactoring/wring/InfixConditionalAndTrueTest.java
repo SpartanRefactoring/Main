@@ -138,7 +138,7 @@ public enum InfixConditionalAndTrueTest {
       that(asInfixExpression().getOperator(), is(CONDITIONAL_AND));
     }
     @Test public void twoOrMoreArguments() {
-      that(Extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
+      that(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
     }
   }
 }

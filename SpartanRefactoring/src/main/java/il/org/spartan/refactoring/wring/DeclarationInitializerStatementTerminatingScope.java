@@ -28,7 +28,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
     if (initializer == null || hasAnnotation(f) || initializer instanceof ArrayInitializer
         || Modifier.isFinal(((VariableDeclarationStatement) f.getParent()).getModifiers()))
       return null;
-    final Statement s = Extract.statement(f);
+    final Statement s = extract.statement(f);
     if (s == null)
       return null;
     final Block parent = asBlock(s.getParent());

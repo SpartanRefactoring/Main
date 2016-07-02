@@ -177,7 +177,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
         if (Statement.class.isAssignableFrom(child.getClass()))
           switch (child.getNodeType()) {
             case BLOCK:
-              if (Extract.statements(child).size() > 1)
+              if (extract.statements(child).size() > 1)
                 ++$.inner;
               return;
             case EMPTY_STATEMENT:

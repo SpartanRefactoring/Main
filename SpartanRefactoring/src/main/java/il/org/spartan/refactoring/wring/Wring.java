@@ -102,23 +102,23 @@ public abstract class Wring<N extends ASTNode> implements Kind {
 
   static abstract class InfixSorting extends AbstractSorting {
     @Override boolean eligible(final InfixExpression e) {
-      final List<Expression> es = Extract.allOperands(e);
+      final List<Expression> es = extract.allOperands(e);
       return !Wrings.mixedLiteralKind(es) && sort(es);
     }
     @Override Expression replacement(final InfixExpression e) {
-      final List<Expression> operands = Extract.allOperands(e);
+      final List<Expression> operands = extract.allOperands(e);
       return !sort(operands) ? null : Subject.operands(operands).to(e.getOperator());
     }
   }
 
   static abstract class InfixSortingOfCDR extends AbstractSorting {
     @Override boolean eligible(final InfixExpression e) {
-      final List<Expression> es = Extract.allOperands(e);
+      final List<Expression> es = extract.allOperands(e);
       es.remove(0);
       return !Wrings.mixedLiteralKind(es) && sort(es);
     }
     @Override Expression replacement(final InfixExpression e) {
-      final List<Expression> operands = Extract.allOperands(e);
+      final List<Expression> operands = extract.allOperands(e);
       final Expression first = operands.remove(0);
       if (!sort(operands))
         return null;
@@ -191,7 +191,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
   static abstract class ReplaceToNextStatement<N extends ASTNode> extends Wring<N> {
     abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g);
     @Override Rewrite make(final N n, final ExclusionManager exclude) {
-      final Statement nextStatement = Extract.nextStatement(n);
+      final Statement nextStatement = extract.nextStatement(n);
       if (nextStatement == null || !eligible(n))
         return null;
       exclude.exclude(nextStatement);
@@ -206,7 +206,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
       };
     }
     @Override boolean scopeIncludes(final N n) {
-      final Statement nextStatement = Extract.nextStatement(n);
+      final Statement nextStatement = extract.nextStatement(n);
       return nextStatement != null && go(ASTRewrite.create(n.getAST()), n, nextStatement, null) != null;
     }
   }
@@ -221,7 +221,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
   static abstract class MultipleReplaceToNextStatement<N extends ASTNode> extends Wring<N> {
     abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g, List<ASTNode> bss, List<ASTNode> crs);
     @Override Rewrite make(final N n, final ExclusionManager exclude) {
-      final Statement nextStatement = Extract.nextStatement(n);
+      final Statement nextStatement = extract.nextStatement(n);
       if (nextStatement == null || !eligible(n))
         return null;
       exclude.exclude(nextStatement);
@@ -240,7 +240,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
       };
     }
     @Override boolean scopeIncludes(final N n) {
-      final Statement nextStatement = Extract.nextStatement(n);
+      final Statement nextStatement = extract.nextStatement(n);
       return nextStatement != null
           && go(ASTRewrite.create(n.getAST()), n, nextStatement, null, new ArrayList<>(), new ArrayList<>()) != null;
     }
@@ -399,7 +399,7 @@ final class LocalInliner {
 
   class LocalInlineWithValue extends Wrapper<Expression> {
     LocalInlineWithValue(final Expression replacement) {
-      super(Extract.core(replacement));
+      super(extract.core(replacement));
     }
     @SafeVarargs protected final void inlineInto(final ASTNode... ns) {
       inlineInto(wrap(ns));

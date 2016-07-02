@@ -27,7 +27,7 @@ public class PlantTest {
   }
   @Test public void plus() {
     final Expression e = Into.e("a + 2 < b");
-    final Expression plus = Extract.firstPlus(e);
+    final Expression plus = extract.firstPlus(e);
     that(plus.toString(), Is.notString(plus), is(true));
     that(e.toString(), Is.notString(plus), is(true));
   }

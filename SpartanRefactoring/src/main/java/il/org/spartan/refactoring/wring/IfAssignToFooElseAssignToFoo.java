@@ -17,15 +17,15 @@ import org.eclipse.jdt.core.dom.*;
  */
 public final class IfAssignToFooElseAssignToFoo extends Wring.ReplaceCurrentNode<IfStatement> implements Kind.Ternarize {
   @Override Statement replacement(final IfStatement s) {
-    final Assignment then = Extract.assignment(then(s));
-    final Assignment elze = Extract.assignment(elze(s));
+    final Assignment then = extract.assignment(then(s));
+    final Assignment elze = extract.assignment(elze(s));
     return !compatible(then, elze) ? null : Subject.pair(left(then),
         Subject.pair(right(then), right(elze)).toCondition(s.getExpression())).toStatement(then.getOperator());
   }
   @Override boolean scopeIncludes(final IfStatement s) {
-    return s != null && compatible(Extract.assignment(then(s)), Extract.assignment(elze(s)));
+    return s != null && compatible(extract.assignment(then(s)), extract.assignment(elze(s)));
   }
   @Override String description(final IfStatement s) {
-    return "Consolidate assignments to " + left(Extract.assignment(then(s)));
+    return "Consolidate assignments to " + left(extract.assignment(then(s)));
   }
 }

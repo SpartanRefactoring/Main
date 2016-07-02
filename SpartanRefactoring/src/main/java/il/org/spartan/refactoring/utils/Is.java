@@ -127,7 +127,7 @@ public enum Is {
         default:
           break;
         case PARENTHESIZED_EXPRESSION:
-          return conditional(Extract.core(e));
+          return conditional(extract.core(e));
       }
     }
     return false;
@@ -180,7 +180,7 @@ public enum Is {
       case THIS_EXPRESSION:
         return true;
       case PREFIX_EXPRESSION:
-        return Is.constant(Extract.core(((PrefixExpression) e).getOperand()));
+        return Is.constant(extract.core(((PrefixExpression) e).getOperand()));
       default:
         return false;
     }
@@ -210,7 +210,7 @@ public enum Is {
   public static boolean deterministic(final Expression e) {
     if (!sideEffectFree(e))
       return false;
-    final Wrapper<Boolean> $ = new Wrapper<Boolean>(Boolean.TRUE);
+    final Wrapper<Boolean> $ = new Wrapper<>(Boolean.TRUE);
     e.accept(new ASTVisitor() {
       @Override public boolean visit(@SuppressWarnings("unused") final ArrayCreation __) {
         $.set(Boolean.FALSE);
@@ -389,7 +389,7 @@ public enum Is {
     return notStringSelf(e) || notStringDown(asInfixExpression(e));
   }
   static boolean notStringDown(final InfixExpression e) {
-    return e != null && (e.getOperator() != PLUS || are.notString(Extract.allOperands(e)));
+    return e != null && (e.getOperator() != PLUS || are.notString(extract.allOperands(e)));
   }
   static boolean notStringSelf(final Expression e) {
     return intIsIn(e.getNodeType(), //
@@ -533,9 +533,9 @@ public enum Is {
       case PREFIX_EXPRESSION:
         return sideEffectFreePrefixExpression((PrefixExpression) e);
       case PARENTHESIZED_EXPRESSION:
-        return sideEffectFree(Extract.core(e));
+        return sideEffectFree(extract.core(e));
       case INFIX_EXPRESSION:
-        return sideEffectsFree(Extract.allOperands((InfixExpression) e));
+        return sideEffectsFree(extract.allOperands((InfixExpression) e));
       case CONDITIONAL_EXPRESSION:
         final ConditionalExpression ce = (ConditionalExpression) e;
         return sideEffectsFree(ce.getExpression(), ce.getThenExpression(), ce.getElseExpression());
@@ -611,7 +611,7 @@ public enum Is {
    *         statement.
    */
   public static boolean singletonStatement(final ASTNode n) {
-    return Extract.statements(n).size() == 1;
+    return extract.statements(n).size() == 1;
   }
   /**
    * Determine whether the "then" branch of an {@link Statement} is a single
@@ -670,7 +670,7 @@ public enum Is {
    *         statements in the parameter
    */
   public static boolean vacuous(final Statement s) {
-    return Extract.statements(s).isEmpty();
+    return extract.statements(s).isEmpty();
   }
   /**
    * Determine whether the 'else' part of an {@link IfStatement} is vacuous.

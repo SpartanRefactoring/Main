@@ -2016,7 +2016,7 @@ public class TrimmerTest {
     final Statement s = s(from);
     that(s, iz("{" + from + "}"));
     that(s, notNullValue());
-    final PostfixExpression e = Extract.findFirstPostfix(s);
+    final PostfixExpression e = extract.findFirstPostfix(s);
     that(e, notNullValue());
     that(e, iz("i--"));
     final ASTNode parent = e.getParent();
@@ -2618,10 +2618,10 @@ public class TrimmerTest {
         "      return res;\n" + //
         ""//
     );
-    final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(u);
+    final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
     that(f, notNullValue());
     that(f, iz(" res = 0"));
-    that(Extract.nextStatement(f), iz(" for (int i = 0;i < s.length();++i)\n"//
+    that(extract.nextStatement(f), iz(" for (int i = 0;i < s.length();++i)\n"//
         + "       if (s.charAt(i) == 'a')\n"//
         + "          res += 2;\n"//
         + "        else "//

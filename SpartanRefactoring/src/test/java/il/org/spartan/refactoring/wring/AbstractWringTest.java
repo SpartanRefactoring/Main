@@ -213,7 +213,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
           that(inner.scopeIncludes(asMe()), is(false));
       }
       @Override protected VariableDeclarationFragment asMe() {
-        return Extract.firstVariableDeclarationFragment(ast.STATEMENTS.ast(input));
+        return extract.firstVariableDeclarationFragment(ast.STATEMENTS.ast(input));
       }
     }
 
@@ -319,7 +319,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
        * first If statement in the input.
        */
       @Override protected IfStatement asMe() {
-        return Extract.firstIfStatement(ast.STATEMENTS.ast(input));
+        return extract.firstIfStatement(ast.STATEMENTS.ast(input));
       }
     }
 
@@ -838,7 +838,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
       return new Document(Wrap.Statement.on(input));
     }
     @Override protected VariableDeclarationFragment asMe() {
-      return Extract.firstVariableDeclarationFragment(ast.STATEMENTS.ast(input));
+      return extract.firstVariableDeclarationFragment(ast.STATEMENTS.ast(input));
     }
   }
 

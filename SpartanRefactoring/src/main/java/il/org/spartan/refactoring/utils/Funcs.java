@@ -507,7 +507,7 @@ public enum Funcs {
    */
   public static int negationLevel(final Expression e) {
     return e instanceof PrefixExpression ? negationLevel((PrefixExpression) e) //
-        : e instanceof ParenthesizedExpression ? negationLevel(Extract.core(e)) //
+        : e instanceof ParenthesizedExpression ? negationLevel(extract.core(e)) //
             : as.bit(e instanceof NumberLiteral && ((NumberLiteral) e).getToken().startsWith("-"));
   }
   /**
@@ -528,7 +528,7 @@ public enum Funcs {
   public static Expression peelNegation(final Expression $) {
     return //
     $ instanceof PrefixExpression ? peelNegation((PrefixExpression) $) //
-        : $ instanceof ParenthesizedExpression ? peelNegation(Extract.core($)) //
+        : $ instanceof ParenthesizedExpression ? peelNegation(extract.core($)) //
             : $ instanceof NumberLiteral ? peelNegation((NumberLiteral) $) : $;
   }
   /**

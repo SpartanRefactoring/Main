@@ -26,7 +26,7 @@ public class UtilsTest {
     that(in("X", "A", "B", "C"), is(false));
   }
   @Test public void inTypicalTrue() {
-    Assert.assertThat(in("A", "A", "B", "C"), is(true));
+    azzert.that(in("A", "A", "B", "C"), is(true));
   }
   @Test public void removePrefiEmpty() {
     that("BAAAAB", is(Utils.removePrefix("BAAAAB", "A")));

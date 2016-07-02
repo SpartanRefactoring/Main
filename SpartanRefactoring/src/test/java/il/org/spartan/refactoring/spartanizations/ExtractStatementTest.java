@@ -12,60 +12,60 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 public class ExtractStatementTest {
   @Test public void declarationCorrectSize() {
-    that(Extract.statements(s("{int a; a();}")).size(), is(2));
+    that(extract.statements(s("{int a; a();}")).size(), is(2));
   }
   @Test public void declarationIsNotEmpty() {
-    that(Extract.statements(s("{int a; a();}")), not(empty()));
+    that(extract.statements(s("{int a; a();}")), not(empty()));
   }
   @Test public void deeplyNestedOneInCurlyIsNotEmpty() {
-    that(Extract.statements(s("{{{{a();}}}}")), not(empty()));
+    that(extract.statements(s("{{{{a();}}}}")), not(empty()));
   }
   @Test public void emptyBlockIsEmpty() {
-    that(Extract.statements(s("{}")), empty());
+    that(extract.statements(s("{}")), empty());
   }
   @Test public void emptyStatementInBlockIsEmpty() {
-    that(Extract.statements(s("{;}")), empty());
+    that(extract.statements(s("{;}")), empty());
   }
   @Test public void emptyStatementIsEmpty() {
-    that(Extract.statements(s(";")), empty());
+    that(extract.statements(s(";")), empty());
   }
   @Test public void fiveIsCorrectSize() {
-    that(Extract.statements(s("{{a();b();}{a(); b(); {}{}{{}} c();}}")).size(), is(5));
+    that(extract.statements(s("{{a();b();}{a(); b(); {}{}{{}} c();}}")).size(), is(5));
   }
   @Test public void isEmptyOfNull() {
-    that(Extract.statements(null), empty());
+    that(extract.statements(null), empty());
   }
   @Test public void isNotNullOfNull() {
-    that(Extract.statements(null), is(notNullValue()));
+    that(extract.statements(null), is(notNullValue()));
   }
   @Test public void isNotNullOfValidStatement() {
-    that(Extract.statements(s("{}")), is(notNullValue()));
+    that(extract.statements(s("{}")), is(notNullValue()));
   }
   @Test public void manyEmptyStatementInBlockIsEmpty() {
-    that(Extract.statements(s("{;};{;;{;;}};")), empty());
+    that(extract.statements(s("{;};{;;{;;}};")), empty());
   }
   @Test public void manyIsNotEmpty() {
-    that(Extract.statements(s("a(); b(); c();")), not(empty()));
+    that(extract.statements(s("a(); b(); c();")), not(empty()));
   }
   @Test public void nestedTwoIsCorrectSize() {
-    that(Extract.statements(s("{a();b();}")).size(), is(2));
+    that(extract.statements(s("{a();b();}")).size(), is(2));
   }
   @Test public void oneInCurlyIsNotEmpty() {
-    that(Extract.statements(s("{a();}")), not(empty()));
+    that(extract.statements(s("{a();}")), not(empty()));
   }
   @Test public void oneIsNotEmpty() {
-    that(Extract.statements(s("{a();}")), not(empty()));
+    that(extract.statements(s("{a();}")), not(empty()));
   }
   @Test public void twoFunctionCallsIsCorrectSize() {
-    that(Extract.statements(s("{b(); a();}")).size(), is(2));
+    that(extract.statements(s("{b(); a();}")).size(), is(2));
   }
   @Test public void twoInCurlyIsNotEmpty() {
-    that(Extract.statements(s("{a();b();}")), not(empty()));
+    that(extract.statements(s("{a();b();}")), not(empty()));
   }
   @Test public void twoIsCorrectSize() {
-    that(Extract.statements(s("a();b();")).size(), is(2));
+    that(extract.statements(s("a();b();")).size(), is(2));
   }
   @Test public void twoIsNotEmpty() {
-    that(Extract.statements(s("a();b();")), not(empty()));
+    that(extract.statements(s("a();b();")), not(empty()));
   }
 }

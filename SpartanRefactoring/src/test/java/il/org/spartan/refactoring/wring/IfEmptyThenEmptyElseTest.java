@@ -14,7 +14,7 @@ import org.junit.*;
 public class IfEmptyThenEmptyElseTest {
   private static final IfEmptyThenEmptyElse WRING = new IfEmptyThenEmptyElse();
   private static final Statement INPUT = Into.s("{if (b) ; else ;}");
-  private static final IfStatement IF = Extract.firstIfStatement(INPUT);
+  private static final IfStatement IF = extract.firstIfStatement(INPUT);
 
   @Test public void eligible() {
     that(WRING.eligible(IF), is(true));
@@ -35,7 +35,7 @@ public class IfEmptyThenEmptyElseTest {
     final String input = Wrap.Statement.on(INPUT + "");
     final Document d = new Document(input);
     final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(d.get());
-    final IfStatement s = Extract.firstIfStatement(u);
+    final IfStatement s = extract.firstIfStatement(u);
     that(s, iz("if(b);else;"));
     final ASTRewrite r = ASTRewrite.create(u.getAST());
     final Rewrite t = WRING.make(s);
@@ -44,7 +44,7 @@ public class IfEmptyThenEmptyElseTest {
     that(e, notNullValue());
     that(e.getChildren().length, greaterThan(0));
     e.apply(d);
-    assertThat(d.get(), Extract.firstIfStatement(ast.COMPILIATION_UNIT.ast(d.get())), nullValue());
+    assertThat(d.get(), extract.firstIfStatement(ast.COMPILIATION_UNIT.ast(d.get())), nullValue());
   }
   @Test public void scopeIncludes() {
     that(WRING.scopeIncludes(IF), is(true));

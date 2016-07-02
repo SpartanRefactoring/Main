@@ -35,7 +35,7 @@ public class DeclarationIfAssginmentTest {
     final String from = "int a = 2,b; if (b) a =3;";
     final String wrap = Wrap.Statement.on(from);
     final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(wrap);
-    final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(u);
+    final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
     that(f, notNullValue());
     that(WRING.scopeIncludes(f), is(false));
   }
@@ -43,16 +43,16 @@ public class DeclarationIfAssginmentTest {
     final String from = "int a = 2,b; if (a+b) a =3;";
     final String wrap = Wrap.Statement.on(from);
     final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(wrap);
-    final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(u);
+    final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
     that(f, notNullValue());
     final Expression initializer = f.getInitializer();
     that(initializer, notNullValue());
-    final IfStatement s = Extract.nextIfStatement(f);
-    that(s, is(Extract.firstIfStatement(u)));
+    final IfStatement s = extract.nextIfStatement(f);
+    that(s, is(extract.firstIfStatement(u)));
     that(s, notNullValue());
     that(s, iz("if (a + b) a=3;"));
     azzert.that(Is.vacuousElse(s), is(true));
-    final Assignment a = Extract.assignment(then(s));
+    final Assignment a = extract.assignment(then(s));
     that(a, notNullValue());
     that(same(left(a), f.getName()), is(true));
     that(a.getOperator(), is(Assignment.Operator.ASSIGN));
@@ -110,7 +110,7 @@ public class DeclarationIfAssginmentTest {
       final String expected = "int a = b ? 3 : 2;";
       final Document d = new Document(Wrap.Statement.on(from));
       final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(d);
-      final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(u);
+      final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
       that(f, notNullValue());
       final ASTRewrite r = new Trimmer().createRewrite(u, null);
       final TextEdit e = r.rewriteAST(d, null);

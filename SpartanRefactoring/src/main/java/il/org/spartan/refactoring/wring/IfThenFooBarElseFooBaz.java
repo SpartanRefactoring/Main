@@ -23,10 +23,10 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements 
     return "Condolidate commmon prefix of then and else branches to just before if(" + s.getExpression() + ") ...";
   }
   @Override Rewrite make(final IfStatement s) {
-    final List<Statement> then = Extract.statements(then(s));
+    final List<Statement> then = extract.statements(then(s));
     if (then.isEmpty())
       return null;
-    final List<Statement> elze = Extract.statements(elze(s));
+    final List<Statement> elze = extract.statements(elze(s));
     if (elze.isEmpty())
       return null;
     final List<Statement> commonPrefix = commonPrefix(then, elze);

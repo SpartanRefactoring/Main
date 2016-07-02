@@ -53,18 +53,18 @@ public class SingletStatementTest {
   @Test public void peelIf() {
     final ASTNode n = ast.STATEMENTS.ast("{if (a) return b; else return c;}");
     that(n, notNullValue());
-    final List<Statement> ss = Extract.statements(n);
+    final List<Statement> ss = extract.statements(n);
     that(ss, notNullValue());
     that(ss.size(), is(1));
-    that(Extract.singleStatement(n), notNullValue());
+    that(extract.singleStatement(n), notNullValue());
   }
   @Test public void peelIPlusPlus() {
     final ASTNode n = ast.STATEMENTS.ast("{i++;}");
     that(n, notNullValue());
-    final List<Statement> ss = Extract.statements(n);
+    final List<Statement> ss = extract.statements(n);
     that(ss, notNullValue());
     that(ss.size(), is(1));
-    that(Extract.singleStatement(n), notNullValue());
+    that(extract.singleStatement(n), notNullValue());
   }
   @Test public void twoFunctionCallsNullValue() {
     that(singleStatement(s("{b(); a();}")), nullValue());

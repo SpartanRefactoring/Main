@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.idiomatic.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
@@ -18,7 +19,7 @@ import org.eclipse.jdt.core.dom.*;
  * @author Yossi Gil
  * @since 2015-07-28
  */
-public enum Extract {
+public enum extract {
   ;
   /**
    * Retrieve all operands, including parenthesized ones, under an expression
@@ -27,7 +28,7 @@ public enum Extract {
    * @return a {@link List} of all operands to the parameter
    */
   public static List<Expression> allOperands(final InfixExpression e) {
-    return Extract.operands(flatten(e));
+    return extract.operands(flatten(e));
   }
   /**
    * @param n a statement or block to extract the assignment from
@@ -35,8 +36,14 @@ public enum Extract {
    *         statement is not an assignment or the assignment if it exists
    */
   public static Assignment assignment(final ASTNode n) {
-    final ExpressionStatement e = Extract.expressionStatement(n);
-    return e == null ? null : asAssignment(e.getExpression());
+    return asAssignment(expression(extract.expressionStatement(n)));
+  }
+  /**
+   * @param e
+   * @return
+   */
+  private static Expression expression(final ExpressionStatement e) {
+    return e == null ? null : e.getExpression();
   }
   /**
    * Find the "core" of a given {@link Expression}, by peeling of any
@@ -65,7 +72,7 @@ public enum Extract {
   public static Statement core(final Statement s) {
     if (Scalpel.isInaccessible(s))
       return s;
-    final List<Statement> ss = Extract.statements(s);
+    final List<Statement> ss = extract.statements(s);
     switch (ss.size()) {
       case 0:
         return null;
@@ -103,7 +110,7 @@ public enum Extract {
    *         more than one statement
    */
   public static ExpressionStatement expressionStatement(final ASTNode n) {
-    return n == null ? null : asExpressionStatement(Extract.singleStatement(n));
+    return n == null ? null : asExpressionStatement(extract.singleStatement(n));
   }
   /**
    * Search for a {@link PrefixExpression} in the tree rooted at an
@@ -227,7 +234,7 @@ public enum Extract {
    *         <code><b>null</b></code> if not such statements exists.
    */
   public static IfStatement ifStatement(final ASTNode n) {
-    return asIfStatement(Extract.singleStatement(n));
+    return asIfStatement(extract.singleStatement(n));
   }
   /**
    * Find the last statement residing under a given {@link Statement}
@@ -258,7 +265,7 @@ public enum Extract {
    *         block contains more than one statement
    */
   public static MethodInvocation methodInvocation(final ASTNode n) {
-    return asMethodInvocation(Extract.expressionStatement(n).getExpression());
+    return asMethodInvocation(extract.expressionStatement(n).getExpression());
   }
   /**
    * Find the {@link Assignment} that follows a given node.
@@ -268,7 +275,7 @@ public enum Extract {
    *         <code><b>null</b></code> if not such value exists.
    */
   public static Assignment nextAssignment(final ASTNode n) {
-    return Extract.assignment(nextStatement(n));
+    return extract.assignment(nextStatement(n));
   }
   /**
    * Extract the {@link IfStatement} that immediately follows a given node
@@ -298,7 +305,7 @@ public enum Extract {
    *         <code><b>null</b></code>, if no such statement exists.
    */
   public static Statement nextStatement(final ASTNode n) {
-    return nextStatement(Extract.statement(n));
+    return nextStatement(extract.statement(n));
   }
   /**
    * Extract the {@link Statement} that immediately follows a given statement
@@ -311,7 +318,7 @@ public enum Extract {
     if (s == null)
       return null;
     final Block b = asBlock(s.getParent());
-    return b == null ? null : next(s, Extract.statements(b));
+    return unless(b == null).eval(() -> next(s, extract.statements(b)));
   }
   /**
    * Makes a list of all operands of an expression, comprising the left operand,
@@ -340,7 +347,13 @@ public enum Extract {
    *         the expression if they are
    */
   public static Expression returnExpression(final ASTNode n) {
-    final ReturnStatement $ = returnStatement(n);
+    return extract.expression(extract.returnStatement(n));
+  }
+  /**
+   * @param $
+   * @return
+   */
+  private static Expression expression(final ReturnStatement $) {
     return $ == null ? null : $.getExpression();
   }
   /**
@@ -351,7 +364,7 @@ public enum Extract {
    *         return it; <code><b>null</b></code> if not such statements exists.
    */
   public static ReturnStatement returnStatement(final ASTNode n) {
-    return asReturnStatement(Extract.singleStatement(n));
+    return asReturnStatement(extract.singleStatement(n));
   }
   /**
    * Finds the single statement in the <code><b>else</b></code> branch of an
@@ -363,7 +376,7 @@ public enum Extract {
    *         exists.
    */
   public static Statement singleElse(final IfStatement s) {
-    return Extract.singleStatement(elze(s));
+    return extract.singleStatement(elze(s));
   }
   /**
    * @param n JD
@@ -371,8 +384,8 @@ public enum Extract {
    *         b is statement it returns b and if b is null it returns a null
    */
   public static Statement singleStatement(final ASTNode n) {
-    final List<Statement> $ = Extract.statements(n);
-    return $.size() != 1 ? null : $.get(0);
+    final List<Statement> $ = extract.statements(n);
+    return unless($.size() != 1).eval(() -> $.get(0));
   }
   /**
    * Finds the single statement in the "then" branch of an {@link IfStatement}
@@ -382,7 +395,7 @@ public enum Extract {
    *         <code><b>null</b></code>, if no such statement exists.
    */
   public static Statement singleThen(final IfStatement s) {
-    return Extract.singleStatement(then(s));
+    return extract.singleStatement(then(s));
   }
   /**
    * Extract the {@link Statement} that contains a given node.
@@ -406,7 +419,7 @@ public enum Extract {
    */
   public static List<Statement> statements(final ASTNode n) {
     final List<Statement> $ = new ArrayList<>();
-    return n == null || !(n instanceof Statement) ? $ : Extract.statementsInto((Statement) n, $);
+    return n == null || !(n instanceof Statement) ? $ : extract.statementsInto((Statement) n, $);
   }
   /**
    * @param n a node to extract an expression from
@@ -414,7 +427,7 @@ public enum Extract {
    *         the expression if they are
    */
   public static Expression throwExpression(final ASTNode n) {
-    final ThrowStatement $ = asThrowStatement(Extract.singleStatement(n));
+    final ThrowStatement $ = asThrowStatement(extract.singleStatement(n));
     return $ == null ? null : $.getExpression();
   }
   /**
@@ -425,7 +438,7 @@ public enum Extract {
    *         return it; <code><b>null</b></code> if not such statements exists.
    */
   public static ThrowStatement throwStatement(final ASTNode n) {
-    return asThrowStatement(Extract.singleStatement(n));
+    return asThrowStatement(extract.singleStatement(n));
   }
   private static Statement next(final Statement s, final List<Statement> ss) {
     for (int i = 0; i < ss.size() - 1; ++i)
@@ -435,7 +448,7 @@ public enum Extract {
   }
   private static List<Statement> statementsInto(final Block b, final List<Statement> $) {
     for (final Object statement : b.statements())
-      Extract.statementsInto((Statement) statement, $);
+      extract.statementsInto((Statement) statement, $);
     return $;
   }
   private static List<Statement> statementsInto(final Statement s, final List<Statement> $) {
@@ -443,7 +456,7 @@ public enum Extract {
       case EMPTY_STATEMENT:
         return $;
       case BLOCK:
-        return Extract.statementsInto((Block) s, $);
+        return extract.statementsInto((Block) s, $);
       default:
         $.add(s);
         return $;

@@ -29,9 +29,9 @@ public class IfAssignToFooElseAssignToFooTest {
     that(asSingle("if (a) a = b; else a = c;"), notNullValue());
     final IfStatement s = asIfStatement(asSingle("if (a) a = b; else a = c;"));
     that(s, notNullValue());
-    final Assignment then = Extract.assignment(then(s));
+    final Assignment then = extract.assignment(then(s));
     assertNotNull(then(s).toString(), then);
-    final Assignment elze = Extract.assignment(elze(s));
+    final Assignment elze = extract.assignment(elze(s));
     that(elze, notNullValue());
     that(compatible(then, elze), is(true));
     that(WRING.scopeIncludes(s), is(true));

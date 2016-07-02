@@ -17,10 +17,10 @@ import org.eclipse.jdt.core.dom.*;
 public final class IfExpressionStatementElseSimilarExpressionStatement extends Wring.ReplaceCurrentNode<IfStatement> implements
     Kind.ConsolidateStatements {
   @Override Statement replacement(final IfStatement s) {
-    final Expression then = Extract.expression(Extract.expressionStatement(then(s)));
+    final Expression then = extract.expression(extract.expressionStatement(then(s)));
     if (then == null)
       return null;
-    final Expression elze = Extract.expression(Extract.expressionStatement(elze(s)));
+    final Expression elze = extract.expression(extract.expressionStatement(elze(s)));
     if (elze == null)
       return null;
     final Expression e = pushdown(Subject.pair(then, elze).toCondition(s.getExpression()));

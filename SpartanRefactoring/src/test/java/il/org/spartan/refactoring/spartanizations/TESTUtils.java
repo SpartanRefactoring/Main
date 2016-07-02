@@ -48,7 +48,7 @@ import org.eclipse.text.edits.*;
     that(statement, notNullValue());
     final ASTNode n = ast.STATEMENTS.ast(statement);
     that(n, notNullValue());
-    return Extract.singleStatement(n);
+    return extract.singleStatement(n);
   }
   public static Document rewrite(final Spartanization s, final CompilationUnit u, final Document $) {
     try {

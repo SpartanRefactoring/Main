@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Extract.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
@@ -51,13 +51,13 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
   private static Expression pushdown(final ConditionalExpression e, final InfixExpression e1, final InfixExpression e2) {
     if (e1.getOperator() != e2.getOperator())
       return null;
-    final List<Expression> es1 = Extract.operands(e1);
-    final List<Expression> es2 = Extract.operands(e2);
+    final List<Expression> es1 = extract.operands(e1);
+    final List<Expression> es2 = extract.operands(e2);
     final int i = findSingleDifference(es1, es2);
     if (i < 0)
       return null;
     final InfixExpression $ = duplicate(e1);
-    final List<Expression> operands = Extract.operands($);
+    final List<Expression> operands = extract.operands($);
     operands.remove(i);
     operands.add(i, p($, Subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression())));
     return p(e, Subject.operands(operands).to($.getOperator()));

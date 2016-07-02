@@ -20,9 +20,9 @@ public class WringsTest {
     final String input = "void f() { int b = 3; do ; while(b != 0); }";
     final Document d = Wrap.Method.intoDocument(input);
     final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(d);
-    final MethodDeclaration m = Extract.firstMethodDeclaration(u);
+    final MethodDeclaration m = extract.firstMethodDeclaration(u);
     that(m, iz(input));
-    final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(m);
+    final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(m);
     that(f, notNullValue());
     final SimpleName b = f.getName();
     that(Collect.usesOf(b).in(m).size(), is(2));
@@ -36,7 +36,7 @@ public class WringsTest {
     final String input = "int f() { for (int a: as) return a; }";
     final Document d = Wrap.Method.intoDocument(input);
     final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(d);
-    final MethodDeclaration m = Extract.firstMethodDeclaration(u);
+    final MethodDeclaration m = extract.firstMethodDeclaration(u);
     that(m, iz(input));
     final Block b = m.getBody();
     final EnhancedForStatement s = (EnhancedForStatement) b.statements().get(0);
@@ -50,7 +50,7 @@ public class WringsTest {
     final String input = "int f() { for (int a: as) return a; }";
     final Document d = Wrap.Method.intoDocument(input);
     final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(d);
-    final MethodDeclaration m = Extract.firstMethodDeclaration(u);
+    final MethodDeclaration m = extract.firstMethodDeclaration(u);
     that(m, iz(input));
     final Block b = m.getBody();
     final EnhancedForStatement s = (EnhancedForStatement) b.statements().get(0);
@@ -70,7 +70,7 @@ public class WringsTest {
     that(Is.sideEffectFree(e), is(false));
     final String input = "int a = f(); return a += 2 * a;";
     final CompilationUnit u = Wrap.Statement.intoCompilationUnit(input);
-    final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(u);
+    final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
     that(f, iz("a=f()"));
     final SimpleName n = f.getName();
     that(n, iz("a"));

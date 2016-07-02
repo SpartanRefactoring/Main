@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Extract.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -40,11 +40,11 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
    * @return the simplified parameter
    */
   public static Expression simplifyNot(final PrefixExpression e) {
-    return pushdownNot(asNot(Extract.core(e)));
+    return pushdownNot(asNot(extract.core(e)));
   }
   private static Expression applyDeMorgan(final InfixExpression inner) {
     final List<Expression> operands = new ArrayList<>();
-    for (final Expression e : Extract.operands(flatten(inner)))
+    for (final Expression e : extract.operands(flatten(inner)))
       operands.add(logicalNot(e));
     return Subject.operands(operands).to(conjugate(inner.getOperator()));
   }

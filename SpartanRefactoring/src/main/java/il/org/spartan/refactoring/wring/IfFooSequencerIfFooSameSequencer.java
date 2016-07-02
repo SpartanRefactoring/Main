@@ -36,8 +36,8 @@ public final class IfFooSequencerIfFooSameSequencer extends Wring.ReplaceToNextS
     if (s2 == null || !Is.vacuousElse(s2))
       return null;
     final Statement then = then(s);
-    final List<Statement> ss1 = Extract.statements(then);
-    if (!same(ss1, Extract.statements(then(s2))) || !Is.sequencer(last(ss1)))
+    final List<Statement> ss1 = extract.statements(then);
+    if (!same(ss1, extract.statements(then(s2))) || !Is.sequencer(last(ss1)))
       return null;
     scalpel.replaceWith(makeIfWithoutElse(BlockSimplify.reorganizeNestedStatement(then, scalpel),
         Subject.pair(s.getExpression(), s2.getExpression()).to(CONDITIONAL_OR)));

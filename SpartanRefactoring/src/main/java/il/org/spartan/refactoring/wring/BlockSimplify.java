@@ -17,7 +17,7 @@ import org.eclipse.jdt.core.dom.*;
  */
 public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> implements Kind.REMOVE_REDUNDANT_PUNCTUATION {
   static Statement reorganizeNestedStatement(final Statement s, final Scalpel scalpel) {
-    final List<Statement> ss = Extract.statements(s);
+    final List<Statement> ss = extract.statements(s);
     switch (ss.size()) {
       case 0:
         return s.getAST().newEmptyStatement();
@@ -40,14 +40,14 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> implements Ki
     return true;
   }
   private static Block reorganizeStatement(final Statement s, final Scalpel scalpel) {
-    final List<Statement> ss = Extract.statements(s);
+    final List<Statement> ss = extract.statements(s);
     final Block $ = s.getAST().newBlock();
     assertNotNull(scalpel);
     scalpel.duplicateInto(ss, expose.statements($));
     return $;
   }
   @Override Statement replacement(final Block b) {
-    final List<Statement> ss = Extract.statements(b);
+    final List<Statement> ss = extract.statements(b);
     if (identical(ss, expose.statements(b)))
       return null;
     final ASTNode parent = b.getParent();

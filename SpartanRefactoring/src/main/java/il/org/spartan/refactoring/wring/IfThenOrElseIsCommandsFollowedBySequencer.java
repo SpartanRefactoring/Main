@@ -32,7 +32,7 @@ import org.eclipse.text.edits.*;
  */
 public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfStatement> implements Kind.SIMPLIFY_NESTED_BLOCK {
   static boolean endsWithSequencer(final Statement s) {
-    return Is.sequencer(Extract.lastStatement(s));
+    return Is.sequencer(extract.lastStatement(s));
   }
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Remove redundant else (possibly after inverting if statement)";
@@ -41,7 +41,7 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
     return new Rewrite(description(s), s) {
       @SuppressWarnings("unused") @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final IfStatement shorterIf = makeShorterIf(s);
-        final List<Statement> remainder = Extract.statements(elze(shorterIf));
+        final List<Statement> remainder = extract.statements(elze(shorterIf));
         shorterIf.setElseStatement(null);
         final Block parent = asBlock(s.getParent());
         final Block newParent = s.getAST().newBlock();

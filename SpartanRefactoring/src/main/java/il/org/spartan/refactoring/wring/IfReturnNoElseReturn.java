@@ -19,16 +19,16 @@ public final class IfReturnNoElseReturn extends Wring.ReplaceToNextStatement<IfS
   @Override ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!Is.vacuousElse(s))
       return null;
-    final ReturnStatement r1 = Extract.returnStatement(then(s));
+    final ReturnStatement r1 = extract.returnStatement(then(s));
     if (r1 == null)
       return null;
-    final Expression e1 = Extract.core(r1.getExpression());
+    final Expression e1 = extract.core(r1.getExpression());
     if (e1 == null)
       return null;
-    final ReturnStatement r2 = Extract.returnStatement(nextStatement);
+    final ReturnStatement r2 = extract.returnStatement(nextStatement);
     if (r2 == null)
       return null;
-    final Expression e2 = Extract.core(r2.getExpression());
+    final Expression e2 = extract.core(r2.getExpression());
     if (e2 == null)
       return null;
     scalpel.operate(s, nextStatement);
@@ -37,7 +37,7 @@ public final class IfReturnNoElseReturn extends Wring.ReplaceToNextStatement<IfS
     return r;
   }
   @Override boolean scopeIncludes(final IfStatement s) {
-    return Is.vacuousElse(s) && Extract.returnStatement(then(s)) != null && Extract.nextReturn(s) != null;
+    return Is.vacuousElse(s) && extract.returnStatement(then(s)) != null && extract.nextReturn(s) != null;
   }
   @Override String description(final IfStatement s) {
     return "Consolidate if(" + s.getExpression() + ") ... into a single 'return'";

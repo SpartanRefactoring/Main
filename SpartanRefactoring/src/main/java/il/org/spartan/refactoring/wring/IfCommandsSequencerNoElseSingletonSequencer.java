@@ -35,7 +35,7 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends Wring.Rep
     if (!shoudlInvert(asVirtualIf))
       return null;
     final IfStatement canonicalIf = invert(asVirtualIf);
-    final List<Statement> ss = Extract.statements(elze(canonicalIf));
+    final List<Statement> ss = extract.statements(elze(canonicalIf));
     canonicalIf.setElseStatement(null);
     if (!Is.block(s.getParent())) { // case 2
       ss.add(0, canonicalIf);

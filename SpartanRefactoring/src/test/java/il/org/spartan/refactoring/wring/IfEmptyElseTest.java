@@ -78,7 +78,7 @@ public class IfEmptyElseTest {
     @Test public void isfStatementElseIsEmpty() {
       @Nullable final IfStatement asMe = asMe();
       assert asMe != null;
-      that(Extract.statements(asMe.getElseStatement()).size(), is(0));
+      that(extract.statements(asMe.getElseStatement()).size(), is(0));
     }
     @Test public void isfStatementElseNotNull() {
       that(elze(asMe()), notNullValue());
@@ -90,8 +90,8 @@ public class IfEmptyElseTest {
       final IfStatement s = asMe();
       that(s, notNullValue());
       that(elze(s), notNullValue());
-      that(Extract.statements(elze(s)), notNullValue());
-      that(Extract.statements(elze(s)).size(), is(0));
+      that(extract.statements(elze(s)), notNullValue());
+      that(extract.statements(elze(s)).size(), is(0));
     }
   }
 }

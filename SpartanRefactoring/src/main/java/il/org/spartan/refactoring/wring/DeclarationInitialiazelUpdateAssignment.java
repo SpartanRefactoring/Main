@@ -25,7 +25,7 @@ public final class DeclarationInitialiazelUpdateAssignment extends Wring.Variabl
       final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
       return null;
-    final Assignment a = Extract.assignment(nextStatement);
+    final Assignment a = extract.assignment(nextStatement);
     if (a == null || !same(n, left(a)) || doesUseForbiddenSiblings(f, right(a)))
       return null;
     final Operator o = a.getOperator();

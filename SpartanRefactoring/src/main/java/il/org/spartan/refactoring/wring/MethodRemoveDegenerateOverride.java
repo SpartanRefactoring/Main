@@ -24,7 +24,7 @@ import org.eclipse.text.edits.*;
  */
 public class MethodRemoveDegenerateOverride extends Wring<MethodDeclaration> implements Kind.Simplify {
   @Override Rewrite make(final MethodDeclaration d) {
-    final ExpressionStatement s = Extract.expressionStatement(d);
+    final ExpressionStatement s = extract.expressionStatement(d);
     return s == null || !(s.getExpression() instanceof SuperMethodInvocation)
         || !shouldRemove(d, (SuperMethodInvocation) s.getExpression()) ? null : new Rewrite(description(d), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {

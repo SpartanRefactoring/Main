@@ -20,16 +20,16 @@ public class OccurrencesTest {
   private final String from = "int a = 2,b; if (a+b) a =3;";
   private final String wrap = Wrap.Statement.on(from);
   private final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(wrap);
-  private final SimpleName a = Extract.firstVariableDeclarationFragment(u).getName();
+  private final SimpleName a = extract.firstVariableDeclarationFragment(u).getName();
   private final VariableDeclarationStatement ab = (VariableDeclarationStatement) a.getParent().getParent();
   private final SimpleName b = ((VariableDeclarationFragment) ab.fragments().get(1)).getName();
-  private final IfStatement s = Extract.nextIfStatement(a);
+  private final IfStatement s = extract.nextIfStatement(a);
   private final InfixExpression e = (InfixExpression) s.getExpression();
 
   @Test public void correctSettings() {
     that(ab, iz("int a=2,b;"));
     that(b.toString(), is("b"));
-    that(s, is(Extract.firstIfStatement(u)));
+    that(s, is(extract.firstIfStatement(u)));
     that(s, iz("if (a + b) a=3;"));
     that(e, iz("a + b"));
   }

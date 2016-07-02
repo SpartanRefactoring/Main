@@ -101,16 +101,16 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
       that(asInfixExpression().getOperator() == Operator.TIMES, is(true));
     }
     @Test public void sortTest() {
-      that(COMPARATOR.sort(Extract.operands(flatten(asInfixExpression()))), is(false));
+      that(COMPARATOR.sort(extract.operands(flatten(asInfixExpression()))), is(false));
     }
     @Test public void sortTwice() {
       final InfixExpression e = asInfixExpression();
-      final List<Expression> operands = Extract.operands(flatten(e));
+      final List<Expression> operands = extract.operands(flatten(e));
       that(COMPARATOR.sort(operands), is(false));
       that(COMPARATOR.sort(operands), is(false));
     }
     @Test public void twoOrMoreArguments() {
-      that(Extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
+      that(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
     }
   }
 
@@ -155,17 +155,17 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
     }
     @Test public void sortTest() {
       final InfixExpression e = asInfixExpression();
-      final List<Expression> operands = Extract.operands(flatten(e));
-      that("Before: " + Extract.operands(flatten(e)) + "\n" + "After: " + operands + "\n", COMPARATOR.sort(operands), is(true));
+      final List<Expression> operands = extract.operands(flatten(e));
+      that("Before: " + extract.operands(flatten(e)) + "\n" + "After: " + operands + "\n", COMPARATOR.sort(operands), is(true));
     }
     @Test public void sortTwice() {
       final InfixExpression e = asInfixExpression();
-      final List<Expression> operands = Extract.operands(flatten(e));
+      final List<Expression> operands = extract.operands(flatten(e));
       that(COMPARATOR.sort(operands), is(true));
       that(COMPARATOR.sort(operands), is(false));
     }
     @Test public void twoOrMoreArguments() {
-      that(Extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
+      that(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
     }
   }
 }

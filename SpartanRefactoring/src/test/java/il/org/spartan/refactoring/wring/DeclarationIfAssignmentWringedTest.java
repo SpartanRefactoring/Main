@@ -135,10 +135,10 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     final ASTRewrite r = ASTRewrite.create(f.getAST());
     final Expression initializer = f.getInitializer();
     assertThat(f.toString(), initializer, notNullValue());
-    final IfStatement s = Extract.nextIfStatement(f);
+    final IfStatement s = extract.nextIfStatement(f);
     that(s, notNullValue());
-    that(Extract.statements(elze(s)).size(), is(0));
-    final Assignment a = Extract.assignment(then(s));
+    that(extract.statements(elze(s)).size(), is(0));
+    final Assignment a = extract.assignment(then(s));
     that(a, notNullValue());
     that(same(left(a), f.getName()), is(true));
     r.replace(initializer, Subject.pair(right(a), initializer).toCondition(s.getExpression()), null);
@@ -150,9 +150,9 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     return $;
   }
   @Override protected VariableDeclarationFragment asMe() {
-    return Extract.firstVariableDeclarationFragment(ast.STATEMENTS.ast(input));
+    return extract.firstVariableDeclarationFragment(ast.STATEMENTS.ast(input));
   }
   private IfStatement findIf() {
-    return Extract.firstIfStatement(ast.STATEMENTS.ast(input));
+    return extract.firstIfStatement(ast.STATEMENTS.ast(input));
   }
 }

@@ -54,7 +54,7 @@ public enum Into {
    */
   public static MethodDeclaration d(final String methodDelclaration) {
     that(methodDelclaration, notNullValue());
-    return Extract.firstMethodDeclaration(Wrap.Method.intoCompilationUnit(methodDelclaration));
+    return extract.firstMethodDeclaration(Wrap.Method.intoCompilationUnit(methodDelclaration));
   }
   /**
    * Convert a given {@link String} into an {@link Expression}, or fail the

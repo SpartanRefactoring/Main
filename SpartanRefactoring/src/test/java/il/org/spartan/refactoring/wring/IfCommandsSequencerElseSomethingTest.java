@@ -66,7 +66,7 @@ public class IfCommandsSequencerElseSomethingTest {
     final String wrap = Wrap.Statement.on(input);
     final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(wrap);
     that(u, notNullValue());
-    final IfStatement s = Extract.firstIfStatement(u);
+    final IfStatement s = extract.firstIfStatement(u);
     that(s, notNullValue());
     that(s.toString(), equalToIgnoringWhiteSpace(input));
     final Wring<IfStatement> w = Toolbox.instance.find(s);

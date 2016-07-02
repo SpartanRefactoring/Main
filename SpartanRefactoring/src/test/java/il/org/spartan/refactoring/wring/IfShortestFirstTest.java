@@ -34,9 +34,9 @@ import org.junit.runners.Parameterized.Parameters;
         "return true;" //
         + ""//
     );
-    final IfStatement s = Extract.firstIfStatement(u);
-    that(Extract.statements(then(s)).size(), is(1));
-    that(Extract.statements(elze(s)).size(), is(1));
+    final IfStatement s = extract.firstIfStatement(u);
+    that(extract.statements(then(s)).size(), is(1));
+    that(extract.statements(elze(s)).size(), is(1));
   }
 
   @RunWith(Parameterized.class)//
