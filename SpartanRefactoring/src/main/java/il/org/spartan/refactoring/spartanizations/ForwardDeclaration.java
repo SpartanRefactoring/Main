@@ -70,9 +70,9 @@ public class ForwardDeclaration extends Spartanization {
         }
         return true;
       }
-      private void rewrite(final int beginingOfDeclarationsBlockIdx, final ASTNode n, final ListRewrite r) {
+      private void rewrite(final int begin, final ASTNode n, final ListRewrite r) {
         r.remove(n, null);
-        r.insertAt(duplicate(n), 1 + beginingOfDeclarationsBlockIdx, null);
+        r.insertAt(duplicate(n), 1 + begin, null);
       }
     });
   }
@@ -80,12 +80,12 @@ public class ForwardDeclaration extends Spartanization {
     final int firstUseIdx = findFirstUse(b, n.getName());
     if (firstUseIdx < 0)
       return true;
-    final int beginingOfDeclarationsIdx = findBeginingOfDeclarationBlock(b, declaredIdx, firstUseIdx);
+    final int begin = findBeginingOfDeclarationBlock(b, declaredIdx, firstUseIdx);
     final ASTNode nextN = (ASTNode) b.statements().get(1 + declaredIdx);
     final int nextDeclaredIdx = 1 + declaredIdx;
     if (nextN.getNodeType() == ASTNode.VARIABLE_DECLARATION_STATEMENT)
       for (final VariableDeclarationFragment f : expose.fragments((VariableDeclarationStatement) nextN))
-        if (nextDeclaredIdx + 1 == findFirstUse(b, f.getName()) && nextDeclaredIdx == beginingOfDeclarationsIdx)
+        if (nextDeclaredIdx + 1 == findFirstUse(b, f.getName()) && nextDeclaredIdx == begin)
           return true;
     return false;
   }

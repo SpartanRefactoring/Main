@@ -3479,10 +3479,10 @@ public class TrimmerTest {
   }
   @Test public void twoOpportunityExample() {
     that(
-        TrimmerTestsUtils.countOpportunities(new Trimmer(), (CompilationUnit) ast.COMPILIATION_UNIT.ast(Wrap.Expression
+        TrimmerTestsUtils.countOpportunities(new Trimmer(), (CompilationUnit) ast.COMPILIATION_UNIT.from(Wrap.Expression
             .on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
     that(
-        TrimmerTestsUtils.countOpportunities(new Trimmer(), (CompilationUnit) ast.COMPILIATION_UNIT.ast(Wrap.Expression
+        TrimmerTestsUtils.countOpportunities(new Trimmer(), (CompilationUnit) ast.COMPILIATION_UNIT.from(Wrap.Expression
             .on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
   }
   @Test public void useOutcontextToManageStringAmbiguity() {

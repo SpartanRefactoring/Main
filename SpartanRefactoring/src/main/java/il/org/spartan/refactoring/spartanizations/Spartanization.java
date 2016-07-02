@@ -38,31 +38,44 @@ public abstract class Spartanization extends Refactoring {
    * @return List of all compilation units in the current project
    * @throws JavaModelException don't forget to catch
    */
-  public static final List<ICompilationUnit> getAllProjectCompilationUnits(final ICompilationUnit u, final IProgressMonitor pm)
+  public static final List<ICompilationUnit> getCompilationUnits(final ICompilationUnit u, final IProgressMonitor pm)
       throws JavaModelException {
-    pm.beginTask("Gathering project information...", 1);
+    pm.beginTask("Collecting all project's compilation units...", 1);
     final List<ICompilationUnit> $ = new ArrayList<>();
-    if (u == null) {
-      announce("Cannot find current compilation unit " + u);
-      return $;
-    }
-    final IJavaProject javaProject = u.getJavaProject();
-    if (javaProject == null) {
-      announce("Cannot find project of " + u);
-      return $;
-    }
-    final IPackageFragmentRoot[] packageFragmentRoots = javaProject.getPackageFragmentRoots();
-    if (packageFragmentRoots == null) {
-      announce("Cannot find roots of " + javaProject);
-      return $;
-    }
-    for (final IPackageFragmentRoot r : packageFragmentRoots)
-      if (r.getKind() == IPackageFragmentRoot.K_SOURCE)
-        for (final IJavaElement e : r.getChildren())
-          if (e.getElementType() == IJavaElement.PACKAGE_FRAGMENT)
-            $.addAll(Arrays.asList(((IPackageFragment) e).getCompilationUnits()));
+    getCompilationUnits(pm, u, $);
     pm.done();
     return $;
+  }
+  /**
+   * @param u JD
+   * @param $ result
+   * @throws JavaModelException
+   */
+  private static Void getCompilationUnits(IProgressMonitor pm, final ICompilationUnit u, final List<ICompilationUnit> $)
+      throws JavaModelException {
+    if (u == null)
+      return announce("Cannot find current compilation unit " + u);
+    final IJavaProject javaProject = u.getJavaProject();
+    if (javaProject == null)
+      return announce("Cannot find project of " + u);
+    final IPackageFragmentRoot[] rs = javaProject.getPackageFragmentRoots();
+    if (rs == null)
+      return announce("Cannot find roots of " + javaProject);
+    for (final IPackageFragmentRoot r : rs) {
+      pm.worked(1);
+      if (r.getKind() != IPackageFragmentRoot.K_SOURCE)
+        break;
+      pm.worked(1);
+      for (final IJavaElement e : r.getChildren()) {
+        pm.worked(1);
+        if (e.getElementType() != IJavaElement.PACKAGE_FRAGMENT)
+          break;
+        $.addAll(Arrays.asList(((IPackageFragment) e).getCompilationUnits()));
+        pm.worked(1);
+      }
+      pm.worked(1);
+    }
+    return null;
   }
   protected static boolean isNodeOutsideMarker(final ASTNode n, final IMarker m) {
     try {
@@ -204,7 +217,7 @@ public abstract class Spartanization extends Refactoring {
         try {
           runAsMarkerFix(new NullProgressMonitor(), m);
         } catch (final CoreException e) {
-          throw new RuntimeException(e);
+          e.printStackTrace();
         }
       }
     };
@@ -400,11 +413,11 @@ public abstract class Spartanization extends Refactoring {
    * @return an ASTRewrite which contains the changes
    */
   private final ASTRewrite createRewrite(final SubProgressMonitor pm, final IMarker m) {
-    return createRewrite(pm, (CompilationUnit) ast.COMPILIATION_UNIT.ast(m, pm), m);
+    return createRewrite(pm, (CompilationUnit) ast.COMPILIATION_UNIT.from(m, pm), m);
   }
   private List<ICompilationUnit> getUnits(final IProgressMonitor pm) throws JavaModelException {
     if (!isTextSelected())
-      return getAllProjectCompilationUnits(compilationUnit != null ? compilationUnit : BaseHandler.currentCompilationUnit(),
+      return getCompilationUnits(compilationUnit != null ? compilationUnit : BaseHandler.currentCompilationUnit(),
           new SubProgressMonitor(pm, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL));
     final List<ICompilationUnit> $ = new ArrayList<>();
     $.add(compilationUnit);

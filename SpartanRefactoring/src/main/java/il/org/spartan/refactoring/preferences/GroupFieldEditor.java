@@ -80,11 +80,11 @@ public class GroupFieldEditor extends FieldEditor {
     initialized = true;
   }
   /* (non-Javadoc) Method declared on FieldEditor. */
-  @Override protected void adjustForNumColumns(final int numColumns) {
+  @Override protected void adjustForNumColumns(@SuppressWarnings("hiding") final int numColumns) {
     this.numColumns = numColumns;
   }
   /* (non-Javadoc) Method declared on FieldEditor. */
-  @Override protected void doFillIntoGrid(final Composite parentParam, int numColumns) {
+  @Override protected void doFillIntoGrid(final Composite parentParam, @SuppressWarnings("hiding") int numColumns) {
     if (members == null || members.isEmpty())
       return;
     if (numColumns == 0)

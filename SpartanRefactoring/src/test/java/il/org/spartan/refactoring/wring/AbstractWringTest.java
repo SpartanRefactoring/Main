@@ -65,7 +65,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
   }
   void assertLegible(final String expression) {
     if (inner != null)
-      that(inner.eligible((N) ast.EXPRESSION.ast(expression)), is(true));
+      that(inner.eligible((N) ast.EXPRESSION.from(expression)), is(true));
   }
   void assertNotLegible(final Block b) {
     if (inner != null)
@@ -213,7 +213,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
           that(inner.scopeIncludes(asMe()), is(false));
       }
       @Override protected VariableDeclarationFragment asMe() {
-        return extract.firstVariableDeclarationFragment(ast.STATEMENTS.ast(input));
+        return extract.firstVariableDeclarationFragment(ast.STATEMENTS.from(input));
       }
     }
 
@@ -319,7 +319,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
        * first If statement in the input.
        */
       @Override protected IfStatement asMe() {
-        return extract.firstIfStatement(ast.STATEMENTS.ast(input));
+        return extract.firstIfStatement(ast.STATEMENTS.from(input));
       }
     }
 
@@ -349,7 +349,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
       }
       @Override protected final CompilationUnit asCompilationUnit() {
         final String s = input;
-        final ASTNode $ = ast.COMPILIATION_UNIT.ast(Wrap.Statement.on(s));
+        final ASTNode $ = ast.COMPILIATION_UNIT.from(Wrap.Statement.on(s));
         that($, is(notNullValue()));
         that($, is(instanceOf(CompilationUnit.class)));
         return (CompilationUnit) $;
@@ -543,7 +543,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
     }
     @Override protected CompilationUnit asCompilationUnit() {
       final String s = input;
-      final ASTNode $ = ast.COMPILIATION_UNIT.ast(Wrap.Expression.on(s));
+      final ASTNode $ = ast.COMPILIATION_UNIT.from(Wrap.Expression.on(s));
       that($, is(notNullValue()));
       that($, is(instanceOf(CompilationUnit.class)));
       return (CompilationUnit) $;
@@ -726,7 +726,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
     }
     @Override protected final CompilationUnit asCompilationUnit() {
       final String s = input;
-      final ASTNode $ = ast.COMPILIATION_UNIT.ast(Wrap.Statement.on(s));
+      final ASTNode $ = ast.COMPILIATION_UNIT.from(Wrap.Statement.on(s));
       that($, is(notNullValue()));
       that($, is(instanceOf(CompilationUnit.class)));
       return (CompilationUnit) $;
@@ -825,7 +825,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
       assertSimilar(Wrap.Statement.on(expected), actual);
     }
     @Override protected CompilationUnit asCompilationUnit() {
-      final CompilationUnit $ = (CompilationUnit) ast.COMPILIATION_UNIT.ast(Wrap.Statement.on(input));
+      final CompilationUnit $ = (CompilationUnit) ast.COMPILIATION_UNIT.from(Wrap.Statement.on(input));
       that($, notNullValue());
       return $;
     }
@@ -838,7 +838,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
       return new Document(Wrap.Statement.on(input));
     }
     @Override protected VariableDeclarationFragment asMe() {
-      return extract.firstVariableDeclarationFragment(ast.STATEMENTS.ast(input));
+      return extract.firstVariableDeclarationFragment(ast.STATEMENTS.from(input));
     }
   }
 

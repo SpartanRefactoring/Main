@@ -145,14 +145,14 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     r.remove(s, null);
   }
   @Override protected CompilationUnit asCompilationUnit() {
-    final CompilationUnit $ = (CompilationUnit) ast.COMPILIATION_UNIT.ast(Wrap.Statement.on(input));
+    final CompilationUnit $ = (CompilationUnit) ast.COMPILIATION_UNIT.from(Wrap.Statement.on(input));
     assertNotNull($);
     return $;
   }
   @Override protected VariableDeclarationFragment asMe() {
-    return extract.firstVariableDeclarationFragment(ast.STATEMENTS.ast(input));
+    return extract.firstVariableDeclarationFragment(ast.STATEMENTS.from(input));
   }
   private IfStatement findIf() {
-    return extract.firstIfStatement(ast.STATEMENTS.ast(input));
+    return extract.firstIfStatement(ast.STATEMENTS.from(input));
   }
 }

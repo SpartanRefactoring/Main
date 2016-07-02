@@ -36,7 +36,7 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
   @Test public void removeParenthesis() throws MalformedTreeException, BadLocationException {
     final String s = " (2) == true";
     final String wrap = Wrap.Expression.on(s);
-    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(wrap);
+    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(wrap);
     that(u, notNullValue());
     final Document d = new Document(wrap);
     that(d, notNullValue());

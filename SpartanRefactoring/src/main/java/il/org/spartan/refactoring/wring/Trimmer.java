@@ -23,11 +23,11 @@ public class Trimmer extends Spartanization {
    * @return the trimmed text
    */
   public static String fixedPoint(final String from) {
-    final Trimmer trimmer = new Trimmer();
+    final Trimmer t = new Trimmer();
     final Document $ = new Document(from);
     for (;;) {
-      final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast($.get());
-      final ASTRewrite r = trimmer.createRewrite(u, null);
+      final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from($.get());
+      final ASTRewrite r = t.createRewrite(u, null);
       final TextEdit e = r.rewriteAST($, null);
       try {
         e.apply($);

@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.handlers;
 
-import static il.org.spartan.refactoring.handlers.ApplySpartanizationHandler.*;
 import static il.org.spartan.refactoring.spartanizations.DialogBoxes.*;
 import il.org.spartan.refactoring.spartanizations.*;
 
@@ -50,7 +49,7 @@ public class CleanupHandler extends BaseHandler {
               "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES, us.size());
           int n = 0;
           for (final ICompilationUnit u : us) {
-            applySafeSpartanizationsTo(u);
+            ApplySpartanizationHandler.execute(u);
             pm.worked(1);
             pm.subTask(u.getElementName() + " " + ++n + "/" + us.size());
           }
@@ -74,7 +73,7 @@ public class CleanupHandler extends BaseHandler {
   }
   private static List<ICompilationUnit> getAllCompilationUnits(final ICompilationUnit u) {
     try {
-      return Spartanization.getAllProjectCompilationUnits(u, new NullProgressMonitor());
+      return Spartanization.getCompilationUnits(u, new NullProgressMonitor());
     } catch (final JavaModelException x) {
       x.printStackTrace();
       return null;
@@ -84,11 +83,11 @@ public class CleanupHandler extends BaseHandler {
    * Returns the number of Spartanizaion suggestions for this compilation unit
    *
    * @param u JD
-   * @return the number of suggesions available for the compilation unit
+   * @return the number of suggestions available for the compilation unit
    */
   public static int countSuggestions(final ICompilationUnit u) {
     int $ = 0;
-    for (final Spartanization s : ApplySpartanizationHandler.safeSpartanizations) {
+    for (final Spartanization s : ApplySpartanizationHandler.inner) {
       s.setMarker(null);
       s.setCompilationUnit(u);
       $ += s.countSuggestions();

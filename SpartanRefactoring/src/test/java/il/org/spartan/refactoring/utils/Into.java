@@ -64,7 +64,7 @@ public enum Into {
    * @return an {@link Expression} data structure representing the parameter.
    */
   public static Expression e(final String expression) {
-    return (Expression) ast.EXPRESSION.ast(expression);
+    return (Expression) ast.EXPRESSION.from(expression);
   }
   /**
    * Convert an array of {@link String} into a {@link List} of
@@ -113,7 +113,7 @@ public enum Into {
    */
   public static Statement s(final String statement) {
     that(statement, notNullValue());
-    final ASTNode n = ast.STATEMENTS.ast(statement);
+    final ASTNode n = ast.STATEMENTS.from(statement);
     assertThat(statement, n, notNullValue());
     assertThat(statement, n, instanceOf(Statement.class));
     return (Statement) n;

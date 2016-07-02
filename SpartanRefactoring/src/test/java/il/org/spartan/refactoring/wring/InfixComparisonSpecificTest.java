@@ -68,7 +68,7 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
   }
   @Test public void comparisonWithSpecificWithinScope() {
     azzert.that(Is.constant(left(i("this != a"))), is(true));
-    final ASTNode n = ast.EXPRESSION.ast("a != this");
+    final ASTNode n = ast.EXPRESSION.from("a != this");
     that(n, notNullValue());
     assertWithinScope(Funcs.asExpression(n));
     correctScopeExpression(n);

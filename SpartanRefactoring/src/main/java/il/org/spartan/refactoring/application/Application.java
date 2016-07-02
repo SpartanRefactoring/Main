@@ -51,7 +51,7 @@ import org.eclipse.jdt.core.dom.*;
           if (n == 0)
             break;
           s.addRoundStat(n);
-          ApplySpartanizationHandler.applySafeSpartanizationsTo(u);
+          ApplySpartanizationHandler.execute(u);
         }
         FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
         if (optVerbose)

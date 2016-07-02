@@ -147,7 +147,7 @@ public class TrimmerTestsUtils {
       assertSimilar(get(), peeled);
     }
     @SuppressWarnings("unchecked") private static Set<String> getComments(final String unpeeled) {
-      final List<Comment> cs = ((CompilationUnit) ast.COMPILIATION_UNIT.ast(unpeeled)).getCommentList();
+      final List<Comment> cs = ((CompilationUnit) ast.COMPILIATION_UNIT.from(unpeeled)).getCommentList();
       final Set<String> $ = new HashSet<>();
       for (final Comment c : cs)
         $.add(unpeeled.substring(c.getStartPosition(), c.getStartPosition() + c.getLength()));
@@ -174,7 +174,7 @@ public class TrimmerTestsUtils {
     return $.get();
   }
   static String apply(final Trimmer t, final String from) {
-    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(from);
+    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(from);
     that(u, notNullValue());
     final Document d = new Document(from);
     that(d, notNullValue());
@@ -183,7 +183,7 @@ public class TrimmerTestsUtils {
     return $.get();
   }
   static String apply(final Wring<? extends ASTNode> ns, final String from) {
-    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(from);
+    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(from);
     that(u, notNullValue());
     final Document d = new Document(from);
     that(d, notNullValue());

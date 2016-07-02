@@ -34,7 +34,7 @@ public class DeclarationIfAssginmentTest {
     that(WRING, notNullValue());
     final String from = "int a = 2,b; if (b) a =3;";
     final String wrap = Wrap.Statement.on(from);
-    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(wrap);
+    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(wrap);
     final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
     that(f, notNullValue());
     that(WRING.scopeIncludes(f), is(false));
@@ -42,7 +42,7 @@ public class DeclarationIfAssginmentTest {
   @Test public void traceForbiddenSiblingsExpanded() {
     final String from = "int a = 2,b; if (a+b) a =3;";
     final String wrap = Wrap.Statement.on(from);
-    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(wrap);
+    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(wrap);
     final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
     that(f, notNullValue());
     final Expression initializer = f.getInitializer();

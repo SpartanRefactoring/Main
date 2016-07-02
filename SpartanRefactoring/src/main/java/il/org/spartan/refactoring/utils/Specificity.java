@@ -40,7 +40,7 @@ public class Specificity implements Comparator<Expression> {
         return Is.null_(n);
       }
     },
-    BOOLEAN_LITERAL {
+    BOOLEAN {
       @Override boolean includes(final ASTNode n) {
         return Is.booleanLiteral(n);
       }

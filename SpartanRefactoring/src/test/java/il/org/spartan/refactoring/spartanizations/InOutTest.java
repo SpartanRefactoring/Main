@@ -47,7 +47,7 @@ public class InOutTest {
     }.go();
   }
   protected static void go(final Spartanization s, final File from, final File to) {
-    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(FileTestUtils.makeInFile(from));
+    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(FileTestUtils.makeInFile(from));
     that(u.toString(), TrimmerTestsUtils.countOpportunities(s, u), is(1));
     TESTUtils.assertOneOpportunity(s, ast.string(from));
     final String expected;

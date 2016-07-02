@@ -27,7 +27,7 @@ public abstract class BaseHandler extends AbstractHandler {
    */
   public static List<ICompilationUnit> compilationUnits() {
     try {
-      return Spartanization.getAllProjectCompilationUnits(currentCompilationUnit(), new NullProgressMonitor());
+      return Spartanization.getCompilationUnits(currentCompilationUnit(), new NullProgressMonitor());
     } catch (final JavaModelException e) {
       e.printStackTrace();
     }

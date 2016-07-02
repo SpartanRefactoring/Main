@@ -22,16 +22,16 @@ public enum ast {
    * Converts file, string or marker to compilation unit.
    */
   COMPILIATION_UNIT(ASTParser.K_COMPILATION_UNIT) {
-    @Override public CompilationUnit ast(final File f) {
-      return ast(string(f));
+    @Override public CompilationUnit from(final File f) {
+      return from(string(f));
     }
-    @Override public CompilationUnit ast(final IFile f) {
+    @Override public CompilationUnit from(final IFile f) {
       return (CompilationUnit) Make.COMPILIATION_UNIT.parser(f).createAST(null);
     }
-    @Override public CompilationUnit ast(final IMarker m, final SubProgressMonitor pm) {
+    @Override public CompilationUnit from(final IMarker m, final SubProgressMonitor pm) {
       return (CompilationUnit) Make.COMPILIATION_UNIT.parser(m).createAST(pm);
     }
-    @Override public CompilationUnit ast(final String s) {
+    @Override public CompilationUnit from(final String s) {
       return (CompilationUnit) makeParser(s).createAST(null);
     }
   },
@@ -39,16 +39,16 @@ public enum ast {
    * Converts file, string or marker to expression.
    */
   EXPRESSION(ASTParser.K_EXPRESSION) {
-    @Override public Expression ast(final File f) {
-      return ast(string(f));
+    @Override public Expression from(final File f) {
+      return from(string(f));
     }
-    @Override public Expression ast(final IFile f) {
+    @Override public Expression from(final IFile f) {
       return (Expression) Make.EXPRESSION.parser(f).createAST(null);
     }
-    @Override public Expression ast(final IMarker m, final SubProgressMonitor pm) {
+    @Override public Expression from(final IMarker m, final SubProgressMonitor pm) {
       return (Expression) Make.EXPRESSION.parser(m).createAST(pm);
     }
-    @Override public Expression ast(final String s) {
+    @Override public Expression from(final String s) {
       return (Expression) makeParser(s).createAST(null);
     }
   },
@@ -151,7 +151,7 @@ public enum ast {
    * @return the {@link ASTNode} obtained by parsing
    */
   public final ASTNode from(final Document d) {
-    return ast(d.get());
+    return from(d.get());
   }
   /**
    * File -> ASTNode converter
@@ -159,14 +159,14 @@ public enum ast {
    * @param f File
    * @return ASTNode
    */
-  public ASTNode ast(final File f) {
-    return ast(string(f));
+  public ASTNode from(final File f) {
+    return from(string(f));
   }
   /**
    * @param f IFile
    * @return ASTNode
    */
-  public ASTNode ast(final IFile f) {
+  public ASTNode from(final IFile f) {
     return Make.of(this).parser(f).createAST(null);
   }
   /**
@@ -176,7 +176,7 @@ public enum ast {
    * @param pm ProgressMonitor
    * @return ASTNode
    */
-  public ASTNode ast(final IMarker m, final SubProgressMonitor pm) {
+  public ASTNode from(final IMarker m, final SubProgressMonitor pm) {
     return Make.of(this).parser(m).createAST(pm);
   }
   /**
@@ -185,7 +185,7 @@ public enum ast {
    * @param s String
    * @return ASTNode
    */
-  public ASTNode ast(final String s) {
+  public ASTNode from(final String s) {
     return makeParser(s).createAST(null);
   }
   private ASTParser makeParser() {

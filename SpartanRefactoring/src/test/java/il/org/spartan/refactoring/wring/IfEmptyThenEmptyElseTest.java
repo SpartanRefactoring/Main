@@ -34,7 +34,7 @@ public class IfEmptyThenEmptyElseTest {
   @Test public void runGo() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = Wrap.Statement.on(INPUT + "");
     final Document d = new Document(input);
-    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.ast(d.get());
+    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(d.get());
     final IfStatement s = extract.firstIfStatement(u);
     that(s, iz("if(b);else;"));
     final ASTRewrite r = ASTRewrite.create(u.getAST());
@@ -44,7 +44,7 @@ public class IfEmptyThenEmptyElseTest {
     that(e, notNullValue());
     that(e.getChildren().length, greaterThan(0));
     e.apply(d);
-    assertThat(d.get(), extract.firstIfStatement(ast.COMPILIATION_UNIT.ast(d.get())), nullValue());
+    assertThat(d.get(), extract.firstIfStatement(ast.COMPILIATION_UNIT.from(d.get())), nullValue());
   }
   @Test public void scopeIncludes() {
     that(WRING.scopeIncludes(IF), is(true));
