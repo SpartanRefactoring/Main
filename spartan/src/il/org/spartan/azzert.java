@@ -693,44 +693,18 @@ public class azzert extends org.junit.Assert {
   public static void assertZero(final int i) {
     assertEquals(0, i);
   }
-  /**
-   * Creates a matcher that matches when both of the specified matchers match
-   * the examined object.
-   * <p/>
-   * For example:
-   *
-   * <pre>
-   * assertThat(&quot;fab&quot;, both(containsString(&quot;a&quot;)).and(containsString(&quot;b&quot;)))
-   * </pre>
-   *
-   * @param matcher
-   * @param <LHS>
-   * @return
-   */
-  public static <LHS> CombinableMatcher.CombinableBothMatcher<LHS> both(final Matcher<? super LHS> matcher) {
+  /** Delegates to {@link OrderingComparison#comparesEqualTo} */
+  @SuppressWarnings("javadoc") public static <LHS> CombinableMatcher.CombinableBothMatcher<LHS> both(
+      final Matcher<? super LHS> matcher) {
     return CombinableMatcher.<LHS> both(matcher);
   }
-  /**
-   * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link OrderingComparison#comparesEqualTo} for primitive type
-   * <code><b>boolean</b></code>.
-   *
-   * @param b JD
-   * @return the result of applying {@link OrderingComparison#comparesEqualTo}
-   *         to the parameter
-   */
-  @Factory public static @Nullable Matcher<Boolean> comparesEqualTo(final boolean b) {
+  /** Delegates to {@link CombinableMatcher#both(Matcher)} */
+  @SuppressWarnings("javadoc")
+  @Factory public static @Nullable Matcher<@Nullable Boolean> comparesEqualTo(final boolean b) {
     return OrderingComparison.comparesEqualTo(Boolean.valueOf(b));
   }
-  /**
-   * A non-auto-boxing wrapper of the original (auto-boxing) Hamcrest matcher
-   * {@link OrderingComparison#comparesEqualTo} for primitive type
-   * <code><b>byte</b></code>.
-   *
-   * @param b JD
-   * @return the result of applying {@link OrderingComparison#comparesEqualTo}
-   *         to the parameter
-   */
+  /** Delegates to {@link OrderingComparison#comparesEqualTo} */
+  @SuppressWarnings("javadoc")
   @Factory public static @Nullable Matcher<@Nullable Byte> comparesEqualTo(final byte b) {
     return OrderingComparison.comparesEqualTo(Byte.valueOf(b));
   }
@@ -803,7 +777,7 @@ public class azzert extends org.junit.Assert {
    * @return the result of applying {@link OrderingComparison#comparesEqualTo}
    *         to the parameter
    */
-  @Factory public static @Nullable Matcher<Short> comparesEqualTo(final short s) {
+  @Factory public static @Nullable Matcher<@Nullable Short> comparesEqualTo(final short s) {
     return OrderingComparison.comparesEqualTo(Short.valueOf(s));
   }
   /**
@@ -948,7 +922,7 @@ public class azzert extends org.junit.Assert {
    * @return the result of applying {@link OrderingComparison#greaterThan} to
    *         the parameter
    */
-  @Factory public static @Nullable Matcher<Byte> greaterThan(final byte b) {
+  @Factory public static @Nullable Matcher<@Nullable Byte> greaterThan(final byte b) {
     return OrderingComparison.greaterThan(Byte.valueOf(b));
   }
   /**

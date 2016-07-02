@@ -144,9 +144,9 @@ public enum as {
    *
    * @param <T> type of objects to be converted
    * @param $ what to covert
-   * @return the result parameter, converted into a {@link List}
+   * @return the result parameter, converted into a {@link  List}
    */
-  @SafeVarargs public static <T> List<T> list(final T... $) {
+  @SafeVarargs public static <T> List<T> list(final @Nullable T @Nullable... $) {
     return accumulate.to(new ArrayList<T>()).add($).elements();
   }
   /**
@@ -250,7 +250,7 @@ public enum as {
       assertArrayEquals(is, as.intArray(as.ingeterList(is)));
     }
     @Test public void asListSimple() {
-      final List<Integer> is = as.list(12, 13, 14);
+      final List<@Nullable Integer> is = as.list(12, 13, 14);
       assertEquals(box.it(12), is.get(0));
       assertEquals(box.it(13), is.get(1));
       assertEquals(box.it(14), is.get(2));

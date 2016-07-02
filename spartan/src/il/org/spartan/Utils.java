@@ -389,7 +389,7 @@ public enum Utils {
    *         one of the supplied extensions.
    */
   public static boolean suffixedBy(final File f, final Iterable<String> suffixes) {
-    return suffixedBy(f.getName(), suffixes);
+    return suffixedBy(name(f), suffixes);
   }
   /**
    * Determine whether a file name ends with any one of the supplied extensions.
@@ -400,7 +400,14 @@ public enum Utils {
    *         one of the supplied extensions.
    */
   public static boolean suffixedBy(final File f, final String... suffixes) {
-    return suffixedBy(cantBeNull(f.getName()), suffixes);
+    return suffixedBy(name(f), suffixes);
+  }
+  /**
+   * @param f JD
+   * @return
+   */
+  private static String name(final File f) {
+    return cantBeNull(f.getName());
   }
   /**
    * Determine whether a string ends with any one of the supplied suffixes.
