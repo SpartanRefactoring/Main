@@ -24,7 +24,8 @@ import org.eclipse.text.edits.*;
 // * alternatives for disabling the warning are: First, a dedicated annotation
 // of
 // * name such as $Resident or
-// * @Unmovable, or some other word that is single, and easy to understand.
+//
+// @Unmovable, or some other word that is single, and easy to understand.
 // <pre>
 // * public static &lt;T&gt; void swap(final T[] ts, final int i, final int j) {
 // * &#064;Resident final T t = ts[i]; ts[i] = ts[j]; ts[j] = t; } </pre>
@@ -37,12 +38,11 @@ import org.eclipse.text.edits.*;
 // void
 // * swap(final T[] ts, final int i, final int j) { final T t = ts[i]; // Don't
 // * move! ts[i] = ts[j]; ts[j] = t; } </pre>
-// * @since 2013/01/01
-// */
+// @since 2013/01/01
+//
 public class InlineSingleUse extends Spartanization {
-  /** Instantiates this class */
-  public InlineSingleUse() {
-    super("Inline Single Use");
+  @Override public String toString() {
+    return super.toString() + "(inline single use)";
   }
   @Override protected final void fillRewrite(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
     u.accept(new ASTVisitor() {

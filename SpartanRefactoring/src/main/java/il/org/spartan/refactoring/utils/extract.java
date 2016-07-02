@@ -39,11 +39,11 @@ public enum extract {
     return asAssignment(expression(extract.expressionStatement(n)));
   }
   /**
-   * @param e
+   * @param s
    * @return
    */
-  private static Expression expression(final ExpressionStatement e) {
-    return e == null ? null : e.getExpression();
+  private static Expression expression(final ExpressionStatement s) {
+    return s == null ? null : s.getExpression();
   }
   /**
    * Find the "core" of a given {@link Expression}, by peeling of any

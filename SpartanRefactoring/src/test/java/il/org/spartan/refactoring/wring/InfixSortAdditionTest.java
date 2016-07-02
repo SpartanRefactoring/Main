@@ -4,6 +4,7 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.AbstractWringTest.Noneligible;
 
 import java.util.*;
 
@@ -28,9 +29,9 @@ public class InfixSortAdditionTest {
 
   @Test public void subjectOperandsWithParenthesis() {
     final Expression e = Into.e("(2 + a) * b");
-    Assert.assertThat(Is.notString(e), is(true));
+    azzert.that(Is.notString(e), is(true));
     final InfixExpression plus = extract.firstPlus(e);
-    Assert.assertThat(Is.notString(plus), is(true));
+    azzert.that(Is.notString(plus), is(true));
     final List<Expression> operands = extract.operands(flatten(plus));
     that(operands.size(), is(2));
     final InfixExpression r = Subject.operands(operands).to(plus.getOperator());
@@ -64,7 +65,7 @@ public class InfixSortAdditionTest {
       super(WRING);
     }
     @Test public void allNotStringArgument() {
-      Assert.assertThat(are.notString(extract.operands(asInfixExpression())), is(true));
+      azzert.that(are.notString(extract.operands(asInfixExpression())), is(true));
     }
     @Override @Test public void flattenIsIdempotentt() {
       final InfixExpression flatten = flatten(asInfixExpression());
@@ -74,7 +75,7 @@ public class InfixSortAdditionTest {
       that(asInfixExpression(), notNullValue());
     }
     @Test public void isPlus() {
-      Assert.assertThat(asInfixExpression().getOperator() == Operator.PLUS, is(true));
+      azzert.that(asInfixExpression().getOperator() == Operator.PLUS, is(true));
     }
     @Test public void sortTest() {
       that(COMPARATOR.sort(extract.operands(flatten(asInfixExpression()))), is(false));
@@ -122,7 +123,7 @@ public class InfixSortAdditionTest {
       super(WRING);
     }
     @Test public void allNotStringArgument() {
-      Assert.assertThat(are.notString(extract.operands(asInfixExpression())), is(true));
+      azzert.that(are.notString(extract.operands(asInfixExpression())), is(true));
     }
     @Override @Test public void flattenIsIdempotentt() {
       final InfixExpression flatten = flatten(asInfixExpression());
@@ -132,7 +133,7 @@ public class InfixSortAdditionTest {
       that(asInfixExpression(), notNullValue());
     }
     @Test public void isPlus() {
-      Assert.assertThat(asInfixExpression().getOperator() == Operator.PLUS, is(true));
+      azzert.that(asInfixExpression().getOperator() == Operator.PLUS, is(true));
     }
     @Test public void notString() {
       for (final Expression e : extract.operands(flatten(asInfixExpression())))

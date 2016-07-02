@@ -29,6 +29,9 @@ import org.eclipse.ui.*;
  * @since 2013/01/01
  */
 public abstract class Spartanization extends Refactoring {
+  @Override public final String getName() {
+    return "Spartanize";
+  }
   /**
    * @param u A compilation unit for reference - you give me an arbitrary
    *          compilation unit from the project and I'll find the root of the
@@ -81,7 +84,8 @@ public abstract class Spartanization extends Refactoring {
     try {
       return n.getStartPosition() < ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue()
           || n.getLength() + n.getStartPosition() > ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
-    } catch (@SuppressWarnings("unused") final CoreException e) {
+    } catch (final CoreException e) {
+      e.printStackTrace();
       return true;
     }
   }
@@ -90,17 +94,8 @@ public abstract class Spartanization extends Refactoring {
   private ICompilationUnit compilationUnit = null;
   private IMarker marker = null;
   final Collection<TextFileChange> changes = new ArrayList<>();
-  private final String name;
   private int totalChanges;
 
-  /***
-   * Instantiates this class, with message identical to name
-   *
-   * @param name a short name of this instance
-   */
-  protected Spartanization(final String name) {
-    this.name = name;
-  }
   @Override public RefactoringStatus checkFinalConditions(final IProgressMonitor pm) throws CoreException,
       OperationCanceledException {
     changes.clear();
@@ -160,7 +155,7 @@ public abstract class Spartanization extends Refactoring {
   }
   @Override public final Change createChange(@SuppressWarnings("unused") final IProgressMonitor __)
       throws OperationCanceledException {
-    return new CompositeChange(getName(), changes.toArray(new Change[changes.size()]));
+    return new CompositeChange("" + this, changes.toArray(new Change[changes.size()]));
   }
   /**
    * creates an ASTRewrite which contains the changes
@@ -196,7 +191,7 @@ public abstract class Spartanization extends Refactoring {
    * @return a quick fix for this instance
    */
   public IMarkerResolution getFix() {
-    return getFix(getName());
+    return getFix("" + this);
   }
   /**
    * @param s Spartanization's name
@@ -226,7 +221,7 @@ public abstract class Spartanization extends Refactoring {
    * @return a quick fix with a preview for this instance.
    */
   public IMarkerResolution getFixWithPreview() {
-    return getFixWithPreview(getName());
+    return getFixWithPreview("" + this);
   }
   /**
    * @param s Text for the preview dialog
@@ -253,9 +248,6 @@ public abstract class Spartanization extends Refactoring {
         }
       }
     };
-  }
-  @Override public final String getName() {
-    return name;
   }
   /**
    * @return the selection
@@ -335,7 +327,7 @@ public abstract class Spartanization extends Refactoring {
     selection = s;
   }
   @Override public String toString() {
-    return name;
+    return "Spartanize";
   }
   protected abstract ASTVisitor collect(final List<Rewrite> $, CompilationUnit u);
   protected abstract void fillRewrite(ASTRewrite r, CompilationUnit u, IMarker m);

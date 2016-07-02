@@ -9,9 +9,17 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+/**
+ * @author Yossi Gil
+ *
+ * @since 2016`
+ */
 public class TypeNamesCollector {
   private static Set<String> basket = new TreeSet<>();
 
+  /**
+   * @param where
+   */
   public static void main(final String[] where) {
     collect(where.length != 0 ? where : new String[] { "." });
     for (final String s : basket)

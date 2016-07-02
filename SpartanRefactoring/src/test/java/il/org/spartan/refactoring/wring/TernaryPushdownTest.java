@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import il.org.spartan.*;
+import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 
 import java.util.*;
 

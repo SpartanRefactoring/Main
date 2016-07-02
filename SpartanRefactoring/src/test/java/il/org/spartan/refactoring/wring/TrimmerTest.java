@@ -46,10 +46,10 @@ public class TrimmerTest {
     that(w.off(wrap), is(from));
     final Trimmer t = new Trimmer();
     final String unpeeled = TrimmerTestsUtils.apply(t, wrap);
-    assertThat("Nothing done on " + from, wrap, not(unpeeled));
+    azzert.that("Nothing done on " + from, wrap, not(unpeeled));
     final String peeled = w.off(unpeeled);
-    assertThat("No similification of " + from, from, not(peeled));
-    assertThat("Simpification of " + from + " is just reformatting", compressSpaces(peeled), not(compressSpaces(from)));
+    azzert.that("No similification of " + from, from, not(peeled));
+    azzert.that("Simpification of " + from + " is just reformatting", compressSpaces(peeled), not(compressSpaces(from)));
     assertSimilar(expected, peeled);
   }
   @Test public void andWithCLASS_CONSTANT() {

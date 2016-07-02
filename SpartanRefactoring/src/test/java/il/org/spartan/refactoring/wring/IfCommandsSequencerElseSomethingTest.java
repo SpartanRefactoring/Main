@@ -8,6 +8,8 @@ import static org.hamcrest.text.IsEqualIgnoringWhiteSpace.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
+import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 
 import java.util.*;
 
@@ -55,10 +57,10 @@ public class IfCommandsSequencerElseSomethingTest {
     final TextEdit x = r.rewriteAST(d, null);
     x.apply(d);
     final String unpeeled = d.get();
-    assertThat("Nothing done on " + s, wrap, not(unpeeled));
+    azzert.that("Nothing done on " + s, wrap, not(unpeeled));
     final String peeled = Wrap.Statement.off(unpeeled);
-    assertThat("No similification of " + s, s, not(peeled));
-    assertThat("Simpification of " + s + " is just reformatting", compressSpaces(peeled), not(compressSpaces(s.toString())));
+    azzert.that("No similification of " + s, s, not(peeled));
+    azzert.that("Simpification of " + s + " is just reformatting", compressSpaces(peeled), not(compressSpaces(s.toString())));
     assertSimilar(" if(a)return b;a(); ", peeled);
   }
   @org.junit.Test public void checkStepsTrimmer() throws MalformedTreeException, BadLocationException {
@@ -85,10 +87,10 @@ public class IfCommandsSequencerElseSomethingTest {
     final TextEdit x = r.rewriteAST(d, null);
     x.apply(d);
     final String unpeeled = d.get();
-    assertThat("Nothing done on " + s, wrap, not(unpeeled));
+    azzert.that("Nothing done on " + s, wrap, not(unpeeled));
     final String peeled = Wrap.Statement.off(unpeeled);
-    assertThat("No similification of " + s, s, not(peeled));
-    assertThat("Simpification of " + s + " is just reformatting", compressSpaces(peeled), not(compressSpaces(s.toString())));
+    azzert.that("No similification of " + s, s, not(peeled));
+    azzert.that("Simpification of " + s + " is just reformatting", compressSpaces(peeled), not(compressSpaces(s.toString())));
     assertSimilar(" if (a) return b; a(); ", peeled);
   }
   @Test public void checkStepsWRING() throws MalformedTreeException {

@@ -2,7 +2,7 @@ package il.org.spartan.refactoring.spartanizations;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
-import static org.junit.Assert.*;
+import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 
 import java.io.*;
@@ -62,10 +62,10 @@ public class Unchanged {
   @Test public void checkNoChange() {
     assertNotNull("Cannot instantiate Spartanization object", spartanization);
     if (input.getName().indexOf(FileTestUtils.testSuffix) <= 0)
-      that(TESTUtils.rewrite(spartanization, (CompilationUnit) ast.COMPILIATION_UNIT.from(input), new Document(input())).get(),
-          is(input()));
+      azzert.that(TESTUtils.rewrite(spartanization, (CompilationUnit) ast.COMPILIATION_UNIT.from(input), new Document(input()))
+          .get(), is(input()));
     else
-      assertThat(
+      azzert.that(
           "",
           TESTUtils.rewrite(spartanization, (CompilationUnit) ast.COMPILIATION_UNIT.from(input),
               new Document(ast.string(FileTestUtils.makeInFile(input)))).get(), is(ast.string(FileTestUtils.makeInFile(input))));
@@ -77,9 +77,9 @@ public class Unchanged {
   @Test public void checkNoOpportunities() {
     assertNotNull("Cannot instantiate spartanization object", spartanization);
     final ASTNode n = ast.COMPILIATION_UNIT.from(input);
-    that(n, notNullValue());
-    that(n, is(instanceOf(CompilationUnit.class)));
-    that((Object) spartanization.findOpportunities((CompilationUnit) n).size(), is((Object) 0));
+    azzert.that(n, notNullValue());
+    azzert.that(n, is(instanceOf(CompilationUnit.class)));
+    azzert.that(spartanization.findOpportunities((CompilationUnit) n).size(), is(0));
   }
   private String input() {
     return ast.string(input);

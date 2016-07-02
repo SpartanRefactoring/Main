@@ -45,9 +45,8 @@ public class Trimmer extends Spartanization {
     }
     return true;
   }
-  /** Instantiates this class */
-  public Trimmer() {
-    super("Trimmer");
+  @Override public String toString() {
+    return super.toString() + "/";
   }
   /**
    * @DisableSpartan

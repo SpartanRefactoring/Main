@@ -3,6 +3,7 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 
 import org.junit.*;
@@ -26,12 +27,12 @@ import org.junit.runners.*;
   }
   private static void assertWrappedTranslation(final String from, final String expected, final Wrap w) {
     final String wrap = w.on(from);
-    that(w.off(wrap), is(from));
+    azzert.that(w.off(wrap), is(from));
     final String unpeeled = Trimmer.fixedPoint(wrap);
-    assertThat("Nothing done on " + from, wrap, not(unpeeled));
+    azzert.that("Nothing done on " + from, wrap, not(unpeeled));
     final String peeled = w.off(unpeeled);
-    assertThat("No similification of " + from, from, not(peeled));
-    assertThat("Simpification of " + from + "is just reformatting", compressSpaces(peeled), not(compressSpaces(from)));
+    azzert.that("No similification of " + from, from, not(peeled));
+    azzert.that("Simpification of " + from + "is just reformatting", compressSpaces(peeled), not(compressSpaces(from)));
     assertSimilar(expected, peeled);
   }
   @Test(timeout = 2000) public void chainComparison() {

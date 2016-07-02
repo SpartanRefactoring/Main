@@ -30,12 +30,13 @@ public abstract class Wring<N extends ASTNode> implements Kind {
   protected CompilationUnit compilationUnit;
   protected Scalpel scalpel;
 
+  abstract String description(N n);
   /**
    * @param u current compilation unit
    * @return this wring
    */
-  public Wring<N> initialize(final CompilationUnit compilationUnit) {
-    this.compilationUnit = compilationUnit;
+  public Wring<N> initialize(final CompilationUnit u) {
+    this.compilationUnit = u;
     return this;
   }
   /**
@@ -47,7 +48,6 @@ public abstract class Wring<N extends ASTNode> implements Kind {
     scalpel = Source.getScalpel(compilationUnit, r, g);
     return this;
   }
-  abstract String description(N n);
   /**
    * Determine whether the parameter is "eligible" for application of this
    * instance. The parameter must be within the scope of the current instance.

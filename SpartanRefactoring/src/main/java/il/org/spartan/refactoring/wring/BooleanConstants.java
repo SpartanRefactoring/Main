@@ -23,7 +23,7 @@ import org.eclipse.jdt.core.dom.*;
  *
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  *
- * @since 2016-04-04
+ @since 2016-04-04
  */
 public class BooleanConstants extends Wring.ReplaceCurrentNode<MethodInvocation> implements Kind.ConsolidateStatements {
   @Override ASTNode replacement(final MethodInvocation i) {

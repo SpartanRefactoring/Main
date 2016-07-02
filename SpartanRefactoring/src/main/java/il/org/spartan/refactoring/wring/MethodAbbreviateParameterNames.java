@@ -24,6 +24,7 @@ import org.eclipse.text.edits.*;
  * replaces all parameter names in a method at once. If it is found to be
  * useless in the near future, delete this class. Otherwise, remove the
  * 
+ * 
  * @Deprecated annotation */
 @Deprecated public class MethodAbbreviateParameterNames extends Wring<MethodDeclaration> implements Kind.RENAME_PARAMETERS {
   @Override String description(final MethodDeclaration d) {

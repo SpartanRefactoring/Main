@@ -21,7 +21,7 @@ import java.util.regex.*;
  *
  *
  *
- * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
+ @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-08-25
  */
 @SuppressWarnings("static-method") public class JavaTypeNameParser {

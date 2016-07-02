@@ -12,19 +12,8 @@ import org.eclipse.jdt.core.dom.*;
  * @author Yossi Gil
  * @since 2015-07-16
  */
-public enum expose {
+@SuppressWarnings("unchecked") public enum expose {
   ;
-  /**
-   * Expose the list of parameters in a {@link MethodDeclaration}
-   *
-   * @param ¢ JD
-   *
-   * @return result of method {@link MethodDeclaration#parameters} downcasted to
-   *         its correct type
-   */
-  @SuppressWarnings("unchecked") public static List<SingleVariableDeclaration> parameters(final MethodDeclaration ¢) {
-    return ¢.parameters();
-  }
   /**
    * Expose the list of arguments in a {@link ClassInstanceCreation}
    *
@@ -44,6 +33,13 @@ public enum expose {
     return ast.expressions(i.arguments());
   }
   /**
+   * @param t
+   * @return
+   */
+  public static List<Type> arguments(ParameterizedType t) {
+    return t.typeArguments();
+  }
+  /**
    * Expose the list of arguments in a {@link SuperMethodInvocation}
    *
    * @param i JD
@@ -60,8 +56,7 @@ public enum expose {
    *         parameter
    */
   public static List<Expression> extendedOperands(final InfixExpression e) {
-    @SuppressWarnings("unchecked") final List<Expression> $ = e.extendedOperands();
-    return $;
+    return e.extendedOperands();
   }
   /**
    * Expose the list of fragments in a {@link FieldDeclaration}
@@ -96,8 +91,19 @@ public enum expose {
    * @param s JD
    * @return a reference to the list of initializers contained in the argument
    */
-  @SuppressWarnings("unchecked") static List<VariableDeclarationExpression> initializers(final ForStatement s) {
+  static List<VariableDeclarationExpression> initializers(final ForStatement s) {
     return s.initializers();
+  }
+  /**
+   * Expose the list of parameters in a {@link MethodDeclaration}
+   *
+   * @param ¢ JD
+   *
+   @return result of method {@link MethodDeclaration#parameters} downcasted to
+   *         its correct type
+   */
+  public static List<SingleVariableDeclaration> parameters(final MethodDeclaration ¢) {
+    return ¢.parameters();
   }
   /**
    * Expose the list of resources contained in a {@link TryStatement}
@@ -105,7 +111,7 @@ public enum expose {
    * @param s JD
    * @return a reference to the list of resources contained in the argument
    */
-  @SuppressWarnings("unchecked") static List<VariableDeclarationExpression> resources(final TryStatement s) {
+  static List<VariableDeclarationExpression> resources(final TryStatement s) {
     return s.resources();
   }
   /**

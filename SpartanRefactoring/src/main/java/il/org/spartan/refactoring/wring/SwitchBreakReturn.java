@@ -50,11 +50,11 @@ public class SwitchBreakReturn extends Wring.MultipleReplaceToNextStatement<Swit
     }
     return false;
   }
-  @SuppressWarnings("unchecked") @Override ASTRewrite go(final ASTRewrite r, final SwitchStatement s,
-      final Statement nextStatement, final TextEditGroup g, final List<ASTNode> bss, final List<ASTNode> crs) {
-    if (!Is.sequencer(nextStatement) || nextStatement instanceof BreakStatement)
+  @SuppressWarnings("unchecked") @Override ASTRewrite go(final ASTRewrite r, final SwitchStatement s, final Statement next,
+      final TextEditGroup g, final List<ASTNode> bss, final List<ASTNode> crs) {
+    if (!Is.sequencer(next) || next instanceof BreakStatement)
       return null;
-    crs.add(nextStatement);
+    crs.add(next);
     boolean cs = true; // true iff every case contain a sequencer
     boolean c = false; // true iff switch contains a case
     boolean ds = false; // true iff default statement ends with a sequencer
@@ -82,7 +82,7 @@ public class SwitchBreakReturn extends Wring.MultipleReplaceToNextStatement<Swit
     if (bss.isEmpty())
       return null;
     if (d && ds || c && cs)
-      r.remove(nextStatement, g);
+      r.remove(next, g);
     return r;
   }
   @Override String description(@SuppressWarnings("unused") final SwitchStatement __) {

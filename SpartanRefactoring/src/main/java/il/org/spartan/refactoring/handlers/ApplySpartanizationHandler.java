@@ -36,13 +36,24 @@ public class ApplySpartanizationHandler extends BaseHandler {
     execute(currentCompilationUnit(), getSelectedText());
     return null;
   }
-  @SuppressWarnings("javadoc") public static void execute(final ICompilationUnit cu) {
+  /**
+   * @param cu JD
+   */
+  public static void execute(final ICompilationUnit cu) {
     execute(cu, new Range(0, 0));
   }
-  @SuppressWarnings("javadoc") public static void execute(final ICompilationUnit cu, final Range r) {
+  /**
+   * @param cu JD
+   * @param r JD
+   */
+  public static void execute(final ICompilationUnit cu, final Range r) {
     execute(cu, r == null || r.size() <= 0 ? new TextSelection(0, 0) : new TextSelection(r.from, r.size()));
   }
-  @SuppressWarnings("javadoc") public static void execute(final ICompilationUnit cu, final ITextSelection t) {
+  /**
+   * @param cu JD
+   * @param t JD
+   */
+  public static void execute(final ICompilationUnit cu, final ITextSelection t) {
     for (final Spartanization s : inner)
       try {
         s.setCompilationUnit(cu);

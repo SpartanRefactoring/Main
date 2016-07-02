@@ -1,5 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
+import static il.org.spartan.refactoring.utils.expose.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -41,19 +43,18 @@ public class MethodExplorer {
         return add(s.getParameter());
       }
       @Override public boolean visit(final ForStatement s) {
-        return add(s.initializers());
+        return add(expose.initializers(s));
       }
       @Override public boolean visit(final TryStatement s) {
-        return add(s.resources());
+        return add(resources(s));
       }
       @Override public boolean visit(final VariableDeclarationStatement s) {
         addFragments(expose.fragments(s));
         return true;
       }
       private boolean add(final List<VariableDeclarationExpression> initializers) {
-        for (final Object o : initializers)
-          if (o instanceof VariableDeclarationExpression)
-            addFragments(expose.fragments((VariableDeclarationExpression) o));
+        for (final VariableDeclarationExpression o : initializers)
+          addFragments(expose.fragments(o));
         return true;
       }
       private boolean add(final SingleVariableDeclaration d) {

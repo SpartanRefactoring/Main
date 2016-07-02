@@ -8,6 +8,7 @@ import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.utils.LiteralParser.Types;
+import il.org.spartan.refactoring.wring.AbstractWringTest.Noneligible;
 
 import java.util.*;
 

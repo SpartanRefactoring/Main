@@ -4,6 +4,8 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
+import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 
 import java.util.*;
 

@@ -7,8 +7,12 @@ import org.eclipse.jface.preference.*;
 import org.eclipse.jface.util.*;
 import org.eclipse.ui.*;
 
-@SuppressWarnings("javadoc") public class PluginPreferencesPage extends FieldEditorPreferencePage implements
-    IWorkbenchPreferencePage {
+/**
+ * @author Yossi Gil
+ *
+ * @since 2016`
+ */
+public class PluginPreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
   private final SpartanPropertyListener listener;
 
   @SuppressWarnings("synthetic-access") public PluginPreferencesPage() {

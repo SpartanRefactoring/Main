@@ -59,6 +59,10 @@ public enum Collect {
       }
     };
   }
+  /**
+   * @param n JD
+   * @return
+   */
   public static Collector forAllOccurencesExcludingDefinitions(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
@@ -69,6 +73,10 @@ public enum Collect {
       }
     };
   }
+  /**
+   * @param n JD
+   * @return
+   */
   public static Collector usesOf(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {

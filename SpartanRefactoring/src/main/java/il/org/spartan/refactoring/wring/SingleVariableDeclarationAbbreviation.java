@@ -47,7 +47,7 @@ public class SingleVariableDeclarationAbbreviation extends Wring<SingleVariableD
         final Javadoc j = m.getJavadoc();
         if (j == null)
           return;
-        final List<TagElement> ts = j.tags();
+        @SuppressWarnings("unchecked") final List<TagElement> ts = j.tags();
         if (ts == null)
           return;
         for (final TagElement t : ts) {

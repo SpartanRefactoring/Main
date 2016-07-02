@@ -8,6 +8,8 @@ import static il.org.spartan.refactoring.utils.Restructure.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.AbstractWringTest.Noneligible;
+import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 
 import java.util.*;
 

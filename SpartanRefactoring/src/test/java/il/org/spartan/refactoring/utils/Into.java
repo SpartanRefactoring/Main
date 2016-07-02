@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
+import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 
 import java.util.*;
@@ -37,8 +38,8 @@ public enum Into {
    */
   public static ConditionalExpression c(final String conditionalExpression) {
     final Expression $ = e(conditionalExpression);
-    assertThat(conditionalExpression, $, notNullValue());
-    assertThat(conditionalExpression, $, instanceOf(ConditionalExpression.class));
+    azzert.that(conditionalExpression, $, notNullValue());
+    azzert.that(conditionalExpression, $, instanceOf(ConditionalExpression.class));
     return (ConditionalExpression) $;
   }
   /**
@@ -114,8 +115,8 @@ public enum Into {
   public static Statement s(final String statement) {
     that(statement, notNullValue());
     final ASTNode n = ast.STATEMENTS.from(statement);
-    assertThat(statement, n, notNullValue());
-    assertThat(statement, n, instanceOf(Statement.class));
+    azzert.that(statement, n, notNullValue());
+    azzert.that(statement, n, instanceOf(Statement.class));
     return (Statement) n;
   }
 }

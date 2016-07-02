@@ -2,7 +2,7 @@ package il.org.spartan.refactoring.preferences;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 
-public interface Kind {
+@SuppressWarnings("javadoc") public interface Kind {
   public interface RENAME_RETURN_VARIABLE extends Kind {
     @Override default WringGroup kind() {
       return WringGroup.RENAME_RETURN_VARIABLE;
@@ -18,7 +18,7 @@ public interface Kind {
   interface ConsolidateStatements extends Kind {
     @Override default WringGroup kind() {
       return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
-    }
+    };
   }
 
   interface DiscardRedundant extends Kind {

@@ -26,7 +26,6 @@ public class AsSpartanization extends Spartanization {
    * @param name The title of the refactoring
    */
   @SuppressWarnings("unchecked") public AsSpartanization(final Wring<? extends ASTNode> inner, final String name) {
-    super(name);
     this.inner = (Wring<ASTNode>) inner;
   }
   @Override protected ASTVisitor collect(final List<Rewrite> $, final CompilationUnit u) {

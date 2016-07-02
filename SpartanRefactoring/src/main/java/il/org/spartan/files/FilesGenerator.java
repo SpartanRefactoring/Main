@@ -31,24 +31,9 @@ import java.util.*;
  * @since 2015-09-23.
  */
 public class FilesGenerator {
-  public static class az {
-    @SafeVarargs public static <T> Iterable<T> iterable(final T... ts) {
-      return () -> new Iterator<T>() {
-        private int next = 0;
-
-        @Override public boolean hasNext() {
-          return next < ts.length;
-        }
-        @Override public T next() {
-          return ts[next++];
-        }
-        @Override public void remove() {
-          throw new UnsupportedOperationException("Cannot remove an element of an array.");
-        }
-      };
-    }
-  }
-
+  /**
+   * @param args
+   */
   public static void main(final String[] args) {
     for (final File f : new FilesGenerator(".java").from("."))
       System.out.println(f);
@@ -71,7 +56,7 @@ public class FilesGenerator {
    * @see FilesGenerator#from
    */
   public FilesGenerator(final String... extensions) {
-    this.extensions = az.iterable(extensions);
+    this.extensions = as.iterable(extensions);
   }
   /**
    * @param from an array of names of directories from which the traversal
@@ -81,7 +66,7 @@ public class FilesGenerator {
    *         {@link Iterable} <code><b>interface</b></code>
    */
   public From from(final String... from) {
-    return from(az.iterable(from));
+    return from(as.iterable(from));
   }
   /**
    * @param from an array of names of directories from which the traversal
@@ -160,7 +145,7 @@ public class FilesGenerator {
 
   /**
    * @param directory should be a directory, but we still need to account for
-   *          weird creatures such as "System Volume Information"
+   *          weird creatures such az "System Volume Information"
    */
   static Iterator<File> directoryIterator(final File directory) {
     if (directory == null || !directory.isDirectory() || directory.list() == null)

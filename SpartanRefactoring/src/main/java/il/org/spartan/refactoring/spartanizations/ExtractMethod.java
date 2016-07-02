@@ -22,9 +22,8 @@ import org.eclipse.text.edits.*;
 // which is supposed to be fine due to the
 // fact that extract method API is internal.
 public class ExtractMethod extends Spartanization {
-  /** Instantiates this class */
-  public ExtractMethod() {
-    super("Split method");
+  @Override public String toString() {
+    return super.toString() + "(extract method)";
   }
 
   CompilationUnit oldCu;

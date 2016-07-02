@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.idiomatic.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
@@ -11,6 +12,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
+import org.eclipse.jdt.core.dom.rewrite.*;
 
 /**
  * Useful Functions
@@ -637,6 +639,10 @@ public enum Funcs {
         return false;
     return true;
   }
+  /**
+   * @param t JD
+   * @return the short name of the parameter
+   */
   public static String shortName(final Type t) {
     return t instanceof NameQualifiedType ? shortName((NameQualifiedType) t)
         : t instanceof PrimitiveType ? shortName((PrimitiveType) t) : t instanceof QualifiedType ? shortName((QualifiedType) t)
@@ -646,6 +652,10 @@ public enum Funcs {
                         : t instanceof ParameterizedType ? shortName((ParameterizedType) t)//
                             : t instanceof UnionType ? shortName((UnionType) t) : null;
   }
+  /**
+   * @param s
+   * @return the short name of the parameter
+   */
   public static String shortName(final String s) {
     return new JavaTypeNameParser(s).shortName();
   }
@@ -668,7 +678,7 @@ public enum Funcs {
     return s.getThenStatement();
   }
   static PrefixExpression asNot(final PrefixExpression e) {
-    return NOT.equals(e.getOperator()) ? e : null;
+    return incase(NOT.equals(e.getOperator()), e);
   }
   private static InfixExpression asComparison(final InfixExpression e) {
     return in(e.getOperator(), //
@@ -735,7 +745,7 @@ public enum Funcs {
       case "List":
       case "Queue":
       case "Set":
-        final String $ = shortName(t.typeArguments());
+        final String $ = shortName(expose.arguments(t));
         if ($ == null)
           return null;
         return $ + "s";

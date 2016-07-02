@@ -37,9 +37,8 @@ import org.eclipse.text.edits.*;
  * </pre>
  */
 public class ForwardDeclaration extends Spartanization {
-  /** Instantiates this class */
-  public ForwardDeclaration() {
-    super("Forward declaration");
+  @Override public String toString() {
+    return super.toString() + "(forward declaration)";
   }
   @Override protected final void fillRewrite(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
     u.accept(new ASTVisitor() {
@@ -77,10 +76,10 @@ public class ForwardDeclaration extends Spartanization {
     });
   }
   static boolean nextNodeIsAlreadyFixed(final Block b, final VariableDeclarationFragment n, final int declaredIdx) {
-    final int firstUseIdx = findFirstUse(b, n.getName());
-    if (firstUseIdx < 0)
+    final int first = findFirstUse(b, n.getName());
+    if (first < 0)
       return true;
-    final int begin = findBeginingOfDeclarationBlock(b, declaredIdx, firstUseIdx);
+    final int begin = findBeginingOfDeclarationBlock(b, declaredIdx, first);
     final ASTNode nextN = (ASTNode) b.statements().get(1 + declaredIdx);
     final int nextDeclaredIdx = 1 + declaredIdx;
     if (nextN.getNodeType() == ASTNode.VARIABLE_DECLARATION_STATEMENT)

@@ -4,6 +4,8 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import il.org.spartan.*;
+import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
+import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 
 import java.util.*;
 
@@ -16,7 +18,7 @@ import org.junit.runners.Parameterized.Parameters;
 /**
  * @author Yossi Gil
  *
- * @since 2014-07-13
+ @since 2014-07-13
  */
 @SuppressWarnings({ "javadoc", "static-method" })//
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)//

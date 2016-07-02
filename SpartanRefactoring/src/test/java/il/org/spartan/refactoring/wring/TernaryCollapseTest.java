@@ -1,10 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 import il.org.spartan.*;
+import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 
 import java.util.*;
 
@@ -36,7 +37,7 @@ public class TernaryCollapseTest {
     that(thenThen, notNullValue());
     final Expression thenElse = core(then.getElseExpression());
     that(thenElse, notNullValue());
-    Assert.assertThat(same(thenElse, elze), is(true));
+    azzert.that(same(thenElse, elze), is(true));
   }
 
   @RunWith(Parameterized.class)//
