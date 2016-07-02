@@ -680,7 +680,7 @@ public class azzert extends org.junit.Assert {
    * @param b JD
    */
   public static void assertTrue(final boolean b) {
-    assertTrue(b);
+    assertTrue("", b);
   }
   public static void assertTrue(final String s, final boolean b) {
     that(s, Boolean.valueOf(b), is(Boolean.TRUE));

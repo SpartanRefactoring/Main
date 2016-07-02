@@ -27,7 +27,7 @@ public final class Separator {
   /**
    * Instantiates this class.
    *
-   * @param c
+   * @param c JD
    */
   public Separator(final char c) {
     this("" + c);
@@ -35,7 +35,7 @@ public final class Separator {
   /**
    * Instantiates this class.
    *
-   * @param s
+   * @param s JD
    */
   public Separator(final String s) {
     this.s = s;
@@ -56,9 +56,10 @@ public final class Separator {
     return wrap(wrap, wrap, ts, between);
   }
   /**
-   * @param <T> JD* @param begin
+   * @param <T> JD
+   * @param begin
    * @param end
-   * @param ts
+   * @param ts JD
    * @param between
    * @return TODO document return type
    */

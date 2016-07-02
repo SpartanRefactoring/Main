@@ -1,6 +1,7 @@
 package il.org.spartan;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.idiomatic.*;
 import static org.junit.Assert.*;
 import il.org.spartan.Utils.FoundHandleForT.FoundHandleForInt;
 
@@ -103,13 +104,13 @@ public enum Utils {
         .replaceAll("(?m)\\s+", " ") // Squeeze whites
         .replaceAll("^\\s", "") // Opening whites
         .replaceAll("\\s$", "") // Closing whites
-    ;
+        ;
     for (final String operator : new String @NonNull [] { ":", "/", "%", ",", "\\{", "\\}", "=", ":", "\\?", ";", "\\+", ">", ">=",
         "!=", "==", "<", "<=", "-", "\\*", "\\|", "\\&", "%", "\\(", "\\)", "[\\^]" })
       $ = $ //
-          .replaceAll(WHITES + operator, operator) // Preceding whites
-          .replaceAll(operator + WHITES, operator) // Trailing whites
-    ;
+      .replaceAll(WHITES + operator, operator) // Preceding whites
+      .replaceAll(operator + WHITES, operator) // Trailing whites
+      ;
     return cantBeNull($);
   }
   /**
@@ -201,7 +202,7 @@ public enum Utils {
    *         parameter is <code><b>null</b></code> or empty
    */
   public static <@Nullable T> T last(final List<T> ts) {
-    return ts.isEmpty() ? null : ts.get(ts.size() - 1);
+    return unless(ts.isEmpty()).eval(ts.get(ts.size() - 1));
   }
   /**
    * Determine whether an {@link Object} is the last in a {@link List}.
@@ -269,8 +270,8 @@ public enum Utils {
    * @return the last item in a list or <code><b>null</b></code> if the
    *         parameter is <code><b>null</b></code> or empty
    */
-  public static <T> @Nullable T penultimate(final @Nullable List<T> ts) {
-    return ts == null || ts.size() < 2 ? null : ts.get(ts.size() - 2);
+  @SuppressWarnings("null") public static <T> @Nullable T penultimate(final @Nullable List<T> ts) {
+    return unless(ts == null || ts.size() < 2).eval(() -> ts.get(ts.size() - 2));
   }
   /**
    * Determine whether an {@link Object} is penultimate in its {@link List}.
