@@ -17,10 +17,14 @@ import org.junit.*;
  * forbidden from giving any semantics to this function, which would be in
  * contrast with the read-only nature of this iterator.
  *
- * @see PureIterator
- * @author Yossi Gil
- * @since 2014-06-03
- * @param <T> some arbitrary type
+ 
+ @see PureIterator
+ 
+ @author Yossi Gil
+ 
+ @since 2014-06-03
+ 
+ @param <T> some arbitrary type
  */
 public abstract class PureIterator<T> implements Iterator<T> {
   /**
@@ -28,16 +32,20 @@ public abstract class PureIterator<T> implements Iterator<T> {
    * descendants from giving {link #remove} semantics other than immediately
    * throwing a fresh instance of {@link IllegalArgumentException}.
    *
-   * @see java.util.Iterator#remove()
+   
+ @see java.util.Iterator#remove()
    */
   @Override public final void remove() {
     throw new IllegalArgumentException();
   }
 
   /**
-   * @author Yossi Gil <Yossi.Gil@GMail.COM>
-   * @param <T> JD
-   * @since 2016
+   
+ @author Yossi Gil <Yossi.Gil@GMail.COM>
+   
+ @param <T> JD
+   
+ @since 2016
    */
   public abstract static class Staged<T> extends PureIterator<T> {
     /**

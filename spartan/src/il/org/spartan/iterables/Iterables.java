@@ -15,8 +15,10 @@ import org.junit.runners.*;
 /**
  * TODO
  *
- * @author Yossi Gil <Yossi.Gil@GMail.COM>
- * @since 2016
+ 
+ @author Yossi Gil <Yossi.Gil@GMail.COM>
+ 
+ @since 2016
  */
 public enum Iterables {
   // No values in an 'enum' used as name space for a collection of 'static'
@@ -25,9 +27,12 @@ public enum Iterables {
   /**
    * Counts the number of items in an {@link Iterable}.
    *
-   * @param <T> some arbitrary type
-   * @param ts some iterable over items whose type is the type parameter
-   * @return the number of items the given iterable yields.
+   
+ @param <T> some arbitrary type
+   
+ @param ts some iterable over items whose type is the type parameter
+   
+ @return the number of items the given iterable yields.
    */
   public static <T> int count(final @Nullable Iterable<T> ts) {
     int $ = 0;
@@ -37,15 +42,19 @@ public enum Iterables {
     return $;
   }
   /**
-   * @param <T> JD
-   * @return TODO document return type
+   
+ @param <T> JD
+   
+ @return TODO document return type
    */
   public static <T> PureIterable.Sized<T> empty() {
     return as.nonNullIterable();
   }
   /**
-   * @param os JD
-   * @return TODO document return type
+   
+ @param os JD
+   
+ @return TODO document return type
    */
   public static boolean isEmpty(final Iterable<?> os) {
     for (final Iterator<?> i = os.iterator(); i.hasNext();)
@@ -54,17 +63,23 @@ public enum Iterables {
     return true;
   }
   /**
-   * @param <T> JD
-   * @param t JD
-   * @return TODO
+   
+ @param <T> JD
+   
+ @param t JD
+   
+ @return TODO
    */
   public static <T> PureIterable.Sized<T> singleton(final T t) {
     return as.nonNullIterable(t);
   }
   /**
-   * @param <T> JD
-   * @param t JD
-   * @return TODO
+   
+ @param <T> JD
+   
+ @param t JD
+   
+ @return TODO
    */
   public static <T> PureIterator<T> singletonIterator(final T t) {
     return singleton(t).iterator();
@@ -76,8 +91,10 @@ public enum Iterables {
    * methods do not use are not prefixed by "test". This prefix is redundant. b)
    * test methods begin with the name of the method they check.
    *
-   * @author Yossi Gil
-   * @since 2014-05-31
+   
+ @author Yossi Gil
+   
+ @since 2014-05-31
    */
   @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   @SuppressWarnings({ "static-method", "javadoc" })//

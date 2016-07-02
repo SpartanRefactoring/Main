@@ -47,8 +47,9 @@ public final class Separator {
     return "";
   }
   /**
-   * @param <T> JD* @param wrap
-   * @param ts
+   * @param <T> JD
+   * @param wrap
+   * @param ts JD
    * @param between
    * @return TODO document return type
    */
@@ -73,7 +74,8 @@ public final class Separator {
     return as.string($.append(end));
   }
   /**
-   * @param <T> JD* @param begin
+   * @param <T> JD
+   * @param begin
    * @param end
    * @param ts
    * @param between
@@ -97,7 +99,8 @@ public final class Separator {
       System.out.print(s + a);
   }
   /**
-   * @param <T> JD* @param between
+   * @param <T> JD
+   * @param between
    * @param ts
    * @return TODO document return type
    */

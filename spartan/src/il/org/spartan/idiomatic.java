@@ -35,7 +35,8 @@ public enum idiomatic {
    */
   public interface Hold {
     /**
-     * @param <T> JD * @param t
+     * @param <T> JD
+     * @param t
      * @return TODO document return type
      */
     <@Nullable T> T eval(final Supplier<T> t);
@@ -60,6 +61,20 @@ public enum idiomatic {
     }
   };
 
+  /**
+   * @param condition JD
+   * @return TODO document return type
+   */
+  public static <T> @Nullable T unless(final boolean condition, final T t) {
+    return incase(!condition, t);
+  }
+  /**
+   * @param condition JD
+   * @return TODO document return type
+   */
+  public static <T> @Nullable T incase(final boolean condition, final T t) {
+    return condition ? t : null;
+  }
   /**
    * @param condition JD
    * @return TODO document return type

@@ -11,9 +11,12 @@ import org.junit.*;
  * A class for lazy, memoizing evaluation of objects of arbitrary type. The
  * evaluation must never return <code><b>null</b></code>.
  *
- * @param <T> some arbitrary type
- * @author Yossi Gil
- * @since 2014-06-20
+ 
+ @param <T> some arbitrary type
+ 
+ @author Yossi Gil
+ 
+ @since 2014-06-20
  */
 public abstract class NonNullCache<T> {
   /**
@@ -26,14 +29,16 @@ public abstract class NonNullCache<T> {
    * computing the cached value. This class protects this function, guaranteeing
    * that it would only be called once.
    *
-   * @return the value to be cached
+   
+ @return the value to be cached
    */
   protected abstract T __();
   /**
    * Compute the cached value, either by looking up the memoized valued, or by
    * actual computation
    *
-   * @return the cached value
+   
+ @return the cached value
    */
   public T value() {
     return value != null ? value : (value = __());

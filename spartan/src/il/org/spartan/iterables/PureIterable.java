@@ -11,10 +11,14 @@ import org.eclipse.jdt.annotation.*;
  * to <code><b>implements</b></code> this class, the trouble of providing a
  * vacuous implementation of this function.
  *
- * @see PureIterator
- * @author Yossi Gil
- * @since 2014-06-03
- * @param <T> some arbitrary type
+ 
+ @see PureIterator
+ 
+ @author Yossi Gil
+ 
+ @since 2014-06-03
+ 
+ @param <T> some arbitrary type
  */
 public interface PureIterable<T> extends Iterable<T> {
   /**
@@ -36,13 +40,17 @@ public interface PureIterable<T> extends Iterable<T> {
    * exhausting the sequence items that this iterable may yield.
    * </ol>
    *
-   * @author Yossi Gil
-   * @since 2014-06-20
-   * @param <T> some arbitrary type
+   
+ @author Yossi Gil
+   
+ @since 2014-06-20
+   
+ @param <T> some arbitrary type
    */
   public abstract class Sized<T> implements PureIterable<T> {
     /**
-     * @return TODO document return type
+     
+ @return TODO document return type
      */
     public abstract int size();
   }

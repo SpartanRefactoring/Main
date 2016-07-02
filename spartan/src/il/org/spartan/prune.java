@@ -21,15 +21,21 @@ import org.junit.*;
  * }
  * </pre>
  *
- * @author Yossi Gil
- * @since 27/08/2008
+ 
+ @author Yossi Gil
+ 
+ @since 27/08/2008
  */
 public enum prune {
   ;
   /**
-   * @param <T> JD
-   * @param <C> JD
-   * @param ts JD * @return TODO document return type
+   
+ @param <T> JD
+   
+ @param <C> JD
+   
+ @param ts JD 
+ @return TODO document return type
    */
   public static <T, C extends Collection<T>> C nulls(final C ts) {
     for (final Iterator<T> i = ts.iterator(); i.hasNext();)
@@ -40,9 +46,12 @@ public enum prune {
   /**
    * Prune <code><b>null</b></code> elements from a given collection.
    *
-   * @param <T> type of elements in the collection.
-   * @param ts a collection of values.
-   * @return a new collection, containing only those non-
+   
+ @param <T> type of elements in the collection.
+   
+ @param ts a collection of values.
+   
+ @return a new collection, containing only those non-
    *         <code><b>null</b></code> elements of the parameter, and in the same
    *         order. No <code><b>null</b></code> elements are present on this
    *         returned collection.
@@ -57,9 +66,12 @@ public enum prune {
   /**
    * Prune <code><b>null</b></code> elements from a given array.
    *
-   * @param <T> type of elements in the array.
-   * @param ts an array of values.
-   * @return a new array, containing precisely those non-
+   
+ @param <T> type of elements in the array.
+   
+ @param ts an array of values.
+   
+ @return a new array, containing precisely those non-
    *         <code><b>null</b></code> elements of the parameter, and in the same
    *         order. No <code><b>null</b></code> elements are present on this
    *         returned collection.
@@ -74,15 +86,20 @@ public enum prune {
   /**
    * Shrink an array size to zero.
    *
-   * @param <T> type of elements in the input array.
-   * @param ts an array of values.
-   * @return an array of size 0 of elements of type <code>T</code>.
+   
+ @param <T> type of elements in the input array.
+   
+ @param ts an array of values.
+   
+ @return an array of size 0 of elements of type <code>T</code>.
    */
   @SuppressWarnings("null") private static <T> T[] shrink(final T @Nullable [] ts) {
     return cantBeNull(Arrays.copyOf(ts, 0));
   }
   /**
-   * @param ss * @return TODO document return type
+   
+ @param ss 
+ @return TODO document return type
    */
   @SafeVarargs public static String[] whites(final String... ss) {
     final List<String> $ = new ArrayList<>();
@@ -92,7 +109,9 @@ public enum prune {
     return asArrray($);
   }
   /**
-   * @param $ * @return TODO document return type
+   
+ @param $ 
+ @return TODO document return type
    */
   @SuppressWarnings("null") private static String[] asArrray(final List<String> $) {
     return cantBeNull($.toArray(new String @NonNull [0]));
@@ -101,8 +120,10 @@ public enum prune {
   /**
    * A JUnit test class for the enclosing class.
    *
-   * @author Yossi Gil, the Technion.
-   * @since 27/08/2008
+   
+ @author Yossi Gil, the Technion.
+   
+ @since 27/08/2008
    */
   @SuppressWarnings({ "static-method", "javadoc", "synthetic-access" })//
   public static class TEST {
