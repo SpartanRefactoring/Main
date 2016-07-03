@@ -27,43 +27,6 @@ import org.junit.runners.*;
  */
 public class LCS {
   /**
-   * Instantiates this class.
-   *
-   
- @param a JD
-   
- @param b JD
-   */
-  public LCS(final String a, final String b) {
-    this(Lines.scatter(a), Lines.scatter(b));
-  }
-  /**
-   * TODO:Document this method Instantiates this class.
-   *
-   
- @param as JD
-   
- @param bs JD
-   */
-  public LCS(final String[] as, final String[] bs) {
-    this(hash(as), hash(bs));
-  }
-  /**
-   * Instantiates this class. TODO: Document this method
-   *
-   
- @param as JD
-   
- @param bs JD
-   */
-  public LCS(final int[] as, final int[] bs) {
-    this.A_s = as;
-    this.B_s = bs;
-    length = new int @NonNull [as.length][];
-    for (int i = 0; i < as.length; ++i)
-      Arrays.fill(length[i] = new int[bs.length], -1);
-  }
-  /**
    
  @param ia JD
    
@@ -113,10 +76,43 @@ public class LCS {
     }
     return $;
   }
-
-  private final int[] A_s;
-  private final int[] B_s;
-  private final int[][] length;
+  /**
+   * Instantiates this class. TODO: Document this method
+   *
+   
+ @param as JD
+   
+ @param bs JD
+   */
+  public LCS(final int[] as, final int[] bs) {
+    this.A_s = as;
+    this.B_s = bs;
+    length = new int @NonNull [as.length][];
+    for (int i = 0; i < as.length; ++i)
+      Arrays.fill(length[i] = new int[bs.length], -1);
+  }
+  /**
+   * Instantiates this class.
+   *
+   
+ @param a JD
+   
+ @param b JD
+   */
+  public LCS(final String a, final String b) {
+    this(Lines.scatter(a), Lines.scatter(b));
+  }
+  /**
+   * TODO:Document this method Instantiates this class.
+   *
+   
+ @param as JD
+   
+ @param bs JD
+   */
+  public LCS(final String[] as, final String[] bs) {
+    this(hash(as), hash(bs));
+  }
 
   private int compute(final int i, final int j) {
     return i < 0 || j < 0 ? 0 : threeWayDynamicProgramingStep(i, j);
@@ -140,12 +136,16 @@ public class LCS {
   private int length(final int i, final int j) {
     return i < 0 || j < 0 ? 0 : obtainLength(i, j);
   }
+
   private int obtainLength(final int i, final int j) {
     return length[i][j] != -1 ? length[i][j] : (length[i][j] = compute(i, j));
   }
   private int threeWayDynamicProgramingStep(final int i, final int j) {
     return max(length(i - 1, j), length(i, j - 1), length(i - 1, j - 1) + as.bit(A_s[i] == B_s[j]));
   }
+  private final int[] A_s;
+  private final int[] B_s;
+  private final int[][] length;
 
   @SuppressWarnings({ "static-method", "javadoc" })//
   @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
@@ -159,11 +159,11 @@ public class LCS {
         $.append(c).append('\n');
       return Lines.scatter(as.string($));
     }
-    @Test public void chars2LinesTypical() {
-      assertEquals(3, chars2Lines("ABC").length);
-    }
     @Test public void chars2LinesSanity() {
       assertEquals(0, chars2Lines("").length);
+    }
+    @Test public void chars2LinesTypical() {
+      assertEquals(3, chars2Lines("ABC").length);
     }
     @Test public void length1StrgumentIsZero() {
       assertEquals(0, length(new int @NonNull [0], new int @NonNull [10]));

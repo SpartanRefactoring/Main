@@ -84,19 +84,6 @@ public enum prune {
     return cantBeNull($.toArray(shrink(ts)));
   }
   /**
-   * Shrink an array size to zero.
-   *
-   
- @param <T> type of elements in the input array.
-   
- @param ts an array of values.
-   
- @return an array of size 0 of elements of type <code>T</code>.
-   */
-  @SuppressWarnings("null") private static <T> T[] shrink(final T @Nullable [] ts) {
-    return cantBeNull(Arrays.copyOf(ts, 0));
-  }
-  /**
    
  @param ss 
  @return TODO document return type
@@ -116,6 +103,19 @@ public enum prune {
   @SuppressWarnings("null") private static String[] asArrray(final List<String> $) {
     return cantBeNull($.toArray(new String @NonNull [0]));
   }
+  /**
+   * Shrink an array size to zero.
+   *
+   
+ @param <T> type of elements in the input array.
+   
+ @param ts an array of values.
+   
+ @return an array of size 0 of elements of type <code>T</code>.
+   */
+  @SuppressWarnings("null") private static <T> T[] shrink(final T @Nullable [] ts) {
+    return cantBeNull(Arrays.copyOf(ts, 0));
+  }
 
   /**
    * A JUnit test class for the enclosing class.
@@ -127,8 +127,48 @@ public enum prune {
    */
   @SuppressWarnings({ "static-method", "javadoc", "synthetic-access" })//
   public static class TEST {
-    final String @NonNull [] alternatingArray = new String @NonNull [] { null, "A", null, null, "B", null, null, null, "C", null };
-    final String @NonNull [] nonNullArray = { "1", "2", "4" };
+    @Test public void nullsNonNullArrayLength() {
+      assertEquals(nonNullArray.length, nulls(nonNullArray).length);
+    }
+    @Test public void nullsNullArrayItems() {
+      assertEquals("1", nulls(nonNullArray)[0]);
+      assertEquals("2", nulls(nonNullArray)[1]);
+      assertEquals("4", nulls(nonNullArray)[2]);
+    }
+    @Test public void nullsPruneArrayAltenatingItems() {
+      assertEquals("A", nulls(alternatingArray)[0]);
+      assertEquals("B", nulls(alternatingArray)[1]);
+      assertEquals("C", nulls(alternatingArray)[2]);
+    }
+
+    @Test public void nullsPruneArrayAltenatingLength() {
+      assertEquals(3, nulls(alternatingArray).length);
+    }
+    @Test public void nullsPruneSparseCollectionContents() {
+      final String[] a = nulls(sparseCollection.value()).toArray(new String[3]);
+      assertEquals("A", a[0]);
+      assertEquals("B", a[1]);
+      assertEquals("C", a[2]);
+      assertEquals(3, a.length);
+    }
+    @Test public void nullsPruneSparseCollectionLength() {
+      assertEquals(3, nulls(sparseCollection.value()).size());
+    }
+    @Test public void nullsPrunNotNull() {
+      notNull(nulls(sparseCollection.value()));
+    }
+    @Test public void shrinkArray() {
+      assertEquals(0, shrink(new Object @Nullable [10]).length);
+    }
+    @Test public void shrinkEmptyArray() {
+      assertEquals(0, shrink(new Object @Nullable [0]).length);
+    }
+    @Test public void whitesEmptyArray() {
+      assertEquals(0, prune.whites(new String @NonNull [] {}).length);
+    }
+    @Test public void whitesEmptyList() {
+      assertEquals(0, prune.whites().length);
+    }
     private final NonNullCache<List<String>> sparseCollection = new NonNullCache<List<String>>() {
       @Override protected List<@Nullable String> __() {
         final List<@Nullable String> $ = new ArrayList<>();
@@ -151,47 +191,7 @@ public enum prune {
         return $;
       }
     };
-
-    @Test public void nullsNonNullArrayLength() {
-      assertEquals(nonNullArray.length, nulls(nonNullArray).length);
-    }
-    @Test public void nullsNullArrayItems() {
-      assertEquals("1", nulls(nonNullArray)[0]);
-      assertEquals("2", nulls(nonNullArray)[1]);
-      assertEquals("4", nulls(nonNullArray)[2]);
-    }
-    @Test public void nullsPruneArrayAltenatingItems() {
-      assertEquals("A", nulls(alternatingArray)[0]);
-      assertEquals("B", nulls(alternatingArray)[1]);
-      assertEquals("C", nulls(alternatingArray)[2]);
-    }
-    @Test public void nullsPruneArrayAltenatingLength() {
-      assertEquals(3, nulls(alternatingArray).length);
-    }
-    @Test public void nullsPruneSparseCollectionContents() {
-      final String[] a = nulls(sparseCollection.value()).toArray(new String[3]);
-      assertEquals("A", a[0]);
-      assertEquals("B", a[1]);
-      assertEquals("C", a[2]);
-      assertEquals(3, a.length);
-    }
-    @Test public void nullsPruneSparseCollectionLength() {
-      assertEquals(3, nulls(sparseCollection.value()).size());
-    }
-    @Test public void nullsPrunNotNull() {
-      assertNotNull(nulls(sparseCollection.value()));
-    }
-    @Test public void shrinkArray() {
-      assertEquals(0, shrink(new Object @Nullable [10]).length);
-    }
-    @Test public void shrinkEmptyArray() {
-      assertEquals(0, shrink(new Object @Nullable [0]).length);
-    }
-    @Test public void whitesEmptyList() {
-      assertEquals(0, prune.whites().length);
-    }
-    @Test public void whitesEmptyArray() {
-      assertEquals(0, prune.whites(new String @NonNull [] {}).length);
-    }
+    final String @NonNull [] alternatingArray = new String @NonNull [] { null, "A", null, null, "B", null, null, null, "C", null };
+    final String @NonNull [] nonNullArray = { "1", "2", "4" };
   }
 }

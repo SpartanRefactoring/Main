@@ -18,50 +18,19 @@ import org.junit.runners.*;
  * collection, and return a {@link String} composed by the elements of this
  * collection, separated by a given {@link String} or <code><b>char</b></code>.
  *
- 
+
  @author Yossi Gil
- 
+
  @since 07/08/2008
  */
 public enum separate {
   ;
-  /** The comma character */
-  public static final String COMMA = ",";
-  /** The dot character */
-  public static final String DOT = ".";
-  /** The Unix line separator character */
-  public static final String NL = "\n";
-  /** The space character */
-  public static final String SPACE = " ";
-
-  /**
-   * A simple program demonstrating the use of this class. This program prints a
-   * comma separated list of its arguments, where special characters in each
-   * argument are escaped prior to printing.
-   *
-   
- @param args list of the command line arguments.
-   */
-  public static void main(final String[] args) {
-    System.out.println("Arguments are: " + separate.these(args).by(", "));
-  }
-  /**
-   * Separates a sequence of strings by {@link #SPACE} characters
-   *
-   
- @param $ what needs to be separated
-   
- @return the parameters, separated by {@link #SPACE}
-   */
-  public static String bySpaces(final String... $) {
-    return separateBySpaces(as.nonNullIterable($));
-  }
   /**
    * Separates an {@link Iterable} strings by {@link #SPACE} characters
    *
-   
+
  @param $ what needs to be separated
-   
+
  @return the parameters, separated by {@link #SPACE}
    */
   @SuppressWarnings("null") public static String bySpaces(final Iterable<String> $) {
@@ -69,24 +38,47 @@ public enum separate {
     return separateBySpaces($.iterator());
   }
   /**
+   * Separates a sequence of strings by {@link #SPACE} characters
+   *
+
+ @param $ what needs to be separated
+
+ @return the parameters, separated by {@link #SPACE}
+   */
+  public static String bySpaces(final String... $) {
+    return separateBySpaces(as.nonNullIterable($));
+  }
+  /**
+   * A simple program demonstrating the use of this class. This program prints a
+   * comma separated list of its arguments, where special characters in each
+   * argument are escaped prior to printing.
+   *
+
+ @param args list of the command line arguments.
+   */
+  public static void main(final String[] args) {
+    System.out.println("Arguments are: " + separate.these(args).by(", "));
+  }
+  /**
    * Separates an {@link Iterable} strings by {@link #SPACE} characters
    *
-   
+
  @param $ what needs to be separated
-   
+
  @return the parameters, separated by {@link #SPACE}
    */
   public static String separateBySpaces(final Iterable<String> $) {
     assert $ != null;
     return separateBySpaces($.iterator());
   }
+
   /**
    * Separates an {@link Iterable} strings (specified by an {@link Iterator}
    * over it by {@link #SPACE} characters
    *
-   
+
  @param ss what needs to be separated
-   
+
  @return the parameters, separated by {@link #SPACE}
    */
   public static String separateBySpaces(final Iterator<String> ss) {
@@ -100,7 +92,7 @@ public enum separate {
    * Factory method for generating a {@link SeparationSubject}, to be used
    * further for actual separation.
    *
-   
+
  @return an empty {@link SeparationSubject}
    */
   public static SeparationSubject these() {
@@ -110,9 +102,9 @@ public enum separate {
    * Separate elements of a given array of <code><b>boolean</b></code>s by a
    * given <code><b>char</b></code>
    *
-   
+
  @param bs an array of elements to be separated
-   
+
  @return a {@link String} obtained by concatenating the textual
    *         representation of the elements in <code>bs</code> separated by
    *         <code>between</code>
@@ -124,9 +116,9 @@ public enum separate {
    * Separate elements of a given array of <code><b>byte</b></code>s by a given
    * <code><b>char</b></code>
    *
-   
+
  @param bs an array of elements to be separated
-   
+
  @return a {@link String} obtained by concatenating the textual
    *         representation of the elements in <code>bs</code> separated by
    *         <code>between</code>
@@ -138,9 +130,9 @@ public enum separate {
    * Separate elements of a given array of <code><b>char</b></code>s by a given
    * <code><b>char</b></code>
    *
-   
+
  @param cs an array of elements to be separated
-   
+
  @return a {@link String} obtained by concatenating the textual
    *         representation of the elements in <code>cs</code> separated by
    *         <code>between</code>
@@ -152,9 +144,9 @@ public enum separate {
    * Separate elements of a given array of <code><b>double</b></code>s by a
    * given <code><b>char</b></code>
    *
-   
+
  @param ds an array of elements to be separated
-   
+
  @return a {@link String} obtained by concatenating the textual
    *         representation of the elements in <code>ds</code> separated by
    *         <code>between</code>
@@ -166,9 +158,9 @@ public enum separate {
    * Separate elements of a given array of <code><b>float</b></code>s by a given
    * <code><b>char</b></code>
    *
-   
+
  @param fs an array of elements to be separated
-   
+
  @return a {@link String} obtained by concatenating the textual
    *         representation of the elements in <code>fs</code> separated by
    *         <code>between</code>
@@ -177,25 +169,11 @@ public enum separate {
     return these(box.it(fs));
   }
   /**
-   * Separate elements of a given array of <code><b>int</b></code>s by a given
-   * <code><b>char</b></code>
-   *
-   
- @param is an array of elements to be separated
-   
- @return a {@link String} obtained by concatenating the textual
-   *         representation of the elements in <code>is</code> separated by
-   *         <code>between</code>
-   */
-  private static SeparationSubject these(final int[] is) {
-    return these(box.it(is));
-  }
-  /**
    * Separate a variable length list of arguments by a comma character.
    *
-   
+
  @param os the objects to be separated.
-   
+
  @return the items, separated by commas
    */
   public static SeparationSubject these(final Iterable<Object> os) {
@@ -205,9 +183,9 @@ public enum separate {
    * Separate elements of a given array of <code><b>long</b></code>s by a given
    * <code><b>char</b></code>
    *
-   
+
  @param ls an array of elements to be separated
-   
+
  @return a {@link String} obtained by concatenating the textual
    *         representation of the elements in <code>ls</code> separated by
    *         <code>between</code>
@@ -218,14 +196,14 @@ public enum separate {
   /**
    * A simple minded separation of members of a {@link Map} data type.
    *
-   
+
  @param <Key> type of elements serving as keys of the map.
-   
+
  @param <Value> type of elements serving as values of the map.
-   
+
  @param map a non-<code><b>null</b></code> {@link Map} objects whose entries
    *          are to be separated.
-   
+
  @return a concatenation of all map entries, separated by
    *         <code>separator</code>, and where the key of each entry is
    *         separated from the value by <code>arrow</code>.
@@ -240,9 +218,9 @@ public enum separate {
    * Separate elements of a given array of <code><b>short</b></code>s by a given
    * <code><b>char</b></code>
    *
-   
+
  @param ss an array of elements to be separated
-   
+
  @return a {@link String} obtained by concatenating the textual
    *         representation of the elements in <code>ss</code> separated by
    *         <code>between</code>
@@ -253,23 +231,45 @@ public enum separate {
   /**
    * Separate a variable length list of arguments by a comma character.
    *
-   
+
  @param <T> type of items
-   
+
  @param ts the objects to be separated.
-   
+
  @return the items, separated by commas
    */
   @SafeVarargs public static <T> SeparationSubject these(final T... ts) {
     return new SeparationSubject(ts);
   }
+  /**
+   * Separate elements of a given array of <code><b>int</b></code>s by a given
+   * <code><b>char</b></code>
+   *
+
+ @param is an array of elements to be separated
+
+ @return a {@link String} obtained by concatenating the textual
+   *         representation of the elements in <code>is</code> separated by
+   *         <code>between</code>
+   */
+  private static SeparationSubject these(final int[] is) {
+    return these(box.it(is));
+  }
+  /** The comma character */
+  public static final String COMMA = ",";
+  /** The dot character */
+  public static final String DOT = ".";
+  /** The Unix line separator character */
+  public static final String NL = "\n";
+  /** The space character */
+  public static final String SPACE = " ";
 
   /**
    * Should not be instantiated by client; created as part of the fluent API
    *
-   
+
  @author Yossi Gil <Yossi.Gil@GMail.COM>
-   
+
  @since 2015
    */
   public static class SeparationSubject {
@@ -277,13 +277,13 @@ public enum separate {
      * Separate elements of a given {@link Iterable} collection by a given
      * {@link String}
      *
-     
+
  @param ts an {@link Iterable} collection of elements to be separated
-     
+
  @param <T> type of elements in the {@link Iterable} collection parameter
-     
+
  @param between what should be used for separating these elements
-     
+
  @return a {@link String} obtained by concatenating the textual
      *         representation of the elements in <code>ts</code> separated by
      *         <code>between</code>
@@ -298,11 +298,11 @@ public enum separate {
     /**
      * Separate a list of elements by a given {@link String}
      *
-     
+
  @param os what needs to be separated
-     
+
  @param between what should be used for separating these elements
-     
+
  @return a {@link String} obtained by concatenating the textual
      *         representation of the elements in <code>ts</code> separated by
      *         <code>between</code>
@@ -323,23 +323,19 @@ public enum separate {
     }
 
     /**
-     * TODO: document this member
-     */
-    public final Iterable<Object> os;
-
-    /**
      * Instantiates this class.
      *
-     
+
  @param os
      */
     public SeparationSubject(final Iterable<Object> os) {
       this.os = os;
     }
+
     /**
      * Instantiates this class.
      *
-     
+
  @param os JD
      */
     public SeparationSubject(final Object[] os) {
@@ -366,9 +362,9 @@ public enum separate {
      * Separate elements of a given array of <code><b>boolean</b></code>s by a
      * given character
      *
-     
+
  @param between what should be used for separating these elements
-     
+
  @return a concatenation of the newline separated
      *         {@link Object#toString()} representations of the elements of
      *         saved objects <code>between</code>
@@ -380,9 +376,9 @@ public enum separate {
      * Separate elements of a given array of <code><b>boolean</b></code>s by a
      * given {@link String}
      *
-     
+
  @param between what should be used for separating these elements
-     
+
  @return a {@link String} obtained by concatenating the textual
      *         representation of the elements in <code>bs</code> separated by
      *         <code>between</code>
@@ -393,7 +389,7 @@ public enum separate {
     /**
      * Separate a variable length list of arguments by a comma character.
      *
-     
+
  @return a concatenation of the comma separated {@link Object#toString()}
      *         representations of the elements of saved objects
      */
@@ -403,7 +399,7 @@ public enum separate {
     /**
      * Separate a variable length list of arguments by a dot character.
      *
-     
+
  @return a concatenation of the dot separated {@link Object#toString()}
      *         representations of the elements of saved objects
      */
@@ -413,7 +409,7 @@ public enum separate {
     /**
      * Separate a variable length list of arguments by new lines.
      *
-     
+
  @return a concatenation of the newline separated
      *         {@link Object#toString()} representations of the elements of
      *         saved objects
@@ -422,9 +418,18 @@ public enum separate {
       return separateBy(prune.whites(as.strings(os)), NL);
     }
     /**
+     * Separates the objects in some order
+     *
+
+ @return the
+     */
+    public String byNothing() {
+      return separateBy(prune.whites(as.strings(os)), "");
+    }
+    /**
      * Separate a variable length list of arguments by a space character.
      *
-     
+
  @return a concatenation of the comma separated {@link Object#toString()}
      *         representations of the elements of saved objects
      */
@@ -432,14 +437,9 @@ public enum separate {
       return separateBy(prune.whites(as.strings(os)), SPACE);
     }
     /**
-     * Separates the objects in some order
-     *
-     
- @return the
+     * TODO: document this member
      */
-    public String byNothing() {
-      return separateBy(prune.whites(as.strings(os)), "");
-    }
+    public final Iterable<Object> os;
   }
 
   @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
@@ -498,7 +498,7 @@ public enum separate {
     }
     @Test public final void byFOfTTArrayChar() {
       final Applicator<Object, String> f = new Applicator<>(a -> "'" + a + "'");
-      assertNotNull("Function literals should never by null.", f);
+      notNull("Function literals should never by null.", f);
       final Collection<String> c = Arrays.asList("Hello", "World");
       assertEquals(2, c.size());
       final Iterable<String> ts = f.to(c);
@@ -544,10 +544,10 @@ public enum separate {
       assertEquals("", separate.these().bySpaces());
     }
     @Test public final void bySpacesLengthLessThan2() {
-      assertTrue(separate.these().bySpaces().length() < 2);
+      trrue(separate.these().bySpaces().length() < 2);
     }
     @Test public final void bySpacesLengthLessThan3() {
-      assertTrue(separate.these().bySpaces().length() < 3);
+      trrue(separate.these().bySpaces().length() < 3);
     }
     @Test public final void bySpacesTypical() {
       assertEquals("A B C", separate.these("A", "B", "C").bySpaces());
@@ -563,15 +563,15 @@ public enum separate {
     }
     @Test public final void separateByNoItemslPruneWhitesSpaceSeparated() {
       final SeparationSubject these = separate.these();
-      assertNotNulls(these);
+      azzert.notNull(these);
       final Iterable<Object> os = these.os;
-      assertNotNulls(os);
-      assertTrue(Iterables.isEmpty(os));
+      azzert.nonNulls(os);
+      trrue(Iterables.isEmpty(os));
       final String[] ss = as.strings(os);
-      assertNotNull(ss);
-      assertZero(ss.length);
+      notNull(ss);
+      azzert.zero(ss.length);
       final String[] noWhites = prune.whites(ss);
-      assertZero(noWhites.length);
+      azzert.zero(noWhites.length);
       assertEquals("", SeparationSubject.separateBy(noWhites, " "));
     }
     @Test public final void separateByNoItemslSpaceSeparated() {
@@ -629,7 +629,7 @@ public enum separate {
       assertEquals(0, Iterables.count(separate.these(Arrays.asList()).os));
     }
     @Test public final void theseOfNoItemsl() {
-      assertTrue(Iterables.isEmpty(separate.these(new String[] {}).os));
+      trrue(Iterables.isEmpty(separate.these(new String[] {}).os));
     }
     @Test public final void theseOfNoItemslSpaceSeparated() {
       assertEquals("", separate.these(new String[] {}).bySpaces());

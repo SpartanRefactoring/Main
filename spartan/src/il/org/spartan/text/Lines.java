@@ -25,10 +25,29 @@ public enum Lines {
   // No enum values in this fake module
   ;
   /**
-   * The string which this module considers as line separator.
+   * Counts the number of liens in a given text
+   *
+   
+ @param text count the number of lines in this parameter
+   
+ @return the number of lines in the parameter
    */
-  public static final String END_OF_LINE_MARKER = "\n";
+  public static int count(final @Nullable String text) {
+    return Lines.scatter(text).length;
+  }
 
+  /**
+   * Builds text from an array of lines
+   *
+   
+ @param lines what needs to be concatenated
+   
+ @return the parameters, concatenated together, with
+   *         {@link #END_OF_LINE_MARKER} separating consecutive arguments
+   */
+  public static String gather(final String... lines) {
+    return separate.these(lines).by(END_OF_LINE_MARKER);
+  }
   /**
    * Breaks text into lines
    *
@@ -43,28 +62,9 @@ public enum Lines {
     return text == null || text.isEmpty() ? NO_LINES : cantBeNull(text.split(END_OF_LINE_MARKER));
   }
   /**
-   * Builds text from an array of lines
-   *
-   
- @param lines what needs to be concatenated
-   
- @return the parameters, concatenated together, with
-   *         {@link #END_OF_LINE_MARKER} separating consecutive arguments
+   * The string which this module considers as line separator.
    */
-  public static String gather(final String... lines) {
-    return separate.these(lines).by(END_OF_LINE_MARKER);
-  }
-  /**
-   * Counts the number of liens in a given text
-   *
-   
- @param text count the number of lines in this parameter
-   
- @return the number of lines in the parameter
-   */
-  public static int count(final @Nullable String text) {
-    return Lines.scatter(text).length;
-  }
+  public static final String END_OF_LINE_MARKER = "\n";
 
   /**
    * A longer and more meaningful name for the array of length zero with
@@ -86,9 +86,6 @@ public enum Lines {
   @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   @SuppressWarnings({ "static-method", "javadoc" })//
   public static class TEST {
-    @Test public void scatterSanity() {
-      assertEquals(1, Lines.scatter("A").length);
-    }
     @Test public void countEmpty() {
       assertEquals(0, count(""));
     }
@@ -103,6 +100,9 @@ public enum Lines {
     }
     @Test public void countTwoVariant() {
       assertEquals(2, count("A\nB"));
+    }
+    @Test public void scatterSanity() {
+      assertEquals(1, Lines.scatter("A").length);
     }
   }
 }

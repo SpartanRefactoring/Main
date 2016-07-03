@@ -20,9 +20,15 @@ import org.junit.*;
  */
 public abstract class NonNullCache<T> {
   /**
-   * The cached value, null when the cache was not populated
+   * Compute the cached value, either by looking up the memoized valued, or by
+   * actual computation
+   *
+   
+ @return the cached value
    */
-  private @Nullable T value = null;
+  public T value() {
+    return value != null ? value : (value = __());
+  }
 
   /**
    * This function is to be implemented by clients, giving a method for
@@ -34,32 +40,26 @@ public abstract class NonNullCache<T> {
    */
   protected abstract T __();
   /**
-   * Compute the cached value, either by looking up the memoized valued, or by
-   * actual computation
-   *
-   
- @return the cached value
+   * The cached value, null when the cache was not populated
    */
-  public T value() {
-    return value != null ? value : (value = __());
-  }
+  private @Nullable T value = null;
 
   @SuppressWarnings("javadoc")//
   public static class TEST extends NonNullCache<String> {
     private static final int SOME_OFFSET = 17;
-    private int evaluations = 0;
-
-    @Override protected String __() {
-      return SOME_OFFSET + "x" + sqr(evaluations++);
-    }
     @Test public void firstReturnsFirstOffset() {
       assertEquals(SOME_OFFSET + "x0", value());
     }
+
     @Test public void restReturnsFirstOffset() {
       value();
       assertEquals(SOME_OFFSET + "x0", value());
       for (int i = 0; i < 10; ++i)
         assertEquals(SOME_OFFSET + "x0", value());
     }
+    @Override protected String __() {
+      return SOME_OFFSET + "x" + sqr(evaluations++);
+    }
+    private int evaluations = 0;
   }
 }

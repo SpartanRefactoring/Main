@@ -18,6 +18,30 @@ import org.eclipse.jdt.annotation.*;
 public interface accumulate<T, C extends Collection<T>> {
   /**
    
+ @param <T> JD
+   
+ @param <C> JD
+   
+ @param c JD
+   
+ @return TODO document return type
+   */
+  public static <T, C extends Collection<T>> accumulate<T, C> to(final C c) {
+    return new accumulate<T, C>() {
+      @Override public accumulate<T, C> add(final @Nullable T t) {
+        if (t == null)
+          return this;
+        assert t != null;
+        c.add(t);
+        return this;
+      }
+      @Override public C elements() {
+        return c;
+      }
+    };
+  }
+  /**
+   
  @param ts
    
  @return <code><b>this</b></code>
@@ -77,28 +101,4 @@ public interface accumulate<T, C extends Collection<T>> {
  @return TODO document return type
    */
   C elements();
-  /**
-   
- @param <T> JD
-   
- @param <C> JD
-   
- @param c JD
-   
- @return TODO document return type
-   */
-  public static <T, C extends Collection<T>> accumulate<T, C> to(final C c) {
-    return new accumulate<T, C>() {
-      @Override public accumulate<T, C> add(final @Nullable T t) {
-        if (t == null)
-          return this;
-        assert t != null;
-        c.add(t);
-        return this;
-      }
-      @Override public C elements() {
-        return c;
-      }
-    };
-  }
 }

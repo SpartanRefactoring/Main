@@ -11,8 +11,6 @@ import org.eclipse.jdt.annotation.*;
  @since @{year}-@{month}-@{day}
  */
 public class maybe<@Nullable T> {
-  private @Nullable T inner;
-
   /**
    
  @param <T> JD
@@ -22,6 +20,7 @@ public class maybe<@Nullable T> {
   public static <@Nullable T> maybe<T> no() {
     return new maybe<>();
   }
+
   /**
    
  @param <T> JD
@@ -33,9 +32,6 @@ public class maybe<@Nullable T> {
   public static <@Nullable T> maybe<T> yes(final T t) {
     return new maybe<>(t);
   }
-  private maybe() {
-    inner = null;
-  }
   /**
    * Instantiates this class.
    *
@@ -45,19 +41,16 @@ public class maybe<@Nullable T> {
   public maybe(final @Nullable T inner) {
     this.inner = inner;
   }
-  /**
-   
- @return TODO document return type
-   */
-  public boolean present() {
-    return inner != null;
+  private maybe() {
+    inner = null;
   }
   /**
    
  @return TODO document return type
    */
-  public boolean missing() {
-    return inner == null;
+  public maybe<@Nullable T> clear() {
+    inner = null;
+    return this;
   }
   /**
    
@@ -70,9 +63,15 @@ public class maybe<@Nullable T> {
    
  @return TODO document return type
    */
-  public maybe<@Nullable T> clear() {
-    inner = null;
-    return this;
+  public boolean missing() {
+    return inner == null;
+  }
+  /**
+   
+ @return TODO document return type
+   */
+  public boolean present() {
+    return inner != null;
   }
   /**
    
@@ -84,4 +83,5 @@ public class maybe<@Nullable T> {
     this.inner = inner;
     return this;
   }
+  private @Nullable T inner;
 }

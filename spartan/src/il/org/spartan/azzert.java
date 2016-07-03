@@ -12,6 +12,18 @@ import org.hamcrest.number.*;
  * @author Yossi Gil
  * @since 2015-07-18
  */
+/**
+ * @author Yossi Gil <Yossi.Gil@GMail.COM>
+ * @since @{year}-@{month}-@{day}
+ */
+/**
+ * @author Yossi Gil <Yossi.Gil@GMail.COM>
+ * @since @{year}-@{month}-@{day}
+ */
+/**
+ * @author Yossi Gil <Yossi.Gil@GMail.COM>
+ * @since @{year}-@{month}-@{day}
+ */
 @SuppressWarnings("javadoc")
 public class azzert extends org.junit.Assert {
   public static <T> @Nullable Matcher<T> allOf(final java.lang.Iterable<Matcher<? super T>> matchers) {
@@ -36,7 +48,7 @@ public class azzert extends org.junit.Assert {
       final Matcher<? super T> sixth) {
     return AllOf.<T> allOf(first, second, third, fourth, fifth, sixth);
   }
-    public static <T> @Nullable Matcher<T> any(final java.lang.Class<T> type) {
+  public static <T> @Nullable Matcher<T> any(final java.lang.Class<T> type) {
     return IsInstanceOf.<T> any(type);
   }
   public static <T> @Nullable AnyOf<T> anyOf(final java.lang.Iterable<Matcher<? super T>> matchers) {
@@ -88,96 +100,8 @@ public class azzert extends org.junit.Assert {
   public static void assertNotEquals(final String reason, final Object o1, final Object o2) {
     assertThat(reason, o1, CoreMatchers.not(o2));
   }
-  public static void assertNotNull(final @Nullable Object o) {
-    that(o, notNullValue());
-  }
-  public static void assertNotNull(final String s, final @Nullable Object o) {
-    assertThat(s, o, notNullValue());
-  }
-  public static void assertNotNulls(final @Nullable Object @Nullable... os) {
-    assert os != null;
-    assertNotNull(os);
-    for (final @Nullable Object o : os)
-      assertNotNull("" + os, o);
-  }
-  public static void assertNull(final @Nullable Object o) {
-    that(o, nullValue());
-  }
-  public static void assertPositive(final int i) {
-    assertTrue(i > 0);
-  }
-  public static void that(final boolean b, final Matcher<? super @Nullable Boolean> m) {
-    that(Boolean.valueOf(b), m);
-  }
-  public static void that(final byte b, final @Nullable Matcher<? super @Nullable Byte> m) {
-    that(Byte.valueOf(b), m);
-  }
-  public static void that(final char c, final Matcher<? super @Nullable Character> m) {
-    that(Character.valueOf(c), m);
-  }
-  public static void that(final double d, final Matcher<? super @Nullable Double> m) {
-    that(Double.valueOf(d), m);
-  }
-  public static void that(final float f, final Matcher<? super @Nullable Float> m) {
-    that(Float.valueOf(f), m);
-  }
-  public static void that(final int i, final Matcher<? super @Nullable Integer> m) {
-    that(Integer.valueOf(i), m);
-  }
-  public static void that(final long l, final Matcher<? super @Nullable Long> m) {
-    that(Long.valueOf(l), m);
-  }
-  public static void that(final Object actual, final Wrapper<@Nullable String> expected) {
-    that(compressSpaces(actual + ""), is(compressSpaces(expected.get())));
-  }
-  public static void that(final short s, final Matcher<? super @Nullable Short> m) {
-    that(Short.valueOf(s), m);
-  }
-  public static void that(final String reason, final boolean b, final Matcher<? super Boolean> m) {
-    assertThat(reason, Boolean.valueOf(b), m);
-  }
-  public static void that(final String reason, final byte b, final Matcher<? super @Nullable Byte> m) {
-    assertThat(reason, Byte.valueOf(b), m);
-  }
-  public static void that(final String reason, final char c, final Matcher<? super Character> m) {
-    assertThat(reason, Character.valueOf(c), m);
-  }
-    public static void that(final String reason, final double d, final Matcher<? super @Nullable Double> m) {
-    assertThat(reason, Double.valueOf(d), m);
-  }
-    public static void that(final String reason, final float f, final Matcher<? super Float> m) {
-    assertThat(reason, Float.valueOf(f), m);
-  }
-    public static void that(final String reason, final int i, final Matcher<? super Integer> m) {
-    assertThat(reason, Integer.valueOf(i), m);
-  }
-  
-  public static void that(final String reason, final long l, final Matcher<? super @Nullable Long> m) {
-    assertThat(reason, Long.valueOf(l), m);
-  }
-   public static void that(final String reason, final short s, final Matcher<? super Short> m) {
-    assertThat(reason, Short.valueOf(s), m);
-  }
-  public static <@Nullable T> void that(final String reason, final @Nullable T actual,
-      final @Nullable Matcher<? super @Nullable T> matcher) {
-    assertThat(reason, actual, matcher);
-  }
-  public static <@Nullable T> void that(final @Nullable T actual, final @Nullable Matcher<? super @Nullable T> matcher) {
-    assertThat("", actual, matcher);
-  }
-  public static void assertTrue(final boolean b) {
-    assertTrue("", b);
-  }
   public static void assertTrue(final String s, final boolean b) {
     that(s, Boolean.valueOf(b), is(Boolean.TRUE));
-  }
-  /**
-   * Assert that an integer is zero
-   *
-   * @param i JD
-   */
-  public static void assertZero(final int i) {
-    assertEquals(0, i);
   }
   @SuppressWarnings("javadoc") public static <LHS> CombinableMatcher.CombinableBothMatcher<LHS> both(
       final Matcher<? super LHS> matcher) {
@@ -186,7 +110,7 @@ public class azzert extends org.junit.Assert {
   @SuppressWarnings("javadoc") @Factory public static @Nullable Matcher<@Nullable Boolean> comparesEqualTo(final boolean b) {
     return OrderingComparison.comparesEqualTo(Boolean.valueOf(b));
   }
-   @Factory public static @Nullable Matcher<@Nullable Byte> comparesEqualTo(final byte b) {
+  @Factory public static @Nullable Matcher<@Nullable Byte> comparesEqualTo(final byte b) {
     return OrderingComparison.comparesEqualTo(Byte.valueOf(b));
   }
   @Factory public static @Nullable Matcher<@Nullable Character> comparesEqualTo(final char c) {
@@ -210,18 +134,16 @@ public class azzert extends org.junit.Assert {
   public static @Nullable Matcher<java.lang.String> containsString(final java.lang.String substring) {
     return StringContains.containsString(substring);
   }
-  
   public static <T> @Nullable Matcher<T> describedAs(final java.lang.String description, final Matcher<T> matcher,
       final Object... values) {
     return DescribedAs.<T> describedAs(description, matcher, values);
   }
-   public static <LHS> CombinableMatcher.CombinableEitherMatcher<LHS> either(final Matcher<? super LHS> matcher) {
+  public static <LHS> CombinableMatcher.CombinableEitherMatcher<LHS> either(final Matcher<? super LHS> matcher) {
     return CombinableMatcher.<LHS> either(matcher);
   }
-   public static @Nullable Matcher<java.lang.String> endsWith(final java.lang.String suffix) {
+  public static @Nullable Matcher<java.lang.String> endsWith(final java.lang.String suffix) {
     return StringEndsWith.endsWith(suffix);
   }
- 
   public static <T> @Nullable Matcher<T> equalTo(final T operand) {
     return IsEqual.<T> equalTo(operand);
   }
@@ -240,6 +162,7 @@ public class azzert extends org.junit.Assert {
   @Factory public static @Nullable Matcher<Double> greaterThan(final double d) {
     return OrderingComparison.greaterThan(Double.valueOf(d));
   }
+
   @Factory public static @Nullable Matcher<Float> greaterThan(final float f) {
     return OrderingComparison.greaterThan(Float.valueOf(f));
   }
@@ -291,6 +214,7 @@ public class azzert extends org.junit.Assert {
   public static <T> @Nullable Matcher<T> instanceOf(final java.lang.Class<?> type) {
     return IsInstanceOf.<T> instanceOf(type);
   }
+
   public static @Nullable Matcher<@Nullable Boolean> is(final boolean b) {
     return is(Boolean.valueOf(b));
   }
@@ -300,6 +224,7 @@ public class azzert extends org.junit.Assert {
   public static @Nullable Matcher<@Nullable Character> is(final char c) {
     return is(Character.valueOf(c));
   }
+
   public static @Nullable Matcher<@Nullable Double> is(final double d) {
     return is(Double.valueOf(d));
   }
@@ -375,6 +300,12 @@ public class azzert extends org.junit.Assert {
   @Factory public static @Nullable Matcher<Short> lessThanOrEqualTo(final short s) {
     return OrderingComparison.lessThanOrEqualTo(Short.valueOf(s));
   }
+  public static void nonNulls(final @Nullable Iterable<@Nullable Object> os) {
+    azzert.notNull(os);
+    assert os !=  null;
+    for (final @Nullable Object o : os)
+      azzert.notNull("" + os, o);
+  }
   public static @Nullable Matcher<Boolean> not(final boolean b) {
     return cantBeNull(IsNot.not(new Boolean(b)));
   }
@@ -405,12 +336,26 @@ public class azzert extends org.junit.Assert {
   public static <T> @Nullable Matcher<T> not(final T value) {
     return IsNot.<T> not(value);
   }
+  public static void notNull(final @Nullable Object o) {
+    that(o, notNullValue());
+  }
+  public static void notNull(final String s, final @Nullable Object o) {
+    assertThat(s, o, notNullValue());
+  }
   public static @Nullable Matcher<@Nullable Object> notNullValue() {
     return IsNull.notNullValue();
   }
-
   public static <T> @Nullable Matcher<T> notNullValue(final java.lang.Class<T> type) {
     return IsNull.<T> notNullValue(type);
+  }
+  public static void notNullz(final @Nullable Object @Nullable... os) {
+    assert os != null;
+    notNull(os);
+    for (final @Nullable Object o : os)
+      notNull("" + os, o);
+  }
+  public static void isNull(final @Nullable Object o) {
+    that(o, nullValue());
   }
   public static @Nullable Matcher<@Nullable Object> nullValue() {
     return IsNull.nullValue();
@@ -418,13 +363,87 @@ public class azzert extends org.junit.Assert {
   public static <T> @Nullable Matcher<T> nullValue(final java.lang.Class<T> type) {
     return IsNull.<T> nullValue(type);
   }
+  public static void positive(final int i) {
+    trrue(i > 0);
+  }
   public static <T> @Nullable Matcher<T> sameInstance(final T target) {
     return IsSame.<T> sameInstance(target);
   }
   public static @Nullable Matcher<java.lang.String> startsWith(final java.lang.String prefix) {
     return StringStartsWith.startsWith(prefix);
   }
+  public static void that(final boolean b, final Matcher<? super @Nullable Boolean> m) {
+    that(Boolean.valueOf(b), m);
+  }
+  public static void that(final byte b, final @Nullable Matcher<? super @Nullable Byte> m) {
+    that(Byte.valueOf(b), m);
+  }
+  public static void that(final char c, final Matcher<? super @Nullable Character> m) {
+    that(Character.valueOf(c), m);
+  }
+  public static void that(final double d, final Matcher<? super @Nullable Double> m) {
+    that(Double.valueOf(d), m);
+  }
+  public static void that(final float f, final Matcher<? super @Nullable Float> m) {
+    that(Float.valueOf(f), m);
+  }
+  public static void that(final int i, final Matcher<? super @Nullable Integer> m) {
+    that(Integer.valueOf(i), m);
+  }
+  public static void that(final long l, final Matcher<? super @Nullable Long> m) {
+    that(Long.valueOf(l), m);
+  }
+  public static void that(final Object actual, final Wrapper<@Nullable String> expected) {
+    that(compressSpaces(actual + ""), is(compressSpaces(expected.get())));
+  }
+  public static void that(final short s, final Matcher<? super @Nullable Short> m) {
+    that(Short.valueOf(s), m);
+  }
+  public static void that(final String reason, final boolean b, final Matcher<? super Boolean> m) {
+    assertThat(reason, Boolean.valueOf(b), m);
+  }
+  public static void that(final String reason, final byte b, final Matcher<? super @Nullable Byte> m) {
+    assertThat(reason, Byte.valueOf(b), m);
+  }
+  public static void that(final String reason, final char c, final Matcher<? super Character> m) {
+    assertThat(reason, Character.valueOf(c), m);
+  }
+  public static void that(final String reason, final double d, final Matcher<? super @Nullable Double> m) {
+    assertThat(reason, Double.valueOf(d), m);
+  }
+  public static void that(final String reason, final float f, final Matcher<? super Float> m) {
+    assertThat(reason, Float.valueOf(f), m);
+  }
+  public static void that(final String reason, final int i, final Matcher<? super Integer> m) {
+    assertThat(reason, Integer.valueOf(i), m);
+  }
+
+  public static void that(final String reason, final long l, final Matcher<? super @Nullable Long> m) {
+    assertThat(reason, Long.valueOf(l), m);
+  }
+  public static void that(final String reason, final short s, final Matcher<? super Short> m) {
+    assertThat(reason, Short.valueOf(s), m);
+  }
+  public static <@Nullable T> void that(final String reason, final @Nullable T actual,
+      final @Nullable Matcher<? super @Nullable T> matcher) {
+    assertThat(reason, actual, matcher);
+  }
+  public static <@Nullable T> void that(final @Nullable T actual, final @Nullable Matcher<? super @Nullable T> matcher) {
+    assertThat("", actual, matcher);
+  }
   public static <T> @Nullable Matcher<T> theInstance(final T target) {
     return IsSame.<T> theInstance(target);
+  }
+  public static void trrue(final boolean b) {
+    assertTrue("", b);
+  }
+
+  /**
+   * Assert that an integer is zero
+   *
+   * @param i JD
+   */
+  public static void zero(final int i) {
+    assertEquals(0, i);
   }
 }

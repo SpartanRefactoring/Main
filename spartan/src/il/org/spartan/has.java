@@ -19,20 +19,19 @@ import org.eclipse.jdt.annotation.*;
 public enum has {
   ;
   /**
-   * Determine whether a <code><b>null</b></code> occurs in a sequence of
-   * objects
-   *
+   * Retrieve next item in a list
+   * 
    
- @param os JD
+ @param <T> JD
+ @param i an index of specific item in a list
    
- @return <code><b>null</b></code> <i>iff</i> one of the parameters is
-   *         <code><b>null</b></code>
+ @param ts the indexed list
+   
+ @return the following item in the list, if such such an item exists,
+   *         otherwise, the last node
    */
-  public static boolean nulls(final Object... os) {
-    for (final Object o : os)
-      if (o == null)
-        return true;
-    return false;
+  public static <@Nullable T> T next(final int i, final List<T> ts) {
+    return !inRange(i + 1, ts) ? last(ts) : ts.get(i + 1);
   }
   /**
    * Determine whether a <code><b>null</b></code> occurs in a sequence of
@@ -51,18 +50,19 @@ public enum has {
     return false;
   }
   /**
-   * Retrieve next item in a list
-   * 
+   * Determine whether a <code><b>null</b></code> occurs in a sequence of
+   * objects
+   *
    
- @param <T> JD
- @param i an index of specific item in a list
+ @param os JD
    
- @param ts the indexed list
-   
- @return the following item in the list, if such such an item exists,
-   *         otherwise, the last node
+ @return <code><b>null</b></code> <i>iff</i> one of the parameters is
+   *         <code><b>null</b></code>
    */
-  public static <@Nullable T> T next(final int i, final List<T> ts) {
-    return !inRange(i + 1, ts) ? last(ts) : ts.get(i + 1);
+  public static boolean nulls(final Object... os) {
+    for (final Object o : os)
+      if (o == null)
+        return true;
+    return false;
   }
 }

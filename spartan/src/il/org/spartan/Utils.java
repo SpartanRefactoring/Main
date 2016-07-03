@@ -17,9 +17,9 @@ import org.junit.runners.*;
  * An empty <code><b>enum</b></code> with a variety of <code>public
  * static</code> utility functions of reasonably wide use.
  *
- 
+
  @author Yossi Gil <code><yossi.gil [at] gmail.com></code>
- 
+
  @since 2013/07/01
  */
 public enum Utils {
@@ -28,13 +28,13 @@ public enum Utils {
    * Appends an element to an array, by reallocating an array whose size is
    * greater by one and placing the element at the last position.
    *
-   
+
  @param <T> JD
-   
+
  @param ts an arbitrary array
-   
+
  @param t an element
-   
+
  @return the newly created array
    */
   public static <T> T[] append(final T[] ts, final T t) {
@@ -43,13 +43,13 @@ public enum Utils {
     return $;
   }
   /**
-   
+
  @param <F> JD
-   
+
  @param <T> JD
-   
+
  @param f JD
-   
+
  @return TODO document return type
    */
   public static <F, T> Applicator<F, T> apply(final Function<F, T> f) {
@@ -78,14 +78,14 @@ public enum Utils {
    * annotation if the type that does not have it. Doing so a is plain clutter.
    * Since the compiler cannot assist you, you will have to be on the guard.
    *
-   
+
  @param <T> an arbitrary type
-   
+
  @param $ an instance of the type parameter
-   
+
  @return its parameter, after verifying that it is not
    *         <code><b>null</b></code>
-   
+
  @see #mustBeNull(Object)
    */
   public static <T> T cantBeNull(final @Nullable T $) {
@@ -96,17 +96,17 @@ public enum Utils {
    * Impose an ordering on type <code><b>boolean</b></code> by which
    * <code><b>true</b></code> is greater than <code><b>false</b></code>.
    *
-   
+
  @param b1 JD
-   
+
  @param b2 JD
-   
+
  @return an integer that is negative, zero or positive depending on whether
    *         the first argument is less than, equal to, or greater than the
    *         second.
-   
+
  @see Comparable
-   
+
  @see Comparator
    */
   public static int compare(final boolean b1, final boolean b2) {
@@ -115,9 +115,9 @@ public enum Utils {
   /**
    * Remove all non-essential spaces from a string that represents Java code.
    *
-   
+
  @param javaCodeFragment JD
-   
+
  @return the parameter, with all redundant spaces removed from it
    */
   public static String compressSpaces(final String javaCodeFragment) {
@@ -137,11 +137,11 @@ public enum Utils {
   /**
    * Determine whether a string contains any of a list of patterns.
    *
-   
+
  @param text string to be tested
-   
+
  @param patterns a list of substrings
-   
+
  @return tree iff the the first parameter contains any of the substrings
    *         found in the second parameter
    */
@@ -155,13 +155,13 @@ public enum Utils {
    * Deletes a specified element from an array, by reallocating an array whose
    * size is smaller by one and shifting the other elements down.
    *
-   
+
  @param <T> JD
-   
+
  @param ts an arbitrary array
-   
+
  @param i position of element to be deleted
-   
+
  @return the newly created array
    */
   public static <T> T[] delete(final T[] ts, final int i) {
@@ -170,20 +170,20 @@ public enum Utils {
     return $;
   }
   /**
-   
+
  @param i JD
-   
+
  @return TODO document return type
    */
   public static FoundHandleForInt found(final int i) {
     return new FoundHandleForInt(i);
   }
   /**
-   
+
  @param <T> JD
-   
+
  @param t JD
-   
+
  @return TODO document return type
    */
   public static <T> FoundHandleForT<T> found(final T t) {
@@ -192,13 +192,13 @@ public enum Utils {
   /**
    * Determine if an item can be found in a list of values
    *
-   
+
  @param <T> JD
-   
+
  @param candidate what to search for
-   
+
  @param ts where to search
-   
+
  @return true if the the item is found in the list
    */
   @SafeVarargs public static <T> boolean in(final T candidate, final T... ts) {
@@ -210,13 +210,13 @@ public enum Utils {
   /**
    * Determine whether an integer is a valid list index
    *
-   
+
  @param <T> JD
-   
+
  @param i some integer
-   
+
  @param ts a list of things
-   
+
  @return <code><b>true</b></code> <i>iff</i> the index is valid index into
    *         the list. and it is the last one in it.
    */
@@ -226,11 +226,11 @@ public enum Utils {
   /**
    * Determine if an integer can be found in a list of values
    *
-   
+
  @param candidate what to search for
-   
+
  @param is where to search
-   
+
  @return true if the the item is found in the list
    */
   @SafeVarargs public static boolean intIsIn(final int candidate, final int... is) {
@@ -240,25 +240,25 @@ public enum Utils {
     return false;
   }
   /**
-   
+
  @param <T> JD
-   
+
  @param ts JD
-   
+
  @return the last item in a list or <code><b>null</b></code> if the
    *         parameter is <code><b>null</b></code> or empty
    */
-  public static <@Nullable T> T last(final List<T> ts) {
-    return unless(ts.isEmpty()).eval(ts.get(ts.size() - 1));
+  public static <T> T last(final @Nullable List<T> ts) {
+    return eval(() -> ts.get(ts.size() - 1)).unless(ts == null || ts.isEmpty());
   }
   /**
    * Determine whether an {@link Object} is the last in a {@link List}.
    *
-   
+
  @param o JD
-   
+
  @param os JD
-   
+
  @return <code><b>true</b></code> <i>iff</i> the {@link Object} parameter is
    *         the same as the last element of the {@link List} parameter
    */
@@ -268,11 +268,11 @@ public enum Utils {
   /**
    * Computes the maximum of two or more integers.
    *
-   
+
  @param a some integer
-   
+
  @param is additional integers
-   
+
  @return the largest of the parameters
    */
   public static int max(final int a, final int... is) {
@@ -284,11 +284,11 @@ public enum Utils {
   /**
    * Computes the minimum of two or more integers
    *
-   
+
  @param a some integer
-   
+
  @param is additional
-   
+
  @return the smallest of the parameters
    */
   public static int min(final int a, final int... is) {
@@ -302,12 +302,12 @@ public enum Utils {
    * <p>
    * This function is the lesser used dual of {@link #cantBeNull(Object)}.
    *
-   
+
  @param <T> some arbitrary type
-   
+
  @param $ an instance of the type parameter which is required to be
    *          <code><b>null</b></code>.
-   
+
  @return the parameter
    */
   public static <@Nullable T> @Nullable Void mustBeNull(final T $) {
@@ -317,36 +317,36 @@ public enum Utils {
   /**
    * Convert variadic list of arguments into an array
    *
-   
+
  @param os JD _
-   
+
  @return the parameter, as an array.
    */
   public static Object[] objects(final Object... os) {
     return os;
   }
   /**
-   
+
  @param <T> JD
-   
+
  @param ts a list
-   
+
  @return the last item in a list or <code><b>null</b></code> if the
    *         parameter is <code><b>null</b></code> or empty
    */
-  @SuppressWarnings("null") public static <T> @Nullable T penultimate(final @Nullable List<T> ts) {
-    return unless(ts == null || ts.size() < 2).eval(() -> ts.get(ts.size() - 2));
+  @SuppressWarnings("null") public static <T> @Nullable T penultimate(final List<T> ts) {
+    return eval(() -> ts.get(ts.size() - 2)).unless(ts == null || ts.size() < 2);
   }
   /**
    * Determine whether an {@link Object} is penultimate in its {@link List}.
    *
-   
+
  @param <T> JD
-   
+
  @param o JD
-   
+
  @param os JD
-   
+
  @return <code><b>true</b></code> <i>iff</i> the an {@link Object} parameter
    *         occurs as the penultimate element of the {@link List} parameter
    */
@@ -357,11 +357,11 @@ public enum Utils {
   /**
    * Prepend a given <code><b>char</b></code> to a {@link StringBuilder}
    *
-   
+
  @param $ prepend to what
-   
+
  @param c what needs to be prepended
-   
+
  @return the {@link StringBuilder} parameter with the
    *         <code><b>char</b></code> parameter prepended to it
    */
@@ -371,11 +371,11 @@ public enum Utils {
   /**
    * Prepend a given {@link String} to a {@link StringBuilder}
    *
-   
+
  @param $ prepend to what
-   
+
  @param s what needs to be prepended
-   
+
  @return the {@link StringBuilder} parameter with the {@link String}
    *         parameter prepended to it
    */
@@ -385,9 +385,9 @@ public enum Utils {
   /**
    * Remove any duplicates that may be present in a given {@link List}
    *
-   
+
  @param <T> JD
-   
+
  @param ts JD
    */
   public static <T> void removeDuplicates(final List<T> ts) {
@@ -398,11 +398,11 @@ public enum Utils {
   /**
    * Remove all occurrences of a given prefix from a given {@link String}.
    *
-   
+
  @param s JD
-   
+
  @param prefix what should be removed
-   
+
  @return the parameter after all such occurrences are removed.
    */
   public static String removePrefix(final String s, final String prefix) {
@@ -413,11 +413,11 @@ public enum Utils {
   /**
    * Remove all occurrences of a given suffix from a given string.
    *
-   
+
  @param s JD
-   
+
  @param suffix what should be removed
-   
+
  @return the parameter after all such occurrences are removed.
    */
   public static String removeSuffix(final String s, final String suffix) {
@@ -428,9 +428,9 @@ public enum Utils {
   /**
    * Remove all occurrences of white space character in a given {@link String}
    *
-   
+
  @param s JD
-   
+
  @return the parameter after all such occurrences are removed.
    */
   public static String removeWhites(final String s) {
@@ -439,9 +439,9 @@ public enum Utils {
   /**
    * Sorts an array
    *
-   
+
  @param is what to sort
-   
+
  @return the given array with elements in sorted order
    */
   public static int[] sort(final int[] is) {
@@ -451,9 +451,9 @@ public enum Utils {
   /**
    * Computes the square of a given number
    *
-   
+
  @param d some number
-   
+
  @return the square of the parameter
    */
   public static double sqr(final double d) {
@@ -462,9 +462,9 @@ public enum Utils {
   /**
    * Computes the square of a given number
    *
-   
+
  @param i some integer
-   
+
  @return the square of the parameter
    */
   public static int sqr(final int i) {
@@ -473,11 +473,11 @@ public enum Utils {
   /**
    * Determine whether a file name ends with any one of the supplied extensions.
    *
-   
+
  @param f a file to examine
-   
+
  @param suffixes a list of potential extensions.
-   
+
  @return <code><b>true</b></code> <em>iff</em>the file name ends with any
    *         one of the supplied extensions.
    */
@@ -487,11 +487,11 @@ public enum Utils {
   /**
    * Determine whether a file name ends with any one of the supplied extensions.
    *
-   
+
  @param f a file to examine
-   
+
  @param suffixes a list of potential extensions.
-   
+
  @return <code><b>true</b></code> <em>iff</em>the file name ends with any
    *         one of the supplied extensions.
    */
@@ -499,22 +499,13 @@ public enum Utils {
     return suffixedBy(name(f), suffixes);
   }
   /**
-   
- @param f JD
-   
- @return
-   */
-  private static String name(final File f) {
-    return cantBeNull(f.getName());
-  }
-  /**
    * Determine whether a string ends with any one of the supplied suffixes.
    *
-   
+
  @param s a string to examine
-   
+
  @param suffixes a list of potential suffixes
-   
+
  @return <code><b>true</b></code> <em>iff</em> <code>s</code> ends with any
    *         one of the supplied suffixes.
    */
@@ -527,11 +518,11 @@ public enum Utils {
   /**
    * Determine whether a string ends with any one of the supplied suffixes.
    *
-   
+
  @param s a string to examine
-   
+
  @param suffixes a list of potential suffixes
-   
+
  @return <code><b>true</b></code> <em>iff</em> <code>s</code> ends with any
    *         one of the supplied suffixes.
    */
@@ -544,13 +535,13 @@ public enum Utils {
   /**
    * Swap the contents of two cells in a given array
    *
-   
+
  @param <T> type of array elements
-   
+
  @param ts the given array
-   
+
  @param i index of one cell
-   
+
  @param j index of another cell
    */
   public static <T> void swap(final T[] ts, final int i, final int j) {
@@ -558,33 +549,42 @@ public enum Utils {
     ts[i] = ts[j];
     ts[j] = t;
   }
+  /**
+
+ @param f JD
+
+ @return
+   */
+  private static String name(final File f) {
+    return cantBeNull(f.getName());
+  }
 
   static final String WHITES = "(?m)\\s+";
 
   /**
    * Reifies the notion of a function
    *
-   
+
  @author Yossi Gil
-   
+
  @param <F> the type of the function's argument
-   
+
  @param <T> the type of the function's result
    */
   public static class Applicator<F, T> {
     /**
      * Instantiates this class
      *
-     
+
  @param function which function to apply?
      */
     public Applicator(final Function<F, T> function) {
       this.function = function;
     }
     /**
-     
+
  @param fs JD
-     
+
  @return TODO document return type of this function
      */
     @SafeVarargs public final Iterable<T> to(final F... fs) {
@@ -595,11 +595,11 @@ public enum Utils {
       return $;
     }
     /**
-     
+
  @param <FS> JD
-     
+
  @param s JD
-     
+
  @return TODO document return type
      */
     public <FS extends Iterable<? extends F>> Iterable<T> to(final FS s) {
@@ -614,18 +614,18 @@ public enum Utils {
   }
 
   /**
-   
+
  @author Yossi Gil <Yossi.Gil@GMail.COM>
-   
+
  @param <T> JD
-   
+
  @since 2016
    */
   public static class FoundHandleForT<T> {
     /**
      * Instantiates this class. *
      *
-     
+
  @param candidate what to search for
      */
     public FoundHandleForT(final T candidate) {
@@ -634,9 +634,9 @@ public enum Utils {
     /**
      * Determine if an integer can be found in a list of values
      *
-     
+
  @param ts where to search
-     
+
  @return true if the the item is found in the list
      */
     @SafeVarargs public final boolean in(final T... ts) {
@@ -649,16 +649,16 @@ public enum Utils {
     final T candidate;
 
     /**
-     
+
  @author Yossi Gil <Yossi.Gil@GMail.COM>
-     
+
  @since 2016
      */
     public static class FoundHandleForInt {
       /**
        * Instantiates this class.
        *
-       
+
  @param candidate what to search for
        */
       public FoundHandleForInt(final int candidate) {
@@ -667,9 +667,9 @@ public enum Utils {
       /**
        * Determine if an integer can be found in a list of values
        *
-       
+
  @param is where to search
-       
+
  @return true if the the item is found in the list
        */
       @SafeVarargs public final boolean in(final int... is) {
@@ -689,9 +689,9 @@ public enum Utils {
    * methods do not use are not prefixed by "test". This prefix is redundant. b)
    * test methods begin with the name of the method they check.
    *
-   
+
  @author Yossi Gil
-   
+
  @since 2014-05-31
    */
   @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
@@ -710,7 +710,7 @@ public enum Utils {
       assertFalse(ss.contains(null));
       assertEquals(4, ss.size());
       for (final String s : ss)
-        assertTrue(ss.contains(s));
+        trrue(ss.contains(s));
     }
     @Test public void addTypical() {
       final Set<String> ss = new HashSet<>();
@@ -719,25 +719,25 @@ public enum Utils {
       assertFalse(ss.contains(null));
       assertEquals(4, ss.size());
       for (final String s : ss)
-        assertTrue(ss.contains(s));
+        trrue(ss.contains(s));
     }
     @Test public void cantBeNullOfNull() {
       try {
         cantBeNull(null);
         fail("AssertionError expected prior to this line.");
       } catch (final AssertionError e) {
-        assertTrue(true);
+        trrue(true);
       }
     }
     @Test public void cantBeNullTypical() {
-      assertNotNull(cantBeNull(new Object()));
+      notNull(cantBeNull(new Object()));
     }
     @Test public void isNullTypical() {
       try {
-        assertNull(mustBeNull(null));
+        isNull(mustBeNull(null));
         fail("AssertionError expected prior to this line.");
       } catch (final AssertionError e) {
-        assertTrue(true);
+        trrue(true);
       }
     }
     @Test public void mustBeNullOfNonNull() {
@@ -745,7 +745,7 @@ public enum Utils {
         mustBeNull(new Object());
         fail("AssertionError expected prior to this line.");
       } catch (final AssertionError e) {
-        assertTrue(true);
+        trrue(true);
       }
     }
     @Test public void quoteEmptyString() {

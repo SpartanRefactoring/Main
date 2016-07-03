@@ -32,90 +32,6 @@ public enum box {
     return cantBeNull(Boolean.valueOf(b));
   }
   /**
-   * Box a <code><b>byte</b></code> into a {@link Byte} object.
-   *
-   
- @param b some <code><b>long</b></code> value
-   
- @return a non-<code><b>null</b></code> {@link Long} with the value of
-   *         <code>l</code>
-   */
-  public static Byte it(final byte b) {
-    return cantBeNull(Byte.valueOf(b));
-  }
-  /**
-   * Box a <code><b>char</b></code> into a {@link Character} object.
-   *
-   
- @param c some <code><b>char</b></code> value
-   
- @return a non-<code><b>null</b></code> {@link Character} with the value of
-   *         <code>c</code>
-   */
-  public static Character it(final char c) {
-    return cantBeNull(Character.valueOf(c));
-  }
-  /**
-   * Box a <code><b>double</b></code> into a {@link Double} object.
-   *
-   
- @param d some <code><b>double</b></code> value
-   
- @return a non-<code><b>null</b></code> {@link Double} with the value of
-   *         <code>d</code>
-   */
-  public static Double it(final double d) {
-    return cantBeNull(Double.valueOf(d));
-  }
-  /**
-   * Box a <code><b>float</b></code> into a {@link Float} object.
-   *
-   
- @param f some <code><b>float</b></code> value
-   
- @return a non-<code><b>null</b></code> {@link Float} with the value of
-   *         <code>f</code>
-   */
-  public static Float it(final float f) {
-    return cantBeNull(Float.valueOf(f));
-  }
-  /**
-   * Box an <code><b>int</b></code> into an {@link Integer} object.
-   *
-   
- @param i some <code><b>int</b></code> value
-   
- @return a non-<code><b>null</b></code> {@link Integer} with the value of
-   *         <code>n</code>
-   */
-  public static Integer it(final int i) {
-    return cantBeNull(Integer.valueOf(i));
-  }
-  /**
-   * Box a <code><b>long</b></code> into a {@link Long} object.
-   *
-   
- @param l some <code><b>long</b></code> value
-   
- @return a non-<code><b>null</b></code> {@link Long} with the value of
-   *         <code>l</code>
-   */
-  public static Long it(final long l) {
-    return cantBeNull(Long.valueOf(l));
-  }
-  /**
-   * Box a <code><b>short</b></code> into a {@link Short} object.
-   *
-   
- @param s some <code><b>short</b></code> value
-   
- @return a non-<code><b>null</b></code> {@link Short} with the value of
-   *         <code>s</code>
-   */
-  public static Short it(final short s) {
-    return cantBeNull(Short.valueOf(s));
-  }
-  /**
    * Box an array of <code><b>boolean</b></code>s into an array of
    * {@link Boolean}s.
    *
@@ -133,6 +49,18 @@ public enum box {
     return $;
   }
   /**
+   * Box a <code><b>byte</b></code> into a {@link Byte} object.
+   *
+   
+ @param b some <code><b>long</b></code> value
+   
+ @return a non-<code><b>null</b></code> {@link Long} with the value of
+   *         <code>l</code>
+   */
+  public static Byte it(final byte b) {
+    return cantBeNull(Byte.valueOf(b));
+  }
+  /**
    * Box an array of <code><b>byte</b></code>s into an array of {@link Byte}s.
    *
    
@@ -147,6 +75,18 @@ public enum box {
     for (int i = 0; i < $.length; ++i)
       $[i] = it(b[i]);
     return $;
+  }
+  /**
+   * Box a <code><b>char</b></code> into a {@link Character} object.
+   *
+   
+ @param c some <code><b>char</b></code> value
+   
+ @return a non-<code><b>null</b></code> {@link Character} with the value of
+   *         <code>c</code>
+   */
+  public static Character it(final char c) {
+    return cantBeNull(Character.valueOf(c));
   }
   /**
    * Box an array of <code><b>byte</b></code>s into an array of
@@ -166,6 +106,18 @@ public enum box {
     return $;
   }
   /**
+   * Box a <code><b>double</b></code> into a {@link Double} object.
+   *
+   
+ @param d some <code><b>double</b></code> value
+   
+ @return a non-<code><b>null</b></code> {@link Double} with the value of
+   *         <code>d</code>
+   */
+  public static Double it(final double d) {
+    return cantBeNull(Double.valueOf(d));
+  }
+  /**
    * Box an array of <code><b>double</b></code>s into an array of {@link Double}
    * s.
    *
@@ -181,6 +133,18 @@ public enum box {
     for (int i = 0; i < $.length; ++i)
       $[i] = it(d[i]);
     return $;
+  }
+  /**
+   * Box a <code><b>float</b></code> into a {@link Float} object.
+   *
+   
+ @param f some <code><b>float</b></code> value
+   
+ @return a non-<code><b>null</b></code> {@link Float} with the value of
+   *         <code>f</code>
+   */
+  public static Float it(final float f) {
+    return cantBeNull(Float.valueOf(f));
   }
   /**
    * Box an array of <code><b>float</b></code>s into an array of {@link Float}
@@ -200,6 +164,18 @@ public enum box {
     return $;
   }
   /**
+   * Box an <code><b>int</b></code> into an {@link Integer} object.
+   *
+   
+ @param i some <code><b>int</b></code> value
+   
+ @return a non-<code><b>null</b></code> {@link Integer} with the value of
+   *         <code>n</code>
+   */
+  public static Integer it(final int i) {
+    return cantBeNull(Integer.valueOf(i));
+  }
+  /**
    * Box an array of <code><b>int</b></code>s into an array of {@link Integer}
    * s.
    *
@@ -217,6 +193,18 @@ public enum box {
     return $;
   }
   /**
+   * Box a <code><b>long</b></code> into a {@link Long} object.
+   *
+   
+ @param l some <code><b>long</b></code> value
+   
+ @return a non-<code><b>null</b></code> {@link Long} with the value of
+   *         <code>l</code>
+   */
+  public static Long it(final long l) {
+    return cantBeNull(Long.valueOf(l));
+  }
+  /**
    * Box an array of <code><b>long</b></code>s into an array of {@link Long}s.
    *
    
@@ -231,6 +219,18 @@ public enum box {
     for (int i = 0; i < $.length; ++i)
       $[i] = it(l[i]);
     return $;
+  }
+  /**
+   * Box a <code><b>short</b></code> into a {@link Short} object.
+   *
+   
+ @param s some <code><b>short</b></code> value
+   
+ @return a non-<code><b>null</b></code> {@link Short} with the value of
+   *         <code>s</code>
+   */
+  public static Short it(final short s) {
+    return cantBeNull(Short.valueOf(s));
   }
   /**
    * Box an array of <code><b>short</b></code>s into an array of {@link Short}

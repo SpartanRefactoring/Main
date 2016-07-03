@@ -16,9 +16,15 @@ import org.junit.*;
  */
 public abstract class NonNegativeCache {
   /**
-   * The cached value, negative when the cache was not populated
+   * Compute the cached value, either by looking up memoization, or by actual
+   * computation
+   *
+   
+ @return the cached value
    */
-  private int value = -1;
+  public int value() {
+    return value >= 0 ? value : (value = __());
+  }
 
   /**
    * This function is to be implemented by clients, giving a method for
@@ -30,32 +36,26 @@ public abstract class NonNegativeCache {
    */
   protected abstract int __();
   /**
-   * Compute the cached value, either by looking up memoization, or by actual
-   * computation
-   *
-   
- @return the cached value
+   * The cached value, negative when the cache was not populated
    */
-  public int value() {
-    return value >= 0 ? value : (value = __());
-  }
+  private int value = -1;
 
   @SuppressWarnings({ "javadoc" })//
   public static class TEST extends NonNegativeCache {
     private static final int SOME_OFFSET = 17;
-    private int evaluations = 0;
-
-    @Override protected int __() {
-      return SOME_OFFSET + sqr(evaluations++);
-    }
     @Test public void firstReturnsFirstOffset() {
       assertEquals(SOME_OFFSET, value());
     }
+
     @Test public void restReturnsFirstOffset() {
       value();
       assertEquals(SOME_OFFSET, value());
       for (int i = 0; i < 10; ++i)
         assertEquals(SOME_OFFSET, value());
     }
+    @Override protected int __() {
+      return SOME_OFFSET + sqr(evaluations++);
+    }
+    private int evaluations = 0;
   }
 }

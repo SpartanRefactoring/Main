@@ -14,11 +14,12 @@ import org.eclipse.jdt.annotation.*;
  @param <T> JD
  */
 public class Wrapper<T> {
-  @Override public String toString() {
-    return "Wrapper of " + t;
+  /**
+   * Instantiates this class
+   */
+  public Wrapper() {
+    //
   }
-
-  private @Nullable T t = null;
 
   /**
    * Instantiates this class
@@ -29,11 +30,13 @@ public class Wrapper<T> {
   public Wrapper(final T t) {
     this.t = t;
   }
+
   /**
-   * Instantiates this class
+   
+ @return the value wrapped in this object.
    */
-  public Wrapper() {
-    //
+  public T get() {
+    return t;
   }
   /**
    * Set the value wrapped in this object.
@@ -44,11 +47,8 @@ public class Wrapper<T> {
   public void set(final T t) {
     this.t = t;
   }
-  /**
-   
- @return the value wrapped in this object.
-   */
-  public T get() {
-    return t;
+  @Override public String toString() {
+    return "Wrapper of " + t;
   }
+  private @Nullable T t = null;
 }

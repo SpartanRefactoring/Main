@@ -13,26 +13,20 @@ import org.junit.*;
 import org.junit.runners.*;
 
 /**
- * TODO
+ * No values in an 'enum' used as name space for a collection of 'static'
+ * functions.
  *
- 
- @author Yossi Gil <Yossi.Gil@GMail.COM>
- 
- @since 2016
+ * @author Yossi Gil <Yossi.Gil@GMail.COM>
  */
 public enum Iterables {
-  // No values in an 'enum' used as name space for a collection of 'static'
-  // functions.
+  //
   ;
   /**
    * Counts the number of items in an {@link Iterable}.
    *
-   
- @param <T> some arbitrary type
-   
- @param ts some iterable over items whose type is the type parameter
-   
- @return the number of items the given iterable yields.
+   * @param <T> some arbitrary type
+   * @param ts some iterable over items whose type is the type parameter
+   * @return the number of items the given iterable yields.
    */
   public static <T> int count(final @Nullable Iterable<T> ts) {
     int $ = 0;
@@ -42,19 +36,15 @@ public enum Iterables {
     return $;
   }
   /**
-   
- @param <T> JD
-   
- @return TODO document return type
+   * @param <T> JD
+   * @return TODO document return type
    */
   public static <T> PureIterable.Sized<T> empty() {
     return as.nonNullIterable();
   }
   /**
-   
- @param os JD
-   
- @return TODO document return type
+   * @param os JD
+   * @return TODO document return type
    */
   public static boolean isEmpty(final Iterable<?> os) {
     for (final Iterator<?> i = os.iterator(); i.hasNext();)
@@ -63,26 +53,26 @@ public enum Iterables {
     return true;
   }
   /**
-   
- @param <T> JD
-   
- @param t JD
-   
- @return TODO
+   * TODO Javadoc(2016): automatically generated for method
+   * <code>singleton</code>
+   *
+   * @param <T> JD
+   * @param t JD
+   * @return PureIterable.Sized<T> TODO Javadoc(2016) automatically generated
+   *         for returned value of method <code>singleton</code>
    */
   public static <T> PureIterable.Sized<T> singleton(final T t) {
     return as.nonNullIterable(t);
   }
   /**
-   
- @param <T> JD
-   
- @param t JD
-   
- @return TODO
+   * wraps a value in a singleton iterator form
+   *
+   * @param <T> JD
+   * @param $ JD
+   * @return the parameter, but in a singleton iterator form
    */
-  public static <T> PureIterator<T> singletonIterator(final T t) {
-    return singleton(t).iterator();
+  public static <T> PureIterator<T> singletonIterator(final T $) {
+    return singleton($).iterator();
   }
 
   /**
@@ -91,10 +81,8 @@ public enum Iterables {
    * methods do not use are not prefixed by "test". This prefix is redundant. b)
    * test methods begin with the name of the method they check.
    *
-   
- @author Yossi Gil
-   
- @since 2014-05-31
+   * @author Yossi Gil
+   * @since 2014-05-31
    */
   @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   @SuppressWarnings({ "static-method", "javadoc" })//
@@ -106,13 +94,13 @@ public enum Iterables {
       assertFalse(contains("Hello", null, "x", "y", null, "z", "w", "u", "v"));
     }
     @Test public void containsSimple() {
-      assertTrue(contains("Hello", "e"));
+      trrue(contains("Hello", "e"));
     }
     @Test public void containsTypical() {
-      assertTrue(contains("Hello", "a", "b", "c", "d", "e", "f"));
+      trrue(contains("Hello", "a", "b", "c", "d", "e", "f"));
     }
     @Test public void containsWithNulls() {
-      assertTrue(contains("Hello", null, "a", "b", null, "c", "d", "e", "f", null));
+      trrue(contains("Hello", null, "a", "b", null, "c", "d", "e", "f", null));
     }
     @Test public void countDoesNotIncludeNull() {
       assertEquals(3, count(as.iterable(null, "One", null, "Two", null, "Three")));

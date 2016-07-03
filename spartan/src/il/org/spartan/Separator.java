@@ -17,52 +17,78 @@ import il.org.spartan.iterables.*;
  * }
  * </pre>
  *
- * @author Yossi Gil (
+ * @author Yossi Gil
  * @since 12/02/2006)
  */
+/**
+ * TODO(2016) Javadoc: automatically generated for type <code></code>
+ *
+ * @author Yossi Gil <Yossi.Gil@GMail.COM>
+ */
 public final class Separator {
-  private final String s;
-  private boolean first = true;
-
   /**
-   * Instantiates this class.
+   * TODO doc(2016): method main2016's automatically generated Javadoc
    *
-   * @param c JD
+   * @param args JD
    */
-  public Separator(final char c) {
-    this("" + c);
+  public static void main(final String[] args) {
+    final Separator s = new Separator(", ");
+    for (final String a : args)
+      System.out.print(s + a);
   }
   /**
-   * Instantiates this class.
+   * TODO Javadoc(2016): automatically generated for method
+   * <code>separateBy</code>
    *
-   * @param s JD
-   */
-  public Separator(final String s) {
-    this.s = s;
-  }
-  @Override public String toString() {
-    if (!first)
-      return s;
-    first = false;
-    return "";
-  }
-  /**
-   * @param <T> JD
-   * @param wrap
-   * @param ts JD
+   * @param is JD
    * @param between
-   * @return TODO document return type
+   * @return String TODO Javadoc(2016) automatically generated for returned
+   *         value of method <code>separateBy</code>
+   */
+  public static String separateBy(final int[] is, final String between) {
+    if (is.length == 0)
+      return "";
+    String $ = "";
+    final Separator s = new Separator(between);
+    for (final int i : is)
+      $ += s + new Integer(i).toString();
+    return $;
+  }
+  /**
+   * TODO Javadoc(2016): automatically generated for method
+   * <code>separateBy</code> returning String
+   *
+   * @param <T> JD
+   * @param between
+   * @param ts JD
+   * @return
+   */
+  public static <T> String separateBy(final String between, final T[] ts) {
+    return wrap("", "", ts, between);
+  }
+  /**
+   * TODO Javadoc(2016): automatically generated for method <code>wrap</code>
+   *
+   * @param <T>
+   * @param wrap
+   * @param ts
+   * @param between
+   * @return String TODO Javadoc(2016) automatically generated for returned
+   *         value of method <code>wrap</code>
    */
   public static <T> String wrap(final String wrap, final Iterable<T> ts, final String between) {
     return wrap(wrap, wrap, ts, between);
   }
   /**
-   * @param <T> JD
+   * TODO Javadoc(2016): automatically generated for method <code>wrap</code>
+   *
+   * @param <T>
    * @param begin
    * @param end
-   * @param ts JD
+   * @param ts
    * @param between
-   * @return TODO document return type
+   * @return String // TODO: automatically generated for return method
+   *         <code>wrap</code>
    */
   public static <T> String wrap(final String begin, final String end, final Iterable<T> ts, final String between) {
     if (Iterables.isEmpty(ts))
@@ -91,34 +117,28 @@ public final class Separator {
     return as.string($.append(end));
   }
   /**
-   * @param args
+   * Instantiates this class.
+   *
+   * @param c JD
    */
-  public static void main(final String[] args) {
-    final Separator s = new Separator(", ");
-    for (final String a : args)
-      System.out.print(s + a);
+  public Separator(final char c) {
+    this("" + c);
   }
   /**
-   * @param <T> JD
-   * @param between
-   * @param ts
-   * @return TODO document return type
+   * Instantiates this class.
+   *
+   * @param s JD
    */
-  public static <T> String separateBy(final String between, final T[] ts) {
-    return wrap("", "", ts, between);
+  public Separator(final String s) {
+    this.s = s;
   }
-  /**
-   * @param is TODO document this parameter
-   * @param between TODO document this parameter
-   * @return TODO document return type
-   */
-  public static String separateBy(final int[] is, final String between) {
-    if (is.length == 0)
-      return "";
-    String $ = "";
-    final Separator s = new Separator(between);
-    for (final int i : is)
-      $ += s + new Integer(i).toString();
-    return $;
+  @Override public String toString() {
+    if (!first)
+      return s;
+    first = false;
+    return "";
   }
+
+  private boolean first = true;
+  private final String s;
 }

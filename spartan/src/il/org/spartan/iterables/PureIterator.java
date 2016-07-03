@@ -48,26 +48,26 @@ public abstract class PureIterator<T> implements Iterator<T> {
  @since 2016
    */
   public abstract static class Staged<T> extends PureIterator<T> {
-    /**
-     * Stores the next value that this iterator returns. It has non-null content
-     * only after {@link #hasNext} returned true.
-     */
-    private @Nullable T next = null;
-
-    protected final boolean setNext(final T next) {
-      mustBeNull(this.next);
-      this.next = next;
-      return true;
-    }
-    protected final void clearNext() {
-      cantBeNull(next);
-      next = null;
-    }
     @Override public final T next() {
       final @NonNull T $ = cantBeNull(next);
       clearNext();
       return $;
     }
+
+    protected final void clearNext() {
+      cantBeNull(next);
+      next = null;
+    }
+    protected final boolean setNext(final T next) {
+      mustBeNull(this.next);
+      this.next = next;
+      return true;
+    }
+    /**
+     * Stores the next value that this iterator returns. It has non-null content
+     * only after {@link #hasNext} returned true.
+     */
+    private @Nullable T next = null;
   }
 
   @SuppressWarnings({ "javadoc" })//
