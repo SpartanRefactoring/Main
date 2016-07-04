@@ -21,8 +21,8 @@ public class Primes {
    */
   public static boolean isPrime(final int c) {
     return //
-    c < 0 ? isPrime(-c) // deal with negative values
-        : c > 1 && isPrimeCore(c); // any integer >- 2
+        c < 0 ? isPrime(-c) // deal with negative values
+            : c > 1 && isPrimeCore(c); // any integer >- 2
   }
   private static boolean isPrimeCore(final int c) {
     for (int d = 2; d * d <= c; ++d)

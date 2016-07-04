@@ -173,7 +173,7 @@ public class LCS {
       assertEquals(4, length( //
           "A\nB\nR\nA", //
           "C\nA\nD\nA\nB\nR\nA\n" //
-      ));
+          ));
     }
     @Test public void lengthStringMiddle() {
       // Common string is: "ABC"

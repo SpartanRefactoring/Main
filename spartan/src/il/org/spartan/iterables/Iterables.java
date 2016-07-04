@@ -6,8 +6,6 @@ import static il.org.spartan.azzert.*;
 import static org.junit.Assert.*;
 import il.org.spartan.*;
 
-import java.util.*;
-
 import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 import org.junit.runners.*;
@@ -47,8 +45,8 @@ public enum Iterables {
    * @return TODO document return type
    */
   public static boolean isEmpty(final Iterable<?> os) {
-    for (final Iterator<?> i = os.iterator(); i.hasNext();)
-      if (i.next() != null)
+    for (final Object name2 : os)
+      if (name2 != null)
         return false;
     return true;
   }

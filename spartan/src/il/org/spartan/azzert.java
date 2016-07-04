@@ -117,13 +117,13 @@ import org.hamcrest.number.*;
   @Factory public static @Nullable Matcher<@Nullable Double> comparesEqualTo(final double d) {
     return OrderingComparison.comparesEqualTo(Double.valueOf(d));
   }
-  @Factory public static @Nullable Matcher<Float> comparesEqualTo(final float f) {
+  @Factory public static @Nullable Matcher<@Nullable Float> comparesEqualTo(final float f) {
     return OrderingComparison.comparesEqualTo(Float.valueOf(f));
   }
-  @Factory public static @Nullable Matcher<Integer> comparesEqualTo(final int i) {
+  @Factory public static @Nullable Matcher<@Nullable Integer> comparesEqualTo(final int i) {
     return OrderingComparison.comparesEqualTo(Integer.valueOf(i));
   }
-  @Factory public static @Nullable Matcher<Long> comparesEqualTo(final long l) {
+  @Factory public static @Nullable Matcher<@Nullable Long> comparesEqualTo(final long l) {
     return OrderingComparison.comparesEqualTo(Long.valueOf(l));
   }
   @Factory public static @Nullable Matcher<@Nullable Short> comparesEqualTo(final short s) {
@@ -138,7 +138,7 @@ import org.hamcrest.number.*;
   public static <LHS> CombinableMatcher.CombinableEitherMatcher<LHS> either(final Matcher<? super LHS> matcher) {
     return CombinableMatcher.<LHS> either(matcher);
   }
-  public static @Nullable Matcher<String> endsWith(final String suffix) {
+  public static @Nullable Matcher<@Nullable String> endsWith(final String suffix) {
     return StringEndsWith.endsWith(suffix);
   }
   public static <T> @Nullable Matcher<T> equalTo(final T operand) {
@@ -147,52 +147,52 @@ import org.hamcrest.number.*;
   public static <U> Matcher<java.lang.Iterable<U>> everyItem(final Matcher<U> itemMatcher) {
     return Every.<U> everyItem(itemMatcher);
   }
-  @Factory public static @Nullable Matcher<Boolean> greaterThan(final boolean b) {
+  @Factory public static @Nullable Matcher<@Nullable Boolean> greaterThan(final boolean b) {
     return OrderingComparison.greaterThan(Boolean.valueOf(b));
   }
   @Factory public static @Nullable Matcher<@Nullable Byte> greaterThan(final byte b) {
     return OrderingComparison.greaterThan(Byte.valueOf(b));
   }
-  @Factory public static @Nullable Matcher<Character> greaterThan(final char c) {
+  @Factory public static @Nullable Matcher<@Nullable Character> greaterThan(final char c) {
     return OrderingComparison.greaterThan(Character.valueOf(c));
   }
-  @Factory public static @Nullable Matcher<Double> greaterThan(final double d) {
+  @Factory public static @Nullable Matcher<@Nullable Double> greaterThan(final double d) {
     return OrderingComparison.greaterThan(Double.valueOf(d));
   }
-  @Factory public static @Nullable Matcher<Float> greaterThan(final float f) {
+  @Factory public static @Nullable Matcher<@Nullable Float> greaterThan(final float f) {
     return OrderingComparison.greaterThan(Float.valueOf(f));
   }
-  @Factory public static @Nullable Matcher<Integer> greaterThan(final int i) {
+  @Factory public static @Nullable Matcher<@Nullable Integer> greaterThan(final int i) {
     return OrderingComparison.greaterThan(Integer.valueOf(i));
   }
-  @Factory public static @Nullable Matcher<Long> greaterThan(final long l) {
+  @Factory public static @Nullable Matcher<@Nullable Long> greaterThan(final long l) {
     return OrderingComparison.greaterThan(Long.valueOf(l));
   }
-  @Factory public static @Nullable Matcher<Short> greaterThan(final short s) {
+  @Factory public static @Nullable Matcher<@Nullable Short> greaterThan(final short s) {
     return OrderingComparison.greaterThan(Short.valueOf(s));
   }
-  @Factory public static @Nullable Matcher<Boolean> greaterThanOrEqualTo(final boolean b) {
+  @Factory public static @Nullable Matcher<@Nullable Boolean> greaterThanOrEqualTo(final boolean b) {
     return OrderingComparison.greaterThanOrEqualTo(Boolean.valueOf(b));
   }
-  @Factory public static @Nullable Matcher<Byte> greaterThanOrEqualTo(final byte b) {
+  @Factory public static @Nullable Matcher<@Nullable Byte> greaterThanOrEqualTo(final byte b) {
     return OrderingComparison.greaterThanOrEqualTo(Byte.valueOf(b));
   }
-  @Factory public static @Nullable Matcher<Character> greaterThanOrEqualTo(final char c) {
+  @Factory public static @Nullable Matcher<@Nullable Character> greaterThanOrEqualTo(final char c) {
     return OrderingComparison.greaterThanOrEqualTo(Character.valueOf(c));
   }
-  @Factory public static @Nullable Matcher<Double> greaterThanOrEqualTo(final double d) {
+  @Factory public static @Nullable Matcher<@Nullable Double> greaterThanOrEqualTo(final double d) {
     return OrderingComparison.greaterThanOrEqualTo(Double.valueOf(d));
   }
-  @Factory public static @Nullable Matcher<Float> greaterThanOrEqualTo(final float f) {
+  @Factory public static @Nullable Matcher<@Nullable Float> greaterThanOrEqualTo(final float f) {
     return OrderingComparison.greaterThanOrEqualTo(Float.valueOf(f));
   }
-  @Factory public static @Nullable Matcher<Integer> greaterThanOrEqualTo(final int i) {
+  @Factory public static @Nullable Matcher<@Nullable Integer> greaterThanOrEqualTo(final int i) {
     return OrderingComparison.greaterThanOrEqualTo(Integer.valueOf(i));
   }
-  @Factory public static @Nullable Matcher<Long> greaterThanOrEqualTo(final long l) {
+  @Factory public static @Nullable Matcher<@Nullable Long> greaterThanOrEqualTo(final long l) {
     return OrderingComparison.greaterThanOrEqualTo(Long.valueOf(l));
   }
-  @Factory public static @Nullable Matcher<Short> greaterThanOrEqualTo(final short s) {
+  @Factory public static @Nullable Matcher<@Nullable Short> greaterThanOrEqualTo(final short s) {
     return OrderingComparison.greaterThanOrEqualTo(Short.valueOf(s));
   }
   public static <T> Matcher<java.lang.Iterable<? super @Nullable T>> hasItem(final Matcher<? super @Nullable T> itemMatcher) {
@@ -264,34 +264,34 @@ import org.hamcrest.number.*;
   @Factory public static @Nullable Matcher<@Nullable Integer> lessThan(final int i) {
     return OrderingComparison.lessThan(Integer.valueOf(i));
   }
-  @Factory public static @Nullable Matcher<Long> lessThan(final long l) {
+  @Factory public static @Nullable Matcher<@Nullable Long> lessThan(final long l) {
     return OrderingComparison.lessThan(Long.valueOf(l));
   }
-  @Factory public static @Nullable Matcher<Short> lessThan(final short s) {
+  @Factory public static @Nullable Matcher<@Nullable Short> lessThan(final short s) {
     return OrderingComparison.lessThan(Short.valueOf(s));
   }
-  @Factory public static @Nullable Matcher<Boolean> lessThanOrEqualTo(final boolean b) {
+  @Factory public static @Nullable Matcher<@Nullable Boolean> lessThanOrEqualTo(final boolean b) {
     return OrderingComparison.lessThanOrEqualTo(Boolean.valueOf(b));
   }
-  @Factory public static @Nullable Matcher<Byte> lessThanOrEqualTo(final byte b) {
+  @Factory public static @Nullable Matcher<@Nullable Byte> lessThanOrEqualTo(final byte b) {
     return OrderingComparison.lessThanOrEqualTo(Byte.valueOf(b));
   }
-  @Factory public static @Nullable Matcher<Character> lessThanOrEqualTo(final char c) {
+  @Factory public static @Nullable Matcher<@Nullable Character> lessThanOrEqualTo(final char c) {
     return OrderingComparison.lessThanOrEqualTo(Character.valueOf(c));
   }
-  @Factory public static @Nullable Matcher<Double> lessThanOrEqualTo(final double d) {
+  @Factory public static @Nullable Matcher<@Nullable Double> lessThanOrEqualTo(final double d) {
     return OrderingComparison.lessThanOrEqualTo(Double.valueOf(d));
   }
-  @Factory public static @Nullable Matcher<Float> lessThanOrEqualTo(final float f) {
+  @Factory public static @Nullable Matcher<@Nullable Float> lessThanOrEqualTo(final float f) {
     return OrderingComparison.lessThanOrEqualTo(Float.valueOf(f));
   }
-  @Factory public static @Nullable Matcher<Integer> lessThanOrEqualTo(final int i) {
+  @Factory public static @Nullable Matcher<@Nullable Integer> lessThanOrEqualTo(final int i) {
     return OrderingComparison.lessThanOrEqualTo(Integer.valueOf(i));
   }
-  @Factory public static @Nullable Matcher<Long> lessThanOrEqualTo(final long l) {
+  @Factory public static @Nullable Matcher<@Nullable Long> lessThanOrEqualTo(final long l) {
     return OrderingComparison.lessThanOrEqualTo(Long.valueOf(l));
   }
-  @Factory public static @Nullable Matcher<Short> lessThanOrEqualTo(final short s) {
+  @Factory public static @Nullable Matcher<@Nullable Short> lessThanOrEqualTo(final short s) {
     return OrderingComparison.lessThanOrEqualTo(Short.valueOf(s));
   }
   public static void nonNulls(final @Nullable Iterable<@Nullable Object> os) {
