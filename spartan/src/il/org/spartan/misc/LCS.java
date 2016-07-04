@@ -20,50 +20,37 @@ import org.junit.runners.*;
  * the line, so that in certain cases, the LCS may be a bit inaccurate. These
  * case are extremely rare.
  *
- 
- @author Yossi Gil
- 
- @since 2014-06-17
+ * @author Yossi Gil
+ * @since 2014-06-17
  */
 public class LCS {
   /**
-   
- @param ia JD
-   
- @param is2 JD
-   
- @return TODO document return type
+   * @param ia JD
+   * @param is2 JD
+   * @return TODO document return type
    */
   public static int length(final int[] ia, final int[] is2) {
     return new LCS(ia, is2).length();
   }
   /**
-   
- @param a JD
-   
- @param s2 JD
-   
- @return TODO document return type
+   * @param a JD
+   * @param s2 JD
+   * @return TODO document return type
    */
   public static int length(final String a, final String s2) {
     return new LCS(a, s2).length();
   }
   /**
-   
- @param ssa JD
-   
- @param ssb JD
-   
- @return TODO document return type
+   * @param ssa JD
+   * @param ssb JD
+   * @return TODO document return type
    */
   public static int length(final String[] ssa, final String[] ssb) {
     return new LCS(ssa, ssb).length();
   }
   /**
-   
- @param s
-   
- @return TODO document return type
+   * @param s
+   * @return TODO document return type
    */
   private static int hash(final String s) {
     return s.replaceAll("\\s+", "").toLowerCase().hashCode();
@@ -79,10 +66,8 @@ public class LCS {
   /**
    * Instantiates this class. TODO: Document this method
    *
-   
- @param as JD
-   
- @param bs JD
+   * @param as JD
+   * @param bs JD
    */
   public LCS(final int[] as, final int[] bs) {
     this.A_s = as;
@@ -94,10 +79,8 @@ public class LCS {
   /**
    * Instantiates this class.
    *
-   
- @param a JD
-   
- @param b JD
+   * @param a JD
+   * @param b JD
    */
   public LCS(final String a, final String b) {
     this(Lines.scatter(a), Lines.scatter(b));
@@ -105,15 +88,12 @@ public class LCS {
   /**
    * TODO:Document this method Instantiates this class.
    *
-   
- @param as JD
-   
- @param bs JD
+   * @param as JD
+   * @param bs JD
    */
   public LCS(final String[] as, final String[] bs) {
     this(hash(as), hash(bs));
   }
-
   private int compute(final int i, final int j) {
     return i < 0 || j < 0 ? 0 : threeWayDynamicProgramingStep(i, j);
   }
@@ -126,23 +106,20 @@ public class LCS {
    * j) must be a valid index of array a (respectively b), or else, the
    * substring of a (respectively b) are empty.
    *
-   
- @param i
-   
- @param j
-   
- @return TODO document return type
+   * @param i JD JD
+   * @param j
+   * @return TODO document return type
    */
   private int length(final int i, final int j) {
     return i < 0 || j < 0 ? 0 : obtainLength(i, j);
   }
-
   private int obtainLength(final int i, final int j) {
     return length[i][j] != -1 ? length[i][j] : (length[i][j] = compute(i, j));
   }
   private int threeWayDynamicProgramingStep(final int i, final int j) {
     return max(length(i - 1, j), length(i, j - 1), length(i - 1, j - 1) + as.bit(A_s[i] == B_s[j]));
   }
+
   private final int[] A_s;
   private final int[] B_s;
   private final int[][] length;

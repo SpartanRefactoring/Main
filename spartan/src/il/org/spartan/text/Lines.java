@@ -16,10 +16,8 @@ import org.junit.runners.*;
  * contain the end-of-line marker, while the text a strings in which all lines,
  * including the last, are terminated by the end-of-line marker.
  *
- 
- @author Yossi Gil
- 
- @since 2014-7-31
+ * @author Yossi Gil
+ * @since 2014-7-31
  */
 public enum Lines {
   // No enum values in this fake module
@@ -27,22 +25,17 @@ public enum Lines {
   /**
    * Counts the number of liens in a given text
    *
-   
- @param text count the number of lines in this parameter
-   
- @return the number of lines in the parameter
+   * @param text count the number of lines in this parameter
+   * @return the number of lines in the parameter
    */
   public static int count(final @Nullable String text) {
     return Lines.scatter(text).length;
   }
-
   /**
    * Builds text from an array of lines
    *
-   
- @param lines what needs to be concatenated
-   
- @return the parameters, concatenated together, with
+   * @param lines what needs to be concatenated
+   * @return the parameters, concatenated together, with
    *         {@link #END_OF_LINE_MARKER} separating consecutive arguments
    */
   public static String gather(final String... lines) {
@@ -51,21 +44,18 @@ public enum Lines {
   /**
    * Breaks text into lines
    *
-   
- @param text some string of characters
-   
- @return the parameter, split into an array if lines
-   
- @see #gather
+   * @param text some string of characters
+   * @return the parameter, split into an array if lines
+   * @see #gather
    */
   public static String[] scatter(final @Nullable String text) {
     return text == null || text.isEmpty() ? NO_LINES : cantBeNull(text.split(END_OF_LINE_MARKER));
   }
+
   /**
    * The string which this module considers as line separator.
    */
   public static final String END_OF_LINE_MARKER = "\n";
-
   /**
    * A longer and more meaningful name for the array of length zero with
    * {@link String} elements.
@@ -78,10 +68,8 @@ public enum Lines {
    * methods do not use are not prefixed by "test". This prefix is redundant. b)
    * test methods begin with the name of the method they check.
    *
-   
- @author Yossi Gil
-   
- @since 2014-05-31
+   * @author Yossi Gil
+   * @since 2014-05-31
    */
   @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   @SuppressWarnings({ "static-method", "javadoc" })//

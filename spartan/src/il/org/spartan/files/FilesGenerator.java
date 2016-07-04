@@ -32,20 +32,18 @@ import java.util.*;
  */
 public class FilesGenerator {
   /**
-   * @param args
+   * @param __ ignored
    */
-  public static void main(final String[] args) {
+  public static void main(final String[] __) {
     for (final File f : new FilesGenerator(".java").from("."))
       System.out.println(f);
   }
-
   private static Iterable<File> asFiles(final Iterable<String> fileNames) {
     final List<File> $ = new ArrayList<>();
     for (final String fileName : fileNames)
       $.add(new File(fileName));
     return $;
   }
-
   /**
    * @param directory should be a directory, but we still need to account for
    *          weird creatures such az "System Volume Information"
@@ -66,10 +64,10 @@ public class FilesGenerator {
           return true;
         }
       }
-
       @Override public File next() {
         return next;
       }
+
       private File next;
     };
   }
@@ -125,10 +123,10 @@ public class FilesGenerator {
     From(final Iterable<File> from) {
       this.from = from;
     }
-
     @Override public Iterator<File> iterator() {
       return new FilesIterator(from.iterator());
     }
+
     final Iterable<File> from;
 
     private class FilesIterator implements Iterator<File> {
@@ -153,7 +151,6 @@ public class FilesGenerator {
             return true;
         }
       }
-
       @Override public File next() {
         return next;
       }
@@ -166,6 +163,7 @@ public class FilesGenerator {
             return true;
         return false;
       }
+
       private File next = null;
       private final Stack<Iterator<File>> stack = new Stack<>();
     }

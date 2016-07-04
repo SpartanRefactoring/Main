@@ -41,7 +41,7 @@ public final class Separator {
    * <code>separateBy</code>
    *
    * @param is JD
-   * @param between
+   * @param between what to put between the items
    * @return String TODO Javadoc(2016) automatically generated for returned
    *         value of method <code>separateBy</code>
    */
@@ -59,9 +59,10 @@ public final class Separator {
    * <code>separateBy</code> returning String
    *
    * @param <T> JD
-   * @param between
+   * @param between what to put between the items
    * @param ts JD
-   * @return
+   * @return TODO document return type of this method * TODO document return
+   *         type of this method
    */
   public static <T> String separateBy(final String between, final T[] ts) {
     return wrap("", "", ts, between);
@@ -69,10 +70,10 @@ public final class Separator {
   /**
    * TODO Javadoc(2016): automatically generated for method <code>wrap</code>
    *
-   * @param <T>
-   * @param wrap
-   * @param ts
-   * @param between
+   * @param <T> JD
+   * @param wrap TODO
+   * @param ts JD
+   * @param between what to put between the items
    * @return String TODO Javadoc(2016) automatically generated for returned
    *         value of method <code>wrap</code>
    */
@@ -82,11 +83,11 @@ public final class Separator {
   /**
    * TODO Javadoc(2016): automatically generated for method <code>wrap</code>
    *
-   * @param <T>
-   * @param begin
-   * @param end
-   * @param ts
-   * @param between
+   * @param <T> JD
+   * @param begin what to place before the items
+   * @param end what to place after the items
+   * @param ts JD
+   * @param between what to put between the items
    * @return String // TODO: automatically generated for return method
    *         <code>wrap</code>
    */
@@ -101,10 +102,10 @@ public final class Separator {
   }
   /**
    * @param <T> JD
-   * @param begin
-   * @param end
-   * @param ts
-   * @param between
+   * @param begin what to place before the items
+   * @param end what to place after the items
+   * @param ts JD
+   * @param between what to put between the items
    * @return TODO document return type
    */
   public static <T> String wrap(final String begin, final String end, final T[] ts, final String between) {

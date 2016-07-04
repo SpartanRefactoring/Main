@@ -24,8 +24,7 @@ import org.hamcrest.number.*;
  * @author Yossi Gil <Yossi.Gil@GMail.COM>
  * @since @{year}-@{month}-@{day}
  */
-@SuppressWarnings("javadoc")
-public class azzert extends org.junit.Assert {
+@SuppressWarnings("javadoc") public class azzert extends org.junit.Assert {
   public static <T> @Nullable Matcher<T> allOf(final java.lang.Iterable<Matcher<? super T>> matchers) {
     return AllOf.<T> allOf(matchers);
   }
@@ -103,11 +102,10 @@ public class azzert extends org.junit.Assert {
   public static void assertTrue(final String s, final boolean b) {
     that(s, Boolean.valueOf(b), is(Boolean.TRUE));
   }
-  @SuppressWarnings("javadoc") public static <LHS> CombinableMatcher.CombinableBothMatcher<LHS> both(
-      final Matcher<? super LHS> matcher) {
+  public static <LHS> CombinableMatcher.CombinableBothMatcher<LHS> both(final Matcher<? super LHS> matcher) {
     return CombinableMatcher.<LHS> both(matcher);
   }
-  @SuppressWarnings("javadoc") @Factory public static @Nullable Matcher<@Nullable Boolean> comparesEqualTo(final boolean b) {
+  @Factory public static @Nullable Matcher<@Nullable Boolean> comparesEqualTo(final boolean b) {
     return OrderingComparison.comparesEqualTo(Boolean.valueOf(b));
   }
   @Factory public static @Nullable Matcher<@Nullable Byte> comparesEqualTo(final byte b) {
@@ -131,17 +129,16 @@ public class azzert extends org.junit.Assert {
   @Factory public static @Nullable Matcher<@Nullable Short> comparesEqualTo(final short s) {
     return OrderingComparison.comparesEqualTo(Short.valueOf(s));
   }
-  public static @Nullable Matcher<java.lang.String> containsString(final java.lang.String substring) {
+  public static @Nullable Matcher<@Nullable String> containsString(final String substring) {
     return StringContains.containsString(substring);
   }
-  public static <T> @Nullable Matcher<T> describedAs(final java.lang.String description, final Matcher<T> matcher,
-      final Object... values) {
+  public static <T> @Nullable Matcher<T> describedAs(final String description, final Matcher<T> matcher, final Object... values) {
     return DescribedAs.<T> describedAs(description, matcher, values);
   }
   public static <LHS> CombinableMatcher.CombinableEitherMatcher<LHS> either(final Matcher<? super LHS> matcher) {
     return CombinableMatcher.<LHS> either(matcher);
   }
-  public static @Nullable Matcher<java.lang.String> endsWith(final java.lang.String suffix) {
+  public static @Nullable Matcher<String> endsWith(final String suffix) {
     return StringEndsWith.endsWith(suffix);
   }
   public static <T> @Nullable Matcher<T> equalTo(final T operand) {
@@ -162,7 +159,6 @@ public class azzert extends org.junit.Assert {
   @Factory public static @Nullable Matcher<Double> greaterThan(final double d) {
     return OrderingComparison.greaterThan(Double.valueOf(d));
   }
-
   @Factory public static @Nullable Matcher<Float> greaterThan(final float f) {
     return OrderingComparison.greaterThan(Float.valueOf(f));
   }
@@ -214,7 +210,6 @@ public class azzert extends org.junit.Assert {
   public static <T> @Nullable Matcher<T> instanceOf(final java.lang.Class<?> type) {
     return IsInstanceOf.<T> instanceOf(type);
   }
-
   public static @Nullable Matcher<@Nullable Boolean> is(final boolean b) {
     return is(Boolean.valueOf(b));
   }
@@ -224,7 +219,6 @@ public class azzert extends org.junit.Assert {
   public static @Nullable Matcher<@Nullable Character> is(final char c) {
     return is(Character.valueOf(c));
   }
-
   public static @Nullable Matcher<@Nullable Double> is(final double d) {
     return is(Double.valueOf(d));
   }
@@ -249,25 +243,25 @@ public class azzert extends org.junit.Assert {
   public static <T> @Nullable Matcher<T> isA(final java.lang.Class<T> type) {
     return Is.<T> isA(type);
   }
-  public static final Wrapper<String> iz(final @NonNull String s) {
+  public static final Wrapper<String> iz(final String s) {
     return new Wrapper<String>(s);
   }
-  @Factory public static @Nullable Matcher<Boolean> lessThan(final boolean b) {
+  @Factory public static @Nullable Matcher<@Nullable Boolean> lessThan(final boolean b) {
     return OrderingComparison.lessThan(Boolean.valueOf(b));
   }
-  @Factory public static @Nullable Matcher<Byte> lessThan(final byte b) {
+  @Factory public static @Nullable Matcher<@Nullable Byte> lessThan(final byte b) {
     return OrderingComparison.lessThan(Byte.valueOf(b));
   }
-  @Factory public static @Nullable Matcher<Character> lessThan(final char c) {
+  @Factory public static @Nullable Matcher<@Nullable Character> lessThan(final char c) {
     return OrderingComparison.lessThan(Character.valueOf(c));
   }
-  @Factory public static @Nullable Matcher<Double> lessThan(final double d) {
+  @Factory public static @Nullable Matcher<@Nullable Double> lessThan(final double d) {
     return OrderingComparison.lessThan(Double.valueOf(d));
   }
-  @Factory public static @Nullable Matcher<Float> lessThan(final float f) {
+  @Factory public static @Nullable Matcher<@Nullable Float> lessThan(final float f) {
     return OrderingComparison.lessThan(Float.valueOf(f));
   }
-  @Factory public static @Nullable Matcher<Integer> lessThan(final int i) {
+  @Factory public static @Nullable Matcher<@Nullable Integer> lessThan(final int i) {
     return OrderingComparison.lessThan(Integer.valueOf(i));
   }
   @Factory public static @Nullable Matcher<Long> lessThan(final long l) {
@@ -302,7 +296,7 @@ public class azzert extends org.junit.Assert {
   }
   public static void nonNulls(final @Nullable Iterable<@Nullable Object> os) {
     azzert.notNull(os);
-    assert os !=  null;
+    assert os != null;
     for (final @Nullable Object o : os)
       azzert.notNull("" + os, o);
   }
@@ -369,7 +363,7 @@ public class azzert extends org.junit.Assert {
   public static <T> @Nullable Matcher<T> sameInstance(final T target) {
     return IsSame.<T> sameInstance(target);
   }
-  public static @Nullable Matcher<java.lang.String> startsWith(final java.lang.String prefix) {
+  public static @Nullable Matcher<String> startsWith(final String prefix) {
     return StringStartsWith.startsWith(prefix);
   }
   public static void that(final boolean b, final Matcher<? super @Nullable Boolean> m) {
@@ -417,7 +411,6 @@ public class azzert extends org.junit.Assert {
   public static void that(final String reason, final int i, final Matcher<? super Integer> m) {
     assertThat(reason, Integer.valueOf(i), m);
   }
-
   public static void that(final String reason, final long l, final Matcher<? super @Nullable Long> m) {
     assertThat(reason, Long.valueOf(l), m);
   }
@@ -437,7 +430,6 @@ public class azzert extends org.junit.Assert {
   public static void trrue(final boolean b) {
     assertTrue("", b);
   }
-
   /**
    * Assert that an integer is zero
    *

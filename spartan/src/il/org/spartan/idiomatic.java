@@ -16,7 +16,6 @@ import org.junit.*;
  * @since 2013/07/01
  */
 public interface idiomatic {
-  ;
   /**
    * TODO Javadoc(2016): automatically generated for method <code>yield</code>
    *
@@ -32,16 +31,24 @@ public interface idiomatic {
    * TODO Javadoc(2016): automatically generated for method <code>yield</code>
    *
    * @param <T> JD
-   * @param t JD
-   * @return Yielder<T> TODO Javadoc(2016) automatically generated for returned
-   *         value of method <code>yield</code>
+   * @param $ result
+   * @return an identical supplier which is also a {@link Holder}
    */
-  static <T> Whener<T> eval(final Supplier<@Nullable T> t) {
-    return () -> t.get();
+  static <T> Holder<T> eval(final Supplier<@Nullable T> $) {
+    return () -> $.get();
   }
   /**
    * @param condition JD
    * @return TODO document return type
+   */
+  /**
+   * TODO Javadoc(2016): automatically generated for method <code>incase</code>
+   *
+   * @param <T> JD
+   * @param condition TODO
+   * @param t JD
+   * @return T TODO Javadoc(2016) automatically generated for returned value of
+   *         method <code>incase</code>
    */
   public static <T> @Nullable T incase(final boolean condition, final T t) {
     return condition ? t : null;
@@ -63,8 +70,13 @@ public interface idiomatic {
     return when(!condition);
   }
   /**
-   * @param condition JD
-   * @return TODO document return type
+   * TODO Javadoc(2016): automatically generated for method <code>unless</code>
+   *
+   * @param <T> JD
+   * @param condition TODO
+   * @param t JD
+   * @return T TODO Javadoc(2016) automatically generated for returned value of
+   *         method <code>unless</code>
    */
   public static <T> @Nullable T unless(final boolean condition, final T t) {
     return incase(!condition, t);
@@ -102,18 +114,17 @@ public interface idiomatic {
   /**
    * TODO(2016) Javadoc: automatically generated for type <code>idiomatic</code>
    *
-   * @param <T>
+   * @param <T> JD
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016
    */
-  //  abstract class Whener<T> implements Supplier<T> {
-  interface Whener<T> extends Supplier<T> {
+  interface Holder<T> extends Supplier<T> {
     /**
      * Return value when condition is <code><b>true</b></code>
      *
      * @param unless condition on which value is returned
-     * @return the {@link #get()} when the parameter is <code><b>true</b></code>,
-     *         otherwise code><b>null</b></code>.
+     * @return the {@link #get()} when the parameter is <code><b>true</b></code>
+     *         , otherwise code><b>null</b></code>.
      */
     default @Nullable T unless(final boolean unless) {
       return when(!unless);
@@ -121,8 +132,8 @@ public interface idiomatic {
     /**
      * Return value when condition is <code><b>true</b></code>
      *
-     * @return the {@link #get()} when the parameter is <code><b>true</b></code>,
-     *         otherwise code><b>null</b></code>.
+     * @return the {@link #get()} when the parameter is <code><b>true</b></code>
+     *         , otherwise code><b>null</b></code>.
      * @param when condition on which value is returned
      */
     default @Nullable T when(final boolean when) {
@@ -137,7 +148,7 @@ public interface idiomatic {
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016
    */
-  static class Storer<T> implements Whener<T> {
+  static class Storer<T> implements Holder<T> {
     /**
      * Instantiates this class.
      *
@@ -168,15 +179,15 @@ public interface idiomatic {
     <@Nullable T> T eval(final Supplier<T> t);
     /**
      * @param <T> JD
-     * @param t JD
+     * @param $ JD
      * @return TODO document return type
      */
-    default <@Nullable T> T eval(final T t) {
-      return eval(() -> t);
+    default <@Nullable T> T eval(final T $) {
+      return eval(() -> $);
     }
   }
 
-  @SuppressWarnings("javadoc") public static class ZZZ {
+  @SuppressWarnings({ "javadoc", "null", "static-method" }) public static class ZZZ {
     @Test public void use0() {
       azzert.notNull(new Storer<ZZZ>(this));
     }
@@ -190,6 +201,18 @@ public interface idiomatic {
     }
     @Test public void use3() {
       azzert.that(take(this).when(true), is(this));
+    }
+    @Test public void use4() {
+      azzert.isNull(take(this).when(false));
+    }
+    @Test public void use5() {
+      azzert.that(take(this).unless(false), is(this));
+    }
+    @Test public void use6() {
+      azzert.isNull(take(this).unless(true));
+    }
+    @Test public void use7() {
+      azzert.isNull(take(null).unless(true));
     }
   }
 }
