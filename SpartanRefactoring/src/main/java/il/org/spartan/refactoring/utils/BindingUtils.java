@@ -64,7 +64,7 @@ import org.eclipse.jdt.internal.corext.dom.*;
     if (b == null)
       return null;
     final IMethodBinding $ = Bindings.findMethodInHierarchy(b, mn, bs);
-    return incase(isVisible($, n, u)).eval($);
+    return take($).when(isVisible($, n, u));
   }
   /**
    * Checks if expression is simple.
