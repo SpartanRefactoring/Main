@@ -41,22 +41,9 @@ import org.eclipse.jdt.core.dom.*;
       return IApplication.EXIT_OK;
     }
     int done = 0, failed = 0;
-    for (final File f : new FilesGenerator(".java", ".JAVA").from(optPath)) {
-      ICompilationUnit u = null;
-      try {
-        u = openCompilationUnit(f);
-        final FileStats s = new FileStats(f);
-        for (int i = 0; i < optRounds; ++i) {
-          final int n = CleanupHandler.countSuggestions(u);
-          if (n == 0)
-            break;
-          s.addRoundStat(n);
-          ApplySpartanizationHandler.execute(u);
-        }
-        FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
-        if (optVerbose)
-          System.out.println("Spartanized file " + f.getAbsolutePath());
-        s.countLinesAfter();
+    for (final File f : new FilesGenerator(".java", ".JAVA").from(optPath))
+      try (AutoCloseableCompilationUnit acu = openCompilationUnit(f)) {
+        final FileStats s = a(f, acu.get());
         fileStats.add(s);
         ++done;
       } catch (final JavaModelException | IOException e) {
@@ -66,16 +53,36 @@ import org.eclipse.jdt.core.dom.*;
         System.err.println("An unexpected error has occurred on file " + f + ": " + e.getMessage());
         e.printStackTrace();
         ++failed;
-      } finally {
-        discardCompilationUnit(u);
       }
-    }
     System.out.println(done + " files processed. " + (failed == 0 ? "" : failed + " failed."));
     if (optStatsChanges)
       printChangeStatistics(fileStats);
     if (optStatsLines)
       printLineStatistics(fileStats);
     return IApplication.EXIT_OK;
+  }
+  /**
+   * @param f
+   * @param u
+   * @return
+   * @throws IOException
+   * @throws FileNotFoundException
+   * @throws JavaModelException
+   */
+  private FileStats a(final File f, ICompilationUnit u) throws IOException, FileNotFoundException, JavaModelException {
+    final FileStats s = new FileStats(f);
+    for (int i = 0; i < optRounds; ++i) {
+      final int n = CleanupHandler.countSuggestions(u);
+      if (n == 0)
+        break;
+      s.addRoundStat(n);
+      ApplySpartanizationHandler.execute(u);
+    }
+    FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
+    if (optVerbose)
+      System.out.println("Spartanized file " + f.getAbsolutePath());
+    s.countLinesAfter();
+    return s;
   }
   @Override public void stop() {
     // Unused
@@ -191,20 +198,27 @@ import org.eclipse.jdt.core.dom.*;
   void setPackage(final String name) throws JavaModelException {
     pack = srcRoot.createPackageFragment(name, false, null);
   }
-  ICompilationUnit openCompilationUnit(final File f) throws IOException, JavaModelException {
+
+  static class AutoCloseableCompilationUnit extends Wrapper<ICompilationUnit> implements AutoCloseable {
+    /** instantiates this class */
+    public AutoCloseableCompilationUnit(ICompilationUnit u) {
+      super(u);
+    }
+    @Override public void close() throws JavaModelException {
+      final ICompilationUnit u = get();
+      try {
+        u.close();
+        u.delete(true, null);
+      } catch (final JavaModelException | NullPointerException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
+  AutoCloseableCompilationUnit openCompilationUnit(final File f) throws IOException, JavaModelException {
     final String source = FileUtils.read(f);
     setPackage(getPackageNameFromSource(source));
-    return pack.createCompilationUnit(f.getName(), source, false, null);
-  }
-  void discardCompilationUnit(final ICompilationUnit u) {
-    try {
-      u.close();
-      u.delete(true, null);
-    } catch (final JavaModelException e) {
-      e.printStackTrace();
-    } catch (final NullPointerException e) {
-      // Ignore
-    }
+    return new AutoCloseableCompilationUnit(pack.createCompilationUnit(f.getName(), source, false, null));
   }
   String getPackageNameFromSource(final String source) {
     final ASTParser p = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
