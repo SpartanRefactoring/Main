@@ -102,7 +102,7 @@ import org.hamcrest.number.*;
   public static void assertTrue(final String s, final boolean b) {
     that(s, Boolean.valueOf(b), is(Boolean.TRUE));
   }
-  public static <LHS> CombinableMatcher.CombinableBothMatcher<LHS> both(final Matcher<? super LHS> matcher) {
+  public static <LHS> CombinableMatcher.@Nullable CombinableBothMatcher<LHS> both(final Matcher<? super LHS> matcher) {
     return CombinableMatcher.<LHS> both(matcher);
   }
   @Factory public static @Nullable Matcher<@Nullable Boolean> comparesEqualTo(final boolean b) {
@@ -135,16 +135,16 @@ import org.hamcrest.number.*;
   public static <T> @Nullable Matcher<T> describedAs(final String description, final Matcher<T> matcher, final Object... values) {
     return DescribedAs.<T> describedAs(description, matcher, values);
   }
-  public static <LHS> CombinableMatcher.CombinableEitherMatcher<LHS> either(final Matcher<? super LHS> matcher) {
+  public static <LHS> CombinableMatcher.@Nullable CombinableEitherMatcher<LHS> either(final Matcher<? super LHS> matcher) {
     return CombinableMatcher.<LHS> either(matcher);
   }
-  public static @Nullable Matcher<@Nullable String> endsWith(final String suffix) {
+  public static @Nullable Matcher<String> endsWith(final String suffix) {
     return StringEndsWith.endsWith(suffix);
   }
   public static <T> @Nullable Matcher<T> equalTo(final T operand) {
     return IsEqual.<T> equalTo(operand);
   }
-  public static <U> Matcher<java.lang.Iterable<U>> everyItem(final Matcher<U> itemMatcher) {
+  public static <U> @Nullable Matcher<java.lang.Iterable<U>> everyItem(final Matcher<U> itemMatcher) {
     return Every.<U> everyItem(itemMatcher);
   }
   @Factory public static @Nullable Matcher<@Nullable Boolean> greaterThan(final boolean b) {

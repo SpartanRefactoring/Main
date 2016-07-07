@@ -106,7 +106,7 @@ public class LCS {
    * j) must be a valid index of array a (respectively b), or else, the
    * substring of a (respectively b) are empty.
    *
-   * @param i JD JD
+   * @param i JD
    * @param j
    * @return TODO document return type
    */

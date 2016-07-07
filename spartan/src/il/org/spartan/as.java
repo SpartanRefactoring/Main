@@ -156,7 +156,7 @@ public enum as {
    * @param ts what to iterate on
    * @return an {@link Iterable} over the parameter
    */
-  @SafeVarargs public static <T> PureIterable.Sized<T> nonNullIterable(final T... ts) {
+  @SafeVarargs public static <T> PureIterable.Sized<T> nonNullIterable(final @Nullable T... ts) {
     return new PureIterable.Sized<T>() {
       @Override public PureIterator<T> iterator() {
         return new PureIterator<T>() {

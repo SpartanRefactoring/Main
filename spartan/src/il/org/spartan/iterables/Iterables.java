@@ -35,7 +35,7 @@ public enum Iterables {
   }
   /**
    * @param <T> JD
-   * @return TODO document return type
+   * @return <code><b>true</b></code> <i>iff</i> the receive is empty
    */
   public static <T> PureIterable.Sized<T> empty() {
     return as.nonNullIterable();

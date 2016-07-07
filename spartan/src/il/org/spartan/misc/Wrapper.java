@@ -28,7 +28,7 @@ public class Wrapper<T> {
   /**
    * @return the value wrapped in this object.
    */
-  public T get() {
+  public @Nullable T get() {
     return t;
   }
   /**
