@@ -81,7 +81,8 @@ public abstract class Spartanization extends Refactoring {
     try {
       return n.getStartPosition() < ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue()
           || n.getLength() + n.getStartPosition() > ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
-    } catch (@SuppressWarnings("unused") final CoreException e) {
+    } catch (final CoreException e) {
+      e.printStackTrace();
       return true;
     }
   }
