@@ -234,7 +234,7 @@ public interface idiomatic {
     @Override public void run() {
       run.run();
     }
-    void unless(final boolean unless) {
+    public void unless(final boolean unless) {
       when(!unless);
     }
     void when(final boolean when) {
