@@ -58,7 +58,6 @@ public class Deducer {
     long version() {
       return version;
     }
-
     abstract boolean updated();
 
     /** other instances that depend on this instance */
@@ -105,10 +104,19 @@ public class Deducer {
       return this;
     }
     @Override public T get() {
-      if (updated())
+      if (updated() || manuallySet())
         return value;
+      for (final Cell<?> c : prerequisites)
+        c.get();
+      value = eval();
       version = latestPrequisiteVersion() + 1;
-      return value = supplier.get();
+      return value;
+    }
+    private @Nullable T eval() {
+      assert supplier != null;
+      azzert.notNull(supplier);
+      assert supplier != null;
+      return supplier.get();
     }
     @Override public void set(final T value) {
       super.set(value);
@@ -129,16 +137,26 @@ public class Deducer {
       return $;
     }
     @Override boolean updated() {
-      // if (supplier == null)
-      // return true;
+      if (manuallySet())
+        return true;
       for (final Cell<?> c : prerequisites)
         if (!c.updated() || version() < c.version())
           return false;
       return true;
     }
+    /**
+     * TODO Javadoc(2016): automatically generated for method
+     * <code>manuallySet</code>
+     *
+     * @return boolean TODO Javadoc(2016) automatically generated for returned
+     *         value of method <code>manuallySet</code>
+     */
+    private boolean manuallySet() {
+      return supplier == null;
+    }
 
     private final List<Cell<?>> prerequisites = new ArrayList<>();
-    private Supplier<T> supplier;
+    private @Nullable Supplier<T> supplier;
   }
 
   /**
@@ -153,7 +171,6 @@ public class Deducer {
     public Valued() {
       super(null);
     }
-
     /**
      * Instantiates this class.
      *
