@@ -264,93 +264,93 @@ public interface Deducer {
     final Cell<@Nullable Integer> d = new Computed<@Nullable Integer>(() -> a() + b.get() + c.get()).dependsOn(a, b, c);
     @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "javadoc" }) //
     public static class TEST extends Example {
-      @Test public void layerA05() {
+      @Test public void seriesA05() {
         a.set(2);
         azzert.notNull(a());
       }
-      @Test public void layerA06() {
+      @Test public void seriesA06() {
         a.set(2);
         azzert.notNull(aPower02());
         azzert.that(aPower02(), is(4));
       }
-      @Test public void layerA07() {
+      @Test public void seriesA07() {
         a.set(2);
         azzert.notNull(aPower03());
         azzert.that(aPower03(), is(8));
       }
-      @Test public void layerA08() {
+      @Test public void seriesA08() {
         a.set(2);
         azzert.notNull(aPower02());
       }
-      @Test public void layerA09() {
+      @Test public void seriesA09() {
         a.set(null);
         azzert.isNull(a());
       }
-      @Test public void layerA1() {
+      @Test public void seriesA1() {
         azzert.isNull(a());
       }
-      @Test(expected = NullPointerException.class) public void layerA10() {
+      @Test(expected = NullPointerException.class) public void seriesA10() {
         a.set(null);
         aPower02();
       }
-      @Test(expected = NullPointerException.class) public void layerA11() {
+      @Test(expected = NullPointerException.class) public void seriesA11() {
         a.set(null);
         aPower03();
       }
-      @Test(expected = NullPointerException.class) public void layerA12() {
+      @Test(expected = NullPointerException.class) public void seriesA12() {
         a.set(null);
         aPower02();
       }
-      @Test public void layerA13() {
+      @Test public void seriesA13() {
         a.set(null);
         azzert.isNull(aPower17NullSafe());
         a.set(2);
         azzert.notNull(aPower17NullSafe());
         azzert.that(a(), is(2));
       }
-      @Test public void layerA14() {
+      @Test public void seriesA14() {
         a.set(2);
         azzert.notNull(aPower17NullSafe());
         azzert.that(a(), is(2));
         azzert.that(aPower17NullSafe(), is(1 << 17));
       }
-      @Test public void layerA15() {
+      @Test public void seriesA15() {
         a.set(null);
         azzert.isNull(aPower17NullSafe());
       }
-      @Test public void layerA16() {
+      @Test public void seriesA16() {
         a.set(null);
         azzert.isNull(aPower17NullSafe.get());
       }
-      @Test public void layerA17() {
+      @Test public void seriesA17() {
         a.set(null);
         final Computed<?> x = (Computed<?>) aPower17NullSafe;
         azzert.isNull(x.get());
       }
-      @Test public void layerA18() {
+      @Test public void seriesA18() {
         a.set(null);
         final Computed<?> x = (Computed<?>) aPower17NullSafe;
       }
-      @Test public void layerA19() {
+      @Test public void seriesA19() {
         a.set(null);
         aPower17NullSafe.get();
       }
-      @Test(expected = NullPointerException.class) public void layerA2() {
+      @Test(expected = NullPointerException.class) public void seriesA2() {
         aPower02().getClass();
       }
-      @Test public void layerA20() {
+      @Test public void seriesA20() {
         aPower17NullSafe.get();
       }
-      @Test(expected = NullPointerException.class) public void layerA3() {
+      @Test(expected = NullPointerException.class) public void seriesA3() {
         aPower03().getClass();
       }
-      @Test(expected = NullPointerException.class) public void layerA4() {
+      @Test(expected = NullPointerException.class) public void seriesA4() {
         aPower05().getClass();
       }
-      @Test(expected = NullPointerException.class) public void layerA5() {
+      @Test(expected = NullPointerException.class) public void seriesA5() {
         a().toString().getClass();
       }
-      @Test public void layerB01() {
+      @Test public void seriesB01() {
         a.set(2);
         azzert.notNull(a());
         azzert.that(a(), is(2));
@@ -363,7 +363,7 @@ public interface Deducer {
         a.set(5);
         azzert.that(a(), is(5));
       }
-      @Test public void layerB02() {
+      @Test public void seriesB02() {
         a.set(2);
         azzert.notNull(aPower02());
         azzert.that(aPower02(), is(4));
@@ -371,7 +371,7 @@ public interface Deducer {
         azzert.notNull(aPower02());
         azzert.that(aPower02(), is(9));
       }
-      @Test public void layerB03() {
+      @Test public void seriesB03() {
         a.set(2);
         azzert.notNull(aPower03());
         azzert.that(aPower03(), is(8));
@@ -379,30 +379,30 @@ public interface Deducer {
         azzert.notNull(aPower03());
         azzert.that(aPower03(), is(27));
       }
-      @Test public void layerB04() {
+      @Test public void seriesB04() {
         a.set(2);
         azzert.notNull(aPower02());
       }
-      @Test public void layerC00() {
+      @Test public void seriesC00() {
         a.set(-3);
         azzert.that(_aPower03Calls, is(0));
         azzert.that(_aPower02Calls, is(0));
       }
-      @Test public void layerC01() {
+      @Test public void seriesC01() {
         a.set(-3);
         azzert.that(aPower03(), is(-27));
         azzert.that(_aPower03Calls, is(1)); // Force invocation
         azzert.that(_aPower02Calls, is(1));
       }
-      @Test public void layerC02() {
+      @Test public void seriesC02() {
         azzert.that(a.version(), is(0L));
         azzert.that(aPower17NullSafe.version(), is(0L));
       }
-      @Test public void layerC03() {
+      @Test public void seriesC03() {
         azzert.that(aPower02.version(), is(0L));
         azzert.that(aPower03.version(), is(0L));
       }
-      @Test public void layerC04() {
+      @Test public void seriesC04() {
         a.set(-2);
         azzert.that(a.version(), is(1L));
         azzert.that(aPower03.version(), is(0L));
@@ -411,19 +411,19 @@ public interface Deducer {
         azzert.that(_aPower02Calls, is(1));
         azzert.that(_aPower03Calls, is(1));
       }
-      @Test public void layerC05() {
+      @Test public void seriesC05() {
         a.set(-2);
         azzert.that(aPower17NullSafe(), is(-(1 << 17))); // Force invocation
         azzert.that(_aPower02Calls, is(1));
         azzert.that(_aPower03Calls, is(1));
       }
-      @Test public void layerD01() {
+      @Test public void seriesD01() {
         azzert.that(a.version, is(0L));
         azzert.that(aPower02.version, is(0L));
         azzert.that(aPower03.version, is(0L));
         azzert.that(aPower17NullSafe.version, is(0L));
       }
-      @Test public void layerD02() {
+      @Test public void seriesD02() {
         azzert.that(a.version, is(0L));
         a.set(1);
         azzert.that(a.version, is(1L));
@@ -431,7 +431,7 @@ public interface Deducer {
         azzert.that(aPower03.version, is(0L));
         azzert.that(aPower17NullSafe.version, is(0L));
       }
-      @Test public void layerD03() {
+      @Test public void seriesD03() {
         a.set(14);
         azzert.that(aPower02.version, is(0L));
         azzert.that(aPower02.get(), is(196)); // Force evaluation
@@ -439,17 +439,17 @@ public interface Deducer {
         azzert.that(aPower02.version, is(2L));
         azzert.that(aPower17NullSafe.version, is(0L));
       }
-      @Test public void layerD04() {
+      @Test public void seriesD04() {
         a.set(14);
         azzert.notNull(a.get());
       }
-      @Test public void layerD05() {
+      @Test public void seriesD05() {
         a.set(14);
         azzert.notNull(a.get());
         azzert.that(a.get(), is(14));
         azzert.that(aPower02.get(), is(196)); // Sanity check
       }
-      @Test public void layerD06() {
+      @Test public void seriesD06() {
         a.set(14);
         azzert.notNull(a.get());
         a.get(); // Force evaluation
@@ -457,27 +457,27 @@ public interface Deducer {
         a.get(); // Force evaluation
         azzert.that(aPower02.version(), is(0L));
       }
-      @Test public void layerD07() {
+      @Test public void seriesD07() {
         a.set(14);
         azzert.notNull(a.get());
         a.get(); // Force evaluation
         azzert.not(aPower02.updated());
       }
-      @Test public void layerD08() {
+      @Test public void seriesD08() {
         a.set(14);
         azzert.that(a.get(), is(14)); // Force evaluation
         azzert.that(a.version(), is(1L));
         azzert.that(aPower02.version, is(0L));
         azzert.that(((Computed<Integer>) aPower02).latestPrequisiteVersion(), is(1L));
       }
-      @Test public void layerD09() {
+      @Test public void seriesD09() {
         a.set(14);
         azzert.that(a.get(), is(14)); // Force evaluation
         azzert.that(a.version(), is(1L));
         azzert.that(aPower02.version, is(0L));
         azzert.notNull(a.dependents);
       }
-      @Test public void layerD10() {
+      @Test public void seriesD10() {
         a.set(14);
         azzert.that(a.get(), is(14)); // Force evaluation
         azzert.that(a.version(), is(1L));
@@ -486,24 +486,24 @@ public interface Deducer {
         azzert.assertTrue("", a.dependents.contains(aPower02));
         azzert.falze(a.dependents.contains(null));
       }
-      @Test public void layerD11() {
+      @Test public void seriesD11() {
         a.set(14);
         azzert.that(a.get(), is(14)); // Force evaluation
         azzert.that(a.version(), is(1L));
       }
-      @Test public void layerD12() {
+      @Test public void seriesD12() {
         assertTrue(a.dependents.contains(aPower02));
       }
-      @Test public void layerD13() {
+      @Test public void seriesD13() {
         assertTrue(a.dependents.contains(aPower03));
       }
-      @Test public void layerD14() {
+      @Test public void seriesD14() {
         assertFalse(a.dependents.contains(aPower05));
       }
-      @Test public void layerD15() {
+      @Test public void seriesD15() {
         assertTrue(a.dependents.contains(aPower17NullSafe));
       }
-      @Test public void layerD16() {
+      @Test public void seriesD16() {
         a.set(2);
         azzert.that(aPower17NullSafe(), is(1 << 17));
         azzert.that(aPower17NullSafe(), is(1 << 17));
@@ -514,7 +514,7 @@ public interface Deducer {
         azzert.that(aPower17NullSafe(), is(1 << 17));
         azzert.that(_aPower03Calls, is(1));
       }
-      @Test public void layerD17() {
+      @Test public void seriesD17() {
         a.set(2);
         azzert.that(aPower17NullSafe(), is(1 << 17));
         azzert.that(aPower17NullSafe(), is(1 << 17));
@@ -526,7 +526,7 @@ public interface Deducer {
         azzert.that(_aPower02Calls, is(2));
         azzert.that(_aPower03Calls, is(2));
       }
-      @Test public void layerE01() {
+      @Test public void seriesE01() {
         azzert.that(a.version(), is(0L));
         azzert.that(aPower02.version(), is(0L));
         azzert.that(aPower03.version(), is(0L));
@@ -633,26 +633,26 @@ public interface Deducer {
         azzert.that(aPower05.version(), is(8L));
         azzert.that(aPower17NullSafe.version(), is(8L));
       }
-      @Test public void layerE02() {
+      @Test public void seriesE02() {
         azzert.that(a.version(), is(0L));
         azzert.that(aPower02.version(), is(0L));
         azzert.that(aPower03.version(), is(0L));
         azzert.that(aPower05.version(), is(0L));
         azzert.that(aPower17NullSafe.version(), is(0L));
       }
-      @Test public void layerE03() {
+      @Test public void seriesE03() {
         a.set(2);
         b.set(3);
         c.set(4);
         azzert.that(d.get(), is(9));
       }
-      @Test public void layerE04() {
+      @Test public void seriesE04() {
         a.set(2);
         aPower02.set(3);
         aPower03.set(5);
         azzert.that(aPower05.get(), is(15));
       }
-      @Test public void layerE05() {
+      @Test public void seriesE05() {
         a.set(2);
         azzert.that(aPower05.get(), is(1 << 5));
         azzert.that(aPower17NullSafe.version(), is(0L));
@@ -660,11 +660,11 @@ public interface Deducer {
         azzert.that(aPower03.version(), is(3L));
         azzert.that(aPower05.version(), is(4L));
       }
-      @Test public void layerE06() {
+      @Test public void seriesE06() {
         a.set(2);
         assertFalse("aPower5 should not be updated! (recursive dependency on a)", aPower05.updated());
       }
-      @Test public void layerF01() {
+      @Test public void seriesF01() {
         a.set(11);
         assertFalse(aPower02.updated());
         azzert.that(aPower02.get(), is(121));
@@ -676,18 +676,22 @@ public interface Deducer {
         assertTrue(aPower02.updated());
         azzert.that(aPower02.get(), is(0xDADA));
       }
-      @Test public void layerF02() {
+      @Test public void seriesF02() {
         a.set(null);
         azzert.notNull(aPower17NullSafe());
         azzert.that(aPower05.version(),is(0L));
       }
-      @Test public void layerF03() {
+      @Test public void seriesF03() {
         a.set(2);
         azzert.that(aPower05.get(), is(1 << 5));
         azzert.that(aPower17NullSafe.version(), is(0L));
         azzert.that(aPower02.version(), is(2L));
         azzert.that(aPower03.version(), is(3L));
         azzert.that(aPower05.version(), is(4L));
+      }
+      @Test public void seriesF04() {
+        a.set(null);
+        azzert.notNull(aPower17NullSafe());
       }
     }
 
