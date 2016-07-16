@@ -156,16 +156,15 @@ public enum as {
    * @param ts what to iterate on
    * @return an {@link Iterable} over the parameter
    */
-  @SafeVarargs public static <T> PureIterable.Sized<T> nonNullIterable(final @Nullable T... ts) {
+  @SafeVarargs public static <T> PureIterable.Sized<T> nonNullIterable(final T... ts) {
     return new PureIterable.Sized<T>() {
       @Override public PureIterator<T> iterator() {
         return new PureIterator<T>() {
           @Override public boolean hasNext() {
             return current < ts.length;
           }
-          @Override public @NonNull T next() {
-            @SuppressWarnings("null") final @NonNull T $ = ts[current++];
-            return $;
+          @Override public T next() {
+            return ts[current++];
           }
 
           int current = 0;
