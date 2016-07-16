@@ -20,7 +20,7 @@ import org.junit.runners.*;
  * @author Yossi Gil <Yossi.Gil@GMail.COM>
  * @since 2016
  */
-public class Deducer {
+public interface Deducer {
   /**
    * A cell stores a value of some type (which is passed by parameter). A cell
    * may be either {@link Valued} or {@link Computed}. A computed cell typically
@@ -68,7 +68,6 @@ public class Deducer {
     T value;
     long version = 0;
   }
-
   /**
    * A value which may depend on others and others may depend on
    *
@@ -82,7 +81,7 @@ public class Deducer {
      *
      * @param supplier JD
      */
-    public Computed(final Supplier<T> supplier) {
+    public Computed(final Supplier<? extends T> supplier) {
       super(null);
       this.supplier = supplier;
     }
@@ -159,10 +158,8 @@ public class Deducer {
     }
 
     private final List<Cell<?>> prerequisites = new ArrayList<>();
-    private @Nullable Supplier<T> supplier;
+    private @Nullable Supplier<? extends @Nullable T> supplier;
   }
-
-  /** a^5 := a^2 * a^3 */
 
   /**
    * An example deducer, in which all cells are of type <code>@NonNull</code
@@ -171,21 +168,21 @@ public class Deducer {
    * <li>{@link #a()}
    * <li>{@link #b()}
    * <li>{@link #c()}
-   * <li>{@link #d()}
    * </ol>
-   * From these, the following cells are computed. cell.`
+   * <p>
+   * The {@link Computed} cells in the example are :
    * <ol>
-   * <li>{@link Example#a()}
-   * <li>{@link Example#aP()}
-   * <li>{@link Example#c()}
-   * <li>{@link Example#d()}
+   * <li>{@link #aPower02()}, `
+   * <li>{@link #aPower03()}, `
+   * <li>{@link #aPower05()},`and
+   * <li>{@link #aPower17NullSafe()}.`
    * </ol>
-   * *
    *
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016
    */
-  @SuppressWarnings({ "boxing", "null", "unused" }) public static class Example extends Deducer {
+  @SuppressWarnings({ "boxing", "null", "unused" }) //
+  public static class Example implements Deducer {
     /** @return contents of cell a */
     public final @Nullable Integer a() {
       return a.get();
@@ -194,6 +191,19 @@ public class Deducer {
     public final @Nullable Integer aPower02() {
       return aPower02.get();
     }
+    /** @return contents of valued cell <code>b</code> */
+    public final @Nullable Integer b() {
+      return b.get();
+    }
+    /** @return contents of valued cell <code>c</code> */
+    public final @Nullable Integer c() {
+      return c.get();
+    }
+    /** @return contents of cell d := a + b + c */
+    public final @Nullable Integer d() {
+      return d.get();
+    }
+
     /** @return contents of cell a^3 := a^2 * a */
     public final @Nullable Integer aPower03() {
       return aPower03.get();
@@ -206,11 +216,11 @@ public class Deducer {
     public final @Nullable Integer aPower17NullSafe() {
       return aPower17NullSafe.get();
     }
-
     /** Must not be private; used for testing of proper lazy evaluation */
     int _aPower02Calls;
     /** Must not be private; used for testing of proper lazy evaluation */
     int _aPower03Calls;
+    /** a^5 := a^2 * a^3 */
     /** Can, and often should be made private; package is OK */
     final Cell<@Nullable Integer> a = new Valued<@Nullable Integer>();
     /** Can, and often should be made private; package is OK */
@@ -223,10 +233,11 @@ public class Deducer {
       ++_aPower03Calls;
       return a() * aPower02();
     }).dependsOn(aPower02, a);
-    /** Can, and often should be made private; package is OK */
+    /** the actual cell behind {@link #aPower05()} */
     final Cell<@Nullable Integer> aPower05 = new Computed<@Nullable Integer>(//
         () -> aPower02() * aPower03()).dependsOn(aPower02, aPower03);
     /** Can, and often should be made private; package is OK */
+    /** the actual cell behind {@link #b()} */
     final Cell<@Nullable Integer> aPower17NullSafe = new Computed<@Nullable Integer>(//
         () -> {
           int i = 1;
@@ -245,11 +256,14 @@ public class Deducer {
           System.err.println(++i);
           return v * v2 * v3;
         }).dependsOn(a, aPower02, aPower03);
+    /** the actual cell behind {@link #b()} */
     final Cell<@Nullable Integer> b = new Valued<@Nullable Integer>(3);
+    /** the actual cell behind {@link #c()} */
     final Cell<@Nullable Integer> c = new Valued<@Nullable Integer>(5);
+    /** the actual cell behind {@link #d()} */
     final Cell<@Nullable Integer> d = new Computed<@Nullable Integer>(() -> a() + b.get() + c.get()).dependsOn(a, b, c);
-
-    @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "javadoc" }) public static class TEST extends Example {
+    @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "javadoc" }) //
+    public static class TEST extends Example {
       @Test public void layerA05() {
         a.set(2);
         azzert.notNull(a());
@@ -316,7 +330,6 @@ public class Deducer {
       @Test public void layerA18() {
         a.set(null);
         final Computed<?> x = (Computed<?>) aPower17NullSafe;
-        f(x);
       }
       @Test public void layerA19() {
         a.set(null);
@@ -665,9 +678,10 @@ public class Deducer {
       }
       @Test public void layerF02() {
         a.set(null);
-        azzert.isNull(aPower17NullSafe());
+        azzert.notNull(aPower17NullSafe());
+        azzert.that(aPower05.version(),is(0L));
       }
-      @Override @Test public void layerF02() {
+      @Test public void layerF03() {
         a.set(2);
         azzert.that(aPower05.get(), is(1 << 5));
         azzert.that(aPower17NullSafe.version(), is(0L));
@@ -675,10 +689,8 @@ public class Deducer {
         azzert.that(aPower03.version(), is(3L));
         azzert.that(aPower05.version(), is(4L));
       }
-      private void f(final Computed<?> x) {
-        x.get();
-      }
     }
+
   }
 
   /**
