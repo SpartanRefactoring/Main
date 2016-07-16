@@ -5,7 +5,6 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.idiomatic.*;
 import static java.lang.Math.*;
 import il.org.spartan.*;
-import il.org.spartan.lazy.LazySymbolicSpreadsheet.Cell._Examples.Valued;
 
 import java.util.*;
 import java.util.function.*;
@@ -102,13 +101,13 @@ public interface LazySymbolicSpreadsheet {
     long version() {
       return version;
     }
-
     /** The last value computed for this cell */
     private @Nullable T cache;
     /** other cells that depend on this cell */
     final List<Cell<?>> dependents = new ArrayList<>();
     long version = 0;
 
+  }
 
     /**
      * A cell that may depend on others.
@@ -189,6 +188,7 @@ public interface LazySymbolicSpreadsheet {
       private @Nullable Supplier<? extends @Nullable T> supplier;
 
       T value;
+    }
 
       /**
        * cell which does not depend on others
@@ -216,81 +216,112 @@ public interface LazySymbolicSpreadsheet {
         @Override protected boolean updated() {
           return true;
         }
+      }
+
+      /**
+       * A cell that may depend on others.
+       *
+       * @param <T> JD
+       * @author Yossi Gil <Yossi.Gil@GMail.COM>
+       * @since 2016
+       */
+      public static class ComputedNonNull<T> extends Cell<T> {
         /**
-         * A cell that may depend on others.
+         * Instantiates this class.
          *
-         * @param <T> JD
-         * @author Yossi Gil <Yossi.Gil@GMail.COM>
-         * @since 2016
+         * @param supplier JD
          */
-        public static class ComputedNonNull<T> extends Cell<T> {
-          /**
-           * Instantiates this class.
-           *
-           * @param supplier JD
-           */
-          public ComputedNonNull(final Supplier<? extends @NonNull T> supplier) {
-            cache((this.supplier = supplier).get());
+        public ComputedNonNull(final Supplier<? extends @NonNull T> supplier) {
+          cache((this.supplier = supplier).get());
+        }
+        @SuppressWarnings({ "unchecked" }) @Override public Cell<T> clone() throws CloneNotSupportedException {
+          return (Cell<T>) super.clone();
+        }
+        /**
+         * Add another cell on which this instance depends
+         *
+         * @param cs JD
+         * @return <code><b>this</b></code>
+         */
+        public Cell<T> dependsOn(final Cell<?>... cs) {
+          for (final Cell<?> c : cs) {
+            $(() -> {
+              c.dependents.add(this);
+            }).unless(c.dependents.contains(this));
+            $(() -> {
+              prerequisites.add(c);
+            }).unless(prerequisites.contains(this));
           }
-          @SuppressWarnings({ "unchecked" }) @Override public Cell<T> clone() throws CloneNotSupportedException {
-            return (Cell<T>) super.clone();
-          }
-          /**
-           * Add another cell on which this instance depends
-           *
-           * @param cs JD
-           * @return <code><b>this</b></code>
-           */
-          public Cell<T> dependsOn(final Cell<?>... cs) {
-            for (final Cell<?> c : cs) {
-              $(() -> {
-                c.dependents.add(this);
-              }).unless(c.dependents.contains(this));
-              $(() -> {
-                prerequisites.add(c);
-              }).unless(prerequisites.contains(this));
-            }
-            return this;
-          }
-
-          @Override public T get() {
-            if (updated() || manuallySet())
-              return cache();
-            for (final Cell<?> c : prerequisites)
-              c.get();
-            cache(eval());
-            version = latestPrequisiteVersion() + 1;
+          return this;
+        }
+      
+        @Override public T get() {
+          if (updated() || manuallySet())
             return cache();
-          }
-
-          private @Nullable T eval() {
-            assert supplier != null;
-            return supplier.get();
-          }
-          private boolean manuallySet() {
-            return supplier == null;
-          }
-          long latestPrequisiteVersion() {
-            long $ = 0;
-            for (final Cell<?> c : prerequisites)
-              if ($ < c.version())
-                $ = c.version();
-            return $;
-          }
-          @Override void setHook() {
-            supplier = null;
-          }
-          @Override boolean updated() {
-            if (supplier == null)
-              return true;
-            for (final Cell<?> c : prerequisites)
-              if (!c.updated() || version() < c.version())
-                return false;
+          for (final Cell<?> c : prerequisites)
+            c.get();
+          cache(eval());
+          version = latestPrequisiteVersion() + 1;
+          return cache();
+        }
+      
+        private @Nullable T eval() {
+          assert supplier != null;
+          return supplier.get();
+        }
+        private boolean manuallySet() {
+          return supplier == null;
+        }
+        long latestPrequisiteVersion() {
+          long $ = 0;
+          for (final Cell<?> c : prerequisites)
+            if ($ < c.version())
+              $ = c.version();
+          return $;
+        }
+        @Override void setHook() {
+          supplier = null;
+        }
+        @Override boolean updated() {
+          if (supplier == null)
             return true;
-          }
+          for (final Cell<?> c : prerequisites)
+            if (!c.updated() || version() < c.version())
+              return false;
+          return true;
+        }
+      
+        private final List<Cell<?>> prerequisites = new ArrayList<>();
+        private @Nullable Supplier<? extends @Nullable T> supplier;
+      }
 
-          private final List<Cell<?>> prerequisites = new ArrayList<>();
-          private @Nullable Supplier<? extends @Nullable T> supplier;
+      /**
+       * cell which does not depend on others
+       *
+       * @param <T> JD
+       * @author Yossi Gil <Yossi.Gil@GMail.COM>
+       * @since 2016
+       */
+      public class Valued<@Nullable T> extends Cell<T> {
+        /** Instantiates this class.* */
+        public Valued() {
+          // Make sure we have a public constructor
+        }
+        /**
+         * instantiates this class
+         *
+         * @param value JD
+         */
+        public Valued(final T value) {
+          cache(value);
+        }
+        /**
+         * instantiates this class
+         *
+         * @param value JD
+         */
+        @Override protected boolean updated() {
+          return true;
         }
       }
     }
@@ -342,7 +373,7 @@ public interface LazySymbolicSpreadsheet {
         int _aPower03Calls;
         /** a^5 := a^2 * a^3 */
         /** Can, and often should be made private; package is OK */
-        final Cell<@Nullable Integer> a = new Valued<@Nullable Integer>();
+        final Cell<@Nullable Integer> a = new LazySymbolicSpreadsheet.Valued<@Nullable Integer>();
         /** Can, and often should be made private; package is OK */
         final Cell<@Nullable Integer> aPower02 = new Computed<@Nullable Integer>(() -> {
           ++_aPower02Calls;
@@ -377,9 +408,9 @@ public interface LazySymbolicSpreadsheet {
               return v * v2 * v3;
             }).dependsOn(a, aPower02, aPower03);
         /** the actual cell behind {@link #b()} */
-        final Cell<@Nullable Integer> b = new Valued<@Nullable Integer>(3);
+        final Cell<@Nullable Integer> b = new LazySymbolicSpreadsheet.Valued<@Nullable Integer>(3);
         /** the actual cell behind {@link #c()} */
-        final Cell<@Nullable Integer> c = new Valued<@Nullable Integer>(5);
+        final Cell<@Nullable Integer> c = new LazySymbolicSpreadsheet.Valued<@Nullable Integer>(5);
         /** the actual cell behind {@link #d()} */
         final Cell<@Nullable Integer> d = new Computed<@Nullable Integer>(() -> a() + b.get() + c.get()).dependsOn(a, b, c);
 
@@ -819,35 +850,4 @@ public interface LazySymbolicSpreadsheet {
           }
         }
       }
-      /**
-       * cell which does not depend on others
-       *
-       * @param <T> JD
-       * @author Yossi Gil <Yossi.Gil@GMail.COM>
-       * @since 2016
-       */
-      public class Valued<@Nullable T> extends Cell<T> {
-        /** Instantiates this class.* */
-        public Valued() {
-          // Make sure we have a public constructor
-        }
-        /**
-         * instantiates this class
-         *
-         * @param value JD
-         */
-        public Valued(final T value) {
-          cache(value);
-        }
-        /**
-         * instantiates this class
-         *
-         * @param value JD
-         */
-        @Override protected boolean updated() {
-          return true;
-        }
-      }
-    }
   }
-}
