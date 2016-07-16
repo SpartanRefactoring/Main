@@ -1,0 +1,338 @@
+#!/usr/bin/gawk -f
+BEGIN {
+    LINE_LEN = 72; 
+    lower["a"] = 0; 
+    lower["b"] = 0; 
+    lower["c"] = 0; 
+    lower["d"] = 0; 
+    lower["e"] = 0; 
+    lower["f"] = 0; 
+    lower["g"] = 0; 
+    lower["h"] = 0; 
+    lower["i"] = 0; 
+    lower["j"] = 0; 
+    lower["k"] = 0; 
+    lower["l"] = 0; 
+    lower["m"] = 0; 
+    lower["n"] = 0; 
+    lower["o"] = 0; 
+    lower["p"] = 0; 
+    lower["q"] = 0; 
+    lower["r"] = 0; 
+    lower["s"] = 0; 
+    lower["t"] = 0; 
+    lower["u"] = 0; 
+    lower["v"] = 0; 
+    lower["w"] = 0; 
+    lower["x"] = 0; 
+    lower["y"] = 0; 
+    lower["z"] = 0; 
+
+    articles["a"] = 0;
+    articles["an"] = 0;
+    articles["the"] = 0;
+    articles["this"] = 0;
+    articles["his"] = 0;
+    articles["her"] = 0;
+    articles["its"] = 0;
+    articles["your"] = 0;
+
+    tobe["is"] = 0;
+    tobe["are"] = 0;
+    tobe["was"] = 0;
+    tobe["were"] = 0;
+    tobe["will"] = 0;
+    tobe["shall"] = 0;
+
+    vowel["a"] = 0;
+    vowel["e"] = 0;
+    vowel["o"] = 0;
+    vowel["i"] = 0;
+    vowel["u"] = 0;
+
+    pseudov["f"] = 0;
+    pseudov["h"] = 0;
+    pseudov["l"] = 0;
+    pseudov["m"] = 0;
+    pseudov["o"] = 0;
+    pseudov["r"] = 0;
+    pseudov["x"] = 0;
+
+    egie["e.g."] = 0;
+    egie["i.e."] = 0;
+
+    acronym["vs."] = 0;
+    acronym["resp."] = 0;
+    acronym["wlog."] = 0;
+    acronym["w.l.o.g."] = 0;
+
+    prop["at"] = 0;
+    prop["to"] = 0;
+    prop["on"] = 0;
+    prop["of"] = 0;
+    prop["with"] = 0;
+    prop["in"] = 0;
+    prop["into"] = 0;
+    prop["onto"] = 0;
+    prop["from"] = 0;
+    prop["for"] = 0;
+
+
+#   prop["as"] = 0;
+}
+
+function is_common_word(s, temp) {
+    temp = tolower(s);
+    if (temp in prop)
+        return 1;
+    if (temp in arconym)
+        return 1;
+    if (temp in tobe)
+        return 1;
+    if (temp in articles)
+        return 1;
+    return 0;
+} 
+
+function islower(s) {
+    return (s in lower);
+}
+
+function isletter(s) {
+    return (tolower(s) in lower)
+}
+
+function isword(s) {
+    return (s ~ /^[a-zA-Z]+$/ );
+}
+
+function bad(s1, s2) {
+    if (toupper(s1) == toupper(s2) && s1 !~ /^[0-9.,]*$/ ) {
+        if (s1 !~ /^[^a-zA-Z]$/ && s1 !~ /^\\/) {
+            error = sprintf("Duplicate word (\"%s\")",s2);
+            return 1;
+        }
+    }
+    if ( (tolower(s1) in articles) && (tolower(s2) in articles)) {
+        error = sprintf("Double articles (\"%s\" and \"%s\")",s1, s2); 
+        return 1;
+    }
+
+    if (s2 ~ /[0-9]%/) {
+        error = sprintf("Apparently unquoted comment `%s'", s2) 
+        return 1;
+    }
+
+
+    firstletter = tolower(first(s2));
+
+    if (firstletter == "\"") {
+        error = sprintf("Bad TeX begin quote in `%s'", s2) 
+        return 1;
+    } 
+    if (firstletter == "'") {
+        error = sprintf("Bad TeX begin quote in \"%s\"", s2) 
+        return 1;
+    }
+
+    if (isletter(firstletter)) { 
+        isvowel = invowels(firstletter);
+        if (toupper(s2) == s2)
+            isvowel = isvowel || firstletter in pseudov; 
+        if (firstletter == "u") 
+            isvowel = !( invowels(third(s2)) || second(s2) ~ /[bst]/) ;  
+        if (tolower(s1) == "an" && ! isvowel) {
+            error = sprintf("Wrong article \"%s %s\"",s1, s2); 
+            return 1;
+        }
+        if (tolower(s1) == "a" && isvowel) {
+            error = sprintf("Wrong article \"%s %s\"",s1, s2); 
+            return 1;
+        }
+    }
+      
+    if ( (tolower(s1) in prop) && (tolower(s2) in prop)) {
+        error = sprintf("Double propositions (\"%s\" and \"%s\")",s1, s2); 
+        return 1;
+    }
+    if ( (tolower(s1) in articles) && (tolower(s2) in prop)) {
+        error = sprintf("Proposition following an article (\"%s\" and \"%s\")",s1, s2); 
+        return 1;
+    }
+    if ( (tolower(s1) in tobe) && (tolower(s2) in tobe)) {
+        error = sprintf("Repeated \"be\"  (\"%s\" and \"%s\")",s1, s2); 
+        return 1;
+    }
+    if (tolower(s1) in egie)
+        return 0;
+
+
+    if (isword(s1) || last(s1) == "," || last(s1) == ";") {
+        if (is_common_word(s2) && s2 != tolower(s2)) {
+            error = sprintf("Wrong capitalization of \"%s\"", s2);
+            return 1;
+        } 
+    }
+    if (last(s1) == "." && last2(s1) != ".." && islower(first(s2))) {
+        error = sprintf("Capitalize \"%s\"", s2);
+        error = error sprintf(" otherwise, write \"%s\" as \"%s\\ \".", s1,s1);
+        return 1;
+    }
+
+    return 0;
+}
+function filename() {
+    res = FILENAME
+    if (res == "-")
+        res = "stdin"
+    return res;
+}
+function trim(s,n) {
+    if (n >= length(s))
+        return s;
+    s = substr(s, 1, n);
+    s = s "..."
+    return s;
+}
+function context(w,n) {
+    res = $w
+    if (w > 1) {
+        res = $(w-1) " " res; 
+    }
+    prev_word = w - 2;
+    next_word = w + 1; 
+    for (;;) {
+        if (prev_word >= 1) {
+            if (length(res) + length($prev_word) + 1 <= n) {
+                res = $prev_word " " res;
+                prev_word--;
+            } else {
+                res = "... " res;
+                prev_word = -1;
+            }
+        }
+        if (next_word <= NF) {
+            if (length(res) + length($next_word) + 1 <= n) {
+                res = res " " $next_word;
+                next_word++;
+            } else {
+                res = res " ...";
+                next_word = NF+1;
+            }
+        }
+        if (prev_word < 1 && next_word > NF)
+            return res;
+    }
+} 
+$0 == "\\CPP" || $0 == "\\BNF" {
+    for (;;) {
+        getline;
+        if ($0 ~ /^\\END/)
+            break;
+    }
+}
+NF != 0 {
+    current_line = ""
+    for (i = 1; i < NF; i++)
+        current_line = current_line $i " " 
+    current_line = current_line $NF; 
+
+    if (current_line == prev_line) {
+        error = "Duplicate line";
+        perror(0);
+        if (NF == 1) {
+            end_line();
+        }
+    }
+    if (bad(last_word_in_prev_line,$1)) {
+        perror(-1);  
+    }
+    for (i = 1; i < NF; i++) {
+        if (tolower($i) == ">from") {
+            error = "\"Mail: >From\"";
+            perror(i);
+            continue;
+        }
+        if (tolower($i) in egie) {
+            error = sprintf("Append comma to \"%s\"", $i);
+            perror(i);
+            continue;
+        }
+        if (tolower($i) in acronym) { 
+            error = sprintf("Append \"\\ \" to \"%s\"",$i);
+            perror(i);
+            continue;
+        }   
+        if ($i == "...") {
+            error = "\\ldots";
+            perror(i);
+            continue;
+        }
+        if (bad($i,$(i+1)))
+            perror(-(i+1)); 
+    }
+
+    end_line();
+}
+
+function tail(s,len) {
+    if (n >= length(s))
+        return s;
+    if (len < 0)
+        len = 0;
+    return substr(s,length(s)-int(len));
+}
+
+function perror(word) { 
+# Word: 0  - Error in full line
+#       i > 0: Error in word i, unrelated to word i-1
+#       i < 0: Error in word -i, related to previous word.
+    message = filename() "(";
+    if (word == 0 || word == -1)
+        message = message FNR-1 "," 
+    message = message FNR "): "; 
+    message = message "[" error "] " 
+    remaining = LINE_LEN - length(message);
+#print "Perror:", word, remaining, remaining
+    if (word == 0) 
+        message = message trim(current_line, remaining); 
+    else if (word == -1) {
+        message = message tail(prev_line, remaining/2);
+        message =  message "\\n " context(1,remaining/2 )
+    } else {
+        if (word < 0)
+            word = -word;   
+        message = message context(word, remaining); 
+    }
+    print message; 
+    error = "";
+}
+
+function end_line() {
+    prev_line = current_line;
+    last_word_in_prev_line = $NF;
+    next;
+}
+
+function first(s) {
+    return substr(s,1,1);
+}
+
+function second(s) {
+    return substr(s,2,1);
+}
+
+function third(s) {
+    return substr(s,3,1);
+}
+
+function last(s) {
+    return substr(s, length(s),1);
+}
+function last2(s) {
+    return substr(s, length(s)-1,2);
+}
+
+function invowels(s) {
+    return (tolower(s) in vowel);
+}

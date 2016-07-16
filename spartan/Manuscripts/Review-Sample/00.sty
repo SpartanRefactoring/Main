@@ -1,0 +1,120 @@
+\def\passOptions#1#2{\PassOptionsToPackage{#2}{#1}}
+
+%\passOptions{algorithm}{plain}
+%\passOptions{amsmath}{fleqn} 
+%\passOptions{cleveref}{capitalize,nameinlink}
+%\passOptions{geometry} {margin=1in}
+%\passOptions{hyperref}{colorlinks=true,final,allcolors=blue,breaklinks,draft=false} % hyperlinks, including DOIs and URLs in bibliography
+%\passOptions{lmodern}{lighttt}
+%\passOptions{xcolor}{usenames, dvipsnames, table} 
+
+% vim: /usepackage/,/^\s*$/-!sort -u
+\usepackage{adjustbox} % Easy size adjustment of tables and figures.
+\usepackage{amsfonts}  % AMS fonts
+\usepackage{amsmath}   % AMS Mathematics
+\usepackage{amssymb}    % Load more math symbols
+\usepackage{amsthm}     % AMS theorems
+\usepackage{array}      % Allow paragraphs in tables 
+\usepackage{booktabs}    % Typography of tables
+\usepackage{cite}        % Sort citations
+\usepackage{float}
+\usepackage{fontspec}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref,cleveref}
+\usepackage{lipsum}
+\usepackage{listings}
+\usepackage{listingsutf8}
+\usepackage{nth}
+\usepackage{pifont}
+\usepackage{syntax}
+\usepackage{tikz}
+
+\setlipsumdefault 1
+
+\adjustboxset{max width=\columnwidth}
+\adjustboxset{max height=0.8\textheight}
+\adjustboxset{center}
+
+\newadjustboxkey*{W}[1]{\setkeys{adjbox}{max width=#1\columnwidth}}
+\newadjustboxkey*{H}[1]{\setkeys{adjbox}{max height=#1\textheight}}
+
+\newtheorem{Theorem}{Theorem}
+\newtheorem{Definition}{Definition}
+
+% Numbering of figures, tables, etc.
+\numberwithin{equation}{section}
+\numberwithin{table}{section}
+\numberwithin{figure}{section}
+
+% How should entities be named in references
+% If last, use abbreviated names // vim: +,/^$/-!sort -u
+\crefname{algorithm}{Alg.\@}{algs.\@}
+\Crefname{algorithm}{Alg.\@}{Algs.\@}
+\crefname{appendix}{Appendix}{appendices}
+\Crefname{appendix}{Appendix}{Appendices}
+\crefname{chapter}{Chap.}{chaps.}
+\Crefname{chapter}{Chap.}{Chaps.}
+\crefname{conjecture}{Conj.\@}{conjs.\@}
+\Crefname{conjecture}{Conj.\@}{Conjs.\@}
+\crefname{definition}{Def.\@}{defs.\@}
+\Crefname{definition}{Def.\@}{Defs.\@}
+\crefname{equation}{eq.\@}{eqs.\@}
+\Crefname{equation}{Eq.\@}{Eqs.\@}
+\crefname{figure}{Fig.\@}{figs.\@}
+\Crefname{figure}{Fig.\@}{Figs.\@}
+\crefname{lemma}{Lemma}{lemmata}
+\Crefname{lemma}{Lemma}{Lemmata}
+\crefname{listing}{List.}{listings}
+\Crefname{listing}{List.}{Listings}
+\crefname{lstlisting}{List.}{listings}
+\Crefname{lstlisting}{List.}{Listings}
+\crefname{section}{Sect.\@}{sects.\@}
+\Crefname{section}{Sect.\@}{Sects.\@}
+\crefname{table}{Table}{tables.}
+\crefname{table}{Table}{tables}
+\Crefname{table}{Table}{Tables}
+\crefname{theorem}{Thm.\@}{thms.\@}
+\Crefname{theorem}{Thm.\@}{Thms.\@}
+
+
+
+
+
+% If last, use full names // vim: +,/^$/-!sort -u
+\crefname{algorithm}{Algorithm}{algorithms} 
+\Crefname{algorithm}{Algorithm}{Algorithms}
+\crefname{appendix}{Appendix}{appendices}
+\Crefname{appendix}{Appendix}{Appendices}
+\crefname{chapter}{Chapter}{chapters}
+\Crefname{chapter}{Chapter}{Chapters}
+\crefname{conjecture}{Conjecture}{conjectures}
+\Crefname{conjecture}{Conjecture}{Conjectures}
+\crefname{definition}{Definition}{definitions}
+\Crefname{definition}{Definition}{Definitions}
+\crefname{equation}{Equation}{equations}
+\Crefname{equation}{Equation}{Equations}
+\crefname{figure}{Figure}{figures}
+\Crefname{figure}{Figure}{Figures}
+\crefname{lemma}{Lemma}{lemmata}
+\Crefname{lemma}{Lemma}{Lemmata}
+\crefname{listing}{Listing}{listings}
+\Crefname{listing}{Listing}{Listings}
+\crefname{lstlisting}{Listing}{listings}
+\Crefname{lstlisting}{Listing}{Listings}
+\crefname{section}{Section}{sections}
+\Crefname{section}{Section}{Sections}
+\crefname{table}{Table}{tables}
+\Crefname{table}{Table}{Tables}
+\crefname{theorem}{Theorem}{theorems}
+\Crefname{theorem}{Theorem}{Theorems}
+
+
+
+\def\sectionautorefname{Sect.}
+\def\subsectionautorefname{Sect.}
+\def\tablename{Table}
+\def\figurename{Fig.}
+
+\newcommand \urlref [1] {\footnote{\url{#1}}}
+\def\nthscript#1{\textsuperscript{\textit{#1}}}

@@ -1,0 +1,19 @@
+It is an old adage that code is being read more often than written.
+Moreover, developers spend more time maintaining existing code than writing new one~\cite{Pearse:Oman:95, Alkhatib:92}.
+Even source code that doesn't change (e.g., library code) is more useful to developers than binary code\cite{Weiser:87}.
+Software metrics\footnote{While an umbrella term that can be applied to many parts of the project, from staffing size to test coverage\cite{Lorenz:Kidd:94}, we will focus on design metrics that aim to quantify complexity.} attempt to provide a quantifiable measure of the quality and complexity of the code\cite{Perlis:Sayward:Shaw:81}.
+They are used all-over when building large scale software applications, and are integrated in most IDEs, either built-in\footnote{\url{http://msdn.microsoft.com/en-us/library/bb385914.aspx}} or as a plugin\footnote{\url{http://eclipse-metrics.sourceforge.net/}}.
+
+Metrics measuring complexity have been shown to be good predictors of error-prone code \cite{Subramanyam:Krishnan:03, Khoshgoftaar:Munson:90, Olague:Etzkorn:Gholston:Quattlebaum:07}.
+However, the metrics used are antique.
+Cyclomatic complexity\cite{McCabe:76} and Halstead's complexity\cite{Halstead:77} were developed in the late 70's, and are more suited for measuring the complexity of procedural or assembly languages.
+Even more object-oriented metrics, such as the Chidamber-Kemerer Suite\cite{Chidamber:Kemerer:94} or the ones listed in Object-Oriented Software Metrics\cite{Lorenz:Kidd:94} were suggested before the great rise in popularity of object-oriented languages\footnote{\Java was released in 1995.}.
+
+We also feel that many of the traditional metrics are too simplistic.
+Many of them simply count some property of the code, such as the number of classes or the inheritance depth, and ignore the original source code.
+Complexity is a property of the source code first, as maintenance is usually performed on the source code, so more information could perhaps be gleamed by analysing it directly.
+It has also been shown that the traditional metrics are correlated to lines of code\cite{Shepperd:88, Herraiz:et:al:07}.
+
+We suggest three new complexity metrics, with different theoritical bases.
+We want to study the correlation between metrics, and find out if they truly differ from each-other, or if they effectively measure the same properties.
+Lastly, we will compare their strength in predicting bugs using several revisions of a large software application.

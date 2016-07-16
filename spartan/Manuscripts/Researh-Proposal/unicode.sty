@@ -1,0 +1,186 @@
+%\usepackage{fontspec}
+\usepackage{ifxetex,ifluatex}
+\usepackage{newunicodechar}
+\usepackage[utf8]{inputenc}
+
+\newif\ifunicode
+\ifxetex\unicodetrue\fi
+\ifluatex\unicodetrue\fi
+
+\ifunicode
+  \newcommand\DeclareUnicodeCharacter[2]{%
+    \begingroup\lccode`|=\string"#1\relax
+    \lowercase{\endgroup\newunicodechar{|}}{#2} %
+  }
+\else
+\fi
+
+%!}column  -t  |  sort  -n  |  sort  -u
+
+\DeclareUnicodeCharacter{00A4}{\textcurrency}           %         ¤
+\DeclareUnicodeCharacter{00A9}{\copyright}              %         © 
+\DeclareUnicodeCharacter{00AC}{\neg}                    %         ¬
+\DeclareUnicodeCharacter{00B1}{\pm}                     %         ±
+\DeclareUnicodeCharacter{00B2}{^2}                      %         ²
+\DeclareUnicodeCharacter{00B3}{^3}                      %         ³
+\DeclareUnicodeCharacter{00B6}{\mypar}                  %         ¶
+\DeclareUnicodeCharacter{00B7}{\cdot}                   %         ·
+\DeclareUnicodeCharacter{00B9}{^1}                      %         ¹
+\DeclareUnicodeCharacter{02B9}{'}                       %         ʹ 
+\DeclareUnicodeCharacter{0393}{\Gamma}                  %         Γ
+\DeclareUnicodeCharacter{0394}{\Delta}                  %         Δ
+\DeclareUnicodeCharacter{0398}{\Theta}                  %         Θ
+\DeclareUnicodeCharacter{039E}{\Xi}                     %         Ξ 
+\DeclareUnicodeCharacter{039E}{\Xi}                     %         Χ
+\DeclareUnicodeCharacter{03A3}{\Sigma}                  %         Σ
+\DeclareUnicodeCharacter{03A6}{\Phi}                    %         Φ
+\DeclareUnicodeCharacter{03A7}{\Xhi}                    %         Χ
+\DeclareUnicodeCharacter{03A8}{\Psi}                    %         Ψ
+\DeclareUnicodeCharacter{03A9}{\Omega}                  %         Ω
+\DeclareUnicodeCharacter{03B1}{\alpha}                  %         α
+\DeclareUnicodeCharacter{03B2}{\beta}                   %         β
+\DeclareUnicodeCharacter{03B3}{\gamma}                  %         γ
+\DeclareUnicodeCharacter{03B4}{\delta}                  %         δ
+\DeclareUnicodeCharacter{03B5}{\epsilon}                %         ε
+\DeclareUnicodeCharacter{03B6}{\zeta}                   %         ζ
+\DeclareUnicodeCharacter{03B7}{\eta}                    %         η
+\DeclareUnicodeCharacter{03B8}{\theta}                  %         θ
+\DeclareUnicodeCharacter{03B9}{\iota}                   %         ι
+\DeclareUnicodeCharacter{03BA}{\kappa}                  %         κ
+\DeclareUnicodeCharacter{03BB}{\lambda}                 %         λ
+\DeclareUnicodeCharacter{03BC}{\mu}                     %         μ
+\DeclareUnicodeCharacter{03BE}{\xi}                     %         ξ
+\DeclareUnicodeCharacter{03C0}{\pi}                     %         π
+\DeclareUnicodeCharacter{03C1}{\rho}                    %         ρ
+\DeclareUnicodeCharacter{03C3}{\sigma}                  %         σ
+\DeclareUnicodeCharacter{03C4}{\tau}                    %         σ
+\DeclareUnicodeCharacter{03C5}{\phi}                    %         φ
+\DeclareUnicodeCharacter{03C7}{\chi}                    %         χ
+\DeclareUnicodeCharacter{03D5}{\varphi}                 %         ϕ
+\DeclareUnicodeCharacter{1D4F}{^k}                      %         ᵏ 
+\DeclareUnicodeCharacter{1D62}{_i}                      %         ᵢ
+\DeclareUnicodeCharacter{1D63}{_r}                      %         ᵣ 
+\DeclareUnicodeCharacter{1D64}{_u}                      %         ᵤ 
+\DeclareUnicodeCharacter{1D65}{_v}                      %         ᵥ 
+\DeclareUnicodeCharacter{1D66}{_\beta}                  %         ᵦ 
+\DeclareUnicodeCharacter{1D67}{_\gamma}                 %         ᵧ 
+\DeclareUnicodeCharacter{1D68}{_\rho}                   %         ᵨ 
+\DeclareUnicodeCharacter{1D69}{_\phi}                   %         ᵩ 
+\DeclareUnicodeCharacter{1D6A}{_\chi}                   %         ᵪ 
+\DeclareUnicodeCharacter{201D}{''}                      %         ”
+\DeclareUnicodeCharacter{201F}{``}                      %         ‟
+\DeclareUnicodeCharacter{2020}{\footnote}               %         †
+\DeclareUnicodeCharacter{2021}{\ddag}                   %         ‡
+\DeclareUnicodeCharacter{2022}{\item}                   %         •
+\DeclareUnicodeCharacter{2026}{\ldots}                  %         …
+\DeclareUnicodeCharacter{2070}{^0}                      %         ⁰
+\DeclareUnicodeCharacter{2071}{^i}                      %         ⁱ
+\DeclareUnicodeCharacter{2074}{^4}                      %         ⁴
+\DeclareUnicodeCharacter{2075}{^5}                      %         ⁵
+\DeclareUnicodeCharacter{2076}{^6}                      %         ⁶
+\DeclareUnicodeCharacter{2077}{^7}                      %         ⁷
+\DeclareUnicodeCharacter{2078}{^8}                      %         ⁸
+\DeclareUnicodeCharacter{2079}{^9}                      %         ⁹
+\DeclareUnicodeCharacter{207A}{^+}                      %
+\DeclareUnicodeCharacter{207B}{^-}                      %         ⁺
+\DeclareUnicodeCharacter{207C}{^=}                      %         ⁼ 
+\DeclareUnicodeCharacter{207F}{^n}                      %         ⁿ
+\DeclareUnicodeCharacter{2080}{_0}                      %         ₁
+\DeclareUnicodeCharacter{2081}{_1}                      %         ₁
+\DeclareUnicodeCharacter{2082}{_2}                      %         ₂
+\DeclareUnicodeCharacter{2083}{_3}                      %         ₃
+\DeclareUnicodeCharacter{2084}{_4}                      %         ₃
+\DeclareUnicodeCharacter{2085}{_5}                      %         ₃
+\DeclareUnicodeCharacter{2086}{_6}                      %         ₃
+\DeclareUnicodeCharacter{2087}{_7}                      %         ₃
+\DeclareUnicodeCharacter{2088}{_8}                      %         ₃
+\DeclareUnicodeCharacter{2089}{_9}                      %         ₉ 
+\DeclareUnicodeCharacter{2090}{_a}                      %         ₐ 
+\DeclareUnicodeCharacter{2091}{_e}                      %         ₑ 
+\DeclareUnicodeCharacter{2092}{_o}                      %         ₒ 
+\DeclareUnicodeCharacter{2093}{_x}                      %         ₓ 
+\DeclareUnicodeCharacter{2095}{_h}                      %         ₕ 
+\DeclareUnicodeCharacter{2096}{_k}                      %         ₖ
+\DeclareUnicodeCharacter{2097}{_l}                      %         ₗ 
+\DeclareUnicodeCharacter{2098}{_m}                      %         ₘ
+\DeclareUnicodeCharacter{2099}{_n}                      %         ₙ
+\DeclareUnicodeCharacter{209A}{_p}                      %         ₚ
+\DeclareUnicodeCharacter{209B}{_s}                      %         ₛ
+\DeclareUnicodeCharacter{209C}{_t}                      %         ₜ
+\DeclareUnicodeCharacter{2102}{\mathbb{C}}              %         ℂ
+\DeclareUnicodeCharacter{2113}{\ell}                    %         ℓ
+\DeclareUnicodeCharacter{2115}{\mathbb{N}}              %         ℕ
+\DeclareUnicodeCharacter{211D}{\mathbb{R}}              %         ℝ
+\DeclareUnicodeCharacter{2124}{\mathbb{Z}}              %         ℤ
+\DeclareUnicodeCharacter{2135}{\aleph}                  %         ℵ
+\DeclareUnicodeCharacter{2190}{\leftarrow}              %         ←
+\DeclareUnicodeCharacter{2191}{\uparrow}                %         ↑
+\DeclareUnicodeCharacter{2192}{\rightarrow}             %         →
+\DeclareUnicodeCharacter{2193}{\downarrow}              %         ↓
+\DeclareUnicodeCharacter{219B}{\nrightarrow}            %         ↛
+\DeclareUnicodeCharacter{21D0}{\Leftarrow}              %         ⇐
+\DeclareUnicodeCharacter{21D2}{\Rightarrow}             %         ⇒
+\DeclareUnicodeCharacter{21D4}{\Leftrightarrow}         %         ⇔
+\DeclareUnicodeCharacter{2200}{\forall}                 %         ∀
+\DeclareUnicodeCharacter{2202}{\partial}                %         ∂
+\DeclareUnicodeCharacter{2203}{\exists}                 %         ∃
+\DeclareUnicodeCharacter{2204}{\not\exists}             %         ∄ 
+\DeclareUnicodeCharacter{2205}{\emptyset}               %         ∅
+\DeclareUnicodeCharacter{2207}{\nabla}                  %         ∇ 
+\DeclareUnicodeCharacter{2208}{\in}                     %         ∈
+\DeclareUnicodeCharacter{2211}{\sum}                    %         ∑ 
+\DeclareUnicodeCharacter{2219}{\bullet}                 %         ∙
+\DeclareUnicodeCharacter{221A}{\sqrt}                   %         √
+\DeclareUnicodeCharacter{221D}{\propto}                 %         ∝
+\DeclareUnicodeCharacter{221E}{\infty}                  %         ∞
+\DeclareUnicodeCharacter{2227}{\wedge}                  %         ∧
+\DeclareUnicodeCharacter{2228}{\vee}                    %         ∨
+\DeclareUnicodeCharacter{2229}{\cap}                    %         ∩
+\DeclareUnicodeCharacter{222A}{\cup}                    %         ∪
+\DeclareUnicodeCharacter{223F}{\text{\textasciitilde}}  %         ∼
+\DeclareUnicodeCharacter{2248}{\approx}                 %         ≈
+\DeclareUnicodeCharacter{2260}{\ne}                     %         ≠
+\DeclareUnicodeCharacter{2261}{\equiv}                  %         ≡
+\DeclareUnicodeCharacter{2264}{\le}                     %         ≤
+\DeclareUnicodeCharacter{2265}{\ge}                     %         ≥
+\DeclareUnicodeCharacter{226A}{\ll}                     %         ≪
+\DeclareUnicodeCharacter{226B}{\gg}                     %         ≫
+\DeclareUnicodeCharacter{226D}{\not\equiv}              %         ≉
+\DeclareUnicodeCharacter{2270}{\not\le}                 %         ≱ 
+\DeclareUnicodeCharacter{2271}{\not\ge}                 %         ≱ 
+\DeclareUnicodeCharacter{2272}{\lesssim}                %         ≲
+\DeclareUnicodeCharacter{2273}{\gtrsim}                 %         ≳
+\DeclareUnicodeCharacter{227A}{\prec}                   %         ≺
+\DeclareUnicodeCharacter{2282}{\subset}                 %         ⊂
+\DeclareUnicodeCharacter{2286}{\subseteq}               %         ⊆
+\DeclareUnicodeCharacter{22A4}{\top}                    %         ⊤
+\DeclareUnicodeCharacter{22A5}{\bot}                    %         ⊥
+\DeclareUnicodeCharacter{22EE}{\vdots}                  %         ⋮
+\DeclareUnicodeCharacter{22EF}{\cdots}                  %         ⋯
+\DeclareUnicodeCharacter{23CE}{\\}                      %         ⏎
+\DeclareUnicodeCharacter{2621}{\dbend}                  %         ☡
+\DeclareUnicodeCharacter{2693}{\pause}                  %         ⚓
+\DeclareUnicodeCharacter{2713}{\cmark}                  %         ✓
+\DeclareUnicodeCharacter{2717}{\xmark}                  %         ✗
+\DeclareUnicodeCharacter{2774}{\{}                      %         ❴
+\DeclareUnicodeCharacter{2775}{\}}                      %         ❵
+\DeclareUnicodeCharacter{27E8}{\langle}                 %         ⟨
+\DeclareUnicodeCharacter{27E9}{\rangle}                 %         ⟩
+\DeclareUnicodeCharacter{2A09}{\times}                  %         ⨉
+\DeclareUnicodeCharacter{2C7C}{_j}                      %         ⱼ
+\DeclareUnicodeCharacter{FF03}{\#}                      %         ＃
+\DeclareUnicodeCharacter{FF05}{\%}                      %         ％
+\DeclareUnicodeCharacter{FF06}{\&}                      %         ＆
+
+\DeclareUnicodeCharacter{1D49E}{\mathcal{C}}            %    𝒞
+\DeclareUnicodeCharacter{1D49F}{\mathcal{D}}            %    𝒟
+\DeclareUnicodeCharacter{1D4AB}{\wp}                    %    𝒫
+\DeclareUnicodeCharacter{1D4BB}{\mathcal{f}}            %    𝒻
+\DeclareUnicodeCharacter{1D4DB}{\mathcal{L}}            %    𝓛
+\DeclareUnicodeCharacter{1D4E3}{\mathcal{T}}            %    𝓣
+\DeclareUnicodeCharacter{1D540}{\mathbb{I}}             %    𝕀
+\DeclareUnicodeCharacter{1D54B}{\mathbb{T}}             %    𝕋
+\DeclareUnicodeCharacter{1D54D}{\mathbb{V}}             %    𝕍
+\DeclareUnicodeCharacter{1D5FB}{\mathbf{n}}             %    𝗻
+\DeclareUnicodeCharacter{1D7EC}{\mathbf{0}}             %    𝟬
+\DeclareUnicodeCharacter{1D7ED}{\mathbf{1}}             %    𝟭
