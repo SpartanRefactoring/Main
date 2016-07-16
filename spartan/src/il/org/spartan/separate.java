@@ -486,10 +486,10 @@ public enum separate {
       assertEquals("", separate.these().bySpaces());
     }
     @Test public final void bySpacesLengthLessThan2() {
-      trrue(separate.these().bySpaces().length() < 2);
+      assertTrue("", separate.these().bySpaces().length() < 2);
     }
     @Test public final void bySpacesLengthLessThan3() {
-      trrue(separate.these().bySpaces().length() < 3);
+      assertTrue("", separate.these().bySpaces().length() < 3);
     }
     @Test public final void bySpacesTypical() {
       assertEquals("A B C", separate.these("A", "B", "C").bySpaces());
@@ -508,7 +508,7 @@ public enum separate {
       azzert.notNull(these);
       final Iterable<Object> os = these.os;
       azzert.nonNulls(os);
-      trrue(Iterables.isEmpty(os));
+      assertTrue("", Iterables.isEmpty(os));
       final String[] ss = as.strings(os);
       notNull(ss);
       azzert.zero(ss.length);
@@ -571,7 +571,7 @@ public enum separate {
       assertEquals(0, Iterables.count(separate.these(Arrays.asList()).os));
     }
     @Test public final void theseOfNoItemsl() {
-      trrue(Iterables.isEmpty(separate.these(new String[] {}).os));
+      assertTrue("", Iterables.isEmpty(separate.these(new String[] {}).os));
     }
     @Test public final void theseOfNoItemslSpaceSeparated() {
       assertEquals("", separate.these(new String[] {}).bySpaces());

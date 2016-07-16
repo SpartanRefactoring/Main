@@ -28,6 +28,13 @@ public interface idiomatic {
     return new Storer<T>(t);
   }
   /**
+   * @param r JD
+   * @return an identical runnable which is also a {@link Executable}
+   */
+  static Executable $(final Runnable r) {
+    return new Executable(r);
+  }
+  /**
    * TODO Javadoc(2016): automatically generated for method <code>yield</code>
    *
    * @param <T> JD
@@ -214,5 +221,36 @@ public interface idiomatic {
     @Test public void use7() {
       azzert.isNull(take(null).unless(true));
     }
+  }
+
+  /**
+   * Evaluate a {@link Runnable} when a condition applies or unless a condition
+   * applies.
+   *
+   * @author Yossi Gil <Yossi.Gil@GMail.COM>
+   * @since 2016
+   */
+  public static class Executable implements Runnable {
+    @Override public void run() {
+      run.run();
+    }
+    void unless(final boolean unless) {
+      when(!unless);
+    }
+    void when(final boolean when) {
+      if (when)
+        run();
+    }
+
+    /**
+     * Instantiates this class.
+     *
+     * @param run JD
+     */
+    public Executable(final Runnable run) {
+      this.run = run;
+    }
+
+    private final Runnable run;
   }
 }

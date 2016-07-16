@@ -581,7 +581,7 @@ public interface Utils {
       assertFalse(ss.contains(null));
       assertEquals(4, ss.size());
       for (final String s : ss)
-        trrue(ss.contains(s));
+        assertTrue("", ss.contains(s));
     }
     @Test public void addTypical() {
       final Set<String> ss = new HashSet<>();
@@ -590,14 +590,14 @@ public interface Utils {
       assertFalse(ss.contains(null));
       assertEquals(4, ss.size());
       for (final String s : ss)
-        trrue(ss.contains(s));
+        assertTrue("", ss.contains(s));
     }
     @Test public void cantBeNullOfNull() {
       try {
         cantBeNull(null);
         fail("AssertionError expected prior to this line.");
       } catch (final AssertionError e) {
-        trrue(true);
+        assertTrue("", true);
       }
     }
     @Test public void cantBeNullTypical() {
@@ -608,7 +608,7 @@ public interface Utils {
         isNull(mustBeNull(null));
         fail("AssertionError expected prior to this line.");
       } catch (final AssertionError e) {
-        trrue(true);
+        assertTrue("", true);
       }
     }
     @Test public void mustBeNullOfNonNull() {
@@ -616,7 +616,7 @@ public interface Utils {
         mustBeNull(new Object());
         fail("AssertionError expected prior to this line.");
       } catch (final AssertionError e) {
-        trrue(true);
+        assertTrue("", true);
       }
     }
     @Test public void quoteEmptyString() {

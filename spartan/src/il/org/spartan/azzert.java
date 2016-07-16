@@ -358,7 +358,7 @@ import org.hamcrest.number.*;
     return IsNull.<T> nullValue(type);
   }
   public static void positive(final int i) {
-    trrue(i > 0);
+    assertTrue("", i > 0);
   }
   public static <T> @Nullable Matcher<T> sameInstance(final T target) {
     return IsSame.<T> sameInstance(target);
@@ -427,8 +427,8 @@ import org.hamcrest.number.*;
   public static <T> @Nullable Matcher<T> theInstance(final T target) {
     return IsSame.<T> theInstance(target);
   }
-  public static void trrue(final boolean b) {
-    assertTrue("", b);
+  public static void falze(final boolean b) {
+    assertFalse("", b);
   }
   /**
    * Assert that an integer is zero
