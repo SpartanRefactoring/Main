@@ -234,6 +234,12 @@ public interface idiomatic {
     @Override public void run() {
       run.run();
     }
+    /**
+     * TODO Javadoc(2016): automatically generated for method
+     * <code>unless</code>
+     *
+     * @param unless condition n which execution occurs.
+     */
     public void unless(final boolean unless) {
       when(!unless);
     }
