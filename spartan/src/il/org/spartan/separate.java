@@ -291,12 +291,12 @@ public enum separate {
     public SeparationSubject(final Object[] os) {
       this(new PureIterable.Sized<Object>() {
         @Override public PureIterator<Object> iterator() {
-          return new PureIterator<@NonNull Object>() {
+          return new PureIterator<Object>() {
             @Override public boolean hasNext() {
               return current < os.length;
             }
             @Override public Object next() {
-              @SuppressWarnings("null") final @NonNull Object $ = os[current++];
+              @SuppressWarnings("null") final Object $ = os[current++];
               return $;
             }
 

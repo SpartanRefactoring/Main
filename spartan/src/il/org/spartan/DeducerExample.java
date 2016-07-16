@@ -2,7 +2,6 @@
 package il.org.spartan;
 
 import static il.org.spartan.azzert.*;
-import static org.junit.Assert.*;
 
 import org.eclipse.jdt.annotation.*;
 import org.junit.*;
@@ -19,45 +18,54 @@ import org.junit.runners.*;
   @Nullable Integer a() {
     return a.get();
   }
-  final @Nullable Integer aPower2() {
-    return aPower2.get();
+  final @Nullable Integer aPower02() {
+    return aPower02.get();
   }
-  final @Nullable Integer aPower3() {
-    return aPower3.get();
+  final @Nullable Integer aPower03() {
+    return aPower03.get();
   }
-  final @Nullable Integer aPower5() {
-    return aPower5.get();
+  final @Nullable Integer aPower05() {
+    return aPower05.get();
   }
   final @Nullable Integer aPower17NullSafe() {
     return aPower17NullSafe.get();
   }
 
-  /** For testing purposes only; must not be private */
-  int _aPower2Calls;
-  /** For testing purposes only; must not be private */
-  int _aPower3Calls;
+  /**
+   * For testing purposes only; must not be private; used for testing of proper
+   * lazy evaluation
+   */
+  int _aPower02Calls;
+  /**
+   * For testing purposes only; must not be private; used for testing of proper
+   * lazy evaluation
+   */
+  int _aPower03Calls;
   /** Can, and often should be made private; package is OK */
   final Cell<@Nullable Integer> a = new Valued<@Nullable Integer>();
   /** Can, and often should be made private; package is OK */
-  final Cell<@Nullable Integer> aPower2 = new Computed<@Nullable Integer>(() -> {
-    _aPower2Calls++;
+  final Cell<@Nullable Integer> aPower02 = new Computed<@Nullable Integer>(() -> {
+    ++_aPower02Calls;
     return a() * a();
   }).dependsOn(a);
   /** Can, and often should be made private; package is OK */
-  final Cell<@Nullable Integer> aPower3 = new Computed<@Nullable Integer>(() -> {
-    ++_aPower3Calls;
-    return aPower2() * a();
-  }).dependsOn(aPower2, a);
+  final Cell<@Nullable Integer> aPower03 = new Computed<@Nullable Integer>(() -> {
+    ++_aPower03Calls;
+    return a() * aPower02();
+  }).dependsOn(aPower02, a);
+  /** Can, and often should be made private; package is OK */
+  final Cell<@Nullable Integer> aPower05 = new Computed<@Nullable Integer>(//
+      () -> aPower02() * aPower03()).dependsOn(aPower02, aPower03);
   /** Can, and often should be made private; package is OK */
   final Cell<@Nullable Integer> aPower17NullSafe = new Computed<@Nullable Integer>(//
       () -> a() == null ? null //
-          : a() * a() * a() * a() * aPower2() * aPower2() * aPower3() * aPower3() * aPower3()//
-      ).dependsOn(a, aPower2, aPower3);
-  /** Can, and often should be made private; package is OK */
-  final Cell<@Nullable Integer> aPower5 = new Computed<@Nullable Integer>(//
-      () -> aPower2() * aPower3()).dependsOn(aPower2, aPower3);
+          : a() * a() * a() * a() * aPower02() * aPower02() * aPower03() * aPower03() * aPower03()//
+      ).dependsOn(a, aPower02, aPower03);
+  final Cell<@Nullable Integer> b = new Valued<@Nullable Integer>(3);
+  final Cell<@Nullable Integer> c = new Valued<@Nullable Integer>(5);
+  final Cell<@Nullable Integer> d = new Computed<@Nullable Integer>(() -> a() + b.get() + c.get()).dependsOn(a, b, c);
 
-  @FixMethodOrder(value = MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "javadoc" }) public static class TEST extends
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "javadoc" }) public static class TEST extends
   DeducerExample {
     @Test public void layerA05() {
       a.set(2);
@@ -65,17 +73,17 @@ import org.junit.runners.*;
     }
     @Test public void layerA06() {
       a.set(2);
-      azzert.notNull(aPower2());
-      azzert.that(aPower2(), is(4));
+      azzert.notNull(aPower02());
+      azzert.that(aPower02(), is(4));
     }
     @Test public void layerA07() {
       a.set(2);
-      azzert.notNull(aPower3());
-      azzert.that(aPower3(), is(8));
+      azzert.notNull(aPower03());
+      azzert.that(aPower03(), is(8));
     }
     @Test public void layerA08() {
       a.set(2);
-      azzert.notNull(aPower2());
+      azzert.notNull(aPower02());
     }
     @Test public void layerA09() {
       a.set(null);
@@ -86,15 +94,15 @@ import org.junit.runners.*;
     }
     @Test(expected = NullPointerException.class) public void layerA10() {
       a.set(null);
-      aPower2();
+      aPower02();
     }
     @Test(expected = NullPointerException.class) public void layerA11() {
       a.set(null);
-      aPower3();
+      aPower03();
     }
     @Test(expected = NullPointerException.class) public void layerA12() {
       a.set(null);
-      aPower2();
+      aPower02();
     }
     @Test public void layerA13() {
       a.set(null);
@@ -104,13 +112,13 @@ import org.junit.runners.*;
       azzert.that(a(), is(2));
     }
     @Test(expected = NullPointerException.class) public void layerA2() {
-      aPower2().getClass();
+      aPower02().getClass();
     }
     @Test(expected = NullPointerException.class) public void layerA3() {
-      aPower3().getClass();
+      aPower03().getClass();
     }
     @Test(expected = NullPointerException.class) public void layerA4() {
-      aPower5().getClass();
+      aPower05().getClass();
     }
     @Test(expected = NullPointerException.class) public void layerA5() {
       a().toString().getClass();
@@ -130,78 +138,78 @@ import org.junit.runners.*;
     }
     @Test public void layerB02() {
       a.set(2);
-      azzert.notNull(aPower2());
-      azzert.that(aPower2(), is(4));
+      azzert.notNull(aPower02());
+      azzert.that(aPower02(), is(4));
       a.set(3);
-      azzert.notNull(aPower2());
-      azzert.that(aPower2(), is(9));
+      azzert.notNull(aPower02());
+      azzert.that(aPower02(), is(9));
     }
     @Test public void layerB03() {
       a.set(2);
-      azzert.notNull(aPower3());
-      azzert.that(aPower3(), is(8));
+      azzert.notNull(aPower03());
+      azzert.that(aPower03(), is(8));
       a.set(3);
-      azzert.notNull(aPower3());
-      azzert.that(aPower3(), is(27));
+      azzert.notNull(aPower03());
+      azzert.that(aPower03(), is(27));
     }
     @Test public void layerB04() {
       a.set(2);
-      azzert.notNull(aPower2());
+      azzert.notNull(aPower02());
     }
     @Test public void layerC00() {
       a.set(-3);
-      azzert.that(_aPower3Calls, is(0));
-      azzert.that(_aPower2Calls, is(0));
+      azzert.that(_aPower03Calls, is(0));
+      azzert.that(_aPower02Calls, is(0));
     }
     @Test public void layerC01() {
       a.set(-3);
-      azzert.that(aPower3(), is(-27));
-      azzert.that(_aPower3Calls, is(1)); // Force invocation
-      azzert.that(_aPower2Calls, is(1));
+      azzert.that(aPower03(), is(-27));
+      azzert.that(_aPower03Calls, is(1)); // Force invocation
+      azzert.that(_aPower02Calls, is(1));
     }
     @Test public void layerC02() {
       azzert.that(a.version(), is(0L));
       azzert.that(aPower17NullSafe.version(), is(0L));
     }
     @Test public void layerC03() {
-      azzert.that(aPower2.version(), is(0L));
-      azzert.that(aPower3.version(), is(0L));
+      azzert.that(aPower02.version(), is(0L));
+      azzert.that(aPower03.version(), is(0L));
     }
     @Test public void layerC04() {
       a.set(-2);
       azzert.that(a.version(), is(1L));
-      azzert.that(aPower3.version(), is(0L));
-      azzert.that(_aPower3Calls, is(0));
+      azzert.that(aPower03.version(), is(0L));
+      azzert.that(_aPower03Calls, is(0));
       azzert.that(aPower17NullSafe(), is(-(1 << 17))); // Force invocation
-      azzert.that(_aPower2Calls, is(1));
-      azzert.that(_aPower3Calls, is(1));
+      azzert.that(_aPower02Calls, is(1));
+      azzert.that(_aPower03Calls, is(1));
     }
     @Test public void layerC05() {
       a.set(-2);
       azzert.that(aPower17NullSafe(), is(-(1 << 17))); // Force invocation
-      azzert.that(_aPower2Calls, is(1));
-      azzert.that(_aPower3Calls, is(1));
+      azzert.that(_aPower02Calls, is(1));
+      azzert.that(_aPower03Calls, is(1));
     }
     @Test public void layerD01() {
       azzert.that(a.version, is(0L));
-      azzert.that(aPower2.version, is(0L));
-      azzert.that(aPower3.version, is(0L));
+      azzert.that(aPower02.version, is(0L));
+      azzert.that(aPower03.version, is(0L));
       azzert.that(aPower17NullSafe.version, is(0L));
     }
     @Test public void layerD02() {
       azzert.that(a.version, is(0L));
       a.set(1);
       azzert.that(a.version, is(1L));
-      azzert.that(aPower2.version, is(0L));
-      azzert.that(aPower3.version, is(0L));
+      azzert.that(aPower02.version, is(0L));
+      azzert.that(aPower03.version, is(0L));
       azzert.that(aPower17NullSafe.version, is(0L));
     }
     @Test public void layerD03() {
       a.set(14);
-      azzert.that(aPower2.version, is(0L));
-      azzert.that(aPower2.get(), is(196)); // Force evaluation
-      azzert.that(aPower3.version, is(0L));
-      azzert.that(aPower2.version, is(2L));
+      azzert.that(aPower02.version, is(0L));
+      azzert.that(aPower02.get(), is(196)); // Force evaluation
+      azzert.that(aPower03.version, is(0L));
+      azzert.that(aPower02.version, is(2L));
       azzert.that(aPower17NullSafe.version, is(0L));
     }
 
@@ -213,43 +221,43 @@ import org.junit.runners.*;
       a.set(14);
       azzert.notNull(a.get());
       azzert.that(a.get(), is(14));
-      azzert.that(aPower2.get(), is(196)); // Sanity check
+      azzert.that(aPower02.get(), is(196)); // Sanity check
     }
     @Test public void layerD06() {
       a.set(14);
       azzert.notNull(a.get());
       a.get(); // Force evaluation
-      azzert.that(aPower2.version(), is(0L));
+      azzert.that(aPower02.version(), is(0L));
       a.get(); // Force evaluation
-      azzert.that(aPower2.version(), is(0L));
+      azzert.that(aPower02.version(), is(0L));
     }
     @Test public void layerD07() {
       a.set(14);
       azzert.notNull(a.get());
       a.get(); // Force evaluation
-      azzert.not(((Computed<Integer>) aPower2).updated());
+      azzert.not(aPower02.updated());
     }
     @Test public void layerD08() {
       a.set(14);
       azzert.that(a.get(), is(14)); // Force evaluation
       azzert.that(a.version(), is(1L));
-      azzert.that(aPower2.version, is(0L));
-      azzert.that(((Computed<Integer>) aPower2).latestPrequisiteVersion(), is(1L));
+      azzert.that(aPower02.version, is(0L));
+      azzert.that(((Computed<Integer>) aPower02).latestPrequisiteVersion(), is(1L));
     }
     @Test public void layerD09() {
       a.set(14);
       azzert.that(a.get(), is(14)); // Force evaluation
       azzert.that(a.version(), is(1L));
-      azzert.that(aPower2.version, is(0L));
+      azzert.that(aPower02.version, is(0L));
       azzert.notNull(a.dependents);
     }
     @Test public void layerD10() {
       a.set(14);
       azzert.that(a.get(), is(14)); // Force evaluation
       azzert.that(a.version(), is(1L));
-      azzert.that(aPower2.version, is(0L));
-      azzert.that(a.dependents.size(), is(3));
-      azzert.assertTrue("", a.dependents.contains(aPower2));
+      azzert.that(aPower02.version, is(0L));
+      azzert.that(a.dependents.size(), is(4)); // d, aPower2, aPower3, aPowe17
+      azzert.assertTrue("", a.dependents.contains(aPower02));
       azzert.falze(a.dependents.contains(null));
     }
     @Test public void layerD11() {
@@ -258,13 +266,13 @@ import org.junit.runners.*;
       azzert.that(a.version(), is(1L));
     }
     @Test public void layerD12() {
-      assertTrue(a.dependents.contains(aPower2));
+      assertTrue(a.dependents.contains(aPower02));
     }
     @Test public void layerD13() {
-      assertTrue(a.dependents.contains(aPower3));
+      assertTrue(a.dependents.contains(aPower03));
     }
     @Test public void layerD14() {
-      assertFalse(a.dependents.contains(aPower5));
+      assertFalse(a.dependents.contains(aPower05));
     }
     @Test public void layerD15() {
       assertTrue(a.dependents.contains(aPower17NullSafe));
@@ -278,126 +286,159 @@ import org.junit.runners.*;
       azzert.that(aPower17NullSafe(), is(1 << 17));
       azzert.that(aPower17NullSafe(), is(1 << 17));
       azzert.that(aPower17NullSafe(), is(1 << 17));
-      azzert.that(_aPower3Calls, is(1));
+      azzert.that(_aPower03Calls, is(1));
     }
     @Test public void layerD17() {
       a.set(2);
       azzert.that(aPower17NullSafe(), is(1 << 17));
       azzert.that(aPower17NullSafe(), is(1 << 17));
-      azzert.that(_aPower2Calls, is(1));
+      azzert.that(_aPower02Calls, is(1));
       a.set(3);
       a.set(2);
       azzert.that(aPower17NullSafe(), is(1 << 17));
       azzert.that(aPower17NullSafe(), is(1 << 17));
-      azzert.that(_aPower2Calls, is(2));
-      azzert.that(_aPower3Calls, is(2));
+      azzert.that(_aPower02Calls, is(2));
+      azzert.that(_aPower03Calls, is(2));
     }
-    @Test public void layerE00() {
+    @Test public void layerE01() {
       azzert.that(a.version(), is(0L));
-      azzert.that(aPower2.version(), is(0L));
-      azzert.that(aPower3.version(), is(0L));
-      azzert.that(aPower5.version(), is(0L));
+      azzert.that(aPower02.version(), is(0L));
+      azzert.that(aPower03.version(), is(0L));
+      azzert.that(aPower05.version(), is(0L));
       azzert.that(aPower17NullSafe.version(), is(0L));
       a.set(2);
       azzert.that(a.version(), is(1L));
-      azzert.that(aPower2.version(), is(0L));
-      azzert.that(aPower3.version(), is(0L));
-      azzert.that(aPower5.version(), is(0L));
+      azzert.that(aPower02.version(), is(0L));
+      azzert.that(aPower03.version(), is(0L));
+      azzert.that(aPower05.version(), is(0L));
       azzert.that(aPower17NullSafe.version(), is(0L));
-      aPower2();
+      aPower02();
+      azzert.that(aPower02(), is(4));
       azzert.that(a.version(), is(1L));
-      azzert.that(aPower2.version(), is(2L));
-      azzert.that(aPower3.version(), is(0L));
-      azzert.that(aPower5.version(), is(0L));
+      azzert.that(aPower02.version(), is(2L));
+      azzert.that(aPower03.version(), is(0L));
+      azzert.that(aPower05.version(), is(0L));
       azzert.that(aPower17NullSafe.version(), is(0L));
-      aPower3();
+      aPower03();
       azzert.that(a.version(), is(1L));
-      azzert.that(aPower2.version(), is(2L));
-      azzert.that(aPower3.version(), is(3L));
-      azzert.that(aPower5.version(), is(0L));
+      azzert.that(aPower02.version(), is(2L));
+      azzert.that(aPower03.version(), is(3L));
+      azzert.that(aPower05.version(), is(0L));
       azzert.that(aPower17NullSafe.version(), is(0L));
-      aPower5();
+      aPower05();
       azzert.that(a.version(), is(1L));
-      azzert.that(aPower2.version(), is(2L));
-      azzert.that(aPower3.version(), is(3L));
-      azzert.that(aPower5.version(), is(4L));
+      azzert.that(aPower02.version(), is(2L));
+      azzert.that(aPower03.version(), is(3L));
+      azzert.that(aPower05.version(), is(4L));
       azzert.that(aPower17NullSafe.version(), is(0L));
       aPower17NullSafe();
       azzert.that(a.version(), is(1L));
-      azzert.that(aPower2.version(), is(2L));
-      azzert.that(aPower3.version(), is(3L));
-      azzert.that(aPower5.version(), is(4L));
+      azzert.that(aPower02.version(), is(2L));
+      azzert.that(aPower03.version(), is(3L));
+      azzert.that(aPower05.version(), is(4L));
       azzert.that(aPower17NullSafe.version(), is(4L));
       a.set(3);
       azzert.that(a.version(), is(5L));
-      azzert.that(aPower2.version(), is(2L));
-      azzert.that(aPower3.version(), is(3L));
-      azzert.that(aPower5.version(), is(4L));
+      azzert.that(aPower02.version(), is(2L));
+      azzert.that(aPower03.version(), is(3L));
+      azzert.that(aPower05.version(), is(4L));
       azzert.that(aPower17NullSafe.version(), is(4L));
-      aPower2();
+      aPower02();
       azzert.that(a.version(), is(5L));
-      azzert.that(aPower2.version(), is(6L));
-      azzert.that(aPower3.version(), is(3L));
-      azzert.that(aPower5.version(), is(4L));
+      azzert.that(aPower02.version(), is(6L));
+      azzert.that(aPower03.version(), is(3L));
+      azzert.that(aPower05.version(), is(4L));
       azzert.that(aPower17NullSafe.version(), is(4L));
-      aPower2();
+      aPower02();
       azzert.that(a.version(), is(5L));
-      azzert.that(aPower2.version(), is(6L));
-      azzert.that(aPower3.version(), is(3L));
-      azzert.that(aPower5.version(), is(4L));
+      azzert.that(aPower02.version(), is(6L));
+      azzert.that(aPower03.version(), is(3L));
+      azzert.that(aPower05.version(), is(4L));
       azzert.that(aPower17NullSafe.version(), is(4L));
-      aPower3();
+      aPower03();
       azzert.that(a.version(), is(5L));
-      azzert.that(aPower2.version(), is(6L));
-      azzert.that(aPower3.version(), is(7L));
-      azzert.that(aPower5.version(), is(4L));
+      azzert.that(aPower02.version(), is(6L));
+      azzert.that(aPower03.version(), is(7L));
+      azzert.that(aPower05.version(), is(4L));
       azzert.that(aPower17NullSafe.version(), is(4L));
-      aPower3();
+      aPower03();
       azzert.that(a.version(), is(5L));
-      azzert.that(aPower2.version(), is(6L));
-      azzert.that(aPower3.version(), is(7L));
-      azzert.that(aPower5.version(), is(4L));
+      azzert.that(aPower02.version(), is(6L));
+      azzert.that(aPower03.version(), is(7L));
+      azzert.that(aPower05.version(), is(4L));
       azzert.that(aPower17NullSafe.version(), is(4L));
-      aPower5();
+      aPower05();
       azzert.that(a.version(), is(5L));
-      azzert.that(aPower2.version(), is(6L));
-      azzert.that(aPower3.version(), is(7L));
-      azzert.that(aPower5.version(), is(8L));
+      azzert.that(aPower02.version(), is(6L));
+      azzert.that(aPower03.version(), is(7L));
+      azzert.that(aPower05.version(), is(8L));
       azzert.that(aPower17NullSafe.version(), is(4L));
-      aPower2();
-      aPower3();
-      aPower5();
-      aPower5();
-      aPower5();
-      aPower3();
-      aPower2();
+      aPower02();
+      aPower03();
+      aPower05();
+      aPower05();
+      aPower05();
+      aPower03();
+      aPower02();
       azzert.that(a.version(), is(5L));
-      azzert.that(aPower2.version(), is(6L));
-      azzert.that(aPower3.version(), is(7L));
-      azzert.that(aPower5.version(), is(8L));
+      azzert.that(aPower02.version(), is(6L));
+      azzert.that(aPower03.version(), is(7L));
+      azzert.that(aPower05.version(), is(8L));
       azzert.that(aPower17NullSafe.version(), is(4L));
       aPower17NullSafe();
       azzert.that(a.version(), is(5L));
-      azzert.that(aPower2.version(), is(6L));
-      azzert.that(aPower3.version(), is(7L));
-      azzert.that(aPower5.version(), is(8L));
+      azzert.that(aPower02.version(), is(6L));
+      azzert.that(aPower03.version(), is(7L));
+      azzert.that(aPower05.version(), is(8L));
       azzert.that(aPower17NullSafe.version(), is(8L));
       aPower17NullSafe();
-      aPower2();
-      aPower3();
-      aPower5();
-      aPower5();
+      aPower02();
+      aPower03();
+      aPower05();
+      aPower05();
       aPower17NullSafe();
-      aPower5();
-      aPower3();
-      aPower2();
+      aPower05();
+      aPower03();
+      aPower02();
       aPower17NullSafe();
       azzert.that(a.version(), is(5L));
-      azzert.that(aPower2.version(), is(6L));
-      azzert.that(aPower3.version(), is(7L));
-      azzert.that(aPower5.version(), is(8L));
+      azzert.that(aPower02.version(), is(6L));
+      azzert.that(aPower03.version(), is(7L));
+      azzert.that(aPower05.version(), is(8L));
       azzert.that(aPower17NullSafe.version(), is(8L));
     }
+    @Test public void layerE02() {
+      azzert.that(a.version(), is(0L));
+      azzert.that(aPower02.version(), is(0L));
+      azzert.that(aPower03.version(), is(0L));
+      azzert.that(aPower05.version(), is(0L));
+      azzert.that(aPower17NullSafe.version(), is(0L));
+    }
+    @Test public void layerE03() {
+      a.set(2);
+      b.set(3);
+      c.set(4);
+      azzert.that(d.get(), is(9));
+    }
+    @Test public void layerE04() {
+      a.set(2);
+      aPower02.set(3);
+      aPower03.set(5);
+      azzert.that(aPower05.get(), is(15));
+    }
+    @Test public void layerE05() {
+      a.set(2);
+      azzert.that(aPower05.get(), is(1 << 5));
+      azzert.that(aPower17NullSafe.version(), is(0L));
+      azzert.that(aPower02.version(), is(2L));
+      azzert.that(aPower03.version(), is(3L));
+      azzert.that(aPower05.version(), is(4L));
+    }
+    @Test public void layerE06() {
+      a.set(2);
+      assertFalse("aPower5 should not be updated! (recursive dependency on a)", aPower05.updated());
+    }
+
   }
 }
 

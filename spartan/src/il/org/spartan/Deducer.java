@@ -55,16 +55,11 @@ public class Deducer {
         $ = max($, c.version);
       return $;
     }
-    void invalidate() {
-      version = 0;
-    }
-    /** @return the value stored in this cell; should not be called by clients */
-    @Nullable T value() {
-      return value;
-    }
     long version() {
       return version;
     }
+
+    abstract boolean updated();
 
     /** other instances that depend on this instance */
     final List<Cell<?>> dependents = new ArrayList<>();
@@ -89,8 +84,8 @@ public class Deducer {
       super(null);
       this.supplier = supplier;
     }
-    @SuppressWarnings({ "unchecked", "null" }) @Override public Computed<@Nullable T> clone() throws CloneNotSupportedException {
-      return (Computed<@Nullable T>) super.clone();
+    @SuppressWarnings({ "unchecked", "null" }) @Override public Cell<T> clone() throws CloneNotSupportedException {
+      return (Cell<T>) super.clone();
     }
     /**
      * Add another cell on which this instance depends
@@ -98,7 +93,7 @@ public class Deducer {
      * @param cs JD
      * @return <code><b>this</b></code>
      */
-    public Computed<T> dependsOn(final Cell<?>... cs) {
+    public Cell<T> dependsOn(final Cell<?>... cs) {
       for (final Cell<?> c : cs) {
         $(() -> {
           c.dependents.add(this);
@@ -110,13 +105,12 @@ public class Deducer {
       return this;
     }
     @Override public T get() {
-      if (supplier == null || updated())
+      if (updated())
         return value;
       version = latestPrequisiteVersion() + 1;
-      assert supplier != null;
       return value = supplier.get();
     }
-    @Override public void set(@Nullable final T value) {
+    @Override public void set(final T value) {
       super.set(value);
       supplier = null;
     }
@@ -134,15 +128,17 @@ public class Deducer {
           $ = c.version();
       return $;
     }
-    boolean updated() {
+    @Override boolean updated() {
+      // if (supplier == null)
+      // return true;
       for (final Cell<?> c : prerequisites)
-        if (version() < c.version())
+        if (!c.updated() || version() < c.version())
           return false;
       return true;
     }
 
     private final List<Cell<?>> prerequisites = new ArrayList<>();
-    private @Nullable Supplier<T> supplier;
+    private Supplier<T> supplier;
   }
 
   /**
@@ -157,6 +153,7 @@ public class Deducer {
     public Valued() {
       super(null);
     }
+
     /**
      * Instantiates this class.
      *
@@ -168,6 +165,9 @@ public class Deducer {
     /** @see java.util.function.Supplier#get() (auto-generated) */
     @Override public T get() {
       return value;
+    }
+    @Override protected boolean updated() {
+      return true;
     }
   }
 }

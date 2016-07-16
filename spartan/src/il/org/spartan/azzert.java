@@ -99,6 +99,12 @@ import org.hamcrest.number.*;
   public static void assertNotEquals(final String reason, final Object o1, final Object o2) {
     assertThat(reason, o1, CoreMatchers.not(o2));
   }
+  public static void assertFalse(final boolean b) {
+    that("", Boolean.valueOf(b), is(Boolean.FALSE));
+  }
+  public static void assertTrue(final boolean b) {
+    that("", Boolean.valueOf(b), is(Boolean.TRUE));
+  }
   public static void assertTrue(final String s, final boolean b) {
     that(s, Boolean.valueOf(b), is(Boolean.TRUE));
   }
