@@ -20,7 +20,7 @@ import org.junit.runners.*;
  * @author Yossi Gil <Yossi.Gil@GMail.COM>
  * @since 2016
  */
-public interface Deducer {
+public interface LazySymbolicSpreadsheet {
   /**
    * A cell stores a value of some type (which is passed by parameter). A cell
    * may be either {@link Valued} or {@link Computed}. A computed cell typically
@@ -182,7 +182,7 @@ public interface Deducer {
    * @since 2016
    */
   @SuppressWarnings({ "boxing", "null", "unused" }) //
-  public static class Example implements Deducer {
+  public static class Example implements LazySymbolicSpreadsheet {
     /** @return contents of cell a */
     public final @Nullable Integer a() {
       return a.get();
