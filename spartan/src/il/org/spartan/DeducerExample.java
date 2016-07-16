@@ -152,15 +152,14 @@ import org.junit.runners.*;
       final Computed<?> x = (Computed<?>) aPower17NullSafe;
       f(x);
     }
-    /**
-     * TODO Javadoc(2016): automatically generated for method <code>f</code>
-     *
-     * @param x void TODO Javadoc(2016) automatically generated for returned
-     *          value of method <code>f</code>
-     */
-    private void f(final Computed<?> x) {
-      x.get();
+    @Test public void layerA19() {
+      a.set(null);
+      aPower17NullSafe.get();
     }
+    @Test public void layerA20() {
+      aPower17NullSafe.get();
+    }
+
     @Test(expected = NullPointerException.class) public void layerA2() {
       aPower02().getClass();
     }
@@ -506,6 +505,9 @@ import org.junit.runners.*;
       azzert.that(aPower02.version(), is(2L));
       azzert.that(aPower03.version(), is(3L));
       azzert.that(aPower05.version(), is(4L));
+    }
+    private void f(final Computed<?> x) {
+      x.get();
     }
   }
 }
