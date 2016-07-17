@@ -6,6 +6,7 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.idiomatic.*;
 import static java.lang.Math.*;
 import il.org.spartan.*;
+import il.org.spartan.lazy.Cookbook.Recipe.NullRobust;
 
 import java.util.*;
 import java.util.function.*;
@@ -73,11 +74,6 @@ public interface Cookbook {
       }
     };
   }
-  /** Fluent API */
-  interface $$RecipeMaker {
-    <X> Cell<@Nullable X> make(final Supplier<X> s);
-  }
-
   /**
    * A factory method for class {@link Ingredient} as in
    *
@@ -126,8 +122,7 @@ public interface Cookbook {
    */
   public static enum __META {
     ;
-    @SuppressWarnings("javadoc")
-    public static class A {
+    @SuppressWarnings("javadoc") public static class A {
       String begin() {
         return begin.get();
       }
@@ -148,16 +143,30 @@ public interface Cookbook {
           -> begin() + text() + end() //
           );
 
-      public static class DEMONSTRATES extends A {
-        @Test public void usecase0() {
+      @SuppressWarnings({ "synthetic-access", "null" })
+      public static class TEST extends A {
+        @Test public void seriesA00() {
           azzert.that(wrap(), is("<a>"));
         }
-        @Test public void usecase1() {
+        @Test public void seriesA01() {
           begin.set("(");
-          azzert.that(wrap, is("(a>"));
+          azzert.that(wrap(), is("(a>"));
+          end.set("(");
+          azzert.that(wrap(), is("(a)"));
+        }
+        @Test public void seriesA02() {
+          azzert.that(wrap, instanceOf(Recipe.class));
+          final Recipe<?> r = (Recipe<?>) wrap;
+          azzert.that(r.dependents.size(), is(0));
+          azzert.that(r.prerequisites.size(), is(3));
+          azzert.that(begin(), is("<"));
+          azzert.that(end(), is(">"));
+          azzert.that(text(), is("p"));
+          azzert.that(wrap(), is("p"));
         }
       }
     }
+
     /**
      * Should not be used by clients. A development time only
      * <code><b>class</b></code> used for testing and as a documented demo of
@@ -218,6 +227,7 @@ public interface Cookbook {
       public final @Nullable Integer d() {
         return d.get();
       }
+
       /** Must not be private; used for testing of proper lazy evaluation */
       int _aPower02Calls;
       /** Must not be private; used for testing of proper lazy evaluation */
@@ -225,13 +235,6 @@ public interface Cookbook {
       /** a^5 := a^2 * a^3 */
       /** Can, and often should be made private; package is OK */
       final Cell<@Nullable Integer> a = new Cookbook.Ingredient<@Nullable Integer>();
-
-      /** the actual cell behind {@link #b()} */
-      final Cell<@Nullable Integer> b = new Cookbook.Ingredient<@Nullable Integer>(3);
-      /** the actual cell behind {@link #c()} */
-      final Cell<@Nullable Integer> c = new Cookbook.Ingredient<@Nullable Integer>(5);
-      /** the actual cell behind {@link #d()} */
-      @SuppressWarnings("null") final Cell<@Nullable Integer> d = Cookbook.from(a, b, c).make(() -> a() + b() + c());
       /** Can, and often should be made private; package is OK */
       @SuppressWarnings("null") final Cell<@Nullable Integer> aPower02 = new Recipe<@Nullable Integer>(() -> {
         ++_aPower02Calls;
@@ -247,11 +250,21 @@ public interface Cookbook {
           () -> aPower02() * aPower03()).ingredients(aPower02, aPower03);
       /** Can, and often should be made private; package is OK */
       /** the actual cell behind {@link #b()} */
-      @SuppressWarnings("null") final Cell<@Nullable Integer> aPower17NullSafe //
-      = from(a, aPower02, aPower03).make(() -> a() * a() * a() * a() * aPower02() * aPower02() * aPower03() * aPower03() * aPower03());
+      @SuppressWarnings("null")//
+      final Cell<@Nullable Integer> aPower17NullSafe = new Recipe.NullRobust<>(() //
+          ->
+      a() * a() * a() * a() * aPower02() * aPower02() * aPower03() * aPower03() * aPower03()//
+          ).ingredients(a, aPower02, aPower03);
+      /** the actual cell behind {@link #b()} */
+      final Cell<@Nullable Integer> b = new Cookbook.Ingredient<@Nullable Integer>(3);
+      /** the actual cell behind {@link #c()} */
+      final Cell<@Nullable Integer> c = new Cookbook.Ingredient<@Nullable Integer>(5);
+      /** the actual cell behind {@link #d()} */
+      @SuppressWarnings("null") final Cell<@Nullable Integer> d = Cookbook.from(a, b, c).make(() -> a() + b() + c());
+
       /**
-       * TODO(2016) Javadoc: automatically generated for type <code>Cookbook.__META.TOUGH</code>
-       *
+       * TODO(2016) Javadoc: automatically generated for type
+       * <code>Cookbook.__META.TOUGH</code>
        *
        * @author Yossi Gil <Yossi.Gil@GMail.COM>
        * @since 2016
@@ -318,7 +331,7 @@ public interface Cookbook {
         }
         @Test public void seriesA17() {
           a.set(null);
-          final Recipe<?> r = (Recipe<?>) aPower17NullSafe;
+          final Recipe.NullRobust<?> r = (NullRobust<?>) aPower17NullSafe;
           azzert.isNull(r.get());
         }
         @Test public void seriesA18() {
@@ -704,6 +717,12 @@ public interface Cookbook {
       }
     }
   }
+
+  /** Fluent API */
+  interface $$RecipeMaker {
+    <X> Cell<@Nullable X> make(final Supplier<X> s);
+  }
+
   /**
    * A cell stores a value of some type (which is passed by parameter). A cell
    * may be either {@link Ingredient} or {@link Recipe}. A computed cell
@@ -797,7 +816,6 @@ public interface Cookbook {
     @Override public T get() {
       return cache();
     }
-
     @Override public final boolean updated() {
       return true;
     }
@@ -825,7 +843,6 @@ public interface Cookbook {
       }
     }
   }
-
 
   /**
    * A cell that may depend on others.
@@ -891,7 +908,7 @@ public interface Cookbook {
       if (supplier == null)
         return true;
       for (final Cell<?> c : prerequisites)
-        if (!c.updated() || version() < c.version())
+        if (!c.updated() || version() <= c.version())
           return false;
       return true;
     }
@@ -1024,5 +1041,4 @@ public interface Cookbook {
       }
     }
   }
-
 }
