@@ -69,7 +69,7 @@ public interface Cookbook {
    */
   static $$RecipeMaker from(final Cell<?>... ingredients) {
     return new $$RecipeMaker() {
-      @Override public <X> Cell<@Nullable X> make(final Supplier<X> s) {
+      @Override public <T> Cell<@Nullable T> make(final Supplier<T> s) {
         return new Recipe<>(s).ingredients(ingredients);
       }
     };
@@ -142,27 +142,46 @@ public interface Cookbook {
       final Cell<String> wrap = from(begin, end, text).make(() //
           -> begin() + text() + end() //
           );
+      final Cell<String> xBoxed = from(wrap).make(() //
+          -> "[[" + wrap() + "]]" //
+          );
+      final Cell<String> zzz = new Ingredient<String>().of("zzz");
 
-      @SuppressWarnings({ "synthetic-access", "null" })
+      @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
+      @SuppressWarnings({ "null", "synthetic-access" })//
       public static class TEST extends A {
-        @Test public void seriesA00() {
-          azzert.that(wrap(), is("<a>"));
+        @Test public void sessionA00() {
+          azzert.that(wrap(), is("<p>"));
         }
-        @Test public void seriesA01() {
+        @Test public void sessionA01() {
           begin.set("(");
-          azzert.that(wrap(), is("(a>"));
-          end.set("(");
-          azzert.that(wrap(), is("(a)"));
+          azzert.that(wrap(), is("(p>"));
+          end.set(")");
+          azzert.that(wrap(), is("(p)"));
         }
-        @Test public void seriesA02() {
+        @Test public void sessionA02() {
           azzert.that(wrap, instanceOf(Recipe.class));
           final Recipe<?> r = (Recipe<?>) wrap;
-          azzert.that(r.dependents.size(), is(0));
+          azzert.that(r.dependents.size(), is(1));
           azzert.that(r.prerequisites.size(), is(3));
           azzert.that(begin(), is("<"));
           azzert.that(end(), is(">"));
           azzert.that(text(), is("p"));
-          azzert.that(wrap(), is("p"));
+          azzert.that(wrap(), is("<p>"));
+        }
+        @Test public void sessionA03() {
+          azzert.that(xBoxed.get(), is("[[<p>]]"));
+          end.set("+");
+          azzert.that(xBoxed.get(), is("[[<p+]]"));
+        }
+        /** Local cells and rules */
+        @Test public void sessionA04() {
+          azzert.that(zzz.get(), is("zzz"));
+          final Cell<String> foo = ingredient("foo");
+          final Cell<String> ba = ingredient("ba");
+          final Cell<String> bazzz = from(ba, zzz).make(() -> ba.get() + zzz.get());
+          final Cell<String> foobazzz = from(foo, bazzz).make(() -> foo.get() + bazzz.get());
+          azzert.that(foobazzz.get(), is("foobazzz"));
         }
       }
     }
@@ -194,7 +213,7 @@ public interface Cookbook {
      * @since 2016
      */
     @SuppressWarnings({ "boxing", "unused" })//
-    public static class TOUGH implements Cookbook {
+    public static class Z implements Cookbook {
       /** @return contents of cell a */
       public final @Nullable Integer a() {
         return a.get();
@@ -270,93 +289,93 @@ public interface Cookbook {
        * @since 2016
        */
       @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "null", "javadoc" })//
-      public static class TEST extends TOUGH {
-        @Test public void seriesA01() {
+      public static class TEST extends Z {
+        @Test public void sessionA01() {
           azzert.isNull(a());
         }
-        @Test public void seriesA05() {
+        @Test public void sessionA05() {
           a.set(2);
           azzert.notNull(a());
         }
-        @Test public void seriesA06() {
+        @Test public void sessionA06() {
           a.set(2);
           azzert.notNull(aPower02());
           azzert.that(aPower02(), is(4));
         }
-        @Test public void seriesA07() {
+        @Test public void sessionA07() {
           a.set(2);
           azzert.notNull(aPower03());
           azzert.that(aPower03(), is(8));
         }
-        @Test public void seriesA08() {
+        @Test public void sessionA08() {
           a.set(2);
           azzert.notNull(aPower02());
         }
-        @Test public void seriesA09() {
+        @Test public void sessionA09() {
           a.set(null);
           azzert.isNull(a());
         }
-        @Test(expected = NullPointerException.class) public void seriesA10() {
+        @Test(expected = NullPointerException.class) public void sessionA10() {
           a.set(null);
           aPower02();
         }
-        @Test(expected = NullPointerException.class) public void seriesA11() {
+        @Test(expected = NullPointerException.class) public void sessionA11() {
           a.set(null);
           aPower03();
         }
-        @Test(expected = NullPointerException.class) public void seriesA12() {
+        @Test(expected = NullPointerException.class) public void sessionA12() {
           a.set(null);
           aPower02();
         }
-        @Test public void seriesA13() {
+        @Test public void sessionA13() {
           a.set(null);
           azzert.isNull(aPower17NullSafe());
           a.set(2);
           azzert.notNull(aPower17NullSafe());
           azzert.that(a(), is(2));
         }
-        @Test public void seriesA14() {
+        @Test public void sessionA14() {
           a.set(2);
           azzert.notNull(aPower17NullSafe());
           azzert.that(a(), is(2));
           azzert.that(aPower17NullSafe(), is(1 << 17));
         }
-        @Test public void seriesA15() {
+        @Test public void sessionA15() {
           a.set(null);
           azzert.isNull(aPower17NullSafe());
         }
-        @Test public void seriesA16() {
+        @Test public void sessionA16() {
           a.set(null);
           azzert.isNull(aPower17NullSafe.get());
         }
-        @Test public void seriesA17() {
+        @Test public void sessionA17() {
           a.set(null);
           final Recipe.NullRobust<?> r = (NullRobust<?>) aPower17NullSafe;
           azzert.isNull(r.get());
         }
-        @Test public void seriesA18() {
+        @Test public void sessionA18() {
           a.set(null);
         }
-        @Test public void seriesA19() {
+        @Test public void sessionA19() {
           a.set(null);
           aPower17NullSafe.get();
         }
-        @Test(expected = NullPointerException.class) public void seriesA2() {
+        @Test(expected = NullPointerException.class) public void sessionA2() {
           aPower02().getClass();
         }
-        @Test public void seriesA20() {
+        @Test public void sessionA20() {
           aPower17NullSafe.get();
         }
-        @Test(expected = NullPointerException.class) public void seriesA3() {
+        @Test(expected = NullPointerException.class) public void sessionA3() {
           aPower03().getClass();
         }
-        @Test(expected = NullPointerException.class) public void seriesA4() {
+        @Test(expected = NullPointerException.class) public void sessionA4() {
           aPower05().getClass();
         }
-        @Test(expected = NullPointerException.class) public void seriesA5() {
+        @Test(expected = NullPointerException.class) public void sessionA5() {
           a().toString().getClass();
         }
-        @Test public void seriesB01() {
+        @Test public void sessionB01() {
           a.set(2);
           azzert.notNull(a());
           azzert.that(a(), is(2));
@@ -369,7 +388,7 @@ public interface Cookbook {
           a.set(5);
           azzert.that(a(), is(5));
         }
-        @Test public void seriesB02() {
+        @Test public void sessionB02() {
           a.set(2);
           azzert.notNull(aPower02());
           azzert.that(aPower02(), is(4));
@@ -377,7 +396,7 @@ public interface Cookbook {
           azzert.notNull(aPower02());
           azzert.that(aPower02(), is(9));
         }
-        @Test public void seriesB03() {
+        @Test public void sessionB03() {
           a.set(2);
           azzert.notNull(aPower03());
           azzert.that(aPower03(), is(8));
@@ -385,30 +404,30 @@ public interface Cookbook {
           azzert.notNull(aPower03());
           azzert.that(aPower03(), is(27));
         }
-        @Test public void seriesB04() {
+        @Test public void sessionB04() {
           a.set(2);
           azzert.notNull(aPower02());
         }
-        @Test public void seriesC00() {
+        @Test public void sessionC00() {
           a.set(-3);
           azzert.that(_aPower03Calls, is(0));
           azzert.that(_aPower02Calls, is(0));
         }
-        @Test public void seriesC01() {
+        @Test public void sessionC01() {
           a.set(-3);
           azzert.that(aPower03(), is(-27));
           azzert.that(_aPower03Calls, is(1)); // Force invocation
           azzert.that(_aPower02Calls, is(1));
         }
-        @Test public void seriesC02() {
+        @Test public void sessionC02() {
           azzert.that(a.version(), is(0L));
           azzert.that(aPower17NullSafe.version(), is(0L));
         }
-        @Test public void seriesC03() {
+        @Test public void sessionC03() {
           azzert.that(aPower02.version(), is(0L));
           azzert.that(aPower03.version(), is(0L));
         }
-        @Test public void seriesC04() {
+        @Test public void sessionC04() {
           a.set(-2);
           azzert.that(a.version(), is(1L));
           azzert.that(aPower03.version(), is(0L));
@@ -417,19 +436,19 @@ public interface Cookbook {
           azzert.that(_aPower02Calls, is(1));
           azzert.that(_aPower03Calls, is(1));
         }
-        @Test public void seriesC05() {
+        @Test public void sessionC05() {
           a.set(-2);
           azzert.that(aPower17NullSafe(), is(-(1 << 17))); // Force invocation
           azzert.that(_aPower02Calls, is(1));
           azzert.that(_aPower03Calls, is(1));
         }
-        @Test public void seriesD01() {
+        @Test public void sessionD01() {
           azzert.that(a.version, is(0L));
           azzert.that(aPower02.version, is(0L));
           azzert.that(aPower03.version, is(0L));
           azzert.that(aPower17NullSafe.version, is(0L));
         }
-        @Test public void seriesD02() {
+        @Test public void sessionD02() {
           azzert.that(a.version, is(0L));
           a.set(1);
           azzert.that(a.version, is(1L));
@@ -437,7 +456,7 @@ public interface Cookbook {
           azzert.that(aPower03.version, is(0L));
           azzert.that(aPower17NullSafe.version, is(0L));
         }
-        @Test public void seriesD03() {
+        @Test public void sessionD03() {
           a.set(14);
           azzert.that(aPower02.version, is(0L));
           azzert.that(aPower02.get(), is(196)); // Force evaluation
@@ -445,17 +464,17 @@ public interface Cookbook {
           azzert.that(aPower02.version, is(2L));
           azzert.that(aPower17NullSafe.version, is(0L));
         }
-        @Test public void seriesD04() {
+        @Test public void sessionD04() {
           a.set(14);
           azzert.notNull(a.get());
         }
-        @Test public void seriesD05() {
+        @Test public void sessionD05() {
           a.set(14);
           azzert.notNull(a.get());
           azzert.that(a.get(), is(14));
           azzert.that(aPower02.get(), is(196)); // Sanity check
         }
-        @Test public void seriesD06() {
+        @Test public void sessionD06() {
           a.set(14);
           azzert.notNull(a.get());
           a.get(); // Force evaluation
@@ -463,27 +482,27 @@ public interface Cookbook {
           a.get(); // Force evaluation
           azzert.that(aPower02.version(), is(0L));
         }
-        @Test public void seriesD07() {
+        @Test public void sessionD07() {
           a.set(14);
           azzert.notNull(a.get());
           a.get(); // Force evaluation
           azzert.not(aPower02.updated());
         }
-        @Test public void seriesD08() {
+        @Test public void sessionD08() {
           a.set(14);
           azzert.that(a.get(), is(14)); // Force evaluation
           azzert.that(a.version(), is(1L));
           azzert.that(aPower02.version, is(0L));
           azzert.that(((Recipe<Integer>) aPower02).latestPrequisiteVersion(), is(1L));
         }
-        @Test public void seriesD09() {
+        @Test public void sessionD09() {
           a.set(14);
           azzert.that(a.get(), is(14)); // Force evaluation
           azzert.that(a.version(), is(1L));
           azzert.that(aPower02.version, is(0L));
           azzert.notNull(a.dependents);
         }
-        @Test public void seriesD10() {
+        @Test public void sessionD10() {
           a.set(14);
           azzert.that(a.get(), is(14)); // Force evaluation
           azzert.that(a.version(), is(1L));
@@ -493,24 +512,24 @@ public interface Cookbook {
           azzert.assertTrue("", a.dependents.contains(aPower02));
           azzert.falze(a.dependents.contains(null));
         }
-        @Test public void seriesD11() {
+        @Test public void sessionD11() {
           a.set(14);
           azzert.that(a.get(), is(14)); // Force evaluation
           azzert.that(a.version(), is(1L));
         }
-        @Test public void seriesD12() {
+        @Test public void sessionD12() {
           assertTrue(a.dependents.contains(aPower02));
         }
-        @Test public void seriesD13() {
+        @Test public void sessionD13() {
           assertTrue(a.dependents.contains(aPower03));
         }
-        @Test public void seriesD14() {
+        @Test public void sessionD14() {
           assertFalse(a.dependents.contains(aPower05));
         }
-        @Test public void seriesD15() {
+        @Test public void sessionD15() {
           assertTrue(a.dependents.contains(aPower17NullSafe));
         }
-        @Test public void seriesD16() {
+        @Test public void sessionD16() {
           a.set(2);
           azzert.that(aPower17NullSafe(), is(1 << 17));
           azzert.that(aPower17NullSafe(), is(1 << 17));
@@ -521,7 +540,7 @@ public interface Cookbook {
           azzert.that(aPower17NullSafe(), is(1 << 17));
           azzert.that(_aPower03Calls, is(1));
         }
-        @Test public void seriesD17() {
+        @Test public void sessionD17() {
           a.set(2);
           azzert.that(aPower17NullSafe(), is(1 << 17));
           azzert.that(aPower17NullSafe(), is(1 << 17));
@@ -533,7 +552,7 @@ public interface Cookbook {
           azzert.that(_aPower02Calls, is(2));
           azzert.that(_aPower03Calls, is(2));
         }
-        @Test public void seriesE01() {
+        @Test public void sessionE01() {
           azzert.that(a.version(), is(0L));
           azzert.that(aPower02.version(), is(0L));
           azzert.that(aPower03.version(), is(0L));
@@ -640,26 +659,26 @@ public interface Cookbook {
           azzert.that(aPower05.version(), is(8L));
           azzert.that(aPower17NullSafe.version(), is(8L));
         }
-        @Test public void seriesE02() {
+        @Test public void sessionE02() {
           azzert.that(a.version(), is(0L));
           azzert.that(aPower02.version(), is(0L));
           azzert.that(aPower03.version(), is(0L));
           azzert.that(aPower05.version(), is(0L));
           azzert.that(aPower17NullSafe.version(), is(0L));
         }
-        @Test public void seriesE03() {
+        @Test public void sessionE03() {
           a.set(2);
           b.set(3);
           c.set(4);
           azzert.that(d.get(), is(9));
         }
-        @Test public void seriesE04() {
+        @Test public void sessionE04() {
           a.set(2);
           aPower02.set(3);
           aPower03.set(5);
           azzert.that(aPower05.get(), is(15));
         }
-        @Test public void seriesE05() {
+        @Test public void sessionE05() {
           a.set(2);
           azzert.that(aPower05.get(), is(1 << 5));
           azzert.that(aPower17NullSafe.version(), is(0L));
@@ -667,11 +686,11 @@ public interface Cookbook {
           azzert.that(aPower03.version(), is(3L));
           azzert.that(aPower05.version(), is(4L));
         }
-        @Test public void seriesE06() {
+        @Test public void sessionE06() {
           a.set(2);
           assertFalse("aPower5 should not be updated! (recursive dependency on a)", aPower05.updated());
         }
-        @Test public void seriesF01() {
+        @Test public void sessionF01() {
           a.set(11);
           assertFalse(aPower02.updated());
           azzert.that(aPower02.get(), is(121));
@@ -683,12 +702,12 @@ public interface Cookbook {
           assertTrue(aPower02.updated());
           azzert.that(aPower02.get(), is(0xDADA));
         }
-        @Test public void seriesF02() {
+        @Test public void sessionF02() {
           a.set(null);
           azzert.isNull(aPower17NullSafe());
           azzert.that(aPower05.version(), is(0L));
         }
-        @Test public void seriesF03() {
+        @Test public void sessionF03() {
           a.set(2);
           azzert.that(aPower05.get(), is(1 << 5));
           azzert.that(aPower17NullSafe.version(), is(0L));
@@ -696,19 +715,19 @@ public interface Cookbook {
           azzert.that(aPower03.version(), is(3L));
           azzert.that(aPower05.version(), is(4L));
         }
-        @Test public void seriesF04() {
+        @Test public void sessionF04() {
           a.set(null);
           azzert.isNull(aPower17NullSafe());
         }
-        @Test public void seriesF05() {
+        @Test public void sessionF05() {
           azzert.isNull(aPower17NullSafe());
         }
-        @Test public void seriesG01() {
+        @Test public void sessionG01() {
           aPower02.set(0xDADA);
           a.set(0xCAFE);
           assertTrue(aPower02.updated());
         }
-        @SuppressWarnings("synthetic-access") @Test public void seriesG02() {
+        @SuppressWarnings("synthetic-access") @Test public void sessionG02() {
           aPower02.set(0xDADA);
           azzert.notNull(aPower02.cache);
           azzert.that(aPower02.cache, is(0xDADA));
@@ -743,6 +762,16 @@ public interface Cookbook {
     }
     /** see @see java.util.function.Supplier#get() (auto-generated) */
     @Override public abstract @Nullable T get();
+    /**
+     * Used for fluent API, synonym of {@link Cell#set(Object)}.
+     * sets the current value of this cell
+     *
+     * @param t JD
+     * @return <code><b>this</b></code>*
+     */
+    public final Cell<T> of(final T t) {
+      return set(t);
+    }
     /**
      * sets the current value of this cell
      *
