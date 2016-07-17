@@ -174,13 +174,22 @@ public interface Cookbook {
           end.set("+");
           azzert.that(xBoxed.get(), is("[[<p+]]"));
         }
-        /** Local cells and rules */
+        /** Local ingredients and recipes */
         @Test public void sessionA04() {
           azzert.that(zzz.get(), is("zzz"));
           final Cell<String> foo = ingredient("foo");
           final Cell<String> ba = ingredient("ba");
           final Cell<String> bazzz = from(ba, zzz).make(() -> ba.get() + zzz.get());
           final Cell<String> foobazzz = from(foo, bazzz).make(() -> foo.get() + bazzz.get());
+          azzert.that(foobazzz.get(), is("foobazzz"));
+        }
+        /** Cloning */
+        @Test public void sessionA05() {
+          final Cell<String> foo = ingredient("foo");
+          final Cell<String> ba = ingredient("ba");
+          final Cell<String> bazzz = from(ba, zzz).make(() -> ba.get() + zzz.get());
+          final Cell<String> foobazzz = from(foo, bazzz).make(() -> foo.get() + bazzz.get());
+          final Cell<String> fbz = foobazzz.clone();
           azzert.that(foobazzz.get(), is("foobazzz"));
         }
       }
@@ -271,8 +280,7 @@ public interface Cookbook {
       /** the actual cell behind {@link #b()} */
       @SuppressWarnings("null")//
       final Cell<@Nullable Integer> aPower17NullSafe = new Recipe.NullRobust<>(() //
-          ->
-      a() * a() * a() * a() * aPower02() * aPower02() * aPower03() * aPower03() * aPower03()//
+          -> a() * a() * a() * a() * aPower02() * aPower02() * aPower03() * aPower03() * aPower03()//
           ).ingredients(a, aPower02, aPower03);
       /** the actual cell behind {@link #b()} */
       final Cell<@Nullable Integer> b = new Cookbook.Ingredient<@Nullable Integer>(3);
@@ -755,7 +763,8 @@ public interface Cookbook {
    * @see Ingredient
    * @see Recipe
    */
-  @SuppressWarnings("null") public abstract class Cell<T> implements Supplier<T>, Cloneable {
+  @SuppressWarnings("null") //
+  public abstract class Cell<T> implements Supplier<T>, Cloneable {
     /** @return the last value computed or set for this cell. */
     public final T cache() {
       return cache;
@@ -763,8 +772,8 @@ public interface Cookbook {
     /** see @see java.util.function.Supplier#get() (auto-generated) */
     @Override public abstract @Nullable T get();
     /**
-     * Used for fluent API, synonym of {@link Cell#set(Object)}.
-     * sets the current value of this cell
+     * Used for fluent API, synonym of {@link Cell#set(Object)}. sets the
+     * current value of this cell
      *
      * @param t JD
      * @return <code><b>this</b></code>*
@@ -819,6 +828,14 @@ public interface Cookbook {
     /** other cells that depend on this cell */
     final List<Cell<?>> dependents = new ArrayList<>();
     long version = 0;
+
+    @SuppressWarnings("unchecked") @Override protected Cell<T> clone() {
+      try {
+        return (Cell<T>) super.clone();
+      } catch (final CloneNotSupportedException e) {
+        return null;
+      }
+    }
   }
 
   /**
@@ -889,12 +906,8 @@ public interface Cookbook {
     public Recipe(final Supplier<? extends T> supplier) {
       this.supplier = supplier;
     }
-    /** Purposefully hide from clients */
-    @SuppressWarnings("unused") private Recipe() {
-      shouldNeverBeCalled();
-    }
-    @SuppressWarnings({ "unchecked" }) @Override public Cell<T> clone() throws CloneNotSupportedException {
-      return (Cell<T>) super.clone();
+    @Override public Cell<T> clone() {
+      return super.clone();
     }
     @Override public T get() {
       if (updated())
@@ -985,7 +998,7 @@ public interface Cookbook {
         super(cantBeNull(supplier));
         cache(cantBeNull(supplier).get());
       }
-      @SuppressWarnings({}) @Override public NotNull<T> clone() throws CloneNotSupportedException {
+      @SuppressWarnings({}) @Override public NotNull<T> clone() {
         return (NotNull<T>) super.clone();
       }
       /**
@@ -1034,7 +1047,7 @@ public interface Cookbook {
         super(supplier);
         assert supplier != null;
       }
-      @SuppressWarnings({}) @Override public Cookbook.Cell<T> clone() throws CloneNotSupportedException {
+      @SuppressWarnings({}) @Override public Cookbook.Cell<T> clone() {
         return super.clone();
       }
       @Override public T get() {
@@ -1069,5 +1082,16 @@ public interface Cookbook {
         }
       }
     }
+  }
+
+  /**
+   * creates a new ingredient with a specific type
+   *
+   * @param <T> JD
+   * @return the newly created instance
+   */
+  static <T> Cell<T> ingredient() {
+    @SuppressWarnings("unused") final Ingredient<T> $ = new Ingredient<T>();
+    return $;
   }
 }
