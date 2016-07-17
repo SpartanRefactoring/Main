@@ -79,6 +79,16 @@ public enum Collect {
       }
     };
   }
+  public static Collector unsafeUsesOf(final SimpleName n) {
+    return new Collector(n) {
+      @Override public List<SimpleName> in(final ASTNode... ns) {
+        final List<SimpleName> $ = new ArrayList<>();
+        for (final ASTNode n : ns)
+          n.accept(new UnsafeUsesCollector($, name));
+        return $;
+      }
+    };
+  }
   static ASTVisitor definitionsCollector(final List<SimpleName> into, final ASTNode n) {
     return new MethodExplorer.IgnoreNestedMethods() {
       @Override public boolean visit(final Assignment a) {

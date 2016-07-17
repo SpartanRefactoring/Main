@@ -38,6 +38,30 @@ import il.org.spartan.refactoring.wring.*;
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) public class TrimmerTest {
+  /**
+   * START OF STABLING TESTS
+   */
+  @Test public void inlineIntoInstanceCreation() {
+    TrimmerTestsUtils.trimming("" //
+        + "public Statement methodBlock(FrameworkMethod m) {\n" //
+        + "  final Statement statement = methodBlock(m);\n" //
+        + "  return new Statement() {\n" //
+        + "     public void evaluate() throws Throwable {\n" //
+        + "       try {\n" //
+        + "         statement.evaluate();\n" //
+        + "         handleDataPointSuccess();\n" //
+        + "       } catch (AssumptionViolatedException e) {\n" //
+        + "         handleAssumptionViolation(e);\n" //
+        + "       } catch (Throwable e) {\n" //
+        + "         reportParameterizedError(e, complete.getArgumentStrings(nullsOk()));\n" //
+        + "       }\n" //
+        + "     }\n" //
+        + "   };\n" //
+        + "}").to("");
+  }
+  /**
+   * END OF STABLING TESTS
+   */
   @Test public void actualExampleForSortAddition() {
     TrimmerTestsUtils.trimming("1 + b.statements().indexOf(declarationStmt)").to("");
   }
