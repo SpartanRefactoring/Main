@@ -372,8 +372,14 @@ final class LocalInliner {
     boolean canInlineInto(final ASTNode... ns) {
       return Collect.definitionsOf(name).in(ns).isEmpty() && (Is.sideEffectFree(get()) || uses(ns).size() <= 1);
     }
+    boolean canSafelyInlineInto(final ASTNode... ns) {
+      return canInlineInto(ns) && unsafeUses(ns).isEmpty();
+    }
     private List<SimpleName> uses(final ASTNode... ns) {
       return Collect.usesOf(name).in(ns);
+    }
+    private List<SimpleName> unsafeUses(final ASTNode... ns) {
+      return Collect.unsafeUsesOf(name).in(ns);
     }
     private void inlineIntoSingleton(final ASTNode replacement, final Wrapper<ASTNode> ns) {
       final ASTNode oldExpression = ns.get();
