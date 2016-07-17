@@ -25,11 +25,14 @@ import org.junit.runners.*;
 public interface Cookbook {
   /**
    * A repository of test cases and examples
+   * <p>
+   * <i>the underscores in the name are magic against alphabetical method
+   * sorters that cannot distinguish code from meta-code</i>
    *
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016
    */
-  public static enum _Examples {
+  public static enum _Meta {
     ;
     /**
      * Should not be used by clients. A development time only
@@ -52,8 +55,6 @@ public interface Cookbook {
      * <li>{@link #aPower17NullSafe()}.
      * </ol>
      * <p>
-     * <i>the dollars in the name are magic against alphabetical method sorters
-     * that cannot distinguish code from meta-code</i>
      *
      * @author Yossi Gil <Yossi.Gil@GMail.COM>
      * @since 2016
@@ -101,21 +102,21 @@ public interface Cookbook {
       /** Can, and often should be made private; package is OK */
       final Edible<@Nullable Integer> a = new Cookbook.Ingredient<@Nullable Integer>();
       /** Can, and often should be made private; package is OK */
-      final Edible<@Nullable Integer> aPower02 = new Recipe<@Nullable Integer>(() -> {
+      @SuppressWarnings("null") final Edible<@Nullable Integer> aPower02 = new Recipe<@Nullable Integer>(() -> {
         ++_aPower02Calls;
         return a() * a();
       }).ingredients(a);
       /** Can, and often should be made private; package is OK */
-      final Edible<@Nullable Integer> aPower03 = new Recipe<@Nullable Integer>(() -> {
+      @SuppressWarnings("null") final Edible<@Nullable Integer> aPower03 = new Recipe<@Nullable Integer>(() -> {
         ++_aPower03Calls;
         return a() * aPower02();
       }).ingredients(aPower02, a);
       /** the actual cell behind {@link #aPower05()} */
-      final Edible<@Nullable Integer> aPower05 = new Recipe<@Nullable Integer>(//
+      @SuppressWarnings("null") final Edible<@Nullable Integer> aPower05 = new Recipe<@Nullable Integer>(//
           () -> aPower02() * aPower03()).ingredients(aPower02, aPower03);
       /** Can, and often should be made private; package is OK */
       /** the actual cell behind {@link #b()} */
-      final Edible<@Nullable Integer> aPower17NullSafe = new Recipe.NullRobust<@Nullable Integer>(//
+      @SuppressWarnings("null") final Edible<@Nullable Integer> aPower17NullSafe = new Recipe.NullRobust<@Nullable Integer>(//
           () -> {
             try {
               return a() * a() * a() * a() * aPower02() * aPower02() * aPower03() * aPower03() * aPower03();
@@ -128,7 +129,8 @@ public interface Cookbook {
       /** the actual cell behind {@link #c()} */
       final Edible<@Nullable Integer> c = new Cookbook.Ingredient<@Nullable Integer>(5);
       /** the actual cell behind {@link #d()} */
-      final Edible<@Nullable Integer> d = new Recipe<@Nullable Integer>(() -> a() + b() + c()).ingredients(a, b, c);
+      @SuppressWarnings("null") final Edible<@Nullable Integer> d = new Recipe<@Nullable Integer>(() -> a() + b() + c())
+          .ingredients(a, b, c);
 
       @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "null", "javadoc" })//
       public static class TEST extends Diophantine {
@@ -154,7 +156,7 @@ public interface Cookbook {
           a.of(null);
           azzert.isNull(a());
         }
-        @Test public void seriesA1() {
+        @Test public void seriesA01() {
           azzert.isNull(a());
         }
         @Test(expected = NullPointerException.class) public void seriesA10() {
@@ -197,7 +199,6 @@ public interface Cookbook {
         }
         @Test public void seriesA18() {
           a.of(null);
-          final Recipe<?> x = (Recipe<?>) aPower17NullSafe;
         }
         @Test public void seriesA19() {
           a.of(null);
@@ -565,7 +566,6 @@ public interface Cookbook {
         @Test public void seriesF05() {
           azzert.isNull(aPower17NullSafe());
         }
-
         @Test public void seriesG01() {
           aPower02.of(0xDADA);
           a.of(0xCAFE);
@@ -583,9 +583,9 @@ public interface Cookbook {
 
   /**
    * A cell stores a value of some type (which is passed by parameter). A cell
-   * may be either {@link Ingredient} or {@link Recipe}. A computed cell typically
-   * depends on other cells, which may either valued, or computed, and hence
-   * depending on yet other cells. A change to a cell's value is triggers
+   * may be either {@link Ingredient} or {@link Recipe}. A computed cell
+   * typically depends on other cells, which may either valued, or computed, and
+   * hence depending on yet other cells. A change to a cell's value is triggers
    * reevalution of all cells that depend on it.
    *
    * @param <T> JD
@@ -599,7 +599,6 @@ public interface Cookbook {
     public final T cache() {
       return cache;
     }
-
     /** see @see java.util.function.Supplier#get() (auto-generated) */
     @Override public @Nullable T get() {
       return cache();
@@ -676,6 +675,7 @@ public interface Cookbook {
     @Override public boolean updated() {
       return true;
     }
+
     /**
      * cell which does not depend on others
      *
@@ -691,13 +691,6 @@ public interface Cookbook {
        */
       public NotNull(final T value) {
         cache(value);
-      }
-      /**
-       * prevent clients from instantiating this this class; this consructor
-       * should never be called
-       */
-      @SuppressWarnings("unused") private NotNull() {
-        assert false;
       }
       @Override public boolean updated() {
         return true;
@@ -795,6 +788,7 @@ public interface Cookbook {
 
     private final List<Edible<?>> prerequisites = new ArrayList<>();
     private @Nullable Supplier<? extends @Nullable T> supplier;
+
     /**
      * A cell that may depend on others.
      *
@@ -843,6 +837,7 @@ public interface Cookbook {
       private final List<Cookbook.Edible<?>> prerequisites = new ArrayList<>();
       private @Nullable Supplier<? extends @Nullable T> supplier;
     }
+
     /**
      * A cell that may depend on others.
      *
