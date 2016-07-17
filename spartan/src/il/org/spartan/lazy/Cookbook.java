@@ -45,7 +45,7 @@ import org.junit.runners.*;
  * <ol>
  * <li>Classes in this interface give several implementations of the cell
  * concept.
- * <li>Inner classes of {@link __Meta} provide examples and extensive unit
+ * <li>Inner classes of {@link __META} provide examples and extensive unit
  * testing.
  * <li>There are no other members: A client class that
  * <code><b>implements</b></code> this interface should be ok.
@@ -123,8 +123,14 @@ public interface Cookbook {
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016
    */
-  public static enum __Meta {
+  public static enum __META {
     ;
+    public static class SIMPLE {
+      Cell<String> begin = ingredient("<");
+      Cell<String> end = ingredient(">");
+      Cell<String> text = ingredient("p");
+    }
+
     /**
      * Should not be used by clients. A development time only
      * <code><b>class</b></code> used for testing and as a documented demo of
@@ -152,7 +158,7 @@ public interface Cookbook {
      * @since 2016
      */
     @SuppressWarnings({ "boxing", "unused" })//
-    public static class A implements Cookbook {
+    public static class TOUGH implements Cookbook {
       /** @return contents of cell a */
       public final @Nullable Integer a() {
         return a.get();
@@ -228,7 +234,7 @@ public interface Cookbook {
       @SuppressWarnings("null") final Cell<@Nullable Integer> d = Cookbook.from(a, b, c).make(() -> a() + b() + c());
 
       @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "null", "javadoc" })//
-      public static class TEST extends A {
+      public static class TEST extends TOUGH {
         @Test public void seriesA01() {
           azzert.isNull(a());
         }
@@ -673,12 +679,6 @@ public interface Cookbook {
           azzert.isNull(((Recipe<?>) aPower02).supplier);
         }
       }
-    }
-
-    public static class B {
-      Cell<String> begin = ingredient("<");
-      Cell<String> end = ingredient(">");
-      Cell<String> text = ingredient("p");
     }
   }
   /**
