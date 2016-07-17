@@ -30,7 +30,7 @@ import org.junit.runners.*;
  * indirectly. The computed value is cached, and used in subsequent calls to
  * prevent unnecessary re-computation.
  * <li> {@link Cell#cache()}, returning the last value cached in the cell.
- * <li> {@link Cell#of(Object)}, whose parameter must be of the correct type,
+ * <li> {@link Cell#set(Object)}, whose parameter must be of the correct type,
  * stores its parameter in the cell, whereby invalidating the contents of all
  * cells whose recipe depends on it.
  * <p>
@@ -63,27 +63,28 @@ public interface Cookbook {
    * </pre>
    *
    * @param ingredients list of ingredients
-   * @return a {@link RecipeMaker} which can be used to continue the fluent API
-   *         chain.
+   * @return a {@link $$RecipeMaker} which can be used to continue the fluent
+   *         API chain.
    */
-  static RecipeMaker from(final Cell<?>... ingredients) {
-    return new RecipeMaker() {
+  static $$RecipeMaker from(final Cell<?>... ingredients) {
+    return new $$RecipeMaker() {
       @Override public <X> Cell<@Nullable X> make(final Supplier<X> s) {
         return new Recipe<>(s).ingredients(ingredients);
       }
     };
   }
-  static <@Nullable T> Cell<T> ingredient() {
-    @SuppressWarnings("unused") final Ingredient<@Nullable T> $ = new Ingredient<T>();
-    return $;
+  /** Fluent API */
+  interface $$RecipeMaker {
+    <X> Cell<@Nullable X> make(final Supplier<X> s);
   }
+
   /**
    * A factory method for class {@link Ingredient} as in
    *
    * <pre>
    * Cell&lt;String&gt; genesis = Cookbook.ingredient();
    * </pre>
-   * 
+   *
    * @param <T> JD
    * @param t JD
    * @return the newly created {@link Ingredient} instance
@@ -125,12 +126,38 @@ public interface Cookbook {
    */
   public static enum __META {
     ;
-    public static class SIMPLE {
-      Cell<String> begin = ingredient("<");
-      Cell<String> end = ingredient(">");
-      Cell<String> text = ingredient("p");
-    }
+    @SuppressWarnings("javadoc")
+    public static class A {
+      String begin() {
+        return begin.get();
+      }
+      String end() {
+        return end.get();
+      }
+      String text() {
+        return text.get();
+      }
+      String wrap() {
+        return wrap.get();
+      }
 
+      final Cell<String> begin = ingredient("<");
+      final Cell<String> end = new Ingredient<String>(">");
+      final Cell<String> text = ingredient("p");
+      final Cell<String> wrap = from(begin, end, text).make(() //
+          -> begin() + text() + end() //
+          );
+
+      public static class DEMONSTRATES extends A {
+        @Test public void usecase0() {
+          azzert.that(wrap(), is("<a>"));
+        }
+        @Test public void usecase1() {
+          begin.set("(");
+          azzert.that(wrap, is("(a>"));
+        }
+      }
+    }
     /**
      * Should not be used by clients. A development time only
      * <code><b>class</b></code> used for testing and as a documented demo of
@@ -199,6 +226,12 @@ public interface Cookbook {
       /** Can, and often should be made private; package is OK */
       final Cell<@Nullable Integer> a = new Cookbook.Ingredient<@Nullable Integer>();
 
+      /** the actual cell behind {@link #b()} */
+      final Cell<@Nullable Integer> b = new Cookbook.Ingredient<@Nullable Integer>(3);
+      /** the actual cell behind {@link #c()} */
+      final Cell<@Nullable Integer> c = new Cookbook.Ingredient<@Nullable Integer>(5);
+      /** the actual cell behind {@link #d()} */
+      @SuppressWarnings("null") final Cell<@Nullable Integer> d = Cookbook.from(a, b, c).make(() -> a() + b() + c());
       /** Can, and often should be made private; package is OK */
       @SuppressWarnings("null") final Cell<@Nullable Integer> aPower02 = new Recipe<@Nullable Integer>(() -> {
         ++_aPower02Calls;
@@ -215,94 +248,84 @@ public interface Cookbook {
       /** Can, and often should be made private; package is OK */
       /** the actual cell behind {@link #b()} */
       @SuppressWarnings("null") final Cell<@Nullable Integer> aPower17NullSafe //
-      = new Recipe.NullRobust<@Nullable Integer>(
-          () -> {
-                        try {
-                          return a() * a() * a() * a() * aPower02() * aPower02() * aPower03() * aPower03() * aPower03();
-                        } catch (final NullPointerException __) {
-                          return null;
-                        }
-          }
-
-
-          );
-      /** the actual cell behind {@link #b()} */
-      final Cell<@Nullable Integer> b = new Cookbook.Ingredient<@Nullable Integer>(3);
-      /** the actual cell behind {@link #c()} */
-      final Cell<@Nullable Integer> c = new Cookbook.Ingredient<@Nullable Integer>(5);
-      /** the actual cell behind {@link #d()} */
-      @SuppressWarnings("null") final Cell<@Nullable Integer> d = Cookbook.from(a, b, c).make(() -> a() + b() + c());
-
+      = from(a, aPower02, aPower03).make(() -> a() * a() * a() * a() * aPower02() * aPower02() * aPower03() * aPower03() * aPower03());
+      /**
+       * TODO(2016) Javadoc: automatically generated for type <code>Cookbook.__META.TOUGH</code>
+       *
+       *
+       * @author Yossi Gil <Yossi.Gil@GMail.COM>
+       * @since 2016
+       */
       @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "null", "javadoc" })//
       public static class TEST extends TOUGH {
         @Test public void seriesA01() {
           azzert.isNull(a());
         }
         @Test public void seriesA05() {
-          a.of(2);
+          a.set(2);
           azzert.notNull(a());
         }
         @Test public void seriesA06() {
-          a.of(2);
+          a.set(2);
           azzert.notNull(aPower02());
           azzert.that(aPower02(), is(4));
         }
         @Test public void seriesA07() {
-          a.of(2);
+          a.set(2);
           azzert.notNull(aPower03());
           azzert.that(aPower03(), is(8));
         }
         @Test public void seriesA08() {
-          a.of(2);
+          a.set(2);
           azzert.notNull(aPower02());
         }
         @Test public void seriesA09() {
-          a.of(null);
+          a.set(null);
           azzert.isNull(a());
         }
         @Test(expected = NullPointerException.class) public void seriesA10() {
-          a.of(null);
+          a.set(null);
           aPower02();
         }
         @Test(expected = NullPointerException.class) public void seriesA11() {
-          a.of(null);
+          a.set(null);
           aPower03();
         }
         @Test(expected = NullPointerException.class) public void seriesA12() {
-          a.of(null);
+          a.set(null);
           aPower02();
         }
         @Test public void seriesA13() {
-          a.of(null);
+          a.set(null);
           azzert.isNull(aPower17NullSafe());
-          a.of(2);
+          a.set(2);
           azzert.notNull(aPower17NullSafe());
           azzert.that(a(), is(2));
         }
         @Test public void seriesA14() {
-          a.of(2);
+          a.set(2);
           azzert.notNull(aPower17NullSafe());
           azzert.that(a(), is(2));
           azzert.that(aPower17NullSafe(), is(1 << 17));
         }
         @Test public void seriesA15() {
-          a.of(null);
+          a.set(null);
           azzert.isNull(aPower17NullSafe());
         }
         @Test public void seriesA16() {
-          a.of(null);
+          a.set(null);
           azzert.isNull(aPower17NullSafe.get());
         }
         @Test public void seriesA17() {
-          a.of(null);
+          a.set(null);
           final Recipe<?> r = (Recipe<?>) aPower17NullSafe;
           azzert.isNull(r.get());
         }
         @Test public void seriesA18() {
-          a.of(null);
+          a.set(null);
         }
         @Test public void seriesA19() {
-          a.of(null);
+          a.set(null);
           aPower17NullSafe.get();
         }
         @Test(expected = NullPointerException.class) public void seriesA2() {
@@ -321,45 +344,45 @@ public interface Cookbook {
           a().toString().getClass();
         }
         @Test public void seriesB01() {
-          a.of(2);
+          a.set(2);
           azzert.notNull(a());
           azzert.that(a(), is(2));
-          a.of(3);
+          a.set(3);
           azzert.that(a(), is(3));
-          a.of(4);
+          a.set(4);
           azzert.that(a(), is(4));
-          a.of(null);
+          a.set(null);
           azzert.isNull(a());
-          a.of(5);
+          a.set(5);
           azzert.that(a(), is(5));
         }
         @Test public void seriesB02() {
-          a.of(2);
+          a.set(2);
           azzert.notNull(aPower02());
           azzert.that(aPower02(), is(4));
-          a.of(3);
+          a.set(3);
           azzert.notNull(aPower02());
           azzert.that(aPower02(), is(9));
         }
         @Test public void seriesB03() {
-          a.of(2);
+          a.set(2);
           azzert.notNull(aPower03());
           azzert.that(aPower03(), is(8));
-          a.of(3);
+          a.set(3);
           azzert.notNull(aPower03());
           azzert.that(aPower03(), is(27));
         }
         @Test public void seriesB04() {
-          a.of(2);
+          a.set(2);
           azzert.notNull(aPower02());
         }
         @Test public void seriesC00() {
-          a.of(-3);
+          a.set(-3);
           azzert.that(_aPower03Calls, is(0));
           azzert.that(_aPower02Calls, is(0));
         }
         @Test public void seriesC01() {
-          a.of(-3);
+          a.set(-3);
           azzert.that(aPower03(), is(-27));
           azzert.that(_aPower03Calls, is(1)); // Force invocation
           azzert.that(_aPower02Calls, is(1));
@@ -373,7 +396,7 @@ public interface Cookbook {
           azzert.that(aPower03.version(), is(0L));
         }
         @Test public void seriesC04() {
-          a.of(-2);
+          a.set(-2);
           azzert.that(a.version(), is(1L));
           azzert.that(aPower03.version(), is(0L));
           azzert.that(_aPower03Calls, is(0));
@@ -382,7 +405,7 @@ public interface Cookbook {
           azzert.that(_aPower03Calls, is(1));
         }
         @Test public void seriesC05() {
-          a.of(-2);
+          a.set(-2);
           azzert.that(aPower17NullSafe(), is(-(1 << 17))); // Force invocation
           azzert.that(_aPower02Calls, is(1));
           azzert.that(_aPower03Calls, is(1));
@@ -395,14 +418,14 @@ public interface Cookbook {
         }
         @Test public void seriesD02() {
           azzert.that(a.version, is(0L));
-          a.of(1);
+          a.set(1);
           azzert.that(a.version, is(1L));
           azzert.that(aPower02.version, is(0L));
           azzert.that(aPower03.version, is(0L));
           azzert.that(aPower17NullSafe.version, is(0L));
         }
         @Test public void seriesD03() {
-          a.of(14);
+          a.set(14);
           azzert.that(aPower02.version, is(0L));
           azzert.that(aPower02.get(), is(196)); // Force evaluation
           azzert.that(aPower03.version, is(0L));
@@ -410,17 +433,17 @@ public interface Cookbook {
           azzert.that(aPower17NullSafe.version, is(0L));
         }
         @Test public void seriesD04() {
-          a.of(14);
+          a.set(14);
           azzert.notNull(a.get());
         }
         @Test public void seriesD05() {
-          a.of(14);
+          a.set(14);
           azzert.notNull(a.get());
           azzert.that(a.get(), is(14));
           azzert.that(aPower02.get(), is(196)); // Sanity check
         }
         @Test public void seriesD06() {
-          a.of(14);
+          a.set(14);
           azzert.notNull(a.get());
           a.get(); // Force evaluation
           azzert.that(aPower02.version(), is(0L));
@@ -428,27 +451,27 @@ public interface Cookbook {
           azzert.that(aPower02.version(), is(0L));
         }
         @Test public void seriesD07() {
-          a.of(14);
+          a.set(14);
           azzert.notNull(a.get());
           a.get(); // Force evaluation
           azzert.not(aPower02.updated());
         }
         @Test public void seriesD08() {
-          a.of(14);
+          a.set(14);
           azzert.that(a.get(), is(14)); // Force evaluation
           azzert.that(a.version(), is(1L));
           azzert.that(aPower02.version, is(0L));
           azzert.that(((Recipe<Integer>) aPower02).latestPrequisiteVersion(), is(1L));
         }
         @Test public void seriesD09() {
-          a.of(14);
+          a.set(14);
           azzert.that(a.get(), is(14)); // Force evaluation
           azzert.that(a.version(), is(1L));
           azzert.that(aPower02.version, is(0L));
           azzert.notNull(a.dependents);
         }
         @Test public void seriesD10() {
-          a.of(14);
+          a.set(14);
           azzert.that(a.get(), is(14)); // Force evaluation
           azzert.that(a.version(), is(1L));
           azzert.that(aPower02.version, is(0L));
@@ -458,7 +481,7 @@ public interface Cookbook {
           azzert.falze(a.dependents.contains(null));
         }
         @Test public void seriesD11() {
-          a.of(14);
+          a.set(14);
           azzert.that(a.get(), is(14)); // Force evaluation
           azzert.that(a.version(), is(1L));
         }
@@ -475,7 +498,7 @@ public interface Cookbook {
           assertTrue(a.dependents.contains(aPower17NullSafe));
         }
         @Test public void seriesD16() {
-          a.of(2);
+          a.set(2);
           azzert.that(aPower17NullSafe(), is(1 << 17));
           azzert.that(aPower17NullSafe(), is(1 << 17));
           azzert.that(aPower17NullSafe(), is(1 << 17));
@@ -486,12 +509,12 @@ public interface Cookbook {
           azzert.that(_aPower03Calls, is(1));
         }
         @Test public void seriesD17() {
-          a.of(2);
+          a.set(2);
           azzert.that(aPower17NullSafe(), is(1 << 17));
           azzert.that(aPower17NullSafe(), is(1 << 17));
           azzert.that(_aPower02Calls, is(1));
-          a.of(3);
-          a.of(2);
+          a.set(3);
+          a.set(2);
           azzert.that(aPower17NullSafe(), is(1 << 17));
           azzert.that(aPower17NullSafe(), is(1 << 17));
           azzert.that(_aPower02Calls, is(2));
@@ -503,7 +526,7 @@ public interface Cookbook {
           azzert.that(aPower03.version(), is(0L));
           azzert.that(aPower05.version(), is(0L));
           azzert.that(aPower17NullSafe.version(), is(0L));
-          a.of(2);
+          a.set(2);
           azzert.that(a.version(), is(1L));
           azzert.that(aPower02.version(), is(0L));
           azzert.that(aPower03.version(), is(0L));
@@ -534,7 +557,7 @@ public interface Cookbook {
           azzert.that(aPower03.version(), is(3L));
           azzert.that(aPower05.version(), is(4L));
           azzert.that(aPower17NullSafe.version(), is(4L));
-          a.of(3);
+          a.set(3);
           azzert.that(a.version(), is(5L));
           azzert.that(aPower02.version(), is(2L));
           azzert.that(aPower03.version(), is(3L));
@@ -612,19 +635,19 @@ public interface Cookbook {
           azzert.that(aPower17NullSafe.version(), is(0L));
         }
         @Test public void seriesE03() {
-          a.of(2);
-          b.of(3);
-          c.of(4);
+          a.set(2);
+          b.set(3);
+          c.set(4);
           azzert.that(d.get(), is(9));
         }
         @Test public void seriesE04() {
-          a.of(2);
-          aPower02.of(3);
-          aPower03.of(5);
+          a.set(2);
+          aPower02.set(3);
+          aPower03.set(5);
           azzert.that(aPower05.get(), is(15));
         }
         @Test public void seriesE05() {
-          a.of(2);
+          a.set(2);
           azzert.that(aPower05.get(), is(1 << 5));
           azzert.that(aPower17NullSafe.version(), is(0L));
           azzert.that(aPower02.version(), is(2L));
@@ -632,28 +655,28 @@ public interface Cookbook {
           azzert.that(aPower05.version(), is(4L));
         }
         @Test public void seriesE06() {
-          a.of(2);
+          a.set(2);
           assertFalse("aPower5 should not be updated! (recursive dependency on a)", aPower05.updated());
         }
         @Test public void seriesF01() {
-          a.of(11);
+          a.set(11);
           assertFalse(aPower02.updated());
           azzert.that(aPower02.get(), is(121));
           assertTrue(aPower02.updated());
-          aPower02.of(0xDADA);
+          aPower02.set(0xDADA);
           assertTrue(aPower02.updated());
           azzert.that(aPower02.get(), is(0xDADA));
-          a.of(0xCAFE);
+          a.set(0xCAFE);
           assertTrue(aPower02.updated());
           azzert.that(aPower02.get(), is(0xDADA));
         }
         @Test public void seriesF02() {
-          a.of(null);
+          a.set(null);
           azzert.isNull(aPower17NullSafe());
           azzert.that(aPower05.version(), is(0L));
         }
         @Test public void seriesF03() {
-          a.of(2);
+          a.set(2);
           azzert.that(aPower05.get(), is(1 << 5));
           azzert.that(aPower17NullSafe.version(), is(0L));
           azzert.that(aPower02.version(), is(2L));
@@ -661,19 +684,19 @@ public interface Cookbook {
           azzert.that(aPower05.version(), is(4L));
         }
         @Test public void seriesF04() {
-          a.of(null);
+          a.set(null);
           azzert.isNull(aPower17NullSafe());
         }
         @Test public void seriesF05() {
           azzert.isNull(aPower17NullSafe());
         }
         @Test public void seriesG01() {
-          aPower02.of(0xDADA);
-          a.of(0xCAFE);
+          aPower02.set(0xDADA);
+          a.set(0xCAFE);
           assertTrue(aPower02.updated());
         }
         @SuppressWarnings("synthetic-access") @Test public void seriesG02() {
-          aPower02.of(0xDADA);
+          aPower02.set(0xDADA);
           azzert.notNull(aPower02.cache);
           azzert.that(aPower02.cache, is(0xDADA));
           azzert.isNull(((Recipe<?>) aPower02).supplier);
@@ -707,7 +730,7 @@ public interface Cookbook {
      * @param t JD
      * @return <code><b>this</b></code>
      */
-    public final Cell<T> of(final T t) {
+    public final Cell<T> set(final T t) {
       cache(t);
       uponForcedSet();
       version = oldestDependent() + 1; // Invalidate all dependents
@@ -1002,8 +1025,4 @@ public interface Cookbook {
     }
   }
 
-  /** Fluent API */
-  interface RecipeMaker {
-    <X> Cell<@Nullable X> make(final Supplier<X> s);
-  }
 }
