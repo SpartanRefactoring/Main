@@ -22,7 +22,7 @@ import il.org.spartan.refactoring.utils.Subject;
 public final class DeclarationInitializerReturnVariable extends Wring.VariableDeclarationFragementAndStatement {
   @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer, final Statement nextStatement,
       final TextEditGroup g) {
-    if (initializer == null || hasAnnotation(f))
+    if (initializer == null || hasAnnotation(f) || initializer instanceof ArrayInitializer)
       return null;
     final ReturnStatement s = asReturnStatement(nextStatement);
     if (s == null)
