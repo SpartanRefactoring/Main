@@ -386,7 +386,7 @@ final class LocalInliner {
       final ASTNode newExpression = duplicate(ns.get());
       ns.set(newExpression);
       rewriter.replace(oldExpression, newExpression, editGroup);
-      for (final ASTNode use : Collect.forAllOccurencesExcludingDefinitions(name).in(newExpression))
+      for (final ASTNode use : Collect.usesOf(name).in(newExpression))
         rewriter.replace(use, !(use instanceof Expression) ? replacement : new Plant((Expression) replacement).into(use.getParent()), editGroup);
     }
   }
