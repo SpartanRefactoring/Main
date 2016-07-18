@@ -6,6 +6,7 @@ import static il.org.spartan.refactoring.wring.TernaryPushdown.pushdown;
 
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.Statement;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
@@ -30,7 +31,7 @@ public final class IfExpressionStatementElseSimilarExpressionStatement extends W
     if (elze == null)
       return null;
     final Expression e = pushdown(Subject.pair(then, elze).toCondition(s.getExpression()));
-    return e == null ? null : Subject.operand(e).toStatement();
+    return e == null || e instanceof MethodInvocation ? null : Subject.operand(e).toStatement();
   }
   @Override String description(@SuppressWarnings("unused") final IfStatement _) {
     return "Consolidate two branches of an 'if' into a single ";
