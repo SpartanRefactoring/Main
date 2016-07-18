@@ -59,6 +59,14 @@ import il.org.spartan.refactoring.wring.*;
         + "   };\n" //
         + "}").to("");
   }
+  @Test public void inlineArrayInitialization() {
+    TrimmerTestsUtils.trimming("" //
+        + "public void multiDimensionalIntArraysAreEqual() {\n" //
+        + "  int[][] int1 = {{1, 2, 3}, {4, 5, 6}};\n" //
+        + "  int[][] int2 = {{1, 2, 3}, {4, 5, 6}};\n" //
+        + "  assertArrayEquals(int1, int2);\n" //
+        + "}").to("");
+  }
   /**
    * END OF STABLING TESTS
    */
