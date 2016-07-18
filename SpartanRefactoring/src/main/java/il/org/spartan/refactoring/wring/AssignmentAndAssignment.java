@@ -52,7 +52,7 @@ public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assign
   }
   private boolean typeSafe(Assignment a1, Assignment a2) {
     if (!a1.getAST().hasResolvedBindings())
-      return true;
+      return !(Extract.core(getRight(a1)) instanceof NumberLiteral);
     ITypeBinding b = left(a1).resolveTypeBinding();
     if (b == null)
       return false;
