@@ -57,57 +57,12 @@ import org.junit.runners.*;
  * @since 2016
  */
 public interface Cookbook {
-  interface $$Function<T, R> {
-    Cell<R> from(Cell<T> ¢);
-  }
-
-  interface $$Function2<T1, T2, R> {
-    Cell<R> from(Cell<T1> ¢1, Cell<T2> ¢2);
-  }
-
-  @FunctionalInterface interface Function2<T1, T2, R> {
-    R apply(T1 ¢1, T2 ¢2);
-  }
-
   /**
-   * TODO(2016) Javadoc: automatically generated for type <code>Cookbook</code>
-   *
-   * @param <T1>
-   * @param <T2>
-   * @param <T3>
-   * @param <R>
-   * @author Yossi Gil <Yossi.Gil@GMail.COM>
-   * @since 2016
+   * @param $ result
+   * @return the parameter
    */
-  @FunctionalInterface interface Function3<T1, T2, T3, R> {
-    R apply(T1 ¢1, T2 ¢2, T3 ¢3);
-  }
-
-  @SuppressWarnings({ "static-method", "javadoc", "null" })//
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
-  public static class TEST {
-    @Test public void sessionA01() {
-      final Cell<Integer> a = ingredient(Integer.valueOf(12));
-      final $$Function<Integer, String> f = compute((final Integer ¢) -> "(" + ¢ + ")");
-      final Cell<String> b = f.from(a);
-      azzert.that(b.get(), is("(12)"));
-    }
-    @Test public void sessionA02() {
-      final Cell<Integer> a = ingredient(Integer.valueOf(12));
-      final Cell<String> f = compute((final Integer ¢) -> "(" + ¢.toString() + ")").from(a);
-      azzert.that(f.get(), is("(12)"));
-    }
-    @Test public void sessionA03() {
-      final Cell<Integer> a = ingredient(Integer.valueOf(12));
-      final Cell<String> f = compute((final Integer ¢) -> "(" + ¢.toString() + ")").from(a);
-      azzert.that(f.get(), is("(12)"));
-    }
-    @Test public void sessionA04() {
-      final Cell<Integer> x = ingredient(Integer.valueOf(13));
-      final Cell<Character> f = ingredient(new Character('f'));
-      final Cell<String> fx = compute((final Integer i, final Character c) -> "" + c + "(" + i + ")").from(x, f);
-      azzert.that(fx.get(), is("f(13)"));
-    }
+  static Cell<?>[] asArray(Set<Cell<?>> $) {
+    return $.toArray(new Cell<?>[$.size()]);
   }
 
   /**
@@ -121,6 +76,7 @@ public interface Cookbook {
   static <@Nullable T, @Nullable R> $$Function<T, R> compute(final Function<T, R> λ) {
     return ¢ -> new Recipe<>(() -> λ.apply(¢.get())).ingredient(¢);
   }
+
   /**
    * TODO Javadoc(2016): automatically generated for method <code>compute</code>
    *
@@ -133,6 +89,7 @@ public interface Cookbook {
   static <@Nullable T1, @Nullable T2, @Nullable R> $$Function2<T1, T2, R> compute(final Function2<T1, T2, R> λ) {
     return (¢1, ¢2) -> new Recipe<>(() -> λ.apply(¢1.get(), ¢2.get())).ingredients(¢1, ¢2);
   }
+
   /**
    * Fluent API function to be used as in
    *
@@ -150,6 +107,17 @@ public interface Cookbook {
         return new Recipe<>(s).ingredients(ingredients);
       }
     };
+  }
+
+  /**
+   * creates a new ingredient with a specific type
+   *
+   * @param <T> JD
+   * @return the newly created instance
+   */
+  static <T> Cell<T> ingredient() {
+    @SuppressWarnings("unused") final Ingredient<T> $ = new Ingredient<T>();
+    return $;
   }
   /**
    * A factory method for class {@link Ingredient} as in
@@ -187,7 +155,13 @@ public interface Cookbook {
     assert false;
     throw new RuntimeException();
   }
-
+  static <@Nullable T> Recipe<T> traceWizard(final Supplier<T> λ) {
+    Cell.trace = new HashSet<>();
+    λ.get();
+    Cell<?>[] $ = asArray(Cell.trace);
+    Cell.trace = null; 
+    return new Recipe<>(λ).ingredients($);
+  }
   /**
    * A repository of test cases and examples
    * <p>
@@ -267,6 +241,33 @@ public interface Cookbook {
           final Cell<String> fbz = foobazzz.clone();
           azzert.that(fbz.get(), is("foobazzz"));
         }
+      }
+    }
+
+    @SuppressWarnings({ "static-method", "javadoc", "null" })//
+    @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
+    public static class C {
+      @Test public void sessionA01() {
+        final Cell<Integer> a = ingredient(Integer.valueOf(12));
+        final $$Function<Integer, String> f = compute((final Integer ¢) -> "(" + ¢ + ")");
+        final Cell<String> b = f.from(a);
+        azzert.that(b.get(), is("(12)"));
+      }
+      @Test public void sessionA02() {
+        final Cell<Integer> a = ingredient(Integer.valueOf(12));
+        final Cell<String> f = compute((final Integer ¢) -> "(" + ¢.toString() + ")").from(a);
+        azzert.that(f.get(), is("(12)"));
+      }
+      @Test public void sessionA03() {
+        final Cell<Integer> a = ingredient(Integer.valueOf(12));
+        final Cell<String> f = compute((final Integer ¢) -> "(" + ¢.toString() + ")").from(a);
+        azzert.that(f.get(), is("(12)"));
+      }
+      @Test public void sessionA04() {
+        final Cell<Integer> x = ingredient(Integer.valueOf(13));
+        final Cell<Character> f = ingredient(new Character('f'));
+        final Cell<String> fx = compute((final Integer i, final Character c) -> "" + c + "(" + i + ")").from(x, f);
+        azzert.that(fx.get(), is("f(13)"));
       }
     }
 
@@ -819,10 +820,43 @@ public interface Cookbook {
       }
     }
   }
+  interface $$Function<T, R> {
+    Cell<R> from(Cell<T> ¢);
+  }
+  interface $$Function2<T1, T2, R> {
+    Cell<R> from(Cell<T1> ¢1, Cell<T2> ¢2);
+  }
 
   /** Fluent API */
   interface $$RecipeMaker {
     <X> Cell<@Nullable X> make(final Supplier<X> s);
+  }
+
+  @SuppressWarnings({ "static-method", "javadoc", "null" })//
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
+  public static class C {
+    @Test public void sessionA01() {
+      final Cell<Integer> a = ingredient(Integer.valueOf(12));
+      final $$Function<Integer, String> f = compute((final Integer ¢) -> "(" + ¢ + ")");
+      final Cell<String> b = f.from(a);
+      azzert.that(b.get(), is("(12)"));
+    }
+    @Test public void sessionA02() {
+      final Cell<Integer> a = ingredient(Integer.valueOf(12));
+      final Cell<String> f = compute((final Integer ¢) -> "(" + ¢.toString() + ")").from(a);
+      azzert.that(f.get(), is("(12)"));
+    }
+    @Test public void sessionA03() {
+      final Cell<Integer> a = ingredient(Integer.valueOf(12));
+      final Cell<String> f = compute((final Integer ¢) -> "(" + ¢.toString() + ")").from(a);
+      azzert.that(f.get(), is("(12)"));
+    }
+    @Test public void sessionA04() {
+      final Cell<Integer> x = ingredient(Integer.valueOf(13));
+      final Cell<Character> f = ingredient(new Character('f'));
+      final Cell<String> fx = compute((final Integer i, final Character c) -> "" + c + "(" + i + ")").from(x, f);
+      azzert.that(fx.get(), is("f(13)"));
+    }
   }
 
   /**
@@ -840,6 +874,8 @@ public interface Cookbook {
    */
   @SuppressWarnings("null")//
   public abstract class Cell<T> implements Supplier<T>, Cloneable {
+    public static Set<Cell<?>> trace;
+
     /** @return the last value computed or set for this cell. */
     public final T cache() {
       return cache;
@@ -884,26 +920,6 @@ public interface Cookbook {
         $ = max($, c.version);
       return $;
     }
-    protected long version() {
-      return version;
-    }
-    void cache(@SuppressWarnings("hiding") final T cache) {
-      this.cache = cache;
-    }
-    /**
-     * by overriding this function, inheriting classes can ask to be notified
-     * when this cell was set.
-     */
-    void uponForcedSet() {
-      // empty by default
-    }
-
-    /** The last value computed for this cell */
-    @Nullable T cache;
-    /** other cells that depend on this cell */
-    final List<Cell<?>> dependents = new ArrayList<>();
-    long version = 0;
-
     @SuppressWarnings("unchecked") @Override protected Cell<T> clone() {
       try {
         return (Cell<T>) super.clone();
@@ -911,6 +927,44 @@ public interface Cookbook {
         return null;
       }
     }
+    protected long version() {
+      return version;
+    }
+    void cache(@SuppressWarnings("hiding") final T cache) {
+      this.cache = cache;
+    }
+
+    /**
+     * by overriding this function, inheriting classes can ask to be notified
+     * when this cell was set.
+     */
+    void uponForcedSet() {
+      // empty by default
+    }
+    /** The last value computed for this cell */
+    @Nullable T cache;
+    /** other cells that depend on this cell */
+    final List<Cell<?>> dependents = new ArrayList<>();
+
+    long version = 0;
+  }
+
+  @FunctionalInterface interface Function2<T1, T2, R> {
+    R apply(T1 ¢1, T2 ¢2);
+  }
+
+  /**
+   * TODO(2016) Javadoc: automatically generated for type <code>Cookbook</code>
+   *
+   * @param <T1>
+   * @param <T2>
+   * @param <T3>
+   * @param <R>
+   * @author Yossi Gil <Yossi.Gil@GMail.COM>
+   * @since 2016
+   */
+  @FunctionalInterface interface Function3<T1, T2, T3, R> {
+    R apply(T1 ¢1, T2 ¢2, T3 ¢3);
   }
 
   /**
@@ -935,6 +989,9 @@ public interface Cookbook {
     }
     /** see @see il.org.spartan.lazy.Cookbook.Cell#get() (auto-generated) */
     @Override public T get() {
+      idiomatic.$(() -> {
+        trace.add(this);
+      }).unless(trace == null);
       return cache();
     }
     @Override public final boolean updated() {
@@ -1157,16 +1214,5 @@ public interface Cookbook {
         }
       }
     }
-  }
-
-  /**
-   * creates a new ingredient with a specific type
-   *
-   * @param <T> JD
-   * @return the newly created instance
-   */
-  static <T> Cell<T> ingredient() {
-    @SuppressWarnings("unused") final Ingredient<T> $ = new Ingredient<T>();
-    return $;
   }
 }
