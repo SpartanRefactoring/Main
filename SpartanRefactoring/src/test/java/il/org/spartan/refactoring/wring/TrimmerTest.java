@@ -67,6 +67,50 @@ import il.org.spartan.refactoring.wring.*;
         + "  assertArrayEquals(int1, int2);\n" //
         + "}").to("");
   }
+  @Test public void IfBarFooElseBazFooExtractUndefinedSuffix() {
+    TrimmerTestsUtils.trimming("" //
+        + "public static void f() {\n" //
+        + "  if (true) {\n" //
+        + "    int i = 0;\n" //
+        + "    System.out.println(i + 0);\n" //
+        + "    ++i;\n" //
+        + "  } else {\n" //
+        + "    int i = 1;\n" //
+        + "    System.out.println(i + 1);\n" //
+        + "    ++i;\n" //
+        + "  }\n" //
+        + "}").to("");
+  }
+  @Test public void IfBarFooElseBazFooExtractDefinedSuffix() {
+    TrimmerTestsUtils.trimming("" //
+        + "public static void f() {\n" //
+        + "  int i = 0;\n" //
+        + "  if (true) {\n" //
+        + "    i += 1;\n" //
+        + "    System.out.println('!');\n" //
+        + "    System.out.println('!');\n" //
+        + "    ++i;\n" //
+        + "  } else {\n" //
+        + "    i += 2;\n" //
+        + "    System.out.println('@');\n" //
+        + "    System.out.println('@');\n" //
+        + "    ++i;\n" //
+        + "  }\n" //
+        + "}").to("" //
+            + "public static void f() {\n" //
+            + "  int i = 0;\n" //
+            + "  if (true) {\n" //
+            + "    i += 1;\n" //
+            + "    System.out.println('!');\n" //
+            + "    System.out.println('!');\n" //
+            + "  } else {\n" //
+            + "    i += 2;\n" //
+            + "    System.out.println('@');\n" //
+            + "    System.out.println('@');\n" //
+            + "  }\n" //
+            + "  ++i;" //
+            + "}");
+  }
   /**
    * END OF STABLING TESTS
    */
