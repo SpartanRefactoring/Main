@@ -112,7 +112,7 @@ public enum Make {
   private ASTParser parser() {
     final ASTParser $ = ASTParser.newParser(AST.JLS8);
     $.setKind(kind);
-    $.setResolveBindings(true);
+    $.setResolveBindings(false);
     return $;
   }
 }
