@@ -3,6 +3,7 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.refactoring.utils.Funcs.duplicate;
 import static il.org.spartan.refactoring.utils.Restructure.duplicateInto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.*;
@@ -20,6 +21,34 @@ import il.org.spartan.refactoring.utils.Subject;
  * @since 2015-07-29
  */
 public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
+  @SuppressWarnings("unchecked")
+  public static boolean safeBlockSimplification(List<Statement> ss) {
+    List<String> l = new ArrayList<>();
+    for (Statement s : ss)
+      if (s instanceof VariableDeclarationStatement) {
+        for (VariableDeclarationFragment f : (List<VariableDeclarationFragment>) ((VariableDeclarationStatement) s)
+            .fragments())
+          if (checkExistOrAdd(f.getName(), l))
+            return false;
+      } else if (s instanceof ForStatement) {
+        for (VariableDeclarationFragment f : (List<VariableDeclarationFragment>) ((ForStatement) s).initializers())
+          if (checkExistOrAdd(f.getName(), l))
+            return false;
+      } else if (s instanceof TryStatement) {
+        for (VariableDeclarationExpression e : (List<VariableDeclarationExpression>) ((TryStatement) s).resources()) {
+          for (VariableDeclarationFragment f : (List<VariableDeclarationFragment>) ((VariableDeclarationExpression) e)
+              .fragments())
+            if (checkExistOrAdd(f.getName(), l))
+              return false;
+        }
+        for (CatchClause c : (List<CatchClause>) ((TryStatement) s).catchClauses()) {
+          for (SingleVariableDeclaration d : (List<SingleVariableDeclaration>) ((CatchClause) c).getException())
+            if (checkExistOrAdd(d.getName(), l))
+              return false;
+        }
+      }
+    return true;
+  }
   static Statement reorganizeNestedStatement(final Statement s) {
     final List<Statement> ss = Extract.statements(s);
     switch (ss.size()) {
@@ -47,7 +76,7 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
   }
   @Override Statement replacement(final Block b) {
     final List<Statement> ss = Extract.statements(b);
-    if (identical(ss, b.statements()))
+    if (identical(ss, b.statements()) || !safeBlockSimplification(ss))
       return null;
     final ASTNode parent = b.getParent();
     if (!(parent instanceof Statement) || parent instanceof TryStatement)
@@ -69,5 +98,12 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
   }
   @Override WringGroup wringGroup() {
 	return WringGroup.REMOVE_REDUNDANT_PUNCTUATION;
+  }
+  private static boolean checkExistOrAdd(SimpleName n, List<String> l) {
+    String s = n.getIdentifier();
+    if (l.contains(s))
+      return true;
+    l.add(s);
+    return false;
   }
 }
