@@ -140,6 +140,18 @@ import il.org.spartan.refactoring.wring.*;
     + "}").to("");
   }
   /**
+   * Not passing because no resolved binding in tests
+   */
+  @Test public void sameAssignmentDifferentTypes() {
+    TrimmerTestsUtils.trimming("" //
+        + "public void f() {\n" //
+        + "  double x;\n" //
+        + "  int y;\n" //
+        + "  x = 0;\n" //
+        + "  y = 0;\n" //
+        + "}").to("");
+  }
+  /**
    * END OF STABLING TESTS
    */
   @Test public void actualExampleForSortAddition() {

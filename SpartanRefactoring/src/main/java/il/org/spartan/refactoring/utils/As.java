@@ -225,7 +225,7 @@ public enum As {
   private ASTParser makeParser() {
     final ASTParser $ = ASTParser.newParser(AST.JLS8);
     $.setKind(kind);
-    $.setResolveBindings(false);
+    $.setResolveBindings(true);
     return $;
   }
 }

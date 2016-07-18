@@ -28,7 +28,7 @@ public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assign
     if (right == null || right.getNodeType() == NULL_LITERAL)
       return null;
     final Assignment a1 = Extract.assignment(nextStatement);
-    if (a1 == null)
+    if (a1 == null || !typeSafe(a, a1))
       return null;
     final Expression right1 = getRight(a1);
     if (right1 == null || !same(right, right1) || !Is.deterministic(right))
@@ -49,5 +49,13 @@ public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assign
   }
   @Override WringGroup wringGroup() {
 	return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
+  }
+  private boolean typeSafe(Assignment a1, Assignment a2) {
+    if (!a1.getAST().hasResolvedBindings())
+      return true;
+    ITypeBinding b = left(a1).resolveTypeBinding();
+    if (b == null)
+      return false;
+    return b.equals(left(a2).resolveTypeBinding());
   }
 }
