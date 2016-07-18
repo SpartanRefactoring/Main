@@ -59,12 +59,22 @@ import il.org.spartan.refactoring.wring.*;
         + "   };\n" //
         + "}").to("");
   }
-  @Test public void inlineArrayInitialization() {
+  @Test public void inlineArrayInitialization1() {
     TrimmerTestsUtils.trimming("" //
         + "public void multiDimensionalIntArraysAreEqual() {\n" //
         + "  int[][] int1 = {{1, 2, 3}, {4, 5, 6}};\n" //
         + "  int[][] int2 = {{1, 2, 3}, {4, 5, 6}};\n" //
         + "  assertArrayEquals(int1, int2);\n" //
+        + "}").to("");
+  }
+  @Test public void inlineArrayInitialization2() {
+    TrimmerTestsUtils.trimming("" //
+        + "public double[] solve() {\n" //
+        + "  final SimpleRegression regress = new SimpleRegression(true);\n" //
+        + "  for (double[] d : points)\n" //
+        + "    regress.addData(d[0], d[1]);\n" //
+        + "  final double[] $ = { regress.getSlope(), regress.getIntercept() };\n" //
+        + "  return $;\n" //
         + "}").to("");
   }
   @Test public void IfBarFooElseBazFooExtractUndefinedSuffix() {
@@ -110,6 +120,24 @@ import il.org.spartan.refactoring.wring.*;
             + "  }\n" //
             + "  ++i;" //
             + "}");
+  }
+  @Test public void unsafeBlockSimlify() {
+    TrimmerTestsUtils.trimming("" //
+    + "public void testParseInteger() {\n" //
+    + "  String source = \"10\";\n" //
+    + "  {\n" //
+    + "    BigFraction c = properFormat.parse(source);\n" //
+    + "    Assert.assertNotNull(c);\n" //
+    + "    Assert.assertEquals(BigInteger.TEN, c.getNumerator());\n" //
+    + "    Assert.assertEquals(BigInteger.ONE, c.getDenominator());\n" //
+    + "  }\n" //
+    + "  {\n" //
+    + "    BigFraction c = improperFormat.parse(source);\n" //
+    + "    Assert.assertNotNull(c);\n" //
+    + "    Assert.assertEquals(BigInteger.TEN, c.getNumerator());\n" //
+    + "    Assert.assertEquals(BigInteger.ONE, c.getDenominator());\n" //
+    + "  }\n" //
+    + "}").to("");
   }
   /**
    * END OF STABLING TESTS
