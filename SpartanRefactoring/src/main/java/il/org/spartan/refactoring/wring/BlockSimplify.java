@@ -42,8 +42,7 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
               return false;
         }
         for (CatchClause c : (List<CatchClause>) ((TryStatement) s).catchClauses()) {
-          for (SingleVariableDeclaration d : (List<SingleVariableDeclaration>) ((CatchClause) c).getException())
-            if (checkExistOrAdd(d.getName(), l))
+            if (checkExistOrAdd(((CatchClause) c).getException().getName(), l))
               return false;
         }
       }
