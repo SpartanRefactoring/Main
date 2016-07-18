@@ -8,8 +8,10 @@ import static il.org.spartan.refactoring.wring.Wrings.insertAfter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.jdt.core.dom.rewrite.ListRewrite;
@@ -38,6 +40,12 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> {
     if (elze.isEmpty())
       return null;
     final List<Statement> commmonSuffix = commmonSuffix(then, elze);
+    for (Statement st : commmonSuffix) {
+      DefinitionsCollector c = new DefinitionsCollector(then);
+      st.accept(c);
+      if (c.notAllDefined())
+        return null;
+    }
     return then.isEmpty() && elze.isEmpty() || commmonSuffix.isEmpty() ? null : new Rewrite(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final IfStatement newIf = replacement();
@@ -78,5 +86,21 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> {
   }
   @Override WringGroup wringGroup() {
 	return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
+  }
+  private class DefinitionsCollector extends ASTVisitor {
+    private boolean notAllDefined;
+    private final Statement[] l;
+    public DefinitionsCollector(List<Statement> l) {
+      notAllDefined = false;
+      this.l = l.toArray(new Statement[l.size()]);
+    }
+    @Override public boolean visit(SimpleName n) {
+      if (!Collect.declarationsOf(n).in(l).isEmpty())
+        notAllDefined = true;
+      return false;
+    }
+    public boolean notAllDefined() {
+      return notAllDefined;
+    }
   }
 }

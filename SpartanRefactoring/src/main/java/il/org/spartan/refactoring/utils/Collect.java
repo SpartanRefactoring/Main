@@ -59,6 +59,16 @@ public enum Collect {
       }
     };
   }
+  public static Collector declarationsOf(final SimpleName n) {
+    return new Collector(n) {
+      @Override public List<SimpleName> in(final ASTNode... ns) {
+        final List<SimpleName> $ = new ArrayList<>();
+        for (final ASTNode n : ns)
+          n.accept(declarationsCollector($, name));
+        return $;
+      }
+    };
+  }
   public static Collector forAllOccurencesExcludingDefinitions(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
@@ -120,6 +130,38 @@ public enum Collect {
       }
       boolean consider(final Expression e) {
         return add(asSimpleName(e));
+      }
+      private void addFragments(final List<VariableDeclarationFragment> fs) {
+        for (final VariableDeclarationFragment f : fs)
+          add(f.getName());
+      }
+      private boolean consider(final List<VariableDeclarationExpression> initializers) {
+        for (final Object o : initializers)
+          if (o instanceof VariableDeclarationExpression)
+            addFragments(((VariableDeclarationExpression) o).fragments());
+        return true;
+      }
+    };
+  }
+  static ASTVisitor declarationsCollector(final List<SimpleName> into, final ASTNode n) {
+    return new MethodExplorer.IgnoreNestedMethods() {
+      @Override public boolean visit(final ForStatement s) {
+        return consider(s.initializers());
+      }
+      @Override public boolean visit(final TryStatement s) {
+        return consider(s.resources());
+      }
+      @Override public boolean visit(final VariableDeclarationFragment f) {
+        return add(f.getName());
+      }
+      @Override public boolean visit(final VariableDeclarationStatement s) {
+        addFragments(s.fragments());
+        return true;
+      }
+      boolean add(final SimpleName candidate) {
+        if (same(candidate, n))
+          into.add(candidate);
+        return true;
       }
       private void addFragments(final List<VariableDeclarationFragment> fs) {
         for (final VariableDeclarationFragment f : fs)
