@@ -114,6 +114,7 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
     return a1.getRightHandSide();
   }
   static Expression pushdown(final ConditionalExpression e) {
+    System.out.println(e);
     if (e == null)
       return null;
     final Expression then = core(e.getThenExpression());
@@ -127,7 +128,8 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
       case SUPER_METHOD_INVOCATION:
         return pushdown(e, (SuperMethodInvocation) e1, (SuperMethodInvocation) e2);
       case METHOD_INVOCATION:
-        return pushdown(e, (MethodInvocation) e1, (MethodInvocation) e2);
+        return null;
+//        return pushdown(e, (MethodInvocation) e1, (MethodInvocation) e2);
       case INFIX_EXPRESSION:
         return pushdown(e, (InfixExpression) e1, (InfixExpression) e2);
       case ASSIGNMENT:

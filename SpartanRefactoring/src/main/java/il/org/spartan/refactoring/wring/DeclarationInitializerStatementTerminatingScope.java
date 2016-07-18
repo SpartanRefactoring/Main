@@ -25,10 +25,13 @@ import il.org.spartan.refactoring.wring.LocalInliner.LocalInlineWithValue;
  * @since 2015-08-07
  */
 public final class DeclarationInitializerStatementTerminatingScope extends Wring.VariableDeclarationFragementAndStatement {
-  @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer, final Statement nextStatement,
+  @SuppressWarnings("unchecked") @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer, final Statement nextStatement,
       final TextEditGroup g) {
-    if (initializer == null || hasAnnotation(f) || initializer instanceof ArrayInitializer)
+    if (initializer == null || hasAnnotation(f) || initializer instanceof ArrayInitializer || initializer instanceof ConditionalExpression)
       return null;
+    for (IExtendedModifier m : (List<IExtendedModifier>) ((VariableDeclarationStatement) f.getParent()).modifiers())
+      if (m.isModifier() && ((Modifier) m).isFinal())
+        return null;
     final Statement s = Extract.statement(f);
     if (s == null)
       return null;
