@@ -61,6 +61,7 @@ public enum Is {
     return blockRequiredInReplacement(s1, s1);
   }
   public static boolean blockRequiredInReplacement(final IfStatement old, final IfStatement newIf) {
+    System.out.println("OK");
     if (newIf == null || old != newIf && elze(old) == null == (elze(newIf) == null))
       return false;
     final IfStatement parent = asIfStatement(parent(old));
@@ -614,7 +615,7 @@ public enum Is {
     if (b == null)
       return false;
     final IfStatement parent = asIfStatement(parent(b));
-    return parent != null && then(parent) == b && (elze(parent) == null || elze(s) == null) && (elze(parent) != null || elze(s) != null || blockRequiredInReplacement(parent, s));
+    return parent != null && (elze(parent) == null || recursiveElze(s) == null) && (elze(parent) != null || recursiveElze(s) != null || blockRequiredInReplacement(parent, s));
   }
   static boolean notStringDown(final Expression e) {
     return notStringSelf(e) || notStringDown(asInfixExpression(e));

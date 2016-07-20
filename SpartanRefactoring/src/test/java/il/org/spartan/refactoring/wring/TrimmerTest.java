@@ -151,6 +151,63 @@ import il.org.spartan.refactoring.wring.*;
         + "  y = 0;\n" //
         + "}").to("");
   }
+  @Test public void redundantButNecessaryBrackets1() {
+    TrimmerTestsUtils.trimming("" //
+      + "if (windowSize != INFINITE_WINDOW) {\n" //
+      + "  if (getN() == windowSize)\n" //
+      + "    eDA.addElementRolling(v);\n" //
+      + "  else if (getN() < windowSize)\n" //
+      + "    eDA.addElement(v);\n" //
+      + "} else {\n" //
+      + "  System.out.println('!');\n" //
+      + "  System.out.println('!');\n" //
+      + "  System.out.println('!');\n" //
+      + "  System.out.println('!');\n" //
+      + "  System.out.println('!');\n" //
+      + "  System.out.println('!');\n" //
+      + "  System.out.println('!');\n" //
+      + "  eDA.addElement(v);\n" //
+      + "}").to("");
+  }
+  @Test public void redundantButNecessaryBrackets2() {
+    TrimmerTestsUtils.trimming("" //
+      + "if (windowSize != INFINITE_WINDOW) {\n" //
+      + "  if (getN() == windowSize)\n" //
+      + "    eDA.addElementRolling(v);\n" //
+      + "} else {\n" //
+      + "  System.out.println('!');\n" //
+      + "  System.out.println('!');\n" //
+      + "  System.out.println('!');\n" //
+      + "  System.out.println('!');\n" //
+      + "  System.out.println('!');\n" //
+      + "  System.out.println('!');\n" //
+      + "  System.out.println('!');\n" //
+      + "  eDA.addElement(v);\n" //
+      + "}").to("");
+  }
+  @Test public void redundantButNecessaryBrackets3() {
+    TrimmerTestsUtils.trimming("" //
+    + "if (b1)\n" //
+    + "  if (b2)\n" //
+    + "    print1('!');\n" //
+    + "  else {\n" //
+    + "    if (b3)\n" //
+    + "      print3('#');\n" //
+    + "  }\n" //
+    + "else {\n" //
+    + "  print4('$');\n" //
+    + "  print4('$');\n" //
+    + "  print4('$');\n" //
+    + "  print4('$');\n" //
+    + "  print4('$');\n" //
+    + "  print4('$');\n" //
+    + "  print4('$');\n" //
+    + "  print4('$');\n" //
+    + "  print4('$');\n" //
+    + "  print4('$');\n" //
+    + "  print4('$');\n" //
+    + "}").to("");
+  }
   /**
    * END OF STABLING TESTS
    */
