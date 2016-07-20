@@ -326,6 +326,12 @@ public enum Funcs {
   public static Statement elze(final IfStatement s) {
     return s.getElseStatement();
   }
+  public static Statement recursiveElze(final IfStatement s) {
+    Statement $ = s.getElseStatement();
+    while ($ instanceof IfStatement)
+      $ = ((IfStatement) $).getElseStatement();
+    return $;
+  }
   /**
    * Swap the order of the left and right operands to an expression, changing
    * the operator if necessary.
