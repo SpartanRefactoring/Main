@@ -114,7 +114,6 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
     return a1.getRightHandSide();
   }
   static Expression pushdown(final ConditionalExpression e) {
-    System.out.println(e);
     if (e == null)
       return null;
     final Expression then = core(e.getThenExpression());
