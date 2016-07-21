@@ -6,6 +6,10 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.idiomatic.*;
 import static java.lang.Math.*;
 import il.org.spartan.*;
+import il.org.spartan.lazy.Cookbook.Internal.$$Function;
+import il.org.spartan.lazy.Cookbook.Internal.$$Function2;
+import il.org.spartan.lazy.Cookbook.Internal.$$RecipeMaker;
+import il.org.spartan.lazy.Cookbook.Internal.Function2;
 import il.org.spartan.lazy.Cookbook.Recipe.NullRobust;
 
 import java.util.*;
@@ -61,12 +65,11 @@ public interface Cookbook {
    * @param $ result
    * @return the parameter
    */
-  static Cell<?>[] asArray(Set<Cell<?>> $) {
+  static Cell<?>[] asArray(final Collection<Cell<?>> $) {
     return $.toArray(new Cell<?>[$.size()]);
   }
-
   /**
-   * TODO Javadoc(2016): automatically generated for method <code>compute</code>
+   * write a recipe
    *
    * @param <T> parameter type
    * @param <R> result type
@@ -76,7 +79,6 @@ public interface Cookbook {
   static <@Nullable T, @Nullable R> $$Function<T, R> compute(final Function<T, R> λ) {
     return ¢ -> new Recipe<>(() -> λ.apply(¢.get())).ingredient(¢);
   }
-
   /**
    * TODO Javadoc(2016): automatically generated for method <code>compute</code>
    *
@@ -89,7 +91,6 @@ public interface Cookbook {
   static <@Nullable T1, @Nullable T2, @Nullable R> $$Function2<T1, T2, R> compute(final Function2<T1, T2, R> λ) {
     return (¢1, ¢2) -> new Recipe<>(() -> λ.apply(¢1.get(), ¢2.get())).ingredients(¢1, ¢2);
   }
-
   /**
    * Fluent API function to be used as in
    *
@@ -108,7 +109,6 @@ public interface Cookbook {
       }
     };
   }
-
   /**
    * creates a new ingredient with a specific type
    *
@@ -130,9 +130,8 @@ public interface Cookbook {
    * @param t JD
    * @return the newly created {@link Ingredient} instance
    */
-  static <@Nullable T> Cell<T> ingredient(final T t) {
-    @SuppressWarnings("unused") final Ingredient<@Nullable T> $ = new Ingredient<T>(t);
-    return $;
+  static <@Nullable T> Cell<@Nullable T> ingredient(final T t) {
+    return new Ingredient<T>(t);
   }
   /**
    * Fluent API factory method that returns a recipe
@@ -145,23 +144,22 @@ public interface Cookbook {
     return new Recipe<>(supplier);
   }
   /**
-   * @return never! The <code><b>none</b></code> type. There is no legal value
-   *         that this function can return, since the type <code>@NonNull</code>
-   *         {@link Void} is empty. (<code><b>null</b></code> is the single vale
-   *         of {@link Void}, but it does not obey the {@link @NonNull}
-   *         annotation.
+   * TODO Javadoc(2016): automatically generated for method
+   * <code>traceWizard</code>
+   *
+   * @param <T>
+   * @param λ
+   * @return Cell<T> TODO Javadoc(2016) automatically generated for returned
+   *         value of method <code>traceWizard</code>
    */
-  static @NonNull Void shouldNeverBeCalled() {
-    assert false;
-    throw new RuntimeException();
-  }
-  static <@Nullable T> Recipe<T> traceWizard(final Supplier<T> λ) {
+  static <@Nullable T> Cell<T> traceWizard(final Supplier<T> λ) {
     Cell.trace = new HashSet<>();
     λ.get();
-    Cell<?>[] $ = asArray(Cell.trace);
-    Cell.trace = null; 
+    final Cell<?>[] $ = asArray(Cell.trace);
+    Cell.trace = null;
     return new Recipe<>(λ).ingredients($);
   }
+
   /**
    * A repository of test cases and examples
    * <p>
@@ -171,6 +169,7 @@ public interface Cookbook {
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016
    */
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   public static enum __META {
     ;
     @SuppressWarnings("javadoc") public static class A {
@@ -196,7 +195,6 @@ public interface Cookbook {
       );
       final Cell<String> zzz = new Ingredient<String>().of("zzz");
 
-      @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
       @SuppressWarnings({ "null", "synthetic-access" })//
       public static class TEST extends A {
         @Test public void sessionA00() {
@@ -268,6 +266,16 @@ public interface Cookbook {
         final Cell<Character> f = ingredient(new Character('f'));
         final Cell<String> fx = compute((final Integer i, final Character c) -> "" + c + "(" + i + ")").from(x, f);
         azzert.that(fx.get(), is("f(13)"));
+      }
+      @SuppressWarnings("synthetic-access") @Test public void sessionA05() {
+        final Cell<Integer> x = ingredient(Integer.valueOf(13));
+        final Cell<Character> f = ingredient(new Character('f'));
+        final Cell<String> fx = traceWizard(() -> "" + f.get() + "(" + x.get() + ")");
+        azzert.that(fx.dependents.size(), is(0));
+        azzert.that(((Recipe<String>) fx).prerequisites.size(), is(2));
+        azzert.that(fx.get(), is("f(13)"));
+        azzert.that(fx.dependents.size(), is(0));
+        azzert.that(((Recipe<String>) fx).prerequisites.size(), is(2));
       }
     }
 
@@ -820,42 +828,56 @@ public interface Cookbook {
       }
     }
   }
-  interface $$Function<T, R> {
-    Cell<R> from(Cell<T> ¢);
-  }
-  interface $$Function2<T1, T2, R> {
-    Cell<R> from(Cell<T1> ¢1, Cell<T2> ¢2);
-  }
 
-  /** Fluent API */
-  interface $$RecipeMaker {
-    <X> Cell<@Nullable X> make(final Supplier<X> s);
-  }
+  /**
+   * TODO(2016) Javadoc: automatically generated for type <code>Cookbook</code>
+   *
+   * @author Yossi Gil <Yossi.Gil@GMail.COM>
+   * @since 2016
+   */
+  interface Internal {
+    /**
+     * @return never! The <code><b>none</b></code> type. There is no legal value
+     *         that this function can return, since the type
+     *         <code>@NonNull</code> {@link Void} is empty. (
+     *         <code><b>null</b></code> is the single vale of {@link Void}, but
+     *         it does not obey the {@link @NonNull} annotation.
+     */
+    static @NonNull Void shouldNeverBeCalled() {
+      assert false;
+      throw new RuntimeException();
+    }
 
-  @SuppressWarnings({ "static-method", "javadoc", "null" })//
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
-  public static class C {
-    @Test public void sessionA01() {
-      final Cell<Integer> a = ingredient(Integer.valueOf(12));
-      final $$Function<Integer, String> f = compute((final Integer ¢) -> "(" + ¢ + ")");
-      final Cell<String> b = f.from(a);
-      azzert.that(b.get(), is("(12)"));
+    interface $$Function<T, R> {
+      Cell<R> from(Cell<T> ¢);
     }
-    @Test public void sessionA02() {
-      final Cell<Integer> a = ingredient(Integer.valueOf(12));
-      final Cell<String> f = compute((final Integer ¢) -> "(" + ¢.toString() + ")").from(a);
-      azzert.that(f.get(), is("(12)"));
+
+    interface $$Function2<T1, T2, R> {
+      Cell<R> from(Cell<T1> ¢1, Cell<T2> ¢2);
     }
-    @Test public void sessionA03() {
-      final Cell<Integer> a = ingredient(Integer.valueOf(12));
-      final Cell<String> f = compute((final Integer ¢) -> "(" + ¢.toString() + ")").from(a);
-      azzert.that(f.get(), is("(12)"));
+
+    /** Fluent API */
+    interface $$RecipeMaker {
+      <X> Cell<@Nullable X> make(final Supplier<X> s);
     }
-    @Test public void sessionA04() {
-      final Cell<Integer> x = ingredient(Integer.valueOf(13));
-      final Cell<Character> f = ingredient(new Character('f'));
-      final Cell<String> fx = compute((final Integer i, final Character c) -> "" + c + "(" + i + ")").from(x, f);
-      azzert.that(fx.get(), is("f(13)"));
+
+    @FunctionalInterface interface Function2<T1, T2, R> {
+      R apply(T1 ¢1, T2 ¢2);
+    }
+
+    /**
+     * TODO(2016) Javadoc: automatically generated for type
+     * <code>Cookbook</code>
+     *
+     * @param <T1>
+     * @param <T2>
+     * @param <T3>
+     * @param <R>
+     * @author Yossi Gil <Yossi.Gil@GMail.COM>
+     * @since 2016
+     */
+    @FunctionalInterface interface Function3<T1, T2, T3, R> {
+      R apply(T1 ¢1, T2 ¢2, T3 ¢3);
     }
   }
 
@@ -874,6 +896,7 @@ public interface Cookbook {
    */
   @SuppressWarnings("null")//
   public abstract class Cell<T> implements Supplier<T>, Cloneable {
+    /** TODO */
     public static Set<Cell<?>> trace;
 
     /** @return the last value computed or set for this cell. */
@@ -933,7 +956,6 @@ public interface Cookbook {
     void cache(@SuppressWarnings("hiding") final T cache) {
       this.cache = cache;
     }
-
     /**
      * by overriding this function, inheriting classes can ask to be notified
      * when this cell was set.
@@ -941,30 +963,12 @@ public interface Cookbook {
     void uponForcedSet() {
       // empty by default
     }
+
     /** The last value computed for this cell */
     @Nullable T cache;
     /** other cells that depend on this cell */
     final List<Cell<?>> dependents = new ArrayList<>();
-
     long version = 0;
-  }
-
-  @FunctionalInterface interface Function2<T1, T2, R> {
-    R apply(T1 ¢1, T2 ¢2);
-  }
-
-  /**
-   * TODO(2016) Javadoc: automatically generated for type <code>Cookbook</code>
-   *
-   * @param <T1>
-   * @param <T2>
-   * @param <T3>
-   * @param <R>
-   * @author Yossi Gil <Yossi.Gil@GMail.COM>
-   * @since 2016
-   */
-  @FunctionalInterface interface Function3<T1, T2, T3, R> {
-    R apply(T1 ¢1, T2 ¢2, T3 ¢3);
   }
 
   /**
@@ -1081,8 +1085,10 @@ public interface Cookbook {
     @Override public boolean updated() {
       if (supplier == null)
         return true;
+      if (version() <= latestPrequisiteVersion())
+        return false;
       for (final Cell<?> c : prerequisites)
-        if (!c.updated() || version() <= c.version())
+        if (!c.updated())
           return false;
       return true;
     }
