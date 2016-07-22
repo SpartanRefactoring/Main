@@ -1,8 +1,8 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.wring.Wrings.*;
 import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.LocalInliner.LocalInlineWithValue;
 
@@ -18,7 +18,7 @@ import org.eclipse.text.edits.*;
  * @since 2015-08-07
  */
 public final class DeclarationInitializerReturnExpression extends Wring.VariableDeclarationFragementAndStatement implements
-    Kind.InlineVariable {
+Kind.InlineVariable {
   @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n,
       final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || hasAnnotation(f))
@@ -38,5 +38,12 @@ public final class DeclarationInitializerReturnExpression extends Wring.Variable
   }
   @Override String description(final VariableDeclarationFragment f) {
     return "Eliminate temporary " + f.getName() + " and inline its value into the expression of the subsequent return statement";
+  }
+  @Override public WringGroup kind() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+    // TODO Auto-generated method stub
   }
 }

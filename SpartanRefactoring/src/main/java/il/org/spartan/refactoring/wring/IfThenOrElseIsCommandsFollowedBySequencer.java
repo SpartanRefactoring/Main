@@ -2,8 +2,10 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;
@@ -37,8 +39,8 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Remove redundant else (possibly after inverting if statement)";
   }
-  @Override Rewrite make(final IfStatement s) {
-    return new Rewrite(description(s), s) {
+  @Override Suggestion make(final IfStatement s) {
+    return new Suggestion(description(s), s) {
       @SuppressWarnings("unused") @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final IfStatement shorterIf = makeShorterIf(s);
         final List<Statement> remainder = extract.statements(elze(shorterIf));
@@ -59,5 +61,12 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
   }
   @Override boolean scopeIncludes(final IfStatement s) {
     return elze(s) != null && (endsWithSequencer(then(s)) || endsWithSequencer(elze(s)));
+  }
+  @Override public WringGroup kind() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+    // TODO Auto-generated method stub
   }
 }

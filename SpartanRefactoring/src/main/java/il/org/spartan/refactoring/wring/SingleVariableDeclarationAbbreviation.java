@@ -3,6 +3,8 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
+import il.org.spartan.refactoring.suggestions.*;
 import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;
@@ -26,7 +28,7 @@ public class SingleVariableDeclarationAbbreviation extends Wring<SingleVariableD
   @Override String description(final SingleVariableDeclaration d) {
     return d.getName().toString();
   }
-  @Override Rewrite make(final SingleVariableDeclaration d, final ExclusionManager exclude) {
+  @Override Suggestion make(final SingleVariableDeclaration d, final ExclusionManager exclude) {
     final ASTNode parent = d.getParent();
     if (parent == null || !(parent instanceof MethodDeclaration))
       return null;
@@ -40,7 +42,7 @@ public class SingleVariableDeclarationAbbreviation extends Wring<SingleVariableD
     final MethodRenameUnusedVariableToUnderscore.IsUsed v = new MethodRenameUnusedVariableToUnderscore.IsUsed(newName);
     if (m.getBody() != null)
       m.getBody().accept(v);
-    return v.conclusion() ? null : new Rewrite("Rename parameter " + oldName + " to " + newName + " in method "
+    return v.conclusion() ? null : new Suggestion("Rename parameter " + oldName + " to " + newName + " in method "
         + m.getName().getIdentifier(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         rename(oldName, newSimpleName(d, newName), m, r, g);
@@ -88,5 +90,12 @@ public class SingleVariableDeclarationAbbreviation extends Wring<SingleVariableD
   }
   private static String pluralVariadic(final SingleVariableDeclaration d) {
     return d.isVarargs() ? "s" : "";
+  }
+  @Override public WringGroup kind() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+    // TODO Auto-generated method stub
   }
 }

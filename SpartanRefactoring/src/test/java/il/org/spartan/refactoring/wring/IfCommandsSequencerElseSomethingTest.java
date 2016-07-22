@@ -7,6 +7,7 @@ import static il.org.spartan.refactoring.utils.Funcs.*;
 import static org.hamcrest.text.IsEqualIgnoringWhiteSpace.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.suggestions.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
@@ -42,7 +43,7 @@ public class IfCommandsSequencerElseSomethingTest {
     final IfStatement s = (IfStatement) asSingle("if (a) return b; else a();");
     that(WRING.scopeIncludes(s), is(true));
     that(WRING.eligible(s), is(true));
-    final Rewrite m = WRING.make(s);
+    final Suggestion m = WRING.make(s);
     that(m, notNullValue());
     final Wring<IfStatement> w = Toolbox.instance.find(s);
     that(w, notNullValue());
@@ -52,7 +53,7 @@ public class IfCommandsSequencerElseSomethingTest {
     that(u, notNullValue());
     final Document d = new Document(wrap);
     that(d, notNullValue());
-    final Trimmer t = new Trimmer();
+    final Context t = new Context();
     final ASTRewrite r = t.createRewrite(u, null);
     final TextEdit x = r.rewriteAST(d, null);
     x.apply(d);
@@ -76,7 +77,7 @@ public class IfCommandsSequencerElseSomethingTest {
     that(w.scopeIncludes(s), is(true));
     that(w.eligible(s), is(true));
     that(w, instanceOf(WRING.getClass()));
-    final Rewrite m = w.make(s);
+    final Suggestion m = w.make(s);
     that(m, notNullValue());
     final ASTRewrite r = ASTRewrite.create(s.getAST());
     m.go(r, null);
@@ -97,7 +98,7 @@ public class IfCommandsSequencerElseSomethingTest {
     final IfStatement s = (IfStatement) asSingle("if (a) return b; else a();");
     that(WRING.scopeIncludes(s), is(true));
     that(WRING.eligible(s), is(true));
-    final Rewrite m = WRING.make(s);
+    final Suggestion m = WRING.make(s);
     that(m, notNullValue());
     final ASTRewrite r = ASTRewrite.create(s.getAST());
     m.go(r, null);
@@ -143,17 +144,17 @@ public class IfCommandsSequencerElseSomethingTest {
         new String[] { "Plant two statements", "if (a) return b; else a(); f();", "if(a)return b;a(); f();" }, //
         null, //
         new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}",
-            "if (x) {;f();;;return a;;;}\n g();" }, //
+        "if (x) {;f();;;return a;;;}\n g();" }, //
         null, //
         new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}",
-            "  if(x){;f();;;return a;;;} g();" }, //
+        "  if(x){;f();;;return a;;;} g();" }, //
         new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}", "" + //
             " if (x) {\n" + //
             "   f();\n" + //
             "   return a;\n" + //
             " }\n" + //
             " g();\n" + //
-            "" }, //
+        "" }, //
         null, //
         new String[] { "Complex with many junk statements", "" + //
             " if (x) {\n" + //
@@ -167,12 +168,12 @@ public class IfCommandsSequencerElseSomethingTest {
             "   }\n" + //
             " }\n" + //
             "", "" + //
-            " if (x) {\n" + //
-            "   f();\n" + //
-            "   return a;\n" + //
-            " }\n" + //
-            " g();\n" + //
-            "" }, //
+                " if (x) {\n" + //
+                "   f();\n" + //
+                "   return a;\n" + //
+                " }\n" + //
+                " g();\n" + //
+        "" }, //
         null);
 
     /**

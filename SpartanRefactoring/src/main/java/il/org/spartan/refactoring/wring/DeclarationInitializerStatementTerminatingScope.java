@@ -4,6 +4,7 @@ import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.LocalInliner.LocalInlineWithValue;
 
@@ -21,7 +22,7 @@ import org.eclipse.text.edits.*;
  * @since 2015-08-07
  */
 public final class DeclarationInitializerStatementTerminatingScope extends Wring.VariableDeclarationFragementAndStatement implements
-    Kind.ConsolidateStatements {
+Kind.ConsolidateStatements {
   @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n,
       final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     // TODO Ori: allow final consolidation
@@ -87,5 +88,12 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
   }
   @Override String description(final VariableDeclarationFragment f) {
     return "Inline local " + f.getName() + " into subsequent statement";
+  }
+  @Override public WringGroup kind() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+    // TODO Auto-generated method stub
   }
 }

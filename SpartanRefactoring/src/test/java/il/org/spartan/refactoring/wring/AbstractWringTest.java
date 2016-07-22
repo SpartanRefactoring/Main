@@ -6,8 +6,10 @@ import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
+import static org.junit.Assert.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.suggestions.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.WringedExpression.Conditional;
 import il.org.spartan.refactoring.wring.AbstractWringTest.WringedExpression.Infix;
@@ -138,7 +140,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
     }
     @Test public void noOpporunity() {
       final CompilationUnit u = asCompilationUnit();
-      azzert.that(u.toString() + wringer.findOpportunities(u), wringer.findOpportunities(u).size(), is(0));
+      azzert.that(u.toString() + wringer.collect(u), wringer.collect(u).size(), is(0));
     }
     @Test public void simiplifies() throws MalformedTreeException, IllegalArgumentException, BadLocationException {
       if (input == null)
@@ -402,7 +404,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
         return;
       assertTrue(inner.scopeIncludes(asMe()));
       final CompilationUnit u = asCompilationUnit();
-      azzert.that(u.toString(), wringer.findOpportunities(u).size(), is(greaterThanOrEqualTo(0)));
+      azzert.that(u.toString(), wringer.collect(u).size(), is(greaterThanOrEqualTo(0)));
     }
     @Test public void hasReplacement() {
       if (inner == null)
@@ -491,7 +493,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
         return;
       azzert.that(inner.scopeIncludes((E) asExpression()), is(true));
       final CompilationUnit u = asCompilationUnit();
-      azzert.that(u.toString(), wringer.findOpportunities(u).size(), is(greaterThanOrEqualTo(1)));
+      azzert.that(u.toString(), wringer.collect(u).size(), is(greaterThanOrEqualTo(1)));
     }
     @Test public void hasReplacement() {
       if (inner == null)
@@ -658,7 +660,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
         return;
       azzert.that(inner.scopeIncludes(asMe()), is(true));
       final CompilationUnit u = asCompilationUnit();
-      azzert.that(u.toString(), wringer.findOpportunities(u).size(), is(greaterThanOrEqualTo(0)));
+      azzert.that(u.toString(), wringer.collect(u).size(), is(greaterThanOrEqualTo(0)));
     }
     @Test public void hasReplacement() {
       if (inner == null)
@@ -784,7 +786,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
         return;
       azzert.that(inner.scopeIncludes(asMe()), is(true));
       final CompilationUnit u = asCompilationUnit();
-      azzert.that(u.toString(), wringer.findOpportunities(u).size(), is(greaterThanOrEqualTo(1)));
+      azzert.that(u.toString(), wringer.collect(u).size(), is(greaterThanOrEqualTo(1)));
     }
     @Test public void hasSimplifier() {
       if (input == null)
@@ -850,7 +852,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
    * @since 2015-07-18
    */
   static class InScope<N extends ASTNode> extends AbstractWringTest<N> {
-    protected final Trimmer wringer = new Trimmer();
+    protected final Context wringer = new Context();
 
     public InScope() {
       this(null);
@@ -890,7 +892,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
 
       /** Where the expected output can be found? */
       @Parameter(2) public String output;
-      protected final Trimmer trimmer = new Trimmer();
+      protected final Context trimmer = new Context();
 
       /**
        * Instantiates the enclosing class ({@link WringedExpression})
@@ -922,7 +924,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
       }
       @Test public void oneOpporunity() {
         final CompilationUnit u = asCompilationUnit();
-        azzert.that("" + u, trimmer.findOpportunities(u).size(), is(1));
+        azzert.that("" + u, trimmer.collect(u).size(), is(1));
         azzert.that(inner.scopeIncludes((N) asExpression()), is(true));
       }
       @Test public void peelableOutput() {

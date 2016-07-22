@@ -7,6 +7,7 @@ import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;
 
+import org.eclipse.jdt.core.dom.Assignment.Operator;
 import org.eclipse.jdt.core.dom.*;
 
 /**

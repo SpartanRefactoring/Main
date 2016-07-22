@@ -36,7 +36,8 @@ import org.eclipse.jdt.internal.corext.dom.*;
    * @param b a method
    * @param n the context in which the method is invoked
    * @param u current {@link CompilationUnit}
-   * @return true iff method is visible from its context
+   * @return <code><b>true</b></code> <i>iff</i> the method is visible from its
+   *         context
    */
   public static boolean isVisible(final IMethodBinding b, final ASTNode n, final CompilationUnit u) {
     final int ms = b.getModifiers();
@@ -64,13 +65,13 @@ import org.eclipse.jdt.internal.corext.dom.*;
     if (b == null)
       return null;
     final IMethodBinding $ = Bindings.findMethodInHierarchy(b, mn, bs);
-    return incase(isVisible($, n, u)).eval($);
+    return take($).when(isVisible($, n, u));
   }
   /**
    * Checks if expression is simple.
    *
    * @param e an expression
-   * @return true iff e is simple
+   * @return <code><b>true</b></code> <i>iff</i> the parameter is simple
    */
   public static boolean isSimple(final Expression e) {
     return e instanceof Name || e instanceof NumberLiteral || e instanceof BooleanLiteral || e instanceof CharacterLiteral

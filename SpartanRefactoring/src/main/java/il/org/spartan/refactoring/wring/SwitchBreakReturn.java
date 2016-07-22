@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;
@@ -61,7 +62,7 @@ public class SwitchBreakReturn extends Wring.MultipleReplaceToNextStatement<Swit
     boolean d = false; // true iff switch contains a default statement
     for (int i = 0; i < s.statements().size(); ++i) {
       final Statement n = (Statement) s.statements().get(i);
-      if (!(n instanceof SwitchCase))
+      if (!(n instanceof SwitchCase)) {
         if (!(n instanceof BreakStatement)) {
           if (n instanceof ReturnStatement || n instanceof ThrowStatement || n instanceof ContinueStatement)
             ds = true;
@@ -69,7 +70,7 @@ public class SwitchBreakReturn extends Wring.MultipleReplaceToNextStatement<Swit
           bss.add(n);
           ds = true;
         }
-      else {
+      } else {
         c = true;
         if (!caseEndsWithSequencer(s.statements(), i))
           cs = false;
@@ -87,5 +88,12 @@ public class SwitchBreakReturn extends Wring.MultipleReplaceToNextStatement<Swit
   }
   @Override String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "insert return statement into switch instead of break";
+  }
+  @Override public WringGroup kind() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+    // TODO Auto-generated method stub
   }
 }

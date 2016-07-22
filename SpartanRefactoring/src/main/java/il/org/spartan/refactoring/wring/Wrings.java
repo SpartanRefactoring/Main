@@ -1,9 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.ExpressionComparator.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -73,21 +73,9 @@ public enum Wrings {
   static IfStatement invert(final IfStatement s) {
     return Subject.pair(elze(s), then(s)).toNot(s.getExpression());
   }
-  static int length(final ASTNode... ns) {
-    int $ = 0;
-    for (final ASTNode n : ns)
-      $ += n.toString().length();
-    return $;
-  }
-  static int size(final ASTNode... ns) {
-    int $ = 0;
-    for (final ASTNode n : ns)
-      $ += nodesCount(n);
-    return $;
-  }
   static IfStatement makeShorterIf(final IfStatement s) {
-    final List<Statement> then = extract.statements(then(s));
-    final List<Statement> elze = extract.statements(elze(s));
+    final List<Statement> then = statements(then(s));
+    final List<Statement> elze = statements(elze(s));
     final IfStatement inverse = invert(s);
     if (then.isEmpty())
       return inverse;

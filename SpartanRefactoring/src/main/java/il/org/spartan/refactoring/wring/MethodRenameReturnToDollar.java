@@ -4,6 +4,8 @@ import static il.org.spartan.idiomatic.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
+import il.org.spartan.refactoring.suggestions.*;
 import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;
@@ -22,7 +24,7 @@ public class MethodRenameReturnToDollar extends Wring<MethodDeclaration> impleme
   @Override String description(final MethodDeclaration d) {
     return d.getName().toString();
   }
-  @Override Rewrite make(final MethodDeclaration d, final ExclusionManager exclude) {
+  @Override Suggestion make(final MethodDeclaration d, final ExclusionManager exclude) {
     final Type t = d.getReturnType2();
     if (t instanceof PrimitiveType && ((PrimitiveType) t).getPrimitiveTypeCode() == PrimitiveType.VOID)
       return null;
@@ -31,7 +33,7 @@ public class MethodRenameReturnToDollar extends Wring<MethodDeclaration> impleme
       return null;
     if (exclude != null)
       exclude.exclude(d);
-    return new Rewrite("Rename variable " + n + " to $ (main variable returned by " + description(d) + ")", d) {
+    return new Suggestion("Rename variable " + n + " to $ (main variable returned by " + description(d) + ")", d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         rename(n, $(), d, r, g);
       }
@@ -39,6 +41,13 @@ public class MethodRenameReturnToDollar extends Wring<MethodDeclaration> impleme
         return newSimpleName(d, "$");
       }
     };
+  }
+  @Override public WringGroup kind() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+    // TODO Auto-generated method stub
   }
 }
 

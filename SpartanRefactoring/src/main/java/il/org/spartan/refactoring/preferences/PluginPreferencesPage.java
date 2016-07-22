@@ -28,13 +28,13 @@ public class PluginPreferencesPage extends FieldEditorPreferencePage implements 
         PluginPreferencesResources.PLUGIN_STARTUP_BEHAVIOR_TEXT, //
         PluginPreferencesResources.PLUGIN_STARTUP_BEHAVIOR_OPTIONS, //
         getFieldEditorParent()) //
-    );
+        );
     // Add the enabled for new projects checkbox
     addField(new BooleanFieldEditor( //
         PluginPreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, //
         PluginPreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT, //
         getFieldEditorParent()) //
-    );
+        );
     // Add the "resolve bindings" checkbox
     final BooleanFieldEditor bindingsCheckbox = new BooleanFieldEditor( //
         PluginPreferencesResources.ENABLE_BINDING_RESOLUTION_ID, //

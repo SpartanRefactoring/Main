@@ -4,6 +4,8 @@ import static il.org.spartan.idiomatic.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
+import il.org.spartan.refactoring.suggestions.*;
 import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;
@@ -23,14 +25,14 @@ import org.eclipse.text.edits.*;
 /* TODO This is a previous version of the MethodParameterAbbreviate wring that
  * replaces all parameter names in a method at once. If it is found to be
  * useless in the near future, delete this class. Otherwise, remove the
- * 
- * 
+ *
+ *
  * @Deprecated annotation */
 @Deprecated public class MethodAbbreviateParameterNames extends Wring<MethodDeclaration> implements Kind.RENAME_PARAMETERS {
   @Override String description(final MethodDeclaration d) {
     return d.getName().toString();
   }
-  @Override Rewrite make(final MethodDeclaration d, final ExclusionManager exclude) {
+  @Override Suggestion make(final MethodDeclaration d, final ExclusionManager exclude) {
     if (d.isConstructor())
       return null;
     final List<SingleVariableDeclaration> vd = find(expose.parameters(d));
@@ -44,7 +46,7 @@ import org.eclipse.text.edits.*;
       return null;
     if (exclude != null)
       exclude.exclude(d);
-    return new Rewrite("Abbreviate parameters in method " + d.getName().toString(), d) {
+    return new Suggestion("Abbreviate parameters in method " + d.getName().toString(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         for (final SimpleName key : renameMap.keySet())
           rename(key, renameMap.get(key), d, r, g);
@@ -82,5 +84,12 @@ import org.eclipse.text.edits.*;
   }
   static private String pluralVariadic(final SingleVariableDeclaration d) {
     return d.isVarargs() ? "s" : "";
+  }
+  @Override public WringGroup kind() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+    // TODO Auto-generated method stub
   }
 }

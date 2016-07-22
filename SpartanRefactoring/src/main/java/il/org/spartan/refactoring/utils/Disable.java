@@ -13,39 +13,30 @@ import org.eclipse.jdt.core.dom.*;
  * @since 2016/05/13
  */
 public class Disable {
-  final Set<ASTNode> dns;
+  final Set<ASTNode> disabled = new HashSet<>();
   /**
-   * Disable spartanization identifier, used by the programmer to indicate a
+   * Disable spartanization signature, used by the programmer to indicate a
    * method/class/code line not to be spartanized
    */
-  public final static String dsi = "@DisableSpartan";
+  public final static String signature = "[do not spartanize]";
 
   protected Disable(final CompilationUnit u) {
-    dns = new HashSet<>();
     if (u == null)
       return;
-    u.accept(new BodyDeclarationVisitor(dns));
+    u.accept(new BodyDeclarationVisitor());
   }
   /**
    * @param n node
    * @return true iff spartanization is disabled for n
    */
   public boolean check(final ASTNode n) {
-    ASTNode p = n;
-    while (p != null) {
-      if (dns.contains(p))
+    for (ASTNode p = n; p != null; p = p.getParent())
+      if (disabled.contains(p))
         return true;
-      p = p.getParent();
-    }
     return false;
   }
 
-  private static class BodyDeclarationVisitor extends ASTVisitor {
-    Set<ASTNode> dns;
-
-    BodyDeclarationVisitor(final Set<ASTNode> dns) {
-      this.dns = dns;
-    }
+  private class BodyDeclarationVisitor extends ASTVisitor {
     @Override public boolean visit(final AnnotationTypeDeclaration d) {
       return go(d);
     }
@@ -72,9 +63,9 @@ public class Disable {
     }
     private boolean go(final BodyDeclaration d) {
       final Javadoc j = d.getJavadoc();
-      if (j == null || !j.toString().contains(dsi))
+      if (j == null || !j.toString().contains(signature))
         return true;
-      dns.add(d);
+      disabled.add(d);
       return false;
     }
   }

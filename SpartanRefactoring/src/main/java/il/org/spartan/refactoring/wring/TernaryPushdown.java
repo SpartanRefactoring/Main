@@ -5,11 +5,14 @@ import static il.org.spartan.refactoring.utils.Restructure.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpression> implements Kind.ReorganizeExpression {
   private static int findSingleDifference(final List<Expression> es1, final List<Expression> es2) {
@@ -141,5 +144,12 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
   }
   @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Pushdown ?: into expression";
+  }
+  @Override public WringGroup kind() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+    // TODO Auto-generated method stub
   }
 }

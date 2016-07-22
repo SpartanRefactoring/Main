@@ -1,8 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
+import il.org.spartan.refactoring.suggestions.*;
 import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;
@@ -22,7 +25,7 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements 
   @Override String description(final IfStatement s) {
     return "Condolidate commmon prefix of then and else branches to just before if(" + s.getExpression() + ") ...";
   }
-  @Override Rewrite make(final IfStatement s) {
+  @Override Suggestion make(final IfStatement s) {
     final List<Statement> then = extract.statements(then(s));
     if (then.isEmpty())
       return null;
@@ -30,7 +33,7 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements 
     if (elze.isEmpty())
       return null;
     final List<Statement> commonPrefix = commonPrefix(then, elze);
-    return commonPrefix.isEmpty() ? null : new Rewrite(description(s), s) {
+    return commonPrefix.isEmpty() ? null : new Suggestion(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final IfStatement newIf = replacement();
         if (!Is.block(s.getParent())) {
@@ -69,10 +72,17 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements 
     }
     return $;
   }
-  @Override Rewrite make(final IfStatement s, final ExclusionManager exclude) {
+  @Override Suggestion make(final IfStatement s, final ExclusionManager exclude) {
     return super.make(s, exclude);
   }
   @Override boolean scopeIncludes(final IfStatement s) {
     return make(s) != null;
+  }
+  @Override public WringGroup kind() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+    // TODO Auto-generated method stub
   }
 }

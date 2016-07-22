@@ -33,10 +33,12 @@ import org.eclipse.jdt.core.dom.*;
     return ast.expressions(i.arguments());
   }
   /**
-   * @param t
-   * @return
+   * Expose the list of type arguments to a {@link ParameterizedType}
+   *
+   * @param t JD
+   * @return the list of type arguments to a {@link ParameterizedType}
    */
-  public static List<Type> arguments(ParameterizedType t) {
+  public static List<Type> arguments(final ParameterizedType t) {
     return t.typeArguments();
   }
   /**
@@ -47,6 +49,15 @@ import org.eclipse.jdt.core.dom.*;
    */
   public static List<Expression> arguments(final SuperMethodInvocation i) {
     return ast.expressions(i.arguments());
+  }
+  /**
+   * Expose the list of comments in a {@link CompilationUnit}
+   *
+   * @param u JD
+   * @return a reference to the list of comments in the argument
+   */
+  public static List<Comment> comments(final CompilationUnit u) {
+    return u.getCommentList();
   }
   /**
    * Expose the list of extended operands in an {@link InfixExpression}
@@ -86,15 +97,6 @@ import org.eclipse.jdt.core.dom.*;
     return ast.fragments(s.fragments());
   }
   /**
-   * Expose the list of initializers contained in a {@link ForStatement}
-   *
-   * @param s JD
-   * @return a reference to the list of initializers contained in the argument
-   */
-  static List<VariableDeclarationExpression> initializers(final ForStatement s) {
-    return s.initializers();
-  }
-  /**
    * Expose the list of parameters in a {@link MethodDeclaration}
    *
    * @param ¢ JD
@@ -106,15 +108,6 @@ import org.eclipse.jdt.core.dom.*;
     return ¢.parameters();
   }
   /**
-   * Expose the list of resources contained in a {@link TryStatement}
-   *
-   * @param s JD
-   * @return a reference to the list of resources contained in the argument
-   */
-  static List<VariableDeclarationExpression> resources(final TryStatement s) {
-    return s.resources();
-  }
-  /**
    * Expose the list of statements contained in a {@link Block}
    *
    * @param b JD
@@ -122,5 +115,23 @@ import org.eclipse.jdt.core.dom.*;
    */
   public static List<Statement> statements(final Block b) {
     return ast.statements(b.statements());
+  }
+  /**
+   * Expose the list of initializers contained in a {@link ForStatement}
+   *
+   * @param s JD
+   * @return a reference to the list of initializers contained in the argument
+   */
+  static List<Expression> initializers(final ForStatement s) {
+    return s.initializers();
+  }
+  /**
+   * Expose the list of resources contained in a {@link TryStatement}
+   *
+   * @param s JD
+   * @return a reference to the list of resources contained in the argument
+   */
+  static List<VariableDeclarationExpression> resources(final TryStatement s) {
+    return s.resources();
   }
 }

@@ -3,6 +3,7 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
@@ -28,20 +29,20 @@ public class IfAssignToFooElseAssignToFooTest {
   static final Wring<IfStatement> WRING = new IfAssignToFooElseAssignToFoo();
 
   @Test public void checkSteps() {
-    that(asSingle("if (a) a = b; else a = c;"), notNullValue());
+    azzert.that(asSingle("if (a) a = b; else a = c;"), notNullValue());
     final IfStatement s = asIfStatement(asSingle("if (a) a = b; else a = c;"));
-    that(s, notNullValue());
+    azzert.that(s, notNullValue());
     final Assignment then = extract.assignment(then(s));
-    assertNotNull(then(s).toString(), then);
+    azzert.notNull(then(s).toString(), then);
     final Assignment elze = extract.assignment(elze(s));
-    that(elze, notNullValue());
-    that(compatible(then, elze), is(true));
-    that(WRING.scopeIncludes(s), is(true));
+    azzert.that(elze, notNullValue());
+    azzert.that(compatible(then, elze), is(true));
+    azzert.that(WRING.scopeIncludes(s), is(true));
   }
 
   @RunWith(Parameterized.class)//
   public static class OutOfScope extends AbstractWringTest.OutOfScope<IfStatement> {
-    static String[][] cases = as.array(//
+    static String[][] cases = as.array(// assertNotNull
         new String[] { "Expression vs. Expression", " 6 - 7 < 2 + 1   " }, //
         new String[] { "Literal vs. Literal", "if (a) return b; else c;" }, //
         new String[] { "Simple if return", "if (a) return b; else return c;" }, //

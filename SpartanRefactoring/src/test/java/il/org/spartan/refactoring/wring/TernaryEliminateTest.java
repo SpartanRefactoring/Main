@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.azzert.*;
+import static org.junit.Assert.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 

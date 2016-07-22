@@ -2,7 +2,9 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -21,11 +23,11 @@ public class IfLastInMethod extends Wring<IfStatement> implements Kind.Simplify 
   @Override String description(final IfStatement s) {
     return "Invert conditional " + s.getExpression() + " for early return";
   }
-  @Override Rewrite make(final IfStatement s) {
+  @Override Suggestion make(final IfStatement s) {
     if (Is.vacuousThen(s) || !Is.vacuousElse(s) || extract.statements(then(s)).size() < 2)
       return null;
     final Block b = asBlock(s.getParent());
-    return b == null || !lastIn(s, b.statements()) || !(b.getParent() instanceof MethodDeclaration) ? null : new Rewrite(
+    return b == null || !lastIn(s, b.statements()) || !(b.getParent() instanceof MethodDeclaration) ? null : new Suggestion(
         description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Wrings.insertAfter(s, extract.statements(then(s)), r, g);
@@ -36,5 +38,12 @@ public class IfLastInMethod extends Wring<IfStatement> implements Kind.Simplify 
         r.replace(s, newIf, g);
       }
     };
+  }
+  @Override public WringGroup kind() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+    // TODO Auto-generated method stub
   }
 }

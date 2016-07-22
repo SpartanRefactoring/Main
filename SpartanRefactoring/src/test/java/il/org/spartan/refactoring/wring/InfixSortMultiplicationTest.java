@@ -5,7 +5,7 @@ import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import il.org.spartan.*;
-import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.suggestions.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.utils.LiteralParser.Types;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Noneligible;

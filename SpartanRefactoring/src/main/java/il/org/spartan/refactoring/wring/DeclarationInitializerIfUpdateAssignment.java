@@ -1,8 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.wring.Wrings.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.LocalInliner.LocalInlineWithValue;
 
@@ -20,7 +21,7 @@ import org.eclipse.text.edits.*;
  * @since 2015-08-07
  */
 public final class DeclarationInitializerIfUpdateAssignment extends Wring.VariableDeclarationFragementAndStatement implements
-    Kind.Ternarize {
+Kind.Ternarize {
   @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n,
       final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
@@ -41,11 +42,18 @@ public final class DeclarationInitializerIfUpdateAssignment extends Wring.Variab
     if (!i.canInlineInto(newInitializer) || i.replacedSize(newInitializer) - size(nextStatement, initializer) > 0)
       return null;
     r.replace(initializer, newInitializer, g);
-    i.inlineInto(then(newInitializer), newInitializer.getExpression());
+    i.inlineInto(extract.then(newInitializer), newInitializer.getExpression());
     r.remove(nextStatement, g);
     return r;
   }
   @Override public String description(final VariableDeclarationFragment f) {
     return "Consolidate initialization of " + f.getName() + " with the subsequent conditional assignment to it";
+  }
+  @Override public WringGroup kind() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+    // TODO Auto-generated method stub
   }
 }

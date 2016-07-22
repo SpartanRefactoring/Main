@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -18,8 +19,8 @@ public class SuperConstructorInvocationRemover extends Wring<SuperConstructorInv
   @Override boolean scopeIncludes(final SuperConstructorInvocation i) {
     return i.arguments().isEmpty();
   }
-  @Override Rewrite make(final SuperConstructorInvocation i) {
-    return new Rewrite(description(i), i) {
+  @Override Suggestion make(final SuperConstructorInvocation i) {
+    return new Suggestion(description(i), i) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.remove(i, g);
       }
@@ -27,5 +28,12 @@ public class SuperConstructorInvocationRemover extends Wring<SuperConstructorInv
   }
   @Override String description(@SuppressWarnings("unused") final SuperConstructorInvocation __) {
     return "Remove empty 'super()' invocation";
+  }
+  @Override public WringGroup kind() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+    // TODO Auto-generated method stub
   }
 }

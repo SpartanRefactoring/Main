@@ -4,9 +4,12 @@ import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 /**
  * A {@link Wring} to simplify a conditional expression containing another
@@ -44,7 +47,7 @@ public class TernaryCollapse extends Wring.ReplaceCurrentNode<ConditionalExpress
     final Expression thenElse = core(then.getElseExpression());
     return same(thenElse, elze) ? Subject.pair(thenThen, elze).toCondition(
         Subject.pair(e.getExpression(), then.getExpression()).to(CONDITIONAL_AND)) : same(thenThen, elze) ? Subject.pair(thenElse,
-        elze).toCondition(Subject.pair(e.getExpression(), logicalNot(then.getExpression())).to(CONDITIONAL_AND)) : null;
+            elze).toCondition(Subject.pair(e.getExpression(), logicalNot(then.getExpression())).to(CONDITIONAL_AND)) : null;
   }
   @Override Expression replacement(final ConditionalExpression e) {
     return collapse(e);
@@ -54,5 +57,12 @@ public class TernaryCollapse extends Wring.ReplaceCurrentNode<ConditionalExpress
   }
   @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Eliminate nested conditional expression";
+  }
+  @Override public WringGroup kind() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+    // TODO Auto-generated method stub
   }
 }

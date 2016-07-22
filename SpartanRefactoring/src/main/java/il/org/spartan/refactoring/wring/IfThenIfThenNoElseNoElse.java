@@ -1,8 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
+import il.org.spartan.refactoring.suggestions.*;
 import il.org.spartan.refactoring.utils.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -23,7 +26,7 @@ public final class IfThenIfThenNoElseNoElse extends Wring<IfStatement> implement
   @Override boolean scopeIncludes(final IfStatement s) {
     return make(s) != null;
   }
-  @Override Rewrite make(final IfStatement s, final ExclusionManager exclude) {
+  @Override Suggestion make(final IfStatement s, final ExclusionManager exclude) {
     if (!Is.vacuousElse(s))
       return null;
     final IfStatement then = asIfStatement(extract.singleThen(s));
@@ -31,7 +34,7 @@ public final class IfThenIfThenNoElseNoElse extends Wring<IfStatement> implement
       return null;
     if (exclude != null)
       exclude.exclude(then);
-    return new Rewrite(description(s), s) {
+    return new Suggestion(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         collapse(Wrings.blockIfNeeded(s, r, g), r, g);
       }
@@ -43,7 +46,14 @@ public final class IfThenIfThenNoElseNoElse extends Wring<IfStatement> implement
     r.replace(s.getExpression(), e, g);
     r.replace(then, duplicate(then(then)), g);
   }
-  @Override Rewrite make(final IfStatement s) {
+  @Override Suggestion make(final IfStatement s) {
     return make(s, null);
+  }
+  @Override public WringGroup kind() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+    // TODO Auto-generated method stub
   }
 }

@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.*;
+import static org.junit.Assert.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
@@ -39,7 +40,7 @@ public class IfEmptyThenEmptyElseTest {
     final IfStatement s = extract.firstIfStatement(u);
     azzert.that(s, iz("if(b);else;"));
     final ASTRewrite r = ASTRewrite.create(u.getAST());
-    final Rewrite t = WRING.make(s);
+    final Suggestion t = WRING.make(s);
     t.go(r, null);
     final TextEdit e = r.rewriteAST(d, null);
     azzert.that(e, notNullValue());

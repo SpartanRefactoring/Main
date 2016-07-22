@@ -17,7 +17,7 @@ import org.eclipse.jdt.core.dom.*;
  * @since 2016/05/16
  */
 @Deprecated public class SwitchDeductStatementsForCase extends ReplaceCurrentNode<SwitchStatement> implements
-    Kind.SWITCH_IF_CONVERTION {
+Kind.SWITCH_IF_CONVERTION {
   @SuppressWarnings({ "javadoc", "unchecked" }) public static boolean containsCaseWithoutSequencer(final SwitchStatement n) {
     boolean ic = false;
     for (final Statement s : (Iterable<Statement>) n.statements())

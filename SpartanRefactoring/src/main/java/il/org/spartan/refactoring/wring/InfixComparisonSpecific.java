@@ -2,9 +2,12 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 /**
  * A {@link Wring} that reorder comparisons so that the specific value is placed
@@ -29,5 +32,12 @@ public final class InfixComparisonSpecific extends Wring.ReplaceCurrentNode<Infi
   }
   @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Exchange left and right operands of comparison";
+  }
+  @Override public WringGroup kind() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+    // TODO Auto-generated method stub
   }
 }

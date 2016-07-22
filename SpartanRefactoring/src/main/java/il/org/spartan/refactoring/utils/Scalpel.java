@@ -1,5 +1,9 @@
 package il.org.spartan.refactoring.utils;
 
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.extract.*;
+import il.org.spartan.utils.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.annotation.*;
@@ -10,47 +14,48 @@ import org.eclipse.text.edits.*;
 
 /**
  * Does {@link ASTNode} replacement operation, by duplication of nodes,
- * extraction of comments and rewriting the result using an {@link ASTRewrite}r
+ * extraction of comments and rewriting the result using an {@link ASTRewrite}
  * and a {@link TextEditGroup}
  *
  * @author Ori Roth
  * @since 2016/05/13
  */
 public class Scalpel {
-  private final CompilationUnit u;
-  private final String s;
-  private final ASTRewrite r;
-  private final TextEditGroup g;
-  private ASTNode base;
-  private ASTNode[] additionals;
-  private ASTNode replacement;
-  private final List<Comment> comments;
-  private final Set<Comment> used;
+  /**
+   * Checks whether this node is inaccessible, i.e. created using this scalpel's
+   * duplication
+   *
+   * @param n node
+   * @return true iff n is artificial node created with this scalpel
+   */
+  public static boolean isInaccessible(final ASTNode n) {
+    return n != null && Boolean.TRUE.equals(n.properties().get(INACCESSIBLE));
+  }
+  static String cut(final String s, final Range r) {
+    return s.substring(r.from, r.to).replaceAll("\n(\t| )*", "\n");
+  }
+  static <N extends ASTNode> N mark(final N n) {
+    n.setProperty(INACCESSIBLE, Boolean.TRUE);
+    return n;
+  }
+
+  private static final String INACCESSIBLE = "inaccessible";
 
   protected Scalpel(final CompilationUnit u, final String s, final ASTRewrite r, final TextEditGroup g) {
-    this.u = u;
-    this.s = s;
-    this.r = r;
-    this.g = g;
-    base = replacement = null;
-    additionals = null;
-    comments = new ArrayList<>();
-    used = new HashSet<>();
+    compilationUnit = u;
+    string = s;
+    astRewrite = r;
+    textEditGroup = g;
   }
   /**
+   * Adding comments of node to preserved comments
+   *
    * @param n node
-   * @return duplicated node with all original comments included
+   * @return this scalpel
    */
-  @SuppressWarnings({ "unchecked" }) public <@Nullable N extends ASTNode> N duplicate(final N n) {
-    if (n == null)
-      return null;
-    if (u == null || r == null || s == null)
-      return Funcs.duplicate(n);
-    final int sp = u.getExtendedStartPosition(n);
-    if (sp < 0)
-      return Funcs.duplicate(n);
-    used.addAll(extract(n));
-    return mark((N) r.createStringPlaceholder(cut(s, sp, sp + u.getExtendedLength(n)), n.getNodeType()));
+  public Scalpel addComments(final ASTNode n) {
+    comments.addAll(0, comments(n));
+    return this;
   }
   /**
    * Duplicating statements from a list. The duplicated nodes have all original
@@ -65,6 +70,21 @@ public class Scalpel {
     return $;
   }
   /**
+   * @param n node
+   * @return duplicated node with all original comments included
+   */
+  public <@Nullable N extends ASTNode> N duplicate(final N n) {
+    if (n == null)
+      return null;
+    if (compilationUnit == null || astRewrite == null || string == null)
+      return Funcs.duplicate(n);
+    final Range r = extendedRange(n);
+    if (r == null)
+      return Funcs.duplicate(n);
+    used.addAll(comments(n));
+    return mark(cast(n, r));
+  }
+  /**
    * Duplicating statements from one list to another. The duplicated nodes have
    * all original comments included
    *
@@ -77,51 +97,51 @@ public class Scalpel {
         to.add(duplicate(n));
   }
   /**
+   * As duplicateWith, but for multiple lists of elements
+   *
+   * @param nss lists of equal statements
+   * @return list of statements with comments from all lists
+   */
+  @SuppressWarnings("unchecked") public <N extends ASTNode> List<N> duplicateWith(final List<N>... nss) {
+    final List<N> $ = new ArrayList<>();
+    if (nss.length == 0)
+      return $;
+    for (int i = 0; i < nss[0].size(); ++i) {
+      final List<N> c = new ArrayList<>();
+      for (final List<N> nl : nss)
+        c.add(nl.get(i));
+      $.add((N) duplicateWith(c.toArray(new ASTNode[c.size()])));
+    }
+    return $;
+  }
+  /**
    * Duplicates a node with comments from other nodes. Used in order to merge
    * multiple equal nodes into one node, containing comments from both nodes
    *
-   * @param ns
+   * @param ns JD
    * @return a duplicate node containing all comments
    */
   @SuppressWarnings("unchecked") public <@Nullable N extends ASTNode> N duplicateWith(final N... ns) {
     if (ns == null)
       return null;
-    if (u == null || r == null || s == null)
+    if (compilationUnit == null || astRewrite == null || string == null)
       return Funcs.duplicate(ns[ns.length - 1]);
     final StringBuilder sb = new StringBuilder();
     final N n = ns[ns.length - 1];
     int cc = 0;
     for (final N element : ns) {
-      final List<Comment> cl = extract(element);
+      final List<Comment> cl = comments(element);
       used.addAll(cl);
       for (final Comment c : cl) {
-        sb.append(cut(s, u.getExtendedStartPosition(c), u.getExtendedStartPosition(c) + u.getExtendedLength(c))).append("\n");
+        sb.append(cut(string, extendedRange(c))).append("\n");
         ++cc;
       }
     }
     assert n != null;
-    @Nullable final String string = n.toString();
-    assert string != null;
-    return mark(cc != 1 ? (N) r.createStringPlaceholder(sb.append(string).toString().trim(), n.getNodeType()) : (N) r
-        .createStringPlaceholder(string.trim() + " " + sb.toString().trim(), n.getNodeType()));
-  }
-  /**
-   * As duplicateWith, but for multiple lists of elements
-   *
-   * @param nls lists of equal statements
-   * @return list of statements with comments from all lists
-   */
-  @SuppressWarnings("unchecked") public <N extends ASTNode> List<N> duplicateWith(final List<N>... nls) {
-    final List<N> $ = new ArrayList<>();
-    if (nls.length == 0)
-      return $;
-    for (int i = 0; i < nls[0].size(); ++i) {
-      final List<N> c = new ArrayList<>();
-      for (final List<N> nl : nls)
-        c.add(nl.get(i));
-      $.add((N) duplicateWith(c.toArray(new ASTNode[c.size()])));
-    }
-    return $;
+    @Nullable final String s = n.toString();
+    assert s != null;
+    return mark(cc != 1 ? (N) astRewrite.createStringPlaceholder(sb.append(s).toString().trim(), n.getNodeType()) : (N) astRewrite
+        .createStringPlaceholder(s.trim() + " " + sb.toString().trim(), n.getNodeType()));
   }
   /**
    * Merge comments of statements of equals lists
@@ -132,7 +152,7 @@ public class Scalpel {
    */
   public List<ASTNode> merge(final List<ASTNode> l1, final List<ASTNode> l2) {
     for (int i = l1.size() - 1; i >= 0; --i)
-      l1.addAll(i, extract(l2.get(i)));
+      l1.addAll(i, comments(l2.get(i)));
     return l1;
   }
   /**
@@ -147,9 +167,33 @@ public class Scalpel {
     base = b;
     additionals = ns;
     comments.clear();
-    comments.addAll(extract(b));
+    comments.addAll(comments(b));
     for (final ASTNode n : ns)
-      comments.addAll(extract(n));
+      comments.addAll(comments(n));
+    return this;
+  }
+  /**
+   * Ends operation without replacement, so the node is replaced with its
+   * comments
+   *
+   * @return this
+   */
+  public Scalpel remove() {
+    comments.removeAll(used);
+    final Set<Comment> unique = new LinkedHashSet<>(comments);
+    comments.clear();
+    comments.addAll(unique);
+    if (comments.isEmpty())
+      astRewrite.remove(base, textEditGroup);
+    else {
+      final List<ASTNode> $ = new ArrayList<>();
+      for (final Comment c : comments)
+        $.add(0, astRewrite.createStringPlaceholder(string.substring(c.getStartPosition(), c.getStartPosition() + c.getLength()),
+            ASTNode.BLOCK));
+      astRewrite.replace(base, astRewrite.createGroupNode($.toArray(new ASTNode[$.size()])), textEditGroup);
+    }
+    for (final ASTNode a : additionals)
+      astRewrite.remove(a, textEditGroup);
     return this;
   }
   /**
@@ -167,130 +211,103 @@ public class Scalpel {
    * additional nodes and adding predefined comments to the replacements
    *
    * @param ns replacements nodes
-   * @return this scalpel
+   * @return this
    */
   public Scalpel replaceWith(final ASTNode... ns) {
-    return replaceWith(r == null ? null : r.createGroupNode(ns), true);
+    return replaceWith(astRewrite == null ? null : astRewrite.createGroupNode(ns), true);
   }
-  /**
-   * Ends operation without replacement, so the node is replaced with its
-   * comments
-   *
-   * @return this scalpel
-   */
-  public Scalpel remove() {
-    comments.removeAll(used);
-    final Set<Comment> unique = new LinkedHashSet<>(comments);
-    comments.clear();
-    comments.addAll(unique);
-    if (comments.isEmpty())
-      r.remove(base, g);
-    else {
-      final List<ASTNode> $ = new ArrayList<>();
-      for (final Comment c : comments)
-        $.add(0, r.createStringPlaceholder(s.substring(c.getStartPosition(), c.getStartPosition() + c.getLength()), ASTNode.BLOCK));
-      r.replace(base, r.createGroupNode($.toArray(new ASTNode[$.size()])), g);
-    }
-    for (final ASTNode a : additionals)
-      r.remove(a, g);
-    return this;
+  @SuppressWarnings("unchecked") private <N extends ASTNode> @Nullable N cast(final N n, final Range r) {
+    return (N) astRewrite.createStringPlaceholder(cut(string, r), n.getNodeType());
   }
-  /**
-   * Adding comments of node to preserved comments
-   *
-   * @param n node
-   * @return this scalpel
-   */
-  public Scalpel addComments(final ASTNode n) {
-    comments.addAll(0, extract(n));
-    return this;
-  }
-  /**
-   * Checks whether this node is inaccessible, i.e. created using this scalpel's
-   * duplication
-   *
-   * @param n node
-   * @return true iff n is artificial node created with this scalpel
-   */
-  public static boolean isInaccessible(final ASTNode n) {
-    return n != null && Boolean.TRUE.equals(n.properties().get("inaccessible"));
-  }
-  @SuppressWarnings("unchecked") private Scalpel replaceWith(final ASTNode n, final boolean isCollapsed) {
-    replacement = n;
-    if (r == null)
-      return this;
-    if (s == null || base == null || replacement == null || u == null) {
-      r.replace(base, replacement, g);
-      for (final ASTNode a : additionals)
-        r.remove(a, g);
-      return this;
-    }
-    comments.removeAll(used);
-    final Set<Comment> unique = new LinkedHashSet<>(comments);
-    comments.clear();
-    comments.addAll(unique);
-    final SourceRange sr = r.getExtendedSourceRangeComputer().computeSourceRange(base);
-    final List<ASTNode> $ = new ArrayList<>();
-    if (replacement instanceof Block && !isCollapsed) {
-      final Block bl = (Block) replacement;
-      Collections.reverse(comments);
-      for (final Comment c : comments)
-        bl.statements().add(
-            0,
-            r.createStringPlaceholder(
-                s.substring(u.getExtendedStartPosition(c), u.getExtendedStartPosition(c) + u.getExtendedLength(c)), ASTNode.BLOCK));
-      $.add(bl);
-    } else {
-      if (comments.size() != 1 || !shouldMoveCommentToEnd(comments.get(0), isCollapsed)) {
-        for (final Comment c : comments)
-          $.add(r.createStringPlaceholder(
-              s.substring(u.getExtendedStartPosition(c), u.getExtendedStartPosition(c) + u.getExtendedLength(c))
-                  + (replacement instanceof Statement || c.isLineComment() ? "\n" : ""), c.getNodeType()));
-        $.add(replacement);
-      } else {
-        final Comment c = comments.get(0);
-        final String f = !c.isLineComment() || allWhiteSpaces(s.substring(sr.getStartPosition() + sr.getLength()).split("\n")[0]) ? ""
-            : "\n";
-        $.add(replacement);
-        final SourceRange csr = r.getExtendedSourceRangeComputer().computeSourceRange(c);
-        $.add(r.createStringPlaceholder(" " + s.substring(csr.getStartPosition(), csr.getStartPosition() + csr.getLength()) + f,
-            c.getNodeType()));
-      }
-      if (replacement instanceof Statement
-          && !allWhiteSpaces(s.substring(rowStartIndex(sr.getStartPosition()), sr.getStartPosition())))
-        $.add(0, r.createStringPlaceholder("", ASTNode.BLOCK));
-    }
-    r.replace(base, r.createGroupNode($.toArray(new ASTNode[$.size()])), g);
-    for (final ASTNode a : additionals)
-      r.remove(a, g);
-    return this;
-  }
-  @SuppressWarnings("unchecked") private <N extends ASTNode> List<Comment> extract(final N n) {
+  private <N extends ASTNode> List<Comment> comments(final N n) {
     final List<Comment> $ = new ArrayList<>();
-    if (s == null || u == null || r == null)
+    if (string == null || compilationUnit == null || astRewrite == null)
       return $;
-    final int sp = u.getExtendedStartPosition(n);
-    final int ep = sp + u.getExtendedLength(n);
-    for (final Comment c : (List<Comment>) u.getCommentList()) {
-      final int csp = u.getExtendedStartPosition(c);
-      if (csp < sp)
+    final Range r = extendedRange(n);
+    for (final Comment c : expose.comments(compilationUnit)) {
+      final int from = extendedRange(c).from;
+      if (from < r.from)
         continue;
-      if (csp >= ep)
+      if (from >= r.to)
         break;
       $.add(c);
     }
     return $;
   }
-  private static String cut(final String s, final int sp, final int ep) {
-    return s.substring(sp, ep).replaceAll("\n(\t| )*", "\n");
+  @SuppressWarnings("unchecked") private Scalpel replaceWith(final ASTNode n, final boolean isCollapsed) {
+    replacement = n;
+    if (astRewrite == null)
+      return this;
+    if (string == null || base == null || replacement == null || compilationUnit == null) {
+      astRewrite.replace(base, replacement, textEditGroup);
+      for (final ASTNode a : additionals)
+        astRewrite.remove(a, textEditGroup);
+      return this;
+    }
+    comments.removeAll(used);
+    final Set<Comment> unique = new LinkedHashSet<>(comments);
+    comments.clear();
+    comments.addAll(unique);
+    final SourceRange sr = astRewrite.getExtendedSourceRangeComputer().computeSourceRange(base);
+    final List<ASTNode> $ = new ArrayList<>();
+    final Block bl = asBlock(replacement);
+    if (bl != null && !isCollapsed) {
+      Collections.reverse(comments);
+      for (final Comment c : comments)
+        bl.statements().add(
+            0,
+            astRewrite.createStringPlaceholder(
+                string.substring(compilationUnit.getExtendedStartPosition(c), compilationUnit.getExtendedStartPosition(c)
+                    + compilationUnit.getExtendedLength(c)), ASTNode.BLOCK));
+      $.add(bl);
+    } else {
+      if (comments.size() != 1 || !shouldMoveCommenToEnd(comments.get(0), isCollapsed)) {
+        for (final Comment c : comments)
+          $.add(astRewrite.createStringPlaceholder(
+              string.substring(compilationUnit.getExtendedStartPosition(c), compilationUnit.getExtendedStartPosition(c)
+                  + compilationUnit.getExtendedLength(c))
+                  + (replacement instanceof Statement || c.isLineComment() ? "\n" : ""), c.getNodeType()));
+        $.add(replacement);
+      } else {
+        final Comment c = comments.get(0);
+        final String f = !c.isLineComment() || allWhites(string.substring(sr.getStartPosition() + sr.getLength()).split("\n")[0]) ? ""
+            : "\n";
+        $.add(replacement);
+        final SourceRange csr = astRewrite.getExtendedSourceRangeComputer().computeSourceRange(c);
+        $.add(astRewrite.createStringPlaceholder(
+            " " + string.substring(csr.getStartPosition(), csr.getStartPosition() + csr.getLength()) + f, c.getNodeType()));
+      }
+      if (replacement instanceof Statement
+          && !allWhites(string.substring(rowStartIndex(sr.getStartPosition()), sr.getStartPosition())))
+        $.add(0, astRewrite.createStringPlaceholder("", ASTNode.BLOCK));
+    }
+    astRewrite.replace(base, astRewrite.createGroupNode($.toArray(new ASTNode[$.size()])), textEditGroup);
+    for (final ASTNode a : additionals)
+      astRewrite.remove(a, textEditGroup);
+    return this;
   }
-  private boolean shouldMoveCommentToEnd(final Comment c, final boolean isCollapsed) {
+  private int rowStartIndex(final int i) {
+    int $ = i;
+    while ($ > 0 && string.charAt($ - 1) != '\n')
+      --$;
+    return $;
+  }
+  final Range extendedRange(final ASTNode n) {
+    if (compilationUnit == null)
+      return null;
+    final int from = compilationUnit.getExtendedStartPosition(n);
+    final int to = from + compilationUnit.getExtendedLength(n);
+    if (from < 0 || from > to)
+      return null;
+    return new Range(from, from + to);
+  }
+  boolean shouldMoveCommenToEnd(final Comment c, final boolean isCollapsed) {
     if (!c.isLineComment() || replacement == null || isCollapsed)
       return false;
     switch (replacement.getNodeType()) {
       case ASTNode.IF_STATEMENT:
         final IfStatement is = (IfStatement) replacement;
-        return Is.vacuous(is.getElseStatement()) && !(is.getThenStatement() instanceof Block);
+        return Is.vacuous(elze(is)) && !Is.block(then(is));
       case ASTNode.SWITCH_STATEMENT:
         return false;
       case ASTNode.FOR_STATEMENT:
@@ -300,20 +317,14 @@ public class Scalpel {
         return true;
     }
   }
-  private int rowStartIndex(final int i) {
-    int $ = i;
-    while ($ > 0 && s.charAt($ - 1) != '\n')
-      --$;
-    return $;
-  }
-  private static boolean allWhiteSpaces(final String s) {
-    for (final char c : s.toCharArray())
-      if (!Character.isWhitespace(c))
-        return false;
-    return true;
-  }
-  @SuppressWarnings("boxing") static <N extends ASTNode> N mark(final N n) {
-    n.setProperty("inaccessible", true);
-    return n;
-  }
+
+  private ASTNode[] additionals;
+  private final ASTRewrite astRewrite;
+  private ASTNode base;
+  private final List<Comment> comments = new ArrayList<>();
+  private final CompilationUnit compilationUnit;
+  private ASTNode replacement;
+  private final String string;
+  private final TextEditGroup textEditGroup;
+  private final Set<Comment> used = new HashSet<>();
 }

@@ -2,6 +2,8 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.extract.*;
+import static org.junit.Assert.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
@@ -94,41 +96,41 @@ public class IfReturnNoElseReturnTest {
   @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   public static class Wringed extends AbstractWringTest.Wringed.IfStatementAndSurrounding {
     private static String[][] cases = new String[][] { //
-        new String[] { "Vanilla {}", "if (a) return b; return a();", "return a ? b: a();" }, //
-        new String[] { "Vanilla ; ", "if (a) return b; return a(); b(); c();", "return a ? b: a(); b(); c();" }, //
-        new String[] { "Vanilla {;{;;};} ", "if (a) return b; else {;{;{};};{;{}}} return c;", "return a?b:c;" }, //
-        null, //
-        new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}",
-            "if (x) {;f();;;return a;;;}\n g();" }, //
-        null, //
-        new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}",
-            "  if(x){;f();;;return a;;;} g();" }, //
-        new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}", "" + //
-            " if (x) {\n" + //
-            "   f();\n" + //
-            "   return a;\n" + //
-            " }\n" + //
-            " g();\n" + //
-            "" }, null, //
-        new String[] { "Complex with many junk statements", "" + //
-            " if (x) {\n" + //
-            "   ;\n" + //
-            "   f();\n" + //
-            "   return a;\n" + //
-            " } else {\n" + //
-            "   ;\n" + //
-            "   g();\n" + //
-            "   {\n" + //
-            "   }\n" + //
-            " }\n" + //
-            "", "" + //
-            " if (x) {\n" + //
-            "   f();\n" + //
-            "   return a;\n" + //
-            " }\n" + //
-            " g();\n" + //
-            "" }, //
-        null };
+      new String[] { "Vanilla {}", "if (a) return b; return a();", "return a ? b: a();" }, //
+      new String[] { "Vanilla ; ", "if (a) return b; return a(); b(); c();", "return a ? b: a(); b(); c();" }, //
+      new String[] { "Vanilla {;{;;};} ", "if (a) return b; else {;{;{};};{;{}}} return c;", "return a?b:c;" }, //
+      null, //
+      new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}",
+      "if (x) {;f();;;return a;;;}\n g();" }, //
+      null, //
+      new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}",
+      "  if(x){;f();;;return a;;;} g();" }, //
+      new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}", "" + //
+          " if (x) {\n" + //
+          "   f();\n" + //
+          "   return a;\n" + //
+          " }\n" + //
+          " g();\n" + //
+      "" }, null, //
+      new String[] { "Complex with many junk statements", "" + //
+          " if (x) {\n" + //
+          "   ;\n" + //
+          "   f();\n" + //
+          "   return a;\n" + //
+          " } else {\n" + //
+          "   ;\n" + //
+          "   g();\n" + //
+          "   {\n" + //
+          "   }\n" + //
+          " }\n" + //
+          "", "" + //
+              " if (x) {\n" + //
+              "   f();\n" + //
+              "   return a;\n" + //
+              " }\n" + //
+              " g();\n" + //
+      "" }, //
+      null };
 
     /**
      * Generate test cases for this parameterized class.

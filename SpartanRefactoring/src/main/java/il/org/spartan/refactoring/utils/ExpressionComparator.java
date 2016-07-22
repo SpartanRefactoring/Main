@@ -121,6 +121,15 @@ public enum ExpressionComparator implements Comparator<Expression> {
   public static boolean longerFirst(final InfixExpression e) {
     return isLonger(left(e), right(e));
   }
+  /**
+   * TODO Javadoc(2016): automatically generated for method
+   * <code>isLonger</code>
+   *
+   * @param e1 JD
+   * @param e2 JD
+   * @return <code><b>true</b></code> <i>iff</i> the first parameter is longer
+   *         than the second
+   */
   private static boolean isLonger(final Expression e1, final Expression e2) {
     return !has.nulls(e1, e2) && (//
         nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD || //

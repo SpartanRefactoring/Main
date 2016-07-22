@@ -18,7 +18,7 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGr
   interface ConsolidateStatements extends Kind {
     @Override default WringGroup kind() {
       return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
-    };
+    }
   }
 
   interface DiscardRedundant extends Kind {

@@ -1,11 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.wring.Wrings.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import il.org.spartan.misc.*;
 import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.suggestions.*;
 import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;
@@ -17,16 +17,17 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 /**
- * A wring is a transformation that works on an AstNode. Such a transformation
- * make a single simplification of the tree. A wring is so small that it is
- * idempotent: Applying a wring to the output of itself is the empty operation.
+ * A wring is a refactoring that works on an {@link ASTNode}. Such a
+ * transformation make a single simplification of the tree. A wring is so small
+ * that it is idempotent: Applying a wring to the output of itself is the empty
+ * operation.
  *
  * @param <N> type of node which triggers the transformation.
  * @author Yossi Gil
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-07-09
  */
-public abstract class Wring<N extends ASTNode> implements Kind {
+public abstract class Wring<N extends ASTNode> extends Suggestion implements Kind {
   protected CompilationUnit compilationUnit;
   protected Scalpel scalpel;
 
@@ -35,8 +36,16 @@ public abstract class Wring<N extends ASTNode> implements Kind {
    * @param u current compilation unit
    * @return this wring
    */
-  public Wring<N> initialize(final CompilationUnit u) {
-    this.compilationUnit = u;
+  public Wring<N> set(final CompilationUnit compilationUnit) {
+    return Context.this.starting.vrom(compilationUnit);
+  }
+  /**
+   * @param r rewriter
+   * @param g text edit group
+   * @return this wring
+   */
+  public Wring<N> createScalpel(final ASTRewrite r) {
+    scalpel = Source.getScalpel(compilationUnit, r, null);
     return this;
   }
   /**
@@ -59,10 +68,10 @@ public abstract class Wring<N extends ASTNode> implements Kind {
   boolean eligible(final N n) {
     return true;
   }
-  Rewrite make(final N n) {
+  Suggestion make(final N n) {
     return make(n, null);
   }
-  Rewrite make(final N n, @SuppressWarnings("unused") final ExclusionManager __) {
+  Suggestion make(final N n, @SuppressWarnings("unused") final ExclusionManager __) {
     return make(n);
   }
   /**
@@ -76,7 +85,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
    *         the simplification offered by this object.
    * @see #eligible(InfixExpression)
    */
-  final boolean nonEligible(final N n) {
+  public final boolean nonEligible(final N n) {
     return !eligible(n);
   }
   /**
@@ -89,11 +98,11 @@ public abstract class Wring<N extends ASTNode> implements Kind {
    * @return <code><b>true</b></code> <i>iff</i> the argument is within the
    *         scope of this object
    */
-  boolean scopeIncludes(final N n) {
+  public boolean scopeIncludes(final N n) {
     return make(n, null) != null;
   }
 
-  static abstract class AbstractSorting extends ReplaceCurrentNode<InfixExpression> {
+  abstract class AbstractSorting extends ReplaceCurrentNode<InfixExpression> {
     @Override final String description(final InfixExpression e) {
       return "Reorder operands of " + e.getOperator();
     }
@@ -127,9 +136,9 @@ public abstract class Wring<N extends ASTNode> implements Kind {
     }
   }
 
-  static abstract class ReplaceCurrentNode<N extends ASTNode> extends Wring<N> {
-    @Override final Rewrite make(final N n) {
-      return !eligible(n) ? null : new Rewrite(description(n), n) {
+  abstract class ReplaceCurrentNode<N extends ASTNode> extends Wring<N> {
+    @Override final Suggestion make(final N n) {
+      return !eligible(n) ? null : new Suggestion(description(n), n) {
         @SuppressWarnings("unused") @Override public void go(final ASTRewrite r, final TextEditGroup g) {
           scalpel.operate(n).replaceWith(replacement(n));
         }
@@ -145,8 +154,8 @@ public abstract class Wring<N extends ASTNode> implements Kind {
    * Similar to {@link ReplaceCurrentNode}, but with an {@link ExclusionManager}
    */
   static abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends Wring<N> {
-    @Override final Rewrite make(final N n, final ExclusionManager m) {
-      return !eligible(n) ? null : new Rewrite(description(n), n) {
+    @Override public final Suggestion make(final N n, final ExclusionManager m) {
+      return !eligible(n) ? null : new Suggestion(description(n), n) {
         @SuppressWarnings("unused") @Override public void go(final ASTRewrite r, final TextEditGroup g) {
           scalpel.operate(n).replaceWith(replacement(n, m));
         }
@@ -165,10 +174,10 @@ public abstract class Wring<N extends ASTNode> implements Kind {
    * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
    * @since 2016-04-25
    */
-  static abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends Wring<N> {
+  abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends Wring<N> {
     abstract ASTRewrite go(ASTRewrite r, N n, TextEditGroup g, List<ASTNode> bss, List<ASTNode> crs);
-    @Override Rewrite make(final N n) {
-      return new Rewrite(description(n), n) {
+    @Override Suggestion make(final N n) {
+      return new Suggestion(description(n), n) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
           final List<ASTNode> bss = new ArrayList<>();
           final List<ASTNode> crs = new ArrayList<>();
@@ -190,12 +199,12 @@ public abstract class Wring<N extends ASTNode> implements Kind {
   /* TODO complete cases 1 and 2 of IfCommandsSequencerNoElseSingletonSequencer */
   static abstract class ReplaceToNextStatement<N extends ASTNode> extends Wring<N> {
     abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g);
-    @Override Rewrite make(final N n, final ExclusionManager exclude) {
+    @Override Suggestion make(final N n, final ExclusionManager exclude) {
       final Statement nextStatement = extract.nextStatement(n);
       if (nextStatement == null || !eligible(n))
         return null;
       exclude.exclude(nextStatement);
-      return new Rewrite(description(n), n, nextStatement) {
+      return new Suggestion(description(n), n, nextStatement) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
           ASTNode p = n;
           while (!(p instanceof Statement))
@@ -220,12 +229,12 @@ public abstract class Wring<N extends ASTNode> implements Kind {
    */
   static abstract class MultipleReplaceToNextStatement<N extends ASTNode> extends Wring<N> {
     abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g, List<ASTNode> bss, List<ASTNode> crs);
-    @Override Rewrite make(final N n, final ExclusionManager exclude) {
+    @Override Suggestion make(final N n, final ExclusionManager exclude) {
       final Statement nextStatement = extract.nextStatement(n);
       if (nextStatement == null || !eligible(n))
         return null;
       exclude.exclude(nextStatement);
-      return new Rewrite(description(n), n, nextStatement) {
+      return new Suggestion(description(n), n, nextStatement) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
           final List<ASTNode> bss = new ArrayList<>();
           final List<ASTNode> crs = new ArrayList<>();
@@ -315,9 +324,9 @@ public abstract class Wring<N extends ASTNode> implements Kind {
      * fragment fragments in the containing {@link VariabelDeclarationStatement}
      * . Still, if the containing node left empty, it is removed as well.
      *
-     * @param f
-     * @param r
-     * @param g
+     * @param f JD
+     * @param r JD
+     * @param g JD
      */
     static void remove(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
       final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
@@ -329,9 +338,9 @@ public abstract class Wring<N extends ASTNode> implements Kind {
      * {@link VariabelDeclarationStatement}. If no fragments are left, then this
      * containing node is eliminated as well.
      *
-     * @param f
-     * @param r
-     * @param g
+     * @param f JD
+     * @param r JD
+     * @param g JD
      */
     static void eliminate(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
       final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
@@ -363,8 +372,8 @@ public abstract class Wring<N extends ASTNode> implements Kind {
       final SimpleName n = f.getName();
       return n == null ? null : go(r, f, n, f.getInitializer(), nextStatement, g);
     }
-    @Override Rewrite make(final VariableDeclarationFragment f, final ExclusionManager exclude) {
-      final Rewrite $ = super.make(f, exclude);
+    @Override Suggestion make(final VariableDeclarationFragment f, final ExclusionManager exclude) {
+      final Suggestion $ = super.make(f, exclude);
       if ($ != null && exclude != null)
         exclude.exclude(f.getParent());
       return $;

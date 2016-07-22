@@ -2,6 +2,8 @@ package il.org.spartan.refactoring.spartanizations;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
+import il.org.spartan.misc.*;
+import il.org.spartan.refactoring.suggestions.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.*;
 
@@ -16,7 +18,7 @@ import org.eclipse.text.edits.*;
 @SuppressWarnings("javadoc") public enum TESTUtils {
   ;
   public static void assertNoChange(final String input) {
-    assertSimilar(input, Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on(input))));
+    assertSimilar(input, Wrap.Expression.off(apply(Wrap.Expression.on(input))));
   }
   /**
    * A test to check that the actual output is similar to the actual value.
@@ -50,29 +52,37 @@ import org.eclipse.text.edits.*;
     that(n, notNullValue());
     return extract.singleStatement(n);
   }
-  public static Document rewrite(final Spartanization s, final CompilationUnit u, final Document $) {
+  public static Document rewrite(final CompilationUnit u, final Document $) {
     try {
-      s.createRewrite(u, null).rewriteAST($, null).apply($);
+      Context.vrom(u).changes().rewriteAST($, null).apply($);
       return $;
     } catch (MalformedTreeException | BadLocationException e) {
       throw new AssertionError(e);
     }
   }
-  public static String apply(final Trimmer t, final String from) {
+  public static Wrapper<String> rewrite(final Wring<? extends ASTNode> $, final CompilationUnit u, final Document d) {
+    try {
+      $.createRewrite(u, null).rewriteAST($, null).apply($);
+      return $;
+    } catch (MalformedTreeException | BadLocationException e) {
+      throw new AssertionError(e);
+    }
+  }
+  public static String apply(final Context t, final String from) {
     final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(from);
     that(u, notNullValue());
     final Document d = new Document(from);
     that(d, notNullValue());
     return TESTUtils.rewrite(t, u, d).get();
   }
-  static void assertNoOpportunity(final Spartanization s, final String from) {
+  static void assertNoOpportunity(final Context s, final String from) {
     final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(from);
     that(u.toString(), TrimmerTestsUtils.countOpportunities(s, u), is(0));
   }
   static void assertNotEvenSimilar(final String expected, final String actual) {
     that(compressSpaces(expected), not(compressSpaces(actual)));
   }
-  static void assertOneOpportunity(final Spartanization s, final String from) {
+  static void assertOneOpportunity(final Context s, final String from) {
     final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(from);
     that(u, notNullValue());
     that(TrimmerTestsUtils.countOpportunities(s, u), greaterThanOrEqualTo(1));

@@ -4,8 +4,10 @@ import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.suggestions.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.utils.Collect.Of;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
@@ -112,7 +114,7 @@ public class DeclarationIfAssginmentTest {
       final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(d);
       final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
       azzert.that(f, notNullValue());
-      final ASTRewrite r = new Trimmer().createRewrite(u, null);
+      final ASTRewrite r = new Context().createRewrite(u, null);
       final TextEdit e = r.rewriteAST(d, null);
       azzert.that(e.getChildrenSize(), greaterThan(0));
       final UndoEdit b = e.apply(d);
@@ -134,7 +136,7 @@ public class DeclarationIfAssginmentTest {
       final String expected = "int a = b ? 3 : 2;";
       final Document d = new Document(Wrap.Statement.on(from));
       final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(d);
-      final Document actual = TESTUtils.rewrite(new Trimmer(), u, d);
+      final Document actual = TESTUtils.rewrite(new Context(), u, d);
       final String peeled = Wrap.Statement.off(actual.get());
       if (expected.equals(peeled))
         return;

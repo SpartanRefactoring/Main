@@ -49,6 +49,11 @@ public enum Collect {
   };
   static final ASTMatcher matcher = new ASTMatcher();
 
+  /**
+   * @param n JD
+   * @return TODO document return type of this method * TODO document return
+   *         type of this method
+   */
   public static Collector definitionsOf(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
@@ -61,7 +66,7 @@ public enum Collect {
   }
   /**
    * @param n JD
-   * @return
+   * @return TODO: document what this function returns
    */
   public static Collector forAllOccurencesExcludingDefinitions(final SimpleName n) {
     return new Collector(n) {
@@ -75,7 +80,7 @@ public enum Collect {
   }
   /**
    * @param n JD
-   * @return
+   * @return TODO: document what this function returns
    */
   public static Collector usesOf(final SimpleName n) {
     return new Collector(n) {
@@ -90,7 +95,12 @@ public enum Collect {
         return consider(left(a));
       }
       @Override public boolean visit(final ForStatement s) {
-        return consider(expose.initializers(s));
+        for (final Expression e : expose.initializers(s))
+          if (e instanceof VariableDeclarationExpression)
+            addFragments(expose.fragments((VariableDeclarationExpression) e));
+          else if (e instanceof Assignment)
+            consider(right((Assignment) e));
+        return true;
       }
       @Override public boolean visit(final PostfixExpression it) {
         return !in(it.getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT)
@@ -338,6 +348,11 @@ public enum Collect {
     Collector(final SimpleName name) {
       this.name = name;
     }
+    /**
+     * @param ns JD
+     * @return TODO document return type of this method * TODO document return
+     *         type of this method
+     */
     public abstract List<SimpleName> in(final ASTNode... ns);
     protected List<SimpleName> usesOf(final List<SimpleName> $, final ASTNode... ns) {
       for (final ASTNode n : ns)

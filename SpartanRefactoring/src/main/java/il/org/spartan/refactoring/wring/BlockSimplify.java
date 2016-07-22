@@ -1,12 +1,15 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.azzert.*;
+import static org.junit.Assert.*;
 import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 /**
  * A {@link Wring} to convert <code>{;; g(); {}{;{;{;}};} }</code> into
@@ -70,5 +73,12 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> implements Ki
   }
   @Override String description(@SuppressWarnings("unused") final Block __) {
     return "Simplify block";
+  }
+  @Override public WringGroup kind() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+    // TODO Auto-generated method stub
   }
 }

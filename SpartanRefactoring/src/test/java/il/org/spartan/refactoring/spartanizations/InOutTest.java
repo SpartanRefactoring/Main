@@ -3,6 +3,8 @@ package il.org.spartan.refactoring.spartanizations;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import static org.junit.Assert.*;
+import il.org.spartan.refactoring.suggestions.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.*;
 
@@ -46,7 +48,7 @@ public class InOutTest {
       }
     }.go();
   }
-  protected static void go(final Spartanization s, final File from, final File to) {
+  protected static void go(final Context s, final File from, final File to) {
     final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(FileTestUtils.makeInFile(from));
     that(u.toString(), TrimmerTestsUtils.countOpportunities(s, u), is(1));
     TESTUtils.assertOneOpportunity(s, ast.string(from));

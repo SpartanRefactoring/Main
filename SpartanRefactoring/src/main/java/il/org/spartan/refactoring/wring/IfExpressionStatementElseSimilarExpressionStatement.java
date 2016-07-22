@@ -1,11 +1,15 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.refactoring.wring.TernaryPushdown.*;
 import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 /**
  * A {@link Wring} to convert <code>if (x) f(a); else f(b);</code> into
@@ -15,7 +19,7 @@ import org.eclipse.jdt.core.dom.*;
  * @since 2015-07-29
  */
 public final class IfExpressionStatementElseSimilarExpressionStatement extends Wring.ReplaceCurrentNode<IfStatement> implements
-    Kind.ConsolidateStatements {
+Kind.ConsolidateStatements {
   @Override Statement replacement(final IfStatement s) {
     final Expression then = extract.expression(extract.expressionStatement(then(s)));
     if (then == null)
@@ -28,5 +32,12 @@ public final class IfExpressionStatementElseSimilarExpressionStatement extends W
   }
   @Override String description(final IfStatement s) {
     return "Consolidate two branches of 'if(" + s.getExpression() + ") ... into one";
+  }
+  @Override public WringGroup kind() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+    // TODO Auto-generated method stub
   }
 }

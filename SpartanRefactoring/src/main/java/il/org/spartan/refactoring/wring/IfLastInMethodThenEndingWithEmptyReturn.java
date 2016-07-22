@@ -2,7 +2,10 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
+import il.org.spartan.refactoring.suggestions.*;
 import il.org.spartan.refactoring.utils.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -23,7 +26,7 @@ public class IfLastInMethodThenEndingWithEmptyReturn extends Wring<IfStatement> 
     return "Remove redundant return statement in 'then' branch of if(" + s.getExpression()
         + ") ... statement that terminates this method";
   }
-  @Override Rewrite make(final IfStatement s, final ExclusionManager exclude) {
+  @Override Suggestion make(final IfStatement s, final ExclusionManager exclude) {
     final Block b = asBlock(s.getParent());
     if (b == null || !(b.getParent() instanceof MethodDeclaration) || !lastIn(s, b.statements()))
       return null;
@@ -32,10 +35,17 @@ public class IfLastInMethodThenEndingWithEmptyReturn extends Wring<IfStatement> 
       return null;
     if (exclude != null)
       exclude.equals(s);
-    return new Rewrite(description(s), s) {
+    return new Suggestion(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(deleteMe, s.getAST().newEmptyStatement(), g);
       }
     };
+  }
+  @Override public WringGroup kind() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+    // TODO Auto-generated method stub
   }
 }

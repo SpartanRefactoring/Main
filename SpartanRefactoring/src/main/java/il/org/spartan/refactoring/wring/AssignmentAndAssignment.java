@@ -4,6 +4,7 @@ import static il.org.spartan.refactoring.utils.Funcs.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -54,5 +55,12 @@ public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assign
   }
   @Override String description(final Assignment a) {
     return "Consolidate two assignment to '" + left(a) + "'";
+  }
+  @Override public WringGroup kind() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+    // TODO Auto-generated method stub
   }
 }

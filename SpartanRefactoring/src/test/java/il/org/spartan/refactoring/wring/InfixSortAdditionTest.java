@@ -145,7 +145,7 @@ public class InfixSortAdditionTest {
       that(operands.size(), greaterThanOrEqualTo(2));
       that(//
           "Before: " + extract.operands(flatten(e)) + "\n" + //
-              "After: " + operands + "\n", //
+          "After: " + operands + "\n", //
           COMPARATOR.sort(operands), is(true));
     }
     @Test public void sortTwice() {

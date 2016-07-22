@@ -2,6 +2,7 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -16,7 +17,7 @@ import org.eclipse.text.edits.*;
  * @since 2015-08-07
  */
 public final class DeclarationAssignment extends Wring.VariableDeclarationFragementAndStatement implements
-    Kind.ConsolidateStatements {
+Kind.ConsolidateStatements {
   @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n,
       final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (initializer != null)
@@ -36,5 +37,12 @@ public final class DeclarationAssignment extends Wring.VariableDeclarationFragem
   }
   @Override String description(final VariableDeclarationFragment f) {
     return "Consolidate declaration of " + f.getName() + " with its subsequent initialization";
+  }
+  @Override public WringGroup kind() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+    // TODO Auto-generated method stub
   }
 }

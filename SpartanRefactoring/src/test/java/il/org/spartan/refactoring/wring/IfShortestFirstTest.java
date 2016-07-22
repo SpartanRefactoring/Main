@@ -2,6 +2,7 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
@@ -35,7 +36,7 @@ import org.junit.runners.Parameterized.Parameters;
         "    return false;\n" + //
         "return true;" //
         + ""//
-    );
+        );
     final IfStatement s = extract.firstIfStatement(u);
     that(extract.statements(then(s)).size(), is(1));
     that(extract.statements(elze(s)).size(), is(1));
@@ -76,19 +77,19 @@ import org.junit.runners.Parameterized.Parameters;
     private static String[][] cases = as.array(//
         new String[] { "Vanilla", "if (a) a(x,y,z,w); else b();", "if (!a) b(); else a(x,y,z,w);" }, //
         new String[] { //
-        "Two statemens are greater than one", //
+            "Two statemens are greater than one", //
             "if (a) {i++;j++;} else b(asdf,as,as,asdf,adfasd,adadfadf,asfasdfasdf);", //
-            "if (!a) b(asdf,as,as,asdf,adfasd,adadfadf,asfasdfasdf); else {i++;j++;} " }, //
+        "if (!a) b(asdf,as,as,asdf,adfasd,adadfadf,asfasdfasdf); else {i++;j++;} " }, //
         new String[] { //
-        "If bug simplified", //
+            "If bug simplified", //
             "" + //
-                "    if (x) {\n" + //
-                "      if (z)\n" + //
-                "        return null;\n" + //
-                "      c = f().charAt(3);\n" + //
-                "    } else if (y)\n" + //
-                "      return;\n" + //
-                "", "" + //
+            "    if (x) {\n" + //
+            "      if (z)\n" + //
+            "        return null;\n" + //
+            "      c = f().charAt(3);\n" + //
+            "    } else if (y)\n" + //
+            "      return;\n" + //
+            "", "" + //
                 "    if (!x) {\n" + //
                 "      if (y)\n" + //
                 "        return;\n" + //

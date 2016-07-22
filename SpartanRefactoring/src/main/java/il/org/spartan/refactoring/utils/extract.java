@@ -39,11 +39,13 @@ public enum extract {
     return asAssignment(expression(extract.expressionStatement(n)));
   }
   /**
-   * @param s
-   * @return
+   * Shorthand for {@link ConditionalExpression#getExpression()}
+   *
+   * @param e JD
+   * @return the else part of the parameter
    */
-  private static Expression expression(final ExpressionStatement s) {
-    return s == null ? null : s.getExpression();
+  public static Expression condition(final ConditionalExpression e) {
+    return logicalNot(logicalNot(e.getExpression()));
   }
   /**
    * Find the "core" of a given {@link Expression}, by peeling of any
@@ -193,6 +195,11 @@ public enum extract {
     });
     return $.get();
   }
+  /**
+   * @param s JD
+   * @return TODO document return type of this method * TODO document return
+   *         type of this method
+   */
   public static Type firstType(final Statement s) {
     final maybe<Type> $ = maybe.no();
     s.accept(new ASTVisitor() {
@@ -350,13 +357,6 @@ public enum extract {
     return extract.expression(extract.returnStatement(n));
   }
   /**
-   * @param $
-   * @return
-   */
-  private static Expression expression(final ReturnStatement $) {
-    return $ == null ? null : $.getExpression();
-  }
-  /**
    * Extract the single {@link ReturnStatement} embedded in a node.
    *
    * @param n JD
@@ -388,7 +388,9 @@ public enum extract {
     return unless($.size() != 1).eval(() -> $.get(0));
   }
   /**
-   * Finds the single statement in the "then" branch of an {@link IfStatement}
+   * ent in the "then" branch of an {@link IfStatement}
+   *
+   * Finds the single statem
    *
    * @param s JD
    * @return the single statement in the "then" branch of the parameter, or
@@ -422,6 +424,15 @@ public enum extract {
     return n == null || !(n instanceof Statement) ? $ : extract.statementsInto((Statement) n, $);
   }
   /**
+   * Shorthand for {@link IfStatement#getThenStatement}
+   *
+   * @param s JD
+   * @return the then statement of the parameter
+   */
+  public static Statement then(final IfStatement s) {
+    return core(s.getThenStatement());
+  }
+  /**
    * @param n a node to extract an expression from
    * @return null if the statement is not an expression or return statement or
    *         the expression if they are
@@ -439,6 +450,19 @@ public enum extract {
    */
   public static ThrowStatement throwStatement(final ASTNode n) {
     return asThrowStatement(extract.singleStatement(n));
+  }
+  /**
+   * @return TODO document return type of this method * TODO document return
+   *         type of this method
+   */
+  private static Expression expression(final ExpressionStatement s) {
+    return s == null ? null : s.getExpression();
+  }
+  /**
+   * @param $ result * @return
+   */
+  private static Expression expression(final ReturnStatement $) {
+    return $ == null ? null : $.getExpression();
   }
   private static Statement next(final Statement s, final List<Statement> ss) {
     for (int i = 0; i < ss.size() - 1; ++i)
@@ -461,5 +485,14 @@ public enum extract {
         $.add(s);
         return $;
     }
+  }
+  /**
+   * Shorthand for {@link ConditionalExpression#getThenExpression()}
+   *
+   * @param e JD
+   * @return the then part of the parameter
+   */
+  public static Expression then(final ConditionalExpression e) {
+    return core(e.getThenExpression());
   }
 }

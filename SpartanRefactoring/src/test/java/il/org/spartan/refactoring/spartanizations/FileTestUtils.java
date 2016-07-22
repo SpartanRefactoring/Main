@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.spartanizations;
 
 import static il.org.spartan.azzert.*;
+import il.org.spartan.refactoring.suggestions.*;
 import il.org.spartan.refactoring.utils.*;
 
 import java.io.*;
@@ -68,9 +69,9 @@ public abstract class FileTestUtils {
   /**
    * Creates a temporary file - including lazy deletion.
    *
-   * @param b
-   * @param d
-   * @param f
+   * @param b JD
+   * @param d JD
+   * @param f JD
    * @return TODO document return type
    */
   static File createTempFile(final StringBuilder b, final TestDirection d, final File f) {
@@ -164,8 +165,8 @@ public abstract class FileTestUtils {
    */
   public static abstract class Files extends FileTestUtils.Traverse {
     /* (non-Javadoc)
-     * 
-     * 
+     *
+     *
      * @see
      * il.ac.technion.cs.ssdl.spartan.refactoring.TestSuite.Traverse#go(java
      * .util.List, java.io.File) */

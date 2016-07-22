@@ -1,12 +1,16 @@
 package il.org.spartan.refactoring.builder;
 
-import il.org.spartan.refactoring.spartanizations.*;
+import static il.org.spartan.Utils.*;
+import static il.org.spartan.refactoring.suggestions.Context.*;
+import il.org.spartan.refactoring.suggestions.*;
 import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.*;
 
 import java.util.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
+import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.core.dom.*;
 
 /**
@@ -14,8 +18,8 @@ import org.eclipse.jdt.core.dom.*;
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code> @since
  *         2014/6/16 (v3)
  * @author Tomer Zeltzer <code><tomerr90 [at] gmail.com></code>
- * @since 2013/07/01
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
+ * @since 2013/07/01
  */
 public class Builder extends IncrementalProjectBuilder {
   /** Long prefix to be used in front of all suggestions */
@@ -40,25 +44,40 @@ public class Builder extends IncrementalProjectBuilder {
 
   @Override protected IProject[] build(final int kind, @SuppressWarnings({ "unused", "rawtypes" }) final Map __,
       final IProgressMonitor m) throws CoreException {
-    if (m != null)
-      m.beginTask("Checking for spartanization opportunities", IProgressMonitor.UNKNOWN);
-    build(kind);
-    if (m != null)
-      m.done();
+    build(kind, m);
     return null;
   }
-  private void build(final int kind) throws CoreException {
-    if (kind == FULL_BUILD) {
-      fullBuild();
-      return;
-    }
-    final IResourceDelta d = getDelta(getProject());
+  /**
+   * TODO Javadoc(2016): automatically generated for method <code>build</code>
+   *
+   * @param kind
+   * @param m void TODO Javadoc(2016) automatically generated for returned value
+   *          of method <code>build</code>
+   */
+  private void build(final int kind, final IProgressMonitor m) {
+    inContext().set(m).new Action() {
+      @Override protected void go() {
+        context.progressMonitor().beginTask("Searching for spartanization suggestions", IProgressMonitor.UNKNOWN);
+        if (kind == FULL_BUILD)
+          fullBuild();
+        else
+          build(getDelta(getProject()));
+        context.progressMonitor().done();
+      }
+    }.go();
+  }
+  /**
+   * Build for a given delta
+   *
+   * @param d JD
+   */
+  void build(final IResourceDelta d) {
     if (d == null)
       fullBuild();
     else
       incrementalBuild(d);
   }
-  protected void fullBuild() {
+  void fullBuild() {
     try {
       getProject().accept(r -> {
         addMarkers(r);
@@ -73,24 +92,22 @@ public class Builder extends IncrementalProjectBuilder {
       addMarkers((IFile) r);
   }
   private static void addMarkers(final IFile f) throws CoreException {
-    Spartanizations.reset();
     deleteMarkers(f);
     addMarkers(f, (CompilationUnit) ast.COMPILIATION_UNIT.from(f));
   }
   private static void addMarkers(final IFile f, final CompilationUnit u) throws CoreException {
-    for (final Spartanization s : Spartanizations.all())
-      for (final Rewrite r : s.findOpportunities(u))
-        if (r != null)
-          addMarker(s, r, f.createMarker(MARKER_TYPE));
+    final Context c = inContext().set(u).set(new Toolbox());
+    for (final @NonNull Suggestion s : s.collect(u))
+      addMarker(s, f.createMarker(MARKER_TYPE));
   }
-  private static void addMarker(final Spartanization s, final Rewrite r, final IMarker m) throws CoreException {
+  private static void addMarker(final Suggestion s, final IMarker m) throws CoreException {
     m.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
     m.setAttribute(SPARTANIZATION_TYPE_KEY, s.toString());
-    m.setAttribute(IMarker.MESSAGE, prefix() + r.description);
-    m.setAttribute(IMarker.CHAR_START, r.from);
-    m.setAttribute(IMarker.CHAR_END, r.to);
+    m.setAttribute(IMarker.MESSAGE, prefix() + s.description());
+    m.setAttribute(IMarker.CHAR_START, s.range().from());
+    m.setAttribute(IMarker.CHAR_END, s.to());
     m.setAttribute(IMarker.TRANSIENT, false);
-    m.setAttribute(IMarker.LINE_NUMBER, r.lineNumber);
+    m.setAttribute(IMarker.LINE_NUMBER, s.lineNumber());
   }
   /**
    * deletes all spartanization suggestion markers
@@ -105,22 +122,19 @@ public class Builder extends IncrementalProjectBuilder {
   public static void deleteMarkers(final IFile f) throws CoreException {
     f.deleteMarkers(MARKER_TYPE, false, IResource.DEPTH_ONE);
   }
-  public static void incrementalBuild(final IResourceDelta d) throws CoreException {
-    d.accept(internalDelta -> {
-      // return true to continue visiting children.
-      // handle removed resource
-      switch (internalDelta.getKind()) {
-        case IResourceDelta.ADDED:
-        case IResourceDelta.CHANGED:
-          // handle added and changed resource
-          // handle added and changed resource
-          addMarkers(internalDelta.getResource());
-          // return true to continue visiting children.
-          // return true to continue visiting children.
-          return true;
-        default:
-          return true; // return true to continue visiting children.
-      }
-    });
+  /**
+   * @param d JD
+   * @throws CoreException
+   */
+  public static void incrementalBuild(final IResourceDelta d) {
+    try {
+      d.accept(v -> {
+        if (found(v.getKind()).in(IResourceDelta.ADDED, IResourceDelta.CHANGED))
+          addMarkers(v.getResource());
+        return true;
+      });
+    } catch (final CoreException e) {
+      e.printStackTrace();
+    }
   }
 }

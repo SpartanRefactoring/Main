@@ -33,7 +33,7 @@ public class TypeNamesCollector {
     try {
       collect(FileUtils.read(f));
     } catch (final IOException e) {
-      System.err.println(e.getMessage());
+      e.printStackTrace();
     }
   }
   private static void collect(final String javaCode) {

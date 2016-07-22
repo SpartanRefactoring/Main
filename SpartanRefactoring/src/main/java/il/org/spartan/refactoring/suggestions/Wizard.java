@@ -1,4 +1,4 @@
-package il.org.spartan.refactoring.spartanizations;
+package il.org.spartan.refactoring.suggestions;
 
 import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.ltk.ui.refactoring.*;

@@ -15,7 +15,7 @@ import org.eclipse.jdt.core.dom.*;
  * @author Yossi Gil
  * @since 2015-07-16
  */
-public enum Have {
+public enum have {
   ;
   /**
    * Determine whether a literal is present

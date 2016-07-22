@@ -96,6 +96,11 @@ public abstract class AncestorSearch {
     until(final ASTNode until) {
       this.until = until;
     }
+    /**
+     * @param n JD
+     * @return TODO document return type of this method * TODO document return
+     *         type of this method
+     */
     public Iterable<ASTNode> ancestors(final SimpleName n) {
       return () -> new Iterator<ASTNode>() {
         ASTNode next = n;

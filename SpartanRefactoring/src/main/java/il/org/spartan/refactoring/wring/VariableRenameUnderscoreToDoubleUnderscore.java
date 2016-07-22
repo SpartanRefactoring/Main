@@ -12,7 +12,7 @@ import org.eclipse.jdt.core.dom.*;
  * @since 2016/05/08
  */
 public class VariableRenameUnderscoreToDoubleUnderscore<N extends VariableDeclaration> extends VariableChangeName<N> implements
-    Kind.RENAME_PARAMETERS {
+Kind.RENAME_PARAMETERS {
   @Override boolean change(final N n) {
     return "_".equals(n.getName().toString());
   }

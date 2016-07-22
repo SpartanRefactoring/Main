@@ -4,8 +4,10 @@ import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
+import static org.junit.Assert.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.suggestions.*;
 import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;
@@ -40,7 +42,7 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
     that(u, notNullValue());
     final Document d = new Document(wrap);
     that(d, notNullValue());
-    final Trimmer t = new Trimmer();
+    final Context t = new Context();
     final ASTRewrite r = t.createRewrite(u, null);
     final TextEdit x = r.rewriteAST(d, null);
     x.apply(d);

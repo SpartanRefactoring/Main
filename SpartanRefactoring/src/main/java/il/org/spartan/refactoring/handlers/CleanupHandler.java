@@ -1,14 +1,14 @@
 package il.org.spartan.refactoring.handlers;
 
-import static il.org.spartan.refactoring.spartanizations.DialogBoxes.*;
-import il.org.spartan.refactoring.spartanizations.*;
+import static il.org.spartan.refactoring.suggestions.DialogBoxes.*;
+import il.org.spartan.refactoring.suggestions.*;
+import il.org.spartan.refactoring.utils.*;
 
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.concurrent.atomic.*;
 
 import org.eclipse.core.commands.*;
-import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
@@ -21,19 +21,14 @@ import org.eclipse.ui.progress.*;
  * @since 2015/08/01
  */
 public class CleanupHandler extends BaseHandler {
-  /** Instantiates this class */
-  public CleanupHandler() {
-    super(null);
-  }
-
   static final int MAX_PASSES = 20;
 
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) throws ExecutionException {
     final StringBuilder message = new StringBuilder();
-    final ICompilationUnit currentCompilationUnit = currentCompilationUnit();
+    final ICompilationUnit currentCompilationUnit = retrieve.currentCompilationUnit();
     final IJavaProject javaProject = currentCompilationUnit.getJavaProject();
     message.append("starting at " + currentCompilationUnit.getElementName() + "\n");
-    final List<ICompilationUnit> us = getAllCompilationUnits(currentCompilationUnit);
+    final List<ICompilationUnit> us = retrieve.allCompilationUnits(currentCompilationUnit);
     message.append("found " + us.size() + " compilation units \n");
     final IWorkbench wb = PlatformUI.getWorkbench();
     final int initialCount = countSuggestions(currentCompilationUnit);
@@ -71,27 +66,17 @@ public class CleanupHandler extends BaseHandler {
     }
     throw new ExecutionException("Too many iterations");
   }
-  private static List<ICompilationUnit> getAllCompilationUnits(final ICompilationUnit u) {
-    try {
-      return Spartanization.getCompilationUnits(u, new NullProgressMonitor());
-    } catch (final JavaModelException x) {
-      x.printStackTrace();
-      return null;
-    }
-  }
   /**
-   * Returns the number of Spartanizaion suggestions for this compilation unit
+   * Returns the number of Spartanization suggestions for this compilation unit
    *
    * @param u JD
    * @return the number of suggestions available for the compilation unit
    */
   public static int countSuggestions(final ICompilationUnit u) {
     int $ = 0;
-    for (final Spartanization s : ApplySpartanizationHandler.inner) {
-      s.setMarker(null);
-      s.setCompilationUnit(u);
-      $ += s.countSuggestions();
-    }
+    final Context s = new Context();
+    s.setMarker(null);
+    $ += s.countSuggestions();
     return $;
   }
 }

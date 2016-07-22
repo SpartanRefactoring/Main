@@ -4,9 +4,12 @@ import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 /**
  * <code>a ? b : c</code> is the same as <code>(a && b) || (!a && c)</code> if b
@@ -42,7 +45,7 @@ public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<Condit
     return simplifyTernary(core(e.getThenExpression()), core(e.getElseExpression()), duplicate(e.getExpression()));
   }
   private static boolean isTernaryOfBooleanLitreral(final ConditionalExpression e) {
-    return e != null && Have.booleanLiteral(core(e.getThenExpression()), core(e.getElseExpression()));
+    return e != null && have.booleanLiteral(core(e.getThenExpression()), core(e.getElseExpression()));
   }
   private static Expression simplifyTernary(final Expression then, final Expression elze, final Expression main) {
     final boolean takeThen = !Is.booleanLiteral(then);
@@ -52,5 +55,12 @@ public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<Condit
   }
   @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Convert conditional expression into logical expression";
+  }
+  @Override public WringGroup kind() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+    // TODO Auto-generated method stub
   }
 }

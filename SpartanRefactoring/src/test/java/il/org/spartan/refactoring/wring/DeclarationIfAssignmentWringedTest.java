@@ -7,6 +7,7 @@ import static il.org.spartan.refactoring.utils.Funcs.*;
 import static org.junit.Assert.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.suggestions.*;
 import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;
@@ -36,9 +37,9 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
       new String[] { "Empty nested else", "int a=2; if (x) a = 3; else {{{}}}", " int a = x ? 3 : 2;" }, //
       new String[] { "Two fragments", //
           "int n2 = 0, n3;" + //
-              "  if (d)\n" + //
-              "    n2 = 2;", //
-          "int n2 = d ? 2 : 0, n3;" }, null);
+          "  if (d)\n" + //
+          "    n2 = 2;", //
+      "int n2 = d ? 2 : 0, n3;" }, null);
 
   /**
    * Generate test cases for this parameterized class.
@@ -77,7 +78,7 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     final String s = input;
     final Document d = new Document(Wrap.Statement.on(s));
     final CompilationUnit u = asCompilationUnit();
-    final ASTRewrite r = new Trimmer().createRewrite(u, null);
+    final ASTRewrite r = new Context().createRewrite(u, null);
     final TextEdit e = r.rewriteAST(d, null);
     that(e, notNullValue());
     that(e.apply(d), is(notNullValue()));
@@ -94,7 +95,7 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
   @Test public void hasOpportunity() {
     that(inner.scopeIncludes(asMe()), is(true));
     final CompilationUnit u = asCompilationUnit();
-    that(u.toString(), new Trimmer().findOpportunities(u).size(), is(greaterThanOrEqualTo(1)));
+    that(u.toString(), new Context().collect(u).size(), is(greaterThanOrEqualTo(1)));
   }
   @Test public void hasSimplifier() {
     @Nullable final VariableDeclarationFragment asMe = asMe();
@@ -108,7 +109,7 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     that(Wrap.Statement.off(Wrap.Statement.on(expected)), is(expected));
   }
   @Test public void rewriteNotEmpty() throws MalformedTreeException, IllegalArgumentException {
-    that(new Trimmer().createRewrite(asCompilationUnit(), null), notNullValue());
+    that(new Context().createRewrite(asCompilationUnit(), null), notNullValue());
   }
   @Test public void scopeIncludesAsMe() {
     @Nullable final VariableDeclarationFragment asMe = asMe();
@@ -120,7 +121,7 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
       return;
     final Document d = new Document(Wrap.Statement.on(input));
     final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(d);
-    final Document actual = TESTUtils.rewrite(new Trimmer(), u, d);
+    final Document actual = TESTUtils.rewrite(new Context(), u, d);
     final String peeled = Wrap.Statement.off(actual.get());
     if (expected.equals(peeled))
       return;
@@ -138,7 +139,7 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     final IfStatement s = extract.nextIfStatement(f);
     that(s, notNullValue());
     that(extract.statements(elze(s)).size(), is(0));
-    final Assignment a = extract.assignment(then(s));
+    final Assignment a = extract.assignment(extract.then(s));
     that(a, notNullValue());
     that(same(left(a), f.getName()), is(true));
     r.replace(initializer, Subject.pair(right(a), initializer).toCondition(s.getExpression()), null);

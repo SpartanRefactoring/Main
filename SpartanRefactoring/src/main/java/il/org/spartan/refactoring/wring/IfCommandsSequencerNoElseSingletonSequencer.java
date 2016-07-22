@@ -1,8 +1,10 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;
@@ -19,7 +21,7 @@ import org.eclipse.text.edits.*;
  * @since 2015-07-29
  */
 public final class IfCommandsSequencerNoElseSingletonSequencer extends Wring.ReplaceToNextStatement<IfStatement> implements
-    Kind.ConsolidateStatements {
+Kind.ConsolidateStatements {
   @Override String description(final IfStatement s) {
     return "Invert conditional and use next statement of if(" + s.getExpression() + ") ...";
   }
@@ -48,5 +50,12 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends Wring.Rep
       scalpel.operate(s, nextStatement).replaceWith($.toArray(new ASTNode[$.size()]));
     }
     return r;
+  }
+  @Override public WringGroup kind() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+    // TODO Auto-generated method stub
   }
 }

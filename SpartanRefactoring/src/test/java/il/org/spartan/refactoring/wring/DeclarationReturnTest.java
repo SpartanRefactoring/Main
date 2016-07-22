@@ -69,7 +69,7 @@ public class DeclarationReturnTest {
                 + "   !messageFlagged ? mReadColorChip : mFlaggedReadColorChip: " //
                 + "    !messageFlagged ? mUnreadColorChip : mFlaggedUnreadColorChip; " //
                 + "   return $;", //
-                "return messageRead?!messageFlagged?mReadColorChip:mFlaggedReadColorChip:!messageFlagged?mUnreadColorChip:mFlaggedUnreadColorChip;" },
+            "return messageRead?!messageFlagged?mReadColorChip:mFlaggedReadColorChip:!messageFlagged?mUnreadColorChip:mFlaggedUnreadColorChip;" },
             null);
 
     /**

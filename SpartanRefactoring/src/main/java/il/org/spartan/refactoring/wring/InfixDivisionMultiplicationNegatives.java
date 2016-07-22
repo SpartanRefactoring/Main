@@ -5,6 +5,8 @@ import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
+import il.org.spartan.refactoring.suggestions.*;
 import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;
@@ -57,7 +59,7 @@ public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpre
   @Override String description(final InfixExpression e) {
     return "Use at most one arithmetical negation, for first factor of " + e.getOperator();
   }
-  @Override Rewrite make(final InfixExpression e, final ExclusionManager exclude) {
+  @Override Suggestion make(final InfixExpression e, final ExclusionManager exclude) {
     final List<Expression> es = gather(e);
     if (es.size() < 2)
       return null;
@@ -66,7 +68,7 @@ public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpre
       return null;
     if (exclude != null)
       exclude.exclude(e);
-    return new Rewrite(description(e), e) {
+    return new Suggestion(description(e), e) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Expression first = totalNegation % 2 == 0 ? null : es.get(0);
         for (final Expression e : es)
@@ -77,5 +79,12 @@ public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpre
               new Plant(Subject.operand(peelNegation(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
       }
     };
+  }
+  @Override public WringGroup kind() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+    // TODO Auto-generated method stub
   }
 }

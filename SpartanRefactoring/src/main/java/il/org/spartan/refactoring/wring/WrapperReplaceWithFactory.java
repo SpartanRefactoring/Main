@@ -1,10 +1,13 @@
 package il.org.spartan.refactoring.wring;
 
 import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 /**
  * A {@link Wring} to replace primitive class (and String) instance creation
@@ -26,7 +29,7 @@ import org.eclipse.jdt.core.dom.*;
  * @since 2016-04-06
  */
 public class WrapperReplaceWithFactory extends Wring.ReplaceCurrentNode<ClassInstanceCreation> implements
-    Kind.REPLACE_CLASS_INSTANCE_CREATION {
+Kind.REPLACE_CLASS_INSTANCE_CREATION {
   // String array contains all primitive class (and String) identifiers
   final String[] pi = { "java.lang.Byte", "java.lang.Short", "java.lang.Integer", "java.lang.Long", "java.lang.Float",
       "java.lang.Double", "java.lang.Character", "java.lang.String", "java.lang.Boolean" };
@@ -44,5 +47,12 @@ public class WrapperReplaceWithFactory extends Wring.ReplaceCurrentNode<ClassIns
   }
   @Override String description(final ClassInstanceCreation c) {
     return "Use factory method " + c.getType() + ".valueOf() instead of initialization";
+  }
+  @Override public WringGroup kind() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+    // TODO Auto-generated method stub
   }
 }

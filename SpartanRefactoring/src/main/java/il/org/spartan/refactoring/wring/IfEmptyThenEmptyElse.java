@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -15,8 +16,8 @@ import org.eclipse.text.edits.*;
  * @since 2015-08-26
  */
 public final class IfEmptyThenEmptyElse extends Wring<IfStatement> implements Kind.Simplify {
-  @Override final Rewrite make(final IfStatement s) {
-    return new Rewrite(description(s), s) {
+  @Override protected final Suggestion make(final IfStatement s) {
+    return new Suggestion(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         s.setElseStatement(null);
         r.remove(s, g);
@@ -28,5 +29,12 @@ public final class IfEmptyThenEmptyElse extends Wring<IfStatement> implements Ki
   }
   @Override String description(final IfStatement s) {
     return "Remove if(" + s.getExpression() + ") with vacous 'then' and 'else' parts";
+  }
+  @Override public WringGroup kind() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+    // TODO Auto-generated method stub
   }
 }

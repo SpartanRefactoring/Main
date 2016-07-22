@@ -7,6 +7,7 @@ import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.suggestions.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Noneligible;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
@@ -41,32 +42,32 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
     assertLegible("this != a");
   }
   @Test public void comparisonWithSpecificNoChange() {
-    assertSimilar("a != this", Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("a != this"))));
-    assertSimilar("a != null", Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("a != null"))));
-    assertSimilar("a == this", Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("a == this"))));
-    assertSimilar("a == null", Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("a == null"))));
-    assertSimilar("a <= this", Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("a <= this"))));
-    assertSimilar("a <= null", Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("a <= null"))));
-    assertSimilar("a >= this", Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("a >= this"))));
-    assertSimilar("a >= null", Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("a >= null"))));
+    assertSimilar("a != this", Wrap.Expression.off(apply(new Context(), Wrap.Expression.on("a != this"))));
+    assertSimilar("a != null", Wrap.Expression.off(apply(new Context(), Wrap.Expression.on("a != null"))));
+    assertSimilar("a == this", Wrap.Expression.off(apply(new Context(), Wrap.Expression.on("a == this"))));
+    assertSimilar("a == null", Wrap.Expression.off(apply(new Context(), Wrap.Expression.on("a == null"))));
+    assertSimilar("a <= this", Wrap.Expression.off(apply(new Context(), Wrap.Expression.on("a <= this"))));
+    assertSimilar("a <= null", Wrap.Expression.off(apply(new Context(), Wrap.Expression.on("a <= null"))));
+    assertSimilar("a >= this", Wrap.Expression.off(apply(new Context(), Wrap.Expression.on("a >= this"))));
+    assertSimilar("a >= null", Wrap.Expression.off(apply(new Context(), Wrap.Expression.on("a >= null"))));
   }
   @Test public void comparisonWithSpecificNoChangeWithLongEpxressions() {
     assertSimilar("very(complicate,func,-ction,call) != this",
-        Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("very(complicate,func,-ction,call) != this"))));
+        Wrap.Expression.off(apply(new Context(), Wrap.Expression.on("very(complicate,func,-ction,call) != this"))));
     assertSimilar("very(complicate,func,-ction,call) != null",
-        Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("very(complicate,func,-ction,call) != null"))));
+        Wrap.Expression.off(apply(new Context(), Wrap.Expression.on("very(complicate,func,-ction,call) != null"))));
     assertSimilar("very(complicate,func,-ction,call) == this",
-        Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("very(complicate,func,-ction,call) == this"))));
+        Wrap.Expression.off(apply(new Context(), Wrap.Expression.on("very(complicate,func,-ction,call) == this"))));
     assertSimilar("very(complicate,func,-ction,call) == null",
-        Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("very(complicate,func,-ction,call) == null"))));
+        Wrap.Expression.off(apply(new Context(), Wrap.Expression.on("very(complicate,func,-ction,call) == null"))));
     assertSimilar("very(complicate,func,-ction,call) <= this",
-        Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("very(complicate,func,-ction,call) <= this"))));
+        Wrap.Expression.off(apply(new Context(), Wrap.Expression.on("very(complicate,func,-ction,call) <= this"))));
     assertSimilar("very(complicate,func,-ction,call) <= null",
-        Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("very(complicate,func,-ction,call) <= null"))));
+        Wrap.Expression.off(apply(new Context(), Wrap.Expression.on("very(complicate,func,-ction,call) <= null"))));
     assertSimilar("very(complicate,func,-ction,call) >= this",
-        Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("very(complicate,func,-ction,call) >= this"))));
+        Wrap.Expression.off(apply(new Context(), Wrap.Expression.on("very(complicate,func,-ction,call) >= this"))));
     assertSimilar("very(complicate,func,-ction,call) >= null",
-        Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on("very(complicate,func,-ction,call) >= null"))));
+        Wrap.Expression.off(apply(new Context(), Wrap.Expression.on("very(complicate,func,-ction,call) >= null"))));
   }
   @Test public void comparisonWithSpecificWithinScope() {
     azzert.that(Is.constant(left(i("this != a"))), is(true));

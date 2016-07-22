@@ -1,10 +1,14 @@
 package il.org.spartan.refactoring.wring;
 
 import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
+import il.org.spartan.refactoring.suggestions.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNodeExclude;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 /**
  * A {@link Wring} to change name of unused variable to double underscore "__"
@@ -15,7 +19,7 @@ import org.eclipse.jdt.core.dom.*;
  * @since 2016-05-08
  */
 @SuppressWarnings("javadoc") public class MethodRenameUnusedVariableToUnderscore extends
-    ReplaceCurrentNodeExclude<SingleVariableDeclaration> implements Kind.RENAME_PARAMETERS {
+ReplaceCurrentNodeExclude<SingleVariableDeclaration> implements Kind.RENAME_PARAMETERS {
   // true iff renaming annotated variables only
   final static boolean BY_ANNOTATION = true;
 
@@ -98,5 +102,12 @@ import org.eclipse.jdt.core.dom.*;
   }
   @Override String description(final SingleVariableDeclaration d) {
     return "Change name of unused variable " + d.getName().getIdentifier() + " to __";
+  }
+  @Override public WringGroup kind() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+    // TODO Auto-generated method stub
   }
 }

@@ -45,17 +45,29 @@ public class MethodExplorer {
       @Override public boolean visit(final ForStatement s) {
         return add(expose.initializers(s));
       }
+      private boolean add(final List<Expression> es) {
+        for (final Expression e : es)
+          if (e instanceof VariableDeclarationExpression)
+            add((VariableDeclarationExpression) e);
+        return true;
+      }
       @Override public boolean visit(final TryStatement s) {
-        return add(resources(s));
+        return addVariableDeclarationExpression(resources(s));
       }
       @Override public boolean visit(final VariableDeclarationStatement s) {
         addFragments(expose.fragments(s));
         return true;
       }
-      private boolean add(final List<VariableDeclarationExpression> initializers) {
+      private boolean addVariableDeclarationExpression(final List<VariableDeclarationExpression> initializers) {
         for (final VariableDeclarationExpression o : initializers)
-          addFragments(expose.fragments(o));
+          add(o);
         return true;
+      }
+      /**
+       * @param o
+       */
+      private void add(final VariableDeclarationExpression o) {
+        addFragments(expose.fragments(o));
       }
       private boolean add(final SingleVariableDeclaration d) {
         $.add(d.getName());
@@ -87,17 +99,17 @@ public class MethodExplorer {
     return $;
   }
 
-  public abstract static class IgnoreNestedMethods extends ASTVisitor {
-    @Override public final boolean visit(@SuppressWarnings("unused") final AnnotationTypeDeclaration __) {
+  @SuppressWarnings("unused") abstract static class IgnoreNestedMethods extends ASTVisitor {
+    @Override public final boolean visit(final AnnotationTypeDeclaration __) {
       return false;
     }
-    @Override public final boolean visit(@SuppressWarnings("unused") final AnonymousClassDeclaration __) {
+    @Override public final boolean visit(final AnonymousClassDeclaration __) {
       return false;
     }
-    @Override public final boolean visit(@SuppressWarnings("unused") final EnumDeclaration __) {
+    @Override public final boolean visit(final EnumDeclaration __) {
       return false;
     }
-    @Override public final boolean visit(@SuppressWarnings("unused") final TypeDeclaration __) {
+    @Override public final boolean visit(final TypeDeclaration __) {
       return false;
     }
   }

@@ -5,6 +5,7 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.suggestions.*;
 
 import org.junit.*;
 import org.junit.runners.*;
@@ -28,7 +29,7 @@ import org.junit.runners.*;
   private static void assertWrappedTranslation(final String from, final String expected, final Wrap w) {
     final String wrap = w.on(from);
     azzert.that(w.off(wrap), is(from));
-    final String unpeeled = Trimmer.fixedPoint(wrap);
+    final String unpeeled = Context.fixedPoint(wrap);
     azzert.that("Nothing done on " + from, wrap, not(unpeeled));
     final String peeled = w.off(unpeeled);
     azzert.that("No similification of " + from, from, not(peeled));
@@ -50,13 +51,13 @@ import org.junit.runners.*;
         "      --i;\n" + //
         "    }" + //
         "}", "" + // //
-        "   f();\n" + //
-        "   g();\n" + //
-        "    if (a) \n" + //
-        "      ++i;\n" + //
-        "    else \n" + //
-        "      --i;" //
-    );
+            "   f();\n" + //
+            "   g();\n" + //
+            "    if (a) \n" + //
+            "      ++i;\n" + //
+            "    else \n" + //
+            "      --i;" //
+        );
   }
   @Test(timeout = 2000) public void desiredSimplificationOfExample() {
     assertSimplifiesTo("on * notion * of * no * nothion < the * plain + kludge", "no*of*on*notion*nothion<kludge+the*plain");
@@ -98,9 +99,9 @@ import org.junit.runners.*;
         + " t = t.f(A).f(b) + t.f(c);   "//
         + "return (t + 3);    ", //
         ""//
-            + "return(Z2.f(A).f(b)+Z2.f(c)+3);" //
-            + "" //
-    );
+        + "return(Z2.f(A).f(b)+Z2.f(c)+3);" //
+        + "" //
+        );
   }
   @Test(timeout = 2000) public void multipleIfDeclarationAssignment() {
     assertConvertsTo(//
@@ -134,7 +135,7 @@ import org.junit.runners.*;
         "       if (s.charAt(i) == 'd')\n" + //
         "        res -= 1;\n" + //
         "  return res;\n" //
-    );
+        );
   }
   @Test(timeout = 2000) public void shortestIfBranchFirst03a() {
     assertConvertsTo("  if ('a' == s.charAt(i))\n" + //
@@ -143,10 +144,10 @@ import org.junit.runners.*;
         "          res -= 1;\n" + //
         "", //
         "  if (s.charAt(i) == 'a')\n" + //
-            "          res += 2;\n" + //
-            "        else if (s.charAt(i) == 'd')\n" + //
-            "          res -= 1;\n" + //
-            "");
+        "          res += 2;\n" + //
+        "        else if (s.charAt(i) == 'd')\n" + //
+        "          res -= 1;\n" + //
+        "");
   }
   @Test(timeout = 2000) public void shortestIfBranchFirst09() {
     assertSimplifiesTo("s.equals(532) ? 9 * yada3(s.length()) : 6 ", "!s.equals(532)?6:9*yada3(s.length())");
@@ -243,8 +244,8 @@ import org.junit.runners.*;
         + "  res = s + 0xABBA;   " //
         + "System.out.println(res); " //
         + "" //
-    , "System.out.println((!s?s:s+0xABBA));" //
-    );
+        , "System.out.println((!s?s:s+0xABBA));" //
+        );
   }
   @Test(timeout = 2000) public void ternarize11() {
     assertConvertsTo("String res = s, foo = \"bar\";if (s.equals(532)==true)    res = s + 0xABBA;System.out.println(res);",
@@ -272,12 +273,12 @@ import org.junit.runners.*;
   @Test(timeout = 2000) public void ternarize18() {
     assertSimplifiesTo(//
         "    final String s = X;\n" + //
-            "    final String res = s;\n" + //
-            "    final int a = 0;\n" + //
-            "    if (s.equals(res))\n" + //
-            "      System.out.println(tH3 + res);\n" + //
-            "    else\n" + //
-            "      System.out.println(h2A+ res + a + s);", //
+        "    final String res = s;\n" + //
+        "    final int a = 0;\n" + //
+        "    if (s.equals(res))\n" + //
+        "      System.out.println(tH3 + res);\n" + //
+        "    else\n" + //
+        "      System.out.println(h2A+ res + a + s);", //
         "System.out.println(X.equals(X)?tH3+X:h2A+X+0+X);");
   }
   @Test(timeout = 2000) public void ternarize23() {
@@ -312,15 +313,15 @@ import org.junit.runners.*;
         + "else "//
         + "  for(int i=0;i<17;++i) "//
         + "    S.out.l('f');"//
-    );
+        );
   }
   @Test(timeout = 2000) public void ternarize54() {
     assertConvertsTo(//
         "if (s == null)\n" + // /
-            "  return Z2;\n" + //
-            "if (!s.contains(delimiter()))\n" + //
-            "  return s;\n" + //
-            "return s.replaceAll(delimiter(), ABC + delimiter());", //
+        "  return Z2;\n" + //
+        "if (!s.contains(delimiter()))\n" + //
+        "  return s;\n" + //
+        "return s.replaceAll(delimiter(), ABC + delimiter());", //
         "return s==null?Z2:!s.contains(delimiter())?s:s.replaceAll(delimiter(),ABC+delimiter());");
   }
 }

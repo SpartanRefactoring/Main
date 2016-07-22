@@ -36,7 +36,7 @@ public class Source {
    * @return disabler, able of determining whether an {@link ASTNode} is
    *         spartanization disabled
    */
-  public static Disable getDisable(final CompilationUnit u) {
+  public static Disable makeDisable(final CompilationUnit u) {
     return new Disable(u);
   }
   /**
