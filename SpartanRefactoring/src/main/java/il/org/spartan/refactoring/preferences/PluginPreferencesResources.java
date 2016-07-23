@@ -8,8 +8,8 @@ import il.org.spartan.refactoring.builder.*;
   /** General preferences **/
   public static final String PLUGIN_STARTUP_BEHAVIOR_ID = "pref_startup_behavior";
   public static final String PLUGIN_STARTUP_BEHAVIOR_TEXT = "Plugin startup behavior:";
-  public static final String[][] PLUGIN_STARTUP_BEHAVIOR_OPTIONS = { { "Remember individual project settings", "remember" },
-    { "Enable for all projects", "always_on" }, { "Disable for all projects", "always_off" } };
+  public static final String[][] PLUGIN_STARTUP_BEHAVIOR_OPTIONS = { { "Remember individual project settings", "remember" }, { "Enable for all projects", "always_on" },
+      { "Disable for all projects", "always_off" } };
   public static final String NEW_PROJECTS_ENABLE_BY_DEFAULT_ID = "pref_enable_by_default_for_new_projects";
   public static final String NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT = "Enable by default for newly created projects";
   public static final String ENABLE_BINDING_RESOLUTION_ID = "pref_resolve_bindings";
@@ -58,46 +58,46 @@ import il.org.spartan.refactoring.builder.*;
     CONSOLIDATE_ASSIGNMENTS_STATEMENTS( //
         CONSOLIDATE_ASSIGNMENTS_STATEMENTS_ID, //
         CONSOLIDATE_ASSIGNMENTS_STATEMENTS_TEXT), //
-        SIMPLIFY_NESTED_BLOCKS( //
-            SIMPLIFY_NESTED_BLOCKS_ID, //
-            SIMPLIFY_NESTED_BLOCKS_TEXT), //
-            ELIMINATE_TEMP( //
-                ELIMINATE_TEMP_ID, //
-                ELIMINATE_TEMP_TEXT), //
-                DISCARD_METHOD_INVOCATION( //
-                    DISCARD_METHOD_INVOCATION_ID, //
-                    DISCARD_METHOD_INVOCATION_TEXT), //
-                    REMOVE_REDUNDANT_PUNCTUATION( //
-                        REMOVE_REDUNDANT_PUNCTUATION_ID, //
-                        REMOVE_REDUNDANT_PUNCTUATION_TEXT), //
-                        Ternarize( //
-                            IF_TO_TERNARY_ID, //
-                            IF_TO_TERNARY_TEXT), //
-                            REFACTOR_INEFFECTIVE( //
-                                REFACTOR_INEFFECTIVE_ID, //
-                                REFACTOR_INEFFECTIVE_TEXT), //
-                                REORDER_EXPRESSIONS( //
-                                    REORDER_EXPRESSIONS_ID, //
-                                    REORDER_EXPRESSIONS_TEXT), //
-                                    OPTIMIZE_ANNOTATIONS( //
-                                        OPTIMIZE_ANNOTATIONS_ID, //
-                                        OPTIMIZE_ANNOTATIONS_TEXT), //
-                                        RENAME_PARAMETERS( //
-                                            RENAME_PARAMETERS_ID, //
-                                            RENAME_PARAMETERS_TEXT), //
-                                            RENAME_RETURN_VARIABLE( //
-                                                RENAME_RETURN_VARIABLE_ID, //
-                                                RENAME_RETURN_VARIABLE_TEXT), //
-                                                REPLACE_CLASS_INSTANCE_CREATION( //
-                                                    REPLACE_CLASS_INSTANCE_CREATION_ID, //
-                                                    REPLACE_CLASS_INSTANCE_CREATION_TEXT), //
-                                                    REPLACE_SEQUENSER( //
-                                                        REPLACE_SEQUENSER_ID, //
-                                                        REPLACE_SEQUENSER_TEXT), //
-                                                        SWITCH_IF_CONVERTION( //
-                                                            SWITCH_IF_CONVERTION_ID, //
-                                                            SWITCH_IF_CONVERTION_TEXT), //
-                                                            ;
+    SIMPLIFY_NESTED_BLOCKS( //
+        SIMPLIFY_NESTED_BLOCKS_ID, //
+        SIMPLIFY_NESTED_BLOCKS_TEXT), //
+    ELIMINATE_TEMP( //
+        ELIMINATE_TEMP_ID, //
+        ELIMINATE_TEMP_TEXT), //
+    DISCARD_METHOD_INVOCATION( //
+        DISCARD_METHOD_INVOCATION_ID, //
+        DISCARD_METHOD_INVOCATION_TEXT), //
+    REMOVE_REDUNDANT_PUNCTUATION( //
+        REMOVE_REDUNDANT_PUNCTUATION_ID, //
+        REMOVE_REDUNDANT_PUNCTUATION_TEXT), //
+    Ternarize( //
+        IF_TO_TERNARY_ID, //
+        IF_TO_TERNARY_TEXT), //
+    REFACTOR_INEFFECTIVE( //
+        REFACTOR_INEFFECTIVE_ID, //
+        REFACTOR_INEFFECTIVE_TEXT), //
+    REORDER_EXPRESSIONS( //
+        REORDER_EXPRESSIONS_ID, //
+        REORDER_EXPRESSIONS_TEXT), //
+    OPTIMIZE_ANNOTATIONS( //
+        OPTIMIZE_ANNOTATIONS_ID, //
+        OPTIMIZE_ANNOTATIONS_TEXT), //
+    RENAME_PARAMETERS( //
+        RENAME_PARAMETERS_ID, //
+        RENAME_PARAMETERS_TEXT), //
+    RENAME_RETURN_VARIABLE( //
+        RENAME_RETURN_VARIABLE_ID, //
+        RENAME_RETURN_VARIABLE_TEXT), //
+    REPLACE_CLASS_INSTANCE_CREATION( //
+        REPLACE_CLASS_INSTANCE_CREATION_ID, //
+        REPLACE_CLASS_INSTANCE_CREATION_TEXT), //
+    REPLACE_SEQUENSER( //
+        REPLACE_SEQUENSER_ID, //
+        REPLACE_SEQUENSER_TEXT), //
+    SWITCH_IF_CONVERTION( //
+        SWITCH_IF_CONVERTION_ID, //
+        SWITCH_IF_CONVERTION_TEXT), //
+    ;
     private final String id, label;
 
     WringGroup(final String id, final String label) {

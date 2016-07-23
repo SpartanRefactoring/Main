@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 
@@ -8,11 +7,12 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import static il.org.spartan.refactoring.utils.Funcs.*;
+
 /**
  * A {@link Wring} to remove the "value" member from annotations that only have
- * a single member, converting
- * <code>@SuppressWarnings(value = "unchecked")</code> to
- * <code>@SuppressWarnings("unchecked")</code>
+ * a single member, converting <code>@SuppressWarnings(value =
+ * "unchecked")</code> to <code>@SuppressWarnings("unchecked")</code>
  *
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-02

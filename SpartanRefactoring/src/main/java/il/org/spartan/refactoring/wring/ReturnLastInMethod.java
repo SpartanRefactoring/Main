@@ -1,7 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.Funcs.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
@@ -9,6 +7,9 @@ import il.org.spartan.refactoring.utils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import static il.org.spartan.Utils.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
 
 /**
  * A {@link Wring} that removes empty return statements, provided that they are
@@ -27,10 +28,10 @@ public final class ReturnLastInMethod extends Wring<ReturnStatement> implements 
     final Block b = asBlock(s.getParent());
     return b == null || !lastIn(s, b.statements()) || !(b.getParent() instanceof MethodDeclaration) ? null //
         : new Suggestion(description(s), s) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.remove(s, g);
-      }
-    };
+          @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+            r.remove(s, g);
+          }
+        };
   }
   @Override public WringGroup kind() {
     // TODO Auto-generated method stub

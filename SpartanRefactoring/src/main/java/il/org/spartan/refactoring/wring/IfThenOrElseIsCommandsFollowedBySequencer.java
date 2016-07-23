@@ -1,9 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.Restructure.*;
-import static il.org.spartan.refactoring.utils.extract.*;
-import static il.org.spartan.refactoring.wring.Wrings.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
@@ -14,20 +10,16 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Restructure.*;
+
+import static il.org.spartan.refactoring.utils.extract.*;
+
+import static il.org.spartan.refactoring.wring.Wrings.*;
+
 /**
- * A {@link Wring} to convert <code> f() {
-  x++;
-  y++;
-  if (a) {
-     i++;
-     j++;
-     k++;
-  }
-}</code> into <code>if (x) {
- *   f();
- *   return a;
- * }
- * g();</code>
+ * A {@link Wring} to convert <code> f() { x++; y++; if (a) { i++; j++; k++; }
+ * }</code> into <code>if (x) { f(); return a; } g();</code>
  *
  * @author Yossi Gil
  * @since 2015-07-29

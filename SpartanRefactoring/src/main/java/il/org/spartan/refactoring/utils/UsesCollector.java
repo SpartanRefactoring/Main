@@ -1,11 +1,11 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.Funcs.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.Utils.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
 
 abstract class HidingDepth extends ScopeManager {
   private int depth = 0;
@@ -172,7 +172,8 @@ class UsesCollector extends HidingDepth {
    * This is where we ignore all occurrences of {@link SimpleName} which are not
    * variable names, e.g., class name, function name, field name, etc.
    *
-   * @param _ JD
+   * @param _
+   *          JD
    */
   private void ingore(@SuppressWarnings("unused") final SimpleName __) {
     // We simply ignore the parameter

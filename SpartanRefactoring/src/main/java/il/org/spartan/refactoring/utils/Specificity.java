@@ -1,10 +1,10 @@
 package il.org.spartan.refactoring.utils;
 
-import static org.eclipse.jdt.core.dom.ASTNode.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 /**
  * @author Yossi Gil
@@ -14,8 +14,10 @@ public class Specificity implements Comparator<Expression> {
   /**
    * A comparison of two {@link Expression} by their level of specificity.
    *
-   * @param e1 JD
-   * @param e2 JD
+   * @param e1
+   *          JD
+   * @param e2
+   *          JD
    * @return a negative, zero, or positive integer, depending on the level of
    *         specificity the first parameter, is less than, equal, or greater
    *         than the specificity level of the second parameter.
@@ -26,7 +28,8 @@ public class Specificity implements Comparator<Expression> {
   /**
    * Determine
    *
-   * @param e JD
+   * @param e
+   *          JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter has a defined
    *         level of specificity.
    */

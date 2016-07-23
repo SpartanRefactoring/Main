@@ -1,8 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.extract.*;
-import static il.org.spartan.refactoring.wring.TernaryPushdown.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
@@ -11,6 +8,12 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import static il.org.spartan.refactoring.utils.Funcs.*;
+
+import static il.org.spartan.refactoring.utils.extract.*;
+
+import static il.org.spartan.refactoring.wring.TernaryPushdown.*;
+
 /**
  * A {@link Wring} to convert <code>if (x) f(a); else f(b);</code> into
  * <code>f(x ? a : b);</code>
@@ -18,8 +21,7 @@ import org.eclipse.text.edits.*;
  * @author Yossi Gil
  * @since 2015-07-29
  */
-public final class IfExpressionStatementElseSimilarExpressionStatement extends Wring.ReplaceCurrentNode<IfStatement> implements
-Kind.ConsolidateStatements {
+public final class IfExpressionStatementElseSimilarExpressionStatement extends Wring.ReplaceCurrentNode<IfStatement> implements Kind.ConsolidateStatements {
   @Override Statement replacement(final IfStatement s) {
     final Expression then = extract.expression(extract.expressionStatement(then(s)));
     if (then == null)

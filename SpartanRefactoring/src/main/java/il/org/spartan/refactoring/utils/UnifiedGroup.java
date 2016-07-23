@@ -50,7 +50,8 @@ public class UnifiedGroup implements Iterable<LinkedList<Integer>> {
   Base base = Base.OneBased; // Does the union find starts with 0 or 1
 
   /**
-   * @param size - size of the group (number of lines)
+   * @param size
+   *          - size of the group (number of lines)
    */
   public UnifiedGroup(final int size) {
     this.size = size;
@@ -73,9 +74,11 @@ public class UnifiedGroup implements Iterable<LinkedList<Integer>> {
   }
 
   /**
-   * @param numOfLines - size of the group (number of lines)
-   * @param countingBase - Counting base - type of the Base enum. Default value
-   *          is OneBased.
+   * @param numOfLines
+   *          - size of the group (number of lines)
+   * @param countingBase
+   *          - Counting base - type of the Base enum. Default value is
+   *          OneBased.
    */
   public UnifiedGroup(final int numOfLines, final Base countingBase) {
     size = numOfLines;
@@ -83,8 +86,10 @@ public class UnifiedGroup implements Iterable<LinkedList<Integer>> {
     base = countingBase;
   }
   /**
-   * @param name - The key, contains the name of the element in the line
-   * @param line - The line in which the name exists
+   * @param name
+   *          - The key, contains the name of the element in the line
+   * @param line
+   *          - The line in which the name exists
    * @return reference to this - for chaining
    */
   public UnifiedGroup add(final String name, final int line) {

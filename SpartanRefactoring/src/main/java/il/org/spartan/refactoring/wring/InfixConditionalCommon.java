@@ -1,9 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.extract.*;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
@@ -14,6 +10,13 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import static il.org.spartan.Utils.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+
+import static il.org.spartan.refactoring.utils.extract.*;
+
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 /**
  * A {@link Wring} to convert <code>b && true</code> to <code>b</code>
@@ -34,8 +37,7 @@ public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<Infix
     if (right == null || right.getOperator() != conjugate)
       return null;
     final Expression leftLeft = left(left);
-    return !Is.sideEffectFree(leftLeft) || !same(leftLeft, left(right)) ? null : Subject.pair(leftLeft,
-        Subject.pair(chopHead(left), chopHead(right)).to(o)).to(conjugate);
+    return !Is.sideEffectFree(leftLeft) || !same(leftLeft, left(right)) ? null : Subject.pair(leftLeft, Subject.pair(chopHead(left), chopHead(right)).to(o)).to(conjugate);
   }
   private static Operator conjugate(final Operator o) {
     return o == null ? null : o == CONDITIONAL_AND ? CONDITIONAL_OR //

@@ -23,8 +23,10 @@ public class Source {
   public static final IPath NONE_PATH = new Path("");
 
   /**
-   * @param p file path
-   * @param s file source
+   * @param p
+   *          file path
+   * @param s
+   *          file source
    */
   public synchronized static void set(final IPath p, final String s) {
     if (p == null || s == null)
@@ -32,7 +34,8 @@ public class Source {
     sm.put(p.toString(), s);
   }
   /**
-   * @param u compilation unit
+   * @param u
+   *          compilation unit
    * @return disabler, able of determining whether an {@link ASTNode} is
    *         spartanization disabled
    */
@@ -40,9 +43,12 @@ public class Source {
     return new Disable(u);
   }
   /**
-   * @param u compilation unit
-   * @param r rewriter
-   * @param g text edit group
+   * @param u
+   *          compilation unit
+   * @param r
+   *          rewriter
+   * @param g
+   *          text edit group
    * @return scalpel for replacement operation
    */
   public static Scalpel getScalpel(final CompilationUnit u, final ASTRewrite r, final TextEditGroup g) {

@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
@@ -8,6 +7,8 @@ import il.org.spartan.refactoring.utils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import static il.org.spartan.refactoring.utils.Funcs.*;
 
 /**
  * A {@link Wring} to convert <code>if (x) ; else {a;}</code> into <code>if (!x)

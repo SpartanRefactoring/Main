@@ -18,7 +18,8 @@ public class Suggestions extends Wrapper<List<Suggestion>> {
   /**
    * instantiates this class
    *
-   * @param inner JD
+   * @param inner
+   *          JD
    */
   public Suggestions(final List<Suggestion> inner) {
     super(inner);

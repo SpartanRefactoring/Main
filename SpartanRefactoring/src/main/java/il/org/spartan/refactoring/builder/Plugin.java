@@ -1,7 +1,5 @@
 package il.org.spartan.refactoring.builder;
 
-import static il.org.spartan.Utils.*;
-
 import java.util.*;
 
 import org.eclipse.core.resources.*;
@@ -9,6 +7,8 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.plugin.*;
 import org.osgi.framework.*;
+
+import static il.org.spartan.Utils.*;
 
 /**
  * @author Artium Nihamkin
@@ -53,7 +53,8 @@ public class Plugin extends AbstractUIPlugin implements IStartup {
   /**
    * logs an error in the plugin
    *
-   * @param t an error
+   * @param t
+   *          an error
    */
   public static void log(final Throwable t) {
     getDefault().getLog().log(new Status(IStatus.ERROR, "org.spartan.refactoring", 0, t.getMessage(), t));

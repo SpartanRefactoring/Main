@@ -1,7 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.extract.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
@@ -12,18 +10,19 @@ import org.eclipse.jdt.core.dom.Assignment.Operator;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import static il.org.spartan.refactoring.utils.Funcs.*;
+
+import static il.org.spartan.refactoring.utils.extract.*;
+
 /**
- * A {@link Wring} to convert <code>int a = 2;
- * if (b)
- *   a = 3;</code> into <code>int a = b ? 3 : 2;</code>
+ * A {@link Wring} to convert <code>int a = 2; if (b) a = 3;</code> into
+ * <code>int a = b ? 3 : 2;</code>
  *
  * @author Yossi Gil
  * @since 2015-08-07
  */
-public final class DeclarationInitializerIfUpdateAssignment extends Wring.VariableDeclarationFragementAndStatement implements
-Kind.Ternarize {
-  @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n,
-      final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
+public final class DeclarationInitializerIfUpdateAssignment extends Wring.VariableDeclarationFragementAndStatement implements Kind.Ternarize {
+  @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
       return null;
     final IfStatement s = asIfStatement(nextStatement);

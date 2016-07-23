@@ -15,7 +15,8 @@ public abstract class AncestorSearch {
    * Factory method, returning an instance which can search by the integer
    * present on a node.
    *
-   * @param type JD
+   * @param type
+   *          JD
    * @return a newly created instance
    * @see ASTNode#getNodeType()
    */
@@ -25,7 +26,8 @@ public abstract class AncestorSearch {
   /**
    * Factory method, returning an instance which can search by a node class
    *
-   * @param c JD
+   * @param c
+   *          JD
    * @return a newly created instance
    * @see ASTNode#getNodeType()
    */
@@ -33,7 +35,8 @@ public abstract class AncestorSearch {
     return new ByNodeClass(c);
   }
   /**
-   * @param n JD
+   * @param n
+   *          JD
    * @return the closest ancestor whose type matches the given type.
    */
   public abstract ASTNode from(final ASTNode n);
@@ -72,11 +75,10 @@ public abstract class AncestorSearch {
   /**
    * A fluent API method to support e.g.,
    *
-   * <pre>
-   * AncestorSearch.until(thisNode).ancestors(current)
-   * </pre>
+   * <pre> AncestorSearch.until(thisNode).ancestors(current) </pre>
    *
-   * @param n JD
+   * @param n
+   *          JD
    * @return a new instance of class {@link until} created from this the
    *         parameter
    */
@@ -97,7 +99,8 @@ public abstract class AncestorSearch {
       this.until = until;
     }
     /**
-     * @param n JD
+     * @param n
+     *          JD
      * @return TODO document return type of this method * TODO document return
      *         type of this method
      */

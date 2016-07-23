@@ -1,7 +1,5 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.extract.*;
 import il.org.spartan.utils.*;
 
 import java.util.*;
@@ -11,6 +9,10 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jdt.core.dom.rewrite.TargetSourceRangeComputer.SourceRange;
 import org.eclipse.text.edits.*;
+
+import static il.org.spartan.refactoring.utils.Funcs.*;
+
+import static il.org.spartan.refactoring.utils.extract.*;
 
 /**
  * Does {@link ASTNode} replacement operation, by duplication of nodes,
@@ -25,7 +27,8 @@ public class Scalpel {
    * Checks whether this node is inaccessible, i.e. created using this scalpel's
    * duplication
    *
-   * @param n node
+   * @param n
+   *          node
    * @return true iff n is artificial node created with this scalpel
    */
   public static boolean isInaccessible(final ASTNode n) {
@@ -50,7 +53,8 @@ public class Scalpel {
   /**
    * Adding comments of node to preserved comments
    *
-   * @param n node
+   * @param n
+   *          node
    * @return this scalpel
    */
   public Scalpel addComments(final ASTNode n) {
@@ -61,7 +65,8 @@ public class Scalpel {
    * Duplicating statements from a list. The duplicated nodes have all original
    * comments included
    *
-   * @param src source list
+   * @param src
+   *          source list
    * @return duplicated list
    */
   public <N extends ASTNode> List<N> duplicate(final List<N> src) {
@@ -70,7 +75,8 @@ public class Scalpel {
     return $;
   }
   /**
-   * @param n node
+   * @param n
+   *          node
    * @return duplicated node with all original comments included
    */
   public <@Nullable N extends ASTNode> N duplicate(final N n) {
@@ -88,8 +94,10 @@ public class Scalpel {
    * Duplicating statements from one list to another. The duplicated nodes have
    * all original comments included
    *
-   * @param from source list
-   * @param to destination list
+   * @param from
+   *          source list
+   * @param to
+   *          destination list
    */
   public <M extends ASTNode, N extends M> void duplicateInto(final List<N> from, final List<M> to) {
     for (final @Nullable M n : from)
@@ -99,7 +107,8 @@ public class Scalpel {
   /**
    * As duplicateWith, but for multiple lists of elements
    *
-   * @param nss lists of equal statements
+   * @param nss
+   *          lists of equal statements
    * @return list of statements with comments from all lists
    */
   @SuppressWarnings("unchecked") public <N extends ASTNode> List<N> duplicateWith(final List<N>... nss) {
@@ -118,7 +127,8 @@ public class Scalpel {
    * Duplicates a node with comments from other nodes. Used in order to merge
    * multiple equal nodes into one node, containing comments from both nodes
    *
-   * @param ns JD
+   * @param ns
+   *          JD
    * @return a duplicate node containing all comments
    */
   @SuppressWarnings("unchecked") public <@Nullable N extends ASTNode> N duplicateWith(final N... ns) {
@@ -140,14 +150,16 @@ public class Scalpel {
     assert n != null;
     @Nullable final String s = n.toString();
     assert s != null;
-    return mark(cc != 1 ? (N) astRewrite.createStringPlaceholder(sb.append(s).toString().trim(), n.getNodeType()) : (N) astRewrite
-        .createStringPlaceholder(s.trim() + " " + sb.toString().trim(), n.getNodeType()));
+    return mark(cc != 1 ? (N) astRewrite.createStringPlaceholder(sb.append(s).toString().trim(), n.getNodeType()) : (N) astRewrite.createStringPlaceholder(s.trim() + " " + sb.toString().trim(),
+        n.getNodeType()));
   }
   /**
    * Merge comments of statements of equals lists
    *
-   * @param l1 list
-   * @param l2 list
+   * @param l1
+   *          list
+   * @param l2
+   *          list
    * @return l1 with comments from l2
    */
   public List<ASTNode> merge(final List<ASTNode> l1, final List<ASTNode> l2) {
@@ -159,8 +171,10 @@ public class Scalpel {
    * Prepare this scalpel to replace b. Remembers comments of both b and nodes
    * in ns
    *
-   * @param b base node
-   * @param ns nodes
+   * @param b
+   *          base node
+   * @param ns
+   *          nodes
    * @return this scalpel
    */
   public Scalpel operate(final ASTNode b, final ASTNode... ns) {
@@ -188,8 +202,7 @@ public class Scalpel {
     else {
       final List<ASTNode> $ = new ArrayList<>();
       for (final Comment c : comments)
-        $.add(0, astRewrite.createStringPlaceholder(string.substring(c.getStartPosition(), c.getStartPosition() + c.getLength()),
-            ASTNode.BLOCK));
+        $.add(0, astRewrite.createStringPlaceholder(string.substring(c.getStartPosition(), c.getStartPosition() + c.getLength()), ASTNode.BLOCK));
       astRewrite.replace(base, astRewrite.createGroupNode($.toArray(new ASTNode[$.size()])), textEditGroup);
     }
     for (final ASTNode a : additionals)
@@ -200,7 +213,8 @@ public class Scalpel {
    * Commit surgery: replace base node with replacement, while removing
    * additional nodes and adding predefined comments to the replacement
    *
-   * @param n replacement node
+   * @param n
+   *          replacement node
    * @return this scalpel
    */
   public Scalpel replaceWith(final ASTNode n) {
@@ -210,7 +224,8 @@ public class Scalpel {
    * Commit surgery: replace base node with replacements, while removing
    * additional nodes and adding predefined comments to the replacements
    *
-   * @param ns replacements nodes
+   * @param ns
+   *          replacements nodes
    * @return this
    */
   public Scalpel replaceWith(final ASTNode... ns) {
@@ -256,29 +271,23 @@ public class Scalpel {
       for (final Comment c : comments)
         bl.statements().add(
             0,
-            astRewrite.createStringPlaceholder(
-                string.substring(compilationUnit.getExtendedStartPosition(c), compilationUnit.getExtendedStartPosition(c)
-                    + compilationUnit.getExtendedLength(c)), ASTNode.BLOCK));
+            astRewrite.createStringPlaceholder(string.substring(compilationUnit.getExtendedStartPosition(c), compilationUnit.getExtendedStartPosition(c) + compilationUnit.getExtendedLength(c)),
+                ASTNode.BLOCK));
       $.add(bl);
     } else {
       if (comments.size() != 1 || !shouldMoveCommenToEnd(comments.get(0), isCollapsed)) {
         for (final Comment c : comments)
-          $.add(astRewrite.createStringPlaceholder(
-              string.substring(compilationUnit.getExtendedStartPosition(c), compilationUnit.getExtendedStartPosition(c)
-                  + compilationUnit.getExtendedLength(c))
-                  + (replacement instanceof Statement || c.isLineComment() ? "\n" : ""), c.getNodeType()));
+          $.add(astRewrite.createStringPlaceholder(string.substring(compilationUnit.getExtendedStartPosition(c), compilationUnit.getExtendedStartPosition(c) + compilationUnit.getExtendedLength(c))
+              + (replacement instanceof Statement || c.isLineComment() ? "\n" : ""), c.getNodeType()));
         $.add(replacement);
       } else {
         final Comment c = comments.get(0);
-        final String f = !c.isLineComment() || allWhites(string.substring(sr.getStartPosition() + sr.getLength()).split("\n")[0]) ? ""
-            : "\n";
+        final String f = !c.isLineComment() || allWhites(string.substring(sr.getStartPosition() + sr.getLength()).split("\n")[0]) ? "" : "\n";
         $.add(replacement);
         final SourceRange csr = astRewrite.getExtendedSourceRangeComputer().computeSourceRange(c);
-        $.add(astRewrite.createStringPlaceholder(
-            " " + string.substring(csr.getStartPosition(), csr.getStartPosition() + csr.getLength()) + f, c.getNodeType()));
+        $.add(astRewrite.createStringPlaceholder(" " + string.substring(csr.getStartPosition(), csr.getStartPosition() + csr.getLength()) + f, c.getNodeType()));
       }
-      if (replacement instanceof Statement
-          && !allWhites(string.substring(rowStartIndex(sr.getStartPosition()), sr.getStartPosition())))
+      if (replacement instanceof Statement && !allWhites(string.substring(rowStartIndex(sr.getStartPosition()), sr.getStartPosition())))
         $.add(0, astRewrite.createStringPlaceholder("", ASTNode.BLOCK));
     }
     astRewrite.replace(base, astRewrite.createGroupNode($.toArray(new ASTNode[$.size()])), textEditGroup);

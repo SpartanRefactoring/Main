@@ -1,8 +1,7 @@
 package il.org.spartan.refactoring.builder;
 
-import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.suggestions.Context.*;
 import il.org.spartan.refactoring.suggestions.*;
+import il.org.spartan.refactoring.suggestions.Context.Action;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.*;
 
@@ -12,6 +11,9 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.Utils.*;
+import static il.org.spartan.refactoring.suggestions.Context.*;
 
 /**
  * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
@@ -42,8 +44,7 @@ public class Builder extends IncrementalProjectBuilder {
    */
   public static final String SPARTANIZATION_TYPE_KEY = "org.spartan.refactoring.spartanizationType";
 
-  @Override protected IProject[] build(final int kind, @SuppressWarnings({ "unused", "rawtypes" }) final Map __,
-      final IProgressMonitor m) throws CoreException {
+  @Override protected IProject[] build(final int kind, @SuppressWarnings({ "unused", "rawtypes" }) final Map __, final IProgressMonitor m) throws CoreException {
     build(kind, m);
     return null;
   }
@@ -51,7 +52,8 @@ public class Builder extends IncrementalProjectBuilder {
    * TODO Javadoc(2016): automatically generated for method <code>build</code>
    *
    * @param kind
-   * @param m void TODO Javadoc(2016) automatically generated for returned value
+   * @param m
+   *          void TODO Javadoc(2016) automatically generated for returned value
    *          of method <code>build</code>
    */
   private void build(final int kind, final IProgressMonitor m) {
@@ -69,7 +71,8 @@ public class Builder extends IncrementalProjectBuilder {
   /**
    * Build for a given delta
    *
-   * @param d JD
+   * @param d
+   *          JD
    */
   void build(final IResourceDelta d) {
     if (d == null)
@@ -112,18 +115,21 @@ public class Builder extends IncrementalProjectBuilder {
   /**
    * deletes all spartanization suggestion markers
    *
-   * @param f the file from which to delete the markers
-   * @throws CoreException if this method fails. Reasons include: This resource
-   *           does not exist. This resource is a project that is not open.
-   *           Resource changes are disallowed during certain types of resource
-   *           change event notification. See {@link IResourceChangeEvent} for
-   *           more details.
+   * @param f
+   *          the file from which to delete the markers
+   * @throws CoreException
+   *           if this method fails. Reasons include: This resource does not
+   *           exist. This resource is a project that is not open. Resource
+   *           changes are disallowed during certain types of resource change
+   *           event notification. See {@link IResourceChangeEvent} for more
+   *           details.
    */
   public static void deleteMarkers(final IFile f) throws CoreException {
     f.deleteMarkers(MARKER_TYPE, false, IResource.DEPTH_ONE);
   }
   /**
-   * @param d JD
+   * @param d
+   *          JD
    * @throws CoreException
    */
   public static void incrementalBuild(final IResourceDelta d) {

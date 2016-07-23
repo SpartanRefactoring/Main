@@ -14,7 +14,8 @@ public class DialogBoxes {
   private static final ImageIcon icon = new ImageIcon(new DialogBoxes().getClass().getResource(ICON_PATH));
 
   /**
-   * @param message What to announce
+   * @param message
+   *          What to announce
    * @return <code><b>null</b></code>
    */
   public static final Void announce(final Object message) {

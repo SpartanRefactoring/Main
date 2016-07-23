@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.application;
 
-import static il.org.spartan.external.External.Introspector.*;
 import il.org.spartan.external.*;
 import il.org.spartan.files.*;
 import il.org.spartan.misc.*;
@@ -14,6 +13,8 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.external.External.Introspector.*;
 
 /**
  * Command line version of this plug-in
@@ -36,7 +37,8 @@ public class Xiphos {
   /**
    * main function, to which command line arguments are passed.
    *
-   * @param args command line arguments
+   * @param args
+   *          command line arguments
    */
   public static void main(final String[] args) {
     new Xiphos(args).go();

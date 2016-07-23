@@ -9,10 +9,11 @@ import org.eclipse.jdt.core.dom.*;
 
 /**
  * A {@link Wring} to replace String appending using StringBuilder or
- * StringBuffer with appending using operator "+"
- * <code><pre>String s = new StringBuilder(myName).append("'s grade is ").append(100).toString();</pre></code>
- * can be replaced with
- * <code><pre>String s = myName + "'s grade is " + 100;</pre></code>
+ * StringBuffer with appending using operator "+" <code><pre>String s = new
+ * StringBuilder
+ * (myName).append("'s grade is ").append(100).toString();</pre></code> can be
+ * replaced with <code><pre>String s = myName + "'s grade is " +
+ * 100;</pre></code>
  *
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-11
@@ -26,7 +27,8 @@ public class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvocation
   /**
    * Checks if an expression need parenthesis in order to interpreted correctly
    *
-   * @param e an Expression
+   * @param e
+   *          an Expression
    * @return whether or not this expression need parenthesis when put together
    *         with other expressions in infix expression. There could be non
    *         explicit parenthesis if the expression is located in an arguments
@@ -42,7 +44,8 @@ public class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvocation
   /**
    * Adds parenthesis to expression if needed.
    *
-   * @param e an Expression
+   * @param e
+   *          an Expression
    * @return e itself if no parenthesis needed, otherwise a
    *         ParenthesisExpression containing e
    */
@@ -55,7 +58,8 @@ public class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvocation
     return $;
   }
   /**
-   * @param e an Expression
+   * @param e
+   *          an Expression
    * @return true iff e is a String
    */
   private static boolean isString(final Expression e) {
@@ -90,8 +94,7 @@ public class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvocation
         }
         break;
       }
-      if (!(e instanceof MethodInvocation) || !"append".equals(((MethodInvocation) e).getName().toString())
-          || ((MethodInvocation) e).arguments().size() == 0)
+      if (!(e instanceof MethodInvocation) || !"append".equals(((MethodInvocation) e).getName().toString()) || ((MethodInvocation) e).arguments().size() == 0)
         return null;
       final Expression a = (Expression) ((MethodInvocation) e).arguments().get(0);
       sll.insertElementAt(addParenthesisIfNeeded(a), 0);

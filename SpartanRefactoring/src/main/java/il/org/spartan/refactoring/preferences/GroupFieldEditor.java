@@ -12,17 +12,12 @@ import org.eclipse.swt.widgets.*;
 /**
  * A {@link FieldEditor} designed to store multiple controls within a group
  * panel widget, to be used in conjunction with an
- * {@link FieldEditorPreferencePage} instance.
- * <p>
- * <b>To use</b>
- * <ol>
- * <li>Create a new {@link GroupFieldEditor} object.
- * <li>Add {@link FieldEditor} objects using the
- * {@link GroupFieldEditor#add(FieldEditor)} method. Each {@link FieldEditor}
- * should be initialized to have the return value of
- * {@link GroupFieldEditor#getFieldEditor()} as its parent.
- * <li>Add the {@link GroupFieldEditor} to the parent as usual
- * </ol>
+ * {@link FieldEditorPreferencePage} instance. <p> <b>To use</b> <ol> <li>Create
+ * a new {@link GroupFieldEditor} object. <li>Add {@link FieldEditor} objects
+ * using the {@link GroupFieldEditor#add(FieldEditor)} method. Each
+ * {@link FieldEditor} should be initialized to have the return value of
+ * {@link GroupFieldEditor#getFieldEditor()} as its parent. <li>Add the
+ * {@link GroupFieldEditor} to the parent as usual </ol>
  *
  * @author alf (original)
  * @author Daniel Mittelman (fixed and revised)
@@ -40,9 +35,11 @@ public class GroupFieldEditor extends FieldEditor {
   /**
    * Create a group of {@link FieldEditor} objects
    *
-   * @param title (optional) the text that will appear in the top label. For no
+   * @param title
+   *          (optional) the text that will appear in the top label. For no
    *          label, pass {@code null}
-   * @param parent the widget's parent, usually
+   * @param parent
+   *          the widget's parent, usually
    *          {@link FieldEditorPreferencePage#getFieldEditorParent()}
    */
   public GroupFieldEditor(final String title, final Composite parent) {
@@ -63,7 +60,8 @@ public class GroupFieldEditor extends FieldEditor {
    * Adds a new {@link FieldEditor} object to the group. Controls must be added
    * before the group is drawn to the parent.
    *
-   * @param e JD
+   * @param e
+   *          JD
    */
   public void add(final FieldEditor e) {
     if (initialized)

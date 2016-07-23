@@ -25,7 +25,7 @@ public class TernaryOfNull extends Wring.ReplaceCurrentNode<ConditionalExpressio
     final Expression elze = elze(e);
     final boolean whenForm = Is._null(elze);
     final Expression condition = extract.condition(e);
-    return replacement(!whenForm?elze:then(e), whenForm ? condition : logicalNot(condition));
+    return replacement(!whenForm ? elze : then(e), whenForm ? condition : logicalNot(condition));
   }
   private static Expression replacement(final Expression eval, final Expression when) {
     return replacement(Subject.operand(eval).toMethodInvocation("eval"), when, logicalNot(when));

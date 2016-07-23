@@ -1,8 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.extract.*;
-import static il.org.spartan.refactoring.wring.Wrings.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
@@ -13,6 +10,12 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import static il.org.spartan.refactoring.utils.Funcs.*;
+
+import static il.org.spartan.refactoring.utils.extract.*;
+
+import static il.org.spartan.refactoring.wring.Wrings.*;
+
 /**
  * A {@link Wring} to convert <code>if (x) { ; f(); return a; } else { ; g(); {
  * } }</code> into <code>if (x) { f(); return a; } g();</code>
@@ -20,8 +23,7 @@ import org.eclipse.text.edits.*;
  * @author Yossi Gil
  * @since 2015-07-29
  */
-public final class IfCommandsSequencerNoElseSingletonSequencer extends Wring.ReplaceToNextStatement<IfStatement> implements
-Kind.ConsolidateStatements {
+public final class IfCommandsSequencerNoElseSingletonSequencer extends Wring.ReplaceToNextStatement<IfStatement> implements Kind.ConsolidateStatements {
   @Override String description(final IfStatement s) {
     return "Invert conditional and use next statement of if(" + s.getExpression() + ") ...";
   }

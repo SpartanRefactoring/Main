@@ -16,7 +16,8 @@ public class Ancestors implements Iterable<ASTNode> {
   /**
    * Instantiates this class
    *
-   * @param from start iteration from this node
+   * @param from
+   *          start iteration from this node
    */
   public Ancestors(final ASTNode from) {
     this.from = from;

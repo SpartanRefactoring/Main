@@ -13,7 +13,8 @@ public class LiteralParser {
   /**
    * Instantiates this class.
    *
-   * @param literal JD
+   * @param literal
+   *          JD
    */
   public LiteralParser(final String literal) {
     this.literal = literal;

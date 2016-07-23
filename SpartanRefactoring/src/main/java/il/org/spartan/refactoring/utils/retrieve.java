@@ -21,7 +21,8 @@ public interface retrieve {
   /**
    * retrieves the {@link ICompilationUnit} of an {@link IResource}
    *
-   * @param p JP
+   * @param p
+   *          JP
    * @return the compilation unit of the parameter
    */
   static ICompilationUnit compilationUnit(final IEditorPart p) {
@@ -30,7 +31,8 @@ public interface retrieve {
   /**
    * retrieves the {@link ICompilationUnit} of an {@link IEditorPart}
    *
-   * @param r JD
+   * @param r
+   *          JD
    * @return ICompilationUnit of the parameter or returned value of method
    *         <code><b>null</b.</code>
    */

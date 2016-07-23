@@ -18,8 +18,7 @@ import org.eclipse.text.edits.*;
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-05-08
  */
-@SuppressWarnings("javadoc") public class MethodRenameUnusedVariableToUnderscore extends
-ReplaceCurrentNodeExclude<SingleVariableDeclaration> implements Kind.RENAME_PARAMETERS {
+@SuppressWarnings("javadoc") public class MethodRenameUnusedVariableToUnderscore extends ReplaceCurrentNodeExclude<SingleVariableDeclaration> implements Kind.RENAME_PARAMETERS {
   // true iff renaming annotated variables only
   final static boolean BY_ANNOTATION = true;
 

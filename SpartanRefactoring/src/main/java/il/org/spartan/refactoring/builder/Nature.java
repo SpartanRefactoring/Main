@@ -16,8 +16,8 @@ public class Nature implements IProjectNature {
   private IProject project;
 
   /* (non-Javadoc)
-   *
-   *
+   * 
+   * 
    * @see org.eclipse.core.resources.IProjectNature#configure() */
   @Override public void configure() throws CoreException {
     final IProjectDescription d = project.getDescription();
@@ -31,8 +31,8 @@ public class Nature implements IProjectNature {
     project.setDescription(d, null);
   }
   /* (non-Javadoc)
-   *
-   *
+   * 
+   * 
    * @see org.eclipse.core.resources.IProjectNature#deconfigure() */
   @Override public void deconfigure() throws CoreException {
     final IProjectDescription description = getProject().getDescription();

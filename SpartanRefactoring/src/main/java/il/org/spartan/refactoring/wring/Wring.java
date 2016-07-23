@@ -1,8 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
-import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import il.org.spartan.misc.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.suggestions.*;
@@ -16,13 +13,18 @@ import org.eclipse.jdt.core.dom.Assignment.Operator;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+
 /**
  * A wring is a refactoring that works on an {@link ASTNode}. Such a
  * transformation make a single simplification of the tree. A wring is so small
  * that it is idempotent: Applying a wring to the output of itself is the empty
  * operation.
  *
- * @param <N> type of node which triggers the transformation.
+ * @param <N>
+ *          type of node which triggers the transformation.
  * @author Yossi Gil
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-07-09
@@ -33,15 +35,18 @@ public abstract class Wring<N extends ASTNode> extends Suggestion implements Kin
 
   abstract String description(N n);
   /**
-   * @param u current compilation unit
+   * @param u
+   *          current compilation unit
    * @return this wring
    */
   public Wring<N> set(final CompilationUnit compilationUnit) {
     return Context.this.starting.vrom(compilationUnit);
   }
   /**
-   * @param r rewriter
-   * @param g text edit group
+   * @param r
+   *          rewriter
+   * @param g
+   *          text edit group
    * @return this wring
    */
   public Wring<N> createScalpel(final ASTRewrite r) {
@@ -49,8 +54,10 @@ public abstract class Wring<N extends ASTNode> extends Suggestion implements Kin
     return this;
   }
   /**
-   * @param r rewriter
-   * @param g text edit group
+   * @param r
+   *          rewriter
+   * @param g
+   *          text edit group
    * @return this wring
    */
   public Wring<N> createScalpel(final ASTRewrite r, final TextEditGroup g) {
@@ -61,7 +68,8 @@ public abstract class Wring<N extends ASTNode> extends Suggestion implements Kin
    * Determine whether the parameter is "eligible" for application of this
    * instance. The parameter must be within the scope of the current instance.
    *
-   * @param n JD
+   * @param n
+   *          JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is eligible for
    *         the simplification offered by this object.
    */
@@ -80,7 +88,8 @@ public abstract class Wring<N extends ASTNode> extends Suggestion implements Kin
    * {@link Wring} is applicable in principle to an object, but that actual
    * application will be vacuous.
    *
-   * @param e JD
+   * @param e
+   *          JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is noneligible for
    *         the simplification offered by this object.
    * @see #eligible(InfixExpression)
@@ -94,7 +103,8 @@ public abstract class Wring<N extends ASTNode> extends Suggestion implements Kin
    * be the case that a {@link Wring} is applicable in principle to an object,
    * but that actual application will be vacuous.
    *
-   * @param n JD
+   * @param n
+   *          JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is within the
    *         scope of this object
    */
@@ -109,7 +119,7 @@ public abstract class Wring<N extends ASTNode> extends Suggestion implements Kin
     abstract boolean sort(List<Expression> operands);
   }
 
-  static abstract class InfixSorting extends AbstractSorting {
+  abstract class InfixSorting extends AbstractSorting {
     @Override boolean eligible(final InfixExpression e) {
       final List<Expression> es = extract.allOperands(e);
       return !Wrings.mixedLiteralKind(es) && sort(es);
@@ -250,18 +260,16 @@ public abstract class Wring<N extends ASTNode> extends Suggestion implements Kin
     }
     @Override boolean scopeIncludes(final N n) {
       final Statement nextStatement = extract.nextStatement(n);
-      return nextStatement != null
-          && go(ASTRewrite.create(n.getAST()), n, nextStatement, null, new ArrayList<>(), new ArrayList<>()) != null;
+      return nextStatement != null && go(ASTRewrite.create(n.getAST()), n, nextStatement, null, new ArrayList<>(), new ArrayList<>()) != null;
     }
   }
 
   static abstract class VariableDeclarationFragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
     static InfixExpression.Operator asInfix(final Assignment.Operator o) {
-      return o == PLUS_ASSIGN ? PLUS : o == MINUS_ASSIGN ? MINUS : o == TIMES_ASSIGN ? TIMES : o == DIVIDE_ASSIGN ? DIVIDE
-          : o == BIT_AND_ASSIGN ? AND : o == BIT_OR_ASSIGN ? OR : o == BIT_XOR_ASSIGN ? XOR : o == REMAINDER_ASSIGN ? REMAINDER
-              : o == LEFT_SHIFT_ASSIGN ? LEFT_SHIFT //
-                  : o == RIGHT_SHIFT_SIGNED_ASSIGN ? RIGHT_SHIFT_SIGNED //
-                      : o == RIGHT_SHIFT_UNSIGNED_ASSIGN ? RIGHT_SHIFT_UNSIGNED : null;
+      return o == PLUS_ASSIGN ? PLUS : o == MINUS_ASSIGN ? MINUS : o == TIMES_ASSIGN ? TIMES : o == DIVIDE_ASSIGN ? DIVIDE : o == BIT_AND_ASSIGN ? AND : o == BIT_OR_ASSIGN ? OR
+          : o == BIT_XOR_ASSIGN ? XOR : o == REMAINDER_ASSIGN ? REMAINDER : o == LEFT_SHIFT_ASSIGN ? LEFT_SHIFT //
+              : o == RIGHT_SHIFT_SIGNED_ASSIGN ? RIGHT_SHIFT_SIGNED //
+                  : o == RIGHT_SHIFT_UNSIGNED_ASSIGN ? RIGHT_SHIFT_UNSIGNED : null;
     }
     static boolean hasAnnotation(final VariableDeclarationFragment f) {
       return hasAnnotation((VariableDeclarationStatement) f.getParent());
@@ -324,9 +332,12 @@ public abstract class Wring<N extends ASTNode> extends Suggestion implements Kin
      * fragment fragments in the containing {@link VariabelDeclarationStatement}
      * . Still, if the containing node left empty, it is removed as well.
      *
-     * @param f JD
-     * @param r JD
-     * @param g JD
+     * @param f
+     *          JD
+     * @param r
+     *          JD
+     * @param g
+     *          JD
      */
     static void remove(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
       final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
@@ -338,9 +349,12 @@ public abstract class Wring<N extends ASTNode> extends Suggestion implements Kin
      * {@link VariabelDeclarationStatement}. If no fragments are left, then this
      * containing node is eliminated as well.
      *
-     * @param f JD
-     * @param r JD
-     * @param g JD
+     * @param f
+     *          JD
+     * @param r
+     *          JD
+     * @param g
+     *          JD
      */
     static void eliminate(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
       final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
@@ -355,18 +369,15 @@ public abstract class Wring<N extends ASTNode> extends Suggestion implements Kin
       fs.addAll(live);
       r.replace(parent, newParent, g);
     }
-    private static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f,
-        final List<VariableDeclarationFragment> fs) {
+    private static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final List<VariableDeclarationFragment> fs) {
       final List<VariableDeclarationFragment> $ = new ArrayList<>();
       for (final VariableDeclarationFragment brother : fs)
         if (brother != null && brother != f && brother.getInitializer() != null)
           $.add(duplicate(brother));
       return $;
     }
-    abstract ASTRewrite go(ASTRewrite r, VariableDeclarationFragment f, SimpleName n, Expression initializer,
-        Statement nextStatement, TextEditGroup g);
-    @Override final ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement,
-        final TextEditGroup g) {
+    abstract ASTRewrite go(ASTRewrite r, VariableDeclarationFragment f, SimpleName n, Expression initializer, Statement nextStatement, TextEditGroup g);
+    @Override final ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
       if (!Is.variableDeclarationStatement(f.getParent()))
         return null;
       final SimpleName n = f.getName();
@@ -420,7 +431,8 @@ final class LocalInliner {
     /**
      * Computes the total number of AST nodes in the replaced parameters
      *
-     * @param es JD
+     * @param es
+     *          JD
      * @return A non-negative integer, computed from original size of the
      *         parameters, the number of occurrences of {@link #name} in the
      *         operands, and the size of the replacement.
@@ -432,7 +444,8 @@ final class LocalInliner {
      * Computes the number of AST nodes added as a result of the replacement
      * operation.
      *
-     * @param es JD
+     * @param es
+     *          JD
      * @return A non-negative integer, computed from the number of occurrences
      *         of {@link #name} in the operands, and the size of the
      *         replacement.
@@ -452,8 +465,7 @@ final class LocalInliner {
       ns.set(newExpression);
       rewriter.replace(oldExpression, newExpression, editGroup);
       for (final ASTNode use : Collect.forAllOccurencesExcludingDefinitions(name).in(newExpression))
-        rewriter.replace(use,
-            !(use instanceof Expression) ? replacement : new Plant((Expression) replacement).into(use.getParent()), editGroup);
+        rewriter.replace(use, !(use instanceof Expression) ? replacement : new Plant((Expression) replacement).into(use.getParent()), editGroup);
     }
   }
 }

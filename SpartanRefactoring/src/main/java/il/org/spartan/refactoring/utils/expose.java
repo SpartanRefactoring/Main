@@ -17,7 +17,8 @@ import org.eclipse.jdt.core.dom.*;
   /**
    * Expose the list of arguments in a {@link ClassInstanceCreation}
    *
-   * @param c JD
+   * @param c
+   *          JD
    * @return a reference to the list of arguments in the argument
    */
   public static List<Expression> arguments(final ClassInstanceCreation c) {
@@ -26,7 +27,8 @@ import org.eclipse.jdt.core.dom.*;
   /**
    * Expose the list of arguments in a {@link MethodInvocation}
    *
-   * @param i JD
+   * @param i
+   *          JD
    * @return a reference to the list of arguments in the argument
    */
   public static List<Expression> arguments(final MethodInvocation i) {
@@ -35,7 +37,8 @@ import org.eclipse.jdt.core.dom.*;
   /**
    * Expose the list of type arguments to a {@link ParameterizedType}
    *
-   * @param t JD
+   * @param t
+   *          JD
    * @return the list of type arguments to a {@link ParameterizedType}
    */
   public static List<Type> arguments(final ParameterizedType t) {
@@ -44,7 +47,8 @@ import org.eclipse.jdt.core.dom.*;
   /**
    * Expose the list of arguments in a {@link SuperMethodInvocation}
    *
-   * @param i JD
+   * @param i
+   *          JD
    * @return a reference to the list of arguments in the argument
    */
   public static List<Expression> arguments(final SuperMethodInvocation i) {
@@ -53,7 +57,8 @@ import org.eclipse.jdt.core.dom.*;
   /**
    * Expose the list of comments in a {@link CompilationUnit}
    *
-   * @param u JD
+   * @param u
+   *          JD
    * @return a reference to the list of comments in the argument
    */
   public static List<Comment> comments(final CompilationUnit u) {
@@ -62,7 +67,8 @@ import org.eclipse.jdt.core.dom.*;
   /**
    * Expose the list of extended operands in an {@link InfixExpression}
    *
-   * @param e JD
+   * @param e
+   *          JD
    * @return a reference to the list of extended operands contained in the
    *         parameter
    */
@@ -72,7 +78,8 @@ import org.eclipse.jdt.core.dom.*;
   /**
    * Expose the list of fragments in a {@link FieldDeclaration}
    *
-   * @param d JD
+   * @param d
+   *          JD
    * @return a reference to the list of fragments in the argument
    */
   public static List<VariableDeclarationFragment> fragments(final FieldDeclaration d) {
@@ -81,7 +88,8 @@ import org.eclipse.jdt.core.dom.*;
   /**
    * Expose the list of fragments in a {@link VariableDeclarationExpression}
    *
-   * @param e JD
+   * @param e
+   *          JD
    * @return a reference to the list of fragments in the argument
    */
   public static List<VariableDeclarationFragment> fragments(final VariableDeclarationExpression e) {
@@ -90,7 +98,8 @@ import org.eclipse.jdt.core.dom.*;
   /**
    * Expose the list of fragments in a {@link VariableDeclarationStatement}
    *
-   * @param s JD
+   * @param s
+   *          JD
    * @return a reference to the list of fragments in the argument
    */
   public static List<VariableDeclarationFragment> fragments(final VariableDeclarationStatement s) {
@@ -99,7 +108,8 @@ import org.eclipse.jdt.core.dom.*;
   /**
    * Expose the list of parameters in a {@link MethodDeclaration}
    *
-   * @param ¢ JD
+   * @param ¢
+   *          JD
    *
    @return result of method {@link MethodDeclaration#parameters} downcasted to
    *         its correct type
@@ -110,7 +120,8 @@ import org.eclipse.jdt.core.dom.*;
   /**
    * Expose the list of statements contained in a {@link Block}
    *
-   * @param b JD
+   * @param b
+   *          JD
    * @return a reference to the list of statements contained in the argument
    */
   public static List<Statement> statements(final Block b) {
@@ -119,7 +130,8 @@ import org.eclipse.jdt.core.dom.*;
   /**
    * Expose the list of initializers contained in a {@link ForStatement}
    *
-   * @param s JD
+   * @param s
+   *          JD
    * @return a reference to the list of initializers contained in the argument
    */
   static List<Expression> initializers(final ForStatement s) {
@@ -128,7 +140,8 @@ import org.eclipse.jdt.core.dom.*;
   /**
    * Expose the list of resources contained in a {@link TryStatement}
    *
-   * @param s JD
+   * @param s
+   *          JD
    * @return a reference to the list of resources contained in the argument
    */
   static List<VariableDeclarationExpression> resources(final TryStatement s) {

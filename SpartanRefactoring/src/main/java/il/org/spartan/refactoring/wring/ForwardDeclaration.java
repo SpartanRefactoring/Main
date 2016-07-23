@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
 import il.org.spartan.refactoring.suggestions.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -10,6 +9,8 @@ import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import static il.org.spartan.refactoring.utils.Funcs.*;
 
 /**
  * @author Artium Nihamkin (original)
@@ -21,21 +22,14 @@ import org.eclipse.text.edits.*;
  * @since 2013/01/01 TODO: There <b>must</b> be an option to disable this
  *        warning in selected places. Consider this example:
  *
- *        <pre>
- * public static &lt;T&gt; void swap(final T[] ts, final int i, final int j) {
- *   final T t = ts[i];
- *   ts[i] = ts[j];
- *   ts[j] = t;
- * }
- * </pre>
+ *        <pre> public static &lt;T&gt; void swap(final T[] ts, final int i,
+ *        final int j) { final T t = ts[i]; ts[i] = ts[j]; ts[j] = t; } </pre>
  *
  *        Require comment
  *
- *        <pre>
- *  public static &lt;T&gt; void swap(final T[] ts, final int i,
+ *        <pre> public static &lt;T&gt; void swap(final T[] ts, final int i,
  *        final int j) { final T t = ts[i]; // Don't move! ts[i] = ts[j]; ts[j]
- *        = t; }
- * </pre>
+ *        = t; } </pre>
  */
 public class ForwardDeclaration extends Spartanization {
   @Override public String toString() {

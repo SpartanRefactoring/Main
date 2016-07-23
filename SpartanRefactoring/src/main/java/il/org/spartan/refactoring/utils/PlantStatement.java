@@ -13,7 +13,8 @@ public class PlantStatement {
   /**
    * instantiates this class
    *
-   * @param inner JD
+   * @param inner
+   *          JD
    */
   public PlantStatement(final Statement inner) {
     this.inner = inner;
@@ -22,7 +23,8 @@ public class PlantStatement {
    * TODO Javadoc(2016): automatically generated for method
    * <code>intoThen</code>
    *
-   * @param s JD
+   * @param s
+   *          JD
    */
   public void intoThen(final IfStatement s) {
     final IfStatement plant = Funcs.asIfStatement(inner);

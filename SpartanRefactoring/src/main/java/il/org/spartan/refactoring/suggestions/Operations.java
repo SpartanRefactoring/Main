@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.suggestions;
 
-import static org.eclipse.core.runtime.IProgressMonitor.*;
 import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;
@@ -10,6 +9,8 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.ltk.core.refactoring.*;
 
+import static org.eclipse.core.runtime.IProgressMonitor.*;
+
 class Operations<Extender extends Operations<?>> extends Context<Operations<Extender>> {
   public void scanCompilationUnitForMarkerFix(final boolean preview) throws CoreException {
     progressMonitor().beginTask("Creating change(s) for a single compilation unit...", UNKNOWN);
@@ -17,8 +18,7 @@ class Operations<Extender extends Operations<?>> extends Context<Operations<Exte
     final TextFileChange textChange = textChange(root());
     Source.set(u.getPath(), textChange.getCurrentDocument(null).get());
     textChange.setTextType("java");
-    textChange.setEdit(astRewrite(new SubProgressMonitor(progressMonitor(), 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL),
-        progressMonitor()).rewriteAST());
+    textChange.setEdit(astRewrite(new SubProgressMonitor(progressMonitor(), 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL), progressMonitor()).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       if (preview)
         changes.add(textChange);
@@ -34,14 +34,12 @@ class Operations<Extender extends Operations<?>> extends Context<Operations<Exte
   }
   void runAsManualCall() throws JavaModelException, CoreException {
     progressMonitor().beginTask("Checking preconditions...", UNKNOWN);
-    scanCompilationUnits(allCompilationUnits(), new SubProgressMonitor(progressMonitor(), 1,
-        SubProgressMonitor.SUPPRESS_SUBTASK_LABEL));
+    scanCompilationUnits(allCompilationUnits(), new SubProgressMonitor(progressMonitor(), 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL));
     progressMonitor().done();
   }
   /**
-   * Count the number files of that would change after Spartanization.
-   * <p>
-   * This is a slow operation. Do not call lightheadedly.
+   * Count the number files of that would change after Spartanization. <p> This
+   * is a slow operation. Do not call lightheadedly.
    *
    * @return the total number of files with suggestions
    */
@@ -72,16 +70,15 @@ class Operations<Extender extends Operations<?>> extends Context<Operations<Exte
     progressMonitor().done();
   }
   /**
-   * @param u JD
+   * @param u
+   *          JD
    * @throws CoreException
    */
   public void scanCompilationUnit() throws CoreException {
     progressMonitor().beginTask("Creating change for a single compilation unit...", 2);
-    final TextChange textChange = inContext().set(compilationUnitInteface.getPath()).Source.set(u.getPath(), textChange
-        .getCurrentDocument(null).get());
+    final TextChange textChange = inContext().set(compilationUnitInteface.getPath()).Source.set(u.getPath(), textChange.getCurrentDocument(null).get());
     textChange.setTextType("java");
-    final SubProgressMonitor subProgressMonitor = new SubProgressMonitor(progressMonitor(), 1,
-        SubProgressMonitor.SUPPRESS_SUBTASK_LABEL);
+    final SubProgressMonitor subProgressMonitor = new SubProgressMonitor(progressMonitor(), 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL);
     final CompilationUnit cu = (CompilationUnit) Make.COMPILIATION_UNIT.parser(u).createAST(subProgressMonitor);
     textChange.setEdit(set(cu).set(subProgressMonitor).rewriteAST());
     if (textChange.getEdit().getLength() != 0)

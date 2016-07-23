@@ -1,9 +1,10 @@
 package il.org.spartan.utils;
 
-import static il.org.spartan.Utils.*;
 import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;
+
+import static il.org.spartan.Utils.*;
 
 /**
  * Utility class for computing the Levenshtein_distance of two strings. The
@@ -20,8 +21,10 @@ public class Levenshtein {
   /**
    * instantiates this class with two strings
    *
-   * @param a JD
-   * @param b JD
+   * @param a
+   *          JD
+   * @param b
+   *          JD
    */
   public Levenshtein(final String a, final String b) {
     as = compressSpaces(a).toCharArray();
@@ -48,8 +51,10 @@ public class Levenshtein {
    * j) must be a valid index of array a (respectively b), or else, the
    * substring of a (respectively b) are empty.
    *
-   * @param i JD
-   * @param j JD
+   * @param i
+   *          JD
+   * @param j
+   *          JD
    * @return the length of the LCS of the two strings
    */
   private int length(final int i, final int j) {

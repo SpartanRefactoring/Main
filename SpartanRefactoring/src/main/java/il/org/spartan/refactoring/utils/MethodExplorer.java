@@ -1,10 +1,10 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.refactoring.utils.expose.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.refactoring.utils.expose.*;
 
 /**
  * A class for analyzing a method.
@@ -18,18 +18,18 @@ public class MethodExplorer {
   /**
    * Instantiate this class
    *
-   * @param inner JD
+   * @param inner
+   *          JD
    */
   public MethodExplorer(final MethodDeclaration inner) {
     this.inner = inner;
   }
   /**
    * Computes the list of all local variable declarations found in a method.
-   * {@link MethodDeclaration}.
-   * <p>
-   * This method correctly ignores declarations made within nested types. It
-   * also correctly adds variables declared within plain and extended for loops,
-   * just as local variables defined within a try and catch clauses.
+   * {@link MethodDeclaration}. <p> This method correctly ignores declarations
+   * made within nested types. It also correctly adds variables declared within
+   * plain and extended for loops, just as local variables defined within a try
+   * and catch clauses.
    *
    * @return a list of {@link SimpleName} from the given method.
    */
@@ -64,10 +64,10 @@ public class MethodExplorer {
         return true;
       }
       /**
-       * @param o
+       * @param e
        */
-      private void add(final VariableDeclarationExpression o) {
-        addFragments(expose.fragments(o));
+      private void add(final VariableDeclarationExpression e) {
+        addFragments(expose.fragments(e));
       }
       private boolean add(final SingleVariableDeclaration d) {
         $.add(d.getName());
@@ -82,9 +82,8 @@ public class MethodExplorer {
   }
   /**
    * Computes the list of all return statements found in a
-   * {@link MethodDeclaration}.
-   * <p>
-   * This method correctly ignores return statements found within nested types.
+   * {@link MethodDeclaration}. <p> This method correctly ignores return
+   * statements found within nested types.
    *
    * @return a list of {@link ReturnStatement} from the given method.
    */

@@ -1,15 +1,10 @@
 package il.org.spartan.refactoring.utils;
 
-import static org.eclipse.core.runtime.IProgressMonitor.*;
-import il.org.spartan.LaxySymbolicSpreadsheet.Cell;
-import il.org.spartan.LaxySymbolicSpreadsheet.Computed;
-import il.org.spartan.LaxySymbolicSpreadsheet.Valued;
 import il.org.spartan.refactoring.suggestions.*;
 import il.org.spartan.refactoring.wring.*;
 import il.org.spartan.utils.*;
 
 import java.util.*;
-import java.util.function.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -19,6 +14,8 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.text.edits.*;
 import org.eclipse.ui.*;
+
+import static org.eclipse.core.runtime.IProgressMonitor.*;
 
 /**
  * A function object representing a sequence of operations on an
@@ -50,10 +47,12 @@ import org.eclipse.ui.*;
   /**
    * Instantiates this class
    *
-   * @param description a textual description of the changes described by this
-   *          instance
-   * @param n the node on which change is to be carried out
-   * @param ns additional nodes, defining the scope of this action.
+   * @param description
+   *          a textual description of the changes described by this instance
+   * @param n
+   *          the node on which change is to be carried out
+   * @param ns
+   *          additional nodes, defining the scope of this action.
    */
   public Suggestion(final String description, final ASTNode n, final ASTNode... ns) {
     this(range(n, ns));
@@ -73,7 +72,8 @@ import org.eclipse.ui.*;
     return getFix("" + this);
   }
   /**
-   * @param s Spartanization's name
+   * @param s
+   *          Spartanization's name
    * @return a quickfix which automatically performs the spartanization
    */
   public IMarkerResolution getFix(final String s) {
@@ -105,10 +105,12 @@ import org.eclipse.ui.*;
   /**
    * Convert the rewrite into changes on an {@link ASTRewrite}
    *
-   * @param r where to place the changes
-   * @param g to be associated with these changes
+   * @param r
+   *          where to place the changes
+   * @param g
+   *          to be associated with these changes
    */
-  public void go(ASTRewrite r, TextEditGroup g) {
+  public void go(final ASTRewrite r, final TextEditGroup g) {
   }
   /** @return current lineNumber */
   public int lineNumber() {
@@ -119,21 +121,24 @@ import org.eclipse.ui.*;
     return self();
   }
   /** sets this instance description */
-  public void of(String s) {
+  public void of(final String s) {
     description = s;
   }
-  public Suggestion of(Wring<?> ¢) {
+  public Suggestion of(final Wring<?> ¢) {
     wring.set(¢);
     return self();
   }
   /**
    * Performs the current Spartanization on the provided compilation unit
    *
-   * @param cu the compilation to spartanize
-   * @param progressMonitor progress monitor for long operations (could be
+   * @param cu
+   *          the compilation to spartanize
+   * @param progressMonitor
+   *          progress monitor for long operations (could be
    *          {@link NullProgressMonitor} for light operations)
    * @return whether any changes have been made to the compilation unit
-   * @throws CoreException exception from the <code>pm</code>
+   * @throws CoreException
+   *           exception from the <code>pm</code>
    */
   public boolean performRule() throws CoreException {
     progressMonitor().beginTask("Creating change for a single compilation unit...", 2);
@@ -169,9 +174,11 @@ import org.eclipse.ui.*;
   /**
    * Performs the current Spartanization on the provided compilation unit
    *
-   * @param cu the compilation to spartanize
+   * @param cu
+   *          the compilation to spartanize
    * @return whether any changes have been made to the compilation unit
-   * @throws CoreException exception from the <code>pm</code>
+   * @throws CoreException
+   *           exception from the <code>pm</code>
    */
   boolean performRule(final ICompilationUnit cu) {
     progressMonitor().beginTask("Creating change for a single compilation unit...", UNKNOWN);
@@ -188,18 +195,14 @@ import org.eclipse.ui.*;
     progressMonitor().done();
     return $;
   }
-  void set(int lineNumber) {
+  void set(final int lineNumber) {
     this.lineNumber = lineNumber;
   }
 
   private String description;
   private int lineNumber;
-  private final Edible<ASTNode> node = new Ingredient<ASTNode>();
-  private final Edible<Range> range = new Recipe<Range>(new Supplier<Range>() {
-    @Override public Range get() {
-      return range(node());
-    }
-  });
-  private final Edible<Wring<?>> wring = new Ingredient<Wring<?>>();
+  private final Cell<ASTNode> node = new Ingredient<ASTNode>();
+  private final Cell<Range> range = new Recipe<Range>(() -> range(node()));
+  private final Cell<Wring<?>> wring = new Ingredient<Wring<?>>();
   List<Change> changes;
 }

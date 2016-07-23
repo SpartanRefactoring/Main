@@ -1,9 +1,10 @@
 package il.org.spartan.refactoring.suggestions;
 
-import static il.org.spartan.azzert.*;
 import il.org.spartan.*;
 
 import org.junit.*;
+
+import static il.org.spartan.azzert.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) public class TEST {
   @Test public void usecase0() {

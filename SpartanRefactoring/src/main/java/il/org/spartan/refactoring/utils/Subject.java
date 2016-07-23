@@ -1,10 +1,10 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.refactoring.utils.Funcs.*;
 
 // TODO: document this class
 @SuppressWarnings("javadoc") public class Subject {

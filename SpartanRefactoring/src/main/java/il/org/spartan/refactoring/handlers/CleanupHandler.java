@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.handlers;
 
-import static il.org.spartan.refactoring.suggestions.DialogBoxes.*;
 import il.org.spartan.refactoring.suggestions.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -12,6 +11,8 @@ import org.eclipse.core.commands.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
+
+import static il.org.spartan.refactoring.suggestions.DialogBoxes.*;
 
 /**
  * A handler for {@link Spartanizations}. This handler executes all safe
@@ -69,7 +70,8 @@ public class CleanupHandler extends BaseHandler {
   /**
    * Returns the number of Spartanization suggestions for this compilation unit
    *
-   * @param u JD
+   * @param u
+   *          JD
    * @return the number of suggestions available for the compilation unit
    */
   public static int countSuggestions(final ICompilationUnit u) {

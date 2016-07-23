@@ -1,8 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.extract.*;
-import static il.org.spartan.refactoring.wring.Wrings.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.suggestions.*;
@@ -13,6 +10,12 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import static il.org.spartan.refactoring.utils.Funcs.*;
+
+import static il.org.spartan.refactoring.utils.extract.*;
+
+import static il.org.spartan.refactoring.wring.Wrings.*;
 
 /**
  * A {@link Wring} to convert <code>if (X) {bar(); foo();} else {baz();
@@ -50,8 +53,7 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> implements Kind
         return replacement(s.getExpression(), Subject.ss(then).toOneStatementOrNull(), Subject.ss(elze).toOneStatementOrNull());
       }
       private IfStatement replacement(final Expression condition, final Statement trimmedThen, final Statement trimmedElse) {
-        return trimmedThen == null && trimmedElse == null ? null : trimmedThen == null ? Subject.pair(trimmedElse, null).toNot(
-            condition) : Subject.pair(trimmedThen, trimmedElse).toIf(condition);
+        return trimmedThen == null && trimmedElse == null ? null : trimmedThen == null ? Subject.pair(trimmedElse, null).toNot(condition) : Subject.pair(trimmedThen, trimmedElse).toIf(condition);
       }
     };
   }

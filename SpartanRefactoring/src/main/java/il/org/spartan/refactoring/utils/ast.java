@@ -62,7 +62,8 @@ public enum ast {
    */
   CLASS_BODY_DECLARATIONS(ASTParser.K_CLASS_BODY_DECLARATIONS);
   /**
-   * @param n The node from which to return statement.
+   * @param n
+   *          The node from which to return statement.
    * @return null if it is not possible to extract the return statement.
    */
   public static ReturnStatement asReturn(final ASTNode n) {
@@ -83,7 +84,8 @@ public enum ast {
   /**
    * Converts a boolean into a bit value
    *
-   * @param $ JD
+   * @param $
+   *          JD
    * @return 1 if the parameter is <code><b>true</b></code>, 0 if it is
    *         <code><b>false</b></code>
    */
@@ -93,7 +95,8 @@ public enum ast {
   /**
    * IFile -> ICompilationUnit converter
    *
-   * @param f File
+   * @param f
+   *          File
    * @return ICompilationUnit
    */
   public static ICompilationUnit iCompilationUnit(final IFile f) {
@@ -102,7 +105,8 @@ public enum ast {
   /**
    * IMarker -> ICompilationUnit converter
    *
-   * @param m IMarker
+   * @param m
+   *          IMarker
    * @return CompilationUnit
    */
   public static ICompilationUnit iCompilationUnit(final IMarker m) {
@@ -111,7 +115,8 @@ public enum ast {
   /**
    * Convert file contents into a {@link String}
    *
-   * @param f JD
+   * @param f
+   *          JD
    * @return the entire contents of this file, as one string
    */
   public static String string(final File f) {
@@ -127,7 +132,8 @@ public enum ast {
   /**
    * Creates a {@link StringBuilder} object out of a file object.
    *
-   * @param f JD
+   * @param f
+   *          JD
    * @return {@link StringBuilder} whose content is the same as the contents of
    *         the parameter.
    */
@@ -147,7 +153,8 @@ public enum ast {
   /**
    * Parses a given {@link Document}.
    *
-   * @param d JD
+   * @param d
+   *          JD
    * @return the {@link ASTNode} obtained by parsing
    */
   public final ASTNode from(final Document d) {
@@ -156,14 +163,16 @@ public enum ast {
   /**
    * File -> ASTNode converter
    *
-   * @param f File
+   * @param f
+   *          File
    * @return ASTNode
    */
   public ASTNode from(final File f) {
     return from(string(f));
   }
   /**
-   * @param f IFile
+   * @param f
+   *          IFile
    * @return ASTNode
    */
   public ASTNode from(final IFile f) {
@@ -172,8 +181,10 @@ public enum ast {
   /**
    * IMarker, SubProgressMonitor -> ASTNode converter
    *
-   * @param m Marker
-   * @param pm ProgressMonitor
+   * @param m
+   *          Marker
+   * @param pm
+   *          ProgressMonitor
    * @return ASTNode
    */
   public ASTNode from(final IMarker m, final SubProgressMonitor pm) {
@@ -182,7 +193,8 @@ public enum ast {
   /**
    * String -> ASTNode converter
    *
-   * @param s String
+   * @param s
+   *          String
    * @return ASTNode
    */
   public ASTNode from(final String s) {
@@ -197,7 +209,8 @@ public enum ast {
   /**
    * Creates a no-binding parser for a given text
    *
-   * @param text what to parse
+   * @param text
+   *          what to parse
    * @return a newly created parser for the parameter
    */
   public ASTParser makeParser(final char[] text) {
@@ -208,7 +221,8 @@ public enum ast {
   /**
    * Creates a no-binding parser for a given compilation unit
    *
-   * @param u what to parse
+   * @param u
+   *          what to parse
    * @return a newly created parser for the parameter
    */
   public ASTParser makeParser(final ICompilationUnit u) {
@@ -219,7 +233,8 @@ public enum ast {
   /**
    * Creates a no-binding parser for a given text
    *
-   * @param text what to parse
+   * @param text
+   *          what to parse
    * @return a newly created parser for the parameter
    */
   public ASTParser makeParser(final String text) {
@@ -228,7 +243,8 @@ public enum ast {
   /**
    * Downcast <code>List<?></code> into <code>List<Expression></code>
    *
-   * @param es JD
+   * @param es
+   *          JD
    * @return the parameter, properly downcasted
    *
    */
@@ -239,7 +255,8 @@ public enum ast {
    * Downcast <code>List<?></code> into
    * <code>List<VariableDeclarationFragment></code>
    *
-   * @param fs JD
+   * @param fs
+   *          JD
    * @return the parameter, properly downcasted
    *
    */
@@ -249,7 +266,8 @@ public enum ast {
   /**
    * Downcast <code>List<?></code> into <code>List<Statement></code>
    *
-   * @param ss JD
+   * @param ss
+   *          JD
    * @return the parameter, properly downcasted
    *
    */

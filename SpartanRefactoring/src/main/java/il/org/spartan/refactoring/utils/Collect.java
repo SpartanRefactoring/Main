@@ -1,12 +1,13 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.Funcs.*;
 import il.org.spartan.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.Utils.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
 
 /**
  * A utility class for finding occurrences of an {@link Expression} in an
@@ -50,7 +51,8 @@ public enum Collect {
   static final ASTMatcher matcher = new ASTMatcher();
 
   /**
-   * @param n JD
+   * @param n
+   *          JD
    * @return TODO document return type of this method * TODO document return
    *         type of this method
    */
@@ -65,7 +67,8 @@ public enum Collect {
     };
   }
   /**
-   * @param n JD
+   * @param n
+   *          JD
    * @return TODO: document what this function returns
    */
   public static Collector forAllOccurencesExcludingDefinitions(final SimpleName n) {
@@ -79,7 +82,8 @@ public enum Collect {
     };
   }
   /**
-   * @param n JD
+   * @param n
+   *          JD
    * @return TODO: document what this function returns
    */
   public static Collector usesOf(final SimpleName n) {
@@ -103,8 +107,7 @@ public enum Collect {
         return true;
       }
       @Override public boolean visit(final PostfixExpression it) {
-        return !in(it.getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT)
-            || consider(it.getOperand());
+        return !in(it.getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT) || consider(it.getOperand());
       }
       @Override public boolean visit(final PrefixExpression it) {
         return consider(it.getOperand());
@@ -260,7 +263,8 @@ public enum Collect {
   /**
    * Creates a function object for searching for a given value.
    *
-   * @param n what to search for
+   * @param n
+   *          what to search for
    * @return a function object to be used for searching for the parameter in a
    *         given location
    */
@@ -275,7 +279,8 @@ public enum Collect {
    * Creates a function object for searching for a given {@link SimpleName}, as
    * specified by the {@link VariableDeclarationFragment},
    *
-   * @param f JD
+   * @param f
+   *          JD
    * @return a function object to be used for searching for the
    *         {@link SimpleName} embedded in the parameter.
    */
@@ -285,8 +290,10 @@ public enum Collect {
   /**
    * Lists the required occurrences
    *
-   * @param what the expression to search for
-   * @param ns the n in which to counted
+   * @param what
+   *          the expression to search for
+   * @param ns
+   *          the n in which to counted
    * @return the list of uses
    */
   final List<SimpleName> collect(final SimpleName what, final ASTNode... ns) {
@@ -303,12 +310,11 @@ public enum Collect {
   /**
    * An auxiliary class which makes it possible to use an easy invocation
    * sequence for the various offerings of the containing class. This class
-   * should never be instantiated or inherited by clients.
-   * <p>
-   * This class realizes the function object concept; an instance of it records
-   * the value we search for; it represents the function that, given a location
-   * for the search, will carry out the search for the captured value in its
-   * location parameter.
+   * should never be instantiated or inherited by clients. <p> This class
+   * realizes the function object concept; an instance of it records the value
+   * we search for; it represents the function that, given a location for the
+   * search, will carry out the search for the captured value in its location
+   * parameter.
    *
    * @see Collect#of
    * @author Yossi Gil <yossi.gil @ gmail.com>
@@ -318,7 +324,8 @@ public enum Collect {
     /**
      * Determine whether this instance occurs in a bunch of expressions
      *
-     * @param ns JD
+     * @param ns
+     *          JD
      * @return <code><b>true</b></code> <i>iff</i> this instance occurs in the
      *         Parameter.
      */
@@ -328,7 +335,8 @@ public enum Collect {
     /**
      * the method that will carry out the search
      *
-     * @param ns where to search
+     * @param ns
+     *          where to search
      * @return a list of occurrences of the captured value in the parameter.
      */
     public abstract List<SimpleName> in(ASTNode... ns);
@@ -349,7 +357,8 @@ public enum Collect {
       this.name = name;
     }
     /**
-     * @param ns JD
+     * @param ns
+     *          JD
      * @return TODO document return type of this method * TODO document return
      *         type of this method
      */

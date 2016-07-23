@@ -48,18 +48,18 @@ public class InOutTest {
       }
     }.go();
   }
-  protected static void go(final Context s, final File from, final File to) {
+  protected static void go(final Context c, final File from, final File to) {
     final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(FileTestUtils.makeInFile(from));
-    that(u.toString(), TrimmerTestsUtils.countOpportunities(s, u), is(1));
-    TESTUtils.assertOneOpportunity(s, ast.string(from));
+    that(u.toString(), TrimmerTestsUtils.countOpportunities(c, u), is(1));
+    TESTUtils.assertOneOpportunity(c, ast.string(from));
     final String expected;
     final Document rewrite;
     if (!from.getName().endsWith(FileTestUtils.testSuffix)) {
       expected = ast.string(to);
-      rewrite = TESTUtils.rewrite(s, u, new Document(ast.string(from)));
+      rewrite = TESTUtils.rewrite(c, u, new Document(ast.string(from)));
     } else {
       expected = ast.string(FileTestUtils.makeOutFile(to));
-      rewrite = TESTUtils.rewrite(s, u, new Document(ast.string(FileTestUtils.makeInFile(from))));
+      rewrite = TESTUtils.rewrite(c, u, new Document(ast.string(FileTestUtils.makeInFile(from))));
     }
     assertSimilar(expected, rewrite.get());
   }

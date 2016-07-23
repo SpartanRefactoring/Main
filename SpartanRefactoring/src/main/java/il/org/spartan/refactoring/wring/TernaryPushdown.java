@@ -1,9 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.Restructure.*;
-import static il.org.spartan.refactoring.utils.extract.*;
-import static org.eclipse.jdt.core.dom.ASTNode.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
@@ -13,6 +9,13 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Restructure.*;
+
+import static il.org.spartan.refactoring.utils.extract.*;
+
+import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpression> implements Kind.ReorganizeExpression {
   private static int findSingleDifference(final List<Expression> es1, final List<Expression> es2) {
@@ -103,8 +106,8 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
     return $;
   }
   static Expression pushdown(final ConditionalExpression e, final Assignment a1, final Assignment a2) {
-    return a1.getOperator() != a2.getOperator() || !same(left(a1), left(a2)) ? null : new Plant(Subject.pair(left(a1),
-        Subject.pair(right(a1), right(a2)).toCondition(e.getExpression())).to(a1.getOperator())).into(e.getParent());
+    return a1.getOperator() != a2.getOperator() || !same(left(a1), left(a2)) ? null : new Plant(Subject.pair(left(a1), Subject.pair(right(a1), right(a2)).toCondition(e.getExpression())).to(
+        a1.getOperator())).into(e.getParent());
   }
   public static Expression right(final Assignment a1) {
     return a1.getRightHandSide();

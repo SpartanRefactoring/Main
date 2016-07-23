@@ -12,11 +12,7 @@ import org.eclipse.text.edits.*;
  * A {@link Wring} to remove overriding methods that only call their counterpart
  * in the parent class, for example: <code>
  *
- * <pre>
- * &#64;Override void foo() {
- *   super.foo();
- * }
- * </pre>
+ * <pre> &#64;Override void foo() { super.foo(); } </pre>
  *
  * </code> will be completely removed.
  *
@@ -26,8 +22,7 @@ import org.eclipse.text.edits.*;
 public class MethodRemoveDegenerateOverride extends Wring<MethodDeclaration> implements Kind.Simplify {
   @Override Suggestion make(final MethodDeclaration d) {
     final ExpressionStatement s = extract.expressionStatement(d);
-    return s == null || !(s.getExpression() instanceof SuperMethodInvocation)
-        || !shouldRemove(d, (SuperMethodInvocation) s.getExpression()) ? null : new Suggestion(description(d), d) {
+    return s == null || !(s.getExpression() instanceof SuperMethodInvocation) || !shouldRemove(d, (SuperMethodInvocation) s.getExpression()) ? null : new Suggestion(description(d), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.remove(d, g);
       }

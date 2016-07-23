@@ -1,8 +1,5 @@
 package il.org.spartan.refactoring.suggestions;
 
-import il.org.*;
-import il.org.spartan.spreadsheet.*;
-
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
@@ -26,8 +23,7 @@ class Semantics<Extender extends Semantics<?>> extends Context<Semantics<Extende
    */
   @Override boolean isMarked(final ASTNode n) {
     try {
-      return n.getStartPosition() < intValue(IMarker.CHAR_START)
-          || n.getLength() + n.getStartPosition() > intValue(IMarker.CHAR_END);
+      return n.getStartPosition() < intValue(IMarker.CHAR_START) || n.getLength() + n.getStartPosition() > intValue(IMarker.CHAR_END);
     } catch (final CoreException e) {
       e.printStackTrace();
       return true;

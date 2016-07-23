@@ -1,7 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.extract.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
@@ -11,18 +9,20 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import static il.org.spartan.refactoring.utils.Funcs.*;
+
+import static il.org.spartan.refactoring.utils.extract.*;
+
 /**
- * A {@link Wring} to convert <code>a ? (f,g,h) : c(d,e)</code> into
- * <code>a ? c(d,e) : f(g,h)</code>
+ * A {@link Wring} to convert <code>a ? (f,g,h) : c(d,e)</code> into <code>a ?
+ * c(d,e) : f(g,h)</code>
  *
  * @author Yossi Gil
  * @since 2015-08-14
  */
-public final class TernaryShortestFirst extends Wring.ReplaceCurrentNode<ConditionalExpression> implements
-Kind.ReorganizeExpression {
+public final class TernaryShortestFirst extends Wring.ReplaceCurrentNode<ConditionalExpression> implements Kind.ReorganizeExpression {
   @Override ConditionalExpression replacement(final ConditionalExpression e) {
-    final ConditionalExpression $ = Subject.pair(core(e.getElseExpression()), core(e.getThenExpression())).toCondition(
-        logicalNot(e.getExpression()));
+    final ConditionalExpression $ = Subject.pair(core(e.getElseExpression()), core(e.getThenExpression())).toCondition(logicalNot(e.getExpression()));
     final Expression then = $.getElseExpression();
     final Expression elze = $.getThenExpression();
     if (!Is.conditional(then) && Is.conditional(elze))
@@ -47,8 +47,7 @@ Kind.ReorganizeExpression {
     return compatible(e1, e2) || compatible(e1, logicalNot(e2));
   }
   private static boolean compatible(final Expression e1, final Expression e2) {
-    return e1.getNodeType() == e2.getNodeType()
-        && (e1 instanceof InstanceofExpression || e1 instanceof InfixExpression || e1 instanceof MethodInvocation);
+    return e1.getNodeType() == e2.getNodeType() && (e1 instanceof InstanceofExpression || e1 instanceof InfixExpression || e1 instanceof MethodInvocation);
   }
   @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Invert logical condition and exhange order of '?' and ':' operands to conditional expression";

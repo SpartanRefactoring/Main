@@ -1,11 +1,12 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.extract.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.refactoring.utils.Funcs.*;
+
+import static il.org.spartan.refactoring.utils.extract.*;
 
 /**
  * An empty <code><b>enum</b></code> for fluent programming. The name should say
@@ -20,7 +21,8 @@ public enum have {
   /**
    * Determine whether a literal is present
    *
-   * @param es JD
+   * @param es
+   *          JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
    *         that is a literal.
    */
@@ -33,7 +35,8 @@ public enum have {
   /**
    * Determine whether a literal is present
    *
-   * @param es JD
+   * @param es
+   *          JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
    *         that is a literal.
    */
@@ -46,7 +49,8 @@ public enum have {
   /**
    * Determine whether a numerical literal is present
    *
-   * @param es JD
+   * @param es
+   *          JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
    *         that is a numeric literal.
    */
@@ -59,7 +63,8 @@ public enum have {
   /**
    * Determine whether a numerical literal is present
    *
-   * @param es JD
+   * @param es
+   *          JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
    *         that is a numeric literal.
    */
@@ -72,7 +77,8 @@ public enum have {
   /**
    * Determine whether a boolean literal is present
    *
-   * @param es JD
+   * @param es
+   *          JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
    *         that is a boolean literal.
    */
@@ -85,7 +91,8 @@ public enum have {
   /**
    * Determine whether a boolean literal is present
    *
-   * @param es JD
+   * @param es
+   *          JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
    *         that is a boolean literal.
    */
@@ -98,7 +105,8 @@ public enum have {
   /**
    * Determine whether the boolean literal <code><b>true</b></code> is present
    *
-   * @param es JD
+   * @param es
+   *          JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements is
    *         the boolean literal <code><b>true</b></code>
    */
@@ -111,7 +119,8 @@ public enum have {
   /**
    * Determine whether the boolean literal <code><b>false</b></code> is present
    *
-   * @param es JD
+   * @param es
+   *          JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements is
    *         the boolean literal <code><b>false</b></code>
    */

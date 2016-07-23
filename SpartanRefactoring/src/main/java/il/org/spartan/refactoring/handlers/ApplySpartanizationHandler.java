@@ -31,21 +31,26 @@ public class ApplySpartanizationHandler extends BaseHandler {
     return null;
   }
   /**
-   * @param cu JD
+   * @param cu
+   *          JD
    */
   public static void execute(final ICompilationUnit cu) {
     execute(cu, new Range(0, 0));
   }
   /**
-   * @param cu JD
-   * @param r JD
+   * @param cu
+   *          JD
+   * @param r
+   *          JD
    */
   public static void execute(final ICompilationUnit cu, final Range r) {
     execute(cu, r == null || r.size() <= 0 ? new TextSelection(0, 0) : new TextSelection(r.from, r.size()));
   }
   /**
-   * @param cu JD
-   * @param t JD
+   * @param cu
+   *          JD
+   * @param t
+   *          JD
    */
   public static void execute(final ICompilationUnit cu, final ITextSelection t) {
     final starting s = new starting();
@@ -60,7 +65,6 @@ public class ApplySpartanizationHandler extends BaseHandler {
     }
   }
   private static ITextSelection getSelectedText() {
-    return (ITextSelection) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().getEditorSite()
-        .getSelectionProvider().getSelection();
+    return (ITextSelection) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().getEditorSite().getSelectionProvider().getSelection();
   }
 }

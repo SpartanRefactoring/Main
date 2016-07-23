@@ -1,9 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.extract.*;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
@@ -14,6 +10,13 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import static il.org.spartan.Utils.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+
+import static il.org.spartan.refactoring.utils.extract.*;
+
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+
 /**
  * A {@link Wring} to convert <code>if (X) return A; if (Y) return A;</code>
  * into <code>if (X || Y) return A;</code>
@@ -21,8 +24,7 @@ import org.eclipse.text.edits.*;
  * @author Yossi Gil
  * @since 2015-07-29
  */
-public final class IfFooSequencerIfFooSameSequencer extends Wring.ReplaceToNextStatement<IfStatement> implements
-Kind.ConsolidateStatements {
+public final class IfFooSequencerIfFooSameSequencer extends Wring.ReplaceToNextStatement<IfStatement> implements Kind.ConsolidateStatements {
   private static IfStatement makeIfWithoutElse(final Statement s, final InfixExpression condition) {
     final IfStatement $ = condition.getAST().newIfStatement();
     $.setExpression(condition);
@@ -30,8 +32,7 @@ Kind.ConsolidateStatements {
     $.setElseStatement(null);
     return $;
   }
-  @Override ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement,
-      @SuppressWarnings("unused") final TextEditGroup __) {
+  @Override ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, @SuppressWarnings("unused") final TextEditGroup __) {
     if (!Is.vacuousElse(s))
       return null;
     final IfStatement s2 = asIfStatement(nextStatement);
@@ -41,8 +42,7 @@ Kind.ConsolidateStatements {
     final List<Statement> ss1 = extract.statements(then);
     if (!same(ss1, extract.statements(then(s2))) || !Is.sequencer(last(ss1)))
       return null;
-    scalpel.replaceWith(makeIfWithoutElse(BlockSimplify.reorganizeNestedStatement(then, scalpel),
-        Subject.pair(s.getExpression(), s2.getExpression()).to(CONDITIONAL_OR)));
+    scalpel.replaceWith(makeIfWithoutElse(BlockSimplify.reorganizeNestedStatement(then, scalpel), Subject.pair(s.getExpression(), s2.getExpression()).to(CONDITIONAL_OR)));
     return r;
   }
   @Override String description(final IfStatement s) {

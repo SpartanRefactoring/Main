@@ -11,30 +11,13 @@ import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 /**
  * A wring to replace if statements with switch statements.
  *
- * <pre>
- * <code>
- * if (x == 1)
- *   return 1;
- * else if (x == 2)
- *   return 2;
- * else
- *   return -1;
- * </code>
- * </pre>
+ * <pre> <code> if (x == 1) return 1; else if (x == 2) return 2; else return -1;
+ * </code> </pre>
  *
  * becomes
  *
- * <pre>
- * <code>
- * switch(x) {
- * case 1:
- *   return 1;
- * case 2:
- *   return 2;
- * default:
- *   return -1;
- * </code>
- * </pre>
+ * <pre> <code> switch(x) { case 1: return 1; case 2: return 2; default: return
+ * -1; </code> </pre>
  *
  * TODO Ori: add binding if needed
  *
@@ -47,27 +30,22 @@ import org.eclipse.jdt.core.dom.InfixExpression.Operator;
   final static ASTMatcher m = new ASTMatcher();
 
   static boolean isSimpleComparison(final Expression e) {
-    return e instanceof InfixExpression && ((InfixExpression) e).getOperator().equals(Operator.EQUALS)
-        && BindingUtils.isSimple(((InfixExpression) e).getRightOperand()) || e instanceof MethodInvocation
-        && "equals".equals(((MethodInvocation) e).getName().getIdentifier()) && ((MethodInvocation) e).arguments().size() == 1
+    return e instanceof InfixExpression && ((InfixExpression) e).getOperator().equals(Operator.EQUALS) && BindingUtils.isSimple(((InfixExpression) e).getRightOperand())
+        || e instanceof MethodInvocation && "equals".equals(((MethodInvocation) e).getName().getIdentifier()) && ((MethodInvocation) e).arguments().size() == 1
         && BindingUtils.isSimple((Expression) ((MethodInvocation) e).arguments().get(0));
   }
   static boolean isSimpleComparison(final Expression e, final Expression v) {
-    return e instanceof InfixExpression && ((InfixExpression) e).getOperator().equals(Operator.EQUALS)
-        && getLeftFromComparison(e).subtreeMatch(m, v) && BindingUtils.isSimple(getRightFromComparison(e))
-        || e instanceof MethodInvocation && "equals".equals(((MethodInvocation) e).getName().getIdentifier())
-        && getLeftFromComparison(e).subtreeMatch(m, v) && ((MethodInvocation) e).arguments().size() == 1
-        && BindingUtils.isSimple(getRightFromComparison(e));
+    return e instanceof InfixExpression && ((InfixExpression) e).getOperator().equals(Operator.EQUALS) && getLeftFromComparison(e).subtreeMatch(m, v)
+        && BindingUtils.isSimple(getRightFromComparison(e)) || e instanceof MethodInvocation && "equals".equals(((MethodInvocation) e).getName().getIdentifier())
+        && getLeftFromComparison(e).subtreeMatch(m, v) && ((MethodInvocation) e).arguments().size() == 1 && BindingUtils.isSimple(getRightFromComparison(e));
   }
   static Expression getLeftFromComparison(final Expression e) {
     return e instanceof InfixExpression ? ((InfixExpression) e).getLeftOperand() : !(e instanceof MethodInvocation) ? null
-        : !(((MethodInvocation) e).getExpression() instanceof StringLiteral) ? ((MethodInvocation) e).getExpression()
-            : (Expression) ((MethodInvocation) e).arguments().get(0);
+        : !(((MethodInvocation) e).getExpression() instanceof StringLiteral) ? ((MethodInvocation) e).getExpression() : (Expression) ((MethodInvocation) e).arguments().get(0);
   }
   static Expression getRightFromComparison(final Expression e) {
     return e instanceof InfixExpression ? ((InfixExpression) e).getRightOperand() : !(e instanceof MethodInvocation) ? null
-        : ((MethodInvocation) e).getExpression() instanceof StringLiteral ? ((MethodInvocation) e).getExpression()
-            : (Expression) ((MethodInvocation) e).arguments().get(0);
+        : ((MethodInvocation) e).getExpression() instanceof StringLiteral ? ((MethodInvocation) e).getExpression() : (Expression) ((MethodInvocation) e).arguments().get(0);
   }
   @SuppressWarnings("unchecked") protected void addStatements(final SwitchStatement $, final Statement s) {
     final int i = $.statements().size();
@@ -78,8 +56,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.Operator;
     if (!SwitchBreakReturn.caseEndsWithSequencer($.statements(), i))
       $.statements().add(s.getAST().newBreakStatement());
   }
-  @SuppressWarnings("unchecked") protected @Nullable SwitchStatement buildSwitch(final SwitchStatement $, final Statement s,
-      final Expression v) {
+  @SuppressWarnings("unchecked") protected @Nullable SwitchStatement buildSwitch(final SwitchStatement $, final Statement s, final Expression v) {
     if (s == null)
       return $;
     if (s instanceof IfStatement) {

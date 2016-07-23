@@ -1,8 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.extract.*;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
@@ -11,14 +8,19 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import static il.org.spartan.refactoring.utils.Funcs.*;
+
+import static il.org.spartan.refactoring.utils.extract.*;
+
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+
 /**
  * <code>a ? b : c</code> is the same as <code>(a && b) || (!a && c)</code> if b
  * is false than: <code>(a && false) || (!a && c) == (!a && c)</code> if b is
  * true than: <code>(a && true) || (!a && c) == a || (!a && c) == a || c</code>
  * if c is false than: <code>(a && b) || (!a && false) == (!a && c)</code> if c
- * is true than
- * <code>(a && b) || (!a && true) == (a && b) || (!a) == !a || b</code> keywords
- * <code><b>this</b></code> or <code><b>null</b></code>.
+ * is true than <code>(a && b) || (!a && true) == (a && b) || (!a) == !a ||
+ * b</code> keywords <code><b>this</b></code> or <code><b>null</b></code>.
  *
  * @author Yossi Gil
  * @since 2015-07-20
@@ -32,14 +34,11 @@ public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<Condit
   }
   /**
    * Consider an expression <code>a ? b : c</code>; in a sense it is the same as
-   * <code>(a && b) || (!a && c)</code>
-   * <ol>
-   * <li>if b is false then: <code>(a && false) || (!a && c) == !a && c</code>
-   * <li>if b is true then:
-   * <code>(a && true) || (!a && c) == a || (!a && c) == a || c</code>
-   * <li>if c is false then: <code>(a && b) || (!a && false) == a && b</code>
-   * <li>if c is true then <code>(a && b) || (!a && true) == !a || b</code>
-   * </ol>
+   * <code>(a && b) || (!a && c)</code> <ol> <li>if b is false then: <code>(a &&
+   * false) || (!a && c) == !a && c</code> <li>if b is true then: <code>(a &&
+   * true) || (!a && c) == a || (!a && c) == a || c</code> <li>if c is false
+   * then: <code>(a && b) || (!a && false) == a && b</code> <li>if c is true
+   * then <code>(a && b) || (!a && true) == !a || b</code> </ol>
    */
   private static Expression simplifyTernary(final ConditionalExpression e) {
     return simplifyTernary(core(e.getThenExpression()), core(e.getElseExpression()), duplicate(e.getExpression()));

@@ -20,7 +20,8 @@ public interface Applicator {
   /**
    * Apply trimming repeatedly, until no more changes
    *
-   * @param from what to process
+   * @param from
+   *          what to process
    * @return the trimmed text
    */
   public static String fixedPoint(final String from) {

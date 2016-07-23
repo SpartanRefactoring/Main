@@ -16,8 +16,7 @@ import org.eclipse.jdt.core.dom.*;
  * @author Ori Roth
  * @since 2016/05/16
  */
-@Deprecated public class SwitchDeductStatementsForCase extends ReplaceCurrentNode<SwitchStatement> implements
-Kind.SWITCH_IF_CONVERTION {
+@Deprecated public class SwitchDeductStatementsForCase extends ReplaceCurrentNode<SwitchStatement> implements Kind.SWITCH_IF_CONVERTION {
   @SuppressWarnings({ "javadoc", "unchecked" }) public static boolean containsCaseWithoutSequencer(final SwitchStatement n) {
     boolean ic = false;
     for (final Statement s : (Iterable<Statement>) n.statements())
@@ -31,8 +30,7 @@ Kind.SWITCH_IF_CONVERTION {
       }
     return false;
   }
-  @SuppressWarnings("javadoc") public static void insertUntilSequencer(final List<Statement> f, final List<Statement> ss,
-      final int i, final Scalpel s) {
+  @SuppressWarnings("javadoc") public static void insertUntilSequencer(final List<Statement> f, final List<Statement> ss, final int i, final Scalpel s) {
     int c = i;
     while (c < f.size()) {
       ss.add(s.duplicate(f.get(c)));

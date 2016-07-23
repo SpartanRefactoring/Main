@@ -26,7 +26,8 @@ public class Disable {
     u.accept(new BodyDeclarationVisitor());
   }
   /**
-   * @param n node
+   * @param n
+   *          node
    * @return true iff spartanization is disabled for n
    */
   public boolean check(final ASTNode n) {

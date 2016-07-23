@@ -1,10 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.Restructure.*;
-import static il.org.spartan.refactoring.utils.extract.*;
-import static org.eclipse.jdt.core.dom.ASTNode.*;
 import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;
@@ -12,6 +7,14 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import static il.org.spartan.Utils.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Restructure.*;
+
+import static il.org.spartan.refactoring.utils.extract.*;
+
+import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 /**
  * A number of utility functions common to all wrings.
@@ -21,13 +24,11 @@ import org.eclipse.text.edits.*;
  */
 public enum Wrings {
   ;
-  static void rename(final SimpleName oldName, final SimpleName newName, final MethodDeclaration d, final ASTRewrite r,
-      final TextEditGroup g) {
+  static void rename(final SimpleName oldName, final SimpleName newName, final MethodDeclaration d, final ASTRewrite r, final TextEditGroup g) {
     new LocalInliner(oldName, r, g).byValue(newName)//
-        .inlineInto(Collect.usesOf(oldName).in(d).toArray(new Expression[] {}));
+    .inlineInto(Collect.usesOf(oldName).in(d).toArray(new Expression[] {}));
   }
-  static void addAllReplacing(final List<Statement> to, final List<Statement> from, final Statement substitute,
-      final Statement by1, final List<Statement> by2) {
+  static void addAllReplacing(final List<Statement> to, final List<Statement> from, final Statement substitute, final Statement by1, final List<Statement> by2) {
     for (final Statement s : from)
       if (s != substitute)
         duplicateInto(s, to);

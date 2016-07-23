@@ -1,8 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.idiomatic.*;
-import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.wring.Wrings.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.suggestions.*;
@@ -13,6 +10,11 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import static il.org.spartan.idiomatic.*;
+
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.wring.Wrings.*;
 
 /**
  * @author Artium Nihamkin (original)
@@ -83,8 +85,7 @@ abstract class AbstractRenamePolicy {
   }
   abstract SimpleName innerSelectReturnVariable();
   final SimpleName selectReturnVariable() {
-    return returnStatements == null || localVariables == null || localVariables.isEmpty() || hasDollar(localVariables) ? null
-        : innerSelectReturnVariable();
+    return returnStatements == null || localVariables == null || localVariables.isEmpty() || hasDollar(localVariables) ? null : innerSelectReturnVariable();
   }
 }
 

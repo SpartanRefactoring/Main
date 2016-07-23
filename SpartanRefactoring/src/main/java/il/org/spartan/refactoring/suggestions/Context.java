@@ -1,8 +1,8 @@
 package il.org.spartan.refactoring.suggestions;
 
 import il.org.spartan.*;
+import il.org.spartan.lazy.*;
 import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.spreadsheet.*;
 import il.org.spartan.utils.*;
 
 import java.util.*;
@@ -60,7 +60,7 @@ public class Context implements Selfie<Context>, Cookbook {
   private static ICompilationUnit getCompilationUnit(final IResource r) {
     return getCompilationUnit((IFile) r);
   }
-  private Context() {
+  public Context() {
     // Keep it private
   }
   public List<@NonNull ASTNode> allNodes() {
@@ -372,16 +372,16 @@ public class Context implements Selfie<Context>, Cookbook {
   ).ingredient(currentCompilationUnit);
   @SuppressWarnings("unused")//
   /** the current compilation unit */
-  final @NonNull String description = null;
+  final Cell<String> description = Cookbook.ingredient("");
   final @Nullable Cell<IMarker> marker = Cookbook.ingredient();
-  public final Cell<Range> range = new Recipe<>(() -> {
+  public final Cell<Range> range = Cookbook.cook(() -> {
     try {
-      return new Range(intValue(CHAR_START), intValue(CHAR_END));
+      return new Range(intValue(IMarker.CHAR_START), intValue(IMarker.CHAR_END));
     } catch (final CoreException e) {
       e.printStackTrace();
       return null;
     }
-  }).ingredients(marker);
+  });
 
   /**
    * To be extended by clients
@@ -399,6 +399,10 @@ public class Context implements Selfie<Context>, Cookbook {
     @Override public void preVisit(final ASTNode __) {
       progressMonitor().worked(1);
     }
+  }
+
+  public String description() {
+    return description.get();
   }
 }
 

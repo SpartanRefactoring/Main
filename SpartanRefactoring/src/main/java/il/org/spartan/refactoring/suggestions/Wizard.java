@@ -9,7 +9,8 @@ import org.eclipse.ltk.ui.refactoring.*;
  */
 public class Wizard extends RefactoringWizard {
   /**
-   * @param r the refactoring to be used with this wizard
+   * @param r
+   *          the refactoring to be used with this wizard
    */
   public Wizard(final Refactoring r) {
     super(r, PREVIEW_EXPAND_FIRST_NODE | DIALOG_BASED_USER_INTERFACE);

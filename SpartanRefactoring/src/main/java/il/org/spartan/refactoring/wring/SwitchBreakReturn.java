@@ -12,28 +12,13 @@ import org.eclipse.text.edits.*;
 
 /**
  * A {@link Wring} to replace break statements within a switch with following
- * return: <code>switch(x) {
- *  case 1:
- *      System.out.println("1 detected");
- *      break;
- *  case 2:
- *      System.out.println("2 detected");
- *      break;
- *  default:
- *      System.out.println("wrong number!");
- *      return "failure";
- * }
- * return "success";</code> turns to <code>switch(x) {
- *  case 1:
- *      System.out.println("1 detected");
- *      return "success";
- *  case 2:
- *      System.out.println("2 detected");
- *      return "success";
- *  default:
- *      System.out.println("wrong number!");
- *      return "failure";
- * }</code>
+ * return: <code>switch(x) { case 1: System.out.println("1 detected"); break;
+ * case 2: System.out.println("2 detected"); break; default:
+ * System.out.println("wrong number!"); return "failure"; } return
+ * "success";</code> turns to <code>switch(x) { case 1:
+ * System.out.println("1 detected"); return "success"; case 2:
+ * System.out.println("2 detected"); return "success"; default:
+ * System.out.println("wrong number!"); return "failure"; }</code>
  *
  * @author Ori Roth
  * @since 2016-04-25
@@ -44,15 +29,13 @@ public class SwitchBreakReturn extends Wring.MultipleReplaceToNextStatement<Swit
       return false;
     Statement s = ss.get(++i);
     while (!(s instanceof SwitchCase) && i < ss.size()) {
-      if (s instanceof BreakStatement || s instanceof ReturnStatement || s instanceof ThrowStatement
-          || s instanceof ContinueStatement)
+      if (s instanceof BreakStatement || s instanceof ReturnStatement || s instanceof ThrowStatement || s instanceof ContinueStatement)
         return true;
       s = ss.get(i++);
     }
     return false;
   }
-  @SuppressWarnings("unchecked") @Override ASTRewrite go(final ASTRewrite r, final SwitchStatement s, final Statement next,
-      final TextEditGroup g, final List<ASTNode> bss, final List<ASTNode> crs) {
+  @SuppressWarnings("unchecked") @Override ASTRewrite go(final ASTRewrite r, final SwitchStatement s, final Statement next, final TextEditGroup g, final List<ASTNode> bss, final List<ASTNode> crs) {
     if (!Is.sequencer(next) || next instanceof BreakStatement)
       return null;
     crs.add(next);

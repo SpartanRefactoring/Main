@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.extract.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
@@ -8,6 +7,8 @@ import il.org.spartan.refactoring.utils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import static il.org.spartan.refactoring.utils.extract.*;
 
 /**
  * A {@link Wring} to convert <code>if (x) throw foo(); throw bar();</code> into
@@ -24,8 +25,7 @@ public final class IfThrowNoElseThrow extends Wring.ReplaceToNextStatement<IfSta
     if (e1 == null)
       return null;
     final Expression e2 = getThrowExpression(nextStatement);
-    return e2 == null ? null : Wrings.replaceTwoStatements(r, s,
-        Subject.operand(Subject.pair(e1, e2).toCondition(s.getExpression())).toThrow(), g);
+    return e2 == null ? null : Wrings.replaceTwoStatements(r, s, Subject.operand(Subject.pair(e1, e2).toCondition(s.getExpression())).toThrow(), g);
   }
   static Expression getThrowExpression(final Statement s) {
     final ThrowStatement $ = extract.throwStatement(s);

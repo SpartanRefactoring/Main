@@ -47,8 +47,7 @@ public class ExtractMethod extends Spartanization {
   final int MinimumGroupSizeForExtraction = 3;
   final int MaximunGroupRelativeToMethodSize = 3;
 
-  @Override protected final void fillRewrite(@SuppressWarnings("unused") final ASTRewrite __, final CompilationUnit u,
-      @SuppressWarnings("unused") final IMarker m) {
+  @Override protected final void fillRewrite(@SuppressWarnings("unused") final ASTRewrite __, final CompilationUnit u, @SuppressWarnings("unused") final IMarker m) {
     u.accept(new ASTVisitor() {
       @SuppressWarnings("boxing") @Override public boolean visit(final MethodDeclaration d) {
         final Block b = d.getBody();
@@ -63,8 +62,7 @@ public class ExtractMethod extends Spartanization {
         });
         final List<LinkedList<Integer>> groups = new LinkedList<>();
         for (final LinkedList<Integer> group : ug)
-          if (group.size() >= MinimumGroupSizeForExtraction
-          && group.size() <= d.getBody().statements().size() - MaximunGroupRelativeToMethodSize)
+          if (group.size() >= MinimumGroupSizeForExtraction && group.size() <= d.getBody().statements().size() - MaximunGroupRelativeToMethodSize)
             groups.add(0, group);
         // TODO Ofir: random method name for now - will be changed later on
         for (final LinkedList<Integer> group : groups) {
