@@ -1,11 +1,8 @@
 package il.org.spartan.refactoring.suggestions;
 
-import static il.org.spartan.refactoring.suggestions.DialogBoxes.*;
-import static org.eclipse.core.resources.IMarker.*;
-import static org.eclipse.core.runtime.IProgressMonitor.*;
 import il.org.spartan.*;
-import il.org.spartan.lazy.*;
 import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.spreadsheet.*;
 import il.org.spartan.utils.*;
 
 import java.util.*;
@@ -19,6 +16,9 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.ui.*;
+
+import static il.org.spartan.refactoring.suggestions.DialogBoxes.*;
+import static org.eclipse.core.runtime.IProgressMonitor.*;
 
 /**
  * @author Yossi Gil
@@ -81,7 +81,8 @@ public class Context implements Selfie<Context>, Cookbook {
   /**
    * Compute a value within this context
    *
-   * @param ¢ JD
+   * @param ¢
+   *          JD
    * @return the computed value
    */
   @SuppressWarnings("static-method") public <T> T eval(final Provider<T> ¢) {
@@ -128,7 +129,8 @@ public class Context implements Selfie<Context>, Cookbook {
   /**
    * Evaluate a sequence of commands within this context
    *
-   * @param ¢ JD
+   * @param ¢
+   *          JD
    */
   @SuppressWarnings("static-method") public void run(final Action ¢) {
     ¢.go();
@@ -170,7 +172,8 @@ public class Context implements Selfie<Context>, Cookbook {
     return allCompilationUnits.get();
   }
   /**
-   * @param n the node which needs to be within the range of
+   * @param n
+   *          the node which needs to be within the range of
    *          <code><b>m</b></code>
    * @return True if the node is within range
    */
@@ -192,8 +195,10 @@ public class Context implements Selfie<Context>, Cookbook {
   /**
    * Collects all compilation units from a given starting point
    *
-   * @param u JD
-   * @param $ result
+   * @param u
+   *          JD
+   * @param $
+   *          result
    * @return nothing
    */
   Void collectInto(final ICompilationUnit u, final Collection<ICompilationUnit> $) {
@@ -216,8 +221,9 @@ public class Context implements Selfie<Context>, Cookbook {
    * <code>collectInto</code>
    *
    * @param $
-   * @param rs void TODO Javadoc(2016) automatically generated for returned
-   *          value of method <code>collectInto</code>
+   * @param rs
+   *          void TODO Javadoc(2016) automatically generated for returned value
+   *          of method <code>collectInto</code>
    */
   private Void collectInto(final Collection<ICompilationUnit> $, final IPackageFragmentRoot[] rs) {
     for (final IPackageFragmentRoot r : rs)
@@ -260,8 +266,7 @@ public class Context implements Selfie<Context>, Cookbook {
    */
   boolean isMarked(final ASTNode n) {
     try {
-      return n.getStartPosition() < intValue(IMarker.CHAR_START)
-          || n.getLength() + n.getStartPosition() > intValue(IMarker.CHAR_END);
+      return n.getStartPosition() < intValue(IMarker.CHAR_START) || n.getLength() + n.getStartPosition() > intValue(IMarker.CHAR_END);
     } catch (final CoreException e) {
       e.printStackTrace();
       return true;
@@ -334,7 +339,7 @@ public class Context implements Selfie<Context>, Cookbook {
   final Cell<Integer> countNodes = new Recipe<>(//
       () -> Integer.valueOf(allNodes().size())//
   ).ingredient(allNodes);
-  final Cell<List<ICompilationUnit>> allCompilationUnits = new Recipe<>(//
+  final Cell<List<ICompilationUnit>> allCompilationUnits = new Cookbook.Recipe<>(//
       () -> {
         progressMonitor().beginTask("Collecting all project's compilation units...", 1);
         final List<ICompilationUnit> $ = new ArrayList<>();
@@ -381,7 +386,8 @@ public class Context implements Selfie<Context>, Cookbook {
   /**
    * To be extended by clients
    *
-   * @param <T> JD
+   * @param <T>
+   *          JD
    */
   public abstract class Provider<T> implements Supplier<T> {
     /** the enclosing context */
@@ -398,12 +404,9 @@ public class Context implements Selfie<Context>, Cookbook {
 
 /**
  * @author Yossi Gil
- * @param <Self> Type of current class, keep to the idiom <code>
- *          <pre>
- * class X extends Context&lt;X&gt; {
- * }
- * </pre>
- * </code<
+ * @param <Self>
+ *          Type of current class, keep to the idiom <code> <pre> class X
+ *          extends Context&lt;X&gt; { } </pre> </code<
  * @since 2016`
  */
 interface Selfie<Self extends Selfie<Self>> {

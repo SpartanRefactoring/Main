@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.*;
@@ -9,12 +8,13 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import static il.org.spartan.refactoring.utils.Funcs.*;
+
 /**
  * A {@link Wring} to simplify a conditional expression containing a null this
- * comes in two varieties: <code>unless ? null : v</code> or
- * <code>when ? expression :  null</code>.
- * <p>
- * Which are converted to <code>eval(expression).unless(unless)</code> or
+ * comes in two varieties: <code>unless ? null : v</code> or <code>when ?
+ * expression : null</code>. <p> Which are converted to
+ * <code>eval(expression).unless(unless)</code> or
  * <code>eval(expression).when(when)</code>
  *
  * @author Yossi Gil
@@ -25,8 +25,7 @@ public class TernaryOfNull extends Wring.ReplaceCurrentNode<ConditionalExpressio
     final Expression elze = elze(e);
     final boolean whenForm = Is._null(elze);
     final Expression condition = extract.condition(e);
-    return replacement(whenForm ? il.org.spartan.refactoring.utils.extract.then(e) : elze, whenForm ? condition
-        : logicalNot(condition));
+    return replacement(!whenForm?elze:then(e), whenForm ? condition : logicalNot(condition));
   }
   private static Expression replacement(final Expression eval, final Expression when) {
     return replacement(Subject.operand(eval).toMethodInvocation("eval"), when, logicalNot(when));
@@ -38,7 +37,7 @@ public class TernaryOfNull extends Wring.ReplaceCurrentNode<ConditionalExpressio
     return Subject.operand($).toChainInvocation(Wrings.length(when) <= Wrings.length(unless) ? when : unless);
   }
   @Override boolean scopeIncludes(final ConditionalExpression e) {
-    return Is._null(il.org.spartan.refactoring.utils.extract.then(e)) ^ Is._null(elze(e));
+    return Is._null(elze(e)) ^ Is._null(extract.then(e));
   }
   @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Eliminate nested conditional expression";
