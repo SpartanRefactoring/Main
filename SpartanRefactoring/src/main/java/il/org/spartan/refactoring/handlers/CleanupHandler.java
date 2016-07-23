@@ -76,7 +76,6 @@ public class CleanupHandler extends BaseHandler {
     int $ = 0;
     final Context s = new Context();
     s.setMarker(null);
-    $ += s.countSuggestions();
-    return $;
+    return $ += s.countSuggestions();
   }
 }

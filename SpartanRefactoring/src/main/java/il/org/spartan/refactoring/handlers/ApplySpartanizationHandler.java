@@ -60,8 +60,7 @@ public class ApplySpartanizationHandler extends BaseHandler {
     }
   }
   private static ITextSelection getSelectedText() {
-    final IEditorPart ep = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-    final ISelection s = ep.getEditorSite().getSelectionProvider().getSelection();
-    return (ITextSelection) s;
+    return (ITextSelection) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().getEditorSite()
+        .getSelectionProvider().getSelection();
   }
 }

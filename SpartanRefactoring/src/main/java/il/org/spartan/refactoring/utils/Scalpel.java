@@ -297,9 +297,7 @@ public class Scalpel {
       return null;
     final int from = compilationUnit.getExtendedStartPosition(n);
     final int to = from + compilationUnit.getExtendedLength(n);
-    if (from < 0 || from > to)
-      return null;
-    return new Range(from, from + to);
+    return from < 0 || from > to ? null : new Range(from, from + to);
   }
   boolean shouldMoveCommenToEnd(final Comment c, final boolean isCollapsed) {
     if (!c.isLineComment() || replacement == null || isCollapsed)
