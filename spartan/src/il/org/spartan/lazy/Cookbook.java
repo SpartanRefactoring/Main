@@ -152,7 +152,7 @@ public interface Cookbook {
    * @return Cell<T> TODO Javadoc(2016) automatically generated for returned
    *         value of method <code>traceWizard</code>
    */
-  static <@Nullable T> Cell<T> traceWizard(final Supplier<T> λ) {
+  static <@Nullable T> Cell<T> cook(final Supplier<T> λ) {
     Cell.trace = new HashSet<>();
     λ.get();
     final Cell<?>[] $ = asArray(Cell.trace);
@@ -270,12 +270,15 @@ public interface Cookbook {
       @SuppressWarnings("synthetic-access") @Test public void sessionA05() {
         final Cell<Integer> x = ingredient(Integer.valueOf(13));
         final Cell<Character> f = ingredient(new Character('f'));
-        final Cell<String> fx = traceWizard(() -> "" + f.get() + "(" + x.get() + ")");
+        final Cell<String> fx = cook(() -> "" + f.get() + "(" + x.get() + ")");
         azzert.that(fx.dependents.size(), is(0));
+        azzert.that(f.dependents.size(), is(1));
         azzert.that(((Recipe<String>) fx).prerequisites.size(), is(2));
         azzert.that(fx.get(), is("f(13)"));
+        f.set('g');
         azzert.that(fx.dependents.size(), is(0));
         azzert.that(((Recipe<String>) fx).prerequisites.size(), is(2));
+        azzert.that(fx.get(), is("g(13)"));
       }
     }
 
