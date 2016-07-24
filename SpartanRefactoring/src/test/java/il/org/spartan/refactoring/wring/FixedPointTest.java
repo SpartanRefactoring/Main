@@ -29,7 +29,7 @@ import org.junit.runners.*;
   private static void assertWrappedTranslation(final String from, final String expected, final Wrap w) {
     final String wrap = w.on(from);
     azzert.that(w.off(wrap), is(from));
-    final String unpeeled = Context.fixedPoint(wrap);
+    final String unpeeled = Project.fixedPoint(wrap);
     azzert.that("Nothing done on " + from, wrap, not(unpeeled));
     final String peeled = w.off(unpeeled);
     azzert.that("No similification of " + from, from, not(peeled));

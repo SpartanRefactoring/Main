@@ -17,7 +17,7 @@ public class QuickFixer implements IMarkerResolutionGenerator {
     try {
       final String attribute = (String) m.getAttribute(Builder.SPARTANIZATION_TYPE_KEY);
       azzert.notNull(attribute);
-      final Context $ = new Context();
+      final Project $ = new Project();
       assert $ != null;
       System.err.println(attribute);
       azzert.notNull(attribute, $);

@@ -22,7 +22,7 @@ import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 /**
  * Useful Functions
  */
-public interface Funcs {
+public interface Funcs { 
   /**
    * Make a duplicate, suitable for tree rewrite, of the parameter
    *
@@ -692,9 +692,9 @@ public interface Funcs {
    */
   static Expression peelNegation(final Expression $) {
     return //
-    $ instanceof PrefixExpression ? peelNegation((PrefixExpression) $) //
-        : $ instanceof ParenthesizedExpression ? peelNegation(extract.core($)) //
-            : $ instanceof NumberLiteral ? peelNegation((NumberLiteral) $) : $;
+        $ instanceof PrefixExpression ? peelNegation((PrefixExpression) $) //
+            : $ instanceof ParenthesizedExpression ? peelNegation(extract.core($)) //
+                : $ instanceof NumberLiteral ? peelNegation((NumberLiteral) $) : $;
   }
   static Expression peelNegation(final NumberLiteral $) {
     return !$.getToken().startsWith("-") ? $ : $.getAST().newNumberLiteral($.getToken().substring(1));

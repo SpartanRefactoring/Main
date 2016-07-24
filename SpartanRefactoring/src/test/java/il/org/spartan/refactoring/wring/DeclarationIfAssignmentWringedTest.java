@@ -78,7 +78,7 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     final String s = input;
     final Document d = new Document(Wrap.Statement.on(s));
     final CompilationUnit u = asCompilationUnit();
-    final ASTRewrite r = new Context().createRewrite(u, null);
+    final ASTRewrite r = new Project().createRewrite(u, null);
     final TextEdit e = r.rewriteAST(d, null);
     that(e, notNullValue());
     that(e.apply(d), is(notNullValue()));
@@ -95,7 +95,7 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
   @Test public void hasOpportunity() {
     that(inner.scopeIncludes(asMe()), is(true));
     final CompilationUnit u = asCompilationUnit();
-    that(u.toString(), new Context().collect(u).size(), is(greaterThanOrEqualTo(1)));
+    that(u.toString(), new Project().collect(u).size(), is(greaterThanOrEqualTo(1)));
   }
   @Test public void hasSimplifier() {
     @Nullable final VariableDeclarationFragment asMe = asMe();
@@ -109,7 +109,7 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     that(Wrap.Statement.off(Wrap.Statement.on(expected)), is(expected));
   }
   @Test public void rewriteNotEmpty() throws MalformedTreeException, IllegalArgumentException {
-    that(new Context().createRewrite(asCompilationUnit(), null), notNullValue());
+    that(new Project().createRewrite(asCompilationUnit(), null), notNullValue());
   }
   @Test public void scopeIncludesAsMe() {
     @Nullable final VariableDeclarationFragment asMe = asMe();
@@ -121,7 +121,7 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
       return;
     final Document d = new Document(Wrap.Statement.on(input));
     final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(d);
-    final Document actual = TESTUtils.rewrite(new Context(), u, d);
+    final Document actual = TESTUtils.rewrite(new Project(), u, d);
     final String peeled = Wrap.Statement.off(actual.get());
     if (expected.equals(peeled))
       return;

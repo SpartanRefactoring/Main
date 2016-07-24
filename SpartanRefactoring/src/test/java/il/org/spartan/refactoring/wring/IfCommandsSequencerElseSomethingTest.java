@@ -53,7 +53,7 @@ public class IfCommandsSequencerElseSomethingTest {
     that(u, notNullValue());
     final Document d = new Document(wrap);
     that(d, notNullValue());
-    final Context t = new Context();
+    final Project t = new Project();
     final ASTRewrite r = t.createRewrite(u, null);
     final TextEdit x = r.rewriteAST(d, null);
     x.apply(d);

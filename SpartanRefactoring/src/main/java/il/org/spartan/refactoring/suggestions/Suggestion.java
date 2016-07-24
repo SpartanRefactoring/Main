@@ -1,10 +1,8 @@
-package il.org.spartan.refactoring.utils;
+package il.org.spartan.refactoring.suggestions;
 
-import il.org.spartan.refactoring.suggestions.*;
+import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.*;
 import il.org.spartan.utils.*;
-
-import java.util.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -24,16 +22,10 @@ import static org.eclipse.core.runtime.IProgressMonitor.*;
  * @author Yossi Gil
  * @since 2015-08-28
  */
-@SuppressWarnings("javadoc") public class Suggestion extends Context {
-  /* A factory function that converts a sequence of ASTNodes into a {@link final
-   * Range}
-   *
-   * @param n arbitrary
-   *
-   * @param ns JD */
-  static Range range(final ASTNode n, final ASTNode... ns) {
-    return range(singleNodeRange(n), ns);
-  }
+@SuppressWarnings("javadoc") //
+public class Suggestion extends Context {
+ public Wring<?> wring() { return wring.get(); }
+  public ASTNode node() { return node.get(); }
   static Range range(final Range r, final ASTNode... ns) {
     Range $ = r;
     for (final ASTNode n : ns)
@@ -62,7 +54,7 @@ import static org.eclipse.core.runtime.IProgressMonitor.*;
     return new CompositeChange("" + this, changes.toArray(new Change[changes.size()]));
   }
   /** @return current description */
-  public String description() {
+  @Override public String description() {
     return description;
   }
   /**
@@ -146,7 +138,7 @@ import static org.eclipse.core.runtime.IProgressMonitor.*;
     Source.set(cu.getPath(), textChange.getCurrentDocument(null).get());
     textChange.setTextType("java");
     final SubProgressMonitor spm = new SubProgressMonitor(progressMonitor, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL);
-    textChange.setEdit(starting.vrom((CompilationUnit) Make.COMPILIATION_UNIT.parser(cu).createAST(spm)).with(spm).rewriteAST());
+    textChange.setEdit(from((CompilationUnit) Make.COMPILIATION_UNIT.parser(cu).createAST(spm)).with(spm).rewriteAST());
     boolean $ = false;
     if (textChange.getEdit().getLength() != 0) {
       textChange.perform(progressMonitor());
@@ -164,12 +156,6 @@ import static org.eclipse.core.runtime.IProgressMonitor.*;
   /** @return a textual description of this instance */
   @Override public String toString() {
     return description != null ? description : getClass().getSimpleName();
-  }
-  public Wring<?> wring() {
-    return wring.get();
-  }
-  ASTNode node() {
-    return node.get();
   }
   /**
    * Performs the current Spartanization on the provided compilation unit
@@ -199,10 +185,9 @@ import static org.eclipse.core.runtime.IProgressMonitor.*;
     this.lineNumber = lineNumber;
   }
 
-  private String description;
-  private int lineNumber;
-  private final Cell<ASTNode> node = new Ingredient<ASTNode>();
-  private final Cell<Range> range = new Recipe<Range>(() -> range(node()));
-  private final Cell<Wring<?>> wring = new Ingredient<Wring<?>>();
-  List<Change> changes;
+  final Cell<String>description = ingredient<Sring>null;
+  final Cell<> =  lineNumber;
+  final Cell<ASTNode> node = ingredient<ASTNode>null;
+  final Cell<Range> range = new Recipe<Range>(() -> range(node()));
+  final Cell<Wring<?>> wring = new Ingredient<Wring<?>>();
 }

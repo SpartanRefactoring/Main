@@ -4,7 +4,7 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 
-class Semantics<Extender extends Semantics<?>> extends Context<Semantics<Extender>> {
+class Semantics<Extender extends Semantics<?>> extends Project<Semantics<Extender>> {
   @Override final boolean containedIn(final ASTNode n) {
     return range().includedIn(range(n));
   }

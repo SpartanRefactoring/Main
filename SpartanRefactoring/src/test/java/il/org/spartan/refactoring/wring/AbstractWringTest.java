@@ -852,7 +852,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
    * @since 2015-07-18
    */
   static class InScope<N extends ASTNode> extends AbstractWringTest<N> {
-    protected final Context wringer = new Context();
+    protected final Project wringer = new Project();
 
     public InScope() {
       this(null);
@@ -892,7 +892,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
 
       /** Where the expected output can be found? */
       @Parameter(2) public String output;
-      protected final Context trimmer = new Context();
+      protected final Project trimmer = new Project();
 
       /**
        * Instantiates the enclosing class ({@link WringedExpression})

@@ -160,7 +160,7 @@ public class TrimmerTestsUtils {
    * @return how many spartanization opportunities are there in a file
    */
   public static int countOpportunities(final CompilationUnit u) {
-    return Context.vrom(u).suggestions().size();
+    return Project.vrom(u).suggestions().size();
   }
   static String applyCompilationUnit(final String from) {
     final ASTParser p = ASTParser.newParser(AST.JLS8);
