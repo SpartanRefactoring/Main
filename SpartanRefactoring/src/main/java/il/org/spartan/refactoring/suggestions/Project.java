@@ -2,11 +2,15 @@ package il.org.spartan.refactoring.suggestions;
 
 import static org.eclipse.jdt.core.dom.ASTParser.*;
 import il.org.spartan.*;
+
 import static il.org.spartan.idiomatic.run;
+import static il.org.spartan.idiomatic.take;
+
 import il.org.spartan.lazy.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.utils.Funcs.*;
+import il.org.spartan.refactoring.wring.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.lazy.Cookbook.Ingredient;
 import il.org.spartan.lazy.Cookbook.Cell;
@@ -29,23 +33,6 @@ import org.eclipse.ui.*;
 
 import static il.org.spartan.refactoring.suggestions.DialogBoxes.*;
 import static org.eclipse.core.runtime.IProgressMonitor.*;
-
-import il.org.spartan.lazy.*;
-import static il.org.spartan.lazy.Cookbook.*;
-import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.wring.*;
-import il.org.spartan.utils.*;
-
-import java.util.*;
-
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.annotation.*;
-import org.eclipse.jdt.core.*;
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.ui.*;
-
 import static org.eclipse.jdt.core.JavaCore.*;
 
 /**
@@ -55,6 +42,28 @@ import static org.eclipse.jdt.core.JavaCore.*;
  */
 @SuppressWarnings("javadoc")//
 public class Project implements Selfie<Project>, Cookbook {
+  // @formatter:off
+  public IEditorPart iEditorPart() { return iEditorPart.get(); }
+  public int kind() { return kind.get().intValue(); }
+  public char[] array() { return array.get(); }
+  public IMarker marker() { return marker.get(); }
+  public IProgressMonitor progressMonitor() { return progressMonitor.get(); }
+  public ITextSelection selection() { return selection.get(); }
+  public @Nullable ICompilationUnit currentCompilationUnit() { return currentCompilationUnit.get(); }
+  public @NonNull List<il.org.spartan.refactoring.suggestions.Suggestion> suggestions() { return suggestions.get(); }
+  public String text() { return text.get(); }
+  public ASTNode root() { return root.get(); }
+  public IWorkbenchWindow iWorkbenchWindow() { return iWorkbenchWindow.get(); }
+  public IFile iFile() { return iFile.get(); }
+  public Document document() { return document.get(); }
+  public IWorkbench iWorkench() { return iWorkbench.get(); }
+  public int nodeCount() { return allNodes().size(); }
+  public List<ASTNode> allNodes() { return allNodes.get(); }
+  public Range range() { return range.get(); }
+  public IWorkbench iWorkbench() { return iWorkbench.get(); }
+  public ICompilationUnit iCompilationUnit() { return iCompilationUnit.get(); }
+  // @formatter:on
+
   // Values:
   final Cell<Integer> kind = value(ASTParser.K_COMPILATION_UNIT);
   final Cell<String> description = value("Current project");
@@ -65,16 +74,16 @@ public class Project implements Selfie<Project>, Cookbook {
   final Cell<ITextSelection> selection = input();
   // Lazy values
   final Cell<IProgressMonitor> progressMonitor = from().make(() -> new NullProgressMonitor());
-  final Cell<IWorkbench> iWorkbench = from().make(() -> PlatformUI.getWorkbench());
-  final Cell<IWorkbenchWindow> currentWorkbenchWindow = from().make(() -> iWorkench().getActiveWorkbenchWindow());
+  final Cell<IWorkbench> iWorkbench = from().make(() -> PlatformUI.getWorkbench());     
+  final Cell<?> toolbox = from().make(()->new Toolbox());
   // Recipes:
-  final Cell<ICompilationUnit> currentCompilationUnit = from(currentWorkbenchWindow).make(() -> getCompilationUnit(currentWorkbenchWindow().getActivePage().getActiveEditor()));
-  final Cell<ICompilationUnit> iCompilationUnit = from(iFile).make(() -> iFile() == null ? null : createCompilationUnitFrom(iFile()));
-  final Cell<ICompilationUnit> compilationUnit = from(currentCompilationUnit).make(() -> currentCompilationUnit());
-  final Cell<ASTNode> root = from(iCompilationUnit).make(() -> Make.COMPILIATION_UNIT.parser(compilationUnitInterface()).createAST(progressMonitor()));
+  final Cell<IWorkbenchWindow> iWorkbenchWindow = from(iWorkbench).make(() -> iWorkbench().getActiveWorkbenchWindow());
+  final Cell<ICompilationUnit> currentCompilationUnit = from(iWorkbenchWindow).make(() -> getCompilationUnit(iWorkbenchWindow()).getActivePage().getActiveEditor()));
+  final Cell<ICompilationUnit> iCompilationUnit = from(iFile).make(() -> take(createCompilationUnitFrom(iFile())).unless(iFile() == null));
+  final Cell<ASTNode> root = from(iCompilationUnit).make(() -> Make.COMPILIATION_UNIT.parser(iCompilationUnit()).createAST(progressMonitor()));
   final Cell<String> text = from(document).make(() -> document().get());
   final Cell<char[]> array = cook(() -> text().toCharArray());
-  final Cell<ASTParser> parser = from(array).make(() -> {
+  final Cell<ASTParser> parser = from(array,kind).make(() -> {
     final ASTParser $ = parser();
     $.setSource(array());
     $.setKind(kind());
@@ -90,20 +99,18 @@ public class Project implements Selfie<Project>, Cookbook {
     return $;
   });
   final Cell<Range> range = cook(() -> computeRange());
-  final Cell<?> toolbox = from().make(()->new Toolbox());
-  final Cell<List<Suggestion>> suggestions = from(toolbox,root).make(() -> {
-    progressMonitor().beginTask("Gathering suggestions for ", nodeCount());
+  final Cell<List<Suggestion>> suggestions = from(toolbox, root, allNodes).make(() -> {
+    progressMonitor().beginTask("Searching for suggestions...", nodeCount());
     final List<Suggestion> $ = new ArrayList<>();
-    final Collecting<Suggestion> = new CollectingVisitor<>() {
-      root().accept(toolbox($));
+      root().accept(new TransformAndPrune($){});
       progressMonitor().done();
       return $;
-    });
-  final Cell<List<ICompilationUnit>> allCompilationUnits = cook(//
+});
+  final Cell<List<ICompilationUnit>> allCompilationUnits = from(iCompilationUnit).make(//
       () -> {
         progressMonitor().beginTask("Collecting all project's compilation units...", 1);
         final List<ICompilationUnit> $ = new ArrayList<>();
-        collectInto(compilationUnitInterface(), $);
+        collectInto(iCompilationUnit(), $);
         progressMonitor().done();
         return $;
       });
@@ -124,9 +131,10 @@ public class Project implements Selfie<Project>, Cookbook {
   public static Project inContext() {
     return new Project();
   }
-  private static ICompilationUnit getCompilationUnit(final IEditorPart ep) {
-    return getCompilationUnit((IResource) ep.getEditorInput().getAdapter(IResource.class));
-  }
+final Cell<IEditorPart> iEditorPart = input();
+final Cell<ICompilationUnit> iCompilationUnit = from(iEditorPart).make(()-> 
+    getCompilationUnit((IResource) iEditorPart().getEditorInput().getAdapter(IResource.class))
+  );
   private static ICompilationUnit getCompilationUnit(final IResource r) {
     return getCompilationUnit(r);
   }
@@ -239,11 +247,8 @@ public class Project implements Selfie<Project>, Cookbook {
     $.setResolveBindings(PluginPreferencesResources.getResolveBindingEnabled());
     return $;
   }
-  int kind() {
-    return kind.get().intValue();
-  }
   protected ProgressVisitor computeSuggestions( Wring<N> w){
-    return new CollectingVisitor<Suggestion>() {
+    return new TransformAndPrune<Suggestion>() {
       @Override protected Suggestion transform(ASTNode n) {
         if (w.scopeIncludes(n) || w.nonEligible(n))
           return null;
@@ -299,9 +304,6 @@ public class Project implements Selfie<Project>, Cookbook {
       return announce("Cannot find roots of " + j);
     progressMonitor().worked(1);
     return collectInto($, rs);
-  }
-  @Nullable ICompilationUnit compilationUnitInterface() {
-    return compilationUnit.get();
   }
   final boolean containedIn(final ASTNode n) {
     return range().includedIn(Funcs.range(n));
@@ -388,22 +390,22 @@ public class Project implements Selfie<Project>, Cookbook {
     }
   }
 
-  abstract class CollectingVisitor<T> extends ProgressVisitor {
+  abstract class TransformAndPrune<T> extends ProgressVisitor {
     /** this is where we collect what's {@link #worthy(Object)} */
-    protected final List<T> collection;
+    protected final List<T> pruned;
 
-    CollectingVisitor() {
+    TransformAndPrune() {
       this(new ArrayList<>());
     }
-    CollectingVisitor(List<T> collection) {
-      this.collection = collection;
+    TransformAndPrune(List<T> pruned) {
+      this.pruned = pruned;
     }
     @Override protected final void go(final ASTNode ¢) {
       go(transform(¢));
     }
     private void go(final T ¢) {
       run(() -> {
-        collection.add(¢);
+        pruned.add(¢);
       }).unless(not(worthy(¢)));
     }
     private boolean not(final boolean b) {
@@ -430,23 +432,4 @@ public class Project implements Selfie<Project>, Cookbook {
      */
     protected abstract T transform(ASTNode n);
   }
-
-  // @formatter:off
-  public char[] array() { return array.get(); }
-  public IMarker marker() { return marker.get(); }
-  public IProgressMonitor progressMonitor() { return progressMonitor.get(); }
-  public ITextSelection selection() { return selection.get(); }
-  public @Nullable ICompilationUnit currentCompilationUnit() { return currentCompilationUnit.get(); }
-  public @NonNull List<il.org.spartan.refactoring.suggestions.Suggestion> suggestions() { return suggestions.get(); }
-  public String text() { return text.get(); }
-  public ASTNode root() { return root.get(); }
-  public IWorkbenchWindow currentWorkbenchWindow() { return currentWorkbenchWindow.get(); }
-  public IFile iFile() { return iFile.get(); }
-  public Document document() { return document.get(); }
-  public IWorkbench iWorkench() { return iWorkbench.get(); }
-  public int nodeCount() { return allNodes().size(); }
-  public List<ASTNode> allNodes() { return allNodes.get(); }
-  public Range range() { return range.get(); }
-  // @formatter:on
-
 }
