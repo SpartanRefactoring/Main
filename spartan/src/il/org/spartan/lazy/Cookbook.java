@@ -102,7 +102,7 @@ public interface Cookbook {
    * @return a {@link $$RecipeMaker} which can be used to continue the fluent
    *         API chain.
    */
-  static $$RecipeMaker from(final Cell<?>... ingredients) {
+  public static $$RecipeMaker from(final Cell<?>... ingredients) {
     return new $$RecipeMaker() {
       @Override public <T> Cell<@Nullable T> make(final Supplier<T> s) {
         return new Recipe<>(s).ingredients(ingredients);
@@ -115,7 +115,7 @@ public interface Cookbook {
    * @param <T> JD
    * @return the newly created instance
    */
-  static <T> Cell<T> ingredient() {
+  public static <T> Cell<T> input() {
     @SuppressWarnings("unused") final Ingredient<T> $ = new Ingredient<T>();
     return $;
   }
@@ -128,9 +128,9 @@ public interface Cookbook {
    *
    * @param <T> JD
    * @param t JD
-   * @return the newly created {@link Ingredient} instance
+   * @return the newly created instance of {@link Ingredient}
    */
-  static <@Nullable T> Cell<@Nullable T> ingredient(final T t) {
+  public static <@Nullable T> Cell<@Nullable T> value(final T t) {
     return new Ingredient<T>(t);
   }
   /**
@@ -140,7 +140,7 @@ public interface Cookbook {
    * @param supplier JD
    * @return the newly created {@link Recipe} object
    */
-  static <T> Recipe<@Nullable T> recipe(final Supplier<T> supplier) {
+  public static <T> Recipe<@Nullable T> recipe(final Supplier<T> supplier) {
     return new Recipe<>(supplier);
   }
   /**
@@ -152,7 +152,7 @@ public interface Cookbook {
    * @return Cell<T> TODO Javadoc(2016) automatically generated for returned
    *         value of method <code>traceWizard</code>
    */
-  static <@Nullable T> Cell<T> cook(final Supplier<T> λ) {
+  public static <@Nullable T> Cell<T> cook(final Supplier<T> λ) {
     Cell.trace = new HashSet<>();
     λ.get();
     final Cell<?>[] $ = asArray(Cell.trace);
@@ -186,9 +186,9 @@ public interface Cookbook {
         return wrap.get();
       }
 
-      final Cell<String> begin = ingredient("<");
+      final Cell<String> begin = value("<");
       final Cell<String> end = new Ingredient<String>(">");
-      final Cell<String> text = ingredient("p");
+      final Cell<String> text = value("p");
       final Cell<String> wrap = from(begin, end, text).make(() -> begin() + text() + end());
       final Cell<String> xBoxed = from(wrap).make(() //
           -> "[[" + wrap() + "]]" //
@@ -224,16 +224,16 @@ public interface Cookbook {
         /** Local ingredients and recipes */
         @Test public void sessionA04() {
           azzert.that(zzz.get(), is("zzz"));
-          final Cell<String> foo = ingredient("foo");
-          final Cell<String> ba = ingredient("ba");
+          final Cell<String> foo = value("foo");
+          final Cell<String> ba = value("ba");
           final Cell<String> bazzz = from(ba, zzz).make(() -> ba.get() + zzz.get());
           final Cell<String> foobazzz = from(foo, bazzz).make(() -> foo.get() + bazzz.get());
           azzert.that(foobazzz.get(), is("foobazzz"));
         }
         /** Cloning */
         @Test public void sessionA05() {
-          final Cell<String> foo = ingredient("foo");
-          final Cell<String> ba = ingredient("ba");
+          final Cell<String> foo = value("foo");
+          final Cell<String> ba = value("ba");
           final Cell<String> bazzz = from(ba, zzz).make(() -> ba.get() + zzz.get());
           final Cell<String> foobazzz = from(foo, bazzz).make(() -> foo.get() + bazzz.get());
           final Cell<String> fbz = foobazzz.clone();
@@ -246,36 +246,36 @@ public interface Cookbook {
     @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
     public static class C {
       @Test public void sessionA01() {
-        final Cell<Integer> a = ingredient(Integer.valueOf(12));
+        final Cell<Integer> a = value(Integer.valueOf(12));
         final $$Function<Integer, String> f = compute((final Integer ¢) -> "(" + ¢ + ")");
         final Cell<String> b = f.from(a);
         azzert.that(b.get(), is("(12)"));
       }
       @Test public void sessionA02() {
-        final Cell<Integer> a = ingredient(Integer.valueOf(12));
+        final Cell<Integer> a = value(Integer.valueOf(12));
         final Cell<String> f = compute((final Integer ¢) -> "(" + ¢.toString() + ")").from(a);
         azzert.that(f.get(), is("(12)"));
       }
       @Test public void sessionA03() {
-        final Cell<Integer> a = ingredient(Integer.valueOf(12));
+        final Cell<Integer> a = value(Integer.valueOf(12));
         final Cell<String> f = compute((final Integer ¢) -> "(" + ¢.toString() + ")").from(a);
         azzert.that(f.get(), is("(12)"));
       }
       @Test public void sessionA04() {
-        final Cell<Integer> x = ingredient(Integer.valueOf(13));
-        final Cell<Character> f = ingredient(new Character('f'));
+        final Cell<Integer> x = value(Integer.valueOf(13));
+        final Cell<Character> f = value(new Character('f'));
         final Cell<String> fx = compute((final Integer i, final Character c) -> "" + c + "(" + i + ")").from(x, f);
         azzert.that(fx.get(), is("f(13)"));
       }
       @SuppressWarnings("synthetic-access") @Test public void sessionA05() {
-        final Cell<Integer> x = ingredient(Integer.valueOf(13));
-        final Cell<Character> f = ingredient(new Character('f'));
+        final Cell<Integer> x = value(Integer.valueOf(13));
+        final Cell<Character> f = value(new Character('f'));
         final Cell<String> fx = cook(() -> "" + f.get() + "(" + x.get() + ")");
         azzert.that(fx.dependents.size(), is(0));
         azzert.that(f.dependents.size(), is(1));
         azzert.that(((Recipe<String>) fx).prerequisites.size(), is(2));
         azzert.that(fx.get(), is("f(13)"));
-        f.set('g');
+        f.set(Character.valueOf('g'));
         azzert.that(fx.dependents.size(), is(0));
         azzert.that(((Recipe<String>) fx).prerequisites.size(), is(2));
         azzert.that(fx.get(), is("g(13)"));
