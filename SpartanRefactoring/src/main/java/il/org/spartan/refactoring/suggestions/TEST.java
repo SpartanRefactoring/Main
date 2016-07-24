@@ -36,7 +36,7 @@ import static il.org.spartan.azzert.*;
     final StringBuilder b = new StringBuilder("1");
     new Project() {
       // Not sure why we need this
-    }.set("X").run(() -> {
+    }.set("X").exec(() -> {
       b.append("2");
       b.append("3");
     });

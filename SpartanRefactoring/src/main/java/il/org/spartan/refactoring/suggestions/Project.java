@@ -2,7 +2,7 @@ package il.org.spartan.refactoring.suggestions;
 
 import static org.eclipse.jdt.core.dom.ASTParser.*;
 import il.org.spartan.*;
-import static il.org.spartan.idiomatic.*;
+import static il.org.spartan.idiomatic.run;
 import il.org.spartan.lazy.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.utils.*;
@@ -11,10 +11,7 @@ import il.org.spartan.utils.*;
 import il.org.spartan.lazy.Cookbook.Ingredient;
 import il.org.spartan.lazy.Cookbook.Cell;
 
-import static il.org.spartan.lazy.Cookbook.value;
-import static il.org.spartan.lazy.Cookbook.recipe;
-import static il.org.spartan.lazy.Cookbook.cook;
-import static il.org.spartan.lazy.Cookbook.input;
+import static il.org.spartan.lazy.Cookbook.*;
 
 import static org.eclipse.jdt.core.JavaCore.createCompilationUnitFrom;
 
@@ -33,6 +30,24 @@ import org.eclipse.ui.*;
 import static il.org.spartan.refactoring.suggestions.DialogBoxes.*;
 import static org.eclipse.core.runtime.IProgressMonitor.*;
 
+import il.org.spartan.lazy.*;
+import static il.org.spartan.lazy.Cookbook.*;
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.*;
+import il.org.spartan.utils.*;
+
+import java.util.*;
+
+import org.eclipse.core.resources.*;
+import org.eclipse.core.runtime.*;
+import org.eclipse.jdt.annotation.*;
+import org.eclipse.jdt.core.*;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jface.text.*;
+import org.eclipse.ui.*;
+
+import static org.eclipse.jdt.core.JavaCore.*;
+
 /**
  * @author Yossi Gil
  *
@@ -41,27 +56,28 @@ import static org.eclipse.core.runtime.IProgressMonitor.*;
 @SuppressWarnings("javadoc")//
 public class Project implements Selfie<Project>, Cookbook {
   // Values:
-  final Cell<Integer> kind = value(Integer.valueOf(ASTParser.K_COMPILATION_UNIT));
-  final Cell<String> description = value("");
+  final Cell<Integer> kind = value(ASTParser.K_COMPILATION_UNIT);
+  final Cell<String> description = value("Current project");
   // Inputs:
   final Cell<IFile> iFile = input();
   final Cell<Document> document = input();
   final Cell<IMarker> marker = input();
   final Cell<ITextSelection> selection = input();
-  // First Order Lazy values
-  final Cell<IProgressMonitor> progressMonitor = cook(() -> new NullProgressMonitor());
+  // Lazy values
+  final Cell<IProgressMonitor> progressMonitor = from().make(() -> new NullProgressMonitor());
+  final Cell<IWorkbench> iWorkbench = from().make(() -> PlatformUI.getWorkbench());
+  final Cell<IWorkbenchWindow> currentWorkbenchWindow = from().make(() -> iWorkench().getActiveWorkbenchWindow());
   // Recipes:
-  final Cell<ICompilationUnit> currentCompilationUnit = cook(() -> getCompilationUnit(currentWorkbenchWindow().getActivePage().getActiveEditor()));
-  final Cell<ICompilationUnit> iCompilationUnit = cook(() -> iFile() == null ? null : createCompilationUnitFrom(iFile()));
-  final Cell<ICompilationUnit> compilationUnit = cook(() -> currentCompilationUnit());
-  final Cell<ASTNode> root = cook(() -> Make.COMPILIATION_UNIT.parser(compilationUnitInterface()).createAST(progressMonitor()));
-  final Cell<String> text = cook(() -> document().get());
-  final Cell<IWorkbench> iWorkbench = cook(() -> PlatformUI.getWorkbench());
-  final Cell<IWorkbenchWindow> currentWorkbenchWindow = cook(() -> iWorkench().getActiveWorkbenchWindow());
+  final Cell<ICompilationUnit> currentCompilationUnit = from(currentWorkbenchWindow).make(() -> getCompilationUnit(currentWorkbenchWindow().getActivePage().getActiveEditor()));
+  final Cell<ICompilationUnit> iCompilationUnit = from(iFile).make(() -> iFile() == null ? null : createCompilationUnitFrom(iFile()));
+  final Cell<ICompilationUnit> compilationUnit = from(currentCompilationUnit).make(() -> currentCompilationUnit());
+  final Cell<ASTNode> root = from(iCompilationUnit).make(() -> Make.COMPILIATION_UNIT.parser(compilationUnitInterface()).createAST(progressMonitor()));
+  final Cell<String> text = from(document).make(() -> document().get());
   final Cell<char[]> array = cook(() -> text().toCharArray());
-  final Cell<ASTParser> parser = cook(() -> {
+  final Cell<ASTParser> parser = from(array).make(() -> {
     final ASTParser $ = parser();
-    $.setSource(array.get());
+    $.setSource(array());
+    $.setKind(kind());
     return $;
   });
   final Cell<List<@NonNull ASTNode>> allNodes = cook(() -> {
@@ -74,21 +90,23 @@ public class Project implements Selfie<Project>, Cookbook {
     return $;
   });
   final Cell<Range> range = cook(() -> computeRange());
-  final Cell<List<Suggestion>> suggestions = recipe(() -> {
+  final Cell<?> toolbox = from().make(()->new Toolbox());
+  final Cell<List<Suggestion>> suggestions = from(toolbox,root).make(() -> {
     progressMonitor().beginTask("Gathering suggestions for ", nodeCount());
     final List<Suggestion> $ = new ArrayList<>();
-    root().accept(collector($));
-    progressMonitor().done();
-    return $;
-  });
+    final Collecting<Suggestion> = new CollectingVisitor<>() {
+      root().accept(toolbox($));
+      progressMonitor().done();
+      return $;
+    });
   final Cell<List<ICompilationUnit>> allCompilationUnits = cook(//
-  () -> {
-    progressMonitor().beginTask("Collecting all project's compilation units...", 1);
-    final List<ICompilationUnit> $ = new ArrayList<>();
-    collectInto(compilationUnitInterface(), $);
-    progressMonitor().done();
-    return $;
-  });
+      () -> {
+        progressMonitor().beginTask("Collecting all project's compilation units...", 1);
+        final List<ICompilationUnit> $ = new ArrayList<>();
+        collectInto(compilationUnitInterface(), $);
+        progressMonitor().done();
+        return $;
+      });
 
   private Range computeRange() {
     try {
@@ -159,7 +177,7 @@ public class Project implements Selfie<Project>, Cookbook {
       }
       private <N extends ASTNode> boolean go(final N n) {
         return !applicable(n); // inner.set(u).createScalpel(r,
-                               // null).make(n).go(r, null);
+        // null).make(n).go(r, null);
       }
     });
   }
@@ -169,7 +187,7 @@ public class Project implements Selfie<Project>, Cookbook {
    * @param ¢
    *          JD
    */
-  @SuppressWarnings("static-method") public void run(final Action ¢) {
+  @SuppressWarnings("static-method") public void activate(final Action ¢) {
     ¢.go();
   }
   ProgressVisitor collect(final List<Suggestion> $) {
@@ -191,12 +209,6 @@ public class Project implements Selfie<Project>, Cookbook {
       }
       @Override public boolean visit(final VariableDeclarationFragment ¢) {
         return process(¢);
-      }
-      <N extends ASTNode> boolean process(final N n) {
-        if (inner.scopeIncludes(n) || inner.nonEligible(n))
-          return true;
-        $.add(inner.make(n));
-        return true;
       }
     };
   }
@@ -230,9 +242,13 @@ public class Project implements Selfie<Project>, Cookbook {
   int kind() {
     return kind.get().intValue();
   }
-  protected ProgressVisitor collector(final List<Suggestion> $) {
-    return new ProgressVisitor() {
-      // TODO: make a collector
+  protected ProgressVisitor computeSuggestions( Wring<N> w){
+    return new CollectingVisitor<Suggestion>() {
+      @Override protected Suggestion transform(ASTNode n) {
+        if (w.scopeIncludes(n) || w.nonEligible(n))
+          return null;
+        return w.make(n);
+      }
     };
   }
   /** @return List of all compilation units in the current project */
@@ -288,7 +304,7 @@ public class Project implements Selfie<Project>, Cookbook {
     return compilationUnit.get();
   }
   final boolean containedIn(final ASTNode n) {
-    return range().includedIn(range(n));
+    return range().includedIn(Funcs.range(n));
   }
   final boolean hasSelection() {
     return selection() != null && !selection().isEmpty() && selection().getLength() != 0;
@@ -300,6 +316,7 @@ public class Project implements Selfie<Project>, Cookbook {
    * determine whether a given node is included in the marker
    *
    * @param n
+   *          JD
    * @return boolean whether a parameter is included in the marker
    *
    */
@@ -326,22 +343,9 @@ public class Project implements Selfie<Project>, Cookbook {
   final boolean outOfRange(final ASTNode n) {
     return marker() != null ? !containedIn(n) : !hasSelection() || !notSelected(n);
   }
-  @SuppressWarnings("static-method") void run(final Runnable r) {
+  @SuppressWarnings("static-method") void exec(final Runnable r) {
     r.run();
   }
-
-  /**
-   * Creates a no-binding parser for a given compilation unit
-   *
-   * @param u
-   *          what to parse
-   * @return a newly created parser for the parameter
-   */
-  final Cell<ASTParser> parser1 = cook(() -> {
-    final ASTParser $ = parser();
-    $.setSource(compilationUnit.get());
-    return $;
-  });
 
   /** To be extended by clients */
   public abstract class Action {
@@ -369,50 +373,66 @@ public class Project implements Selfie<Project>, Cookbook {
   }
 
   public abstract class ProgressVisitor extends ASTVisitor {
-    @Override public final boolean preVisit2(ASTNode n) {
+    @Override public final boolean preVisit2(final ASTNode n) {
       return filter(n);
     }
-    public boolean filter(ASTNode n) {
+    public boolean filter(final ASTNode n) {
       return n != null;
     }
     @Override public final void preVisit(final ASTNode n) {
       progressMonitor().worked(1);
       go(n);
     }
-    protected void go(ASTNode n) {
+    protected void go(final ASTNode n) {
       /** empty by default */
     }
   }
 
-  public abstract class CollectingVisitor<T> extends ProgressVisitor {
-    protected List<T> collection = new ArrayList<>();
+  abstract class CollectingVisitor<T> extends ProgressVisitor {
+    /** this is where we collect what's {@link #worthy(Object)} */
+    protected final List<T> collection;
 
-    protected final void go(ASTNode ¢) {
+    CollectingVisitor() {
+      this(new ArrayList<>());
+    }
+    CollectingVisitor(List<T> collection) {
+      this.collection = collection;
+    }
+    @Override protected final void go(final ASTNode ¢) {
       go(transform(¢));
     }
-    /**
-     * TODO Javadoc(2016): automatically generated for method <code>go</code>
-     *
-     * @param ¢$
-     *          void TODO Javadoc(2016) automatically generated for returned
-     *          value of method <code>go</code>
-     */
-    private void go(T ¢) {
-      idiomatic.eval(
-          ()->{collection.add(¢)).unless(not(worthy(¢))); 
-          }
-          );
+    private void go(final T ¢) {
+      run(() -> {
+        collection.add(¢);
+      }).unless(not(worthy(¢)));
     }
-    private boolean not(boolean b) {
+    private boolean not(final boolean b) {
       return !b;
     }
-    private boolean worthy(T $) {
-      return $ != null;
+    /**
+     * determine whether a product of {@link #transform(ASTNode)} is worthy of
+     * collecting
+     *
+     * @param ¢
+     *          JD
+     * @return true iff the parameter is worthy; by default all products which
+     *         are not null are worthy; clients may override.
+     */
+    protected boolean worthy(final T ¢) {
+      return ¢ != null;
     }
+    /**
+     * to be implemented by client: a function to convert nodes
+     *
+     * @param n
+     * @return T TODO Javadoc(2016) automatically generated for returned value
+     *         of method <code>transform</code>
+     */
     protected abstract T transform(ASTNode n);
   }
 
   // @formatter:off
+  public char[] array() { return array.get(); }
   public IMarker marker() { return marker.get(); }
   public IProgressMonitor progressMonitor() { return progressMonitor.get(); }
   public ITextSelection selection() { return selection.get(); }
@@ -428,4 +448,5 @@ public class Project implements Selfie<Project>, Cookbook {
   public List<ASTNode> allNodes() { return allNodes.get(); }
   public Range range() { return range.get(); }
   // @formatter:on
+
 }
