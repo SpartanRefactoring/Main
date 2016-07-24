@@ -147,10 +147,9 @@ public interface Cookbook {
    * TODO Javadoc(2016): automatically generated for method
    * <code>traceWizard</code>
    *
-   * @param <T>
-   * @param λ
-   * @return Cell<T> TODO Javadoc(2016) automatically generated for returned
-   *         value of method <code>traceWizard</code>
+   * @param <T> JD
+   * @param λ JD
+   * @return a newly created {@link Cell}
    */
   public static <@Nullable T> Cell<T> cook(final Supplier<T> λ) {
     Cell.trace = new HashSet<>();
@@ -604,7 +603,7 @@ public interface Cookbook {
           azzert.that(aPower02.version, is(0L));
           azzert.that(a.dependents.size(), is(4)); // d, aPower2, aPower3,
           // aPowe17
-          azzert.assertTrue("", a.dependents.contains(aPower02));
+          azzert.azzert.aye("", a.dependents.contains(aPower02));
           azzert.falze(a.dependents.contains(null));
         }
         @Test public void sessionD11() {
@@ -613,16 +612,16 @@ public interface Cookbook {
           azzert.that(a.version(), is(1L));
         }
         @Test public void sessionD12() {
-          assertTrue(a.dependents.contains(aPower02));
+          azzert.aye(a.dependents.contains(aPower02));
         }
         @Test public void sessionD13() {
-          assertTrue(a.dependents.contains(aPower03));
+          azzert.aye(a.dependents.contains(aPower03));
         }
         @Test public void sessionD14() {
           assertFalse(a.dependents.contains(aPower05));
         }
         @Test public void sessionD15() {
-          assertTrue(a.dependents.contains(aPower17NullSafe));
+          azzert.aye(a.dependents.contains(aPower17NullSafe));
         }
         @Test public void sessionD16() {
           a.set(2);
@@ -789,12 +788,12 @@ public interface Cookbook {
           a.set(11);
           assertFalse(aPower02.updated());
           azzert.that(aPower02.get(), is(121));
-          assertTrue(aPower02.updated());
+          azzert.aye(aPower02.updated());
           aPower02.set(0xDADA);
-          assertTrue(aPower02.updated());
+          azzert.aye(aPower02.updated());
           azzert.that(aPower02.get(), is(0xDADA));
           a.set(0xCAFE);
-          assertTrue(aPower02.updated());
+          azzert.aye(aPower02.updated());
           azzert.that(aPower02.get(), is(0xDADA));
         }
         @Test public void sessionF02() {
@@ -820,7 +819,7 @@ public interface Cookbook {
         @Test public void sessionG01() {
           aPower02.set(0xDADA);
           a.set(0xCAFE);
-          assertTrue(aPower02.updated());
+          azzert.aye(aPower02.updated());
         }
         @SuppressWarnings("synthetic-access") @Test public void sessionG02() {
           aPower02.set(0xDADA);

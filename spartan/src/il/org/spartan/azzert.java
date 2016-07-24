@@ -12,18 +12,6 @@ import org.hamcrest.number.*;
  * @author Yossi Gil
  * @since 2015-07-18
  */
-/**
- * @author Yossi Gil <Yossi.Gil@GMail.COM>
- * @since @{year}-@{month}-@{day}
- */
-/**
- * @author Yossi Gil <Yossi.Gil@GMail.COM>
- * @since @{year}-@{month}-@{day}
- */
-/**
- * @author Yossi Gil <Yossi.Gil@GMail.COM>
- * @since @{year}-@{month}-@{day}
- */
 @SuppressWarnings("javadoc") public class azzert extends org.junit.Assert {
   public static <T> @Nullable Matcher<T> allOf(final java.lang.Iterable<Matcher<? super T>> matchers) {
     return AllOf.<T> allOf(matchers);
@@ -102,10 +90,10 @@ import org.hamcrest.number.*;
   public static void assertFalse(final boolean b) {
     that("", Boolean.valueOf(b), is(Boolean.FALSE));
   }
-  public static void assertTrue(final boolean b) {
+  public static void azzert.aye(final boolean b) {
     that("", Boolean.valueOf(b), is(Boolean.TRUE));
   }
-  public static void assertTrue(final String s, final boolean b) {
+  public static void azzert.aye(final String s, final boolean b) {
     that(s, Boolean.valueOf(b), is(Boolean.TRUE));
   }
   public static <LHS> CombinableMatcher.@Nullable CombinableBothMatcher<LHS> both(final Matcher<? super LHS> matcher) {
@@ -364,7 +352,7 @@ import org.hamcrest.number.*;
     return IsNull.<T> nullValue(type);
   }
   public static void positive(final int i) {
-    assertTrue("", i > 0);
+    azzert.aye("", i > 0);
   }
   public static <T> @Nullable Matcher<T> sameInstance(final T target) {
     return IsSame.<T> sameInstance(target);
@@ -427,6 +415,36 @@ import org.hamcrest.number.*;
       final @Nullable Matcher<? super @Nullable T> matcher) {
     assertThat(reason, actual, matcher);
   }
+  public static Asserter aye(final boolean claim) {
+    return aye("", claim);
+  }
+  public static Asserter aye(final String reason, final boolean claim) {
+    return new Asserter().andAye(claim);
+  }
+  public static Asserter nay(final boolean claim) {
+    return nay("", claim);
+  }
+  public static @NonNull Asserter nay(final String reason, final boolean claim) {
+    return new Asserter().andNay(reason, claim);
+  }
+
+  public static class Asserter {
+    public @NonNull Asserter andAye(final boolean claim) {
+      return andAye("", claim);
+    }
+    public Asserter andNay(final boolean claim) {
+      return andNay("", claim);
+    }
+    public Asserter andNay(final String reason, final boolean claim) {
+      assertFalse(reason, claim);
+      return this;
+    }
+    public Asserter andAye(final String reason, final boolean claim) {
+      azzert.aye(reason, claim);
+      return this;
+    }
+  }
+
   public static <@Nullable T> void that(final @Nullable T actual, final @Nullable Matcher<? super @Nullable T> matcher) {
     assertThat("", actual, matcher);
   }

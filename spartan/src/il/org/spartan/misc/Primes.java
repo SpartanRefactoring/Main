@@ -53,10 +53,10 @@ public class Primes {
       assertFalse(isPrime(-1));
     }
     @Test public void isPrimeOf_2() {
-      assertTrue(isPrime(-2));
+      azzert.aye(isPrime(-2));
     }
     @Test public void isPrimeOf_3() {
-      assertTrue(isPrime(-3));
+      azzert.aye(isPrime(-3));
     }
     @Test public void isPrimeOf_4() {
       assertFalse(isPrime(-4));

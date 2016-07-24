@@ -92,13 +92,13 @@ public enum Iterables {
       assertFalse(contains("Hello", null, "x", "y", null, "z", "w", "u", "v"));
     }
     @Test public void containsSimple() {
-      assertTrue("", contains("Hello", "e"));
+      azzert.aye("", contains("Hello", "e"));
     }
     @Test public void containsTypical() {
-      assertTrue("", contains("Hello", "a", "b", "c", "d", "e", "f"));
+      azzert.aye("", contains("Hello", "a", "b", "c", "d", "e", "f"));
     }
     @Test public void containsWithNulls() {
-      assertTrue("", contains("Hello", null, "a", "b", null, "c", "d", "e", "f", null));
+      azzert.aye("", contains("Hello", null, "a", "b", null, "c", "d", "e", "f", null));
     }
     @Test public void countDoesNotIncludeNull() {
       assertEquals(3, count(as.iterable(null, "One", null, "Two", null, "Three")));
