@@ -1,18 +1,13 @@
 package il.org.spartan.refactoring.suggestions;
 
-
-
 import static il.org.spartan.lazy.Cookbook.cook;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.ui.*;
 
-/**
- * @author Yossi Gil
- *
- * @since 2016`
- */
+/** @author Yossi Gil
+ * @since 2016` */
 @SuppressWarnings("javadoc") public class CurrentCompilationUnit extends Monitored {
   // @formatter:off 
   // VIM: +,/formatter:on/-!sort -u | column -t | sed "s/^/  /"
@@ -39,19 +34,18 @@ import org.eclipse.ui.*;
   final  Cell<IWorkbenchWindow>  activeWorkBenchWindow  =  cook(()->  workbench().getActiveWorkbenchWindow());
   final  Cell<IWorkbench>        workbench              =  cook(()->  PlatformUI.getWorkbench());
   // @formatter:on
-  /**
-   * Inner class, inheriting all of its container's {@link Cell}s, and adding
-   * some of its own.
-   * 
+  /** Inner class, inheriting all of its container's {@link Cell}s, and adding
+   * some of its own. Access to container's c {@link Cells} is through the
+   * {@link #context} variable.
    * @author Yossi Gil
-   * @since 2016`
-   */
-  public abstract class Current extends Described.Monitored {
+   * @since 2016` */
+  public abstract class Context extends Described.Monitored {
     /** instantiates this class */
-    public Current() {
+    public Context() {
       new Described().super();
     }
-    /** the containing object */
-    protected final CurrentCompilationUnit context = CurrentCompilationUnit.this; 
+
+    /** the containing instance */
+    protected final CurrentCompilationUnit context = CurrentCompilationUnit.this;
   }
 }

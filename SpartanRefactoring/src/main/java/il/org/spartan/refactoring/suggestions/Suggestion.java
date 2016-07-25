@@ -185,9 +185,9 @@ public class Suggestion extends Context {
     this.lineNumber = lineNumber;
   }
 
-  final Cell<String>description = ingredient<Sring>null;
-  final Cell<> =  lineNumber;
-  final Cell<ASTNode> node = ingredient<ASTNode>null;
+  final Cell<String>description = ingredient<Sring>(null);
+  final Cell<Integer> lineNumber =  ingredient(lineNumber);
+  final Cell<ASTNode> node = ingredient<ASTNode>(null);
   final Cell<Range> range = new Recipe<Range>(() -> range(node()));
   final Cell<Wring<?>> wring = new Ingredient<Wring<?>>();
 }

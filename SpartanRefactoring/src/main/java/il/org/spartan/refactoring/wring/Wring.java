@@ -76,7 +76,7 @@ public abstract class Wring<N extends ASTNode> extends Suggestion implements Kin
   boolean eligible(final N n) {
     return true;
   }
-  Suggestion make(final N n) {
+  public Suggestion make(final N n) {
     return make(n, null);
   }
   Suggestion make(final N n, @SuppressWarnings("unused") final ExclusionManager __) {
