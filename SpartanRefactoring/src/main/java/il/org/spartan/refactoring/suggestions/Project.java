@@ -31,6 +31,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.ui.*;
 
+import static il.org.spartan.refactoring.spartanizations.DialogBoxes.*;
 import static il.org.spartan.refactoring.suggestions.DialogBoxes.*;
 import static org.eclipse.core.runtime.IProgressMonitor.*;
 import static org.eclipse.jdt.core.JavaCore.*;
@@ -41,54 +42,40 @@ import static org.eclipse.jdt.core.JavaCore.*;
  * @since 2016`
  */
 @SuppressWarnings("javadoc")//
-public class Project implements Selfie<Project>, Cookbook {
+public class Project extends Bench implements Selfie<Project> {
   // @formatter:off
-  public IEditorPart iEditorPart() { return iEditorPart.get(); }
-  public int kind() { return kind.get().intValue(); }
-  public char[] array() { return array.get(); }
-  public IMarker marker() { return marker.get(); }
-  public IProgressMonitor progressMonitor() { return progressMonitor.get(); }
-  public ITextSelection selection() { return selection.get(); }
-  public @Nullable ICompilationUnit currentCompilationUnit() { return currentCompilationUnit.get(); }
-  public @NonNull List<il.org.spartan.refactoring.suggestions.Suggestion> suggestions() { return suggestions.get(); }
-  public String text() { return text.get(); }
   public ASTNode root() { return root.get(); }
-  public IWorkbenchWindow iWorkbenchWindow() { return iWorkbenchWindow.get(); }
-  public IFile iFile() { return iFile.get(); }
+  public char[] array() { return array.get(); }
   public Document document() { return document.get(); }
-  public IWorkbench iWorkench() { return iWorkbench.get(); }
+  public IMarker marker() { return marker.get(); }
+  public int kind() { return kind.get().intValue(); }
   public int nodeCount() { return allNodes().size(); }
+  public ITextSelection selection() { return selection.get(); }
   public List<ASTNode> allNodes() { return allNodes.get(); }
+  public List<Suggestion> suggestions() { return suggestions.get(); }
   public Range range() { return range.get(); }
-  public IWorkbench iWorkbench() { return iWorkbench.get(); }
-  public ICompilationUnit iCompilationUnit() { return iCompilationUnit.get(); }
+  public String text() { return text.get(); }
   // @formatter:on
-
   // Values:
   final Cell<Integer> kind = value(ASTParser.K_COMPILATION_UNIT);
   final Cell<String> description = value("Current project");
   // Inputs:
-  final Cell<IFile> iFile = input();
   final Cell<Document> document = input();
   final Cell<IMarker> marker = input();
   final Cell<ITextSelection> selection = input();
   // Lazy values
-  final Cell<IProgressMonitor> progressMonitor = from().make(() -> new NullProgressMonitor());
-  final Cell<IWorkbench> iWorkbench = from().make(() -> PlatformUI.getWorkbench());     
-  final Cell<?> toolbox = from().make(()->new Toolbox());
+  final Cell<?> toolbox = from().make(() -> new Toolbox());
   // Recipes:
-  final Cell<IWorkbenchWindow> iWorkbenchWindow = from(iWorkbench).make(() -> iWorkbench().getActiveWorkbenchWindow());
-  final Cell<ICompilationUnit> currentCompilationUnit = from(iWorkbenchWindow).make(() -> getCompilationUnit(iWorkbenchWindow()).getActivePage().getActiveEditor()));
-  final Cell<ICompilationUnit> iCompilationUnit = from(iFile).make(() -> take(createCompilationUnitFrom(iFile())).unless(iFile() == null));
-  final Cell<ASTNode> root = from(iCompilationUnit).make(() -> Make.COMPILIATION_UNIT.parser(iCompilationUnit()).createAST(progressMonitor()));
-  final Cell<String> text = from(document).make(() -> document().get());
+  final Cell<ASTNode> root = cook(() -> Make.COMPILIATION_UNIT.parser(compilationUnit()).createAST(progressMonitor()));
+  final Cell<String> text = cook(() -> document().get());
   final Cell<char[]> array = cook(() -> text().toCharArray());
-  final Cell<ASTParser> parser = from(array,kind).make(() -> {
-    final ASTParser $ = parser();
-    $.setSource(array());
+  final Cell<ASTParser> parser = from(array, kind).make(() -> {
+    final ASTParser $ = ASTParser.newParser(AST.JLS8);
     $.setKind(kind());
+    $.setResolveBindings(PluginPreferencesResources.getResolveBindingEnabled());
+    $.setSource(array());
     return $;
-  });
+  }); 
   final Cell<List<@NonNull ASTNode>> allNodes = cook(() -> {
     final List<@NonNull ASTNode> $ = new ArrayList<>();
     root().accept(new ProgressVisitor() {
@@ -102,18 +89,15 @@ public class Project implements Selfie<Project>, Cookbook {
   final Cell<List<Suggestion>> suggestions = from(toolbox, root, allNodes).make(() -> {
     progressMonitor().beginTask("Searching for suggestions...", nodeCount());
     final List<Suggestion> $ = new ArrayList<>();
-      root().accept(new TransformAndPrune($){});
-      progressMonitor().done();
-      return $;
-});
-  final Cell<List<ICompilationUnit>> allCompilationUnits = from(iCompilationUnit).make(//
-      () -> {
-        progressMonitor().beginTask("Collecting all project's compilation units...", 1);
-        final List<ICompilationUnit> $ = new ArrayList<>();
-        collectInto(iCompilationUnit(), $);
-        progressMonitor().done();
-        return $;
-      });
+    root().accept(new TransformAndPrune<Suggestion>($) {
+      @Override protected Suggestion transform(ASTNode n) {
+        return null;
+      }
+    });
+    progressMonitor().done();
+    return $;
+  });
+
 
   private Range computeRange() {
     try {
@@ -131,14 +115,8 @@ public class Project implements Selfie<Project>, Cookbook {
   public static Project inContext() {
     return new Project();
   }
-final Cell<IEditorPart> iEditorPart = input();
-final Cell<ICompilationUnit> iCompilationUnit = from(iEditorPart).make(()-> 
-    getCompilationUnit((IResource) iEditorPart().getEditorInput().getAdapter(IResource.class))
-  );
-  private static ICompilationUnit getCompilationUnit(final IResource r) {
-    return getCompilationUnit(r);
-  }
-  public Project() {
+
+  private Project() {
     // Keep it private
   }
   /**
@@ -220,34 +198,8 @@ final Cell<ICompilationUnit> iCompilationUnit = from(iEditorPart).make(()->
       }
     };
   }
-  private Void collectInto(final Collection<ICompilationUnit> $, final IPackageFragmentRoot[] rs) {
-    for (final IPackageFragmentRoot r : rs)
-      try {
-        progressMonitor().worked(1);
-        if (r.getKind() != IPackageFragmentRoot.K_SOURCE)
-          continue;
-        progressMonitor().worked(1);
-        for (final IJavaElement e : r.getChildren()) {
-          progressMonitor().worked(1);
-          if (e.getElementType() != IJavaElement.PACKAGE_FRAGMENT)
-            break;
-          $.addAll(as.list(((IPackageFragment) e).getCompilationUnits()));
-          progressMonitor().worked(1);
-        }
-        progressMonitor().worked(1);
-      } catch (final JavaModelException x) {
-        x.printStackTrace();
-        continue;
-      }
-    return null;
-  }
-  private ASTParser parser() {
-    final ASTParser $ = ASTParser.newParser(AST.JLS8);
-    $.setKind(kind());
-    $.setResolveBindings(PluginPreferencesResources.getResolveBindingEnabled());
-    return $;
-  }
-  protected ProgressVisitor computeSuggestions( Wring<N> w){
+
+  protected ProgressVisitor computeSuggestions(Wring<N> w) {
     return new TransformAndPrune<Suggestion>() {
       @Override protected Suggestion transform(ASTNode n) {
         if (w.scopeIncludes(n) || w.nonEligible(n))
@@ -280,6 +232,31 @@ final Cell<ICompilationUnit> iCompilationUnit = from(iEditorPart).make(()->
     rewrite($);
     progressMonitor().done();
     return $;
+  }
+  private static Void getCompilationUnits() throws JavaModelException {
+    if (super.compilationUnit() == null)
+      return announce("Cannot find current compilation unit " + u);
+    final IJavaProject javaProject = u.getJavaProject();
+    if (javaProject() == null)
+      return announce("Cannot find project of " + u);
+    final IPackageFragmentRoot[] rs = javaProject.getPackageFragmentRoots();
+    if (rs == null)
+      return announce("Cannot find roots of " + javaProject);
+    for (final IPackageFragmentRoot r : rs) {
+      pm.worked(1);
+      if (r.getKind() != IPackageFragmentRoot.K_SOURCE)
+        break;
+      pm.worked(1);
+      for (final IJavaElement e : r.getChildren()) {
+        pm.worked(1);
+        if (e.getElementType() != IJavaElement.PACKAGE_FRAGMENT)
+          break;
+        $.addAll(Arrays.asList(((IPackageFragment) e).getCompilationUnits()));
+        pm.worked(1);
+      }
+      pm.worked(1);
+    }
+    return null;
   }
   /**
    * Collects all compilation units from a given starting point
@@ -424,7 +401,7 @@ final Cell<ICompilationUnit> iCompilationUnit = from(iEditorPart).make(()->
       return ¢ != null;
     }
     /**
-     * to be implemented by client: a function to convert nodes
+     * to be implemented by client: a function to convert nodes to a given type.
      *
      * @param n
      * @return T TODO Javadoc(2016) automatically generated for returned value
