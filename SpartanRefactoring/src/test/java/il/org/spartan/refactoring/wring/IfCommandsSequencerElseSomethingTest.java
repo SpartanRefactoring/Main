@@ -3,9 +3,12 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+
 import static il.org.spartan.refactoring.utils.Funcs.*;
+
 import static org.hamcrest.text.IsEqualIgnoringWhiteSpace.*;
 import il.org.spartan.*;
+import il.org.spartan.refactoring.contexts.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.suggestions.*;
 import il.org.spartan.refactoring.utils.*;

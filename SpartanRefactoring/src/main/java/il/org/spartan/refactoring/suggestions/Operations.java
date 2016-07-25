@@ -1,5 +1,6 @@
 package il.org.spartan.refactoring.suggestions;
 
+import il.org.spartan.refactoring.contexts.*;
 import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;

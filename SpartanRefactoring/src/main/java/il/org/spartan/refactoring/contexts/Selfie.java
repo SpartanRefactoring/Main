@@ -1,4 +1,4 @@
-package il.org.spartan.refactoring.suggestions;
+package il.org.spartan.refactoring.contexts;
 
 /**
  * @author Yossi Gil

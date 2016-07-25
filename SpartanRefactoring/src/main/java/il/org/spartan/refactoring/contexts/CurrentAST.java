@@ -1,27 +1,14 @@
-package il.org.spartan.refactoring.suggestions;
+package il.org.spartan.refactoring.contexts;
 
-import static org.eclipse.jdt.core.dom.ASTParser.*;
 import il.org.spartan.*;
-import il.org.spartan.idiomatic.Producer;
-
-import static il.org.spartan.idiomatic.run;
-import static il.org.spartan.idiomatic.take;
-import static il.org.spartan.idiomatic.katching;
-
 import il.org.spartan.lazy.*;
+import il.org.spartan.lazy.Cookbook.*;
+import static il.org.spartan.lazy.Cookbook.*;
 import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.suggestions.*;
 import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.utils.Funcs.*;
 import il.org.spartan.refactoring.wring.*;
 import il.org.spartan.utils.*;
-import il.org.spartan.lazy.Cookbook.Ingredient;
-import il.org.spartan.lazy.Cookbook.Cell;
-
-import static il.org.spartan.lazy.Cookbook.*;
-
-import static il.org.spartan.idiomatic.*;
-
-import static org.eclipse.jdt.core.JavaCore.createCompilationUnitFrom;
 
 import java.util.*;
 import java.util.function.*;
@@ -29,54 +16,44 @@ import java.util.function.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.annotation.*;
-import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
-import org.eclipse.ui.*;
 
-import static il.org.spartan.refactoring.suggestions.DialogBoxes.*;
-import static org.eclipse.core.runtime.IProgressMonitor.*;
-import static org.eclipse.jdt.core.JavaCore.*;
+import static il.org.spartan.idiomatic.*;
 
 /** @author Yossi Gil
  * @since 2016` */
 @SuppressWarnings("javadoc")//
 public class CurrentAST extends CurrentCompilationUnit.Context implements Selfie<CurrentAST> {
-  /** factory method for this class,
-   * @return a new empty instance */
-  public static CurrentAST inContext() {
-    return new CurrentAST();
+  /** instantiates this class */
+  public CurrentAST(CurrentCompilationUnit context) {
+    context.super();
   }
-  public  List<ASTNode>     allNodes()     {  return  allNodes.get();         }
-  public  char[]            array()        {  return  array.get();            }
   /** Returns an exact copy of this instance
    * @return Created clone object */
-  @SuppressWarnings("unchecked") @Override public CurrentAST clone() {
+  @Override public CurrentAST clone() {
     try {
       return (CurrentAST) super.clone();
     } catch (final CloneNotSupportedException e) {
       throw new RuntimeException(e);
     }
   }
-  public  Document          document()     {  return  document.get();         }
-  /** Compute a value within this context
-   * @param ¢ JD
-   * @return the computed value */
-  @SuppressWarnings("static-method") public <T> T eval(final Provider<T> ¢) {
-    return ¢.get();
-  }
-  public  int               kind()         {  return  kind.get().intValue();  }
-  public  IMarker           marker()       {  return  marker.get();           }
-  public  int               nodeCount()    {  return  allNodes().size();      }
-  public  Range             range()        {  return  range.get();            }
   // Getters of all cells, which provide access to their cached or recomputed 
-  // content; @formatter:off
+  // content 
   //
-  // Sort alphabetically and placed columns; VIM: +,/^\s*\/\//-!sort -u | column -t | sed "s/^/  /"
+  // Sort alphabetically and placed in columns; 
+  // VIM: /^\s*[^\/ \t][^\/ \t]/;/^\s*\/\//-!sort -u | column -t | sed "s/^/  /"
+  // @formatter:off
   public  ASTNode           root()         {  return  root.get();             }
+  public  char[]            array()        {  return  array.get();            }
+  public  Document          document()     {  return  document.get();         }
+  public  IMarker           marker()       {  return  marker.get();           }
+  public  int               kind()         {  return  kind.get().intValue();  }
+  public  int               nodeCount()    {  return  allNodes().size();      }
   public  ITextSelection    selection()    {  return  selection.get();        }
+  public  List<ASTNode>     allNodes()     {  return  allNodes.get();         }
   public  List<Suggestion>  suggestions()  {  return  suggestions.get();      }
+  public  Range             range()        {  return  range.get();            }
   public  String            text()         {  return  text.get();             }
   // Auxiliary function 
   private Range computeRange() {
@@ -132,6 +109,7 @@ boolean isSelected(final int offset) {
   final boolean outOfRange(final ASTNode n) {
     return marker() != null ? !containedIn(n) : !hasSelection() || !notSelected(n);
   }
+  final Cell<Document> document = cook(()->new Document(text()));
   final Cell<List<@NonNull ASTNode>> allNodes = cook(() -> {
     final List<@NonNull ASTNode> $ = new ArrayList<>();
     root().accept(new ProgressVisitor() {
@@ -141,15 +119,19 @@ boolean isSelected(final int offset) {
     });
     return $;
   });
-  final  Cell<char[]>   array  =  cook(()->  text().toCharArray());
-  final  Cell<Document>  document  =  cook(()->  new  Document(text()));
   //
-  // The cells themselves;  @formatter:off
+  // The cells themselves;  
+  // @formatter:off
   // Sort alphabetically and placed columns; VIM: +,/^\s*\/\//-!sort -u | column -t | sed "s/^/  /"
   final Cell<Integer> kind = value(ASTParser.K_COMPILATION_UNIT);
   // Inputs:
   // Sort alphabetically and placed columns; VIM: +,/^\s*\/\//-!sort -u | column -t | sed "s/^/  /"
+  final  Cell<char[]>   array  =  cook(()->  text().toCharArray());
   final  Cell<IMarker>         marker     =  input();
+  final  Cell<ITextSelection>  selection  =  input();
+  final Cell<Range> range = cook(() -> computeRange());
+  // @formatter:on
+
   // More complex recipes:
   final Cell<ASTParser> parser = from(array, kind).make(() -> {
     final ASTParser $ = ASTParser.newParser(AST.JLS8);
@@ -158,17 +140,19 @@ boolean isSelected(final int offset) {
     $.setSource(array());
     return $;
   });
-  final Cell<Range> range = cook(() -> computeRange());
   // Simple recipes:
   // Sort alphabetically and placed columns; VIM: +,/^\s*\/\//-!sort -u | column -t | sed "s/^/  /"
   final  Cell<ASTNode>  root   =  cook(()->  Make.COMPILIATION_UNIT.parser(context.compilationUnit()).createAST(progressMonitor()));
-  final  Cell<ITextSelection>  selection  =  input();
   final Cell<List<Suggestion>> suggestions = from(root, allNodes).make(() -> {
     begin("Searching for suggestions...", nodeCount());
     final List<Suggestion> $ = new ArrayList<>();
     root().accept(new TransformAndPrune<Suggestion>($) {
       /** Simply return null by default */
-      @Override protected Suggestion transform(@SuppressWarnings("unused") final ASTNode __) {
+      /**
+       * @param n 
+       * @return {@link Suggestion} made for this node. 
+       */
+      @Override protected Suggestion transform(final ASTNode n) {
         return null;
       }
     });
@@ -204,7 +188,6 @@ boolean isSelected(final int offset) {
     }
     protected abstract void go(final ASTNode n);
   }
-
 
   abstract class TransformAndPrune<T> extends ProgressVisitor {
     TransformAndPrune() {
@@ -242,3 +225,5 @@ boolean isSelected(final int offset) {
     protected final List<T> pruned;
   }
 }
+
+

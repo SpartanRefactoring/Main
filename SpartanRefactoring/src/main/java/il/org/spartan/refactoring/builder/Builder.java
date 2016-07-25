@@ -1,7 +1,8 @@
 package il.org.spartan.refactoring.builder;
 
+import il.org.spartan.refactoring.contexts.*;
+import il.org.spartan.refactoring.contexts.CurrentAST.*;
 import il.org.spartan.refactoring.suggestions.*;
-import il.org.spartan.refactoring.suggestions.CurrentAST.Action;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.*;
 
@@ -13,7 +14,7 @@ import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.suggestions.CurrentAST.*;
+import static il.org.spartan.refactoring.contexts.CurrentAST.*;
 
 /**
  * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>

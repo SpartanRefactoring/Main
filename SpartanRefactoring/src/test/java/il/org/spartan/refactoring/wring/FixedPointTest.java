@@ -4,6 +4,7 @@ import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import il.org.spartan.*;
+import il.org.spartan.refactoring.contexts.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.suggestions.*;
 

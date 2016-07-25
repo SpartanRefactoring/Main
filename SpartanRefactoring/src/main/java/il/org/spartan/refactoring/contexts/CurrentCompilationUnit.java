@@ -1,6 +1,7 @@
-package il.org.spartan.refactoring.suggestions;
+package il.org.spartan.refactoring.contexts;
 
 import static il.org.spartan.lazy.Cookbook.cook;
+
 
 import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.*;

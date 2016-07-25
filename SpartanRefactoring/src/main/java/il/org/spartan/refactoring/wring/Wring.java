@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import il.org.spartan.misc.*;
+import il.org.spartan.refactoring.contexts.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.suggestions.*;
 import il.org.spartan.refactoring.utils.*;
@@ -14,6 +15,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
+
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
