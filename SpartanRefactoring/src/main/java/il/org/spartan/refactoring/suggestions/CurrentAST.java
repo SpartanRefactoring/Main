@@ -2,9 +2,11 @@ package il.org.spartan.refactoring.suggestions;
 
 import static org.eclipse.jdt.core.dom.ASTParser.*;
 import il.org.spartan.*;
+import il.org.spartan.idiomatic.Producer;
 
 import static il.org.spartan.idiomatic.run;
 import static il.org.spartan.idiomatic.take;
+import static il.org.spartan.idiomatic.Producer.katching;
 
 import il.org.spartan.lazy.*;
 import il.org.spartan.refactoring.preferences.*;
@@ -16,6 +18,8 @@ import il.org.spartan.lazy.Cookbook.Ingredient;
 import il.org.spartan.lazy.Cookbook.Cell;
 
 import static il.org.spartan.lazy.Cookbook.*;
+
+import static il.org.spartan.idiomatic.*;
 
 import static org.eclipse.jdt.core.JavaCore.createCompilationUnitFrom;
 
@@ -31,7 +35,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.ui.*;
 
-import static il.org.spartan.refactoring.spartanizations.DialogBoxes.*;
 import static il.org.spartan.refactoring.suggestions.DialogBoxes.*;
 import static org.eclipse.core.runtime.IProgressMonitor.*;
 import static org.eclipse.jdt.core.JavaCore.*;
@@ -42,7 +45,7 @@ import static org.eclipse.jdt.core.JavaCore.*;
  * @since 2016`
  */
 @SuppressWarnings("javadoc")//
-public class Project extends Bench implements Selfie<Project> {
+public class CurrentAST extends CurrentCompilationUnit implements Selfie<CurrentAST> {
   // @formatter:off
   public ASTNode root() { return root.get(); }
   public char[] array() { return array.get(); }
@@ -56,9 +59,9 @@ public class Project extends Bench implements Selfie<Project> {
   public Range range() { return range.get(); }
   public String text() { return text.get(); }
   // @formatter:on
+
   // Values:
   final Cell<Integer> kind = value(ASTParser.K_COMPILATION_UNIT);
-  final Cell<String> description = value("Current project");
   // Inputs:
   final Cell<Document> document = input();
   final Cell<IMarker> marker = input();
@@ -87,36 +90,32 @@ public class Project extends Bench implements Selfie<Project> {
   });
   final Cell<Range> range = cook(() -> computeRange());
   final Cell<List<Suggestion>> suggestions = from(toolbox, root, allNodes).make(() -> {
-    progressMonitor().beginTask("Searching for suggestions...", nodeCount());
+    begin("Searching for suggestions...", nodeCount());
     final List<Suggestion> $ = new ArrayList<>();
     root().accept(new TransformAndPrune<Suggestion>($) {
-      @Override protected Suggestion transform(ASTNode n) {
+      /** Simply return null by default */
+      @Override protected Suggestion transform(@SuppressWarnings("unused") ASTNode __) {
         return null;
       }
     });
-    progressMonitor().done();
+    end();
     return $;
   });
 
 
   private Range computeRange() {
-    try {
-      return new Range(intValue(IMarker.CHAR_START), intValue(IMarker.CHAR_END));
-    } catch (final CoreException x) {
-      x.printStackTrace();
-      return null;
-    }
+    return katching<Range>(()-> new Range(intValue(IMarker.CHAR_START), intValue(IMarker.CHAR_END)));
   }
   /**
    * factory method for this class,
    *
    * @return a new empty instance
    */
-  public static Project inContext() {
-    return new Project();
+  public static CurrentAST inContext() {
+    return new CurrentAST();
   }
 
-  private Project() {
+  private CurrentAST() {
     // Keep it private
   }
   /**
@@ -124,9 +123,9 @@ public class Project extends Bench implements Selfie<Project> {
    *
    * @return Created clone object
    */
-  @SuppressWarnings("unchecked") @Override public Project clone() {
+  @SuppressWarnings("unchecked") @Override public CurrentAST clone() {
     try {
-      return (Project) super.clone();
+      return (CurrentAST) super.clone();
     } catch (final CloneNotSupportedException e) {
       throw new RuntimeException(e);
     }
@@ -208,10 +207,6 @@ public class Project extends Bench implements Selfie<Project> {
       }
     };
   }
-  /** @return List of all compilation units in the current project */
-  List<ICompilationUnit> allCompilationUnits() {
-    return allCompilationUnits.get();
-  }
   /**
    * @param n
    *          the node which needs to be within the range of
@@ -233,7 +228,7 @@ public class Project extends Bench implements Selfie<Project> {
     progressMonitor().done();
     return $;
   }
-  private static Void getCompilationUnits() throws JavaModelException {
+  private Void getCompilationUnits() throws JavaModelException {
     if (super.compilationUnit() == null)
       return announce("Cannot find current compilation unit " + u);
     final IJavaProject javaProject = u.getJavaProject();
@@ -243,18 +238,18 @@ public class Project extends Bench implements Selfie<Project> {
     if (rs == null)
       return announce("Cannot find roots of " + javaProject);
     for (final IPackageFragmentRoot r : rs) {
-      pm.worked(1);
+      work();
       if (r.getKind() != IPackageFragmentRoot.K_SOURCE)
         break;
-      pm.worked(1);
+      work();
       for (final IJavaElement e : r.getChildren()) {
-        pm.worked(1);
+        work();
         if (e.getElementType() != IJavaElement.PACKAGE_FRAGMENT)
           break;
         $.addAll(Arrays.asList(((IPackageFragment) e).getCompilationUnits()));
-        pm.worked(1);
+        work();
       }
-      pm.worked(1);
+      work();
     }
     return null;
   }
@@ -336,7 +331,7 @@ public class Project extends Bench implements Selfie<Project> {
     protected abstract void go();
 
     /** the enclosing context */
-    public final @NonNull Project context = Project.this;
+    public final @NonNull CurrentAST context = CurrentAST.this;
   }
 
   /**
@@ -347,7 +342,7 @@ public class Project extends Bench implements Selfie<Project> {
    */
   public abstract class Provider<T> implements Supplier<T> {
     /** the enclosing context */
-    public final @NonNull Project context = Project.this;
+    public final @NonNull CurrentAST context = CurrentAST.this;
     // to be filled with clients
   }
 

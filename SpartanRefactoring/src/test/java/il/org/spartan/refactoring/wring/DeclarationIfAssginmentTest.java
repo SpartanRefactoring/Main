@@ -114,7 +114,7 @@ public class DeclarationIfAssginmentTest {
       final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(d);
       final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
       azzert.that(f, notNullValue());
-      final ASTRewrite r = new Project().createRewrite(u, null);
+      final ASTRewrite r = new CurrentAST().createRewrite(u, null);
       final TextEdit e = r.rewriteAST(d, null);
       azzert.that(e.getChildrenSize(), greaterThan(0));
       final UndoEdit b = e.apply(d);
@@ -136,7 +136,7 @@ public class DeclarationIfAssginmentTest {
       final String expected = "int a = b ? 3 : 2;";
       final Document d = new Document(Wrap.Statement.on(from));
       final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(d);
-      final Document actual = TESTUtils.rewrite(new Project(), u, d);
+      final Document actual = TESTUtils.rewrite(new CurrentAST(), u, d);
       final String peeled = Wrap.Statement.off(actual.get());
       if (expected.equals(peeled))
         return;

@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.builder;
 
 import il.org.spartan.refactoring.suggestions.*;
-import il.org.spartan.refactoring.suggestions.Project.Action;
+import il.org.spartan.refactoring.suggestions.CurrentAST.Action;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.*;
 
@@ -13,7 +13,7 @@ import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.suggestions.Project.*;
+import static il.org.spartan.refactoring.suggestions.CurrentAST.*;
 
 /**
  * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
@@ -57,7 +57,7 @@ public class Builder extends IncrementalProjectBuilder {
    *          of method <code>build</code>
    */
   private void build(final int kind, final IProgressMonitor m) {
-    inContext().set(m).new Action() {
+    inContext().set(m).new Current() {
       @Override protected void go() {
         context.progressMonitor().beginTask("Searching for spartanization suggestions", IProgressMonitor.UNKNOWN);
         if (kind == FULL_BUILD)
@@ -99,7 +99,7 @@ public class Builder extends IncrementalProjectBuilder {
     addMarkers(f, (CompilationUnit) ast.COMPILIATION_UNIT.from(f));
   }
   private static void addMarkers(final IFile f, final CompilationUnit u) throws CoreException {
-    final Project c = inContext().set(u).set(new Toolbox());
+    final CurrentAST c = inContext().set(u).set(new Toolbox());
     for (final @NonNull Suggestion s : s.collect(u))
       addMarker(s, f.createMarker(MARKER_TYPE));
   }

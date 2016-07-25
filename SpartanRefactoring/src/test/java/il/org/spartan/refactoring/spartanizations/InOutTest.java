@@ -48,7 +48,7 @@ public class InOutTest {
       }
     }.go();
   }
-  protected static void go(final Project c, final File from, final File to) {
+  protected static void go(final CurrentAST c, final File from, final File to) {
     final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(FileTestUtils.makeInFile(from));
     that(u.toString(), TrimmerTestsUtils.countOpportunities(c, u), is(1));
     TESTUtils.assertOneOpportunity(c, ast.string(from));

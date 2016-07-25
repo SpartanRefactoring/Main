@@ -2,6 +2,8 @@ package il.org.spartan.refactoring.suggestions;
 
 import javax.swing.*;
 
+import org.eclipse.jdt.annotation.*;
+
 /**
  * A class to manage dialog boxes and other GUI elements.
  *
@@ -18,7 +20,7 @@ public class DialogBoxes {
    *          What to announce
    * @return <code><b>null</b></code>
    */
-  public static final Void announce(final Object message) {
+  public static <@Nullable T> T announce(final Object message) {
     JOptionPane.showMessageDialog(null, message, NAME, JOptionPane.INFORMATION_MESSAGE, icon);
     return null;
   }

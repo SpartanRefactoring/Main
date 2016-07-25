@@ -8,25 +8,25 @@ import static il.org.spartan.azzert.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) public class TEST {
   @Test public void usecase0() {
-    Project.inContext().set("Hi Mum!").eval(() -> null);
+    CurrentAST.inContext().set("Hi Mum!").eval(() -> null);
   }
   @Test public void usecase1() {
-    new Project() {
+    new CurrentAST() {
       @Override String go() {
         return super.description();
       }
     }.set("String s").go();
-    Project.inContext().set("Hi Mum!").eval(() -> null);
+    CurrentAST.inContext().set("Hi Mum!").eval(() -> null);
   }
   @Test public void usecase2() {
-    new Project().set("String s").go();
-    Project.inContext().set("Hi Mum!").eval(() -> null);
+    new CurrentAST().set("String s").go();
+    CurrentAST.inContext().set("Hi Mum!").eval(() -> null);
   }
   @Test public void usecase3() {
-    azzert.isNull(new Project().set("String s").go());
+    azzert.isNull(new CurrentAST().set("String s").go());
   }
   @Test public void usecase4() {
-    azzert.that(new Project() {
+    azzert.that(new CurrentAST() {
       @Override String go() {
         return "(" + description() + ")";
       }
@@ -34,7 +34,7 @@ import static il.org.spartan.azzert.*;
   }
   @Test public void usecase5() {
     final StringBuilder b = new StringBuilder("1");
-    new Project() {
+    new CurrentAST() {
       // Not sure why we need this
     }.set("X").exec(() -> {
       b.append("2");
@@ -44,7 +44,7 @@ import static il.org.spartan.azzert.*;
   }
   @Test public void usecase6() {
     final StringBuilder b = new StringBuilder("1");
-    final Project c = new Project().set("X");
+    final CurrentAST c = new CurrentAST().set("X");
     c.new Action() {
       @Override public void run() {
         b.append("2");

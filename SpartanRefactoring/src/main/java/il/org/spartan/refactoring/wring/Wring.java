@@ -40,7 +40,7 @@ public abstract class Wring<N extends ASTNode> extends Suggestion implements Kin
    * @return this wring
    */
   public Wring<N> set(final CompilationUnit compilationUnit) {
-    return Project.this.starting.vrom(compilationUnit);
+    return CurrentAST.this.starting.vrom(compilationUnit);
   }
   /**
    * @param r

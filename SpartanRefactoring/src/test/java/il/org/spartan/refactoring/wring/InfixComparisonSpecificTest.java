@@ -42,32 +42,32 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
     assertLegible("this != a");
   }
   @Test public void comparisonWithSpecificNoChange() {
-    assertSimilar("a != this", Wrap.Expression.off(apply(new Project(), Wrap.Expression.on("a != this"))));
-    assertSimilar("a != null", Wrap.Expression.off(apply(new Project(), Wrap.Expression.on("a != null"))));
-    assertSimilar("a == this", Wrap.Expression.off(apply(new Project(), Wrap.Expression.on("a == this"))));
-    assertSimilar("a == null", Wrap.Expression.off(apply(new Project(), Wrap.Expression.on("a == null"))));
-    assertSimilar("a <= this", Wrap.Expression.off(apply(new Project(), Wrap.Expression.on("a <= this"))));
-    assertSimilar("a <= null", Wrap.Expression.off(apply(new Project(), Wrap.Expression.on("a <= null"))));
-    assertSimilar("a >= this", Wrap.Expression.off(apply(new Project(), Wrap.Expression.on("a >= this"))));
-    assertSimilar("a >= null", Wrap.Expression.off(apply(new Project(), Wrap.Expression.on("a >= null"))));
+    assertSimilar("a != this", Wrap.Expression.off(apply(new CurrentAST(), Wrap.Expression.on("a != this"))));
+    assertSimilar("a != null", Wrap.Expression.off(apply(new CurrentAST(), Wrap.Expression.on("a != null"))));
+    assertSimilar("a == this", Wrap.Expression.off(apply(new CurrentAST(), Wrap.Expression.on("a == this"))));
+    assertSimilar("a == null", Wrap.Expression.off(apply(new CurrentAST(), Wrap.Expression.on("a == null"))));
+    assertSimilar("a <= this", Wrap.Expression.off(apply(new CurrentAST(), Wrap.Expression.on("a <= this"))));
+    assertSimilar("a <= null", Wrap.Expression.off(apply(new CurrentAST(), Wrap.Expression.on("a <= null"))));
+    assertSimilar("a >= this", Wrap.Expression.off(apply(new CurrentAST(), Wrap.Expression.on("a >= this"))));
+    assertSimilar("a >= null", Wrap.Expression.off(apply(new CurrentAST(), Wrap.Expression.on("a >= null"))));
   }
   @Test public void comparisonWithSpecificNoChangeWithLongEpxressions() {
     assertSimilar("very(complicate,func,-ction,call) != this",
-        Wrap.Expression.off(apply(new Project(), Wrap.Expression.on("very(complicate,func,-ction,call) != this"))));
+        Wrap.Expression.off(apply(new CurrentAST(), Wrap.Expression.on("very(complicate,func,-ction,call) != this"))));
     assertSimilar("very(complicate,func,-ction,call) != null",
-        Wrap.Expression.off(apply(new Project(), Wrap.Expression.on("very(complicate,func,-ction,call) != null"))));
+        Wrap.Expression.off(apply(new CurrentAST(), Wrap.Expression.on("very(complicate,func,-ction,call) != null"))));
     assertSimilar("very(complicate,func,-ction,call) == this",
-        Wrap.Expression.off(apply(new Project(), Wrap.Expression.on("very(complicate,func,-ction,call) == this"))));
+        Wrap.Expression.off(apply(new CurrentAST(), Wrap.Expression.on("very(complicate,func,-ction,call) == this"))));
     assertSimilar("very(complicate,func,-ction,call) == null",
-        Wrap.Expression.off(apply(new Project(), Wrap.Expression.on("very(complicate,func,-ction,call) == null"))));
+        Wrap.Expression.off(apply(new CurrentAST(), Wrap.Expression.on("very(complicate,func,-ction,call) == null"))));
     assertSimilar("very(complicate,func,-ction,call) <= this",
-        Wrap.Expression.off(apply(new Project(), Wrap.Expression.on("very(complicate,func,-ction,call) <= this"))));
+        Wrap.Expression.off(apply(new CurrentAST(), Wrap.Expression.on("very(complicate,func,-ction,call) <= this"))));
     assertSimilar("very(complicate,func,-ction,call) <= null",
-        Wrap.Expression.off(apply(new Project(), Wrap.Expression.on("very(complicate,func,-ction,call) <= null"))));
+        Wrap.Expression.off(apply(new CurrentAST(), Wrap.Expression.on("very(complicate,func,-ction,call) <= null"))));
     assertSimilar("very(complicate,func,-ction,call) >= this",
-        Wrap.Expression.off(apply(new Project(), Wrap.Expression.on("very(complicate,func,-ction,call) >= this"))));
+        Wrap.Expression.off(apply(new CurrentAST(), Wrap.Expression.on("very(complicate,func,-ction,call) >= this"))));
     assertSimilar("very(complicate,func,-ction,call) >= null",
-        Wrap.Expression.off(apply(new Project(), Wrap.Expression.on("very(complicate,func,-ction,call) >= null"))));
+        Wrap.Expression.off(apply(new CurrentAST(), Wrap.Expression.on("very(complicate,func,-ction,call) >= null"))));
   }
   @Test public void comparisonWithSpecificWithinScope() {
     azzert.that(Is.constant(left(i("this != a"))), is(true));

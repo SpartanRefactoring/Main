@@ -76,7 +76,7 @@ public class CleanupHandler extends BaseHandler {
    */
   public static int countSuggestions(final ICompilationUnit u) {
     int $ = 0;
-    final Project s = new Project();
+    final CurrentAST s = new CurrentAST();
     s.setMarker(null);
     return $ += s.countSuggestions();
   }

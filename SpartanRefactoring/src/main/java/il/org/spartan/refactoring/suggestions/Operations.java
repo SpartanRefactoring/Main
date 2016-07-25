@@ -11,7 +11,7 @@ import org.eclipse.ltk.core.refactoring.*;
 
 import static org.eclipse.core.runtime.IProgressMonitor.*;
 
-class Operations<Extender extends Operations<?>> extends Project<Operations<Extender>> {
+class Operations<Extender extends Operations<?>> extends CurrentAST<Operations<Extender>> {
   public void scanCompilationUnitForMarkerFix(final boolean preview) throws CoreException {
     progressMonitor().beginTask("Creating change(s) for a single compilation unit...", UNKNOWN);
     final ICompilationUnit u = ast.iCompilationUnit(marker());
