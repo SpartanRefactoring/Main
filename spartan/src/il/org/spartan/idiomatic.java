@@ -8,90 +8,64 @@ import java.util.function.*;
 import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
-/**
- * An empty <code><b>enum</b></code> with a variety of <code>public
+/** An empty <code><b>enum</b></code> with a variety of <code>public
  * static</code> utility functions of reasonably wide use.
- *
  * @author Yossi Gil <code><yossi.gil [at] gmail.com></code>
- * @since 2013/07/01
- */
+ * @since 2013/07/01 */
 public interface idiomatic {
-  /**
-   * TODO Javadoc(2016): automatically generated for method <code>yield</code>
-   *
+  /** TODO Javadoc(2016): automatically generated for method <code>yield</code>
    * @param <T> JD
    * @param t JD
    * @return Yielder<T> TODO Javadoc(2016) automatically generated for returned
-   *         value of method <code>yield</code>
-   */
+   *         value of method <code>yield</code> */
   public static <T> Storer<T> take(final T t) {
     return new Storer<T>(t);
   }
-  /**
-   * @param r JD
-   * @return an identical runnable which is also a {@link Executable}
-   */
-  static Executable $(final Runnable r) {
-    return new Executable(r);
+  /** @param r JD
+   * @return an identical runnable which is also a {@link Runner} */
+  static Runner run(final Runnable r) {
+    return new Runner(r);
   }
-  /**
-   * TODO Javadoc(2016): automatically generated for method <code>yield</code>
-   *
+  /** TODO Javadoc(2016): automatically generated for method <code>yield</code>
    * @param <T> JD
    * @param $ result
-   * @return an identical supplier which is also a {@link Holder}
-   */
+   * @return an identical supplier which is also a {@link Holder} */
   static <T> Holder<T> eval(final Supplier<@Nullable T> $) {
     return () -> $.get();
   }
-  /**
-   * @param condition JD
-   * @return TODO document return type
-   */
-  /**
-   * TODO Javadoc(2016): automatically generated for method <code>incase</code>
-   *
+  /** @param condition JD
+   * @return TODO document return type */
+  /** TODO Javadoc(2016): automatically generated for method <code>incase</code>
    * @param <T> JD
    * @param condition TODO
    * @param t JD
    * @return T TODO Javadoc(2016) automatically generated for returned value of
-   *         method <code>incase</code>
-   */
+   *         method <code>incase</code> */
   public static <T> @Nullable T incase(final boolean condition, final T t) {
     return condition ? t : null;
   }
-  /**
-   * Quote a given {@link String}
-   *
+  /** Quote a given {@link String}
    * @param $ some {@link String} to be quoted
-   * @return the parameter, quoted
-   */
+   * @return the parameter, quoted */
   public static String quote(final @Nullable String $) {
     return $ != null ? QUOTE + $ + QUOTE : "<null reference>";
   }
-  /**
-   * @param condition JD
-   * @return TODO document return type
-   */
+  /** @param condition JD
+   * @return TODO document return type */
   public static Trigger unless(final boolean condition) {
     return when(!condition);
   }
-  /**
-   * TODO Javadoc(2016): automatically generated for method <code>unless</code>
-   *
+  /** TODO Javadoc(2016): automatically generated for method <code>unless</code>
    * @param <T> JD
    * @param condition TODO
    * @param t JD
    * @return T TODO Javadoc(2016) automatically generated for returned value of
-   *         method <code>unless</code>
-   */
+   *         method <code>unless</code> */
   public static <T> @Nullable T unless(final boolean condition, final T t) {
     return incase(!condition, t);
   }
-  /**
-   * @param condition JD
-   * @return TODO document return type
-   */
+  /** @param condition JD
+   * @return TODO document return type */
   public static Trigger when(final boolean condition) {
     return condition ? eval : ignore;
   }
@@ -111,56 +85,38 @@ public interface idiomatic {
     }
   };
 
-  /**
-   * Supplier with {@link #when(boolean)} method
-   *
+  /** Supplier with {@link #when(boolean)} method
    * @param <T> JD
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
-   * @since 2016
-   */
-  /**
-   * TODO(2016) Javadoc: automatically generated for type <code>idiomatic</code>
-   *
+   * @since 2016 */
+  /** TODO(2016) Javadoc: automatically generated for type <code>idiomatic</code>
    * @param <T> JD
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
-   * @since 2016
-   */
+   * @since 2016 */
   interface Holder<T> extends Supplier<T> {
-    /**
-     * Return value when condition is <code><b>true</b></code>
-     *
+    /** Return value when condition is <code><b>true</b></code>
      * @param unless condition on which value is returned
      * @return the {@link #get()} when the parameter is <code><b>true</b></code>
-     *         , otherwise code><b>null</b></code>.
-     */
+     *         , otherwise code><b>null</b></code>. */
     default @Nullable T unless(final boolean unless) {
       return when(!unless);
     }
-    /**
-     * Return value when condition is <code><b>true</b></code>
-     *
+    /** Return value when condition is <code><b>true</b></code>
      * @return the {@link #get()} when the parameter is <code><b>true</b></code>
      *         , otherwise code><b>null</b></code>.
-     * @param when condition on which value is returned
-     */
+     * @param when condition on which value is returned */
     default @Nullable T when(final boolean when) {
       return when ? get() : null;
     }
   }
 
-  /**
-   * Store a value to be returned with {@link #get()} function
-   *
+  /** Store a value to be returned with {@link #get()} function
    * @param <T> JD
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
-   * @since 2016
-   */
+   * @since 2016 */
   static class Storer<T> implements Holder<T> {
-    /**
-     * Instantiates this class.
-     *
-     * @param inner JD
-     */
+    /** Instantiates this class.
+     * @param inner JD */
     public Storer(final T inner) {
       this.inner = inner;
     }
@@ -173,22 +129,16 @@ public interface idiomatic {
     public final T inner;
   }
 
-  /**
-   * @author Yossi Gil <Yossi.Gil@GMail.COM>
-   * @since 2016
-   */
+  /** @author Yossi Gil <Yossi.Gil@GMail.COM>
+   * @since 2016 */
   interface Trigger {
-    /**
-     * @param <T> JD
+    /** @param <T> JD
      * @param t JD
-     * @return TODO document return type
-     */
+     * @return TODO document return type */
     <@Nullable T> T eval(final Supplier<T> t);
-    /**
-     * @param <T> JD
+    /** @param <T> JD
      * @param $ JD
-     * @return TODO document return type
-     */
+     * @return TODO document return type */
     default <@Nullable T> T eval(final T $) {
       return eval(() -> $);
     }
@@ -223,23 +173,17 @@ public interface idiomatic {
     }
   }
 
-  /**
-   * Evaluate a {@link Runnable} when a condition applies or unless a condition
+  /** Evaluate a {@link Runnable} when a condition applies or unless a condition
    * applies.
-   *
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
-   * @since 2016
-   */
-  public static class Executable implements Runnable {
+   * @since 2016 */
+  public static class Runner implements Runnable {
     @Override public void run() {
       run.run();
     }
-    /**
-     * TODO Javadoc(2016): automatically generated for method
+    /** TODO Javadoc(2016): automatically generated for method
      * <code>unless</code>
-     *
-     * @param unless condition n which execution occurs.
-     */
+     * @param unless condition n which execution occurs. */
     public void unless(final boolean unless) {
       when(!unless);
     }
@@ -247,16 +191,40 @@ public interface idiomatic {
       if (when)
         run();
     }
-
-    /**
-     * Instantiates this class.
-     *
-     * @param run JD
-     */
-    public Executable(final Runnable run) {
+    /** Instantiates this class.
+     * @param run JD */
+    public Runner(final Runnable run) {
       this.run = run;
     }
 
     private final Runnable run;
+  }
+
+  /** A class which is just like {@link Supplier}, except that it uses the
+   * shorter name ({@link #λ()} and that it allows for {@link Exception}s to be
+   * thrown by the getters.
+   * @author Yossi Gil
+   * @param <T> JD
+   * @since 2016` */
+  @FunctionalInterface
+  public interface Producer<@Nullable T> {
+    /** @return the next value provided by this instance
+     * @throws Exception JD */
+    T λ() throws Exception;
+  }
+
+  /** A filter, which prints an appropriate log message and returns null in case
+   * of {@link Exception} thrown by {@link Producer#λ()}
+   * @param <T> JD
+   * @param $ JD
+   * @return the result of invoking the parameter, or <code><b>null</b></code>
+   *         if an exception occurred. */
+  static <@Nullable T> T katching(final Producer<T> $) {
+    try {
+      return $.λ();
+    } catch (final Exception ¢) {
+      ¢.printStackTrace();
+      return null;
+    }
   }
 }

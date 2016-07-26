@@ -61,35 +61,17 @@ import org.junit.runners.*;
  * @since 2016
  */
 public interface Cookbook {
-  /**
-   * @param $ result
-   * @return the parameter
-   */
-  static Cell<?>[] asArray(final Collection<Cell<?>> $) {
-    return $.toArray(new Cell<?>[$.size()]);
-  }
-  /**
-   * write a recipe
-   *
-   * @param <T> parameter type
-   * @param <R> result type
-   * @param λ function from the first type argument to the second type argument
-   * @return $$Function
-   */
-  static <@Nullable T, @Nullable R> $$Function<T, R> compute(final Function<T, R> λ) {
-    return ¢ -> new Recipe<>(() -> λ.apply(¢.get())).ingredient(¢);
-  }
-  /**
-   * TODO Javadoc(2016): automatically generated for method <code>compute</code>
-   *
-   * @param <T1> first parameter type
-   * @param <T2> second parameter type
-   * @param <R> result type
-   * @param λ function from the first type argument to the second type argument
-   * @return $$Function
-   */
-  static <@Nullable T1, @Nullable T2, @Nullable R> $$Function2<T1, T2, R> compute(final Function2<T1, T2, R> λ) {
-    return (¢1, ¢2) -> new Recipe<>(() -> λ.apply(¢1.get(), ¢2.get())).ingredients(¢1, ¢2);
+  /** TODO Javadoc(2016): automatically generated for method
+   * <code>traceWizard</code>
+   * @param <T> JD
+   * @param $ JD
+   * @return a newly created {@link Cell} */
+  public static <@Nullable T> Cell<T> cook(final Supplier<T> $) {
+    Cell.trace = new HashSet<>();
+    $.get();
+    final Cell<?>[] trace = asArray(Cell.trace);
+    Cell.trace = null;
+    return new Recipe<>($).ingredients(trace);
   }
   /**
    * Fluent API function to be used as in
@@ -119,44 +101,57 @@ public interface Cookbook {
     @SuppressWarnings("unused") final Ingredient<T> $ = new Ingredient<T>();
     return $;
   }
-  /**
-   * A factory method for class {@link Ingredient} as in
-   *
-   * <pre>
-   * Cell&lt;String&gt; genesis = Cookbook.ingredient();
-   * </pre>
-   *
-   * @param <T> JD
-   * @param t JD
-   * @return the newly created instance of {@link Ingredient}
-   */
-  public static <@Nullable T> Cell<@Nullable T> value(final T t) {
-    return new Ingredient<T>(t);
-  }
-  /**
-   * Fluent API factory method that returns a recipe
-   *
+  /** Fluent API factory method that returns a recipe
    * @param <T> JD
    * @param supplier JD
-   * @return the newly created {@link Recipe} object
-   */
+   * @return the newly created {@link Recipe} object */
   public static <T> Recipe<@Nullable T> recipe(final Supplier<T> supplier) {
     return new Recipe<>(supplier);
   }
-  /**
-   * TODO Javadoc(2016): automatically generated for method
-   * <code>traceWizard</code>
-   *
+  /** A factory method for class {@link Ingredient} of an {@Integer} as
+   * in
+   * 
+   * <pre>
+   * Cell&lt;String&gt; genesis = Cookbook.value(2);
+   * </pre>
+   * @param i JD
+   * @return the newly created instance of {@link Ingredient} */
+  public static Cell<Integer> value(final int i) {
+    return new Ingredient<Integer>(Integer.valueOf(i));
+  }
+
+  /** A factory method for class {@link Ingredient} as in
+   * 
+   * <pre>
+   * Cell&lt;String&gt; genesis = Cookbook.value(&quot;&quot;);
+   * </pre>
    * @param <T> JD
-   * @param λ JD
-   * @return a newly created {@link Cell}
-   */
-  public static <@Nullable T> Cell<T> cook(final Supplier<T> λ) {
-    Cell.trace = new HashSet<>();
-    λ.get();
-    final Cell<?>[] $ = asArray(Cell.trace);
-    Cell.trace = null;
-    return new Recipe<>(λ).ingredients($);
+   * @param t JD
+   * @return the newly created instance of {@link Ingredient} */
+  public static <@Nullable T> Cell<@Nullable T> value(final T t) {
+    return new Ingredient<T>(t);
+  }
+  /** @param $ result
+   * @return the parameter */
+  static Cell<?>[] asArray(final Collection<Cell<?>> $) {
+    return $.toArray(new Cell<?>[$.size()]);
+  }
+  /** write a recipe
+   * @param <T> parameter type
+   * @param <R> result type
+   * @param λ function from the first type argument to the second type argument
+   * @return $$Function */
+  static <@Nullable T, @Nullable R> $$Function<T, R> compute(final Function<T, R> λ) {
+    return ¢ -> new Recipe<>(() -> λ.apply(¢.get())).ingredient(¢);
+  }
+  /** TODO Javadoc(2016): automatically generated for method <code>compute</code>
+   * @param <T1> first parameter type
+   * @param <T2> second parameter type
+   * @param <R> result type
+   * @param λ function from the first type argument to the second type argument
+   * @return $$Function */
+  static <@Nullable T1, @Nullable T2, @Nullable R> $$Function2<T1, T2, R> compute(final Function2<T1, T2, R> λ) {
+    return (¢1, ¢2) -> new Recipe<>(() -> λ.apply(¢1.get(), ¢2.get())).ingredients(¢1, ¢2);
   }
 
   /**
@@ -603,7 +598,7 @@ public interface Cookbook {
           azzert.that(aPower02.version, is(0L));
           azzert.that(a.dependents.size(), is(4)); // d, aPower2, aPower3,
           // aPowe17
-          azzert.azzert.aye("", a.dependents.contains(aPower02));
+          azzert.aye("", a.dependents.contains(aPower02));
           azzert.falze(a.dependents.contains(null));
         }
         @Test public void sessionD11() {
@@ -832,58 +827,6 @@ public interface Cookbook {
   }
 
   /**
-   * TODO(2016) Javadoc: automatically generated for type <code>Cookbook</code>
-   *
-   * @author Yossi Gil <Yossi.Gil@GMail.COM>
-   * @since 2016
-   */
-  interface Internal {
-    /**
-     * @return never! The <code><b>none</b></code> type. There is no legal value
-     *         that this function can return, since the type
-     *         <code>@NonNull</code> {@link Void} is empty. (
-     *         <code><b>null</b></code> is the single vale of {@link Void}, but
-     *         it does not obey the {@link @NonNull} annotation.
-     */
-    static @NonNull Void shouldNeverBeCalled() {
-      assert false;
-      throw new RuntimeException();
-    }
-
-    interface $$Function<T, R> {
-      Cell<R> from(Cell<T> ¢);
-    }
-
-    interface $$Function2<T1, T2, R> {
-      Cell<R> from(Cell<T1> ¢1, Cell<T2> ¢2);
-    }
-
-    /** Fluent API */
-    interface $$RecipeMaker {
-      <X> Cell<@Nullable X> make(final Supplier<X> s);
-    }
-
-    @FunctionalInterface interface Function2<T1, T2, R> {
-      R apply(T1 ¢1, T2 ¢2);
-    }
-
-    /**
-     * TODO(2016) Javadoc: automatically generated for type
-     * <code>Cookbook</code>
-     *
-     * @param <T1>
-     * @param <T2>
-     * @param <T3>
-     * @param <R>
-     * @author Yossi Gil <Yossi.Gil@GMail.COM>
-     * @since 2016
-     */
-    @FunctionalInterface interface Function3<T1, T2, T3, R> {
-      R apply(T1 ¢1, T2 ¢2, T3 ¢3);
-    }
-  }
-
-  /**
    * A cell stores a value of some type (which is passed by parameter). A cell
    * may be either {@link Ingredient} or {@link Recipe}. A computed cell
    * typically depends on other cells, which may either valued, or computed, and
@@ -995,7 +938,7 @@ public interface Cookbook {
     }
     /** see @see il.org.spartan.lazy.Cookbook.Cell#get() (auto-generated) */
     @Override public T get() {
-      idiomatic.$(() -> {
+      idiomatic.run(() -> {
         trace.add(this);
       }).unless(trace == null);
       return cache();
@@ -1028,13 +971,54 @@ public interface Cookbook {
     }
   }
 
-  /**
-   * A cell that may depend on others.
-   *
+  /** TODO(2016) Javadoc: automatically generated for type <code>Cookbook</code>
+   * @author Yossi Gil <Yossi.Gil@GMail.COM>
+   * @since 2016 */
+  interface Internal {
+    /** @return never! The <code><b>none</b></code> type. There is no legal value
+     *         that this function can return, since the type
+     *         <code>@NonNull</code> {@link Void} is empty. (
+     *         <code><b>null</b></code> is the single vale of {@link Void}, but
+     *         it does not obey the {@link @NonNull} annotation. */
+    static @NonNull Void shouldNeverBeCalled() {
+      assert false;
+      throw new RuntimeException();
+    }
+
+    interface $$Function<T, R> {
+      Cell<R> from(Cell<T> ¢);
+    }
+
+    interface $$Function2<T1, T2, R> {
+      Cell<R> from(Cell<T1> ¢1, Cell<T2> ¢2);
+    }
+
+    /** Fluent API */
+    interface $$RecipeMaker {
+      <X> Cell<@Nullable X> make(final Supplier<X> s);
+    }
+
+    @FunctionalInterface interface Function2<T1, T2, R> {
+      R apply(T1 ¢1, T2 ¢2);
+    }
+
+    /** TODO(2016) Javadoc: automatically generated for type
+     * <code>Cookbook</code>
+     * @param <T1>
+     * @param <T2>
+     * @param <T3>
+     * @param <R>
+     * @author Yossi Gil <Yossi.Gil@GMail.COM>
+     * @since 2016 */
+    @FunctionalInterface interface Function3<T1, T2, T3, R> {
+      R apply(T1 ¢1, T2 ¢2, T3 ¢3);
+    }
+  }
+
+  /** A cell that may depend on others.
    * @param <T> JD
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
-   * @since 2016
-   */
+   * @since 2016 */
   public static class Recipe<@Nullable T> extends Cell<T> {
     /**
      * Instantiates this class.
@@ -1065,10 +1049,10 @@ public interface Cookbook {
      * @return <code><b>this</b></code>
      */
     public Recipe<T> ingredient(final Cell<?> e) {
-      $(() -> {
+      run(() -> {
         e.dependents.add(this);
       }).unless(e.dependents.contains(this));
-      $(() -> {
+      run(() -> {
         prerequisites.add(e);
       }).unless(prerequisites.contains(this));
       return this;
@@ -1114,11 +1098,13 @@ public interface Cookbook {
           $ = c.version();
       return $;
     }
+
     @Override void uponForcedSet() {
       supplier = null;
     }
 
     private final List<Cell<?>> prerequisites = new ArrayList<>();
+
     private @Nullable Supplier<? extends @Nullable T> supplier;
 
     /**

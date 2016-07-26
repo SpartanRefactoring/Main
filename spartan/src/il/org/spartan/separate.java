@@ -296,8 +296,7 @@ public enum separate {
               return current < os.length;
             }
             @Override public Object next() {
-              @SuppressWarnings("null") final Object $ = os[current++];
-              return $;
+              return os[current++];
             }
 
             int current = 0;

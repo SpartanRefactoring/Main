@@ -3,6 +3,7 @@
 package il.org.spartan.misc;
 
 import static org.junit.Assert.*;
+import il.org.spartan.*;
 
 import org.junit.*;
 

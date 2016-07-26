@@ -12,30 +12,31 @@ import org.hamcrest.number.*;
  * @author Yossi Gil
  * @since 2015-07-18
  */
-@SuppressWarnings("javadoc") public class azzert extends org.junit.Assert {
-  public static <T> @Nullable Matcher<T> allOf(final java.lang.Iterable<Matcher<? super T>> matchers) {
+@SuppressWarnings({ "javadoc", "null" })//
+public class azzert extends org.junit.Assert {
+  public static <T> Matcher<T> allOf(final java.lang.Iterable<Matcher<? super T>> matchers) {
     return AllOf.<T> allOf(matchers);
   }
-  @SafeVarargs public static <T> @Nullable Matcher<T> allOf(final Matcher<? super T>... matchers) {
+  @SafeVarargs public static <T> Matcher<T> allOf(final Matcher<? super T>... matchers) {
     return AllOf.<T> allOf(matchers);
   }
-  public static <T> @Nullable Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second) {
+  public static <T> Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second) {
     return AllOf.<T> allOf(first, second);
   }
-  public static <T> @Nullable Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second,
+  public static <T> Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second,
       final Matcher<? super T> third) {
     return AllOf.<T> allOf(first, second, third);
   }
-  public static <T> @Nullable Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second,
+  public static <T> Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second,
       final Matcher<? super T> third, final Matcher<? super T> fourth, final Matcher<? super T> fifth) {
     return AllOf.<T> allOf(first, second, third, fourth, fifth);
   }
-  public static <T> @Nullable Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second,
+  public static <T> Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second,
       final Matcher<? super T> third, final Matcher<? super T> fourth, final Matcher<? super T> fifth,
       final Matcher<? super T> sixth) {
     return AllOf.<T> allOf(first, second, third, fourth, fifth, sixth);
   }
-  public static <T> @Nullable Matcher<T> any(final java.lang.Class<T> type) {
+  public static <T> Matcher<T> any(final java.lang.Class<T> type) {
     return IsInstanceOf.<T> any(type);
   }
   public static <T> @Nullable AnyOf<T> anyOf(final java.lang.Iterable<Matcher<? super T>> matchers) {
@@ -63,10 +64,10 @@ import org.hamcrest.number.*;
       final Matcher<? super T> sixth) {
     return AnyOf.<T> anyOf(first, second, third, fourth, fifth, sixth);
   }
-  public static @Nullable Matcher<@Nullable Object> anything() {
+  public static Matcher<@Nullable Object> anything() {
     return IsAnything.anything();
   }
-  public static @Nullable Matcher<@Nullable Object> anything(final @Nullable String description) {
+  public static Matcher<@Nullable Object> anything(final @Nullable String description) {
     return IsAnything.anything(description);
   }
   public static void assertEquals(final int expected, final int actual) {
@@ -90,103 +91,103 @@ import org.hamcrest.number.*;
   public static void assertFalse(final boolean b) {
     that("", Boolean.valueOf(b), is(Boolean.FALSE));
   }
-  public static void azzert.aye(final boolean b) {
+  public static void assertTrue(final boolean b) {
     that("", Boolean.valueOf(b), is(Boolean.TRUE));
   }
-  public static void azzert.aye(final String s, final boolean b) {
+  public static void assertTrue(final String s, final boolean b) {
     that(s, Boolean.valueOf(b), is(Boolean.TRUE));
   }
   public static <LHS> CombinableMatcher.@Nullable CombinableBothMatcher<LHS> both(final Matcher<? super LHS> matcher) {
     return CombinableMatcher.<LHS> both(matcher);
   }
-  @Factory public static @Nullable Matcher<@Nullable Boolean> comparesEqualTo(final boolean b) {
+  @Factory public static Matcher<@Nullable Boolean> comparesEqualTo(final boolean b) {
     return OrderingComparison.comparesEqualTo(Boolean.valueOf(b));
   }
-  @Factory public static @Nullable Matcher<@Nullable Byte> comparesEqualTo(final byte b) {
+  @Factory public static Matcher<@Nullable Byte> comparesEqualTo(final byte b) {
     return OrderingComparison.comparesEqualTo(Byte.valueOf(b));
   }
-  @Factory public static @Nullable Matcher<@Nullable Character> comparesEqualTo(final char c) {
+  @Factory public static Matcher<@Nullable Character> comparesEqualTo(final char c) {
     return OrderingComparison.comparesEqualTo(Character.valueOf(c));
   }
-  @Factory public static @Nullable Matcher<@Nullable Double> comparesEqualTo(final double d) {
+  @Factory public static Matcher<@Nullable Double> comparesEqualTo(final double d) {
     return OrderingComparison.comparesEqualTo(Double.valueOf(d));
   }
-  @Factory public static @Nullable Matcher<@Nullable Float> comparesEqualTo(final float f) {
+  @Factory public static Matcher<@Nullable Float> comparesEqualTo(final float f) {
     return OrderingComparison.comparesEqualTo(Float.valueOf(f));
   }
-  @Factory public static @Nullable Matcher<@Nullable Integer> comparesEqualTo(final int i) {
+  @Factory public static Matcher<@Nullable Integer> comparesEqualTo(final int i) {
     return OrderingComparison.comparesEqualTo(Integer.valueOf(i));
   }
-  @Factory public static @Nullable Matcher<@Nullable Long> comparesEqualTo(final long l) {
+  @Factory public static Matcher<@Nullable Long> comparesEqualTo(final long l) {
     return OrderingComparison.comparesEqualTo(Long.valueOf(l));
   }
-  @Factory public static @Nullable Matcher<@Nullable Short> comparesEqualTo(final short s) {
+  @Factory public static Matcher<@Nullable Short> comparesEqualTo(final short s) {
     return OrderingComparison.comparesEqualTo(Short.valueOf(s));
   }
-  public static @Nullable Matcher<@Nullable String> containsString(final String substring) {
+  public static Matcher<@Nullable String> containsString(final String substring) {
     return StringContains.containsString(substring);
   }
-  public static <T> @Nullable Matcher<T> describedAs(final String description, final Matcher<T> matcher, final Object... values) {
+  public static <T> Matcher<T> describedAs(final String description, final Matcher<T> matcher, final Object... values) {
     return DescribedAs.<T> describedAs(description, matcher, values);
   }
   public static <LHS> CombinableMatcher.@Nullable CombinableEitherMatcher<LHS> either(final Matcher<? super LHS> matcher) {
     return CombinableMatcher.<LHS> either(matcher);
   }
-  public static @Nullable Matcher<String> endsWith(final String suffix) {
+  public static Matcher<String> endsWith(final String suffix) {
     return StringEndsWith.endsWith(suffix);
   }
-  public static <T> @Nullable Matcher<T> equalTo(final T operand) {
+  public static <T> Matcher<T> equalTo(final T operand) {
     return IsEqual.<T> equalTo(operand);
   }
-  public static <U> @Nullable Matcher<java.lang.Iterable<U>> everyItem(final Matcher<U> itemMatcher) {
+  public static <U> Matcher<java.lang.Iterable<U>> everyItem(final Matcher<U> itemMatcher) {
     return Every.<U> everyItem(itemMatcher);
   }
-  @Factory public static @Nullable Matcher<@Nullable Boolean> greaterThan(final boolean b) {
+  @Factory public static Matcher<@Nullable Boolean> greaterThan(final boolean b) {
     return OrderingComparison.greaterThan(Boolean.valueOf(b));
   }
-  @Factory public static @Nullable Matcher<@Nullable Byte> greaterThan(final byte b) {
+  @Factory public static Matcher<@Nullable Byte> greaterThan(final byte b) {
     return OrderingComparison.greaterThan(Byte.valueOf(b));
   }
-  @Factory public static @Nullable Matcher<@Nullable Character> greaterThan(final char c) {
+  @Factory public static Matcher<@Nullable Character> greaterThan(final char c) {
     return OrderingComparison.greaterThan(Character.valueOf(c));
   }
-  @Factory public static @Nullable Matcher<@Nullable Double> greaterThan(final double d) {
+  @Factory public static Matcher<@Nullable Double> greaterThan(final double d) {
     return OrderingComparison.greaterThan(Double.valueOf(d));
   }
-  @Factory public static @Nullable Matcher<@Nullable Float> greaterThan(final float f) {
+  @Factory public static Matcher<@Nullable Float> greaterThan(final float f) {
     return OrderingComparison.greaterThan(Float.valueOf(f));
   }
-  @Factory public static @Nullable Matcher<@Nullable Integer> greaterThan(final int i) {
+  @Factory public static Matcher<@Nullable Integer> greaterThan(final int i) {
     return OrderingComparison.greaterThan(Integer.valueOf(i));
   }
-  @Factory public static @Nullable Matcher<@Nullable Long> greaterThan(final long l) {
+  @Factory public static Matcher<@Nullable Long> greaterThan(final long l) {
     return OrderingComparison.greaterThan(Long.valueOf(l));
   }
-  @Factory public static @Nullable Matcher<@Nullable Short> greaterThan(final short s) {
+  @Factory public static Matcher<@Nullable Short> greaterThan(final short s) {
     return OrderingComparison.greaterThan(Short.valueOf(s));
   }
-  @Factory public static @Nullable Matcher<@Nullable Boolean> greaterThanOrEqualTo(final boolean b) {
+  @Factory public static Matcher<@Nullable Boolean> greaterThanOrEqualTo(final boolean b) {
     return OrderingComparison.greaterThanOrEqualTo(Boolean.valueOf(b));
   }
-  @Factory public static @Nullable Matcher<@Nullable Byte> greaterThanOrEqualTo(final byte b) {
+  @Factory public static Matcher<@Nullable Byte> greaterThanOrEqualTo(final byte b) {
     return OrderingComparison.greaterThanOrEqualTo(Byte.valueOf(b));
   }
-  @Factory public static @Nullable Matcher<@Nullable Character> greaterThanOrEqualTo(final char c) {
+  @Factory public static Matcher<@Nullable Character> greaterThanOrEqualTo(final char c) {
     return OrderingComparison.greaterThanOrEqualTo(Character.valueOf(c));
   }
-  @Factory public static @Nullable Matcher<@Nullable Double> greaterThanOrEqualTo(final double d) {
+  @Factory public static Matcher<@Nullable Double> greaterThanOrEqualTo(final double d) {
     return OrderingComparison.greaterThanOrEqualTo(Double.valueOf(d));
   }
-  @Factory public static @Nullable Matcher<@Nullable Float> greaterThanOrEqualTo(final float f) {
+  @Factory public static Matcher<@Nullable Float> greaterThanOrEqualTo(final float f) {
     return OrderingComparison.greaterThanOrEqualTo(Float.valueOf(f));
   }
-  @Factory public static @Nullable Matcher<@Nullable Integer> greaterThanOrEqualTo(final int i) {
+  @Factory public static Matcher<@Nullable Integer> greaterThanOrEqualTo(final int i) {
     return OrderingComparison.greaterThanOrEqualTo(Integer.valueOf(i));
   }
-  @Factory public static @Nullable Matcher<@Nullable Long> greaterThanOrEqualTo(final long l) {
+  @Factory public static Matcher<@Nullable Long> greaterThanOrEqualTo(final long l) {
     return OrderingComparison.greaterThanOrEqualTo(Long.valueOf(l));
   }
-  @Factory public static @Nullable Matcher<@Nullable Short> greaterThanOrEqualTo(final short s) {
+  @Factory public static Matcher<@Nullable Short> greaterThanOrEqualTo(final short s) {
     return OrderingComparison.greaterThanOrEqualTo(Short.valueOf(s));
   }
   public static <T> Matcher<java.lang.Iterable<? super @Nullable T>> hasItem(final Matcher<? super @Nullable T> itemMatcher) {
@@ -201,91 +202,91 @@ import org.hamcrest.number.*;
   @SafeVarargs public static <T> Matcher<java.lang.Iterable<T>> hasItems(final T... items) {
     return IsCollectionContaining.<T> hasItems(items);
   }
-  public static <T> @Nullable Matcher<T> instanceOf(final java.lang.Class<?> type) {
+  public static <T> Matcher<T> instanceOf(final java.lang.Class<?> type) {
     return IsInstanceOf.<T> instanceOf(type);
   }
-  public static @Nullable Matcher<@Nullable Boolean> is(final boolean b) {
+  public static Matcher<@Nullable Boolean> is(final boolean b) {
     return is(Boolean.valueOf(b));
   }
-  public static @Nullable Matcher<@Nullable Byte> is(final byte b) {
+  public static Matcher<@Nullable Byte> is(final byte b) {
     return is(Byte.valueOf(b));
   }
-  public static @Nullable Matcher<@Nullable Character> is(final char c) {
+  public static Matcher<@Nullable Character> is(final char c) {
     return is(Character.valueOf(c));
   }
-  public static @Nullable Matcher<@Nullable Double> is(final double d) {
+  public static Matcher<@Nullable Double> is(final double d) {
     return is(Double.valueOf(d));
   }
-  public static @Nullable Matcher<@Nullable Float> is(final float f) {
+  public static Matcher<@Nullable Float> is(final float f) {
     return is(Float.valueOf(f));
   }
-  public static @Nullable Matcher<@Nullable Integer> is(final int i) {
+  public static Matcher<@Nullable Integer> is(final int i) {
     return is(Integer.valueOf(i));
   }
-  public static @Nullable Matcher<@Nullable Long> is(final long l) {
+  public static Matcher<@Nullable Long> is(final long l) {
     return is(Long.valueOf(l));
   }
-  public static <T> @Nullable Matcher<T> is(final Matcher<T> matcher) {
+  public static <T> Matcher<T> is(final Matcher<T> matcher) {
     return Is.<T> is(matcher);
   }
-  public static @Nullable Matcher<@Nullable Short> is(final short s) {
+  public static Matcher<@Nullable Short> is(final short s) {
     return is(Short.valueOf(s));
   }
   public static <@Nullable T> Matcher<T> is(final @Nullable T value) {
     return Is.<T> is(value);
   }
-  public static <T> @Nullable Matcher<T> isA(final java.lang.Class<T> type) {
+  public static <T> Matcher<T> isA(final java.lang.Class<T> type) {
     return Is.<T> isA(type);
   }
-  public static final Wrapper<String> iz(final String s) {
+  @SuppressWarnings("unused") public static final Wrapper<String> iz(final String s) {
     return new Wrapper<String>(s);
   }
-  @Factory public static @Nullable Matcher<@Nullable Boolean> lessThan(final boolean b) {
+  @Factory public static Matcher<@Nullable Boolean> lessThan(final boolean b) {
     return OrderingComparison.lessThan(Boolean.valueOf(b));
   }
-  @Factory public static @Nullable Matcher<@Nullable Byte> lessThan(final byte b) {
+  @Factory public static Matcher<@Nullable Byte> lessThan(final byte b) {
     return OrderingComparison.lessThan(Byte.valueOf(b));
   }
-  @Factory public static @Nullable Matcher<@Nullable Character> lessThan(final char c) {
+  @Factory public static Matcher<@Nullable Character> lessThan(final char c) {
     return OrderingComparison.lessThan(Character.valueOf(c));
   }
-  @Factory public static @Nullable Matcher<@Nullable Double> lessThan(final double d) {
+  @Factory public static Matcher<@Nullable Double> lessThan(final double d) {
     return OrderingComparison.lessThan(Double.valueOf(d));
   }
-  @Factory public static @Nullable Matcher<@Nullable Float> lessThan(final float f) {
+  @Factory public static Matcher<@Nullable Float> lessThan(final float f) {
     return OrderingComparison.lessThan(Float.valueOf(f));
   }
-  @Factory public static @Nullable Matcher<@Nullable Integer> lessThan(final int i) {
+  @Factory public static Matcher<@Nullable Integer> lessThan(final int i) {
     return OrderingComparison.lessThan(Integer.valueOf(i));
   }
-  @Factory public static @Nullable Matcher<@Nullable Long> lessThan(final long l) {
+  @Factory public static Matcher<@Nullable Long> lessThan(final long l) {
     return OrderingComparison.lessThan(Long.valueOf(l));
   }
-  @Factory public static @Nullable Matcher<@Nullable Short> lessThan(final short s) {
+  @Factory public static Matcher<@Nullable Short> lessThan(final short s) {
     return OrderingComparison.lessThan(Short.valueOf(s));
   }
-  @Factory public static @Nullable Matcher<@Nullable Boolean> lessThanOrEqualTo(final boolean b) {
+  @Factory public static Matcher<@Nullable Boolean> lessThanOrEqualTo(final boolean b) {
     return OrderingComparison.lessThanOrEqualTo(Boolean.valueOf(b));
   }
-  @Factory public static @Nullable Matcher<@Nullable Byte> lessThanOrEqualTo(final byte b) {
+  @Factory public static Matcher<@Nullable Byte> lessThanOrEqualTo(final byte b) {
     return OrderingComparison.lessThanOrEqualTo(Byte.valueOf(b));
   }
-  @Factory public static @Nullable Matcher<@Nullable Character> lessThanOrEqualTo(final char c) {
+  @Factory public static Matcher<@Nullable Character> lessThanOrEqualTo(final char c) {
     return OrderingComparison.lessThanOrEqualTo(Character.valueOf(c));
   }
-  @Factory public static @Nullable Matcher<@Nullable Double> lessThanOrEqualTo(final double d) {
+  @Factory public static Matcher<@Nullable Double> lessThanOrEqualTo(final double d) {
     return OrderingComparison.lessThanOrEqualTo(Double.valueOf(d));
   }
-  @Factory public static @Nullable Matcher<@Nullable Float> lessThanOrEqualTo(final float f) {
+  @Factory public static Matcher<@Nullable Float> lessThanOrEqualTo(final float f) {
     return OrderingComparison.lessThanOrEqualTo(Float.valueOf(f));
   }
-  @Factory public static @Nullable Matcher<@Nullable Integer> lessThanOrEqualTo(final int i) {
+  @Factory public static Matcher<@Nullable Integer> lessThanOrEqualTo(final int i) {
     return OrderingComparison.lessThanOrEqualTo(Integer.valueOf(i));
   }
-  @Factory public static @Nullable Matcher<@Nullable Long> lessThanOrEqualTo(final long l) {
+  @Factory public static Matcher<@Nullable Long> lessThanOrEqualTo(final long l) {
     return OrderingComparison.lessThanOrEqualTo(Long.valueOf(l));
   }
-  @Factory public static @Nullable Matcher<@Nullable Short> lessThanOrEqualTo(final short s) {
+  @Factory public static Matcher<@Nullable Short> lessThanOrEqualTo(final short s) {
     return OrderingComparison.lessThanOrEqualTo(Short.valueOf(s));
   }
   public static void nonNulls(final @Nullable Iterable<@Nullable Object> os) {
@@ -294,34 +295,34 @@ import org.hamcrest.number.*;
     for (final @Nullable Object o : os)
       azzert.notNull("" + os, o);
   }
-  public static @Nullable Matcher<Boolean> not(final boolean b) {
+  public static Matcher<Boolean> not(final boolean b) {
     return cantBeNull(IsNot.not(new Boolean(b)));
   }
-  public static @Nullable Matcher<Byte> not(final byte b) {
+  public static Matcher<Byte> not(final byte b) {
     return cantBeNull(IsNot.not(new Byte(b)));
   }
-  public static @Nullable Matcher<Character> not(final char i) {
+  public static Matcher<Character> not(final char i) {
     return cantBeNull(IsNot.not(new Character(i)));
   }
-  public static @Nullable Matcher<Double> not(final double d) {
+  public static Matcher<Double> not(final double d) {
     return cantBeNull(IsNot.not(new Double(d)));
   }
-  public static @Nullable Matcher<Float> not(final float f) {
+  public static Matcher<Float> not(final float f) {
     return cantBeNull(IsNot.not(new Float(f)));
   }
-  public static @Nullable Matcher<Integer> not(final int i) {
+  public static Matcher<Integer> not(final int i) {
     return cantBeNull(IsNot.not(new Integer(i)));
   }
-  public static @Nullable Matcher<Long> not(final long i) {
+  public static Matcher<Long> not(final long i) {
     return cantBeNull(IsNot.not(new Long(i)));
   }
-  public static <T> @Nullable Matcher<T> not(final Matcher<T> matcher) {
+  public static <T> Matcher<T> not(final Matcher<T> matcher) {
     return IsNot.<T> not(matcher);
   }
-  public static @Nullable Matcher<Short> not(final short s) {
+  public static Matcher<Short> not(final short s) {
     return cantBeNull(IsNot.not(new Short(s)));
   }
-  public static <T> @Nullable Matcher<T> not(final T value) {
+  public static <T> Matcher<T> not(final T value) {
     return IsNot.<T> not(value);
   }
   public static void notNull(final @Nullable Object o) {
@@ -330,10 +331,10 @@ import org.hamcrest.number.*;
   public static void notNull(final String s, final @Nullable Object o) {
     assertThat(s, o, notNullValue());
   }
-  public static @Nullable Matcher<@Nullable Object> notNullValue() {
+  public static Matcher<@Nullable Object> notNullValue() {
     return IsNull.notNullValue();
   }
-  public static <T> @Nullable Matcher<T> notNullValue(final java.lang.Class<T> type) {
+  public static <T> Matcher<T> notNullValue(final java.lang.Class<T> type) {
     return IsNull.<T> notNullValue(type);
   }
   public static void notNullz(final @Nullable Object @Nullable... os) {
@@ -345,25 +346,25 @@ import org.hamcrest.number.*;
   public static void isNull(final @Nullable Object o) {
     that(o, nullValue());
   }
-  public static @Nullable Matcher<@Nullable Object> nullValue() {
+  public static Matcher<@Nullable Object> nullValue() {
     return IsNull.nullValue();
   }
-  public static <T> @Nullable Matcher<T> nullValue(final java.lang.Class<T> type) {
+  public static <T> Matcher<T> nullValue(final java.lang.Class<T> type) {
     return IsNull.<T> nullValue(type);
   }
   public static void positive(final int i) {
-    azzert.aye("", i > 0);
+    azzert.that(i, greaterThan(0));
   }
-  public static <T> @Nullable Matcher<T> sameInstance(final T target) {
+  public static <T> Matcher<T> sameInstance(final T target) {
     return IsSame.<T> sameInstance(target);
   }
-  public static @Nullable Matcher<String> startsWith(final String prefix) {
+  public static Matcher<String> startsWith(final String prefix) {
     return StringStartsWith.startsWith(prefix);
   }
   public static void that(final boolean b, final Matcher<? super @Nullable Boolean> m) {
     that(Boolean.valueOf(b), m);
   }
-  public static void that(final byte b, final @Nullable Matcher<? super @Nullable Byte> m) {
+  public static void that(final byte b, final Matcher<? super @Nullable Byte> m) {
     that(Byte.valueOf(b), m);
   }
   public static void that(final char c, final Matcher<? super @Nullable Character> m) {
@@ -412,14 +413,14 @@ import org.hamcrest.number.*;
     assertThat(reason, Short.valueOf(s), m);
   }
   public static <@Nullable T> void that(final String reason, final @Nullable T actual,
-      final @Nullable Matcher<? super @Nullable T> matcher) {
+ final Matcher<? super @Nullable T> matcher) {
     assertThat(reason, actual, matcher);
   }
   public static Asserter aye(final boolean claim) {
     return aye("", claim);
   }
   public static Asserter aye(final String reason, final boolean claim) {
-    return new Asserter().andAye(claim);
+    return new Asserter().andAye(reason, claim);
   }
   public static Asserter nay(final boolean claim) {
     return nay("", claim);
@@ -445,10 +446,10 @@ import org.hamcrest.number.*;
     }
   }
 
-  public static <@Nullable T> void that(final @Nullable T actual, final @Nullable Matcher<? super @Nullable T> matcher) {
+  public static <@Nullable T> void that(final @Nullable T actual, final Matcher<? super @Nullable T> matcher) {
     assertThat("", actual, matcher);
   }
-  public static <T> @Nullable Matcher<T> theInstance(final T target) {
+  public static <T> Matcher<T> theInstance(final T target) {
     return IsSame.<T> theInstance(target);
   }
   public static void falze(final boolean b) {
