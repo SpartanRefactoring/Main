@@ -74,8 +74,8 @@ public interface idiomatic {
   public static final String QUOTE = "'";
   /** an evaluating trigger */
   static final Trigger eval = new Trigger() {
-    @Override public <@Nullable T> T eval(final Supplier<T> __) {
-      return null;
+    @Override public <@Nullable T> T eval(final Supplier<T> s) {
+      return s.get();
     }
   };
   /** an ignoring trigger */
@@ -144,13 +144,13 @@ public interface idiomatic {
     }
   }
 
-  @SuppressWarnings({ "javadoc", "null", "static-method" }) public static class ZZZ {
+  @SuppressWarnings({ "javadoc", "null", "static-method" }) public static class TEST {
     @Test public void use0() {
-      azzert.notNull(new Storer<ZZZ>(this));
+      azzert.notNull(new Storer<TEST>(this));
     }
     @Test public void use1() {
-      azzert.notNull(new Storer<ZZZ>(this));
-      new Storer<ZZZ>(this).when(true);
+      azzert.notNull(new Storer<TEST>(this));
+      new Storer<TEST>(this).when(true);
     }
     @Test public void use2() {
       azzert.notNull(take(this));
@@ -169,9 +169,23 @@ public interface idiomatic {
       azzert.isNull(take(this).unless(true));
     }
     @Test public void use7() {
+      azzert.isNull(take(this).unless(true));
       azzert.isNull(take(null).unless(true));
+      azzert.isNull(take(null).unless(false));
     }
-  }
+    @Test public void use08() {
+      azzert.isNull(unless(true).eval(() -> new Object()));
+    }
+    @Test public void use09() {
+      azzert.notNull(unless(false).eval(() -> new Object()));
+    }
+  @Test public void use10() {
+      azzert.notNull(when(true).eval(() -> new Object()));
+    }
+  @Test public void use11() {
+      azzert.isNull(when(false).eval(() -> new Object()));
+    }
+}
 
   /** Evaluate a {@link Runnable} when a condition applies or unless a condition
    * applies.

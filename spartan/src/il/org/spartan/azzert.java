@@ -437,11 +437,11 @@ public class azzert extends org.junit.Assert {
       return andNay("", claim);
     }
     public Asserter andNay(final String reason, final boolean claim) {
-      assertFalse(reason, claim);
+      azzert.that(reason, claim, is(false));
       return this;
     }
     public Asserter andAye(final String reason, final boolean claim) {
-      azzert.aye(reason, claim);
+      azzert.that(reason, claim, is(true));
       return this;
     }
   }
