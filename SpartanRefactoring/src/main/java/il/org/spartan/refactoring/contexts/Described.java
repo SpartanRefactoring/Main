@@ -14,7 +14,7 @@ import static il.org.spartan.lazy.Cookbook.value;
  */
 public class Described implements Cookbook {
   /** Direct access to the underlying cell */
-  final Cell<String> description = value("Current project");
+  protected final Cell<String> description = value("Current project");
 
   /** @return contents of the underlying cell; may trigger computation */
   public final String description() {

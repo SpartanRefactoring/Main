@@ -24,7 +24,7 @@ import static il.org.spartan.idiomatic.*;
 /** @author Yossi Gil
  * @since 2016` */
 @SuppressWarnings("javadoc")//
-public class CurrentAST extends CurrentCompilationUnit.Context implements Selfie<CurrentAST> {
+public class CurrentAST extends CurrentCompilationUnit.Context  {
   /** instantiates this class */
   public CurrentAST(CurrentCompilationUnit context) {
     context.super();
@@ -209,7 +209,7 @@ boolean isSelected(final int offset) {
       go(transform(¢));
     }
     /** to be implemented by client: a function to convert nodes to a given type.
-     * @param n
+     * @param n JD
      * @return T TODO Javadoc(2016) automatically generated for returned value
      *         of method <code>transform</code> */
     protected abstract T transform(ASTNode n);

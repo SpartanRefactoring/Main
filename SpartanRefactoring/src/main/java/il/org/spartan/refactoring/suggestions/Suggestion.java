@@ -1,5 +1,20 @@
 package il.org.spartan.refactoring.suggestions;
 
+import static il.org.spartan.lazy.Cookbook.from;
+import static il.org.spartan.lazy.Cookbook.cook;
+import static il.org.spartan.lazy.Cookbook.input;
+import static il.org.spartan.lazy.Cookbook.value;
+import static il.org.spartan.lazy.Cookbook.recipe;
+
+import il.org.spartan.*;
+
+import java.util.*;
+
+import org.eclipse.jdt.core.*;
+
+import static il.org.spartan.refactoring.suggestions.DialogBoxes.*;
+import il.org.spartan.lazy.*;
+import il.org.spartan.refactoring.contexts.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.*;
 import il.org.spartan.utils.*;
@@ -23,9 +38,9 @@ import static org.eclipse.core.runtime.IProgressMonitor.*;
  * @since 2015-08-28
  */
 @SuppressWarnings("javadoc") //
-public class Suggestion extends Context {
+public class Suggestion extends Described {
  public Wring<?> wring() { return wring.get(); }
-  public ASTNode node() { return node.get(); }
+ public ASTNode node() { return node.get(); }
   static Range range(final Range r, final ASTNode... ns) {
     Range $ = r;
     for (final ASTNode n : ns)
@@ -52,10 +67,6 @@ public class Suggestion extends Context {
   }
   public final Change createChange() throws OperationCanceledException {
     return new CompositeChange("" + this, changes.toArray(new Change[changes.size()]));
-  }
-  /** @return current description */
-  @Override public String description() {
-    return description;
   }
   /**
    * @return a quick fix for this instance
@@ -106,7 +117,7 @@ public class Suggestion extends Context {
   }
   /** @return current lineNumber */
   public int lineNumber() {
-    return lineNumber;
+    return lineNumber.get().intValue();
   }
   public Suggestion of(final Range ¢) {
     set(¢);
@@ -114,7 +125,7 @@ public class Suggestion extends Context {
   }
   /** sets this instance description */
   public void of(final String s) {
-    description = s;
+    super.description.set(s);
   }
   public Suggestion of(final Wring<?> ¢) {
     wring.set(¢);
@@ -155,7 +166,7 @@ public class Suggestion extends Context {
   }
   /** @return a textual description of this instance */
   @Override public String toString() {
-    return description != null ? description : getClass().getSimpleName();
+    return description();
   }
   /**
    * Performs the current Spartanization on the provided compilation unit
@@ -182,12 +193,11 @@ public class Suggestion extends Context {
     return $;
   }
   void set(final int lineNumber) {
-    this.lineNumber = lineNumber;
+    this.lineNumber.set(Integer.valueOf(lineNumber));
   }
 
-  final Cell<String>description = ingredient<Sring>(null);
-  final Cell<Integer> lineNumber =  ingredient(lineNumber);
-  final Cell<ASTNode> node = ingredient<ASTNode>(null);
-  final Cell<Range> range = new Recipe<Range>(() -> range(node()));
-  final Cell<Wring<?>> wring = new Ingredient<Wring<?>>();
+  final Cell<Integer> lineNumber =  input();
+  final Cell<Wring<?>> wring =  input();
+  final Cell<ASTNode> node = input();
+  final Cell<Range> range = cook(() -> Funcs.range(node()));
 }
