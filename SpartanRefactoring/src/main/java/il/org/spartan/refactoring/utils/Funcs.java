@@ -326,6 +326,12 @@ public enum Funcs {
   public static Statement elze(final IfStatement s) {
     return s.getElseStatement();
   }
+  /**
+   * As elze but returns the last else statement in "if - else if - ... - else" statement
+   * 
+   * @param s
+   * @return last nested else statement
+   */
   public static Statement recursiveElze(final IfStatement s) {
     Statement $ = s.getElseStatement();
     while ($ instanceof IfStatement)
