@@ -2,8 +2,8 @@ package il.org.spartan.refactoring.contexts;
 
 import il.org.spartan.*;
 import il.org.spartan.lazy.*;
-import il.org.spartan.lazy.Cookbook.*;
-import static il.org.spartan.lazy.Cookbook.*;
+import il.org.spartan.lazy.Environment.*;
+import static il.org.spartan.lazy.Environment.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.suggestions.*;
 import il.org.spartan.refactoring.utils.*;
@@ -109,8 +109,7 @@ boolean isSelected(final int offset) {
   final boolean outOfRange(final ASTNode n) {
     return marker() != null ? !containedIn(n) : !hasSelection() || !notSelected(n);
   }
-  final Cell<Document> document = cook(()->new Document(text()));
-  final Cell<List<@NonNull ASTNode>> allNodes = cook(() -> {
+  final Property<List<@NonNull ASTNode>> allNodes = function(() -> {
     final List<@NonNull ASTNode> $ = new ArrayList<>();
     root().accept(new ProgressVisitor() {
       @Override public void go(final ASTNode n) {
@@ -123,27 +122,27 @@ boolean isSelected(final int offset) {
   // The cells themselves;  
   // @formatter:off
   // Sort alphabetically and placed columns; VIM: +,/^\s*\/\//-!sort -u | column -t | sed "s/^/  /"
-  final Cell<Integer> kind = value(ASTParser.K_COMPILATION_UNIT);
+  final Property<Integer> kind = value(ASTParser.K_COMPILATION_UNIT);
   // Inputs:
   // Sort alphabetically and placed columns; VIM: +,/^\s*\/\//-!sort -u | column -t | sed "s/^/  /"
-  final  Cell<char[]>   array  =  cook(()->  text().toCharArray());
-  final  Cell<IMarker>         marker     =  input();
-  final  Cell<ITextSelection>  selection  =  input();
-  final Cell<Range> range = cook(() -> computeRange());
+  final  Property<char[]>   array  =  function(()->  text().toCharArray());
+  final  Property<IMarker>         marker     =  input();
+  final  Property<ITextSelection>  selection  =  input();
+  final Property<Range> range = function(() -> computeRange());
   // @formatter:on
 
   // More complex recipes:
-  final Cell<ASTParser> parser = from(array, kind).make(() -> {
+  final Property<ASTParser> parser = bind((int kind, char[] cs) -> {
     final ASTParser $ = ASTParser.newParser(AST.JLS8);
-    $.setKind(kind());
+    $.setKind(kind);
     $.setResolveBindings(PluginPreferencesResources.getResolveBindingEnabled());
-    $.setSource(array());
+    $.setSource(cs);
     return $;
-  });
+  }).to(kind, array);
   // Simple recipes:
   // Sort alphabetically and placed columns; VIM: +,/^\s*\/\//-!sort -u | column -t | sed "s/^/  /"
-  final  Cell<ASTNode>  root   =  cook(()->  Make.COMPILIATION_UNIT.parser(context.compilationUnit()).createAST(progressMonitor()));
-  final Cell<List<Suggestion>> suggestions = from(root, allNodes).make(() -> {
+  final  Property<ASTNode>  root   =  function(()->  Make.COMPILIATION_UNIT.parser(context.compilationUnit()).createAST(progressMonitor()));
+  final Property<List<Suggestion>> suggestions = from(root, allNodes).make(() -> {
     begin("Searching for suggestions...", nodeCount());
     final List<Suggestion> $ = new ArrayList<>();
     root().accept(new TransformAndPrune<Suggestion>($) {
@@ -159,15 +158,16 @@ boolean isSelected(final int offset) {
     end();
     return $;
   });
-  final  Cell<String>   text   =  cook(()->  document().get());
+  final Property<String>   text   =  function(()->  document().get());
+  final Property<Document> document = bind((String ¢)->new Document(¢)).to(text);
   // Lazy values
   // Sort alphabetically and placed columns; VIM: +,/^\s*\/\//-!sort -u | column -t | sed "s/^/  /"
-  final  Cell<?>         toolbox   =  from().make(()->  new  Toolbox());
-  /** Inner class, inheriting all of its container's {@link Cell}s, and possibly
-  *adding some of its own. Access to container's c {@link Cells} is through the
+  final  Property<?>         toolbox   =  from().make(()->  new  Toolbox());
+  /** Inner class, inheriting all of its container's {@link Property}s, and possibly
+  *adding some of its own. Access to container's c {@link Property} is through the
      * {@link #context} variable.
      * <p>Clients extend this class to create more specialized contexts, adding more 
-     * {@link Cell}s and {@link Cookbook#recipe(Supplier)}'s.
+     * {@link Property}s and {@link Environment#recipe(Supplier)}'s.
      * @author Yossi Gil
      * @since 2016` */
     public abstract class Context {
