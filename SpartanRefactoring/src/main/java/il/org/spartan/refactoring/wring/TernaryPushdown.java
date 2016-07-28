@@ -127,8 +127,7 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
       case SUPER_METHOD_INVOCATION:
         return pushdown(e, (SuperMethodInvocation) e1, (SuperMethodInvocation) e2);
       case METHOD_INVOCATION:
-        return null;
-//        return pushdown(e, (MethodInvocation) e1, (MethodInvocation) e2);
+        return pushdown(e, (MethodInvocation) e1, (MethodInvocation) e2);
       case INFIX_EXPRESSION:
         return pushdown(e, (InfixExpression) e1, (InfixExpression) e2);
       case ASSIGNMENT:
