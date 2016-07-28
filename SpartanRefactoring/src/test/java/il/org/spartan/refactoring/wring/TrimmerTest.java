@@ -2701,7 +2701,7 @@ import il.org.spartan.refactoring.wring.*;
     TrimmerTestsUtils.trimming("k = k + 4;if (2 * 6 + 4 == k) return true;").to("");
   }
   @Test public void shortestOperand05() {
-    TrimmerTestsUtils.trimming("    final W s = new W(\"bob\");\n" + //
+    TrimmerTestsUtils.trimming("    W s = new W(\"bob\");\n" + //
         "    return s.l(hZ).l(\"-ba\").toString() == \"bob-ha-banai\";").to("return(new W(\"bob\")).l(hZ).l(\"-ba\").toString()==\"bob-ha-banai\";");
   }
   @Test public void shortestOperand09() {
