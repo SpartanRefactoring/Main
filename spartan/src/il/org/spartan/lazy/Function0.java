@@ -6,6 +6,7 @@ package il.org.spartan.lazy;
  * @author Yossi Gil <Yossi.Gil@GMail.COM>
  * @since 2016 */
 @FunctionalInterface public interface Function0<T> {
-  /** @return result of function application */
-  T ϑ();
+  /** @return result of function application
+   * @throws Exception in case the function failed */
+  T ϑ() throws Exception;
 }

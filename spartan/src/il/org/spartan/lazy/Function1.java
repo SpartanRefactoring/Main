@@ -9,6 +9,7 @@ package il.org.spartan.lazy;
 @FunctionalInterface public interface Function1<T, A> {
   /** Encapsulated function
    * @param ¢ JD
+   * @throws Exception in case the function failed
    * @return the result of applying the function to the argument */
-  T ϑ(A ¢);
+  T ϑ(A ¢) throws Exception;
 }

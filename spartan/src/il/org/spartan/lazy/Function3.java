@@ -14,6 +14,7 @@ package il.org.spartan.lazy;
    * @param ¢1 1st argument
    * @param ¢2 2nd argument
    * @param ¢3 3rd argument
+   * @throws Exception in case the function failed
    * @return the result of applying the function to the arguments */
-  T ϑ(A1 ¢1, A2 ¢2, A3 ¢3);
+  T ϑ(A1 ¢1, A2 ¢2, A3 ¢3) throws Exception;
   }
