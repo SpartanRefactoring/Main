@@ -280,9 +280,9 @@ import il.org.spartan.refactoring.wring.Trimmer;
   }
   @Test(timeout = 2000) public void ternarize18() {
     assertConvertsTo(//
-        "    final String s = X;\n" + //
-            "    final String res = s;\n" + //
-            "    final int a = 0;\n" + //
+        "    String s = X;\n" + //
+            "    String res = s;\n" + //
+            "    int a = 0;\n" + //
             "    if (s.equals(res))\n" + //
             "      System.out.println(tH3 + res);\n" + //
             "    else\n" + //
