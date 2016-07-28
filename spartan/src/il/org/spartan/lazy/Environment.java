@@ -77,10 +77,10 @@ import org.junit.*;
   public static <@Nullable T> Property<T> undefined() {
     return new Property<>();
   }
-  /** A factory method of class {@link Property} of an {@Integer} as in
+  /** A factory method of class {@link Property} of an {@link Integer} as in
    *
    * <pre>
-   * Property&lt;String&gt; genesis = Cookbook.value(2);
+   * Property&lt;Integer&gt; genesis = {@link Environment}.value(2);
    * </pre>
    * @param i JD
    * @return the newly created instance of {@link Ingredient} */

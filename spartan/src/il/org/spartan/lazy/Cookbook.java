@@ -108,8 +108,7 @@ public interface Cookbook {
   public static <T> Recipe<@Nullable T> recipe(final Supplier<T> supplier) {
     return new Recipe<>(supplier);
   }
-  /** A factory method for class {@link Ingredient} of an {@Integer} as
-   * in
+  /** A factory method for class {@link Ingredient} of an {@link Integer} as in
    * 
    * <pre>
    * Cell&lt;String&gt; genesis = Cookbook.value(2);
