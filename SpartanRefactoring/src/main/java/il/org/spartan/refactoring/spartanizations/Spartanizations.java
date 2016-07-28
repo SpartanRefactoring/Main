@@ -15,8 +15,6 @@ import il.org.spartan.refactoring.wring.Trimmer;
 public class Spartanizations {
   private static Spartanization[] all = { //
       new Trimmer(), //
-      // new ForwardDeclaration(), //
-      // new InlineSingleUse(), //
   };
   @SuppressWarnings("synthetic-access") //
   private static final Map<String, Spartanization> map = new HashMap<String, Spartanization>() {
