@@ -1,8 +1,10 @@
 package il.org.spartan.refactoring.contexts;
 
-import static il.org.spartan.lazy.Cookbook.cook;
+import static il.org.spartan.lazy.Environment.function;
 
 import il.org.spartan.*;
+import il.org.spartan.lazy.*;
+import il.org.spartan.lazy.Environment.Property;
 import static il.org.spartan.azzert.positive;
 
 import org.junit.Test;
@@ -29,17 +31,17 @@ import org.eclipse.ui.*;
   
   // @formatter:off 
   // VIM: +,/formatter:on/- | column -t | sed "s/^/  /"
-  final  Cell<IWorkbench>        workbench              =  cook(()->  PlatformUI.getWorkbench());
-  final  Cell<IWorkbenchWindow>  activeWorkBenchWindow  =  cook(()->  workbench().getActiveWorkbenchWindow());
-  final  Cell<IWorkbenchPage>    activePage             =  cook(()->  activeWorkBenchWindow().getActivePage());
-  final  Cell<IEditorPart>       activeEditor           =  cook(()->  activePage().getActiveEditor());
-  final  Cell<IEditorInput>      editorInput            =  cook(()->  activeEditor().getEditorInput());
-  final  Cell<IResource>         resource               =  cook(()->  (IResource)editorInput().getAdapter(IResource.class));
-  final  Cell<IFile>             iFile                  =  cook(()->  (IFile)resource());
-  final  Cell<ICompilationUnit>  compilationUnit        =  cook(()->  JavaCore.createCompilationUnitFrom(iFile()));
-  final  Cell<IJavaProject>      javaProject            =  cook(()->  compilationUnit().getJavaProject());
+  final  Property<IWorkbench>        workbench              =  function(()->  PlatformUI.getWorkbench());
+  final  Property<IWorkbenchWindow>  activeWorkBenchWindow  =  function(()->  workbench().getActiveWorkbenchWindow());
+  final  Property<IWorkbenchPage>    activePage             =  function(()->  activeWorkBenchWindow().getActivePage());
+  final  Property<IEditorPart>       activeEditor           =  function(()->  activePage().getActiveEditor());
+  final  Property<IEditorInput>      editorInput            =  function(()->  activeEditor().getEditorInput());
+  final  Property<IResource>         resource               =  function(()->  (IResource)editorInput().getAdapter(IResource.class));
+  final  Property<IFile>             iFile                  =  function(()->  (IFile)resource());
+  final  Property<ICompilationUnit>  compilationUnit        =  function(()->  JavaCore.createCompilationUnitFrom(iFile()));
+  final  Property<IJavaProject>      javaProject            =  function(()->  compilationUnit().getJavaProject());
   // @formatter:on
-  /** Inner class, inheriting all of its container's {@link Cell}s, and adding
+  /** Inner class, inheriting all of its container's {@link Property}s, and adding
    * some of its own. Access to container's c {@link Cells} is through the
    * {@link #context} variable.
    * @author Yossi Gil
