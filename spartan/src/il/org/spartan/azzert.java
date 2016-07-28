@@ -463,4 +463,9 @@ public class azzert extends org.junit.Assert {
   public static void zero(final int i) {
     assertEquals(0, i);
   }
+  /** Assert that long is zero
+   * @param l JD */
+  public static void zero(final long l) {
+    assertEquals(0, l);
+  }
 }
