@@ -8,7 +8,6 @@ package il.org.spartan.lazy;
  * @param <A3> type of the 3rd argument
  * @author Yossi Gil <Yossi.Gil@GMail.COM>
  * @since 2016 */
-
 @FunctionalInterface public interface Function3<T, A1, A2, A3> {
   /** Encapsulated function
    * @param ¢1 1st argument
@@ -17,4 +16,4 @@ package il.org.spartan.lazy;
    * @throws Exception in case the function failed
    * @return the result of applying the function to the arguments */
   T ϑ(A1 ¢1, A2 ¢2, A3 ¢3) throws Exception;
-  }
+}
