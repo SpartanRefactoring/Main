@@ -61,7 +61,6 @@ public enum Is {
     return blockRequiredInReplacement(s1, s1);
   }
   public static boolean blockRequiredInReplacement(final IfStatement old, final IfStatement newIf) {
-    System.out.println("OK");
     if (newIf == null || old != newIf && elze(old) == null == (elze(newIf) == null))
       return false;
     final IfStatement parent = asIfStatement(parent(old));
