@@ -126,8 +126,8 @@ boolean isSelected(final int offset) {
   // Inputs:
   // Sort alphabetically and placed columns; VIM: +,/^\s*\/\//-!sort -u | column -t | sed "s/^/  /"
   final  Property<char[]>   array  =  function(()->  text().toCharArray());
-  final  Property<IMarker>         marker     =  input();
-  final  Property<ITextSelection>  selection  =  input();
+  final  Property<IMarker>         marker     =  undefined();
+  final  Property<ITextSelection>  selection  =  undefined();
   final Property<Range> range = function(() -> computeRange());
   // @formatter:on
 
