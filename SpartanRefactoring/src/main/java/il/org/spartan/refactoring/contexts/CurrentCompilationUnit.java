@@ -1,17 +1,14 @@
 package il.org.spartan.refactoring.contexts;
 
-import static il.org.spartan.lazy.Environment.function;
-
 import il.org.spartan.*;
-import il.org.spartan.lazy.*;
 import il.org.spartan.lazy.Environment.Property;
-import static il.org.spartan.azzert.positive;
 
-import org.junit.Test;
-import org.mockito.internal.matchers.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.ui.*;
+import org.junit.*;
+
+import static il.org.spartan.lazy.Environment.*;
 
 /** @author Yossi Gil
  * @since 2016 */
@@ -32,7 +29,7 @@ import org.eclipse.ui.*;
   // @formatter:off 
   // VIM: +,/formatter:on/- | column -t | sed "s/^/  /"
   final  Property<IWorkbench>        workbench              =  function(()->  PlatformUI.getWorkbench());
-  final  Property<IWorkbenchWindow>  activeWorkBenchWindow  =  function(()->  workbench().getActiveWorkbenchWindow());
+  final  Property<IWorkbenchWindow>  activeWorkBenchWindow  =  bind((IWorkBench ¢)->  ¢.getActiveWorkbenchWindow()).to(workbench);
   final  Property<IWorkbenchPage>    activePage             =  function(()->  activeWorkBenchWindow().getActivePage());
   final  Property<IEditorPart>       activeEditor           =  function(()->  activePage().getActiveEditor());
   final  Property<IEditorInput>      editorInput            =  function(()->  activeEditor().getEditorInput());
