@@ -1,6 +1,9 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.lazy;
 
+/** TODO(2016) Javadoc: document class <code></code>
+ * @author Yossi Gil <Yossi.Gil@GMail.COM>
+ * @since 2016 */
 public class IdentifierLetters {
   public static void main(String[] args) {
     for (int i = Character.MIN_CODE_POINT; i <= Character.MAX_CODE_POINT; i++)

@@ -266,9 +266,8 @@ import org.junit.*;
       version = latestPrequisiteVersion() + 1;
       return cache(t);
     }
-    /** TODO Javadoc(2016): automatically generated for method
-     * <code>undefine</code>
-     * @return this */
+    /** puts this instance in an undefined state
+     * @return <code><b>this</b></code> */
     public Property<@Nullable T> undefine() {
       cache(null);
       return this;
@@ -337,7 +336,7 @@ import org.junit.*;
     @Nullable Function0<? extends @Nullable T> ϑ = null;
   }
 
-  @SuppressWarnings({ "javadoc", "static-method", "null" }) public static class TEST {
+  @SuppressWarnings({ "static-method", "null" }) public static class TEST {
     private static final String EMPTY = "";
     private static final int FIRST_MAGIC_NUMBER = 1729;
     private static final String HELLO = "Hello";
@@ -395,7 +394,7 @@ import org.junit.*;
       azzert.that(integer.ϑ(), is(FIRST_MAGIC_NUMBER));
       azzert.that(supplierCalls, is(1));
       azzert.that(integer.get(), is(FIRST_MAGIC_NUMBER));
-      integer.set(SECOND_MAGIC_NUMBER);
+      integer.set(Integer.valueOf(SECOND_MAGIC_NUMBER));
       azzert.aye(integer.updated());
       azzert.that(integer.get(), is(SECOND_MAGIC_NUMBER));
       azzert.that(supplierCalls, is(1L));
@@ -440,8 +439,10 @@ import org.junit.*;
       azzert.that(helloWorld.get(), iz(WORLD + SEPARATOR + WORLD));
     }
     @Test public void seriesA7() {
+      // TODO: fill this test case
     }
     @Test public void seriesA8() {
+      // TODO: fill this test case
     }
     @Test public void seriesA9() {
       final Property<String> a = value(EMPTY);

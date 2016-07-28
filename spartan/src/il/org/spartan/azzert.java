@@ -8,10 +8,8 @@ import org.hamcrest.*;
 import org.hamcrest.core.*;
 import org.hamcrest.number.*;
 
-/**
- * @author Yossi Gil
- * @since 2015-07-18
- */
+/** @author Yossi Gil
+ * @since 2015-07-18 */
 @SuppressWarnings({ "javadoc", "null" })//
 public class azzert extends org.junit.Assert {
   public static <T> Matcher<T> allOf(final java.lang.Iterable<Matcher<? super T>> matchers) {
@@ -23,16 +21,13 @@ public class azzert extends org.junit.Assert {
   public static <T> Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second) {
     return AllOf.<T> allOf(first, second);
   }
-  public static <T> Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second,
-      final Matcher<? super T> third) {
+  public static <T> Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second, final Matcher<? super T> third) {
     return AllOf.<T> allOf(first, second, third);
   }
-  public static <T> Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second,
-      final Matcher<? super T> third, final Matcher<? super T> fourth, final Matcher<? super T> fifth) {
+  public static <T> Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second, final Matcher<? super T> third, final Matcher<? super T> fourth, final Matcher<? super T> fifth) {
     return AllOf.<T> allOf(first, second, third, fourth, fifth);
   }
-  public static <T> Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second,
-      final Matcher<? super T> third, final Matcher<? super T> fourth, final Matcher<? super T> fifth,
+  public static <T> Matcher<T> allOf(final Matcher<? super T> first, final Matcher<? super T> second, final Matcher<? super T> third, final Matcher<? super T> fourth, final Matcher<? super T> fifth,
       final Matcher<? super T> sixth) {
     return AllOf.<T> allOf(first, second, third, fourth, fifth, sixth);
   }
@@ -51,16 +46,14 @@ public class azzert extends org.junit.Assert {
   public static <T> @Nullable AnyOf<T> anyOf(final Matcher<T> first, final Matcher<? super T> second, final Matcher<? super T> third) {
     return AnyOf.<T> anyOf(first, second, third);
   }
-  public static <T> @Nullable AnyOf<T> anyOf(final Matcher<T> first, final Matcher<? super T> second,
-      final Matcher<? super T> third, final Matcher<? super T> fourth) {
+  public static <T> @Nullable AnyOf<T> anyOf(final Matcher<T> first, final Matcher<? super T> second, final Matcher<? super T> third, final Matcher<? super T> fourth) {
     return AnyOf.<T> anyOf(first, second, third, fourth);
   }
-  public static <T> @Nullable AnyOf<@Nullable T> anyOf(final Matcher<T> first, final Matcher<? super T> second,
-      final Matcher<? super T> third, final Matcher<? super T> fourth, final Matcher<? super T> fifth) {
+  public static <T> @Nullable AnyOf<@Nullable T> anyOf(final Matcher<T> first, final Matcher<? super T> second, final Matcher<? super T> third, final Matcher<? super T> fourth,
+      final Matcher<? super T> fifth) {
     return AnyOf.<T> anyOf(first, second, third, fourth, fifth);
   }
-  public static <T> @Nullable AnyOf<T> anyOf(final Matcher<T> first, final Matcher<? super T> second,
-      final Matcher<? super T> third, final Matcher<? super T> fourth, final Matcher<? super T> fifth,
+  public static <T> @Nullable AnyOf<T> anyOf(final Matcher<T> first, final Matcher<? super T> second, final Matcher<? super T> third, final Matcher<? super T> fourth, final Matcher<? super T> fifth,
       final Matcher<? super T> sixth) {
     return AnyOf.<T> anyOf(first, second, third, fourth, fifth, sixth);
   }
@@ -239,7 +232,7 @@ public class azzert extends org.junit.Assert {
     return Is.<T> isA(type);
   }
   @SuppressWarnings("unused") public static final Wrapper<String> iz(final String s) {
-    return new Wrapper<String>(s);
+    return new Wrapper<@NonNull String>(s);
   }
   @Factory public static Matcher<@Nullable Boolean> lessThan(final boolean b) {
     return OrderingComparison.lessThan(Boolean.valueOf(b));
@@ -412,8 +405,7 @@ public class azzert extends org.junit.Assert {
   public static void that(final String reason, final short s, final Matcher<? super Short> m) {
     assertThat(reason, Short.valueOf(s), m);
   }
-  public static <@Nullable T> void that(final String reason, final @Nullable T actual,
- final Matcher<? super @Nullable T> matcher) {
+  public static <@Nullable T> void that(final String reason, final @Nullable T actual, final Matcher<? super @Nullable T> matcher) {
     assertThat(reason, actual, matcher);
   }
   public static Asserter aye(final boolean claim) {
@@ -455,11 +447,8 @@ public class azzert extends org.junit.Assert {
   public static void falze(final boolean b) {
     assertFalse("", b);
   }
-  /**
-   * Assert that an integer is zero
-   *
-   * @param i JD
-   */
+  /** Assert that an integer is zero
+   * @param i JD */
   public static void zero(final int i) {
     assertEquals(0, i);
   }

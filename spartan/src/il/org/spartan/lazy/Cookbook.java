@@ -189,7 +189,7 @@ public interface Cookbook {
       );
       final Cell<String> zzz = new Ingredient<String>().of("zzz");
 
-      @SuppressWarnings({ "null", "synthetic-access" })//
+      @SuppressWarnings({ "synthetic-access" })//
       public static class TEST extends A {
         @Test public void sessionA00() {
           azzert.that(wrap(), is("<p>"));

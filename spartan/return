@@ -2,9 +2,9 @@
 <em>iff</em> one or more of the parameters is
 <em>iff</em> the parameter has
 <em>iff</em> the parameter is
-@return 1 if the parameter is true, 0 otherwise
+@return <code>1</code> if the parameter is true, 0 otherwise
 @return an array of 
-@return an array of length 0 of instances of <code>T</code>.
+@return an array of length <code>0</code> of instances of <code>T</code>.
 @return an array of {@link Something} of the same length as that of 
 @return an array of {@link Something} of length <code>12</code>
 @return an array of the parameter values, each converted to i
@@ -32,7 +32,7 @@
 @return never! The <code><b>none</b></code> type. There is no legal value
 @return the newly created array
 @return the newly created {@link Something} instance
-@return the next value in the 
+@return the next value in the parameter
 @return the number of
 @return the parameter
 @return the parameter, after all such occurrences are removed.

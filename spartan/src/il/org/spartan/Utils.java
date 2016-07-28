@@ -200,7 +200,7 @@ public interface Utils {
    * @return the last item in a list or <code><b>null</b></code> if the
    *         parameter is <code><b>null</b></code> or empty
    */
-  public static <T> @Nullable T last(final @Nullable List<T> ts) {
+  @SuppressWarnings("null") public static <T> @Nullable T last(final @Nullable List<T> ts) {
     return eval(() -> ts.get(ts.size() - 1)).unless(ts == null || ts.isEmpty());
   }
   /**
