@@ -53,8 +53,7 @@ import org.junit.*;
  * apply
  * @author Yossi Gil <Yossi.Gil@GMail.COM>
  * @since 2016 */
-@SuppressWarnings("javadoc")
-public interface Environment {
+@SuppressWarnings("javadoc") public interface Environment {
   public static <@Nullable T, @Nullable A> Binder1<T, A> bind(final Function1<T, A> f) {
     return new Property<T>().bind(f);
   }
@@ -67,8 +66,8 @@ public interface Environment {
   public static <@Nullable T, @Nullable A1, @Nullable A2, @Nullable A3, @Nullable A4> Binder4<T, A1, A2, A3, A4> bind(final Function4<T, A1, A2, A3, A4> f) {
     return new Property<T>().bind(f);
   }
-  public static <@Nullable T> Property<T> supplier(final Function0<T> supplier) {
-    return new Property<T>().of(supplier);
+  public static <@Nullable T> Property<T> function(final Function0<T> f) {
+    return new Property<T>().set(f);
   }
   /** A factory method of class {@link Property} returning an undefined value for
    * a cell
@@ -345,7 +344,7 @@ public interface Environment {
     private static final int SECOND_MAGIC_NUMBER = FIRST_MAGIC_NUMBER ^ FIRST_MAGIC_NUMBER << 1;
     private static final String SEPARATOR = ", ";
     private static final String WORLD = "World!";
-  
+
     @Before public void init() {
       nullProperty = null;
       undefinedProperty = undefined();
@@ -378,7 +377,6 @@ public interface Environment {
       helloWorld.bind((String ¢1, String ¢2, String ¢3, String ¢4) -> (¢1 + ¢2 + ¢3 + ¢4)).to(hello, world, hello, world);
       azzert.that(helloWorld.ϑ(), iz(HELLO + WORLD + HELLO + WORLD));
     }
-  
     @Test public void seriesA4() {
       azzert.that(supplierCalls, is(0));
       azzert.that(integer.version(), is(0L));
@@ -463,16 +461,16 @@ public interface Environment {
       b.bind((final String ¢) -> "Hello, " + a.ϑ()).to(a);
       b.bind((final String ¢) -> "Hello, " + a.ϑ()).to(a);
     }
+
     private Property<String> emptyString;
     private Property<String> hello;
-  
     private Property<String> helloWorld;
     private Property<String> nullProperty;
     private Property<String> separator;
     private int supplierCalls;
     private Property<String> undefinedProperty = undefined();
     private Property<String> world;
-    Property<Integer> integer = supplier(() -> {
+    Property<Integer> integer = function(() -> {
       supplierCalls++;
       return Integer.valueOf(FIRST_MAGIC_NUMBER);
     });
