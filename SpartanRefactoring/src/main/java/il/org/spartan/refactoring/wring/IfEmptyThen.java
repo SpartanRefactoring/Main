@@ -24,7 +24,7 @@ public final class IfEmptyThen extends Wring.ReplaceCurrentNode<IfStatement> {
   @Override boolean scopeIncludes(final IfStatement s) {
     return s != null && Is.vacuousThen(s) && !Is.vacuousElse(s);
   }
-  @Override String description(@SuppressWarnings("unused") final IfStatement _) {
+  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Invert conditional and remove vacuous 'then' branch";
   }
   @Override WringGroup wringGroup() {

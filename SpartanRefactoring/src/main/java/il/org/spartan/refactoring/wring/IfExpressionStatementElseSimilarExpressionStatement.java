@@ -33,7 +33,7 @@ public final class IfExpressionStatementElseSimilarExpressionStatement extends W
     final Expression e = pushdown(Subject.pair(then, elze).toCondition(s.getExpression()));
     return e == null ? null : Subject.operand(e).toStatement();
   }
-  @Override String description(@SuppressWarnings("unused") final IfStatement _) {
+  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate two branches of an 'if' into a single ";
   }
   @Override WringGroup wringGroup() {

@@ -30,7 +30,7 @@ public final class IfReturnFooElseReturnBar extends Wring.ReplaceCurrentNode<IfS
   @Override boolean scopeIncludes(final IfStatement s) {
     return s != null && Extract.returnExpression(then(s)) != null && Extract.returnExpression(elze(s)) != null;
   }
-  @Override String description(@SuppressWarnings("unused") final IfStatement _) {
+  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Replace if with a return of a conditional statement";
   }
   @Override WringGroup wringGroup() {

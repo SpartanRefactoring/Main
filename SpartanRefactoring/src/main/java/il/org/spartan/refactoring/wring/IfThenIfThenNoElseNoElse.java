@@ -21,7 +21,7 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2015-09-01
  */
 public final class IfThenIfThenNoElseNoElse extends Wring<IfStatement> {
-  @Override String description(@SuppressWarnings("unused") final IfStatement _) {
+  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Merge conditionals of nested if staement";
   }
   @Override boolean scopeIncludes(final IfStatement s) {

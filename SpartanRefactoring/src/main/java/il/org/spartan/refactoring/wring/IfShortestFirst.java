@@ -18,7 +18,7 @@ public final class IfShortestFirst extends Wring.ReplaceCurrentNode<IfStatement>
   @Override Statement replacement(final IfStatement s) {
     return Wrings.thenIsShorter(s) ? null : invert(s);
   }
-  @Override String description(@SuppressWarnings("unused") final IfStatement _) {
+  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Invert logical conditiona and swap branches of 'if' to make the shortest branch first";
   }
   @Override WringGroup wringGroup() {
