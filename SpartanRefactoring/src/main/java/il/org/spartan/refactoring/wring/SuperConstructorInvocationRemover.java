@@ -11,7 +11,7 @@ import il.org.spartan.refactoring.utils.Rewrite;
  * A wring to remove <code>super()</code> calls which take no arguments, as
  * typically created by Eclipse's template for constructors.
  *
- * @author Yossi Gil
+ * @author Daniel Mittelman? 
  * @since 2015-08-26
  */
 public class SuperConstructorInvocationRemover extends Wring<SuperConstructorInvocation> {
