@@ -3,22 +3,23 @@ package il.org.spartan.refactoring.contexts;
 
 import il.org.spartan.lazy.*;
 
-import static il.org.spartan.lazy.Cookbook.value;
+import static il.org.spartan.lazy.Environment.value;
+import il.org.spartan.lazy.Environment.Property;
 
 /**
- * a {@link Cookbook} for described entities
+ * a {@link Environment} for described entities
  * 
  * @author Yossi Gil
  *
  * @since 2016`
  */
-public class Described implements Cookbook {
+public class Described implements Environment {
   /** Direct access to the underlying cell */
-  protected final Cell<String> description = value("Current project");
+  protected final Property<String> description = value("Current something");
 
   /** @return contents of the underlying cell; may trigger computation */
   public final String description() {
-    return description.get();
+    return description.ϑ();
   }
 
   /**

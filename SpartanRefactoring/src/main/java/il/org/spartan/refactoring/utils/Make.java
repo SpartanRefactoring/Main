@@ -25,13 +25,13 @@ public enum Make {
   /** Strategy for conversion into a class body */
   CLASS_BODY_DECLARATIONS(ASTParser.K_CLASS_BODY_DECLARATIONS); //
   /**
-   * Converts the {@link ast} value to its corresponding {@link Make} enum value
+   * Converts the {@link MakeAST} value to its corresponding {@link Make} enum value
    *
    * @param a
-   *          The {@link ast} type
+   *          The {@link MakeAST} type
    * @return the corresponding {@link Make} value to the argument
    */
-  public static Make of(final ast a) {
+  public static Make of(final MakeAST a) {
     switch (a) {
       case STATEMENTS:
         return Make.STATEMENTS;
@@ -105,7 +105,7 @@ public enum Make {
    * @return the created parser
    */
   public ASTParser parser(final IMarker m) {
-    return parser(ast.iCompilationUnit(m));
+    return parser(MakeAST.iCompilationUnit(m));
   }
   /**
    * Creates a no-binding parser for a given text

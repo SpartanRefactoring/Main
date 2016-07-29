@@ -52,7 +52,7 @@ public class IfCommandsSequencerElseSomethingTest {
     that(w, notNullValue());
     that(w, instanceOf(WRING.getClass()));
     final String wrap = Wrap.Statement.on(s.toString());
-    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(wrap);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILIATION_UNIT.from(wrap);
     that(u, notNullValue());
     final Document d = new Document(wrap);
     that(d, notNullValue());
@@ -70,7 +70,7 @@ public class IfCommandsSequencerElseSomethingTest {
   @org.junit.Test public void checkStepsTrimmer() throws MalformedTreeException, BadLocationException {
     final String input = "if (a) return b; else a();";
     final String wrap = Wrap.Statement.on(input);
-    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(wrap);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILIATION_UNIT.from(wrap);
     that(u, notNullValue());
     final IfStatement s = extract.firstIfStatement(u);
     that(s, notNullValue());

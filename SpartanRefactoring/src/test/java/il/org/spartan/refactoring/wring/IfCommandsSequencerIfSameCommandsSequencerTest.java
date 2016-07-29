@@ -28,7 +28,7 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
 
   @Test public void checkFirstIfStatement1() {
     final String s = "if (a) return b; if (b) return b;";
-    final ASTNode n = ast.STATEMENTS.from(s);
+    final ASTNode n = MakeAST.STATEMENTS.from(s);
     azzert.that(n, notNullValue());
     final IfStatement i = extract.firstIfStatement(n);
     azzert.that(n.toString(), i, notNullValue());
@@ -37,13 +37,13 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
   }
   @Test public void checkFirstIfStatement2() {
     final String s = "if (a) return b; else return a();";
-    final IfStatement i = extract.firstIfStatement(ast.STATEMENTS.from(s));
+    final IfStatement i = extract.firstIfStatement(MakeAST.STATEMENTS.from(s));
     azzert.that(i, notNullValue());
     azzert.that(i.toString(), WRING.scopeIncludes(i), is(false));
   }
   @Test public void checkFirstIfStatement3() {
     final String s = "if (a) a= b; else a=c;";
-    final IfStatement i = extract.firstIfStatement(ast.STATEMENTS.from(s));
+    final IfStatement i = extract.firstIfStatement(MakeAST.STATEMENTS.from(s));
     azzert.that(i, notNullValue());
     azzert.that(i.toString(), WRING.scopeIncludes(i), is(false));
   }
@@ -154,7 +154,7 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
       azzert.that(extract.nextIfStatement(asMe()), notNullValue());
     }
     @Test public void isfStatementElseIsEmpty() {
-      azzert.that(extract.statements(elze(extract.firstIfStatement(ast.STATEMENTS.from(input)))).size(), is(0));
+      azzert.that(extract.statements(elze(extract.firstIfStatement(MakeAST.STATEMENTS.from(input)))).size(), is(0));
     }
     @Test public void isIfStatement() {
       azzert.that(input, asMe(), notNullValue());

@@ -2,6 +2,7 @@ package il.org.spartan.refactoring.contexts;
 
 import il.org.spartan.*;
 import il.org.spartan.lazy.*;
+import il.org.spartan.refactoring.utils.MakeAST;
 import il.org.spartan.lazy.Environment.*;
 import static il.org.spartan.lazy.Environment.*;
 import il.org.spartan.refactoring.preferences.*;
@@ -16,6 +17,7 @@ import java.util.function.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.annotation.*;
+import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
@@ -23,8 +25,8 @@ import static il.org.spartan.idiomatic.*;
 
 /** @author Yossi Gil
  * @since 2016` */
-@SuppressWarnings("javadoc")//
-public class CurrentAST extends CurrentCompilationUnit.Context  {
+@SuppressWarnings("javadoc") //
+public class CurrentAST extends CurrentCompilationUnit.Environment {
   /** instantiates this class */
   public CurrentAST(CurrentCompilationUnit context) {
     context.super();
@@ -38,11 +40,11 @@ public class CurrentAST extends CurrentCompilationUnit.Context  {
       throw new RuntimeException(e);
     }
   }
-  // Getters of all cells, which provide access to their cached or recomputed 
-  // content 
+  // Getters of all cells, which provide access to their cached or recomputed
+  // content
   //
-  // Sort alphabetically and placed in columns; 
-  // VIM: /^\s*[^\/ \t][^\/ \t]/;/^\s*\/\//-!sort -u | column -t | sed "s/^/  /"
+  // Sort alphabetically and placed in columns;
+  // VIM: /^\s*[^\/ \t][^\/ \t]/;/^\s*\/\//-!sort -u | column -t | sed "s/^/ /"
   // @formatter:off
   public  ASTNode           root()         {  return  root.get();             }
   public  char[]            array()        {  return  array.get();            }
@@ -77,9 +79,6 @@ public class CurrentAST extends CurrentCompilationUnit.Context  {
   final boolean containedIn(final ASTNode n) {
     return range().includedIn(Funcs.range(n));
   }
-  @SuppressWarnings("static-method") void exec(final Runnable r) {
-    r.run();
-  }
   final boolean hasSelection() {
     return selection() != null && !selection().isEmpty() && selection().getLength() != 0;
   }
@@ -97,9 +96,9 @@ public class CurrentAST extends CurrentCompilationUnit.Context  {
       return true;
     }
   }
-boolean isSelected(final int offset) {
-  return hasSelection() && offset >= selection().getOffset() && offset < selection().getLength() + selection().getOffset();
-}
+  boolean isSelected(final int offset) {
+    return hasSelection() && offset >= selection().getOffset() && offset < selection().getLength() + selection().getOffset();
+  }
   /** Determines if the node is outside of the selected text.
    * @return true if the node is not inside selection. If there is no selection
    *         at all will return false. */
@@ -118,39 +117,38 @@ boolean isSelected(final int offset) {
     });
     return $;
   });
-  //
-  // The cells themselves;  
   // @formatter:off
-  // Sort alphabetically and placed columns; VIM: +,/^\s*\/\//-!sort -u | column -t | sed "s/^/  /"
-  final Property<Integer> kind = value(ASTParser.K_COMPILATION_UNIT);
-  // Inputs:
-  // Sort alphabetically and placed columns; VIM: +,/^\s*\/\//-!sort -u | column -t | sed "s/^/  /"
-  final  Property<char[]>   array  =  function(()->  text().toCharArray());
+  // Suppliers: can be sorted.
+  // Sort alphabetically, organize in columns, indent. VIM: /^\s*[^*\/][^*\/]/,/^\s*\/\//-!sort -u | column -t | sed "s/^/  /"
+  final  Property<ASTNode>         root       =  bind((ICompilationUnit ¢)->MakeAST.COMPILIATION_UNIT.from(parent.compilationUnit.get()).createAST(progressMonitor()));
   final  Property<IMarker>         marker     =  undefined();
+  final  Property<Integer>         kind       =  value(ASTParser.K_COMPILATION_UNIT);
   final  Property<ITextSelection>  selection  =  undefined();
-  final Property<Range> range = function(() -> computeRange());
+// Bindings: cannot be sorted 
+  // Organize in columns, indent, but do not sort. VIM: /^\s*[^*\/][^*\/]/,/^\s*\/\//-!column -t | sed "s/^/  /"
+  final  Property<Document>        document   =  function(()                           ->  new  Document(¢)).to(text);
+  final  Property<String>    text      =  function(()   ->  document().get());
+  final  Property<char[]>    array     =  function(()   ->  text().toCharArray());
+  final  Property<Range>     range     =  function(()   ->  computeRange());
   // @formatter:on
-
   // More complex recipes:
-  final Property<ASTParser> parser = bind((int kind, char[] cs) -> {
+  final Property<ASTParser> parser = bind((@SuppressWarnings("hiding") Integer kind, char[] cs) -> {
     final ASTParser $ = ASTParser.newParser(AST.JLS8);
-    $.setKind(kind);
+    $.setKind(kind.intValue());
     $.setResolveBindings(PluginPreferencesResources.getResolveBindingEnabled());
     $.setSource(cs);
     return $;
   }).to(kind, array);
   // Simple recipes:
-  // Sort alphabetically and placed columns; VIM: +,/^\s*\/\//-!sort -u | column -t | sed "s/^/  /"
-  final  Property<ASTNode>  root   =  function(()->  Make.COMPILIATION_UNIT.parser(context.compilationUnit()).createAST(progressMonitor()));
+  // Sort alphabetically and placed columns; VIM: +,/^\s*\/\//-!sort -u | column
+  // -t | sed "s/^/ /"
   final Property<List<Suggestion>> suggestions = from(root, allNodes).make(() -> {
     begin("Searching for suggestions...", nodeCount());
     final List<Suggestion> $ = new ArrayList<>();
     root().accept(new TransformAndPrune<Suggestion>($) {
       /** Simply return null by default */
-      /**
-       * @param n 
-       * @return {@link Suggestion} made for this node. 
-       */
+      /** @param n
+       * @return {@link Suggestion} made for this node. */
       @Override protected Suggestion transform(final ASTNode n) {
         return null;
       }
@@ -158,22 +156,23 @@ boolean isSelected(final int offset) {
     end();
     return $;
   });
-  final Property<String>   text   =  function(()->  document().get());
-  final Property<Document> document = bind((String ¢)->new Document(¢)).to(text);
   // Lazy values
-  // Sort alphabetically and placed columns; VIM: +,/^\s*\/\//-!sort -u | column -t | sed "s/^/  /"
-  final  Property<?>         toolbox   =  from().make(()->  new  Toolbox());
-  /** Inner class, inheriting all of its container's {@link Property}s, and possibly
-  *adding some of its own. Access to container's c {@link Property} is through the
-     * {@link #context} variable.
-     * <p>Clients extend this class to create more specialized contexts, adding more 
-     * {@link Property}s and {@link Environment#recipe(Supplier)}'s.
-     * @author Yossi Gil
-     * @since 2016` */
-    public abstract class Context {
-      /** the containing instance */
-      @SuppressWarnings("hiding") protected final CurrentAST context = CurrentAST.this;
-    }
+  // Sort alphabetically and placed columns; VIM: +,/^\s*\/\//-!sort -u | column
+  // -t | sed "s/^/ /"
+  final Property<?> toolbox = from().make(() -> new Toolbox());
+
+  /** Inner class, inheriting all of its container's {@link Property}s, and
+   * possibly adding some of its own. Access to container's c {@link Property}
+   * is through the {@link #context} variable.
+   * <p>
+   * Clients extend this class to create more specialized contexts, adding more
+   * {@link Property}s and {@link Environment#recipe(Supplier)}'s.
+   * @author Yossi Gil
+   * @since 2016` */
+  public abstract class Environment {
+    /** the containing instance */
+    @SuppressWarnings("hiding") protected final CurrentAST parent = CurrentAST.this;
+  }
 
   public abstract class ProgressVisitor extends ASTVisitor {
     public boolean filter(final ASTNode n) {
@@ -193,7 +192,6 @@ boolean isSelected(final int offset) {
     TransformAndPrune() {
       this(new ArrayList<>());
     }
-
     TransformAndPrune(final List<T> pruned) {
       this.pruned = pruned;
     }
@@ -208,7 +206,8 @@ boolean isSelected(final int offset) {
     @Override protected final void go(final ASTNode ¢) {
       go(transform(¢));
     }
-    /** to be implemented by client: a function to convert nodes to a given type.
+    /** to be implemented by client: a function to convert nodes to a given
+     * type.
      * @param n JD
      * @return T TODO Javadoc(2016) automatically generated for returned value
      *         of method <code>transform</code> */
@@ -221,9 +220,8 @@ boolean isSelected(final int offset) {
     protected boolean worthy(final T ¢) {
       return ¢ != null;
     }
+
     /** this is where we collect what's {@link #worthy(Object)} */
     protected final List<T> pruned;
   }
 }
-
-

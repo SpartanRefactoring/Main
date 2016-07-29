@@ -73,7 +73,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
   }
   void assertLegible(final String expression) {
     if (inner != null)
-      azzert.that(inner.eligible((N) ast.EXPRESSION.from(expression)), is(true));
+      azzert.that(inner.eligible((N) MakeAST.EXPRESSION.from(expression)), is(true));
   }
   void assertNotLegible(final Block b) {
     if (inner != null)
@@ -221,7 +221,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
           azzert.that(inner.scopeIncludes(asMe()), is(false));
       }
       @Override protected VariableDeclarationFragment asMe() {
-        return extract.firstVariableDeclarationFragment(ast.STATEMENTS.from(input));
+        return extract.firstVariableDeclarationFragment(MakeAST.STATEMENTS.from(input));
       }
     }
 
@@ -327,7 +327,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
        * first If statement in the input.
        */
       @Override protected IfStatement asMe() {
-        return extract.firstIfStatement(ast.STATEMENTS.from(input));
+        return extract.firstIfStatement(MakeAST.STATEMENTS.from(input));
       }
     }
 
@@ -357,7 +357,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
       }
       @Override protected final CompilationUnit asCompilationUnit() {
         final String s = input;
-        final ASTNode $ = ast.COMPILIATION_UNIT.from(Wrap.Statement.on(s));
+        final ASTNode $ = MakeAST.COMPILIATION_UNIT.from(Wrap.Statement.on(s));
         azzert.that($, is(notNullValue()));
         azzert.that($, is(instanceOf(CompilationUnit.class)));
         return (CompilationUnit) $;
@@ -551,7 +551,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
     }
     @Override protected CompilationUnit asCompilationUnit() {
       final String s = input;
-      final ASTNode $ = ast.COMPILIATION_UNIT.from(Wrap.Expression.on(s));
+      final ASTNode $ = MakeAST.COMPILIATION_UNIT.from(Wrap.Expression.on(s));
       azzert.that($, is(notNullValue()));
       azzert.that($, is(instanceOf(CompilationUnit.class)));
       return (CompilationUnit) $;
@@ -734,7 +734,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
     }
     @Override protected final CompilationUnit asCompilationUnit() {
       final String s = input;
-      final ASTNode $ = ast.COMPILIATION_UNIT.from(Wrap.Statement.on(s));
+      final ASTNode $ = MakeAST.COMPILIATION_UNIT.from(Wrap.Statement.on(s));
       azzert.that($, is(notNullValue()));
       azzert.that($, is(instanceOf(CompilationUnit.class)));
       return (CompilationUnit) $;
@@ -822,7 +822,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
       if (input == null)
         return;
       final Document d = new Document(Wrap.Statement.on(input));
-      final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(d);
+      final CompilationUnit u = (CompilationUnit) MakeAST.COMPILIATION_UNIT.from(d);
       final Document actual = TESTUtils.rewrite(wringer, u, d);
       final String peeled = Wrap.Statement.off(actual.get());
       if (expected.equals(peeled))
@@ -833,7 +833,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
       assertSimilar(Wrap.Statement.on(expected), actual);
     }
     @Override protected CompilationUnit asCompilationUnit() {
-      final CompilationUnit $ = (CompilationUnit) ast.COMPILIATION_UNIT.from(Wrap.Statement.on(input));
+      final CompilationUnit $ = (CompilationUnit) MakeAST.COMPILIATION_UNIT.from(Wrap.Statement.on(input));
       azzert.that($, notNullValue());
       return $;
     }
@@ -846,7 +846,7 @@ public class AbstractWringTest<@Nullable N extends ASTNode> extends AbstractTest
       return new Document(Wrap.Statement.on(input));
     }
     @Override protected VariableDeclarationFragment asMe() {
-      return extract.firstVariableDeclarationFragment(ast.STATEMENTS.from(input));
+      return extract.firstVariableDeclarationFragment(MakeAST.STATEMENTS.from(input));
     }
   }
 

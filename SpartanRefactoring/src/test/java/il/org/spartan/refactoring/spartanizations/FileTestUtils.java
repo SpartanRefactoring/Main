@@ -55,13 +55,13 @@ public abstract class FileTestUtils {
    * Makes an Input file out of a Test file
    */
   protected static File makeInFile(final File f) {
-    return createTempFile(deleteTestKeyword(ast.stringBuilder(f)), TestDirection.In, f);
+    return createTempFile(deleteTestKeyword(MakeAST.stringBuilder(f)), TestDirection.In, f);
   }
   /**
    * Makes an Output file out of a Test file
    */
   protected static File makeOutFile(final File f) {
-    final StringBuilder $ = ast.stringBuilder(f);
+    final StringBuilder $ = MakeAST.stringBuilder(f);
     if ($.indexOf(testKeyword) > 0)
       $.delete(0, $.indexOf(testKeyword) + testKeyword.length() + ($.indexOf("\r\n") > 0 ? 2 : 1));
     return createTempFile($, TestDirection.Out, f);

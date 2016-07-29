@@ -3477,9 +3477,9 @@ public class TrimmerTest {
     trimming("f(a,b,c,d) * f()").to("f() * f(a,b,c,d)");
   }
   @Test public void twoOpportunityExample() {
-    that(TrimmerTestsUtils.countOpportunities((CompilationUnit) ast.COMPILIATION_UNIT.from(Wrap.Expression
+    that(TrimmerTestsUtils.countOpportunities((CompilationUnit) MakeAST.COMPILIATION_UNIT.from(Wrap.Expression
         .on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
-    that(TrimmerTestsUtils.countOpportunities((CompilationUnit) ast.COMPILIATION_UNIT.from(Wrap.Expression
+    that(TrimmerTestsUtils.countOpportunities((CompilationUnit) MakeAST.COMPILIATION_UNIT.from(Wrap.Expression
         .on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
   }
   @Test public void useOutcontextToManageStringAmbiguity() {

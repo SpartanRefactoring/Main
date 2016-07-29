@@ -77,7 +77,7 @@ public enum Wrap {
    *         of the wrapped parameter.
    */
   public CompilationUnit intoCompilationUnit(final String codeFragment) {
-    return (CompilationUnit) ast.COMPILIATION_UNIT.from(on(codeFragment));
+    return (CompilationUnit) MakeAST.COMPILIATION_UNIT.from(on(codeFragment));
   }
   /**
    * Wrap a given code fragment, and converts it into a {@link Document}

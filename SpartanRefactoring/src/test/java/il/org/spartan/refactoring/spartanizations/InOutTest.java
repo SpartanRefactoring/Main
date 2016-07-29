@@ -40,7 +40,7 @@ public class InOutTest {
   public static Collection<Object[]> cases() {
     return new FileTestUtils.Files() {
       @Override Object[] makeCase(final Spartanization s, final File folder, final File input, final String name) {
-        if (name.endsWith(testSuffix) && ast.stringBuilder(input).indexOf(testKeyword) > 0)
+        if (name.endsWith(testSuffix) && MakeAST.stringBuilder(input).indexOf(testKeyword) > 0)
           return objects(s, name, input, makeOutFile(input));
         if (!name.endsWith(".in"))
           return null;
@@ -50,17 +50,17 @@ public class InOutTest {
     }.go();
   }
   protected static void go(final CurrentAST c, final File from, final File to) {
-    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(FileTestUtils.makeInFile(from));
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILIATION_UNIT.from(FileTestUtils.makeInFile(from));
     that(u.toString(), TrimmerTestsUtils.countOpportunities(c, u), is(1));
-    TESTUtils.assertOneOpportunity(c, ast.string(from));
+    TESTUtils.assertOneOpportunity(c, MakeAST.string(from));
     final String expected;
     final Document rewrite;
     if (!from.getName().endsWith(FileTestUtils.testSuffix)) {
-      expected = ast.string(to);
-      rewrite = TESTUtils.rewrite(c, u, new Document(ast.string(from)));
+      expected = MakeAST.string(to);
+      rewrite = TESTUtils.rewrite(c, u, new Document(MakeAST.string(from)));
     } else {
-      expected = ast.string(FileTestUtils.makeOutFile(to));
-      rewrite = TESTUtils.rewrite(c, u, new Document(ast.string(FileTestUtils.makeInFile(from))));
+      expected = MakeAST.string(FileTestUtils.makeOutFile(to));
+      rewrite = TESTUtils.rewrite(c, u, new Document(MakeAST.string(FileTestUtils.makeInFile(from))));
     }
     assertSimilar(expected, rewrite.get());
   }

@@ -41,7 +41,7 @@ public class DeclarationIfAssginmentTest {
     azzert.that(WRING, notNullValue());
     final String from = "int a = 2,b; if (b) a =3;";
     final String wrap = Wrap.Statement.on(from);
-    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(wrap);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILIATION_UNIT.from(wrap);
     final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
     azzert.that(f, notNullValue());
     azzert.that(WRING.scopeIncludes(f), is(false));
@@ -49,7 +49,7 @@ public class DeclarationIfAssginmentTest {
   @Test public void traceForbiddenSiblingsExpanded() {
     final String from = "int a = 2,b; if (a+b) a =3;";
     final String wrap = Wrap.Statement.on(from);
-    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(wrap);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILIATION_UNIT.from(wrap);
     final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
     azzert.that(f, notNullValue());
     final Expression initializer = f.getInitializer();
@@ -115,7 +115,7 @@ public class DeclarationIfAssginmentTest {
       final String from = "int a = 2;\n if (b) a =3;";
       final String expected = "int a = b ? 3 : 2;";
       final Document d = new Document(Wrap.Statement.on(from));
-      final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(d);
+      final CompilationUnit u = (CompilationUnit) MakeAST.COMPILIATION_UNIT.from(d);
       final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
       azzert.that(f, notNullValue());
       final ASTRewrite r = new CurrentAST().createRewrite(u, null);
@@ -139,7 +139,7 @@ public class DeclarationIfAssginmentTest {
       final String from = "int a = 2; if (b) a =3;";
       final String expected = "int a = b ? 3 : 2;";
       final Document d = new Document(Wrap.Statement.on(from));
-      final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(d);
+      final CompilationUnit u = (CompilationUnit) MakeAST.COMPILIATION_UNIT.from(d);
       final Document actual = TESTUtils.rewrite(new CurrentAST(), u, d);
       final String peeled = Wrap.Statement.off(actual.get());
       if (expected.equals(peeled))

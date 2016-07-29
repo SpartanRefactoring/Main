@@ -19,7 +19,7 @@ import org.junit.runners.*;
 public class OccurrencesTest {
   private final String from = "int a = 2,b; if (a+b) a =3;";
   private final String wrap = Wrap.Statement.on(from);
-  private final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(wrap);
+  private final CompilationUnit u = (CompilationUnit) MakeAST.COMPILIATION_UNIT.from(wrap);
   private final SimpleName a = extract.firstVariableDeclarationFragment(u).getName();
   private final VariableDeclarationStatement ab = (VariableDeclarationStatement) a.getParent().getParent();
   private final SimpleName b = ((VariableDeclarationFragment) ab.fragments().get(1)).getName();

@@ -4,6 +4,7 @@ package il.org.spartan.refactoring.contexts;
 import static il.org.spartan.lazy.Cookbook.from;
 
 import il.org.spartan.*;
+import il.org.spartan.lazy.Environment.*;
 
 import java.util.*;
 
@@ -14,7 +15,7 @@ import static il.org.spartan.refactoring.suggestions.DialogBoxes.*;
 /** Provides list of all {@link ICompilationUnit} in this Workbench
  * @author Yossi Gil
  * @since 2016` */
-public class CurrentProject extends CurrentCompilationUnit.Context {
+public class CurrentProject extends CurrentCompilationUnit.Environment {
   /** instantiates this class
    * @param current the containing context */
   public CurrentProject(CurrentCompilationUnit current) {
@@ -26,14 +27,14 @@ public class CurrentProject extends CurrentCompilationUnit.Context {
   }
   List<ICompilationUnit> collect() throws JavaModelException {
     work();
-    if (context.compilationUnit() == null)
+    if (parent.compilationUnit() == null)
       return announce("Cannot find current compilation unit ");
     work();
-    if (context.javaProject() == null)
-      return announce("Cannot find project of " + context.compilationUnit());
+    if parent.javaProject() == null)
+      return announce("Cannot find project of " +parent.compilationUnit());
     work();
     if (packageFragmentRoots() == null)
-      return announce("Cannot find roots of " + context.javaProject());
+      return announce("Cannot find roots of " +parent.javaProject());
     final List<ICompilationUnit> $ = new ArrayList<>();
     for (final IPackageFragmentRoot r : packageFragmentRoots()) {
       work();
@@ -59,7 +60,7 @@ public class CurrentProject extends CurrentCompilationUnit.Context {
     return packageFragmentRoots.get();
   }
   /** Direct access to the underlying cell */
-  final Cell<List<ICompilationUnit>> compilationUnits = from(context.compilationUnit).make(//
+  final Property<List<ICompilationUnit>> compilationUnits = function(parent.compilationUnit).make(//
       () -> {
         begin("Collecting all project's compilation units...", 1);
         final List<ICompilationUnit> $ = idiomatic.<List<ICompilationUnit>>katching(() -> collect());
@@ -68,6 +69,6 @@ public class CurrentProject extends CurrentCompilationUnit.Context {
       });
 
   /** Direct access to the underlying cell */
-  final Cell<IPackageFragmentRoot[]> packageFragmentRoots = from(context.javaProject).make(//
+  final Property<IPackageFragmentRoot[]> packageFragmentRoots = from(parent.javaProject).make(//
       ()-> idiomatic.<IPackageFragmentRoot[]>  katching(() -> context.javaProject().getPackageFragmentRoots()));
 }

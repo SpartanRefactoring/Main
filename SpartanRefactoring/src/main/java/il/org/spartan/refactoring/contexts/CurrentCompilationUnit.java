@@ -12,47 +12,7 @@ import il.org.spartan.*;
 /** @author Yossi Gil
  * @since 2016 */
 @SuppressWarnings("javadoc") public class CurrentCompilationUnit extends Monitored {
-  // @formatter:off
-  // VIM: +,/formatter:on/-!sort -u | column -t | sed "s/^/  /"
-  public  final  ICompilationUnit  compilationUnit()        {  return  compilationUnit.get();        }
-  public  final  IEditorInput      editorInput()            {  return  editorInput.get();            }
-  public  final  IEditorPart       activeEditor()           {  return  activeEditor.get();           }
-  public  final  IFile             iFile()                  {  return  iFile.get();                  }
-  public  final  IJavaProject      javaProject()            {  return  javaProject.get();            }
-  public  final  IResource         resource()               {  return  resource.get();               }
-  public  final  IWorkbenchPage    activePage()             {  return  activePage.get();             }
-  public  final  IWorkbenchWindow  activeWorkBenchWindow()  {  return  activeWorkBenchWindow.get();  }
-  public  final  IWorkbench        workbench()              {  return  workbench.get();              }
-  // @formatter:on
-
-  // @formatter:off
-  // VIM: +,/formatter:on/- | column -t | sed "s/^/  /"
-  final  Property<IWorkbench>        workbench              =  function(()->  PlatformUI.getWorkbench());
-  final  Property<IWorkbenchWindow>  activeWorkBenchWindow  =  bind((IWorkbench ¢) ->  ¢.getActiveWorkbenchWindow()).to(workbench);
-
-  //    ( ¢)->  ¢.getActiveWorkbenchWindow()).to(workbench);
- final  Property<IWorkbenchPage>    activePage             = bind((IWorkbenchWindow ¢)-> ¢.getActivePage()).to(activeWorkBenchWindow);
-  final  Property<IEditorPart>       activeEditor           =  function(()->  activePage().getActiveEditor());
-  final  Property<IEditorInput>      editorInput            =  function(()->  activeEditor().getEditorInput());
-  final  Property<IResource>         resource               =  function(()->  editorInput().getAdapter(IResource.class));
-  final  Property<IFile>             iFile                  =  function(()->  (IFile)resource());
-  final  Property<ICompilationUnit>  compilationUnit        =  function(()->  JavaCore.createCompilationUnitFrom(iFile()));
-  final  Property<IJavaProject>      javaProject            =  function(()->  compilationUnit().getJavaProject());
-  // @formatter:on
-  /** Inner class, inheriting all of its container's {@link Property}s, and
-   * adding some of its own. Access to container's c {@link Cells} is through
-   * the {@link #context} variable.
-   * @author Yossi Gil
-   * @since 2016` */
-  public abstract class Context extends Described.Monitored {
-    /** instantiates this class */
-    public Context() {
-      new Described().super();
-    }
-
-    /** the containing instance */
-    protected final CurrentCompilationUnit context = CurrentCompilationUnit.this;
-  }
+  public static class __META {
 
   @SuppressWarnings("static-method") public static class TEST {
     @Test public void sessionA01() {
@@ -91,4 +51,45 @@ import il.org.spartan.*;
       azzert.isNull(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor());
     }
   }
+}
+  // @formatter:on
+  /** Inner class, inheriting all of its container's {@link Property}s, and
+   * adding some of its own. Access to container's  {@link Properties} is through
+   * the {@link #parent} variable.
+   * @author Yossi Gil
+   * @since 2016` */
+  public abstract class  Environment extends Described.Monitored {
+    /** the containing instance */
+    protected final CurrentCompilationUnit parent = CurrentCompilationUnit.this;
+
+    /** instantiates this class */
+    public Environment() {
+      new Described().super();
+    }
+  }
+  // @formatter:off
+  // Suppliers: may be sorted.
+  // Sort alphabetically, organize in columns, indent. VIM: /^\s*[^*\/][^*\/]/,/^\s*\/\//-!sort -u | column -t | sed "s/^/  /"
+  final  Property<IWorkbench>        workbench        =  function(()             ->  PlatformUI.getWorkbench());
+  // Bindings: must not be sorted 
+  // Organize in columns, indent, but do not sort. VIM: /^\s*[^*\/][^*\/]/,/^\s*\/\//-!column -t | sed "s/^/  /"
+  final  Property<IWorkbenchWindow>  activeWorkbench  =  bind((IWorkbench        ¢)  ->  ¢.getActiveWorkbenchWindow()).to(workbench);
+  final  Property<IWorkbenchPage>    activePage       =  bind((IWorkbenchWindow  ¢)  ->  ¢.getActivePage()).to(activeWorkbench);
+  final  Property<IEditorPart>       activeEditor     =  bind((IWorkbenchPage    ¢)  ->  ¢.getActiveEditor()).to(activePage);
+  final  Property<IEditorInput>      editorInput      =  bind((IEditorPart       ¢)  ->  ¢.getEditorInput()).to(activeEditor);
+  final  Property<IResource>         resource         =  bind((IEditorInput      ¢)  ->  ¢.getAdapter(IResource.class)).to(editorInput);
+  final  Property<IFile>             iFile            =  bind((IResource         ¢)  ->  (IFile)¢).to(resource);
+  final  Property<ICompilationUnit>  compilationUnit  =  bind((IFile             ¢)  ->  JavaCore.createCompilationUnitFrom(¢)).to(iFile);
+  final  Property<IJavaProject>      javaProject      =  bind((ICompilationUnit  ¢)  ->  ¢.getJavaProject()).to(compilationUnit);
+  // Getters: can be sorter
+  // Sort alphabetically, organize in columns, indent. VIM: /^\s*[^*\/][^*\/]/,/^\s*\/\//-!sort -u | column -t | sed "s/^/  /"
+  public  final  ICompilationUnit  compilationUnit()  {  return  compilationUnit.get();  }
+  public  final  IEditorInput      editorInput()      {  return  editorInput.get();      }
+  public  final  IFile             iFile()            {  return  iFile.get();            }
+  public  final  IJavaProject      javaProject()      {  return  javaProject.get();      }
+  public  final  IResource         resource()         {  return  resource.get();         }
+  public  final  IWorkbench        workbench()        {  return  workbench.get();        }
+  public  final  IEditorPart       activeEditor()     {  return  activeEditor.get();     }
+  public  final  IWorkbenchPage    activePage()       {  return  activePage.get();       }
+  public  final  IWorkbenchWindow  activeWorkbench()  {  return  activeWorkbench.get();  }
 }

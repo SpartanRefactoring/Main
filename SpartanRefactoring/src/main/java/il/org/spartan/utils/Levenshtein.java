@@ -64,6 +64,6 @@ public class Levenshtein {
     return length[i][j] != -1 ? length[i][j] : (length[i][j] = compute(i, j));
   }
   private int threeWayDynamicProgramingStep(final int i, final int j) {
-    return max(length(i - 1, j), length(i, j - 1), length(i - 1, j - 1) + ast.bit(as[i] == bs[j]));
+    return max(length(i - 1, j), length(i, j - 1), length(i - 1, j - 1) + MakeAST.bit(as[i] == bs[j]));
   }
 }

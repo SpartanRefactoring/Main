@@ -97,7 +97,7 @@ public class Builder extends IncrementalProjectBuilder {
   }
   private static void addMarkers(final IFile f) throws CoreException {
     deleteMarkers(f);
-    addMarkers(f, (CompilationUnit) ast.COMPILIATION_UNIT.from(f));
+    addMarkers(f, (CompilationUnit) MakeAST.COMPILIATION_UNIT.from(f));
   }
   private static void addMarkers(final IFile f, final CompilationUnit u) throws CoreException {
     final CurrentAST c = inContext().set(u).set(new Toolbox());

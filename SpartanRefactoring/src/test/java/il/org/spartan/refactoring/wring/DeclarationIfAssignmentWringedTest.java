@@ -123,7 +123,7 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     if (inner == null)
       return;
     final Document d = new Document(Wrap.Statement.on(input));
-    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(d);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILIATION_UNIT.from(d);
     final Document actual = TESTUtils.rewrite(new CurrentAST(), u, d);
     final String peeled = Wrap.Statement.off(actual.get());
     if (expected.equals(peeled))
@@ -149,14 +149,14 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     r.remove(s, null);
   }
   @Override protected CompilationUnit asCompilationUnit() {
-    final CompilationUnit $ = (CompilationUnit) ast.COMPILIATION_UNIT.from(Wrap.Statement.on(input));
+    final CompilationUnit $ = (CompilationUnit) MakeAST.COMPILIATION_UNIT.from(Wrap.Statement.on(input));
     assertNotNull($);
     return $;
   }
   @Override protected VariableDeclarationFragment asMe() {
-    return extract.firstVariableDeclarationFragment(ast.STATEMENTS.from(input));
+    return extract.firstVariableDeclarationFragment(MakeAST.STATEMENTS.from(input));
   }
   private IfStatement findIf() {
-    return extract.firstIfStatement(ast.STATEMENTS.from(input));
+    return extract.firstIfStatement(MakeAST.STATEMENTS.from(input));
   }
 }

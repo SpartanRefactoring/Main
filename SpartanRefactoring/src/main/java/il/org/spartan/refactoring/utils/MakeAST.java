@@ -17,7 +17,7 @@ import org.eclipse.jface.text.*;
  * @author Yossi Gil
  * @since 2015-07-16
  */
-public enum ast {
+public enum MakeAST {
   /**
    * Converts file, string or marker to compilation unit.
    */
@@ -147,7 +147,7 @@ public enum ast {
 
   final int kind;
 
-  private ast(final int kind) {
+  private MakeAST(final int kind) {
     this.kind = kind;
   }
   /**

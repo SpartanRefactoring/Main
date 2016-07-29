@@ -31,19 +31,19 @@ public class IfReturnNoElseReturnTest {
 
   @Test public void checkFirstIfStatement1() {
     final String s = "if (a) return b; return a();";
-    final IfStatement i = extract.firstIfStatement(ast.STATEMENTS.from(s));
+    final IfStatement i = extract.firstIfStatement(MakeAST.STATEMENTS.from(s));
     that(i, notNullValue());
     that(i.toString(), WRING.scopeIncludes(i), is(true));
   }
   @Test public void checkFirstIfStatement2() {
     final String s = "if (a) return b; else return a();";
-    final IfStatement i = extract.firstIfStatement(ast.STATEMENTS.from(s));
+    final IfStatement i = extract.firstIfStatement(MakeAST.STATEMENTS.from(s));
     that(i, notNullValue());
     that(i.toString(), WRING.scopeIncludes(i), is(false));
   }
   @Test public void checkFirstIfStatement3() {
     final String s = "if (a) a= b; else a=c;";
-    final IfStatement i = extract.firstIfStatement(ast.STATEMENTS.from(s));
+    final IfStatement i = extract.firstIfStatement(MakeAST.STATEMENTS.from(s));
     that(i, notNullValue());
     that(i.toString(), WRING.scopeIncludes(i), is(false));
   }
@@ -155,7 +155,7 @@ public class IfReturnNoElseReturnTest {
       that(extract.nextReturn(asMe()), notNullValue());
     }
     @Test public void isfStatementElseIsEmpty() {
-      that(extract.statements(extract.firstIfStatement(ast.STATEMENTS.from(input)).getElseStatement()).size(), is(0));
+      that(extract.statements(extract.firstIfStatement(MakeAST.STATEMENTS.from(input)).getElseStatement()).size(), is(0));
     }
     @Test public void isIfStatement() {
       assertThat(input, asMe(), notNullValue());

@@ -65,7 +65,7 @@ public enum Into {
    * @return an {@link Expression} data structure representing the parameter.
    */
   public static Expression e(final String expression) {
-    return (Expression) ast.EXPRESSION.from(expression);
+    return (Expression) MakeAST.EXPRESSION.from(expression);
   }
   /**
    * Convert an array of {@link String} into a {@link List} of
@@ -114,7 +114,7 @@ public enum Into {
    */
   public static Statement s(final String statement) {
     that(statement, notNullValue());
-    final ASTNode n = ast.STATEMENTS.from(statement);
+    final ASTNode n = MakeAST.STATEMENTS.from(statement);
     azzert.that(statement, n, notNullValue());
     azzert.that(statement, n, instanceOf(Statement.class));
     return (Statement) n;

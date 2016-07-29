@@ -49,7 +49,7 @@ import org.eclipse.text.edits.*;
    */
   public static Statement asSingle(final String statement) {
     that(statement, notNullValue());
-    final ASTNode n = ast.STATEMENTS.from(statement);
+    final ASTNode n = MakeAST.STATEMENTS.from(statement);
     that(n, notNullValue());
     return extract.singleStatement(n);
   }
@@ -70,21 +70,21 @@ import org.eclipse.text.edits.*;
     }
   }
   public static String apply(final CurrentAST t, final String from) {
-    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(from);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILIATION_UNIT.from(from);
     that(u, notNullValue());
     final Document d = new Document(from);
     that(d, notNullValue());
     return TESTUtils.rewrite(t, u, d).get();
   }
   static void assertNoOpportunity(final CurrentAST s, final String from) {
-    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(from);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILIATION_UNIT.from(from);
     that(u.toString(), TrimmerTestsUtils.countOpportunities(s, u), is(0));
   }
   static void assertNotEvenSimilar(final String expected, final String actual) {
     that(compressSpaces(expected), not(compressSpaces(actual)));
   }
   static void assertOneOpportunity(final CurrentAST s, final String from) {
-    final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(from);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILIATION_UNIT.from(from);
     that(u, notNullValue());
     that(TrimmerTestsUtils.countOpportunities(s, u), greaterThanOrEqualTo(1));
   }

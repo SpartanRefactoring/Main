@@ -2,35 +2,28 @@ package il.org.spartan.refactoring.contexts;
 
 import il.org.spartan.lazy.*;
 
+import static il.org.spartan.lazy.Environment.;
+import static il.org.spartan.lazy.Environment.function;
+import il.org.spartan.lazy.Environment.Property;
+
 import static il.org.spartan.lazy.Cookbook.cook;
 
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.annotation.*;
 
-/**
- * @author Yossi Gil
- *
- * @since 2016`
- */
-public class Monitored implements Cookbook {
-  /**
-   * notify of work being done
-   *
-   * @param <T>
-   *          JD
-   * @return OK
-   */
+/** @author Yossi Gil
+ * @since 2016` */
+public class Monitored implements Environment {
+  /** notify of work being done
+   * @param <T> JD
+   * @return OK */
   public <@Nullable T> T work() {
     progressMonitor().worked(1);
     return null;
   }
-  /**
-   * notify task beginning
-   *
-   * @param <T>
-   *          JD
-   * @return <code><b>bottom</b></code>
-   */
+  /** notify task beginning
+   * @param <T> JD
+   * @return <code><b>bottom</b></code> */
   public final <@Nullable T> T begin() {
     return begin(defaultName());
   }
@@ -40,40 +33,25 @@ public class Monitored implements Cookbook {
   @SuppressWarnings("static-method") int defaultWork() {
     return IProgressMonitor.UNKNOWN;
   }
-  /**
-   * notify task beginning
-   *
-   * @param name
-   *          JD
-   * @param <T>
-   *          JD
-   * @return <code><b>bottom</b></code>
-   */
+  /** notify task beginning
+   * @param name JD
+   * @param <T> JD
+   * @return <code><b>bottom</b></code> */
   public final <@Nullable T> T begin(final String name) {
     return begin(name, defaultWork());
   }
-  /**
-   * notify task beginning
-   *
-   * @param name
-   *          name of task
-   * @param totalWork
-   *          total work to be executed
-   * @param <T>
-   *          JD
-   * @return <code><b>bottom</b></code>
-   */
+  /** notify task beginning
+   * @param name name of task
+   * @param totalWork total work to be executed
+   * @param <T> JD
+   * @return <code><b>bottom</b></code> */
   public <@Nullable T> T begin(final String name, final int totalWork) {
     progressMonitor().beginTask(name, totalWork);
     return null;
   }
-  /**
-   * notify task ending
-   *
-   * @param <T>
-   *          JD
-   * @return <code><b>bottom</b></code>
-   */
+  /** notify task ending
+   * @param <T> JD
+   * @return <code><b>bottom</b></code> */
   public <@Nullable T> T end() {
     progressMonitor().done();
     return null;
@@ -83,6 +61,5 @@ public class Monitored implements Cookbook {
     return progressMonitor.get();
   }
 
-  final Cell<IProgressMonitor> progressMonitor = cook(() -> new NullProgressMonitor());
+  final Property<IProgressMonitor> progressMonitor = function(() -> new NullProgressMonitor());
 }
-

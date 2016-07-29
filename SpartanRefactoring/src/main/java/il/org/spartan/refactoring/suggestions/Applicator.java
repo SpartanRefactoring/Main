@@ -27,7 +27,7 @@ public interface Applicator {
   public static String fixedPoint(final String from) {
     final Document $ = new Document(from);
     for (;;) {
-      final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from($.get());
+      final CompilationUnit u = (CompilationUnit) MakeAST.COMPILIATION_UNIT.from($.get());
       final ASTRewrite r = t.createRewrite(u, null);
       final TextEdit e = r.rewriteAST($, null);
       try {

@@ -22,7 +22,7 @@ import org.eclipse.jdt.core.dom.*;
    * @return a reference to the list of arguments in the argument
    */
   public static List<Expression> arguments(final ClassInstanceCreation c) {
-    return ast.expressions(c.arguments());
+    return MakeAST.expressions(c.arguments());
   }
   /**
    * Expose the list of arguments in a {@link MethodInvocation}
@@ -32,7 +32,7 @@ import org.eclipse.jdt.core.dom.*;
    * @return a reference to the list of arguments in the argument
    */
   public static List<Expression> arguments(final MethodInvocation i) {
-    return ast.expressions(i.arguments());
+    return MakeAST.expressions(i.arguments());
   }
   /**
    * Expose the list of type arguments to a {@link ParameterizedType}
@@ -52,7 +52,7 @@ import org.eclipse.jdt.core.dom.*;
    * @return a reference to the list of arguments in the argument
    */
   public static List<Expression> arguments(final SuperMethodInvocation i) {
-    return ast.expressions(i.arguments());
+    return MakeAST.expressions(i.arguments());
   }
   /**
    * Expose the list of comments in a {@link CompilationUnit}
@@ -83,7 +83,7 @@ import org.eclipse.jdt.core.dom.*;
    * @return a reference to the list of fragments in the argument
    */
   public static List<VariableDeclarationFragment> fragments(final FieldDeclaration d) {
-    return ast.fragments(d.fragments());
+    return MakeAST.fragments(d.fragments());
   }
   /**
    * Expose the list of fragments in a {@link VariableDeclarationExpression}
@@ -93,7 +93,7 @@ import org.eclipse.jdt.core.dom.*;
    * @return a reference to the list of fragments in the argument
    */
   public static List<VariableDeclarationFragment> fragments(final VariableDeclarationExpression e) {
-    return ast.fragments(e.fragments());
+    return MakeAST.fragments(e.fragments());
   }
   /**
    * Expose the list of fragments in a {@link VariableDeclarationStatement}
@@ -103,7 +103,7 @@ import org.eclipse.jdt.core.dom.*;
    * @return a reference to the list of fragments in the argument
    */
   public static List<VariableDeclarationFragment> fragments(final VariableDeclarationStatement s) {
-    return ast.fragments(s.fragments());
+    return MakeAST.fragments(s.fragments());
   }
   /**
    * Expose the list of parameters in a {@link MethodDeclaration}
@@ -125,7 +125,7 @@ import org.eclipse.jdt.core.dom.*;
    * @return a reference to the list of statements contained in the argument
    */
   public static List<Statement> statements(final Block b) {
-    return ast.statements(b.statements());
+    return MakeAST.statements(b.statements());
   }
   /**
    * Expose the list of initializers contained in a {@link ForStatement}
