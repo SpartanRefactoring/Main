@@ -2,9 +2,10 @@ package il.org.spartan.refactoring.contexts;
 
 import il.org.spartan.lazy.*;
 
-import static il.org.spartan.lazy.Environment.;
 import static il.org.spartan.lazy.Environment.function;
 import il.org.spartan.lazy.Environment.Property;
+import il.org.spartan.refactoring.contexts.Described.*;
+import il.org.spartan.refactoring.contexts.Described.Monitored.*;
 
 import static il.org.spartan.lazy.Cookbook.cook;
 
@@ -14,6 +15,18 @@ import org.eclipse.jdt.annotation.*;
 /** @author Yossi Gil
  * @since 2016` */
 public class Monitored implements Environment {
+  /** Inner class, inheriting all of its container's {@link Property}s, and
+   * possibly adding some of its own. Access to container's c {@link Property}
+   * is through the {@link #parent} variable.
+   * <p>
+   * Clients extend this class to create more specialized contexts, adding more
+   * {@link Property}s and {@link ¢#recipe(Supplier)}'s.
+   * @author Yossi Gil
+   * @since 2016` */
+  public abstract class ¢ {
+    /** the containing instance */
+    @SuppressWarnings("hiding") protected final Monitored parent = Monitored.this;
+  }
   /** notify of work being done
    * @param <T> JD
    * @return OK */

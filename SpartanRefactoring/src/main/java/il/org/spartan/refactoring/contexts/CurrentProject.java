@@ -30,7 +30,7 @@ public class CurrentProject extends CurrentCompilationUnit.Environment {
     if (parent.compilationUnit() == null)
       return announce("Cannot find current compilation unit ");
     work();
-    if parent.javaProject() == null)
+    if (parent.javaProject() == null)
       return announce("Cannot find project of " +parent.compilationUnit());
     work();
     if (packageFragmentRoots() == null)
