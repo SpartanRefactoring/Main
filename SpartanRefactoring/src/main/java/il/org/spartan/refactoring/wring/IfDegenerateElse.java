@@ -30,7 +30,7 @@ public final class IfDegenerateElse extends Wring.ReplaceCurrentNode<IfStatement
   @Override boolean scopeIncludes(final IfStatement s) {
     return s != null && then(s) != null && degenerateElse(s);
   }
-  @Override String description(@SuppressWarnings("unused") final IfStatement _) {
+  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Remove vacuous 'else' branch";
   }
   static boolean degenerateElse(final IfStatement s) {

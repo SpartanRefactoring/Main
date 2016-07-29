@@ -21,7 +21,7 @@ public final class InfixConditionalAndTrue extends Wring.ReplaceCurrentNode<Infi
   @Override boolean scopeIncludes(final InfixExpression e) {
     return Is.conditionalAnd(e) && Have.trueLiteral(Extract.allOperands(e));
   }
-  @Override String description(@SuppressWarnings("unused") final InfixExpression _) {
+  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Remove 'true' argument to '&&'";
   }
   @Override WringGroup wringGroup() {

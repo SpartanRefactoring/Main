@@ -92,7 +92,7 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
         return reorganizeNestedStatement(b);
     }
   }
-  @Override String description(@SuppressWarnings("unused") final Block _) {
+  @Override String description(@SuppressWarnings("unused") final Block __) {
     return "Simplify block";
   }
   @Override WringGroup wringGroup() {

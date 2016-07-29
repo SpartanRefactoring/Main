@@ -31,7 +31,7 @@ public final class IfThrowFooElseThrowBar extends Wring.ReplaceCurrentNode<IfSta
   @Override boolean scopeIncludes(final IfStatement s) {
     return s != null && Extract.throwExpression(then(s)) != null && Extract.throwExpression(elze(s)) != null;
   }
-  @Override String description(@SuppressWarnings("unused") final IfStatement _) {
+  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate 'if' into a 'throw' statement of a conditional expression";
   }
   @Override WringGroup wringGroup() {

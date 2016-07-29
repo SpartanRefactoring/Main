@@ -49,7 +49,7 @@ public final class IfFooSequencerIfFooSameSequencer extends Wring.ReplaceToNextS
         : Wrings.replaceTwoStatements(r, s,
             makeIfWithoutElse(BlockSimplify.reorganizeNestedStatement(then), Subject.pair(s.getExpression(), s2.getExpression()).to(CONDITIONAL_OR)), g);
   }
-  @Override String description(@SuppressWarnings("unused") final IfStatement _) {
+  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate two 'if' statements with identical body";
   }
   @Override WringGroup wringGroup() {

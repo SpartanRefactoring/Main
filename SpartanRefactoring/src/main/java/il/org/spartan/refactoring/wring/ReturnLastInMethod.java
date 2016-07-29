@@ -21,7 +21,7 @@ import il.org.spartan.refactoring.utils.Rewrite;
  */
 
 public final class ReturnLastInMethod extends Wring<ReturnStatement> {
-  @Override String description(@SuppressWarnings("unused") final ReturnStatement _) {
+  @Override String description(@SuppressWarnings("unused") final ReturnStatement __) {
     return "Remove redundant return statement";
   }
   @Override Rewrite make(final ReturnStatement s) {

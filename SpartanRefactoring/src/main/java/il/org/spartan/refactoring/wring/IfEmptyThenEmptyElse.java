@@ -27,7 +27,7 @@ public final class IfEmptyThenEmptyElse extends Wring<IfStatement> {
   @Override boolean scopeIncludes(final IfStatement s) {
     return s != null && Is.vacuousThen(s) && Is.vacuousElse(s);
   }
-  @Override String description(@SuppressWarnings("unused") final IfStatement _) {
+  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Remove 'if' statement with vacous 'then' and 'else' parts";
   }
   @Override WringGroup wringGroup() {

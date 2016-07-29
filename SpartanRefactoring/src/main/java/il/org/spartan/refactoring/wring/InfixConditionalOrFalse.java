@@ -21,7 +21,7 @@ public final class InfixConditionalOrFalse extends Wring.ReplaceCurrentNode<Infi
   @Override boolean scopeIncludes(final InfixExpression e) {
     return e != null && Is.conditionalOr(e) && Have.falseLiteral(Extract.allOperands(e));
   }
-  @Override String description(@SuppressWarnings("unused") final InfixExpression _) {
+  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Remove 'false' argument to '||'";
   }
   @Override WringGroup wringGroup() {

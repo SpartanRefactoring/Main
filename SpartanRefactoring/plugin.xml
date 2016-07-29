@@ -138,19 +138,6 @@
             class="il.org.spartan.refactoring.handlers.ToggleSpartanizationHandler"
             commandId="org.spartan.commands.ToggleCommand">
       </handler>
-
-      <handler
-            class="il.org.spartan.refactoring.handlers.ExtractMethodHandler"
-            commandId="org.spartan.refactoring.commands.ExtractMethod">
-      </handler>
-      <handler
-            class="il.org.spartan.refactoring.handlers.ForwardDeclarationHandler"
-            commandId="org.spartan.refactoring.commands.ForwardDeclaraion">
-      </handler>
-      <handler
-            class="il.org.spartan.refactoring.handlers.InlineSingleUseHandler"
-            commandId="org.spartan.refactoring.commands.InlineSingleUse">
-      </handler>
       <handler
             class="il.org.spartan.refactoring.handlers.CleanupHandler"
             commandId="org.spartan.refactoring.commands.Cleanup">

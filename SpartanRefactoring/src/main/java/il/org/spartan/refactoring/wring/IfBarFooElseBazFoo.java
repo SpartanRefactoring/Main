@@ -29,7 +29,7 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2015-09-05
  */
 public final class IfBarFooElseBazFoo extends Wring<IfStatement> {
-  @Override String description(@SuppressWarnings("unused") final IfStatement _) {
+  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate commmon suffix of then and else branches to just after if statement";
   }
   @Override Rewrite make(final IfStatement s) {

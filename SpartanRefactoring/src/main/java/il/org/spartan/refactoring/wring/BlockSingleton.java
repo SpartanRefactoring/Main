@@ -28,7 +28,7 @@ public class BlockSingleton extends Wring.ReplaceCurrentNode<Block> {
     final Statement $ = ss.get(0);
     return Is.blockEssential($) ? null : duplicate($);
   }
-  @Override String description(@SuppressWarnings("unused") final Block _) {
+  @Override String description(@SuppressWarnings("unused") final Block __) {
     return "Remove redundant curly braces.";
   }
   @Override WringGroup wringGroup() {
