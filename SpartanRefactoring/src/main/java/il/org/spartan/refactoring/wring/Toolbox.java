@@ -114,7 +114,7 @@ public class Toolbox {
 		              new TernaryPushdown(), //
 		              null) //
 		          .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
-		          .add(TypeDeclaration.class, new InterfaceNoAbstract()) //
+		          .add(TypeDeclaration.class, new InterfaceClean()) //
 		          .add(ReturnStatement.class, new ReturnLastInMethod()) //
 		          .seal();
 
