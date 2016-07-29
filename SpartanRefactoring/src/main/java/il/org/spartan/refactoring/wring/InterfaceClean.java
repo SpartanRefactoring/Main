@@ -9,14 +9,14 @@ import org.eclipse.jdt.core.dom.*;
  * @author Yossi Gil
  * @since 2015-07-29
  */
-public final class InterfaceNoAbstract extends Wring.RemoveModifier<TypeDeclaration> {
+public final class InterfaceClean extends Wring.RemoveModifier<TypeDeclaration> {
   @Override boolean eligible(final TypeDeclaration ¢) {
     return ¢.isInterface();
   }
   @Override String description(final TypeDeclaration ¢) {
-    return "Remove redundant 'abstract' modifier from interface " + ¢.getName();
+    return "Remove redundant 'abstract'/'static' modifier from interface " + ¢.getName();
   }
   @Override boolean redundantModifier(final Modifier ¢) {
-    return ¢.isAbstract();
+    return ¢.isAbstract() || ¢.isStatic();
   }
 }

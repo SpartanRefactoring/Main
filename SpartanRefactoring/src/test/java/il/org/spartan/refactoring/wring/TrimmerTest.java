@@ -1464,7 +1464,35 @@ import il.org.spartan.refactoring.utils.*;
     trimming("abstract interface a {}")//
     .to("interface a {}");//
   }
-  @Test public void issue51() {
+ @Test public void issue50b() {
+    trimming("abstract static interface a {}")//
+    .to("interface a {}");//
+  }
+ @Test public void issue50c() {
+    trimming("static abstract interface a {}")//
+    .to("interface a {}");//
+  }
+ @Test public void issue50d() {
+    trimming("static interface a {}")//
+    .to("interface a {}");//
+  }
+ @Test public void issue50e() {
+    trimming("abstract static final enum a {}")//
+    .to("interface a {}");//
+  }
+ @Test public void issue50f() {
+    trimming("static final enum a {}")//
+    .to("enum a {}");//
+  }
+ @Test public void issue50g() {
+    trimming("static abstract enum a {}")//
+    .to("enum a {}");//
+  }
+ @Test public void issue50h() {
+    trimming("static abstract final enum a {}")//
+    .to("interface a {}");//
+  }
+@Test public void issue51() {
     trimming("int f() { int x = 0; for (int i = 0; i < 10; ++i) x += i; return x;}")//
         .to("int f() { int $ = 0; for (int i = 0; i < 10; ++i) $ += i; return $;}");
   }
