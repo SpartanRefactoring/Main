@@ -96,7 +96,7 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
     return "Simplify block";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REMOVE_REDUNDANT_PUNCTUATION;
+	return WringGroup.REMOVE_SYNTACTIC_BAGGAGE;
   }
   private static boolean checkExistOrAdd(SimpleName n, List<String> l) {
     String s = n.getIdentifier();

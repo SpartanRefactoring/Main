@@ -32,6 +32,6 @@ public class BlockSingleton extends Wring.ReplaceCurrentNode<Block> {
     return "Remove redundant curly braces.";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REMOVE_REDUNDANT_PUNCTUATION;
+	return WringGroup.REMOVE_SYNTACTIC_BAGGAGE;
   }
 }

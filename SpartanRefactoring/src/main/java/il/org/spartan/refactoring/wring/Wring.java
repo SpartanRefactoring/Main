@@ -1,123 +1,119 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.duplicate;
-import static il.org.spartan.refactoring.utils.Funcs.left;
-import static il.org.spartan.refactoring.utils.Funcs.right;
-import static il.org.spartan.refactoring.wring.Wrings.size;
-import static org.eclipse.jdt.core.dom.Assignment.Operator.ASSIGN;
-import static org.eclipse.jdt.core.dom.Assignment.Operator.BIT_AND_ASSIGN;
-import static org.eclipse.jdt.core.dom.Assignment.Operator.BIT_OR_ASSIGN;
-import static org.eclipse.jdt.core.dom.Assignment.Operator.BIT_XOR_ASSIGN;
-import static org.eclipse.jdt.core.dom.Assignment.Operator.DIVIDE_ASSIGN;
-import static org.eclipse.jdt.core.dom.Assignment.Operator.LEFT_SHIFT_ASSIGN;
-import static org.eclipse.jdt.core.dom.Assignment.Operator.MINUS_ASSIGN;
-import static org.eclipse.jdt.core.dom.Assignment.Operator.PLUS_ASSIGN;
-import static org.eclipse.jdt.core.dom.Assignment.Operator.REMAINDER_ASSIGN;
-import static org.eclipse.jdt.core.dom.Assignment.Operator.RIGHT_SHIFT_SIGNED_ASSIGN;
-import static org.eclipse.jdt.core.dom.Assignment.Operator.RIGHT_SHIFT_UNSIGNED_ASSIGN;
-import static org.eclipse.jdt.core.dom.Assignment.Operator.TIMES_ASSIGN;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.AND;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.DIVIDE;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.LEFT_SHIFT;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.MINUS;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.OR;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.PLUS;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.REMAINDER;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.RIGHT_SHIFT_SIGNED;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.RIGHT_SHIFT_UNSIGNED;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.TIMES;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.XOR;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.wring.Wrings.*;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.function.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Assignment;
-import org.eclipse.jdt.core.dom.Assignment.Operator;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.IExtendedModifier;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.PrefixExpression;
-import org.eclipse.jdt.core.dom.SimpleName;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
-import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.Assignment.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
-import il.org.spartan.misc.Wrapper;
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Collect;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.Plant;
-import il.org.spartan.refactoring.utils.Rewrite;
-import il.org.spartan.refactoring.utils.Subject;
+import il.org.spartan.misc.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
+
+final class LocalInliner {
+  class LocalInlineWithValue extends Wrapper<Expression> {
+    LocalInlineWithValue(final Expression replacement) {
+      super(Extract.core(replacement));
+    }
+    /**
+     * Computes the number of AST nodes added as a result of the replacement
+     * operation.
+     *
+     * @param es
+     *          JD
+     * @return A non-negative integer, computed from the number of occurrences
+     *         of {@link #name} in the operands, and the size of the
+     *         replacement.
+     */
+    int addedSize(final ASTNode... ns) {
+      return uses(ns).size() * (size(get()) - 1);
+    }
+    boolean canInlineInto(final ASTNode... ns) {
+      return Collect.definitionsOf(name).in(ns).isEmpty() && (Is.sideEffectFree(get()) || uses(ns).size() <= 1);
+    }
+    boolean canSafelyInlineInto(final ASTNode... ns) {
+      return canInlineInto(ns) && unsafeUses(ns).isEmpty();
+    }
+    @SafeVarargs protected final void inlineInto(final ASTNode... ns) {
+      inlineInto(wrap(ns));
+    }
+    @SafeVarargs private final void inlineInto(final Wrapper<ASTNode>... ns) {
+      for (final Wrapper<ASTNode> e : ns)
+        inlineIntoSingleton(get(), e);
+    }
+    private void inlineIntoSingleton(final ASTNode replacement, final Wrapper<ASTNode> ns) {
+      final ASTNode oldExpression = ns.get();
+      final ASTNode newExpression = duplicate(ns.get());
+      ns.set(newExpression);
+      rewriter.replace(oldExpression, newExpression, editGroup);
+      for (final ASTNode use : Collect.usesOf(name).in(newExpression))
+        rewriter.replace(use,
+            !(use instanceof Expression) ? replacement : new Plant((Expression) replacement).into(use.getParent()), editGroup);
+    }
+    /**
+     * Computes the total number of AST nodes in the replaced parameters
+     *
+     * @param es
+     *          JD
+     * @return A non-negative integer, computed from original size of the
+     *         parameters, the number of occurrences of {@link #name} in the
+     *         operands, and the size of the replacement.
+     */
+    int replacedSize(final ASTNode... ns) {
+      return size(ns) + uses(ns).size() * (size(get()) - 1);
+    }
+    private List<SimpleName> unsafeUses(final ASTNode... ns) {
+      return Collect.unsafeUsesOf(name).in(ns);
+    }
+    private List<SimpleName> uses(final ASTNode... ns) {
+      return Collect.usesOf(name).in(ns);
+    }
+  }
+
+  static Wrapper<ASTNode>[] wrap(final ASTNode[] ns) {
+    @SuppressWarnings("unchecked") final Wrapper<ASTNode>[] $ = new Wrapper[ns.length];
+    int i = 0;
+    for (final ASTNode t : ns)
+      $[i++] = new Wrapper<>(t);
+    return $;
+  }
+
+  final SimpleName name;
+  final ASTRewrite rewriter;
+  final TextEditGroup editGroup;
+
+  LocalInliner(final SimpleName n) {
+    this(n, null, null);
+  }
+  LocalInliner(final SimpleName n, final ASTRewrite rewriter, final TextEditGroup g) {
+    name = n;
+    this.rewriter = rewriter;
+    editGroup = g;
+  }
+  LocalInlineWithValue byValue(final Expression replacement) {
+    return new LocalInlineWithValue(replacement);
+  }
+}
 
 /**
  * A wring is a transformation that works on an AstNode. Such a transformation
  * make a single simplification of the tree. A wring is so small that it is
  * idempotent: Applying a wring to the output of itself is the empty operation.
  *
- * @param <N> type of node which triggers the transformation.
+ * @param <N>
+ *          type of node which triggers the transformation.
  * @author Yossi Gil
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-07-09
  */
 public abstract class Wring<N extends ASTNode> {
-  abstract String description(N n);
-  /**
-   * Determine whether the parameter is "eligible" for application of this
-   * instance. The parameter must be within the scope of the current instance.
-   *
-   * @param n JD
-   * @return <code><b>true</b></code> <i>iff</i> the argument is eligible for
-   *         the simplification offered by this object.
-   */
-  boolean eligible(@SuppressWarnings("unused") final N n) {
-    return true;
-  }
-  Rewrite make(final N n) {
-    return make(n, null);
-  }
-  Rewrite make(final N n, @SuppressWarnings("unused") final ExclusionManager exclude) {
-    return make(n);
-  }
-  /**
-   * Returns the preference group to which the wring belongs to.
-   * This method should be overriden for each wring and should return
-   * one of the values of {@link WringGroup}
-   * @return the preference group this wring belongs to
-   */
-  abstract WringGroup wringGroup();
-  /**
-   * Determines whether this {@link Wring} object is not applicable for a given
-   * {@link PrefixExpression} is within the "scope" of this . Note that a
-   * {@link Wring} is applicable in principle to an object, but that actual
-   * application will be vacuous.
-   *
-   * @param e JD
-   * @return <code><b>true</b></code> <i>iff</i> the argument is noneligible for
-   *         the simplification offered by this object.
-   * @see #eligible(InfixExpression)
-   */
-  final boolean nonEligible(final N n) {
-    return !eligible(n);
-  }
-  /**
-   * Determines whether this {@link Wring} object is applicable for a given
-   * {@link InfixExpression} is within the "scope" of this . Note that it could
-   * be the case that a {@link Wring} is applicable in principle to an object,
-   * but that actual application will be vacuous.
-   *
-   * @param n JD
-   * @return <code><b>true</b></code> <i>iff</i> the argument is within the
-   *         scope of this object
-   */
-  boolean scopeIncludes(final N n) {
-    return make(n, null) != null;
-  }
-
   static abstract class AbstractSorting extends ReplaceCurrentNode<InfixExpression> {
     @Override final String description(final InfixExpression e) {
       return "Reorder operands of " + e.getOperator();
@@ -149,6 +145,43 @@ public abstract class Wring<N extends ASTNode> {
         return null;
       operands.add(0, first);
       return Subject.operands(operands).to(e.getOperator());
+    }
+  }
+
+  public static abstract class RemoveModifier<N extends ASTNode> extends Wring.ReplaceCurrentNode<N> {
+    @Override String description(final N n) {
+      return "remove redundant modifier";
+    }
+    private IExtendedModifier firstBad(final N n) {
+      return firstThat(n, (final Modifier ¢) -> redundantModifier(¢));
+    }
+    IExtendedModifier firstThat(final N n, final Predicate<Modifier> f) {
+      for (final IExtendedModifier m : Extract.modifiers(n))
+        if (m.isModifier() && f.test((Modifier) m))
+          return m;
+      return null;
+    }
+    private N go(final N $) {
+      for (final Iterator<IExtendedModifier> it = Extract.modifiers($).iterator(); it.hasNext();)
+        if (redundantModifier(it.next()))
+          it.remove();
+      return $;
+    }
+    final boolean has(final N ¢, final Predicate<Modifier> p) {
+      return firstThat(¢, p) != null;
+    }
+    private boolean redundantModifier(final IExtendedModifier m) {
+      return redundantModifier((Modifier) m);
+    }
+    abstract boolean redundantModifier(Modifier m);
+    @Override N replacement(final N $) {
+      return go(duplicate($));
+    }
+    @Override final boolean scopeIncludes(final N ¢) {
+      return firstBad(¢) != null;
+    }
+    @Override final WringGroup wringGroup() {
+      return WringGroup.REMOVE_SYNTACTIC_BAGGAGE;
     }
   }
 
@@ -199,18 +232,6 @@ public abstract class Wring<N extends ASTNode> {
                                           : o == RIGHT_SHIFT_SIGNED_ASSIGN ? RIGHT_SHIFT_SIGNED //
                                               : o == RIGHT_SHIFT_UNSIGNED_ASSIGN ? RIGHT_SHIFT_UNSIGNED : null;
     }
-    static boolean hasAnnotation(final VariableDeclarationFragment f) {
-      return hasAnnotation((VariableDeclarationStatement) f.getParent());
-    }
-    static boolean hasAnnotation(final VariableDeclarationStatement s) {
-      return hasAnnotation(s.modifiers());
-    }
-    static boolean hasAnnotation(final List<IExtendedModifier> ms) {
-      for (final IExtendedModifier m : ms)
-        if (m.isAnnotation())
-          return true;
-      return false;
-    }
     static Expression assignmentAsExpression(final Assignment a) {
       final Operator o = a.getOperator();
       return o == ASSIGN ? duplicate(right(a)) : Subject.pair(left(a), right(a)).to(asInfix(o));
@@ -220,52 +241,6 @@ public abstract class Wring<N extends ASTNode> {
         if (Collect.BOTH_SEMANTIC.of(b).existIn(ns))
           return true;
       return false;
-    }
-    static List<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
-      final List<VariableDeclarationFragment> $ = new ArrayList<>();
-      boolean collecting = false;
-      for (final VariableDeclarationFragment brother : (List<VariableDeclarationFragment>) ((VariableDeclarationStatement) f.getParent()).fragments()) {
-        if (brother == f) {
-          collecting = true;
-          continue;
-        }
-        if (collecting)
-          $.add(brother);
-      }
-      return $;
-    }
-    static int removalSaving(final VariableDeclarationFragment f) {
-      final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-      final int $ = size(parent);
-      if (parent.fragments().size() <= 1)
-        return $;
-      final VariableDeclarationStatement newParent = duplicate(parent);
-      newParent.fragments().remove(parent.fragments().indexOf(f));
-      return $ - size(newParent);
-    }
-    static int eliminationSaving(final VariableDeclarationFragment f) {
-      final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-      final List<VariableDeclarationFragment> live = live(f, parent.fragments());
-      final int $ = size(parent);
-      if (live.isEmpty())
-        return $;
-      final VariableDeclarationStatement newParent = duplicate(parent);
-      newParent.fragments().clear();
-      newParent.fragments().addAll(live);
-      return $ - size(newParent);
-    }
-    /**
-     * Removes a {@link VariableDeclarationFragment}, leaving intact any other
-     * fragment fragments in the containing {@link VariabelDeclarationStatement}
-     * . Still, if the containing node left empty, it is removed as well.
-     *
-     * @param f
-     * @param r
-     * @param g
-     */
-    static void remove(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
-      final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-      r.remove(parent.fragments().size() > 1 ? f : parent, g);
     }
     /**
      * Eliminates a {@link VariableDeclarationFragment}, with any other fragment
@@ -289,15 +264,77 @@ public abstract class Wring<N extends ASTNode> {
       newParent.fragments().addAll(live);
       r.replace(parent, newParent, g);
     }
-    private static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final List<VariableDeclarationFragment> fs) {
+    static int eliminationSaving(final VariableDeclarationFragment f) {
+      final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
+      final List<VariableDeclarationFragment> live = live(f, parent.fragments());
+      final int $ = size(parent);
+      if (live.isEmpty())
+        return $;
+      final VariableDeclarationStatement newParent = duplicate(parent);
+      newParent.fragments().clear();
+      newParent.fragments().addAll(live);
+      return $ - size(newParent);
+    }
+    static List<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
+      final List<VariableDeclarationFragment> $ = new ArrayList<>();
+      boolean collecting = false;
+      for (final VariableDeclarationFragment brother : (List<VariableDeclarationFragment>) ((VariableDeclarationStatement) f
+          .getParent()).fragments()) {
+        if (brother == f) {
+          collecting = true;
+          continue;
+        }
+        if (collecting)
+          $.add(brother);
+      }
+      return $;
+    }
+    static boolean hasAnnotation(final List<IExtendedModifier> ms) {
+      for (final IExtendedModifier m : ms)
+        if (m.isAnnotation())
+          return true;
+      return false;
+    }
+    static boolean hasAnnotation(final VariableDeclarationFragment f) {
+      return hasAnnotation((VariableDeclarationStatement) f.getParent());
+    }
+    static boolean hasAnnotation(final VariableDeclarationStatement s) {
+      return hasAnnotation(s.modifiers());
+    }
+    private static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f,
+        final List<VariableDeclarationFragment> fs) {
       final List<VariableDeclarationFragment> $ = new ArrayList<>();
       for (final VariableDeclarationFragment brother : fs)
         if (brother != null && brother != f && brother.getInitializer() != null)
           $.add(duplicate(brother));
       return $;
     }
-    abstract ASTRewrite go(ASTRewrite r, VariableDeclarationFragment f, SimpleName n, Expression initializer, Statement nextStatement, TextEditGroup g);
-    @Override final ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
+    static int removalSaving(final VariableDeclarationFragment f) {
+      final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
+      final int $ = size(parent);
+      if (parent.fragments().size() <= 1)
+        return $;
+      final VariableDeclarationStatement newParent = duplicate(parent);
+      newParent.fragments().remove(parent.fragments().indexOf(f));
+      return $ - size(newParent);
+    }
+    /**
+     * Removes a {@link VariableDeclarationFragment}, leaving intact any other
+     * fragment fragments in the containing {@link VariabelDeclarationStatement}
+     * . Still, if the containing node left empty, it is removed as well.
+     *
+     * @param f
+     * @param r
+     * @param g
+     */
+    static void remove(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
+      final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
+      r.remove(parent.fragments().size() > 1 ? f : parent, g);
+    }
+    abstract ASTRewrite go(ASTRewrite r, VariableDeclarationFragment f, SimpleName n, Expression initializer,
+        Statement nextStatement, TextEditGroup g);
+    @Override final ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement,
+        final TextEditGroup g) {
       if (!Is.variableDeclarationStatement(f.getParent()))
         return null;
       final SimpleName n = f.getName();
@@ -310,84 +347,61 @@ public abstract class Wring<N extends ASTNode> {
       return $;
     }
   }
-}
 
-final class LocalInliner {
-  static Wrapper<ASTNode>[] wrap(final ASTNode[] ns) {
-    @SuppressWarnings("unchecked") final Wrapper<ASTNode>[] $ = new Wrapper[ns.length];
-    int i = 0;
-    for (final ASTNode t : ns)
-      $[i++] = new Wrapper<>(t);
-    return $;
+  abstract String description(N n);
+  /**
+   * Determine whether the parameter is "eligible" for application of this
+   * instance. The parameter must be within the scope of the current instance.
+   *
+   * @param n
+   *          JD
+   * @return <code><b>true</b></code> <i>iff</i> the argument is eligible for
+   *         the simplification offered by this object.
+   */
+  boolean eligible(@SuppressWarnings("unused") final N n) {
+    return true;
   }
-  final SimpleName name;
-  final ASTRewrite rewriter;
-  final TextEditGroup editGroup;
-  LocalInliner(final SimpleName n) {
-    this(n, null, null);
+  Rewrite make(final N n) {
+    return make(n, null);
   }
-  LocalInliner(final SimpleName n, final ASTRewrite rewriter, final TextEditGroup g) {
-    name = n;
-    this.rewriter = rewriter;
-    editGroup = g;
+  Rewrite make(final N n, @SuppressWarnings("unused") final ExclusionManager exclude) {
+    return make(n);
   }
-  LocalInlineWithValue byValue(final Expression replacement) {
-    return new LocalInlineWithValue(replacement);
+  /**
+   * Determines whether this {@link Wring} object is not applicable for a given
+   * {@link PrefixExpression} is within the "scope" of this . Note that a
+   * {@link Wring} is applicable in principle to an object, but that actual
+   * application will be vacuous.
+   *
+   * @param e
+   *          JD
+   * @return <code><b>true</b></code> <i>iff</i> the argument is noneligible for
+   *         the simplification offered by this object.
+   * @see #eligible(InfixExpression)
+   */
+  final boolean nonEligible(final N n) {
+    return !eligible(n);
   }
-
-  class LocalInlineWithValue extends Wrapper<Expression> {
-    LocalInlineWithValue(final Expression replacement) {
-      super(Extract.core(replacement));
-    }
-    @SafeVarargs protected final void inlineInto(final ASTNode... ns) {
-      inlineInto(wrap(ns));
-    }
-    @SafeVarargs private final void inlineInto(final Wrapper<ASTNode>... ns) {
-      for (final Wrapper<ASTNode> e : ns)
-        inlineIntoSingleton(get(), e);
-    }
-    /**
-     * Computes the total number of AST nodes in the replaced parameters
-     *
-     * @param es JD
-     * @return A non-negative integer, computed from original size of the
-     *         parameters, the number of occurrences of {@link #name} in the
-     *         operands, and the size of the replacement.
-     */
-    int replacedSize(final ASTNode... ns) {
-      return size(ns) + uses(ns).size() * (size(get()) - 1);
-    }
-    /**
-     * Computes the number of AST nodes added as a result of the replacement
-     * operation.
-     *
-     * @param es JD
-     * @return A non-negative integer, computed from the number of occurrences
-     *         of {@link #name} in the operands, and the size of the
-     *         replacement.
-     */
-    int addedSize(final ASTNode... ns) {
-      return uses(ns).size() * (size(get()) - 1);
-    }
-    boolean canInlineInto(final ASTNode... ns) {
-      return Collect.definitionsOf(name).in(ns).isEmpty() && (Is.sideEffectFree(get()) || uses(ns).size() <= 1);
-    }
-    boolean canSafelyInlineInto(final ASTNode... ns) {
-      return canInlineInto(ns) && unsafeUses(ns).isEmpty();
-    }
-    private List<SimpleName> uses(final ASTNode... ns) {
-      return Collect.usesOf(name).in(ns);
-    }
-    private List<SimpleName> unsafeUses(final ASTNode... ns) {
-      return Collect.unsafeUsesOf(name).in(ns);
-    }
-    private void inlineIntoSingleton(final ASTNode replacement, final Wrapper<ASTNode> ns) {
-      final ASTNode oldExpression = ns.get();
-      final ASTNode newExpression = duplicate(ns.get());
-      ns.set(newExpression);
-      rewriter.replace(oldExpression, newExpression, editGroup);
-      for (final ASTNode use : Collect.usesOf(name).in(newExpression))
-        rewriter.replace(use, !(use instanceof Expression) ? replacement : new Plant((Expression) replacement).into(use.getParent()), editGroup);
-    }
+  /**
+   * Determines whether this {@link Wring} object is applicable for a given
+   * {@link InfixExpression} is within the "scope" of this . Note that it could
+   * be the case that a {@link Wring} is applicable in principle to an object,
+   * but that actual application will be vacuous.
+   *
+   * @param n
+   *          JD
+   * @return <code><b>true</b></code> <i>iff</i> the argument is within the
+   *         scope of this object
+   */
+  boolean scopeIncludes(final N n) {
+    return make(n, null) != null;
   }
+  /**
+   * Returns the preference group to which the wring belongs to. This method
+   * should be overriden for each wring and should return one of the values of
+   * {@link WringGroup}
+   *
+   * @return the preference group this wring belongs to
+   */
+  abstract WringGroup wringGroup();
 }

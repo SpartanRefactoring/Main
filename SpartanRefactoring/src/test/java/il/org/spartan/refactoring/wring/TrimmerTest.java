@@ -1461,8 +1461,8 @@ import il.org.spartan.refactoring.utils.*;
         .to("int f(){int $=0;for(int i:X)$+=f(i);return $;}");
   }
   @Test public void issue50a() {
-    trimming("void f() { abstract interface a {}}")//
-    .to("void f() { interface a {}}");//
+    trimming("abstract interface a {}")//
+    .to("interface a {}");//
   }
   @Test public void issue51() {
     trimming("int f() { int x = 0; for (int i = 0; i < 10; ++i) x += i; return x;}")//
