@@ -99,7 +99,7 @@ import org.junit.*;
     return new Property<>(t);
   }
 
-  @FunctionalInterface interface Binder1<@Nullable T, A> {
+  @FunctionalInterface interface Binder1<@Nullable T, @Nullable A> {
     Property<T> to(Property<A> ¢);
   }
 
@@ -275,10 +275,10 @@ import org.junit.*;
     /** @return <code><b>true</b></code> <em>iff</em> the value in this cell is
      *         updated with respect to all its prerequisites */
     public boolean updated() {
-      if (cache() == null)
-        return false;
       if (ϑ == null)
         return true;
+      if (cache() == null)
+        return false;
       for (final Property<?> ¢ : prerequisites)
         if (version() <= ¢.version() || !¢.updated())
           return false;
@@ -292,15 +292,63 @@ import org.junit.*;
     @Override public T ϑ() {
       if (updated())
         return cache();
-      for (final Property<?> ¢ : prerequisites)
-        ¢.ϑ();
       assert ϑ != null;
+      for (final Property<?> ¢ : prerequisites)
+        ¢.update();
+      version = latestPrequisiteVersion() + 1;
       try {
         return set(ϑ.ϑ());
       } catch (final Exception x) {
         undefine();
         return null;
       }
+    }
+    /** TODO Javadoc(2016): automatically generated for method
+     * <code>update</code> <em>iff</em> <code>s</code> ends with any
+     * @return <code>1</code> if the parameter is true, 0 otherwise
+     * @return an array of
+     * @return an array of length <code>0</code> of instances of <code>T</code>.
+     * @return an array of {@link Something} of the same length as that of
+     * @return an array of {@link Something} of length <code>12</code>
+     * @return an array of the parameter values, each converted to i
+     * @return an array representation of the parameter
+     * @return an empty {@link Something}
+     * @return a new array, containing precisely those non-
+     * @return a new collection, containing only those non-
+     * @return a newly created instance of {@link Something} with the value of
+     * @return an identical instance which is also {@link Something}
+     * @return an {@link Iterable} over the parameter
+     * @return a non-<code><b>null</b></code> {@link Something} with the value
+     * @return <code>0</code> if the parameter <em>iff</em> one or more of the
+     *         parameters is
+     * @return <code>-1</code> if the parameter <em>iff</em> the parameter has
+     * @return <code>1</code> if the parameter
+     * @return <code><b>null</b></code> <em>iff</em> the parameter is
+     * @return <code><b>this</b></code>
+     * @return <code><b>true</b></code>
+     * @return <code><b>false</b></code>
+     * @return <code><b>true</b></code> <i>iff</i> the parameter is
+     * @return <code><b>true</b></code> <i>iff</i> the receive is empty
+     * @return contents of {@link Something}
+     * @return <em>iff</em> the contents of
+     * @return <em>iff</em> the index is a valid index into
+     * @return <em>iff</em> the {@link Object} parameter is
+     * @return never! The <code><b>none</b></code> type. There is no legal value
+     * @return the newly created array
+     * @return the newly created {@link Something} instance
+     * @return the next value in the parameter
+     * @return the number of
+     * @return the parameter
+     * @return the parameter, after all such occurrences are removed.
+     * @return the parameter, after to a non-null string.
+     * @return the parameter, but in a form of
+     * @return the parameter, converted into {@link Something}
+     * @return the parameters, concatenated together, with
+     * @return the parameters, organized as an array with entries whose type
+     *         is */
+    public void update() {
+      // Make sure the value on the instance is as updated as possible
+      get();
     }
     @Nullable T cache(@SuppressWarnings("hiding") final T cache) {
       return this.cache = cache;

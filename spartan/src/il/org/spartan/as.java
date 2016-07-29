@@ -87,8 +87,10 @@ public enum as {
    */
   public static int[] intArray(final List<Integer> is) {
     final int @NonNull [] $ = new int @NonNull [is.size()];
-    for (int i = 0; i < $.length; ++i)
-      $[i] = is.get(i).intValue();
+    for (int i = 0; i < $.length; ++i) {
+      @SuppressWarnings("null") int __ = is.get(i).intValue();
+      $[i] = __;
+    }
     return $;
   }
   /**
@@ -212,7 +214,7 @@ public enum as {
    * @return an array of the parameter values, each converted to i
    *         {@link String}
    */
-  @SuppressWarnings("null") public static String[] strings(final Iterable<? extends @Nullable Object> os) {
+  public static String[] strings(final Iterable<? extends @Nullable Object> os) {
     final List<@NonNull String> $ = new ArrayList<>();
     for (final @Nullable Object o : os)
       if (o != null)

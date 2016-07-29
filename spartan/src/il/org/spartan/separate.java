@@ -415,7 +415,7 @@ public enum separate {
     @Test public final void byCharArrayString() {
       assertEquals("a; x", separate.these(new char[] { 'a', 'x' }).by("; "));
     }
-    @Test public final void byCommasTypical() {
+    @Test public final void byCommasypical() {
       assertEquals("A,B,C", separate.these("A", "B", "C").byCommas());
     }
     @Test public final void byDoubleArrayChar() {

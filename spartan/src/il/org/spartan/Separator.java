@@ -3,10 +3,9 @@ package il.org.spartan;
 
 import il.org.spartan.iterables.*;
 
-/**
- * A class representing a separator string, which can be used for separating
+/** A class representing a separator string, which can be used for separating
  * elements of a sequence while printing it, without special case treatment of
- * the first or last element. For example, the following program prints a list
+ * the first or las. element. For example, the following program prints a list
  * of its arguments separated by commas, without using any conditionals.
  *
  * <pre>
@@ -18,8 +17,7 @@ import il.org.spartan.iterables.*;
  * </pre>
  *
  * @author Yossi Gil
- * @since 12/02/2006)
- */
+ * @since 12/02/2006) */
 /**
  * TODO(2016) Javadoc: automatically generated for type <code></code>
  *
