@@ -30,7 +30,7 @@ public final class InfixComparisonSpecific extends Wring.ReplaceCurrentNode<Infi
   @Override Expression replacement(final InfixExpression e) {
     return flip(e);
   }
-  @Override String description(@SuppressWarnings("unused") final InfixExpression _) {
+  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Exchange left and right operands of comparison";
   }
   @Override WringGroup wringGroup() {

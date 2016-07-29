@@ -24,7 +24,7 @@ import il.org.spartan.refactoring.utils.Rewrite;
  */
 
 public class IfLastInMethodThenEndingWithEmptyReturn extends Wring<IfStatement> {
-  @Override String description(@SuppressWarnings("unused") final IfStatement _) {
+  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Remove redundant return statement in 'then' branch of if statement that terminates this method";
   }
   @Override Rewrite make(final IfStatement s, final ExclusionManager exclude) {

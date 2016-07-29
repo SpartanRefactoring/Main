@@ -32,7 +32,7 @@ public final class IfThrowNoElseThrow extends Wring.ReplaceToNextStatement<IfSta
     final ThrowStatement $ = Extract.throwStatement(s);
     return $ == null ? null : Extract.core($.getExpression());
   }
-  @Override String description(@SuppressWarnings("unused") final IfStatement _) {
+  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate into a single 'throw'";
   }
   @Override WringGroup wringGroup() {
