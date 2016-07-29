@@ -1,19 +1,18 @@
 package il.org.spartan.refactoring.contexts;
 
-import il.org.spartan.*;
-import il.org.spartan.lazy.Environment.Property;
+import static il.org.spartan.lazy.Environment.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.ui.*;
 import org.junit.*;
 
-import static il.org.spartan.lazy.Environment.*;
+import il.org.spartan.*;
 
 /** @author Yossi Gil
  * @since 2016 */
 @SuppressWarnings("javadoc") public class CurrentCompilationUnit extends Monitored {
-  // @formatter:off 
+  // @formatter:off
   // VIM: +,/formatter:on/-!sort -u | column -t | sed "s/^/  /"
   public  final  ICompilationUnit  compilationUnit()        {  return  compilationUnit.get();        }
   public  final  IEditorInput      editorInput()            {  return  editorInput.get();            }
@@ -25,22 +24,24 @@ import static il.org.spartan.lazy.Environment.*;
   public  final  IWorkbenchWindow  activeWorkBenchWindow()  {  return  activeWorkBenchWindow.get();  }
   public  final  IWorkbench        workbench()              {  return  workbench.get();              }
   // @formatter:on
-  
-  // @formatter:off 
+
+  // @formatter:off
   // VIM: +,/formatter:on/- | column -t | sed "s/^/  /"
   final  Property<IWorkbench>        workbench              =  function(()->  PlatformUI.getWorkbench());
-  final  Property<IWorkbenchWindow>  activeWorkBenchWindow  =  bind((IWorkBench ¢)->  ¢.getActiveWorkbenchWindow()).to(workbench);
-  final  Property<IWorkbenchPage>    activePage             =  function(()->  activeWorkBenchWindow().getActivePage());
+  final  Property<IWorkbenchWindow>  activeWorkBenchWindow  =  bind((IWorkbench ¢) ->  ¢.getActiveWorkbenchWindow()).to(workbench);
+
+  //    ( ¢)->  ¢.getActiveWorkbenchWindow()).to(workbench);
+ final  Property<IWorkbenchPage>    activePage             = bind((IWorkbenchWindow ¢)-> ¢.getActivePage()).to(activeWorkBenchWindow);
   final  Property<IEditorPart>       activeEditor           =  function(()->  activePage().getActiveEditor());
   final  Property<IEditorInput>      editorInput            =  function(()->  activeEditor().getEditorInput());
-  final  Property<IResource>         resource               =  function(()->  (IResource)editorInput().getAdapter(IResource.class));
+  final  Property<IResource>         resource               =  function(()->  editorInput().getAdapter(IResource.class));
   final  Property<IFile>             iFile                  =  function(()->  (IFile)resource());
   final  Property<ICompilationUnit>  compilationUnit        =  function(()->  JavaCore.createCompilationUnitFrom(iFile()));
   final  Property<IJavaProject>      javaProject            =  function(()->  compilationUnit().getJavaProject());
   // @formatter:on
-  /** Inner class, inheriting all of its container's {@link Property}s, and adding
-   * some of its own. Access to container's c {@link Cells} is through the
-   * {@link #context} variable.
+  /** Inner class, inheriting all of its container's {@link Property}s, and
+   * adding some of its own. Access to container's c {@link Cells} is through
+   * the {@link #context} variable.
    * @author Yossi Gil
    * @since 2016` */
   public abstract class Context extends Described.Monitored {
@@ -67,7 +68,7 @@ import static il.org.spartan.lazy.Environment.*;
       azzert.notNull(JavaCore.createCompilationUnitFrom((IFile) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().getEditorInput().getAdapter(IResource.class)));
     }
     @Test public void sessionA03() {
-      IWorkbenchWindow ¢ = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+      final IWorkbenchWindow ¢ = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
       azzert.notNull(¢);
       azzert.notNull(¢.getPages());
       azzert.positive(¢.getPages().length);
@@ -82,7 +83,7 @@ import static il.org.spartan.lazy.Environment.*;
       azzert.positive(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPages().length);
     }
     @Test public void sessionA07() {
-      IWorkbenchPage ¢ = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+      final IWorkbenchPage ¢ = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
       azzert.notNull(¢);
       azzert.isNull(¢.getActiveEditor());
     }
