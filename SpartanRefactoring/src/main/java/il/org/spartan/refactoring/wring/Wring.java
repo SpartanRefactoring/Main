@@ -1,5 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
+import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.utils.Funcs.duplicate;
 import static il.org.spartan.refactoring.utils.Funcs.duplicate;
 import static il.org.spartan.refactoring.utils.Funcs.left;
 import static il.org.spartan.refactoring.utils.Funcs.right;
@@ -295,7 +297,7 @@ public abstract class Wring<N extends ASTNode> {
      */
     static void eliminate(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
       final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-      final List<VariableDeclarationFragment> live = live(f, parent.fragments());
+      final List<VariableDeclarationFragment> live = live(f, fragments(parent));
       if (live.isEmpty()) {
         r.remove(parent, g);
         return;
