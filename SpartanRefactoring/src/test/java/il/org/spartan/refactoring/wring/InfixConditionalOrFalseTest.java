@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static  il.org.spartan.azzert.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
@@ -133,7 +133,7 @@ public enum InfixConditionalOrFalseTest {
       azzert.that(flatten(flatten).toString(), is(flatten.toString()));
     }
     @Override @Test public void inputIsInfixExpression() {
-       azzert.notNull(asInfixExpression());
+      azzert.notNull(asInfixExpression());
     }
     @Test public void isANDorOR() {
       azzert.that(asInfixExpression().getOperator(), is(CONDITIONAL_OR));

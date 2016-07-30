@@ -29,16 +29,16 @@ public class TernaryCollapseTest {
 
   @Test public void steps() {
     final ConditionalExpression e = c("a ? b ? x : z :z");
-     azzert.notNull(e);
+    azzert.notNull(e);
     final ConditionalExpression then = asConditionalExpression(core(e.getThenExpression()));
-     azzert.notNull(then);
+    azzert.notNull(then);
     final Expression elze = core(e.getElseExpression());
-     azzert.notNull(elze);
+    azzert.notNull(elze);
     final Expression thenThen = core(then.getThenExpression());
-     azzert.notNull(thenThen);
+    azzert.notNull(thenThen);
     final Expression thenElse = core(then.getElseExpression());
-     azzert.notNull(thenElse);
-     azzert.aye(same(thenElse, elze));
+    azzert.notNull(thenElse);
+    azzert.aye(same(thenElse, elze));
   }
 
   @RunWith(Parameterized.class) //

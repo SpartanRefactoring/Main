@@ -1,4 +1,5 @@
 package il.org.spartan.refactoring.wring;
+
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
@@ -25,9 +26,9 @@ public class IfExpressionStatementElseSimilarExpressionStatementTest {
 
   @Test public void checkSteps() {
     final Statement s = asSingle("if (a) f(b); else f(c);");
-     azzert.notNull(s);
+    azzert.notNull(s);
     final IfStatement i = asIfStatement(s);
-     azzert.notNull(i);
+    azzert.notNull(i);
     azzert.that(WRING.scopeIncludes(i), is(true));
   }
 

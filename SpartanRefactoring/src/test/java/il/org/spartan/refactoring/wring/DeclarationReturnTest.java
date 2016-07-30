@@ -28,7 +28,7 @@ public class DeclarationReturnTest {
   static final Wring<VariableDeclarationFragment> WRING = new DeclarationInitializerReturnVariable();
 
   @Test public void placeHolder() {
-     azzert.notNull(WRING);
+    azzert.notNull(WRING);
   }
 
   @RunWith(Parameterized.class) //
@@ -91,11 +91,11 @@ public class DeclarationReturnTest {
       final VariableDeclarationFragment f = asMe();
       final ASTRewrite r = ASTRewrite.create(f.getAST());
       final Expression initializer = f.getInitializer();
-       azzert.notNull(initializer);
-       azzert.notNull(extract.nextStatement(f));
+      azzert.notNull(initializer);
+      azzert.notNull(extract.nextStatement(f));
       final ReturnStatement s = extract.nextReturn(f);
-       azzert.notNull(s);
-       azzert.aye(same(f.getName(), extract.expression(s)));
+      azzert.notNull(s);
+      azzert.aye(same(f.getName(), extract.expression(s)));
       r.remove(extract.statement(f), null);
       r.replace(s, Subject.operand(initializer).toReturn(), null);
     }

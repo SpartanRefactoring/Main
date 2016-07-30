@@ -34,8 +34,8 @@ public class TernaryShortestFirstTest {
     final Expression elze = extract.core(e.getElseExpression());
     final Expression then = extract.core(e.getThenExpression());
     final Expression $ = Subject.pair(elze, then).toCondition(logicalNot(e.getExpression()));
-     azzert.nay(then.toString(), Is.conditional(then));
-     azzert.nay(elze.toString(), Is.conditional(elze));
+    azzert.nay(then.toString(), Is.conditional(then));
+    azzert.nay(elze.toString(), Is.conditional(elze));
     azzert.that($.toString().length(), greaterThan(0));
     azzert.that($, iz("length(not(notConditional)) + length(then) >= length(notConditional) + length(elze) ? $ : null"));
   }
@@ -51,8 +51,8 @@ public class TernaryShortestFirstTest {
     final Expression elze = extract.core(e.getElseExpression());
     final Expression then = extract.core(e.getThenExpression());
     final Expression $ = Subject.pair(elze, then).toCondition(logicalNot(e.getExpression()));
-     azzert.nay(then.toString(), Is.conditional(then));
-     azzert.nay(elze.toString(), Is.conditional(elze));
+    azzert.nay(then.toString(), Is.conditional(then));
+    azzert.nay(elze.toString(), Is.conditional(elze));
     azzert.that($.toString().length(), greaterThan(0));
     azzert.that($, iz("f(o) ? x.f(a).to(e.g()) : null"));
   }

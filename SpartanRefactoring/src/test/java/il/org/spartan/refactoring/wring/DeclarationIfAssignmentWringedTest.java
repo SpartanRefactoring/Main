@@ -4,6 +4,7 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.utils.Utils.*;
+import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -82,13 +83,13 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
   }
   @Test public void eligible() {
     final VariableDeclarationFragment s = asMe();
-     azzert.aye(s.toString(), inner.eligible(s));
+    azzert.aye(s.toString(), inner.eligible(s));
   }
   @Test public void findsSimplifier() {
-     azzert.notNull(Toolbox.instance.find(asMe()));
+    azzert.notNull(Toolbox.instance.find(asMe()));
   }
   @Test public void hasOpportunity() {
-     azzert.aye(inner.scopeIncludes(asMe()));
+    azzert.aye(inner.scopeIncludes(asMe()));
     final CompilationUnit u = asCompilationUnit();
     azzert.that(u.toString(), new Trimmer().findOpportunities(u).size(), is(greaterThanOrEqualTo(1)));
   }
@@ -96,13 +97,13 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     azzert.notNull(asMe().toString(), Toolbox.instance.find(asMe()));
   }
   @Test public void noneligible() {
-     azzert.nay(inner.nonEligible(asMe()));
+    azzert.nay(inner.nonEligible(asMe()));
   }
   @Test public void peelableOutput() {
-    azzert.that(Wrap.Statement.off(Wrap.Statement.on(expected)), is((expected)));
+    azzert.that(Wrap.Statement.off(Wrap.Statement.on(expected)), is(expected));
   }
   @Test public void rewriteNotEmpty() throws MalformedTreeException, IllegalArgumentException {
-     azzert.notNull(new Trimmer().createRewrite(asCompilationUnit(), null));
+    azzert.notNull(new Trimmer().createRewrite(asCompilationUnit(), null));
   }
   @Test public void scopeIncludesAsMe() {
     azzert.that(asMe().toString(), inner.scopeIncludes(asMe()), is(true));
@@ -127,19 +128,19 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     final VariableDeclarationFragment f = asMe();
     final ASTRewrite r = ASTRewrite.create(f.getAST());
     final Expression initializer = f.getInitializer();
-     azzert.notNull(f.toString(), initializer);
+    azzert.notNull(f.toString(), initializer);
     final IfStatement s = extract.nextIfStatement(f);
-     azzert.notNull(s);
+    azzert.notNull(s);
     azzert.zero(extract.statements(elze(s)).size());
     final Assignment a = extract.assignment(then(s));
-     azzert.notNull(a);
-     azzert.aye(same(left(a), f.getName()));
+    azzert.notNull(a);
+    azzert.aye(same(left(a), f.getName()));
     r.replace(initializer, Subject.pair(right(a), initializer).toCondition(s.getExpression()), null);
     r.remove(s, null);
   }
   @Override protected CompilationUnit asCompilationUnit() {
     final CompilationUnit $ = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(Wrap.Statement.on(input));
-     azzert.notNull($);
+    azzert.notNull($);
     return $;
   }
   @Override protected VariableDeclarationFragment asMe() {
