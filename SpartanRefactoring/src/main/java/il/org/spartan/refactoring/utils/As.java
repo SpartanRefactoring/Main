@@ -3,7 +3,7 @@ package il.org.spartan.refactoring.utils;
 import static org.junit.Assert.fail;
 
 import java.io.*;
-import java.util.Scanner;
+import java.util.*;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
@@ -12,6 +12,8 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.Document;
+
+import junit.framework.*;
 
 /**
  * An empty <code><b>enum</b></code> for fluent programming. The name should say
@@ -53,7 +55,15 @@ public enum As {
       return (Expression) Make.EXPRESSION.parser(m).createAST(pm);
     }
     @Override public Expression ast(final String s) {
-      return (Expression) makeParser(s).createAST(null);
+      Assert.assertEquals(ASTParser.K_EXPRESSION, kind);
+      ASTParser makeParser = makeParser(s);
+      Assert.assertNotNull(makeParser);
+      makeParser.setKind(ASTParser.K_EXPRESSION);
+      ASTNode $ = makeParser.createAST(null);
+      if ($ instanceof Expression)
+        return (Expression) $;
+      fail("Not an expression" + $ + "\n Actual type: " + $.getClass().getSimpleName() + "\n p=" + makeParser);
+      throw new RuntimeException();
     }
   },
   /**
@@ -66,7 +76,8 @@ public enum As {
    */
   CLASS_BODY_DECLARATIONS(ASTParser.K_CLASS_BODY_DECLARATIONS);
   /**
-   * @param n The node from which to return statement.
+   * @param n
+   *          The node from which to return statement.
    * @return null if it is not possible to extract the return statement.
    */
   public static ReturnStatement asReturn(final ASTNode n) {
@@ -84,7 +95,8 @@ public enum As {
   /**
    * Converts a boolean into a bit value
    *
-   * @param $ JD
+   * @param $
+   *          JD
    * @return 1 if the parameter is <code><b>true</b></code>, 0 if it is
    *         <code><b>false</b></code>
    */
@@ -94,7 +106,8 @@ public enum As {
   /**
    * IFile -> ICompilationUnit converter
    *
-   * @param f File
+   * @param f
+   *          File
    * @return ICompilationUnit
    */
   public static ICompilationUnit iCompilationUnit(final IFile f) {
@@ -103,7 +116,8 @@ public enum As {
   /**
    * IMarker -> ICompilationUnit converter
    *
-   * @param m IMarker
+   * @param m
+   *          IMarker
    * @return CompilationUnit
    */
   public static ICompilationUnit iCompilationUnit(final IMarker m) {
@@ -112,7 +126,8 @@ public enum As {
   /**
    * Convert file contents into a {@link String}
    *
-   * @param f a file
+   * @param f
+   *          a file
    * @return the entire contents of this file, as one string
    */
   public static String string(final File f) {
@@ -129,7 +144,8 @@ public enum As {
   /**
    * Creates a {@link StringBuilder} object out of a file object.
    *
-   * @param f JD
+   * @param f
+   *          JD
    * @return {@link StringBuilder} whose content is the same as the contents of
    *         the parameter.
    */
@@ -143,14 +159,17 @@ public enum As {
   private static ReturnStatement asReturn(final Block b) {
     return b.statements().size() != 1 ? null : asReturn((Statement) b.statements().get(0));
   }
+
   final int kind;
+
   private As(final int kind) {
     this.kind = kind;
   }
   /**
    * Parses a given {@link Document}.
    *
-   * @param d JD
+   * @param d
+   *          JD
    * @return the {@link ASTNode} obtained by parsing
    */
   public final ASTNode ast(final Document d) {
@@ -159,14 +178,16 @@ public enum As {
   /**
    * File -> ASTNode converter
    *
-   * @param f File
+   * @param f
+   *          File
    * @return ASTNode
    */
   public ASTNode ast(final File f) {
     return ast(string(f));
   }
   /**
-   * @param f IFile
+   * @param f
+   *          IFile
    * @return ASTNode
    */
   public ASTNode ast(final IFile f) {
@@ -175,8 +196,10 @@ public enum As {
   /**
    * IMarker, SubProgressMonitor -> ASTNode converter
    *
-   * @param m Marker
-   * @param pm ProgressMonitor
+   * @param m
+   *          Marker
+   * @param pm
+   *          ProgressMonitor
    * @return ASTNode
    */
   public ASTNode ast(final IMarker m, final SubProgressMonitor pm) {
@@ -185,7 +208,8 @@ public enum As {
   /**
    * String -> ASTNode converter
    *
-   * @param s String
+   * @param s
+   *          String
    * @return ASTNode
    */
   public ASTNode ast(final String s) {
@@ -194,18 +218,21 @@ public enum As {
   /**
    * Creates a no-binding parser for a given text
    *
-   * @param text what to parse
+   * @param text
+   *          what to parse
    * @return a newly created parser for the parameter
    */
   public ASTParser makeParser(final char[] text) {
     final ASTParser $ = makeParser();
     $.setSource(text);
+    $.setKind(kind);
     return $;
   }
   /**
    * Creates a no-binding parser for a given compilation unit
    *
-   * @param u what to parse
+   * @param u
+   *          what to parse
    * @return a newly created parser for the parameter
    */
   public ASTParser makeParser(final ICompilationUnit u) {
@@ -216,14 +243,18 @@ public enum As {
   /**
    * Creates a no-binding parser for a given text
    *
-   * @param text what to parse
+   * @param text
+   *          what to parse
    * @return a newly created parser for the parameter
    */
   public ASTParser makeParser(final String text) {
     return makeParser(text.toCharArray());
   }
   private ASTParser makeParser() {
-    final ASTParser $ = ASTParser.newParser(AST.JLS8);
+    @SuppressWarnings("deprecation") ASTParser $ = ASTParser.newParser(AST.JLS8);
+    Map<String, String> options = JavaCore.getOptions();
+    JavaCore.setComplianceOptions(JavaCore.VERSION_1_8, options);
+    $.setCompilerOptions(options);
     $.setKind(kind);
     $.setResolveBindings(false);
     return $;

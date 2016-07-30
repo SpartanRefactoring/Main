@@ -111,10 +111,11 @@ public class Toolbox {
 		              new TernaryCollapse(), //
 		              new TernaryEliminate(), //
 		              new TernaryShortestFirst(), //
-		              new TernaryPushdown(), //
+		              new TernaryPushdown(), //`
 		              null) //
 		          .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
 		          .add(TypeDeclaration.class, new InterfaceClean()) //
+		          .add(EnumDeclaration.class, new EnumClean()) //
 		          .add(ReturnStatement.class, new ReturnLastInMethod()) //
 		          .seal();
 
