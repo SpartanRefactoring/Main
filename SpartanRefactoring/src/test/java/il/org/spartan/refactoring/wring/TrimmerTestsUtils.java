@@ -1,16 +1,14 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
+import static  il.org.spartan.azzert.*;
+import static il.org.spartan.azzert.assertNotEquals;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.utils.Utils.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
+import il.org.spartan.*;
 import il.org.spartan.misc.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
@@ -25,21 +23,21 @@ public class TrimmerTestsUtils {
     }
     public OperandToWring<N> in(final Wring<N> w) {
       final N findNode = findNode(w);
-      assertThat(w.scopeIncludes(findNode), is(true));
+      azzert.that(w.scopeIncludes(findNode), is(true));
       return this;
     }
     public OperandToWring<N> notIn(final Wring<N> w) {
-      assertThat(w.scopeIncludes(findNode(w)), is(false));
+      azzert.that(w.scopeIncludes(findNode(w)), is(false));
       return this;
     }
     private N findNode(final Wring<N> w) {
-      assertThat(w, notNullValue());
-      final Wrap wrap = findWrap();
-      assertThat(wrap, notNullValue());
+      azzert.notNull(w);
+      final Wrap wrap = Wrap.find(get());
+      azzert.notNull(wrap);
       final CompilationUnit u = wrap.intoCompilationUnit(get());
-      assertThat(u, notNullValue());
+      azzert.notNull(u);
       final N $ = firstInstance(u);
-      assertThat($, notNullValue());
+      azzert.notNull($);
       return $;
     }
     private N firstInstance(final CompilationUnit u) {
@@ -77,30 +75,36 @@ public class TrimmerTestsUtils {
     public Operand to(final String expected) {
       if (expected == null || expected.isEmpty())
         checkSame();
-      else
-        checkExpected(expected);
+      else {
+        final Wrap w = Wrap.find(get());
+        final String wrap = w.on(get());
+        final String unpeeled = TrimmerTestsUtils.apply(new Trimmer(), wrap);
+        if (wrap.equals(unpeeled))
+          fail("Nothing done on " + get());
+        final String peeled = w.off(unpeeled);
+        if (peeled.equals(get()))
+          azzert.that("No trimming of " + get(), peeled, is(not(get())));
+        if (compressSpaces(peeled).equals(compressSpaces(get())))
+          azzert.that("Trimming of " + get() + "is just reformatting", compressSpaces(get()), is(not(compressSpaces(peeled))));
+        assertSimilar(expected, peeled);
+      }
       return new Operand(expected);
     }
-    Wrap findWrap() {
-      final Wrap $ = Wrap.find(get());
-      assertThat("Cannot parse '" + get() + "'; did you forget a semicolon?", $, notNullValue());
-      return $;
-    }
-    private void checkExpected(final String expected) {
-      final Wrap w = findWrap();
+    void checkExpected(final String expected) {
+      final Wrap w = Wrap.find(get());
       final String wrap = w.on(get());
       final String unpeeled = TrimmerTestsUtils.apply(new Trimmer(), wrap);
       if (wrap.equals(unpeeled))
         fail("Nothing done on " + get());
       final String peeled = w.off(unpeeled);
       if (peeled.equals(get()))
-        assertNotEquals("No trimming of " + get(), get(), peeled);
+        azzert.that("No trimming of " + get(), peeled, is(not(get())));
       if (compressSpaces(peeled).equals(compressSpaces(get())))
-        assertNotEquals("Trimming of " + get() + "is just reformatting", compressSpaces(peeled), compressSpaces(get()));
+        azzert.that("Trimming of " + get() + "is just reformatting", compressSpaces(get()), is(not(compressSpaces(peeled))));
       assertSimilar(expected, peeled);
     }
     private void checkSame() {
-      final Wrap w = findWrap();
+      final Wrap w = Wrap.find(get());
       final String wrap = w.on(get());
       final String unpeeled = TrimmerTestsUtils.apply(new Trimmer(), wrap);
       if (wrap.equals(unpeeled))
@@ -117,18 +121,18 @@ public class TrimmerTestsUtils {
   }
   static String apply(final Trimmer t, final String from) {
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
-    assertNotNull(u);
+     azzert.notNull(u);
     final Document d = new Document(from);
-    assertNotNull(d);
+     azzert.notNull(d);
     final Document $ = TESTUtils.rewrite(t, u, d);
-    assertNotNull($);
+     azzert.notNull($);
     return $.get();
   }
   static String apply(final Wring<? extends ASTNode> ns, final String from) {
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
-    assertNotNull(u);
+     azzert.notNull(u);
     final Document d = new Document(from);
-    assertNotNull(d);
+     azzert.notNull(d);
     return TESTUtils.rewrite(new AsSpartanization(ns, "Tested Refactoring"), u, d).get();
   }
   static void assertSimplifiesTo(final String from, final String expected, final Wring<? extends ASTNode> ns, final Wrap wrapper) {

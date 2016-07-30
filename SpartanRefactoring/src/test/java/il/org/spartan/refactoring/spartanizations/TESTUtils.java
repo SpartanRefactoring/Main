@@ -1,16 +1,13 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.OrderingComparison.*;
+import static  il.org.spartan.azzert.*;
 import static il.org.spartan.utils.Utils.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.*;
 
@@ -57,9 +54,9 @@ import il.org.spartan.refactoring.wring.*;
    * @return an {@link Statement} data structure representing the parameter.
    */
   public static Statement asSingle(final String statement) {
-    assertThat(statement, notNullValue());
+    azzert.notNull(statement);
     final ASTNode n = MakeAST.STATEMENTS.from(statement);
-    assertThat(n, notNullValue());
+    azzert.notNull(n);
     return extract.singleStatement(n);
   }
   public static Document rewrite(final Spartanization s, final CompilationUnit u, final Document $) {
@@ -72,9 +69,9 @@ import il.org.spartan.refactoring.wring.*;
   }
   static String apply(final Trimmer t, final String from) {
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
-    assertNotNull(u);
+     azzert.notNull(u);
     final Document d = new Document(from);
-    assertNotNull(d);
+     azzert.notNull(d);
     return TESTUtils.rewrite(t, u, d).get();
   }
   static void assertNoOpportunity(final Spartanization s, final String from) {
@@ -86,7 +83,7 @@ import il.org.spartan.refactoring.wring.*;
   }
   static void assertOneOpportunity(final Spartanization s, final String from) {
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
-    assertThat(u, notNullValue());
-    assertThat(TrimmerTestsUtils.countOpportunities(s, u), greaterThanOrEqualTo(1));
+    azzert.notNull(u);
+    azzert.that(TrimmerTestsUtils.countOpportunities(s, u), greaterThanOrEqualTo(1));
   }
 }

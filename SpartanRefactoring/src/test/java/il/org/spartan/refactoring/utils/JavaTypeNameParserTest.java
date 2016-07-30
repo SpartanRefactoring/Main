@@ -1,51 +1,52 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
+import static  il.org.spartan.azzert.*;
 
 import org.junit.*;
 import org.junit.runners.*;
+
+import il.org.spartan.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class JavaTypeNameParserTest {
   @Test public void alphaNumericMid() {
-    assertThat(new JavaTypeNameParser("Base64Parser").shortName(), is("p"));
+    azzert.that(new JavaTypeNameParser("Base64Parser").shortName(), is("p"));
   }
   @Test public void alphaNumericPost() {
-    assertThat(new JavaTypeNameParser("Int32").shortName(), is("i"));
+    azzert.that(new JavaTypeNameParser("Int32").shortName(), is("i"));
   }
   @Test public void ast() {
-    assertThat(new JavaTypeNameParser("AST").shortName(), is("t"));
+    azzert.that(new JavaTypeNameParser("AST").shortName(), is("t"));
   }
   @Test public void astNode() {
-    assertThat(new JavaTypeNameParser("ASTNode").shortName(), is("n"));
+    azzert.that(new JavaTypeNameParser("ASTNode").shortName(), is("n"));
   }
   @Test public void compilationUnit() {
-    assertThat(new JavaTypeNameParser("CompilationUnit").shortName(), is("u"));
+    azzert.that(new JavaTypeNameParser("CompilationUnit").shortName(), is("u"));
   }
   @Test public void httpSecureConnection() {
-    assertThat(new JavaTypeNameParser("HTTPSecureConnection").shortName(), is("c"));
+    azzert.that(new JavaTypeNameParser("HTTPSecureConnection").shortName(), is("c"));
   }
   @Test public void iCompilationUnit() {
-    assertThat(new JavaTypeNameParser("ICompilationUnit").shortName(), is("u"));
+    azzert.that(new JavaTypeNameParser("ICompilationUnit").shortName(), is("u"));
   }
   @Test public void infixExpression() {
-    assertThat(new JavaTypeNameParser("InfixExpression").shortName(), is("e"));
+    azzert.that(new JavaTypeNameParser("InfixExpression").shortName(), is("e"));
   }
   @Test public void jUnit() {
-    assertThat(new JavaTypeNameParser("JUnit").shortName(), is("u"));
+    azzert.that(new JavaTypeNameParser("JUnit").shortName(), is("u"));
   }
   @Test public void onlyLowerCase() {
-    assertThat(new JavaTypeNameParser("onlylowercase").shortName(), is("o"));
+    azzert.that(new JavaTypeNameParser("onlylowercase").shortName(), is("o"));
   }
   @Test public void onlyUpperCase() {
-    assertThat(new JavaTypeNameParser("ONLYUPPERCASE").shortName(), is("e"));
+    azzert.that(new JavaTypeNameParser("ONLYUPPERCASE").shortName(), is("e"));
   }
   @Test public void singleChar() {
-    assertThat(new JavaTypeNameParser("Q").shortName(), is("q"));
+    azzert.that(new JavaTypeNameParser("Q").shortName(), is("q"));
   }
   @Test public void stringBuilder() {
-    assertThat(new JavaTypeNameParser("StringBuilder").shortName(), is("b"));
+    azzert.that(new JavaTypeNameParser("StringBuilder").shortName(), is("b"));
   }
 }

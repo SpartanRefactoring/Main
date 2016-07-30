@@ -29,16 +29,16 @@ public class ApplySpartanizationHandler extends BaseHandler {
       new Trimmer() };
 
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent e) {
-    applySafeSpartanizationsTo(currentCompilationUnit(), getSelectedText());
+    apply(currentCompilationUnit(), getSelectedText());
     return null;
   }
-  public static void applySafeSpartanizationsTo(final ICompilationUnit cu) {
-    applySafeSpartanizationsTo(cu, new Range(0, 0));
+  public static void apply(final ICompilationUnit cu) {
+    apply(cu, new Range(0, 0));
   }
-  public static void applySafeSpartanizationsTo(final ICompilationUnit cu, final Range r) {
-    applySafeSpartanizationsTo(cu, r == null || r.size() <= 0 ? new TextSelection(0, 0) : new TextSelection(r.from, r.size()));
+  public static void apply(final ICompilationUnit cu, final Range r) {
+    apply(cu, r == null || r.size() <= 0 ? new TextSelection(0, 0) : new TextSelection(r.from, r.size()));
   }
-  public static void applySafeSpartanizationsTo(final ICompilationUnit cu, final ITextSelection t) {
+  public static void apply(final ICompilationUnit cu, final ITextSelection t) {
     for (final Spartanization s : safeSpartanizations)
       try {
         s.setCompilationUnit(cu);

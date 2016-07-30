@@ -1,12 +1,8 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.*;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.OrderingComparison.*;
+import static  il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -16,8 +12,9 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.Utils;
 
 /**
  * Unit tests for {@link Wrings#MULTIPLCATION_SORTER}.
@@ -134,16 +131,16 @@ public enum InfixConditionalAndTrueTest {
     }
     @Override @Test public void flattenIsIdempotentt() {
       final InfixExpression flatten = flatten(asInfixExpression());
-      assertThat(flatten(flatten).toString(), is(flatten.toString()));
+      azzert.that(flatten(flatten).toString(), is(flatten.toString()));
     }
     @Override @Test public void inputIsInfixExpression() {
-      assertNotNull(asInfixExpression());
+       azzert.notNull(asInfixExpression());
     }
     @Test public void isANDorOR() {
-      assertThat(asInfixExpression().getOperator(), is(CONDITIONAL_AND));
+      azzert.that(asInfixExpression().getOperator(), is(CONDITIONAL_AND));
     }
     @Test public void twoOrMoreArguments() {
-      assertThat(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
+      azzert.that(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
     }
   }
 }
