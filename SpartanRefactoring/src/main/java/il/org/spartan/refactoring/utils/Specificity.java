@@ -55,7 +55,7 @@ public class Specificity implements Comparator<Expression> {
     },
     CONSTANT {
       @Override boolean includes(final ASTNode n) {
-        return n.getNodeType() == PREFIX_EXPRESSION && Is.literal(Extract.core(((PrefixExpression) n).getOperand()));
+        return n.getNodeType() == PREFIX_EXPRESSION && Is.literal(extract.core(((PrefixExpression) n).getOperand()));
       }
     },
     CLASS_CONSTANT {
@@ -69,7 +69,7 @@ public class Specificity implements Comparator<Expression> {
       }
     },;
     static int of(final ASTNode n) {
-      final Expression e = Extract.core((Expression) n);
+      final Expression e = extract.core((Expression) n);
       for (final Level l : values())
         if (l.includes(e))
           return l.ordinal();

@@ -30,7 +30,7 @@ import org.junit.*;
   }
   @Test public void plus() {
     final Expression e = Into.e("a + 2 < b");
-    final Expression plus = Extract.firstPlus(e);
+    final Expression plus = extract.firstPlus(e);
     assertThat(plus.toString(), Is.notString(plus), is(true));
     assertThat(e.toString(), Is.notString(plus), is(true));
   }

@@ -24,7 +24,7 @@ public final class DeclarationInitialiazerAssignment extends Wring.VariableDecla
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
       return null;
-    final Assignment a = Extract.assignment(nextStatement);
+    final Assignment a = extract.assignment(nextStatement);
     if (a == null || !same(n, left(a)) || a.getOperator() != ASSIGN)
       return null;
     final Expression newInitializer = duplicate(right(a));

@@ -26,7 +26,7 @@ public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assign
     final Expression right = getRight(a);
     if (right == null || right.getNodeType() == NULL_LITERAL)
       return null;
-    final Assignment a1 = Extract.assignment(nextStatement);
+    final Assignment a1 = extract.assignment(nextStatement);
     if (a1 == null)
       return null;
     final Expression right1 = getRight(a1);
@@ -40,7 +40,7 @@ public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assign
     return a.getOperator() != ASSIGN ? null : extractRight(a);
   }
   static Expression extractRight(final Assignment a) {
-    final Expression $ = Extract.core(right(a));
+    final Expression $ = extract.core(right(a));
     return !($ instanceof Assignment) || ((Assignment) $).getOperator() != ASSIGN ? $ : extractRight((Assignment) $);
   }
   @Override String description(final Assignment a) {

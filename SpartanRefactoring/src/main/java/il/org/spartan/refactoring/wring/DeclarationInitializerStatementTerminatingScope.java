@@ -29,7 +29,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
     for (final IExtendedModifier m : (List<IExtendedModifier>) ((VariableDeclarationStatement) f.getParent()).modifiers())
       if (m.isModifier() && ((Modifier) m).isFinal())
         return null;
-    final Statement s = Extract.statement(f);
+    final Statement s = extract.statement(f);
     if (s == null)
       return null;
     final Block parent = asBlock(s.getParent());

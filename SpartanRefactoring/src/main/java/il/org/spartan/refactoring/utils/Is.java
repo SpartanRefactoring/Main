@@ -164,7 +164,7 @@ public enum Is {
       case THIS_EXPRESSION:
         return true;
       case PREFIX_EXPRESSION:
-        return Is.constant(Extract.core(((PrefixExpression) e).getOperand()));
+        return Is.constant(extract.core(((PrefixExpression) e).getOperand()));
       default:
         return false;
     }
@@ -497,7 +497,7 @@ public enum Is {
       case PARENTHESIZED_EXPRESSION:
         return sideEffectFree(((ParenthesizedExpression) e).getExpression());
       case INFIX_EXPRESSION:
-        return sideEffectsFree(Extract.allOperands((InfixExpression) e));
+        return sideEffectsFree(extract.allOperands((InfixExpression) e));
       case CONDITIONAL_EXPRESSION:
         final ConditionalExpression ce = (ConditionalExpression) e;
         return sideEffectsFree(ce.getExpression(), ce.getThenExpression(), ce.getElseExpression());
@@ -556,7 +556,7 @@ public enum Is {
    *         statement.
    */
   public static boolean singletonStatement(final ASTNode n) {
-    return Extract.statements(n).size() == 1;
+    return extract.statements(n).size() == 1;
   }
   /**
    * Determine whether the "then" branch of an {@link Statement} is a single
@@ -621,7 +621,7 @@ public enum Is {
    *         statements in the parameter
    */
   public static boolean vacuous(final Statement s) {
-    return Extract.statements(s).size() == 0;
+    return extract.statements(s).size() == 0;
   }
   /**
    * Determine whether the 'else' part of an {@link IfStatement} is vacuous.
@@ -669,7 +669,7 @@ public enum Is {
     return notStringSelf(e) || notStringDown(asInfixExpression(e));
   }
   static boolean notStringDown(final InfixExpression e) {
-    return e != null && (e.getOperator() != PLUS || Are.notString(Extract.allOperands(e)));
+    return e != null && (e.getOperator() != PLUS || Are.notString(extract.allOperands(e)));
   }
   static boolean notStringSelf(final Expression e) {
     return intIsIn(e.getNodeType(), //

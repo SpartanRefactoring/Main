@@ -16,28 +16,28 @@ import il.org.spartan.refactoring.spartanizations.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) public class ExtractTest {
   @Test public void core() {
-    assertThat(Extract.core((Expression) null), nullValue());
-    assertThat(Extract.core((Statement) null), nullValue());
+    assertThat(extract.core((Expression) null), nullValue());
+    assertThat(extract.core((Statement) null), nullValue());
   }
   @Test public void firstMethdoDeclaration() {
-    assertThat(Extract.firstMethodDeclaration(Wrap.Method.intoCompilationUnit("int f() { return a; }")),
+    assertThat(extract.firstMethodDeclaration(Wrap.Method.intoCompilationUnit("int f() { return a; }")),
         iz("int f() { return a; }"));
   }
   @Test public void operandsCount() {
-    assertThat(Extract.operands(i("a+b+c+(d+e)+f")).size(), is(5));
+    assertThat(extract.operands(i("a+b+c+(d+e)+f")).size(), is(5));
   }
   @Test public void operandsOfNullIsNull() {
-    assertThat(Extract.operands(null), is(nullValue()));
+    assertThat(extract.operands(null), is(nullValue()));
   }
   @Test public void plus() {
-    assertThat(Extract.firstPlus(Into.e("a + 2 < b")), iz("a+2"));
+    assertThat(extract.firstPlus(Into.e("a + 2 < b")), iz("a+2"));
   }
   @Test public void prefixToPostfixDecrement() {
     final String from = "for (int i = 0; i < 100;  i--)  i--;";
     final Statement s = s(from);
     assertThat(s, iz("{" + from + "}"));
     assertNotNull(s);
-    final PostfixExpression e = Extract.findFirstPostfix(s);
+    final PostfixExpression e = extract.findFirstPostfix(s);
     assertNotNull(e);
     assertThat(e.toString(), is("i--"));
   }

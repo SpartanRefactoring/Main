@@ -112,16 +112,16 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
       assertTrue(asInfixExpression().getOperator() == Operator.TIMES);
     }
     @Test public void sortTest() {
-      assertFalse(COMPARATOR.sort(Extract.operands(flatten(asInfixExpression()))));
+      assertFalse(COMPARATOR.sort(extract.operands(flatten(asInfixExpression()))));
     }
     @Test public void sortTwice() {
       final InfixExpression e = asInfixExpression();
-      final List<Expression> operands = Extract.operands(flatten(e));
+      final List<Expression> operands = extract.operands(flatten(e));
       assertFalse(COMPARATOR.sort(operands));
       assertFalse(COMPARATOR.sort(operands));
     }
     @Test public void twoOrMoreArguments() {
-      assertThat(Extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
+      assertThat(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
     }
   }
 
@@ -166,18 +166,18 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
     }
     @Test public void sortTest() {
       final InfixExpression e = asInfixExpression();
-      final List<Expression> operands = Extract.operands(flatten(e));
-      assertThat("Before: " + Extract.operands(flatten(e)) + "\n" + "After: " + operands + "\n", COMPARATOR.sort(operands),
+      final List<Expression> operands = extract.operands(flatten(e));
+      assertThat("Before: " + extract.operands(flatten(e)) + "\n" + "After: " + operands + "\n", COMPARATOR.sort(operands),
           is(true));
     }
     @Test public void sortTwice() {
       final InfixExpression e = asInfixExpression();
-      final List<Expression> operands = Extract.operands(flatten(e));
+      final List<Expression> operands = extract.operands(flatten(e));
       assertTrue(COMPARATOR.sort(operands));
       assertFalse(COMPARATOR.sort(operands));
     }
     @Test public void twoOrMoreArguments() {
-      assertThat(Extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
+      assertThat(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
     }
   }
 }

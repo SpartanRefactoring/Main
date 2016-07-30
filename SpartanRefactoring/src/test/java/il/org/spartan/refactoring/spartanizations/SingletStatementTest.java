@@ -58,18 +58,18 @@ public class SingletStatementTest {
   @Test public void peelIf() {
     final ASTNode n = MakeAST.STATEMENTS.from("{if (a) return b; else return c;}");
     assertThat(n, notNullValue());
-    final List<Statement> ss = Extract.statements(n);
+    final List<Statement> ss = extract.statements(n);
     assertThat(ss, notNullValue());
     assertThat(ss.size(), is(1));
-    assertNotNull(Extract.singleStatement(n));
+    assertNotNull(extract.singleStatement(n));
   }
   @Test public void peelIPlusPlus() {
     final ASTNode n = MakeAST.STATEMENTS.from("{i++;}");
     assertThat(n, notNullValue());
-    final List<Statement> ss = Extract.statements(n);
+    final List<Statement> ss = extract.statements(n);
     assertThat(ss, notNullValue());
     assertThat(ss.size(), is(1));
-    assertNotNull(Extract.singleStatement(n));
+    assertNotNull(extract.singleStatement(n));
   }
   @Test public void twoFunctionCallsNullValue() {
     assertThat(singleStatement(s("{b(); a();}")), nullValue());

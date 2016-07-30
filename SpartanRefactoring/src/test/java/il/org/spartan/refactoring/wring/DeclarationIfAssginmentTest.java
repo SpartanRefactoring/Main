@@ -43,7 +43,7 @@ public class DeclarationIfAssginmentTest {
     final String from = "int a = 2,b; if (b) a =3;";
     final String wrap = Wrap.Statement.on(from);
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
-    final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(u);
+    final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
     assertThat(f, notNullValue());
     assertThat(WRING.scopeIncludes(f), is(false));
   }
@@ -51,16 +51,16 @@ public class DeclarationIfAssginmentTest {
     final String from = "int a = 2,b; if (a+b) a =3;";
     final String wrap = Wrap.Statement.on(from);
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
-    final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(u);
+    final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
     assertThat(f, notNullValue());
     final Expression initializer = f.getInitializer();
     assertNotNull(initializer);
-    final IfStatement s = Extract.nextIfStatement(f);
-    assertThat(s, is(Extract.firstIfStatement(u)));
+    final IfStatement s = extract.nextIfStatement(f);
+    assertThat(s, is(extract.firstIfStatement(u)));
     assertNotNull(s);
     assertThat(s, iz("if (a + b) a=3;"));
     assertTrue(Is.vacuousElse(s));
-    final Assignment a = Extract.assignment(then(s));
+    final Assignment a = extract.assignment(then(s));
     assertNotNull(a);
     assertTrue(same(left(a), f.getName()));
     assertThat(a.getOperator(), is(Assignment.Operator.ASSIGN));
@@ -117,7 +117,7 @@ public class DeclarationIfAssginmentTest {
       final String expected = "int a = b ? 3 : 2;";
       final Document d = new Document(Wrap.Statement.on(from));
       final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(d);
-      final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(u);
+      final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
       assertThat(f, notNullValue());
       final ASTRewrite r = new Trimmer().createRewrite(u, null);
       final TextEdit e = r.rewriteAST(d, null);

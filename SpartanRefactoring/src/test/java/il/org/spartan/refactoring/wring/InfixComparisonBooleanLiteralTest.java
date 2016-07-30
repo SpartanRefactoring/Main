@@ -120,12 +120,12 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
       assertNotNull(asInfixExpression());
     }
     @Test public void sortTwice() {
-      final List<Expression> operands = Extract.operands(flatten(asInfixExpression()));
+      final List<Expression> operands = extract.operands(flatten(asInfixExpression()));
       ExpressionComparator.ADDITION.sort(operands);
       assertFalse(ExpressionComparator.ADDITION.sort(operands));
     }
     @Test public void twoOrMoreArguments() {
-      assertThat(Extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
+      assertThat(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
     }
   }
 }

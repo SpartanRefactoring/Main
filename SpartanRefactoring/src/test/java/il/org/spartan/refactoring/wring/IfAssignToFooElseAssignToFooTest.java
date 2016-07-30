@@ -33,9 +33,9 @@ public class IfAssignToFooElseAssignToFooTest {
     assertNotNull(asSingle("if (a) a = b; else a = c;"));
     final IfStatement s = asIfStatement(asSingle("if (a) a = b; else a = c;"));
     assertNotNull(s);
-    final Assignment then = Extract.assignment(then(s));
+    final Assignment then = extract.assignment(then(s));
     assertNotNull(then(s).toString(), then);
-    final Assignment elze = Extract.assignment(elze(s));
+    final Assignment elze = extract.assignment(elze(s));
     assertNotNull(elze);
     assertThat(compatible(then, elze), is(true));
     assertThat(WRING.scopeIncludes(s), is(true));

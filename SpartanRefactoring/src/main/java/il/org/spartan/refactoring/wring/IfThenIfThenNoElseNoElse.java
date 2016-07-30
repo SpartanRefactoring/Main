@@ -27,7 +27,7 @@ public final class IfThenIfThenNoElseNoElse extends Wring<IfStatement> {
   @Override Rewrite make(final IfStatement s, final ExclusionManager exclude) {
     if (!Is.vacuousElse(s))
       return null;
-    final IfStatement then = asIfStatement(Extract.singleThen(s));
+    final IfStatement then = asIfStatement(extract.singleThen(s));
     if (then == null || !Is.vacuousElse(then))
       return null;
     if (exclude != null)
@@ -39,7 +39,7 @@ public final class IfThenIfThenNoElseNoElse extends Wring<IfStatement> {
     };
   }
   static void collapse(final IfStatement s, final ASTRewrite r, final TextEditGroup g) {
-    final IfStatement then = asIfStatement(Extract.singleThen(s));
+    final IfStatement then = asIfStatement(extract.singleThen(s));
     final InfixExpression e = Subject.pair(s.getExpression(), then.getExpression()).to(CONDITIONAL_AND);
     r.replace(s.getExpression(), e, g);
     r.replace(then, duplicate(then(then)), g);
