@@ -2,6 +2,7 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
+import static il.org.spartan.refactoring.utils.expose.*;
 
 import java.util.*;
 
@@ -18,7 +19,7 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2015-07-29
  */
 public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
-  public static boolean safeBlockSimplification(final List<Statement> ss) {
+  @SuppressWarnings("unchecked") public static boolean safeBlockSimplification(final List<Statement> ss) {
     final List<String> l = new ArrayList<>();
     for (final Statement s : ss)
       if (s instanceof VariableDeclarationStatement) {
@@ -42,7 +43,7 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
     return true;
   }
   static Statement reorganizeNestedStatement(final Statement s) {
-    final List<Statement> ss = Extract.statements(s);
+    final List<Statement> ss = extract.statements(s);
     switch (ss.size()) {
       case 0:
         return s.getAST().newEmptyStatement();
@@ -61,14 +62,14 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
     return true;
   }
   private static Block reorganizeStatement(final Statement s) {
-    final List<Statement> ss = Extract.statements(s);
+    final List<Statement> ss = extract.statements(s);
     final Block $ = s.getAST().newBlock();
-    duplicateInto(ss, $.statements());
+    duplicateInto(ss, statements($));
     return $;
   }
   @Override Statement replacement(final Block b) {
-    final List<Statement> ss = Extract.statements(b);
-    if (identical(ss, Extract.statements(b)) || !safeBlockSimplification(ss))
+    final List<Statement> ss = extract.statements(b);
+    if (identical(ss, statements(b)) || !safeBlockSimplification(ss))
       return null;
     final ASTNode parent = b.getParent();
     if (!(parent instanceof Statement) || parent instanceof TryStatement)

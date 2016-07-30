@@ -2,7 +2,7 @@ package il.org.spartan.refactoring.spartanizations;
 
 import java.util.*;
 
-import il.org.spartan.refactoring.wring.Trimmer;
+import il.org.spartan.refactoring.wring.*;
 
 /**
  * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code> (v2)
@@ -25,6 +25,7 @@ public class Spartanizations {
     }
   };
   private final Spartanization value;
+
   private Spartanizations(final Spartanization value) {
     this.value = value;
   }
@@ -35,7 +36,8 @@ public class Spartanizations {
     return value;
   }
   /**
-   * @param c Spartanization rule
+   * @param c
+   *          Spartanization rule
    * @return Spartanization class rule instance
    */
   @SuppressWarnings("unchecked") //
@@ -54,6 +56,7 @@ public class Spartanizations {
       @Override public Iterator<Spartanization> iterator() {
         return new Iterator<Spartanization>() {
           int next = 0;
+
           @Override public boolean hasNext() {
             return next < all.length;
           }
@@ -78,7 +81,8 @@ public class Spartanizations {
       map.put(s.getClass().getSimpleName(), s);
   }
   /**
-   * @param name the name of the spartanization
+   * @param name
+   *          the name of the spartanization
    * @return an instance of the spartanization
    */
   public static Spartanization get(final String name) {

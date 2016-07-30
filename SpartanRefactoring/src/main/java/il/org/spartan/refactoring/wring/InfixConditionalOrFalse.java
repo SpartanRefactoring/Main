@@ -1,12 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Have;
-import il.org.spartan.refactoring.utils.Is;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
  * A {@link Wring} to convert <code>b || false</code> to <code>b</code>
@@ -19,12 +16,12 @@ public final class InfixConditionalOrFalse extends Wring.ReplaceCurrentNode<Infi
     return Wrings.eliminateLiteral(e, false);
   }
   @Override boolean scopeIncludes(final InfixExpression e) {
-    return e != null && Is.conditionalOr(e) && Have.falseLiteral(Extract.allOperands(e));
+    return e != null && Is.conditionalOr(e) && Have.falseLiteral(extract.allOperands(e));
   }
   @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Remove 'false' argument to '||'";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REFACTOR_INEFFECTIVE;
+    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

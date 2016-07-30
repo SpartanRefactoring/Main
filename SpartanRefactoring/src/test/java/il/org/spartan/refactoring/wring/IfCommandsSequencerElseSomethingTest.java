@@ -1,42 +1,26 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.asSingle;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
-import static il.org.spartan.refactoring.utils.Funcs.asIfStatement;
-import static il.org.spartan.utils.Utils.compressSpaces;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.text.IsEqualIgnoringWhiteSpace.equalToIgnoringWhiteSpace;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static il.org.spartan.azzert.*;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.utils.Utils.*;
+import static org.hamcrest.text.IsEqualIgnoringWhiteSpace.*;
 
-import java.util.Collection;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.Document;
-import org.eclipse.text.edits.MalformedTreeException;
-import org.eclipse.text.edits.TextEdit;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.jface.text.*;
+import org.eclipse.text.edits.*;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.*;
 
-import il.org.spartan.refactoring.spartanizations.Wrap;
-import il.org.spartan.refactoring.utils.As;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Rewrite;
-import il.org.spartan.refactoring.wring.*;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
+import il.org.spartan.*;
+import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.AbstractWringTest.*;
 import il.org.spartan.utils.Utils;
 
 /**
@@ -49,25 +33,35 @@ import il.org.spartan.utils.Utils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class IfCommandsSequencerElseSomethingTest {
   static final IfThenOrElseIsCommandsFollowedBySequencer WRING = new IfThenOrElseIsCommandsFollowedBySequencer();
+
+  static public void fail(String message) {
+    if (message == null) {
+      throw new AssertionError();
+    }
+    throw new AssertionError(message);
+  }
+  static public void fail() {
+    fail(null);
+  }
   @Test public void checkSteps() {
     final Statement s = asSingle("if (a) return a = b; else a = c;");
-    assertNotNull(s);
-    assertNotNull(asIfStatement(s));
+    azzert.notNull(s);
+    azzert.notNull(asIfStatement(s));
   }
   @Test public void checkStepsFull() throws MalformedTreeException, BadLocationException {
     final IfStatement s = (IfStatement) asSingle("if (a) return b; else a();");
-    assertThat(WRING.scopeIncludes(s), is(true));
-    assertThat(WRING.eligible(s), is(true));
+    azzert.that(WRING.scopeIncludes(s), is(true));
+    azzert.that(WRING.eligible(s), is(true));
     final Rewrite m = WRING.make(s);
-    assertThat(m, notNullValue());
+    azzert.notNull(m);
     final Wring<IfStatement> w = Toolbox.instance.find(s);
-    assertThat(w, notNullValue());
-    assertThat(w, instanceOf(WRING.getClass()));
+    azzert.notNull(w);
+    azzert.that(w, instanceOf(WRING.getClass()));
     final String wrap = Wrap.Statement.on(s.toString());
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(wrap);
-    assertNotNull(u);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
+    azzert.notNull(u);
     final Document d = new Document(wrap);
-    assertNotNull(d);
+    azzert.notNull(d);
     final Trimmer t = new Trimmer();
     final ASTRewrite r = t.createRewrite(u, null);
     final TextEdit x = r.rewriteAST(d, null);
@@ -76,33 +70,33 @@ public class IfCommandsSequencerElseSomethingTest {
     if (wrap.equals(unpeeled))
       fail("Nothing done on " + s);
     final String peeled = Wrap.Statement.off(unpeeled);
-    if (peeled.equals(s))
-      assertNotEquals("No similification of " + s, s, peeled);
-    if (compressSpaces(peeled).equals(compressSpaces(s.toString())))
-      assertNotEquals("Simpification of " + s + " is just reformatting", compressSpaces(peeled), compressSpaces(s.toString()));
+    azzert.that("No similification of " + s, s, not(peeled));
+    final String compressSpaces = compressSpaces(peeled);
+    final String compressSpaces2 = compressSpaces(s.toString());
+    azzert.that("Simpification of " + s + " is just reformatting", compressSpaces, not(compressSpaces2));
     assertSimilar(" if(a)return b;a(); ", peeled);
   }
   @Test public void checkStepsTrimmer() throws MalformedTreeException, BadLocationException {
     final String input = "if (a) return b; else a();";
     final String wrap = Wrap.Statement.on(input);
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(wrap);
-    assertNotNull(u);
-    final IfStatement s = Extract.firstIfStatement(u);
-    assertThat(s, notNullValue());
-    assertThat(s.toString(), equalToIgnoringWhiteSpace(input));
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
+    azzert.notNull(u);
+    final IfStatement s = extract.firstIfStatement(u);
+    azzert.notNull(s);
+    azzert.that(s.toString(), equalToIgnoringWhiteSpace(input));
     final Wring<IfStatement> w = Toolbox.instance.find(s);
-    assertThat(w, notNullValue());
-    assertThat(w.scopeIncludes(s), is(true));
-    assertThat(w.eligible(s), is(true));
-    assertThat(w, instanceOf(WRING.getClass()));
+    azzert.notNull(w);
+    azzert.that(w.scopeIncludes(s), is(true));
+    azzert.that(w.eligible(s), is(true));
+    azzert.that(w, instanceOf(WRING.getClass()));
     final Rewrite m = w.make(s);
-    assertThat(m, notNullValue());
+    azzert.notNull(m);
     final ASTRewrite r = ASTRewrite.create(s.getAST());
     m.go(r, null);
-    assertThat(r.toString(), allOf(startsWith("Events:"), containsString("[replaced:"), containsString("]")));
+    azzert.that(r.toString(), allOf(startsWith("Events:"), containsString("[replaced:"), containsString("]")));
     final Document d = new Document(wrap);
-    assertNotNull(d);
-    assertThat(d.get(), equalToIgnoringWhiteSpace(wrap.toString()));
+    azzert.notNull(d);
+    azzert.that(d.get(), equalToIgnoringWhiteSpace(wrap.toString()));
     final TextEdit x = r.rewriteAST(d, null);
     x.apply(d);
     final String unpeeled = d.get();
@@ -110,20 +104,20 @@ public class IfCommandsSequencerElseSomethingTest {
       fail("Nothing done on " + s);
     final String peeled = Wrap.Statement.off(unpeeled);
     if (peeled.equals(s))
-      assertNotEquals("No similification of " + s, s, peeled);
+      azzert.that("No similification of " + s, peeled, is(not(s.toString())));
     if (compressSpaces(peeled).equals(compressSpaces(s.toString())))
-      assertNotEquals("Simpification of " + s + " is just reformatting", compressSpaces(peeled), compressSpaces(s.toString()));
+      azzert.that("Simpification of " + s + " is just reformatting", compressSpaces(s.toString()), is(not(compressSpaces(peeled))));
     assertSimilar(" if (a) return b; a(); ", peeled);
   }
   @Test public void checkStepsWRING() throws MalformedTreeException {
     final IfStatement s = (IfStatement) asSingle("if (a) return b; else a();");
-    assertThat(WRING.scopeIncludes(s), is(true));
-    assertThat(WRING.eligible(s), is(true));
+    azzert.that(WRING.scopeIncludes(s), is(true));
+    azzert.that(WRING.eligible(s), is(true));
     final Rewrite m = WRING.make(s);
-    assertThat(m, notNullValue());
+    azzert.notNull(m);
     final ASTRewrite r = ASTRewrite.create(s.getAST());
     m.go(r, null);
-    assertThat(r.toString(), allOf(startsWith("Events:"), containsString("[replaced:"), containsString("]")));
+    azzert.that(r.toString(), allOf(startsWith("Events:"), containsString("[replaced:"), containsString("]")));
   }
 
   @RunWith(Parameterized.class) //
@@ -139,6 +133,7 @@ public class IfCommandsSequencerElseSomethingTest {
         new String[] { "Simple if plus assign", "if (a) a += b; else a += c;" }, //
         new String[] { "Simple if plus assign", "if (a) a *= b; else a *= c;" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -163,9 +158,11 @@ public class IfCommandsSequencerElseSomethingTest {
         new String[] { "Vanilla: sequencer in else", "if (a) return b; else a();", "if(a)return b;a();" }, //
         new String[] { "Plant two statements", "if (a) return b; else a(); f();", "if(a)return b;a(); f();" }, //
         null, //
-        new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}", "if (x) {;f();;;return a;;;}\n g();" }, //
+        new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}",
+            "if (x) {;f();;;return a;;;}\n g();" }, //
         null, //
-        new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}", "  if(x){;f();;;return a;;;} g();" }, //
+        new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}",
+            "  if(x){;f();;;return a;;;} g();" }, //
         new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}",
             "" + //
                 " if (x) {\n" + //
@@ -196,6 +193,7 @@ public class IfCommandsSequencerElseSomethingTest {
                 " g();\n" + //
                 "" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *

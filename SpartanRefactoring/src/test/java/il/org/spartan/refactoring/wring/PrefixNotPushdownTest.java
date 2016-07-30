@@ -1,32 +1,21 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.refactoring.utils.Extract.core;
-import static il.org.spartan.refactoring.utils.Funcs.asBooleanLiteral;
-import static il.org.spartan.refactoring.utils.Funcs.asNot;
-import static il.org.spartan.refactoring.utils.Into.p;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertNotNull;
+import static il.org.spartan.azzert.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Into.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 
-import java.util.Collection;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.PrefixExpression;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.eclipse.jdt.core.dom.*;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.*;
 
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.wring.PrefixNotPushdown;
-import il.org.spartan.refactoring.wring.Wring;
-import il.org.spartan.refactoring.wring.Wrings;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
+import il.org.spartan.*;
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.AbstractWringTest.*;
 import il.org.spartan.utils.Utils;
 
 /**
@@ -40,22 +29,23 @@ import il.org.spartan.utils.Utils;
 public class PrefixNotPushdownTest {
   /** The {@link Wring} under test */
   static final PrefixNotPushdown WRING = new PrefixNotPushdown();
+
   @Test public void notOfFalse() {
     final PrefixExpression e = p("!false");
-    assertThat(e, is(notNullValue()));
-    assertThat(WRING.scopeIncludes(e), is(true));
-    assertThat(WRING.eligible(e), is(true));
-    assertThat(asNot(e), is(notNullValue()));
+    azzert.notNull(e);
+    azzert.that(WRING.scopeIncludes(e), is(true));
+    azzert.that(WRING.eligible(e), is(true));
+    azzert.notNull(asNot(e));
     final Expression inner = core(e.getOperand());
-    assertThat(inner, is(notNullValue()));
-    assertThat(inner.toString(), is("false"));
-    assertThat(Is.booleanLiteral(inner), is(true));
-    assertThat(PrefixNotPushdown.perhapsNotOfLiteral(inner), is(notNullValue()));
-    assertThat(PrefixNotPushdown.notOfLiteral(asBooleanLiteral(inner)), is(notNullValue()));
-    assertThat(PrefixNotPushdown.perhapsNotOfLiteral(inner), is(notNullValue()));
-    assertThat(PrefixNotPushdown.pushdownNot(inner), is(notNullValue()));
-    assertThat(PrefixNotPushdown.pushdownNot(asNot(e)), is(notNullValue()));
-    assertThat(WRING.replacement(e), is(notNullValue()));
+    azzert.notNull(inner);
+    azzert.that(inner.toString(), is("false"));
+    azzert.that(Is.booleanLiteral(inner), is(true));
+    azzert.notNull(PrefixNotPushdown.perhapsNotOfLiteral(inner));
+    azzert.notNull(PrefixNotPushdown.notOfLiteral(asBooleanLiteral(inner)));
+    azzert.notNull(PrefixNotPushdown.perhapsNotOfLiteral(inner));
+    azzert.notNull(PrefixNotPushdown.pushdownNot(inner));
+    azzert.notNull(PrefixNotPushdown.pushdownNot(asNot(e)));
+    azzert.notNull(WRING.replacement(e));
   }
 
   @RunWith(Parameterized.class) //
@@ -65,6 +55,7 @@ public class PrefixNotPushdownTest {
         new String[] { "Simple not of function", "!f(a)" }, //
         new String[] { "Actual example", "!inRange(m, e)" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -111,6 +102,7 @@ public class PrefixNotPushdownTest {
         new String[] { "Mutliple not parenthesis", "!(!(d) || ((!(!(!(((c))))))))", "d && c" }, //
         new String[] { "Nested not", "!(!(a || b))", "a||b" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -128,7 +120,7 @@ public class PrefixNotPushdownTest {
       super(WRING);
     }
     @Test public void inputIsPrefixExpression() {
-      assertNotNull(asPrefixExpression());
+      azzert.notNull(asPrefixExpression());
     }
   }
 }

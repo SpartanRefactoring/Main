@@ -1,15 +1,13 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.then;
+import static il.org.spartan.refactoring.utils.Funcs.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.Subject;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
  * A {@link Wring} to convert <code>if (x) throw foo(); throw bar();</code> into
@@ -26,16 +24,17 @@ public final class IfThrowNoElseThrow extends Wring.ReplaceToNextStatement<IfSta
     if (e1 == null)
       return null;
     final Expression e2 = getThrowExpression(nextStatement);
-    return e2 == null ? null : Wrings.replaceTwoStatements(r, s, Subject.operand(Subject.pair(e1, e2).toCondition(s.getExpression())).toThrow(), g);
+    return e2 == null ? null
+        : Wrings.replaceTwoStatements(r, s, Subject.operand(Subject.pair(e1, e2).toCondition(s.getExpression())).toThrow(), g);
   }
   static Expression getThrowExpression(final Statement s) {
-    final ThrowStatement $ = Extract.throwStatement(s);
-    return $ == null ? null : Extract.core($.getExpression());
+    final ThrowStatement $ = extract.throwStatement(s);
+    return $ == null ? null : extract.core($.getExpression());
   }
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate into a single 'throw'";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.IF_TO_TERNARY;
+    return WringGroup.IF_TO_TERNARY;
   }
 }

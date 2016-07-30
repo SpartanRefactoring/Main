@@ -1,38 +1,35 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.asBlock;
-import static il.org.spartan.refactoring.utils.Funcs.duplicate;
-import static il.org.spartan.utils.Utils.intIsIn;
-import static il.org.spartan.utils.Utils.lastIn;
-import static il.org.spartan.utils.Utils.penultimateIn;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
-import java.util.List;
+import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.wring.LocalInliner.LocalInlineWithValue;
+import il.org.spartan.refactoring.wring.LocalInliner.*;
 
 /**
- * A {@link Wring} to convert <code>int a = 3;
- * b = a;</code> into <code>b = a</code>
+ * A {@link Wring} to convert <code>int a = 3; b = a;</code> into <code>b =
+ * a</code>
  *
  * @author Yossi Gil
  * @since 2015-08-07
  */
 public final class DeclarationInitializerStatementTerminatingScope extends Wring.VariableDeclarationFragementAndStatement {
-  @SuppressWarnings("unchecked") @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer, final Statement nextStatement,
-      final TextEditGroup g) {
+  @SuppressWarnings("unchecked") @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f,
+      final SimpleName n, final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || hasAnnotation(f) || initializer instanceof ArrayInitializer)
       return null;
-    for (IExtendedModifier m : (List<IExtendedModifier>) ((VariableDeclarationStatement) f.getParent()).modifiers())
+    for (final IExtendedModifier m : (List<IExtendedModifier>) ((VariableDeclarationStatement) f.getParent()).modifiers())
       if (m.isModifier() && ((Modifier) m).isFinal())
         return null;
-    final Statement s = Extract.statement(f);
+    final Statement s = extract.statement(f);
     if (s == null)
       return null;
     final Block parent = asBlock(s.getParent());
@@ -96,6 +93,6 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
     return "Inline local " + f.getName() + " into subsequent statement";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
+    return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }

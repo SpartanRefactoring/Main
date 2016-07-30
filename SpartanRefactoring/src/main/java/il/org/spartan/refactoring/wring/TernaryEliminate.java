@@ -1,13 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.same;
+import static il.org.spartan.refactoring.utils.Funcs.*;
 
-import org.eclipse.jdt.core.dom.ConditionalExpression;
-import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Plant;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
  * A {@link Wring} to eliminate a ternary in which both branches are identical
@@ -17,7 +15,7 @@ import il.org.spartan.refactoring.utils.Plant;
  */
 public final class TernaryEliminate extends Wring.ReplaceCurrentNode<ConditionalExpression> {
   @Override Expression replacement(final ConditionalExpression e) {
-    return new Plant(Extract.core(e.getThenExpression())).into(e.getParent());
+    return new Plant(extract.core(e.getThenExpression())).into(e.getParent());
   }
   @Override boolean scopeIncludes(final ConditionalExpression e) {
     return e != null && same(e.getThenExpression(), e.getElseExpression());
@@ -26,6 +24,6 @@ public final class TernaryEliminate extends Wring.ReplaceCurrentNode<Conditional
     return "Eliminate conditional exprssion with identical branches";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REFACTOR_INEFFECTIVE;
+    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

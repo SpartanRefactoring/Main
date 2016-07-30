@@ -1,14 +1,14 @@
 package il.org.spartan.refactoring.wring;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.utils.Ancestors;
+import il.org.spartan.refactoring.utils.*;
 
 class ExclusionManager {
   final Set<ASTNode> inner = new HashSet<>();
+
   boolean isExcluded(final ASTNode n) {
     for (final ASTNode ancestor : new Ancestors(n))
       if (inner.contains(ancestor))

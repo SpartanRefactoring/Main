@@ -1,12 +1,9 @@
 package il.org.spartan.refactoring.utils;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IMarker;
-import org.eclipse.jdt.core.ICompilationUnit;
-import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.core.dom.AST;
-import org.eclipse.jdt.core.dom.ASTParser;
-import org.eclipse.jface.text.Document;
+import org.eclipse.core.resources.*;
+import org.eclipse.jdt.core.*;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jface.text.*;
 
 /**
  * An empty <code><b>enum</b></code> for fluent programming. The name should say
@@ -26,18 +23,20 @@ public enum Make {
   /** Strategy for conversion into a class body */
   CLASS_BODY_DECLARATIONS(ASTParser.K_CLASS_BODY_DECLARATIONS); //
   /**
-   * Converts the {@link As} value to its corresponding {@link Make} enum value
+   * Converts the {@link MakeAST} value to its corresponding {@link Make} enum
+   * value
    *
-   * @param a The {@link As} type
+   * @param a
+   *          The {@link MakeAST} type
    * @return the corresponding {@link Make} value to the argument
    */
-  public static Make of(final As a) {
+  public static Make of(final MakeAST a) {
     switch (a) {
       case STATEMENTS:
         return Make.STATEMENTS;
       case EXPRESSION:
         return Make.EXPRESSION;
-      case COMPILIATION_UNIT:
+      case COMPILATION_UNIT:
         return Make.COMPILIATION_UNIT;
       case CLASS_BODY_DECLARATIONS:
         return Make.CLASS_BODY_DECLARATIONS;
@@ -45,14 +44,17 @@ public enum Make {
         return null;
     }
   }
+
   private final int kind;
+
   private Make(final int kind) {
     this.kind = kind;
   }
   /**
    * Creates a no-binding parser for a given text
    *
-   * @param text what to parse
+   * @param text
+   *          what to parse
    * @return a newly created parser for the parameter
    */
   public ASTParser parser(final char[] text) {
@@ -63,7 +65,8 @@ public enum Make {
   /**
    * Creates a parser for a given {@link Document}
    *
-   * @param d JD
+   * @param d
+   *          JD
    * @return the created parser
    */
   public ASTParser parser(final Document d) {
@@ -74,7 +77,8 @@ public enum Make {
   /**
    * Creates a no-binding parser for a given compilation unit
    *
-   * @param u what to parse
+   * @param u
+   *          what to parse
    * @return a newly created parser for the parameter
    */
   public ASTParser parser(final ICompilationUnit u) {
@@ -85,7 +89,8 @@ public enum Make {
   /**
    * Creates a parser for a given {@link IFile}
    *
-   * @param f JD
+   * @param f
+   *          JD
    * @return the created parser
    */
   public ASTParser parser(final IFile f) {
@@ -94,16 +99,18 @@ public enum Make {
   /**
    * Creates a parser for a given marked text.
    *
-   * @param m JD
+   * @param m
+   *          JD
    * @return the created parser
    */
   public ASTParser parser(final IMarker m) {
-    return parser(As.iCompilationUnit(m));
+    return parser(MakeAST.iCompilationUnit(m));
   }
   /**
    * Creates a no-binding parser for a given text
    *
-   * @param text what to parse
+   * @param text
+   *          what to parse
    * @return a newly created parser for the parameter
    */
   public ASTParser parser(final String text) {

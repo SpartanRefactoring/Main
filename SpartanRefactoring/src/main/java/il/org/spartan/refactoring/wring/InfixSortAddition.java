@@ -1,14 +1,13 @@
 package il.org.spartan.refactoring.wring;
 
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.PLUS;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.InfixExpression.Operator;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
 /**
@@ -27,7 +26,7 @@ public final class InfixSortAddition extends Wring.InfixSorting {
     return Is.notString(e) && super.eligible(e);
   }
   @Override Expression replacement(final InfixExpression e) {
-    final List<Expression> operands = Extract.allOperands(e);
+    final List<Expression> operands = extract.allOperands(e);
     final boolean notString = Is.notString(e);
     final boolean canSort = sort(operands);
     return !notString || !canSort ? null : Subject.operands(operands).to(e.getOperator());
@@ -36,6 +35,6 @@ public final class InfixSortAddition extends Wring.InfixSorting {
     return e.getOperator() == PLUS;
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REORDER_EXPRESSIONS;
+    return WringGroup.REORDER_EXPRESSIONS;
   }
 }

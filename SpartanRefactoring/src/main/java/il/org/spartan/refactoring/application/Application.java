@@ -1,24 +1,18 @@
 package il.org.spartan.refactoring.application;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.equinox.app.IApplication;
-import org.eclipse.equinox.app.IApplicationContext;
+import org.eclipse.core.runtime.*;
+import org.eclipse.equinox.app.*;
 import org.eclipse.jdt.core.*;
-import org.eclipse.jdt.core.dom.ASTParser;
-import org.eclipse.jdt.core.dom.ASTVisitor;
-import org.eclipse.jdt.core.dom.PackageDeclaration;
-import il.org.spartan.misc.Wrapper;
+import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.files.FilesGenerator;
-import il.org.spartan.refactoring.handlers.ApplySpartanizationHandler;
-import il.org.spartan.refactoring.handlers.CleanupHandler;
-import il.org.spartan.utils.FileUtils;
+import il.org.spartan.files.*;
+import il.org.spartan.misc.*;
+import il.org.spartan.refactoring.handlers.*;
+import il.org.spartan.utils.*;
 
 /**
  * An {@link IApplication} extension entry point, allowing execution of this
@@ -35,6 +29,7 @@ import il.org.spartan.utils.FileUtils;
   boolean optStatsLines = false, optStatsChanges = false;
   int optRounds = 20;
   String optPath;
+
   @Override public Object start(final IApplicationContext arg0) {
     if (parseArguments(Arrays.asList((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS))))
       return IApplication.EXIT_OK;
@@ -56,7 +51,7 @@ import il.org.spartan.utils.FileUtils;
           if (n == 0)
             break;
           s.addRoundStat(n);
-          ApplySpartanizationHandler.applySafeSpartanizationsTo(u);
+          ApplySpartanizationHandler.apply(u);
         }
         FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
         if (optVerbose)
@@ -92,7 +87,8 @@ import il.org.spartan.utils.FileUtils;
         + "within the given PATH. Files are spartanized in place by default.");
     System.out.println("");
     System.out.println("Options:");
-    System.out.println("  -N       Do not overwrite existing files (writes the Spartanized output to a new file in the same directory)");
+    System.out
+        .println("  -N       Do not overwrite existing files (writes the Spartanized output to a new file in the same directory)");
     System.out.println("  -C<num>  Maximum number of Spartanizaion rounds for each file (default: 20)");
     System.out.println("  -E       Display statistics for each file separately");
     System.out.println("  -V       Be verbose");
@@ -233,6 +229,7 @@ import il.org.spartan.utils.FileUtils;
     final int linesBefore;
     int linesAfter;
     final List<Integer> roundStats = new ArrayList<>();
+
     public FileStats(final File file) throws IOException {
       linesBefore = countLines(this.file = file);
     }
@@ -259,6 +256,7 @@ import il.org.spartan.utils.FileUtils;
       return linesAfter;
     }
   }
+
   static int countLines(final File f) throws IOException {
     try (LineNumberReader lr = new LineNumberReader(new FileReader(f))) {
       lr.skip(Long.MAX_VALUE);

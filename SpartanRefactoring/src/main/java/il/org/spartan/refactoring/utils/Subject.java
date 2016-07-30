@@ -1,12 +1,9 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.refactoring.utils.Funcs.duplicate;
-import static il.org.spartan.refactoring.utils.Funcs.logicalNot;
-import static il.org.spartan.refactoring.utils.Funcs.rebase;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.expose.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -39,20 +36,22 @@ import org.eclipse.jdt.core.dom.*;
 
   public static class Claimer {
     protected final AST ast;
+
     public Claimer(final ASTNode n) {
       ast = n == null ? null : n.getAST();
     }
     Expression claim(final Expression e) {
-      return rebase(duplicate(Extract.core(e)), ast);
+      return rebase(duplicate(extract.core(e)), ast);
     }
     Statement claim(final Statement s) {
-      final Statement core = Extract.core(s);
+      final Statement core = extract.core(s);
       return core == null ? null : rebase(duplicate(core), ast);
     }
   }
 
   public static class Operand extends Claimer {
     private final Expression inner;
+
     Operand(final Expression inner) {
       super(inner);
       this.inner = claim(inner);
@@ -96,6 +95,7 @@ import org.eclipse.jdt.core.dom.*;
 
   public static class Pair extends Claimer {
     final Expression left, right;
+
     Pair(final Expression left, final Expression right) {
       super(left);
       this.left = claim(left);
@@ -129,6 +129,7 @@ import org.eclipse.jdt.core.dom.*;
 
   public static class Several extends Claimer {
     private final List<Expression> operands;
+
     public Several(final List<Expression> operands) {
       super(operands.get(0));
       this.operands = new ArrayList<>();
@@ -139,13 +140,14 @@ import org.eclipse.jdt.core.dom.*;
       assert operands.size() >= 2;
       final InfixExpression $ = Subject.pair(operands.get(0), operands.get(1)).to(o);
       for (int i = 2; i < operands.size(); ++i)
-        $.extendedOperands().add(new Plant(operands.get(i)).into($));
+        extendedOperands($).add(new Plant(operands.get(i)).into($));
       return $;
     }
   }
 
   public static class SeveralStatements extends Claimer {
     private final List<Statement> inner;
+
     public SeveralStatements(final List<Statement> inner) {
       super(inner.isEmpty() ? null : inner.get(0));
       this.inner = new ArrayList<>();
@@ -154,7 +156,7 @@ import org.eclipse.jdt.core.dom.*;
     }
     public Block toBlock() {
       final Block $ = ast.newBlock();
-      $.statements().addAll(inner);
+      expose.statements($).addAll(inner);
       return $;
     }
     public Statement toOptionalBlock() {
@@ -175,6 +177,7 @@ import org.eclipse.jdt.core.dom.*;
   public static class StatementPair extends Claimer {
     private final Statement elze;
     private final Statement then;
+
     StatementPair(final Statement then, final Statement elze) {
       super(then);
       this.then = claim(then);

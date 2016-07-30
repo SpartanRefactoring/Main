@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
-import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * A utility class designed to help generate the environment of a method (i.e
@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.dom.ASTNode;
  */
 public class EnvironmentMaker {
   private final ASTNode location;
+
   EnvironmentMaker(final ASTNode location) {
     this.location = location;
   }

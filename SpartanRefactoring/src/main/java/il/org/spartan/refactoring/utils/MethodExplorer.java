@@ -1,7 +1,9 @@
 package il.org.spartan.refactoring.utils;
 
-import java.util.ArrayList;
-import java.util.List;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.expose.*;
+
+import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -13,21 +15,22 @@ import org.eclipse.jdt.core.dom.*;
  */
 public class MethodExplorer {
   final MethodDeclaration inner;
+
   /**
    * Instantiate this class
    *
-   * @param inner JD
+   * @param inner
+   *          JD
    */
   public MethodExplorer(final MethodDeclaration inner) {
     this.inner = inner;
   }
   /**
    * Computes the list of all local variable declarations found in a method.
-   * {@link MethodDeclaration}.
-   * <p>
-   * This method correctly ignores declarations made within nested types. It
-   * also correctly adds variables declared within plain and extended for loops,
-   * just as local variables defined within a try and catch clauses.
+   * {@link MethodDeclaration}. <p> This method correctly ignores declarations
+   * made within nested types. It also correctly adds variables declared within
+   * plain and extended for loops, just as local variables defined within a try
+   * and catch clauses.
    *
    * @return a list of {@link SimpleName} from the given method.
    */
@@ -41,19 +44,18 @@ public class MethodExplorer {
         return add(s.getParameter());
       }
       @Override public boolean visit(final ForStatement s) {
-        return add(s.initializers());
+        return add(initializers(s));
       }
       @Override public boolean visit(final TryStatement s) {
-        return add(s.resources());
+        return add(resources(s));
       }
       @Override public boolean visit(final VariableDeclarationStatement s) {
-        addFragments(s.fragments());
+        addFragments(fragments(s));
         return true;
       }
-      private boolean add(final List<VariableDeclarationExpression> initializers) {
-        for (final Object o : initializers)
-          if (o instanceof VariableDeclarationExpression)
-            addFragments(((VariableDeclarationExpression) o).fragments());
+      private boolean add(final List<? extends Expression> es) {
+        for (final Expression e : es)
+          addFragments(fragments(asVariableDeclarationExpression(e)));
         return true;
       }
       private boolean add(final SingleVariableDeclaration d) {
@@ -69,9 +71,8 @@ public class MethodExplorer {
   }
   /**
    * Computes the list of all return statements found in a
-   * {@link MethodDeclaration}.
-   * <p>
-   * This method correctly ignores return statements found within nested types.
+   * {@link MethodDeclaration}. <p> This method correctly ignores return
+   * statements found within nested types.
    *
    * @return a list of {@link ReturnStatement} from the given method.
    */
@@ -86,17 +87,17 @@ public class MethodExplorer {
     return $;
   }
 
-  public abstract static class IgnoreNestedMethods extends ASTVisitor {
-    @Override public final boolean visit(@SuppressWarnings("unused") final AnnotationTypeDeclaration __) {
+  @SuppressWarnings("unused") public abstract static class IgnoreNestedMethods extends ASTVisitor {
+    @Override public final boolean visit(final AnnotationTypeDeclaration __) {
       return false;
     }
-    @Override public final boolean visit(@SuppressWarnings("unused") final AnonymousClassDeclaration __) {
+    @Override public final boolean visit(final AnonymousClassDeclaration __) {
       return false;
     }
-    @Override public final boolean visit(@SuppressWarnings("unused") final EnumDeclaration __) {
+    @Override public final boolean visit(final EnumDeclaration __) {
       return false;
     }
-    @Override public final boolean visit(@SuppressWarnings("unused") final TypeDeclaration __) {
+    @Override public final boolean visit(final TypeDeclaration __) {
       return false;
     }
   }

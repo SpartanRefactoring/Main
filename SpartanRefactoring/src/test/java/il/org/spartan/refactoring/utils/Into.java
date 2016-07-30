@@ -1,17 +1,13 @@
 package il.org.spartan.refactoring.utils;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static il.org.spartan.azzert.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.spartanizations.Wrap;
-import il.org.spartan.refactoring.utils.As;
-import il.org.spartan.refactoring.utils.Extract;
+import il.org.spartan.*;
+import il.org.spartan.refactoring.spartanizations.*;
 
 /**
  * An empty <code><b>enum</b></code> for fluent programming. The name should say
@@ -27,7 +23,8 @@ public enum Into {
    * Convert a given {@link String} into an {@link Assignment}, or fail the
    * current test, if such a conversion is not possible
    *
-   * @param expression a {@link String} that represents a Java statement
+   * @param expression
+   *          a {@link String} that represents a Java statement
    * @return an {@link Statement} data structure representing the parameter.
    */
   public static Assignment a(final String expression) {
@@ -37,14 +34,15 @@ public enum Into {
    * Convert a given {@link String} into an {@link ConditionalExpression}, or
    * fail the current test, if such a conversion is not possible
    *
-   * @param conditionalExpression a {@link String} that represents a
-   *          "conditional" (also known as "ternary") expression.
+   * @param conditionalExpression
+   *          a {@link String} that represents a "conditional" (also known as
+   *          "ternary") expression.
    * @return an {@link Statement} data structure representing the parameter.
    */
   public static ConditionalExpression c(final String conditionalExpression) {
     final Expression $ = e(conditionalExpression);
-    assertThat(conditionalExpression, $, notNullValue());
-    assertThat(conditionalExpression, $, instanceOf(ConditionalExpression.class));
+    azzert.notNull(conditionalExpression, $);
+    azzert.that(conditionalExpression, $, instanceOf(ConditionalExpression.class));
     return (ConditionalExpression) $;
   }
   /**
@@ -53,32 +51,33 @@ public enum Into {
    * {@link CompilationUnit}, parsing it, and then extracting the first method
    * in it. possible
    *
-   * @param methodDelclaration a {@link String} that represents a Java method
-   *          declaration
+   * @param methodDelclaration
+   *          a {@link String} that represents a Java method declaration
    * @return an {@link MethodDeclaration} data structure representing the
    *         parameter.
    */
   public static MethodDeclaration d(final String methodDelclaration) {
-    assertThat(methodDelclaration, notNullValue());
-    return Extract.firstMethodDeclaration(Wrap.Method.intoCompilationUnit(methodDelclaration));
+    azzert.notNull(methodDelclaration);
+    return extract.firstMethodDeclaration(Wrap.Method.intoCompilationUnit(methodDelclaration));
   }
   /**
    * Convert a given {@link String} into an {@link Expression}, or fail the
    * current test, if such a conversion is not possible
    *
-   * @param expression a {@link String} that represents a Java expression
+   * @param expression
+   *          a {@link String} that represents a Java expression
    * @return an {@link Expression} data structure representing the parameter.
    */
   public static Expression e(final String expression) {
-    return (Expression) As.EXPRESSION.ast(expression);
+    return (Expression) MakeAST.EXPRESSION.from(expression);
   }
   /**
    * Convert an array of {@link String} into a {@link List} of
    * {@link Expression}, or fail the current test, if such a conversion is not
    * possible
    *
-   * @param expressions an array of {@link String}s, each representing a Java
-   *          expression
+   * @param expressions
+   *          an array of {@link String}s, each representing a Java expression
    * @return a {@link List} of {@link Expression} data structures, each
    *         representing an element of the input.
    */
@@ -92,7 +91,8 @@ public enum Into {
    * Convert a given {@link String} into an {@link InfixExpression}, or fail the
    * current test, if such a conversion is not possible
    *
-   * @param expression a {@link String} that represents a Java expression
+   * @param expression
+   *          a {@link String} that represents a Java expression
    * @return an {@link InfixExpression} data structure representing the
    *         parameter.
    */
@@ -103,7 +103,8 @@ public enum Into {
    * Convert a given {@link String} into an {@link PrefixExpression}, or fail
    * the current test, if such a conversion is not possible
    *
-   * @param expression a {@link String} that represents a Java expression
+   * @param expression
+   *          a {@link String} that represents a Java expression
    * @return a {@link PrefixExpression} data structure representing the
    *         parameter.
    */
@@ -114,14 +115,15 @@ public enum Into {
    * Convert a given {@link String} into an {@link Statement}, or fail the
    * current test, if such a conversion is not possible
    *
-   * @param statement a {@link String} that represents a Java statement
+   * @param statement
+   *          a {@link String} that represents a Java statement
    * @return an {@link Statement} data structure representing the parameter.
    */
   public static Statement s(final String statement) {
-    assertThat(statement, notNullValue());
-    final ASTNode n = As.STATEMENTS.ast(statement);
-    assertThat(statement, n, notNullValue());
-    assertThat(statement, n, instanceOf(Statement.class));
+    azzert.notNull(statement);
+    final ASTNode n = MakeAST.STATEMENTS.from(statement);
+    azzert.notNull(statement, n);
+    azzert.that(statement, n, instanceOf(Statement.class));
     return (Statement) n;
   }
 }

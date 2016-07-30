@@ -1,23 +1,29 @@
 package il.org.spartan.files;
 
-import static il.org.spartan.utils.Utils.asList;
+import static il.org.spartan.utils.Utils.*;
 
-import java.io.File;
+import java.io.*;
 import java.util.*;
 
 /**
  * Provides, employing fluent API, a {@link Iterable} interface for iteration
- * over files in the file system.
- * <p>
- * Typical uses are<code><pre>
+ * over files in the file system. <p> Typical uses are<code>
+ *
+ * <pre>
  *   <b>for</b> ({@link File} f: <b>new</b> {@link FilesGenerator}(".java").from("."))
  *     System.out.println(f);
- * </pre></code> to recursively iterate over all files whose extension is
- * ".java" in the current directory, or <code><pre>
+ * </pre>
+ *
+ * </code> to recursively iterate over all files whose extension is ".java" in
+ * the current directory, or <code>
+ *
+ * <pre>
  *   <b>for</b> ({@link File} f: <b>new</b> {@link FilesGenerator}().from("/bin", "/home"))
  *     System.out.println(f);
- * </pre></code> to recursively iterate (over all files in the <code>/bin</code>
- * and <code>/home</code> directories.
+ * </pre>
+ *
+ * </code> to recursively iterate (over all files in the <code>/bin</code> and
+ * <code>/home</code> directories.
  *
  * @author Yossi Gil
  * @since 2015-09-23.
@@ -25,36 +31,37 @@ import java.util.*;
 public class FilesGenerator {
   public static class as {
     public static <T> Iterable<T> iterable(final T... ts) {
-      return new Iterable<T>() {
-        @Override public Iterator<T> iterator() {
-          return new Iterator<T>() {
-            private int next = 0;
-            @Override public boolean hasNext() {
-              return next < ts.length;
-            }
-            @Override public T next() {
-              return ts[next++];
-            }
-            @Override public void remove() {
-              throw new UnsupportedOperationException("Cannot remove an element of an array.");
-            }
-          };
+      return () -> new Iterator<T>() {
+        private int next = 0;
+
+        @Override public boolean hasNext() {
+          return next < ts.length;
+        }
+        @Override public T next() {
+          return ts[next++];
+        }
+        @Override public void remove() {
+          throw new UnsupportedOperationException("Cannot remove an element of an array.");
         }
       };
     }
   }
+
   public static void main(final String[] args) {
     for (final File f : new FilesGenerator(".java").from("."))
       System.out.println(f);
   }
+
   /** Which extensions we search for */
   final Iterable<String> extensions;
+
   /**
    * Instantiates this class. This instantiation makes the first step in the
    * call chain that makes the fluent API. The second (and last) such step is
    * provided by function {@link #from(String...)}.
    *
-   * @param extensions an array of non-<code><b>null</b></code> {@link String}s
+   * @param extensions
+   *          an array of non-<code><b>null</b></code> {@link String}s
    *          specifying the allowed extensions for files that the iterator
    *          should yield, e.g., ".java", ".class", ".doc", etc. If this
    *          parameter is <code><b>null</b></code>, or of length 0, or contains
@@ -66,8 +73,9 @@ public class FilesGenerator {
     this.extensions = asList(extensions);
   }
   /**
-   * @param from an array of names of directories from which the traversal
-   *          should begin
+   * @param from
+   *          an array of names of directories from which the traversal should
+   *          begin
    * @return an instance of an internal (yet <code><b>public</b></code>)
    *         <code><b>class</b></code> which <code><b>implements</b></code> the
    *         {@link Iterable} <code><b>interface</b></code>
@@ -76,8 +84,9 @@ public class FilesGenerator {
     return from(as.iterable(from));
   }
   /**
-   * @param from an array of names of directories from which the traversal
-   *          should begin
+   * @param from
+   *          an array of names of directories from which the traversal should
+   *          begin
    * @return an instance of an internal (yet <code><b>public</b></code>)
    *         <code><b>class</b></code> which <code><b>implements</b></code> the
    *         {@link Iterable} <code><b>interface</b></code>
@@ -102,6 +111,7 @@ public class FilesGenerator {
    */
   public class From implements Iterable<File> {
     final Iterable<File> from;
+
     From(final Iterable<File> from) {
       this.from = from;
     }
@@ -112,6 +122,7 @@ public class FilesGenerator {
     private class FilesIterator implements Iterator<File> {
       private File next = null;
       private final Stack<Iterator<File>> stack = new Stack<>();
+
       public FilesIterator(final Iterator<File> i) {
         stack.push(i);
       }
@@ -147,9 +158,11 @@ public class FilesGenerator {
       }
     }
   }
+
   /**
-   * @param directory should be a directory, but we still need to account for
-   *          weird creatures such as "System Volume Information"
+   * @param directory
+   *          should be a directory, but we still need to account for weird
+   *          creatures such as "System Volume Information"
    */
   static Iterator<File> directoryIterator(final File directory) {
     if (directory == null || !directory.isDirectory() || directory.list() == null)
@@ -157,6 +170,7 @@ public class FilesGenerator {
     final Iterator<String> generator = asList(directory.list()).iterator();
     return new Iterator<File>() {
       private File next;
+
       @Override public boolean hasNext() {
         for (;;) {
           if (!generator.hasNext())

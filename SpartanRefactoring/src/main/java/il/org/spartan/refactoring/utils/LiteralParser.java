@@ -9,10 +9,12 @@ package il.org.spartan.refactoring.utils;
  */
 public class LiteralParser {
   final String literal;
+
   /**
    * Instantiates this class.
    *
-   * @param literal JD
+   * @param literal
+   *          JD
    */
   public LiteralParser(final String literal) {
     this.literal = literal;

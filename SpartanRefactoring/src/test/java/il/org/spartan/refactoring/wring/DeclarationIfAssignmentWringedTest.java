@@ -1,40 +1,24 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.OrderingComparison.greaterThanOrEqualTo;
+import static il.org.spartan.azzert.*;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.utils.Utils.compressSpaces;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.*;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
+import static il.org.spartan.utils.Utils.*;
 
-import java.util.Collection;
+import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.Document;
-import org.eclipse.text.edits.MalformedTreeException;
-import org.eclipse.text.edits.TextEdit;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
-import il.org.spartan.refactoring.spartanizations.TESTUtils;
-import il.org.spartan.refactoring.spartanizations.Wrap;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.jface.text.*;
+import org.eclipse.text.edits.*;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.*;
 
+import il.org.spartan.*;
+import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.wring.DeclarationInitializerIfAssignment;
-import il.org.spartan.refactoring.wring.Toolbox;
-import il.org.spartan.refactoring.wring.Trimmer;
-import il.org.spartan.refactoring.wring.Wring;
 import il.org.spartan.utils.Utils;
 
 @SuppressWarnings({ "javadoc" }) //
@@ -55,6 +39,7 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
               "    n2 = 2;", //
           "int n2 = d ? 2 : 0, n3;" },
       null);
+
   /**
    * Generate test cases for this parameterized class.
    *
@@ -67,8 +52,10 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
   public static Collection<Object[]> cases() {
     return collect(cases);
   }
+
   /** What should the output be */
   @Parameter(2) public String expected;
+
   /** Instantiates the enclosing class ({@link Wringed}) */
   public DeclarationIfAssignmentWringedTest() {
     super(WRING);
@@ -78,11 +65,11 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
   }
   @Test public void checkIf() {
     final IfStatement s = findIf();
-    assertThat(s, notNullValue());
-    assertThat(Is.vacuousElse(s), is(true));
+    azzert.notNull(s);
+    azzert.that(Is.vacuousElse(s), is(true));
   }
   @Test public void correctSimplifier() {
-    assertThat(asMe().toString(), Toolbox.instance.find(asMe()), instanceOf(inner.getClass()));
+    azzert.that(asMe().toString(), Toolbox.instance.find(asMe()), instanceOf(inner.getClass()));
   }
   @Test public void createRewrite() throws MalformedTreeException, IllegalArgumentException, BadLocationException {
     final String s = input;
@@ -90,41 +77,41 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     final CompilationUnit u = asCompilationUnit();
     final ASTRewrite r = new Trimmer().createRewrite(u, null);
     final TextEdit e = r.rewriteAST(d, null);
-    assertThat(e, notNullValue());
-    assertThat(e.apply(d), is(notNullValue()));
+    azzert.notNull(e);
+    azzert.notNull(e.apply(d));
   }
   @Test public void eligible() {
     final VariableDeclarationFragment s = asMe();
-    assertTrue(s.toString(), inner.eligible(s));
+    azzert.aye(s.toString(), inner.eligible(s));
   }
   @Test public void findsSimplifier() {
-    assertNotNull(Toolbox.instance.find(asMe()));
+    azzert.notNull(Toolbox.instance.find(asMe()));
   }
   @Test public void hasOpportunity() {
-    assertTrue(inner.scopeIncludes(asMe()));
+    azzert.aye(inner.scopeIncludes(asMe()));
     final CompilationUnit u = asCompilationUnit();
-    assertThat(u.toString(), new Trimmer().findOpportunities(u).size(), is(greaterThanOrEqualTo(1)));
+    azzert.that(u.toString(), new Trimmer().findOpportunities(u).size(), is(greaterThanOrEqualTo(1)));
   }
   @Test public void hasSimplifier() {
-    assertThat(asMe().toString(), Toolbox.instance.find(asMe()), is(notNullValue()));
+    azzert.notNull(asMe().toString(), Toolbox.instance.find(asMe()));
   }
   @Test public void noneligible() {
-    assertFalse(inner.nonEligible(asMe()));
+    azzert.nay(inner.nonEligible(asMe()));
   }
   @Test public void peelableOutput() {
-    assertEquals(expected, Wrap.Statement.off(Wrap.Statement.on(expected)));
+    azzert.that(Wrap.Statement.off(Wrap.Statement.on(expected)), is(expected));
   }
   @Test public void rewriteNotEmpty() throws MalformedTreeException, IllegalArgumentException {
-    assertNotNull(new Trimmer().createRewrite(asCompilationUnit(), null));
+    azzert.notNull(new Trimmer().createRewrite(asCompilationUnit(), null));
   }
   @Test public void scopeIncludesAsMe() {
-    assertThat(asMe().toString(), inner.scopeIncludes(asMe()), is(true));
+    azzert.that(asMe().toString(), inner.scopeIncludes(asMe()), is(true));
   }
   @Test public void simiplifies() throws MalformedTreeException, IllegalArgumentException {
     if (inner == null)
       return;
     final Document d = new Document(Wrap.Statement.on(input));
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(d);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(d);
     final Document actual = TESTUtils.rewrite(new Trimmer(), u, d);
     final String peeled = Wrap.Statement.off(actual.get());
     if (expected.equals(peeled))
@@ -132,7 +119,7 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     if (input.equals(peeled))
       fail("Nothing done on " + input);
     if (compressSpaces(peeled).equals(compressSpaces(input)))
-      assertNotEquals("Wringing of " + input + " amounts to mere reformatting", compressSpaces(peeled), compressSpaces(input));
+      azzert.that("Wringing of " + input + " amounts to mere reformatting", compressSpaces(input), is(not(compressSpaces(peeled))));
     assertSimilar(expected, peeled);
     assertSimilar(Wrap.Statement.on(expected), actual);
   }
@@ -140,25 +127,25 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     final VariableDeclarationFragment f = asMe();
     final ASTRewrite r = ASTRewrite.create(f.getAST());
     final Expression initializer = f.getInitializer();
-    assertNotNull(f.toString(), initializer);
-    final IfStatement s = Extract.nextIfStatement(f);
-    assertNotNull(s);
-    assertThat(Extract.statements(elze(s)).size(), is(0));
-    final Assignment a = Extract.assignment(then(s));
-    assertNotNull(a);
-    assertTrue(same(left(a), f.getName()));
+    azzert.notNull(f.toString(), initializer);
+    final IfStatement s = extract.nextIfStatement(f);
+    azzert.notNull(s);
+    azzert.zero(extract.statements(elze(s)).size());
+    final Assignment a = extract.assignment(then(s));
+    azzert.notNull(a);
+    azzert.aye(same(left(a), f.getName()));
     r.replace(initializer, Subject.pair(right(a), initializer).toCondition(s.getExpression()), null);
     r.remove(s, null);
   }
   @Override protected CompilationUnit asCompilationUnit() {
-    final CompilationUnit $ = (CompilationUnit) As.COMPILIATION_UNIT.ast(Wrap.Statement.on(input));
-    assertNotNull($);
+    final CompilationUnit $ = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(Wrap.Statement.on(input));
+    azzert.notNull($);
     return $;
   }
   @Override protected VariableDeclarationFragment asMe() {
-    return Extract.firstVariableDeclarationFragment(As.STATEMENTS.ast(input));
+    return extract.firstVariableDeclarationFragment(MakeAST.STATEMENTS.from(input));
   }
   private IfStatement findIf() {
-    return Extract.firstIfStatement(As.STATEMENTS.ast(input));
+    return extract.firstIfStatement(MakeAST.STATEMENTS.from(input));
   }
 }

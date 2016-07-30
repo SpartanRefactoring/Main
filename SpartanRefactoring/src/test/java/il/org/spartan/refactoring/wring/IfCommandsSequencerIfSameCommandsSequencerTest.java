@@ -1,29 +1,19 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.refactoring.utils.Funcs.elze;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertNotNull;
+import static il.org.spartan.azzert.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
 
-import java.util.Collection;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.eclipse.jdt.core.dom.*;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.*;
 
-import il.org.spartan.refactoring.utils.As;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.wring.IfFooSequencerIfFooSameSequencer;
-import il.org.spartan.refactoring.wring.Wring;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
+import il.org.spartan.*;
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.AbstractWringTest.*;
 import il.org.spartan.utils.Utils;
 
 /**
@@ -36,25 +26,26 @@ import il.org.spartan.utils.Utils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class IfCommandsSequencerIfSameCommandsSequencerTest {
   static final Wring<IfStatement> WRING = new IfFooSequencerIfFooSameSequencer();
+
   @Test public void checkFirstIfStatement1() {
     final String s = "if (a) return b; if (b) return b;";
-    final ASTNode n = As.STATEMENTS.ast(s);
-    assertNotNull(n);
-    final IfStatement i = Extract.firstIfStatement(n);
-    assertThat(n.toString(), i, notNullValue());
-    assertThat(i.toString(), WRING.scopeIncludes(i), is(true));
+    final ASTNode n = MakeAST.STATEMENTS.from(s);
+    azzert.notNull(n);
+    final IfStatement i = extract.firstIfStatement(n);
+    azzert.notNull(n.toString(), i);
+    azzert.that(i.toString(), WRING.scopeIncludes(i), is(true));
   }
   @Test public void checkFirstIfStatement2() {
     final String s = "if (a) return b; else return a();";
-    final IfStatement i = Extract.firstIfStatement(As.STATEMENTS.ast(s));
-    assertNotNull(i);
-    assertThat(i.toString(), WRING.scopeIncludes(i), is(false));
+    final IfStatement i = extract.firstIfStatement(MakeAST.STATEMENTS.from(s));
+    azzert.notNull(i);
+    azzert.that(i.toString(), WRING.scopeIncludes(i), is(false));
   }
   @Test public void checkFirstIfStatement3() {
     final String s = "if (a) a= b; else a=c;";
-    final IfStatement i = Extract.firstIfStatement(As.STATEMENTS.ast(s));
-    assertNotNull(i);
-    assertThat(i.toString(), WRING.scopeIncludes(i), is(false));
+    final IfStatement i = extract.firstIfStatement(MakeAST.STATEMENTS.from(s));
+    azzert.notNull(i);
+    azzert.that(i.toString(), WRING.scopeIncludes(i), is(false));
   }
 
   @RunWith(Parameterized.class) //
@@ -104,6 +95,7 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
                 " }\n" + //
                 "" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -131,13 +123,16 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
         new String[] { "Continue expression", "if (a) continue a; if (b) continue a;", "if (a || b) continue a;" }, //
         new String[] { "Continue empty", "if (a) continue; if (b) continue;", "if (a || b) continue;" }, //
         new String[] { "Throw expression", "if (a) throw e; if (b) throw e;", "if (a || b) throw e;" }, //
-        new String[] { "Single statement is nested", "if (a) {{{; return a; }}} if (b) {;{;return a;};;}", "if (a || b) return a;" }, //
+        new String[] { "Single statement is nested", "if (a) {{{; return a; }}} if (b) {;{;return a;};;}",
+            "if (a || b) return a;" }, //
         new String[] { "Parenthesis where necesary", "if (a=b) return a; if (b=a) return a;", "if ((a=b) || (b =a)) return a;" }, //
         new String[] { "No parenthesis for == ", "if (a==b) return a; if (b==a) return a;", "if (a==b || b ==a) return a;" }, //
         new String[] { "No parenthesis for  && and ||", "if (a&&b) return a; if (b||a) return a;", "if (a&&b || b ||a) return a;" }, //
-        new String[] { "No parenthesis for OR", "if (a||b||c) return a; if (a||b||c||d) return a;", "if (a||b||c||a||b||c||d) return a;" }, //
+        new String[] { "No parenthesis for OR", "if (a||b||c) return a; if (a||b||c||d) return a;",
+            "if (a||b||c||a||b||c||d) return a;" }, //
         new String[] { "Two statements", "if (a) { f(); return a; } if (b) {f(); return a;}", "if (a || b) {f(); return a;}" }, //
         null };
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -155,25 +150,25 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
       super(WRING);
     }
     @Test public void asMeNotNull() {
-      assertNotNull(asMe());
+      azzert.notNull(asMe());
     }
     @Test public void followedByReturn() {
-      assertThat(Extract.nextIfStatement(asMe()), notNullValue());
+      azzert.notNull(extract.nextIfStatement(asMe()));
     }
     @Test public void isfStatementElseIsEmpty() {
-      assertThat(Extract.statements(elze(Extract.firstIfStatement(As.STATEMENTS.ast(input)))).size(), is(0));
+      azzert.that(extract.statements(elze(extract.firstIfStatement(MakeAST.STATEMENTS.from(input)))).size(), is(0));
     }
     @Test public void isIfStatement() {
-      assertThat(input, asMe(), notNullValue());
+      azzert.notNull(input, asMe());
     }
     @Test public void myScopeIncludes() {
       final IfStatement s = asMe();
-      assertThat(s, notNullValue());
-      assertThat(Extract.statements(elze(s)), notNullValue());
-      assertThat(Extract.statements(elze(s)).size(), is(0));
+      azzert.notNull(s);
+      azzert.notNull(extract.statements(elze(s)));
+      azzert.that(extract.statements(elze(s)).size(), is(0));
     }
     @Test public void noElse() {
-      assertThat(Extract.statements(elze(asMe())).size(), is(0));
+      azzert.that(extract.statements(elze(asMe())).size(), is(0));
     }
   }
 }

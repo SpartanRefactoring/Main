@@ -1,41 +1,33 @@
 package il.org.spartan.utils;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.OrderingComparison.greaterThan;
-import static il.org.spartan.hamcrest.OrderingComparison.lessThan;
-import static il.org.spartan.utils.Utils.in;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static il.org.spartan.azzert.*;
+import static il.org.spartan.utils.Utils.*;
 
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.junit.*;
+import org.junit.runners.*;
 
-import il.org.spartan.utils.Utils;
+import il.org.spartan.*;
 
 @FixMethodOrder(MethodSorters.JVM) //
 @SuppressWarnings({ "static-method", "javadoc", }) //
 public class UtilsTest {
   @Test public void compareFF() {
-    assertThat(Utils.compare(false, false), is(0));
+    azzert.that(Utils.compare(false, false), is(0));
   }
   @Test public void compareFT() {
-    assertThat(Utils.compare(false, true), lessThan(0));
+    azzert.that(Utils.compare(false, true), lessThan(0));
   }
   @Test public void compareTF() {
-    assertThat(Utils.compare(true, false), greaterThan(0));
+    azzert.that(Utils.compare(true, false), greaterThan(0));
   }
   @Test public void compareTT() {
-    assertThat(Utils.compare(true, true), is(0));
+    azzert.that(Utils.compare(true, true), is(0));
   }
   @Test public void inTypicalFalse() {
-    assertFalse(in("X", "A", "B", "C"));
+    azzert.nay(in("X", "A", "B", "C"));
   }
   @Test public void inTypicalTrue() {
-    assertTrue(in("A", "A", "B", "C"));
+    azzert.aye(in("A", "A", "B", "C"));
   }
   @Test public void removePrefiEmpty() {
     assertEquals(Utils.removePrefix("BAAAAB", "A"), "BAAAAB");
@@ -56,12 +48,12 @@ public class UtilsTest {
     assertEquals(Utils.removeSuffix("AAAABC", "BC"), "AAAA");
   }
   @Test public void removeWhites() {
-    assertThat(Utils.removeWhites("ABC"), is("ABC"));
-    assertThat(Utils.removeWhites("ABC\n"), is("ABC"));
-    assertThat(Utils.removeWhites(" ABC\n"), is("ABC"));
-    assertThat(Utils.removeWhites("A BC"), is("ABC"));
-    assertThat(Utils.removeWhites("AB\rC\n"), is("ABC"));
-    assertThat(Utils.removeWhites("A\fB\rC\n"), is("ABC"));
-    assertThat(Utils.removeWhites("\t\tA\fB\rC\n"), is("ABC"));
+    azzert.that(Utils.removeWhites("ABC"), is("ABC"));
+    azzert.that(Utils.removeWhites("ABC\n"), is("ABC"));
+    azzert.that(Utils.removeWhites(" ABC\n"), is("ABC"));
+    azzert.that(Utils.removeWhites("A BC"), is("ABC"));
+    azzert.that(Utils.removeWhites("AB\rC\n"), is("ABC"));
+    azzert.that(Utils.removeWhites("A\fB\rC\n"), is("ABC"));
+    azzert.that(Utils.removeWhites("\t\tA\fB\rC\n"), is("ABC"));
   }
 }

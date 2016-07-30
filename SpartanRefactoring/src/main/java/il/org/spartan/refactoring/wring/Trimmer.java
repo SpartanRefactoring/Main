@@ -1,18 +1,15 @@
 package il.org.spartan.refactoring.wring;
 
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.Document;
-import org.eclipse.text.edits.MalformedTreeException;
-import org.eclipse.text.edits.TextEdit;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.jface.text.*;
+import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.spartanizations.Spartanization;
-import il.org.spartan.refactoring.utils.As;
-import il.org.spartan.refactoring.utils.Rewrite;
+import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
  * @author Yossi Gil
@@ -22,14 +19,15 @@ public class Trimmer extends Spartanization {
   /**
    * Apply trimming repeatedly, until no more changes
    *
-   * @param from what to process
+   * @param from
+   *          what to process
    * @return the trimmed text
    */
   public static String fixedPoint(final String from) {
     final Trimmer trimmer = new Trimmer();
     final Document $ = new Document(from);
     for (;;) {
-      final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast($.get());
+      final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from($.get());
       final ASTRewrite r = trimmer.createRewrite(u, null);
       final TextEdit e = r.rewriteAST($, null);
       try {
@@ -82,6 +80,7 @@ public class Trimmer extends Spartanization {
 
   abstract class DispatchingVisitor extends ASTVisitor {
     final ExclusionManager exclude = makeExcluder();
+
     @Override public final boolean visit(final Assignment it) {
       return cautiousGo(it);
     }
@@ -116,11 +115,8 @@ public class Trimmer extends Spartanization {
       return cautiousGo(it);
     }
     @Override public final boolean visit(final TypeDeclaration it) {
-        return cautiousGo(it);
-      }
-    @Override public final boolean visit(final EnumDeclaration it) {
-        return cautiousGo(it);
-      }
+      return cautiousGo(it);
+    }
     @Override public final boolean visit(final VariableDeclarationFragment it) {
       return cautiousGo(it);
     }

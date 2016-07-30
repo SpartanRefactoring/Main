@@ -1,16 +1,15 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.wring.Wrings.rename;
+import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.wring.Wrings.*;
 
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.SimpleName;
-import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
 /**
@@ -32,7 +31,7 @@ import il.org.spartan.refactoring.utils.*;
   @Override Rewrite make(final MethodDeclaration d, final ExclusionManager exclude) {
     if (d.isConstructor())
       return null;
-    final List<SingleVariableDeclaration> vd = find(d.parameters());
+    final List<SingleVariableDeclaration> vd = find(parameters(d));
     final Map<SimpleName, SimpleName> renameMap = new HashMap<>();
     if (vd == null)
       return null;
@@ -57,7 +56,8 @@ import il.org.spartan.refactoring.utils.*;
         $.add(d);
     return $.size() != 0 ? $ : null;
   }
-  private static boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m, final Collection<SimpleName> newNames) {
+  private static boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m,
+      final Collection<SimpleName> newNames) {
     if (Funcs.shortName(d.getType()) == null)
       return false;
     final MethodExplorer e = new MethodExplorer(m);
@@ -67,7 +67,7 @@ import il.org.spartan.refactoring.utils.*;
     for (final SimpleName n : newNames)
       if (n.getIdentifier().equals(Funcs.shortName(d.getType())))
         return false;
-    for (final SingleVariableDeclaration n : (List<SingleVariableDeclaration>) m.parameters())
+    for (final SingleVariableDeclaration n : parameters(m))
       if (n.getName().getIdentifier().equals(Funcs.shortName(d.getType())))
         return false;
     return !m.getName().getIdentifier().equalsIgnoreCase(Funcs.shortName(d.getType()));
@@ -83,6 +83,6 @@ import il.org.spartan.refactoring.utils.*;
     return d.isVarargs() ? "s" : "";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.RENAME_PARAMETERS;
+    return WringGroup.RENAME_PARAMETERS;
   }
 }
