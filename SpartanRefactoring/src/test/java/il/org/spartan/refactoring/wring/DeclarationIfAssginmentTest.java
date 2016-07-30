@@ -32,11 +32,9 @@ import il.org.spartan.utils.Utils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class DeclarationIfAssginmentTest {
   static final DeclarationInitializerIfAssignment WRING = new DeclarationInitializerIfAssignment();
-  static <T> void assertNotEquals(String s, T t1, T t2) {
-    azzert.that(s, t2, is(not(t1))); 
-   }
+
   @Test public void traceForbiddenSiblings() {
-     azzert.notNull(WRING);
+    azzert.notNull(WRING);
     final String from = "int a = 2,b; if (b) a =3;";
     final String wrap = Wrap.Statement.on(from);
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
@@ -51,15 +49,15 @@ public class DeclarationIfAssginmentTest {
     final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
     azzert.notNull(f);
     final Expression initializer = f.getInitializer();
-     azzert.notNull(initializer);
+    azzert.notNull(initializer);
     final IfStatement s = extract.nextIfStatement(f);
     azzert.that(s, is(extract.firstIfStatement(u)));
-     azzert.notNull(s);
+    azzert.notNull(s);
     azzert.that(s, iz("if (a + b) a=3;"));
-     azzert.aye(Is.vacuousElse(s));
+    azzert.aye(Is.vacuousElse(s));
     final Assignment a = extract.assignment(then(s));
-     azzert.notNull(a);
-     azzert.aye(same(left(a), f.getName()));
+    azzert.notNull(a);
+    azzert.aye(same(left(a), f.getName()));
     azzert.that(a.getOperator(), is(Assignment.Operator.ASSIGN));
     final List<VariableDeclarationFragment> x = VariableDeclarationFragementAndStatement.forbiddenSiblings(f);
     azzert.that(x.size(), greaterThan(0));
@@ -67,9 +65,9 @@ public class DeclarationIfAssginmentTest {
     final VariableDeclarationFragment b = x.get(0);
     azzert.that(b.toString(), is("b"));
     final Of of = Collect.BOTH_SEMANTIC.of(b);
-     azzert.notNull(of);
+    azzert.notNull(of);
     final Expression e = s.getExpression();
-     azzert.notNull(e);
+    azzert.notNull(e);
     azzert.that(e, iz("a + b"));
     final List<SimpleName> in = of.in(e);
     azzert.that(in.size(), is(1));
@@ -131,9 +129,8 @@ public class DeclarationIfAssginmentTest {
       assertSimilar(expected, peeled);
       assertSimilar(Wrap.Statement.on(expected), d);
     }
-
     @Test public void nonNullWring() {
-       azzert.notNull(WRING);
+      azzert.notNull(WRING);
     }
     @Test public void vanilla() throws MalformedTreeException, IllegalArgumentException {
       final String from = "int a = 2; if (b) a =3;";
