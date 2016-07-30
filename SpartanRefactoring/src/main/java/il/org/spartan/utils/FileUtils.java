@@ -1,12 +1,9 @@
 package il.org.spartan.utils;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+import java.nio.charset.*;
+import java.nio.file.*;
+import java.util.*;
 
 /**
  * A class for utility methods when working with files and directories
@@ -19,7 +16,8 @@ public class FileUtils {
    * Returns a list of all the .java files found recursively within the provided
    * paths
    *
-   * @param paths Directories to scan
+   * @param paths
+   *          Directories to scan
    * @return a list of absolute paths to .java files found within the provided
    *         directories. If no files were found, an empty list is returned
    */
@@ -39,9 +37,11 @@ public class FileUtils {
   /**
    * Returns the contents of a source file
    *
-   * @param fileName The source file's path
+   * @param fileName
+   *          The source file's path
    * @return the source file's contents, or an empty string in case of an error
-   * @throws IOException in case of error
+   * @throws IOException
+   *           in case of error
    */
   public static String readFromFile(final String fileName) throws IOException {
     return read(Paths.get(fileName));
@@ -52,9 +52,11 @@ public class FileUtils {
   /**
    * Converts the entire contents of a file into a {@link String}
    *
-   * @param f JD
+   * @param f
+   *          JD
    * @return a string representing the contents of a file.
-   * @throws IOException in case of error
+   * @throws IOException
+   *           in case of error
    */
   public static String read(final File f) throws IOException {
     final String ls = System.getProperty("line.separator");
@@ -67,9 +69,12 @@ public class FileUtils {
     return $.toString();
   }
   /**
-   * @param fileName where to write
-   * @param text what to write
-   * @throws FileNotFoundException in case the file could not be found
+   * @param fileName
+   *          where to write
+   * @param text
+   *          what to write
+   * @throws FileNotFoundException
+   *           in case the file could not be found
    */
   public static void writeToFile(final String fileName, final String text) throws FileNotFoundException {
     try (final PrintWriter p = new PrintWriter(fileName)) {

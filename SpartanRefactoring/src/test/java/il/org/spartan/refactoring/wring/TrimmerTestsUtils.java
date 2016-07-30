@@ -1,135 +1,27 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
-import static il.org.spartan.utils.Utils.compressSpaces;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static il.org.spartan.azzert.*;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import static il.org.spartan.utils.Utils.*;
 
-import java.util.*;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jface.text.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.ASTVisitor;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jface.text.Document;
-import org.junit.*;
-
-import il.org.spartan.misc.Wrapper;
-import il.org.spartan.refactoring.spartanizations.Spartanization;
-import il.org.spartan.refactoring.spartanizations.TESTUtils;
-import il.org.spartan.refactoring.spartanizations.Wrap;
-import il.org.spartan.refactoring.utils.As;
-import il.org.spartan.refactoring.wring.TrimmerTestsUtils.Operand;
+import il.org.spartan.*;
+import il.org.spartan.misc.*;
+import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.utils.*;
 
 public class TrimmerTestsUtils {
-  @Test public void canParseEnum1() {
-    new Operand("enum a{}");
-  }
-  private static void assertBalanced(final String message, final String s) {
-    if (!isBalanced(s))
-      fail( //
-          new StringBuilder(message)//
-              .append(" Unbalanced\n* Essence='") //
-              .append(Wrap.essence(s))//
-              .append("' len=").append(Wrap.essence(s).length())//
-              .append("\n is not {[()]} balanced;") //
-              .append("\n FULL=").append(s) //
-              .append("   len=").append(s.length()) //
-              .append("\n ERROR=").append(unblancingError(s)) //
-              .toString() //
-      ); //
-  }
-  @Test public void balanced() {
-    assertBalanced("SIMPLE", "class T { T() { super(a); a();}}");
-  }
-  private static String unblancingError(String s) {
-    final Stack<Character> $ = new Stack<Character>();
-    int i = 0;
-    char t;
-    for (char c : s.toCharArray()) {
-      switch (c) {
-        case '{':
-        case '(':
-        case '[':
-          $.push(c);
-          break;
-        case ']':
-          if ($.isEmpty())
-            return "No closers expected at " + i + ", but found '" + c;
-          if ((t = $.pop()) != '[')
-            return "Found ] at " + i + ", but expecting close of '" + t + "' remaning is ; " + $ + "" + s.substring(0, i);
-          break;
-        case ')':
-          if ($.isEmpty())
-            return "No closers expected at " + i + ", but found '" + c;
-          if ((t = $.pop()) != '(')
-            return "Found } at " + i + ", but expecting close of '" + t + "' remaning is ; " + $+ "" + s.substring(0, i);
-          break;
-        case '}':
-          if ($.isEmpty())
-            return "No closers expected at " + i + ", but found '" + c;
-          if ((t = $.pop()) != '{')
-            return "Found } at " + i + ", but expecting close of '" + t + "' remaning is ; " + $+ "" + s.substring(0, i);
-          break;
-      }
-      i++;
+  static public void fail(String message) {
+    if (message == null) {
+      throw new AssertionError();
     }
-    if (!$.isEmpty())
-      return "Expecting closers at end: " + $;
-    return null;
+    throw new AssertionError(message);
   }
-  public static boolean isBalanced(String in) {
-    final Stack<Character> $ = new Stack<Character>();
-    for (char c : in.toCharArray()) {
-      switch (c) {
-        default:
-          continue;
-        case '{':
-        case '(':
-        case '[':
-          $.push(c);
-          break;
-        case ']':
-          if ($.isEmpty() || $.pop() != '[')
-            return false;
-          break;
-        case ')':
-          if ($.isEmpty() || $.pop() != '(')
-            return false;
-          break;
-        case '}':
-          if ($.isEmpty() || $.pop() != '{')
-            return false;
-          break;
-      }
-    }
-    return $.isEmpty();
+  static public void fail() {
+    fail(null);
   }
-  @Test public void canParseEnum2() {
-    Operand a = new Operand("enum a{}");
-    assertNotNull(a.findWrap());
-  }
-  @Test public void canParseEnum3() {
-    Operand a = new Operand("enum a{}");
-    final Wrap $ = Wrap.find(a.get());
-    if ($ == null)
-      fail("Cannot parse '\n" + a.get() + "\n'; did you forget a semicolon?");
-    Wrap x = $;
-    assertNotNull(x);
-  }
-  @Test public void canParseEnum4() {
-    String inner = "enum A{}";
-    final Wrap $ = Wrap.find(inner);
-    assertNotNull($);
-  }
-  @Test public void canParseEnum5() {
-    new Operand("enum a{}");
-  }
-
   static class OperandToWring<N extends ASTNode> extends TrimmerTestsUtils.Operand {
     final Class<N> clazz;
 
@@ -139,21 +31,21 @@ public class TrimmerTestsUtils {
     }
     public OperandToWring<N> in(final Wring<N> w) {
       final N findNode = findNode(w);
-      assertThat(w.scopeIncludes(findNode), is(true));
+      azzert.that(w.scopeIncludes(findNode), is(true));
       return this;
     }
     public OperandToWring<N> notIn(final Wring<N> w) {
-      assertThat(w.scopeIncludes(findNode(w)), is(false));
+      azzert.that(w.scopeIncludes(findNode(w)), is(false));
       return this;
     }
     private N findNode(final Wring<N> w) {
-      assertThat(w, notNullValue());
-      final Wrap wrap = findWrap();
-      assertThat(wrap, notNullValue());
+      azzert.notNull(w);
+      final Wrap wrap = Wrap.find(get());
+      azzert.notNull(wrap);
       final CompilationUnit u = wrap.intoCompilationUnit(get());
-      assertThat(u, notNullValue());
+      azzert.notNull(u);
       final N $ = firstInstance(u);
-      assertThat($, notNullValue());
+      azzert.notNull($);
       return $;
     }
     private N firstInstance(final CompilationUnit u) {
@@ -191,35 +83,36 @@ public class TrimmerTestsUtils {
     public Operand to(final String expected) {
       if (expected == null || expected.isEmpty())
         checkSame();
-      else
-        checkExpected(expected);
+      else {
+        final Wrap w = Wrap.find(get());
+        final String wrap = w.on(get());
+        final String unpeeled = TrimmerTestsUtils.apply(new Trimmer(), wrap);
+        if (wrap.equals(unpeeled))
+          fail("Nothing done on " + get());
+        final String peeled = w.off(unpeeled);
+        if (peeled.equals(get()))
+          azzert.that("No trimming of " + get(), peeled, is(not(get())));
+        if (compressSpaces(peeled).equals(compressSpaces(get())))
+          azzert.that("Trimming of " + get() + "is just reformatting", compressSpaces(get()), is(not(compressSpaces(peeled))));
+        assertSimilar(expected, peeled);
+      }
       return new Operand(expected);
     }
-    Wrap findWrap() {
-      final Wrap $ = Wrap.find(get());
-      if ($ == null)
-        fail("Cannot parse \n        " + get() + "\n did you forget a semicolon?");
-      return $;
-    }
-    private void checkExpected(final String expected) {
-      assertBalanced("INPUT", get());
-      assertBalanced("EXPECTED", expected);
-      final Wrap w = findWrap();
+    void checkExpected(final String expected) {
+      final Wrap w = Wrap.find(get());
       final String wrap = w.on(get());
-      final String unpeeled = apply(new Trimmer(), wrap);
+      final String unpeeled = TrimmerTestsUtils.apply(new Trimmer(), wrap);
       if (wrap.equals(unpeeled))
         fail("Nothing done on " + get());
-      assertBalanced("UNPEELED", unpeeled);
       final String peeled = w.off(unpeeled);
       if (peeled.equals(get()))
-        assertNotEquals("No trimming of " + get(), get(), peeled);
-      assertBalanced("PEELED", peeled);
+        azzert.that("No trimming of " + get(), peeled, is(not(get())));
       if (compressSpaces(peeled).equals(compressSpaces(get())))
-        assertNotEquals("Trimming of " + get() + "is just reformatting", compressSpaces(peeled), compressSpaces(get()));
+        azzert.that("Trimming of " + get() + "is just reformatting", compressSpaces(get()), is(not(compressSpaces(peeled))));
       assertSimilar(expected, peeled);
     }
     private void checkSame() {
-      final Wrap w = findWrap();
+      final Wrap w = Wrap.find(get());
       final String wrap = w.on(get());
       final String unpeeled = TrimmerTestsUtils.apply(new Trimmer(), wrap);
       if (wrap.equals(unpeeled))
@@ -235,19 +128,19 @@ public class TrimmerTestsUtils {
     return s.findOpportunities(u).size();
   }
   static String apply(final Trimmer t, final String from) {
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(from);
-    assertNotNull(u);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
+    azzert.notNull(u);
     final Document d = new Document(from);
-    assertNotNull(d);
+    azzert.notNull(d);
     final Document $ = TESTUtils.rewrite(t, u, d);
-    assertNotNull($);
+    azzert.notNull($);
     return $.get();
   }
   static String apply(final Wring<? extends ASTNode> ns, final String from) {
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(from);
-    assertNotNull(u);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
+    azzert.notNull(u);
     final Document d = new Document(from);
-    assertNotNull(d);
+    azzert.notNull(d);
     return TESTUtils.rewrite(new AsSpartanization(ns, "Tested Refactoring"), u, d).get();
   }
   static void assertSimplifiesTo(final String from, final String expected, final Wring<? extends ASTNode> ns, final Wrap wrapper) {
@@ -257,9 +150,9 @@ public class TrimmerTestsUtils {
       fail("Nothing done on " + from);
     final String peeled = wrapper.off(unpeeled);
     if (peeled.equals(from))
-      assertNotEquals("No similification of " + from, from, peeled);
+      azzert.that("No similification of " + from, peeled, is(not(from)));
     if (compressSpaces(peeled).equals(compressSpaces(from)))
-      assertNotEquals("Simpification of " + from + " is just reformatting", compressSpaces(peeled), compressSpaces(from));
+      azzert.that("Simpification of " + from + " is just reformatting", compressSpaces(from), is(not(compressSpaces(peeled))));
     assertSimilar(expected, peeled);
   }
   static <N extends ASTNode> OperandToWring<N> included(final String from, final Class<N> clazz) {

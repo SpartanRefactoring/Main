@@ -1,33 +1,26 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.elze;
-import static il.org.spartan.refactoring.utils.Funcs.then;
-import static il.org.spartan.refactoring.wring.TernaryPushdown.pushdown;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.wring.TernaryPushdown.*;
 
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.MethodInvocation;
-import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Subject;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
- * A {@link Wring} to convert <code>if (x)
- *   f(a);
- * else
- *   f(b);</code> into <code>f(x ? a : b);</code>
+ * A {@link Wring} to convert <code>if (x) f(a); else f(b);</code> into
+ * <code>f(x ? a : b);</code>
  *
  * @author Yossi Gil
  * @since 2015-07-29
  */
 public final class IfExpressionStatementElseSimilarExpressionStatement extends Wring.ReplaceCurrentNode<IfStatement> {
   @Override Statement replacement(final IfStatement s) {
-    final Expression then = Extract.expression(Extract.expressionStatement(then(s)));
+    final Expression then = extract.expression(extract.expressionStatement(then(s)));
     if (then == null)
       return null;
-    final Expression elze = Extract.expression(Extract.expressionStatement(elze(s)));
+    final Expression elze = extract.expression(extract.expressionStatement(elze(s)));
     if (elze == null)
       return null;
     final Expression e = pushdown(Subject.pair(then, elze).toCondition(s.getExpression()));
@@ -37,6 +30,6 @@ public final class IfExpressionStatementElseSimilarExpressionStatement extends W
     return "Consolidate two branches of an 'if' into a single ";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
+    return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }

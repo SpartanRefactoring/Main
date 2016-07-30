@@ -1,27 +1,20 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.elze;
-import static il.org.spartan.refactoring.utils.Funcs.same;
-import static il.org.spartan.refactoring.utils.Funcs.then;
-import static il.org.spartan.refactoring.wring.Wrings.insertBefore;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.wring.Wrings.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.jdt.core.dom.rewrite.ListRewrite;
-import org.eclipse.text.edits.TextEditGroup;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
 /**
- * A {@link Wring} to convert
- * <code>if (X) {foo(); bar();} else {foo(); baz();}</code> into
- * <code>foo(); if (X) bar(); else baz();</code>
+ * A {@link Wring} to convert <code>if (X) {foo(); bar();} else {foo();
+ * baz();}</code> into <code>foo(); if (X) bar(); else baz();</code>
  *
  * @author Yossi Gil
  * @since 2015-07-29
@@ -31,10 +24,10 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> {
     return "Condolidate commmon prefix of then and else branches to just before if statement";
   }
   @Override Rewrite make(final IfStatement s) {
-    final List<Statement> then = Extract.statements(then(s));
+    final List<Statement> then = extract.statements(then(s));
     if (then.isEmpty())
       return null;
-    final List<Statement> elze = Extract.statements(elze(s));
+    final List<Statement> elze = extract.statements(elze(s));
     if (elze.isEmpty())
       return null;
     final List<Statement> commonPrefix = commonPrefix(then, elze);
@@ -82,6 +75,6 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> {
     return make(s) != null;
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REFACTOR_INEFFECTIVE;
+    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

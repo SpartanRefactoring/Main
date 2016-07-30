@@ -4,7 +4,6 @@ import static il.org.spartan.utils.Utils.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
-import org.junit.Assert;
 
 import il.org.spartan.refactoring.utils.*;
 
@@ -19,17 +18,17 @@ import il.org.spartan.refactoring.utils.*;
 public enum Wrap {
   OUTER("package p; // BEGIN PACKAGE \n", "\n// END PACKAGE\n"),
   /** Algorithm for wrapping/unwrapping a method */
-  Method("" + OUTER.before + //
+  Method("" + //
+      "package p;\n" + //
       "public class SpongeBob {\n" + //
       "", "" + //
-          "\n}// END of class SpongeBob\n" + //
-          "" + OUTER.after + //
+          "} // END OF PACKAGE\n" + //
           ""), //
   /** Algorithm for wrapping/unwrapping a statement */
   Statement("" + Method.before + //
       "public void squarePants(){\n" + //
       "", "" + //
-          "\n} // END OF METHOD \n" + //
+          "} // END OF METHOD \n" + //
           "" + Method.after + //
           ""), //
   /** Algorithm for wrapping/unwrapping an expression */
@@ -99,11 +98,7 @@ public enum Wrap {
    *         of the wrapped parameter.
    */
   public CompilationUnit intoCompilationUnit(final String codeFragment) {
-    Assert.assertNotNull(codeFragment);
-    Assert.assertNotNull(on(codeFragment));
-    As compiliationUnit = As.COMPILIATION_UNIT;
-    Assert.assertNotNull(compiliationUnit);
-    return (CompilationUnit) compiliationUnit.ast(on(codeFragment));
+    return (CompilationUnit) MakeAST.COMPILATION_UNIT.from(on(codeFragment));
   }
   /**
    * Wrap a given code fragment, and converts it into a {@link Document}

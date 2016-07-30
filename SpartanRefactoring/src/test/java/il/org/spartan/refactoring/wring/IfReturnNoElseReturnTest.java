@@ -1,30 +1,19 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.refactoring.utils.Funcs.elze;
-import static il.org.spartan.refactoring.utils.Funcs.then;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertNotNull;
+import static il.org.spartan.azzert.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
 
-import java.util.Collection;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.eclipse.jdt.core.dom.*;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.*;
 
-import il.org.spartan.refactoring.utils.As;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.wring.IfReturnNoElseReturn;
-import il.org.spartan.refactoring.wring.Wring;
-import il.org.spartan.refactoring.wring.Wrings;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
+import il.org.spartan.*;
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.AbstractWringTest.*;
 import il.org.spartan.utils.Utils;
 
 /**
@@ -38,23 +27,24 @@ import il.org.spartan.utils.Utils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class IfReturnNoElseReturnTest {
   static final Wring<IfStatement> WRING = new IfReturnNoElseReturn();
+
   @Test public void checkFirstIfStatement1() {
     final String s = "if (a) return b; return a();";
-    final IfStatement i = Extract.firstIfStatement(As.STATEMENTS.ast(s));
-    assertNotNull(i);
-    assertThat(i.toString(), WRING.scopeIncludes(i), is(true));
+    final IfStatement i = extract.firstIfStatement(MakeAST.STATEMENTS.from(s));
+    azzert.notNull(i);
+    azzert.that(i.toString(), WRING.scopeIncludes(i), is(true));
   }
   @Test public void checkFirstIfStatement2() {
     final String s = "if (a) return b; else return a();";
-    final IfStatement i = Extract.firstIfStatement(As.STATEMENTS.ast(s));
-    assertNotNull(i);
-    assertThat(i.toString(), WRING.scopeIncludes(i), is(false));
+    final IfStatement i = extract.firstIfStatement(MakeAST.STATEMENTS.from(s));
+    azzert.notNull(i);
+    azzert.that(i.toString(), WRING.scopeIncludes(i), is(false));
   }
   @Test public void checkFirstIfStatement3() {
     final String s = "if (a) a= b; else a=c;";
-    final IfStatement i = Extract.firstIfStatement(As.STATEMENTS.ast(s));
-    assertNotNull(i);
-    assertThat(i.toString(), WRING.scopeIncludes(i), is(false));
+    final IfStatement i = extract.firstIfStatement(MakeAST.STATEMENTS.from(s));
+    azzert.notNull(i);
+    azzert.that(i.toString(), WRING.scopeIncludes(i), is(false));
   }
 
   @RunWith(Parameterized.class) //
@@ -84,6 +74,7 @@ public class IfReturnNoElseReturnTest {
         new String[] { "Simple if plus assign", "if (a) a *= b; else a *= c;" }, //
         new String[] { "Simple if return empty else", "if (a) return b; else ;" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -108,9 +99,11 @@ public class IfReturnNoElseReturnTest {
         new String[] { "Vanilla ; ", "if (a) return b; return a(); b(); c();", "return a ? b: a(); b(); c();" }, //
         new String[] { "Vanilla {;{;;};} ", "if (a) return b; else {;{;{};};{;{}}} return c;", "return a?b:c;" }, //
         null, //
-        new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}", "if (x) {;f();;;return a;;;}\n g();" }, //
+        new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}",
+            "if (x) {;f();;;return a;;;}\n g();" }, //
         null, //
-        new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}", "  if(x){;f();;;return a;;;} g();" }, //
+        new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}",
+            "  if(x){;f();;;return a;;;} g();" }, //
         new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}",
             "" + //
                 " if (x) {\n" + //
@@ -141,6 +134,7 @@ public class IfReturnNoElseReturnTest {
                 " g();\n" + //
                 "" }, //
         null };
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -158,28 +152,28 @@ public class IfReturnNoElseReturnTest {
       super(WRING);
     }
     @Test public void asMeNotNull() {
-      assertNotNull(asMe());
+      azzert.notNull(asMe());
     }
     @Test public void followedByReturn() {
-      assertThat(Extract.nextReturn(asMe()), notNullValue());
+      azzert.notNull(extract.nextReturn(asMe()));
     }
     @Test public void isfStatementElseIsEmpty() {
-      assertThat(Extract.statements(Extract.firstIfStatement(As.STATEMENTS.ast(input)).getElseStatement()).size(), is(0));
+      azzert.that(extract.statements(extract.firstIfStatement(MakeAST.STATEMENTS.from(input)).getElseStatement()).size(), is(0));
     }
     @Test public void isIfStatement() {
-      assertThat(input, asMe(), notNullValue());
+      azzert.notNull(input, asMe());
     }
     @Test public void myScopeIncludes() {
       final IfStatement s = asMe();
-      assertThat(s, notNullValue());
-      assertThat(Extract.statements(elze(s)), notNullValue());
-      assertThat(Extract.statements(elze(s)).size(), is(0));
+      azzert.notNull(s);
+      azzert.notNull(extract.statements(elze(s)));
+      azzert.that(extract.statements(elze(s)).size(), is(0));
     }
     @Test public void noElse() {
-      assertThat(Extract.statements(elze(asMe())).size(), is(0));
+      azzert.that(extract.statements(elze(asMe())).size(), is(0));
     }
     @Test public void thenIsSingleReturn() {
-      assertThat(Extract.returnStatement(then(asMe())), notNullValue());
+      azzert.notNull(extract.returnStatement(then(asMe())));
     }
   }
 }

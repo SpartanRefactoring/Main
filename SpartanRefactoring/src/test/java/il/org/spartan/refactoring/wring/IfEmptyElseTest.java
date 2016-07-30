@@ -1,28 +1,19 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.refactoring.utils.Funcs.elze;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertNotNull;
+import static il.org.spartan.azzert.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
 
-import java.util.Collection;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.eclipse.jdt.core.dom.*;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.*;
 
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.wring.IfDegenerateElse;
-import il.org.spartan.refactoring.wring.Wring;
-import il.org.spartan.refactoring.wring.Wrings;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
+import il.org.spartan.*;
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.AbstractWringTest.*;
 import il.org.spartan.utils.Utils;
 
 /**
@@ -44,6 +35,7 @@ public class IfEmptyElseTest {
         new String[] { "Simply nested if return", "{if (a)  return b; else return c;}" }, //
         new String[] { "Nested if return", "if (a) {;{{;;return b; }}} else {{{;return c;};;};}" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -68,6 +60,7 @@ public class IfEmptyElseTest {
         new String[] { "Vanilla ; ", "if (a) f(); else ;", "if (a) f();" }, //
         new String[] { "Vanilla {;{;;};} ", "if (a) f(); else {;{;{};};{;{}}}", "if (a) f();" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -85,20 +78,20 @@ public class IfEmptyElseTest {
       super(WRING);
     }
     @Test public void isfStatementElseIsEmpty() {
-      assertThat(Extract.statements(asMe().getElseStatement()).size(), is(0));
+      azzert.that(extract.statements(asMe().getElseStatement()).size(), is(0));
     }
     @Test public void isfStatementElseNotNull() {
-      assertNotNull(elze(asMe()));
+      azzert.notNull(elze(asMe()));
     }
     @Test public void isIfStatement() {
-      assertNotNull(asMe());
+      azzert.notNull(asMe());
     }
     @Test public void myScopeIncludes() {
       final IfStatement s = asMe();
-      assertThat(s, notNullValue());
-      assertThat(elze(s), notNullValue());
-      assertThat(Extract.statements(elze(s)), notNullValue());
-      assertThat(Extract.statements(elze(s)).size(), is(0));
+      azzert.notNull(s);
+      azzert.notNull(elze(s));
+      azzert.notNull(extract.statements(elze(s)));
+      azzert.that(extract.statements(elze(s)).size(), is(0));
     }
   }
 }

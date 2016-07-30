@@ -1,38 +1,20 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.elze;
-import static il.org.spartan.refactoring.utils.Funcs.same;
-import static il.org.spartan.refactoring.utils.Funcs.then;
+import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.jdt.core.dom.rewrite.ListRewrite;
-import org.eclipse.text.edits.TextEditGroup;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.Subject;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
- * A {@link Wring} to convert <code>if (x) {
- *   ;
- *   f();
- *   return a;
- * } else {
- *   ;
- *   g();
- *   {
- *   }
- * }</code> into <code>if (x) {
- *   f();
- *   return a;
- * }
- * g();</code>
+ * A {@link Wring} to convert <code>if (x) { ; f(); return a; } else { ; g(); {
+ * } }</code> into <code>if (x) { f(); return a; } g();</code>
  *
  * @author Yossi Gil
  * @since 2015-07-29
@@ -53,7 +35,7 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends Wring.Rep
     if (!shoudlInvert(asVirtualIf))
       return null;
     final IfStatement canonicalIf = invert(asVirtualIf);
-    final List<Statement> ss = Extract.statements(elze(canonicalIf));
+    final List<Statement> ss = extract.statements(elze(canonicalIf));
     canonicalIf.setElseStatement(null);
     if (!Is.block(s.getParent())) {
       ss.add(0, canonicalIf);
@@ -67,6 +49,6 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends Wring.Rep
     return r;
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
+    return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }

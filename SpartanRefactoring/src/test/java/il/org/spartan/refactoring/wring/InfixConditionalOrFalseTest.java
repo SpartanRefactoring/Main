@@ -1,27 +1,19 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.OrderingComparison.greaterThanOrEqualTo;
-import static il.org.spartan.refactoring.utils.Restructure.flatten;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.CONDITIONAL_OR;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertNotNull;
+import static il.org.spartan.azzert.*;
+import static il.org.spartan.refactoring.utils.Restructure.*;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
-import java.util.Collection;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.eclipse.jdt.core.dom.*;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.*;
 
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.wring.InfixConditionalOrFalse;
-import il.org.spartan.refactoring.wring.Wring;
-import il.org.spartan.refactoring.wring.Wrings;
+import il.org.spartan.*;
+import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.utils.Utils;
 
 /**
@@ -65,7 +57,8 @@ public enum InfixConditionalOrFalseTest {
         new String[] { "AND of 5 without boolean", "false && a && b && c && d" }, //
         new String[] { "AND of 6 without boolean", "a && b && c && false && d && e" }, //
         new String[] { "AND of 7 without boolean with parenthesis", "(a && b) && (c && (d && (e && false)))" }, //
-        new String[] { "AND of 7 without boolean and multiple false value", "(a && (b && false)) && (c && (d && (e && (false && false))))" }, //
+        new String[] { "AND of 7 without boolean and multiple false value",
+            "(a && (b && false)) && (c && (d && (e && (false && false))))" }, //
         new String[] { "true && true", "true && true" }, //
         new String[] { "AND of 3 with true", "a && b && true" }, //
         new String[] { "AND of 4 with true", "a && b && c && true" }, //
@@ -80,6 +73,7 @@ public enum InfixConditionalOrFalseTest {
         new String[] { "AND of 6 with true with parenthesis", "x && (true && (a && b && true)) && (c && (d && e))" }, //
         new String[] { "AND with true", "true && b && a" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -108,15 +102,18 @@ public enum InfixConditionalOrFalseTest {
         new String[] { "OR of 4 with false", "x || a || b || c || false", "x || a || b || c" }, //
         new String[] { "OR of 5 with false", "x || a || false || c || d", "x || a || c || d" }, //
         new String[] { "OR of 6 with false", "false || x || a || b || c || d || e", "x || a || b || c || d || e" }, //
-        new String[] { "OR of 6 with false with parenthesis", "x || (a || (false) || b) || (c || (d || e))", "x || a || b || c || d || e" }, //
+        new String[] { "OR of 6 with false with parenthesis", "x || (a || (false) || b) || (c || (d || e))",
+            "x || a || b || c || d || e" }, //
         new String[] { "OR false with something", "false || a || false", "a" }, //
         new String[] { "OR something with false", "false || a || false", "a" }, //
         new String[] { "OR of 3 with false", "false || a || b || false", "a || b" }, //
         new String[] { "OR of 4 with false", "a || b || false || c", "a || b || c" }, //
         new String[] { "OR of 5 with false", "a || b || c || d || false", "a || b || c || d" }, //
         new String[] { "OR of 6 with two false", "a || false || b || false || c || d || e", "a || b || c || d || e" }, //
-        new String[] { "OR of 6 with false with parenthesis", "(a || b) || false || (c || false || (d || e || false))", "a || b || c || d || e" }, //
+        new String[] { "OR of 6 with false with parenthesis", "(a || b) || false || (c || false || (d || e || false))",
+            "a || b || c || d || e" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -133,16 +130,16 @@ public enum InfixConditionalOrFalseTest {
     }
     @Override @Test public void flattenIsIdempotentt() {
       final InfixExpression flatten = flatten(asInfixExpression());
-      assertThat(flatten(flatten).toString(), is(flatten.toString()));
+      azzert.that(flatten(flatten).toString(), is(flatten.toString()));
     }
     @Override @Test public void inputIsInfixExpression() {
-      assertNotNull(asInfixExpression());
+      azzert.notNull(asInfixExpression());
     }
     @Test public void isANDorOR() {
-      assertThat(asInfixExpression().getOperator(), is(CONDITIONAL_OR));
+      azzert.that(asInfixExpression().getOperator(), is(CONDITIONAL_OR));
     }
     @Test public void twoOrMoreArguments() {
-      assertThat(Extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
+      azzert.that(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
     }
   }
 }

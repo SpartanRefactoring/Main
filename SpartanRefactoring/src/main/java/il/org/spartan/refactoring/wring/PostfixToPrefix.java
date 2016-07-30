@@ -1,11 +1,10 @@
 package il.org.spartan.refactoring.wring;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.PostfixExpression.Operator;
+import org.eclipse.jdt.core.dom.PostfixExpression.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.AncestorSearch;
-import il.org.spartan.refactoring.utils.Subject;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
  * A {@link Wring} that converts, whenever possible, postfix increment/decrement
@@ -37,6 +36,6 @@ public final class PostfixToPrefix extends Wring.ReplaceCurrentNode<PostfixExpre
     return o == PostfixExpression.Operator.DECREMENT ? "decrement" : "increment";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REORDER_EXPRESSIONS;
+    return WringGroup.REORDER_EXPRESSIONS;
   }
 }
