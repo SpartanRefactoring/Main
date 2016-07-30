@@ -31,7 +31,7 @@ public class ExtractStatementTest {
     assertThat(Extract.statements(s("{}")), empty());
   }
   @Test public void emptyStatementInBlockIsEmpty() {
-    assertThat(Extract.statements(s("{;}")), empty());
+    assertThat(Extract.statements(s("{}")), empty());
   }
   @Test public void emptyStatementIsEmpty() {
     assertThat(Extract.statements(s(";")), empty());
@@ -49,7 +49,7 @@ public class ExtractStatementTest {
     assertThat(Extract.statements(s("{}")), is(notNullValue()));
   }
   @Test public void manyEmptyStatementInBlockIsEmpty() {
-    assertThat(Extract.statements(s("{;};{;;{;;}};")), empty());
+    assertThat(Extract.statements(s("{};{;;{;;}};")), empty());
   }
   @Test public void manyIsNotEmpty() {
     assertThat(Extract.statements(s("a(); b(); c();")), not(empty()));

@@ -1,5 +1,6 @@
 package il.org.spartan.refactoring.wring;
 import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.trimming;
+import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
 import static il.org.spartan.hamcrest.CoreMatchers.is;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
 import static il.org.spartan.hamcrest.MatcherAssert.iz;
@@ -50,7 +51,7 @@ import il.org.spartan.refactoring.utils.*;
     final String wrap = w.on(from);
     assertEquals(from, w.off(wrap));
     final Trimmer t = new Trimmer();
-    final String unpeeled = TrimmerTestsUtils.apply(t, wrap);
+    final String unpeeled =apply(t, wrap);
     if (wrap.equals(unpeeled))
       fail("Nothing done on " + from);
     final String peeled = w.off(unpeeled);
@@ -100,10 +101,10 @@ import il.org.spartan.refactoring.utils.*;
     trimming("a = 0; b = 0;").to("b = a = 0;");
   }
   @Test public void assignmentAssignmentVanillaScopeIncludes() {
-    TrimmerTestsUtils.included("a = 3; b = 3;", Assignment.class).in(new AssignmentAndAssignment());
+   included("a = 3; b = 3;", Assignment.class).in(new AssignmentAndAssignment());
   }
   @Test public void assignmentAssignmentVanillaScopeIncludesNull() {
-    TrimmerTestsUtils.included("a = null; b = null;", Assignment.class).notIn(new AssignmentAndAssignment());
+   included("a = null; b = null;", Assignment.class).notIn(new AssignmentAndAssignment());
   }
   @Test public void assignmentReturn0() {
     trimming("a = 3; return a;").to("return a = 3;");
@@ -908,7 +909,7 @@ import il.org.spartan.refactoring.utils.*;
         .to(" if (a) if (!b) f(); x();");
   }
   @Test public void ifEmptyElsewWithinIf() {
-    trimming("if (a) if (b) {;;;f();} else {;}")//
+    trimming("if (a) if (b) {;;;f();} else {}")//
         .to("if(a&&b){;;;f();}");
   }
   @Test public void ifEmptyThenThrow() {
@@ -1103,15 +1104,13 @@ import il.org.spartan.refactoring.utils.*;
         "    final Z res = new Z(6);\n" + //
         "    S.out.println(res.j);\n" + //
         "    return res;\n" + //
-        "  }\n" + //
-        "}\n" + //
+        " }\n" + //
         "").to(//
             "  public int y() {\n" + // //
                 "    final Z $ = new Z(6);\n" + ////
                 "    S.out.println($.j);\n" + ////
                 "    return $;\n" + // //
                 "  }\n" + //
-                "}\n" + //
                 "");
   }
   @Test public void inlineArrayInitialization1() {
@@ -1478,19 +1477,20 @@ import il.org.spartan.refactoring.utils.*;
   }
  @Test public void issue50e() {
     trimming("abstract static final enum a {}")//
-    .to("interface a {}");//
+    .to("abstract final enum a {}");//
   }
  @Test public void issue50f() {
-    trimming("static final enum a {}")//
+    trimming("static enum a {};")//
     .to("enum a {}");//
   }
+ 
  @Test public void issue50g() {
-    trimming("static abstract enum a {}")//
+    trimming("static enum a {}")//
     .to("enum a {}");//
   }
  @Test public void issue50h() {
-    trimming("static abstract final enum a {}")//
-    .to("interface a {}");//
+    trimming("static enum a {a, b}")//
+    .to("enum a {a, b}");//
   }
 @Test public void issue51() {
     trimming("int f() { int x = 0; for (int i = 0; i < 10; ++i) x += i; return x;}")//
@@ -1506,7 +1506,7 @@ import il.org.spartan.refactoring.utils.*;
     trimming("void m() { if (a) { f(); return; }}").to("void m() { if (a) { f(); ; }}");
   }
   @Test public void issue52B2() {
-    trimming("void m() { if (a) ++i; else { f(); return; }").to("void m() { if (a) ++i; else { f(); ; }");
+    trimming("void m() { if (a) ++i; else { f(); return; }}").to("void m() { if (a) ++i; else { f(); ; }}");
   }
   @Test public void issue53() {
     trimming("int[] is = f(); for (int i: is) f(i);")//
@@ -1585,7 +1585,7 @@ import il.org.spartan.refactoring.utils.*;
         .to("while (c) b[i] = f;");
   }
   @Test public void issue54WhileScopeDoesNotInclude() {
-    TrimmerTestsUtils.included("int a  = f(); while (c) b[i] = a;", VariableDeclarationFragment.class)//
+   included("int a  = f(); while (c) b[i] = a;", VariableDeclarationFragment.class)//
         .notIn(new DeclarationInitializerStatementTerminatingScope());
   }
   @Test public void issue57a() {
@@ -1671,7 +1671,7 @@ import il.org.spartan.refactoring.utils.*;
         .to("");
   }
   @Test public void methodWithLastIf() {
-    trimming("int f() { if (a) { f(); g(); h();}").to("int f() { if (!a) return;  f(); g(); h();");
+    trimming("int f() { if (a) { f(); g(); h();}}").to("int f() { if (!a) return;  f(); g(); h();}");
   }
   @Test public void nestedIf1() {
     trimming("if (a) if (b) i++;").to("if (a && b) i++;");
@@ -1949,10 +1949,10 @@ import il.org.spartan.refactoring.utils.*;
   @Test public void paramAbbreviateBasic2() {
     trimming("int m(StringBuilder builder) {" + //
         "if(builder.exec())" + //
-        "builder.clear();")
+        "builder.clear();}")
             .to("int m(StringBuilder b) {" + //
                 "if(b.exec())" + //
-                "b.clear();");
+                "b.clear();}");
   }
   @Test public void paramAbbreviateCollision() {
     trimming("void m(Expression exp, Expression expresssion) { }").to("void m(Expression e, Expression expresssion) { }");
@@ -2002,12 +2002,12 @@ import il.org.spartan.refactoring.utils.*;
         "iterator = new Iterator<Object>() {" + //
         "int i = 0;" + //
         "@Override public boolean hasNext() { return false; }" + //
-        "@Override public Object next() { return null; } };")
+        "@Override public Object next() { return null; } };}")
             .to("void f(Iterator i) {" + //
                 "i = new Iterator<Object>() {" + //
                 "int i = 0;" + //
                 "@Override public boolean hasNext() { return false; }" + //
-                "@Override public Object next() { return null; } };");
+                "@Override public Object next() { return null; } };}");
   }
   @Test public void parenthesizeOfpushdownTernary() {
     trimming("a ? b+x+e+f:b+y+e+f").to("b+(a ? x : y)+e+f");
@@ -2462,13 +2462,14 @@ import il.org.spartan.refactoring.utils.*;
     + "}").to("");
   }
   @Test public void removeSuper() {
-    trimming("class T { T() { super(); }").to("class T { T() { }");
+    trimming("class T {T(){super();}}").to("class T { T() { }}");
   }
+
   @Test public void removeSuperWithArgument() {
-    trimming("class T { T() { super(a); a();}").to("");
+    trimming("class T { T() { super(a); a();}}").to("");
   }
   @Test public void removeSuperWithStatemen() {
-    trimming("class T { T() { super(); a++;}").to("class T { T() { ++a;}");
+    trimming("class T { T() { super(); a++;}}").to("class T { T() { ++a;}}");
   }
   @Test public void renameToDollarActual() {
     trimming(//
@@ -2721,7 +2722,7 @@ import il.org.spartan.refactoring.utils.*;
     trimming("return 2 - 4 < 50 - 20 - 10 - 5;").to("return 2 - 4 < 50 - 5 - 10 - 20 ;");
   }
   @Test public void shortestOperand10() {
-    trimming("return b == true;} ").to("return b;}");
+    trimming("return b == true;").to("return b;");
   }
   @Test public void shortestOperand11() {
     trimming("int h,u,m,a,n;return b == true && n + a > m - u || h > u;").to("int h,u,m,a,n;return b&&a+n>m-u||h>u;");
@@ -2769,7 +2770,7 @@ import il.org.spartan.refactoring.utils.*;
     trimming("return f(a,b,c,d) + f(a,b,c) + f();     } ").to("");
   }
   @Test public void shortestOperand28() {
-    trimming("return f(a,b,c,d) * f(a,b,c) * f();     } ").to("return f()*f(a,b,c)*f(a,b,c,d);}");
+    trimming("return f(a,b,c,d) * f(a,b,c) * f();").to("return f()*f(a,b,c)*f(a,b,c,d);");
   }
   @Test public void shortestOperand29() {
     trimming("f(a,b,c,d) ^ f() ^ 0").to("f() ^ f(a,b,c,d) ^ 0");
@@ -2797,20 +2798,32 @@ import il.org.spartan.refactoring.utils.*;
         .to("boolean f() { int $ = 0; for (int i = 0; i < 10; ++i) $ += i; return $;}");
   }
   @Test public void simplifyBlockComplexEmpty0() {
-    trimming("{}").to("/* empty */    ");
+    trimming("{;}").to("/* empty */    ");
+  }
+  @Test public void simplifyBlockComplexEmpty0A() {
+    trimming("{}").to("");
+  }
+  @Test public void simplifyBlockComplexEmpty0B() {
+    trimming("{;}").to("");
+  }
+  @Test public void simplifyBlockComplexEmpty0C() {
+    trimming("{{;}}").to("");
+  }
+  @Test public void simplifyBlockComplexEmpty0D() {
+    trimming("{;;;{;;;}{;}}").to("/* empty */    ");
   }
   @Test public void simplifyBlockComplexEmpty1() {
-    trimming("{;;{;{{}}}{;}{};}").to(" ");
+    trimming("{;;{;{{}}}{}{};}").to("/* empty */ ");
   }
   @Test public void simplifyBlockComplexSingleton() {
-    TrimmerTestsUtils.assertSimplifiesTo("{;{{;;return b; }}}", "return b;", new BlockSimplify(), Wrap.Statement);
+   assertSimplifiesTo("{;{{;;return b; }}}", "return b;", new BlockSimplify(), Wrap.Statement);
   }
   @Test public void simplifyBlockDeeplyNestedReturn() {
-    TrimmerTestsUtils.assertSimplifiesTo("{{{;return c;};;};}", "return c;", new BlockSimplify(), Wrap.Statement);
+   assertSimplifiesTo("{{{;return c;};;};}", "return c;", new BlockSimplify(), Wrap.Statement);
   }
   /* Begin of already good tests */
   @Test public void simplifyBlockEmpty() {
-    TrimmerTestsUtils.assertSimplifiesTo("{;;}", "", new BlockSimplify(), Wrap.Statement);
+   assertSimplifiesTo("{;;}", "", new BlockSimplify(), Wrap.Statement);
   }
   @Test public void simplifyBlockExpressionVsExpression() {
     trimming("6 - 7 < a * 3").to("6 - 7 < 3 * a");
@@ -2819,7 +2832,7 @@ import il.org.spartan.refactoring.utils.*;
     trimming("if (a) return b; else c();").to("if(a)return b;c();");
   }
   @Test public void simplifyBlockThreeStatements() {
-    TrimmerTestsUtils.assertSimplifiesTo("{i++;{{;;return b; }}j++;}", "i++;return b;j++;", new BlockSimplify(), Wrap.Statement);
+   assertSimplifiesTo("{i++;{{;;return b; }}j++;}", "i++;return b;j++;", new BlockSimplify(), Wrap.Statement);
   }
   @Test public void simplifyLogicalNegationNested() {
     trimming("!((a || b == c) && (d || !(!!c)))").to("!a && b != c || !d && c");

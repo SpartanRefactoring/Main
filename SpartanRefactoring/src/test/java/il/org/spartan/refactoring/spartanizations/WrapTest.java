@@ -48,8 +48,8 @@ import org.junit.Test;
   @Test public void findEmptyBlock() {
     assertThat(Wrap.find("{}"), is(Wrap.Statement));
   }
-  @Test public void findError() {
-    assertThat(Wrap.find("}} f() { a();} b();}"), is(nullValue()));
+  @Test(expected=AssertionError.class) public void findError() {
+    Wrap.find("}}) { a();} b();}");
   }
   @Test public void findExpression() {
     assertThat(Wrap.find("i++"), is(Wrap.Expression));
