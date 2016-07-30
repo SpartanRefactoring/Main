@@ -1,14 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.azzert.assertEquals;
-import static il.org.spartan.azzert.assertNotEquals;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static il.org.spartan.utils.Utils.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
@@ -131,7 +128,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     }
     @Test public void noOpporunity() {
       final CompilationUnit u = asCompilationUnit();
-      assertEquals(u.toString() + wringer.findOpportunities(u), 0, wringer.findOpportunities(u).size());
+      azzert.that(u.toString() + wringer.findOpportunities(u), wringer.findOpportunities(u).size(), is(0));
     }
     @Test public void simiplifies() throws MalformedTreeException, IllegalArgumentException, BadLocationException {
       if (input == null)
@@ -313,9 +310,6 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
         assertSimilar(expected, peeled);
         assertSimilar(Wrap.Statement.on(expected), excpected);
       }
-      static <T> void assertNotEquals(String s, T t1, T t2) {
-        azzert.that(s, t2, is(not(t1))); 
-       }
       /**
        * In case of an IfStatemnet and surrounding, we search and then find the
        * first If statement in the input.
@@ -416,7 +410,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     @Test public void peelableOutput() {
       if (inner == null)
         return;
-      assertEquals(expected, Wrap.Statement.off(Wrap.Statement.on(expected)));
+      azzert.that(Wrap.Statement.off(Wrap.Statement.on(expected)), is((expected)));
     }
     @Test public void scopeIncludes() {
       if (inner == null)
@@ -507,7 +501,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     @Test public void peelableOutput() {
       if (input == null)
         return;
-      assertEquals(expected, Wrap.Expression.off(Wrap.Expression.on(expected)));
+      azzert.that(Wrap.Expression.off(Wrap.Expression.on(expected)), is((expected)));
     }
     @Test public void scopeIncludes() {
       if (inner == null)
@@ -691,7 +685,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     @Test public void peelableOutput() {
       if (input == null)
         return;
-      assertEquals(expected, Wrap.Statement.off(Wrap.Statement.on(expected)));
+      azzert.that(Wrap.Statement.off(Wrap.Statement.on(expected)), is((expected)));
     }
     @Test public void scopeIncludesAsMe() {
       if (input == null)
@@ -806,7 +800,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     @Test public void peelableOutput() {
       if (expected == null)
         return;
-      assertEquals(expected, Wrap.Statement.off(Wrap.Statement.on(expected)));
+      azzert.that(Wrap.Statement.off(Wrap.Statement.on(expected)), is((expected)));
     }
     @Test public void rewriteNotEmpty() throws MalformedTreeException, IllegalArgumentException {
        azzert.notNull(wringer.createRewrite(asCompilationUnit(), null));
@@ -865,7 +859,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     }
     @Test public void correctSimplifier() {
       if (inner != null)
-        assertEquals(inner, Toolbox.instance.find(asExpression()));
+        azzert.that(Toolbox.instance.find(asExpression()), is((inner)));
     }
     @Test public void findsSimplifier() {
       if (inner != null)
@@ -911,7 +905,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
         super(w);
       }
       @Test public void correctSimplifier() {
-        assertEquals(inner, Toolbox.instance.find(asExpression()));
+        azzert.that(Toolbox.instance.find(asExpression()), is((inner)));
       }
       @Test public void createRewrite() throws MalformedTreeException, IllegalArgumentException, BadLocationException {
         final String s = input;
@@ -932,11 +926,11 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       }
       @Test public void oneOpporunity() {
         final CompilationUnit u = asCompilationUnit();
-        assertEquals(u.toString(), 1, trimmer.findOpportunities(u).size());
+        azzert.that(u.toString(), trimmer.findOpportunities(u).size(), is(1));
          azzert.aye(inner.scopeIncludes((N) asExpression()));
       }
       @Test public void peelableOutput() {
-        assertEquals(output, Wrap.Expression.off(Wrap.Expression.on(output)));
+        azzert.that(Wrap.Expression.off(Wrap.Expression.on(output)), is((output)));
       }
       @Test public void scopeIncludes() {
          azzert.nay(inner.scopeIncludes((N) asExpression()));
@@ -958,4 +952,5 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       protected abstract Document asDocument();
     }
   }
+
 }
