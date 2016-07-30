@@ -26,7 +26,7 @@ import org.junit.*;
  * <p>
  * The protocol of cells include:
  * <ol>
- * <li> {@link Property#ϑ()}, returning the cell's value, recomputing it if it is
+ * <li> {@link Property#¢()}, returning the cell's value, recomputing it if it is
  * less recent than any {@link Ingredient} on which it depends, directly or
  * indirectly. The computed value is cached, and used in subsequent calls to
  * prevent unnecessary re-computation.
@@ -157,7 +157,7 @@ import org.junit.*;
      *         <li>returns <code><b>this</b></code>
      *         </ol> */
     public <@Nullable A> Binder1<T, A> bind(final Function1<T, A> f) {
-      return ¢ -> set(() -> f.ϑ(¢.ϑ()), ¢);
+      return ¢ -> set(() -> f.ϑ(¢.¢()), ¢);
     }
     /** Used for fluent API; sets the current value of this instance to a be a
      * function taking two arguments
@@ -169,7 +169,7 @@ import org.junit.*;
      *         applied changes the current instance returning
      *         <code><b>this</b></code> */
     public <@Nullable A1, @Nullable A2> Binder2<@Nullable T, @Nullable A1, @Nullable A2> bind(final Function2<T, A1, A2> f) {
-      return (¢1, ¢2) -> set(() -> f.ϑ(¢1.ϑ(), ¢2.ϑ()), ¢1, ¢2);
+      return (¢1, ¢2) -> set(() -> f.ϑ(¢1.¢(), ¢2.¢()), ¢1, ¢2);
     }
     /** Used for fluent API; sets the current value of this instance to a be a
      * function taking four arguments
@@ -182,7 +182,7 @@ import org.junit.*;
      *         when applied changes the current instance and returning
      *         <code><b>this</b></code> */
     public <@Nullable A1, @Nullable A2, @Nullable A3> Binder3<T, A1, A2, A3> bind(final Function3<T, A1, A2, A3> f) {
-      return (¢1, ¢2, ¢3) -> set(() -> f.ϑ(¢1.ϑ(), ¢2.ϑ(), ¢3.ϑ()), ¢1, ¢2, ¢3);
+      return (¢1, ¢2, ¢3) -> set(() -> f.ϑ(¢1.¢(), ¢2.¢(), ¢3.¢()), ¢1, ¢2, ¢3);
     }
     /** Used for fluent API; sets the current value of this instance to a be a
      * function taking four arguments
@@ -196,7 +196,7 @@ import org.junit.*;
      *         when applied changes the current instance and returning
      *         <code><b>this</b></code> */
     public <@Nullable A1, @Nullable A2, @Nullable A3, @Nullable A4> Binder4<T, A1, A2, A3, A4> bind(final Function4<T, A1, A2, A3, A4> f) {
-      return (¢1, ¢2, ¢3, ¢4) -> set(() -> f.ϑ(¢1.ϑ(), ¢2.ϑ(), ¢3.ϑ(), ¢4.ϑ()), ¢1, ¢2, ¢3, ¢4);
+      return (¢1, ¢2, ¢3, ¢4) -> set(() -> f.ϑ(¢1.¢(), ¢2.¢(), ¢3.¢(), ¢4.¢()), ¢1, ¢2, ¢3, ¢4);
     }
     /** @return the last value computed or set for this instance. */
     public final T cache() {
@@ -211,7 +211,7 @@ import org.junit.*;
     }
     /** @return current value stored in this instance, recomputed if necessary */
     public T get() {
-      return ϑ();
+      return ¢();
     }
     /** Add another property on which this instance depends
      * @param ¢ JD
@@ -289,7 +289,7 @@ import org.junit.*;
       return version;
     }
     /** @return current value stored in this instance, recomputed if necessary */
-    @Override public T ϑ() {
+    @Override public T ¢() {
       if (updated())
         return cache();
       assert ϑ != null;
@@ -297,7 +297,7 @@ import org.junit.*;
         ¢.update();
       version = latestPrequisiteVersion() + 1;
       try {
-        return set(ϑ.ϑ());
+        return set(ϑ.¢());
       } catch (final Exception x) {
         undefine();
         return null;
@@ -388,7 +388,7 @@ import org.junit.*;
     private static final String EMPTY = "";
     private static final int FIRST_MAGIC_NUMBER = 1729;
     private static final String HELLO = "Hello";
-    private static final int SECOND_MAGIC_NUMBER = FIRST_MAGIC_NUMBER ^ FIRST_MAGIC_NUMBER << 1;
+    private static final int SECOND_MAGIC_NUMBER = FIRST_MAGIC_NUMBER << 1 ^ FIRST_MAGIC_NUMBER;
     private static final String SEPARATOR = ", ";
     private static final String WORLD = "World!";
 
@@ -402,44 +402,44 @@ import org.junit.*;
       helloWorld = bind((String ¢1, String ¢2, String ¢3) -> (¢1 + ¢2 + ¢3)).to(hello, separator, world);
     }
     @Test public void seriesA0() {
-      azzert.that(hello.ϑ(), iz(HELLO));
+      azzert.that(hello.¢(), iz(HELLO));
       azzert.isNull(nullProperty);
       azzert.isNull(undefinedProperty.ϑ);
-      azzert.isNull(undefinedProperty.ϑ());
-      azzert.that(emptyString.ϑ(), iz(EMPTY));
+      azzert.isNull(undefinedProperty.¢());
+      azzert.that(emptyString.¢(), iz(EMPTY));
     }
     @Test public void seriesA1() {
-      azzert.that(hello.ϑ(), iz(HELLO));
+      azzert.that(hello.¢(), iz(HELLO));
       hello.undefine();
       azzert.isNull(hello.ϑ);
-      azzert.isNull(hello.ϑ());
+      azzert.isNull(hello.¢());
     }
     @Test public void seriesA2() {
-      azzert.that(hello.ϑ(), iz(HELLO));
+      azzert.that(hello.¢(), iz(HELLO));
       hello.set(WORLD);
-      azzert.that(hello.ϑ(), iz(WORLD));
+      azzert.that(hello.¢(), iz(WORLD));
     }
     @Test public void seriesA3() {
-      azzert.that(helloWorld.ϑ(), iz(HELLO + SEPARATOR + WORLD));
+      azzert.that(helloWorld.¢(), iz(HELLO + SEPARATOR + WORLD));
       helloWorld.bind((String ¢1, String ¢2, String ¢3, String ¢4) -> (¢1 + ¢2 + ¢3 + ¢4)).to(hello, world, hello, world);
-      azzert.that(helloWorld.ϑ(), iz(HELLO + WORLD + HELLO + WORLD));
+      azzert.that(helloWorld.¢(), iz(HELLO + WORLD + HELLO + WORLD));
     }
     @Test public void seriesA4() {
       azzert.that(supplierCalls, is(0));
       azzert.that(integer.version(), is(0L));
       azzert.nay(integer.updated());
-      azzert.that(integer.ϑ(), is(FIRST_MAGIC_NUMBER));
+      azzert.that(integer.¢(), is(FIRST_MAGIC_NUMBER));
       azzert.that(integer.get(), is(FIRST_MAGIC_NUMBER));
       azzert.that(supplierCalls, is(1));
-      azzert.that(integer.ϑ(), is(FIRST_MAGIC_NUMBER));
+      azzert.that(integer.¢(), is(FIRST_MAGIC_NUMBER));
       azzert.that(integer.get(), is(FIRST_MAGIC_NUMBER));
-      azzert.that(integer.ϑ(), is(FIRST_MAGIC_NUMBER));
+      azzert.that(integer.¢(), is(FIRST_MAGIC_NUMBER));
       azzert.that(integer.get(), is(FIRST_MAGIC_NUMBER));
-      azzert.that(integer.ϑ(), is(FIRST_MAGIC_NUMBER));
+      azzert.that(integer.¢(), is(FIRST_MAGIC_NUMBER));
       azzert.that(integer.get(), is(FIRST_MAGIC_NUMBER));
-      azzert.that(integer.ϑ(), is(FIRST_MAGIC_NUMBER));
+      azzert.that(integer.¢(), is(FIRST_MAGIC_NUMBER));
       azzert.that(integer.get(), is(FIRST_MAGIC_NUMBER));
-      azzert.that(integer.ϑ(), is(FIRST_MAGIC_NUMBER));
+      azzert.that(integer.¢(), is(FIRST_MAGIC_NUMBER));
       azzert.that(supplierCalls, is(1));
       azzert.that(integer.get(), is(FIRST_MAGIC_NUMBER));
       integer.set(Integer.valueOf(SECOND_MAGIC_NUMBER));
@@ -498,7 +498,7 @@ import org.junit.*;
       azzert.zero(a.version);
       a.of(WORLD);
       azzert.aye(a.dependents.isEmpty()).andAye(a.prerequisites.isEmpty());
-      azzert.that(a.ϑ(), iz(WORLD));
+      azzert.that(a.¢(), iz(WORLD));
       azzert.that(a.version, is(1L));
       final Property<String> b = new Property<>();
       azzert.aye(b.dependents.isEmpty()).andAye(b.prerequisites.isEmpty());
@@ -507,8 +507,8 @@ import org.junit.*;
       azzert.that(b.dependents, empty());
       azzert.nay(b.prerequisites.isEmpty());
       azzert.that(b.prerequisites, contains(azzert.is(a)));
-      b.bind((final String ¢) -> "Hello, " + a.ϑ()).to(a);
-      b.bind((final String ¢) -> "Hello, " + a.ϑ()).to(a);
+      b.bind((final String ¢) -> "Hello, " + a.¢()).to(a);
+      b.bind((final String ¢) -> "Hello, " + a.¢()).to(a);
     }
 
     private Property<String> emptyString;
@@ -520,7 +520,7 @@ import org.junit.*;
     private Property<String> undefinedProperty = undefined();
     private Property<String> world;
     Property<Integer> integer = function(() -> {
-      supplierCalls++;
+      ++supplierCalls;
       return Integer.valueOf(FIRST_MAGIC_NUMBER);
     });
   }

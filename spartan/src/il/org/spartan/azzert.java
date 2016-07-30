@@ -7,6 +7,7 @@ import org.eclipse.jdt.annotation.*;
 import org.hamcrest.*;
 import org.hamcrest.core.*;
 import org.hamcrest.number.*;
+import org.junit.*;
 
 /** @author Yossi Gil
  * @since 2015-07-18 */
@@ -232,7 +233,7 @@ public class azzert extends org.junit.Assert {
     return Is.<T> isA(type);
   }
   @SuppressWarnings("unused") public static final Wrapper<String> iz(final String s) {
-    return new Wrapper<@NonNull String>(s);
+    return new Wrapper<>(s);
   }
   @Factory public static Matcher<@Nullable Boolean> lessThan(final boolean b) {
     return OrderingComparison.lessThan(Boolean.valueOf(b));
@@ -338,6 +339,12 @@ public class azzert extends org.junit.Assert {
   }
   public static void isNull(final @Nullable Object o) {
     that(o, nullValue());
+  }
+  public static void fail() {
+    Assert.fail();
+  }
+  public static void fail(String s) {
+    Assert.fail(s);
   }
   public static Matcher<@Nullable Object> nullValue() {
     return IsNull.nullValue();
