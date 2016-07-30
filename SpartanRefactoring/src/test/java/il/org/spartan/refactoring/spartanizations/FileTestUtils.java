@@ -1,16 +1,11 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
-import il.org.spartan.refactoring.utils.MakeAST;
+import il.org.spartan.refactoring.utils.*;
 
 /**
  * An abstract representation of our test suite, which is represented in
@@ -34,11 +29,13 @@ public abstract class FileTestUtils {
    * Folder in which all test cases are found
    */
   public static final File location = new File("src/test/resources");
+
   /**
    * Instantiates a {@link Class} object if possible, otherwise generate an
    * assertion failure
    *
-   * @param c an arbitrary class object
+   * @param c
+   *          an arbitrary class object
    * @return an instance of the parameter
    */
   public static Object getInstance(final Class<?> c) {
@@ -72,7 +69,7 @@ public abstract class FileTestUtils {
   }
   /**
    * Creates a temporary file - including lazy deletion.
-   * 
+   *
    * @param b
    * @param d
    * @param f
@@ -95,7 +92,8 @@ public abstract class FileTestUtils {
    * Convert a canonical name of a class into a {@link Class} object, if
    * possible, otherwise generate an assertion failure
    *
-   * @param name the canonical name of some class
+   * @param name
+   *          the canonical name of some class
    * @return the object representing this class
    * @since 2014/05/23
    */
@@ -269,8 +267,10 @@ public abstract class FileTestUtils {
     /**
      * Collect test cases from each file in {@link #location}
      *
-     * @param $ where to save the collected test cases
-     * @param f an entry in {@link #location}
+     * @param $
+     *          where to save the collected test cases
+     * @param f
+     *          an entry in {@link #location}
      */
     public abstract void go(List<Object[]> $, final File f);
   }

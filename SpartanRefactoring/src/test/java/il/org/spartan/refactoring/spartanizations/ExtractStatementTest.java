@@ -2,18 +2,16 @@ package il.org.spartan.refactoring.spartanizations;
 
 import static il.org.spartan.hamcrest.CoreMatchers.is;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.refactoring.utils.Into.s;
+import static il.org.spartan.refactoring.utils.Into.*;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.collection.IsEmptyCollection.empty;
+import static org.hamcrest.collection.IsEmptyCollection.*;
 
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.junit.*;
+import org.junit.runners.*;
 
-import il.org.spartan.refactoring.utils.Extract;
+import il.org.spartan.refactoring.utils.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //

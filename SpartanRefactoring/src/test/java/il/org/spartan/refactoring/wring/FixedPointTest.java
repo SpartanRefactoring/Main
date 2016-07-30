@@ -1,16 +1,13 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
-import static il.org.spartan.utils.Utils.compressSpaces;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.fail;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import static il.org.spartan.utils.Utils.*;
+import static org.junit.Assert.*;
 
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.junit.*;
+import org.junit.runners.*;
 
-import il.org.spartan.refactoring.spartanizations.Wrap;
+import il.org.spartan.refactoring.spartanizations.*;
 
 /**
  * * Unit tests for the nesting class Unit test for the containing class. Note
@@ -45,19 +42,17 @@ import il.org.spartan.refactoring.spartanizations.Wrap;
     assertSimplifiesTo("a == true == b == c", "a == b == c");
   }
   @Test public void commonPrefixIfBranchesInBlock() {
-    assertConvertsTo(
-        "{" + //
-            "    if (a) {\n" + //
-            "      f();\n" + //
-            "      g();\n" + //
-            "      ++i;\n" + //
-            "    } else {\n" + //
-            "      f();\n" + //
-            "      g();\n" + //
-            "      --i;\n" + //
-            "    }" + //
-            "}",
-        "" + ////
+    assertConvertsTo("{" + //
+        "    if (a) {\n" + //
+        "      f();\n" + //
+        "      g();\n" + //
+        "      ++i;\n" + //
+        "    } else {\n" + //
+        "      f();\n" + //
+        "      g();\n" + //
+        "      --i;\n" + //
+        "    }" + //
+        "}", "" + ////
             "   f();\n" + //
             "   g();\n" + //
             "    if (a) \n" + //
@@ -211,7 +206,8 @@ import il.org.spartan.refactoring.spartanizations.Wrap;
   }
   @Test(timeout = 2000) public void shortestOperand08() {
     assertConvertsTo(//
-        "if (bob.father.age > 42 && bob.mother.father.age > bob.age ) return true; else return false;", "return bob.father.age>42&&bob.mother.father.age>bob.age;");
+        "if (bob.father.age > 42 && bob.mother.father.age > bob.age ) return true; else return false;",
+        "return bob.father.age>42&&bob.mother.father.age>bob.age;");
   }
   @Test(timeout = 2000) public void shortestOperand26() {
     assertConvertsTo("return f(a,b,c,d) | f() | 0;} ", "return f()|f(a,b,c,d)|0;}");
@@ -224,7 +220,8 @@ import il.org.spartan.refactoring.spartanizations.Wrap;
   }
   @Test(timeout = 2000) public void ternarize01() {
     assertConvertsTo(//
-        "String res = s;if (s.equals(532)==true)    res = s + 0xABBA;else    res = SPAM;System.out.println(res);", "System.out.println((!s.equals(532)?SPAM:s+0xABBA));");
+        "String res = s;if (s.equals(532)==true)    res = s + 0xABBA;else    res = SPAM;System.out.println(res);",
+        "System.out.println((!s.equals(532)?SPAM:s+0xABBA));");
   }
   @Test(timeout = 2000) public void ternarize02() {
     assertConvertsTo(//
@@ -237,7 +234,8 @@ import il.org.spartan.refactoring.spartanizations.Wrap;
         " return s.equals(532) ? 6 : 9; ");
   }
   @Test(timeout = 2000) public void ternarize04() {
-    assertConvertsTo("  int res = 0;if (s.equals(532))    res += 6;else    res += 9;/*if (s.equals(532))    res += 6;else    res += 9;*/   return res;",
+    assertConvertsTo(
+        "  int res = 0;if (s.equals(532))    res += 6;else    res += 9;/*if (s.equals(532))    res += 6;else    res += 9;*/   return res;",
         "return 0+(s.equals(532)?6:9);");
   }
   @Test(timeout = 2000) public void ternarize06() {
@@ -246,21 +244,24 @@ import il.org.spartan.refactoring.spartanizations.Wrap;
         "System.out.println((!s.equals(532)?s:s+0xABBA));");
   }
   @Test public void ternarize07a() {
-    assertConvertsTo("" //
-        + "String res;" //
-        + "res = s;   " //
-        + "if (res==true)    " //
-        + "  res = s + 0xABBA;   " //
-        + "System.out.println(res); " //
-        + "" //
+    assertConvertsTo(
+        "" //
+            + "String res;" //
+            + "res = s;   " //
+            + "if (res==true)    " //
+            + "  res = s + 0xABBA;   " //
+            + "System.out.println(res); " //
+            + "" //
         , "System.out.println((!s?s:s+0xABBA));" //
     );
   }
   @Test(timeout = 2000) public void ternarize11() {
-    assertConvertsTo("String res = s, foo = \"bar\";if (s.equals(532)==true)    res = s + 0xABBA;System.out.println(res);", "System.out.println((!s.equals(532)?s:s+0xABBA));");
+    assertConvertsTo("String res = s, foo = \"bar\";if (s.equals(532)==true)    res = s + 0xABBA;System.out.println(res);",
+        "System.out.println((!s.equals(532)?s:s+0xABBA));");
   }
   @Test(timeout = 2000) public void ternarize15() {
-    assertConvertsTo("  String res = mode, foo = \"Not in test mode\";int k;k = 1984;if (mode.equals(f())==true)    foo = test-bob;foo = \"sponge-bob\";",
+    assertConvertsTo(
+        "  String res = mode, foo = \"Not in test mode\";int k;k = 1984;if (mode.equals(f())==true)    foo = test-bob;foo = \"sponge-bob\";",
         "String res=mode,foo=\"Not in test mode\";int k=1984;if(mode.equals(f()))foo=test-bob;foo=\"sponge-bob\";");
   }
   @Test(timeout = 2000) public void ternarize17() {

@@ -2,14 +2,14 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.hamcrest.CoreMatchers.is;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.OrderingComparison.greaterThanOrEqualTo;
-import static org.hamcrest.CoreMatchers.notNullValue;
+import static il.org.spartan.hamcrest.OrderingComparison.*;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.text.IsEqualIgnoringWhiteSpace.equalToIgnoringWhiteSpace;
+import static org.hamcrest.text.IsEqualIgnoringWhiteSpace.*;
 
-import org.junit.Test;
+import org.junit.*;
 
-import il.org.spartan.refactoring.utils.LiteralParser.Types;
+import il.org.spartan.refactoring.utils.LiteralParser.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) public class LiteralParserTest {
   @Test public void doubleBinaryLiterals() {

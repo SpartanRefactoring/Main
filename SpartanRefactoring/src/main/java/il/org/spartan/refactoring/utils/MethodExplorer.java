@@ -1,27 +1,11 @@
 package il.org.spartan.refactoring.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-import static il.org.spartan.refactoring.utils.expose.*; 
-import static il.org.spartan.refactoring.utils.Funcs.*; 
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.expose.*;
 
-import org.eclipse.jdt.core.dom.ASTVisitor;
-import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
-import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
-import org.eclipse.jdt.core.dom.CatchClause;
-import org.eclipse.jdt.core.dom.EnhancedForStatement;
-import org.eclipse.jdt.core.dom.EnumDeclaration;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.ForStatement;
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.ReturnStatement;
-import org.eclipse.jdt.core.dom.SimpleName;
-import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
-import org.eclipse.jdt.core.dom.TryStatement;
-import org.eclipse.jdt.core.dom.TypeDeclaration;
-import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
-import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
-import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import java.util.*;
+
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * A class for analyzing a method.
@@ -31,21 +15,22 @@ import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
  */
 public class MethodExplorer {
   final MethodDeclaration inner;
+
   /**
    * Instantiate this class
    *
-   * @param inner JD
+   * @param inner
+   *          JD
    */
   public MethodExplorer(final MethodDeclaration inner) {
     this.inner = inner;
   }
   /**
    * Computes the list of all local variable declarations found in a method.
-   * {@link MethodDeclaration}.
-   * <p>
-   * This method correctly ignores declarations made within nested types. It
-   * also correctly adds variables declared within plain and extended for loops,
-   * just as local variables defined within a try and catch clauses.
+   * {@link MethodDeclaration}. <p> This method correctly ignores declarations
+   * made within nested types. It also correctly adds variables declared within
+   * plain and extended for loops, just as local variables defined within a try
+   * and catch clauses.
    *
    * @return a list of {@link SimpleName} from the given method.
    */
@@ -70,7 +55,7 @@ public class MethodExplorer {
       }
       private boolean add(final List<? extends Expression> es) {
         for (final Expression e : es)
-            addFragments(fragments(asVariableDeclarationExpression(e)));
+          addFragments(fragments(asVariableDeclarationExpression(e)));
         return true;
       }
       private boolean add(final SingleVariableDeclaration d) {
@@ -86,9 +71,8 @@ public class MethodExplorer {
   }
   /**
    * Computes the list of all return statements found in a
-   * {@link MethodDeclaration}.
-   * <p>
-   * This method correctly ignores return statements found within nested types.
+   * {@link MethodDeclaration}. <p> This method correctly ignores return
+   * statements found within nested types.
    *
    * @return a list of {@link ReturnStatement} from the given method.
    */
@@ -102,9 +86,9 @@ public class MethodExplorer {
     });
     return $;
   }
-  @SuppressWarnings("unused")
-  public abstract static class IgnoreNestedMethods extends ASTVisitor {
-    @Override public final boolean visit( final AnnotationTypeDeclaration __) {
+
+  @SuppressWarnings("unused") public abstract static class IgnoreNestedMethods extends ASTVisitor {
+    @Override public final boolean visit(final AnnotationTypeDeclaration __) {
       return false;
     }
     @Override public final boolean visit(final AnonymousClassDeclaration __) {

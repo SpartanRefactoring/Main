@@ -1,26 +1,21 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.refactoring.utils.Funcs.elze;
-import static il.org.spartan.refactoring.utils.Funcs.then;
+import static il.org.spartan.hamcrest.CoreMatchers.*;
+import static il.org.spartan.hamcrest.MatcherAssert.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
 
-import java.util.Collection;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.eclipse.jdt.core.dom.*;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.*;
 
-import il.org.spartan.refactoring.spartanizations.Wrap;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
-import il.org.spartan.utils.Utils;
+import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.AbstractWringTest.*;
+import il.org.spartan.utils.*;
 
 /**
  * Unit tests for {@link Wrings#ADDITION_SORTER}.
@@ -31,6 +26,7 @@ import il.org.spartan.utils.Utils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) public class IfShortestFirstTest {
   static final Wring<IfStatement> WRING = new IfShortestFirst();
+
   @Test public void statmentCount() {
     final CompilationUnit u = Wrap.Statement.intoCompilationUnit("" + //
         "if (name == null) {\n" + //
@@ -56,8 +52,9 @@ import il.org.spartan.utils.Utils;
         new String[] { "No else", "if (a) {;{{;;return b; }}}" }, //
         new String[] { "Two statemens are greater than one", //
             "if (a) {i++;j++;} else b(asdf,as,as,asdf,adfasd,adadfadf,asfasdfasdf);", //
-    }, //
+        }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -103,7 +100,8 @@ import il.org.spartan.utils.Utils;
                 "      c = f().charAt(3);\n" + //
                 "    }\n" + //
                 ""//
-    }, null);
+        }, null);
+
     /**
      * Generate test cases for this parameterized class.
      *

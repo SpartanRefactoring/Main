@@ -1,36 +1,26 @@
 package il.org.spartan.refactoring.wring;
 
+import static il.org.spartan.hamcrest.MatcherAssert.*;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.MatcherAssert.iz;
-import static il.org.spartan.hamcrest.OrderingComparison.greaterThan;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static il.org.spartan.hamcrest.OrderingComparison.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.Document;
-import org.eclipse.text.edits.MalformedTreeException;
-import org.eclipse.text.edits.TextEdit;
-import org.junit.Test;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.jface.text.*;
+import org.eclipse.text.edits.*;
+import org.junit.*;
 
-import il.org.spartan.refactoring.spartanizations.Wrap;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Into;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.MakeAST;
-import il.org.spartan.refactoring.utils.Rewrite;
+import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.utils.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public class IfEmptyThenEmptyElseTest {
   private static final IfEmptyThenEmptyElse WRING = new IfEmptyThenEmptyElse();
   private static final Statement INPUT = Into.s("{if (b) ; else ;}");
   private static final IfStatement IF = Extract.firstIfStatement(INPUT);
+
   @Test public void eligible() {
     assertTrue(WRING.eligible(IF));
   }

@@ -2,55 +2,27 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.hamcrest.CoreMatchers.is;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.OrderingComparison.greaterThanOrEqualTo;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.asSingle;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
-import static il.org.spartan.refactoring.utils.Funcs.asBlock;
-import static il.org.spartan.refactoring.utils.Funcs.asIfStatement;
-import static il.org.spartan.refactoring.utils.Into.c;
-import static il.org.spartan.refactoring.utils.Into.e;
-import static il.org.spartan.refactoring.utils.Into.i;
-import static il.org.spartan.refactoring.utils.Into.p;
-import static il.org.spartan.refactoring.utils.Into.s;
-import static il.org.spartan.refactoring.utils.Restructure.flatten;
-import static il.org.spartan.utils.Utils.compressSpaces;
-import static org.hamcrest.CoreMatchers.instanceOf;
+import static il.org.spartan.hamcrest.OrderingComparison.*;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Into.*;
+import static il.org.spartan.refactoring.utils.Restructure.*;
+import static il.org.spartan.utils.Utils.*;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.ConditionalExpression;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.PrefixExpression;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.Document;
-import org.eclipse.text.edits.MalformedTreeException;
-import org.eclipse.text.edits.TextEdit;
-import org.junit.Test;
-import org.junit.runners.Parameterized.Parameter;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.jface.text.*;
+import org.eclipse.text.edits.*;
+import org.junit.*;
+import org.junit.runners.Parameterized.*;
 
-import il.org.spartan.refactoring.spartanizations.Spartanization;
-import il.org.spartan.refactoring.spartanizations.TESTUtils;
-import il.org.spartan.refactoring.spartanizations.Wrap;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Funcs;
-import il.org.spartan.refactoring.utils.MakeAST;
-import il.org.spartan.refactoring.wring.AbstractWringTest.WringedExpression.Conditional;
-import il.org.spartan.refactoring.wring.AbstractWringTest.WringedExpression.Infix;
+import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.AbstractWringTest.WringedExpression.*;
 
 /**
  * @author Yossi Gil
@@ -59,13 +31,15 @@ import il.org.spartan.refactoring.wring.AbstractWringTest.WringedExpression.Infi
 @SuppressWarnings({ "javadoc", "unchecked" }) //
 public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
   protected final Wring<N> inner;
+
   public AbstractWringTest() {
     this(null);
   }
   /**
    * Instantiates the enclosing class ({@link AbstractWringTest})
    *
-   * @param inner JD
+   * @param inner
+   *          JD
    */
   AbstractWringTest(final Wring<N> inner) {
     this.inner = inner;
@@ -125,13 +99,15 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
   public static class Noneligible<N extends ASTNode> extends InScope<N> {
     /** Description of a test case for {@link Parameter} annotation */
     protected static final String DESCRIPTION = "Test #{index}. ({0}) \"{1}\" ==>|";
+
     public Noneligible() {
       this(null);
     }
     /**
      * Instantiates the enclosing class ({@link Noneligible})
      *
-     * @param inner JD
+     * @param inner
+     *          JD
      */
     Noneligible(final Wring<N> inner) {
       super(inner);
@@ -211,6 +187,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
   public static class OutOfScope<N extends ASTNode> extends AbstractWringTest<N> {
     /** Description of a test case for {@link Parameter} annotation */
     protected static final String DESCRIPTION = "Test #{index}. ({0}) \"{1}\" N/A";
+
     public OutOfScope() {
       super(null);
     }
@@ -273,6 +250,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     protected static final String DESCRIPTION = "Test #{index}. ({0}) \"{1}\" ==> \"{2}\"";
     /** What should the output be */
     @Parameter(2) public String expected;
+
     /** Default constructor to make Junit happy */
     public Wringed() {
       this(null);
@@ -292,7 +270,8 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       /**
        * Instantiates the enclosing class ({@link Conditional})
        *
-       * @param w JD
+       * @param w
+       *          JD
        */
       Conditional(final Wring<ConditionalExpression> e) {
         super(e);
@@ -385,6 +364,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     protected static final String DESCRIPTION = "Test #{index}. ({0}) \"{1}\" ==> \"{2}\"";
     /** What should the output be */
     @Parameter(2) public String expected;
+
     public WringedBlock() {
       super(null);
     }
@@ -477,6 +457,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     protected static final String DESCRIPTION = "Test #{index}. ({0}) \"{1}\" ==> \"{2}\"";
     /** What should the output be */
     @Parameter(2) public String expected;
+
     public WringedExpression() {
       this(null);
     }
@@ -601,7 +582,8 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       /**
        * Instantiates the enclosing class ({@link Infix})
        *
-       * @param w JD
+       * @param w
+       *          JD
        */
       Conditional(final Wring<ConditionalExpression> e) {
         super(e);
@@ -651,6 +633,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     protected static final String DESCRIPTION = "Test #{index}. ({0}) \"{1}\" ==> \"{2}\"";
     /** What should the output be */
     @Parameter(2) public String expected;
+
     public WringedIfStatement() {
       this(null);
     }
@@ -873,6 +856,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
    */
   static class InScope<N extends ASTNode> extends AbstractWringTest<N> {
     protected final Trimmer wringer = new Trimmer();
+
     public InScope() {
       this(null);
     }
@@ -898,6 +882,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     static abstract class WringedInput<N extends ASTNode> extends AbstractWringTest<N> {
       /** How should a test case like this be described? */
       protected static final String DESCRIPTION = "{index}: \"{1}\" => \"{2}\" ({0})";
+
       static Document rewrite(final Spartanization s, final CompilationUnit u, final Document d) {
         try {
           s.createRewrite(u, null).rewriteAST(d, null).apply(d);
@@ -911,13 +896,16 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
         }
         return null;
       }
+
       /** Where the expected output can be found? */
       @Parameter(2) public String output;
       protected final Trimmer trimmer = new Trimmer();
+
       /**
        * Instantiates the enclosing class ({@link WringedExpression})
        *
-       * @param w JD
+       * @param w
+       *          JD
        */
       WringedInput(final Wring<N> w) {
         super(w);

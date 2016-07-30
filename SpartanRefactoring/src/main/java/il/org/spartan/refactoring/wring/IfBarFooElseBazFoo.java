@@ -1,33 +1,20 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.elze;
-import static il.org.spartan.refactoring.utils.Funcs.same;
-import static il.org.spartan.refactoring.utils.Funcs.then;
-import static il.org.spartan.refactoring.wring.Wrings.insertAfter;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.wring.Wrings.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.ASTVisitor;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.SimpleName;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.jdt.core.dom.rewrite.ListRewrite;
-import org.eclipse.text.edits.TextEditGroup;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Collect;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.Rewrite;
-import il.org.spartan.refactoring.utils.Subject;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
- * A {@link Wring} to convert
- * <code>if (X) {bar(); foo();} else {baz(); foo();}</code> into
- * <code>if (X) bar(); else baz(); foo();</code>
+ * A {@link Wring} to convert <code>if (X) {bar(); foo();} else {baz();
+ * foo();}</code> into <code>if (X) bar(); else baz(); foo();</code>
  *
  * @author Yossi Gil
  * @since 2015-09-05
@@ -44,8 +31,8 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> {
     if (elze.isEmpty())
       return null;
     final List<Statement> commmonSuffix = commmonSuffix(then, elze);
-    for (Statement st : commmonSuffix) {
-      DefinitionsCollector c = new DefinitionsCollector(then);
+    for (final Statement st : commmonSuffix) {
+      final DefinitionsCollector c = new DefinitionsCollector(then);
       st.accept(c);
       if (c.notAllDefined())
         return null;
@@ -68,7 +55,8 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> {
       }
       private IfStatement replacement(final Expression condition, final Statement trimmedThen, final Statement trimmedElse) {
         return trimmedThen == null && trimmedElse == null ? null
-            : trimmedThen == null ? Subject.pair(trimmedElse, null).toNot(condition) : Subject.pair(trimmedThen, trimmedElse).toIf(condition);
+            : trimmedThen == null ? Subject.pair(trimmedElse, null).toNot(condition)
+                : Subject.pair(trimmedThen, trimmedElse).toIf(condition);
       }
     };
   }
@@ -89,16 +77,18 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> {
     return super.make(s, exclude);
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
+    return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
+
   private class DefinitionsCollector extends ASTVisitor {
     private boolean notAllDefined;
     private final Statement[] l;
-    public DefinitionsCollector(List<Statement> l) {
+
+    public DefinitionsCollector(final List<Statement> l) {
       notAllDefined = false;
       this.l = l.toArray(new Statement[l.size()]);
     }
-    @Override public boolean visit(SimpleName n) {
+    @Override public boolean visit(final SimpleName n) {
       if (!Collect.declarationsOf(n).in(l).isEmpty())
         notAllDefined = true;
       return false;

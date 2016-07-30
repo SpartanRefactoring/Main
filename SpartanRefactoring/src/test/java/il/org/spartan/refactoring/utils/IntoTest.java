@@ -1,11 +1,11 @@
 package il.org.spartan.refactoring.utils;
 
+import static il.org.spartan.hamcrest.MatcherAssert.*;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.MatcherAssert.iz;
-import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import org.junit.Test;
+import org.junit.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) public class IntoTest {
   @Test public void dCorrect() {

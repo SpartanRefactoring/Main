@@ -1,11 +1,11 @@
 package il.org.spartan.hamcrest;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.utils.Utils.compressSpaces;
+import static il.org.spartan.hamcrest.CoreMatchers.*;
+import static il.org.spartan.utils.Utils.*;
 
-import org.hamcrest.Matcher;
+import org.hamcrest.*;
 
-import il.org.spartan.misc.Wrapper;
+import il.org.spartan.misc.*;
 
 /**
  * Non-auto-boxing version for all primitive types of the family of Hamcrest
@@ -23,8 +23,10 @@ public class MatcherAssert extends org.hamcrest.MatcherAssert {
    * computation is delegated to
    * {@link org.hamcrest.MatcherAssert#assertThat(Object, Matcher)}.
    *
-   * @param b JD
-   * @param m JD
+   * @param b
+   *          JD
+   * @param m
+   *          JD
    * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
    */
   public static void assertThat(final boolean b, final Matcher<? super Boolean> m) {
@@ -38,8 +40,10 @@ public class MatcherAssert extends org.hamcrest.MatcherAssert {
    * computation is delegated to
    * {@link org.hamcrest.MatcherAssert#assertThat(Object, Matcher)}.
    *
-   * @param b JD
-   * @param m JD
+   * @param b
+   *          JD
+   * @param m
+   *          JD
    * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
    */
   public static void assertThat(final byte b, final Matcher<? super Byte> m) {
@@ -53,8 +57,10 @@ public class MatcherAssert extends org.hamcrest.MatcherAssert {
    * computation is delegated to
    * {@link org.hamcrest.MatcherAssert#assertThat(Object, Matcher)}.
    *
-   * @param c JD
-   * @param m JD
+   * @param c
+   *          JD
+   * @param m
+   *          JD
    * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
    */
   public static void assertThat(final char c, final Matcher<? super Character> m) {
@@ -68,8 +74,10 @@ public class MatcherAssert extends org.hamcrest.MatcherAssert {
    * computation is delegated to
    * {@link org.hamcrest.MatcherAssert#assertThat(Object, Matcher)}.
    *
-   * @param d JD
-   * @param m JD
+   * @param d
+   *          JD
+   * @param m
+   *          JD
    * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
    */
   public static void assertThat(final double d, final Matcher<? super Double> m) {
@@ -83,8 +91,10 @@ public class MatcherAssert extends org.hamcrest.MatcherAssert {
    * computation is delegated to
    * {@link org.hamcrest.MatcherAssert#assertThat(Object, Matcher)}.
    *
-   * @param f JD
-   * @param m JD
+   * @param f
+   *          JD
+   * @param m
+   *          JD
    * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
    */
   public static void assertThat(final float f, final Matcher<? super Float> m) {
@@ -98,8 +108,10 @@ public class MatcherAssert extends org.hamcrest.MatcherAssert {
    * computation is delegated to
    * {@link org.hamcrest.MatcherAssert#assertThat(Object, Matcher)}.
    *
-   * @param i JD
-   * @param m JD
+   * @param i
+   *          JD
+   * @param m
+   *          JD
    * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
    */
   public static void assertThat(final int i, final Matcher<? super Integer> m) {
@@ -113,8 +125,10 @@ public class MatcherAssert extends org.hamcrest.MatcherAssert {
    * computation is delegated to
    * {@link org.hamcrest.MatcherAssert#assertThat(Object, Matcher)}.
    *
-   * @param l JD
-   * @param m JD
+   * @param l
+   *          JD
+   * @param m
+   *          JD
    * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
    */
   public static void assertThat(final long l, final Matcher<? super Long> m) {
@@ -128,8 +142,10 @@ public class MatcherAssert extends org.hamcrest.MatcherAssert {
    * computation is delegated to
    * {@link org.hamcrest.MatcherAssert#assertThat(Object, Matcher)}.
    *
-   * @param s JD
-   * @param m JD
+   * @param s
+   *          JD
+   * @param m
+   *          JD
    * @see org.hamcrest.MatcherAssert#assertThat(Object, Matcher)
    */
   public static void assertThat(final short s, final Matcher<? super Short> m) {
@@ -143,10 +159,13 @@ public class MatcherAssert extends org.hamcrest.MatcherAssert {
    * out, computation is delegated to
    * {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}.
    *
-   * @param reason as in the original Hamcrest function
+   * @param reason
+   *          as in the original Hamcrest function
    *          {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}
-   * @param b JD
-   * @param m JD
+   * @param b
+   *          JD
+   * @param m
+   *          JD
    * @see org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)
    */
   public static void assertThat(final String reason, final boolean b, final Matcher<? super Boolean> m) {
@@ -160,10 +179,13 @@ public class MatcherAssert extends org.hamcrest.MatcherAssert {
    * out, computation is delegated to
    * {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}.
    *
-   * @param reason as in the original Hamcrest function
+   * @param reason
+   *          as in the original Hamcrest function
    *          {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}
-   * @param b JD
-   * @param m JD
+   * @param b
+   *          JD
+   * @param m
+   *          JD
    * @see org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)
    */
   public static void assertThat(final String reason, final byte b, final Matcher<? super Byte> m) {
@@ -177,10 +199,13 @@ public class MatcherAssert extends org.hamcrest.MatcherAssert {
    * out, computation is delegated to
    * {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}.
    *
-   * @param reason as in
+   * @param reason
+   *          as in
    *          {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}
-   * @param c JD
-   * @param m JD
+   * @param c
+   *          JD
+   * @param m
+   *          JD
    * @see org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)
    */
   public static void assertThat(final String reason, final char c, final Matcher<? super Character> m) {
@@ -194,10 +219,13 @@ public class MatcherAssert extends org.hamcrest.MatcherAssert {
    * out, computation is delegated to
    * {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}.
    *
-   * @param reason as in the original Hamcrest function
+   * @param reason
+   *          as in the original Hamcrest function
    *          {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}
-   * @param d JD
-   * @param m JD
+   * @param d
+   *          JD
+   * @param m
+   *          JD
    * @see org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)
    */
   public static void assertThat(final String reason, final double d, final Matcher<? super Double> m) {
@@ -211,10 +239,13 @@ public class MatcherAssert extends org.hamcrest.MatcherAssert {
    * out, computation is delegated to
    * {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}.
    *
-   * @param reason as in the original Hamcrest function
+   * @param reason
+   *          as in the original Hamcrest function
    *          {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}
-   * @param f JD
-   * @param m JD
+   * @param f
+   *          JD
+   * @param m
+   *          JD
    * @see org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)
    */
   public static void assertThat(final String reason, final float f, final Matcher<? super Float> m) {
@@ -228,10 +259,13 @@ public class MatcherAssert extends org.hamcrest.MatcherAssert {
    * out, computation is delegated to
    * {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}.
    *
-   * @param reason as in the original Hamcrest function
+   * @param reason
+   *          as in the original Hamcrest function
    *          {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}
-   * @param i JD
-   * @param m JD
+   * @param i
+   *          JD
+   * @param m
+   *          JD
    * @see org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)
    */
   public static void assertThat(final String reason, final int i, final Matcher<? super Integer> m) {
@@ -245,10 +279,13 @@ public class MatcherAssert extends org.hamcrest.MatcherAssert {
    * out, computation is delegated to
    * {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}.
    *
-   * @param reason as in the original Hamcrest function
+   * @param reason
+   *          as in the original Hamcrest function
    *          {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}
-   * @param l JD
-   * @param m JD
+   * @param l
+   *          JD
+   * @param m
+   *          JD
    * @see org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)
    */
   public static void assertThat(final String reason, final long l, final Matcher<? super Long> m) {
@@ -262,10 +299,13 @@ public class MatcherAssert extends org.hamcrest.MatcherAssert {
    * out, computation is delegated to
    * {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}.
    *
-   * @param reason as in the original Hamcrest function
+   * @param reason
+   *          as in the original Hamcrest function
    *          {@link org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)}
-   * @param s JD
-   * @param m JD
+   * @param s
+   *          JD
+   * @param m
+   *          JD
    * @see org.hamcrest.MatcherAssert#assertThat(String, Object, Matcher)
    */
   public static void assertThat(final String reason, final short s, final Matcher<? super Short> m) {
@@ -277,8 +317,10 @@ public class MatcherAssert extends org.hamcrest.MatcherAssert {
    * such representation, while ignoring white space characters, unless these
    * occur between identifiers.
    *
-   * @param actual the actual object
-   * @param expected the expected textual representation of the first parameter
+   * @param actual
+   *          the actual object
+   * @param expected
+   *          the expected textual representation of the first parameter
    */
   public static void assertThat(final Object actual, final Wrapper<String> expected) {
     assertThat(compressSpaces(actual + ""), is(compressSpaces(expected.get())));
@@ -286,7 +328,8 @@ public class MatcherAssert extends org.hamcrest.MatcherAssert {
   /**
    * Wraps the provided {@link String}
    *
-   * @param s a {@link String} to wrap
+   * @param s
+   *          a {@link String} to wrap
    * @return a wrapped {@link String}
    */
   public static final Wrapper<String> iz(final String s) {

@@ -1,13 +1,11 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import static il.org.spartan.utils.Utils.compressSpaces;
-import static il.org.spartan.utils.Utils.removePrefix;
-import static il.org.spartan.utils.Utils.removeSuffix;
+import static il.org.spartan.utils.Utils.*;
 
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jface.text.Document;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jface.text.*;
 
-import il.org.spartan.refactoring.utils.MakeAST;
+import il.org.spartan.refactoring.utils.*;
 
 /**
  * An empty <code><b>enum</b></code> for fluent programming. The name should say
@@ -19,27 +17,22 @@ import il.org.spartan.refactoring.utils.MakeAST;
  */
 public enum Wrap {
   /** Algorithm for wrapping/unwrapping a method */
-  Method(
-      "" + //
-          "package p;\n" + //
-          "public class SpongeBob {\n" + //
-          "",
-      "" + //
+  Method("" + //
+      "package p;\n" + //
+      "public class SpongeBob {\n" + //
+      "", "" + //
           "} // END OF PACKAGE\n" + //
           ""), //
-          /** Algorithm for wrapping/unwrapping a statement */
-  Statement(
-      "" + Method.before + //
-          "public void squarePants(){\n" + //
-          "",
-      "" + //
+  /** Algorithm for wrapping/unwrapping a statement */
+  Statement("" + Method.before + //
+      "public void squarePants(){\n" + //
+      "", "" + //
           "} // END OF METHOD \n" + //
           "" + Method.after + //
           ""), //
-          /** Algorithm for wrapping/unwrapping an expression */
-  Expression(
-      "" + Statement.before + //
-          "   if (", //
+  /** Algorithm for wrapping/unwrapping an expression */
+  Expression("" + Statement.before + //
+      "   if (", //
       "" + //
           ") patrick();\n" + //
           Statement.after + //
@@ -49,7 +42,8 @@ public enum Wrap {
   /**
    * Finds the most appropriate Wrap for a given code fragment
    *
-   * @param codeFragment JD
+   * @param codeFragment
+   *          JD
    * @return the most appropriate Wrap, or null, if the parameter could not be
    *         parsed appropriately.
    */
@@ -67,8 +61,10 @@ public enum Wrap {
         .replaceAll("//.*?\n", "\n")//
         .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
   }
+
   private final String before;
   private final String after;
+
   Wrap(final String before, final String after) {
     this.before = before;
     this.after = after;
@@ -77,7 +73,8 @@ public enum Wrap {
    * Wrap a given code fragment, and then parse it, converting it into a
    * {@link CompilationUnit}.
    *
-   * @param codeFragment JD
+   * @param codeFragment
+   *          JD
    * @return a newly created {@link CompilationUnit} representing the parsed AST
    *         of the wrapped parameter.
    */
@@ -87,7 +84,8 @@ public enum Wrap {
   /**
    * Wrap a given code fragment, and converts it into a {@link Document}
    *
-   * @param codeFragment JD
+   * @param codeFragment
+   *          JD
    * @return a newly created {@link CompilationUnit} representing the parsed AST
    *         of the wrapped parameter.
    */
@@ -97,7 +95,8 @@ public enum Wrap {
   /**
    * Remove a wrap from around a phrase
    *
-   * @param codeFragment a wrapped program phrase
+   * @param codeFragment
+   *          a wrapped program phrase
    * @return the unwrapped phrase
    */
   public final String off(final String codeFragment) {
@@ -106,7 +105,8 @@ public enum Wrap {
   /**
    * Place a wrap around a phrase
    *
-   * @param codeFragment some program phrase
+   * @param codeFragment
+   *          some program phrase
    * @return the wrapped phrase
    */
   public final String on(final String codeFragment) {

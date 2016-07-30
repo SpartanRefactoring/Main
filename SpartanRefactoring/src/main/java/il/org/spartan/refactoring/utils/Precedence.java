@@ -1,13 +1,9 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.refactoring.utils.Funcs.asExpression;
-import static org.eclipse.jdt.core.dom.ASTNode.ASSIGNMENT;
-import static org.eclipse.jdt.core.dom.ASTNode.INFIX_EXPRESSION;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static org.eclipse.jdt.core.dom.ASTNode.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Assignment;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * *An empty <code><b>enum</b></code> for fluent programming. The name should
@@ -23,7 +19,8 @@ public enum Precedence {
   ;
   final static int UNDEFINED = -1;
   private static final ChainStringToIntegerMap of = new ChainStringToIntegerMap()//
-      .putOn(1, "[]", ".", "() invoke", "++ post", "-- post", "MethodInvocation", "PostfixExpression", "ArrayAccess", "FieldAccess", "QualifiedName") //
+      .putOn(1, "[]", ".", "() invoke", "++ post", "-- post", "MethodInvocation", "PostfixExpression", "ArrayAccess", "FieldAccess",
+          "QualifiedName") //
       .putOn(2, "++ pre", "-- pre", "+ unary", "- unary", "!", "~", "PrefixExpression") //
       .putOn(3, "() cast", "new", "ArrayCreation", "ClassInstanceCreation", "CastExpression") //
       .putOn(4, "*", "/", "%") // multiplicative
@@ -43,11 +40,14 @@ public enum Precedence {
           "&=", "^=", "|=", // assignment, bitwise
           "<<=", ">>=", ">>>="// assignment, shift
   );
+
   /**
    * Compare precedence of two expressions.
    *
-   * @param host JD
-   * @param e2 JD
+   * @param host
+   *          JD
+   * @param e2
+   *          JD
    * @return <code><b>true</b></code> <i>iff</i> the precedence of the first
    *         parameter is equal to that of the second parameter.
    */
@@ -57,8 +57,10 @@ public enum Precedence {
   /**
    * Compare precedence of two expressions.
    *
-   * @param e1 JD
-   * @param e2 JD
+   * @param e1
+   *          JD
+   * @param e2
+   *          JD
    * @return <code><b>true</b></code> <i>iff</i> the precedence of the first
    *         parameter is strictly greater than that of the second parameter.
    */
@@ -69,7 +71,8 @@ public enum Precedence {
    * determine whether the precedence of a given {@link Expression} can be
    * determined.
    *
-   * @param n JD
+   * @param n
+   *          JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter a legal
    *         precedence of Java.
    */
@@ -80,7 +83,8 @@ public enum Precedence {
    * Determine the precedence of an
    * {@link org.eclipse.jdt.core.dom.Assignment.Operator}
    *
-   * @param o JD
+   * @param o
+   *          JD
    * @return the precedence of the parameter
    */
   private static int of(final Assignment.Operator o) {
@@ -89,7 +93,8 @@ public enum Precedence {
   /**
    * Determine the precedence of an arbitrary {@link ASTNode}
    *
-   * @param n JD
+   * @param n
+   *          JD
    * @return the precedence of the parameter
    */
   public static int of(final ASTNode n) {
@@ -98,7 +103,8 @@ public enum Precedence {
   /**
    * Determine the precedence of the operator present on an {@link Expression}
    *
-   * @param e JD
+   * @param e
+   *          JD
    * @return the precedence of the parameter
    */
   public static int of(final Expression e) {
@@ -117,7 +123,8 @@ public enum Precedence {
    * Determine the precedence of an
    * {@link org.eclipse.jdt.core.dom.InfixExpression.Operator}
    *
-   * @param o JD
+   * @param o
+   *          JD
    * @return the precedence of the parameter
    */
   public static int of(final InfixExpression.Operator o) {
@@ -126,8 +133,10 @@ public enum Precedence {
   /**
    * Determine the precedence of two expressions is the same.
    *
-   * @param e1 JD
-   * @param e2 JD
+   * @param e1
+   *          JD
+   * @param e2
+   *          JD
    * @return the precedence of the parameter
    */
   public static boolean same(final Expression e1, final Expression e2) {
@@ -137,8 +146,10 @@ public enum Precedence {
    * Determine whether an expression has the same precedence as that of a given
    * operator.
    *
-   * @param o JD
-   * @param e JD
+   * @param o
+   *          JD
+   * @param e
+   *          JD
    * @return <code><b>true</b></code> <i>iff</i> the precedence of the two
    *         parameters is the same.
    */
@@ -168,7 +179,8 @@ public enum Precedence {
     /**
      * determine whether an integer falls within the legal range of precedences.
      *
-     * @param precedence JD
+     * @param precedence
+     *          JD
      * @return <code><b>true</b></code> <i>iff</i> the parameter is a legal
      *         precedence of Java.
      */

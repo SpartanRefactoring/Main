@@ -1,36 +1,25 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
+import static il.org.spartan.hamcrest.CoreMatchers.*;
+import static il.org.spartan.hamcrest.MatcherAssert.*;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.MatcherAssert.iz;
-import static il.org.spartan.hamcrest.OrderingComparison.greaterThanOrEqualTo;
-import static il.org.spartan.refactoring.utils.Restructure.flatten;
+import static il.org.spartan.hamcrest.OrderingComparison.*;
+import static il.org.spartan.refactoring.utils.Restructure.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.InfixExpression.Operator;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.InfixExpression.*;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.*;
 
-import il.org.spartan.refactoring.utils.Are;
-import il.org.spartan.refactoring.utils.ExpressionComparator;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Into;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.Subject;
-import il.org.spartan.refactoring.wring.AbstractWringTest.Noneligible;
-import il.org.spartan.utils.Utils;
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.AbstractWringTest.*;
+import il.org.spartan.utils.*;
 
 /**
  * Unit tests for {@link Wrings#ADDITION_SORTER}.
@@ -43,6 +32,7 @@ import il.org.spartan.utils.Utils;
 public class InfixSortAdditionTest {
   static final Wring<InfixExpression> WRING = new InfixSortAddition();
   static final ExpressionComparator COMPARATOR = ExpressionComparator.ADDITION;
+
   @Test public void subjectOperandsWithParenthesis() {
     final Expression e = Into.e("(2 + a) * b");
     assertTrue(Is.notString(e));
@@ -65,6 +55,7 @@ public class InfixSortAdditionTest {
         new String[] { "Plain addition plus constant", "5*a+b*c+12" }, //
         new String[] { "Literal addition", "2+3" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -120,6 +111,7 @@ public class InfixSortAdditionTest {
         new String[] { "Literals of distinct length", "123+12+1", "1+12+123" }, //
         new String[] { "Sort expressions by size", "1*f(a,b,c,d) + 2*f(a,b) + 3*f()", "3*f() +2*f(a,b)+ 1*f(a,b,c,d)" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *

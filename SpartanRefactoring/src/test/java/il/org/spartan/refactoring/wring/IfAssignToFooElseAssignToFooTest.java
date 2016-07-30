@@ -1,29 +1,22 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
+import static il.org.spartan.hamcrest.CoreMatchers.*;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.asSingle;
-import static il.org.spartan.refactoring.utils.Funcs.asIfStatement;
-import static il.org.spartan.refactoring.utils.Funcs.compatible;
-import static il.org.spartan.refactoring.utils.Funcs.elze;
-import static il.org.spartan.refactoring.utils.Funcs.then;
-import static org.junit.Assert.assertNotNull;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static org.junit.Assert.*;
 
-import java.util.Collection;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.Assignment;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.eclipse.jdt.core.dom.*;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.*;
 
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
-import il.org.spartan.utils.Utils;
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.AbstractWringTest.*;
+import il.org.spartan.utils.*;
 
 /**
  * Unit tests for {@link Wrings#ADDITION_SORTER}.
@@ -35,6 +28,7 @@ import il.org.spartan.utils.Utils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class IfAssignToFooElseAssignToFooTest {
   static final Wring<IfStatement> WRING = new IfAssignToFooElseAssignToFoo();
+
   @Test public void checkSteps() {
     assertNotNull(asSingle("if (a) a = b; else a = c;"));
     final IfStatement s = asIfStatement(asSingle("if (a) a = b; else a = c;"));
@@ -58,6 +52,7 @@ public class IfAssignToFooElseAssignToFooTest {
         new String[] { "Not same assignment", "if (a) a /= b; else a /= c;" }, //
         new String[] { "Another distinct assignment", "if (a) a /= b; else a %= c;" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -82,6 +77,7 @@ public class IfAssignToFooElseAssignToFooTest {
         new String[] { "Simple if plus assign", "if (a) a += b; else a += c;", "a += a ? b : c;" }, //
         new String[] { "Simple if plus assign", "if (a) a *= b; else a *= c;", "a *= a ? b : c;" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *

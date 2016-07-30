@@ -1,19 +1,18 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.OrderingComparison.greaterThan;
-import static il.org.spartan.hamcrest.OrderingComparison.lessThan;
-import static il.org.spartan.refactoring.utils.Into.e;
+import static il.org.spartan.hamcrest.CoreMatchers.*;
+import static il.org.spartan.hamcrest.MatcherAssert.*;
+import static il.org.spartan.hamcrest.OrderingComparison.*;
+import static il.org.spartan.refactoring.utils.Into.*;
 
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.junit.*;
+import org.junit.runners.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public class SpecificityTest {
   private static final Specificity SPECIFICITY = new Specificity();
+
   @Test public void characterGreaterThanNull() {
     assertThat(SPECIFICITY.compare(e("'a'"), e("null")), greaterThan(0));
   }

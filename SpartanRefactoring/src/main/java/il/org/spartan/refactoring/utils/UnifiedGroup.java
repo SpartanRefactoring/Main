@@ -1,17 +1,14 @@
 package il.org.spartan.refactoring.utils;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map.Entry;
+import java.util.*;
+import java.util.Map.*;
 
 class ChainedHash<K, V> extends HashMap<K, LinkedList<V>> {
   /**
    * For serialization version control
    */
   private static final long serialVersionUID = -6008083316796560877L;
+
   public ChainedHash<K, V> chain(final K key, final V value) {
     if (!containsKey(key))
       put(key, new LinkedList<V>());
@@ -51,8 +48,10 @@ public class UnifiedGroup implements Iterable<LinkedList<Integer>> {
   final ChainedHash<String, Integer> names = new ChainedHash<>();
   final int size;
   Base base = Base.OneBased; // Does the union find starts with 0 or 1
+
   /**
-   * @param size - size of the group (number of lines)
+   * @param size
+   *          - size of the group (number of lines)
    */
   public UnifiedGroup(final int size) {
     this.size = size;
@@ -67,15 +66,19 @@ public class UnifiedGroup implements Iterable<LinkedList<Integer>> {
     /**
      * Zero based
      */
-    ZeroBased, /**
-                * one based
-                */
+    ZeroBased,
+    /**
+     * one based
+     */
     OneBased
   }
+
   /**
-   * @param numOfLines - size of the group (number of lines)
-   * @param countingBase - Counting base - type of the Base enum. Default value
-   *          is OneBased.
+   * @param numOfLines
+   *          - size of the group (number of lines)
+   * @param countingBase
+   *          - Counting base - type of the Base enum. Default value is
+   *          OneBased.
    */
   public UnifiedGroup(final int numOfLines, final Base countingBase) {
     size = numOfLines;
@@ -83,8 +86,10 @@ public class UnifiedGroup implements Iterable<LinkedList<Integer>> {
     base = countingBase;
   }
   /**
-   * @param name - The key, contains the name of the element in the line
-   * @param line - The line in which the name exists
+   * @param name
+   *          - The key, contains the name of the element in the line
+   * @param line
+   *          - The line in which the name exists
    * @return reference to this - for chaining
    */
   public UnifiedGroup add(final String name, final int line) {
@@ -115,6 +120,7 @@ public class UnifiedGroup implements Iterable<LinkedList<Integer>> {
 class UnionFind {
   private final int[] parentOf; // parent for each number
   private final int[] sizeOf; // subtree dimension of the indexed element
+
   public UnionFind(final int size) {
     sizeOf = new int[size];
     Arrays.fill(sizeOf, 1);

@@ -1,24 +1,8 @@
 package il.org.spartan.refactoring.wring;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Assignment;
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.ConditionalExpression;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.PostfixExpression;
-import org.eclipse.jdt.core.dom.PrefixExpression;
-import org.eclipse.jdt.core.dom.ReturnStatement;
-import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
-import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
-import org.eclipse.jdt.core.dom.TypeDeclaration;
-import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * A class that contains a bunch of {@link Wring} objects, allowing selecting
@@ -34,11 +18,14 @@ public class Toolbox {
         return $;
     return null;
   }
+
   private final Map<Class<? extends ASTNode>, List<Object>> inner = new HashMap<>();
+
   /**
    * Find the first {@link Wring} appropriate for an {@link ASTNode}
    *
-   * @param n JD
+   * @param n
+   *          JD
    * @return the first {@link Wring} for which the parameter is within scope, or
    *         <code><b>null</b></code>i if no such {@link Wring} is found.
    */
@@ -57,89 +44,90 @@ public class Toolbox {
    * Initialize this class' internal instance object
    */
   public static void generate() {
-	 instance = new Maker()//
-		      .add(Assignment.class, //
-		              new AssignmentAndAssignment(), //
-		              new AssignmentAndReturn(), //
-		              null) //
-		          .add(Block.class, //
-		              new BlockSimplify(), //
-		              new BlockSingleton(), //
-		              null) //
-		          .add(PostfixExpression.class, new PostfixToPrefix()) //
-		          .add(InfixExpression.class, //
-		              new InfixDivisionMultiplicationNegatives(), //
-		              new InfixSortAddition(), //
-		              new InfixComparisonBooleanLiteral(), //
-		              new InfixConditionalAndTrue(), //
-		              new InfixConditionalOrFalse(), //
-		              new InfixComparisonSpecific(), //
-		              new InfixSortMultiplication(), //
-		              new InfixSortPseudoAddition(), //
-		              new InfixSortSubstraction(), //
-		              new InfixSortDivision(), //
-		              new InfixConditionalCommon(), //
-		              null)
-		          .add(MethodDeclaration.class, //
-		              new MethodRenameReturnToDollar(), //
-		              null)
-		          .add(SingleVariableDeclaration.class, //
-		              new SingleVariableDeclarationAbbreviation(), //
-		              null)
-		          .add(VariableDeclarationFragment.class, //
-		              new DeclarationAssignment(), //
-		              new DeclarationInitialiazerAssignment(), //
-		              new DeclarationInitialiazelUpdateAssignment(), //
-		              new DeclarationInitializerIfAssignment(), //
-		              new DeclarationInitializerIfUpdateAssignment(), //
-		              new DeclarationInitializerReturnVariable(), //
-		              new DeclarationInitializerReturnExpression(), //
-		              new DeclarationInitializerReturnAssignment(), //
-		              new DeclarationInitializerReturnUpdateAssignment(), //
-		              new DeclarationInitializerStatementTerminatingScope(), //
-		              null) //
-		          .add(IfStatement.class, //
-		              new IfLastInMethodThenEndingWithEmptyReturn(), //
-		              new IfLastInMethodElseEndingWithEmptyReturn(), //
-		              new IfLastInMethod(), //
-		              new IfReturnFooElseReturnBar(), //
-		              new IfReturnNoElseReturn(), //
-		              new IfAssignToFooElseAssignToFoo(), //
-		              new IfThenFooBarElseFooBaz(), //
-		              new IfBarFooElseBazFoo(), //
-		              new IfThrowFooElseThrowBar(), //
-		              new IfThrowNoElseThrow(), //
-		              new IfExpressionStatementElseSimilarExpressionStatement(), //
-		              new IfThenOrElseIsCommandsFollowedBySequencer(), //
-		              new IfFooSequencerIfFooSameSequencer(), //
-		              new IfCommandsSequencerNoElseSingletonSequencer(), //
-		              new IfThenIfThenNoElseNoElse(), //
-		              new IfEmptyThenEmptyElse(), //
-		              new IfDegenerateElse(), //
-		              new IfEmptyThen(), //
-		              new IfShortestFirst(), //
-		              null)//
-		          .add(PrefixExpression.class, //
-		              new PrefixIncrementDecrementReturn(), //
-		              new PrefixNotPushdown()) //
-		          .add(ConditionalExpression.class, //
-		              new TernaryBooleanLiteral(), //
-		              new TernaryCollapse(), //
-		              new TernaryEliminate(), //
-		              new TernaryShortestFirst(), //
-		              new TernaryPushdown(), //
-		              null) //
-		          .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
-		          .add(TypeDeclaration.class, new InterfaceClean()) //
-		          .add(ReturnStatement.class, new ReturnLastInMethod()) //
-		          .seal();
-
+    instance = new Maker()//
+        .add(Assignment.class, //
+            new AssignmentAndAssignment(), //
+            new AssignmentAndReturn(), //
+            null) //
+        .add(Block.class, //
+            new BlockSimplify(), //
+            new BlockSingleton(), //
+            null) //
+        .add(PostfixExpression.class, new PostfixToPrefix()) //
+        .add(InfixExpression.class, //
+            new InfixDivisionMultiplicationNegatives(), //
+            new InfixSortAddition(), //
+            new InfixComparisonBooleanLiteral(), //
+            new InfixConditionalAndTrue(), //
+            new InfixConditionalOrFalse(), //
+            new InfixComparisonSpecific(), //
+            new InfixSortMultiplication(), //
+            new InfixSortPseudoAddition(), //
+            new InfixSortSubstraction(), //
+            new InfixSortDivision(), //
+            new InfixConditionalCommon(), //
+            null)
+        .add(MethodDeclaration.class, //
+            new MethodRenameReturnToDollar(), //
+            null)
+        .add(SingleVariableDeclaration.class, //
+            new SingleVariableDeclarationAbbreviation(), //
+            null)
+        .add(VariableDeclarationFragment.class, //
+            new DeclarationAssignment(), //
+            new DeclarationInitialiazerAssignment(), //
+            new DeclarationInitialiazelUpdateAssignment(), //
+            new DeclarationInitializerIfAssignment(), //
+            new DeclarationInitializerIfUpdateAssignment(), //
+            new DeclarationInitializerReturnVariable(), //
+            new DeclarationInitializerReturnExpression(), //
+            new DeclarationInitializerReturnAssignment(), //
+            new DeclarationInitializerReturnUpdateAssignment(), //
+            new DeclarationInitializerStatementTerminatingScope(), //
+            null) //
+        .add(IfStatement.class, //
+            new IfLastInMethodThenEndingWithEmptyReturn(), //
+            new IfLastInMethodElseEndingWithEmptyReturn(), //
+            new IfLastInMethod(), //
+            new IfReturnFooElseReturnBar(), //
+            new IfReturnNoElseReturn(), //
+            new IfAssignToFooElseAssignToFoo(), //
+            new IfThenFooBarElseFooBaz(), //
+            new IfBarFooElseBazFoo(), //
+            new IfThrowFooElseThrowBar(), //
+            new IfThrowNoElseThrow(), //
+            new IfExpressionStatementElseSimilarExpressionStatement(), //
+            new IfThenOrElseIsCommandsFollowedBySequencer(), //
+            new IfFooSequencerIfFooSameSequencer(), //
+            new IfCommandsSequencerNoElseSingletonSequencer(), //
+            new IfThenIfThenNoElseNoElse(), //
+            new IfEmptyThenEmptyElse(), //
+            new IfDegenerateElse(), //
+            new IfEmptyThen(), //
+            new IfShortestFirst(), //
+            null)//
+        .add(PrefixExpression.class, //
+            new PrefixIncrementDecrementReturn(), //
+            new PrefixNotPushdown()) //
+        .add(ConditionalExpression.class, //
+            new TernaryBooleanLiteral(), //
+            new TernaryCollapse(), //
+            new TernaryEliminate(), //
+            new TernaryShortestFirst(), //
+            new TernaryPushdown(), //
+            null) //
+        .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
+        .add(TypeDeclaration.class, new InterfaceClean()) //
+        .add(ReturnStatement.class, new ReturnLastInMethod()) //
+        .seal();
   }
   public static Toolbox instance() {
     return instance;
   }
+
   /** The default instance of this class */
   static Toolbox instance;
+
   /**
    * A builder for the enclosing class.
    *
@@ -151,8 +139,10 @@ public class Toolbox {
      * Associate a bunch of{@link Wring} with a given sub-class of
      * {@link ASTNode}.
      *
-     * @param c JD
-     * @param ws JD
+     * @param c
+     *          JD
+     * @param ws
+     *          JD
      * @return <code><b>this</b></code>, for easy chaining.
      */
     @SafeVarargs public final <N extends ASTNode> Maker add(final Class<N> c, final Wring<N>... ws) {
@@ -160,8 +150,8 @@ public class Toolbox {
       for (final Wring<N> w : ws) {
         if (w == null)
           break;
-        if(!w.wringGroup().isEnabled())
-        	continue;
+        if (!w.wringGroup().isEnabled())
+          continue;
         l.add(w);
       }
       return this;

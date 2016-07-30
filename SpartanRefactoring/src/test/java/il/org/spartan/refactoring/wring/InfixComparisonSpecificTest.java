@@ -2,39 +2,26 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.hamcrest.CoreMatchers.is;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.OrderingComparison.greaterThanOrEqualTo;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertNoChange;
-import static il.org.spartan.refactoring.utils.Funcs.flip;
-import static il.org.spartan.refactoring.utils.Funcs.left;
-import static il.org.spartan.refactoring.utils.Into.i;
-import static il.org.spartan.refactoring.utils.Restructure.flatten;
-import static org.hamcrest.CoreMatchers.notNullValue;
+import static il.org.spartan.hamcrest.OrderingComparison.*;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Into.*;
+import static il.org.spartan.refactoring.utils.Restructure.*;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.eclipse.jdt.core.dom.*;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.*;
 
-import il.org.spartan.refactoring.utils.ExpressionComparator;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Funcs;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.MakeAST;
-import il.org.spartan.refactoring.wring.AbstractWringTest.Noneligible;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.utils.Utils;
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.AbstractWringTest.*;
+import il.org.spartan.utils.*;
 
 /**
  * Unit tests for {@link Wrings#ADDITION_SORTER}.
@@ -46,6 +33,7 @@ import il.org.spartan.utils.Utils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpression> {
   static final InfixComparisonSpecific WRING = new InfixComparisonSpecific();
+
   /** Instantiates this class */
   public InfixComparisonSpecificTest() {
     super(WRING);
@@ -177,6 +165,7 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
         // Misc
         new String[] { "Correct order", "1 + 2 < 3 " }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -209,6 +198,7 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
         new String[] { "Expression vs. Expression", " 6 - 7 < 2 + 1   " }, //
         new String[] { "Literal vs. Literal", "1 < 102333" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -262,6 +252,7 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
         new String[] { "Crazy comparison", "null == 1", "1 == null" }, //
         new String[] { "Negative number", "-1 == a", "a == -1" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
