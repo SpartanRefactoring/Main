@@ -808,7 +808,7 @@ public enum Funcs {
       case "List":
       case "Queue":
       case "Set":
-        final String $ = shortName(t.typeArguments());
+        final String $ = shortName(expose.typeArguments(t));
         if ($ == null)
           return null;
         return $ + "s";
