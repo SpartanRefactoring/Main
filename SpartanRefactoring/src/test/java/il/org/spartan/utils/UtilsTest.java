@@ -14,8 +14,6 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import il.org.spartan.utils.Utils;
-
 @FixMethodOrder(MethodSorters.JVM) //
 @SuppressWarnings({ "static-method", "javadoc", }) //
 public class UtilsTest {

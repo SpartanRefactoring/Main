@@ -1,6 +1,9 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import il.org.spartan.refactoring.wring.Trimmer;
 

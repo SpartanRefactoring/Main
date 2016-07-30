@@ -1,11 +1,19 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Funcs.asAssignment;
+import static il.org.spartan.refactoring.utils.Funcs.asReturnStatement;
+import static il.org.spartan.refactoring.utils.Funcs.left;
+import static il.org.spartan.refactoring.utils.Funcs.same;
 import static il.org.spartan.refactoring.wring.Wrings.size;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.ASSIGN;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.Assignment.Operator;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.ReturnStatement;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
 

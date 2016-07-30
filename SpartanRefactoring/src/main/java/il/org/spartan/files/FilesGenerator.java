@@ -3,7 +3,10 @@ package il.org.spartan.files;
 import static il.org.spartan.utils.Utils.asList;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Stack;
 
 /**
  * Provides, employing fluent API, a {@link Iterable} interface for iteration

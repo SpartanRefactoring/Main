@@ -19,8 +19,7 @@ import il.org.spartan.misc.Wrapper;
 import il.org.spartan.refactoring.spartanizations.Spartanization;
 import il.org.spartan.refactoring.spartanizations.TESTUtils;
 import il.org.spartan.refactoring.spartanizations.Wrap;
-import il.org.spartan.refactoring.utils.As;
-import il.org.spartan.refactoring.wring.TrimmerTestsUtils.Operand;
+import il.org.spartan.refactoring.utils.MakeAST;
 
 public class TrimmerTestsUtils {
 
@@ -123,7 +122,7 @@ public class TrimmerTestsUtils {
 	  }
 
 	static String apply(final Trimmer t, final String from) {
-	    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(from);
+	    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
 	    assertNotNull(u);
 	    final Document d = new Document(from);
 	    assertNotNull(d);
@@ -133,7 +132,7 @@ public class TrimmerTestsUtils {
 	  }
 
 	static String apply(final Wring<? extends ASTNode> ns, final String from) {
-	    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(from);
+	    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
 	    assertNotNull(u);
 	    final Document d = new Document(from);
 	    assertNotNull(d);

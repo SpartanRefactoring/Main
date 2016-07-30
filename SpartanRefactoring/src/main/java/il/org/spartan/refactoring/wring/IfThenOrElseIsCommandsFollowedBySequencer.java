@@ -1,4 +1,5 @@
 package il.org.spartan.refactoring.wring;
+import static il.org.spartan.refactoring.utils.expose.*;
 
 import static il.org.spartan.refactoring.utils.Funcs.asBlock;
 import static il.org.spartan.refactoring.utils.Funcs.elze;
@@ -54,11 +55,11 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
         final Block parent = asBlock(s.getParent());
         final Block newParent = s.getAST().newBlock();
         if (parent != null) {
-          addAllReplacing(newParent.statements(), parent.statements(), s, shorterIf, remainder);
+          addAllReplacing(statements(newParent), statements(parent), s, shorterIf, remainder);
           r.replace(parent, newParent, g);
         } else {
-          newParent.statements().add(shorterIf);
-          duplicateInto(remainder, newParent.statements());
+          statements(newParent).add(shorterIf);
+          duplicateInto(remainder, statements(newParent));
           r.replace(s, newParent, g);
         }
       }

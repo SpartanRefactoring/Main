@@ -10,8 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import il.org.spartan.refactoring.spartanizations.Spartanization;
-import il.org.spartan.refactoring.utils.As;
+import il.org.spartan.refactoring.utils.MakeAST;
 
 /**
  * An abstract representation of our test suite, which is represented in
@@ -60,13 +59,13 @@ public abstract class FileTestUtils {
    * Makes an Input file out of a Test file
    */
   protected static File makeInFile(final File f) {
-    return createTempFile(deleteTestKeyword(As.stringBuilder(f)), TestDirection.In, f);
+    return createTempFile(deleteTestKeyword(MakeAST.stringBuilder(f)), TestDirection.In, f);
   }
   /**
    * Makes an Output file out of a Test file
    */
   protected static File makeOutFile(final File f) {
-    final StringBuilder $ = As.stringBuilder(f);
+    final StringBuilder $ = MakeAST.stringBuilder(f);
     if ($.indexOf(testKeyword) > 0)
       $.delete(0, $.indexOf(testKeyword) + testKeyword.length() + ($.indexOf("\r\n") > 0 ? 2 : 1));
     return createTempFile($, TestDirection.Out, f);

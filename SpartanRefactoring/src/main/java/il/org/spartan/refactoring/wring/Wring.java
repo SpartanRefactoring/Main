@@ -1,21 +1,62 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.wring.Wrings.*;
-import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+import static il.org.spartan.refactoring.utils.Funcs.duplicate;
+import static il.org.spartan.refactoring.utils.Funcs.left;
+import static il.org.spartan.refactoring.utils.Funcs.right;
+import static il.org.spartan.refactoring.wring.Wrings.size;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.BIT_AND_ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.BIT_OR_ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.BIT_XOR_ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.DIVIDE_ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.LEFT_SHIFT_ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.MINUS_ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.PLUS_ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.REMAINDER_ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.RIGHT_SHIFT_SIGNED_ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.RIGHT_SHIFT_UNSIGNED_ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.TIMES_ASSIGN;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.AND;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.DIVIDE;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.LEFT_SHIFT;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.MINUS;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.OR;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.PLUS;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.REMAINDER;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.RIGHT_SHIFT_SIGNED;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.RIGHT_SHIFT_UNSIGNED;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.TIMES;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.XOR;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.function.Predicate;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.Assignment.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.Assignment.Operator;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.IExtendedModifier;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.Modifier;
+import org.eclipse.jdt.core.dom.PrefixExpression;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.text.edits.TextEditGroup;
 
-import il.org.spartan.misc.*;
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.misc.Wrapper;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
+import il.org.spartan.refactoring.utils.Collect;
+import il.org.spartan.refactoring.utils.Extract;
+import il.org.spartan.refactoring.utils.Is;
+import il.org.spartan.refactoring.utils.Plant;
+import il.org.spartan.refactoring.utils.Rewrite;
+import il.org.spartan.refactoring.utils.Subject;
+import il.org.spartan.refactoring.utils.expose;
 
 final class LocalInliner {
   class LocalInlineWithValue extends Wrapper<Expression> {
@@ -299,7 +340,7 @@ public abstract class Wring<N extends ASTNode> {
       return hasAnnotation((VariableDeclarationStatement) f.getParent());
     }
     static boolean hasAnnotation(final VariableDeclarationStatement s) {
-      return hasAnnotation(s.modifiers());
+      return hasAnnotation(expose.modifiers(s));
     }
     private static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f,
         final List<VariableDeclarationFragment> fs) {

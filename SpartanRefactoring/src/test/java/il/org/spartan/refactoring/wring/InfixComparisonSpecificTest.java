@@ -27,9 +27,11 @@ import org.junit.runners.MethodSorters;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.wring.InfixComparisonSpecific;
-import il.org.spartan.refactoring.wring.Wrings;
+import il.org.spartan.refactoring.utils.ExpressionComparator;
+import il.org.spartan.refactoring.utils.Extract;
+import il.org.spartan.refactoring.utils.Funcs;
+import il.org.spartan.refactoring.utils.Is;
+import il.org.spartan.refactoring.utils.MakeAST;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Noneligible;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.utils.Utils;
@@ -76,7 +78,7 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
   }
   @Test public void comparisonWithSpecificWithinScope() {
     assertTrue(Is.constant(left(i("this != a"))));
-    final ASTNode n = As.EXPRESSION.ast("a != this");
+    final ASTNode n = MakeAST.EXPRESSION.from("a != this");
     assertThat(n, notNullValue());
     assertWithinScope(Funcs.asExpression(n));
     correctScopeExpression(n);

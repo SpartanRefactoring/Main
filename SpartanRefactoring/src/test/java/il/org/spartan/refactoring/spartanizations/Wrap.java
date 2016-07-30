@@ -7,7 +7,7 @@ import static il.org.spartan.utils.Utils.removeSuffix;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jface.text.Document;
 
-import il.org.spartan.refactoring.utils.As;
+import il.org.spartan.refactoring.utils.MakeAST;
 
 /**
  * An empty <code><b>enum</b></code> for fluent programming. The name should say
@@ -82,7 +82,7 @@ public enum Wrap {
    *         of the wrapped parameter.
    */
   public CompilationUnit intoCompilationUnit(final String codeFragment) {
-    return (CompilationUnit) As.COMPILIATION_UNIT.ast(on(codeFragment));
+    return (CompilationUnit) MakeAST.COMPILATION_UNIT.from(on(codeFragment));
   }
   /**
    * Wrap a given code fragment, and converts it into a {@link Document}

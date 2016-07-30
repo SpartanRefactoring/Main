@@ -3,20 +3,19 @@ package il.org.spartan.refactoring.utils;
 import static il.org.spartan.hamcrest.CoreMatchers.is;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
 import static il.org.spartan.hamcrest.MatcherAssert.iz;
+import static il.org.spartan.refactoring.utils.Into.i;
+import static il.org.spartan.refactoring.utils.Into.s;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertNotNull;
-import static il.org.spartan.refactoring.utils.Into.i;
-import static il.org.spartan.refactoring.utils.Into.s;
 
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.PostfixExpression;
 import org.eclipse.jdt.core.dom.Statement;
 import org.junit.Test;
-import il.org.spartan.refactoring.spartanizations.Wrap;
 
-import il.org.spartan.refactoring.utils.Extract;
+import il.org.spartan.refactoring.spartanizations.Wrap;
 
 @SuppressWarnings({ "static-method", "javadoc" }) public class ExtractTest {
   @Test public void core() {

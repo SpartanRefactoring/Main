@@ -2,7 +2,6 @@ package il.org.spartan.refactoring.spartanizations;
 
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
 import static il.org.spartan.hamcrest.OrderingComparison.greaterThanOrEqualTo;
-import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.countOpportunities;
 import static il.org.spartan.utils.Utils.compressSpaces;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -17,12 +16,10 @@ import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.Document;
 import org.eclipse.text.edits.MalformedTreeException;
 
-import il.org.spartan.refactoring.spartanizations.Spartanization;
-import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.refactoring.utils.Extract;
+import il.org.spartan.refactoring.utils.MakeAST;
 import il.org.spartan.refactoring.wring.Trimmer;
 import il.org.spartan.refactoring.wring.TrimmerTestsUtils;
-import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.countOpportunities;
 
 /**
  * @author Yossi Gil
@@ -62,7 +59,7 @@ import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.countOpportunit
    */
   public static Statement asSingle(final String statement) {
     assertThat(statement, notNullValue());
-    final ASTNode n = As.STATEMENTS.ast(statement);
+    final ASTNode n = MakeAST.STATEMENTS.from(statement);
     assertThat(n, notNullValue());
     return Extract.singleStatement(n);
   }
@@ -75,21 +72,21 @@ import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.countOpportunit
     }
   }
   static String apply(final Trimmer t, final String from) {
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(from);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
     assertNotNull(u);
     final Document d = new Document(from);
     assertNotNull(d);
     return TESTUtils.rewrite(t, u, d).get();
   }
   static void assertNoOpportunity(final Spartanization s, final String from) {
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(from);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
     assertEquals(u.toString(), 0, TrimmerTestsUtils.countOpportunities(s, u));
   }
   static void assertNotEvenSimilar(final String expected, final String actual) {
     assertNotEquals(compressSpaces(expected), compressSpaces(actual));
   }
   static void assertOneOpportunity(final Spartanization s, final String from) {
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(from);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
     assertThat(u, notNullValue());
     assertThat(TrimmerTestsUtils.countOpportunities(s, u), greaterThanOrEqualTo(1));
   }

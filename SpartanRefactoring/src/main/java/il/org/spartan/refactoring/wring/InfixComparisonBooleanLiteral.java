@@ -1,7 +1,10 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Extract.core;
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Funcs.asBooleanLiteral;
+import static il.org.spartan.refactoring.utils.Funcs.left;
+import static il.org.spartan.refactoring.utils.Funcs.logicalNot;
+import static il.org.spartan.refactoring.utils.Funcs.right;
 import static il.org.spartan.utils.Utils.in;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.EQUALS;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.NOT_EQUALS;

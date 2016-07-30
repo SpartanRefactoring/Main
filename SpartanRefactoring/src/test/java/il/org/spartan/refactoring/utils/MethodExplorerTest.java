@@ -11,8 +11,6 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.ReturnStatement;
 import org.junit.Test;
 
-import il.org.spartan.refactoring.utils.MethodExplorer;
-
 @SuppressWarnings({ "static-method", "javadoc" }) public class MethodExplorerTest {
   @Test public void localVariablesCatchExpression() {
     assertThat(new MethodExplorer(

@@ -2,8 +2,26 @@ package il.org.spartan.refactoring.utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import static il.org.spartan.refactoring.utils.expose.*; 
+import static il.org.spartan.refactoring.utils.Funcs.*; 
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
+import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
+import org.eclipse.jdt.core.dom.CatchClause;
+import org.eclipse.jdt.core.dom.EnhancedForStatement;
+import org.eclipse.jdt.core.dom.EnumDeclaration;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.ForStatement;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.ReturnStatement;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
+import org.eclipse.jdt.core.dom.TryStatement;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
 /**
  * A class for analyzing a method.
@@ -41,19 +59,18 @@ public class MethodExplorer {
         return add(s.getParameter());
       }
       @Override public boolean visit(final ForStatement s) {
-        return add(s.initializers());
+        return add(initializers(s));
       }
       @Override public boolean visit(final TryStatement s) {
-        return add(s.resources());
+        return add(resources(s));
       }
       @Override public boolean visit(final VariableDeclarationStatement s) {
-        addFragments(s.fragments());
+        addFragments(fragments(s));
         return true;
       }
-      private boolean add(final List<VariableDeclarationExpression> initializers) {
-        for (final Object o : initializers)
-          if (o instanceof VariableDeclarationExpression)
-            addFragments(((VariableDeclarationExpression) o).fragments());
+      private boolean add(final List<? extends Expression> es) {
+        for (final Expression e : es)
+            addFragments(fragments(asVariableDeclarationExpression(e)));
         return true;
       }
       private boolean add(final SingleVariableDeclaration d) {
@@ -85,18 +102,18 @@ public class MethodExplorer {
     });
     return $;
   }
-
+  @SuppressWarnings("unused")
   public abstract static class IgnoreNestedMethods extends ASTVisitor {
-    @Override public final boolean visit(@SuppressWarnings("unused") final AnnotationTypeDeclaration __) {
+    @Override public final boolean visit( final AnnotationTypeDeclaration __) {
       return false;
     }
-    @Override public final boolean visit(@SuppressWarnings("unused") final AnonymousClassDeclaration __) {
+    @Override public final boolean visit(final AnonymousClassDeclaration __) {
       return false;
     }
-    @Override public final boolean visit(@SuppressWarnings("unused") final EnumDeclaration __) {
+    @Override public final boolean visit(final EnumDeclaration __) {
       return false;
     }
-    @Override public final boolean visit(@SuppressWarnings("unused") final TypeDeclaration __) {
+    @Override public final boolean visit(final TypeDeclaration __) {
       return false;
     }
   }

@@ -1,12 +1,22 @@
 package il.org.spartan.refactoring.wring;
 
+import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.refactoring.utils.Funcs.duplicate;
 import static il.org.spartan.refactoring.utils.Restructure.duplicateInto;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.CatchClause;
+import org.eclipse.jdt.core.dom.ForStatement;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.TryStatement;
+import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Extract;
@@ -70,12 +80,12 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
   private static Block reorganizeStatement(final Statement s) {
     final List<Statement> ss = Extract.statements(s);
     final Block $ = s.getAST().newBlock();
-    duplicateInto(ss, $.statements());
+    duplicateInto(ss, statements($));
     return $;
   }
   @Override Statement replacement(final Block b) {
     final List<Statement> ss = Extract.statements(b);
-    if (identical(ss, b.statements()) || !safeBlockSimplification(ss))
+    if (identical(ss, statements(b)) || !safeBlockSimplification(ss))
       return null;
     final ASTNode parent = b.getParent();
     if (!(parent instanceof Statement) || parent instanceof TryStatement)
