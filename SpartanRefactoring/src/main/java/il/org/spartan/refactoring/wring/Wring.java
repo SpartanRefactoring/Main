@@ -261,26 +261,26 @@ public abstract class Wring<N extends ASTNode> {
         return;
       }
       final VariableDeclarationStatement newParent = duplicate(parent);
-      newParent.fragments().clear();
-      newParent.fragments().addAll(live);
+      fragments(newParent).clear();
+      fragments(newParent).addAll(live);
       r.replace(parent, newParent, g);
     }
     static int eliminationSaving(final VariableDeclarationFragment f) {
       final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-      final List<VariableDeclarationFragment> live = live(f, parent.fragments());
+      final List<VariableDeclarationFragment> live = live(f, fragments(parent));
       final int $ = size(parent);
       if (live.isEmpty())
         return $;
       final VariableDeclarationStatement newParent = duplicate(parent);
-      newParent.fragments().clear();
-      newParent.fragments().addAll(live);
+      fragments(newParent).clear();
+      fragments(newParent).addAll(live);
       return $ - size(newParent);
     }
     static List<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
       final List<VariableDeclarationFragment> $ = new ArrayList<>();
       boolean collecting = false;
-      for (final VariableDeclarationFragment brother : (List<VariableDeclarationFragment>) ((VariableDeclarationStatement) f
-          .getParent()).fragments()) {
+      VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
+      for (final VariableDeclarationFragment brother : fragments(parent)) {
         if (brother == f) {
           collecting = true;
           continue;
