@@ -1,30 +1,27 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.wring.Wrings.size;
+import static il.org.spartan.refactoring.wring.Wrings.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.Assignment.Operator;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
+import org.eclipse.jdt.core.dom.Assignment.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.Subject;
-import il.org.spartan.refactoring.wring.LocalInliner.LocalInlineWithValue;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.LocalInliner.*;
 
 /**
- * A {@link Wring} to convert <code>int a = 2;
- * if (b)
- *   a = 3;</code> into <code>int a = b ? 3 : 2;</code>
+ * A {@link Wring} to convert <code>int a = 2; if (b) a = 3;</code> into
+ * <code>int a = b ? 3 : 2;</code>
  *
  * @author Yossi Gil
  * @since 2015-08-07
  */
 public final class DeclarationInitializerIfUpdateAssignment extends Wring.VariableDeclarationFragementAndStatement {
-  @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer, final Statement nextStatement,
-      final TextEditGroup g) {
+  @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+      final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
       return null;
     final IfStatement s = asIfStatement(nextStatement);
@@ -32,7 +29,7 @@ public final class DeclarationInitializerIfUpdateAssignment extends Wring.Variab
       return null;
     s.setElseStatement(null);
     final Expression condition = s.getExpression();
-    final Assignment a = Extract.assignment(then(s));
+    final Assignment a = extract.assignment(then(s));
     if (a == null || !same(left(a), n) || doesUseForbiddenSiblings(f, condition, right(a)))
       return null;
     final Operator o = a.getOperator();
@@ -51,6 +48,6 @@ public final class DeclarationInitializerIfUpdateAssignment extends Wring.Variab
     return "Consolidate initialization of " + f.getName() + " with the subsequent conditional assignment to it";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.IF_TO_TERNARY;
+    return WringGroup.IF_TO_TERNARY;
   }
 }

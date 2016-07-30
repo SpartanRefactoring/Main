@@ -1,10 +1,9 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.refactoring.utils.Funcs.right;
-import static il.org.spartan.refactoring.utils.Funcs.same;
-import static il.org.spartan.utils.Utils.in;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.utils.Utils.*;
 
-import java.util.List;
+import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -63,6 +62,7 @@ abstract class ScopeManager extends ASTVisitor {
 abstract class HidingDepth extends ScopeManager {
   private int depth = 0;
   private int hideDepth = Integer.MAX_VALUE;
+
   boolean hidden() {
     return depth >= hideDepth;
   }
@@ -82,6 +82,7 @@ abstract class HidingDepth extends ScopeManager {
 class UsesCollector extends HidingDepth {
   private final List<SimpleName> result;
   private final SimpleName focus;
+
   UsesCollector(final List<SimpleName> result, final SimpleName focus) {
     this.result = result;
     this.focus = focus;
@@ -104,7 +105,7 @@ class UsesCollector extends HidingDepth {
   @Override public boolean visit(final MethodInvocation i) {
     ingore(i.getName());
     recurse(i.getExpression());
-    return recurse(i.arguments());
+    return recurse(expose.arguments(i));
   }
   @Override public boolean visit(final QualifiedName n) {
     return recurse(n.getQualifier());
@@ -115,7 +116,7 @@ class UsesCollector extends HidingDepth {
   }
   @Override public boolean visit(final SuperMethodInvocation i) {
     ingore(i.getName());
-    return recurse(i.arguments());
+    return recurse(expose.arguments(i));
   }
   @Override public boolean visit(final VariableDeclarationFragment f) {
     return !declaredIn(f) && recurse(f.getInitializer());
@@ -135,14 +136,14 @@ class UsesCollector extends HidingDepth {
   }
   @Override boolean go(final AbstractTypeDeclaration d) {
     ingore(d.getName());
-    return !declaredIn(d) && recurse(d.bodyDeclarations());
+    return !declaredIn(d) && recurse(expose.bodyDeclarations(d));
   }
   boolean go(final AnnotationTypeDeclaration d) {
     ingore(d.getName());
-    return !declaredIn(d) && recurse(d.bodyDeclarations());
+    return !declaredIn(d) && recurse(expose.bodyDeclarations(d));
   }
   @Override boolean go(final AnonymousClassDeclaration d) {
-    return !declaredIn(d) && recurse(d.bodyDeclarations());
+    return !declaredIn(d) && recurse(expose.bodyDeclarations(d));
   }
   @Override boolean go(final EnhancedForStatement s) {
     final SimpleName name = s.getParameter().getName();
@@ -200,12 +201,13 @@ class UsesCollector extends HidingDepth {
    * This is where we ignore all occurrences of {@link SimpleName} which are not
    * variable names, e.g., class name, function name, field name, etc.
    *
-   * @param _ JD
+   * @param _
+   *          JD
    */
   private void ingore(@SuppressWarnings("unused") final SimpleName __) {
     // We simply ignore the parameter
   }
-  private boolean recurse(final List<ASTNode> ns) {
+  private boolean recurse(final List<? extends ASTNode> ns) {
     for (final ASTNode n : ns)
       recurse(n);
     return false;
@@ -213,6 +215,7 @@ class UsesCollector extends HidingDepth {
 
   private final class DeclaredInFields extends ASTVisitor {
     private final ASTNode parent;
+
     DeclaredInFields(final ASTNode parent) {
       this.parent = parent;
     }
@@ -223,11 +226,9 @@ class UsesCollector extends HidingDepth {
 }
 
 class UnsafeUsesCollector extends UsesCollector {
-
-  UnsafeUsesCollector(List<SimpleName> result, SimpleName focus) {
+  UnsafeUsesCollector(final List<SimpleName> result, final SimpleName focus) {
     super(result, focus);
   }
-  
   @Override void consider(final SimpleName n) {
     ASTNode p = n.getParent();
     while (p != null) {
@@ -238,8 +239,7 @@ class UnsafeUsesCollector extends UsesCollector {
       p = p.getParent();
     }
   }
-  
-  private boolean unsafe(ASTNode n) {
+  private boolean unsafe(final ASTNode n) {
     return n instanceof ClassInstanceCreation;
   }
 }

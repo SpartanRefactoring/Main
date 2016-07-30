@@ -1,11 +1,11 @@
 package il.org.spartan.refactoring.utils;
 
-import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.utils.Utils.hasNull;
+import static il.org.spartan.refactoring.utils.Funcs.removeWhites;
+import static il.org.spartan.utils.Utils.*;
+import static org.eclipse.jdt.core.dom.ASTNode.*;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -25,7 +25,8 @@ public enum ExpressionComparator implements Comparator<Expression> {
   ADDITION {
     @Override public int compare(final Expression e1, final Expression e2) {
       int $;
-      return ($ = literalCompare(e1, e2)) != 0 || ($ = nodesCompare(e1, e2)) != 0 || ($ = characterCompare(e1, e2)) != 0 || ($ = alphabeticalCompare(e1, e2)) != 0 ? $ : 0;
+      return ($ = literalCompare(e1, e2)) != 0 || ($ = nodesCompare(e1, e2)) != 0 || ($ = characterCompare(e1, e2)) != 0
+          || ($ = alphabeticalCompare(e1, e2)) != 0 ? $ : 0;
     }
   },
   /**
@@ -50,10 +51,12 @@ public enum ExpressionComparator implements Comparator<Expression> {
   MULTIPLICATION {
     @Override public int compare(final Expression e1, final Expression e2) {
       int $;
-      return ($ = literalCompare(e2, e1)) == 0 && ($ = nodesCompare(e1, e2)) == 0 && ($ = characterCompare(e1, e2)) == 0 && ($ = alphabeticalCompare(e1, e2)) == 0 ? 0 : $;
+      return ($ = literalCompare(e2, e1)) == 0 && ($ = nodesCompare(e1, e2)) == 0 && ($ = characterCompare(e1, e2)) == 0
+          && ($ = alphabeticalCompare(e1, e2)) == 0 ? 0 : $;
     }
   };
   private static Specificity specificity = new Specificity();
+
   static int literalCompare(final Expression e1, final Expression e2) {
     return -specificity.compare(e1, e2);
   }
@@ -61,7 +64,8 @@ public enum ExpressionComparator implements Comparator<Expression> {
     return round(nodesCount(e1) - nodesCount(e2), NODES_THRESHOLD);
   }
   static int argumentsCompare(final Expression e1, final Expression e2) {
-    return !Is.methodInvocation(e1) || !Is.methodInvocation(e2) ? 0 : argumentsCompare((MethodInvocation) e1, (MethodInvocation) e2);
+    return !Is.methodInvocation(e1) || !Is.methodInvocation(e2) ? 0
+        : argumentsCompare((MethodInvocation) e1, (MethodInvocation) e2);
   }
   static int argumentsCompare(final MethodInvocation i1, final MethodInvocation i2) {
     return i1.arguments().size() - i2.arguments().size();
@@ -69,8 +73,10 @@ public enum ExpressionComparator implements Comparator<Expression> {
   /**
    * Compare method invocations by the number of arguments
    *
-   * @param e1 JD
-   * @param e2 JD
+   * @param e1
+   *          JD
+   * @param e2
+   *          JD
    * @return <code><b>true</b></code> <i>iff</i> the first argument is a method
    *         invocation with more arguments that the second argument
    */
@@ -80,8 +86,10 @@ public enum ExpressionComparator implements Comparator<Expression> {
   /**
    * Compare expressions by their number of characters
    *
-   * @param e1 JD
-   * @param e2 JD
+   * @param e1
+   *          JD
+   * @param e2
+   *          JD
    * @return an integer which is either negative, zero, or positive, if the
    *         number of characters in the first argument is less than, equal to,
    *         or greater than the number of characters in the second argument.
@@ -92,8 +100,10 @@ public enum ExpressionComparator implements Comparator<Expression> {
   /**
    * Lexicographical comparison expressions by their number of characters
    *
-   * @param e1 JD
-   * @param e2 JD
+   * @param e1
+   *          JD
+   * @param e2
+   *          JD
    * @return an integer which is either negative, zero, or positive, if the
    *         number of characters in the first argument occurs before, at the
    *         same place, or after then the second argument in lexicographical
@@ -111,7 +121,8 @@ public enum ExpressionComparator implements Comparator<Expression> {
   /**
    * Compare the length of the left and right arguments of an infix expression
    *
-   * @param e JD
+   * @param e
+   *          JD
    * @return <code><b>true</b></code> <i>iff</i> if the left operand of the
    *         parameter is is longer than the second argument
    */
@@ -124,15 +135,18 @@ public enum ExpressionComparator implements Comparator<Expression> {
         nodesCount(e1) >= nodesCount(e2) && moreArguments(e1, e2)//
     );
   }
+
   /**
    * Threshold for comparing nodes; a difference in the number of nodes between
    * two nodes is considered zero, if it is the less than this value,
    */
   public static final int NODES_THRESHOLD = 1;
+
   /**
    * Counts the number of non-space characters in a tree rooted at a given node
    *
-   * @param n JD
+   * @param n
+   *          JD
    * @return Number of abstract syntax tree nodes under the parameter.
    */
   public static int countNonWhites(final ASTNode n) {
@@ -141,7 +155,8 @@ public enum ExpressionComparator implements Comparator<Expression> {
   /**
    * Counts the number of nodes in a tree rooted at a given node
    *
-   * @param n JD
+   * @param n
+   *          JD
    * @return Number of abstract syntax tree nodes under the parameter.
    */
   public static int nodesCount(final ASTNode n) {
@@ -159,7 +174,8 @@ public enum ExpressionComparator implements Comparator<Expression> {
   /**
    * Counts the number of statements in a tree rooted at a given node
    *
-   * @param n JD
+   * @param n
+   *          JD
    * @return Number of abstract syntax tree nodes under the parameter.
    */
   public static int lineCount(final ASTNode n) {
@@ -172,7 +188,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
         if (Statement.class.isAssignableFrom(child.getClass()))
           switch (child.getNodeType()) {
             case BLOCK:
-              if (Extract.statements(child).size() > 1)
+              if (extract.statements(child).size() > 1)
                 ++$.inner;
               return;
             case EMPTY_STATEMENT:
@@ -198,7 +214,8 @@ public enum ExpressionComparator implements Comparator<Expression> {
   /**
    * Sorts the {@link Expression} list
    *
-   * @param es an {@link Expression} list to sort
+   * @param es
+   *          an {@link Expression} list to sort
    * @return True if the list was modified
    */
   public boolean sort(final List<Expression> es) {

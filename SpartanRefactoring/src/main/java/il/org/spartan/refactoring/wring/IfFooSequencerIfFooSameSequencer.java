@@ -1,30 +1,21 @@
 package il.org.spartan.refactoring.wring;
 
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.CONDITIONAL_OR;
-import static il.org.spartan.refactoring.utils.Funcs.asIfStatement;
-import static il.org.spartan.refactoring.utils.Funcs.same;
-import static il.org.spartan.refactoring.utils.Funcs.then;
-import static il.org.spartan.utils.Utils.last;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.utils.Utils.*;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.Subject;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
- * A {@link Wring} to convert <code>if (X)
- *   return A;
- * if (Y)
- *   return A;</code> into <code>if (X || Y)
- *   return A;</code>
+ * A {@link Wring} to convert <code>if (X) return A; if (Y) return A;</code>
+ * into <code>if (X || Y) return A;</code>
  *
  * @author Yossi Gil
  * @since 2015-07-29
@@ -44,15 +35,15 @@ public final class IfFooSequencerIfFooSameSequencer extends Wring.ReplaceToNextS
     if (s2 == null || !Is.vacuousElse(s2))
       return null;
     final Statement then = then(s);
-    final List<Statement> ss1 = Extract.statements(then);
-    return !same(ss1, Extract.statements(then(s2))) || !Is.sequencer(last(ss1)) ? null
-        : Wrings.replaceTwoStatements(r, s,
-            makeIfWithoutElse(BlockSimplify.reorganizeNestedStatement(then), Subject.pair(s.getExpression(), s2.getExpression()).to(CONDITIONAL_OR)), g);
+    final List<Statement> ss1 = extract.statements(then);
+    return !same(ss1, extract.statements(then(s2))) || !Is.sequencer(last(ss1)) ? null
+        : Wrings.replaceTwoStatements(r, s, makeIfWithoutElse(BlockSimplify.reorganizeNestedStatement(then),
+            Subject.pair(s.getExpression(), s2.getExpression()).to(CONDITIONAL_OR)), g);
   }
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate two 'if' statements with identical body";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
+    return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }

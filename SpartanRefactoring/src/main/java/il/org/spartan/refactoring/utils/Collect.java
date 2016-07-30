@@ -1,13 +1,14 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.utils.Utils.asArray;
-import static il.org.spartan.utils.Utils.in;
+import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.utils.Utils.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import il.org.spartan.utils.Utils;
+
+import il.org.spartan.utils.*;
 
 /**
  * A utility class for finding occurrences of an {@link Expression} in an
@@ -49,6 +50,7 @@ public enum Collect {
     }
   };
   static final ASTMatcher matcher = new ASTMatcher();
+
   public static Collector definitionsOf(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
@@ -105,22 +107,23 @@ public enum Collect {
         return consider(left(a));
       }
       @Override public boolean visit(final ForStatement s) {
-        return consider(s.initializers());
+        return consider(initializers(s));
       }
       @Override public boolean visit(final PostfixExpression it) {
-        return !in(it.getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT) || consider(it.getOperand());
+        return !in(it.getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT)
+            || consider(it.getOperand());
       }
       @Override public boolean visit(final PrefixExpression it) {
         return consider(it.getOperand());
       }
       @Override public boolean visit(final TryStatement s) {
-        return consider(s.resources());
+        return consider(resources(s));
       }
       @Override public boolean visit(final VariableDeclarationFragment f) {
         return add(f.getName());
       }
       @Override public boolean visit(final VariableDeclarationStatement s) {
-        addFragments(s.fragments());
+        addFragments(fragments(s));
         return true;
       }
       boolean add(final SimpleName candidate) {
@@ -135,10 +138,9 @@ public enum Collect {
         for (final VariableDeclarationFragment f : fs)
           add(f.getName());
       }
-      private boolean consider(final List<VariableDeclarationExpression> initializers) {
-        for (final Object o : initializers)
-          if (o instanceof VariableDeclarationExpression)
-            addFragments(((VariableDeclarationExpression) o).fragments());
+      private boolean consider(final List<? extends Expression> initializers) {
+        for (final Expression e : initializers)
+          addFragments(fragments(asVariableDeclarationExpression(e)));
         return true;
       }
     };
@@ -146,16 +148,16 @@ public enum Collect {
   static ASTVisitor declarationsCollector(final List<SimpleName> into, final ASTNode n) {
     return new MethodExplorer.IgnoreNestedMethods() {
       @Override public boolean visit(final ForStatement s) {
-        return consider(s.initializers());
+        return consider(initializers(s));
       }
       @Override public boolean visit(final TryStatement s) {
-        return consider(s.resources());
+        return consider(resources(s));
       }
       @Override public boolean visit(final VariableDeclarationFragment f) {
         return add(f.getName());
       }
       @Override public boolean visit(final VariableDeclarationStatement s) {
-        addFragments(s.fragments());
+        addFragments(fragments(s));
         return true;
       }
       boolean add(final SimpleName candidate) {
@@ -167,10 +169,9 @@ public enum Collect {
         for (final VariableDeclarationFragment f : fs)
           add(f.getName());
       }
-      private boolean consider(final List<VariableDeclarationExpression> initializers) {
-        for (final Object o : initializers)
-          if (o instanceof VariableDeclarationExpression)
-            addFragments(((VariableDeclarationExpression) o).fragments());
+      private boolean consider(final List<? extends Expression> es) {
+        for (final Expression e : es)
+          addFragments(fragments(asVariableDeclarationExpression(e)));
         return true;
       }
     };
@@ -181,6 +182,7 @@ public enum Collect {
   private static ASTVisitor usesCollector(final SimpleName what, final List<SimpleName> into, final boolean lexicalOnly) {
     return new ASTVisitor() {
       private int loopDepth = 0;
+
       @Override public void endVisit(@SuppressWarnings("unused") final DoStatement __) {
         --loopDepth;
       }
@@ -281,7 +283,7 @@ public enum Collect {
         final List<VariableDeclarationFragment> $ = new ArrayList<>();
         classNode.accept(new ASTVisitor() {
           @Override public boolean visit(final FieldDeclaration d) {
-            $.addAll(d.fragments());
+            $.addAll(fragments(d));
             return false;
           }
         });
@@ -295,7 +297,8 @@ public enum Collect {
   /**
    * Creates a function object for searching for a given value.
    *
-   * @param n what to search for
+   * @param n
+   *          what to search for
    * @return a function object to be used for searching for the parameter in a
    *         given location
    */
@@ -310,7 +313,8 @@ public enum Collect {
    * Creates a function object for searching for a given {@link SimpleName}, as
    * specified by the {@link VariableDeclarationFragment},
    *
-   * @param f JD
+   * @param f
+   *          JD
    * @return a function object to be used for searching for the
    *         {@link SimpleName} embedded in the parameter.
    */
@@ -320,8 +324,10 @@ public enum Collect {
   /**
    * Lists the required occurrences
    *
-   * @param what the expression to search for
-   * @param ns the n in which to counted
+   * @param what
+   *          the expression to search for
+   * @param ns
+   *          the n in which to counted
    * @return the list of uses
    */
   final List<SimpleName> collect(final SimpleName what, final ASTNode... ns) {
@@ -330,11 +336,7 @@ public enum Collect {
       for (final ASTVisitor v : collectors(what, $))
         n.accept(v);
     Utils.removeDuplicates($);
-    Collections.sort($, new Comparator<Expression>() {
-      @Override public int compare(final Expression e1, final Expression e2) {
-        return e1.getStartPosition() - e2.getStartPosition();
-      }
-    });
+    Collections.sort($, (e1, e2) -> e1.getStartPosition() - e2.getStartPosition());
     return $;
   }
   abstract ASTVisitor[] collectors(final SimpleName n, final List<SimpleName> into);
@@ -342,12 +344,11 @@ public enum Collect {
   /**
    * An auxiliary class which makes it possible to use an easy invocation
    * sequence for the various offerings of the containing class. This class
-   * should never be instantiated or inherited by clients.
-   * <p>
-   * This class realizes the function object concept; an instance of it records
-   * the value we search for; it represents the function that, given a location
-   * for the search, will carry out the search for the captured value in its
-   * location parameter.
+   * should never be instantiated or inherited by clients. <p> This class
+   * realizes the function object concept; an instance of it records the value
+   * we search for; it represents the function that, given a location for the
+   * search, will carry out the search for the captured value in its location
+   * parameter.
    *
    * @see Collect#of
    * @author Yossi Gil <yossi.gil @ gmail.com>
@@ -357,7 +358,8 @@ public enum Collect {
     /**
      * Determine whether this instance occurs in a bunch of expressions
      *
-     * @param ns JD
+     * @param ns
+     *          JD
      * @return <code><b>true</b></code> <i>iff</i> this instance occurs in the
      *         Parameter.
      */
@@ -367,7 +369,8 @@ public enum Collect {
     /**
      * the method that will carry out the search
      *
-     * @param ns where to search
+     * @param ns
+     *          where to search
      * @return a list of occurrences of the captured value in the parameter.
      */
     public abstract List<SimpleName> in(ASTNode... ns);
@@ -383,6 +386,7 @@ public enum Collect {
    */
   public abstract static class Collector {
     protected final SimpleName name;
+
     Collector(final SimpleName name) {
       this.name = name;
     }

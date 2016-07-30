@@ -1,40 +1,24 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.OrderingComparison.greaterThanOrEqualTo;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
-import static il.org.spartan.refactoring.utils.Restructure.flatten;
-import static il.org.spartan.utils.Utils.compressSpaces;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.*;
+import static il.org.spartan.azzert.*;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import static il.org.spartan.refactoring.utils.Restructure.*;
+import static il.org.spartan.utils.Utils.*;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.Document;
-import org.eclipse.text.edits.MalformedTreeException;
-import org.eclipse.text.edits.TextEdit;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.jface.text.*;
+import org.eclipse.text.edits.*;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.*;
 
-import il.org.spartan.refactoring.spartanizations.Spartanization;
-import il.org.spartan.refactoring.spartanizations.Wrap;
-import il.org.spartan.refactoring.utils.As;
-import il.org.spartan.refactoring.utils.ExpressionComparator;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.wring.InfixComparisonBooleanLiteral;
-import il.org.spartan.refactoring.wring.Trimmer;
-import il.org.spartan.refactoring.wring.Wrings;
+import il.org.spartan.*;
+import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.utils.Utils;
 
 /**
@@ -47,16 +31,17 @@ import il.org.spartan.utils.Utils;
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixExpression> {
   static final InfixComparisonBooleanLiteral WRING = new InfixComparisonBooleanLiteral();
+
   public InfixComparisonBooleanLiteralTest() {
     super(WRING);
   }
   @Test public void removeParenthesis() throws MalformedTreeException, BadLocationException {
     final String s = " (2) == true";
     final String wrap = Wrap.Expression.on(s);
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(wrap);
-    assertNotNull(u);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
+    azzert.notNull(u);
     final Document d = new Document(wrap);
-    assertNotNull(d);
+    azzert.notNull(d);
     final Trimmer t = new Trimmer();
     final ASTRewrite r = t.createRewrite(u, null);
     final TextEdit x = r.rewriteAST(d, null);
@@ -65,10 +50,9 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
     if (wrap.equals(unpeeled))
       fail("Nothing done on " + s);
     final String peeled = Wrap.Expression.off(unpeeled);
-    if (peeled.equals(s))
-      assertNotEquals("No similification of " + s, s, peeled);
+    azzert.that("No similification of " + s, s, not(peeled));
     if (compressSpaces(peeled).equals(compressSpaces(s)))
-      assertNotEquals("Simpification of " + s + " is just reformatting", compressSpaces(peeled), compressSpaces(s));
+      azzert.that("Simpification of " + s + " is just reformatting", compressSpaces(peeled), not(compressSpaces(s)));
     assertSimilar(" 2 ", peeled);
   }
 
@@ -97,6 +81,7 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
         new String[] { "", "true != false", "true" }, //
         new String[] { "", "true != true", "false" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -125,18 +110,27 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
     }
     @Override @Test public void flattenIsIdempotentt() {
       final InfixExpression flatten = flatten(asInfixExpression());
-      assertThat(flatten(flatten).toString(), is(flatten.toString()));
+      azzert.that(flatten(flatten).toString(), is(flatten.toString()));
     }
     @Override @Test public void inputIsInfixExpression() {
-      assertNotNull(asInfixExpression());
+      azzert.notNull(asInfixExpression());
     }
     @Test public void sortTwice() {
-      final List<Expression> operands = Extract.operands(flatten(asInfixExpression()));
+      final List<Expression> operands = extract.operands(flatten(asInfixExpression()));
       ExpressionComparator.ADDITION.sort(operands);
-      assertFalse(ExpressionComparator.ADDITION.sort(operands));
+      azzert.nay(ExpressionComparator.ADDITION.sort(operands));
     }
     @Test public void twoOrMoreArguments() {
-      assertThat(Extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
+      azzert.that(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
     }
+  }
+  static public void fail(String message) {
+    if (message == null) {
+      throw new AssertionError();
+    }
+    throw new AssertionError(message);
+  }
+  static public void fail() {
+    fail(null);
   }
 }

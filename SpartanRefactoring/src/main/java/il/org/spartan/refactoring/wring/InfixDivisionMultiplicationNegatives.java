@@ -1,25 +1,21 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Extract.core;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.utils.Utils.in;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.DIVIDE;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.TIMES;
+import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.utils.extract.*;
+import static il.org.spartan.utils.Utils.*;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.MINUS;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.InfixExpression.Operator;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.InfixExpression.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Plant;
-import il.org.spartan.refactoring.utils.Rewrite;
-import il.org.spartan.refactoring.utils.Subject;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
  * A {@link Wring} that sorts the arguments of a {@link Operator#DIVIDE}
@@ -54,7 +50,7 @@ public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpre
     gather(core(left(e)), $);
     gather(core(right(e)), $);
     if (e.hasExtendedOperands())
-      gather(e.extendedOperands(), $);
+      gather(extendedOperands(e), $);
     return $;
   }
   private static List<Expression> gather(final List<Expression> es, final List<Expression> $) {
@@ -93,6 +89,6 @@ public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpre
     };
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REORDER_EXPRESSIONS;
+    return WringGroup.REORDER_EXPRESSIONS;
   }
 }

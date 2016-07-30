@@ -1,20 +1,17 @@
 package il.org.spartan.refactoring.wring;
 
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
-import static il.org.spartan.refactoring.utils.Extract.core;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.Restructure.flatten;
+import static il.org.spartan.refactoring.utils.Restructure.*;
+import static il.org.spartan.refactoring.utils.extract.*;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.Operator;
+import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.Subject;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
  * A {@link Wring} that pushes down "<code>!</code>", the negation operator as
@@ -25,7 +22,8 @@ import il.org.spartan.refactoring.utils.Subject;
  */
 public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpression> {
   /**
-   * @param o JD
+   * @param o
+   *          JD
    * @return the operator that produces the logical negation of the parameter
    */
   public static Operator conjugate(final Operator o) {
@@ -43,15 +41,16 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
    * A utility function, which tries to simplify a boolean expression, whose top
    * most parameter is logical negation.
    *
-   * @param e JD
+   * @param e
+   *          JD
    * @return the simplified parameter
    */
   public static Expression simplifyNot(final PrefixExpression e) {
-    return pushdownNot(asNot(Extract.core(e)));
+    return pushdownNot(asNot(extract.core(e)));
   }
   private static Expression applyDeMorgan(final InfixExpression inner) {
     final List<Expression> operands = new ArrayList<>();
-    for (final Expression e : Extract.operands(flatten(inner)))
+    for (final Expression e : extract.operands(flatten(inner)))
       operands.add(logicalNot(e));
     return Subject.operands(operands).to(conjugate(inner.getOperator()));
   }
@@ -115,6 +114,6 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
     return "Pushdown logical negation ('!')";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REORDER_EXPRESSIONS;
+    return WringGroup.REORDER_EXPRESSIONS;
   }
 }

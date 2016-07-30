@@ -1,25 +1,19 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.asSingle;
-import static il.org.spartan.refactoring.utils.Funcs.asIfStatement;
-import static org.junit.Assert.assertNotNull;
+import static il.org.spartan.azzert.*;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
 
-import java.util.Collection;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.Statement;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.eclipse.jdt.core.dom.*;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.*;
 
-import il.org.spartan.refactoring.wring.IfExpressionStatementElseSimilarExpressionStatement;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
+import il.org.spartan.*;
+import il.org.spartan.refactoring.wring.AbstractWringTest.*;
 import il.org.spartan.utils.Utils;
 
 /* @author Yossi Gil
@@ -29,12 +23,13 @@ import il.org.spartan.utils.Utils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class IfExpressionStatementElseSimilarExpressionStatementTest {
   static final IfExpressionStatementElseSimilarExpressionStatement WRING = new IfExpressionStatementElseSimilarExpressionStatement();
+
   @Test public void checkSteps() {
     final Statement s = asSingle("if (a) f(b); else f(c);");
-    assertNotNull(s);
+    azzert.notNull(s);
     final IfStatement i = asIfStatement(s);
-    assertNotNull(i);
-    assertThat(WRING.scopeIncludes(i), is(true));
+    azzert.notNull(i);
+    azzert.that(WRING.scopeIncludes(i), is(true));
   }
 
   @RunWith(Parameterized.class) //
@@ -51,6 +46,7 @@ public class IfExpressionStatementElseSimilarExpressionStatementTest {
         new String[] { "Simple if plus assign", "if (a) a += b; else a += c;", }, //
         new String[] { "Simple if plus assign", "if (a) a *= b; else a *= c;", }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -77,6 +73,7 @@ public class IfExpressionStatementElseSimilarExpressionStatementTest {
         new String[] { "Distinct receiver no arguments", "if (a) y.f(); else x.f();", "(a ?y :x).f();" }, //
         new String[] { "Distinct receiver two arguments", "if (a) y.f(a,b,c); else x.f(a,b,c);", "(a ?y :x).f(a,b,c);" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *

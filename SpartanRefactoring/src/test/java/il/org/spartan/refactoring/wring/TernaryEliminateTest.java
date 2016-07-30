@@ -1,21 +1,15 @@
 package il.org.spartan.refactoring.wring;
 
-import static org.junit.Assert.assertNotNull;
+import java.util.*;
 
-import java.util.Collection;
+import org.eclipse.jdt.core.dom.*;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.*;
 
-import org.eclipse.jdt.core.dom.ConditionalExpression;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
-
-import il.org.spartan.refactoring.wring.TernaryEliminate;
-import il.org.spartan.refactoring.wring.Wring;
-import il.org.spartan.refactoring.wring.Wrings;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
+import il.org.spartan.*;
+import il.org.spartan.refactoring.wring.AbstractWringTest.*;
 import il.org.spartan.utils.Utils;
 
 /**
@@ -48,6 +42,7 @@ public class TernaryEliminateTest {
         new String[] { "function call", "a ? f(b) : f(c)" }, //
         new String[] { "a method call", "a ? y.f(b) :y.f(c)" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -74,6 +69,7 @@ public class TernaryEliminateTest {
         new String[] { "identical increment", "a ? b++ :b++", "b++" }, //
         new String[] { "identical addition", "a ? b+d :b+ d", "b+d" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -89,7 +85,7 @@ public class TernaryEliminateTest {
       super(WRING);
     }
     @Test public void inputIsConditionalfixExpression() {
-      assertNotNull(asConditionalExpression());
+      azzert.notNull(asConditionalExpression());
     }
   }
 }

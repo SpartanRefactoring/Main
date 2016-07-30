@@ -1,29 +1,19 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.same;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static il.org.spartan.refactoring.utils.Funcs.*;
 
-import java.util.Collection;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.ReturnStatement;
-import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.*;
 
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Subject;
-import il.org.spartan.refactoring.wring.DeclarationInitializerReturnVariable;
-import il.org.spartan.refactoring.wring.Wring;
-import il.org.spartan.refactoring.wring.Wrings;
+import il.org.spartan.*;
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.AbstractWringTest.*;
 import il.org.spartan.utils.Utils;
 
 /**
@@ -36,8 +26,9 @@ import il.org.spartan.utils.Utils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class DeclarationReturnTest {
   static final Wring<VariableDeclarationFragment> WRING = new DeclarationInitializerReturnVariable();
+
   @Test public void placeHolder() {
-    assertNotNull(WRING);
+    azzert.notNull(WRING);
   }
 
   @RunWith(Parameterized.class) //
@@ -49,6 +40,7 @@ public class DeclarationReturnTest {
         new String[] { "Vanilla", "int a = 2; if (b) a =3;", }, //
         new String[] { "Vanilla", "int a = 3, b; return;", }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -78,6 +70,7 @@ public class DeclarationReturnTest {
                 + "   return $;", //
             "return messageRead?!messageFlagged?mReadColorChip:mFlaggedReadColorChip:!messageFlagged?mUnreadColorChip:mFlaggedUnreadColorChip;" },
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -98,12 +91,12 @@ public class DeclarationReturnTest {
       final VariableDeclarationFragment f = asMe();
       final ASTRewrite r = ASTRewrite.create(f.getAST());
       final Expression initializer = f.getInitializer();
-      assertNotNull(initializer);
-      assertNotNull(Extract.nextStatement(f));
-      final ReturnStatement s = Extract.nextReturn(f);
-      assertNotNull(s);
-      assertTrue(same(f.getName(), Extract.expression(s)));
-      r.remove(Extract.statement(f), null);
+      azzert.notNull(initializer);
+      azzert.notNull(extract.nextStatement(f));
+      final ReturnStatement s = extract.nextReturn(f);
+      azzert.notNull(s);
+      azzert.aye(same(f.getName(), extract.expression(s)));
+      r.remove(extract.statement(f), null);
       r.replace(s, Subject.operand(initializer).toReturn(), null);
     }
   }

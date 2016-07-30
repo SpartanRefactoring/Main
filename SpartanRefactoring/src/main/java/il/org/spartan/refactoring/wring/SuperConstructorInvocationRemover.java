@@ -1,17 +1,17 @@
 package il.org.spartan.refactoring.wring;
 
-import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Rewrite;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
  * A wring to remove <code>super()</code> calls which take no arguments, as
  * typically created by Eclipse's template for constructors.
  *
- * @author Daniel Mittelman? 
+ * @author Daniel Mittelman?
  * @since 2015-08-26
  */
 public class SuperConstructorInvocationRemover extends Wring<SuperConstructorInvocation> {
@@ -29,6 +29,6 @@ public class SuperConstructorInvocationRemover extends Wring<SuperConstructorInv
     return "Remove empty 'super()' invocation";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REFACTOR_INEFFECTIVE;
+    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

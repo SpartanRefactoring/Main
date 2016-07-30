@@ -1,9 +1,8 @@
 package il.org.spartan.refactoring.utils;
 
-import java.util.Iterator;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * A class to search in the ancestry line of a given node.
@@ -16,7 +15,8 @@ public abstract class AncestorSearch {
    * Factory method, returning an instance which can search by the integer
    * present on a node.
    *
-   * @param type JD
+   * @param type
+   *          JD
    * @return a newly created instance
    * @see ASTNode#getNodeType()
    */
@@ -26,7 +26,8 @@ public abstract class AncestorSearch {
   /**
    * Factory method, returning an instance which can search by a node class
    *
-   * @param c JD
+   * @param c
+   *          JD
    * @return a newly created instance
    * @see ASTNode#getNodeType()
    */
@@ -34,13 +35,15 @@ public abstract class AncestorSearch {
     return new ByNodeClass(c);
   }
   /**
-   * @param n JD
+   * @param n
+   *          JD
    * @return the closest ancestor whose type matches the given type.
    */
   public abstract ASTNode from(final ASTNode n);
 
   static class ByNodeClass extends AncestorSearch {
     private final Class<? extends ASTNode> clazz;
+
     public ByNodeClass(final Class<? extends ASTNode> clazz) {
       this.clazz = clazz;
     }
@@ -57,7 +60,9 @@ public abstract class AncestorSearch {
     public ByNodeType(final int type) {
       this.type = type;
     }
+
     final int type;
+
     @Override public ASTNode from(final ASTNode n) {
       if (n != null)
         for (ASTNode $ = n.getParent(); $ != null; $ = $.getParent())
@@ -66,32 +71,31 @@ public abstract class AncestorSearch {
       return null;
     }
   }
+
   public static Until until(final ASTNode n) {
     return new Until(n);
   }
 
   public static class Until {
     final ASTNode until;
+
     Until(final ASTNode until) {
       this.until = until;
     }
     public Iterable<ASTNode> ancestors(final SimpleName n) {
-      return new Iterable<ASTNode>() {
-        @Override public Iterator<ASTNode> iterator() {
-          return new Iterator<ASTNode>() {
-            ASTNode next = n;
-            @Override public boolean hasNext() {
-              return next != null;
-            }
-            @Override public ASTNode next() {
-              final ASTNode $ = next;
-              next = next == until ? null : next.getParent();
-              return $;
-            }
-            @Override public void remove() {
-              throw new UnsupportedOperationException();
-            }
-          };
+      return () -> new Iterator<ASTNode>() {
+        ASTNode next = n;
+
+        @Override public boolean hasNext() {
+          return next != null;
+        }
+        @Override public ASTNode next() {
+          final ASTNode $ = next;
+          next = next == until ? null : next.getParent();
+          return $;
+        }
+        @Override public void remove() {
+          throw new UnsupportedOperationException();
         }
       };
     }

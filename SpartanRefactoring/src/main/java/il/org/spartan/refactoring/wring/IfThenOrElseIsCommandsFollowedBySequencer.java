@@ -1,46 +1,29 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.asBlock;
-import static il.org.spartan.refactoring.utils.Funcs.elze;
-import static il.org.spartan.refactoring.utils.Funcs.then;
-import static il.org.spartan.refactoring.utils.Restructure.duplicateInto;
-import static il.org.spartan.refactoring.wring.Wrings.addAllReplacing;
-import static il.org.spartan.refactoring.wring.Wrings.makeShorterIf;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Restructure.*;
+import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.wring.Wrings.*;
 
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.Rewrite;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
- * A {@link Wring} to convert <code> f() {
-  x++;
-  y++;
-  if (a) {
-     i++;
-     j++;
-     k++;
-  }
-}</code> into <code>if (x) {
- *   f();
- *   return a;
- * }
- * g();</code>
+ * A {@link Wring} to convert <code> f() { x++; y++; if (a) { i++; j++; k++; }
+ * }</code> into <code>if (x) { f(); return a; } g();</code>
  *
  * @author Yossi Gil
  * @since 2015-07-29
  */
 public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfStatement> {
   static boolean endsWithSequencer(final Statement s) {
-    return Is.sequencer(Extract.lastStatement(s));
+    return Is.sequencer(extract.lastStatement(s));
   }
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Remove redundant else (possibly after inverting if statement)";
@@ -49,16 +32,16 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
     return new Rewrite(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final IfStatement shorterIf = makeShorterIf(s);
-        final List<Statement> remainder = Extract.statements(elze(shorterIf));
+        final List<Statement> remainder = extract.statements(elze(shorterIf));
         shorterIf.setElseStatement(null);
         final Block parent = asBlock(s.getParent());
         final Block newParent = s.getAST().newBlock();
         if (parent != null) {
-          addAllReplacing(newParent.statements(), parent.statements(), s, shorterIf, remainder);
+          addAllReplacing(statements(newParent), statements(parent), s, shorterIf, remainder);
           r.replace(parent, newParent, g);
         } else {
-          newParent.statements().add(shorterIf);
-          duplicateInto(remainder, newParent.statements());
+          statements(newParent).add(shorterIf);
+          duplicateInto(remainder, statements(newParent));
           r.replace(s, newParent, g);
         }
       }
@@ -68,6 +51,6 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
     return elze(s) != null && (endsWithSequencer(then(s)) || endsWithSequencer(elze(s)));
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.SIMPLIFY_NESTED_BLOCKS;
+    return WringGroup.SIMPLIFY_NESTED_BLOCKS;
   }
 }

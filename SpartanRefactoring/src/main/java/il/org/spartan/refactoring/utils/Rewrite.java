@@ -1,11 +1,10 @@
 package il.org.spartan.refactoring.utils;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
-import il.org.spartan.utils.Range;
+import il.org.spartan.utils.*;
 
 /**
  * A function object representing a sequence of operations on an
@@ -19,13 +18,16 @@ public abstract class Rewrite extends Range {
   public final String description;
   /** The line number of the first character to be rewritten **/
   public int lineNumber = -1;
+
   /**
    * Instantiates this class
    *
-   * @param description a textual description of the changes described by this
-   *          instance
-   * @param n the node on which change is to be carried out
-   * @param ns additional nodes, defining the scope of this action.
+   * @param description
+   *          a textual description of the changes described by this instance
+   * @param n
+   *          the node on which change is to be carried out
+   * @param ns
+   *          additional nodes, defining the scope of this action.
    */
   public Rewrite(final String description, final ASTNode n, final ASTNode... ns) {
     this(description, range(n, ns));
@@ -39,7 +41,8 @@ public abstract class Rewrite extends Range {
    * A factory function that converts a sequence of ASTNodes into a
    * {@link Range}
    *
-   * @param n arbitrary
+   * @param n
+   *          arbitrary
    * @param ns
    */
   static Range range(final ASTNode n, final ASTNode... ns) {
@@ -58,8 +61,10 @@ public abstract class Rewrite extends Range {
   /**
    * Convert the rewrite into changes on an {@link ASTRewrite}
    *
-   * @param r where to place the changes
-   * @param g to be associated with these changes
+   * @param r
+   *          where to place the changes
+   * @param g
+   *          to be associated with these changes
    */
   public abstract void go(ASTRewrite r, TextEditGroup g);
 }

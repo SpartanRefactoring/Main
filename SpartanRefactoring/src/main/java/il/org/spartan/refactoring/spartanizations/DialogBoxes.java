@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 /**
  * A class to manage dialog boxes and other GUI elements.
@@ -13,8 +12,10 @@ public class DialogBoxes {
   private static final String NAME = "Spartanization";
   private static final String ICON_PATH = "/src/main/icons/spartan-warrior64.gif";
   private static final ImageIcon icon = new ImageIcon(new DialogBoxes().getClass().getResource(ICON_PATH));
+
   /**
-   * @param message What to announce
+   * @param message
+   *          What to announce
    * @return <code><b>null</b></code>
    */
   public static final Void announce(final Object message) {

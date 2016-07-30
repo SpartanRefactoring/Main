@@ -1,10 +1,11 @@
 package il.org.spartan.refactoring.utils;
 
 import java.util.*;
-import java.util.Map.Entry;
+import java.util.Map.*;
 
 class ChainStringToIntegerMap {
   public Map<String, Integer> inner = new HashMap<>();
+
   public boolean containsKey(final String key) {
     return inner.containsKey(key);
   }
@@ -24,7 +25,7 @@ class ChainStringToIntegerMap {
     return inner.keySet();
   }
   public ChainStringToIntegerMap put(final String key, final int value) {
-    assert!inner.containsKey(key);
+    assert !inner.containsKey(key);
     inner.put(key, new Integer(value));
     return this;
   }

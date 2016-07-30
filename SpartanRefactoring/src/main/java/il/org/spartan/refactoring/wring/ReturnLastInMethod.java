@@ -1,25 +1,22 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.asBlock;
-import static il.org.spartan.utils.Utils.lastIn;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.utils.Utils.*;
 
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.ReturnStatement;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Rewrite;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
- * A {@link Wring} that removes empty return statements, provided that 
- * they are last in method.
+ * A {@link Wring} that removes empty return statements, provided that they are
+ * last in method.
  *
  * @author Yossi Gil
  * @since 2015-7-17
  */
-
 public final class ReturnLastInMethod extends Wring<ReturnStatement> {
   @Override String description(@SuppressWarnings("unused") final ReturnStatement __) {
     return "Remove redundant return statement";
@@ -36,6 +33,6 @@ public final class ReturnLastInMethod extends Wring<ReturnStatement> {
         };
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REFACTOR_INEFFECTIVE;
+    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }
