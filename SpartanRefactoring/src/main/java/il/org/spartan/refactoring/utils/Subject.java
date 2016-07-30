@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.expose.*;
 
 import java.util.*;
 
@@ -139,7 +140,7 @@ import org.eclipse.jdt.core.dom.*;
       assert operands.size() >= 2;
       final InfixExpression $ = Subject.pair(operands.get(0), operands.get(1)).to(o);
       for (int i = 2; i < operands.size(); ++i)
-        $.extendedOperands().add(new Plant(operands.get(i)).into($));
+        extendedOperands($).add(new Plant(operands.get(i)).into($));
       return $;
     }
   }
@@ -155,7 +156,7 @@ import org.eclipse.jdt.core.dom.*;
     }
     public Block toBlock() {
       final Block $ = ast.newBlock();
-      $.statements().addAll(inner);
+      expose.statements($).addAll(inner);
       return $;
     }
     public Statement toOptionalBlock() {
