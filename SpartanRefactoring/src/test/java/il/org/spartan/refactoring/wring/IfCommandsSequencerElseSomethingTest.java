@@ -5,7 +5,6 @@ import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.utils.Utils.*;
 import static org.hamcrest.text.IsEqualIgnoringWhiteSpace.*;
-import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -35,6 +34,15 @@ import il.org.spartan.utils.Utils;
 public class IfCommandsSequencerElseSomethingTest {
   static final IfThenOrElseIsCommandsFollowedBySequencer WRING = new IfThenOrElseIsCommandsFollowedBySequencer();
 
+  static public void fail(String message) {
+    if (message == null) {
+      throw new AssertionError();
+    }
+    throw new AssertionError(message);
+  }
+  static public void fail() {
+    fail(null);
+  }
   @Test public void checkSteps() {
     final Statement s = asSingle("if (a) return a = b; else a = c;");
     azzert.notNull(s);

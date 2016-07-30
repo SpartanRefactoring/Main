@@ -4,7 +4,6 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
-import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -84,6 +83,15 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
     @Parameters(name = DESCRIPTION) //
     public static Collection<Object[]> cases() {
       return collect(cases);
+    }
+    static public void fail(String message) {
+      if (message == null) {
+        throw new AssertionError();
+      }
+      throw new AssertionError(message);
+    }
+    static public void fail() {
+      fail(null);
     }
     static Document rewrite(final Spartanization s, final CompilationUnit u, final Document d) {
       try {
