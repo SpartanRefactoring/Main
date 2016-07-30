@@ -8,11 +8,13 @@ package il.org.spartan.refactoring.utils;
  * @author Yossi Gil
  * @since 2015-07-16
  */
-public enum As {;
+public enum As {
+  ;
   /**
    * Converts a boolean into a bit value
    *
-   * @param $ JD
+   * @param $
+   *          JD
    * @return 1 if the parameter is <code><b>true</b></code>, 0 if it is
    *         <code><b>false</b></code>
    */

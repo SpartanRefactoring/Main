@@ -1,28 +1,10 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.refactoring.utils.Funcs.duplicate;
-import static il.org.spartan.refactoring.utils.Funcs.logicalNot;
-import static il.org.spartan.refactoring.utils.Funcs.rebase;
+import static il.org.spartan.refactoring.utils.Funcs.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.AST;
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Assignment;
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.ConditionalExpression;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.ExpressionStatement;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.ParenthesizedExpression;
-import org.eclipse.jdt.core.dom.PostfixExpression;
-import org.eclipse.jdt.core.dom.PrefixExpression;
-import org.eclipse.jdt.core.dom.ReturnStatement;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.ThrowStatement;
+import org.eclipse.jdt.core.dom.*;
 
 // TODO: document this class
 @SuppressWarnings("javadoc") public class Subject {
@@ -53,6 +35,7 @@ import org.eclipse.jdt.core.dom.ThrowStatement;
 
   public static class Claimer {
     protected final AST ast;
+
     public Claimer(final ASTNode n) {
       ast = n == null ? null : n.getAST();
     }
@@ -67,6 +50,7 @@ import org.eclipse.jdt.core.dom.ThrowStatement;
 
   public static class Operand extends Claimer {
     private final Expression inner;
+
     Operand(final Expression inner) {
       super(inner);
       this.inner = claim(inner);
@@ -110,6 +94,7 @@ import org.eclipse.jdt.core.dom.ThrowStatement;
 
   public static class Pair extends Claimer {
     final Expression left, right;
+
     Pair(final Expression left, final Expression right) {
       super(left);
       this.left = claim(left);
@@ -143,6 +128,7 @@ import org.eclipse.jdt.core.dom.ThrowStatement;
 
   public static class Several extends Claimer {
     private final List<Expression> operands;
+
     public Several(final List<Expression> operands) {
       super(operands.get(0));
       this.operands = new ArrayList<>();
@@ -160,6 +146,7 @@ import org.eclipse.jdt.core.dom.ThrowStatement;
 
   public static class SeveralStatements extends Claimer {
     private final List<Statement> inner;
+
     public SeveralStatements(final List<Statement> inner) {
       super(inner.isEmpty() ? null : inner.get(0));
       this.inner = new ArrayList<>();
@@ -189,6 +176,7 @@ import org.eclipse.jdt.core.dom.ThrowStatement;
   public static class StatementPair extends Claimer {
     private final Statement elze;
     private final Statement then;
+
     StatementPair(final Statement then, final Statement elze) {
       super(then);
       this.then = claim(then);

@@ -1,24 +1,17 @@
 package il.org.spartan.refactoring.application;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Set;
-import java.util.TreeSet;
+import java.io.*;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.ASTVisitor;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.Name;
-import org.eclipse.jdt.core.dom.QualifiedName;
-import org.eclipse.jdt.core.dom.SimpleName;
-import org.eclipse.jdt.core.dom.SimpleType;
+import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.files.FilesGenerator;
-import il.org.spartan.refactoring.utils.Funcs;
-import il.org.spartan.refactoring.utils.MakeAST;
-import il.org.spartan.utils.FileUtils;
+import il.org.spartan.files.*;
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.utils.*;
 
 public class TypeNamesCollector {
   private static Set<String> basket = new TreeSet<>();
+
   public static void main(final String[] where) {
     collect(where.length != 0 ? where : new String[] { "." });
     for (final String s : basket)

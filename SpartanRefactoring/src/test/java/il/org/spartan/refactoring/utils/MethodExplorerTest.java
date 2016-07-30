@@ -2,36 +2,36 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.hamcrest.CoreMatchers.is;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.ReturnStatement;
-import org.junit.Test;
+import org.eclipse.jdt.core.dom.*;
+import org.junit.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) public class MethodExplorerTest {
   @Test public void localVariablesCatchExpression() {
-    assertThat(new MethodExplorer(
-        Into.d("" + "  void f() {\n" + "    try {\n" + "      f();\n" + "    } catch (final Exception|RuntimeException e) {\n" + "      f();\n" + "    }\n" + "  }"))
-            .localVariables().size(),
+    assertThat(
+        new MethodExplorer(Into.d("" + "  void f() {\n" + "    try {\n" + "      f();\n"
+            + "    } catch (final Exception|RuntimeException e) {\n" + "      f();\n" + "    }\n" + "  }")).localVariables().size(),
         is(1));
   }
   @Test public void localVariablesExtendedForLoop() {
-    assertThat(
-        new MethodExplorer(Into.d("" + "  int sum(final int is[]) {\n" + "    int $ = 0;\n" + "    for (final int i : is)\n" + "      $ += i;\n" + "    return $;\n" + "  } "))
-            .localVariables().size(),
-        is(2));
+    assertThat(new MethodExplorer(Into.d("" + "  int sum(final int is[]) {\n" + "    int $ = 0;\n" + "    for (final int i : is)\n"
+        + "      $ += i;\n" + "    return $;\n" + "  } ")).localVariables().size(), is(2));
   }
   @Test public void localVariablesForLoopNoVariable() {
     assertThat(new MethodExplorer(Into.d("  int f() {\n" + "  for (f(); i*j <10; i += j++);  }")).localVariables().size(), is(0));
   }
   @Test public void localVariablesForLoopOneVariable() {
-    assertThat(new MethodExplorer(Into.d("  int f() {\n" + "  for (int i = 0; i*j <10; i += j++);  }")).localVariables().size(), is(1));
+    assertThat(new MethodExplorer(Into.d("  int f() {\n" + "  for (int i = 0; i*j <10; i += j++);  }")).localVariables().size(),
+        is(1));
   }
   @Test public void localVariablesForLoopTwoVariables() {
-    assertThat(new MethodExplorer(Into.d("  int f() {\n" + "  for (int i = 0, j = 2; i*j <10; i += j++);  }")).localVariables().size(), is(2));
+    assertThat(
+        new MethodExplorer(Into.d("  int f() {\n" + "  for (int i = 0, j = 2; i*j <10; i += j++);  }")).localVariables().size(),
+        is(2));
   }
   @Test public void localVariablesMultipleFragments() {
     assertThat(new MethodExplorer(Into.d("  int f() {\n" + "int a,b;\n" + "  }")).localVariables().size(), is(2));
@@ -41,19 +41,23 @@ import org.junit.Test;
   }
   @Test public void localVariablesNone() {
     assertThat(
-        new MethodExplorer(Into.d("  int f() {\n" + "    return new Object() {\n" + "      @Override public boolean equals(Object obj) {\n" + "        return super.equals(obj);\n"
-            + "      }\n" + "      @Override public int hashCode() {\n" + "        return super.hashCode();\n" + "      }\n" + "    }.hashCode();\n" + "  }")).localVariables()
-                .size(),
+        new MethodExplorer(
+            Into.d("  int f() {\n" + "    return new Object() {\n" + "      @Override public boolean equals(Object obj) {\n"
+                + "        return super.equals(obj);\n" + "      }\n" + "      @Override public int hashCode() {\n"
+                + "        return super.hashCode();\n" + "      }\n" + "    }.hashCode();\n" + "  }")).localVariables().size(),
         is(0));
   }
   @Test public void localVariablesRepeatedNestedFragments() {
-    assertThat(new MethodExplorer(Into.d("  int f() {\n" + "int a,b,c,d;\n" + "  {int i, j;} {int i,j; int k;}")).localVariables().size(), is(9));
+    assertThat(
+        new MethodExplorer(Into.d("  int f() {\n" + "int a,b,c,d;\n" + "  {int i, j;} {int i,j; int k;}")).localVariables().size(),
+        is(9));
   }
   @Test public void localVariablesTryClause() {
     assertThat(new MethodExplorer(Into.d("" + "  void f() {\n" + "    final File f = new File(\"f\");\n"
-        + "    try (final InputStream s = new FileInputStream(f); final InputStreamReader is = new InputStreamReader(s)) {\n" + "      f();\n"
-        + "    } catch (final FileNotFoundException e) {\n" + "      e.printStackTrace();\n" + "    } catch (final IOException e) {\n" + "      e.printStackTrace();\n"
-        + "    } finally {\n" + "      f();\n" + "    }\n" + "  }\n")).localVariables().size(), is(5));
+        + "    try (final InputStream s = new FileInputStream(f); final InputStreamReader is = new InputStreamReader(s)) {\n"
+        + "      f();\n" + "    } catch (final FileNotFoundException e) {\n" + "      e.printStackTrace();\n"
+        + "    } catch (final IOException e) {\n" + "      e.printStackTrace();\n" + "    } finally {\n" + "      f();\n"
+        + "    }\n" + "  }\n")).localVariables().size(), is(5));
   }
   @Test public void localVariablesVanilla() {
     assertThat(new MethodExplorer(Into.d("  int f() {\n" + "int a;\n" + "  }")).localVariables().size(), is(1));
@@ -109,10 +113,10 @@ import org.junit.Test;
     assertThat(a.size(), is(2));
   }
   @Test public void returnStatementsWithNestedEnum() {
-    assertThat(
-        new MethodExplorer(Into.d("  int f() {\n" + "    return new Object() {\n" + "      @Override public boolean equals(Object obj) {\n" + "        return super.equals(obj);\n"
-            + "      }\n" + "      @Override public int hashCode() {\n" + "        return super.hashCode();\n" + "      }\n" + "    }.hashCode();\n" + "  }")).returnStatements()
-                .size(),
+    assertThat(new MethodExplorer(
+        Into.d("  int f() {\n" + "    return new Object() {\n" + "      @Override public boolean equals(Object obj) {\n"
+            + "        return super.equals(obj);\n" + "      }\n" + "      @Override public int hashCode() {\n"
+            + "        return super.hashCode();\n" + "      }\n" + "    }.hashCode();\n" + "  }")).returnStatements().size(),
         is(1));
   }
 }

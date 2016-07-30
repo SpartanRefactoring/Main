@@ -1,17 +1,15 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.elze;
+import static il.org.spartan.refactoring.utils.Funcs.*;
 
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.Subject;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
- * A {@link Wring} to convert <code>if (x) ; else  {a;}</code> into
- * <code>if (!x) a;</code>.
+ * A {@link Wring} to convert <code>if (x) ; else {a;}</code> into <code>if (!x)
+ * a;</code>.
  *
  * @author Yossi Gil
  * @since 2015-08-26
@@ -28,6 +26,6 @@ public final class IfEmptyThen extends Wring.ReplaceCurrentNode<IfStatement> {
     return "Invert conditional and remove vacuous 'then' branch";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REFACTOR_INEFFECTIVE;
+    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

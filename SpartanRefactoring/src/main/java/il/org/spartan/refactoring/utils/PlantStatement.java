@@ -1,10 +1,10 @@
 package il.org.spartan.refactoring.utils;
 
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.*;
 
 public class PlantStatement {
   private final Statement inner;
+
   public PlantStatement(final Statement inner) {
     this.inner = inner;
   }

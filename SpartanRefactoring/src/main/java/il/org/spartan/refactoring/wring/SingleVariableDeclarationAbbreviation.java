@@ -1,34 +1,24 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.same;
+import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.expose.*;
-import static il.org.spartan.refactoring.wring.Wrings.rename;
+import static il.org.spartan.refactoring.wring.Wrings.*;
 
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Javadoc;
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.SimpleName;
-import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
-import org.eclipse.jdt.core.dom.TagElement;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Funcs;
-import il.org.spartan.refactoring.utils.JavaTypeNameParser;
-import il.org.spartan.refactoring.utils.MethodExplorer;
-import il.org.spartan.refactoring.utils.Rewrite;
-import il.org.spartan.refactoring.utils.expose;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
  * A {@link Wring} that abbreviates the name of a method parameter that is a
  * viable candidate for abbreviation (meaning that its name is suitable for
  * renaming, and isn't the desired name). The abbreviated name is the first
- * character in the last word of the variable's name.
- * <p>
- * This wring is applied to all methods in the code, excluding constructors.
+ * character in the last word of the variable's name. <p> This wring is applied
+ * to all methods in the code, excluding constructors.
  *
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015/09/24
@@ -92,6 +82,6 @@ public class SingleVariableDeclarationAbbreviation extends Wring<SingleVariableD
     return d.isVarargs() ? "s" : "";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.RENAME_PARAMETERS;
+    return WringGroup.RENAME_PARAMETERS;
   }
 }

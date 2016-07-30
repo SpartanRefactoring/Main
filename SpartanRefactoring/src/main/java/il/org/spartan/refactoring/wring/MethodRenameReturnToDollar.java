@@ -1,24 +1,16 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.same;
-import static il.org.spartan.refactoring.wring.Wrings.rename;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.wring.Wrings.*;
 
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.PrimitiveType;
-import org.eclipse.jdt.core.dom.ReturnStatement;
-import org.eclipse.jdt.core.dom.SimpleName;
-import org.eclipse.jdt.core.dom.Type;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Collect;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.MethodExplorer;
-import il.org.spartan.refactoring.utils.Rewrite;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
  * @author Artium Nihamkin (original)
@@ -49,7 +41,7 @@ public class MethodRenameReturnToDollar extends Wring<MethodDeclaration> {
     };
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.RENAME_RETURN_VARIABLE;
+    return WringGroup.RENAME_RETURN_VARIABLE;
   }
 }
 
@@ -73,9 +65,11 @@ abstract class AbstractRenamePolicy {
     }
     return $;
   }
+
   final MethodDeclaration inner;
   final List<SimpleName> localVariables;
   final List<ReturnStatement> returnStatements;
+
   public AbstractRenamePolicy(final MethodDeclaration inner) {
     final MethodExplorer explorer = new MethodExplorer(this.inner = inner);
     localVariables = explorer.localVariables();
@@ -83,7 +77,8 @@ abstract class AbstractRenamePolicy {
   }
   abstract SimpleName innerSelectReturnVariable();
   final SimpleName selectReturnVariable() {
-    return returnStatements == null || localVariables == null || localVariables.isEmpty() || hasDollar(localVariables) ? null : innerSelectReturnVariable();
+    return returnStatements == null || localVariables == null || localVariables.isEmpty() || hasDollar(localVariables) ? null
+        : innerSelectReturnVariable();
   }
 }
 

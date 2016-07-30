@@ -1,31 +1,8 @@
 package il.org.spartan.refactoring.utils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
-import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.BodyDeclaration;
-import org.eclipse.jdt.core.dom.ClassInstanceCreation;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.FieldDeclaration;
-import org.eclipse.jdt.core.dom.ForStatement;
-import org.eclipse.jdt.core.dom.IExtendedModifier;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.Javadoc;
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.MethodInvocation;
-import org.eclipse.jdt.core.dom.ParameterizedType;
-import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.SuperMethodInvocation;
-import org.eclipse.jdt.core.dom.TagElement;
-import org.eclipse.jdt.core.dom.TryStatement;
-import org.eclipse.jdt.core.dom.Type;
-import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
-import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
-import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * An empty <code><b>enum</b></code> for fluent programming. The name should say
@@ -153,19 +130,19 @@ public enum expose {
   public static List<Statement> statements(final Block b) {
     return MakeAST.statements(b.statements());
   }
-  @SuppressWarnings("unchecked") public static List<BodyDeclaration> bodyDeclarations(AbstractTypeDeclaration d) {
+  @SuppressWarnings("unchecked") public static List<BodyDeclaration> bodyDeclarations(final AbstractTypeDeclaration d) {
     return d.bodyDeclarations();
   }
-  @SuppressWarnings("unchecked") public static List<BodyDeclaration> bodyDeclarations(AnonymousClassDeclaration d) {
+  @SuppressWarnings("unchecked") public static List<BodyDeclaration> bodyDeclarations(final AnonymousClassDeclaration d) {
     return d.bodyDeclarations();
   }
-  @SuppressWarnings("unchecked") public static List<IExtendedModifier> modifiers(VariableDeclarationStatement s) {
+  @SuppressWarnings("unchecked") public static List<IExtendedModifier> modifiers(final VariableDeclarationStatement s) {
     return s.modifiers();
   }
-  @SuppressWarnings("unchecked") public static List<TagElement> tags(Javadoc j) {
+  @SuppressWarnings("unchecked") public static List<TagElement> tags(final Javadoc j) {
     return j.tags();
   }
-  @SuppressWarnings("unchecked") public static List<ParameterizedType> typeArguments(ParameterizedType t) {
+  @SuppressWarnings("unchecked") public static List<ParameterizedType> typeArguments(final ParameterizedType t) {
     return t.typeArguments();
   }
 }

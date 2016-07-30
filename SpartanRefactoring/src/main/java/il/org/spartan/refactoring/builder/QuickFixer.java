@@ -1,12 +1,10 @@
 package il.org.spartan.refactoring.builder;
 
-import org.eclipse.core.resources.IMarker;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.ui.IMarkerResolution;
-import org.eclipse.ui.IMarkerResolutionGenerator;
+import org.eclipse.core.resources.*;
+import org.eclipse.core.runtime.*;
+import org.eclipse.ui.*;
 
-import il.org.spartan.refactoring.spartanizations.Spartanization;
-import il.org.spartan.refactoring.spartanizations.Spartanizations;
+import il.org.spartan.refactoring.spartanizations.*;
 
 /**
  * A quickfix generator for spartanization refactoring

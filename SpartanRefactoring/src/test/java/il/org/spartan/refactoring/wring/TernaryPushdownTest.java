@@ -1,16 +1,15 @@
 package il.org.spartan.refactoring.wring;
 
-import java.util.Collection;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.ConditionalExpression;
-import org.junit.FixMethodOrder;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.eclipse.jdt.core.dom.*;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.*;
 
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.utils.Utils;
+import il.org.spartan.refactoring.wring.AbstractWringTest.*;
+import il.org.spartan.utils.*;
 
 /**
  * Unit tests for {@link Wrings#ADDITION_SORTER}.
@@ -57,8 +56,10 @@ public class TernaryPushdownTest {
         new String[] { "not on PLUSPLUS", "a ? x++ :y++", }, //
         new String[] { "not on PLUS", "a ? +x : +y", }, //
         new String[] { "Into constructor not same arity", "a ? new S(a,new Integer(4),b) : new S(new Ineger(3))" }, //
-        new String[] { "field refernece", "externalImage ? R.string.webview_contextmenu_image_download_action : R.string.webview_contextmenu_image_save_action", }, //
+        new String[] { "field refernece",
+            "externalImage ? R.string.webview_contextmenu_image_download_action : R.string.webview_contextmenu_image_save_action", }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -89,11 +90,16 @@ public class TernaryPushdownTest {
         new String[] { "almost identical 4 addition last", "a ? b+d+e+y:b+d+e+x", "b+d+e+(a ? y : x)" }, //
         new String[] { "almost identical 4 addition second", "a ? b+x+e+f:b+y+e+f", "b+(a ? x : y)+e+f" }, //
         new String[] { "different target field refernce", "a ? 1 + x.a : 1 + y.a", "1+(a ? x.a : y.a)" }, //
-        new String[] { "Into constructor 1/1 location", "a.equal(b) ? new S(new Integer(4)) : new S(new Ineger(3))", "new S(a.equal(b)? new Integer(4): new Ineger(3))" }, //
-        new String[] { "Into constructor 1/3", "a.equal(b) ? new S(new Integer(4),a,b) : new S(new Ineger(3),a,b)", "new S(a.equal(b)? new Integer(4): new Ineger(3), a, b)" }, //
-        new String[] { "Into constructor 2/3", "a.equal(b) ? new S(a,new Integer(4),b) : new S(a, new Ineger(3), b)", "new S(a,a.equal(b)? new Integer(4): new Ineger(3),b)" }, //
-        new String[] { "Into constructor 3/3", "a.equal(b) ? new S(a,b,new Integer(4)) : new S(a,b,new Ineger(3))", "new S(a, b, a.equal(b)? new Integer(4): new Ineger(3))" }, //
+        new String[] { "Into constructor 1/1 location", "a.equal(b) ? new S(new Integer(4)) : new S(new Ineger(3))",
+            "new S(a.equal(b)? new Integer(4): new Ineger(3))" }, //
+        new String[] { "Into constructor 1/3", "a.equal(b) ? new S(new Integer(4),a,b) : new S(new Ineger(3),a,b)",
+            "new S(a.equal(b)? new Integer(4): new Ineger(3), a, b)" }, //
+        new String[] { "Into constructor 2/3", "a.equal(b) ? new S(a,new Integer(4),b) : new S(a, new Ineger(3), b)",
+            "new S(a,a.equal(b)? new Integer(4): new Ineger(3),b)" }, //
+        new String[] { "Into constructor 3/3", "a.equal(b) ? new S(a,b,new Integer(4)) : new S(a,b,new Ineger(3))",
+            "new S(a, b, a.equal(b)? new Integer(4): new Ineger(3))" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *

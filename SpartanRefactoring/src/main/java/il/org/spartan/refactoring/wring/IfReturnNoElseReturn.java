@@ -1,18 +1,13 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.then;
+import static il.org.spartan.refactoring.utils.Funcs.*;
 
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.ReturnStatement;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.Subject;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
  * A {@link Wring} to convert <code>if (x) return foo(); return bar();</code>
@@ -35,7 +30,8 @@ public final class IfReturnNoElseReturn extends Wring.ReplaceToNextStatement<IfS
     if (r2 == null)
       return null;
     final Expression e2 = Extract.core(r2.getExpression());
-    return e2 == null ? null : Wrings.replaceTwoStatements(r, s, Subject.operand(Subject.pair(e1, e2).toCondition(s.getExpression())).toReturn(), g);
+    return e2 == null ? null
+        : Wrings.replaceTwoStatements(r, s, Subject.operand(Subject.pair(e1, e2).toCondition(s.getExpression())).toReturn(), g);
   }
   @Override boolean scopeIncludes(final IfStatement s) {
     return Is.vacuousElse(s) && Extract.returnStatement(then(s)) != null && Extract.nextReturn(s) != null;
@@ -44,6 +40,6 @@ public final class IfReturnNoElseReturn extends Wring.ReplaceToNextStatement<IfS
     return "Consolidate into a single 'return'";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.IF_TO_TERNARY;
+    return WringGroup.IF_TO_TERNARY;
   }
 }

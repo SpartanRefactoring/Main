@@ -1,25 +1,16 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.expose.*;
-import static il.org.spartan.refactoring.wring.Wrings.rename;
+import static il.org.spartan.refactoring.wring.Wrings.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.SimpleName;
-import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Funcs;
-import il.org.spartan.refactoring.utils.JavaTypeNameParser;
-import il.org.spartan.refactoring.utils.MethodExplorer;
-import il.org.spartan.refactoring.utils.Rewrite;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
  * A {@link Wring} that abbreviates the names of variables that have a generic
@@ -65,7 +56,8 @@ import il.org.spartan.refactoring.utils.Rewrite;
         $.add(d);
     return $.size() != 0 ? $ : null;
   }
-  private static boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m, final Collection<SimpleName> newNames) {
+  private static boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m,
+      final Collection<SimpleName> newNames) {
     if (Funcs.shortName(d.getType()) == null)
       return false;
     final MethodExplorer e = new MethodExplorer(m);
@@ -75,7 +67,7 @@ import il.org.spartan.refactoring.utils.Rewrite;
     for (final SimpleName n : newNames)
       if (n.getIdentifier().equals(Funcs.shortName(d.getType())))
         return false;
-    for (final SingleVariableDeclaration n : (List<SingleVariableDeclaration>) parameters(m))
+    for (final SingleVariableDeclaration n : parameters(m))
       if (n.getName().getIdentifier().equals(Funcs.shortName(d.getType())))
         return false;
     return !m.getName().getIdentifier().equalsIgnoreCase(Funcs.shortName(d.getType()));
@@ -91,6 +83,6 @@ import il.org.spartan.refactoring.utils.Rewrite;
     return d.isVarargs() ? "s" : "";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.RENAME_PARAMETERS;
+    return WringGroup.RENAME_PARAMETERS;
   }
 }
