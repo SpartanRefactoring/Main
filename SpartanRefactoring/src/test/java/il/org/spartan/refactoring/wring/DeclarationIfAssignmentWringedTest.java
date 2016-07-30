@@ -3,18 +3,31 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.hamcrest.CoreMatchers.is;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
 import static il.org.spartan.hamcrest.OrderingComparison.greaterThanOrEqualTo;
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
+import static il.org.spartan.refactoring.utils.Funcs.elze;
+import static il.org.spartan.refactoring.utils.Funcs.left;
+import static il.org.spartan.refactoring.utils.Funcs.right;
+import static il.org.spartan.refactoring.utils.Funcs.same;
+import static il.org.spartan.refactoring.utils.Funcs.then;
 import static il.org.spartan.utils.Utils.compressSpaces;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.*;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.Collection;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.Document;
@@ -27,14 +40,13 @@ import org.junit.runners.MethodSorters;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
+
 import il.org.spartan.refactoring.spartanizations.TESTUtils;
 import il.org.spartan.refactoring.spartanizations.Wrap;
-
-import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.wring.DeclarationInitializerIfAssignment;
-import il.org.spartan.refactoring.wring.Toolbox;
-import il.org.spartan.refactoring.wring.Trimmer;
-import il.org.spartan.refactoring.wring.Wring;
+import il.org.spartan.refactoring.utils.Extract;
+import il.org.spartan.refactoring.utils.Is;
+import il.org.spartan.refactoring.utils.MakeAST;
+import il.org.spartan.refactoring.utils.Subject;
 import il.org.spartan.utils.Utils;
 
 @SuppressWarnings({ "javadoc" }) //
@@ -124,7 +136,7 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     if (inner == null)
       return;
     final Document d = new Document(Wrap.Statement.on(input));
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(d);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(d);
     final Document actual = TESTUtils.rewrite(new Trimmer(), u, d);
     final String peeled = Wrap.Statement.off(actual.get());
     if (expected.equals(peeled))
@@ -151,14 +163,14 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     r.remove(s, null);
   }
   @Override protected CompilationUnit asCompilationUnit() {
-    final CompilationUnit $ = (CompilationUnit) As.COMPILIATION_UNIT.ast(Wrap.Statement.on(input));
+    final CompilationUnit $ = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(Wrap.Statement.on(input));
     assertNotNull($);
     return $;
   }
   @Override protected VariableDeclarationFragment asMe() {
-    return Extract.firstVariableDeclarationFragment(As.STATEMENTS.ast(input));
+    return Extract.firstVariableDeclarationFragment(MakeAST.STATEMENTS.from(input));
   }
   private IfStatement findIf() {
-    return Extract.firstIfStatement(As.STATEMENTS.ast(input));
+    return Extract.firstIfStatement(MakeAST.STATEMENTS.from(input));
   }
 }

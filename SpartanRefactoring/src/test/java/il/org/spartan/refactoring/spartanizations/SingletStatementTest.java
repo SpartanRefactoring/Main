@@ -18,8 +18,8 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.refactoring.utils.Extract;
+import il.org.spartan.refactoring.utils.MakeAST;
 
 @SuppressWarnings({ "javadoc", "static-method" }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
@@ -61,7 +61,7 @@ public class SingletStatementTest {
     assertThat(singleStatement(s("{a();}")), notNullValue());
   }
   @Test public void peelIf() {
-    final ASTNode n = As.STATEMENTS.ast("{if (a) return b; else return c;}");
+    final ASTNode n = MakeAST.STATEMENTS.from("{if (a) return b; else return c;}");
     assertThat(n, notNullValue());
     final List<Statement> ss = Extract.statements(n);
     assertThat(ss, notNullValue());
@@ -69,7 +69,7 @@ public class SingletStatementTest {
     assertNotNull(Extract.singleStatement(n));
   }
   @Test public void peelIPlusPlus() {
-    final ASTNode n = As.STATEMENTS.ast("{i++;}");
+    final ASTNode n = MakeAST.STATEMENTS.from("{i++;}");
     assertThat(n, notNullValue());
     final List<Statement> ss = Extract.statements(n);
     assertThat(ss, notNullValue());

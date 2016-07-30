@@ -4,17 +4,28 @@ import static il.org.spartan.hamcrest.CoreMatchers.is;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
 import static il.org.spartan.hamcrest.MatcherAssert.iz;
 import static il.org.spartan.hamcrest.OrderingComparison.greaterThan;
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
+import static il.org.spartan.refactoring.utils.Funcs.left;
+import static il.org.spartan.refactoring.utils.Funcs.right;
+import static il.org.spartan.refactoring.utils.Funcs.same;
+import static il.org.spartan.refactoring.utils.Funcs.then;
 import static il.org.spartan.utils.Utils.compressSpaces;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.*;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.Collection;
 import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.Document;
@@ -27,14 +38,15 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+
 import il.org.spartan.refactoring.spartanizations.TESTUtils;
 import il.org.spartan.refactoring.spartanizations.Wrap;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.utils.Collect;
 import il.org.spartan.refactoring.utils.Collect.Of;
-import il.org.spartan.refactoring.wring.DeclarationInitializerIfAssignment;
-import il.org.spartan.refactoring.wring.Trimmer;
+import il.org.spartan.refactoring.utils.Extract;
+import il.org.spartan.refactoring.utils.Is;
+import il.org.spartan.refactoring.utils.MakeAST;
+import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.refactoring.wring.Wring.VariableDeclarationFragementAndStatement;
 import il.org.spartan.utils.Utils;
 
@@ -50,7 +62,7 @@ public class DeclarationIfAssginmentTest {
     assertNotNull(WRING);
     final String from = "int a = 2,b; if (b) a =3;";
     final String wrap = Wrap.Statement.on(from);
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(wrap);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
     final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(u);
     assertThat(f, notNullValue());
     assertThat(WRING.scopeIncludes(f), is(false));
@@ -58,7 +70,7 @@ public class DeclarationIfAssginmentTest {
   @Test public void traceForbiddenSiblingsExpanded() {
     final String from = "int a = 2,b; if (a+b) a =3;";
     final String wrap = Wrap.Statement.on(from);
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(wrap);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
     final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(u);
     assertThat(f, notNullValue());
     final Expression initializer = f.getInitializer();
@@ -123,7 +135,7 @@ public class DeclarationIfAssginmentTest {
       final String from = "int a = 2;\n if (b) a =3;";
       final String expected = "int a = b ? 3 : 2;";
       final Document d = new Document(Wrap.Statement.on(from));
-      final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(d);
+      final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(d);
       final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(u);
       assertThat(f, notNullValue());
       final ASTRewrite r = new Trimmer().createRewrite(u, null);
@@ -148,7 +160,7 @@ public class DeclarationIfAssginmentTest {
       final String from = "int a = 2; if (b) a =3;";
       final String expected = "int a = b ? 3 : 2;";
       final Document d = new Document(Wrap.Statement.on(from));
-      final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(d);
+      final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(d);
       final Document actual = TESTUtils.rewrite(new Trimmer(), u, d);
       final String peeled = Wrap.Statement.off(actual.get());
       if (expected.equals(peeled))

@@ -18,11 +18,8 @@ import org.junit.runners.MethodSorters;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.wring.IfReturnNoElseReturn;
-import il.org.spartan.refactoring.wring.Wring;
-import il.org.spartan.refactoring.wring.Wrings;
+import il.org.spartan.refactoring.utils.MakeAST;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 import il.org.spartan.utils.Utils;
@@ -40,19 +37,19 @@ public class IfReturnNoElseReturnTest {
   static final Wring<IfStatement> WRING = new IfReturnNoElseReturn();
   @Test public void checkFirstIfStatement1() {
     final String s = "if (a) return b; return a();";
-    final IfStatement i = Extract.firstIfStatement(As.STATEMENTS.ast(s));
+    final IfStatement i = Extract.firstIfStatement(MakeAST.STATEMENTS.from(s));
     assertNotNull(i);
     assertThat(i.toString(), WRING.scopeIncludes(i), is(true));
   }
   @Test public void checkFirstIfStatement2() {
     final String s = "if (a) return b; else return a();";
-    final IfStatement i = Extract.firstIfStatement(As.STATEMENTS.ast(s));
+    final IfStatement i = Extract.firstIfStatement(MakeAST.STATEMENTS.from(s));
     assertNotNull(i);
     assertThat(i.toString(), WRING.scopeIncludes(i), is(false));
   }
   @Test public void checkFirstIfStatement3() {
     final String s = "if (a) a= b; else a=c;";
-    final IfStatement i = Extract.firstIfStatement(As.STATEMENTS.ast(s));
+    final IfStatement i = Extract.firstIfStatement(MakeAST.STATEMENTS.from(s));
     assertNotNull(i);
     assertThat(i.toString(), WRING.scopeIncludes(i), is(false));
   }
@@ -164,7 +161,7 @@ public class IfReturnNoElseReturnTest {
       assertThat(Extract.nextReturn(asMe()), notNullValue());
     }
     @Test public void isfStatementElseIsEmpty() {
-      assertThat(Extract.statements(Extract.firstIfStatement(As.STATEMENTS.ast(input)).getElseStatement()).size(), is(0));
+      assertThat(Extract.statements(Extract.firstIfStatement(MakeAST.STATEMENTS.from(input)).getElseStatement()).size(), is(0));
     }
     @Test public void isIfStatement() {
       assertThat(input, asMe(), notNullValue());

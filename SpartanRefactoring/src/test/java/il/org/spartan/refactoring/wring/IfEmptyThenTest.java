@@ -13,7 +13,6 @@ import org.junit.Test;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Into;
 import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.wring.IfEmptyThen;
 
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public class IfEmptyThenTest {

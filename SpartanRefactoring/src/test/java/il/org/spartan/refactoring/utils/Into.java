@@ -7,11 +7,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.ConditionalExpression;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.PrefixExpression;
+import org.eclipse.jdt.core.dom.Statement;
 
 import il.org.spartan.refactoring.spartanizations.Wrap;
-import il.org.spartan.refactoring.utils.As;
-import il.org.spartan.refactoring.utils.Extract;
 
 /**
  * An empty <code><b>enum</b></code> for fluent programming. The name should say
@@ -70,7 +76,7 @@ public enum Into {
    * @return an {@link Expression} data structure representing the parameter.
    */
   public static Expression e(final String expression) {
-    return (Expression) As.EXPRESSION.ast(expression);
+    return (Expression) MakeAST.EXPRESSION.from(expression);
   }
   /**
    * Convert an array of {@link String} into a {@link List} of
@@ -119,7 +125,7 @@ public enum Into {
    */
   public static Statement s(final String statement) {
     assertThat(statement, notNullValue());
-    final ASTNode n = As.STATEMENTS.ast(statement);
+    final ASTNode n = MakeAST.STATEMENTS.from(statement);
     assertThat(statement, n, notNullValue());
     assertThat(statement, n, instanceOf(Statement.class));
     return (Statement) n;

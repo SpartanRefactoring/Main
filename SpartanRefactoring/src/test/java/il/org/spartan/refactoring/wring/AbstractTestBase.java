@@ -7,6 +7,7 @@ import java.util.Collection;
 
 import org.junit.Test;
 import org.junit.runners.Parameterized.Parameter;
+
 import il.org.spartan.refactoring.spartanizations.Wrap;
 
 @SuppressWarnings({ "javadoc" }) //

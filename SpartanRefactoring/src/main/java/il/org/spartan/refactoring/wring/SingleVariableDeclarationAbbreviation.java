@@ -1,16 +1,26 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.same;
+import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.refactoring.wring.Wrings.rename;
 
 import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Javadoc;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
+import org.eclipse.jdt.core.dom.TagElement;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.utils.Funcs;
+import il.org.spartan.refactoring.utils.JavaTypeNameParser;
+import il.org.spartan.refactoring.utils.MethodExplorer;
+import il.org.spartan.refactoring.utils.Rewrite;
+import il.org.spartan.refactoring.utils.expose;
 
 /**
  * A {@link Wring} that abbreviates the name of a method parameter that is a
@@ -44,7 +54,7 @@ public class SingleVariableDeclarationAbbreviation extends Wring<SingleVariableD
         final Javadoc j = m.getJavadoc();
         if (j == null)
           return;
-        final List<TagElement> ts = j.tags();
+        final List<TagElement> ts = expose.tags(j);
         if (ts == null)
           return;
         for (final TagElement t : ts) {
@@ -66,7 +76,7 @@ public class SingleVariableDeclarationAbbreviation extends Wring<SingleVariableD
     for (final SimpleName n : e.localVariables())
       if (n.getIdentifier().equals(Funcs.shortName(d.getType())))
         return false;
-    for (final SingleVariableDeclaration n : (List<SingleVariableDeclaration>) m.parameters())
+    for (final SingleVariableDeclaration n : parameters(m))
       if (n.getName().getIdentifier().equals(Funcs.shortName(d.getType())))
         return false;
     return !m.getName().getIdentifier().equalsIgnoreCase(Funcs.shortName(d.getType()));

@@ -1,18 +1,35 @@
 package il.org.spartan.refactoring.wring;
 
-import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static il.org.spartan.refactoring.utils.Extract.core;
+import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.refactoring.utils.Funcs.duplicate;
 import static il.org.spartan.refactoring.utils.Funcs.left;
 import static il.org.spartan.refactoring.utils.Funcs.same;
 import static il.org.spartan.refactoring.utils.Restructure.parenthesize;
+import static org.eclipse.jdt.core.dom.ASTNode.ASSIGNMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.CLASS_INSTANCE_CREATION;
+import static org.eclipse.jdt.core.dom.ASTNode.FIELD_ACCESS;
+import static org.eclipse.jdt.core.dom.ASTNode.INFIX_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.METHOD_INVOCATION;
+import static org.eclipse.jdt.core.dom.ASTNode.SUPER_METHOD_INVOCATION;
 
 import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.ClassInstanceCreation;
+import org.eclipse.jdt.core.dom.ConditionalExpression;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.FieldAccess;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.SuperMethodInvocation;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.utils.Extract;
+import il.org.spartan.refactoring.utils.Plant;
+import il.org.spartan.refactoring.utils.Precedence;
+import il.org.spartan.refactoring.utils.Subject;
 
 final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpression> {
   private static int findSingleDifference(final List<Expression> es1, final List<Expression> es2) {
@@ -31,8 +48,8 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
   private static Expression pushdown(final ConditionalExpression e, final ClassInstanceCreation e1, final ClassInstanceCreation e2) {
     if (!same(e1.getType(), e2.getType()) || !same(e1.getExpression(), e2.getExpression()))
       return null;
-    final List<Expression> es1 = e1.arguments();
-    final List<Expression> es2 = e2.arguments();
+    final List<Expression> es1 = arguments(e1);
+    final List<Expression> es2 = arguments(e2);
     if (es1.size() != es2.size())
       return null;
     final int i = findSingleDifference(es1, es2);
@@ -69,8 +86,8 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
   private static Expression pushdown(final ConditionalExpression e, final MethodInvocation e1, final MethodInvocation e2) {
     if (!same(e1.getName(), e2.getName()))
       return null;
-    final List<Expression> es1 = e1.arguments();
-    final List<Expression> es2 = e2.arguments();
+    final List<Expression> es1 = arguments(e1);
+    final List<Expression> es2 = arguments(e2);
     final Expression receiver1 = e1.getExpression();
     final Expression receiver2 = e2.getExpression();
     if (!same(receiver1, receiver2)) {
@@ -94,8 +111,8 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
   private static Expression pushdown(final ConditionalExpression e, final SuperMethodInvocation e1, final SuperMethodInvocation e2) {
     if (!same(e1.getName(), e2.getName()))
       return null;
-    final List<Expression> es1 = e1.arguments();
-    final List<Expression> es2 = e2.arguments();
+    final List<Expression> es1 = arguments(e1);
+    final List<Expression> es2 = arguments(e2);
     if (es1.size() != es2.size())
       return null;
     final int i = findSingleDifference(es1, es2);

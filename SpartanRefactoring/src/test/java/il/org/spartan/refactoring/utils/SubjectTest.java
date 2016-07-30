@@ -17,10 +17,14 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.PostfixExpression;
+import org.eclipse.jdt.core.dom.PrefixExpression;
+import org.eclipse.jdt.core.dom.Statement;
 import org.junit.Test;
 
-import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.utils.Subject.Pair;
 
 @SuppressWarnings({ "javadoc", "static-method" }) public class SubjectTest {

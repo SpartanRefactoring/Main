@@ -2,9 +2,12 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.hamcrest.CoreMatchers.is;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.refactoring.utils.Funcs.*;
-import static org.junit.Assert.assertNotNull;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.asSingle;
+import static il.org.spartan.refactoring.utils.Funcs.asIfStatement;
+import static il.org.spartan.refactoring.utils.Funcs.compatible;
+import static il.org.spartan.refactoring.utils.Funcs.elze;
+import static il.org.spartan.refactoring.utils.Funcs.then;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.Collection;
 
@@ -16,13 +19,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 
 import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.wring.IfAssignToFooElseAssignToFoo;
-import il.org.spartan.refactoring.wring.Wring;
-import il.org.spartan.refactoring.wring.Wrings;
+import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
+import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 import il.org.spartan.utils.Utils;
 
 /**

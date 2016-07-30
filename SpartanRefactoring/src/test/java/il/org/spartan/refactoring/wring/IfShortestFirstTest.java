@@ -18,9 +18,6 @@ import org.junit.runners.Parameterized.Parameters;
 
 import il.org.spartan.refactoring.spartanizations.Wrap;
 import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.wring.IfShortestFirst;
-import il.org.spartan.refactoring.wring.Wring;
-import il.org.spartan.refactoring.wring.Wrings;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 import il.org.spartan.utils.Utils;

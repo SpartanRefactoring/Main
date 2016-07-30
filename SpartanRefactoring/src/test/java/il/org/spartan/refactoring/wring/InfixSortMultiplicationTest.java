@@ -9,12 +9,19 @@ import static il.org.spartan.refactoring.utils.Into.i;
 import static il.org.spartan.refactoring.utils.Restructure.flatten;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.Collection;
 import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.Document;
@@ -31,7 +38,6 @@ import il.org.spartan.refactoring.utils.ExpressionComparator;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.LiteralParser;
 import il.org.spartan.refactoring.utils.LiteralParser.Types;
-import il.org.spartan.refactoring.wring.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Noneligible;
 import il.org.spartan.utils.Utils;
 

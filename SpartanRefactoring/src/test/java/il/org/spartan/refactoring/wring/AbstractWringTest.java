@@ -7,16 +7,34 @@ import static il.org.spartan.refactoring.spartanizations.TESTUtils.asSingle;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
 import static il.org.spartan.refactoring.utils.Funcs.asBlock;
 import static il.org.spartan.refactoring.utils.Funcs.asIfStatement;
-import static il.org.spartan.refactoring.utils.Into.*;
+import static il.org.spartan.refactoring.utils.Into.c;
+import static il.org.spartan.refactoring.utils.Into.e;
+import static il.org.spartan.refactoring.utils.Into.i;
+import static il.org.spartan.refactoring.utils.Into.p;
+import static il.org.spartan.refactoring.utils.Into.s;
 import static il.org.spartan.refactoring.utils.Restructure.flatten;
 import static il.org.spartan.utils.Utils.compressSpaces;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.ConditionalExpression;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.PrefixExpression;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.Document;
@@ -28,12 +46,9 @@ import org.junit.runners.Parameterized.Parameter;
 import il.org.spartan.refactoring.spartanizations.Spartanization;
 import il.org.spartan.refactoring.spartanizations.TESTUtils;
 import il.org.spartan.refactoring.spartanizations.Wrap;
-import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.refactoring.utils.Extract;
 import il.org.spartan.refactoring.utils.Funcs;
-import il.org.spartan.refactoring.wring.Toolbox;
-import il.org.spartan.refactoring.wring.Trimmer;
-import il.org.spartan.refactoring.wring.Wring;
+import il.org.spartan.refactoring.utils.MakeAST;
 import il.org.spartan.refactoring.wring.AbstractWringTest.WringedExpression.Conditional;
 import il.org.spartan.refactoring.wring.AbstractWringTest.WringedExpression.Infix;
 
@@ -82,7 +97,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     return $;
   }
   void assertLegible(final String expression) {
-    assertTrue(inner.eligible((N) As.EXPRESSION.ast(expression)));
+    assertTrue(inner.eligible((N) MakeAST.EXPRESSION.from(expression)));
   }
   void assertNotLegible(final Block b) {
     assertThat(inner.eligible((N) b), is(false));
@@ -220,7 +235,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
           assertThat(inner.scopeIncludes(asMe()), is(false));
       }
       @Override protected VariableDeclarationFragment asMe() {
-        return Extract.firstVariableDeclarationFragment(As.STATEMENTS.ast(input));
+        return Extract.firstVariableDeclarationFragment(MakeAST.STATEMENTS.from(input));
       }
     }
 
@@ -327,7 +342,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
        * first If statement in the input.
        */
       @Override protected IfStatement asMe() {
-        return Extract.firstIfStatement(As.STATEMENTS.ast(input));
+        return Extract.firstIfStatement(MakeAST.STATEMENTS.from(input));
       }
     }
 
@@ -357,7 +372,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       }
       @Override protected final CompilationUnit asCompilationUnit() {
         final String s = input;
-        final ASTNode $ = As.COMPILIATION_UNIT.ast(Wrap.Statement.on(s));
+        final ASTNode $ = MakeAST.COMPILATION_UNIT.from(Wrap.Statement.on(s));
         assertThat($, is(notNullValue()));
         assertThat($, is(instanceOf(CompilationUnit.class)));
         return (CompilationUnit) $;
@@ -565,7 +580,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     }
     @Override protected CompilationUnit asCompilationUnit() {
       final String s = input;
-      final ASTNode $ = As.COMPILIATION_UNIT.ast(Wrap.Expression.on(s));
+      final ASTNode $ = MakeAST.COMPILATION_UNIT.from(Wrap.Expression.on(s));
       assertThat($, is(notNullValue()));
       assertThat($, is(instanceOf(CompilationUnit.class)));
       return (CompilationUnit) $;
@@ -742,7 +757,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     }
     @Override protected final CompilationUnit asCompilationUnit() {
       final String s = input;
-      final ASTNode $ = As.COMPILIATION_UNIT.ast(Wrap.Statement.on(s));
+      final ASTNode $ = MakeAST.COMPILATION_UNIT.from(Wrap.Statement.on(s));
       assertThat($, is(notNullValue()));
       assertThat($, is(instanceOf(CompilationUnit.class)));
       return (CompilationUnit) $;
@@ -822,7 +837,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       if (input == null)
         return;
       final Document d = new Document(Wrap.Statement.on(input));
-      final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(d);
+      final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(d);
       final Document actual = TESTUtils.rewrite(wringer, u, d);
       final String peeled = Wrap.Statement.off(actual.get());
       if (expected.equals(peeled))
@@ -835,7 +850,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       assertSimilar(Wrap.Statement.on(expected), actual);
     }
     @Override protected CompilationUnit asCompilationUnit() {
-      final CompilationUnit $ = (CompilationUnit) As.COMPILIATION_UNIT.ast(Wrap.Statement.on(input));
+      final CompilationUnit $ = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(Wrap.Statement.on(input));
       assertNotNull($);
       return $;
     }
@@ -848,7 +863,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       return new Document(Wrap.Statement.on(input));
     }
     @Override protected VariableDeclarationFragment asMe() {
-      return Extract.firstVariableDeclarationFragment(As.STATEMENTS.ast(input));
+      return Extract.firstVariableDeclarationFragment(MakeAST.STATEMENTS.from(input));
     }
   }
 

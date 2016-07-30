@@ -6,7 +6,31 @@ import static il.org.spartan.utils.Utils.in;
 
 import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
+import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
+import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.CastExpression;
+import org.eclipse.jdt.core.dom.ClassInstanceCreation;
+import org.eclipse.jdt.core.dom.EnhancedForStatement;
+import org.eclipse.jdt.core.dom.EnumDeclaration;
+import org.eclipse.jdt.core.dom.FieldAccess;
+import org.eclipse.jdt.core.dom.FieldDeclaration;
+import org.eclipse.jdt.core.dom.ForStatement;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.PostfixExpression;
+import org.eclipse.jdt.core.dom.PrefixExpression;
+import org.eclipse.jdt.core.dom.QualifiedName;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
+import org.eclipse.jdt.core.dom.SuperMethodInvocation;
+import org.eclipse.jdt.core.dom.Type;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 
 abstract class ScopeManager extends ASTVisitor {
   @Override public final void endVisit(@SuppressWarnings("unused") final AnnotationTypeDeclaration __) {
@@ -104,7 +128,7 @@ class UsesCollector extends HidingDepth {
   @Override public boolean visit(final MethodInvocation i) {
     ingore(i.getName());
     recurse(i.getExpression());
-    return recurse(i.arguments());
+    return recurse(expose.arguments(i));
   }
   @Override public boolean visit(final QualifiedName n) {
     return recurse(n.getQualifier());
@@ -115,7 +139,7 @@ class UsesCollector extends HidingDepth {
   }
   @Override public boolean visit(final SuperMethodInvocation i) {
     ingore(i.getName());
-    return recurse(i.arguments());
+    return recurse(expose.arguments(i));
   }
   @Override public boolean visit(final VariableDeclarationFragment f) {
     return !declaredIn(f) && recurse(f.getInitializer());
@@ -135,14 +159,14 @@ class UsesCollector extends HidingDepth {
   }
   @Override boolean go(final AbstractTypeDeclaration d) {
     ingore(d.getName());
-    return !declaredIn(d) && recurse(d.bodyDeclarations());
+    return !declaredIn(d) && recurse(expose.bodyDeclarations(d));
   }
   boolean go(final AnnotationTypeDeclaration d) {
     ingore(d.getName());
-    return !declaredIn(d) && recurse(d.bodyDeclarations());
+    return !declaredIn(d) && recurse(expose.bodyDeclarations(d));
   }
   @Override boolean go(final AnonymousClassDeclaration d) {
-    return !declaredIn(d) && recurse(d.bodyDeclarations());
+    return !declaredIn(d) && recurse(expose.bodyDeclarations(d));
   }
   @Override boolean go(final EnhancedForStatement s) {
     final SimpleName name = s.getParameter().getName();
@@ -205,7 +229,7 @@ class UsesCollector extends HidingDepth {
   private void ingore(@SuppressWarnings("unused") final SimpleName __) {
     // We simply ignore the parameter
   }
-  private boolean recurse(final List<ASTNode> ns) {
+  private boolean recurse(final List<? extends ASTNode> ns) {
     for (final ASTNode n : ns)
       recurse(n);
     return false;

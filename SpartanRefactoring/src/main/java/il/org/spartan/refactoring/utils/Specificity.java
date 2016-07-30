@@ -5,7 +5,10 @@ import static org.eclipse.jdt.core.dom.ASTNode.SIMPLE_NAME;
 
 import java.util.Comparator;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.PrefixExpression;
+import org.eclipse.jdt.core.dom.SimpleName;
 
 /**
  * @author Yossi Gil

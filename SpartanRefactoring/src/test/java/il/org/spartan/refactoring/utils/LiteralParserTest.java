@@ -9,7 +9,6 @@ import static org.hamcrest.text.IsEqualIgnoringWhiteSpace.equalToIgnoringWhiteSp
 
 import org.junit.Test;
 
-import il.org.spartan.refactoring.utils.LiteralParser;
 import il.org.spartan.refactoring.utils.LiteralParser.Types;
 
 @SuppressWarnings({ "static-method", "javadoc" }) public class LiteralParserTest {

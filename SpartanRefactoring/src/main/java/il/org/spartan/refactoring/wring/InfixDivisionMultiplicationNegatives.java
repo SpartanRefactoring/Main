@@ -1,7 +1,13 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Extract.core;
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.utils.Funcs.asInfixExpression;
+import static il.org.spartan.refactoring.utils.Funcs.duplicate;
+import static il.org.spartan.refactoring.utils.Funcs.left;
+import static il.org.spartan.refactoring.utils.Funcs.negationLevel;
+import static il.org.spartan.refactoring.utils.Funcs.peelNegation;
+import static il.org.spartan.refactoring.utils.Funcs.right;
 import static il.org.spartan.utils.Utils.in;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.DIVIDE;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.TIMES;
@@ -54,7 +60,7 @@ public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpre
     gather(core(left(e)), $);
     gather(core(right(e)), $);
     if (e.hasExtendedOperands())
-      gather(e.extendedOperands(), $);
+      gather(extendedOperands(e), $);
     return $;
   }
   private static List<Expression> gather(final List<Expression> es, final List<Expression> $) {

@@ -6,7 +6,6 @@ import static il.org.spartan.refactoring.wring.TernaryPushdown.pushdown;
 
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.Statement;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
