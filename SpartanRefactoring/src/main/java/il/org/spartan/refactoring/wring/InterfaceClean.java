@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.Modifier;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
 
 /**
  * A {@link Wring} to convert <code><b>abstract</b>abstract <b>interface</b> a

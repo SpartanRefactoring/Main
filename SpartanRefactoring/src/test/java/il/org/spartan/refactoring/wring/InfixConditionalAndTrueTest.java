@@ -19,9 +19,6 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.wring.InfixConditionalAndTrue;
-import il.org.spartan.refactoring.wring.Wring;
-import il.org.spartan.refactoring.wring.Wrings;
 import il.org.spartan.utils.Utils;
 
 /**

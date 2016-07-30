@@ -1,12 +1,47 @@
 package il.org.spartan.refactoring.utils;
+import static il.org.spartan.refactoring.utils.expose.*;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.utils.Funcs.left;
+import static il.org.spartan.refactoring.utils.Funcs.right;
+import static il.org.spartan.refactoring.utils.Funcs.same;
 import static il.org.spartan.utils.Utils.asArray;
 import static il.org.spartan.utils.Utils.in;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTMatcher;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.CastExpression;
+import org.eclipse.jdt.core.dom.ClassInstanceCreation;
+import org.eclipse.jdt.core.dom.DoStatement;
+import org.eclipse.jdt.core.dom.EnhancedForStatement;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.FieldAccess;
+import org.eclipse.jdt.core.dom.FieldDeclaration;
+import org.eclipse.jdt.core.dom.ForStatement;
+import org.eclipse.jdt.core.dom.InstanceofExpression;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.PostfixExpression;
+import org.eclipse.jdt.core.dom.PrefixExpression;
+import org.eclipse.jdt.core.dom.QualifiedName;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
+import org.eclipse.jdt.core.dom.TryStatement;
+import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.eclipse.jdt.core.dom.WhileStatement;
+import org.eclipse.jdt.internal.ui.text.correction.proposals.AssignToVariableAssistProposal;
+
 import il.org.spartan.utils.Utils;
 
 /**
@@ -105,7 +140,7 @@ public enum Collect {
         return consider(left(a));
       }
       @Override public boolean visit(final ForStatement s) {
-        return consider(s.initializers());
+        return consider(initializers(s));
       }
       @Override public boolean visit(final PostfixExpression it) {
         return !in(it.getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT) || consider(it.getOperand());
@@ -114,13 +149,13 @@ public enum Collect {
         return consider(it.getOperand());
       }
       @Override public boolean visit(final TryStatement s) {
-        return consider(s.resources());
+        return consider(resources(s));
       }
       @Override public boolean visit(final VariableDeclarationFragment f) {
         return add(f.getName());
       }
       @Override public boolean visit(final VariableDeclarationStatement s) {
-        addFragments(s.fragments());
+        addFragments(fragments(s));
         return true;
       }
       boolean add(final SimpleName candidate) {
@@ -135,10 +170,9 @@ public enum Collect {
         for (final VariableDeclarationFragment f : fs)
           add(f.getName());
       }
-      private boolean consider(final List<VariableDeclarationExpression> initializers) {
-        for (final Object o : initializers)
-          if (o instanceof VariableDeclarationExpression)
-            addFragments(((VariableDeclarationExpression) o).fragments());
+      private boolean consider(final List<? extends Expression> initializers) {
+        for (final Expression e : initializers)
+            addFragments(fragments(asVariableDeclarationExpression(e)));
         return true;
       }
     };
@@ -146,16 +180,16 @@ public enum Collect {
   static ASTVisitor declarationsCollector(final List<SimpleName> into, final ASTNode n) {
     return new MethodExplorer.IgnoreNestedMethods() {
       @Override public boolean visit(final ForStatement s) {
-        return consider(s.initializers());
+        return consider(initializers(s));
       }
       @Override public boolean visit(final TryStatement s) {
-        return consider(s.resources());
+        return consider(resources(s));
       }
       @Override public boolean visit(final VariableDeclarationFragment f) {
         return add(f.getName());
       }
       @Override public boolean visit(final VariableDeclarationStatement s) {
-        addFragments(s.fragments());
+        addFragments(fragments(s));
         return true;
       }
       boolean add(final SimpleName candidate) {
@@ -167,10 +201,9 @@ public enum Collect {
         for (final VariableDeclarationFragment f : fs)
           add(f.getName());
       }
-      private boolean consider(final List<VariableDeclarationExpression> initializers) {
-        for (final Object o : initializers)
-          if (o instanceof VariableDeclarationExpression)
-            addFragments(((VariableDeclarationExpression) o).fragments());
+      private boolean consider(final List<? extends Expression> es) {
+        for (final Expression e : es)
+            addFragments(fragments(asVariableDeclarationExpression(e)));
         return true;
       }
     };
@@ -281,7 +314,7 @@ public enum Collect {
         final List<VariableDeclarationFragment> $ = new ArrayList<>();
         classNode.accept(new ASTVisitor() {
           @Override public boolean visit(final FieldDeclaration d) {
-            $.addAll(d.fragments());
+            $.addAll(fragments(d));
             return false;
           }
         });

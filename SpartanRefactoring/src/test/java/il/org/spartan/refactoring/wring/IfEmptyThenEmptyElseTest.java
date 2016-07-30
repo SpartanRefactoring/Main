@@ -8,7 +8,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.Document;
@@ -17,8 +20,11 @@ import org.eclipse.text.edits.TextEdit;
 import org.junit.Test;
 
 import il.org.spartan.refactoring.spartanizations.Wrap;
-import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.wring.IfEmptyThenEmptyElse;
+import il.org.spartan.refactoring.utils.Extract;
+import il.org.spartan.refactoring.utils.Into;
+import il.org.spartan.refactoring.utils.Is;
+import il.org.spartan.refactoring.utils.MakeAST;
+import il.org.spartan.refactoring.utils.Rewrite;
 
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public class IfEmptyThenEmptyElseTest {
@@ -43,7 +49,7 @@ public class IfEmptyThenEmptyElseTest {
   @Test public void runGo() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = Wrap.Statement.on(INPUT + "");
     final Document d = new Document(input);
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(d.get());
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(d.get());
     final IfStatement s = Extract.firstIfStatement(u);
     assertThat(s, iz("if(b);else;"));
     final ASTRewrite r = ASTRewrite.create(u.getAST());
@@ -53,7 +59,7 @@ public class IfEmptyThenEmptyElseTest {
     assertNotNull(e);
     assertThat(e.getChildren().length, greaterThan(0));
     e.apply(d);
-    assertNull(d.get(), Extract.firstIfStatement(As.COMPILIATION_UNIT.ast(d.get())));
+    assertNull(d.get(), Extract.firstIfStatement(MakeAST.COMPILATION_UNIT.from(d.get())));
   }
   @Test public void scopeIncludes() {
     assertTrue(WRING.scopeIncludes(IF));

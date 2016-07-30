@@ -7,7 +7,10 @@ import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar
 import static il.org.spartan.refactoring.utils.Restructure.flatten;
 import static il.org.spartan.utils.Utils.compressSpaces;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 import java.util.Collection;
 import java.util.List;
@@ -29,12 +32,9 @@ import org.junit.runners.Parameterized.Parameters;
 
 import il.org.spartan.refactoring.spartanizations.Spartanization;
 import il.org.spartan.refactoring.spartanizations.Wrap;
-import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.refactoring.utils.ExpressionComparator;
 import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.wring.InfixComparisonBooleanLiteral;
-import il.org.spartan.refactoring.wring.Trimmer;
-import il.org.spartan.refactoring.wring.Wrings;
+import il.org.spartan.refactoring.utils.MakeAST;
 import il.org.spartan.utils.Utils;
 
 /**
@@ -53,7 +53,7 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
   @Test public void removeParenthesis() throws MalformedTreeException, BadLocationException {
     final String s = " (2) == true";
     final String wrap = Wrap.Expression.on(s);
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(wrap);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
     assertNotNull(u);
     final Document d = new Document(wrap);
     assertNotNull(d);

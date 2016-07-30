@@ -1,11 +1,16 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.duplicate;
+import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.refactoring.utils.Funcs.parent;
 
 import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.SynchronizedStatement;
+import org.eclipse.jdt.core.dom.TryStatement;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 import il.org.spartan.refactoring.utils.Is;
@@ -22,7 +27,7 @@ public class BlockSingleton extends Wring.ReplaceCurrentNode<Block> {
     final ASTNode parent = parent(b);
     if (!(parent instanceof Statement) || parent instanceof TryStatement || parent instanceof SynchronizedStatement)
       return null;
-    final List<Statement> ss = b.statements();
+    final List<Statement> ss = statements(b);
     if (ss.size() != 1)
       return null;
     final Statement $ = ss.get(0);

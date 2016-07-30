@@ -1,8 +1,5 @@
 package il.org.spartan.refactoring.preferences;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import il.org.spartan.refactoring.builder.Plugin;
 
 public class PluginPreferencesResources {

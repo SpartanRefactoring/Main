@@ -5,11 +5,16 @@ import java.io.IOException;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.Name;
+import org.eclipse.jdt.core.dom.QualifiedName;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.SimpleType;
 
 import il.org.spartan.files.FilesGenerator;
-import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.refactoring.utils.Funcs;
+import il.org.spartan.refactoring.utils.MakeAST;
 import il.org.spartan.utils.FileUtils;
 
 public class TypeNamesCollector {
@@ -31,7 +36,7 @@ public class TypeNamesCollector {
     }
   }
   private static void collect(final String javaCode) {
-    collect((CompilationUnit) As.COMPILIATION_UNIT.ast(javaCode));
+    collect((CompilationUnit) MakeAST.COMPILATION_UNIT.from(javaCode));
   }
   private static void collect(final CompilationUnit u) {
     u.accept(new ASTVisitor() {

@@ -6,12 +6,19 @@ import static il.org.spartan.refactoring.wring.Wrings.rename;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.PrimitiveType;
+import org.eclipse.jdt.core.dom.ReturnStatement;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.text.edits.TextEditGroup;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.utils.Collect;
+import il.org.spartan.refactoring.utils.Is;
+import il.org.spartan.refactoring.utils.MethodExplorer;
+import il.org.spartan.refactoring.utils.Rewrite;
 
 /**
  * @author Artium Nihamkin (original)

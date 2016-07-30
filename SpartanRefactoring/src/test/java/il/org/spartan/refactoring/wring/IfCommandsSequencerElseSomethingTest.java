@@ -6,7 +6,11 @@ import static il.org.spartan.refactoring.spartanizations.TESTUtils.asSingle;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
 import static il.org.spartan.refactoring.utils.Funcs.asIfStatement;
 import static il.org.spartan.utils.Utils.compressSpaces;
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.text.IsEqualIgnoringWhiteSpace.equalToIgnoringWhiteSpace;
 import static org.junit.Assert.assertNotEquals;
@@ -31,10 +35,9 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 import il.org.spartan.refactoring.spartanizations.Wrap;
-import il.org.spartan.refactoring.utils.As;
 import il.org.spartan.refactoring.utils.Extract;
+import il.org.spartan.refactoring.utils.MakeAST;
 import il.org.spartan.refactoring.utils.Rewrite;
-import il.org.spartan.refactoring.wring.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
 import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
 import il.org.spartan.utils.Utils;
@@ -64,7 +67,7 @@ public class IfCommandsSequencerElseSomethingTest {
     assertThat(w, notNullValue());
     assertThat(w, instanceOf(WRING.getClass()));
     final String wrap = Wrap.Statement.on(s.toString());
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(wrap);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
     assertNotNull(u);
     final Document d = new Document(wrap);
     assertNotNull(d);
@@ -85,7 +88,7 @@ public class IfCommandsSequencerElseSomethingTest {
   @Test public void checkStepsTrimmer() throws MalformedTreeException, BadLocationException {
     final String input = "if (a) return b; else a();";
     final String wrap = Wrap.Statement.on(input);
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(wrap);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
     assertNotNull(u);
     final IfStatement s = Extract.firstIfStatement(u);
     assertThat(s, notNullValue());

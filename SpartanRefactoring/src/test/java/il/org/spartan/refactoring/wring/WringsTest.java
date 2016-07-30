@@ -9,8 +9,19 @@ import static il.org.spartan.refactoring.utils.Into.es;
 import static il.org.spartan.refactoring.wring.Wrings.mixedLiteralKind;
 import static org.junit.Assert.assertNotNull;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.Assignment.Operator;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.EnhancedForStatement;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.ReturnStatement;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.Document;
@@ -19,16 +30,18 @@ import org.eclipse.text.edits.TextEdit;
 import org.junit.Test;
 
 import il.org.spartan.refactoring.spartanizations.Wrap;
-import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.wring.LocalInliner;
-import il.org.spartan.refactoring.wring.Wring;
-import il.org.spartan.refactoring.wring.Wrings;
+import il.org.spartan.refactoring.utils.Collect;
+import il.org.spartan.refactoring.utils.Extract;
+import il.org.spartan.refactoring.utils.Into;
+import il.org.spartan.refactoring.utils.Is;
+import il.org.spartan.refactoring.utils.MakeAST;
+import il.org.spartan.refactoring.utils.Subject;
 
 @SuppressWarnings({ "javadoc", "static-method" }) public class WringsTest {
   @Test public void renameIntoDoWhile() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = "void f() { int b = 3; do ; while(b != 0); }";
     final Document d = Wrap.Method.intoDocument(input);
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(d);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(d);
     final MethodDeclaration m = Extract.firstMethodDeclaration(u);
     assertThat(m, iz(input));
     final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(m);
@@ -44,7 +57,7 @@ import il.org.spartan.refactoring.wring.Wrings;
   @Test public void countInEnhancedFor() throws IllegalArgumentException, MalformedTreeException {
     final String input = "int f() { for (int a: as) return a; }";
     final Document d = Wrap.Method.intoDocument(input);
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(d);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(d);
     final MethodDeclaration m = Extract.firstMethodDeclaration(u);
     assertThat(m, iz(input));
     final Block b = m.getBody();
@@ -58,7 +71,7 @@ import il.org.spartan.refactoring.wring.Wrings;
   @Test public void renameInEnhancedFor() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = "int f() { for (int a: as) return a; }";
     final Document d = Wrap.Method.intoDocument(input);
-    final CompilationUnit u = (CompilationUnit) As.COMPILIATION_UNIT.ast(d);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(d);
     final MethodDeclaration m = Extract.firstMethodDeclaration(u);
     assertThat(m, iz(input));
     final Block b = m.getBody();

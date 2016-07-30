@@ -11,8 +11,6 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import il.org.spartan.refactoring.utils.ExpressionComparator;
-
 /**
  * Test class for {@link ExpressionComparator}
  *
