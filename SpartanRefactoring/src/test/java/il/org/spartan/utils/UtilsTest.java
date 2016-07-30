@@ -24,10 +24,10 @@ public class UtilsTest {
     azzert.that(Utils.compare(true, true), is(0));
   }
   @Test public void inTypicalFalse() {
-     azzert.nay(in("X", "A", "B", "C"));
+    azzert.nay(in("X", "A", "B", "C"));
   }
   @Test public void inTypicalTrue() {
-     azzert.aye(in("A", "A", "B", "C"));
+    azzert.aye(in("A", "A", "B", "C"));
   }
   @Test public void removePrefiEmpty() {
     assertEquals(Utils.removePrefix("BAAAAB", "A"), "BAAAAB");

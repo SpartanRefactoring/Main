@@ -7,6 +7,7 @@ import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
 import static il.org.spartan.utils.Utils.*;
+import static org.junit.Assert.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
@@ -46,9 +47,9 @@ import il.org.spartan.refactoring.utils.*;
     final String peeled = w.off(unpeeled);
     if (peeled.equals(from))
       azzert.that("No similification of " + from, from, is(not(peeled)));
-    String compressSpaces = compressSpaces(peeled);
-    String compressSpaces2 = compressSpaces(from);
-      azzert.that("Simpification of " + from + " is just reformatting", compressSpaces2, not(compressSpaces));
+    final String compressSpaces = compressSpaces(peeled);
+    final String compressSpaces2 = compressSpaces(from);
+    azzert.that("Simpification of " + from + " is just reformatting", compressSpaces2, not(compressSpaces));
     assertSimilar(expected, peeled);
   }
   @Test public void andWithCLASS_CONSTANT() {
@@ -351,10 +352,9 @@ import il.org.spartan.refactoring.utils.*;
   }
   @Test public void chainComparison() {
     final InfixExpression e = i("a == true == b == c");
-    azzert.that(right(e).toString(),is("c"));
+    azzert.that(right(e).toString(), is("c"));
     trimming("a == true == b == c").to("a == b == c");
   }
-
   @Test public void chainCOmparisonTrueLast() {
     trimming("a == b == c == true").to("a == b == c");
   }
@@ -372,10 +372,10 @@ import il.org.spartan.refactoring.utils.*;
   }
   @Test public void comaprisonWithSpecific0Legibiliy00() {
     final InfixExpression e = i("this != a");
-     azzert.aye(in(e.getOperator(), Operator.EQUALS, Operator.NOT_EQUALS));
-     azzert.nay(Is.booleanLiteral(right(e)));
-     azzert.nay(Is.booleanLiteral(left(e)));
-     azzert.aye(in(e.getOperator(), Operator.EQUALS, Operator.NOT_EQUALS));
+    azzert.aye(in(e.getOperator(), Operator.EQUALS, Operator.NOT_EQUALS));
+    azzert.nay(Is.booleanLiteral(right(e)));
+    azzert.nay(Is.booleanLiteral(left(e)));
+    azzert.aye(in(e.getOperator(), Operator.EQUALS, Operator.NOT_EQUALS));
   }
   @Test public void comaprisonWithSpecific1() {
     trimming("null != a").to("a != null");
@@ -1240,43 +1240,43 @@ import il.org.spartan.refactoring.utils.*;
   }
   @Test public void isGreaterTrue() {
     final InfixExpression e = i("f(a,b,c,d,e) * f(a,b,c)");
-    azzert.that(right(e).toString(),is("f(a,b,c)"));
-    azzert.that(left(e).toString(),is("f(a,b,c,d,e)"));
+    azzert.that(right(e).toString(), is("f(a,b,c)"));
+    azzert.that(left(e).toString(), is("f(a,b,c,d,e)"));
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
     azzert.that(s, instanceOf(InfixSortMultiplication.class));
-     azzert.notNull(s);
-     azzert.aye(s.scopeIncludes(e));
+    azzert.notNull(s);
+    azzert.aye(s.scopeIncludes(e));
     final Expression e1 = left(e);
     final Expression e2 = right(e);
-     azzert.nay(hasNull(e1, e2));
+    azzert.nay(hasNull(e1, e2));
     final boolean tokenWiseGreater = nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD;
-     azzert.aye(tokenWiseGreater);
-     azzert.aye(ExpressionComparator.moreArguments(e1, e2));
-     azzert.aye(ExpressionComparator.longerFirst(e));
-     azzert.aye(e.toString(), s.eligible(e));
+    azzert.aye(tokenWiseGreater);
+    azzert.aye(ExpressionComparator.moreArguments(e1, e2));
+    azzert.aye(ExpressionComparator.longerFirst(e));
+    azzert.aye(e.toString(), s.eligible(e));
     final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) s).replacement(e);
-     azzert.notNull(replacement);
-    azzert.that(replacement.toString(),is("f(a,b,c) * f(a,b,c,d,e)"));
+    azzert.notNull(replacement);
+    azzert.that(replacement.toString(), is("f(a,b,c) * f(a,b,c,d,e)"));
   }
   @Test public void isGreaterTrueButAlmostNot() {
     final InfixExpression e = i("f(a,b,c,d) * f(a,b,c)");
-    azzert.that(right(e).toString(),is("f(a,b,c)"));
-    azzert.that(left(e).toString(),is("f(a,b,c,d)"));
+    azzert.that(right(e).toString(), is("f(a,b,c)"));
+    azzert.that(left(e).toString(), is("f(a,b,c,d)"));
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
     azzert.that(s, instanceOf(InfixSortMultiplication.class));
-     azzert.notNull(s);
-     azzert.aye(s.scopeIncludes(e));
+    azzert.notNull(s);
+    azzert.aye(s.scopeIncludes(e));
     final Expression e1 = left(e);
     final Expression e2 = right(e);
-     azzert.nay(hasNull(e1, e2));
+    azzert.nay(hasNull(e1, e2));
     final boolean tokenWiseGreater = nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD;
-     azzert.nay(tokenWiseGreater);
-     azzert.aye(ExpressionComparator.moreArguments(e1, e2));
-     azzert.aye(ExpressionComparator.longerFirst(e));
-     azzert.aye(e.toString(), s.eligible(e));
+    azzert.nay(tokenWiseGreater);
+    azzert.aye(ExpressionComparator.moreArguments(e1, e2));
+    azzert.aye(ExpressionComparator.longerFirst(e));
+    azzert.aye(e.toString(), s.eligible(e));
     final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) s).replacement(e);
-     azzert.notNull(replacement);
-    azzert.that(replacement.toString(),is("f(a,b,c) * f(a,b,c,d)"));
+    azzert.notNull(replacement);
+    azzert.that(replacement.toString(), is("f(a,b,c) * f(a,b,c,d)"));
   }
   @Test public void issue06() {
     trimming("a*-b").to("-a * b");
@@ -2038,9 +2038,9 @@ import il.org.spartan.refactoring.utils.*;
     final String from = "for (int i = 0; i < 100;  i--)  i--;";
     final Statement s = s(from);
     azzert.that(s, iz("{" + from + "}"));
-     azzert.notNull(s);
+    azzert.notNull(s);
     final PostfixExpression e = extract.findFirstPostfix(s);
-     azzert.notNull(e);
+    azzert.notNull(e);
     azzert.that(e, iz("i--"));
     final ASTNode parent = e.getParent();
     azzert.notNull(parent);
@@ -2491,12 +2491,12 @@ import il.org.spartan.refactoring.utils.*;
   @Test public void rightSimplificatioForNulNNVariableReplacement() {
     final InfixExpression e = i("null != a");
     final Wring<InfixExpression> w = Toolbox.instance.find(e);
-     azzert.notNull(w);
-     azzert.aye(w.scopeIncludes(e));
-     azzert.aye(w.eligible(e));
+    azzert.notNull(w);
+    azzert.aye(w.scopeIncludes(e));
+    azzert.aye(w.eligible(e));
     final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) w).replacement(e);
-     azzert.notNull(replacement);
-    azzert.that(replacement.toString(),is("a != null"));
+    azzert.notNull(replacement);
+    azzert.that(replacement.toString(), is("a != null"));
   }
   @Test public void rightSipmlificatioForNulNNVariable() {
     azzert.that(Toolbox.instance.find(i("null != a")), instanceOf(InfixComparisonSpecific.class));
@@ -3163,7 +3163,8 @@ import il.org.spartan.refactoring.utils.*;
     trimming("a ? b.f():c.f()").to("(a?b:c).f()");
   }
   @Test public void testPeel() {
-    azzert.that(Wrap.Expression.off(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge")),is("on * notion * of * no * nothion != the * plain + kludge"));
+    azzert.that(Wrap.Expression.off(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge")),
+        is("on * notion * of * no * nothion != the * plain + kludge"));
   }
   @Test public void twoMultiplication1() {
     trimming("f(a,b,c,d) * f()").to("f() * f(a,b,c,d)");

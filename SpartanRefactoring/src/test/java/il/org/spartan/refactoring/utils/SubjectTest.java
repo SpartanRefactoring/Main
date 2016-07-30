@@ -99,7 +99,7 @@ import il.org.spartan.refactoring.utils.Subject.*;
     azzert.that(operands.size(), is(2));
     azzert.that(operands.get(0).toString(), is("1"));
     azzert.that(operands.get(1).toString(), is("2 * 3"));
-     azzert.aye(ExpressionComparator.ADDITION.sort(operands));
+    azzert.aye(ExpressionComparator.ADDITION.sort(operands));
     azzert.that(operands.get(0).toString(), is("2 * 3"));
     azzert.that(operands.get(1).toString(), is("1"));
     final InfixExpression refit = Subject.operands(operands).to(e.getOperator());
@@ -111,9 +111,9 @@ import il.org.spartan.refactoring.utils.Subject.*;
   }
   @Test public void subjectOperands() {
     final Expression e = Into.e("2 + a < b");
-     azzert.aye(Is.notString(e));
+    azzert.aye(Is.notString(e));
     final InfixExpression plus = extract.firstPlus(e);
-     azzert.aye(Is.notString(plus));
+    azzert.aye(Is.notString(plus));
     final List<Expression> operands = extract.operands(flatten(plus));
     azzert.that(operands.size(), is(2));
     final boolean b = ExpressionComparator.ADDITION.sort(operands);
@@ -137,9 +137,9 @@ import il.org.spartan.refactoring.utils.Subject.*;
   }
   @Test public void subjectOperandsWithParenthesis() {
     final Expression e = Into.e("(2 + a) * b");
-     azzert.aye(Is.notString(e));
+    azzert.aye(Is.notString(e));
     final InfixExpression plus = extract.firstPlus(e);
-     azzert.aye(Is.notString(plus));
+    azzert.aye(Is.notString(plus));
     final List<Expression> operands = extract.operands(flatten(plus));
     azzert.that(operands.size(), is(2));
     final boolean b = ExpressionComparator.ADDITION.sort(operands);

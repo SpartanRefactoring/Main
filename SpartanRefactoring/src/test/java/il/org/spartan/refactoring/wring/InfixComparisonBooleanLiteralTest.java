@@ -4,6 +4,7 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static il.org.spartan.utils.Utils.*;
+import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -39,9 +40,9 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
     final String s = " (2) == true";
     final String wrap = Wrap.Expression.on(s);
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
-     azzert.notNull(u);
+    azzert.notNull(u);
     final Document d = new Document(wrap);
-     azzert.notNull(d);
+    azzert.notNull(d);
     final Trimmer t = new Trimmer();
     final ASTRewrite r = t.createRewrite(u, null);
     final TextEdit x = r.rewriteAST(d, null);
@@ -50,7 +51,7 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
     if (wrap.equals(unpeeled))
       fail("Nothing done on " + s);
     final String peeled = Wrap.Expression.off(unpeeled);
-      azzert.that("No similification of " + s, s, not(peeled));
+    azzert.that("No similification of " + s, s, not(peeled));
     if (compressSpaces(peeled).equals(compressSpaces(s)))
       azzert.that("Simpification of " + s + " is just reformatting", compressSpaces(peeled), not(compressSpaces(s)));
     assertSimilar(" 2 ", peeled);
@@ -113,12 +114,12 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
       azzert.that(flatten(flatten).toString(), is(flatten.toString()));
     }
     @Override @Test public void inputIsInfixExpression() {
-       azzert.notNull(asInfixExpression());
+      azzert.notNull(asInfixExpression());
     }
     @Test public void sortTwice() {
       final List<Expression> operands = extract.operands(flatten(asInfixExpression()));
       ExpressionComparator.ADDITION.sort(operands);
-       azzert.nay(ExpressionComparator.ADDITION.sort(operands));
+      azzert.nay(ExpressionComparator.ADDITION.sort(operands));
     }
     @Test public void twoOrMoreArguments() {
       azzert.that(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));

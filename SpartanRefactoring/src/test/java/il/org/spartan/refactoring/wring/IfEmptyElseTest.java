@@ -81,10 +81,10 @@ public class IfEmptyElseTest {
       azzert.that(extract.statements(asMe().getElseStatement()).size(), is(0));
     }
     @Test public void isfStatementElseNotNull() {
-       azzert.notNull(elze(asMe()));
+      azzert.notNull(elze(asMe()));
     }
     @Test public void isIfStatement() {
-       azzert.notNull(asMe());
+      azzert.notNull(asMe());
     }
     @Test public void myScopeIncludes() {
       final IfStatement s = asMe();

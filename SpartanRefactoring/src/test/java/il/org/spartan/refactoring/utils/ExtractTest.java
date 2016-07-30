@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
-import static  il.org.spartan.azzert.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -31,9 +31,9 @@ import il.org.spartan.refactoring.spartanizations.*;
     final String from = "for (int i = 0; i < 100;  i--)  i--;";
     final Statement s = s(from);
     azzert.that(s, iz("{" + from + "}"));
-     azzert.notNull(s);
+    azzert.notNull(s);
     final PostfixExpression e = extract.findFirstPostfix(s);
-     azzert.notNull(e);
+    azzert.notNull(e);
     azzert.that(e.toString(), is("i--"));
   }
 }

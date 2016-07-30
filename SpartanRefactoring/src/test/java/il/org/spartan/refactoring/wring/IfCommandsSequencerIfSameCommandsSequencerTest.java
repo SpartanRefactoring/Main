@@ -30,7 +30,7 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
   @Test public void checkFirstIfStatement1() {
     final String s = "if (a) return b; if (b) return b;";
     final ASTNode n = MakeAST.STATEMENTS.from(s);
-     azzert.notNull(n);
+    azzert.notNull(n);
     final IfStatement i = extract.firstIfStatement(n);
     azzert.notNull(n.toString(), i);
     azzert.that(i.toString(), WRING.scopeIncludes(i), is(true));
@@ -38,13 +38,13 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
   @Test public void checkFirstIfStatement2() {
     final String s = "if (a) return b; else return a();";
     final IfStatement i = extract.firstIfStatement(MakeAST.STATEMENTS.from(s));
-     azzert.notNull(i);
+    azzert.notNull(i);
     azzert.that(i.toString(), WRING.scopeIncludes(i), is(false));
   }
   @Test public void checkFirstIfStatement3() {
     final String s = "if (a) a= b; else a=c;";
     final IfStatement i = extract.firstIfStatement(MakeAST.STATEMENTS.from(s));
-     azzert.notNull(i);
+    azzert.notNull(i);
     azzert.that(i.toString(), WRING.scopeIncludes(i), is(false));
   }
 
@@ -150,7 +150,7 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
       super(WRING);
     }
     @Test public void asMeNotNull() {
-       azzert.notNull(asMe());
+      azzert.notNull(asMe());
     }
     @Test public void followedByReturn() {
       azzert.notNull(extract.nextIfStatement(asMe()));

@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
-import static  il.org.spartan.azzert.*;
+import static il.org.spartan.azzert.*;
 import static org.hamcrest.text.IsEqualIgnoringWhiteSpace.*;
 
 import org.junit.*;

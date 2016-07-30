@@ -84,9 +84,9 @@ public abstract class FileTestUtils {
   }
   static Spartanization makeSpartanizationObject(final String folderForClass) {
     final Class<?> c = asClass(folderForClass);
-     azzert.notNull(c);
+    azzert.notNull(c);
     final Object $ = getInstance(c);
-     azzert.notNull($);
+    azzert.notNull($);
     return (Spartanization) $;
   }
   /**
@@ -256,11 +256,11 @@ public abstract class FileTestUtils {
      * @return a collection of all test cases generated in the traversal
      */
     public final Collection<Object[]> go() {
-       azzert.notNull(location);
-       azzert.notNull(location.listFiles());
+      azzert.notNull(location);
+      azzert.notNull(location.listFiles());
       final List<Object[]> $ = new ArrayList<>();
       for (final File f : location.listFiles()) {
-         azzert.notNull(f);
+        azzert.notNull(f);
         go($, f);
       }
       return $;

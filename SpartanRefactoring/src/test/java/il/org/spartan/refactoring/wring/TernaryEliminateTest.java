@@ -85,7 +85,7 @@ public class TernaryEliminateTest {
       super(WRING);
     }
     @Test public void inputIsConditionalfixExpression() {
-       azzert.notNull(asConditionalExpression());
+      azzert.notNull(asConditionalExpression());
     }
   }
 }

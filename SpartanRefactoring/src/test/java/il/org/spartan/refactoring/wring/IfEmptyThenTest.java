@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static  il.org.spartan.azzert.*;
+import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
@@ -15,18 +15,18 @@ public class IfEmptyThenTest {
   private static final IfStatement IF = extract.firstIfStatement(INPUT);
 
   @Test public void eligible() {
-     azzert.aye(WRING.eligible(IF));
+    azzert.aye(WRING.eligible(IF));
   }
   @Test public void emptyThen() {
-     azzert.aye(Is.vacuousThen(IF));
+    azzert.aye(Is.vacuousThen(IF));
   }
   @Test public void extractFirstIf() {
-     azzert.notNull(IF);
+    azzert.notNull(IF);
   }
   @Test public void inputType() {
     azzert.that(INPUT, instanceOf(Block.class));
   }
   @Test public void scopeIncludes() {
-     azzert.aye(WRING.scopeIncludes(IF));
+    azzert.aye(WRING.scopeIncludes(IF));
   }
 }

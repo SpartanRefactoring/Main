@@ -35,7 +35,7 @@ public class GroupFieldEditor extends FieldEditor {
 
   /**
    * Create a group of {@link FieldEditor} objects
-   * 
+   *
    * @param labelText
    *          (optional) the text that will appear in the top label. For no
    *          label, pass {@code null}
@@ -53,7 +53,7 @@ public class GroupFieldEditor extends FieldEditor {
   /**
    * Returns the parent for all the FieldEditors inside of this group. In this
    * class, the actual {@link Group} object is returned
-   * 
+   *
    * @return the parent {@link Composite} object
    */
   public Composite getFieldEditor() {

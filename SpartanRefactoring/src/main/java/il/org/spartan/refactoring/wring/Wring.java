@@ -279,7 +279,7 @@ public abstract class Wring<N extends ASTNode> {
     static List<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
       final List<VariableDeclarationFragment> $ = new ArrayList<>();
       boolean collecting = false;
-      VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
+      final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
       for (final VariableDeclarationFragment brother : fragments(parent)) {
         if (brother == f) {
           collecting = true;

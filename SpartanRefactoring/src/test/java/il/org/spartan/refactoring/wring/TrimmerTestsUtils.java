@@ -1,8 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
-import static  il.org.spartan.azzert.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.utils.Utils.*;
+import static org.junit.Assert.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
@@ -120,18 +121,18 @@ public class TrimmerTestsUtils {
   }
   static String apply(final Trimmer t, final String from) {
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
-     azzert.notNull(u);
+    azzert.notNull(u);
     final Document d = new Document(from);
-     azzert.notNull(d);
+    azzert.notNull(d);
     final Document $ = TESTUtils.rewrite(t, u, d);
-     azzert.notNull($);
+    azzert.notNull($);
     return $.get();
   }
   static String apply(final Wring<? extends ASTNode> ns, final String from) {
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
-     azzert.notNull(u);
+    azzert.notNull(u);
     final Document d = new Document(from);
-     azzert.notNull(d);
+    azzert.notNull(d);
     return TESTUtils.rewrite(new AsSpartanization(ns, "Tested Refactoring"), u, d).get();
   }
   static void assertSimplifiesTo(final String from, final String expected, final Wring<? extends ASTNode> ns, final Wrap wrapper) {

@@ -61,7 +61,7 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
     assertNoChange("very(complicate,func,-ction,call) >= null");
   }
   @Test public void comparisonWithSpecificWithinScope() {
-     azzert.aye(Is.constant(left(i("this != a"))));
+    azzert.aye(Is.constant(left(i("this != a"))));
     final ASTNode n = MakeAST.EXPRESSION.from("a != this");
     azzert.notNull(n);
     assertWithinScope(Funcs.asExpression(n));
@@ -69,62 +69,62 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
   }
   @Test public void comparisonWithSpecificWithinScope1() {
     final InfixExpression e = i("this != a");
-     azzert.aye(Is.constant(left(e)));
-     azzert.aye(inner.scopeIncludes(e));
+    azzert.aye(Is.constant(left(e)));
+    azzert.aye(inner.scopeIncludes(e));
     assertLegible(e.toString());
   }
   @Test public void comparisonWithSpecificWithinScope2() {
     assertWithinScope("this != a");
   }
   @Test public void scopeIncludesFalse1() {
-     azzert.nay(WRING.scopeIncludes(i("13455643294 * 22")));
+    azzert.nay(WRING.scopeIncludes(i("13455643294 * 22")));
   }
   @Test public void scopeIncludesFalse1expanded() {
     final InfixExpression e = i("13455643294 * 22");
-     azzert.aye(!e.hasExtendedOperands());
-     azzert.nay(Is.comparison(e));
+    azzert.aye(!e.hasExtendedOperands());
+    azzert.nay(Is.comparison(e));
   }
   @Test public void scopeIncludesFalse2() {
-     azzert.nay(WRING.scopeIncludes(i("1 + 2 < 3 & 7 + 4 > 2 + 1 || 6 - 7 < 2 + 1")));
+    azzert.nay(WRING.scopeIncludes(i("1 + 2 < 3 & 7 + 4 > 2 + 1 || 6 - 7 < 2 + 1")));
   }
   @Test public void scopeIncludesFalse3() {
-     azzert.nay(WRING.scopeIncludes(i("1 + 2 < 3 & 7 + 4 > 2 + 1")));
+    azzert.nay(WRING.scopeIncludes(i("1 + 2 < 3 & 7 + 4 > 2 + 1")));
   }
   @Test public void scopeIncludesFalse4() {
-     azzert.nay(WRING.scopeIncludes(i(" 6 - 7 < 2 + 1   ")));
+    azzert.nay(WRING.scopeIncludes(i(" 6 - 7 < 2 + 1   ")));
   }
   @Test public void scopeIncludesFalse6() {
-     azzert.aye(WRING.scopeIncludes(i("1 < 102333")));
+    azzert.aye(WRING.scopeIncludes(i("1 < 102333")));
   }
   @Test public void scopeIncludesFalse7() {
-     azzert.nay(WRING.scopeIncludes(i("1 + 2 < 3 & 7 + 4 > 2 + 1 || 6 - 7 < 2 + 1")));
+    azzert.nay(WRING.scopeIncludes(i("1 + 2 < 3 & 7 + 4 > 2 + 1 || 6 - 7 < 2 + 1")));
   }
   @Test public void scopeIncludesFalse8() {
-     azzert.nay(WRING.scopeIncludes(i("1 + 2 < 3 & 7 + 4 > 2 + 1")));
+    azzert.nay(WRING.scopeIncludes(i("1 + 2 < 3 & 7 + 4 > 2 + 1")));
   }
   @Test public void scopeIncludesFalse9() {
-     azzert.nay(WRING.scopeIncludes(i(" 6 - 7 < 2 + 1   ")));
+    azzert.nay(WRING.scopeIncludes(i(" 6 - 7 < 2 + 1   ")));
   }
   @Test public void scopeIncludesTrue1() {
-     azzert.aye(WRING.scopeIncludes(i("a == this")));
+    azzert.aye(WRING.scopeIncludes(i("a == this")));
   }
   @Test public void scopeIncludesTrue2() {
-     azzert.aye(WRING.scopeIncludes(i("this == null")));
+    azzert.aye(WRING.scopeIncludes(i("this == null")));
   }
   @Test public void scopeIncludesTrue3() {
-     azzert.aye(WRING.scopeIncludes(i("12 == this")));
+    azzert.aye(WRING.scopeIncludes(i("12 == this")));
   }
   @Test public void scopeIncludesTrue4() {
-     azzert.aye(WRING.scopeIncludes(i("a == 11")));
+    azzert.aye(WRING.scopeIncludes(i("a == 11")));
   }
   @Test public void scopeIncludesTrue5() {
-     azzert.aye(WRING.scopeIncludes(i("13455643294 < 22")));
+    azzert.aye(WRING.scopeIncludes(i("13455643294 < 22")));
   }
   @Test public void scopeIncludesTrue7() {
-     azzert.aye(WRING.scopeIncludes(i("1 < 102333")));
+    azzert.aye(WRING.scopeIncludes(i("1 < 102333")));
   }
   @Test public void scopeIncludesTrue8() {
-     azzert.aye(WRING.scopeIncludes(i("13455643294 < 22")));
+    azzert.aye(WRING.scopeIncludes(i("13455643294 < 22")));
   }
 
   @RunWith(Parameterized.class) //
@@ -181,7 +181,7 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
       azzert.that(flatten(flatten).toString(), is(flatten.toString()));
     }
     @Override @Test public void inputIsInfixExpression() {
-       azzert.notNull(asInfixExpression());
+      azzert.notNull(asInfixExpression());
     }
     @Test public void twoOrMoreArguments() {
       azzert.that(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
@@ -270,21 +270,21 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
       azzert.that(flatten(flatten).toString(), is(flatten.toString()));
     }
     @Test public void flipIsNotNull() {
-       azzert.notNull(flip(asInfixExpression()));
+      azzert.notNull(flip(asInfixExpression()));
     }
     @Override @Test public void inputIsInfixExpression() {
-       azzert.notNull(asInfixExpression());
+      azzert.notNull(asInfixExpression());
     }
     @Test public void sortTwiceADDITION() {
       final InfixExpression e = asInfixExpression();
       final List<Expression> operands = extract.operands(flatten(e));
       ExpressionComparator.ADDITION.sort(operands);
-       azzert.nay(ExpressionComparator.ADDITION.sort(operands));
+      azzert.nay(ExpressionComparator.ADDITION.sort(operands));
     }
     @Test public void sortTwiceMULTIPLICATION() {
       final List<Expression> operands = extract.operands(flatten(asInfixExpression()));
       ExpressionComparator.MULTIPLICATION.sort(operands);
-       azzert.nay(ExpressionComparator.MULTIPLICATION.sort(operands));
+      azzert.nay(ExpressionComparator.MULTIPLICATION.sort(operands));
     }
     @Test public void twoOrMoreArguments() {
       azzert.that(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));

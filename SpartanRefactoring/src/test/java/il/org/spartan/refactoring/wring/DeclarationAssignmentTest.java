@@ -24,7 +24,7 @@ public class DeclarationAssignmentTest {
 
   @Test public void placeHolder() {
     // Place holder for future tests
-     azzert.notNull(WRING);
+    azzert.notNull(WRING);
   }
 
   @RunWith(Parameterized.class) //

@@ -417,8 +417,7 @@ public enum Funcs {
     return hasNull(n, name) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || name.getNodeType() != SIMPLE_NAME ? null
         : getDefinition((VariableDeclarationStatement) n, (SimpleName) name);
   }
-  private static VariableDeclarationFragment getDefinition(VariableDeclarationStatement s,
-      SimpleName n) {
+  private static VariableDeclarationFragment getDefinition(final VariableDeclarationStatement s, final SimpleName n) {
     return getVarDeclFrag(expose.fragments(s), n);
   }
   /**
@@ -825,7 +824,7 @@ public enum Funcs {
         return null;
     }
   }
-  private static String shortName(List<? extends Type> ts) {
+  private static String shortName(final List<? extends Type> ts) {
     if (ts == null || ts.size() != 1)
       return null;
     return shortName(ts.get(0));

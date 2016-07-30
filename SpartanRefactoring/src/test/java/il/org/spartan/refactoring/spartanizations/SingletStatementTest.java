@@ -58,7 +58,7 @@ public class SingletStatementTest {
     final List<Statement> ss = extract.statements(n);
     azzert.notNull(ss);
     azzert.that(ss.size(), is(1));
-     azzert.notNull(extract.singleStatement(n));
+    azzert.notNull(extract.singleStatement(n));
   }
   @Test public void peelIPlusPlus() {
     final ASTNode n = MakeAST.STATEMENTS.from("{i++;}");
@@ -66,7 +66,7 @@ public class SingletStatementTest {
     final List<Statement> ss = extract.statements(n);
     azzert.notNull(ss);
     azzert.that(ss.size(), is(1));
-     azzert.notNull(extract.singleStatement(n));
+    azzert.notNull(extract.singleStatement(n));
   }
   @Test public void twoFunctionCallsNullValue() {
     azzert.isNull(singleStatement(s("{b(); a();}")));

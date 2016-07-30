@@ -4,6 +4,7 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
+import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -43,17 +44,17 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
   }
   @Test public void oneMultiplication0() {
     final InfixExpression e = i("f(a,b,c,d) * f(a,b,c)");
-        azzert.that(right(e).toString(), iz("f(a,b,c)")); 
+    azzert.that(right(e).toString(), iz("f(a,b,c)"));
     azzert.that(inner.scopeIncludes(e), is(true));
     azzert.that(inner.eligible(e), is(true));
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
     azzert.that(s, instanceOf(InfixSortMultiplication.class));
-     azzert.notNull(s);
-     azzert.aye(s.scopeIncludes(e));
-     azzert.aye(s.eligible(e));
+    azzert.notNull(s);
+    azzert.aye(s.scopeIncludes(e));
+    azzert.aye(s.eligible(e));
     final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) s).replacement(e);
-     azzert.notNull(replacement);
-    azzert.that(replacement.toString(), is(("f(a,b,c) * f(a,b,c,d)")));
+    azzert.notNull(replacement);
+    azzert.that(replacement.toString(), is("f(a,b,c) * f(a,b,c,d)"));
   }
   @Test public void parseOfToken() {
     azzert.that(new LiteralParser(e(" 2  ").toString()).type(), is(Types.INTEGER.ordinal()));

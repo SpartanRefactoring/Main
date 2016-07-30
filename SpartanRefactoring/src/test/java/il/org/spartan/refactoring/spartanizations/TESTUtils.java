@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import static  il.org.spartan.azzert.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.utils.Utils.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -69,9 +69,9 @@ import il.org.spartan.refactoring.wring.*;
   }
   static String apply(final Trimmer t, final String from) {
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
-     azzert.notNull(u);
+    azzert.notNull(u);
     final Document d = new Document(from);
-     azzert.notNull(d);
+    azzert.notNull(d);
     return TESTUtils.rewrite(t, u, d).get();
   }
   static void assertNoOpportunity(final Spartanization s, final String from) {

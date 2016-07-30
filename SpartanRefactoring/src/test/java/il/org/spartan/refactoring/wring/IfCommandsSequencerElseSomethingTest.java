@@ -1,9 +1,11 @@
 package il.org.spartan.refactoring.wring;
-import static  il.org.spartan.azzert.*;
+
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.utils.Utils.*;
 import static org.hamcrest.text.IsEqualIgnoringWhiteSpace.*;
+import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -35,8 +37,8 @@ public class IfCommandsSequencerElseSomethingTest {
 
   @Test public void checkSteps() {
     final Statement s = asSingle("if (a) return a = b; else a = c;");
-     azzert.notNull(s);
-     azzert.notNull(asIfStatement(s));
+    azzert.notNull(s);
+    azzert.notNull(asIfStatement(s));
   }
   @Test public void checkStepsFull() throws MalformedTreeException, BadLocationException {
     final IfStatement s = (IfStatement) asSingle("if (a) return b; else a();");
@@ -49,9 +51,9 @@ public class IfCommandsSequencerElseSomethingTest {
     azzert.that(w, instanceOf(WRING.getClass()));
     final String wrap = Wrap.Statement.on(s.toString());
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
-     azzert.notNull(u);
+    azzert.notNull(u);
     final Document d = new Document(wrap);
-     azzert.notNull(d);
+    azzert.notNull(d);
     final Trimmer t = new Trimmer();
     final ASTRewrite r = t.createRewrite(u, null);
     final TextEdit x = r.rewriteAST(d, null);
@@ -60,17 +62,17 @@ public class IfCommandsSequencerElseSomethingTest {
     if (wrap.equals(unpeeled))
       fail("Nothing done on " + s);
     final String peeled = Wrap.Statement.off(unpeeled);
-      azzert.that("No similification of " + s, s, not(peeled));
-      String compressSpaces = compressSpaces(peeled);
-      String compressSpaces2 = compressSpaces(s.toString());
-      azzert.that("Simpification of " + s + " is just reformatting", compressSpaces, not(compressSpaces2));
+    azzert.that("No similification of " + s, s, not(peeled));
+    final String compressSpaces = compressSpaces(peeled);
+    final String compressSpaces2 = compressSpaces(s.toString());
+    azzert.that("Simpification of " + s + " is just reformatting", compressSpaces, not(compressSpaces2));
     assertSimilar(" if(a)return b;a(); ", peeled);
   }
   @Test public void checkStepsTrimmer() throws MalformedTreeException, BadLocationException {
     final String input = "if (a) return b; else a();";
     final String wrap = Wrap.Statement.on(input);
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
-     azzert.notNull(u);
+    azzert.notNull(u);
     final IfStatement s = extract.firstIfStatement(u);
     azzert.notNull(s);
     azzert.that(s.toString(), equalToIgnoringWhiteSpace(input));
@@ -85,7 +87,7 @@ public class IfCommandsSequencerElseSomethingTest {
     m.go(r, null);
     azzert.that(r.toString(), allOf(startsWith("Events:"), containsString("[replaced:"), containsString("]")));
     final Document d = new Document(wrap);
-     azzert.notNull(d);
+    azzert.notNull(d);
     azzert.that(d.get(), equalToIgnoringWhiteSpace(wrap.toString()));
     final TextEdit x = r.rewriteAST(d, null);
     x.apply(d);
@@ -99,7 +101,6 @@ public class IfCommandsSequencerElseSomethingTest {
       azzert.that("Simpification of " + s + " is just reformatting", compressSpaces(s.toString()), is(not(compressSpaces(peeled))));
     assertSimilar(" if (a) return b; a(); ", peeled);
   }
-
   @Test public void checkStepsWRING() throws MalformedTreeException {
     final IfStatement s = (IfStatement) asSingle("if (a) return b; else a();");
     azzert.that(WRING.scopeIncludes(s), is(true));
@@ -140,6 +141,7 @@ public class IfCommandsSequencerElseSomethingTest {
       super(WRING);
     }
   }
+
   @RunWith(Parameterized.class) //
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
   public static class Wringed extends AbstractWringTest.Wringed.IfStatementAndSurrounding {
