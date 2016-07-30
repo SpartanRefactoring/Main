@@ -34,7 +34,7 @@ public class SingletStatementTest {
     assertThat(singleStatement(s("{}")), nullValue());
   }
   @Test public void emptyStatementInBlockIsNull() {
-    assertThat(singleStatement(s("{;}")), nullValue());
+    assertThat(singleStatement(s("{}")), nullValue());
   }
   @Test public void emptyStatementIsNull() {
     assertThat(singleStatement(s(";")), nullValue());
@@ -43,7 +43,7 @@ public class SingletStatementTest {
     assertThat(singleStatement(s("{{a();b();}{a(); b(); {}{}{{}} c();}}")), nullValue());
   }
   @Test public void manyEmptyStatementInBlockIsNull() {
-    assertThat(singleStatement(s("{;};{;;{;;}};")), nullValue());
+    assertThat(singleStatement(s("{};{;;{;;}};")), nullValue());
   }
   @Test public void manyIsNull() {
     assertThat(singleStatement(s("a(); b(); c();")), nullValue());
