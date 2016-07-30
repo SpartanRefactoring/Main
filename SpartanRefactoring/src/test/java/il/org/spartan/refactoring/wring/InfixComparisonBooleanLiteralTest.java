@@ -4,7 +4,6 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static il.org.spartan.utils.Utils.*;
-import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -124,5 +123,14 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
     @Test public void twoOrMoreArguments() {
       azzert.that(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
     }
+  }
+  static public void fail(String message) {
+    if (message == null) {
+      throw new AssertionError();
+    }
+    throw new AssertionError(message);
+  }
+  static public void fail() {
+    fail(null);
   }
 }
