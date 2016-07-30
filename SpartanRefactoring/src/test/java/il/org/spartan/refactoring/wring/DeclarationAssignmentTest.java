@@ -1,7 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static org.junit.Assert.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -10,8 +8,8 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
-import il.org.spartan.utils.*;
 
 /**
  * Unit tests for {@link Wrings#ADDITION_SORTER}.
@@ -26,12 +24,12 @@ public class DeclarationAssignmentTest {
 
   @Test public void placeHolder() {
     // Place holder for future tests
-    assertNotNull(WRING);
+     azzert.notNull(WRING);
   }
 
   @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope<VariableDeclarationFragment> {
-    static String[][] cases = Utils.asArray(//
+    static String[][] cases = as.array(//
         new String[] { "Wrong assignnet", "int a = 0; if (x)  a+= 5" }, //
         new String[] { "Wrong assignnet", "int a = 0; if (a)  a= 5;" }, //
         null);
@@ -55,7 +53,7 @@ public class DeclarationAssignmentTest {
   @RunWith(Parameterized.class) //
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
   public static class Wringed extends AbstractWringTest.Wringed.WringedVariableDeclarationFragmentAndSurrounding {
-    private static String[][] cases = Utils.asArray(//
+    private static String[][] cases = as.array(//
         new String[] { "Vanilla", "int a; a =3;", "int a=3;" }, //
         null);
 

@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.azzert.*;
 
 import java.util.*;
 

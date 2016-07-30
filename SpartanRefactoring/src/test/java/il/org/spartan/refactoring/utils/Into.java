@@ -1,12 +1,12 @@
 package il.org.spartan.refactoring.utils;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
+import static  il.org.spartan.azzert.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 
 /**
@@ -41,8 +41,8 @@ public enum Into {
    */
   public static ConditionalExpression c(final String conditionalExpression) {
     final Expression $ = e(conditionalExpression);
-    assertThat(conditionalExpression, $, notNullValue());
-    assertThat(conditionalExpression, $, instanceOf(ConditionalExpression.class));
+    azzert.notNull(conditionalExpression, $);
+    azzert.that(conditionalExpression, $, instanceOf(ConditionalExpression.class));
     return (ConditionalExpression) $;
   }
   /**
@@ -57,7 +57,7 @@ public enum Into {
    *         parameter.
    */
   public static MethodDeclaration d(final String methodDelclaration) {
-    assertThat(methodDelclaration, notNullValue());
+    azzert.notNull(methodDelclaration);
     return extract.firstMethodDeclaration(Wrap.Method.intoCompilationUnit(methodDelclaration));
   }
   /**
@@ -120,10 +120,10 @@ public enum Into {
    * @return an {@link Statement} data structure representing the parameter.
    */
   public static Statement s(final String statement) {
-    assertThat(statement, notNullValue());
+    azzert.notNull(statement);
     final ASTNode n = MakeAST.STATEMENTS.from(statement);
-    assertThat(statement, n, notNullValue());
-    assertThat(statement, n, instanceOf(Statement.class));
+    azzert.notNull(statement, n);
+    azzert.that(statement, n, instanceOf(Statement.class));
     return (Statement) n;
   }
 }

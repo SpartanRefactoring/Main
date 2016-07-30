@@ -1,15 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.*;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.OrderingComparison.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.utils.Utils.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -22,12 +16,13 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.utils.Collect.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
 import il.org.spartan.refactoring.wring.Wring.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.Utils;
 
 /**
  * @author Yossi Gil
@@ -37,48 +32,50 @@ import il.org.spartan.utils.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class DeclarationIfAssginmentTest {
   static final DeclarationInitializerIfAssignment WRING = new DeclarationInitializerIfAssignment();
-
+  static <T> void assertNotEquals(String s, T t1, T t2) {
+    azzert.that(s, t2, is(not(t1))); 
+   }
   @Test public void traceForbiddenSiblings() {
-    assertNotNull(WRING);
+     azzert.notNull(WRING);
     final String from = "int a = 2,b; if (b) a =3;";
     final String wrap = Wrap.Statement.on(from);
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
     final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
-    assertThat(f, notNullValue());
-    assertThat(WRING.scopeIncludes(f), is(false));
+    azzert.notNull(f);
+    azzert.that(WRING.scopeIncludes(f), is(false));
   }
   @Test public void traceForbiddenSiblingsExpanded() {
     final String from = "int a = 2,b; if (a+b) a =3;";
     final String wrap = Wrap.Statement.on(from);
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
     final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
-    assertThat(f, notNullValue());
+    azzert.notNull(f);
     final Expression initializer = f.getInitializer();
-    assertNotNull(initializer);
+     azzert.notNull(initializer);
     final IfStatement s = extract.nextIfStatement(f);
-    assertThat(s, is(extract.firstIfStatement(u)));
-    assertNotNull(s);
-    assertThat(s, iz("if (a + b) a=3;"));
-    assertTrue(Is.vacuousElse(s));
+    azzert.that(s, is(extract.firstIfStatement(u)));
+     azzert.notNull(s);
+    azzert.that(s, iz("if (a + b) a=3;"));
+     azzert.aye(Is.vacuousElse(s));
     final Assignment a = extract.assignment(then(s));
-    assertNotNull(a);
-    assertTrue(same(left(a), f.getName()));
-    assertThat(a.getOperator(), is(Assignment.Operator.ASSIGN));
+     azzert.notNull(a);
+     azzert.aye(same(left(a), f.getName()));
+    azzert.that(a.getOperator(), is(Assignment.Operator.ASSIGN));
     final List<VariableDeclarationFragment> x = VariableDeclarationFragementAndStatement.forbiddenSiblings(f);
-    assertThat(x.size(), greaterThan(0));
-    assertThat(x.size(), is(1));
+    azzert.that(x.size(), greaterThan(0));
+    azzert.that(x.size(), is(1));
     final VariableDeclarationFragment b = x.get(0);
-    assertThat(b.toString(), is("b"));
+    azzert.that(b.toString(), is("b"));
     final Of of = Collect.BOTH_SEMANTIC.of(b);
-    assertNotNull(of);
+     azzert.notNull(of);
     final Expression e = s.getExpression();
-    assertNotNull(e);
-    assertThat(e, iz("a + b"));
+     azzert.notNull(e);
+    azzert.that(e, iz("a + b"));
     final List<SimpleName> in = of.in(e);
-    assertThat(in.size(), is(1));
-    assertThat(!in.isEmpty(), is(true));
-    assertThat(Collect.BOTH_SEMANTIC.of(f).existIn(s.getExpression(), right(a)), is(true));
-    assertThat(of.existIn(s.getExpression(), right(a)), is(true));
+    azzert.that(in.size(), is(1));
+    azzert.that(!in.isEmpty(), is(true));
+    azzert.that(Collect.BOTH_SEMANTIC.of(f).existIn(s.getExpression(), right(a)), is(true));
+    azzert.that(of.existIn(s.getExpression(), right(a)), is(true));
   }
 
   @RunWith(Parameterized.class) //
@@ -118,24 +115,25 @@ public class DeclarationIfAssginmentTest {
       final Document d = new Document(Wrap.Statement.on(from));
       final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(d);
       final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
-      assertThat(f, notNullValue());
+      azzert.notNull(f);
       final ASTRewrite r = new Trimmer().createRewrite(u, null);
       final TextEdit e = r.rewriteAST(d, null);
-      assertThat(e.getChildrenSize(), greaterThan(0));
+      azzert.that(e.getChildrenSize(), greaterThan(0));
       final UndoEdit b = e.apply(d);
-      assertThat(b, notNullValue());
+      azzert.notNull(b);
       final String peeled = Wrap.Statement.off(d.get());
       if (expected.equals(peeled))
         return;
       if (from.equals(peeled))
         fail("Nothing done on " + from);
       if (compressSpaces(peeled).equals(compressSpaces(from)))
-        assertNotEquals("Wringing of " + from + " amounts to mere reformatting", compressSpaces(peeled), compressSpaces(from));
+        azzert.that("Wringing of " + from + " amounts to mere reformatting", compressSpaces(from), is(not(compressSpaces(peeled))));
       assertSimilar(expected, peeled);
       assertSimilar(Wrap.Statement.on(expected), d);
     }
+
     @Test public void nonNullWring() {
-      assertNotNull(WRING);
+       azzert.notNull(WRING);
     }
     @Test public void vanilla() throws MalformedTreeException, IllegalArgumentException {
       final String from = "int a = 2; if (b) a =3;";
@@ -149,7 +147,7 @@ public class DeclarationIfAssginmentTest {
       if (from.equals(peeled))
         fail("Nothing done on " + from);
       if (compressSpaces(peeled).equals(compressSpaces(from)))
-        assertNotEquals("Wringing of " + from + " amounts to mere reformatting", compressSpaces(peeled), compressSpaces(from));
+        azzert.that("Wringing of " + from + " amounts to mere reformatting", compressSpaces(from), is(not(compressSpaces(peeled))));
       assertSimilar(expected, peeled);
       assertSimilar(Wrap.Statement.on(expected), actual);
     }

@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.*;
-import static il.org.spartan.hamcrest.MatcherAssert.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 
 import java.util.*;
@@ -12,10 +11,11 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.Utils;
 
 /**
  * Unit tests for {@link Wrings#ADDITION_SORTER}.
@@ -38,8 +38,8 @@ import il.org.spartan.utils.*;
         + ""//
     );
     final IfStatement s = extract.firstIfStatement(u);
-    assertThat(extract.statements(then(s)).size(), is(1));
-    assertThat(extract.statements(elze(s)).size(), is(1));
+    azzert.that(extract.statements(then(s)).size(), is(1));
+    azzert.that(extract.statements(elze(s)).size(), is(1));
   }
 
   @RunWith(Parameterized.class) //

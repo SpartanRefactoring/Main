@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -12,9 +11,10 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.Utils;
 
 /**
  * Unit tests for {@link Wrings#ADDITION_SORTER}.
@@ -28,7 +28,7 @@ public class DeclarationReturnTest {
   static final Wring<VariableDeclarationFragment> WRING = new DeclarationInitializerReturnVariable();
 
   @Test public void placeHolder() {
-    assertNotNull(WRING);
+     azzert.notNull(WRING);
   }
 
   @RunWith(Parameterized.class) //
@@ -91,11 +91,11 @@ public class DeclarationReturnTest {
       final VariableDeclarationFragment f = asMe();
       final ASTRewrite r = ASTRewrite.create(f.getAST());
       final Expression initializer = f.getInitializer();
-      assertNotNull(initializer);
-      assertNotNull(extract.nextStatement(f));
+       azzert.notNull(initializer);
+       azzert.notNull(extract.nextStatement(f));
       final ReturnStatement s = extract.nextReturn(f);
-      assertNotNull(s);
-      assertTrue(same(f.getName(), extract.expression(s)));
+       azzert.notNull(s);
+       azzert.aye(same(f.getName(), extract.expression(s)));
       r.remove(extract.statement(f), null);
       r.replace(s, Subject.operand(initializer).toReturn(), null);
     }

@@ -1,11 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -15,9 +11,10 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.Utils;
 
 /**
  * Unit tests for {@link IfFooSequencerIfFooSameSequencer}.
@@ -33,22 +30,22 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
   @Test public void checkFirstIfStatement1() {
     final String s = "if (a) return b; if (b) return b;";
     final ASTNode n = MakeAST.STATEMENTS.from(s);
-    assertNotNull(n);
+     azzert.notNull(n);
     final IfStatement i = extract.firstIfStatement(n);
-    assertThat(n.toString(), i, notNullValue());
-    assertThat(i.toString(), WRING.scopeIncludes(i), is(true));
+    azzert.notNull(n.toString(), i);
+    azzert.that(i.toString(), WRING.scopeIncludes(i), is(true));
   }
   @Test public void checkFirstIfStatement2() {
     final String s = "if (a) return b; else return a();";
     final IfStatement i = extract.firstIfStatement(MakeAST.STATEMENTS.from(s));
-    assertNotNull(i);
-    assertThat(i.toString(), WRING.scopeIncludes(i), is(false));
+     azzert.notNull(i);
+    azzert.that(i.toString(), WRING.scopeIncludes(i), is(false));
   }
   @Test public void checkFirstIfStatement3() {
     final String s = "if (a) a= b; else a=c;";
     final IfStatement i = extract.firstIfStatement(MakeAST.STATEMENTS.from(s));
-    assertNotNull(i);
-    assertThat(i.toString(), WRING.scopeIncludes(i), is(false));
+     azzert.notNull(i);
+    azzert.that(i.toString(), WRING.scopeIncludes(i), is(false));
   }
 
   @RunWith(Parameterized.class) //
@@ -153,25 +150,25 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
       super(WRING);
     }
     @Test public void asMeNotNull() {
-      assertNotNull(asMe());
+       azzert.notNull(asMe());
     }
     @Test public void followedByReturn() {
-      assertThat(extract.nextIfStatement(asMe()), notNullValue());
+      azzert.notNull(extract.nextIfStatement(asMe()));
     }
     @Test public void isfStatementElseIsEmpty() {
-      assertThat(extract.statements(elze(extract.firstIfStatement(MakeAST.STATEMENTS.from(input)))).size(), is(0));
+      azzert.that(extract.statements(elze(extract.firstIfStatement(MakeAST.STATEMENTS.from(input)))).size(), is(0));
     }
     @Test public void isIfStatement() {
-      assertThat(input, asMe(), notNullValue());
+      azzert.notNull(input, asMe());
     }
     @Test public void myScopeIncludes() {
       final IfStatement s = asMe();
-      assertThat(s, notNullValue());
-      assertThat(extract.statements(elze(s)), notNullValue());
-      assertThat(extract.statements(elze(s)).size(), is(0));
+      azzert.notNull(s);
+      azzert.notNull(extract.statements(elze(s)));
+      azzert.that(extract.statements(elze(s)).size(), is(0));
     }
     @Test public void noElse() {
-      assertThat(extract.statements(elze(asMe())).size(), is(0));
+      azzert.that(extract.statements(elze(asMe())).size(), is(0));
     }
   }
 }

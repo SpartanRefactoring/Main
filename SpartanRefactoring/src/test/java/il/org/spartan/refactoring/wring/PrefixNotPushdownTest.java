@@ -1,14 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.refactoring.utils.extract.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 
 import java.util.*;
 
@@ -18,9 +13,10 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.Utils;
 
 /**
  * Unit tests for {@link Wrings#ADDITION_SORTER}.
@@ -36,20 +32,20 @@ public class PrefixNotPushdownTest {
 
   @Test public void notOfFalse() {
     final PrefixExpression e = p("!false");
-    assertThat(e, is(notNullValue()));
-    assertThat(WRING.scopeIncludes(e), is(true));
-    assertThat(WRING.eligible(e), is(true));
-    assertThat(asNot(e), is(notNullValue()));
+    azzert.notNull(e);
+    azzert.that(WRING.scopeIncludes(e), is(true));
+    azzert.that(WRING.eligible(e), is(true));
+    azzert.notNull(asNot(e));
     final Expression inner = core(e.getOperand());
-    assertThat(inner, is(notNullValue()));
-    assertThat(inner.toString(), is("false"));
-    assertThat(Is.booleanLiteral(inner), is(true));
-    assertThat(PrefixNotPushdown.perhapsNotOfLiteral(inner), is(notNullValue()));
-    assertThat(PrefixNotPushdown.notOfLiteral(asBooleanLiteral(inner)), is(notNullValue()));
-    assertThat(PrefixNotPushdown.perhapsNotOfLiteral(inner), is(notNullValue()));
-    assertThat(PrefixNotPushdown.pushdownNot(inner), is(notNullValue()));
-    assertThat(PrefixNotPushdown.pushdownNot(asNot(e)), is(notNullValue()));
-    assertThat(WRING.replacement(e), is(notNullValue()));
+    azzert.notNull(inner);
+    azzert.that(inner.toString(), is("false"));
+    azzert.that(Is.booleanLiteral(inner), is(true));
+    azzert.notNull(PrefixNotPushdown.perhapsNotOfLiteral(inner));
+    azzert.notNull(PrefixNotPushdown.notOfLiteral(asBooleanLiteral(inner)));
+    azzert.notNull(PrefixNotPushdown.perhapsNotOfLiteral(inner));
+    azzert.notNull(PrefixNotPushdown.pushdownNot(inner));
+    azzert.notNull(PrefixNotPushdown.pushdownNot(asNot(e)));
+    azzert.notNull(WRING.replacement(e));
   }
 
   @RunWith(Parameterized.class) //
@@ -124,7 +120,7 @@ public class PrefixNotPushdownTest {
       super(WRING);
     }
     @Test public void inputIsPrefixExpression() {
-      assertNotNull(asPrefixExpression());
+       azzert.notNull(asPrefixExpression());
     }
   }
 }

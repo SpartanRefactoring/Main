@@ -1,11 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.*;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
+import static  il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.util.*;
 
@@ -13,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 
 /**
@@ -32,49 +29,49 @@ public class OccurrencesTest {
   private final InfixExpression e = (InfixExpression) s.getExpression();
 
   @Test public void correctSettings() {
-    assertThat(ab, iz("int a=2,b;"));
-    assertThat(b.toString(), is("b"));
-    assertThat(s, is(extract.firstIfStatement(u)));
-    assertThat(s, iz("if (a + b) a=3;"));
-    assertThat(e, iz("a + b"));
+    azzert.that(ab, iz("int a=2,b;"));
+    azzert.that(b.toString(), is("b"));
+    azzert.that(s, is(extract.firstIfStatement(u)));
+    azzert.that(s, iz("if (a + b) a=3;"));
+    azzert.that(e, iz("a + b"));
   }
   @Test public void exploreLeftOfE() {
-    assertThat(left(e), iz("a"));
+    azzert.that(left(e), iz("a"));
   }
   @Test public void lexicalUsesCollector() {
     final List<SimpleName> into = new ArrayList<>();
     final ASTVisitor collector = Collect.lexicalUsesCollector(into, a);
     a.accept(collector);
-    assertThat(into.size(), is(1));
+    azzert.that(into.size(), is(1));
   }
   @Test public void occurencesAinAL() {
-    assertThat(Collect.BOTH_SEMANTIC.of(a).in(a).size(), is(1));
+    azzert.that(Collect.BOTH_SEMANTIC.of(a).in(a).size(), is(1));
   }
   @Test public void occurencesAinAsame() {
-    assertThat(same(a, a), is(true));
+    azzert.that(same(a, a), is(true));
   }
   @Test public void occurencesAinE() {
-    assertThat(Collect.BOTH_SEMANTIC.of(a).in(e).size(), is(1));
+    azzert.that(Collect.BOTH_SEMANTIC.of(a).in(e).size(), is(1));
   }
   @Test public void occurencesAinLeftOfE() {
-    assertThat(Collect.BOTH_SEMANTIC.of(a).in(left(e)).size(), is(1));
+    azzert.that(Collect.BOTH_SEMANTIC.of(a).in(left(e)).size(), is(1));
   }
   @Test public void occurencesAinLeftOfEsame() {
-    assertThat(same(left(e), a), is(true));
+    azzert.that(same(left(e), a), is(true));
   }
   @Test public void occurencesAinRightOfE() {
-    assertThat(Collect.BOTH_SEMANTIC.of(a).in(right(e)).size(), is(0));
+    azzert.that(Collect.BOTH_SEMANTIC.of(a).in(right(e)).size(), is(0));
   }
   @Test public void occurencesBinE() {
-    assertThat(Collect.BOTH_SEMANTIC.of(b).in(e).size(), is(1));
+    azzert.that(Collect.BOTH_SEMANTIC.of(b).in(e).size(), is(1));
   }
   @Test public void occurencesBinRightOfE() {
-    assertThat(Collect.BOTH_SEMANTIC.of(b).in(right(e)).size(), is(1));
+    azzert.that(Collect.BOTH_SEMANTIC.of(b).in(right(e)).size(), is(1));
   }
   @Test public void sameAandLeftOfE() {
-    assertThat(same(a, left(e)), is(true));
+    azzert.that(same(a, left(e)), is(true));
   }
   @Test public void sameTypeAandLeftOfE() {
-    assertThat(a, instanceOf(left(e).getClass()));
+    azzert.that(a, instanceOf(left(e).getClass()));
   }
 }

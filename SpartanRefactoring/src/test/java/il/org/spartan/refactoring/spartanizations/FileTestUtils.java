@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.io.*;
 import java.util.*;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 
 /**
@@ -83,9 +84,9 @@ public abstract class FileTestUtils {
   }
   static Spartanization makeSpartanizationObject(final String folderForClass) {
     final Class<?> c = asClass(folderForClass);
-    assertNotNull(c);
+     azzert.notNull(c);
     final Object $ = getInstance(c);
-    assertNotNull($);
+     azzert.notNull($);
     return (Spartanization) $;
   }
   /**
@@ -255,11 +256,11 @@ public abstract class FileTestUtils {
      * @return a collection of all test cases generated in the traversal
      */
     public final Collection<Object[]> go() {
-      assertNotNull(location);
-      assertNotNull(location.listFiles());
+       azzert.notNull(location);
+       azzert.notNull(location.listFiles());
       final List<Object[]> $ = new ArrayList<>();
       for (final File f : location.listFiles()) {
-        assertNotNull(f);
+         azzert.notNull(f);
         go($, f);
       }
       return $;

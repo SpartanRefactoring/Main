@@ -1,12 +1,8 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -14,70 +10,71 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class SingletStatementTest {
   @Test public void declarationAndStatementIsNull() {
-    assertThat(singleStatement(s("{int a; a();}")), nullValue());
+    azzert.isNull(singleStatement(s("{int a; a();}")));
   }
   @Test public void deeplyNestedOneInCurlyIsNull() {
-    assertThat(singleStatement(s("{{{{a();}}}}")), not(nullValue()));
+    azzert.notNull(singleStatement(s("{{{{a();}}}}")));
   }
   @Test public void emptyBlockIsNull() {
-    assertThat(singleStatement(s("{}")), nullValue());
+    azzert.isNull(singleStatement(s("{}")));
   }
   @Test public void emptyStatementInBlockIsNull() {
-    assertThat(singleStatement(s("{;}")), nullValue());
+    azzert.isNull(singleStatement(s("{;}")));
   }
   @Test public void emptyStatementIsNull() {
-    assertThat(singleStatement(s(";")), nullValue());
+    azzert.isNull(singleStatement(s(";")));
   }
   @Test public void fiveIsCorrectSize() {
-    assertThat(singleStatement(s("{{a();b();}{a(); b(); {}{}{{}} c();}}")), nullValue());
+    azzert.isNull(singleStatement(s("{{a();b();}{a(); b(); {}{}{{}} c();}}")));
   }
   @Test public void manyEmptyStatementInBlockIsNull() {
-    assertThat(singleStatement(s("{;};{;;{;;}};")), nullValue());
+    azzert.isNull(singleStatement(s("{;};{;;{;;}};")));
   }
   @Test public void manyIsNull() {
-    assertThat(singleStatement(s("a(); b(); c();")), nullValue());
+    azzert.isNull(singleStatement(s("a(); b(); c();")));
   }
   @Test public void nestedTwoIsCorrectSize() {
-    assertThat(singleStatement(s("{a();b();}")), nullValue());
+    azzert.isNull(singleStatement(s("{a();b();}")));
   }
   @Test public void nullGivesNull() {
-    assertThat(singleStatement(null), nullValue());
+    azzert.isNull(singleStatement(null));
   }
   @Test public void oneInCurlyIsNotNull() {
-    assertThat(singleStatement(s("{a();}")), notNullValue());
+    azzert.notNull(singleStatement(s("{a();}")));
   }
   @Test public void oneIsNotNull() {
-    assertThat(singleStatement(s("{a();}")), notNullValue());
+    azzert.notNull(singleStatement(s("{a();}")));
   }
   @Test public void peelIf() {
     final ASTNode n = MakeAST.STATEMENTS.from("{if (a) return b; else return c;}");
-    assertThat(n, notNullValue());
+    azzert.notNull(n);
     final List<Statement> ss = extract.statements(n);
-    assertThat(ss, notNullValue());
-    assertThat(ss.size(), is(1));
-    assertNotNull(extract.singleStatement(n));
+    azzert.notNull(ss);
+    azzert.that(ss.size(), is(1));
+     azzert.notNull(extract.singleStatement(n));
   }
   @Test public void peelIPlusPlus() {
     final ASTNode n = MakeAST.STATEMENTS.from("{i++;}");
-    assertThat(n, notNullValue());
+    azzert.notNull(n);
     final List<Statement> ss = extract.statements(n);
-    assertThat(ss, notNullValue());
-    assertThat(ss.size(), is(1));
-    assertNotNull(extract.singleStatement(n));
+    azzert.notNull(ss);
+    azzert.that(ss.size(), is(1));
+     azzert.notNull(extract.singleStatement(n));
   }
   @Test public void twoFunctionCallsNullValue() {
-    assertThat(singleStatement(s("{b(); a();}")), nullValue());
+    azzert.isNull(singleStatement(s("{b(); a();}")));
   }
   @Test public void twoInCurlyIsNull() {
-    assertThat(singleStatement(s("{a();b();}")), nullValue());
+    azzert.isNull(singleStatement(s("{a();b();}")));
   }
   @Test public void twoNullValue() {
-    assertThat(singleStatement(s("a();b();")), nullValue());
+    azzert.isNull(singleStatement(s("a();b();")));
   }
 }

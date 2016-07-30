@@ -1,12 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.*;
-import static il.org.spartan.hamcrest.MatcherAssert.*;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.OrderingComparison.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -17,9 +12,10 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.Utils;
 
 /**
  * Unit tests for {@link Wrings#ADDITION_SORTER}.
@@ -35,14 +31,14 @@ public class InfixSortAdditionTest {
 
   @Test public void subjectOperandsWithParenthesis() {
     final Expression e = Into.e("(2 + a) * b");
-    assertTrue(Is.notString(e));
+     azzert.aye(Is.notString(e));
     final InfixExpression plus = extract.firstPlus(e);
-    assertTrue(Is.notString(plus));
+     azzert.aye(Is.notString(plus));
     final List<Expression> operands = extract.operands(flatten(plus));
-    assertThat(operands.size(), is(2));
+    azzert.that(operands.size(), is(2));
     final InfixExpression r = Subject.operands(operands).to(plus.getOperator());
-    assertThat(r, iz("2+a"));
-    assertThat(new InfixSortAddition().replacement(plus), iz("a+2"));
+    azzert.that(r, iz("2+a"));
+    azzert.that(new InfixSortAddition().replacement(plus), iz("a+2"));
   }
 
   @RunWith(Parameterized.class) //
@@ -71,28 +67,28 @@ public class InfixSortAdditionTest {
       super(WRING);
     }
     @Test public void allNotStringArgument() {
-      assertTrue(Are.notString(extract.operands(asInfixExpression())));
+       azzert.aye(Are.notString(extract.operands(asInfixExpression())));
     }
     @Override @Test public void flattenIsIdempotentt() {
       final InfixExpression flatten = flatten(asInfixExpression());
-      assertThat(flatten(flatten).toString(), is(flatten.toString()));
+      azzert.that(flatten(flatten).toString(), is(flatten.toString()));
     }
     @Override @Test public void inputIsInfixExpression() {
-      assertNotNull(asInfixExpression());
+       azzert.notNull(asInfixExpression());
     }
     @Test public void isPlus() {
-      assertTrue(asInfixExpression().getOperator() == Operator.PLUS);
+       azzert.aye(asInfixExpression().getOperator() == Operator.PLUS);
     }
     @Test public void sortTest() {
-      assertFalse(COMPARATOR.sort(extract.operands(flatten(asInfixExpression()))));
+       azzert.nay(COMPARATOR.sort(extract.operands(flatten(asInfixExpression()))));
     }
     @Test public void sortTwice() {
       final List<Expression> operands = extract.operands(flatten(asInfixExpression()));
-      assertFalse(COMPARATOR.sort(operands));
-      assertFalse(COMPARATOR.sort(operands));
+       azzert.nay(COMPARATOR.sort(operands));
+       azzert.nay(COMPARATOR.sort(operands));
     }
     @Test public void twoOrMoreArguments() {
-      assertThat(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
+      azzert.that(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
     }
   }
 
@@ -129,27 +125,27 @@ public class InfixSortAdditionTest {
       super(WRING);
     }
     @Test public void allNotStringArgument() {
-      assertTrue(Are.notString(extract.operands(asInfixExpression())));
+       azzert.aye(Are.notString(extract.operands(asInfixExpression())));
     }
     @Override @Test public void flattenIsIdempotentt() {
       final InfixExpression flatten = flatten(asInfixExpression());
-      assertThat(flatten(flatten).toString(), is(flatten.toString()));
+      azzert.that(flatten(flatten).toString(), is(flatten.toString()));
     }
     @Override @Test public void inputIsInfixExpression() {
-      assertNotNull(asInfixExpression());
+       azzert.notNull(asInfixExpression());
     }
     @Test public void isPlus() {
-      assertTrue(asInfixExpression().getOperator() == Operator.PLUS);
+       azzert.aye(asInfixExpression().getOperator() == Operator.PLUS);
     }
     @Test public void notString() {
       for (final Expression e : extract.operands(flatten(asInfixExpression())))
-        assertThat(e.toString(), Is.notString(e), is(true));
+        azzert.that(e.toString(), Is.notString(e), is(true));
     }
     @Test public void sortTest() {
       final InfixExpression e = asInfixExpression();
       final List<Expression> operands = extract.operands(flatten(e));
-      assertThat(operands.size(), greaterThanOrEqualTo(2));
-      assertThat(//
+      azzert.that(operands.size(), greaterThanOrEqualTo(2));
+      azzert.that(//
           "Before: " + extract.operands(flatten(e)) + "\n" + //
               "After: " + operands + "\n", //
           COMPARATOR.sort(operands), is(true));
@@ -157,11 +153,11 @@ public class InfixSortAdditionTest {
     @Test public void sortTwice() {
       final InfixExpression e = asInfixExpression();
       final List<Expression> operands = extract.operands(flatten(e));
-      assertTrue(e.toString(), COMPARATOR.sort(operands));
-      assertFalse(e.toString(), COMPARATOR.sort(operands));
+       azzert.aye(e.toString(), COMPARATOR.sort(operands));
+       azzert.nay(e.toString(), COMPARATOR.sort(operands));
     }
     @Test public void twoOrMoreArguments() {
-      assertThat(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
+      azzert.that(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
     }
   }
 }

@@ -51,7 +51,7 @@ import il.org.spartan.utils.*;
           if (n == 0)
             break;
           s.addRoundStat(n);
-          ApplySpartanizationHandler.applySafeSpartanizationsTo(u);
+          ApplySpartanizationHandler.apply(u);
         }
         FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
         if (optVerbose)

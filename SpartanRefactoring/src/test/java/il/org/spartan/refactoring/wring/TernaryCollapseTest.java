@@ -1,9 +1,8 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
-import static org.junit.Assert.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 
 import java.util.*;
 
@@ -13,8 +12,9 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.Utils;
 
 /**
  * Unit tests for {@link Wrings#ADDITION_SORTER}.
@@ -29,16 +29,16 @@ public class TernaryCollapseTest {
 
   @Test public void steps() {
     final ConditionalExpression e = c("a ? b ? x : z :z");
-    assertNotNull(e);
+     azzert.notNull(e);
     final ConditionalExpression then = asConditionalExpression(core(e.getThenExpression()));
-    assertNotNull(then);
+     azzert.notNull(then);
     final Expression elze = core(e.getElseExpression());
-    assertNotNull(elze);
+     azzert.notNull(elze);
     final Expression thenThen = core(then.getThenExpression());
-    assertNotNull(thenThen);
+     azzert.notNull(thenThen);
     final Expression thenElse = core(then.getElseExpression());
-    assertNotNull(thenElse);
-    assertTrue(same(thenElse, elze));
+     azzert.notNull(thenElse);
+     azzert.aye(same(thenElse, elze));
   }
 
   @RunWith(Parameterized.class) //

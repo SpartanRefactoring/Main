@@ -1,12 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.MatcherAssert.*;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.OrderingComparison.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -16,9 +11,10 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.Utils;
 
 /**
  * Unit tests for {@link Wrings#ADDITION_SORTER}.
@@ -34,31 +30,31 @@ public class TernaryShortestFirstTest {
   @Test public void cyclicBug() {
     final ConditionalExpression e = Into
         .c("length(not(notConditional)) + length(then) < length(notConditional) + length(elze) ? null : $");
-    assertThat(e, notNullValue());
+    azzert.notNull(e);
     final Expression elze = extract.core(e.getElseExpression());
     final Expression then = extract.core(e.getThenExpression());
     final Expression $ = Subject.pair(elze, then).toCondition(logicalNot(e.getExpression()));
-    assertFalse(then.toString(), Is.conditional(then));
-    assertFalse(elze.toString(), Is.conditional(elze));
-    assertThat($.toString().length(), greaterThan(0));
-    assertThat($, iz("length(not(notConditional)) + length(then) >= length(notConditional) + length(elze) ? $ : null"));
+     azzert.nay(then.toString(), Is.conditional(then));
+     azzert.nay(elze.toString(), Is.conditional(elze));
+    azzert.that($.toString().length(), greaterThan(0));
+    azzert.that($, iz("length(not(notConditional)) + length(then) >= length(notConditional) + length(elze) ? $ : null"));
   }
   @Test public void trace1() {
     final ConditionalExpression e = Into.c("a?f(b,c,d):a");
-    assertThat(e, notNullValue());
-    assertThat(Subject.pair(extract.core(e.getElseExpression()), extract.core(e.getThenExpression()))
+    azzert.notNull(e);
+    azzert.that(Subject.pair(extract.core(e.getElseExpression()), extract.core(e.getThenExpression()))
         .toCondition(logicalNot(e.getExpression())), iz("!a?a:f(b,c,d)"));
   }
   @Test public void trace2() {
     final ConditionalExpression e = Into.c("!f(o) ? null : x.f(a).to(e.g())");
-    assertThat(e, notNullValue());
+    azzert.notNull(e);
     final Expression elze = extract.core(e.getElseExpression());
     final Expression then = extract.core(e.getThenExpression());
     final Expression $ = Subject.pair(elze, then).toCondition(logicalNot(e.getExpression()));
-    assertFalse(then.toString(), Is.conditional(then));
-    assertFalse(elze.toString(), Is.conditional(elze));
-    assertThat($.toString().length(), greaterThan(0));
-    assertThat($, iz("f(o) ? x.f(a).to(e.g()) : null"));
+     azzert.nay(then.toString(), Is.conditional(then));
+     azzert.nay(elze.toString(), Is.conditional(elze));
+    azzert.that($.toString().length(), greaterThan(0));
+    azzert.that($, iz("f(o) ? x.f(a).to(e.g()) : null"));
   }
 
   @RunWith(Parameterized.class) //
