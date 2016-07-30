@@ -25,7 +25,7 @@ public final class DeclarationInitializerReturnVariable extends Wring.VariableDe
     final ReturnStatement s = asReturnStatement(nextStatement);
     if (s == null)
       return null;
-    final Expression returnValue = Extract.expression(s);
+    final Expression returnValue = extract.expression(s);
     if (returnValue == null || !same(n, returnValue))
       return null;
     eliminate(f, r, g);

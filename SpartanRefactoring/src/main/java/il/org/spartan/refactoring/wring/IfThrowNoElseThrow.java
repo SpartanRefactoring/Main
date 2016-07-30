@@ -28,8 +28,8 @@ public final class IfThrowNoElseThrow extends Wring.ReplaceToNextStatement<IfSta
         : Wrings.replaceTwoStatements(r, s, Subject.operand(Subject.pair(e1, e2).toCondition(s.getExpression())).toThrow(), g);
   }
   static Expression getThrowExpression(final Statement s) {
-    final ThrowStatement $ = Extract.throwStatement(s);
-    return $ == null ? null : Extract.core($.getExpression());
+    final ThrowStatement $ = extract.throwStatement(s);
+    return $ == null ? null : extract.core($.getExpression());
   }
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate into a single 'throw'";

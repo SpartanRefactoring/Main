@@ -2042,7 +2042,7 @@ import il.org.spartan.refactoring.utils.*;
     final Statement s = s(from);
     assertThat(s, iz("{" + from + "}"));
     assertNotNull(s);
-    final PostfixExpression e = Extract.findFirstPostfix(s);
+    final PostfixExpression e = extract.findFirstPostfix(s);
     assertNotNull(e);
     assertThat(e, iz("i--"));
     final ASTNode parent = e.getParent();
@@ -2674,10 +2674,10 @@ import il.org.spartan.refactoring.utils.*;
         "      return res;\n" + //
         ""//
     );
-    final VariableDeclarationFragment f = Extract.firstVariableDeclarationFragment(u);
+    final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
     assertThat(f, notNullValue());
     assertThat(f, iz(" res = 0"));
-    assertThat(Extract.nextStatement(f),
+    assertThat(extract.nextStatement(f),
         iz(" for (int i = 0;i < s.length();++i)\n"//
             + "       if (s.charAt(i) == 'a')\n"//
             + "          res += 2;\n"//

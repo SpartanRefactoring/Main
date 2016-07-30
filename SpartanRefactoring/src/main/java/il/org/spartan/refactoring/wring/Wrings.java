@@ -45,7 +45,7 @@ public enum Wrings {
     return (IfStatement) b.statements().get(0);
   }
   static Expression eliminateLiteral(final InfixExpression e, final boolean b) {
-    final List<Expression> operands = Extract.allOperands(e);
+    final List<Expression> operands = extract.allOperands(e);
     removeAll(b, operands);
     switch (operands.size()) {
       case 0:
@@ -57,7 +57,7 @@ public enum Wrings {
     }
   }
   static boolean endsWithSequencer(final Statement s) {
-    return Is.sequencer(Extract.lastStatement(s));
+    return Is.sequencer(extract.lastStatement(s));
   }
   static ListRewrite insertAfter(final Statement where, final List<Statement> what, final ASTRewrite r, final TextEditGroup g) {
     final ListRewrite $ = r.getListRewrite(where.getParent(), Block.STATEMENTS_PROPERTY);
@@ -87,8 +87,8 @@ public enum Wrings {
     return $;
   }
   static IfStatement makeShorterIf(final IfStatement s) {
-    final List<Statement> then = Extract.statements(then(s));
-    final List<Statement> elze = Extract.statements(elze(s));
+    final List<Statement> then = extract.statements(then(s));
+    final List<Statement> elze = extract.statements(elze(s));
     final IfStatement inverse = invert(s);
     if (then.isEmpty())
       return inverse;
@@ -116,7 +116,7 @@ public enum Wrings {
   }
   static ASTRewrite replaceTwoStatements(final ASTRewrite r, final Statement what, final Statement by, final TextEditGroup g) {
     final Block parent = asBlock(what.getParent());
-    final List<Statement> siblings = Extract.statements(parent);
+    final List<Statement> siblings = extract.statements(parent);
     final int i = siblings.indexOf(what);
     siblings.remove(i);
     siblings.remove(i);
@@ -127,8 +127,8 @@ public enum Wrings {
     return r;
   }
   static boolean shoudlInvert(final IfStatement s) {
-    final int rankThen = sequencerRank(Extract.lastStatement(then(s)));
-    final int rankElse = sequencerRank(Extract.lastStatement(elze(s)));
+    final int rankThen = sequencerRank(extract.lastStatement(then(s)));
+    final int rankElse = sequencerRank(extract.lastStatement(elze(s)));
     return rankElse > rankThen || rankThen == rankElse && !Wrings.thenIsShorter(s);
   }
   static boolean thenIsShorter(final IfStatement s) {
@@ -143,8 +143,8 @@ public enum Wrings {
     if (s1 > s2)
       return false;
     assert s1 == s2;
-    final int n2 = Extract.statements(elze).size();
-    final int n1 = Extract.statements(then).size();
+    final int n2 = extract.statements(elze).size();
+    final int n1 = extract.statements(then).size();
     if (n1 < n2)
       return true;
     if (n1 > n2)

@@ -30,7 +30,7 @@ public final class DeclarationInitializerIfAssignment extends Wring.VariableDecl
     final Expression condition = s.getExpression();
     if (condition == null)
       return null;
-    final Assignment a = Extract.assignment(then(s));
+    final Assignment a = extract.assignment(then(s));
     if (a == null || !same(left(a), n) || a.getOperator() != Assignment.Operator.ASSIGN
         || doesUseForbiddenSiblings(f, condition, right(a)))
       return null;

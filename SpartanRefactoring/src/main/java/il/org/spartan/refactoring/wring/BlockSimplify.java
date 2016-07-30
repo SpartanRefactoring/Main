@@ -43,7 +43,7 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
     return true;
   }
   static Statement reorganizeNestedStatement(final Statement s) {
-    final List<Statement> ss = Extract.statements(s);
+    final List<Statement> ss = extract.statements(s);
     switch (ss.size()) {
       case 0:
         return s.getAST().newEmptyStatement();
@@ -62,13 +62,13 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
     return true;
   }
   private static Block reorganizeStatement(final Statement s) {
-    final List<Statement> ss = Extract.statements(s);
+    final List<Statement> ss = extract.statements(s);
     final Block $ = s.getAST().newBlock();
     duplicateInto(ss, statements($));
     return $;
   }
   @Override Statement replacement(final Block b) {
-    final List<Statement> ss = Extract.statements(b);
+    final List<Statement> ss = extract.statements(b);
     if (identical(ss, statements(b)) || !safeBlockSimplification(ss))
       return null;
     final ASTNode parent = b.getParent();

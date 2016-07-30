@@ -100,7 +100,7 @@ import il.org.spartan.refactoring.utils.Subject.*;
   }
   @Test public void refitWithSort() {
     final InfixExpression e = i("1 + 2 * 3");
-    final List<Expression> operands = Extract.operands(flatten(e));
+    final List<Expression> operands = extract.operands(flatten(e));
     assertThat(operands.size(), is(2));
     assertThat(operands.get(0).toString(), is("1"));
     assertThat(operands.get(1).toString(), is("2 * 3"));
@@ -117,16 +117,16 @@ import il.org.spartan.refactoring.utils.Subject.*;
   @Test public void subjectOperands() {
     final Expression e = Into.e("2 + a < b");
     assertTrue(Is.notString(e));
-    final InfixExpression plus = Extract.firstPlus(e);
+    final InfixExpression plus = extract.firstPlus(e);
     assertTrue(Is.notString(plus));
-    final List<Expression> operands = Extract.operands(flatten(plus));
+    final List<Expression> operands = extract.operands(flatten(plus));
     assertThat(operands.size(), is(2));
     final boolean b = ExpressionComparator.ADDITION.sort(operands);
     assertThat(b, is(true));
     assertThat(Subject.operands(operands).to(plus.getOperator()), iz("a +2"));
   }
   @Test public void subjectOperandsDoesNotIntroduceList() {
-    final List<Expression> operands = Extract.operands(Funcs.duplicate(i("a*b")));
+    final List<Expression> operands = extract.operands(Funcs.duplicate(i("a*b")));
     assertThat(operands.size(), is(2));
     final InfixExpression e = i("1+2");
     final InfixExpression refit = Subject.operands(operands).to(e.getOperator());
@@ -134,18 +134,18 @@ import il.org.spartan.refactoring.utils.Subject.*;
     assertThat(refit.toString(), is("a + b"));
   }
   @Test public void subjectOperandsIsCorrect() {
-    assertThat(Subject.operands(Extract.operands(Funcs.duplicate(i("a*b*c")))).to(i("1+2+3").getOperator()).toString(),
+    assertThat(Subject.operands(extract.operands(Funcs.duplicate(i("a*b*c")))).to(i("1+2+3").getOperator()).toString(),
         is("a + b + c"));
   }
   @Test public void subjectOperandsNotNull() {
-    assertThat(Subject.operands(Extract.operands(Funcs.duplicate(i("a+b+c")))).to(i("1+2+3").getOperator()), notNullValue());
+    assertThat(Subject.operands(extract.operands(Funcs.duplicate(i("a+b+c")))).to(i("1+2+3").getOperator()), notNullValue());
   }
   @Test public void subjectOperandsWithParenthesis() {
     final Expression e = Into.e("(2 + a) * b");
     assertTrue(Is.notString(e));
-    final InfixExpression plus = Extract.firstPlus(e);
+    final InfixExpression plus = extract.firstPlus(e);
     assertTrue(Is.notString(plus));
-    final List<Expression> operands = Extract.operands(flatten(plus));
+    final List<Expression> operands = extract.operands(flatten(plus));
     assertThat(operands.size(), is(2));
     final boolean b = ExpressionComparator.ADDITION.sort(operands);
     assertThat(b, is(true));

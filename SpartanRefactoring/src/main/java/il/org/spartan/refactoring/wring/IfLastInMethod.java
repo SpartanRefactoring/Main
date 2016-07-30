@@ -23,13 +23,13 @@ public class IfLastInMethod extends Wring<IfStatement> {
     return "Invert conditional " + s.getExpression() + " for early return";
   }
   @Override Rewrite make(final IfStatement s) {
-    if (Is.vacuousThen(s) || !Is.vacuousElse(s) || Extract.statements(then(s)).size() < 2)
+    if (Is.vacuousThen(s) || !Is.vacuousElse(s) || extract.statements(then(s)).size() < 2)
       return null;
     final Block b = asBlock(s.getParent());
     return b == null || !lastIn(s, b.statements()) || !(b.getParent() instanceof MethodDeclaration) ? null
         : new Rewrite(description(s), s) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-            Wrings.insertAfter(s, Extract.statements(then(s)), r, g);
+            Wrings.insertAfter(s, extract.statements(then(s)), r, g);
             final IfStatement newIf = duplicate(s);
             newIf.setExpression(duplicate(logicalNot(s.getExpression())));
             newIf.setThenStatement(s.getAST().newReturnStatement());

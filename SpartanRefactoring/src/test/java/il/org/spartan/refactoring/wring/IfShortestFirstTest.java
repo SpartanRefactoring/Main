@@ -37,9 +37,9 @@ import il.org.spartan.utils.*;
         "return true;" //
         + ""//
     );
-    final IfStatement s = Extract.firstIfStatement(u);
-    assertThat(Extract.statements(then(s)).size(), is(1));
-    assertThat(Extract.statements(elze(s)).size(), is(1));
+    final IfStatement s = extract.firstIfStatement(u);
+    assertThat(extract.statements(then(s)).size(), is(1));
+    assertThat(extract.statements(elze(s)).size(), is(1));
   }
 
   @RunWith(Parameterized.class) //

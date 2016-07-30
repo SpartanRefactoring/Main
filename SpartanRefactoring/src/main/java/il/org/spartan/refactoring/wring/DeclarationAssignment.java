@@ -21,11 +21,11 @@ public final class DeclarationAssignment extends Wring.VariableDeclarationFragem
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer != null)
       return null;
-    final Assignment a = Extract.assignment(nextStatement);
+    final Assignment a = extract.assignment(nextStatement);
     if (a == null || !same(n, left(a)) || doesUseForbiddenSiblings(f, right(a)))
       return null;
     r.replace(f, makeVariableDeclarationFragement(f, right(a)), g);
-    r.remove(Extract.statement(a), g);
+    r.remove(extract.statement(a), g);
     return r;
   }
   private static VariableDeclarationFragment makeVariableDeclarationFragement(final VariableDeclarationFragment f,

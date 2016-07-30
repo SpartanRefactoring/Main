@@ -92,11 +92,11 @@ public class DeclarationReturnTest {
       final ASTRewrite r = ASTRewrite.create(f.getAST());
       final Expression initializer = f.getInitializer();
       assertNotNull(initializer);
-      assertNotNull(Extract.nextStatement(f));
-      final ReturnStatement s = Extract.nextReturn(f);
+      assertNotNull(extract.nextStatement(f));
+      final ReturnStatement s = extract.nextReturn(f);
       assertNotNull(s);
-      assertTrue(same(f.getName(), Extract.expression(s)));
-      r.remove(Extract.statement(f), null);
+      assertTrue(same(f.getName(), extract.expression(s)));
+      r.remove(extract.statement(f), null);
       r.replace(s, Subject.operand(initializer).toReturn(), null);
     }
   }

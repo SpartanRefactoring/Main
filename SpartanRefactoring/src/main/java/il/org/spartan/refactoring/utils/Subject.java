@@ -40,10 +40,10 @@ import org.eclipse.jdt.core.dom.*;
       ast = n == null ? null : n.getAST();
     }
     Expression claim(final Expression e) {
-      return rebase(duplicate(Extract.core(e)), ast);
+      return rebase(duplicate(extract.core(e)), ast);
     }
     Statement claim(final Statement s) {
-      final Statement core = Extract.core(s);
+      final Statement core = extract.core(s);
       return core == null ? null : rebase(duplicate(core), ast);
     }
   }
