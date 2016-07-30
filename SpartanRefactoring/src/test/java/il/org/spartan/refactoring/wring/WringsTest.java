@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static  il.org.spartan.azzert.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
@@ -24,7 +24,7 @@ import il.org.spartan.refactoring.utils.*;
     final MethodDeclaration m = extract.firstMethodDeclaration(u);
     azzert.that(m, iz(input));
     final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(m);
-     azzert.notNull(f);
+    azzert.notNull(f);
     final SimpleName b = f.getName();
     azzert.that(Collect.usesOf(b).in(m).size(), is(2));
     final ASTRewrite r = ASTRewrite.create(b.getAST());
@@ -42,7 +42,7 @@ import il.org.spartan.refactoring.utils.*;
     final Block b = m.getBody();
     final EnhancedForStatement s = (EnhancedForStatement) b.statements().get(0);
     final SingleVariableDeclaration p = s.getParameter();
-     azzert.notNull(p);
+    azzert.notNull(p);
     final SimpleName a = p.getName();
     azzert.that(a, iz("a"));
     azzert.that(Collect.usesOf(a).in(m).size(), is(2));
@@ -56,14 +56,14 @@ import il.org.spartan.refactoring.utils.*;
     final Block b = m.getBody();
     final EnhancedForStatement s = (EnhancedForStatement) b.statements().get(0);
     final SingleVariableDeclaration p = s.getParameter();
-     azzert.notNull(p);
+    azzert.notNull(p);
     final SimpleName n = p.getName();
     final ASTRewrite r = ASTRewrite.create(b.getAST());
     Wrings.rename(n, n.getAST().newSimpleName("$"), m, r, null);
     final TextEdit e = r.rewriteAST(d, null);
     e.apply(d);
     final String output = Wrap.Method.off(d.get());
-     azzert.notNull(output);
+    azzert.notNull(output);
     azzert.that(output, iz(" int f() {for(int $:as)return $;}"));
   }
   @Test public void inlineExpressionWithSideEffect() {

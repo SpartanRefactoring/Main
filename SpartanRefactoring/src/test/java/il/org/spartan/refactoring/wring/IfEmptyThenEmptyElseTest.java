@@ -19,16 +19,16 @@ public class IfEmptyThenEmptyElseTest {
   private static final IfStatement IF = extract.firstIfStatement(INPUT);
 
   @Test public void eligible() {
-     azzert.aye(WRING.eligible(IF));
+    azzert.aye(WRING.eligible(IF));
   }
   @Test public void emptyElse() {
-     azzert.aye(Is.vacuousElse(IF));
+    azzert.aye(Is.vacuousElse(IF));
   }
   @Test public void emptyThen() {
-     azzert.aye(Is.vacuousThen(IF));
+    azzert.aye(Is.vacuousThen(IF));
   }
   @Test public void extractFirstIf() {
-     azzert.notNull(IF);
+    azzert.notNull(IF);
   }
   @Test public void inputType() {
     org.hamcrest.MatcherAssert.assertThat(INPUT, instanceOf(Block.class));
@@ -43,12 +43,12 @@ public class IfEmptyThenEmptyElseTest {
     final Rewrite t = WRING.make(s);
     t.go(r, null);
     final TextEdit e = r.rewriteAST(d, null);
-     azzert.notNull(e);
+    azzert.notNull(e);
     azzert.that(e.getChildren().length, greaterThan(0));
     e.apply(d);
-     azzert.isNull(extract.firstIfStatement(MakeAST.COMPILATION_UNIT.from(d.get())));
+    azzert.isNull(extract.firstIfStatement(MakeAST.COMPILATION_UNIT.from(d.get())));
   }
   @Test public void scopeIncludes() {
-     azzert.aye(WRING.scopeIncludes(IF));
+    azzert.aye(WRING.scopeIncludes(IF));
   }
 }

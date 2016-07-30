@@ -51,16 +51,16 @@ public class ExpressionFlatten {
     azzert.that(i("1+2").hasExtendedOperands(), is(false));
   }
   @Test public void isNotStringInfixFalse() {
-     azzert.nay(Is.notString(i("1+f")));
+    azzert.nay(Is.notString(i("1+f")));
   }
   @Test public void isNotStringInfixPlain() {
-     azzert.nay(Is.notString(e("1+f")));
+    azzert.nay(Is.notString(e("1+f")));
   }
   @Test public void leftOperandIsNotString() {
-     azzert.aye(Is.notString(left(i("1+2"))));
+    azzert.aye(Is.notString(left(i("1+2"))));
   }
   @Test public void leftOperandIsNumeric() {
-     azzert.aye(Is.numericLiteral(left(i("1+2"))));
+    azzert.aye(Is.numericLiteral(left(i("1+2"))));
   }
   @Test public void leftOperandIsOne() {
     azzert.that(left(i("1+2")).toString(), is("1"));

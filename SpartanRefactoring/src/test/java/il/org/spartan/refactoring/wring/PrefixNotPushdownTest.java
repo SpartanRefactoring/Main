@@ -120,7 +120,7 @@ public class PrefixNotPushdownTest {
       super(WRING);
     }
     @Test public void inputIsPrefixExpression() {
-       azzert.notNull(asPrefixExpression());
+      azzert.notNull(asPrefixExpression());
     }
   }
 }

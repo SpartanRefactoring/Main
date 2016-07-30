@@ -29,13 +29,13 @@ public class IfAssignToFooElseAssignToFooTest {
   static final Wring<IfStatement> WRING = new IfAssignToFooElseAssignToFoo();
 
   @Test public void checkSteps() {
-     azzert.notNull(asSingle("if (a) a = b; else a = c;"));
+    azzert.notNull(asSingle("if (a) a = b; else a = c;"));
     final IfStatement s = asIfStatement(asSingle("if (a) a = b; else a = c;"));
-     azzert.notNull(s);
+    azzert.notNull(s);
     final Assignment then = extract.assignment(then(s));
-     azzert.notNull(then(s).toString(), then);
+    azzert.notNull(then(s).toString(), then);
     final Assignment elze = extract.assignment(elze(s));
-     azzert.notNull(elze);
+    azzert.notNull(elze);
     azzert.that(compatible(then, elze), is(true));
     azzert.that(WRING.scopeIncludes(s), is(true));
   }

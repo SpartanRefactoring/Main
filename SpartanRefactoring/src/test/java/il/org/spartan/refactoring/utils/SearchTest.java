@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
-import static  il.org.spartan.azzert.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 
@@ -220,7 +220,7 @@ import il.org.spartan.refactoring.utils.Collect.*;
     final MethodDeclaration d = d(input);
     azzert.that(d, iz(input));
     final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(d);
-     azzert.notNull(f);
+    azzert.notNull(f);
     final SimpleName b = f.getName();
     azzert.that(b, iz("b"));
     azzert.that(Collect.usesOf(b).in(d).size(), is(2));
@@ -230,7 +230,7 @@ import il.org.spartan.refactoring.utils.Collect.*;
     final MethodDeclaration d = d(input);
     azzert.that(d, iz(input));
     final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(d);
-     azzert.notNull(f);
+    azzert.notNull(f);
     final SimpleName b = f.getName();
     azzert.that(b, iz("b"));
     azzert.that(Collect.usesOf(b).in(d).size(), is(1));
