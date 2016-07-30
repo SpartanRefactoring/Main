@@ -28,7 +28,7 @@ public final class DeclarationInitializerReturnUpdateAssignment extends Wring.Va
     final ReturnStatement s = asReturnStatement(nextStatement);
     if (s == null)
       return null;
-    final Assignment a = asAssignment(Extract.expression(s));
+    final Assignment a = asAssignment(extract.expression(s));
     if (a == null || !same(n, left(a)))
       return null;
     final Operator o = a.getOperator();

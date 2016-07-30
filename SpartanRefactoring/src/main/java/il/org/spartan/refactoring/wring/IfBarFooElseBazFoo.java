@@ -24,10 +24,10 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> {
     return "Consolidate commmon suffix of then and else branches to just after if statement";
   }
   @Override Rewrite make(final IfStatement s) {
-    final List<Statement> then = Extract.statements(then(s));
+    final List<Statement> then = extract.statements(then(s));
     if (then.isEmpty())
       return null;
-    final List<Statement> elze = Extract.statements(elze(s));
+    final List<Statement> elze = extract.statements(elze(s));
     if (elze.isEmpty())
       return null;
     final List<Statement> commmonSuffix = commmonSuffix(then, elze);

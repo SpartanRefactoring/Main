@@ -60,7 +60,7 @@ import il.org.spartan.refactoring.wring.*;
     assertThat(statement, notNullValue());
     final ASTNode n = MakeAST.STATEMENTS.from(statement);
     assertThat(n, notNullValue());
-    return Extract.singleStatement(n);
+    return extract.singleStatement(n);
   }
   public static Document rewrite(final Spartanization s, final CompilationUnit u, final Document $) {
     try {

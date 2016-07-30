@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Extract.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -42,7 +42,7 @@ public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<Infix
                 : null;
   }
   private static Expression chopHead(final InfixExpression e) {
-    final List<Expression> es = Extract.allOperands(e);
+    final List<Expression> es = extract.allOperands(e);
     es.remove(0);
     return es.size() < 2 ? duplicate(es.get(0)) : Subject.operands(es).to(e.getOperator());
   }

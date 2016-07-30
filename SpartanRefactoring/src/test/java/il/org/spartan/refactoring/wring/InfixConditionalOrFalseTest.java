@@ -142,7 +142,7 @@ public enum InfixConditionalOrFalseTest {
       assertThat(asInfixExpression().getOperator(), is(CONDITIONAL_OR));
     }
     @Test public void twoOrMoreArguments() {
-      assertThat(Extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
+      assertThat(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
     }
   }
 }
