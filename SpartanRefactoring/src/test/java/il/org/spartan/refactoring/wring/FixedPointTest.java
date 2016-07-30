@@ -1,5 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
+import static il.org.spartan.azzert.assertEquals;
+import static il.org.spartan.azzert.assertNotEquals;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.utils.Utils.*;
 import static org.junit.Assert.*;

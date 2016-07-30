@@ -1,13 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.*;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.OrderingComparison.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static il.org.spartan.utils.Utils.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -20,9 +16,10 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.Utils;
 
 /**
  * Unit tests for {@link Wrings#ADDITION_SORTER}.
@@ -42,9 +39,9 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
     final String s = " (2) == true";
     final String wrap = Wrap.Expression.on(s);
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
-    assertNotNull(u);
+     azzert.notNull(u);
     final Document d = new Document(wrap);
-    assertNotNull(d);
+     azzert.notNull(d);
     final Trimmer t = new Trimmer();
     final ASTRewrite r = t.createRewrite(u, null);
     final TextEdit x = r.rewriteAST(d, null);
@@ -53,10 +50,9 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
     if (wrap.equals(unpeeled))
       fail("Nothing done on " + s);
     final String peeled = Wrap.Expression.off(unpeeled);
-    if (peeled.equals(s))
-      assertNotEquals("No similification of " + s, s, peeled);
+      azzert.that("No similification of " + s, s, not(peeled));
     if (compressSpaces(peeled).equals(compressSpaces(s)))
-      assertNotEquals("Simpification of " + s + " is just reformatting", compressSpaces(peeled), compressSpaces(s));
+      azzert.that("Simpification of " + s + " is just reformatting", compressSpaces(peeled), not(compressSpaces(s)));
     assertSimilar(" 2 ", peeled);
   }
 
@@ -114,18 +110,18 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
     }
     @Override @Test public void flattenIsIdempotentt() {
       final InfixExpression flatten = flatten(asInfixExpression());
-      assertThat(flatten(flatten).toString(), is(flatten.toString()));
+      azzert.that(flatten(flatten).toString(), is(flatten.toString()));
     }
     @Override @Test public void inputIsInfixExpression() {
-      assertNotNull(asInfixExpression());
+       azzert.notNull(asInfixExpression());
     }
     @Test public void sortTwice() {
       final List<Expression> operands = extract.operands(flatten(asInfixExpression()));
       ExpressionComparator.ADDITION.sort(operands);
-      assertFalse(ExpressionComparator.ADDITION.sort(operands));
+       azzert.nay(ExpressionComparator.ADDITION.sort(operands));
     }
     @Test public void twoOrMoreArguments() {
-      assertThat(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
+      azzert.that(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
     }
   }
 }

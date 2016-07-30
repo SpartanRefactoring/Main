@@ -1,7 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static org.junit.Assert.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -10,8 +8,9 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.Utils;
 
 /**
  * Unit tests for {@link Wrings#ADDITION_SORTER}.
@@ -86,7 +85,7 @@ public class TernaryEliminateTest {
       super(WRING);
     }
     @Test public void inputIsConditionalfixExpression() {
-      assertNotNull(asConditionalExpression());
+       azzert.notNull(asConditionalExpression());
     }
   }
 }

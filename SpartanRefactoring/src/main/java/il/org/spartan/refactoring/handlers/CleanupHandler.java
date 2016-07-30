@@ -51,7 +51,7 @@ public class CleanupHandler extends BaseHandler {
           "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES, us.size());
           int n = 0;
           for (final ICompilationUnit u : us) {
-            applySafeSpartanizationsTo(u);
+            apply(u);
             pm.worked(1);
             pm.subTask(u.getElementName() + " " + ++n + "/" + us.size());
           }

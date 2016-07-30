@@ -1,11 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -15,9 +11,10 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.Utils;
 
 /**
  * Unit tests for {@link Wrings#IFX_SOMETHING_EXISTING_EMPTY_ELSE}.
@@ -81,20 +78,20 @@ public class IfEmptyElseTest {
       super(WRING);
     }
     @Test public void isfStatementElseIsEmpty() {
-      assertThat(extract.statements(asMe().getElseStatement()).size(), is(0));
+      azzert.that(extract.statements(asMe().getElseStatement()).size(), is(0));
     }
     @Test public void isfStatementElseNotNull() {
-      assertNotNull(elze(asMe()));
+       azzert.notNull(elze(asMe()));
     }
     @Test public void isIfStatement() {
-      assertNotNull(asMe());
+       azzert.notNull(asMe());
     }
     @Test public void myScopeIncludes() {
       final IfStatement s = asMe();
-      assertThat(s, notNullValue());
-      assertThat(elze(s), notNullValue());
-      assertThat(extract.statements(elze(s)), notNullValue());
-      assertThat(extract.statements(elze(s)).size(), is(0));
+      azzert.notNull(s);
+      azzert.notNull(elze(s));
+      azzert.notNull(extract.statements(elze(s)));
+      azzert.that(extract.statements(elze(s)).size(), is(0));
     }
   }
 }

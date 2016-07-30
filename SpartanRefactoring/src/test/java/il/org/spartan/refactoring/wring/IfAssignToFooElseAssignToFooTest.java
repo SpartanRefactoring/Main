@@ -1,10 +1,8 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.hamcrest.CoreMatchers.*;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -14,9 +12,10 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.Utils;
 
 /**
  * Unit tests for {@link Wrings#ADDITION_SORTER}.
@@ -30,15 +29,15 @@ public class IfAssignToFooElseAssignToFooTest {
   static final Wring<IfStatement> WRING = new IfAssignToFooElseAssignToFoo();
 
   @Test public void checkSteps() {
-    assertNotNull(asSingle("if (a) a = b; else a = c;"));
+     azzert.notNull(asSingle("if (a) a = b; else a = c;"));
     final IfStatement s = asIfStatement(asSingle("if (a) a = b; else a = c;"));
-    assertNotNull(s);
+     azzert.notNull(s);
     final Assignment then = extract.assignment(then(s));
-    assertNotNull(then(s).toString(), then);
+     azzert.notNull(then(s).toString(), then);
     final Assignment elze = extract.assignment(elze(s));
-    assertNotNull(elze);
-    assertThat(compatible(then, elze), is(true));
-    assertThat(WRING.scopeIncludes(s), is(true));
+     azzert.notNull(elze);
+    azzert.that(compatible(then, elze), is(true));
+    azzert.that(WRING.scopeIncludes(s), is(true));
   }
 
   @RunWith(Parameterized.class) //

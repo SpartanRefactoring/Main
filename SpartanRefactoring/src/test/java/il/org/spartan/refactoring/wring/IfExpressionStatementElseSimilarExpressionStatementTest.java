@@ -1,10 +1,7 @@
 package il.org.spartan.refactoring.wring;
-
-import static il.org.spartan.hamcrest.CoreMatchers.*;
-import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -14,8 +11,9 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.Utils;
 
 /* @author Yossi Gil
  *
@@ -27,10 +25,10 @@ public class IfExpressionStatementElseSimilarExpressionStatementTest {
 
   @Test public void checkSteps() {
     final Statement s = asSingle("if (a) f(b); else f(c);");
-    assertNotNull(s);
+     azzert.notNull(s);
     final IfStatement i = asIfStatement(s);
-    assertNotNull(i);
-    assertThat(WRING.scopeIncludes(i), is(true));
+     azzert.notNull(i);
+    azzert.that(WRING.scopeIncludes(i), is(true));
   }
 
   @RunWith(Parameterized.class) //
