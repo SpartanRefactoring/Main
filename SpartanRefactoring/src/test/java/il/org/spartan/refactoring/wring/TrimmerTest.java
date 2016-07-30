@@ -7,7 +7,6 @@ import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
 import static il.org.spartan.utils.Utils.*;
-import static org.junit.Assert.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
@@ -2346,6 +2345,15 @@ import il.org.spartan.refactoring.utils.*;
     trimming(
         " public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass res = new BlahClass(6);   S.out.println(res.j);   return res; ")
             .to(" public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   S.out.println($.j);   return $; ");
+  }
+  static public void fail(String message) {
+    if (message == null) {
+      throw new AssertionError();
+    }
+    throw new AssertionError(message);
+  }
+  static public void fail() {
+    fail(null);
   }
   @Ignore @Test public void reanmeReturnVariableToDollar02() {
     trimming(
