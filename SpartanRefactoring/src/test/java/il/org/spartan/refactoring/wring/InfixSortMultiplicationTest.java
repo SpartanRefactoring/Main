@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.azzert.assertEquals;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
@@ -54,7 +53,7 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
      azzert.aye(s.eligible(e));
     final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) s).replacement(e);
      azzert.notNull(replacement);
-    assertEquals("f(a,b,c) * f(a,b,c,d)", replacement.toString());
+    azzert.that(replacement.toString(), is(("f(a,b,c) * f(a,b,c,d)")));
   }
   @Test public void parseOfToken() {
     azzert.that(new LiteralParser(e(" 2  ").toString()).type(), is(Types.INTEGER.ordinal()));

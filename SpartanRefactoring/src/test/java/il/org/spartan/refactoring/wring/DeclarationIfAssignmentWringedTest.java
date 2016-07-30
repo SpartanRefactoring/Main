@@ -99,7 +99,7 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
      azzert.nay(inner.nonEligible(asMe()));
   }
   @Test public void peelableOutput() {
-    assertEquals(expected, Wrap.Statement.off(Wrap.Statement.on(expected)));
+    azzert.that(Wrap.Statement.off(Wrap.Statement.on(expected)), is((expected)));
   }
   @Test public void rewriteNotEmpty() throws MalformedTreeException, IllegalArgumentException {
      azzert.notNull(new Trimmer().createRewrite(asCompilationUnit(), null));
@@ -123,9 +123,6 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     assertSimilar(expected, peeled);
     assertSimilar(Wrap.Statement.on(expected), actual);
   }
-  static <T> void assertNotEquals(String s, T t1, T t2) {
-    azzert.that(s, t2, is(not(t1))); 
-   }
   @Test public void traceLegiblity() {
     final VariableDeclarationFragment f = asMe();
     final ASTRewrite r = ASTRewrite.create(f.getAST());

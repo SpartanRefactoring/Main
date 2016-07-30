@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
 import static  il.org.spartan.azzert.*;
-import static il.org.spartan.azzert.assertNotEquals;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.utils.Utils.*;
 
@@ -142,9 +141,9 @@ public class TrimmerTestsUtils {
       fail("Nothing done on " + from);
     final String peeled = wrapper.off(unpeeled);
     if (peeled.equals(from))
-      assertNotEquals("No similification of " + from, from, peeled);
+      azzert.that("No similification of " + from, peeled, is(not(from)));
     if (compressSpaces(peeled).equals(compressSpaces(from)))
-      assertNotEquals("Simpification of " + from + " is just reformatting", compressSpaces(peeled), compressSpaces(from));
+      azzert.that("Simpification of " + from + " is just reformatting", compressSpaces(from), is(not(compressSpaces(peeled))));
     assertSimilar(expected, peeled);
   }
   static <N extends ASTNode> OperandToWring<N> included(final String from, final Class<N> clazz) {

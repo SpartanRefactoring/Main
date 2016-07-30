@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.wring;
 import static  il.org.spartan.azzert.*;
-import static il.org.spartan.azzert.assertNotEquals;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.utils.Utils.*;
@@ -95,11 +94,12 @@ public class IfCommandsSequencerElseSomethingTest {
       fail("Nothing done on " + s);
     final String peeled = Wrap.Statement.off(unpeeled);
     if (peeled.equals(s))
-      assertNotEquals("No similification of " + s, s, peeled);
+      azzert.that("No similification of " + s, peeled, is(not(s.toString())));
     if (compressSpaces(peeled).equals(compressSpaces(s.toString())))
-      assertNotEquals("Simpification of " + s + " is just reformatting", compressSpaces(peeled), compressSpaces(s.toString()));
+      azzert.that("Simpification of " + s + " is just reformatting", compressSpaces(s.toString()), is(not(compressSpaces(peeled))));
     assertSimilar(" if (a) return b; a(); ", peeled);
   }
+
   @Test public void checkStepsWRING() throws MalformedTreeException {
     final IfStatement s = (IfStatement) asSingle("if (a) return b; else a();");
     azzert.that(WRING.scopeIncludes(s), is(true));
@@ -140,7 +140,6 @@ public class IfCommandsSequencerElseSomethingTest {
       super(WRING);
     }
   }
-
   @RunWith(Parameterized.class) //
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
   public static class Wringed extends AbstractWringTest.Wringed.IfStatementAndSurrounding {
