@@ -1,36 +1,11 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.refactoring.utils.Funcs.right;
-import static il.org.spartan.refactoring.utils.Funcs.same;
-import static il.org.spartan.utils.Utils.in;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.utils.Utils.*;
 
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.ASTVisitor;
-import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
-import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
-import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
-import org.eclipse.jdt.core.dom.Assignment;
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.CastExpression;
-import org.eclipse.jdt.core.dom.ClassInstanceCreation;
-import org.eclipse.jdt.core.dom.EnhancedForStatement;
-import org.eclipse.jdt.core.dom.EnumDeclaration;
-import org.eclipse.jdt.core.dom.FieldAccess;
-import org.eclipse.jdt.core.dom.FieldDeclaration;
-import org.eclipse.jdt.core.dom.ForStatement;
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.MethodInvocation;
-import org.eclipse.jdt.core.dom.PostfixExpression;
-import org.eclipse.jdt.core.dom.PrefixExpression;
-import org.eclipse.jdt.core.dom.QualifiedName;
-import org.eclipse.jdt.core.dom.SimpleName;
-import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
-import org.eclipse.jdt.core.dom.SuperMethodInvocation;
-import org.eclipse.jdt.core.dom.Type;
-import org.eclipse.jdt.core.dom.TypeDeclaration;
-import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.*;
 
 abstract class ScopeManager extends ASTVisitor {
   @Override public final void endVisit(@SuppressWarnings("unused") final AnnotationTypeDeclaration __) {
@@ -87,6 +62,7 @@ abstract class ScopeManager extends ASTVisitor {
 abstract class HidingDepth extends ScopeManager {
   private int depth = 0;
   private int hideDepth = Integer.MAX_VALUE;
+
   boolean hidden() {
     return depth >= hideDepth;
   }
@@ -106,6 +82,7 @@ abstract class HidingDepth extends ScopeManager {
 class UsesCollector extends HidingDepth {
   private final List<SimpleName> result;
   private final SimpleName focus;
+
   UsesCollector(final List<SimpleName> result, final SimpleName focus) {
     this.result = result;
     this.focus = focus;
@@ -224,7 +201,8 @@ class UsesCollector extends HidingDepth {
    * This is where we ignore all occurrences of {@link SimpleName} which are not
    * variable names, e.g., class name, function name, field name, etc.
    *
-   * @param _ JD
+   * @param _
+   *          JD
    */
   private void ingore(@SuppressWarnings("unused") final SimpleName __) {
     // We simply ignore the parameter
@@ -237,6 +215,7 @@ class UsesCollector extends HidingDepth {
 
   private final class DeclaredInFields extends ASTVisitor {
     private final ASTNode parent;
+
     DeclaredInFields(final ASTNode parent) {
       this.parent = parent;
     }
@@ -247,11 +226,9 @@ class UsesCollector extends HidingDepth {
 }
 
 class UnsafeUsesCollector extends UsesCollector {
-
-  UnsafeUsesCollector(List<SimpleName> result, SimpleName focus) {
+  UnsafeUsesCollector(final List<SimpleName> result, final SimpleName focus) {
     super(result, focus);
   }
-  
   @Override void consider(final SimpleName n) {
     ASTNode p = n.getParent();
     while (p != null) {
@@ -262,8 +239,7 @@ class UnsafeUsesCollector extends UsesCollector {
       p = p.getParent();
     }
   }
-  
-  private boolean unsafe(ASTNode n) {
+  private boolean unsafe(final ASTNode n) {
     return n instanceof ClassInstanceCreation;
   }
 }

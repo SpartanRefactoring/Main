@@ -1,26 +1,19 @@
 package il.org.spartan.refactoring.handlers;
 
-import static il.org.spartan.refactoring.handlers.ApplySpartanizationHandler.applySafeSpartanizationsTo;
-import static il.org.spartan.refactoring.spartanizations.DialogBoxes.announce;
+import static il.org.spartan.refactoring.handlers.ApplySpartanizationHandler.*;
+import static il.org.spartan.refactoring.spartanizations.DialogBoxes.*;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.lang.reflect.*;
+import java.util.*;
+import java.util.concurrent.atomic.*;
 
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.jdt.core.ICompilationUnit;
-import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.jface.operation.IRunnableWithProgress;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.progress.IProgressService;
+import org.eclipse.core.commands.*;
+import org.eclipse.core.runtime.*;
+import org.eclipse.jdt.core.*;
+import org.eclipse.ui.*;
+import org.eclipse.ui.progress.*;
 
-import il.org.spartan.refactoring.spartanizations.Spartanization;
-import il.org.spartan.refactoring.spartanizations.Spartanizations;
+import il.org.spartan.refactoring.spartanizations.*;
 
 /**
  * A handler for {@link Spartanizations}. This handler executes all safe
@@ -34,7 +27,9 @@ public class CleanupHandler extends BaseHandler {
   public CleanupHandler() {
     super(null);
   }
+
   static final int MAX_PASSES = 20;
+
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent e) throws ExecutionException {
     final StringBuilder message = new StringBuilder();
     final ICompilationUnit currentCompilationUnit = currentCompilationUnit();
@@ -51,18 +46,16 @@ public class CleanupHandler extends BaseHandler {
       final IProgressService ps = wb.getProgressService();
       final AtomicInteger passNum = new AtomicInteger(i + 1);
       try {
-        ps.busyCursorWhile(new IRunnableWithProgress() {
-          @Override public void run(final IProgressMonitor pm) {
-            pm.beginTask("Spartanizing project '" + javaProject.getElementName() + "' - " + //
-                "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES, us.size());
-            int n = 0;
-            for (final ICompilationUnit u : us) {
-              applySafeSpartanizationsTo(u);
-              pm.worked(1);
-              pm.subTask(u.getElementName() + " " + ++n + "/" + us.size());
-            }
-            pm.done();
+        ps.busyCursorWhile(pm -> {
+          pm.beginTask("Spartanizing project '" + javaProject.getElementName() + "' - " + //
+          "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES, us.size());
+          int n = 0;
+          for (final ICompilationUnit u : us) {
+            applySafeSpartanizationsTo(u);
+            pm.worked(1);
+            pm.subTask(u.getElementName() + " " + ++n + "/" + us.size());
           }
+          pm.done();
         });
       } catch (final InvocationTargetException x) {
         x.printStackTrace();
@@ -91,7 +84,8 @@ public class CleanupHandler extends BaseHandler {
   /**
    * Returns the number of Spartanizaion suggestions for this compilation unit
    *
-   * @param u JD
+   * @param u
+   *          JD
    * @return the number of suggesions available for the compilation unit
    */
   public static int countSuggestions(final ICompilationUnit u) {

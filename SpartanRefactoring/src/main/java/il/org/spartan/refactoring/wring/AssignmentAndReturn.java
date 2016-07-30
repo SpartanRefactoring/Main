@@ -1,24 +1,18 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Extract.core;
-import static il.org.spartan.refactoring.utils.Funcs.asReturnStatement;
-import static il.org.spartan.refactoring.utils.Funcs.asStatement;
-import static il.org.spartan.refactoring.utils.Funcs.left;
-import static il.org.spartan.refactoring.utils.Funcs.same;
+import static il.org.spartan.refactoring.utils.Extract.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
 
-import org.eclipse.jdt.core.dom.Assignment;
-import org.eclipse.jdt.core.dom.ForStatement;
-import org.eclipse.jdt.core.dom.ReturnStatement;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Subject;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
- * A {@link Wring} to convert <code>a = 3;return a;</code> to
- * <code>return a = 3;</code>
+ * A {@link Wring} to convert <code>a = 3;return a;</code> to <code>return a =
+ * 3;</code>
  *
  * @author Yossi Gil
  * @since 2015-08-28
@@ -39,6 +33,6 @@ public class AssignmentAndReturn extends Wring.ReplaceToNextStatement<Assignment
     return "Inline assignment to " + left(a) + " with its subsequent 'return'";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
+    return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }

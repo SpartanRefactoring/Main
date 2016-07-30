@@ -1,9 +1,8 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.utils.Utils.intIsIn;
+import static il.org.spartan.utils.Utils.*;
 
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.*;
 
 /**
  * An empty <code><b>enum</b></code> for fluent programming. The name should say
@@ -18,7 +17,8 @@ public enum Associativity {
   /**
    * Determine whether associativity is right-to-left
    *
-   * @param e JD
+   * @param e
+   *          JD
    * @return <code><b>true</b></code> <i>iff</i> the associativity of parameter
    *         present on the parameter is right-to-left.
    */
@@ -35,7 +35,8 @@ public enum Associativity {
   /**
    * Determine whether associativity is left-to-right
    *
-   * @param o JD
+   * @param o
+   *          JD
    * @return <code><b>true</b></code> <i>iff</i> the associativity of the
    *         parameter is left-to-right.
    */

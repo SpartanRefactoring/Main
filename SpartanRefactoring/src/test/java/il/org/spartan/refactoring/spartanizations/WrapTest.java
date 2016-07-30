@@ -1,17 +1,15 @@
 package il.org.spartan.refactoring.spartanizations;
 
 import static il.org.spartan.hamcrest.CoreMatchers.is;
-import static il.org.spartan.refactoring.spartanizations.Wrap.essence;
-import static org.hamcrest.CoreMatchers.containsString;
+import static il.org.spartan.refactoring.spartanizations.Wrap.*;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jface.text.Document;
-import org.junit.Test;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jface.text.*;
+import org.junit.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) public class WrapTest {
   @Test public void dealWithBothKindsOfComment() {
@@ -90,7 +88,8 @@ import org.junit.Test;
     assertEquals(Wrap.Expression.off(Wrap.Expression.on("a/b")), "a/b");
   }
   @Test public void removeComments() {
-    similar(Wrap.removeComments("" + "if (b) {\n" + " /* empty */" + "} else {\n" + " throw new Exception();\n" + "}"), "if (b) {} else { throw new Exception(); }");
+    similar(Wrap.removeComments("" + "if (b) {\n" + " /* empty */" + "} else {\n" + " throw new Exception();\n" + "}"),
+        "if (b) {} else { throw new Exception(); }");
   }
   @Test public void statement() {
     assertThat(Wrap.Statement.off(Wrap.Statement.on("int a;")), is("int a;"));

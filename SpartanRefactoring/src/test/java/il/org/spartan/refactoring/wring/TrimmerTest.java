@@ -1,50 +1,26 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.hamcrest.CoreMatchers.is;
+import static il.org.spartan.hamcrest.MatcherAssert.*;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.MatcherAssert.iz;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.assertSimilar;
-import static il.org.spartan.refactoring.utils.ExpressionComparator.NODES_THRESHOLD;
-import static il.org.spartan.refactoring.utils.ExpressionComparator.nodesCount;
-import static il.org.spartan.refactoring.utils.Funcs.left;
-import static il.org.spartan.refactoring.utils.Funcs.right;
-import static il.org.spartan.refactoring.utils.Into.i;
-import static il.org.spartan.refactoring.utils.Into.s;
-import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.trimming;
-import static il.org.spartan.utils.Utils.compressSpaces;
-import static il.org.spartan.utils.Utils.hasNull;
-import static il.org.spartan.utils.Utils.in;
-import static org.hamcrest.CoreMatchers.instanceOf;
+import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import static il.org.spartan.refactoring.utils.ExpressionComparator.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Into.*;
+import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
+import static il.org.spartan.utils.Utils.*;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Assignment;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.InfixExpression.Operator;
-import org.eclipse.jdt.core.dom.PostfixExpression;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
-import org.junit.FixMethodOrder;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.InfixExpression.*;
+import org.junit.*;
+import org.junit.runners.*;
 
-import il.org.spartan.refactoring.spartanizations.Wrap;
-import il.org.spartan.refactoring.utils.ExpressionComparator;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.MakeAST;
+import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
  * * Unit tests for the nesting class Unit test for the containing class. Note

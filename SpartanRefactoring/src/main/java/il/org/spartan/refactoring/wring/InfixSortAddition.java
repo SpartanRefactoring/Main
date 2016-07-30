@@ -1,18 +1,14 @@
 package il.org.spartan.refactoring.wring;
 
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.PLUS;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.InfixExpression.Operator;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.ExpressionComparator;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.Subject;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
  * A {@link Wring} that sorts the arguments of a {@link Operator#PLUS}
@@ -39,6 +35,6 @@ public final class InfixSortAddition extends Wring.InfixSorting {
     return e.getOperator() == PLUS;
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REORDER_EXPRESSIONS;
+    return WringGroup.REORDER_EXPRESSIONS;
   }
 }

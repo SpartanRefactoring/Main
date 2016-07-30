@@ -1,15 +1,14 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.hamcrest.CoreMatchers.is;
+import static il.org.spartan.hamcrest.MatcherAssert.*;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.MatcherAssert.iz;
-import static il.org.spartan.refactoring.utils.Into.e;
-import static org.hamcrest.CoreMatchers.notNullValue;
+import static il.org.spartan.refactoring.utils.Into.*;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.junit.Test;
+import org.eclipse.jdt.core.dom.*;
+import org.junit.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) public class PlantTest {
   @Test public void plantIntoLess() {

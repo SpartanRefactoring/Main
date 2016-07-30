@@ -2,27 +2,22 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.hamcrest.CoreMatchers.is;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.refactoring.utils.Funcs.elze;
-import static il.org.spartan.refactoring.utils.Funcs.then;
-import static org.hamcrest.CoreMatchers.notNullValue;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
-import java.util.Collection;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.eclipse.jdt.core.dom.*;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.*;
 
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.MakeAST;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
-import il.org.spartan.utils.Utils;
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.AbstractWringTest.*;
+import il.org.spartan.utils.*;
 
 /**
  * Unit tests for
@@ -35,6 +30,7 @@ import il.org.spartan.utils.Utils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class IfReturnNoElseReturnTest {
   static final Wring<IfStatement> WRING = new IfReturnNoElseReturn();
+
   @Test public void checkFirstIfStatement1() {
     final String s = "if (a) return b; return a();";
     final IfStatement i = Extract.firstIfStatement(MakeAST.STATEMENTS.from(s));
@@ -81,6 +77,7 @@ public class IfReturnNoElseReturnTest {
         new String[] { "Simple if plus assign", "if (a) a *= b; else a *= c;" }, //
         new String[] { "Simple if return empty else", "if (a) return b; else ;" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -105,9 +102,11 @@ public class IfReturnNoElseReturnTest {
         new String[] { "Vanilla ; ", "if (a) return b; return a(); b(); c();", "return a ? b: a(); b(); c();" }, //
         new String[] { "Vanilla {;{;;};} ", "if (a) return b; else {;{;{};};{;{}}} return c;", "return a?b:c;" }, //
         null, //
-        new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}", "if (x) {;f();;;return a;;;}\n g();" }, //
+        new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}",
+            "if (x) {;f();;;return a;;;}\n g();" }, //
         null, //
-        new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}", "  if(x){;f();;;return a;;;} g();" }, //
+        new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}",
+            "  if(x){;f();;;return a;;;} g();" }, //
         new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}",
             "" + //
                 " if (x) {\n" + //
@@ -138,6 +137,7 @@ public class IfReturnNoElseReturnTest {
                 " g();\n" + //
                 "" }, //
         null };
+
     /**
      * Generate test cases for this parameterized class.
      *

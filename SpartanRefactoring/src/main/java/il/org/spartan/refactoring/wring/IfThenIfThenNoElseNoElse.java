@@ -1,24 +1,18 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.asIfStatement;
-import static il.org.spartan.refactoring.utils.Funcs.duplicate;
-import static il.org.spartan.refactoring.utils.Funcs.then;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.CONDITIONAL_AND;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.Rewrite;
-import il.org.spartan.refactoring.utils.Subject;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
- * A {@link Wring} to convert <code>if (x) if (a) f();</code> into
- * <code>if (x && a) f();</code>
+ * A {@link Wring} to convert <code>if (x) if (a) f();</code> into <code>if (x
+ * && a) f();</code>
  *
  * @author Yossi Gil
  * @since 2015-09-01
@@ -54,6 +48,6 @@ public final class IfThenIfThenNoElseNoElse extends Wring<IfStatement> {
     return make(s, null);
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.SIMPLIFY_NESTED_BLOCKS;
+    return WringGroup.SIMPLIFY_NESTED_BLOCKS;
   }
 }

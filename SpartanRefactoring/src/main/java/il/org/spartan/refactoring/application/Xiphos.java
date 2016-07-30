@@ -1,36 +1,20 @@
 package il.org.spartan.refactoring.application;
 
-import static il.org.spartan.external.External.Introspector.extract;
+import static il.org.spartan.external.External.Introspector.*;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.LineNumberReader;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
-import org.eclipse.core.resources.IFolder;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IProjectDescription;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.jdt.core.IClasspathEntry;
-import org.eclipse.jdt.core.ICompilationUnit;
-import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.IPackageFragment;
-import org.eclipse.jdt.core.IPackageFragmentRoot;
-import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.jdt.core.dom.ASTParser;
-import org.eclipse.jdt.core.dom.ASTVisitor;
-import org.eclipse.jdt.core.dom.PackageDeclaration;
+import org.eclipse.core.resources.*;
+import org.eclipse.core.runtime.*;
+import org.eclipse.jdt.core.*;
+import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.external.External;
-import il.org.spartan.files.FilesGenerator;
-import il.org.spartan.misc.Wrapper;
-import il.org.spartan.refactoring.handlers.ApplySpartanizationHandler;
-import il.org.spartan.refactoring.handlers.CleanupHandler;
-import il.org.spartan.utils.FileUtils;
+import il.org.spartan.external.*;
+import il.org.spartan.files.*;
+import il.org.spartan.misc.*;
+import il.org.spartan.refactoring.handlers.*;
+import il.org.spartan.utils.*;
 
 /**
  * Command line version of this plug-in
@@ -49,10 +33,12 @@ public class Xiphos {
   boolean optDoNotOverwrite = false;
   boolean optStatsChanges = false;
   private final List<String> remaining;
+
   /**
    * main function, to which command line arguments are passed.
    *
-   * @param args command line arguments
+   * @param args
+   *          command line arguments
    */
   public static void main(final String[] args) {
     new Xiphos(args).go();
@@ -111,7 +97,8 @@ public class Xiphos {
         + "within the given PATH. Files are spartanized in place by default.");
     System.out.println("");
     System.out.println("Options:");
-    System.out.println("  -N       Do not overwrite existing files (writes the Spartanized output to a new file in the same directory)");
+    System.out
+        .println("  -N       Do not overwrite existing files (writes the Spartanized output to a new file in the same directory)");
     System.out.println("  -C<num>  Maximum number of Spartanizaion rounds for each file (default: 20)");
     System.out.println("  -E       Display statistics for each file separately");
     System.out.println("  -V       Be verbose");
@@ -156,20 +143,6 @@ public class Xiphos {
   }
   String determineOutputFilename(final String path) {
     return !optDoNotOverwrite ? path : path.substring(0, path.lastIndexOf('.')) + "_new.java";
-  }
-  private void parseArguments(final List<String> args) {
-    for (final String a : args) {
-      if (a.equals("-N"))
-        optDoNotOverwrite = true;
-      if (a.equals("-E"))
-        optIndividualStatistics = true;
-      if (a.equals("-V"))
-        verbose = true;
-      if (a.equals("-l"))
-        optStatsLines = true;
-      if (a.equals("-r"))
-        optStatsChanges = true;
-    }
   }
   void prepareTempIJavaProject() throws CoreException {
     final IProject p = ResourcesPlugin.getWorkspace().getRoot().getProject("spartanTemp");
@@ -238,6 +211,7 @@ public class Xiphos {
     final int linesBefore;
     int linesAfter;
     final List<Integer> roundStats = new ArrayList<>();
+
     public FileStats(final File file) throws IOException {
       linesBefore = countLines(this.file = file);
     }
@@ -264,6 +238,7 @@ public class Xiphos {
       return linesAfter;
     }
   }
+
   static int countLines(final File f) throws IOException {
     try (LineNumberReader lr = new LineNumberReader(new FileReader(f))) {
       lr.skip(Long.MAX_VALUE);

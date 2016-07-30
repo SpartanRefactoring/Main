@@ -1,27 +1,20 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.same;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static org.junit.Assert.*;
 
-import java.util.Collection;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.ReturnStatement;
-import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.*;
 
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Subject;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
-import il.org.spartan.utils.Utils;
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.AbstractWringTest.*;
+import il.org.spartan.utils.*;
 
 /**
  * Unit tests for {@link Wrings#ADDITION_SORTER}.
@@ -33,6 +26,7 @@ import il.org.spartan.utils.Utils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class DeclarationReturnTest {
   static final Wring<VariableDeclarationFragment> WRING = new DeclarationInitializerReturnVariable();
+
   @Test public void placeHolder() {
     assertNotNull(WRING);
   }
@@ -46,6 +40,7 @@ public class DeclarationReturnTest {
         new String[] { "Vanilla", "int a = 2; if (b) a =3;", }, //
         new String[] { "Vanilla", "int a = 3, b; return;", }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -75,6 +70,7 @@ public class DeclarationReturnTest {
                 + "   return $;", //
             "return messageRead?!messageFlagged?mReadColorChip:mFlaggedReadColorChip:!messageFlagged?mUnreadColorChip:mFlaggedUnreadColorChip;" },
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *

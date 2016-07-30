@@ -1,21 +1,18 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.hamcrest.CoreMatchers.is;
+import static il.org.spartan.hamcrest.MatcherAssert.*;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.MatcherAssert.iz;
-import static il.org.spartan.refactoring.utils.Into.i;
-import static il.org.spartan.refactoring.utils.Into.s;
+import static il.org.spartan.refactoring.utils.Into.*;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.PostfixExpression;
-import org.eclipse.jdt.core.dom.Statement;
-import org.junit.Test;
+import org.eclipse.jdt.core.dom.*;
+import org.junit.*;
 
-import il.org.spartan.refactoring.spartanizations.Wrap;
+import il.org.spartan.refactoring.spartanizations.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) public class ExtractTest {
   @Test public void core() {
@@ -23,7 +20,8 @@ import il.org.spartan.refactoring.spartanizations.Wrap;
     assertThat(Extract.core((Statement) null), nullValue());
   }
   @Test public void firstMethdoDeclaration() {
-    assertThat(Extract.firstMethodDeclaration(Wrap.Method.intoCompilationUnit("int f() { return a; }")), iz("int f() { return a; }"));
+    assertThat(Extract.firstMethodDeclaration(Wrap.Method.intoCompilationUnit("int f() { return a; }")),
+        iz("int f() { return a; }"));
   }
   @Test public void operandsCount() {
     assertThat(Extract.operands(i("a+b+c+(d+e)+f")).size(), is(5));

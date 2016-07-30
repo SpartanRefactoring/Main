@@ -1,17 +1,15 @@
 package il.org.spartan.refactoring.wring;
 
-import java.util.Collection;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.Block;
-import org.junit.FixMethodOrder;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.eclipse.jdt.core.dom.*;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.*;
 
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.refactoring.wring.AbstractWringTest.Wringed;
-import il.org.spartan.utils.Utils;
+import il.org.spartan.refactoring.wring.AbstractWringTest.*;
+import il.org.spartan.utils.*;
 
 /**
  * Unit tests for {@link Wrings#ADDITION_SORTER}.
@@ -33,6 +31,7 @@ public enum BlockSimplifyTest {
         new String[] { "Nested if return", "if (a) {;{{;;return b; }}} else {{{;return c;};;};}" }, //
         new String[] { "Simple block", "{a(); b(); c();}" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -61,6 +60,7 @@ public enum BlockSimplifyTest {
         new String[] { "Complex singleton", "{;{{;;return b; }}}", " return b;" }, //
         new String[] { "Three statements ", "{i++;{{;;return b; }}j++;}", " i++;return b;j++;" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *

@@ -2,44 +2,30 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.hamcrest.CoreMatchers.is;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.OrderingComparison.greaterThanOrEqualTo;
-import static il.org.spartan.refactoring.utils.Funcs.right;
-import static il.org.spartan.refactoring.utils.Into.e;
-import static il.org.spartan.refactoring.utils.Into.i;
-import static il.org.spartan.refactoring.utils.Restructure.flatten;
-import static org.hamcrest.CoreMatchers.instanceOf;
+import static il.org.spartan.hamcrest.OrderingComparison.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Into.*;
+import static il.org.spartan.refactoring.utils.Restructure.*;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.InfixExpression.Operator;
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.Document;
-import org.eclipse.text.edits.MalformedTreeException;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.InfixExpression.*;
+import org.eclipse.jface.text.*;
+import org.eclipse.text.edits.*;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.*;
 
-import il.org.spartan.refactoring.spartanizations.Spartanization;
-import il.org.spartan.refactoring.utils.ExpressionComparator;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.LiteralParser;
-import il.org.spartan.refactoring.utils.LiteralParser.Types;
-import il.org.spartan.refactoring.wring.AbstractWringTest.Noneligible;
-import il.org.spartan.utils.Utils;
+import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.utils.LiteralParser.*;
+import il.org.spartan.refactoring.wring.AbstractWringTest.*;
+import il.org.spartan.utils.*;
 
 /**
  * Unit tests for {@link Wrings#MULTIPLCATION_SORTER}.
@@ -52,6 +38,7 @@ import il.org.spartan.utils.Utils;
 public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpression> {
   static final InfixSortMultiplication WRING = new InfixSortMultiplication();
   static final ExpressionComparator COMPARATOR = ExpressionComparator.MULTIPLICATION;
+
   public InfixSortMultiplicationTest() {
     super(WRING);
   }
@@ -90,6 +77,7 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
         new String[] { "Plain product of three, sorted", "2*a*b" }, //
         new String[] { "Plain product of four, sorted", "2*a*b*c" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -149,6 +137,7 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
         new String[] { "Long alphabetical sorting", "f(t)*g(h1,h2)*y*a*2*b*x", "2*a*b*x*y*f(t)*g(h1,h2)" }, //
         new String[] { "Plain alphabetical sorting", "f(y)*f(x)", "f(x)*f(y)" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -178,7 +167,8 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
     @Test public void sortTest() {
       final InfixExpression e = asInfixExpression();
       final List<Expression> operands = Extract.operands(flatten(e));
-      assertThat("Before: " + Extract.operands(flatten(e)) + "\n" + "After: " + operands + "\n", COMPARATOR.sort(operands), is(true));
+      assertThat("Before: " + Extract.operands(flatten(e)) + "\n" + "After: " + operands + "\n", COMPARATOR.sort(operands),
+          is(true));
     }
     @Test public void sortTwice() {
       final InfixExpression e = asInfixExpression();

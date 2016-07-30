@@ -1,40 +1,22 @@
 package il.org.spartan.refactoring.wring;
+
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Restructure.*;
 import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.wring.Wrings.*;
 
-import static il.org.spartan.refactoring.utils.Funcs.asBlock;
-import static il.org.spartan.refactoring.utils.Funcs.elze;
-import static il.org.spartan.refactoring.utils.Funcs.then;
-import static il.org.spartan.refactoring.utils.Restructure.duplicateInto;
-import static il.org.spartan.refactoring.wring.Wrings.addAllReplacing;
-import static il.org.spartan.refactoring.wring.Wrings.makeShorterIf;
+import java.util.*;
 
-import java.util.List;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
-import org.eclipse.text.edits.TextEditGroup;
-
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.Rewrite;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
- * A {@link Wring} to convert <code> f() {
-  x++;
-  y++;
-  if (a) {
-     i++;
-     j++;
-     k++;
-  }
-}</code> into <code>if (x) {
- *   f();
- *   return a;
- * }
- * g();</code>
+ * A {@link Wring} to convert <code> f() { x++; y++; if (a) { i++; j++; k++; }
+ * }</code> into <code>if (x) { f(); return a; } g();</code>
  *
  * @author Yossi Gil
  * @since 2015-07-29
@@ -69,6 +51,6 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
     return elze(s) != null && (endsWithSequencer(then(s)) || endsWithSequencer(elze(s)));
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.SIMPLIFY_NESTED_BLOCKS;
+    return WringGroup.SIMPLIFY_NESTED_BLOCKS;
   }
 }

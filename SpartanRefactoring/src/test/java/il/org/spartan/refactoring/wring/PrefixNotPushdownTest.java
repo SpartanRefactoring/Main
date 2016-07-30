@@ -2,29 +2,25 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.hamcrest.CoreMatchers.is;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.refactoring.utils.Extract.core;
-import static il.org.spartan.refactoring.utils.Funcs.asBooleanLiteral;
-import static il.org.spartan.refactoring.utils.Funcs.asNot;
-import static il.org.spartan.refactoring.utils.Into.p;
+import static il.org.spartan.refactoring.utils.Extract.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Into.*;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
-import java.util.Collection;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.PrefixExpression;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.eclipse.jdt.core.dom.*;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.*;
 
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.utils.Utils;
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.AbstractWringTest.*;
+import il.org.spartan.utils.*;
 
 /**
  * Unit tests for {@link Wrings#ADDITION_SORTER}.
@@ -37,6 +33,7 @@ import il.org.spartan.utils.Utils;
 public class PrefixNotPushdownTest {
   /** The {@link Wring} under test */
   static final PrefixNotPushdown WRING = new PrefixNotPushdown();
+
   @Test public void notOfFalse() {
     final PrefixExpression e = p("!false");
     assertThat(e, is(notNullValue()));
@@ -62,6 +59,7 @@ public class PrefixNotPushdownTest {
         new String[] { "Simple not of function", "!f(a)" }, //
         new String[] { "Actual example", "!inRange(m, e)" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *
@@ -108,6 +106,7 @@ public class PrefixNotPushdownTest {
         new String[] { "Mutliple not parenthesis", "!(!(d) || ((!(!(!(((c))))))))", "d && c" }, //
         new String[] { "Nested not", "!(!(a || b))", "a||b" }, //
         null);
+
     /**
      * Generate test cases for this parameterized class.
      *

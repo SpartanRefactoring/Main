@@ -1,27 +1,15 @@
 package il.org.spartan.refactoring.wring;
 
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Restructure.*;
 import static il.org.spartan.refactoring.utils.expose.*;
-import static il.org.spartan.refactoring.utils.Funcs.duplicate;
-import static il.org.spartan.refactoring.utils.Restructure.duplicateInto;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.CatchClause;
-import org.eclipse.jdt.core.dom.ForStatement;
-import org.eclipse.jdt.core.dom.SimpleName;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.TryStatement;
-import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
-import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
-import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.Extract;
-import il.org.spartan.refactoring.utils.Is;
-import il.org.spartan.refactoring.utils.Subject;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
  * A {@link Wring} to convert <code>{;; g(); {}{;{;{;}};} }</code> into
@@ -31,30 +19,26 @@ import il.org.spartan.refactoring.utils.Subject;
  * @since 2015-07-29
  */
 public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
-  @SuppressWarnings("unchecked")
-  public static boolean safeBlockSimplification(List<Statement> ss) {
-    List<String> l = new ArrayList<>();
-    for (Statement s : ss)
+  @SuppressWarnings("unchecked") public static boolean safeBlockSimplification(final List<Statement> ss) {
+    final List<String> l = new ArrayList<>();
+    for (final Statement s : ss)
       if (s instanceof VariableDeclarationStatement) {
-        for (VariableDeclarationFragment f : (List<VariableDeclarationFragment>) ((VariableDeclarationStatement) s)
+        for (final VariableDeclarationFragment f : (List<VariableDeclarationFragment>) ((VariableDeclarationStatement) s)
             .fragments())
           if (checkExistOrAdd(f.getName(), l))
             return false;
       } else if (s instanceof ForStatement) {
-        for (VariableDeclarationFragment f : (List<VariableDeclarationFragment>) ((ForStatement) s).initializers())
+        for (final VariableDeclarationFragment f : (List<VariableDeclarationFragment>) ((ForStatement) s).initializers())
           if (checkExistOrAdd(f.getName(), l))
             return false;
       } else if (s instanceof TryStatement) {
-        for (VariableDeclarationExpression e : (List<VariableDeclarationExpression>) ((TryStatement) s).resources()) {
-          for (VariableDeclarationFragment f : (List<VariableDeclarationFragment>) ((VariableDeclarationExpression) e)
-              .fragments())
+        for (final VariableDeclarationExpression e : (List<VariableDeclarationExpression>) ((TryStatement) s).resources())
+          for (final VariableDeclarationFragment f : (List<VariableDeclarationFragment>) e.fragments())
             if (checkExistOrAdd(f.getName(), l))
               return false;
-        }
-        for (CatchClause c : (List<CatchClause>) ((TryStatement) s).catchClauses()) {
-            if (checkExistOrAdd(((CatchClause) c).getException().getName(), l))
-              return false;
-        }
+        for (final CatchClause c : (List<CatchClause>) ((TryStatement) s).catchClauses())
+          if (checkExistOrAdd(c.getException().getName(), l))
+            return false;
       }
     return true;
   }
@@ -106,10 +90,10 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
     return "Simplify block";
   }
   @Override WringGroup wringGroup() {
-	return WringGroup.REMOVE_SYNTACTIC_BAGGAGE;
+    return WringGroup.REMOVE_SYNTACTIC_BAGGAGE;
   }
-  private static boolean checkExistOrAdd(SimpleName n, List<String> l) {
-    String s = n.getIdentifier();
+  private static boolean checkExistOrAdd(final SimpleName n, final List<String> l) {
+    final String s = n.getIdentifier();
     if (l.contains(s))
       return true;
     l.add(s);

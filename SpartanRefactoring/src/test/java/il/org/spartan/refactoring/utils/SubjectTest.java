@@ -1,31 +1,22 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.hamcrest.CoreMatchers.is;
+import static il.org.spartan.hamcrest.MatcherAssert.*;
 import static il.org.spartan.hamcrest.MatcherAssert.assertThat;
-import static il.org.spartan.hamcrest.MatcherAssert.iz;
-import static il.org.spartan.refactoring.utils.Funcs.duplicate;
-import static il.org.spartan.refactoring.utils.Into.e;
-import static il.org.spartan.refactoring.utils.Into.i;
-import static il.org.spartan.refactoring.utils.Into.s;
-import static il.org.spartan.refactoring.utils.Restructure.flatten;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Into.*;
+import static il.org.spartan.refactoring.utils.Restructure.*;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.Assignment;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.PostfixExpression;
-import org.eclipse.jdt.core.dom.PrefixExpression;
-import org.eclipse.jdt.core.dom.Statement;
-import org.junit.Test;
+import org.eclipse.jdt.core.dom.*;
+import org.junit.*;
 
-import il.org.spartan.refactoring.utils.Subject.Pair;
+import il.org.spartan.refactoring.utils.Subject.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) public class SubjectTest {
   @Test public void assignment() {
@@ -63,7 +54,8 @@ import il.org.spartan.refactoring.utils.Subject.Pair;
     assertThat(Subject.pair(s, s("f();")).toIf(e("a")), iz("if(a)s(); else f();"));
   }
   @Test public void makeIfStatementOfNestedIf() {
-    assertThat(Subject.pair(s("if (a) return b;"), s("if (c) return d;")).toIf(e("x")), iz("if(x) {if (a) return b; } else if (c) return d;"));
+    assertThat(Subject.pair(s("if (a) return b;"), s("if (c) return d;")).toIf(e("x")),
+        iz("if(x) {if (a) return b; } else if (c) return d;"));
   }
   @Test public void multiplicationOfAddition() {
     assertThat(Subject.pair(e("a+B"), e("c+d")).to(InfixExpression.Operator.TIMES), iz("(a + B) * (c + d)"));
@@ -142,7 +134,8 @@ import il.org.spartan.refactoring.utils.Subject.Pair;
     assertThat(refit.toString(), is("a + b"));
   }
   @Test public void subjectOperandsIsCorrect() {
-    assertThat(Subject.operands(Extract.operands(Funcs.duplicate(i("a*b*c")))).to(i("1+2+3").getOperator()).toString(), is("a + b + c"));
+    assertThat(Subject.operands(Extract.operands(Funcs.duplicate(i("a*b*c")))).to(i("1+2+3").getOperator()).toString(),
+        is("a + b + c"));
   }
   @Test public void subjectOperandsNotNull() {
     assertThat(Subject.operands(Extract.operands(Funcs.duplicate(i("a+b+c")))).to(i("1+2+3").getOperator()), notNullValue());

@@ -1,23 +1,13 @@
 package il.org.spartan.refactoring.utils;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Assignment;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.ConditionalExpression;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.PrefixExpression;
-import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.spartanizations.Wrap;
+import il.org.spartan.refactoring.spartanizations.*;
 
 /**
  * An empty <code><b>enum</b></code> for fluent programming. The name should say
@@ -33,7 +23,8 @@ public enum Into {
    * Convert a given {@link String} into an {@link Assignment}, or fail the
    * current test, if such a conversion is not possible
    *
-   * @param expression a {@link String} that represents a Java statement
+   * @param expression
+   *          a {@link String} that represents a Java statement
    * @return an {@link Statement} data structure representing the parameter.
    */
   public static Assignment a(final String expression) {
@@ -43,8 +34,9 @@ public enum Into {
    * Convert a given {@link String} into an {@link ConditionalExpression}, or
    * fail the current test, if such a conversion is not possible
    *
-   * @param conditionalExpression a {@link String} that represents a
-   *          "conditional" (also known as "ternary") expression.
+   * @param conditionalExpression
+   *          a {@link String} that represents a "conditional" (also known as
+   *          "ternary") expression.
    * @return an {@link Statement} data structure representing the parameter.
    */
   public static ConditionalExpression c(final String conditionalExpression) {
@@ -59,8 +51,8 @@ public enum Into {
    * {@link CompilationUnit}, parsing it, and then extracting the first method
    * in it. possible
    *
-   * @param methodDelclaration a {@link String} that represents a Java method
-   *          declaration
+   * @param methodDelclaration
+   *          a {@link String} that represents a Java method declaration
    * @return an {@link MethodDeclaration} data structure representing the
    *         parameter.
    */
@@ -72,7 +64,8 @@ public enum Into {
    * Convert a given {@link String} into an {@link Expression}, or fail the
    * current test, if such a conversion is not possible
    *
-   * @param expression a {@link String} that represents a Java expression
+   * @param expression
+   *          a {@link String} that represents a Java expression
    * @return an {@link Expression} data structure representing the parameter.
    */
   public static Expression e(final String expression) {
@@ -83,8 +76,8 @@ public enum Into {
    * {@link Expression}, or fail the current test, if such a conversion is not
    * possible
    *
-   * @param expressions an array of {@link String}s, each representing a Java
-   *          expression
+   * @param expressions
+   *          an array of {@link String}s, each representing a Java expression
    * @return a {@link List} of {@link Expression} data structures, each
    *         representing an element of the input.
    */
@@ -98,7 +91,8 @@ public enum Into {
    * Convert a given {@link String} into an {@link InfixExpression}, or fail the
    * current test, if such a conversion is not possible
    *
-   * @param expression a {@link String} that represents a Java expression
+   * @param expression
+   *          a {@link String} that represents a Java expression
    * @return an {@link InfixExpression} data structure representing the
    *         parameter.
    */
@@ -109,7 +103,8 @@ public enum Into {
    * Convert a given {@link String} into an {@link PrefixExpression}, or fail
    * the current test, if such a conversion is not possible
    *
-   * @param expression a {@link String} that represents a Java expression
+   * @param expression
+   *          a {@link String} that represents a Java expression
    * @return a {@link PrefixExpression} data structure representing the
    *         parameter.
    */
@@ -120,7 +115,8 @@ public enum Into {
    * Convert a given {@link String} into an {@link Statement}, or fail the
    * current test, if such a conversion is not possible
    *
-   * @param statement a {@link String} that represents a Java statement
+   * @param statement
+   *          a {@link String} that represents a Java statement
    * @return an {@link Statement} data structure representing the parameter.
    */
   public static Statement s(final String statement) {
