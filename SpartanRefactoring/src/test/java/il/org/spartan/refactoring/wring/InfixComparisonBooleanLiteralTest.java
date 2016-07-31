@@ -126,9 +126,7 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
   }
 
   static public void fail(final String message) {
-    if (message == null)
-      throw new AssertionError();
-    throw new AssertionError(message);
+    throw message == null ? new AssertionError() : new AssertionError(message);
   }
   static public void fail() {
     fail(null);

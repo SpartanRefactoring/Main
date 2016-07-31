@@ -26,12 +26,12 @@ public enum Make {
    * Converts the {@link MakeAST} value to its corresponding {@link Make} enum
    * value
    *
-   * @param a
+   * @param t
    *          The {@link MakeAST} type
    * @return the corresponding {@link Make} value to the argument
    */
-  public static Make of(final MakeAST a) {
-    switch (a) {
+  public static Make of(final MakeAST t) {
+    switch (t) {
       case STATEMENTS:
         return Make.STATEMENTS;
       case EXPRESSION:
