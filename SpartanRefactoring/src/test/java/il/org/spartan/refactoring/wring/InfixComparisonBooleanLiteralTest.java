@@ -51,8 +51,8 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
       fail("Nothing done on " + s);
     final String peeled = Wrap.Expression.off(unpeeled);
     azzert.that("No similification of " + s, s, not(peeled));
-    if (compressSpaces(peeled).equals(compressSpaces(s)))
-      azzert.that("Simpification of " + s + " is just reformatting", compressSpaces(peeled), not(compressSpaces(s)));
+    if (gist(peeled).equals(gist(s)))
+      azzert.that("Simpification of " + s + " is just reformatting", gist(peeled), not(gist(s)));
     assertSimilar(" 2 ", peeled);
   }
 

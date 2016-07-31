@@ -5,6 +5,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+
 /**
  * An empty <code><b>enum</b></code> with a variety of <code>public
  * static</code> utility functions of reasonably wide use.
@@ -78,7 +79,7 @@ public enum Utils {
    *          JD
    * @return the parameter, with all redundant spaces removes from it
    */
-  public static String compressSpaces(final String javaCodeFragment) {
+  public static String gist(final String javaCodeFragment) {
     String $ = javaCodeFragment//
         .replaceAll("(?m)\\s+", " ") // Squeeze whites
         .replaceAll("^\\s", "") // Opening whites
@@ -147,21 +148,6 @@ public enum Utils {
    */
   public static <T> boolean inRange(final int i, final List<T> ts) {
     return i >= 0 && i < ts.size();
-  }
-  /**
-   * Determine if an integer can be found in a list of values
-   *
-   * @param candidate
-   *          what to search for
-   * @param is
-   *          where to search
-   * @return true if the the item is found in the list
-   */
-  @SafeVarargs public static boolean intIsIn(final int candidate, final int... is) {
-    for (final int i : is)
-      if (i == candidate)
-        return true;
-    return false;
   }
   /**
    * @param ts

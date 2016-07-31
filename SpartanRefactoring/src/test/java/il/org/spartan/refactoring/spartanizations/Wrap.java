@@ -64,9 +64,9 @@ public enum Wrap {
     for (final Wrap w : Wrap.WRAPS) {
       final String on = w.on(codeFragment);
       final ASTNode n = MakeAST.COMPILATION_UNIT.from(on);
-      $.append("\n* Attemtpt ").append(++i).append(" Wrapper: ").append(w);
-      $.append("\n* I Essence=").append(essence(on));
-      $.append("\n* O Essence=").append(essence(n.toString()));
+      $.append("\n* Attempt ").append(++i).append(" Wrapper: ").append(w);
+      $.append("\n* < Essence=").append(essence(on));
+      $.append("\n* > Essence=").append(essence(n.toString()));
       $.append("\n* AST=").append(essence(n.getAST().toString()));
       $.append("\n**** INPUT= \n").append(on);
       $.append("\n**** OUTPUT=").append(n.toString());
@@ -74,7 +74,7 @@ public enum Wrap {
     return "" + $;
   }
   public static String essence(final String codeFragment) {
-    return compressSpaces(removeComments(codeFragment));
+    return gist(removeComments(codeFragment));
   }
   static String removeComments(final String codeFragment) {
     return codeFragment//

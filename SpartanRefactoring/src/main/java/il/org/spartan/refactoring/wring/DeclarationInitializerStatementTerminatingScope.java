@@ -62,7 +62,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
   }
   private static boolean never(final SimpleName n, final Statement s) {
     for (final ASTNode ancestor : AncestorSearch.until(s).ancestors(n))
-      if (intIsIn(ancestor.getNodeType(), TRY_STATEMENT, SYNCHRONIZED_STATEMENT))
+      if (Funcs.intIsIn(ancestor.getNodeType(), TRY_STATEMENT, SYNCHRONIZED_STATEMENT))
         return true;
     return false;
   }

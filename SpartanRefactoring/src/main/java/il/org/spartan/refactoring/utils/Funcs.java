@@ -7,6 +7,7 @@ import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import java.util.*;
 
+import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -776,8 +777,8 @@ public enum Funcs {
         return $;
     return null;
   }
-  private static boolean is(final ASTNode n, final int type) {
-    return n != null && type == n.getNodeType();
+  static boolean is(final ASTNode n, final int... types) {
+    return n != null && intIsIn(n.getNodeType(), types);
   }
   private static Map<Operator, Operator> makeConjugates() {
     final Map<Operator, Operator> $ = new HashMap<>();
@@ -868,5 +869,29 @@ public enum Funcs {
       default:
         return null;
     }
+  }
+  public static ASTParser parser(int kind) {
+    final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
+    $.setKind(kind);
+    $.setResolveBindings(false);
+    Map<String, String> options = JavaCore.getOptions();
+    options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_8); //or newer version
+    $.setCompilerOptions(options);
+    return $;
+  }
+  /**
+   * Determine if an integer can be found in a list of values
+   *
+   * @param candidate
+   *          what to search for
+   * @param is
+   *          where to search
+   * @return true if the the item is found in the list
+   */
+  @SafeVarargs public static boolean intIsIn(final int candidate, final int... is) {
+    for (final int i : is)
+      if (i == candidate)
+        return true;
+    return false;
   }
 }

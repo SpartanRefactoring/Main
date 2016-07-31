@@ -36,8 +36,8 @@ import il.org.spartan.refactoring.spartanizations.*;
     final String peeled = w.off(unpeeled);
     if (peeled.equals(from))
       assertNotEquals("No similification of " + from, from, peeled);
-    if (compressSpaces(peeled).equals(compressSpaces(from)))
-      assertNotEquals("Simpification of " + from + "is just reformatting", compressSpaces(peeled), compressSpaces(from));
+    if (gist(peeled).equals(gist(from)))
+      assertNotEquals("Simpification of " + from + "is just reformatting", gist(peeled), gist(from));
     assertSimilar(expected, peeled);
   }
   @Test(timeout = 2000) public void chainComparison() {

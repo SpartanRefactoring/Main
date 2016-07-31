@@ -46,8 +46,8 @@ import il.org.spartan.refactoring.utils.*;
     final String peeled = w.off(unpeeled);
     if (peeled.equals(from))
       azzert.that("No similification of " + from, from, is(not(peeled)));
-    final String compressSpaces = compressSpaces(peeled);
-    final String compressSpaces2 = compressSpaces(from);
+    final String compressSpaces = gist(peeled);
+    final String compressSpaces2 = gist(from);
     azzert.that("Simpification of " + from + " is just reformatting", compressSpaces2, not(compressSpaces));
     assertSimilar(expected, peeled);
   }
@@ -1465,21 +1465,28 @@ import il.org.spartan.refactoring.utils.*;
     trimming("static interface a {}")//
         .to("interface a {}");//
   }
-  @Ignore @Test public void issue50e() {
-    trimming("abstract static final enum a {}")//
-        .to("interface a {}");//
+  @Test public void issue50e() {
+    trimming("enum a {a,b}")//
+        .to(null);//
+  }@Test public void issue50e1() {
+    trimming("enum a {a}")//
+        .to(null);//
   }
-  @Ignore @Test public void issue50f() {
-    trimming("static final enum a {}")//
-        .to("enum a {}");//
+  @Test public void issue50e2() {
+    trimming("enum a {}")//
+        .to(null);//
   }
-  @Ignore @Test public void issue50g() {
-    trimming("static abstract enum a {}")//
-        .to("enum a {}");//
+@Test public void issue50f() {
+    trimming("static enum a {a, b}")//
+        .to("enum a {a, b}");//
   }
-  @Ignore @Test public void issue50h() {
-    trimming("static abstract final enum a {}")//
-        .to("interface a {}");//
+  @Test public void issue50g() {
+    trimming("static abstract enum a {x,y,z; void f() {}}")//
+        .to("enum a {x,y,z; void f() {}}");//
+  }
+  @Test public void issue50h() {
+    trimming("static abstract final enum a {x,y,z; void f() {}}")//
+        .to("interface a {x,y,z; void f() {}}");//
   }
   @Test public void issue51() {
     trimming("int f() { int x = 0; for (int i = 0; i < 10; ++i) x += i; return x;}")//
