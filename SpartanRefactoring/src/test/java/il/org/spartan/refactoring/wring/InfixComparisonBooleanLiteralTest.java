@@ -80,6 +80,7 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
         new String[] { "", "true != true", "false" }, //
         new String[] { "", "true != false", "true" }, //
         new String[] { "", "true != true", "false" }, //
+        new String[] { "", "true == true", "true" }, //
         null);
 
     /**
