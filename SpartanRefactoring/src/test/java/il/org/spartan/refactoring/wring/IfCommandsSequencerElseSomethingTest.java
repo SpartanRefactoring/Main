@@ -36,9 +36,7 @@ public class IfCommandsSequencerElseSomethingTest {
   static final IfThenOrElseIsCommandsFollowedBySequencer WRING = new IfThenOrElseIsCommandsFollowedBySequencer();
 
   static public void fail(final String message) {
-    if (message == null)
-      throw new AssertionError();
-    throw new AssertionError(message);
+    throw message == null ? new AssertionError() : new AssertionError(message);
   }
   static public void fail() {
     fail(null);

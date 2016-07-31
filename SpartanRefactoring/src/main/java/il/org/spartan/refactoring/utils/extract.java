@@ -46,9 +46,14 @@ public enum extract {
     };
   }
   public static ASTNode containerType(final ASTNode ¢) {
-    for (final ASTNode n : ancestors(¢.getParent()))
-      if (is(n, ENUM_DECLARATION, TYPE_DECLARATION, ANNOTATION_TYPE_DECLARATION))
-        return n;
+    for (final ASTNode $ : ancestors(¢.getParent()))
+      if (is($
+          , ANONYMOUS_CLASS_DECLARATION //
+          , ANNOTATION_TYPE_DECLARATION //
+          , ENUM_DECLARATION //
+          , TYPE_DECLARATION //
+          ))
+        return $;
     return null;
   }
   /**
@@ -295,9 +300,7 @@ public enum extract {
     return asMethodInvocation(extract.expressionStatement(n).getExpression());
   }
   public static List<IExtendedModifier> modifiers(final ASTNode ¢) {
-    if (¢ instanceof TypeDeclaration)
-      return modifiers((TypeDeclaration) ¢);
-    return new ArrayList<>();
+    return !(¢ instanceof TypeDeclaration) ? new ArrayList<>() : modifiers((TypeDeclaration) ¢);
   }
   @SuppressWarnings("unchecked") public static List<IExtendedModifier> modifiers(final TypeDeclaration d) {
     return d.modifiers();

@@ -826,9 +826,7 @@ public enum Funcs {
     }
   }
   private static String shortName(final List<? extends Type> ts) {
-    if (ts == null || ts.size() != 1)
-      return null;
-    return shortName(ts.get(0));
+    return ts == null || ts.size() != 1 ? null : shortName(ts.get(0));
   }
   private static String shortName(final PrimitiveType t) {
     return t.getPrimitiveTypeCode().toString().substring(0, 1);

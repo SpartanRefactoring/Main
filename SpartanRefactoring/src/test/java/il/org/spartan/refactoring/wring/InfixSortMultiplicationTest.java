@@ -85,14 +85,7 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
-    static public void fail(final String message) {
-      if (message == null)
-        throw new AssertionError();
-      throw new AssertionError(message);
-    }
-    static public void fail() {
-      fail(null);
-    }
+
     static Document rewrite(final Spartanization s, final CompilationUnit u, final Document d) {
       try {
         s.createRewrite(u, null).rewriteAST(d, null).apply(d);
