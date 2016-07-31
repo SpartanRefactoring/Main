@@ -307,7 +307,7 @@ public enum Is {
    * @return <code><b>true</b></code> <i>iff</i> the Expression is literal
    */
   public static boolean literal(final ASTNode n) {
-    return intIsIn(n.getNodeType(), //
+    return Funcs.intIsIn(n.getNodeType(), //
         NULL_LITERAL, //
         CHARACTER_LITERAL, //
         NUMBER_LITERAL, //
@@ -672,7 +672,7 @@ public enum Is {
     return e != null && (e.getOperator() != PLUS || Are.notString(extract.allOperands(e)));
   }
   static boolean notStringSelf(final Expression e) {
-    return intIsIn(e.getNodeType(), //
+    return Funcs.intIsIn(e.getNodeType(), //
         ARRAY_CREATION, //
         BOOLEAN_LITERAL, //
         CHARACTER_LITERAL, //

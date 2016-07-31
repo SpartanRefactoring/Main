@@ -1,5 +1,4 @@
 package il.org.spartan.refactoring.spartanizations;
-import il.org.spartan.*;
 import org.junit.*;
 
 import il.org.spartan.*;

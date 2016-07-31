@@ -1,10 +1,10 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.utils.Utils.*;
-import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -124,9 +124,9 @@ public class DeclarationIfAssginmentTest {
       if (expected.equals(peeled))
         return;
       if (from.equals(peeled))
-        fail("Nothing done on " + from);
-      if (compressSpaces(peeled).equals(compressSpaces(from)))
-        azzert.that("Wringing of " + from + " amounts to mere reformatting", compressSpaces(from), is(not(compressSpaces(peeled))));
+        azzert.fail("Nothing done on " + from);
+      if (gist(peeled).equals(gist(from)))
+        azzert.that("Wringing of " + from + " amounts to mere reformatting", gist(from), is(not(gist(peeled))));
       assertSimilar(expected, peeled);
       assertSimilar(Wrap.Statement.on(expected), d);
     }
@@ -142,10 +142,8 @@ public class DeclarationIfAssginmentTest {
       final String peeled = Wrap.Statement.off(actual.get());
       if (expected.equals(peeled))
         return;
-      if (from.equals(peeled))
-        fail("Nothing done on " + from);
-      if (compressSpaces(peeled).equals(compressSpaces(from)))
-        azzert.that("Wringing of " + from + " amounts to mere reformatting", compressSpaces(from), is(not(compressSpaces(peeled))));
+      azzert.that("Nothing done on " + from, peeled, not(from));
+      azzert.that("Wringing of " + from + " amounts to mere reformatting", gist(from), is(not(gist(peeled))));
       assertSimilar(expected, peeled);
       assertSimilar(Wrap.Statement.on(expected), actual);
     }

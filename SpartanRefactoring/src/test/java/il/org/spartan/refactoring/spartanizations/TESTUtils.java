@@ -79,7 +79,7 @@ import il.org.spartan.refactoring.wring.*;
     assertEquals(u.toString(), 0, TrimmerTestsUtils.countOpportunities(s, u));
   }
   static void assertNotEvenSimilar(final String expected, final String actual) {
-    assertNotEquals(compressSpaces(expected), compressSpaces(actual));
+    assertNotEquals(gist(expected), gist(actual));
   }
   static void assertOneOpportunity(final Spartanization s, final String from) {
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);

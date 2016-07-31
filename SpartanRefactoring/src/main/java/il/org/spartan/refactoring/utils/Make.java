@@ -58,7 +58,7 @@ public enum Make {
    * @return a newly created parser for the parameter
    */
   public ASTParser parser(final char[] text) {
-    final ASTParser $ = parser();
+    final ASTParser $ = Funcs.parser(kind);
     $.setSource(text);
     return $;
   }
@@ -70,7 +70,7 @@ public enum Make {
    * @return the created parser
    */
   public ASTParser parser(final Document d) {
-    final ASTParser $ = parser();
+    final ASTParser $ = Funcs.parser(kind);
     $.setSource(d.get().toCharArray());
     return $;
   }
@@ -82,7 +82,7 @@ public enum Make {
    * @return a newly created parser for the parameter
    */
   public ASTParser parser(final ICompilationUnit u) {
-    final ASTParser $ = parser();
+    final ASTParser $ = Funcs.parser(kind);
     $.setSource(u);
     return $;
   }
@@ -115,11 +115,5 @@ public enum Make {
    */
   public ASTParser parser(final String text) {
     return parser(text.toCharArray());
-  }
-  private ASTParser parser() {
-    final ASTParser $ = ASTParser.newParser(AST.JLS8);
-    $.setKind(kind);
-    $.setResolveBindings(false);
-    return $;
   }
 }
