@@ -1,5 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
+import static il.org.spartan.refactoring.utils.extract.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
@@ -26,7 +27,7 @@ public final class InfixSortAddition extends Wring.InfixSorting {
     return Is.notString(e) && super.eligible(e);
   }
   @Override Expression replacement(final InfixExpression e) {
-    final List<Expression> operands = extract.allOperands(e);
+    final List<Expression> operands = allOperands(e);
     final boolean notString = Is.notString(e);
     final boolean canSort = sort(operands);
     return !notString || !canSort ? null : Subject.operands(operands).to(e.getOperator());

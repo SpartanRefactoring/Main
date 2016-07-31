@@ -2,6 +2,7 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 
 import java.util.*;
 
@@ -44,7 +45,7 @@ import org.eclipse.jdt.core.dom.*;
       return rebase(duplicate(extract.core(e)), ast);
     }
     Statement claim(final Statement s) {
-      final Statement core = extract.core(s);
+      final Statement core = core(s);
       return core == null ? null : rebase(duplicate(core), ast);
     }
   }

@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 
 import java.util.*;
 
@@ -93,9 +94,9 @@ public class DeclarationReturnTest {
       final Expression initializer = f.getInitializer();
       azzert.notNull(initializer);
       azzert.notNull(extract.nextStatement(f));
-      final ReturnStatement s = extract.nextReturn(f);
+      final ReturnStatement s = nextReturn(f);
       azzert.notNull(s);
-      azzert.aye(same(f.getName(), extract.expression(s)));
+      azzert.aye(same(f.getName(), expression(s)));
       r.remove(extract.statement(f), null);
       r.replace(s, Subject.operand(initializer).toReturn(), null);
     }

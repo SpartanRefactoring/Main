@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 
 import java.util.*;
@@ -35,7 +36,7 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends Wring.Rep
     if (!shoudlInvert(asVirtualIf))
       return null;
     final IfStatement canonicalIf = invert(asVirtualIf);
-    final List<Statement> ss = extract.statements(elze(canonicalIf));
+    final List<Statement> ss = statements(elze(canonicalIf));
     canonicalIf.setElseStatement(null);
     if (!Is.block(s.getParent())) {
       ss.add(0, canonicalIf);

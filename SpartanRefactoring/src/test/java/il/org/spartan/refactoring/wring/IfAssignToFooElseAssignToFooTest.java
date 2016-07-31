@@ -3,6 +3,7 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 
 import java.util.*;
 
@@ -13,7 +14,6 @@ import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
 
 import il.org.spartan.*;
-import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
 import il.org.spartan.utils.Utils;
 
@@ -32,9 +32,9 @@ public class IfAssignToFooElseAssignToFooTest {
     azzert.notNull(asSingle("if (a) a = b; else a = c;"));
     final IfStatement s = asIfStatement(asSingle("if (a) a = b; else a = c;"));
     azzert.notNull(s);
-    final Assignment then = extract.assignment(then(s));
+    final Assignment then = assignment(then(s));
     azzert.notNull(then(s).toString(), then);
-    final Assignment elze = extract.assignment(elze(s));
+    final Assignment elze = assignment(elze(s));
     azzert.notNull(elze);
     azzert.that(compatible(then, elze), is(true));
     azzert.that(WRING.scopeIncludes(s), is(true));

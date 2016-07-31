@@ -9,9 +9,9 @@ import org.eclipse.jdt.core.dom.*;
  * @author Yossi Gil
  * @since 2015-07-29
  */
-public final class EnumClean extends Wring.RemoveModifier<EnumDeclaration> {
-  @Override String description(final EnumDeclaration ¢) {
-    return "Remove redundant 'abstract'/'static' modifier from interface " + ¢.getName();
+public final class BodyDeclarationModifiers extends Wring.RemoveModifier<BodyDeclaration> {
+  @Override String description(final BodyDeclaration ¢) {
+    return "Remove redundant 'abstract'/'static' modifier from interface " + ¢;
   }
   @Override boolean redundant(final Modifier ¢) {
     return ¢.isStatic();

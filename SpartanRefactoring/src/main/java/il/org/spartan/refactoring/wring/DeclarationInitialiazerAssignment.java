@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
@@ -9,7 +10,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
-import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.LocalInliner.*;
 
 /**
@@ -24,7 +24,7 @@ public final class DeclarationInitialiazerAssignment extends Wring.VariableDecla
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
       return null;
-    final Assignment a = extract.assignment(nextStatement);
+    final Assignment a = assignment(nextStatement);
     if (a == null || !same(n, left(a)) || a.getOperator() != ASSIGN)
       return null;
     final Expression newInitializer = duplicate(right(a));

@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -25,7 +26,7 @@ public final class DeclarationInitializerReturnVariable extends Wring.VariableDe
     final ReturnStatement s = asReturnStatement(nextStatement);
     if (s == null)
       return null;
-    final Expression returnValue = extract.expression(s);
+    final Expression returnValue = expression(s);
     if (returnValue == null || !same(n, returnValue))
       return null;
     eliminate(f, r, g);

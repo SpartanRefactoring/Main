@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 
 import java.util.*;
 
@@ -58,7 +59,7 @@ public enum Into {
    */
   public static MethodDeclaration d(final String methodDelclaration) {
     azzert.notNull(methodDelclaration);
-    return extract.firstMethodDeclaration(Wrap.Method.intoCompilationUnit(methodDelclaration));
+    return firstMethodDeclaration(Wrap.Method.intoCompilationUnit(methodDelclaration));
   }
   /**
    * Convert a given {@link String} into an {@link Expression}, or fail the

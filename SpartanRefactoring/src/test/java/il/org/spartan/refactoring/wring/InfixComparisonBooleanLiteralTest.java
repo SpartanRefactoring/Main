@@ -3,6 +3,7 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.utils.Utils.*;
 
 import java.util.*;
@@ -116,7 +117,7 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
       azzert.notNull(asInfixExpression());
     }
     @Test public void sortTwice() {
-      final List<Expression> operands = extract.operands(flatten(asInfixExpression()));
+      final List<Expression> operands = operands(flatten(asInfixExpression()));
       ExpressionComparator.ADDITION.sort(operands);
       azzert.nay(ExpressionComparator.ADDITION.sort(operands));
     }

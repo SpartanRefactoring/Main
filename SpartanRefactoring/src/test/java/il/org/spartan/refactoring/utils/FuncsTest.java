@@ -5,6 +5,7 @@ import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.utils.ExpressionComparator.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.mockito.Mockito.*;
 
@@ -117,6 +118,6 @@ public class FuncsTest {
     azzert.that(shortName(t("org.eclipse.jdt.core.dom.InfixExpression _;")), equalTo("e"));
   }
   private Type t(final String codeFragment) {
-    return extract.firstType(s(codeFragment));
+    return firstType(s(codeFragment));
   }
 }
