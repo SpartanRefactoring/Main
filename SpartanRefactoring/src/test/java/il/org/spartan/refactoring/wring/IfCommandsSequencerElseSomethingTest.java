@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.utils.Utils.*;
@@ -34,10 +35,9 @@ import il.org.spartan.utils.Utils;
 public class IfCommandsSequencerElseSomethingTest {
   static final IfThenOrElseIsCommandsFollowedBySequencer WRING = new IfThenOrElseIsCommandsFollowedBySequencer();
 
-  static public void fail(String message) {
-    if (message == null) {
+  static public void fail(final String message) {
+    if (message == null)
       throw new AssertionError();
-    }
     throw new AssertionError(message);
   }
   static public void fail() {

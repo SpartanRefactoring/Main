@@ -30,7 +30,7 @@ import java.util.*;
  */
 public class FilesGenerator {
   public static class as {
-    public static <T> Iterable<T> iterable(final T... ts) {
+    @SafeVarargs public static <T> Iterable<T> iterable(final T... ts) {
       return () -> new Iterator<T>() {
         private int next = 0;
 

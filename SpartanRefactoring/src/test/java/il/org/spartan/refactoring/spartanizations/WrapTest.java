@@ -47,7 +47,7 @@ import il.org.spartan.*;
   @Test public void findEmptyBlock() {
     azzert.that(Wrap.find("{}"), is(Wrap.Statement));
   }
-  @Test(expected=AssertionError.class) public void findError() {
+  @Test(expected = AssertionError.class) public void findError() {
     azzert.that(Wrap.find("}} f() { a();} b();}"), is(nullValue()));
   }
   @Test public void findExpression() {
