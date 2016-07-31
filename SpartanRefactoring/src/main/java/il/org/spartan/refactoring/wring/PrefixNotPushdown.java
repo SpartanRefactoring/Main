@@ -50,7 +50,7 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
   }
   private static Expression applyDeMorgan(final InfixExpression inner) {
     final List<Expression> operands = new ArrayList<>();
-    for (final Expression e : operands(flatten(inner)))
+    for (final Expression e : extract.operands(flatten(inner)))
       operands.add(logicalNot(e));
     return Subject.operands(operands).to(conjugate(inner.getOperator()));
   }

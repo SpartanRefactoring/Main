@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.refactoring.wring.TernaryPushdown.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -18,10 +17,10 @@ import il.org.spartan.refactoring.utils.*;
  */
 public final class IfExpressionStatementElseSimilarExpressionStatement extends Wring.ReplaceCurrentNode<IfStatement> {
   @Override Statement replacement(final IfStatement s) {
-    final Expression then = expression(expressionStatement(then(s)));
+    final Expression then = extract.expression(extract.expressionStatement(then(s)));
     if (then == null)
       return null;
-    final Expression elze = expression(expressionStatement(elze(s)));
+    final Expression elze = extract.expression(extract.expressionStatement(elze(s)));
     if (elze == null)
       return null;
     final Expression e = pushdown(Subject.pair(then, elze).toCondition(s.getExpression()));
