@@ -13,7 +13,8 @@ public final class EnumClean extends Wring.RemoveModifier<EnumDeclaration> {
   @Override String description(final EnumDeclaration ¢) {
     return "Remove redundant 'abstract'/'static' modifier from interface " + ¢.getName();
   }
-  @Override boolean redundant(final Modifier ¢) {
+
+  @Override boolean redundantModifier(final Modifier ¢) {
     return ¢.isStatic();
   }
 }

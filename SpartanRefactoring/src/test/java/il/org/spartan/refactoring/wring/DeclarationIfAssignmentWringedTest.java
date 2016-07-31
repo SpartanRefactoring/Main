@@ -4,7 +4,6 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.utils.Utils.*;
 
 import java.util.*;
@@ -14,7 +13,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 import org.junit.*;
-import org.junit.Assert;
 import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
@@ -120,7 +118,7 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     if (expected.equals(peeled))
       return;
     if (input.equals(peeled))
-      Assert.fail("Nothing done on " + input);
+      azzert.fail("Nothing done on " + input);
     if (gist(peeled).equals(gist(input)))
       azzert.that("Wringing of " + input + " amounts to mere reformatting", gist(input), is(not(gist(peeled))));
     assertSimilar(expected, peeled);
@@ -131,10 +129,10 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     final ASTRewrite r = ASTRewrite.create(f.getAST());
     final Expression initializer = f.getInitializer();
     azzert.notNull(f.toString(), initializer);
-    final IfStatement s = nextIfStatement(f);
+    final IfStatement s = extract.nextIfStatement(f);
     azzert.notNull(s);
     azzert.zero(extract.statements(elze(s)).size());
-    final Assignment a = assignment(then(s));
+    final Assignment a = extract.assignment(then(s));
     azzert.notNull(a);
     azzert.aye(same(left(a), f.getName()));
     r.replace(initializer, Subject.pair(right(a), initializer).toCondition(s.getExpression()), null);
@@ -146,9 +144,9 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     return $;
   }
   @Override protected VariableDeclarationFragment asMe() {
-    return firstVariableDeclarationFragment(MakeAST.STATEMENTS.from(input));
+    return extract.firstVariableDeclarationFragment(MakeAST.STATEMENTS.from(input));
   }
   private IfStatement findIf() {
-    return firstIfStatement(MakeAST.STATEMENTS.from(input));
+    return extract.firstIfStatement(MakeAST.STATEMENTS.from(input));
   }
 }

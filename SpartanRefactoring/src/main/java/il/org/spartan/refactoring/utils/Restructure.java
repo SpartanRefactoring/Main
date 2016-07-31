@@ -52,7 +52,7 @@ public enum Restructure {
    *         <code><b>null</b></code> if not value exists.
    */
   public static Statement singleStatement(final ASTNode n) {
-    final List<Statement> $ = statements(n);
+    final List<Statement> $ = extract.statements(n);
     return $.size() != 1 ? null : $.get(0);
   }
   /**
@@ -66,7 +66,8 @@ public enum Restructure {
    * @return a duplicate of the argument, with the a flattened list of operands.
    */
   public static InfixExpression flatten(final InfixExpression $) {
-    return Subject.operands(flattenInto($.getOperator(), operands($), new ArrayList<Expression>())).to(duplicate($).getOperator());
+    return Subject.operands(flattenInto($.getOperator(), extract.operands($), new ArrayList<Expression>()))
+        .to(duplicate($).getOperator());
   }
   private static List<Expression> flattenInto(final Operator o, final List<Expression> es, final List<Expression> $) {
     for (final Expression e : es)
@@ -76,7 +77,7 @@ public enum Restructure {
   private static List<Expression> flattenInto(final Operator o, final Expression e, final List<Expression> $) {
     final Expression core = core(e);
     return !Is.infix(core) || asInfixExpression(core).getOperator() != o ? add(!Is.simple(core) ? e : core, $)
-        : flattenInto(o, operands(asInfixExpression(core)), $);
+        : flattenInto(o, extract.operands(asInfixExpression(core)), $);
   }
   private static List<Expression> add(final Expression e, final List<Expression> $) {
     $.add(e);

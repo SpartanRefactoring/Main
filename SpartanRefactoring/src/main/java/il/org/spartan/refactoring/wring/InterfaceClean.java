@@ -16,7 +16,7 @@ public final class InterfaceClean extends Wring.RemoveModifier<TypeDeclaration> 
   @Override String description(final TypeDeclaration ¢) {
     return "Remove redundant 'abstract'/'static' modifier from interface " + ¢.getName();
   }
-  @Override boolean redundant(final Modifier ¢) {
+  @Override boolean redundantModifier(final Modifier ¢) {
     return ¢.isAbstract() || ¢.isStatic();
   }
 }

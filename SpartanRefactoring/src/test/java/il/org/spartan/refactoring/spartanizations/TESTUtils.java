@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.spartanizations;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.utils.Utils.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -58,7 +57,7 @@ import il.org.spartan.refactoring.wring.*;
     azzert.notNull(statement);
     final ASTNode n = MakeAST.STATEMENTS.from(statement);
     azzert.notNull(n);
-    return singleStatement(n);
+    return extract.singleStatement(n);
   }
   public static Document rewrite(final Spartanization s, final CompilationUnit u, final Document $) {
     try {

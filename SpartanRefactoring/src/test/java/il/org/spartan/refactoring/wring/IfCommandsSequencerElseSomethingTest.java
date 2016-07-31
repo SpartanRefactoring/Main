@@ -4,7 +4,6 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.utils.Utils.*;
 import static org.hamcrest.text.IsEqualIgnoringWhiteSpace.*;
 
@@ -80,7 +79,7 @@ public class IfCommandsSequencerElseSomethingTest {
     final String wrap = Wrap.Statement.on(input);
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
     azzert.notNull(u);
-    final IfStatement s = firstIfStatement(u);
+    final IfStatement s = extract.firstIfStatement(u);
     azzert.notNull(s);
     azzert.that(s.toString(), equalToIgnoringWhiteSpace(input));
     final Wring<IfStatement> w = Toolbox.instance.find(s);

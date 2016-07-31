@@ -2,7 +2,6 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.extract.*;
 
 import java.util.*;
 
@@ -31,19 +30,19 @@ public class IfReturnNoElseReturnTest {
 
   @Test public void checkFirstIfStatement1() {
     final String s = "if (a) return b; return a();";
-    final IfStatement i = firstIfStatement(MakeAST.STATEMENTS.from(s));
+    final IfStatement i = extract.firstIfStatement(MakeAST.STATEMENTS.from(s));
     azzert.notNull(i);
     azzert.that(i.toString(), WRING.scopeIncludes(i), is(true));
   }
   @Test public void checkFirstIfStatement2() {
     final String s = "if (a) return b; else return a();";
-    final IfStatement i = firstIfStatement(MakeAST.STATEMENTS.from(s));
+    final IfStatement i = extract.firstIfStatement(MakeAST.STATEMENTS.from(s));
     azzert.notNull(i);
     azzert.that(i.toString(), WRING.scopeIncludes(i), is(false));
   }
   @Test public void checkFirstIfStatement3() {
     final String s = "if (a) a= b; else a=c;";
-    final IfStatement i = firstIfStatement(MakeAST.STATEMENTS.from(s));
+    final IfStatement i = extract.firstIfStatement(MakeAST.STATEMENTS.from(s));
     azzert.notNull(i);
     azzert.that(i.toString(), WRING.scopeIncludes(i), is(false));
   }

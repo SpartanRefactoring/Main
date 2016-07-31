@@ -6,7 +6,6 @@ import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
-import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.utils.Utils.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -210,7 +209,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
           azzert.that(inner.scopeIncludes(asMe()), is(false));
       }
       @Override protected VariableDeclarationFragment asMe() {
-        return firstVariableDeclarationFragment(MakeAST.STATEMENTS.from(input));
+        return extract.firstVariableDeclarationFragment(MakeAST.STATEMENTS.from(input));
       }
     }
 
@@ -317,7 +316,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
        * first If statement in the input.
        */
       @Override protected IfStatement asMe() {
-        return firstIfStatement(MakeAST.STATEMENTS.from(input));
+        return extract.firstIfStatement(MakeAST.STATEMENTS.from(input));
       }
     }
 
@@ -836,7 +835,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       return new Document(Wrap.Statement.on(input));
     }
     @Override protected VariableDeclarationFragment asMe() {
-      return firstVariableDeclarationFragment(MakeAST.STATEMENTS.from(input));
+      return extract.firstVariableDeclarationFragment(MakeAST.STATEMENTS.from(input));
     }
   }
 
