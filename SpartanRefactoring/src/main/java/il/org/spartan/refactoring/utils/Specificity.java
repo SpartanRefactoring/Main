@@ -1,5 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
+import static il.org.spartan.refactoring.utils.extract.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
@@ -69,7 +70,7 @@ public class Specificity implements Comparator<Expression> {
       }
     },;
     static int of(final ASTNode n) {
-      final Expression e = extract.core((Expression) n);
+      final Expression e = core((Expression) n);
       for (final Level l : values())
         if (l.includes(e))
           return l.ordinal();

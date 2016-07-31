@@ -143,7 +143,7 @@ public enum expose {
   @SuppressWarnings("unchecked") public static List<ParameterizedType> typeArguments(final ParameterizedType t) {
     return t.typeArguments();
   }
-  @SuppressWarnings("unchecked") public static List<CatchClause> catchClauses(TryStatement s) {
+  @SuppressWarnings("unchecked") public static List<CatchClause> catchClauses(final TryStatement s) {
     return s.catchClauses();
   }
 }

@@ -3,6 +3,9 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.refactoring.utils.ExpressionComparator.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
+import static il.org.spartan.refactoring.utils.expose.statements;
+import static il.org.spartan.refactoring.utils.extract.*;
+import static il.org.spartan.refactoring.utils.extract.statements;
 import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
@@ -45,7 +48,7 @@ public enum Wrings {
     return (IfStatement) b.statements().get(0);
   }
   static Expression eliminateLiteral(final InfixExpression e, final boolean b) {
-    final List<Expression> operands = extract.allOperands(e);
+    final List<Expression> operands = allOperands(e);
     removeAll(b, operands);
     switch (operands.size()) {
       case 0:
@@ -87,8 +90,8 @@ public enum Wrings {
     return $;
   }
   static IfStatement makeShorterIf(final IfStatement s) {
-    final List<Statement> then = extract.statements(then(s));
-    final List<Statement> elze = extract.statements(elze(s));
+    final List<Statement> then = statements(then(s));
+    final List<Statement> elze = statements(elze(s));
     final IfStatement inverse = invert(s);
     if (then.isEmpty())
       return inverse;
@@ -116,7 +119,7 @@ public enum Wrings {
   }
   static ASTRewrite replaceTwoStatements(final ASTRewrite r, final Statement what, final Statement by, final TextEditGroup g) {
     final Block parent = asBlock(what.getParent());
-    final List<Statement> siblings = extract.statements(parent);
+    final List<Statement> siblings = statements(parent);
     final int i = siblings.indexOf(what);
     siblings.remove(i);
     siblings.remove(i);
@@ -143,8 +146,8 @@ public enum Wrings {
     if (s1 > s2)
       return false;
     assert s1 == s2;
-    final int n2 = extract.statements(elze).size();
-    final int n1 = extract.statements(then).size();
+    final int n2 = statements(elze).size();
+    final int n1 = statements(then).size();
     if (n1 < n2)
       return true;
     if (n1 > n2)

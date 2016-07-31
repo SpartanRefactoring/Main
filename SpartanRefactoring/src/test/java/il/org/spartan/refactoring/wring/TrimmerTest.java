@@ -6,6 +6,7 @@ import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.ExpressionComparator.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
 import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.apply;
 import static il.org.spartan.utils.Utils.*;
@@ -44,7 +45,7 @@ import il.org.spartan.refactoring.utils.*;
     final Trimmer t = new Trimmer();
     final String unpeeled = apply(t, wrap);
     if (wrap.equals(unpeeled))
-      fail("Nothing done on " + from);
+      azzert.fail("Nothing done on " + from);
     final String peeled = w.off(unpeeled);
     if (peeled.equals(from))
       azzert.that("No similification of " + from, from, is(not(peeled)));
@@ -2046,7 +2047,7 @@ import il.org.spartan.refactoring.utils.*;
     final Statement s = s(from);
     azzert.that(s, iz("{" + from + "}"));
     azzert.notNull(s);
-    final PostfixExpression e = extract.findFirstPostfix(s);
+    final PostfixExpression e = findFirstPostfix(s);
     azzert.notNull(e);
     azzert.that(e, iz("i--"));
     final ASTNode parent = e.getParent();
@@ -2678,7 +2679,7 @@ import il.org.spartan.refactoring.utils.*;
         "      return res;\n" + //
         ""//
     );
-    final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
+    final VariableDeclarationFragment f = firstVariableDeclarationFragment(u);
     azzert.notNull(f);
     azzert.that(f, iz(" res = 0"));
     azzert.that(extract.nextStatement(f),

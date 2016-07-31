@@ -2,7 +2,8 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
-import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.utils.expose.statements;
+import static il.org.spartan.refactoring.utils.extract.statements;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 
 import java.util.*;
@@ -32,7 +33,7 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
     return new Rewrite(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final IfStatement shorterIf = makeShorterIf(s);
-        final List<Statement> remainder = extract.statements(elze(shorterIf));
+        final List<Statement> remainder = statements(elze(shorterIf));
         shorterIf.setElseStatement(null);
         final Block parent = asBlock(s.getParent());
         final Block newParent = s.getAST().newBlock();

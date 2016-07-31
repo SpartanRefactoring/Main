@@ -4,6 +4,7 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.utils.Utils.*;
 
 import java.util.*;
@@ -40,7 +41,7 @@ public class DeclarationIfAssginmentTest {
     final String from = "int a = 2,b; if (b) a =3;";
     final String wrap = Wrap.Statement.on(from);
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
-    final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
+    final VariableDeclarationFragment f = firstVariableDeclarationFragment(u);
     azzert.notNull(f);
     azzert.that(WRING.scopeIncludes(f), is(false));
   }
@@ -48,16 +49,16 @@ public class DeclarationIfAssginmentTest {
     final String from = "int a = 2,b; if (a+b) a =3;";
     final String wrap = Wrap.Statement.on(from);
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
-    final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
+    final VariableDeclarationFragment f = firstVariableDeclarationFragment(u);
     azzert.notNull(f);
     final Expression initializer = f.getInitializer();
     azzert.notNull(initializer);
-    final IfStatement s = extract.nextIfStatement(f);
+    final IfStatement s = nextIfStatement(f);
     azzert.that(s, is(extract.firstIfStatement(u)));
     azzert.notNull(s);
     azzert.that(s, iz("if (a + b) a=3;"));
     azzert.aye(Is.vacuousElse(s));
-    final Assignment a = extract.assignment(then(s));
+    final Assignment a = assignment(then(s));
     azzert.notNull(a);
     azzert.aye(same(left(a), f.getName()));
     azzert.that(a.getOperator(), is(Assignment.Operator.ASSIGN));
@@ -114,7 +115,7 @@ public class DeclarationIfAssginmentTest {
       final String expected = "int a = b ? 3 : 2;";
       final Document d = new Document(Wrap.Statement.on(from));
       final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(d);
-      final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
+      final VariableDeclarationFragment f = firstVariableDeclarationFragment(u);
       azzert.notNull(f);
       final ASTRewrite r = new Trimmer().createRewrite(u, null);
       final TextEdit e = r.rewriteAST(d, null);

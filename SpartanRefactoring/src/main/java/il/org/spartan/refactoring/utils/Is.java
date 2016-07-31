@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -556,7 +557,7 @@ public enum Is {
    *         statement.
    */
   public static boolean singletonStatement(final ASTNode n) {
-    return extract.statements(n).size() == 1;
+    return statements(n).size() == 1;
   }
   /**
    * Determine whether the "then" branch of an {@link Statement} is a single
@@ -621,7 +622,7 @@ public enum Is {
    *         statements in the parameter
    */
   public static boolean vacuous(final Statement s) {
-    return extract.statements(s).size() == 0;
+    return statements(s).size() == 0;
   }
   /**
    * Determine whether the 'else' part of an {@link IfStatement} is vacuous.
