@@ -149,36 +149,36 @@ public abstract class Wring<N extends ASTNode> {
     }
   }
 
-  public static abstract class RemoveModifier<N extends ASTNode> extends Wring.ReplaceCurrentNode<N> {
+  public static abstract class RemoveModifier<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> {
     @Override String description(final N n) {
       return "remove redundant modifier";
     }
     private IExtendedModifier firstBad(final N n) {
-      return firstThat(n, (final Modifier ¢) -> redundantModifier(¢));
+      return firstThat(n, (final Modifier ¢) -> redundant(¢));
     }
     IExtendedModifier firstThat(final N n, final Predicate<Modifier> f) {
-      for (final IExtendedModifier m : extract.modifiers(n))
+      for (final IExtendedModifier m : expose.modifiers(n))
         if (m.isModifier() && f.test((Modifier) m))
           return m;
       return null;
     }
     private N go(final N $) {
-      for (final Iterator<IExtendedModifier> it = extract.modifiers($).iterator(); it.hasNext();)
-        if (redundantModifier(it.next()))
-          it.remove();
+      for (final Iterator<IExtendedModifier> ¢ = expose.modifiers($).iterator(); ¢.hasNext();)
+        if (redundant(¢.next()))
+          ¢.remove();
       return $;
     }
-    final boolean has(final N ¢, final Predicate<Modifier> p) {
+    boolean has(final N ¢, final Predicate<Modifier> p) {
       return firstThat(¢, p) != null;
     }
-    private boolean redundantModifier(final IExtendedModifier m) {
-      return redundantModifier((Modifier) m);
+    private boolean redundant(final IExtendedModifier m) {
+      return redundant((Modifier) m);
     }
-    abstract boolean redundantModifier(Modifier m);
+    abstract boolean redundant(Modifier m);
     @Override N replacement(final N $) {
       return go(duplicate($));
     }
-    @Override final boolean scopeIncludes(final N ¢) {
+    @Override boolean scopeIncludes(final N ¢) {
       return firstBad(¢) != null;
     }
     @Override final WringGroup wringGroup() {

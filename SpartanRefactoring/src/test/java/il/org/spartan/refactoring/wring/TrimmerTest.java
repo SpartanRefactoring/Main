@@ -1479,17 +1479,17 @@ import il.org.spartan.refactoring.utils.*;
     trimming("enum a {}")//
         .to(null);//
   }
-  @Ignore @Test public void issue50f() {
+  @Test public void issue50f() {
     trimming("static enum a {a, b}")//
         .to("enum a {a, b}");//
   }
-  @Ignore @Test public void issue50g() {
+  @Test public void issue50g() {
     trimming("static abstract enum a {x,y,z; void f() {}}")//
         .to("enum a {x,y,z; void f() {}}");//
   }
-  @Ignore @Test public void issue50h() {
+  @Test public void issue50h() {
     trimming("static abstract final enum a {x,y,z; void f() {}}")//
-        .to("interface a {x,y,z; void f() {}}");//
+        .to("enum a {x,y,z; void f() {}}");//
   }
   @Test public void issue51() {
     trimming("int f() { int x = 0; for (int i = 0; i < 10; ++i) x += i; return x;}")//

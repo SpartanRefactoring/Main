@@ -66,14 +66,11 @@ public class Toolbox {
             new InfixSortSubstraction(), //
             new InfixSortDivision(), //
             new InfixConditionalCommon(), //
-            null)
-        .add(MethodDeclaration.class, //
+            null).add(MethodDeclaration.class, //
             new MethodRenameReturnToDollar(), //
-            null)
-        .add(SingleVariableDeclaration.class, //
+            null).add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //
-            null)
-        .add(VariableDeclarationFragment.class, //
+            null).add(VariableDeclarationFragment.class, //
             new DeclarationAssignment(), //
             new DeclarationInitialiazerAssignment(), //
             new DeclarationInitialiazelUpdateAssignment(), //
@@ -116,8 +113,9 @@ public class Toolbox {
             new TernaryShortestFirst(), //
             new TernaryPushdown(), //
             null) //
-        .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
-        .add(TypeDeclaration.class, new InterfaceClean()) //
+        .add(TypeDeclaration.class, new InterfaceClean(), null) //
+        .add(EnumDeclaration.class, new EnumClean(), null) //
+        .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover(), null) //
         .add(ReturnStatement.class, new ReturnLastInMethod()) //
         .seal();
   }
