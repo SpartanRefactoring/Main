@@ -5,6 +5,7 @@ import static il.org.spartan.utils.Utils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 
 /**
@@ -54,7 +55,7 @@ public enum Wrap {
     for (final Wrap $ : WRAPS)
       if ($.contains($.intoCompilationUnit(codeFragment).toString(), codeFragment))
         return $;
-    Assert.fail("Cannot parse '\n" + codeFragment + "\n********* I tried the following options:" + options(codeFragment));
+    azzert.fail("Cannot parse '\n" + codeFragment + "\n********* I tried the following options:" + options(codeFragment));
     throw new RuntimeException();
   }
   private static String options(final String codeFragment) {
@@ -62,7 +63,7 @@ public enum Wrap {
     int i = 0;
     for (final Wrap w : Wrap.WRAPS) {
       final String on = w.on(codeFragment);
-      final ASTNode n = As.COMPILIATION_UNIT.ast(on);
+      final ASTNode n = MakeAST.COMPILATION_UNIT.from(on);
       $.append("\n* Attemtpt ").append(++i).append(" Wrapper: ").append(w);
       $.append("\n* I Essence=").append(essence(on));
       $.append("\n* O Essence=").append(essence(n.toString()));

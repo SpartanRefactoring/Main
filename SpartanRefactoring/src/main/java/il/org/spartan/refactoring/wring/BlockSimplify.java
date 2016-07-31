@@ -12,7 +12,7 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
 /**
- * A {@link Wring} to convert <code>{;; g(); {}{;{;{}};} }</code> into
+ * A {@link Wring} to convert <code>{;; g(); {}{;{;{;}};} }</code> into
  * <code>g();</code>
  *
  * @author Yossi Gil
@@ -79,7 +79,9 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
         return b.getAST().newEmptyStatement();
       case 1:
         final Statement s = ss.get(0);
-        return Is.blockEssential(s) ? Subject.statement(s).toBlock() : duplicate(s);
+        if (Is.blockEssential(s))
+          return Subject.statement(s).toBlock();
+        return duplicate(s);
       default:
         return reorganizeNestedStatement(b);
     }
