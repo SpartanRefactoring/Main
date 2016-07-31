@@ -295,7 +295,7 @@ public abstract class Spartanization extends Refactoring {
     final TextFileChange textChange = new TextFileChange(cu.getElementName(), (IFile) cu.getResource());
     textChange.setTextType("java");
     final SubProgressMonitor spm = new SubProgressMonitor(pm, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL);
-    textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILIATION_UNIT.parser(cu).createAST(spm), spm).rewriteAST());
+    textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILATION_UNIT.parser(cu).createAST(spm), spm).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       textChange.perform(pm);
     pm.done();
@@ -358,7 +358,7 @@ public abstract class Spartanization extends Refactoring {
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
     final SubProgressMonitor subProgressMonitor = new SubProgressMonitor(m, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL);
-    final CompilationUnit cu = (CompilationUnit) Make.COMPILIATION_UNIT.parser(u).createAST(subProgressMonitor);
+    final CompilationUnit cu = (CompilationUnit) Make.COMPILATION_UNIT.parser(u).createAST(subProgressMonitor);
     textChange.setEdit(createRewrite(cu, subProgressMonitor).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       changes.add(textChange);

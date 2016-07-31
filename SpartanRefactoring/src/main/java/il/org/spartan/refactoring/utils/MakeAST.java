@@ -26,10 +26,10 @@ public enum MakeAST {
       return from(string(f));
     }
     @Override public CompilationUnit from(final IFile f) {
-      return (CompilationUnit) Make.COMPILIATION_UNIT.parser(f).createAST(null);
+      return (CompilationUnit) Make.COMPILATION_UNIT.parser(f).createAST(null);
     }
     @Override public CompilationUnit from(final IMarker m, final SubProgressMonitor pm) {
-      return (CompilationUnit) Make.COMPILIATION_UNIT.parser(m).createAST(pm);
+      return (CompilationUnit) Make.COMPILATION_UNIT.parser(m).createAST(pm);
     }
     @Override public CompilationUnit from(final String s) {
       return (CompilationUnit) makeParser(s).createAST(null);
