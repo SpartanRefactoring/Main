@@ -3,8 +3,6 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static il.org.spartan.refactoring.utils.expose.*;
-import static il.org.spartan.refactoring.utils.expose.statements;
-import static il.org.spartan.refactoring.utils.extract.statements;
 
 import java.util.*;
 import java.util.function.*;
@@ -24,20 +22,21 @@ import il.org.spartan.refactoring.utils.*;
 public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
   public static boolean hasHidings(final List<Statement> ss) {
     return new Predicate<List<Statement>>() {
-      @Override public boolean test(final List<Statement> ss) {
+      @Override public boolean test(List<Statement> ss) {
         for (final Statement s : ss)
           if (¢(s))
             return true;
         return false;
       }
-      boolean ¢(final CatchClause c) {
+
+      boolean ¢(CatchClause c) {
         return ¢(c.getException());
       }
-      boolean ¢(final ForStatement ¢) {
+      boolean ¢(ForStatement ¢) {
         return ¢(expose.initializers(¢));
       }
-      boolean ¢(final List<Expression> es) {
-        for (final Expression e : es)
+      boolean ¢(List<Expression> es) {
+        for (Expression e : es)
           if (e instanceof VariableDeclarationExpression)
             if (¢((VariableDeclarationExpression) e))
               return true;
@@ -46,10 +45,10 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
       boolean ¢(final SimpleName ¢) {
         return ¢(¢.getIdentifier());
       }
-      boolean ¢(final SingleVariableDeclaration d) {
+      boolean ¢(SingleVariableDeclaration d) {
         return ¢(d.getName());
       }
-      boolean ¢(final Statement ¢) {
+      boolean ¢(Statement ¢) {
         if (¢ instanceof VariableDeclarationStatement)
           return ¢((VariableDeclarationStatement) ¢);
         if (¢ instanceof ForStatement)
@@ -64,37 +63,36 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
         dictionary.add(¢);
         return false;
       }
-      boolean ¢(final TryStatement s) {
-        return ¢¢¢(expose.resources(s)) || ¢¢(expose.catchClauses(s));
+      boolean ¢(TryStatement s) {
+        return (¢¢¢(expose.resources(s)) || ¢¢(expose.catchClauses(s)));
       }
-      boolean ¢(final VariableDeclarationExpression ¢) {
+      boolean ¢(VariableDeclarationExpression ¢) {
         return ¢¢¢¢(expose.fragments(¢));
       }
-      boolean ¢(final VariableDeclarationFragment f) {
+      boolean ¢(VariableDeclarationFragment f) {
         return ¢(f.getName());
       }
       boolean ¢(final VariableDeclarationStatement ds) {
         return ¢¢¢¢(fragments(ds));
       }
-      boolean ¢¢(final List<CatchClause> cs) {
-        for (final CatchClause c : cs)
+      boolean ¢¢(List<CatchClause> cs) {
+        for (CatchClause c : cs)
           if (¢(c))
             return true;
         return false;
       }
-      boolean ¢¢¢(final List<VariableDeclarationExpression> es) {
-        for (final VariableDeclarationExpression e : es)
+      boolean ¢¢¢(List<VariableDeclarationExpression> es) {
+        for (VariableDeclarationExpression e : es)
           if (¢(e))
             return true;
         return false;
       }
-      boolean ¢¢¢¢(final List<VariableDeclarationFragment> fragments) {
-        for (final VariableDeclarationFragment x : fragments)
+      boolean ¢¢¢¢(List<VariableDeclarationFragment> fragments) {
+        for (VariableDeclarationFragment x : fragments)
           if (¢(x))
             return true;
         return false;
       }
-
       final Set<String> dictionary = new HashSet<>();
     }.test(ss);
   }
@@ -107,13 +105,13 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
     return true;
   }
   private static Block reorganizeStatement(final Statement s) {
-    final List<Statement> ss = statements(s);
+    final List<Statement> ss = extract.statements(s);
     final Block $ = s.getAST().newBlock();
     duplicateInto(ss, statements($));
     return $;
   }
   static Statement reorganizeNestedStatement(final Statement s) {
-    final List<Statement> ss = statements(s);
+    final List<Statement> ss = extract.statements(s);
     switch (ss.size()) {
       case 0:
         return s.getAST().newEmptyStatement();
@@ -127,7 +125,7 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
     return "Simplify block";
   }
   @Override Statement replacement(final Block b) {
-    final List<Statement> ss = statements(b);
+    final List<Statement> ss = extract.statements(b);
     if (identical(ss, statements(b)) || hasHidings(ss))
       return null;
     final ASTNode parent = b.getParent();

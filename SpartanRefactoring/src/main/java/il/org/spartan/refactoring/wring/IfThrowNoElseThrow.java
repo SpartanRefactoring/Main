@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.extract.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -29,8 +28,8 @@ public final class IfThrowNoElseThrow extends Wring.ReplaceToNextStatement<IfSta
         : Wrings.replaceTwoStatements(r, s, Subject.operand(Subject.pair(e1, e2).toCondition(s.getExpression())).toThrow(), g);
   }
   static Expression getThrowExpression(final Statement s) {
-    final ThrowStatement $ = throwStatement(s);
-    return $ == null ? null : core($.getExpression());
+    final ThrowStatement $ = extract.throwStatement(s);
+    return $ == null ? null : extract.core($.getExpression());
   }
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate into a single 'throw'";

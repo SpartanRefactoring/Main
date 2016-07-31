@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
@@ -30,7 +29,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
     for (final IExtendedModifier m : (List<IExtendedModifier>) ((VariableDeclarationStatement) f.getParent()).modifiers())
       if (m.isModifier() && ((Modifier) m).isFinal())
         return null;
-    final Statement s = statement(f);
+    final Statement s = extract.statement(f);
     if (s == null)
       return null;
     final Block parent = asBlock(s.getParent());

@@ -33,7 +33,7 @@ public enum extract {
   }
   public static Iterable<ASTNode> ancestors(final ASTNode ¢) {
     return () -> new Iterator<ASTNode>() {
-      ASTNode current = ¢.getParent();
+      ASTNode current = ¢;
 
       @Override public boolean hasNext() {
         return current != null;
@@ -47,11 +47,12 @@ public enum extract {
   }
   public static ASTNode containerType(final ASTNode ¢) {
     for (final ASTNode $ : ancestors(¢.getParent()))
-      if (is($, ANONYMOUS_CLASS_DECLARATION //
+      if (is($
+          , ANONYMOUS_CLASS_DECLARATION //
           , ANNOTATION_TYPE_DECLARATION //
           , ENUM_DECLARATION //
           , TYPE_DECLARATION //
-      ))
+          ))
         return $;
     return null;
   }
@@ -479,7 +480,7 @@ public enum extract {
       case EMPTY_STATEMENT:
         return $;
       case BLOCK:
-        return statementsInto((Block) s, $);
+        return extract.statementsInto((Block) s, $);
       default:
         $.add(s);
         return $;
@@ -506,4 +507,5 @@ public enum extract {
   public static ThrowStatement throwStatement(final ASTNode n) {
     return asThrowStatement(extract.singleStatement(n));
   }
+
 }
