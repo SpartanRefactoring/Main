@@ -2,6 +2,7 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 
 import java.util.*;
 
@@ -31,19 +32,19 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
     final String s = "if (a) return b; if (b) return b;";
     final ASTNode n = MakeAST.STATEMENTS.from(s);
     azzert.notNull(n);
-    final IfStatement i = extract.firstIfStatement(n);
+    final IfStatement i = firstIfStatement(n);
     azzert.notNull(n.toString(), i);
     azzert.that(i.toString(), WRING.scopeIncludes(i), is(true));
   }
   @Test public void checkFirstIfStatement2() {
     final String s = "if (a) return b; else return a();";
-    final IfStatement i = extract.firstIfStatement(MakeAST.STATEMENTS.from(s));
+    final IfStatement i = firstIfStatement(MakeAST.STATEMENTS.from(s));
     azzert.notNull(i);
     azzert.that(i.toString(), WRING.scopeIncludes(i), is(false));
   }
   @Test public void checkFirstIfStatement3() {
     final String s = "if (a) a= b; else a=c;";
-    final IfStatement i = extract.firstIfStatement(MakeAST.STATEMENTS.from(s));
+    final IfStatement i = firstIfStatement(MakeAST.STATEMENTS.from(s));
     azzert.notNull(i);
     azzert.that(i.toString(), WRING.scopeIncludes(i), is(false));
   }

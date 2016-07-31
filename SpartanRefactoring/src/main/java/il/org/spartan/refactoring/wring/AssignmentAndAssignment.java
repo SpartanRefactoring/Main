@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
@@ -26,7 +27,7 @@ public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assign
     final Expression right = getRight(a);
     if (right == null || right.getNodeType() == NULL_LITERAL)
       return null;
-    final Assignment a1 = extract.assignment(nextStatement);
+    final Assignment a1 = assignment(nextStatement);
     if (a1 == null)
       return null;
     final Expression right1 = getRight(a1);
@@ -40,7 +41,7 @@ public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assign
     return a.getOperator() != ASSIGN ? null : extractRight(a);
   }
   static Expression extractRight(final Assignment a) {
-    final Expression $ = extract.core(right(a));
+    final Expression $ = core(right(a));
     return !($ instanceof Assignment) || ((Assignment) $).getOperator() != ASSIGN ? $ : extractRight((Assignment) $);
   }
   @Override String description(final Assignment a) {

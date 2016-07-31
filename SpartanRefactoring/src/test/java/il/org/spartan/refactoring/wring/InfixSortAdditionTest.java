@@ -2,6 +2,7 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 
 import java.util.*;
 
@@ -32,9 +33,9 @@ public class InfixSortAdditionTest {
   @Test public void subjectOperandsWithParenthesis() {
     final Expression e = Into.e("(2 + a) * b");
     azzert.aye(Is.notString(e));
-    final InfixExpression plus = extract.firstPlus(e);
+    final InfixExpression plus = firstPlus(e);
     azzert.aye(Is.notString(plus));
-    final List<Expression> operands = extract.operands(flatten(plus));
+    final List<Expression> operands = operands(flatten(plus));
     azzert.that(operands.size(), is(2));
     final InfixExpression r = Subject.operands(operands).to(plus.getOperator());
     azzert.that(r, iz("2+a"));
@@ -83,7 +84,7 @@ public class InfixSortAdditionTest {
       azzert.nay(COMPARATOR.sort(extract.operands(flatten(asInfixExpression()))));
     }
     @Test public void sortTwice() {
-      final List<Expression> operands = extract.operands(flatten(asInfixExpression()));
+      final List<Expression> operands = operands(flatten(asInfixExpression()));
       azzert.nay(COMPARATOR.sort(operands));
       azzert.nay(COMPARATOR.sort(operands));
     }
@@ -138,21 +139,21 @@ public class InfixSortAdditionTest {
       azzert.aye(asInfixExpression().getOperator() == Operator.PLUS);
     }
     @Test public void notString() {
-      for (final Expression e : extract.operands(flatten(asInfixExpression())))
+      for (final Expression e : operands(flatten(asInfixExpression())))
         azzert.that(e.toString(), Is.notString(e), is(true));
     }
     @Test public void sortTest() {
       final InfixExpression e = asInfixExpression();
-      final List<Expression> operands = extract.operands(flatten(e));
+      final List<Expression> operands = operands(flatten(e));
       azzert.that(operands.size(), greaterThanOrEqualTo(2));
       azzert.that(//
-          "Before: " + extract.operands(flatten(e)) + "\n" + //
+          "Before: " + operands(flatten(e)) + "\n" + //
               "After: " + operands + "\n", //
           COMPARATOR.sort(operands), is(true));
     }
     @Test public void sortTwice() {
       final InfixExpression e = asInfixExpression();
-      final List<Expression> operands = extract.operands(flatten(e));
+      final List<Expression> operands = operands(flatten(e));
       azzert.aye(e.toString(), COMPARATOR.sort(operands));
       azzert.nay(e.toString(), COMPARATOR.sort(operands));
     }

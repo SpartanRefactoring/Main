@@ -2,6 +2,7 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 
 import java.util.*;
 
@@ -31,8 +32,8 @@ public class TernaryShortestFirstTest {
     final ConditionalExpression e = Into
         .c("length(not(notConditional)) + length(then) < length(notConditional) + length(elze) ? null : $");
     azzert.notNull(e);
-    final Expression elze = extract.core(e.getElseExpression());
-    final Expression then = extract.core(e.getThenExpression());
+    final Expression elze = core(e.getElseExpression());
+    final Expression then = core(e.getThenExpression());
     final Expression $ = Subject.pair(elze, then).toCondition(logicalNot(e.getExpression()));
     azzert.nay(then.toString(), Is.conditional(then));
     azzert.nay(elze.toString(), Is.conditional(elze));
@@ -42,14 +43,15 @@ public class TernaryShortestFirstTest {
   @Test public void trace1() {
     final ConditionalExpression e = Into.c("a?f(b,c,d):a");
     azzert.notNull(e);
-    azzert.that(Subject.pair(extract.core(e.getElseExpression()), extract.core(e.getThenExpression()))
-        .toCondition(logicalNot(e.getExpression())), iz("!a?a:f(b,c,d)"));
+    azzert.that(
+        Subject.pair(extract.core(e.getElseExpression()), core(e.getThenExpression())).toCondition(logicalNot(e.getExpression())),
+        iz("!a?a:f(b,c,d)"));
   }
   @Test public void trace2() {
     final ConditionalExpression e = Into.c("!f(o) ? null : x.f(a).to(e.g())");
     azzert.notNull(e);
-    final Expression elze = extract.core(e.getElseExpression());
-    final Expression then = extract.core(e.getThenExpression());
+    final Expression elze = core(e.getElseExpression());
+    final Expression then = core(e.getThenExpression());
     final Expression $ = Subject.pair(elze, then).toCondition(logicalNot(e.getExpression()));
     azzert.nay(then.toString(), Is.conditional(then));
     azzert.nay(elze.toString(), Is.conditional(elze));

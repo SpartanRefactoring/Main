@@ -2,6 +2,7 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 
 import java.util.*;
 
@@ -37,7 +38,7 @@ import il.org.spartan.utils.Utils;
         "return true;" //
         + ""//
     );
-    final IfStatement s = extract.firstIfStatement(u);
+    final IfStatement s = firstIfStatement(u);
     azzert.that(extract.statements(then(s)).size(), is(1));
     azzert.that(extract.statements(elze(s)).size(), is(1));
   }

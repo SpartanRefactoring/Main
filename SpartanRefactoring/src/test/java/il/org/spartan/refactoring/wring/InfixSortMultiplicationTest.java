@@ -5,6 +5,8 @@ import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
+import static il.org.spartan.refactoring.utils.extract.*;
+import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -85,7 +87,6 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
-
     static Document rewrite(final Spartanization s, final CompilationUnit u, final Document d) {
       try {
         s.createRewrite(u, null).rewriteAST(d, null).apply(d);
@@ -114,7 +115,7 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
     }
     @Test public void sortTwice() {
       final InfixExpression e = asInfixExpression();
-      final List<Expression> operands = extract.operands(flatten(e));
+      final List<Expression> operands = operands(flatten(e));
       azzert.nay(COMPARATOR.sort(operands));
       azzert.nay(COMPARATOR.sort(operands));
     }
@@ -164,13 +165,12 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
     }
     @Test public void sortTest() {
       final InfixExpression e = asInfixExpression();
-      final List<Expression> operands = extract.operands(flatten(e));
-      azzert.that("Before: " + extract.operands(flatten(e)) + "\n" + "After: " + operands + "\n", COMPARATOR.sort(operands),
-          is(true));
+      final List<Expression> operands = operands(flatten(e));
+      azzert.that("Before: " + operands(flatten(e)) + "\n" + "After: " + operands + "\n", COMPARATOR.sort(operands), is(true));
     }
     @Test public void sortTwice() {
       final InfixExpression e = asInfixExpression();
-      final List<Expression> operands = extract.operands(flatten(e));
+      final List<Expression> operands = operands(flatten(e));
       azzert.aye(COMPARATOR.sort(operands));
       azzert.nay(COMPARATOR.sort(operands));
     }

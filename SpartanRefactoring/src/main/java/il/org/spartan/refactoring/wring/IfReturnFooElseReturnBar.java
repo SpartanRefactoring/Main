@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -17,12 +18,12 @@ import il.org.spartan.refactoring.utils.*;
 public final class IfReturnFooElseReturnBar extends Wring.ReplaceCurrentNode<IfStatement> {
   @Override Statement replacement(final IfStatement s) {
     final Expression condition = s.getExpression();
-    final Expression then = extract.returnExpression(then(s));
-    final Expression elze = extract.returnExpression(elze(s));
+    final Expression then = returnExpression(then(s));
+    final Expression elze = returnExpression(elze(s));
     return then == null || elze == null ? null : Subject.operand(Subject.pair(then, elze).toCondition(condition)).toReturn();
   }
   @Override boolean scopeIncludes(final IfStatement s) {
-    return s != null && extract.returnExpression(then(s)) != null && extract.returnExpression(elze(s)) != null;
+    return s != null && returnExpression(then(s)) != null && returnExpression(elze(s)) != null;
   }
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Replace if with a return of a conditional statement";

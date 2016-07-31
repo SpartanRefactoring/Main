@@ -2,6 +2,8 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.utils.extract.*;
+import static il.org.spartan.refactoring.utils.extract.modifiers;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -124,23 +126,23 @@ public abstract class Wring<N extends ASTNode> {
 
   static abstract class InfixSorting extends AbstractSorting {
     @Override boolean eligible(final InfixExpression e) {
-      final List<Expression> es = extract.allOperands(e);
+      final List<Expression> es = allOperands(e);
       return !Wrings.mixedLiteralKind(es) && sort(es);
     }
     @Override Expression replacement(final InfixExpression e) {
-      final List<Expression> operands = extract.allOperands(e);
+      final List<Expression> operands = allOperands(e);
       return !sort(operands) ? null : Subject.operands(operands).to(e.getOperator());
     }
   }
 
   static abstract class InfixSortingOfCDR extends AbstractSorting {
     @Override boolean eligible(final InfixExpression e) {
-      final List<Expression> es = extract.allOperands(e);
+      final List<Expression> es = allOperands(e);
       es.remove(0);
       return !Wrings.mixedLiteralKind(es) && sort(es);
     }
     @Override Expression replacement(final InfixExpression e) {
-      final List<Expression> operands = extract.allOperands(e);
+      final List<Expression> operands = allOperands(e);
       final Expression first = operands.remove(0);
       if (!sort(operands))
         return null;
@@ -154,27 +156,27 @@ public abstract class Wring<N extends ASTNode> {
       return "remove redundant modifier";
     }
     private IExtendedModifier firstBad(final N n) {
-      return firstThat(n, (final Modifier ¢) -> redundantModifier(¢));
+      return firstThat(n, (final Modifier ¢) -> redundant(¢));
     }
     IExtendedModifier firstThat(final N n, final Predicate<Modifier> f) {
-      for (final IExtendedModifier m : extract.modifiers(n))
+      for (final IExtendedModifier m : modifiers(n))
         if (m.isModifier() && f.test((Modifier) m))
           return m;
       return null;
     }
     private N go(final N $) {
-      for (final Iterator<IExtendedModifier> it = extract.modifiers($).iterator(); it.hasNext();)
-        if (redundantModifier(it.next()))
-          it.remove();
+      for (final Iterator<IExtendedModifier> ¢ = modifiers($).iterator(); ¢.hasNext();)
+        if (redundantModifier(¢.next()))
+          ¢.remove();
       return $;
     }
     final boolean has(final N ¢, final Predicate<Modifier> p) {
       return firstThat(¢, p) != null;
     }
-    private boolean redundantModifier(final IExtendedModifier m) {
-      return redundantModifier((Modifier) m);
+    private boolean redundantModifier(final IExtendedModifier ¢) {
+      return ¢.isModifier() && redundant((Modifier) ¢);
     }
-    abstract boolean redundantModifier(Modifier m);
+    abstract boolean redundant(Modifier m);
     @Override N replacement(final N $) {
       return go(duplicate($));
     }
@@ -203,7 +205,7 @@ public abstract class Wring<N extends ASTNode> {
   static abstract class ReplaceToNextStatement<N extends ASTNode> extends Wring<N> {
     abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g);
     @Override Rewrite make(final N n, final ExclusionManager exclude) {
-      final Statement nextStatement = extract.nextStatement(n);
+      final Statement nextStatement = nextStatement(n);
       if (nextStatement == null || !eligible(n))
         return null;
       exclude.exclude(nextStatement);
@@ -214,7 +216,7 @@ public abstract class Wring<N extends ASTNode> {
       };
     }
     @Override boolean scopeIncludes(final N n) {
-      final Statement nextStatement = extract.nextStatement(n);
+      final Statement nextStatement = nextStatement(n);
       return nextStatement != null && go(ASTRewrite.create(n.getAST()), n, nextStatement, null) != null;
     }
   }

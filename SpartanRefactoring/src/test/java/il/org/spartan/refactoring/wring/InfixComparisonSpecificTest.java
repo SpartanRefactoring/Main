@@ -6,6 +6,7 @@ import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 
 import java.util.*;
 
@@ -278,12 +279,12 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
     }
     @Test public void sortTwiceADDITION() {
       final InfixExpression e = asInfixExpression();
-      final List<Expression> operands = extract.operands(flatten(e));
+      final List<Expression> operands = operands(flatten(e));
       ExpressionComparator.ADDITION.sort(operands);
       azzert.nay(ExpressionComparator.ADDITION.sort(operands));
     }
     @Test public void sortTwiceMULTIPLICATION() {
-      final List<Expression> operands = extract.operands(flatten(asInfixExpression()));
+      final List<Expression> operands = operands(flatten(asInfixExpression()));
       ExpressionComparator.MULTIPLICATION.sort(operands);
       azzert.nay(ExpressionComparator.MULTIPLICATION.sort(operands));
     }

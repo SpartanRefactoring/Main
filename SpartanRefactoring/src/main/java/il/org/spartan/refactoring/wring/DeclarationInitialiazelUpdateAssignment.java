@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
@@ -25,7 +26,7 @@ public final class DeclarationInitialiazelUpdateAssignment extends Wring.Variabl
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
       return null;
-    final Assignment a = extract.assignment(nextStatement);
+    final Assignment a = assignment(nextStatement);
     if (a == null || !same(n, left(a)) || doesUseForbiddenSiblings(f, right(a)))
       return null;
     final Operator o = a.getOperator();

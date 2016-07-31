@@ -5,6 +5,7 @@ import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 
 import java.util.*;
 
@@ -96,7 +97,7 @@ import il.org.spartan.refactoring.utils.Subject.*;
   }
   @Test public void refitWithSort() {
     final InfixExpression e = i("1 + 2 * 3");
-    final List<Expression> operands = extract.operands(flatten(e));
+    final List<Expression> operands = operands(flatten(e));
     azzert.that(operands.size(), is(2));
     azzert.that(operands.get(0).toString(), is("1"));
     azzert.that(operands.get(1).toString(), is("2 * 3"));
@@ -113,16 +114,16 @@ import il.org.spartan.refactoring.utils.Subject.*;
   @Test public void subjectOperands() {
     final Expression e = Into.e("2 + a < b");
     azzert.aye(Is.notString(e));
-    final InfixExpression plus = extract.firstPlus(e);
+    final InfixExpression plus = firstPlus(e);
     azzert.aye(Is.notString(plus));
-    final List<Expression> operands = extract.operands(flatten(plus));
+    final List<Expression> operands = operands(flatten(plus));
     azzert.that(operands.size(), is(2));
     final boolean b = ExpressionComparator.ADDITION.sort(operands);
     azzert.that(b, is(true));
     azzert.that(Subject.operands(operands).to(plus.getOperator()), iz("a +2"));
   }
   @Test public void subjectOperandsDoesNotIntroduceList() {
-    final List<Expression> operands = extract.operands(Funcs.duplicate(i("a*b")));
+    final List<Expression> operands = operands(Funcs.duplicate(i("a*b")));
     azzert.that(operands.size(), is(2));
     final InfixExpression e = i("1+2");
     final InfixExpression refit = Subject.operands(operands).to(e.getOperator());
@@ -139,9 +140,9 @@ import il.org.spartan.refactoring.utils.Subject.*;
   @Test public void subjectOperandsWithParenthesis() {
     final Expression e = Into.e("(2 + a) * b");
     azzert.aye(Is.notString(e));
-    final InfixExpression plus = extract.firstPlus(e);
+    final InfixExpression plus = firstPlus(e);
     azzert.aye(Is.notString(plus));
-    final List<Expression> operands = extract.operands(flatten(plus));
+    final List<Expression> operands = operands(flatten(plus));
     azzert.that(operands.size(), is(2));
     final boolean b = ExpressionComparator.ADDITION.sort(operands);
     azzert.that(b, is(true));
