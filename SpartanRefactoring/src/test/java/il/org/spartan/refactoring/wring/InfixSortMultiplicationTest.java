@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
@@ -84,10 +85,9 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
-    static public void fail(String message) {
-      if (message == null) {
+    static public void fail(final String message) {
+      if (message == null)
         throw new AssertionError();
-      }
       throw new AssertionError(message);
     }
     static public void fail() {

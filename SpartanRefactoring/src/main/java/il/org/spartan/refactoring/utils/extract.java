@@ -45,11 +45,10 @@ public enum extract {
       }
     };
   }
-  public static ASTNode containerType(ASTNode ¢) {
-    for (ASTNode n : ancestors(¢.getParent())) {
+  public static ASTNode containerType(final ASTNode ¢) {
+    for (final ASTNode n : ancestors(¢.getParent()))
       if (is(n, ENUM_DECLARATION, TYPE_DECLARATION, ANNOTATION_TYPE_DECLARATION))
         return n;
-    }
     return null;
   }
   /**

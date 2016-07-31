@@ -1,4 +1,5 @@
 package il.org.spartan.refactoring.utils;
+
 import static il.org.spartan.refactoring.utils.Funcs.*;
 
 import java.io.*;
