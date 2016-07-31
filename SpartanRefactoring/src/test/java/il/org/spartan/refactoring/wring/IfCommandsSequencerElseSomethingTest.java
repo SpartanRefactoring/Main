@@ -71,8 +71,8 @@ public class IfCommandsSequencerElseSomethingTest {
       fail("Nothing done on " + s);
     final String peeled = Wrap.Statement.off(unpeeled);
     azzert.that("No similification of " + s, s, not(peeled));
-    final String compressSpaces = compressSpaces(peeled);
-    final String compressSpaces2 = compressSpaces(s.toString());
+    final String compressSpaces = gist(peeled);
+    final String compressSpaces2 = gist(s.toString());
     azzert.that("Simpification of " + s + " is just reformatting", compressSpaces, not(compressSpaces2));
     assertSimilar(" if(a)return b;a(); ", peeled);
   }
@@ -105,8 +105,8 @@ public class IfCommandsSequencerElseSomethingTest {
     final String peeled = Wrap.Statement.off(unpeeled);
     if (peeled.equals(s))
       azzert.that("No similification of " + s, peeled, is(not(s.toString())));
-    if (compressSpaces(peeled).equals(compressSpaces(s.toString())))
-      azzert.that("Simpification of " + s + " is just reformatting", compressSpaces(s.toString()), is(not(compressSpaces(peeled))));
+    if (gist(peeled).equals(gist(s.toString())))
+      azzert.that("Simpification of " + s + " is just reformatting", gist(s.toString()), is(not(gist(peeled))));
     assertSimilar(" if (a) return b; a(); ", peeled);
   }
   @Test public void checkStepsWRING() throws MalformedTreeException {

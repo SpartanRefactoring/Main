@@ -162,7 +162,7 @@ public abstract class Spartanization extends Refactoring {
    *          displayed
    * @return an ASTRewrite which contains the changes
    */
-  public final ASTRewrite createRewrite(final CompilationUnit u, final SubProgressMonitor pm) {
+  public final ASTRewrite createRewrite(final CompilationUnit u, final IProgressMonitor pm) {
     return createRewrite(pm, u, (IMarker) null);
   }
   /**
@@ -294,7 +294,7 @@ public abstract class Spartanization extends Refactoring {
     pm.beginTask("Creating change for a single compilation unit...", 2);
     final TextFileChange textChange = new TextFileChange(cu.getElementName(), (IFile) cu.getResource());
     textChange.setTextType("java");
-    final SubProgressMonitor spm = new SubProgressMonitor(pm, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL);
+    final IProgressMonitor spm = new SubProgressMonitor(pm, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL);
     textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILATION_UNIT.parser(cu).createAST(spm), spm).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       textChange.perform(pm);
@@ -357,7 +357,7 @@ public abstract class Spartanization extends Refactoring {
     m.beginTask("Creating change for a single compilation unit...", 2);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
-    final SubProgressMonitor subProgressMonitor = new SubProgressMonitor(m, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL);
+    final IProgressMonitor subProgressMonitor = new SubProgressMonitor(m, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL);
     final CompilationUnit cu = (CompilationUnit) Make.COMPILATION_UNIT.parser(u).createAST(subProgressMonitor);
     textChange.setEdit(createRewrite(cu, subProgressMonitor).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
@@ -393,7 +393,7 @@ public abstract class Spartanization extends Refactoring {
       scanCompilationUnit(cu, new SubProgressMonitor(pm, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL));
     pm.done();
   }
-  private ASTRewrite createRewrite(final SubProgressMonitor pm, final CompilationUnit u, final IMarker m) {
+  private ASTRewrite createRewrite(final IProgressMonitor pm, final CompilationUnit u, final IMarker m) {
     if (pm != null)
       pm.beginTask("Creating rewrite operation...", 1);
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
@@ -413,7 +413,7 @@ public abstract class Spartanization extends Refactoring {
    *          the marker
    * @return an ASTRewrite which contains the changes
    */
-  private final ASTRewrite createRewrite(final SubProgressMonitor pm, final IMarker m) {
+  private final ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m) {
     return createRewrite(pm, (CompilationUnit) MakeAST.COMPILATION_UNIT.from(m, pm), m);
   }
   private List<ICompilationUnit> getUnits(final IProgressMonitor pm) throws JavaModelException {

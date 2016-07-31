@@ -118,8 +118,8 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
       return;
     if (input.equals(peeled))
       fail("Nothing done on " + input);
-    if (compressSpaces(peeled).equals(compressSpaces(input)))
-      azzert.that("Wringing of " + input + " amounts to mere reformatting", compressSpaces(input), is(not(compressSpaces(peeled))));
+    if (gist(peeled).equals(gist(input)))
+      azzert.that("Wringing of " + input + " amounts to mere reformatting", gist(input), is(not(gist(peeled))));
     assertSimilar(expected, peeled);
     assertSimilar(Wrap.Statement.on(expected), actual);
   }

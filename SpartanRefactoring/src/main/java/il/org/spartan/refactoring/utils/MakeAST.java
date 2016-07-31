@@ -1,4 +1,5 @@
 package il.org.spartan.refactoring.utils;
+import static il.org.spartan.refactoring.utils.Funcs.*;
 
 import java.io.*;
 import java.util.*;
@@ -28,7 +29,7 @@ public enum MakeAST {
     @Override public CompilationUnit from(final IFile f) {
       return (CompilationUnit) Make.COMPILATION_UNIT.parser(f).createAST(null);
     }
-    @Override public CompilationUnit from(final IMarker m, final SubProgressMonitor pm) {
+    @Override public CompilationUnit from(final IMarker m, final IProgressMonitor pm) {
       return (CompilationUnit) Make.COMPILATION_UNIT.parser(m).createAST(pm);
     }
     @Override public CompilationUnit from(final String s) {
@@ -45,7 +46,7 @@ public enum MakeAST {
     @Override public Expression from(final IFile f) {
       return (Expression) Make.EXPRESSION.parser(f).createAST(null);
     }
-    @Override public Expression from(final IMarker m, final SubProgressMonitor pm) {
+    @Override public Expression from(final IMarker m, final IProgressMonitor pm) {
       return (Expression) Make.EXPRESSION.parser(m).createAST(pm);
     }
     @Override public Expression from(final String s) {
@@ -187,7 +188,7 @@ public enum MakeAST {
    *          ProgressMonitor
    * @return ASTNode
    */
-  public ASTNode from(final IMarker m, final SubProgressMonitor pm) {
+  public ASTNode from(final IMarker m, final IProgressMonitor pm) {
     return Make.of(this).parser(m).createAST(pm);
   }
   /**
@@ -200,12 +201,6 @@ public enum MakeAST {
   public ASTNode from(final String s) {
     return makeParser(s).createAST(null);
   }
-  private ASTParser makeParser() {
-    final ASTParser $ = ASTParser.newParser(AST.JLS8);
-    $.setKind(kind);
-    $.setResolveBindings(false);
-    return $;
-  }
   /**
    * Creates a no-binding parser for a given text
    *
@@ -214,7 +209,7 @@ public enum MakeAST {
    * @return a newly created parser for the parameter
    */
   public ASTParser makeParser(final char[] text) {
-    final ASTParser $ = makeParser();
+    final ASTParser $ = parser(kind);
     $.setSource(text);
     return $;
   }
@@ -226,7 +221,7 @@ public enum MakeAST {
    * @return a newly created parser for the parameter
    */
   public ASTParser makeParser(final ICompilationUnit u) {
-    final ASTParser $ = makeParser();
+    final ASTParser $ = parser(kind);
     $.setSource(u);
     return $;
   }

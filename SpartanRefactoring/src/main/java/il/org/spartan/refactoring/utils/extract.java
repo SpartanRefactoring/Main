@@ -31,6 +31,27 @@ public enum extract {
   public static List<Expression> allOperands(final InfixExpression e) {
     return extract.operands(flatten(e));
   }
+  public static Iterable<ASTNode> ancestors(final ASTNode ¢) {
+    return () -> new Iterator<ASTNode>() {
+      ASTNode current = ¢;
+
+      @Override public boolean hasNext() {
+        return current != null;
+      }
+      @Override public ASTNode next() {
+        final ASTNode $ = current;
+        current = current.getParent();
+        return $;
+      }
+    };
+  }
+  public static ASTNode containerType(ASTNode ¢) {
+    for (ASTNode n : ancestors(¢.getParent())) {
+      if (is(n, ENUM_DECLARATION, TYPE_DECLARATION, ANNOTATION_TYPE_DECLARATION))
+        return n;
+    }
+    return null;
+  }
   /**
    * @param n
    *          a statement or block to extract the assignment from
@@ -274,6 +295,20 @@ public enum extract {
   public static MethodInvocation methodInvocation(final ASTNode n) {
     return asMethodInvocation(extract.expressionStatement(n).getExpression());
   }
+  public static List<IExtendedModifier> modifiers(final ASTNode ¢) {
+    if (¢ instanceof TypeDeclaration)
+      return modifiers((TypeDeclaration) ¢);
+    return new ArrayList<>();
+  }
+  @SuppressWarnings("unchecked") public static List<IExtendedModifier> modifiers(final TypeDeclaration d) {
+    return d.modifiers();
+  }
+  private static Statement next(final Statement s, final List<Statement> ss) {
+    for (int i = 0; i < ss.size() - 1; ++i)
+      if (ss.get(i) == s)
+        return ss.get(i + 1);
+    return null;
+  }
   /**
    * Find the {@link Assignment} that follows a given node.
    *
@@ -433,6 +468,22 @@ public enum extract {
     final List<Statement> $ = new ArrayList<>();
     return n == null || !(n instanceof Statement) ? $ : extract.statementsInto((Statement) n, $);
   }
+  private static List<Statement> statementsInto(final Block b, final List<Statement> $) {
+    for (final Object statement : b.statements())
+      extract.statementsInto((Statement) statement, $);
+    return $;
+  }
+  private static List<Statement> statementsInto(final Statement s, final List<Statement> $) {
+    switch (s.getNodeType()) {
+      case EMPTY_STATEMENT:
+        return $;
+      case BLOCK:
+        return extract.statementsInto((Block) s, $);
+      default:
+        $.add(s);
+        return $;
+    }
+  }
   /**
    * @param n
    *          a node to extract an expression from
@@ -453,35 +504,5 @@ public enum extract {
    */
   public static ThrowStatement throwStatement(final ASTNode n) {
     return asThrowStatement(extract.singleStatement(n));
-  }
-  private static Statement next(final Statement s, final List<Statement> ss) {
-    for (int i = 0; i < ss.size() - 1; ++i)
-      if (ss.get(i) == s)
-        return ss.get(i + 1);
-    return null;
-  }
-  private static List<Statement> statementsInto(final Block b, final List<Statement> $) {
-    for (final Object statement : b.statements())
-      extract.statementsInto((Statement) statement, $);
-    return $;
-  }
-  private static List<Statement> statementsInto(final Statement s, final List<Statement> $) {
-    switch (s.getNodeType()) {
-      case EMPTY_STATEMENT:
-        return $;
-      case BLOCK:
-        return extract.statementsInto((Block) s, $);
-      default:
-        $.add(s);
-        return $;
-    }
-  }
-  @SuppressWarnings("unchecked") public static List<IExtendedModifier> modifiers(final TypeDeclaration d) {
-    return d.modifiers();
-  }
-  public static List<IExtendedModifier> modifiers(final ASTNode ¢) {
-    if (¢ instanceof TypeDeclaration)
-      return modifiers((TypeDeclaration) ¢);
-    return new ArrayList<>();
   }
 }

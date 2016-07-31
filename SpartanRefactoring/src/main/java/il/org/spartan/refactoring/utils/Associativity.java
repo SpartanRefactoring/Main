@@ -1,7 +1,5 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.utils.Utils.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 /**
@@ -30,7 +28,7 @@ public enum Associativity {
   }
   private static boolean isRightToLeft(final int precedence) {
     assert Precedence.Is.legal(precedence);
-    return intIsIn(precedence, 2, 3, 14, 15);
+    return Funcs.intIsIn(precedence, 2, 3, 14, 15);
   }
   /**
    * Determine whether associativity is left-to-right
