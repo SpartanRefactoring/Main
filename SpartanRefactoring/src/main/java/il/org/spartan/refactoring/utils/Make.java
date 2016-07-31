@@ -15,7 +15,7 @@ import org.eclipse.jface.text.*;
  */
 public enum Make {
   /** Strategy for conversion into a compilation unit */
-  COMPILIATION_UNIT(ASTParser.K_COMPILATION_UNIT), //
+  COMPILATION_UNIT(ASTParser.K_COMPILATION_UNIT), //
   /** Strategy for conversion into an expression */
   EXPRESSION(ASTParser.K_EXPRESSION), //
   /** Strategy for conversion into an sequence of statements */
@@ -37,7 +37,7 @@ public enum Make {
       case EXPRESSION:
         return Make.EXPRESSION;
       case COMPILATION_UNIT:
-        return Make.COMPILIATION_UNIT;
+        return Make.COMPILATION_UNIT;
       case CLASS_BODY_DECLARATIONS:
         return Make.CLASS_BODY_DECLARATIONS;
       default:

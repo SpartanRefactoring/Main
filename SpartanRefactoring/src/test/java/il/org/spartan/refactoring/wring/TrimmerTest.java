@@ -2799,13 +2799,13 @@ import il.org.spartan.refactoring.utils.*;
     trimming("{;}").to("/* empty */    ");
   }
   @Test public void simplifyBlockComplexEmpty0A() {
-    trimming("{}").to("");
+    trimming("{}").to("/* empty */");
   }
   @Test public void simplifyBlockComplexEmpty0B() {
-    trimming("{;}").to("");
+    trimming("{;}").to("/* empty */");
   }
   @Test public void simplifyBlockComplexEmpty0C() {
-    trimming("{{;}}").to("");
+    trimming("{{;}}").to("/* empty */");
   }
   @Test public void simplifyBlockComplexEmpty0D() {
     trimming("{;;;{;;;}{;}}").to("/* empty */    ");
