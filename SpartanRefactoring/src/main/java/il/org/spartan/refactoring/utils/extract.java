@@ -299,12 +299,7 @@ public enum extract {
   public static MethodInvocation methodInvocation(final ASTNode n) {
     return asMethodInvocation(extract.expressionStatement(n).getExpression());
   }
-  public static List<IExtendedModifier> modifiers(final ASTNode ¢) {
-    return !(¢ instanceof TypeDeclaration) ? new ArrayList<>() : modifiers((TypeDeclaration) ¢);
-  }
-  @SuppressWarnings("unchecked") public static List<IExtendedModifier> modifiers(final TypeDeclaration d) {
-    return d.modifiers();
-  }
+
   private static Statement next(final Statement s, final List<Statement> ss) {
     for (int i = 0; i < ss.size() - 1; ++i)
       if (ss.get(i) == s)

@@ -15,18 +15,6 @@ import org.eclipse.jdt.core.dom.*;
 public enum expose {
   ;
   /**
-   * Expose the list of parameters in a {@link MethodDeclaration}
-   *
-   * @param ¢
-   *          JD
-   *
-   * @return result of method {@link MethodDeclaration#parameters} downcasted to
-   *         its correct type
-   */
-  @SuppressWarnings("unchecked") public static List<SingleVariableDeclaration> parameters(final MethodDeclaration ¢) {
-    return ¢.parameters();
-  }
-  /**
    * Expose the list of arguments in a {@link ClassInstanceCreation}
    *
    * @param c
@@ -55,6 +43,15 @@ public enum expose {
    */
   public static List<Expression> arguments(final SuperMethodInvocation i) {
     return MakeAST.expressions(i.arguments());
+  }
+  @SuppressWarnings("unchecked") public static List<BodyDeclaration> bodyDeclarations(final AbstractTypeDeclaration d) {
+    return d.bodyDeclarations();
+  }
+  @SuppressWarnings("unchecked") public static List<BodyDeclaration> bodyDeclarations(final AnonymousClassDeclaration d) {
+    return d.bodyDeclarations();
+  }
+  @SuppressWarnings("unchecked") public static List<CatchClause> catchClauses(TryStatement s) {
+    return s.catchClauses();
   }
   /**
    * Expose the list of extended operands in an {@link InfixExpression}
@@ -108,6 +105,25 @@ public enum expose {
   @SuppressWarnings("unchecked") public static List<Expression> initializers(final ForStatement s) {
     return s.initializers();
   }
+  @SuppressWarnings("unchecked") public static List<IExtendedModifier> modifiers(final VariableDeclarationStatement s) {
+    return s.modifiers();
+  }
+
+  @SuppressWarnings("unchecked") public static List<IExtendedModifier> modifiers(final BodyDeclaration d) {
+    return d.modifiers();
+  }
+  /**
+   * Expose the list of parameters in a {@link MethodDeclaration}
+   *
+   * @param ¢
+   *          JD
+   *
+   * @return result of method {@link MethodDeclaration#parameters} downcasted to
+   *         its correct type
+   */
+  @SuppressWarnings("unchecked") public static List<SingleVariableDeclaration> parameters(final MethodDeclaration ¢) {
+    return ¢.parameters();
+  }
   /**
    * Expose the list of resources contained in a {@link TryStatement}
    *
@@ -128,22 +144,10 @@ public enum expose {
   public static List<Statement> statements(final Block b) {
     return MakeAST.statements(b.statements());
   }
-  @SuppressWarnings("unchecked") public static List<BodyDeclaration> bodyDeclarations(final AbstractTypeDeclaration d) {
-    return d.bodyDeclarations();
-  }
-  @SuppressWarnings("unchecked") public static List<BodyDeclaration> bodyDeclarations(final AnonymousClassDeclaration d) {
-    return d.bodyDeclarations();
-  }
-  @SuppressWarnings("unchecked") public static List<IExtendedModifier> modifiers(final VariableDeclarationStatement s) {
-    return s.modifiers();
-  }
   @SuppressWarnings("unchecked") public static List<TagElement> tags(final Javadoc j) {
     return j.tags();
   }
   @SuppressWarnings("unchecked") public static List<ParameterizedType> typeArguments(final ParameterizedType t) {
     return t.typeArguments();
-  }
-  @SuppressWarnings("unchecked") public static List<CatchClause> catchClauses(TryStatement s) {
-    return s.catchClauses();
   }
 }
