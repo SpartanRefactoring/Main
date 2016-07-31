@@ -124,10 +124,10 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
       azzert.that(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
     }
   }
-  static public void fail(String message) {
-    if (message == null) {
+
+  static public void fail(final String message) {
+    if (message == null)
       throw new AssertionError();
-    }
     throw new AssertionError(message);
   }
   static public void fail() {

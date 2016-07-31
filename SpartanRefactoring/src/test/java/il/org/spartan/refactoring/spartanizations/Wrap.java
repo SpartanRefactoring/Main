@@ -4,8 +4,8 @@ import static il.org.spartan.utils.Utils.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
+import org.junit.Assert;
 
-import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 
 /**
@@ -55,7 +55,7 @@ public enum Wrap {
     for (final Wrap $ : WRAPS)
       if ($.contains($.intoCompilationUnit(codeFragment).toString(), codeFragment))
         return $;
-    azzert.fail("Cannot parse '\n" + codeFragment + "\n********* I tried the following options:" + options(codeFragment));
+    Assert.fail("Cannot parse '\n" + codeFragment + "\n********* I tried the following options:" + options(codeFragment));
     throw new RuntimeException();
   }
   private static String options(final String codeFragment) {

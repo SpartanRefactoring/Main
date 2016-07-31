@@ -5,7 +5,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-
 /**
  * An empty <code><b>enum</b></code> with a variety of <code>public
  * static</code> utility functions of reasonably wide use.

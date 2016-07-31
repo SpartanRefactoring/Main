@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
@@ -12,6 +13,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 import org.junit.*;
+import org.junit.Assert;
 import org.junit.runners.Parameterized.*;
 
 import il.org.spartan.*;
@@ -529,12 +531,12 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
         wringer.createRewrite(u, null).rewriteAST(d, null).apply(d);
         actual = d;
       } catch (final MalformedTreeException e) {
-        azzert.fail(e.getMessage());
+        Assert.fail(e.getMessage());
       } catch (final IllegalArgumentException e) {
         e.printStackTrace();
-        azzert.fail(e.getMessage());
+        Assert.fail(e.getMessage());
       } catch (final BadLocationException e) {
-        azzert.fail(e.getMessage());
+        Assert.fail(e.getMessage());
       }
       if (actual == null)
         return;
@@ -695,7 +697,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       if (expected.equals(peeled))
         return;
       if (input.equals(peeled))
-        azzert.fail("Nothing done on " + input);
+        Assert.fail("Nothing done on " + input);
       if (gist(peeled).equals(gist(input)))
         assertNotEquals("Wringing of " + input + " amounts to mere reformatting", gist(peeled), gist(input));
       assertSimilar(expected, peeled);
@@ -813,7 +815,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       if (expected.equals(peeled))
         return;
       if (input.equals(peeled))
-        azzert.fail("Nothing done on " + input);
+        Assert.fail("Nothing done on " + input);
       if (gist(peeled).equals(gist(input)))
         assertNotEquals("Wringing of " + input + " amounts to mere reformatting", gist(peeled), gist(input));
       assertSimilar(expected, peeled);
@@ -875,11 +877,11 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
           s.createRewrite(u, null).rewriteAST(d, null).apply(d);
           return d;
         } catch (final MalformedTreeException e) {
-          azzert.fail(e.getMessage());
+          Assert.fail(e.getMessage());
         } catch (final IllegalArgumentException e) {
-          azzert.fail(e.getMessage());
+          Assert.fail(e.getMessage());
         } catch (final BadLocationException e) {
-          azzert.fail(e.getMessage());
+          Assert.fail(e.getMessage());
         }
         return null;
       }

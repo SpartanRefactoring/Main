@@ -13,6 +13,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 import org.junit.*;
+import org.junit.Assert;
 import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
@@ -124,7 +125,7 @@ public class DeclarationIfAssginmentTest {
       if (expected.equals(peeled))
         return;
       if (from.equals(peeled))
-        azzert.fail("Nothing done on " + from);
+        Assert.fail("Nothing done on " + from);
       if (gist(peeled).equals(gist(from)))
         azzert.that("Wringing of " + from + " amounts to mere reformatting", gist(from), is(not(gist(peeled))));
       assertSimilar(expected, peeled);
