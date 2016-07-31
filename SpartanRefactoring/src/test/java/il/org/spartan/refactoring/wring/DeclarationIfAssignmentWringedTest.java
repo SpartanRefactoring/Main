@@ -5,7 +5,6 @@ import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.utils.Utils.*;
-import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -119,7 +118,7 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     if (expected.equals(peeled))
       return;
     if (input.equals(peeled))
-      fail("Nothing done on " + input);
+      azzert.fail("Nothing done on " + input);
     if (gist(peeled).equals(gist(input)))
       azzert.that("Wringing of " + input + " amounts to mere reformatting", gist(input), is(not(gist(peeled))));
     assertSimilar(expected, peeled);

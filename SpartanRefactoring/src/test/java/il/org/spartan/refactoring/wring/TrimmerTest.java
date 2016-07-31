@@ -2354,14 +2354,6 @@ import il.org.spartan.refactoring.utils.*;
         " public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass res = new BlahClass(6);   S.out.println(res.j);   return res; ")
             .to(" public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   S.out.println($.j);   return $; ");
   }
-  static public void fail(final String message) {
-    if (message == null)
-      throw new AssertionError();
-    throw new AssertionError(message);
-  }
-  static public void fail() {
-    fail(null);
-  }
   @Ignore @Test public void reanmeReturnVariableToDollar02() {
     trimming(
         " int res = blah.length();   if (blah.contains(0xDEAD))    return res * 2;   if (res % 2 ==0)    return ++res;   if (blah.startsWith(\"y\")) {    return y(res);   int x = res + 6;   if (x>1)    return res + x;   res -= 1;   return res; ")

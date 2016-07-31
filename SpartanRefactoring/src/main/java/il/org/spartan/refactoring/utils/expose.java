@@ -86,9 +86,7 @@ public enum expose {
    * @return a reference to the list of fragments in the argument
    */
   public static List<VariableDeclarationFragment> fragments(final VariableDeclarationExpression e) {
-    if (e == null)
-      return new ArrayList<>();
-    return MakeAST.fragments(e.fragments());
+    return e == null ? new ArrayList<>() : MakeAST.fragments(e.fragments());
   }
   /**
    * Expose the list of fragments in a {@link VariableDeclarationStatement}
