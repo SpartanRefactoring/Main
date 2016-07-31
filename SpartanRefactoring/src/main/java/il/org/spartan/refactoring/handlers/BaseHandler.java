@@ -50,7 +50,7 @@ public abstract class BaseHandler extends AbstractHandler {
     return PlatformUI.getWorkbench().getActiveWorkbenchWindow();
   }
   private static ICompilationUnit getCompilationUnit(final IEditorPart ep) {
-    return ep == null ? null : getCompilationUnit(ep.getEditorInput().getAdapter(IResource.class));
+    return ep == null ? null : getCompilationUnit((IResource)ep.getEditorInput().getAdapter(IResource.class));
   }
   private static ICompilationUnit getCompilationUnit(final IResource r) {
     return r == null ? null : JavaCore.createCompilationUnitFrom((IFile) r);

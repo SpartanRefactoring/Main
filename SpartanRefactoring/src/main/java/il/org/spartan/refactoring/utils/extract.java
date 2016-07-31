@@ -507,4 +507,5 @@ public enum extract {
   public static ThrowStatement throwStatement(final ASTNode n) {
     return asThrowStatement(extract.singleStatement(n));
   }
+
 }

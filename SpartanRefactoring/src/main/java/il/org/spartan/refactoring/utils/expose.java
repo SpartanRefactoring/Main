@@ -105,7 +105,7 @@ public enum expose {
    *          JD
    * @return a reference to the list of initializers contained in the argument
    */
-  @SuppressWarnings("unchecked") static List<Expression> initializers(final ForStatement s) {
+  @SuppressWarnings("unchecked") public static List<Expression> initializers(final ForStatement s) {
     return s.initializers();
   }
   /**
@@ -115,7 +115,7 @@ public enum expose {
    *          JD
    * @return a reference to the list of resources contained in the argument
    */
-  @SuppressWarnings("unchecked") static List<VariableDeclarationExpression> resources(final TryStatement s) {
+  @SuppressWarnings("unchecked") public static List<VariableDeclarationExpression> resources(final TryStatement s) {
     return s.resources();
   }
   /**
@@ -142,5 +142,8 @@ public enum expose {
   }
   @SuppressWarnings("unchecked") public static List<ParameterizedType> typeArguments(final ParameterizedType t) {
     return t.typeArguments();
+  }
+  @SuppressWarnings("unchecked") public static List<CatchClause> catchClauses(TryStatement s) {
+    return s.catchClauses();
   }
 }
