@@ -5,6 +5,7 @@ import static il.org.spartan.refactoring.utils.Restructure.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 
 import java.util.*;
+import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -19,39 +20,81 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2015-07-29
  */
 public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
-  @SuppressWarnings("unchecked") public static boolean safeBlockSimplification(final List<Statement> ss) {
-    final List<String> l = new ArrayList<>();
-    for (final Statement s : ss)
-      if (s instanceof VariableDeclarationStatement) {
-        for (final VariableDeclarationFragment f : (List<VariableDeclarationFragment>) ((VariableDeclarationStatement) s)
-            .fragments())
-          if (checkExistOrAdd(f.getName(), l))
-            return false;
-      } else if (s instanceof ForStatement) {
-        for (final VariableDeclarationFragment f : (List<VariableDeclarationFragment>) ((ForStatement) s).initializers())
-          if (checkExistOrAdd(f.getName(), l))
-            return false;
-      } else if (s instanceof TryStatement) {
-        for (final VariableDeclarationExpression e : (List<VariableDeclarationExpression>) ((TryStatement) s).resources())
-          for (final VariableDeclarationFragment f : (List<VariableDeclarationFragment>) e.fragments())
-            if (checkExistOrAdd(f.getName(), l))
-              return false;
-        for (final CatchClause c : (List<CatchClause>) ((TryStatement) s).catchClauses())
-          if (checkExistOrAdd(c.getException().getName(), l))
-            return false;
+  public static boolean hasHidings(final List<Statement> ss) {
+    return new Predicate<List<Statement>>() {
+      @Override public boolean test(List<Statement> ss) {
+        for (final Statement s : ss)
+          if (¢(s))
+            return true;
+        return false;
       }
-    return true;
-  }
-  static Statement reorganizeNestedStatement(final Statement s) {
-    final List<Statement> ss = extract.statements(s);
-    switch (ss.size()) {
-      case 0:
-        return s.getAST().newEmptyStatement();
-      case 1:
-        return duplicate(ss.get(0));
-      default:
-        return reorganizeStatement(s);
-    }
+
+      boolean ¢(CatchClause c) {
+        return ¢(c.getException());
+      }
+      boolean ¢(ForStatement ¢) {
+        return ¢(expose.initializers(¢));
+      }
+      boolean ¢(List<Expression> es) {
+        for (Expression e : es)
+          if (e instanceof VariableDeclarationExpression)
+            if (¢((VariableDeclarationExpression) e))
+              return true;
+        return false;
+      }
+      boolean ¢(final SimpleName ¢) {
+        return ¢(¢.getIdentifier());
+      }
+      boolean ¢(SingleVariableDeclaration d) {
+        return ¢(d.getName());
+      }
+      boolean ¢(Statement ¢) {
+        if (¢ instanceof VariableDeclarationStatement)
+          return ¢((VariableDeclarationStatement) ¢);
+        if (¢ instanceof ForStatement)
+          return ¢((ForStatement) ¢);
+        if (¢ instanceof TryStatement)
+          return ¢((TryStatement) ¢);
+        return false;
+      }
+      boolean ¢(final String ¢) {
+        if (dictionary.contains(¢))
+          return true;
+        dictionary.add(¢);
+        return false;
+      }
+      boolean ¢(TryStatement s) {
+        return (¢¢¢(expose.resources(s)) || ¢¢(expose.catchClauses(s)));
+      }
+      boolean ¢(VariableDeclarationExpression ¢) {
+        return ¢¢¢¢(expose.fragments(¢));
+      }
+      boolean ¢(VariableDeclarationFragment f) {
+        return ¢(f.getName());
+      }
+      boolean ¢(final VariableDeclarationStatement ds) {
+        return ¢¢¢¢(fragments(ds));
+      }
+      boolean ¢¢(List<CatchClause> cs) {
+        for (CatchClause c : cs)
+          if (¢(c))
+            return true;
+        return false;
+      }
+      boolean ¢¢¢(List<VariableDeclarationExpression> es) {
+        for (VariableDeclarationExpression e : es)
+          if (¢(e))
+            return true;
+        return false;
+      }
+      boolean ¢¢¢¢(List<VariableDeclarationFragment> fragments) {
+        for (VariableDeclarationFragment x : fragments)
+          if (¢(x))
+            return true;
+        return false;
+      }
+      final Set<String> dictionary = new HashSet<>();
+    }.test(ss);
   }
   private static boolean identical(final List<Statement> os1, final List<Statement> os2) {
     if (os1.size() != os2.size())
@@ -67,9 +110,23 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
     duplicateInto(ss, statements($));
     return $;
   }
+  static Statement reorganizeNestedStatement(final Statement s) {
+    final List<Statement> ss = extract.statements(s);
+    switch (ss.size()) {
+      case 0:
+        return s.getAST().newEmptyStatement();
+      case 1:
+        return duplicate(ss.get(0));
+      default:
+        return reorganizeStatement(s);
+    }
+  }
+  @Override String description(@SuppressWarnings("unused") final Block __) {
+    return "Simplify block";
+  }
   @Override Statement replacement(final Block b) {
     final List<Statement> ss = extract.statements(b);
-    if (identical(ss, statements(b)) || !safeBlockSimplification(ss))
+    if (identical(ss, statements(b)) || hasHidings(ss))
       return null;
     final ASTNode parent = b.getParent();
     if (!(parent instanceof Statement) || parent instanceof TryStatement)
@@ -86,17 +143,7 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
         return reorganizeNestedStatement(b);
     }
   }
-  @Override String description(@SuppressWarnings("unused") final Block __) {
-    return "Simplify block";
-  }
   @Override WringGroup wringGroup() {
     return WringGroup.REMOVE_SYNTACTIC_BAGGAGE;
-  }
-  private static boolean checkExistOrAdd(final SimpleName n, final List<String> l) {
-    final String s = n.getIdentifier();
-    if (l.contains(s))
-      return true;
-    l.add(s);
-    return false;
   }
 }
