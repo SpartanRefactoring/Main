@@ -4,10 +4,7 @@ import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
-
-import il.org.spartan.*;
 import il.org.spartan.refactoring.wring.*;
-import il.org.spartan.utils.*;
 
 import java.util.*;
 

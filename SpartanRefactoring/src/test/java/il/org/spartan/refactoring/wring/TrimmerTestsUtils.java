@@ -10,7 +10,6 @@ import il.org.spartan.refactoring.utils.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
-import org.junit.Assert;
 
 public class TrimmerTestsUtils {
   static class OperandToWring<N extends ASTNode> extends TrimmerTestsUtils.Operand {
@@ -79,7 +78,7 @@ public class TrimmerTestsUtils {
         final String wrap = w.on(get());
         final String unpeeled = TrimmerTestsUtils.apply(new Trimmer(), wrap);
         if (wrap.equals(unpeeled))
-          Assert.fail("Nothing done on " + get());
+          azzert.fail("Nothing done on " + get());
         final String peeled = w.off(unpeeled);
         if (peeled.equals(get()))
           azzert.that("No trimming of " + get(), peeled, is(not(get())));
@@ -94,7 +93,7 @@ public class TrimmerTestsUtils {
       final String wrap = w.on(get());
       final String unpeeled = TrimmerTestsUtils.apply(new Trimmer(), wrap);
       if (wrap.equals(unpeeled))
-        Assert.fail("Nothing done on " + get());
+        azzert.fail("Nothing done on " + get());
       final String peeled = w.off(unpeeled);
       if (peeled.equals(get()))
         azzert.that("No trimming of " + get(), peeled, is(not(get())));
@@ -138,7 +137,7 @@ public class TrimmerTestsUtils {
     final String wrap = wrapper.on(from);
     final String unpeeled = apply(ns, wrap);
     if (wrap.equals(unpeeled))
-      Assert.fail("Nothing done on " + from);
+      azzert.fail("Nothing done on " + from);
     final String peeled = wrapper.off(unpeeled);
     if (peeled.equals(from))
       azzert.that("No similification of " + from, peeled, is(not(from)));

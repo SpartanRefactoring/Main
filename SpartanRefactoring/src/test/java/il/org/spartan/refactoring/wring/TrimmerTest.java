@@ -3197,15 +3197,15 @@ import org.junit.runners.*;
         + "  String source = \"10\";\n" //
         + "  {\n" //
         + "    BigFraction c = properFormat.parse(source);\n" //
-        + "    Assert.azzert.notNull(c);\n" //
-        + "    Assert.assertEquals(BigInteger.TEN, c.getNumerator());\n" //
-        + "    Assert.assertEquals(BigInteger.ONE, c.getDenominator());\n" //
+        + "    azzert.notNull(c);\n" //
+        + "    azzert.assertEquals(BigInteger.TEN, c.getNumerator());\n" //
+        + "    azzert.assertEquals(BigInteger.ONE, c.getDenominator());\n" //
         + "  }\n" //
         + "  {\n" //
         + "    BigFraction c = improperFormat.parse(source);\n" //
-        + "    Assert.azzert.notNull(c);\n" //
-        + "    Assert.assertEquals(BigInteger.TEN, c.getNumerator());\n" //
-        + "    Assert.assertEquals(BigInteger.ONE, c.getDenominator());\n" //
+        + "    azzert.notNull(c);\n" //
+        + "    azzert.assertEquals(BigInteger.TEN, c.getNumerator());\n" //
+        + "    azzert.assertEquals(BigInteger.ONE, c.getDenominator());\n" //
         + "  }\n" //
         + "}").to("");
   }

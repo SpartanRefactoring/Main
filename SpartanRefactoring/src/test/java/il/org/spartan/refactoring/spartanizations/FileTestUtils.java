@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import static org.junit.Assert.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -101,7 +100,7 @@ public abstract class FileTestUtils {
     try {
       return Class.forName(name);
     } catch (final ClassNotFoundException e) {
-      fail(name + ": class not found. " + e.getMessage());
+      azzert.fail(name + ": class not found. " + e.getMessage());
       return null;
     }
   }
@@ -182,65 +181,7 @@ public abstract class FileTestUtils {
     abstract Object[] makeCase(final Spartanization s, final File d, final File f, final String name);
   }
 
-  /**
-   * java.lang.AssertionError:
-   * il.org.spartan.refacoring.spartanizations.ExtractMethod: class not found.
-   * il.org.spartan.refacoring.spartanizations.ExtractMethod at
-   * org.junit.Assert.fail(Assert.java:88) at
-   * il.org.spartan.refactoring.spartanizations.FileTestUtils.asClass(FileTestUtils
-   * .java:84) at il.org.spartan.refactoring.spartanizations.FileTestUtils.
-   * makeSpartanizationObject(FileTestUtils.java:41) at
-   * il.org.spartan.refactoring.spartanizations.FileTestUtils.
-   * makeSpartanizationObject(FileTestUtils.java:38) at
-   * il.org.spartan.refactoring.spartanizations.FileTestUtils$Files.go(
-   * FileTestUtils.java:161) at
-   * il.org.spartan.refactoring.spartanizations.FileTestUtils$Traverse.go(
-   * FileTestUtils.java:108) at
-   * il.org.spartan.refactoring.spartanizations.InOutTest.cases(InOutTest.java:85)
-   * at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) at
-   * sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:
-   * 62) at sun.reflect.DelegatingMethodAccessorImpl.invoke(
-   * DelegatingMethodAccessorImpl.java:43) at
-   * java.lang.reflect.Method.invoke(Method.java:497) at
-   * org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod
-   * .java:50) at
-   * org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.
-   * java:12) at
-   * org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.
-   * java:47) at
-   * org.junit.runners.Parameterized.allParameters(Parameterized.java:280) at
-   * org.junit.runners.Parameterized.<init>(Parameterized.java:248) at
-   * sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) at
-   * sun.reflect.NativeConstructorAccessorImpl.newInstance(
-   * NativeConstructorAccessorImpl.java:62) at
-   * sun.reflect.DelegatingConstructorAccessorImpl.newInstance(
-   * DelegatingConstructorAccessorImpl.java:45) at
-   * java.lang.reflect.Constructor.newInstance(Constructor.java:422) at
-   * org.junit.internal.builders.AnnotatedBuilder.buildRunner(AnnotatedBuilder.
-   * java:104) at org.junit.internal.builders.AnnotatedBuilder.runnerForClass(
-   * AnnotatedBuilder.java:86) at
-   * org.junit.runners.model.RunnerBuilder.safeRunnerForClass(RunnerBuilder.java
-   * :59) at
-   * org.junit.internal.builders.AllDefaultPossibilitiesBuilder.runnerForClass(
-   * AllDefaultPossibilitiesBuilder.java:26) at
-   * org.junit.runners.model.RunnerBuilder.safeRunnerForClass(RunnerBuilder.java
-   * :59) at
-   * org.junit.internal.requests.ClassRequest.getRunner(ClassRequest.java:33) at
-   * org.junit.internal.requests.SortingRequest.getRunner(SortingRequest.java:
-   * 21) at org.eclipse.jdt.internal.junit4.runner.JUnit4TestLoader.
-   * createUnfilteredTest(JUnit4TestLoader.java:84) at
-   * org.eclipse.jdt.internal.junit4.runner.JUnit4TestLoader.createTest(
-   * JUnit4TestLoader.java:70) at
-   * org.eclipse.jdt.internal.junit4.runner.JUnit4TestLoader.loadTests(
-   * JUnit4TestLoader.java:43) at
-   * org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(
-   * RemoteTestRunner.java:444) at
-   * org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(
-   * RemoteTestRunner.java:675) at
-   * org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner
-   * .java:382) at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(
-   * RemoteTestRunner.java:192)
-   */
+
   /**
    * An abstract class representing the concept of traversing the
    * {@link #location} while generating test cases.
