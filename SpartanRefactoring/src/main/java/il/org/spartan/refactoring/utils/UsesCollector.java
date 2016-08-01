@@ -239,7 +239,7 @@ class UnsafeUsesCollector extends UsesCollector {
       p = p.getParent();
     }
   }
-  private boolean unsafe(final ASTNode n) {
+  private static boolean unsafe(final ASTNode n) {
     return n instanceof ClassInstanceCreation;
   }
 }
