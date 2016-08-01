@@ -153,7 +153,7 @@ public interface Utils {
    * @return TODO document return type
    */
   public static <T> FoundHandleForT<T> found(final T t) {
-    return new FoundHandleForT<>(t);
+    return new FoundHandleForT<T>(t);
   }
   /**
    * Determine if an item can be found in a list of values

@@ -13,6 +13,22 @@ import org.junit.*;
  * @since 2015-07-18 */
 @SuppressWarnings({ "javadoc", "null" })//
 public class azzert extends org.junit.Assert {
+  public static class Asserter {
+    public @NonNull Asserter andAye(final boolean claim) {
+      return andAye("", claim);
+    }
+    public Asserter andAye(final String reason, final boolean claim) {
+      azzert.that(reason, claim, is(true));
+      return this;
+    }
+    public Asserter andNay(final boolean claim) {
+      return andNay("", claim);
+    }
+    public Asserter andNay(final String reason, final boolean claim) {
+      azzert.that(reason, claim, is(false));
+      return this;
+    }
+  }
   public static <T> Matcher<T> allOf(final java.lang.Iterable<Matcher<? super T>> matchers) {
     return AllOf.<T> allOf(matchers);
   }
@@ -73,6 +89,9 @@ public class azzert extends org.junit.Assert {
   public static void assertEquals(final String reason, final int i1, final int i2) {
     assertThat(reason, box.it(i1), CoreMatchers.equalTo(box.it(i2)));
   }
+  public static void assertFalse(final boolean b) {
+    that("", Boolean.valueOf(b), is(Boolean.FALSE));
+  }
   public static void assertFalse(final String s, final boolean b) {
     that(s, b, is(Boolean.FALSE));
   }
@@ -82,14 +101,17 @@ public class azzert extends org.junit.Assert {
   public static void assertNotEquals(final String reason, final Object o1, final Object o2) {
     assertThat(reason, o1, CoreMatchers.not(o2));
   }
-  public static void assertFalse(final boolean b) {
-    that("", Boolean.valueOf(b), is(Boolean.FALSE));
-  }
   public static void assertTrue(final boolean b) {
     that("", Boolean.valueOf(b), is(Boolean.TRUE));
   }
   public static void assertTrue(final String s, final boolean b) {
     that(s, Boolean.valueOf(b), is(Boolean.TRUE));
+  }
+  public static Asserter aye(final boolean claim) {
+    return aye("", claim);
+  }
+  public static Asserter aye(final String reason, final boolean claim) {
+    return new Asserter().andAye(reason, claim);
   }
   public static <LHS> CombinableMatcher.@Nullable CombinableBothMatcher<LHS> both(final Matcher<? super LHS> matcher) {
     return CombinableMatcher.<LHS> both(matcher);
@@ -135,6 +157,15 @@ public class azzert extends org.junit.Assert {
   }
   public static <U> Matcher<java.lang.Iterable<U>> everyItem(final Matcher<U> itemMatcher) {
     return Every.<U> everyItem(itemMatcher);
+  }
+  public static void fail() {
+    Assert.fail();
+  }
+  public static void fail(String s) {
+    Assert.fail(s);
+  }
+  public static void falze(final boolean b) {
+    assertFalse("", b);
   }
   @Factory public static Matcher<@Nullable Boolean> greaterThan(final boolean b) {
     return OrderingComparison.greaterThan(Boolean.valueOf(b));
@@ -232,8 +263,11 @@ public class azzert extends org.junit.Assert {
   public static <T> Matcher<T> isA(final java.lang.Class<T> type) {
     return Is.<T> isA(type);
   }
-  @SuppressWarnings("unused") public static final Wrapper<String> iz(final String s) {
-    return new Wrapper<>(s);
+  public static void isNull(final @Nullable Object o) {
+    that(o, nullValue());
+  }
+  public static final Wrapper<String> iz(final String s) {
+    return new Wrapper<String>(s);
   }
   @Factory public static Matcher<@Nullable Boolean> lessThan(final boolean b) {
     return OrderingComparison.lessThan(Boolean.valueOf(b));
@@ -282,6 +316,12 @@ public class azzert extends org.junit.Assert {
   }
   @Factory public static Matcher<@Nullable Short> lessThanOrEqualTo(final short s) {
     return OrderingComparison.lessThanOrEqualTo(Short.valueOf(s));
+  }
+  public static Asserter nay(final boolean claim) {
+    return nay("", claim);
+  }
+  public static @NonNull Asserter nay(final String reason, final boolean claim) {
+    return new Asserter().andNay(reason, claim);
   }
   public static void nonNulls(final @Nullable Iterable<@Nullable Object> os) {
     azzert.notNull(os);
@@ -336,15 +376,6 @@ public class azzert extends org.junit.Assert {
     notNull(os);
     for (final @Nullable Object o : os)
       notNull("" + os, o);
-  }
-  public static void isNull(final @Nullable Object o) {
-    that(o, nullValue());
-  }
-  public static void fail() {
-    Assert.fail();
-  }
-  public static void fail(String s) {
-    Assert.fail(s);
   }
   public static Matcher<@Nullable Object> nullValue() {
     return IsNull.nullValue();
@@ -409,50 +440,19 @@ public class azzert extends org.junit.Assert {
   public static void that(final String reason, final long l, final Matcher<? super @Nullable Long> m) {
     assertThat(reason, Long.valueOf(l), m);
   }
+
   public static void that(final String reason, final short s, final Matcher<? super Short> m) {
     assertThat(reason, Short.valueOf(s), m);
   }
+
   public static <@Nullable T> void that(final String reason, final @Nullable T actual, final Matcher<? super @Nullable T> matcher) {
     assertThat(reason, actual, matcher);
   }
-  public static Asserter aye(final boolean claim) {
-    return aye("", claim);
-  }
-  public static Asserter aye(final String reason, final boolean claim) {
-    return new Asserter().andAye(reason, claim);
-  }
-  public static Asserter nay(final boolean claim) {
-    return nay("", claim);
-  }
-  public static @NonNull Asserter nay(final String reason, final boolean claim) {
-    return new Asserter().andNay(reason, claim);
-  }
-
-  public static class Asserter {
-    public @NonNull Asserter andAye(final boolean claim) {
-      return andAye("", claim);
-    }
-    public Asserter andNay(final boolean claim) {
-      return andNay("", claim);
-    }
-    public Asserter andNay(final String reason, final boolean claim) {
-      azzert.that(reason, claim, is(false));
-      return this;
-    }
-    public Asserter andAye(final String reason, final boolean claim) {
-      azzert.that(reason, claim, is(true));
-      return this;
-    }
-  }
-
   public static <@Nullable T> void that(final @Nullable T actual, final Matcher<? super @Nullable T> matcher) {
     assertThat("", actual, matcher);
   }
   public static <T> Matcher<T> theInstance(final T target) {
     return IsSame.<T> theInstance(target);
-  }
-  public static void falze(final boolean b) {
-    assertFalse("", b);
   }
   /** Assert that an integer is zero
    * @param i JD */
