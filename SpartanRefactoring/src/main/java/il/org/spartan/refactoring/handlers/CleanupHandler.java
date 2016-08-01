@@ -29,7 +29,7 @@ public class CleanupHandler extends BaseHandler {
 
   static final int MAX_PASSES = 20;
 
-  @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent e) throws ExecutionException {
+  @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) throws ExecutionException {
     final StringBuilder message = new StringBuilder();
     final ICompilationUnit currentCompilationUnit = currentCompilationUnit();
     final IJavaProject javaProject = currentCompilationUnit.getJavaProject();

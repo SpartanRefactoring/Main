@@ -140,9 +140,9 @@ import org.eclipse.jdt.core.dom.*;
       return true;
     }
     for (final String a : args) {
-      if (a.equals("-N"))
+      if ("-N".equals(a))
         optDoNotOverwrite = true;
-      if (a.equals("-E"))
+      if ("-E".equals(a))
         optIndividualStatistics = true;
       try {
         if (a.startsWith("-C"))
@@ -150,11 +150,11 @@ import org.eclipse.jdt.core.dom.*;
       } catch (final NumberFormatException e) {
         // Ignore
       }
-      if (a.equals("-V"))
+      if ("-V".equals(a))
         optVerbose = true;
-      if (a.equals("-l"))
+      if ("-l".equals(a))
         optStatsLines = true;
-      if (a.equals("-r"))
+      if ("-r".equals(a))
         optStatsChanges = true;
       if (!a.startsWith("-"))
         optPath = a;

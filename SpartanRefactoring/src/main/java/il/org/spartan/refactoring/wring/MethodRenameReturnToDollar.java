@@ -47,7 +47,7 @@ public class MethodRenameReturnToDollar extends Wring<MethodDeclaration> {
 abstract class AbstractRenamePolicy {
   private static boolean hasDollar(final List<SimpleName> ns) {
     for (final SimpleName n : ns)
-      if (n.getIdentifier().equals("$"))
+      if ("$".equals(n.getIdentifier()))
         return true;
     return false;
   }
