@@ -612,7 +612,7 @@ public interface Cookbook {
           azzert.aye(a.dependents.contains(aPower03));
         }
         @Test public void sessionD14() {
-          assertFalse(a.dependents.contains(aPower05));
+          azzert.nay(a.dependents.contains(aPower05));
         }
         @Test public void sessionD15() {
           azzert.aye(a.dependents.contains(aPower17NullSafe));
@@ -776,11 +776,11 @@ public interface Cookbook {
         }
         @Test public void sessionE06() {
           a.set(2);
-          assertFalse("aPower5 should not be updated! (recursive dependency on a)", aPower05.updated());
+          azzert.nay("aPower5 should not be updated! (recursive dependency on a)", aPower05.updated());
         }
         @Test public void sessionF01() {
           a.set(11);
-          assertFalse(aPower02.updated());
+          azzert.nay(aPower02.updated());
           azzert.that(aPower02.get(), is(121));
           azzert.aye(aPower02.updated());
           aPower02.set(0xDADA);

@@ -577,8 +577,8 @@ public interface Utils {
     @Test public void addAllTypical() {
       final Set<String> ss = new HashSet<>();
       accumulate.to(ss).addAll(as.set("A", "B"), null, as.set("B", "C", "D"));
-      assertFalse(ss.contains("E"));
-      assertFalse(ss.contains(null));
+      azzert.nay(ss.contains("E"));
+      azzert.nay(ss.contains(null));
       assertEquals(4, ss.size());
       for (final String s : ss)
         azzert.aye("", ss.contains(s));
@@ -586,8 +586,8 @@ public interface Utils {
     @Test public void addTypical() {
       final Set<String> ss = new HashSet<>();
       accumulate.to(ss).add(null, "A", null, "B", "B", null, "C", "D", null);
-      assertFalse(ss.contains("E"));
-      assertFalse(ss.contains(null));
+      azzert.nay(ss.contains("E"));
+      azzert.nay(ss.contains(null));
       assertEquals(4, ss.size());
       for (final String s : ss)
         azzert.aye("", ss.contains(s));
@@ -644,4 +644,5 @@ public interface Utils {
       assertArrayEquals(intToIntegers(1, 29, 60), $);
     }
   }
+
 }

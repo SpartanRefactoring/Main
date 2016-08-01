@@ -464,4 +464,29 @@ public class azzert extends org.junit.Assert {
   public static void zero(final long l) {
     assertEquals(0, l);
   }
+
+  @SuppressWarnings("unused")
+  public static class Inline {
+    private static <T> void assertEquals(T t1, T t2) {
+      azzert.that(t2, is(t1));
+    }
+    private static <T> void assertEquals(String reason, T t1, T t2) {
+      azzert.that(reason, t2, is(t1));
+    }
+    private static <T> void assertNotEquals(T t1, T t2) {
+      azzert.that(t2, is(t1));
+    }
+    private static void assertFalse(String reason, boolean b) {
+      azzert.nay(reason, b);
+    }
+    private static void assertFalse(boolean b) {
+      azzert.nay(b);
+    }
+    private static void assertTrue(String reason, boolean b) {
+      azzert.aye(reason, b);
+    }
+    private static void assertTrue(boolean b) {
+      azzert.aye(b);
+    }
+  }
 }

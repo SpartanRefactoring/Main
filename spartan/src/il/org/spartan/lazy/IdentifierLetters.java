@@ -1,6 +1,8 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.lazy;
 
+import il.org.spartan.*;
+
 @SuppressWarnings("javadoc")
 public class IdentifierLetters {
   public static void main(String[] args) {
@@ -9,6 +11,6 @@ public class IdentifierLetters {
         System.out.println("\t" + hex(i) + "\t" + (char) i + " ");
   }
   static String hex(int i) {
-    return String.format("U+%4X", Integer.valueOf(i), i);
+    return String.format("U+%4X", Integer.valueOf(i), box.it(i));
   }
 }
