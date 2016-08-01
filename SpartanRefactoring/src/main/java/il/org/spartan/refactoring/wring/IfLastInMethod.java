@@ -2,13 +2,12 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.utils.Utils.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
+import il.org.spartan.refactoring.utils.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
-import il.org.spartan.refactoring.utils.*;
 
 /**
  * A {@link Wring} to convert <code><b>if</b> (a) { f(); g(); }</code> into

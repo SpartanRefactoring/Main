@@ -114,7 +114,7 @@ public enum Utils {
    *          an unknown number of objects
    * @return true if one of the objects is a null or false otherwise
    */
-  public static boolean hasNull(final Object... os) {
+  public static boolean hasNulls(final Object... os) {
     for (final Object o : os)
       if (o == null)
         return true;

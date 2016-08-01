@@ -1,13 +1,12 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
+import il.org.spartan.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-
-import il.org.spartan.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) public class MethodExplorerTest {
   @Test public void localVariablesCatchExpression() {
