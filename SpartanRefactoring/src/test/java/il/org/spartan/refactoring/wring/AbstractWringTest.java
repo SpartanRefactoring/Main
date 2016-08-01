@@ -17,7 +17,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 import org.junit.*;
-import org.junit.Assert;
 import org.junit.runners.Parameterized.Parameter;
 
 /**
@@ -530,12 +529,12 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
         wringer.createRewrite(u, null).rewriteAST(d, null).apply(d);
         actual = d;
       } catch (final MalformedTreeException e) {
-        Assert.fail(e.getMessage());
+        azzert.fail(e.getMessage());
       } catch (final IllegalArgumentException e) {
         e.printStackTrace();
-        Assert.fail(e.getMessage());
+        azzert.fail(e.getMessage());
       } catch (final BadLocationException e) {
-        Assert.fail(e.getMessage());
+        azzert.fail(e.getMessage());
       }
       if (actual == null)
         return;
@@ -696,7 +695,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       if (expected.equals(peeled))
         return;
       if (input.equals(peeled))
-        Assert.fail("Nothing done on " + input);
+        azzert.fail("Nothing done on " + input);
       if (gist(peeled).equals(gist(input)))
         assertNotEquals("Wringing of " + input + " amounts to mere reformatting", gist(peeled), gist(input));
       assertSimilar(expected, peeled);
@@ -814,7 +813,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       if (expected.equals(peeled))
         return;
       if (input.equals(peeled))
-        Assert.fail("Nothing done on " + input);
+        azzert.fail("Nothing done on " + input);
       if (gist(peeled).equals(gist(input)))
         assertNotEquals("Wringing of " + input + " amounts to mere reformatting", gist(peeled), gist(input));
       assertSimilar(expected, peeled);
@@ -876,11 +875,11 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
           s.createRewrite(u, null).rewriteAST(d, null).apply(d);
           return d;
         } catch (final MalformedTreeException e) {
-          Assert.fail(e.getMessage());
+          azzert.fail(e.getMessage());
         } catch (final IllegalArgumentException e) {
-          Assert.fail(e.getMessage());
+          azzert.fail(e.getMessage());
         } catch (final BadLocationException e) {
-          Assert.fail(e.getMessage());
+          azzert.fail(e.getMessage());
         }
         return null;
       }
