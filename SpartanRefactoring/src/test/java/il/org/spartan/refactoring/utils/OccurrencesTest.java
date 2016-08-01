@@ -1,15 +1,17 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import il.org.spartan.*;
-import il.org.spartan.refactoring.spartanizations.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
+
+import il.org.spartan.*;
+import il.org.spartan.refactoring.spartanizations.*;
 
 /**
  * @author Yossi Gil

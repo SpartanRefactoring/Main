@@ -3,14 +3,15 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
  * A {@link Wring} that abbreviates the name of a method parameter that is a
@@ -36,7 +37,7 @@ public class SingleVariableDeclarationAbbreviation extends Wring<SingleVariableD
     if (exclude != null)
       exclude.exclude(m);
     final SimpleName oldName = d.getName();
-    final String newName = Funcs.shortName(d.getType()) + pluralVariadic(d);
+    final String newName = spartan.shorten(d.getType()) + pluralVariadic(d);
     return new Rewrite("Rename parameter " + oldName + " to " + newName + " in method " + m.getName().getIdentifier(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         rename(oldName, d.getAST().newSimpleName(newName), m, r, g);
@@ -59,22 +60,22 @@ public class SingleVariableDeclarationAbbreviation extends Wring<SingleVariableD
     };
   }
   private static boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m) {
-    if (Funcs.shortName(d.getType()) == null)
+    if (spartan.shorten(d.getType()) == null)
       return false;
     final MethodExplorer e = new MethodExplorer(m);
     for (final SimpleName n : e.localVariables())
-      if (n.getIdentifier().equals(Funcs.shortName(d.getType())))
+      if (n.getIdentifier().equals(spartan.shorten(d.getType())))
         return false;
     for (final SingleVariableDeclaration n : parameters(m))
-      if (n.getName().getIdentifier().equals(Funcs.shortName(d.getType())))
+      if (n.getName().getIdentifier().equals(spartan.shorten(d.getType())))
         return false;
-    return !m.getName().getIdentifier().equalsIgnoreCase(Funcs.shortName(d.getType()));
+    return !m.getName().getIdentifier().equalsIgnoreCase(spartan.shorten(d.getType()));
   }
   private static boolean suitable(final SingleVariableDeclaration d) {
     return new JavaTypeNameParser(d.getType().toString()).isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
   }
   private static boolean isShort(final SingleVariableDeclaration d) {
-    final String n = Funcs.shortName(d.getType());
+    final String n = spartan.shorten(d.getType());
     return n != null && (n + pluralVariadic(d)).equals(d.getName().getIdentifier());
   }
   private static String pluralVariadic(final SingleVariableDeclaration d) {

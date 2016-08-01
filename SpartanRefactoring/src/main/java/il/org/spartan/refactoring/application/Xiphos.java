@@ -1,11 +1,6 @@
 package il.org.spartan.refactoring.application;
 
 import static il.org.spartan.external.External.Introspector.*;
-import il.org.spartan.external.*;
-import il.org.spartan.files.*;
-import il.org.spartan.misc.*;
-import il.org.spartan.refactoring.handlers.*;
-import il.org.spartan.utils.*;
 
 import java.io.*;
 import java.util.*;
@@ -14,6 +9,12 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.external.*;
+import il.org.spartan.files.*;
+import il.org.spartan.misc.*;
+import il.org.spartan.refactoring.handlers.*;
+import il.org.spartan.utils.*;
 
 /**
  * Command line version of this plug-in

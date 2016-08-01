@@ -39,7 +39,6 @@ public class IfAssignToFooElseAssignToFooTest {
     azzert.that(compatible(then, elze), is(true));
     azzert.that(WRING.scopeIncludes(s), is(true));
   }
-  
   @Test public void checkCompatability() {
     final Assignment a1 = extract.assignment(Into.s("x=a1;"));
     final Assignment a2 = extract.assignment(Into.s("x=a2;"));

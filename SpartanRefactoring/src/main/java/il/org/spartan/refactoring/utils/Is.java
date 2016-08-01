@@ -4,12 +4,13 @@ import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
-import il.org.spartan.misc.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.Operator;
+import org.eclipse.jdt.core.dom.InfixExpression.*;
+
+import il.org.spartan.misc.*;
 
 /**
  * An empty <code><b>enum</b></code> for fluent programming. The name should say

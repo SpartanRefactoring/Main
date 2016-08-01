@@ -3,9 +3,10 @@ package il.org.spartan.refactoring.utils;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
-import il.org.spartan.*;
 
 import org.junit.*;
+
+import il.org.spartan.*;
 
 /**
  * Test class for class {@link Is}
