@@ -42,7 +42,7 @@ import org.eclipse.text.edits.*;
    */
   public static void assertSimilar(final String expected, final String actual) {
     if (!expected.equals(actual))
-      assertEquals(Wrap.essence(expected), Wrap.essence(actual));
+      azzert.that(Wrap.essence(actual), is(Wrap.essence(expected)));
   }
   /**
    * Convert a given {@link String} into an {@link Statement}, or fail the
@@ -75,10 +75,10 @@ import org.eclipse.text.edits.*;
   }
   static void assertNoOpportunity(final Spartanization s, final String from) {
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
-    assertEquals(u.toString(), 0, TrimmerTestsUtils.countOpportunities(s, u));
+    azzert.that(u.toString(), TrimmerTestsUtils.countOpportunities(s, u), is(0));
   }
   static void assertNotEvenSimilar(final String expected, final String actual) {
-    assertNotEquals(gist(expected), gist(actual));
+    azzert.that(gist(actual), is(gist(expected)));
   }
   static void assertOneOpportunity(final Spartanization s, final String from) {
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);

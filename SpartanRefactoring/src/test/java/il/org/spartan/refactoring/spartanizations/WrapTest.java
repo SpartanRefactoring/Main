@@ -29,7 +29,7 @@ import org.junit.*;
         + "}"), is(Wrap.Statement));
   }
   @Test public void essenceTest() {
-    assertEquals(essence("if (b) {\n /* empty */; \n} // no else \n throw new Exception();\n"), "if(b){;}throw new Exception();");
+    azzert.that("if(b){;}throw new Exception();", is(essence("if (b) {\n /* empty */; \n} // no else \n throw new Exception();\n")));
   }
   @Test public void expression() {
     azzert.that(Wrap.Expression.off(Wrap.Expression.on("a+b")), is("a+b"));
@@ -82,7 +82,7 @@ import org.junit.*;
     azzert.that(Wrap.Method.off(Wrap.Method.on("int f() { return a; }")), is("int f() { return a; }"));
   }
   @Test public void offDivision() {
-    assertEquals(Wrap.Expression.off(Wrap.Expression.on("a/b")), "a/b");
+    azzert.that("a/b", is(Wrap.Expression.off(Wrap.Expression.on("a/b"))));
   }
   @Test public void removeComments() {
     similar(Wrap.removeComments("" + "if (b) {\n" + " /* empty */" + "} else {\n" + " throw new Exception();\n" + "}"),
@@ -92,6 +92,6 @@ import org.junit.*;
     azzert.that(Wrap.Statement.off(Wrap.Statement.on("int a;")), is("int a;"));
   }
   private void similar(final String s1, final String s2) {
-    assertEquals(essence(s1), essence(s2));
+    azzert.that(essence(s2), is(essence(s1)));
   }
 }
