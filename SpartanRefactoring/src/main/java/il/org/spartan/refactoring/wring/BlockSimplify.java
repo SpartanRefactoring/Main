@@ -47,13 +47,8 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
         return ¢(d.getName());
       }
       boolean ¢(Statement ¢) {
-        if (¢ instanceof VariableDeclarationStatement)
-          return ¢((VariableDeclarationStatement) ¢);
-        if (¢ instanceof ForStatement)
-          return ¢((ForStatement) ¢);
-        if (¢ instanceof TryStatement)
-          return ¢((TryStatement) ¢);
-        return false;
+        return ¢ instanceof VariableDeclarationStatement ? ¢((VariableDeclarationStatement) ¢)
+            : ¢ instanceof ForStatement ? ¢((ForStatement) ¢) : ¢ instanceof TryStatement && ¢((TryStatement)¢);
       }
       boolean ¢(final String ¢) {
         if (dictionary.contains(¢))
@@ -70,8 +65,8 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
       boolean ¢(VariableDeclarationFragment f) {
         return ¢(f.getName());
       }
-      boolean ¢(final VariableDeclarationStatement ds) {
-        return ¢¢¢¢(fragments(ds));
+      boolean ¢(final VariableDeclarationStatement s) {
+        return ¢¢¢¢(fragments(s));
       }
       boolean ¢¢(List<CatchClause> cs) {
         for (CatchClause c : cs)
@@ -85,8 +80,8 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
             return true;
         return false;
       }
-      boolean ¢¢¢¢(List<VariableDeclarationFragment> fragments) {
-        for (VariableDeclarationFragment x : fragments)
+      boolean ¢¢¢¢(List<VariableDeclarationFragment> fs) {
+        for (VariableDeclarationFragment x : fs)
           if (¢(x))
             return true;
         return false;

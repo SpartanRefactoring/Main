@@ -60,7 +60,7 @@ public class PluginPreferencesResources {
       return label;
     }
     public boolean isEnabled() {
-      return Plugin.getDefault() == null || Plugin.getDefault().getPreferenceStore().getString(id).equals("on");
+      return Plugin.getDefault() == null || "on".equals(Plugin.getDefault().getPreferenceStore().getString(id));
     }
   }
 }

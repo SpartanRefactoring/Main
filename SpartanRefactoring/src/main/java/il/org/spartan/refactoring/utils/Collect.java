@@ -54,8 +54,8 @@ public enum Collect {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
-        for (final ASTNode n : ns)
-          n.accept(definitionsCollector($, name));
+        for (final ASTNode ¢ : ns)
+          ¢.accept(definitionsCollector($, name));
         return $;
       }
     };
@@ -64,8 +64,8 @@ public enum Collect {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
-        for (final ASTNode n : ns)
-          n.accept(declarationsCollector($, name));
+        for (final ASTNode ¢ : ns)
+          ¢.accept(declarationsCollector($, name));
         return $;
       }
     };
@@ -74,8 +74,8 @@ public enum Collect {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
-        for (final ASTNode n : ns)
-          n.accept(new UsesCollectorIgnoreDefinitions($, name));
+        for (final ASTNode ¢ : ns)
+          ¢.accept(new UsesCollectorIgnoreDefinitions($, name));
         return $;
       }
     };
@@ -84,8 +84,8 @@ public enum Collect {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
-        for (final ASTNode n : ns)
-          n.accept(new UsesCollector($, name));
+        for (final ASTNode ¢ : ns)
+         ¢.accept(new UsesCollector($, name));
         return $;
       }
     };
@@ -94,8 +94,8 @@ public enum Collect {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
-        for (final ASTNode n : ns)
-          n.accept(new UnsafeUsesCollector($, name));
+        for (final ASTNode ¢ : ns)
+          ¢.accept(new UnsafeUsesCollector($, name));
         return $;
       }
     };
