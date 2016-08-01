@@ -1,15 +1,15 @@
 package il.org.spartan.refactoring.wring;
 
-import il.org.spartan.refactoring.wring.AbstractWringTest.OutOfScope;
-import il.org.spartan.utils.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.runners.Parameterized.*;
+
+import il.org.spartan.refactoring.wring.AbstractWringTest.*;
+import il.org.spartan.utils.*;
 
 /**
  * Unit tests for {@link Wrings#ADDITION_SORTER}.

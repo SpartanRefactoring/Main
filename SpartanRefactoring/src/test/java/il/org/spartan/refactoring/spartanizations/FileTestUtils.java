@@ -1,10 +1,10 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import il.org.spartan.*;
-import il.org.spartan.refactoring.utils.*;
-
 import java.io.*;
 import java.util.*;
+
+import il.org.spartan.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
  * An abstract representation of our test suite, which is represented in
@@ -180,7 +180,6 @@ public abstract class FileTestUtils {
     }
     abstract Object[] makeCase(final Spartanization s, final File d, final File f, final String name);
   }
-
 
   /**
    * An abstract class representing the concept of traversing the

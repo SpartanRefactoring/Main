@@ -1,26 +1,28 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.utils.Utils.*;
 import static il.org.spartan.idiomatic.*;
+import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
-import il.org.spartan.refactoring.wring.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.Operator;
+import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
+
+import il.org.spartan.refactoring.wring.*;
 
 /**
  * Useful Functions
  */
 public enum Funcs {
   ;
-  public static AbstractTypeDeclaration asAbstractTypeDeclaration(ASTNode n) {
-    return eval(()->((AbstractTypeDeclaration) n)).when(n instanceof AbstractTypeDeclaration);
+  private static Map<Operator, Operator> conjugate = makeConjugates();
+  public static AbstractTypeDeclaration asAbstractTypeDeclaration(final ASTNode n) {
+    return eval(() -> ((AbstractTypeDeclaration) n)).when(n instanceof AbstractTypeDeclaration);
   }
   /**
    * Convert an {@link Expression} into {@link InfixExpression} whose operator
@@ -45,6 +47,9 @@ public enum Funcs {
    */
   public static Assignment asAssignment(final ASTNode $) {
     return !is($, ASSIGNMENT) ? null : (Assignment) $;
+  }
+  private static int asBit(final boolean b) {
+    return b ? 1 : 0;
   }
   /**
    * Convert, is possible, an {@link ASTNode} to a {@link Block}
@@ -80,6 +85,16 @@ public enum Funcs {
    */
   public static InfixExpression asComparison(final Expression e) {
     return !(e instanceof InfixExpression) ? null : asComparison((InfixExpression) e);
+  }
+  private static InfixExpression asComparison(final InfixExpression e) {
+    return in(e.getOperator(), //
+        GREATER, //
+        GREATER_EQUALS, //
+        LESS, //
+        LESS_EQUALS, //
+        EQUALS, //
+        NOT_EQUALS //
+    ) ? e : null;
   }
   /**
    * Convert, is possible, an {@link ASTNode} to a {@link ConditionalExpression}
@@ -156,7 +171,7 @@ public enum Funcs {
    *         <code><b>null</b></code> if no such down-cast is possible..
    */
   public static MethodDeclaration asMethodDeclaration(final ASTNode $) {
-    return eval(()->((MethodDeclaration) $)).when($ instanceof MethodDeclaration);
+    return eval(() -> ((MethodDeclaration) $)).when($ instanceof MethodDeclaration);
   }
   /**
    * Down-cast, if possible, to {@link MethodInvocation}
@@ -181,6 +196,9 @@ public enum Funcs {
   public static PrefixExpression asNot(final Expression e) {
     return !(e instanceof PrefixExpression) ? null : asNot(asPrefixExpression(e));
   }
+  static PrefixExpression asNot(final PrefixExpression e) {
+    return NOT.equals(e.getOperator()) ? e : null;
+  }
   /**
    * Down-cast, if possible, to {@link InfixExpression}
    *
@@ -190,7 +208,7 @@ public enum Funcs {
    *         <code><b>null</b></code> if no such down-casting is possible.
    */
   public static PostfixExpression asPostfixExpression(final ASTNode n) {
-    return eval(()->(PostfixExpression) n).when(n instanceof PostfixExpression);
+    return eval(() -> (PostfixExpression) n).when(n instanceof PostfixExpression);
   }
   /**
    * Down-cast, if possible, to {@link PrefixExpression}
@@ -201,7 +219,7 @@ public enum Funcs {
    *         <code><b>null</b></code> if no such down-casting is possible.
    */
   public static PrefixExpression asPrefixExpression(final ASTNode n) {
-    return eval(()->(PrefixExpression) n).when(n instanceof PrefixExpression);
+    return eval(() -> (PrefixExpression) n).when(n instanceof PrefixExpression);
   }
   /**
    * @param n
@@ -219,6 +237,9 @@ public enum Funcs {
       default:
         return null;
     }
+  }
+  static ReturnStatement asReturn(final Block b) {
+    return b.statements().size() != 1 ? null : Funcs.asReturn((Statement) b.statements().get(0));
   }
   /**
    * Down-cast, if possible, to {@link ReturnStatement}
@@ -240,7 +261,7 @@ public enum Funcs {
    *         <code><b>null</b></code> if no such down-cast is possible..
    */
   public static SimpleName asSimpleName(final ASTNode $) {
-    return eval(()->(SimpleName) $).when($ instanceof SimpleName);
+    return eval(() -> (SimpleName) $).when($ instanceof SimpleName);
   }
   /**
    * Down-cast, if possible, to {@link Statement}
@@ -252,6 +273,16 @@ public enum Funcs {
    */
   public static Statement asStatement(final ASTNode n) {
     return !isStatement(n) ? null : (Statement) n;
+  }
+  /**
+   * Obtain a condensed textual representation of an {@link ASTNode}
+   *
+   * @param n
+   *          JD
+   * @return the textual representation of the parameter,
+   */
+  public static String asString(final ASTNode n) {
+    return removeWhites(n.toString());
   }
   /**
    * Convert, is possible, an {@link ASTNode} to a {@link ConditionalExpression}
@@ -300,24 +331,6 @@ public enum Funcs {
       return false;
     for (final Assignment a : as)
       if (incompatible(base, a))
-        return false;
-    return true;
-  }
-  public static boolean incompatible(final Assignment a1, final Assignment a2) {
-    return hasNulls(a1, a2) || !compatibleOps(a1.getOperator(), a2.getOperator()) || !same(left(a1), left(a2));
-  }
-  /**
-   * String wise comparison of all the given SimpleNames
-   *
-   * @param e
-   *          a string to compare all names to
-   * @param ames
-   *          SimplesNames to compare by their string value to cmpTo
-   * @return true if all names are the same (string wise) or false otherwise
-   */
-  public static boolean same(final Expression e, final Expression... es) {
-    for (Expression x : es)
-      if (!Funcs.same(e, x))
         return false;
     return true;
   }
@@ -381,6 +394,12 @@ public enum Funcs {
   public static Statement elze(final IfStatement s) {
     return s.getElseStatement();
   }
+  private static Expression find(final boolean b, final List<Expression> es) {
+    for (final Expression $ : es)
+      if (Is.booleanLiteral($) && b == asBooleanLiteral($).booleanValue())
+        return $;
+    return null;
+  }
   /**
    * Swap the order of the left and right operands to an expression, changing
    * the operator if necessary.
@@ -423,6 +442,18 @@ public enum Funcs {
     return hasNulls(n, name) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || name.getNodeType() != SIMPLE_NAME ? null
         : getDefinition((VariableDeclarationStatement) n, (SimpleName) name);
   }
+  private static VariableDeclarationFragment getDefinition(final VariableDeclarationStatement s, final SimpleName n) {
+    return getVarDeclFrag(expose.fragments(s), n);
+  }
+  private static VariableDeclarationFragment getVarDeclFrag(final List<VariableDeclarationFragment> fs, final SimpleName n) {
+    for (final VariableDeclarationFragment $ : fs)
+      if (same(n, $.getName()))
+        return $;
+    return null;
+  }
+  public static boolean incompatible(final Assignment a1, final Assignment a2) {
+    return hasNulls(a1, a2) || !compatibleOps(a1.getOperator(), a2.getOperator()) || !same(left(a1), left(a2));
+  }
   /**
    * Determine if an integer can be found in a list of values
    *
@@ -438,10 +469,13 @@ public enum Funcs {
         return true;
     return false;
   }
-  public static boolean isAbstractTypeDeclaration(ASTNode n) {
+  static boolean is(final ASTNode n, final int... types) {
+    return n != null && intIsIn(n.getNodeType(), types);
+  }
+  public static boolean isAbstractTypeDeclaration(final ASTNode n) {
     return n != null && n instanceof AbstractTypeDeclaration;
   }
-  public static boolean isAnonymousClassDeclaration(ASTNode n) {
+  public static boolean isAnonymousClassDeclaration(final ASTNode n) {
     return is(n, ANONYMOUS_CLASS_DECLARATION);
   }
   /**
@@ -463,7 +497,7 @@ public enum Funcs {
   public static boolean isBoolOrNull(final ASTNode n) {
     return is(n, BOOLEAN_LITERAL, NULL_LITERAL);
   }
-  public static boolean isEnumDeclaration(BodyDeclaration ¢) {
+  public static boolean isEnumDeclaration(final BodyDeclaration ¢) {
     return is(¢, ENUM_DECLARATION);
   }
   /**
@@ -504,7 +538,7 @@ public enum Funcs {
   public static boolean isInfix(final ASTNode n) {
     return is(n, INFIX_EXPRESSION);
   }
-  public static boolean isInterface(ASTNode n) {
+  public static boolean isInterface(final ASTNode n) {
     return is(n, TYPE_DECLARATION) && ((TypeDeclaration) n).isInterface();
   }
   public static boolean isMethodDeclaration(final ASTNode $) {
@@ -531,7 +565,8 @@ public enum Funcs {
       case EXPRESSION_STATEMENT:
         return isNodeIncOrDecExp(((ExpressionStatement) n).getExpression());
       case POSTFIX_EXPRESSION:
-        return in(((PostfixExpression) n).getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
+        return in(((PostfixExpression) n).getOperator(), PostfixExpression.Operator.INCREMENT,
+            PostfixExpression.Operator.DECREMENT);
       case PREFIX_EXPRESSION:
         return in(asPrefixExpression(n).getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT);
       default:
@@ -559,7 +594,7 @@ public enum Funcs {
   public static boolean isSimpleName(final ASTNode $) {
     return is($, SIMPLE_NAME);
   }
-  public static boolean isStatement(ASTNode n) {
+  public static boolean isStatement(final ASTNode n) {
     return n instanceof Statement;
   }
   /**
@@ -621,6 +656,14 @@ public enum Funcs {
     final Expression $$ = PrefixNotPushdown.simplifyNot($);
     return $$ == null ? $ : $$;
   }
+  private static Map<Operator, Operator> makeConjugates() {
+    final Map<Operator, Operator> $ = new HashMap<>();
+    $.put(GREATER, LESS);
+    $.put(LESS, GREATER);
+    $.put(GREATER_EQUALS, LESS_EQUALS);
+    $.put(LESS_EQUALS, GREATER_EQUALS);
+    return $;
+  }
   /**
    * @param e
    *          the expression to return in the return statement
@@ -633,6 +676,9 @@ public enum Funcs {
     return e instanceof PrefixExpression ? negationLevel((PrefixExpression) e)
         : e instanceof ParenthesizedExpression ? negationLevel(((ParenthesizedExpression) e).getExpression())
             : asBit(e instanceof NumberLiteral && ((NumberLiteral) e).getToken().startsWith("-"));
+  }
+  private static int negationLevel(final PrefixExpression e) {
+    return asBit(e.getOperator() == PrefixExpression.Operator.MINUS) + negationLevel(e.getOperand());
   }
   /**
    * Retrieve next item in a list
@@ -672,6 +718,12 @@ public enum Funcs {
     $ instanceof PrefixExpression ? peelNegation((PrefixExpression) $) //
         : $ instanceof ParenthesizedExpression ? peelNegation(((ParenthesizedExpression) $).getExpression()) //
             : $ instanceof NumberLiteral ? peelNegation((NumberLiteral) $) : $;
+  }
+  private static Expression peelNegation(final NumberLiteral $) {
+    return !$.getToken().startsWith("-") ? $ : $.getAST().newNumberLiteral($.getToken().substring(1));
+  }
+  private static Expression peelNegation(final PrefixExpression $) {
+    return $.getOperator() != PrefixExpression.Operator.MINUS ? $ : peelNegation($.getOperand());
   }
   /**
    * Retrieve previous item in a list
@@ -730,17 +782,7 @@ public enum Funcs {
       es.remove(e);
     }
   }
-  /**
-   * Obtain a condensed textual representation of an {@link ASTNode}
-   *
-   * @param n
-   *          JD
-   * @return the textual representation of the parameter,
-   */
-  public static String asString(final ASTNode n) {
-    return removeWhites(n.toString());
-  }
-  /**
+   /**
    * Shorthand for {@link Assignment#getRightHandSide()}
    *
    * @param a
@@ -786,6 +828,21 @@ public enum Funcs {
     return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType() && n1.toString().equals(n2.toString());
   }
   /**
+   * String wise comparison of all the given SimpleNames
+   *
+   * @param e
+   *          a string to compare all names to
+   * @param ames
+   *          SimplesNames to compare by their string value to cmpTo
+   * @return true if all names are the same (string wise) or false otherwise
+   */
+  public static boolean same(final Expression e, final Expression... es) {
+    for (final Expression x : es)
+      if (!Funcs.same(e, x))
+        return false;
+    return true;
+  }
+  /**
    * Determine whether two lists of nodes are the same, in the sense that their
    * textual representations is identical.
    *
@@ -805,18 +862,6 @@ public enum Funcs {
         return false;
     return true;
   }
-  public static String shortName(final String s) {
-    return new JavaTypeNameParser(s).shortName();
-  }
-  public static String shortName(final Type t) {
-    return t instanceof NameQualifiedType ? shortName((NameQualifiedType) t)
-        : t instanceof PrimitiveType ? shortName((PrimitiveType) t) : t instanceof QualifiedType ? shortName((QualifiedType) t)
-            : t instanceof SimpleType ? shortName((SimpleType) t) : t instanceof WildcardType ? shortName((WildcardType) t)
-                : t instanceof ArrayType ? shortName((ArrayType) t)
-                    : t instanceof IntersectionType ? shortName((IntersectionType) t) //
-                        : t instanceof ParameterizedType ? shortName((ParameterizedType) t)//
-                            : t instanceof UnionType ? shortName((UnionType) t) : null;
-  }
   /**
    * Shorthand for {@link ConditionalExpression#getThenExpression()}
    *
@@ -827,6 +872,7 @@ public enum Funcs {
   public static Expression then(final ConditionalExpression e) {
     return e.getThenExpression();
   }
+
   /**
    * Shorthand for {@link IfStatement#getThenStatement}
    *
@@ -837,110 +883,4 @@ public enum Funcs {
   public static Statement then(final IfStatement s) {
     return s.getThenStatement();
   }
-  private static int asBit(final boolean b) {
-    return b ? 1 : 0;
-  }
-  private static InfixExpression asComparison(final InfixExpression e) {
-    return in(e.getOperator(), //
-        GREATER, //
-        GREATER_EQUALS, //
-        LESS, //
-        LESS_EQUALS, //
-        EQUALS, //
-        NOT_EQUALS //
-    ) ? e : null;
-  }
-  private static Expression find(final boolean b, final List<Expression> es) {
-    for (final Expression $ : es)
-      if (Is.booleanLiteral($) && b == asBooleanLiteral($).booleanValue())
-        return $;
-    return null;
-  }
-  private static VariableDeclarationFragment getDefinition(final VariableDeclarationStatement s, final SimpleName n) {
-    return getVarDeclFrag(expose.fragments(s), n);
-  }
-  private static VariableDeclarationFragment getVarDeclFrag(final List<VariableDeclarationFragment> fs, final SimpleName n) {
-    for (final VariableDeclarationFragment $ : fs)
-      if (same(n, $.getName()))
-        return $;
-    return null;
-  }
-  private static Map<Operator, Operator> makeConjugates() {
-    final Map<Operator, Operator> $ = new HashMap<>();
-    $.put(GREATER, LESS);
-    $.put(LESS, GREATER);
-    $.put(GREATER_EQUALS, LESS_EQUALS);
-    $.put(LESS_EQUALS, GREATER_EQUALS);
-    return $;
-  }
-  private static int negationLevel(final PrefixExpression e) {
-    return asBit(e.getOperator() == PrefixExpression.Operator.MINUS) + negationLevel(e.getOperand());
-  }
-  private static Expression peelNegation(final NumberLiteral $) {
-    return !$.getToken().startsWith("-") ? $ : $.getAST().newNumberLiteral($.getToken().substring(1));
-  }
-  private static Expression peelNegation(final PrefixExpression $) {
-    return $.getOperator() != PrefixExpression.Operator.MINUS ? $ : peelNegation($.getOperand());
-  }
-  private static String repeat(final int i, final char c) {
-    return new String(new char[i]).replace('\0', c);
-  }
-  private static String shortName(final ArrayType t) {
-    return shortName(t.getElementType()) + repeat(t.getDimensions(), 's');
-  }
-  private static String shortName(@SuppressWarnings("unused") final IntersectionType __) {
-    return null;
-  }
-  private static String shortName(final List<? extends Type> ts) {
-    return ts == null || ts.size() != 1 ? null : shortName(ts.get(0));
-  }
-  private static String shortName(final Name n) {
-    return n instanceof SimpleName ? shortName(n.toString()) //
-        : n instanceof QualifiedName ? shortName(((QualifiedName) n).getName()) //
-            : null;
-  }
-  private static String shortName(final NameQualifiedType t) {
-    return shortName(t.getName());
-  }
-  private static String shortName(final ParameterizedType t) {
-    switch (t.getType().toString()) {
-      case "Collection":
-      case "Iterable":
-      case "List":
-      case "Queue":
-      case "Set":
-        final String $ = shortName(expose.typeArguments(t));
-        if ($ == null)
-          return null;
-        return $ + "s";
-      default:
-        return null;
-    }
-  }
-  private static String shortName(final PrimitiveType t) {
-    return t.getPrimitiveTypeCode().toString().substring(0, 1);
-  }
-  private static String shortName(final QualifiedType t) {
-    return shortName(t.getName());
-  }
-  private static String shortName(final SimpleType t) {
-    return shortName(t.getName());
-  }
-  private static String shortName(@SuppressWarnings("unused") final UnionType __) {
-    return null;
-  }
-  private static String shortName(final WildcardType t) {
-    return shortName(t.getBound());
-  }
-  static PrefixExpression asNot(final PrefixExpression e) {
-    return NOT.equals(e.getOperator()) ? e : null;
-  }
-  static ReturnStatement asReturn(final Block b) {
-    return b.statements().size() != 1 ? null : Funcs.asReturn((Statement) b.statements().get(0));
-  }
-  static boolean is(final ASTNode n, final int... types) {
-    return n != null && intIsIn(n.getNodeType(), types);
-  }
-
-  private static Map<Operator, Operator> conjugate = makeConjugates();
 }

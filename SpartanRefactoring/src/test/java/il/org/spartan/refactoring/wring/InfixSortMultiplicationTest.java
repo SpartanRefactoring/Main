@@ -1,26 +1,28 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
-import il.org.spartan.*;
-import il.org.spartan.refactoring.spartanizations.*;
-import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.utils.LiteralParser.Types;
-import il.org.spartan.refactoring.wring.AbstractWringTest.Noneligible;
-import il.org.spartan.utils.Utils;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.Operator;
+import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.runners.Parameterized.*;
+
+import il.org.spartan.*;
+import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.utils.LiteralParser.*;
+import il.org.spartan.refactoring.wring.AbstractWringTest.*;
+import il.org.spartan.utils.Utils;
 
 /**
  * Unit tests for {@link Wrings#MULTIPLCATION_SORTER}.
@@ -83,7 +85,6 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
-
     static Document rewrite(final Spartanization s, final CompilationUnit u, final Document d) {
       try {
         s.createRewrite(u, null).rewriteAST(d, null).apply(d);
@@ -91,7 +92,7 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
       } catch (final MalformedTreeException e) {
         azzert.fail(e.getMessage());
       } catch (final IllegalArgumentException e) {
-       azzert. fail(e.getMessage());
+        azzert.fail(e.getMessage());
       } catch (final BadLocationException e) {
         azzert.fail(e.getMessage());
       }

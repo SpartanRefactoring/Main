@@ -1,12 +1,12 @@
 package il.org.spartan.refactoring.preferences;
 
-import il.org.spartan.refactoring.builder.*;
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.wring.*;
-
 import org.eclipse.jface.preference.*;
 import org.eclipse.jface.util.*;
 import org.eclipse.ui.*;
+
+import il.org.spartan.refactoring.builder.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.wring.*;
 
 public class PluginPreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
   private final SpartanPropertyListener listener;
@@ -44,7 +44,7 @@ public class PluginPreferencesPage extends FieldEditorPreferencePage implements 
    * An event handler used to re-initialize the Trimmer spartanization once a
    * wring preference was modified.
    */
-   static class SpartanPropertyListener implements IPropertyChangeListener {
+  static class SpartanPropertyListener implements IPropertyChangeListener {
     @Override public void propertyChange(@SuppressWarnings("unused") final PropertyChangeEvent __) {
       // Recreate the toolbox's internal instance, adding only enabled wrings
       Toolbox.generate();

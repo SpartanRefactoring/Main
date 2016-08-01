@@ -1,16 +1,18 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.utils.ExpressionComparator.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.mockito.Mockito.*;
-import il.org.spartan.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
+
+import il.org.spartan.*;
 
 /**
  * A test suite for class {@link Funcs}
@@ -22,7 +24,7 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" }) @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class FuncsTest {
   @Test public void arrayOfInts() {
-    azzert.that(shortName(t("int[][] _;")), equalTo("iss"));
+    azzert.that(spartan.shorten(t("int[][] _;")), equalTo("iss"));
   }
   @Test public void asComparisonPrefixlExpression() {
     final PrefixExpression p = mock(PrefixExpression.class);
@@ -76,7 +78,7 @@ public class FuncsTest {
     azzert.aye(Is.deMorgan(CONDITIONAL_OR));
   }
   @Test public void listOfInts() {
-    azzert.that(shortName(t("List<Set<Integer>> _;")), equalTo("iss"));
+    azzert.that(spartan.shorten(t("List<Set<Integer>> _;")), equalTo("iss"));
   }
   @Test public void sameOfNullAndSomething() {
     azzert.nay(Funcs.same(null, e("a")));
@@ -100,19 +102,19 @@ public class FuncsTest {
     azzert.nay(Funcs.same(e("a+b+c"), e("a+b")));
   }
   @Test public void shortNameASTRewriter() {
-    azzert.that(shortName(t("ASTRewriter _;")), equalTo("r"));
+    azzert.that(spartan.shorten(t("ASTRewriter _;")), equalTo("r"));
   }
   @Test public void shortNameDouble() {
-    azzert.that(shortName(t("double _;")), equalTo("d"));
+    azzert.that(spartan.shorten(t("double _;")), equalTo("d"));
   }
   @Test public void shortNameExpression() {
-    azzert.that(shortName(t("Expression _;")), equalTo("e"));
+    azzert.that(spartan.shorten(t("Expression _;")), equalTo("e"));
   }
   @Test public void shortNameInfrastructure() {
-    azzert.that(shortName(t("int _;")), equalTo("i"));
+    azzert.that(spartan.shorten(t("int _;")), equalTo("i"));
   }
   @Test public void shortNameQualifiedType() {
-    azzert.that(shortName(t("org.eclipse.jdt.core.dom.InfixExpression _;")), equalTo("e"));
+    azzert.that(spartan.shorten(t("org.eclipse.jdt.core.dom.InfixExpression _;")), equalTo("e"));
   }
   private Type t(final String codeFragment) {
     return extract.firstType(s(codeFragment));

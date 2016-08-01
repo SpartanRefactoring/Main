@@ -2,11 +2,12 @@ package il.org.spartan.refactoring.spartanizations;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.Wrap.*;
-import il.org.spartan.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 import org.junit.*;
+
+import il.org.spartan.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) public class WrapTest {
   @Test public void dealWithBothKindsOfComment() {
@@ -29,7 +30,8 @@ import org.junit.*;
         + "}"), is(Wrap.Statement));
   }
   @Test public void essenceTest() {
-    azzert.that("if(b){;}throw new Exception();", is(essence("if (b) {\n /* empty */; \n} // no else \n throw new Exception();\n")));
+    azzert.that("if(b){;}throw new Exception();",
+        is(essence("if (b) {\n /* empty */; \n} // no else \n throw new Exception();\n")));
   }
   @Test public void expression() {
     azzert.that(Wrap.Expression.off(Wrap.Expression.on("a+b")), is("a+b"));
