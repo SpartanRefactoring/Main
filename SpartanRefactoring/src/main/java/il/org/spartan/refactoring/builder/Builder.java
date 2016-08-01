@@ -1,13 +1,13 @@
 package il.org.spartan.refactoring.builder;
 
-import il.org.spartan.refactoring.spartanizations.*;
-import il.org.spartan.refactoring.utils.*;
-
 import java.util.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
  * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>

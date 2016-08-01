@@ -1,13 +1,13 @@
 package il.org.spartan.refactoring.wring;
 
-import il.org.spartan.refactoring.spartanizations.*;
-import il.org.spartan.refactoring.utils.*;
-
 import java.util.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
+
+import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
  * An adapter that converts the @{link Wring} protocol into that of

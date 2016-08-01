@@ -50,7 +50,7 @@ public enum expose {
   @SuppressWarnings("unchecked") public static List<BodyDeclaration> bodyDeclarations(final AnonymousClassDeclaration d) {
     return d.bodyDeclarations();
   }
-  @SuppressWarnings("unchecked") public static List<CatchClause> catchClauses(TryStatement s) {
+  @SuppressWarnings("unchecked") public static List<CatchClause> catchClauses(final TryStatement s) {
     return s.catchClauses();
   }
   /**
@@ -108,7 +108,6 @@ public enum expose {
   @SuppressWarnings("unchecked") public static List<IExtendedModifier> modifiers(final VariableDeclarationStatement s) {
     return s.modifiers();
   }
-
   @SuppressWarnings("unchecked") public static List<IExtendedModifier> modifiers(final BodyDeclaration d) {
     return d.modifiers();
   }

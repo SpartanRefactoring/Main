@@ -5,15 +5,16 @@ import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.Operator;
+import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
  * A {@link Wring} that sorts the arguments of a {@link Operator#DIVIDE}
@@ -82,7 +83,8 @@ public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpre
           if (¢ != first && negationLevel(¢) > 0)
             r.replace(¢, new Plant(duplicate(peelNegation(¢))).into(¢.getParent()), g);
         if (first != null)
-          r.replace(first, new Plant(Subject.operand(peelNegation(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
+          r.replace(first,
+              new Plant(Subject.operand(peelNegation(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
       }
     };
   }

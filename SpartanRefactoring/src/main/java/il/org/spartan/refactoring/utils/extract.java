@@ -4,11 +4,12 @@ import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
-import il.org.spartan.misc.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.misc.*;
 
 /**
  * An empty <code><b>enum</b></code> for fluent programming. The name should say
@@ -46,12 +47,11 @@ public enum extract {
   }
   public static ASTNode containerType(final ASTNode ¢) {
     for (final ASTNode $ : ancestors(¢.getParent()))
-      if (is($
-          , ANONYMOUS_CLASS_DECLARATION //
+      if (is($, ANONYMOUS_CLASS_DECLARATION //
           , ANNOTATION_TYPE_DECLARATION //
           , ENUM_DECLARATION //
           , TYPE_DECLARATION //
-          ))
+      ))
         return $;
     return null;
   }
@@ -298,7 +298,6 @@ public enum extract {
   public static MethodInvocation methodInvocation(final ASTNode n) {
     return asMethodInvocation(extract.expressionStatement(n).getExpression());
   }
-
   private static Statement next(final Statement s, final List<Statement> ss) {
     for (int i = 0; i < ss.size() - 1; ++i)
       if (ss.get(i) == s)
@@ -501,5 +500,4 @@ public enum extract {
   public static ThrowStatement throwStatement(final ASTNode n) {
     return asThrowStatement(extract.singleStatement(n));
   }
-
 }

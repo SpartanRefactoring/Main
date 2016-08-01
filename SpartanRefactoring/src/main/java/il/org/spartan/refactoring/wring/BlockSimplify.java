@@ -3,13 +3,14 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static il.org.spartan.refactoring.utils.expose.*;
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
  * A {@link Wring} to convert <code>{;; g(); {}{;{;{;}};} }</code> into
@@ -21,21 +22,20 @@ import org.eclipse.jdt.core.dom.*;
 public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
   public static boolean hasHidings(final List<Statement> ss) {
     return new Predicate<List<Statement>>() {
-      @Override public boolean test(List<Statement> ss) {
+      @Override public boolean test(final List<Statement> ss) {
         for (final Statement s : ss)
           if (¢(s))
             return true;
         return false;
       }
-
-      boolean ¢(CatchClause c) {
+      boolean ¢(final CatchClause c) {
         return ¢(c.getException());
       }
-      boolean ¢(ForStatement ¢) {
+      boolean ¢(final ForStatement ¢) {
         return ¢(expose.initializers(¢));
       }
-      boolean ¢(List<Expression> es) {
-        for (Expression e : es)
+      boolean ¢(final List<Expression> es) {
+        for (final Expression e : es)
           if (e instanceof VariableDeclarationExpression && ¢((VariableDeclarationExpression) e))
             return true;
         return false;
@@ -43,12 +43,12 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
       boolean ¢(final SimpleName ¢) {
         return ¢(¢.getIdentifier());
       }
-      boolean ¢(SingleVariableDeclaration d) {
+      boolean ¢(final SingleVariableDeclaration d) {
         return ¢(d.getName());
       }
-      boolean ¢(Statement ¢) {
+      boolean ¢(final Statement ¢) {
         return ¢ instanceof VariableDeclarationStatement ? ¢((VariableDeclarationStatement) ¢)
-            : ¢ instanceof ForStatement ? ¢((ForStatement) ¢) : ¢ instanceof TryStatement && ¢((TryStatement)¢);
+            : ¢ instanceof ForStatement ? ¢((ForStatement) ¢) : ¢ instanceof TryStatement && ¢((TryStatement) ¢);
       }
       boolean ¢(final String ¢) {
         if (dictionary.contains(¢))
@@ -56,36 +56,37 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
         dictionary.add(¢);
         return false;
       }
-      boolean ¢(TryStatement s) {
-        return (¢¢¢(expose.resources(s)) || ¢¢(expose.catchClauses(s)));
+      boolean ¢(final TryStatement s) {
+        return ¢¢¢(expose.resources(s)) || ¢¢(expose.catchClauses(s));
       }
-      boolean ¢(VariableDeclarationExpression ¢) {
+      boolean ¢(final VariableDeclarationExpression ¢) {
         return ¢¢¢¢(expose.fragments(¢));
       }
-      boolean ¢(VariableDeclarationFragment f) {
+      boolean ¢(final VariableDeclarationFragment f) {
         return ¢(f.getName());
       }
       boolean ¢(final VariableDeclarationStatement s) {
         return ¢¢¢¢(fragments(s));
       }
-      boolean ¢¢(List<CatchClause> cs) {
-        for (CatchClause c : cs)
+      boolean ¢¢(final List<CatchClause> cs) {
+        for (final CatchClause c : cs)
           if (¢(c))
             return true;
         return false;
       }
-      boolean ¢¢¢(List<VariableDeclarationExpression> es) {
-        for (VariableDeclarationExpression e : es)
+      boolean ¢¢¢(final List<VariableDeclarationExpression> es) {
+        for (final VariableDeclarationExpression e : es)
           if (¢(e))
             return true;
         return false;
       }
-      boolean ¢¢¢¢(List<VariableDeclarationFragment> fs) {
-        for (VariableDeclarationFragment x : fs)
+      boolean ¢¢¢¢(final List<VariableDeclarationFragment> fs) {
+        for (final VariableDeclarationFragment x : fs)
           if (¢(x))
             return true;
         return false;
       }
+
       final Set<String> dictionary = new HashSet<>();
     }.test(ss);
   }
