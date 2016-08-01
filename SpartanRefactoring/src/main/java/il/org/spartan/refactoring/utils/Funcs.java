@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.idiomatic.*;
 import static il.org.spartan.utils.Utils.*;
+import static il.org.spartan.idiomatic.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
