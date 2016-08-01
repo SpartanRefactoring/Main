@@ -39,6 +39,25 @@ public class IfAssignToFooElseAssignToFooTest {
     azzert.that(compatible(then, elze), is(true));
     azzert.that(WRING.scopeIncludes(s), is(true));
   }
+  
+  @Test public void checkCompatability() {
+    final Assignment a1 = extract.assignment(Into.s("x=a1;"));
+    final Assignment a2 = extract.assignment(Into.s("x=a2;"));
+    azzert.notNull(a1);
+    azzert.notNull(a2);
+    azzert.that(a1.toString(), is("x=a1"));
+    azzert.that(a2.toString(), is("x=a2"));
+    azzert.aye(compatibleOps(a1.getOperator(), a2.getOperator()));
+    azzert.aye(isSimpleName(left(a1)));
+    azzert.aye(isSimpleName(left(a2)));
+    final SimpleName n1 = asSimpleName(left(a1));
+    final SimpleName n2 = asSimpleName(left(a2));
+    azzert.that(n1.toString(), is("x"));
+    azzert.that(n2.toString(), is("x"));
+    azzert.aye(same(left(a1), left(a2)));
+    azzert.nay(incompatible(a1, a2));
+    azzert.aye(compatible(a1, a2));
+  }
 
   @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope<IfStatement> {

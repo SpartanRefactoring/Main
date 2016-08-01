@@ -1,12 +1,11 @@
 package il.org.spartan.refactoring.spartanizations;
 
 import static il.org.spartan.utils.Utils.*;
+import il.org.spartan.refactoring.utils.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 import org.junit.Assert;
-
-import il.org.spartan.refactoring.utils.*;
 
 /**
  * An empty <code><b>enum</b></code> for fluent programming. The name should say
