@@ -159,6 +159,14 @@ public enum Wrings {
     switch (n.getNodeType()) {
       default:
         return -1;
+      case BREAK_STATEMENT:
+        return 0;
+      case CONTINUE_STATEMENT:
+        return 1;
+      case RETURN_STATEMENT:
+        return 2;
+      case THROW_STATEMENT:
+        return 3;
     }
   }
 }

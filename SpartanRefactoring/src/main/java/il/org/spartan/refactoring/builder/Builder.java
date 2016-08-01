@@ -4,7 +4,7 @@ import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;
-import static il.org.spartan.refactoring.utils.Funcs.intIsIn;
+
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
@@ -109,8 +109,18 @@ public class Builder extends IncrementalProjectBuilder {
   }
   public static void incrementalBuild(final IResourceDelta d) throws CoreException {
     d.accept(internalDelta -> {
-      if (intIsIn(internalDelta.getKind(), IResourceDelta.ADDED, IResourceDelta.CHANGED))
+      switch (internalDelta.getKind()) {
+        case IResourceDelta.ADDED:
+        case IResourceDelta.CHANGED:
+          // handle added and changed resource
           addMarkers(internalDelta.getResource());
+          break;
+        case IResourceDelta.REMOVED:
+          // handle removed resource
+          break;
+        default:
+          break;
+      }
       // return true to continue visiting children.
       return true;
     });
