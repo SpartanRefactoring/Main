@@ -169,8 +169,8 @@ class UsesCollector extends HidingDepth {
   }
   private boolean declaredIn(final AbstractTypeDeclaration d) {
     d.accept(new ASTVisitor() {
-      @Override public boolean visit(final FieldDeclaration d) {
-        return !hidden() && !declaredIn(d);
+      @Override public boolean visit(final FieldDeclaration ¢) {
+        return !hidden() && !declaredIn(¢);
       }
     });
     return hidden();
@@ -194,8 +194,8 @@ class UsesCollector extends HidingDepth {
   private void declaresField(final ASTNode n) {
     n.accept(new DeclaredInFields(n));
   }
-  private boolean hit(final SimpleName n) {
-    return same(n, focus);
+  private boolean hit(final SimpleName ¢) {
+    return same(¢, focus);
   }
   /**
    * This is where we ignore all occurrences of {@link SimpleName} which are not

@@ -78,9 +78,9 @@ public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpre
     return new Rewrite(description(e), e) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Expression first = totalNegation % 2 == 0 ? null : es.get(0);
-        for (final Expression e : es)
-          if (e != first && negationLevel(e) > 0)
-            r.replace(e, new Plant(duplicate(peelNegation(e))).into(e.getParent()), g);
+        for (final Expression ¢ : es)
+          if (¢ != first && negationLevel(¢) > 0)
+            r.replace(¢, new Plant(duplicate(peelNegation(¢))).into(¢.getParent()), g);
         if (first != null)
           r.replace(first, new Plant(Subject.operand(peelNegation(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
       }

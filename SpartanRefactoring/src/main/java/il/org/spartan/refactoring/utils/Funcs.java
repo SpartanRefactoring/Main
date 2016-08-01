@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.utils.Utils.*;
+import static il.org.spartan.idiomatic.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
@@ -19,7 +20,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 public enum Funcs {
   ;
   public static AbstractTypeDeclaration asAbstractTypeDeclaration(ASTNode n) {
-    return isAbstractTypeDeclaration(n) ? asAbstractTypeDeclaration(n) : null;
+    return eval(()->((AbstractTypeDeclaration) n)).when(n instanceof AbstractTypeDeclaration);
   }
   /**
    * Convert an {@link Expression} into {@link InfixExpression} whose operator
@@ -155,7 +156,7 @@ public enum Funcs {
    *         <code><b>null</b></code> if no such down-cast is possible..
    */
   public static MethodDeclaration asMethodDeclaration(final ASTNode $) {
-    return isMethodDeclaration($) ? (MethodDeclaration) $ : null;
+    return eval(()->((MethodDeclaration) $)).when($ instanceof MethodDeclaration);
   }
   /**
    * Down-cast, if possible, to {@link MethodInvocation}
@@ -189,7 +190,7 @@ public enum Funcs {
    *         <code><b>null</b></code> if no such down-casting is possible.
    */
   public static PostfixExpression asPostfixExpression(final ASTNode n) {
-    return !(n instanceof PostfixExpression) ? null : (PostfixExpression) n;
+    return eval(()->(PostfixExpression) n).when(n instanceof PostfixExpression);
   }
   /**
    * Down-cast, if possible, to {@link PrefixExpression}
@@ -200,7 +201,7 @@ public enum Funcs {
    *         <code><b>null</b></code> if no such down-casting is possible.
    */
   public static PrefixExpression asPrefixExpression(final ASTNode n) {
-    return !(n instanceof PrefixExpression) ? null : (PrefixExpression) n;
+    return eval(()->(PrefixExpression) n).when(n instanceof PrefixExpression);
   }
   /**
    * @param n
@@ -239,7 +240,7 @@ public enum Funcs {
    *         <code><b>null</b></code> if no such down-cast is possible..
    */
   public static SimpleName asSimpleName(final ASTNode $) {
-    return isSimpleName($) ? (SimpleName) $ : null;
+    return eval(()->(SimpleName) $).when($ instanceof SimpleName);
   }
   /**
    * Down-cast, if possible, to {@link Statement}
@@ -303,9 +304,7 @@ public enum Funcs {
     return true;
   }
   public static boolean incompatible(final Assignment a1, final Assignment a2) {
-    if (hasNulls(a1, a2))
-      return true;
-    return !compatibleOps(a1.getOperator(), a2.getOperator()) || !same(left(a1), left(a2));
+    return hasNulls(a1, a2) || !compatibleOps(a1.getOperator(), a2.getOperator()) || !same(left(a1), left(a2));
   }
   /**
    * String wise comparison of all the given SimpleNames
@@ -480,12 +479,12 @@ public enum Funcs {
   /**
    * Determine whether a declaration is final or not
    *
-   * @param s
+   * @param d
    *          JD
    * @return true if declaration is final
    */
-  public static boolean isFinal(final BodyDeclaration s) {
-    return (Modifier.FINAL & s.getModifiers()) != 0;
+  public static boolean isFinal(final BodyDeclaration d) {
+    return (Modifier.FINAL & d.getModifiers()) != 0;
   }
   /**
    * Determine whether a variable declaration is final or not
@@ -532,8 +531,7 @@ public enum Funcs {
       case EXPRESSION_STATEMENT:
         return isNodeIncOrDecExp(((ExpressionStatement) n).getExpression());
       case POSTFIX_EXPRESSION:
-        return in(((PostfixExpression) n).getOperator(), PostfixExpression.Operator.INCREMENT,
-            PostfixExpression.Operator.DECREMENT);
+        return in(((PostfixExpression) n).getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
       case PREFIX_EXPRESSION:
         return in(asPrefixExpression(n).getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT);
       default:
@@ -551,12 +549,12 @@ public enum Funcs {
   /**
    * Determine whether a declaration is private
    *
-   * @param s
+   * @param d
    *          JD
    * @return true if declaration is private
    */
-  public static boolean isPrivate(final BodyDeclaration s) {
-    return (Modifier.PRIVATE & s.getModifiers()) != 0;
+  public static boolean isPrivate(final BodyDeclaration d) {
+    return (Modifier.PRIVATE & d.getModifiers()) != 0;
   }
   public static boolean isSimpleName(final ASTNode $) {
     return is($, SIMPLE_NAME);
@@ -567,12 +565,12 @@ public enum Funcs {
   /**
    * Determine whether a declaration is static or not
    *
-   * @param s
+   * @param d
    *          JD
    * @return true if declaration is static
    */
-  public static boolean isStatic(final BodyDeclaration s) {
-    return (Modifier.STATIC & s.getModifiers()) != 0;
+  public static boolean isStatic(final BodyDeclaration d) {
+    return (Modifier.STATIC & d.getModifiers()) != 0;
   }
   /**
    * @param n
@@ -812,14 +810,12 @@ public enum Funcs {
   }
   public static String shortName(final Type t) {
     return t instanceof NameQualifiedType ? shortName((NameQualifiedType) t)
-        : t instanceof PrimitiveType ? shortName((PrimitiveType) t)
-            : t instanceof QualifiedType ? shortName((QualifiedType) t)
-                : t instanceof SimpleType ? shortName((SimpleType) t)
-                    : t instanceof WildcardType ? shortName((WildcardType) t)
-                        : t instanceof ArrayType ? shortName((ArrayType) t)
-                            : t instanceof IntersectionType ? shortName((IntersectionType) t) //
-                                : t instanceof ParameterizedType ? shortName((ParameterizedType) t)//
-                                    : t instanceof UnionType ? shortName((UnionType) t) : null;
+        : t instanceof PrimitiveType ? shortName((PrimitiveType) t) : t instanceof QualifiedType ? shortName((QualifiedType) t)
+            : t instanceof SimpleType ? shortName((SimpleType) t) : t instanceof WildcardType ? shortName((WildcardType) t)
+                : t instanceof ArrayType ? shortName((ArrayType) t)
+                    : t instanceof IntersectionType ? shortName((IntersectionType) t) //
+                        : t instanceof ParameterizedType ? shortName((ParameterizedType) t)//
+                            : t instanceof UnionType ? shortName((UnionType) t) : null;
   }
   /**
    * Shorthand for {@link ConditionalExpression#getThenExpression()}
@@ -853,19 +849,6 @@ public enum Funcs {
         EQUALS, //
         NOT_EQUALS //
     ) ? e : null;
-  }
-  /**
-   * TODO: Document this method
-   * 
-   * @param identifier
-   * @param names
-   * @return
-   */
-  private static boolean compatibleNames(String identifier, final Expression... names) {
-    for (final Expression name : names)
-      if (!isSimpleName(name) || asSimpleName(name).getIdentifier().equals(identifier))
-        return false;
-    return true;
   }
   private static Expression find(final boolean b, final List<Expression> es) {
     for (final Expression $ : es)
@@ -905,8 +888,7 @@ public enum Funcs {
   private static String shortName(final ArrayType t) {
     return shortName(t.getElementType()) + repeat(t.getDimensions(), 's');
   }
-  private static String shortName(final IntersectionType t) {
-    // TODO Auto-generated method stub
+  private static String shortName(@SuppressWarnings("unused") final IntersectionType __) {
     return null;
   }
   private static String shortName(final List<? extends Type> ts) {

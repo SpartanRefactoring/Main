@@ -156,9 +156,9 @@ public abstract class Wring<N extends ASTNode> {
       return firstThat(n, (final Modifier ¢) -> redundant(¢));
     }
     IExtendedModifier firstThat(final N n, final Predicate<Modifier> f) {
-      for (final IExtendedModifier m : expose.modifiers(n))
-        if (m.isModifier() && f.test((Modifier) m))
-          return m;
+      for (final IExtendedModifier $ : expose.modifiers(n))
+        if ($.isModifier() && f.test((Modifier) $))
+          return $;
       return null;
     }
     private N go(final N $) {
@@ -358,13 +358,13 @@ public abstract class Wring<N extends ASTNode> {
    * @return <code><b>true</b></code> <i>iff</i> the argument is eligible for
    *         the simplification offered by this object.
    */
-  boolean eligible(@SuppressWarnings("unused") final N n) {
+  boolean eligible(@SuppressWarnings("unused") final N __) {
     return true;
   }
   Rewrite make(final N n) {
     return make(n, null);
   }
-  Rewrite make(final N n, @SuppressWarnings("unused") final ExclusionManager exclude) {
+  Rewrite make(final N n, @SuppressWarnings("unused") final ExclusionManager __) {
     return make(n);
   }
   /**
