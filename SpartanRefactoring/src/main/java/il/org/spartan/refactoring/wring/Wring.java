@@ -149,7 +149,7 @@ public abstract class Wring<N extends ASTNode> {
   }
 
   public static abstract class RemoveModifier<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> {
-    @Override String description(final N n) {
+    @Override String description(@SuppressWarnings("unused") final N __) {
       return "remove redundant modifier";
     }
     private IExtendedModifier firstBad(final N n) {
