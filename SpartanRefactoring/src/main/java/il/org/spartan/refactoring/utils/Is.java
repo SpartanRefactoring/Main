@@ -99,8 +99,15 @@ public enum Is {
     for (final Expression e : es) {
       if (e == null)
         continue;
-      if (extract.core(e).getNodeType() == CONDITIONAL_EXPRESSION)
-        return true;
+      switch (e.getNodeType()) {
+        default:
+          break;
+        case CONDITIONAL_EXPRESSION:
+          return true;
+        case PARENTHESIZED_EXPRESSION:
+          if (((ParenthesizedExpression) e).getExpression().getNodeType() == CONDITIONAL_EXPRESSION)
+            return true;
+      }
     }
     return false;
   }
