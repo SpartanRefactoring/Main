@@ -1,23 +1,20 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.ExpressionComparator.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
-import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.apply;
 import static il.org.spartan.utils.Utils.*;
-
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.*;
-import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
+
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.InfixExpression.Operator;
+import org.junit.*;
+import org.junit.runners.*;
 
 /**
  * * Unit tests for the nesting class Unit test for the containing class. Note
@@ -44,7 +41,7 @@ import il.org.spartan.refactoring.utils.*;
     final Trimmer t = new Trimmer();
     final String unpeeled = apply(t, wrap);
     if (wrap.equals(unpeeled))
-      fail("Nothing done on " + from);
+      azzert.fail("Nothing done on " + from);
     final String peeled = w.off(unpeeled);
     if (peeled.equals(from))
       azzert.that("No similification of " + from, from, is(not(peeled)));
@@ -1247,7 +1244,7 @@ import il.org.spartan.refactoring.utils.*;
     azzert.aye(s.scopeIncludes(e));
     final Expression e1 = left(e);
     final Expression e2 = right(e);
-    azzert.nay(hasNull(e1, e2));
+    azzert.nay(hasNulls(e1, e2));
     final boolean tokenWiseGreater = nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD;
     azzert.aye(tokenWiseGreater);
     azzert.aye(ExpressionComparator.moreArguments(e1, e2));
@@ -1267,7 +1264,7 @@ import il.org.spartan.refactoring.utils.*;
     azzert.aye(s.scopeIncludes(e));
     final Expression e1 = left(e);
     final Expression e2 = right(e);
-    azzert.nay(hasNull(e1, e2));
+    azzert.nay(hasNulls(e1, e2));
     final boolean tokenWiseGreater = nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD;
     azzert.nay(tokenWiseGreater);
     azzert.aye(ExpressionComparator.moreArguments(e1, e2));

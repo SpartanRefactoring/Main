@@ -1,18 +1,16 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.utils.ExpressionComparator.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.mockito.Mockito.*;
+import il.org.spartan.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
-
-import il.org.spartan.*;
 
 /**
  * A test suite for class {@link Funcs}
@@ -93,7 +91,7 @@ public class FuncsTest {
     azzert.that(negationLevel(e("- - - - (- (-a))")), is(6));
   }
   @Test public void sameOfSomethingAndNull() {
-    azzert.nay(Funcs.same(e("a"), null));
+    azzert.nay(Funcs.same(e("a"), (Expression) null));
   }
   @Test public void sameOfTwoExpressionsIdentical() {
     azzert.aye(Funcs.same(e("a+b"), e("a+b")));

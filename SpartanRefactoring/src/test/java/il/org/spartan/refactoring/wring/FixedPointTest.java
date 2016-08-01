@@ -1,15 +1,15 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.azzert.assertEquals;
-import static il.org.spartan.azzert.assertNotEquals;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.utils.Utils.*;
 import static org.junit.Assert.*;
 
+import il.org.spartan.*;
+import il.org.spartan.refactoring.spartanizations.*;
+
 import org.junit.*;
 import org.junit.runners.*;
-
-import il.org.spartan.refactoring.spartanizations.*;
 
 /**
  * * Unit tests for the nesting class Unit test for the containing class. Note
@@ -261,10 +261,25 @@ import il.org.spartan.refactoring.spartanizations.*;
     assertConvertsTo("String res = s, foo = \"bar\";if (s.equals(532)==true)    res = s + 0xABBA;System.out.println(res);",
         "System.out.println((!s.equals(532)?s:s+0xABBA));");
   }
-  @Test(timeout = 2000) public void ternarize15() {
+  @Test public void ternarize15() {
     assertConvertsTo(
         "  String res = mode, foo = \"Not in test mode\";int k;k = 1984;if (mode.equals(f())==true)    foo = test-bob;foo = \"sponge-bob\";",
         "String res=mode,foo=\"Not in test mode\";int k=1984;if(mode.equals(f()))foo=test-bob;foo=\"sponge-bob\";");
+  }
+  @Test public void hasNullsTest() {
+    Object a = null;
+    azzert.aye(hasNulls(a));
+    azzert.nay(hasNulls(new Object()));
+    azzert.aye(hasNulls(new Object(), null));
+    azzert.nay(hasNulls(new Object(), new Object()));
+    azzert.nay(hasNulls(new Object(), new Object()));
+    azzert.nay(hasNulls(new Object(), new Object(), new Object()));
+    azzert.nay(hasNulls(new Object(), new Object(), new Object(), new Object()));
+    azzert.aye(hasNulls( null,  new Object(),new Object(), new Object(), new Object()));
+    azzert.aye(hasNulls( new Object(), new Object(), null,new Object(), new Object()));
+    azzert.aye(hasNulls( new Object(), new Object(), new Object(), null,new Object()));
+    azzert.aye(hasNulls( new Object(), new Object(), new Object(), new Object(), null));
+    
   }
   @Test(timeout = 2000) public void ternarize17() {
     assertConvertsTo("    int a, b;\n" + //
