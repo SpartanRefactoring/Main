@@ -87,9 +87,8 @@ public enum as {
    */
   public static int[] intArray(final List<Integer> is) {
     final int @NonNull [] $ = new int @NonNull [is.size()];
-    for (int i = 0; i < $.length; ++i) {
-      $[i] = is.get(i).intValue();
-    }
+    for (int i = 0; i < $.length; ++i) 
+    $[i] = is.get(i).intValue();
     return $;
   }
   /**
