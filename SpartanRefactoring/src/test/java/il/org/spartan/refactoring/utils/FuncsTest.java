@@ -12,13 +12,10 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/**
- * A test suite for class {@link Funcs}
- *
+/** A test suite for class {@link Funcs}
  * @author Yossi Gil
  * @since 2015-07-18
- * @see Funcs
- */
+ * @see Funcs */
 @SuppressWarnings({ "static-method", "javadoc" }) @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 public class FuncsTest {
   @Test public void arrayOfInts() {

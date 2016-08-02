@@ -5,14 +5,10 @@ import il.org.spartan.refactoring.builder.*;
 import org.eclipse.core.runtime.preferences.*;
 import org.eclipse.jface.preference.*;
 
-/**
- * This class is called by Eclipse when the plugin is first loaded and has no
+/** This class is called by Eclipse when the plugin is first loaded and has no
  * default preference values. These are set by the values specified here.
- *
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
- * @since 2016/03/28
- *
- */
+ * @since 2016/03/28 */
 public class PluginPreferencesDefaultValuesInitializer extends AbstractPreferenceInitializer {
   @Override public void initializeDefaultPreferences() {
     final IPreferenceStore ps = Plugin.getDefault().getPreferenceStore();

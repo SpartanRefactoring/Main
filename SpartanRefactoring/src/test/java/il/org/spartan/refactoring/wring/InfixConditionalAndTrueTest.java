@@ -15,12 +15,9 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.Parameters;
 
-/**
- * Unit tests for {@link Wrings#MULTIPLCATION_SORTER}.
- *
+/** Unit tests for {@link Wrings#MULTIPLCATION_SORTER}.
  * @author Yossi Gil
- * @since 2014-07-13
- */
+ * @since 2014-07-13 */
 @SuppressWarnings("javadoc")//
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 public enum InfixConditionalAndTrueTest {
@@ -71,16 +68,12 @@ public enum InfixConditionalAndTrueTest {
         new String[] { "AND of 5 without boolean", "false && a && b && c && d" }, //
         new String[] { "AND of 6 without boolean", "a && b && c && false && d && e" }, //
         new String[] { "AND of 7 without boolean with parenthesis", "(a && b) && (c && (d && (e && false)))" }, //
-        new String[] { "AND of 7 without boolean and multiple false value",
-        "(a && (b && false)) && (c && (d && (e && (false && false))))" }, //
+        new String[] { "AND of 7 without boolean and multiple false value", "(a && (b && false)) && (c && (d && (e && (false && false))))" }, //
         null);
 
-    /**
-     * Generate test cases for this parameterized class.
-     *
+    /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
-     *         objects, the test case name, the input, and the file.
-     */
+     *         objects, the test case name, the input, and the file. */
     @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
@@ -101,25 +94,19 @@ public enum InfixConditionalAndTrueTest {
         new String[] { "AND of 4 with true", "x && true && a && b && c", "x && a && b && c" }, //
         new String[] { "AND of 5 with true", "x && a && b && c && true && true && true && d", "x && a && b && c && d" }, //
         new String[] { "AND of 6 with true", "x && a && true && b && c && d && e", "x && a && b && c && d && e" }, //
-        new String[] { "AND of 6 with true with parenthesis", "x && (true && (a && b && true)) && (c && (d && e))",
-        "x && a && b && c && d && e" }, //
+        new String[] { "AND of 6 with true with parenthesis", "x && (true && (a && b && true)) && (c && (d && e))", "x && a && b && c && d && e" }, //
         new String[] { "AND with true", "true && b && a", "b && a" }, //
         new String[] { "AND of 3 with true", "a && b && true", "a && b" }, //
         new String[] { "AND of 4 with true", "a && b && c && true", "a && b && c" }, //
         new String[] { "AND of 5 with true", "true && a && b && c && d", "a && b && c && d" }, //
         new String[] { "AND of 6 with true", "a && b && c && true && d && e", "a && b && c && d && e" }, //
-        new String[] { "AND of 7 with true with parenthesis", "true && (a && b) && (c && (d && (e && true)))",
-        "a && b && c && d && e" }, //
-        new String[] { "AND of 7 with multiple true value", "(a && (b && true)) && (c && (d && (e && (true && true))))",
-        "a&&b&&c&&d&&e" }, //
+        new String[] { "AND of 7 with true with parenthesis", "true && (a && b) && (c && (d && (e && true)))", "a && b && c && d && e" }, //
+        new String[] { "AND of 7 with multiple true value", "(a && (b && true)) && (c && (d && (e && (true && true))))", "a&&b&&c&&d&&e" }, //
         null);
 
-    /**
-     * Generate test cases for this parameterized class.
-     *
+    /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
-     *         objects, the test case name, the input, and the expected output
-     */
+     *         objects, the test case name, the input, and the expected output */
     @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);

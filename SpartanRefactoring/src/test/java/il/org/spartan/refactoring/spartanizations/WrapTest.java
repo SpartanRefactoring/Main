@@ -28,8 +28,7 @@ import org.junit.*;
         + "}"), is(Wrap.Statement));
   }
   @Test public void essenceTest() {
-    azzert
-        .that("if(b){;}throw new Exception();", is(essence("if (b) {\n /* empty */; \n} // no else \n throw new Exception();\n")));
+    azzert.that("if(b){;}throw new Exception();", is(essence("if (b) {\n /* empty */; \n} // no else \n throw new Exception();\n")));
   }
   @Test public void expression() {
     azzert.that(Wrap.Expression.off(Wrap.Expression.on("a+b")), is("a+b"));

@@ -14,17 +14,13 @@ import org.eclipse.ltk.ui.refactoring.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.handlers.*;
 
-/**
- * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>:
+/** @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>:
  *         original version
  * @author Yossi Gil <code><yossi.gil [at] gmail.com></code>: major refactoring
  *         2013/07/11
- * @since 2013/07/01
- */
+ * @since 2013/07/01 */
 public abstract class BaseHandler extends AbstractHandler {
-  /**
-   * @return List of all compilation units in the current project
-   */
+  /** @return List of all compilation units in the current project */
   public static List<ICompilationUnit> compilationUnits() {
     try {
       return Spartanization.getAllProjectCompilationUnits(currentCompilationUnit(), new NullProgressMonitor());
@@ -33,19 +29,13 @@ public abstract class BaseHandler extends AbstractHandler {
     }
     return null;
   }
-  /**
-   * Retrieves the current {@link ICompilationUnit}
-   *
-   * @return the current {@link ICompilationUnit}
-   */
+  /** Retrieves the current {@link ICompilationUnit}
+   * @return the current {@link ICompilationUnit} */
   public static ICompilationUnit currentCompilationUnit() {
     return getCompilationUnit(getCurrentWorkbenchWindow().getActivePage().getActiveEditor());
   }
-  /**
-   * Retrieves the current {@link IWorkbenchWindow}
-   *
-   * @return the current {@link IWorkbenchWindow}
-   */
+  /** Retrieves the current {@link IWorkbenchWindow}
+   * @return the current {@link IWorkbenchWindow} */
   public static IWorkbenchWindow getCurrentWorkbenchWindow() {
     return PlatformUI.getWorkbench().getActiveWorkbenchWindow();
   }
@@ -58,12 +48,8 @@ public abstract class BaseHandler extends AbstractHandler {
 
   private final Spartanization inner;
 
-  /**
-   * Instantiates this class
-   *
-   * @param inner
-   *          JD
-   */
+  /** Instantiates this class
+   * @param inner JD */
   protected BaseHandler(final Spartanization inner) {
     this.inner = inner;
   }

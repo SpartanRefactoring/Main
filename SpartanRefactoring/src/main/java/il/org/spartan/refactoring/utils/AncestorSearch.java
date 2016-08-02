@@ -4,41 +4,27 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-/**
- * A class to search in the ancestry line of a given node.
- *
+/** A class to search in the ancestry line of a given node.
  * @author Yossi Gil
- * @since 2015-08-22
- */
+ * @since 2015-08-22 */
 public abstract class AncestorSearch {
-  /**
-   * Factory method, returning an instance which can search by the integer
+  /** Factory method, returning an instance which can search by the integer
    * present on a node.
-   *
-   * @param type
-   *          JD
+   * @param type JD
    * @return a newly created instance
-   * @see ASTNode#getNodeType()
-   */
+   * @see ASTNode#getNodeType() */
   public static AncestorSearch forType(final int type) {
     return new ByNodeType(type);
   }
-  /**
-   * Factory method, returning an instance which can search by a node class
-   *
-   * @param c
-   *          JD
+  /** Factory method, returning an instance which can search by a node class
+   * @param c JD
    * @return a newly created instance
-   * @see ASTNode#getNodeType()
-   */
+   * @see ASTNode#getNodeType() */
   public static <N extends ASTNode> AncestorSearch forClass(final Class<N> c) {
     return new ByNodeClass(c);
   }
-  /**
-   * @param n
-   *          JD
-   * @return the closest ancestor whose type matches the given type.
-   */
+  /** @param n JD
+   * @return the closest ancestor whose type matches the given type. */
   public abstract ASTNode from(final ASTNode n);
 
   static class ByNodeClass extends AncestorSearch {

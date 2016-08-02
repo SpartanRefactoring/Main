@@ -11,13 +11,10 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-/**
- * A {@link Wring} to convert <code>if (X) {bar(); foo();} else {baz();
+/** A {@link Wring} to convert <code>if (X) {bar(); foo();} else {baz();
  * foo();}</code> into <code>if (X) bar(); else baz(); foo();</code>
- *
  * @author Yossi Gil
- * @since 2015-09-05
- */
+ * @since 2015-09-05 */
 public final class IfBarFooElseBazFoo extends Wring<IfStatement> {
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate commmon suffix of then and else branches to just after if statement";
@@ -53,8 +50,8 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> {
         return replacement(s.getExpression(), Subject.ss(then).toOneStatementOrNull(), Subject.ss(elze).toOneStatementOrNull());
       }
       private IfStatement replacement(final Expression condition, final Statement trimmedThen, final Statement trimmedElse) {
-        return trimmedThen == null && trimmedElse == null ? null : trimmedThen == null ? Subject.pair(trimmedElse, null).toNot(
-            condition) : Subject.pair(trimmedThen, trimmedElse).toIf(condition);
+        return trimmedThen == null && trimmedElse == null ? null : trimmedThen == null ? Subject.pair(trimmedElse, null).toNot(condition) : Subject
+            .pair(trimmedThen, trimmedElse).toIf(condition);
       }
     };
   }

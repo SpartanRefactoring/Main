@@ -9,24 +9,16 @@ import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 
-/**
- * An adapter that converts the @{link Wring} protocol into that of
+/** An adapter that converts the @{link Wring} protocol into that of
  * {@link Spartanization}
- *
  * @author Yossi Gil
- * @since 2015/07/25
- */
+ * @since 2015/07/25 */
 public class AsSpartanization extends Spartanization {
   final Wring<ASTNode> inner;
 
-  /**
-   * Instantiates this class
-   *
-   * @param inner
-   *          The wring we wish to convert
-   * @param name
-   *          The title of the refactoring
-   */
+  /** Instantiates this class
+   * @param inner The wring we wish to convert
+   * @param name The title of the refactoring */
   @SuppressWarnings("unchecked") public AsSpartanization(final Wring<? extends ASTNode> inner, final String name) {
     super(name);
     this.inner = (Wring<ASTNode>) inner;

@@ -15,12 +15,9 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 
-/**
- * Command line version of this plug-in
- *
+/** Command line version of this plug-in
  * @author Yossi Gil
- * @since 2015/10/10
- */
+ * @since 2015/10/10 */
 public class Xiphos {
   @External(alias = "r") int rounds = 20;
   @External(alias = "v") boolean verbose = false;
@@ -33,12 +30,8 @@ public class Xiphos {
   boolean optStatsChanges = false;
   private final List<String> remaining;
 
-  /**
-   * main function, to which command line arguments are passed.
-   *
-   * @param args
-   *          command line arguments
-   */
+  /** main function, to which command line arguments are passed.
+   * @param args command line arguments */
   public static void main(final String[] args) {
     new Xiphos(args).go();
   }
@@ -96,8 +89,7 @@ public class Xiphos {
         + "within the given PATH. Files are spartanized in place by default.");
     System.out.println("");
     System.out.println("Options:");
-    System.out
-    .println("  -N       Do not overwrite existing files (writes the Spartanized output to a new file in the same directory)");
+    System.out.println("  -N       Do not overwrite existing files (writes the Spartanized output to a new file in the same directory)");
     System.out.println("  -C<num>  Maximum number of Spartanizaion rounds for each file (default: 20)");
     System.out.println("  -E       Display statistics for each file separately");
     System.out.println("  -V       Be verbose");
@@ -201,10 +193,8 @@ public class Xiphos {
     }
   }
 
-  /**
-   * Data structure designed to hold and compute information about a single
-   * file, in order to produce statistics when completed execution
-   */
+  /** Data structure designed to hold and compute information about a single
+   * file, in order to produce statistics when completed execution */
   private class FileStats {
     final File file;
     final int linesBefore;

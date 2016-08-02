@@ -12,16 +12,14 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-/**
- * A {@link Wring} that abbreviates the name of a method parameter that is a
+/** A {@link Wring} that abbreviates the name of a method parameter that is a
  * viable candidate for abbreviation (meaning that its name is suitable for
  * renaming, and isn't the desired name). The abbreviated name is the first
- * character in the last word of the variable's name. <p> This wring is applied
- * to all methods in the code, excluding constructors.
- *
+ * character in the last word of the variable's name.
+ * <p>
+ * This wring is applied to all methods in the code, excluding constructors.
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
- * @since 2015/09/24
- */
+ * @since 2015/09/24 */
 public class SingleVariableDeclarationAbbreviation extends Wring<SingleVariableDeclaration> {
   @Override String description(final SingleVariableDeclaration d) {
     return d.getName().toString();

@@ -15,22 +15,18 @@ public class PluginPreferencesPage extends FieldEditorPreferencePage implements 
     super(GRID);
     listener = new SpartanPropertyListener();
   }
-  /**
-   * Build the preferences page by adding controls
-   */
+  /** Build the preferences page by adding controls */
   @Override public void createFieldEditors() {
     // Add the startup behavior combo box
-    addField(new ComboFieldEditor(PluginPreferencesResources.PLUGIN_STARTUP_BEHAVIOR_ID,
-        PluginPreferencesResources.PLUGIN_STARTUP_BEHAVIOR_TEXT, PluginPreferencesResources.PLUGIN_STARTUP_BEHAVIOR_OPTIONS,
-        getFieldEditorParent()));
+    addField(new ComboFieldEditor(PluginPreferencesResources.PLUGIN_STARTUP_BEHAVIOR_ID, PluginPreferencesResources.PLUGIN_STARTUP_BEHAVIOR_TEXT,
+        PluginPreferencesResources.PLUGIN_STARTUP_BEHAVIOR_OPTIONS, getFieldEditorParent()));
     // Add the enabled for new projects checkbox
     addField(new BooleanFieldEditor(PluginPreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_ID,
         PluginPreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT, getFieldEditorParent()));
     // Create and fill the "enabled spartanizations" group box
     final GroupFieldEditor gr = new GroupFieldEditor("Enabled spartanizations", getFieldEditorParent());
     for (final WringGroup wring : WringGroup.values())
-      gr.add(new ComboFieldEditor(wring.getId(), wring.getLabel(), PluginPreferencesResources.WRING_COMBO_OPTIONS, gr
-          .getFieldEditor()));
+      gr.add(new ComboFieldEditor(wring.getId(), wring.getLabel(), PluginPreferencesResources.WRING_COMBO_OPTIONS, gr.getFieldEditor()));
     addField(gr);
     gr.init();
   }
@@ -40,10 +36,8 @@ public class PluginPreferencesPage extends FieldEditorPreferencePage implements 
     Plugin.getDefault().getPreferenceStore().addPropertyChangeListener(listener);
   }
 
-  /**
-   * An event handler used to re-initialize the Trimmer spartanization once a
-   * wring preference was modified.
-   */
+  /** An event handler used to re-initialize the Trimmer spartanization once a
+   * wring preference was modified. */
   static class SpartanPropertyListener implements IPropertyChangeListener {
     @Override public void propertyChange(@SuppressWarnings("unused") final PropertyChangeEvent __) {
       // Recreate the toolbox's internal instance, adding only enabled wrings

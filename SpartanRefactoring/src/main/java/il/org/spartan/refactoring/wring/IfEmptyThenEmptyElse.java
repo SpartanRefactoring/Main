@@ -7,13 +7,10 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-/**
- * A {@link Wring} to eliminate degenerate if statements such as <code>if (x) ;
+/** A {@link Wring} to eliminate degenerate if statements such as <code>if (x) ;
  * else ;</code>
- *
  * @author Yossi Gil
- * @since 2015-08-26
- */
+ * @since 2015-08-26 */
 public final class IfEmptyThenEmptyElse extends Wring<IfStatement> {
   @Override final Rewrite make(final IfStatement s) {
     return new Rewrite(description(s), s) {

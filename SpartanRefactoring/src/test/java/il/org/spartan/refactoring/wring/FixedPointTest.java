@@ -9,14 +9,11 @@ import il.org.spartan.refactoring.spartanizations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/**
- * * Unit tests for the nesting class Unit test for the containing class. Note
+/** * Unit tests for the nesting class Unit test for the containing class. Note
  * our naming convention: a) test methods do not use the redundant "test"
  * prefix. b) test methods begin with the name of the method they check.
- *
  * @author Yossi Gil
- * @since 2014-07-10
- */
+ * @since 2014-07-10 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 @SuppressWarnings({ "static-method", "javadoc" }) public class FixedPointTest {
   private static void assertConvertsTo(final String from, final String expected) {
@@ -59,7 +56,7 @@ import org.junit.runners.*;
         "      ++i;\n" + //
         "    else \n" + //
         "      --i;" //
-        );
+    );
   }
   @Test(timeout = 2000) public void desiredSimplificationOfExample() {
     assertSimplifiesTo("on * notion * of * no * nothion < the * plain + kludge", "no*of*on*notion*nothion<kludge+the*plain");
@@ -101,9 +98,9 @@ import org.junit.runners.*;
         + " t = t.f(A).f(b) + t.f(c);   "//
         + "return (t + 3);    ", //
         ""//
-        + "return(Z2.f(A).f(b)+Z2.f(c)+3);" //
-        + "" //
-        );
+            + "return(Z2.f(A).f(b)+Z2.f(c)+3);" //
+            + "" //
+    );
   }
   @Test(timeout = 2000) public void multipleIfDeclarationAssignment() {
     assertConvertsTo(//
@@ -137,7 +134,7 @@ import org.junit.runners.*;
         "       if (s.charAt(i) == 'd')\n" + //
         "        res -= 1;\n" + //
         "  return res;\n" //
-        );
+    );
   }
   @Test(timeout = 2000) public void shortestIfBranchFirst03a() {
     assertConvertsTo("  if ('a' == s.charAt(i))\n" + //
@@ -145,11 +142,11 @@ import org.junit.runners.*;
         "        else if ('d' == s.charAt(i))\n" + //
         "          res -= 1;\n" + //
         "", //
-            "  if (s.charAt(i) == 'a')\n" + //
+        "  if (s.charAt(i) == 'a')\n" + //
             "          res += 2;\n" + //
             "        else if (s.charAt(i) == 'd')\n" + //
             "          res -= 1;\n" + //
-        "");
+            "");
   }
   @Test(timeout = 2000) public void shortestIfBranchFirst09() {
     assertSimplifiesTo("s.equals(532) ? 9 * yada3(s.length()) : 6 ", "!s.equals(532)?6:9*yada3(s.length())");
@@ -247,7 +244,7 @@ import org.junit.runners.*;
         + "System.out.println(res); " //
         + "" //
     , "System.out.println((!s?s:s+0xABBA));" //
-        );
+    );
   }
   @Test(timeout = 2000) public void ternarize11() {
     assertConvertsTo("String res = s, foo = \"bar\";if (s.equals(532)==true)    res = s + 0xABBA;System.out.println(res);",
@@ -289,12 +286,12 @@ import org.junit.runners.*;
   @Test(timeout = 2000) public void ternarize18() {
     assertConvertsTo(//
         "    String s = X;\n" + //
-        "    String res = s;\n" + //
-        "    int a = 0;\n" + //
-        "    if (s.equals(res))\n" + //
-        "      System.out.println(tH3 + res);\n" + //
-        "    else\n" + //
-        "      System.out.println(h2A+ res + a + s);", "System.out.println(X.equals(X)?tH3+X:h2A+X+0+X);");
+            "    String res = s;\n" + //
+            "    int a = 0;\n" + //
+            "    if (s.equals(res))\n" + //
+            "      System.out.println(tH3 + res);\n" + //
+            "    else\n" + //
+            "      System.out.println(h2A+ res + a + s);", "System.out.println(X.equals(X)?tH3+X:h2A+X+0+X);");
   }
   @Test(timeout = 2000) public void ternarize23() {
     assertConvertsTo(//
@@ -328,15 +325,15 @@ import org.junit.runners.*;
         + "else "//
         + "  for(int i=0;i<17;++i) "//
         + "    S.out.l('f');"//
-        );
+    );
   }
   @Test(timeout = 2000) public void ternarize54() {
     assertConvertsTo(//
         "if (s == null)\n" + // /
-        "  return Z2;\n" + //
-        "if (!s.contains(delimiter()))\n" + //
-        "  return s;\n" + //
-        "return s.replaceAll(delimiter(), ABC + delimiter());", //
+            "  return Z2;\n" + //
+            "if (!s.contains(delimiter()))\n" + //
+            "  return s;\n" + //
+            "return s.replaceAll(delimiter(), ABC + delimiter());", //
         "return s==null?Z2:!s.contains(delimiter())?s:s.replaceAll(delimiter(),ABC+delimiter());");
   }
 }

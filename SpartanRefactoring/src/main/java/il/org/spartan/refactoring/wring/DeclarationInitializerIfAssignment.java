@@ -10,16 +10,13 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-/**
- * A {@link Wring} to convert <code>int a = 2; if (b) a = 3;</code> into
+/** A {@link Wring} to convert <code>int a = 2; if (b) a = 3;</code> into
  * <code>int a = b ? 3 : 2;</code>
- *
  * @author Yossi Gil
- * @since 2015-08-07
- */
+ * @since 2015-08-07 */
 public final class DeclarationInitializerIfAssignment extends Wring.VariableDeclarationFragementAndStatement {
-  @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n,
-      final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
+  @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+      final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
       return null;
     final IfStatement s = asIfStatement(nextStatement);
@@ -30,8 +27,7 @@ public final class DeclarationInitializerIfAssignment extends Wring.VariableDecl
     if (condition == null)
       return null;
     final Assignment a = extract.assignment(then(s));
-    if (a == null || !same(left(a), n) || a.getOperator() != Assignment.Operator.ASSIGN
-        || doesUseForbiddenSiblings(f, condition, right(a)))
+    if (a == null || !same(left(a), n) || a.getOperator() != Assignment.Operator.ASSIGN || doesUseForbiddenSiblings(f, condition, right(a)))
       return null;
     final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
     if (!i.canInlineInto(condition, right(a)))

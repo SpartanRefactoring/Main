@@ -23,10 +23,8 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.Parameters;
 
-/**
- * @author Yossi Gil
- * @since 2014-07-13
- */
+/** @author Yossi Gil
+ * @since 2014-07-13 */
 @SuppressWarnings({ "javadoc", "static-method" })//
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 public class DeclarationIfAssginmentTest {
@@ -84,12 +82,9 @@ public class DeclarationIfAssginmentTest {
         new String[] { "Uses later variable", "int a = 2,b = true; if (b) a =3;", }, //
         null);
 
-    /**
-     * Generate test cases for this parameterized class.
-     *
+    /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
-     *         objects, the test case name, the input, and the file.
-     */
+     *         objects, the test case name, the input, and the file. */
     @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);

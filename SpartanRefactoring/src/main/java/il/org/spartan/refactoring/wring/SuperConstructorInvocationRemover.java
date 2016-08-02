@@ -7,13 +7,10 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-/**
- * A wring to remove <code>super()</code> calls which take no arguments, as
+/** A wring to remove <code>super()</code> calls which take no arguments, as
  * typically created by Eclipse's template for constructors.
- *
  * @author Daniel Mittelman?
- * @since 2015-08-26
- */
+ * @since 2015-08-26 */
 public class SuperConstructorInvocationRemover extends Wring<SuperConstructorInvocation> {
   @Override boolean scopeIncludes(final SuperConstructorInvocation i) {
     return i.arguments().isEmpty();

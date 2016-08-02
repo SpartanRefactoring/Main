@@ -11,10 +11,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/**
- * @author Yossi Gil
- * @since 2014-08-25
- */
+/** @author Yossi Gil
+ * @since 2014-08-25 */
 @SuppressWarnings({ "javadoc" })//
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 public class OccurrencesTest {
