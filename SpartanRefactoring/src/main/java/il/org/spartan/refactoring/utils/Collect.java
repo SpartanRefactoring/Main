@@ -222,7 +222,7 @@ public enum Collect {
         collect(n.getExpression());
         return false;
       }
-      @Override public boolean visit(final ForStatement s) {
+      @Override public boolean visit(@SuppressWarnings("unused") final ForStatement __) {
         ++loopDepth;
         return true;
       }
@@ -251,7 +251,7 @@ public enum Collect {
       @Override public boolean visit(final SimpleName n) {
         return collect(n);
       }
-      @Override public boolean visit(final WhileStatement s) {
+      @Override public boolean visit(@SuppressWarnings("unused") final WhileStatement __) {
         ++loopDepth;
         return true;
       }
