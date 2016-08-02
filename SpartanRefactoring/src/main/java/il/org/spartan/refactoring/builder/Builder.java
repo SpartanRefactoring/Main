@@ -114,15 +114,14 @@ public class Builder extends IncrementalProjectBuilder {
         case IResourceDelta.CHANGED:
           // handle added and changed resource
           addMarkers(internalDelta.getResource());
-          break;
+          return true; // return true to continue visiting children.
         case IResourceDelta.REMOVED:
+          // return true to continue visiting children.
           // handle removed resource
-          break;
+          return true;
         default:
-          break;
+          return true; // return true to continue visiting children.
       }
-      // return true to continue visiting children.
-      return true;
     });
   }
 }
