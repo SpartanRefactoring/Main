@@ -69,6 +69,7 @@ public class Toolbox {
             null)
         .add(MethodDeclaration.class, //
             new MethodRenameReturnToDollar(), //
+            new RedundantModifiers.OfMethod(), //
             null)
         .add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //
