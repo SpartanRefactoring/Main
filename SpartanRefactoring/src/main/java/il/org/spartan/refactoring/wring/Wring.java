@@ -40,7 +40,7 @@ final class LocalInliner {
     @SafeVarargs protected final void inlineInto(final ASTNode... ns) {
       inlineInto(wrap(ns));
     }
-    @SafeVarargs private final void inlineInto(final Wrapper<ASTNode>... ns) {
+    private void inlineInto(final Wrapper<ASTNode>... ns) {
       for (final Wrapper<ASTNode> e : ns)
         inlineIntoSingleton(get(), e);
     }

@@ -29,7 +29,7 @@ public final class InfixComparisonBooleanLiteral extends Wring.ReplaceCurrentNod
   private static boolean literalOnRight(final InfixExpression e) {
     return Is.booleanLiteral(core(right(e)));
   }
-  @Override public final boolean scopeIncludes(final InfixExpression e) {
+  @Override public boolean scopeIncludes(final InfixExpression e) {
     return !e.hasExtendedOperands() && in(e.getOperator(), EQUALS, NOT_EQUALS) && (literalOnLeft(e) || literalOnRight(e));
   }
   @Override String description(final InfixExpression e) {
