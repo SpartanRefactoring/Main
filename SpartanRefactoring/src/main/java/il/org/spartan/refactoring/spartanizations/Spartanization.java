@@ -26,15 +26,13 @@ import org.eclipse.ui.*;
  *         2013/07/10
  * @since 2013/01/01 */
 public abstract class Spartanization extends Refactoring {
-  /** @param u A compilation unit for reference - you give me an arbitrary
-   *        compilation unit from the project and I'll find the root of the
-   *        project and do my magic.
-   * @param pm A standard {@link IProgressMonitor} - if you don't care about
-   *        operation times put a "new NullProgressMonitor()"
-   * @return List of all compilation units in the current project
-   * @throws JavaModelException don't forget to catch */
-  public static final List<ICompilationUnit> getAllProjectCompilationUnits(final ICompilationUnit u, final IProgressMonitor pm)
-      throws JavaModelException {
+  /**
+   * @param u  A compilation unit for reference - you give me an arbitrary compilation unit from the project and I'll find the root of the project and do my magic.
+   * @param pm  A standard  {@link IProgressMonitor}  - if you don't care about operation times put a "new NullProgressMonitor()"
+   * @return  List of all compilation units in the current project
+   * @throws JavaModelException  don't forget to catch 
+   */
+  public static List<ICompilationUnit> getAllProjectCompilationUnits(final ICompilationUnit u, final IProgressMonitor pm) throws JavaModelException {
     pm.beginTask("Gathering project information...", 1);
     final List<ICompilationUnit> $ = new ArrayList<>();
     if (u == null) {
@@ -316,13 +314,13 @@ public abstract class Spartanization extends Refactoring {
       pm.done();
     return $;
   }
-  /** creates an ASTRewrite, under the context of a text marker, which contains
-   * the changes
-   * @param pm a progress monitor in which to display the progress of the
-   *        refactoring
-   * @param m the marker
-   * @return an ASTRewrite which contains the changes */
-  private final ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m) {
+  /**
+   * creates an ASTRewrite, under the context of a text marker, which contains the changes
+   * @param pm  a progress monitor in which to display the progress of the refactoring
+   * @param m  the marker
+   * @return  an ASTRewrite which contains the changes 
+   */
+  private ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m) {
     return createRewrite(pm, (CompilationUnit) MakeAST.COMPILATION_UNIT.from(m, pm), m);
   }
   private List<ICompilationUnit> getUnits(final IProgressMonitor pm) throws JavaModelException {
@@ -344,7 +342,7 @@ public abstract class Spartanization extends Refactoring {
   private boolean isSelected(final int offset) {
     return isTextSelected() && offset >= selection.getOffset() && offset < selection.getLength() + selection.getOffset();
   }
-  private final boolean isTextSelected() {
+  private boolean isTextSelected() {
     return selection != null && !selection.isEmpty() && selection.getLength() != 0;
   }
   private void runAsManualCall(final IProgressMonitor pm) throws JavaModelException, CoreException {

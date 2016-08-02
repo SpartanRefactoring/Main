@@ -125,11 +125,11 @@ public enum Collect {
       boolean consider(final Expression e) {
         return add(asSimpleName(e));
       }
-      private void addFragments(final List<VariableDeclarationFragment> fs) {
+      void addFragments(final List<VariableDeclarationFragment> fs) {
         for (final VariableDeclarationFragment f : fs)
           add(f.getName());
       }
-      private boolean consider(final List<? extends Expression> initializers) {
+      boolean consider(final List<? extends Expression> initializers) {
         for (final Expression e : initializers)
           addFragments(fragments(asVariableDeclarationExpression(e)));
         return true;
@@ -156,11 +156,11 @@ public enum Collect {
           into.add(candidate);
         return true;
       }
-      private void addFragments(final List<VariableDeclarationFragment> fs) {
+      void addFragments(final List<VariableDeclarationFragment> fs) {
         for (final VariableDeclarationFragment f : fs)
           add(f.getName());
       }
-      private boolean consider(final List<? extends Expression> es) {
+      boolean consider(final List<? extends Expression> es) {
         for (final Expression e : es)
           addFragments(fragments(asVariableDeclarationExpression(e)));
         return true;
@@ -258,19 +258,19 @@ public enum Collect {
         if (repeated())
           into.add(n);
       }
-      private boolean add(final Object o) {
+      boolean add(final Object o) {
         return collect((Expression) o);
       }
-      private boolean collect(final Expression e) {
+      boolean collect(final Expression e) {
         collectExpression(e);
         return true;
       }
-      private boolean collect(@SuppressWarnings("rawtypes") final List os) {
+      boolean collect(@SuppressWarnings("rawtypes") final List os) {
         for (final Object o : os)
           add(o);
         return true;
       }
-      private List<VariableDeclarationFragment> getFieldsOfClass(final ASTNode classNode) {
+      List<VariableDeclarationFragment> getFieldsOfClass(final ASTNode classNode) {
         final List<VariableDeclarationFragment> $ = new ArrayList<>();
         classNode.accept(new ASTVisitor() {
           @Override public boolean visit(final FieldDeclaration d) {
@@ -280,7 +280,7 @@ public enum Collect {
         });
         return $;
       }
-      private boolean repeated() {
+      boolean repeated() {
         return !lexicalOnly && loopDepth > 0;
       }
     };

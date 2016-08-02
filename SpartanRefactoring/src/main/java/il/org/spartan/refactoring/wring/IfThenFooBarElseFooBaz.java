@@ -41,13 +41,12 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> {
           lr.remove(s, g);
         }
       }
-      private IfStatement replacement() {
+      IfStatement replacement() {
         return replacement(s.getExpression(), Subject.ss(then).toOneStatementOrNull(), Subject.ss(elze).toOneStatementOrNull());
       }
-      private IfStatement replacement(final Expression condition, final Statement trimmedThen, final Statement trimmedElse) {
-        return trimmedThen == null && trimmedElse == null ? null //
-            : trimmedThen == null ? Subject.pair(trimmedElse, null).toNot(condition)//
-                : Subject.pair(trimmedThen, trimmedElse).toIf(condition);
+      IfStatement replacement(final Expression condition, final Statement trimmedThen, final Statement trimmedElse) {
+        return trimmedThen == null && trimmedElse == null ? null
+            : trimmedThen == null ? Subject.pair(trimmedElse, null).toNot(condition) : Subject.pair(trimmedThen, trimmedElse).toIf(condition);
       }
     };
   }

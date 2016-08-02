@@ -12,7 +12,7 @@ import org.eclipse.text.edits.*;
  * @author Yossi Gil
  * @since 2015-08-26 */
 public final class IfEmptyThenEmptyElse extends Wring<IfStatement> {
-  @Override final Rewrite make(final IfStatement s) {
+  @Override Rewrite make(final IfStatement s) {
     return new Rewrite(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         s.setElseStatement(null);

@@ -83,7 +83,7 @@ public abstract class RedundantModifiers<N extends BodyDeclaration> extends Wrin
     return false;
   }
   @Override String description(final BodyDeclaration ¢) {
-    return "Remove redundant " + redundants(¢) + " modifier(s) from " + ¢.toString();
+    return "Remove redundant " + redundants(¢) + " modifier(s) from declaration";
   }
   @Override BodyDeclaration replacement(final BodyDeclaration $) {
     return prune(duplicate($), redundancies($));
