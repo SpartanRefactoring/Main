@@ -10,8 +10,8 @@ import org.junit.runners.*;
 /** Test class for {@link ExpressionComparator}
  * @author Yossi Gil
  * @since 2015-07-17 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
-@SuppressWarnings({ "javadoc", "static-method" })//
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@SuppressWarnings({ "javadoc", "static-method" }) //
 public class ExpressionComparatorTest {
   @Test public void alphabeticalCompare() {
     azzert.that(ExpressionComparator.alphabeticalCompare(e("1+2"), e("6+7")), lessThan(0));

@@ -23,8 +23,8 @@ import org.junit.runners.Parameterized.Parameters;
 /** Unit tests for {@link Wrings#ADDITION_SORTER}.
  * @author Yossi Gil
  * @since 2014-07-13 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
-@SuppressWarnings({ "javadoc", "static-method" })//
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@SuppressWarnings({ "javadoc", "static-method" }) //
 public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixExpression> {
   static final InfixComparisonBooleanLiteral WRING = new InfixComparisonBooleanLiteral();
 
@@ -52,7 +52,7 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
     assertSimilar(" 2 ", peeled);
   }
 
-  @RunWith(Parameterized.class)//
+  @RunWith(Parameterized.class) //
   public static class WringedInput extends AbstractWringTest.WringedExpression.Infix {
     static String[][] cases = Utils.asArray(//
         new String[] { "", "a == b == c == true", "a == b == c" }, //
@@ -82,7 +82,7 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
-    @Parameters(name = DESCRIPTION)//
+    @Parameters(name = DESCRIPTION) //
     public static Collection<Object[]> cases() {
       return collect(cases);
     }

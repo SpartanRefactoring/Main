@@ -6,8 +6,8 @@ import il.org.spartan.refactoring.utils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.PostfixExpression.Operator;
 
-/** A {@link Wring} that converts, whenever possible, postfix increment/decrement
- * to prefix increment/decrement
+/** A {@link Wring} that converts, whenever possible, postfix
+ * increment/decrement to prefix increment/decrement
  * @author Yossi Gil
  * @since 2015-7-17 */
 public final class PostfixToPrefix extends Wring.ReplaceCurrentNode<PostfixExpression> {

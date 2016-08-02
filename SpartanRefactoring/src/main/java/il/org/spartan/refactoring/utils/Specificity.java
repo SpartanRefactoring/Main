@@ -56,8 +56,7 @@ public class Specificity implements Comparator<Expression> {
       @Override boolean includes(final ASTNode n) {
         return Is.this_(n);
       }
-    },
-    ;
+    },;
     static int of(final ASTNode n) {
       final Expression e = extract.core((Expression) n);
       for (final Level l : values())

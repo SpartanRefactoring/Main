@@ -19,8 +19,8 @@ import org.junit.runners.Parameterized.Parameters;
 /** Unit tests for {@link IfFooSequencerIfFooSameSequencer}.
  * @author Yossi Gil
  * @since 2014-07-13 */
-@SuppressWarnings({ "javadoc", "static-method" })//
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
+@SuppressWarnings({ "javadoc", "static-method" }) //
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class IfCommandsSequencerIfSameCommandsSequencerTest {
   static final Wring<IfStatement> WRING = new IfFooSequencerIfFooSameSequencer();
 
@@ -45,7 +45,7 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
     azzert.that(i.toString(), WRING.scopeIncludes(i), is(false));
   }
 
-  @RunWith(Parameterized.class)//
+  @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope<IfStatement> {
     static String[][] cases = Utils.asArray(//
         new String[] { "Another distinct assignment", "if (a) a /= b; else a %= c;" }, //
@@ -78,24 +78,25 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
         new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}" }, //
         new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}" }, //
         new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}" }, //
-        new String[] { "Complex with many junk statements", "" + //
-            " if (x) {\n" + //
-            "   ;\n" + //
-            "   f();\n" + //
-            "   return a;\n" + //
-            " } else {\n" + //
-            "   ;\n" + //
-            "   g();\n" + //
-            "   {\n" + //
-            "   }\n" + //
-            " }\n" + //
-            "" }, //
+        new String[] { "Complex with many junk statements",
+            "" + //
+                " if (x) {\n" + //
+                "   ;\n" + //
+                "   f();\n" + //
+                "   return a;\n" + //
+                " } else {\n" + //
+                "   ;\n" + //
+                "   g();\n" + //
+                "   {\n" + //
+                "   }\n" + //
+                " }\n" + //
+                "" }, //
         null);
 
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
-    @Parameters(name = DESCRIPTION)//
+    @Parameters(name = DESCRIPTION) //
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
@@ -105,11 +106,11 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
     }
   }
 
-  @RunWith(Parameterized.class)//
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
+  @RunWith(Parameterized.class) //
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
   public static class Wringed extends AbstractWringTest.Wringed.IfStatementAndSurrounding {
     private static String[][] cases = new String[][] { //
-    new String[] { "Return expression", "if (a) return a; if (b) return a;", "if (a || b) return a;" }, //
+        new String[] { "Return expression", "if (a) return a; if (b) return a;", "if (a || b) return a;" }, //
         new String[] { "Return empty", "if (a) return; if (b) return;", "if (a || b) return;" }, //
         new String[] { "Break expression", "if (a) break a; if (b) break a;", "if (a || b) break a;" }, //
         new String[] { "Break empty", "if (a) break; if (b) break;", "if (a || b) break;" }, //
@@ -127,7 +128,7 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
-    @Parameters(name = DESCRIPTION)//
+    @Parameters(name = DESCRIPTION) //
     public static Collection<Object[]> cases() {
       return collect(cases);
     }

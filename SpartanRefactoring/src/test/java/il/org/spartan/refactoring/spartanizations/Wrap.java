@@ -7,9 +7,9 @@ import il.org.spartan.refactoring.utils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
-/** An empty <code><b>enum</b></code> for fluent programming. The name should say
- * it all: The name, followed by a dot, followed by a method name, should read
- * like a sentence phrase.
+/** An empty <code><b>enum</b></code> for fluent programming. The name should
+ * say it all: The name, followed by a dot, followed by a method name, should
+ * read like a sentence phrase.
  * @author Yossi Gil
  * @since 2015-07-16 */
 public enum Wrap {
@@ -19,15 +19,15 @@ public enum Wrap {
       "package p;\n" + //
       "public class SpongeBob {\n" + //
       "", "" + //
-      "} // END OF PACKAGE\n" + //
-      ""), //
+          "} // END OF PACKAGE\n" + //
+          ""), //
   /** Algorithm for wrapping/unwrapping a statement */
   Statement("" + Method.before + //
       "public void squarePants(){\n" + //
       "", "" + //
-      "} // END OF METHOD \n" + //
-      "" + Method.after + //
-      ""), //
+          "} // END OF METHOD \n" + //
+          "" + Method.after + //
+          ""), //
   /** Algorithm for wrapping/unwrapping an expression */
   Expression("" + Statement.before + //
       "   if (", //

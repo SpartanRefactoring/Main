@@ -43,8 +43,8 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
         return ¢(d.getName());
       }
       boolean ¢(final Statement ¢) {
-        return ¢ instanceof VariableDeclarationStatement ? ¢((VariableDeclarationStatement) ¢) : ¢ instanceof ForStatement ? ¢((ForStatement) ¢)
-            : ¢ instanceof TryStatement && ¢((TryStatement) ¢);
+        return ¢ instanceof VariableDeclarationStatement ? ¢((VariableDeclarationStatement) ¢)
+            : ¢ instanceof ForStatement ? ¢((ForStatement) ¢) : ¢ instanceof TryStatement && ¢((TryStatement) ¢);
       }
       boolean ¢(final String ¢) {
         if (dictionary.contains(¢))
