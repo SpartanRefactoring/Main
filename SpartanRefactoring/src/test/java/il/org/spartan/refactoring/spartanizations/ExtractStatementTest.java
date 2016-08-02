@@ -9,8 +9,8 @@ import il.org.spartan.refactoring.utils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-@SuppressWarnings({ "javadoc", "static-method" })//
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
+@SuppressWarnings({ "javadoc", "static-method" }) //
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class ExtractStatementTest {
   @Test public void declarationCorrectSize() {
     azzert.that(extract.statements(s("{int a; a();}")).size(), is(2));

@@ -35,7 +35,7 @@ public enum Precedence {
           "*=", "/=", "%=", // assignment, multiplicative
           "&=", "^=", "|=", // assignment, bitwise
           "<<=", ">>=", ">>>="// assignment, shift
-      );
+  );
 
   /** Compare precedence of two expressions.
    * @param host JD
@@ -129,7 +129,8 @@ public enum Precedence {
    * @since 2015-07-14 */
   public enum Is {
     ;
-    /** determine whether an integer falls within the legal range of precedences.
+    /** determine whether an integer falls within the legal range of
+     * precedences.
      * @param precedence JD
      * @return <code><b>true</b></code> <i>iff</i> the parameter is a legal
      *         precedence of Java. */

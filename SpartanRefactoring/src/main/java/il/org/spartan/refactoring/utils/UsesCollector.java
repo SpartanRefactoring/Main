@@ -197,8 +197,8 @@ class UsesCollector extends HidingDepth {
   private boolean hit(final SimpleName ¢) {
     return same(¢, focus);
   }
-  /** This is where we ignore all occurrences of {@link SimpleName} which are not
-   * variable names, e.g., class name, function name, field name, etc.
+  /** This is where we ignore all occurrences of {@link SimpleName} which are
+   * not variable names, e.g., class name, function name, field name, etc.
    * @param _ JD */
   private void ingore(@SuppressWarnings("unused") final SimpleName __) {
     // We simply ignore the parameter

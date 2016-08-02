@@ -9,8 +9,8 @@ import java.util.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015/09/19 */
 public class FileUtils {
-  /** Returns a list of all the .java files found recursively within the provided
-   * paths
+  /** Returns a list of all the .java files found recursively within the
+   * provided paths
    * @param paths Directories to scan
    * @return a list of absolute paths to .java files found within the provided
    *         directories. If no files were found, an empty list is returned */

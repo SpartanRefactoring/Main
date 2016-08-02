@@ -57,12 +57,15 @@ public class Toolbox {
             new InfixSortSubstraction(), //
             new InfixSortDivision(), //
             new InfixConditionalCommon(), //
-            null).add(MethodDeclaration.class, //
+            null)
+        .add(MethodDeclaration.class, //
             new MethodRenameReturnToDollar(), //
             new RedundantModifiers.OfMethod(), //
-            null).add(SingleVariableDeclaration.class, //
+            null)
+        .add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //
-            null).add(VariableDeclarationFragment.class, //
+            null)
+        .add(VariableDeclarationFragment.class, //
             new DeclarationAssignment(), //
             new DeclarationInitialiazerAssignment(), //
             new DeclarationInitialiazelUpdateAssignment(), //

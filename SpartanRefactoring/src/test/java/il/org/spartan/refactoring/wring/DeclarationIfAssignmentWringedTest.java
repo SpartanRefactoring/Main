@@ -21,9 +21,9 @@ import org.junit.runners.*;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
-@SuppressWarnings({ "javadoc" })//
-@RunWith(Parameterized.class)//
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
+@SuppressWarnings({ "javadoc" }) //
+@RunWith(Parameterized.class) //
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<VariableDeclarationFragment> {
   final static DeclarationInitializerIfAssignment WRING = new DeclarationInitializerIfAssignment();
   /** Description of a test case for {@link Parameter} annotation */
@@ -37,14 +37,15 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
           "int n2 = 0, n3;" + //
               "  if (d)\n" + //
               "    n2 = 2;", //
-          "int n2 = d ? 2 : 0, n3;" }, null);
+          "int n2 = d ? 2 : 0, n3;" },
+      null);
 
   /** Generate test cases for this parameterized class.
-   * @return a collection of cases, where each case is an array of three objects,
-   *         the test case name, the input, and the file. */
+   * @return a collection of cases, where each case is an array of three
+   *         objects, the test case name, the input, and the file. */
   // TODO: JUnit bug: gets confused when value contains new line characters:
   // @Parameters(name = "Test #{index}. ({0}) \"{1}\" ==> \"{2}\"") //
-  @Parameters(name = "Test #{index}. ({0}) ")//
+  @Parameters(name = "Test #{index}. ({0}) ") //
   public static Collection<Object[]> cases() {
     return collect(cases);
   }

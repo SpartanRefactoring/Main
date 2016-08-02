@@ -13,9 +13,9 @@ import java.util.*;
  * @since 2013/07/01 */
 public class Spartanizations {
   private static Spartanization[] all = { //
-  new Trimmer(), //
+      new Trimmer(), //
   };
-  @SuppressWarnings("synthetic-access")//
+  @SuppressWarnings("synthetic-access") //
   private static final Map<String, Spartanization> map = new HashMap<String, Spartanization>() {
     private static final long serialVersionUID = -8921699276699040030L;
     {
@@ -34,7 +34,7 @@ public class Spartanizations {
   }
   /** @param c Spartanization rule
    * @return Spartanization class rule instance */
-  @SuppressWarnings("unchecked")//
+  @SuppressWarnings("unchecked") //
   public static <T extends Spartanization> T findInstance(final Class<? extends T> c) {
     for (final Spartanization $ : all)
       if ($.getClass().equals(c))
