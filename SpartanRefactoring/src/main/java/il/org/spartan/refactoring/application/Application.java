@@ -271,10 +271,10 @@ import org.eclipse.jdt.core.dom.*;
   MethodInvocation getMethodInvocation(final CompilationUnit u, final int lineNumber, MethodInvocation i) {
     final Wrapper<MethodInvocation> $ = new Wrapper<>();
     u.accept(new ASTVisitor() {
-      @Override public boolean visit(final MethodInvocation i) {
-        if (u.getLineNumber(i.getStartPosition()) == lineNumber)
-          $.set(i);
-        return super.visit(i);
+      @Override public boolean visit(final MethodInvocation ¢) {
+        if (u.getLineNumber(¢.getStartPosition()) == lineNumber)
+          $.set(¢);
+        return super.visit(¢);
       }
     });
     return $.get() == null ? i : $.get();
