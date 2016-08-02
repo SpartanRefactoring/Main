@@ -1,15 +1,13 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
+import il.org.spartan.*;
+import il.org.spartan.refactoring.utils.Collect.Collector;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-
-import il.org.spartan.*;
-import il.org.spartan.refactoring.utils.Collect.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) public class SearchTest {
   private final SimpleName n = asSimpleName(e("n"));

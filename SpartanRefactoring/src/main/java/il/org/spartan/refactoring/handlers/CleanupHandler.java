@@ -2,6 +2,7 @@ package il.org.spartan.refactoring.handlers;
 
 import static il.org.spartan.refactoring.handlers.ApplySpartanizationHandler.*;
 import static il.org.spartan.refactoring.spartanizations.DialogBoxes.*;
+import il.org.spartan.refactoring.spartanizations.*;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -12,8 +13,6 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
-
-import il.org.spartan.refactoring.spartanizations.*;
 
 /**
  * A handler for {@link Spartanizations}. This handler executes all safe

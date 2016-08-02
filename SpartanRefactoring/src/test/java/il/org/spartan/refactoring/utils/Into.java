@@ -1,13 +1,12 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
+import il.org.spartan.*;
+import il.org.spartan.refactoring.spartanizations.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-
-import il.org.spartan.*;
-import il.org.spartan.refactoring.spartanizations.*;
 
 /**
  * An empty <code><b>enum</b></code> for fluent programming. The name should say

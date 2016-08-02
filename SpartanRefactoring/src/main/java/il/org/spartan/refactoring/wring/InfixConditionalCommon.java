@@ -4,14 +4,13 @@ import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
+import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.*;
-
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
-import il.org.spartan.refactoring.utils.*;
+import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 
 /**
  * A {@link Wring} to convert <code>b && true</code> to <code>b</code>
