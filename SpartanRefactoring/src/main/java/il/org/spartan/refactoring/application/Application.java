@@ -88,7 +88,7 @@ import org.eclipse.jdt.core.dom.*;
     System.out.println("");
     System.out.println("Options:");
     System.out
-        .println("  -N       Do not overwrite existing files (writes the Spartanized output to a new file in the same directory)");
+    .println("  -N       Do not overwrite existing files (writes the Spartanized output to a new file in the same directory)");
     System.out.println("  -C<num>  Maximum number of Spartanizaion rounds for each file (default: 20)");
     System.out.println("  -E       Display statistics for each file separately");
     System.out.println("  -V       Be verbose");
@@ -204,7 +204,7 @@ import org.eclipse.jdt.core.dom.*;
     p.setSource(source.toCharArray());
     return getPackageNameFromSource(new Wrapper<>(""), p.createAST(null));
   }
-  private String getPackageNameFromSource(final Wrapper<String> $, ASTNode n) {
+  private String getPackageNameFromSource(final Wrapper<String> $, final ASTNode n) {
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final PackageDeclaration d) {
         $.set(d.getName().toString());
@@ -268,7 +268,7 @@ import org.eclipse.jdt.core.dom.*;
   static int countLines(final String fileName) throws IOException {
     return countLines(new File(fileName));
   }
-  MethodInvocation getMethodInvocation(final CompilationUnit u, final int lineNumber, MethodInvocation i) {
+  MethodInvocation getMethodInvocation(final CompilationUnit u, final int lineNumber, final MethodInvocation i) {
     final Wrapper<MethodInvocation> $ = new Wrapper<>();
     u.accept(new ASTVisitor() {
       @Override public boolean visit(final MethodInvocation ¢) {

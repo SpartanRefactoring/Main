@@ -153,7 +153,7 @@ class UnionFind {
     for (int child = from; child != root; child = parentOf[child])
       parentOf[child] = root;
   }
-  @SuppressWarnings("boxing") //
+  @SuppressWarnings("boxing")//
   public static void main(final String[] args) {
     // TODO Ofir: Tests, should be made better by me,
     final ChainedHash<String, Integer> names = new ChainedHash<>();

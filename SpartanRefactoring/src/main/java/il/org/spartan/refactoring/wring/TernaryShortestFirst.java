@@ -17,8 +17,8 @@ import org.eclipse.jdt.core.dom.*;
  */
 public final class TernaryShortestFirst extends Wring.ReplaceCurrentNode<ConditionalExpression> {
   @Override ConditionalExpression replacement(final ConditionalExpression e) {
-    final ConditionalExpression $ = Subject.pair(core(e.getElseExpression()), core(e.getThenExpression()))
-        .toCondition(logicalNot(e.getExpression()));
+    final ConditionalExpression $ = Subject.pair(core(e.getElseExpression()), core(e.getThenExpression())).toCondition(
+        logicalNot(e.getExpression()));
     final Expression then = $.getElseExpression();
     final Expression elze = $.getThenExpression();
     if (!Is.conditional(then) && Is.conditional(elze))

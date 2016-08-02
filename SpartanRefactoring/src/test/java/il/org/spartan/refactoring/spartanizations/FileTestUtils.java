@@ -166,7 +166,7 @@ public abstract class FileTestUtils {
    */
   public static abstract class Files extends FileTestUtils.Traverse {
     /* (non-Javadoc)
-     *
+     * 
      * @see
      * il.ac.technion.cs.ssdl.spartan.refactoring.TestSuite.Traverse#go(java
      * .util.List, java.io.File) */

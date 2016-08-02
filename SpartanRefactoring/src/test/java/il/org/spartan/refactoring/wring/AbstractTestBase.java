@@ -8,7 +8,7 @@ import java.util.*;
 import org.junit.*;
 import org.junit.runners.Parameterized.Parameter;
 
-@SuppressWarnings({ "javadoc" }) //
+@SuppressWarnings({ "javadoc" })//
 public class AbstractTestBase {
   protected static Collection<Object[]> collect(final String[][] cases) {
     final Collection<Object[]> $ = new ArrayList<>(cases.length);

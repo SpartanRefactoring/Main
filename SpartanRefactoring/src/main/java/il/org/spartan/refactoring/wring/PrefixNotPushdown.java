@@ -26,15 +26,12 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
    * @return the operator that produces the logical negation of the parameter
    */
   public static Operator conjugate(final Operator o) {
-    return o == null ? null
-        : o.equals(CONDITIONAL_AND) ? CONDITIONAL_OR //
-            : o.equals(CONDITIONAL_OR) ? CONDITIONAL_AND //
-                : o.equals(EQUALS) ? NOT_EQUALS
-                    : o.equals(NOT_EQUALS) ? EQUALS
-                        : o.equals(LESS_EQUALS) ? GREATER
-                            : o.equals(GREATER) ? LESS_EQUALS //
-                                : o.equals(GREATER_EQUALS) ? LESS //
-                                    : o.equals(LESS) ? GREATER_EQUALS : null;
+    return o == null ? null : o.equals(CONDITIONAL_AND) ? CONDITIONAL_OR //
+        : o.equals(CONDITIONAL_OR) ? CONDITIONAL_AND //
+            : o.equals(EQUALS) ? NOT_EQUALS : o.equals(NOT_EQUALS) ? EQUALS : o.equals(LESS_EQUALS) ? GREATER
+                : o.equals(GREATER) ? LESS_EQUALS //
+                    : o.equals(GREATER_EQUALS) ? LESS //
+                        : o.equals(LESS) ? GREATER_EQUALS : null;
   }
   /**
    * A utility function, which tries to simplify a boolean expression, whose top
@@ -94,7 +91,7 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
         || ($ = perhapsDoubleNegation(e)) != null//
         || ($ = perhapsDeMorgan(e)) != null//
         || ($ = perhapsComparison(e)) != null //
-            ? $ : null;
+    ? $ : null;
   }
   private static Expression pushdownNot(final PrefixExpression e) {
     return e == null ? null : pushdownNot(core(e.getOperand()));

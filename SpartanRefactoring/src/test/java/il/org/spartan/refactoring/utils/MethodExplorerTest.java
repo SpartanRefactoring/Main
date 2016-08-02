@@ -10,14 +10,13 @@ import org.junit.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) public class MethodExplorerTest {
   @Test public void localVariablesCatchExpression() {
-    azzert.that(
-        new MethodExplorer(Into.d("" + "  void f() {\n" + "    try {\n" + "      f();\n"
-            + "    } catch (final Exception|RuntimeException e) {\n" + "      f();\n" + "    }\n" + "  }")).localVariables().size(),
-        is(1));
+    azzert.that(new MethodExplorer(Into.d("" + "  void f() {\n" + "    try {\n" + "      f();\n"
+        + "    } catch (final Exception|RuntimeException e) {\n" + "      f();\n" + "    }\n" + "  }")).localVariables().size(),
+            is(1));
   }
   @Test public void localVariablesExtendedForLoop() {
-    azzert.that(new MethodExplorer(Into.d("" + "  int sum(final int is[]) {\n" + "    int $ = 0;\n" + "    for (final int i : is)\n"
-        + "      $ += i;\n" + "    return $;\n" + "  } ")).localVariables().size(), is(2));
+    azzert.that(new MethodExplorer(Into.d("" + "  int sum(final int is[]) {\n" + "    int $ = 0;\n"
+        + "    for (final int i : is)\n" + "      $ += i;\n" + "    return $;\n" + "  } ")).localVariables().size(), is(2));
   }
   @Test public void localVariablesForLoopNoVariable() {
     azzert.that(new MethodExplorer(Into.d("  int f() {\n" + "  for (f(); i*j <10; i += j++);  }")).localVariables().size(), is(0));
@@ -27,9 +26,8 @@ import org.junit.*;
         is(1));
   }
   @Test public void localVariablesForLoopTwoVariables() {
-    azzert.that(
-        new MethodExplorer(Into.d("  int f() {\n" + "  for (int i = 0, j = 2; i*j <10; i += j++);  }")).localVariables().size(),
-        is(2));
+    azzert.that(new MethodExplorer(Into.d("  int f() {\n" + "  for (int i = 0, j = 2; i*j <10; i += j++);  }")).localVariables()
+        .size(), is(2));
   }
   @Test public void localVariablesMultipleFragments() {
     azzert.that(new MethodExplorer(Into.d("  int f() {\n" + "int a,b;\n" + "  }")).localVariables().size(), is(2));
@@ -38,17 +36,14 @@ import org.junit.*;
     azzert.that(new MethodExplorer(Into.d("  int f() {\n" + "int a,b;\n" + "  {int c, d;}}")).localVariables().size(), is(4));
   }
   @Test public void localVariablesNone() {
-    azzert.that(
-        new MethodExplorer(
-            Into.d("  int f() {\n" + "    return new Object() {\n" + "      @Override public boolean equals(Object obj) {\n"
-                + "        return super.equals(obj);\n" + "      }\n" + "      @Override public int hashCode() {\n"
-                + "        return super.hashCode();\n" + "      }\n" + "    }.hashCode();\n" + "  }")).localVariables().size(),
-        is(0));
+    azzert.that(new MethodExplorer(Into.d("  int f() {\n" + "    return new Object() {\n"
+        + "      @Override public boolean equals(Object obj) {\n" + "        return super.equals(obj);\n" + "      }\n"
+        + "      @Override public int hashCode() {\n" + "        return super.hashCode();\n" + "      }\n" + "    }.hashCode();\n"
+        + "  }")).localVariables().size(), is(0));
   }
   @Test public void localVariablesRepeatedNestedFragments() {
-    azzert.that(
-        new MethodExplorer(Into.d("  int f() {\n" + "int a,b,c,d;\n" + "  {int i, j;} {int i,j; int k;}")).localVariables().size(),
-        is(9));
+    azzert.that(new MethodExplorer(Into.d("  int f() {\n" + "int a,b,c,d;\n" + "  {int i, j;} {int i,j; int k;}")).localVariables()
+        .size(), is(9));
   }
   @Test public void localVariablesTryClause() {
     azzert.that(new MethodExplorer(Into.d("" + "  void f() {\n" + "    final File f = new File(\"f\");\n"
@@ -111,10 +106,9 @@ import org.junit.*;
     azzert.that(a.size(), is(2));
   }
   @Test public void returnStatementsWithNestedEnum() {
-    azzert.that(new MethodExplorer(
-        Into.d("  int f() {\n" + "    return new Object() {\n" + "      @Override public boolean equals(Object obj) {\n"
-            + "        return super.equals(obj);\n" + "      }\n" + "      @Override public int hashCode() {\n"
-            + "        return super.hashCode();\n" + "      }\n" + "    }.hashCode();\n" + "  }")).returnStatements().size(),
-        is(1));
+    azzert.that(new MethodExplorer(Into.d("  int f() {\n" + "    return new Object() {\n"
+        + "      @Override public boolean equals(Object obj) {\n" + "        return super.equals(obj);\n" + "      }\n"
+        + "      @Override public int hashCode() {\n" + "        return super.hashCode();\n" + "      }\n" + "    }.hashCode();\n"
+        + "  }")).returnStatements().size(), is(1));
   }
 }
