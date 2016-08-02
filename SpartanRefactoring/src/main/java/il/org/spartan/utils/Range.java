@@ -4,12 +4,13 @@ import il.org.spartan.*;
 
 import java.util.*;
 
-/** An immutable integral range, representing all integers between {@link #from},
- * up to, but not including, {@link #to}, i.e.,
+/** An immutable integral range, representing all integers between
+ * {@link #from}, up to, but not including, {@link #to}, i.e.,
  *
  * <pre>
  * {@link #from}, {@link #from}+1, ..., {@link #to}-1
  * </pre>
+ * 
  * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
  * @since 2012 */
 public class Range {

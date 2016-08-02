@@ -43,7 +43,8 @@ public enum Restructure {
    * "+(+(a,b),c)", into <code>a + b + c</code>, whose inner form is (roughly)
    * "+(a,b,c)".
    * @param $ JD
-   * @return a duplicate of the argument, with the a flattened list of operands. */
+   * @return a duplicate of the argument, with the a flattened list of
+   *         operands. */
   public static InfixExpression flatten(final InfixExpression $) {
     return Subject.operands(flattenInto($.getOperator(), extract.operands($), new ArrayList<Expression>())).to(duplicate($).getOperator());
   }
@@ -54,8 +55,8 @@ public enum Restructure {
   }
   private static List<Expression> flattenInto(final Operator o, final Expression e, final List<Expression> $) {
     final Expression core = core(e);
-    return !Is.infix(core) || asInfixExpression(core).getOperator() != o ? add(!Is.simple(core) ? e : core, $) : flattenInto(o,
-        extract.operands(asInfixExpression(core)), $);
+    return !Is.infix(core) || asInfixExpression(core).getOperator() != o ? add(!Is.simple(core) ? e : core, $)
+        : flattenInto(o, extract.operands(asInfixExpression(core)), $);
   }
   private static List<Expression> add(final Expression e, final List<Expression> $) {
     $.add(e);

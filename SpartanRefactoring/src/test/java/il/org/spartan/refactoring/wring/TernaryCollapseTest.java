@@ -18,8 +18,8 @@ import org.junit.runners.Parameterized.Parameters;
 /** Unit tests for {@link Wrings#ADDITION_SORTER}.
  * @author Yossi Gil
  * @since 2014-07-13 */
-@SuppressWarnings({ "javadoc", "static-method" })//
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
+@SuppressWarnings({ "javadoc", "static-method" }) //
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class TernaryCollapseTest {
   static final Wring<ConditionalExpression> WRING = new TernaryCollapse();
 
@@ -37,10 +37,10 @@ public class TernaryCollapseTest {
     azzert.aye(same(thenElse, elze));
   }
 
-  @RunWith(Parameterized.class)//
+  @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Exprezzion<ConditionalExpression> {
     static String[][] cases = Utils.asArray(
-    //
+        //
         new String[] { "No boolean", "a?b:c" }, //
         new String[] { "F X", "a ? false : c" }, //
         new String[] { "T X", "a ? true : c" }, //
@@ -88,7 +88,7 @@ public class TernaryCollapseTest {
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
-    @Parameters(name = DESCRIPTION)//
+    @Parameters(name = DESCRIPTION) //
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
@@ -98,8 +98,8 @@ public class TernaryCollapseTest {
     }
   }
 
-  @RunWith(Parameterized.class)//
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
+  @RunWith(Parameterized.class) //
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
   public static class Wringed extends AbstractWringTest.WringedExpression.Conditional {
     private static String[][] cases = Utils.asArray(//
         new String[] { "Vanilla", "a ? b ? x : z :z", "a && b ? x : z" }, //
@@ -111,7 +111,7 @@ public class TernaryCollapseTest {
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
-    @Parameters(name = DESCRIPTION)//
+    @Parameters(name = DESCRIPTION) //
     public static Collection<Object[]> cases() {
       return collect(cases);
     }

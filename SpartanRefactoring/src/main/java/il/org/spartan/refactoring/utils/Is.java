@@ -11,9 +11,9 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 
-/** An empty <code><b>enum</b></code> for fluent programming. The name should say
- * it all: The name, followed by a dot, followed by a method name, should read
- * like a sentence phrase.
+/** An empty <code><b>enum</b></code> for fluent programming. The name should
+ * say it all: The name, followed by a dot, followed by a method name, should
+ * read like a sentence phrase.
  * @author Yossi Gil
  * @since 2015-07-16 */
 public enum Is {
@@ -27,7 +27,8 @@ public enum Is {
   }
   /** @param n the statement or block to check if it is an assignment
    * @return <code><b>true</b></code> if the parameter an assignment or false if
-   *         the parameter not or if the block Contains more than one statement */
+   *         the parameter not or if the block Contains more than one
+   *         statement */
   public static boolean assignment(final ASTNode n) {
     return is(n, ASSIGNMENT);
   }
@@ -111,10 +112,11 @@ public enum Is {
   public static boolean conditionalOr(final InfixExpression e) {
     return e != null && e.getOperator() == CONDITIONAL_OR;
   }
-  /** Determine whether a node is a "specific", i.e., <code><b>null</b></code> or
-   * <code><b>this</b></code> or literal.
+  /** Determine whether a node is a "specific", i.e., <code><b>null</b></code>
+   * or <code><b>this</b></code> or literal.
    * @param e JD
-   * @return <code><b>true</b></code> <i>iff</i> the parameter is a "specific" */
+   * @return <code><b>true</b></code> <i>iff</i> the parameter is a
+   *         "specific" */
   public static boolean constant(final Expression e) {
     switch (e.getNodeType()) {
       case CHARACTER_LITERAL:
@@ -128,8 +130,8 @@ public enum Is {
         return false;
     }
   }
-  /** Check whether the operator of an expression is susceptible for applying one
-   * of the two de Morgan laws.
+  /** Check whether the operator of an expression is susceptible for applying
+   * one of the two de Morgan laws.
    * @param e InfixExpression
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an operator on
    *         which the de Morgan laws apply. */
@@ -178,7 +180,8 @@ public enum Is {
     return is(n, EXPRESSION_STATEMENT);
   }
   /** @param o The operator to check
-   * @return True - if the operator have opposite one in terms of operands swap. */
+   * @return True - if the operator have opposite one in terms of operands
+   *         swap. */
   public static boolean flipable(final Operator o) {
     return in(o, //
         AND, //
@@ -234,10 +237,11 @@ public enum Is {
         NUMBER_LITERAL, //
         STRING_LITERAL, //
         BOOLEAN_LITERAL //
-        );
+    );
   }
   /** @param s JD
-   * @return <code><b>true</b></code> <i>iff</i> the parameter return a literal */
+   * @return <code><b>true</b></code> <i>iff</i> the parameter return a
+   *         literal */
   public static boolean literal(final ReturnStatement s) {
     return literal(s.getExpression());
   }
@@ -318,9 +322,9 @@ public enum Is {
   public static boolean return_(final ASTNode n) {
     return is(n, RETURN_STATEMENT);
   }
-  /** Determine whether a node is a "sequencer", i.e., <code><b>return</b></code>
-   * , <code><b>break</b></code>, <code><b>continue</b></code> or
-   * <code><b>throw</b></code>
+  /** Determine whether a node is a "sequencer", i.e.,
+   * <code><b>return</b></code> , <code><b>break</b></code>,
+   * <code><b>continue</b></code> or <code><b>throw</b></code>
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a sequencer */
   public static boolean sequencer(final ASTNode n) {
@@ -407,7 +411,8 @@ public enum Is {
   }
   /** Determine whether a node is a simple name
    * @param n JD
-   * @return <code><b>true</b></code> <i>iff</i> the parameter is a simple name */
+   * @return <code><b>true</b></code> <i>iff</i> the parameter is a simple
+   *         name */
   public static boolean simpleName(final ASTNode n) {
     return is(n, SIMPLE_NAME);
   }
@@ -452,8 +457,8 @@ public enum Is {
   public static boolean thisOrNull(final Expression e) {
     return Is.oneOf(e, NULL_LITERAL, THIS_EXPRESSION);
   }
-  /** Determine whether a given {@link Statement} is an {@link EmptyStatement} or
-   * has nothing but empty statements in it.
+  /** Determine whether a given {@link Statement} is an {@link EmptyStatement}
+   * or has nothing but empty statements in it.
    * @param s JD
    * @return <code><b>true</b></code> <i>iff</i> there are no non-empty
    *         statements in the parameter */
@@ -506,8 +511,8 @@ public enum Is {
         NULL_LITERAL, // null + null is an error, not a string.
         NUMBER_LITERAL, //
         PREFIX_EXPRESSION //
-        //
-        );
+    //
+    );
   }
   static boolean sideEffectFreeArrayCreation(final ArrayCreation c) {
     final ArrayInitializer i = c.getInitializer();

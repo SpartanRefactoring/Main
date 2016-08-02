@@ -10,9 +10,9 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-/** An empty <code><b>enum</b></code> for fluent programming. The name should say
- * it all: The name, followed by a dot, followed by a method name, should read
- * like a sentence phrase.
+/** An empty <code><b>enum</b></code> for fluent programming. The name should
+ * say it all: The name, followed by a dot, followed by a method name, should
+ * read like a sentence phrase.
  * @author Yossi Gil
  * @since 2015-07-28 */
 public enum extract {
@@ -124,7 +124,8 @@ public enum extract {
     });
     return $.get();
   }
-  /** Search for an {@link IfStatement} in the tree rooted at an {@link ASTNode}.
+  /** Search for an {@link IfStatement} in the tree rooted at an
+   * {@link ASTNode}.
    * @param n JD
    * @return the first {@link IfStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
@@ -189,8 +190,8 @@ public enum extract {
     });
     return $.get();
   }
-  /** Return the first {@link VariableDeclarationFragment} encountered in a visit
-   * of the tree rooted a the parameter.
+  /** Return the first {@link VariableDeclarationFragment} encountered in a
+   * visit of the tree rooted a the parameter.
    * @param n JD
    * @return the first such node encountered in a visit of the tree rooted a the
    *         parameter, or <code><b>null</b></code> */
@@ -224,7 +225,8 @@ public enum extract {
   /** Extract the {@link MethodDeclaration} that contains a given node.
    * @param n JD
    * @return the inner most {@link MethodDeclaration} in which the parameter is
-   *         nested, or <code><b>null</b></code>, if no such statement exists. */
+   *         nested, or <code><b>null</b></code>, if no such statement
+   *         exists. */
   public static MethodDeclaration methodDeclaration(final ASTNode n) {
     for (ASTNode $ = n; $ != null; $ = $.getParent())
       if (Is.methodDeclaration($))
@@ -281,8 +283,8 @@ public enum extract {
     final Block b = asBlock(s.getParent());
     return b == null ? null : next(s, extract.statements(b));
   }
-  /** Makes a list of all operands of an expression, comprising the left operand,
-   * the right operand, followed by extra operands when they exist.
+  /** Makes a list of all operands of an expression, comprising the left
+   * operand, the right operand, followed by extra operands when they exist.
    * @param e JD
    * @return a list of all operands of an expression */
   public static List<Expression> operands(final InfixExpression e) {
@@ -306,7 +308,8 @@ public enum extract {
   /** Extract the single {@link ReturnStatement} embedded in a node.
    * @param n JD
    * @return the single {@link ReturnStatement} embedded in the parameter, and
-   *         return it; <code><b>null</b></code> if not such statements exists. */
+   *         return it; <code><b>null</b></code> if not such statements
+   *         exists. */
   public static ReturnStatement returnStatement(final ASTNode n) {
     return asReturnStatement(extract.singleStatement(n));
   }
@@ -377,7 +380,8 @@ public enum extract {
   /** Extract the single {@link ThrowStatement} embedded in a node.
    * @param n JD
    * @return the single {@link ThrowStatement} embedded in the parameter, and
-   *         return it; <code><b>null</b></code> if not such statements exists. */
+   *         return it; <code><b>null</b></code> if not such statements
+   *         exists. */
   public static ThrowStatement throwStatement(final ASTNode n) {
     return asThrowStatement(extract.singleStatement(n));
   }

@@ -8,8 +8,8 @@ import il.org.spartan.refactoring.utils.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-/** <code>a ? b : c</code> is the same as <code>(a && b) || (!a && c)</code> if b
- * is false than: <code>(a && false) || (!a && c) == (!a && c)</code> if b is
+/** <code>a ? b : c</code> is the same as <code>(a && b) || (!a && c)</code> if
+ * b is false than: <code>(a && false) || (!a && c) == (!a && c)</code> if b is
  * true than: <code>(a && true) || (!a && c) == a || (!a && c) == a || c</code>
  * if c is false than: <code>(a && b) || (!a && false) == (!a && c)</code> if c
  * is true than <code>(a && b) || (!a && true) == (a && b) || (!a) == !a ||
@@ -23,8 +23,8 @@ public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<Condit
   @Override boolean scopeIncludes(final ConditionalExpression e) {
     return isTernaryOfBooleanLitreral(e);
   }
-  /** Consider an expression <code>a ? b : c</code>; in a sense it is the same as
-   * <code>(a && b) || (!a && c)</code>
+  /** Consider an expression <code>a ? b : c</code>; in a sense it is the same
+   * as <code>(a && b) || (!a && c)</code>
    * <ol>
    * <li>if b is false then: <code>(a &&
    * false) || (!a && c) == !a && c</code>
@@ -32,7 +32,8 @@ public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<Condit
    * true) || (!a && c) == a || (!a && c) == a || c</code>
    * <li>if c is false then: <code>(a && b) || (!a && false) == a && b</code>
    * <li>if c is true then <code>(a && b) || (!a && true) == !a || b</code>
-   * </ol> */
+   * </ol>
+  */
   private static Expression simplifyTernary(final ConditionalExpression e) {
     return simplifyTernary(core(e.getThenExpression()), core(e.getElseExpression()), duplicate(e.getExpression()));
   }

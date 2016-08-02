@@ -74,7 +74,8 @@ public enum Funcs {
         NOT_EQUALS //
     ) ? e : null;
   }
-  /** Convert, is possible, an {@link ASTNode} to a {@link ConditionalExpression}
+  /** Convert, is possible, an {@link ASTNode} to a
+   * {@link ConditionalExpression}
    * @param n JD
    * @return the argument, but down-casted to a {@link ConditionalExpression},
    *         or <code><b>null</b></code> if no such down-cast is possible.. */
@@ -199,7 +200,8 @@ public enum Funcs {
   public static String asString(final ASTNode n) {
     return removeWhites(n.toString());
   }
-  /** Convert, is possible, an {@link ASTNode} to a {@link ConditionalExpression}
+  /** Convert, is possible, an {@link ASTNode} to a
+   * {@link ConditionalExpression}
    * @param n JD
    * @return the argument, but down-casted to a {@link ConditionalExpression},
    *         or <code><b>null</b></code> if no such down-cast is possible.. */
@@ -310,8 +312,8 @@ public enum Funcs {
    *         (or if s or name are null) */
   // TODO this seems a bug
   public static VariableDeclarationFragment getDefinition(final ASTNode n, final Expression name) {
-    return hasNulls(n, name) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || name.getNodeType() != SIMPLE_NAME ? null : getDefinition(
-        (VariableDeclarationStatement) n, (SimpleName) name);
+    return hasNulls(n, name) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || name.getNodeType() != SIMPLE_NAME ? null
+        : getDefinition((VariableDeclarationStatement) n, (SimpleName) name);
   }
   private static VariableDeclarationFragment getDefinition(final VariableDeclarationStatement s, final SimpleName n) {
     return getVarDeclFrag(expose.fragments(s), n);
@@ -479,8 +481,8 @@ public enum Funcs {
   }
   public static int negationLevel(final Expression e) {
     return e instanceof PrefixExpression ? negationLevel((PrefixExpression) e)
-        : e instanceof ParenthesizedExpression ? negationLevel(((ParenthesizedExpression) e).getExpression()) : asBit(e instanceof NumberLiteral
-            && ((NumberLiteral) e).getToken().startsWith("-"));
+        : e instanceof ParenthesizedExpression ? negationLevel(((ParenthesizedExpression) e).getExpression())
+            : asBit(e instanceof NumberLiteral && ((NumberLiteral) e).getToken().startsWith("-"));
   }
   private static int negationLevel(final PrefixExpression e) {
     return asBit(e.getOperator() == PrefixExpression.Operator.MINUS) + negationLevel(e.getOperand());
@@ -582,8 +584,7 @@ public enum Funcs {
    * representations is identical.
    * <p>
    * Each of the parameters may be <code><b>null</b></code>; a
-   * <code><b>null</b></code> is only equal to<
-   * code><b>null</b></code>
+   * <code><b>null</b></code> is only equal to< code><b>null</b></code>
    * @param n1 JD
    * @param n2 JD
    * @return <code><b>true</b></code> if the parameters are the same. */

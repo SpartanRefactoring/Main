@@ -12,7 +12,8 @@ import org.eclipse.jdt.core.dom.*;
  * @author Yossi Gil
  * @since 2015-07-19 */
 public enum ExpressionComparator implements Comparator<Expression> {
-  /** Order on terms in addition: literals must be last. Sort literals by length.
+  /** Order on terms in addition: literals must be last. Sort literals by
+   * length.
    * @author Yossi Gil
    * @since 2015-07-19 */
   ADDITION {
@@ -98,9 +99,9 @@ public enum ExpressionComparator implements Comparator<Expression> {
   }
   private static boolean isLonger(final Expression e1, final Expression e2) {
     return !hasNulls(e1, e2) && (//
-        nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD || //
+    nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD || //
         nodesCount(e1) >= nodesCount(e2) && moreArguments(e1, e2)//
-        );
+    );
   }
 
   /** Threshold for comparing nodes; a difference in the number of nodes between

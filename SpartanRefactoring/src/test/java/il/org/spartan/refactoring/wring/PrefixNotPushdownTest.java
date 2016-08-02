@@ -20,8 +20,8 @@ import org.junit.runners.Parameterized.Parameters;
 /** Unit tests for {@link Wrings#ADDITION_SORTER}.
  * @author Yossi Gil
  * @since 2014-07-13 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
-@SuppressWarnings({ "javadoc", "static-method" })//
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@SuppressWarnings({ "javadoc", "static-method" }) //
 public class PrefixNotPushdownTest {
   /** The {@link Wring} under test */
   static final PrefixNotPushdown WRING = new PrefixNotPushdown();
@@ -44,7 +44,7 @@ public class PrefixNotPushdownTest {
     azzert.notNull(WRING.replacement(e));
   }
 
-  @RunWith(Parameterized.class)//
+  @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Exprezzion<PrefixExpression> {
     static String[][] cases = Utils.asArray(//
         new String[] { "Simple not", "!a" }, //
@@ -55,7 +55,7 @@ public class PrefixNotPushdownTest {
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
-    @Parameters(name = DESCRIPTION)//
+    @Parameters(name = DESCRIPTION) //
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
@@ -65,8 +65,8 @@ public class PrefixNotPushdownTest {
     }
   }
 
-  @RunWith(Parameterized.class)//
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
+  @RunWith(Parameterized.class) //
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
   public static class Wringed extends AbstractWringTest.WringedExpression<PrefixExpression> {
     private static String[][] cases = Utils.asArray(//
         new String[] { "2 level not of false", "!!false", "false" }, //
@@ -99,7 +99,7 @@ public class PrefixNotPushdownTest {
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
-    @Parameters(name = DESCRIPTION)//
+    @Parameters(name = DESCRIPTION) //
     public static Collection<Object[]> cases() {
       return collect(cases);
     }

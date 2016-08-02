@@ -11,8 +11,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-@SuppressWarnings({ "javadoc", "static-method" })//
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
+@SuppressWarnings({ "javadoc", "static-method" }) //
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class ExpressionFlatten {
   @Test public void flattenExists() {
     flatten(i("1+2"));
