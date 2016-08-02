@@ -1,5 +1,6 @@
 package il.org.spartan.refactoring.spartanizations;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.wring.*;
 
 import java.util.*;
@@ -51,19 +52,7 @@ public class Spartanizations {
    * @return Iteration over all Spartanization class instances
    */
   public static Iterable<Spartanization> allAvailableSpartanizations() {
-    return () -> new Iterator<Spartanization>() {
-      int next = 0;
-
-      @Override public boolean hasNext() {
-        return next < all.length;
-      }
-      @Override public Spartanization next() {
-        return all[next++];
-      }
-      @Override public final void remove() {
-        throw new IllegalArgumentException();
-      }
-    };
+    as.iterable(all);
   }
   /**
    * Resets the enumeration with the current values from the preferences file.
