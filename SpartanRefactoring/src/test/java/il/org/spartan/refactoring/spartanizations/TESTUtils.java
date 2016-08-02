@@ -10,10 +10,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
-/**
- * @author Yossi Gil
- * @since 2015-07-17
- */
+/** @author Yossi Gil
+ * @since 2015-07-17 */
 @SuppressWarnings("javadoc") public enum TESTUtils {
   ;
   static final String WHITES = "(?m)\\s+";
@@ -21,37 +19,23 @@ import org.eclipse.text.edits.*;
   public static void assertNoChange(final String input) {
     assertSimilar(input, Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on(input))));
   }
-  /**
-   * A test to check that the actual output is similar to the actual value.
-   *
-   * @param expected
-   *          JD
-   * @param actual
-   *          JD
-   */
+  /** A test to check that the actual output is similar to the actual value.
+   * @param expected JD
+   * @param actual JD */
   public static void assertSimilar(final String expected, final Document actual) {
     assertSimilar(expected, actual.get());
   }
-  /**
-   * A test to check that the actual output is similar to the actual value.
-   *
-   * @param expected
-   *          JD
-   * @param actual
-   *          JD
-   */
+  /** A test to check that the actual output is similar to the actual value.
+   * @param expected JD
+   * @param actual JD */
   public static void assertSimilar(final String expected, final String actual) {
     if (!expected.equals(actual))
       azzert.that(Wrap.essence(actual), is(Wrap.essence(expected)));
   }
-  /**
-   * Convert a given {@link String} into an {@link Statement}, or fail the
+  /** Convert a given {@link String} into an {@link Statement}, or fail the
    * current test, if such a conversion is not possible
-   *
-   * @param statement
-   *          a {@link String} that represents a Java statement
-   * @return an {@link Statement} data structure representing the parameter.
-   */
+   * @param statement a {@link String} that represents a Java statement
+   * @return an {@link Statement} data structure representing the parameter. */
   public static Statement asSingle(final String statement) {
     azzert.notNull(statement);
     final ASTNode n = MakeAST.STATEMENTS.from(statement);

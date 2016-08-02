@@ -22,16 +22,12 @@ final class LocalInliner {
     LocalInlineWithValue(final Expression replacement) {
       super(extract.core(replacement));
     }
-    /**
-     * Computes the number of AST nodes added as a result of the replacement
+    /** Computes the number of AST nodes added as a result of the replacement
      * operation.
-     *
-     * @param es
-     *          JD
+     * @param es JD
      * @return A non-negative integer, computed from the number of occurrences
      *         of {@link #name} in the operands, and the size of the
-     *         replacement.
-     */
+     *         replacement. */
     int addedSize(final ASTNode... ns) {
       return uses(ns).size() * (size(get()) - 1);
     }
@@ -54,18 +50,13 @@ final class LocalInliner {
       ns.set(newExpression);
       rewriter.replace(oldExpression, newExpression, editGroup);
       for (final ASTNode use : Collect.usesOf(name).in(newExpression))
-        rewriter.replace(use,
-            !(use instanceof Expression) ? replacement : new Plant((Expression) replacement).into(use.getParent()), editGroup);
+        rewriter.replace(use, !(use instanceof Expression) ? replacement : new Plant((Expression) replacement).into(use.getParent()), editGroup);
     }
-    /**
-     * Computes the total number of AST nodes in the replaced parameters
-     *
-     * @param es
-     *          JD
+    /** Computes the total number of AST nodes in the replaced parameters
+     * @param es JD
      * @return A non-negative integer, computed from original size of the
      *         parameters, the number of occurrences of {@link #name} in the
-     *         operands, and the size of the replacement.
-     */
+     *         operands, and the size of the replacement. */
     int replacedSize(final ASTNode... ns) {
       return size(ns) + uses(ns).size() * (size(get()) - 1);
     }
@@ -102,17 +93,13 @@ final class LocalInliner {
   }
 }
 
-/**
- * A wring is a transformation that works on an AstNode. Such a transformation
+/** A wring is a transformation that works on an AstNode. Such a transformation
  * make a single simplification of the tree. A wring is so small that it is
  * idempotent: Applying a wring to the output of itself is the empty operation.
- *
- * @param <N>
- *          type of node which triggers the transformation.
+ * @param <N> type of node which triggers the transformation.
  * @author Yossi Gil
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
- * @since 2015-07-09
- */
+ * @since 2015-07-09 */
 public abstract class Wring<N extends ASTNode> {
   static abstract class AbstractSorting extends ReplaceCurrentNode<InfixExpression> {
     @Override final String description(final InfixExpression e) {
@@ -236,16 +223,13 @@ public abstract class Wring<N extends ASTNode> {
           return true;
       return false;
     }
-    /**
-     * Eliminates a {@link VariableDeclarationFragment}, with any other fragment
+    /** Eliminates a {@link VariableDeclarationFragment}, with any other fragment
      * fragments which are not live in the containing
      * {@link VariabelDeclarationStatement}. If no fragments are left, then this
      * containing node is eliminated as well.
-     *
      * @param f
      * @param r
-     * @param g
-     */
+     * @param g */
     static void eliminate(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
       final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
       final List<VariableDeclarationFragment> live = live(f, fragments(parent));
@@ -295,8 +279,7 @@ public abstract class Wring<N extends ASTNode> {
     static boolean hasAnnotation(final VariableDeclarationStatement s) {
       return hasAnnotation(expose.modifiers(s));
     }
-    private static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f,
-        final List<VariableDeclarationFragment> fs) {
+    private static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final List<VariableDeclarationFragment> fs) {
       final List<VariableDeclarationFragment> $ = new ArrayList<>();
       for (final VariableDeclarationFragment brother : fs)
         if (brother != null && brother != f && brother.getInitializer() != null)
@@ -312,23 +295,18 @@ public abstract class Wring<N extends ASTNode> {
       newParent.fragments().remove(parent.fragments().indexOf(f));
       return $ - size(newParent);
     }
-    /**
-     * Removes a {@link VariableDeclarationFragment}, leaving intact any other
+    /** Removes a {@link VariableDeclarationFragment}, leaving intact any other
      * fragment fragments in the containing {@link VariabelDeclarationStatement}
      * . Still, if the containing node left empty, it is removed as well.
-     *
      * @param f
      * @param r
-     * @param g
-     */
+     * @param g */
     static void remove(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
       final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
       r.remove(parent.fragments().size() > 1 ? f : parent, g);
     }
-    abstract ASTRewrite go(ASTRewrite r, VariableDeclarationFragment f, SimpleName n, Expression initializer,
-        Statement nextStatement, TextEditGroup g);
-    @Override final ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement,
-        final TextEditGroup g) {
+    abstract ASTRewrite go(ASTRewrite r, VariableDeclarationFragment f, SimpleName n, Expression initializer, Statement nextStatement, TextEditGroup g);
+    @Override final ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
       if (!Is.variableDeclarationStatement(f.getParent()))
         return null;
       final SimpleName n = f.getName();
@@ -343,15 +321,11 @@ public abstract class Wring<N extends ASTNode> {
   }
 
   abstract String description(N n);
-  /**
-   * Determine whether the parameter is "eligible" for application of this
+  /** Determine whether the parameter is "eligible" for application of this
    * instance. The parameter must be within the scope of the current instance.
-   *
-   * @param n
-   *          JD
+   * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is eligible for
-   *         the simplification offered by this object.
-   */
+   *         the simplification offered by this object. */
   boolean eligible(@SuppressWarnings("unused") final N __) {
     return true;
   }
@@ -361,41 +335,30 @@ public abstract class Wring<N extends ASTNode> {
   Rewrite make(final N n, @SuppressWarnings("unused") final ExclusionManager __) {
     return make(n);
   }
-  /**
-   * Determines whether this {@link Wring} object is not applicable for a given
+  /** Determines whether this {@link Wring} object is not applicable for a given
    * {@link PrefixExpression} is within the "scope" of this . Note that a
    * {@link Wring} is applicable in principle to an object, but that actual
    * application will be vacuous.
-   *
-   * @param e
-   *          JD
+   * @param e JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is noneligible for
    *         the simplification offered by this object.
-   * @see #eligible(InfixExpression)
-   */
+   * @see #eligible(InfixExpression) */
   final boolean nonEligible(final N n) {
     return !eligible(n);
   }
-  /**
-   * Determines whether this {@link Wring} object is applicable for a given
+  /** Determines whether this {@link Wring} object is applicable for a given
    * {@link InfixExpression} is within the "scope" of this . Note that it could
    * be the case that a {@link Wring} is applicable in principle to an object,
    * but that actual application will be vacuous.
-   *
-   * @param n
-   *          JD
+   * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is within the
-   *         scope of this object
-   */
+   *         scope of this object */
   boolean scopeIncludes(final N n) {
     return make(n, null) != null;
   }
-  /**
-   * Returns the preference group to which the wring belongs to. This method
+  /** Returns the preference group to which the wring belongs to. This method
    * should be overriden for each wring and should return one of the values of
    * {@link WringGroup}
-   *
-   * @return the preference group this wring belongs to
-   */
+   * @return the preference group this wring belongs to */
   abstract WringGroup wringGroup();
 }

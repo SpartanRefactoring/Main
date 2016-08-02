@@ -7,14 +7,11 @@ import il.org.spartan.refactoring.utils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
-/**
- * An empty <code><b>enum</b></code> for fluent programming. The name should say
+/** An empty <code><b>enum</b></code> for fluent programming. The name should say
  * it all: The name, followed by a dot, followed by a method name, should read
  * like a sentence phrase.
- *
  * @author Yossi Gil
- * @since 2015-07-16
- */
+ * @since 2015-07-16 */
 public enum Wrap {
   OUTER("package p; // BEGIN PACKAGE \n", "\n// END PACKAGE\n"),
   /** Algorithm for wrapping/unwrapping a method */
@@ -24,32 +21,28 @@ public enum Wrap {
       "", "" + //
       "} // END OF PACKAGE\n" + //
       ""), //
-      /** Algorithm for wrapping/unwrapping a statement */
-      Statement("" + Method.before + //
-          "public void squarePants(){\n" + //
-          "", "" + //
+  /** Algorithm for wrapping/unwrapping a statement */
+  Statement("" + Method.before + //
+      "public void squarePants(){\n" + //
+      "", "" + //
       "} // END OF METHOD \n" + //
       "" + Method.after + //
       ""), //
-          /** Algorithm for wrapping/unwrapping an expression */
-          Expression("" + Statement.before + //
-              "   if (", //
-              "" + //
-              ") patrick();\n" + //
-              Statement.after + //
-              ""), //
-              //
-              ;
+  /** Algorithm for wrapping/unwrapping an expression */
+  Expression("" + Statement.before + //
+      "   if (", //
+      "" + //
+          ") patrick();\n" + //
+          Statement.after + //
+          ""), //
+  //
+  ;
   public static final Wrap[] WRAPS = new Wrap[] { Statement, Expression, Method, OUTER };
 
-  /**
-   * Finds the most appropriate Wrap for a given code fragment
-   *
-   * @param codeFragment
-   *          JD
+  /** Finds the most appropriate Wrap for a given code fragment
+   * @param codeFragment JD
    * @return the most appropriate Wrap, or null, if the parameter could not be
-   *         parsed appropriately.
-   */
+   *         parsed appropriately. */
   public static Wrap find(final String codeFragment) {
     for (final Wrap $ : WRAPS)
       if ($.contains($.intoCompilationUnit(codeFragment).toString(), codeFragment))
@@ -88,46 +81,30 @@ public enum Wrap {
     this.before = before;
     this.after = after;
   }
-  /**
-   * Wrap a given code fragment, and then parse it, converting it into a
+  /** Wrap a given code fragment, and then parse it, converting it into a
    * {@link CompilationUnit}.
-   *
-   * @param codeFragment
-   *          JD
+   * @param codeFragment JD
    * @return a newly created {@link CompilationUnit} representing the parsed AST
-   *         of the wrapped parameter.
-   */
+   *         of the wrapped parameter. */
   public CompilationUnit intoCompilationUnit(final String codeFragment) {
     return (CompilationUnit) MakeAST.COMPILATION_UNIT.from(on(codeFragment));
   }
-  /**
-   * Wrap a given code fragment, and converts it into a {@link Document}
-   *
-   * @param codeFragment
-   *          JD
+  /** Wrap a given code fragment, and converts it into a {@link Document}
+   * @param codeFragment JD
    * @return a newly created {@link CompilationUnit} representing the parsed AST
-   *         of the wrapped parameter.
-   */
+   *         of the wrapped parameter. */
   public Document intoDocument(final String codeFragment) {
     return new Document(on(codeFragment));
   }
-  /**
-   * Remove a wrap from around a phrase
-   *
-   * @param codeFragment
-   *          a wrapped program phrase
-   * @return the unwrapped phrase
-   */
+  /** Remove a wrap from around a phrase
+   * @param codeFragment a wrapped program phrase
+   * @return the unwrapped phrase */
   public final String off(final String codeFragment) {
     return removeSuffix(removePrefix(codeFragment, before), after);
   }
-  /**
-   * Place a wrap around a phrase
-   *
-   * @param codeFragment
-   *          some program phrase
-   * @return the wrapped phrase
-   */
+  /** Place a wrap around a phrase
+   * @param codeFragment some program phrase
+   * @return the wrapped phrase */
   public final String on(final String codeFragment) {
     return before + codeFragment + after;
   }

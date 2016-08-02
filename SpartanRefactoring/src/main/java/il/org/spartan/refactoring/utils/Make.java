@@ -5,14 +5,11 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
-/**
- * An empty <code><b>enum</b></code> for fluent programming. The name should say
+/** An empty <code><b>enum</b></code> for fluent programming. The name should say
  * it all: The name, followed by a dot, followed by a method name, should read
  * like a sentence phrase.
- *
  * @author Yossi Gil
- * @since 2015-07-16
- */
+ * @since 2015-07-16 */
 public enum Make {
   /** Strategy for conversion into a compilation unit */
   COMPILATION_UNIT(ASTParser.K_COMPILATION_UNIT), //
@@ -22,14 +19,10 @@ public enum Make {
   STATEMENTS(ASTParser.K_STATEMENTS), //
   /** Strategy for conversion into a class body */
   CLASS_BODY_DECLARATIONS(ASTParser.K_CLASS_BODY_DECLARATIONS); //
-  /**
-   * Converts the {@link MakeAST} value to its corresponding {@link Make} enum
+  /** Converts the {@link MakeAST} value to its corresponding {@link Make} enum
    * value
-   *
-   * @param t
-   *          The {@link MakeAST} type
-   * @return the corresponding {@link Make} value to the argument
-   */
+   * @param t The {@link MakeAST} type
+   * @return the corresponding {@link Make} value to the argument */
   public static Make of(final MakeAST t) {
     switch (t) {
       case STATEMENTS:
@@ -50,69 +43,45 @@ public enum Make {
   private Make(final int kind) {
     this.kind = kind;
   }
-  /**
-   * Creates a no-binding parser for a given text
-   *
-   * @param text
-   *          what to parse
-   * @return a newly created parser for the parameter
-   */
+  /** Creates a no-binding parser for a given text
+   * @param text what to parse
+   * @return a newly created parser for the parameter */
   public ASTParser parser(final char[] text) {
     final ASTParser $ = Funcs.parser(kind);
     $.setSource(text);
     return $;
   }
-  /**
-   * Creates a parser for a given {@link Document}
-   *
-   * @param d
-   *          JD
-   * @return the created parser
-   */
+  /** Creates a parser for a given {@link Document}
+   * @param d JD
+   * @return the created parser */
   public ASTParser parser(final Document d) {
     final ASTParser $ = Funcs.parser(kind);
     $.setSource(d.get().toCharArray());
     return $;
   }
-  /**
-   * Creates a no-binding parser for a given compilation unit
-   *
-   * @param u
-   *          what to parse
-   * @return a newly created parser for the parameter
-   */
+  /** Creates a no-binding parser for a given compilation unit
+   * @param u what to parse
+   * @return a newly created parser for the parameter */
   public ASTParser parser(final ICompilationUnit u) {
     final ASTParser $ = Funcs.parser(kind);
     $.setSource(u);
     return $;
   }
-  /**
-   * Creates a parser for a given {@link IFile}
-   *
-   * @param f
-   *          JD
-   * @return the created parser
-   */
+  /** Creates a parser for a given {@link IFile}
+   * @param f JD
+   * @return the created parser */
   public ASTParser parser(final IFile f) {
     return parser(JavaCore.createCompilationUnitFrom(f));
   }
-  /**
-   * Creates a parser for a given marked text.
-   *
-   * @param m
-   *          JD
-   * @return the created parser
-   */
+  /** Creates a parser for a given marked text.
+   * @param m JD
+   * @return the created parser */
   public ASTParser parser(final IMarker m) {
     return parser(MakeAST.iCompilationUnit(m));
   }
-  /**
-   * Creates a no-binding parser for a given text
-   *
-   * @param text
-   *          what to parse
-   * @return a newly created parser for the parameter
-   */
+  /** Creates a no-binding parser for a given text
+   * @param text what to parse
+   * @return a newly created parser for the parameter */
   public ASTParser parser(final String text) {
     return parser(text.toCharArray());
   }

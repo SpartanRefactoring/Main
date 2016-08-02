@@ -48,8 +48,7 @@ import org.junit.*;
     azzert.that(Subject.pair(s, s("f();")).toIf(e("a")), iz("if(a)s(); else f();"));
   }
   @Test public void makeIfStatementOfNestedIf() {
-    azzert.that(Subject.pair(s("if (a) return b;"), s("if (c) return d;")).toIf(e("x")),
-        iz("if(x) {if (a) return b; } else if (c) return d;"));
+    azzert.that(Subject.pair(s("if (a) return b;"), s("if (c) return d;")).toIf(e("x")), iz("if(x) {if (a) return b; } else if (c) return d;"));
   }
   @Test public void multiplicationOfAddition() {
     azzert.that(Subject.pair(e("a+B"), e("c+d")).to(InfixExpression.Operator.TIMES), iz("(a + B) * (c + d)"));
@@ -128,8 +127,7 @@ import org.junit.*;
     azzert.that(refit.toString(), is("a + b"));
   }
   @Test public void subjectOperandsIsCorrect() {
-    azzert.that(Subject.operands(extract.operands(Funcs.duplicate(i("a*b*c")))).to(i("1+2+3").getOperator()).toString(),
-        is("a + b + c"));
+    azzert.that(Subject.operands(extract.operands(Funcs.duplicate(i("a*b*c")))).to(i("1+2+3").getOperator()).toString(), is("a + b + c"));
   }
   @Test public void subjectOperandsNotNull() {
     azzert.notNull(Subject.operands(extract.operands(Funcs.duplicate(i("a+b+c")))).to(i("1+2+3").getOperator()));

@@ -15,13 +15,10 @@ import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-/**
- * A {@link Wring} that sorts the arguments of a {@link Operator#DIVIDE}
+/** A {@link Wring} that sorts the arguments of a {@link Operator#DIVIDE}
  * expression.
- *
  * @author Yossi Gil
- * @since 2015-09-05
- */
+ * @since 2015-09-05 */
 public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpression> {
   private static int countNegations(final List<Expression> es) {
     int $ = 0;
@@ -82,8 +79,7 @@ public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpre
           if (¢ != first && negationLevel(¢) > 0)
             r.replace(¢, new Plant(duplicate(peelNegation(¢))).into(¢.getParent()), g);
         if (first != null)
-          r.replace(first,
-              new Plant(Subject.operand(peelNegation(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
+          r.replace(first, new Plant(Subject.operand(peelNegation(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
       }
     };
   }

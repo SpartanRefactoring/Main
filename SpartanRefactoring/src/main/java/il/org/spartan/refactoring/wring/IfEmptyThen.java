@@ -6,13 +6,10 @@ import il.org.spartan.refactoring.utils.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-/**
- * A {@link Wring} to convert <code>if (x) ; else {a;}</code> into <code>if (!x)
+/** A {@link Wring} to convert <code>if (x) ; else {a;}</code> into <code>if (!x)
  * a;</code>.
- *
  * @author Yossi Gil
- * @since 2015-08-26
- */
+ * @since 2015-08-26 */
 public final class IfEmptyThen extends Wring.ReplaceCurrentNode<IfStatement> {
   @Override Statement replacement(final IfStatement s) {
     final IfStatement $ = Subject.pair(elze(s), null).toNot(s.getExpression());

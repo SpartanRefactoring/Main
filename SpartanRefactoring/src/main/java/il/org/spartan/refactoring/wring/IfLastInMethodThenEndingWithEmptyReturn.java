@@ -9,15 +9,12 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-/**
- * A {@link Wring} to convert <code>if (a) { return x; } </code> into
+/** A {@link Wring} to convert <code>if (a) { return x; } </code> into
  * <code>return x;</code> provided that this <code><b>if</b></code> statement is
  * the last statement in a method.
- *
  * @author Yossi Gil
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
- * @since 2015-09-09
- */
+ * @since 2015-09-09 */
 public class IfLastInMethodThenEndingWithEmptyReturn extends Wring<IfStatement> {
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Remove redundant return statement in 'then' branch of if statement that terminates this method";

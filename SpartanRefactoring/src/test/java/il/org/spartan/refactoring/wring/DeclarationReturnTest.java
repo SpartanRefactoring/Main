@@ -16,12 +16,9 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.Parameters;
 
-/**
- * Unit tests for {@link Wrings#ADDITION_SORTER}.
- *
+/** Unit tests for {@link Wrings#ADDITION_SORTER}.
  * @author Yossi Gil
- * @since 2014-07-13
- */
+ * @since 2014-07-13 */
 @SuppressWarnings({ "javadoc", "static-method" })//
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 public class DeclarationReturnTest {
@@ -41,12 +38,9 @@ public class DeclarationReturnTest {
         new String[] { "Vanilla", "int a = 3, b; return;", }, //
         null);
 
-    /**
-     * Generate test cases for this parameterized class.
-     *
+    /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
-     *         objects, the test case name, the input, and the file.
-     */
+     *         objects, the test case name, the input, and the file. */
     @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
@@ -60,31 +54,25 @@ public class DeclarationReturnTest {
   @RunWith(Parameterized.class)//
   @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   public static class Wringed extends AbstractWringTest.Wringed.WringedVariableDeclarationFragmentAndSurrounding {
-    private static String[][] cases = Utils
-        .asArray(
-            //
-            new String[] { "Vanilla", "int a = 3; return a;", "return 3;" }, //
-            new String[] { "Vanilla", "int a = 3, b; return a;", "return 3;" }, //
-            new String[] { "Actual", "ColorChip $ " + "= messageRead ? "//
-                + "   !messageFlagged ? mReadColorChip : mFlaggedReadColorChip: " //
-                + "    !messageFlagged ? mUnreadColorChip : mFlaggedUnreadColorChip; " //
-                + "   return $;", //
-                "return messageRead?!messageFlagged?mReadColorChip:mFlaggedReadColorChip:!messageFlagged?mUnreadColorChip:mFlaggedUnreadColorChip;" },
-            null);
+    private static String[][] cases = Utils.asArray(
+        //
+        new String[] { "Vanilla", "int a = 3; return a;", "return 3;" }, //
+        new String[] { "Vanilla", "int a = 3, b; return a;", "return 3;" }, //
+        new String[] { "Actual", "ColorChip $ " + "= messageRead ? "//
+            + "   !messageFlagged ? mReadColorChip : mFlaggedReadColorChip: " //
+            + "    !messageFlagged ? mUnreadColorChip : mFlaggedUnreadColorChip; " //
+            + "   return $;", //
+            "return messageRead?!messageFlagged?mReadColorChip:mFlaggedReadColorChip:!messageFlagged?mUnreadColorChip:mFlaggedUnreadColorChip;" },
+        null);
 
-    /**
-     * Generate test cases for this parameterized class.
-     *
+    /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
-     *         objects, the test case name, the input, and the file.
-     */
+     *         objects, the test case name, the input, and the file. */
     @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
-    /**
-     * Instantiates the enclosing class ({@link Wringed})
-     */
+    /** Instantiates the enclosing class ({@link Wringed}) */
     public Wringed() {
       super(WRING);
     }

@@ -47,12 +47,9 @@ public class IfExpressionStatementElseSimilarExpressionStatementTest {
         new String[] { "Simple if plus assign", "if (a) a *= b; else a *= c;", }, //
         null);
 
-    /**
-     * Generate test cases for this parameterized class.
-     *
+    /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
-     *         objects, the test case name, the input, and the file.
-     */
+     *         objects, the test case name, the input, and the file. */
     @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
@@ -74,19 +71,14 @@ public class IfExpressionStatementElseSimilarExpressionStatementTest {
         new String[] { "Distinct receiver two arguments", "if (a) y.f(a,b,c); else x.f(a,b,c);", "(a ?y :x).f(a,b,c);" }, //
         null);
 
-    /**
-     * Generate test cases for this parameterized class.
-     *
+    /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
-     *         objects, the test case name, the input, and the file.
-     */
+     *         objects, the test case name, the input, and the file. */
     @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
-    /**
-     * Instantiates the enclosing class ({@link Wringed})
-     */
+    /** Instantiates the enclosing class ({@link Wringed}) */
     public Wringed() {
       super(WRING);
     }

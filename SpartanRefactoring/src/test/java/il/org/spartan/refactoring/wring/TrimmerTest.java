@@ -16,19 +16,14 @@ import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 import org.junit.*;
 import org.junit.runners.*;
 
-/**
- * * Unit tests for the nesting class Unit test for the containing class. Note
+/** * Unit tests for the nesting class Unit test for the containing class. Note
  * our naming convention: a) test methods do not use the redundant "test"
  * prefix. b) test methods begin with the name of the method they check.
- *
  * @author Yossi Gil
- * @since 2014-07-10
- */
+ * @since 2014-07-10 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 @SuppressWarnings({ "static-method", "javadoc" }) public class TrimmerTest {
-  /**
-   * END OF STABLING TESTS
-   */
+  /** END OF STABLING TESTS */
   @Test public void actualExampleForSortAddition() {
     trimming("1 + b.statements().indexOf(declarationStmt)").to("");
   }
@@ -65,11 +60,11 @@ import org.junit.runners.*;
   }
   @Test public void assignmentAssignmentChain4() {
     trimming("a1 = a2 = a3 = a4 = 13; b1 = b2 = b3 = b4 = b5 = 13;")//
-    .to("b1 = b2 = b3 = b4 = b5 = a1 = a2 = a3 = a4 = 13;");
+        .to("b1 = b2 = b3 = b4 = b5 = a1 = a2 = a3 = a4 = 13;");
   }
   @Test public void assignmentAssignmentChain5() {
     trimming("a1 = (a2 = (a3 = (a4 = 13))); b1 = b2 = b3 = ((((b4 = (b5 = 13)))));")//
-    .to("b1=b2=b3=((((b4=(b5=a1=(a2=(a3=(a4=13))))))));");
+        .to("b1=b2=b3=((((b4=(b5=a1=(a2=(a3=(a4=13))))))));");
   }
   @Test public void assignmentAssignmentNew() {
     trimming("a = new B(); b= new B();").to("");
@@ -244,8 +239,7 @@ import org.junit.runners.*;
         "Y?o(s,b,g(f)):b.f(\".in\")&&!y(d,b)?o(b.z(u,v),s,f):null");
   }
   @Test public void bugIntroducingMISSINGWord1d() {
-    trimming("Y ? Z : !b.f(\".in\") ? null : y(d, b) ? null : o(b.z(u, v), s, f)").to(
-        "Y?Z:b.f(\".in\")&&!y(d,b)?o(b.z(u,v),s,f):null");
+    trimming("Y ? Z : !b.f(\".in\") ? null : y(d, b) ? null : o(b.z(u, v), s, f)").to("Y?Z:b.f(\".in\")&&!y(d,b)?o(b.z(u,v),s,f):null");
   }
   @Test public void bugIntroducingMISSINGWord1e() {
     trimming("Y ? Z : R ? null : S ? null : T").to("Y?Z:!R&&!S?T:null");
@@ -304,8 +298,8 @@ import org.junit.runners.*;
         .to("name.endsWith(testSuffix) && MakeAST.stringBuilder(f).indexOf(testKeyword)==-1?objects(s,name,makeInFile(f)):name.endsWith(\".in\")&&!dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),s,f):null");
   }
   @Test public void bugIntroducingMISSINGWordTry2() {
-    trimming("!(intent.getBooleanExtra(EXTRA_FROM_SHORTCUT, false) && !K9.FOLDER_NONE.equals(mAccount.getAutoExpandFolderName()))")
-    .to("!intent.getBooleanExtra(EXTRA_FROM_SHORTCUT,false)||K9.FOLDER_NONE.equals(mAccount.getAutoExpandFolderName())");
+    trimming("!(intent.getBooleanExtra(EXTRA_FROM_SHORTCUT, false) && !K9.FOLDER_NONE.equals(mAccount.getAutoExpandFolderName()))").to(
+        "!intent.getBooleanExtra(EXTRA_FROM_SHORTCUT,false)||K9.FOLDER_NONE.equals(mAccount.getAutoExpandFolderName())");
   }
   @Test public void bugIntroducingMISSINGWordTry3() {
     trimming("!(f.g(X, false) && !a.b.e(m.h()))").to("!f.g(X,false)||a.b.e(m.h())");
@@ -547,7 +541,7 @@ import org.junit.runners.*;
   }
   @Test public void correctSubstitutionInIfAssignment() {
     trimming("int a = 2+3; if (a+b > a << b) a =(((((a *7 << a)))));")//
-    .to("int a=2+3+b>2+3<<b?(2+3)*7<<2+3:2+3;");
+        .to("int a=2+3+b>2+3<<b?(2+3)*7<<2+3:2+3;");
   }
   @Test public void declarationAssignmentUpdateWithIncrement() {
     trimming("int a=0; a+=++a;").to("");
@@ -587,8 +581,8 @@ import org.junit.runners.*;
   }
   @Test public void declarationIfUsesLaterVariable() {
     trimming("int a=0, b=0;if (b==3)   a=4;")//
-    .to(" int a=0;if(0==3)a=4;") //
-    .to(" int a=0==3?4:0;");
+        .to(" int a=0;if(0==3)a=4;") //
+        .to(" int a=0==3?4:0;");
   }
   @Test public void declarationIfUsesLaterVariable1() {
     trimming("int a=0, b=0;if (b==3)   a=4; f();").to("");
@@ -706,7 +700,7 @@ import org.junit.runners.*;
   }
   @Test public void dontSimplifyCatchBlock() {
     trimming("try { {} ; {} } catch (Exception e) {{} ; {}  } finally {{} ; {}}")//
-    .to(" try {}          catch (Exception e) {}          finally {}");
+        .to(" try {}          catch (Exception e) {}          finally {}");
   }
   @Test public void duplicatePartialIfBranches() {
     trimming("" + //
@@ -773,8 +767,7 @@ import org.junit.runners.*;
         " /*    * This is a comment    */      int h = 7;   int j = 2;   int i = 6;   int k = i+2;   S.out.println(i-j+k); ");
   }
   @Ignore @Test public void forwardDeclaration3() {
-    trimming(
-        "/*    * This is a comment    */      int i = 6;   int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m);   y(i);   y(i+m); ")
+    trimming("/*    * This is a comment    */      int i = 6;   int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m);   y(i);   y(i+m); ")
         .to(" /*    * This is a comment    */      int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m);   int i = 6;   y(i);   y(i+m); ");
   }
   @Ignore @Test public void forwardDeclaration4() {
@@ -783,8 +776,7 @@ import org.junit.runners.*;
         .to(" /*    * This is a comment    */      int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m);   int i = 6;   final BlahClass bc = new BlahClass(i);   y(i+m+bc.j);    private static class BlahClass {   public BlahClass(int i) {    j = 2*i;      public final int j; ");
   }
   @Ignore @Test public void forwardDeclaration5() {
-    trimming(
-        "/*    * This is a comment    */      int i = y(0);   int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m + i);   y(i+m); ")
+    trimming("/*    * This is a comment    */      int i = y(0);   int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m + i);   y(i+m); ")
         .to(" /*    * This is a comment    */      int j = 3;   int k = j+2;   int i = y(0);   int m = k + j -19;   y(m*2 - k/m + i);   y(i+m); ");
   }
   @Ignore @Test public void forwardDeclaration6() {
@@ -894,11 +886,11 @@ import org.junit.runners.*;
   }
   @Test public void ifDegenerateThenInIf() {
     trimming("if (a) if (b) {} else f(); x();")//
-    .to(" if (a) if (!b) f(); x();");
+        .to(" if (a) if (!b) f(); x();");
   }
   @Test public void ifEmptyElsewWithinIf() {
     trimming("if (a) if (b) {;;;f();} else {}")//
-    .to("if(a&&b){;;;f();}");
+        .to("if(a&&b){;;;f();}");
   }
   @Test public void ifEmptyThenThrow() {
     trimming("" //
@@ -1048,7 +1040,7 @@ import org.junit.runners.*;
   }
   @Test public void infiniteLoopBug4() {
     trimming("void f(final VariableDeclarationStatement n) {}")//
-    .to(" void f(final VariableDeclarationStatement s) { }");
+        .to(" void f(final VariableDeclarationStatement s) { }");
   }
   @Ignore @Test public void inline00() {
     trimming("" + //
@@ -1123,9 +1115,7 @@ import org.junit.runners.*;
   @Test public void inlineInitializersSecondStep() {
     trimming("int a = 2; return 3*a*4;").to("return 3 * 2 * 4;");
   }
-  /**
-   * START OF STABLING TESTS
-   */
+  /** START OF STABLING TESTS */
   @Test public void inlineIntoInstanceCreation() {
     trimming("" //
         + "public Statement methodBlock(FrameworkMethod m) {\n" //
@@ -1148,18 +1138,16 @@ import org.junit.runners.*;
     trimming("int a = f(); if (a) g(a); else h(u(a));").to("");
   }
   @Ignore @Test public void inlineSingleUse01() {
-    trimming(
-        "/*    * This is a comment    */      int i = y(0);   int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m + i); ")
-        .to(" /*    * This is a comment    */      int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m + (y(0))); ");
+    trimming("/*    * This is a comment    */      int i = y(0);   int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m + i); ").to(
+        " /*    * This is a comment    */      int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m + (y(0))); ");
   }
   @Ignore @Test public void inlineSingleUse02() {
     trimming("/*    * This is a comment    */      int i = 5,j=3;   int k = j+2;   int m = k + j -19 +i;   y(k); ").to(
         " /*    * This is a comment    */      int j=3;   int k = j+2;   int m = k + j -19 +(5);   y(k); ");
   }
   @Ignore @Test public void inlineSingleUse03() {
-    trimming(
-        "/*    * This is a comment    */      int i = 5;   int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m + i); ")
-        .to(" /*    * This is a comment    */      int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m + (5)); ");
+    trimming("/*    * This is a comment    */      int i = 5;   int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m + i); ").to(
+        " /*    * This is a comment    */      int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m + (5)); ");
   }
   @Ignore @Test public void inlineSingleUse04() {
     trimming("int x = 6;   final BlahClass b = new BlahClass(x);   int y = 2+b.j;   y(y-b.j);   y(y*2); ").to(
@@ -1203,16 +1191,16 @@ import org.junit.runners.*;
   }
   @Test public void inlineSingleUseKillingVariablesSimplified() {
     trimming("int $=1,xi=0,xj=0,yi=0,yj=0;  if (xi > xj == yi > yj)    $++;   else    $--;")//
-    .to(" int $=1,xj=0,yi=0,yj=0;       if(0>xj==yi>yj)$++;else $--;")//
-    .to(" int $=1,yi=0,yj=0;            if(0>0==yi>yj)$++;else $--;") //
-    .to(" int $=1,yj=0;                 if(0>0==0>yj)$++;else $--;") //
-    .to(" int $=1;                      if(0>0==0>0)$++;else $--;") //
-    .to(" int $=1;                      if(0>0==0>0)++$;else--$;") //
+        .to(" int $=1,xj=0,yi=0,yj=0;       if(0>xj==yi>yj)$++;else $--;")//
+        .to(" int $=1,yi=0,yj=0;            if(0>0==yi>yj)$++;else $--;") //
+        .to(" int $=1,yj=0;                 if(0>0==0>yj)$++;else $--;") //
+        .to(" int $=1;                      if(0>0==0>0)$++;else $--;") //
+        .to(" int $=1;                      if(0>0==0>0)++$;else--$;") //
     ;
   }
   @Test public void inlineSingleUseTrivial() {
     trimming(" int $=1,yj=0;                 if(0>0==yj<0)++$;else--$;") //
-    .to("  int $=1;                      if(0>0==0<0)++$;else--$;") //
+        .to("  int $=1;                      if(0>0==0<0)++$;else--$;") //
     ;
   }
   @Test public void inlineSingleUseVanilla() {
@@ -1220,14 +1208,14 @@ import org.junit.runners.*;
   }
   @Test public void inlineSingleUseWithAssignment() {
     trimming("int a = 2; while (true) if (f()) f(a); else a = 2;")//
-    .to("");
+        .to("");
   }
   @Test public void inlineSingleVariableIntoPlusPlus() {
     trimming("int $ = 0;  if (a)  ++$;  else --$;").to("");
   }
   @Test public void inliningWithVariableAssignedTo() {
     trimming("int a=3,b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}") //
-    .to("int b=5;if(3==4)if(b==3)b=2;else{b=3;b=3;}else if(b==3)b=2;else{b=3*3;b=3;}") //
+        .to("int b=5;if(3==4)if(b==3)b=2;else{b=3;b=3;}else if(b==3)b=2;else{b=3*3;b=3;}") //
     ;
   }
   @Test public void isGreaterTrue() {
@@ -1275,13 +1263,13 @@ import org.junit.runners.*;
   }
   @Test public void issue06A() {
     trimming("x/a*-b/-c*- - - d / d")//
-    .to("-x/a * b/ c * d/d")//
-    .to("");
+        .to("-x/a * b/ c * d/d")//
+        .to("");
   }
   @Test public void issue06B() {
     trimming("x/a*-b/-c*- - - d / -d")//
-    .to("x/a * b/ c * d/d")//
-    .to("d*x/a*b/c/d");
+        .to("x/a * b/ c * d/d")//
+        .to("d*x/a*b/c/d");
   }
   @Test public void issue06C1() {
     trimming("a*-b/-c*- - - d / d").to("-a * b/ c * d/d");
@@ -1303,28 +1291,28 @@ import org.junit.runners.*;
   }
   @Test public void issue06F() {
     trimming("x*a*-b*-c*- - - d * d")//
-    .to("-x*a*b*c*d*d")//
-    .to("");
+        .to("-x*a*b*c*d*d")//
+        .to("");
   }
   @Test public void issue06G() {
     trimming("x*a*-b*-c*- - - d / d")//
-    .to("-x*a*b*c*d/d")//
-    .to("");
+        .to("-x*a*b*c*d/d")//
+        .to("");
   }
   @Test public void issue06H() {
     trimming("x/a*-b/-c*- - - d ")//
-    .to("-x/a * b/ c * d")//
+        .to("-x/a * b/ c * d")//
     ;
   }
   @Test public void issue06I() {
     trimming("41 * - 19")//
-    .to("-41 * 19 ") //
+        .to("-41 * 19 ") //
     ;
   }
   @Test public void issue06J() {
     trimming("41 * a * - 19")//
-    .to("-41*a*19")//
-    .to("-41*19*a") //
+        .to("-41*a*19")//
+        .to("-41*19*a") //
     ;
   }
   @Test public void issue37Simplified() {
@@ -1340,7 +1328,7 @@ import org.junit.runners.*;
   }
   @Test public void issue37WithSimplifiedBlock() {
     trimming("if (a) { {} ; if (b) f(); {} } else { g(); f(); ++i; ++j; }")//
-    .to(" if (a) {  if (b) f(); } else { g(); f(); ++i; ++j; }");
+        .to(" if (a) {  if (b) f(); } else { g(); f(); ++i; ++j; }");
   }
   @Test public void issue38() {
     trimming("    return o == null ? null\n" + //
@@ -1351,8 +1339,8 @@ import org.junit.runners.*;
   @Test public void issue38Simplfiied() {
     trimming(//
         "         o == CONDITIONAL_AND ? CONDITIONAL_OR \n" + //
-        "            : o == CONDITIONAL_OR ? CONDITIONAL_AND \n" + //
-        "                : null").to("");
+            "            : o == CONDITIONAL_OR ? CONDITIONAL_AND \n" + //
+            "                : null").to("");
   }
   @Test public void issue39base() {
     trimming("" + //
@@ -1441,51 +1429,51 @@ import org.junit.runners.*;
   }
   @Test public void issue49() {
     trimming("int f() { int f = 0; for (int i: X) $ += f(i); return f;}")//
-    .to("int f(){int $=0;for(int i:X)$+=f(i);return $;}");
+        .to("int f(){int $=0;for(int i:X)$+=f(i);return $;}");
   }
   @Test public void issue50a() {
     trimming("abstract interface a {}")//
-    .to("interface a {}");//
+        .to("interface a {}");//
   }
   @Test public void issue50b() {
     trimming("abstract static interface a {}")//
-    .to("interface a {}");//
+        .to("interface a {}");//
   }
   @Test public void issue50c() {
     trimming("static abstract interface a {}")//
-    .to("interface a {}");//
+        .to("interface a {}");//
   }
   @Test public void issue50d() {
     trimming("static interface a {}")//
-    .to("interface a {}");//
+        .to("interface a {}");//
   }
   @Test public void issue50e() {
     trimming("enum a {a,b}")//
-    .to(null);//
+        .to(null);//
   }
   @Test public void issue50e1() {
     trimming("enum a {a}")//
-    .to(null);//
+        .to(null);//
   }
   @Test public void issue50e2() {
     trimming("enum a {}")//
-    .to(null);//
+        .to(null);//
   }
   @Test public void issue50f() {
     trimming("static enum a {a, b}")//
-    .to("enum a {a, b}");//
+        .to("enum a {a, b}");//
   }
   @Test public void issue50g() {
     trimming("static abstract enum a {x,y,z; void f() {}}")//
-    .to("enum a {x,y,z; void f() {}}");//
+        .to("enum a {x,y,z; void f() {}}");//
   }
   @Test public void issue50h() {
     trimming("static abstract final enum a {x,y,z; void f() {}}")//
-    .to("enum a {x,y,z; void f() {}}");//
+        .to("enum a {x,y,z; void f() {}}");//
   }
   @Test public void issue51() {
     trimming("int f() { int x = 0; for (int i = 0; i < 10; ++i) x += i; return x;}")//
-    .to("int f() { int $ = 0; for (int i = 0; i < 10; ++i) $ += i; return $;}");
+        .to("int f() { int $ = 0; for (int i = 0; i < 10; ++i) $ += i; return $;}");
   }
   @Test public void issue52A() {
     trimming("void m() { return; }").to("void m() {}");
@@ -1501,83 +1489,83 @@ import org.junit.runners.*;
   }
   @Test public void issue53() {
     trimming("int[] is = f(); for (int i: is) f(i);")//
-    .to("for (int i: f()) f(i);");
+        .to("for (int i: f()) f(i);");
   }
   @Test public void issue54DoNonSideEffect() {
     trimming("int a  = f; do { b[i] = a; } while (b[i] != a);")//
-    .to("do { b[i] = f; } while (b[i] != f);");
+        .to("do { b[i] = f; } while (b[i] != f);");
   }
   @Test public void issue54DoNonSideEffectEmptyBody() {
     trimming("int a = f(); do ; while (a != 1);")//
-    .to("");
+        .to("");
   }
   @Test public void issue54DoWhile() {
     trimming("int a  = f(); do { b[i] = 2; ++i; } while (b[i] != a);")//
-    .to("");
+        .to("");
   }
   @Test public void issue54DoWithBlock() {
     trimming("int a  = f(); do { b[i] = a;  ++i; } while (b[i] != a);")//
-    .to("");
+        .to("");
   }
   @Test public void issue54doWithoutBlock() {
     trimming("int a  = f(); do b[i] = a; while (b[i] != a);")//
-    .to("");
+        .to("");
   }
   @Test public void issue54ForEnhanced() {
     trimming("int a  = f(); for (int i: a) b[i] = x;")//
-    .to(" for (int i: f()) b[i] = x;");
+        .to(" for (int i: f()) b[i] = x;");
   }
   @Test public void issue54ForEnhancedNonSideEffectLoopHeader() {
     trimming("int a  = f; for (int i: a) b[i] = b[i-1];")//
-    .to("for (int i: f) b[i] = b[i-1];");
+        .to("for (int i: f) b[i] = b[i-1];");
   }
   @Test public void issue54ForEnhancedNonSideEffectWithBody() {
     trimming("int a  = f; for (int i: j) b[i] = a;")//
-    .to(" for(int i:j)b[i]=f; ");
+        .to(" for(int i:j)b[i]=f; ");
   }
   @Test public void issue54ForPlain() {
     trimming("int a  = f(); for (int i = 0; i < 100;  ++i) b[i] = a;")//
-    .to("");
+        .to("");
   }
   @Test public void issue54ForPlainNonSideEffect() {
     trimming("int a  = f; for (int i = 0; i < 100;  ++i) b[i] = a;")//
-    .to("for (int i = 0; i < 100;  ++i) b[i] = f;");
+        .to("for (int i = 0; i < 100;  ++i) b[i] = f;");
   }
   @Test public void issue54ForPlainUseInCondition() {
     trimming("int a  = f(); for (int i = 0; a < 100;  ++i) b[i] = 3;")//
-    .to("");
+        .to("");
   }
   @Test public void issue54ForPlainUseInConditionNonSideEffect() {
     trimming("int a  = f; for (int i = 0; a < 100;  ++i) b[i] = 3;")//
-    .to("for (int i = 0; f < 100;  ++i) b[i] = 3;");
+        .to("for (int i = 0; f < 100;  ++i) b[i] = 3;");
   }
   @Test public void issue54ForPlainUseInInitializer() {
     trimming("int a  = f(); for (int i = a; i < 100; i++) b[i] = 3;")//
-    .to(" for (int i = f(); i < 100; i++) b[i] = 3;");
+        .to(" for (int i = f(); i < 100; i++) b[i] = 3;");
   }
   @Test public void issue54ForPlainUseInInitializerNonSideEffect() {
     trimming("int a  = f; for (int i = a; i < 100; i *= a) b[i] = 3;")//
-    .to(" for (int i = f; i < 100; i *= f) b[i] = 3;");
+        .to(" for (int i = f; i < 100; i *= f) b[i] = 3;");
   }
   @Test public void issue54ForPlainUseInUpdaters() {
     trimming("int a  = f(); for (int i = 0; i < 100; i *= a) b[i] = 3;")//
-    .to("");
+        .to("");
   }
   @Test public void issue54ForPlainUseInUpdatersNonSideEffect() {
     trimming("int a  = f; for (int i = 0; i < 100; i *= a) b[i] = 3;")//
-    .to("for (int i = 0; i < 100; i *= f) b[i] = 3;");
+        .to("for (int i = 0; i < 100; i *= f) b[i] = 3;");
   }
   @Test public void issue54While() {
     trimming("int a  = f(); while (c) b[i] = a;")//
-    .to("");
+        .to("");
   }
   @Test public void issue54WhileNonSideEffect() {
     trimming("int a  = f; while (c) b[i] = a;")//
-    .to("while (c) b[i] = f;");
+        .to("while (c) b[i] = f;");
   }
   @Test public void issue54WhileScopeDoesNotInclude() {
     included("int a  = f(); while (c) b[i] = a;", VariableDeclarationFragment.class)//
-    .notIn(new DeclarationInitializerStatementTerminatingScope());
+        .notIn(new DeclarationInitializerStatementTerminatingScope());
   }
   @Test public void issue57a() {
     trimming("void m(List<Expression>... expressions) { }").to("void m(List<Expression>... ess) {}");
@@ -1658,8 +1646,8 @@ import org.junit.runners.*;
   }
   @Test public void massiveInlining() {
     trimming("int a,b,c;String t = zE4;if (2 * 3.1415 * 180 > a || t.concat(sS) ==1922 && t.length() > 3)    return c > 5;")//
-    .to("int a,b,c;if(2*3.1415*180>a||zE4.concat(sS)==1922&&zE4.length()>3)return c>5;") //
-    .to("");
+        .to("int a,b,c;if(2*3.1415*180>a||zE4.concat(sS)==1922&&zE4.length()>3)return c>5;") //
+        .to("");
   }
   @Test public void methodWithLastIf() {
     trimming("int f() { if (a) { f(); g(); h();}}").to("int f() { if (!a) return;  f(); g(); h();}");
@@ -1672,52 +1660,52 @@ import org.junit.runners.*;
   }
   @Test public void nestedIf3() {
     trimming("if (x) if (a) if (b) i++; else ; else ; else { y++; f(); g(); z();}")//
-    .to("if(x)if(a&&b)i++;else;else{++y;f();g();z();}");
+        .to("if(x)if(a&&b)i++;else;else{++y;f();g();z();}");
   }
   @Test public void nestedIf33() {
     trimming("if(x){if(a&&b)i++;else;}else{++y;f();g();}")//
-    .to(" if(x)if(a&&b)i++;else;else{++y;f();g();}")//
-    .to(" if(x){if(a&&b)i++;}else{++y;f();g();}")//
-    .to(" if(x){if(a&&b)++i;}else{++y;f();g();}")//
+        .to(" if(x)if(a&&b)i++;else;else{++y;f();g();}")//
+        .to(" if(x){if(a&&b)i++;}else{++y;f();g();}")//
+        .to(" if(x){if(a&&b)++i;}else{++y;f();g();}")//
     ;
   }
   @Test public void nestedIf33a() {
     trimming("if (x) { if (a && b) i++; } else { y++; f(); g(); }")//
-    .to(" if (x) {if(a&&b)++i;} else{++y;f();g();}");
+        .to(" if (x) {if(a&&b)++i;} else{++y;f();g();}");
   }
   @Test public void nestedIf33b() {
     trimming("if (x) if (a && b) i++; else; else { y++; f(); g(); }")//
-    .to("if(x){if(a&&b)i++;}else{++y;f();g();}");
+        .to("if(x){if(a&&b)i++;}else{++y;f();g();}");
   }
   @Test public void nestedIf3c() {
     trimming("if (x) if (a && b) i++; else; else { y++; f(); g(); }")//
-    .to(" if(x) {if(a&&b)i++;} else {++y;f();g();}");
+        .to(" if(x) {if(a&&b)i++;} else {++y;f();g();}");
   }
   @Test public void nestedIf3d() {
     trimming("if (x) if (a) if (b) i++; else ; else ; else { y++; f(); g(); z();}")//
-    .to("if(x)if(a&&b)i++;else; else{++y;f();g();z();}") //
-    .to("if(x){if(a&&b)i++;} else{++y;f();g();z();}") //
-    .to("if(x){if(a&&b)++i;} else{++y;f();g();z();}") //
+        .to("if(x)if(a&&b)i++;else; else{++y;f();g();z();}") //
+        .to("if(x){if(a&&b)i++;} else{++y;f();g();z();}") //
+        .to("if(x){if(a&&b)++i;} else{++y;f();g();z();}") //
     ;
   }
   @Test public void nestedIf3e() {
     trimming("if (x) if (a) if (b) i++; else ; else ; else { y++; f(); g(); z();}")//
-    .to(" if(x)if(a&&b)i++;else;else{++y;f();g();z();}") //
-    .to(" if(x){if(a&&b)i++;}else{++y;f();g();z();}");
+        .to(" if(x)if(a&&b)i++;else;else{++y;f();g();z();}") //
+        .to(" if(x){if(a&&b)i++;}else{++y;f();g();z();}");
   }
   @Test public void nestedIf3f() {
     trimming("if(x){if(a&&b)i++;else;}else{++y;f();g();}")//
-    .to(" if(x)if(a&&b)i++; else; else{++y;f();g();}") //
-    .to(" if(x){if(a&&b)i++;}else{++y;f();g();}");
+        .to(" if(x)if(a&&b)i++; else; else{++y;f();g();}") //
+        .to(" if(x){if(a&&b)i++;}else{++y;f();g();}");
   }
   @Test public void nestedIf3f1() {
     trimming(" if(x)if(a&&b)i++; else; else{++y;f();g();}") //
-    .to(" if(x){if(a&&b)i++;}else{++y;f();g();}");
+        .to(" if(x){if(a&&b)i++;}else{++y;f();g();}");
   }
   @Test public void nestedIf3x() {
     trimming("if (x) if (a) if (b) i++; else ; else ; else { y++; f(); g(); z();}")//
-    .to("if(x)if(a&&b)i++;else;else{++y;f();g();z();}") //
-    .to("if(x){if(a&&b)i++;}else{++y;f();g();z();}") //
+        .to("if(x)if(a&&b)i++;else;else{++y;f();g();z();}") //
+        .to("if(x){if(a&&b)i++;}else{++y;f();g();z();}") //
     ;
   }
   @Test public void nestedTernaryAlignment() {
@@ -1740,19 +1728,19 @@ import org.junit.runners.*;
   }
   @Test public void noinliningIntoSynchronizedStatement() {
     trimming("int a  = f(); synchronized(this) { int b = a; }")//
-    .to("");
+        .to("");
   }
   @Test public void noinliningIntoSynchronizedStatementEvenWithoutSideEffect() {
     trimming("int a  = f; synchronized(this) { int b = a; }")//
-    .to("");
+        .to("");
   }
   @Test public void noinliningIntoTryStatement() {
     trimming("int a  = f(); try { int b = a; } catch (Exception E) {}")//
-    .to("");
+        .to("");
   }
   @Test public void noinliningIntoTryStatementEvenWithoutSideEffect() {
     trimming("int a  = f; try { int b = a; } catch (Exception E) {}")//
-    .to("");
+        .to("");
   }
   @Test public void notOfAnd() {
     trimming("!(A && B)").to("!A || !B");
@@ -2245,16 +2233,13 @@ import org.junit.runners.*;
     trimming("a.equal(b) ? new S(new Integer(4)) : new S(new Ineger(3))").to("new S(a.equal(b)? new Integer(4): new Ineger(3))");
   }
   @Test public void pushdownTernaryIntoConstructor1Div3() {
-    trimming("a.equal(b) ? new S(new Integer(4),a,b) : new S(new Ineger(3),a,b)").to(
-        "new S(a.equal(b)? new Integer(4): new Ineger(3), a, b)");
+    trimming("a.equal(b) ? new S(new Integer(4),a,b) : new S(new Ineger(3),a,b)").to("new S(a.equal(b)? new Integer(4): new Ineger(3), a, b)");
   }
   @Test public void pushdownTernaryIntoConstructor2Div3() {
-    trimming("a.equal(b) ? new S(a,new Integer(4),b) : new S(a, new Ineger(3), b)").to(
-        "new S(a,a.equal(b)? new Integer(4): new Ineger(3),b)");
+    trimming("a.equal(b) ? new S(a,new Integer(4),b) : new S(a, new Ineger(3), b)").to("new S(a,a.equal(b)? new Integer(4): new Ineger(3),b)");
   }
   @Test public void pushdownTernaryIntoConstructor3Div3() {
-    trimming("a.equal(b) ? new S(a,b,new Integer(4)) : new S(a,b,new Ineger(3))").to(
-        "new S(a, b, a.equal(b)? new Integer(4): new Ineger(3))");
+    trimming("a.equal(b) ? new S(a,b,new Integer(4)) : new S(a,b,new Ineger(3))").to("new S(a, b, a.equal(b)? new Integer(4): new Ineger(3))");
   }
   @Test public void pushdownTernaryIntoConstructorNotSameArity() {
     trimming("a ? new S(a,new Integer(4),b) : new S(new Ineger(3))")
@@ -2267,8 +2252,8 @@ import org.junit.runners.*;
         + "      S.out.println(Ho + x + a);").to("S.out.println(s.equals(t)?Hey+res:Ho+x+a);");
   }
   @Test public void pushdownTernaryLongFieldRefernece() {
-    trimming("externalImage ? R.string.webview_contextmenu_image_download_action : R.string.webview_contextmenu_image_save_action")
-    .to("!externalImage ? R.string.webview_contextmenu_image_save_action : R.string.webview_contextmenu_image_download_action");
+    trimming("externalImage ? R.string.webview_contextmenu_image_download_action : R.string.webview_contextmenu_image_save_action").to(
+        "!externalImage ? R.string.webview_contextmenu_image_save_action : R.string.webview_contextmenu_image_download_action");
   }
   @Test public void pushdownTernaryMethodInvocationFirst() {
     trimming("a?b():c").to("!a?c:b()");
@@ -2459,13 +2444,13 @@ import org.junit.runners.*;
   @Test public void renameToDollarActual() {
     trimming(//
         "        public static DeletePolicy fromInt(int initialSetting) {\n" + //
-        "            for (DeletePolicy policy: values()) {\n" + //
-        "                if (policy.setting == initialSetting) {\n" + //
-        "                    return policy;\n" + //
-        "                }\n" + //
-        "            }\n" + //
-        "            throw new IllegalArgumentException(\"DeletePolicy \" + initialSetting + \" unknown\");\n" + //
-        "        }").to(//
+            "            for (DeletePolicy policy: values()) {\n" + //
+            "                if (policy.setting == initialSetting) {\n" + //
+            "                    return policy;\n" + //
+            "                }\n" + //
+            "            }\n" + //
+            "            throw new IllegalArgumentException(\"DeletePolicy \" + initialSetting + \" unknown\");\n" + //
+            "        }").to(//
         "        public static DeletePolicy fromInt(int initialSetting) {\n" + //
             "            for (DeletePolicy $: values()) {\n" + //
             "                if ($.setting == initialSetting) {\n" + //
@@ -2477,7 +2462,7 @@ import org.junit.runners.*;
   }
   @Test public void renameToDollarEnhancedFor() {
     trimming("int f() { for (int a: as) return a; }")//
-    .to(" int f() {for(int $:as)return $;}");
+        .to(" int f() {for(int $:as)return $;}");
   }
   @Test public void replaceInitializationInReturn() {
     trimming("int a = 3; return a + 4;").to("return 3 + 4;");
@@ -2523,12 +2508,10 @@ import org.junit.runners.*;
     trimming("if (a) {f(); g(); h(); ++i;} else if (a) ++i; else j++;").to("if(!a)if(a)++i;else j++;else{f();g();h();++i;}");
   }
   @Test public void shortestBranchIfWithComplexNestedIf5() {
-    trimming("if (a) {f(); g(); h(); ++i; f();} else if (a) ++i; else j++;").to(
-        "if(!a)if(a)++i;else j++;else{f();g();h();++i;f();}");
+    trimming("if (a) {f(); g(); h(); ++i; f();} else if (a) ++i; else j++;").to("if(!a)if(a)++i;else j++;else{f();g();h();++i;f();}");
   }
   @Test public void shortestBranchIfWithComplexNestedIf6() {
-    trimming("if (a) {f(); g(); h(); ++i; f(); j++;} else if (a) ++i; else j++;").to(
-        "if(!a)if(a)++i;else j++;else{f();g();h();++i;f();j++;}");
+    trimming("if (a) {f(); g(); h(); ++i; f(); j++;} else if (a) ++i; else j++;").to("if(!a)if(a)++i;else j++;else{f();g();h();++i;f();j++;}");
   }
   @Test public void shortestBranchIfWithComplexNestedIf7() {
     trimming("if (a) {f(); ++i; g(); h(); ++i; f(); j++;} else if (a) ++i; else j++;").to(
@@ -2665,7 +2648,7 @@ import org.junit.runners.*;
         "          res -= 1;\n" + //
         "      return res;\n" + //
         ""//
-        );
+    );
     final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
     azzert.notNull(f);
     azzert.that(f, iz(" res = 0"));
@@ -2700,8 +2683,7 @@ import org.junit.runners.*;
   }
   @Test public void shortestOperand05() {
     trimming("    W s = new W(\"bob\");\n" + //
-        "    return s.l(hZ).l(\"-ba\").toString() == \"bob-ha-banai\";").to(
-        "return(new W(\"bob\")).l(hZ).l(\"-ba\").toString()==\"bob-ha-banai\";");
+        "    return s.l(hZ).l(\"-ba\").toString() == \"bob-ha-banai\";").to("return(new W(\"bob\")).l(hZ).l(\"-ba\").toString()==\"bob-ha-banai\";");
   }
   @Test public void shortestOperand09() {
     trimming("return 2 - 4 < 50 - 20 - 10 - 5;").to("return 2 - 4 < 50 - 5 - 10 - 20 ;");
@@ -2780,7 +2762,7 @@ import org.junit.runners.*;
   }
   @Test public void simpleBooleanMethod() {
     trimming("boolean f() { int x = 0; for (int i = 0; i < 10; ++i) x += i; return x;}")//
-    .to("boolean f() { int $ = 0; for (int i = 0; i < 10; ++i) $ += i; return $;}");
+        .to("boolean f() { int $ = 0; for (int i = 0; i < 10; ++i) $ += i; return $;}");
   }
   @Test public void simplifyBlockComplexEmpty0() {
     trimming("{;}").to("/* empty */    ");
@@ -3031,12 +3013,12 @@ import org.junit.runners.*;
   }
   @Test public void ternarize13() {
     trimming("String res = m, foo;  if (m.equals(f())==true)   foo = M; ")//
-    .to("String foo;if(m.equals(f())==true)foo=M;")//
-    .to("String foo;if(m.equals(f()))foo=M;");
+        .to("String foo;if(m.equals(f())==true)foo=M;")//
+        .to("String foo;if(m.equals(f()))foo=M;");
   }
   @Test public void ternarize13Simplified() {
     trimming("String r = m, f;  if (m.e(f()))   f = M; ")//
-    .to("String f;if(m.e(f()))f=M;");
+        .to("String f;if(m.e(f()))f=M;");
   }
   @Test public void ternarize13SimplifiedMore() {
     trimming("if (m.equals(f())==true)   foo = M; ").to("if (m.equals(f())) foo=M;");
@@ -3070,7 +3052,7 @@ import org.junit.runners.*;
   }
   public void ternarize18() {
     trimming("final String res=s;System.out.println(s.equals(res)?tH3+res:h2A+res+0);")//
-    .to("System.out.println(s.equals(s)?tH3+res:h2A+s+0);");
+        .to("System.out.println(s.equals(s)?tH3+res:h2A+s+0);");
   }
   @Test public void ternarize21() {
     trimming("if (s.equals(532)){    S.out.println(gG);    S.out.l(kKz);} f(); ").to("");
@@ -3090,13 +3072,13 @@ import org.junit.runners.*;
   }
   @Test public void ternarize33() {
     trimming("int a, b=0;   if (b==3){    a=4; } ")//
-    .to("int a;if(0==3){a=4;}") //
-    .to("int a;if(0==3)a=4;") //
-    .to(null);
+        .to("int a;if(0==3){a=4;}") //
+        .to("int a;if(0==3)a=4;") //
+        .to(null);
   }
   @Test public void ternarize35() {
     trimming("int a,b=0,c=0;a=4;if(c==3){b=2;}")//
-    .to("int a=4,b=0,c=0;if(c==3)b=2;");
+        .to("int a=4,b=0,c=0;if(c==3)b=2;");
   }
   @Test public void ternarize36() {
     trimming("int a,b=0,c=0;a=4;if (c==3){  b=2;   a=6; } f();").to("int a=4,b=0,c=0;if(c==3){b=2;a=6;} f();");
@@ -3109,8 +3091,7 @@ import org.junit.runners.*;
         "int a=3,b,c,d;b=5;d=7;if(a==4)while(b==3)c=a;else while(d==3)c=a*a;");
   }
   @Test public void ternarize42() {
-    trimming(
-        " int a, b; a = 3;b = 5; if (a == 4) if (b == 3) b = 2; else{b = a; b=3;}  else if (b == 3) b = 2; else{ b = a*a;         b=3; }")//
+    trimming(" int a, b; a = 3;b = 5; if (a == 4) if (b == 3) b = 2; else{b = a; b=3;}  else if (b == 3) b = 2; else{ b = a*a;         b=3; }")//
         .to("int a=3,b;b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}") //
         .to("int a=3,b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}") //
         .to("int b=5;if(3==4)if(b==3)b=2;else{b=3;b=3;}else if(b==3)b=2;else{b=3*3;b=3;}") //
@@ -3120,45 +3101,44 @@ import org.junit.runners.*;
   }
   @Test public void ternarize45() {
     trimming("if (m.equals(f())==true) if (b==3){ return 3; return 7;}   else    if (b==3){ return 2;}     a=7; ")//
-    .to("if (m.equals(f())) {if (b==3){ return 3; return 7;} if (b==3){ return 2;}   }  a=7; ");
+        .to("if (m.equals(f())) {if (b==3){ return 3; return 7;} if (b==3){ return 2;}   }  a=7; ");
   }
   @Test public void ternarize46() {
     trimming(//
         "   int a , b=0;\n" + //
-        "   if (m.equals(NG)==true)\n" + //
-        "     if (b==3){\n" + //
-        "       return 3;\n" + //
-        "     } else {\n" + //
-        "       a+=7;\n" + //
-        "     }\n" + //
-        "   else\n" + //
-        "     if (b==3){\n" + //
-        "       return 2;\n" + //
-        "     } else {\n" + //
-        "       a=7;\n" + //
-        "     }").to("int a;if(m.equals(NG)==true)if(0==3){return 3;}else{a+=7;}else if(0==3){return 2;}else{a=7;}");
+            "   if (m.equals(NG)==true)\n" + //
+            "     if (b==3){\n" + //
+            "       return 3;\n" + //
+            "     } else {\n" + //
+            "       a+=7;\n" + //
+            "     }\n" + //
+            "   else\n" + //
+            "     if (b==3){\n" + //
+            "       return 2;\n" + //
+            "     } else {\n" + //
+            "       a=7;\n" + //
+            "     }").to("int a;if(m.equals(NG)==true)if(0==3){return 3;}else{a+=7;}else if(0==3){return 2;}else{a=7;}");
   }
   @Test public void ternarize49() {
     trimming("if (s.equals(532)){ S.out.println(gG); S.out.l(kKz); } f();").to("");
   }
   @Test public void ternarize52() {
     trimming("int a=0,b = 0,c,d = 0,e = 0;if (a < b) {c = d;c = e;} f();")//
-    .to("");
+        .to("");
   }
   @Test public void ternarize54() {
     trimming("int $=1,xi=0,xj=0,yi=0,yj=0; if(xi > xj == yi > yj)++$;else--$;")//
-    .to(" int $=1,xj=0,yi=0,yj=0;      if(0>xj==yi>yj)++$;else--$;");
+        .to(" int $=1,xj=0,yi=0,yj=0;      if(0>xj==yi>yj)++$;else--$;");
   }
   @Test public void ternarize55() {
     trimming("if (key.equals(markColumn))\n" + //
         " to.put(key, a.toString());\n" + //
         "else\n" + //
-        "  to.put(key, missing(key, a) ? Z2 : get(key, a));").to(
-        "to.put(key,key.equals(markColumn)?a.toString():missing(key,a)?Z2:get(key,a));");
+        "  to.put(key, missing(key, a) ? Z2 : get(key, a));").to("to.put(key,key.equals(markColumn)?a.toString():missing(key,a)?Z2:get(key,a));");
   }
   @Test public void ternarize56() {
     trimming("if (target == 0) {p.f(X); p.v(0); p.f(q +  target); p.v(q * 100 / target); } f();") //
-    .to("if(target==0){p.f(X);p.v(0);p.f(q+target);p.v(100*q / target); } f();");
+        .to("if(target==0){p.f(X);p.v(0);p.f(q+target);p.v(100*q / target); } f();");
   }
   @Test public void ternarizeIntoSuperMethodInvocation() {
     trimming("a ? super.f(a, b, c) : super.f(a, x, c)").to("super.f(a, a ? b : x, c)");
@@ -3174,10 +3154,12 @@ import org.junit.runners.*;
     trimming("f(a,b,c,d) * f()").to("f() * f(a,b,c,d)");
   }
   @Test public void twoOpportunityExample() {
-    azzert.that(TrimmerTestsUtils.countOpportunities(new Trimmer(), (CompilationUnit) MakeAST.COMPILATION_UNIT.from(Wrap.Expression
-        .on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
-    azzert.that(TrimmerTestsUtils.countOpportunities(new Trimmer(), (CompilationUnit) MakeAST.COMPILATION_UNIT.from(Wrap.Expression
-        .on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
+    azzert.that(
+        TrimmerTestsUtils.countOpportunities(new Trimmer(),
+            (CompilationUnit) MakeAST.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
+    azzert.that(
+        TrimmerTestsUtils.countOpportunities(new Trimmer(),
+            (CompilationUnit) MakeAST.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
   }
   @Test public void unsafeBlockSimlify() {
     trimming("" //

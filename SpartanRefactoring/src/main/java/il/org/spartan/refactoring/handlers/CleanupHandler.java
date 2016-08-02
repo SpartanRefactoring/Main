@@ -14,13 +14,10 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
 
-/**
- * A handler for {@link Spartanizations}. This handler executes all safe
+/** A handler for {@link Spartanizations}. This handler executes all safe
  * Spartanizations on all java files in the current project.
- *
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code>
- * @since 2015/08/01
- */
+ * @since 2015/08/01 */
 public class CleanupHandler extends BaseHandler {
   /** Instantiates this class */
   public CleanupHandler() {
@@ -80,13 +77,9 @@ public class CleanupHandler extends BaseHandler {
       return null;
     }
   }
-  /**
-   * Returns the number of Spartanizaion suggestions for this compilation unit
-   *
-   * @param u
-   *          JD
-   * @return the number of suggesions available for the compilation unit
-   */
+  /** Returns the number of Spartanizaion suggestions for this compilation unit
+   * @param u JD
+   * @return the number of suggesions available for the compilation unit */
   public static int countSuggestions(final ICompilationUnit u) {
     int $ = 0;
     for (final Spartanization s : ApplySpartanizationHandler.safeSpartanizations) {

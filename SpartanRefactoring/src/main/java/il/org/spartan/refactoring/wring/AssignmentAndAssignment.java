@@ -10,13 +10,10 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-/**
- * A {@link Wring} to convert <code>a = 3; b = 3;</code> to <code>a = b =
+/** A {@link Wring} to convert <code>a = 3; b = 3;</code> to <code>a = b =
  * 3</code>
- *
  * @author Yossi Gil
- * @since 2015-08-28
- */
+ * @since 2015-08-28 */
 public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assignment> {
   @Override ASTRewrite go(final ASTRewrite r, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
     final ASTNode parent = a.getParent();
