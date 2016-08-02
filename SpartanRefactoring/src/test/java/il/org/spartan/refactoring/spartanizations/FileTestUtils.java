@@ -1,10 +1,10 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import java.io.*;
-import java.util.*;
-
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
+
+import java.io.*;
+import java.util.*;
 
 /**
  * An abstract representation of our test suite, which is represented in

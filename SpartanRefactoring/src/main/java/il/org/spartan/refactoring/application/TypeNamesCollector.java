@@ -1,13 +1,13 @@
 package il.org.spartan.refactoring.application;
 
+import il.org.spartan.files.*;
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.utils.*;
+
 import java.io.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-
-import il.org.spartan.files.*;
-import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.utils.*;
 
 public class TypeNamesCollector {
   private static Set<String> basket = new TreeSet<>();
