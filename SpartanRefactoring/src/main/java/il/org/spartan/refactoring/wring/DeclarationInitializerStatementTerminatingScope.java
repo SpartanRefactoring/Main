@@ -25,7 +25,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
       final SimpleName n, final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || hasAnnotation(f) || initializer instanceof ArrayInitializer)
       return null;
-    for (final IExtendedModifier m : (List<IExtendedModifier>) ((VariableDeclarationStatement) f.getParent()).modifiers())
+    for (final IExtendedModifier m :  expose.modifiers((VariableDeclarationStatement) f.getParent()))
       if (m.isModifier() && ((Modifier) m).isFinal())
         return null;
     final Statement s = extract.statement(f);
@@ -74,7 +74,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
         case ANONYMOUS_CLASS_DECLARATION:
           return true;
         case FOR_STATEMENT:
-          if (((ForStatement) ancestor).initializers().indexOf(child) != -1)
+          if (expose.initializers((ForStatement) ancestor).indexOf(child) != -1)
             break;
           return true;
         case ENHANCED_FOR_STATEMENT:
