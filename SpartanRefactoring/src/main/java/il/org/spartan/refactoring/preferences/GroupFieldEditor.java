@@ -65,7 +65,7 @@ public class GroupFieldEditor extends FieldEditor {
     initialized = true;
   }
   /* (non-Javadoc) Method declared on FieldEditor. */
-  @Override protected void adjustForNumColumns(final int numColumns) {
+  @Override protected void adjustForNumColumns(@SuppressWarnings("hiding") final int numColumns) {
     this.numColumns = numColumns;
   }
   /* (non-Javadoc) Method declared on FieldEditor. */
