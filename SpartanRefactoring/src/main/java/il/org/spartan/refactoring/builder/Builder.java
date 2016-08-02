@@ -63,7 +63,7 @@ public class Builder extends IncrementalProjectBuilder {
       getProject().accept(r -> {
         addMarkers(r);
         return true; // to continue visiting children.
-      });
+        });
     } catch (final CoreException e) {
       e.printStackTrace();
     }

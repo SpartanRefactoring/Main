@@ -14,9 +14,9 @@ import java.util.*;
  */
 public class Spartanizations {
   private static Spartanization[] all = { //
-      new Trimmer(), //
+  new Trimmer(), //
   };
-  @SuppressWarnings("synthetic-access") //
+  @SuppressWarnings("synthetic-access")//
   private static final Map<String, Spartanization> map = new HashMap<String, Spartanization>() {
     private static final long serialVersionUID = -8921699276699040030L;
     {
@@ -40,7 +40,7 @@ public class Spartanizations {
    *          Spartanization rule
    * @return Spartanization class rule instance
    */
-  @SuppressWarnings("unchecked") //
+  @SuppressWarnings("unchecked")//
   public static <T extends Spartanization> T findInstance(final Class<? extends T> c) {
     for (final Spartanization $ : all)
       if ($.getClass().equals(c))
@@ -51,22 +51,17 @@ public class Spartanizations {
    * @return Iteration over all Spartanization class instances
    */
   public static Iterable<Spartanization> allAvailableSpartanizations() {
-    return new Iterable<Spartanization>() {
-      @SuppressWarnings("synthetic-access") //
-      @Override public Iterator<Spartanization> iterator() {
-        return new Iterator<Spartanization>() {
-          int next = 0;
+    return () -> new Iterator<Spartanization>() {
+      int next = 0;
 
-          @Override public boolean hasNext() {
-            return next < all.length;
-          }
-          @Override public Spartanization next() {
-            return all[next++];
-          }
-          @Override public final void remove() {
-            throw new IllegalArgumentException();
-          }
-        };
+      @Override public boolean hasNext() {
+        return next < all.length;
+      }
+      @Override public Spartanization next() {
+        return all[next++];
+      }
+      @Override public final void remove() {
+        throw new IllegalArgumentException();
       }
     };
   }

@@ -26,7 +26,7 @@ public class ApplySpartanizationHandler extends BaseHandler {
   }
 
   static final Spartanization[] safeSpartanizations = { //
-      new Trimmer() };
+  new Trimmer() };
 
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     apply(currentCompilationUnit(), getSelectedText());

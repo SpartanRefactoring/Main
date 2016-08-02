@@ -50,7 +50,7 @@ public enum extract {
           , ANNOTATION_TYPE_DECLARATION //
           , ENUM_DECLARATION //
           , TYPE_DECLARATION //
-      ))
+          ))
         return $;
     return null;
   }
