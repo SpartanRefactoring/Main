@@ -588,9 +588,10 @@ public interface Utils {
       accumulate.to(ss).add(null, "A", null, "B", "B", null, "C", "D", null);
       azzert.nay(ss.contains("E"));
       azzert.nay(ss.contains(null));
-      assertEquals(4, ss.size());
+      azzert.that(ss.size(), is(4));
       for (final String s : ss)
         azzert.aye("", ss.contains(s));
+      azzert.aye(ss.contains("A"));
     }
     @Test public void cantBeNullOfNull() {
       try {

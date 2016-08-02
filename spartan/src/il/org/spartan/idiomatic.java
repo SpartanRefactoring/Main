@@ -55,12 +55,11 @@ public interface idiomatic {
   public static Trigger unless(final boolean condition) {
     return when(!condition);
   }
-  /** TODO Javadoc(2016): automatically generated for method <code>unless</code>
-   * @param <T> JD
-   * @param condition TODO
+  /** @param <T> JD
+   * @param condition when should the action take place
    * @param t JD
-   * @return T TODO Javadoc(2016) automatically generated for returned value of
-   *         method <code>unless</code> */
+   * @return the non-boolean parameter, in case the boolean parameter is true,
+   *         or null, otherwise */
   public static <T> @Nullable T unless(final boolean condition, final T t) {
     return incase(!condition, t);
   }
@@ -86,10 +85,6 @@ public interface idiomatic {
   };
 
   /** Supplier with {@link #when(boolean)} method
-   * @param <T> JD
-   * @author Yossi Gil <Yossi.Gil@GMail.COM>
-   * @since 2016 */
-  /** TODO(2016) Javadoc: automatically generated for type <code>idiomatic</code>
    * @param <T> JD
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016 */
@@ -179,13 +174,13 @@ public interface idiomatic {
     @Test public void use09() {
       azzert.notNull(unless(false).eval(() -> new Object()));
     }
-  @Test public void use10() {
+    @Test public void use10() {
       azzert.notNull(when(true).eval(() -> new Object()));
     }
-  @Test public void use11() {
+    @Test public void use11() {
       azzert.isNull(when(false).eval(() -> new Object()));
     }
-}
+  }
 
   /** Evaluate a {@link Runnable} when a condition applies or unless a condition
    * applies.
@@ -220,8 +215,7 @@ public interface idiomatic {
    * @author Yossi Gil
    * @param <T> JD
    * @since 2016` */
-  @FunctionalInterface
-  public interface Producer<@Nullable T> {
+  @FunctionalInterface public interface Producer<@Nullable T> {
     /** @return the next value provided by this instance
      * @throws Exception JD */
     T λ() throws Exception;
