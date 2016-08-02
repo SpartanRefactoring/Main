@@ -21,8 +21,8 @@ public enum expose {
    *          JD
    * @return a reference to the list of arguments in the argument
    */
-  public static List<Expression> arguments(final ClassInstanceCreation c) {
-    return MakeAST.expressions(c.arguments());
+  @SuppressWarnings("unchecked") public static List<Expression> arguments(final ClassInstanceCreation c) {
+    return c.arguments();
   }
   /**
    * Expose the list of arguments in a {@link MethodInvocation}
@@ -31,8 +31,8 @@ public enum expose {
    *          JD
    * @return a reference to the list of arguments in the argument
    */
-  public static List<Expression> arguments(final MethodInvocation i) {
-    return MakeAST.expressions(i.arguments());
+  @SuppressWarnings("unchecked") public static List<Expression> arguments(final MethodInvocation i) {
+    return i.arguments();
   }
   /**
    * Expose the list of arguments in a {@link SuperMethodInvocation}
@@ -41,8 +41,8 @@ public enum expose {
    *          JD
    * @return a reference to the list of arguments in the argument
    */
-  public static List<Expression> arguments(final SuperMethodInvocation i) {
-    return MakeAST.expressions(i.arguments());
+  @SuppressWarnings("unchecked") public static List<Expression> arguments(final SuperMethodInvocation i) {
+    return i.arguments();
   }
   @SuppressWarnings("unchecked") public static List<BodyDeclaration> bodyDeclarations(final AbstractTypeDeclaration d) {
     return d.bodyDeclarations();
@@ -72,8 +72,8 @@ public enum expose {
    *          JD
    * @return a reference to the list of fragments in the argument
    */
-  public static List<VariableDeclarationFragment> fragments(final FieldDeclaration d) {
-    return MakeAST.fragments(d.fragments());
+  @SuppressWarnings("unchecked") public static List<VariableDeclarationFragment> fragments(final FieldDeclaration d) {
+    return d.fragments();
   }
   /**
    * Expose the list of fragments in a {@link VariableDeclarationExpression}
@@ -82,8 +82,8 @@ public enum expose {
    *          JD
    * @return a reference to the list of fragments in the argument
    */
-  public static List<VariableDeclarationFragment> fragments(final VariableDeclarationExpression e) {
-    return e == null ? new ArrayList<>() : MakeAST.fragments(e.fragments());
+  @SuppressWarnings("unchecked") public static List<VariableDeclarationFragment> fragments(final VariableDeclarationExpression e) {
+    return e != null ? e.fragments() : new ArrayList<>();
   }
   /**
    * Expose the list of fragments in a {@link VariableDeclarationStatement}
@@ -92,8 +92,8 @@ public enum expose {
    *          JD
    * @return a reference to the list of fragments in the argument
    */
-  public static List<VariableDeclarationFragment> fragments(final VariableDeclarationStatement s) {
-    return MakeAST.fragments(s.fragments());
+  @SuppressWarnings("unchecked") public static List<VariableDeclarationFragment> fragments(final VariableDeclarationStatement s) {
+    return  s.fragments();
   }
   /**
    * Expose the list of initializers contained in a {@link ForStatement}
@@ -140,8 +140,8 @@ public enum expose {
    *          JD
    * @return a reference to the list of statements contained in the argument
    */
-  public static List<Statement> statements(final Block b) {
-    return MakeAST.statements(b.statements());
+  @SuppressWarnings("unchecked") public static List<Statement> statements(final Block b) {
+    return  b.statements();
   }
   @SuppressWarnings("unchecked") public static List<TagElement> tags(final Javadoc j) {
     return j.tags();
