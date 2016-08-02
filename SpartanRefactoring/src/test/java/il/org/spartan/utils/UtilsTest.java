@@ -7,8 +7,8 @@ import il.org.spartan.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-@FixMethodOrder(MethodSorters.JVM) //
-@SuppressWarnings({ "static-method", "javadoc", }) //
+@FixMethodOrder(MethodSorters.JVM)//
+@SuppressWarnings({ "static-method", "javadoc", })//
 public class UtilsTest {
   @Test public void compareFF() {
     azzert.that(Utils.compare(false, false), is(0));

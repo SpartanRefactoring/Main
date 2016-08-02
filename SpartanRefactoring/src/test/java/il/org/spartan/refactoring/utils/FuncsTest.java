@@ -19,7 +19,7 @@ import org.junit.runners.*;
  * @since 2015-07-18
  * @see Funcs
  */
-@SuppressWarnings({ "static-method", "javadoc" }) @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@SuppressWarnings({ "static-method", "javadoc" }) @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 public class FuncsTest {
   @Test public void arrayOfInts() {
     azzert.that(spartan.shorten(t("int[][] _;")), equalTo("iss"));

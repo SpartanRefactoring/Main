@@ -22,24 +22,24 @@ public enum Wrap {
       "package p;\n" + //
       "public class SpongeBob {\n" + //
       "", "" + //
-          "} // END OF PACKAGE\n" + //
-          ""), //
-  /** Algorithm for wrapping/unwrapping a statement */
-  Statement("" + Method.before + //
-      "public void squarePants(){\n" + //
-      "", "" + //
-          "} // END OF METHOD \n" + //
-          "" + Method.after + //
-          ""), //
-  /** Algorithm for wrapping/unwrapping an expression */
-  Expression("" + Statement.before + //
-      "   if (", //
-      "" + //
-          ") patrick();\n" + //
-          Statement.after + //
-          ""), //
-  //
-  ;
+      "} // END OF PACKAGE\n" + //
+      ""), //
+      /** Algorithm for wrapping/unwrapping a statement */
+      Statement("" + Method.before + //
+          "public void squarePants(){\n" + //
+          "", "" + //
+      "} // END OF METHOD \n" + //
+      "" + Method.after + //
+      ""), //
+          /** Algorithm for wrapping/unwrapping an expression */
+          Expression("" + Statement.before + //
+              "   if (", //
+              "" + //
+              ") patrick();\n" + //
+              Statement.after + //
+              ""), //
+              //
+              ;
   public static final Wrap[] WRAPS = new Wrap[] { Statement, Expression, Method, OUTER };
 
   /**

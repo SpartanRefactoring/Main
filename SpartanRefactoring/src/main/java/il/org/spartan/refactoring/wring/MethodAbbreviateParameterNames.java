@@ -21,8 +21,8 @@ import org.eclipse.text.edits.*;
  */
 /* TODO This is a previous version of the MethodParameterAbbreviate wring that
  * replaces all parameter names in a method at once. If it is found to be
- * useless in the near future, delete this class. Otherwise, remove
- * the @Deprecated annotation */
+ * useless in the near future, delete this class. Otherwise, remove the
+ * @Deprecated annotation */
 @Deprecated public class MethodAbbreviateParameterNames extends Wring<MethodDeclaration> {
   @Override String description(final MethodDeclaration d) {
     return d.getName().toString();
@@ -55,8 +55,7 @@ import org.eclipse.text.edits.*;
         $.add(d);
     return $.size() != 0 ? $ : null;
   }
-  private static boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m,
-      final Collection<SimpleName> newNames) {
+  private static boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m, final Collection<SimpleName> newNames) {
     if (spartan.shorten(d.getType()) == null)
       return false;
     final MethodExplorer e = new MethodExplorer(m);

@@ -220,17 +220,11 @@ public abstract class Wring<N extends ASTNode> {
 
   static abstract class VariableDeclarationFragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
     static InfixExpression.Operator asInfix(final Assignment.Operator o) {
-      return o == PLUS_ASSIGN ? PLUS
-          : o == MINUS_ASSIGN ? MINUS
-              : o == TIMES_ASSIGN ? TIMES
-                  : o == DIVIDE_ASSIGN ? DIVIDE
-                      : o == BIT_AND_ASSIGN ? AND
-                          : o == BIT_OR_ASSIGN ? OR
-                              : o == BIT_XOR_ASSIGN ? XOR
-                                  : o == REMAINDER_ASSIGN ? REMAINDER
-                                      : o == LEFT_SHIFT_ASSIGN ? LEFT_SHIFT //
-                                          : o == RIGHT_SHIFT_SIGNED_ASSIGN ? RIGHT_SHIFT_SIGNED //
-                                              : o == RIGHT_SHIFT_UNSIGNED_ASSIGN ? RIGHT_SHIFT_UNSIGNED : null;
+      return o == PLUS_ASSIGN ? PLUS : o == MINUS_ASSIGN ? MINUS : o == TIMES_ASSIGN ? TIMES : o == DIVIDE_ASSIGN ? DIVIDE
+          : o == BIT_AND_ASSIGN ? AND : o == BIT_OR_ASSIGN ? OR : o == BIT_XOR_ASSIGN ? XOR : o == REMAINDER_ASSIGN ? REMAINDER
+              : o == LEFT_SHIFT_ASSIGN ? LEFT_SHIFT //
+                  : o == RIGHT_SHIFT_SIGNED_ASSIGN ? RIGHT_SHIFT_SIGNED //
+                      : o == RIGHT_SHIFT_UNSIGNED_ASSIGN ? RIGHT_SHIFT_UNSIGNED : null;
     }
     static Expression assignmentAsExpression(final Assignment a) {
       final Operator o = a.getOperator();

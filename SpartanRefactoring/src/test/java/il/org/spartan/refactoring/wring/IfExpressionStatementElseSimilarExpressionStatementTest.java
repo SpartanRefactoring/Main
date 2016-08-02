@@ -17,10 +17,10 @@ import org.junit.runners.*;
 import org.junit.runners.Parameterized.Parameters;
 
 /* @author Yossi Gil
- *
+ * 
  * @since 2014-07-13 */
-@SuppressWarnings({ "javadoc", "static-method" }) //
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@SuppressWarnings({ "javadoc", "static-method" })//
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 public class IfExpressionStatementElseSimilarExpressionStatementTest {
   static final IfExpressionStatementElseSimilarExpressionStatement WRING = new IfExpressionStatementElseSimilarExpressionStatement();
 
@@ -32,7 +32,7 @@ public class IfExpressionStatementElseSimilarExpressionStatementTest {
     azzert.that(WRING.scopeIncludes(i), is(true));
   }
 
-  @RunWith(Parameterized.class) //
+  @RunWith(Parameterized.class)//
   public static class OutOfScope extends AbstractWringTest.OutOfScope<IfStatement> {
     static String[][] cases = Utils.asArray(//
         new String[] { "Expression vs. Expression", " 6 - 7 < 2 + 1   " }, //
@@ -53,7 +53,7 @@ public class IfExpressionStatementElseSimilarExpressionStatementTest {
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file.
      */
-    @Parameters(name = DESCRIPTION) //
+    @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
@@ -63,8 +63,8 @@ public class IfExpressionStatementElseSimilarExpressionStatementTest {
     }
   }
 
-  @RunWith(Parameterized.class) //
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+  @RunWith(Parameterized.class)//
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   public static class Wringed extends AbstractWringTest.WringedIfStatement {
     private static String[][] cases = Utils.asArray(//
         new String[] { "Vanilla", "if (a) f(b); else f(c);", "f(a ? b: c);" }, //
@@ -80,7 +80,7 @@ public class IfExpressionStatementElseSimilarExpressionStatementTest {
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file.
      */
-    @Parameters(name = DESCRIPTION) //
+    @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
     }

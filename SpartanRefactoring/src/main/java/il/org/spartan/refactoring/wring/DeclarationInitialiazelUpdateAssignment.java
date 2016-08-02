@@ -20,8 +20,8 @@ import org.eclipse.text.edits.*;
  * @since 2015-08-07
  */
 public final class DeclarationInitialiazelUpdateAssignment extends Wring.VariableDeclarationFragementAndStatement {
-  @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
-      final Statement nextStatement, final TextEditGroup g) {
+  @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n,
+      final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
       return null;
     final Assignment a = extract.assignment(nextStatement);

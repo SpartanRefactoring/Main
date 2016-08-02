@@ -20,6 +20,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 public enum Funcs {
   ;
   private static Map<Operator, Operator> conjugate = makeConjugates();
+
   public static AbstractTypeDeclaration asAbstractTypeDeclaration(final ASTNode n) {
     return eval(() -> ((AbstractTypeDeclaration) n)).when(n instanceof AbstractTypeDeclaration);
   }
@@ -93,7 +94,7 @@ public enum Funcs {
         LESS_EQUALS, //
         EQUALS, //
         NOT_EQUALS //
-    ) ? e : null;
+        ) ? e : null;
   }
   /**
    * Convert, is possible, an {@link ASTNode} to a {@link ConditionalExpression}
@@ -564,8 +565,7 @@ public enum Funcs {
       case EXPRESSION_STATEMENT:
         return isNodeIncOrDecExp(((ExpressionStatement) n).getExpression());
       case POSTFIX_EXPRESSION:
-        return in(((PostfixExpression) n).getOperator(), PostfixExpression.Operator.INCREMENT,
-            PostfixExpression.Operator.DECREMENT);
+        return in(((PostfixExpression) n).getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
       case PREFIX_EXPRESSION:
         return in(asPrefixExpression(n).getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT);
       default:
@@ -708,15 +708,15 @@ public enum Funcs {
     $.setResolveBindings(false);
     @SuppressWarnings("unchecked") final Map<String, String> options = JavaCore.getOptions();
     options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_8); // or newer
-                                                                 // version
+    // version
     $.setCompilerOptions(options);
     return $;
   }
   public static Expression peelNegation(final Expression $) {
     return //
-    $ instanceof PrefixExpression ? peelNegation((PrefixExpression) $) //
-        : $ instanceof ParenthesizedExpression ? peelNegation(((ParenthesizedExpression) $).getExpression()) //
-            : $ instanceof NumberLiteral ? peelNegation((NumberLiteral) $) : $;
+        $ instanceof PrefixExpression ? peelNegation((PrefixExpression) $) //
+            : $ instanceof ParenthesizedExpression ? peelNegation(((ParenthesizedExpression) $).getExpression()) //
+                : $ instanceof NumberLiteral ? peelNegation((NumberLiteral) $) : $;
   }
   private static Expression peelNegation(final NumberLiteral $) {
     return !$.getToken().startsWith("-") ? $ : $.getAST().newNumberLiteral($.getToken().substring(1));
@@ -781,7 +781,7 @@ public enum Funcs {
       es.remove(e);
     }
   }
-   /**
+  /**
    * Shorthand for {@link Assignment#getRightHandSide()}
    *
    * @param a
@@ -871,7 +871,6 @@ public enum Funcs {
   public static Expression then(final ConditionalExpression e) {
     return e.getThenExpression();
   }
-
   /**
    * Shorthand for {@link IfStatement#getThenStatement}
    *

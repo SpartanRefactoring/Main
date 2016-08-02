@@ -92,8 +92,8 @@ public abstract class Spartanization extends Refactoring {
   protected Spartanization(final String name) {
     this.name = name;
   }
-  @Override public RefactoringStatus checkFinalConditions(final IProgressMonitor pm)
-      throws CoreException, OperationCanceledException {
+  @Override public RefactoringStatus checkFinalConditions(final IProgressMonitor pm) throws CoreException,
+      OperationCanceledException {
     changes.clear();
     totalChanges = 0;
     if (marker == null)
@@ -385,8 +385,8 @@ public abstract class Spartanization extends Refactoring {
    * @throws IllegalArgumentException
    * @throws CoreException
    */
-  protected void scanCompilationUnits(final List<ICompilationUnit> cus, final IProgressMonitor pm)
-      throws IllegalArgumentException, CoreException {
+  protected void scanCompilationUnits(final List<ICompilationUnit> cus, final IProgressMonitor pm) throws IllegalArgumentException,
+      CoreException {
     pm.beginTask("Iterating over gathered compilation units...", cus.size());
     for (final ICompilationUnit cu : cus)
       scanCompilationUnit(cu, new SubProgressMonitor(pm, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL));
