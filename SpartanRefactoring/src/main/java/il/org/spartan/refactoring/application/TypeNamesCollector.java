@@ -37,10 +37,8 @@ public class TypeNamesCollector {
         basket.add(last(t.getName()).toString());
         return true;
       }
-      private SimpleName last(final Name n) {
-        return n.isSimpleName() ? (SimpleName) n //
-            : n.isQualifiedName() ? ((QualifiedName) n).getName() //
-                : null;
+      SimpleName last(final Name n) {
+        return n.isSimpleName() ? (SimpleName) n : n.isQualifiedName() ? ((QualifiedName) n).getName() : null;
       }
     });
   }

@@ -71,7 +71,7 @@ public class AsSpartanization extends Spartanization {
       @Override public boolean visit(final VariableDeclarationFragment f) {
         return go(f);
       }
-      private <N extends ASTNode> boolean go(final N n) {
+      <N extends ASTNode> boolean go(final N n) {
         if (inRange(m, n))
           inner.make(n).go(r, null);
         return true;

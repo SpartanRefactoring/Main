@@ -44,16 +44,16 @@ public class MethodExplorer {
         addFragments(fragments(s));
         return true;
       }
-      private boolean add(final List<? extends Expression> es) {
+      boolean add(final List<? extends Expression> es) {
         for (final Expression e : es)
           addFragments(fragments(asVariableDeclarationExpression(e)));
         return true;
       }
-      private boolean add(final SingleVariableDeclaration d) {
+      boolean add(final SingleVariableDeclaration d) {
         $.add(d.getName());
         return true;
       }
-      private void addFragments(final List<VariableDeclarationFragment> fs) {
+      void addFragments(final List<VariableDeclarationFragment> fs) {
         for (final VariableDeclarationFragment f : fs)
           $.add(f.getName());
       }
