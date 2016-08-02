@@ -3,12 +3,11 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.utils.Utils.*;
+import il.org.spartan.*;
+import il.org.spartan.refactoring.spartanizations.*;
 
 import org.junit.*;
 import org.junit.runners.*;
-
-import il.org.spartan.*;
-import il.org.spartan.refactoring.spartanizations.*;
 
 /**
  * * Unit tests for the nesting class Unit test for the containing class. Note
