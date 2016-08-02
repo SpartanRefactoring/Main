@@ -16,12 +16,9 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.Parameters;
 
-/**
- * Unit tests for {@link Wrings#ADDITION_SORTER}.
- *
+/** Unit tests for {@link Wrings#ADDITION_SORTER}.
  * @author Yossi Gil
- * @since 2014-07-13
- */
+ * @since 2014-07-13 */
 @SuppressWarnings({ "javadoc", "static-method" })//
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 public class InfixSortAdditionTest {
@@ -51,12 +48,9 @@ public class InfixSortAdditionTest {
         new String[] { "Literal addition", "2+3" }, //
         null);
 
-    /**
-     * Generate test cases for this parameterized class.
-     *
+    /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
-     *         objects, the test case name, the input, and the file.
-     */
+     *         objects, the test case name, the input, and the file. */
     @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
@@ -107,19 +101,14 @@ public class InfixSortAdditionTest {
         new String[] { "Sort expressions by size", "1*f(a,b,c,d) + 2*f(a,b) + 3*f()", "3*f() +2*f(a,b)+ 1*f(a,b,c,d)" }, //
         null);
 
-    /**
-     * Generate test cases for this parameterized class.
-     *
+    /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
-     *         objects, the test case name, the input, and the file.
-     */
+     *         objects, the test case name, the input, and the file. */
     @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
-    /**
-     * Instantiates the enclosing class ({@link WringedExpression})
-     */
+    /** Instantiates the enclosing class ({@link WringedExpression}) */
     public Wringed() {
       super(WRING);
     }
@@ -146,7 +135,7 @@ public class InfixSortAdditionTest {
       azzert.that(operands.size(), greaterThanOrEqualTo(2));
       azzert.that(//
           "Before: " + extract.operands(flatten(e)) + "\n" + //
-          "After: " + operands + "\n", //
+              "After: " + operands + "\n", //
           COMPARATOR.sort(operands), is(true));
     }
     @Test public void sortTwice() {

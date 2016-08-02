@@ -9,15 +9,12 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.ui.handlers.*;
 
-/**
- * A command handler which toggles the spartanization nature
- *
+/** A command handler which toggles the spartanization nature
  * @see org.eclipse.core.commands.IHandler
  * @see org.eclipse.core.commands.AbstractHandler
  * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
- * @since 2013/07/01
- */
+ * @since 2013/07/01 */
 public class ToggleSpartanizationHandler extends AbstractHandler {
   private static Void execute(final ISelection s, final boolean state) throws CoreException {
     if (s instanceof IStructuredSelection)
@@ -29,8 +26,7 @@ public class ToggleSpartanizationHandler extends AbstractHandler {
     return null;
   }
   private static IProject extractProject(final Object o) {
-    return o instanceof IProject ? (IProject) o : o instanceof IAdaptable ? (IProject) ((IAdaptable) o).getAdapter(IProject.class)
-        : null;
+    return o instanceof IProject ? (IProject) o : o instanceof IAdaptable ? (IProject) ((IAdaptable) o).getAdapter(IProject.class) : null;
   }
   private static void toggleNature(final IProject p, final boolean state) throws CoreException {
     // NOTE: In order to ensure that we're not adding the nature when it's
@@ -61,9 +57,7 @@ public class ToggleSpartanizationHandler extends AbstractHandler {
     description.setNatureIds(append(natures, Nature.NATURE_ID));
     p.setDescription(description, null);
   }
-  /**
-   * the main method of the command handler, runs when the command is called.
-   */
+  /** the main method of the command handler, runs when the command is called. */
   @Override public Void execute(final ExecutionEvent e) throws ExecutionException {
     // Invert the old value to get the new
     final boolean newValue = !HandlerUtil.toggleCommandState(e.getCommand());

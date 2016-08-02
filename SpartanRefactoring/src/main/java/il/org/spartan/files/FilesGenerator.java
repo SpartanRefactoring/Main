@@ -5,25 +5,24 @@ import static il.org.spartan.utils.Utils.*;
 import java.io.*;
 import java.util.*;
 
-/**
- * Provides, employing fluent API, a {@link Iterable} interface for iteration
- * over files in the file system. <p> Typical uses are<code>
- *
+/** Provides, employing fluent API, a {@link Iterable} interface for iteration
+ * over files in the file system.
+ * <p>
+ * Typical uses are<code>
+ * 
  * <pre> <b>for</b> ({@link File} f: <b>new</b> {@link FilesGenerator}
  * (".java").from(".")) System.out.println(f); </pre>
- *
+ * 
  * </code> to recursively iterate over all files whose extension is ".java" in
  * the current directory, or <code>
- *
+ * 
  * <pre> <b>for</b> ({@link File} f: <b>new</b> {@link FilesGenerator}
  * ().from("/bin", "/home")) System.out.println(f); </pre>
- *
+ * 
  * </code> to recursively iterate (over all files in the <code>/bin</code> and
  * <code>/home</code> directories.
- *
  * @author Yossi Gil
- * @since 2015-09-23.
- */
+ * @since 2015-09-23. */
 public class FilesGenerator {
   public static class as {
     @SafeVarargs public static <T> Iterable<T> iterable(final T... ts) {
@@ -51,42 +50,32 @@ public class FilesGenerator {
   /** Which extensions we search for */
   final Iterable<String> extensions;
 
-  /**
-   * Instantiates this class. This instantiation makes the first step in the
+  /** Instantiates this class. This instantiation makes the first step in the
    * call chain that makes the fluent API. The second (and last) such step is
    * provided by function {@link #from(String...)}.
-   *
-   * @param extensions
-   *          an array of non-<code><b>null</b></code> {@link String}s
-   *          specifying the allowed extensions for files that the iterator
-   *          should yield, e.g., ".java", ".class", ".doc", etc. If this
-   *          parameter is <code><b>null</b></code>, or of length 0, or contains
-   *          a {@link String} of length 0, then the iterator yields all files
-   *          found in the scanned locations.
-   * @see FilesGenerator#from
-   */
+   * @param extensions an array of non-<code><b>null</b></code> {@link String}s
+   *        specifying the allowed extensions for files that the iterator should
+   *        yield, e.g., ".java", ".class", ".doc", etc. If this parameter is
+   *        <code><b>null</b></code>, or of length 0, or contains a
+   *        {@link String} of length 0, then the iterator yields all files found
+   *        in the scanned locations.
+   * @see FilesGenerator#from */
   public FilesGenerator(final String... extensions) {
     this.extensions = asList(extensions);
   }
-  /**
-   * @param from
-   *          an array of names of directories from which the traversal should
-   *          begin
+  /** @param from an array of names of directories from which the traversal
+   *        should begin
    * @return an instance of an internal (yet <code><b>public</b></code>)
    *         <code><b>class</b></code> which <code><b>implements</b></code> the
-   *         {@link Iterable} <code><b>interface</b></code>
-   */
+   *         {@link Iterable} <code><b>interface</b></code> */
   public From from(final String... from) {
     return from(as.iterable(from));
   }
-  /**
-   * @param from
-   *          an array of names of directories from which the traversal should
-   *          begin
+  /** @param from an array of names of directories from which the traversal
+   *        should begin
    * @return an instance of an internal (yet <code><b>public</b></code>)
    *         <code><b>class</b></code> which <code><b>implements</b></code> the
-   *         {@link Iterable} <code><b>interface</b></code>
-   */
+   *         {@link Iterable} <code><b>interface</b></code> */
   public From from(final Iterable<String> from) {
     return new From(asFiles(from));
   }
@@ -97,14 +86,11 @@ public class FilesGenerator {
     return $;
   }
 
-  /**
-   * An internal (yet <code><b>public</b></code>) <code><b>class</b></code>
+  /** An internal (yet <code><b>public</b></code>) <code><b>class</b></code>
    * which <code><b>implements</b></code> the {@link Iterable}
    * <code><b>interface</b></code>.
-   *
    * @author Yossi Gil
-   * @since 2015-09-23.
-   */
+   * @since 2015-09-23. */
   public class From implements Iterable<File> {
     final Iterable<File> from;
 
@@ -155,11 +141,8 @@ public class FilesGenerator {
     }
   }
 
-  /**
-   * @param directory
-   *          should be a directory, but we still need to account for weird
-   *          creatures such as "System Volume Information"
-   */
+  /** @param directory should be a directory, but we still need to account for
+   *        weird creatures such as "System Volume Information" */
   static Iterator<File> directoryIterator(final File directory) {
     if (directory == null || !directory.isDirectory() || directory.list() == null)
       return null;

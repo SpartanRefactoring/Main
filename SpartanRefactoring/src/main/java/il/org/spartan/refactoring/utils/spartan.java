@@ -53,10 +53,10 @@ public interface spartan {
     return new JavaTypeNameParser(s).shortName();
   }
   static String shorten(final Type t) {
-    return t instanceof NameQualifiedType ? shorten((NameQualifiedType) t)
-        : t instanceof PrimitiveType ? shorten((PrimitiveType) t) : t instanceof QualifiedType ? shorten((QualifiedType) t)
-            : t instanceof SimpleType ? shorten((SimpleType) t) : t instanceof WildcardType ? shortName((WildcardType) t)
-                : t instanceof ArrayType ? shorten((ArrayType) t) : t instanceof IntersectionType ? shorten((IntersectionType) t) //
+    return t instanceof NameQualifiedType ? shorten((NameQualifiedType) t) : t instanceof PrimitiveType ? shorten((PrimitiveType) t)
+        : t instanceof QualifiedType ? shorten((QualifiedType) t) : t instanceof SimpleType ? shorten((SimpleType) t)
+            : t instanceof WildcardType ? shortName((WildcardType) t) : t instanceof ArrayType ? shorten((ArrayType) t)
+                : t instanceof IntersectionType ? shorten((IntersectionType) t) //
                     : t instanceof ParameterizedType ? shorten((ParameterizedType) t)//
                         : t instanceof UnionType ? shortName((UnionType) t) : null;
   }

@@ -12,13 +12,10 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-/**
- * A {@link Wring} to convert <code>if (X) return A; if (Y) return A;</code>
+/** A {@link Wring} to convert <code>if (X) return A; if (Y) return A;</code>
  * into <code>if (X || Y) return A;</code>
- *
  * @author Yossi Gil
- * @since 2015-07-29
- */
+ * @since 2015-07-29 */
 public final class IfFooSequencerIfFooSameSequencer extends Wring.ReplaceToNextStatement<IfStatement> {
   private static IfStatement makeIfWithoutElse(final Statement s, final InfixExpression condition) {
     final IfStatement $ = condition.getAST().newIfStatement();
@@ -35,11 +32,8 @@ public final class IfFooSequencerIfFooSameSequencer extends Wring.ReplaceToNextS
       return null;
     final Statement then = then(s);
     final List<Statement> ss1 = extract.statements(then);
-    return !same(ss1, extract.statements(then(s2))) || !Is.sequencer(last(ss1)) ? null : Wrings.replaceTwoStatements(
-        r,
-        s,
-        makeIfWithoutElse(BlockSimplify.reorganizeNestedStatement(then),
-            Subject.pair(s.getExpression(), s2.getExpression()).to(CONDITIONAL_OR)), g);
+    return !same(ss1, extract.statements(then(s2))) || !Is.sequencer(last(ss1)) ? null : Wrings.replaceTwoStatements(r, s,
+        makeIfWithoutElse(BlockSimplify.reorganizeNestedStatement(then), Subject.pair(s.getExpression(), s2.getExpression()).to(CONDITIONAL_OR)), g);
   }
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate two 'if' statements with identical body";

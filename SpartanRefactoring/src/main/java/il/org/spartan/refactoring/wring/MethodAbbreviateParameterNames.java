@@ -11,17 +11,15 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-/**
- * A {@link Wring} that abbreviates the names of variables that have a generic
+/** A {@link Wring} that abbreviates the names of variables that have a generic
  * variation. The abbreviated name is the first character in the last word of
  * the variable's name.
- *
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
- * @since 2015/08/24
- */
+ * @since 2015/08/24 */
 /* TODO This is a previous version of the MethodParameterAbbreviate wring that
  * replaces all parameter names in a method at once. If it is found to be
  * useless in the near future, delete this class. Otherwise, remove the
+ * 
  * @Deprecated annotation */
 @Deprecated public class MethodAbbreviateParameterNames extends Wring<MethodDeclaration> {
   @Override String description(final MethodDeclaration d) {

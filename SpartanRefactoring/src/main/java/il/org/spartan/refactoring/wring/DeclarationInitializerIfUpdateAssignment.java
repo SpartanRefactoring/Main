@@ -11,16 +11,13 @@ import org.eclipse.jdt.core.dom.Assignment.Operator;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-/**
- * A {@link Wring} to convert <code>int a = 2; if (b) a = 3;</code> into
+/** A {@link Wring} to convert <code>int a = 2; if (b) a = 3;</code> into
  * <code>int a = b ? 3 : 2;</code>
- *
  * @author Yossi Gil
- * @since 2015-08-07
- */
+ * @since 2015-08-07 */
 public final class DeclarationInitializerIfUpdateAssignment extends Wring.VariableDeclarationFragementAndStatement {
-  @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n,
-      final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
+  @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+      final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
       return null;
     final IfStatement s = asIfStatement(nextStatement);

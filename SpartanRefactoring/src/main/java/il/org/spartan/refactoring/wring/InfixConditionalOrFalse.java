@@ -5,12 +5,9 @@ import il.org.spartan.refactoring.utils.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-/**
- * A {@link Wring} to convert <code>b || false</code> to <code>b</code>
- *
+/** A {@link Wring} to convert <code>b || false</code> to <code>b</code>
  * @author Yossi Gil
- * @since 2015-07-20
- */
+ * @since 2015-07-20 */
 public final class InfixConditionalOrFalse extends Wring.ReplaceCurrentNode<InfixExpression> {
   @Override Expression replacement(final InfixExpression e) {
     return Wrings.eliminateLiteral(e, false);

@@ -22,12 +22,9 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.Parameters;
 
-/**
- * Unit tests for {@link Wrings#MULTIPLCATION_SORTER}.
- *
+/** Unit tests for {@link Wrings#MULTIPLCATION_SORTER}.
  * @author Yossi Gil
- * @since 2014-07-13
- */
+ * @since 2014-07-13 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 @SuppressWarnings({ "javadoc", "static-method" })//
 public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpression> {
@@ -73,12 +70,9 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
         new String[] { "Plain product of four, sorted", "2*a*b*c" }, //
         null);
 
-    /**
-     * Generate test cases for this parameterized class.
-     *
+    /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
-     *         objects, the test case name, the input, and the file.
-     */
+     *         objects, the test case name, the input, and the file. */
     @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
@@ -133,19 +127,14 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
         new String[] { "Plain alphabetical sorting", "f(y)*f(x)", "f(x)*f(y)" }, //
         null);
 
-    /**
-     * Generate test cases for this parameterized class.
-     *
+    /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
-     *         objects, the test case name, the input, and the file.
-     */
+     *         objects, the test case name, the input, and the file. */
     @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
-    /**
-     * Instantiates the enclosing class ({@link WringedExpression})
-     */
+    /** Instantiates the enclosing class ({@link WringedExpression}) */
     public Wringed() {
       super(WRING);
     }
@@ -162,8 +151,7 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
     @Test public void sortTest() {
       final InfixExpression e = asInfixExpression();
       final List<Expression> operands = extract.operands(flatten(e));
-      azzert.that("Before: " + extract.operands(flatten(e)) + "\n" + "After: " + operands + "\n", COMPARATOR.sort(operands),
-          is(true));
+      azzert.that("Before: " + extract.operands(flatten(e)) + "\n" + "After: " + operands + "\n", COMPARATOR.sort(operands), is(true));
     }
     @Test public void sortTwice() {
       final InfixExpression e = asInfixExpression();

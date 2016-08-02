@@ -15,12 +15,9 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.Parameters;
 
-/**
- * Unit tests for {@link Wrings#MULTIPLCATION_SORTER}.
- *
+/** Unit tests for {@link Wrings#MULTIPLCATION_SORTER}.
  * @author Yossi Gil
- * @since 2014-07-13
- */
+ * @since 2014-07-13 */
 @SuppressWarnings("javadoc")//
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 public enum InfixConditionalOrFalseTest {
@@ -56,8 +53,7 @@ public enum InfixConditionalOrFalseTest {
         new String[] { "AND of 5 without boolean", "false && a && b && c && d" }, //
         new String[] { "AND of 6 without boolean", "a && b && c && false && d && e" }, //
         new String[] { "AND of 7 without boolean with parenthesis", "(a && b) && (c && (d && (e && false)))" }, //
-        new String[] { "AND of 7 without boolean and multiple false value",
-        "(a && (b && false)) && (c && (d && (e && (false && false))))" }, //
+        new String[] { "AND of 7 without boolean and multiple false value", "(a && (b && false)) && (c && (d && (e && (false && false))))" }, //
         new String[] { "true && true", "true && true" }, //
         new String[] { "AND of 3 with true", "a && b && true" }, //
         new String[] { "AND of 4 with true", "a && b && c && true" }, //
@@ -73,12 +69,9 @@ public enum InfixConditionalOrFalseTest {
         new String[] { "AND with true", "true && b && a" }, //
         null);
 
-    /**
-     * Generate test cases for this parameterized class.
-     *
+    /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
-     *         objects, the test case name, the input, and the file.
-     */
+     *         objects, the test case name, the input, and the file. */
     @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
@@ -101,24 +94,19 @@ public enum InfixConditionalOrFalseTest {
         new String[] { "OR of 4 with false", "x || a || b || c || false", "x || a || b || c" }, //
         new String[] { "OR of 5 with false", "x || a || false || c || d", "x || a || c || d" }, //
         new String[] { "OR of 6 with false", "false || x || a || b || c || d || e", "x || a || b || c || d || e" }, //
-        new String[] { "OR of 6 with false with parenthesis", "x || (a || (false) || b) || (c || (d || e))",
-        "x || a || b || c || d || e" }, //
+        new String[] { "OR of 6 with false with parenthesis", "x || (a || (false) || b) || (c || (d || e))", "x || a || b || c || d || e" }, //
         new String[] { "OR false with something", "false || a || false", "a" }, //
         new String[] { "OR something with false", "false || a || false", "a" }, //
         new String[] { "OR of 3 with false", "false || a || b || false", "a || b" }, //
         new String[] { "OR of 4 with false", "a || b || false || c", "a || b || c" }, //
         new String[] { "OR of 5 with false", "a || b || c || d || false", "a || b || c || d" }, //
         new String[] { "OR of 6 with two false", "a || false || b || false || c || d || e", "a || b || c || d || e" }, //
-        new String[] { "OR of 6 with false with parenthesis", "(a || b) || false || (c || false || (d || e || false))",
-        "a || b || c || d || e" }, //
+        new String[] { "OR of 6 with false with parenthesis", "(a || b) || false || (c || false || (d || e || false))", "a || b || c || d || e" }, //
         null);
 
-    /**
-     * Generate test cases for this parameterized class.
-     *
+    /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
-     *         objects, the test case name, the input, and the expected output
-     */
+     *         objects, the test case name, the input, and the expected output */
     @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);

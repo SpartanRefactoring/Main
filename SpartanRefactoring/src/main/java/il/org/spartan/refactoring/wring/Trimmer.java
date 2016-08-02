@@ -11,18 +11,12 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
-/**
- * @author Yossi Gil
- * @since 2015/07/10
- */
+/** @author Yossi Gil
+ * @since 2015/07/10 */
 public class Trimmer extends Spartanization {
-  /**
-   * Apply trimming repeatedly, until no more changes
-   *
-   * @param from
-   *          what to process
-   * @return the trimmed text
-   */
+  /** Apply trimming repeatedly, until no more changes
+   * @param from what to process
+   * @return the trimmed text */
   public static String fixedPoint(final String from) {
     final Trimmer trimmer = new Trimmer();
     final Document $ = new Document(from);

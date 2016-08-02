@@ -6,13 +6,10 @@ import il.org.spartan.refactoring.utils.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-/**
- * A {@link Wring} to convert <code>if (x) throw b; else throw c;</code> into
+/** A {@link Wring} to convert <code>if (x) throw b; else throw c;</code> into
  * <code>throw x? b : c</code>
- *
  * @author Yossi Gil
- * @since 2015-07-29
- */
+ * @since 2015-07-29 */
 public final class IfThrowFooElseThrowBar extends Wring.ReplaceCurrentNode<IfStatement> {
   @Override Statement replacement(final IfStatement s) {
     final Expression condition = s.getExpression();

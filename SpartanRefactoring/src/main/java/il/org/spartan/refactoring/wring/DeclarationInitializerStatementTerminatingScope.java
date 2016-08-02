@@ -13,19 +13,16 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-/**
- * A {@link Wring} to convert <code>int a = 3; b = a;</code> into <code>b =
+/** A {@link Wring} to convert <code>int a = 3; b = a;</code> into <code>b =
  * a</code>
- *
  * @author Yossi Gil
- * @since 2015-08-07
- */
+ * @since 2015-08-07 */
 public final class DeclarationInitializerStatementTerminatingScope extends Wring.VariableDeclarationFragementAndStatement {
-  @SuppressWarnings("unchecked") @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f,
-      final SimpleName n, final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
+  @SuppressWarnings("unchecked") @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n,
+      final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || hasAnnotation(f) || initializer instanceof ArrayInitializer)
       return null;
-    for (final IExtendedModifier m :  expose.modifiers((VariableDeclarationStatement) f.getParent()))
+    for (final IExtendedModifier m : expose.modifiers((VariableDeclarationStatement) f.getParent()))
       if (m.isModifier() && ((Modifier) m).isFinal())
         return null;
     final Statement s = extract.statement(f);

@@ -6,37 +6,24 @@ import il.org.spartan.refactoring.utils.*;
 import java.io.*;
 import java.util.*;
 
-/**
- * An abstract representation of our test suite, which is represented in
+/** An abstract representation of our test suite, which is represented in
  * directory tree.
- *
  * @author Yossi Gil
  * @since 2014/05/24
- * @author Yossi GIl
- */
+ * @author Yossi GIl */
 public abstract class FileTestUtils {
-  /**
-   * A String determines whereas we are at the IN or OUT side of the test See
-   * TestCases test files for reference.
-   */
+  /** A String determines whereas we are at the IN or OUT side of the test See
+   * TestCases test files for reference. */
   final static String testKeyword = "<Test Result>";
-  /**
-   * Suffix for test files.
-   */
+  /** Suffix for test files. */
   protected final static String testSuffix = ".test";
-  /**
-   * Folder in which all test cases are found
-   */
+  /** Folder in which all test cases are found */
   public static final File location = new File("src/test/resources");
 
-  /**
-   * Instantiates a {@link Class} object if possible, otherwise generate an
+  /** Instantiates a {@link Class} object if possible, otherwise generate an
    * assertion failure
-   *
-   * @param c
-   *          an arbitrary class object
-   * @return an instance of the parameter
-   */
+   * @param c an arbitrary class object
+   * @return an instance of the parameter */
   public static Object getInstance(final Class<?> c) {
     try {
       return c.newInstance();
@@ -51,29 +38,22 @@ public abstract class FileTestUtils {
     }
     return null;
   }
-  /**
-   * Makes an Input file out of a Test file
-   */
+  /** Makes an Input file out of a Test file */
   protected static File makeInFile(final File f) {
     return createTempFile(deleteTestKeyword(MakeAST.stringBuilder(f)), TestDirection.In, f);
   }
-  /**
-   * Makes an Output file out of a Test file
-   */
+  /** Makes an Output file out of a Test file */
   protected static File makeOutFile(final File f) {
     final StringBuilder $ = MakeAST.stringBuilder(f);
     if ($.indexOf(testKeyword) > 0)
       $.delete(0, $.indexOf(testKeyword) + testKeyword.length() + ($.indexOf("\r\n") > 0 ? 2 : 1));
     return createTempFile($, TestDirection.Out, f);
   }
-  /**
-   * Creates a temporary file - including lazy deletion.
-   *
+  /** Creates a temporary file - including lazy deletion.
    * @param b
    * @param d
    * @param f
-   * @return
-   */
+   * @return */
   static File createTempFile(final StringBuilder b, final TestDirection d, final File f) {
     return createTemporaryRandomAccessFile(createTempFile(d, f), b.toString());
   }
@@ -87,15 +67,11 @@ public abstract class FileTestUtils {
     azzert.notNull($);
     return (Spartanization) $;
   }
-  /**
-   * Convert a canonical name of a class into a {@link Class} object, if
+  /** Convert a canonical name of a class into a {@link Class} object, if
    * possible, otherwise generate an assertion failure
-   *
-   * @param name
-   *          the canonical name of some class
+   * @param name the canonical name of some class
    * @return the object representing this class
-   * @since 2014/05/23
-   */
+   * @since 2014/05/23 */
   private static Class<?> asClass(final String name) {
     try {
       return Class.forName(name);
@@ -131,20 +107,15 @@ public abstract class FileTestUtils {
     return null;
   }
 
-  /**
-   ** An abstract class to be extended and implemented by client, while
+  /** An abstract class to be extended and implemented by client, while
    * overriding {@link #go(List, File)} as per customer's need.
-   *
    * @seTestUtils.SATestSuite.Files
    * @see FileTestUtils.Traverse
    * @author Yossi Gil
-   * @since 2014/05/24
-   */
+   * @since 2014/05/24 */
   public static abstract class Directories extends FileTestUtils.Traverse {
-    /**
-     * Adds a test case to the collection of all test cases generated in the
-     * traversal
-     */
+    /** Adds a test case to the collection of all test cases generated in the
+     * traversal */
     @Override public final void go(final List<Object[]> $, final File f) {
       if (!f.isDirectory())
         return;
@@ -155,15 +126,12 @@ public abstract class FileTestUtils {
     abstract Object[] makeCase(File d);
   }
 
-  /**
-   ** An abstract class to be extended and implemented by client, while
+  /** An abstract class to be extended and implemented by client, while
    * overriding {@link #go(List, File)} as per customer's need.
-   *
    * @seTestUtils.SATestSuite.Directories
    * @see FileTestUtils.Traverse
    * @author Yossi Gil
-   * @since 2014/05/24
-   */
+   * @since 2014/05/24 */
   public static abstract class Files extends FileTestUtils.Traverse {
     /* (non-Javadoc)
      * 
@@ -181,19 +149,14 @@ public abstract class FileTestUtils {
     abstract Object[] makeCase(final Spartanization s, final File d, final File f, final String name);
   }
 
-  /**
-   * An abstract class representing the concept of traversing the
+  /** An abstract class representing the concept of traversing the
    * {@link #location} while generating test cases.
-   *
    * @seTestUtils.SATestSuite.Files
    * @seTestUtils.SATestSuite.Directories
    * @author Yossi Gil
-   * @since 2014/05/24
-   */
+   * @since 2014/05/24 */
   public static abstract class Traverse extends FileTestUtils {
-    /**
-     * @return a collection of all test cases generated in the traversal
-     */
+    /** @return a collection of all test cases generated in the traversal */
     public final Collection<Object[]> go() {
       azzert.notNull(location);
       azzert.notNull(location.listFiles());
@@ -204,14 +167,9 @@ public abstract class FileTestUtils {
       }
       return $;
     }
-    /**
-     * Collect test cases from each file in {@link #location}
-     *
-     * @param $
-     *          where to save the collected test cases
-     * @param f
-     *          an entry in {@link #location}
-     */
+    /** Collect test cases from each file in {@link #location}
+     * @param $ where to save the collected test cases
+     * @param f an entry in {@link #location} */
     public abstract void go(List<Object[]> $, final File f);
   }
 

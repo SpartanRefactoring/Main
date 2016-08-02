@@ -14,13 +14,10 @@ import org.eclipse.equinox.app.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 
-/**
- * An {@link IApplication} extension entry point, allowing execution of this
+/** An {@link IApplication} extension entry point, allowing execution of this
  * plug-in from the command line.
- *
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
- * @since 2015/09/19
- */
+ * @since 2015/09/19 */
 @SuppressWarnings("static-method") public class Application implements IApplication {
   IJavaProject javaProject;
   IPackageFragmentRoot srcRoot;
@@ -87,8 +84,7 @@ import org.eclipse.jdt.core.dom.*;
         + "within the given PATH. Files are spartanized in place by default.");
     System.out.println("");
     System.out.println("Options:");
-    System.out
-    .println("  -N       Do not overwrite existing files (writes the Spartanized output to a new file in the same directory)");
+    System.out.println("  -N       Do not overwrite existing files (writes the Spartanized output to a new file in the same directory)");
     System.out.println("  -C<num>  Maximum number of Spartanizaion rounds for each file (default: 20)");
     System.out.println("  -E       Display statistics for each file separately");
     System.out.println("  -V       Be verbose");
@@ -222,10 +218,8 @@ import org.eclipse.jdt.core.dom.*;
     }
   }
 
-  /**
-   * Data structure designed to hold and compute information about a single
-   * file, in order to produce statistics when completed execution
-   */
+  /** Data structure designed to hold and compute information about a single
+   * file, in order to produce statistics when completed execution */
   private class FileStats {
     final File file;
     final int linesBefore;

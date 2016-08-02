@@ -1,28 +1,19 @@
 package il.org.spartan.refactoring.utils;
 
-/**
- * A utility to determine the exact type of a Java character or numerical
+/** A utility to determine the exact type of a Java character or numerical
  * literal.
- *
  * @author Yossi Gil
- * @since 2015-08-30
- */
+ * @since 2015-08-30 */
 public class LiteralParser {
   final String literal;
 
-  /**
-   * Instantiates this class.
-   *
-   * @param literal
-   *          JD
-   */
+  /** Instantiates this class.
+   * @param literal JD */
   public LiteralParser(final String literal) {
     this.literal = literal;
   }
-  /**
-   * @return an integer representing the type of this literal.
-   * @see LiteralParser.Types
-   */
+  /** @return an integer representing the type of this literal.
+   * @see LiteralParser.Types */
   public int type() {
     if (literal.charAt(0) == '\'')
       return Types.CHARACTER.ordinal();
@@ -47,13 +38,10 @@ public class LiteralParser {
     }
   }
 
-  /**
-   * An <code><b>enum</b></code> to give symbolic names to the literal types.
-   *
+  /** An <code><b>enum</b></code> to give symbolic names to the literal types.
    * @author Yossi Gil
    * @since 2015-08-30
-   * @see LiteralParser#type
-   */
+   * @see LiteralParser#type */
   public enum Types {
     /** <code>int</code> */
     INTEGER, //

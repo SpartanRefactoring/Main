@@ -8,17 +8,13 @@ import il.org.spartan.utils.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-/**
- * A {@link Wring} to convert <code>a ? (f,g,h) : c(d,e)</code> into <code>a ?
+/** A {@link Wring} to convert <code>a ? (f,g,h) : c(d,e)</code> into <code>a ?
  * c(d,e) : f(g,h)</code>
- *
  * @author Yossi Gil
- * @since 2015-08-14
- */
+ * @since 2015-08-14 */
 public final class TernaryShortestFirst extends Wring.ReplaceCurrentNode<ConditionalExpression> {
   @Override ConditionalExpression replacement(final ConditionalExpression e) {
-    final ConditionalExpression $ = Subject.pair(core(e.getElseExpression()), core(e.getThenExpression())).toCondition(
-        logicalNot(e.getExpression()));
+    final ConditionalExpression $ = Subject.pair(core(e.getElseExpression()), core(e.getThenExpression())).toCondition(logicalNot(e.getExpression()));
     final Expression then = $.getElseExpression();
     final Expression elze = $.getThenExpression();
     if (!Is.conditional(then) && Is.conditional(elze))

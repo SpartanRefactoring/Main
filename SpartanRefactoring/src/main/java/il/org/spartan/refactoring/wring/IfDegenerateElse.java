@@ -6,13 +6,10 @@ import il.org.spartan.refactoring.utils.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-/**
- * /** A {@link Wring} to convert <code>if (x) return b; else { }</code> into
+/** /** A {@link Wring} to convert <code>if (x) return b; else { }</code> into
  * <code>if (x) return b;</code>
- *
  * @author Yossi Gil
- * @since 2015-08-01
- */
+ * @since 2015-08-01 */
 public final class IfDegenerateElse extends Wring.ReplaceCurrentNode<IfStatement> {
   @Override Statement replacement(final IfStatement s) {
     final IfStatement $ = duplicate(s);

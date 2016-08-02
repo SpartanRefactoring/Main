@@ -17,12 +17,9 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.Parameters;
 
-/**
- * Unit tests for {@link Wrings#ADDITION_SORTER}.
- *
+/** Unit tests for {@link Wrings#ADDITION_SORTER}.
  * @author Yossi Gil
- * @since 2014-07-13
- */
+ * @since 2014-07-13 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 @SuppressWarnings({ "static-method", "javadoc" }) public class IfShortestFirstTest {
   static final Wring<IfStatement> WRING = new IfShortestFirst();
@@ -36,7 +33,7 @@ import org.junit.runners.Parameterized.Parameters;
         "    return false;\n" + //
         "return true;" //
         + ""//
-        );
+    );
     final IfStatement s = extract.firstIfStatement(u);
     azzert.that(extract.statements(then(s)).size(), is(1));
     azzert.that(extract.statements(elze(s)).size(), is(1));
@@ -55,12 +52,9 @@ import org.junit.runners.Parameterized.Parameters;
         }, //
         null);
 
-    /**
-     * Generate test cases for this parameterized class.
-     *
+    /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
-     *         objects, the test case name, the input, and the file.
-     */
+     *         objects, the test case name, the input, and the file. */
     @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
@@ -79,17 +73,17 @@ import org.junit.runners.Parameterized.Parameters;
         new String[] { //
         "Two statemens are greater than one", //
             "if (a) {i++;j++;} else b(asdf,as,as,asdf,adfasd,adadfadf,asfasdfasdf);", //
-        "if (!a) b(asdf,as,as,asdf,adfasd,adadfadf,asfasdfasdf); else {i++;j++;} " }, //
+            "if (!a) b(asdf,as,as,asdf,adfasd,adadfadf,asfasdfasdf); else {i++;j++;} " }, //
         new String[] { //
         "If bug simplified", //
             "" + //
-            "    if (x) {\n" + //
-            "      if (z)\n" + //
-            "        return null;\n" + //
-            "      c = f().charAt(3);\n" + //
-            "    } else if (y)\n" + //
-            "      return;\n" + //
-            "", "" + //
+                "    if (x) {\n" + //
+                "      if (z)\n" + //
+                "        return null;\n" + //
+                "      c = f().charAt(3);\n" + //
+                "    } else if (y)\n" + //
+                "      return;\n" + //
+                "", "" + //
                 "    if (!x) {\n" + //
                 "      if (y)\n" + //
                 "        return;\n" + //
@@ -101,19 +95,14 @@ import org.junit.runners.Parameterized.Parameters;
                 ""//
         }, null);
 
-    /**
-     * Generate test cases for this parameterized class.
-     *
+    /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
-     *         objects, the test case name, the input, and the file.
-     */
+     *         objects, the test case name, the input, and the file. */
     @Parameters(name = "Test #{index}. ({0}) ")//
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
-    /**
-     * Instantiates the enclosing class ({@link Wringed})
-     */
+    /** Instantiates the enclosing class ({@link Wringed}) */
     public Wringed() {
       super(WRING);
     }

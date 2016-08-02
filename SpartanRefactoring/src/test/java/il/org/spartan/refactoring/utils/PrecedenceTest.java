@@ -7,10 +7,8 @@ import il.org.spartan.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-/**
- * @author Yossi Gil
- * @since 2015-07-17
- */
+/** @author Yossi Gil
+ * @since 2015-07-17 */
 @SuppressWarnings({ "static-method", "javadoc" }) public class PrecedenceTest {
   @Test public void addition() {
     azzert.that(Precedence.of(e("a+b")), is(5));

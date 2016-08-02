@@ -7,12 +7,9 @@ import il.org.spartan.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/**
- * Test class for {@link ExpressionComparator}
- *
+/** Test class for {@link ExpressionComparator}
  * @author Yossi Gil
- * @since 2015-07-17
- */
+ * @since 2015-07-17 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 @SuppressWarnings({ "javadoc", "static-method" })//
 public class ExpressionComparatorTest {

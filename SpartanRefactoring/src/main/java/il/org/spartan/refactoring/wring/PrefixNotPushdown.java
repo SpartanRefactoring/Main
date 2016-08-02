@@ -12,35 +12,24 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 
-/**
- * A {@link Wring} that pushes down "<code>!</code>", the negation operator as
+/** A {@link Wring} that pushes down "<code>!</code>", the negation operator as
  * much as possible, using the de-Morgan and other simplification rules.
- *
  * @author Yossi Gil
- * @since 2015-7-17
- */
+ * @since 2015-7-17 */
 public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpression> {
-  /**
-   * @param o
-   *          JD
-   * @return the operator that produces the logical negation of the parameter
-   */
+  /** @param o JD
+   * @return the operator that produces the logical negation of the parameter */
   public static Operator conjugate(final Operator o) {
     return o == null ? null : o.equals(CONDITIONAL_AND) ? CONDITIONAL_OR //
         : o.equals(CONDITIONAL_OR) ? CONDITIONAL_AND //
-            : o.equals(EQUALS) ? NOT_EQUALS : o.equals(NOT_EQUALS) ? EQUALS : o.equals(LESS_EQUALS) ? GREATER
-                : o.equals(GREATER) ? LESS_EQUALS //
-                    : o.equals(GREATER_EQUALS) ? LESS //
-                        : o.equals(LESS) ? GREATER_EQUALS : null;
+            : o.equals(EQUALS) ? NOT_EQUALS : o.equals(NOT_EQUALS) ? EQUALS : o.equals(LESS_EQUALS) ? GREATER : o.equals(GREATER) ? LESS_EQUALS //
+                : o.equals(GREATER_EQUALS) ? LESS //
+                    : o.equals(LESS) ? GREATER_EQUALS : null;
   }
-  /**
-   * A utility function, which tries to simplify a boolean expression, whose top
+  /** A utility function, which tries to simplify a boolean expression, whose top
    * most parameter is logical negation.
-   *
-   * @param e
-   *          JD
-   * @return the simplified parameter
-   */
+   * @param e JD
+   * @return the simplified parameter */
   public static Expression simplifyNot(final PrefixExpression e) {
     return pushdownNot(asNot(extract.core(e)));
   }

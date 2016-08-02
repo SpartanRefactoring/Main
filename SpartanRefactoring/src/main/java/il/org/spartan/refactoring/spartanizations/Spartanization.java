@@ -18,29 +18,21 @@ import org.eclipse.ltk.ui.refactoring.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
-/**
- * the base class for all Spartanization Refactoring classes, contains common
+/** the base class for all Spartanization Refactoring classes, contains common
  * functionality
- *
  * @author Artium Nihamkin (original)
  * @author Boris van Sosin <boris.van.sosin [at] gmail.com>} (v2)
  * @author Yossi Gil <code><yossi.gil [at] gmail.com></code>: major refactoring
  *         2013/07/10
- * @since 2013/01/01
- */
+ * @since 2013/01/01 */
 public abstract class Spartanization extends Refactoring {
-  /**
-   * @param u
-   *          A compilation unit for reference - you give me an arbitrary
-   *          compilation unit from the project and I'll find the root of the
-   *          project and do my magic.
-   * @param pm
-   *          A standard {@link IProgressMonitor} - if you don't care about
-   *          operation times put a "new NullProgressMonitor()"
+  /** @param u A compilation unit for reference - you give me an arbitrary
+   *        compilation unit from the project and I'll find the root of the
+   *        project and do my magic.
+   * @param pm A standard {@link IProgressMonitor} - if you don't care about
+   *        operation times put a "new NullProgressMonitor()"
    * @return List of all compilation units in the current project
-   * @throws JavaModelException
-   *           don't forget to catch
-   */
+   * @throws JavaModelException don't forget to catch */
   public static final List<ICompilationUnit> getAllProjectCompilationUnits(final ICompilationUnit u, final IProgressMonitor pm)
       throws JavaModelException {
     pm.beginTask("Gathering project information...", 1);
@@ -83,17 +75,12 @@ public abstract class Spartanization extends Refactoring {
   private final String name;
   private int totalChanges;
 
-  /***
-   * Instantiates this class, with message identical to name
-   *
-   * @param name
-   *          a short name of this instance
-   */
+  /*** Instantiates this class, with message identical to name
+   * @param name a short name of this instance */
   protected Spartanization(final String name) {
     this.name = name;
   }
-  @Override public RefactoringStatus checkFinalConditions(final IProgressMonitor pm) throws CoreException,
-      OperationCanceledException {
+  @Override public RefactoringStatus checkFinalConditions(final IProgressMonitor pm) throws CoreException, OperationCanceledException {
     changes.clear();
     totalChanges = 0;
     if (marker == null)
@@ -111,12 +98,10 @@ public abstract class Spartanization extends Refactoring {
       $.merge(RefactoringStatus.createFatalErrorStatus("Nothing to refactor."));
     return $;
   }
-  /**
-   * Count the number of suggestions offered by this instance. <p> This is an
-   * slow operation. Do not call light-headedly.
-   *
-   * @return the total number of suggestions offered by this instance
-   */
+  /** Count the number of suggestions offered by this instance.
+   * <p>
+   * This is an slow operation. Do not call light-headedly.
+   * @return the total number of suggestions offered by this instance */
   public int countSuggestions() {
     setMarker(null);
     try {
@@ -128,12 +113,10 @@ public abstract class Spartanization extends Refactoring {
     }
     return totalChanges;
   }
-  /**
-   * Count the number files that would change after Spartanization. <p> This is
-   * an slow operation. Do not call light-headedly.
-   *
-   * @return the total number of files with suggestions
-   */
+  /** Count the number files that would change after Spartanization.
+   * <p>
+   * This is an slow operation. Do not call light-headedly.
+   * @return the total number of files with suggestions */
   public int countFilesChanges() {
     // TODO not sure if this function is necessary - if it is, it could be
     // easily optimized when called after countSuggestions()
@@ -147,61 +130,41 @@ public abstract class Spartanization extends Refactoring {
     }
     return changes.size();
   }
-  @Override public final Change createChange(@SuppressWarnings("unused") final IProgressMonitor __)
-      throws OperationCanceledException {
+  @Override public final Change createChange(@SuppressWarnings("unused") final IProgressMonitor __) throws OperationCanceledException {
     return new CompositeChange(getName(), changes.toArray(new Change[changes.size()]));
   }
-  /**
-   * creates an ASTRewrite which contains the changes
-   *
-   * @param u
-   *          the Compilation Unit (outermost ASTNode in the Java Grammar)
-   * @param pm
-   *          a progress monitor in which the progress of the refactoring is
-   *          displayed
-   * @return an ASTRewrite which contains the changes
-   */
+  /** creates an ASTRewrite which contains the changes
+   * @param u the Compilation Unit (outermost ASTNode in the Java Grammar)
+   * @param pm a progress monitor in which the progress of the refactoring is
+   *        displayed
+   * @return an ASTRewrite which contains the changes */
   public final ASTRewrite createRewrite(final CompilationUnit u, final IProgressMonitor pm) {
     return createRewrite(pm, u, (IMarker) null);
   }
-  /**
-   * Checks a Compilation Unit (outermost ASTNode in the Java Grammar) for
+  /** Checks a Compilation Unit (outermost ASTNode in the Java Grammar) for
    * spartanization suggestions
-   *
-   * @param u
-   *          what to check
+   * @param u what to check
    * @return a collection of {@link Rewrite} objects each containing a
-   *         spartanization opportunity
-   */
+   *         spartanization opportunity */
   public final List<Rewrite> findOpportunities(final CompilationUnit u) {
     final List<Rewrite> $ = new ArrayList<>();
     u.accept(collect($));
     return $;
   }
-  /**
-   * @return the compilationUnit
-   */
+  /** @return the compilationUnit */
   public ICompilationUnit getCompilationUnit() {
     return compilationUnit;
   }
-  /**
-   * @return a quick fix for this instance
-   */
+  /** @return a quick fix for this instance */
   public IMarkerResolution getFix() {
     return getFix(getName());
   }
-  /**
-   * @param s
-   *          Spartanization's name
-   * @return a quickfix which automatically performs the spartanization
-   */
+  /** @param s Spartanization's name
+   * @return a quickfix which automatically performs the spartanization */
   public IMarkerResolution getFix(final String s) {
-    /**
-     * a quickfix which automatically performs the spartanization
-     *
+    /** a quickfix which automatically performs the spartanization
      * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
-     * @since 2013/07/01
-     */
+     * @since 2013/07/01 */
     return new IMarkerResolution() {
       @Override public String getLabel() {
         return "Spartanize!";
@@ -215,33 +178,25 @@ public abstract class Spartanization extends Refactoring {
       }
     };
   }
-  /**
-   * @return a quick fix with a preview for this instance.
-   */
+  /** @return a quick fix with a preview for this instance. */
   public IMarkerResolution getFixWithPreview() {
     return getFixWithPreview(getName());
   }
-  /**
-   * @param s
-   *          Text for the preview dialog
-   * @return a quickfix which opens a refactoring wizard with the spartanization
-   */
+  /** @param s Text for the preview dialog
+   * @return a quickfix which opens a refactoring wizard with the spartanization */
   public IMarkerResolution getFixWithPreview(final String s) {
     return new IMarkerResolution() {
-      /**
-       * a quickfix which opens a refactoring wizard with the spartanization
-       *
+      /** a quickfix which opens a refactoring wizard with the spartanization
        * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
-       *         (v2)
-       */
+       *         (v2) */
       @Override public String getLabel() {
         return "Show spartanization preview";
       }
       @Override public void run(final IMarker m) {
         setMarker(m);
         try {
-          new RefactoringWizardOpenOperation(new Wizard(Spartanization.this)).run(Display.getCurrent().getActiveShell(),
-              "Spartan refactoring: " + Spartanization.this);
+          new RefactoringWizardOpenOperation(new Wizard(Spartanization.this)).run(Display.getCurrent().getActiveShell(), "Spartan refactoring: "
+              + Spartanization.this);
         } catch (final InterruptedException e) {
           e.printStackTrace();
         }
@@ -251,44 +206,29 @@ public abstract class Spartanization extends Refactoring {
   @Override public final String getName() {
     return name;
   }
-  /**
-   * @return the selection
-   */
+  /** @return the selection */
   public ITextSelection getSelection() {
     return selection;
   }
-  /**
-   * .
-   *
+  /** .
    * @return True if there are Spartanizations which can be performed on the
-   *         compilation unit.
-   */
+   *         compilation unit. */
   public boolean haveSuggestions() {
     return countSuggestions() > 0;
   }
-  /**
-   * @param m
-   *          marker which represents the range to apply the Spartanization
-   *          within
-   * @param n
-   *          the node which needs to be within the range of
-   *          <code><b>m</b></code>
-   * @return True if the node is within range
-   */
+  /** @param m marker which represents the range to apply the Spartanization
+   *        within
+   * @param n the node which needs to be within the range of
+   *        <code><b>m</b></code>
+   * @return True if the node is within range */
   public final boolean inRange(final IMarker m, final ASTNode n) {
     return m != null ? !isNodeOutsideMarker(n, m) : !isTextSelected() || !isNodeOutsideSelection(n);
   }
-  /**
-   * Performs the current Spartanization on the provided compilation unit
-   *
-   * @param cu
-   *          the compilation to Spartanize
-   * @param pm
-   *          progress monitor for long operations (could be
-   *          {@link NullProgressMonitor} for light operations)
-   * @throws CoreException
-   *           exception from the <code>pm</code>
-   */
+  /** Performs the current Spartanization on the provided compilation unit
+   * @param cu the compilation to Spartanize
+   * @param pm progress monitor for long operations (could be
+   *        {@link NullProgressMonitor} for light operations)
+   * @throws CoreException exception from the <code>pm</code> */
   public void performRule(final ICompilationUnit cu, final IProgressMonitor pm) throws CoreException {
     pm.beginTask("Creating change for a single compilation unit...", 2);
     final TextFileChange textChange = new TextFileChange(cu.getElementName(), (IFile) cu.getResource());
@@ -299,37 +239,23 @@ public abstract class Spartanization extends Refactoring {
       textChange.perform(pm);
     pm.done();
   }
-  /**
-   * @param pm
-   *          a progress monitor in which to display the progress of the
-   *          refactoring
-   * @param m
-   *          the marker for which the refactoring needs to run
+  /** @param pm a progress monitor in which to display the progress of the
+   *        refactoring
+   * @param m the marker for which the refactoring needs to run
    * @return a RefactoringStatus
-   * @throws CoreException
-   *           the JDT core throws it
-   */
+   * @throws CoreException the JDT core throws it */
   public RefactoringStatus runAsMarkerFix(final IProgressMonitor pm, final IMarker m) throws CoreException {
     return innerRunAsMarkerFix(pm, m, false);
   }
-  /**
-   * @param u
-   *          the compilationUnit to set
-   */
+  /** @param u the compilationUnit to set */
   public void setCompilationUnit(final ICompilationUnit u) {
     compilationUnit = u;
   }
-  /**
-   * @param m
-   *          the marker to set for the refactoring
-   */
+  /** @param m the marker to set for the refactoring */
   public final void setMarker(final IMarker m) {
     marker = m;
   }
-  /**
-   * @param s
-   *          the selection to set
-   */
+  /** @param s the selection to set */
   public void setSelection(final ITextSelection s) {
     selection = s;
   }
@@ -338,20 +264,14 @@ public abstract class Spartanization extends Refactoring {
   }
   protected abstract ASTVisitor collect(final List<Rewrite> $);
   protected abstract void fillRewrite(ASTRewrite r, CompilationUnit u, IMarker m);
-  /**
-   * Determines if the node is outside of the selected text.
-   *
+  /** Determines if the node is outside of the selected text.
    * @return true if the node is not inside selection. If there is no selection
-   *         at all will return false.
-   */
+   *         at all will return false. */
   protected boolean isNodeOutsideSelection(final ASTNode n) {
     return !isSelected(n.getStartPosition());
   }
-  /**
-   * @param u
-   *          JD
-   * @throws CoreException
-   */
+  /** @param u JD
+   * @throws CoreException */
   protected void scanCompilationUnit(final ICompilationUnit u, final IProgressMonitor m) throws CoreException {
     m.beginTask("Creating change for a single compilation unit...", 2);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
@@ -364,8 +284,7 @@ public abstract class Spartanization extends Refactoring {
     totalChanges += findOpportunities(cu).size();
     m.done();
   }
-  protected void scanCompilationUnitForMarkerFix(final IMarker m, final IProgressMonitor pm, final boolean preview)
-      throws CoreException {
+  protected void scanCompilationUnitForMarkerFix(final IMarker m, final IProgressMonitor pm, final boolean preview) throws CoreException {
     pm.beginTask("Creating change(s) for a single compilation unit...", 2);
     final ICompilationUnit u = MakeAST.iCompilationUnit(m);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
@@ -378,15 +297,11 @@ public abstract class Spartanization extends Refactoring {
         changes.add(textChange);
     pm.done();
   }
-  /**
-   * Creates a change from each compilation unit and stores it in the changes
+  /** Creates a change from each compilation unit and stores it in the changes
    * array
-   *
    * @throws IllegalArgumentException
-   * @throws CoreException
-   */
-  protected void scanCompilationUnits(final List<ICompilationUnit> cus, final IProgressMonitor pm) throws IllegalArgumentException,
-      CoreException {
+   * @throws CoreException */
+  protected void scanCompilationUnits(final List<ICompilationUnit> cus, final IProgressMonitor pm) throws IllegalArgumentException, CoreException {
     pm.beginTask("Iterating over gathered compilation units...", cus.size());
     for (final ICompilationUnit cu : cus)
       scanCompilationUnit(cu, new SubProgressMonitor(pm, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL));
@@ -401,30 +316,24 @@ public abstract class Spartanization extends Refactoring {
       pm.done();
     return $;
   }
-  /**
-   * creates an ASTRewrite, under the context of a text marker, which contains
+  /** creates an ASTRewrite, under the context of a text marker, which contains
    * the changes
-   *
-   * @param pm
-   *          a progress monitor in which to display the progress of the
-   *          refactoring
-   * @param m
-   *          the marker
-   * @return an ASTRewrite which contains the changes
-   */
+   * @param pm a progress monitor in which to display the progress of the
+   *        refactoring
+   * @param m the marker
+   * @return an ASTRewrite which contains the changes */
   private final ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m) {
     return createRewrite(pm, (CompilationUnit) MakeAST.COMPILATION_UNIT.from(m, pm), m);
   }
   private List<ICompilationUnit> getUnits(final IProgressMonitor pm) throws JavaModelException {
     if (!isTextSelected())
-      return getAllProjectCompilationUnits(compilationUnit != null ? compilationUnit : BaseHandler.currentCompilationUnit(),
-          new SubProgressMonitor(pm, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL));
+      return getAllProjectCompilationUnits(compilationUnit != null ? compilationUnit : BaseHandler.currentCompilationUnit(), new SubProgressMonitor(
+          pm, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL));
     final List<ICompilationUnit> $ = new ArrayList<>();
     $.add(compilationUnit);
     return $;
   }
-  private RefactoringStatus innerRunAsMarkerFix(final IProgressMonitor pm, final IMarker m, final boolean preview)
-      throws CoreException {
+  private RefactoringStatus innerRunAsMarkerFix(final IProgressMonitor pm, final IMarker m, final boolean preview) throws CoreException {
     marker = m;
     pm.beginTask("Running refactoring...", 2);
     scanCompilationUnitForMarkerFix(m, pm, preview);

@@ -5,10 +5,8 @@ import il.org.spartan.utils.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 
-/**
- * @author Artium Nihamkin
- * @since 2013/07/01
- */
+/** @author Artium Nihamkin
+ * @since 2013/07/01 */
 public class Nature implements IProjectNature {
   /** ID of this project nature */
   public static final String NATURE_ID = "org.spartan.refactoring.NatureID";

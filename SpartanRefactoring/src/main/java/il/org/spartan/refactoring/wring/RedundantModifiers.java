@@ -9,13 +9,10 @@ import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-/**
- * A {@link Wring} to convert <code><b>abstract</b>abstract <b>interface</b> a
+/** A {@link Wring} to convert <code><b>abstract</b>abstract <b>interface</b> a
  * {}</code> to <code><b>interface</b> a {}</code>
- *
  * @author Yossi Gil
- * @since 2015-07-29
- */
+ * @since 2015-07-29 */
 public abstract class RedundantModifiers<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> {
   private static Set<Modifier> matches(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ps) {
     final Set<Modifier> $ = new LinkedHashSet<>();

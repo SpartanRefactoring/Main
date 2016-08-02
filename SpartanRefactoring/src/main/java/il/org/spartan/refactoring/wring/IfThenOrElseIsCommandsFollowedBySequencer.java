@@ -13,13 +13,10 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-/**
- * A {@link Wring} to convert <code> f() { x++; y++; if (a) { i++; j++; k++; }
+/** A {@link Wring} to convert <code> f() { x++; y++; if (a) { i++; j++; k++; }
  * }</code> into <code>if (x) { f(); return a; } g();</code>
- *
  * @author Yossi Gil
- * @since 2015-07-29
- */
+ * @since 2015-07-29 */
 public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfStatement> {
   static boolean endsWithSequencer(final Statement s) {
     return Is.sequencer(extract.lastStatement(s));

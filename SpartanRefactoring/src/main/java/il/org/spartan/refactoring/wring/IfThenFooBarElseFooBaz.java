@@ -11,13 +11,10 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-/**
- * A {@link Wring} to convert <code>if (X) {foo(); bar();} else {foo();
+/** A {@link Wring} to convert <code>if (X) {foo(); bar();} else {foo();
  * baz();}</code> into <code>foo(); if (X) bar(); else baz();</code>
- *
  * @author Yossi Gil
- * @since 2015-07-29
- */
+ * @since 2015-07-29 */
 public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> {
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Condolidate commmon prefix of then and else branches to just before if statement";

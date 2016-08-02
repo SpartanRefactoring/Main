@@ -14,8 +14,7 @@ import org.junit.*;
     azzert.isNull(extract.core((Statement) null));
   }
   @Test public void firstMethdoDeclaration() {
-    azzert.that(extract.firstMethodDeclaration(Wrap.Method.intoCompilationUnit("int f() { return a; }")),
-        iz("int f() { return a; }"));
+    azzert.that(extract.firstMethodDeclaration(Wrap.Method.intoCompilationUnit("int f() { return a; }")), iz("int f() { return a; }"));
   }
   @Test public void operandsCount() {
     azzert.that(extract.operands(i("a+b+c+(d+e)+f")).size(), is(5));

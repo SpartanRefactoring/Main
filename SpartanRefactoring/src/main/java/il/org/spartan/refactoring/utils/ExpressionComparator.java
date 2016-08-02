@@ -8,19 +8,13 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-/**
- * Various methods for comparing
- *
+/** Various methods for comparing
  * @author Yossi Gil
- * @since 2015-07-19
- */
+ * @since 2015-07-19 */
 public enum ExpressionComparator implements Comparator<Expression> {
-  /**
-   * Order on terms in addition: literals must be last. Sort literals by length.
-   *
+  /** Order on terms in addition: literals must be last. Sort literals by length.
    * @author Yossi Gil
-   * @since 2015-07-19
-   */
+   * @since 2015-07-19 */
   ADDITION {
     @Override public int compare(final Expression e1, final Expression e2) {
       int $;
@@ -28,25 +22,19 @@ public enum ExpressionComparator implements Comparator<Expression> {
           || ($ = alphabeticalCompare(e1, e2)) != 0 ? $ : 0;
     }
   },
-  /**
-   * Order on terms in addition: except that we do not sort alphabetically
-   *
+  /** Order on terms in addition: except that we do not sort alphabetically
    * @author Yossi Gil
-   * @since 2015-07-19
-   */
+   * @since 2015-07-19 */
   PRUDENT {
     @Override public int compare(final Expression e1, final Expression e2) {
       int $;
       return ($ = literalCompare(e1, e2)) != 0 || ($ = nodesCompare(e1, e2)) != 0 || ($ = characterCompare(e1, e2)) != 0 ? $ : 0;
     }
   },
-  /**
-   * Order on terms in multiplication: literals must be last. Sort literals by
+  /** Order on terms in multiplication: literals must be last. Sort literals by
    * length.
-   *
    * @author Yossi Gil
-   * @since 2015-07-19
-   */
+   * @since 2015-07-19 */
   MULTIPLICATION {
     @Override public int compare(final Expression e1, final Expression e2) {
       int $;
@@ -63,51 +51,35 @@ public enum ExpressionComparator implements Comparator<Expression> {
     return round(nodesCount(e1) - nodesCount(e2), NODES_THRESHOLD);
   }
   static int argumentsCompare(final Expression e1, final Expression e2) {
-    return !Is.methodInvocation(e1) || !Is.methodInvocation(e2) ? 0
-        : argumentsCompare((MethodInvocation) e1, (MethodInvocation) e2);
+    return !Is.methodInvocation(e1) || !Is.methodInvocation(e2) ? 0 : argumentsCompare((MethodInvocation) e1, (MethodInvocation) e2);
   }
   static int argumentsCompare(final MethodInvocation i1, final MethodInvocation i2) {
     return i1.arguments().size() - i2.arguments().size();
   }
-  /**
-   * Compare method invocations by the number of arguments
-   *
-   * @param e1
-   *          JD
-   * @param e2
-   *          JD
+  /** Compare method invocations by the number of arguments
+   * @param e1 JD
+   * @param e2 JD
    * @return <code><b>true</b></code> <i>iff</i> the first argument is a method
-   *         invocation with more arguments that the second argument
-   */
+   *         invocation with more arguments that the second argument */
   public static boolean moreArguments(final Expression e1, final Expression e2) {
     return argumentsCompare(e1, e2) > 0;
   }
-  /**
-   * Compare expressions by their number of characters
-   *
-   * @param e1
-   *          JD
-   * @param e2
-   *          JD
+  /** Compare expressions by their number of characters
+   * @param e1 JD
+   * @param e2 JD
    * @return an integer which is either negative, zero, or positive, if the
    *         number of characters in the first argument is less than, equal to,
-   *         or greater than the number of characters in the second argument.
-   */
+   *         or greater than the number of characters in the second argument. */
   static int characterCompare(final Expression e1, final Expression e2) {
     return countNonWhites(e1) - countNonWhites(e2);
   }
-  /**
-   * Lexicographical comparison expressions by their number of characters
-   *
-   * @param e1
-   *          JD
-   * @param e2
-   *          JD
+  /** Lexicographical comparison expressions by their number of characters
+   * @param e1 JD
+   * @param e2 JD
    * @return an integer which is either negative, zero, or positive, if the
    *         number of characters in the first argument occurs before, at the
    *         same place, or after then the second argument in lexicographical
-   *         order.
-   */
+   *         order. */
   static int alphabeticalCompare(final Expression e1, final Expression e2) {
     return asString(e1).compareTo(asString(e2));
   }
@@ -117,14 +89,10 @@ public enum ExpressionComparator implements Comparator<Expression> {
   static int asBit(final boolean b) {
     return b ? 1 : 0;
   }
-  /**
-   * Compare the length of the left and right arguments of an infix expression
-   *
-   * @param e
-   *          JD
+  /** Compare the length of the left and right arguments of an infix expression
+   * @param e JD
    * @return <code><b>true</b></code> <i>iff</i> if the left operand of the
-   *         parameter is is longer than the second argument
-   */
+   *         parameter is is longer than the second argument */
   public static boolean longerFirst(final InfixExpression e) {
     return isLonger(left(e), right(e));
   }
@@ -135,29 +103,19 @@ public enum ExpressionComparator implements Comparator<Expression> {
         );
   }
 
-  /**
-   * Threshold for comparing nodes; a difference in the number of nodes between
-   * two nodes is considered zero, if it is the less than this value,
-   */
+  /** Threshold for comparing nodes; a difference in the number of nodes between
+   * two nodes is considered zero, if it is the less than this value, */
   public static final int NODES_THRESHOLD = 1;
 
-  /**
-   * Counts the number of non-space characters in a tree rooted at a given node
-   *
-   * @param n
-   *          JD
-   * @return Number of abstract syntax tree nodes under the parameter.
-   */
+  /** Counts the number of non-space characters in a tree rooted at a given node
+   * @param n JD
+   * @return Number of abstract syntax tree nodes under the parameter. */
   public static int countNonWhites(final ASTNode n) {
     return asString(n).length();
   }
-  /**
-   * Counts the number of nodes in a tree rooted at a given node
-   *
-   * @param n
-   *          JD
-   * @return Number of abstract syntax tree nodes under the parameter.
-   */
+  /** Counts the number of nodes in a tree rooted at a given node
+   * @param n JD
+   * @return Number of abstract syntax tree nodes under the parameter. */
   public static int nodesCount(final ASTNode n) {
     class Integer {
       int inner = 0;
@@ -170,13 +128,9 @@ public enum ExpressionComparator implements Comparator<Expression> {
     });
     return $.inner;
   }
-  /**
-   * Counts the number of statements in a tree rooted at a given node
-   *
-   * @param n
-   *          JD
-   * @return Number of abstract syntax tree nodes under the parameter.
-   */
+  /** Counts the number of statements in a tree rooted at a given node
+   * @param n JD
+   * @return Number of abstract syntax tree nodes under the parameter. */
   public static int lineCount(final ASTNode n) {
     class Integer {
       int inner = 0;
@@ -210,13 +164,9 @@ public enum ExpressionComparator implements Comparator<Expression> {
     });
     return $.inner;
   }
-  /**
-   * Sorts the {@link Expression} list
-   *
-   * @param es
-   *          an {@link Expression} list to sort
-   * @return True if the list was modified
-   */
+  /** Sorts the {@link Expression} list
+   * @param es an {@link Expression} list to sort
+   * @return True if the list was modified */
   public boolean sort(final List<Expression> es) {
     boolean $ = false;
     // Bubble sort
