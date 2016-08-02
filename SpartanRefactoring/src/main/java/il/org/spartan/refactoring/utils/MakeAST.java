@@ -236,38 +236,4 @@ public enum MakeAST {
   public ASTParser makeParser(final String text) {
     return makeParser(text.toCharArray());
   }
-  /**
-   * Downcast <code>List<?></code> into <code>List<Expression></code>
-   *
-   * @param es
-   *          JD
-   * @return the parameter, properly downcasted
-   *
-   */
-  @SuppressWarnings("unchecked") public static List<Expression> expressions(final List<?> es) {
-    return (List<Expression>) es;
-  }
-  /**
-   * Downcast <code>List<?></code> into
-   * <code>List<VariableDeclarationFragment></code>
-   *
-   * @param fs
-   *          JD
-   * @return the parameter, properly downcasted
-   *
-   */
-  @SuppressWarnings("unchecked") public static List<VariableDeclarationFragment> fragments(final List<?> fs) {
-    return (List<VariableDeclarationFragment>) fs;
-  }
-  /**
-   * Downcast <code>List<?></code> into <code>List<Statement></code>
-   *
-   * @param ss
-   *          JD
-   * @return the parameter, properly downcasted
-   *
-   */
-  @SuppressWarnings("unchecked") public static List<Statement> statements(final List<?> ss) {
-    return (List<Statement>) ss;
-  }
 }

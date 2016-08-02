@@ -52,7 +52,7 @@ public class Spartanizations {
    * @return Iteration over all Spartanization class instances
    */
   public static Iterable<Spartanization> allAvailableSpartanizations() {
-    as.iterable(all);
+   return as.iterable(all);
   }
   /**
    * Resets the enumeration with the current values from the preferences file.
