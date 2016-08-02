@@ -1,5 +1,10 @@
 package il.org.spartan.refactoring.application;
 
+import il.org.spartan.files.*;
+import il.org.spartan.misc.*;
+import il.org.spartan.refactoring.handlers.*;
+import il.org.spartan.utils.*;
+
 import java.io.*;
 import java.util.*;
 
@@ -8,11 +13,6 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.equinox.app.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
-
-import il.org.spartan.files.*;
-import il.org.spartan.misc.*;
-import il.org.spartan.refactoring.handlers.*;
-import il.org.spartan.utils.*;
 
 /**
  * An {@link IApplication} extension entry point, allowing execution of this
@@ -202,10 +202,12 @@ import il.org.spartan.utils.*;
   String getPackageNameFromSource(final String source) {
     final ASTParser p = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     p.setSource(source.toCharArray());
-    final Wrapper<String> $ = new Wrapper<>("");
-    p.createAST(null).accept(new ASTVisitor() {
-      @Override public boolean visit(final PackageDeclaration node) {
-        $.set(node.getName().toString());
+    return getPackageNameFromSource(new Wrapper<>(""), p.createAST(null));
+  }
+  private String getPackageNameFromSource(final Wrapper<String> $, ASTNode n) {
+    n.accept(new ASTVisitor() {
+      @Override public boolean visit(final PackageDeclaration d) {
+        $.set(d.getName().toString());
         return false;
       }
     });
@@ -265,5 +267,16 @@ import il.org.spartan.utils.*;
   }
   static int countLines(final String fileName) throws IOException {
     return countLines(new File(fileName));
+  }
+  MethodInvocation getMethodInvocation(final CompilationUnit u, final int lineNumber, MethodInvocation i) {
+    final Wrapper<MethodInvocation> $ = new Wrapper<>();
+    u.accept(new ASTVisitor() {
+      @Override public boolean visit(final MethodInvocation i) {
+        if (u.getLineNumber(i.getStartPosition()) == lineNumber)
+          $.set(i);
+        return super.visit(i);
+      }
+    });
+    return $.get() == null ? i : $.get();
   }
 }

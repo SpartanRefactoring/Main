@@ -40,7 +40,7 @@ public class Plugin extends AbstractUIPlugin implements IStartup {
     plugin = null;
     super.stop(c);
   }
-  private void startSpartan() {
+  private static void startSpartan() {
     applyPluginToAllProjects();
     refreshAllProjects();
   }
