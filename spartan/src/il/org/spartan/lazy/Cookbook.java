@@ -61,12 +61,13 @@ import org.junit.runners.*;
  * @since 2016
  */
 public interface Cookbook {
-  /** TODO Javadoc(2016): automatically generated for method
-   * <code>traceWizard</code>
-   * @param <T> JD
-   * @param $ JD
-   * @return a newly created {@link Cell} */
-  public static <@Nullable T> Cell<T> cook(final Supplier<T> $) {
+  /**
+   * TODO Javadoc(2016): automatically generated for method <code>traceWizard</code>
+   * @param < T >  JD
+   * @param $  JD
+   * @return  a newly created  {@link Cell}  
+   */
+  static <@Nullable T> Cell<T> cook(final Supplier<T> $) {
     Cell.trace = new HashSet<>();
     $.get();
     final Cell<?>[] trace = asArray(Cell.trace);
@@ -74,17 +75,11 @@ public interface Cookbook {
     return new Recipe<>($).ingredients(trace);
   }
   /**
-   * Fluent API function to be used as in
-   *
-   * <pre>
-   * Cell<Integer> d = from(a,b,c).make(.....)
-   * </pre>
-   *
-   * @param ingredients list of ingredients
-   * @return a {@link $$RecipeMaker} which can be used to continue the fluent
-   *         API chain.
+   * Fluent API function to be used as in <pre> Cell<Integer> d = from(a,b,c).make(.....) </pre>
+   * @param ingredients  list of ingredients
+   * @return  a  {@link $$RecipeMaker}  which can be used to continue the fluent API chain.
    */
-  public static $$RecipeMaker from(final Cell<?>... ingredients) {
+  static $$RecipeMaker from(final Cell<?>... ingredients) {
     return new $$RecipeMaker() {
       @Override public <T> Cell<@Nullable T> make(final Supplier<T> s) {
         return new Recipe<>(s).ingredients(ingredients);
@@ -97,38 +92,35 @@ public interface Cookbook {
    * @param <T> JD
    * @return the newly created instance
    */
-  public static <T> Cell<T> input() {
-    @SuppressWarnings("unused") final Ingredient<T> $ = new Ingredient<T>();
-    return $;
+  static <T> Cell<T> input() {
+    return new Ingredient<>();
   }
-  /** Fluent API factory method that returns a recipe
-   * @param <T> JD
-   * @param supplier JD
-   * @return the newly created {@link Recipe} object */
-  public static <T> Recipe<@Nullable T> recipe(final Supplier<T> supplier) {
+  /**
+   * Fluent API factory method that returns a recipe
+   * @param < T >  JD
+   * @param supplier  JD
+   * @return  the newly created  {@link Recipe}  object 
+   */
+  static <T> Recipe<@Nullable T> recipe(final Supplier<T> supplier) {
     return new Recipe<>(supplier);
   }
-  /** A factory method for class {@link Ingredient} of an {@link Integer} as in
-   * 
-   * <pre>
-   * Cell&lt;String&gt; genesis = Cookbook.value(2);
-   * </pre>
-   * @param i JD
-   * @return the newly created instance of {@link Ingredient} */
-  public static Cell<Integer> value(final int i) {
-    return new Ingredient<Integer>(Integer.valueOf(i));
+  /**
+   * A factory method for class  {@link Ingredient}  of an  {@link Integer}  as in <pre> Cell&lt;String&gt; genesis = Cookbook.value(2); </pre>
+   * @param i  JD
+   * @return  the newly created instance of  {@link Ingredient}  
+   */
+  static Cell<Integer> value(final int i) {
+    return new Ingredient<>(Integer.valueOf(i));
   }
 
-  /** A factory method for class {@link Ingredient} as in
-   * 
-   * <pre>
-   * Cell&lt;String&gt; genesis = Cookbook.value(&quot;&quot;);
-   * </pre>
-   * @param <T> JD
-   * @param t JD
-   * @return the newly created instance of {@link Ingredient} */
-  public static <@Nullable T> Cell<@Nullable T> value(final T t) {
-    return new Ingredient<T>(t);
+  /**
+   * A factory method for class  {@link Ingredient}  as in <pre> Cell&lt;String&gt; genesis = Cookbook.value(&quot;&quot;); </pre>
+   * @param < T >  JD
+   * @param t  JD
+   * @return  the newly created instance of  {@link Ingredient}  
+   */
+  static <@Nullable T> Cell<@Nullable T> value(final T t) {
+    return new Ingredient<>(t);
   }
   /** @param $ result
    * @return the parameter */
@@ -163,9 +155,9 @@ public interface Cookbook {
    * @since 2016
    */
   @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
-  public static enum __META {
+  enum __META {
     ;
-    @SuppressWarnings("javadoc") public static class A {
+    public static class A {
       String begin() {
         return begin.get();
       }
@@ -180,13 +172,13 @@ public interface Cookbook {
       }
 
       final Cell<String> begin = value("<");
-      final Cell<String> end = new Ingredient<String>(">");
+      final Cell<String> end = new Ingredient<>(">");
       final Cell<String> text = value("p");
       final Cell<String> wrap = from(begin, end, text).make(() -> begin() + text() + end());
       final Cell<String> xBoxed = from(wrap).make(() //
           -> "[[" + wrap() + "]]" //
       );
-      final Cell<String> zzz = new Ingredient<String>().of("zzz");
+      final Cell<String> zzz = new Ingredient<@Nullable String>().of("zzz");
 
       @SuppressWarnings({ "synthetic-access" })//
       public static class TEST extends A {
@@ -235,9 +227,10 @@ public interface Cookbook {
       }
     }
 
-    @SuppressWarnings({ "static-method", "javadoc", "null" })//
+    @SuppressWarnings({ "static-method", "null" }) //
     @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
     public static class C {
+      /** TODO: Document field Cookbook.java */
       @Test public void sessionA01() {
         final Cell<Integer> a = value(Integer.valueOf(12));
         final $$Function<Integer, String> f = compute((final Integer ¢) -> "(" + ¢ + ")");
@@ -301,7 +294,7 @@ public interface Cookbook {
      * @author Yossi Gil <Yossi.Gil@GMail.COM>
      * @since 2016
      */
-    @SuppressWarnings({ "boxing", "unused" })//
+    @SuppressWarnings({ "boxing" }) //
     public static class Z implements Cookbook {
       /** @return contents of cell a */
       public final @Nullable Integer a() {
@@ -342,19 +335,19 @@ public interface Cookbook {
       int _aPower03Calls;
       /** a^5 := a^2 * a^3 */
       /** Can, and often should be made private; package is OK */
-      final Cell<@Nullable Integer> a = new Cookbook.Ingredient<@Nullable Integer>();
+      final Cell<@Nullable Integer> a = new Cookbook.Ingredient<>();
       /** Can, and often should be made private; package is OK */
-      @SuppressWarnings("null") final Cell<@Nullable Integer> aPower02 = new Recipe<@Nullable Integer>(() -> {
+      @SuppressWarnings("null") final Cell<@Nullable Integer> aPower02 = new Recipe<>(() -> {
         ++_aPower02Calls;
         return a() * a();
       }).ingredients(a);
       /** Can, and often should be made private; package is OK */
-      @SuppressWarnings("null") final Cell<@Nullable Integer> aPower03 = new Recipe<@Nullable Integer>(() -> {
+      @SuppressWarnings("null") final Cell<@Nullable Integer> aPower03 = new Recipe<>(() -> {
         ++_aPower03Calls;
         return a() * aPower02();
       }).ingredients(aPower02, a);
       /** the actual cell behind {@link #aPower05()} */
-      @SuppressWarnings("null") final Cell<@Nullable Integer> aPower05 = new Recipe<@Nullable Integer>(//
+      @SuppressWarnings("null") final Cell<@Nullable Integer> aPower05 = new Recipe<>(//
           () -> aPower02() * aPower03()).ingredients(aPower02, aPower03);
       /** Can, and often should be made private; package is OK */
       /** the actual cell behind {@link #b()} */
@@ -363,9 +356,9 @@ public interface Cookbook {
           -> a() * a() * a() * a() * aPower02() * aPower02() * aPower03() * aPower03() * aPower03()//
       ).ingredients(a, aPower02, aPower03);
       /** the actual cell behind {@link #b()} */
-      final Cell<@Nullable Integer> b = new Cookbook.Ingredient<@Nullable Integer>(3);
+      final Cell<@Nullable Integer> b = new Cookbook.Ingredient<>(3);
       /** the actual cell behind {@link #c()} */
-      final Cell<@Nullable Integer> c = new Cookbook.Ingredient<@Nullable Integer>(5);
+      final Cell<@Nullable Integer> c = new Cookbook.Ingredient<>(5);
       /** the actual cell behind {@link #d()} */
       @SuppressWarnings("null") final Cell<@Nullable Integer> d = Cookbook.from(a, b, c).make(() -> a() + b() + c());
 
@@ -881,7 +874,7 @@ public interface Cookbook {
      *         stored in this node is updated.
      */
     public abstract boolean updated();
-    private final long oldestDependent() {
+    private long oldestDependent() {
       long $ = 0;
       for (final Cell<?> c : dependents)
         $ = max($, c.version);

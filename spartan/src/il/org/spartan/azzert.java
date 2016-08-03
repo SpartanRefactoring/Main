@@ -266,8 +266,8 @@ public class azzert extends org.junit.Assert {
   public static void isNull(final @Nullable Object o) {
     that(o, nullValue());
   }
-  public static final Wrapper<String> iz(final String s) {
-    return new Wrapper<String>(s);
+  public static Wrapper<String> iz(final String s) {
+    return new Wrapper<>(s);
   }
   @Factory public static Matcher<@Nullable Boolean> lessThan(final boolean b) {
     return OrderingComparison.lessThan(Boolean.valueOf(b));

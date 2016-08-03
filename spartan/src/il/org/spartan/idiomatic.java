@@ -18,8 +18,8 @@ public interface idiomatic {
    * @param t JD
    * @return Yielder<T> TODO Javadoc(2016) automatically generated for returned
    *         value of method <code>yield</code> */
-  public static <T> Storer<T> take(final T t) {
-    return new Storer<T>(t);
+  static <T> Storer<T> take(final T t) {
+    return new Storer<>(t);
   }
   /** @param r JD
    * @return an identical runnable which is also a {@link Runner} */
@@ -41,18 +41,18 @@ public interface idiomatic {
    * @param t JD
    * @return T TODO Javadoc(2016) automatically generated for returned value of
    *         method <code>incase</code> */
-  public static <T> @Nullable T incase(final boolean condition, final T t) {
+  static <T> @Nullable T incase(final boolean condition, final T t) {
     return condition ? t : null;
   }
   /** Quote a given {@link String}
    * @param $ some {@link String} to be quoted
    * @return the parameter, quoted */
-  public static String quote(final @Nullable String $) {
+  static String quote(final @Nullable String $) {
     return $ != null ? QUOTE + $ + QUOTE : "<null reference>";
   }
   /** @param condition JD
    * @return TODO document return type */
-  public static Trigger unless(final boolean condition) {
+  static Trigger unless(final boolean condition) {
     return when(!condition);
   }
   /** @param <T> JD
@@ -60,17 +60,17 @@ public interface idiomatic {
    * @param t JD
    * @return the non-boolean parameter, in case the boolean parameter is true,
    *         or null, otherwise */
-  public static <T> @Nullable T unless(final boolean condition, final T t) {
+  static <T> @Nullable T unless(final boolean condition, final T t) {
     return incase(!condition, t);
   }
   /** @param condition JD
    * @return TODO document return type */
-  public static Trigger when(final boolean condition) {
+  static Trigger when(final boolean condition) {
     return condition ? eval : ignore;
   }
 
   /** Single quote: */
-  public static final String QUOTE = "'";
+  static final String QUOTE = "'";
   /** an evaluating trigger */
   static final Trigger eval = new Trigger() {
     @Override public <@Nullable T> T eval(final Supplier<T> s) {
@@ -112,7 +112,7 @@ public interface idiomatic {
   static class Storer<T> implements Holder<T> {
     /** Instantiates this class.
      * @param inner JD */
-    public Storer(final T inner) {
+    Storer(final T inner) {
       this.inner = inner;
     }
     /** see @see java.util.function.Supplier#get() (auto-generated) */
@@ -121,7 +121,7 @@ public interface idiomatic {
     }
 
     /** */
-    public final T inner;
+    final T inner;
   }
 
   /** @author Yossi Gil <Yossi.Gil@GMail.COM>
@@ -141,11 +141,11 @@ public interface idiomatic {
 
   @SuppressWarnings({ "javadoc", "null", "static-method" }) public static class TEST {
     @Test public void use0() {
-      azzert.notNull(new Storer<TEST>(this));
+      azzert.notNull(new Storer<>(this));
     }
     @Test public void use1() {
-      azzert.notNull(new Storer<TEST>(this));
-      new Storer<TEST>(this).when(true);
+      azzert.notNull(new Storer<>(this));
+      new Storer<>(this).when(true);
     }
     @Test public void use2() {
       azzert.notNull(take(this));
@@ -186,7 +186,7 @@ public interface idiomatic {
    * applies.
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016 */
-  public static class Runner implements Runnable {
+  static class Runner implements Runnable {
     @Override public void run() {
       run.run();
     }
@@ -202,7 +202,7 @@ public interface idiomatic {
     }
     /** Instantiates this class.
      * @param run JD */
-    public Runner(final Runnable run) {
+    Runner(final Runnable run) {
       this.run = run;
     }
 

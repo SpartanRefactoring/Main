@@ -1,9 +1,12 @@
 package il.org.spartan.files;
 
 import il.org.spartan.*;
+import il.org.spartan.iterables.PureIterable.*;
 
 import java.io.*;
 import java.util.*;
+
+import org.eclipse.jdt.annotation.*;
 
 /**
  * Provides, employing fluent API, a {@link Iterable} interface for iteration
@@ -51,7 +54,8 @@ public class FilesGenerator {
   static Iterator<File> directoryIterator(final File directory) {
     if (directory == null || !directory.isDirectory() || directory.list() == null)
       return null;
-    final Iterator<String> generator = as.iterable(directory.list()).iterator();
+    @NonNull Sized<@Nullable String> iterable = as.iterable(directory.list());
+    final Iterator<String> generator = iterable.iterator();
     return new Iterator<File>() {
       @Override public boolean hasNext() {
         for (;;) {

@@ -26,6 +26,9 @@ import org.junit.*;
  */
 public enum prune {
   ;
+  /** TODO: Document field prune.java */
+  private static final String NULL = "null";
+
   /**
    * @param <T> JD
    * @param <C> JD
@@ -65,7 +68,7 @@ public enum prune {
    *         order. No <code><b>null</b></code> elements are present on this
    *         returned collection.
    */
-  @SuppressWarnings("null") public static <T> T[] nulls(final T[] ts) {
+  public static <T> T[] nulls(final T[] ts) {
     final List<T> $ = new ArrayList<>();
     for (final T t : ts)
       if (t != null)
@@ -87,7 +90,7 @@ public enum prune {
    * @param $
    * @return TODO document return type
    */
-  @SuppressWarnings("null") private static String[] asArrray(final List<String> $) {
+  private static String[] asArrray(final List<String> $) {
     return cantBeNull($.toArray(new String @NonNull [0]));
   }
   /**
@@ -97,7 +100,7 @@ public enum prune {
    * @param ts an array of values.
    * @return an array of size 0 of elements of type <code>T</code>.
    */
-  @SuppressWarnings("null") private static <T> T[] shrink(final T @Nullable [] ts) {
+  @SuppressWarnings(NULL) private static <T> T[] shrink(final T @Nullable [] ts) {
     return cantBeNull(Arrays.copyOf(ts, 0));
   }
 

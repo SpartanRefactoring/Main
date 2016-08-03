@@ -54,48 +54,44 @@ import org.junit.*;
  * @author Yossi Gil <Yossi.Gil@GMail.COM>
  * @since 2016 */
 @SuppressWarnings("javadoc") public interface Environment {
-  public static <@Nullable T, @Nullable A> Binder1<T, A> bind(final Function1<T, A> f) {
+  static <@Nullable T, @Nullable A> Binder1<T, A> bind(final Function1<T, A> f) {
     return new Property<T>().bind(f);
   }
-  public static <@Nullable T, @Nullable A1, @Nullable A2> Binder2<@Nullable T, @Nullable A1, @Nullable A2> bind(final Function2<T, A1, A2> f) {
+  static <@Nullable T, @Nullable A1, @Nullable A2> Binder2<@Nullable T, @Nullable A1, @Nullable A2> bind(final Function2<T, A1, A2> f) {
     return new Property<T>().bind(f);
   }
-  public static <@Nullable T, @Nullable A1, @Nullable A2, @Nullable A3> Binder3<T, A1, A2, A3> bind(final Function3<T, A1, A2, A3> f) {
+  static <@Nullable T, @Nullable A1, @Nullable A2, @Nullable A3> Binder3<T, A1, A2, A3> bind(final Function3<T, A1, A2, A3> f) {
     return new Property<T>().bind(f);
   }
-  public static <@Nullable T, @Nullable A1, @Nullable A2, @Nullable A3, @Nullable A4> Binder4<T, A1, A2, A3, A4> bind(final Function4<T, A1, A2, A3, A4> f) {
+  static <@Nullable T, @Nullable A1, @Nullable A2, @Nullable A3, @Nullable A4> Binder4<T, A1, A2, A3, A4> bind(final Function4<T, A1, A2, A3, A4> f) {
     return new Property<T>().bind(f);
   }
-  public static <@Nullable T> Property<T> function(final Function0<T> f) {
+  static <@Nullable T> Property<T> function(final Function0<T> f) {
     return new Property<T>().set(f);
   }
-  /** A factory method of class {@link Property} returning an undefined value for
-   * a cell
-   * @param <T> JD
-   * @return the newly created instance of {@link Property} containing null
-   *         value of the type parameter */
-  public static <@Nullable T> Property<T> undefined() {
+  /**
+   * A factory method of class  {@link Property}  returning an undefined value for a cell
+   * @param < T >  JD
+   * @return  the newly created instance of  {@link Property}  containing null value of the type parameter 
+   */
+  static <@Nullable T> Property<T> undefined() {
     return new Property<>();
   }
-  /** A factory method of class {@link Property} of an {@link Integer} as in
-   *
-   * <pre>
-   * Property&lt;Integer&gt; genesis = {@link Environment}.value(2);
-   * </pre>
-   * @param i JD
-   * @return the newly created instance of {@link Ingredient} */
-  public static Property<Integer> value(final int i) {
+  /**
+   * A factory method of class  {@link Property}  of an  {@link Integer}  as in <pre> Property&lt;Integer&gt; genesis =  {@link Environment} .value(2); </pre>
+   * @param i  JD
+   * @return  the newly created instance of  {@link Ingredient}  
+   */
+  static Property<@Nullable Integer> value(final int i) {
     return new Property<>(Integer.valueOf(i));
   }
-  /** A factory method for class {@link Ingredient} as in
-   *
-   * <pre>
-   * Property&lt;String&gt; genesis = Cookbook.value(&quot;&quot;);
-   * </pre>
-   * @param <T> JD
-   * @param t JD
-   * @return the newly created instance of {@link Property} */
-  public static <@Nullable T> Property<@Nullable T> value(final T t) {
+  /**
+   * A factory method for class  {@link Ingredient}  as in <pre> Property&lt;String&gt; genesis = Cookbook.value(&quot;&quot;); </pre>
+   * @param < T >  JD
+   * @param t  JD
+   * @return  the newly created instance of  {@link Property}  
+   */
+  static <@Nullable T> Property<@Nullable T> value(final T t) {
     return new Property<>(t);
   }
 
