@@ -12,8 +12,31 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} to convert <code>if (x) { ; f(); return a; } else { ; g(); {
- * } }</code> into <code>if (x) { f(); return a; } g();</code>
+/** A {@link Wring} to convert
+ * 
+ * <pre>
+ * if (x) {
+ *   ;
+ *   f();
+ *   return a;
+ * } else {
+ *   ;
+ *   g();
+ *   {
+ *   }
+ * }
+ * </pre>
+ * 
+ * into
+ * 
+ * <pre>
+ * if (x) {
+ *   f();
+ *   return a;
+ * }
+ * g();
+ * </pre>
+ * 
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfCommandsSequencerNoElseSingletonSequencer extends Wring.ReplaceToNextStatement<IfStatement> {

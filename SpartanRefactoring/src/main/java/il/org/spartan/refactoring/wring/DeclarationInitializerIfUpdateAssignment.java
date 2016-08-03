@@ -12,8 +12,20 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.LocalInliner.*;
 
-/** A {@link Wring} to convert <code>int a = 2; if (b) a = 3;</code> into
- * <code>int a = b ? 3 : 2;</code>
+/** A {@link Wring} to convert
+ * 
+ * <pre>
+ * int a = 2;
+ * if (b)
+ *   a = 3;
+ * </pre>
+ * 
+ * into
+ * 
+ * <pre>
+ * int a = b ? 3 : 2;
+ * </pre>
+ * 
  * @author Yossi Gil
  * @since 2015-08-07 */
 public final class DeclarationInitializerIfUpdateAssignment extends Wring.VariableDeclarationFragementAndStatement {

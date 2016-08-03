@@ -13,8 +13,22 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} to convert <code>if (X) return A; if (Y) return A;</code>
- * into <code>if (X || Y) return A;</code>
+/** A {@link Wring} to convert
+ * 
+ * <pre>
+ * if (X)
+ *   return A;
+ * if (Y)
+ *   return A;
+ * </pre>
+ * 
+ * into
+ * 
+ * <pre>
+ * if (X || Y)
+ *   return A;
+ * </pre>
+ * 
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfFooSequencerIfFooSameSequencer extends Wring.ReplaceToNextStatement<IfStatement> {
