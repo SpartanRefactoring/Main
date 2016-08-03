@@ -9,7 +9,6 @@
 \passOptions{xcolor} {usenames, dvipsnames, table} 
 
 % vim: /usepackage/,/^\s*$/-!sort -u
-\usepackage{adjustbox} % Easy size adjustment of tables and figures.
 \usepackage{amsfonts}  % AMS fonts
 \usepackage{amsmath}   % AMS Mathematics
 \usepackage{amssymb}   % Load more math symbols
@@ -33,8 +32,6 @@
 \usepackage{wrapfig}
 
 % Tikz libraries
-\usetikzlibrary{graphdrawing}
-\usetikzlibrary{graphs} 
 \usetikzlibrary{shapes} 
 
 % Comment out if you cannot find these
@@ -42,12 +39,6 @@
 \usepackage{yogi-unicode}
 \usepackage[terse]{yogi-algorithm}
 
-\adjustboxset{max width=\columnwidth}
-\adjustboxset{max height=0.8\textheight}
-\adjustboxset{center}
-
-\newadjustboxkey*{W}[1]{\setkeys{adjbox}{max width=#1\columnwidth}}
-\newadjustboxkey*{H}[1]{\setkeys{adjbox}{max height=#1\textheight}}
 
 \newtheorem{Theorem}{Theorem}
 \newtheorem{Definition}{Definition}
