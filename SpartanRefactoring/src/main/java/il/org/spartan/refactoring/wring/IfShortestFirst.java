@@ -6,8 +6,18 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 
-/** A {@link Wring} to convert <pre>a ? (f,g,h) : c(d,e)</pre> into <pre>a ?
- * c(d,e) : f(g,h)</pre>
+/** A {@link Wring} to convert
+ * 
+ * <pre>
+ * a ? (f,g,h) : c(d,e)
+ * </pre>
+ * 
+ * into
+ * 
+ * <pre>
+ * a ? c(d, e) : f(g, h)
+ * </pre>
+ * 
  * @author Yossi Gil
  * @since 2015-08-15 */
 public final class IfShortestFirst extends Wring.ReplaceCurrentNode<IfStatement> {

@@ -12,8 +12,34 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} to convert <code>{;; g(); {}{;{;{;}};} }</code> into
- * <code>g();</code>
+/** A {@link Wring} to convert
+ * 
+ * <pre>
+ * {
+ *   ;
+ *   ;
+ *   g();
+ *   {
+ *   }
+ *   {
+ *     ;
+ *     {
+ *       ;
+ *       {
+ *         ;
+ *       }
+ *     }
+ *     ;
+ *   }
+ * }
+ * </pre>
+ * 
+ * into
+ * 
+ * <pre>
+ * g();
+ * </pre>
+ * 
  * @author Yossi Gil
  * @since 2015-07-29 */
 public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {

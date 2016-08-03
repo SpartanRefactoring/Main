@@ -10,11 +10,34 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} to convert <pre>if (a) { return x; } </pre> into
- * <pre>return x;</pre> provided that this <pre><b>if</b></pre> statement is
- * the last statement in a method.
+/** A {@link Wring} to convert
+ * 
+ * <pre>
+ * if (a) {
+ *   return x;
+ * }
+ * </pre>
+ * 
+ * into
+ * 
+ * <pre>
+ * return x;
+ * </pre>
+ * 
+ * provided that this
+ * 
+ * <pre>
+ * <b>if</b>
+ * </pre>
+ * 
+ * statement is the last statement in a method.
  * @author Yossi Gil
- * @author Daniel Mittelman <pre><mittelmania [at] gmail.com></pre>
+ * @author Daniel Mittelman
+ * 
+ *         <pre>
+ * <mittelmania [at] gmail.com>
+ *         </pre>
+ * 
  * @since 2015-09-09 */
 public class IfLastInMethodThenEndingWithEmptyReturn extends Wring<IfStatement> {
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
