@@ -32,7 +32,11 @@
   \item Pullup arirthmetic negation.
   \item Pushdown ternarizations..
         a ? b(x) : b(y) => b(a ? x: y)
-  \item Distributive rule on booleans a && b || c && b => (a || c) && c there are four variants.
+  \item Distributive rule on booleans 
+    \begin{listings}
+a a && b || c && b => (a || c) && c 
+    \end{listings}
+      there are four variants.
   \item More specific first: How should you order X == Y.
         Rule: you start from the more specific and increase specifity,.
         I.e., S(X) > S(Y)
@@ -67,6 +71,9 @@ Like the "it" variable in ML programming language or HyperCard programming langu
 Take a penny, leave a penny
 
 \subsection{Misc}
+Prefix to postifx
+x.equals("a:) to "a.equals(this"
+
 
 \begin{itemize}
 \item Associative rule of ifs: if (a) if (b) x; => if (a && b) x
@@ -130,7 +137,7 @@ In fields: to canonical instance name or pluralized
 In getters: Change name to fieldName if it is a getter.
 In Methods
 In local variables:
-return variable to $
+return variable to \$
 Change argument to one single case letter
 In world amalgams, use the first letter of the last word.
 Deal with multiplicities of arrays
@@ -138,12 +145,12 @@ Deal with multiplicities of collections
 Deal with nested multiplicities
 Change return type of void to ClassName and return this
 Single argument:
-To __ if unused
-To $ in case it is returned
+To \_\_ if unused
+To \$ in case it is returned
 To fieldName in case it is a setter
 To ¢ in case method has no inner methods and is not a setter
 Any number of arguments:
-To $ in case it is returned
+To \$ in case it is returned
 To __(n) if it is unused and documented as such
 Change argument to one single case letter
 In world amalgams, use the first letter of the last word.
