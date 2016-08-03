@@ -355,9 +355,7 @@ public interface Cookbook {
       /** the actual cell behind {@link #d()} */
       @SuppressWarnings("null") final Cell<@Nullable Integer> d = Cookbook.from(a, b, c).make(() -> a() + b() + c());
 
-      /** TODO(2016) Javadoc: automatically generated for type
-       * <code>Cookbook.__META.TOUGH</code>
-       * @author Yossi Gil <Yossi.Gil@GMail.COM>
+      /** @author Yossi Gil <Yossi.Gil@GMail.COM>
        * @since 2016 */
       @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "null", "javadoc" }) //
       public static class TEST extends Z {
