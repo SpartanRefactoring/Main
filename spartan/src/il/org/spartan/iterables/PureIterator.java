@@ -3,43 +3,36 @@ package il.org.spartan.iterables;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
-import il.org.spartan.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
-/**
- * A kind of {@link Iterator} which does not support the rarely used
+import il.org.spartan.*;
+
+/** A kind of {@link Iterator} which does not support the rarely used
  * {@link #remove} operation and saves the user, i.e., who ever chooses to
  * <code><b>implement</b></code> this class, the trouble of providing a vacuous
  * implementation of this function. Moreover, the descendant is actually
  * forbidden from giving any semantics to this function, which would be in
  * contrast with the read-only nature of this iterator.
- *
  * @see PureIterator
  * @author Yossi Gil
  * @since 2014-06-03
- * @param <T> some arbitrary type
- */
+ * @param <T> some arbitrary type */
 public abstract class PureIterator<T> implements Iterator<T> {
-  /**
-   * This <code><b>final</b></code> implementation of the method, prevents
+  /** This <code><b>final</b></code> implementation of the method, prevents
    * descendants from giving {link #remove} semantics other than immediately
    * throwing a fresh instance of {@link IllegalArgumentException}.
-   *
-   * @see java.util.Iterator#remove()
-   */
+   * @see java.util.Iterator#remove() */
   @Override public final void remove() {
     throw new IllegalArgumentException();
   }
 
-  /**
-   * @author Yossi Gil <Yossi.Gil@GMail.COM>
+  /** @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @param <T> JD
-   * @since 2016
-   */
+   * @since 2016 */
   public abstract static class Staged<T> extends PureIterator<T> {
     @Override public final T next() {
       final @NonNull T $ = cantBeNull(next);
@@ -56,14 +49,12 @@ public abstract class PureIterator<T> implements Iterator<T> {
       return true;
     }
 
-    /**
-     * Stores the next value that this iterator returns. It has non-null content
-     * only after {@link #hasNext} returned true.
-     */
+    /** Stores the next value that this iterator returns. It has non-null
+     * content only after {@link #hasNext} returned true. */
     private @Nullable T next = null;
   }
 
-  @SuppressWarnings({ "javadoc" })//
+  @SuppressWarnings({ "javadoc" }) //
   public static class TEST extends PureIterator.Staged<String> {
     @Override public boolean hasNext() {
       return false;
@@ -74,16 +65,16 @@ public abstract class PureIterator<T> implements Iterator<T> {
     @Test(expected = IllegalArgumentException.class) public void tryToRemove() {
       remove();
     }
-    public static <T> void assertEquals(T t1, T t2) {
+    public static <T> void assertEquals(final T t1, final T t2) {
       azzert.that(t2, is(t1));
     }
-    public static <T> void assertEquals(String reason, T t1, T t2) {
+    public static <T> void assertEquals(final String reason, final T t1, final T t2) {
       azzert.that(reason, t2, is(t1));
     }
-    public static <T> void assertNotEquals(T t1, T t2) {
+    public static <T> void assertNotEquals(final T t1, final T t2) {
       azzert.that(t2, is(t1));
     }
-    public static <T> void assertNotEquals(String reason, T t1, T t2) {
+    public static <T> void assertNotEquals(final String reason, final T t1, final T t2) {
       azzert.that(reason, t2, is(t1));
     }
   }

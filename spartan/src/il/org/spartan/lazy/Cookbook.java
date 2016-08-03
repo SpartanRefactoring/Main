@@ -4,13 +4,7 @@ package il.org.spartan.lazy;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.idiomatic.*;
-import static java.lang.Math.*;
-import il.org.spartan.*;
-import il.org.spartan.lazy.Cookbook.Internal.$$Function;
-import il.org.spartan.lazy.Cookbook.Internal.$$Function2;
-import il.org.spartan.lazy.Cookbook.Internal.$$RecipeMaker;
-import il.org.spartan.lazy.Cookbook.Internal.Function2;
-import il.org.spartan.lazy.Cookbook.Recipe.NullRobust;
+import static java.lang.Math.max;
 
 import java.util.*;
 import java.util.function.*;
@@ -19,23 +13,27 @@ import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/**
- * This interface represents the concept of a <i>lazy symbolic spreadsheet</i>,
+import il.org.spartan.*;
+import il.org.spartan.lazy.Cookbook.Internal.*;
+import il.org.spartan.lazy.Cookbook.Internal.Function2;
+import il.org.spartan.lazy.Cookbook.Recipe.*;
+
+/** This interface represents the concept of a <i>lazy symbolic spreadsheet</i>,
  * made by DAG of interdependent {@link Cell}s. A {@link Cell} is either an
  * <ol>
- * <li> {@link Ingredient} is a generic storing a value of the type parameter,
+ * <li>{@link Ingredient} is a generic storing a value of the type parameter,
  * <i>or</i> a
- * <li> {@link Recipe} for making such a value from <i>prerequisite</i> cells.
+ * <li>{@link Recipe} for making such a value from <i>prerequisite</i> cells.
  * </ol>
  * <p>
  * The protocol of cells include:
  * <ol>
- * <li> {@link Cell#get()}, returning the cell's value, recomputing it if it is
+ * <li>{@link Cell#get()}, returning the cell's value, recomputing it if it is
  * less recent than any {@link Ingredient} on which it depends, directly or
  * indirectly. The computed value is cached, and used in subsequent calls to
  * prevent unnecessary re-computation.
- * <li> {@link Cell#cache()}, returning the last value cached in the cell.
- * <li> {@link Cell#set(Object)}, whose parameter must be of the correct type,
+ * <li>{@link Cell#cache()}, returning the last value cached in the cell.
+ * <li>{@link Cell#set(Object)}, whose parameter must be of the correct type,
  * stores its parameter in the cell, whereby invalidating the contents of all
  * cells whose recipe depends on it.
  * <p>
@@ -56,10 +54,8 @@ import org.junit.runners.*;
  * <code><b>implements</b></code> this interface should be ok.
  * <ol>
  * apply
- *
  * @author Yossi Gil <Yossi.Gil@GMail.COM>
- * @since 2016
- */
+ * @since 2016 */
 public interface Cookbook {
   /** TODO Javadoc(2016): automatically generated for method
    * <code>traceWizard</code>
@@ -89,12 +85,9 @@ public interface Cookbook {
       }
     };
   }
-  /**
-   * creates a new ingredient with a specific type
-   *
+  /** creates a new ingredient with a specific type
    * @param <T> JD
-   * @return the newly created instance
-   */
+   * @return the newly created instance */
   public static <T> Cell<T> input() {
     return new Ingredient<>();
   }
@@ -106,21 +99,22 @@ public interface Cookbook {
     return new Recipe<>(supplier);
   }
   /** A factory method for class {@link Ingredient} of an {@link Integer} as in
-   * 
+   *
    * <pre>
    * Cell&lt;String&gt; genesis = Cookbook.value(2);
    * </pre>
+   * 
    * @param i JD
    * @return the newly created instance of {@link Ingredient} */
   public static Cell<Integer> value(final int i) {
     return new Ingredient<>(Integer.valueOf(i));
   }
-
   /** A factory method for class {@link Ingredient} as in
-   * 
+   *
    * <pre>
    * Cell&lt;String&gt; genesis = Cookbook.value(&quot;&quot;);
    * </pre>
+   * 
    * @param <T> JD
    * @param t JD
    * @return the newly created instance of {@link Ingredient} */
@@ -140,7 +134,8 @@ public interface Cookbook {
   static <@Nullable T, @Nullable R> $$Function<T, R> compute(final Function<T, R> λ) {
     return ¢ -> new Recipe<>(() -> λ.apply(¢.get())).ingredient(¢);
   }
-  /** TODO Javadoc(2016): automatically generated for method <code>compute</code>
+  /** TODO Javadoc(2016): automatically generated for method
+   * <code>compute</code>
    * @param <T1> first parameter type
    * @param <T2> second parameter type
    * @param <R> result type
@@ -150,16 +145,13 @@ public interface Cookbook {
     return (¢1, ¢2) -> new Recipe<>(() -> λ.apply(¢1.get(), ¢2.get())).ingredients(¢1, ¢2);
   }
 
-  /**
-   * A repository of test cases and examples
+  /** A repository of test cases and examples
    * <p>
    * <i>the underscores in the name are magic against alphabetical method
    * sorters that cannot distinguish code from meta-code</i>
-   *
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
-   * @since 2016
-   */
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
+   * @since 2016 */
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
   public static enum __META {
     ;
     @SuppressWarnings("javadoc") public static class A {
@@ -181,11 +173,11 @@ public interface Cookbook {
       final Cell<String> text = value("p");
       final Cell<String> wrap = from(begin, end, text).make(() -> begin() + text() + end());
       final Cell<String> xBoxed = from(wrap).make(() //
-          -> "[[" + wrap() + "]]" //
+      -> "[[" + wrap() + "]]" //
       );
       final Cell<String> zzz = new Ingredient<@Nullable String>().of("zzz");
 
-      @SuppressWarnings({ "synthetic-access" })//
+      @SuppressWarnings({ "synthetic-access" }) //
       public static class TEST extends A {
         @Test public void sessionA00() {
           azzert.that(wrap(), is("<p>"));
@@ -233,7 +225,7 @@ public interface Cookbook {
     }
 
     @SuppressWarnings({ "static-method", "javadoc", "null" }) //
-    @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
+    @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
     public static class C {
       @Test public void sessionA01() {
         final Cell<Integer> a = value(Integer.valueOf(12));
@@ -272,8 +264,7 @@ public interface Cookbook {
       }
     }
 
-    /**
-     * Should not be used by clients. A development time only
+    /** Should not be used by clients. A development time only
      * <code><b>class</b></code> used for testing and as a documented demo of
      * using {@link Cookbook}.
      * <p>
@@ -294,10 +285,8 @@ public interface Cookbook {
      * <li>{@link #d()}.
      * </ol>
      * <p>
-     *
      * @author Yossi Gil <Yossi.Gil@GMail.COM>
-     * @since 2016
-     */
+     * @since 2016 */
     @SuppressWarnings({ "boxing" }) //
     public static class Z implements Cookbook {
       /** @return contents of cell a */
@@ -355,9 +344,9 @@ public interface Cookbook {
           () -> aPower02() * aPower03()).ingredients(aPower02, aPower03);
       /** Can, and often should be made private; package is OK */
       /** the actual cell behind {@link #b()} */
-      @SuppressWarnings("null")//
+      @SuppressWarnings("null") //
       final Cell<@Nullable Integer> aPower17NullSafe = new Recipe.NullRobust<>(() //
-          -> a() * a() * a() * a() * aPower02() * aPower02() * aPower03() * aPower03() * aPower03()//
+      -> a() * a() * a() * a() * aPower02() * aPower02() * aPower03() * aPower03() * aPower03()//
       ).ingredients(a, aPower02, aPower03);
       /** the actual cell behind {@link #b()} */
       final Cell<@Nullable Integer> b = new Cookbook.Ingredient<>(3);
@@ -366,14 +355,11 @@ public interface Cookbook {
       /** the actual cell behind {@link #d()} */
       @SuppressWarnings("null") final Cell<@Nullable Integer> d = Cookbook.from(a, b, c).make(() -> a() + b() + c());
 
-      /**
-       * TODO(2016) Javadoc: automatically generated for type
+      /** TODO(2016) Javadoc: automatically generated for type
        * <code>Cookbook.__META.TOUGH</code>
-       *
        * @author Yossi Gil <Yossi.Gil@GMail.COM>
-       * @since 2016
-       */
-      @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "null", "javadoc" })//
+       * @since 2016 */
+      @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "null", "javadoc" }) //
       public static class TEST extends Z {
         @Test public void sessionA01() {
           azzert.isNull(a());
@@ -822,20 +808,17 @@ public interface Cookbook {
     }
   }
 
-  /**
-   * A cell stores a value of some type (which is passed by parameter). A cell
+  /** A cell stores a value of some type (which is passed by parameter). A cell
    * may be either {@link Ingredient} or {@link Recipe}. A computed cell
    * typically depends on other cells, which may either valued, or computed, and
    * hence depending on yet other cells. A change to a cell's value is triggers
    * invalidates all cells that depend on it.
-   *
    * @param <T> JD
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016
    * @see Ingredient
-   * @see Recipe
-   */
-  @SuppressWarnings("null")//
+   * @see Recipe */
+  @SuppressWarnings("null") //
   public abstract class Cell<T> implements Supplier<T>, Cloneable {
     /** TODO */
     public static Set<Cell<?>> trace;
@@ -846,37 +829,28 @@ public interface Cookbook {
     }
     /** see @see java.util.function.Supplier#get() (auto-generated) */
     @Override public abstract @Nullable T get();
-    /**
-     * Used for fluent API, synonym of {@link Cell#set(Object)}. sets the
+    /** Used for fluent API, synonym of {@link Cell#set(Object)}. sets the
      * current value of this cell
-     *
      * @param t JD
-     * @return <code><b>this</b></code>*
-     */
+     * @return <code><b>this</b></code>* */
     public final Cell<T> of(final T t) {
       return set(t);
     }
-    /**
-     * sets the current value of this cell
-     *
+    /** sets the current value of this cell
      * @param t JD
-     * @return <code><b>this</b></code>
-     */
+     * @return <code><b>this</b></code> */
     public final Cell<T> set(final T t) {
       cache(t);
       uponForcedSet();
       version = oldestDependent() + 1; // Invalidate all dependents
       return this;
     }
-    /**
-     * template function to be implemented by clients; normally an ingredient is
-     * always updated and a dish is updated if all its ingredients are updated,
-     * and the recipe was applied <i>after</i> all the ingredients where
-     * updated.
-     *
+    /** template function to be implemented by clients; normally an ingredient
+     * is always updated and a dish is updated if all its ingredients are
+     * updated, and the recipe was applied <i>after</i> all the ingredients
+     * where updated.
      * @return <code><b>true</b></code> <i>iff</i> the contents of the cache
-     *         stored in this node is updated.
-     */
+     *         stored in this node is updated. */
     public abstract boolean updated();
     private final long oldestDependent() {
       long $ = 0;
@@ -897,10 +871,8 @@ public interface Cookbook {
     void cache(@SuppressWarnings("hiding") final T cache) {
       this.cache = cache;
     }
-    /**
-     * by overriding this function, inheriting classes can ask to be notified
-     * when this cell was set.
-     */
+    /** by overriding this function, inheriting classes can ask to be notified
+     * when this cell was set. */
     void uponForcedSet() {
       // empty by default
     }
@@ -912,23 +884,17 @@ public interface Cookbook {
     long version = 0;
   }
 
-  /**
-   * cell which does not depend on others
-   *
+  /** cell which does not depend on others
    * @param <T> JD
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
-   * @since 2016
-   */
+   * @since 2016 */
   public class Ingredient<@Nullable T> extends Cell<T> {
     /** Instantiates this class.* */
     public Ingredient() {
       // Make sure we have a public constructor
     }
-    /**
-     * instantiates this class
-     *
-     * @param value JD
-     */
+    /** instantiates this class
+     * @param value JD */
     public Ingredient(final T value) {
       cache(value);
     }
@@ -943,19 +909,13 @@ public interface Cookbook {
       return true;
     }
 
-    /**
-     * cell which does not depend on others
-     *
+    /** cell which does not depend on others
      * @param <T> JD
      * @author Yossi Gil <Yossi.Gil@GMail.COM>
-     * @since 2016
-     */
+     * @since 2016 */
     public static class NotNull<T> extends Cookbook.Ingredient<T> {
-      /**
-       * instantiates this class
-       *
-       * @param value JD
-       */
+      /** instantiates this class
+       * @param value JD */
       public NotNull(final T value) {
         super(value);
       }
@@ -971,8 +931,8 @@ public interface Cookbook {
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016 */
   interface Internal {
-    /** @return never! The <code><b>none</b></code> type. There is no legal value
-     *         that this function can return, since the type
+    /** @return never! The <code><b>none</b></code> type. There is no legal
+     *         value that this function can return, since the type
      *         <code>@NonNull</code> {@link Void} is empty. (
      *         <code><b>null</b></code> is the single vale of {@link Void}, but
      *         it does not obey the {@link @NonNull} annotation. */
@@ -1016,11 +976,8 @@ public interface Cookbook {
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016 */
   public static class Recipe<@Nullable T> extends Cell<T> {
-    /**
-     * Instantiates this class.
-     *
-     * @param supplier JD
-     */
+    /** Instantiates this class.
+     * @param supplier JD */
     public Recipe(final Supplier<? extends T> supplier) {
       this.supplier = supplier;
     }
@@ -1038,12 +995,9 @@ public interface Cookbook {
       version = latestPrequisiteVersion() + 1;
       return cache();
     }
-    /**
-     * Add another cell on which this instance depends
-     *
+    /** Add another cell on which this instance depends
      * @param e JD
-     * @return <code><b>this</b></code>
-     */
+     * @return <code><b>this</b></code> */
     public Recipe<T> ingredient(final Cell<?> e) {
       run(() -> {
         e.dependents.add(this);
@@ -1053,12 +1007,9 @@ public interface Cookbook {
       }).unless(prerequisites.contains(this));
       return this;
     }
-    /**
-     * Add another cell on which this instance depends
-     *
+    /** Add another cell on which this instance depends
      * @param es JD
-     * @return <code><b>this</b></code>
-     */
+     * @return <code><b>this</b></code> */
     public Recipe<T> ingredients(final Cell<?>... es) {
       for (final Cell<?> e : es)
         ingredient(e);
@@ -1078,12 +1029,9 @@ public interface Cookbook {
       assert supplier != null;
       return supplier.get();
     }
-    /**
-     * To be overridden by extending classes for e.g., null protection
-     *
+    /** To be overridden by extending classes for e.g., null protection
      * @param $ result
-     * @return the parameter
-     */
+     * @return the parameter */
     @SuppressWarnings("static-method") <N> N filter(final N n) {
       return n;
     }
@@ -1094,28 +1042,20 @@ public interface Cookbook {
           $ = c.version();
       return $;
     }
-
     @Override void uponForcedSet() {
       supplier = null;
     }
 
     private final List<Cell<?>> prerequisites = new ArrayList<>();
-
     private @Nullable Supplier<? extends @Nullable T> supplier;
 
-    /**
-     * A cell that may depend on others.
-     *
+    /** A cell that may depend on others.
      * @param <T> JD
      * @author Yossi Gil <Yossi.Gil@GMail.COM>
-     * @since 2016
-     */
+     * @since 2016 */
     @SuppressWarnings("null") public static class NotNull<T> extends Cookbook.Recipe<T> {
-      /**
-       * Instantiates this class.
-       *
-       * @param supplier JD
-       */
+      /** Instantiates this class.
+       * @param supplier JD */
       public NotNull(final Supplier<? extends @NonNull T> supplier) {
         super(cantBeNull(supplier));
         cache(cantBeNull(supplier).get());
@@ -1123,12 +1063,9 @@ public interface Cookbook {
       @SuppressWarnings({}) @Override public NotNull<T> clone() {
         return (NotNull<T>) super.clone();
       }
-      /**
-       * Add another cell on which this instance depends
-       *
+      /** Add another cell on which this instance depends
        * @param cs JD
-       * @return <code><b>this</b></code>
-       */
+       * @return <code><b>this</b></code> */
       @Override public NotNull<T> ingredients(final Cookbook.Cell<?>... cs) {
         return (NotNull<T>) super.ingredients(cs);
       }
@@ -1152,19 +1089,13 @@ public interface Cookbook {
       private @Nullable Supplier<? extends @Nullable T> supplier;
     }
 
-    /**
-     * A cell that may depend on others.
-     *
+    /** A cell that may depend on others.
      * @param <T> JD
      * @author Yossi Gil <Yossi.Gil@GMail.COM>
-     * @since 2016
-     */
+     * @since 2016 */
     public static class NullRobust<@Nullable T> extends Cookbook.Recipe<T> {
-      /**
-       * Instantiates this class.
-       *
-       * @param supplier JD
-       */
+      /** Instantiates this class.
+       * @param supplier JD */
       public NullRobust(final Supplier<? extends T> supplier) {
         super(supplier);
         assert supplier != null;
@@ -1179,12 +1110,9 @@ public interface Cookbook {
           return null;
         }
       }
-      /**
-       * Add another cell on which this instance depends
-       *
+      /** Add another cell on which this instance depends
        * @param cs JD
-       * @return <code><b>this</b></code>
-       */
+       * @return <code><b>this</b></code> */
       @Override public NullRobust<T> ingredients(final Cookbook.Cell<?>... cs) {
         super.ingredients(cs);
         return this;

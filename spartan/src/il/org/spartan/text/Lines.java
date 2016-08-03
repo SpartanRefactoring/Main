@@ -3,76 +3,58 @@ package il.org.spartan.text;
 
 import static il.org.spartan.Utils.*;
 import static org.junit.Assert.*;
-import il.org.spartan.*;
 
 import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/**
- * A trivial utility module with functions to scatter a text into an array of
+import il.org.spartan.*;
+
+/** A trivial utility module with functions to scatter a text into an array of
  * lines, and, conversely, gather an array of lines into text. Scattering and
  * gathering obey the rule that a line is a {@link String} which does not
  * contain the end-of-line marker, while the text a strings in which all lines,
  * including the last, are terminated by the end-of-line marker.
- *
  * @author Yossi Gil
- * @since 2014-7-31
- */
+ * @since 2014-7-31 */
 public enum Lines {
   // No enum values in this fake module
   ;
-  /**
-   * Counts the number of liens in a given text
-   *
+  /** Counts the number of liens in a given text
    * @param text count the number of lines in this parameter
-   * @return the number of lines in the parameter
-   */
+   * @return the number of lines in the parameter */
   public static int count(final @Nullable String text) {
     return Lines.scatter(text).length;
   }
-  /**
-   * Builds text from an array of lines
-   *
+  /** Builds text from an array of lines
    * @param lines what needs to be concatenated
    * @return the parameters, concatenated together, with
-   *         {@link #END_OF_LINE_MARKER} separating consecutive arguments
-   */
+   *         {@link #END_OF_LINE_MARKER} separating consecutive arguments */
   public static String gather(final String... lines) {
     return separate.these(lines).by(END_OF_LINE_MARKER);
   }
-  /**
-   * Breaks text into lines
-   *
+  /** Breaks text into lines
    * @param text some string of characters
    * @return the parameter, split into an array if lines
-   * @see #gather
-   */
+   * @see #gather */
   public static String[] scatter(final @Nullable String text) {
     return text == null || text.isEmpty() ? NO_LINES : cantBeNull(text.split(END_OF_LINE_MARKER));
   }
 
-  /**
-   * The string which this module considers as line separator.
-   */
+  /** The string which this module considers as line separator. */
   public static final String END_OF_LINE_MARKER = "\n";
-  /**
-   * A longer and more meaningful name for the array of length zero with
-   * {@link String} elements.
-   */
+  /** A longer and more meaningful name for the array of length zero with
+   * {@link String} elements. */
   public static final String[] NO_LINES = new String @NonNull [0];
 
-  /**
-   * A static nested class hosting unit tests for the nesting class Unit test
+  /** A static nested class hosting unit tests for the nesting class Unit test
    * for the containing class. Note the naming convention: a) names of test
    * methods do not use are not prefixed by "test". This prefix is redundant. b)
    * test methods begin with the name of the method they check.
-   *
    * @author Yossi Gil
-   * @since 2014-05-31
-   */
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
-  @SuppressWarnings({ "static-method", "javadoc" })//
+   * @since 2014-05-31 */
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+  @SuppressWarnings({ "static-method", "javadoc" }) //
   public static class TEST {
     @Test public void countEmpty() {
       assertEquals(0, count(""));

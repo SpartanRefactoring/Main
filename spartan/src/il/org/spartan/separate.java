@@ -3,8 +3,6 @@ package il.org.spartan;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
-import il.org.spartan.Utils.Applicator;
-import il.org.spartan.iterables.*;
 
 import java.util.*;
 import java.util.function.*;
@@ -12,6 +10,9 @@ import java.util.function.*;
 import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 import org.junit.runners.*;
+
+import il.org.spartan.Utils.*;
+import il.org.spartan.iterables.*;
 
 /** A utility class providing library functions that take an array or a
  * collection, and return a {@link String} composed by the elements of this

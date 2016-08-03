@@ -2,4 +2,3 @@
 @NonNullByDefault package il.org.spartan;
 
 import org.eclipse.jdt.annotation.*;
-

@@ -3,27 +3,22 @@
 package il.org.spartan.misc;
 
 import static org.junit.Assert.*;
-import il.org.spartan.*;
 
 import org.junit.*;
 
-/**
- * Primality testing and generation of primes.
- *
+import il.org.spartan.*;
+
+/** Primality testing and generation of primes.
  * @author Yossi Gil
- * @since 2012-05-01
- */
+ * @since 2012-05-01 */
 public class Primes {
-  /**
-   * Tests for primality.
-   *
+  /** Tests for primality.
    * @param c candidate to experience primality testing
-   * @return <code><b>true</b></code> <i>iff</i> the parameter is prime.
-   */
+   * @return <code><b>true</b></code> <i>iff</i> the parameter is prime. */
   public static boolean isPrime(final int c) {
     return //
-        c < 0 ? isPrime(-c) // deal with negative values
-            : c > 1 && isPrimeCore(c); // any integer >- 2
+    c < 0 ? isPrime(-c) // deal with negative values
+        : c > 1 && isPrimeCore(c); // any integer >- 2
   }
   private static boolean isPrimeCore(final int c) {
     for (int d = 2; d * d <= c; ++d)
@@ -31,12 +26,9 @@ public class Primes {
         return false;
     return true;
   }
-  /**
-   * A generator for the sequence of primes: 2, 3, 5, 7, 11, 13, 17, 19, 23,...
-   *
+  /** A generator for the sequence of primes: 2, 3, 5, 7, 11, 13, 17, 19, 23,...
    * @return the next value in the sequence of primes; the first value returned
-   *         is 2.
-   */
+   *         is 2. */
   public int next() {
     for (;;)
       if (isPrimeCore(++current))
@@ -45,7 +37,7 @@ public class Primes {
 
   private int current = 1;
 
-  @SuppressWarnings({ "static-method", "javadoc" })//
+  @SuppressWarnings({ "static-method", "javadoc" }) //
   public static class TEST {
     @Test public void firstIsTwo() {
       assertEquals(2, new Primes().next());

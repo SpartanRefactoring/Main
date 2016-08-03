@@ -18,31 +18,22 @@ import il.org.spartan.iterables.*;
  *
  * @author Yossi Gil
  * @since 12/02/2006) */
-/**
- * TODO(2016) Javadoc: automatically generated for type <code></code>
- *
- * @author Yossi Gil <Yossi.Gil@GMail.COM>
- */
+/** TODO(2016) Javadoc: automatically generated for type <code></code>
+ * @author Yossi Gil <Yossi.Gil@GMail.COM> */
 public final class Separator {
-  /**
-   * TODO doc(2016): method main2016's automatically generated Javadoc
-   *
-   * @param args JD
-   */
+  /** TODO doc(2016): method main2016's automatically generated Javadoc
+   * @param args JD */
   public static void main(final String[] args) {
     final Separator s = new Separator(", ");
     for (final String a : args)
       System.out.print(s + a);
   }
-  /**
-   * TODO Javadoc(2016): automatically generated for method
+  /** TODO Javadoc(2016): automatically generated for method
    * <code>separateBy</code>
-   *
    * @param is JD
    * @param between what to put between the items
    * @return String TODO Javadoc(2016) automatically generated for returned
-   *         value of method <code>separateBy</code>
-   */
+   *         value of method <code>separateBy</code> */
   public static String separateBy(final int[] is, final String between) {
     if (is.length == 0)
       return "";
@@ -52,43 +43,34 @@ public final class Separator {
       $ += s + new Integer(i).toString();
     return $;
   }
-  /**
-   * TODO Javadoc(2016): automatically generated for method
+  /** TODO Javadoc(2016): automatically generated for method
    * <code>separateBy</code> returning String
-   *
    * @param <T> JD
    * @param between what to put between the items
    * @param ts JD
    * @return TODO document return type of this method * TODO document return
-   *         type of this method
-   */
+   *         type of this method */
   public static <T> String separateBy(final String between, final T[] ts) {
     return wrap("", "", ts, between);
   }
-  /**
-   * TODO Javadoc(2016): automatically generated for method <code>wrap</code>
-   *
+  /** TODO Javadoc(2016): automatically generated for method <code>wrap</code>
    * @param <T> JD
    * @param wrap TODO
    * @param ts JD
    * @param between what to put between the items
    * @return String TODO Javadoc(2016) automatically generated for returned
-   *         value of method <code>wrap</code>
-   */
+   *         value of method <code>wrap</code> */
   public static <T> String wrap(final String wrap, final Iterable<T> ts, final String between) {
     return wrap(wrap, wrap, ts, between);
   }
-  /**
-   * TODO Javadoc(2016): automatically generated for method <code>wrap</code>
-   *
+  /** TODO Javadoc(2016): automatically generated for method <code>wrap</code>
    * @param <T> JD
    * @param begin what to place before the items
    * @param end what to place after the items
    * @param ts JD
    * @param between what to put between the items
    * @return String // TODO: automatically generated for return method
-   *         <code>wrap</code>
-   */
+   *         <code>wrap</code> */
   public static <T> String wrap(final String begin, final String end, final Iterable<T> ts, final String between) {
     if (Iterables.isEmpty(ts))
       return "";
@@ -98,14 +80,12 @@ public final class Separator {
       $.append(s).append(t);
     return as.string($.append(end));
   }
-  /**
-   * @param <T> JD
+  /** @param <T> JD
    * @param begin what to place before the items
    * @param end what to place after the items
    * @param ts JD
    * @param between what to put between the items
-   * @return TODO document return type
-   */
+   * @return TODO document return type */
   public static <T> String wrap(final String begin, final String end, final T[] ts, final String between) {
     if (ts.length == 0)
       return "";
@@ -115,19 +95,13 @@ public final class Separator {
       $.append(s).append(t);
     return as.string($.append(end));
   }
-  /**
-   * Instantiates this class.
-   *
-   * @param c JD
-   */
+  /** Instantiates this class.
+   * @param c JD */
   public Separator(final char c) {
     this("" + c);
   }
-  /**
-   * Instantiates this class.
-   *
-   * @param s JD
-   */
+  /** Instantiates this class.
+   * @param s JD */
   public Separator(final String s) {
     this.s = s;
   }

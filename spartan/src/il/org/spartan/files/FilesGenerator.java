@@ -1,15 +1,14 @@
 package il.org.spartan.files;
 
-import il.org.spartan.*;
-import il.org.spartan.iterables.PureIterable.*;
-
 import java.io.*;
 import java.util.*;
 
 import org.eclipse.jdt.annotation.*;
 
-/**
- * Provides, employing fluent API, a {@link Iterable} interface for iteration
+import il.org.spartan.*;
+import il.org.spartan.iterables.PureIterable.*;
+
+/** Provides, employing fluent API, a {@link Iterable} interface for iteration
  * over files in the file system.
  * <p>
  * Typical uses are<code>
@@ -29,14 +28,10 @@ import org.eclipse.jdt.annotation.*;
  *
  * to recursively iterate (over all files in the <code>/bin</code> and
  * <code>/home</code> directories.
- *
  * @author Yossi Gil
- * @since 2015-09-23.
- */
+ * @since 2015-09-23. */
 public class FilesGenerator {
-  /**
-   * @param __ ignored
-   */
+  /** @param __ ignored */
   public static void main(final String[] __) {
     for (final File f : new FilesGenerator(".java").from("."))
       System.out.println(f);
@@ -47,14 +42,12 @@ public class FilesGenerator {
       $.add(new File(fileName));
     return $;
   }
-  /**
-   * @param directory should be a directory, but we still need to account for
-   *          weird creatures such az "System Volume Information"
-   */
+  /** @param directory should be a directory, but we still need to account for
+   *        weird creatures such az "System Volume Information" */
   static Iterator<File> directoryIterator(final File directory) {
     if (directory == null || !directory.isDirectory() || directory.list() == null)
       return null;
-    @NonNull Sized<@Nullable String> iterable = as.iterable(directory.list());
+    @NonNull final Sized<@Nullable String> iterable = as.iterable(directory.list());
     final Iterator<String> generator = iterable.iterator();
     return new Iterator<File>() {
       @Override public boolean hasNext() {
@@ -75,39 +68,32 @@ public class FilesGenerator {
       private File next;
     };
   }
-  /**
-   * Instantiates this class. This instantiation makes the first step in the
+  /** Instantiates this class. This instantiation makes the first step in the
    * call chain that makes the fluent API. The second (and last) such step is
    * provided by function {@link #from(String...)}.
-   *
    * @param extensions an array of non-<code><b>null</b></code> {@link String}s
-   *          specifying the allowed extensions for files that the iterator
-   *          should yield, e.g., ".java", ".class", ".doc", etc. If this
-   *          parameter is <code><b>null</b></code>, or of length 0, or contains
-   *          a {@link String} of length 0, then the iterator yields all files
-   *          found in the scanned locations.
-   * @see FilesGenerator#from
-   */
+   *        specifying the allowed extensions for files that the iterator should
+   *        yield, e.g., ".java", ".class", ".doc", etc. If this parameter is
+   *        <code><b>null</b></code>, or of length 0, or contains a
+   *        {@link String} of length 0, then the iterator yields all files found
+   *        in the scanned locations.
+   * @see FilesGenerator#from */
   public FilesGenerator(final String... extensions) {
     this.extensions = as.iterable(extensions);
   }
-  /**
-   * @param from an array of names of directories from which the traversal
-   *          should begin
+  /** @param from an array of names of directories from which the traversal
+   *        should begin
    * @return an instance of an internal (yet <code><b>public</b></code>)
    *         <code><b>class</b></code> which <code><b>implements</b></code> the
-   *         {@link Iterable} <code><b>interface</b></code>
-   */
+   *         {@link Iterable} <code><b>interface</b></code> */
   public From from(final Iterable<String> from) {
     return new From(asFiles(from));
   }
-  /**
-   * @param from an array of names of directories from which the traversal
-   *          should begin
+  /** @param from an array of names of directories from which the traversal
+   *        should begin
    * @return an instance of an internal (yet <code><b>public</b></code>)
    *         <code><b>class</b></code> which <code><b>implements</b></code> the
-   *         {@link Iterable} <code><b>interface</b></code>
-   */
+   *         {@link Iterable} <code><b>interface</b></code> */
   public From from(final String... from) {
     return from(as.iterable(from));
   }
@@ -115,14 +101,11 @@ public class FilesGenerator {
   /** Which extensions we search for */
   final Iterable<String> extensions;
 
-  /**
-   * An internal (yet <code><b>public</b></code>) <code><b>class</b></code>
+  /** An internal (yet <code><b>public</b></code>) <code><b>class</b></code>
    * which <code><b>implements</b></code> the {@link Iterable}
    * <code><b>interface</b></code>.
-   *
    * @author Yossi Gil
-   * @since 2015-09-23.
-   */
+   * @since 2015-09-23. */
   public class From implements Iterable<File> {
     From(final Iterable<File> from) {
       this.from = from;

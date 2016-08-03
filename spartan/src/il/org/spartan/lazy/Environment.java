@@ -2,36 +2,38 @@
 package il.org.spartan.lazy;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.azzert.is;
 import static il.org.spartan.idiomatic.*;
 import static java.lang.Math.*;
 import static org.hamcrest.Matchers.*;
-import il.org.spartan.*;
-import il.org.spartan.lazy.Cookbook.Ingredient;
-import il.org.spartan.lazy.Cookbook.Recipe;
-import il.org.spartan.lazy.Cookbook.__META;
 
 import java.util.*;
 
+import javax.xml.bind.*;
+
 import org.eclipse.jdt.annotation.*;
 import org.junit.*;
+
+import il.org.spartan.*;
+import il.org.spartan.lazy.Cookbook.*;
 
 /** This interface represents the concept of a <i>lazy symbolic spreadsheet</i>,
  * made by DAG of interdependent {@link Property}s. A {@link Property} is either
  * an
  * <ol>
- * <li> {@link Ingredient} is a generic storing a value of the type parameter,
+ * <li>{@link Ingredient} is a generic storing a value of the type parameter,
  * <i>or</i> a
- * <li> {@link Recipe} for making such a value from <i>prerequisite</i> cells.
+ * <li>{@link Recipe} for making such a value from <i>prerequisite</i> cells.
  * </ol>
  * <p>
  * The protocol of cells include:
  * <ol>
- * <li> {@link Property#¢()}, returning the cell's value, recomputing it if it is
+ * <li>{@link Property#¢()}, returning the cell's value, recomputing it if it is
  * less recent than any {@link Ingredient} on which it depends, directly or
  * indirectly. The computed value is cached, and used in subsequent calls to
  * prevent unnecessary re-computation.
- * <li> {@link Property#cache()}, returning the last value cached in the cell.
- * <li> {@link Property#of(Object)}, whose parameter must be of the correct type,
+ * <li>{@link Property#cache()}, returning the last value cached in the cell.
+ * <li>{@link Property#of(Object)}, whose parameter must be of the correct type,
  * stores its parameter in the cell, whereby invalidating the contents of all
  * cells whose recipe depends on it.
  * <p>
@@ -69,11 +71,11 @@ import org.junit.*;
   static <@Nullable T> Property<T> function(final Function0<T> f) {
     return new Property<T>().set(f);
   }
-  /**
-   * A factory method of class  {@link Property}  returning an undefined value for a cell
-   * @param < T >  JD
-   * @return  the newly created instance of  {@link Property}  containing null value of the type parameter 
-   */
+  /** A factory method of class {@link Property} returning an undefined value
+   * for a cell
+   * @param < T > JD
+   * @return the newly created instance of {@link Property} containing null
+   *         value of the type parameter */
   static <@Nullable T> Property<T> undefined() {
     return new Property<>();
   }
@@ -82,17 +84,21 @@ import org.junit.*;
    * <pre>
    * Property&lt;Integer&gt; genesis = {@link Environment}.value(2);
    * </pre>
+   * 
    * @param i JD
    * @return the newly created instance of {@link Ingredient} */
   public static Property<@Nullable Integer> value(final int i) {
     return new Property<>(Integer.valueOf(i));
   }
-  /**
-   * A factory method for class  {@link Ingredient}  as in <pre> Property&lt;String&gt; genesis = Cookbook.value(&quot;&quot;); </pre>
-   * @param < T >  JD
-   * @param t  JD
-   * @return  the newly created instance of  {@link Property}  
-   */
+  /** A factory method for class {@link Ingredient} as in
+   * 
+   * <pre>
+   * Property&lt;String&gt; genesis = Cookbook.value(&quot;&quot;);
+   * </pre>
+   * 
+   * @param < T > JD
+   * @param t JD
+   * @return the newly created instance of {@link Property} */
   static <@Nullable T> Property<@Nullable T> value(final T t) {
     return new Property<>(t);
   }
@@ -147,13 +153,14 @@ import org.junit.*;
      * function taking one argument
      * @param <A> argument's type
      * @param f a one argument function that returns a new value for this
-     *          instance
+     *        instance
      * @return a function with one argument named {@link Binder#to(Object...)}
      *         which when applied
      *         <ol>
      *         <li>changes the current instance
      *         <li>returns <code><b>this</b></code>
-     *         </ol> */
+     *         </ol>
+    */
     public <@Nullable A> Binder1<T, A> bind(final Function1<T, A> f) {
       return ¢ -> set(() -> f.ϑ(¢.¢()), ¢);
     }
@@ -162,7 +169,7 @@ import org.junit.*;
      * @param <A1> 1st argument's type
      * @param <A2> 2nd argument's type
      * @param f a two argument function that returns a new value for this
-     *          instance
+     *        instance
      * @return a function with two arguments named {@link Binder2#to} which when
      *         applied changes the current instance returning
      *         <code><b>this</b></code> */
@@ -175,7 +182,7 @@ import org.junit.*;
      * @param <A2> 2nd argument's type
      * @param <A3> 3rd argument's type
      * @param f a one argument function that returns a new value for this
-     *          instance
+     *        instance
      * @return a function with four arguments named {@link #toString()} which
      *         when applied changes the current instance and returning
      *         <code><b>this</b></code> */
@@ -189,7 +196,7 @@ import org.junit.*;
      * @param <A3> 3rd argument's type
      * @param <A4> 4th argument's type
      * @param f a one argument function that returns a new value for this
-     *          instance
+     *        instance
      * @return a function with four arguments named {@link #toString()} which
      *         when applied changes the current instance and returning
      *         <code><b>this</b></code> */
@@ -207,7 +214,8 @@ import org.junit.*;
         throw new RuntimeException(x);
       }
     }
-    /** @return current value stored in this instance, recomputed if necessary */
+    /** @return current value stored in this instance, recomputed if
+     *         necessary */
     public T get() {
       return ¢();
     }
@@ -234,7 +242,7 @@ import org.junit.*;
      * @param <A3> 3rd argument's type
      * @param <A4> 4th argument's type
      * @param ϑ a one argument function that returns a new value for this
-     *          instance
+     *        instance
      * @return a function with three arguments named
      *         {@link Binder3#to(Object, Object, Object)} which when applied
      *         changes the current instance and returning
@@ -286,11 +294,11 @@ import org.junit.*;
     public long version() {
       return version;
     }
-    /** @return current value stored in this instance, recomputed if necessary */
+    /** @return current value stored in this instance, recomputed if
+     *         necessary */
     @Override public T ¢() {
       if (updated())
         return cache();
-
       for (final Property<?> ¢ : prerequisites)
         ¢.update();
       version = latestPrequisiteVersion() + 1;
@@ -398,7 +406,7 @@ import org.junit.*;
       world = value(WORLD);
       separator = value(SEPARATOR);
       emptyString = value(EMPTY);
-      helloWorld = bind((String ¢1, String ¢2, String ¢3) -> (¢1 + ¢2 + ¢3)).to(hello, separator, world);
+      helloWorld = bind((final String ¢1, final String ¢2, final String ¢3) -> (¢1 + ¢2 + ¢3)).to(hello, separator, world);
     }
     @Test public void seriesA0() {
       azzert.that(hello.¢(), iz(HELLO));
@@ -420,7 +428,7 @@ import org.junit.*;
     }
     @Test public void seriesA3() {
       azzert.that(helloWorld.¢(), iz(HELLO + SEPARATOR + WORLD));
-      helloWorld.bind((String ¢1, String ¢2, String ¢3, String ¢4) -> (¢1 + ¢2 + ¢3 + ¢4)).to(hello, world, hello, world);
+      helloWorld.bind((final String ¢1, final String ¢2, final String ¢3, final String ¢4) -> (¢1 + ¢2 + ¢3 + ¢4)).to(hello, world, hello, world);
       azzert.that(helloWorld.¢(), iz(HELLO + WORLD + HELLO + WORLD));
     }
     @Test public void seriesA4() {
@@ -455,7 +463,7 @@ import org.junit.*;
       azzert.nay(helloWorld.updated());
     }
     @Test public void seriesA6() {
-      Property<String> $ = bind((String ¢1, String ¢2, String ¢3) -> (¢1 + ¢2 + ¢3)).to(hello, separator, world);
+      final Property<String> $ = bind((final String ¢1, final String ¢2, final String ¢3) -> (¢1 + ¢2 + ¢3)).to(hello, separator, world);
       azzert.that($.prerequisites.size(), is(3));
       azzert.that($.dependents, empty());
       azzert.that($.version, is(0L));

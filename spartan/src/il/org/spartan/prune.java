@@ -9,10 +9,9 @@ import java.util.*;
 import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
-/**
- * A <b>Utility class</b> providing functions to remove <code><b>null</b></code>
- * elements from arrays and iterable collections. For example, to process the
- * non-<code><b>null</b></code> elements of an array:
+/** A <b>Utility class</b> providing functions to remove
+ * <code><b>null</b></code> elements from arrays and iterable collections. For
+ * example, to process the non-<code><b>null</b></code> elements of an array:
  *
  * <pre>
  * void f(String ss[]) {
@@ -22,32 +21,26 @@ import org.junit.*;
  * </pre>
  *
  * @author Yossi Gil
- * @since 27/08/2008
- */
+ * @since 27/08/2008 */
 public enum prune {
   ;
-  /**
-   * @param <T> JD
+  /** @param <T> JD
    * @param <C> JD
    * @param ts JD
-   * @return TODO document return type
-   */
+   * @return TODO document return type */
   public static <T, C extends Collection<T>> C nulls(final C ts) {
     for (final Iterator<T> i = ts.iterator(); i.hasNext();)
       if (i.next() == null)
         i.remove();
     return ts;
   }
-  /**
-   * Prune <code><b>null</b></code> elements from a given collection.
-   *
+  /** Prune <code><b>null</b></code> elements from a given collection.
    * @param <T> type of elements in the collection.
    * @param ts a collection of values.
    * @return a new collection, containing only those non-
    *         <code><b>null</b></code> elements of the parameter, and in the same
    *         order. No <code><b>null</b></code> elements are present on this
-   *         returned collection.
-   */
+   *         returned collection. */
   public static <T> List<T> nulls(final Iterable<T> ts) {
     final ArrayList<T> $ = new ArrayList<>();
     for (final T t : ts)
@@ -55,16 +48,13 @@ public enum prune {
         $.add(t);
     return $;
   }
-  /**
-   * Prune <code><b>null</b></code> elements from a given array.
-   *
+  /** Prune <code><b>null</b></code> elements from a given array.
    * @param <T> type of elements in the array.
    * @param ts an array of values.
    * @return a new array, containing precisely those non-
    *         <code><b>null</b></code> elements of the parameter, and in the same
    *         order. No <code><b>null</b></code> elements are present on this
-   *         returned collection.
-   */
+   *         returned collection. */
   public static <T> T[] nulls(final T[] ts) {
     final List<T> $ = new ArrayList<>();
     for (final T t : ts)
@@ -72,10 +62,8 @@ public enum prune {
         $.add(t);
     return cantBeNull($.toArray(shrink(ts)));
   }
-  /**
-   * @param ss JD
-   * @return TODO document return type
-   */
+  /** @param ss JD
+   * @return TODO document return type */
   @SafeVarargs public static String[] whites(final String... ss) {
     final List<String> $ = new ArrayList<>();
     for (final String s : ss)
@@ -83,31 +71,23 @@ public enum prune {
         accumulate.to($).add(s.trim());
     return asArrray($);
   }
-  /**
-   * @param $
-   * @return TODO document return type
-   */
+  /** @param $
+   * @return TODO document return type */
   private static String[] asArrray(final List<String> $) {
     return cantBeNull($.toArray(new String @NonNull [0]));
   }
-  /**
-   * Shrink an array size to zero.
-   *
+  /** Shrink an array size to zero.
    * @param <T> type of elements in the input array.
    * @param ts an array of values.
-   * @return an array of size 0 of elements of type <code>T</code>.
-   */
+   * @return an array of size 0 of elements of type <code>T</code>. */
   private static <T> T[] shrink(final T @Nullable [] ts) {
     return cantBeNull(Arrays.copyOf(ts, 0));
   }
 
-  /**
-   * A JUnit test class for the enclosing class.
-   *
+  /** A JUnit test class for the enclosing class.
    * @author Yossi Gil, the Technion.
-   * @since 27/08/2008
-   */
-  @SuppressWarnings({ "static-method", "javadoc", "synthetic-access" })//
+   * @since 27/08/2008 */
+  @SuppressWarnings({ "static-method", "javadoc", "synthetic-access" }) //
   public static class TEST {
     @Test public void nullsNonNullArrayLength() {
       assertEquals(nonNullArray.length, nulls(nonNullArray).length);

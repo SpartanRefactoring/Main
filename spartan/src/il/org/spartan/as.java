@@ -63,7 +63,7 @@ public enum as {
   /** Return a compact representation of a list of {@link Integer}s as an array
    * of type <code><b>int</b></code>.
    * @param is the list to be converted, none of the elements in it can be
-   *          <code><b>null</b></code>
+   *        <code><b>null</b></code>
    * @return an array of <code><b>int</b></code>. representing the input. */
   public static int[] intArray(final List<Integer> is) {
     final int @NonNull [] $ = new int @NonNull [is.size()];
@@ -105,7 +105,7 @@ public enum as {
    * </pre>
    *
    * @param is what to iterate on (recall that a list of arguments of the same
-   *          type is isomorphic to array parameters in Java
+   *        type is isomorphic to array parameters in Java
    * @return an {@link Iterable} over the array, which can then be used to to
    *         iterate over the parameter(s) */
   public static Iterable<Integer> asIterable(final Integer... is) {
@@ -122,19 +122,15 @@ public enum as {
       int current = 0;
     };
   }
-  Iterable<Integer> asIterableEssence(Integer... is) {
-    return new Iterable<Integer>() {
-      public Iterator<Integer> iterator() {
-        return new Iterator<Integer>() {
-          int current = 0;
+  Iterable<Integer> asIterableEssence(final Integer... is) {
+    return () -> new Iterator<Integer>() {
+      int current = 0;
 
-          public boolean hasNext() {
-            return current < is.length;
-          }
-          public Integer next() {
-            return is[current++];
-          }
-        };
+      @Override public boolean hasNext() {
+        return current < is.length;
+      }
+      @Override public Integer next() {
+        return is[current++];
       }
     };
   }
