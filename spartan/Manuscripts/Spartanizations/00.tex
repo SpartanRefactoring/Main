@@ -1,30 +1,14 @@
-\title{My First Article} 
-\author{First Last\\
-  \normalsize\texttt{\url{mailto:First.Last@cs.technion.ac.il}}\\
+\title{Spartanizations} 
+\author{Yossi Gil \and Matteo Orr\'u Last\thanks{Contact Author}\\
 	Department of Computer Science\\
 	Technion---Israel Institute of Technology\\
+  \normalsize
+  \texttt{\url{mailto:yogi@cs.technion.ac.il}} \quad
+      \texttt{\url{mailto:matteo.orru@cs.technion.ac.il}}
 }
 
-
-% Only one of the following lines should be uncommented:
-% \documentclass[10pt,twocolumn]{article} % Uncomment this line for 10pt/double column
-  \documentclass{article}                 % Uncomment this line for 12t/single column
-
-% See here:
-% http://tex.stackexchange.com/questions/307574/lipsum-to-yield-by-default-a-different-paragraph-in-each-application
-\usepackage{lipsum}
-\newcounter{yglipsum}
-\newcommand{\yglipsum}{%
-  \stepcounter{yglipsum}%
-  \lipsum[\value{yglipsum}-\numexpr\value{yglipsum}+\ygmany\relax]%
-  \addtocounter{yglipsum}{\ygmany}%
-}
-
-% change to the number of paragraphs you want;
-% the number of generated paragraphs is \ygmany+1
-\newcommand{\ygmany}{1} % can be 0
-
-\usepackage[colorlinks=true,final,allcolors=blue,breaklinks,draft=false]{hyperref}
+\documentclass{article}                 
+\usepakcage{\jobname}
 
 \begin{document}
 \maketitle
@@ -43,20 +27,22 @@
 \end{flushright}
 
 \begin{abstract}
-  \yglipsum
+  \input{abstract}
 \end{abstract}
 
 \section{Introduction}
-Something short: \lipsum
-\subsection{Background}
-\yglipsum
+\input{aa}
 
-\subsection{Motivation}
-\yglipsum
+\paragraph{Outline}
+Finally, \cref{section:zz} concludes.
 
-\subsection{Contribution}
-\yglipsum
+\section{Main Techniques}
+\input{techniques}
 
-\paragraph{Outline} \yglipsum
+\section{Discussion}
+\input{zz}
+
+\bibliographystyle{abbrv}
+\bibliography{\jobname}
 
 \end{document}
