@@ -1,0 +1,153 @@
+\subsection{Syntactic Baggage}
+\begin{itemize}
+  \item Redundant parenthesis and curly brackets.
+  \item Remove redundant modifiers: Remove final in private methods
+        Remove final from static methods
+        Remove visibility of all members of in an interface
+        Remove abstract before interface
+        Remove abstract before methods in interfaces
+        Remove final from all  methods in final class
+        Remove private/static from everything defined in anonymous classes
+  \item Extra super() calls.
+\end{itemize}
+
+\subsection{Shorter phrases}
+\begin{itemize}
+  \item Distributive rule of booelan expressions
+  \item Distributive rule of assignment: a = x; b = x; -> a = b =x
+  \item Distributive rule of arithmetics.
+  \item Common prefix of If
+  \item Common Suffix of If
+  \item Pull out arithmetical negation
+  \item Use ternary instead of conditionals.
+  \item convert prefix ++ and -- into postfix when possible
+  \item x.toString() -> "" + x
+\end{itemize}
+
+\subsection{Canonical Form of Common Expressions}
+\begin{itemize}
+  \item Follow patterns: Pattern: A*x + B
+  \item Sorting by size, but also as per the previous rule.
+  \item De morgan pushdown logical negation.
+  \item Pullup arirthmetic negation.
+  \item Pushdown ternarizations..
+        a ? b(x) : b(y) => b(a ? x: y)
+  \item Distributive rule on booleans a && b || c && b => (a || c) && c there are four variants.
+  \item More specific first: How should you order X == Y.
+        Rule: you start from the more specific and increase specifity,.
+        I.e., S(X) > S(Y)
+
+        \begin{enumerate}
+          \item null/this/true/false
+          \item 0, 1, ""
+          \item 12, 13.4
+          \item Classes: public, protected, package, private
+          \item Fields: Static fields, Fields,
+          \item parameters,
+          \item local variables ordered by scope.
+          \item ¢
+        \end{enumerate}
+\end{itemize}
+
+\subsection{Names}
+Scope plays a rule:
+in short scopes use short names.
+some common names:
+\begin{enumerate}
+  \item \$ the return variable.
+  \item \_\_ don't use.
+  \item ¢ penny: the sent argument,
+\end{enumerate}
+One letter abbreviations.
+Take last word, don't use acronyms.
+Use plurals with 's'
+
+Like the "it" variable in ML programming language or HyperCard programming language on macintosh. Ancient!!!
+¢ is short for "that" (like this) or for "sent" argument, or of "Penny" something so little you do not want to worry about.
+Take a penny, leave a penny
+
+\subsection{Misc}
+
+\begin{itemize}
+\item Associative rule of ifs: if (a) if (b) x; => if (a && b) x
+\item Associative rule of ifs: if (a) if (b) x; => if (a && b) x
+  \end{itemize}
+
+\subsection{Early returns and the such}
+Off load exceptional cases quickly.
+inline single use of variables.
+Inline multiple use of variables: if 1) result is shorter and 2) the expression has no side effects.
+Pseudo inlining with initializers.
+Scope:
+Move into for
+Move into try
+Move next to use
+Variability (add final when possible.)
+Variables (inlining)
+What’s first
+Most external escape
+Shortest: 2*112*a*ab
+Least specific
+Algebraic simplifications
+Patterns: 2 * x + 1
+Pushdown:
+Logical Negation
+Arithmetical Negation
+String transformations
+.toString() -> “” +
+x.equals(“a”) -> “a”.equals(b)
+Auto insert “”
+Auto distributive
+Logical simplification
+Literal simplification
+Repeated deterministic expressions
+Arithmetical simplification
+Auto Collect
+Auto insert/remove 0+ in ternarization.
+Auto insert/remove 1*
+Auto add “” +
+Control simplification
+Ternarize
+Early return
+@SuppressWarnings("unused") private
+void earlyReturn(int a) {
+  if (new Random().nextInt() <= 3) {
+    earlyReturn(12);
+    earlyReturn(124);
+    } else {
+    earlyReturn(4);
+    earlyReturn(5);
+    earlyReturn(44);
+  }
+}
+
+
+
+Switch Normalization
+Renamings:
+In constructors: Arguments to corresponding field names
+In fields: to canonical instance name or pluralized
+In getters: Change name to fieldName if it is a getter.
+In Methods
+In local variables:
+return variable to $
+Change argument to one single case letter
+In world amalgams, use the first letter of the last word.
+Deal with multiplicities of arrays
+Deal with multiplicities of collections
+Deal with nested multiplicities
+Change return type of void to ClassName and return this
+Single argument:
+To __ if unused
+To $ in case it is returned
+To fieldName in case it is a setter
+To ¢ in case method has no inner methods and is not a setter
+Any number of arguments:
+To $ in case it is returned
+To __(n) if it is unused and documented as such
+Change argument to one single case letter
+In world amalgams, use the first letter of the last word.
+Deal with multiplicities
+
+a
+
