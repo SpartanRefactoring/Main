@@ -84,18 +84,18 @@ import il.org.spartan.lazy.Cookbook.*;
    * <pre>
    * Property&lt;Integer&gt; genesis = {@link Environment}.value(2);
    * </pre>
-   * 
+   *
    * @param i JD
    * @return the newly created instance of {@link Ingredient} */
   public static Property<@Nullable Integer> value(final int i) {
     return new Property<>(Integer.valueOf(i));
   }
   /** A factory method for class {@link Ingredient} as in
-   * 
+   *
    * <pre>
    * Property&lt;String&gt; genesis = Cookbook.value(&quot;&quot;);
    * </pre>
-   * 
+   *
    * @param < T > JD
    * @param t JD
    * @return the newly created instance of {@link Property} */

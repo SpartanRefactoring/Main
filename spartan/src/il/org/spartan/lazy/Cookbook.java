@@ -103,7 +103,7 @@ public interface Cookbook {
    * <pre>
    * Cell&lt;String&gt; genesis = Cookbook.value(2);
    * </pre>
-   * 
+   *
    * @param i JD
    * @return the newly created instance of {@link Ingredient} */
   public static Cell<Integer> value(final int i) {
@@ -114,7 +114,7 @@ public interface Cookbook {
    * <pre>
    * Cell&lt;String&gt; genesis = Cookbook.value(&quot;&quot;);
    * </pre>
-   * 
+   *
    * @param <T> JD
    * @param t JD
    * @return the newly created instance of {@link Ingredient} */
