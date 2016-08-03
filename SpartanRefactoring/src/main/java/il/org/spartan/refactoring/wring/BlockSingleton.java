@@ -10,8 +10,19 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} to convert <code>if {a) g();}</code> into <code>if (a)
- * g();</code>
+/** A {@link Wring} to convert
+ * 
+ * <pre>
+ * if {a) g();}
+ * </pre>
+ * 
+ * into
+ * 
+ * <pre>
+ * if (a)
+ *   g();
+ * </pre>
+ * 
  * @author Yossi Gil
  * @since 2015-09-09 */
 public class BlockSingleton extends Wring.ReplaceCurrentNode<Block> {
