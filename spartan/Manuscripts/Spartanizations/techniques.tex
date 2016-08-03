@@ -6,7 +6,7 @@
         Remove visibility of all members of in an interface
         Remove abstract before interface
         Remove abstract before methods in interfaces
-        Remove final from all  methods in final class
+        Remove final from all methods in final class
         Remove private/static from everything defined in anonymous classes
   \item Extra super() calls.
 \end{itemize}
@@ -20,8 +20,14 @@
   \item Common Suffix of If
   \item Pull out arithmetical negation
   \item Use ternary instead of conditionals.
-  \item convert prefix ++ and -- into postfix when possible
-  \item x.toString() -> "" + x
+  \item convert prefix ++ and--into postfix when possible
+  \item
+\begin{code}{JAVA}
+x.toString()
+\end{code}
+\begin{code}{JAVA}
+"" + x
+\end{code}
 \end{itemize}
 
 \subsection{Canonical Form of Common Expressions}
@@ -32,10 +38,10 @@
   \item Pullup arirthmetic negation.
   \item Pushdown ternarizations..
         a ? b(x) : b(y) => b(a ? x: y)
-  \item Distributive rule on booleans 
-    \begin{listings}
-a a && b || c && b => (a || c) && c 
-    \end{listings}
+  \item Distributive rule on booleans
+    \begin{code}{JAVA}
+a && b || c && b => (a || c) && c
+    \end{code}
       there are four variants.
   \item More specific first: How should you order X == Y.
         Rule: you start from the more specific and increase specifity,.
@@ -63,6 +69,7 @@ some common names:
   \item ¢ penny: the sent argument,
 \end{enumerate}
 One letter abbreviations.
+Also, use ‟x”
 Take last word, don't use acronyms.
 Use plurals with 's'
 
@@ -74,10 +81,19 @@ Take a penny, leave a penny
 Prefix to postifx
 x.equals("a:) to "a.equals(this"
 
-
 \begin{itemize}
-\item Associative rule of ifs: if (a) if (b) x; => if (a && b) x
-\item Associative rule of ifs: if (a) if (b) x; => if (a && b) x
+\item Associative rule of ifs: 
+  \begin{code}{JAVA}
+  if (a) if (b) x;
+\end{code}
+  \begin{code}{JAVA}
+  if (a && b) x
+  \end{code}
+\item Associative rule of ifs: if (a) 
+\begin{code}{JAVA}if (b) x;\end{code}
+\begin{code}{JAVA}if (a && b) x\end{code}
+\begin{java}if (this == null) return super();\end{java}
+  
   \end{itemize}
 
 \subsection{Early returns and the such}
@@ -128,8 +144,6 @@ void earlyReturn(int a) {
   }
 }
 
-
-
 Switch Normalization
 Renamings:
 In constructors: Arguments to corresponding field names
@@ -151,10 +165,9 @@ To fieldName in case it is a setter
 To ¢ in case method has no inner methods and is not a setter
 Any number of arguments:
 To \$ in case it is returned
-To __(n) if it is unused and documented as such
+To__(n) if it is unused and documented as such
 Change argument to one single case letter
 In world amalgams, use the first letter of the last word.
 Deal with multiplicities
 
 a
-
