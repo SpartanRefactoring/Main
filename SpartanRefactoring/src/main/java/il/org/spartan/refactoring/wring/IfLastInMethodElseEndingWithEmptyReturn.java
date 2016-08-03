@@ -36,7 +36,7 @@ import il.org.spartan.refactoring.utils.*;
  * 
  * statement is the last statement in a method.
  * @author Yossi Gil
- * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
+ * @author Daniel Mittelman <tt><mittelmania [at] gmail.com></tt>
  * @since 2015-09-09 */
 public class IfLastInMethodElseEndingWithEmptyReturn extends Wring<IfStatement> {
   @SuppressWarnings("unused") @Override String description(final IfStatement __) {

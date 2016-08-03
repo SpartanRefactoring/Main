@@ -9,8 +9,22 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} to convert <pre>if (x) return foo(); return bar();</pre>
- * into <pre>return a ? foo (): bar();</pre> return a; } g();</pre>
+/** A {@link Wring} to convert
+ * 
+ * <pre>
+ * if (x)
+ *   return foo();
+ * return bar();
+ * </pre>
+ * 
+ * into
+ * 
+ * <pre>
+ * return a ? foo() : bar();
+ * </pre>
+ * 
+ * return a; } g();
+ * </pre>
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfReturnNoElseReturn extends Wring.ReplaceToNextStatement<IfStatement> {

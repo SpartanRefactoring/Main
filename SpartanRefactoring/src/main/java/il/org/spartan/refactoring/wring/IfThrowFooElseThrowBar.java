@@ -7,8 +7,21 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} to convert <code>if (x) throw b; else throw c;</code> into
- * <code>throw x? b : c</code>
+/** A {@link Wring} to convert
+ * 
+ * <pre>
+ * if (x)
+ *   throw b;
+ * else
+ *   throw c;
+ * </pre>
+ * 
+ * into
+ * 
+ * <pre>
+ * throw x? b : c
+ * </pre>
+ * 
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfThrowFooElseThrowBar extends Wring.ReplaceCurrentNode<IfStatement> {

@@ -11,7 +11,19 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** A {@link Wring} that eliminates redundant comparison with the two boolean
- * literals: <code><b>true</b></code> and <code><b>false</b></code>.
+ * literals:
+ * 
+ * <pre>
+ * <b>true</b>
+ * </pre>
+ * 
+ * and
+ * 
+ * <pre>
+ * <b>false</b>
+ * </pre>
+ * 
+ * .
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class InfixComparisonBooleanLiteral extends Wring.ReplaceCurrentNode<InfixExpression> {

@@ -10,8 +10,19 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} to convert <pre>a = 3;return a;</pre> to <code>return a =
- * 3;</code>
+/** A {@link Wring} to convert
+ * 
+ * <pre>
+ * a = 3;
+ * return a;
+ * </pre>
+ * 
+ * to
+ * 
+ * <pre>
+ * return a = 3;
+ * </pre>
+ * 
  * @author Yossi Gil
  * @since 2015-08-28 */
 public class AssignmentAndReturn extends Wring.ReplaceToNextStatement<Assignment> {

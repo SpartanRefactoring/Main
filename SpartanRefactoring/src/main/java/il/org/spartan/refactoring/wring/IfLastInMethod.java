@@ -10,9 +10,25 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} to convert <pre><b>if</b> (a) { f(); g(); }</pre> into
- * <pre><b>if</b> (!a) return f(); g();</pre> provided that this
- * <pre><b>if</b></pre> statement is the last statement in a method.
+/** A {@link Wring} to convert
+ * 
+ * <pre>
+ * <b>if</b> (a) { f(); g(); }
+ * </pre>
+ * 
+ * into
+ * 
+ * <pre>
+ * <b>if</b> (!a) return f(); g();
+ * </pre>
+ * 
+ * provided that this
+ * 
+ * <pre>
+ * <b>if</b>
+ * </pre>
+ * 
+ * statement is the last statement in a method.
  * @author Yossi Gil
  * @since 2015-09-09 */
 public class IfLastInMethod extends Wring<IfStatement> {
