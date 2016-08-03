@@ -1,10 +1,10 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import il.org.spartan.*;
-import il.org.spartan.refactoring.utils.*;
-
 import java.io.*;
 import java.util.*;
+
+import il.org.spartan.*;
+import il.org.spartan.refactoring.utils.*;
 
 /** An abstract representation of our test suite, which is represented in
  * directory tree.
@@ -134,7 +134,7 @@ public abstract class FileTestUtils {
    * @since 2014/05/24 */
   public static abstract class Files extends FileTestUtils.Traverse {
     /* (non-Javadoc)
-     * 
+     *
      * @see
      * il.ac.technion.cs.ssdl.spartan.refactoring.TestSuite.Traverse#go(java
      * .util.List, java.io.File) */

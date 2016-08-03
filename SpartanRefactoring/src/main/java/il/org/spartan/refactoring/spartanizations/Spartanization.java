@@ -1,8 +1,6 @@
 package il.org.spartan.refactoring.spartanizations;
 
 import static il.org.spartan.refactoring.spartanizations.DialogBoxes.*;
-import il.org.spartan.refactoring.handlers.*;
-import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;
 import java.util.List;
@@ -17,6 +15,9 @@ import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.ltk.ui.refactoring.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
+
+import il.org.spartan.refactoring.handlers.*;
+import il.org.spartan.refactoring.utils.*;
 
 /** the base class for all Spartanization Refactoring classes, contains common
  * functionality

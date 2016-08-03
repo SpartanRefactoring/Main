@@ -7,15 +7,15 @@ import java.util.regex.*;
  * A variable's short name is a single-character name, determined by the first
  * character in the last word of the type's name.<br>
  * For example: <code>
- * 
+ *
  * <pre> public void execute(HTTPSecureConnection httpSecureConnection) {...}
  * </pre>
- * 
+ *
  * </code> would become<br>
  * <code>
- * 
+ *
  * <pre> public void execute(HTTPSecureConnection c) {...} </pre>
- * 
+ *
  * </code>
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-08-25 */

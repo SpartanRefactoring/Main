@@ -2,11 +2,12 @@ package il.org.spartan.refactoring.spartanizations;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.Wrap.*;
-import il.org.spartan.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 import org.junit.*;
+
+import il.org.spartan.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) public class WrapTest {
   @Test public void dealWithBothKindsOfComment() {
