@@ -84,7 +84,7 @@ import org.junit.*;
    * </pre>
    * @param i JD
    * @return the newly created instance of {@link Ingredient} */
-  public static Property<Integer> value(final int i) {
+  public static Property<@Nullable Integer> value(final int i) {
     return new Property<>(Integer.valueOf(i));
   }
   /** A factory method for class {@link Ingredient} as in
@@ -292,10 +292,11 @@ import org.junit.*;
     @Override public T ϑ() {
       if (updated())
         return cache();
-      assert ϑ != null;
+
       for (final Property<?> ¢ : prerequisites)
         ¢.update();
       version = latestPrequisiteVersion() + 1;
+      assert ϑ != null;
       try {
         return set(ϑ.ϑ());
       } catch (final Exception x) {

@@ -71,9 +71,11 @@ public enum separate {
    */
   public static String separateBySpaces(final Iterator<String> ss) {
     final StringBuilder $ = new StringBuilder();
+    if (ss != null) {
     final Separator s = new Separator(SPACE);
     while (ss.hasNext())
       $.append(s).append(ss.next());
+    }
     return as.string($);
   }
   /**

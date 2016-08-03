@@ -98,8 +98,7 @@ public interface Cookbook {
    * @return the newly created instance
    */
   public static <T> Cell<T> input() {
-    @SuppressWarnings("unused") final Ingredient<T> $ = new Ingredient<T>();
-    return $;
+    return new Ingredient<>();
   }
   /** Fluent API factory method that returns a recipe
    * @param <T> JD
@@ -116,7 +115,7 @@ public interface Cookbook {
    * @param i JD
    * @return the newly created instance of {@link Ingredient} */
   public static Cell<Integer> value(final int i) {
-    return new Ingredient<Integer>(Integer.valueOf(i));
+    return new Ingredient<>(Integer.valueOf(i));
   }
 
   /** A factory method for class {@link Ingredient} as in
@@ -128,7 +127,7 @@ public interface Cookbook {
    * @param t JD
    * @return the newly created instance of {@link Ingredient} */
   public static <@Nullable T> Cell<@Nullable T> value(final T t) {
-    return new Ingredient<T>(t);
+    return new Ingredient<>(t);
   }
   /** @param $ result
    * @return the parameter */
@@ -180,7 +179,7 @@ public interface Cookbook {
       }
 
       final Cell<String> begin = value("<");
-      final Cell<String> end = new Ingredient<String>(">");
+      final Cell<String> end = new Ingredient<>(">");
       final Cell<String> text = value("p");
       final Cell<String> wrap = from(begin, end, text).make(() -> begin() + text() + end());
       final Cell<String> xBoxed = from(wrap).make(() //
@@ -301,7 +300,7 @@ public interface Cookbook {
      * @author Yossi Gil <Yossi.Gil@GMail.COM>
      * @since 2016
      */
-    @SuppressWarnings({ "boxing", "unused" })//
+    @SuppressWarnings({ "boxing" }) //
     public static class Z implements Cookbook {
       /** @return contents of cell a */
       public final @Nullable Integer a() {
@@ -342,19 +341,19 @@ public interface Cookbook {
       int _aPower03Calls;
       /** a^5 := a^2 * a^3 */
       /** Can, and often should be made private; package is OK */
-      final Cell<@Nullable Integer> a = new Cookbook.Ingredient<@Nullable Integer>();
+      final Cell<@Nullable Integer> a = new Cookbook.Ingredient<>();
       /** Can, and often should be made private; package is OK */
-      @SuppressWarnings("null") final Cell<@Nullable Integer> aPower02 = new Recipe<@Nullable Integer>(() -> {
+      @SuppressWarnings("null") final Cell<@Nullable Integer> aPower02 = new Recipe<>(() -> {
         ++_aPower02Calls;
         return a() * a();
       }).ingredients(a);
       /** Can, and often should be made private; package is OK */
-      @SuppressWarnings("null") final Cell<@Nullable Integer> aPower03 = new Recipe<@Nullable Integer>(() -> {
+      @SuppressWarnings("null") final Cell<@Nullable Integer> aPower03 = new Recipe<>(() -> {
         ++_aPower03Calls;
         return a() * aPower02();
       }).ingredients(aPower02, a);
       /** the actual cell behind {@link #aPower05()} */
-      @SuppressWarnings("null") final Cell<@Nullable Integer> aPower05 = new Recipe<@Nullable Integer>(//
+      @SuppressWarnings("null") final Cell<@Nullable Integer> aPower05 = new Recipe<>(//
           () -> aPower02() * aPower03()).ingredients(aPower02, aPower03);
       /** Can, and often should be made private; package is OK */
       /** the actual cell behind {@link #b()} */
@@ -363,9 +362,9 @@ public interface Cookbook {
           -> a() * a() * a() * a() * aPower02() * aPower02() * aPower03() * aPower03() * aPower03()//
       ).ingredients(a, aPower02, aPower03);
       /** the actual cell behind {@link #b()} */
-      final Cell<@Nullable Integer> b = new Cookbook.Ingredient<@Nullable Integer>(3);
+      final Cell<@Nullable Integer> b = new Cookbook.Ingredient<>(3);
       /** the actual cell behind {@link #c()} */
-      final Cell<@Nullable Integer> c = new Cookbook.Ingredient<@Nullable Integer>(5);
+      final Cell<@Nullable Integer> c = new Cookbook.Ingredient<>(5);
       /** the actual cell behind {@link #d()} */
       @SuppressWarnings("null") final Cell<@Nullable Integer> d = Cookbook.from(a, b, c).make(() -> a() + b() + c());
 
