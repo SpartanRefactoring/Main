@@ -13,12 +13,12 @@ import org.eclipse.jdt.annotation.*;
  */
 public interface accumulate<T, C extends Collection<T>> {
   /**
-   * @param <T> JD
-   * @param <C> JD
-   * @param c JD
-   * @return TODO document return type
+   * @param < T >  JD
+   * @param < C >  JD
+   * @param c  JD
+   * @return  TODO document return type
    */
-  public static <T, C extends Collection<T>> accumulate<T, C> to(final C c) {
+  static <T, C extends Collection<T>> accumulate<T, C> to(final C c) {
     return new accumulate<T, C>() {
       @Override public accumulate<T, C> add(final @Nullable T t) {
         if (t == null)

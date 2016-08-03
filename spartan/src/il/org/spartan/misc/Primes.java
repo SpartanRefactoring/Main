@@ -51,7 +51,7 @@ public class Primes {
       assertEquals(2, new Primes().next());
     }
     @Test public void isPrimeOf_1() {
-      assertFalse(isPrime(-1));
+      azzert.nay(isPrime(-1));
     }
     @Test public void isPrimeOf_2() {
       azzert.aye(isPrime(-2));
@@ -60,13 +60,13 @@ public class Primes {
       azzert.aye(isPrime(-3));
     }
     @Test public void isPrimeOf_4() {
-      assertFalse(isPrime(-4));
+      azzert.nay(isPrime(-4));
     }
     @Test public void isPrimeOf0() {
-      assertFalse(isPrime(0));
+      azzert.nay(isPrime(0));
     }
     @Test public void isPrimeOf1() {
-      assertFalse(isPrime(1));
+      azzert.nay(isPrime(1));
     }
     @Test public void secondIsThree() {
       final Primes p = new Primes();

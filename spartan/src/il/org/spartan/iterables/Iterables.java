@@ -3,7 +3,6 @@ package il.org.spartan.iterables;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
-import static org.junit.Assert.*;
 import il.org.spartan.*;
 
 import org.eclipse.jdt.annotation.*;
@@ -86,10 +85,10 @@ public enum Iterables {
   @SuppressWarnings({ "static-method", "javadoc" })//
   public static class TEST {
     @Test public void containsDegenerate() {
-      assertFalse(contains("Hello"));
+      azzert.nay(contains("Hello"));
     }
     @Test public void containseturnsFalseTypical() {
-      assertFalse(contains("Hello", null, "x", "y", null, "z", "w", "u", "v"));
+      azzert.nay(contains("Hello", null, "x", "y", null, "z", "w", "u", "v"));
     }
     @Test public void containsSimple() {
       azzert.aye("", contains("Hello", "e"));

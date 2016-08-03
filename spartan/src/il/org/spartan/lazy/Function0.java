@@ -8,5 +8,5 @@ package il.org.spartan.lazy;
 @FunctionalInterface public interface Function0<T> {
   /** @return result of function application
    * @throws Exception in case the function failed */
-  T ϑ() throws Exception;
+  T ¢() throws Exception;
 }

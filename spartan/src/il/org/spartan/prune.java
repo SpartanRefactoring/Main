@@ -26,6 +26,9 @@ import org.junit.*;
  */
 public enum prune {
   ;
+  /** TODO: Document field prune.java */
+  private static final String NULL = "null";
+
   /**
    * @param <T> JD
    * @param <C> JD

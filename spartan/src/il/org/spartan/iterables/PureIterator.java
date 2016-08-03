@@ -2,7 +2,8 @@
 package il.org.spartan.iterables;
 
 import static il.org.spartan.Utils.*;
-import static org.junit.Assert.*;
+import static il.org.spartan.azzert.*;
+import il.org.spartan.*;
 
 import java.util.*;
 
@@ -68,10 +69,22 @@ public abstract class PureIterator<T> implements Iterator<T> {
       return false;
     }
     @Test public void isEmpty() {
-      assertFalse(hasNext());
+      azzert.nay(hasNext());
     }
     @Test(expected = IllegalArgumentException.class) public void tryToRemove() {
       remove();
+    }
+    public static <T> void assertEquals(T t1, T t2) {
+      azzert.that(t2, is(t1));
+    }
+    public static <T> void assertEquals(String reason, T t1, T t2) {
+      azzert.that(reason, t2, is(t1));
+    }
+    public static <T> void assertNotEquals(T t1, T t2) {
+      azzert.that(t2, is(t1));
+    }
+    public static <T> void assertNotEquals(String reason, T t1, T t2) {
+      azzert.that(reason, t2, is(t1));
     }
   }
 }

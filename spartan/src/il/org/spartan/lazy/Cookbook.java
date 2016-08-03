@@ -73,8 +73,7 @@ public interface Cookbook {
     Cell.trace = null;
     return new Recipe<>($).ingredients(trace);
   }
-  /**
-   * Fluent API function to be used as in
+  /** Fluent API function to be used as in
    *
    * <pre>
    * Cell<Integer> d = from(a,b,c).make(.....)
@@ -82,8 +81,7 @@ public interface Cookbook {
    *
    * @param ingredients list of ingredients
    * @return a {@link $$RecipeMaker} which can be used to continue the fluent
-   *         API chain.
-   */
+   *         API chain. */
   public static $$RecipeMaker from(final Cell<?>... ingredients) {
     return new $$RecipeMaker() {
       @Override public <T> Cell<@Nullable T> make(final Supplier<T> s) {
@@ -234,7 +232,7 @@ public interface Cookbook {
       }
     }
 
-    @SuppressWarnings({ "static-method", "javadoc", "null" })//
+    @SuppressWarnings({ "static-method", "javadoc", "null" }) //
     @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
     public static class C {
       @Test public void sessionA01() {
