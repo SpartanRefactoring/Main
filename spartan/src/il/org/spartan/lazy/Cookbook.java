@@ -183,7 +183,7 @@ public interface Cookbook {
       final Cell<String> xBoxed = from(wrap).make(() //
           -> "[[" + wrap() + "]]" //
       );
-      final Cell<String> zzz = new Ingredient<String>().of("zzz");
+      final Cell<String> zzz = new Ingredient<@Nullable String>().of("zzz");
 
       @SuppressWarnings({ "synthetic-access" })//
       public static class TEST extends A {
