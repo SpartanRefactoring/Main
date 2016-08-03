@@ -1,11 +1,12 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.*;
-import il.org.spartan.*;
-import il.org.spartan.refactoring.utils.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
+
+import il.org.spartan.*;
+import il.org.spartan.refactoring.utils.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public class IfEmptyThenTest {

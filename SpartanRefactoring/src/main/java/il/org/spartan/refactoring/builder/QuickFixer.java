@@ -1,10 +1,10 @@
 package il.org.spartan.refactoring.builder;
 
-import il.org.spartan.refactoring.spartanizations.*;
-
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.ui.*;
+
+import il.org.spartan.refactoring.spartanizations.*;
 
 /** A quickfix generator for spartanization refactoring
  * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>

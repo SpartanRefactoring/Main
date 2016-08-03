@@ -2,10 +2,11 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Into.*;
-import il.org.spartan.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
+
+import il.org.spartan.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) public class PlantTest {
   @Test public void plantIntoLess() {

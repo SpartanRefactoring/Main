@@ -1,11 +1,12 @@
 package il.org.spartan.refactoring.spartanizations;
 
 import static il.org.spartan.utils.Utils.*;
-import il.org.spartan.*;
-import il.org.spartan.refactoring.utils.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
+
+import il.org.spartan.*;
+import il.org.spartan.refactoring.utils.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
