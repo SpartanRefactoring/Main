@@ -1,9 +1,10 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.wring.Wrings.*;
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
 
 import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 
 /** A {@link Wring} to convert <code>a ? (f,g,h) : c(d,e)</code> into <code>a ?
  * c(d,e) : f(g,h)</code>

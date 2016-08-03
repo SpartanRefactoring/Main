@@ -3,15 +3,16 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.wring.LocalInliner.LocalInlineWithValue;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.LocalInliner.*;
 
 /** A {@link Wring} to convert <code>int a = 3; b = a;</code> into <code>b =
  * a</code>

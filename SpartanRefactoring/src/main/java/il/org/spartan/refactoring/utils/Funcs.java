@@ -5,14 +5,15 @@ import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
-import il.org.spartan.refactoring.wring.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.Operator;
+import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
+
+import il.org.spartan.refactoring.wring.*;
 
 /** Useful Functions */
 public enum Funcs {
@@ -505,7 +506,7 @@ public enum Funcs {
     final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     $.setKind(kind);
     $.setResolveBindings(false);
-    @SuppressWarnings("unchecked") final Map<String, String> options = JavaCore.getOptions();
+    final Map<String, String> options = JavaCore.getOptions();
     options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_8); // or newer
     // version
     $.setCompilerOptions(options);

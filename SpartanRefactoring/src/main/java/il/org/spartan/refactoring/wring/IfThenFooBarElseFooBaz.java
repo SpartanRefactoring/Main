@@ -2,14 +2,15 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /** A {@link Wring} to convert <code>if (X) {foo(); bar();} else {foo();
  * baz();}</code> into <code>foo(); if (X) bar(); else baz();</code>

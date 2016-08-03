@@ -1,16 +1,18 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
-import il.org.spartan.*;
-import il.org.spartan.refactoring.utils.Subject.Pair;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
+
+import il.org.spartan.*;
+import il.org.spartan.refactoring.utils.Subject.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) public class SubjectTest {
   @Test public void assignment() {

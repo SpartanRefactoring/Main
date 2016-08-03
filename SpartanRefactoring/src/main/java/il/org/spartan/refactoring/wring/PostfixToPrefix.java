@@ -1,10 +1,10 @@
 package il.org.spartan.refactoring.wring;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.*;
-
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.PostfixExpression.Operator;
+import org.eclipse.jdt.core.dom.PostfixExpression.*;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /** A {@link Wring} that converts, whenever possible, postfix
  * increment/decrement to prefix increment/decrement

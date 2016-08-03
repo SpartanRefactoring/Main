@@ -2,10 +2,11 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Into.*;
-import il.org.spartan.*;
 
 import org.junit.*;
 import org.junit.runners.*;
+
+import il.org.spartan.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "static-method" }) //

@@ -1,9 +1,9 @@
 package il.org.spartan.refactoring.spartanizations;
 
+import java.util.*;
+
 import il.org.spartan.*;
 import il.org.spartan.refactoring.wring.*;
-
-import java.util.*;
 
 /** @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code> (v2)
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code> (original /

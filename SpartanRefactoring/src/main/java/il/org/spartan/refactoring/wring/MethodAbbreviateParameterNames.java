@@ -2,14 +2,15 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
-import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /** A {@link Wring} that abbreviates the names of variables that have a generic
  * variation. The abbreviated name is the first character in the last word of
@@ -19,7 +20,7 @@ import org.eclipse.text.edits.*;
 /* TODO This is a previous version of the MethodParameterAbbreviate wring that
  * replaces all parameter names in a method at once. If it is found to be
  * useless in the near future, delete this class. Otherwise, remove the
- * 
+ *
  * @Deprecated annotation */
 @Deprecated public class MethodAbbreviateParameterNames extends Wring<MethodDeclaration> {
   @Override String description(final MethodDeclaration d) {

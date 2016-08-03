@@ -1,7 +1,5 @@
 package il.org.spartan.refactoring.handlers;
 
-import il.org.spartan.refactoring.spartanizations.*;
-
 import java.util.*;
 
 import org.eclipse.core.commands.*;
@@ -13,6 +11,8 @@ import org.eclipse.jface.viewers.*;
 import org.eclipse.ltk.ui.refactoring.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.handlers.*;
+
+import il.org.spartan.refactoring.spartanizations.*;
 
 /** @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>:
  *         original version
@@ -40,7 +40,7 @@ public abstract class BaseHandler extends AbstractHandler {
     return PlatformUI.getWorkbench().getActiveWorkbenchWindow();
   }
   private static ICompilationUnit getCompilationUnit(final IEditorPart ep) {
-    return ep == null ? null : getCompilationUnit((IResource) ep.getEditorInput().getAdapter(IResource.class));
+    return ep == null ? null : getCompilationUnit(ep.getEditorInput().getAdapter(IResource.class));
   }
   private static ICompilationUnit getCompilationUnit(final IResource r) {
     return r == null ? null : JavaCore.createCompilationUnitFrom((IFile) r);

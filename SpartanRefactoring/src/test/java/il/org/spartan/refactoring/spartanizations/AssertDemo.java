@@ -1,8 +1,8 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import il.org.spartan.*;
-
 import org.junit.*;
+
+import il.org.spartan.*;
 
 @SuppressWarnings("static-method") public class AssertDemo {
   public static void main(final String[] args) {
