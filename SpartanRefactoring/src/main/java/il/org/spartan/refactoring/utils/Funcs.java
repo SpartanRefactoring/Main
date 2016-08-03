@@ -582,10 +582,9 @@ public enum Funcs {
     return ¢.getRightOperand();
   }
   /** Determine whether two nodes are the same, in the sense that their textual
-   * representations is identical.
-   * <¢>
-   * Each of the parameters may be <code><b>null</b></code>; a
-   * <code><b>null</b></code> is only equal to< code><b>null</b></code>
+   * representations is identical. <¢> Each of the parameters may be
+   * <code><b>null</b></code>; a <code><b>null</b></code> is only equal to<
+   * code><b>null</b></code>
    * @param n1 JD
    * @param n2 JD
    * @return <code><b>true</b></code> if the parameters are the same. */

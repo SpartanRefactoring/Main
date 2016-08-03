@@ -11,8 +11,19 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} to convert <pre>a = 3; b = 3;</pre> to <pre>a = b =
- * 3</pre>
+/** A {@link Wring} to convert
+ * 
+ * <pre>
+ * a = 3;
+ * b = 3;
+ * </pre>
+ * 
+ * to
+ * 
+ * <pre>
+ * a = b = 3
+ * </pre>
+ * 
  * @author Yossi Gil
  * @since 2015-08-28 */
 public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assignment> {

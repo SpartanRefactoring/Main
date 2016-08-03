@@ -9,8 +9,18 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.utils.*;
 
-/** A {@link Wring} to convert <code>a ? (f,g,h) : c(d,e)</code> into <code>a ?
- * c(d,e) : f(g,h)</code>
+/** A {@link Wring} to convert
+ * 
+ * <pre>
+ * a ? (f,g,h) : c(d,e)
+ * </pre>
+ * 
+ * into
+ * 
+ * <pre>
+ * a ? c(d, e) : f(g, h)
+ * </pre>
+ * 
  * @author Yossi Gil
  * @since 2015-08-14 */
 public final class TernaryShortestFirst extends Wring.ReplaceCurrentNode<ConditionalExpression> {

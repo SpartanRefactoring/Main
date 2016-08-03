@@ -21,7 +21,7 @@ public class Toolbox {
   /** Find the first {@link Wring} appropriate for an {@link ASTNode}
    * @param n JD
    * @return the first {@link Wring} for which the parameter is within scope, or
-   *         <code><b>null</b></code>i if no such {@link Wring} is found. */
+   *         <code><b>null</b></code> if no such {@link Wring} is found. */
   public <N extends ASTNode> Wring<N> find(final N n) {
     return find(n, get(n));
   }

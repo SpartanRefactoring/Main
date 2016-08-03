@@ -9,12 +9,53 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
-/** <code>a ? b : c</code> is the same as <code>(a && b) || (!a && c)</code> if
- * b is false than: <code>(a && false) || (!a && c) == (!a && c)</code> if b is
- * true than: <code>(a && true) || (!a && c) == a || (!a && c) == a || c</code>
- * if c is false than: <code>(a && b) || (!a && false) == (!a && c)</code> if c
- * is true than <code>(a && b) || (!a && true) == (a && b) || (!a) == !a ||
- * b</code> keywords <code><b>this</b></code> or <code><b>null</b></code>.
+/** <pre>
+ * a ? b : c
+ * </pre>
+ * 
+ * is the same as
+ * 
+ * <pre>
+ * (a && b) || (!a && c)
+ * </pre>
+ * 
+ * if b is false than:
+ * 
+ * <pre>
+ * (a && false) || (!a && c) == (!a && c)
+ * </pre>
+ * 
+ * if b is true than:
+ * 
+ * <pre>
+ * (a && true) || (!a && c) == a || (!a && c) == a || c
+ * </pre>
+ * 
+ * if c is false than:
+ * 
+ * <pre>
+ * (a && b) || (!a && false) == (!a && c)
+ * </pre>
+ * 
+ * if c is true than
+ * 
+ * <pre>
+ * (a && b) || (!a && true) == (a && b) || (!a) == !a || b
+ * </pre>
+ * 
+ * keywords
+ * 
+ * <pre>
+ * <b>this</b>
+ * </pre>
+ * 
+ * or
+ * 
+ * <pre>
+ * <b>null</b>
+ * </pre>
+ * 
+ * .
  * @author Yossi Gil
  * @since 2015-07-20 */
 public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<ConditionalExpression> {
@@ -24,15 +65,41 @@ public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<Condit
   @Override boolean scopeIncludes(final ConditionalExpression e) {
     return isTernaryOfBooleanLitreral(e);
   }
-  /** Consider an expression <code>a ? b : c</code>; in a sense it is the same
-   * as <code>(a && b) || (!a && c)</code>
+  /** Consider an expression
+   * 
+   * <pre>
+   * a ? b : c
+   * </pre>
+   * 
+   * ; in a sense it is the same as
+   * 
+   * <pre>
+   * (a && b) || (!a && c)
+   * </pre>
    * <ol>
-   * <li>if b is false then: <code>(a &&
-   * false) || (!a && c) == !a && c</code>
-   * <li>if b is true then: <code>(a &&
-   * true) || (!a && c) == a || (!a && c) == a || c</code>
-   * <li>if c is false then: <code>(a && b) || (!a && false) == a && b</code>
-   * <li>if c is true then <code>(a && b) || (!a && true) == !a || b</code>
+   * <li>if b is false then:
+   * 
+   * <pre>
+   * (a && false) || (!a && c) == !a && c
+   * </pre>
+   * 
+   * <li>if b is true then:
+   * 
+   * <pre>
+   * (a && true) || (!a && c) == a || (!a && c) == a || c
+   * </pre>
+   * 
+   * <li>if c is false then:
+   * 
+   * <pre>
+   * (a && b) || (!a && false) == a && b
+   * </pre>
+   * 
+   * <li>if c is true then
+   * 
+   * <pre>
+   * (a && b) || (!a && true) == !a || b
+   * </pre>
    * </ol>
   */
   private static Expression simplifyTernary(final ConditionalExpression e) {
