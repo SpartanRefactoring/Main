@@ -7,9 +7,20 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} to convert <code>if (x) ; else {a;}</code> into
- * <code>if (!x)
- * a;</code>.
+/** A {@link Wring} to convert
+ * 
+ * <pre>
+ * if (x) ; else {a;}
+ * </pre>
+ * 
+ * into
+ * 
+ * <pre>
+ * if (!x)
+ * a;
+ * </pre>
+ * 
+ * .
  * @author Yossi Gil
  * @since 2015-08-26 */
 public final class IfEmptyThen extends Wring.ReplaceCurrentNode<IfStatement> {

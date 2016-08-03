@@ -10,9 +10,31 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} to convert <code>if (a) { return x; } else { return y;
- * }</code> into <code>if (a) return x; return y;</code> provided that this
- * <code><b>if</b></code> statement is the last statement in a method.
+/** A {@link Wring} to convert
+ * 
+ * <pre>
+ * if (a) {
+ *   return x;
+ * } else {
+ *   return y;
+ * }
+ * </pre>
+ * 
+ * into
+ * 
+ * <pre>
+ * if (a)
+ *   return x;
+ * return y;
+ * </pre>
+ * 
+ * provided that this
+ * 
+ * <pre>
+ * <b>if</b>
+ * </pre>
+ * 
+ * statement is the last statement in a method.
  * @author Yossi Gil
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-09-09 */

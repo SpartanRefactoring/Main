@@ -12,8 +12,8 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} to convert <code>if (X) {foo(); bar();} else {foo();
- * baz();}</code> into <code>foo(); if (X) bar(); else baz();</code>
+/** A {@link Wring} to convert <pre>if (X) {foo(); bar();} else {foo();
+ * baz();}</pre> into <pre>foo(); if (X) bar(); else baz();</pre>
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> {
