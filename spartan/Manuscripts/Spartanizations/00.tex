@@ -36,6 +36,8 @@
 \paragraph{Outline}
 Finally, \cref{section:zz} concludes.
 
+\cite{Turnu:Concas:Marchesi:Tonelli:11}
+
 \section{Main Techniques}
 \input{techniques}
 
@@ -43,7 +45,26 @@ Finally, \cref{section:zz} concludes.
 \label{section:zz}
 \input{zz}
 
-\bibliographystyle{abbrv}
-\bibliography{\jobname}
-
+\bibliographystyle{abbrv}\small
+\bibliography{%
+\jobname,%
+author-names,%
+other-shorthands-abbreviated,%
+publishers-abbreviated,%
+conferences-abbreviated,%
+journals-abbreviated,%
+journals-full,%
+yogi-tr,%
+yogi-book,%
+yogi-practice,%
+yogi-misc,%
+yogi-journal,%
+yogi-theory,%
+yogi-confs,%
+GPCE,%
+OOPSLA,%
+PLDI,%
+USENIX,%
+ECOOP%
+}
 \end{document}
