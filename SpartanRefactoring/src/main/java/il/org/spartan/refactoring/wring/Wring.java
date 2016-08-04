@@ -42,8 +42,8 @@ final class LocalInliner {
       inlineInto(wrap(ns));
     }
     private void inlineInto(final Wrapper<ASTNode>... ns) {
-      for (final Wrapper<ASTNode> e : ns)
-        inlineIntoSingleton(get(), e);
+      for (final Wrapper<ASTNode> n : ns)
+        inlineIntoSingleton(get(), n);
     }
     private void inlineIntoSingleton(final ASTNode replacement, final Wrapper<ASTNode> ns) {
       final ASTNode oldExpression = ns.get();
