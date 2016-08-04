@@ -25,8 +25,8 @@ public enum as {
    * @param <T> JD
    * @param ts JD
    * @return an array representation of the parameter */
-  @SafeVarargs public static <T> T[] array(final T... ts) {
-    return ts;
+  @SafeVarargs public static <T> T[] array(final T... $) {
+    return $;
   }
   /** Converts a boolean into a bit value
    * @param $ some boolean value
