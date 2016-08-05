@@ -467,6 +467,7 @@ public class azzert extends org.junit.Assert {
     assertEquals(0, l);
   }
 
-  @SuppressWarnings("unused") public static class Inline {
-  }
+  public static class Inline {
+    // Why do we need this class?
+ }
 }

@@ -153,7 +153,7 @@ public enum prune {
         return $;
       }
     };
-    final String @NonNull [] alternatingArray = new String @NonNull [] { null, "A", null, null, "B", null, null, null, "C", null };
-    final String @NonNull [] nonNullArray = { "1", "2", "4" };
+    final String[] alternatingArray = new String @NonNull [] { null, "A", null, null, "B", null, null, null, "C", null };
+    final String[] nonNullArray = { "1", "2", "4" };
   }
 }

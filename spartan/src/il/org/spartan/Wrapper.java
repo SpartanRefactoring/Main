@@ -1,4 +1,4 @@
-package il.org.spartan.misc;
+package il.org.spartan;
 
 import org.eclipse.jdt.annotation.*;
 
@@ -30,5 +30,5 @@ public class Wrapper<T> {
     return "Wrapper of " + t;
   }
 
-  private @Nullable T t = null;
+  @Nullable protected T t = null;
 }
