@@ -1,6 +1,90 @@
+Mention naturlaization
+
+\Java
+Software engineers tend to engage  on religious wars on styles are
+
+Examples from stakoverflow, or even usenet... 
+
+A famous example is that of curly brackets around a single statement making
+the body of control flow commands, such as \kk{if} and 
+\kk{while}.
+Mention that \Go forces you to use them!
+Mention that are compulsory in \kk{synchronized}, 
+\kk{try},  
+\kk{catch},  
+\kk{finally},  
+
+but on the other hand, in a recent addition lambda expressions\cite{lambda}
+the options are maintained.
+You can write
+\begin{JAVA}
+()-> 3
+\end{JAVA}
+and
+\begin{JAVA}
+  ()-> {3}
+\end{JAVA}
+check this.
+
+``\emph{the braces war}''
+
+
+Why should this be important?
+\begin{itemize}
+    \item Easy to write in  your own style, but how can 
+      you always adjust to the style of others.
+      Waste of neurons.
+    \item Code comparison. Which part of my change is semantical and which 
+      part of this my own personal style.
+    \item Code analysis tools should adjust to different styles and many
+        different ways for doing the same thing.
+    \item METRICS: IN a recent paper Gal and I showed that size 
+      is the only thing that matters.
+    \item METRICS: IN a recent paper Gal and I showed that the notion of 
+      "size" is very different in different projects.
+\end{itemize}
+
+The holly grail of "canonical representation of code" .
+Does LOC mean anything?
+Not if you apply different indentation rules.
+A better metric is NOT = number of tokens.
+But even this is influenced by coding styles, including but 
+not limited to the famous braces war.
+
 
 \subsection{Background}
+There is very little scientific work on style.
+Mention the Latin quote.
 
+Mention the style guides on C++ and Java. Oracle.
+
+But where these styles a matter of a careful and raional design process?
+What were the underlying principles.
+
+Last paragraph: many people believe that style is irrelevant and unimportant. 
+We believe that it is.
+
+\subsection{Spartan programming}
+First occurred in a stupid TOOLS USA 199X. tutorial.
+The point of making and perfecting it was to "be rational" and 
+reexamine all assumptions. 
+Rules have changed.
+Utter despise of backward compatability the need to rewrite the code.
+
+Mention it.  The spartanization tool.
+
+Say that some of your alma mater gang love to do this kind of metrics, but 
+no one really knows whether the results are applicable to different projects
+since 
+\cite{Turnu:Concas:Marchesi:Tonelli:11}
+
+
+the "Idionsyncratic Projects Hypothesis" I also had a plateau paper with 
+Dany and Maayan about this. A number o years ago.
+
+
+This paper gives an overview of spartanization, future work will be
+experiments.
 
 \subsection{Contribution}
 
