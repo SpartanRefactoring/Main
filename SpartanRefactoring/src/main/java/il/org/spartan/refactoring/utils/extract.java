@@ -24,6 +24,9 @@ public enum extract {
   public static List<Expression> allOperands(final InfixExpression e) {
     return extract.operands(flatten(e));
   }
+  /** Retrieves the ancestors of the ASTNode, via an Iterator.
+   * @param ¢ JD
+   * @return an {@link Iterable} that traverses the ancestors of the ASTNode. */
   public static Iterable<ASTNode> ancestors(final ASTNode ¢) {
     return () -> new Iterator<ASTNode>() {
       ASTNode current = ¢;
