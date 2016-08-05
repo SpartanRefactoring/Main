@@ -3,17 +3,15 @@ package il.org.spartan.iterables;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
-
 import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 import org.junit.runners.*;
-
 import il.org.spartan.*;
 
 /** No values in an 'enum' used as name space for a collection of 'static'
  * functions.
  * @author Yossi Gil <Yossi.Gil@GMail.COM> */
-public enum Iterables {
+public enum iterables {
   //
   ;
   /** Counts the number of items in an {@link Iterable}.
@@ -85,7 +83,7 @@ public enum Iterables {
       assertEquals(3, count(as.iterable(null, "One", null, "Two", null, "Three")));
     }
     @Test public void countEmpty() {
-      assertEquals(0, count(Iterables.<String> empty()));
+      assertEquals(0, count(iterables.<String> empty()));
     }
     @Test public void countSingleton() {
       assertEquals(1, count(singleton(new Object())));

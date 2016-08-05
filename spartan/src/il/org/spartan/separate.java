@@ -3,14 +3,11 @@ package il.org.spartan;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
-
 import java.util.*;
 import java.util.function.*;
-
 import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 import org.junit.runners.*;
-
 import il.org.spartan.Utils.*;
 import il.org.spartan.iterables.*;
 
@@ -354,7 +351,7 @@ public enum separate {
       final Collection<String> c = Arrays.asList("Hello", "World");
       assertEquals(2, c.size());
       final Iterable<String> ts = f.to(c);
-      assertEquals(2, Iterables.count(ts));
+      assertEquals(2, iterables.count(ts));
       assertEquals("'Hello' 'World'", separate.these(ts).by(' '));
     }
     @Test public final void byFOfTTArrayString() {
@@ -418,7 +415,7 @@ public enum separate {
       azzert.notNull(these);
       final Iterable<Object> os = these.os;
       azzert.nonNulls(os);
-      azzert.aye("", Iterables.isEmpty(os));
+      azzert.aye("", iterables.isEmpty(os));
       final String[] ss = as.strings(os);
       notNull(ss);
       azzert.zero(ss.length);
@@ -433,7 +430,7 @@ public enum separate {
       assertEquals("", bySpaces());
     }
     @Test public void separateBySpaceEmptyIterator() {
-      assertEquals("", separateBySpaces(Iterables.<String> empty()));
+      assertEquals("", separateBySpaces(iterables.<String> empty()));
     }
     @Test public void separateBySpaceMultipleIterator() {
       assertEquals("X Y Z", bySpaces("X", "Y", "Z"));
@@ -442,13 +439,13 @@ public enum separate {
       assertEquals("Hello World ", separateBySpaces(as.nonNullIterable("Hello", "World ")));
     }
     @Test public void separateBySpaceOnSingletonIteator() {
-      assertEquals("Hello", separateBySpaces(Iterables.singleton("Hello")));
+      assertEquals("Hello", separateBySpaces(iterables.singleton("Hello")));
     }
     @Test public void separateBySpaceSimple() {
       assertEquals("A", bySpaces("A"));
     }
     @Test public void separateBySpaceSingletonIterator() {
-      assertEquals("X", separateBySpaces(Iterables.singleton("X")));
+      assertEquals("X", separateBySpaces(iterables.singleton("X")));
     }
     @Test public void separateBySpaceTwoStrings() {
       assertEquals("A B", bySpaces("A", "B"));
@@ -457,31 +454,31 @@ public enum separate {
       assertEquals(" ", "" + SPACE);
     }
     @Test public final void theseArraySize0() {
-      assertEquals(0, Iterables.count(separate.these(as.array()).os));
+      assertEquals(0, iterables.count(separate.these(as.array()).os));
     }
     @Test public final void theseArraySize1() {
-      assertEquals(1, Iterables.count(separate.these(as.array("Rosebud")).os));
+      assertEquals(1, iterables.count(separate.these(as.array("Rosebud")).os));
     }
     @Test public final void theseArraySize2() {
-      assertEquals(2, Iterables.count(separate.these(as.array("Hello", "World")).os));
+      assertEquals(2, iterables.count(separate.these(as.array("Hello", "World")).os));
     }
     @Test public final void theseArraySize3() {
-      assertEquals(3, Iterables.count(separate.these(as.array("A", "B", "C")).os));
+      assertEquals(3, iterables.count(separate.these(as.array("A", "B", "C")).os));
     }
     @Test public final void theseFromOneItem() {
-      assertEquals(1, Iterables.count(separate.these(Arrays.asList("Rosebud")).os));
+      assertEquals(1, iterables.count(separate.these(Arrays.asList("Rosebud")).os));
     }
     @Test public final void theseFromThreeItems() {
-      assertEquals(3, Iterables.count(separate.these(Arrays.asList("A", "B", "C")).os));
+      assertEquals(3, iterables.count(separate.these(Arrays.asList("A", "B", "C")).os));
     }
     @Test public final void theseFromTwoItems() {
-      assertEquals(2, Iterables.count(separate.these(Arrays.asList("Hello", "World")).os));
+      assertEquals(2, iterables.count(separate.these(Arrays.asList("Hello", "World")).os));
     }
     @Test public final void theseFromZeroItems() {
-      assertEquals(0, Iterables.count(separate.these(Arrays.asList()).os));
+      assertEquals(0, iterables.count(separate.these(Arrays.asList()).os));
     }
     @Test public final void theseOfNoItemsl() {
-      azzert.aye("", Iterables.isEmpty(separate.these(new String[] {}).os));
+      azzert.aye("", iterables.isEmpty(separate.these(new String[] {}).os));
     }
     @Test public final void theseOfNoItemslSpaceSeparated() {
       assertEquals("", separate.these(new String[] {}).bySpaces());

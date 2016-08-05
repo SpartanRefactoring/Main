@@ -3,9 +3,7 @@
 package il.org.spartan.misc;
 
 import static org.junit.Assert.*;
-
 import org.junit.*;
-
 import il.org.spartan.*;
 
 /** Primality testing and generation of primes.

@@ -72,7 +72,7 @@ public final class Separator {
    * @return String // TODO: automatically generated for return method
    *         <code>wrap</code> */
   public static <T> String wrap(final String begin, final String end, final Iterable<T> ts, final String between) {
-    if (Iterables.isEmpty(ts))
+    if (iterables.isEmpty(ts))
       return "";
     final StringBuilder $ = new StringBuilder(begin);
     final Separator s = new Separator(between);

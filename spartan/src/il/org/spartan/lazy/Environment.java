@@ -6,14 +6,10 @@ import static il.org.spartan.azzert.is;
 import static il.org.spartan.idiomatic.*;
 import static java.lang.Math.*;
 import static org.hamcrest.Matchers.*;
-
 import java.util.*;
-
 import javax.xml.bind.*;
-
 import org.eclipse.jdt.annotation.*;
 import org.junit.*;
-
 import il.org.spartan.*;
 import il.org.spartan.lazy.Cookbook.*;
 

@@ -2,7 +2,6 @@
 package il.org.spartan;
 
 import static il.org.spartan.Utils.*;
-
 import org.eclipse.jdt.annotation.*;
 
 /** A utility class, with a collection of function to box primitive types in

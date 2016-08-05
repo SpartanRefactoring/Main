@@ -3,11 +3,9 @@ package il.org.spartan.text;
 
 import static il.org.spartan.Utils.*;
 import static org.junit.Assert.*;
-
 import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 import org.junit.runners.*;
-
 import il.org.spartan.*;
 
 /** A trivial utility module with functions to scatter a text into an array of

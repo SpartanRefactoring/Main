@@ -1,14 +1,11 @@
 package il.org.spartan;
 
 import static il.org.spartan.Utils.*;
-
 import org.eclipse.jdt.annotation.*;
 import org.hamcrest.*;
 import org.hamcrest.core.*;
 import org.hamcrest.number.*;
 import org.junit.*;
-
-import il.org.spartan.misc.*;
 
 /** @author Yossi Gil
  * @since 2015-07-18 */
