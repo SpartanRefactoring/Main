@@ -487,6 +487,9 @@ public enum Is {
   public static boolean variableDeclarationStatement(final ASTNode n) {
     return is(n, VARIABLE_DECLARATION_STATEMENT);
   }
+  /** Determine whether the curly brackets of an {@link IfStatement} are vacuous.
+   * @param s JD
+   * @return <code><b>true</b></code> <i>iff</i> the curly brackets are essential */
   static boolean blockEssential(final IfStatement s) {
     if (s == null)
       return false;
@@ -497,6 +500,10 @@ public enum Is {
     return parent != null && (elze(parent) == null || recursiveElze(s) == null)
         && (elze(parent) != null || recursiveElze(s) != null || blockRequiredInReplacement(parent, s));
   }
+  /** Determine whether an {@link Expression} could not be evaluated as a string.
+   * @param e JD
+   * @return <code><b>true</b></code> <i>iff</i> the parameter is not a string or 
+   *         composed of appended strings */
   static boolean notStringDown(final Expression e) {
     return notStringSelf(e) || notStringDown(asInfixExpression(e));
   }
