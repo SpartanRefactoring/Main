@@ -22,6 +22,12 @@ import il.org.spartan.refactoring.utils.*;
  * x.size() > 0
  * </pre>
  *
+ * or
+ *
+ * <pre>
+ * x.size() >= 1
+ * </pre>
+ *
  * to
  *
  * <pre>
