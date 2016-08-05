@@ -2,7 +2,7 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         id="org.spartan.refactoring.BuilderID"
+         id="ilorg.spartan.refactoring.BuilderID"
          name="Spartanization Checker"
          point="org.eclipse.core.resources.builders">
       <builder
@@ -13,7 +13,7 @@
       </builder>
    </extension>
    <extension
-         id="org.spartan.refactoring.NatureID"
+         id="ilorg.spartan.refactoring.NatureID"
          name="Spartanization Nature"
          point="org.eclipse.core.resources.natures">
       <runtime>
@@ -22,11 +22,11 @@
          </run>
       </runtime>
       <builder
-            id="org.spartan.refactoring.BuilderID">
+            id="ilorg.spartan.refactoring.BuilderID">
       </builder>
    </extension>
      <extension
-     id="org.spartan.refactoring.application"
+     id="ilorg.spartan.refactoring.application"
      name="Spartan Refactoring Application"
      point="org.eclipse.core.runtime.applications">
      <application>
@@ -34,11 +34,11 @@
      </application>
    </extension>
   <extension
-        id="org.spartan.refactoring.startupExtension"
+        id="ilorg.spartan.refactoring.startupExtension"
         point="org.eclipse.ui.startup">
   </extension>
 <extension
-    id="org.spartan.refactoring.spartanizationSuggestion"
+    id="ilorg.spartan.refactoring.spartanizationSuggestion"
     name="Spartanization Suggestion"
     point="org.eclipse.core.resources.markers">
   <super type="org.eclipse.core.resources.problemmarker" />
@@ -46,42 +46,42 @@
 
    <extension point="org.eclipse.ui.ide.markerResolution">
       <markerResolutionGenerator 
-               markerType="org.spartan.refactoring.spartanizationSuggestion"
+               markerType="ilorg.spartan.refactoring.spartanizationSuggestion"
          class="il.org.spartan.refactoring.builder.QuickFixer"/>
    </extension>
 
    <extension point="org.eclipse.ui.editors.annotationTypes">
-     <type markerType="org.spartan.refactoring.spartanizationSuggestion" 
-       name="org.spartan.refactoring.spartanizationMarker" />
+     <type markerType="ilorg.spartan.refactoring.spartanizationSuggestion" 
+       name="ilorg.spartan.refactoring.spartanizationMarker" />
    </extension>
    <extension
       point="org.eclipse.ui.editors.markerAnnotationSpecification">
    <specification
-         annotationType="org.spartan.refactoring.spartanizationMarker"
-         colorPreferenceKey="org.spartan.refactoring.spartanizationMarker.color"
+         annotationType="ilorg.spartan.refactoring.spartanizationMarker"
+         colorPreferenceKey="ilorg.spartan.refactoring.spartanizationMarker.color"
          colorPreferenceValue="0,0,180"
          contributesToHeader="false"
          includeOnPreferencePage="true"
          label="Spartanization Suggestion"
-         overviewRulerPreferenceKey="org.spartan.refactoring.spartanizationMarker.overview"
+         overviewRulerPreferenceKey="ilorg.spartan.refactoring.spartanizationMarker.overview"
          overviewRulerPreferenceValue="true"
          presentationLayer="0"
-         textPreferenceKey="org.spartan.refactoring.spartanizationMarker.text"
+         textPreferenceKey="ilorg.spartan.refactoring.spartanizationMarker.text"
          textPreferenceValue="true"
          textStylePreferenceValue="PROBLEM_UNDERLINE"
-         verticalRulerPreferenceKey="org.spartan.refactoring.spartanizationMarker.ruler"
+         verticalRulerPreferenceKey="ilorg.spartan.refactoring.spartanizationMarker.ruler"
          verticalRulerPreferenceValue="true">
    </specification>
 </extension>
    <extension
          point="org.eclipse.ui.commands">
       <category
-            id="org.spartan.commands.category"
+            id="ilorg.spartan.commands.category"
             name="Spartanization Category">
       </category>
       <command
-            categoryId="org.spartan.commands.category"
-            id="org.spartan.commands.ToggleCommand"
+            categoryId="ilorg.spartan.commands.category"
+            id="ilorg.spartan.commands.ToggleCommand"
             name="Toggle Automatic Spartanization Suggestion">
             <state
            		class="org.eclipse.ui.handlers.RegistryToggleState:true"
@@ -89,62 +89,62 @@
             </state>
       </command>
       <category
-            id="org.spartan.refactoring.category"
+            id="ilorg.spartan.refactoring.category"
             name="Spartan Refactoring">
       </category>
       <command
-            categoryId="org.spartan.refactoring.category"
-            id="org.spartan.refactoring.commands.ShortestOperand"
+            categoryId="ilorg.spartan.refactoring.category"
+            id="ilorg.spartan.refactoring.commands.ShortestOperand"
             name="Shortest operand first">
       </command>
       <command
-            categoryId="org.spartan.refactoring.category"
-            id="org.spartan.refactoring.commands.ExtractMethod"
+            categoryId="ilorg.spartan.refactoring.category"
+            id="ilorg.spartan.refactoring.commands.ExtractMethod"
             name="Extract statements to new method">
       </command>
       <command
-            categoryId="org.spartan.refactoring.category"
-            id="org.spartan.refactoring.commands.ForwardDeclaraion"
+            categoryId="ilorg.spartan.refactoring.category"
+            id="ilorg.spartan.refactoring.commands.ForwardDeclaraion"
             name="Forward declaration">
       </command>
       <command
-            categoryId="org.spartan.refactoring.category"
-            id="org.spartan.refactoring.commands.InlineSingleUse"
+            categoryId="ilorg.spartan.refactoring.category"
+            id="ilorg.spartan.refactoring.commands.InlineSingleUse"
             name="Inline single use">
       </command>
       <command
-            categoryId="org.spartan.refactoring.category"
-            id="org.spartan.refactoring.commands.RedundantEquality"
+            categoryId="ilorg.spartan.refactoring.category"
+            id="ilorg.spartan.refactoring.commands.RedundantEquality"
             name="Redandant equality">
       </command>
       <command
-            categoryId="org.spartan.refactoring.category"
-            id="org.spartan.refactoring.commands.ShortestBranchFirst"
+            categoryId="ilorg.spartan.refactoring.category"
+            id="ilorg.spartan.refactoring.commands.ShortestBranchFirst"
             name="Shortest branch first">
       </command>
       <command
-            categoryId="org.spartan.refactoring.category"
-            id="org.spartan.refactoring.commands.Cleanup"
+            categoryId="ilorg.spartan.refactoring.category"
+            id="ilorg.spartan.refactoring.commands.Cleanup"
             name="Spartanize entire project">
       </command>
       <command
-            categoryId="org.spartan.refactoring.category"
-            id="org.spartan.refactoring.commands.ApplySpartanization"
+            categoryId="ilorg.spartan.refactoring.category"
+            id="ilorg.spartan.refactoring.commands.ApplySpartanization"
             name="Spartanize active window">
       </command>
    </extension>
    <extension point="org.eclipse.ui.handlers">
       <handler
             class="il.org.spartan.refactoring.handlers.ToggleSpartanizationHandler"
-            commandId="org.spartan.commands.ToggleCommand">
+            commandId="ilorg.spartan.commands.ToggleCommand">
       </handler>
       <handler
             class="il.org.spartan.refactoring.handlers.CleanupHandler"
-            commandId="org.spartan.refactoring.commands.Cleanup">
+            commandId="ilorg.spartan.refactoring.commands.Cleanup">
       </handler>
       <handler
             class="il.org.spartan.refactoring.handlers.ApplySpartanizationHandler"
-            commandId="org.spartan.refactoring.commands.ApplySpartanization">
+            commandId="ilorg.spartan.refactoring.commands.ApplySpartanization">
       </handler>
    </extension>
    <extension
@@ -152,12 +152,12 @@
       <menuContribution
             locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
          <toolbar
-               id="org.spartan.refactoring.toolbars.spartanToolbar">
+               id="ilorg.spartan.refactoring.toolbars.spartanToolbar">
             <command
-                  commandId="org.spartan.refactoring.commands.ApplySpartanization"
+                  commandId="ilorg.spartan.refactoring.commands.ApplySpartanization"
                   icon="src/main/icons/spartan-warrior.gif"
                   tooltip="Spartanize this file"
-                  id="org.spartan.refactoring.toolbars.ApplySpartanization">
+                  id="ilorg.spartan.refactoring.toolbars.ApplySpartanization">
             </command>
          </toolbar>
       </menuContribution>
@@ -166,12 +166,12 @@
             allPopups="true"
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <menu
-               id="org.spartan.menus.spartanization"
+               id="ilorg.spartan.menus.spartanization"
                label="Spartanization"
                mnemonic="S">
             <command
-                  commandId="org.spartan.commands.ToggleCommand"
-                  id="org.spartan.menus.toggleCommand"
+                  commandId="ilorg.spartan.commands.ToggleCommand"
+                  id="ilorg.spartan.menus.toggleCommand"
                   label="Enable Spartanization Suggestions"
                   style="toggle"
                   mnemonic="S">
@@ -196,43 +196,43 @@
                   label="Spartanization">
 
                <command
-                     commandId="org.spartan.refactoring.commands.ShortestOperand"
-                     id="org.spartan.menus.ShortestOperandCommand"
+                     commandId="ilorg.spartan.refactoring.commands.ShortestOperand"
+                     id="ilorg.spartan.menus.ShortestOperandCommand"
                      style="push">
                </command>
                <command
-                     commandId="org.spartan.refactoring.commands.ExtractMethod"
-                     id="org.spartan.menus.ExtractMethodCommand"
+                     commandId="ilorg.spartan.refactoring.commands.ExtractMethod"
+                     id="ilorg.spartan.menus.ExtractMethodCommand"
                      style="push">
                </command>
                <command
-                     commandId="org.spartan.refactoring.commands.ForwardDeclaraion"
-                     id="org.spartan.menus.ForwardDeclarationCommand"
+                     commandId="ilorg.spartan.refactoring.commands.ForwardDeclaraion"
+                     id="ilorg.spartan.menus.ForwardDeclarationCommand"
                      style="push">
                </command>
                <command
-                     commandId="org.spartan.refactoring.commands.InlineSingleUse"
-                     id="org.spartan.menus.InlineSingleUseCommand"
+                     commandId="ilorg.spartan.refactoring.commands.InlineSingleUse"
+                     id="ilorg.spartan.menus.InlineSingleUseCommand"
                      style="push">
                </command>
                <command
-                     commandId="org.spartan.refactoring.commands.RedundantEquality"
-                     id="org.spartan.menus.RedundantEqualityCommand"
+                     commandId="ilorg.spartan.refactoring.commands.RedundantEquality"
+                     id="ilorg.spartan.menus.RedundantEqualityCommand"
                      style="push">
                </command>
                <command
-                     commandId="org.spartan.refactoring.commands.ShortestBranchFirst"
-                     id="org.spartan.menus.ShortestBranchFirstCommand"
+                     commandId="ilorg.spartan.refactoring.commands.ShortestBranchFirst"
+                     id="ilorg.spartan.menus.ShortestBranchFirstCommand"
                      style="push">
                </command>
                <command
-                     commandId="org.spartan.refactoring.commands.Cleanup"
-                     id="org.spartan.menus.CleanupCommand"
+                     commandId="ilorg.spartan.refactoring.commands.Cleanup"
+                     id="ilorg.spartan.menus.CleanupCommand"
                      style="push">
                </command>
                <command
-                     commandId="org.spartan.refactoring.commands.ApplySpartanization"
-                     id="org.spartan.refactoring.menus.ApplySpartanizationCommand"
+                     commandId="ilorg.spartan.refactoring.commands.ApplySpartanization"
+                     id="ilorg.spartan.refactoring.menus.ApplySpartanizationCommand"
                      style="push">
                </command>
             </menu>
@@ -245,31 +245,31 @@
                id="org.eclipse.jdt.ui.refactoring.menu2"
                label="Spartanization">
           <command
-                  commandId="org.spartan.refactoring.commands.ShortestOperand"
+                  commandId="ilorg.spartan.refactoring.commands.ShortestOperand"
                   style="push">
             </command>
             <command
-                  commandId="org.spartan.refactoring.commands.ExtractMethod"
+                  commandId="ilorg.spartan.refactoring.commands.ExtractMethod"
                   style="push">
             </command>
             <command
-                  commandId="org.spartan.refactoring.commands.ForwardDeclaraion"
+                  commandId="ilorg.spartan.refactoring.commands.ForwardDeclaraion"
                   style="push">
             </command>
             <command
-                  commandId="org.spartan.refactoring.commands.InlineSingleUse"
+                  commandId="ilorg.spartan.refactoring.commands.InlineSingleUse"
                   style="push">
             </command>
             <command
-                  commandId="org.spartan.refactoring.commands.RedundantEquality"
+                  commandId="ilorg.spartan.refactoring.commands.RedundantEquality"
                   style="push">
             </command>
             <command
-                  commandId="org.spartan.refactoring.commands.ShortestBranchFirst"
+                  commandId="ilorg.spartan.refactoring.commands.ShortestBranchFirst"
                   style="push">
             </command>
             <command
-                     commandId="org.spartan.refactoring.commands.Cleanup"
+                     commandId="ilorg.spartan.refactoring.commands.Cleanup"
                      style="push">
             </command>
 

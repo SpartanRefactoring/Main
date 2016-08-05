@@ -38,6 +38,8 @@ public enum extract {
       }
     };
   }
+  /** @param ¢ JD
+  /** @return */
   public static ASTNode containerType(final ASTNode ¢) {
     for (final ASTNode $ : ancestors(¢.getParent()))
       if (is($, ANONYMOUS_CLASS_DECLARATION //
