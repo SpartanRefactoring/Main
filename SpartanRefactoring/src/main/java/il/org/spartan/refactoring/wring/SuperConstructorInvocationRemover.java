@@ -8,11 +8,11 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** A wring to remove
- * 
+ *
  * <pre>
  * super()
  * </pre>
- * 
+ *
  * calls which take no arguments, as typically created by Eclipse's template for
  * constructors.
  * @author Daniel Mittelman?

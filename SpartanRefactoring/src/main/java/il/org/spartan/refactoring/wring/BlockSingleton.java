@@ -11,18 +11,18 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** A {@link Wring} to convert
- * 
+ *
  * <pre>
  * if {a) g();}
  * </pre>
- * 
+ *
  * into
- * 
+ *
  * <pre>
  * if (a)
  *   g();
  * </pre>
- * 
+ *
  * @author Yossi Gil
  * @since 2015-09-09 */
 public class BlockSingleton extends Wring.ReplaceCurrentNode<Block> {

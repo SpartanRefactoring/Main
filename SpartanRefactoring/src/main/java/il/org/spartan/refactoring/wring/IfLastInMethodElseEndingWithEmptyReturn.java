@@ -11,7 +11,7 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** A {@link Wring} to convert
- * 
+ *
  * <pre>
  * if (a) {
  *   return x;
@@ -19,21 +19,21 @@ import il.org.spartan.refactoring.utils.*;
  *   return y;
  * }
  * </pre>
- * 
+ *
  * into
- * 
+ *
  * <pre>
  * if (a)
  *   return x;
  * return y;
  * </pre>
- * 
+ *
  * provided that this
- * 
+ *
  * <pre>
  * <b>if</b>
  * </pre>
- * 
+ *
  * statement is the last statement in a method.
  * @author Yossi Gil
  * @author Daniel Mittelman <tt><mittelmania [at] gmail.com></tt>
