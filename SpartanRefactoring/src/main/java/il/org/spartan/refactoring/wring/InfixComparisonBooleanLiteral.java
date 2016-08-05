@@ -12,17 +12,17 @@ import il.org.spartan.refactoring.utils.*;
 
 /** A {@link Wring} that eliminates redundant comparison with the two boolean
  * literals:
- * 
+ *
  * <pre>
  * <b>true</b>
  * </pre>
- * 
+ *
  * and
- * 
+ *
  * <pre>
  * <b>false</b>
  * </pre>
- * 
+ *
  * .
  * @author Yossi Gil
  * @since 2015-07-17 */

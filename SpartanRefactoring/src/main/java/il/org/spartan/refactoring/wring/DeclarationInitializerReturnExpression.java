@@ -12,18 +12,18 @@ import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.LocalInliner.*;
 
 /** A {@link Wring} to convert
- * 
+ *
  * <pre>
  * int a = 3;
  * return a;
  * </pre>
- * 
+ *
  * into
- * 
+ *
  * <pre>
  * return a;
  * </pre>
- * 
+ *
  * @author Yossi Gil
  * @since 2015-08-07 */
 public final class DeclarationInitializerReturnExpression extends Wring.VariableDeclarationFragementAndStatement {

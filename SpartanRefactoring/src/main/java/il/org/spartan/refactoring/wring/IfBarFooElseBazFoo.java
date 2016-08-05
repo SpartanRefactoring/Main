@@ -13,7 +13,7 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** A {@link Wring} to convert
- * 
+ *
  * <pre>
  * if (X) {
  *   bar();
@@ -23,9 +23,9 @@ import il.org.spartan.refactoring.utils.*;
  *   foo();
  * }
  * </pre>
- * 
+ *
  * into
- * 
+ *
  * <pre>
  * if (X)
  *   bar();
@@ -33,7 +33,7 @@ import il.org.spartan.refactoring.utils.*;
  *   baz();
  * foo();
  * </pre>
- * 
+ *
  * @author Yossi Gil
  * @since 2015-09-05 */
 public final class IfBarFooElseBazFoo extends Wring<IfStatement> {

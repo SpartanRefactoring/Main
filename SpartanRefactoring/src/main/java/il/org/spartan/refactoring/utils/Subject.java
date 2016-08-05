@@ -88,6 +88,12 @@ import org.eclipse.jdt.core.dom.*;
       $.setExpression(inner);
       return $;
     }
+    public MethodInvocation toMethod(final String methodName) {
+      final MethodInvocation $ = ast.newMethodInvocation();
+      $.setExpression(inner);
+      $.setName(ast.newSimpleName(methodName));
+      return $;
+    }
   }
 
   public static class Pair extends Claimer {

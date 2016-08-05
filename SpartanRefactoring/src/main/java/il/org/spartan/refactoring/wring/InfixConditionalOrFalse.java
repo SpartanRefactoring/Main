@@ -6,17 +6,17 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** A {@link Wring} to convert
- * 
+ *
  * <pre>
  * b || false
  * </pre>
- * 
+ *
  * to
- * 
+ *
  * <pre>
  * b
  * </pre>
- * 
+ *
  * @author Yossi Gil
  * @since 2015-07-20 */
 public final class InfixConditionalOrFalse extends Wring.ReplaceCurrentNode<InfixExpression> {

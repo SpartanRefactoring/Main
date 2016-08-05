@@ -1,5 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
+import static il.org.spartan.idiomatic.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -77,7 +79,7 @@ public abstract class AncestorSearch {
         }
         @Override public ASTNode next() {
           final ASTNode $ = next;
-          next = next == until ? null : next.getParent();
+          next = eval(() -> next.getParent()).unless(next == until);
           return $;
         }
         @Override public void remove() {
