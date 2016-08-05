@@ -13,7 +13,7 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** A {@link Wring} to convert
- * 
+ *
  * <pre>
  * {
  *   ;
@@ -33,13 +33,13 @@ import il.org.spartan.refactoring.utils.*;
  *   }
  * }
  * </pre>
- * 
+ *
  * into
- * 
+ *
  * <pre>
  * g();
  * </pre>
- * 
+ *
  * @author Yossi Gil
  * @since 2015-07-29 */
 public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {

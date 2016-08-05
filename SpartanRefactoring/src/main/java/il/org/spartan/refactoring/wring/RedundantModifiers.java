@@ -11,18 +11,18 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** A {@link Wring} to convert
- * 
+ *
  * <pre>
  * <b>abstract</b>abstract <b>interface</b> a
  * {}
  * </pre>
- * 
+ *
  * to
- * 
+ *
  * <pre>
  * <b>interface</b> a {}
  * </pre>
- * 
+ *
  * @author Yossi Gil
  * @since 2015-07-29 */
 public abstract class RedundantModifiers<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> {

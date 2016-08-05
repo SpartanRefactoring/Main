@@ -15,18 +15,18 @@ import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.LocalInliner.*;
 
 /** A {@link Wring} to convert
- * 
+ *
  * <pre>
  * int a = 3;
  * b = a;
  * </pre>
- * 
+ *
  * into
- * 
+ *
  * <pre>
  * b = a
  * </pre>
- * 
+ *
  * @author Yossi Gil
  * @since 2015-08-07 */
 public final class DeclarationInitializerStatementTerminatingScope extends Wring.VariableDeclarationFragementAndStatement {

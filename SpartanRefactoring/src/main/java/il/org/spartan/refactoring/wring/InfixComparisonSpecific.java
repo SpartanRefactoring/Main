@@ -10,17 +10,17 @@ import il.org.spartan.refactoring.utils.*;
 /** A {@link Wring} that reorder comparisons so that the specific value is
  * placed on the right. Specific value means a literal, or any of the two
  * keywords
- * 
+ *
  * <pre>
  * <b>this</b>
  * </pre>
- * 
+ *
  * or
- * 
+ *
  * <pre>
  * <b>null</b>
  * </pre>
- * 
+ *
  * .
  * @author Yossi Gil
  * @since 2015-07-17 */

@@ -10,18 +10,18 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** A {@link Wring} to convert
- * 
+ *
  * <pre>
  * int a = 3;
  * return a;
  * </pre>
- * 
+ *
  * into
- * 
+ *
  * <pre>
  * return a;
  * </pre>
- * 
+ *
  * https://docs.oracle.com/javase/tutorial/java/nutsandbolts/op1.html
  * @author Yossi Gil
  * @since 2015-08-07 */
