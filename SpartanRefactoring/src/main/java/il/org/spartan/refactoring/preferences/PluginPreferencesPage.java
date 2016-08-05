@@ -36,8 +36,8 @@ public class PluginPreferencesPage extends FieldEditorPreferencePage implements 
     Plugin.getDefault().getPreferenceStore().addPropertyChangeListener(listener);
   }
 
-  /** An event handler used to re-initialize the Trimmer spartanization once a
-   * wring preference was modified. */
+  /** An event handler used to re-initialize the {@link Trimmer} spartanization
+   * once a wring preference was modified. */
   static class SpartanPropertyListener implements IPropertyChangeListener {
     @Override public void propertyChange(@SuppressWarnings("unused") final PropertyChangeEvent __) {
       // Recreate the toolbox's internal instance, adding only enabled wrings
