@@ -26,7 +26,7 @@
 			<arguments>
 				<dictionary>
 					<key>LaunchConfigHandle</key>
-					<value>&lt;project&gt;/.externalToolBuilders/org.spartan.refactoring.BuilderID.launch</value>
+					<value>&lt;project&gt;/.externalToolBuilders/ilorg.spartan.refactoring.BuilderID.launch</value>
 				</dictionary>
 			</arguments>
 		</buildCommand>
@@ -36,7 +36,7 @@
 			</arguments>
 		</buildCommand>
 		<buildCommand>
-			<name>org.spartan.refactoring.BuilderID</name>
+			<name>ilorg.spartan.refactoring.BuilderID</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
@@ -45,7 +45,7 @@
 		<nature>org.eclipse.m2e.core.maven2Nature</nature>
 		<nature>org.eclipse.pde.PluginNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
-		<nature>org.spartan.refactoring.builder.Nature</nature>
-		<nature>org.spartan.refactoring.NatureID</nature>
+		<nature>ilorg.spartan.refactoring.builder.Nature</nature>
+		<nature>ilorg.spartan.refactoring.NatureID</nature>
 	</natures>
 </projectDescription>
