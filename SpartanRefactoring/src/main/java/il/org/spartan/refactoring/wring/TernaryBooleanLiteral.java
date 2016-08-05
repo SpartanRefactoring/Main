@@ -12,49 +12,49 @@ import il.org.spartan.refactoring.utils.*;
 /** <pre>
  * a ? b : c
  * </pre>
- * 
+ *
  * is the same as
- * 
+ *
  * <pre>
  * (a && b) || (!a && c)
  * </pre>
- * 
+ *
  * if b is false than:
- * 
+ *
  * <pre>
  * (a && false) || (!a && c) == (!a && c)
  * </pre>
- * 
+ *
  * if b is true than:
- * 
+ *
  * <pre>
  * (a && true) || (!a && c) == a || (!a && c) == a || c
  * </pre>
- * 
+ *
  * if c is false than:
- * 
+ *
  * <pre>
  * (a && b) || (!a && false) == (!a && c)
  * </pre>
- * 
+ *
  * if c is true than
- * 
+ *
  * <pre>
  * (a && b) || (!a && true) == (a && b) || (!a) == !a || b
  * </pre>
- * 
+ *
  * keywords
- * 
+ *
  * <pre>
  * <b>this</b>
  * </pre>
- * 
+ *
  * or
- * 
+ *
  * <pre>
  * <b>null</b>
  * </pre>
- * 
+ *
  * .
  * @author Yossi Gil
  * @since 2015-07-20 */
@@ -66,37 +66,37 @@ public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<Condit
     return isTernaryOfBooleanLitreral(e);
   }
   /** Consider an expression
-   * 
+   *
    * <pre>
    * a ? b : c
    * </pre>
-   * 
+   *
    * ; in a sense it is the same as
-   * 
+   *
    * <pre>
    * (a && b) || (!a && c)
    * </pre>
    * <ol>
    * <li>if b is false then:
-   * 
+   *
    * <pre>
    * (a && false) || (!a && c) == !a && c
    * </pre>
-   * 
+   *
    * <li>if b is true then:
-   * 
+   *
    * <pre>
    * (a && true) || (!a && c) == a || (!a && c) == a || c
    * </pre>
-   * 
+   *
    * <li>if c is false then:
-   * 
+   *
    * <pre>
    * (a && b) || (!a && false) == a && b
    * </pre>
-   * 
+   *
    * <li>if c is true then
-   * 
+   *
    * <pre>
    * (a && b) || (!a && true) == !a || b
    * </pre>

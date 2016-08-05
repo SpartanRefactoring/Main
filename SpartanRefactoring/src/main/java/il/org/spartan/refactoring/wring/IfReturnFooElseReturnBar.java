@@ -8,20 +8,20 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** A {@link Wring} to convert
- * 
+ *
  * <pre>
  * if (x)
  *   return b;
  * else
  *   return c;
  * </pre>
- * 
+ *
  * into
- * 
+ *
  * <pre>
  * return x? b : c
  * </pre>
- * 
+ *
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfReturnFooElseReturnBar extends Wring.ReplaceCurrentNode<IfStatement> {

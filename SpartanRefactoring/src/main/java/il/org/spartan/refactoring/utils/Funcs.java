@@ -18,7 +18,14 @@ import il.org.spartan.refactoring.wring.*;
 /** Useful Functions */
 public enum Funcs {
   ;
-  private static Map<Operator, Operator> conjugate = makeConjugates();
+  @SuppressWarnings("serial") private static Map<Operator, Operator> conjugate = new HashMap<Operator, Operator>() {
+    {
+      put(GREATER, LESS);
+      put(LESS, GREATER);
+      put(GREATER_EQUALS, LESS_EQUALS);
+      put(LESS_EQUALS, GREATER_EQUALS);
+    }
+  };
 
   public static AbstractTypeDeclaration asAbstractTypeDeclaration(final ASTNode ¢) {
     return eval(() -> ((AbstractTypeDeclaration) ¢)).when(¢ instanceof AbstractTypeDeclaration);
@@ -305,7 +312,7 @@ public enum Funcs {
   public static InfixExpression flip(final InfixExpression ¢) {
     if (¢.hasExtendedOperands())
       throw new IllegalArgumentException(¢ + ": flipping undefined for an expression with extra operands ");
-    return Subject.pair(right(¢), left(¢)).to(flip(¢.getOperator()));
+    return Subject.pair(right(¢), left(¢)).to(conjugate(¢.getOperator()));
   }
   /** Makes an opposite operator from a given one, which keeps its logical
    * operation after the node swapping. ¢.¢. "&" is commutative, therefore no
@@ -313,17 +320,17 @@ public enum Funcs {
    * @param ¢ The operator to flip
    * @return The correspond operator - ¢.¢. "<=" will become ">", "+" will stay
    *         "+". */
-  public static Operator flip(final Operator ¢) {
+  public static Operator conjugate(final Operator ¢) {
     return !conjugate.containsKey(¢) ? ¢ : conjugate.get(¢);
   }
-  /** @param ¢ the node from which to extract the proper fragment
-   * @param name the name by which to look for the fragment
+  /** @param n the node from which to extract the proper fragment
+   * @param e the name by which to look for the fragment
    * @return the fragment if such with the given name exists or null otherwise
    *         (or if ¢ or name are null) */
   // TODO this seems a bug
-  public static VariableDeclarationFragment getDefinition(final ASTNode ¢, final Expression name) {
-    return hasNulls(¢, name) || ¢.getNodeType() != VARIABLE_DECLARATION_STATEMENT || name.getNodeType() != SIMPLE_NAME ? null
-        : getDefinition((VariableDeclarationStatement) ¢, (SimpleName) name);
+  public static VariableDeclarationFragment getDefinition(final ASTNode n, final Expression e) {
+    return hasNulls(n, e) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || e.getNodeType() != SIMPLE_NAME ? null
+        : getDefinition((VariableDeclarationStatement) n, (SimpleName) e);
   }
   private static VariableDeclarationFragment getDefinition(final VariableDeclarationStatement s, final SimpleName n) {
     return getVarDeclFrag(expose.fragments(s), n);
@@ -367,6 +374,9 @@ public enum Funcs {
    *         otherwise */
   public static boolean isBoolOrNull(final ASTNode ¢) {
     return is(¢, BOOLEAN_LITERAL, NULL_LITERAL);
+  }
+  public static boolean isComparison(final Operator o) {
+    return in(o, EQUALS, NOT_EQUALS, GREATER_EQUALS, GREATER, LESS, LESS_EQUALS);
   }
   public static boolean isEnumDeclaration(final BodyDeclaration ¢) {
     return is(¢, ENUM_DECLARATION);
@@ -476,14 +486,6 @@ public enum Funcs {
     final Expression $$ = PrefixNotPushdown.simplifyNot($);
     return $$ == null ? $ : $$;
   }
-  private static Map<Operator, Operator> makeConjugates() {
-    final Map<Operator, Operator> $ = new HashMap<>();
-    $.put(GREATER, LESS);
-    $.put(LESS, GREATER);
-    $.put(GREATER_EQUALS, LESS_EQUALS);
-    $.put(LESS_EQUALS, GREATER_EQUALS);
-    return $;
-  }
   /** @param ¢ the expression to return in the return statement
    * @return the new return statement */
   public static ThrowStatement makeThrowStatement(final Expression ¢) {
@@ -550,9 +552,9 @@ public enum Funcs {
   @SuppressWarnings("unchecked") public static <N extends ASTNode> N rebase(final N n, final AST t) {
     return (N) copySubtree(t, n);
   }
-  /** As elze but returns the last else statement in "if - else if - ... - else"
-   * statement
-   * @param ¢
+  /** As {@link #elze(ConditionalExpression)} but returns the last else
+   * statement in "if - else if - ... - else" statement
+   * @param ¢ JD
    * @return last nested else statement */
   public static Statement recursiveElze(final IfStatement ¢) {
     Statement $ = ¢.getElseStatement();

@@ -104,6 +104,12 @@ public class FuncsTest {
   @Test public void shortNameDouble() {
     azzert.that(spartan.shorten(t("double _;")), equalTo("d"));
   }
+  @Test public void shortNameExpressions() {
+    azzert.that(spartan.shorten(t("Expression[] _;")), equalTo("es"));
+  }
+  @Test public void shortNameExpressionsList() {
+    azzert.that(spartan.shorten(t("List<Expression> _;")), equalTo("es"));
+  }
   @Test public void shortNameExpression() {
     azzert.that(spartan.shorten(t("Expression _;")), equalTo("e"));
   }
