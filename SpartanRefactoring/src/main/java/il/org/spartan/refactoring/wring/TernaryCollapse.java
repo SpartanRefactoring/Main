@@ -12,17 +12,17 @@ import il.org.spartan.refactoring.utils.*;
 /** A {@link Wring} to simplify a conditional expression containing another
  * conditional expression, when two of the three inner expressions are
  * identical, e.g., converting
- * 
+ *
  * <pre>
  * a ? b ? x : z : z
  * </pre>
- * 
+ *
  * into
- * 
+ *
  * <pre>
  * a && b ? x : z
  * </pre>
- * 
+ *
  * .
  * @author Yossi Gil
  * @since 2015-9-19 */

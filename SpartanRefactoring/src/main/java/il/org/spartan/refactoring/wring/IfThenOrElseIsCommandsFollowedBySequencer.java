@@ -15,7 +15,7 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** A {@link Wring} to convert
- * 
+ *
  * <pre>
  * f() {
  *   x++;
@@ -27,9 +27,9 @@ import il.org.spartan.refactoring.utils.*;
  *   }
  * }
  * </pre>
- * 
+ *
  * into
- * 
+ *
  * <pre>
  * if (x) {
  *   f();
@@ -37,7 +37,7 @@ import il.org.spartan.refactoring.utils.*;
  * }
  * g();
  * </pre>
- * 
+ *
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfStatement> {

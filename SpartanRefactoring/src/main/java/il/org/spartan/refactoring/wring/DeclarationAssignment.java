@@ -10,18 +10,18 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** A {@link Wring} to convert
- * 
+ *
  * <pre>
  * int a;
  * a = 3;
  * </pre>
- * 
+ *
  * into
- * 
+ *
  * <pre>
  * int a = 3;
  * </pre>
- * 
+ *
  * @author Yossi Gil
  * @since 2015-08-07 */
 public final class DeclarationAssignment extends Wring.VariableDeclarationFragementAndStatement {

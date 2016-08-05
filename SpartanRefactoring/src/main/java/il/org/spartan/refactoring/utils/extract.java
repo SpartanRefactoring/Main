@@ -386,7 +386,7 @@ public enum extract {
   public static ThrowStatement throwStatement(final ASTNode n) {
     return asThrowStatement(extract.singleStatement(n));
   }
-  public static CompilationUnit compilationUnit(ASTNode ¢) {
+  public static CompilationUnit compilationUnit(final ASTNode ¢) {
     return (CompilationUnit) AncestorSearch.forType(COMPILATION_UNIT).from(¢);
   }
 }

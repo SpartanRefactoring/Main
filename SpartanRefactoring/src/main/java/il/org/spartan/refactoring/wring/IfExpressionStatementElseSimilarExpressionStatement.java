@@ -9,20 +9,20 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** A {@link Wring} to convert
- * 
+ *
  * <pre>
  * if (x)
  *   f(a);
  * else
  *   f(b);
  * </pre>
- * 
+ *
  * into
- * 
+ *
  * <pre>
  * f(x ? a : b);
  * </pre>
- * 
+ *
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfExpressionStatementElseSimilarExpressionStatement extends Wring.ReplaceCurrentNode<IfStatement> {
