@@ -8,20 +8,20 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** A {@link Wring} to convert
- * 
+ *
  * <pre>
  * if (x)
  *   a += 3;
  * else
  *   a += 9;
  * </pre>
- * 
+ *
  * into
- * 
+ *
  * <pre>
  * a += x ? 3 : 9;
  * </pre>
- * 
+ *
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfAssignToFooElseAssignToFoo extends Wring.ReplaceCurrentNode<IfStatement> {

@@ -366,7 +366,7 @@ public enum Funcs {
   public static boolean isBoolOrNull(final ASTNode ¢) {
     return is(¢, BOOLEAN_LITERAL, NULL_LITERAL);
   }
-  public static boolean isComparison(Operator o) {
+  public static boolean isComparison(final Operator o) {
     return in(o, EQUALS, NOT_EQUALS, GREATER_EQUALS, GREATER, LESS, LESS_EQUALS);
   }
   public static boolean isEnumDeclaration(final BodyDeclaration ¢) {

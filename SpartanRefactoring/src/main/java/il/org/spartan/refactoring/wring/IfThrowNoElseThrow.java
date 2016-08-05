@@ -10,19 +10,19 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** A {@link Wring} to convert
- * 
+ *
  * <pre>
  * if (x)
  *   throw foo();
  * throw bar();
  * </pre>
- * 
+ *
  * into
- * 
+ *
  * <pre>
  * throw a ? foo() : bar();
  * </pre>
- * 
+ *
  * @author Yossi Gil
  * @since 2015-09-09 */
 public final class IfThrowNoElseThrow extends Wring.ReplaceToNextStatement<IfStatement> {

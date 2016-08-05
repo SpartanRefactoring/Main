@@ -1,8 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
-import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
-import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.BindingUtils.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
@@ -57,7 +58,7 @@ public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression
     final IMethodBinding b = getVisibleMethod(receiver != null ? receiver.resolveTypeBinding() : container(e), "isEmpty", null, e, u);
     if (b == null)
       return null;
-    ITypeBinding t = b.getReturnType();
+    final ITypeBinding t = b.getReturnType();
     if (b == null || !"boolean".equals("" + t) && !"java.lang.Boolean".equals(t.getBinaryName()))
       return null;
     final MethodInvocation $ = Subject.operand(receiver).toMethod("isEmpty");

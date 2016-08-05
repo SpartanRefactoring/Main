@@ -11,20 +11,20 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** A {@link Wring} to convert
- * 
+ *
  * <pre>
  * if (x)
  *   if (a)
  *     f();
  * </pre>
- * 
+ *
  * into
- * 
+ *
  * <pre>
  * if (x && a)
  *   f();
  * </pre>
- * 
+ *
  * @author Yossi Gil
  * @since 2015-09-01 */
 public final class IfThenIfThenNoElseNoElse extends Wring<IfStatement> {
