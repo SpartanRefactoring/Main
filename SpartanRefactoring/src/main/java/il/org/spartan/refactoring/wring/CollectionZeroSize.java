@@ -1,49 +1,69 @@
 package il.org.spartan.refactoring.wring;
 
-import il.org.spartan.refactoring.preferences.*;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.BindingUtils.*;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.InfixExpression.*;
+
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
-import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.Operator;
-
 /** A {@link Wring} to change emptiness check from
- * <code><pre>x.size() != 0</pre></code> or <code><pre>x.size() > 0</pre></code>
- * to <code><pre>!x.isEmpty()</pre></code>. TODO add tests
+ *
+ * <pre>
+ * x.size() != 0
+ * </pre>
+ *
+ * or
+ *
+ * <pre>
+ * x.size() > 0
+ * </pre>
+ *
+ * to
+ *
+ * <pre>
+ * !x.isEmpty()
+ * </pre>
+ *
+ * .
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-24 */
 public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression> {
-  // list of accepted operators
-  final List<InfixExpression.Operator> ao = Arrays
-      .asList(new Operator[] { InfixExpression.Operator.EQUALS, InfixExpression.Operator.NOT_EQUALS, InfixExpression.Operator.GREATER });
-
   @Override ASTNode replacement(final InfixExpression e) {
-    if (!e.getAST().hasResolvedBindings() || !(e.getLeftOperand() instanceof MethodInvocation) || !(e.getRightOperand() instanceof NumberLiteral)
-        || !ao.contains(e.getOperator()))
+    if (!e.getAST().hasResolvedBindings())
       return null;
-    final MethodInvocation mi = (MethodInvocation) e.getLeftOperand();
-    final NumberLiteral nl = (NumberLiteral) e.getRightOperand();
-    if (!"size".equals(mi.getName().getIdentifier()) || Double.parseDouble(nl.getToken()) != 0)
+    final Operator o = e.getOperator();
+    if (!isComparison(o))
       return null;
-    final Expression mie = mi.getExpression();
-    final IMethodBinding iemb = BindingUtils.getVisibleMethod(mie != null ? mie.resolveTypeBinding() : BindingUtils.getClass(e), "isEmpty", null, e,
-        compilationUnit);
-    if (iemb == null || !"boolean".equals(iemb.getReturnType().toString()) && !"java.lang.Boolean".equals(iemb.getReturnType().getBinaryName()))
+    final Expression right = right(e);
+    final Expression left = left(e);
+    if (left instanceof MethodInvocation == right instanceof MethodInvocation)
       return null;
-    final MethodInvocation ie = e.getAST().newMethodInvocation();
-    ie.setExpression((Expression) ASTNode.copySubtree(e.getAST(), mi.getExpression()));
-    ie.setName(e.getAST().newSimpleName("isEmpty"));
-    ASTNode $;
-    if (e.getOperator().equals(InfixExpression.Operator.EQUALS))
-      $ = ie;
-    else {
-      $ = e.getAST().newPrefixExpression();
-      ((PrefixExpression) $).setOperator(PrefixExpression.Operator.NOT);
-      ((PrefixExpression) $).setOperand(ie);
-    }
-    return $;
+    if (left instanceof NumberLiteral == right instanceof NumberLiteral)
+      return null;
+    if (left instanceof MethodInvocation)
+      return replacement(e, o, (MethodInvocation) left, (NumberLiteral) right);
+    return replacement(e, conjugate(o), (MethodInvocation) right, (NumberLiteral) left);
+  }
+  private static ASTNode replacement(final InfixExpression e, final Operator o, final MethodInvocation i, final NumberLiteral l) {
+    if (!"size".equals(i.getName().getIdentifier()) || Double.parseDouble(l.getToken()) != 0)
+      return null;
+    final CompilationUnit u = extract.compilationUnit(e);
+    if (u == null)
+      return null;
+    final Expression receiver = i.getExpression();
+    final IMethodBinding b = getVisibleMethod(receiver != null ? receiver.resolveTypeBinding() : container(e), "isEmpty", null, e, u);
+    if (b == null)
+      return null;
+    ITypeBinding t = b.getReturnType();
+    if (b == null || !"boolean".equals("" + t) && !"java.lang.Boolean".equals(t.getBinaryName()))
+      return null;
+    final MethodInvocation $ = Subject.operand(receiver).toMethod("isEmpty");
+    if (o.equals(InfixExpression.Operator.EQUALS))
+      return $;
+    return Subject.operand($).to(NOT);
   }
   @Override String description(final InfixExpression n) {
     final Expression e = ((MethodInvocation) n.getLeftOperand()).getExpression();

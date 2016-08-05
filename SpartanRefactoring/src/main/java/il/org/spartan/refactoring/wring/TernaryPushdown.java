@@ -75,9 +75,8 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
     if (!same(receiver1, receiver2)) {
       if (receiver1 == null || !same(es1, es2))
         return null;
-      final ConditionalExpression c = Subject.pair(receiver1, receiver2).toCondition(e.getExpression());
       final MethodInvocation $ = duplicate(e1);
-      $.setExpression(parenthesize(c));
+      $.setExpression(parenthesize(Subject.pair(receiver1, receiver2).toCondition(e.getExpression())));
       return $;
     }
     if (es1.size() != es2.size())
