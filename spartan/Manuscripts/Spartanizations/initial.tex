@@ -1,87 +1,92 @@
-
 DO NOT REPEAT THE TABLES IN GOOGLE DOCS.
 Just say: 26 projects mention summary results only.
-Check out all sheets. I think only bzip2 makes sense.\\
+Check out all sheets. I think only bzip2 makes sense.⏎
 
 Cite naturalness of software.
 
-Preliminary results supporting the 
+Preliminary results supporting the
 "Hypothesis that can never be proved"
-Because this is not what you like.\\
+Because this is not what you like.⏎
 
-------------------------------------
+\hrule
 
-In \cref{table:proj-stat-original} are reported the results obtained by applying Jack to our dataset. 
-After removing the unessential code and obtaining boilerplate code we computed compression ratio. 
-We also applied the Burroughs-Wheeler algorithm to the outcome of the Jack algorithm.
-As we can see if we compare the results reported in \cref{table:proj-stat-original}
-and \cref{table:proj-stat-original} the compression ratio is higher if the BW algorithm
-is applied to the boilerplate code.
+In \cref{table:original} are reported the results obtained by applying Jack to
+our dataset. After removing the unessential code and obtaining boilerplate
+code we computed compression ratio. We also applied the Burroughs-Wheeler
+algorithm to the outcome of the Jack algorithm. As we can see if we compare
+the results reported in \cref{table:original} and \cref{table:original} the
+compression ratio is higher if the BW algorithm is applied to the boilerplate
+code.
 
 \begin{table}
-\centering
-\scalebox{0.8}{
-\begin{tabular}{lccccc}
-\toprule
-& \textbf{Jack size} & \textbf{comp. ratio} & \textbf{Jack size BZip2} & \textbf{Ratio} & \textbf{Combined ratio}\\ 
-\midrule
-Average & 5078034 & 2.78 & 729934 & 6.60 & 18.37\\
-Minimum & 456050 & 1.73 & 77706 & 4.89 & 10.18\\
-Maximum & 19697634 & 12.85 & 3414889 & 8.68 & 83.65\\
-Range & 19241584 & 11.12 & 3337183 & 3.79 & 73.47\\
-Median & 1822510 & 2.34 & 343815 & 6.50 & 15.95\\
-\bottomrule
-\end{tabular}}
-\label{table:proj-stat-original}
-\caption{The results of the compression using the Jack algorithm alone and both Jack and 
-Burroughs-Wheeler algorithms combined.}
+  \centering
+  \scalebox{0.8}{
+    \begin{tabular}{lccccc}
+      \toprule
+              & \textbf{Jack size} & \textbf{comp. ratio} & \textbf{Jack size BZip2} & \textbf{Ratio} & \textbf{Combined ratio}⏎
+      \midrule
+      Average & 5078034            & 2.78                 & 729934                   & 6.60           & 18.37⏎
+      Minimum & 456050             & 1.73                 & 77706                    & 4.89           & 10.18⏎
+      Maximum & 19697634           & 12.85                & 3414889                  & 8.68           & 83.65⏎
+      Range   & 19241584           & 11.12                & 3337183                  & 3.79           & 73.47⏎
+      Median  & 1822510            & 2.34                 & 343815                   & 6.50           & 15.95⏎
+      \bottomrule
+    \end{tabular}}
+  \label{table:original}
+  \caption{The results of the compression using the Jack algorithm alone and both Jack and
+  Burroughs-Wheeler algorithms combined.}
 \end{table}
 
 We than applied a set of spartanizations (partial spartanization) to all the
-software systems.  Afterwards we applied both the Jack and the BW algorithm.
-The results are reported in \cref{table:proj-stat-partial} where it is also
-reported the improvement in the compression due to the spartanization.  It is
+software systems. Afterwards we applied both the Jack and the BW algorithm.
+The results are reported in \cref{table:partial} where it is also
+reported the improvement in the compression due to the spartanization. It is
 worth to note that we have an improvement in any statistics, in other words the
 spartanization affected positively the compression, increasing the compression
-ratio.  This is counter intuitive, being a small file most difficult to
+ratio. This is counter intuitive, being a small file most difficult to
 compress than a larger one (REFORMULATE)
 
-\begin{table*}
-\centering
-\scalebox{0.8}{
-\begin{tabular}{lccccc}
-\hline
- & \textbf{Jack size} &	\textbf{Jack size BZip2} & \textbf{Ratio} & 
- \textbf{Improvement in Comp. Ratio with Spartanization} & 
- \textbf{Total Improvement} \\
- \hline
-Average & 5050647 & 719488 & 6.66 & 0.06 & 1.01\\
-Minimum & 439825 & 75391 & 4.90 & -0.37 & 0.21\\
-Maximum & 19173224 & 3275918 & 8.79 & 0.49 & 1.07\\
-Range & 18733399 & 3200527 & 3.89 & 0.86 & 0.87\\
-Median & 1959917 & 341851 & 6.79 & 0.08 & 1.04\\
-\end{tabular}}
-\label{table:proj-stat-partial}
-\caption{The results after performing a partial spartanization of the code, compared 
-with the compression ratios obtained with the Jack and Burroughs-Wheeler algorithm.}
-\end{table*}
+\begin{table}
+  \label{table:partial}
+  \caption{The results after performing a partial spartanization of the code, compared
+  with the compression ratios obtained with the Jack and Burroughs-Wheeler algorithm.}
+  \centering
+  \scalebox{0.8}{
+    \begin{tabular}{lccccc}
+      \toprule
+      & \textbf{Jack size} & \textbf{Jack size BZip2} & \textbf{Ratio} &
+      \textbf{Improvement in Comp. Ratio with Spartanization} &
+      \textbf{Total Improvement}⏎
+      \midrule
+      Average & 5050647  & 719488  & 6.66 & 0.06  & 1.01⏎
+      Minimum & 439825   & 75391   & 4.90 & -0.37 & 0.21⏎
+      Maximum & 19173224 & 3275918 & 8.79 & 0.49  & 1.07⏎
+      Range   & 18733399 & 3200527 & 3.89 & 0.86  & 0.87⏎
+      Median  & 1959917  & 341851  & 6.79 & 0.08  & 1.04⏎
+      \bottomrule
+    \end{tabular}}
+\end{table}
 
-\begin{table*}
-\centering
-\scalebox{0.85}{
-\begin{tabular}{lccccc}
-\hline
- & \textbf{Jack size} &	\textbf{Jack size BZip2} & \textbf{Ratio} & 
- \textbf{Overall Improvement} & 
- \textbf{Improvement over Partial Spartanization} \\
- \hline
-Average & 4947319 & 713857 & 6.56 & -0.03 & -0.09\\
-Minimum & 430375 & 75160 & 4.89 & -0.40 & -0.28\\
-Maximum & 18890899 & 3244851 & 8.72 & 0.41 & -0.01 \\
-Range & 18460524 & 3169691 & 3.83 & 0.81 & 0.27\\
-Median & 1923056 & 339930 & 6.70 & 0.00 & -0.09 \\
-\end{tabular}}
-\label{table:proj-stat-total}
-\caption{The results after performing a total spartanization of the code, compared 
-with the compression ratios obtained with the Jack and Burroughs-Wheeler algorithm.}
-\end{table*}
+\begin{table}
+  \label{table:total}
+  \caption{The results after performing a total spartanization of the code, compared
+  with the compression ratios obtained with the Jack and Burroughs-Wheeler algorithm.}
+  \centering
+  \scalebox{0.85}{
+    \begin{tabular}{lccccc}
+      \toprule
+      & \textbf{Jack size} & \textbf{Jack size BZip2} & \textbf{Ratio} &
+      \textbf{Overall Improvement} &
+      \textbf{Improvement over Partial Spartanization}⏎
+      \midrule
+      Average & 4947319  & 713857  & 6.56 & -0.03 & -0.09⏎
+      Minimum & 430375   & 75160   & 4.89 & -0.40 & -0.28⏎
+      Maximum & 18890899 & 3244851 & 8.72 & 0.41  & -0.01⏎
+      Range   & 18460524 & 3169691 & 3.83 & 0.81  & 0.27⏎
+      Median  & 1923056  & 339930  & 6.70 & 0.00  & -0.09⏎
+      \bottomrule
+    \end{tabular}}
+\end{table}
+
+
+

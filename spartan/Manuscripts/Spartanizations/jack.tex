@@ -14,7 +14,7 @@ Specifically, in order to do that, Jack automatically removes:
 \item strings perhaps use
 \item keywords are replaced by a single symbol rep
 but not identifiers. Take note that it is comon wisdom that the bulk of code is identifiers.
-\item same for operators such as -> ++, <<<<=
+\item same for multi-character operators such as \cc{->}, \cc{[]}, and \cc{<<<<=}
 \end{itemize}
 
 The second compression algorithm was invented by Burroughs and Wheeler
@@ -32,14 +32,15 @@ statistics is reported in \cref{table:corpus}
   \caption{The results of the compression using the Burroughs-Wheeler algorithm}
   \centering
   \scalebox{0.8}{
-    \begin{tabular}{lccc}
-      \hline
+    \begin{tabular}{l*3r}
+      \toprule
               & \textbf{Java size} & \textbf{Java size BZip2} & \textbf{Java comp. ratio}⏎
-      \hline
-      Average & 12370223 & 1272331 & 9.25⏎
-      Minimum & 1 019125 & 129 114 & 7.22⏎
-      Maximum & 46965422 & 5607599 & 12.96⏎
-      Range & 45946297 & 5478485 & 5.74⏎
-      Median & 5128541 & 607535 & 8.91⏎
+      \midrule
+      Average & 12370223           & 1272331                  & 9.25⏎
+      Minimum & 1 019125           & 129 114                  & 7.22⏎
+      Maximum & 46965422           & 5607599                  & 12.96⏎
+      Range   & 45946297           & 5478485                  & 5.74⏎
+      Median  & 5128541            & 607535                   & 8.91⏎
+      \bottomrule
     \end{tabular}}
 \end{table}
