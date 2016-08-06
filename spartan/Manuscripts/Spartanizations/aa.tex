@@ -17,10 +17,35 @@ Telling the story of ``Spartan Programming'', one particular sytle guideline for
 \Java, this manuscript is also likely to be contentious, even more so, since 
 ``spartanized'' code such as 
 \begin{code}{JAVA}
-copy here something really wild
-\end{code}
-may look bizzare to eyes accustomed to traditional \Java code.
+  public static <T, C extends Collection<T>> 
+                                accumulate<T, C> to(final C c) {
+    return new accumulate<T, C>() {
+      @Override public accumulate<T, C> add(final @Nullable T t) {
+        if (t == null)
+          return this;
+        assert t != null;
+        c.add(t);
+        return this;
+      }
+      @Override public C elements() {
+        return c;
+      }
+    };
+  }
+  \end{code}
 
+\begin{code}{JAVA}
+
+default accumulate<T, C> addAll(final Iterable<? extends T>... tss) {
+  for (final Iterable<? extends T> ts : tss)
+    addAll(ts);
+  return this;
+}
+ 
+\end{code}
+
+  
+may look bizzare to eyes accustomed to traditional \Java code.
 
 
 This manuscript reports 
