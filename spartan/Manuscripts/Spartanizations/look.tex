@@ -7,123 +7,123 @@ add few examples perhaps from spartan library or plugin.
 Fig. \ref{fig:code-before-spartanization} shows an example of class 
 that present some issues or, put in other words, spartanization opportunity. 
 
-\begin{figure}
-\begin{code}{JAVA}
-
-private static int sendAnEmail(String from, List<String> recepients, String subject, 
-         String body, List<File> attachements, boolean actuallySend)
-         throws Throwable {
-     List<MimeBodyPart> parts = new ArrayList<MimeBodyPart>();
-     // ''Build a sub-part for each attachment''
-     for (Iterator<File> i = attachements.iterator(); i.hasNext();) {
-         MimeBodyPart currPart = new MimeBodyPart();
-         FileDataSource fds = new FileDataSource(i.next());
-         currPart.setDataHandler(new DataHandler(fds));
-         currPart.setFileName(fds.getName());
-         parts.add(currPart);
-     }
-     // ''Build the message. add sub-parts if exist''
-     Session ses = Session.getInstance(new Properties());
-     Message msg = new MimeMessage(ses);
-     if (parts.size() == 0)
-         msg.setText(body); // ''A single part message''
-     else {
-         // ''A Multi part message''
-         MimeBodyPart textPart = new MimeBodyPart();
-         textPart.setText(body);
-         Multipart mp = new MimeMultipart();
-         mp.addBodyPart(textPart);
-         for (Iterator<MimeBodyPart> i = parts.iterator(); i.hasNext();)
-             mp.addBodyPart(i.next());
-         msg.setContent(mp);
-     }
-     msg.setFrom(new InternetAddress(from));
-     msg.setSubject(subject);
-     msg.setSentDate(new Date());
-     Transport transp = ses.getTransport("smtp");
-     transp.connect(smtpServer, port, userName, password);
-     List<InternetAddress> toAddresses = new ArrayList<InternetAddress>();
-     for (Iterator<String> i = recepients.iterator(); i.hasNext();) {
-         String curr = i.next();
-         InternetAddress[] temp = InternetAddress.parse(curr, false);
-         toAddresses.addAll(Arrays.asList(temp));
-     }
-     InternetAddress[] arr = new InternetAddress[toAddresses.size()];
-     int j = 0;
-     for (Iterator<InternetAddress> i = toAddresses.iterator(); i.hasNext(); ++j) {
-         InternetAddress curr = i.next();
-         arr[j] = curr;
-     }
-     msg.addRecipients(Message.RecipientType.TO, arr);
-     if (actuallySend)
-         transp.sendMessage(msg, arr);
-     transp.close();
-     return arr.length;
- }
-
-\end{code}
-\caption{An example of Java code \textbf{before} the spartanization}
-\label{fig:code-before-spartanization}
-\end{figure}
-
-Fig. \ref{fig:code-after-spartanization} shows the same class after several
-subsequent spartanizations. 
-
-\begin{figure}
-\begin{code}{JAVA}
-
-private static void sendEmail(final String from, final List<String> to, 
-                                  final String subject, final String body,
-    final List<File> attachments) throws Throwable {
-    final Session s = Session.getInstance(new Properties());
-    final Message m = new MimeMessage(s);
-    setHeaders(m, from, to, subject);
-    setContent(m, body, attachments);
-    sendMessage(m, s);
-}
-
-private static void setHeaders(final Message m, final String from, 
-                                 final List<String> to, final String subject) {
-    m.setSentDate(new Date());
-    m.setFrom(new InternetAddress(from));
-    for (final String t : to)
-    m.addRecipients(Message.RecipientType.TO, InternetAddress.parse(t, false));
-    m.setSubject(subject);
-}
-
-private static void setContent(final Message m, final String body, 
-                      final List<File> attachments) throws MessagingException {
-    if (attachments.size() == 0) { // ''No attachments to send''
-    m.setText(body);
-    return;
-    }
-    // ''Generate a multi-part message''
-    final MimeBodyPart textPart = new MimeBodyPart();
-    textPart.setText(body);
-    final Multipart mp = new MimeMultipart();
-    mp.addBodyPart(textPart);
-    for (final File f : attachments)
-    mp.addBodyPart(makeBodyPart(f));
-    m.setContent(mp);
-}
-
-private static MimeBodyPart makeBodyPart(final File f) throws MessagingException {
-    final MimeBodyPart $ = new MimeBodyPart();
-    final FileDataSource fds = new FileDataSource(f);
-    $.setDataHandler(new DataHandler(fds));
-    $.setFileName(fds.getName());
-    return $;
-}
-
-private static void sendMessage(final Message m, final Session s) {
-    final Transport t = s.getTransport("smtp");
-    t.connect(smtpServer, port, userName, password);
-    t.sendMessage(m, m.getAllRecipients());
-    t.close();
-}
-
-\end{code}
-\caption{An example of Java code \textbf{after} the spartanization}
-\label{fig:code-after-spartanization}
-\end{figure}
+% \begin{figure}
+% \begin{code}{JAVA}
+% 
+% private static int sendAnEmail(String from, List<String> recepients, String subject, 
+%          String body, List<File> attachements, boolean actuallySend)
+%          throws Throwable {
+%      List<MimeBodyPart> parts = new ArrayList<MimeBodyPart>();
+%      // ''Build a sub-part for each attachment''
+%      for (Iterator<File> i = attachements.iterator(); i.hasNext();) {
+%          MimeBodyPart currPart = new MimeBodyPart();
+%          FileDataSource fds = new FileDataSource(i.next());
+%          currPart.setDataHandler(new DataHandler(fds));
+%          currPart.setFileName(fds.getName());
+%          parts.add(currPart);
+%      }
+%      // ''Build the message. add sub-parts if exist''
+%      Session ses = Session.getInstance(new Properties());
+%      Message msg = new MimeMessage(ses);
+%      if (parts.size() == 0)
+%          msg.setText(body); // ''A single part message''
+%      else {
+%          // ''A Multi part message''
+%          MimeBodyPart textPart = new MimeBodyPart();
+%          textPart.setText(body);
+%          Multipart mp = new MimeMultipart();
+%          mp.addBodyPart(textPart);
+%          for (Iterator<MimeBodyPart> i = parts.iterator(); i.hasNext();)
+%              mp.addBodyPart(i.next());
+%          msg.setContent(mp);
+%      }
+%      msg.setFrom(new InternetAddress(from));
+%      msg.setSubject(subject);
+%      msg.setSentDate(new Date());
+%      Transport transp = ses.getTransport("smtp");
+%      transp.connect(smtpServer, port, userName, password);
+%      List<InternetAddress> toAddresses = new ArrayList<InternetAddress>();
+%      for (Iterator<String> i = recepients.iterator(); i.hasNext();) {
+%          String curr = i.next();
+%          InternetAddress[] temp = InternetAddress.parse(curr, false);
+%          toAddresses.addAll(Arrays.asList(temp));
+%      }
+%      InternetAddress[] arr = new InternetAddress[toAddresses.size()];
+%      int j = 0;
+%      for (Iterator<InternetAddress> i = toAddresses.iterator(); i.hasNext(); ++j) {
+%          InternetAddress curr = i.next();
+%          arr[j] = curr;
+%      }
+%      msg.addRecipients(Message.RecipientType.TO, arr);
+%      if (actuallySend)
+%          transp.sendMessage(msg, arr);
+%      transp.close();
+%      return arr.length;
+%  }
+% 
+% \end{code}
+% \caption{An example of Java code \textbf{before} the spartanization}
+% \label{fig:code-before-spartanization}
+% \end{figure}
+% 
+% Fig. \ref{fig:code-after-spartanization} shows the same class after several
+% subsequent spartanizations. 
+% 
+% \begin{figure}
+% \begin{code}{JAVA}
+% 
+% private static void sendEmail(final String from, final List<String> to, 
+%                                   final String subject, final String body,
+%     final List<File> attachments) throws Throwable {
+%     final Session s = Session.getInstance(new Properties());
+%     final Message m = new MimeMessage(s);
+%     setHeaders(m, from, to, subject);
+%     setContent(m, body, attachments);
+%     sendMessage(m, s);
+% }
+% 
+% private static void setHeaders(final Message m, final String from, 
+%                                  final List<String> to, final String subject) {
+%     m.setSentDate(new Date());
+%     m.setFrom(new InternetAddress(from));
+%     for (final String t : to)
+%     m.addRecipients(Message.RecipientType.TO, InternetAddress.parse(t, false));
+%     m.setSubject(subject);
+% }
+% 
+% private static void setContent(final Message m, final String body, 
+%                       final List<File> attachments) throws MessagingException {
+%     if (attachments.size() == 0) { // ''No attachments to send''
+%     m.setText(body);
+%     return;
+%     }
+%     // ''Generate a multi-part message''
+%     final MimeBodyPart textPart = new MimeBodyPart();
+%     textPart.setText(body);
+%     final Multipart mp = new MimeMultipart();
+%     mp.addBodyPart(textPart);
+%     for (final File f : attachments)
+%     mp.addBodyPart(makeBodyPart(f));
+%     m.setContent(mp);
+% }
+% 
+% private static MimeBodyPart makeBodyPart(final File f) throws MessagingException {
+%     final MimeBodyPart $ = new MimeBodyPart();
+%     final FileDataSource fds = new FileDataSource(f);
+%     $.setDataHandler(new DataHandler(fds));
+%     $.setFileName(fds.getName());
+%     return $;
+% }
+% 
+% private static void sendMessage(final Message m, final Session s) {
+%     final Transport t = s.getTransport("smtp");
+%     t.connect(smtpServer, port, userName, password);
+%     t.sendMessage(m, m.getAllRecipients());
+%     t.close();
+% }
+% 
+% \end{code}
+% \caption{An example of Java code \textbf{after} the spartanization}
+% \label{fig:code-after-spartanization}
+% \end{figure}
 
