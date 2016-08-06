@@ -1,100 +1,98 @@
-As a whole, the stackoverlow\urlref{http://stackoverlow.com} community 
-recommedns against asking coding style and coding convetions related questions. 
-Tag \cc{code-styling} and its many synonyms: \cc{code-convention}, 
-\cc{coding-guidelines} are specifically 
-earmarked\urlref{http://stackoverflow.com/tags/coding-style/info} as 
+As a whole, the stackoverlow\urlref{http://stackoverlow.com} community
+recommedns against asking coding style and coding convetions related questions.
+Tag \cc{code-styling} and its many synonyms: \cc{code-convention},
+\cc{coding-guidelines} are specifically
+earmarked\urlref{http://stackoverflow.com/tags/coding-style/info} as
 \begin{quote}
-DO NOT USE! This tag refers to an entirely opinionated subject and is therefore 
-no longer on-topic. Refactoring, braces, indentation, Hungarian notation, and 
-other stylistic issues relating to code. 
+DO NOT USE! This tag refers to an entirely opinionated subject and is therefore
+no longer on-topic. Refactoring, braces, indentation, Hungarian notation, and
+other stylistic issues relating to code.
 \end{quote}
-But it is not only curly braces matters that may raise 
-this kind of ``religious'' wars. Even the famous convention maxim ``\emph{gotos 
-are evil}''~\cite{Dijksta:must be in bib} was challenged in the scientific 
+But it is not only curly braces matters that may raise
+this kind of ‟religious” wars. Even the famous convention maxim ‟\emph{gotos
+are evil}”~\cite{Dijksta:must be in bib} was challenged in the scientific
 literature~\cite{Knuth: and there are several others}.
 
-Telling the story of ``Spartan Programming'', one particular sytle guideline for 
-\Java, this manuscript is also likely to be contentious, even more so, since 
-``spartanized'' code such as 
+Telling the story of ‟Spartan Programming”, one particular style guideline for
+\Java, this manuscript is also likely to be contentious, even more so, since
+‟spartanized” code such as
 
 \begin{figure}[h]
-\begin{code}{JAVA}
-  public static <T, C extends Collection<T>> 
-                                accumulate<T, C> to(final C c) {
-    return new accumulate<T, C>() {
-      @Override public accumulate<T, C> add(final @Nullable T t) {
-        if (t == null)
-          return this;
-        assert t != null;
-        c.add(t);
+  \begin{Code}{JAVA}{Where was this taken from?}
+public static <T, C extends Collection<T>>
+                              accumulate<T, C> to(final C c) {
+  return new accumulate<T, C>() {
+    @Override public accumulate<T, C> add(final @Nullable T t) {
+      if (t == null)
         return this;
-      }
-      @Override public C elements() {
-        return c;
-      }
-    };
-  }
-  \end{code}
+      assert t != null;
+      c.add(t);
+      return this;
+    }
+    @Override public C elements() {
+      return c;
+    }
+  };
+}
+\end{Code}
 \label{figure:shock}
 \caption{An example of spartan code}
 \end{figure}
 
 \begin{figure}[h]
-\begin{code}{JAVA}
+\begin{Code}{JAVA}{Where was this taken from?}
 default accumulate<T, C> addAll(final Iterable<? extends T>... tss) {
   for (final Iterable<? extends T> ts : tss)
     addAll(ts);
   return this;
 }
-\end{code}
+\end{Code}
 \label{figure:shock-2}
 \caption{An example of spartan code}
 \end{figure}
-  
 
-% \begin{code}{JAVA}
-% /** Tests for primality.
-%   * @param ¢ candidate to be tested
-%   * @return <code><b>true</b></code> <i>iff</i> the parameter is prime. */
-% public static boolean isPrime(final int ¢) {
-%   return ¢ < -1 && isPrime(-¢) // deal with negative values
-%       || ¢ > 1 && isPrime¢(¢); // any integer >- 2
-% }
-% private static boolean isPrime¢(final int ¢) {
-%   for (int d = 2; d * d <= ¢; d++)
-%     if (¢ \% d == 0)
-%       return false;
-%   return true;
-% }
-% \end{code}
+\begin{Code}{JAVA}{Where was this taken from?}
+/** Tests for primality.
+  * @param ¢ candidate to be tested
+  * @return <code><b>true</b></code> <i>iff</i> the parameter is prime. */
+public static boolean isPrime(final int ¢) {
+  return ¢ < -1 && isPrime(-¢) // deal with negative values
+      || ¢ > 1 && isPrime¢(¢); // any integer >- 2
+}
+private static boolean isPrime¢(final int ¢) {
+  for (int d = 2; d * d <= ¢; d++)
+    if (¢ ％ d == 0)
+      return false;
+  return true;
+}
+\end{Code}
 \begin{figure}[h]
-\begin{code}{JAVA}
+  \begin{Code}{JAVA}{Where was this taken from?}
 default Set<Variable> freeVariables() {
-    final Set<Variable> $ = new LinkedHashSet<>();
+    final Set<Variable>~$ = new LinkedHashSet<>();
     if (isVariable())
-      $.add((Variable) this);
+~$.add((Variable) this);
     else
       for (final Term ¢ : this)
-        $.addAll(¢.freeVariables());
-    return $;
+~$.addAll(¢.freeVariables());
+    return~$;
   }
-\end{code}
+\end{Code}
 \label{figure:shock-3}
 \caption{An example of spartan code}
 \end{figure}
 
-  
 may look bizzare to eyes accustomed to traditional \Java code.
 
-This manuscript reports in 
+This manuscript reports in
 
 Mention that \Go forces you to use them!
-Mention that are compulsory in \kk{synchronized}, 
-\kk{try},  
-\kk{catch},  
-\kk{finally},  
+Mention that are compulsory in \kk{synchronized},
+\kk{try},
+\kk{catch},
+\kk{finally},
 
-but on the other hand, in a recent addition lambda expressions\cite{lambda}
+but on the other hand, in a recent addition lambda expressions~\cite{lambda}
 the options are maintained.
 You can write
 \begin{JAVA}
@@ -106,21 +104,20 @@ and
 \end{JAVA}
 check this.
 
-``\emph{the braces war}''
-
+‟\emph{the braces war}”
 
 Why should this be important?
 \begin{itemize}
-    \item Easy to write in  your own style, but how can 
+    \item Easy to write in your own style, but how can
       you always adjust to the style of others.
       Waste of neurons.
-    \item Code comparison. Which part of my change is semantical and which 
+    \item Code comparison. Which part of my change is semantical and which
       part of this my own personal style.
     \item Code analysis tools should adjust to different styles and many
         different ways for doing the same thing.
-    \item METRICS: IN a recent paper Gal and I showed that size 
+    \item METRICS: IN a recent paper Gal and I showed that size
       is the only thing that matters.
-    \item METRICS: IN a recent paper Gal and I showed that the notion of 
+    \item METRICS: IN a recent paper Gal and I showed that the notion of
       "size" is very different in different projects.
 \end{itemize}
 
@@ -128,16 +125,16 @@ The holly grail of "canonical representation of code" .
 Does LOC mean anything?
 Not if you apply different indentation rules.
 A better metric is NOT = number of tokens.
-But even this is influenced by coding styles, including but 
+But even this is influenced by coding styles, including but
 not limited to the famous braces war.
 
 \textbf{Mention naturlaization (MAT: moved here from the beginning)}
 
-Some recent studies investigated the presence of some regularities in code that 
+Some recent studies investigated the presence of some regularities in code that
 make source code repetitive and predictable as well as natural language.
-In Hindle et al. \cite{Hindle:Bar:Su:Gabel:Devanbu:2012} analyzed a large corpora composed
+In Hindle et al.~\cite{Hindle:Bar:Su:Gabel:Devanbu:2012} analyzed a large corpora composed
 by ... of software systems and compared the properties with natural language.
-They found out that source code present many statistical properties that 
+They found out that source code present many statistical properties that
 
 \subsection{Background}
 There is very little scientific work on style.
@@ -148,43 +145,42 @@ Mention the style guides on C++ and Java. Oracle.
 But where these styles a matter of a careful and raional design process?
 What were the underlying principles.
 
-Last paragraph: many people believe that style is irrelevant and unimportant. 
+Last paragraph: many people believe that style is irrelevant and unimportant.
 We believe that it is.
 
 \subsection{Spartan programming}
 First occurred in a stupid TOOLS USA 199X. tutorial.
-The point of making and perfecting it was to "be rational" and 
-reexamine all assumptions. 
+The point of making and perfecting it was to "be rational" and
+reexamine all assumptions.
 Rules have changed.
 Utter despise of backward compatability the need to rewrite the code.
 
-Mention it.  The spartanization tool.
+Mention it. The spartanization tool.
 
-Say that some of your alma mater gang love to do this kind of metrics, but 
+Say that some of your alma mater gang love to do this kind of metrics, but
 no one really knows whether the results are applicable to different projects
-since 
+since
 \cite{Turnu:Concas:Marchesi:Tonelli:11}
 
-the "Idionsyncratic Projects Hypothesis" I also had a plateau paper with 
+the "Idionsyncratic Projects Hypothesis" I also had a plateau paper with
 Dany and Maayan about this. A number o years ago.
-
 
 This paper gives an overview of spartanization, future work will be
 experiments.
 
 \subsection{Contribution}
 
-\textbf{(the following text has been adapted by the wiki)}\\
+\textbf{(the following text has been adapted by the wiki)}⏎
 
 Spartan programming is an approach to writing code aimed at improving at
 reducing code complexity by appling many techininques, some already known in
 literature, some others more novel. It was introduced in the mid on nienties
-and it has been a part of some teachings.  Its rationale is based on some
+and it has been a part of some teachings. Its rationale is based on some
 principles, but at the end of the day it is a techninque to pursue an extreme
 minimalism code writing.
 
 One of these principles is the "Babylonian Tower Principle": It states that the
-number of abstraction levels of a software systems is limited.  A famous study
+number of abstraction levels of a software systems is limited. A famous study
 by Miller, also proved that the cognitive burden people might bear, namely the
 number of cognitive items that can be processed in human being working memory,
 is limited to 7 (plus or minus two) elements. By simplifying the basic element
@@ -193,34 +189,33 @@ developers' cognitive burden.
 
 However, being in a certain sense, counter intuitive, in order to apply
 Spartanization on their working routines, the developers need to respect a firm
-discipline.  From a certain standpoint, Spartan Programming might be seen as a
-list of code style presciption, but it would just scratch the surface.  It is
-far more than that, since it 
+discipline. From a certain standpoint, Spartan Programming might be seen as a
+list of code style presciption, but it would just scratch the surface. It is
+far more than that, since it
 
 Being minialized, spartanized code might be less readable that the original.
-This is ...  Spartan programming is not directly concerned with readability, at
+This is ... Spartan programming is not directly concerned with readability, at
 least not in its subjective and cultural-dependent sense. In fact, spartan
 programs will bring much misery to anyone preferring long, verbose programs.
 
-Spartanization aims at minimizing Vertical complexity (the number of lines of code), 
-Horizontal complexity, the number of tokens, character, parameters and variables, 
+Spartanization aims at minimizing Vertical complexity (the number of lines of code),
+Horizontal complexity, the number of tokens, character, parameters and variables,
 as well as reduce the number of loops and conditional statements.
-Spartan programming prescribes, a careful use of the variables, stressing the need 
-to inline variables that are used only once and emphasizing the use of foreach loops 
-in languages implementing it. Variables visibility and accessibility should also be 
-possibly minimized, favouring the use of private over public variables whenever it 
-is possible. 
+Spartan programming prescribes, a careful use of the variables, stressing the need
+to inline variables that are used only once and emphasizing the use of foreach loops
+in languages implementing it. Variables visibility and accessibility should also be
+possibly minimized, favouring the use of private over public variables whenever it
+is possible.
 
-Also the names of variables should be taken short for local variables, with short scope, 
-leaving to their class names to explicit their behaviour. Minimizing variability using 
-final and @NonNull annotation. Stress the use of generic names technique. Minimize lifespan 
-avoiding persistent variables when it is possible. Favour the use of collection instead 
-of arrays. Interfaces should present a minimal number of parameters, also minimizing 
-the interaction between them. Favour ternarization over the use of if-then-else constructs 
-and use a simplified version of the conditionals that implies an early return. Moreover, 
-use an early exit logic with continue, break and return instructions. 
+Also the names of variables should be taken short for local variables, with short scope,
+leaving to their class names to explicit their behaviour. Minimizing variability using
+final and @NonNull annotation. Stress the use of generic names technique. Minimize lifespan
+avoiding persistent variables when it is possible. Favour the use of collection instead
+of arrays. Interfaces should present a minimal number of parameters, also minimizing
+the interaction between them. Favour ternarization over the use of if-then-else constructs
+and use a simplified version of the conditionals that implies an early return. Moreover,
+use an early exit logic with continue, break and return instructions.
 
-Everything should be formatted in order to make an efficient use of the screen space, 
-by removing unnecessary tokens (i.e. redundant parentheses, etc.). 
-Methods should be as short as possible. 
-
+Everything should be formatted in order to make an efficient use of the screen space,
+by removing unnecessary tokens (i.e. redundant parentheses, etc.).
+Methods should be as short as possible.
