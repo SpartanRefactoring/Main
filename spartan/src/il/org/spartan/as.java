@@ -1,9 +1,8 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
 
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.azzert.assertEquals;
-import static org.junit.Assert.*;
 import java.util.*;
 import org.eclipse.jdt.annotation.*;
 import org.junit.*;
@@ -15,8 +14,6 @@ import il.org.spartan.iterables.*;
  * @author Yossi Gil
  * @since Jul 8, 2014 */
 public enum as {
-  // No values in an 'enum' which serves as a name space for a collection of
-  // 'static' functions.
   ;
   /** Converts a sequence of arguments into an array
    * @param <T> JD
@@ -237,10 +234,10 @@ public enum as {
   @SuppressWarnings({ "static-method", "javadoc", "boxing" }) //
   public static class TEST {
     @Test public void asBitOfFalse() {
-      assertEquals(0, as.bit(false));
+      azzert.that(as.bit(false), is(0));
     }
     @Test public void asBitOfTrue() {
-      assertEquals(1, as.bit(true));
+      azzert.that(as.bit(true), is(1));
     }
     @Test public void asIntArraySimple() {
       final int @NonNull [] is = as.intArray(100, 200, 200, 12, 13, 0);
@@ -248,20 +245,20 @@ public enum as {
     }
     @Test public void asListSimple() {
       final List<@Nullable Integer> is = as.list(12, 13, 14);
-      assertEquals(box.it(12), is.get(0));
-      assertEquals(box.it(13), is.get(1));
-      assertEquals(box.it(14), is.get(2));
-      assertEquals(3, is.size());
+      azzert.that(is.get(0), is(box.it(12)));
+      azzert.that(is.get(1), is(box.it(13)));
+      azzert.that(is.get(2), is(box.it(14)));
+      azzert.that(is.size(), is(3));
     }
     @Test public void stringOfNull() {
-      assertEquals(NULL, as.string(null));
+      azzert.that(as.string(null), is(NULL));
     }
     @Test public void stringWhenToStringReturnsNull() {
-      assertEquals(NULL, as.string(new Object() {
+      azzert.that(as.string(new Object() {
         @Override public @Nullable String toString() {
           return null;
         }
-      }));
+      }), is(NULL));
     }
   }
 }
