@@ -3,10 +3,9 @@ recommends against asking coding style and coding conventions related questions.
 Tag \cc{code-styling} and its many synonyms: \cc{code-convention},
 \cc{coding-guidelines} are specifically
 earmarked\urlref{http://stackoverflow.com/tags/coding-style/info} as
-\begin{quote}
-  \begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=My nice heading]
-  \textsc{Do Not Use! 
-\tcblower
+
+\begin{tcolorbox}[colback=green!5!white,colframe=blue!25!white,notitle]
+    \textsc{Do Not Use!} 
 This tag refers to an entirely opinionated subject and is therefore
 no longer on-topic. Refactoring, braces, indentation, Hungarian notation, and
 other stylistic issues relating to code.
@@ -46,11 +45,12 @@ public static <T, C extends Collection<T>> accumulate<T, C>
 
 \begin{figure}[h]
 \begin{Code}{JAVA}{Where was this taken from?}
-default accumulate<T, C> addAll(final Iterable<? extends T>... tss) {
-  for (final Iterable<? extends T> ¢ : tss)
-    addAll(¢);
-  return this;
-}
+default accumulate<T, C> 
+    addAll(final Iterable<? extends T>... tss) {
+      for (final Iterable<? extends T> ¢ : tss)
+        addAll(¢);
+      return this;
+    }
 \end{Code}
 \label{figure:shock-2}
 \caption{An example of spartan code}
