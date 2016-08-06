@@ -1,6 +1,6 @@
 As a whole, the stackoverlow\urlref{http://stackoverlow.com} community 
 recommedns against asking coding style and coding convetions related questions. 
-Tag \cc{code-styling}, and its many synonyms, \cc{code-convention}, 
+Tag \cc{code-styling} and its many synonyms: \cc{code-convention}, 
 \cc{coding-guidelines} are specifically 
 earmarked\urlref{http://stackoverflow.com/tags/coding-style/info} as 
 \begin{quote}
@@ -16,6 +16,8 @@ literature~\cite{Knuth: and there are several others}.
 Telling the story of ``Spartan Programming'', one particular sytle guideline for 
 \Java, this manuscript is also likely to be contentious, even more so, since 
 ``spartanized'' code such as 
+
+\begin{figure}[h]
 \begin{code}{JAVA}
   public static <T, C extends Collection<T>> 
                                 accumulate<T, C> to(final C c) {
@@ -33,16 +35,22 @@ Telling the story of ``Spartan Programming'', one particular sytle guideline for
     };
   }
   \end{code}
+\label{figure:shock}
+\caption{An example of spartan code}
+\end{figure}
 
+\begin{figure}[h]
 \begin{code}{JAVA}
-
 default accumulate<T, C> addAll(final Iterable<? extends T>... tss) {
   for (final Iterable<? extends T> ts : tss)
     addAll(ts);
   return this;
 }
- 
 \end{code}
+\label{figure:shock-2}
+\caption{An example of spartan code}
+\end{figure}
+  
 
 % \begin{code}{JAVA}
 % /** Tests for primality.
@@ -59,46 +67,27 @@ default accumulate<T, C> addAll(final Iterable<? extends T>... tss) {
 %   return true;
 % }
 % \end{code}
-
+\begin{figure}[h]
 \begin{code}{JAVA}
 default Set<Variable> freeVariables() {
-    final Set<Variable> \$ = new LinkedHashSet<>();
+    final Set<Variable> $ = new LinkedHashSet<>();
     if (isVariable())
-      \$.add((Variable) this);
+      $.add((Variable) this);
     else
       for (final Term ¢ : this)
-        \$.addAll(¢.freeVariables());
-    return \$;
+        $.addAll(¢.freeVariables());
+    return $;
   }
 \end{code}
-
-
+\label{figure:shock-3}
+\caption{An example of spartan code}
+\end{figure}
 
   
 may look bizzare to eyes accustomed to traditional \Java code.
 
+This manuscript reports in 
 
-This manuscript reports 
-
-in 
-
-\cc{code-styling}
-\Java
-Software engineers tend to engage  on religious wars on styles are
-
-Examples from stakoverflow, or even usenet... 
-
-Stackoverflow\footnote{http://stackoverflow.com/} reports many discussions on style and code conventions. 
-However, it is worth to not how it is suggested not to use \kk{code-styling} (and its synonims: \kk{code-style}, 
-\kk{code-convetions} and the like) as tag, because it is claimed that 
-``This tag refers to an \emph{entirely opinionated subject} and is therefore no longer on-topic''(\emph{sic}, 
-emphasis is ours). 
-This seems to suggest that they want to prevent \emph{ex ante} some of these religious wars to take place.
-\kk{code formatting} is the tag used to 
-
-A famous example is that of curly brackets around a single statement making
-the body of control flow commands, such as \kk{if} and 
-\kk{while}.
 Mention that \Go forces you to use them!
 Mention that are compulsory in \kk{synchronized}, 
 \kk{try},  
@@ -175,7 +164,6 @@ Say that some of your alma mater gang love to do this kind of metrics, but
 no one really knows whether the results are applicable to different projects
 since 
 \cite{Turnu:Concas:Marchesi:Tonelli:11}
-
 
 the "Idionsyncratic Projects Hypothesis" I also had a plateau paper with 
 Dany and Maayan about this. A number o years ago.
