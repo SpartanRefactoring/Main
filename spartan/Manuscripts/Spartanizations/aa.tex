@@ -1,24 +1,28 @@
 As a whole, the stackoverlow\urlref{http://stackoverlow.com} community
-recommedns against asking coding style and coding convetions related questions.
+recommends against asking coding style and coding conventions related questions.
 Tag \cc{code-styling} and its many synonyms: \cc{code-convention},
 \cc{coding-guidelines} are specifically
 earmarked\urlref{http://stackoverflow.com/tags/coding-style/info} as
 \begin{quote}
-DO NOT USE! This tag refers to an entirely opinionated subject and is therefore
+  \begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=My nice heading]
+  \textsc{Do Not Use! 
+\tcblower
+This tag refers to an entirely opinionated subject and is therefore
 no longer on-topic. Refactoring, braces, indentation, Hungarian notation, and
 other stylistic issues relating to code.
-\end{quote}
+\end{tcolorbox}
+
 But it is not only curly braces matters that may raise
-this kind of ‟religious” wars. Even the famous convention maxim ‟\emph{gotos
+this kind of ‟religious” wars. Even the Dijksta's maxim ‟\emph{gotos
 are evil}”~\cite{Dijksta:must be in bib} was challenged in the scientific
 literature~\cite{Knuth: and there are several others}.
 
 Telling the story of ‟Spartan Programming”, one particular style guideline for
-\Java, this manuscript is also likely to be contentious, even more so, since
-‟spartanized” code such as
+\Java, this manuscript is also likely to be contentious. Perhaps even more so
+after examining some ‟spartanized” code such as in \cref{figure:first}. 
 
 \begin{figure}[h]
-\label{figure:shock}
+\label{figure:first}
 \caption{An example of spartan code}
   \begin{Code}{JAVA}{Where was this taken from?}
 public static <T, C extends Collection<T>> accumulate<T, C> 
