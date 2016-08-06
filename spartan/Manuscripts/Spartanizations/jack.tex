@@ -12,33 +12,34 @@ Specifically, in order to do that, Jack automatically removes:
 \item package
 \item comments
 \item strings perhaps use
-\item keywords are replaced by a single symbol rep 
+\item keywords are replaced by a single symbol rep
 but not identifiers. Take note that it is comon wisdom that the bulk of code is identifiers.
-\item same for operators such as -> ++, <<<<= 
+\item same for operators such as -> ++, <<<<=
 \end{itemize}
 
-The second compression algorithm was invented by Burroughs and Wheeler \cite{Burrows:Wheeler:1994}.
-It is based on a transformation that performs a permutation in the order of the characters 
-If the original string had several substrings that occurred often, then the transformed string will have several places where a single 
-character is repeated multiple times in a row.
+The second compression algorithm was invented by Burroughs and Wheeler
+\cite{Burrows:Wheeler:1994}. It is based on a transformation that performs a
+permutation in the order of the characters If the original string had several
+substrings that occurred often, then the transformed string will have several
+places where a single character is repeated multiple times in a row.
 
-The dataset of software used in this analysis is composed by 26 popular Java projects whose size spans 
-from around 1 Mbyte to almost 47 Mbyte - the main statistics is reported in Table \ref{tab:proj-stat-source}
+The dataset of software used in this analysis is composed by 26 popular Java
+projects whose size spans from around 1 Mbyte to almost 47 Mbyte - the main
+statistics is reported in \cref{table:corpus}
 
 \begin{table}
-\centering
-\scalebox{0.8}{
-\begin{tabular}{lccc}
-\hline
-& \textbf{Java size} &  \textbf{Java size BZip2} &  \textbf{Java comp. ratio}\\ 
- \hline
-Average & 12370223 & 1272331 & 9.25\\
-Minimum & 1 019125 & 129 114 & 7.22\\
-Maximum & 46965422 & 5607599 & 12.96\\
-Range & 45946297 & 5478485 & 5.74\\
-Median & 5128541 & 607535 & 8.91\\
-\end{tabular}}
-\label{tab:proj-stat-source}
-\caption{The results of the compression using the Burroughs-Wheeler algorithm}
+  \label{table:corpus}
+  \caption{The results of the compression using the Burroughs-Wheeler algorithm}
+  \centering
+  \scalebox{0.8}{
+    \begin{tabular}{lccc}
+      \hline
+              & \textbf{Java size} & \textbf{Java size BZip2} & \textbf{Java comp. ratio}⏎
+      \hline
+      Average & 12370223 & 1272331 & 9.25⏎
+      Minimum & 1 019125 & 129 114 & 7.22⏎
+      Maximum & 46965422 & 5607599 & 12.96⏎
+      Range & 45946297 & 5478485 & 5.74⏎
+      Median & 5128541 & 607535 & 8.91⏎
+    \end{tabular}}
 \end{table}
-
