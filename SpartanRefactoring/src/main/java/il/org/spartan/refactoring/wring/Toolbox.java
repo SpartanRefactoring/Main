@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 /** A class that contains a bunch of {@link Wring} objects, allowing selecting
@@ -15,9 +14,7 @@ public class Toolbox {
         return $;
     return null;
   }
-
   private final Map<Class<? extends ASTNode>, List<Object>> inner = new HashMap<>();
-
   /** Find the first {@link Wring} appropriate for an {@link ASTNode}
    * @param n JD
    * @return the first {@link Wring} for which the parameter is within scope, or
@@ -61,6 +58,9 @@ public class Toolbox {
         .add(MethodDeclaration.class, //
             new MethodRenameReturnToDollar(), //
             new RedundantModifiers.OfMethod(), //
+            null)
+        .add(MethodInvocation.class, //
+            new StringEqualsConstant(), //
             null)
         .add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //
@@ -117,7 +117,6 @@ public class Toolbox {
   public static Toolbox instance() {
     return instance;
   }
-
   /** The default instance of this class */
   static Toolbox instance;
 
