@@ -19,21 +19,23 @@ Telling the story of ‟Spartan Programming”, one particular style guideline f
 
 \begin{figure}[h]
   \begin{Code}{JAVA}{Where was this taken from?}
-public static <T, C extends Collection<T>>
-                              accumulate<T, C> to(final C c) {
-  return new accumulate<T, C>() {
-    @Override public accumulate<T, C> add(final @Nullable T t) {
-      if (t == null)
-        return this;
-      assert t != null;
-      c.add(t);
-      return this;
-    }
-    @Override public C elements() {
-      return c;
-    }
-  };
-}
+public 
+  static <T, C extends Collection<T>>
+    accumulate<T, C> to(final C c) {
+      return new accumulate<T, C>() {
+        @Override public C elements() {
+          return c;
+        }
+        @Override public accumulate<T, C> 
+          add(final @Nullable T ¢) {
+            if (¢ == null)
+              return this;
+            assert ¢ != null;
+            c.add(¢);
+            return this;
+          }
+      };
+  }
 \end{Code}
 \label{figure:shock}
 \caption{An example of spartan code}
@@ -59,9 +61,9 @@ public static boolean isPrime(final int ¢) {
   return ¢ < -1 && isPrime(-¢) // deal with negative values
       || ¢ > 1 && isPrime¢(¢); // any integer >- 2
 }
-private static boolean isPrime¢(final int ¢) {
-  for (int d = 2; d * d <= ¢; d++)
-    if (¢ ％ d == 0)
+private static boolean isPrime¢(final int i) {
+  for (int ¢ = 2; ¢ * ¢ <= i; ++¢)
+    if (i ％ ¢ == 0)
       return false;
   return true;
 }
@@ -69,13 +71,13 @@ private static boolean isPrime¢(final int ¢) {
 \begin{figure}[h]
   \begin{Code}{JAVA}{Where was this taken from?}
 default Set<Variable> freeVariables() {
-    final Set<Variable>~$ = new LinkedHashSet<>();
+    final Set<Variable> $ = new LinkedHashSet<>();
     if (isVariable())
-~$.add((Variable) this);
+      $.add((Variable) this);
     else
       for (final Term ¢ : this)
-~$.addAll(¢.freeVariables());
-    return~$;
+        $.addAll(¢.freeVariables());
+    return $;
   }
 \end{Code}
 \label{figure:shock-3}

@@ -57,7 +57,7 @@
 
 \tcbset{output/.style={
     minipage,
-    width=0.95\linewidth,
+    width=\linewidth,
     comment=#1,
     listing and comment,
 }}
@@ -75,6 +75,8 @@
 
 \newtcblisting{Code}[3][]{%
   codebox=#2,
+  minipage,
+  width=\columnwidth,
   title={#3},
   #1
 }
@@ -90,7 +92,7 @@
   listing file={#2},
   codebox=display,
   minipage,
-  width=0.95\linewidth,
+  width=\linewidth,
   colback=Aquamarine!20,
   title={File \cc{#2}},
   #1
@@ -111,7 +113,7 @@
   listing file={#2},
   codebox=printout,
   minipage,
-  width=0.90\linewidth,
+  width=\linewidth,
   outer arc=12pt,
   sharp corners=downhill,
   arc=12pt,
@@ -136,7 +138,6 @@
   xrightmargin=\codedisplayspace,
   resetmargins=true,
   breaklines=true,
-%  linewidth=0.96\columnwidth,
 }
 
 \lstdefinestyle{printout}{%
