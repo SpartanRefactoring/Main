@@ -1,9 +1,70 @@
-Mention naturlaization
+As a whole, the stackoverlow\urlref{http://stackoverlow.com} community 
+recommedns against asking coding style and coding convetions related questions. 
+Tag \cc{code-styling}, and its many synonyms, \cc{code-convention}, 
+\cc{coding-guidelines} are specifically 
+earmarked\urlref{http://stackoverflow.com/tags/coding-style/info} as 
+\begin{quote}
+DO NOT USE! This tag refers to an entirely opinionated subject and is therefore 
+no longer on-topic. Refactoring, braces, indentation, Hungarian notation, and 
+other stylistic issues relating to code. 
+\end{quote}
+But it is not only curly braces matters that may raise 
+this kind of ``religious'' wars. Even the famous convention maxim ``\emph{gotos 
+are evil}''~\cite{Dijksta:must be in bib} was challenged in the scientific 
+literature~\cite{Knuth: and there are several others}.
 
+Telling the story of ``Spartan Programming'', one particular sytle guideline for 
+\Java, this manuscript is also likely to be contentious, even more so, since 
+``spartanized'' code such as 
+\begin{code}{JAVA}
+  public static <T, C extends Collection<T>> 
+                                accumulate<T, C> to(final C c) {
+    return new accumulate<T, C>() {
+      @Override public accumulate<T, C> add(final @Nullable T t) {
+        if (t == null)
+          return this;
+        assert t != null;
+        c.add(t);
+        return this;
+      }
+      @Override public C elements() {
+        return c;
+      }
+    };
+  }
+  \end{code}
+
+\begin{code}{JAVA}
+
+default accumulate<T, C> addAll(final Iterable<? extends T>... tss) {
+  for (final Iterable<? extends T> ts : tss)
+    addAll(ts);
+  return this;
+}
+ 
+\end{code}
+
+  
+may look bizzare to eyes accustomed to traditional \Java code.
+
+
+This manuscript reports 
+
+in 
+
+\cc{code-styling}
 \Java
 Software engineers tend to engage  on religious wars on styles are
 
 Examples from stakoverflow, or even usenet... 
+
+Stackoverflow\footnote{http://stackoverflow.com/} reports many discussions on style and code conventions. 
+However, it is worth to not how it is suggested not to use \kk{code-styling} (and its synonims: \kk{code-style}, 
+\kk{code-convetions} and the like) as tag, because it is claimed that 
+``This tag refers to an \emph{entirely opinionated subject} and is therefore no longer on-topic''(\emph{sic}, 
+emphasis is ours). 
+This seems to suggest that they want to prevent \emph{ex ante} some of these religious wars to take place.
+\kk{code formatting} is the tag used to 
 
 A famous example is that of curly brackets around a single statement making
 the body of control flow commands, such as \kk{if} and 
@@ -51,6 +112,13 @@ A better metric is NOT = number of tokens.
 But even this is influenced by coding styles, including but 
 not limited to the famous braces war.
 
+\textbf{Mention naturlaization (MAT: moved here from the beginning)}
+
+Some recent studies investigated the presence of some regularities in code that 
+make source code repetitive and predictable as well as natural language.
+In Hindle et al. \cite{Hindle:Bar:Su:Gabel:Devanbu:2012} analyzed a large corpora composed
+by ... of software systems and compared the properties with natural language.
+They found out that source code present many statistical properties that 
 
 \subsection{Background}
 There is very little scientific work on style.
@@ -88,6 +156,7 @@ experiments.
 
 \subsection{Contribution}
 
+\textbf{(the following text has been adapted by the wiki)}\\
 
 Spartan programming is an approach to writing code aimed at improving at
 reducing code complexity by appling many techininques, some already known in
@@ -114,4 +183,26 @@ Being minialized, spartanized code might be less readable that the original.
 This is ...  Spartan programming is not directly concerned with readability, at
 least not in its subjective and cultural-dependent sense. In fact, spartan
 programs will bring much misery to anyone preferring long, verbose programs.
-Spartanization aims at minimizing:
+
+Spartanization aims at minimizing Vertical complexity (the number of lines of code), 
+Horizontal complexity, the number of tokens, character, parameters and variables, 
+as well as reduce the number of loops and conditional statements.
+Spartan programming prescribes, a careful use of the variables, stressing the need 
+to inline variables that are used only once and emphasizing the use of foreach loops 
+in languages implementing it. Variables visibility and accessibility should also be 
+possibly minimized, favouring the use of private over public variables whenever it 
+is possible. 
+
+Also the names of variables should be taken short for local variables, with short scope, 
+leaving to their class names to explicit their behaviour. Minimizing variability using 
+final and @NonNull annotation. Stress the use of generic names technique. Minimize lifespan 
+avoiding persistent variables when it is possible. Favour the use of collection instead 
+of arrays. Interfaces should present a minimal number of parameters, also minimizing 
+the interaction between them. Favour ternarization over the use of if-then-else constructs 
+and use a simplified version of the conditionals that implies an early return. Moreover, 
+use an early exit logic with continue, break and return instructions. 
+
+Everything should be formatted in order to make an efficient use of the screen space, 
+by removing unnecessary tokens (i.e. redundant parentheses, etc.). 
+Methods should be as short as possible. 
+
