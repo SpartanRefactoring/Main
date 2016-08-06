@@ -17,7 +17,7 @@ public enum as {
   ;
   /** Converts a sequence of arguments into an array
    * @param <T> JD
-   * @param ts JD
+   * @param $ the result, as multiple arguments to variadic function
    * @return an array representation of the parameter */
   @SafeVarargs public static <T> T[] array(final T... $) {
     return $;
@@ -61,8 +61,8 @@ public enum as {
    * @return an array of <code><b>int</b></code>. representing the input. */
   public static int[] intArray(final List<Integer> is) {
     final int @NonNull [] $ = new int @NonNull [is.size()];
-    for (int i = 0; i < $.length; ++i)
-      $[i] = is.get(i).intValue();
+    for (int ¢ = 0; ¢ < $.length; ++¢)
+      $[¢] = is.get(¢).intValue();
     return $;
   }
   /** Creates an iterable for an array of objects

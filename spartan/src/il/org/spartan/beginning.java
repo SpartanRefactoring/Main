@@ -8,7 +8,7 @@ import org.junit.runners.*;
 import il.org.spartan.beginning.with.C.D.*;
 import il.org.spartan.iterables.*;
 
-public interface beginning {
+@SuppressWarnings("javadoc") public interface beginning {
   public static final String COMMA = ",";
 
   public static void main(final String[] args) {
