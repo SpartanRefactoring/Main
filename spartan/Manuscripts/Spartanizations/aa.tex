@@ -44,6 +44,36 @@ default accumulate<T, C> addAll(final Iterable<? extends T>... tss) {
  
 \end{code}
 
+% \begin{code}{JAVA}
+% /** Tests for primality.
+%   * @param ¢ candidate to be tested
+%   * @return <code><b>true</b></code> <i>iff</i> the parameter is prime. */
+% public static boolean isPrime(final int ¢) {
+%   return ¢ < -1 && isPrime(-¢) // deal with negative values
+%       || ¢ > 1 && isPrime¢(¢); // any integer >- 2
+% }
+% private static boolean isPrime¢(final int ¢) {
+%   for (int d = 2; d * d <= ¢; d++)
+%     if (¢ \% d == 0)
+%       return false;
+%   return true;
+% }
+% \end{code}
+
+\begin{code}{JAVA}
+default Set<Variable> freeVariables() {
+    final Set<Variable> \$ = new LinkedHashSet<>();
+    if (isVariable())
+      \$.add((Variable) this);
+    else
+      for (final Term ¢ : this)
+        \$.addAll(¢.freeVariables());
+    return \$;
+  }
+\end{code}
+
+
+
   
 may look bizzare to eyes accustomed to traditional \Java code.
 
