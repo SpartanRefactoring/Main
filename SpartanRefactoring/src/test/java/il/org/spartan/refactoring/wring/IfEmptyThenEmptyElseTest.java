@@ -31,7 +31,7 @@ public class IfEmptyThenEmptyElseTest {
     azzert.notNull(IF);
   }
   @Test public void inputType() {
-    org.hamcrest.MatcherAssert.assertThat(INPUT, instanceOf(Block.class));
+   azzert.that(INPUT, instanceOf(Block.class));
   }
   @Test public void runGo() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = Wrap.Statement.on(INPUT + "");
