@@ -2,8 +2,10 @@
 package il.org.spartan;
 
 import static il.org.spartan.azzert.*;
+import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 import org.junit.runners.*;
+import il.org.spartan.beginning.with.C.D.*;
 import il.org.spartan.iterables.*;
 
 public interface beginning {
@@ -116,15 +118,16 @@ public interface beginning {
   public static final String NL = "\n";
   public static final String SPACE = " ";
 
-  static <T> void assertEquals(final T t1, final T t2) {
-    azzert.that(t2, is(t1));
-  }
-
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
   @SuppressWarnings({ "static-method", "javadoc" }) //
   public static class TEST {
     @Test public void with() {
-      assertEquals("ax,yc", beginning.with("a").separate("x", "y").by(",").endingWith("c"));
+      azzert.that("" + beginning.with("a").separate("x", "y").by(",").endingWith("c"), is("ax,yc"));
+    }
+    @Test public void withType() {
+      Object endingWith = beginning.with("a").separate("x", "y").by(",").endingWith("c");
+      azzert.notNull(endingWith);
+      azzert.that("" + endingWith, is("ax,yc"));
     }
   }
 }
