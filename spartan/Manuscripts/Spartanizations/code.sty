@@ -26,26 +26,6 @@
 \providecommand{\listingsfont}{\ttfamily}
 \providecommand{\commentsfont}{\rmfamily}
 
-\def\ameBASH{\Bash}
-\def\nameADA{\Ada}
-\def\nameAWKPROG{\AWK}
-\def\nameCEEPL{\CPL}
-\def\nameCPLUSPLUS{\CC}
-\def\nameCSHARP{\CSharp}
-\def\nameEMEL{\ML}
-\def\nameFORTRAN{\Fortran}
-\def\nameGO{\Go}
-\def\nameHASKELL{\Haskell}
-\def\nameJAVA{\Java}
-\def\nameLISP{\Lisp}
-\def\nameOCCAM{\Occam}
-\def\namePASCAL{\Pascal}
-\def\namePEEAGEPEE{\PHP}
-\def\namePEEELONE{PL/I}
-\def\namePERL{\Perl}
-\def\namePROLOG{\Prolog}
-\def\namePYTHON{\Python}
-
 \tcbuselibrary{fitting}
 
 \tcbset{codebox/.style={
@@ -70,8 +50,6 @@
   listing style=#1,
   notitle,
   size=small,
-  watermark text=\csname name#1\endcsname,
-  watermark color=blue!20!red,
   outer arc=6pt,
   arc=6pt,
   watermark opacity=0.10,
@@ -133,7 +111,7 @@
   listing file={#2},
   codebox=printout,
   minipage,
-  width=0.95\linewidth,
+  width=0.90\linewidth,
   outer arc=12pt,
   sharp corners=downhill,
   arc=12pt,
