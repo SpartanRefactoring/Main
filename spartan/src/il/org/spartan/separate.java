@@ -4,7 +4,6 @@ package il.org.spartan;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
-import static org.junit.Assert.*;
 
 import java.util.*;
 import java.util.function.*;
@@ -171,7 +170,7 @@ public enum separate {
     }
     @Test public final void byFOfTTArrayChar() {
       final Applicator<Object, String> f = new Applicator<>(a -> "'" + a + "'");
-      assertNotNull("Function literals should never by null.", f);
+      azzert.notNull("Function literals should never by null.", f);
       final Collection<String> c = as.list("Hello", "World");
       azzert.that(c.size(), is(2));
       final Iterable<String> ts = f.to(c);
@@ -239,12 +238,12 @@ public enum separate {
     }
     @Test public final void separateByNoItemslPruneWhitesSpaceSeparated() {
       final SeparationSubject these = separate.these();
-      assertNotNull(null, these);
+      azzert.notNull(null, these);
       final Iterable<? extends Object> os = these.os;
-      assertNotNull(null, os);
+      azzert.notNull(null, os);
       azzert.aye(iterables.isEmpty(os));
       final String[] ss = as.strings(os);
-      assertNotNull(null, ss);
+      azzert.notNull(null, ss);
       azzert.zero(ss.length);
       final String[] noWhites = prune.whites(ss);
       azzert.zero(noWhites.length);

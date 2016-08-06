@@ -1,8 +1,8 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.text;
 
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.Utils.*;
-import static org.junit.Assert.*;
 import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 import org.junit.runners.*;
@@ -18,6 +18,9 @@ import il.org.spartan.*;
 public enum Lines {
   // No enum values in this fake module
   ;
+  static void assertFalse(final String reason, final boolean b) {
+    azzert.nay(reason, b);
+  }
   /** Counts the number of liens in a given text
    * @param text count the number of lines in this parameter
    * @return the number of lines in the parameter */
@@ -55,22 +58,22 @@ public enum Lines {
   @SuppressWarnings({ "static-method", "javadoc" }) //
   public static class TEST {
     @Test public void countEmpty() {
-      assertEquals(0, count(""));
+      azzert.that(count(""), is(0));
     }
     @Test public void countNewLine() {
-      assertEquals(0, count("\n"));
+      azzert.that(count("\n"), is(0));
     }
     @Test public void countOneLine() {
-      assertEquals(1, count("A"));
+      azzert.that(count("A"), is(1));
     }
     @Test public void countTwo() {
-      assertEquals(2, count("A\nB\n"));
+      azzert.that(count("A\nB\n"), is(2));
     }
     @Test public void countTwoVariant() {
-      assertEquals(2, count("A\nB"));
+      azzert.that(count("A\nB"), is(2));
     }
     @Test public void scatterSanity() {
-      assertEquals(1, Lines.scatter("A").length);
+      azzert.that(Lines.scatter("A").length, is(1));
     }
   }
 }

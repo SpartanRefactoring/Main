@@ -1,10 +1,8 @@
 package il.org.spartan;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.azzert.assertEquals;
 import static il.org.spartan.azzert.fail;
 import static il.org.spartan.idiomatic.*;
-import static org.junit.Assert.*;
 import java.io.*;
 import java.util.*;
 import java.util.function.*;
@@ -439,12 +437,22 @@ public interface Utils {
         $[i] = box.it(is[i]);
       return $;
     }
-    @Test public void addAllTypical() {
+
+      static <T> void assertEquals(final T t1, final T t2) {
+        azzert.that(t2, is(t1));
+      }
+      static void assertFalse(final String reason, final boolean b) {
+        azzert.nay(reason, b);
+      }
+      static <T> void assertNotEquals(final T t1, final T t2) {
+        azzert.that(t2, is(t1));
+      }
+      @Test public void addAllTypical() {
       final Set<String> ss = new HashSet<>();
       accumulate.to(ss).addAll(as.set("A", "B"), null, as.set("B", "C", "D"));
       azzert.nay(ss.contains("E"));
       azzert.nay(ss.contains(null));
-      assertEquals(4, ss.size());
+      azzert.that(ss.size(), is(4));
       for (final String s : ss)
         azzert.aye("", ss.contains(s));
     }
@@ -486,13 +494,13 @@ public interface Utils {
       }
     }
     @Test public void quoteEmptyString() {
-      assertEquals("''", idiomatic.quote(""));
+      azzert.that(idiomatic.quote(""), is("''"));
     }
     @Test public void quoteNull() {
-      assertEquals("<null reference>", idiomatic.quote(null));
+      azzert.that(idiomatic.quote(null), is("<null reference>"));
     }
     @Test public void quoteSimpleString() {
-      assertEquals("'A'", idiomatic.quote("A"));
+      azzert.that(idiomatic.quote("A"), is("'A'"));
     }
     @Test public void swapDegenerate() {
       final String @NonNull [] ss = as.array("A", "B", "C", "D");
