@@ -18,34 +18,33 @@ Telling the story of ‟Spartan Programming”, one particular style guideline f
 ‟spartanized” code such as
 
 \begin{figure}[h]
-  \begin{Code}{JAVA}{Where was this taken from?}
-public 
-  static <T, C extends Collection<T>>
-    accumulate<T, C> to(final C c) {
-      return new accumulate<T, C>() {
-        @Override public C elements() {
-          return c;
-        }
-        @Override public accumulate<T, C> 
-          add(final @Nullable T ¢) {
-            if (¢ == null)
-              return this;
-            assert ¢ != null;
-            c.add(¢);
-            return this;
-          }
-      };
-  }
-\end{Code}
 \label{figure:shock}
 \caption{An example of spartan code}
+  \begin{Code}{JAVA}{Where was this taken from?}
+public static <T, C extends Collection<T>> accumulate<T, C> 
+  to(final C c) {
+    return new accumulate<T, C>() {
+      @Override public C elements() {
+        return c;
+      }
+      @Override public accumulate<T, C> 
+        add(final @Nullable T ¢) {
+          if (¢ == null)
+            return this;
+          assert ¢ != null;
+          c.add(¢);
+          return this;
+        }
+    };
+  }
+\end{Code}
 \end{figure}
 
 \begin{figure}[h]
 \begin{Code}{JAVA}{Where was this taken from?}
 default accumulate<T, C> addAll(final Iterable<? extends T>... tss) {
-  for (final Iterable<? extends T> ts : tss)
-    addAll(ts);
+  for (final Iterable<? extends T> ¢ : tss)
+    addAll(¢);
   return this;
 }
 \end{Code}
@@ -53,6 +52,7 @@ default accumulate<T, C> addAll(final Iterable<? extends T>... tss) {
 \caption{An example of spartan code}
 \end{figure}
 
+\begin{figure}[h]
 \begin{Code}{JAVA}{Where was this taken from?}
 /** Tests for primality.
   * @param ¢ candidate to be tested
@@ -68,6 +68,8 @@ private static boolean isPrime¢(final int i) {
   return true;
 }
 \end{Code}
+\end{figure}
+
 \begin{figure}[h]
   \begin{Code}{JAVA}{Where was this taken from?}
 default Set<Variable> freeVariables() {
@@ -113,7 +115,7 @@ Why should this be important?
     \item Easy to write in your own style, but how can
       you always adjust to the style of others.
       Waste of neurons.
-    \item Code comparison. Which part of my change is semantical and which
+    \item Code comparison. Which part of my change is semantically and which
       part of this my own personal style.
     \item Code analysis tools should adjust to different styles and many
         different ways for doing the same thing.
@@ -132,7 +134,7 @@ not limited to the famous braces war.
 
 \subsection{Background}
 
-Despite tha fact that coding style is a topic that might lead developers to engage heated 
+Despite the fact that coding style is a topic that might lead developers to engage heated 
 discussions, to the best of the author's knowledge, there is actually very little scientific 
 work on that. 
 
