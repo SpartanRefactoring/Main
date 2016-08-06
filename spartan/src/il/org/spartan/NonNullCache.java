@@ -32,13 +32,13 @@ public abstract class NonNullCache<T> {
     private static final int SOME_OFFSET = 17;
 
     @Test public void firstReturnsFirstOffset() {
-      assertEquals(SOME_OFFSET + "x0", value());
+      azzert.that(value(), is(SOME_OFFSET + "x0"));
     }
     @Test public void restReturnsFirstOffset() {
       value();
-      assertEquals(SOME_OFFSET + "x0", value());
+      azzert.that(value(), is(SOME_OFFSET + "x0"));
       for (int i = 0; i < 10; ++i)
-        assertEquals(SOME_OFFSET + "x0", value());
+        azzert.that(value(), is(SOME_OFFSET + "x0"));
     }
     @Override protected String __() {
       return SOME_OFFSET + "x" + sqr(evaluations++);
