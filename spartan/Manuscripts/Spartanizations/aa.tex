@@ -1,4 +1,4 @@
-As a whole, the stackoverlow\urlref{http://stackoverlow.com} community
+As a whole, the Stackoverlow\urlref{http://stackoverlow.com} community
 recommends against asking coding style and coding conventions related questions.
 Tag \cc{code-styling} and its many synonyms: \cc{code-convention},
 \cc{coding-guidelines} are specifically
@@ -11,17 +11,18 @@ no longer on-topic. Refactoring, braces, indentation, Hungarian notation, and
 other stylistic issues relating to code.
 \end{tcolorbox}
 
-As pointed out by this statement, \emph{``curly brakets wars''}, namely discussions 
-on wether, when and how using curly brakets are discuraged. 
+As pointed out by this statement, \emph{``curly brackets wars''}, namely discussions 
+on weather, when and how using curly brackets (and the like), are somehow discouraged. 
 However, such discussions can not be simply relegate to something about personal 
 tastes. 
-As a matter of fact, some of this options are included also in syntax definion of some languages. 
-For example, in \Go forces you to use them \urlref{https://golang.org/doc/faq\#semicolons}.
-Another example migh be that of some Java statement blocks, such as \kk{synchronized}, \kk{try}, \kk{catch},
+As a matter of fact, some of this options are included also in the syntax definition of some languages. 
+For example, in \Go forces you to use curly brackets \urlref{https://golang.org/doc/faq\#semicolons}.
+Another example might be that of some Java statement blocks, such as \kk{synchronized}, \kk{try}, \kk{catch},
 \kk{finally}, for which the curly brackets are compulsory.
-However, on the other hand, sometimes it happens that they can be ingnored, like in a recent addition to 
-the lambda expressions \urlref{http://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html\#syntax}.
-(CHECK the LINK. DID NOT FIND references to curly brackets).\\ 
+On the other hand, sometimes it happens that they can be ignored, like in a recent addition to 
+the lambda expressions \urlref{http://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html\#syntax}
+available in Java.
+\textbf{(CHECK the LINK. DID NOT FIND references to curly brackets)}.
 Thus you can write both the following versions of the same code.
 % the options are maintained.
 % You can write
@@ -30,7 +31,7 @@ Thus you can write both the following versions of the same code.
 \end{code}
 and
 \begin{code}{JAVA}
-  ()-> {3}
+()-> {3}
 \end{code}
 % check this.
 % 
@@ -41,10 +42,15 @@ this kind of ‟religious” wars. Even the Dijksta's maxim ‟\emph{gotos
 are evil}”~\cite{Dijkstra:1968} was challenged in the scientific
 literature~\cite{Knuth:1974,Ramshaw:1988,Bochmann:1973,Sennesh:Gil:2016,Zoethout:1979,Wulf:1979,Clark:1984}.
 
+It seems that both practitioners and researchers consider code conventions, code style
+something unrelated to other most sensitive issues, such as the design and productivity.
+We think that using an appropriate code convention might have a meaningful impact on the
+design of code and also on its quality.
+
 Telling the story of ‟Spartan Programming”, one particular style guideline for
 \Java, this manuscript is also likely to be contentious. Perhaps even more so
 after examining some ‟spartanized” code such as in \cref{figure:first} 
-may look bizzare to eyes accustomed to traditional \Java code.
+may look bizarre to eyes accustomed to traditional \Java code.
 % This manuscript reports in
 
 Why should this be important?
