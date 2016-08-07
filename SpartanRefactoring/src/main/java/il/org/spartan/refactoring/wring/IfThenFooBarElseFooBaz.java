@@ -30,7 +30,7 @@ import il.org.spartan.refactoring.utils.*;
  * else
  *   baz();
  * </pre>
- * 
+ *
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> {

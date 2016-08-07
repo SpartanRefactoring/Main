@@ -14,7 +14,7 @@ import il.org.spartan.refactoring.wring.AbstractWringTest.*;
 import il.org.spartan.utils.Utils;
 
 /* @author Yossi Gil
- * 
+ *
  * @since 2014-07-13 */
 @SuppressWarnings({ "javadoc", "static-method" }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
