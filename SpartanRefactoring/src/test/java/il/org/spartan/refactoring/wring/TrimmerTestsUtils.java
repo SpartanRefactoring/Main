@@ -6,7 +6,6 @@ import static il.org.spartan.utils.Utils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 import il.org.spartan.*;
-import il.org.spartan.misc.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 

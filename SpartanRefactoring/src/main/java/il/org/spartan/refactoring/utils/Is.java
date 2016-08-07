@@ -7,7 +7,7 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
-import il.org.spartan.misc.*;
+import il.org.spartan.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should say
  * it all: The name, followed by a dot, followed by a method name, should read

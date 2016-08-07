@@ -6,7 +6,7 @@ import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import java.util.*;
 import org.eclipse.jdt.core.dom.*;
-import il.org.spartan.misc.*;
+import il.org.spartan.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should say
  * it all: The name, followed by a dot, followed by a method name, should read
@@ -149,7 +149,7 @@ public enum extract {
    * @return the first {@link IfStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
   public static MethodDeclaration firstMethodDeclaration(final ASTNode n) {
-    final Wrapper<MethodDeclaration> $ = new Wrapper<>();
+    final Wrapper<MethodDeclaration> $ = new Wrapper< >();
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final MethodDeclaration d) {
         if ($.get() == null)
