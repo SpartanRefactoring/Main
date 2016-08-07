@@ -43,8 +43,7 @@ public enum expose {
    * @return reference to the list of extended operands contained in the
    *         parameter */
   public static List<Expression> extendedOperands(final InfixExpression ¢) {
-    final List<Expression> $ = ¢.extendedOperands();
-    return $;
+    return ¢.extendedOperands();
   }
   /** Expose the list of fragments in a {@link FieldDeclaration}
    * @param ¢ JD
