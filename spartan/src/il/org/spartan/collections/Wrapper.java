@@ -9,8 +9,17 @@ import il.org.spartan.*;
  * @since 2015-08-02
  * @param <T> JD */
 public class Wrapper<T> {
-  protected @Nullable T inner;
+  /** @return the value wrapped in this object. */
+  public @Nullable T get() {
+    return inner;
+  }
+  /** Set the value wrapped in this object.
+   * @param inner JD */
+  public void set(final T inner) {
+    this.inner = inner;
+  }
 
+  @Nullable protected T inner = null;
   @Override public String toString() {
     return inner == null ? "null" : Utils.cantBeNull(inner.toString());
   }
@@ -38,9 +47,5 @@ public class Wrapper<T> {
   /** Instantiates this class */
   public Wrapper() {
     this(null);
-  }
-  /** @return the value wrapped in this object. */
-  public T get() {
-    return inner;
   }
 }

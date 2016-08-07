@@ -1,7 +1,6 @@
 package il.org.spartan;
 
-import org.eclipse.jdt.annotation.Nullable;
-import il.org.spartan.*;
+import org.eclipse.jdt.annotation.*;
 
 /** A generic wrapper classes which can store and retrieve values of any type.
  * @author Yossi Gil
@@ -40,5 +39,9 @@ public class Wrapper<T> {
   /** @return the value wrapped in this object. */
   public T get() {
     return inner;
+  }
+  /** set current value */
+  public void set(T inner) {
+    this.inner = inner;
   }
 }
