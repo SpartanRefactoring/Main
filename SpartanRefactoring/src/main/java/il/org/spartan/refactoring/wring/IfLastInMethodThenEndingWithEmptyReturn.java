@@ -35,7 +35,7 @@ import il.org.spartan.refactoring.utils.*;
  *         <pre>
  * <mittelmania [at] gmail.com>
  *         </pre>
- * 
+ *
  * @since 2015-09-09 */
 public class IfLastInMethodThenEndingWithEmptyReturn extends Wring<IfStatement> {
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {

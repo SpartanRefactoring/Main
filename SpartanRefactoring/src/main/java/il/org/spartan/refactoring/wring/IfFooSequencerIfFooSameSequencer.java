@@ -25,7 +25,7 @@ import il.org.spartan.refactoring.utils.*;
  * if (X || Y)
  *   return A;
  * </pre>
- * 
+ *
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfFooSequencerIfFooSameSequencer extends Wring.ReplaceToNextStatement<IfStatement> {

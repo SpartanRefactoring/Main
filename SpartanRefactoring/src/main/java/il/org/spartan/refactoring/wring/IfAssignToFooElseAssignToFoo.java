@@ -19,7 +19,7 @@ import il.org.spartan.refactoring.utils.*;
  * <pre>
  * a += x ? 3 : 9;
  * </pre>
- * 
+ *
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfAssignToFooElseAssignToFoo extends Wring.ReplaceCurrentNode<IfStatement> {

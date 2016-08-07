@@ -20,7 +20,7 @@ import il.org.spartan.refactoring.utils.*;
  * <pre>
  * f(x ? a : b);
  * </pre>
- * 
+ *
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfExpressionStatementElseSimilarExpressionStatement extends Wring.ReplaceCurrentNode<IfStatement> {
