@@ -47,25 +47,23 @@ something unrelated to other most sensitive issues, such as the design and produ
 We think that using an appropriate code convention might have a meaningful impact on the
 design of code and also on its quality.
 
-Telling the story of ‟Spartan Programming”, one particular style guideline for
-\Java, this manuscript is also likely to be contentious. Perhaps even more so
-after examining some ‟spartanized” code such as in \cref{figure:first} 
-may look bizarre to eyes accustomed to traditional \Java code.
-% This manuscript reports in
-
-Why should this be important?
+% Why should this be important?
+The following scenarios might be helpful to clarify this point.
 \begin{itemize}
-    \item Easy to write in your own style, but how can
-      you always adjust to the style of others.
-      Waste of neurons.
-    \item Code comparison. Which part of my change is semantically and which
-      part of this my own personal style.
-    \item Code analysis tools should adjust to different styles and many
+    \item Developers would certainly find easy to write code in their own style. However, software
+    development is carried out in a collaborative environment and developers works together on 
+    the same files. Adjusting the code to others style require a certain effort and it is time consuming. 
+    %       Waste of neurons.
+    \item A common task performed during software development is code comparison. 
+    Since part of the changes might be due to stylistic reasons, it is mandatory to distinguish the 
+    semantically sensitive changes from the stylistic ones. 
+%     Which part of my change is semantically and which
+%       part of this my own personal style.
+    \item Also code analysis tools should adjust to different styles and many
         different ways for doing the same thing.
-    \item METRICS: IN a recent paper Gal and I showed that size
-      is the only thing that matters.
-    \item METRICS: IN a recent paper Gal and I showed that the notion of
-      "size" is very different in different projects.
+    \item Code conventions might affect metrics. In a recent one of the author demonstrated that size
+      is the only thing that matters \cite{Gil:Lalouche:2016}.
+    \item Moreover, the same notion of size has been shown to be very different in different projects \cite{Gil:Lalouche:2016}.
 \end{itemize}
 
 The holly grail of "canonical representation of code" .
@@ -74,6 +72,12 @@ Not if you apply different indentation rules.
 A better metric is NOT = number of tokens.
 But even this is influenced by coding styles, including but
 not limited to the famous braces war.
+
+Telling the story of ‟Spartan Programming”, one particular style guideline for
+\Java, this manuscript is also likely to be contentious. Perhaps even more so
+after examining some ‟spartanized” code such as in \cref{figure:first} 
+may look bizarre to eyes accustomed to traditional \Java code.
+% This manuscript reports in
 
 \subsection{Background}
 
@@ -94,17 +98,17 @@ of a rationale approach to the problem of defining effective code conventions, m
 related to the fact that when it comes to code styling most of the dialectic efforts are devoted
 to make each personal preferences prevail against the others.
 
-This tendency to trasform technical discussions on disputes about personal preferences 
-in matter of code readability, maintenability (not to mention the developers' efficiency) might 
+This tendency to transform technical discussions on disputes about personal preferences 
+in matter of code readability, maintainability (not to mention the developers' efficiency) might 
 have led Stackoverflow managers to the decision reported in the Introduction, embracing the 
 wiseness of the ancient latins who were used to say that \emph{De gustibus non est disputandum}.
 
-Nowithstanding what reported above, code conventions are considered a worthwhile issue during 
+Notwithstanding what reported above, code conventions are considered a worthwhile issue during 
 the development process, otherwise we would not find style guides for the most important 
-programming languages like (Java, C++, etc.) and from the major players worldwide in 
-the ITC arena, like Oracle and Google \cite{}. 
+programming languages like (Java, C++, etc.) and promoted by the major players in 
+the ITC arena worldwide, like Oracle and Google \cite{}. 
 
-But where these styles a matter of a careful and raional design process?
+But where these styles a matter of a careful and rational design process?
 What were the underlying principles.
 
 Last paragraph: many people believe that style is irrelevant and unimportant.
