@@ -1,9 +1,9 @@
 package il.org.spartan.files;
 
-import il.org.spartan.*;
-
 import java.io.*;
 import java.util.*;
+
+import il.org.spartan.*;
 
 /**
  * Provides, employing fluent API, a {@link Iterable} interface for iteration

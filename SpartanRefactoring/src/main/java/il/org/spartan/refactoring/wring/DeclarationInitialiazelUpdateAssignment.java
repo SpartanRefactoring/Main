@@ -3,14 +3,15 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
-import il.org.spartan.refactoring.preferences.*;
-import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.wring.LocalInliner.LocalInlineWithValue;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.Assignment.Operator;
+import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.LocalInliner.*;
 
 /**
  * A {@link Wring} to convert <code>int a;

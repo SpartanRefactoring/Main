@@ -1,12 +1,12 @@
 package il.org.spartan.refactoring.wring;
 
-import il.org.spartan.refactoring.preferences.*;
-import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
-
 import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.Operator;
+import org.eclipse.jdt.core.dom.InfixExpression.*;
+
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.Wring.*;
 
 /**
  * A wring to replace if statements with switch statements.

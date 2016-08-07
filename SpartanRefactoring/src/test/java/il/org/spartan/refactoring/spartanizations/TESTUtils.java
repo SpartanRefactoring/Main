@@ -1,13 +1,13 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
-import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.wring.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
+
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.*;
 
 /**
  * @author Yossi Gil

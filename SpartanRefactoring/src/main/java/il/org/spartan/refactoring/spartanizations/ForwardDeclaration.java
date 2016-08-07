@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.spartanizations;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;
 
@@ -9,6 +8,8 @@ import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import il.org.spartan.refactoring.utils.*;
 
 /**
  * @author Artium Nihamkin (original)

@@ -2,13 +2,9 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.azzert.assertTrue;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static org.junit.Assert.*;
-import il.org.spartan.*;
-import il.org.spartan.misc.*;
-import il.org.spartan.refactoring.preferences.*;
-import il.org.spartan.refactoring.spartanizations.*;
-import il.org.spartan.refactoring.utils.*;
 
 import java.util.*;
 
@@ -16,6 +12,11 @@ import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
+
+import il.org.spartan.collections.*;
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.utils.*;
 
 public class TrimmerTestsUtils {
   static class OperandToWring<N extends ASTNode> extends TrimmerTestsUtils.Operand {

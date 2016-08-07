@@ -1,12 +1,13 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.extract.*;
+
+import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.utils.*;
-
-import org.eclipse.jdt.core.dom.*;
 
 /**
  * A {@link Wring} to convert <code>a ? (f,g,h) : c(d,e)</code> into

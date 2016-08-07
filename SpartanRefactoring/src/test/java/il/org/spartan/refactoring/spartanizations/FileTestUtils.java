@@ -1,10 +1,11 @@
 package il.org.spartan.refactoring.spartanizations;
 
 import static il.org.spartan.azzert.*;
-import il.org.spartan.refactoring.utils.*;
 
 import java.io.*;
 import java.util.*;
+
+import il.org.spartan.refactoring.utils.*;
 
 /**
  * An abstract representation of our test suite, which is represented in

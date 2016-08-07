@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.preferences;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 
 public interface Kind {
   public interface RENAME_RETURN_VARIABLE extends Kind {

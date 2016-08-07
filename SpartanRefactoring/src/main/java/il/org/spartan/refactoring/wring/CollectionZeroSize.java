@@ -1,12 +1,12 @@
 package il.org.spartan.refactoring.wring;
 
-import il.org.spartan.refactoring.preferences.*;
-import il.org.spartan.refactoring.utils.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.Operator;
+import org.eclipse.jdt.core.dom.InfixExpression.*;
+
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
  * A {@link Wring} to change emptiness check from

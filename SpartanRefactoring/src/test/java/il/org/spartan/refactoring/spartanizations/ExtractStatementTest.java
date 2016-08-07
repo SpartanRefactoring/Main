@@ -3,10 +3,11 @@ package il.org.spartan.refactoring.spartanizations;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static org.hamcrest.collection.IsEmptyCollection.*;
-import il.org.spartan.refactoring.utils.*;
 
 import org.junit.*;
 import org.junit.runners.*;
+
+import il.org.spartan.refactoring.utils.*;
 
 @SuppressWarnings({ "javadoc", "static-method" })//
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)//

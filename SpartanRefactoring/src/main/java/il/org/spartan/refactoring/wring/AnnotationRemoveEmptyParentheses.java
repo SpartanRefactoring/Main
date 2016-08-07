@@ -1,9 +1,10 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import il.org.spartan.refactoring.preferences.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.refactoring.preferences.*;
 
 /**
  * A {@link Wring} to remove the parentheses from annotations that do not take

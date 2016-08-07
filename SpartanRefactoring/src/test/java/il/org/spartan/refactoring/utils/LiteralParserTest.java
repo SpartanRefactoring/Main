@@ -2,9 +2,10 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
 import static org.hamcrest.text.IsEqualIgnoringWhiteSpace.*;
-import il.org.spartan.refactoring.utils.LiteralParser.Types;
 
 import org.junit.*;
+
+import il.org.spartan.refactoring.utils.LiteralParser.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) public class LiteralParserTest {
   @Test public void doubleBinaryLiterals() {

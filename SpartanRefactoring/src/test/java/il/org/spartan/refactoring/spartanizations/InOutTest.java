@@ -3,8 +3,7 @@ package il.org.spartan.refactoring.spartanizations;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
-import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.wring.*;
+import static org.junit.Assert.*;
 
 import java.io.*;
 import java.util.*;
@@ -14,8 +13,10 @@ import org.eclipse.jface.text.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.runners.Parameterized.*;
+
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.*;
 
 /**
  * Run tests in which a specific transformation is not supposed to change the

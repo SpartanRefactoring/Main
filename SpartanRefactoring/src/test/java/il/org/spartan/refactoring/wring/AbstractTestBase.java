@@ -1,12 +1,13 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.*;
-import il.org.spartan.refactoring.spartanizations.*;
 
 import java.util.*;
 
 import org.junit.*;
-import org.junit.runners.Parameterized.Parameter;
+import org.junit.runners.Parameterized.*;
+
+import il.org.spartan.refactoring.spartanizations.*;
 
 @SuppressWarnings({ "javadoc" })//
 public class AbstractTestBase {

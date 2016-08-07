@@ -1,12 +1,13 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.azzert.*;
-import il.org.spartan.refactoring.preferences.*;
-import il.org.spartan.refactoring.utils.*;
+import static org.junit.Assert.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
  * A {@link Wring} to convert <code>{;; g(); {}{;{;{;}};} }</code> into

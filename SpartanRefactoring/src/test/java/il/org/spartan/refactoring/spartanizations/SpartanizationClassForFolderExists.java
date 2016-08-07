@@ -8,8 +8,7 @@ import java.util.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.runners.Parameterized.*;
 
 /**
  * Tests that each directory in our test suite is a name of valid

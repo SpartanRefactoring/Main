@@ -1,10 +1,10 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import il.org.spartan.refactoring.wring.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.annotation.*;
+
+import il.org.spartan.refactoring.wring.*;
 
 /**
  * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code> (v2)

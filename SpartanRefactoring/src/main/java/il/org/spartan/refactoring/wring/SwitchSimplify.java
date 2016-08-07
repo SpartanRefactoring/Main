@@ -2,13 +2,14 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.idiomatic.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import il.org.spartan.refactoring.preferences.*;
-import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.Wring.*;
 
 /**
  * A wring to remove ineffective cases from a switch statement.

@@ -5,7 +5,7 @@ import java.util.*;
 import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jdt.core.dom.rewrite.TargetSourceRangeComputer.SourceRange;
+import org.eclipse.jdt.core.dom.rewrite.TargetSourceRangeComputer.*;
 import org.eclipse.text.edits.*;
 
 /**

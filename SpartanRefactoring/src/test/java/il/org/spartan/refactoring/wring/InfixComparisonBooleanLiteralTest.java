@@ -1,12 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
-import il.org.spartan.*;
-import il.org.spartan.refactoring.spartanizations.*;
-import il.org.spartan.refactoring.utils.*;
+import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -17,7 +14,11 @@ import org.eclipse.text.edits.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.runners.Parameterized.*;
+
+import il.org.spartan.*;
+import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
  * Unit tests for {@link Wrings#ADDITION_SORTER}.
@@ -25,8 +26,8 @@ import org.junit.runners.Parameterized.Parameters;
  * @author Yossi Gil
  * @since 2014-07-13
  */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
-@SuppressWarnings({ "javadoc", "static-method" })//
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@SuppressWarnings({ "javadoc", "static-method" }) //
 public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixExpression> {
   static final InfixComparisonBooleanLiteral WRING = new InfixComparisonBooleanLiteral();
 
@@ -52,7 +53,7 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
     assertSimilar(" 2 ", peeled);
   }
 
-  @RunWith(Parameterized.class)//
+  @RunWith(Parameterized.class) //
   public static class WringedInput extends AbstractWringTest.WringedExpression.Infix {
     static String[][] cases = as.array(//
         new String[] { "", "a == b == c == true", "a == b == c" }, //
@@ -84,7 +85,7 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file.
      */
-    @Parameters(name = DESCRIPTION)//
+    @Parameters(name = DESCRIPTION) //
     public static Collection<Object[]> cases() {
       return collect(cases);
     }

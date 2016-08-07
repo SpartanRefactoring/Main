@@ -1,13 +1,12 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.azzert.assertTrue;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
-import il.org.spartan.refactoring.spartanizations.*;
-import il.org.spartan.refactoring.utils.*;
+import static org.junit.Assert.*;
 
 import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.core.dom.*;
@@ -16,7 +15,10 @@ import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 import org.hamcrest.*;
 import org.junit.*;
-import org.junit.runners.Parameterized.Parameter;
+import org.junit.runners.Parameterized.*;
+
+import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.utils.*;
 
 /**
  * @author Yossi Gil

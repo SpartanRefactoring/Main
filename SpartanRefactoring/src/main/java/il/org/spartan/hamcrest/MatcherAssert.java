@@ -1,8 +1,6 @@
 package il.org.spartan.hamcrest;
 
-import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
-import il.org.spartan.misc.*;
 
 import org.hamcrest.*;
 

@@ -1,11 +1,11 @@
 package il.org.spartan.refactoring.utils;
 
-import il.org.spartan.refactoring.preferences.*;
-
 import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
+
+import il.org.spartan.refactoring.preferences.*;
 
 /**
  * An empty <code><b>enum</b></code> for fluent programming. The name should say

@@ -1,8 +1,8 @@
 package il.org.spartan.refactoring.wring;
 
-import il.org.spartan.refactoring.preferences.*;
-
 import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.refactoring.preferences.*;
 
 /**
  * Replaces name of variables named "_" into "__"

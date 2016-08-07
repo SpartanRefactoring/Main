@@ -5,7 +5,6 @@ import static il.org.spartan.idiomatic.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
-import il.org.spartan.*;
 
 import java.util.*;
 

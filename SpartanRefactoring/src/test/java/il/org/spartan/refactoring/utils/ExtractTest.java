@@ -2,10 +2,11 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Into.*;
-import il.org.spartan.refactoring.spartanizations.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
+
+import il.org.spartan.refactoring.spartanizations.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) public class ExtractTest {
   @Test public void core() {

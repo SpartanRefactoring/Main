@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.azzert.*;
-import il.org.spartan.*;
+import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -9,7 +8,9 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.runners.Parameterized.*;
+
+import il.org.spartan.*;
 
 /**
  * Unit tests for {@link Wrings#ADDITION_SORTER}.

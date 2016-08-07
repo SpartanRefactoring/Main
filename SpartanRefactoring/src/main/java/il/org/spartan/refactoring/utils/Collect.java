@@ -2,11 +2,12 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import il.org.spartan.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.*;
 
 /**
  * A utility class for finding occurrences of an {@link Expression} in an

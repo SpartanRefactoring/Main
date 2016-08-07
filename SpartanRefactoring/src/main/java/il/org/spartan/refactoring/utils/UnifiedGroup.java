@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import java.util.*;
-import java.util.Map.Entry;
+import java.util.Map.*;
 
 class ChainedHash<K, V> extends HashMap<K, LinkedList<V>> {
   /**
