@@ -2,15 +2,12 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
-
 import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
@@ -23,7 +20,6 @@ import il.org.spartan.utils.Utils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) public class IfShortestFirstTest {
   static final Wring<IfStatement> WRING = new IfShortestFirst();
-
   @Test public void statmentCount() {
     final CompilationUnit u = Wrap.Statement.intoCompilationUnit("" + //
         "if (name == null) {\n" + //
@@ -51,7 +47,6 @@ import il.org.spartan.utils.Utils;
             "if (a) {i++;j++;} else b(asdf,as,as,asdf,adfasd,adadfadf,asfasdfasdf);", //
         }, //
         null);
-
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -95,7 +90,6 @@ import il.org.spartan.utils.Utils;
                 "    }\n" + //
                 ""//
         }, null);
-
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */

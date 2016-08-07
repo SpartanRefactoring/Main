@@ -5,9 +5,7 @@ import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
-
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.eclipse.jface.text.*;
@@ -16,7 +14,6 @@ import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
-
 import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
@@ -32,7 +29,6 @@ import il.org.spartan.utils.Utils;
 public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpression> {
   static final InfixSortMultiplication WRING = new InfixSortMultiplication();
   static final ExpressionComparator COMPARATOR = ExpressionComparator.MULTIPLICATION;
-
   public InfixSortMultiplicationTest() {
     super(WRING);
   }
@@ -71,7 +67,6 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
         new String[] { "Plain product of three, sorted", "2*a*b" }, //
         new String[] { "Plain product of four, sorted", "2*a*b*c" }, //
         null);
-
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -128,7 +123,6 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
         new String[] { "Long alphabetical sorting", "f(t)*g(h1,h2)*y*a*2*b*x", "2*a*b*x*y*f(t)*g(h1,h2)" }, //
         new String[] { "Plain alphabetical sorting", "f(y)*f(x)", "f(x)*f(y)" }, //
         null);
-
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */

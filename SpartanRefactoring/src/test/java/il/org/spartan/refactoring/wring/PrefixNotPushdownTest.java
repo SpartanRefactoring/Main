@@ -4,15 +4,12 @@ import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.extract.*;
-
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
-
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
@@ -26,7 +23,6 @@ import il.org.spartan.utils.Utils;
 public class PrefixNotPushdownTest {
   /** The {@link Wring} under test */
   static final PrefixNotPushdown WRING = new PrefixNotPushdown();
-
   @Test public void notOfFalse() {
     final PrefixExpression e = p("!false");
     azzert.notNull(e);
@@ -52,7 +48,6 @@ public class PrefixNotPushdownTest {
         new String[] { "Simple not of function", "!f(a)" }, //
         new String[] { "Actual example", "!inRange(m, e)" }, //
         null);
-
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -96,7 +91,6 @@ public class PrefixNotPushdownTest {
         new String[] { "Mutliple not parenthesis", "!(!(d) || ((!(!(!(((c))))))))", "d && c" }, //
         new String[] { "Nested not", "!(!(a || b))", "a||b" }, //
         null);
-
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */

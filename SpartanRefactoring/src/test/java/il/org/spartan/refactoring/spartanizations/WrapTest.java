@@ -2,11 +2,9 @@ package il.org.spartan.refactoring.spartanizations;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.Wrap.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 import org.junit.*;
-
 import il.org.spartan.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) public class WrapTest {

@@ -2,15 +2,12 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
-
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
@@ -23,7 +20,6 @@ import il.org.spartan.utils.Utils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class TernaryShortestFirstTest {
   static final Wring<ConditionalExpression> WRING = new TernaryShortestFirst();
-
   @Test public void cyclicBug() {
     final ConditionalExpression e = Into.c("length(not(notConditional)) + length(then) < length(notConditional) + length(elze) ? null : $");
     azzert.notNull(e);
@@ -89,7 +85,6 @@ public class TernaryShortestFirstTest {
         new String[] { "almost identical 4 addition second", "a ? b+x+e+f:b+y+e+f", }, //
         new String[] { "different target field refernce", "a ? 1 + x.a : 1 + y.a" }, //
         null);
-
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -113,7 +108,6 @@ public class TernaryShortestFirstTest {
             "length(not(notConditional))+length(then)>=length(notConditional)+length(elze)?$:null",//
         }, //
         null);
-
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */

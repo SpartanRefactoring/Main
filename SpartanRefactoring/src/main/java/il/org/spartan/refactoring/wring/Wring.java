@@ -5,15 +5,12 @@ import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
-
 import java.util.*;
 import java.util.function.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-
 import il.org.spartan.misc.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
@@ -68,7 +65,6 @@ final class LocalInliner {
       return Collect.usesOf(name).in(ns);
     }
   }
-
   static Wrapper<ASTNode>[] wrap(final ASTNode[] ns) {
     @SuppressWarnings("unchecked") final Wrapper<ASTNode>[] $ = new Wrapper[ns.length];
     int i = 0;
@@ -76,11 +72,9 @@ final class LocalInliner {
       $[i++] = new Wrapper<>(t);
     return $;
   }
-
   final SimpleName name;
   final ASTRewrite rewriter;
   final TextEditGroup editGroup;
-
   LocalInliner(final SimpleName n) {
     this(n, null, null);
   }
@@ -327,7 +321,6 @@ public abstract class Wring<N extends ASTNode> {
       return $;
     }
   }
-
   abstract String description(N n);
   /** Determine whether the parameter is "eligible" for application of this
    * instance. The parameter must be within the scope of the current instance.

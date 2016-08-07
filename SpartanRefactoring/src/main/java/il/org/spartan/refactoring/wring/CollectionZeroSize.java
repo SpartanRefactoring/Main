@@ -3,10 +3,8 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.refactoring.utils.BindingUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
-
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -20,6 +18,12 @@ import il.org.spartan.refactoring.utils.*;
  *
  * <pre>
  * x.size() > 0
+ * </pre>
+ *
+ * or
+ *
+ * <pre>
+ * x.size() >= 1
  * </pre>
  *
  * to

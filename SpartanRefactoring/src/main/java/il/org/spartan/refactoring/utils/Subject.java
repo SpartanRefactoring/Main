@@ -2,10 +2,9 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.expose.*;
-
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
+import il.org.spartan.*;
 
 // TODO: document this class
 @SuppressWarnings("javadoc") public class Subject {
@@ -13,7 +12,7 @@ import org.eclipse.jdt.core.dom.*;
     return new Operand(inner);
   }
   public static Several operands(final Expression... e) {
-    return new Several(Arrays.asList(e));
+    return new Several(as.list(e));
   }
   public static Several operands(final List<Expression> es) {
     return new Several(es);
@@ -31,12 +30,11 @@ import org.eclipse.jdt.core.dom.*;
     return new SeveralStatements(ss);
   }
   public static SeveralStatements statements(final Statement... ss) {
-    return ss(Arrays.asList(ss));
+    return ss(as.list(ss));
   }
 
   public static class Claimer {
     protected final AST ast;
-
     public Claimer(final ASTNode n) {
       ast = n == null ? null : n.getAST();
     }
@@ -51,7 +49,6 @@ import org.eclipse.jdt.core.dom.*;
 
   public static class Operand extends Claimer {
     private final Expression inner;
-
     Operand(final Expression inner) {
       super(inner);
       this.inner = claim(inner);
@@ -98,7 +95,6 @@ import org.eclipse.jdt.core.dom.*;
 
   public static class Pair extends Claimer {
     final Expression left, right;
-
     Pair(final Expression left, final Expression right) {
       super(left);
       this.left = claim(left);
@@ -132,7 +128,6 @@ import org.eclipse.jdt.core.dom.*;
 
   public static class Several extends Claimer {
     private final List<Expression> operands;
-
     public Several(final List<Expression> operands) {
       super(operands.get(0));
       this.operands = new ArrayList<>();
@@ -150,7 +145,6 @@ import org.eclipse.jdt.core.dom.*;
 
   public static class SeveralStatements extends Claimer {
     private final List<Statement> inner;
-
     public SeveralStatements(final List<Statement> inner) {
       super(inner.isEmpty() ? null : inner.get(0));
       this.inner = new ArrayList<>();
@@ -180,7 +174,6 @@ import org.eclipse.jdt.core.dom.*;
   public static class StatementPair extends Claimer {
     private final Statement elze;
     private final Statement then;
-
     StatementPair(final Statement then, final Statement elze) {
       super(then);
       this.then = claim(then);

@@ -2,13 +2,10 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
-
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -99,7 +96,6 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> {
   private class DefinitionsCollector extends ASTVisitor {
     private boolean notAllDefined;
     private final Statement[] l;
-
     public DefinitionsCollector(final List<Statement> l) {
       notAllDefined = false;
       this.l = l.toArray(new Statement[l.size()]);

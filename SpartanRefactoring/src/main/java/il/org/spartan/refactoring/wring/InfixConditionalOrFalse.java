@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
 import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 

@@ -4,16 +4,13 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.Collect.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) public class SearchTest {
   private final SimpleName n = asSimpleName(e("n"));
-
   @Test public void awful() {
     azzert.that(searcher().in(d("Object n() {\n" + //
         "    class n {\n" + //

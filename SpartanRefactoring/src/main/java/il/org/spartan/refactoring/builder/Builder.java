@@ -1,11 +1,9 @@
 package il.org.spartan.refactoring.builder;
 
 import java.util.*;
-
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -22,18 +20,15 @@ public class Builder extends IncrementalProjectBuilder {
   public static final String SPARTANIZATION_SHORT_PREFIX = "Spartanize: ";
   /** Empty prefix for brevity */
   public static final String EMPTY_PREFIX = "";
-
   private static String prefix() {
     return SPARTANIZATION_SHORT_PREFIX;
   }
-
   /** the ID under which this builder is registered */
   public static final String BUILDER_ID = "org.spartan.refactoring.BuilderID";
   private static final String MARKER_TYPE = "org.spartan.refactoring.spartanizationSuggestion";
   /** the key in the marker's properties map under which the type of the
    * spartanization is stored */
   public static final String SPARTANIZATION_TYPE_KEY = "org.spartan.refactoring.spartanizationType";
-
   @Override protected IProject[] build(final int kind, @SuppressWarnings({ "unused", "rawtypes" }) final Map __, final IProgressMonitor m)
       throws CoreException {
     if (m != null)
@@ -91,10 +86,10 @@ public class Builder extends IncrementalProjectBuilder {
   /** deletes all spartanization suggestion markers
    * @param f the file from which to delete the markers
    * @throws CoreException if this method fails. Reasons include: This resource
-   *         does not exist. This resource is a project that is not open.
-   *         Resource changes are disallowed during certain types of resource
-   *         change event notification. See {@link IResourceChangeEvent} for
-   *         more details. */
+   *           does not exist. This resource is a project that is not open.
+   *           Resource changes are disallowed during certain types of resource
+   *           change event notification. See {@link IResourceChangeEvent} for
+   *           more details. */
   public static void deleteMarkers(final IFile f) throws CoreException {
     f.deleteMarkers(MARKER_TYPE, false, IResource.DEPTH_ONE);
   }

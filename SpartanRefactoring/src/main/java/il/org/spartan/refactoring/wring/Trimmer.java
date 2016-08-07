@@ -1,13 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
 import java.util.*;
-
 import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
-
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -74,7 +72,6 @@ public class Trimmer extends Spartanization {
 
   abstract class DispatchingVisitor extends ASTVisitor {
     final ExclusionManager exclude = makeExcluder();
-
     @Override public final boolean visit(final Assignment ¢) {
       return cautiousGo(¢);
     }
@@ -94,6 +91,9 @@ public class Trimmer extends Spartanization {
       return cautiousGo(¢);
     }
     @Override public final boolean visit(final InfixExpression ¢) {
+      return cautiousGo(¢);
+    }
+    @Override public final boolean visit(final MethodInvocation ¢) {
       return cautiousGo(¢);
     }
     @Override public final boolean visit(final MethodDeclaration ¢) {

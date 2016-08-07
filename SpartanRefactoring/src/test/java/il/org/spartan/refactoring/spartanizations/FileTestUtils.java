@@ -2,7 +2,6 @@ package il.org.spartan.refactoring.spartanizations;
 
 import java.io.*;
 import java.util.*;
-
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -19,7 +18,6 @@ public abstract class FileTestUtils {
   protected final static String testSuffix = ".test";
   /** Folder in which all test cases are found */
   public static final File location = new File("src/test/resources");
-
   /** Instantiates a {@link Class} object if possible, otherwise generate an
    * assertion failure
    * @param c an arbitrary class object

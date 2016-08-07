@@ -3,11 +3,8 @@ package il.org.spartan.refactoring.utils;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.utils.Utils.*;
-
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.utils.*;
 
 /** A utility class for finding occurrences of an {@link Expression} in an
@@ -43,7 +40,6 @@ public enum Collect {
     }
   };
   static final ASTMatcher matcher = new ASTMatcher();
-
   public static Collector definitionsOf(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
@@ -174,7 +170,6 @@ public enum Collect {
   private static ASTVisitor usesCollector(final SimpleName what, final List<SimpleName> into, final boolean lexicalOnly) {
     return new ASTVisitor() {
       private int loopDepth = 0;
-
       @Override public void endVisit(@SuppressWarnings("unused") final DoStatement __) {
         --loopDepth;
       }
@@ -352,7 +347,6 @@ public enum Collect {
    * @since 2015-09-06 */
   public abstract static class Collector {
     protected final SimpleName name;
-
     Collector(final SimpleName name) {
       this.name = name;
     }

@@ -1,5 +1,4 @@
 package il.org.spartan.refactoring.utils;
-
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
  * read like a sentence phrase.

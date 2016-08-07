@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.spartanizations;
 
 import java.util.*;
-
 import il.org.spartan.*;
 import il.org.spartan.refactoring.wring.*;
 
@@ -24,7 +23,6 @@ public class Spartanizations {
     }
   };
   private final Spartanization value;
-
   private Spartanizations(final Spartanization value) {
     this.value = value;
   }
