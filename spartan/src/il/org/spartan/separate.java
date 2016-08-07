@@ -1,5 +1,4 @@
-/** Part of the "Spartan Blog"; mutilate the rest if you are so inclined / but
- * leave this line as is */
+/** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
 
 import static il.org.spartan.Utils.*;
@@ -301,7 +300,7 @@ public enum separate {
       azzert.that(iterables.count(separate.these(as.list("Hello", "World")).os), is(2));
     }
     @Test public final void theseFromZeroItems() {
-      azzert.that(iterables.count(separate.these(as.list()).os), is(0));
+      azzert.that(iterables.count(separate.these(as.list((Double) null)).os), is(0));
     }
     @Test public final void theseOfNoItemsl() {
       azzert.aye(iterables.isEmpty(separate.these(new String[] {}).os));
