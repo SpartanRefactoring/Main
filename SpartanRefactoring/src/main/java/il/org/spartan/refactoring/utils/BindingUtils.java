@@ -2,7 +2,6 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.idiomatic.*;
 import static il.org.spartan.refactoring.utils.extract.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.internal.corext.dom.*;
 

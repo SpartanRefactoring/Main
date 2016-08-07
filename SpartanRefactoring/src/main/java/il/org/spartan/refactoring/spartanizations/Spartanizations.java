@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.spartanizations;
 
 import java.util.*;
-
 import il.org.spartan.*;
 import il.org.spartan.refactoring.wring.*;
 

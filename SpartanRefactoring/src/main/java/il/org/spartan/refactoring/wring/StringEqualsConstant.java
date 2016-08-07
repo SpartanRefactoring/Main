@@ -1,11 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
-import il.org.spartan.refactoring.preferences.*;
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
-import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode;
 import java.util.*;
 import org.eclipse.jdt.core.dom.*;
+import il.org.spartan.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.Wring.*;
 
 /** Used to replace
  *
@@ -23,7 +23,7 @@ import org.eclipse.jdt.core.dom.*;
  * @since 2016/05/08 */
 public class StringEqualsConstant extends ReplaceCurrentNode<MethodInvocation> {
   final static String[] _mns = { "equals", "equalsIgnoreCase" };
-  final static List<String> mns = Arrays.asList(_mns);
+  final static List<String> mns = as.list(_mns);
   @SuppressWarnings("unchecked") @Override ASTNode replacement(final MethodInvocation i) {
     if (!mns.contains(i.getName().toString()) || i.arguments().size() != 1 || i.getExpression() == null || i.getExpression() instanceof StringLiteral
         || !(i.arguments().get(0) instanceof StringLiteral))

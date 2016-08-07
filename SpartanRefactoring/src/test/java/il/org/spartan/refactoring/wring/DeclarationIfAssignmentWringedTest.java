@@ -5,9 +5,7 @@ import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.utils.Utils.*;
-
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
@@ -16,7 +14,6 @@ import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
-
 import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;

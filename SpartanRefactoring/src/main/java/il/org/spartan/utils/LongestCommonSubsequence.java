@@ -1,9 +1,7 @@
 package il.org.spartan.utils;
 
 import static il.org.spartan.utils.Utils.*;
-
 import java.util.*;
-
 import il.org.spartan.refactoring.utils.*;
 
 /** Utility class for computing the "Longest Common Subsequence" of two strings.
