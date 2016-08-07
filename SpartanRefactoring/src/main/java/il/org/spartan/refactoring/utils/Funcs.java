@@ -521,12 +521,12 @@ public enum Funcs {
     return $.getOperator() != PrefixExpression.Operator.MINUS ? $ : peelNegation($.getOperand());
   }
   /** Retrieve previous item in a list
-   * @param ¢ an index of specific item in a list
+   * @param i an index of specific item in a list
    * @param ts the indexed list
    * @return the previous item in the list, if such an item exists, otherwise,
    *         the last node */
-  public static <¢> ¢ prev(final int ¢, final List<¢> ts) {
-    return ts.get(¢ < 1 ? 0 : ¢ - 1);
+  public static <¢> ¢ prev(final int i, final List<¢> ts) {
+    return ts.get(i < 1 ? 0 : i - 1);
   }
   /** Make a duplicate, suitable for tree rewrite, of the parameter
    * @param ¢ JD
