@@ -1,9 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.idiomatic.*;
-
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 /** A class to search in the ancestry line of a given node.
@@ -31,7 +29,6 @@ public abstract class AncestorSearch {
 
   static class ByNodeClass extends AncestorSearch {
     private final Class<? extends ASTNode> clazz;
-
     public ByNodeClass(final Class<? extends ASTNode> clazz) {
       this.clazz = clazz;
     }
@@ -48,9 +45,7 @@ public abstract class AncestorSearch {
     public ByNodeType(final int type) {
       this.type = type;
     }
-
     final int type;
-
     @Override public ASTNode from(final ASTNode n) {
       if (n != null)
         for (ASTNode $ = n.getParent(); $ != null; $ = $.getParent())
@@ -59,21 +54,18 @@ public abstract class AncestorSearch {
       return null;
     }
   }
-
   public static Until until(final ASTNode n) {
     return new Until(n);
   }
 
   public static class Until {
     final ASTNode until;
-
     Until(final ASTNode until) {
       this.until = until;
     }
     public Iterable<ASTNode> ancestors(final SimpleName n) {
       return () -> new Iterator<ASTNode>() {
         ASTNode next = n;
-
         @Override public boolean hasNext() {
           return next != null;
         }

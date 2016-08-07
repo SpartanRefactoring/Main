@@ -1,13 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
-
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
 import il.org.spartan.utils.*;
 
@@ -28,7 +26,6 @@ public enum IfThrowFooElseThrowBarTest {
         new String[] { "Simply nested if return", "{if (a)  return b; else return c;}" }, //
         new String[] { "Nested if return", "if (a) {;{{;;return b; }}} else {{{;return c;};;};}" }, //
         null);
-
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -51,7 +48,6 @@ public enum IfThrowFooElseThrowBarTest {
         new String[] { "Simply nested if throw", "{if (a)  throw b; else throw c;}", "if(a)throw b;else throw c;" }, //
         new String[] { "Nested if throw", "if (a) {;{{;;throw b; }}} else {{{;throw c;};;};}", "throw a ? b : c;" }, //
         null);
-
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */

@@ -4,9 +4,7 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static il.org.spartan.utils.Utils.*;
-
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
@@ -15,7 +13,6 @@ import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
-
 import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
@@ -28,7 +25,6 @@ import il.org.spartan.utils.Utils;
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixExpression> {
   static final InfixComparisonBooleanLiteral WRING = new InfixComparisonBooleanLiteral();
-
   public InfixComparisonBooleanLiteralTest() {
     super(WRING);
   }
@@ -79,7 +75,6 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
         new String[] { "", "true != true", "false" }, //
         new String[] { "", "true == true", "true" }, //
         null);
-
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -119,7 +114,6 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
       azzert.that(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
     }
   }
-
   static public void fail(final String message) {
     throw message == null ? new AssertionError() : new AssertionError(message);
   }

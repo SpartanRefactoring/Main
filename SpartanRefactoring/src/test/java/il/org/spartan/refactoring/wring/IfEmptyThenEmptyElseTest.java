@@ -1,13 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 import org.junit.*;
-
 import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
@@ -17,7 +15,6 @@ public class IfEmptyThenEmptyElseTest {
   private static final IfEmptyThenEmptyElse WRING = new IfEmptyThenEmptyElse();
   private static final Statement INPUT = Into.s("{if (b) ; else ;}");
   private static final IfStatement IF = extract.firstIfStatement(INPUT);
-
   @Test public void eligible() {
     azzert.aye(WRING.eligible(IF));
   }
@@ -31,7 +28,7 @@ public class IfEmptyThenEmptyElseTest {
     azzert.notNull(IF);
   }
   @Test public void inputType() {
-    org.hamcrest.MatcherAssert.assertThat(INPUT, instanceOf(Block.class));
+    azzert.that(INPUT, instanceOf(Block.class));
   }
   @Test public void runGo() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = Wrap.Statement.on(INPUT + "");

@@ -3,15 +3,12 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
-
 import il.org.spartan.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
 import il.org.spartan.utils.Utils;
@@ -23,7 +20,6 @@ import il.org.spartan.utils.Utils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class IfExpressionStatementElseSimilarExpressionStatementTest {
   static final IfExpressionStatementElseSimilarExpressionStatement WRING = new IfExpressionStatementElseSimilarExpressionStatement();
-
   @Test public void checkSteps() {
     final Statement s = asSingle("if (a) f(b); else f(c);");
     azzert.notNull(s);
@@ -46,7 +42,6 @@ public class IfExpressionStatementElseSimilarExpressionStatementTest {
         new String[] { "Simple if plus assign", "if (a) a += b; else a += c;", }, //
         new String[] { "Simple if plus assign", "if (a) a *= b; else a *= c;", }, //
         null);
-
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -70,7 +65,6 @@ public class IfExpressionStatementElseSimilarExpressionStatementTest {
         new String[] { "Distinct receiver no arguments", "if (a) y.f(); else x.f();", "(a ?y :x).f();" }, //
         new String[] { "Distinct receiver two arguments", "if (a) y.f(a,b,c); else x.f(a,b,c);", "(a ?y :x).f(a,b,c);" }, //
         null);
-
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */

@@ -5,7 +5,6 @@ import java.util.Map.*;
 
 class ChainStringToIntegerMap {
   public Map<String, Integer> inner = new HashMap<>();
-
   public boolean containsKey(final String key) {
     return inner.containsKey(key);
   }

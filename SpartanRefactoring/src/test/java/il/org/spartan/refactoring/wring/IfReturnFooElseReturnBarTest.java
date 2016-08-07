@@ -1,13 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
-
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
 import il.org.spartan.utils.*;
 
@@ -25,7 +23,6 @@ public enum IfReturnFooElseReturnBarTest {
     static String[][] cases = Utils.asArray(//
         new String[] { "Return only on one side", "if (a) return b; else c;" }, //
         null);
-
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -48,7 +45,6 @@ public enum IfReturnFooElseReturnBarTest {
         new String[] { "Simply nested if return", "{if (a)  return b; else return c;}", " if(a)return b;else return c;" }, //
         new String[] { "Nested if return", "if (a) {;{{;;return b; }}} else {{{;return c;};;};}", "return a ? b : c;" }, //
         null);
-
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */

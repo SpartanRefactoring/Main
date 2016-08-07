@@ -3,9 +3,7 @@ package il.org.spartan.refactoring.utils;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
-
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 /** Various methods for comparing
@@ -44,7 +42,6 @@ public enum ExpressionComparator implements Comparator<Expression> {
     }
   };
   private static Specificity specificity = new Specificity();
-
   static int literalCompare(final Expression e1, final Expression e2) {
     return -specificity.compare(e1, e2);
   }
@@ -103,11 +100,9 @@ public enum ExpressionComparator implements Comparator<Expression> {
         nodesCount(e1) >= nodesCount(e2) && moreArguments(e1, e2)//
     );
   }
-
   /** Threshold for comparing nodes; a difference in the number of nodes between
    * two nodes is considered zero, if it is the less than this value, */
   public static final int NODES_THRESHOLD = 1;
-
   /** Counts the number of non-space characters in a tree rooted at a given node
    * @param n JD
    * @return Number of abstract syntax tree nodes under the parameter. */

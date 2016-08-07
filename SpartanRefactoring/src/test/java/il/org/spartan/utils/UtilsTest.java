@@ -2,10 +2,8 @@ package il.org.spartan.utils;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.utils.Utils.*;
-
 import org.junit.*;
 import org.junit.runners.*;
-
 import il.org.spartan.*;
 
 @FixMethodOrder(MethodSorters.JVM) //

@@ -1,16 +1,13 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
-
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
-
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
@@ -23,7 +20,6 @@ import il.org.spartan.utils.Utils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class DeclarationReturnTest {
   static final Wring<VariableDeclarationFragment> WRING = new DeclarationInitializerReturnVariable();
-
   @Test public void placeHolder() {
     azzert.notNull(WRING);
   }
@@ -37,7 +33,6 @@ public class DeclarationReturnTest {
         new String[] { "Vanilla", "int a = 2; if (b) a =3;", }, //
         new String[] { "Vanilla", "int a = 3, b; return;", }, //
         null);
-
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -65,7 +60,6 @@ public class DeclarationReturnTest {
                 + "   return $;", //
             "return messageRead?!messageFlagged?mReadColorChip:mFlaggedReadColorChip:!messageFlagged?mUnreadColorChip:mFlaggedUnreadColorChip;" },
         null);
-
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */

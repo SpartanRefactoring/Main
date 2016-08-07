@@ -4,11 +4,8 @@ import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
-
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.misc.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
@@ -30,7 +27,6 @@ public enum extract {
   public static Iterable<ASTNode> ancestors(final ASTNode ¢) {
     return () -> new Iterator<ASTNode>() {
       ASTNode current = ¢;
-
       @Override public boolean hasNext() {
         return current != null;
       }
@@ -41,6 +37,7 @@ public enum extract {
       }
     };
   }
+  /** @param ¢ JD /** @return */
   public static ASTNode containerType(final ASTNode ¢) {
     for (final ASTNode $ : ancestors(¢.getParent()))
       if (is($, ANONYMOUS_CLASS_DECLARATION //

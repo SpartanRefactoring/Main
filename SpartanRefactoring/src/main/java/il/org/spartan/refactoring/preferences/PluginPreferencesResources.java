@@ -43,7 +43,6 @@ public class PluginPreferencesResources {
                 REFACTOR_INEFFECTIVE_TEXT), REORDER_EXPRESSIONS(REORDER_EXPRESSIONS_ID, REORDER_EXPRESSIONS_TEXT), RENAME_PARAMETERS(
                     RENAME_PARAMETERS_ID, RENAME_PARAMETERS_TEXT), RENAME_RETURN_VARIABLE(RENAME_RETURN_VARIABLE_ID, RENAME_RETURN_VARIABLE_TEXT),;
     private final String id, label;
-
     WringGroup(final String id, final String label) {
       this.id = id;
       this.label = label;

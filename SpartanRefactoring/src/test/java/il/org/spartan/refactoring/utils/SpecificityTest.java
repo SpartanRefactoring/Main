@@ -2,17 +2,14 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Into.*;
-
 import org.junit.*;
 import org.junit.runners.*;
-
 import il.org.spartan.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public class SpecificityTest {
   private static final Specificity SPECIFICITY = new Specificity();
-
   @Test public void characterGreaterThanNull() {
     azzert.that(SPECIFICITY.compare(e("'a'"), e("null")), greaterThan(0));
   }

@@ -2,9 +2,7 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.utils.Utils.*;
-
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 abstract class ScopeManager extends ASTVisitor {
@@ -62,7 +60,6 @@ abstract class ScopeManager extends ASTVisitor {
 abstract class HidingDepth extends ScopeManager {
   private int depth = 0;
   private int hideDepth = Integer.MAX_VALUE;
-
   boolean hidden() {
     return depth >= hideDepth;
   }
@@ -82,7 +79,6 @@ abstract class HidingDepth extends ScopeManager {
 class UsesCollector extends HidingDepth {
   private final List<SimpleName> result;
   private final SimpleName focus;
-
   UsesCollector(final List<SimpleName> result, final SimpleName focus) {
     this.result = result;
     this.focus = focus;
@@ -211,7 +207,6 @@ class UsesCollector extends HidingDepth {
 
   private final class DeclaredInFields extends ASTVisitor {
     private final ASTNode parent;
-
     DeclaredInFields(final ASTNode parent) {
       this.parent = parent;
     }
