@@ -2,10 +2,9 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.expose.*;
-
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
+import il.org.spartan.*;
 
 // TODO: document this class
 @SuppressWarnings("javadoc") public class Subject {
@@ -13,7 +12,7 @@ import org.eclipse.jdt.core.dom.*;
     return new Operand(inner);
   }
   public static Several operands(final Expression... e) {
-    return new Several(Arrays.asList(e));
+    return new Several(as.list(e));
   }
   public static Several operands(final List<Expression> es) {
     return new Several(es);
@@ -31,7 +30,7 @@ import org.eclipse.jdt.core.dom.*;
     return new SeveralStatements(ss);
   }
   public static SeveralStatements statements(final Statement... ss) {
-    return ss(Arrays.asList(ss));
+    return ss(as.list(ss));
   }
 
   public static class Claimer {

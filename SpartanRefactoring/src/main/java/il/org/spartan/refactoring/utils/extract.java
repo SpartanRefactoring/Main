@@ -4,11 +4,8 @@ import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
-
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.misc.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should

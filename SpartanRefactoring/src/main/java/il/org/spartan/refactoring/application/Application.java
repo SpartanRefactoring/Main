@@ -2,13 +2,12 @@ package il.org.spartan.refactoring.application;
 
 import java.io.*;
 import java.util.*;
-
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.equinox.app.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
-
+import il.org.spartan.*;
 import il.org.spartan.files.*;
 import il.org.spartan.misc.*;
 import il.org.spartan.refactoring.handlers.*;
@@ -224,7 +223,7 @@ import il.org.spartan.utils.*;
     pack = srcRoot.createPackageFragment(name, false, null);
   }
   @Override public Object start(final IApplicationContext arg0) {
-    if (parseArguments(Arrays.asList((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS))))
+    if (parseArguments(as.list((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS))))
       return IApplication.EXIT_OK;
     final List<FileStats> fileStats = new ArrayList<>();
     try {

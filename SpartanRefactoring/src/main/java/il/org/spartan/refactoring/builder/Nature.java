@@ -2,7 +2,6 @@ package il.org.spartan.refactoring.builder;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
-
 import il.org.spartan.utils.*;
 
 /** @author Artium Nihamkin

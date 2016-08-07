@@ -2,9 +2,7 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.expose.*;
-
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 /** A class for analyzing a method.
