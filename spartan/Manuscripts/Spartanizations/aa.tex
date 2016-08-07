@@ -11,6 +11,31 @@ no longer on-topic. Refactoring, braces, indentation, Hungarian notation, and
 other stylistic issues relating to code.
 \end{tcolorbox}
 
+As pointed out by this statement, \emph{``curly brakets wars''}, namely discussions 
+on wether, when and how using curly brakets are discuraged. 
+However, such discussions can not be simply relegate to something about personal 
+tastes. 
+As a matter of fact, some of this options are included also in syntax definion of some languages. 
+For example, in \Go forces you to use them \urlref{https://golang.org/doc/faq\#semicolons}.
+Another example migh be that of some Java statement blocks, such as \kk{synchronized}, \kk{try}, \kk{catch},
+\kk{finally}, for which the curly brackets are compulsory.
+However, on the other hand, sometimes it happens that they can be ingnored, like in a recent addition to 
+the lambda expressions \urlref{http://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html\#syntax}.
+(CHECK the LINK. DID NOT FIND references to curly brackets).\\ 
+Thus you can write both the following versions of the same code.
+% the options are maintained.
+% You can write
+\begin{code}{JAVA}
+()-> 3
+\end{code}
+and
+\begin{code}{JAVA}
+  ()-> {3}
+\end{code}
+% check this.
+% 
+% ‟\emph{the braces war}”
+
 But it is not only curly braces matters that may raise
 this kind of ‟religious” wars. Even the Dijksta's maxim ‟\emph{gotos
 are evil}”~\cite{Dijkstra:1968} was challenged in the scientific
@@ -18,101 +43,9 @@ literature~\cite{Knuth:1974,Ramshaw:1988,Bochmann:1973,Sennesh:Gil:2016,Zoethout
 
 Telling the story of ‟Spartan Programming”, one particular style guideline for
 \Java, this manuscript is also likely to be contentious. Perhaps even more so
-after examining some ‟spartanized” code such as in \cref{figure:first}. 
-
-\begin{figure}[h]
-\label{figure:first}
-\caption{An example of spartan code}
-  \begin{Code}{JAVA}{Where was this taken from?}
-public static <T, C extends Collection<T>> accumulate<T, C> 
-  to(final C c) {
-    return new accumulate<T, C>() {
-      @Override public C elements() {
-        return c;
-      }
-      @Override public accumulate<T, C> 
-        add(final @Nullable T ¢) {
-          if (¢ == null)
-            return this;
-          assert ¢ != null;
-          c.add(¢);
-          return this;
-        }
-    };
-  }
-\end{Code}
-\end{figure}
-
-\begin{figure}[h]
-\begin{Code}{JAVA}{Where was this taken from?}
-default accumulate<T, C> 
-    addAll(final Iterable<? extends T>... tss) {
-      for (final Iterable<? extends T> ¢ : tss)
-        addAll(¢);
-      return this;
-    }
-\end{Code}
-\label{figure:shock-2}
-\caption{An example of spartan code}
-\end{figure}
-
-\begin{figure}[h]
-\begin{Code}{JAVA}{Where was this taken from?}
-/** Tests for primality.
-  * @param ¢ candidate to be tested
-  * @return <code><b>true</b></code> <i>iff</i> the parameter is prime. */
-public static boolean isPrime(final int ¢) {
-  return ¢ < -1 && isPrime(-¢) // deal with negative values
-      || ¢ > 1 && isPrime¢(¢); // any integer >- 2
-}
-private static boolean isPrime¢(final int i) {
-  for (int ¢ = 2; ¢ * ¢ <= i; ++¢)
-    if (i ％ ¢ == 0)
-      return false;
-  return true;
-}
-\end{Code}
-\end{figure}
-
-\begin{figure}[h]
-  \begin{Code}{JAVA}{Where was this taken from?}
-default Set<Variable> freeVariables() {
-    final Set<Variable> $ = new LinkedHashSet<>();
-    if (isVariable())
-      $.add((Variable) this);
-    else
-      for (final Term ¢ : this)
-        $.addAll(¢.freeVariables());
-    return $;
-  }
-\end{Code}
-\label{figure:shock-3}
-\caption{An example of spartan code}
-\end{figure}
-
+after examining some ‟spartanized” code such as in \cref{figure:first} 
 may look bizzare to eyes accustomed to traditional \Java code.
-
-This manuscript reports in
-
-Mention that \Go forces you to use them!
-Mention that are compulsory in \kk{synchronized},
-\kk{try},
-\kk{catch},
-\kk{finally},
-
-but on the other hand, in a recent addition lambda expressions~\cite{lambda}
-the options are maintained.
-You can write
-\begin{JAVA}
-()-> 3
-\end{JAVA}
-and
-\begin{JAVA}
-  ()-> {3}
-\end{JAVA}
-check this.
-
-‟\emph{the braces war}”
+% This manuscript reports in
 
 Why should this be important?
 \begin{itemize}
@@ -145,7 +78,7 @@ work on that.
 If one queries for ``code conventions''
 \footnote{On text, abstract and keywords and restraining the outcomes to the ``Computer Science''
 disciplinary area} 
-on Scopus\footnote{http://scopus.org}, one of the most important bibliographic databases, what it comes out is around 
+on Scopus\urlref{http://scopus.org}, one of the most important bibliographic databases, what it comes out is around 
 thousands of results\footnote{The search was performed on August 2016}. 
 However, very few of them  have \kk{code conventions} among they
 keywords and deal with code conventions
@@ -196,8 +129,8 @@ Mention it.}
 % The spartanization tool.
 
 This led to the design of a tool who perform the spartanizations for Java code.
-This is available in the form of Eclipse\footnote{https://eclipse.org/} plugin in the 
-marketplace\footnote{https://marketplace.eclipse.org/}
+This is available in the form of Eclipse\urlref{https://eclipse.org/} plugin in the 
+marketplace\urlref{https://marketplace.eclipse.org/}
 
 Say that some of your alma mater gang love to do this kind of metrics, but
 no one really knows whether the results are applicable to different projects
