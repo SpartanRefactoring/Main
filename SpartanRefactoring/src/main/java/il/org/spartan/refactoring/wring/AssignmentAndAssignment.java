@@ -21,6 +21,7 @@ import il.org.spartan.refactoring.utils.*;
  * <pre>
  * a = b = 3
  * </pre>
+ * 
  * @author Yossi Gil
  * @since 2015-08-28 */
 public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assignment> {

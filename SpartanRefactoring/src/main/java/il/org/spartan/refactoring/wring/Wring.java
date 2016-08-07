@@ -202,11 +202,17 @@ public abstract class Wring<N extends ASTNode> {
 
   static abstract class VariableDeclarationFragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
     static InfixExpression.Operator asInfix(final Assignment.Operator o) {
-      return o == PLUS_ASSIGN ? PLUS : o == MINUS_ASSIGN ? MINUS : o == TIMES_ASSIGN ? TIMES : o == DIVIDE_ASSIGN ? DIVIDE
-          : o == BIT_AND_ASSIGN ? AND : o == BIT_OR_ASSIGN ? OR : o == BIT_XOR_ASSIGN ? XOR : o == REMAINDER_ASSIGN ? REMAINDER
-              : o == LEFT_SHIFT_ASSIGN ? LEFT_SHIFT //
-                  : o == RIGHT_SHIFT_SIGNED_ASSIGN ? RIGHT_SHIFT_SIGNED //
-                      : o == RIGHT_SHIFT_UNSIGNED_ASSIGN ? RIGHT_SHIFT_UNSIGNED : null;
+      return o == PLUS_ASSIGN ? PLUS
+          : o == MINUS_ASSIGN ? MINUS
+              : o == TIMES_ASSIGN ? TIMES
+                  : o == DIVIDE_ASSIGN ? DIVIDE
+                      : o == BIT_AND_ASSIGN ? AND
+                          : o == BIT_OR_ASSIGN ? OR
+                              : o == BIT_XOR_ASSIGN ? XOR
+                                  : o == REMAINDER_ASSIGN ? REMAINDER
+                                      : o == LEFT_SHIFT_ASSIGN ? LEFT_SHIFT //
+                                          : o == RIGHT_SHIFT_SIGNED_ASSIGN ? RIGHT_SHIFT_SIGNED //
+                                              : o == RIGHT_SHIFT_UNSIGNED_ASSIGN ? RIGHT_SHIFT_UNSIGNED : null;
     }
     static Expression assignmentAsExpression(final Assignment a) {
       final Operator o = a.getOperator();
@@ -218,8 +224,8 @@ public abstract class Wring<N extends ASTNode> {
           return true;
       return false;
     }
-    /** Eliminates a {@link VariableDeclarationFragment}, with any other fragment
-     * fragments which are not live in the containing
+    /** Eliminates a {@link VariableDeclarationFragment}, with any other
+     * fragment fragments which are not live in the containing
      * {@link VariabelDeclarationStatement}. If no fragments are left, then this
      * containing node is eliminated as well.
      * @param f
@@ -300,7 +306,8 @@ public abstract class Wring<N extends ASTNode> {
       final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
       r.remove(parent.fragments().size() > 1 ? f : parent, g);
     }
-    abstract ASTRewrite go(ASTRewrite r, VariableDeclarationFragment f, SimpleName n, Expression initializer, Statement nextStatement, TextEditGroup g);
+    abstract ASTRewrite go(ASTRewrite r, VariableDeclarationFragment f, SimpleName n, Expression initializer, Statement nextStatement,
+        TextEditGroup g);
     @Override final ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
       if (!Is.variableDeclarationStatement(f.getParent()))
         return null;
