@@ -7,7 +7,7 @@ import il.org.spartan.refactoring.utils.*;
 /** A {@link Wring} to convert
  *
  * <pre>
- * b && true
+ * b &amp;&amp; true
  * </pre>
  *
  * to
@@ -15,7 +15,6 @@ import il.org.spartan.refactoring.utils.*;
  * <pre>
  * b
  * </pre>
- *
  * @author Yossi Gil
  * @since 2015-07-20 */
 public final class InfixConditionalAndTrue extends Wring.ReplaceCurrentNode<InfixExpression> {

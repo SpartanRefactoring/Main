@@ -10,8 +10,8 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 
-@SuppressWarnings({ "javadoc", "static-method" }) //
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@SuppressWarnings({ "javadoc", "static-method" })//
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 public class SingletStatementTest {
   @Test public void declarationAndStatementIsNull() {
     azzert.isNull(singleStatement(s("{int a; a();}")));

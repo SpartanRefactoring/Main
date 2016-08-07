@@ -7,15 +7,15 @@ import java.util.regex.*;
  * A variable's short name is a single-character name, determined by the first
  * character in the last word of the type's name.<br>
  * For example: <code>
- *
+ * 
  * <pre> public void execute(HTTPSecureConnection httpSecureConnection) {...}
  * </pre>
- *
+ * 
  * </code> would become<br>
  * <code>
- *
+ * 
  * <pre> public void execute(HTTPSecureConnection c) {...} </pre>
- *
+ * 
  * </code>
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-08-25 */
@@ -55,9 +55,8 @@ import java.util.regex.*;
     return a.toLowerCase();
   }
   private String toSingular(final String s) {
-    return s == null ? null
-        : s.endsWith("ies") ? s.substring(0, s.length() - 3) + "y"
-            : s.endsWith("es") ? s.substring(0, s.length() - 2) : s.endsWith("s") ? s.substring(0, s.length() - 1) : s;
+    return s == null ? null : s.endsWith("ies") ? s.substring(0, s.length() - 3) + "y" : s.endsWith("es") ? s.substring(0, s.length() - 2) : s
+        .endsWith("s") ? s.substring(0, s.length() - 1) : s;
   }
   /** Shorthand for n.equals(this.shortName())
    * @param s JD

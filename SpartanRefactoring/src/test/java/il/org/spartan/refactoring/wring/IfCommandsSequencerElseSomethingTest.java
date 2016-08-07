@@ -24,8 +24,8 @@ import il.org.spartan.utils.Utils;
 /** Unit tests for {@link Wrings#ADDITION_SORTER}.
  * @author Yossi Gil
  * @since 2014-07-13 */
-@SuppressWarnings({ "javadoc", "static-method" }) //
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@SuppressWarnings({ "javadoc", "static-method" })//
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 public class IfCommandsSequencerElseSomethingTest {
   static final IfThenOrElseIsCommandsFollowedBySequencer WRING = new IfThenOrElseIsCommandsFollowedBySequencer();
   static public void fail(final String message) {
@@ -111,7 +111,7 @@ public class IfCommandsSequencerElseSomethingTest {
     azzert.that(r.toString(), allOf(startsWith("Events:"), containsString("[replaced:"), containsString("]")));
   }
 
-  @RunWith(Parameterized.class) //
+  @RunWith(Parameterized.class)//
   public static class OutOfScope extends AbstractWringTest.OutOfScope<IfStatement> {
     static String[][] cases = Utils.asArray(//
         new String[] { "Literal vs. Literal", "if (a) return b; else c;" }, //
@@ -127,7 +127,7 @@ public class IfCommandsSequencerElseSomethingTest {
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
-    @Parameters(name = DESCRIPTION) //
+    @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
@@ -137,8 +137,8 @@ public class IfCommandsSequencerElseSomethingTest {
     }
   }
 
-  @RunWith(Parameterized.class) //
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+  @RunWith(Parameterized.class)//
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   public static class Wringed extends AbstractWringTest.Wringed.IfStatementAndSurrounding {
     private static String[][] cases = Utils.asArray(//
         new String[] { "Vanilla: sequencer in then", "if (a) return b; else a();", "if(a)return b;a();" }, //
@@ -148,40 +148,37 @@ public class IfCommandsSequencerElseSomethingTest {
         new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}", "if (x) {;f();;;return a;;;}\n g();" }, //
         null, //
         new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}", "  if(x){;f();;;return a;;;} g();" }, //
-        new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}",
-            "" + //
-                " if (x) {\n" + //
-                "   f();\n" + //
-                "   return a;\n" + //
-                " }\n" + //
-                " g();\n" + //
-                "" }, //
+        new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}", "" + //
+            " if (x) {\n" + //
+            "   f();\n" + //
+            "   return a;\n" + //
+            " }\n" + //
+            " g();\n" + //
+            "" }, //
         null, //
-        new String[] { "Complex with many junk statements",
-            "" + //
-                " if (x) {\n" + //
-                "   ;\n" + //
-                "   f();\n" + //
-                "   return a;\n" + //
-                " } else {\n" + //
-                "   ;\n" + //
-                "   g();\n" + //
-                "   {\n" + //
-                "   }\n" + //
-                " }\n" + //
-                "",
-            "" + //
-                " if (x) {\n" + //
-                "   f();\n" + //
-                "   return a;\n" + //
-                " }\n" + //
-                " g();\n" + //
-                "" }, //
+        new String[] { "Complex with many junk statements", "" + //
+            " if (x) {\n" + //
+            "   ;\n" + //
+            "   f();\n" + //
+            "   return a;\n" + //
+            " } else {\n" + //
+            "   ;\n" + //
+            "   g();\n" + //
+            "   {\n" + //
+            "   }\n" + //
+            " }\n" + //
+            "", "" + //
+            " if (x) {\n" + //
+            "   f();\n" + //
+            "   return a;\n" + //
+            " }\n" + //
+            " g();\n" + //
+            "" }, //
         null);
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
-    @Parameters(name = DESCRIPTION) //
+    @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
     }

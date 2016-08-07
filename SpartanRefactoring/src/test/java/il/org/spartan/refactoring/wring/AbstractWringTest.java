@@ -20,7 +20,7 @@ import il.org.spartan.refactoring.wring.AbstractWringTest.WringedExpression.*;
 
 /** @author Yossi Gil
  * @since 2015-07-18 */
-@SuppressWarnings({ "javadoc", "unchecked" }) //
+@SuppressWarnings({ "javadoc", "unchecked" })//
 public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
   protected final Wring<N> inner;
   public AbstractWringTest() {

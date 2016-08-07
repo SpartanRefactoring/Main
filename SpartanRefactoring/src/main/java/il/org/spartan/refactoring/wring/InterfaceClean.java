@@ -14,7 +14,6 @@ import org.eclipse.jdt.core.dom.*;
  * <pre>
  * <b>interface</b> a {}
  * </pre>
- *
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class InterfaceClean extends Wring.RemoveModifier<TypeDeclaration> {
