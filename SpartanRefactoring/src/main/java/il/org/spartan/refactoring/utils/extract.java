@@ -24,7 +24,6 @@ public enum extract {
   public static Iterable<ASTNode> ancestors(final ASTNode ¢) {
     return () -> new Iterator<ASTNode>() {
       ASTNode current = ¢;
-
       @Override public boolean hasNext() {
         return current != null;
       }
@@ -35,8 +34,7 @@ public enum extract {
       }
     };
   }
-  /** @param ¢ JD
-  /** @return */
+  /** @param ¢ JD /** @return */
   public static ASTNode containerType(final ASTNode ¢) {
     for (final ASTNode $ : ancestors(¢.getParent()))
       if (is($, ANONYMOUS_CLASS_DECLARATION //

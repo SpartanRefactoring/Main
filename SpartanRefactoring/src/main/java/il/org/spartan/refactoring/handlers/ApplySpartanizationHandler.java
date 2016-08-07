@@ -20,10 +20,8 @@ public class ApplySpartanizationHandler extends BaseHandler {
   public ApplySpartanizationHandler() {
     super(null);
   }
-
   static final Spartanization[] safeSpartanizations = { //
       new Trimmer() };
-
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     apply(currentCompilationUnit(), getSelectedText());
     return null;

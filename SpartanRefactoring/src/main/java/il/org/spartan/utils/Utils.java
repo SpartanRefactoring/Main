@@ -11,7 +11,6 @@ import org.eclipse.jdt.core.dom.*;
 public enum Utils {
   ;
   static final String WHITES = "(?m)\\s+";
-
   /** Appends an element to an array, by reallocating an array whose size is
    * greater by one and placing the element at the last position.
    * @param ts an arbitrary array

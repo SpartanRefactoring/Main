@@ -24,7 +24,6 @@ import il.org.spartan.utils.Utils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpression> {
   static final InfixComparisonSpecific WRING = new InfixComparisonSpecific();
-
   /** Instantiates this class */
   public InfixComparisonSpecificTest() {
     super(WRING);
@@ -156,7 +155,6 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
         // Misc
         new String[] { "Correct order", "1 + 2 < 3 " }, //
         null);
-
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -186,7 +184,6 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
         new String[] { "Expression vs. Expression", " 6 - 7 < 2 + 1   " }, //
         new String[] { "Literal vs. Literal", "1 < 102333" }, //
         null);
-
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -237,7 +234,6 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
         new String[] { "Crazy comparison", "null == 1", "1 == null" }, //
         new String[] { "Negative number", "-1 == a", "a == -1" }, //
         null);
-
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */

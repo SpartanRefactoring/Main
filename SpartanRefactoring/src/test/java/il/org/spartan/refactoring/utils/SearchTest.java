@@ -11,7 +11,6 @@ import il.org.spartan.refactoring.utils.Collect.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) public class SearchTest {
   private final SimpleName n = asSimpleName(e("n"));
-
   @Test public void awful() {
     azzert.that(searcher().in(d("Object n() {\n" + //
         "    class n {\n" + //

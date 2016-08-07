@@ -42,7 +42,6 @@ public enum ExpressionComparator implements Comparator<Expression> {
     }
   };
   private static Specificity specificity = new Specificity();
-
   static int literalCompare(final Expression e1, final Expression e2) {
     return -specificity.compare(e1, e2);
   }
@@ -101,11 +100,9 @@ public enum ExpressionComparator implements Comparator<Expression> {
         nodesCount(e1) >= nodesCount(e2) && moreArguments(e1, e2)//
     );
   }
-
   /** Threshold for comparing nodes; a difference in the number of nodes between
    * two nodes is considered zero, if it is the less than this value, */
   public static final int NODES_THRESHOLD = 1;
-
   /** Counts the number of non-space characters in a tree rooted at a given node
    * @param n JD
    * @return Number of abstract syntax tree nodes under the parameter. */

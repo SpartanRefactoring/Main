@@ -28,7 +28,6 @@ import il.org.spartan.utils.Utils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class IfCommandsSequencerElseSomethingTest {
   static final IfThenOrElseIsCommandsFollowedBySequencer WRING = new IfThenOrElseIsCommandsFollowedBySequencer();
-
   static public void fail(final String message) {
     throw message == null ? new AssertionError() : new AssertionError(message);
   }
@@ -125,7 +124,6 @@ public class IfCommandsSequencerElseSomethingTest {
         new String[] { "Simple if plus assign", "if (a) a += b; else a += c;" }, //
         new String[] { "Simple if plus assign", "if (a) a *= b; else a *= c;" }, //
         null);
-
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -180,7 +178,6 @@ public class IfCommandsSequencerElseSomethingTest {
                 " g();\n" + //
                 "" }, //
         null);
-
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */

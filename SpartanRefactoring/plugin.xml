@@ -5,11 +5,8 @@
          id="il.org.spartan.refactoring.BuilderID"
          name="Spartanization Checker"
          point="org.eclipse.core.resources.builders">
-      <builder
-            hasNature="true">
-         <run
-               class="il.org.spartan.refactoring.builder.Builder">
-         </run>
+      <builder hasNature="true">
+         <run class="il.org.spartan.refactoring.builder.Builder"/> 
       </builder>
    </extension>
    <extension
@@ -17,13 +14,9 @@
          name="Spartanization Nature"
          point="org.eclipse.core.resources.natures">
       <runtime>
-         <run
-               class="il.org.spartan.refactoring.builder.Nature">
-         </run>
+         <run class="il.org.spartan.refactoring.builder.Nature"/> 
       </runtime>
-      <builder
-            id="il.org.spartan.refactoring.BuilderID">
-      </builder>
+      <builder id="il.org.spartan.refactoring.BuilderID"/> 
    </extension>
      <extension
      id="il.org.spartan.refactoring.application"
@@ -33,29 +26,23 @@
      <run class="il.org.spartan.refactoring.application.Application"></run>
      </application>
    </extension>
-  <extension
-        id="il.org.spartan.refactoring.startupExtension"
-        point="org.eclipse.ui.startup">
-  </extension>
+  <extension id="il.org.spartan.refactoring.startupExtension" point="org.eclipse.ui.startup"/>
 <extension
     id="il.org.spartan.refactoring.spartanizationSuggestion"
     name="Spartanization Suggestion"
     point="org.eclipse.core.resources.markers">
   <super type="org.eclipse.core.resources.problemmarker" />
 </extension>
-
    <extension point="org.eclipse.ui.ide.markerResolution">
       <markerResolutionGenerator 
                markerType="il.org.spartan.refactoring.spartanizationSuggestion"
          class="il.org.spartan.refactoring.builder.QuickFixer"/>
    </extension>
-
    <extension point="org.eclipse.ui.editors.annotationTypes">
      <type markerType="il.org.spartan.refactoring.spartanizationSuggestion" 
        name="il.org.spartan.refactoring.spartanizationMarker" />
    </extension>
-   <extension
-      point="org.eclipse.ui.editors.markerAnnotationSpecification">
+   <extension point="org.eclipse.ui.editors.markerAnnotationSpecification">
    <specification
          annotationType="il.org.spartan.refactoring.spartanizationMarker"
          colorPreferenceKey="il.org.spartan.refactoring.spartanizationMarker.color"
@@ -73,12 +60,8 @@
          verticalRulerPreferenceValue="true">
    </specification>
 </extension>
-   <extension
-         point="org.eclipse.ui.commands">
-      <category
-            id="il.org.spartan.commands.category"
-            name="Spartanization Category">
-      </category>
+   <extension point="org.eclipse.ui.commands">
+      <category id="il.org.spartan.commands.category" name="Spartanization Category"/>
       <command
             categoryId="il.org.spartan.commands.category"
             id="il.org.spartan.commands.ToggleCommand"

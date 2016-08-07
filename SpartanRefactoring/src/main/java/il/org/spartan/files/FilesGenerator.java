@@ -27,7 +27,6 @@ public class FilesGenerator {
     @SafeVarargs public static <T> Iterable<T> iterable(final T... ts) {
       return () -> new Iterator<T>() {
         private int next = 0;
-
         @Override public boolean hasNext() {
           return next < ts.length;
         }
@@ -40,30 +39,27 @@ public class FilesGenerator {
       };
     }
   }
-
   public static void main(final String[] args) {
     for (final File f : new FilesGenerator(".java").from("."))
       System.out.println(f);
   }
-
   /** Which extensions we search for */
   final Iterable<String> extensions;
-
   /** Instantiates this class. This instantiation makes the first step in the
    * call chain that makes the fluent API. The second (and last) such step is
    * provided by function {@link #from(String...)}.
    * @param extensions an array of non-<code><b>null</b></code> {@link String}s
-   *        specifying the allowed extensions for files that the iterator should
-   *        yield, e.g., ".java", ".class", ".doc", etc. If this parameter is
-   *        <code><b>null</b></code>, or of length 0, or contains a
-   *        {@link String} of length 0, then the iterator yields all files found
-   *        in the scanned locations.
+   *          specifying the allowed extensions for files that the iterator
+   *          should yield, e.g., ".java", ".class", ".doc", etc. If this
+   *          parameter is <code><b>null</b></code>, or of length 0, or contains
+   *          a {@link String} of length 0, then the iterator yields all files
+   *          found in the scanned locations.
    * @see FilesGenerator#from */
   public FilesGenerator(final String... extensions) {
     this.extensions = asList(extensions);
   }
   /** @param from an array of names of directories from which the traversal
-   *        should begin
+   *          should begin
    * @return an instance of an internal (yet <code><b>public</b></code>)
    *         <code><b>class</b></code> which <code><b>implements</b></code> the
    *         {@link Iterable} <code><b>interface</b></code> */
@@ -71,7 +67,7 @@ public class FilesGenerator {
     return from(as.iterable(from));
   }
   /** @param from an array of names of directories from which the traversal
-   *        should begin
+   *          should begin
    * @return an instance of an internal (yet <code><b>public</b></code>)
    *         <code><b>class</b></code> which <code><b>implements</b></code> the
    *         {@link Iterable} <code><b>interface</b></code> */
@@ -92,7 +88,6 @@ public class FilesGenerator {
    * @since 2015-09-23. */
   public class From implements Iterable<File> {
     final Iterable<File> from;
-
     From(final Iterable<File> from) {
       this.from = from;
     }
@@ -103,7 +98,6 @@ public class FilesGenerator {
     private class FilesIterator implements Iterator<File> {
       private File next = null;
       private final Stack<Iterator<File>> stack = new Stack<>();
-
       public FilesIterator(final Iterator<File> i) {
         stack.push(i);
       }
@@ -139,16 +133,14 @@ public class FilesGenerator {
       }
     }
   }
-
   /** @param directory should be a directory, but we still need to account for
-   *        weird creatures such as "System Volume Information" */
+   *          weird creatures such as "System Volume Information" */
   static Iterator<File> directoryIterator(final File directory) {
     if (directory == null || !directory.isDirectory() || directory.list() == null)
       return null;
     final Iterator<String> generator = asList(directory.list()).iterator();
     return new Iterator<File>() {
       private File next;
-
       @Override public boolean hasNext() {
         for (;;) {
           if (!generator.hasNext())

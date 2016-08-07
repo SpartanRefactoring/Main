@@ -60,11 +60,9 @@ abstract class AbstractRenamePolicy {
     }
     return $;
   }
-
   final MethodDeclaration inner;
   final List<SimpleName> localVariables;
   final List<ReturnStatement> returnStatements;
-
   public AbstractRenamePolicy(final MethodDeclaration inner) {
     final MethodExplorer explorer = new MethodExplorer(this.inner = inner);
     localVariables = explorer.localVariables();

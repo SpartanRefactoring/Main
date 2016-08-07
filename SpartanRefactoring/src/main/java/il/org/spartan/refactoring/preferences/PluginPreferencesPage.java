@@ -9,7 +9,6 @@ import il.org.spartan.refactoring.wring.*;
 
 public class PluginPreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
   private final SpartanPropertyListener listener;
-
   public PluginPreferencesPage() {
     super(GRID);
     listener = new SpartanPropertyListener();
