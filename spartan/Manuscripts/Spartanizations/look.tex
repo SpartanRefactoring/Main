@@ -7,5 +7,74 @@
 % Fig. \ref{fig:code-before-spartanization} shows an example of class 
 % that present some issues or, put in other words, spartanization opportunity. 
 
+\begin{figure}[h]
+\label{figure:first}
+\caption{An example of spartan code}
+  \begin{Code}{JAVA}{Where was this taken from?}
+public static <T, C extends Collection<T>> accumulate<T, C> 
+  to(final C c) {
+    return new accumulate<T, C>() {
+      @Override public C elements() {
+        return c;
+      }
+      @Override public accumulate<T, C> 
+        add(final @Nullable T ¢) {
+          if (¢ == null)
+            return this;
+          assert ¢ != null;
+          c.add(¢);
+          return this;
+        }
+    };
+  }
+\end{Code}
+\end{figure}
+
+\begin{figure}[h]
+\begin{Code}{JAVA}{Where was this taken from?}
+default accumulate<T, C> 
+    addAll(final Iterable<? extends T>... tss) {
+      for (final Iterable<? extends T> ¢ : tss)
+        addAll(¢);
+      return this;
+    }
+\end{Code}
+\label{figure:shock-2}
+\caption{An example of spartan code}
+\end{figure}
+
+\begin{figure}[h]
+\begin{Code}{JAVA}{Where was this taken from?}
+/** Tests for primality.
+  * @param ¢ candidate to be tested
+  * @return <code><b>true</b></code> <i>iff</i> the parameter is prime. */
+public static boolean isPrime(final int ¢) {
+  return ¢ < -1 && isPrime(-¢) // deal with negative values
+      || ¢ > 1 && isPrime¢(¢); // any integer >- 2
+}
+private static boolean isPrime¢(final int i) {
+  for (int ¢ = 2; ¢ * ¢ <= i; ++¢)
+    if (i ％ ¢ == 0)
+      return false;
+  return true;
+}
+\end{Code}
+\end{figure}
+
+\begin{figure}[h]
+  \begin{Code}{JAVA}{Where was this taken from?}
+default Set<Variable> freeVariables() {
+    final Set<Variable> $ = new LinkedHashSet<>();
+    if (isVariable())
+      $.add((Variable) this);
+    else
+      for (final Term ¢ : this)
+        $.addAll(¢.freeVariables());
+    return $;
+  }
+\end{Code}
+\label{figure:shock-3}
+\caption{An example of spartan code}
+\end{figure}
 
 

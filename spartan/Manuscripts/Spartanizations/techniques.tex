@@ -2,12 +2,12 @@
 \begin{itemize}
   \item Redundant parenthesis and curly brackets.
   \item Remove redundant modifiers: Remove final in private methods
-        Remove final from static methods
-        Remove visibility of all members of in an interface
-        Remove abstract before interface
-        Remove abstract before methods in interfaces
-        Remove final from all methods in final class
-        Remove private/static from everything defined in anonymous classes
+  \item Remove final from static methods
+  \item Remove visibility of all members of in an interface
+  \item Remove abstract before interface
+  \item Remove abstract before methods in interfaces
+  \item Remove final from all methods in final class
+  \item Remove private/static from everything defined in anonymous classes
   \item Extra super() calls.
 \end{itemize}
 
@@ -36,8 +36,10 @@ x.toString()
   \item Sorting by size, but also as per the previous rule.
   \item De morgan pushdown logical negation.
   \item Pullup arirthmetic negation.
-  \item Pushdown ternarizations..
-        a ? b(x) : b(y) => b(a ? x: y)
+  \item Pushdown ternarizations.
+  \begin{code}{java}
+   a ? b(x) : b(y) => b(a ? x: y)
+  \end{code}
   \item Distributive rule on booleans
     \begin{code}{JAVA}
 a && b || c && b => (a || c) && c
@@ -99,41 +101,45 @@ if (this == null) return super();
   \end{itemize}
 
 \subsection{Early returns and the such}
-Off load exceptional cases quickly.
-inline single use of variables.
-Inline multiple use of variables: if 1) result is shorter and 2) the expression has no side effects.
-Pseudo inlining with initializers.
-Scope:
-Move into for
-Move into try
-Move next to use
-Variability (add final when possible.)
-Variables (inlining)
-What’s first
-Most external escape
-Shortest: 2*112*a*ab
-Least specific
-Algebraic simplifications
-Patterns: 2 * x + 1
-Pushdown:
-Logical Negation
-Arithmetical Negation
-String transformations
-.toString() -> “” +
-x.equals(“a”) -> “a”.equals(b)
-Auto insert “”
-Auto distributive
-Logical simplification
-Literal simplification
-Repeated deterministic expressions
-Arithmetical simplification
-Auto Collect
-Auto insert/remove 0+ in ternarization.
-Auto insert/remove 1*
-Auto add “” +
-Control simplification
-Ternarize
-Early return
+\begin{itemize}
+\item Off load exceptional cases quickly.
+\item inline single use of variables.
+\item Inline multiple use of variables: if 1) result is shorter and 2) the expression has no side effects.
+\item Pseudo inlining with initializers.
+\item Scope:
+\begin{itemize}
+ \item Move into for
+ \item Move into try
+ \item Move next to use
+\end{itemize}
+\item Variability (add final when possible.)
+\item Variables (inlining)
+\item What’s first
+\item Most external escape
+\item Shortest: 2*112*a*ab
+\item Least specific
+\item Algebraic simplifications
+\item Patterns: 2 * x + 1
+\item Pushdown:
+\item Logical Negation
+\item Arithmetical Negation
+\item String transformations
+\item .toString() -> “” +
+\item x.equals(“a”) -> “a”.equals(b)
+\item Auto insert “”
+\item Auto distributive
+\item Logical simplification
+\item Literal simplification
+\item Repeated deterministic expressions
+\item Arithmetical simplification
+\item Auto Collect
+\item Auto insert/remove 0+ in ternarization.
+\item Auto insert/remove 1*
+\item Auto add “” +
+\item Control simplification
+\item Ternarize
+\item Early return
+\begin{java}
 @SuppressWarnings("unused") private
 void earlyReturn(int a) {
   if (new Random().nextInt() <= 3) {
@@ -145,31 +151,35 @@ void earlyReturn(int a) {
     earlyReturn(44);
   }
 }
+\end{java}
+ 
+\end{itemize}
 
-Switch Normalization
-Renamings:
-In constructors: Arguments to corresponding field names
-In fields: to canonical instance name or pluralized
-In getters: Change name to fieldName if it is a getter.
-In Methods
-In local variables:
-return variable to \$
-Change argument to one single case letter
-In world amalgams, use the first letter of the last word.
-Deal with multiplicities of arrays
-Deal with multiplicities of collections
-Deal with nested multiplicities
-Change return type of void to ClassName and return this
-Single argument:
-To \_\_ if unused
-To \$ in case it is returned
-To fieldName in case it is a setter
-To ¢ in case method has no inner methods and is not a setter
-Any number of arguments:
-To \$ in case it is returned
-To__(n) if it is unused and documented as such
-Change argument to one single case letter
-In world amalgams, use the first letter of the last word.
-Deal with multiplicities
+\begin{itemize}
+\item Switch Normalization
+\item Renamings:
+\item In constructors: Arguments to corresponding field names
+\item In fields: to canonical instance name or pluralized
+\item In getters: Change name to fieldName if it is a getter.
+\item In Methods
+\item In local variables:
+\item return variable to \$
+\item Change argument to one single case letter
+\item In world amalgams, use the first letter of the last word.
+\item Deal with multiplicities of arrays
+\item Deal with multiplicities of collections
+\item Deal with nested multiplicities
+\item Change return type of void to ClassName and return this
+\item Single argument:
+\item To \_\_ if unused
+\item To \$ in case it is returned
+\item To fieldName in case it is a setter
+\item To ¢ in case method has no inner methods and is not a setter
+\item Any number of arguments:
+\item To \$ in case it is returned
+\item To__(n) if it is unused and documented as such
+\item Change argument to one single case letter
+\item In world amalgams, use the first letter of the last word.
+\item Deal with multiplicities
+\end{itemize}
 
-a
