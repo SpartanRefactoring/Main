@@ -1,10 +1,8 @@
 package il.org.spartan.refactoring.spartanizations;
 
 import static il.org.spartan.refactoring.spartanizations.DialogBoxes.*;
-
 import java.util.*;
 import java.util.List;
-
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
@@ -15,7 +13,7 @@ import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.ltk.ui.refactoring.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
-
+import il.org.spartan.*;
 import il.org.spartan.refactoring.handlers.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -55,7 +53,7 @@ public abstract class Spartanization extends Refactoring {
       if (r.getKind() == IPackageFragmentRoot.K_SOURCE)
         for (final IJavaElement e : r.getChildren())
           if (e.getElementType() == IJavaElement.PACKAGE_FRAGMENT)
-            $.addAll(Arrays.asList(((IPackageFragment) e).getCompilationUnits()));
+            $.addAll(as.list(((IPackageFragment) e).getCompilationUnits()));
     pm.done();
     return $;
   }

@@ -1,7 +1,6 @@
 package il.org.spartan.files;
 
 import static il.org.spartan.utils.Utils.*;
-
 import java.io.*;
 import java.util.*;
 

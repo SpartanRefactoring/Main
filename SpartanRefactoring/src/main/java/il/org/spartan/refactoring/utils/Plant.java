@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 /** A fluent API class that wraps an {@link Expression} with parenthesis, if the

@@ -2,7 +2,6 @@ package il.org.spartan.refactoring.spartanizations;
 
 import java.io.*;
 import java.util.*;
-
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 

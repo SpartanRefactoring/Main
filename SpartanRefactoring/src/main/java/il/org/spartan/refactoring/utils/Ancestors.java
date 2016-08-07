@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 /** An {@link Iterable} yielding all ancestors of a given node.

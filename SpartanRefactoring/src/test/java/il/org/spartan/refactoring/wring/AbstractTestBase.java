@@ -1,12 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.*;
-
 import java.util.*;
-
 import org.junit.*;
 import org.junit.runners.Parameterized.*;
-
 import il.org.spartan.refactoring.spartanizations.*;
 
 @SuppressWarnings({ "javadoc" }) //

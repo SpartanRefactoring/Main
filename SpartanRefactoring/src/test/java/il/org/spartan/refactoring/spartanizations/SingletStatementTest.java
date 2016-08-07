@@ -3,13 +3,10 @@ package il.org.spartan.refactoring.spartanizations;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
-
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 

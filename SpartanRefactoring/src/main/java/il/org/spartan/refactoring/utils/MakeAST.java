@@ -1,10 +1,8 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
-
 import java.io.*;
 import java.util.*;
-
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
