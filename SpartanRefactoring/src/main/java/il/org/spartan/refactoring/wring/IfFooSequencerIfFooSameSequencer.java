@@ -25,6 +25,7 @@ import il.org.spartan.refactoring.utils.*;
  * if (X || Y)
  *   return A;
  * </pre>
+ * 
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfFooSequencerIfFooSameSequencer extends Wring.ReplaceToNextStatement<IfStatement> {
@@ -43,8 +44,10 @@ public final class IfFooSequencerIfFooSameSequencer extends Wring.ReplaceToNextS
       return null;
     final Statement then = then(s);
     final List<Statement> ss1 = extract.statements(then);
-    return !same(ss1, extract.statements(then(s2))) || !Is.sequencer(last(ss1)) ? null : Wrings.replaceTwoStatements(r, s,
-        makeIfWithoutElse(BlockSimplify.reorganizeNestedStatement(then), Subject.pair(s.getExpression(), s2.getExpression()).to(CONDITIONAL_OR)), g);
+    return !same(ss1, extract.statements(then(s2))) || !Is.sequencer(last(ss1)) ? null
+        : Wrings.replaceTwoStatements(r, s,
+            makeIfWithoutElse(BlockSimplify.reorganizeNestedStatement(then), Subject.pair(s.getExpression(), s2.getExpression()).to(CONDITIONAL_OR)),
+            g);
   }
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate two 'if' statements with identical body";

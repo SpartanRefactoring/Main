@@ -5,8 +5,9 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} that reorder comparisons so that the specific value is placed
- * on the right. Specific value means a literal, or any of the two keywords
+/** A {@link Wring} that reorder comparisons so that the specific value is
+ * placed on the right. Specific value means a literal, or any of the two
+ * keywords
  *
  * <pre>
  * <b>this</b>

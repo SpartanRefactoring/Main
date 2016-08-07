@@ -36,6 +36,7 @@ import il.org.spartan.refactoring.utils.*;
  * <pre>
  * g();
  * </pre>
+ * 
  * @author Yossi Gil
  * @since 2015-07-29 */
 public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {

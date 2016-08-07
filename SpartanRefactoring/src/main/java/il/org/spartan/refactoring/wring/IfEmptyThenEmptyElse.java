@@ -14,6 +14,7 @@ import il.org.spartan.refactoring.utils.*;
  * else
  *   ;
  * </pre>
+ * 
  * @author Yossi Gil
  * @since 2015-08-26 */
 public final class IfEmptyThenEmptyElse extends Wring<IfStatement> {

@@ -23,6 +23,7 @@ import il.org.spartan.refactoring.wring.LocalInliner.*;
  * <pre>
  * return a;
  * </pre>
+ * 
  * @author Yossi Gil
  * @since 2015-08-07 */
 public final class DeclarationInitializerReturnUpdateAssignment extends Wring.VariableDeclarationFragementAndStatement {

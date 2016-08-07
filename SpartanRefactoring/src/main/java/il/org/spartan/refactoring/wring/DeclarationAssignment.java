@@ -19,6 +19,7 @@ import il.org.spartan.refactoring.utils.*;
  * <pre>
  * int a = 3;
  * </pre>
+ * 
  * @author Yossi Gil
  * @since 2015-08-07 */
 public final class DeclarationAssignment extends Wring.VariableDeclarationFragementAndStatement {

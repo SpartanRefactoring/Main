@@ -18,7 +18,7 @@ public enum Wrings {
   ;
   static void rename(final SimpleName oldName, final SimpleName newName, final MethodDeclaration d, final ASTRewrite r, final TextEditGroup g) {
     new LocalInliner(oldName, r, g).byValue(newName)//
-    .inlineInto(Collect.usesOf(oldName).in(d).toArray(new Expression[] {}));
+        .inlineInto(Collect.usesOf(oldName).in(d).toArray(new Expression[] {}));
   }
   static void addAllReplacing(final List<Statement> to, final List<Statement> from, final Statement substitute, final Statement by1,
       final List<Statement> by2) {

@@ -76,9 +76,10 @@ public enum Funcs {
         LESS_EQUALS, //
         EQUALS, //
         NOT_EQUALS //
-        ) ? ¢ : null;
+    ) ? ¢ : null;
   }
-  /** Convert, is possible, an {@link ASTNode} to a {@link ConditionalExpression}
+  /** Convert, is possible, an {@link ASTNode} to a
+   * {@link ConditionalExpression}
    * @param ¢ JD
    * @return the argument, but down-casted to a {@link ConditionalExpression},
    *         or <code><b>null</b></code> if no such down-cast is possible.. */
@@ -203,7 +204,8 @@ public enum Funcs {
   public static String asString(final ASTNode ¢) {
     return removeWhites(¢.toString());
   }
-  /** Convert, is possible, an {@link ASTNode} to a {@link ConditionalExpression}
+  /** Convert, is possible, an {@link ASTNode} to a
+   * {@link ConditionalExpression}
    * @param ¢ JD
    * @return the argument, but down-casted to a {@link ConditionalExpression},
    *         or <code><b>null</b></code> if no such down-cast is possible.. */
@@ -213,8 +215,9 @@ public enum Funcs {
   /** Convert, if possible, an {@link Expression} to a
    * {@link VariableDeclarationExpression}
    * @param ¢ JD
-   * @return the argument, but down-casted to a {@link VariableDeclarationExpression},
-   *         or <code><b>null</b></code> if no such down-cast is possible.. */
+   * @return the argument, but down-casted to a
+   *         {@link VariableDeclarationExpression}, or <code><b>null</b></code>
+   *         if no such down-cast is possible.. */
   public static VariableDeclarationExpression asVariableDeclarationExpression(final Expression ¢) {
     return ¢.getNodeType() != VARIABLE_DECLARATION_EXPRESSION ? null : (VariableDeclarationExpression) ¢;
   }
@@ -290,7 +293,7 @@ public enum Funcs {
   /** Find the first matching expression to the given boolean (b).
    * @param b JD, es JD
    * @return the first expression from the given list (es) whose boolean value
-   * matches to the given boolean (b). */
+   *         matches to the given boolean (b). */
   private static Expression find(final boolean b, final List<Expression> es) {
     for (final Expression $ : es)
       if (Is.booleanLiteral($) && b == asBooleanLiteral($).booleanValue())
@@ -323,8 +326,8 @@ public enum Funcs {
    *         (or if ¢ or name are null) */
   // TODO this seems a bug
   public static VariableDeclarationFragment getDefinition(final ASTNode n, final Expression e) {
-    return hasNulls(n, e) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || e.getNodeType() != SIMPLE_NAME ? null : getDefinition(
-        (VariableDeclarationStatement) n, (SimpleName) e);
+    return hasNulls(n, e) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || e.getNodeType() != SIMPLE_NAME ? null
+        : getDefinition((VariableDeclarationStatement) n, (SimpleName) e);
   }
   private static VariableDeclarationFragment getDefinition(final VariableDeclarationStatement s, final SimpleName n) {
     return getVarDeclFrag(expose.fragments(s), n);
@@ -487,8 +490,8 @@ public enum Funcs {
   }
   public static int negationLevel(final Expression ¢) {
     return ¢ instanceof PrefixExpression ? negationLevel((PrefixExpression) ¢)
-        : ¢ instanceof ParenthesizedExpression ? negationLevel(((ParenthesizedExpression) ¢).getExpression()) : asBit(¢ instanceof NumberLiteral
-            && ((NumberLiteral) ¢).getToken().startsWith("-"));
+        : ¢ instanceof ParenthesizedExpression ? negationLevel(((ParenthesizedExpression) ¢).getExpression())
+            : asBit(¢ instanceof NumberLiteral && ((NumberLiteral) ¢).getToken().startsWith("-"));
   }
   private static int negationLevel(final PrefixExpression ¢) {
     return asBit(¢.getOperator() == PrefixExpression.Operator.MINUS) + negationLevel(¢.getOperand());
@@ -519,9 +522,9 @@ public enum Funcs {
   }
   public static Expression peelNegation(final Expression $) {
     return //
-        $ instanceof PrefixExpression ? peelNegation((PrefixExpression) $) //
-            : $ instanceof ParenthesizedExpression ? peelNegation(((ParenthesizedExpression) $).getExpression()) //
-                : $ instanceof NumberLiteral ? peelNegation((NumberLiteral) $) : $;
+    $ instanceof PrefixExpression ? peelNegation((PrefixExpression) $) //
+        : $ instanceof ParenthesizedExpression ? peelNegation(((ParenthesizedExpression) $).getExpression()) //
+            : $ instanceof NumberLiteral ? peelNegation((NumberLiteral) $) : $;
   }
   private static Expression peelNegation(final NumberLiteral $) {
     return !$.getToken().startsWith("-") ? $ : $.getAST().newNumberLiteral($.getToken().substring(1));
@@ -546,8 +549,8 @@ public enum Funcs {
   @SuppressWarnings("unchecked") public static <N extends ASTNode> N rebase(final N n, final AST t) {
     return (N) copySubtree(t, n);
   }
-  /** As {@link #elze(ConditionalExpression)} but returns the last else statement
-   * in "if - else if - ... - else" statement
+  /** As {@link #elze(ConditionalExpression)} but returns the last else
+   * statement in "if - else if - ... - else" statement
    * @param ¢ JD
    * @return last nested else statement */
   public static Statement recursiveElze(final IfStatement ¢) {

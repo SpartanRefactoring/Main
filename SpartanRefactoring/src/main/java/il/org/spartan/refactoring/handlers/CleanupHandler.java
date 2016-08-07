@@ -40,7 +40,7 @@ public class CleanupHandler extends BaseHandler {
       try {
         ps.busyCursorWhile(pm -> {
           pm.beginTask("Spartanizing project '" + javaProject.getElementName() + "' - " + //
-              "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES, us.size());
+          "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES, us.size());
           int n = 0;
           for (final ICompilationUnit u : us) {
             apply(u);
