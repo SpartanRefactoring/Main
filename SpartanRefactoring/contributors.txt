@@ -1,4 +1,4 @@
-#
+﻿#
 # This file holds the complete list of people who contributed to this repository.
 # Please keep this file maintained, and new contributors should be added
 # in an alphabetical order.
@@ -14,3 +14,4 @@ Tomer Zeltzer <tomerr90 [at] gmail.com>
 Yossi Gil <yossi.gil [at] gmail.com>
 Dor Ma’ayan <dor.d.ma [at] gmail.com>
 Alexander Kopzon <alexkopzon [at] gmail.com>
+Dan Greenstein <dngreenst [at] gmail.com>
