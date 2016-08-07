@@ -23,7 +23,8 @@ public enum extract {
   }
   /** Retrieves the ancestors of the ASTNode, via an Iterator.
    * @param ¢ JD
-   * @return an {@link Iterable} that traverses the ancestors of the ASTNode. */
+   * @return an {@link Iterable} that traverses the ancestors of the ASTNode. 
+   * Use case: Counting the number of Expressions among a given ASTNode's ancestors */
   public static Iterable<ASTNode> ancestors(final ASTNode ¢) {
     return () -> new Iterator<ASTNode>() {
       ASTNode current = ¢;
