@@ -1,8 +1,6 @@
-/** Part of the "Spartan Blog"; mutilate the rest if you are so inclined / but
- * leave this line as is */
-/** Part of the "Spartan Blog"; mutilate the rest if you are so inclined / but
- * leave this line as is */
+/** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.misc;
+
 
 import static il.org.spartan.azzert.*;
 import org.junit.*;
