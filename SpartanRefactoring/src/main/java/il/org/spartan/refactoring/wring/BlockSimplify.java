@@ -41,9 +41,9 @@ import il.org.spartan.refactoring.utils.*;
 public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
   public static boolean hasHidings(final List<Statement> ss) {
     return new Predicate<List<Statement>>() {
-      @Override public boolean test(final List<Statement> ss) {
-        for (final Statement s : ss)
-          if (¢(s))
+      @Override public boolean test(final List<Statement> ¢¢) {
+        for (final Statement ¢ : ¢¢)
+          if (¢(¢))
             return true;
         return false;
       }

@@ -47,8 +47,8 @@ public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression
       return null;
     if (left instanceof NumberLiteral == right instanceof NumberLiteral)
       return null;
-    return left instanceof MethodInvocation ? replacement(e, o, (MethodInvocation) left, (NumberLiteral) right) : replacement(e, conjugate(o),
-        (MethodInvocation) right, (NumberLiteral) left);
+    return left instanceof MethodInvocation ? replacement(e, o, (MethodInvocation) left, (NumberLiteral) right)
+        : replacement(e, conjugate(o), (MethodInvocation) right, (NumberLiteral) left);
   }
   private static ASTNode replacement(final InfixExpression e, final Operator o, final MethodInvocation i, final NumberLiteral l) {
     if (!"size".equals(i.getName().getIdentifier()) || Double.parseDouble(l.getToken()) != 0)
@@ -57,7 +57,8 @@ public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression
     if (u == null)
       return null;
     final Expression receiver = i.getExpression();
-    final IMethodBinding b = getVisibleMethod(receiver == null?extract.container(e):receiver.resolveTypeBinding(), "isEmpty", null, e, u);
+    final IMethodBinding b = BindingUtils.getVisibleMethod(receiver == null ? BindingUtils.container(e) : receiver.resolveTypeBinding(), "isEmpty",
+        null, e, u);
     if (b == null)
       return null;
     final ITypeBinding t = b.getReturnType();
