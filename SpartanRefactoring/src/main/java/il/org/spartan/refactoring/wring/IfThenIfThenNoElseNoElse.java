@@ -19,10 +19,9 @@ import il.org.spartan.refactoring.utils.*;
  * into
  *
  * <pre>
- * if (x && a)
+ * if (x &amp;&amp; a)
  *   f();
  * </pre>
- *
  * @author Yossi Gil
  * @since 2015-09-01 */
 public final class IfThenIfThenNoElseNoElse extends Wring<IfStatement> {

@@ -6,7 +6,7 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 
-@SuppressWarnings({ "javadoc", "static-method" }) //
+@SuppressWarnings({ "javadoc", "static-method" })//
 public class IfEmptyThenTest {
   private static final IfEmptyThen WRING = new IfEmptyThen();
   private static final Statement INPUT = Into.s("{if (b) ; else ff();}");

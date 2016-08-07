@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.BindingUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 import org.eclipse.jdt.core.dom.*;
@@ -48,9 +47,8 @@ public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression
       return null;
     if (left instanceof NumberLiteral == right instanceof NumberLiteral)
       return null;
-    if (left instanceof MethodInvocation)
-      return replacement(e, o, (MethodInvocation) left, (NumberLiteral) right);
-    return replacement(e, conjugate(o), (MethodInvocation) right, (NumberLiteral) left);
+    return left instanceof MethodInvocation ? replacement(e, o, (MethodInvocation) left, (NumberLiteral) right) : replacement(e, conjugate(o),
+        (MethodInvocation) right, (NumberLiteral) left);
   }
   private static ASTNode replacement(final InfixExpression e, final Operator o, final MethodInvocation i, final NumberLiteral l) {
     if (!"size".equals(i.getName().getIdentifier()) || Double.parseDouble(l.getToken()) != 0)
@@ -59,16 +57,14 @@ public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression
     if (u == null)
       return null;
     final Expression receiver = i.getExpression();
-    final IMethodBinding b = getVisibleMethod(receiver != null ? receiver.resolveTypeBinding() : container(e), "isEmpty", null, e, u);
+    final IMethodBinding b = getVisibleMethod(receiver == null?extract.container(e):receiver.resolveTypeBinding(), "isEmpty", null, e, u);
     if (b == null)
       return null;
     final ITypeBinding t = b.getReturnType();
     if (b == null || !"boolean".equals("" + t) && !"java.lang.Boolean".equals(t.getBinaryName()))
       return null;
     final MethodInvocation $ = Subject.operand(receiver).toMethod("isEmpty");
-    if (o.equals(InfixExpression.Operator.EQUALS))
-      return $;
-    return Subject.operand($).to(NOT);
+    return o.equals(InfixExpression.Operator.EQUALS) ? $ : Subject.operand($).to(NOT);
   }
   @Override String description(final InfixExpression n) {
     final Expression e = ((MethodInvocation) n.getLeftOperand()).getExpression();

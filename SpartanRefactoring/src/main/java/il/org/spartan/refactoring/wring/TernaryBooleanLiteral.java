@@ -14,31 +14,31 @@ import il.org.spartan.refactoring.utils.*;
  * is the same as
  *
  * <pre>
- * (a && b) || (!a && c)
+ * (a &amp;&amp; b) || (!a &amp;&amp; c)
  * </pre>
  *
  * if b is false than:
  *
  * <pre>
- * (a && false) || (!a && c) == (!a && c)
+ * (a &amp;&amp; false) || (!a &amp;&amp; c) == (!a &amp;&amp; c)
  * </pre>
  *
  * if b is true than:
  *
  * <pre>
- * (a && true) || (!a && c) == a || (!a && c) == a || c
+ * (a &amp;&amp; true) || (!a &amp;&amp; c) == a || (!a &amp;&amp; c) == a || c
  * </pre>
  *
  * if c is false than:
  *
  * <pre>
- * (a && b) || (!a && false) == (!a && c)
+ * (a &amp;&amp; b) || (!a &amp;&amp; false) == (!a &amp;&amp; c)
  * </pre>
  *
  * if c is true than
  *
  * <pre>
- * (a && b) || (!a && true) == (a && b) || (!a) == !a || b
+ * (a &amp;&amp; b) || (!a &amp;&amp; true) == (a &amp;&amp; b) || (!a) == !a || b
  * </pre>
  *
  * keywords
@@ -72,34 +72,31 @@ public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<Condit
    * ; in a sense it is the same as
    *
    * <pre>
-   * (a && b) || (!a && c)
+   * (a &amp;&amp; b) || (!a &amp;&amp; c)
    * </pre>
    * <ol>
    * <li>if b is false then:
    *
    * <pre>
-   * (a && false) || (!a && c) == !a && c
+   * (a &amp;&amp; false) || (!a &amp;&amp; c) == !a &amp;&amp; c
    * </pre>
-   *
    * <li>if b is true then:
    *
    * <pre>
-   * (a && true) || (!a && c) == a || (!a && c) == a || c
+   * (a &amp;&amp; true) || (!a &amp;&amp; c) == a || (!a &amp;&amp; c) == a || c
    * </pre>
-   *
    * <li>if c is false then:
    *
    * <pre>
-   * (a && b) || (!a && false) == a && b
+   * (a &amp;&amp; b) || (!a &amp;&amp; false) == a &amp;&amp; b
    * </pre>
-   *
    * <li>if c is true then
    *
    * <pre>
-   * (a && b) || (!a && true) == !a || b
+   * (a &amp;&amp; b) || (!a &amp;&amp; true) == !a || b
    * </pre>
-   * </ol>
-  */
+   * 
+   * </ol> */
   private static Expression simplifyTernary(final ConditionalExpression e) {
     return simplifyTernary(core(e.getThenExpression()), core(e.getElseExpression()), duplicate(e.getExpression()));
   }

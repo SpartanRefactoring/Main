@@ -20,7 +20,6 @@ import il.org.spartan.refactoring.utils.*;
  * if (x)
  *   return b;
  * </pre>
- *
  * @author Yossi Gil
  * @since 2015-08-01 */
 public final class IfDegenerateElse extends Wring.ReplaceCurrentNode<IfStatement> {

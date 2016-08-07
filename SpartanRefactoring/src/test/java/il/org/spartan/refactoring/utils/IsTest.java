@@ -9,7 +9,7 @@ import il.org.spartan.*;
 /** Test class for class {@link Is}
  * @author Yossi Gil
  * @since 2015-07-17 */
-@SuppressWarnings({ "javadoc", "static-method" }) //
+@SuppressWarnings({ "javadoc", "static-method" })//
 public class IsTest {
   @Test public void booleanLiteralFalseOnNull() {
     azzert.that(Is.booleanLiteral(e("null")), is(false));

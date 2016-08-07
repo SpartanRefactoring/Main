@@ -21,8 +21,7 @@ import il.org.spartan.refactoring.utils.*;
  * return a ? foo() : bar();
  * </pre>
  *
- * return a; } g();
- * </pre>
+ * return a; } g(); </pre>
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfReturnNoElseReturn extends Wring.ReplaceToNextStatement<IfStatement> {
