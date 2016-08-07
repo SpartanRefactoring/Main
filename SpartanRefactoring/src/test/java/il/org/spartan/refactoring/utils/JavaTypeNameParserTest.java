@@ -47,4 +47,12 @@ public class JavaTypeNameParserTest {
   @Test public void stringBuilder() {
     azzert.that(new JavaTypeNameParser("StringBuilder").shortName(), is("b"));
   }
+  //some upper, some lower case characters - the upper are more representive.
+  @Test public void Alex_and_Dan_test() {
+	azzert.that(new JavaTypeNameParser("Alex_and_Dan").shortName(), is("ad"));
+  }
+  //all lower case characters - not sure how you want to shorten it.
+  @Test public void some_name_an_electrical_engineer_can_give() {
+	azzert.that(new JavaTypeNameParser("very_low_voltage").shortName(), is("vlv"));
+  }
 }
