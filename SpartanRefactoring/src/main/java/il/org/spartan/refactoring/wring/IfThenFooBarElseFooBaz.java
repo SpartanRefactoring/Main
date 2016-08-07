@@ -30,7 +30,6 @@ import il.org.spartan.refactoring.utils.*;
  * else
  *   baz();
  * </pre>
- *
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> {
@@ -63,8 +62,8 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> {
         return replacement(s.getExpression(), Subject.ss(then).toOneStatementOrNull(), Subject.ss(elze).toOneStatementOrNull());
       }
       IfStatement replacement(final Expression condition, final Statement trimmedThen, final Statement trimmedElse) {
-        return trimmedThen == null && trimmedElse == null ? null
-            : trimmedThen == null ? Subject.pair(trimmedElse, null).toNot(condition) : Subject.pair(trimmedThen, trimmedElse).toIf(condition);
+        return trimmedThen == null && trimmedElse == null ? null : trimmedThen == null ? Subject.pair(trimmedElse, null).toNot(condition) : Subject
+            .pair(trimmedThen, trimmedElse).toIf(condition);
       }
     };
   }

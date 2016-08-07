@@ -19,7 +19,6 @@ import il.org.spartan.refactoring.utils.*;
  * if (a)
  *   g();
  * </pre>
- *
  * @author Yossi Gil
  * @since 2015-09-09 */
 public class BlockSingleton extends Wring.ReplaceCurrentNode<Block> {

@@ -17,7 +17,7 @@ import il.org.spartan.refactoring.utils.*;
 /* TODO This is a previous version of the MethodParameterAbbreviate wring that
  * replaces all parameter names in a method at once. If it is found to be
  * useless in the near future, delete this class. Otherwise, remove the
- *
+ * 
  * @Deprecated annotation */
 @Deprecated public class MethodAbbreviateParameterNames extends Wring<MethodDeclaration> {
   @Override String description(final MethodDeclaration d) {

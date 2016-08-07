@@ -5,8 +5,8 @@ import org.junit.*;
 import org.junit.runners.*;
 import il.org.spartan.*;
 
-@SuppressWarnings({ "javadoc", "static-method" }) //
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@SuppressWarnings({ "javadoc", "static-method" })//
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 public class JavaTypeNameParserTest {
   @Test public void alphaNumericMid() {
     azzert.that(new JavaTypeNameParser("Base64Parser").shortName(), is("p"));

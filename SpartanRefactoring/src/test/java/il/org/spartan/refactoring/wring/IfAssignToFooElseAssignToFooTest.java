@@ -17,8 +17,8 @@ import il.org.spartan.utils.Utils;
 /** Unit tests for {@link Wrings#ADDITION_SORTER}.
  * @author Yossi Gil
  * @since 2014-07-13 */
-@SuppressWarnings({ "javadoc", "static-method" }) //
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@SuppressWarnings({ "javadoc", "static-method" })//
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 public class IfAssignToFooElseAssignToFooTest {
   static final Wring<IfStatement> WRING = new IfAssignToFooElseAssignToFoo();
   @Test public void checkSteps() {
@@ -51,7 +51,7 @@ public class IfAssignToFooElseAssignToFooTest {
     azzert.aye(compatible(a1, a2));
   }
 
-  @RunWith(Parameterized.class) //
+  @RunWith(Parameterized.class)//
   public static class OutOfScope extends AbstractWringTest.OutOfScope<IfStatement> {
     static String[][] cases = Utils.asArray(//
         new String[] { "Expression vs. Expression", " 6 - 7 < 2 + 1   " }, //
@@ -65,7 +65,7 @@ public class IfAssignToFooElseAssignToFooTest {
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
-    @Parameters(name = DESCRIPTION) //
+    @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
@@ -75,8 +75,8 @@ public class IfAssignToFooElseAssignToFooTest {
     }
   }
 
-  @RunWith(Parameterized.class) //
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+  @RunWith(Parameterized.class)//
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   public static class Wringed extends AbstractWringTest.WringedIfStatement {
     private static String[][] cases = Utils.asArray(//
         new String[] { "Simple if assign", "if (a) a = b; else a = c;", "a = a ? b : c;" }, //
@@ -86,7 +86,7 @@ public class IfAssignToFooElseAssignToFooTest {
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
-    @Parameters(name = DESCRIPTION) //
+    @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
     }

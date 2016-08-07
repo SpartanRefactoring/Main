@@ -20,7 +20,6 @@ import il.org.spartan.refactoring.utils.*;
  * <pre>
  * throw a ? foo() : bar();
  * </pre>
- *
  * @author Yossi Gil
  * @since 2015-09-09 */
 public final class IfThrowNoElseThrow extends Wring.ReplaceToNextStatement<IfStatement> {

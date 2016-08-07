@@ -56,13 +56,13 @@ public enum Utils {
         .replaceAll("(?m)\\s+", " ") // Squeeze whites
         .replaceAll("^\\s", "") // Opening whites
         .replaceAll("\\s$", "") // Closing whites
-    ;
+        ;
     for (final String operator : new String[] { ":", "/", "%", ",", "\\{", "\\}", "=", ":", "\\?", ";", "\\+", ">", ">=", "!=", "==", "<", "<=", "-",
         "\\*", "\\|", "\\&", "%", "\\(", "\\)", "[\\^]" })
       $ = $ //
-          .replaceAll(WHITES + operator, operator) // Preceding whites
-          .replaceAll(operator + WHITES, operator) // Trailing whites
-      ;
+      .replaceAll(WHITES + operator, operator) // Preceding whites
+      .replaceAll(operator + WHITES, operator) // Trailing whites
+    ;
     return $;
   }
   /** Deletes a specified element from an array, by reallocating an array whose
@@ -184,8 +184,7 @@ public enum Utils {
     Arrays.sort(is);
     return is;
   }
-  /** Determine whether a file name ends with any one of the supplied
-   * extensions.
+  /** Determine whether a file name ends with any one of the supplied extensions.
    * @param f a file to examine
    * @param suffixes a list of potential extensions.
    * @return <code><b>true</b></code> <em>iff</em>the file name ends with any
@@ -193,8 +192,7 @@ public enum Utils {
   public static boolean suffixedBy(final File f, final Iterable<String> suffixes) {
     return suffixedBy(f.getName(), suffixes);
   }
-  /** Determine whether a file name ends with any one of the supplied
-   * extensions.
+  /** Determine whether a file name ends with any one of the supplied extensions.
    * @param f a file to examine
    * @param suffixes a list of potential extensions.
    * @return <code><b>true</b></code> <em>iff</em>the file name ends with any

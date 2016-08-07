@@ -13,7 +13,7 @@ import il.org.spartan.refactoring.utils.*;
 /** A {@link Wring} to convert
  *
  * <pre>
- * b && true
+ * b &amp;&amp; true
  * </pre>
  *
  * to
@@ -21,7 +21,6 @@ import il.org.spartan.refactoring.utils.*;
  * <pre>
  * b
  * </pre>
- *
  * @author Yossi Gil
  * @since 2015-07-20 */
 public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<InfixExpression> {
@@ -37,14 +36,13 @@ public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<Infix
     if (right == null || right.getOperator() != conjugate)
       return null;
     final Expression leftLeft = left(left);
-    return !Is.sideEffectFree(leftLeft) || !same(leftLeft, left(right)) ? null
-        : Subject.pair(leftLeft, Subject.pair(chopHead(left), chopHead(right)).to(o)).to(conjugate);
+    return !Is.sideEffectFree(leftLeft) || !same(leftLeft, left(right)) ? null : Subject.pair(leftLeft,
+        Subject.pair(chopHead(left), chopHead(right)).to(o)).to(conjugate);
   }
   private static Operator conjugate(final Operator o) {
-    return o == null ? null
-        : o == CONDITIONAL_AND ? CONDITIONAL_OR //
-            : o == CONDITIONAL_OR ? CONDITIONAL_AND //
-                : null;
+    return o == null ? null : o == CONDITIONAL_AND ? CONDITIONAL_OR //
+        : o == CONDITIONAL_OR ? CONDITIONAL_AND //
+            : null;
   }
   private static Expression chopHead(final InfixExpression e) {
     final List<Expression> es = extract.allOperands(e);

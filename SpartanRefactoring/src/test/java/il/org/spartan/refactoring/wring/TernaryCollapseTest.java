@@ -16,8 +16,8 @@ import il.org.spartan.utils.Utils;
 /** Unit tests for {@link Wrings#ADDITION_SORTER}.
  * @author Yossi Gil
  * @since 2014-07-13 */
-@SuppressWarnings({ "javadoc", "static-method" }) //
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@SuppressWarnings({ "javadoc", "static-method" })//
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
 public class TernaryCollapseTest {
   static final Wring<ConditionalExpression> WRING = new TernaryCollapse();
   @Test public void steps() {
@@ -34,10 +34,10 @@ public class TernaryCollapseTest {
     azzert.aye(same(thenElse, elze));
   }
 
-  @RunWith(Parameterized.class) //
+  @RunWith(Parameterized.class)//
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Exprezzion<ConditionalExpression> {
     static String[][] cases = Utils.asArray(
-        //
+    //
         new String[] { "No boolean", "a?b:c" }, //
         new String[] { "F X", "a ? false : c" }, //
         new String[] { "T X", "a ? true : c" }, //
@@ -68,23 +68,23 @@ public class TernaryCollapseTest {
         new String[] { "Into constructor not same arity", "a ? new S(a,new Integer(4),b) : new S(new Ineger(3))" }, //
         new String[] { "field refernece",
             "externalImage ? R.string.webview_contextmenu_image_download_action : R.string.webview_contextmenu_image_save_action", }, //
-        new String[] { "almost identical function call", "a ? f(b) :f(c)" }, //
-        new String[] { "almost identical method call", "a ? y.f(b) :y.f(c)" }, //
-        new String[] { "almost identical assignment", "a ? (b=c) :(b=d)", }, //
-        new String[] { "almost identical 2 addition", "a ? b+d :b+ c", }, //
-        new String[] { "almost identical 3 addition", "a ? b+d +x:b+ c + x", }, //
-        new String[] { "almost identical 4 addition last", "a ? b+d+e+y:b+d+e+x", }, //
-        new String[] { "almost identical 4 addition second", "a ? b+x+e+f:b+y+e+f", }, //
-        new String[] { "different target field refernce", "a ? 1 + x.a : 1 + y.a", }, //
-        new String[] { "Into constructor 1/1 location", "a.equal(b) ? new S(new Integer(4)) : new S(new Ineger(3))", }, //
-        new String[] { "Into constructor 1/3", "a.equal(b) ? new S(new Integer(4),a,b) : new S(new Ineger(3),a,b)", }, //
-        new String[] { "Into constructor 2/3", "a.equal(b) ? new S(a,new Integer(4),b) : new S(a, new Ineger(3), b)", }, //
-        new String[] { "Into constructor 3/3", "a.equal(b) ? new S(a,b,new Integer(4)) : new S(a,b,new Ineger(3))", }, //
-        null);
+            new String[] { "almost identical function call", "a ? f(b) :f(c)" }, //
+            new String[] { "almost identical method call", "a ? y.f(b) :y.f(c)" }, //
+            new String[] { "almost identical assignment", "a ? (b=c) :(b=d)", }, //
+            new String[] { "almost identical 2 addition", "a ? b+d :b+ c", }, //
+            new String[] { "almost identical 3 addition", "a ? b+d +x:b+ c + x", }, //
+            new String[] { "almost identical 4 addition last", "a ? b+d+e+y:b+d+e+x", }, //
+            new String[] { "almost identical 4 addition second", "a ? b+x+e+f:b+y+e+f", }, //
+            new String[] { "different target field refernce", "a ? 1 + x.a : 1 + y.a", }, //
+            new String[] { "Into constructor 1/1 location", "a.equal(b) ? new S(new Integer(4)) : new S(new Ineger(3))", }, //
+            new String[] { "Into constructor 1/3", "a.equal(b) ? new S(new Integer(4),a,b) : new S(new Ineger(3),a,b)", }, //
+            new String[] { "Into constructor 2/3", "a.equal(b) ? new S(a,new Integer(4),b) : new S(a, new Ineger(3), b)", }, //
+            new String[] { "Into constructor 3/3", "a.equal(b) ? new S(a,b,new Integer(4)) : new S(a,b,new Ineger(3))", }, //
+            null);
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
-    @Parameters(name = DESCRIPTION) //
+    @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
@@ -94,8 +94,8 @@ public class TernaryCollapseTest {
     }
   }
 
-  @RunWith(Parameterized.class) //
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+  @RunWith(Parameterized.class)//
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
   public static class Wringed extends AbstractWringTest.WringedExpression.Conditional {
     private static String[][] cases = Utils.asArray(//
         new String[] { "Vanilla", "a ? b ? x : z :z", "a && b ? x : z" }, //
@@ -106,7 +106,7 @@ public class TernaryCollapseTest {
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
-    @Parameters(name = DESCRIPTION) //
+    @Parameters(name = DESCRIPTION)//
     public static Collection<Object[]> cases() {
       return collect(cases);
     }

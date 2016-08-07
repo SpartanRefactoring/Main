@@ -9,14 +9,13 @@ import il.org.spartan.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) public class WrapTest {
   @Test public void dealWithBothKindsOfComment() {
-    similar(
-        ""//
-            + "if (b) {\n"//
-            + " /* empty */"//
-            + "; \n"//
-            + "} { // no else \n"//
-            + " throw new Exception();\n"//
-            + "}", //
+    similar(""//
+        + "if (b) {\n"//
+        + " /* empty */"//
+        + "; \n"//
+        + "} { // no else \n"//
+        + " throw new Exception();\n"//
+        + "}", //
         "if (b) {;} { throw new Exception(); }");
   }
   @Test public void dealWithComment() {

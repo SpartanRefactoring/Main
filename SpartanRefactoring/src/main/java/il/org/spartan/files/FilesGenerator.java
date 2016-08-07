@@ -8,18 +8,18 @@ import java.util.*;
  * over files in the file system.
  * <p>
  * Typical uses are<code>
- *
+ * 
  * <pre> <b>for</b> ({@link File} f: <b>new</b> {@link FilesGenerator}
  * (".java").from(".")) System.out.println(f); </pre>
- *
- * </code> to recursively iterate over all files whose extension is ".java" in
- * the current directory, or <code>
- *
+ * 
+ * </code> to recursively iterate over all files whose extension is ".java"
+ * in the current directory, or <code>
+ * 
  * <pre> <b>for</b> ({@link File} f: <b>new</b> {@link FilesGenerator}
  * ().from("/bin", "/home")) System.out.println(f); </pre>
- *
- * </code> to recursively iterate (over all files in the <code>/bin</code> and
- * <code>/home</code> directories.
+ * 
+ * </code> to recursively iterate (over all files in the <code>/bin</code>
+ * and <code>/home</code> directories.
  * @author Yossi Gil
  * @since 2015-09-23. */
 public class FilesGenerator {
@@ -58,16 +58,16 @@ public class FilesGenerator {
   public FilesGenerator(final String... extensions) {
     this.extensions = asList(extensions);
   }
-  /** @param from an array of names of directories from which the traversal
-   *          should begin
+  /** @param from an array of names of directories from which the traversal should
+   *          begin
    * @return an instance of an internal (yet <code><b>public</b></code>)
    *         <code><b>class</b></code> which <code><b>implements</b></code> the
    *         {@link Iterable} <code><b>interface</b></code> */
   public From from(final String... from) {
     return from(as.iterable(from));
   }
-  /** @param from an array of names of directories from which the traversal
-   *          should begin
+  /** @param from an array of names of directories from which the traversal should
+   *          begin
    * @return an instance of an internal (yet <code><b>public</b></code>)
    *         <code><b>class</b></code> which <code><b>implements</b></code> the
    *         {@link Iterable} <code><b>interface</b></code> */
