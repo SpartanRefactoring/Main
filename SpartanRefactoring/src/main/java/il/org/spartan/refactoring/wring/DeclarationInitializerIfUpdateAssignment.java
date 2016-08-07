@@ -23,6 +23,7 @@ import il.org.spartan.refactoring.wring.LocalInliner.*;
  * <pre>
  * int a = b ? 3 : 2;
  * </pre>
+ * 
  * @author Yossi Gil
  * @since 2015-08-07 */
 public final class DeclarationInitializerIfUpdateAssignment extends Wring.VariableDeclarationFragementAndStatement {

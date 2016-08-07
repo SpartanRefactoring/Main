@@ -15,6 +15,7 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
  * <pre>
  * a ? c(d, e) : f(g, h)
  * </pre>
+ * 
  * @author Yossi Gil
  * @since 2015-08-15 */
 public final class IfShortestFirst extends Wring.ReplaceCurrentNode<IfStatement> {

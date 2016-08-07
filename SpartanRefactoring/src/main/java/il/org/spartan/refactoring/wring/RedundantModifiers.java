@@ -19,6 +19,7 @@ import il.org.spartan.refactoring.utils.*;
  * <pre>
  * <b>interface</b> a {}
  * </pre>
+ * 
  * @author Yossi Gil
  * @since 2015-07-29 */
 public abstract class RedundantModifiers<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> {

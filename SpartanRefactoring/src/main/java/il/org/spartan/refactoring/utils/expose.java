@@ -3,12 +3,12 @@ package il.org.spartan.refactoring.utils;
 import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
-/** An empty <code><b>enum</b></code> for fluent programming. The name should say
- * it all: The name, followed by a dot, followed by a method name, should read
- * like a sentence phrase.
+/** An empty <code><b>enum</b></code> for fluent programming. The name should
+ * say it all: The name, followed by a dot, followed by a method name, should
+ * read like a sentence phrase.
  * @author Yossi Gil
  * @since 2015-07-16 */
-@SuppressWarnings("unchecked")//
+@SuppressWarnings("unchecked") //
 public enum expose {
   ;
   /** Expose the list of arguments in a {@link ClassInstanceCreation}
@@ -35,7 +35,8 @@ public enum expose {
   public static List<BodyDeclaration> bodyDeclarations(final AbstractTypeDeclaration ¢) {
     return ¢.bodyDeclarations();
   }
-  /** Expose the list of bodyDeclarations in an {@link AnonymousClassDeclaration}
+  /** Expose the list of bodyDeclarations in an
+   * {@link AnonymousClassDeclaration}
    * @param ¢ JD
    * @return reference to the list of bodyDeclarations in the argument */
   public static List<BodyDeclaration> bodyDeclarations(final AnonymousClassDeclaration ¢) {
