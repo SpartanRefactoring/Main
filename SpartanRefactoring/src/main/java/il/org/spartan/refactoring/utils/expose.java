@@ -29,12 +29,21 @@ public enum expose {
   public static List<Expression> arguments(final SuperMethodInvocation ¢) {
     return ¢.arguments();
   }
+  /** Expose the list of bodyDeclarations in an {@link AbstractTypeDeclaration}
+   * @param ¢ JD
+   * @return reference to the list of bodyDeclarations in the argument */
   public static List<BodyDeclaration> bodyDeclarations(final AbstractTypeDeclaration ¢) {
     return ¢.bodyDeclarations();
   }
+  /** Expose the list of bodyDeclarations in an {@link AnonymousClassDeclaration}
+   * @param ¢ JD
+   * @return reference to the list of bodyDeclarations in the argument */
   public static List<BodyDeclaration> bodyDeclarations(final AnonymousClassDeclaration ¢) {
     return ¢.bodyDeclarations();
   }
+  /** Expose the list of catchClauses in a {@link TryStatement}
+   * @param ¢ JD
+   * @return reference to the list of catchClauses in the argument */
   public static List<CatchClause> catchClauses(final TryStatement ¢) {
     return ¢.catchClauses();
   }

@@ -210,6 +210,11 @@ public enum Funcs {
   public static ThrowStatement asThrowStatement(final ASTNode ¢) {
     return !(¢ instanceof ThrowStatement) ? null : (ThrowStatement) ¢;
   }
+  /** Convert, if possible, an {@link Expression} to a
+   * {@link VariableDeclarationExpression}
+   * @param ¢ JD
+   * @return the argument, but down-casted to a {@link VariableDeclarationExpression},
+   *         or <code><b>null</b></code> if no such down-cast is possible.. */
   public static VariableDeclarationExpression asVariableDeclarationExpression(final Expression ¢) {
     return ¢.getNodeType() != VARIABLE_DECLARATION_EXPRESSION ? null : (VariableDeclarationExpression) ¢;
   }
@@ -282,6 +287,10 @@ public enum Funcs {
   public static Statement elze(final IfStatement ¢) {
     return ¢.getElseStatement();
   }
+  /** Find the first matching expression to the given boolean (b).
+   * @param b JD, es JD
+   * @return the first expression from the given list (es) whose boolean value
+   * matches to the given boolean (b). */
   private static Expression find(final boolean b, final List<Expression> es) {
     for (final Expression $ : es)
       if (Is.booleanLiteral($) && b == asBooleanLiteral($).booleanValue())
