@@ -1,34 +1,44 @@
 package il.org.spartan;
 
-import org.eclipse.jdt.annotation.*;
+import org.eclipse.jdt.annotation.Nullable;
+import il.org.spartan.*;
 
 /** A generic wrapper classes which can store and retrieve values of any type.
- * Main use is in
  * @author Yossi Gil
  * @since 2015-08-02
  * @param <T> JD */
 public class Wrapper<T> {
-  /** Instantiates this class */
-  public Wrapper() {
-    //
+  protected @Nullable T inner;
+  @Override public String toString() {
+    return inner == null ? "null" : Utils.cantBeNull(inner.toString());
+  }
+  @Override public int hashCode() {
+    return inner == null ? 0 : inner.hashCode();
+  }
+  @Override public final boolean equals(@Nullable final Object o) {
+    return super.equals(o) || o != null && getClass() == o.getClass() && equals((Wrapper<?>) o);
+  }
+  @SuppressWarnings("unchecked") //
+  @Override public Wrapper<T> clone() throws CloneNotSupportedException {
+    return (Wrapper<T>) Utils.cantBeNull(super.clone());
+  }
+  /** @param w JD
+   * @return <code><b>true</b></code> <i>iff</i> method <code>equals</code>
+   *         returns <code><b>true</b></code> for the wrapped objects. */
+  public boolean equals(final Wrapper<?> w) {
+    return inner == null ? w.inner == null : inner.equals(w.inner);
   }
   /** Instantiates this class
-   * @param t JD */
-  public Wrapper(final T t) {
-    this.t = t;
+   * @param inner JD */
+  public Wrapper(final @Nullable T inner) {
+    this.inner = inner;
+  }
+  /** Instantiates this class */
+  public Wrapper() {
+    this(null);
   }
   /** @return the value wrapped in this object. */
-  public @Nullable T get() {
-    return t;
+  public T get() {
+    return inner;
   }
-  /** Set the value wrapped in this object.
-   * @param t JD */
-  public void set(final T t) {
-    this.t = t;
-  }
-  @Override public String toString() {
-    return "Wrapper1 of " + t;
-  }
-
-  @Nullable protected T t = null;
 }
