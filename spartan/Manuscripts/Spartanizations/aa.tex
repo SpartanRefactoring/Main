@@ -61,17 +61,27 @@ The following scenarios might be helpful to clarify this point.
 %       part of this my own personal style.
     \item Also code analysis tools should adjust to different styles and many
         different ways for doing the same thing.
-    \item Code conventions might affect metrics. In a recent one of the author demonstrated that size
+    \item Code conventions might affect several metrics. The number of lines of code (LOC) or the number of 
+    tokes (NOT) are influenced by coding styles. In a recent one of the author demonstrated that size
       is the only thing that matters \cite{Gil:Lalouche:2016}.
     \item Moreover, the same notion of size has been shown to be very different in different projects \cite{Gil:Lalouche:2016}.
 \end{itemize}
 
-The holly grail of "canonical representation of code" .
+\textbf{The holly grail of "canonical representation of code" .
 Does LOC mean anything?
-Not if you apply different indentation rules.
-A better metric is NOT = number of tokens.
-But even this is influenced by coding styles, including but
-not limited to the famous braces war.
+Not if you apply different indentation rules.}\\
+% A better metric is NOT = number of tokens.
+% But even this is influenced by coding styles, including but
+% not limited to the famous braces war.
+
+This manuscript present Spartan Programming as a rationale approach to code conventions. 
+
+Spartan programming is an approach to writing code aimed at reducing code complexity by 
+applying many techniques, some already known in literature, some others more novel. 
+% It was introduced in the mid on ninties
+% and it has been a part of some teachings. 
+Its rationale is based on some principles, but at the end of the day it is a technique 
+to pursue an extreme minimalism code writing.
 
 Telling the story of ‟Spartan Programming”, one particular style guideline for
 \Java, this manuscript is also likely to be contentious. Perhaps even more so
@@ -133,7 +143,7 @@ assumptions about how to code.
 reexamine all assumptions.}
 
 \emph{Rules have changed.
-Utter despise of backward compatability the need to rewrite the code.
+Utter despise of backward compatibility the need to rewrite the code.
 Mention it.} 
 
 % The spartanization tool.
@@ -156,12 +166,12 @@ experiments.
 
 \textbf{(the following text has been adapted by the wiki)}⏎
 
-Spartan programming is an approach to writing code aimed at improving at
-reducing code complexity by appling many techininques, some already known in
-literature, some others more novel. It was introduced in the mid on nienties
-and it has been a part of some teachings. Its rationale is based on some
-principles, but at the end of the day it is a techninque to pursue an extreme
-minimalism code writing.
+% Spartan programming is an approach to writing code aimed at improving at
+% reducing code complexity by applying many techniques, some already known in
+% literature, some others more novel. It was introduced in the mid on ninties
+% and it has been a part of some teachings. Its rationale is based on some
+% principles, but at the end of the day it is a technique to pursue an extreme
+% minimalism code writing.
 
 One of these principles is the "Babylonian Tower Principle": It states that the
 number of abstraction levels of a software systems is limited. A famous study
