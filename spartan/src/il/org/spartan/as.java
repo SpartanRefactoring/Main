@@ -47,7 +47,7 @@ public enum as {
     }
 
     @Test public void stringOfNull() {
-      azzert.that(as.string(null), is("(null)"));
+      azzert.that(as.string(null), is("null"));
     }
 
     @Test public void stringWhenToStringReturnsNull() {

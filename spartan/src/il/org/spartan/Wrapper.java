@@ -27,7 +27,7 @@ public class Wrapper<T> {
     this.t = t;
   }
   @Override public String toString() {
-    return "Wrapper of " + t;
+    return "Wrapper1 of " + t;
   }
 
   @Nullable protected T t = null;

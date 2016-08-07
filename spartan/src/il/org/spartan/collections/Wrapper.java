@@ -1,8 +1,8 @@
 package il.org.spartan.collections;
 
 import org.eclipse.jdt.annotation.Nullable;
+import il.org.spartan.*;
 
-import il.org.spartan.__;
 
 /** A generic wrapper classes which can store and retrieve values of any type.
  * @author Yossi Gil
@@ -12,7 +12,7 @@ public class Wrapper<T> {
   protected @Nullable T inner;
 
   @Override public String toString() {
-    return inner == null ? "null" : __.cantBeNull(inner.toString());
+    return inner == null ? "null" : Utils.cantBeNull(inner.toString());
   }
   @Override public int hashCode() {
     return inner == null ? 0 : inner.hashCode();
@@ -22,7 +22,7 @@ public class Wrapper<T> {
   }
   @SuppressWarnings("unchecked") //
   @Override public Wrapper<T> clone() throws CloneNotSupportedException {
-    return (Wrapper<T>) __.cantBeNull(super.clone());
+    return (Wrapper<T>) Utils.cantBeNull(super.clone());
   }
   /** @param w JD
    * @return <code><b>true</b></code> <i>iff</i> method <code>equals</code>
