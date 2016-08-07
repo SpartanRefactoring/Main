@@ -148,9 +148,10 @@ Mention it.}
 
 % The spartanization tool.
 
-This led to the design of a tool who perform the spartanizations for Java code.
-This is available in the form of Eclipse\urlref{https://eclipse.org/} plugin in the 
-marketplace\urlref{https://marketplace.eclipse.org/}
+During the course of the years has been developed a tool which automatically apply 
+perform the spartanizations, namely transformation of codes according to the spartan rules,
+This tools applies to Java code and has been implemented as a plugin for the Eclipse\urlref{https://eclipse.org/} 
+IDE. It is available through the Eclipse marketplace\urlref{https://marketplace.eclipse.org/}
 
 Say that some of your alma mater gang love to do this kind of metrics, but
 no one really knows whether the results are applicable to different projects
@@ -192,9 +193,15 @@ This is ... Spartan programming is not directly concerned with readability, at
 least not in its subjective and cultural-dependent sense. In fact, spartan
 programs will bring much misery to anyone preferring long, verbose programs.
 
-Spartanization aims at minimizing Vertical complexity (the number of lines of code),
-Horizontal complexity, the number of tokens, character, parameters and variables,
-as well as reduce the number of loops and conditional statements.
+Spartanization aims at minimizing:
+\begin{itemize}
+ \item Vertical complexity: the number of lines of code.
+ \item Horizontal complexity.
+ \item Characters, tokens, parameters and variable.
+ \item Loops.
+ \item Conditional statements.
+\end{itemize}
+
 Spartan programming prescribes, a careful use of the variables, stressing the need
 to inline variables that are used only once and emphasizing the use of foreach loops
 in languages implementing it. Variables visibility and accessibility should also be
