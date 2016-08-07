@@ -33,7 +33,7 @@ import il.org.spartan.refactoring.utils.*;
  * }
  * g();
  * </pre>
- * 
+ *
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfCommandsSequencerNoElseSingletonSequencer extends Wring.ReplaceToNextStatement<IfStatement> {

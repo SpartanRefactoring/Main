@@ -21,7 +21,7 @@ import il.org.spartan.refactoring.utils.*;
  * <pre>
  * b
  * </pre>
- * 
+ *
  * @author Yossi Gil
  * @since 2015-07-20 */
 public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<InfixExpression> {

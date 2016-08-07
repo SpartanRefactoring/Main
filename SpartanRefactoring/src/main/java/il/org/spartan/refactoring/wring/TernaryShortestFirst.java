@@ -18,7 +18,7 @@ import il.org.spartan.utils.*;
  * <pre>
  * a ? c(d, e) : f(g, h)
  * </pre>
- * 
+ *
  * @author Yossi Gil
  * @since 2015-08-14 */
 public final class TernaryShortestFirst extends Wring.ReplaceCurrentNode<ConditionalExpression> {

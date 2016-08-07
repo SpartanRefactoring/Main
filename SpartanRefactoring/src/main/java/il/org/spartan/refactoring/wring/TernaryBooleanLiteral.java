@@ -80,19 +80,19 @@ public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<Condit
    * <pre>
    * (a &amp;&amp; false) || (!a &amp;&amp; c) == !a &amp;&amp; c
    * </pre>
-   * 
+   *
    * <li>if b is true then:
    *
    * <pre>
    * (a &amp;&amp; true) || (!a &amp;&amp; c) == a || (!a &amp;&amp; c) == a || c
    * </pre>
-   * 
+   *
    * <li>if c is false then:
    *
    * <pre>
    * (a &amp;&amp; b) || (!a &amp;&amp; false) == a &amp;&amp; b
    * </pre>
-   * 
+   *
    * <li>if c is true then
    *
    * <pre>
