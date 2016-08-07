@@ -27,7 +27,6 @@ public class Xiphos {
   boolean optDoNotOverwrite = false;
   boolean optStatsChanges = false;
   private final List<String> remaining;
-
   /** main function, to which command line arguments are passed.
    * @param args command line arguments */
   public static void main(final String[] args) {
@@ -198,7 +197,6 @@ public class Xiphos {
     final int linesBefore;
     int linesAfter;
     final List<Integer> roundStats = new ArrayList<>();
-
     public FileStats(final File file) throws IOException {
       linesBefore = countLines(this.file = file);
     }
@@ -225,7 +223,6 @@ public class Xiphos {
       return linesAfter;
     }
   }
-
   static int countLines(final File f) throws IOException {
     try (LineNumberReader lr = new LineNumberReader(new FileReader(f))) {
       lr.skip(Long.MAX_VALUE);

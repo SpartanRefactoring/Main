@@ -11,7 +11,6 @@ public class IfEmptyThenTest {
   private static final IfEmptyThen WRING = new IfEmptyThen();
   private static final Statement INPUT = Into.s("{if (b) ; else ff();}");
   private static final IfStatement IF = extract.firstIfStatement(INPUT);
-
   @Test public void eligible() {
     azzert.aye(WRING.eligible(IF));
   }

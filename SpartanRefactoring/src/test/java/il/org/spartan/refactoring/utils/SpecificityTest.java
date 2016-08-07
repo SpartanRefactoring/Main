@@ -10,7 +10,6 @@ import il.org.spartan.*;
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public class SpecificityTest {
   private static final Specificity SPECIFICITY = new Specificity();
-
   @Test public void characterGreaterThanNull() {
     azzert.that(SPECIFICITY.compare(e("'a'"), e("null")), greaterThan(0));
   }

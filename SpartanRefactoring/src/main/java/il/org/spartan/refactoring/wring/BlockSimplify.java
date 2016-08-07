@@ -107,7 +107,6 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
             return true;
         return false;
       }
-
       final Set<String> dictionary = new HashSet<>();
     }.test(ss);
   }

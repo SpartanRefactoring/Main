@@ -18,7 +18,6 @@ public abstract class FileTestUtils {
   protected final static String testSuffix = ".test";
   /** Folder in which all test cases are found */
   public static final File location = new File("src/test/resources");
-
   /** Instantiates a {@link Class} object if possible, otherwise generate an
    * assertion failure
    * @param c an arbitrary class object

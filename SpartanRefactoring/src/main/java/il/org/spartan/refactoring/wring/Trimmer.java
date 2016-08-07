@@ -72,7 +72,6 @@ public class Trimmer extends Spartanization {
 
   abstract class DispatchingVisitor extends ASTVisitor {
     final ExclusionManager exclude = makeExcluder();
-
     @Override public final boolean visit(final Assignment ¢) {
       return cautiousGo(¢);
     }
@@ -97,7 +96,7 @@ public class Trimmer extends Spartanization {
     @Override public final boolean visit(final MethodInvocation ¢) {
       return cautiousGo(¢);
     }
-     @Override public final boolean visit(final MethodDeclaration ¢) {
+    @Override public final boolean visit(final MethodDeclaration ¢) {
       return cautiousGo(¢);
     }
     @Override public final boolean visit(final PostfixExpression ¢) {

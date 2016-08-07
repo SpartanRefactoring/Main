@@ -14,7 +14,6 @@ import il.org.spartan.*;
  * @since 2015/09/06 (Updated - auto initialization of the plugin) */
 public class Plugin extends AbstractUIPlugin implements IStartup {
   private static Plugin plugin;
-
   /** an empty c'tor. creates an instance of the plugin. */
   public Plugin() {
     plugin = this;

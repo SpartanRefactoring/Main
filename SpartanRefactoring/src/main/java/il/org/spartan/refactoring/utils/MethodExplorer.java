@@ -10,7 +10,6 @@ import org.eclipse.jdt.core.dom.*;
  * @since 2015-08-29 */
 public class MethodExplorer {
   final MethodDeclaration inner;
-
   /** Instantiate this class
    * @param inner JD */
   public MethodExplorer(final MethodDeclaration inner) {

@@ -9,7 +9,6 @@ import org.eclipse.jdt.core.dom.*;
  * @since 2015-08-25 */
 public class EnvironmentMaker {
   private final ASTNode location;
-
   EnvironmentMaker(final ASTNode location) {
     this.location = location;
   }

@@ -21,9 +21,7 @@ public class CleanupHandler extends BaseHandler {
   public CleanupHandler() {
     super(null);
   }
-
   static final int MAX_PASSES = 20;
-
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) throws ExecutionException {
     final StringBuilder message = new StringBuilder();
     final ICompilationUnit currentCompilationUnit = currentCompilationUnit();

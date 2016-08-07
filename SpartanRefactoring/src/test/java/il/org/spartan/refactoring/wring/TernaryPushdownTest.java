@@ -55,7 +55,6 @@ public class TernaryPushdownTest {
         new String[] { "field refernece",
             "externalImage ? R.string.webview_contextmenu_image_download_action : R.string.webview_contextmenu_image_save_action", }, //
         null);
-
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -92,7 +91,6 @@ public class TernaryPushdownTest {
         new String[] { "Into constructor 3/3", "a.equal(b) ? new S(a,b,new Integer(4)) : new S(a,b,new Ineger(3))",
             "new S(a, b, a.equal(b)? new Integer(4): new Ineger(3))" }, //
         null);
-
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */

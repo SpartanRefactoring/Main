@@ -23,7 +23,6 @@ public enum Funcs {
       put(LESS_EQUALS, GREATER_EQUALS);
     }
   };
-
   public static AbstractTypeDeclaration asAbstractTypeDeclaration(final ASTNode ¢) {
     return eval(() -> ((AbstractTypeDeclaration) ¢)).when(¢ instanceof AbstractTypeDeclaration);
   }

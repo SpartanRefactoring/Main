@@ -6,7 +6,6 @@ import org.eclipse.jdt.core.dom.*;
 
 class ExclusionManager {
   final Set<ASTNode> inner = new HashSet<>();
-
   boolean isExcluded(final ASTNode n) {
     for (final ASTNode ancestor : ancestors(n))
       if (inner.contains(ancestor))

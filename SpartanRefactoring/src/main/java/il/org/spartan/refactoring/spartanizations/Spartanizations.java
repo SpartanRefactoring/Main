@@ -23,7 +23,6 @@ public class Spartanizations {
     }
   };
   private final Spartanization value;
-
   private Spartanizations(final Spartanization value) {
     this.value = value;
   }
