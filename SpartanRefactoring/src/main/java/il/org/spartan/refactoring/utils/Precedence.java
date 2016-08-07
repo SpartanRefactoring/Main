@@ -35,7 +35,6 @@ public enum Precedence {
           "&=", "^=", "|=", // assignment, bitwise
           "<<=", ">>=", ">>>="// assignment, shift
   );
-
   /** Compare precedence of two expressions.
    * @param host JD
    * @param e2 JD

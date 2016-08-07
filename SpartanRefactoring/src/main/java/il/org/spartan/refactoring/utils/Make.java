@@ -37,9 +37,7 @@ public enum Make {
         return null;
     }
   }
-
   private final int kind;
-
   private Make(final int kind) {
     this.kind = kind;
   }

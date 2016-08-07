@@ -96,7 +96,6 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> {
   private class DefinitionsCollector extends ASTVisitor {
     private boolean notAllDefined;
     private final Statement[] l;
-
     public DefinitionsCollector(final List<Statement> l) {
       notAllDefined = false;
       this.l = l.toArray(new Statement[l.size()]);

@@ -21,7 +21,6 @@ import il.org.spartan.utils.Utils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class IfAssignToFooElseAssignToFooTest {
   static final Wring<IfStatement> WRING = new IfAssignToFooElseAssignToFoo();
-
   @Test public void checkSteps() {
     azzert.notNull(asSingle("if (a) a = b; else a = c;"));
     final IfStatement s = asIfStatement(asSingle("if (a) a = b; else a = c;"));
@@ -63,7 +62,6 @@ public class IfAssignToFooElseAssignToFooTest {
         new String[] { "Not same assignment", "if (a) a /= b; else a /= c;" }, //
         new String[] { "Another distinct assignment", "if (a) a /= b; else a %= c;" }, //
         null);
-
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -85,7 +83,6 @@ public class IfAssignToFooElseAssignToFooTest {
         new String[] { "Simple if plus assign", "if (a) a += b; else a += c;", "a += a ? b : c;" }, //
         new String[] { "Simple if plus assign", "if (a) a *= b; else a *= c;", "a *= a ? b : c;" }, //
         null);
-
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */

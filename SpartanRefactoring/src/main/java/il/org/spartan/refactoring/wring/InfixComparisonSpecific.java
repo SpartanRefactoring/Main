@@ -26,9 +26,7 @@ public final class InfixComparisonSpecific extends Wring.ReplaceCurrentNode<Infi
   @Override boolean eligible(final InfixExpression e) {
     return specifity.compare(left(e), right(e)) < 0;
   }
-
   private static final Specificity specifity = new Specificity();
-
   @Override public boolean scopeIncludes(final InfixExpression e) {
     return !e.hasExtendedOperands() && Is.comparison(e) && (Specificity.defined(left(e)) || Specificity.defined(right(e)));
   }

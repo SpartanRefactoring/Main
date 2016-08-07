@@ -9,7 +9,6 @@ import il.org.spartan.utils.*;
 
 public class TypeNamesCollector {
   private static Set<String> basket = new TreeSet<>();
-
   public static void main(final String[] where) {
     collect(where.length != 0 ? where : new String[] { "." });
     for (final String s : basket)

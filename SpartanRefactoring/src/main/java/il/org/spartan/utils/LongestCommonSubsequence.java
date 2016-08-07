@@ -12,7 +12,6 @@ public class LongestCommonSubsequence {
   private final char[] as;
   private final char[] bs;
   private final int[][] length;
-
   public LongestCommonSubsequence(final String a, final String b) {
     as = gist(a).toCharArray();
     bs = gist(b).toCharArray();

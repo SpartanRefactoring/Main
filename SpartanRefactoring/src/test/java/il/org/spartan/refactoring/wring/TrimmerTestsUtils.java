@@ -13,7 +13,6 @@ import il.org.spartan.refactoring.utils.*;
 public class TrimmerTestsUtils {
   static class OperandToWring<N extends ASTNode> extends TrimmerTestsUtils.Operand {
     final Class<N> clazz;
-
     public OperandToWring(final String from, final Class<N> clazz) {
       super(from);
       this.clazz = clazz;
@@ -109,7 +108,6 @@ public class TrimmerTestsUtils {
       assertSimilar(get(), peeled);
     }
   }
-
   public static int countOpportunities(final Spartanization s, final CompilationUnit u) {
     return s.findOpportunities(u).size();
   }
