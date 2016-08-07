@@ -2,15 +2,12 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
-
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
@@ -23,7 +20,6 @@ import il.org.spartan.utils.Utils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class IfCommandsSequencerIfSameCommandsSequencerTest {
   static final Wring<IfStatement> WRING = new IfFooSequencerIfFooSameSequencer();
-
   @Test public void checkFirstIfStatement1() {
     final String s = "if (a) return b; if (b) return b;";
     final ASTNode n = MakeAST.STATEMENTS.from(s);
@@ -92,7 +88,6 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
                 " }\n" + //
                 "" }, //
         null);
-
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -124,7 +119,6 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
         new String[] { "No parenthesis for OR", "if (a||b||c) return a; if (a||b||c||d) return a;", "if (a||b||c||a||b||c||d) return a;" }, //
         new String[] { "Two statements", "if (a) { f(); return a; } if (b) {f(); return a;}", "if (a || b) {f(); return a;}" }, //
         null };
-
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */

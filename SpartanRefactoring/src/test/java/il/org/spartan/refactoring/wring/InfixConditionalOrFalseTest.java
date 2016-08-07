@@ -3,15 +3,12 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
-
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
-
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.utils.Utils;
@@ -69,7 +66,6 @@ public enum InfixConditionalOrFalseTest {
         new String[] { "AND of 6 with true with parenthesis", "x && (true && (a && b && true)) && (c && (d && e))" }, //
         new String[] { "AND with true", "true && b && a" }, //
         null);
-
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -104,7 +100,6 @@ public enum InfixConditionalOrFalseTest {
         new String[] { "OR of 6 with two false", "a || false || b || false || c || d || e", "a || b || c || d || e" }, //
         new String[] { "OR of 6 with false with parenthesis", "(a || b) || false || (c || false || (d || e || false))", "a || b || c || d || e" }, //
         null);
-
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the expected

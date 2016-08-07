@@ -2,7 +2,6 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 /** *An empty <code><b>enum</b></code> for fluent programming. The name should
@@ -36,7 +35,6 @@ public enum Precedence {
           "&=", "^=", "|=", // assignment, bitwise
           "<<=", ">>=", ">>>="// assignment, shift
   );
-
   /** Compare precedence of two expressions.
    * @param host JD
    * @param e2 JD

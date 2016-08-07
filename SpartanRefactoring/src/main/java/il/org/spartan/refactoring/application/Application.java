@@ -2,13 +2,12 @@ package il.org.spartan.refactoring.application;
 
 import java.io.*;
 import java.util.*;
-
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.equinox.app.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
-
+import il.org.spartan.*;
 import il.org.spartan.files.*;
 import il.org.spartan.misc.*;
 import il.org.spartan.refactoring.handlers.*;
@@ -26,7 +25,6 @@ import il.org.spartan.utils.*;
     final int linesBefore;
     int linesAfter;
     final List<Integer> roundStats = new ArrayList<>();
-
     public FileStats(final File file) throws IOException {
       linesBefore = countLines(this.file = file);
     }
@@ -53,7 +51,6 @@ import il.org.spartan.utils.*;
       }
     }
   }
-
   static int countLines(final File f) throws IOException {
     try (LineNumberReader lr = new LineNumberReader(new FileReader(f))) {
       lr.skip(Long.MAX_VALUE);
@@ -63,7 +60,6 @@ import il.org.spartan.utils.*;
   static int countLines(final String fileName) throws IOException {
     return countLines(new File(fileName));
   }
-
   IJavaProject javaProject;
   IPackageFragmentRoot srcRoot;
   IPackageFragment pack;
@@ -71,7 +67,6 @@ import il.org.spartan.utils.*;
   boolean optStatsLines = false, optStatsChanges = false;
   int optRounds = 20;
   String optPath;
-
   String determineOutputFilename(final String path) {
     return !optDoNotOverwrite ? path : path.substring(0, path.lastIndexOf('.')) + "_new.java";
   }
@@ -224,7 +219,7 @@ import il.org.spartan.utils.*;
     pack = srcRoot.createPackageFragment(name, false, null);
   }
   @Override public Object start(final IApplicationContext arg0) {
-    if (parseArguments(Arrays.asList((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS))))
+    if (parseArguments(as.list((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS))))
       return IApplication.EXIT_OK;
     final List<FileStats> fileStats = new ArrayList<>();
     try {

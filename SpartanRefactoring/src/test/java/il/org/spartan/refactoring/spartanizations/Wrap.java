@@ -1,10 +1,8 @@
 package il.org.spartan.refactoring.spartanizations;
 
 import static il.org.spartan.utils.Utils.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
-
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -39,7 +37,6 @@ public enum Wrap {
   //
   ;
   public static final Wrap[] WRAPS = new Wrap[] { Statement, Expression, Method, OUTER };
-
   /** Finds the most appropriate Wrap for a given code fragment
    * @param codeFragment JD
    * @return the most appropriate Wrap, or null, if the parameter could not be
@@ -74,10 +71,8 @@ public enum Wrap {
         .replaceAll("//.*?\n", "\n")//
         .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
   }
-
   private final String before;
   private final String after;
-
   Wrap(final String before, final String after) {
     this.before = before;
     this.after = after;

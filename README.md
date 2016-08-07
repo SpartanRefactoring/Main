@@ -1,8 +1,10 @@
-# Spartan Refactoring [![Build Status](https://travis-ci.org/SpartanRefactoring/spartan-refactoring.svg?branch=master)](https://travis-ci.org/SpartanRefactoring/spartan-refactoring)
+# Spartan Refactoring [![Build Status](https://travis-ci.org/SpartanRefactoring/spartan-refactoring.svg?branch=more-stable)](https://travis-ci.org/SpartanRefactoring/spartan-refactoring)
 Spartan Refactoring is a plugin for Eclipse that automatically applies the principles of *[Spartan Programming]* to your Java code. Simply put, it reviews your code, provides suggestions and applies them in order to make your code cleaner, shorter and more comprehensible. It is written in Java.
 
 ## Background
 This project was initially conceived as an academic project in the [Technion - Israel Institute of Technology], and was later developed for several years by different students and members of the Computer Science faculty.
+
+The refactorings made by this plug-in are based on the concept of Spartan Programming, which suggests guidelines for writing short, clean code. There's a lot of reading material on the subject in the [project wiki].
 
 ## Compiling from source
 #### Using Maven (recommended)
@@ -74,6 +76,7 @@ The code is contained within these Java packages:
 The project is available under the **[MIT License]**
 
 [Spartan Programming]: http://blog.codinghorror.com/spartan-programming/
+[project wiki]: https://github.com/SpartanRefactoring/spartan-refactoring/wiki/Spartan-Programming
 [Technion - Israel Institute of Technology]: http://www.technion.ac.il/en/
 [abstract syntax tree]: https://en.wikipedia.org/wiki/Abstract_syntax_tree
 [ASTVisitor]: http://help.eclipse.org/mars/index.jsp?topic=%2Forg.eclipse.jdt.doc.isv%2Freference%2Fapi%2Forg%2Feclipse%2Fjdt%2Fcore%2Fdom%2FASTVisitor.html

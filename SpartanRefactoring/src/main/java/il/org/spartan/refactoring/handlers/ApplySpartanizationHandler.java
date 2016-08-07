@@ -6,7 +6,6 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.ui.*;
-
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.wring.*;
 import il.org.spartan.utils.*;
@@ -21,10 +20,8 @@ public class ApplySpartanizationHandler extends BaseHandler {
   public ApplySpartanizationHandler() {
     super(null);
   }
-
   static final Spartanization[] safeSpartanizations = { //
       new Trimmer() };
-
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     apply(currentCompilationUnit(), getSelectedText());
     return null;

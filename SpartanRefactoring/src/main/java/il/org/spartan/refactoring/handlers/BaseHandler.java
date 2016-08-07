@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.handlers;
 
 import java.util.*;
-
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -11,7 +10,6 @@ import org.eclipse.jface.viewers.*;
 import org.eclipse.ltk.ui.refactoring.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.handlers.*;
-
 import il.org.spartan.refactoring.spartanizations.*;
 
 /** @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>:
@@ -45,9 +43,7 @@ public abstract class BaseHandler extends AbstractHandler {
   private static ICompilationUnit getCompilationUnit(final IResource r) {
     return r == null ? null : JavaCore.createCompilationUnitFrom((IFile) r);
   }
-
   private final Spartanization inner;
-
   /** Instantiates this class
    * @param inner JD */
   protected BaseHandler(final Spartanization inner) {

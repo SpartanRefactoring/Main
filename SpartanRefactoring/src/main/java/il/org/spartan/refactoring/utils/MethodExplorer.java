@@ -2,9 +2,7 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.expose.*;
-
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 /** A class for analyzing a method.
@@ -12,7 +10,6 @@ import org.eclipse.jdt.core.dom.*;
  * @since 2015-08-29 */
 public class MethodExplorer {
   final MethodDeclaration inner;
-
   /** Instantiate this class
    * @param inner JD */
   public MethodExplorer(final MethodDeclaration inner) {

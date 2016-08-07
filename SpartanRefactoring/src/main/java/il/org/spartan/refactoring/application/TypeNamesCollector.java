@@ -2,16 +2,13 @@ package il.org.spartan.refactoring.application;
 
 import java.io.*;
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.files.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.utils.*;
 
 public class TypeNamesCollector {
   private static Set<String> basket = new TreeSet<>();
-
   public static void main(final String[] where) {
     collect(where.length != 0 ? where : new String[] { "." });
     for (final String s : basket)

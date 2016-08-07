@@ -3,10 +3,8 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.utils.Utils.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
-
 import il.org.spartan.*;
 import il.org.spartan.misc.*;
 import il.org.spartan.refactoring.spartanizations.*;
@@ -15,7 +13,6 @@ import il.org.spartan.refactoring.utils.*;
 public class TrimmerTestsUtils {
   static class OperandToWring<N extends ASTNode> extends TrimmerTestsUtils.Operand {
     final Class<N> clazz;
-
     public OperandToWring(final String from, final Class<N> clazz) {
       super(from);
       this.clazz = clazz;
@@ -111,7 +108,6 @@ public class TrimmerTestsUtils {
       assertSimilar(get(), peeled);
     }
   }
-
   public static int countOpportunities(final Spartanization s, final CompilationUnit u) {
     return s.findOpportunities(u).size();
   }

@@ -1,7 +1,6 @@
 package il.org.spartan.utils;
 
 import java.util.*;
-
 import il.org.spartan.*;
 
 /** An immutable integral range, representing all integers between
@@ -18,7 +17,6 @@ public class Range {
   public final int from;
   /** the end of the range (exclusive) */
   public final int to;
-
   /** The number of integers in the range
    * @return a non-negative integer, computed as {@link #to} -{@link #from} */
   public int size() {

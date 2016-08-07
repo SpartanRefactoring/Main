@@ -3,12 +3,9 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static il.org.spartan.refactoring.utils.expose.*;
-
 import java.util.*;
 import java.util.function.*;
-
 import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -110,7 +107,6 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
             return true;
         return false;
       }
-
       final Set<String> dictionary = new HashSet<>();
     }.test(ss);
   }

@@ -2,17 +2,14 @@ package il.org.spartan.refactoring.handlers;
 
 import static il.org.spartan.refactoring.handlers.ApplySpartanizationHandler.*;
 import static il.org.spartan.refactoring.spartanizations.DialogBoxes.*;
-
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.concurrent.atomic.*;
-
 import org.eclipse.core.commands.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
-
 import il.org.spartan.refactoring.spartanizations.*;
 
 /** A handler for {@link Spartanizations}. This handler executes all safe
@@ -24,9 +21,7 @@ public class CleanupHandler extends BaseHandler {
   public CleanupHandler() {
     super(null);
   }
-
   static final int MAX_PASSES = 20;
-
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) throws ExecutionException {
     final StringBuilder message = new StringBuilder();
     final ICompilationUnit currentCompilationUnit = currentCompilationUnit();

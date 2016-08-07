@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 /** A fluent API class that wraps an {@link Expression} with parenthesis, if the
@@ -14,7 +13,6 @@ import org.eclipse.jdt.core.dom.*;
  * @since 2015-08-20 */
 public class Plant {
   private final Expression inner;
-
   /** Instantiates this class, recording the expression that might be wrapped.
    * @param inner JD */
   public Plant(final Expression inner) {
