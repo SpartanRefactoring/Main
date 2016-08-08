@@ -74,10 +74,12 @@ public class Toolbox {
             new InfixSortSubstraction(), //
             new InfixSortDivision(), //
             new InfixConditionalCommon(), //
-            null).add(MethodDeclaration.class, //
+            null)
+        .add(MethodDeclaration.class, //
             new MethodRenameReturnToDollar(), //
             new MethodRemoveDegenerateOverride(), //
-            null).add(MethodInvocation.class, //
+            null)
+        .add(MethodInvocation.class, //
             new BooleanConstants(), //
             new StringFromStringBuilder(), //
             new StringEqualsConstant(), //
@@ -86,7 +88,8 @@ public class Toolbox {
             new SingleVariableDeclarationAbbreviation(), //
             new MethodRenameUnusedVariableToUnderscore(), //
             new VariableRenameUnderscoreToDoubleUnderscore<SingleVariableDeclaration>(), //
-            null).add(VariableDeclarationFragment.class, //
+            null)//
+        .add(VariableDeclarationFragment.class, //
             new DeclarationAssignment(), //
             new DeclarationInitialiazerAssignment(), //
             new DeclarationInitialiazelUpdateAssignment(), //
