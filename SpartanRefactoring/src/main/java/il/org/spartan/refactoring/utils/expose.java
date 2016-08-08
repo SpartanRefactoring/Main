@@ -82,8 +82,8 @@ public enum expose {
   public static List<IExtendedModifier> modifiers(final BodyDeclaration ¢) {
     return ¢.modifiers();
   }
-  public static List<IExtendedModifier> modifiers(final SingleVariableDeclaration n) {
-    return n.modifiers();
+  public static List<IExtendedModifier> modifiers(final SingleVariableDeclaration ¢) {
+    return ¢.modifiers();
   }
   public static List<IExtendedModifier> modifiers(final VariableDeclarationStatement ¢) {
     return ¢.modifiers();

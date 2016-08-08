@@ -16,13 +16,13 @@ import il.org.spartan.refactoring.utils.*;
  * or
  *
  * <pre>
- * x.size() > 0
+ * x.size() &gt; 0
  * </pre>
  *
  * or
  *
  * <pre>
- * x.size() >= 1
+ * x.size() &gt;= 1
  * </pre>
  *
  * to
@@ -35,6 +35,9 @@ import il.org.spartan.refactoring.utils.*;
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-24 */
 public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression> {
+  static boolean invalidTypes(final Expression ¢1, final Expression ¢2) {
+    return ¢2 instanceof MethodInvocation == ¢1 instanceof MethodInvocation || ¢2 instanceof NumberLiteral == ¢1 instanceof NumberLiteral;
+  }
   private static ASTNode replacement(final InfixExpression e, final Operator o, final MethodInvocation i, final NumberLiteral l) {
     if (!"size".equals(i.getName().getIdentifier()) || Double.parseDouble(l.getToken()) != 0)
       return null;
@@ -64,12 +67,11 @@ public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression
       return null;
     final Expression right = right(e);
     final Expression left = left(e);
-    if (left instanceof MethodInvocation == right instanceof MethodInvocation)
-      return null;
-    if (left instanceof NumberLiteral == right instanceof NumberLiteral)
-      return null;
-    return left instanceof MethodInvocation ? replacement(e, o, (MethodInvocation) left, (NumberLiteral) right)
-        : replacement(e, conjugate(o), (MethodInvocation) right, (NumberLiteral) left);
+    return invalidTypes(right, left) ? null //
+        : left instanceof MethodInvocation ? //
+        replacement(e, o, (MethodInvocation) left, (NumberLiteral) right) //
+            : replacement(e, conjugate(o), (MethodInvocation) right, (NumberLiteral) left)//
+    ;
   }
   @Override WringGroup wringGroup() {
     return WringGroup.REFACTOR_INEFFECTIVE;
