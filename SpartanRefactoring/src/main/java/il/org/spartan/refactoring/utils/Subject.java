@@ -5,6 +5,7 @@ import static il.org.spartan.refactoring.utils.expose.*;
 import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
+import il.org.spartan.refactoring.wring.*;
 
 // TODO: document this class
 @SuppressWarnings("javadoc") public class Subject {
@@ -65,6 +66,9 @@ import il.org.spartan.*;
       final ThrowStatement $ = ast.newThrowStatement();
       $.setExpression(inner);
       return $;
+    }
+    public Expression toQualifier(String string) {
+      return ast.newQualifiedName((SimpleName) inner,ast.newSimpleName(string));
     }
   }
 
