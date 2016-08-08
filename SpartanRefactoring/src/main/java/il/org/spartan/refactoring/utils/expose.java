@@ -79,10 +79,10 @@ public enum expose {
   public static List<Expression> initializers(final ForStatement ¢) {
     return ¢.initializers();
   }
-  public static List<IExtendedModifier> modifiers(final VariableDeclarationStatement ¢) {
+  public static List<IExtendedModifier> modifiers(final BodyDeclaration ¢) {
     return ¢.modifiers();
   }
-  public static List<IExtendedModifier> modifiers(final BodyDeclaration ¢) {
+  public static List<IExtendedModifier> modifiers(final VariableDeclarationStatement ¢) {
     return ¢.modifiers();
   }
   /** Expose the list of parameters in a {@link MethodDeclaration}
@@ -109,5 +109,8 @@ public enum expose {
   }
   public static List<ParameterizedType> typeArguments(final ParameterizedType ¢) {
     return ¢.typeArguments();
+  }
+  List<IExtendedModifier> modifiers(SingleVariableDeclaration n) {
+    return n.modifiers();
   }
 }
