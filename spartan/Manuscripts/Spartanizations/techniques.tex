@@ -21,7 +21,7 @@
   \item Pull out arithmetical negation
   \item Use ternary instead of conditionals.
   \item convert prefix ++ and--into postfix when possible
-  \item
+  \item Example:
 \begin{code}{JAVA}
 x.toString()
 \end{code}
@@ -37,10 +37,12 @@ x.toString()
   \item De morgan pushdown logical negation.
   \item Pullup arirthmetic negation.
   \item Pushdown ternarizations.
+  \item Example:
   \begin{code}{java}
    a ? b(x) : b(y) => b(a ? x: y)
   \end{code}
   \item Distributive rule on booleans
+  \item Example:
     \begin{code}{JAVA}
 a && b || c && b => (a || c) && c
     \end{code}
