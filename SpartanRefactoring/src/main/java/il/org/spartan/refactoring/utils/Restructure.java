@@ -13,18 +13,18 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
  * @since 2015-07-21 */
 public enum Restructure {
   ;
-  /** Duplicate all {@link Statement} object found in a given list into another
+  /** Duplicate all {@link ASTNode} objects found in a given list into another
    * list.
    * @param from JD
    * @param into JD */
-  public static void duplicateInto(final List<Statement> from, final List<Statement> into) {
-    for (final Statement s : from)
+  public static  <N extends ASTNode> void duplicateInto(final List<N> from, final List<N> into) {
+    for (final N s : from)
       duplicateInto(s, into);
   }
   /** Duplicate a {@link Statement} into another list.
    * @param from JD
    * @param into JD */
-  public static void duplicateInto(final Statement from, final List<Statement> into) {
+  public static  <N extends ASTNode>   void duplicateInto(final N from, final List<N> into) {
     into.add(duplicate(from));
   }
   /** Determine whether a give {@link ASTNode} includes precisely one
