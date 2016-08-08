@@ -6,12 +6,13 @@
 # Contributions can be found in individual files by the @author annotation.
 #
 
+# Keep this list alphabetically sorted VIM: +,$!sort -u
+Alexander Kopzon <alexkopzon [at] gmail.com>
 Artium Nihamkin <artium [at] nihamkin.com>
 Boris van Sosin <boris.van.sosin [at] gmail.com>
+Dan Greenstein <dngreenst [at] gmail.com>
 Daniel Mittelman <daniel [at] mittelman.co.il>
+Dor Ma’ayan <dor.d.ma [at] gmail.com>
 Ofir Elmakias <elmakias [at] outlook.com>
 Tomer Zeltzer <tomerr90 [at] gmail.com>
 Yossi Gil <yossi.gil [at] gmail.com>
-Dor Ma’ayan <dor.d.ma [at] gmail.com>
-Alexander Kopzon <alexkopzon [at] gmail.com>
-Dan Greenstein <dngreenst [at] gmail.com>
