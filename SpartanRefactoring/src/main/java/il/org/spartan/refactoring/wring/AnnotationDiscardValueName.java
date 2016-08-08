@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
-
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Funcs.newSimpleName;
 
 import org.eclipse.jdt.core.dom.*;
 
