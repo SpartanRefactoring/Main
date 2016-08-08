@@ -505,12 +505,12 @@ public enum Funcs {
     return n.getAST().newSimpleName(newName);
   }
   /** Retrieve next item in a list
-   * @param ¢ an index of specific item in a list
+   * @param i an index of specific item in a list
    * @param ts the indexed list
    * @return the following item in the list, if such such an item exists,
    *         otherwise, the last node */
-  public static <¢> ¢ next(final int ¢, final List<¢> ts) {
-    return !inRange(¢ + 1, ts) ? last(ts) : ts.get(¢ + 1);
+  public static <T> T next(final int i, final List<T> ts) {
+    return !inRange(i + 1, ts) ? last(ts) : ts.get(i + 1);
   }
   /** Shorthand for {@link ASTNode#getParent()}
    * @param ¢ JD
@@ -545,7 +545,7 @@ public enum Funcs {
    * @param ts the indexed list
    * @return the previous item in the list, if such an item exists, otherwise,
    *         the last node */
-  public static <¢> ¢ prev(final int i, final List<¢> ts) {
+  public static <T> T prev(final int i, final List<T> ts) {
     return ts.get(i < 1 ? 0 : i - 1);
   }
   /** Make a duplicate, suitable for tree rewrite, of the parameter

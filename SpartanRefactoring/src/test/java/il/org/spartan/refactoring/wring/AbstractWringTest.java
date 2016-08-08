@@ -1,22 +1,22 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static il.org.spartan.utils.Utils.*;
+import il.org.spartan.*;
+import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.wring.AbstractWringTest.WringedExpression.Conditional;
+import il.org.spartan.refactoring.wring.AbstractWringTest.WringedExpression.Infix;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 import org.junit.*;
-import org.junit.runners.Parameterized.*;
-import il.org.spartan.*;
-import il.org.spartan.refactoring.spartanizations.*;
-import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.wring.AbstractWringTest.WringedExpression.*;
+import org.junit.runners.Parameterized.Parameter;
 
 /** @author Yossi Gil
  * @since 2015-07-18 */

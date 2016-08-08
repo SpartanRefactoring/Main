@@ -66,8 +66,8 @@ import il.org.spartan.*;
       $.setExpression(inner);
       return $;
     }
-    public Expression toQualifier(String string) {
-      return ast.newQualifiedName((SimpleName) inner,ast.newSimpleName(string));
+    public Expression toQualifier(String name) {
+      return ast.newQualifiedName((SimpleName) inner,ast.newSimpleName(name));
     }
   }
 
