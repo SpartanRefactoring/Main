@@ -97,10 +97,8 @@ final class LocalInliner {
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-07-09 */
 public abstract class Wring<N extends ASTNode> {
-
-  /**
-   * Similar to {@link ReplaceCurrentNode}, but with an {@link ExclusionManager}
-   */
+  /** Similar to {@link ReplaceCurrentNode}, but with an
+   * {@link ExclusionManager} */
   static abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends Wring<N> {
     @Override final Rewrite make(final N n, final ExclusionManager m) {
       return !eligible(n) ? null : new Rewrite(description(n), n) {
@@ -114,6 +112,7 @@ public abstract class Wring<N extends ASTNode> {
       return replacement(n, new ExclusionManager()) != null;
     }
   }
+
   static abstract class AbstractSorting extends ReplaceCurrentNode<InfixExpression> {
     @Override final String description(final InfixExpression e) {
       return "Reorder operands of " + e.getOperator();
