@@ -216,27 +216,27 @@ public abstract class Wring<N extends ASTNode> {
     }
   }
 
-  /**
-   * MultipleReplaceCurrentNode replaces multiple nodes in current statement
+  /** MultipleReplaceCurrentNode replaces multiple nodes in current statement
    * with multiple nodes (or a single node).
-   *
    * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
-   * @since 2016-04-25
-   */
+   * @since 2016-04-25 */
   static abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends Wring<N> {
     abstract ASTRewrite go(ASTRewrite r, N n, TextEditGroup g, List<ASTNode> bss, List<ASTNode> crs);
     @Override Rewrite make(final N n) {
       return new Rewrite(description(n), n) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-          final List<ASTNode> bss = new ArrayList<>();
-          final List<ASTNode> crs = new ArrayList<>();
-          MultipleReplaceCurrentNode.this.go(r, n, g, bss, crs);
-          if (bss.size() != crs.size() && crs.size() != 1)
-            return; // indicates bad wring design
-          final boolean ucr = crs.size() == 1;
-          final int s = bss.size();
-          for (int i = 0; i < s; ++i)
-            scalpel.operate(bss.get(i)).replaceWith(crs.get(ucr ? 0 : i));
+          final List<ASTNode> input = new ArrayList<>();
+          final List<ASTNode> output = new ArrayList<>();
+          MultipleReplaceCurrentNode.this.go(r, n, g, input, output);
+          final boolean ucrx = output.size() == 1;
+          if (output.size() == 1)
+            for (ASTNode a : input)
+              scalpel.operate(a).replaceWith(output.get(0));
+          else if (input.size() == output.size())
+            for (int i = 0; i < input.size(); ++i)
+              scalpel.operate(input.get(i)).replaceWith(output.get(ucr ? 0 : i));
+          else 
+            return;
         }
       };
     }
@@ -244,7 +244,6 @@ public abstract class Wring<N extends ASTNode> {
       return go(ASTRewrite.create(n.getAST()), n, null, new ArrayList<>(), new ArrayList<>()) != null;
     }
   }
-
 
   static abstract class VariableDeclarationFragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
     static InfixExpression.Operator asInfix(final Assignment.Operator o) {
