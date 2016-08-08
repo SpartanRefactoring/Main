@@ -15,6 +15,16 @@ import il.org.spartan.refactoring.wring.*;
 /** Useful Functions */
 public enum Funcs {
   ;
+  /**
+   * Create a new {@link SimpleName} instance at the AST of the parameter
+   *
+   * @param n JD
+   * @param newName the name that the returned value shall bear
+   * @return a new {@link SimpleName} instance at the AST of the parameter
+   */
+  public static SimpleName newSimpleName(final ASTNode n, final String newName) {
+    return n.getAST().newSimpleName(newName);
+  }
   @SuppressWarnings("serial") private static Map<Operator, Operator> conjugate = new HashMap<Operator, Operator>() {
     {
       put(GREATER, LESS);
