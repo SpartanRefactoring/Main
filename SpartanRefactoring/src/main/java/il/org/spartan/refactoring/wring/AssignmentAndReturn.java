@@ -24,6 +24,9 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-08-28 */
 public class AssignmentAndReturn extends Wring.ReplaceToNextStatement<Assignment> {
+  @Override String description(final Assignment a) {
+    return "Inline assignment to " + left(a) + " with its subsequent 'return'";
+  }
   @Override ASTRewrite go(final ASTRewrite r, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
     final Statement parent = asStatement(a.getParent());
     if (parent == null || parent instanceof ForStatement)
@@ -34,9 +37,6 @@ public class AssignmentAndReturn extends Wring.ReplaceToNextStatement<Assignment
     r.remove(parent, g);
     r.replace(s, Subject.operand(a).toReturn(), g);
     return r;
-  }
-  @Override String description(final Assignment a) {
-    return "Inline assignment to " + left(a) + " with its subsequent 'return'";
   }
   @Override WringGroup wringGroup() {
     return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;

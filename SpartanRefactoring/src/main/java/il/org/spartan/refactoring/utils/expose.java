@@ -82,6 +82,9 @@ public enum expose {
   public static List<IExtendedModifier> modifiers(final BodyDeclaration ¢) {
     return ¢.modifiers();
   }
+  public static List<IExtendedModifier> modifiers(final SingleVariableDeclaration n) {
+    return n.modifiers();
+  }
   public static List<IExtendedModifier> modifiers(final VariableDeclarationStatement ¢) {
     return ¢.modifiers();
   }
@@ -109,8 +112,5 @@ public enum expose {
   }
   public static List<ParameterizedType> typeArguments(final ParameterizedType ¢) {
     return ¢.typeArguments();
-  }
-  public static List<IExtendedModifier> modifiers(SingleVariableDeclaration n) {
-    return n.modifiers();
   }
 }

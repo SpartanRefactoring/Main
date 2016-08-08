@@ -20,20 +20,6 @@ import il.org.spartan.utils.Utils;
 @SuppressWarnings({ "javadoc", "static-method" }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class InfixSortAdditionTest {
-  static final Wring<InfixExpression> WRING = new InfixSortAddition();
-  static final ExpressionComparator COMPARATOR = ExpressionComparator.ADDITION;
-  @Test public void subjectOperandsWithParenthesis() {
-    final Expression e = Into.e("(2 + a) * b");
-    azzert.aye(Is.notString(e));
-    final InfixExpression plus = extract.firstPlus(e);
-    azzert.aye(Is.notString(plus));
-    final List<Expression> operands = extract.operands(flatten(plus));
-    azzert.that(operands.size(), is(2));
-    final InfixExpression r = Subject.operands(operands).to(plus.getOperator());
-    azzert.that(r, iz("2+a"));
-    azzert.that(new InfixSortAddition().replacement(plus), iz("a+2"));
-  }
-
   @RunWith(Parameterized.class) //
   public static class Noneligible extends AbstractWringTest.Noneligible.Infix {
     static String[][] cases = Utils.asArray(//
@@ -142,5 +128,18 @@ public class InfixSortAdditionTest {
     @Test public void twoOrMoreArguments() {
       azzert.that(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
     }
+  }
+  static final Wring<InfixExpression> WRING = new InfixSortAddition();
+  static final ExpressionComparator COMPARATOR = ExpressionComparator.ADDITION;
+  @Test public void subjectOperandsWithParenthesis() {
+    final Expression e = Into.e("(2 + a) * b");
+    azzert.aye(Is.notString(e));
+    final InfixExpression plus = extract.firstPlus(e);
+    azzert.aye(Is.notString(plus));
+    final List<Expression> operands = extract.operands(flatten(plus));
+    azzert.that(operands.size(), is(2));
+    final InfixExpression r = Subject.operands(operands).to(plus.getOperator());
+    azzert.that(r, iz("2+a"));
+    azzert.that(new InfixSortAddition().replacement(plus), iz("a+2"));
   }
 }

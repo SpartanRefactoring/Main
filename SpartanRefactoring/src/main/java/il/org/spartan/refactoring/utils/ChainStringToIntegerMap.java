@@ -28,13 +28,13 @@ class ChainStringToIntegerMap {
     inner.put(key, new Integer(value));
     return this;
   }
+  public ChainStringToIntegerMap putAll(final Map<? extends String, ? extends Integer> i) {
+    inner.putAll(i);
+    return this;
+  }
   public ChainStringToIntegerMap putOn(final int value, final String... keys) {
     for (final String key : keys)
       put(key, value);
-    return this;
-  }
-  public ChainStringToIntegerMap putAll(final Map<? extends String, ? extends Integer> i) {
-    inner.putAll(i);
     return this;
   }
   public ChainStringToIntegerMap remove(final String key) {

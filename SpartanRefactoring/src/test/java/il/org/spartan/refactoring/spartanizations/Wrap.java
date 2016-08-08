@@ -37,6 +37,9 @@ public enum Wrap {
   //
   ;
   public static final Wrap[] WRAPS = new Wrap[] { Statement, Expression, Method, OUTER };
+  public static String essence(final String codeFragment) {
+    return gist(removeComments(codeFragment));
+  }
   /** Finds the most appropriate Wrap for a given code fragment
    * @param codeFragment JD
    * @return the most appropriate Wrap, or null, if the parameter could not be
@@ -63,9 +66,6 @@ public enum Wrap {
     }
     return "" + $;
   }
-  public static String essence(final String codeFragment) {
-    return gist(removeComments(codeFragment));
-  }
   static String removeComments(final String codeFragment) {
     return codeFragment//
         .replaceAll("//.*?\n", "\n")//
@@ -76,6 +76,9 @@ public enum Wrap {
   Wrap(final String before, final String after) {
     this.before = before;
     this.after = after;
+  }
+  private boolean contains(final String wrap, final String inner) {
+    return essence(off(wrap)).contains(essence(inner));
   }
   /** Wrap a given code fragment, and then parse it, converting it into a
    * {@link CompilationUnit}.
@@ -103,8 +106,5 @@ public enum Wrap {
    * @return the wrapped phrase */
   public final String on(final String codeFragment) {
     return before + codeFragment + after;
-  }
-  private boolean contains(final String wrap, final String inner) {
-    return essence(off(wrap)).contains(essence(inner));
   }
 }

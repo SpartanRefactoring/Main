@@ -75,17 +75,17 @@ public class FuncsTest {
   @Test public void listOfInts() {
     azzert.that(spartan.shorten(t("List<Set<Integer>> _;")), equalTo("iss"));
   }
+  @Test public void negationOfExpressionManyNegation() {
+    azzert.that(negationLevel(e("- - - - (- (-a))")), is(6));
+  }
+  @Test public void negationOfExpressionNoNegation() {
+    azzert.that(negationLevel(e("((((4))))")), is(0));
+  }
   @Test public void sameOfNullAndSomething() {
     azzert.nay(Funcs.same(null, e("a")));
   }
   @Test public void sameOfNulls() {
     azzert.aye(Funcs.same((ASTNode) null, (ASTNode) null));
-  }
-  @Test public void negationOfExpressionNoNegation() {
-    azzert.that(negationLevel(e("((((4))))")), is(0));
-  }
-  @Test public void negationOfExpressionManyNegation() {
-    azzert.that(negationLevel(e("- - - - (- (-a))")), is(6));
   }
   @Test public void sameOfSomethingAndNull() {
     azzert.nay(Funcs.same(e("a"), (Expression) null));
@@ -102,14 +102,14 @@ public class FuncsTest {
   @Test public void shortNameDouble() {
     azzert.that(spartan.shorten(t("double _;")), equalTo("d"));
   }
+  @Test public void shortNameExpression() {
+    azzert.that(spartan.shorten(t("Expression _;")), equalTo("e"));
+  }
   @Test public void shortNameExpressions() {
     azzert.that(spartan.shorten(t("Expression[] _;")), equalTo("es"));
   }
   @Test public void shortNameExpressionsList() {
     azzert.that(spartan.shorten(t("List<Expression> _;")), equalTo("es"));
-  }
-  @Test public void shortNameExpression() {
-    azzert.that(spartan.shorten(t("Expression _;")), equalTo("e"));
   }
   @Test public void shortNameInfrastructure() {
     azzert.that(spartan.shorten(t("int _;")), equalTo("i"));

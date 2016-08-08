@@ -15,12 +15,6 @@ import il.org.spartan.refactoring.wring.AbstractWringTest.*;
 @SuppressWarnings({ "javadoc", "static-method" }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class DeclarationAssignmentTest {
-  static final Wring<VariableDeclarationFragment> WRING = new DeclarationAssignment();
-  @Test public void placeHolder() {
-    // Place holder for future tests
-    azzert.notNull(WRING);
-  }
-
   @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope<VariableDeclarationFragment> {
     static String[][] cases = as.array(//
@@ -57,5 +51,10 @@ public class DeclarationAssignmentTest {
     public Wringed() {
       super(WRING);
     }
+  }
+  static final Wring<VariableDeclarationFragment> WRING = new DeclarationAssignment();
+  @Test public void placeHolder() {
+    // Place holder for future tests
+    azzert.notNull(WRING);
   }
 }

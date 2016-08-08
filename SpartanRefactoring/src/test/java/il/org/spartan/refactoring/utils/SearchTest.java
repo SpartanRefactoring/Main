@@ -349,11 +349,17 @@ import il.org.spartan.refactoring.utils.Collect.*;
   @Test public void minusMinusPre() {
     azzert.that(Collect.forAllOccurencesExcludingDefinitions(n).in(s("--n;")).size(), is(0));
   }
+  private int nCount(final String statement) {
+    return searcher().in(s(statement)).size();
+  }
   @Test public void plusPlus() {
     azzert.that(Collect.forAllOccurencesExcludingDefinitions(n).in(s("n++;")).size(), is(0));
   }
   @Test public void plusPlusPre() {
     azzert.that(Collect.forAllOccurencesExcludingDefinitions(n).in(s("++n;")).size(), is(0));
+  }
+  private Collector searcher() {
+    return Collect.usesOf(n);
   }
   @Test public void superMethodInocation() {
     azzert.that(searcher().in(e("super.n(this)\n")).size(), is(0));
@@ -374,11 +380,5 @@ import il.org.spartan.refactoring.utils.Collect.*;
   }
   @Test public void vanillaShortVersion() {
     azzert.that(nCount("b = n;"), is(1));
-  }
-  private int nCount(final String statement) {
-    return searcher().in(s(statement)).size();
-  }
-  private Collector searcher() {
-    return Collect.usesOf(n);
   }
 }

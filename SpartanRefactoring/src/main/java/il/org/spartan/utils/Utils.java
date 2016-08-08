@@ -48,6 +48,16 @@ public enum Utils {
   public static int compare(final boolean b1, final boolean b2) {
     return b1 == b2 ? 0 : b1 ? 1 : -1;
   }
+  /** Deletes a specified element from an array, by reallocating an array whose
+   * size is smaller by one and shifting the other elements down.
+   * @param ts an arbitrary array
+   * @param i position of element to be deleted
+   * @return the newly created array */
+  public static <T> T[] delete(final T[] ts, final int i) {
+    final T[] $ = Arrays.copyOf(ts, ts.length - 1);
+    System.arraycopy(ts, i + 1, $, i, $.length - i);
+    return $;
+  }
   /** Remove all non-essential spaces from a string that represents Java code.
    * @param javaCodeFragment JD
    * @return the parameter, with all redundant spaces removes from it */
@@ -63,16 +73,6 @@ public enum Utils {
           .replaceAll(WHITES + operator, operator) // Preceding whites
           .replaceAll(operator + WHITES, operator) // Trailing whites
       ;
-    return $;
-  }
-  /** Deletes a specified element from an array, by reallocating an array whose
-   * size is smaller by one and shifting the other elements down.
-   * @param ts an arbitrary array
-   * @param i position of element to be deleted
-   * @return the newly created array */
-  public static <T> T[] delete(final T[] ts, final int i) {
-    final T[] $ = Arrays.copyOf(ts, ts.length - 1);
-    System.arraycopy(ts, i + 1, $, i, $.length - i);
     return $;
   }
   /** determine whether there is a null in a sequence of object

@@ -29,6 +29,14 @@ import java.util.regex.*;
   public JavaTypeNameParser(final String typeName) {
     this.typeName = typeName;
   }
+  /** @return an abbreviation of the type name */
+  public String abbreviate() {
+    String a = "";
+    final Matcher m = Pattern.compile("[A-Z]").matcher(typeName);
+    while (m.find())
+      a += m.group();
+    return a.toLowerCase();
+  }
   /** Returns whether a variable name is a generic variation of its type name. A
    * variable name is considered to be a generic variation of its type name if
    * the variable name is equal to the type name, either one of them is
@@ -41,29 +49,17 @@ import java.util.regex.*;
     return typeName.equalsIgnoreCase(variableName) || lowerCaseContains(typeName, variableName)
         || lowerCaseContains(typeName, toSingular(variableName)) || variableName.equals(abbreviate());
   }
-  /** Returns the calculated short name for the type
-   * @return the type's short name */
-  public String shortName() {
-    return String.valueOf(Character.toLowerCase(lastName().charAt(0)));
-  }
-  /** @return an abbreviation of the type name */
-  public String abbreviate() {
-    String a = "";
-    final Matcher m = Pattern.compile("[A-Z]").matcher(typeName);
-    while (m.find())
-      a += m.group();
-    return a.toLowerCase();
-  }
-  private String toSingular(final String s) {
-    return s == null ? null
-        : s.endsWith("ies") ? s.substring(0, s.length() - 3) + "y"
-            : s.endsWith("es") ? s.substring(0, s.length() - 2) : s.endsWith("s") ? s.substring(0, s.length() - 1) : s;
+  private boolean isLower(final int i) {
+    return Character.isLowerCase(typeName.charAt(i));
   }
   /** Shorthand for n.equals(this.shortName())
    * @param s JD
    * @return true if the provided name equals the type's short name */
   public boolean isShort(final String s) {
     return s.equals(shortName());
+  }
+  private boolean isUpper(final int i) {
+    return Character.isUpperCase(typeName.charAt(i));
   }
   String lastName() {
     return typeName.substring(lastNameIndex());
@@ -79,13 +75,17 @@ import java.util.regex.*;
     }
     return 0;
   }
-  private boolean isLower(final int i) {
-    return Character.isLowerCase(typeName.charAt(i));
-  }
-  private boolean isUpper(final int i) {
-    return Character.isUpperCase(typeName.charAt(i));
-  }
   private boolean lowerCaseContains(final String s, final String substring) {
     return s.toLowerCase().contains(substring.toLowerCase());
+  }
+  /** Returns the calculated short name for the type
+   * @return the type's short name */
+  public String shortName() {
+    return String.valueOf(Character.toLowerCase(lastName().charAt(0)));
+  }
+  private String toSingular(final String s) {
+    return s == null ? null
+        : s.endsWith("ies") ? s.substring(0, s.length() - 3) + "y"
+            : s.endsWith("es") ? s.substring(0, s.length() - 2) : s.endsWith("s") ? s.substring(0, s.length() - 1) : s;
   }
 }

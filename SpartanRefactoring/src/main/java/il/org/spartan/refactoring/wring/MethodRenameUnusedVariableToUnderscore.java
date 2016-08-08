@@ -1,27 +1,20 @@
 package il.org.spartan.refactoring.wring;
+
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.Wring.*;
 
-/**
- * A {@link Wring} to change name of unused variable to double underscore "__"
+/** A {@link Wring} to change name of unused variable to double underscore "__"
  * TODO Ori: (maybe) inherent VariableChangeName instead of
  * ReplaceCurrentNodeExclude
- *
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
- * @since 2016-05-08
- */
-@SuppressWarnings("javadoc") public class MethodRenameUnusedVariableToUnderscore extends
-    ReplaceCurrentNodeExclude<SingleVariableDeclaration> {
-  // true iff renaming annotated variables only
-  final static boolean BY_ANNOTATION = true;
-
+ * @since 2016-05-08 */
+@SuppressWarnings("javadoc") public class MethodRenameUnusedVariableToUnderscore extends ReplaceCurrentNodeExclude<SingleVariableDeclaration> {
   public static class IsUsed extends ASTVisitor {
     boolean c = true;
     String n;
-
     public IsUsed(final SimpleName sn) {
       n = sn.getIdentifier();
     }
@@ -31,9 +24,7 @@ import il.org.spartan.refactoring.wring.Wring.*;
     public boolean conclusion() {
       return !c;
     }
-    @Override public boolean visit(final SimpleName sn) {
-      if (n.equals(sn.getIdentifier()))
-        c = false;
+    @Override public boolean preVisit2(@SuppressWarnings("unused") final ASTNode __) {
       return c;
     }
     @Override public final boolean visit(@SuppressWarnings("unused") final AnnotationTypeDeclaration __) {
@@ -45,14 +36,17 @@ import il.org.spartan.refactoring.wring.Wring.*;
     @Override public final boolean visit(@SuppressWarnings("unused") final EnumDeclaration __) {
       return false;
     }
+    @Override public boolean visit(final SimpleName sn) {
+      if (n.equals(sn.getIdentifier()))
+        c = false;
+      return c;
+    }
     @Override public final boolean visit(@SuppressWarnings("unused") final TypeDeclaration __) {
       return false;
     }
-    @Override public boolean preVisit2(@SuppressWarnings("unused") final ASTNode __) {
-      return c;
-    }
   }
-
+  // true iff renaming annotated variables only
+  final static boolean BY_ANNOTATION = true;
   public static boolean isUsed(final MethodDeclaration d, final SimpleName n) {
     final IsUsed u = new IsUsed(n);
     d.getBody().accept(u);
@@ -69,6 +63,12 @@ import il.org.spartan.refactoring.wring.Wring.*;
         break;
       }
     return false;
+  }
+  private static final String unusedVariableName() {
+    return "__";
+  }
+  @Override String description(final SingleVariableDeclaration d) {
+    return "Change name of unused variable " + d.getName().getIdentifier() + " to __";
   }
   @SuppressWarnings("unchecked") @Override ASTNode replacement(final SingleVariableDeclaration n, final ExclusionManager m) {
     final ASTNode p = n.getParent();
@@ -89,17 +89,10 @@ import il.org.spartan.refactoring.wring.Wring.*;
     $.setFlags($.getFlags());
     $.setInitializer($.getInitializer());
     $.setType(Funcs.duplicate(n.getType()));
-    duplicateInto(n.modifiers(), $.modifiers());
+    duplicateModifiers(expose.modifiers(n), expose.modifiers($));
     return $;
-  }
-  private static final String unusedVariableName() {
-    return "__";
-  }
-  @Override String description(final SingleVariableDeclaration d) {
-    return "Change name of unused variable " + d.getName().getIdentifier() + " to __";
   }
   @Override WringGroup wringGroup() {
     return WringGroup.RENAME_PARAMETERS;
-    
   }
 }

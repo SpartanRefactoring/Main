@@ -19,22 +19,6 @@ import il.org.spartan.utils.Utils;
  * @since 2014-07-13 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) public class IfShortestFirstTest {
-  static final Wring<IfStatement> WRING = new IfShortestFirst();
-  @Test public void statmentCount() {
-    final CompilationUnit u = Wrap.Statement.intoCompilationUnit("" + //
-        "if (name == null) {\n" + //
-        "    if (other.name != null)\n" + //
-        "        return false;\n" + //
-        "} else if (!name.equals(other.name))\n" + //
-        "    return false;\n" + //
-        "return true;" //
-        + ""//
-    );
-    final IfStatement s = extract.firstIfStatement(u);
-    azzert.that(extract.statements(then(s)).size(), is(1));
-    azzert.that(extract.statements(elze(s)).size(), is(1));
-  }
-
   @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope<IfStatement> {
     static String[][] cases = Utils.asArray(//
@@ -101,5 +85,20 @@ import il.org.spartan.utils.Utils;
     public Wringed() {
       super(WRING);
     }
+  }
+  static final Wring<IfStatement> WRING = new IfShortestFirst();
+  @Test public void statmentCount() {
+    final CompilationUnit u = Wrap.Statement.intoCompilationUnit("" + //
+        "if (name == null) {\n" + //
+        "    if (other.name != null)\n" + //
+        "        return false;\n" + //
+        "} else if (!name.equals(other.name))\n" + //
+        "    return false;\n" + //
+        "return true;" //
+        + ""//
+    );
+    final IfStatement s = extract.firstIfStatement(u);
+    azzert.that(extract.statements(then(s)).size(), is(1));
+    azzert.that(extract.statements(elze(s)).size(), is(1));
   }
 }

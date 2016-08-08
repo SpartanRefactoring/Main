@@ -17,11 +17,31 @@ import il.org.spartan.refactoring.spartanizations.*;
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code>
  * @since 2015/08/01 */
 public class CleanupHandler extends BaseHandler {
+  static final int MAX_PASSES = 20;
+  /** Returns the number of Spartanizaion suggestions for this compilation unit
+   * @param u JD
+   * @return the number of suggesions available for the compilation unit */
+  public static int countSuggestions(final ICompilationUnit u) {
+    int $ = 0;
+    for (final Spartanization s : ApplySpartanizationHandler.safeSpartanizations) {
+      s.setMarker(null);
+      s.setCompilationUnit(u);
+      $ += s.countSuggestions();
+    }
+    return $;
+  }
+  private static List<ICompilationUnit> getAllCompilationUnits(final ICompilationUnit u) {
+    try {
+      return Spartanization.getAllProjectCompilationUnits(u, new NullProgressMonitor());
+    } catch (final JavaModelException x) {
+      x.printStackTrace();
+      return null;
+    }
+  }
   /** Instantiates this class */
   public CleanupHandler() {
     super(null);
   }
-  static final int MAX_PASSES = 20;
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) throws ExecutionException {
     final StringBuilder message = new StringBuilder();
     final ICompilationUnit currentCompilationUnit = currentCompilationUnit();
@@ -64,25 +84,5 @@ public class CleanupHandler extends BaseHandler {
             message);
     }
     throw new ExecutionException("Too many iterations");
-  }
-  private static List<ICompilationUnit> getAllCompilationUnits(final ICompilationUnit u) {
-    try {
-      return Spartanization.getAllProjectCompilationUnits(u, new NullProgressMonitor());
-    } catch (final JavaModelException x) {
-      x.printStackTrace();
-      return null;
-    }
-  }
-  /** Returns the number of Spartanizaion suggestions for this compilation unit
-   * @param u JD
-   * @return the number of suggesions available for the compilation unit */
-  public static int countSuggestions(final ICompilationUnit u) {
-    int $ = 0;
-    for (final Spartanization s : ApplySpartanizationHandler.safeSpartanizations) {
-      s.setMarker(null);
-      s.setCompilationUnit(u);
-      $ += s.countSuggestions();
-    }
-    return $;
   }
 }

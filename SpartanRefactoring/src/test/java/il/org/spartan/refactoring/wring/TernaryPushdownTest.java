@@ -15,8 +15,6 @@ import il.org.spartan.utils.*;
 @SuppressWarnings({ "javadoc", }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class TernaryPushdownTest {
-  static final Wring<ConditionalExpression> WRING = new TernaryPushdown();
-
   @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Exprezzion<ConditionalExpression> {
     static String[][] cases = Utils.asArray(
@@ -103,4 +101,5 @@ public class TernaryPushdownTest {
       super(WRING);
     }
   }
+  static final Wring<ConditionalExpression> WRING = new TernaryPushdown();
 }

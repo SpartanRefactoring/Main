@@ -17,8 +17,8 @@ import il.org.spartan.refactoring.utils.*;
  * @author Daniel Mittelman?
  * @since 2015-08-26 */
 public class SuperConstructorInvocationRemover extends Wring<SuperConstructorInvocation> {
-  @Override boolean scopeIncludes(final SuperConstructorInvocation i) {
-    return i.arguments().isEmpty();
+  @Override String description(@SuppressWarnings("unused") final SuperConstructorInvocation __) {
+    return "Remove empty 'super()' invocation";
   }
   @Override Rewrite make(final SuperConstructorInvocation i) {
     return new Rewrite(description(i), i) {
@@ -27,8 +27,8 @@ public class SuperConstructorInvocationRemover extends Wring<SuperConstructorInv
       }
     };
   }
-  @Override String description(@SuppressWarnings("unused") final SuperConstructorInvocation __) {
-    return "Remove empty 'super()' invocation";
+  @Override boolean scopeIncludes(final SuperConstructorInvocation i) {
+    return i.arguments().isEmpty();
   }
   @Override WringGroup wringGroup() {
     return WringGroup.REMOVE_SYNTACTIC_BAGGAGE;

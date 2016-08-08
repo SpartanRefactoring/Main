@@ -20,48 +20,20 @@ public class Builder extends IncrementalProjectBuilder {
   public static final String SPARTANIZATION_SHORT_PREFIX = "Spartanize: ";
   /** Empty prefix for brevity */
   public static final String EMPTY_PREFIX = "";
-  private static String prefix() {
-    return SPARTANIZATION_SHORT_PREFIX;
-  }
   /** the ID under which this builder is registered */
   public static final String BUILDER_ID = "org.spartan.refactoring.BuilderID";
   private static final String MARKER_TYPE = "org.spartan.refactoring.spartanizationSuggestion";
   /** the key in the marker's properties map under which the type of the
    * spartanization is stored */
   public static final String SPARTANIZATION_TYPE_KEY = "org.spartan.refactoring.spartanizationType";
-  @Override protected IProject[] build(final int kind, @SuppressWarnings({ "unused", "rawtypes" }) final Map __, final IProgressMonitor m)
-      throws CoreException {
-    if (m != null)
-      m.beginTask("Checking for spartanization opportunities", IProgressMonitor.UNKNOWN);
-    build(kind);
-    if (m != null)
-      m.done();
-    return null;
-  }
-  private void build(final int kind) throws CoreException {
-    if (kind == FULL_BUILD) {
-      fullBuild();
-      return;
-    }
-    final IResourceDelta d = getDelta(getProject());
-    if (d == null)
-      fullBuild();
-    else
-      incrementalBuild(d);
-  }
-  protected void fullBuild() {
-    try {
-      getProject().accept(r -> {
-        addMarkers(r);
-        return true; // to continue visiting children.
-      });
-    } catch (final CoreException e) {
-      e.printStackTrace();
-    }
-  }
-  static void addMarkers(final IResource r) throws CoreException {
-    if (r instanceof IFile && r.getName().endsWith(".java"))
-      addMarkers((IFile) r);
+  private static void addMarker(final Spartanization s, final Rewrite r, final IMarker m) throws CoreException {
+    m.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
+    m.setAttribute(SPARTANIZATION_TYPE_KEY, s.toString());
+    m.setAttribute(IMarker.MESSAGE, prefix() + r.description);
+    m.setAttribute(IMarker.CHAR_START, r.from);
+    m.setAttribute(IMarker.CHAR_END, r.to);
+    m.setAttribute(IMarker.TRANSIENT, false);
+    m.setAttribute(IMarker.LINE_NUMBER, r.lineNumber);
   }
   private static void addMarkers(final IFile f) throws CoreException {
     Spartanizations.reset();
@@ -74,14 +46,9 @@ public class Builder extends IncrementalProjectBuilder {
         if (r != null)
           addMarker(s, r, f.createMarker(MARKER_TYPE));
   }
-  private static void addMarker(final Spartanization s, final Rewrite r, final IMarker m) throws CoreException {
-    m.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
-    m.setAttribute(SPARTANIZATION_TYPE_KEY, s.toString());
-    m.setAttribute(IMarker.MESSAGE, prefix() + r.description);
-    m.setAttribute(IMarker.CHAR_START, r.from);
-    m.setAttribute(IMarker.CHAR_END, r.to);
-    m.setAttribute(IMarker.TRANSIENT, false);
-    m.setAttribute(IMarker.LINE_NUMBER, r.lineNumber);
+  static void addMarkers(final IResource r) throws CoreException {
+    if (r instanceof IFile && r.getName().endsWith(".java"))
+      addMarkers((IFile) r);
   }
   /** deletes all spartanization suggestion markers
    * @param f the file from which to delete the markers
@@ -109,5 +76,38 @@ public class Builder extends IncrementalProjectBuilder {
           return true; // return true to continue visiting children.
       }
     });
+  }
+  private static String prefix() {
+    return SPARTANIZATION_SHORT_PREFIX;
+  }
+  private void build(final int kind) throws CoreException {
+    if (kind == FULL_BUILD) {
+      fullBuild();
+      return;
+    }
+    final IResourceDelta d = getDelta(getProject());
+    if (d == null)
+      fullBuild();
+    else
+      incrementalBuild(d);
+  }
+  @Override protected IProject[] build(final int kind, @SuppressWarnings({ "unused", "rawtypes" }) final Map __, final IProgressMonitor m)
+      throws CoreException {
+    if (m != null)
+      m.beginTask("Checking for spartanization opportunities", IProgressMonitor.UNKNOWN);
+    build(kind);
+    if (m != null)
+      m.done();
+    return null;
+  }
+  protected void fullBuild() {
+    try {
+      getProject().accept(r -> {
+        addMarkers(r);
+        return true; // to continue visiting children.
+      });
+    } catch (final CoreException e) {
+      e.printStackTrace();
+    }
   }
 }

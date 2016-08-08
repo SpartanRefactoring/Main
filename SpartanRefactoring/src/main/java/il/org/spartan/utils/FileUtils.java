@@ -27,15 +27,15 @@ public class FileUtils {
     }
     return $;
   }
-  /** Returns the contents of a source file
-   * @param fileName The source file's path
-   * @return the source file's contents, or an empty string in case of an error
-   * @throws IOException in case of error */
-  public static String readFromFile(final String fileName) throws IOException {
-    return read(Paths.get(fileName));
-  }
-  private static String read(final Path p) throws IOException {
-    return new String(Files.readAllBytes(p), StandardCharsets.UTF_8);
+  private static void iterateFiles(final File dir, final List<String> files) {
+    if (dir == null)
+      return;
+    for (final File f : dir.listFiles()) {
+      if (f.isDirectory())
+        iterateFiles(f, files);
+      if (f.isFile() && f.getName().endsWith(".java"))
+        files.add(f.getAbsolutePath());
+    }
   }
   /** Converts the entire contents of a file into a {@link String}
    * @param f JD
@@ -51,6 +51,16 @@ public class FileUtils {
     }
     return $.toString();
   }
+  private static String read(final Path p) throws IOException {
+    return new String(Files.readAllBytes(p), StandardCharsets.UTF_8);
+  }
+  /** Returns the contents of a source file
+   * @param fileName The source file's path
+   * @return the source file's contents, or an empty string in case of an error
+   * @throws IOException in case of error */
+  public static String readFromFile(final String fileName) throws IOException {
+    return read(Paths.get(fileName));
+  }
   /** @param fileName where to write
    * @param text what to write
    * @throws FileNotFoundException in case the file could not be found */
@@ -58,16 +68,6 @@ public class FileUtils {
     try (final PrintWriter p = new PrintWriter(fileName)) {
       p.write(text);
       p.flush();
-    }
-  }
-  private static void iterateFiles(final File dir, final List<String> files) {
-    if (dir == null)
-      return;
-    for (final File f : dir.listFiles()) {
-      if (f.isDirectory())
-        iterateFiles(f, files);
-      if (f.isFile() && f.getName().endsWith(".java"))
-        files.add(f.getAbsolutePath());
     }
   }
 }

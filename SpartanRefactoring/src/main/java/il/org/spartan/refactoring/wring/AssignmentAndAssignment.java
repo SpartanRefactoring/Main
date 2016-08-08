@@ -25,6 +25,16 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-08-28 */
 public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assignment> {
+  static Expression extractRight(final Assignment a) {
+    final Expression $ = extract.core(right(a));
+    return !($ instanceof Assignment) || ((Assignment) $).getOperator() != ASSIGN ? $ : extractRight((Assignment) $);
+  }
+  static Expression getRight(final Assignment a) {
+    return a.getOperator() != ASSIGN ? null : extractRight(a);
+  }
+  @Override String description(final Assignment a) {
+    return "Consolidate assignment to " + left(a) + " with subsequent similar assignment";
+  }
   @Override ASTRewrite go(final ASTRewrite r, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
     final ASTNode parent = a.getParent();
     if (!(parent instanceof Statement))
@@ -41,16 +51,6 @@ public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assign
     r.remove(parent, g);
     r.replace(right1, duplicate(a), g);
     return r;
-  }
-  static Expression getRight(final Assignment a) {
-    return a.getOperator() != ASSIGN ? null : extractRight(a);
-  }
-  static Expression extractRight(final Assignment a) {
-    final Expression $ = extract.core(right(a));
-    return !($ instanceof Assignment) || ((Assignment) $).getOperator() != ASSIGN ? $ : extractRight((Assignment) $);
-  }
-  @Override String description(final Assignment a) {
-    return "Consolidate assignment to " + left(a) + " with subsequent similar assignment";
   }
   @Override WringGroup wringGroup() {
     return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;

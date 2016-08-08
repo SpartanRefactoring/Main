@@ -26,6 +26,9 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-08-28 */
 public class PrefixIncrementDecrementReturn extends Wring.ReplaceToNextStatement<PrefixExpression> {
+  @Override String description(final PrefixExpression e) {
+    return "Consolidate " + e + " with subsequent 'return' of " + e.getOperand();
+  }
   @Override ASTRewrite go(final ASTRewrite r, final PrefixExpression e, final Statement nextStatement, final TextEditGroup g) {
     if (!in(e.getOperator(), INCREMENT, DECREMENT))
       return null;
@@ -38,9 +41,6 @@ public class PrefixIncrementDecrementReturn extends Wring.ReplaceToNextStatement
     r.remove(parent, g);
     r.replace(s, Subject.operand(e).toReturn(), g);
     return r;
-  }
-  @Override String description(final PrefixExpression e) {
-    return "Consolidate " + e + " with subsequent 'return' of " + e.getOperand();
   }
   @Override WringGroup wringGroup() {
     return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;

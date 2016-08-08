@@ -14,8 +14,27 @@ import il.org.spartan.refactoring.wring.*;
 @SuppressWarnings("javadoc") public enum TESTUtils {
   ;
   static final String WHITES = "(?m)\\s+";
+  static String apply(final Trimmer t, final String from) {
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
+    azzert.notNull(u);
+    final Document d = new Document(from);
+    azzert.notNull(d);
+    return TESTUtils.rewrite(t, u, d).get();
+  }
   public static void assertNoChange(final String input) {
     assertSimilar(input, Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on(input))));
+  }
+  static void assertNoOpportunity(final Spartanization s, final String from) {
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
+    azzert.that(u.toString(), TrimmerTestsUtils.countOpportunities(s, u), is(0));
+  }
+  static void assertNotEvenSimilar(final String expected, final String actual) {
+    azzert.that(gist(actual), is(gist(expected)));
+  }
+  static void assertOneOpportunity(final Spartanization s, final String from) {
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
+    azzert.notNull(u);
+    azzert.that(TrimmerTestsUtils.countOpportunities(s, u), greaterThanOrEqualTo(1));
   }
   /** A test to check that the actual output is similar to the actual value.
    * @param expected JD
@@ -47,24 +66,5 @@ import il.org.spartan.refactoring.wring.*;
     } catch (MalformedTreeException | BadLocationException e) {
       throw new AssertionError(e);
     }
-  }
-  static String apply(final Trimmer t, final String from) {
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
-    azzert.notNull(u);
-    final Document d = new Document(from);
-    azzert.notNull(d);
-    return TESTUtils.rewrite(t, u, d).get();
-  }
-  static void assertNoOpportunity(final Spartanization s, final String from) {
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
-    azzert.that(u.toString(), TrimmerTestsUtils.countOpportunities(s, u), is(0));
-  }
-  static void assertNotEvenSimilar(final String expected, final String actual) {
-    azzert.that(gist(actual), is(gist(expected)));
-  }
-  static void assertOneOpportunity(final Spartanization s, final String from) {
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
-    azzert.notNull(u);
-    azzert.that(TrimmerTestsUtils.countOpportunities(s, u), greaterThanOrEqualTo(1));
   }
 }

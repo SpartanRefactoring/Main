@@ -15,16 +15,6 @@ import il.org.spartan.refactoring.wring.*;
 /** Useful Functions */
 public enum Funcs {
   ;
-  /**
-   * Create a new {@link SimpleName} instance at the AST of the parameter
-   *
-   * @param n JD
-   * @param newName the name that the returned value shall bear
-   * @return a new {@link SimpleName} instance at the AST of the parameter
-   */
-  public static SimpleName newSimpleName(final ASTNode n, final String newName) {
-    return n.getAST().newSimpleName(newName);
-  }
   @SuppressWarnings("serial") private static Map<Operator, Operator> conjugate = new HashMap<Operator, Operator>() {
     {
       put(GREATER, LESS);
@@ -270,6 +260,15 @@ public enum Funcs {
         return false;
     return true;
   }
+  /** Makes an opposite operator from a given one, which keeps its logical
+   * operation after the node swapping. ¢.¢. "&" is commutative, therefore no
+   * change needed. "<" isn'¢ commutative, but it has its opposite: ">=".
+   * @param ¢ The operator to flip
+   * @return The correspond operator - ¢.¢. "<=" will become ">", "+" will stay
+   *         "+". */
+  public static Operator conjugate(final Operator ¢) {
+    return !conjugate.containsKey(¢) ? ¢ : conjugate.get(¢);
+  }
   /** @param ns unknown number of nodes to check
    * @return true if one of the nodes is an Expression Statement of type Post or
    *         Pre Expression with ++ or -- operator. false if none of them are or
@@ -320,15 +319,6 @@ public enum Funcs {
     if (¢.hasExtendedOperands())
       throw new IllegalArgumentException(¢ + ": flipping undefined for an expression with extra operands ");
     return Subject.pair(right(¢), left(¢)).to(conjugate(¢.getOperator()));
-  }
-  /** Makes an opposite operator from a given one, which keeps its logical
-   * operation after the node swapping. ¢.¢. "&" is commutative, therefore no
-   * change needed. "<" isn'¢ commutative, but it has its opposite: ">=".
-   * @param ¢ The operator to flip
-   * @return The correspond operator - ¢.¢. "<=" will become ">", "+" will stay
-   *         "+". */
-  public static Operator conjugate(final Operator ¢) {
-    return !conjugate.containsKey(¢) ? ¢ : conjugate.get(¢);
   }
   /** @param n the node from which to extract the proper fragment
    * @param e the name by which to look for the fragment
@@ -505,6 +495,13 @@ public enum Funcs {
   }
   private static int negationLevel(final PrefixExpression ¢) {
     return asBit(¢.getOperator() == PrefixExpression.Operator.MINUS) + negationLevel(¢.getOperand());
+  }
+  /** Create a new {@link SimpleName} instance at the AST of the parameter
+   * @param n JD
+   * @param newName the name that the returned value shall bear
+   * @return a new {@link SimpleName} instance at the AST of the parameter */
+  public static SimpleName newSimpleName(final ASTNode n, final String newName) {
+    return n.getAST().newSimpleName(newName);
   }
   /** Retrieve next item in a list
    * @param ¢ an index of specific item in a list

@@ -19,11 +19,6 @@ import il.org.spartan.utils.Utils;
 @SuppressWarnings({ "javadoc", "static-method" }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class DeclarationReturnTest {
-  static final Wring<VariableDeclarationFragment> WRING = new DeclarationInitializerReturnVariable();
-  @Test public void placeHolder() {
-    azzert.notNull(WRING);
-  }
-
   @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope<VariableDeclarationFragment> {
     static String[][] cases = Utils.asArray(//
@@ -83,5 +78,9 @@ public class DeclarationReturnTest {
       r.remove(extract.statement(f), null);
       r.replace(s, Subject.operand(initializer).toReturn(), null);
     }
+  }
+  static final Wring<VariableDeclarationFragment> WRING = new DeclarationInitializerReturnVariable();
+  @Test public void placeHolder() {
+    azzert.notNull(WRING);
   }
 }

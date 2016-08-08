@@ -34,6 +34,19 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> {
+  private static List<Statement> commonPrefix(final List<Statement> ss1, final List<Statement> ss2) {
+    final List<Statement> $ = new ArrayList<>();
+    while (!ss1.isEmpty() && !ss2.isEmpty()) {
+      final Statement s1 = ss1.get(0);
+      final Statement s2 = ss2.get(0);
+      if (!same(s1, s2))
+        break;
+      $.add(s1);
+      ss1.remove(0);
+      ss2.remove(0);
+    }
+    return $;
+  }
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Condolidate commmon prefix of then and else branches to just before if statement";
   }
@@ -67,19 +80,6 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> {
             : trimmedThen == null ? Subject.pair(trimmedElse, null).toNot(condition) : Subject.pair(trimmedThen, trimmedElse).toIf(condition);
       }
     };
-  }
-  private static List<Statement> commonPrefix(final List<Statement> ss1, final List<Statement> ss2) {
-    final List<Statement> $ = new ArrayList<>();
-    while (!ss1.isEmpty() && !ss2.isEmpty()) {
-      final Statement s1 = ss1.get(0);
-      final Statement s2 = ss2.get(0);
-      if (!same(s1, s2))
-        break;
-      $.add(s1);
-      ss1.remove(0);
-      ss2.remove(0);
-    }
-    return $;
   }
   @Override Rewrite make(final IfStatement s, final ExclusionManager exclude) {
     return super.make(s, exclude);
