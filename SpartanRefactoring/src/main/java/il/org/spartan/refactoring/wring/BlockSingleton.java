@@ -23,6 +23,9 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-09-09 */
 public class BlockSingleton extends Wring.ReplaceCurrentNode<Block> {
+  @Override String description(@SuppressWarnings("unused") final Block __) {
+    return "Remove redundant curly braces.";
+  }
   @Override Statement replacement(final Block b) {
     final ASTNode parent = parent(b);
     if (!(parent instanceof Statement) || parent instanceof TryStatement || parent instanceof SynchronizedStatement)
@@ -32,9 +35,6 @@ public class BlockSingleton extends Wring.ReplaceCurrentNode<Block> {
       return null;
     final Statement $ = ss.get(0);
     return Is.blockEssential($) ? null : duplicate($);
-  }
-  @Override String description(@SuppressWarnings("unused") final Block __) {
-    return "Remove redundant curly braces.";
   }
   @Override WringGroup wringGroup() {
     return WringGroup.REMOVE_SYNTACTIC_BAGGAGE;

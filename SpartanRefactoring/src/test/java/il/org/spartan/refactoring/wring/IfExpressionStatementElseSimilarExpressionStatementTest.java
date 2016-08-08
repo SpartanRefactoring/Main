@@ -19,15 +19,6 @@ import il.org.spartan.utils.Utils;
 @SuppressWarnings({ "javadoc", "static-method" }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class IfExpressionStatementElseSimilarExpressionStatementTest {
-  static final IfExpressionStatementElseSimilarExpressionStatement WRING = new IfExpressionStatementElseSimilarExpressionStatement();
-  @Test public void checkSteps() {
-    final Statement s = asSingle("if (a) f(b); else f(c);");
-    azzert.notNull(s);
-    final IfStatement i = asIfStatement(s);
-    azzert.notNull(i);
-    azzert.that(WRING.scopeIncludes(i), is(true));
-  }
-
   @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope<IfStatement> {
     static String[][] cases = Utils.asArray(//
@@ -76,5 +67,13 @@ public class IfExpressionStatementElseSimilarExpressionStatementTest {
     public Wringed() {
       super(WRING);
     }
+  }
+  static final IfExpressionStatementElseSimilarExpressionStatement WRING = new IfExpressionStatementElseSimilarExpressionStatement();
+  @Test public void checkSteps() {
+    final Statement s = asSingle("if (a) f(b); else f(c);");
+    azzert.notNull(s);
+    final IfStatement i = asIfStatement(s);
+    azzert.notNull(i);
+    azzert.that(WRING.scopeIncludes(i), is(true));
   }
 }

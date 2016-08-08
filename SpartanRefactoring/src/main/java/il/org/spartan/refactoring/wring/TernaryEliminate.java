@@ -9,14 +9,14 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class TernaryEliminate extends Wring.ReplaceCurrentNode<ConditionalExpression> {
+  @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
+    return "Eliminate conditional exprssion with identical branches";
+  }
   @Override Expression replacement(final ConditionalExpression e) {
     return new Plant(extract.core(e.getThenExpression())).into(e.getParent());
   }
   @Override boolean scopeIncludes(final ConditionalExpression e) {
     return e != null && same(e.getThenExpression(), e.getElseExpression());
-  }
-  @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
-    return "Eliminate conditional exprssion with identical branches";
   }
   @Override WringGroup wringGroup() {
     return WringGroup.REFACTOR_INEFFECTIVE;

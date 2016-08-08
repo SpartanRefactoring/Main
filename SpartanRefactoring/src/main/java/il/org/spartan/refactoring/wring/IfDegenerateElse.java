@@ -24,6 +24,12 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-08-01 */
 public final class IfDegenerateElse extends Wring.ReplaceCurrentNode<IfStatement> {
+  static boolean degenerateElse(final IfStatement s) {
+    return elze(s) != null && Is.vacuousElse(s);
+  }
+  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
+    return "Remove vacuous 'else' branch";
+  }
   @Override Statement replacement(final IfStatement s) {
     final IfStatement $ = duplicate(s);
     $.setElseStatement(null);
@@ -31,12 +37,6 @@ public final class IfDegenerateElse extends Wring.ReplaceCurrentNode<IfStatement
   }
   @Override boolean scopeIncludes(final IfStatement s) {
     return s != null && then(s) != null && degenerateElse(s);
-  }
-  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
-    return "Remove vacuous 'else' branch";
-  }
-  static boolean degenerateElse(final IfStatement s) {
-    return elze(s) != null && Is.vacuousElse(s);
   }
   @Override WringGroup wringGroup() {
     return WringGroup.REFACTOR_INEFFECTIVE;

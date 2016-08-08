@@ -39,6 +39,16 @@ public enum extract {
       }
     };
   }
+  /** @param n a statement or block to extract the assignment from
+   * @return null if the block contains more than one statement or if the
+   *         statement is not an assignment or the assignment if it exists */
+  public static Assignment assignment(final ASTNode n) {
+    final ExpressionStatement e = extract.expressionStatement(n);
+    return e == null ? null : asAssignment(e.getExpression());
+  }
+  public static CompilationUnit compilationUnit(final ASTNode ¢) {
+    return (CompilationUnit) AncestorSearch.forType(COMPILATION_UNIT).from(¢);
+  }
   /** @param ¢ JD /** @return */
   public static ASTNode containerType(final ASTNode ¢) {
     for (final ASTNode $ : ancestors(¢.getParent()))
@@ -49,13 +59,6 @@ public enum extract {
       ))
         return $;
     return null;
-  }
-  /** @param n a statement or block to extract the assignment from
-   * @return null if the block contains more than one statement or if the
-   *         statement is not an assignment or the assignment if it exists */
-  public static Assignment assignment(final ASTNode n) {
-    final ExpressionStatement e = extract.expressionStatement(n);
-    return e == null ? null : asAssignment(e.getExpression());
   }
   /** Find the "core" of a given {@link Expression}, by peeling of any
    * parenthesis that may wrap it.
@@ -387,8 +390,5 @@ public enum extract {
    *         exists. */
   public static ThrowStatement throwStatement(final ASTNode n) {
     return asThrowStatement(extract.singleStatement(n));
-  }
-  public static CompilationUnit compilationUnit(final ASTNode ¢) {
-    return (CompilationUnit) AncestorSearch.forType(COMPILATION_UNIT).from(¢);
   }
 }

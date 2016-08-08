@@ -23,6 +23,9 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfReturnFooElseReturnBar extends Wring.ReplaceCurrentNode<IfStatement> {
+  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
+    return "Replace if with a return of a conditional statement";
+  }
   @Override Statement replacement(final IfStatement s) {
     final Expression condition = s.getExpression();
     final Expression then = extract.returnExpression(then(s));
@@ -31,9 +34,6 @@ public final class IfReturnFooElseReturnBar extends Wring.ReplaceCurrentNode<IfS
   }
   @Override boolean scopeIncludes(final IfStatement s) {
     return s != null && extract.returnExpression(then(s)) != null && extract.returnExpression(elze(s)) != null;
-  }
-  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
-    return "Replace if with a return of a conditional statement";
   }
   @Override WringGroup wringGroup() {
     return WringGroup.IF_TO_TERNARY;

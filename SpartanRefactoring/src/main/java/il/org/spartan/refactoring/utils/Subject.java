@@ -8,31 +8,6 @@ import il.org.spartan.*;
 
 // TODO: document this class
 @SuppressWarnings("javadoc") public class Subject {
-  public static Operand operand(final Expression inner) {
-    return new Operand(inner);
-  }
-  public static Several operands(final Expression... e) {
-    return new Several(as.list(e));
-  }
-  public static Several operands(final List<Expression> es) {
-    return new Several(es);
-  }
-  public static Pair pair(final Expression left, final Expression right) {
-    return new Pair(left, right);
-  }
-  public static StatementPair pair(final Statement s1, final Statement s2) {
-    return new StatementPair(s1, s2);
-  }
-  public static SeveralStatements statement(final Statement s) {
-    return statements(s);
-  }
-  public static SeveralStatements ss(final List<Statement> ss) {
-    return new SeveralStatements(ss);
-  }
-  public static SeveralStatements statements(final Statement... ss) {
-    return ss(as.list(ss));
-  }
-
   public static class Claimer {
     protected final AST ast;
     public Claimer(final ASTNode n) {
@@ -70,6 +45,12 @@ import il.org.spartan.*;
       $.setOperand(new Plant(inner).into($));
       return $;
     }
+    public MethodInvocation toMethod(final String methodName) {
+      final MethodInvocation $ = ast.newMethodInvocation();
+      $.setExpression(inner);
+      $.setName(ast.newSimpleName(methodName));
+      return $;
+    }
     /** Create a new {@link ReturnStatement} with which returns our operand
      * @return the new return statement */
     public ReturnStatement toReturn() {
@@ -83,12 +64,6 @@ import il.org.spartan.*;
     public ThrowStatement toThrow() {
       final ThrowStatement $ = ast.newThrowStatement();
       $.setExpression(inner);
-      return $;
-    }
-    public MethodInvocation toMethod(final String methodName) {
-      final MethodInvocation $ = ast.newMethodInvocation();
-      $.setExpression(inner);
-      $.setName(ast.newSimpleName(methodName));
       return $;
     }
   }
@@ -156,6 +131,9 @@ import il.org.spartan.*;
       expose.statements($).addAll(inner);
       return $;
     }
+    public Statement toOneStatementOrNull() {
+      return inner.isEmpty() ? null : toOptionalBlock();
+    }
     public Statement toOptionalBlock() {
       switch (inner.size()) {
         case 0:
@@ -165,9 +143,6 @@ import il.org.spartan.*;
         default:
           return toBlock();
       }
-    }
-    public Statement toOneStatementOrNull() {
-      return inner.isEmpty() ? null : toOptionalBlock();
     }
   }
 
@@ -191,5 +166,29 @@ import il.org.spartan.*;
     public IfStatement toNot(final Expression condition) {
       return toIf(logicalNot(condition));
     }
+  }
+  public static Operand operand(final Expression inner) {
+    return new Operand(inner);
+  }
+  public static Several operands(final Expression... e) {
+    return new Several(as.list(e));
+  }
+  public static Several operands(final List<Expression> es) {
+    return new Several(es);
+  }
+  public static Pair pair(final Expression left, final Expression right) {
+    return new Pair(left, right);
+  }
+  public static StatementPair pair(final Statement s1, final Statement s2) {
+    return new StatementPair(s1, s2);
+  }
+  public static SeveralStatements ss(final List<Statement> ss) {
+    return new SeveralStatements(ss);
+  }
+  public static SeveralStatements statement(final Statement s) {
+    return statements(s);
+  }
+  public static SeveralStatements statements(final Statement... ss) {
+    return ss(as.list(ss));
   }
 }

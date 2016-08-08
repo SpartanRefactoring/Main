@@ -27,90 +27,6 @@ import il.org.spartan.utils.Utils;
 @SuppressWarnings({ "javadoc", "static-method" }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class IfCommandsSequencerElseSomethingTest {
-  static final IfThenOrElseIsCommandsFollowedBySequencer WRING = new IfThenOrElseIsCommandsFollowedBySequencer();
-  static public void fail(final String message) {
-    throw message == null ? new AssertionError() : new AssertionError(message);
-  }
-  static public void fail() {
-    fail(null);
-  }
-  @Test public void checkSteps() {
-    final Statement s = asSingle("if (a) return a = b; else a = c;");
-    azzert.notNull(s);
-    azzert.notNull(asIfStatement(s));
-  }
-  @Test public void checkStepsFull() throws MalformedTreeException, BadLocationException {
-    final IfStatement s = (IfStatement) asSingle("if (a) return b; else a();");
-    azzert.that(WRING.scopeIncludes(s), is(true));
-    azzert.that(WRING.eligible(s), is(true));
-    final Rewrite m = WRING.make(s);
-    azzert.notNull(m);
-    final Wring<IfStatement> w = Toolbox.instance.find(s);
-    azzert.notNull(w);
-    azzert.that(w, instanceOf(WRING.getClass()));
-    final String wrap = Wrap.Statement.on(s.toString());
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
-    azzert.notNull(u);
-    final Document d = new Document(wrap);
-    azzert.notNull(d);
-    final Trimmer t = new Trimmer();
-    final ASTRewrite r = t.createRewrite(u, null);
-    final TextEdit x = r.rewriteAST(d, null);
-    x.apply(d);
-    final String unpeeled = d.get();
-    if (wrap.equals(unpeeled))
-      fail("Nothing done on " + s);
-    final String peeled = Wrap.Statement.off(unpeeled);
-    azzert.that("No similification of " + s, s, not(peeled));
-    final String compressSpaces = gist(peeled);
-    final String compressSpaces2 = gist(s.toString());
-    azzert.that("Simpification of " + s + " is just reformatting", compressSpaces, not(compressSpaces2));
-    assertSimilar(" if(a)return b;a(); ", peeled);
-  }
-  @Test public void checkStepsTrimmer() throws MalformedTreeException, BadLocationException {
-    final String input = "if (a) return b; else a();";
-    final String wrap = Wrap.Statement.on(input);
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
-    azzert.notNull(u);
-    final IfStatement s = extract.firstIfStatement(u);
-    azzert.notNull(s);
-    azzert.that(s.toString(), equalToIgnoringWhiteSpace(input));
-    final Wring<IfStatement> w = Toolbox.instance.find(s);
-    azzert.notNull(w);
-    azzert.that(w.scopeIncludes(s), is(true));
-    azzert.that(w.eligible(s), is(true));
-    azzert.that(w, instanceOf(WRING.getClass()));
-    final Rewrite m = w.make(s);
-    azzert.notNull(m);
-    final ASTRewrite r = ASTRewrite.create(s.getAST());
-    m.go(r, null);
-    azzert.that(r.toString(), allOf(startsWith("Events:"), containsString("[replaced:"), containsString("]")));
-    final Document d = new Document(wrap);
-    azzert.notNull(d);
-    azzert.that(d.get(), equalToIgnoringWhiteSpace(wrap.toString()));
-    final TextEdit x = r.rewriteAST(d, null);
-    x.apply(d);
-    final String unpeeled = d.get();
-    if (wrap.equals(unpeeled))
-      fail("Nothing done on " + s);
-    final String peeled = Wrap.Statement.off(unpeeled);
-    if (peeled.equals(s))
-      azzert.that("No similification of " + s, peeled, is(not(s.toString())));
-    if (gist(peeled).equals(gist(s.toString())))
-      azzert.that("Simpification of " + s + " is just reformatting", gist(s.toString()), is(not(gist(peeled))));
-    assertSimilar(" if (a) return b; a(); ", peeled);
-  }
-  @Test public void checkStepsWRING() throws MalformedTreeException {
-    final IfStatement s = (IfStatement) asSingle("if (a) return b; else a();");
-    azzert.that(WRING.scopeIncludes(s), is(true));
-    azzert.that(WRING.eligible(s), is(true));
-    final Rewrite m = WRING.make(s);
-    azzert.notNull(m);
-    final ASTRewrite r = ASTRewrite.create(s.getAST());
-    m.go(r, null);
-    azzert.that(r.toString(), allOf(startsWith("Events:"), containsString("[replaced:"), containsString("]")));
-  }
-
   @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope<IfStatement> {
     static String[][] cases = Utils.asArray(//
@@ -189,5 +105,88 @@ public class IfCommandsSequencerElseSomethingTest {
     public Wringed() {
       super(WRING);
     }
+  }
+  static final IfThenOrElseIsCommandsFollowedBySequencer WRING = new IfThenOrElseIsCommandsFollowedBySequencer();
+  static public void fail() {
+    fail(null);
+  }
+  static public void fail(final String message) {
+    throw message == null ? new AssertionError() : new AssertionError(message);
+  }
+  @Test public void checkSteps() {
+    final Statement s = asSingle("if (a) return a = b; else a = c;");
+    azzert.notNull(s);
+    azzert.notNull(asIfStatement(s));
+  }
+  @Test public void checkStepsFull() throws MalformedTreeException, BadLocationException {
+    final IfStatement s = (IfStatement) asSingle("if (a) return b; else a();");
+    azzert.that(WRING.scopeIncludes(s), is(true));
+    azzert.that(WRING.eligible(s), is(true));
+    final Rewrite m = WRING.make(s);
+    azzert.notNull(m);
+    final Wring<IfStatement> w = Toolbox.instance.find(s);
+    azzert.notNull(w);
+    azzert.that(w, instanceOf(WRING.getClass()));
+    final String wrap = Wrap.Statement.on(s.toString());
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
+    azzert.notNull(u);
+    final Document d = new Document(wrap);
+    azzert.notNull(d);
+    final Trimmer t = new Trimmer();
+    final ASTRewrite r = t.createRewrite(u, null);
+    final TextEdit x = r.rewriteAST(d, null);
+    x.apply(d);
+    final String unpeeled = d.get();
+    if (wrap.equals(unpeeled))
+      fail("Nothing done on " + s);
+    final String peeled = Wrap.Statement.off(unpeeled);
+    azzert.that("No similification of " + s, s, not(peeled));
+    final String compressSpaces = gist(peeled);
+    final String compressSpaces2 = gist(s.toString());
+    azzert.that("Simpification of " + s + " is just reformatting", compressSpaces, not(compressSpaces2));
+    assertSimilar(" if(a)return b;a(); ", peeled);
+  }
+  @Test public void checkStepsTrimmer() throws MalformedTreeException, BadLocationException {
+    final String input = "if (a) return b; else a();";
+    final String wrap = Wrap.Statement.on(input);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
+    azzert.notNull(u);
+    final IfStatement s = extract.firstIfStatement(u);
+    azzert.notNull(s);
+    azzert.that(s.toString(), equalToIgnoringWhiteSpace(input));
+    final Wring<IfStatement> w = Toolbox.instance.find(s);
+    azzert.notNull(w);
+    azzert.that(w.scopeIncludes(s), is(true));
+    azzert.that(w.eligible(s), is(true));
+    azzert.that(w, instanceOf(WRING.getClass()));
+    final Rewrite m = w.make(s);
+    azzert.notNull(m);
+    final ASTRewrite r = ASTRewrite.create(s.getAST());
+    m.go(r, null);
+    azzert.that(r.toString(), allOf(startsWith("Events:"), containsString("[replaced:"), containsString("]")));
+    final Document d = new Document(wrap);
+    azzert.notNull(d);
+    azzert.that(d.get(), equalToIgnoringWhiteSpace(wrap.toString()));
+    final TextEdit x = r.rewriteAST(d, null);
+    x.apply(d);
+    final String unpeeled = d.get();
+    if (wrap.equals(unpeeled))
+      fail("Nothing done on " + s);
+    final String peeled = Wrap.Statement.off(unpeeled);
+    if (peeled.equals(s))
+      azzert.that("No similification of " + s, peeled, is(not(s.toString())));
+    if (gist(peeled).equals(gist(s.toString())))
+      azzert.that("Simpification of " + s + " is just reformatting", gist(s.toString()), is(not(gist(peeled))));
+    assertSimilar(" if (a) return b; a(); ", peeled);
+  }
+  @Test public void checkStepsWRING() throws MalformedTreeException {
+    final IfStatement s = (IfStatement) asSingle("if (a) return b; else a();");
+    azzert.that(WRING.scopeIncludes(s), is(true));
+    azzert.that(WRING.eligible(s), is(true));
+    final Rewrite m = WRING.make(s);
+    azzert.notNull(m);
+    final ASTRewrite r = ASTRewrite.create(s.getAST());
+    m.go(r, null);
+    azzert.that(r.toString(), allOf(startsWith("Events:"), containsString("[replaced:"), containsString("]")));
   }
 }

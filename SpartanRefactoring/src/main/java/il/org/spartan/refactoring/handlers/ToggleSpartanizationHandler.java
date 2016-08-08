@@ -15,6 +15,26 @@ import il.org.spartan.refactoring.builder.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2013/07/01 */
 public class ToggleSpartanizationHandler extends AbstractHandler {
+  private static void disableNature(final IProject p) throws CoreException {
+    final IProjectDescription description = p.getDescription();
+    final String[] natures = description.getNatureIds();
+    for (int i = 0; i < natures.length; ++i)
+      if (Nature.NATURE_ID.equals(natures[i])) {
+        description.setNatureIds(delete(natures, i));
+        p.setDescription(description, null);
+        p.accept(r -> {
+          if (r instanceof IFile && r.getName().endsWith(".java"))
+            Builder.deleteMarkers((IFile) r);
+          return true;
+        });
+      }
+  }
+  private static void enableNature(final IProject p) throws CoreException {
+    final IProjectDescription description = p.getDescription();
+    final String[] natures = description.getNatureIds();
+    description.setNatureIds(append(natures, Nature.NATURE_ID));
+    p.setDescription(description, null);
+  }
   private static Void execute(final ISelection s, final boolean state) throws CoreException {
     if (s instanceof IStructuredSelection)
       for (final Object o : ((IStructuredSelection) s).toList()) {
@@ -35,26 +55,6 @@ public class ToggleSpartanizationHandler extends AbstractHandler {
     disableNature(p);
     if (state)
       enableNature(p);
-  }
-  private static void disableNature(final IProject p) throws CoreException {
-    final IProjectDescription description = p.getDescription();
-    final String[] natures = description.getNatureIds();
-    for (int i = 0; i < natures.length; ++i)
-      if (Nature.NATURE_ID.equals(natures[i])) {
-        description.setNatureIds(delete(natures, i));
-        p.setDescription(description, null);
-        p.accept(r -> {
-          if (r instanceof IFile && r.getName().endsWith(".java"))
-            Builder.deleteMarkers((IFile) r);
-          return true;
-        });
-      }
-  }
-  private static void enableNature(final IProject p) throws CoreException {
-    final IProjectDescription description = p.getDescription();
-    final String[] natures = description.getNatureIds();
-    description.setNatureIds(append(natures, Nature.NATURE_ID));
-    p.setDescription(description, null);
   }
   /** the main method of the command handler, runs when the command is
    * called. */

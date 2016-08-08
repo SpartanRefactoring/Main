@@ -19,28 +19,6 @@ import il.org.spartan.utils.Utils;
 @SuppressWarnings({ "javadoc", "static-method" }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class IfCommandsSequencerIfSameCommandsSequencerTest {
-  static final Wring<IfStatement> WRING = new IfFooSequencerIfFooSameSequencer();
-  @Test public void checkFirstIfStatement1() {
-    final String s = "if (a) return b; if (b) return b;";
-    final ASTNode n = MakeAST.STATEMENTS.from(s);
-    azzert.notNull(n);
-    final IfStatement i = extract.firstIfStatement(n);
-    azzert.notNull(n.toString(), i);
-    azzert.that(i.toString(), WRING.scopeIncludes(i), is(true));
-  }
-  @Test public void checkFirstIfStatement2() {
-    final String s = "if (a) return b; else return a();";
-    final IfStatement i = extract.firstIfStatement(MakeAST.STATEMENTS.from(s));
-    azzert.notNull(i);
-    azzert.that(i.toString(), WRING.scopeIncludes(i), is(false));
-  }
-  @Test public void checkFirstIfStatement3() {
-    final String s = "if (a) a= b; else a=c;";
-    final IfStatement i = extract.firstIfStatement(MakeAST.STATEMENTS.from(s));
-    azzert.notNull(i);
-    azzert.that(i.toString(), WRING.scopeIncludes(i), is(false));
-  }
-
   @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope<IfStatement> {
     static String[][] cases = Utils.asArray(//
@@ -151,5 +129,26 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
     @Test public void noElse() {
       azzert.that(extract.statements(elze(asMe())).size(), is(0));
     }
+  }
+  static final Wring<IfStatement> WRING = new IfFooSequencerIfFooSameSequencer();
+  @Test public void checkFirstIfStatement1() {
+    final String s = "if (a) return b; if (b) return b;";
+    final ASTNode n = MakeAST.STATEMENTS.from(s);
+    azzert.notNull(n);
+    final IfStatement i = extract.firstIfStatement(n);
+    azzert.notNull(n.toString(), i);
+    azzert.that(i.toString(), WRING.scopeIncludes(i), is(true));
+  }
+  @Test public void checkFirstIfStatement2() {
+    final String s = "if (a) return b; else return a();";
+    final IfStatement i = extract.firstIfStatement(MakeAST.STATEMENTS.from(s));
+    azzert.notNull(i);
+    azzert.that(i.toString(), WRING.scopeIncludes(i), is(false));
+  }
+  @Test public void checkFirstIfStatement3() {
+    final String s = "if (a) a= b; else a=c;";
+    final IfStatement i = extract.firstIfStatement(MakeAST.STATEMENTS.from(s));
+    azzert.notNull(i);
+    azzert.that(i.toString(), WRING.scopeIncludes(i), is(false));
   }
 }

@@ -17,11 +17,6 @@ public class Range {
   public final int from;
   /** the end of the range (exclusive) */
   public final int to;
-  /** The number of integers in the range
-   * @return a non-negative integer, computed as {@link #to} -{@link #from} */
-  public int size() {
-    return to - from;
-  }
   /** Instantiates from beginning and end locations
    * @param from JD
    * @param to JD */
@@ -34,11 +29,8 @@ public class Range {
   public Range(final Range other) {
     this(other.from, other.to);
   }
-  /** @param r arbitrary
-   * @return <code><b>true</b></code> <i>iff</i> <code><b>this</b></code> is
-   *         included in the parameter. */
-  public boolean includedIn(final Range r) {
-    return from >= r.from && to <= r.to;
+  @Override public boolean equals(final Object o) {
+    return o instanceof Range && from == ((Range) o).from && to == ((Range) o).to;
   }
   /** Find an including range
    * @param rs some arbitrary {@link Range} objects
@@ -51,6 +43,29 @@ public class Range {
         return $;
     return null;
   }
+  @Override public int hashCode() {
+    // Cantor pairing function
+    return (int) (from + 0.5 * (to + from) * (to + from + 1));
+  }
+  /** @param r arbitrary
+   * @return <code><b>true</b></code> <i>iff</i> <code><b>this</b></code> is
+   *         included in the parameter. */
+  public boolean includedIn(final Range r) {
+    return from >= r.from && to <= r.to;
+  }
+  /** Merge with another record
+   * @param r JD
+   * @return A newly created range representing the merge. */
+  public Range merge(final Range r) {
+    return new Range(Math.min(from, r.from), Math.max(to, r.to));
+  }
+  /** Determine whether overlaps in any part another range
+   * @param r arbitrary
+   * @return <code><b>true</b></code> <i>iff</i> <code><b>this</b></code>
+   *         overlaps the parameter. */
+  public boolean overlapping(final Range r) {
+    return from >= r.from || to <= r.to;
+  }
   /** Prune all ranges in a given list that include this object.
    * @param rs JD */
   public void pruneIncluders(final List<? extends Range> rs) {
@@ -61,27 +76,12 @@ public class Range {
       rs.remove(includesMe);
     }
   }
-  /** Determine whether overlaps in any part another range
-   * @param r arbitrary
-   * @return <code><b>true</b></code> <i>iff</i> <code><b>this</b></code>
-   *         overlaps the parameter. */
-  public boolean overlapping(final Range r) {
-    return from >= r.from || to <= r.to;
-  }
-  @Override public int hashCode() {
-    // Cantor pairing function
-    return (int) (from + 0.5 * (to + from) * (to + from + 1));
-  }
-  @Override public boolean equals(final Object o) {
-    return o instanceof Range && from == ((Range) o).from && to == ((Range) o).to;
+  /** The number of integers in the range
+   * @return a non-negative integer, computed as {@link #to} -{@link #from} */
+  public int size() {
+    return to - from;
   }
   @Override public String toString() {
     return String.format("[%d, %d]", box.it(from), box.it(to));
-  }
-  /** Merge with another record
-   * @param r JD
-   * @return A newly created range representing the merge. */
-  public Range merge(final Range r) {
-    return new Range(Math.min(from, r.from), Math.max(to, r.to));
   }
 }

@@ -13,13 +13,6 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
  * @since 2015-07-21 */
 public enum Restructure {
   ;
-  public static void duplicateModifiers(List<IExtendedModifier> from, List<IExtendedModifier> to) {
-    for (IExtendedModifier m : from)
-      if (m.isModifier())
-        to.add(duplicate((Modifier) m));
-      else if (m.isAnnotation())
-        to.add(duplicate((NormalAnnotation) m));
-  }
   private static List<Expression> add(final Expression e, final List<Expression> $) {
     $.add(e);
     return $;
@@ -61,6 +54,13 @@ public enum Restructure {
    * @param into JD */
   public static <N extends ASTNode> void duplicateInto(final N from, final List<N> into) {
     into.add(duplicate(from));
+  }
+  public static void duplicateModifiers(final List<IExtendedModifier> from, final List<IExtendedModifier> to) {
+    for (final IExtendedModifier m : from)
+      if (m.isModifier())
+        to.add(duplicate((Modifier) m));
+      else if (m.isAnnotation())
+        to.add(duplicate((NormalAnnotation) m));
   }
   /** Flatten the list of arguments to an {@link InfixExpression}, e.g., convert
    * an expression such as <code>(a + b) + c</code> whose inner form is roughly

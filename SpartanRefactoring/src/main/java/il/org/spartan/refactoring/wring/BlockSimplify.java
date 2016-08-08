@@ -42,12 +42,7 @@ import il.org.spartan.refactoring.utils.*;
 public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
   public static boolean hasHidings(final List<Statement> ss) {
     return new Predicate<List<Statement>>() {
-      @Override public boolean test(final List<Statement> ¢¢) {
-        for (final Statement ¢ : ¢¢)
-          if (¢(¢))
-            return true;
-        return false;
-      }
+      final Set<String> dictionary = new HashSet<>();
       boolean ¢(final CatchClause c) {
         return ¢(c.getException());
       }
@@ -107,7 +102,12 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
             return true;
         return false;
       }
-      final Set<String> dictionary = new HashSet<>();
+      @Override public boolean test(final List<Statement> ¢¢) {
+        for (final Statement ¢ : ¢¢)
+          if (¢(¢))
+            return true;
+        return false;
+      }
     }.test(ss);
   }
   private static boolean identical(final List<Statement> os1, final List<Statement> os2) {
@@ -117,12 +117,6 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
       if (os1.get(i) != os2.get(i))
         return false;
     return true;
-  }
-  private static Block reorganizeStatement(final Statement s) {
-    final List<Statement> ss = extract.statements(s);
-    final Block $ = s.getAST().newBlock();
-    duplicateInto(ss, statements($));
-    return $;
   }
   static Statement reorganizeNestedStatement(final Statement s) {
     final List<Statement> ss = extract.statements(s);
@@ -134,6 +128,12 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
       default:
         return reorganizeStatement(s);
     }
+  }
+  private static Block reorganizeStatement(final Statement s) {
+    final List<Statement> ss = extract.statements(s);
+    final Block $ = s.getAST().newBlock();
+    duplicateInto(ss, statements($));
+    return $;
   }
   @Override String description(@SuppressWarnings("unused") final Block __) {
     return "Simplify block";

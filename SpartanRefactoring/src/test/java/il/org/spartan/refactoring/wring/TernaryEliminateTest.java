@@ -16,8 +16,6 @@ import il.org.spartan.utils.Utils;
 @SuppressWarnings({ "javadoc", }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class TernaryEliminateTest {
-  static final Wring<ConditionalExpression> WRING = new TernaryEliminate();
-
   @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Exprezzion<ConditionalExpression> {
     static String[][] cases = Utils.asArray(//
@@ -75,4 +73,5 @@ public class TernaryEliminateTest {
       azzert.notNull(asConditionalExpression());
     }
   }
+  static final Wring<ConditionalExpression> WRING = new TernaryEliminate();
 }

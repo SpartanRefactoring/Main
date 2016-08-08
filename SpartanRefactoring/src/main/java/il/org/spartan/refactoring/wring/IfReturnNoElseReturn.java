@@ -26,6 +26,9 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfReturnNoElseReturn extends Wring.ReplaceToNextStatement<IfStatement> {
+  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
+    return "Consolidate into a single 'return'";
+  }
   @Override ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!Is.vacuousElse(s))
       return null;
@@ -43,9 +46,6 @@ public final class IfReturnNoElseReturn extends Wring.ReplaceToNextStatement<IfS
   }
   @Override boolean scopeIncludes(final IfStatement s) {
     return Is.vacuousElse(s) && extract.returnStatement(then(s)) != null && extract.nextReturn(s) != null;
-  }
-  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
-    return "Consolidate into a single 'return'";
   }
   @Override WringGroup wringGroup() {
     return WringGroup.IF_TO_TERNARY;

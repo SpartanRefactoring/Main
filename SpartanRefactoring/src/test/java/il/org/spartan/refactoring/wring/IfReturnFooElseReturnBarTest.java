@@ -16,8 +16,6 @@ import il.org.spartan.utils.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public enum IfReturnFooElseReturnBarTest {
   ;
-  static final Wring<IfStatement> WRING = new IfReturnFooElseReturnBar();
-
   @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope<IfStatement> {
     static String[][] cases = Utils.asArray(//
@@ -57,4 +55,5 @@ public enum IfReturnFooElseReturnBarTest {
       super(WRING);
     }
   }
+  static final Wring<IfStatement> WRING = new IfReturnFooElseReturnBar();
 }

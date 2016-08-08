@@ -7,23 +7,6 @@ import org.eclipse.jdt.core.dom.*;
 /** @author Yossi Gil
  * @since 2015-08-23 */
 public class Specificity implements Comparator<Expression> {
-  /** A comparison of two {@link Expression} by their level of specificity.
-   * @param e1 JD
-   * @param e2 JD
-   * @return a negative, zero, or positive integer, depending on the level of
-   *         specificity the first parameter, is less than, equal, or greater
-   *         than the specificity level of the second parameter. */
-  @Override public int compare(final Expression e1, final Expression e2) {
-    return Level.of(e1) - Level.of(e2);
-  }
-  /** Determine
-   * @param e JD
-   * @return <code><b>true</b></code> <i>iff</i> the parameter has a defined
-   *         level of specificity. */
-  public static boolean defined(final Expression e) {
-    return Level.defined(e);
-  }
-
   enum Level {
     NULL {
       @Override boolean includes(final ASTNode n) {
@@ -55,6 +38,9 @@ public class Specificity implements Comparator<Expression> {
         return Is.this_(n);
       }
     },;
+    static boolean defined(final Expression e) {
+      return of(e) != values().length;
+    }
     static int of(final ASTNode n) {
       final Expression e = extract.core((Expression) n);
       for (final Level l : values())
@@ -62,9 +48,22 @@ public class Specificity implements Comparator<Expression> {
           return l.ordinal();
       return values().length;
     }
-    static boolean defined(final Expression e) {
-      return of(e) != values().length;
-    }
     abstract boolean includes(final ASTNode n);
+  }
+  /** Determine
+   * @param e JD
+   * @return <code><b>true</b></code> <i>iff</i> the parameter has a defined
+   *         level of specificity. */
+  public static boolean defined(final Expression e) {
+    return Level.defined(e);
+  }
+  /** A comparison of two {@link Expression} by their level of specificity.
+   * @param e1 JD
+   * @param e2 JD
+   * @return a negative, zero, or positive integer, depending on the level of
+   *         specificity the first parameter, is less than, equal, or greater
+   *         than the specificity level of the second parameter. */
+  @Override public int compare(final Expression e1, final Expression e2) {
+    return Level.of(e1) - Level.of(e2);
   }
 }

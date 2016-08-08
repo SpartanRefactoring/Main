@@ -16,22 +16,6 @@ import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) public class WringsTest {
-  @Test public void renameIntoDoWhile() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
-    final String input = "void f() { int b = 3; do ; while(b != 0); }";
-    final Document d = Wrap.Method.intoDocument(input);
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(d);
-    final MethodDeclaration m = extract.firstMethodDeclaration(u);
-    azzert.that(m, iz(input));
-    final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(m);
-    azzert.notNull(f);
-    final SimpleName b = f.getName();
-    azzert.that(Collect.usesOf(b).in(m).size(), is(2));
-    final ASTRewrite r = ASTRewrite.create(b.getAST());
-    Wrings.rename(b, b.getAST().newSimpleName("c"), m, r, null);
-    final TextEdit e = r.rewriteAST(d, null);
-    e.apply(d);
-    azzert.that(Wrap.Method.off(d.get()), iz("void f() { int c = 3; do ; while(c != 0); }"));
-  }
   @Test public void countInEnhancedFor() throws IllegalArgumentException, MalformedTreeException {
     final String input = "int f() { for (int a: as) return a; }";
     final Document d = Wrap.Method.intoDocument(input);
@@ -45,25 +29,6 @@ import il.org.spartan.refactoring.utils.*;
     final SimpleName a = p.getName();
     azzert.that(a, iz("a"));
     azzert.that(Collect.usesOf(a).in(m).size(), is(2));
-  }
-  @Test public void renameInEnhancedFor() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
-    final String input = "int f() { for (int a: as) return a; }";
-    final Document d = Wrap.Method.intoDocument(input);
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(d);
-    final MethodDeclaration m = extract.firstMethodDeclaration(u);
-    azzert.that(m, iz(input));
-    final Block b = m.getBody();
-    final EnhancedForStatement s = (EnhancedForStatement) b.statements().get(0);
-    final SingleVariableDeclaration p = s.getParameter();
-    azzert.notNull(p);
-    final SimpleName n = p.getName();
-    final ASTRewrite r = ASTRewrite.create(b.getAST());
-    Wrings.rename(n, n.getAST().newSimpleName("$"), m, r, null);
-    final TextEdit e = r.rewriteAST(d, null);
-    e.apply(d);
-    final String output = Wrap.Method.off(d.get());
-    azzert.notNull(output);
-    azzert.that(output, iz(" int f() {for(int $:as)return $;}"));
   }
   @Test public void inlineExpressionWithSideEffect() {
     final Expression e = Into.e("f()");
@@ -103,5 +68,40 @@ import il.org.spartan.refactoring.utils.*;
   }
   @Test public void mixedLiteralKindSingletonList() {
     azzert.that(mixedLiteralKind(es("1")), is(false));
+  }
+  @Test public void renameInEnhancedFor() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
+    final String input = "int f() { for (int a: as) return a; }";
+    final Document d = Wrap.Method.intoDocument(input);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(d);
+    final MethodDeclaration m = extract.firstMethodDeclaration(u);
+    azzert.that(m, iz(input));
+    final Block b = m.getBody();
+    final EnhancedForStatement s = (EnhancedForStatement) b.statements().get(0);
+    final SingleVariableDeclaration p = s.getParameter();
+    azzert.notNull(p);
+    final SimpleName n = p.getName();
+    final ASTRewrite r = ASTRewrite.create(b.getAST());
+    Wrings.rename(n, n.getAST().newSimpleName("$"), m, r, null);
+    final TextEdit e = r.rewriteAST(d, null);
+    e.apply(d);
+    final String output = Wrap.Method.off(d.get());
+    azzert.notNull(output);
+    azzert.that(output, iz(" int f() {for(int $:as)return $;}"));
+  }
+  @Test public void renameIntoDoWhile() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
+    final String input = "void f() { int b = 3; do ; while(b != 0); }";
+    final Document d = Wrap.Method.intoDocument(input);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(d);
+    final MethodDeclaration m = extract.firstMethodDeclaration(u);
+    azzert.that(m, iz(input));
+    final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(m);
+    azzert.notNull(f);
+    final SimpleName b = f.getName();
+    azzert.that(Collect.usesOf(b).in(m).size(), is(2));
+    final ASTRewrite r = ASTRewrite.create(b.getAST());
+    Wrings.rename(b, b.getAST().newSimpleName("c"), m, r, null);
+    final TextEdit e = r.rewriteAST(d, null);
+    e.apply(d);
+    azzert.that(Wrap.Method.off(d.get()), iz("void f() { int c = 3; do ; while(c != 0); }"));
   }
 }

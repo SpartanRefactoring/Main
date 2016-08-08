@@ -24,6 +24,18 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
   @SuppressWarnings("unchecked") private static <T extends Expression> T p(final ASTNode n, final T $) {
     return !Precedence.Is.legal(Precedence.of(n)) || Precedence.of(n) >= Precedence.of($) ? $ : (T) parenthesize($);
   }
+  static Expression pushdown(final ConditionalExpression e) {
+    if (e == null)
+      return null;
+    final Expression then = core(e.getThenExpression());
+    final Expression elze = core(e.getElseExpression());
+    return same(then, elze) ? null : pushdown(e, then, elze);
+  }
+  static Expression pushdown(final ConditionalExpression e, final Assignment a1, final Assignment a2) {
+    return a1.getOperator() != a2.getOperator() || !same(left(a1), left(a2)) ? null
+        : new Plant(Subject.pair(left(a1), Subject.pair(right(a1), right(a2)).toCondition(e.getExpression())).to(a1.getOperator()))
+            .into(e.getParent());
+  }
   private static Expression pushdown(final ConditionalExpression e, final ClassInstanceCreation e1, final ClassInstanceCreation e2) {
     if (!same(e1.getType(), e2.getType()) || !same(e1.getExpression(), e2.getExpression()))
       return null;
@@ -38,6 +50,26 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
     arguments($).remove(i);
     arguments($).add(i, Subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression()));
     return $;
+  }
+  private static Expression pushdown(final ConditionalExpression e, final Expression e1, final Expression e2) {
+    if (e1.getNodeType() != e2.getNodeType())
+      return null;
+    switch (e1.getNodeType()) {
+      case SUPER_METHOD_INVOCATION:
+        return pushdown(e, (SuperMethodInvocation) e1, (SuperMethodInvocation) e2);
+      case METHOD_INVOCATION:
+        return pushdown(e, (MethodInvocation) e1, (MethodInvocation) e2);
+      case INFIX_EXPRESSION:
+        return pushdown(e, (InfixExpression) e1, (InfixExpression) e2);
+      case ASSIGNMENT:
+        return pushdown(e, (Assignment) e1, (Assignment) e2);
+      case FIELD_ACCESS:
+        return pushdown(e, (FieldAccess) e1, (FieldAccess) e2);
+      case CLASS_INSTANCE_CREATION:
+        return pushdown(e, (ClassInstanceCreation) e1, (ClassInstanceCreation) e2);
+      default:
+        return null;
+    }
   }
   private static Expression pushdown(final ConditionalExpression e, final FieldAccess e1, final FieldAccess e2) {
     if (!same(e1.getName(), e2.getName()))
@@ -101,49 +133,17 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
     arguments($).add(i, Subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression()));
     return $;
   }
-  static Expression pushdown(final ConditionalExpression e, final Assignment a1, final Assignment a2) {
-    return a1.getOperator() != a2.getOperator() || !same(left(a1), left(a2)) ? null
-        : new Plant(Subject.pair(left(a1), Subject.pair(right(a1), right(a2)).toCondition(e.getExpression())).to(a1.getOperator()))
-            .into(e.getParent());
-  }
   public static Expression right(final Assignment a1) {
     return a1.getRightHandSide();
   }
-  static Expression pushdown(final ConditionalExpression e) {
-    if (e == null)
-      return null;
-    final Expression then = core(e.getThenExpression());
-    final Expression elze = core(e.getElseExpression());
-    return same(then, elze) ? null : pushdown(e, then, elze);
-  }
-  private static Expression pushdown(final ConditionalExpression e, final Expression e1, final Expression e2) {
-    if (e1.getNodeType() != e2.getNodeType())
-      return null;
-    switch (e1.getNodeType()) {
-      case SUPER_METHOD_INVOCATION:
-        return pushdown(e, (SuperMethodInvocation) e1, (SuperMethodInvocation) e2);
-      case METHOD_INVOCATION:
-        return pushdown(e, (MethodInvocation) e1, (MethodInvocation) e2);
-      case INFIX_EXPRESSION:
-        return pushdown(e, (InfixExpression) e1, (InfixExpression) e2);
-      case ASSIGNMENT:
-        return pushdown(e, (Assignment) e1, (Assignment) e2);
-      case FIELD_ACCESS:
-        return pushdown(e, (FieldAccess) e1, (FieldAccess) e2);
-      case CLASS_INSTANCE_CREATION:
-        return pushdown(e, (ClassInstanceCreation) e1, (ClassInstanceCreation) e2);
-      default:
-        return null;
-    }
+  @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
+    return "Pushdown ?: into expression";
   }
   @Override Expression replacement(final ConditionalExpression e) {
     return pushdown(e);
   }
   @Override boolean scopeIncludes(final ConditionalExpression e) {
     return pushdown(e) != null;
-  }
-  @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
-    return "Pushdown ?: into expression";
   }
   @Override WringGroup wringGroup() {
     return WringGroup.REORDER_EXPRESSIONS;

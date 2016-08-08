@@ -13,9 +13,6 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class InfixSortAddition extends Wring.InfixSorting {
-  @Override boolean sort(final List<Expression> es) {
-    return ExpressionComparator.ADDITION.sort(es);
-  }
   @Override boolean eligible(final InfixExpression e) {
     return Is.notString(e) && super.eligible(e);
   }
@@ -27,6 +24,9 @@ public final class InfixSortAddition extends Wring.InfixSorting {
   }
   @Override boolean scopeIncludes(final InfixExpression e) {
     return e.getOperator() == PLUS;
+  }
+  @Override boolean sort(final List<Expression> es) {
+    return ExpressionComparator.ADDITION.sort(es);
   }
   @Override WringGroup wringGroup() {
     return WringGroup.REORDER_EXPRESSIONS;

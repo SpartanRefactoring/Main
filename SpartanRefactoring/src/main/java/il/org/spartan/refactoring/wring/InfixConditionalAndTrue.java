@@ -19,14 +19,14 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-07-20 */
 public final class InfixConditionalAndTrue extends Wring.ReplaceCurrentNode<InfixExpression> {
+  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
+    return "Remove 'true' argument to '&&'";
+  }
   @Override Expression replacement(final InfixExpression e) {
     return Wrings.eliminateLiteral(e, true);
   }
   @Override boolean scopeIncludes(final InfixExpression e) {
     return Is.conditionalAnd(e) && Have.trueLiteral(extract.allOperands(e));
-  }
-  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
-    return "Remove 'true' argument to '&&'";
   }
   @Override WringGroup wringGroup() {
     return WringGroup.REFACTOR_INEFFECTIVE;

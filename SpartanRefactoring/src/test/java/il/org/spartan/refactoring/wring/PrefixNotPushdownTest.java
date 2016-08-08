@@ -21,26 +21,6 @@ import il.org.spartan.utils.Utils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public class PrefixNotPushdownTest {
-  /** The {@link Wring} under test */
-  static final PrefixNotPushdown WRING = new PrefixNotPushdown();
-  @Test public void notOfFalse() {
-    final PrefixExpression e = p("!false");
-    azzert.notNull(e);
-    azzert.that(WRING.scopeIncludes(e), is(true));
-    azzert.that(WRING.eligible(e), is(true));
-    azzert.notNull(asNot(e));
-    final Expression inner = core(e.getOperand());
-    azzert.notNull(inner);
-    azzert.that(inner.toString(), is("false"));
-    azzert.that(Is.booleanLiteral(inner), is(true));
-    azzert.notNull(PrefixNotPushdown.perhapsNotOfLiteral(inner));
-    azzert.notNull(PrefixNotPushdown.notOfLiteral(asBooleanLiteral(inner)));
-    azzert.notNull(PrefixNotPushdown.perhapsNotOfLiteral(inner));
-    azzert.notNull(PrefixNotPushdown.pushdownNot(inner));
-    azzert.notNull(PrefixNotPushdown.pushdownNot(asNot(e)));
-    azzert.notNull(WRING.replacement(e));
-  }
-
   @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Exprezzion<PrefixExpression> {
     static String[][] cases = Utils.asArray(//
@@ -105,5 +85,24 @@ public class PrefixNotPushdownTest {
     @Test public void inputIsPrefixExpression() {
       azzert.notNull(asPrefixExpression());
     }
+  }
+  /** The {@link Wring} under test */
+  static final PrefixNotPushdown WRING = new PrefixNotPushdown();
+  @Test public void notOfFalse() {
+    final PrefixExpression e = p("!false");
+    azzert.notNull(e);
+    azzert.that(WRING.scopeIncludes(e), is(true));
+    azzert.that(WRING.eligible(e), is(true));
+    azzert.notNull(asNot(e));
+    final Expression inner = core(e.getOperand());
+    azzert.notNull(inner);
+    azzert.that(inner.toString(), is("false"));
+    azzert.that(Is.booleanLiteral(inner), is(true));
+    azzert.notNull(PrefixNotPushdown.perhapsNotOfLiteral(inner));
+    azzert.notNull(PrefixNotPushdown.notOfLiteral(asBooleanLiteral(inner)));
+    azzert.notNull(PrefixNotPushdown.perhapsNotOfLiteral(inner));
+    azzert.notNull(PrefixNotPushdown.pushdownNot(inner));
+    azzert.notNull(PrefixNotPushdown.pushdownNot(asNot(e)));
+    azzert.notNull(WRING.replacement(e));
   }
 }

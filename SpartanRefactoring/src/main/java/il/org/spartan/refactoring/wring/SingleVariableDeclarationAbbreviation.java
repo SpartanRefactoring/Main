@@ -19,6 +19,28 @@ import il.org.spartan.refactoring.utils.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015/09/24 */
 public class SingleVariableDeclarationAbbreviation extends Wring<SingleVariableDeclaration> {
+  private static boolean isShort(final SingleVariableDeclaration d) {
+    final String n = spartan.shorten(d.getType());
+    return n != null && (n + pluralVariadic(d)).equals(d.getName().getIdentifier());
+  }
+  private static boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m) {
+    if (spartan.shorten(d.getType()) == null)
+      return false;
+    final MethodExplorer e = new MethodExplorer(m);
+    for (final SimpleName n : e.localVariables())
+      if (n.getIdentifier().equals(spartan.shorten(d.getType())))
+        return false;
+    for (final SingleVariableDeclaration n : parameters(m))
+      if (n.getName().getIdentifier().equals(spartan.shorten(d.getType())))
+        return false;
+    return !m.getName().getIdentifier().equalsIgnoreCase(spartan.shorten(d.getType()));
+  }
+  private static String pluralVariadic(final SingleVariableDeclaration d) {
+    return d.isVarargs() ? "s" : "";
+  }
+  private static boolean suitable(final SingleVariableDeclaration d) {
+    return new JavaTypeNameParser(d.getType().toString()).isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
+  }
   @Override String description(final SingleVariableDeclaration d) {
     return d.getName().toString();
   }
@@ -53,28 +75,6 @@ public class SingleVariableDeclarationAbbreviation extends Wring<SingleVariableD
         }
       }
     };
-  }
-  private static boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m) {
-    if (spartan.shorten(d.getType()) == null)
-      return false;
-    final MethodExplorer e = new MethodExplorer(m);
-    for (final SimpleName n : e.localVariables())
-      if (n.getIdentifier().equals(spartan.shorten(d.getType())))
-        return false;
-    for (final SingleVariableDeclaration n : parameters(m))
-      if (n.getName().getIdentifier().equals(spartan.shorten(d.getType())))
-        return false;
-    return !m.getName().getIdentifier().equalsIgnoreCase(spartan.shorten(d.getType()));
-  }
-  private static boolean suitable(final SingleVariableDeclaration d) {
-    return new JavaTypeNameParser(d.getType().toString()).isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
-  }
-  private static boolean isShort(final SingleVariableDeclaration d) {
-    final String n = spartan.shorten(d.getType());
-    return n != null && (n + pluralVariadic(d)).equals(d.getName().getIdentifier());
-  }
-  private static String pluralVariadic(final SingleVariableDeclaration d) {
-    return d.isVarargs() ? "s" : "";
   }
   @Override WringGroup wringGroup() {
     return WringGroup.RENAME_PARAMETERS;

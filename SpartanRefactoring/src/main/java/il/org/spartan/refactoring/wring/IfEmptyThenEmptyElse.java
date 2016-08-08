@@ -18,6 +18,9 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-08-26 */
 public final class IfEmptyThenEmptyElse extends Wring<IfStatement> {
+  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
+    return "Remove 'if' statement with vacous 'then' and 'else' parts";
+  }
   @Override Rewrite make(final IfStatement s) {
     return new Rewrite(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -28,9 +31,6 @@ public final class IfEmptyThenEmptyElse extends Wring<IfStatement> {
   }
   @Override boolean scopeIncludes(final IfStatement s) {
     return s != null && Is.vacuousThen(s) && Is.vacuousElse(s);
-  }
-  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
-    return "Remove 'if' statement with vacous 'then' and 'else' parts";
   }
   @Override WringGroup wringGroup() {
     return WringGroup.REFACTOR_INEFFECTIVE;

@@ -2866,32 +2866,6 @@ public class TrimmerTest240 {
   @Ignore("string builder") public void stringFromBuilderNoStringComponents() {
     trimming("new StringBuilder(0).append(1).toString()").to("\"\" + 0 + 1");
   }
-  @Ignore("switch") public void switchBreakesToReturnAllCases() {
-    trimming("" //
-        + " switch (x) {\n" //
-        + "     case 1:\n"//
-        + "         System.out.println(\"1\");\n" //
-        + "         break;\n" //
-        + "     case 2:\n"//
-        + "         System.out.println(\"2\");\n" //
-        + "         return 1;\n" //
-        + "     case 3:\n"//
-        + "         System.out.println(\"3\");\n" //
-        + " }\n"//
-        + " return 3;")
-            .to("" //
-                + " switch (x) {\n" //
-                + "     case 1:\n"//
-                + "         System.out.println(\"1\");\n" //
-                + "         return 3;\n" //
-                + "     case 2:\n"//
-                + "         System.out.println(\"2\");\n" //
-                + "         return 1;\n" //
-                + "     case 3:\n"//
-                + "         System.out.println(\"3\");\n" //
-                + " }\n"//
-                + " return 3;");
-  }
   @Ignore("switch") public void switchBrakesToReturnCaseWithoutSequencer() {
     trimming("" //
         + " switch (x) {\n" //
@@ -2946,6 +2920,32 @@ public class TrimmerTest240 {
                 + "     default:\n"//
                 + "         return 2;\n" //
                 + " }");
+  }
+  @Ignore("switch") public void switchBreakesToReturnAllCases() {
+    trimming("" //
+        + " switch (x) {\n" //
+        + "     case 1:\n"//
+        + "         System.out.println(\"1\");\n" //
+        + "         break;\n" //
+        + "     case 2:\n"//
+        + "         System.out.println(\"2\");\n" //
+        + "         return 1;\n" //
+        + "     case 3:\n"//
+        + "         System.out.println(\"3\");\n" //
+        + " }\n"//
+        + " return 3;")
+            .to("" //
+                + " switch (x) {\n" //
+                + "     case 1:\n"//
+                + "         System.out.println(\"1\");\n" //
+                + "         return 3;\n" //
+                + "     case 2:\n"//
+                + "         System.out.println(\"2\");\n" //
+                + "         return 1;\n" //
+                + "     case 3:\n"//
+                + "         System.out.println(\"3\");\n" //
+                + " }\n"//
+                + " return 3;");
   }
   // TODO Ori: add binding for tests
   @Ignore @Test public void SwitchFewCasesReplaceWithIf1() {

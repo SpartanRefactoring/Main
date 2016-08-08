@@ -4,6 +4,22 @@ package il.org.spartan.refactoring.utils;
  * @author Yossi Gil
  * @since 2015-08-30 */
 public class LiteralParser {
+  /** An <code><b>enum</b></code> to give symbolic names to the literal types.
+   * @author Yossi Gil
+   * @since 2015-08-30
+   * @see LiteralParser#type */
+  public enum Types {
+    /** <code>int</code> */
+    INTEGER, //
+    /** <code>long</code> */
+    LONG, //
+    /** <code>char</code> */
+    CHARACTER, //
+    /** <code>float</code> */
+    FLOAT, //
+    /** <code>double</code> */
+    DOUBLE;
+  }
   final String literal;
   /** Instantiates this class.
    * @param literal JD */
@@ -34,22 +50,5 @@ public class LiteralParser {
           return Types.DOUBLE.ordinal();
         return Types.INTEGER.ordinal();
     }
-  }
-
-  /** An <code><b>enum</b></code> to give symbolic names to the literal types.
-   * @author Yossi Gil
-   * @since 2015-08-30
-   * @see LiteralParser#type */
-  public enum Types {
-    /** <code>int</code> */
-    INTEGER, //
-    /** <code>long</code> */
-    LONG, //
-    /** <code>char</code> */
-    CHARACTER, //
-    /** <code>float</code> */
-    FLOAT, //
-    /** <code>double</code> */
-    DOUBLE;
   }
 }

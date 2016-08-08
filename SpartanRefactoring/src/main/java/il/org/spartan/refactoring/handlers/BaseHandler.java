@@ -32,16 +32,16 @@ public abstract class BaseHandler extends AbstractHandler {
   public static ICompilationUnit currentCompilationUnit() {
     return getCompilationUnit(getCurrentWorkbenchWindow().getActivePage().getActiveEditor());
   }
+  private static ICompilationUnit getCompilationUnit(final IEditorPart ep) {
+    return ep == null ? null : getCompilationUnit(ep.getEditorInput().getAdapter(IResource.class));
+  }
+  private static ICompilationUnit getCompilationUnit(final IResource r) {
+    return r == null ? null : JavaCore.createCompilationUnitFrom((IFile) r);
+  }
   /** Retrieves the current {@link IWorkbenchWindow}
    * @return the current {@link IWorkbenchWindow} */
   public static IWorkbenchWindow getCurrentWorkbenchWindow() {
     return PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-  }
-  private static ICompilationUnit getCompilationUnit(final IEditorPart ep) {
-    return ep == null ? null : getCompilationUnit((IResource)ep.getEditorInput().getAdapter(IResource.class));
-  }
-  private static ICompilationUnit getCompilationUnit(final IResource r) {
-    return r == null ? null : JavaCore.createCompilationUnitFrom((IFile) r);
   }
   private final Spartanization inner;
   /** Instantiates this class
@@ -66,16 +66,16 @@ public abstract class BaseHandler extends AbstractHandler {
     wop.run(getCurrentWorkbenchWindow().getShell(), getDialogTitle());
     return null;
   }
-  private RefactoringWizard getWizard(final ITextSelection s, final ICompilationUnit cu) {
-    final Spartanization $ = getRefactoring();
-    $.setSelection(s);
-    $.setCompilationUnit(cu);
-    return new Wizard($);
-  }
   protected final String getDialogTitle() {
     return inner.getName();
   }
   protected Spartanization getRefactoring() {
     return inner;
+  }
+  private RefactoringWizard getWizard(final ITextSelection s, final ICompilationUnit cu) {
+    final Spartanization $ = getRefactoring();
+    $.setSelection(s);
+    $.setCompilationUnit(cu);
+    return new Wizard($);
   }
 }

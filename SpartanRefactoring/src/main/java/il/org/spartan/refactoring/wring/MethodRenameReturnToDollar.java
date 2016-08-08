@@ -9,37 +9,6 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
-/** @author Artium Nihamkin (original)
- * @author Boris van Sosin <tt><boris.van.sosin [at] gmail.com></tt> (v2)
- * @author Yossi Gil (v3)
- * @since 2013/01/01 */
-public class MethodRenameReturnToDollar extends Wring<MethodDeclaration> {
-  @Override String description(final MethodDeclaration d) {
-    return d.getName().toString();
-  }
-  @Override Rewrite make(final MethodDeclaration d, final ExclusionManager exclude) {
-    final Type t = d.getReturnType2();
-    if (t instanceof PrimitiveType && ((PrimitiveType) t).getPrimitiveTypeCode() == PrimitiveType.VOID)
-      return null;
-    final SimpleName n = new Conservative(d).selectReturnVariable();
-    if (n == null)
-      return null;
-    if (exclude != null)
-      exclude.exclude(d);
-    return new Rewrite("Rename variable " + n + " to $ (main variable returned by " + description(d) + ")", d) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        rename(n, $(), d, r, g);
-      }
-      SimpleName $() {
-        return d.getAST().newSimpleName("$");
-      }
-    };
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.RENAME_RETURN_VARIABLE;
-  }
-}
-
 abstract class AbstractRenamePolicy {
   private static boolean hasDollar(final List<SimpleName> ns) {
     for (final SimpleName n : ns)
@@ -76,9 +45,6 @@ abstract class AbstractRenamePolicy {
 }
 
 class Aggressive extends AbstractRenamePolicy {
-  public Aggressive(final MethodDeclaration inner) {
-    super(inner);
-  }
   private static SimpleName bestCandidate(final List<SimpleName> ns, final List<ReturnStatement> ss) {
     final int bestScore = bestScore(ns, ss);
     if (bestScore > 0)
@@ -105,6 +71,9 @@ class Aggressive extends AbstractRenamePolicy {
       $ += Collect.BOTH_LEXICAL.of(n).in(r).size();
     return $;
   }
+  public Aggressive(final MethodDeclaration inner) {
+    super(inner);
+  }
   @Override SimpleName innerSelectReturnVariable() {
     return bestCandidate(localVariables, returnStatements);
   }
@@ -125,5 +94,36 @@ class Conservative extends AbstractRenamePolicy {
       if (same(n, s.getExpression()))
         return false;
     return true;
+  }
+}
+
+/** @author Artium Nihamkin (original)
+ * @author Boris van Sosin <tt><boris.van.sosin [at] gmail.com></tt> (v2)
+ * @author Yossi Gil (v3)
+ * @since 2013/01/01 */
+public class MethodRenameReturnToDollar extends Wring<MethodDeclaration> {
+  @Override String description(final MethodDeclaration d) {
+    return d.getName().toString();
+  }
+  @Override Rewrite make(final MethodDeclaration d, final ExclusionManager exclude) {
+    final Type t = d.getReturnType2();
+    if (t instanceof PrimitiveType && ((PrimitiveType) t).getPrimitiveTypeCode() == PrimitiveType.VOID)
+      return null;
+    final SimpleName n = new Conservative(d).selectReturnVariable();
+    if (n == null)
+      return null;
+    if (exclude != null)
+      exclude.exclude(d);
+    return new Rewrite("Rename variable " + n + " to $ (main variable returned by " + description(d) + ")", d) {
+      SimpleName $() {
+        return d.getAST().newSimpleName("$");
+      }
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+        rename(n, $(), d, r, g);
+      }
+    };
+  }
+  @Override WringGroup wringGroup() {
+    return WringGroup.RENAME_RETURN_VARIABLE;
   }
 }

@@ -3,6 +3,30 @@ package il.org.spartan.refactoring.preferences;
 import il.org.spartan.refactoring.builder.*;
 
 public class PluginPreferencesResources {
+  /** An enum holding together all the "enabled spartanizations" options, also
+   * allowing to get the set preference value for each of them */
+  public enum WringGroup {
+    CONSOLIDATE_ASSIGNMENTS_STATEMENTS(CONSOLIDATE_ASSIGNMENTS_STATEMENTS_ID, CONSOLIDATE_ASSIGNMENTS_STATEMENTS_TEXT), SIMPLIFY_NESTED_BLOCKS(
+        SIMPLIFY_NESTED_BLOCKS_ID, SIMPLIFY_NESTED_BLOCKS_TEXT), ELIMINATE_TEMP(ELIMINATE_TEMP_ID, ELIMINATE_TEMP_TEXT), REMOVE_SYNTACTIC_BAGGAGE(
+            REMOVE_REDUNDANT_PUNCTUATION_ID,
+            REMOVE_REDUNDANT_PUNCTUATION_TEXT), IF_TO_TERNARY(IF_TO_TERNARY_ID, IF_TO_TERNARY_TEXT), REFACTOR_INEFFECTIVE(REFACTOR_INEFFECTIVE_ID,
+                REFACTOR_INEFFECTIVE_TEXT), REORDER_EXPRESSIONS(REORDER_EXPRESSIONS_ID, REORDER_EXPRESSIONS_TEXT), RENAME_PARAMETERS(
+                    RENAME_PARAMETERS_ID, RENAME_PARAMETERS_TEXT), RENAME_RETURN_VARIABLE(RENAME_RETURN_VARIABLE_ID, RENAME_RETURN_VARIABLE_TEXT),;
+    private final String id, label;
+    WringGroup(final String id, final String label) {
+      this.id = id;
+      this.label = label;
+    }
+    public String getId() {
+      return id;
+    }
+    public String getLabel() {
+      return label;
+    }
+    public boolean isEnabled() {
+      return Plugin.getDefault() == null || "on".equals(Plugin.getDefault().getPreferenceStore().getString(id));
+    }
+  }
   /** Page description **/
   public static final String PAGE_DESCRIPTION = "Preferences for the Spartan Refactoring plug-in";
   /** General preferences **/
@@ -32,29 +56,4 @@ public class PluginPreferencesResources {
   public static final String RENAME_RETURN_VARIABLE_ID = "pref_wrings_rename_return_variable";
   public static final String RENAME_RETURN_VARIABLE_TEXT = "Rename return variable to $";
   public static final String WRING_COMBO_OPTIONS[][] = { { "Enabled", "on" }, { "Disabled", "off" } };
-
-  /** An enum holding together all the "enabled spartanizations" options, also
-   * allowing to get the set preference value for each of them */
-  public enum WringGroup {
-    CONSOLIDATE_ASSIGNMENTS_STATEMENTS(CONSOLIDATE_ASSIGNMENTS_STATEMENTS_ID, CONSOLIDATE_ASSIGNMENTS_STATEMENTS_TEXT), SIMPLIFY_NESTED_BLOCKS(
-        SIMPLIFY_NESTED_BLOCKS_ID, SIMPLIFY_NESTED_BLOCKS_TEXT), ELIMINATE_TEMP(ELIMINATE_TEMP_ID, ELIMINATE_TEMP_TEXT), REMOVE_SYNTACTIC_BAGGAGE(
-            REMOVE_REDUNDANT_PUNCTUATION_ID,
-            REMOVE_REDUNDANT_PUNCTUATION_TEXT), IF_TO_TERNARY(IF_TO_TERNARY_ID, IF_TO_TERNARY_TEXT), REFACTOR_INEFFECTIVE(REFACTOR_INEFFECTIVE_ID,
-                REFACTOR_INEFFECTIVE_TEXT), REORDER_EXPRESSIONS(REORDER_EXPRESSIONS_ID, REORDER_EXPRESSIONS_TEXT), RENAME_PARAMETERS(
-                    RENAME_PARAMETERS_ID, RENAME_PARAMETERS_TEXT), RENAME_RETURN_VARIABLE(RENAME_RETURN_VARIABLE_ID, RENAME_RETURN_VARIABLE_TEXT),;
-    private final String id, label;
-    WringGroup(final String id, final String label) {
-      this.id = id;
-      this.label = label;
-    }
-    public String getId() {
-      return id;
-    }
-    public String getLabel() {
-      return label;
-    }
-    public boolean isEnabled() {
-      return Plugin.getDefault() == null || "on".equals(Plugin.getDefault().getPreferenceStore().getString(id));
-    }
-  }
 }

@@ -34,6 +34,35 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-09-05 */
 public final class IfBarFooElseBazFoo extends Wring<IfStatement> {
+  private class DefinitionsCollector extends ASTVisitor {
+    private boolean notAllDefined;
+    private final Statement[] l;
+    public DefinitionsCollector(final List<Statement> l) {
+      notAllDefined = false;
+      this.l = l.toArray(new Statement[l.size()]);
+    }
+    public boolean notAllDefined() {
+      return notAllDefined;
+    }
+    @Override public boolean visit(final SimpleName n) {
+      if (!Collect.declarationsOf(n).in(l).isEmpty())
+        notAllDefined = true;
+      return false;
+    }
+  }
+  private static List<Statement> commmonSuffix(final List<Statement> ss1, final List<Statement> ss2) {
+    final List<Statement> $ = new ArrayList<>();
+    while (!ss1.isEmpty() && !ss2.isEmpty()) {
+      final Statement s1 = ss1.get(ss1.size() - 1);
+      final Statement s2 = ss2.get(ss2.size() - 1);
+      if (!same(s1, s2))
+        break;
+      $.add(s1);
+      ss1.remove(ss1.size() - 1);
+      ss2.remove(ss2.size() - 1);
+    }
+    return $;
+  }
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate commmon suffix of then and else branches to just after if statement";
   }
@@ -73,40 +102,10 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> {
       }
     };
   }
-  private static List<Statement> commmonSuffix(final List<Statement> ss1, final List<Statement> ss2) {
-    final List<Statement> $ = new ArrayList<>();
-    while (!ss1.isEmpty() && !ss2.isEmpty()) {
-      final Statement s1 = ss1.get(ss1.size() - 1);
-      final Statement s2 = ss2.get(ss2.size() - 1);
-      if (!same(s1, s2))
-        break;
-      $.add(s1);
-      ss1.remove(ss1.size() - 1);
-      ss2.remove(ss2.size() - 1);
-    }
-    return $;
-  }
   @Override Rewrite make(final IfStatement s, final ExclusionManager exclude) {
     return super.make(s, exclude);
   }
   @Override WringGroup wringGroup() {
     return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
-  }
-
-  private class DefinitionsCollector extends ASTVisitor {
-    private boolean notAllDefined;
-    private final Statement[] l;
-    public DefinitionsCollector(final List<Statement> l) {
-      notAllDefined = false;
-      this.l = l.toArray(new Statement[l.size()]);
-    }
-    @Override public boolean visit(final SimpleName n) {
-      if (!Collect.declarationsOf(n).in(l).isEmpty())
-        notAllDefined = true;
-      return false;
-    }
-    public boolean notAllDefined() {
-      return notAllDefined;
-    }
   }
 }

@@ -55,6 +55,14 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
   DeclarationIfAssignmentWringedTest(final Wring<VariableDeclarationFragment> inner) {
     super(inner);
   }
+  @Override protected CompilationUnit asCompilationUnit() {
+    final CompilationUnit $ = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(Wrap.Statement.on(input));
+    azzert.notNull($);
+    return $;
+  }
+  @Override protected VariableDeclarationFragment asMe() {
+    return extract.firstVariableDeclarationFragment(MakeAST.STATEMENTS.from(input));
+  }
   @Test public void checkIf() {
     final IfStatement s = findIf();
     azzert.notNull(s);
@@ -75,6 +83,9 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
   @Test public void eligible() {
     final VariableDeclarationFragment s = asMe();
     azzert.aye(s.toString(), inner.eligible(s));
+  }
+  private IfStatement findIf() {
+    return extract.firstIfStatement(MakeAST.STATEMENTS.from(input));
   }
   @Test public void findsSimplifier() {
     azzert.notNull(Toolbox.instance.find(asMe()));
@@ -128,16 +139,5 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     azzert.aye(same(left(a), f.getName()));
     r.replace(initializer, Subject.pair(right(a), initializer).toCondition(s.getExpression()), null);
     r.remove(s, null);
-  }
-  @Override protected CompilationUnit asCompilationUnit() {
-    final CompilationUnit $ = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(Wrap.Statement.on(input));
-    azzert.notNull($);
-    return $;
-  }
-  @Override protected VariableDeclarationFragment asMe() {
-    return extract.firstVariableDeclarationFragment(MakeAST.STATEMENTS.from(input));
-  }
-  private IfStatement findIf() {
-    return extract.firstIfStatement(MakeAST.STATEMENTS.from(input));
   }
 }

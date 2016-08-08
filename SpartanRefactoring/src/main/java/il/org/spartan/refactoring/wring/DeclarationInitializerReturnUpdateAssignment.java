@@ -27,6 +27,9 @@ import il.org.spartan.refactoring.wring.LocalInliner.*;
  * @author Yossi Gil
  * @since 2015-08-07 */
 public final class DeclarationInitializerReturnUpdateAssignment extends Wring.VariableDeclarationFragementAndStatement {
+  @Override String description(final VariableDeclarationFragment f) {
+    return "Eliminate temporary " + f.getName() + " and inline its value into the expression of the subsequent return statement";
+  }
   @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || hasAnnotation(f))
@@ -48,9 +51,6 @@ public final class DeclarationInitializerReturnUpdateAssignment extends Wring.Va
     i.inlineInto(newReturnValue);
     eliminate(f, r, g);
     return r;
-  }
-  @Override String description(final VariableDeclarationFragment f) {
-    return "Eliminate temporary " + f.getName() + " and inline its value into the expression of the subsequent return statement";
   }
   @Override WringGroup wringGroup() {
     return WringGroup.ELIMINATE_TEMP;

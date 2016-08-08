@@ -72,6 +72,20 @@ import il.org.spartan.refactoring.spartanizations.*;
   @Test(timeout = 2000) public void eliminateRedundantIf4() {
     assertConvertsTo("{if (a) {;}} ", "");
   }
+  @Test public void hasNullsTest() {
+    final Object a = null;
+    azzert.aye(hasNulls(a));
+    azzert.nay(hasNulls(new Object()));
+    azzert.aye(hasNulls(new Object(), null));
+    azzert.nay(hasNulls(new Object(), new Object()));
+    azzert.nay(hasNulls(new Object(), new Object()));
+    azzert.nay(hasNulls(new Object(), new Object(), new Object()));
+    azzert.nay(hasNulls(new Object(), new Object(), new Object(), new Object()));
+    azzert.aye(hasNulls(null, new Object(), new Object(), new Object(), new Object()));
+    azzert.aye(hasNulls(new Object(), new Object(), null, new Object(), new Object()));
+    azzert.aye(hasNulls(new Object(), new Object(), new Object(), null, new Object()));
+    azzert.aye(hasNulls(new Object(), new Object(), new Object(), new Object(), null));
+  }
   @Test(timeout = 2000) public void inlineInitializers() {
     assertConvertsTo("int b,a = 2; return 3 * a * b; ", "return 2 * 3 * b;");
   }
@@ -261,20 +275,6 @@ import il.org.spartan.refactoring.spartanizations.*;
     assertConvertsTo(
         "  String res = mode, foo = \"Not in test mode\";int k;k = 1984;if (mode.equals(f())==true)    foo = test-bob;foo = \"sponge-bob\";",
         "String res=mode,foo=\"Not in test mode\";int k=1984;if(mode.equals(f()))foo=test-bob;foo=\"sponge-bob\";");
-  }
-  @Test public void hasNullsTest() {
-    final Object a = null;
-    azzert.aye(hasNulls(a));
-    azzert.nay(hasNulls(new Object()));
-    azzert.aye(hasNulls(new Object(), null));
-    azzert.nay(hasNulls(new Object(), new Object()));
-    azzert.nay(hasNulls(new Object(), new Object()));
-    azzert.nay(hasNulls(new Object(), new Object(), new Object()));
-    azzert.nay(hasNulls(new Object(), new Object(), new Object(), new Object()));
-    azzert.aye(hasNulls(null, new Object(), new Object(), new Object(), new Object()));
-    azzert.aye(hasNulls(new Object(), new Object(), null, new Object(), new Object()));
-    azzert.aye(hasNulls(new Object(), new Object(), new Object(), null, new Object()));
-    azzert.aye(hasNulls(new Object(), new Object(), new Object(), new Object(), null));
   }
   @Test(timeout = 2000) public void ternarize17() {
     assertConvertsTo("    int a, b;\n" + //
