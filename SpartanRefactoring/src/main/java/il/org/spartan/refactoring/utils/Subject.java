@@ -5,7 +5,6 @@ import static il.org.spartan.refactoring.utils.expose.*;
 import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
-import il.org.spartan.refactoring.wring.*;
 
 // TODO: document this class
 @SuppressWarnings("javadoc") public class Subject {
@@ -52,7 +51,7 @@ import il.org.spartan.refactoring.wring.*;
       $.setName(ast.newSimpleName(methodName));
       return $;
     }
-    /** Create a new {@link ReturnStatement} with which returns our operand
+    /** Create a new {@link ReturnStatement} which returns our operand
      * @return the new return statement */
     public ReturnStatement toReturn() {
       final ReturnStatement $ = ast.newReturnStatement();
