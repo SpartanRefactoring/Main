@@ -8,7 +8,6 @@ import static il.org.spartan.refactoring.utils.ExpressionComparator.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
-import static org.junit.Assert.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.junit.*;
@@ -36,10 +35,10 @@ public class TrimmerTest240 {
     that(w.off(wrap), is(from));
     final Trimmer t = new Trimmer();
     final String unpeeled = TrimmerTestsUtils.apply(t, wrap);
-    assertThat("Nothing done on " + from, wrap, not(unpeeled));
+    azzert.that("Nothing done on " + from, wrap, not(unpeeled));
     final String peeled = w.off(unpeeled);
-    assertThat("No similification of " + from, from, not(peeled));
-    assertThat("Simpification of " + from + " is just reformatting", compressSpaces(peeled), not(compressSpaces(from)));
+    azzert.that("No similification of " + from, from, not(peeled));
+    azzert.that("Simpification of " + from + " is just reformatting", compressSpaces(peeled), not(compressSpaces(from)));
     assertSimilar(expected, peeled);
   }
   @Test public void andWithCLASS_CONSTANT() {
@@ -3110,7 +3109,7 @@ public class TrimmerTest240 {
                 + "    break;" //
                 + "  }");
   }
-  @Ignore("switch")public void switchSimplifyParenthesizedCases() {
+  @Ignore("switch") public void switchSimplifyParenthesizedCases() {
     trimming("" //
         + "switch (checkMatrix(A)) {\n" //
         + "  case -1: {\n" //
