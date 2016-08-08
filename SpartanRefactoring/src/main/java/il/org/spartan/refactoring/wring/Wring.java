@@ -11,7 +11,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import Wring.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
@@ -216,6 +215,36 @@ public abstract class Wring<N extends ASTNode> {
       return nextStatement != null && go(ASTRewrite.create(n.getAST()), n, nextStatement, null) != null;
     }
   }
+
+  /**
+   * MultipleReplaceCurrentNode replaces multiple nodes in current statement
+   * with multiple nodes (or a single node).
+   *
+   * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
+   * @since 2016-04-25
+   */
+  static abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends Wring<N> {
+    abstract ASTRewrite go(ASTRewrite r, N n, TextEditGroup g, List<ASTNode> bss, List<ASTNode> crs);
+    @Override Rewrite make(final N n) {
+      return new Rewrite(description(n), n) {
+        @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+          final List<ASTNode> bss = new ArrayList<>();
+          final List<ASTNode> crs = new ArrayList<>();
+          MultipleReplaceCurrentNode.this.go(r, n, g, bss, crs);
+          if (bss.size() != crs.size() && crs.size() != 1)
+            return; // indicates bad wring design
+          final boolean ucr = crs.size() == 1;
+          final int s = bss.size();
+          for (int i = 0; i < s; ++i)
+            scalpel.operate(bss.get(i)).replaceWith(crs.get(ucr ? 0 : i));
+        }
+      };
+    }
+    @Override boolean scopeIncludes(final N n) {
+      return go(ASTRewrite.create(n.getAST()), n, null, new ArrayList<>(), new ArrayList<>()) != null;
+    }
+  }
+
 
   static abstract class VariableDeclarationFragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
     static InfixExpression.Operator asInfix(final Assignment.Operator o) {
