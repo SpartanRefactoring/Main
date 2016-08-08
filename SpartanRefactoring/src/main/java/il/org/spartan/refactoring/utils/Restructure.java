@@ -60,7 +60,7 @@ public enum Restructure {
       if (m.isModifier())
         to.add(duplicate((Modifier) m));
       else if (m.isAnnotation())
-        to.add(duplicate((NormalAnnotation) m));
+        to.add(duplicate((Annotation) m));
   }
   /** Flatten the list of arguments to an {@link InfixExpression}, e.g., convert
    * an expression such as <code>(a + b) + c</code> whose inner form is roughly
