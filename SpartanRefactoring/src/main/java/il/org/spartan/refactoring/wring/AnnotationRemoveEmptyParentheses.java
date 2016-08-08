@@ -5,6 +5,7 @@ import static il.org.spartan.refactoring.utils.Funcs.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 
 /**
  * A {@link Wring} to remove the parentheses from annotations that do not take
@@ -14,8 +15,7 @@ import il.org.spartan.refactoring.preferences.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-02
  */
-public class AnnotationRemoveEmptyParentheses extends Wring.ReplaceCurrentNode<NormalAnnotation> implements
-    Kind.OPTIMIZE_ANNOTATIONS {
+public class AnnotationRemoveEmptyParentheses extends Wring.ReplaceCurrentNode<NormalAnnotation> {
   @Override ASTNode replacement(final NormalAnnotation a) {
     if (a.values().size() > 0)
       return null;
@@ -25,5 +25,8 @@ public class AnnotationRemoveEmptyParentheses extends Wring.ReplaceCurrentNode<N
   }
   @Override String description(final NormalAnnotation a) {
     return "Remove redundant parentheses from the @" + a.getTypeName().getFullyQualifiedName() + " annotation";
+  }
+  @Override WringGroup wringGroup() {
+    return WringGroup.REMOVE_SYNTACTIC_BAGGAGE;
   }
 }
