@@ -13,14 +13,12 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
  * @since 2015-07-21 */
 public enum Restructure {
   ;
-  public static void duplicateModifiers(List<IExtendedModifier> from, List<ASTNode> to) {
-    for(IExtendedModifier m: from)
+  public static void duplicateModifiers(List<IExtendedModifier> from, List<IExtendedModifier> to) {
+    for (IExtendedModifier m : from)
       if (m.isModifier())
-        to.add((Modifier)m);
+        to.add(duplicate((Modifier) m));
       else if (m.isAnnotation())
-        to.add((NormalAnnotation) m);
-      return ;
-    
+        to.add(duplicate((NormalAnnotation) m));
   }
   private static List<Expression> add(final Expression e, final List<Expression> $) {
     $.add(e);
