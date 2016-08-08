@@ -234,7 +234,7 @@ public abstract class Wring<N extends ASTNode> {
               scalpel.operate(a).replaceWith(output.get(0));
           else if (input.size() == output.size())
             for (int i = 0; i < input.size(); ++i)
-              scalpel.operate(input.get(i)).replaceWith(output.get(ucr ? 0 : i));
+              scalpel.operate(input.get(i)).replaceWith(output.get(i));
           else 
             return;
         }
