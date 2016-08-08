@@ -5,22 +5,22 @@ Tag \cc{code-styling} and its many synonyms: \cc{code-convention},
 earmarked\urlref{http://stackoverflow.com/tags/coding-style/info} as
 
 \begin{tcolorbox}[colback=green!5!white,colframe=blue!25!white,notitle]
-    \textsc{Do Not Use!} 
+    \textsc{Do Not Use!}
 This tag refers to an entirely opinionated subject and is therefore
 no longer on-topic. Refactoring, braces, indentation, Hungarian notation, and
 other stylistic issues relating to code.
 \end{tcolorbox}
 
-As pointed out by this statement, \emph{``curly brackets wars''}, namely discussions 
-on weather, when and how using curly brackets (and the like), are somehow discouraged. 
-However, such discussions can not be simply relegate to something about personal 
-tastes. 
-As a matter of fact, some of this options are included also in the syntax definition of some languages. 
-For example, in \Go forces you to use curly brackets \urlref{https://golang.org/doc/faq\#semicolons}.
+As pointed out by this statement, \emph{‟curly brackets wars”}, namely discussions
+on weather, when and how using curly brackets (and the like), are somehow discouraged.
+However, such discussions can not be simply relegate to something about personal
+tastes.
+As a matter of fact, some of this options are included also in the syntax definition of some languages.
+For example, in \Go forces you to use curly brackets \urlref{https://golang.org/doc/faq＃semicolons}.
 Another example might be that of some Java statement blocks, such as \kk{synchronized}, \kk{try}, \kk{catch},
 \kk{finally}, for which the curly brackets are compulsory.
-On the other hand, sometimes it happens that they can be ignored, like in a recent addition to 
-the lambda expressions \urlref{http://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html\#syntax}
+On the other hand, sometimes it happens that they can be ignored, like in a recent addition to
+the lambda expressions \urlref{http://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html＃syntax}
 available in Java.
 \textbf{(CHECK the LINK. DID NOT FIND references to curly brackets)}.
 Thus you can write both the following versions of the same code.
@@ -34,7 +34,7 @@ and
 ()-> {3}
 \end{code}
 % check this.
-% 
+%
 % ‟\emph{the braces war}”
 
 But it is not only curly braces matters that may raise
@@ -51,62 +51,63 @@ design of code and also on its quality.
 The following scenarios might be helpful to clarify this point.
 \begin{itemize}
     \item Developers would certainly find easy to write code in their own style. However, software
-    development is carried out in a collaborative environment and developers works together on 
-    the same files. Adjusting the code to others style require a certain effort and it is time consuming. 
-    %       Waste of neurons.
-    \item A common task performed during software development is code comparison. 
-    Since part of the changes might be due to stylistic reasons, it is mandatory to distinguish the 
-    semantically sensitive changes from the stylistic ones. 
-%     Which part of my change is semantically and which
-%       part of this my own personal style.
+    development is carried out in a collaborative environment and developers works together on
+    the same files. Adjusting the code to others style require a certain effort and it is time consuming.
+    % Waste of neurons.
+    \item A common task performed during software development is code comparison.
+    Since part of the changes might be due to stylistic reasons, it is mandatory to distinguish the
+    semantically sensitive changes from the stylistic ones.
+% Which part of my change is semantically and which
+% part of this my own personal style.
     \item Also code analysis tools should adjust to different styles, since there are many
         different ways for doing the same thing.
-    \item Code conventions might affect several metrics. The number of lines of code (LOC) or the number of 
+    \item Code conventions might affect several metrics. The number of lines of code (LOC) or the number of
     tokes (NOT) are influenced by coding styles. In a recent one of the author demonstrated that size
-      is the only thing that matters \cite{Gil:Lalouche:2016}.
-    \item Moreover, the same notion of size has been shown to be very different in different projects \cite{Gil:Lalouche:2016}.
+      is the only thing that matters~\cite{Gil:Lalouche:2016}.
+    \item Moreover, the same notion of size has been shown to be very different in different projects~\cite{Gil:Lalouche:2016}.
 \end{itemize}
 
 \textbf{The holy grail of "canonical representation of code" .
 Does LOC mean anything?
-Not if you apply different indentation rules.}\\
+Not if you apply different indentation rules.}⏎
 
-This manuscript present ``Spartan Programming'', a programming style based on many techniques,
-including some already reported in the literature and novel ones and combines them 
-in a systematic way to reduce simultaneusly many different measures of complexity.
-In other words, a Spartan programmer strive to achieve an extreme minimalism and simplicity.
-Even if it can be seen as one of the many code styles available, Spartan Programming differs from
-all of them because of its unifying principle of minimalism and simplicity.
+This manuscript present ‟Spartan Programming”, a programming style based on
+many techniques, including some already reported in the literature and novel
+ones and combines them in a systematic way to reduce simultaneously many
+different measures of complexity.  In other words, a Spartan programmer strive
+to achieve an extreme minimalism and simplicity.  Even if it can be seen as one
+of the many code styles available, Spartan Programming differs from all of them
+because of its unifying principle of minimalism and simplicity.
 % This manuscript reports in
 
 \subsection{Background}
 
-Despite the fact that coding style is a topic that might lead developers to engage heated 
-discussions, to the best of the author's knowledge, there is actually very little scientific 
-work on that. 
+Despite the fact that coding style is a topic that might lead developers to
+engage heated discussions, to the best of the author's knowledge, there is
+actually very little scientific work on that.
 
-If one queries for ``code conventions''
-\footnote{On text, abstract and keywords and restraining the outcomes to the ``Computer Science''
-disciplinary area} 
-on Scopus\urlref{http://scopus.org}, one of the most important bibliographic databases, what it comes out is around 
-thousands of results\footnote{The search was performed on August 2016}. 
-However, very few of them  have \kk{code conventions} among they
-keywords and deal with code conventions
+If one queries for ‟code conventions” †{On text, abstract and keywords and
+restraining the outcomes to the ‟Computer Science” disciplinary area} on
+Scopus\urlref{http://scopus.org}, one of the most important bibliographic
+databases, what it comes out is around thousands of results†{The search was
+performed on August 2016}.  However, very few of them have \kk{code
+conventions} among they keywords and deal with code conventions
 
-This alleged \emph{nonchalance} shown by the scientific community towards the investigation 
-of a rationale approach to the problem of defining effective code conventions, might be 
-related to the fact that when it comes to code styling most of the dialectic efforts are devoted
+This alleged \emph{nonchalance} shown by the scientific community towards the
+investigation of a rationale approach to the problem of defining effective code
+conventions, might be related to the fact that when it comes to code styling
+most of the dialectic efforts are devoted
 to make each personal preferences prevail against the others.
 
-This tendency to transform technical discussions on disputes about personal preferences 
-in matter of code readability, maintainability (not to mention the developers' efficiency) might 
-have led Stackoverflow managers to the decision reported in the Introduction, embracing the 
+This tendency to transform technical discussions on disputes about personal preferences
+in matter of code readability, maintainability (not to mention the developers' efficiency) might
+have led Stackoverflow managers to the decision reported in the Introduction, embracing the
 wiseness of the ancient latins who were used to say that \emph{De gustibus non est disputandum}.
 
-Notwithstanding what reported above, code conventions are considered a worthwhile issue during 
-the development process, otherwise we would not find style guides for the most important 
-programming languages like (Java, C++, etc.) and promoted by the major players in 
-the ITC arena worldwide, like Oracle and Google \cite{}. 
+Notwithstanding what reported above, code conventions are considered a worthwhile issue during
+the development process, otherwise we would not find style guides for the most important
+programming languages like (Java, C++, etc.) and promoted by the major players in
+the ITC arena worldwide, like Oracle and Google~\cite{}.
 
 \textbf{But where these styles a matter of a careful and rational design process?
 What were the underlying principles.}
@@ -116,17 +117,17 @@ We believe that it is.
 
 \subsection{Spartan programming}
 
-% The coding guidelines began with a dozen or so printed pages, 
-% "a little book of style", which the author handed out to computer science students 
-% in the Hebrew university of Jerusalem. The term "Spartan Programming" was coined in 1996, 
-% when the author gave a tutorial on "Spartan C++" at the TOOLS (Techniques of Object Oriented 
-% Languages and Systems) scientific conference, held in Santa Barbara, CA USA. The guidelines 
+% The coding guidelines began with a dozen or so printed pages,
+% "a little book of style", which the author handed out to computer science students
+% in the Hebrew university of Jerusalem. The term "Spartan Programming" was coined in 1996,
+% when the author gave a tutorial on "Spartan C++" at the TOOLS (Techniques of Object Oriented
+% Languages and Systems) scientific conference, held in Santa Barbara, CA USA. The guidelines
 % were taught under this name in numerous Technion courses since then.
 
-The definition of ``Spartan Programming'' first occurred in a tutorial taken at 
-the TOOL (Techniques of Object Oriented Languages and Systems) scientific conference, 
+The definition of ‟Spartan Programming” first occurred in a tutorial taken at
+the TOOL (Techniques of Object Oriented Languages and Systems) scientific conference,
 held in Santa Barbara, CA USA. % in in a stupid TOOLS USA 199X. tutorial.
-The aim was to present a rational approach to programming by examining all the previous 
+The aim was to present a rational approach to programming by examining all the previous
 assumptions about how to code.
 
 \emph{point of making and perfecting it was to "be rational" and
@@ -134,38 +135,36 @@ reexamine all assumptions.}
 
 \emph{Rules have changed.
 Utter despise of backward compatibility the need to rewrite the code.
-Mention it.} 
+Mention it.}
 
 % The spartanization tool.
 
-Spartanization principles were implemented in a tool automatically apply code transorfation 
+Spartanization principles were implemented in a tool automatically apply code transorfation
 to \emph{spartanize} the code, namely transformation of codes according to the spartan rules, has been developed.
-This tools works for Java code and it is implemented as a plugin for the Eclipse\urlref{https://eclipse.org/} 
+This tools works for Java code and it is implemented as a plugin for the Eclipse\urlref{https://eclipse.org/}
 IDE. It is available through the Eclipse marketplace\urlref{https://marketplace.eclipse.org/}
 
 Say that some of your alma mater gang love to do this kind of metrics, but
 no one really knows whether the results are applicable to different projects
-since \cite{Turnu:Concas:Marchesi:Tonelli:11}
+since~\cite{Turnu:Concas:Marchesi:Tonelli:11}
 
 the "Idionsyncratic Projects Hypothesis" I also had a plateau paper with
 Dany and Maayan about this. A number o years ago.
-
 
 \subsection{Contribution}
 
 The present manuscript makes the following contributions:
 
-This manuscript present ``Spartan Programming'', a programming style based on many techniques,
-including some already reported in the literature and novel ones and combines them 
+This manuscript present ‟Spartan Programming”, a programming style based on many techniques,
+including some already reported in the literature and novel ones and combines them
 in a systematic way to reduce simultaneusly many different measures of complexity.
 In other words, a Spartan programmer strive to achieve an extreme minimalism and simplicity.
 Even if it can be seen as one of the many code styles available, Spartan Programming differs from
 all of them because of its unifying principle of minimalism and simplicity.
 
-
 Telling the story of ‟Spartan Programming”, one particular style guideline for
 \Java, this manuscript is also likely to be contentious. Perhaps even more so
-after examining some ‟spartanized” code such as in \cref{figure:first} 
+after examining some ‟spartanized” code such as in \cref{figure:first}
 may look bizarre to eyes accustomed to traditional \Java code.
 
 % \textbf{(the following text has been adapted by the wiki)}⏎
@@ -178,4 +177,3 @@ far more than that, since it ...
 
 This paper gives an overview of spartanization, future work will be
 experiments.
-
