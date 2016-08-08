@@ -1,8 +1,10 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.expose.*;
 import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /** A {@link Wring} to remove unnecessary uses of Boolean.valueOf, for example
  * by converting <code>
@@ -25,11 +27,18 @@ public class BooleanConstants extends Wring.ReplaceCurrentNode<MethodInvocation>
   @Override String description(@SuppressWarnings("unused") final MethodInvocation __) {
     return "Use built-in boolean constant instead of valueOf()";
   }
-  @Override ASTNode replacement(final MethodInvocation i) {
-    return i.getExpression() == null || !"Boolean".equals(i.getExpression().toString()) || !"valueOf".equals(i.getName().getIdentifier())
-        || i.arguments().size() != 1 || !"true".equals(i.arguments().get(0).toString()) && !"false".equals(i.arguments().get(0).toString()) ? null
-            : i.getAST().newQualifiedName(i.getAST().newName("Boolean"),
-                newSimpleName(i, ((BooleanLiteral) i.arguments().get(0)).booleanValue() ? "TRUE" : "FALSE"));
+  @Override Expression replacement(final MethodInvocation i) {
+    final Expression e = i.getExpression();
+    if (e == null || !"Boolean".equals(e.toString()))
+      return null;
+    if (!"valueOf".equals(i.getName().getIdentifier()))
+      return null;
+    if (arguments(i).size() != 1)
+      return null;
+    final BooleanLiteral b = asBooleanLiteral(arguments(i).get(0));
+    if (b == null)
+      return null;
+    return Subject.operand(e).toQualifier(b.booleanValue() ? "TRUE" : "FALSE");
   }
   @Override WringGroup wringGroup() {
     return WringGroup.REMOVE_SYNTACTIC_BAGGAGE;
