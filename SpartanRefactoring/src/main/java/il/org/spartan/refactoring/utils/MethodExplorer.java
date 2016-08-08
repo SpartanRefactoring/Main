@@ -9,6 +9,20 @@ import org.eclipse.jdt.core.dom.*;
  * @author Yossi Gil
  * @since 2015-08-29 */
 public class MethodExplorer {
+  @SuppressWarnings("unused") public abstract static class IgnoreNestedMethods extends ASTVisitor {
+    @Override public final boolean visit(final AnnotationTypeDeclaration __) {
+      return false;
+    }
+    @Override public final boolean visit(final AnonymousClassDeclaration __) {
+      return false;
+    }
+    @Override public final boolean visit(final EnumDeclaration __) {
+      return false;
+    }
+    @Override public final boolean visit(final TypeDeclaration __) {
+      return false;
+    }
+  }
   final MethodDeclaration inner;
   /** Instantiate this class
    * @param inner JD */
@@ -25,6 +39,19 @@ public class MethodExplorer {
   public List<SimpleName> localVariables() {
     final List<SimpleName> $ = new ArrayList<>();
     inner.accept(new IgnoreNestedMethods() {
+      boolean add(final List<? extends Expression> es) {
+        for (final Expression e : es)
+          addFragments(fragments(asVariableDeclarationExpression(e)));
+        return true;
+      }
+      boolean add(final SingleVariableDeclaration d) {
+        $.add(d.getName());
+        return true;
+      }
+      void addFragments(final List<VariableDeclarationFragment> fs) {
+        for (final VariableDeclarationFragment f : fs)
+          $.add(f.getName());
+      }
       @Override public boolean visit(final CatchClause c) {
         return add(c.getException());
       }
@@ -40,19 +67,6 @@ public class MethodExplorer {
       @Override public boolean visit(final VariableDeclarationStatement s) {
         addFragments(fragments(s));
         return true;
-      }
-      boolean add(final List<? extends Expression> es) {
-        for (final Expression e : es)
-          addFragments(fragments(asVariableDeclarationExpression(e)));
-        return true;
-      }
-      boolean add(final SingleVariableDeclaration d) {
-        $.add(d.getName());
-        return true;
-      }
-      void addFragments(final List<VariableDeclarationFragment> fs) {
-        for (final VariableDeclarationFragment f : fs)
-          $.add(f.getName());
       }
     });
     return $;
@@ -71,20 +85,5 @@ public class MethodExplorer {
       }
     });
     return $;
-  }
-
-  @SuppressWarnings("unused") public abstract static class IgnoreNestedMethods extends ASTVisitor {
-    @Override public final boolean visit(final AnnotationTypeDeclaration __) {
-      return false;
-    }
-    @Override public final boolean visit(final AnonymousClassDeclaration __) {
-      return false;
-    }
-    @Override public final boolean visit(final EnumDeclaration __) {
-      return false;
-    }
-    @Override public final boolean visit(final TypeDeclaration __) {
-      return false;
-    }
   }
 }

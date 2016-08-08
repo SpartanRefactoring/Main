@@ -24,6 +24,9 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfExpressionStatementElseSimilarExpressionStatement extends Wring.ReplaceCurrentNode<IfStatement> {
+  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
+    return "Consolidate two branches of an 'if' into a single ";
+  }
   @Override Statement replacement(final IfStatement s) {
     final Expression then = extract.expression(extract.expressionStatement(then(s)));
     if (then == null)
@@ -33,9 +36,6 @@ public final class IfExpressionStatementElseSimilarExpressionStatement extends W
       return null;
     final Expression e = pushdown(Subject.pair(then, elze).toCondition(s.getExpression()));
     return e == null ? null : Subject.operand(e).toStatement();
-  }
-  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
-    return "Consolidate two branches of an 'if' into a single ";
   }
   @Override WringGroup wringGroup() {
     return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;

@@ -10,20 +10,59 @@ import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 
 public class TrimmerTestsUtils {
+  static class Operand extends Wrapper<String> {
+    public Operand(final String inner) {
+      super(inner);
+    }
+    void checkExpected(final String expected) {
+      final Wrap w = Wrap.find(get());
+      final String wrap = w.on(get());
+      final String unpeeled = TrimmerTestsUtils.apply(new Trimmer(), wrap);
+      if (wrap.equals(unpeeled))
+        azzert.fail("Nothing done on " + get());
+      final String peeled = w.off(unpeeled);
+      if (peeled.equals(get()))
+        azzert.that("No trimming of " + get(), peeled, is(not(get())));
+      if (gist(peeled).equals(gist(get())))
+        azzert.that("Trimming of " + get() + "is just reformatting", gist(get()), is(not(gist(peeled))));
+      assertSimilar(expected, peeled);
+    }
+    private void checkSame() {
+      final Wrap w = Wrap.find(get());
+      final String wrap = w.on(get());
+      final String unpeeled = TrimmerTestsUtils.apply(new Trimmer(), wrap);
+      if (wrap.equals(unpeeled))
+        return;
+      final String peeled = w.off(unpeeled);
+      if (peeled.equals(get()) || gist(peeled).equals(gist(get())))
+        return;
+      assertSimilar(get(), peeled);
+    }
+    public Operand to(final String expected) {
+      if (expected == null || expected.isEmpty())
+        checkSame();
+      else {
+        final Wrap w = Wrap.find(get());
+        final String wrap = w.on(get());
+        final String unpeeled = TrimmerTestsUtils.apply(new Trimmer(), wrap);
+        if (wrap.equals(unpeeled))
+          azzert.fail("Nothing done on " + get());
+        final String peeled = w.off(unpeeled);
+        if (peeled.equals(get()))
+          azzert.that("No trimming of " + get(), peeled, is(not(get())));
+        if (gist(peeled).equals(gist(get())))
+          azzert.that("Trimming of " + get() + "is just reformatting", gist(get()), is(not(gist(peeled))));
+        assertSimilar(expected, peeled);
+      }
+      return new Operand(expected);
+    }
+  }
+
   static class OperandToWring<N extends ASTNode> extends TrimmerTestsUtils.Operand {
     final Class<N> clazz;
     public OperandToWring(final String from, final Class<N> clazz) {
       super(from);
       this.clazz = clazz;
-    }
-    public OperandToWring<N> in(final Wring<N> w) {
-      final N findNode = findNode(w);
-      azzert.that(w.scopeIncludes(findNode), is(true));
-      return this;
-    }
-    public OperandToWring<N> notIn(final Wring<N> w) {
-      azzert.that(w.scopeIncludes(findNode(w)), is(false));
-      return this;
     }
     private N findNode(final Wring<N> w) {
       azzert.notNull(w);
@@ -58,57 +97,15 @@ public class TrimmerTestsUtils {
       });
       return $.get();
     }
-  }
-
-  static class Operand extends Wrapper<String> {
-    public Operand(final String inner) {
-      super(inner);
+    public OperandToWring<N> in(final Wring<N> w) {
+      final N findNode = findNode(w);
+      azzert.that(w.scopeIncludes(findNode), is(true));
+      return this;
     }
-    public Operand to(final String expected) {
-      if (expected == null || expected.isEmpty())
-        checkSame();
-      else {
-        final Wrap w = Wrap.find(get());
-        final String wrap = w.on(get());
-        final String unpeeled = TrimmerTestsUtils.apply(new Trimmer(), wrap);
-        if (wrap.equals(unpeeled))
-          azzert.fail("Nothing done on " + get());
-        final String peeled = w.off(unpeeled);
-        if (peeled.equals(get()))
-          azzert.that("No trimming of " + get(), peeled, is(not(get())));
-        if (gist(peeled).equals(gist(get())))
-          azzert.that("Trimming of " + get() + "is just reformatting", gist(get()), is(not(gist(peeled))));
-        assertSimilar(expected, peeled);
-      }
-      return new Operand(expected);
+    public OperandToWring<N> notIn(final Wring<N> w) {
+      azzert.that(w.scopeIncludes(findNode(w)), is(false));
+      return this;
     }
-    void checkExpected(final String expected) {
-      final Wrap w = Wrap.find(get());
-      final String wrap = w.on(get());
-      final String unpeeled = TrimmerTestsUtils.apply(new Trimmer(), wrap);
-      if (wrap.equals(unpeeled))
-        azzert.fail("Nothing done on " + get());
-      final String peeled = w.off(unpeeled);
-      if (peeled.equals(get()))
-        azzert.that("No trimming of " + get(), peeled, is(not(get())));
-      if (gist(peeled).equals(gist(get())))
-        azzert.that("Trimming of " + get() + "is just reformatting", gist(get()), is(not(gist(peeled))));
-      assertSimilar(expected, peeled);
-    }
-    private void checkSame() {
-      final Wrap w = Wrap.find(get());
-      final String wrap = w.on(get());
-      final String unpeeled = TrimmerTestsUtils.apply(new Trimmer(), wrap);
-      if (wrap.equals(unpeeled))
-        return;
-      final String peeled = w.off(unpeeled);
-      if (peeled.equals(get()) || gist(peeled).equals(gist(get())))
-        return;
-      assertSimilar(get(), peeled);
-    }
-  }
-  public static int countOpportunities(final Spartanization s, final CompilationUnit u) {
-    return s.findOpportunities(u).size();
   }
   static String apply(final Trimmer t, final String from) {
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
@@ -137,6 +134,9 @@ public class TrimmerTestsUtils {
     if (gist(peeled).equals(gist(from)))
       azzert.that("Simpification of " + from + " is just reformatting", gist(from), is(not(gist(peeled))));
     assertSimilar(expected, peeled);
+  }
+  public static int countOpportunities(final Spartanization s, final CompilationUnit u) {
+    return s.findOpportunities(u).size();
   }
   static <N extends ASTNode> OperandToWring<N> included(final String from, final Class<N> clazz) {
     return new OperandToWring<>(from, clazz);

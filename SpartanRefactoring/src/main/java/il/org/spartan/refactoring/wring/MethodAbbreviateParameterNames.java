@@ -20,8 +20,34 @@ import il.org.spartan.refactoring.utils.*;
  *
  * @Deprecated annotation */
 @Deprecated public class MethodAbbreviateParameterNames extends Wring<MethodDeclaration> {
+  private static boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m, final Collection<SimpleName> newNames) {
+    if (spartan.shorten(d.getType()) == null)
+      return false;
+    final MethodExplorer e = new MethodExplorer(m);
+    for (final SimpleName n : e.localVariables())
+      if (n.getIdentifier().equals(spartan.shorten(d.getType())))
+        return false;
+    for (final SimpleName n : newNames)
+      if (n.getIdentifier().equals(spartan.shorten(d.getType())))
+        return false;
+    for (final SingleVariableDeclaration n : parameters(m))
+      if (n.getName().getIdentifier().equals(spartan.shorten(d.getType())))
+        return false;
+    return !m.getName().getIdentifier().equalsIgnoreCase(spartan.shorten(d.getType()));
+  }
   @Override String description(final MethodDeclaration d) {
     return d.getName().toString();
+  }
+  private List<SingleVariableDeclaration> find(final List<SingleVariableDeclaration> ds) {
+    final List<SingleVariableDeclaration> $ = new ArrayList<>();
+    for (final SingleVariableDeclaration d : ds)
+      if (suitable(d))
+        $.add(d);
+    return $.size() != 0 ? $ : null;
+  }
+  private boolean isShort(final SingleVariableDeclaration d) {
+    final String n = spartan.shorten(d.getType());
+    return n != null && (n + pluralVariadic(d)).equals(d.getName().getIdentifier());
   }
   @Override Rewrite make(final MethodDeclaration d, final ExclusionManager exclude) {
     if (d.isConstructor())
@@ -44,37 +70,11 @@ import il.org.spartan.refactoring.utils.*;
       }
     };
   }
-  private List<SingleVariableDeclaration> find(final List<SingleVariableDeclaration> ds) {
-    final List<SingleVariableDeclaration> $ = new ArrayList<>();
-    for (final SingleVariableDeclaration d : ds)
-      if (suitable(d))
-        $.add(d);
-    return $.size() != 0 ? $ : null;
-  }
-  private static boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m, final Collection<SimpleName> newNames) {
-    if (spartan.shorten(d.getType()) == null)
-      return false;
-    final MethodExplorer e = new MethodExplorer(m);
-    for (final SimpleName n : e.localVariables())
-      if (n.getIdentifier().equals(spartan.shorten(d.getType())))
-        return false;
-    for (final SimpleName n : newNames)
-      if (n.getIdentifier().equals(spartan.shorten(d.getType())))
-        return false;
-    for (final SingleVariableDeclaration n : parameters(m))
-      if (n.getName().getIdentifier().equals(spartan.shorten(d.getType())))
-        return false;
-    return !m.getName().getIdentifier().equalsIgnoreCase(spartan.shorten(d.getType()));
+  @SuppressWarnings("static-method") private String pluralVariadic(final SingleVariableDeclaration d) {
+    return d.isVarargs() ? "s" : "";
   }
   private boolean suitable(final SingleVariableDeclaration d) {
     return new JavaTypeNameParser(d.getType().toString()).isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
-  }
-  private boolean isShort(final SingleVariableDeclaration d) {
-    final String n = spartan.shorten(d.getType());
-    return n != null && (n + pluralVariadic(d)).equals(d.getName().getIdentifier());
-  }
-  @SuppressWarnings("static-method") private String pluralVariadic(final SingleVariableDeclaration d) {
-    return d.isVarargs() ? "s" : "";
   }
   @Override WringGroup wringGroup() {
     return WringGroup.RENAME_PARAMETERS;

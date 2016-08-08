@@ -32,6 +32,18 @@ public class IsTest {
   @Test public void canMakeExpression() {
     e("2+2");
   }
+  @Test public void deterministicArray1() {
+    azzert.that(Is.deterministic(e("new a[3]")), is(false));
+  }
+  @Test public void deterministicArray2() {
+    azzert.that(Is.deterministic(e("new int[] {12,13}")), is(false));
+  }
+  @Test public void deterministicArray3() {
+    azzert.that(Is.deterministic(e("new int[] {12,13, i++}")), is(false));
+  }
+  @Test public void deterministicArray4() {
+    azzert.that(Is.deterministic(e("new int[f()]")), is(false));
+  }
   @Test public void isConstantFalse() {
     azzert.that(Is.constant(e("a")), is(false));
   }
@@ -93,18 +105,6 @@ public class IsTest {
   @Test public void numericLiteralTrue() {
     azzert.that(Is.numericLiteral(e("1")), is(true));
   }
-  @Test public void deterministicArray1() {
-    azzert.that(Is.deterministic(e("new a[3]")), is(false));
-  }
-  @Test public void deterministicArray2() {
-    azzert.that(Is.deterministic(e("new int[] {12,13}")), is(false));
-  }
-  @Test public void deterministicArray3() {
-    azzert.that(Is.deterministic(e("new int[] {12,13, i++}")), is(false));
-  }
-  @Test public void deterministicArray4() {
-    azzert.that(Is.deterministic(e("new int[f()]")), is(false));
-  }
   @Test public void sideEffectArray1() {
     azzert.that(Is.sideEffectFree(e("new a[3]")), is(true));
   }
@@ -140,9 +140,6 @@ public class IsTest {
   @Test public void sideEffectFreeCastTrue() {
     azzert.that(Is.sideEffectFree(e("(A) b")), is(true));
   }
-  @Test public void sideEffectFreeNull() {
-    azzert.that(Is.sideEffectFree(e("null")), is(true));
-  }
   @Test public void sideEffectFreeExists() {
     Is.sideEffectFree(e("null"));
   }
@@ -172,6 +169,9 @@ public class IsTest {
   }
   @Test public void sideEffectFreeMinusMinusPre() {
     azzert.that(Is.sideEffectFree(e("--a")), is(false));
+  }
+  @Test public void sideEffectFreeNull() {
+    azzert.that(Is.sideEffectFree(e("null")), is(true));
   }
   @Test public void sideEffectFreeOfAssignment() {
     azzert.that(Is.sideEffectFree(e("a=b")), is(false));

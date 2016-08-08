@@ -27,6 +27,9 @@ import il.org.spartan.refactoring.wring.LocalInliner.*;
  * @author Yossi Gil
  * @since 2015-08-07 */
 public final class DeclarationInitializerIfUpdateAssignment extends Wring.VariableDeclarationFragementAndStatement {
+  @Override public String description(final VariableDeclarationFragment f) {
+    return "Consolidate initialization of " + f.getName() + " with the subsequent conditional assignment to it";
+  }
   @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
@@ -50,9 +53,6 @@ public final class DeclarationInitializerIfUpdateAssignment extends Wring.Variab
     i.inlineInto(then(newInitializer), newInitializer.getExpression());
     r.remove(nextStatement, g);
     return r;
-  }
-  @Override public String description(final VariableDeclarationFragment f) {
-    return "Consolidate initialization of " + f.getName() + " with the subsequent conditional assignment to it";
   }
   @Override WringGroup wringGroup() {
     return WringGroup.IF_TO_TERNARY;

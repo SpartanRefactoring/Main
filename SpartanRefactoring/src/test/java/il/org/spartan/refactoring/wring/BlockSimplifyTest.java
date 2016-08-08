@@ -16,8 +16,6 @@ import il.org.spartan.utils.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public enum BlockSimplifyTest {
   ;
-  static final Wring<Block> WRING = new BlockSimplify();
-
   @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope<Block> {
     static String[][] cases = Utils.asArray(//
@@ -63,4 +61,5 @@ public enum BlockSimplifyTest {
       super(WRING);
     }
   }
+  static final Wring<Block> WRING = new BlockSimplify();
 }

@@ -20,8 +20,6 @@ import il.org.spartan.utils.Utils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public enum InfixConditionalOrFalseTest {
   ;
-  static final Wring<InfixExpression> WRING = new InfixConditionalOrFalse();
-
   @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Exprezzion.Infix {
     static String[][] cases = Utils.asArray(//
@@ -126,4 +124,5 @@ public enum InfixConditionalOrFalseTest {
       azzert.that(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
     }
   }
+  static final Wring<InfixExpression> WRING = new InfixConditionalOrFalse();
 }

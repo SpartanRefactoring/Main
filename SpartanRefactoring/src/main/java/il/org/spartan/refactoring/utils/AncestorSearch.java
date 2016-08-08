@@ -8,25 +8,6 @@ import org.eclipse.jdt.core.dom.*;
  * @author Yossi Gil
  * @since 2015-08-22 */
 public abstract class AncestorSearch {
-  /** Factory method, returning an instance which can search by the integer
-   * present on a node.
-   * @param type JD
-   * @return a newly created instance
-   * @see ASTNode#getNodeType() */
-  public static AncestorSearch forType(final int type) {
-    return new ByNodeType(type);
-  }
-  /** Factory method, returning an instance which can search by a node class
-   * @param c JD
-   * @return a newly created instance
-   * @see ASTNode#getNodeType() */
-  public static <N extends ASTNode> AncestorSearch forClass(final Class<N> c) {
-    return new ByNodeClass(c);
-  }
-  /** @param n JD
-   * @return the closest ancestor whose type matches the given type. */
-  public abstract ASTNode from(final ASTNode n);
-
   static class ByNodeClass extends AncestorSearch {
     private final Class<? extends ASTNode> clazz;
     public ByNodeClass(final Class<? extends ASTNode> clazz) {
@@ -42,10 +23,10 @@ public abstract class AncestorSearch {
   }
 
   static class ByNodeType extends AncestorSearch {
+    final int type;
     public ByNodeType(final int type) {
       this.type = type;
     }
-    final int type;
     @Override public ASTNode from(final ASTNode n) {
       if (n != null)
         for (ASTNode $ = n.getParent(); $ != null; $ = $.getParent())
@@ -53,9 +34,6 @@ public abstract class AncestorSearch {
             return $;
       return null;
     }
-  }
-  public static Until until(final ASTNode n) {
-    return new Until(n);
   }
 
   public static class Until {
@@ -80,4 +58,25 @@ public abstract class AncestorSearch {
       };
     }
   }
+  /** Factory method, returning an instance which can search by a node class
+   * @param c JD
+   * @return a newly created instance
+   * @see ASTNode#getNodeType() */
+  public static <N extends ASTNode> AncestorSearch forClass(final Class<N> c) {
+    return new ByNodeClass(c);
+  }
+  /** Factory method, returning an instance which can search by the integer
+   * present on a node.
+   * @param type JD
+   * @return a newly created instance
+   * @see ASTNode#getNodeType() */
+  public static AncestorSearch forType(final int type) {
+    return new ByNodeType(type);
+  }
+  public static Until until(final ASTNode n) {
+    return new Until(n);
+  }
+  /** @param n JD
+   * @return the closest ancestor whose type matches the given type. */
+  public abstract ASTNode from(final ASTNode n);
 }

@@ -9,32 +9,16 @@ import org.eclipse.jdt.internal.corext.dom.*;
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-24 */
 @SuppressWarnings("restriction") public class BindingUtils {
-  /** @param u current compilation unit
-   * @return current package */
-  public static IPackageBinding getPackage(final CompilationUnit u) {
-    return u.getPackage().resolveBinding();
-  }
   /** @param n an {@link ASTNode}
    * @return the type in which n is placed, or null if there is none */
   public static ITypeBinding container(final ASTNode n) {
     final ASTNode $ = containerType(n);
     return eval(() -> ((TypeDeclaration) $).resolveBinding()).when($ != null && $ instanceof TypeDeclaration);
   }
-  /** Determines whether an invocation of a method is legal in a specific
-   * context.
-   * @param b a method
-   * @param n the context in which the method is invoked
-   * @param u current {@link CompilationUnit}
-   * @return true iff method is visible from its context */
-  public static boolean isVisible(final IMethodBinding b, final ASTNode n, final CompilationUnit u) {
-    final int ms = b.getModifiers();
-    if (Modifier.isPublic(ms))
-      return true;
-    final ITypeBinding mc = b.getDeclaringClass();
-    if (Modifier.isProtected(ms) && mc.getPackage().equals(getPackage(u)))
-      return true;
-    final ITypeBinding nc = container(n);
-    return nc != null && nc.equals(mc);
+  /** @param u current compilation unit
+   * @return current package */
+  public static IPackageBinding getPackage(final CompilationUnit u) {
+    return u.getPackage().resolveBinding();
   }
   /** Finds visible method in hierarchy.
    * @param b base type
@@ -57,5 +41,21 @@ import org.eclipse.jdt.internal.corext.dom.*;
   public static boolean isSimple(final Expression e) {
     return e instanceof Name || e instanceof NumberLiteral || e instanceof BooleanLiteral || e instanceof CharacterLiteral || e instanceof NullLiteral
         || e instanceof StringLiteral || e instanceof ThisExpression || e instanceof TypeLiteral;
+  }
+  /** Determines whether an invocation of a method is legal in a specific
+   * context.
+   * @param b a method
+   * @param n the context in which the method is invoked
+   * @param u current {@link CompilationUnit}
+   * @return true iff method is visible from its context */
+  public static boolean isVisible(final IMethodBinding b, final ASTNode n, final CompilationUnit u) {
+    final int ms = b.getModifiers();
+    if (Modifier.isPublic(ms))
+      return true;
+    final ITypeBinding mc = b.getDeclaringClass();
+    if (Modifier.isProtected(ms) && mc.getPackage().equals(getPackage(u)))
+      return true;
+    final ITypeBinding nc = container(n);
+    return nc != null && nc.equals(mc);
   }
 }

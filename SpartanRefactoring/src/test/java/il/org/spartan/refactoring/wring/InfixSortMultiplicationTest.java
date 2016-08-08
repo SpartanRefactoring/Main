@@ -27,38 +27,6 @@ import il.org.spartan.utils.Utils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpression> {
-  static final InfixSortMultiplication WRING = new InfixSortMultiplication();
-  static final ExpressionComparator COMPARATOR = ExpressionComparator.MULTIPLICATION;
-  public InfixSortMultiplicationTest() {
-    super(WRING);
-  }
-  @Test public void legibleOnShorterChainParenthesisComparisonLast() {
-    assertLegible("z * 2 * a * b * c * d * e * f * g * h");
-  }
-  @Test public void oneMultiplication0() {
-    final InfixExpression e = i("f(a,b,c,d) * f(a,b,c)");
-    azzert.that(right(e).toString(), iz("f(a,b,c)"));
-    azzert.that(inner.scopeIncludes(e), is(true));
-    azzert.that(inner.eligible(e), is(true));
-    final Wring<InfixExpression> s = Toolbox.instance.find(e);
-    azzert.that(s, instanceOf(InfixSortMultiplication.class));
-    azzert.notNull(s);
-    azzert.aye(s.scopeIncludes(e));
-    azzert.aye(s.eligible(e));
-    final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) s).replacement(e);
-    azzert.notNull(replacement);
-    azzert.that(replacement.toString(), is("f(a,b,c) * f(a,b,c,d)"));
-  }
-  @Test public void parseOfToken() {
-    azzert.that(new LiteralParser(e(" 2  ").toString()).type(), is(Types.INTEGER.ordinal()));
-  }
-  @Test public void scopeIncludesTrue1() {
-    azzert.aye(WRING.scopeIncludes(i("2*a")));
-  }
-  @Test public void scopeIncludesTrue2() {
-    azzert.aye(WRING.scopeIncludes(i("a*2")));
-  }
-
   @RunWith(Parameterized.class) //
   public static class Noneligible extends AbstractWringTest.Noneligible.Infix {
     static String[][] cases = Utils.asArray(//
@@ -158,5 +126,36 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
     @Test public void twoOrMoreArguments() {
       azzert.that(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
     }
+  }
+  static final InfixSortMultiplication WRING = new InfixSortMultiplication();
+  static final ExpressionComparator COMPARATOR = ExpressionComparator.MULTIPLICATION;
+  public InfixSortMultiplicationTest() {
+    super(WRING);
+  }
+  @Test public void legibleOnShorterChainParenthesisComparisonLast() {
+    assertLegible("z * 2 * a * b * c * d * e * f * g * h");
+  }
+  @Test public void oneMultiplication0() {
+    final InfixExpression e = i("f(a,b,c,d) * f(a,b,c)");
+    azzert.that(right(e).toString(), iz("f(a,b,c)"));
+    azzert.that(inner.scopeIncludes(e), is(true));
+    azzert.that(inner.eligible(e), is(true));
+    final Wring<InfixExpression> s = Toolbox.instance.find(e);
+    azzert.that(s, instanceOf(InfixSortMultiplication.class));
+    azzert.notNull(s);
+    azzert.aye(s.scopeIncludes(e));
+    azzert.aye(s.eligible(e));
+    final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) s).replacement(e);
+    azzert.notNull(replacement);
+    azzert.that(replacement.toString(), is("f(a,b,c) * f(a,b,c,d)"));
+  }
+  @Test public void parseOfToken() {
+    azzert.that(new LiteralParser(e(" 2  ").toString()).type(), is(Types.INTEGER.ordinal()));
+  }
+  @Test public void scopeIncludesTrue1() {
+    azzert.aye(WRING.scopeIncludes(i("2*a")));
+  }
+  @Test public void scopeIncludesTrue2() {
+    azzert.aye(WRING.scopeIncludes(i("a*2")));
   }
 }

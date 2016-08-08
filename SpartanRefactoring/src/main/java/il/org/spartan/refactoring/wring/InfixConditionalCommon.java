@@ -25,6 +25,20 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-07-20 */
 public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<InfixExpression> {
+  private static Expression chopHead(final InfixExpression e) {
+    final List<Expression> es = extract.allOperands(e);
+    es.remove(0);
+    return es.size() < 2 ? duplicate(es.get(0)) : Subject.operands(es).to(e.getOperator());
+  }
+  private static Operator conjugate(final Operator o) {
+    return o == null ? null
+        : o == CONDITIONAL_AND ? CONDITIONAL_OR //
+            : o == CONDITIONAL_OR ? CONDITIONAL_AND //
+                : null;
+  }
+  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
+    return "Factor out common logical component of ||";
+  }
   @Override Expression replacement(final InfixExpression e) {
     final Operator o = e.getOperator();
     if (!in(o, CONDITIONAL_AND, CONDITIONAL_OR))
@@ -39,20 +53,6 @@ public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<Infix
     final Expression leftLeft = left(left);
     return !Is.sideEffectFree(leftLeft) || !same(leftLeft, left(right)) ? null
         : Subject.pair(leftLeft, Subject.pair(chopHead(left), chopHead(right)).to(o)).to(conjugate);
-  }
-  private static Operator conjugate(final Operator o) {
-    return o == null ? null
-        : o == CONDITIONAL_AND ? CONDITIONAL_OR //
-            : o == CONDITIONAL_OR ? CONDITIONAL_AND //
-                : null;
-  }
-  private static Expression chopHead(final InfixExpression e) {
-    final List<Expression> es = extract.allOperands(e);
-    es.remove(0);
-    return es.size() < 2 ? duplicate(es.get(0)) : Subject.operands(es).to(e.getOperator());
-  }
-  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
-    return "Factor out common logical component of ||";
   }
   @Override WringGroup wringGroup() {
     return WringGroup.REFACTOR_INEFFECTIVE;

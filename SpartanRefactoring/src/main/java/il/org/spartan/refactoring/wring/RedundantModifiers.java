@@ -23,6 +23,19 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 public abstract class RedundantModifiers<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> {
+  public static class OfAnnotation extends RedundantModifiers<AnnotationTypeDeclaration> { /* empty */
+  }
+
+  // @formatter:on
+  public static class OfEnum extends RedundantModifiers<TypeDeclaration> { /* empty */
+  }
+
+  public static class OfField extends RedundantModifiers<FieldDeclaration> { /* empty */
+  }
+
+  //@formatter:off
+  public static class OfMethod extends RedundantModifiers<MethodDeclaration> { /* empty */ }
+  public static class OfType extends RedundantModifiers<TypeDeclaration> { /* empty */ }
   private static Set<Modifier> matches(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ps) {
     final Set<Modifier> $ = new LinkedHashSet<>();
     for (final IExtendedModifier m : expose.modifiers(¢))
@@ -85,18 +98,22 @@ public abstract class RedundantModifiers<N extends BodyDeclaration> extends Wrin
   private static boolean test(final IExtendedModifier m, final Set<Predicate<Modifier>> ps) {
     return m instanceof Modifier && test((Modifier) m, ps);
   }
+
   private static boolean test(final Modifier m, final Set<Predicate<Modifier>> ps) {
     for (final Predicate<Modifier> p : ps)
       if (p.test(m))
         return true;
     return false;
   }
+
   @Override String description(final BodyDeclaration ¢) {
     return "Remove redundant " + redundants(¢) + " modifier(s) from declaration";
   }
+
   @Override BodyDeclaration replacement(final BodyDeclaration $) {
     return prune(duplicate($), redundancies($));
   }
+
   @Override boolean scopeIncludes(final BodyDeclaration ¢) {
     final Set<Predicate<Modifier>> ps = redundancies(¢);
     return !ps.isEmpty() && !matchess(¢, ps).isEmpty();
@@ -104,18 +121,4 @@ public abstract class RedundantModifiers<N extends BodyDeclaration> extends Wrin
   @Override WringGroup wringGroup() {
     return WringGroup.REMOVE_SYNTACTIC_BAGGAGE;
   }
-
-  public static class OfAnnotation extends RedundantModifiers<AnnotationTypeDeclaration> { /* empty */
-  }
-
-  // @formatter:on
-  public static class OfEnum extends RedundantModifiers<TypeDeclaration> { /* empty */
-  }
-
-  public static class OfField extends RedundantModifiers<FieldDeclaration> { /* empty */
-  }
-
-  //@formatter:off
-  public static class OfMethod extends RedundantModifiers<MethodDeclaration> { /* empty */ }
-  public static class OfType extends RedundantModifiers<TypeDeclaration> { /* empty */ }
 }

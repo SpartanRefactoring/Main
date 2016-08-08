@@ -213,7 +213,7 @@ public abstract class Wring<N extends ASTNode> {
     @Override final Rewrite make(final N n, final ExclusionManager m) {
       return !eligible(n) ? null : new Rewrite(description(n), n) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-          r.replace(n, replacement(n,m), g);
+          r.replace(n, replacement(n, m), g);
         }
       };
     }

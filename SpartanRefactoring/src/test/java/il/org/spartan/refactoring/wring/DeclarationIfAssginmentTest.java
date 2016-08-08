@@ -27,50 +27,6 @@ import il.org.spartan.utils.Utils;
 @SuppressWarnings({ "javadoc", "static-method" }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class DeclarationIfAssginmentTest {
-  static final DeclarationInitializerIfAssignment WRING = new DeclarationInitializerIfAssignment();
-  @Test public void traceForbiddenSiblings() {
-    azzert.notNull(WRING);
-    final String from = "int a = 2,b; if (b) a =3;";
-    final String wrap = Wrap.Statement.on(from);
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
-    final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
-    azzert.notNull(f);
-    azzert.that(WRING.scopeIncludes(f), is(false));
-  }
-  @Test public void traceForbiddenSiblingsExpanded() {
-    final String from = "int a = 2,b; if (a+b) a =3;";
-    final String wrap = Wrap.Statement.on(from);
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
-    final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
-    azzert.notNull(f);
-    final Expression initializer = f.getInitializer();
-    azzert.notNull(initializer);
-    final IfStatement s = extract.nextIfStatement(f);
-    azzert.that(s, is(extract.firstIfStatement(u)));
-    azzert.notNull(s);
-    azzert.that(s, iz("if (a + b) a=3;"));
-    azzert.aye(Is.vacuousElse(s));
-    final Assignment a = extract.assignment(then(s));
-    azzert.notNull(a);
-    azzert.aye(same(left(a), f.getName()));
-    azzert.that(a.getOperator(), is(Assignment.Operator.ASSIGN));
-    final List<VariableDeclarationFragment> x = VariableDeclarationFragementAndStatement.forbiddenSiblings(f);
-    azzert.that(x.size(), greaterThan(0));
-    azzert.that(x.size(), is(1));
-    final VariableDeclarationFragment b = x.get(0);
-    azzert.that(b.toString(), is("b"));
-    final Of of = Collect.BOTH_SEMANTIC.of(b);
-    azzert.notNull(of);
-    final Expression e = s.getExpression();
-    azzert.notNull(e);
-    azzert.that(e, iz("a + b"));
-    final List<SimpleName> in = of.in(e);
-    azzert.that(in.size(), is(1));
-    azzert.that(!in.isEmpty(), is(true));
-    azzert.that(Collect.BOTH_SEMANTIC.of(f).existIn(s.getExpression(), right(a)), is(true));
-    azzert.that(of.existIn(s.getExpression(), right(a)), is(true));
-  }
-
   @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Declaration {
     static String[][] cases = Utils.asArray(//
@@ -137,5 +93,48 @@ public class DeclarationIfAssginmentTest {
       assertSimilar(expected, peeled);
       assertSimilar(Wrap.Statement.on(expected), actual);
     }
+  }
+  static final DeclarationInitializerIfAssignment WRING = new DeclarationInitializerIfAssignment();
+  @Test public void traceForbiddenSiblings() {
+    azzert.notNull(WRING);
+    final String from = "int a = 2,b; if (b) a =3;";
+    final String wrap = Wrap.Statement.on(from);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
+    final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
+    azzert.notNull(f);
+    azzert.that(WRING.scopeIncludes(f), is(false));
+  }
+  @Test public void traceForbiddenSiblingsExpanded() {
+    final String from = "int a = 2,b; if (a+b) a =3;";
+    final String wrap = Wrap.Statement.on(from);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
+    final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
+    azzert.notNull(f);
+    final Expression initializer = f.getInitializer();
+    azzert.notNull(initializer);
+    final IfStatement s = extract.nextIfStatement(f);
+    azzert.that(s, is(extract.firstIfStatement(u)));
+    azzert.notNull(s);
+    azzert.that(s, iz("if (a + b) a=3;"));
+    azzert.aye(Is.vacuousElse(s));
+    final Assignment a = extract.assignment(then(s));
+    azzert.notNull(a);
+    azzert.aye(same(left(a), f.getName()));
+    azzert.that(a.getOperator(), is(Assignment.Operator.ASSIGN));
+    final List<VariableDeclarationFragment> x = VariableDeclarationFragementAndStatement.forbiddenSiblings(f);
+    azzert.that(x.size(), greaterThan(0));
+    azzert.that(x.size(), is(1));
+    final VariableDeclarationFragment b = x.get(0);
+    azzert.that(b.toString(), is("b"));
+    final Of of = Collect.BOTH_SEMANTIC.of(b);
+    azzert.notNull(of);
+    final Expression e = s.getExpression();
+    azzert.notNull(e);
+    azzert.that(e, iz("a + b"));
+    final List<SimpleName> in = of.in(e);
+    azzert.that(in.size(), is(1));
+    azzert.that(!in.isEmpty(), is(true));
+    azzert.that(Collect.BOTH_SEMANTIC.of(f).existIn(s.getExpression(), right(a)), is(true));
+    azzert.that(of.existIn(s.getExpression(), right(a)), is(true));
   }
 }

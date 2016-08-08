@@ -57,11 +57,8 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-07-20 */
 public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<ConditionalExpression> {
-  @Override Expression replacement(final ConditionalExpression e) {
-    return simplifyTernary(e);
-  }
-  @Override boolean scopeIncludes(final ConditionalExpression e) {
-    return isTernaryOfBooleanLitreral(e);
+  private static boolean isTernaryOfBooleanLitreral(final ConditionalExpression e) {
+    return e != null && Have.booleanLiteral(core(e.getThenExpression()), core(e.getElseExpression()));
   }
   /** Consider an expression
    *
@@ -103,9 +100,6 @@ public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<Condit
   private static Expression simplifyTernary(final ConditionalExpression e) {
     return simplifyTernary(core(e.getThenExpression()), core(e.getElseExpression()), duplicate(e.getExpression()));
   }
-  private static boolean isTernaryOfBooleanLitreral(final ConditionalExpression e) {
-    return e != null && Have.booleanLiteral(core(e.getThenExpression()), core(e.getElseExpression()));
-  }
   private static Expression simplifyTernary(final Expression then, final Expression elze, final Expression main) {
     final boolean takeThen = !Is.booleanLiteral(then);
     final Expression other = takeThen ? then : elze;
@@ -114,6 +108,12 @@ public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<Condit
   }
   @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Convert conditional expression into logical expression";
+  }
+  @Override Expression replacement(final ConditionalExpression e) {
+    return simplifyTernary(e);
+  }
+  @Override boolean scopeIncludes(final ConditionalExpression e) {
+    return isTernaryOfBooleanLitreral(e);
   }
   @Override WringGroup wringGroup() {
     return WringGroup.IF_TO_TERNARY;

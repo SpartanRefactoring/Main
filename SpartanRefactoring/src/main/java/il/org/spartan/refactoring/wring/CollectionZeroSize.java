@@ -35,21 +35,6 @@ import il.org.spartan.refactoring.utils.*;
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-24 */
 public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression> {
-  @Override ASTNode replacement(final InfixExpression e) {
-    if (!e.getAST().hasResolvedBindings())
-      return null;
-    final Operator o = e.getOperator();
-    if (!isComparison(o))
-      return null;
-    final Expression right = right(e);
-    final Expression left = left(e);
-    if (left instanceof MethodInvocation == right instanceof MethodInvocation)
-      return null;
-    if (left instanceof NumberLiteral == right instanceof NumberLiteral)
-      return null;
-    return left instanceof MethodInvocation ? replacement(e, o, (MethodInvocation) left, (NumberLiteral) right)
-        : replacement(e, conjugate(o), (MethodInvocation) right, (NumberLiteral) left);
-  }
   private static ASTNode replacement(final InfixExpression e, final Operator o, final MethodInvocation i, final NumberLiteral l) {
     if (!"size".equals(i.getName().getIdentifier()) || Double.parseDouble(l.getToken()) != 0)
       return null;
@@ -70,6 +55,21 @@ public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression
   @Override String description(final InfixExpression n) {
     final Expression e = ((MethodInvocation) n.getLeftOperand()).getExpression();
     return e == null ? "Use isEmpty()" : "Use " + e.toString() + ".isEmpty()";
+  }
+  @Override ASTNode replacement(final InfixExpression e) {
+    if (!e.getAST().hasResolvedBindings())
+      return null;
+    final Operator o = e.getOperator();
+    if (!isComparison(o))
+      return null;
+    final Expression right = right(e);
+    final Expression left = left(e);
+    if (left instanceof MethodInvocation == right instanceof MethodInvocation)
+      return null;
+    if (left instanceof NumberLiteral == right instanceof NumberLiteral)
+      return null;
+    return left instanceof MethodInvocation ? replacement(e, o, (MethodInvocation) left, (NumberLiteral) right)
+        : replacement(e, conjugate(o), (MethodInvocation) right, (NumberLiteral) left);
   }
   @Override WringGroup wringGroup() {
     return WringGroup.REFACTOR_INEFFECTIVE;

@@ -23,6 +23,9 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfAssignToFooElseAssignToFoo extends Wring.ReplaceCurrentNode<IfStatement> {
+  @Override String description(final IfStatement s) {
+    return "Consolidate assignments to " + left(extract.assignment(then(s)));
+  }
   @Override Statement replacement(final IfStatement s) {
     final Assignment then = extract.assignment(then(s));
     final Assignment elze = extract.assignment(elze(s));
@@ -31,9 +34,6 @@ public final class IfAssignToFooElseAssignToFoo extends Wring.ReplaceCurrentNode
   }
   @Override boolean scopeIncludes(final IfStatement s) {
     return s != null && compatible(extract.assignment(then(s)), extract.assignment(elze(s)));
-  }
-  @Override String description(final IfStatement s) {
-    return "Consolidate assignments to " + left(extract.assignment(then(s)));
   }
   @Override WringGroup wringGroup() {
     return WringGroup.IF_TO_TERNARY;

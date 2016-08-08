@@ -14,11 +14,11 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class InfixSortMultiplication extends Wring.InfixSorting {
-  @Override boolean sort(final List<Expression> es) {
-    return ExpressionComparator.MULTIPLICATION.sort(es);
-  }
   @Override boolean scopeIncludes(final InfixExpression e) {
     return in(e.getOperator(), TIMES);
+  }
+  @Override boolean sort(final List<Expression> es) {
+    return ExpressionComparator.MULTIPLICATION.sort(es);
   }
   @Override WringGroup wringGroup() {
     return WringGroup.REORDER_EXPRESSIONS;

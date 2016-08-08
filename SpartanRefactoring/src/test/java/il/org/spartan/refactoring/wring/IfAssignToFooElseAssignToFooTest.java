@@ -20,37 +20,6 @@ import il.org.spartan.utils.Utils;
 @SuppressWarnings({ "javadoc", "static-method" }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class IfAssignToFooElseAssignToFooTest {
-  static final Wring<IfStatement> WRING = new IfAssignToFooElseAssignToFoo();
-  @Test public void checkSteps() {
-    azzert.notNull(asSingle("if (a) a = b; else a = c;"));
-    final IfStatement s = asIfStatement(asSingle("if (a) a = b; else a = c;"));
-    azzert.notNull(s);
-    final Assignment then = extract.assignment(then(s));
-    azzert.notNull(then(s).toString(), then);
-    final Assignment elze = extract.assignment(elze(s));
-    azzert.notNull(elze);
-    azzert.that(compatible(then, elze), is(true));
-    azzert.that(WRING.scopeIncludes(s), is(true));
-  }
-  @Test public void checkCompatability() {
-    final Assignment a1 = extract.assignment(Into.s("x=a1;"));
-    final Assignment a2 = extract.assignment(Into.s("x=a2;"));
-    azzert.notNull(a1);
-    azzert.notNull(a2);
-    azzert.that(a1.toString(), is("x=a1"));
-    azzert.that(a2.toString(), is("x=a2"));
-    azzert.aye(compatibleOps(a1.getOperator(), a2.getOperator()));
-    azzert.aye(isSimpleName(left(a1)));
-    azzert.aye(isSimpleName(left(a2)));
-    final SimpleName n1 = asSimpleName(left(a1));
-    final SimpleName n2 = asSimpleName(left(a2));
-    azzert.that(n1.toString(), is("x"));
-    azzert.that(n2.toString(), is("x"));
-    azzert.aye(same(left(a1), left(a2)));
-    azzert.nay(incompatible(a1, a2));
-    azzert.aye(compatible(a1, a2));
-  }
-
   @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope<IfStatement> {
     static String[][] cases = Utils.asArray(//
@@ -94,5 +63,35 @@ public class IfAssignToFooElseAssignToFooTest {
     public Wringed() {
       super(WRING);
     }
+  }
+  static final Wring<IfStatement> WRING = new IfAssignToFooElseAssignToFoo();
+  @Test public void checkCompatability() {
+    final Assignment a1 = extract.assignment(Into.s("x=a1;"));
+    final Assignment a2 = extract.assignment(Into.s("x=a2;"));
+    azzert.notNull(a1);
+    azzert.notNull(a2);
+    azzert.that(a1.toString(), is("x=a1"));
+    azzert.that(a2.toString(), is("x=a2"));
+    azzert.aye(compatibleOps(a1.getOperator(), a2.getOperator()));
+    azzert.aye(isSimpleName(left(a1)));
+    azzert.aye(isSimpleName(left(a2)));
+    final SimpleName n1 = asSimpleName(left(a1));
+    final SimpleName n2 = asSimpleName(left(a2));
+    azzert.that(n1.toString(), is("x"));
+    azzert.that(n2.toString(), is("x"));
+    azzert.aye(same(left(a1), left(a2)));
+    azzert.nay(incompatible(a1, a2));
+    azzert.aye(compatible(a1, a2));
+  }
+  @Test public void checkSteps() {
+    azzert.notNull(asSingle("if (a) a = b; else a = c;"));
+    final IfStatement s = asIfStatement(asSingle("if (a) a = b; else a = c;"));
+    azzert.notNull(s);
+    final Assignment then = extract.assignment(then(s));
+    azzert.notNull(then(s).toString(), then);
+    final Assignment elze = extract.assignment(elze(s));
+    azzert.notNull(elze);
+    azzert.that(compatible(then, elze), is(true));
+    azzert.that(WRING.scopeIncludes(s), is(true));
   }
 }

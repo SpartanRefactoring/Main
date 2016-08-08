@@ -24,31 +24,6 @@ import il.org.spartan.utils.Utils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixExpression> {
-  static final InfixComparisonBooleanLiteral WRING = new InfixComparisonBooleanLiteral();
-  public InfixComparisonBooleanLiteralTest() {
-    super(WRING);
-  }
-  @Test public void removeParenthesis() throws MalformedTreeException, BadLocationException {
-    final String s = " (2) == true";
-    final String wrap = Wrap.Expression.on(s);
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
-    azzert.notNull(u);
-    final Document d = new Document(wrap);
-    azzert.notNull(d);
-    final Trimmer t = new Trimmer();
-    final ASTRewrite r = t.createRewrite(u, null);
-    final TextEdit x = r.rewriteAST(d, null);
-    x.apply(d);
-    final String unpeeled = d.get();
-    if (wrap.equals(unpeeled))
-      fail("Nothing done on " + s);
-    final String peeled = Wrap.Expression.off(unpeeled);
-    azzert.that("No similification of " + s, s, not(peeled));
-    if (gist(peeled).equals(gist(s)))
-      azzert.that("Simpification of " + s + " is just reformatting", gist(peeled), not(gist(s)));
-    assertSimilar(" 2 ", peeled);
-  }
-
   @RunWith(Parameterized.class) //
   public static class WringedInput extends AbstractWringTest.WringedExpression.Infix {
     static String[][] cases = Utils.asArray(//
@@ -114,10 +89,34 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
       azzert.that(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
     }
   }
+  static final InfixComparisonBooleanLiteral WRING = new InfixComparisonBooleanLiteral();
+  static public void fail() {
+    fail(null);
+  }
   static public void fail(final String message) {
     throw message == null ? new AssertionError() : new AssertionError(message);
   }
-  static public void fail() {
-    fail(null);
+  public InfixComparisonBooleanLiteralTest() {
+    super(WRING);
+  }
+  @Test public void removeParenthesis() throws MalformedTreeException, BadLocationException {
+    final String s = " (2) == true";
+    final String wrap = Wrap.Expression.on(s);
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
+    azzert.notNull(u);
+    final Document d = new Document(wrap);
+    azzert.notNull(d);
+    final Trimmer t = new Trimmer();
+    final ASTRewrite r = t.createRewrite(u, null);
+    final TextEdit x = r.rewriteAST(d, null);
+    x.apply(d);
+    final String unpeeled = d.get();
+    if (wrap.equals(unpeeled))
+      fail("Nothing done on " + s);
+    final String peeled = Wrap.Expression.off(unpeeled);
+    azzert.that("No similification of " + s, s, not(peeled));
+    if (gist(peeled).equals(gist(s)))
+      azzert.that("Simpification of " + s + " is just reformatting", gist(peeled), not(gist(s)));
+    assertSimilar(" 2 ", peeled);
   }
 }

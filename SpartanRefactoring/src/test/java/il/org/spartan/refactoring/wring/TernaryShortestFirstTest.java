@@ -19,36 +19,6 @@ import il.org.spartan.utils.Utils;
 @SuppressWarnings({ "javadoc", "static-method" }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class TernaryShortestFirstTest {
-  static final Wring<ConditionalExpression> WRING = new TernaryShortestFirst();
-  @Test public void cyclicBug() {
-    final ConditionalExpression e = Into.c("length(not(notConditional)) + length(then) < length(notConditional) + length(elze) ? null : $");
-    azzert.notNull(e);
-    final Expression elze = extract.core(e.getElseExpression());
-    final Expression then = extract.core(e.getThenExpression());
-    final Expression $ = Subject.pair(elze, then).toCondition(logicalNot(e.getExpression()));
-    azzert.nay(then.toString(), Is.conditional(then));
-    azzert.nay(elze.toString(), Is.conditional(elze));
-    azzert.that($.toString().length(), greaterThan(0));
-    azzert.that($, iz("length(not(notConditional)) + length(then) >= length(notConditional) + length(elze) ? $ : null"));
-  }
-  @Test public void trace1() {
-    final ConditionalExpression e = Into.c("a?f(b,c,d):a");
-    azzert.notNull(e);
-    azzert.that(Subject.pair(extract.core(e.getElseExpression()), extract.core(e.getThenExpression())).toCondition(logicalNot(e.getExpression())),
-        iz("!a?a:f(b,c,d)"));
-  }
-  @Test public void trace2() {
-    final ConditionalExpression e = Into.c("!f(o) ? null : x.f(a).to(e.g())");
-    azzert.notNull(e);
-    final Expression elze = extract.core(e.getElseExpression());
-    final Expression then = extract.core(e.getThenExpression());
-    final Expression $ = Subject.pair(elze, then).toCondition(logicalNot(e.getExpression()));
-    azzert.nay(then.toString(), Is.conditional(then));
-    azzert.nay(elze.toString(), Is.conditional(elze));
-    azzert.that($.toString().length(), greaterThan(0));
-    azzert.that($, iz("f(o) ? x.f(a).to(e.g()) : null"));
-  }
-
   @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Exprezzion<ConditionalExpression> {
     static String[][] cases = Utils.asArray(//
@@ -119,5 +89,34 @@ public class TernaryShortestFirstTest {
     public Wringed() {
       super(WRING);
     }
+  }
+  static final Wring<ConditionalExpression> WRING = new TernaryShortestFirst();
+  @Test public void cyclicBug() {
+    final ConditionalExpression e = Into.c("length(not(notConditional)) + length(then) < length(notConditional) + length(elze) ? null : $");
+    azzert.notNull(e);
+    final Expression elze = extract.core(e.getElseExpression());
+    final Expression then = extract.core(e.getThenExpression());
+    final Expression $ = Subject.pair(elze, then).toCondition(logicalNot(e.getExpression()));
+    azzert.nay(then.toString(), Is.conditional(then));
+    azzert.nay(elze.toString(), Is.conditional(elze));
+    azzert.that($.toString().length(), greaterThan(0));
+    azzert.that($, iz("length(not(notConditional)) + length(then) >= length(notConditional) + length(elze) ? $ : null"));
+  }
+  @Test public void trace1() {
+    final ConditionalExpression e = Into.c("a?f(b,c,d):a");
+    azzert.notNull(e);
+    azzert.that(Subject.pair(extract.core(e.getElseExpression()), extract.core(e.getThenExpression())).toCondition(logicalNot(e.getExpression())),
+        iz("!a?a:f(b,c,d)"));
+  }
+  @Test public void trace2() {
+    final ConditionalExpression e = Into.c("!f(o) ? null : x.f(a).to(e.g())");
+    azzert.notNull(e);
+    final Expression elze = extract.core(e.getElseExpression());
+    final Expression then = extract.core(e.getThenExpression());
+    final Expression $ = Subject.pair(elze, then).toCondition(logicalNot(e.getExpression()));
+    azzert.nay(then.toString(), Is.conditional(then));
+    azzert.nay(elze.toString(), Is.conditional(elze));
+    azzert.that($.toString().length(), greaterThan(0));
+    azzert.that($, iz("f(o) ? x.f(a).to(e.g()) : null"));
   }
 }

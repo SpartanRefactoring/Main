@@ -36,6 +36,9 @@ public final class IfFooSequencerIfFooSameSequencer extends Wring.ReplaceToNextS
     $.setElseStatement(null);
     return $;
   }
+  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
+    return "Consolidate two 'if' statements with identical body";
+  }
   @Override ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!Is.vacuousElse(s))
       return null;
@@ -48,9 +51,6 @@ public final class IfFooSequencerIfFooSameSequencer extends Wring.ReplaceToNextS
         : Wrings.replaceTwoStatements(r, s,
             makeIfWithoutElse(BlockSimplify.reorganizeNestedStatement(then), Subject.pair(s.getExpression(), s2.getExpression()).to(CONDITIONAL_OR)),
             g);
-  }
-  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
-    return "Consolidate two 'if' statements with identical body";
   }
   @Override WringGroup wringGroup() {
     return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;

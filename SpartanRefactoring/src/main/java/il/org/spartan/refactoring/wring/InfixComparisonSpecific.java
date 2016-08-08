@@ -23,18 +23,18 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class InfixComparisonSpecific extends Wring.ReplaceCurrentNode<InfixExpression> {
+  private static final Specificity specifity = new Specificity();
+  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
+    return "Exchange left and right operands of comparison";
+  }
   @Override boolean eligible(final InfixExpression e) {
     return specifity.compare(left(e), right(e)) < 0;
-  }
-  private static final Specificity specifity = new Specificity();
-  @Override public boolean scopeIncludes(final InfixExpression e) {
-    return !e.hasExtendedOperands() && Is.comparison(e) && (Specificity.defined(left(e)) || Specificity.defined(right(e)));
   }
   @Override Expression replacement(final InfixExpression e) {
     return flip(e);
   }
-  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
-    return "Exchange left and right operands of comparison";
+  @Override public boolean scopeIncludes(final InfixExpression e) {
+    return !e.hasExtendedOperands() && Is.comparison(e) && (Specificity.defined(left(e)) || Specificity.defined(right(e)));
   }
   @Override WringGroup wringGroup() {
     return WringGroup.REORDER_EXPRESSIONS;

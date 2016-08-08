@@ -19,8 +19,6 @@ import il.org.spartan.utils.Utils;
 @SuppressWarnings("javadoc") //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class IfEmptyElseTest {
-  static final Wring<IfStatement> WRING = new IfDegenerateElse();
-
   @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope<IfStatement> {
     static String[][] cases = Utils.asArray(//
@@ -78,4 +76,5 @@ public class IfEmptyElseTest {
       azzert.that(extract.statements(elze(s)).size(), is(0));
     }
   }
+  static final Wring<IfStatement> WRING = new IfDegenerateElse();
 }

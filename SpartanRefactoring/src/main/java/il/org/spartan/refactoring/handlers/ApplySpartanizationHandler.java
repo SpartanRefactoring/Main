@@ -16,21 +16,10 @@ import il.org.spartan.utils.*;
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code>
  * @since 2015/08/01 */
 public class ApplySpartanizationHandler extends BaseHandler {
-  /** Instantiates this class */
-  public ApplySpartanizationHandler() {
-    super(null);
-  }
   static final Spartanization[] safeSpartanizations = { //
       new Trimmer() };
-  @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    apply(currentCompilationUnit(), getSelectedText());
-    return null;
-  }
   public static void apply(final ICompilationUnit cu) {
     apply(cu, new Range(0, 0));
-  }
-  public static void apply(final ICompilationUnit cu, final Range r) {
-    apply(cu, r == null || r.size() <= 0 ? new TextSelection(0, 0) : new TextSelection(r.from, r.size()));
   }
   public static void apply(final ICompilationUnit cu, final ITextSelection t) {
     for (final Spartanization s : safeSpartanizations)
@@ -42,9 +31,20 @@ public class ApplySpartanizationHandler extends BaseHandler {
         x.printStackTrace();
       }
   }
+  public static void apply(final ICompilationUnit cu, final Range r) {
+    apply(cu, r == null || r.size() <= 0 ? new TextSelection(0, 0) : new TextSelection(r.from, r.size()));
+  }
   private static ITextSelection getSelectedText() {
     final IEditorPart ep = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
     final ISelection s = ep.getEditorSite().getSelectionProvider().getSelection();
     return !(s instanceof ITextSelection) ? null : (ITextSelection) s;
+  }
+  /** Instantiates this class */
+  public ApplySpartanizationHandler() {
+    super(null);
+  }
+  @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
+    apply(currentCompilationUnit(), getSelectedText());
+    return null;
   }
 }

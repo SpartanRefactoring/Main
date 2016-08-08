@@ -37,6 +37,21 @@ public enum Is {
   public static boolean block(final ASTNode n) {
     return is(n, BLOCK);
   }
+  /** Determine whether the curly brackets of an {@link IfStatement} are
+   * vacuous.
+   * @param s JD
+   * @return <code><b>true</b></code> <i>iff</i> the curly brackets are
+   *         essential */
+  static boolean blockEssential(final IfStatement s) {
+    if (s == null)
+      return false;
+    final Block b = asBlock(parent(s));
+    if (b == null)
+      return false;
+    final IfStatement parent = asIfStatement(parent(b));
+    return parent != null && (elze(parent) == null || recursiveElze(s) == null)
+        && (elze(parent) != null || recursiveElze(s) != null || blockRequiredInReplacement(parent, s));
+  }
   public static boolean blockEssential(final Statement s) {
     return blockEssential(asIfStatement(s));
   }
@@ -201,6 +216,9 @@ public enum Is {
   public static boolean infix(final ASTNode n) {
     return is(n, INFIX_EXPRESSION);
   }
+  private static boolean is(final ASTNode n, final int type) {
+    return n != null && type == n.getNodeType();
+  }
   /** @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the node is an Expression
    *         Statement of type Post or Pre Expression with ++ or -- operator
@@ -217,6 +235,12 @@ public enum Is {
       default:
         return false;
     }
+  }
+  private static boolean isOneOf(final int i, final int... is) {
+    for (final int j : is)
+      if (i == j)
+        return true;
+    return false;
   }
   /** Determine whether an item is the last one in a list
    * @param t a list item
@@ -271,6 +295,9 @@ public enum Is {
   public static boolean nonAssociative(final ASTNode n) {
     return nonAssociative(asInfixExpression(n));
   }
+  private static boolean nonAssociative(final InfixExpression e) {
+    return e != null && in(e.getOperator(), MINUS, DIVIDE, REMAINDER);
+  }
   /** @param e JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an expression
    *         whose type is provably not of type {@link String}, in the sense
@@ -278,6 +305,47 @@ public enum Is {
    *         strings. concatenation. */
   public static boolean notString(final Expression e) {
     return notStringSelf(e) || notStringUp(e) || notStringDown(asInfixExpression(e));
+  }
+  /** Determine whether an {@link Expression} could not be evaluated as a
+   * string.
+   * @param e JD
+   * @return <code><b>true</b></code> <i>iff</i> the parameter is not a string
+   *         or composed of appended strings */
+  static boolean notStringDown(final Expression e) {
+    return notStringSelf(e) || notStringDown(asInfixExpression(e));
+  }
+  static boolean notStringDown(final InfixExpression e) {
+    return e != null && (e.getOperator() != PLUS || Are.notString(extract.allOperands(e)));
+  }
+  static boolean notStringSelf(final Expression e) {
+    return Funcs.intIsIn(e.getNodeType(), //
+        ARRAY_CREATION, //
+        BOOLEAN_LITERAL, //
+        CHARACTER_LITERAL, //
+        INSTANCEOF_EXPRESSION, //
+        NULL_LITERAL, // null + null is an error, not a string.
+        NUMBER_LITERAL, //
+        PREFIX_EXPRESSION //
+    //
+    );
+  }
+  private static boolean notStringUp(final Expression e) {
+    for (ASTNode context = e.getParent(); context != null; context = context.getParent())
+      switch (context.getNodeType()) {
+        case INFIX_EXPRESSION:
+          if (asInfixExpression(context).getOperator().equals(PLUS))
+            continue;
+          return true;
+        case ARRAY_ACCESS:
+        case PREFIX_EXPRESSION:
+        case POSTFIX_EXPRESSION:
+          return true;
+        case PARENTHESIZED_EXPRESSION:
+          continue;
+        default:
+          return false;
+      }
+    return false;
   }
   /** Determine whether a node is the <code><b>null</b></code> keyword
    * @param n JD
@@ -382,6 +450,26 @@ public enum Is {
         return false;
     }
   }
+  static boolean sideEffectFreeArrayCreation(final ArrayCreation c) {
+    final ArrayInitializer i = c.getInitializer();
+    return sideEffectsFree(c.dimensions()) && (i == null || sideEffectsFree(i.expressions()));
+  }
+  static boolean sideEffectFreePrefixExpression(final PrefixExpression e) {
+    return in(e.getOperator(), PrefixExpression.Operator.PLUS, PrefixExpression.Operator.MINUS, PrefixExpression.Operator.COMPLEMENT,
+        PrefixExpression.Operator.NOT) && sideEffectFree(e.getOperand());
+  }
+  private static boolean sideEffectsFree(final Expression... es) {
+    for (final Expression e : es)
+      if (!sideEffectFree(e))
+        return false;
+    return true;
+  }
+  private static boolean sideEffectsFree(final List<?> os) {
+    for (final Object o : os)
+      if (o == null || !sideEffectFree(Funcs.asExpression((ASTNode) o)))
+        return false;
+    return true;
+  }
   /** Determine whether an {@link Expression} is so basic that it never needs to
    * be placed in parenthesis.
    * @param e JD
@@ -483,93 +571,5 @@ public enum Is {
    *         declaration statement. */
   public static boolean variableDeclarationStatement(final ASTNode n) {
     return is(n, VARIABLE_DECLARATION_STATEMENT);
-  }
-  /** Determine whether the curly brackets of an {@link IfStatement} are
-   * vacuous.
-   * @param s JD
-   * @return <code><b>true</b></code> <i>iff</i> the curly brackets are
-   *         essential */
-  static boolean blockEssential(final IfStatement s) {
-    if (s == null)
-      return false;
-    final Block b = asBlock(parent(s));
-    if (b == null)
-      return false;
-    final IfStatement parent = asIfStatement(parent(b));
-    return parent != null && (elze(parent) == null || recursiveElze(s) == null)
-        && (elze(parent) != null || recursiveElze(s) != null || blockRequiredInReplacement(parent, s));
-  }
-  /** Determine whether an {@link Expression} could not be evaluated as a
-   * string.
-   * @param e JD
-   * @return <code><b>true</b></code> <i>iff</i> the parameter is not a string
-   *         or composed of appended strings */
-  static boolean notStringDown(final Expression e) {
-    return notStringSelf(e) || notStringDown(asInfixExpression(e));
-  }
-  static boolean notStringDown(final InfixExpression e) {
-    return e != null && (e.getOperator() != PLUS || Are.notString(extract.allOperands(e)));
-  }
-  static boolean notStringSelf(final Expression e) {
-    return Funcs.intIsIn(e.getNodeType(), //
-        ARRAY_CREATION, //
-        BOOLEAN_LITERAL, //
-        CHARACTER_LITERAL, //
-        INSTANCEOF_EXPRESSION, //
-        NULL_LITERAL, // null + null is an error, not a string.
-        NUMBER_LITERAL, //
-        PREFIX_EXPRESSION //
-    //
-    );
-  }
-  static boolean sideEffectFreeArrayCreation(final ArrayCreation c) {
-    final ArrayInitializer i = c.getInitializer();
-    return sideEffectsFree(c.dimensions()) && (i == null || sideEffectsFree(i.expressions()));
-  }
-  static boolean sideEffectFreePrefixExpression(final PrefixExpression e) {
-    return in(e.getOperator(), PrefixExpression.Operator.PLUS, PrefixExpression.Operator.MINUS, PrefixExpression.Operator.COMPLEMENT,
-        PrefixExpression.Operator.NOT) && sideEffectFree(e.getOperand());
-  }
-  private static boolean is(final ASTNode n, final int type) {
-    return n != null && type == n.getNodeType();
-  }
-  private static boolean isOneOf(final int i, final int... is) {
-    for (final int j : is)
-      if (i == j)
-        return true;
-    return false;
-  }
-  private static boolean nonAssociative(final InfixExpression e) {
-    return e != null && in(e.getOperator(), MINUS, DIVIDE, REMAINDER);
-  }
-  private static boolean notStringUp(final Expression e) {
-    for (ASTNode context = e.getParent(); context != null; context = context.getParent())
-      switch (context.getNodeType()) {
-        case INFIX_EXPRESSION:
-          if (asInfixExpression(context).getOperator().equals(PLUS))
-            continue;
-          return true;
-        case ARRAY_ACCESS:
-        case PREFIX_EXPRESSION:
-        case POSTFIX_EXPRESSION:
-          return true;
-        case PARENTHESIZED_EXPRESSION:
-          continue;
-        default:
-          return false;
-      }
-    return false;
-  }
-  private static boolean sideEffectsFree(final Expression... es) {
-    for (final Expression e : es)
-      if (!sideEffectFree(e))
-        return false;
-    return true;
-  }
-  private static boolean sideEffectsFree(final List<?> os) {
-    for (final Object o : os)
-      if (o == null || !sideEffectFree(Funcs.asExpression((ASTNode) o)))
-        return false;
-    return true;
   }
 }

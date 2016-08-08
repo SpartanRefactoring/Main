@@ -55,14 +55,14 @@ public class TernaryCollapse extends Wring.ReplaceCurrentNode<ConditionalExpress
         : same(thenThen, elze)
             ? Subject.pair(thenElse, elze).toCondition(Subject.pair(e.getExpression(), logicalNot(then.getExpression())).to(CONDITIONAL_AND)) : null;
   }
+  @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
+    return "Eliminate nested conditional expression";
+  }
   @Override Expression replacement(final ConditionalExpression e) {
     return collapse(e);
   }
   @Override boolean scopeIncludes(final ConditionalExpression e) {
     return collapse(e) != null;
-  }
-  @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
-    return "Eliminate nested conditional expression";
   }
   @Override WringGroup wringGroup() {
     return WringGroup.IF_TO_TERNARY;
