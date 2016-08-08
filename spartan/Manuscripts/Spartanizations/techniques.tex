@@ -168,7 +168,75 @@ if (this == null) return super();
   
   \end{itemize}
 
-\subsection{Early returns and the such}
+\subsection{Variable Elimination}
+
+Spartan programming promote a coding style that do not use many variables, meaning that it strives to inline instructions instead of 
+storing their results on variables. The spartanized version of a code not originally written in the Spartan way, would 
+probably see many of the included variable deleted whenever and wherever it is possible.
+
+The idea behind this approach is to reduce the cognitive burden of the developers, either in case of whom is coding who has to spent
+time and effort in finding effective names, either in the case of a reader who need to put some effort to figure out what is the meaning of 
+a variable, starting from its name. 
+
+Since variables change, it needs to be sure that it happens when it is supposed to do. Moreover it is needed to associate a role to a variables,
+so that the code that reads that variable can understand and appreciate it and figure out the list of location where it may be read (CHANGE).
+
+These are some technique for variable elimination.
+
+\subsubsection{Variable Inlining}
+
+The following is an autoexplicative example of inlining:
+
+\begin{code}{JAVA}
+double a = p.area();
+return a; 
+\end{code}
+
+becomes
+
+\begin{code}{JAVA}
+return p.area();  
+\end{code}
+
+\subsection{Early returns} 
+
+Another technique for variable elimination is the early return and it consist in returning the result of a computation
+as soon as it is available, instead of storing it in a variable (and then returning it).
+An example of early return is reported in the following code.
+\begin{code}{JAVA}
+private ResultRenderer getRenderer() throws InstantiationException, 
+			    IllegalAccessException, ClassNotFoundException {
+    ResultRenderer renderer = new DefaultResultRenderer();
+    if (_resultRenderer != null)
+        renderer = (ResultRenderer) Class.forName(_resultRenderer).newInstance();
+    return renderer;
+}
+\end{code}
+With the early return it becomes:
+\begin{code}{JAVA}
+private ResultRenderer getRenderer() throws InstantiationException,
+                             IllegalAccessException, ClassNotFoundException {
+    return _resultRenderer != null ? (ResultRenderer) 
+        Class.forName(_resultRenderer).newInstance() : DefaultResultRenderer();
+} 
+\end{code}
+
+
+%  rationale behind the Spartan programming's desire to eliminate variables is that every variable places a burden on both the reader and the writer.
+% Each variable has a name. The code writer must spend precious mental effort on picking a good name for the variable. The code reader must spend similar 
+% effort in figuring out the intention of the reader from the name.
+% Variables tend to change. The code writer must invest resources in making sure that the variable is changed only when it is supposed to. The code reader must 
+% work out the set of locations that may change the variable, and understand the nature of these changes.
+% Variables may be used by the code. The code writer must define a role for that variable which suggests where that variable may be read. The code reader must 
+% understand that role, and to properly appreciate that role, he must work out the list of code locations in which the variable may be read.
+
+\begin{itemize}
+  \item Off load exceptional cases quickly.
+  \item inline single use of variables.
+  \item Inline multiple use of variables: if 1) result is shorter and 2) the expression has no side effects.
+  \item Pseudo inlining with initializers.
+  \item Scope:
+\end{itemize}
 \begin{itemize}
 \item Off load exceptional cases quickly.
 \item inline single use of variables.
@@ -218,9 +286,9 @@ if (this == null) return super();
 
 \item Control simplification
 \begin{itemize}
- \item \item Ternarize
-\item Early return
-\item Example: 
+  \item \item Ternarize
+  \item Early return
+  \item Example: 
 \begin{code}{JAVA}
 @SuppressWarnings("unused") private
 void earlyReturn(int a) {
@@ -234,37 +302,44 @@ void earlyReturn(int a) {
   }
 }
 \end{code}
+    \end{itemize}
 \end{itemize}
-\end{itemize}
-
 \begin{itemize}
 \item Switch Normalization
 \item Renamings:
 \begin{itemize}
- \item In constructors: Arguments to corresponding field names
- \item In fields: to canonical instance name or pluralized
- \item In getters: Change name to fieldName if it is a getter.
- \item In Methods
+  \item In constructors: Arguments to corresponding field names
+  \item In fields: to canonical instance name or pluralized
+  \item In getters: Change name to fieldName if it is a getter.
+  \item In Methods
+  \item In local variables:
+  \item return variable to \$
 \end{itemize}
-
-\item In local variables:
-\item return variable to \$
 \item Change argument to one single case letter
 \item In world amalgams, use the first letter of the last word.
-\item Deal with multiplicities of arrays
-\item Deal with multiplicities of collections
-\item Deal with nested multiplicities
+\item Multiplicities
+\begin{itemize}
+  \item Deal with multiplicities of arrays
+  \item Deal with multiplicities of collections
+  \item Deal with nested multiplicities
+\end{itemize}
 \item Change return type of void to ClassName and return this
-\item Single argument:
-\item To \_\_ if unused
-\item To \$ in case it is returned
-\item To fieldName in case it is a setter
-\item To ¢ in case method has no inner methods and is not a setter
-\item Any number of arguments:
-\item To \$ in case it is returned
-\item To__(n) if it is unused and documented as such
-\item Change argument to one single case letter
-\item In world amalgams, use the first letter of the last word.
-\item Deal with multiplicities
+\begin{itemize}
+  \item Single argument:
+  \begin{itemize}
+    \item To \_\_ if unused
+    \item To \$ in case it is returned
+    \item To fieldName in case it is a setter
+    \item To ¢ in case method has no inner methods and is not a setter
+   \end{itemize}
+  \begin{itemize}
+    \item Any number of arguments:
+    \item To \$ in case it is returned
+    \item To__(n) if it is unused and documented as such
+   \end{itemize}
+  % \item Change argument to one single case letter
+  % \item In world amalgams, use the first letter of the last word.
+  \item Deal with multiplicities
+\end{itemize}
 \end{itemize}
 
