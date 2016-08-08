@@ -7,20 +7,18 @@ Spartanization aims at minimizing:
  \item Conditional statements.
 \end{itemize}
 
-Spartan programming prescribes, a careful use of the variables, stressing the need
-to inline variables that are used only once and emphasizing the use of foreach loops
-in languages implementing it. Variables visibility and accessibility should also be
-possibly minimized, favoring the use of private over public variables whenever it
-is possible.
+% Spartan programming prescribes, a careful use of the variables, stressing the need
+% to inline variables that are used only once and emphasizing the use of foreach loops
+% in languages implementing it. Variables visibility and accessibility should also be
+% possibly minimized, favoring the use of private over public variables whenever it
+% is possible.
 
-Also the names of variables should be taken short for local variables, with short scope,
-leaving to their class names to explicit their behavior. Minimizing variability using
-final and @NonNull annotation. Stress the use of generic names technique. Minimize lifespan
-avoiding persistent variables when it is possible. Favor the use of collection instead
-of arrays. Interfaces should present a minimal number of parameters, also minimizing
-the interaction between them. Favor ternarization over the use of if-then-else constructs
-and use a simplified version of the conditionals that implies an early return. Moreover,
-use an early exit logic with continue, break and return instructions.
+% Also the names of variables should be taken short for local variables, with short scope, leaving to their class names to explicit their behavior. 
+% Minimize lifespan avoiding persistent variables when it is possible. 
+% Favor the use of collection instead of arrays. 
+% Interfaces should present a minimal number of parameters, also minimizing the interaction between them. 
+% Favor ternarization over the use of if-then-else constructs and use a simplified version of the conditionals that implies an early return. 
+% Moreover, use an early exit logic with continue, break and return instructions.
 
 Everything should be formatted in order to make an efficient use of the screen space,
 by removing unnecessary tokens (i.e., redundant parentheses, etc.).
@@ -60,7 +58,7 @@ a = b = x;
   \item Common Suffix of If
   \item Pull out arithmetical negation
   \item Use ternary instead of conditionals.
-  \item convert prefix ++ and--into postfix when possible
+  \item convert prefix ++ and--into postfix when possibled
   \item Example:
 \begin{code}{JAVA}
 x.toString()
@@ -97,7 +95,7 @@ a && b || c && b => (a || c) && c
           \item 12, 13.4
           \item Classes: public, protected, package, private
           \item Fields: Static fields, Fields,
-          \item parameters,
+          \item parameters,d
           \item local variables ordered by scope.
           \item ¢
         \end{enumerate}
@@ -112,6 +110,8 @@ With regards to the naming, Spartan Programming applies three principles:
 \end{itemize}
 Generally speaking, variable names should be chosen based on their scope.
 The shorter the scope the shorter the variable name.
+Minimizing variability using \kk{final} and \kk{@NonNull} annotation. 
+% Stress the use of generic names technique. 
 % Scope plays a rule:
 % in short scopes use short names.
 Some (suggested) common names might be:
@@ -132,8 +132,8 @@ Other prescriptions are the following:
 \begin{itemize}
  \item Use one letter abbreviations.
  \item Also, use ‟x”
- \item Take last word, don't use acronyms.
- \item Use plurals with 's'
+ \item In case of word amalgams, namely multi-words names, take last word. Don't use acronyms.
+ \item Use plurals with 's' (for example for collections).
  \item Do not use unpronouncable names.
  \item Do not use acronyms, unless they are well established (i.e. ASCII, LAN, etc.)
  \item Do not include type (i.e. Integer, Boolean, etc.) or the kind (i.e. public, private, etc.) into the names.
@@ -144,29 +144,6 @@ entity, maybe is try to collapse on that entity multiple functionalities.
 There might be the case to re-think the design, splitting the entity according to the different functionalityies 
 
 % Like the "it" variable in ML programming language or HyperCard programming language on macintosh. Ancient!!!
-
-
-\subsection{Misc}
-\begin{itemize}
-\item Prefix to postifx
-x.equals("a:) to "a.equals(this" (???)
-
-
-\item Associative rule of ifs: 
-  \begin{code}{JAVA}
-if (a) if (b) x;
-\end{code}
-  \begin{code}{JAVA}
-if (a && b) x
-  \end{code}
-% \item Associative rule of ifs: if (a) 
-% \begin{code}{JAVA}if (b) x;\end{code}
-% \begin{code}{JAVA}if (a && b) x\end{code}
-\begin{code}{JAVA}
-if (this == null) return super();
-????\end{code}
-  
-  \end{itemize}
 
 \subsection{Variable Elimination}
 
@@ -198,28 +175,41 @@ becomes
 return p.area();  
 \end{code}
 
-\subsection{Early returns} 
+\subsubsection{Early returns} 
 
 Another technique for variable elimination is the early return and it consist in returning the result of a computation
 as soon as it is available, instead of storing it in a variable (and then returning it).
 An example of early return is reported in the following code.
 \begin{code}{JAVA}
-private ResultRenderer getRenderer() throws InstantiationException, 
-			    IllegalAccessException, ClassNotFoundException {
-    ResultRenderer renderer = new DefaultResultRenderer();
-    if (_resultRenderer != null)
-        renderer = (ResultRenderer) Class.forName(_resultRenderer).newInstance();
-    return renderer;
+private boolean isKeyword(String token, String[] keywords) {
+    for (int i = 0; i < keywords.length; i++)d
+        if (token.equals(keywords[i])) 
+            return true;
+    return false;
 }
 \end{code}
-With the early return it becomes:
+
+Using \kk{forech} construct available in several langues it is possible to 
+avoid the index (in those case in which there are no instructions to access to it).
 \begin{code}{JAVA}
-private ResultRenderer getRenderer() throws InstantiationException,
-                             IllegalAccessException, ClassNotFoundException {
-    return _resultRenderer != null ? (ResultRenderer) 
-        Class.forName(_resultRenderer).newInstance() : DefaultResultRenderer();
-} 
+private boolean isKeyword(String token, String[] keywords) {
+    for (final String element : keywords)
+        if (element.equals(token))
+            return true;
+    return false;
+}
 \end{code}
+The same result can be obtained using the some construct to loop over collections, 
+preferred instead of the arrays, without the use of the \kk{Itarator} class, as 
+in the previous versions of Java.
+% With the early return it becomes:
+% \begin{code}{JAVA}
+% private ResultRenderer getRenderer() throws InstantiationException,
+%                              IllegalAccessException, ClassNotFoundException {
+%     return _resultRenderer != null ? (ResultRenderer) 
+%         Class.forName(_resultRenderer).newInstance() : DefaultResultRenderer();
+% } 
+% \end{code}
 
 
 %  rationale behind the Spartan programming's desire to eliminate variables is that every variable places a burden on both the reader and the writer.
@@ -230,6 +220,62 @@ private ResultRenderer getRenderer() throws InstantiationException,
 % Variables may be used by the code. The code writer must define a role for that variable which suggests where that variable may be read. The code reader must 
 % understand that role, and to properly appreciate that role, he must work out the list of code locations in which the variable may be read.
 
+\subsubsection{Control simplification}
+Spartan programming foster the use of the ternary operator over the \kk{if-else} construct.
+This way the implementation of the factorial
+\begin{code}{JAVA}
+int factorial(int n) {d
+    if (n <= 1)
+        return n;
+    else
+        return n * fact(n - 1);
+}
+\end{code}
+becomes
+\begin{code}{JAVA}
+int factorial(int n) {
+    return n <= 1 ? n : n * fact(n - 1);
+}
+\end{code}
+
+in this case in a return statement that allows inlining of the instruction.
+
+\subsubsection{String simplification Techniques}
+\begin{itemize}
+ \item String transformations
+ \item instead of .toString() use ``" +
+ \item x.equals(“a”) -> “a”.equals(b)
+ \item Auto insert “”
+\end{itemize}
+
+\subsection{Miscellaneous Techniques}
+
+Here we report a series of techninques that not fall expressly in one of the previous category.
+
+\begin{itemize}
+\item Favour prefix operators instead to postifix ones.
+\item In expressions order the operator according to their length (shortest come first)
+or specificity (more specific come first).
+% x.equals("a:) to "a.equals(this" (???)
+
+\item Associative rule of ifs: 
+  \begin{code}{JAVA}
+if (a) if (b) x;
+\end{code}
+  \begin{code}{JAVA}
+if (a && b) x
+  \end{code}
+% \item Associative rule of ifs: if (a) 
+% \begin{code}{JAVA}if (b) x;\end{code}
+% \begin{code}{JAVA}if (a && b) x\end{code}
+\begin{code}{JAVA}
+if (this == null) return super();d
+????\end{code}
+  
+\end{itemize}
+
+% \begin{itemize}
+% INLINING??
 \begin{itemize}
   \item Off load exceptional cases quickly.
   \item inline single use of variables.
@@ -237,72 +283,48 @@ private ResultRenderer getRenderer() throws InstantiationException,
   \item Pseudo inlining with initializers.
   \item Scope:
 \end{itemize}
-\begin{itemize}
-\item Off load exceptional cases quickly.
-\item inline single use of variables.
-\item Inline multiple use of variables: if 1) result is shorter and 2) the expression has no side effects.
-\item Pseudo inlining with initializers.
-\item Scope:
+% \begin{itemize}
+% \item Off load exceptional cases quickly.
+% \item inline single use of variables.
+% \item Inline multiple use of variables: if 1) result is shorter and 2) the expression has no side effects.
+% \item Pseudo inlining with initializers.
+% \item Scope:
 \begin{itemize}
  \item Move into for
  \item Move into try
  \item Move next to use
 \end{itemize}
+\begin{itemize}
 \item Variability (add final when possible.)
 \item Variables (inlining)
 \item What’s first
+\end{itemize}
 \begin{itemize}
  \item Most external escape
  \item Shortest: 2*112*a*ab
  \item Least specific
 \end{itemize}
-\item Simplificatons
 \begin{itemize}
- \item Algebraic simplifications
- \item Logical simplification
- \item Literal simplification
- \item Arithmetical simplification
-\end{itemize}
-\item String simplification
-\begin{itemize}
- \item String transformations
- \item .toString() -> “” +
- \item x.equals(“a”) -> “a”.equals(b)
- \item Auto insert “”
-\end{itemize}
-\item Patterns: 2 * x + 1
-\item Pushdown:
-\item Logical Negation
-\item Arithmetical Negation
-\item Auto distributive
-\item Repeated deterministic expressions
-\item Auto
-\begin{itemize}
- \item Auto Collect
- \item Auto insert/remove 0+ in ternarization.
- \item Auto insert/remove 1*
- \item Auto add “” +
-\end{itemize}
-
-\item Control simplification
-\begin{itemize}
-  \item \item Ternarize
-  \item Early return
-  \item Example: 
-\begin{code}{JAVA}
-@SuppressWarnings("unused") private
-void earlyReturn(int a) {
-  if (new Random().nextInt() <= 3) {
-    earlyReturn(12);
-    earlyReturn(124);
-    } else {
-    earlyReturn(4);
-    earlyReturn(5);
-    earlyReturn(44);
-  }
-}
-\end{code}
-    \end{itemize}
+  \item Simplificatons
+  \begin{itemize}
+    \item Algebraic simplifications
+    \item Logical simplification
+    \item Literal simplification
+    \item Arithmetical simplification
+  \end{itemize}
+  \item Patterns: 2 * x + 1d
+  \item Pushdown:
+   \item Logical Negation
+  \item Arithmetical Negation
+  \item Auto distributive
+  \item Repeated deterministic expressions
+  \item Auto
+  \begin{itemize}
+    \item Auto Collect
+    \item Auto insert/remove 0+ in ternarization.
+    \item Auto insert/remove 1*
+    \item Auto add “” +
+  \end{itemize}
 \end{itemize}
 \begin{itemize}
 \item Switch Normalization
@@ -316,8 +338,8 @@ void earlyReturn(int a) {
   \item return variable to \$
 \end{itemize}
 \item Change argument to one single case letter
-\item In world amalgams, use the first letter of the last word.
-\item Multiplicities
+% \item In world amalgams, use the first letter of the last word.
+% \item Multiplicities
 \begin{itemize}
   \item Deal with multiplicities of arrays
   \item Deal with multiplicities of collections
@@ -343,3 +365,22 @@ void earlyReturn(int a) {
 \end{itemize}
 \end{itemize}
 
+
+% \begin{itemize}
+%   \item \item Ternarize
+%   \item Early return
+%   \item Example: 
+% \begin{code}{JAVA}
+% @SuppressWarnings("unused") private
+% void earlyReturn(int a) {
+%   if (new Random().nextInt() <= 3) {
+%     earlyReturn(12);
+%     earlyReturn(124);
+%     } else {
+%     earlyReturn(4);
+%     earlyReturn(5);
+%     earlyReturn(44);
+%   }
+% }
+% \end{code}
+%     \end{itemize}
