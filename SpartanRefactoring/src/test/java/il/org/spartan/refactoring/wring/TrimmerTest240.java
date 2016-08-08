@@ -868,7 +868,7 @@ public class TrimmerTest240 {
     trimming("if (a) if (b) {} else f(); x();")//
         .to(" if (a) if (!b) f(); x();");
   }
-  @Ignore( "which is the correct behavior?") public void ifDoNotRemoveBracesWithVariableDeclarationStatement() {
+  @Ignore("which is the correct behavior?") public void ifDoNotRemoveBracesWithVariableDeclarationStatement() {
     trimming("if(a) { int i = 3; }").to("");
   }
   @Ignore("Which is the correct behavior?") public void ifDoNotRemoveBracesWithVariableDeclarationStatement2() {
