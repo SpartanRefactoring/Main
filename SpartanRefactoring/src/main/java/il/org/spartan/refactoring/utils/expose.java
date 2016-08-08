@@ -110,7 +110,7 @@ public enum expose {
   public static List<ParameterizedType> typeArguments(final ParameterizedType ¢) {
     return ¢.typeArguments();
   }
-  List<IExtendedModifier> modifiers(SingleVariableDeclaration n) {
+  public List<IExtendedModifier> modifiers(SingleVariableDeclaration n) {
     return n.modifiers();
   }
 }
