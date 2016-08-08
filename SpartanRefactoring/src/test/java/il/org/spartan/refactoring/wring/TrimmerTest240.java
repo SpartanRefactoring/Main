@@ -2857,7 +2857,7 @@ public class TrimmerTest240 {
   @Test public void sortTwoOperands4() {
     trimming("2L*1").to("1*2L");
   }
-  @Test public void stringFromBuilderAddParenthesis() {
+  @Ignore("string builder") public void stringFromBuilderAddParenthesis() {
     trimming("new StringBuilder(f()).append(1+1).toString()").to("\"\" + f() + (1+1)");
   }
   @Ignore("string builder") public void stringFromBuilderGeneral() {
