@@ -1,8 +1,9 @@
 package il.org.spartan.refactoring.wring;
-
+import static il.org.spartan.refactoring.utils.Restructure.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.preferences.*;
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.Wring.*;
 
@@ -90,7 +91,7 @@ import il.org.spartan.refactoring.wring.Wring.*;
     $.setFlags($.getFlags());
     $.setInitializer($.getInitializer());
     $.setType(Funcs.duplicate(n.getType()));
-    scalpel.duplicateInto(n.modifiers(), $.modifiers());
+    duplicateInto(n.modifiers(), $.modifiers());
     return $;
   }
   private static final String unusedVariableName() {
@@ -98,5 +99,9 @@ import il.org.spartan.refactoring.wring.Wring.*;
   }
   @Override String description(final SingleVariableDeclaration d) {
     return "Change name of unused variable " + d.getName().getIdentifier() + " to __";
+  }
+  @Override WringGroup wringGroup() {
+    return WringGroup.RENAME_PARAMETERS;
+    
   }
 }
