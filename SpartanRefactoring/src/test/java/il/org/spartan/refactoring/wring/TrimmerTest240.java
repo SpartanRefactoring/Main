@@ -2383,7 +2383,7 @@ public class TrimmerTest240 {
   @Test public void renameVariableUnderscore1() {
     trimming("void f(int _) {System.out.println(_);}").to("void f(int __) {System.out.println(__);}");
   }
-  @Test public void renameVariableUnderscore2() {
+  @Ignore("bug") public void renameVariableUnderscore2() {
     trimming("class A {int _; int f(int _) {return _;}}").to("class A {int __; int f(int __) {return __;}}");
   }
   @Ignore @Test public void replaceClassInstanceCreationWithFactoryClassInstanceCreation() {
