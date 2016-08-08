@@ -38,8 +38,8 @@ public abstract class VariableBindingVisitor extends ASTVisitor {
     // To be written
   }
   /** replaces {@link #preVisit(ASTNode)}
-   * @param node JD */
-  public void preVisit0(ASTNode node) {
+   * @param n JD */
+  public void preVisit0(ASTNode n) {
     // To be realized by user
   }
 }
