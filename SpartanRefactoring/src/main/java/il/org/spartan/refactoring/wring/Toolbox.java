@@ -61,6 +61,7 @@ public class Toolbox {
             null)
         .add(MethodInvocation.class, //
             new StringEqualsConstant(), //
+            new BooleanConstants(), //
             null)
         .add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //
