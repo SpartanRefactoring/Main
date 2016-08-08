@@ -365,14 +365,14 @@ public enum extract {
       extract.statementsInto((Statement) statement, $);
     return $;
   }
-  private static List<Statement> statementsInto(final Statement s, final List<Statement> $) {
-    switch (s.getNodeType()) {
+  private static List<Statement> statementsInto(final Statement ¢, final List<Statement> $) {
+    switch (¢.getNodeType()) {
       case EMPTY_STATEMENT:
         return $;
       case BLOCK:
-        return extract.statementsInto((Block) s, $);
+        return extract.statementsInto((Block) ¢, $);
       default:
-        $.add(s);
+        $.add(¢);
         return $;
     }
   }
