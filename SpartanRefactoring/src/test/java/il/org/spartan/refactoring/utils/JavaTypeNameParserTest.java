@@ -8,6 +8,10 @@ import il.org.spartan.*;
 @SuppressWarnings({ "javadoc", "static-method" }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class JavaTypeNameParserTest {
+  // some upper, some lower case characters - the upper are more representive.
+  @Test public void Alex_and_Dan_test() {
+    azzert.that(new JavaTypeNameParser("Alex_and_Dan").shortName(), is("ad"));
+  }
   @Test public void alphaNumericMid() {
     azzert.that(new JavaTypeNameParser("Base64Parser").shortName(), is("p"));
   }
@@ -44,15 +48,11 @@ public class JavaTypeNameParserTest {
   @Test public void singleChar() {
     azzert.that(new JavaTypeNameParser("Q").shortName(), is("q"));
   }
+  // all lower case characters - not sure how you want to shorten it.
+  @Test public void some_name_an_electrical_engineer_can_give() {
+    azzert.that(new JavaTypeNameParser("very_low_voltage").shortName(), is("vlv"));
+  }
   @Test public void stringBuilder() {
     azzert.that(new JavaTypeNameParser("StringBuilder").shortName(), is("b"));
-  }
-  //some upper, some lower case characters - the upper are more representive.
-  @Test public void Alex_and_Dan_test() {
-	azzert.that(new JavaTypeNameParser("Alex_and_Dan").shortName(), is("ad"));
-  }
-  //all lower case characters - not sure how you want to shorten it.
-  @Test public void some_name_an_electrical_engineer_can_give() {
-	azzert.that(new JavaTypeNameParser("very_low_voltage").shortName(), is("vlv"));
   }
 }
