@@ -64,7 +64,9 @@ public class Toolbox {
             null)
         .add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //
-            null)
+            new MethodRenameUnusedVariableToUnderscore(), //
+            new VariableRenameUnderscoreToDoubleUnderscore<SingleVariableDeclaration>(), //
+            null)//
         .add(VariableDeclarationFragment.class, //
             new DeclarationAssignment(), //
             new DeclarationInitialiazerAssignment(), //
@@ -115,9 +117,6 @@ public class Toolbox {
         .add(NormalAnnotation.class, //
             new AnnotationDiscardValueName(), //
             new AnnotationRemoveEmptyParentheses(), //
-            null) //
-        .add(VariableDeclaration.class, //
-            new VariableRenameUnderscoreToDoubleUnderscore<>(), //
             null) //
         .seal();
   }
