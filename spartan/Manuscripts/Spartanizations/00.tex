@@ -8,25 +8,36 @@
   {\{ YoGi~$|$~Matteo.Orru \} @cs.technion.ac.il}
 
 \usepackage{\jobname}
+\usepackage{balance}
 
 \begin{document}
 \textsc{de gustibus non est disputandum†{%
     Latin maxim: in matters of taste, there can be no disputes
 }}
 {\let\newpage\relax\maketitle}
-\begin{flushright}
-  \begin{minipage}{2.5in}
-    \normalsize \rmfamily\scshape
-    \color{red}{%
-      suum cuique \newline
-      Tu mortale, essere avvertiti. \newline
-      Tu non Shallt Rimuovere \newline
-      Questo comandamento \newline
-      Mentre ci sono segni di Haste \newline
-      in questo documento !!!! \newline
-    }
-  \end{minipage}
-\end{flushright}
+% \begin{flushright}
+%   \begin{minipage}{2.5in}
+%     \normalsize \rmfamily\scshape
+%     \color{red}{%
+%       suum cuique \newline
+%       Tu mortale, essere avvertiti. \newline
+%       Tu non Shallt Rimuovere \newline
+%       Questo comandamento \newline
+%       Mentre ci sono segni di Haste \newline
+%       in questo documento !!!! \newline
+%     }
+%   \end{minipage}
+% \end{flushright}
+% 
+% \begin{quote}
+%  “Let us change our traditional attitude to the construction of
+% programs: Instead of imagining that our main task is to instruct a
+% computer what to do, let us concentrate rather on explaining to
+% human beings what we want a computer to do... 
+% 
+% Donald Knuth
+% \end{quote}
+
 
 \begin{abstract}
   \input{abstract}
@@ -48,22 +59,22 @@ Finally, \cref{section:zz} concludes.
 \label{section:principia}
 \input{principia}
 
-\section{Main Techniques of Butchering}
-\label{section:techniques}
-\input{techniques}
-
 \section{The Scary Spartan Look}
 \label{section:look}
 \input{look}
+
+\section{Main Techniques of Butchering}
+\label{section:techniques}
+\input{techniques}
 
 \section{Ripping with Jack}
 \label{section:jack}
 \input{jack}
 Jack size.
 
-\section{Some Empirical Results}
-\label{section:look}
-\input{look}
+% \section{Some Empirical Results}
+% \label{section:look}
+% \input{look}
 
 \section{Initial Preliminary Results}
 \label{section:initial}
@@ -72,7 +83,7 @@ Jack size.
 \section{Discussion}
 \label{section:zz}
 \input{zz}
-
+\balance
 \bibliographystyle{abbrv}\small
 \bibliography{%
 \jobname,%

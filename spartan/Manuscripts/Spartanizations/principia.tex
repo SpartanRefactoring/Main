@@ -1,0 +1,51 @@
+Spartan Programming rationale is based on two (???) principles:
+
+\begin{description}
+ \item [\textbf{Babylonian Tower Principle}: ] It states that the
+number of abstraction levels of a software systems is limited.
+  \item [\textbf{The 7 +/- 2 Principle}: ] A famous study
+by Miller, also proved that the cognitive burden people might bear, namely the
+number of cognitive items that can be processed in human being working memory,
+is limited to 7 (plus or minus two) elements. By simplifying the basic element
+of more complex, structured composite component, spartan programming reduce the
+developers' cognitive burden.
+\end{description} 
+
+% However, being in a certain sense, counter intuitive, in order to apply
+% Spartanization on their working routines, the developers need to respect a firm
+% discipline. From a certain standpoint, Spartan Programming might be seen as a
+% list of code style prescription, but it would just scratch the surface. It is
+% far more than that, since it
+% 
+% Being minimized, spartanized code might be less readable that the original.
+% This is ... Spartan programming is not directly concerned with readability, at
+% least not in its subjective and cultural-dependent sense. In fact, spartan
+% programs will bring much misery to anyone preferring long, verbose programs.
+% 
+% Spartanization aims at minimizing:
+% \begin{itemize}
+%  \item Vertical complexity: the number of lines of code.
+%  \item Horizontal complexity.
+%  \item Characters, tokens, parameters and variable.
+%  \item Loops.
+%  \item Conditional statements.
+% \end{itemize}
+% 
+% Spartan programming prescribes, a careful use of the variables, stressing the need
+% to inline variables that are used only once and emphasizing the use of foreach loops
+% in languages implementing it. Variables visibility and accessibility should also be
+% possibly minimized, favoring the use of private over public variables whenever it
+% is possible.
+% 
+% Also the names of variables should be taken short for local variables, with short scope,
+% leaving to their class names to explicit their behavior. Minimizing variability using
+% final and @NonNull annotation. Stress the use of generic names technique. Minimize lifespan
+% avoiding persistent variables when it is possible. Favor the use of collection instead
+% of arrays. Interfaces should present a minimal number of parameters, also minimizing
+% the interaction between them. Favor ternarization over the use of if-then-else constructs
+% and use a simplified version of the conditionals that implies an early return. Moreover,
+% use an early exit logic with continue, break and return instructions.
+% 
+% Everything should be formatted in order to make an efficient use of the screen space,
+% by removing unnecessary tokens (i.e., redundant parentheses, etc.).
+% Methods should be as short as possible.

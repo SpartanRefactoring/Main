@@ -1,4 +1,4 @@
-As a whole, the stackoverlow\urlref{http://stackoverlow.com} community
+As a whole, the Stackoverlow\urlref{http://stackoverlow.com} community
 recommends against asking coding style and coding conventions related questions.
 Tag \cc{code-styling} and its many synonyms: \cc{code-convention},
 \cc{coding-guidelines} are specifically
@@ -11,17 +11,18 @@ no longer on-topic. Refactoring, braces, indentation, Hungarian notation, and
 other stylistic issues relating to code.
 \end{tcolorbox}
 
-As pointed out by this statement, \emph{``curly brakets wars''}, namely discussions 
-on wether, when and how using curly brakets are discuraged. 
+As pointed out by this statement, \emph{``curly brackets wars''}, namely discussions 
+on weather, when and how using curly brackets (and the like), are somehow discouraged. 
 However, such discussions can not be simply relegate to something about personal 
 tastes. 
-As a matter of fact, some of this options are included also in syntax definion of some languages. 
-For example, in \Go forces you to use them \urlref{https://golang.org/doc/faq\#semicolons}.
-Another example migh be that of some Java statement blocks, such as \kk{synchronized}, \kk{try}, \kk{catch},
+As a matter of fact, some of this options are included also in the syntax definition of some languages. 
+For example, in \Go forces you to use curly brackets \urlref{https://golang.org/doc/faq\#semicolons}.
+Another example might be that of some Java statement blocks, such as \kk{synchronized}, \kk{try}, \kk{catch},
 \kk{finally}, for which the curly brackets are compulsory.
-However, on the other hand, sometimes it happens that they can be ingnored, like in a recent addition to 
-the lambda expressions \urlref{http://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html\#syntax}.
-(CHECK the LINK. DID NOT FIND references to curly brackets).\\ 
+On the other hand, sometimes it happens that they can be ignored, like in a recent addition to 
+the lambda expressions \urlref{http://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html\#syntax}
+available in Java.
+\textbf{(CHECK the LINK. DID NOT FIND references to curly brackets)}.
 Thus you can write both the following versions of the same code.
 % the options are maintained.
 % You can write
@@ -30,7 +31,7 @@ Thus you can write both the following versions of the same code.
 \end{code}
 and
 \begin{code}{JAVA}
-  ()-> {3}
+()-> {3}
 \end{code}
 % check this.
 % 
@@ -41,33 +42,42 @@ this kind of ‟religious” wars. Even the Dijksta's maxim ‟\emph{gotos
 are evil}”~\cite{Dijkstra:1968} was challenged in the scientific
 literature~\cite{Knuth:1974,Ramshaw:1988,Bochmann:1973,Sennesh:Gil:2016,Zoethout:1979,Wulf:1979,Clark:1984}.
 
-Telling the story of ‟Spartan Programming”, one particular style guideline for
-\Java, this manuscript is also likely to be contentious. Perhaps even more so
-after examining some ‟spartanized” code such as in \cref{figure:first} 
-may look bizzare to eyes accustomed to traditional \Java code.
-% This manuscript reports in
+It seems that both practitioners and researchers consider code conventions, code style
+something unrelated to other most sensitive issues, such as the design and productivity.
+We think that using an appropriate code convention might have a meaningful impact on the
+design of code and also on its quality.
 
-Why should this be important?
+% Why should this be important?
+The following scenarios might be helpful to clarify this point.
 \begin{itemize}
-    \item Easy to write in your own style, but how can
-      you always adjust to the style of others.
-      Waste of neurons.
-    \item Code comparison. Which part of my change is semantically and which
-      part of this my own personal style.
-    \item Code analysis tools should adjust to different styles and many
+    \item Developers would certainly find easy to write code in their own style. However, software
+    development is carried out in a collaborative environment and developers works together on 
+    the same files. Adjusting the code to others style require a certain effort and it is time consuming. 
+    %       Waste of neurons.
+    \item A common task performed during software development is code comparison. 
+    Since part of the changes might be due to stylistic reasons, it is mandatory to distinguish the 
+    semantically sensitive changes from the stylistic ones. 
+%     Which part of my change is semantically and which
+%       part of this my own personal style.
+    \item Also code analysis tools should adjust to different styles, since there are many
         different ways for doing the same thing.
-    \item METRICS: IN a recent paper Gal and I showed that size
-      is the only thing that matters.
-    \item METRICS: IN a recent paper Gal and I showed that the notion of
-      "size" is very different in different projects.
+    \item Code conventions might affect several metrics. The number of lines of code (LOC) or the number of 
+    tokes (NOT) are influenced by coding styles. In a recent one of the author demonstrated that size
+      is the only thing that matters \cite{Gil:Lalouche:2016}.
+    \item Moreover, the same notion of size has been shown to be very different in different projects \cite{Gil:Lalouche:2016}.
 \end{itemize}
 
-The holly grail of "canonical representation of code" .
+\textbf{The holy grail of "canonical representation of code" .
 Does LOC mean anything?
-Not if you apply different indentation rules.
-A better metric is NOT = number of tokens.
-But even this is influenced by coding styles, including but
-not limited to the famous braces war.
+Not if you apply different indentation rules.}\\
+
+This manuscript present ``Spartan Programming'', a programming style based on many techniques,
+including some already reported in the literature and novel ones and combines them 
+in a systematic way to reduce simultaneusly many different measures of complexity.
+In other words, a Spartan programmer strive to achieve an extreme minimalism and simplicity.
+Even if it can be seen as one of the many code styles available, Spartan Programming differs from
+all of them because of its unifying principle of minimalism and simplicity.
+% This manuscript reports in
 
 \subsection{Background}
 
@@ -88,18 +98,18 @@ of a rationale approach to the problem of defining effective code conventions, m
 related to the fact that when it comes to code styling most of the dialectic efforts are devoted
 to make each personal preferences prevail against the others.
 
-This tendency to trasform technical discussions on disputes about personal preferences 
-in matter of code readability, maintenability (not to mention the developers' efficiency) might 
+This tendency to transform technical discussions on disputes about personal preferences 
+in matter of code readability, maintainability (not to mention the developers' efficiency) might 
 have led Stackoverflow managers to the decision reported in the Introduction, embracing the 
 wiseness of the ancient latins who were used to say that \emph{De gustibus non est disputandum}.
 
-Nowithstanding what reported above, code conventions are considered a worthwhile issue during 
+Notwithstanding what reported above, code conventions are considered a worthwhile issue during 
 the development process, otherwise we would not find style guides for the most important 
-programming languages like (Java, C++, etc.) and from the major players worldwide in 
-the ITC arena, like Oracle and Google \cite{}. 
+programming languages like (Java, C++, etc.) and promoted by the major players in 
+the ITC arena worldwide, like Oracle and Google \cite{}. 
 
-But where these styles a matter of a careful and raional design process?
-What were the underlying principles.
+\textbf{But where these styles a matter of a careful and rational design process?
+What were the underlying principles.}
 
 Last paragraph: many people believe that style is irrelevant and unimportant.
 We believe that it is.
@@ -123,14 +133,15 @@ assumptions about how to code.
 reexamine all assumptions.}
 
 \emph{Rules have changed.
-Utter despise of backward compatability the need to rewrite the code.
+Utter despise of backward compatibility the need to rewrite the code.
 Mention it.} 
 
 % The spartanization tool.
 
-This led to the design of a tool who perform the spartanizations for Java code.
-This is available in the form of Eclipse\urlref{https://eclipse.org/} plugin in the 
-marketplace\urlref{https://marketplace.eclipse.org/}
+Spartanization principles were implemented in a tool automatically apply code transorfation 
+to \emph{spartanize} the code, namely transformation of codes according to the spartan rules, has been developed.
+This tools works for Java code and it is implemented as a plugin for the Eclipse\urlref{https://eclipse.org/} 
+IDE. It is available through the Eclipse marketplace\urlref{https://marketplace.eclipse.org/}
 
 Say that some of your alma mater gang love to do this kind of metrics, but
 no one really knows whether the results are applicable to different projects
@@ -139,57 +150,32 @@ since \cite{Turnu:Concas:Marchesi:Tonelli:11}
 the "Idionsyncratic Projects Hypothesis" I also had a plateau paper with
 Dany and Maayan about this. A number o years ago.
 
-This paper gives an overview of spartanization, future work will be
-experiments.
 
 \subsection{Contribution}
 
-\textbf{(the following text has been adapted by the wiki)}⏎
+The present manuscript makes the following contributions:
 
-Spartan programming is an approach to writing code aimed at improving at
-reducing code complexity by appling many techininques, some already known in
-literature, some others more novel. It was introduced in the mid on nienties
-and it has been a part of some teachings. Its rationale is based on some
-principles, but at the end of the day it is a techninque to pursue an extreme
-minimalism code writing.
+This manuscript present ``Spartan Programming'', a programming style based on many techniques,
+including some already reported in the literature and novel ones and combines them 
+in a systematic way to reduce simultaneusly many different measures of complexity.
+In other words, a Spartan programmer strive to achieve an extreme minimalism and simplicity.
+Even if it can be seen as one of the many code styles available, Spartan Programming differs from
+all of them because of its unifying principle of minimalism and simplicity.
 
-One of these principles is the "Babylonian Tower Principle": It states that the
-number of abstraction levels of a software systems is limited. A famous study
-by Miller, also proved that the cognitive burden people might bear, namely the
-number of cognitive items that can be processed in human being working memory,
-is limited to 7 (plus or minus two) elements. By simplifying the basic element
-of more complex, structured composite component, spartan programming reduce the
-developers' cognitive burden.
+
+Telling the story of ‟Spartan Programming”, one particular style guideline for
+\Java, this manuscript is also likely to be contentious. Perhaps even more so
+after examining some ‟spartanized” code such as in \cref{figure:first} 
+may look bizarre to eyes accustomed to traditional \Java code.
+
+% \textbf{(the following text has been adapted by the wiki)}⏎
 
 However, being in a certain sense, counter intuitive, in order to apply
 Spartanization on their working routines, the developers need to respect a firm
 discipline. From a certain standpoint, Spartan Programming might be seen as a
 list of code style prescription, but it would just scratch the surface. It is
-far more than that, since it
+far more than that, since it ...
 
-Being minimized, spartanized code might be less readable that the original.
-This is ... Spartan programming is not directly concerned with readability, at
-least not in its subjective and cultural-dependent sense. In fact, spartan
-programs will bring much misery to anyone preferring long, verbose programs.
+This paper gives an overview of spartanization, future work will be
+experiments.
 
-Spartanization aims at minimizing Vertical complexity (the number of lines of code),
-Horizontal complexity, the number of tokens, character, parameters and variables,
-as well as reduce the number of loops and conditional statements.
-Spartan programming prescribes, a careful use of the variables, stressing the need
-to inline variables that are used only once and emphasizing the use of foreach loops
-in languages implementing it. Variables visibility and accessibility should also be
-possibly minimized, favoring the use of private over public variables whenever it
-is possible.
-
-Also the names of variables should be taken short for local variables, with short scope,
-leaving to their class names to explicit their behavior. Minimizing variability using
-final and @NonNull annotation. Stress the use of generic names technique. Minimize lifespan
-avoiding persistent variables when it is possible. Favor the use of collection instead
-of arrays. Interfaces should present a minimal number of parameters, also minimizing
-the interaction between them. Favor ternarization over the use of if-then-else constructs
-and use a simplified version of the conditionals that implies an early return. Moreover,
-use an early exit logic with continue, break and return instructions.
-
-Everything should be formatted in order to make an efficient use of the screen space,
-by removing unnecessary tokens (i.e., redundant parentheses, etc.).
-Methods should be as short as possible.
