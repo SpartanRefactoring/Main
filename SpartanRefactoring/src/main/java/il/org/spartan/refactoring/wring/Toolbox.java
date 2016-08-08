@@ -112,6 +112,13 @@ public class Toolbox {
         .add(EnumDeclaration.class, new EnumClean(), null) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover(), null) //
         .add(ReturnStatement.class, new ReturnLastInMethod()) //
+        .add(NormalAnnotation.class, //
+            new AnnotationDiscardValueName(), //
+            new AnnotationRemoveEmptyParentheses(), //
+            null) //
+        .add(VariableDeclaration.class, //
+            new VariableRenameUnderscoreToDoubleUnderscore<>(), //
+            null) //
         .seal();
   }
   public static Toolbox instance() {

@@ -117,6 +117,9 @@ public class Trimmer extends Spartanization {
     @Override public final boolean visit(final VariableDeclarationFragment ¢) {
       return cautiousGo(¢);
     }
+    @Override public final boolean visit(final NormalAnnotation ¢) {
+      return cautiousGo(¢);
+    }
     abstract <N extends ASTNode> boolean go(final N n);
     private boolean cautiousGo(final ASTNode n) {
       return !exclude.isExcluded(n) && go(n);
