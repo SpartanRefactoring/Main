@@ -13,9 +13,8 @@ The ‟Size Before” column of \Cref{table:corpus} provides the main size
 statistics of the constituting artifacts.
 
 \begin{table}[H]
-  \caption{Aggregating statistics of compression power of
-    BZip2 and size of software artifacts
-  corpus before and after compression}
+  \caption{Aggregating statistics, over artifacts in the corpus, 
+  of compression power of BZip2 and size, before and after compression.}
   \label{table:corpus}
   \par\vspace{10pt plus 6pt minus 4pt}
   \centering
@@ -55,7 +54,7 @@ of software's naturalness~\cite{Hindle:Bar:Su:Gabel:Devanbu:12}. The
 measures are similar but not identical: Compression algorithms search
 (and exploit) the input for repetitive patterns of unbounded length, while
 naturalness limits the search to~$n$-grams for some small integer~$n$. Quality
-in compression algorithms is measured by compression \emph{power}, defined as
+in compression algorithms is measured by \emph{compression power}, defined as
 the ratio of uncompressed size to the compressed size. Compression power should
 be correlated with \emph{naturalness}, but it distinct from it.
 
@@ -103,15 +102,15 @@ if we compare the results reported in \cref{table:original} and
 \cref{table:original} the compression power is higher if the BW algorithm is
 applied to the boilerplate code.
 
-% \matteo†{copy and adapt caption from first table in this section}
-
 \begin{table}
-  \caption{Aggregating statistics of compression power of
-    Jack alone and Jack and BZip2.}
+  \caption{
+    Aggregating statistics, over artifacts in the corpus, of size and
+    compression power of Jack and Jack combined with BZip2.
+  }
   \label{table:original}
   \par\vspace{10pt plus 6pt minus 4pt}
   \centering
-  \scalebox{0.75}{%
+  \begin{adjustbox}{max width = \columnwidth}
     \begin{tabular}{l*5r}
       \toprule
       & \multicolumn{2}{c}{\textit{Jack}}
@@ -129,7 +128,8 @@ applied to the boilerplate code.
       \sffamily  Med\@. & 1,822,510  & 2.34  & 343,815   & 6.50 & 15.95⏎
       \sffamily  Range  & 19,241,584 & 11.12 & 3,337,183 & 3.79 & 73.47⏎
       \bottomrule
-    \end{tabular}}
+    \end{tabular}
+  \end{adjustbox}
 \end{table}
 
 \subsection{Pure Spartanization}
@@ -178,7 +178,7 @@ compress than a larger one (REFORMULATE)
   \label{table:total}
   \par\vspace{10pt plus 6pt minus 4pt}
   \centering
-  \scalebox{0.70}{%
+  \begin{adjustbox}{max width=\columnwidth}
     \begin{tabular}{l*5r}
       \toprule
       & \multicolumn{2}{c}{\textit{Size (bytes)}}
@@ -189,14 +189,15 @@ compress than a larger one (REFORMULATE)
       & \textit{Jack + BZip2}
       &      & \textit{Overall}
       & \textit{Partial Spartan.}⏎
-      \midrule % VIM: +,/bottom/-!column -t|sed 's/^/    /'
-      \sffamily  Ave\@. & 4,947,319  & 713,857   & 6.56 & -0.03 & -0.09⏎
-      \sffamily  Min\@. & 430,375    & 75,160    & 4.89 & -0.40 & -0.28⏎
-      \sffamily  Max\@. & 18,890,899 & 3,244,851 & 8.72 & 0.41  & -0.01⏎
-      \sffamily  Med\@. & 1,923,056  & 339,930   & 6.70 & 0.00  & -0.09⏎
-      \sffamily  Range  & 18,460,524 & 3,169,691 & 3.83 & 0.81  & 0.27⏎
+      \midrule % VIM: +,/bottom/-!column -t|sed 's/^/  /'
+  \sffamily  Ave\@.  &  4,947,319   &  713,857    &  6.56  &  -0.03  &  -0.09⏎
+  \sffamily  Min\@.  &  430,375     &  75,160     &  4.89  &  -0.40  &  -0.28⏎
+  \sffamily  Max\@.  &  18,890,899  &  3,244,851  &  8.72  &  0.41   &  -0.01⏎
+  \sffamily  Med\@.  &  1,923,056   &  339,930    &  6.70  &  0.00   &  -0.09⏎
+  \sffamily  Range   &  18,460,524  &  3,169,691  &  3.83  &  0.81   &  0.27⏎
       \bottomrule
-    \end{tabular}}
+    \end{tabular}
+  \end{adjustbox}
 \end{table}
 
 Preliminary results supporting the
