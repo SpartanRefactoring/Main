@@ -23,11 +23,12 @@ statistics of the constituting artifacts.
       \cmidrule(r){2-3}
                        & \textit{Before} & \textit{After} & \multicolumn1c{\textit{Power}}⏎
       \midrule
-      \sffamily Ave.\ & 12,370,223 & 1,272,331 & 9.25⏎
-      \sffamily Min.\ & 1,019,125 & 129,114 & 7.22⏎
-      \sffamily Max.\ & 46,965,422 & 5,607,599 & 12.96⏎
-      \sffamily Med.\ & 5,128,541 & 607,535 & 8.91⏎
-      \sffamily Range & 45,946,297 & 5,478,485 & 5.74⏎
+      % VIM: +,/bottom/-!column -t|awk '{print"      " $0}' 
+      \sffamily  Ave.\  &  12,370,223  &  1,272,331  &  9.25   ⏎
+      \sffamily  Min.\  &  1,019,125   &  129,114    &  7.22   ⏎
+      \sffamily  Max.\  &  46,965,422  &  5,607,599  &  12.96  ⏎
+      \sffamily  Med.\  &  5,128,541   &  607,535    &  8.91   ⏎
+      \sffamily  Range  &  45,946,297  &  5,478,485  &  5.74   ⏎
       \bottomrule
     \end{tabular}
   \end{adjustbox}
@@ -57,7 +58,7 @@ BZip2 starts the search in a broader context, as implied by the
 Burrows-Wheeler algorithm~\cite{Burrows:Wheeler:94}. 
 
 Columns~2 and~3 of \cref{table:corpus} provide statistics of size and
-compression power after BZip2\urlref{http://bzip.org/} compression. 
+compression power after BZip2\urlref{http://bzip.org/} compression. As expected, 
 
 
 
