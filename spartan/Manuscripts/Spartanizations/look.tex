@@ -1,14 +1,15 @@
-Spartan Programming style favour laconicity over verbosity, leading to 
-a code that is (sometimes extremely) minimized. For this reason, spartanized code might 
-be less readable that the original. However, code readability is not one of 
-the main concern of Spartan Programming. All that said, to a certain extent, 
-spartan(ized) code might look a little bit ``scary'' to developers not used to it.
+Spartan Programming style favour laconic expression over the verbose, leading
+to a code that is (sometimes extremely) minimized. For this reason, spartanized
+code might be less readable that the original. However, code readability is not
+one of the main concern of Spartan Programming. All that said, to a certain
+extent, spartan(ized) code might look a little bit ``scary'' to developers not
+accustomed to it.
 
-In the following, we are presenting some examples of Spartan Programming.
-All of them are taken from the source code of the Spartan Refactoring 
-Plugin for Eclipse that has been introduced in \cref{section:eclipse}. 
-This code was developed following the spartan programming rules since 
-the beginning.
+In the following, we are presenting some examples of Spartan
+Programming\footnote{https://github.com/SpartanRefactoring/spartan/blob/master/src/il/org/spartan/misc/Primes.java}.
+All of them are taken from the source code of the Spartan Refactoring Plugin
+for Eclipse that has been introduced in \cref{section:eclipse}.  This code was
+developed following the spartan programming rules since the beginning.
 
 % \Cref{figure:first} report an application of the principles … 
 
@@ -52,7 +53,7 @@ the beginning.
 \begin{figure}[h]
 \label{figure:shock-2}
 \caption{An example of spartan code}
-\begin{Code}{JAVA}{Where was this taken from?}
+\begin{Code}{JAVA}{Primes.java}
 /** Tests for primality.
   * @param ¢ candidate to be tested
   * @return <code><b>true</b></code> <i>iff</i> the parameter is prime. */
@@ -73,13 +74,16 @@ private static boolean isPrime¢(final int i) {££
 Finally in \cref{figure:shock-3} it is possible to see that… 
 
 \begin{figure}[ht]
-  \matteo\footnote{incorrect} \caption{Spartan functions to test for primality%
-\footnote{https://github.com/SpartanRefactoring/spartan/blob/master/src/il/org/spartan/misc/Primes.java}}
-\caption{An example of spartan code}
+  \matteo\footnote{incorrect reference} 
+    \caption{% 
+      Spartan functions to test for primality%
+      \footnote{%
+        https://github.com/SpartanRefactoring/spartan/blob/master/src/il/org/spartan/misc/Primes.java
+      }
+    }
 \label{figure:shock-3}
-\begin{Code}{JAVA}{Where was this taken from?}
-default Set<Variable> freeVariables() {££
 \begin{Code}{JAVA}{Primes.java}
+default Set<Variable> freeVariables() {££
 default Set<Variable> freeVariables() {
     final Set<Variable> $ = new LinkedHashSet<>();
     if (isVariable())

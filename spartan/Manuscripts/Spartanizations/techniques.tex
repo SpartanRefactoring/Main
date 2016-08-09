@@ -7,6 +7,7 @@ Spartanization aims at minimizing:
  \item Conditional statements.
 \end{itemize}
 
+<<<<<<< HEAD
 % Spartan programming prescribes, a careful use of the variables, stressing the need
 % to inline variables that are used only once and emphasizing the use of foreach loops
 % in languages implementing it. Variables visibility and accessibility should also be
@@ -20,6 +21,8 @@ Spartanization aims at minimizing:
 % Favor ternarization over the use of if-then-else constructs and use a simplified version of the conditionals that implies an early return.
 % Moreover, use an early exit logic with continue, break and return instructions.
 
+=======
+>>>>>>> 1d166307efed6cc16d1f88322f10d9036b77d4b0
 Everything should be formatted in order to make an efficient use of the screen space,
 by removing unnecessary tokens (i.e., redundant parentheses, etc.).
 Methods should be as short as possible.
@@ -111,10 +114,14 @@ With regards to the naming, Spartan Programming applies three principles:
 \end{itemize}
 Generally speaking, variable names should be chosen based on their scope.
 The shorter the scope the shorter the variable name.
+<<<<<<< HEAD
 Minimizing variability using \kk{final} and \kk{@NonNull} annotation.
 % Stress the use of generic names technique.
 % Scope plays a rule:
 % in short scopes use short names.
+=======
+Minimizing variability using \kk{final} and \kk{@NonNull} annotation. 
+>>>>>>> 1d166307efed6cc16d1f88322f10d9036b77d4b0
 Some (suggested) common names might be:
 \begin{enumerate}
   \item \$ for the return variable.
@@ -147,36 +154,34 @@ Other prescriptions are the following:
 
 \end{itemize}
 
-Variable name might be also a design guideline. If a developers chose a multi-word variable name for an
-entity, maybe is try to collapse on that entity multiple functionalities.
-There might be the case to re-think the design, splitting the entity according to the different functionalityies
-
-% Like the "it" variable in ML programming language or HyperCard programming language on macintosh. Ancient!!!
+Variable name might be also a design guideline. If a developers chose a
+multi-word variable name for an entity, maybe is try to collapse on that entity
+multiple functionalities.  There might be the case to re-think the design,
+splitting the entity according to the different functionalityies
 
 \subsection{Variable Elimination}
 
 Spartan programming promote a coding style that do not use many variables,
-meaning that it strives to inline instructions instead of storing their
-results on variables. The spartanized version of a code not originally
-written in the Spartan way, would probably see many of the included
-variable deleted whenever and wherever it is possible.
+meaning that it strives to inline instructions instead of storing their results
+on variables. The spartanized version of a code not originally written in the
+Spartan way, would probably see many of the included variable deleted whenever
+and wherever it is possible.
 
 The idea behind this approach is to reduce the cognitive burden of the
-developers, either in case of whom is coding who has to spent time and
-effort in finding effective names, either in the case of a reader who need
-to put some effort to figure out what is the meaning of a variable,
-starting from its name.
+developers, either in case of whom is coding who has to spent time and effort
+in finding effective names, either in the case of a reader who need to put some
+effort to figure out what is the meaning of a variable, starting from its name.
 
-Since variables change, it needs to be sure that it happens when it is
-supposed to do. Moreover it is needed to associate a role to a variables,
-so that the code that reads that variable can understand and appreciate it
-and figure out the list of location where it may be read (CHANGE).
+Since variables change, it needs to be sure that it happens when it is supposed
+to do. Moreover it is needed to associate a role to a variables, so that the
+code that reads that variable can understand and appreciate it and figure out
+the list of location where it may be read (CHANGE).
 
 These are some technique for variable elimination.
 
 \subsubsection{Variable Inlining}
 
-The following is an autoexplicative example of inlining:
+The following is a self explanatory example of inlining:
 
 \begin{code}{JAVA}
 double a = p.area();
@@ -191,9 +196,11 @@ return p.area();
 
 \subsubsection{Early returns}
 
-Another technique for variable elimination is the early return and it consist in returning the result of a computation
-as soon as it is available, instead of storing it in a variable (and then returning it).
-An example of early return is reported in the following code.
+Another technique for variable elimination is the early return and it consist
+in returning the result of a computation as soon as it is available, instead of
+storing it in a variable (and then returning it).  An example of early return
+is reported in the following code.
+
 \begin{code}{JAVA}
 private boolean isKeyword(String token, String[] keywords) {££
     for (int i = 0; i < keywords.length; i++)d
@@ -204,7 +211,8 @@ private boolean isKeyword(String token, String[] keywords) {££
 \end{code}
 
 Using \kk{forech} construct available in several langues it is possible to
-avoid the index (in those case in which there are no instructions to access to it).
+avoid the index (in those case in which there are no instructions to access to
+it).
 \begin{code}{JAVA}
 private boolean isKeyword(String token, String[] keywords) {££
     for (final String element : keywords)
@@ -216,6 +224,7 @@ private boolean isKeyword(String token, String[] keywords) {££
 The same result can be obtained using the some construct to loop over collections,
 preferred instead of the arrays, without the use of the \kk{Itarator} class, as
 in the previous versions of Java.
+
 % With the early return it becomes:
 % \begin{code}{JAVA}
 % private ResultRenderer getRenderer() throws InstantiationException,
@@ -247,7 +256,7 @@ int factorial(int n) {d
 becomes
 \begin{code}{JAVA}
 int factorial(int n) {££
-    return n <= 1 ££? n : n * fact(n - 1);
+  return n <= 1 ££? n : n * fact(n - 1);
 }
 \end{code}
 
@@ -267,10 +276,9 @@ Here we report a series of techniques that not fall expressly in one of the
 previous category.
 
 \begin{itemize}
-\item Favour prefix operators instead to postifix ones.
-\item In expressions order the operator according to their length (shortest come first)
-or specificity (more specific come first).
-% x.equals("a:) to "a.equals(this" (???)
+\item Favor prefix operators over postfix ones.
+\item In expressions order the operator according to their length (shortest
+  come first) or specificity (more specific come first).
 
 \item Associative rule of ifs:
   \begin{code}{JAVA}
