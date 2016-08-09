@@ -71,8 +71,8 @@ are similar but not identical: Compression algorithms search (and exploit) the
 input for repetitive patterns of unbounded length, while naturalness limits the
 search to~$n$-grams for some small integer~$n$. The difficulty with applying
 vanilla naturalness measures is that they become prohibitively slow
-for~$n>5$~(say). Patterns of spartanizations, just like refactoring, often
-manipulate many more than~$5$ tokens.
+for~$n>5$~(say). Alas, patterns of spartanizations, just like refactoring,
+often manipulate many more than~$5$ tokens.
 
 Quality in compression algorithms is measured by \emph{compression power},
 defined as the ratio of uncompressed size to the compressed size. Compression
@@ -135,9 +135,9 @@ when applied in this order.
   \begin{adjustbox}{max width = \columnwidth}
     \begin{tabular}{l*5r}
       \toprule
-      & \multicolumn{2}{c}{\textit{Jack}}
-      & \multicolumn{2}{c}{\textit{Jack+BZip2}}
-      & \multicolumn1c\textit{Combined}⏎
+      & \multicolumn2c{\textit{Jack}}
+      & \multicolumn2c{\textit{Jack+BZip2}}
+      & \multicolumn1c{\textit{Combined}}⏎
       \cmidrule(r){2-3} \cmidrule(r){4-5} \cmidrule(r){6-6}
       & \textit{Size (bytes)}
       & \textit{Powr}
@@ -174,10 +174,11 @@ when BZip2 is applied to the original code, than if it is applied to the Jacked
 code. In other words, approximate naturalness of non-filtered code is better
 than that of jacked code. This should not be a surprise: there are good reasons
 to assume that compression of comments, strings, and boilerplate \kk{import}s,
-is better than that of the code itself. If these are eliminated from the input, then
-compression power show decrease.
+is better than that of the code itself. If these are eliminated from the input,
+then compression power is expected to decrease.
 
 \subsection{Structural Spartanization and Approximate Naturalness}
+
 In the first set of experiments, designed to answer \textbf{RQ1.1}, \Java code
 in the software artifacts were subjected to our automatic spartanization
 tool, configured to employ structural wrings. We then compare the approximate
@@ -185,7 +186,7 @@ naturalness of the automatically spartanized code with that of the original
 code.
 
 The results are summarized in \cref{table:structural}.
-reported the improvement in the compression due to the spartanization. It is
+the improvement in the compression due to the spartanization. It is
 worth to note that we have an improvement in any statistics, in other words the
 spartanization affected positively the compression, increasing the compression
 power. This is counter intuitive, being a small file most difficult to
@@ -197,24 +198,21 @@ compress than a larger one (REFORMULATE)
   \label{table:structural}
   \par\vspace{10pt plus 6pt minus 4pt}
   \centering
-  \scalebox{0.75}{%
-    \begin{tabular}{l*5r}
+  \begin{adjustbox}{max width=\columnwidth}
+    \begin{tabular}{l*3r}
       \toprule
-      & \multicolumn{2}{c}{\textit{Size (bytes)}}
-      & \textit{Power}
-      &\multicolumn{2}{c}{\textit{Improvement}}⏎
-      \cmidrule(r){2-3} \cmidrule(r){5-6}
-      & \textit{Jack}
-      & \textit{Jack + BZip2}
-      & & \textit{with Spartan.} & \textit{Total}⏎
+      & \textit{}⏎
+      \cmidrule(r){2-2} \cmidrule(r){3-3} \cmidrule(r){4-4}
+      &  \multicolumn1c{\itshape BZip2 Power} & \textit{with Spartan.} & \textit{Total}⏎
       \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
-      \sffamily  Ave.  & 5,050,647  & 719,488   & 6.66 & 0.06  & 1.01⏎
-      \sffamily  Min.  & 439,825    & 75,391    & 4.90 & -0.37 & 0.21⏎
-      \sffamily  Max.  & 19,173,224 & 3,275,918 & 8.79 & 0.49  & 1.07⏎
-      \sffamily  Med.  & 1,959,917  & 341,851   & 6.79 & 0.08  & 1.04⏎
-      \sffamily  Range & 18,733,399 & 3,200,527 & 3.89 & 0.86  & 0.87⏎
+      \sffamily  Ave.  &  6.66 & 0.06  & 1.01⏎
+      \sffamily  Min.  &  4.90 & -0.37 & 0.21⏎
+      \sffamily  Max.  &  8.79 & 0.49  & 1.07⏎
+      \sffamily  Med.  &  6.79 & 0.08  & 1.04⏎
+      \sffamily  Range &  3.89 & 0.86  & 0.87⏎
       \bottomrule
-    \end{tabular}}
+    \end{tabular}
+  \end{adjustbox}
 \end{table}
 
 \subsection{Renaming Spartanization}
