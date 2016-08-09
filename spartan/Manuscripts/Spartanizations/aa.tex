@@ -83,29 +83,11 @@ because of its unifying principle of minimalism and simplicity.
 
 \subsection{Background}
 
-% Despite the fact that coding style is a topic that might lead developers to
-% engage heated discussions, to the best of the author's knowledge, there is
-% actually very little scientific work on that.
-% 
-% If one queries for ‟code conventions” †{The search was
-% performed on August 2016 on text, abstract and keywords and
-% restraining the outcomes to the ‟Computer Science” disciplinary area} on
-% Scopus\urlref{http://scopus.org}, one of the most important bibliographic
-% databases, what it comes out is around thousands of results. However, very few of them have \kk{code
-% conventions} among they keywords and deal with code conventions
-
 The alleged \emph{nonchalance} shown by the scientific community towards the
 investigation of a rationale approach to the problem of defining effective code
 conventions, might be related to the fact that when it comes to code styling
 most of the dialectic efforts are devoted to make each personal preferences 
 prevail against the others.
-
-% This tendency to transform technical discussions on disputes about personal preferences
-% in matter of code readability, maintainability (not to mention the developers' efficiency) might
-% have led Stackoverflow managers to the decision reported in the Introduction, embracing the
-% wiseness of the ancient latins who were used to say that \emph{De gustibus non est disputandum}.
-
-% Notwithstanding what reported above, 
 
 On the other hand, code conventions are considered a worthwhile issue during
 the development process, otherwise we would not find style guides for the most important
@@ -115,6 +97,13 @@ and Google\urlref{https://google.github.io/styleguide/javaguide.html}.
 
 \textbf{But where these styles a matter of a careful and rational design process?
 What were the underlying principles.}
+
+Hindle et alii \cite{Hindle:Bar:Su:Gabel:Devanbu:12} analyzed a large corpus of 
+Java software systems, using an approach based on Natural Language Processing (NLP).
+They specifically used the n-gram model as a linguistic model to analyze source code
+and then they compare the feature of the code corpus with those of corpus
+written in natural language. They found meaningful differences, but the most interesting
+one is that code affected by bugs differ more from natural language that the bug free.
 
 Last paragraph: many people believe that style is irrelevant and unimportant.
 We believe that it is.
