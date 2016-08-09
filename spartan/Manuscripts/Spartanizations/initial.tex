@@ -3,18 +3,19 @@
 The main research question that concerns us here is
 \begin{description}
   \item[RQ1] \emph{Is spartan code more natural than non-spartanized code?} also,
-      and more concretely,
-    \begin{description}
-      \item[RQ1.1] \emph{Does structural spartanization contribute software naturalness?}
-      \item[RQ1.2] \emph{Does renaming spartanization contribute software naturalness?}
-  \item[RQ1] \emph{Is spartan code more natural than non-spartanized code?}
+        and more concretely,
+        \begin{description}
+          \item[RQ1.1] \emph{Does structural spartanization contribute software naturalness?}
+          \item[RQ1.2] \emph{Does renaming spartanization contribute software naturalness?}
+          \item[RQ1] \emph{Is spartan code more natural than non-spartanized code?}
+        \end{description}
 \end{description}
 Yet another question that intrigues us here is:
 \begin{description}
   \item[RQ2] Find an approximation of software's
-    naturalness~\cite{Hindle:Bar:Su:Gabel:Devanbu:12} suitable
-    for experiments with spartan code.
-\end{enumerate}
+        naturalness~\cite{Hindle:Bar:Su:Gabel:Devanbu:12} suitable
+        for experiments with spartan code.
+\end{description}
 
 \subsection{Data Corpus}
 We used the ‟Gil-Lalouche”~\cite{Gil:Lalouche:16} software corpus,
@@ -44,11 +45,11 @@ statistics of the constituting artifacts.
       & \textit{After}
       & \multicolumn1c{\textit{Power}}⏎
       \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
- \sffamily  Ave.   &  12,370,223  &  1,272,331  &  9.25⏎
- \sffamily  Min.   &  1,019,125   &  129,114    &  7.22⏎
- \sffamily  Max.   &  46,965,422  &  5,607,599  &  12.96⏎
- \sffamily  Med.   &  5,128,541   &  607,535    &  8.91⏎
- \sffamily  Range  &  45,946,297  &  5,478,485  &  5.74⏎
+      \sffamily  Ave.  & 12,370,223 & 1,272,331 & 9.25⏎
+      \sffamily  Min.  & 1,019,125  & 129,114   & 7.22⏎
+      \sffamily  Max.  & 46,965,422 & 5,607,599 & 12.96⏎
+      \sffamily  Med.  & 5,128,541  & 607,535   & 8.91⏎
+      \sffamily  Range & 45,946,297 & 5,478,485 & 5.74⏎
       \bottomrule
     \end{tabular}
   \end{adjustbox}
@@ -84,11 +85,11 @@ greedy search for repetitions starting at the input's prefix, while BZip2
 starts the search in a broader context, as implied by the Burrows-Wheeler
 algorithm~\cite{Burrows:Wheeler:94}.
 
-Columns~2 and~3 of \cref{table:corpus} provide statistics of compressed size
-and compression power of BZip2\urlref{http://bzip.org/}. As in the study of
-naturalness of software, we witness the fact that projects can be very
-different. There is two fold range variation of their associated compression
-power, as there is in their naturalness.
+The second and third columns of \cref{table:corpus} provide statistics of
+compressed size and compression power of BZip2\urlref{http://bzip.org/}. As in
+the study of naturalness of software, we witness the fact that projects can be
+very different. There is two fold range variation of their associated
+compression power, as there is in their naturalness.
 
 \subsection{The Jack Preprocessor}
 
@@ -99,7 +100,7 @@ material such as configuration information.
 
 Note that \cc{.java} files often contain more text than just plain code.  To
 better focus on the code itself, this study employs \emph{Jack}, a special
-purpose \Java preprocessor applied prior to compression. 
+purpose \Java preprocessor applied prior to compression.
 
 Jack replaces each keyword and operator with a single one byte token. The
 rationale is that keywords such as \kk{class} are read and produced by
@@ -124,7 +125,7 @@ future.
 applied after Jack, and the accumulative compression power of Jack and BZip2
 when applied in this order.
 
-\begin{table} 
+\begin{table}
   \caption{Aggregating statistics, over artifacts in the corpus,
     of size and compression power of Jack and Jack combined with BZip2.
   }
@@ -135,7 +136,7 @@ when applied in this order.
     \begin{tabular}{l*5r}
       \toprule
       & \multicolumn{2}{c}{\textit{Jack}}
-      & \multicolumn{2}{c}{\textit{Jack + BZip2}}
+      & \multicolumn{2}{c}{\textit{Jack+BZip2}}
       & \multicolumn1c\textit{Combined}⏎
       \cmidrule(r){2-3} \cmidrule(r){4-5} \cmidrule(r){6-6}
       & \textit{Size (bytes)}
@@ -144,11 +145,11 @@ when applied in this order.
       & \textit{Powr}
       & \textit{Power}⏎
       \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
- \sffamily  Ave.   &  5,078,034   &  2.78   &  729,934    &  6.60  &  18.37⏎
- \sffamily  Min.   &  456,050     &  1.73   &  77,706     &  4.89  &  10.18⏎
- \sffamily  Max.   &  19,697,634  &  12.85  &  3,414,889  &  8.68  &  83.65⏎
- \sffamily  Med.   &  1,822,510   &  2.34   &  343,815    &  6.50  &  15.95⏎
- \sffamily  Range  &  19,241,584  &  11.12  &  3,337,183  &  3.79  &  73.47⏎
+      \sffamily  Ave.  & 5,078,034  & 2.78  & 729,934   & 6.60 & 18.37⏎
+      \sffamily  Min.  & 456,050    & 1.73  & 77,706    & 4.89 & 10.18⏎
+      \sffamily  Max.  & 19,697,634 & 12.85 & 3,414,889 & 8.68 & 83.65⏎
+      \sffamily  Med.  & 1,822,510  & 2.34  & 343,815   & 6.50 & 15.95⏎
+      \sffamily  Range & 19,241,584 & 11.12 & 3,337,183 & 3.79 & 73.47⏎
       \bottomrule
     \end{tabular}
   \end{adjustbox}
@@ -178,12 +179,12 @@ compression power show decrease.
 
 \subsection{Structural Spartanization and Approximate Naturalness}
 In the first set of experiments, designed to answer \textbf{RQ1.1}, \Java code
-in the software artifacts were subjected to our automatic spartanization 
+in the software artifacts were subjected to our automatic spartanization
 tool, configured to employ structural wrings. We then compare the approximate
 naturalness of the automatically spartanized code with that of the original
 code.
 
-The results are summarized in \cref{table:structural}. 
+The results are summarized in \cref{table:structural}.
 reported the improvement in the compression due to the spartanization. It is
 worth to note that we have an improvement in any statistics, in other words the
 spartanization affected positively the compression, increasing the compression
@@ -191,36 +192,35 @@ power. This is counter intuitive, being a small file most difficult to
 compress than a larger one (REFORMULATE)
 
 \begin{table}
-  \caption{Aggregating statistics of compression power after a structural spartanization.
-  Comparison with the compressione ratio obtained with Jack and BZip2.}
+  \caption{Aggregating statistics of compression power of Jack+BZip2 after
+  automatic structural spartanization, compared with non-spartanized code.}
   \label{table:structural}
   \par\vspace{10pt plus 6pt minus 4pt}
   \centering
   \scalebox{0.75}{%
-  \begin{tabular}{l*5r}
-    \toprule
-    & \multicolumn{2}{c}{\textit{Size (bytes)}}
-    & \textit{Ratio}
-    &\multicolumn{2}{c}{\textit{Improvement}}⏎
-    \cmidrule(r){2-3} \cmidrule(r){5-6}
-    & \textit{Jack}
-    & \textit{Jack + BZip2}
-    & & \textit{with Spartan.} & \textit{Total}⏎
-    \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
- \sffamily  Ave.   &  5,050,647   &  719,488    &  6.66  &  0.06   &  1.01⏎
- \sffamily  Min.   &  439,825     &  75,391     &  4.90  &  -0.37  &  0.21⏎
- \sffamily  Max.   &  19,173,224  &  3,275,918  &  8.79  &  0.49   &  1.07⏎
- \sffamily  Med.   &  1,959,917   &  341,851    &  6.79  &  0.08   &  1.04⏎
- \sffamily  Range  &  18,733,399  &  3,200,527  &  3.89  &  0.86   &  0.87⏎
-    \bottomrule
-  \end{tabular}}
+    \begin{tabular}{l*5r}
+      \toprule
+      & \multicolumn{2}{c}{\textit{Size (bytes)}}
+      & \textit{Power}
+      &\multicolumn{2}{c}{\textit{Improvement}}⏎
+      \cmidrule(r){2-3} \cmidrule(r){5-6}
+      & \textit{Jack}
+      & \textit{Jack + BZip2}
+      & & \textit{with Spartan.} & \textit{Total}⏎
+      \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
+      \sffamily  Ave.  & 5,050,647  & 719,488   & 6.66 & 0.06  & 1.01⏎
+      \sffamily  Min.  & 439,825    & 75,391    & 4.90 & -0.37 & 0.21⏎
+      \sffamily  Max.  & 19,173,224 & 3,275,918 & 8.79 & 0.49  & 1.07⏎
+      \sffamily  Med.  & 1,959,917  & 341,851   & 6.79 & 0.08  & 1.04⏎
+      \sffamily  Range & 18,733,399 & 3,200,527 & 3.89 & 0.86  & 0.87⏎
+      \bottomrule
+    \end{tabular}}
 \end{table}
 
 \subsection{Renaming Spartanization}
-% \matteo†{copy and adapt from first caption}
 \begin{table}
-  \caption{Aggregating statistics of compression power after a total spartanization.
-  Comparison with the compressione ratio obtained with Jack and BZip2.}
+  \caption{Aggregating statistics of compression power of Jack+BZip2 after
+  automatic structural+renaming spartanization, compared with non-spartanized code.}
   \label{table:total}
   \par\vspace{10pt plus 6pt minus 4pt}
   \centering
@@ -228,19 +228,19 @@ compress than a larger one (REFORMULATE)
     \begin{tabular}{l*5r}
       \toprule
       & \multicolumn{2}{c}{\textit{Size (bytes)}}
-      & \textit{Ratio}
+      & \textit{Power}
       &\multicolumn{2}{c}{\textit{Improvement over}}⏎
       \cmidrule(r){2-3} \cmidrule(r){5-6}
       & \textit{Jack}
-      & \textit{Jack + BZip2}
+      & \textit{Jack+BZip2}
       & & \textit{Overall}
       & \textit{Partial Spartan.}⏎
       \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
- \sffamily  Ave\@.  &  4,947,319   &  713,857    &  6.56  &  -0.03  &  -0.09⏎
- \sffamily  Min\@.  &  430,375     &  75,160     &  4.89  &  -0.40  &  -0.28⏎
- \sffamily  Max\@.  &  18,890,899  &  3,244,851  &  8.72  &  0.41   &  -0.01⏎
- \sffamily  Med\@.  &  1,923,056   &  339,930    &  6.70  &  0.00   &  -0.09⏎
- \sffamily  Range   &  18,460,524  &  3,169,691  &  3.83  &  0.81   &  0.27⏎
+      \sffamily  Ave\@. & 4,947,319  & 713,857   & 6.56 & -0.03 & -0.09⏎
+      \sffamily  Min\@. & 430,375    & 75,160    & 4.89 & -0.40 & -0.28⏎
+      \sffamily  Max\@. & 18,890,899 & 3,244,851 & 8.72 & 0.41  & -0.01⏎
+      \sffamily  Med\@. & 1,923,056  & 339,930   & 6.70 & 0.00  & -0.09⏎
+      \sffamily  Range  & 18,460,524 & 3,169,691 & 3.83 & 0.81  & 0.27⏎
       \bottomrule
     \end{tabular}
   \end{adjustbox}
