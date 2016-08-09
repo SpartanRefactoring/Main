@@ -5,11 +5,10 @@ from~\emph{GitHub's Trending
   repositories}~\urlref{https://github.com/trending?l=java＆since=monthly} and
 the \emph{GitHub \Java Corpus}%
 \urlref{http://groups.inf.ed.ac.uk/cup/javaGithub/}
-list due to Charles and Allamanis~\matteo\cite{Charles:Allamanis:13}
-
-\matteo:We may be making a grave mistake here. Is this guy's last name Charles,
-or is it that Charles is his first?
-
+list due to Charles and Allamanis%~\matteo
+\cite{Allamanis:Sutton:13}.
+% \matteo:We may be making a grave mistake here. Is this guy's last name Charles,
+% or is it that Charles is his first?
 The ‟Size Before” column of \Cref{table:corpus} provides the main size
 statistics of the constituting artifacts.
 
@@ -43,7 +42,7 @@ statistics of the constituting artifacts.
 Notably, sizes span more than one order of magnitude, from one megabyte of
 source to circa~47, the median being around five megabytes, the average around
 twelve. The GL corpus was used before for the study of software metrics.
-See~\cite{Gil:Lalouche:16}~\cite{Gil:Lalouche:EMPIRICALSOFTWAREENGINEERING}
+See~\cite{Gil:Lalouche:16}~\cite{Gil:Lalouche:16b}
 \matteo for
 reproducibility details and for a description of the artifacts' selection
 process. Sufficient to us here is that the selection was independent of the
@@ -104,11 +103,11 @@ if we compare the results reported in \cref{table:original} and
 \cref{table:original} the compression power is higher if the BW algorithm is
 applied to the boilerplate code.
 
-\matteo†{copy and adapt caption from first table in this section}
+% \matteo†{copy and adapt caption from first table in this section}
 
 \begin{table}
-  \caption{The results of the compression using the Jack algorithm alone and
-  both Jack and Burrows-Wheeler algorithms combined}
+  \caption{Aggregating statistics of compression power of
+    Jack alone and Jack and BZip2.}
   \label{table:original}
   \par\vspace{10pt plus 6pt minus 4pt}
   \centering
@@ -143,15 +142,15 @@ worth to note that we have an improvement in any statistics, in other words the
 spartanization affected positively the compression, increasing the compression
 power. This is counter intuitive, being a small file most difficult to
 compress than a larger one (REFORMULATE)
-\matteo†{copy and adapt from first caption}
+% \matteo†{copy and adapt from first caption}
 
 \begin{table}
-  \caption{The results after performing a partial spartanization of the code,
-    compared with the compression ratios obtained with the Jack and
-  Burrows-Wheeler algorithm}
+  \caption{Aggregating statistics of compression power after a partial spartanization.
+  Comparison with the compressione ratio obtained with Jack and BZip2.}
   \label{table:partial}
   \par\vspace{10pt plus 6pt minus 4pt}
   \centering
+  \scalebox{0.75}{%
   \begin{tabular}{l*5r}
     \toprule
     & \multicolumn{2}{c}{\textit{Size (bytes)}}
@@ -168,15 +167,14 @@ compress than a larger one (REFORMULATE)
     \sffamily  Med\@. & 1,959,917  & 341,851   & 6.79 & 0.08  & 1.04  ⏎
     \sffamily  Range  & 18,733,399 & 3,200,527 & 3.89 & 0.86  & 0.87  ⏎
     \bottomrule
-  \end{tabular}
+  \end{tabular}}
 \end{table}
 
 \subsection{Renaming Spartanization}
-\matteo†{copy and adapt from first caption}
+% \matteo†{copy and adapt from first caption}
 \begin{table}
-  \caption{The results after performing a total spartanization of the code,
-    compared with the compression ratios obtained with the Jack and
-  Burrows-Wheeler algorithm.}
+  \caption{Aggregating statistics of compression power after a total spartanization.
+  Comparison with the compressione ratio obtained with Jack and BZip2.}
   \label{table:total}
   \par\vspace{10pt plus 6pt minus 4pt}
   \centering
