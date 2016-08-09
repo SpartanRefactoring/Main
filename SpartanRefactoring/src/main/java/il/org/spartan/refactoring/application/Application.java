@@ -46,6 +46,7 @@ import il.org.spartan.utils.*;
       try {
         return roundStats.get(r).intValue();
       } catch (final IndexOutOfBoundsException x) {
+        x.printStackTrace();
         return 0;
       }
     }

@@ -46,6 +46,7 @@ public class Xiphos {
       try {
         return roundStats.get(r).intValue();
       } catch (final IndexOutOfBoundsException e) {
+        e.printStackTrace();
         return 0;
       }
     }
