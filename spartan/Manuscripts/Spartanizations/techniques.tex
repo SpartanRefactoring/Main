@@ -7,25 +7,6 @@ Spartanization aims at minimizing:
   \item Conditional statements.
 \end{itemize}
 
-% Spartan programming prescribes, a careful use of the variables, stressing the
-% need to inline variables that are used only once and emphasizing the use of
-% foreach loops in languages implementing it. Variables visibility and
-% accessibility should also be possibly minimized, favoring the use of private
-% over public variables whenever it is possible.
-
-% Also the names of variables should be taken short for local variables, with
-% short scope, leaving to their class names to explicit their behavior.
-% Minimize lifespan avoiding persistent variables when it is possible.  Favor
-% the use of collection instead of arrays.  Interfaces should present a minimal
-% number of parameters, also minimizing the interaction between them.  Favor
-% ternarization over the use of if-then-else constructs and use a simplified
-% version of the conditionals that implies an early return.  Moreover, use an
-% early exit logic with continue, break and return instructions.
-
-Everything should be formatted in order to make an efficient use of the screen
-space, by removing unnecessary tokens (i.e., redundant parentheses, etc.).
-Methods should be as short as possible.
-
 \subsection{Syntactic Baggage}
 A set of rules are aimed at removing redundant tokens (i.e., brackets,
 modifiers, etc.).
@@ -232,20 +213,6 @@ collections, preferred instead of the arrays, without the use of the
 % Class.forName(ᵣesultRenderer).newInstance() : DefaultResultRenderer();
 % }
 % \end{code}
-
-% rationale behind the Spartan programming's desire to eliminate variables is
-% that every variable places a burden on both the reader and the writer.  Each
-% variable has a name. The code writer must spend precious mental effort on
-% picking a good name for the variable. The code reader must spend similar
-% effort in figuring out the intention of the reader from the name.  Variables
-% tend to change. The code writer must invest resources in making sure that the
-% variable is changed only when it is supposed to. The code reader must work
-% out the set of locations that may change the variable, and understand the
-% nature of these changes.  Variables may be used by the code. The code writer
-% must define a role for that variable which suggests where that variable may
-% be read. The code reader must understand that role, and to properly
-% appreciate that role, he must work out the list of code locations in which
-% the variable may be read.
 
 \subsubsection{Control simplification}
 Spartan programming foster the use of the ternary operator over the
