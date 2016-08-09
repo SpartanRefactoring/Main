@@ -251,6 +251,9 @@ public interface Utils {
    * &#64;param $ an instance of the type parameter
    * &#64;return its parameter, after verifying that it is not <code><b>null</b>
    *         </code>
+   * @param $ result
+   * @param <T> JD
+   * @return the parameter, but guaranteed to be {@link NonNull}
    * @see #mustBeNull(Object) */
   @Nullable public static <T> T canBeNull(final T $) {
     return $;
@@ -283,7 +286,7 @@ public interface Utils {
    * @return its parameter, after verifying that it is not
    *         <code><b>null</b></code>
    * @see #mustBeNull(Object) */
-  static <T> T cantBeNull(final @Nullable T $) {
+  static <T> @NonNull T cantBeNull(final @Nullable T $) {
     assert $ != null;
     return $;
   }

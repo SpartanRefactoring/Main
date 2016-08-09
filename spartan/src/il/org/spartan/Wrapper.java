@@ -19,7 +19,7 @@ public class Wrapper<T> {
   }
   @SuppressWarnings("unchecked") //
   @Override public Wrapper<T> clone() throws CloneNotSupportedException {
-    return (Wrapper<T>) Utils.cantBeNull(super.clone());
+    return ((Wrapper<T>) Utils.cantBeNull(super.clone()));
   }
   /** @param w JD
    * @return <code><b>true</b></code> <i>iff</i> method <code>equals</code>
