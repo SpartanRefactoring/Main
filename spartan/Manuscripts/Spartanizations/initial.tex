@@ -112,7 +112,7 @@ applied to the boilerplate code.
   \label{table:original}
   \par\vspace{10pt plus 6pt minus 4pt}
   \centering
-  \scalebox{0.75}{%
+  \begin{adjustbox}{max width = \columnwidth}
     \begin{tabular}{l*5r}
       \toprule
       & \multicolumn{2}{c}{\textit{Jack}}
@@ -130,7 +130,8 @@ applied to the boilerplate code.
       \sffamily  Med\@. & 1,822,510  & 2.34  & 343,815   & 6.50 & 15.95⏎
       \sffamily  Range  & 19,241,584 & 11.12 & 3,337,183 & 3.79 & 73.47⏎
       \bottomrule
-    \end{tabular}}
+    \end{tabular}
+  \end{adjustbox}
 \end{table}
 
 \subsection{Pure Spartanization}
@@ -152,23 +153,25 @@ compress than a larger one (REFORMULATE)
   \label{table:partial}
   \par\vspace{10pt plus 6pt minus 4pt}
   \centering
-  \begin{tabular}{l*5r}
-    \toprule
-    & \multicolumn{2}{c}{\textit{Size (bytes)}}
-    & \textit{Ratio}
-    &\multicolumn{2}{c}{\textit{Improvement}}⏎
-    \cmidrule(r){2-3} \cmidrule(r){5-6}
-    & \textit{Jack}
-    & \textit{Jack + BZip2}
-    & & \textit{with Spartan.} & \textit{Total}⏎
-    \midrule % VIM: +,/bottom/-!column -t|sed 's/^/    /'
-    \sffamily  Ave\@. & 5,050,647  & 719,488   & 6.66 & 0.06  & 1.01  ⏎
-    \sffamily  Min\@. & 439,825    & 75,391    & 4.90 & -0.37 & 0.21  ⏎
-    \sffamily  Max\@. & 19,173,224 & 3,275,918 & 8.79 & 0.49  & 1.07  ⏎
-    \sffamily  Med\@. & 1,959,917  & 341,851   & 6.79 & 0.08  & 1.04  ⏎
-    \sffamily  Range  & 18,733,399 & 3,200,527 & 3.89 & 0.86  & 0.87  ⏎
-    \bottomrule
-  \end{tabular}
+  \begin{adjustbox}{max width = \columnwidth}
+    \begin{tabular}{l*5r}
+      \toprule
+      & \multicolumn{2}{c}{\textit{Size (bytes)}}
+      & \textit{Ratio}
+      &\multicolumn{2}{c}{\textit{Improvement}}⏎
+      \cmidrule(r){2-3} \cmidrule(r){5-6}
+      & \textit{Jack}
+      & \textit{Jack + BZip2}
+      & & \textit{with Spartan.} & \textit{Total}⏎
+      \midrule % VIM: +,/bottom/-!column -t|sed 's/^/    /'
+      \sffamily  Ave\@. & 5,050,647  & 719,488   & 6.66 & 0.06  & 1.01  ⏎
+      \sffamily  Min\@. & 439,825    & 75,391    & 4.90 & -0.37 & 0.21  ⏎
+      \sffamily  Max\@. & 19,173,224 & 3,275,918 & 8.79 & 0.49  & 1.07  ⏎
+      \sffamily  Med\@. & 1,959,917  & 341,851   & 6.79 & 0.08  & 1.04  ⏎
+      \sffamily  Range  & 18,733,399 & 3,200,527 & 3.89 & 0.86  & 0.87  ⏎
+      \bottomrule
+    \end{tabular}
+  \end{adjustbox}
 \end{table}
 
 \subsection{Renaming Spartanization}
@@ -180,7 +183,7 @@ compress than a larger one (REFORMULATE)
   \label{table:total}
   \par\vspace{10pt plus 6pt minus 4pt}
   \centering
-  \scalebox{0.70}{%
+  \begin{adjustbox}{max width=\columnwidth}
     \begin{tabular}{l*5r}
       \toprule
       & \multicolumn{2}{c}{\textit{Size (bytes)}}
@@ -191,14 +194,15 @@ compress than a larger one (REFORMULATE)
       & \textit{Jack + BZip2}
       &      & \textit{Overall}
       & \textit{Partial Spartan.}⏎
-      \midrule % VIM: +,/bottom/-!column -t|sed 's/^/    /'
-      \sffamily  Ave\@. & 4,947,319  & 713,857   & 6.56 & -0.03 & -0.09⏎
-      \sffamily  Min\@. & 430,375    & 75,160    & 4.89 & -0.40 & -0.28⏎
-      \sffamily  Max\@. & 18,890,899 & 3,244,851 & 8.72 & 0.41  & -0.01⏎
-      \sffamily  Med\@. & 1,923,056  & 339,930   & 6.70 & 0.00  & -0.09⏎
-      \sffamily  Range  & 18,460,524 & 3,169,691 & 3.83 & 0.81  & 0.27⏎
+      \midrule % VIM: +,/bottom/-!column -t|sed 's/^/  /'
+  \sffamily  Ave\@.  &  4,947,319   &  713,857    &  6.56  &  -0.03  &  -0.09⏎
+  \sffamily  Min\@.  &  430,375     &  75,160     &  4.89  &  -0.40  &  -0.28⏎
+  \sffamily  Max\@.  &  18,890,899  &  3,244,851  &  8.72  &  0.41   &  -0.01⏎
+  \sffamily  Med\@.  &  1,923,056   &  339,930    &  6.70  &  0.00   &  -0.09⏎
+  \sffamily  Range   &  18,460,524  &  3,169,691  &  3.83  &  0.81   &  0.27⏎
       \bottomrule
-    \end{tabular}}
+    \end{tabular}
+  \end{adjustbox}
 \end{table}
 
 Preliminary results supporting the
