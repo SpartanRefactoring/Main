@@ -84,15 +84,29 @@ public enum Collect {
    * @return <b>ASTVisitor</b> as described above.*/
   static ASTVisitor declarationsCollector(final List<SimpleName> into, final ASTNode n) {
     return new MethodExplorer.IgnoreNestedMethods() {
+      /**Adds to the list provided by the closure (into) the name of the given candidate.
+       * @param candidate to be inserter to the list provided by the closure (into).
+       * @return <code><b>true</b></code> <i>iff</i> the identifier of the given {@SimpleName} is equal to the
+       * ASTnode's provided by the closure (n)
+       */
       boolean add(final SimpleName candidate) {
         if (same(candidate, n))
           into.add(candidate);
         return true;
       }
+      /**Tries to add to the list provided by the closure (into) the names of the {@VariableDeclarationFragment}s given in the param (fs).
+       * @param fs is a {@link List} of a {@link VariableDeclarationFragment}
+       */
       void addFragments(final List<VariableDeclarationFragment> fs) {
         for (final VariableDeclarationFragment f : fs)
           add(f.getName());
       }
+      /**Tries to add to the list provided by the closure (into) the identifiers from all the {@link VariableDeclarationExpression}s
+       * from the given list (es).
+       * @param es is a {@link List} of any type which extends a {@link Expression}
+       * @return <code><b>true</b></code> <i>iff</i> addFragment() succeeds with the {@link VariableDeclarationFragment}s
+       * from each (extended) Expression in the param (es).
+       */
       boolean consider(final List<? extends Expression> es) {
         for (final Expression e : es)
           addFragments(fragments(asVariableDeclarationExpression(e)));
