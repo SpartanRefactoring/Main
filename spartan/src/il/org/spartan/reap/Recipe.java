@@ -6,8 +6,6 @@ import static il.org.spartan.idiomatic.*;
 import java.util.*;
 import java.util.function.*;
 import org.eclipse.jdt.annotation.*;
-import il.org.spartan.reap.Cell.*;
-import il.org.spartan.reap.Recipe.*;
 
 /** A cell that may depend on others.
  * @param <T> JD

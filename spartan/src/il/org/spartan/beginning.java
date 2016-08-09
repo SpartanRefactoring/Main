@@ -2,10 +2,8 @@
 package il.org.spartan;
 
 import static il.org.spartan.azzert.*;
-import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 import org.junit.runners.*;
-import il.org.spartan.beginning.with.C.D.*;
 import il.org.spartan.iterables.*;
 
 @SuppressWarnings("javadoc") public interface beginning {

@@ -44,10 +44,10 @@ public enum has {
     return false;
   }
 
-  public static class TEST {
+  @SuppressWarnings("javadoc") public static class TEST {
     private final @Nullable String nul = null;
 
-    @SuppressWarnings("javadoc") @Test public void seriesA01() {
+    @Test public void seriesA01() {
       azzert.aye(has.nulls(nul));
     }
     @Test public void seriesA02() {

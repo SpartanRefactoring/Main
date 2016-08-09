@@ -28,7 +28,7 @@ public enum separate {
      * @return a {@String} obtained by concatenating the textual representation
      *         of the elements in <code>ts</code> separated by
      *         <code>between</code> */
-    private static <T> String by(final Iterable<? extends T> ts, final String between) {
+    static <T> String by(final Iterable<? extends T> ts, final String between) {
       final Separator s = new Separator(between);
       final StringBuffer $ = new StringBuffer();
       for (final T t : ts)
@@ -41,7 +41,7 @@ public enum separate {
      * @return a {@String} obtained by concatenating the textual representation
      *         of the elements in <code>ts</code> separated by
      *         <code>between</code> */
-    private static String separateBy(final Iterable<? extends Object> os, final String between) {
+    static String separateBy(final Iterable<? extends Object> os, final String between) {
       final Separator s = new Separator(between);
       final StringBuffer $ = new StringBuffer();
       for (final Object o : os)

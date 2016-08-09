@@ -126,7 +126,7 @@ public interface Utils {
     @Test public void cantBeNullOfNull() {
       try {
         cantBeNull(null);
-        fail("AssertionError expected prior to this line.");
+        azzert.fail("AssertionError expected prior to this line.");
       } catch (final AssertionError e) {
         azzert.aye("", true);
       }

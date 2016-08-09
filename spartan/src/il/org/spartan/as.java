@@ -257,7 +257,7 @@ public enum as {
     return Utils.cantBeNull($.toArray(new String @NonNull [$.size()]));
   }
 
-  Iterable<Integer> asIterableEssence(final Integer... is) {
+  static Iterable<Integer> asIterableEssence(final Integer... is) {
     return () -> new Iterator<Integer>() {
       int current = 0;
       @Override public boolean hasNext() {
