@@ -6,7 +6,7 @@ extent, spartan(ized) code might look a little bit ‟scary” to developers not
 accustomed to it.
 
 In the following, we are presenting some examples of Spartan
-Programming†{https://github.com/SpartanRefactoring/spartan/blob/master/src/il/org/spartan/misc/Primes.java}.
+Programming % \urlref{https://github.com/SpartanRefactoring/spartan/blob/master/src/il/org/spartan/misc/Primes.java}.
 All of them are taken from the source code of the Spartan Refactoring Plugin
 for Eclipse that has been introduced in \cref{section:eclipse}. This code was
 developed following the spartan programming rules since the beginning.
@@ -52,8 +52,11 @@ developed following the spartan programming rules since the beginning.
 % \end{figure}
 \begin{figure}[h]
 \label{figure:shock-2}
-\caption{An example of spartan code}
-\begin{Code}{JAVA}{Primes.java}
+\caption{Spartan functions to test for primality†{
+      https://github.com/SpartanRefactoring/spartan/
+      }
+     }
+\begin{Code}{JAVA}{il.org.spartan.misc.Primes＃isPrime}
 /** Tests for primality.
   * @param ¢ candidate to be tested
   * @return <code><b>true</b></code> <i>iff</i> the parameter is prime. */
@@ -65,7 +68,7 @@ private static boolean isPrime¢(final int i) {££
   assert i >= 2;
   for (int ¢ = 2; ¢ * ¢ <= i; ++¢)
     if (i ％ ¢ == 0)
-      return false;
+      return false;＃
   return true;
 }
 \end{Code}
@@ -73,18 +76,18 @@ private static boolean isPrime¢(final int i) {££
 
 Finally in \cref{figure:shock-3} it is possible to see that…
 
-\matteo incorrect reference in this table, see if you can add class name
-＃ function style reference,
-e.g., \texttt{il.org.spartan.protolog.Variable＃freeVariables}
+% \matteo incorrect reference in this table, see if you can add class name
+% ＃ function style reference,
+% e.g., \texttt{il.org.spartan.protolog.Variable＃freeVariables}
 
 \begin{figure}[ht]
     \caption{%
-      Spartan functions to test for primality†{%
-        https://github.com/SpartanRefactoring/spartan/blob/master/src/il/org/spartan/misc/Primes.java
+      Spartan functions to test for setting free variables†{
+      https://github.com/yossigil/Protolog
       }
     }
 \label{figure:shock-3}
-\begin{Code}{JAVA}{Primes.java}
+\begin{Code}{JAVA}{il.org.spartan.protolog.Variable＃freeVariables}
 default Set<Variable> freeVariables() {££
     final Set<Variable> $ = new LinkedHashSet<>();
     if (isVariable())
