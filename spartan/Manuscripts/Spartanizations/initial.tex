@@ -43,6 +43,7 @@ process. Sufficient to us here is that the selection was independent of the
 current research and that the artifacts are of considerable size, wide use,
 evolution history and, development effort.
 
+\subsection{Burrows-Wheeler Compression}
 Compression power is used in this work-in-progress report as a quick estimate
 of software's naturalness~\cite{Hindle:Bar:Su:Gabel:Devanbu:2012}.  The
 measures are similar but not identical: Compression algorithms search
@@ -64,7 +65,9 @@ study of naturalness of software, we witness the fact that projects can be very
 different. There is two fold range variation of their associated compression
 power, as there is in their naturalness.
 
-To better focus on the code complexity, our study further employs \emph{Jack},
+\subsection{The Jack Preprocessor}
+
+To better focus on ``pure''  code complexity, our study further employs \emph{Jack},
 a special purpose preprocessor. Jack replaces each keyword and operator with a
 single one byte token. The rationale is that keywords such as \kk{class} are
 read and produced by programmers as an individual cohesive token, rather than a
@@ -80,10 +83,12 @@ directives are generated and optimized automatically, and are subject to
 underlying project guideline. Comments also follow their own style, which is
 very different from that of the code, and, string literals, at least those with
 significant content, are ought to be managed by configuration and
-internationalization processes. Jack currently does not remove unit-tests, but
-is planned to do so in the future.
-In \cref{table:original} are reported the results obtained by applying Jack to
-  \par\vspace{10pt plus 6pt minus 4pt}
+internationalization processes. 
+
+
+Jack currently does not remove unit-tests, but is planned to do so in the future.
+
+\Cref{table:original}  
 our dataset. After removing the unessential code and obtaining boilerplate
 code we computed compression power. We also applied the Burrows-Wheeler
 algorithm to the outcome of the Jack algorithm. As we can see if we compare
@@ -112,6 +117,9 @@ code.
       \bottomrule
     \end{tabular}}
 \end{table}
+
+
+\subsection{Pure Spartanization}
 
 We than applied a set of spartanizations (partial spartanization) to all the
 software systems. Afterwards we applied both the Jack and the BW algorithm.
@@ -143,6 +151,8 @@ compress than a larger one (REFORMULATE)
     \end{tabular}
 \end{table}
 
+
+\subsection{Renaming Spartanization}
 \begin{table}
   \caption{The results after performing a total spartanization of the code, compared
   with the compression ratios obtained with the Jack and Burrows-Wheeler algorithm.}
@@ -155,18 +165,17 @@ compress than a larger one (REFORMULATE)
                  & \multicolumn{2}{c}{\textit{Size (bytes)}} & \textit{Ratio} &\multicolumn{2}{c}{\textit{Improvement over}}⏎
                \cmidrule(r){2-3} \cmidrule(r){5-6}
               & \textit{Jack} & \textit{Jack + BZip2} & & \textit{Overall} & \textit{Partial Spartan.}⏎
-      \midrule
-      \sffamily Ave. & 4,947,319 & 713,857 & 6.56 & -0.03 & -0.09⏎
-      \sffamily Min. & 430,375 & 75,160 & 4.89 & -0.40 & -0.28⏎
-      \sffamily Max. & 18,890,899 & 3,244,851 & 8.72 & 0.41 & -0.01⏎
-      \sffamily Med. & 1,923,056 & 339,930 & 6.70 & 0.00 & -0.09⏎
-      \sffamily Range & 18,460,524 & 3,169,691 & 3.83 & 0.81 & 0.27⏎
+      \midrule % VIM: +,/bottom/-!column -t|awk '{print"      " $0}' 
+      \sffamily  Ave.   &  4,947,319   &  713,857    &  6.56  &  -0.03  &  -0.09  ⏎
+      \sffamily  Min.   &  430,375     &  75,160     &  4.89  &  -0.40  &  -0.28  ⏎
+      \sffamily  Max.   &  18,890,899  &  3,244,851  &  8.72  &  0.41   &  -0.01  ⏎
+      \sffamily  Med.   &  1,923,056   &  339,930    &  6.70  &  0.00   &  -0.09  ⏎
+      \sffamily  Range  &  18,460,524  &  3,169,691  &  3.83  &  0.81   &  0.27   ⏎
       \bottomrule
     \end{tabular}}
 \end{table}
 
-Cite naturalness of software~\cite{Hindle:Bar:Su:Gabel:Devanbu:2012}.
 
 Preliminary results supporting the
-"Hypothesis that can never be proved"
-Because this is not what you like.⏎
+``Hypothesis that can never be proved''
+Because this is not what you like.
