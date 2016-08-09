@@ -1,11 +1,11 @@
 \subsection{Data Corpus}
-We used the ‟Gil-Lalouche”~\cite{Gil:Lalouche:2016} software corpus,
+We used the ‟Gil-Lalouche”~\cite{Gil:Lalouche:16} software corpus,
 assembled from~26 popular \Java open source software artifacts collected
 from~\emph{GitHub's Trending
   repositories}~\urlref{https://github.com/trending?l=java＆since=monthly} and
 the \emph{GitHub \Java Corpus}%
 \urlref{http://groups.inf.ed.ac.uk/cup/javaGithub/}
-list due to Charles and Allamanis~\cite{Charles:Allamanis:2013}
+list due to Charles and Allamanis~\matteo\cite{Charles:Allamanis:13}
 
 The ‟Size Before” column of \Cref{table:corpus} provides the main size
 statistics of the constituting artifacts.
@@ -40,7 +40,7 @@ statistics of the constituting artifacts.
 Notably, sizes span more than one order of magnitude, from one megabyte of
 source to circa~47, the median being around five megabytes, the average around
 twelve. The GL corpus was used before for the study of software metrics.
-See~\cite{Gil:Lalouche:2016}~\cite{Gil:Lalouche:EMPIRICALSOFTWAREENGINEERING}
+See~\cite{Gil:Lalouche:16}~\cite{Gil:Lalouche:EMPIRICALSOFTWAREENGINEERING}
 \matteo for
 reproducibility details and for a description of the artifacts' selection
 process. Sufficient to us here is that the selection was independent of the
@@ -49,7 +49,7 @@ evolution history and, development effort.
 
 \subsection{Burrows-Wheeler Compression}
 Compression power is used in this work-in-progress report as a quick estimate
-of software's naturalness~\cite{Hindle:Bar:Su:Gabel:Devanbu:2012}. The
+of software's naturalness~\cite{Hindle:Bar:Su:Gabel:Devanbu:12}. The
 measures are similar but not identical: Compression algorithms search
 (and exploit) the input for repetitive patterns of unbounded length, while
 naturalness limits the search to~$n$-grams for some small integer~$n$. Quality
