@@ -2,53 +2,53 @@ Spartan Programming style favour laconic expression over the verbose, leading
 to a code that is (sometimes extremely) minimized. For this reason, spartanized
 code might be less readable that the original. However, code readability is not
 one of the main concern of Spartan Programming. All that said, to a certain
-extent, spartan(ized) code might look a little bit ``scary'' to developers not
+extent, spartan(ized) code might look a little bit ‟scary” to developers not
 accustomed to it.
 
 In the following, we are presenting some examples of Spartan
-Programming\footnote{https://github.com/SpartanRefactoring/spartan/blob/master/src/il/org/spartan/misc/Primes.java}.
+Programming†{https://github.com/SpartanRefactoring/spartan/blob/master/src/il/org/spartan/misc/Primes.java}.
 All of them are taken from the source code of the Spartan Refactoring Plugin
-for Eclipse that has been introduced in \cref{section:eclipse}.  This code was
+for Eclipse that has been introduced in \cref{section:eclipse}. This code was
 developed following the spartan programming rules since the beginning.
 
-% \Cref{figure:first} report an application of the principles … 
+% \Cref{figure:first} report an application of the principles …
 
 % \begin{figure}[h]
 % \label{figure:first}
 % \caption{An example of spartan code}
-%   \begin{Code}{JAVA}{Where was this taken from?}
-% public static <T, C extends Collection<T>> accumulate<T, C> 
-%   to(final C c) {
-%     return new accumulate<T, C>() {
-%       @Override public C elements() {
-%         return c;
-%       }
-%       @Override public accumulate<T, C> 
-%         add(final @Nullable T ¢) {
-%           if (¢ == null)
-%             return this;
-%           c.add(¢);
-%           return this;
-%         }
-%     };
-%   }
+% \begin{Code}{JAVA}{Where was this taken from?}
+% public static <T, C extends Collection<T>> accumulate<T, C>
+% to(final C c) {
+% return new accumulate<T, C>() {
+% @Override public C elements() {
+% return c;
+% }
+% @Override public accumulate<T, C>
+% add(final @Nullable T ¢) {
+% if (¢ == null)
+% return this;
+% c.add(¢);
+% return this;
+% }
+% };
+% }
 % \end{Code}
 % \end{figure}
 
 % In the code reported in \cref{figure:shock-2} we can see ... .
-% 
+%
 % \begin{figure}[h]
 % \label{figure:shock-2}
 % \caption{An example of spartan code}
 % \begin{Code}{JAVA}{Where was this taken from?}
-% default accumulate<T, C> 
-%     addAll(final Iterable<? extends T>... tss) {
-%       for (final Iterable<? extends T> ¢ : tss)
-%         addAll(¢);
-%       return this;
-%     }
+% default accumulate<T, C>
+% addAll(final Iterable<? extends T>... tss) {
+% for (final Iterable<? extends T> ¢ : tss)
+% addAll(¢);
+% return this;
+% }
 % \end{Code}
-% 
+%
 % \end{figure}
 \begin{figure}[h]
 \label{figure:shock-2}
@@ -71,12 +71,15 @@ private static boolean isPrime¢(final int i) {££
 \end{Code}
 \end{figure}
 
-Finally in \cref{figure:shock-3} it is possible to see that… 
+Finally in \cref{figure:shock-3} it is possible to see that…
+
+\matteo incorrect reference in this table, see if you can add class name
+＃ function style reference,
+e.g., \texttt{il.org.spartan.protolog.Variable＃freeVariables}
 
 \begin{figure}[ht]
-  \matteo\footnote{incorrect reference} 
-    \caption{% 
-      Spartan functions to test for primality\footnote{%
+    \caption{%
+      Spartan functions to test for primality†{%
         https://github.com/SpartanRefactoring/spartan/blob/master/src/il/org/spartan/misc/Primes.java
       }
     }
@@ -85,10 +88,10 @@ Finally in \cref{figure:shock-3} it is possible to see that…
 default Set<Variable> freeVariables() {££
     final Set<Variable> $ = new LinkedHashSet<>();
     if (isVariable())
-      $.add((Variable) this);
+     $.add((Variable) this);
     else
       for (final Term ¢ : this)
-        $.addAll(¢.freeVariables());
+       $.addAll(¢.freeVariables());
     return $;
   }
 \end{Code}

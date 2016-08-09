@@ -40,7 +40,8 @@ statistics of the constituting artifacts.
 Notably, sizes span more than one order of magnitude, from one megabyte of
 source to circa~47, the median being around five megabytes, the average around
 twelve. The GL corpus was used before for the study of software metrics.
-See~\cite{Gil:Lalouche:2016}~\cite{Cite:Gal:SecondPaper}\matteo for
+See~\cite{Gil:Lalouche:2016}~\cite{Gil:Lalouche:EMPIRICALSOFTWAREENGINEERING}
+\matteo for
 reproducibility details and for a description of the artifacts' selection
 process. Sufficient to us here is that the selection was independent of the
 current research and that the artifacts are of considerable size, wide use,
@@ -62,9 +63,9 @@ greedy search for repetitions starting at the input's prefix, while BZip2
 starts the search in a broader context, as implied by the Burrows-Wheeler
 algorithm~\cite{Burrows:Wheeler:94}.
 
-Columns~2 and~3 of \cref{table:corpus} provide statistics of compressed size and
-compression power with BZip2\urlref{http://bzip.org/} compression. As in the
-study of naturalness of software, we witness the fact that projects can be very
+Columns~2 and~3 of \cref{table:corpus} provide statistics of compressed size
+and compression power of BZip2\urlref{http://bzip.org/}. As in the study of
+naturalness of software, we witness the fact that projects can be very
 different. There is two fold range variation of their associated compression
 power, as there is in their naturalness.
 
@@ -98,8 +99,8 @@ the outcome of the Jack algorithm. As we can see if we compare the results
 reported in \cref{table:original} and \cref{table:original} the compression
 power is higher if the BW algorithm is applied to the boilerplate code.
 
+  \matteo†{copy and adapt caption from first table in this section}
 \begin{table}
-  \matteo†{copy and adapt from first caption}
   \caption{The results of the compression using the Jack algorithm alone and
   both Jack and Burrows-Wheeler algorithms combined}
   \label{table:original}
@@ -136,9 +137,9 @@ worth to note that we have an improvement in any statistics, in other words the
 spartanization affected positively the compression, increasing the compression
 power. This is counter intuitive, being a small file most difficult to
 compress than a larger one (REFORMULATE)
+  \matteo†{copy and adapt from first caption}
 
 \begin{table}
-  \matteo†{copy and adapt from first caption}
   \caption{The results after performing a partial spartanization of the code,
     compared with the compression ratios obtained with the Jack and
   Burrows-Wheeler algorithm}
