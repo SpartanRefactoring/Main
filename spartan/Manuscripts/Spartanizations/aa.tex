@@ -13,8 +13,10 @@ other stylistic issues relating to code.
 
 As pointed out by this statement, \emph{‟curly brackets wars”}, namely discussions
 on weather, when and how using curly brackets (and the like), are somehow discouraged.
+As Latins were used to say: \emph{De gustibus non est disputandum}.
+
 However, such discussions can not be simply relegate to something about personal
-tastes.
+tastes. 
 As a matter of fact, some of this options are included also in the syntax definition of some languages.
 For example, in \Go forces you to use curly brackets \urlref{https://golang.org/doc/faq＃semicolons}.
 Another example might be that of some Java statement blocks, such as \kk{synchronized}, \kk{try}, \kk{catch},
@@ -30,6 +32,16 @@ http://www.oracle.com/technetwork/articles/java/architect-lambdas-part1-2080972.
 But it is not only curly braces matters that may raise
 this kind of ‟religious” wars. Even the Dijksta's maxim ‟\emph{gotos are evil}”~\cite{Dijkstra:68} 
 was challenged in the scientific literature~\cite{Knuth:74,Ramshaw:88,Bochmann:73,Sennesh:Gil:16,Zoethout:79,Wulf:79,Clark:84}.
+
+Despite the fact that coding style is a topic that might lead developers to
+engage heated discussions, to the best of the author's knowledge, there is
+actually very little scientific work on that.
+If one queries for ‟code conventions” †{The search was
+performed on August 2016 on text, abstract and keywords and
+restraining the outcomes to the ‟Computer Science” disciplinary area} on
+Scopus\urlref{http://scopus.org}, one of the most important bibliographic
+databases, what it comes out is around thousands of results. However, very few of them have \kk{code
+conventions} among they keywords and deal with code conventions
 
 It seems that both practitioners and researchers consider code conventions, code style
 something unrelated to other most sensitive issues, such as the design and productivity.
@@ -53,7 +65,7 @@ The following scenarios might be helpful to clarify this point.
     \item Code conventions might affect several metrics. The number of lines of code (LOC) or the number of
     tokes (NOT) are influenced by coding styles. In a recent one of the author demonstrated that size
       is the only thing that matters~\cite{Gil:Lalouche:16}.
-    \item Moreover, the same notion of size has been shown to be very different in different projects~\cite{Gil:Lalouche:16}.
+      Moreover, the same notion of size has been shown to be very different in different projects~\cite{Gil:Lalouche:16}.
 \end{itemize}
 
 \textbf{The holy grail of ``canonical representation of code''.  
@@ -71,32 +83,35 @@ because of its unifying principle of minimalism and simplicity.
 
 \subsection{Background}
 
-Despite the fact that coding style is a topic that might lead developers to
-engage heated discussions, to the best of the author's knowledge, there is
-actually very little scientific work on that.
+% Despite the fact that coding style is a topic that might lead developers to
+% engage heated discussions, to the best of the author's knowledge, there is
+% actually very little scientific work on that.
+% 
+% If one queries for ‟code conventions” †{The search was
+% performed on August 2016 on text, abstract and keywords and
+% restraining the outcomes to the ‟Computer Science” disciplinary area} on
+% Scopus\urlref{http://scopus.org}, one of the most important bibliographic
+% databases, what it comes out is around thousands of results. However, very few of them have \kk{code
+% conventions} among they keywords and deal with code conventions
 
-If one queries for ‟code conventions” †{The search was
-performed on August 2016 on text, abstract and keywords and
-restraining the outcomes to the ‟Computer Science” disciplinary area} on
-Scopus\urlref{http://scopus.org}, one of the most important bibliographic
-databases, what it comes out is around thousands of results. However, very few of them have \kk{code
-conventions} among they keywords and deal with code conventions
-
-This alleged \emph{nonchalance} shown by the scientific community towards the
+The alleged \emph{nonchalance} shown by the scientific community towards the
 investigation of a rationale approach to the problem of defining effective code
 conventions, might be related to the fact that when it comes to code styling
-most of the dialectic efforts are devoted
-to make each personal preferences prevail against the others.
+most of the dialectic efforts are devoted to make each personal preferences 
+prevail against the others.
 
-This tendency to transform technical discussions on disputes about personal preferences
-in matter of code readability, maintainability (not to mention the developers' efficiency) might
-have led Stackoverflow managers to the decision reported in the Introduction, embracing the
-wiseness of the ancient latins who were used to say that \emph{De gustibus non est disputandum}.
+% This tendency to transform technical discussions on disputes about personal preferences
+% in matter of code readability, maintainability (not to mention the developers' efficiency) might
+% have led Stackoverflow managers to the decision reported in the Introduction, embracing the
+% wiseness of the ancient latins who were used to say that \emph{De gustibus non est disputandum}.
 
-Notwithstanding what reported above, code conventions are considered a worthwhile issue during
+% Notwithstanding what reported above, 
+
+On the other hand, code conventions are considered a worthwhile issue during
 the development process, otherwise we would not find style guides for the most important
-programming languages like (Java, C++, etc.) and promoted by the major players in
-the ITC arena worldwide, like Oracle and Google~\cite{}.
+programming languages (i.e. Java, C++, etc.) and issued by the major players in
+the ITC arena worldwide, like Oracle\urlref{http://www.oracle.com/technetwork/java/codeconvtoc-136057.html} 
+and Google\urlref{https://google.github.io/styleguide/javaguide.html}.
 
 \textbf{But where these styles a matter of a careful and rational design process?
 What were the underlying principles.}
