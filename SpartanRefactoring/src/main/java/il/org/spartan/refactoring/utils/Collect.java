@@ -79,7 +79,7 @@ public enum Collect {
   static final ASTMatcher matcher = new ASTMatcher();
   /** Creates an ASTVisitor that adds to the provided SimpleName list all the identifiers of variable declarations
    * expressions, which are identical the provided ASTNode's.
-   * @param ns JD
+   * @param into - The ASTVisitor's output parameter
    * @param n JD
    * @return <b>ASTVisitor</b> as described above.*/
   static ASTVisitor declarationsCollector(final List<SimpleName> into, final ASTNode n) {
@@ -127,6 +127,12 @@ public enum Collect {
       }
     };
   }
+  /**
+   * Creates a new Collector with the provided name. The new Collector's 'in' function returns a list of occurrences
+   * of the provided name in declarations.
+   * @param n
+   * @return A <b>Collector</b>, of declarations with the provided name.
+   */
   public static Collector declarationsOf(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
