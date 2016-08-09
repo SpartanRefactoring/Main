@@ -13,11 +13,11 @@ Spartanization aims at minimizing:
 % possibly minimized, favoring the use of private over public variables whenever it
 % is possible.
 
-% Also the names of variables should be taken short for local variables, with short scope, leaving to their class names to explicit their behavior. 
-% Minimize lifespan avoiding persistent variables when it is possible. 
-% Favor the use of collection instead of arrays. 
-% Interfaces should present a minimal number of parameters, also minimizing the interaction between them. 
-% Favor ternarization over the use of if-then-else constructs and use a simplified version of the conditionals that implies an early return. 
+% Also the names of variables should be taken short for local variables, with short scope, leaving to their class names to explicit their behavior.
+% Minimize lifespan avoiding persistent variables when it is possible.
+% Favor the use of collection instead of arrays.
+% Interfaces should present a minimal number of parameters, also minimizing the interaction between them.
+% Favor ternarization over the use of if-then-else constructs and use a simplified version of the conditionals that implies an early return.
 % Moreover, use an early exit logic with continue, break and return instructions.
 
 Everything should be formatted in order to make an efficient use of the screen space,
@@ -25,7 +25,8 @@ by removing unnecessary tokens (i.e., redundant parentheses, etc.).
 Methods should be as short as possible.
 
 \subsection{Syntactic Baggage}
-A set of rules are aimed at removing redundants tokens (i.e. brackets, modifiers, etc.).
+A set of rules are aimed at removing redundant tokens (i.e., brackets,
+modifiers, etc.).
 \begin{itemize}
   \item Redundant parenthesis and curly brackets.
   \item Removing redundant modifiers:
@@ -44,14 +45,14 @@ A set of rules are aimed at removing redundants tokens (i.e. brackets, modifiers
 \subsection{Shorter phrases}
 \begin{itemize}
   \item Distributive rule of booelan expressions
-  \item Distributive rule of assignment: 
+  \item Distributive rule of assignment:
   \begin{code}{JAVA}
-a = x; 
-b = x;   
+a = x;
+b = x;
   \end{code}
   becomes
     \begin{code}{JAVA}
-a = b = x;   
+a = b = x;
   \end{code}
   \item Distributive rule of arithmetics.
   \item Common prefix of If
@@ -76,12 +77,12 @@ Use canonical form for the most common expressions, as much as possibile.
   \item De morgan pushdown logical negation.
   \item Pullup arirthmetic negation.
   \item Pushdown ternarizations. For example:
-%   \item Example:
+% \item Example:
   \begin{code}{java}
 a ? b(x) : b(y) => b(a ? x: y)
   \end{code}
   \item Apply the distributive rule on booleans. For instance:
-%   \item Example:
+% \item Example:
     \begin{code}{JAVA}
 a && b || c && b => (a || c) && c
     \end{code}
@@ -110,21 +111,21 @@ With regards to the naming, Spartan Programming applies three principles:
 \end{itemize}
 Generally speaking, variable names should be chosen based on their scope.
 The shorter the scope the shorter the variable name.
-Minimizing variability using \kk{final} and \kk{@NonNull} annotation. 
-% Stress the use of generic names technique. 
+Minimizing variability using \kk{final} and \kk{@NonNull} annotation.
+% Stress the use of generic names technique.
 % Scope plays a rule:
 % in short scopes use short names.
 Some (suggested) common names might be:
 \begin{enumerate}
   \item \$ for the return variable.
-%   \item \_\_ don't use.
+% \item \_\_ don't use.
   \item ¢ penny for the sent argument.
 \end{enumerate}
-¢ is is in place of "that" (that is a ``placeholder'' like this) or for "sent" argument.
-\footnote{The term and symbol of "Penny" is chosen to convey the meaning that is something so little you do not want to worry about.
+¢ is is in place of "that" (that is a ‟placeholder” like this) or for "sent" argument.
+†{The term and symbol of "Penny" is chosen to convey the meaning that is something so little you do not want to worry about.
 \emph{Take a penny, leave a penny!}}
-Brevity for the sake of brevity is \textbf{not} a prescription in Spartan programming. 
-It is worth to say that descriptiveness of variable is still a cornerstone principle. 
+Brevity for the sake of brevity is \textbf{not} a prescription in Spartan programming.
+It is worth to say that descriptiveness of variable is still a cornerstone principle.
 At the same time, Spartan Programming emphasize the need to chose short names, whenever is possible.
 In other word, one word name is better than a multi-word name.
 
@@ -132,31 +133,44 @@ Other prescriptions are the following:
 \begin{itemize}
  \item Use one letter abbreviations.
  \item Also, use ‟x”
- \item In case of word amalgams, namely multi-words names, take last word. Don't use acronyms.
- \item Use plurals with 's' (for example for collections).
- \item Do not use unpronouncable names.
- \item Do not use acronyms, unless they are well established (i.e. ASCII, LAN, etc.)
- \item Do not include type (i.e. Integer, Boolean, etc.) or the kind (i.e. public, private, etc.) into the names.
+ \item In case of word amalgams, namely multi-words names, take last word.
+   Don't use acronyms.
+
+ \item Use plurals with ‟s” (for example for collections).
+
+ \item Do not use unpronounceable names.
+ \item Do not use acronyms, unless they are well established (i.e., ASCII, LAN,
+   etc.)
+
+ \item Do not include type (i.e., Integer, Boolean, etc.) or the kind (i.e.,
+   public, private, etc.) into the names.
+
 \end{itemize}
 
-Variable name might be also a design guideline. If a developers chose a multi-word variable name for an 
-entity, maybe is try to collapse on that entity multiple functionalities. 
-There might be the case to re-think the design, splitting the entity according to the different functionalityies 
+Variable name might be also a design guideline. If a developers chose a multi-word variable name for an
+entity, maybe is try to collapse on that entity multiple functionalities.
+There might be the case to re-think the design, splitting the entity according to the different functionalityies
 
 % Like the "it" variable in ML programming language or HyperCard programming language on macintosh. Ancient!!!
 
 \subsection{Variable Elimination}
 
-Spartan programming promote a coding style that do not use many variables, meaning that it strives to inline instructions instead of 
-storing their results on variables. The spartanized version of a code not originally written in the Spartan way, would 
-probably see many of the included variable deleted whenever and wherever it is possible.
+Spartan programming promote a coding style that do not use many variables,
+meaning that it strives to inline instructions instead of storing their
+results on variables. The spartanized version of a code not originally
+written in the Spartan way, would probably see many of the included
+variable deleted whenever and wherever it is possible.
 
-The idea behind this approach is to reduce the cognitive burden of the developers, either in case of whom is coding who has to spent
-time and effort in finding effective names, either in the case of a reader who need to put some effort to figure out what is the meaning of 
-a variable, starting from its name. 
+The idea behind this approach is to reduce the cognitive burden of the
+developers, either in case of whom is coding who has to spent time and
+effort in finding effective names, either in the case of a reader who need
+to put some effort to figure out what is the meaning of a variable,
+starting from its name.
 
-Since variables change, it needs to be sure that it happens when it is supposed to do. Moreover it is needed to associate a role to a variables,
-so that the code that reads that variable can understand and appreciate it and figure out the list of location where it may be read (CHANGE).
+Since variables change, it needs to be sure that it happens when it is
+supposed to do. Moreover it is needed to associate a role to a variables,
+so that the code that reads that variable can understand and appreciate it
+and figure out the list of location where it may be read (CHANGE).
 
 These are some technique for variable elimination.
 
@@ -166,58 +180,57 @@ The following is an autoexplicative example of inlining:
 
 \begin{code}{JAVA}
 double a = p.area();
-return a; 
+return a;
 \end{code}
 
 becomes
 
 \begin{code}{JAVA}
-return p.area();  
+return p.area();
 \end{code}
 
-\subsubsection{Early returns} 
+\subsubsection{Early returns}
 
 Another technique for variable elimination is the early return and it consist in returning the result of a computation
 as soon as it is available, instead of storing it in a variable (and then returning it).
 An example of early return is reported in the following code.
 \begin{code}{JAVA}
-private boolean isKeyword(String token, String[] keywords) {
+private boolean isKeyword(String token, String[] keywords) {££
     for (int i = 0; i < keywords.length; i++)d
-        if (token.equals(keywords[i])) 
+        if (token.equals(keywords[i]))
             return true;
     return false;
 }
 \end{code}
 
-Using \kk{forech} construct available in several langues it is possible to 
+Using \kk{forech} construct available in several langues it is possible to
 avoid the index (in those case in which there are no instructions to access to it).
 \begin{code}{JAVA}
-private boolean isKeyword(String token, String[] keywords) {
+private boolean isKeyword(String token, String[] keywords) {££
     for (final String element : keywords)
         if (element.equals(token))
             return true;
     return false;
 }
 \end{code}
-The same result can be obtained using the some construct to loop over collections, 
-preferred instead of the arrays, without the use of the \kk{Itarator} class, as 
+The same result can be obtained using the some construct to loop over collections,
+preferred instead of the arrays, without the use of the \kk{Itarator} class, as
 in the previous versions of Java.
 % With the early return it becomes:
 % \begin{code}{JAVA}
 % private ResultRenderer getRenderer() throws InstantiationException,
-%                              IllegalAccessException, ClassNotFoundException {
-%     return _resultRenderer != null ? (ResultRenderer) 
-%         Class.forName(_resultRenderer).newInstance() : DefaultResultRenderer();
-% } 
+% IllegalAccessException, ClassNotFoundException {££
+% returnᵣesultRenderer != null ? (ResultRenderer)
+% Class.forName(ᵣesultRenderer).newInstance() : DefaultResultRenderer();
+% }
 % \end{code}
 
-
-%  rationale behind the Spartan programming's desire to eliminate variables is that every variable places a burden on both the reader and the writer.
-% Each variable has a name. The code writer must spend precious mental effort on picking a good name for the variable. The code reader must spend similar 
+% rationale behind the Spartan programming's desire to eliminate variables is that every variable places a burden on both the reader and the writer.
+% Each variable has a name. The code writer must spend precious mental effort on picking a good name for the variable. The code reader must spend similar
 % effort in figuring out the intention of the reader from the name.
-% Variables tend to change. The code writer must invest resources in making sure that the variable is changed only when it is supposed to. The code reader must 
+% Variables tend to change. The code writer must invest resources in making sure that the variable is changed only when it is supposed to. The code reader must
 % work out the set of locations that may change the variable, and understand the nature of these changes.
-% Variables may be used by the code. The code writer must define a role for that variable which suggests where that variable may be read. The code reader must 
+% Variables may be used by the code. The code writer must define a role for that variable which suggests where that variable may be read. The code reader must
 % understand that role, and to properly appreciate that role, he must work out the list of code locations in which the variable may be read.
 
 \subsubsection{Control simplification}
@@ -233,8 +246,8 @@ int factorial(int n) {d
 \end{code}
 becomes
 \begin{code}{JAVA}
-int factorial(int n) {
-    return n <= 1 ? n : n * fact(n - 1);
+int factorial(int n) {££
+    return n <= 1 ££? n : n * fact(n - 1);
 }
 \end{code}
 
@@ -243,14 +256,15 @@ in this case in a return statement that allows inlining of the instruction.
 \subsubsection{String simplification Techniques}
 \begin{itemize}
  \item String transformations
- \item instead of .toString() use ``" +
+ \item instead of \cc{££.toString()} use \cc{"" +}
  \item x.equals(“a”) -> “a”.equals(b)
  \item Auto insert “”
 \end{itemize}
 
 \subsection{Miscellaneous Techniques}
 
-Here we report a series of techninques that not fall expressly in one of the previous category.
+Here we report a series of techniques that not fall expressly in one of the
+previous category.
 
 \begin{itemize}
 \item Favour prefix operators instead to postifix ones.
@@ -258,20 +272,20 @@ Here we report a series of techninques that not fall expressly in one of the pre
 or specificity (more specific come first).
 % x.equals("a:) to "a.equals(this" (???)
 
-\item Associative rule of ifs: 
+\item Associative rule of ifs:
   \begin{code}{JAVA}
 if (a) if (b) x;
 \end{code}
   \begin{code}{JAVA}
 if (a && b) x
   \end{code}
-% \item Associative rule of ifs: if (a) 
+% \item Associative rule of ifs: if (a)
 % \begin{code}{JAVA}if (b) x;\end{code}
 % \begin{code}{JAVA}if (a && b) x\end{code}
 \begin{code}{JAVA}
-if (this == null) return super();d
-????\end{code}
-  
+if (this == null) return super();
+\end{code}
+
 \end{itemize}
 
 % \begin{itemize}
@@ -279,7 +293,8 @@ if (this == null) return super();d
 \begin{itemize}
   \item Off load exceptional cases quickly.
   \item inline single use of variables.
-  \item Inline multiple use of variables: if 1) result is shorter and 2) the expression has no side effects.
+  \item Inline multiple use of variables: if 1) result is shorter and 2
+) the expression has no side effects.
   \item Pseudo inlining with initializers.
   \item Scope:
 \end{itemize}
@@ -327,8 +342,8 @@ if (this == null) return super();d
   \end{itemize}
 \end{itemize}
 \begin{itemize}
-\item Switch Normalization
-\item Renamings:
+
+\subsection{Renaming}
 \begin{itemize}
   \item In constructors: Arguments to corresponding field names
   \item In fields: to canonical instance name or pluralized
@@ -357,7 +372,8 @@ if (this == null) return super();d
   \begin{itemize}
     \item Any number of arguments:
     \item To \$ in case it is returned
-    \item To__(n) if it is unused and documented as such
+    \item To \cc{\_\_}
+      if it is unused and documented as such
    \end{itemize}
   % \item Change argument to one single case letter
   % \item In world amalgams, use the first letter of the last word.
@@ -365,22 +381,21 @@ if (this == null) return super();d
 \end{itemize}
 \end{itemize}
 
-
 % \begin{itemize}
-%   \item \item Ternarize
-%   \item Early return
-%   \item Example: 
+% \item \item Ternarize
+% \item Early return
+% \item Example:
 % \begin{code}{JAVA}
 % @SuppressWarnings("unused") private
-% void earlyReturn(int a) {
-%   if (new Random().nextInt() <= 3) {
-%     earlyReturn(12);
-%     earlyReturn(124);
-%     } else {
-%     earlyReturn(4);
-%     earlyReturn(5);
-%     earlyReturn(44);
-%   }
+% void earlyReturn(int a) {££
+% if (new Random().nextInt() <= 3) {££
+% earlyReturn(12);
+% earlyReturn(124);
+% } else {££
+% earlyReturn(4);
+% earlyReturn(5);
+% earlyReturn(44);
+% }
 % }
 % \end{code}
-%     \end{itemize}
+% \end{itemize}

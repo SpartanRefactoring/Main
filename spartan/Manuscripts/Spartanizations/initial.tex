@@ -67,12 +67,12 @@ power, as there is in their naturalness.
 
 \subsection{The Jack Preprocessor}
 
-To better focus on ``pure''  code complexity, our study further employs \emph{Jack},
-a special purpose preprocessor. Jack replaces each keyword and operator with a
-single one byte token. The rationale is that keywords such as \kk{class} are
-read and produced by programmers as an individual cohesive token, rather than a
-sequence of letters that form an identifier, or sequence of digits that make a
-numeric literal.
+To better focus on ``pure''  code complexity, our study further employs
+\emph{Jack}, a special purpose preprocessor. Jack replaces each keyword and
+operator with a single one byte token. The rationale is that keywords such as
+\kk{class} are read and produced by programmers as an individual cohesive
+token, rather than a sequence of letters that form an identifier, or sequence
+of digits that make a numeric literal.
 
 Jack also eliminates from the \Java code all of the following five: white space
 characters, \kk{package} declaration, \kk{import} directives, comments of all
@@ -81,28 +81,28 @@ of these is not a product of pure coding effort: White space characters are
 generated and frequently change by automatic code formatting. Also, \kk{import}
 directives are generated and optimized automatically, and are subject to
 underlying project guideline. Comments also follow their own style, which is
-very different from that of the code, and, string literals, at least those with
-significant content, are ought to be managed by configuration and
-internationalization processes. 
+very different from that of the code, \emph{and}, string literals, at least
+those with significant content, are ought to be managed by configuration and
+internationalization processes rather than coding per-se. 
 
-
-Jack currently does not remove unit-tests, but is planned to do so in the future.
+Jack currently does not remove unit-tests, but is planned to do so in the
+future.
 
 \Cref{table:original}  
-our dataset. After removing the unessential code and obtaining boilerplate
-code we computed compression power. We also applied the Burrows-Wheeler
-algorithm to the outcome of the Jack algorithm. As we can see if we compare
-the results reported in \cref{table:original} and \cref{table:original} the
-compression power is higher if the BW algorithm is applied to the boilerplate
-code.
+our dataset. After removing the unessential code and obtaining boilerplate code
+we computed compression power. We also applied the Burrows-Wheeler algorithm to
+the outcome of the Jack algorithm. As we can see if we compare the results
+reported in \cref{table:original} and \cref{table:original} the compression
+power is higher if the BW algorithm is applied to the boilerplate code.
 
 \begin{table}
-  \caption{The results of the compression using the Jack algorithm alone and both Jack and
-  Burrows-Wheeler algorithms combined}
+  \matteo\footnote{copy and adapt from first caption}
+  \caption{The results of the compression using the Jack algorithm alone and
+  both Jack and Burrows-Wheeler algorithms combined}
   \label{table:original}
   \par\vspace{10pt plus 6pt minus 4pt}
   \centering
-  \scalebox{0.75}{
+  \scalebox{0.75}{%
     \begin{tabular}{l*5r}
       \toprule
               & \multicolumn{2}{c}{\textit{Jack}} & \multicolumn{2}{c}{\textit{Jack + BZip2}} & \textit{Combined-}⏎
@@ -131,48 +131,52 @@ power. This is counter intuitive, being a small file most difficult to
 compress than a larger one (REFORMULATE)
 
 \begin{table}
-  \caption{The results after performing a partial spartanization of the code, compared
-  with the compression ratios obtained with the Jack and Burrows-Wheeler algorithm}
+  \matteo\footnote{copy and adapt from first caption}
+  \caption{The results after performing a partial spartanization of the code,
+    compared with the compression ratios obtained with the Jack and
+  Burrows-Wheeler algorithm}
   \label{table:partial}
   \par\vspace{10pt plus 6pt minus 4pt}
   \centering
-    \begin{tabular}{l*5r}
-      \toprule
-           & \multicolumn{2}{c}{\textit{Size (bytes)}} & \textit{Ratio} &\multicolumn{2}{c}{\textit{Improvement}}⏎
-               \cmidrule(r){2-3} \cmidrule(r){5-6}
-              & \textit{Jack} & \textit{Jack + BZip2} & & \textit{with Spartan.} & \textit{Total}⏎
-      \midrule % VIM: +,/bottom/-!column -t|awk '{print"      " $0}' 
-      \sffamily  Ave.   &  5,050,647   &  719,488    &  6.66  &  0.06   &  1.01  ⏎
-      \sffamily  Min.   &  439,825     &  75,391     &  4.90  &  -0.37  &  0.21  ⏎
-      \sffamily  Max.   &  19,173,224  &  3,275,918  &  8.79  &  0.49   &  1.07  ⏎
-      \sffamily  Med.   &  1,959,917   &  341,851    &  6.79  &  0.08   &  1.04  ⏎
-      \sffamily  Range  &  18,733,399  &  3,200,527  &  3.89  &  0.86   &  0.87  ⏎
-      \bottomrule
-    \end{tabular}
+  \begin{tabular}{l*5r}
+    \toprule
+         & \multicolumn{2}{c}{\textit{Size (bytes)}} & \textit{Ratio} &\multicolumn{2}{c}{\textit{Improvement}}⏎
+             \cmidrule(r){2-3} \cmidrule(r){5-6}
+            & \textit{Jack} & \textit{Jack + BZip2} & & \textit{with Spartan.} & \textit{Total}⏎
+    \midrule % VIM: +,/bottom/-!column -t|awk '{print"      " $0}' 
+    \sffamily  Ave.   &  5,050,647   &  719,488    &  6.66  &  0.06   &  1.01  ⏎
+    \sffamily  Min.   &  439,825     &  75,391     &  4.90  &  -0.37  &  0.21  ⏎
+    \sffamily  Max.   &  19,173,224  &  3,275,918  &  8.79  &  0.49   &  1.07  ⏎
+    \sffamily  Med.   &  1,959,917   &  341,851    &  6.79  &  0.08   &  1.04  ⏎
+    \sffamily  Range  &  18,733,399  &  3,200,527  &  3.89  &  0.86   &  0.87  ⏎
+    \bottomrule
+  \end{tabular}
 \end{table}
 
 
 \subsection{Renaming Spartanization}
+\matteo\footnote{copy and adapt from first caption}
 \begin{table}
-  \caption{The results after performing a total spartanization of the code, compared
-  with the compression ratios obtained with the Jack and Burrows-Wheeler algorithm.}
+  \caption{The results after performing a total spartanization of the code,
+  compared with the compression ratios obtained with the Jack and
+  Burrows-Wheeler algorithm.} 
   \label{table:total}
   \par\vspace{10pt plus 6pt minus 4pt}
   \centering
-  \scalebox{0.70}{
-    \begin{tabular}{l*5r}
-      \toprule
-                 & \multicolumn{2}{c}{\textit{Size (bytes)}} & \textit{Ratio} &\multicolumn{2}{c}{\textit{Improvement over}}⏎
-               \cmidrule(r){2-3} \cmidrule(r){5-6}
-              & \textit{Jack} & \textit{Jack + BZip2} & & \textit{Overall} & \textit{Partial Spartan.}⏎
-      \midrule % VIM: +,/bottom/-!column -t|awk '{print"      " $0}' 
-      \sffamily  Ave.   &  4,947,319   &  713,857    &  6.56  &  -0.03  &  -0.09  ⏎
-      \sffamily  Min.   &  430,375     &  75,160     &  4.89  &  -0.40  &  -0.28  ⏎
-      \sffamily  Max.   &  18,890,899  &  3,244,851  &  8.72  &  0.41   &  -0.01  ⏎
-      \sffamily  Med.   &  1,923,056   &  339,930    &  6.70  &  0.00   &  -0.09  ⏎
-      \sffamily  Range  &  18,460,524  &  3,169,691  &  3.83  &  0.81   &  0.27   ⏎
-      \bottomrule
-    \end{tabular}}
+  \scalebox{0.70}{%
+  \begin{tabular}{l*5r}
+    \toprule
+               & \multicolumn{2}{c}{\textit{Size (bytes)}} & \textit{Ratio} &\multicolumn{2}{c}{\textit{Improvement over}}⏎
+             \cmidrule(r){2-3} \cmidrule(r){5-6}
+            & \textit{Jack} & \textit{Jack + BZip2} & & \textit{Overall} & \textit{Partial Spartan.}⏎
+    \midrule % VIM: +,/bottom/-!column -t|awk '{print"      " $0}' 
+    \sffamily  Ave.   &  4,947,319   &  713,857    &  6.56  &  -0.03  &  -0.09  ⏎
+    \sffamily  Min.   &  430,375     &  75,160     &  4.89  &  -0.40  &  -0.28  ⏎
+    \sffamily  Max.   &  18,890,899  &  3,244,851  &  8.72  &  0.41   &  -0.01  ⏎
+    \sffamily  Med.   &  1,923,056   &  339,930    &  6.70  &  0.00   &  -0.09  ⏎
+    \sffamily  Range  &  18,460,524  &  3,169,691  &  3.83  &  0.81   &  0.27   ⏎
+    \bottomrule
+  \end{tabular}}
 \end{table}
 
 

@@ -6,7 +6,7 @@ spartan(ized) code might look a little bit ``scary'' to developers not used to i
 
 In the following, we are presenting some examples of Spartan Programming.
 All of them are taken from the source code of the Spartan Refactoring 
-Plugin for Eclipse that has been introduced in Section \ref{Introduction}. 
+Plugin for Eclipse that has been introduced in \cref{section:eclipse}. 
 This code was developed following the spartan programming rules since 
 the beginning.
 
@@ -56,11 +56,12 @@ the beginning.
 /** Tests for primality.
   * @param ¢ candidate to be tested
   * @return <code><b>true</b></code> <i>iff</i> the parameter is prime. */
-public static boolean isPrime(final int ¢) {
+public static boolean isPrime(final int ¢) {££
   return ¢ < -1 && isPrime(-¢) // deal with negative values
-      || ¢ > 1 && isPrime¢(¢); // any integer >- 2
+      || ¢ > 1 && isPrime¢(¢); // any integer >= 2
 }
-private static boolean isPrime¢(final int i) {
+private static boolean isPrime¢(final int i) {££
+  assert i >= 2;
   for (int ¢ = 2; ¢ * ¢ <= i; ++¢)
     if (i ％ ¢ == 0)
       return false;
@@ -69,13 +70,13 @@ private static boolean isPrime¢(final int i) {
 \end{Code}
 \end{figure}
 
-Finally in \cref{figure:shock-3} it is possible to see that ... .
+Finally in \cref{figure:shock-3} it is possible to see that… 
 
 \begin{figure}[ht]
 \label{figure:shock-3}
 \caption{An example of spartan code}
 \begin{Code}{JAVA}{Where was this taken from?}
-default Set<Variable> freeVariables() {
+default Set<Variable> freeVariables() {££
     final Set<Variable> $ = new LinkedHashSet<>();
     if (isVariable())
       $.add((Variable) this);
@@ -86,5 +87,3 @@ default Set<Variable> freeVariables() {
   }
 \end{Code}
 \end{figure}
-
-
