@@ -41,7 +41,7 @@ public enum separate {
      * @return a {@String} obtained by concatenating the textual representation
      *         of the elements in <code>ts</code> separated by
      *         <code>between</code> */
-    static String separateBy(final Iterable<? extends Object> os, final String between) {
+    static String separateBy(final Iterable<?> os, final String between) {
       final Separator s = new Separator(between);
       final StringBuffer $ = new StringBuffer();
       for (final Object o : os)
@@ -56,9 +56,9 @@ public enum separate {
       return as.string($);
     }
 
-    public final Iterable<? extends Object> os;
+    public final Iterable<?> os;
 
-    public SeparationSubject(final Iterable<? extends Object> os) {
+    public SeparationSubject(final Iterable<?> os) {
       this.os = os;
     }
     public SeparationSubject(final Object[] os) {
@@ -238,7 +238,7 @@ public enum separate {
     @Test public final void separateByNoItemslPruneWhitesSpaceSeparated() {
       final SeparationSubject these = separate.these();
       azzert.notNull(null, these);
-      final Iterable<? extends Object> os = these.os;
+      final Iterable<?> os = these.os;
       azzert.notNull(null, os);
       azzert.aye(iterables.isEmpty(os));
       final String[] ss = as.strings(os);
@@ -411,7 +411,7 @@ public enum separate {
   }
   /** Separate a variable length list of arguments by a comma character.
    * @param os the objects to be separated. */
-  public static SeparationSubject these(final Iterable<? extends Object> os) {
+  public static SeparationSubject these(final Iterable<?> os) {
     return new SeparationSubject(os);
   }
   /** Separate elements of a given array of <code><b>long</b></code>s by a given
