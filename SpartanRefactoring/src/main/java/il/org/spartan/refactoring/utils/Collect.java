@@ -143,6 +143,9 @@ public enum Collect {
       }
     };
   }
+  /**@see {@link declarationsCollector}
+   * specific comments are provided to methods which are not taking place in the {@link declarationsCollector}.
+   */
   static ASTVisitor definitionsCollector(final List<SimpleName> into, final ASTNode n) {
     return new MethodExplorer.IgnoreNestedMethods() {
       boolean add(final SimpleName candidate) {
@@ -154,6 +157,12 @@ public enum Collect {
         for (final VariableDeclarationFragment f : fs)
           add(f.getName());
       }
+      /**Ths function is needed cause a definition can be not in a declaration form, and then asVariableDeclarationExpression()
+       * will fail
+       * @param e JD
+       * @return <code><b>true</b></code> <i>iff</i> the identifier of the given {@link Expression} is equal to the
+       * ASTnode's provided by the closure (n)
+       */
       boolean consider(final Expression e) {
         return add(asSimpleName(e));
       }
@@ -168,9 +177,20 @@ public enum Collect {
       @Override public boolean visit(final ForStatement s) {
         return consider(initializers(s));
       }
+      //waiting for email answer.
+      /**
+       * 
+       * @param it JD
+       * @return 
+       */
       @Override public boolean visit(final PostfixExpression it) {
         return !in(it.getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT) || consider(it.getOperand());
       }
+      /**
+       * 
+       * @param it JD
+       * @return
+       */
       @Override public boolean visit(final PrefixExpression it) {
         return consider(it.getOperand());
       }
