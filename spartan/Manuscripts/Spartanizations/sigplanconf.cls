@@ -823,7 +823,6 @@
 \@setflag \@caprule = \@true
 
 \long\def \@makecaption #1#2{%
-  \addvspace{4pt}
   \if \@caprule
     \hrule width \hsize height .33pt
     \vspace{4pt}
