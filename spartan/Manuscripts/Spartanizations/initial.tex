@@ -14,9 +14,8 @@ The ‟Size Before” column of \Cref{table:corpus} provides the main size
 statistics of the constituting artifacts.
 
 \begin{table}[H]
-  \caption{Aggregating statistics of compression power of
-    BZip2 and size of software artifacts
-  corpus before and after compression}
+  \caption{Aggregating statistics, over artifacts in the corpus, 
+  of compression power of BZip2 and size, before and after compression.}
   \label{table:corpus}
   \par\vspace{10pt plus 6pt minus 4pt}
   \centering
@@ -56,7 +55,7 @@ of software's naturalness~\cite{Hindle:Bar:Su:Gabel:Devanbu:12}. The
 measures are similar but not identical: Compression algorithms search
 (and exploit) the input for repetitive patterns of unbounded length, while
 naturalness limits the search to~$n$-grams for some small integer~$n$. Quality
-in compression algorithms is measured by compression \emph{power}, defined as
+in compression algorithms is measured by \emph{compression power}, defined as
 the ratio of uncompressed size to the compressed size. Compression power should
 be correlated with \emph{naturalness}, but it distinct from it.
 
@@ -104,11 +103,11 @@ if we compare the results reported in \cref{table:original} and
 \cref{table:original} the compression power is higher if the BW algorithm is
 applied to the boilerplate code.
 
-\matteo†{copy and adapt caption from first table in this section}
-
 \begin{table}
-  \caption{The results of the compression using the Jack algorithm alone and
-  both Jack and Burrows-Wheeler algorithms combined}
+  \caption{
+    Aggregating statistics, over artifacts in the corpus, of size and
+    compression power of Jack and Jack combined with BZip2.
+  }
   \label{table:original}
   \par\vspace{10pt plus 6pt minus 4pt}
   \centering
@@ -148,7 +147,7 @@ compress than a larger one (REFORMULATE)
 
 \begin{table}
   \caption{The results after performing a partial spartanization of the code,
-    compared with the compression ratios obtained with the Jack and
+    compared with the compression powers obtained with the Jack and
   Burrows-Wheeler algorithm}
   \label{table:partial}
   \par\vspace{10pt plus 6pt minus 4pt}
@@ -178,7 +177,7 @@ compress than a larger one (REFORMULATE)
 \matteo†{copy and adapt from first caption}
 \begin{table}
   \caption{The results after performing a total spartanization of the code,
-    compared with the compression ratios obtained with the Jack and
+    compared with the compression powers obtained with the Jack and
   Burrows-Wheeler algorithm.}
   \label{table:total}
   \par\vspace{10pt plus 6pt minus 4pt}
