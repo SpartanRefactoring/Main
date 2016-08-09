@@ -1,4 +1,21 @@
 \matteo: can you please proof read this section?
+
+The main research question that concerns us here is
+\begin{description}
+  \item[RQ1] \emph{Is spartan code more natural than non-spartanized code?} also,
+      and more concretely,
+    \begin{description}
+      \item[RQ1.1] \emph{Does structural spartanization contribute software naturalness?}
+      \item[RQ1.2] \emph{Does renaming spartanization contribute software naturalness?}
+  \item[RQ1] \emph{Is spartan code more natural than non-spartanized code?}
+\end{description}
+Yet another question that intrigues us here is:
+\begin{description}
+  \item[RQ2] Find an approximation of software's
+    naturalness~\cite{Hindle:Bar:Su:Gabel:Devanbu:12} suitable
+    for experiments with spartan code.
+\end{enumerate}
+
 \subsection{Data Corpus}
 We used the ‟Gil-Lalouche”~\cite{Gil:Lalouche:16} software corpus,
 assembled from~26 popular \Java open source software artifacts collected
@@ -27,35 +44,39 @@ statistics of the constituting artifacts.
       & \textit{After}
       & \multicolumn1c{\textit{Power}}⏎
       \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
- \sffamily  Ave.    &  12,370,223  &  1,272,331  &  9.25⏎
- \sffamily  Min.    &  1,019,125   &  129,114    &  7.22⏎
- \sffamily  Max.    &  46,965,422  &  5,607,599  &  12.96⏎
- \sffamily  Med.    &  5,128,541   &  607,535    &  8.91⏎
+ \sffamily  Ave.   &  12,370,223  &  1,272,331  &  9.25⏎
+ \sffamily  Min.   &  1,019,125   &  129,114    &  7.22⏎
+ \sffamily  Max.   &  46,965,422  &  5,607,599  &  12.96⏎
+ \sffamily  Med.   &  5,128,541   &  607,535    &  8.91⏎
  \sffamily  Range  &  45,946,297  &  5,478,485  &  5.74⏎
       \bottomrule
     \end{tabular}
   \end{adjustbox}
 \end{table}
 
-Notably, sizes span more than one order of magnitude, from one megabyte of
-source to circa~47, the median being around five megabytes, the average around
-twelve. The GL corpus was used before for the study of software metrics.
-See~\cite{Gil:Lalouche:16}~\cite{Gil:Lalouche:16b}
-\matteo for
-reproducibility details and for a description of the artifacts' selection
+Notably, sizes†span more than one
+order of magnitude, from one megabyte of source to circa~47, the median being
+around five megabytes, the average around twelve. The GL corpus was used before
+for the study of software metrics.  See~\cite{Gil:Lalouche:16,Gil:Lalouche:16b}
+for reproducibility details and for a description of the artifacts' selection
 process. Sufficient to us here is that the selection was independent of the
 current research and that the artifacts are of considerable size, wide use,
 evolution history and, development effort.
 
 \subsection{Burrows-Wheeler Compression}
 Compression power is used in this work-in-progress report as a quick estimate
-of software's naturalness~\cite{Hindle:Bar:Su:Gabel:Devanbu:12}. The
-measures are similar but not identical: Compression algorithms search
-(and exploit) the input for repetitive patterns of unbounded length, while
-naturalness limits the search to~$n$-grams for some small integer~$n$. Quality
-in compression algorithms is measured by \emph{compression power}, defined as
-the ratio of uncompressed size to the compressed size. Compression power should
-be correlated with \emph{naturalness}, but it distinct from it.
+of software's naturalness~\cite{Hindle:Bar:Su:Gabel:Devanbu:12}. The measures
+are similar but not identical: Compression algorithms search (and exploit) the
+input for repetitive patterns of unbounded length, while naturalness limits the
+search to~$n$-grams for some small integer~$n$. The difficulty with applying
+vanilla naturalness measures is that they become prohibitively slow
+for~$n>5$~(say). Patterns of spartanizations, just like refactoring, often
+manipulate many more than~$5$ tokens.
+
+Quality in compression algorithms is measured by \emph{compression power},
+defined as the ratio of uncompressed size to the compressed size. Compression
+power, our \emph{approximate naturalness} should be correlated with
+\emph{original naturalness}, but it distinct from it.
 
 We found that with respect to \Java software the compression power of Bzip2 is
 greater than that of GZip. This greater power is probably because Gzip make a
@@ -71,12 +92,19 @@ power, as there is in their naturalness.
 
 \subsection{The Jack Preprocessor}
 
-To better focus on ‟pure” code complexity, our study further employs
-\emph{Jack}, a special purpose preprocessor. Jack replaces each keyword and
-operator with a single one byte token. The rationale is that keywords such as
-\kk{class} are read and produced by programmers as an individual cohesive
-token, rather than a sequence of letters that form an identifier, or sequence
-of digits that make a numeric literal.
+Even though software artifacts often includes more than just \cc{.java} files,
+size and other data are of these files only. The rationale is that we wish to
+concentrate on the naturalness of the \Java code itself, rather auxiliary
+material such as configuration information.
+
+Note that \cc{.java} files often contain more text than just plain code.  To
+better focus on the code itself, this study employs \emph{Jack}, a special
+purpose \Java preprocessor applied prior to compression. 
+
+Jack replaces each keyword and operator with a single one byte token. The
+rationale is that keywords such as \kk{class} are read and produced by
+programmers as an individual cohesive token, rather than a sequence of letters
+that form an identifier, or sequence of digits that make a numeric literal.
 
 Jack also eliminates from the \Java code all of the following five: white space
 characters, \kk{package} declaration, \kk{import} directives, comments of all
@@ -95,9 +123,10 @@ future.
 \Cref{table:original} presents the compression power of Jack, BZip, when
 applied after Jack, and the accumulative compression power of Jack and BZip2
 when applied in this order.
-\begin{table} \caption{ Aggregating statistics, over artifacts in the corpus,
-    of size and
-    compression power of Jack and Jack combined with BZip2.
+
+\begin{table} 
+  \caption{Aggregating statistics, over artifacts in the corpus,
+    of size and compression power of Jack and Jack combined with BZip2.
   }
   \label{table:original}
   \par\vspace{10pt plus 6pt minus 4pt}
@@ -126,28 +155,35 @@ when applied in this order.
 \end{table}
 
 In the table, we can observe that Jack typically compress files to half their
-size , although the are some artifacts (with many \kk{import}s and comments),
+size, although the are some artifacts (with many \kk{import}s and comments),
 in which the removal of boilerplate material from the program make a ten fold
-reduction in size. 
+reduction in size.
 
 The combined compression power of Jack and BZip2 reaches greater values,
 ranging from circa 10 fold compression to circa 80 fold. However, the more
-interesting measure, the BZip2 after Jack compression power.  This measure is
-our approximation of naturalness: it is telling how much the essence of the
-code itself, discarding boilerplate is compressible (and hence predictable). 
+interesting measure, the BZip2 after Jack compression power. This measure is
+our \emph{approximate of naturalness}, which answers \textbf{RQ2}. Approximate
+naturalness is telling how much the essence of the code itself, discarding
+boilerplate is compressible (and hence predictable, or, approximately natural).
 
-Comparing the penultimate column of the table with the final
-column of \cref{table:corpus}, we see that overall, Jack reduces the
-compression power of BZip2. All five statistics: average, min, max, median, 
-and range,  are higher when BZip2 is applied to the original code, than
-if it is applied to the Jacked code.
+Comparing the penultimate column of the table with the final column of
+\cref{table:corpus}, we see that overall, Jack reduces the compression power of
+BZip2. All five statistics: average, min, max, median, and range, are higher
+when BZip2 is applied to the original code, than if it is applied to the Jacked
+code. In other words, approximate naturalness of non-filtered code is better
+than that of jacked code. This should not be a surprise: there are good reasons
+to assume that compression of comments, strings, and boilerplate \kk{import}s,
+is better than that of the code itself. If these are eliminated from the input, then
+compression power show decrease.
 
-\subsection{Pure Spartanization}
-If hour research conjecture is true, then we expl 
+\subsection{Structural Spartanization and Approximate Naturalness}
+In the first set of experiments, designed to answer \textbf{RQ1.1}, \Java code
+in the software artifacts were subjected to our automatic spartanization 
+tool, configured to employ structural wrings. We then compare the approximate
+naturalness of the automatically spartanized code with that of the original
+code.
 
-We than applied a set of spartanizations (structural spartanization) to all the
-software systems. Afterwards we applied both the Jack and the BW algorithm.
-The results are reported in \cref{table:structural} where it is also
+The results are summarized in \cref{table:structural}. 
 reported the improvement in the compression due to the spartanization. It is
 worth to note that we have an improvement in any statistics, in other words the
 spartanization affected positively the compression, increasing the compression
@@ -200,11 +236,11 @@ compress than a larger one (REFORMULATE)
       & & \textit{Overall}
       & \textit{Partial Spartan.}⏎
       \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
-  \sffamily Ave\@. & 4,947,319 & 713,857 & 6.56 & -0.03 & -0.09⏎
-  \sffamily Min\@. & 430,375 & 75,160 & 4.89 & -0.40 & -0.28⏎
-  \sffamily Max\@. & 18,890,899 & 3,244,851 & 8.72 & 0.41 & -0.01⏎
-  \sffamily Med\@. & 1,923,056 & 339,930 & 6.70 & 0.00 & -0.09⏎
-  \sffamily Range & 18,460,524 & 3,169,691 & 3.83 & 0.81 & 0.27⏎
+ \sffamily  Ave\@.  &  4,947,319   &  713,857    &  6.56  &  -0.03  &  -0.09⏎
+ \sffamily  Min\@.  &  430,375     &  75,160     &  4.89  &  -0.40  &  -0.28⏎
+ \sffamily  Max\@.  &  18,890,899  &  3,244,851  &  8.72  &  0.41   &  -0.01⏎
+ \sffamily  Med\@.  &  1,923,056   &  339,930    &  6.70  &  0.00   &  -0.09⏎
+ \sffamily  Range   &  18,460,524  &  3,169,691  &  3.83  &  0.81   &  0.27⏎
       \bottomrule
     \end{tabular}
   \end{adjustbox}
