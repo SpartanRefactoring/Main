@@ -82,7 +82,7 @@ Use canonical form for the most common expressions, as much as possibile.
   \item Pushdown ternarizations. For example:
 % \item Example:
   \begin{code}{java}
-a ? b(x) : b(y) => b(a ? x: y)
+a ££? b(x) : b(y) => b(a ££? x: y)
   \end{code}
   \item Apply the distributive rule on booleans. For instance:
 % \item Example:

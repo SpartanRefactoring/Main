@@ -76,15 +76,13 @@ Finally in \cref{figure:shock-3} it is possible to see that…
 \begin{figure}[ht]
   \matteo\footnote{incorrect reference} 
     \caption{% 
-      Spartan functions to test for primality%
-      \footnote{%
+      Spartan functions to test for primality\footnote{%
         https://github.com/SpartanRefactoring/spartan/blob/master/src/il/org/spartan/misc/Primes.java
       }
     }
 \label{figure:shock-3}
 \begin{Code}{JAVA}{Primes.java}
 default Set<Variable> freeVariables() {££
-default Set<Variable> freeVariables() {
     final Set<Variable> $ = new LinkedHashSet<>();
     if (isVariable())
       $.add((Variable) this);
