@@ -1,19 +1,18 @@
+\matteo: can you please proof read this section?
 \subsection{Data Corpus}
 We used the ‟Gil-Lalouche”~\cite{Gil:Lalouche:16} software corpus,
 assembled from~26 popular \Java open source software artifacts collected
 from~\emph{GitHub's Trending
-  repositories}~\urlref{https://github.com/trending?l=java＆since=monthly} and
+  repositories}\urlref{https://github.com/trending?l=java＆since=monthly} and
 the \emph{GitHub \Java Corpus}%
 \urlref{http://groups.inf.ed.ac.uk/cup/javaGithub/}
-list due to Charles and Allamanis%~\matteo
-\cite{Allamanis:Sutton:13}.
-% \matteo:We may be making a grave mistake here. Is this guy's last name Charles,
-% or is it that Charles is his first?
+list due to Allamanis and Sutton~\cite{Allamanis:Sutton:13}.
+
 The ‟Size Before” column of \Cref{table:corpus} provides the main size
 statistics of the constituting artifacts.
 
 \begin{table}[H]
-  \caption{Aggregating statistics, over artifacts in the corpus, 
+  \caption{Aggregating statistics, over artifacts in the corpus,
   of compression power of BZip2 and size, before and after compression.}
   \label{table:corpus}
   \par\vspace{10pt plus 6pt minus 4pt}
@@ -27,12 +26,12 @@ statistics of the constituting artifacts.
       & \textit{Before}
       & \textit{After}
       & \multicolumn1c{\textit{Power}}⏎
-      \midrule % VIM: +,/bottom/-!column -t|sed 's/^/    /'
-    \sffamily  Ave\@.  ＆  12,370,223  &  1,272,331  &  9.25   ⏎
-    \sffamily  Min\@.  ＆  1,019,125   &  129,114    &  7.22   ⏎
-    \sffamily  Max\@.  ＆  46,965,422  &  5,607,599  &  12.96  ⏎
-    \sffamily  Med\@.  ＆  5,128,541   &  607,535    &  8.91   ⏎
-    \sffamily  Range   &   45,946,297  &  5,478,485  &  5.74   ⏎
+      \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
+ \sffamily  Ave.    &  12,370,223  &  1,272,331  &  9.25⏎
+ \sffamily  Min.    &  1,019,125   &  129,114    &  7.22⏎
+ \sffamily  Max.    &  46,965,422  &  5,607,599  &  12.96⏎
+ \sffamily  Med.    &  5,128,541   &  607,535    &  8.91⏎
+ \sffamily  Range  &  45,946,297  &  5,478,485  &  5.74⏎
       \bottomrule
     \end{tabular}
   \end{adjustbox}
@@ -90,21 +89,14 @@ very different from that of the code, \emph{and}, string literals, at least
 those with significant content, are ought to be managed by configuration and
 internationalization processes rather than coding per-se.
 
-\matteo: can  you please proof read this section?
-
 Jack currently does not remove unit-tests, but is planned to do so in the
 future.
 
-\Cref{table:original} our dataset. After removing the unessential code and
-obtaining boilerplate code we computed compression power. We also applied the
-Burrows-Wheeler algorithm to the outcome of the Jack algorithm. As we can see
-if we compare the results reported in \cref{table:original} and
-\cref{table:original} the compression power is higher if the BW algorithm is
-applied to the boilerplate code.
-
-\begin{table}
-  \caption{
-    Aggregating statistics, over artifacts in the corpus, of size and
+\Cref{table:original} presents the compression power of Jack, BZip, when
+applied after Jack, and the accumulative compression power of Jack and BZip2
+when applied in this order.
+\begin{table} \caption{ Aggregating statistics, over artifacts in the corpus,
+    of size and
     compression power of Jack and Jack combined with BZip2.
   }
   \label{table:original}
@@ -115,39 +107,57 @@ applied to the boilerplate code.
       \toprule
       & \multicolumn{2}{c}{\textit{Jack}}
       & \multicolumn{2}{c}{\textit{Jack + BZip2}}
-      & \textit{Combined-}⏎
-      \cmidrule(r){2-3} \cmidrule(r){4-5}
+      & \multicolumn1c\textit{Combined}⏎
+      \cmidrule(r){2-3} \cmidrule(r){4-5} \cmidrule(r){6-6}
       & \textit{Size (bytes)}
-      & \textit{Ratio}
+      & \textit{Powr}
       & \textit{Size (bytes)}
-      & \textit{Ratio} & \textit{-Power} ⏎
-      \midrule % VIM: +,/bottom/-!column -t|sed 's/^/    /'
-      \sffamily  Ave\@. & 5,078,034  & 2.78  & 729,934   & 6.60 & 18.37⏎
-      \sffamily  Min\@. & 456,050    & 1.73  & 77,706    & 4.89 & 10.18⏎
-      \sffamily  Max\@. & 19,697,634 & 12.85 & 3,414,889 & 8.68 & 83.65⏎
-      \sffamily  Med\@. & 1,822,510  & 2.34  & 343,815   & 6.50 & 15.95⏎
-      \sffamily  Range  & 19,241,584 & 11.12 & 3,337,183 & 3.79 & 73.47⏎
+      & \textit{Powr}
+      & \textit{Power}⏎
+      \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
+ \sffamily  Ave.   &  5,078,034   &  2.78   &  729,934    &  6.60  &  18.37⏎
+ \sffamily  Min.   &  456,050     &  1.73   &  77,706     &  4.89  &  10.18⏎
+ \sffamily  Max.   &  19,697,634  &  12.85  &  3,414,889  &  8.68  &  83.65⏎
+ \sffamily  Med.   &  1,822,510   &  2.34   &  343,815    &  6.50  &  15.95⏎
+ \sffamily  Range  &  19,241,584  &  11.12  &  3,337,183  &  3.79  &  73.47⏎
       \bottomrule
     \end{tabular}
   \end{adjustbox}
 \end{table}
 
-\subsection{Pure Spartanization}
+In the table, we can observe that Jack typically compress files to half their
+size , although the are some artifacts (with many \kk{import}s and comments),
+in which the removal of boilerplate material from the program make a ten fold
+reduction in size. 
 
-We than applied a set of spartanizations (partial spartanization) to all the
+The combined compression power of Jack and BZip2 reaches greater values,
+ranging from circa 10 fold compression to circa 80 fold. However, the more
+interesting measure, the BZip2 after Jack compression power.  This measure is
+our approximation of naturalness: it is telling how much the essence of the
+code itself, discarding boilerplate is compressible (and hence predictable). 
+
+Comparing the penultimate column of the table with the final
+column of \cref{table:corpus}, we see that overall, Jack reduces the
+compression power of BZip2. All five statistics: average, min, max, median, 
+and range,  are higher when BZip2 is applied to the original code, than
+if it is applied to the Jacked code.
+
+\subsection{Pure Spartanization}
+If hour research conjecture is true, then we expl 
+
+We than applied a set of spartanizations (structural spartanization) to all the
 software systems. Afterwards we applied both the Jack and the BW algorithm.
-The results are reported in \cref{table:partial} where it is also
+The results are reported in \cref{table:structural} where it is also
 reported the improvement in the compression due to the spartanization. It is
 worth to note that we have an improvement in any statistics, in other words the
 spartanization affected positively the compression, increasing the compression
 power. This is counter intuitive, being a small file most difficult to
 compress than a larger one (REFORMULATE)
-% \matteo†{copy and adapt from first caption}
 
 \begin{table}
-  \caption{Aggregating statistics of compression power after a partial spartanization.
+  \caption{Aggregating statistics of compression power after a structural spartanization.
   Comparison with the compressione ratio obtained with Jack and BZip2.}
-  \label{table:partial}
+  \label{table:structural}
   \par\vspace{10pt plus 6pt minus 4pt}
   \centering
   \scalebox{0.75}{%
@@ -160,12 +170,12 @@ compress than a larger one (REFORMULATE)
     & \textit{Jack}
     & \textit{Jack + BZip2}
     & & \textit{with Spartan.} & \textit{Total}⏎
-    \midrule % VIM: +,/bottom/-!column -t|sed 's/^/    /'
-    \sffamily  Ave\@. & 5,050,647  & 719,488   & 6.66 & 0.06  & 1.01  ⏎
-    \sffamily  Min\@. & 439,825    & 75,391    & 4.90 & -0.37 & 0.21  ⏎
-    \sffamily  Max\@. & 19,173,224 & 3,275,918 & 8.79 & 0.49  & 1.07  ⏎
-    \sffamily  Med\@. & 1,959,917  & 341,851   & 6.79 & 0.08  & 1.04  ⏎
-    \sffamily  Range  & 18,733,399 & 3,200,527 & 3.89 & 0.86  & 0.87  ⏎
+    \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
+ \sffamily  Ave.   &  5,050,647   &  719,488    &  6.66  &  0.06   &  1.01⏎
+ \sffamily  Min.   &  439,825     &  75,391     &  4.90  &  -0.37  &  0.21⏎
+ \sffamily  Max.   &  19,173,224  &  3,275,918  &  8.79  &  0.49   &  1.07⏎
+ \sffamily  Med.   &  1,959,917   &  341,851    &  6.79  &  0.08   &  1.04⏎
+ \sffamily  Range  &  18,733,399  &  3,200,527  &  3.89  &  0.86   &  0.87⏎
     \bottomrule
   \end{tabular}}
 \end{table}
@@ -187,14 +197,14 @@ compress than a larger one (REFORMULATE)
       \cmidrule(r){2-3} \cmidrule(r){5-6}
       & \textit{Jack}
       & \textit{Jack + BZip2}
-      &      & \textit{Overall}
+      & & \textit{Overall}
       & \textit{Partial Spartan.}⏎
-      \midrule % VIM: +,/bottom/-!column -t|sed 's/^/  /'
-  \sffamily  Ave\@.  &  4,947,319   &  713,857    &  6.56  &  -0.03  &  -0.09⏎
-  \sffamily  Min\@.  &  430,375     &  75,160     &  4.89  &  -0.40  &  -0.28⏎
-  \sffamily  Max\@.  &  18,890,899  &  3,244,851  &  8.72  &  0.41   &  -0.01⏎
-  \sffamily  Med\@.  &  1,923,056   &  339,930    &  6.70  &  0.00   &  -0.09⏎
-  \sffamily  Range   &  18,460,524  &  3,169,691  &  3.83  &  0.81   &  0.27⏎
+      \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
+  \sffamily Ave\@. & 4,947,319 & 713,857 & 6.56 & -0.03 & -0.09⏎
+  \sffamily Min\@. & 430,375 & 75,160 & 4.89 & -0.40 & -0.28⏎
+  \sffamily Max\@. & 18,890,899 & 3,244,851 & 8.72 & 0.41 & -0.01⏎
+  \sffamily Med\@. & 1,923,056 & 339,930 & 6.70 & 0.00 & -0.09⏎
+  \sffamily Range & 18,460,524 & 3,169,691 & 3.83 & 0.81 & 0.27⏎
       \bottomrule
     \end{tabular}
   \end{adjustbox}

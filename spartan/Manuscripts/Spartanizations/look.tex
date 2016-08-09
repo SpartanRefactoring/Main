@@ -76,10 +76,6 @@ private static boolean isPrime¢(final int i) {££
 
 Finally in \cref{figure:shock-3} it is possible to see that…
 
-% \matteo incorrect reference in this table, see if you can add class name
-% ＃ function style reference,
-% e.g., \texttt{il.org.spartan.protolog.Variable＃freeVariables}
-
 \begin{figure}[ht]
     \caption{%
       Spartan functions to test for setting free variables†{
@@ -87,7 +83,7 @@ Finally in \cref{figure:shock-3} it is possible to see that…
       }
     }
 \label{figure:shock-3}
-\begin{Code}{JAVA}{il.org.spartan.protolog.Variable＃freeVariables}
+\begin{Code}{JAVA}{\scriptsize\texttt{il.org.spartan.protolog.Variable＃freeVariables}}
 default Set<Variable> freeVariables() {££
     final Set<Variable> $ = new LinkedHashSet<>();
     if (isVariable())
