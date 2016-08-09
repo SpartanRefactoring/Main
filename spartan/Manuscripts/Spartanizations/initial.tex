@@ -217,7 +217,7 @@ compress than a larger one (REFORMULATE)
 
 \begin{table}
   \caption{Aggregating statistics of compression power of Jack+BZip2 after
-  automatic \textbf{structural} spartanization, compared with non-spartanized code.
+  automatic \textbf{structural} spartanization. Difference with the not spartanized case.
   }
   \label{table:original}
   \par\vspace{10pt plus 6pt minus 4pt}
@@ -249,6 +249,49 @@ compress than a larger one (REFORMULATE)
     \end{tabular}
   \end{adjustbox}
 \end{table}
+
+\begin{table}
+  \caption{Aggregating statistics of compression power of Jack+BZip2 after
+  automatic \textbf{structural} spartanization, compared with non-spartanized code.
+  }
+  \label{table:original}
+  \par\vspace{10pt plus 6pt minus 4pt}
+  \centering
+  \begin{adjustbox}{max width = \columnwidth}
+    \begin{tabular}{l*3r}
+      \toprule
+      & \multicolumn1c{\textit{Jack}}
+      & \multicolumn1c{\textit{Jack+BZip2}}
+      & \multicolumn1c{\textit{Combined}}⏎
+%       \cmidrule(r){2-3} \cmidrule(r){4-5} \cmidrule(r){6-6}
+%       & \textit{Size (bytes)}
+      & \textit{Powr}
+%       & \textit{Size (bytes)}
+      & \textit{Powr}
+      & \textit{Power}⏎
+      \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
+\sffamily  Ave.  & -0.32 & 0.06  & -1.95\\
+\sffamily  Min.  & 0.06  & 0.01  & 0.40\\  
+\sffamily  Max.  & -8.98 & 0.11  & -55.46\\
+\sffamily  Med.  & -8.71 & 3.00  & -56.90\\
+\sffamily  Range & -0.26 & -2.61 & 1.66\\
+      \bottomrule
+    \end{tabular}
+  \end{adjustbox}
+\end{table}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
