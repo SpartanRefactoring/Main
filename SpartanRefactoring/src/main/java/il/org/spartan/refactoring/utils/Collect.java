@@ -77,6 +77,11 @@ public enum Collect {
     public abstract List<SimpleName> in(ASTNode... ns);
   }
   static final ASTMatcher matcher = new ASTMatcher();
+  /** Creates an ASTVisitor that adds to the provided SimpleName list all the identifiers of variable declarations
+   * expressions, which are identical the provided ASTNode's.
+   * @param ns JD
+   * @param n JD
+   * @return <b>ASTVisitor</b> as described above.*/
   static ASTVisitor declarationsCollector(final List<SimpleName> into, final ASTNode n) {
     return new MethodExplorer.IgnoreNestedMethods() {
       boolean add(final SimpleName candidate) {
