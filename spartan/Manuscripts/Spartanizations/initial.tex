@@ -198,17 +198,33 @@ compress than a larger one (REFORMULATE)
   \par\vspace{10pt plus 6pt minus 4pt}
   \centering
   \begin{adjustbox}{max width=\columnwidth}
-    \begin{tabular}{l*3r}
+    \begin{tabular}{l*6r}
       \toprule
-      & \textit{}⏎
-      \cmidrule(r){2-2} \cmidrule(r){3-3} \cmidrule(r){4-4}
-      &  \multicolumn1c{\itshape BZip2 Power} & \textit{with Spartan.} & \textit{Total}⏎
+      & \multicolumn2c{\textit{Size (bytes)}}
+      & \multicolumn2c{\textit{Powr}}
+      & \multicolumn1c{\textit{Improvement}}\\
+%       \cmidrule(r){2-3}\cmidrule(r){4-5} \cmidrule(r){6-6}
+      & \textit{Jack}
+      & \textit{Jack+BZip2}
+      & \textit{BZip2 on Jack}
+      & \textit{Combined}
+      & \textit{with. Spartan}
+      & \textit{total with partial}\\
       \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
-      \sffamily  Ave.  &  6.66 & 0.06  & 1.01⏎
-      \sffamily  Min.  &  4.90 & -0.37 & 0.21⏎
-      \sffamily  Max.  &  8.79 & 0.49  & 1.07⏎
-      \sffamily  Med.  &  6.79 & 0.08  & 1.04⏎
-      \sffamily  Range &  3.89 & 0.86  & 0.87⏎
+      \sffamily  Ave.  & 5,050,647  & 719,488   & 6.66 & 15.88 & 16.42 & 1.01 \\
+      \sffamily  Min.  & 439,825    & 75,391    & 4.90 & 10.58 & 10.58 & 0.21 \\  
+      \sffamily  Max.  & 19,173,224 & 3,275,918 & 8.79 & 23.21 & 28.19 & 1.07 \\
+      \sffamily  Med.  & 1,959,917  & 341,851   & 6.79 & 12.63 & 16.57 & 0.87 \\
+      \sffamily  Range & 18,733,399 & 3,200,527 & 3.89 & 15.27 & 17.61 & 1.04 \\
+      & \textit{}⏎
+%       \cmidrule(r){2-2} \cmidrule(r){3-3} \cmidrule(r){4-4}
+%       &  \multicolumn1c{\itshape BZip2 Power} & \textit{with Spartan.} & \textit{Total}⏎
+%       \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
+%       \sffamily  Ave.  &   & 0.06  & 1.01⏎
+%       \sffamily  Min.  &   & -0.37 & 0.21⏎
+%       \sffamily  Max.  &   & 0.49  & 1.07⏎
+%       \sffamily  Med.  &   & 0.08  & 1.04⏎
+%       \sffamily  Range &   & 0.86  & 0.87⏎
       \bottomrule
     \end{tabular}
   \end{adjustbox}
@@ -222,11 +238,11 @@ compress than a larger one (REFORMULATE)
   \par\vspace{10pt plus 6pt minus 4pt}
   \centering
   \begin{adjustbox}{max width = \columnwidth}
-    \begin{tabular}{l*5r}
+    \begin{tabular}{l*6c}
       \toprule
       & \multicolumn2c{\textit{Jack}}
       & \multicolumn2c{\textit{Jack+BZip2}}
-      & \multicolumn1c{\textit{Combined}}⏎
+      & \multicolumn2c{\textit{Combined}}\\
       \cmidrule(r){2-3} \cmidrule(r){4-5} \cmidrule(r){6-6}
       & \textit{Size (bytes)}
       & \textit{Powr}
@@ -239,11 +255,11 @@ compress than a larger one (REFORMULATE)
 %       \sffamily  Max.  & 19,697,634 & 12.85 & 3,414,889 & 8.68 & 83.65⏎
 %       \sffamily  Med.  & 1,822,510  & 2.34  & 343,815   & 6.50 & 15.95⏎
 %       \sffamily  Range & 19,241,584 & 11.12 & 3,337,183 & 3.79 & 73.47⏎
-\sffamily  Ave.  & 5,050,647  & 2.46 & 719,488   & 6.66 & 16.42\\
-\sffamily  Min.  & 439,825    & 1.79 & 75,391    & 4.90 & 10.58\\  
-\sffamily  Max.  & 19,173,224 & 3.87 & 3,275,918 & 8.79 & 28.19\\
-\sffamily  Med.  & 1,959,917  & 2.41 & 341,851   & 6.79 & 16.57\\
-\sffamily  Range & 18,733,399 & 2.08 & 3,200,527 & 3.89 & 17.61\\
+\sffamily  Ave.  & 5,050,647  & 2.46 & 719,488   & 6.66 & 0.06  & 1.01 \\
+\sffamily  Min.  & 439,825    & 1.79 & 75,391    & 4.90 & -0.37 & 0.21 \\  
+\sffamily  Max.  & 19,173,224 & 3.87 & 3,275,918 & 8.79 & 0.49  & 1.07 \\
+\sffamily  Med.  & 1,959,917  & 2.41 & 341,851   & 6.79 & 0.86  & 0.87 \\
+\sffamily  Range & 18,733,399 & 2.08 & 3,200,527 & 3.89 & 0.08  & 0.08 \\
       \bottomrule
     \end{tabular}
   \end{adjustbox}
