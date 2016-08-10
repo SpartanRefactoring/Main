@@ -365,53 +365,6 @@ if (this == null) return super();
 % }
 % \end{code}
 % \end{itemize}
-\begin{figure}
-  \caption{An automatically spartanized version of
-      the \Java program of \cref{figure:eclipse}}
-    \label{figure:eclipse:automatic}
-    \begin{adjustbox}{max width=\columnwidth}
-\begin{code}[minipage, width=1.20\columnwidth]{JAVA}
-public class Test1 { // comments and £\kk{import}£ directives omitted for brevity
-  public static void main(final String args[]) {££
-    final ASTParser p = ASTParser.newParser(AST.JLS3);
-    p.setSource((
-      "public class A {\n" +
-      " int i = 9;\n"+ //
-      " int j;\n" + //
-      " ArrayList<Integer> al = new ArrayList<Integer>();\n" + //
-      " j=1000;\n" + // sic!
-      "}\n").toCharArray());
-    final CompilationUnit u = (CompilationUnit) p.createAST(null);
-    u.accept(new ASTVisitor() {££
-      Set £\ignore$£$ = new HashSet();
-      @Override public boolean visit(final SimpleName ¢) {££
-        if (£\ignore$£$.contains(¢.getIdentifier()))
-          System.out.println("Usage of '" + ¢ + //
-            "' at line " + u.getLineNumber(¢.getStartPosition()));
-        return true;
-      }
-      @Override public boolean visit(final VariableDeclarationFragment f) {££
-        final SimpleName ¢ = f.getName();
-        £\ignore$£$.add(¢.getIdentifier());
-        System.out.println("Declaration of '" + ¢ + //
-          "' at line" + u.getLineNumber(¢.getStartPosition()));
-        return false; // do not continue to avoid usage info
-      }
-    });
-  }
-}
-\end{code}
-  \end{adjustbox}
-\end{figure}
-
-Each of the several wrings applied to obtain \cref{figure:eclipse:automatic}
-  reduced at least one of our minimization ends.
-At several occasions, cleanup increased these.
-Overall, in this case, the result of automatic application of spartanization
-  is a reduction in the number of lines, words, and characters
-  by factors of~$1.6$,~$1.18$, and~$1.4$.\footnote{Part of this improvement
-  is due to cleanup, optimization the use of \kk{import}; we shall account
-for this phenomena in the empirical section.} 
 
 \Cref{figure:eclipse:spartan} shows the spartanized version of the program in
 the \cref{figure:eclipse}. Employed were nominal spartanization, e.g., renaming
