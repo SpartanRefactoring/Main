@@ -44,7 +44,9 @@ endif
 view: $(call tip,view,open a PDF viewer on made output) $(MAIN).pdf 
 	@ (okular --unique $(MAIN).pdf &> /dev/null > /dev/null &)
 	
-.PHONY: clean 
+.PHONY: clean c 
+c: $(call tip,c, shorthand of clean) clean
+
 clean: $(call tip,clean,\
  move all auotmatically-generated-files (currently $(G0)) to /tmp)
 	@ - [ -z '$(garbage)' ] || mv -f $(garbage) $(TMP)
@@ -52,26 +54,36 @@ clean: $(call tip,clean,\
 	@ - [ $(G0) -eq 1 ] && echo $(G0) file moved to $(TMP) [$(G1) bytes] || true 
 	@ - [ $(G0) -eq 0 ] && echo already clean || true 
 
-.PHONY: latex 
+.PHONY: latex l 
+l: $(call tip,l, shorthand of latex) latex
+
 latex: $(call tip,latex,run latex to make $(MAIN).pdf) $(MAIN).pdf
 	texfot $(LATEX) ./$(MAIN).tex
 
 
-.PHONY: force 
-force: $(call tip,force, alias of 'latex') 
+.PHONY: force f
+f: $(call tip,f, shorthand of force) force
+
+force: $(call tip,force, shorthand of 'latex') 
 	texfot $(LATEX) ./$(MAIN).tex
 
 $(MAIN).pdf: $(call tip,$(MAIN).pdf,our main latex target) $(SOURCES) 
 	texfot $(LATEX) ./$(MAIN).tex
 
-.PHONY: verbose 
+.PHONY: verbose v
+v: $(call tip,v, shorthand of verose) verbose
+
 verbose: $(call tip,verbose,run latex interactively; to fix compilation errors)  
 	$(LATEX_COMMAND) ./$(MAIN).tex
 
-.PHONY: all 
+.PHONY: all a
+a: $(call tip,a, shorthand of all) all 
+
 all: $(call tip,all,recreate all targets (currently $(TARGETS); useful in batch mode)) $(TARGETS)
 
 .PHONY: silent
+s: $(call tip,s, shorthand of silent) silent 
+
 silent: $(call tip,silent,remake $(MAIN).pdf but silently) $(MAIN).pdf $(SOURCES) Makefile
 	$(LATEX) -interaction=batchmode $(MAIN).tex
 
@@ -82,7 +94,9 @@ again: $(call tip,again,alias for 'silent' remake $(MAIN).pdf but silently) sile
 write18: $(call tip,write18,remake $(MAIN).pdf with -shell-escape) $(SOURCES) $(LISTINGS) 
 	$(LATEX) -draftmode -shell-escape ./$(MAIN).tex
 
-.PHONY: bibtex
+.PHONY: bibtex b
+b: $(call tip,b, shorthand of bibtex) all 
+
 $(MAIN).blg bibtex: $(call tip,bibtex, regenerate the bibliogrpahy)	
 	$(LATEX) -interaction=batchmode -draftmode $(MAIN).tex
 	bibtex $(MAIN)
