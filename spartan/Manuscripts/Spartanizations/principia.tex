@@ -213,7 +213,7 @@ Compare this figure to its spartanized version, as showing in
 \cref{figure:cell1}
 
 \begin{figure}
-  \caption{A spartanized version of the \Java class in \cref{figure:cell9}
+  \caption{A spartanized version of the \Java class in \cref{figure:cell0}
     automatically generated methods (16 lines, 70 words and 420 characters).}
     \label{figure:cell1}
     \begin{adjustbox}{max width=\columnwidth}
@@ -238,14 +238,15 @@ public class C1<T> {
 \end{adjustbox}
 \end{figure}
 Evidently, spartanization has removed all conditionals, replacing these with
-the ternary operator and the short-circuit operators, ‟\cc{\|\|}” and
-‟\cc{＆＆}”. Spartanization also abbreviated \cc{obj} to \cc{o}.  The code is
-evidently shorter, not as nested.  Horizontal complexity, i.e., line length has
-improved as well, except for an increase due to the extraction of a
+the ternary operator and the short-circuit operators, ‟\cc{\textbar\textbar}”
+and ‟\cc{＆＆}”. Spartanization also abbreviated \cc{obj} to \cc{o}.  The code
+is evidently shorter, not as nested.  Horizontal complexity, i.e., line length
+has improved as well, except for an increase due to the extraction of a
 \kk{private} version of \cc{equals($\cdot$)}; recall though that this stage is
 carried out manually, at user's discretion.
 
 \subsection{Automation}
+\label{section:automation}
 Consider the \Java program presented in \cref{figure:eclipse}, drawn from the
 Eclipse JDT Tutorial series\urlref{%
 http://www.programcreek.com/2011/01/a-complete-standalone-example-of-astparser},
