@@ -1,12 +1,46 @@
 % \matteo: can you please proof read this section?
+\matteo: uncomment if you are done.
 
-The main research question that concerns us here is
+Having described the spartanization style and process, we now turn to the
+question of evaluation.  Our hypothesis here is that both structural and
+nominal spartanization make the code more regular. The conjecture is that
+spartanization should: preserve semantics, reduce code size, and making the
+code \emph{more compressible}. The challenge is in meeting the conjunction of
+the three conditions in the conjecture:
+\begin{itemize}
+    \item The removal of all code decreases size, but does not preserve semantics.
+    \item Compression by a tool such as GZip, reduces size, preserves
+      semantics. However, compression power is certain to suffer. It is 
+      not possible to further compress \cc{.zip} files, whereas plain code
+      compresses typically in a factor of two or more.
+    \item Another operation which preserves semantics while making
+      the code smaller is the reducing runs of whitespace characters combined 
+      with all spaces that surround non-alphabetical operators. 
+      However, since white spaces are used so frequently in the code,
+      this action is likely to make the result less compressible than the origin. 
+    \item Even the plain removal of curly brackets in singleton blocks as
+      recommended by one of the battling camps of the braces war, is not guaranteed
+      to improve compressibility. A good predictor is likely to discover that a
+      an opening curly bracket always occurs after the conditional of an \kk{if}. 
+      It might become less efficient when this character bracket does not always occur. 
+\end{itemize}
+
+Of the four components of the process, we are most interested in structural and
+nominal spartanization. The other two components
+are left beyond the scope of this work.  Cleanup for spartanization is a bit
+less interesting, since it is not particular to spartanization.  Upon
+automation of method extraction, future research is to evaluate the quality of
+these. 
+
+From the perspective of  language software engineering, the research question
+that concerns us here can be phrased as follow: 
+
 \begin{description}
   \item[RQ1.] \emph{Is spartan code more natural than non-spartanized code?} also,
         and more concretely,
         \begin{description}
           \item[RQ1.1.] \emph{Does structural spartanization contribute software naturalness?}
-          \item[RQ1.2.] \emph{Does renaming spartanization contribute software naturalness?}
+          \item[RQ1.2.] \emph{Does nominal spartanization contribute software naturalness?}
         \end{description}
 \end{description}
 Yet another question that intrigues us here is:
@@ -308,8 +342,7 @@ compress than a larger one (REFORMULATE)
 
 
 
-
-\subsection{Renaming Spartanization}
+\subsection{Nominal Spartanization}
 \begin{table}
   \caption{Aggregating statistics of compression power of Jack+BZip2 after
   automatic structural+renaming spartanization, compared with non-spartanized code.}

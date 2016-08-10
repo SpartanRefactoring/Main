@@ -67,31 +67,74 @@ Conversely, complaints on code quality, include deep and complex nesting
 and many methods and classes that should be understood before understanding any
 given method, etc.
 
-Also, the end of minimizing and life and size of saved contexts captures in it
+Also, the end of minimizing life and size of saved contexts captures in it
 principles such as early \cc{throw}, \cc{return} and \cc{break} (from loops) on
 errors, ordering by increasing length to increase readability, and also the
 practice of placing at first the short branch of an \cc{if} conditional, etc.
 
 The main novelty in spartan programming is not in these numerical minimization
 ends, but in the \emph{extent}, \emph{manner}, and \emph{automatization} of the
-quest for this minimization:
+quest for this minimization. Unlike other coding guidelines, spartanization
+prescribes a (semi-automatic) uncompromising process by which code can be
+spartanized.
+
 
 \subsection{Manner of application}
 The spartanization process is governed by the spartan
 \emph{toolbox}, which is a collection of many (currently around sixty)
-wrings.  Each \emph{wring} is a refactoring that does not degrade quality as
-measured by any of minimization ends: LOC, number of tokens, nesting level,
-size of stacked scope, etc., while improving on at least one of them.
+structural and nominal wrings.  Each \emph{wring} is a refactoring that does
+not degrade quality as measured by any of minimization ends: LOC, number of
+tokens, nesting level, size of stacked scope, etc., while improving on at least
+one of them.
+
+A \emph{structural wring} is a wring that modifies the structure of the code,
+such as the conversion of \cc{\kk{if} (f() == \kk{true}) \kk{return true};
+\kk{else return false};} to \cc{\kk{return} f();}. Another structural wring is
+the one that removes the useless \kk{abstract} and \kk{public} modifiers from
+declarations made withing and \kk{interface}. 
+
+In contrast, a \emph{nominal wring} is a wring that does does not modify the
+code itself, but renames some entities in it, most particularly, variables.
+For example, the toolbox includes a nominal wring to convert the name of the
+variable returned by a method, to the one character identifier ``\cc{\$}'',
+which is the short spartan name for result.
 
 If none of the wrings in the toolbox is applicable to the code, then
 spartanization has reached a (local) optimum. Otherwise, code spartanization
 proceeds by selecting one such wring and continuing with the code obtained
 after applying this wring.
 
-This process can be automated or carried out interactively. Many of the
-wrings are implemented as part of an open source spartan refactoring Eclipse
-plugin\urlref{https://github.com/SpartanRefactoring/spartan-refactoring}
-which makes it possible for programmers to apply much of it.
+This process can be automated or carried out interactively. Many of the wrings
+are implemented as part of an open source spartan refactoring Eclipse
+plugin\urlref{https://github.com/SpartanRefactoring/spartan-refactoring} which
+makes it possible for programmers to apply much of it.
+
+In addition to wrings, spartanization may use 
+\begin{itemize}
+    \item  clean by external tools, specifically, Eclipse's cleanup operation, 
+      to tasks such as minimizing variability as planting \kk{final} modifier
+      whenever possible, removing unused variables and methods, etc.  
+    \item user intervention for appropriate 
+        clever method extraction which would minimize exploitation of scope.
+\end{itemize}
+Naturally, size increases with the addition of \cc{final}s; other cleanups, such
+as the automatic addition of \cc{@Override} annotation may increase size as well.
+Also, typically method extraction increases code size, be it measured in lines,
+  tokens, characters or bytes. 
+
+Thus, there are four components to the spartanization process:
+\emph{\textbf{(i)}} structural, 
+\emph{\textbf{(ii)}} nominal, 
+\emph{\textbf{(iii)}} cleanup, and,  
+\emph{\textbf{(iv)}} method extraction. 
+Current technology can automate all but the last component; 
+automation of method extraction requires more research,
+paying attention to current state of the art \matteo\cite{ 
+    we should have many citations
+    somewhere can you please add some citations
+}.
+The empirical \cref{section:initial} below investigates how structural and
+nominal spartanizations contribute to the naturalness of code.
 
 \subsection{Extent of application}
 An underlying principle is not only that the minimization of
@@ -102,8 +145,9 @@ to any other extent†{%
   great (\textsl{being asked for the extent of Sparta's border, while
   holding his spear}).
 }.
-The resulting spartanized code might be very different than original.
-A case in point is the code presented in \cref{figure:eclipse}, drawn from the
+
+Heavily spartanized code is often quite different than the original.  A case in
+point is the \Java program presented in \cref{figure:eclipse}, drawn from the
 Eclipse JDT Tutorial series\urlref{%
 http://www.programcreek.com/2011/01/a-complete-standalone-example-of-astparser/},
 but slightly amended for brevity.
@@ -112,9 +156,9 @@ but slightly amended for brevity.
   \caption{A complete standalone example of using class \cc{ASTParser}, drawn
     from the Eclipse JDT Tutorial Series, abbreviated and reformatted.} 
     \label{figure:eclipse}
-    \begin{code}[listing style={numbered, language=Java},minipage,width=0.98\columnwidth]{JAVA}
-// comments and £\kk{import}£ directives omitted for brevity
-public class Test {
+    \begin{adjustbox}{max width=\columnwidth}
+      \begin{code}[minipage, width=1.13\columnwidth]{JAVA}
+public class Test { // comments and £\kk{import}£ directives omitted for brevity
   public static void main(String args[]) {
     ASTParser parser = ASTParser.newParser(AST.JLS3);
     parser.setSource(
@@ -127,7 +171,7 @@ public class Test {
       .toCharArray()
     );
     parser.setKind(ASTParser.K£\_£COMPILATION£\_£UNIT);
-    final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
+    CompilationUnit cu = (CompilationUnit) parser.createAST(null);
     cu.accept(new ASTVisitor() {
       Set names = new HashSet();
       public boolean visit(VariableDeclarationFragment node) {
@@ -149,47 +193,51 @@ public class Test {
     });
   }
 }
-  \end{code}
+\end{code}
+  \end{adjustbox}
 \end{figure}
 
+\Cref{figure:eclipse:spartan}.
+shows a spartanized version of program in the \cref{figure:eclipse}, 
 
-\begin{figure}[H]
-  \caption{Spartanized version of the program in \cref{figure:eclipse}}
+\begin{figure}
+  \caption{Spartanized version, including renaming, restructuring, and method extraction 
+  of the full \Java program in \cref{figure:eclipse}.}
   \label{figure:eclipse:spartan}
   \def\ignore#1{}
-\begin{code}[listing style={numbered, language=Java},minipage,width=0.98\columnwidth]{JAVA}
-import java.util.*;
-import org.eclipse.jdt.core.dom.*;
-
-public class Test {
-  public static void main(final String args[]) {
-    go();
-  }
+  \begin{adjustbox}{max width = \columnwidth}
+\begin{code}[minipage, width=1.13\columnwidth]{JAVA}
+public class Test { // comments and £\kk{import}£ directives omitted for brevity
+  public static void main(String args[]) { go(); }
   private static void go() {
-    final ASTParser p = makeParser();
-    final CompilationUnit u = (CompilationUnit) p.createAST(null);
+    CompilationUnit u = makeCompilationUnit();
     u.accept(new ASTVisitor() {
-      final Set<String> £\ignore$£$ = new HashSet<>();
-      @Override public boolean visit(final SimpleName ¢) {
+      Set £\ignore$£$ = new HashSet();
+      public boolean visit(SimpleName ¢) {
         note(¢);
         return true;
       }
-      @Override public boolean visit(final VariableDeclarationFragment ¢) {
+      public boolean visit(VariableDeclarationFragment ¢) {
         collect(¢.getName());
-        return false; // do not continue to avoid usage info
+        return false; 
       }
-      void note(final SimpleName ¢) {
+      void note(SimpleName ¢) {
         if (£\ignore$£$.contains(¢.getIdentifier()))
-          System.out.println("Usage of '" + ¢ + "' at line " + u.getLineNumber(¢.getStartPosition()));
+          System.out.println("Usage of '" + ¢ + //
+            "' at line " + u.getLineNumber(¢.getStartPosition()));
       }
-      void collect(final SimpleName ¢) {
+      void collect(SimpleName ¢) {
         £\ignore$£$.add(¢.getIdentifier());
-        System.out.println("Declaration of '" + ¢ + "' at line" + u.getLineNumber(¢.getStartPosition()));
+        System.out.println("Declaration of '" + ¢ + //
+          "' at line" + u.getLineNumber(¢.getStartPosition()));
       }
     });
   }
+  private static CompilationUnit makeCompilationUnit() {
+    return (CompilationUnit) makeParser().createAST(null);
+  }
   private static ASTParser makeParser() {
-    final ASTParser £\ignore$£$ = ASTParser.newParser(AST.JLS3);
+    ASTParser £\ignore$£$ = ASTParser.newParser(AST.JLS3);
     £\ignore$£$.setSource(
       "public class A {\n" + 
       "  int i = 9;\n"+ //
@@ -202,42 +250,10 @@ public class Test {
     £\ignore$£$.setKind(ASTParser.K£\_£COMPILATION£\_£UNIT);
     return £\ignore$£$;
   }
-}
-public class Test {
-  public static void main(String args[]) {
-    ASTParser parser = ASTParser.newParser(AST.JLS3);
-    parser.setSource(
-      "public class A { int i = 9;  \n int j;\n" + //
-      "ArrayList<Integer> al = new ArrayList<Integer>();j=1000; }" + //
-      ""
-      .toCharArray()
-    );
-    parser.setKind(ASTParser.K£\_£COMPILATION£\_£UNIT);
-    final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
-    cu.accept(new ASTVisitor() {
-      Set names = new HashSet();
-      public boolean visit(VariableDeclarationFragment node) {
-        SimpleName name = node.getName();
-        this.names.add(name.getIdentifier());
-        System.out.println(
-          "Declaration of '" + name + "' at line" + //
-          cu.getLineNumber(name.getStartPosition()));
-        return false; 
-      }
-      public boolean visit(SimpleName node) {
-        if (this.names.contains(node.getIdentifier())) {
-          System.out.println(
-            "Usage of '" + node + "' at line " +//
-            cu.getLineNumber(node.getStartPosition()));
-        }
-        return true;
-      }
-    });
-  }
-}
-  \end{code}
+\end{code}
+  \end{adjustbox}
 \end{figure}
-  41  120 1407 original.java
+
 
 
 
