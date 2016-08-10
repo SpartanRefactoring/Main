@@ -1,5 +1,5 @@
 The spartan programming style tries to achieve terse, clear and modular code,
-by \textit{simultaneous} minimization of these: 
+by \textit{simultaneous} minimization of these:
 \begin{enumerate}
   \item \textit{code size,} which here means all of number of lines, number of
     characters, \emph{and}, number of language tokens;
@@ -13,8 +13,26 @@ by \textit{simultaneous} minimization of these:
   \item \textit{exploitation of scope,} which means the number of distinct
     identifiers (of fields, methods, etc.) used in any module.
   \item \textit{life of stacked context,} which is the most intricate of the
-    spartan minimization ends. To understand the term
+    spartan minimization ends. To understand what terms
+    stacked context and its life mean, consider
+    this code snippet
+    \begin{code}{java}
+ThingTwo ii = new ThingTwo();
+System.out.println(ii);
+i.wreck(house);
+System.out.println(ii);
+ThingOne i = new ThingOne(); // Stack context of £\cc{ii}£
+System.out.println(i); // Context of £\cc{ii}£ still stacked
+i.wreck(house); // Stacked still£…£
+System.out.println(i); // Still!
+cat.join(i, ii); // Finally: recalling context of £\cc{ii}£.
+    \end{code}
+    term ‟stacked context” refers to that
 \end{enumerate}
+The last line in this snippet joins the three objects,
+\cc{cat},~\cc{i}, and \cc{ii}. Object \cc{i} is prepared
+and printed in the four preceding lines.
+
 
 To an extent, these minimization ends are reformulation of traditional
 belief on software: that software should be organized in short cohesive modules
