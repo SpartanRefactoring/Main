@@ -178,19 +178,32 @@ then compression power is expected to decrease.
 
 In the first set of experiments, designed to answer \textbf{RQ1.1}, \Java code
 in the software artifacts were subjected to our automatic spartanization
-tool, configured to employ structural wrings. We then compare the approximate
-naturalness of the automatically spartanized code with that of the original
-code.
+tool, configured to employ structural wrings. 
+The results are reported in \cref{table:structural} where there are reported 
+the compression power of the Jacked code and its approximate 
+naturaleness (BZip2 + code). 
+We compared these results % approximate naturalness of the automatically spartanized code 
+with those related to the original code.
+We specifically subtract the aggregating statistics of the latter with those related to the former.
+\cref{table:structural-difference} reports the outcome of this comparison. 
+% of the aggragating statistics for the latter, related to 
+% the spartanized code, and the compression power of the original code. 
+The first column of \cref{table:structural-difference} regards the application of the Jack algorithm to the spartanized code. 
+As we can see some of the results are negative, meaning that the spartanized jacked code is less compressed 
+than the Jacked original one. 
+This can be explained if we take into account the fact that Spartanization removes some 
+of the elements that are removed also by Jack.
+The second column of the same Table regards the approximate naturaleness of the spartanized Jacked code.
+In this case the difference are all positive, meaning that the approximate naturaleness of 
+a spartanized jacked code is higher than in the original code.
+This might be explained by the fact that ...
 
-The results are reported in \cref{table:structural} where we can see 
-the values of the copression power for both the Jacked code and its approximate naturaleness.
-\cref{table:structural-difference} report the comparison between these results, related to 
-the spartanized code, and those related to the original code. 
-With regards to the Jack algorithm for the spartanized code, we can see that the statistics is
-lightly worse that in the original code. 
-It means that Jack is not able to compress spartanized code better than in the case of the original
-code. 
-It something expected since Spartanization removes
+
+% With regards to the Jack algorithm for the spartanized code, we can see that the statistics is
+% lightly worse that in the original code. 
+% It means that Jack is not able to compress spartanized code better than in the case of the original
+% code. 
+% It something expected since Spartanization removes
 
 % which reports the difference 
 % in the aggregatint statistics for the Jacked code and for the It is
