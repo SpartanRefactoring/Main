@@ -1,46 +1,12 @@
 % \matteo: can you please proof read this section?
-\matteo: uncomment if you are done.
 
-Having described the spartanization style and process, we now turn to the
-question of evaluation.  Our hypothesis here is that both structural and
-nominal spartanization make the code more regular. The conjecture is that
-spartanization should: preserve semantics, reduce code size, and making the
-code \emph{more compressible}. The challenge is in meeting the conjunction of
-the three conditions in the conjecture:
-\begin{itemize}
-    \item The removal of all code decreases size, but does not preserve semantics.
-    \item Compression by a tool such as GZip, reduces size, preserves
-      semantics. However, compression power is certain to suffer. It is 
-      not possible to further compress \cc{.zip} files, whereas plain code
-      compresses typically in a factor of two or more.
-    \item Another operation which preserves semantics while making
-      the code smaller is the reducing runs of whitespace characters combined 
-      with all spaces that surround non-alphabetical operators. 
-      However, since white spaces are used so frequently in the code,
-      this action is likely to make the result less compressible than the origin. 
-    \item Even the plain removal of curly brackets in singleton blocks as
-      recommended by one of the battling camps of the braces war, is not guaranteed
-      to improve compressibility. A good predictor is likely to discover that a
-      an opening curly bracket always occurs after the conditional of an \kk{if}. 
-      It might become less efficient when this character bracket does not always occur. 
-\end{itemize}
-
-Of the four components of the process, we are most interested in structural and
-nominal spartanization. The other two components
-are left beyond the scope of this work.  Cleanup for spartanization is a bit
-less interesting, since it is not particular to spartanization.  Upon
-automation of method extraction, future research is to evaluate the quality of
-these. 
-
-From the perspective of  language software engineering, the research question
-that concerns us here can be phrased as follow: 
-
+The main research question that concerns us here is
 \begin{description}
   \item[RQ1.] \emph{Is spartan code more natural than non-spartanized code?} also,
         and more concretely,
         \begin{description}
           \item[RQ1.1.] \emph{Does structural spartanization contribute software naturalness?}
-          \item[RQ1.2.] \emph{Does nominal spartanization contribute software naturalness?}
+          \item[RQ1.2.] \emph{Does renaming spartanization contribute software naturalness?}
         \end{description}
 \end{description}
 Yet another question that intrigues us here is:
@@ -192,6 +158,18 @@ reduction in size.
 
 The combined compression power of Jack and BZip2 reaches greater values,
 ranging from circa 10 fold compression to circa 80 fold. However, the more
+% With regards to the Jack algorithm for the spartanized code, we can see that the statistics is
+% lightly worse that in the original code. 
+% It means that Jack is not able to compress spartanized code better than in the case of the original
+% code. 
+% It something expected since Spartanization removes
+
+% which reports the difference 
+% in the aggregatint statistics for the Jacked code and for the It is
+% worth to note that we have an improvement in any (???) statistics, in other words the
+% spartanization affected positively the compression, increasing the compression
+% power. This is counter intuitive, being a small file most difficult to
+% compress than a larger one (REFORMULATE)
 interesting measure is the ``BZip2 after Jack'' compression power. This measure is
 our \emph{approximate naturalness}, which answers \textbf{RQ2}. Approximate
 naturalness is telling how much the essence of the code itself, discarding
@@ -212,26 +190,27 @@ then compression power is expected to decrease.
 
 In the first set of experiments, designed to answer \textbf{RQ1.1}, \Java code
 in the software artifacts were subjected to our automatic spartanization
-tool, configured to employ structural wrings. We then compare the approximate
-naturalness of the automatically spartanized code with that of the original
-code.
+tool, configured to employ structural wrings. 
+The results are reported in \cref{table:structural} where there are reported 
+the compression power of the Jacked code and its approximate 
+naturaleness (BZip2 + code). 
+We compared these results % approximate naturalness of the automatically spartanized code 
+with those related to the original code.
+We specifically subtract the aggregating statistics of the latter with those related to the former.
+\cref{table:difference} reports the outcome of this comparison. 
+% of the aggragating statistics for the latter, related to 
+% the spartanized code, and the compression power of the original code. 
 
-The results are reported in \cref{table:structural} where we can see 
-the values of the copression power for both the Jacked code and its approximate naturaleness.
-\cref{table:structural-difference} report the comparison between these results, related to 
-the spartanized code, and those related to the original code. 
-With regards to the Jack algorithm for the spartanized code, we can see that the statistics is
-lightly worse that in the original code. 
-It means that Jack is not able to compress spartanized code better than in the case of the original
-code. 
-It something expected since Spartanization removes
+The first column of \cref{table:difference} regards the application of the Jack algorithm to the spartanized code. 
+As we can see some of the results are negative, meaning that the spartanized jacked code is less compressed 
+than the Jacked original one. 
+This can be explained if we take into account the fact that Spartanization removes some 
+of the elements that are removed also by Jack.
 
-% which reports the difference 
-% in the aggregatint statistics for the Jacked code and for the It is
-% worth to note that we have an improvement in any (???) statistics, in other words the
-% spartanization affected positively the compression, increasing the compression
-% power. This is counter intuitive, being a small file most difficult to
-% compress than a larger one (REFORMULATE)
+The second column of the same Table regards the approximate naturaleness of the spartanized Jacked code.
+In this case the difference are all positive, meaning that the approximate naturaleness of 
+a spartanized jacked code is higher than in the original code.
+This might be explained by the fact that ...
 
 \begin{table}
   \caption{Aggregating statistics of compression power of Jack+BZip2 after
@@ -328,7 +307,7 @@ It something expected since Spartanization removes
   \end{adjustbox}
 \end{table}
 
-\subsection{Nominal Spartanization}
+\subsection{Renaming Spartanization}
 \begin{table}
   \caption{Aggregating statistics of compression power of Jack+BZip2 after
   automatic structural+renaming spartanization, compared with non-spartanized code.}
