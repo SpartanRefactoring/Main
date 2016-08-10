@@ -365,3 +365,163 @@ if (this == null) return super();
 % }
 % \end{code}
 % \end{itemize}
+\begin{figure}
+  \caption{An automatically spartanized version of
+      the \Java program of \cref{figure:eclipse}}
+    \label{figure:eclipse:automatic}
+    \begin{adjustbox}{max width=\columnwidth}
+\begin{code}[minipage, width=1.20\columnwidth]{JAVA}
+public class Test1 { // comments and £\kk{import}£ directives omitted for brevity
+  public static void main(final String args[]) {££
+    final ASTParser p = ASTParser.newParser(AST.JLS3);
+    p.setSource((
+      "public class A {\n" +
+      " int i = 9;\n"+ //
+      " int j;\n" + //
+      " ArrayList<Integer> al = new ArrayList<Integer>();\n" + //
+      " j=1000;\n" + // sic!
+      "}\n").toCharArray());
+    final CompilationUnit u = (CompilationUnit) p.createAST(null);
+    u.accept(new ASTVisitor() {££
+      Set £\ignore$£$ = new HashSet();
+      @Override public boolean visit(final SimpleName ¢) {££
+        if (£\ignore$£$.contains(¢.getIdentifier()))
+          System.out.println("Usage of '" + ¢ + //
+            "' at line " + u.getLineNumber(¢.getStartPosition()));
+        return true;
+      }
+      @Override public boolean visit(final VariableDeclarationFragment f) {££
+        final SimpleName ¢ = f.getName();
+        £\ignore$£$.add(¢.getIdentifier());
+        System.out.println("Declaration of '" + ¢ + //
+          "' at line" + u.getLineNumber(¢.getStartPosition()));
+        return false; // do not continue to avoid usage info
+      }
+    });
+  }
+}
+\end{code}
+  \end{adjustbox}
+\end{figure}
+
+Each of the several wrings applied to obtain \cref{figure:eclipse:automatic}
+  reduced at least one of our minimization ends.
+At several occasions, cleanup increased these.
+Overall, in this case, the result of automatic application of spartanization
+  is a reduction in the number of lines, words, and characters
+  by factors of~$1.6$,~$1.18$, and~$1.4$.\footnote{Part of this improvement
+  is due to cleanup, optimization the use of \kk{import}; we shall account
+for this phenomena in the empirical section.} 
+
+\Cref{figure:eclipse:spartan} shows the spartanized version of the program in
+the \cref{figure:eclipse}. Employed were nominal spartanization, e.g., renaming
+variable \cc{names} to~\cc{\$}, structural spartanization, e.g., for the
+removal of braces, and modularization.
+
+The product of external cleanup, which in this case amounts to adding
+\kk{final}s and \kk{@Override}, is not included in this example.
+
+The main difference between the figures is due to method extractions, conducted
+manually. Function \cc{go()} minimizes exploitation of scope by denying
+access to the \cc{args} argument of function \cc{main}.
+Function \cc{makeCompilationUnit()} takes advantage of the fact that variable
+\cc{parser} is only used in a limited section of \cc{main}, etc.
+
+Examining the body of the anonymous class (that one that \cc{extends} \cc{ASTVisitor})
+we see some more extracted methods. The reduction in clutter due to
+spartanization makes it possible to identify another spot of useful method
+extraction.
+
+\begin{figure}
+  \caption{Spartanized version including structural, nominal, modular, but
+    not cleanups, of the \Java program in \cref{figure:eclipse}.}
+  \label{figure:eclipse:spartan}
+  \begin{adjustbox}{max width = \columnwidth}
+\begin{code}[minipage, width=1.13\columnwidth]{JAVA}
+public class Test { // comments and £\kk{import}£ directives omitted for brevity
+  public static void main(String args[]) { go(); }
+  private static void go() {££
+    CompilationUnit u = makeCompilationUnit();
+    u.accept(new ASTVisitor() {££
+      Set £\ignore$£$ = new HashSet();
+      public boolean visit(SimpleName ¢) {££
+        note(¢);
+        return true;
+      }
+      public boolean visit(VariableDeclarationFragment ¢) {££
+        collect(¢.getName());
+        return false;
+      }
+      void note(SimpleName ¢) {££
+        if (£\ignore$£$.contains(¢.getIdentifier()))
+          System.out.println("Usage of '" + ¢ + //
+            "' at line " + u.getLineNumber(¢.getStartPosition()));
+      }
+      void collect(SimpleName ¢) {££
+        £\ignore$£$.add(¢.getIdentifier());
+        System.out.println("Declaration of '" + ¢ + //
+          "' at line" + u.getLineNumber(¢.getStartPosition()));
+      }
+    });
+  }
+  private static CompilationUnit makeCompilationUnit() {££
+    return (CompilationUnit) makeParser().createAST(null);
+  }
+  private static ASTParser makeParser() {££
+    ASTParser £\ignore$£$ = ASTParser.newParser(AST.JLS3);
+    £\ignore$£$.setSource(
+      "public class A {\n" +
+      " int i = 9;\n"+ //
+      " int j;\n" + //
+      " ArrayList<Integer> al = new ArrayList<Integer>();\n" + //
+      " j=1000;\n" + // sic!
+      "}\n" + //
+      .toCharArray()
+);
+    £\ignore$£$.setKind(ASTParser.K£\_£COMPILATION£\_£UNIT);
+    return £\ignore$£$;
+  }
+}
+\end{code}
+  \end{adjustbox}
+\end{figure}
+
+% Yet another, further simplified version of the code of \cref{figure:eclipse} shows
+% up in \cref{figure:eclipse:extract}. This figure depicts only the anonymous
+% class found in previous figures, but with extra method extracted to simplify
+% the code. Of course, a demand for clever method extraction can not be part of a
+% strucured We argue that the
+% process of spartanization helped in
+% this case to highlight
+
+\label{section:automation}
+% However, being in a certain sense, counter intuitive, in order to apply
+% Spartanization on their working routines, the developers need to respect a firm
+% discipline. From a certain standpoint, Spartan Programming might be seen as a
+% list of code style prescription, but it would just scratch the surface. It is
+% far more than that, since it
+%
+% Being minimized, spartanized code might be less readable that the original.
+% This is … Spartan programming is not directly concerned with readability, at
+% least not in its subjective and cultural-dependent sense. In fact, spartan
+% programs will bring much misery to anyone preferring long, verbose programs.
+%
+% Spartan programming prescribes, a careful use of the variables, stressing the need
+% to inline variables that are used only once and emphasizing the use of foreach loops
+% in languages implementing it. Variables visibility and accessibility should also be
+% possibly minimized, favoring the use of private over public variables whenever it
+% is possible.
+%
+% Also the names of variables should be taken short for local variables, with
+% short scope, leaving to their class names to explicit their behavior.
+% Minimizing variability using final and @NonNull annotation. Stress the use of
+% generic names technique. Minimize lifespan avoiding persistent variables when
+% it is possible. Favor the use of collection instead of arrays. Interfaces
+% should present a minimal number of parameters, also minimizing the interaction
+% between them. Favor ternarization over the use of if-then-else constructs and
+% use a simplified version of the conditionals that implies an early return.
+% Moreover, use an early exit logic with continue, break and return instructions.
+%
+% Everything should be formatted in order to make an efficient use of the screen
+% space, by removing unnecessary tokens (i.e., redundant parentheses, etc.).
+% Methods should be as short as possible.

@@ -85,13 +85,13 @@ Finally in \cref{figure:shock-3} it is possible to see that…
 \label{figure:shock-3}
 \begin{Code}{JAVA}{\scriptsize\texttt{il.org.spartan.protolog.Variable＃freeVariables}}
 default Set<Variable> freeVariables() {££
-    final Set<Variable> $ = new LinkedHashSet<>();
+    final Set<Variable> £\ignore$£$ = new LinkedHashSet<>();
     if (isVariable())
-     $.add((Variable) this);
+     £\ignore$£$.add((Variable) this);
     else
       for (final Term ¢ : this)
-       $.addAll(¢.freeVariables());
-    return $;
+       £\ignore$£$.addAll(¢.freeVariables());
+    return £\ignore$£$;
   }
 \end{Code}
 \end{figure}

@@ -16,6 +16,8 @@
 
 \maketitle
 
+\def\ignore#1{}
+\def\gal{\marginpar[G$\Rightarrow$]{$\Leftarrow$G}}
 \def\yossi{\marginpar[Y$\Rightarrow$]{$\Leftarrow$Y}}
 \def\matteo{\marginpar[M$\Rightarrow$]{$\Leftarrow$M}}
 
@@ -28,19 +30,14 @@
 
 \paragraph{Outline}
 \cref{section:principia}
-\cref{section:techniques}
 \cref{section:look}
 \cref{section:initial}
 \cref{section:zz}
 Finally, \cref{section:zz} concludes.
 
-\section{The Spartanization Process}
+\section{The Process of Code Spartanization}
 \label{section:principia}
 \input{principia}
-
-\section{Main Techniques of Butchering}
-\label{section:techniques}
-\input{techniques}
 
 \section{The Scary Spartan Look}
 \label{section:look}
@@ -77,4 +74,10 @@ PLDI,%
 USENIX,%
 ECOOP%
 }
+
+\appendix
+\section{Main Techniques of Butchering}
+\label{section:techniques}
+\input{techniques}
+
 \end{document}
