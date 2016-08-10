@@ -4,7 +4,6 @@
 
 make the case for canonical code.
 
-
 As a whole, the Stackoverlow\urlref{http://stackoverlow.com} community
 recommends against asking coding style and coding conventions related questions.
 Tag \cc{code-styling} and its many synonyms: \cc{code-convention},
@@ -50,42 +49,64 @@ bibliographic databases, what it comes out is around thousands of results.
 However, very few of them have \kk{code conventions} among they keywords and
 deal with code conventions
 
-It seems that both practitioners and researchers consider code conventions, code style
-something unrelated to other most sensitive issues, such as the design and productivity.
-We think that using an appropriate code convention might have a meaningful impact on the
-design of code and also on its quality.
+It seems that both practitioners and researchers prerceive code style something unrelated to other most 
+sensitive issues, such as the design and productivity.
+
+On the contrary, we consider that code style might have a significant impact on the
+design of code and also on its quality~\cite{Gil:2011}.
+
+Generally speaking, developers would certainly find easy to write code in their own style. 
+However, software development is carried out in a collaborative environment and developers 
+works together on the same files. Adjusting the code to others style require a certain effort 
+and it is time consuming. A common task performed during software development is code comparison.
+Since part of the changes might be due to stylistic reasons, it is mandatory to distinguish the
+semantically sensitive changes from the stylistic ones.
+Also code analysis tools should adjust to different styles, since there are many
+different ways for doing the same thing.
+Code conventions might affect several metrics. The number of lines of code (LOC) or the number of
+tokes (NOT) are influenced by coding styles (i.e. number of spaces, indentation, etc.). 
+Code style might affect the project size metrics, that has been proved to be different in different
+(``Idiosyncratic Projects Hypothesis'')~\cite{Gil:Lalouche:16}~\cite{Gil:2011:Goldstein:Moshkovich:2011} 
+% In a recent one of the author demonstrated that size is the only thing that matters\cite{Gil:Lalouche:16}.
+% Moreover, the same notion of size has been shown to be very different in different projects~.
 
 % Why should this be important?
-The following scenarios might be helpful to clarify this point.
-\begin{itemize}
-    \item Developers would certainly find easy to write code in their own style. However, software
-    development is carried out in a collaborative environment and developers works together on
-    the same files. Adjusting the code to others style require a certain effort and it is time consuming.
-    % Waste of neurons.
-    \item A common task performed during software development is code comparison.
-    Since part of the changes might be due to stylistic reasons, it is mandatory to distinguish the
-    semantically sensitive changes from the stylistic ones.
-% Which part of my change is semantically and which
-% part of this my own personal style.
-    \item Also code analysis tools should adjust to different styles, since there are many
-        different ways for doing the same thing.
-    \item Code conventions might affect several metrics. The number of lines of code (LOC) or the number of
-    tokes (NOT) are influenced by coding styles. In a recent one of the author demonstrated that size
-      is the only thing that matters~\cite{Gil:Lalouche:16}.
-      Moreover, the same notion of size has been shown to be very different in different projects~\cite{Gil:Lalouche:16}.
-\end{itemize}
+% The following scenarios might be helpful to clarify this point.
+% \begin{itemize}
+% %     \item Developers would certainly find easy to write code in their own style. However, software
+% %     development is carried out in a collaborative environment and developers works together on
+% %     the same files. Adjusting the code to others style require a certain effort and it is time consuming.
+%     % Waste of neurons.
+% %     \item A common task performed during software development is code comparison.
+% %     Since part of the changes might be due to stylistic reasons, it is mandatory to distinguish the
+% %     semantically sensitive changes from the stylistic ones.
+% % Which part of my change is semantically and which
+% % part of this my own personal style.
+% %     \item Also code analysis tools should adjust to different styles, since there are many
+% %         different ways for doing the same thing.
+% %     \item Code conventions might affect several metrics. The number of lines of code (LOC) or the number of
+% %     tokes (NOT) are influenced by coding styles. In a recent one of the author demonstrated that size
+% %       is the only thing that matters~\cite{Gil:Lalouche:16}.
+% %       Moreover, the same notion of size has been shown to be very different in different projects~\cite{Gil:Lalouche:16}.
+% \end{itemize}
 
-\textbf{The holy grail of ``canonical representation of code''.  
-  Does LOC mean anything?  Not if you apply different indentation 
-rules.}
+This manuscript present ‟Spartan Programming”, a programming methodology
+whose main goal is to keep code simple and minimalistic in order to make it
+mantainable and elegant. 
 
-This manuscript present ‟Spartan Programming”, a programming style based on
-many techniques, including some already reported in the literature and novel
+It style based on many techniques, including some already reported in the literature and novel
 ones and combines them in a systematic way to reduce simultaneously many
 different measures of complexity. In other words, a Spartan programmer strive
 to achieve an extreme minimalism and simplicity. Even if it can be seen as one
 of the many code styles available, Spartan Programming differs from all of them
 because of its unifying principle of minimalism and simplicity.
+
+We are definitely far from having achieved the achieve the ``holy grail'' of 
+``canonical representation of code''. 
+However we consider Spartan programming is a possible way to engage this endavour and 
+also a very little step towards is achievement. 
+
+%   Does LOC mean anything?  Not if you apply different indentation rules.
 % This manuscript reports in
 
 \subsection{Background}
@@ -185,8 +206,8 @@ Say that some of your alma mater gang love to do this kind of metrics, but
 no one really knows whether the results are applicable to different projects
 since~\cite{Turnu:Concas:Marchesi:Tonelli:11}
 
-The ``Idiosyncratic Projects Hypothesis'' I also had a plateau paper with
-Dany and Maayan about this. A number o years ago.\cite{Gil:2011:Goldstein:Moshkovich:2011}
+% The ``Idiosyncratic Projects Hypothesis'' I also had a plateau paper with
+% Dany and Maayan about this. A number o years ago.\cite{Gil:2011:Goldstein:Moshkovich:2011}
 
 \subsection{Contribution}
 
