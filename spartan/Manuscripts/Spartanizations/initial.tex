@@ -129,8 +129,7 @@ compression power, as there is in their naturalness.
 Even though software artifacts often includes more than just \cc{.java} files,
 size and other data are of these files only. The rationale is that we wish to
 concentrate on the naturalness of the \Java code itself, rather auxiliary
-material such as configuration information.
-
+material such as configuration information. 
 Note that \cc{.java} files often contain more text than just plain code.  To
 better focus on the code itself, this study employs \emph{Jack}, a special
 purpose \Java preprocessor applied prior to compression.
@@ -150,17 +149,16 @@ underlying project guideline. Comments also follow their own style, which is
 very different from that of the code, \emph{and}, string literals, at least
 those with significant content, are ought to be managed by configuration and
 internationalization processes rather than coding per-se.
-
 Jack currently does not remove unit-tests, but is planned to do so in the
 future.
 
 \Cref{table:original} presents the compression power of Jack, BZip, when
 applied after Jack, and the accumulative compression power of Jack and BZip2
 when applied in this order.
-
 \begin{table}
   \caption{Aggregating statistics, over artifacts in the corpus,
-    of size and compression power of Jack and Jack combined with BZip2.
+    of size and compression power of Jack and Jack combined with BZip2 
+    relative to the original software.
   }
   \label{table:original}
   \par\vspace{10pt plus 6pt minus 4pt}
@@ -187,20 +185,20 @@ when applied in this order.
     \end{tabular}
   \end{adjustbox}
 \end{table}
-
 In the table, we can observe that Jack typically compress files to half their
-size, although the are some artifacts (with many \kk{import}s and comments),
+size, although there are some artifacts (with many \kk{import}s and comments),
 in which the removal of boilerplate material from the program make a ten fold
 reduction in size.
 
 The combined compression power of Jack and BZip2 reaches greater values,
 ranging from circa 10 fold compression to circa 80 fold. However, the more
-interesting measure, the BZip2 after Jack compression power. This measure is
-our \emph{approximate of naturalness}, which answers \textbf{RQ2.}. Approximate
+interesting measure is the ``BZip2 after Jack'' compression power. This measure is
+our \emph{approximate naturalness}, which answers \textbf{RQ2}. Approximate
 naturalness is telling how much the essence of the code itself, discarding
 boilerplate is compressible (and hence predictable, or, approximately natural).
 
-Comparing the penultimate column of the table with the final column of
+Comparing the penultimate column (``Powr'') of the \cref{table:original} 
+with the final column (``Power'') of
 \cref{table:corpus}, we see that overall, Jack reduces the compression power of
 BZip2. All five statistics: average, min, max, median, and range, are higher
 when BZip2 is applied to the original code, than if it is applied to the Jacked
@@ -218,17 +216,27 @@ tool, configured to employ structural wrings. We then compare the approximate
 naturalness of the automatically spartanized code with that of the original
 code.
 
-The results are summarized in \cref{table:structural}.
-the improvement in the compression due to the spartanization. It is
-worth to note that we have an improvement in any statistics, in other words the
-spartanization affected positively the compression, increasing the compression
-power. This is counter intuitive, being a small file most difficult to
-compress than a larger one (REFORMULATE)
+The results are reported in \cref{table:structural} where we can see 
+the values of the copression power for both the Jacked code and its approximate naturaleness.
+\cref{table:structural-difference} report the comparison between these results, related to 
+the spartanized code, and those related to the original code. 
+With regards to the Jack algorithm for the spartanized code, we can see that the statistics is
+lightly worse that in the original code. 
+It means that Jack is not able to compress spartanized code better than in the case of the original
+code. 
+It something expected since Spartanization removes
+
+% which reports the difference 
+% in the aggregatint statistics for the Jacked code and for the It is
+% worth to note that we have an improvement in any (???) statistics, in other words the
+% spartanization affected positively the compression, increasing the compression
+% power. This is counter intuitive, being a small file most difficult to
+% compress than a larger one (REFORMULATE)
 
 \begin{table}
   \caption{Aggregating statistics of compression power of Jack+BZip2 after
   automatic structural spartanization, compared with non-spartanized code.}
-  \label{table:structural}
+  \label{table:structural-comparison}
   \par\vspace{10pt plus 6pt minus 4pt}
   \centering
   \begin{adjustbox}{max width=\columnwidth}
@@ -259,7 +267,7 @@ compress than a larger one (REFORMULATE)
   \caption{Aggregating statistics of compression power of Jack+BZip2 after
   automatic \textbf{structural} spartanization, compared with non-spartanized code. 
   }
-  \label{table:original}
+  \label{table:structural}
   \par\vspace{10pt plus 6pt minus 4pt}
   \centering
   \begin{adjustbox}{max width = \columnwidth}
@@ -291,9 +299,10 @@ compress than a larger one (REFORMULATE)
 \end{table}
 
 \begin{table}
-  \caption{Difference in compression power between original code and spartanized one.
+  \caption{%
+  Difference between the aggregating statistics for the compression power of the spartanized and the original code.
   }
-  \label{table:original}
+  \label{table:difference}
   \par\vspace{10pt plus 6pt minus 4pt}
   \centering
   \begin{adjustbox}{max width = \columnwidth}
@@ -318,29 +327,6 @@ compress than a larger one (REFORMULATE)
     \end{tabular}
   \end{adjustbox}
 \end{table}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 \subsection{Nominal Spartanization}
 \begin{table}
