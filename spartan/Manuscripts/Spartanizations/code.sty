@@ -173,16 +173,18 @@
   style=code,
 }
 
-% General style for numbered displayed code. Same as "display" style,
-% but with minimal spacing for the numbering.
+% General style for numbered displayed code. Same as "display" style,or
+% but with minimal spacing f the numbering.
 \lstdefinestyle{numbered}{%
   style=display,
-  numbers=right,
-  stepnumber=1,
-  numbersep=2pt,
-  xleftmargin=3ex,
-  numberblanklines=false,
-  numberstyle=\tiny\bf,
+    xleftmargin=4ex,
+  numbersep=2ex,
+%
+  numbers=left,
+%  stepnumber=1,
+%  numberblanklines=false,
+  numberstyle=\tiny\bf\color{olive!50!black},
+  language=Java,
 }
 
 \lstset{defaultdialect=[GNU]C++}
@@ -248,7 +250,7 @@
 \newLanguage{php}{PEEAGEPEE}
 \newLanguage{GoOH}{GO}
 \newLanguage[alsoletter={-}]{HTML}{HTML}
-\newLanguage[morekeywords={enum,strictfp,@interface,inherited},alsoletter={@},literate={->}{$\rightarrow$}1]{Java}{JAVA}
+\newLanguage[morekeywords={enum,strictfp,@interface,inherited, assert},alsoletter={@},literate={->}{$\rightarrow$}1]{Java}{JAVA}
 \newLanguage{Oberon-2}{OBERON}
 \newLanguage{Pascal}{PASCAL}
 \newLanguage{Prolog}{PROLOG}
