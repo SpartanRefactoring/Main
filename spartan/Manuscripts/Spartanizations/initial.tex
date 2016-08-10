@@ -76,9 +76,9 @@ often manipulate many more than~$5$ tokens.
 Quality in compression algorithms is measured by \emph{compression power},
 defined as the ratio of uncompressed size to the compressed size. Compression
 power, our \emph{approximate naturalness} should be correlated with
-\emph{original naturalness}, but it distinct from it.
+\emph{original naturalness}, but it distincts from it.
 
-We found that with respect to \Java software the compression power of Bzip2 is
+We found that with respect to \Java software the compression power of BZip2 is
 greater than that of GZip. This greater power is probably because Gzip make a
 greedy search for repetitions starting at the input's prefix, while BZip2
 starts the search in a broader context, as implied by the Burrows-Wheeler
@@ -202,15 +202,30 @@ We specifically subtract the aggregating statistics of the latter with those rel
 % the spartanized code, and the compression power of the original code. 
 
 The first column of \cref{table:difference} regards the application of the Jack algorithm to the spartanized code. 
-As we can see some of the results are negative, meaning that the spartanized jacked code is less compressed 
-than the Jacked original one. 
-This can be explained if we take into account the fact that Spartanization removes some 
-of the elements that are removed also by Jack.
+As we can see some of the results are negative.
+Let us consider, for example, the Average value of the compression power. 
+This value is negative, meaning that the Spartanized Jacked code il less compressed.
+However we are not considering a significative difference.
+Also the Max value is negative. As a matter of fact the Max value for the Spartanized code is 
+significantly different from the corresponding value in the original, being the latter greater.
+This might be due to the fact that there could be case that Spartanized code 
+tend to be more laconic, with many variables removed, and code inlined. 
+When Jack algorithm removes the tokens that are repeated several times in a .java file 
+(i.e. modifiers: abstract, public, private; import
+instructions; terms like extends, implements, try, catch).
+From this point of view, boilerplate code is less repetitive
+% meaning that the spartanized jacked code is less compressed 
+% than the Jacked original one. 
+% This can be explained if we take into account the fact that Spartanization removes some 
+% of the elements that are removed also by Jack.
 
 The second column of the same Table regards the approximate naturaleness of the spartanized Jacked code.
 In this case the difference are all positive, meaning that the approximate naturaleness of 
 a spartanized jacked code is higher than in the original code.
-This might be explained by the fact that ...
+This might imply that boilerplate version of Spartanized code is more compress, namely more predictable and
+thus closer to the natural language. 
+This might be explained by the fact that Spartan Programming aims explicitely to a style
+that look like spoken language. 
 
 \begin{table}
   \caption{Aggregating statistics of compression power of Jack+BZip2 after
@@ -336,6 +351,6 @@ This might be explained by the fact that ...
   \end{adjustbox}
 \end{table}
 
-Preliminary results supporting the
-‟Hypothesis that can never be proved”
-Because this is not what you like.
+% Preliminary results supporting the
+% ‟Hypothesis that can never be proved”
+% Because this is not what you like.
