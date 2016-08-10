@@ -19,8 +19,8 @@ by \textit{simultaneous} minimization of these measures:
   \item \textit{exploitation of scope,} which means the number of distinct
         identifiers (of fields, methods, etc.) used in any module.
   \item \textit{life and size of stacked context,} which is the most intricate of the
-        spartan minimization ends. 
-        
+        spartan minimization ends.
+
         To understand what terms stacked context and its life mean, consider
         this code snippet
 
@@ -29,33 +29,33 @@ ThingTwo ii = new ThingTwo();
 ii.wreck(house);
 System.out.println(ii);
 ThingOne i = new ThingOne(); // Stack context of £\cc{ii}£
-System.out.println(i);       // Context of £\cc{ii}£ still stacked
-i.wreck(house);              // Stacked still£…£
-System.out.println(i);       // Still!
-cat.join(i, ii);             // Finally: recalling context of £\cc{ii}£.
+System.out.println(i); // Context of £\cc{ii}£ still stacked
+i.wreck(house); // Stacked still£…£
+System.out.println(i); // Still!
+cat.join(i, ii); // Finally: recalling context of £\cc{ii}£.
   \end{code}
   The last line in this snippet joins the three objects,
   \cc{cat},~\cc{i}, and \cc{ii}. The four preceding lines prepare
-  and print object \cc{i}.
+  and print object~\cc{i}.
 
   Object~\cc{i} is prepared and printed in the remainder, i.e., the first three
-  lines of the snippet.  The fact that it existed is stacked then during the
-  preparation of \cc{i}, and restored only at the last line.
+  lines of the snippet. The fact that it existed is stacked then during the
+  preparation of~\cc{i}, and restored only at the last line.
 
   By swapping the order of construction, we obtain code in which the stacked is
-  a bit shorter, \cc{i} instead of \cc{ii}, and in a linear read of the
+  a bit shorter,~\cc{i} instead of \cc{ii}, and in a linear read of the
   program, it is stacked for three rather than four lines.
- 
-\begin{code}[minipage,width=54ex]{java} 
+
+\begin{code}[minipage,width=54ex]{java}
 ThingOne i = new ThingOne();
-ThingOne i = new ThingOne(); 
-System.out.println(i); 
-i.enter(house); 
-System.out.println(i);        
-ThingTwo ii = new ThingTwo(); // Stack context of £\cc{i}£. 
-ii.enter(house);              // Context of £\cc{i}£ still stacked.
-System.out.println(ii);       // £\cc{i}£ is stacked still.  
-cat.join(i, ii);              // Recalling context of £\cc{ii}£.
+ThingOne i = new ThingOne();
+System.out.println(i);
+i.enter(house);
+System.out.println(i);
+ThingTwo ii = new ThingTwo(); // Stack context of £\cc{i}£.
+ii.enter(house); // Context of £\cc{i}£ still stacked.
+System.out.println(ii); // £\cc{i}£ is stacked still.
+cat.join(i, ii); // Recalling context of £\cc{ii}£.
   \end{code}
 \end{enumerate}
 
@@ -72,31 +72,44 @@ principles such as early \cc{throw}, \cc{return} and \cc{break} (from loops) on
 errors, ordering by increasing length to increase readability, and also the
 practice of placing at first the short branch of an \cc{if} conditional, etc.
 
-The main novelty in spartan programming is not in these numerical minimization
-ends, but in the \emph{extent}, \emph{manner}, and \emph{automatization} of the
-quest for this minimization. Unlike other coding guidelines, spartanization
-prescribes a (semi-automatic) uncompromising process by which code can be
-spartanized.
-
+Unlike other coding guidelines, spartanization prescribes a (semi-automatic)
+uncompromising process by which code can be spartanized.  The main novelty
+therefore in spartan programming is not in these numerical minimization ends,
+but in the \emph{manner}, \emph{extent}, and \emph{automatization} of the quest
+for their optimization. The last three \emph{emphasized} words make the titles
+of \cref{sction:manner,section:extent,section:automation} ahead.
 
 \subsection{Manner of application}
+\label{section:manner}
 The spartanization process is governed by the spartan
 \emph{toolbox}, which is a collection of many (currently around sixty)
-structural and nominal wrings.  Each \emph{wring} is a refactoring that does
+structural and nominal wrings. Each \emph{wring} is a refactoring that does
 not degrade quality as measured by any of minimization ends: LOC, number of
 tokens, nesting level, size of stacked scope, etc., while improving on at least
 one of them.
 
 A \emph{structural wring} is a wring that modifies the structure of the code,
-such as the conversion of \cc{\kk{if} (f() == \kk{true}) \kk{return true};
-\kk{else return false};} to \cc{\kk{return} f();}. Another structural wring is
-the one that removes the useless \kk{abstract} and \kk{public} modifiers from
-declarations made withing and \kk{interface}. 
+A simple structural wring is the one removing
+useless \kk{abstract} and \kk{public} modifiers from
+declarations made withing an \kk{interface}.
+The application of several structural wrings in succession converts
+\begin{java}
+if (f() == true) {
+  return false;;
+} else {
+  return true;;
+}
+\end{java}
+into to \cc{\kk{return} !f();}, including a wring to remove redundant
+curly brackets and one for the removal of redundant semincolons. 
+Also involved is a wring for the conversion of an \kk{if} into to a
+\emph{ternary} expression (one employing the operator~\cc{$·$?$·$:$·$}), and a
+wring simplification of ternary expressions involving boolean literals.
 
 In contrast, a \emph{nominal wring} is a wring that does does not modify the
 code itself, but renames some entities in it, most particularly, variables.
 For example, the toolbox includes a nominal wring to convert the name of the
-variable returned by a method, to the one character identifier ``\cc{\$}'',
+variable returned by a method, to the one character identifier ‟\cc{\$}”,
 which is the short spartan name for result.
 
 If none of the wrings in the toolbox is applicable to the code, then
@@ -109,44 +122,48 @@ are implemented as part of an open source spartan refactoring Eclipse
 plugin\urlref{https://github.com/SpartanRefactoring/spartan-refactoring} which
 makes it possible for programmers to apply much of it.
 
-In addition to wrings, spartanization may use 
+In addition to wrings, spartanization may use
 \begin{itemize}
-    \item  clean by external tools, specifically, Eclipse's cleanup operation, 
+    \item cleanup by external tools, specifically, Eclipse's cleanup operation,
       to tasks such as minimizing variability as planting \kk{final} modifier
-      whenever possible, removing unused variables and methods, etc.  
-    \item user intervention for appropriate 
-        clever method extraction which would minimize exploitation of scope.
+      whenever possible, removing unused variables and methods, removing
+      unnecessary parenthesis, etc.  
+    \item user intervention for appropriate
+        clever method extraction, and other modular restructuring to 
+        minimize e.g., exploitation of scope.
 \end{itemize}
 Naturally, size increases with the addition of \cc{final}s; other cleanups, such
 as the automatic addition of \cc{@Override} annotation may increase size as well.
-Also, typically method extraction increases code size, be it measured in lines,
-  tokens, characters or bytes. 
+Also, typically method extraction and other modular transformations increases
+code size, be it measured in lines, tokens, characters or bytes.
 
 Thus, there are four components to the spartanization process:
-\emph{\textbf{(i)}} structural, 
-\emph{\textbf{(ii)}} nominal, 
-\emph{\textbf{(iii)}} cleanup, and,  
-\emph{\textbf{(iv)}} method extraction. 
-Current technology can automate all but the last component; 
+\emph{\textbf{(i)}} structural,
+\emph{\textbf{(ii)}} nominal,
+\emph{\textbf{(iii)}} cleanup, and,
+\emph{\textbf{(iv)}} modular.
+Current technology can automate all but the last component;
 automation of method extraction requires more research,
-paying attention to current state of the art \matteo\cite{ 
+paying attention to current state of the art \matteo~\cite{
     we should have many citations
     somewhere can you please add some citations
 }.
+This section is concerned with the full process of spartanization. 
 The empirical \cref{section:initial} below investigates how structural and
 nominal spartanizations contribute to the naturalness of code.
 
 \subsection{Extent of application}
+\label{section:extent}
 An underlying principle is not only that the minimization of
 the above ends matters, but also that \emph{nothing else matters}.
 In other words, wrings are applied repeatedly, with explicit disregard
 to any other extent†{%
-  In Spartan words: ‟\textit{As far as this can reach}.” K. Agesilaus the
+  In the Spartan's words: ‟\textit{As far as this can reach}.” K. Agesilaus the
   great (\textsl{being asked for the extent of Sparta's border, while
   holding his spear}).
 }.
 
-Heavily spartanized code is often quite different than the original.  A case in
+Heavily spartanized code is often quite different than the original. A case in
 point is the \Java program presented in \cref{figure:eclipse}, drawn from the
 Eclipse JDT Tutorial series\urlref{%
 http://www.programcreek.com/2011/01/a-complete-standalone-example-of-astparser/},
@@ -154,7 +171,7 @@ but slightly amended for brevity.
 
 \begin{figure}[H]
   \caption{A complete standalone example of using class \cc{ASTParser}, drawn
-    from the Eclipse JDT Tutorial Series, abbreviated and reformatted.} 
+    from the Eclipse JDT Tutorial Series, abbreviated and reformatted.}
     \label{figure:eclipse}
     \begin{adjustbox}{max width=\columnwidth}
       \begin{code}[minipage, width=1.13\columnwidth]{JAVA}
@@ -162,14 +179,14 @@ public class Test { // comments and £\kk{import}£ directives omitted for brevi
   public static void main(String args[]) {
     ASTParser parser = ASTParser.newParser(AST.JLS3);
     parser.setSource(
-      "public class A {\n" + 
-      "  int i = 9;\n"+ //
-      "  int j;\n" + //
-      "  ArrayList<Integer> al = new ArrayList<Integer>();\n" + //
-      "  j=1000;\n" + // sic!
+      "public class A {\n" +
+      " int i = 9;\n"+ //
+      " int j;\n" + //
+      " ArrayList<Integer> al = new ArrayList<Integer>();\n" + //
+      " j=1000;\n" + // sic!
       "}\n" + //
       .toCharArray()
-    );
+);
     parser.setKind(ASTParser.K£\_£COMPILATION£\_£UNIT);
     CompilationUnit cu = (CompilationUnit) parser.createAST(null);
     cu.accept(new ASTVisitor() {
@@ -180,7 +197,7 @@ public class Test { // comments and £\kk{import}£ directives omitted for brevi
         System.out.println(
           "Declaration of '" + name + "' at line" + //
           cu.getLineNumber(name.getStartPosition()));
-        return false; 
+        return false;
       }
       public boolean visit(SimpleName node) {
         if (this.names.contains(node.getIdentifier())) {
@@ -197,12 +214,28 @@ public class Test { // comments and £\kk{import}£ directives omitted for brevi
   \end{adjustbox}
 \end{figure}
 
-\Cref{figure:eclipse:spartan}.
-shows a spartanized version of program in the \cref{figure:eclipse}, 
+\Cref{figure:eclipse:spartan} shows the spartanized version of the program in
+the \cref{figure:eclipse}. Employed were nominal spartanization, e.g., renaming
+variable \cc{names} to~\cc{\$}, structural spartanization, e.g., for the
+removal of braces, and modularization.
+
+The product of external cleanup, which in this case amounts to adding
+\kk{final}s and \kk{@Override}, is not included in this example.
+
+The main difference between the figures is due to method extractions, conducted
+manually. Function \cc{go()} minimizes exploitation of scope by denying
+access to the \cc{args} argument of function \cc{main}.
+Function \cc{makeCompilationUnit()} takes advantage of the fact that variable
+\cc{parser} is only used in a limited section of \cc{main}, etc.
+
+Examining the body of the anonymous class (that one that \cc{extends} \cc{ASTVisitor})
+we see some more extracted methods. The reduction in clutter due to
+spartanization makes it possible to identify another spot of useful method
+extraction.
 
 \begin{figure}
-  \caption{Spartanized version, including renaming, restructuring, and method extraction 
-  of the full \Java program in \cref{figure:eclipse}.}
+  \caption{Spartanized version including structural, nominal, modular , but
+    not cleanups, of the \Java program in \cref{figure:eclipse}.}
   \label{figure:eclipse:spartan}
   \def\ignore#1{}
   \begin{adjustbox}{max width = \columnwidth}
@@ -219,7 +252,7 @@ public class Test { // comments and £\kk{import}£ directives omitted for brevi
       }
       public boolean visit(VariableDeclarationFragment ¢) {
         collect(¢.getName());
-        return false; 
+        return false;
       }
       void note(SimpleName ¢) {
         if (£\ignore$£$.contains(¢.getIdentifier()))
@@ -239,40 +272,49 @@ public class Test { // comments and £\kk{import}£ directives omitted for brevi
   private static ASTParser makeParser() {
     ASTParser £\ignore$£$ = ASTParser.newParser(AST.JLS3);
     £\ignore$£$.setSource(
-      "public class A {\n" + 
-      "  int i = 9;\n"+ //
-      "  int j;\n" + //
-      "  ArrayList<Integer> al = new ArrayList<Integer>();\n" + //
-      "  j=1000;\n" + // sic!
+      "public class A {\n" +
+      " int i = 9;\n"+ //
+      " int j;\n" + //
+      " ArrayList<Integer> al = new ArrayList<Integer>();\n" + //
+      " j=1000;\n" + // sic!
       "}\n" + //
       .toCharArray()
     );
     £\ignore$£$.setKind(ASTParser.K£\_£COMPILATION£\_£UNIT);
     return £\ignore$£$;
   }
+}
 \end{code}
   \end{adjustbox}
 \end{figure}
 
+Yet another, more simplified version of the code of \cref{figure:eclipse} shows
+up in \cref{figure:eclipse:extract}. This figure depicts only the anonymous
+class found in previous figures, but with extra method extracted to simplify
+the code. Of course, a demand for clever method extraction can not be part of a
+strucured We argue that the
+process of spartanization helped in
+this case to highlight  
 
-\subsection{Automatization}
+\subsection{Automation}
+\label{section:automation}
 % However, being in a certain sense, counter intuitive, in order to apply
 % Spartanization on their working routines, the developers need to respect a firm
 % discipline. From a certain standpoint, Spartan Programming might be seen as a
 % list of code style prescription, but it would just scratch the surface. It is
 % far more than that, since it
-% 
+%
 % Being minimized, spartanized code might be less readable that the original.
 % This is … Spartan programming is not directly concerned with readability, at
 % least not in its subjective and cultural-dependent sense. In fact, spartan
 % programs will bring much misery to anyone preferring long, verbose programs.
-% 
+%
 % Spartan programming prescribes, a careful use of the variables, stressing the need
 % to inline variables that are used only once and emphasizing the use of foreach loops
 % in languages implementing it. Variables visibility and accessibility should also be
 % possibly minimized, favoring the use of private over public variables whenever it
 % is possible.
-% 
+%
 % Also the names of variables should be taken short for local variables, with
 % short scope, leaving to their class names to explicit their behavior.
 % Minimizing variability using final and @NonNull annotation. Stress the use of
@@ -282,7 +324,7 @@ public class Test { // comments and £\kk{import}£ directives omitted for brevi
 % between them. Favor ternarization over the use of if-then-else constructs and
 % use a simplified version of the conditionals that implies an early return.
 % Moreover, use an early exit logic with continue, break and return instructions.
-% 
+%
 % Everything should be formatted in order to make an efficient use of the screen
 % space, by removing unnecessary tokens (i.e., redundant parentheses, etc.).
 % Methods should be as short as possible.
