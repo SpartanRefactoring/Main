@@ -6,92 +6,51 @@ extent, spartan(ized) code might look a little bit ‟scary” to developers not
 accustomed to it.
 
 In the following, we are presenting some examples of Spartan
-Programming % \urlref{https://github.com/SpartanRefactoring/spartan/blob/master/src/il/org/spartan/misc/Primes.java}.
+Programming % 
+\urlref{https://github.com/SpartanRefactoring/spartan/blob/master/src/il/org/spartan/misc/Primes.java}.
 All of them are taken from the source code of the Spartan Refactoring Plugin
 for Eclipse that has been introduced in \cref{section:eclipse}. This code was
 developed following the spartan programming rules since the beginning.
 
 % \Cref{figure:first} report an application of the principles …
 
-% \begin{figure}
-% \label{figure:first}
-% \caption{An example of spartan code}
-% \begin{Code}{JAVA}{Where was this taken from?}
-% public static <T, C extends Collection<T>> accumulate<T, C>
-% to(final C c) {
-% return new accumulate<T, C>() {
-% @Override public C elements() {
-% return c;
-% }
-% @Override public accumulate<T, C>
-% add(final @Nullable T ¢) {
-% if (¢ == null)
-% return this;
-% c.add(¢);
-% return this;
-% }
-% };
-% }
-% \end{Code}
-% \end{figure}
+\begin{figure}
+\label{figure:first}
+\caption{An example of spartan code}
+\begin{Code}{JAVA}{Where was this taken from?}
+public static <T, C extends Collection<T>> accumulate<T, C>
+to(final C c) {
+return new accumulate<T, C>() {
+@Override public C elements() {
+return c;
+}
+@Override public accumulate<T, C>
+add(final @Nullable T ¢) {
+if (¢ == null)
+return this;
+c.add(¢);
+return this;
+}
+};
+}
+\end{Code}
+\end{figure}
 
-% In the code reported in \cref{figure:shock-2} we can see ... .
-%
-% \begin{figure}
-% \label{figure:shock-2}
-% \caption{An example of spartan code}
-% \begin{Code}{JAVA}{Where was this taken from?}
-% default accumulate<T, C>
-% addAll(final Iterable<? extends T>... tss) {
-% for (final Iterable<? extends T> ¢ : tss)
-% addAll(¢);
-% return this;
-% }
-% \end{Code}
-%
-% \end{figure}
+In the code reported in \cref{figure:shock-2} we can see ... .
+
 \begin{figure}
 \label{figure:shock-2}
-\caption{Spartan functions to test for primality†{%
-      https://github.com/SpartanRefactoring/spartan/
-      }
-     }
-\begin{Code}{JAVA}{il.org.spartan.misc.Primes＃isPrime}
-/** Tests for primality.
-  * @param ¢ candidate to be tested
-  * @return <code><b>true</b></code> <i>iff</i> the parameter is prime. */
-public static boolean isPrime(final int ¢) {££
-  return ¢ < -1 && isPrime(-¢) // deal with negative values
-      || ¢ > 1 && isPrime¢(¢); // any integer >= 2
-}
-private static boolean isPrime¢(final int i) {££
-  assert i >= 2;
-  for (int ¢ = 2; ¢ * ¢ <= i; ++¢)
-    if (i ％ ¢ == 0)
-      return false;＃
-  return true;
+\caption{An example of spartan code}
+\begin{Code}{JAVA}{Where was this taken from?}
+default accumulate<T, C>
+addAll(final Iterable<? extends T>... tss) {
+for (final Iterable<? extends T> ¢ : tss)
+addAll(¢);
+return this;
 }
 \end{Code}
-\end{figure}
 
+\end{figure}
 Finally in \cref{figure:shock-3} it is possible to see that…
 
-\begin{figure}
-    \caption{%
-      Spartan function to test for setting free variables in a symbolic-expression, such as those of \protect\Prolog†{%
-      https://github.com/yossigil/Protolog
-      }
-    }
-\label{figure:shock-3}
-\begin{Code}{JAVA}{\scriptsize\texttt{il.org.spartan.protolog.Variable＃freeVariables}}
-default Set<Variable> freeVariables() {££
-    final Set<Variable> £\ignore$£$ = new LinkedHashSet<>();
-    if (isVariable())
-     £\ignore$£$.add((Variable) this);
-    else
-      for (final Term ¢ : this)
-       £\ignore$£$.addAll(¢.freeVariables());
-    return £\ignore$£$;
-  }
-\end{Code}
-\end{figure}
+
