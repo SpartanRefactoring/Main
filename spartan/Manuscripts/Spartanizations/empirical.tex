@@ -155,7 +155,7 @@ internationalization processes rather than coding per-se.
 Jack currently does not remove unit-tests, but is planned to do so in the
 future.
 
-\Cref{table:virgin} presents the compression power of Jack, BZip, when
+\Cref{table:virgin} presents the compression power of Jack, BZip2, when
 applied after Jack, and the accumulative compression power of Jack and BZip2
 when applied in this order.
 \begin{table}
@@ -200,7 +200,6 @@ ranging from circa 10 fold compression to circa 80 fold. However, the more
 % It means that Jack is not able to compress spartanized code better than in the case of the original
 % code. 
 % It something expected since Spartanization removes
-
 % which reports the difference 
 % in the aggregatint statistics for the Jacked code and for the It is
 % worth to note that we have an improvement in any (???) statistics, in other words the
@@ -238,11 +237,12 @@ We specifically subtract the aggregating statistics of the latter with those rel
 % of the aggragating statistics for the latter, related to 
 % the spartanized code, and the compression power of the original code. 
 
-The first column of \cref{table:difference} regards the application of the Jack algorithm to the spartanized code. 
-As we can see some of the results are negative.
-For example, the average value of the compression power is negative, meaning that the Spartanized Jacked code 
-il less compressed than the original.
-However we are not considering a significative difference.
+The first column of \cref{table:difference} regards the application of the Jack 
+algorithm to the spartanized code. As we can see, although the values 
+are not high, some of these are negative.
+For example, the average value of the compression power is negative, 
+meaning that the Spartanized Jacked code is, on average, less compressed than the original.
+However, we are not considering a significative difference.
 Also the Max value is negative. As a matter of fact the Max value for the Spartanized code is 
 significantly different from the corresponding value in the original, being the latter greater.
 This might be due to the fact that there could be case that Spartanized code 
