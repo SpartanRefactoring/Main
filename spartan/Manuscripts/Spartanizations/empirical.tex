@@ -20,8 +20,8 @@ the three conditions in the conjecture:
       this action is likely to make the result less compressible than the origin. 
     \item Even the plain removal of curly brackets in singleton blocks as
       recommended by one of the battling camps of the braces war, is not guaranteed
-      to improve compressibility. A good predictor is likely to discover that a
-      an opening curly bracket always occurs after the conditional of an \kk{if}. 
+      to improve compressibility. A good predictor is likely to discover that
+      an opening curly bracket always occurs after an \kk{if} in conditional statements. 
       It might become less efficient when this character bracket does not always occur. 
 \end{itemize}
 
@@ -42,7 +42,7 @@ question that concerns us here can be phrased as follows:
   \item[RQ1.] \emph{Is spartan code more natural than non-spartanized code?} also,
         and more concretely,
         \begin{description}
-          \item[RQ1.1.] \emph{Does structural spartanization contribute software naturalness?}
+          \item[RQ1.1.] \emph{Does structural spartanization contribute software naturalness?}\matteo doubt: ``contribute to'' or ``contribute''?
           \item[RQ1.2.] \emph{Does renaming spartanization contribute software naturalness?}
         \end{description}
 \end{description}
@@ -64,7 +64,7 @@ list due to Allamanis and Sutton~\cite{Allamanis:Sutton:13}.
 
 The ‟Size Before” column of \Cref{table:corpus} provides the chief size
 statistics of the constituting artifacts.
-
+%
 \begin{table}
   \caption{\label{table:corpus}%
     Aggregating statistics, over artifacts in the corpus,
@@ -90,15 +90,15 @@ statistics of the constituting artifacts.
     \end{tabular}
   \end{adjustbox}
 \end{table}
-
-Notably, sizes†span more than one
+%
+Notably, sizes span more than one
 order of magnitude, from one megabyte of source to circa~47, the median being
 around five megabytes, the average around twelve. The GL corpus was used before
 for the study of software metrics.  See~\cite{Gil:Lalouche:16,Gil:Lalouche:16b}
 for reproducibility details and for a description of the artifacts' selection
 process. Sufficient to us here is that the selection was independent of the
 current research and that the artifacts are of considerable size, wide use,
-evolution history and, development effort.
+evolution history and development effort.
 
 \subsection{Burrows-Wheeler Compression}
 Compression power is used in this work-in-progress report as a quick estimate
