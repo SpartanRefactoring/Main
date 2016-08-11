@@ -1,6 +1,43 @@
 % \matteo: can you please proof read this section?
+\matteo: uncomment if you are done.
 
-The main research question that concerns us here is
+Having described the spartanization style and process, we now turn to the
+question of evaluation.  Our hypothesis here is that both structural and
+nominal spartanization make the code more regular. The conjecture is that
+spartanization should: preserve semantics, reduce code size, and making the
+code \emph{more compressible}. The challenge is in meeting the conjunction of
+the three conditions in the conjecture:
+\begin{itemize}
+    \item The removal of all code decreases size, but does not preserve semantics.
+    \item Compression by a tool such as GZip, reduces size, preserves
+      semantics. However, compression power is certain to suffer. It is 
+      not possible to further compress \cc{.zip} files, whereas plain code
+      compresses typically in a factor of two or more.
+    \item Another operation which preserves semantics while making
+      the code smaller is the reducing runs of whitespace characters combined 
+      with all spaces that surround non-alphabetical operators. 
+      However, since white spaces are used so frequently in the code,
+      this action is likely to make the result less compressible than the origin. 
+    \item Even the plain removal of curly brackets in singleton blocks as
+      recommended by one of the battling camps of the braces war, is not guaranteed
+      to improve compressibility. A good predictor is likely to discover that a
+      an opening curly bracket always occurs after the conditional of an \kk{if}. 
+      It might become less efficient when this character bracket does not always occur. 
+\end{itemize}
+
+Of the four components of the process, we are most interested in structural and
+nominal spartanization. The other two components are left beyond the scope of
+this work.  Cleanup for spartanization is a bit less interesting, since it is
+not particular to spartanization.  Upon automation of method extraction, future
+research is to evaluate the quality of these. 
+
+As shall be revealed below, there is a strong empirical evidence to support
+the conjecture, when limited to structural sparnization. The results regarding
+nominal spartanization are inconclusive, and the reduction we witness in 
+compressibility is not statistically significant. 
+
+From the perspective of  language software engineering, the main research
+question that concerns us here can be phrased as follows:
 \begin{description}
   \item[RQ1.] \emph{Is spartan code more natural than non-spartanized code?} also,
         and more concretely,
@@ -76,9 +113,9 @@ often manipulate many more than~$5$ tokens.
 Quality in compression algorithms is measured by \emph{compression power},
 defined as the ratio of uncompressed size to the compressed size. Compression
 power, our \emph{approximate naturalness} should be correlated with
-\emph{original naturalness}, but it distinct from it.
+\emph{original naturalness}, but it distincts from it.
 
-We found that with respect to \Java software the compression power of Bzip2 is
+We found that with respect to \Java software the compression power of BZip2 is
 greater than that of GZip. This greater power is probably because Gzip make a
 greedy search for repetitions starting at the input's prefix, while BZip2
 starts the search in a broader context, as implied by the Burrows-Wheeler
@@ -202,15 +239,27 @@ We specifically subtract the aggregating statistics of the latter with those rel
 % the spartanized code, and the compression power of the original code. 
 
 The first column of \cref{table:difference} regards the application of the Jack algorithm to the spartanized code. 
-As we can see some of the results are negative, meaning that the spartanized jacked code is less compressed 
-than the Jacked original one. 
-This can be explained if we take into account the fact that Spartanization removes some 
-of the elements that are removed also by Jack.
+As we can see some of the results are negative.
+Let us consider, for example, the Average value of the compression power. 
+This value is negative, meaning that the Spartanized Jacked code il less compressed.
+However we are not considering a significative difference.
+Also the Max value is negative. As a matter of fact the Max value for the Spartanized code is 
+significantly different from the corresponding value in the original, being the latter greater.
+This might be due to the fact that there could be case that Spartanized code 
+tend to be more laconic, with many variables removed, and code inlined. 
+When Jack algorithm removes the tokens that are repeated several times in a .java file 
+(i.e. modifiers: abstract, public, private; import
+instructions; terms like extends, implements, try, catch).
+From this point of view, boilerplate code is less repetitive
+% meaning that the spartanized jacked code is less compressed 
+% than the Jacked original one. 
+% This can be explained if we take into account the fact that Spartanization removes some 
+% of the elements that are removed also by Jack.
 
-The second column of the same Table regards the approximate naturaleness of the
-spartanized Jacked code.  In this case the difference are all positive, meaning
-that the approximate naturaleness of a spartanized jacked code is higher than
-in the original code.  This might be explained by the fact that ...
+The second column of the same Table regards the approximate naturalness of the 
+spartanized jacked code.  All difference are positive, implying the
+answer to \textbf{RQ1.1}: approximate naturalness of a structurally spartanized code
+is higher than that of the original.
 
 \begin{table}
   \caption{\label{table:structural}%
@@ -367,6 +416,6 @@ spartanization, compared with non-spartanized code.}
   \end{adjustbox}
 \end{table}
 
-Preliminary results supporting the
-‟Hypothesis that can never be proved”
-Because this is not what you like.
+% Preliminary results supporting the
+% ‟Hypothesis that can never be proved”
+% Because this is not what you like.
