@@ -263,17 +263,17 @@ is higher than that of the original.
 
 \begin{table}
   \caption{Aggregating statistics of compression power of Jack+BZip2 after
-  automatic \textbf{structural} spartanization, compared with non-spartanized code. 
+  automatic \emph{structural spartanization}, compared with non-spartanized code. 
   }
   \label{table:structural}
   \par\vspace{10pt plus 6pt minus 4pt}
   \centering
   \begin{adjustbox}{max width = \columnwidth}
-    \begin{tabular}{l*6r}
+    \begin{tabular}{l*5r}
       \toprule
       & \multicolumn2c{\textit{Jack}}
-      & \multicolumn2c{\textit{Jack+BZip2}}
-      & \multicolumn2c{\textit{Combined}}\\
+      & \multicolumn2c{\textit{BZip2 after Jack}}
+      & \multicolumn1c{\textit{Jack+BZip2}}\\
       \cmidrule(r){2-3} \cmidrule(r){4-5} \cmidrule(r){6-6}
       & \textit{Size (bytes)}
       & \textit{Powr}
@@ -281,15 +281,21 @@ is higher than that of the original.
       & \textit{Powr}
       & \textit{Power}⏎
       \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
-      \sffamily  Ave.  & 5,050,647  & 2.46 & 719,488   & 6.66 & 0.06  & 1.01 \\
-      \sffamily  Min.  & 439,825    & 1.79 & 75,391    & 4.90 & -0.37 & 0.21 \\  
-      \sffamily  Max.  & 19,173,224 & 3.87 & 3,275,918 & 8.79 & 0.49  & 1.07 \\
-      \sffamily  Med.  & 1,959,917  & 2.41 & 341,851   & 6.79 & 0.86  & 0.87 \\
-      \sffamily  Range & 18,733,399 & 2.08 & 3,200,527 & 3.89 & 0.08  & 0.08 \\
+      \sffamily  Ave.  & 5,050,647  & 2.46 & 719,488   & 6.66 & 16.42 \\% & 1.01 \\
+      \sffamily  Min.  & 439,825    & 1.79 & 75,391    & 4.90 & 10.58 \\% & 0.21 \\  
+      \sffamily  Max.  & 19,173,224 & 3.87 & 3,275,918 & 8.79 & 28.19 \\% & 1.07 \\
+      \sffamily  Med.  & 1,959,917  & 2.41 & 341,851   & 6.79 & 16.57 \\% & 0.87 \\
+      \sffamily  Range & 18,733,399 & 2.08 & 3,200,527 & 3.89 & 17.61 \\% & 0.08 \\
       \bottomrule
     \end{tabular}
   \end{adjustbox}
 \end{table}
+
+
+
+
+
+
 
 \begin{table}
   \caption{%
