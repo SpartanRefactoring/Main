@@ -90,13 +90,12 @@ The spartanization process is governed by the spartan
 \emph{toolbox}, which is a collection of many (currently around sixty)
 structural and nominal wrings. Each \emph{wring} is a refactoring that does
 not degrade quality as measured by any of minimization ends: LOC, number of
-tokens, nesting level, size of stacked scope, etc., while improving on at least
+tokens, nesting level, size of stacked scope, etc., while improving at least
 one of them.
 
-A \emph{structural wring} is a wring that modifies the structure of the code,
-A simple structural wring is the one removing
-useless \kk{abstract} and \kk{public} modifiers from
-declarations made withing an \kk{interface}.
+A \emph{structural wring} is a wring that modifies the structure of the code, A
+simple structural wring is the one removing useless \kk{abstract} and
+\kk{public} modifiers from declarations made withing an \kk{interface}.
 The application of a chain of structural wrings converts
 \begin{lcode}{JAVA}
 if (f() == true) {££
@@ -210,8 +209,8 @@ public class C0<T> {££
     } else if (!inner.equals(other.inner))
       return false;
     return true;
-  }
-}
+  }££
+}££££
 \end{code}
 \end{adjustbox}
 \end{figure}
@@ -501,14 +500,14 @@ default Set<Variable> freeVariables() {££
 \newlength\ruleLength
 
 One can also note that \cref{figure:free} demonstrates
-  a structural wring that puts first the shortest branch of a
+  a structural wring that puts first the shortest branch of 
   an \kk{if}, at the price of negating the conditional.
 However, the number of structural wrings is too large to enumerate and
 demonstrate all here. The following categorization provides a summary:
 
 \begin{description}
-  \item[S0] \emph{Null impact elimination.} The tooblox contains wrings to make
-    trivial simplifcations of computation whose effect is null. Examples
+  \item[S0] \emph{Null impact elimination.} The toolbox contains wrings to make
+    trivial simplifications of computation whose effect is null. Examples
     include comparison with \kk{true} (always yielding the compared value),
     use of unary ``\cc{+}'',  addition of \cc{0}, multiplication by \cc{1}, a
     conjunction with a \kk{true} in it, disjunction with \kk{false} in it, concatenation 
@@ -555,7 +554,7 @@ transformation, to a different \kk{else} branch.
 
 \item[S2] \emph{Factorization with the distributive propety.}
   The distributive property occurs in code for many more occasions
-  than plain arithmetics, including Boolean algebra, assignments, and
+  than plain arithmetic, including Boolean algebra, assignments, and
   conditionals. The structural wrings in the toolbox that take
   advantage of this property are
 
@@ -582,14 +581,14 @@ transformation, to a different \kk{else} branch.
 }
 \end{adjustbox}
 
-Worthy of notice in this partial list are symmetries of distrubtion: right and
-left distribution (as in \kk{if}), the replaceability of operators (\cc{＆＆}
-is can be replaceable by \cc{||}, as long as the mirror replacement of
+Worthy of notice in this partial list are symmetries of the distributive property: right and
+left distribution (as in \kk{if}), the duality of operators (\cc{＆＆} can
+be replaceable by \cc{||}, as long as the mirror replacement of
 \cc{||} by \cc{＆＆} is carried out collaterally), etc.
 
 \item[S3] \emph{Ternarization} The third kind of non-trivial wrings are those
   that attempt to change an \kk{if} statement into a ternary expression.
-  The basic transofrmation rule is:
+  The basic transformation rule is:
   \begin{quote}
   \footnotesize
     \begin{align}
@@ -599,7 +598,7 @@ is can be replaceable by \cc{||}, as long as the mirror replacement of
 except that more caution must be applied before applying this transformation.
 
 Firstly, notice that the original code is a statement, while the transformed is
-an expression. The transfomration can only work if the distributive rule
+an expression. The transformation can only work if the distributive rule
 \cref{eq:ternary} can be applied next to to can further push down the ternary
 operator onto~$S₁$ and~$S₂$ whereby making the transformed into a statement.
 
@@ -615,17 +614,17 @@ spartanization may need to complete it, by transformation rules such as:
 Observe that the above transformation rule is not a wring: It increases the 
 number of tokens, to make the input more amenable to ternarization.
 
-\item[S4] \emph{Canonic form} Wrings of this kind to bring the 
+\item[S4] \emph{Canonic form.} Wrings of this kind to bring the 
   code into a more canonical form, by sorting by length terms of addition
   factors of multiplication, pulling out multiplication by \cc{-1}, and  
-   even  pushing down logical negation using De Morgan
+   even  pushing down logical negation using de-Morgan
    laws (possibly flipping comparison operations when necessary), etc.
 
    Also included in this group is the wring that converts \cc{x.toString()} to
    \cc{""+x}, a wring that favors, whenever possible, postfix increment and decrement
    operations to their prefix version, and more.
 
-\item[S5] \emph{Inlining and scope reduction}
+\item[S5] \emph{Inlining and scope reduction.}
   The final kind of structural wrings is concerned with elimination of
   variables through inlining, and when this is not possible, trying to reduce
   their scope.  A variable is inlined if it used only once, or if it its
