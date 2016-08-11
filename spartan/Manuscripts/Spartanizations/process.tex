@@ -119,7 +119,7 @@ if (f() == true) {££
 \vspace{-4ex}
 
 This chain includes a wring to remove redundant curly brackets and
-one for the removal of redundant semicolons.  Also involved is a wring for the
+one for the removal of redundant semicolons. Also involved is a wring for the
 conversion of an \kk{if} into to a \emph{ternary} expression (one employing the
 operator~\cc{$·$?$·$:$·$}), and a wring simplifying of ternary expressions
 involving boolean literals.
@@ -301,7 +301,7 @@ public class Test0 {££ // comments and £\kk{import}£ directives omitted for 
   public static void main(String args[]) {££
     ASTParser parser = ASTParser.newParser(AST.JLS3);
     parser.setSource((
-      "public class A {\n" + 
+      "public class A {\n" +
       " int i = 9;\n"+ //
       " int j;\n" + //
       " ArrayList<Integer> al = new ArrayList<Integer>();\n" + //
@@ -407,7 +407,7 @@ Follow the example to appreciate the automatic spartanization process involved:
         \HyperTalk:
         the variable which is so prevalent in the current piece of code that
         naming it would be waste of words. Stated differently, the
-        meaning of a variable named~\cc{¢} should be so clear to the reader that 
+        meaning of a variable named~\cc{¢} should be so clear to the reader that
         naming it would be a waste of words.
 
       \item[N3] Renaming variable \cc{parser} to~\cc{p}, and variable~\cc{cu}
@@ -422,11 +422,11 @@ Follow the example to appreciate the automatic spartanization process involved:
         as the first letter in the last word of the component of the type name.
         Variable \cc{parser} of type \cc{ASTParser} is hence renamed~\cc{p},
         and~\cc{u} is new name of variable \cc{cu} of type
-        \cc{CompilationUnit}.  In the case of containers, such as arrays,
-        lists, sets, etc., \textbf{N1} add an ``s'' to the short letter
-        denoting the elements' type. As demonstrated  in
+        \cc{CompilationUnit}. In the case of containers, such as arrays,
+        lists, sets, etc., \textbf{N1} add an ‟s” to the short letter
+        denoting the elements' type. As demonstrated in
         \cref{figure:accumulate} above, the short name of an iterable of a
-        collections of type \cc{T} is is thus \cc{tss}.
+        collections of type~\cc{T} is is thus \cc{tss}.
 
         Abbreviation is limited to only those cases in which short names
         uniquely identifies the variables and there are not more than four of
@@ -547,10 +547,10 @@ rules\vspace{-3ex}
   {\scriptsize
       \begin{align}
         & \begin{multlined}[c][0.5\columnwidth]
-      \text{\cc{\kk{if}~($C$)~\kk{return}~$E$;~\kk{else}~$S$;}} ⇒\\
+      \text{\cc{\kk{if}~($C$)~\kk{return}~$E$;~\kk{else}~$S$;}} ⇒⏎
         \text{\cc{\kk{if}~($C$)~\kk{return}~$E$;~$S$;}}
       \end{multlined}
-        ⏎
+⏎
         & \text{\cc{\kk{if}~($C$)~$S$;~\kk{else}~;}} ⇒ \text{\cc{\kk{if}~($C$)~$S$;}}⏎
         & \text{\cc{\kk{if}~($C$)~;~\kk{else}~$S$}} ⇒ \text{\cc{\kk{if}~(!$C$)~$S$;}}⏎
         & \text{\cc{\kk{while}~($C$)~❴❵}} ⇒ \text{\cc{\kk{while}~($C$)~;}}
@@ -569,28 +569,34 @@ attaches, as a result of the transformation, to a different \kk{else} branch.
   conditionals. The structural wrings in the toolbox that take
   advantage of this property are:
 
-\begin{adjustbox}{max width=\columnwidth}
   {\scriptsize
-    \setlength\ruleLength{1.19\columnwidth}
-    \let\columnwidth \ruleLength
-  \begin{minipage}{\columnwidth} % Can use values greater than one.
     \begin{align}
-      & \text{\cc{$A$*$C$ +~$C$*$B$}} ⇒ \text{\cc{($A$+$C$) *~$B$}},⏎
+      & \text{\cc{$A$*$B$ +~$C$*$B$}} ⇒ \text{\cc{($A$+$C$)~*~$B$}},⏎
+      & \text{\cc{$B$*$A$ +~$B$*$C$}} ⇒ \text{\cc{$B$~*~($A$+$C$)}},⏎
       & \text{\cc{$A$ ＆＆~$B$ ||~$C$ ＆＆~$B$}} ⇒ \text{\cc{($A$ ||~$C$) ＆＆~$B$}},⏎
       & \text{\cc{$A$ ||~$B$ ＆＆~$B$ ||~$B$}} ⇒ \text{\cc{$A$ ＆＆~$C$ ||~$B$}},⏎
       & \text{\cc{\kk{if}~($C₁$)~$S$; \kk{if}~($C₂$)~$S$;}} ⇒ \text{\cc{\kk{if} ($C₁$ ＆＆~$C₂$)~$S$;}}⏎
-      & \text{\cc{\kk{if}~($C₁$)~\kk{if}~($C₂)$~$S$; \kk{if}~($C₂$)~$S$;}} ⇒ \text{\cc{\kk{if} ($C₁$ ||~$C₂$)~$S$;}} &⏎
-      & \text{\cc{\kk{if}~($C$)❴$S₁$;$S₂$❵~\kk{else}~❴$S₁$;~$S₃$❵}} ⇒ \text{\cc{$S₁$;\kk{if}~($C$)~$S₂$;~\kk{else}~$S₃$}}⏎
-      & \text{\cc{\kk{if}~($C$)❴$S₁$;$S₃$❵~\kk{else}~❴$S₂$;~$S₃$❵}} ⇒
-      \text{\cc{\kk{if}~($C$)~$S₁$;~\kk{else}~$S₂$};~$S₃$}⏎
+      & \begin{multlined}[c][0.5\columnwidth]
+       \text{\cc{\kk{if}~($C₁$)~\kk{if}~($C₂)$~$S$; \kk{if}~($C₂$)~$S$;}} ⇒⏎
+       \text{\cc{\kk{if} ($C₁$ ||~$C₂$)~$S$;}}
+     \end{multlined}⏎
+      & \begin{multlined}[c][0.5\columnwidth]
+     \text{\cc{\kk{if}~($C$)❴$S₁$;$S₂$❵~\kk{else}~❴$S₁$;~$S₃$❵}} ⇒⏎
+     \text{\cc{$S₁$;\kk{if}~($C$)~$S₂$;~\kk{else}~$S₃$}}
+     \end{multlined}⏎
+      & \begin{multlined}[c][0.5\columnwidth]
+       \text{\cc{\kk{if}~($C$)❴$S₁$;$S₃$❵~\kk{else}~❴$S₂$;~$S₃$❵}} ⇒ \\
+      \text{\cc{\kk{if}~($C$)~$S₁$;~\kk{else}~$S₂$};~$S₃$}
+     \end{multlined}⏎
       & \text{\cc{$V₁$ =~$X$;~$V₂$ =~$X$}} ⇒ \text{\cc{$V₁$ =~$V₂$ =~$X$}}⏎
       \label{eq:ternary}
       & \text{\cc{$C$~? f($X$) : f($Y$)}} ⇒ \text{\cc{f($C$~?~$X$:~$Y$)}}⏎
-      & \text{\cc{\kk{if}~($C$)~\kk{return}~$E₁$;~\kk{else}~\kk{return}~$E₂$}} ⇒ \text{\cc{\kk{return}~$C$~?~$E₁$~:~$E₂$;}}
+      & \begin{multlined}[c][0.5\columnwidth]
+        \text{\cc{\kk{if}~($C$)~\kk{return}~$E₁$;~\kk{else}~\kk{return}~$E₂$}} ⇒⏎
+        \text{\cc{\kk{return}~$C$~?~$E₁$~:~$E₂$;}}
+     \end{multlined}
   \end{align}
-  \end{minipage}
 }
-\end{adjustbox}
 
 Worthy of notice in this partial list are symmetries of the distributive property: right and
 left distribution (as in \kk{if}), the duality of operators (\cc{＆＆} can
