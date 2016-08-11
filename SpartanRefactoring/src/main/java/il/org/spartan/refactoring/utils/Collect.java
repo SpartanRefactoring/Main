@@ -127,11 +127,9 @@ public enum Collect {
       }
     };
   }
-  /**
-   * Creates a new Collector with the provided name. The new Collector's 'in' function returns a list of occurrences
-   * of the provided name in declarations.
-   * @param n
-   * @return A <b>Collector</b>, of declarations with the provided name.
+  /**Creates a new Collector which holds the occurrences of the provided name in declarations.
+   * @param n JD
+   * @return A {@link Collector}, with the uses of the provided identifier within declarations.
    */
   public static Collector declarationsOf(final SimpleName n) {
     return new Collector(n) {
@@ -177,22 +175,21 @@ public enum Collect {
       @Override public boolean visit(final ForStatement s) {
         return consider(initializers(s));
       }
-      //waiting for email answer.
-      /**
-       * 
+      /**{@link PostfixExpression} can be only INCREMENT OR DECREMENT.
        * @param it JD
-       * @return 
+       * @return the identifier of the operand.
        */
       @Override public boolean visit(final PostfixExpression it) {
-        return !in(it.getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT) || consider(it.getOperand());
+        //return !in(it.getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT) || consider(it.getOperand());
+        return consider(it.getOperand());
       }
-      /**
-       * 
+      /**{@link PrefixExpression} can be more then only INCREMENT OR DECREMENT, but only on that cases it is a definition.
        * @param it JD
-       * @return
+       * @return the identifier of the operand.
        */
       @Override public boolean visit(final PrefixExpression it) {
-        return consider(it.getOperand());
+        //return consider(it.getOperand());
+        return !in(it.getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT) || consider(it.getOperand());
       }
       @Override public boolean visit(final TryStatement s) {
         return consider(resources(s));
@@ -206,6 +203,8 @@ public enum Collect {
       }
     };
   }
+  /**@see declarationsOf
+   */
   public static Collector definitionsOf(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
@@ -216,6 +215,10 @@ public enum Collect {
       }
     };
   }
+  /**Finds all the rest (not declarations or definitions) identifier (n) uses.  
+   * @param n same as "name"
+   * @return {@link Collector} of all occurrences which are not definitions.
+   */
   public static Collector forAllOccurencesExcludingDefinitions(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
@@ -226,9 +229,10 @@ public enum Collect {
       }
     };
   }
-  static ASTVisitor lexicalUsesCollector(final List<SimpleName> into, final SimpleName what) {
-    return usesCollector(what, into, true);
-  }
+  /**finds all the occurrences of the given name (n) in which it is a {@link ClassInstanceCreation}
+   * @param n JD
+   * @return a Collector with all unsafe uses of the identifier (n)
+   */
   public static Collector unsafeUsesOf(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
@@ -238,6 +242,15 @@ public enum Collect {
         return $;
       }
     };
+  }
+  //didn't find any use case in which it will be different of usesCollector
+  /**TODO find any use case in which it will be different of usesCollector
+   * @param into
+   * @param what
+   * @return
+   */
+  static ASTVisitor lexicalUsesCollector(final List<SimpleName> into, final SimpleName what) {
+    return usesCollector(what, into, true);
   }
   private static ASTVisitor usesCollector(final SimpleName what, final List<SimpleName> into, final boolean lexicalOnly) {
     return new ASTVisitor() {
@@ -353,6 +366,11 @@ public enum Collect {
       }
     };
   }
+  /**Creates a new Collector which holds all the occurrences of the provided name.
+   * @param n JD
+   * @return A {@link Collector}, with the uses of the provided identifier within the provided
+   * {@link ASTNode)s array to the in function..
+   */
   public static Collector usesOf(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
