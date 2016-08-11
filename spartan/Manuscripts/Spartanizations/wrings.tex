@@ -1,0 +1,417 @@
+One can also note that \cref{figure:free} demonstrates
+  a structural wring that puts first the shortest branch of a
+  an \kk{if}, at the price of negating the conditional.
+However, the number of structural wrings is too large to enumerate and
+demonstrate all here. The following categorization provides a summary:
+
+\begin{description}
+  \item[S1] \emph{Removal of syntactic baggage.} 
+    Syntactic baggage is keywords and other language tokens,
+     whose presence does not contribute to the code semantics.
+    In other words, they are safe to remove while preserving meaning. 
+    Other than the famous braces around a singleton statement, 
+    The spartan toolbox includes wrings to remove redundant modifiers,
+    such as \kk{final}, when present about \kk{private} methods, \kk{abstract},
+    when present about \kk{interface}s, spurious \kk{super}\cc{()} calls, redundant
+    semicolons, etc.
+
+\item[S2] \emph{Factorization with the distributive propety.}
+  The distributive property holds in code for many more occasions
+  The spartan toolbox includes
+  than arithmetics, including 
+   
+  Distributive rule of Boolean expressions
+
+  Distributive rule of assignment:
+\begin{code}{JAVA}
+a = x;
+b = x;
+\end{code}
+  becomes
+  \begin{code}{JAVA}
+a = b = x;
+  \end{code}
+  Distributive rule of arithmetic.
+    Common prefix of If
+    Common Suffix of If
+    Pull out arithmetical negation
+    Use ternary instead of conditionals.
+    convert prefix ++ and--into postfix when possible
+    Example:
+        \begin{code}{JAVA}
+x.toString()
+  \end{code}
+  \begin{code}{JAVA}
+"" + x
+  \end{code}
+
+\item[S3] \emph{Ternarization}
+
+\item[S4] \emph{Canonical form} 
+Use canonical form for the most common expressions, as much as possibile.
+
+    Follow patterns: Pattern: A*x + B
+    Sorting by size, but also as per the previous rule.
+    De Morgan pushdown logical negation.
+    Pullup arirthmetic negation.
+    Pushdown ternarizations. For example:
+        % Example:
+        \begin{code}{java}
+a ££? b(x) : b(y) => b(a ££? x: y)
+  \end{code}
+    Apply the distributive rule on booleans. For instance:
+        % Example:
+\begin{code}{JAVA}
+a && b || c && b => (a || c) && c
+  \end{code}
+  This is one variant (there are other three).
+    More specific first: How should you order X == Y.
+        Rule: you start from the more specific and increase specifity, i.e.,
+        S(X) > S(Y)
+            null/this/true/false
+            0, 1, ""
+            12, 13.4
+            Classes: public, protected, package, private
+            Fields: Static fields, Fields,
+            parameters,d
+            local variables ordered by scope.
+            ¢
+\item{Inlining}
+
+Spartan programming promote a coding style that do not use many variables,
+meaning that it strives to inline instructions instead of storing their results
+on variables. The spartanized version of a code not originally written in the
+Spartan way, would probably see many of the included variable deleted whenever
+and wherever it is possible.
+
+The idea behind this approach is to reduce the cognitive burden of the
+developers, either in case of whom is coding who has to spent time and effort
+in finding effective names, either in the case of a reader who need to put some
+effort to figure out what is the meaning of a variable, starting from its name.
+
+Since variables change, it needs to be sure that it happens when it is supposed
+to do. Moreover it is needed to associate a role to a variables, so that the
+code that reads that variable can understand and appreciate it and figure out
+the list of location where it may be read (CHANGE).
+
+These are some technique for variable elimination.
+
+The following is a self explanatory example of inlining:
+
+\begin{code}{JAVA}
+double a = p.area();
+return a;
+\end{code}
+
+becomes
+
+\begin{code}{JAVA}
+return p.area();
+\end{code}
+
+\item{Early returns}
+
+Another technique for variable elimination is the early return and it consist
+in returning the result of a computation as soon as it is available, instead of
+storing it in a variable (and then returning it). An example of early return
+is reported in the following code.
+
+\begin{code}{JAVA}
+private boolean isKeyword(String token, String[] keywords) {££
+    for (int i = 0; i < keywords.length; i++)d
+        if (token.equals(keywords[i]))
+            return true;
+    return false;
+}
+\end{code}
+
+Using \kk{forech} construct available in several langues it is possible to
+avoid the index (in those case in which there are no instructions to access to
+it).
+\begin{code}{JAVA}
+private boolean isKeyword(String token, String[] keywords) {££
+    for (final String element : keywords)
+        if (element.equals(token))
+            return true;
+    return false;
+}
+\end{code}
+The same result can be obtained using the some construct to loop over
+collections, preferred instead of the arrays, without the use of the
+\cc{Iterator} class, as in the previous versions of Java.
+
+% With the early return it becomes:
+% \begin{code}{JAVA}
+% private ResultRenderer getRenderer() throws InstantiationException,
+% IllegalAccessException, ClassNotFoundException {££
+% returnᵣesultRenderer != null ? (ResultRenderer)
+% Class.forName(ᵣesultRenderer).newInstance() : DefaultResultRenderer();
+% }
+% \end{code}
+
+\item{Control simplification}
+Spartan programming foster the use of the ternary operator over the
+\kk{if-else} construct. This way the implementation of the factorial
+\begin{code}{JAVA}
+int factorial(int n) {d
+    if (n <= 1)
+        return n;
+    else
+        return n * fact(n - 1);
+}
+\end{code}
+becomes
+\begin{code}{JAVA}
+int factorial(int n) {££
+  return n <= 1 ££? n : n * fact(n - 1);
+}
+\end{code}
+in this case in a return statement that allows inlining of the instruction.
+
+\item{String simplification Techniques}
+
+    String transformations
+    instead of \cc{££.toString()} use \cc{"" +}
+    x.equals(“a”) -> “a”.equals(b)
+    Auto insert “”
+
+\item{Miscellaneous Techniques}
+
+Here we report a series of techniques that not fall expressly in one of the
+previous category.
+
+    Favor prefix operators over postfix ones.
+    In expressions order the operator according to their length (shortest
+        come first) or specificity (more specific come first).
+    Associative rule of ifs:
+        \begin{code}{JAVA}
+if (a) if (b) x;
+  \end{code}
+  \begin{code}{JAVA}
+if (a && b) x
+  \end{code}
+  % Associative rule of ifs: if (a)
+  % \begin{code}{JAVA}if (b) x;\end{code}
+  % \begin{code}{JAVA}if (a && b) x\end{code}
+  \begin{code}{JAVA}
+if (this == null) return super();
+  \end{code}
+
+  INLINING??
+
+      Off load exceptional cases quickly.
+      inline single use of variables.
+      Inline multiple use of variables: if 1) result is shorter and 2
+) the expression has no side effects.
+      Pseudo inlining with initializers.
+      Scope:
+
+  Scope:
+
+      Move into for
+      Move into try
+      Move next to use
+
+  Variability
+
+      Variability (add final when possible.)
+      Variables (inlining)
+      What’s first
+
+  Sorting
+
+      Most external escape
+      Shortest: 2*112*a*ab
+      Least specific
+
+  Canonical ordering
+
+      Simplificatons
+
+              Algebraic simplifications
+              Logical simplification
+              Literal simplification
+              Arithmetical simplification
+
+      Patterns: 2 * x + 1d
+      Pushdown:
+      Logical Negation
+      Arithmetical Negation
+      Auto distributive
+      Repeated deterministic expressions
+      Auto
+
+              Auto Collect
+              Auto insert/remove 0+ in ternarization.
+              Auto insert/remove 1*
+              Auto add “” +
+
+  \subsection{Renaming}
+
+      In constructors: Arguments to corresponding field names
+      In fields: to canonical instance name or pluralized
+      In getters: Change name to fieldName if it is a getter.
+      In Methods
+      In local variables:
+      return variable to \$
+
+    Change argument to one single case letter
+        % In world amalgams, use the first letter of the last word.
+        % Multiplicities
+
+            Deal with multiplicities of arrays
+            Deal with multiplicities of collections
+            Deal with nested multiplicities
+
+    Change return type of void to ClassName and return this
+
+            Single argument:
+
+                    To \_\_ if unused
+                    To \$ in case it is returned
+                    To fieldName in case it is a setter
+                    To ¢ in case method has no inner methods and is not a
+                        setter
+
+                    Any number of arguments:
+                    To \$ in case it is returned
+                    To \cc{\_\_}
+                        if it is unused and documented as such
+
+                % Change argument to one single case letter
+                % In world amalgams, use the first letter of the last word.
+            Deal with multiplicities
+
+%
+% Ternarize
+% Early return
+% Example:
+% \begin{code}{JAVA}
+% @SuppressWarnings("unused") private
+% void earlyReturn(int a) {££
+% if (new Random().nextInt() <= 3) {££
+% earlyReturn(12);
+% earlyReturn(124);
+% } else {££
+% earlyReturn(4);
+% earlyReturn(5);
+% earlyReturn(44);
+% }
+% }
+% \end{code}
+%
+
+\Cref{figure:eclipse:spartan} shows the spartanized version of the program in
+the \cref{figure:eclipse}. Employed were nominal spartanization, e.g., renaming
+variable \cc{names} to~\cc{\$}, structural spartanization, e.g., for the
+removal of braces, and modularization.
+
+The product of external cleanup, which in this case amounts to adding
+\kk{final}s and \kk{@Override}, is not included in this example.
+
+The main difference between the figures is due to method extractions, conducted
+manually. Auxiliary \kk{private} function \cc{main()} minimizes exploitation of
+scope by denying access to the \cc{args} argument of function \cc{main}.
+Function \cc{makeCompilationUnit()} takes advantage of the fact that variable
+\cc{parser} is only used in a limited section of the \kk{public} function
+\cc{main(String[] args}, etc.
+
+Examining the body of the anonymous class (that one that \cc{extends}
+\cc{ASTVisitor}) we see some more extracted methods. The reduction in clutter
+due to spartanization makes it possible to identify another spot of useful
+method extraction.
+
+\begin{figure}
+  \caption{Spartanized version including structural, nominal, modular, but
+    not cleanups, of the \Java program in \cref{figure:eclipse}.}
+  \label{figure:eclipse:spartan}
+  \begin{adjustbox}{max width = \columnwidth}
+\begin{code}[minipage, width=1.13\columnwidth]{JAVA}
+public class Test {££ // comments and £\kk{import}£ directives omitted for brevity
+  public static void main(String[] £\_\_£) {££ main(); }
+  private static void main() {££
+    CompilationUnit u = makeCompilationUnit();
+    u.accept(new ASTVisitor() {££
+      Set £\ignore$£$ = new HashSet();
+      public boolean visit(SimpleName ¢) {££
+        note(¢);
+        return true;
+      }
+      public boolean visit(VariableDeclarationFragment ¢) {££
+        collect(¢.getName());
+        return false;
+      }
+      void note(SimpleName ¢) {££
+        if (£\ignore$£$.contains(¢.getIdentifier()))
+          System.out.println("Usage of '" + ¢ + //
+            "' at line " + u.getLineNumber(¢.getStartPosition()));
+      }
+      void collect(SimpleName ¢) {££
+        £\ignore$£$.add(¢.getIdentifier());
+        System.out.println("Declaration of '" + ¢ + //
+          "' at line" + u.getLineNumber(¢.getStartPosition()));
+      }
+    });
+  }
+  private static CompilationUnit makeCompilationUnit() {££
+    return (CompilationUnit) makeParser().createAST(null);
+  }
+  private static ASTParser makeParser() {££
+    ASTParser £\ignore$£$ = ASTParser.newParser(AST.JLS3);
+    £\ignore$£$.setSource(
+      "public class A {\n" +
+      " int i = 9;\n"+ //
+      " int j;\n" + //
+      " ArrayList<Integer> al = new ArrayList<Integer>();\n" + //
+      " j=1000;\n" + // 
+      "}\n" + //
+      .toCharArray()
+);
+    £\ignore$£$.setKind(ASTParser.K£\_£COMPILATION£\_£UNIT);
+    return £\ignore$£$;
+  }
+}
+\end{code}
+  \end{adjustbox}
+\end{figure}
+
+% Yet another, further simplified version of the code of \cref{figure:eclipse} shows
+% up in \cref{figure:eclipse:extract}. This figure depicts only the anonymous
+% class found in previous figures, but with extra method extracted to simplify
+% the code. Of course, a demand for clever method extraction can not be part of a
+% strucured We argue that the
+% process of spartanization helped in
+% this case to highlight
+
+% However, being in a certain sense, counter intuitive, in order to apply
+% Spartanization on their working routines, the developers need to respect a firm
+% discipline. From a certain standpoint, Spartan Programming might be seen as a
+% list of code style prescription, but it would just scratch the surface. It is
+% far more than that, since it
+%
+% Being minimized, spartanized code might be less readable that the original.
+% This is … Spartan programming is not directly concerned with readability, at
+% least not in its subjective and cultural-dependent sense. In fact, spartan
+% programs will bring much misery to anyone preferring long, verbose programs.
+%
+% Spartan programming prescribes, a careful use of the variables, stressing the need
+% to inline variables that are used only once and emphasizing the use of foreach loops
+% in languages implementing it. Variables visibility and accessibility should also be
+% possibly minimized, favoring the use of private over public variables whenever it
+% is possible.
+%
+% Also the names of variables should be taken short for local variables, with
+% short scope, leaving to their class names to explicit their behavior.
+% Minimizing variability using final and @NonNull annotation. Stress the use of
+% generic names technique. Minimize lifespan avoiding persistent variables when
+% it is possible. Favor the use of collection instead of arrays. Interfaces
+% should present a minimal number of parameters, also minimizing the interaction
+% between them. Favor ternarization over the use of if-then-else constructs and
+% use a simplified version of the conditionals that implies an early return.
+% Moreover, use an early exit logic with continue, break and return instructions.
+%
+% Everything should be formatted in order to make an efficient use of the screen
+% space, by removing unnecessary tokens (i.e., redundant parentheses, etc.).
+% Methods should be as short as possible.
+
+\end{description}
