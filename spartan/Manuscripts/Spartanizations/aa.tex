@@ -95,7 +95,10 @@ The code in the figure is drawn from a fluent API module\urlref{%
   https://github.com/SpartanRefactoring/spartan/blob/master/src/il/org/spartan/accumulate.java
 } which makes it possible to write fluent snippets
 such as \[
-  \text{\cc{accumulate.to(myCollection).add(x).addAll(myCollection)}}.
+  \begin{multlined}
+    \text{\cc{accumulate.to(myCollection).add(x).}}\\
+    \text{\cc{.add(y).addAll(anotherCollection)}}.
+  \end{multlined}
 \]
 For brevity, only methods' names, parameters and body are shown;
 return type, generic parameters, modifiers and annotations are omitted.
@@ -115,8 +118,8 @@ bibliographic databases, what it comes out is around thousands of results.
 However, very few of them have \kk{code conventions} among they keywords and
 deal with code conventions
 
-It seems that both practitioners and researchers perceive code style something unrelated to other most
-sensitive issues, such as the design and productivity.
+It seems that both practitioners and researchers perceive code style something
+unrelated to other most sensitive issues, such as the design and productivity.
 
 On the contrary, we consider that code style might have a significant impact on the
 design of code and also on its quality~\cite{Gil:2010}.
