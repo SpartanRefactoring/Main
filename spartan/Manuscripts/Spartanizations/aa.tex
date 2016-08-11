@@ -232,3 +232,44 @@ This paper gives an overview of spartanization, future work will be
 experiments.
 
 Mention that wrings are optimistic, generally safe, but not bullet proof.
+
+\begin{figure}
+\label{figure:first}
+\caption{An example of spartan code}
+\begin{Code}{JAVA}{Where was this taken from?}
+public static <T, C extends Collection<T>> accumulate<T, C>
+to(final C c) {££
+return new accumulate<T, C>() {££
+@Override public C elements() {££
+return c;
+}
+@Override public accumulate<T, C>
+add(final @Nullable T ¢) {££
+if (¢ == null)
+return this;
+c.add(¢);
+return this;
+}
+};
+}
+\end{Code}
+\end{figure}
+
+In the code reported in \cref{figure:shock-2} we can see ... .
+
+\begin{figure}
+\label{figure:shock-2}
+\caption{An example of spartan code}
+\begin{Code}{JAVA}{Where was this taken from?}
+default accumulate<T, C>
+addAll(final Iterable<? extends T>... tss) {££
+for (final Iterable<? extends T> ¢ : tss)
+addAll(¢);
+return this;
+}
+\end{Code}
+
+\end{figure}
+Finally in \cref{figure:shock-3} it is possible to see that…
+
+
