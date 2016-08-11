@@ -17,7 +17,7 @@ TMP 					 := $(shell mktemp -d)
 # This is our first target. It would become your default if you include this
 # file, without defining an targets before it. It is OK to use a target whose
 # main body is defined later. 
-.PHONY: help
+.PHONY: help 
 help:     
 	@echo $(if $(need-help),,Type \'$(MAKE) help\' to get help)
 
@@ -54,9 +54,7 @@ clean: $(call tip,clean,\
 	@ - [ $(G0) -eq 1 ] && echo $(G0) file moved to $(TMP) [$(G1) bytes] || true 
 	@ - [ $(G0) -eq 0 ] && echo already clean || true 
 
-.PHONY: latex l 
-l: $(call tip,l, shorthand of latex) latex
-
+.PHONY: latex  
 latex: $(call tip,latex,run latex to make $(MAIN).pdf) $(MAIN).pdf
 	texfot $(LATEX) ./$(MAIN).tex
 
@@ -109,9 +107,10 @@ all: write18 bibtex latex
 warnings: $(call tip,warnings,present all LaTeX warnings) 
 	 $(LATEX) -interaction=batchmode -draftmoe -recorder 00.tex 2>&1 | grep --color=auto -E "Warning|Missing" 
 
-.PHONY: lacheck
+.PHONY: lacheck l
 lacheck: $(call tip,lachek,run lacheck on all sources) 
 	lacheck *.tex
+l: $(call tip,l, shorthand of lacheck) lacheck
 
 .PHONY: aspell
 aspell: $(call tip,aspell,run aspell on all sources) 

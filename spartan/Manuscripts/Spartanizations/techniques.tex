@@ -1,22 +1,10 @@
-\subsection{Syntactic Baggage}
+The code can be
+further polished and spartanized by method extraction and other refactoring.
+For now, we concentrate on the automatic spartanization, which as explained
+above, comes in
+two main varieties.\subsection{Syntactic Baggage}
 A set of rules are aimed at removing redundant tokens (i.e., brackets,
 modifiers, etc.).
-\begin{itemize}
-  \item Redundant parenthesis and curly brackets.
-  \item Removing redundant modifiers:
-        \begin{itemize}
-          \item \kk{final} in private methods.
-          \item \kk{final} from static methods.
-          \item \kk{abstract} before interface.
-          \item \kk{abstract} before methods in interfaces.
-          \item \kk{final} from all methods in final classes.
-          \item \kk{private} and \kk{static} from everything defined in
-                anonymous classes.
-        \end{itemize}
-  \item Removing visibility of all members of an interface
-  \item Extra super() calls.
-\end{itemize}
-
 \subsection{Shorter phrases}
 \begin{itemize}
   \item Distributive rule of Boolean expressions
@@ -392,8 +380,8 @@ method extraction.
   \label{figure:eclipse:spartan}
   \begin{adjustbox}{max width = \columnwidth}
 \begin{code}[minipage, width=1.13\columnwidth]{JAVA}
-public class Test { // comments and £\kk{import}£ directives omitted for brevity
-  public static void main(String[] £\_\_£) { main(); }
+public class Test {££ // comments and £\kk{import}£ directives omitted for brevity
+  public static void main(String[] £\_\_£) {££ main(); }
   private static void main() {££
     CompilationUnit u = makeCompilationUnit();
     u.accept(new ASTVisitor() {££
@@ -428,9 +416,8 @@ public class Test { // comments and £\kk{import}£ directives omitted for brevi
       " int i = 9;\n"+ //
       " int j;\n" + //
       " ArrayList<Integer> al = new ArrayList<Integer>();\n" + //
-      " j=1000;\n" + // sic!
-      "}\n" + //
-      .toCharArray()
+      " j=1000;\n" + // 
+      "}".toCharArray()
 );
     £\ignore$£$.setKind(ASTParser.K£\_£COMPILATION£\_£UNIT);
     return £\ignore$£$;
