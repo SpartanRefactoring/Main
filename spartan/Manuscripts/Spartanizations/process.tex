@@ -271,7 +271,7 @@ understanding of the Boolean operators
 Notice though that line length, which is not optimized by the wrings, suffered
 a bit. We do have fewer lines, but the average number of characters in them
 increased from 23 characters to 26.5. Also, the maximal line length increased
-from 71 characters to 81. This last increase is due though due to the
+from 71 characters to 81. This last increase is though due to the
 extraction of a \kk{private} version of \cc{equals($·$)}, which is carried
 out manually, at user's discretion.
 
@@ -292,7 +292,7 @@ public class Test0 {££ // comments and £\kk{import}£ directives omitted for 
   public static void main(String args[]) {££
     ASTParser parser = ASTParser.newParser(AST.JLS3);
     parser.setSource((
-      "public class A {\n" +
+      "public class A {\n" + 
       " int i = 9;\n"+ //
       " int j;\n" + //
       " ArrayList<Integer> al = new ArrayList<Integer>();\n" + //
@@ -398,14 +398,14 @@ Follow the example to appreciate the automatic spartanization process involved:
         \HyperTalk:
         the variable which is so prevalent in the current piece of code that
         naming it would be waste of words. Stated differently, the
-        meaning of a variable named~\cc{¢} should be so clear to the reader that
-        reader, that naming it would be a waste of words.
+        meaning of a variable named~\cc{¢} should be so clear to the reader that 
+        naming it would be a waste of words.
 
       \item[N3] Renaming variable \cc{parser} to~\cc{p}, and variable~\cc{cu}
         to~\cc{u}. In accordance with the \emph{Linux kernel coding style}%
         \urlref{https://www.kernel.org/doc/Documentation/CodingStyle}
         and other style guides nominal spartanization abbreviates short scoped
-        variables: locals and parameters to one letter that uniquely identifies
+        variables, locals and parameters to one letter that uniquely identifies
         their type. For example, type \kk{int} is denoted by~\cc{i} and the
         name of short scoped, variable \cc{int index;} is abbreviated to~\cc{i}.
 
@@ -426,7 +426,7 @@ utility services\urlref{%
   https://github.com/SpartanRefactoring/spartan/blob/master/src/il/org/spartan/misc/Primes.java},
   further demonstrates \textbf{N3}. In the inner loop of the test for
   primality, there is no need to spend words and mental effort to name the
-  candidate divisor. It is sufficient to refer to it is by the spartan
+  candidate divisor. It is sufficient to refer to it by the spartan
   name~\cc{¢}, and no confusion should arise.
 
 \begin{figure}
