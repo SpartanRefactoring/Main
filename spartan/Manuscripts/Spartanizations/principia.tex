@@ -297,7 +297,7 @@ public class Test0 {££ // comments and £\kk{import}£ directives omitted for 
       " int i = 9;\n"+ //
       " int j;\n" + //
       " ArrayList<Integer> al = new ArrayList<Integer>();\n" + //
-      " j=1000;\n" + // 
+      " j=1000;\n" + //
       "}\n").toCharArray());
     parser.setKind(ASTParser.K£\_£COMPILATION£\_£UNIT);
     CompilationUnit cu = (CompilationUnit) parser.createAST(null);
@@ -344,7 +344,7 @@ public class Test1 {££ // comments and £\kk{import}£ directives omitted for 
       " int i = 9;\n"+ //
       " int j;\n" + //
       " ArrayList<Integer> al = new ArrayList<Integer>();\n" + //
-      " j=1000;\n" + // 
+      " j=1000;\n" + //
       "}\n").toCharArray());
     final CompilationUnit u = (CompilationUnit) p.createAST(null);
     u.accept(new ASTVisitor() {££
@@ -460,18 +460,18 @@ In contrast, the single parameter to auxiliary \kk{private} function
 \cc{isPrime¢($·$)} must be named ‟\cc{i}”, since its scope includes yet another
 binding: That of some name to the loop variable.
 
-Confusion does not rise in naming the loop variable ‟\cc{¢}” since the name
+Confusion does not rise in naming the loop variable~‟\cc{¢}” since the name
 \emph{always} refers to the most recently defined variable, i.e., the one that
 occurs last in the most inner lexical scope.
 
 \Cref{figure:free}, drawn from a spartan implementation of
-\Prolog\urlref{https://github.com/yossigil/Protolog}, demonstrates one nominal wring 
-from the spartan toolbox: 
+\Prolog\urlref{https://github.com/yossigil/Protolog}, demonstrates one nominal wring
+from the spartan toolbox:
 \begin{description}
 \item[N4] employ the spartan name~‟\cc{\$}” for
-  the \emph{single} variable that represents the function's result.†{the name
-    ‟\cc{\$}” is borrowed from many DSLs, particularly of regular expressions
-    and languages, in which it denotes the concept of termination.}
+  the \emph{single} variable that represents the function's result.†{the
+    name~‟\cc{\$}” is borrowed from many DSLs, particularly of regular
+  expressions and languages, in which it denotes the concept of termination.}
 
   The automatic wring heuristic for identifying the ‟result variable”
   by running a tournament between legible candidates result variable,
@@ -502,7 +502,7 @@ default Set<Variable> freeVariables() {££
 \newlength\ruleLength
 
 One can also note that \cref{figure:free} demonstrates
-  a structural wring that puts first the shortest branch of 
+  a structural wring that puts first the shortest branch of
   an \kk{if}, at the price of negating the conditional.
 However, the number of structural wrings is too large to enumerate and
 demonstrate all here. The following categorization provides a summary:
@@ -511,8 +511,8 @@ demonstrate all here. The following categorization provides a summary:
   \item[S0] \emph{Null impact elimination.} The toolbox contains wrings to make
     trivial simplifications of computation whose effect is null. Examples
     include comparison with \kk{true} (always yielding the compared value),
-    use of unary ``\cc{+}'',  addition of \cc{0}, multiplication by \cc{1}, a
-    conjunction with a \kk{true} in it, disjunction with \kk{false} in it, concatenation 
+    use of unary ‟\cc{+}”, addition of~\cc{0}, multiplication by~\cc{1}, a
+    conjunction with a \kk{true} in it, disjunction with \kk{false} in it, concatenation
     with the empty string (\cc{""}), etc.
 
     Nullary computation is not frequent in actual code, but it often generated
@@ -526,27 +526,21 @@ demonstrate all here. The following categorization provides a summary:
     The spartan toolbox includes wrings to remove redundant modifiers,
     such as \kk{final} (when present on \kk{private} methods) \kk{abstract}
     (when present on \kk{interface}s), spurious \kk{super}\cc{()} calls, redundant
-    semicolon at the of initialization lists, redundant calls to 
+    semicolon at the of initialization lists, redundant calls to
     \cc{toString()} of objects involved in string concatenation, etc.
 
 Transformation rules are a convenient shorthand for specifying wrings, e.g.,
-rules:
+rules\vspace{-3ex}
 
-\begin{adjustbox}{max width=\columnwidth}
   {\footnotesize
-    \setlength\ruleLength{1.19\columnwidth}
-    \let\columnwidth \ruleLength
-    \begin{minipage}{\columnwidth} % Can use values greater than one.
       \begin{align}
         & \text{\cc{\kk{if}~($C$)~\kk{return}~$E$;~\kk{else}~$S$;}} ⇒
-        \text{\cc{\kk{if}~($C$)~\kk{return}~$E$;~$S$;}} ⏎
+        \text{\cc{\kk{if}~($C$)~\kk{return}~$E$;~$S$;}}⏎
         & \text{\cc{\kk{if}~($C$)~$S$;~\kk{else}~;}} ⇒ \text{\cc{\kk{if}~($C$)~$S$;}}⏎
         & \text{\cc{\kk{if}~($C$)~;~\kk{else}~$S$}} ⇒ \text{\cc{\kk{if}~(!$C$)~$S$;}}⏎
         & \text{\cc{\kk{while}~($C$)~❴❵}} ⇒ \text{\cc{\kk{while}~($C$)~;}}
       \end{align}
-    \end{minipage}
-  }
-\end{adjustbox}
+    } \vspace{-3ex}
 
 \noindent remove redundant \kk{else} branches, an empty main branch of conditional, and
 convert a~\cc{❴}…\cc{❵} pair to~\cc{;}. Wrings however may be more complicated:
@@ -558,7 +552,7 @@ transformation, to a different \kk{else} branch.
   The distributive property occurs in code for many more occasions
   than plain arithmetic, including Boolean algebra, assignments, and
   conditionals. The structural wrings in the toolbox that take
-  advantage of this property are
+  advantage of this property are:
 
 \begin{adjustbox}{max width=\columnwidth}
   {\footnotesize
@@ -589,39 +583,42 @@ be replaceable by \cc{||}, as long as the mirror replacement of
 \cc{||} by \cc{＆＆} is carried out collaterally), etc.
 
 \item[S3] \emph{Ternarization.} The third kind of non-trivial wrings are those
-  that attempt to change an \kk{if} statement into a ternary expression.
-  The basic transformation rule is:\\
-  {
-  \footnotesize
-    \begin{align}
-      & \text{\cc{\kk{if}~($C$)~$S$;~\kk{else}~$S₂$;}} ⇒ \text{\cc{$C$~?~$S₁$~:~$S₂$}}
-  \end{align}
-}
-\noindent except that more caution must be applied before applying this transformation.
-
-Firstly, notice that the original code is a statement, while the transformed is
-an expression. The transformation can only work if the distributive rule
-\cref{eq:ternary} can be applied next to to can further push down the ternary
-operator onto~$S₁$ and~$S₂$ whereby making the transformed into a statement.
-
-Secondly, since in many the \kk{else} branch of a wring is missing, the
-spartanization may need to complete it, by transformation rules such as:
+that attempt to change an \kk{if} statement into a ternary expression.
+The basic transformation rule is:\vspace{-3ex}
 
 {
-  \footnotesize
-    \begin{multline*}
-      \text{\cc{\kk{if}~($C$)~\kk{return} $E_1$;\kk{return}~$E₂$;}}  ⇒\\
-           \text{\cc{\kk{if}~($C$)~\kk{return} $E_1$;\kk{else} \kk{return}~$E₂$;}} 
-  \end{multline*}
-}
-\noindent Observe that the above transformation rule is not a wring: It
-increases the number of tokens, to make the input more amenable to
-ternarization.
+\footnotesize        
+    \begin{align}
+& \text{\cc{\kk{if}~($C$)~$S$;~\kk{else}~$S₂$;}} ⇒ \text{\cc{$C$~?~$S₁$~:~$S₂$}}
+    \end{align}
+  }\vspace{-3ex}
 
-\item[S4] \emph{Canonic form.} Wrings of this kind to bring the 
+\noindent except that more caution must be applied before applying this transformation:
+\begin{enumerate}
+  \item Notice that the original code is a statement, while the transformed is
+        an expression. The transformation can only work if the distributive rule
+        \cref{eq:ternary} can be applied next to to can further push down the ternary
+        operator onto~$S₁$ and~$S₂$ whereby making the transformed into a statement.
+  \item Since in many the \kk{else} branch of a wring is missing, the
+    spartanization may need to complete it, by transformation rules such as:\vspace{-3ex}
+
+        {
+            \footnotesize
+            \begin{multline*}
+              \text{\cc{\kk{if}~($C$)~\kk{return}~$E₁$;\kk{return}~$E₂$;}} ⇒⏎
+              \text{\cc{\kk{if}~($C$)~\kk{return}~$E₁$;\kk{else} \kk{return}~$E₂$;}}.
+            \end{multline*}
+          }\vspace{-3ex}
+
+        Observe that the above transformation rule is not a wring: It
+        increases the number of tokens, to make the input more amenable to
+        ternarization.
+\end{enumerate}
+
+\item[S4] \emph{Canonic form.} Wrings of this kind to bring the
   code into a more canonical form, by sorting by length terms of addition
-  factors of multiplication, pulling out multiplication by \cc{-1}, and  
-   even  pushing down logical negation using de-Morgan
+  factors of multiplication, pulling out multiplication by \cc{-1}, and
+   even pushing down logical negation using de-Morgan
    laws (possibly flipping comparison operations when necessary), etc.
 
    Also included in this group is the wring that converts \cc{x.toString()} to
@@ -631,12 +628,12 @@ ternarization.
 \item[S5] \emph{Inlining and scope reduction.}
   The final kind of structural wrings is concerned with elimination of
   variables through inlining, and when this is not possible, trying to reduce
-  their scope.  A variable is inlined if it used only once, or if it its
+  their scope. A variable is inlined if it used only once, or if it its
   computation involves no side effects, and its inlining does not increase code
   size.
 
   If a variable cannot be inlined, then there are wrings that try to bring its
   definition as close as possible to its use. If several variables compete for
   the closest position to a certain definition, then the \textit{life and size
-  of stacked context} minimization end arbitrates. 
+  of stacked context} minimization end arbitrates.
 \end{description}
