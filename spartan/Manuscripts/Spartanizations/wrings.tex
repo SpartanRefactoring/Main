@@ -1,3 +1,5 @@
+\newlength\ruleLength
+
 One can also note that \cref{figure:free} demonstrates
   a structural wring that puts first the shortest branch of a
   an \kk{if}, at the price of negating the conditional.
@@ -5,49 +7,126 @@ However, the number of structural wrings is too large to enumerate and
 demonstrate all here. The following categorization provides a summary:
 
 \begin{description}
-  \item[S1] \emph{Removal of syntactic baggage.} 
+  \item[S0] \emph{Null impact elimination.} The tooblox contains wrings to make
+    trivial simplifcations of computation whose effect is null. Examples
+    include comparison with \kk{true} (always yielding the compared value),
+    use of unary ``\cc{+}'',  addition of \cc{0}, multiplication by \cc{1}, a
+    conjunction with a \kk{true} in it, disjunction with \kk{false} in it, concatenation 
+    with the empty string (\cc{""}), etc.
+
+    Nullary computation is not frequent in actual code, but it often generated
+    out of other, more complicated wrings.
+
+  \item[S1] \emph{Removal of syntactic baggage.}
     Syntactic baggage is keywords and other language tokens,
      whose presence does not contribute to the code semantics.
-    In other words, they are safe to remove while preserving meaning. 
-    Other than the famous braces around a singleton statement, 
+    In other words, they are safe to remove while preserving meaning.
+    Other than the famous braces around a singleton statement,
     The spartan toolbox includes wrings to remove redundant modifiers,
-    such as \kk{final}, when present about \kk{private} methods, \kk{abstract},
-    when present about \kk{interface}s, spurious \kk{super}\cc{()} calls, redundant
-    semicolons, etc.
+    such as \kk{final} (when present on \kk{private} methods) \kk{abstract}
+    (when present on \kk{interface}s), spurious \kk{super}\cc{()} calls, redundant
+    semicolon at the of initialization lists, redundant calls to 
+    \cc{toString()} of objects involved in string concatenation, etc.
+
+Transformation rules are a convenient shorthand for specifying wrings, e.g.,
+rules:
+
+\begin{adjustbox}{max width=\columnwidth}
+  {\footnotesize
+    \setlength\ruleLength{1.19\columnwidth}
+    \let\columnwidth \ruleLength
+    \begin{minipage}{\columnwidth} % Can use values greater than one.
+      \begin{align}
+        & \text{\cc{\kk{if}~($C$)~\kk{return}~$E$;~\kk{else}~$S$;}} ⇒
+        \text{\cc{\kk{if}~($C$)~\kk{return}~$E$;~$S$;}} ⏎
+        & \text{\cc{\kk{if}~($C$)~$S$;~\kk{else}~;}} ⇒ \text{\cc{\kk{if}~($C$)~$S$;}}⏎
+        & \text{\cc{\kk{if}~($C$)~;~\kk{else}~$S$}} ⇒ \text{\cc{\kk{if}~(!$C$)~$S$;}}⏎
+        & \text{\cc{\kk{while}~($C$)~❴❵}} ⇒ \text{\cc{\kk{while}~($C$)~;}}
+      \end{align}
+    \end{minipage}
+  }
+\end{adjustbox}
+
+\noindent remove redundant \kk{else} branches, an empty main branch of conditional, and
+convert a~\cc{❴}…\cc{❵} pair to~\cc{;}. Wrings however may be more complicated:
+removing an empty \kk{else} branch may change semantics if attention is not paid
+to occasions in which the remaining \kk{if} attaches, as a result of the
+transformation, to a different \kk{else} branch.
 
 \item[S2] \emph{Factorization with the distributive propety.}
-  The distributive property holds in code for many more occasions
-  The spartan toolbox includes
-  than arithmetics, including 
-   
-  Distributive rule of Boolean expressions
+  The distributive property occurs in code for many more occasions
+  than plain arithmetics, including Boolean algebra, assignments, and
+  conditionals. The structural wrings in the toolbox that take
+  advantage of this property are
 
-  Distributive rule of assignment:
-\begin{code}{JAVA}
-a = x;
-b = x;
-\end{code}
-  becomes
-  \begin{code}{JAVA}
-a = b = x;
-  \end{code}
-  Distributive rule of arithmetic.
-    Common prefix of If
-    Common Suffix of If
-    Pull out arithmetical negation
-    Use ternary instead of conditionals.
-    convert prefix ++ and--into postfix when possible
-    Example:
-        \begin{code}{JAVA}
-x.toString()
-  \end{code}
-  \begin{code}{JAVA}
-"" + x
-  \end{code}
+\begin{adjustbox}{max width=\columnwidth}
+  {\footnotesize
+    \setlength\ruleLength{1.19\columnwidth}
+    \let\columnwidth \ruleLength
+  \begin{minipage}{\columnwidth} % Can use values greater than one.
+    \begin{align}
+      & \text{\cc{$A$*$C$ +~$C$*$B$}} ⇒ \text{\cc{($A$+$C$) *~$B$}},⏎
+      & \text{\cc{$A$ ＆＆~$B$ ||~$C$ ＆＆~$B$}} ⇒ \text{\cc{($A$ ||~$C$) ＆＆~$B$}},⏎
+      & \text{\cc{$A$ ||~$B$ ＆＆~$B$ ||~$B$}} ⇒ \text{\cc{$A$ ＆＆~$C$ ||~$B$}},⏎
+      & \text{\cc{\kk{if}~($C₁$)~$S$; \kk{if}~($C₂$)~$S$;}} ⇒ \text{\cc{\kk{if} ($C₁$ ＆＆~$C₂$)~$S$;}}⏎
+      & \text{\cc{\kk{if}~($C₁$)~\kk{if}~($C₂)$~$S$; \kk{if}~($C₂$)~$S$;}} ⇒ \text{\cc{\kk{if} ($C₁$ ||~$C₂$)~$S$;}} &⏎
+      & \text{\cc{\kk{if}~($C$)❴$S₁$;$S₂$❵~\kk{else}~❴$S₁$;~$S₃$❵}} ⇒ \text{\cc{$S₁$;\kk{if}~($C$)~$S₂$;~\kk{else}~$S₃$}}⏎
+      & \text{\cc{\kk{if}~($C$)❴$S₁$;$S₃$❵~\kk{else}~❴$S₂$;~$S₃$❵}} ⇒
+      \text{\cc{\kk{if}~($C$)~$S₁$;~\kk{else}~$S₂$};~$S₃$}⏎
+      & \text{\cc{$V₁$ =~$X$;~$V₂$ =~$X$}} ⇒ \text{\cc{$V₁$ =~$V₂$ =~$X$}}⏎
+      \label{eq:ternary}
+      & \text{\cc{$C$~? f($X$) : f($Y$)}} ⇒ \text{\cc{f($C$~?~$X$:~$Y$)}}⏎
+      & \text{\cc{\kk{if}~($C$)~\kk{return}~$E₁$;~\kk{else}~\kk{return}~$E₂$}} ⇒ \text{\cc{\kk{return}~$C$~?~$E₁$~:~$E₂$;}}
+  \end{align}
+  \end{minipage}
+}
+\end{adjustbox}
 
-\item[S3] \emph{Ternarization}
+Worthy of notice in this partial list are symmetries of distrubtion: right and
+left distribution (as in \kk{if}), the replaceability of operators (\cc{＆＆}
+is can be replaceable by \cc{||}, as long as the mirror replacement of
+\cc{||} by \cc{＆＆} is carried out collaterally), etc.
 
-\item[S4] \emph{Canonical form} 
+\item[S3] \emph{Ternarization} The third kind of non-trivial wrings are those
+  that attempt to change an \kk{if} statement into a ternary expression.
+  The basic transofrmation rule is:
+  \begin{quote}
+  \footnotesize
+    \begin{align}
+      & \text{\cc{\kk{if}~($C$)~$S$;~\kk{else}~$S₂$;}} ⇒ \text{\cc{$C$~?~$S₁$~:~$S₂$}}
+  \end{align}
+\end{quote}
+except that more caution must be applied before applying this transformation.
+
+Firstly, notice that the original code is a statement, while the transformed is
+an expression. The transfomration can only work if the distributive rule
+\cref{eq:ternary} can be applied next to to can further push down the ternary
+operator onto~$S₁$ and~$S₂$ whereby making the transformed into a statement.
+
+Secondly, since in many the \kk{else} branch of a wring is missing, the
+spartanization may need to complete it, by transformation rules such as:
+\begin{quote}
+  \footnotesize
+    \begin{align*}
+      & \text{\cc{\kk{if}~($C$)~\kk{return} $E_1$;\kk{return}~$E₂$;}} ⇒
+      \text{\cc{\kk{if}~($C$)~\kk{return} $E_1$;\kk{else} \kk{return}~$E₂$;}} ⇒
+      \text{\cc{$C$~?~$S₁$~:~$S₂$}}.
+  \end{align*}
+\end{quote}
+Observe that the above transformation rule is not a wring: It increases the 
+number of tokens, to make the input more amenable to ternarization.
+
+\item[S4] \emph{Canonic form} Wrings of this kind to bring the 
+  code into a more canonical form, by sorting by length terms of addition
+  factors of multiplication, pulling out multiplication by \cc{-1}, and  
+   even  pushing down logical negation using De Morgan
+   laws (possibly flipping comparison operations when necessary), etc.
+
+   Also included in this group is the wring that converts \cc{x.toString()} to
+   \cc{""+x}, a wring that favors, whenever possible, postfix increment and decrement
+   operations to their prefix version, and more.
+
+\item[S5] \emph{Inlining and scope reduction}
 Use canonical form for the most common expressions, as much as possibile.
 
     Follow patterns: Pattern: A*x + B
@@ -57,14 +136,10 @@ Use canonical form for the most common expressions, as much as possibile.
     Pushdown ternarizations. For example:
         % Example:
         \begin{code}{java}
-a ££? b(x) : b(y) => b(a ££? x: y)
   \end{code}
     Apply the distributive rule on booleans. For instance:
         % Example:
-\begin{code}{JAVA}
-a && b || c && b => (a || c) && c
-  \end{code}
-  This is one variant (there are other three).
+ This is one variant (there are other three).
     More specific first: How should you order X == Y.
         Rule: you start from the more specific and increase specifity, i.e.,
         S(X) > S(Y)
@@ -363,7 +438,7 @@ public class Test {££ // comments and £\kk{import}£ directives omitted for b
       " int i = 9;\n"+ //
       " int j;\n" + //
       " ArrayList<Integer> al = new ArrayList<Integer>();\n" + //
-      " j=1000;\n" + // 
+      " j=1000;\n" + //
       "}\n" + //
       .toCharArray()
 );
