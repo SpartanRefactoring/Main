@@ -62,12 +62,14 @@
     listing and comment,
 }}
 
-\newtcblisting{code}[2][]{%
+\newtcblisting{icode}[2][]{%
   codebox=#2,
+  after={},
+  before={},
   #1
 }
 
-\newtcblisting{lcode}[2][]{%
+\newtcblisting{code}[2][]{%
   codebox=#2,
   before=\par\smallskip,
   #1
@@ -122,6 +124,7 @@
 }
 
 % Begin with generating a general purpose ``code style''. Use a mono-spaced font
+
 % for everything; set tabs, escape, etc. 
 
 \lstdefinestyle{basic}{%

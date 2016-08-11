@@ -97,23 +97,32 @@ A \emph{structural wring} is a wring that modifies the structure of the code, A
 simple structural wring is the one removing useless \kk{abstract} and
 \kk{public} modifiers from declarations made within an \kk{interface}.
 The application of a chain of structural wrings converts
-\begin{lcode}{JAVA}
+\vspace{-2ex}
+
+\begin{quote}
+\begin{tabular}{m{15ex}m{4ex}m{10ex}}
+\begin{java}
 if (f() == true) {££
   return false;;
 } else {££
   return true;;
 }
-\end{lcode}
-\noindent into
-\begin{lcode}{JAVA}
-return !f();
-\end{lcode}
-\noindent
-This chain includes a wring to remove redundant curly brackets and one for the
-removal of redundant semicolons.
-Also involved is a wring for the conversion of an \kk{if} into to a
-\emph{ternary} expression (one employing the operator~\cc{$·$?$·$:$·$}), and a
-wring simplification of ternary expressions involving boolean literals.
+\end{java}
+& into &
+\begin{java}
+££
+££
+  return !f();
+\end{java}
+\end{tabular}
+\end{quote}
+\vspace{-4ex}
+
+This chain includes a wring to remove redundant curly brackets and
+one for the removal of redundant semicolons.  Also involved is a wring for the
+conversion of an \kk{if} into to a \emph{ternary} expression (one employing the
+operator~\cc{$·$?$·$:$·$}), and a wring simplifying of ternary expressions
+involving boolean literals.
 
 In contrast, a \emph{nominal wring} is a wring that does not modify the
 code itself, but renames some entities in it, most particularly, variables.
@@ -412,9 +421,14 @@ Follow the example to appreciate the automatic spartanization process involved:
         More generally, the single letter denoting a long type name is defined
         as the first letter in the last word of the component of the type name.
         Variable \cc{parser} of type \cc{ASTParser} is hence renamed~\cc{p},
-        and~\cc{u} is new name of variable \cc{cu} of type \cc{CompilationUnit}.
+        and~\cc{u} is new name of variable \cc{cu} of type
+        \cc{CompilationUnit}.  In the case of containers, such as arrays,
+        lists, sets, etc., \textbf{N1} add an ``s'' to the short letter
+        denoting the elements' type. As demonstrated  in
+        \cref{figure:accumulate} above, the short name of an iterable of a
+        collections of type \cc{T} is is thus \cc{tss}.
 
-        Abbreviation is limited to only those cases in which one letter
+        Abbreviation is limited to only those cases in which short names
         uniquely identifies the variables and there are not more than four of
         these. Experience shows that only a small minority of the methods is
         excluded by this limitation.
@@ -531,10 +545,13 @@ demonstrate all here. The following categorization provides a summary:
 Transformation rules are a convenient shorthand for specifying wrings, e.g.,
 rules\vspace{-3ex}
 
-  {\footnotesize
+  {\scriptsize
       \begin{align}
-        & \text{\cc{\kk{if}~($C$)~\kk{return}~$E$;~\kk{else}~$S$;}} ⇒
-        \text{\cc{\kk{if}~($C$)~\kk{return}~$E$;~$S$;}}⏎
+        & \begin{multlined}[c][0.5\columnwidth]
+      \text{\cc{\kk{if}~($C$)~\kk{return}~$E$;~\kk{else}~$S$;}} ⇒\\
+        \text{\cc{\kk{if}~($C$)~\kk{return}~$E$;~$S$;}}
+      \end{multlined}
+        ⏎
         & \text{\cc{\kk{if}~($C$)~$S$;~\kk{else}~;}} ⇒ \text{\cc{\kk{if}~($C$)~$S$;}}⏎
         & \text{\cc{\kk{if}~($C$)~;~\kk{else}~$S$}} ⇒ \text{\cc{\kk{if}~(!$C$)~$S$;}}⏎
         & \text{\cc{\kk{while}~($C$)~❴❵}} ⇒ \text{\cc{\kk{while}~($C$)~;}}
@@ -554,7 +571,7 @@ attaches, as a result of the transformation, to a different \kk{else} branch.
   advantage of this property are:
 
 \begin{adjustbox}{max width=\columnwidth}
-  {\footnotesize
+  {\scriptsize
     \setlength\ruleLength{1.19\columnwidth}
     \let\columnwidth \ruleLength
   \begin{minipage}{\columnwidth} % Can use values greater than one.
@@ -585,8 +602,7 @@ be replaceable by \cc{||}, as long as the mirror replacement of
 that attempt to change an \kk{if} statement into a ternary expression.
 The basic transformation rule is:\vspace{-3ex}
 
-{
-\footnotesize
+{\scriptsize
     \begin{align}
 & \text{\cc{\kk{if}~($C$)~$S$;~\kk{else}~$S₂$;}} ⇒ \text{\cc{$C$~?~$S₁$~:~$S₂$}}
     \end{align}
@@ -601,8 +617,7 @@ The basic transformation rule is:\vspace{-3ex}
   \item Since in many the \kk{else} branch of a wring is missing, the
     spartanization may need to complete it, by transformation rules such as:\vspace{-3ex}
 
-        {
-            \footnotesize
+        {\scriptsize
             \begin{multline*}
               \text{\cc{\kk{if}~($C$)~\kk{return}~$E₁$;\kk{return}~$E₂$;}} ⇒⏎
               \text{\cc{\kk{if}~($C$)~\kk{return}~$E₁$;\kk{else} \kk{return}~$E₂$;}}.

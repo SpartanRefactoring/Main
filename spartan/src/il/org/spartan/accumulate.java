@@ -18,7 +18,6 @@ public interface accumulate<T, C extends Collection<T>> {
       @Override public accumulate<T, C> add(final @Nullable T t) {
         if (t == null)
           return this;
-        assert t != null;
         c.add(t);
         return this;
       }
