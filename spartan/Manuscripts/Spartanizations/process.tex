@@ -617,8 +617,8 @@ The basic transformation rule is:\vspace{-3ex}
 \begin{enumerate}
   \item Notice that the original code is a statement, while the transformed is
         an expression. The transformation can only work if the distributive rule
-        \cref{eq:ternary} can be applied next to to can further push down the ternary
-        operator onto~$S₁$ and~$S₂$ whereby making the transformed into a statement.
+        \cref{eq:ternary} can be \textbf{applied}, %. next to to can 
+        to further push down the ternary operator onto~$S₁$ and~$S₂$ whereby making the transformed into a statement.
   \item Since in many the \kk{else} branch of a wring is missing, the
     spartanization may need to complete it, by transformation rules such as:\vspace{-3ex}
 
@@ -645,9 +645,9 @@ The basic transformation rule is:\vspace{-3ex}
    decrement operations to their prefix version, and more.
 
 \item[S5] \emph{Inlining and scope reduction.}
-  The final kind of structural wrings is concerned with elimination of
+  The final kind of structural wrings is concerned with the elimination of
   variables through inlining, and when this is not possible, trying to reduce
-  their scope. A variable is inlined if it used only once, or if it its
+  their scope. A variable is inlined if it used only once, or if its
   computation involves no side effects, and its inlining does not increase code
   size.
 
