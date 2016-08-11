@@ -1,15 +1,14 @@
 \documentclass[preprint,10pt,nonatbib]{sigplanconf}
 \title{Code Spartanization}
-\subtitle{\scriptsize \emph{one rational approach for\\ resolving religious style wars}}
+\subtitle{\scriptsize \emph{one rational approach for⏎ resolving religious style wars}}
 \authorinfo
   {Yossi Gil \and Matteo Orrù}
   {%
-    Dept.\@ of Comp.\@ Sc.\@\\
-    The Technion---I.I.T.\\ 
+    Dept.\@ of Comp.\@ Sc.\@⏎
+    The Technion---I.I.T.⏎
     Haifa 32000, Israel
   }
   {❴ YoGi~$|$~Matteo.Orru ❵ @cs.technion.ac.il}
-
 
 \usepackage{\jobname}
 \begin{document}
@@ -17,9 +16,9 @@
 \maketitle
 
 \def\ignore#1{}
-\def\gal{\marginpar[G$\Rightarrow$]{$\Leftarrow$G}}
-\def\yossi{\marginpar[Y$\Rightarrow$]{$\Leftarrow$Y}}
-\def\matteo{\marginpar[M$\Rightarrow$]{$\Leftarrow$M}}
+\def\gal{\marginpar[G$⇒$]{$⇐$G}}
+\def\yossi{\marginpar[Y$⇒$]{$⇐$Y}}
+\def\matteo{\marginpar[M$⇒$]{$⇐$M}}
 
 \begin{abstract}
   \input{abstract}
@@ -29,9 +28,12 @@
 \input{aa}
 
 \paragraph{Outline.} \Cref{section:process} describes the code spartanization
-process, taking some space to elaborate on rationale and the automation of the
-process.  \cref{section:initial} desribes the empirical results.
-\Cref{section:zz} condludes, also with directions for future work. 
+process including what we call ‟cleanup”, ‟structural”, and ‟nominal”
+spartanization, taking some space to elaborate on rationale and the automation
+of the process. \cref{section:initial} desribes the empirical results.
+\Cref{section:zz} condludes, also with directions for future work.  The
+appendix demonstrates how spartanization interacts with method extraction
+refactoring process. 
 
 \section{The Process of Code Spartanization}
 \label{section:process}
@@ -80,6 +82,5 @@ ECOOP%
 %\section{The Scary Spartan Look}
 %\label{section:look}
 %\input{look}
-
 
 \end{document}
