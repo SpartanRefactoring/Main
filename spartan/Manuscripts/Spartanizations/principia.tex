@@ -394,8 +394,10 @@ Follow the example to appreciate the automatic spartanization process involved:
       name of unused variables.
     \item[N2] Renaming certain variables to~\cc{¢}. The
       spartan name~\cc{¢} is for the most imminent argument or manipulated
-      entity that is not \cc{this}, and reminiscent of \kk{it} of \ML \cite{Milner:Tofte:Macqueen:1997} and
-        HyperCard~\cite{Goodman:1987}:
+      entity that is not \cc{this}, and reminiscent of \kk{it} of \ML and
+        \HyperTalk:
+      \matteo \verb+Please git pull from "~/texmf"+
+
         the variable which is so prevalent in the current piece of code that
         naming it would be waste of words. Stated differently, the
         meaning of a variable named~\cc{¢} should be so clear to the reader that
@@ -541,11 +543,11 @@ rules\vspace{-3ex}
       \end{align}
     } \vspace{-3ex}
 
-\noindent remove redundant \kk{else} branches, an empty main branch of conditional, and
-convert a~\cc{❴}…\cc{❵} pair to~\cc{;}. Wrings however may be more complicated:
-removing an empty \kk{else} branch may change semantics if attention is not paid
-to occasions in which the remaining \kk{if} attaches, as a result of the
-transformation, to a different \kk{else} branch.
+\noindent remove redundant \kk{else} branches, an empty main branch of
+conditional, and convert an empty~\cc{❴}…\cc{❵} pair to~\cc{;}. Wrings however
+may be more complicated: removing an empty \kk{else} branch may change
+semantics if attention is not paid to occasions in which the remaining \kk{if}
+attaches, as a result of the transformation, to a different \kk{else} branch.
 
 \item[S2] \emph{Factorization with the distributive propety.}
   The distributive property occurs in code for many more occasions
@@ -586,7 +588,7 @@ that attempt to change an \kk{if} statement into a ternary expression.
 The basic transformation rule is:\vspace{-3ex}
 
 {
-\footnotesize        
+\footnotesize
     \begin{align}
 & \text{\cc{\kk{if}~($C$)~$S$;~\kk{else}~$S₂$;}} ⇒ \text{\cc{$C$~?~$S₁$~:~$S₂$}}
     \end{align}
