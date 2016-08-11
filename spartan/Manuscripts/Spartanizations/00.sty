@@ -32,12 +32,18 @@
 \usepackage{syntax}
 \usepackage{tikz}
 
-\floatstyle{ruled}
+\newcommand\fs@myruled{%
+  \def\@fs@cfont{\bfseries}\let\@fs@capt\floatc@ruled
+  \def\@fs@pre{\hrule height.8pt depth0pt \kern2pt}%
+  \def\@fs@mid{\kern2pt\hrule\kern2pt}%
+  \def\@fs@post{\relax}%
+  \let\@fs@iftopcapt\iftrue
+}
+
+\floatstyle{myruled}
+\restylefloat{algorithm}
 \restylefloat{figure}
 \restylefloat{listing}
-\restylefloat{algorithm}
-
-\floatstyle{plaintop}
 \restylefloat{table}
 
 % Tikz libraries

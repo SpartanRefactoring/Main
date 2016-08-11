@@ -375,15 +375,16 @@ The product of external cleanup, which in this case amounts to adding
 \kk{final}s and \kk{@Override}, is not included in this example.
 
 The main difference between the figures is due to method extractions, conducted
-manually. Function \cc{go()} minimizes exploitation of scope by denying
-access to the \cc{args} argument of function \cc{main}.
+manually. Auxiliary \kk{private} function \cc{main()} minimizes exploitation of
+scope by denying access to the \cc{args} argument of function \cc{main}.
 Function \cc{makeCompilationUnit()} takes advantage of the fact that variable
-\cc{parser} is only used in a limited section of \cc{main}, etc.
+\cc{parser} is only used in a limited section of the \kk{public} function
+\cc{main(String[] args}, etc.
 
-Examining the body of the anonymous class (that one that \cc{extends} \cc{ASTVisitor})
-we see some more extracted methods. The reduction in clutter due to
-spartanization makes it possible to identify another spot of useful method
-extraction.
+Examining the body of the anonymous class (that one that \cc{extends}
+\cc{ASTVisitor}) we see some more extracted methods. The reduction in clutter
+due to spartanization makes it possible to identify another spot of useful
+method extraction.
 
 \begin{figure}
   \caption{Spartanized version including structural, nominal, modular, but
@@ -392,8 +393,8 @@ extraction.
   \begin{adjustbox}{max width = \columnwidth}
 \begin{code}[minipage, width=1.13\columnwidth]{JAVA}
 public class Test { // comments and £\kk{import}£ directives omitted for brevity
-  public static void main(String args[]) { go(); }
-  private static void go() {££
+  public static void main(String[] £\_\_£) { main(); }
+  private static void main() {££
     CompilationUnit u = makeCompilationUnit();
     u.accept(new ASTVisitor() {££
       Set £\ignore$£$ = new HashSet();

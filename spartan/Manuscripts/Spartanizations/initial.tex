@@ -28,10 +28,10 @@ list due to Allamanis and Sutton~\cite{Allamanis:Sutton:13}.
 The ‟Size Before” column of \Cref{table:corpus} provides the main size
 statistics of the constituting artifacts.
 
-\begin{table}[H]
-  \caption{Aggregating statistics, over artifacts in the corpus,
+\begin{table}
+  \caption{\label{table:corpus}%
+    Aggregating statistics, over artifacts in the corpus,
   of compression power of BZip2 and size, before and after compression.}
-  \label{table:corpus}
   \par\vspace{10pt plus 6pt minus 4pt}
   \centering
   \begin{adjustbox}{max width=\columnwidth}
@@ -118,23 +118,23 @@ internationalization processes rather than coding per-se.
 Jack currently does not remove unit-tests, but is planned to do so in the
 future.
 
-\Cref{table:original} presents the compression power of Jack, BZip, when
+\Cref{table:virgin} presents the compression power of Jack, BZip, when
 applied after Jack, and the accumulative compression power of Jack and BZip2
 when applied in this order.
 \begin{table}
-  \caption{Aggregating statistics, over artifacts in the corpus,
+  \caption{\label{table:virgin}%
+    Aggregating statistics, over artifacts in the corpus,
     of size and compression power of Jack and Jack combined with BZip2 
     relative to the original software.
   }
-  \label{table:original}
   \par\vspace{10pt plus 6pt minus 4pt}
   \centering
   \begin{adjustbox}{max width = \columnwidth}
     \begin{tabular}{l*5r}
       \toprule
       & \multicolumn2c{\textit{Jack}}
-      & \multicolumn2c{\textit{Jack+BZip2}}
-      & \multicolumn1c{\textit{Combined}}⏎
+      & \multicolumn2c{\textit{BZip2 after Jack}}
+      & \multicolumn1c{\textit{Jack+BZip2}}⏎
       \cmidrule(r){2-3} \cmidrule(r){4-5} \cmidrule(r){6-6}
       & \textit{Size (bytes)}
       & \textit{Powr}
@@ -175,7 +175,7 @@ our \emph{approximate naturalness}, which answers \textbf{RQ2}. Approximate
 naturalness is telling how much the essence of the code itself, discarding
 boilerplate is compressible (and hence predictable, or, approximately natural).
 
-Comparing the penultimate column (``Powr'') of the \cref{table:original} 
+Comparing the penultimate column (``Powr'') of the \cref{table:virgin} 
 with the final column (``Power'') of
 \cref{table:corpus}, we see that overall, Jack reduces the compression power of
 BZip2. All five statistics: average, min, max, median, and range, are higher
@@ -207,14 +207,44 @@ than the Jacked original one.
 This can be explained if we take into account the fact that Spartanization removes some 
 of the elements that are removed also by Jack.
 
-The second column of the same Table regards the approximate naturaleness of the spartanized Jacked code.
-In this case the difference are all positive, meaning that the approximate naturaleness of 
-a spartanized jacked code is higher than in the original code.
-This might be explained by the fact that ...
+The second column of the same Table regards the approximate naturaleness of the
+spartanized Jacked code.  In this case the difference are all positive, meaning
+that the approximate naturaleness of a spartanized jacked code is higher than
+in the original code.  This might be explained by the fact that ...
 
 \begin{table}
-  \caption{Aggregating statistics of compression power of Jack+BZip2 after
-  automatic structural spartanization, compared with non-spartanized code.}
+  \caption{\label{table:structural}%
+    Aggregating statistics of compression power of Jack+BZip2 after
+  automatic structural spartanization.}
+  \par\vspace{10pt plus 6pt minus 4pt}
+  \centering
+  \begin{adjustbox}{max width = \columnwidth}
+    \begin{tabular}{l*5r}
+      \toprule
+      & \multicolumn2c{\textit{Jack}}
+      & \multicolumn2c{\textit{BZip2 after Jack}}
+      & \multicolumn1c{\textit{Jack+BZip2}}⏎
+      \cmidrule(r){2-3} \cmidrule(r){4-5} \cmidrule(r){6-6}
+      & \textit{Size (bytes)}
+      & \textit{Powr}
+      & \textit{Size (bytes)}
+      & \textit{Powr}
+      & \textit{Power}⏎
+      \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
+      \sffamily  Ave.  & 5,050,647  & 6.66 & 719,488   & 15.88 &  \\
+      \sffamily  Min.  & 439,825    & 4.90 & 75,391    & 10.58 &  \\  
+      \sffamily  Max.  & 19,173,224 & 8.79 & 3,275,918 & 23.21 &  \\
+      \sffamily  Med.  & 1,959,917  & 6.79 & 341,851   & 12.63 &  \\
+      \sffamily  Range & 18,733,399 & 3.89 & 3,200,527 & 15.27 &  \\
+      \bottomrule
+    \end{tabular}
+  \end{adjustbox}
+\end{table}
+
+\begin{table}
+  \caption{CHECK ME I think only last two columns make sense: Aggregating
+  statistics of compression power of Jack+BZip2 after automatic structural
+spartanization, compared with non-spartanized code.}
   \label{table:structural-comparison}
   \par\vspace{10pt plus 6pt minus 4pt}
   \centering
@@ -241,6 +271,7 @@ This might be explained by the fact that ...
     \end{tabular}
   \end{adjustbox}
 \end{table}
+
 
 \begin{table}
   \caption{Aggregating statistics of compression power of Jack+BZip2 after
@@ -309,9 +340,9 @@ This might be explained by the fact that ...
 
 \subsection{Renaming Spartanization}
 \begin{table}
-  \caption{Aggregating statistics of compression power of Jack+BZip2 after
+  \caption{\label{table:total}%
+    Aggregating statistics of compression power of Jack+BZip2 after
   automatic structural+renaming spartanization, compared with non-spartanized code.}
-  \label{table:total}
   \par\vspace{10pt plus 6pt minus 4pt}
   \centering
   \begin{adjustbox}{max width=\columnwidth}

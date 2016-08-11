@@ -31,10 +31,10 @@ ThingTwo ii = new ThingTwo();
 ii.wreck(house);
 System.out.println(ii);
 ThingOne i = new ThingOne(); // Stack context of £\cc{ii}£
-System.out.println(i); // Context of £\cc{ii}£ still stacked
-i.wreck(house); // Stacked still£…£
-System.out.println(i); // Still!
-cat.join(i, ii); // Finally: recalling context of £\cc{ii}£.
+System.out.println(i);       // Context of £\cc{ii}£ still stacked
+i.wreck(house);              // Stacked still£…£
+System.out.println(i);       // Still!
+cat.join(i, ii);             // Finally: recalling context of £\cc{ii}£.
   \end{code}
   The last line in this snippet joins the three objects,
   \cc{cat},~\cc{i}, and \cc{ii}. The four preceding lines prepare
@@ -45,8 +45,8 @@ cat.join(i, ii); // Finally: recalling context of £\cc{ii}£.
   preparation of~\cc{i}, and restored only at the last line.
 
   By swapping the order of construction, we obtain code in which the stacked is
-  a bit shorter,~\cc{i} instead of \cc{ii}, and in a linear read of the
-  program, it is stacked for three rather than four lines.
+  a bit shorter,~\cc{i} instead of~\cc{ii}, and in a linear read of the
+  program, it is stacked for three lines rather than four.
 
 \begin{code}[minipage,width=54ex]{java}
 ThingOne i = new ThingOne();
@@ -55,19 +55,19 @@ System.out.println(i);
 i.enter(house);
 System.out.println(i);
 ThingTwo ii = new ThingTwo(); // Stack context of £\cc{i}£.
-ii.enter(house); // Context of £\cc{i}£ still stacked.
-System.out.println(ii); // Context is stacked still.
-cat.join(i, ii); // Recalling context of £\cc{ii}£.
+ii.enter(house);              // Context of £\cc{i}£ still stacked.
+System.out.println(ii);       // Context is stacked still.
+cat.join(i, ii);              // Recalling context of £\cc{ii}£.
   \end{code}
 \end{enumerate}
 
-To an extent, these minimization ends are reformulation of traditional
-belief on software: that software should be organized in short cohesive modules
-whose code depends on few globals, and is frugal in its use of control.
-Conversely, complaints on code quality, include deep and complex nesting
-\kk{if}s and \kk{for}s, endless parameters' lists, piles of global variables
-and many methods and classes that should be understood before understanding any
-given method, etc.
+To an extent, these minimization ends are reformulation of traditional belief
+on software: that software should be organized in short cohesive modules whose
+code depends on few globals, and is frugal in its use of control.  Conversely,
+complaints on code quality, include deep and complex nesting \kk{if}s and
+\kk{for}s, endless parameters' lists, piles of global variables and many
+methods and classes that should be understood before understanding any given
+method, etc.
 
 Also, the end of minimizing life and size of saved contexts captures in it
 principles such as early \cc{throw}, \cc{return} and \cc{break} (from loops) on
@@ -75,7 +75,7 @@ errors, ordering by increasing length to increase readability, and also the
 practice of placing at first the short branch of an \cc{if} conditional, etc.
 
 Unlike other coding guidelines, spartanization prescribes a (semi-automatic)
-uncompromising process by which code can be spartanized. The main novelty
+uncompromising process by which code can be spartanized. The central novelty
 therefore in spartan programming is not in these numerical minimization ends,
 but in the \emph{manner}, \emph{extent}, and \emph{automatization} of the quest
 for their optimization. The last three \emph{emphasized} words make the titles
@@ -234,12 +234,12 @@ public class C1<T> {
   public int hashCode() {
     return 31 + ((inner == null) ? 0 : inner.hashCode());
   }
-  public boolean equals(Object o) {
-    return o == this || //
-      o != null && getClass() == o.getClass() && equals((C1) o);
+  public boolean equals(Object ¢) {
+    return ¢ == this || //
+      ¢ != null && getClass() == ¢.getClass() && equals((C1) ¢);
   }
-  private boolean equals(C1 c) {
-    return inner == null ? c.inner == null : inner.equals(c.inner);
+  private boolean equals(C1 ¢) {
+    return inner == null ? ¢.inner == null : inner.equals(¢.inner);
   }
 }
 \end{code}
@@ -247,15 +247,26 @@ public class C1<T> {
 \end{figure}
 Evidently, spartanization has removed all conditionals, replacing these with
 the ternary operator and the short-circuit operators, ‟\cc{\textbar\textbar}”
-and ‟\cc{＆＆}”. Spartanization also abbreviated \cc{obj} to \cc{o}.  The code
-is evidently shorter, and not as nested.  
+and ‟\cc{＆＆}”. Spartanization also abbreviated \cc{obj} to \cc{o} and then
+renamed it to \cc{¢}, eliminated the spurious \cc{\kk{super}()} call in the
+constructor, as well as the two variables use in \cc{hashCode()}, turning the
+function into a single expression.  The resulting code is evidently shorter,
+and not as nested. Arguably, the code is also  easier explain and understand:
+For example, function \cc{equals(Object ¢)} in the figure is described by its
+own code, while relying on the understanding of the Boolean operators 
+\begin{quote}\itshape\scriptsize
+If the sent parameter is the same as \cc{this}, then equality is guaranteed.
+Otherwise, the parameter must not be \kk{null}, and must be of the same class
+of \kk{this}. Futher, the parameter must also be of the same as class as 
+\kk{this}, and equal to \kk{this} when downcasted to its class.
+\end{quote}
 
-Notice however that line length, which is not optimized by the wrings, suffered
+Notice though that line length, which is not optimized by the wrings, suffered
 a bit.  We do have fewer lines, but the average number of characters in them
 increased from 23 characters to 26.5. Also, the maximal line length increased
 from 71 characters to 81. This last increase is due though due to the
 extraction of a \kk{private} version of \cc{equals($\cdot$)}, which is carried
-out manually, and at user's discretion. 
+out manually, at user's discretion. 
 
 \subsection{Automation}
 \label{section:automation}
@@ -277,7 +288,7 @@ public class Test0 { // comments and £\kk{import}£ directives omitted for brev
       " int i = 9;\n"+ //
       " int j;\n" + //
       " ArrayList<Integer> al = new ArrayList<Integer>();\n" + //
-      " j=1000;\n" + // sic!
+      " j=1000;\n" + // sic (syntax error in the original)
       "}\n").toCharArray());
     parser.setKind(ASTParser.K£\_£COMPILATION£\_£UNIT);
     CompilationUnit cu = (CompilationUnit) parser.createAST(null);
@@ -307,11 +318,22 @@ public class Test0 { // comments and £\kk{import}£ directives omitted for brev
 \end{figure}
 
 \Cref{figure:eclipse:automatic} shows the automatically spartanized version of
-the this code. Employed were cleanup operations (adding \kk{final}s and
-\cc{@Override} annotations, and the convoluted reference to \cc{names}),
-structural spartanization (removing redudant curly brackets) and nominal
-spartanization, renaming variable \cc{names} to~\cc{\$}, and variables in which
-occur in scopes where no ambiguity can occur to~\cc{¢}.
+the this code. Automation involved these components: 
+\begin{itemize}
+  \item \emph{Cleanup}, adding \kk{final}s and \cc{@Override} annotations, 
+      and simplifying the convoluted reference to data member \cc{names}.
+    \item \emph{Structural spartanization}, whose operation was limited  to the
+      removal of one pair of redundant curly brackets.
+    \item \emph{Nominal spartanization}, including renaming of the unused
+      parameter \cc{args} to \cc{main($\cdot$)}, to the empty spartan name
+      \cc{\_\_}.
+
+      Nominal spartanization also renamed certain variables to~\cc{¢}, which is
+      the spartan name for what might be denoted by keyword \kk{that} in a
+      redesigned language, and is the most imminent argument or manipulated
+      entity that is not \cc{this}. 
+\end{itemize}
+       
 
 \begin{figure}
   \caption{An automatically spartanized version of
@@ -320,14 +342,14 @@ occur in scopes where no ambiguity can occur to~\cc{¢}.
     \begin{adjustbox}{max width=\columnwidth}
 \begin{code}[minipage, width=1.20\columnwidth]{JAVA}
 public class Test1 { // comments and £\kk{import}£ directives omitted for brevity
-  public static void main(final String args[]) {££
+  public static void main(final String[] £\_\_£) {££
     final ASTParser p = ASTParser.newParser(AST.JLS3);
     p.setSource((
       "public class A {\n" +
       " int i = 9;\n"+ //
       " int j;\n" + //
       " ArrayList<Integer> al = new ArrayList<Integer>();\n" + //
-      " j=1000;\n" + // sic!
+      " j=1000;\n" + // sic (syntax error in the original)
       "}\n").toCharArray());
     final CompilationUnit u = (CompilationUnit) p.createAST(null);
     u.accept(new ASTVisitor() {££
@@ -355,13 +377,16 @@ public class Test1 { // comments and £\kk{import}£ directives omitted for brev
 Each of the several wrings applied to obtain \cref{figure:eclipse:automatic}
   reduced at least one of our minimization ends.
 At several occasions, cleanup increased these.
-Overall, in this case, the result of automatic application of spartanization
+Overall, the result of automatic application of spartanization
   is a reduction in the number of lines, words, and characters
   by factors of~$1.6$,~$1.18$, and~$1.4$.\footnote{Part of this improvement
-  is due to cleanup, optimization the use of \kk{import}; we shall account
-  for this phenomena in the empirical section.} 
+  is due to cleanup operation that optimizes the use of \kk{import}; we shall
 
-We can witness the impact of spartanization, even on pedestrian code such as
+
+Evidently
+Even on the pedestrian code such as that of \cref{figure:eclipse}
+spartanization has an impact.
+such as
 the one given \cref{figure:eclipse}. The code can be further polished and
 spartanized by method extraction and other refactorings. For now, we
 concentrate on the automatic spartanization, which as explained above, comes in
