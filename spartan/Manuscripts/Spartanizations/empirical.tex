@@ -107,7 +107,7 @@ are similar but not identical: Compression algorithms search (and exploit) the
 input for repetitive patterns of unbounded length, while naturalness limits the
 search to~$n$-grams for some small integer~$n$. The difficulty with applying
 vanilla naturalness measures is that they become prohibitively slow
-for~$n>5$~(say). Alas, patterns of spartanizations, just like refactoring,
+for~$n>5$~(say)\matteo. Alas, patterns of spartanizations, just like refactoring,
 often manipulate many more than~$5$ tokens.
 
 Quality in compression algorithms is measured by \emph{compression power},
@@ -115,14 +115,14 @@ defined as the ratio of uncompressed size to the compressed size. Compression
 power, our \emph{approximate naturalness} should be correlated with
 \emph{original naturalness}, but it distincts from it.
 
-We found that with respect to \Java software the compression power of BZip2 is
-greater than that of GZip. This greater power is probably because Gzip make a
+We found that with respect to \Java software the compression power of BZip2\urlref{http://bzip.org/}
+is greater than that of GZip. This greater power is probably because Gzip make a
 greedy search for repetitions starting at the input's prefix, while BZip2
 starts the search in a broader context, as implied by the Burrows-Wheeler
 algorithm~\cite{Burrows:Wheeler:94}.
 
 The second and third columns of \cref{table:corpus} provide statistics of
-compressed size and compression power of BZip2\urlref{http://bzip.org/}. As in
+compressed size and compression power of BZip2. As in
 the study of naturalness of software, we witness the fact that projects can be
 very different. There is two fold range variation of their associated
 compression power, as there is in their naturalness.
@@ -144,12 +144,12 @@ that form an identifier, or sequence of digits that make a numeric literal.
 
 Jack also eliminates from the \Java code all of the following five: white space
 characters, \kk{package} declaration, \kk{import} directives, comments of all
-sorts, and, the body of all string literals. The assumption here is that each
+sorts and the body of all string literals. The assumption here is that each
 of these is not a product of pure coding effort: White space characters are
 generated and frequently change by automatic code formatting. Also, \kk{import}
-directives are generated and optimized automatically, and are subject to
+directives are generated and optimized automatically and are subject to
 underlying project guideline. Comments also follow their own style, which is
-very different from that of the code, \emph{and}, string literals, at least
+very different from that of the code, \emph{and} string literals, at least
 those with significant content, are ought to be managed by configuration and
 internationalization processes rather than coding per-se.
 Jack currently does not remove unit-tests, but is planned to do so in the
