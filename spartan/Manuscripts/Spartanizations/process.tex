@@ -121,7 +121,7 @@ if (f() == true) {££
 
 This chain includes a wring to remove redundant curly brackets and one for the
 removal of redundant semicolons. Also involved is a wring for the conversion of
-an \kk{if} into to a \emph{ternary} expression (one employing the
+an \kk{if} into a \emph{ternary} expression (one employing the
 operator~\cc{$·$?$·$:$·$}), and a wring simplifying of ternary expressions
 involving boolean literals.
 
@@ -251,7 +251,7 @@ public class C1<T> {££
   }
   private boolean equals(C1 ¢) {££
     return inner == null ? ¢.inner == null : inner.equals(¢.inner);
-  }
+  }££
 }
 \end{code}
 \end{adjustbox}
@@ -329,14 +329,14 @@ public class Test0 {££ // comments and £\kk{import}£ directives omitted for 
         return true;
       }
     });
-  }
+  }££
 }
 \end{code}
   \end{adjustbox}
 \end{figure}
 
 \Cref{figure:eclipse:automatic} shows the automatically spartanized version of
-the this code.
+this code.
 
 \begin{figure}[htbp]
   \caption{\label{figure:eclipse:automatic}%
@@ -539,7 +539,7 @@ demonstrate all here. The following categorization provides a summary:
     the spartan toolbox includes wrings to remove redundant modifiers,
     such as \kk{final} (when present on \kk{private} methods) \kk{abstract}
     (when present on \kk{interface}s), spurious \kk{super}\cc{()} calls, redundant
-    semicolon at the of initialization lists, redundant calls to
+    comma at the end of initialization lists, redundant calls to
     \cc{toString()} of objects involved in string concatenation, etc.
 
 Transformation rules are a convenient shorthand for specifying wrings, e.g.,
