@@ -1,4 +1,3 @@
-
 \subsection{Spartan programming}
 
 \begin{quote}
@@ -11,7 +10,7 @@
   \end{flushright}
 \end{quote}
 
-``Spartan Programming'' is a programming methodology whose driving principles are
+‟Spartan Programming” is a programming methodology whose driving principles are
 minimalism and simplicity. It combines several techniques,
 some already reported in the literature, some other novel, that are applied
 with the aim of reducing
@@ -36,7 +35,7 @@ held in Santa Barbara, CA USA.
 The aim was to present a rational approach to programming by examining all the previous
 assumptions about how to code.
 
-\emph{point of making and perfecting it was to ``be rational'' and
+\emph{point of making and perfecting it was to ‟be rational” and
 reexamine all assumptions.}
 
 \emph{Rules have changed.
@@ -119,7 +118,6 @@ and Google\urlref{https://google.github.io/styleguide/javaguide.html}.
 \textbf{But where these styles a matter of a careful and rational design
   process?
 What were the underlying principles.}
-
 
 % The following scenarios might be helpful to clarify this point.
 % \begin{itemize}
@@ -226,15 +224,15 @@ Some (suggested) common names might be:
         % \item \_\_ don't use.
   \item ¢ penny for the sent argument.
 \end{enumerate}
-¢ is is in place of "that" (that is a ‟placeholder” like this) or for ``sent''
+¢ is is in place of "that" (that is a ‟placeholder” like this) or for ‟sent”
 argument.†{The term and symbol of "Penny" is chosen to convey the meaning
   that is something so little you do not want to worry about.
   \emph{Take a penny, leave a penny!}}
 
 Brevity for the sake of brevity is \textbf{not} a prescription in Spartan
-programming.  It is worth to say that descriptiveness of variable is still a
-cornerstone principle.  At the same time, Spartan Programming emphasize the
-need to chose short names, whenever is possible.  In other word, one word name
+programming. It is worth to say that descriptiveness of variable is still a
+cornerstone principle. At the same time, Spartan Programming emphasize the
+need to chose short names, whenever is possible. In other word, one word name
 is better than a multi-word name.
 
 Other prescriptions are the following:
@@ -257,7 +255,7 @@ Other prescriptions are the following:
 
 Variable name might be also a design guideline. If a developers chose a
 multi-word variable name for an entity, maybe is try to collapse on that entity
-multiple functionalities.  There might be the case to re-think the design,
+multiple functionalities. There might be the case to re-think the design,
 splitting the entity according to the different functionalities
 
 \subsection{Variable Elimination}
@@ -299,7 +297,7 @@ return p.area();
 
 Another technique for variable elimination is the early return and it consist
 in returning the result of a computation as soon as it is available, instead of
-storing it in a variable (and then returning it).  An example of early return
+storing it in a variable (and then returning it). An example of early return
 is reported in the following code.
 
 \begin{code}{JAVA}
@@ -337,7 +335,7 @@ collections, preferred instead of the arrays, without the use of the
 
 \subsubsection{Control simplification}
 Spartan programming foster the use of the ternary operator over the
-\kk{if-else} construct.  This way the implementation of the factorial
+\kk{if-else} construct. This way the implementation of the factorial
 \begin{code}{JAVA}
 int factorial(int n) {d
     if (n <= 1)
@@ -366,77 +364,6 @@ in this case in a return statement that allows inlining of the instruction.
 
 Here we report a series of techniques that not fall expressly in one of the
 previous category.
-
-\begin{itemize}
-  \item Favor prefix operators over postfix ones.
-  \item In expressions order the operator according to their length (shortest
-        come first) or specificity (more specific come first).
-  \item Associative rule of ifs:
-        \begin{code}{JAVA}
-if (a) if (b) x;
-  \end{code}
-  \begin{code}{JAVA}
-if (a && b) x
-  \end{code}
-  % \item Associative rule of ifs: if (a)
-  % \begin{code}{JAVA}if (b) x;\end{code}
-  % \begin{code}{JAVA}if (a && b) x\end{code}
-  \begin{code}{JAVA}
-if (this == null) return super();
-  \end{code}
-
-
-  INLINING??
-  \begin{itemize}
-    \item Off load exceptional cases quickly.
-    \item inline single use of variables.
-    \item Inline multiple use of variables: if 1) result is shorter and 2
-          ) the expression has no side effects.
-    \item Pseudo inlining with initializers.
-    \item Scope:
-  \end{itemize}
-
-  Scope:
-  \begin{itemize}
-    \item Move into for
-    \item Move into try
-    \item Move next to use
-  \end{itemize}
-  Variability
-  \begin{itemize}
-    \item Variability (add final when possible.)
-    \item Variables (inlining)
-    \item What’s first
-  \end{itemize}
-  Sorting
-  \begin{itemize}
-    \item Most external escape
-    \item Shortest: 2*112*a*ab
-    \item Least specific
-  \end{itemize}
-  Canonical ordering
-  \begin{itemize}
-    \item Simplificatons
-          \begin{itemize}
-            \item Algebraic simplifications
-            \item Logical simplification
-            \item Literal simplification
-            \item Arithmetical simplification
-          \end{itemize}
-    \item Patterns: 2 * x + 1d
-    \item Pushdown:
-    \item Logical Negation
-    \item Arithmetical Negation
-    \item Auto distributive
-    \item Repeated deterministic expressions
-    \item Auto
-          \begin{itemize}
-            \item Auto Collect
-            \item Auto insert/remove 0+ in ternarization.
-            \item Auto insert/remove 1*
-            \item Auto add “” +
-          \end{itemize}
-  \end{itemize}
 
   \subsection{Renaming}
   \begin{itemize}
@@ -558,7 +485,7 @@ public class Test {££ // comments and £\kk{import}£ directives omitted for b
       " int i = 9;\n"+ //
       " int j;\n" + //
       " ArrayList<Integer> al = new ArrayList<Integer>();\n" + //
-      " j=1000;\n" + // 
+      " j=1000;\n" + //
       "}".toCharArray()
 );
     £\ignore$£$.setKind(ASTParser.K£\_£COMPILATION£\_£UNIT);
