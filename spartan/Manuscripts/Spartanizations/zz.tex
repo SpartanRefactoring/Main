@@ -1,12 +1,31 @@
 % Spartan programming tries to imitate the laconic, terse speak.  
-% 
-% \textbf{However, it is worth to mention that the average value is quite small (0.06) so 
-% this result might be influenced by statistical fluctuations.}
-% \textbf{As well as reported in the previous section, it is worth not note that 
-% these values are quite small.}
-% 
-% In this paper we presented a novel approach to coding. We introduced the
-% problem, illustrated the rationale behind (the philosophy) of the Spartan
+In this paper we presented Spartan Programming, a novel approach to programming 
+and code styling.
+We firstly introduced the methodology, highlighting the basic principles, then 
+we illustated the process and the main transformations (wring) involved, 
+reporting also a number of example of spartanized code.
+
+Since one of the goal of Spartan Programming it to produce minimalistic code, 
+in order to favour modularity and maintainability, it might result in 
+code that is not easy to read for a not accostomed developer.
+At the same time, spartan(ized) code tend to be a close as possible 
+to a terse, laconic speech. To evaluate if this goal is actually achieved 
+in practice, we studied an approximation of the naturalness measure reported in 
+\cite{Hindle:Bar:Su:Gabel:Devanbu:12}. 
+
+This might lead to interesting application of the Spartan Programming, since 
+there are some finding in the literature that support the hypothesis that code 
+with a higher naturalness tend to be less affected by bugs 
+\cite{Hindle:Bar:Su:Gabel:Devanbu:12}.
+We found that structural spartanization improve the naturalness of code. 
+On the contrary renaming spartanization does not seem able to improve the code naturalness.
+
+This manuscript presents a work-in-progress. 
+We found this prelimiary results encouraging and 
+we are planning to extend the present study by extending the dataset, improving the 
+statistic analysis and the set of spartanization techniques analyzed. 
+
+% illustrated the rationale behind (the philosophy) of the Spartan
 % Programming, next we thoroughly described the techniques to apply to spartanize
 % the code (or to write it in the spartan way since the beginning) and eventually
 % we report the result of an experiment performed on a representative dataset of
@@ -14,7 +33,8 @@
 % compression of spartanized code is higher than not spartanized one, we can
 % evince that spartanization have a meaningful impact on source code (???).  The
 % aim of this paper is mainly that of giving an overview of the spartanization
-% techniques.  In the future we intend to perform a number of experiments, in
+% techniques.  
+% In the future we intend to perform a number of experiments, in
 % order to carry on the research on the impact of the spartanization on software
 % systems' properties, including its quality.
 % 
