@@ -94,10 +94,9 @@ write18: $(call tip,write18,remake $(MAIN).pdf with -shell-escape) $(SOURCES) $(
 
 .PHONY: bibtex b
 b: $(call tip,b, shorthand of bibtex) all 
-
 $(MAIN).blg bibtex: $(call tip,bibtex, regenerate the bibliogrpahy)	
 	$(LATEX) -interaction=batchmode -draftmode $(MAIN).tex
-	bibtex $(MAIN)
+	bibtex $(MAIN) *.bib
 	$(LATEX) -interaction=batchmode -draftmode ./$(MAIN).tex
 
 .PHONY: all

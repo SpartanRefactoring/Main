@@ -143,18 +143,18 @@ violates the law of Demeter~\cite{Lieberherr:96}, and makes debugging more diffi
 Other complaints are of the use of hard to type non-ASCII characters,
   unpronounceable names (e.g., \cc{sss}).
 Yet another dimension of concerns lies with the extensive
-  use of the ternary operator, ‟$·$~\cc{?}~$·$~\cc{:}~$·$}”, which some find
+  use of the ternary operator, ‟$·$~\cc{?}~$·$~\cc{:}~$·$”, which some find
   less readable than plain \kk{if}, and the loss of modular
-  structure\footntoe{in the classical sense, i.e., one exit point to each
+  structure†{in the classical sense, i.e., one exit point to each
   block} with short-circuit Boolean operators, as in e.g., \cref{figure:cell1}
   ahead.
 
 The spartan answer to these is that once the decision to minimize, e.g.,
-  variability has been made, the introduction of other competing requirements 
+  variability has been made, the introduction of other competing requirements
   confuses matters.
 Complaints are therefore answered by suggesting more powerful
   debuggers, keyboards and other tools, the understanding the
-  that other rules might be broken, and the fact that eyes that 
+  that other rules might be broken, and the fact that eyes that
   trained to understand code, can also learn reading, e.g., short-circuit
   operators.
 
@@ -164,9 +164,9 @@ The rationale is that even though careful balancing of conflicting quality
 To promote this understanding, one must first try to make a candid effort to
   prioritize certain principles over others.
 Spartanization does precisely that, preferring small size, minimal vocabulary
-  and variability and other elements of laconic speech over other legitimate 
+  and variability and other elements of laconic speech over other legitimate
   concerns.
-Spartan code may be liked, or disliked, by programmers\footnote{our biased experience
+Spartan code may be liked, or disliked, by programmers†{our biased experience
   is that once understood, it is appreciated and often adopted} but it must be
   defined and practiced, to be subjected to quantitative studies as the one
   reported here.
@@ -179,9 +179,9 @@ Some similar attempts were made in the past, with varying degree of success.
 \Pascal does not allow short-circuit operators for a reason, \Haskell forgoes
 variables entirely, \Go enforces its braces and semicolons style,
 and \Python its own indentation style. In contrast with these and similarly to
-other style checkers, spartan code does not invent a new language. 
+other style checkers, spartan code does not invent a new language.
 The process of code spartanization is hosting its monastic practices on an
-existing language. 
+existing language.
 
 \subsection{Other contribution}
 
@@ -250,5 +250,5 @@ The evaluation part here is concerned with fragments~\textbf{S}
 and~\textbf{N}. The expectation is that spartanization not only reduces size,
 but it also makes the resulting code more regular, i.e., more compressible than
 the original. As we shall explain, not trivial. Results are that~\textbf{S}
-passes this trial by fire.  We remain inconclusive on whether this is true for
+passes this trial by fire. We remain inconclusive on whether this is true for
 the \textbf{N} fragment.
