@@ -107,7 +107,7 @@ are similar but not identical: Compression algorithms search (and exploit) the
 input for repetitive patterns of unbounded length, while naturalness limits the
 search to~$n$-grams for some small integer~$n$. The difficulty with applying
 vanilla naturalness measures is that they become prohibitively slow
-for~\mbox{$n>5$}~(say). Alas, patterns of spartanizations, just like
+for~\mbox{$n>5$}~(say). Alas, the wrings of spartanizations, just like
 refactoring, often manipulate many more than~$5$ tokens.
 
 Quality in compression algorithms is measured by \emph{compression power},
@@ -177,7 +177,7 @@ when applied in this order.
       & \textit{Powr}
       & \textit{Size (bytes)}
       & \textit{Powr}
-      & \textit{Power}⏎
+      & \textit{Combined Power}⏎
       \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
       \sffamily Ave. & 5,078,034 & 2.78 & 729,934 & 6.60 & 18.37⏎
       \sffamily Min. & 456,050 & 1.73 & 77,706 & 4.89 & 10.18⏎
@@ -299,22 +299,6 @@ module, we still hope to be able to demonstrate that nominal spartanization
 can improve naturalness.
 \endinput
 
-We still hope to be able to show  
-
-
-We compared these results % approximate naturalness of the automatically spartanized code
-with those related to the original code, namely we compute the difference
-between the compression power and approximate naturalness reported in \cref{table:structural}
-and those reported in \cref{table:virgin}.
-
-Then we computed the same aggregating statistics, that are reported in
-\cref{table:comparisons-original} (first two columns).
-
-% We specifically subtract the aggregating statistics of the latter with those related to the former.
-% \cref{table:difference} reports the outcome of this comparison.
-% of the aggragating statistics for the latter, related to
-% the spartanized code, and the compression power of the original code.
-
 The first column of \cref{table:comparisons-original} refers to the application
 of the Jack algorithm to the spartanized code. As we can see some of these values are negative - particularly
 average, max value and range.
@@ -335,6 +319,51 @@ might suggest that structurally spartanized code is closer to the naturalness la
 than the original one. That is actually one of the goals of spartan programming.
 \textbf{However, it is worth to mention that the average value is quite small (0.06) so
 probably this results are subject to statistical fluctuations.}
+=======
+
+We still hope to be able to show  
+
+
+We compared these results % approximate naturalness of the automatically spartanized code
+with those related to the original code, namely we compute the difference
+between the compression power and approximate naturalness reported in \cref{table:structural}
+=======
+The results are reported in \cref{table:structural} where are reported
+the compression power of the Jacked code and its approximate
+naturalness (``BZip2 after Jack'' column).
+We compared these results % approximate naturalness of the automatically spartanized code
+with those related to the original code, namely we compute the difference 
+between the compression power and approximante naturalness reported in \cref{table:structural}
+>>>>>>> 5a5252f982bf87d9bd211f7036655fb63439496a
+and those reported in \cref{table:virgin}.
+
+Then we computed the same aggregating statistics, that are reported in
+\cref{table:comparisons-original} (first two columns).
+
+% We specifically subtract the aggregating statistics of the latter with those related to the former.
+% \cref{table:difference} reports the outcome of this comparison.
+% of the aggragating statistics for the latter, related to
+% the spartanized code, and the compression power of the original code.
+
+The first column of \cref{table:comparisons-original} refers to the application of the Jack
+algorithm to the spartanized code. As we can see some of these values are negative - particularly 
+average and min value. 
+A negative value for the average of the Jack compression powers implies that, 
+on average, spartanized code is less prone to be compressed by Jack tha original code. 
+Negative values for the minimum compression power means
+that there is a significant difference, for at least one project, in the degree of compression
+that Jack might achieved on spartanized code. 
+
+The second column of \cref{table:comparisons-original}, on the contrary, reports only 
+one negative value, related to the minimum value for the difference of the compression power. 
+It means that at least in one case the approximate naturaless was worse in the 
+structurally spartanized code. The fact that the average value is positive implies
+that the approximate naturalness of structurally spartanized
+code is, on average, higher than the original code. Since it represents the predictability of
+the code written by developers, having removed the boilerplate code using Jack, this
+might suggest that structurally spartanized code is closer to the natural language
+than the original one. That is actually one of the goals of spartan programming. 
+>>>>>>> 5a5252f982bf87d9bd211f7036655fb63439496a
 % value of the compression power is negative,
 % meaning that the Spartanized Jacked code is, on average, less compressed than the original.
 % However, we are not considering a significative difference.
@@ -356,6 +385,7 @@ probably this results are subject to statistical fluctuations.}
 % The second column of the same Table regards the approximate naturalness of the
 % spartanized jacked code. All difference are positive, implying the
 
+<<<<<<< HEAD
 
 % \begin{table}
 % \caption{%
@@ -385,6 +415,70 @@ probably this results are subject to statistical fluctuations.}
 % \bottomrule
 % \end{tabular}
 % \end{adjustbox}
+=======
+\begin{table}
+  \caption{Aggregating statistics of compression power of Jack+BZip2 after
+  automatic \emph{structural spartanization}, compared with non-spartanized code.
+  }
+  \label{table:structural}
+  \par\vspace{10pt plus 6pt minus 4pt}
+  \centering
+  \begin{adjustbox}{max width = \columnwidth}
+    \begin{tabular}{l*5r}
+      \toprule
+      & \multicolumn2c{\textit{Jack}}
+      & \multicolumn2c{\textit{BZip2 after Jack}}
+      & \multicolumn1c{\textit{Jack+BZip2}}⏎
+      \cmidrule(r){2-3} \cmidrule(r){4-5} \cmidrule(r){6-6}
+      & \textit{Size (bytes)}
+      & \textit{Powr}
+      & \textit{Size (bytes)}
+      & \textit{Powr}
+      & \textit{Combined Power}⏎
+      \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
+      \sffamily Ave. & 5,050,647 & 2.46 & 719,488 & 6.66 & 16.42⏎% & 1.01⏎
+      \sffamily Min. & 439,825 & 1.79 & 75,391 & 4.90 & 10.58⏎% & 0.21⏎
+      \sffamily Max. & 19,173,224 & 3.87 & 3,275,918 & 8.79 & 28.19⏎% & 1.07⏎
+      \sffamily Med. & 1,959,917 & 2.41 & 341,851 & 6.79 & 16.57⏎% & 0.87⏎
+      \sffamily Range & 18,733,399 & 2.08 & 3,200,527 & 3.89 & 17.61⏎% & 0.08⏎
+      \bottomrule
+    \end{tabular}
+  \end{adjustbox}
+\end{table}
+
+This lead us to positively answer to \textbf{RQ1.1}: 
+approximate naturalness of a structurally spartanized code
+is higher than that of the original.
+
+% \begin{table}
+%   \caption{%
+%   Difference between the aggregating statistics for the compression power of the spartanized and the original code.
+%   }
+%   \label{table:difference}
+%   \par\vspace{10pt plus 6pt minus 4pt}
+%   \centering
+%   \begin{adjustbox}{max width = \columnwidth}
+%     \begin{tabular}{l*3r}
+%       \toprule
+%       & \multicolumn1c{\textit{Jack}}
+%       & \multicolumn1c{\textit{Jack+BZip2}}
+%       & \multicolumn1c{\textit{Combined}}⏎
+% %       \cmidrule(r){2-3} \cmidrule(r){4-5} \cmidrule(r){6-6}
+% %       & \textit{Size (bytes)}
+%       & \textit{Powr}
+% %       & \textit{Size (bytes)}
+%       & \textit{Powr}
+%       & \textit{Combined Power}⏎
+%       \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
+% \sffamily  Ave.  & -0.32 & 0.06  & -1.95  \\
+% \sffamily  Min.  &  0.06 & 0.01  &  0.40  \\  
+% \sffamily  Max.  & -8.98 & 0.11  & -55.46 \\
+% \sffamily  Med.  &  0.07 & 0.29  &  0.62  \\
+% \sffamily  Range & -9.04 & 0.10  & -55.86 \\
+%       \bottomrule
+%     \end{tabular}
+%   \end{adjustbox}
+>>>>>>> 5a5252f982bf87d9bd211f7036655fb63439496a
 % \end{table}
 
 % \begin{table}
@@ -435,19 +529,20 @@ probably this results are subject to statistical fluctuations.}
       & \textit{Powr}
       & \textit{Size (bytes)}
       & \textit{Powr}
-      & \textit{Power}⏎
+      & \textit{Combined Power}⏎
       \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
       \sffamily Ave. & 4,947,319 & 2.51 & 713,857 & 6.56 & 16.51⏎
       \sffamily Min. & 430,375 & 1.83 & 75,160 & 4.89 & 10.62⏎
       \sffamily Max. & 18,890,899 & 3.92 & 3,244,851 & 8.72 & 28.28⏎
-      \sffamily Range & 18,460,524 & 2.09 & 3,169,691 & 3.83 & 17.66⏎
       \sffamily Med. & 1,923,056 & 2.46 & 339,930 & 6.70 & 16.66⏎
+      \sffamily Range & 18,460,524 & 2.09 & 3,169,691 & 3.83 & 17.66⏎
       \bottomrule
     \end{tabular}
   \end{adjustbox}
 \end{table}
 
 % \begin{table}
+<<<<<<< HEAD
 % \caption{\label{table:total}%
 % Aggregating statistics of compression power of Jack+BZip2 after
 % automatic structural+renaming spartanization, compared with non-spartanized code.}
@@ -473,12 +568,40 @@ probably this results are subject to statistical fluctuations.}
 % \bottomrule
 % \end{tabular}
 % \end{adjustbox}
+=======
+%   \caption{\label{table:total}%
+%     Aggregating statistics of compression power of Jack+BZip2 after
+%   automatic structural+renaming spartanization, compared with non-spartanized code.}
+%   \par\vspace{10pt plus 6pt minus 4pt}
+%   \centering
+%   \begin{adjustbox}{max width=\columnwidth}
+%     \begin{tabular}{l*5r}
+%       \toprule
+%       & \multicolumn{2}{c}{\textit{Size (bytes)}}
+%       & \textit{Combined Power}
+%       &\multicolumn{2}{c}{\textit{Improvement over}}⏎
+%       \cmidrule(r){2-3} \cmidrule(r){5-6}
+%       & \textit{Jack}
+%       & \textit{Jack+BZip2}
+%       & & \textit{Overall}
+%       & \textit{Partial Spartan.}⏎
+%       \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
+%       \sffamily Ave\@. & 4,947,319 & 713,857 & 6.56 & -0.03 & -0.09⏎
+%       \sffamily Min\@. & 430,375 & 75,160 & 4.89 & -0.40 & -0.28⏎
+%       \sffamily Max\@. & 18,890,899 & 3,244,851 & 8.72 & 0.41 & -0.01⏎
+%       \sffamily Med\@. & 1,923,056 & 339,930 & 6.70 & 0.00 & -0.09⏎
+%       \sffamily Range & 18,460,524 & 3,169,691 & 3.83 & 0.81 & 0.27⏎
+%       \bottomrule
+%     \end{tabular}
+%   \end{adjustbox}
+>>>>>>> 5a5252f982bf87d9bd211f7036655fb63439496a
 % \end{table}
 \subsection{Structural and Renaming Spartanization: Total Spartanization}
 
 \cref{table:nominal} reports the results of the experiment carryed out on
 spartanized code using both structural and renaming spartanization.
 In the following, for sake of brevity, we will refer to this case as \emph{total spartanization}.
+<<<<<<< HEAD
 The third and fourth columns of \cref{table:comparisons-original} report the corresponding
 aggregating statistics of the comparison with the original code, in the case of
 \emph{total spartanization}.
@@ -509,6 +632,38 @@ compression, meaning that total spartanization allowed a better compression of t
   \caption{Aggregating statistics for comparison in compression power and approximete
   naturalness due after \emph{structural spartanization} (first two columns) and
   to \emph{structural} and \emph{renaming} spartanization (last two
+=======
+The third and fourth columns of \cref{table:comparisons-original} report the corresponding 
+aggregating statistics of the comparison with the original code, in the case of 
+\emph{total spartanization}. 
+% This comparison, namely the difference between the compression ratio (approximate naturalness) 
+% and the corresponding values for the original code (as reported in \cref{table:original}), 
+% shows the improvement or decrement of naturalness of the software after spartanization.
+As we can see the majority of the values are negative for both Jack and approximate naturalness, 
+specifically the average values.  
+This result lead us to answer negatively to the \textbf{RQ1.2}: including renaming spartanization 
+did not improved approximate naturalness, at least for what concern the studied dataset.
+
+In order to understand the contribution of renaming spartanization to the total spartanization, 
+we compared compression power and approximate naturalness of the total spartanized code 
+with the same value for structural spartanized code. 
+% in other word the result of the successive application of Jack and BZip2. 
+The results are reported in \cref{table:comparisons-structural}. In this Table we 
+can see that whereas the compression power 
+is lightly improved, the statistics for the approximate naturalness are negative.
+This might suggest that, differently from the structural spartanizations, the renaming ones 
+did not improve the naturalness of code.
+
+The third column of \cref{table:comparisons-structural} show the comparison of the combined
+compression power, namely the result of the application BZip2 to Jacked code, 
+between total and structural spartanization. As we can see there is a net improvement in 
+compression, meaning that the total spartanization led to a better compression of the starting code.
+
+\begin{table}
+  \caption{Aggregating statistics for comparison in compression power and approximete 
+  naturalness due to \emph{structural spartanization} (first two columns) and
+  to \emph{structural} and \emph{renaming} spartanization (last two 
+>>>>>>> 5a5252f982bf87d9bd211f7036655fb63439496a
   columns) if compared with original code.}
   \label{table:comparisons-original}
   \par\vspace{10pt plus 6pt minus 4pt}
@@ -529,11 +684,19 @@ compression, meaning that total spartanization allowed a better compression of t
       & \textit{Jack Powr}
       & \textit{BZip2 after Jack}⏎
       \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
+<<<<<<< HEAD
       \sffamily Ave. & -0.32 & 0.06 & -0.28 & -0.03⏎ % 0.06 & -1.95⏎
       \sffamily Min. & 0.06 & -0.37 & -10.33 & -0.40⏎% 0.01 & 0.40⏎
       \sffamily Max. & -8.98 & 0.49 & 0.21 & 0.41⏎% 0.11 & -55.46⏎
       \sffamily Med. & 0.07 & 0.08 & 0.12 & -0.003⏎ % 0.29 & 0.62⏎
       \sffamily Range & -9.04 & 0.86 & 10.54 & 0.81⏎% 0.10 & -55.86⏎
+=======
+      \sffamily  Ave.  & -0.33 & 0.06  & -0.28  &  -0.03 \\ % 0.06  & -1.95  \\
+      \sffamily  Min.  &  -10.38 & -0.37 & -10.33 &  -0.40 \\% 0.01  &  0.40  \\  
+      \sffamily  Max.  & 0.18 & 0.49  &  0.21  &   0.41 \\% 0.11  & -55.46 \\
+      \sffamily  Med.  &  0.07 & 0.08  &  0.12  & -0.003 \\ % 0.29  &  0.62  \\
+      \sffamily  Range & 10.55 & 0.86  & 10.54  &   0.81 \\% 0.10  & -55.86 \\
+>>>>>>> 5a5252f982bf87d9bd211f7036655fb63439496a
       \bottomrule
     \end{tabular}
   \end{adjustbox}
@@ -544,8 +707,13 @@ compression, meaning that total spartanization allowed a better compression of t
 % both the spartanizations are applied, and the structural only.
 
 \begin{table}
+<<<<<<< HEAD
   \caption{Aggregating statistics for the comparison of the compression power and
   approximate naturaleness between the \emph{Total} spartanization (\emph{Structural} and
+=======
+  \caption{Aggregating statistics for the comparison of the compression power and 
+  approximete naturalness between the \emph{Total} spartanization (\emph{Structural} and 
+>>>>>>> 5a5252f982bf87d9bd211f7036655fb63439496a
   \emph{Renaming} together) and the \emph{structural} only}
   \label{table:comparisons-structural}
   \par\vspace{10pt plus 6pt minus 4pt}
@@ -558,11 +726,19 @@ compression, meaning that total spartanization allowed a better compression of t
       \cmidrule(r){2-4}%\cmidrule(r){4-5} % \cmidrule(r){6-6}
       & \textit{Jack}
       & \textit{BZip2 after Jack}
+<<<<<<< HEAD
       & \textit{Combined}⏎
 % & \textit{Jack Powr}
 % & \textit{BZip2 after Jack}
 % & \textit{Jack Powr}
 % & \textit{BZip2 after Jack}⏎
+=======
+      & \textit{Combined Power}\\
+%       & \textit{Jack Powr}
+%       & \textit{BZip2 after Jack}
+%       & \textit{Jack Powr}
+%       & \textit{BZip2 after Jack}\\
+>>>>>>> 5a5252f982bf87d9bd211f7036655fb63439496a
       \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
 % \sffamily Ave. & & &⏎ % 0.06 & -1.95⏎
 % \sffamily Min. & & &⏎% 0.01 & 0.40⏎
@@ -628,7 +804,7 @@ compression, meaning that total spartanization allowed a better compression of t
 % & \textit{Powr}
 % & \textit{Size (bytes)}
 % & \textit{Powr}
-% & \textit{Power}⏎
+% & \textit{Combined Power}⏎
 % \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
 % \sffamily Ave. & 5,050,647 & 6.66 & 719,488 & 15.88 &⏎
 % \sffamily Min. & 439,825 & 4.90 & 75,391 & 10.58 &⏎
