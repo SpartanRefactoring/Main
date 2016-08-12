@@ -325,36 +325,36 @@ is higher than that of the original.
 %   \end{adjustbox}
 % \end{table}
 
-\begin{table}
-  \caption{(TO BE REMOVED?) CHECK ME I think only last two columns make sense: Aggregating
-  statistics of compression power of Jack+BZip2 after automatic structural
-spartanization, compared with non-spartanized code.}
-  \label{table:structural-comparison}
-  \par\vspace{10pt plus 6pt minus 4pt}
-  \centering
-  \begin{adjustbox}{max width=\columnwidth}
-    \begin{tabular}{l*6r}
-      \toprule
-      & \multicolumn2c{\textit{Size (bytes)}}
-      & \multicolumn2c{\textit{Powr}}
-      & \multicolumn1c{\textit{Improvement}}⏎
-% \cmidrule(r){2-3}\cmidrule(r){4-5} \cmidrule(r){6-6}
-      & \textit{Jack}
-      & \textit{Jack+BZip2}
-      & \textit{BZip2 on Jack}
-      & \textit{Combined}
-      & \textit{with. Spartan}
-      & \textit{total with partial}⏎
-      \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
-      \sffamily Ave. & 5,050,647 & 719,488 & 6.66 & 15.88 & 16.42 & 1.01⏎
-      \sffamily Min. & 439,825 & 75,391 & 4.90 & 10.58 & 10.58 & 0.21⏎
-      \sffamily Max. & 19,173,224 & 3,275,918 & 8.79 & 23.21 & 28.19 & 1.07⏎
-      \sffamily Med. & 1,959,917 & 341,851 & 6.79 & 12.63 & 16.57 & 0.87⏎
-      \sffamily Range & 18,733,399 & 3,200,527 & 3.89 & 15.27 & 17.61 & 1.04⏎
-      \bottomrule
-    \end{tabular}
-  \end{adjustbox}
-\end{table}
+% \begin{table}
+%   \caption{(TO BE REMOVED?) CHECK ME I think only last two columns make sense: Aggregating
+%   statistics of compression power of Jack+BZip2 after automatic structural
+% spartanization, compared with non-spartanized code.}
+%   \label{table:structural-comparison}
+%   \par\vspace{10pt plus 6pt minus 4pt}
+%   \centering
+%   \begin{adjustbox}{max width=\columnwidth}
+%     \begin{tabular}{l*6r}
+%       \toprule
+%       & \multicolumn2c{\textit{Size (bytes)}}
+%       & \multicolumn2c{\textit{Powr}}
+%       & \multicolumn1c{\textit{Improvement}}⏎
+% % \cmidrule(r){2-3}\cmidrule(r){4-5} \cmidrule(r){6-6}
+%       & \textit{Jack}
+%       & \textit{Jack+BZip2}
+%       & \textit{BZip2 on Jack}
+%       & \textit{Combined}
+%       & \textit{with. Spartan}
+%       & \textit{total with partial}⏎
+%       \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
+%       \sffamily Ave. & 5,050,647 & 719,488 & 6.66 & 15.88 & 16.42 & 1.01⏎
+%       \sffamily Min. & 439,825 & 75,391 & 4.90 & 10.58 & 10.58 & 0.21⏎
+%       \sffamily Max. & 19,173,224 & 3,275,918 & 8.79 & 23.21 & 28.19 & 1.07⏎
+%       \sffamily Med. & 1,959,917 & 341,851 & 6.79 & 12.63 & 16.57 & 0.87⏎
+%       \sffamily Range & 18,733,399 & 3,200,527 & 3.89 & 15.27 & 17.61 & 1.04⏎
+%       \bottomrule
+%     \end{tabular}
+%   \end{adjustbox}
+% \end{table}
 
 \subsection{Renaming Spartanization}
 
