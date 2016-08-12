@@ -111,23 +111,28 @@ expressions, and more. All these are drawn from actual code serving in live
 projects.
 
 \subsection{Contribution}
+
 The tendency of style discussions to generate more heat than light, is probably
 the reason that the topic is not frequented by scientists.†{%
   A recent search for coding conventions on ‟Scopus"', yielded almost no papers which
-refer to the topic.} In fear of this controversiality this paper also tries to
-avoid superlatives†{reviewers' comments on failures are doubly
-  appreciated.} to the convention.†{some qualitative discussion of this
-  sort may be found here~\cite{Gil:2010}.} Our main claims are:
+refer to the topic.} In fear of controversiality this paper tries to avoid
+superlatives, non-consensual adjectives, and qualitative judgments†{reviewers'
+comments on failures are doubly appreciated.} to the
+convention.†{some qualitative discussion of this
+  sort may be found here~\cite{Gil:2010}.} 
+  
+ Our main claims are:  
 \begin{enumrate}
-    \item Spartan programming defines measurable values, e.g., size, 
-        number of variables, etc., all derived from common principles
-        qualitative teaching of software engineering, and aims at optimizing these.  \item There is an orderly process of minimizing these values, 
-        and fragments
-        of this process can be, and are, automated.
-    \item As shown in the evaluation section, at least one fragment of this
-      process achieves more regular code, where the term regularity is
+    \item Spartan programming defines measurable values, e.g., size, number of
+      variables, etc., all derived from common qualitative principles
+        software engineering, and aims at minimizing these.  
+    \item There is an orderly process of minimization, 
+      and some of the fragments of this process can be automated.
+      We further present a prototype tool for this automation. 
+    \item as shown in the evaluation section, at least one fragment of this
+      process achieves more regular code, where the term regularity being
       precisely defined.
-\end{enumrate}
+\end{enumerate}
 
 Some recent studies~\cite{%
   Gil:Lalouche:16,%
@@ -180,7 +185,7 @@ process can be automated though.)
 
 In terms of abstract term rewriting, fragments~\textbf{C} and~\textbf{N} are
 more mundane. The \textbf{N} fragment offers rules (wrings) for enforcing the
-lacnonic variale naming convention. It is, determinisic---spartan programming
+laconic variable naming convention. It is, deterministic---spartan programming
 name suggestions are unequivocal. Fragment \textbf{N} is also trivially
 non-size increasing, and reaches a unique normal after a finite number of
 steps. 
@@ -196,4 +201,3 @@ reduces size, but it also makes the resulting code more regular,
 i.e., more compressible than the original. As we shall expalin, 
 not trivial. Results are that~\textbf{S} passes this trial by fire,
 but inconclusive with regard to \textbf{N}. 
-
