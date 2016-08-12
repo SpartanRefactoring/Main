@@ -20,8 +20,8 @@ the three conditions in the conjecture:
       this action is likely to make the result less compressible than the origin. 
     \item Even the plain removal of curly brackets in singleton blocks as
       recommended by one of the battling camps of the braces war, is not guaranteed
-      to improve compressibility. A good predictor is likely to discover that a
-      an opening curly bracket always occurs after the conditional of an \kk{if}. 
+      to improve compressibility. A good predictor is likely to discover that
+      an opening curly bracket always occurs after an \kk{if} in conditional statements. 
       It might become less efficient when this character bracket does not always occur. 
 \end{itemize}
 
@@ -42,7 +42,7 @@ question that concerns us here can be phrased as follows:
   \item[RQ1.] \emph{Is spartan code more natural than non-spartanized code?} also,
         and more concretely,
         \begin{description}
-          \item[RQ1.1.] \emph{Does structural spartanization contribute software naturalness?}
+          \item[RQ1.1.] \emph{Does structural spartanization contribute software naturalness?}\matteo doubt: ``contribute to'' or ``contribute''?
           \item[RQ1.2.] \emph{Does renaming spartanization contribute software naturalness?}
         \end{description}
 \end{description}
@@ -64,7 +64,7 @@ list due to Allamanis and Sutton~\cite{Allamanis:Sutton:13}.
 
 The ‟Size Before” column of \Cref{table:corpus} provides the chief size
 statistics of the constituting artifacts.
-
+%
 \begin{table}
   \caption{\label{table:corpus}%
     Aggregating statistics, over artifacts in the corpus,
@@ -90,15 +90,15 @@ statistics of the constituting artifacts.
     \end{tabular}
   \end{adjustbox}
 \end{table}
-
-Notably, sizes†span more than one
+%
+Notably, sizes span more than one
 order of magnitude, from one megabyte of source to circa~47, the median being
 around five megabytes, the average around twelve. The GL corpus was used before
 for the study of software metrics.  See~\cite{Gil:Lalouche:16,Gil:Lalouche:16b}
 for reproducibility details and for a description of the artifacts' selection
 process. Sufficient to us here is that the selection was independent of the
 current research and that the artifacts are of considerable size, wide use,
-evolution history and, development effort.
+evolution history and development effort.
 
 \subsection{Burrows-Wheeler Compression}
 Compression power is used in this work-in-progress report as a quick estimate
@@ -107,7 +107,7 @@ are similar but not identical: Compression algorithms search (and exploit) the
 input for repetitive patterns of unbounded length, while naturalness limits the
 search to~$n$-grams for some small integer~$n$. The difficulty with applying
 vanilla naturalness measures is that they become prohibitively slow
-for~$n>5$~(say). Alas, patterns of spartanizations, just like refactoring,
+for~$n>5$~(say)\matteo. Alas, patterns of spartanizations, just like refactoring,
 often manipulate many more than~$5$ tokens.
 
 Quality in compression algorithms is measured by \emph{compression power},
@@ -115,14 +115,14 @@ defined as the ratio of uncompressed size to the compressed size. Compression
 power, our \emph{approximate naturalness} should be correlated with
 \emph{original naturalness}, but it distincts from it.
 
-We found that with respect to \Java software the compression power of BZip2 is
-greater than that of GZip. This greater power is probably because Gzip make a
+We found that with respect to \Java software the compression power of BZip2\urlref{http://bzip.org/}
+is greater than that of GZip. This greater power is probably because Gzip make a
 greedy search for repetitions starting at the input's prefix, while BZip2
 starts the search in a broader context, as implied by the Burrows-Wheeler
 algorithm~\cite{Burrows:Wheeler:94}.
 
 The second and third columns of \cref{table:corpus} provide statistics of
-compressed size and compression power of BZip2\urlref{http://bzip.org/}. As in
+compressed size and compression power of BZip2. As in
 the study of naturalness of software, we witness the fact that projects can be
 very different. There is two fold range variation of their associated
 compression power, as there is in their naturalness.
@@ -144,18 +144,18 @@ that form an identifier, or sequence of digits that make a numeric literal.
 
 Jack also eliminates from the \Java code all of the following five: white space
 characters, \kk{package} declaration, \kk{import} directives, comments of all
-sorts, and, the body of all string literals. The assumption here is that each
+sorts and the body of all string literals. The assumption here is that each
 of these is not a product of pure coding effort: White space characters are
 generated and frequently change by automatic code formatting. Also, \kk{import}
-directives are generated and optimized automatically, and are subject to
+directives are generated and optimized automatically and are subject to
 underlying project guideline. Comments also follow their own style, which is
-very different from that of the code, \emph{and}, string literals, at least
+very different from that of the code, \emph{and} string literals, at least
 those with significant content, are ought to be managed by configuration and
 internationalization processes rather than coding per-se.
 Jack currently does not remove unit-tests, but is planned to do so in the
 future.
 
-\Cref{table:virgin} presents the compression power of Jack, BZip, when
+\Cref{table:virgin} presents the compression power of Jack, BZip2, when
 applied after Jack, and the accumulative compression power of Jack and BZip2
 when applied in this order.
 \begin{table}
@@ -200,7 +200,6 @@ ranging from circa 10 fold compression to circa 80 fold. However, the more
 % It means that Jack is not able to compress spartanized code better than in the case of the original
 % code. 
 % It something expected since Spartanization removes
-
 % which reports the difference 
 % in the aggregatint statistics for the Jacked code and for the It is
 % worth to note that we have an improvement in any (???) statistics, in other words the
@@ -238,11 +237,13 @@ We specifically subtract the aggregating statistics of the latter with those rel
 % of the aggragating statistics for the latter, related to 
 % the spartanized code, and the compression power of the original code. 
 
-The first column of \cref{table:difference} regards the application of the Jack algorithm to the spartanized code. 
-As we can see some of the results are negative.
-For example, the average value of the compression power is negative, meaning that the Spartanized Jacked code 
-il less compressed than the original.
-However we are not considering a significative difference.
+The first column of \cref{table:difference} regards the application of the Jack 
+algorithm to the spartanized code. As we can see, although the values 
+are not high, some of these are negative.
+For example, the average value of the compression power is negative, 
+meaning that the Spartanized Jacked code is, on average, less compressed than the original.
+% However, we are not considering a significative difference.
+
 Also the Max value is negative. As a matter of fact the Max value for the Spartanized code is 
 significantly different from the corresponding value in the original, being the latter greater.
 This might be due to the fact that there could be case that Spartanized code 
@@ -291,12 +292,6 @@ is higher than that of the original.
   \end{adjustbox}
 \end{table}
 
-
-
-
-
-
-
 \begin{table}
   \caption{%
   Difference between the aggregating statistics for the compression power of the spartanized and the original code.
@@ -326,6 +321,8 @@ is higher than that of the original.
     \end{tabular}
   \end{adjustbox}
 \end{table}
+
+
 
 \begin{table}
   \caption{(TO BE REMOVED?) CHECK ME I think only last two columns make sense: Aggregating
@@ -360,7 +357,39 @@ spartanization, compared with non-spartanized code.}
 
 \subsection{Renaming Spartanization}
 
+\cref{table:nominal} reports the results of the experiment carryed out on 
+spartanized code using both structural and renaming spartanization.
 
+\begin{table}
+  \caption{Aggregating statistics of compression power of Jack+BZip2 after
+  automatic total (namely \emph{structural} and \emph{naming spartanization}), 
+  compared with non-spartanized code. 
+  }
+  \label{table:nominal}
+  \par\vspace{10pt plus 6pt minus 4pt}
+  \centering
+  \begin{adjustbox}{max width = \columnwidth}
+    \begin{tabular}{l*5r}
+      \toprule
+      & \multicolumn2c{\textit{Jack}}
+      & \multicolumn2c{\textit{BZip2 after Jack}}
+      & \multicolumn1c{\textit{Jack+BZip2}}\\
+      \cmidrule(r){2-3} \cmidrule(r){4-5} \cmidrule(r){6-6}
+      & \textit{Size (bytes)}
+      & \textit{Powr}
+      & \textit{Size (bytes)}
+      & \textit{Powr}
+      & \textit{Power}⏎
+      \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
+      \sffamily  Ave.  & 4,947,319 & 2.51 & 713,857 & 6.56 & 16.51 \\
+      \sffamily  Min.  & 430,375 & 1.83 & 75,160 & 4.89 & 10.62 \\
+      \sffamily  Max.  & 18,890,899 & 3.92 & 3,244,851 & 8.72 & 28.28 \\
+      \sffamily  Range & 18,460,524 & 2.09 & 3,169,691 & 3.83 & 17.66 \\
+      \sffamily  Med.  & 1,923,056 & 2.46 & 339,930 & 6.70 & 16.66 \\
+      \bottomrule
+    \end{tabular}
+  \end{adjustbox}
+\end{table}
 
 \begin{table}
   \caption{\label{table:total}%
@@ -421,35 +450,35 @@ spartanization, compared with non-spartanized code.}
   \end{adjustbox}
 \end{table}
 
-
-\begin{table}
-  \caption{\label{table:structural2}%
-    (TO BE REMOVED?)Aggregating statistics of compression power of Jack+BZip2 after
-  automatic structural spartanization.}
-  \par\vspace{10pt plus 6pt minus 4pt}
-  \centering
-  \begin{adjustbox}{max width = \columnwidth}
-    \begin{tabular}{l*5r}
-      \toprule
-      & \multicolumn2c{\textit{Jack}}
-      & \multicolumn2c{\textit{BZip2 after Jack}}
-      & \multicolumn1c{\textit{Jack+BZip2}}⏎
-      \cmidrule(r){2-3} \cmidrule(r){4-5} \cmidrule(r){6-6}
-      & \textit{Size (bytes)}
-      & \textit{Powr}
-      & \textit{Size (bytes)}
-      & \textit{Powr}
-      & \textit{Power}⏎
-      \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
-      \sffamily  Ave.  & 5,050,647  & 6.66 & 719,488   & 15.88 &  \\
-      \sffamily  Min.  & 439,825    & 4.90 & 75,391    & 10.58 &  \\  
-      \sffamily  Max.  & 19,173,224 & 8.79 & 3,275,918 & 23.21 &  \\
-      \sffamily  Med.  & 1,959,917  & 6.79 & 341,851   & 12.63 &  \\
-      \sffamily  Range & 18,733,399 & 3.89 & 3,200,527 & 15.27 &  \\
-      \bottomrule
-    \end{tabular}
-  \end{adjustbox}
-\end{table}
+% 
+% \begin{table}
+%   \caption{\label{table:structural2}%
+%     (TO BE REMOVED?)Aggregating statistics of compression power of Jack+BZip2 after
+%   automatic structural spartanization.}
+%   \par\vspace{10pt plus 6pt minus 4pt}
+%   \centering
+%   \begin{adjustbox}{max width = \columnwidth}
+%     \begin{tabular}{l*5r}
+%       \toprule
+%       & \multicolumn2c{\textit{Jack}}
+%       & \multicolumn2c{\textit{BZip2 after Jack}}
+%       & \multicolumn1c{\textit{Jack+BZip2}}⏎
+%       \cmidrule(r){2-3} \cmidrule(r){4-5} \cmidrule(r){6-6}
+%       & \textit{Size (bytes)}
+%       & \textit{Powr}
+%       & \textit{Size (bytes)}
+%       & \textit{Powr}
+%       & \textit{Power}⏎
+%       \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
+%       \sffamily  Ave.  & 5,050,647  & 6.66 & 719,488   & 15.88 &  \\
+%       \sffamily  Min.  & 439,825    & 4.90 & 75,391    & 10.58 &  \\  
+%       \sffamily  Max.  & 19,173,224 & 8.79 & 3,275,918 & 23.21 &  \\
+%       \sffamily  Med.  & 1,959,917  & 6.79 & 341,851   & 12.63 &  \\
+%       \sffamily  Range & 18,733,399 & 3.89 & 3,200,527 & 15.27 &  \\
+%       \bottomrule
+%     \end{tabular}
+%   \end{adjustbox}
+% \end{table}
 
 
 % Preliminary results supporting the
