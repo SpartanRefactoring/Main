@@ -93,8 +93,9 @@ not degrade quality as measured by any of minimization ends: LOC, number of
 tokens, nesting level, size of stacked scope, etc., while improving at least
 one of them.
 
-A \emph{structural wring} is a wring that modifies the structure of the code, A
-simple structural wring is the one removing useless \kk{abstract} and
+A \emph{structural wring} is a wring that modifies the structure of the
+code. A simple structural wring is the one removing useless \kk{abstract}
+and
 \kk{public} modifiers from declarations made within an \kk{interface}.
 The application of a chain of structural wrings converts
 \vspace{-2ex}
@@ -110,17 +111,17 @@ if (f() == true) {££
 \end{java}
 & into &
 \begin{java}
-££
-££
+£\relax£ 
+£\relax\relax£ 
   return !f();
 \end{java}
 \end{tabular}
 \end{quote}
 \vspace{-4ex}
 
-This chain includes a wring to remove redundant curly brackets and
-one for the removal of redundant semicolons. Also involved is a wring for the
-conversion of an \kk{if} into to a \emph{ternary} expression (one employing the
+This chain includes a wring to remove redundant curly brackets and one for the
+removal of redundant semicolons. Also involved is a wring for the conversion of
+an \kk{if} into to a \emph{ternary} expression (one employing the
 operator~\cc{$·$?$·$:$·$}), and a wring simplifying of ternary expressions
 involving boolean literals.
 
@@ -371,7 +372,7 @@ public class Test1 {££ // comments and £\kk{import}£ directives omitted for 
         return false; // do not continue to avoid usage info
       }
     });
-  }
+  }££
 }
 \end{code}
   \end{adjustbox}
@@ -426,7 +427,7 @@ Follow the example to appreciate the automatic spartanization process involved:
         lists, sets, etc., \textbf{N1} add an ‟s” to the short letter
         denoting the elements' type. As demonstrated in
         \cref{figure:accumulate} above, the short name of an iterable of a
-        collections of type~\cc{T} is is thus \cc{tss}.
+        collections of type~\cc{T} is thus \cc{tss}.
 
         Abbreviation is limited to only those cases in which short names
         uniquely identifies the variables and there are not more than four of
@@ -617,7 +618,7 @@ The basic transformation rule is:\vspace{-3ex}
 \begin{enumerate}
   \item Notice that the original code is a statement, while the transformed is
         an expression. The transformation can only work if the distributive rule
-        \cref{eq:ternary} can be \textbf{applied}, %. next to to can 
+        \cref{eq:ternary} can be \textbf{applied}, %. Next to can 
         to further push down the ternary operator onto~$S₁$ and~$S₂$ whereby making the transformed into a statement.
   \item Since in many the \kk{else} branch of a wring is missing, the
     spartanization may need to complete it, by transformation rules such as:\vspace{-3ex}
