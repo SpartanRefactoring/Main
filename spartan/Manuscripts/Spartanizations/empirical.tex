@@ -242,7 +242,8 @@ algorithm to the spartanized code. As we can see, although the values
 are not high, some of these are negative.
 For example, the average value of the compression power is negative, 
 meaning that the Spartanized Jacked code is, on average, less compressed than the original.
-However, we are not considering a significative difference.
+% However, we are not considering a significative difference.
+
 Also the Max value is negative. As a matter of fact the Max value for the Spartanized code is 
 significantly different from the corresponding value in the original, being the latter greater.
 This might be due to the fact that there could be case that Spartanized code 
@@ -291,12 +292,6 @@ is higher than that of the original.
   \end{adjustbox}
 \end{table}
 
-
-
-
-
-
-
 \begin{table}
   \caption{%
   Difference between the aggregating statistics for the compression power of the spartanized and the original code.
@@ -326,6 +321,8 @@ is higher than that of the original.
     \end{tabular}
   \end{adjustbox}
 \end{table}
+
+
 
 \begin{table}
   \caption{(TO BE REMOVED?) CHECK ME I think only last two columns make sense: Aggregating
@@ -360,7 +357,39 @@ spartanization, compared with non-spartanized code.}
 
 \subsection{Renaming Spartanization}
 
+\cref{table:nominal} reports the results of the experiment carryed out on 
+spartanized code using both structural and renaming spartanization.
 
+\begin{table}
+  \caption{Aggregating statistics of compression power of Jack+BZip2 after
+  automatic total (namely \emph{structural} and \emph{naming spartanization}), 
+  compared with non-spartanized code. 
+  }
+  \label{table:nominal}
+  \par\vspace{10pt plus 6pt minus 4pt}
+  \centering
+  \begin{adjustbox}{max width = \columnwidth}
+    \begin{tabular}{l*5r}
+      \toprule
+      & \multicolumn2c{\textit{Jack}}
+      & \multicolumn2c{\textit{BZip2 after Jack}}
+      & \multicolumn1c{\textit{Jack+BZip2}}\\
+      \cmidrule(r){2-3} \cmidrule(r){4-5} \cmidrule(r){6-6}
+      & \textit{Size (bytes)}
+      & \textit{Powr}
+      & \textit{Size (bytes)}
+      & \textit{Powr}
+      & \textit{Power}⏎
+      \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
+      \sffamily  Ave.  & 4,947,319 & 2.51 & 713,857 & 6.56 & 16.51 \\
+      \sffamily  Min.  & 430,375 & 1.83 & 75,160 & 4.89 & 10.62 \\
+      \sffamily  Max.  & 18,890,899 & 3.92 & 3,244,851 & 8.72 & 28.28 \\
+      \sffamily  Range & 18,460,524 & 2.09 & 3,169,691 & 3.83 & 17.66 \\
+      \sffamily  Med.  & 1,923,056 & 2.46 & 339,930 & 6.70 & 16.66 \\
+      \bottomrule
+    \end{tabular}
+  \end{adjustbox}
+\end{table}
 
 \begin{table}
   \caption{\label{table:total}%
@@ -421,35 +450,35 @@ spartanization, compared with non-spartanized code.}
   \end{adjustbox}
 \end{table}
 
-
-\begin{table}
-  \caption{\label{table:structural2}%
-    (TO BE REMOVED?)Aggregating statistics of compression power of Jack+BZip2 after
-  automatic structural spartanization.}
-  \par\vspace{10pt plus 6pt minus 4pt}
-  \centering
-  \begin{adjustbox}{max width = \columnwidth}
-    \begin{tabular}{l*5r}
-      \toprule
-      & \multicolumn2c{\textit{Jack}}
-      & \multicolumn2c{\textit{BZip2 after Jack}}
-      & \multicolumn1c{\textit{Jack+BZip2}}⏎
-      \cmidrule(r){2-3} \cmidrule(r){4-5} \cmidrule(r){6-6}
-      & \textit{Size (bytes)}
-      & \textit{Powr}
-      & \textit{Size (bytes)}
-      & \textit{Powr}
-      & \textit{Power}⏎
-      \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
-      \sffamily  Ave.  & 5,050,647  & 6.66 & 719,488   & 15.88 &  \\
-      \sffamily  Min.  & 439,825    & 4.90 & 75,391    & 10.58 &  \\  
-      \sffamily  Max.  & 19,173,224 & 8.79 & 3,275,918 & 23.21 &  \\
-      \sffamily  Med.  & 1,959,917  & 6.79 & 341,851   & 12.63 &  \\
-      \sffamily  Range & 18,733,399 & 3.89 & 3,200,527 & 15.27 &  \\
-      \bottomrule
-    \end{tabular}
-  \end{adjustbox}
-\end{table}
+% 
+% \begin{table}
+%   \caption{\label{table:structural2}%
+%     (TO BE REMOVED?)Aggregating statistics of compression power of Jack+BZip2 after
+%   automatic structural spartanization.}
+%   \par\vspace{10pt plus 6pt minus 4pt}
+%   \centering
+%   \begin{adjustbox}{max width = \columnwidth}
+%     \begin{tabular}{l*5r}
+%       \toprule
+%       & \multicolumn2c{\textit{Jack}}
+%       & \multicolumn2c{\textit{BZip2 after Jack}}
+%       & \multicolumn1c{\textit{Jack+BZip2}}⏎
+%       \cmidrule(r){2-3} \cmidrule(r){4-5} \cmidrule(r){6-6}
+%       & \textit{Size (bytes)}
+%       & \textit{Powr}
+%       & \textit{Size (bytes)}
+%       & \textit{Powr}
+%       & \textit{Power}⏎
+%       \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
+%       \sffamily  Ave.  & 5,050,647  & 6.66 & 719,488   & 15.88 &  \\
+%       \sffamily  Min.  & 439,825    & 4.90 & 75,391    & 10.58 &  \\  
+%       \sffamily  Max.  & 19,173,224 & 8.79 & 3,275,918 & 23.21 &  \\
+%       \sffamily  Med.  & 1,959,917  & 6.79 & 341,851   & 12.63 &  \\
+%       \sffamily  Range & 18,733,399 & 3.89 & 3,200,527 & 15.27 &  \\
+%       \bottomrule
+%     \end{tabular}
+%   \end{adjustbox}
+% \end{table}
 
 
 % Preliminary results supporting the
