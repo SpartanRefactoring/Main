@@ -107,13 +107,13 @@ are similar but not identical: Compression algorithms search (and exploit) the
 input for repetitive patterns of unbounded length, while naturalness limits the
 search to~$n$-grams for some small integer~$n$. The difficulty with applying
 vanilla naturalness measures is that they become prohibitively slow
-for~\mbox{$n>5$}~(say). Alas, the wrings of spartanizations, just like
+for~\mbox{$n>5$}~(say). Alas, the wrings of spartanization, just like
 refactoring, often manipulate many more than~$5$ tokens.
 
 Quality in compression algorithms is measured by \emph{compression power},
 defined as the ratio of uncompressed size to the compressed size. Compression
 power, our \emph{approximate naturalness} should be correlated with
-\emph{original naturalness}, but it distincts from it.
+\emph{original naturalness}, but it distinct from it.
 
 We found that with respect to \Java software the compression power of
 BZip2\urlref{http://bzip.org/} is greater than that of GZip. This greater power
@@ -363,7 +363,6 @@ code is, on average, higher than the original code. Since it represents the pred
 the code written by developers, having removed the boilerplate code using Jack, this
 might suggest that structurally spartanized code is closer to the natural language
 than the original one. That is actually one of the goals of spartan programming. 
->>>>>>> 5a5252f982bf87d9bd211f7036655fb63439496a
 % value of the compression power is negative,
 % meaning that the Spartanized Jacked code is, on average, less compressed than the original.
 % However, we are not considering a significative difference.
@@ -401,9 +400,9 @@ than the original one. That is actually one of the goals of spartan programming.
 % & \multicolumn1c{\textit{Combined}}⏎
 % % \cmidrule(r){2-3} \cmidrule(r){4-5} \cmidrule(r){6-6}
 % % & \textit{Size (bytes)}
-% & \textit{Powr}
+% & \textit{Power}
 % % & \textit{Size (bytes)}
-% & \textit{Powr}
+% & \textit{Power}
 % & \textit{Power}⏎
 % \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
 % \sffamily Ave. & -0.32 & 0.06 & -1.95⏎
@@ -430,9 +429,9 @@ than the original one. That is actually one of the goals of spartan programming.
       & \multicolumn1c{\textit{Jack+BZip2}}⏎
       \cmidrule(r){2-3} \cmidrule(r){4-5} \cmidrule(r){6-6}
       & \textit{Size (bytes)}
-      & \textit{Powr}
+      & \textit{Power}
       & \textit{Size (bytes)}
-      & \textit{Powr}
+      & \textit{Power}
       & \textit{Combined Power}⏎
       \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
       \sffamily Ave. & 5,050,647 & 2.46 & 719,488 & 6.66 & 16.42⏎% & 1.01⏎
@@ -464,9 +463,9 @@ is higher than that of the original.
 %       & \multicolumn1c{\textit{Combined}}⏎
 % %       \cmidrule(r){2-3} \cmidrule(r){4-5} \cmidrule(r){6-6}
 % %       & \textit{Size (bytes)}
-%       & \textit{Powr}
+%       & \textit{Power}
 % %       & \textit{Size (bytes)}
-%       & \textit{Powr}
+%       & \textit{Power}
 %       & \textit{Combined Power}⏎
 %       \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
 % \sffamily  Ave.  & -0.32 & 0.06  & -1.95  \\
@@ -491,7 +490,7 @@ is higher than that of the original.
 % \begin{tabular}{l*6r}
 % \toprule
 % & \multicolumn2c{\textit{Size (bytes)}}
-% & \multicolumn2c{\textit{Powr}}
+% & \multicolumn2c{\textit{Power}}
 % & \multicolumn1c{\textit{Improvement}}⏎
 % % \cmidrule(r){2-3}\cmidrule(r){4-5} \cmidrule(r){6-6}
 % & \textit{Jack}
@@ -525,9 +524,9 @@ is higher than that of the original.
       & \multicolumn1c{\textit{Jack+BZip2}}⏎
       \cmidrule(r){2-3} \cmidrule(r){4-5} \cmidrule(r){6-6}
       & \textit{Size (bytes)}
-      & \textit{Powr}
+      & \textit{Power}
       & \textit{Size (bytes)}
-      & \textit{Powr}
+      & \textit{Power}
       & \textit{Combined Power}⏎
       \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
       \sffamily Ave. & 4,947,319 & 2.51 & 713,857 & 6.56 & 16.51⏎
@@ -678,7 +677,7 @@ compression, meaning that the total spartanization led to a better compression o
 % & \textit{Jack+BZip2}
 % & \textit{BZip2 on Jack}
 % & \textit{Combined}
-      & \textit{Jack Powr}
+      & \textit{Jack Power}
       & \textit{BZip2 after Jack}
       & \textit{Jack Powr}
       & \textit{BZip2 after Jack}⏎
@@ -727,15 +726,15 @@ compression, meaning that the total spartanization led to a better compression o
       & \textit{BZip2 after Jack}
 <<<<<<< HEAD
       & \textit{Combined}⏎
-% & \textit{Jack Powr}
+% & \textit{Jack Power}
 % & \textit{BZip2 after Jack}
-% & \textit{Jack Powr}
+% & \textit{Jack Power}
 % & \textit{BZip2 after Jack}⏎
 =======
       & \textit{Combined Power}\\
-%       & \textit{Jack Powr}
+%       & \textit{Jack Power}
 %       & \textit{BZip2 after Jack}
-%       & \textit{Jack Powr}
+%       & \textit{Jack Power}
 %       & \textit{BZip2 after Jack}\\
 >>>>>>> 5a5252f982bf87d9bd211f7036655fb63439496a
       \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
@@ -765,7 +764,7 @@ compression, meaning that the total spartanization led to a better compression o
 % \begin{tabular}{l*2r}
 % \toprule
 % % & \multicolumn2c{\textit{Size (bytes)}}
-% % & \multicolumn2c{\textit{Powr}}
+% % & \multicolumn2c{\textit{Power}}
 % & \multicolumn2c{\textit{Improvement}}⏎
 % % \cmidrule(r){2-3}\cmidrule(r){4-5} \cmidrule(r){6-6}
 % % & \textit{Jack}
