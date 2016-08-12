@@ -1,3 +1,153 @@
+
+\subsection{Spartan programming}
+
+\begin{quote}
+  ‟Let us change our traditional attitude to the construction of programs:
+  Instead of imagining that our main task is to instruct a computer what to do,
+  let us concentrate rather on explaining to human beings what we want a computer
+  to do…”
+  \begin{flushright}
+   \upshape Donald E Knuth. ‟Literate Programming (1984)”
+  \end{flushright}
+\end{quote}
+
+% The coding guidelines began with a dozen or so printed pages,
+% "a little book of style", which the author handed out to computer science students
+% in the Hebrew university of Jerusalem. The term "Spartan Programming" was coined in 1996,
+% when the author gave a tutorial on "Spartan C++" at the TOOLS (Techniques of Object Oriented
+% Languages and Systems) scientific conference, held in Santa Barbara, CA USA. The guidelines
+% were taught under this name in numerous Technion courses since then.
+
+% This manuscript present
+‟Spartan Programming” is a programming methodology whose driving principles are
+minimalism and simplicity. It combines several techniques,
+some already reported in the literature, some other novel, that are applied
+with the aim of reducing
+% and combines them in a systematic
+% way to reduce
+simultaneously many different measures of complexity.
+In other words, a ‟Spartan programmer” strive
+to achieve an extreme minimalism and simplicity, by breaking
+the code in simple modules.
+It is worth to note that it is not a just code style - it is in fact a \emph{programming style}.
+The code that emerges as a result of the application of the rules of the
+Spartan Programming appears more elegant reminding, to a certain extent
+functional more than imperative programming.
+
+% Even if it can be seen as one of the many code styles available,
+% Spartan Programming differs from all of them
+% because of its unifying principle of minimalism and simplicity.
+
+The definition of ‟Spartan Programming” first occurred in a tutorial taken at
+the TOOLS (Techniques of Object Oriented Languages and Systems) scientific conference,
+held in Santa Barbara, CA USA. % in in a stupid TOOLS USA 199X. tutorial.D
+The aim was to present a rational approach to programming by examining all the previous
+assumptions about how to code.
+
+\emph{point of making and perfecting it was to "be rational" and
+reexamine all assumptions.}
+
+\emph{Rules have changed.
+Utter despise of backward compatibility the need to rewrite the code.
+Mention it.}
+
+% The spartanization tool.
+
+However, being in a certain sense, counter intuitive, in order to apply
+Spartanization on their working routines, the developers need to respect a
+firm discipline. From a certain standpoint, Spartan Programming might be
+seen as a list of code style prescription, but it would just scratch the
+surface. It is far more than that, since it.
+
+Spartanization principles were implemented in a tool automatically apply code
+transformation to \emph{spartanize} the code, namely transformation of codes
+according to the spartan rules, has been developed.
+This tools works for \Java code and it is implemented as a plugin for the
+Eclipse\urlref{https://eclipse.org/} IDE\@. It is available through the Eclipse
+marketplace\urlref{https://marketplace.eclipse.org/}
+
+% Say that some of your alma mater gang love to do this kind of metrics, but
+% no one really knows whether the results are applicable to different projects
+% since~\cite{Turnu:Concas:Marchesi:Tonelli:11}
+
+% The ‟Idiosyncratic Projects Hypothesis” I also had a plateau paper with
+% Dany and Maayan about this. A number o years ago.~\cite{Gil:2011:Goldstein:Moshkovich:2011}
+
+\subsection{Contribution}
+
+The present manuscript makes the following contributions:
+
+% \textbf{(the following text has been adapted by the wiki)}
+
+This paper gives an overview of spartanization, future work will be
+experiments.
+
+Mention that wrings are optimistic, generally safe, but not bullet proof.
+
+Spartan Programming style favour laconic expression over the verbose, leading
+to a code that is (sometimes extremely) minimized. For this reason, spartanized
+code might be less readable that the original. However, code readability is not
+one of the main concern of Spartan Programming. All that said, to a certain
+extent, spartan(ized) code might look a little bit ‟scary” to developers not
+accustomed to it.
+
+In the following, we are presenting some examples of Spartan
+Programming %
+All of them are taken from the source code of the Spartan Refactoring Plugin
+for Eclipse that has been introduced in \cref{section:eclipse}. This code was
+developed following the spartan programming rules since the beginning.This manuscript present ‟Spartan Programming”, a programming methodology
+whose main goal is to keep code simple and minimalistic in order to make it
+mantainable and elegant.
+
+It style based on many techniques, including some already reported in the literature and novel
+ones and combines them in a systematic way to reduce simultaneously many
+different measures of complexity. In other words, a Spartan programmer strive
+to achieve an extreme minimalism and simplicity. Even if it can be seen as one
+of the many code styles available, Spartan Programming differs from all of them
+because of its unifying principle of minimalism and simplicity.
+
+We are definitely far from having achieved the achieve the ‟holy grail” of
+‟canonical representation of code”.
+However we consider Spartan programming is a possible way to engage this endavour and
+also a very little step towards is achievement.
+
+The alleged \emph{nonchalance} shown by the scientific community towards the
+investigation of a rationale approach to the problem of defining effective code
+conventions, might be related to the fact that when it comes to code styling
+most of the dialectic efforts are devoted to make each personal preferences
+prevail against the others.
+
+On the other hand, code conventions are considered a worthwhile issue during
+the development process, otherwise we would not find style guides for principal
+programming languages (\Java, \CC, etc.) and promoted by the major players in
+the ITC arena worldwide, like
+Oracle\urlref{http://www.oracle.com/technetwork/java/codeconvtoc-136057.html}
+and Google\urlref{https://google.github.io/styleguide/javaguide.html}.
+
+\textbf{But where these styles a matter of a careful and rational design
+  process?
+What were the underlying principles.}
+
+
+% The following scenarios might be helpful to clarify this point.
+% \begin{itemize}
+% % \item Developers would certainly find easy to write code in their own style. However, software
+% % development is carried out in a collaborative environment and developers works together on
+% % the same files. Adjusting the code to others style require a certain effort and it is time consuming.
+% % Waste of neurons.
+% % \item A common task performed during software development is code comparison.
+% % Since part of the changes might be due to stylistic reasons, it is mandatory to distinguish the
+% % semantically sensitive changes from the stylistic ones.
+% % Which part of my change is semantically and which
+% % part of this my own personal style.
+% % \item Also code analysis tools should adjust to different styles, since there are many
+% % different ways for doing the same thing.
+% % \item Code conventions might affect several metrics. The number of lines of code (LOC) or the number of
+% % tokes (NOT) are influenced by coding styles. In a recent one of the author demonstrated that size
+% % is the only thing that matters~\cite{Gil:Lalouche:16}.
+% % Moreover, the same notion of size has been shown to be very different in different projects~\cite{Gil:Lalouche:16}.
+% \end{itemize}
+
 The code can be
 further polished and spartanized by method extraction and other refactoring.
 For now, we concentrate on the automatic spartanization, which as explained

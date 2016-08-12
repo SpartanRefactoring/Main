@@ -96,7 +96,7 @@ The code in the figure is drawn from a fluent API module\urlref{%
 } which makes it possible to write fluent snippets
 such as \[
   \begin{multlined}
-    \text{\cc{accumulate.to(myCollection).add(x).}}\\
+    \text{\cc{accumulate.to(myCollection).add(x).}}⏎
     \text{\cc{.add(y).addAll(anotherCollection)}}.
   \end{multlined}
 \]
@@ -110,207 +110,94 @@ code below demonstrate use of the ternary conditional operator, boolean
 expressions, and more. All these are drawn from actual code serving in live
 projects.
 
-The tendency of style discussions to generate more heat than light, is perhaps
-the reason that the topic is not frequented by scientists.\footnote{% A recent
-  search for coding conventions on ``Scopus"', yielded almost no papers which
-refer to the topic.} In fear of this controversiality this paper also tries to
-avoid  superlatives \footnote{reviewers' comments on failures are doubly
-  appreciated.} to the convention.\footnote{some qualitative discussion of this 
-  sort may be found here~\cite{Gil:2010}.} Our main claims are: 
+\subsection{Contribution}
+
+The tendency of style discussions to generate more heat than light, is probably
+the reason that the topic is not frequented by scientists.†{%
+  A recent search for coding conventions on ‟Scopus"', yielded almost no papers which
+refer to the topic.} In fear of controversiality this paper tries to avoid
+superlatives, non-consensual adjectives, and qualitative judgments†{reviewers'
+comments on failures are doubly appreciated.} to the
+convention.†{some qualitative discussion of this
+  sort may be found here~\cite{Gil:2010}.} 
+  
+ Our main claims are:  
 \begin{enumerate}
-    \item spartan programming defines measurable ends, derived from 
-      accepted principles, and aims at optimizing these
-    \item there is an orderly process to optimize these ends, 
+    \item Spartan programming defines measurable values, e.g., size, number of
+      variables, etc., all derived from common qualitative principles
+        software engineering, and aims at minimizing these.  
+    \item There is an orderly process of minimization, 
+      and some of the fragments of this process can be automated.
+      We further present a prototype tool for this automation. 
     \item as shown in the evaluation section, at least one fragment of this
-      process achieves more regular code, where the term regularity is
+      process achieves more regular code, where the term regularity being
       precisely defined.
 \end{enumerate}
 
-Another
-% \item 
-automatic spartanization, accompanied by the ``Jack'' tool,
-        described below, may be applicable for normalizing for different
-        style
+Some recent studies~\cite{%
+  Gil:Lalouche:16,%
+  Goldstein:Moshkovich:2011,
+  Zhang:Zheng:Ying:Hassan:2016,
+} show that not only individual programmers follow their own programming style,
+but also that code style is characteristic of software projects as a whole. It
+was also shown that even plain size metrics such as LOC and NOT (number of
+tokes NOT) must be normalized for project's idiosyncrasies before making
+inter-project comparisons.
 
-Generally speaking, developers would certainly find easy to write code in their own style.
-However, software development is carried out in a collaborative environment and developers
-works together on the same files. Adjusting the code to others style require a certain effort
-and it is time consuming. A common task performed during software development is code comparison.
-Since part of the changes might be due to stylistic reasons, it is mandatory to distinguish the
-semantically sensitive changes from the stylistic ones.
-Also code analysis tools should adjust to different styles, since there are many
-different ways for doing the same thing.
-Code conventions might affect several metrics. The number of lines of code
-(LOC) or the number of tokes (NOT) are influenced by coding styles (i.e.,
-number of spaces, indentation, etc.). Code style might affect the project size
-metrics, that has been proved to be different in different (‟Idiosyncratic
-Projects
-Hypothesis”)~\cite{Gil:Lalouche:16}~\cite{Gil:2011:Goldstein:Moshkovich:2011}
-% In a recent one of the author demonstrated that size is the only thing that matters~\cite{Gil:Lalouche:16}.
-% Moreover, the same notion of size has been shown to be very different in different projects~.
-
-% Why should this be important?
-% The following scenarios might be helpful to clarify this point.
-% \begin{itemize}
-% % \item Developers would certainly find easy to write code in their own style. However, software
-% % development is carried out in a collaborative environment and developers works together on
-% % the same files. Adjusting the code to others style require a certain effort and it is time consuming.
-% % Waste of neurons.
-% % \item A common task performed during software development is code comparison.
-% % Since part of the changes might be due to stylistic reasons, it is mandatory to distinguish the
-% % semantically sensitive changes from the stylistic ones.
-% % Which part of my change is semantically and which
-% % part of this my own personal style.
-% % \item Also code analysis tools should adjust to different styles, since there are many
-% % different ways for doing the same thing.
-% % \item Code conventions might affect several metrics. The number of lines of code (LOC) or the number of
-% % tokes (NOT) are influenced by coding styles. In a recent one of the author demonstrated that size
-% % is the only thing that matters~\cite{Gil:Lalouche:16}.
-% % Moreover, the same notion of size has been shown to be very different in different projects~\cite{Gil:Lalouche:16}.
-% \end{itemize}
-
-This manuscript present ‟Spartan Programming”, a programming methodology
-whose main goal is to keep code simple and minimalistic in order to make it
-mantainable and elegant.
-
-It style based on many techniques, including some already reported in the literature and novel
-ones and combines them in a systematic way to reduce simultaneously many
-different measures of complexity. In other words, a Spartan programmer strive
-to achieve an extreme minimalism and simplicity. Even if it can be seen as one
-of the many code styles available, Spartan Programming differs from all of them
-because of its unifying principle of minimalism and simplicity.
-
-We are definitely far from having achieved the achieve the ‟holy grail” of
-‟canonical representation of code”.
-However we consider Spartan programming is a possible way to engage this endavour and
-also a very little step towards is achievement.
-
-% Does LOC mean anything? Not if you apply different indentation rules.
-% This manuscript reports in
-
-\subsection{Background}
-
-The alleged \emph{nonchalance} shown by the scientific community towards the
-investigation of a rationale approach to the problem of defining effective code
-conventions, might be related to the fact that when it comes to code styling
-most of the dialectic efforts are devoted to make each personal preferences
-prevail against the others.
-
-On the other hand, code conventions are considered a worthwhile issue during
-the development process, otherwise we would not find style guides for principal
-programming languages (\Java, \CC, etc.) and promoted by the major players in
-the ITC arena worldwide, like
-Oracle\urlref{http://www.oracle.com/technetwork/java/codeconvtoc-136057.html}
-and Google\urlref{https://google.github.io/styleguide/javaguide.html}.
-
-\textbf{But where these styles a matter of a careful and rational design
-  process?
-What were the underlying principles.}
+Another potential contribution of the present work is in the description of an
+automated process for generating a ‟canonical” version of code which
+compensates for many of these differences.  Code canonization is achieved by
+automatic spartanization, followed by the application of the ``Jack'' tool
+(described below), yields code clean from many marks of personal and project
+variations, including indentation, variable names, etc., use of conditionals,
+variables, etc.
 
 Hindle et alii~\cite{Hindle:Bar:Su:Gabel:Devanbu:12} analyzed a large corpus of
-Java software systems, using an approach based on Natural Language Processing (NLP).
-They specifically used the n-gram model as a linguistic model to analyze source code
-and then they compare the feature of the code corpus with those of corpus
-written in natural language. They found meaningful differences, but the most interesting
-one is that code affected by bugs differ more from natural language that the bug free.
+Java software systems, using an approach based on Natural Language Processing
+(NLP).  They specifically used the $n$-gram model as a linguistic model to
+analyze source code and then they compare the feature of the code corpus with
+those of corpus written in natural language. One interesting finding of theirs
+is that that buggy code tends to resemble less the rest of the code, or less
+natural. Our empirical study employs a related notion, \emph{code regularity}
+which was demonstrated to be associated with
+readability~\cite{Jbara:Feitelson:14}.
 
-Last paragraph: many people believe that style is irrelevant and unimportant.
-We believe that it is.
+\subsection{Spartanization and Abstract Rewriting Systems}
 
-\subsection{Spartan programming}
+There are four fragments to the spartanization process: \textbf{S}-structural,
+\textbf{N}-nominal, \textbf{C}-cleanup, and \textbf{M}-modular. All four might
+be thought of as abstract rewriting systems (ASR), more specifically, term
+rewrite system. In each fragment, rewrite rules are non-deterministically
+selected and applied to the code's AST. 
 
-\begin{quote}
-  ‟Let us change our traditional attitude to the construction of programs:
-  Instead of imagining that our main task is to instruct a computer what to do,
-  let us concentrate rather on explaining to human beings what we want a computer
-  to do…”
-  \begin{flushright}
-   \upshape Donald E Knuth. ‟Literate Programming (1984)”
-  \end{flushright}
-\end{quote}
+From a theoretical perspective the most interesting fragment is \textbf{S},
+dealing with structural transformations, including, but not limited to, removal
+of braces, early returns, inlining etc.  The fragment is unique in being both
+non-etherian and non-confluent, i.e., there is no infinite chain of rewrites,
+but there is no single normal form.  Termination is guaranteed, since each rule
+(wring in the spartan lingo) is reducing (with respect to the minimization
+ends) 
 
-% The coding guidelines began with a dozen or so printed pages,
-% "a little book of style", which the author handed out to computer science students
-% in the Hebrew university of Jerusalem. The term "Spartan Programming" was coined in 1996,
-% when the author gave a tutorial on "Spartan C++" at the TOOLS (Techniques of Object Oriented
-% Languages and Systems) scientific conference, held in Santa Barbara, CA USA. The guidelines
-% were taught under this name in numerous Technion courses since then.
+In contrast, the \textbf{M}-modular fragment is (at this stage) more of a
+recommendation to humans to creatively employ method extraction, and in some
+cases inlining, to achieve the spartan look. (We believe that some of this
+process can be automated though.) 
 
-% This manuscript present
-‟Spartan Programming” is a programming methodology whose driving principles are
-minimalism and simplicity. It combines several techniques,
-some already reported in the literature, some other novel, that are applied
-with the aim of reducing
-% and combines them in a systematic
-% way to reduce
-simultaneously many different measures of complexity.
-In other words, a ‟Spartan programmer” strive
-to achieve an extreme minimalism and simplicity, by breaking
-the code in simple modules.
-It is worth to note that it is not a just code style - it is in fact a \emph{programming style}.
-The code that emerges as a result of the application of the rules of the
-Spartan Programming appears more elegant reminding, to a certain extent
-functional more than imperative programming.
+In terms of abstract term rewriting, fragments~\textbf{C} and~\textbf{N} are
+more mundane. The \textbf{N} fragment offers rules (wrings) for enforcing the
+laconic variable naming convention. It is, deterministic---spartan programming
+name suggestions are unequivocal. Fragment \textbf{N} is also trivially
+non-size increasing, and reaches a unique normal after a finite number of
+steps. 
 
-% Even if it can be seen as one of the many code styles available,
-% Spartan Programming differs from all of them
-% because of its unifying principle of minimalism and simplicity.
+Least important is the non-essential~\textbf{C} fragment, which relies on an
+external tool for making, not necessarily size decreasing, transformation of
+the code in attempt to reduce the number of warnings. In our
+implementation,~\textbf{C} is realized with the Eclipse cleanup tools.
 
-The definition of ‟Spartan Programming” first occurred in a tutorial taken at
-the TOOLS (Techniques of Object Oriented Languages and Systems) scientific conference,
-held in Santa Barbara, CA USA. % in in a stupid TOOLS USA 199X. tutorial.D
-The aim was to present a rational approach to programming by examining all the previous
-assumptions about how to code.
-
-\emph{point of making and perfecting it was to "be rational" and
-reexamine all assumptions.}
-
-\emph{Rules have changed.
-Utter despise of backward compatibility the need to rewrite the code.
-Mention it.}
-
-% The spartanization tool.
-
-However, being in a certain sense, counter intuitive, in order to apply
-Spartanization on their working routines, the developers need to respect a
-firm discipline. From a certain standpoint, Spartan Programming might be
-seen as a list of code style prescription, but it would just scratch the
-surface. It is far more than that, since it.
-
-Spartanization principles were implemented in a tool automatically apply code
-transformation to \emph{spartanize} the code, namely transformation of codes
-according to the spartan rules, has been developed.
-This tools works for \Java code and it is implemented as a plugin for the
-Eclipse\urlref{https://eclipse.org/} IDE\@. It is available through the Eclipse
-marketplace\urlref{https://marketplace.eclipse.org/}
-
-% Say that some of your alma mater gang love to do this kind of metrics, but
-% no one really knows whether the results are applicable to different projects
-% since~\cite{Turnu:Concas:Marchesi:Tonelli:11}
-
-% The ‟Idiosyncratic Projects Hypothesis” I also had a plateau paper with
-% Dany and Maayan about this. A number o years ago.~\cite{Gil:2011:Goldstein:Moshkovich:2011}
-
-\subsection{Contribution}
-
-The present manuscript makes the following contributions:
-
-% \textbf{(the following text has been adapted by the wiki)}
-
-This paper gives an overview of spartanization, future work will be
-experiments.
-
-Mention that wrings are optimistic, generally safe, but not bullet proof.
-
-Spartan Programming style favour laconic expression over the verbose, leading
-to a code that is (sometimes extremely) minimized. For this reason, spartanized
-code might be less readable that the original. However, code readability is not
-one of the main concern of Spartan Programming. All that said, to a certain
-extent, spartan(ized) code might look a little bit ‟scary” to developers not
-accustomed to it.
-
-In the following, we are presenting some examples of Spartan
-Programming %
-All of them are taken from the source code of the Spartan Refactoring Plugin
-for Eclipse that has been introduced in \cref{section:eclipse}. This code was
-developed following the spartan programming rules since the beginning.
+The evaluation part here is concerned with fragments~\textbf{S} 
+and~\textbf{N}.  The expectation is that spartanization not only 
+reduces size, but it also makes the resulting code more regular,
+i.e., more compressible than the original. As we shall expalin, 
+not trivial. Results are that~\textbf{S} passes this trial by fire,
+but inconclusive with regard to \textbf{N}. 
