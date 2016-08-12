@@ -253,11 +253,16 @@ that there is a significant difference, for some projects, in the degree of comp
 that Jack might achieved on spartanized code. 
 
 The second column of \cref{table:comparisons-original}, on the contrary, reports only 
-positive values. This means that the approximante naturaleness of structurally spartanized
-code is higher than the original code. Since it represents the predictability of
+one negative values, related to the minimum value for the difference of the compression power. 
+It means that at least in one case the approximate naturaless was worse in tre 
+structurally spartanized code. The fact that the average value is positive implies that 
+that the approximante naturaleness of structurally spartanized
+code is, on average, higher than the original code. Since it represents the predictability of
 the code written by developers, having removed the boilerplate code using Jack, this
 might suggest that structurally spartanized code is closer to the natural language
-than the original one. 
+than the original one. That is actually one of the goals of spartan programming. 
+\textbf{However, it is worth to mention that the average value is quite small (0.06) so 
+probably this results are subject to statistical fluctuations.}
 % value of the compression power is negative,
 % meaning that the Spartanized Jacked code is, on average, less compressed than the original.
 % However, we are not considering a significative difference.
@@ -276,10 +281,8 @@ than the original one.
 % This can be explained if we take into account the fact that Spartanization removes some
 % of the elements that are removed also by Jack.
 
-The second column of the same Table regards the approximate naturalness of the
-spartanized jacked code. All difference are positive, implying the
-answer to \textbf{RQ1.1}: approximate naturalness of a structurally spartanized code
-is higher than that of the original.
+% The second column of the same Table regards the approximate naturalness of the
+% spartanized jacked code. All difference are positive, implying the
 
 \begin{table}
   \caption{Aggregating statistics of compression power of Jack+BZip2 after
@@ -311,6 +314,9 @@ is higher than that of the original.
   \end{adjustbox}
 \end{table}
 
+This lead us to positively answer to \textbf{RQ1.1}: 
+approximate naturalness of a structurally spartanized code
+is higher than that of the original.
 
 % \begin{table}
 %   \caption{%
@@ -373,14 +379,11 @@ is higher than that of the original.
 %   \end{adjustbox}
 % \end{table}
 
-\subsection{Renaming Spartanization}
 
-\cref{table:nominal} reports the results of the experiment carryed out on
-spartanized code using both structural and renaming spartanization.
 
 \begin{table}
   \caption{Aggregating statistics of compression power of Jack+BZip2 after
-  automatic \emph{Total}, compared with non-spartanized code.}
+  automatic \emph{total spartanization}, compared with non-spartanized code.}
   \label{table:nominal}
   \par\vspace{10pt plus 6pt minus 4pt}
   \centering
@@ -434,12 +437,36 @@ spartanized code using both structural and renaming spartanization.
 %     \end{tabular}
 %   \end{adjustbox}
 % \end{table}
+\subsection{Structural and Renaming Spartanization: Total Spartanization}
 
-\cref{table:comparisons-original} shows the aggregating statistics for a comparison between 
-the compression power and the approximente naturalness. This comparison, namely the difference
-between the compression ration (approximate naturaleness) and the corresponding values
-for the original code (as reported in \cref{table:original}), shows the improvement or decrement
-of naturaleness of the software after spartanization.
+\cref{table:nominal} reports the results of the experiment carryed out on
+spartanized code using both structural and renaming spartanization.
+In the following, for sake of brevity, we will refer to this case as \emph{total spartanization}.
+The third and fourth columns of \cref{table:comparisons-original} report the corresponding 
+aggregating statistics of the comparison with the original code, in the case of 
+\emph{total spartanization}. 
+% This comparison, namely the difference between the compression ratio (approximate naturaleness) 
+% and the corresponding values for the original code (as reported in \cref{table:original}), 
+% shows the improvement or decrement of naturaleness of the software after spartanization.
+As we can see the majority of the values are negative for both Jack and approximate naturaleness, 
+specifically the average values. As well as reported in the previous section, it is worth not note that 
+these values are quite small. 
+This result lead us to answer negatively to the \textbf{RQ1.2}: including renaming spartanization 
+did not improved approximate naturaleness.
+
+In order to understand the contribution of renaming spartanization to the total spartanization, 
+we compared compression power and approximate naturaleness of the total spartanized code 
+with the same value for structural spartanized code. 
+% in other word the result of the successive application of Jack and BZip2. 
+The results are reported in \cref{table:comparisons-structural}. In this Table we 
+can see that wheres the compression power (related to the Jack performance) 
+is lightly improved, the statistics for the approximate naturaleness are negative.
+This might suggest that, differently from the structural spartanizations, the renaming one 
+do not improve naturaleness of code.
+The third column of \cref{table:comparisons-structural} show the comparison of the combined
+compression power, namely the result of the successive application of Jack and BZip2, 
+between total and structural spartanization. As we can see there is a net improvement in 
+compression, meaning that total spartanization allowed a better compression of the starting code.
 
 \begin{table}
   \caption{Aggregating statistics for comparison in compression power and approximete 
@@ -475,9 +502,9 @@ of naturaleness of the software after spartanization.
   \end{adjustbox}
 \end{table}
 
-\cref{table:comparisons-structura} shows the aggregating statistics for the comparison of  
-the compression power and the approximente naturalness between the two case: Total, when 
-both the spartanizations are applied, and the structural only.
+% \cref{table:comparisons-structura} shows the aggregating statistics for the comparison of  
+% the compression power and the approximente naturalness between the two case: Total, when 
+% both the spartanizations are applied, and the structural only.
 
 \begin{table}
   \caption{Aggregating statistics for the comparison of the compression power and 
