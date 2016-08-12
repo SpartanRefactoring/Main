@@ -42,7 +42,7 @@ question that concerns us here can be phrased as follows:
   \item[RQ1.] \emph{Is spartan code more natural than non-spartanized code?} also,
         and more concretely,
         \begin{description}
-          \item[RQ1.1.] \emph{Does structural spartanization contribute software naturalness?}\matteo doubt: ``contribute to'' or ``contribute''?
+          \item[RQ1.1.] \emph{Does structural spartanization contribute to software naturalness?}
           \item[RQ1.2.] \emph{Does renaming spartanization contribute software naturalness?}
         \end{description}
 \end{description}
@@ -107,19 +107,20 @@ are similar but not identical: Compression algorithms search (and exploit) the
 input for repetitive patterns of unbounded length, while naturalness limits the
 search to~$n$-grams for some small integer~$n$. The difficulty with applying
 vanilla naturalness measures is that they become prohibitively slow
-for~$n>5$~(say)\matteo. Alas, patterns of spartanizations, just like refactoring,
-often manipulate many more than~$5$ tokens.
+for~$n>5$~(say)\matteo\verb+citation?non essential+. Alas, patterns of
+spartanizations, just like refactoring, often manipulate many more than~$5$
+tokens.
 
 Quality in compression algorithms is measured by \emph{compression power},
 defined as the ratio of uncompressed size to the compressed size. Compression
 power, our \emph{approximate naturalness} should be correlated with
 \emph{original naturalness}, but it distincts from it.
 
-We found that with respect to \Java software the compression power of BZip2\urlref{http://bzip.org/}
-is greater than that of GZip. This greater power is probably because Gzip make a
-greedy search for repetitions starting at the input's prefix, while BZip2
-starts the search in a broader context, as implied by the Burrows-Wheeler
-algorithm~\cite{Burrows:Wheeler:94}.
+We found that with respect to \Java software the compression power of
+BZip2\urlref{http://bzip.org/} is greater than that of GZip. This greater power
+is probably because Gzip makes a greedy search for repetitions starting at the
+beginning of the input, while BZip2 starts the search in a broader context, as
+implied by the Burrows-Wheeler algorithm~\cite{Burrows:Wheeler:94}.
 
 The second and third columns of \cref{table:corpus} provide statistics of
 compressed size and compression power of BZip2. As in
