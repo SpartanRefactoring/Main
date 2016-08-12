@@ -54,10 +54,10 @@ guideline†{Since it was first described~\cite{TOOLS:98:Santa:Barbara}
   manuscript is also likely to be contentious. Perhaps even more so after
 witnessing some spartanized code such as in \cref{figure:accumulate}, which
 make look look bizarre to the unaccustomed eye, and very different from
-traditional \Java code.
+traditional production \Java code.
 
 \begin{figure}
-\caption{\label{figure:aaccumulate}
+\caption{\label{figure:accumulate}
   Some functions from interface \cc{accumulate},
   used for fluent API in the spartan library (abbreviated).
   }
@@ -105,24 +105,31 @@ return type, generic parameters, modifiers and annotations are omitted.
 
 Worthy of note in \cref{figure:accumulate} are the concise (some may say
 cryptic) method bodies, the small number of parameters, and the short names of
-variables and parameters. Other examples of spartan code below demonstrate use
-of the ternary conditional operator, boolean expressions.
+variables and parameters. Other examples of, perhaps even stranger, spartan
+code below demonstrate use of the ternary conditional operator, boolean
+expressions, and more. All these are drawn from actual code serving in live
+projects.
 
-Despite the fact that coding style is a topic that might lead developers to
-engage heated discussions, to the best of the authors' knowledge, there is
-actually very little scientific work on that. If one queries for ‟code
-conventions”†{The search was performed on August 2016 on text, abstract and
-keywords and restraining the outcomes to the ‟Computer Science” disciplinary
-area} on Scopus\urlref{http://scopus.org}, one of the most important
-bibliographic databases, what it comes out is around thousands of results.
-However, very few of them have \kk{code conventions} among they keywords and
-deal with code conventions
+The tendency of style discussions to generate more heat than light, is perhaps
+the reason that the topic is not frequented by scientists.\footnote{% A recent
+  search for coding conventions on ``Scopus"', yielded almost no papers which
+refer to the topic.} In fear of this controversiality this paper also tries to
+avoid  superlatives \footnote{reviewers' comments on failures are doubly
+  appreciated.} to the convention.\footnote{some qualitative discussion of this 
+  sort may be found here~\cite{Gil:2010}.} Our main claims are: 
+\begin{enumrate}
+    \item spartan programming defines measurable ends, derived from 
+      accepted principles, and aims at optimizing these
+    \item there is an orderly process to optimize these ends, 
+    \item as shown in the evaluation section, at least one fragment of this
+      process achieves more regular code, where the term regularity is
+      precisely defined.
+\end{enumrate}
 
-It seems that both practitioners and researchers perceive code style something
-unrelated to other most sensitive issues, such as the design and productivity.
-
-On the contrary, we consider that code style might have a significant impact on the
-design of code and also on its quality~\cite{Gil:2010}.
+Another
+\item automatic spartanization, accompanied by the ``Jack'' tool,
+        described below, may be applicable for normalizing for different
+        style
 
 Generally speaking, developers would certainly find easy to write code in their own style.
 However, software development is carried out in a collaborative environment and developers
@@ -230,7 +237,7 @@ We believe that it is.
 
 % This manuscript present
 ‟Spartan Programming” is a programming methodology whose driving principles are
-minimalism and simplicity. It combines seveal techniques,
+minimalism and simplicity. It combines several techniques,
 some already reported in the literature, some other novel, that are applied
 with the aim of reducing
 % and combines them in a systematic
@@ -293,10 +300,6 @@ This paper gives an overview of spartanization, future work will be
 experiments.
 
 Mention that wrings are optimistic, generally safe, but not bullet proof.
-
-In the code reported in \cref{figure:shock-2} we can see ... .
-
-Finally in \cref{figure:shock-3} it is possible to see that…
 
 Spartan Programming style favour laconic expression over the verbose, leading
 to a code that is (sometimes extremely) minimized. For this reason, spartanized
