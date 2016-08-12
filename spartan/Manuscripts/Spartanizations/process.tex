@@ -155,12 +155,12 @@ as the automatic addition of \cc{@Override} annotation may increase size as well
 Also, typically method extraction and other modular transformations increases
 code size, be it measured in lines, tokens, characters or bytes.
 
-Thus, there are four components to the spartanization process:
+Thus, there are four fragments to the spartanization process:
 \emph{\textbf{(i)}} structural,
 \emph{\textbf{(ii)}} nominal,
 \emph{\textbf{(iii)}} cleanup, and,
 \emph{\textbf{(iv)}} modular.
-Current technology can automate all but the last component;
+Current technology can automate all but the last fragment;
 automation of method extraction and modularization requires more research,
 paying attention to current state of the
 art~\cite{Griswold:Chen:Morison:Bowdidge:1998,Holmes:Murphy:2005}.  
@@ -419,7 +419,7 @@ Follow the example to appreciate the automatic spartanization process involved:
         name of short scoped, variable \cc{int index;} is abbreviated to~\cc{i}.
 
         More generally, the single letter denoting a long type name is defined
-        as the first letter in the last word of the component of the type name.
+        as the first letter in the last word of the fragment of the type name.
         Variable \cc{parser} of type \cc{ASTParser} is hence renamed~\cc{p},
         and~\cc{u} is new name of variable \cc{cu} of type
         \cc{CompilationUnit}. In the case of containers, such as arrays,
