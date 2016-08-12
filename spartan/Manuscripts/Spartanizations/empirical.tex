@@ -292,35 +292,35 @@ is higher than that of the original.
   \end{adjustbox}
 \end{table}
 
-\begin{table}
-  \caption{%
-  Difference between the aggregating statistics for the compression power of the spartanized and the original code.
-  }
-  \label{table:difference}
-  \par\vspace{10pt plus 6pt minus 4pt}
-  \centering
-  \begin{adjustbox}{max width = \columnwidth}
-    \begin{tabular}{l*3r}
-      \toprule
-      & \multicolumn1c{\textit{Jack}}
-      & \multicolumn1c{\textit{Jack+BZip2}}
-      & \multicolumn1c{\textit{Combined}}⏎
-%       \cmidrule(r){2-3} \cmidrule(r){4-5} \cmidrule(r){6-6}
-%       & \textit{Size (bytes)}
-      & \textit{Powr}
-%       & \textit{Size (bytes)}
-      & \textit{Powr}
-      & \textit{Power}⏎
-      \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
-\sffamily  Ave.  & -0.32 & 0.06  & -1.95  \\
-\sffamily  Min.  &  0.06 & 0.01  &  0.40  \\  
-\sffamily  Max.  & -8.98 & 0.11  & -55.46 \\
-\sffamily  Med.  &  0.07 & 0.29  &  0.62  \\
-\sffamily  Range & -9.04 & 0.10  & -55.86 \\
-      \bottomrule
-    \end{tabular}
-  \end{adjustbox}
-\end{table}
+% \begin{table}
+%   \caption{%
+%   Difference between the aggregating statistics for the compression power of the spartanized and the original code.
+%   }
+%   \label{table:difference}
+%   \par\vspace{10pt plus 6pt minus 4pt}
+%   \centering
+%   \begin{adjustbox}{max width = \columnwidth}
+%     \begin{tabular}{l*3r}
+%       \toprule
+%       & \multicolumn1c{\textit{Jack}}
+%       & \multicolumn1c{\textit{Jack+BZip2}}
+%       & \multicolumn1c{\textit{Combined}}⏎
+% %       \cmidrule(r){2-3} \cmidrule(r){4-5} \cmidrule(r){6-6}
+% %       & \textit{Size (bytes)}
+%       & \textit{Powr}
+% %       & \textit{Size (bytes)}
+%       & \textit{Powr}
+%       & \textit{Power}⏎
+%       \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
+% \sffamily  Ave.  & -0.32 & 0.06  & -1.95  \\
+% \sffamily  Min.  &  0.06 & 0.01  &  0.40  \\  
+% \sffamily  Max.  & -8.98 & 0.11  & -55.46 \\
+% \sffamily  Med.  &  0.07 & 0.29  &  0.62  \\
+% \sffamily  Range & -9.04 & 0.10  & -55.86 \\
+%       \bottomrule
+%     \end{tabular}
+%   \end{adjustbox}
+% \end{table}
 
 
 
@@ -414,6 +414,46 @@ spartanized code using both structural and renaming spartanization.
       \sffamily  Max\@. & 18,890,899 & 3,244,851 & 8.72 & 0.41  & -0.01⏎
       \sffamily  Med\@. & 1,923,056  & 339,930   & 6.70 & 0.00  & -0.09⏎
       \sffamily  Range  & 18,460,524 & 3,169,691 & 3.83 & 0.81  & 0.27⏎
+      \bottomrule
+    \end{tabular}
+  \end{adjustbox}
+\end{table}
+
+\cref{table:comparisons-original} shows the aggregating statistics for a comparison between 
+the compression power and the approximente naturalness. This comparison, namely the difference
+between the compression ration (approximate naturaleness) and the corresponding values
+for the original code (as reported in \cref{table:original}), shows the improvement or decrement
+of naturaleness of the software after spartanization.
+
+\begin{table}
+  \caption{Aggregating statistics for comparison in compression power and approximete 
+  naturaleness due after \emph{structural spartanization} (first two columns) and
+  to \emph{structural} and \emph{renaming} spartanization (last two 
+  columns) if compared with original code.}
+  \label{table:comparisons-original}
+  \par\vspace{10pt plus 6pt minus 4pt}
+  \centering
+  \begin{adjustbox}{max width=\columnwidth}
+    \begin{tabular}{l*4r}
+      \toprule
+	& \multicolumn2c{\textit{Structural}}
+	& \multicolumn2c{\textit{Structural+Renaming}}\\
+% 	& \multicolumn1c{\textit{Improvement}}\\
+      \cmidrule(r){2-3}\cmidrule(r){4-5} % \cmidrule(r){6-6}
+%       & \textit{Jack}
+%       & \textit{Jack+BZip2}
+%       & \textit{BZip2 on Jack}
+%       & \textit{Combined}
+      & \textit{Jack Powr}
+      & \textit{BZip2 after Jack}
+      & \textit{Jack Powr}
+      & \textit{BZip2 after Jack}\\
+      \midrule % VIM: +,/bottom/-!column -t|sed 's/^/ /'
+      \sffamily  Ave.  & -0.32 & 0.06  & -0.28  &  -0.03 \\ % 0.06  & -1.95  \\
+      \sffamily  Min.  &  0.06 & -0.37 & -10.33 &  -0.40 \\% 0.01  &  0.40  \\  
+      \sffamily  Max.  & -8.98 & 0.49  &  0.21  &   0.41 \\% 0.11  & -55.46 \\
+      \sffamily  Med.  &  0.07 & 0.08  &  0.12  & -0.003 \\ % 0.29  &  0.62  \\
+      \sffamily  Range & -9.04 & 0.86  & 10.54  &   0.81 \\% 0.10  & -55.86 \\
       \bottomrule
     \end{tabular}
   \end{adjustbox}
