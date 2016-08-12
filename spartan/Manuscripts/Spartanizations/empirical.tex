@@ -237,27 +237,40 @@ with those related to the original code, namely we compute the difference
 between the compression power and approximante naturaleness reported in \cref{table:structural}
 and those reported in \cref{table:virgin}.
 Then we computed the same aggregating statistics, that are reported in 
-\cref{table:comparisons-original}
+\cref{table:comparisons-original} (first two columns).
 % We specifically subtract the aggregating statistics of the latter with those related to the former.
 % \cref{table:difference} reports the outcome of this comparison.
 % of the aggragating statistics for the latter, related to
 % the spartanized code, and the compression power of the original code.
 
-The first column of \cref{table:difference} regards the application of the Jack
-algorithm to the spartanized code. As we can see, although the values
-are not high, some of these are negative.
-For example, the average value of the compression power is negative,
-meaning that the Spartanized Jacked code is, on average, less compressed than the original.
-% However, we are not considering a significative difference.
+The first column of \cref{table:comparisons-original} refers to the application of the Jack
+algorithm to the spartanized code. As we can see some of these values are negative - particularly 
+average, max value and range. 
+A negative value for the average of the Jack compression powers implies that, 
+on average, spartanized code is less prone to be compressed by Jack tha original code. 
+Negative values for max compression and range, that are of course related values, means
+that there is a significant difference, for some projects, in the degree of compression
+that Jack might achieved on spartanized code. 
 
-Also the Max value is negative. As a matter of fact the Max value for the Spartanized code is
-significantly different from the corresponding value in the original, being the latter greater.
-This might be due to the fact that there could be case that Spartanized code
-tend to be more laconic, with many variables removed, and code inlined.
-When Jack algorithm removes the tokens that are repeated several times in a .java file
-(i.e. modifiers: abstract, public, private; import
-instructions; terms like extends, implements, try, catch).
-From this point of view, boilerplate code is less repetitive
+The second column of \cref{table:comparisons-original}, on the contrary, reports only 
+positive values. This means that the approximante naturaleness of structurally spartanized
+code is higher than the original code. Since it represents the predictability of
+the code written by developers, having removed the boilerplate code using Jack, this
+might suggest that structurally spartanized code is closer to the natural language
+than the original one. 
+% value of the compression power is negative,
+% meaning that the Spartanized Jacked code is, on average, less compressed than the original.
+% However, we are not considering a significative difference.
+% ----
+% Also the Max value is negative. As a matter of fact the Max value for the Spartanized code is
+% significantly different from the corresponding value in the original, being the latter greater.
+% This might be due to the fact that there could be case that Spartanized code
+% tend to be more laconic, with many variables removed, and code inlined.
+% When Jack algorithm removes the tokens that are repeated several times in a .java file
+% (i.e. modifiers: abstract, public, private; import
+% instructions; terms like extends, implements, try, catch).
+% From this point of view, boilerplate code is less repetitive
+% -----
 % meaning that the spartanized jacked code is less compressed
 % than the Jacked original one.
 % This can be explained if we take into account the fact that Spartanization removes some
