@@ -231,11 +231,15 @@ in the software artifacts were subjected to our automatic spartanization
 tool, configured to employ structural wrings.
 The results are reported in \cref{table:structural} where are reported
 the compression power of the Jacked code and its approximate
-naturaleness (Jack+BZip2).
+naturaleness (``BZip2 after Jack'' column).
 We compared these results % approximate naturalness of the automatically spartanized code
-with those related to the original code.
-We specifically subtract the aggregating statistics of the latter with those related to the former.
-\cref{table:difference} reports the outcome of this comparison.
+with those related to the original code, namely we compute the difference 
+between the compression power and approximante naturaleness reported in \cref{table:structural}
+and those reported in \cref{table:virgin}.
+Then we computed the same aggregating statistics, that are reported in 
+\cref{table:comparisons-original}
+% We specifically subtract the aggregating statistics of the latter with those related to the former.
+% \cref{table:difference} reports the outcome of this comparison.
 % of the aggragating statistics for the latter, related to
 % the spartanized code, and the compression power of the original code.
 
