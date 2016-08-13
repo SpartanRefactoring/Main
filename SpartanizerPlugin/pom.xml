@@ -37,6 +37,7 @@
   </dependencies>
   
   <build>
+    <pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.eclipse.tycho</groupId>
@@ -103,5 +104,6 @@
         <version>${tycho.version}</version>
       </plugin>
   	</plugins>
+  </pluginManagement>
   </build>
 </project>
