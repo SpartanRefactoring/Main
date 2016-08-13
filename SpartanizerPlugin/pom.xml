@@ -35,11 +35,6 @@
       <artifactId>spartan</artifactId>
       <version>1.0</version>
     </dependency>
-    <dependency>
-      <groupId>il.org.spartan</groupId>
-      <artifactId>cli</artifactId>
-      <version>1.0</version>
-    </dependency>
   </dependencies>
   
   <build>
