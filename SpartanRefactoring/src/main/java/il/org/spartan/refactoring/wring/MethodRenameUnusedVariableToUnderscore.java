@@ -70,7 +70,7 @@ import il.org.spartan.refactoring.wring.Wring.*;
   @Override String description(final SingleVariableDeclaration d) {
     return "Change name of unused variable " + d.getName().getIdentifier() + " to __";
   }
-  @SuppressWarnings("unchecked") @Override ASTNode replacement(final SingleVariableDeclaration n, final ExclusionManager m) {
+  @Override ASTNode replacement(final SingleVariableDeclaration n, final ExclusionManager m) {
     MethodDeclaration d = getMethod(n);
     for (final SingleVariableDeclaration svd : expose.parameters(d))
       if (unusedVariableName().equals(svd.getName().getIdentifier()))
