@@ -85,6 +85,9 @@ public class Builder extends IncrementalProjectBuilder {
       fullBuild();
       return;
     }
+    build();
+  }
+  private void build() throws CoreException {
     final IResourceDelta d = getDelta(getProject());
     if (d == null)
       fullBuild();
