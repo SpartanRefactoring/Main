@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.preferences;
 
-import static il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup.*;
 import java.util.*;
 import java.util.List;
 import org.eclipse.jface.dialogs.*;
