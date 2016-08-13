@@ -52,7 +52,7 @@ public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression
     if (b == null)
       return null;
     final ITypeBinding t = b.getReturnType();
-    if (b == null || !"boolean".equals("" + t) && !"java.lang.Boolean".equals(t.getBinaryName()))
+    if (!"boolean".equals("" + t) && !"java.lang.Boolean".equals(t.getBinaryName()))
       return null;
     final MethodInvocation $ = Subject.operand(receiver).toMethod("isEmpty");
     return o.equals(InfixExpression.Operator.EQUALS) ? $ : Subject.operand($).to(NOT);
