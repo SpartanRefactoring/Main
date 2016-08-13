@@ -63,8 +63,8 @@ public class GroupFieldEditor extends FieldEditor {
         numColumns = Math.max(numColumns, fe.getNumberOfControls());
     gridData(numColumns);
     gridLayout(numColumns);
-    for (final FieldEditor editor : members)
-      editor.fillIntoGrid(parentParam, numColumns);
+    for (final FieldEditor ¢ : members)
+      ¢.fillIntoGrid(parentParam, numColumns);
     parent.layout();
     parent.redraw();
   }
@@ -84,19 +84,19 @@ public class GroupFieldEditor extends FieldEditor {
   /* (non-Javadoc) Method declared on FieldEditor. Loads the value from the
    * preference store and sets it to the check box. */
   @Override protected void doLoad() {
-    for (final FieldEditor editor : members)
-      editor.load();
+    for (final FieldEditor ¢ : members)
+      ¢.load();
   }
   /* (non-Javadoc) Method declared on FieldEditor. Loads the default value from
    * the preference store and sets it to the check box. */
   @Override protected void doLoadDefault() {
-    for (final FieldEditor editor : members)
-      editor.loadDefault();
+    for (final FieldEditor ¢ : members)
+      ¢.loadDefault();
   }
   /* (non-Javadoc) Method declared on FieldEditor. */
   @Override protected void doStore() {
-    for (final FieldEditor editor : members)
-      editor.store();
+    for (final FieldEditor ¢ : members)
+      ¢.store();
   }
   /** Returns the parent for all the FieldEditors inside of this group. In this
    * class, the actual {@link Group} object is returned
@@ -116,15 +116,15 @@ public class GroupFieldEditor extends FieldEditor {
     initialized = true;
   }
   @Override public boolean isValid() {
-    for (final FieldEditor editor : members)
-      if (!editor.isValid())
+    for (final FieldEditor ¢ : members)
+      if (!¢.isValid())
         return false;
     return true;
   }
   /* @see FieldEditor.setEnabled */
   @Override public void setEnabled(final boolean enabled, final Composite parentParam) {
-    for (final FieldEditor editor : members)
-      editor.setEnabled(enabled, parentParam);
+    for (final FieldEditor ¢ : members)
+      ¢.setEnabled(enabled, parentParam);
   }
   /* (non-Javadoc) Method declared on FieldEditor. */
   @Override public void setFocus() {
@@ -132,13 +132,13 @@ public class GroupFieldEditor extends FieldEditor {
       members.iterator().next().setFocus();
   }
   @Override public void setPage(final DialogPage p) {
-    for (final FieldEditor editor : members)
-      editor.setPage(p);
+    for (final FieldEditor ¢ : members)
+      ¢.setPage(p);
   }
   @Override public void setPreferenceStore(final IPreferenceStore s) {
     super.setPreferenceStore(s);
-    for (final FieldEditor editor : members)
-      editor.setPreferenceStore(s);
+    for (final FieldEditor ¢ : members)
+      ¢.setPreferenceStore(s);
   }
   @Override public void store() {
     doStore();
