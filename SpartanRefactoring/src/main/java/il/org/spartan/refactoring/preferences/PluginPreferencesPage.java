@@ -1,4 +1,5 @@
 package il.org.spartan.refactoring.preferences;
+
 import static il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup.*;
 import org.eclipse.jface.preference.*;
 import org.eclipse.jface.util.*;
@@ -32,8 +33,7 @@ public class PluginPreferencesPage extends FieldEditorPreferencePage implements 
     addField(new ComboFieldEditor(PLUGIN_STARTUP_BEHAVIOR_ID, PLUGIN_STARTUP_BEHAVIOR_TEXT,
         PluginPreferencesResources.PLUGIN_STARTUP_BEHAVIOR_OPTIONS, getFieldEditorParent()));
     // Add the enabled for new projects checkbox
-    addField(new BooleanFieldEditor(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID,
-        NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT, getFieldEditorParent()));
+    addField(new BooleanFieldEditor(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT, getFieldEditorParent()));
     // Create and fill the "enabled spartanizations" group box
     final GroupFieldEditor g = new GroupFieldEditor("Enabled spartanizations", getFieldEditorParent());
     for (final WringGroup w : WringGroup.values())

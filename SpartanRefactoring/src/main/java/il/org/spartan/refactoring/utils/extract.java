@@ -49,9 +49,9 @@ public enum extract {
   public static CompilationUnit compilationUnit(final ASTNode ¢) {
     return (CompilationUnit) AncestorSearch.forType(COMPILATION_UNIT).from(¢);
   }
-  /**
-   *  @param ¢ JD 
-   *  @return ASTNode of the type if one of ¢'s parent ancestors is a container type and null otherwise */
+  /** @param ¢ JD
+   * @return ASTNode of the type if one of ¢'s parent ancestors is a container
+   *         type and null otherwise */
   public static ASTNode containerType(final ASTNode ¢) {
     for (final ASTNode $ : ancestors(¢.getParent()))
       if (is($, ANONYMOUS_CLASS_DECLARATION //

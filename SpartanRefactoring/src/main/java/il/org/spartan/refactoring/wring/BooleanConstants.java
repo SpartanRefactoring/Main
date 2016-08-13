@@ -7,8 +7,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} to remove unnecessary uses of Boolean.valueOf, for example by
- * converting <code>
+/** A {@link Wring} to remove unnecessary uses of Boolean.valueOf, for example
+ * by converting <code>
  * 
  * <pre>
  * Boolean b = Boolean.valueOf(true)
