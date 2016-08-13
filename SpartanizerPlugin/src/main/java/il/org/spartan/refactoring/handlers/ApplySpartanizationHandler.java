@@ -18,6 +18,7 @@ import il.org.spartan.utils.*;
 public class ApplySpartanizationHandler extends BaseHandler {
   static final Spartanization[] safeSpartanizations = { //
       new Trimmer() };
+
   public static void apply(final ICompilationUnit cu) {
     apply(cu, new Range(0, 0));
   }

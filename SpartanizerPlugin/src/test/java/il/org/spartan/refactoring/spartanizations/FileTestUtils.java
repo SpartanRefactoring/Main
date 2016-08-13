@@ -81,6 +81,7 @@ public abstract class FileTestUtils {
      * @param f an entry in {@link #location} */
     public abstract void go(List<Object[]> $, final File f);
   }
+
   /** A String determines whereas we are at the IN or OUT side of the test See
    * TestCases test files for reference. */
   final static String testKeyword = "<Test Result>";
@@ -88,6 +89,7 @@ public abstract class FileTestUtils {
   protected final static String testSuffix = ".test";
   /** Folder in which all test cases are found */
   public static final File location = new File("src/test/resources");
+
   /** Convert a canonical name of a class into a {@link Class} object, if
    * possible, otherwise generate an assertion failure
    * @param name the canonical name of some class

@@ -30,6 +30,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     static abstract class WringedInput<N extends ASTNode> extends AbstractWringTest<N> {
       /** How should a test case like this be described? */
       protected static final String DESCRIPTION = "{index}: \"{1}\" => \"{2}\" ({0})";
+
       static Document rewrite(final Spartanization s, final CompilationUnit u, final Document d) {
         try {
           s.createRewrite(u, null).rewriteAST(d, null).apply(d);
@@ -43,9 +44,11 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
         }
         return null;
       }
+
       /** Where the expected output can be found? */
       @Parameter(2) public String output;
       protected final Trimmer trimmer = new Trimmer();
+
       /** Instantiates the enclosing class ({@link WringedExpression})
        * @param w JD */
       WringedInput(final Wring<N> w) {
@@ -97,7 +100,9 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
         assertSimilar(Wrap.Expression.on(output), excpected);
       }
     }
+
     protected final Trimmer wringer = new Trimmer();
+
     public InScope() {
       this(null);
     }
@@ -150,8 +155,10 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
         azzert.notNull(asInfixExpression());
       }
     }
+
     /** Description of a test case for {@link Parameter} annotation */
     protected static final String DESCRIPTION = "Test #{index}. ({0}) \"{1}\" ==>|";
+
     public Noneligible() {
       this(null);
     }
@@ -234,6 +241,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
             azzert.notNull(asInfixExpression());
         }
       }
+
       public Exprezzion() {
         this(null);
       }
@@ -246,8 +254,10 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
         return $;
       }
     }
+
     /** Description of a test case for {@link Parameter} annotation */
     protected static final String DESCRIPTION = "Test #{index}. ({0}) \"{1}\" N/A";
+
     public OutOfScope() {
       super(null);
     }
@@ -342,10 +352,12 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
         azzert.notNull(asInfixExpression());
       }
     }
+
     /** Description of a test case for {@link Parameter} annotation */
     protected static final String DESCRIPTION = "Test #{index}. ({0}) \"{1}\" ==> \"{2}\"";
     /** What should the output be */
     @Parameter(2) public String expected;
+
     /** Default constructor to make Junit happy */
     public Wringed() {
       this(null);
@@ -363,6 +375,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     protected static final String DESCRIPTION = "Test #{index}. ({0}) \"{1}\" ==> \"{2}\"";
     /** What should the output be */
     @Parameter(2) public String expected;
+
     public WringedBlock() {
       super(null);
     }
@@ -491,10 +504,12 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
         azzert.notNull(asInfixExpression());
       }
     }
+
     /** Description of a test case for {@link Parameter} annotation */
     protected static final String DESCRIPTION = "Test #{index}. ({0}) \"{1}\" ==> \"{2}\"";
     /** What should the output be */
     @Parameter(2) public String expected;
+
     public WringedExpression() {
       this(null);
     }
@@ -612,6 +627,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     protected static final String DESCRIPTION = "Test #{index}. ({0}) \"{1}\" ==> \"{2}\"";
     /** What should the output be */
     @Parameter(2) public String expected;
+
     public WringedIfStatement() {
       this(null);
     }
@@ -821,7 +837,9 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       assertSimilar(Wrap.Statement.on(expected), actual);
     }
   }
+
   protected final Wring<N> inner;
+
   public AbstractWringTest() {
     this(null);
   }

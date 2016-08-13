@@ -14,6 +14,7 @@ import il.org.spartan.refactoring.utils.*;
 public class Trimmer extends Spartanization {
   abstract class DispatchingVisitor extends ASTVisitor {
     final ExclusionManager exclude = makeExcluder();
+
     private boolean cautiousGo(final ASTNode n) {
       return !exclude.isExcluded(n) && go(n);
     }
@@ -67,6 +68,7 @@ public class Trimmer extends Spartanization {
       return cautiousGo(¢);
     }
   }
+
   /** Apply trimming repeatedly, until no more changes
    * @param from what to process
    * @return the trimmed text */

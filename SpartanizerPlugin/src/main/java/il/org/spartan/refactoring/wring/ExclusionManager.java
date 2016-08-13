@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 class ExclusionManager {
   final Set<ASTNode> inner = new HashSet<>();
+
   void exclude(final ASTNode n) {
     inner.add(n);
   }

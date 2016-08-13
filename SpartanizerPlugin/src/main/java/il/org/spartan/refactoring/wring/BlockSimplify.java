@@ -43,6 +43,7 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
   public static boolean hasHidings(final List<Statement> ss) {
     return new Predicate<List<Statement>>() {
       final Set<String> dictionary = new HashSet<>();
+
       boolean ¢(final CatchClause c) {
         return ¢(c.getException());
       }

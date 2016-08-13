@@ -21,6 +21,7 @@ public class DeclarationAssignmentTest {
         new String[] { "Wrong assignnet", "int a = 0; if (x)  a+= 5" }, //
         new String[] { "Wrong assignnet", "int a = 0; if (a)  a= 5;" }, //
         null);
+
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -40,6 +41,7 @@ public class DeclarationAssignmentTest {
     private static String[][] cases = as.array(//
         new String[] { "Vanilla", "int a; a =3;", "int a=3;" }, //
         null);
+
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -52,7 +54,9 @@ public class DeclarationAssignmentTest {
       super(WRING);
     }
   }
+
   static final Wring<VariableDeclarationFragment> WRING = new DeclarationAssignment();
+
   @Test public void placeHolder() {
     // Place holder for future tests
     azzert.notNull(WRING);

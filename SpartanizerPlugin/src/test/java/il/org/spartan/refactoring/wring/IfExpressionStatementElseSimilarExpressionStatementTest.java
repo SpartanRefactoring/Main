@@ -33,6 +33,7 @@ public class IfExpressionStatementElseSimilarExpressionStatementTest {
         new String[] { "Simple if plus assign", "if (a) a += b; else a += c;", }, //
         new String[] { "Simple if plus assign", "if (a) a *= b; else a *= c;", }, //
         null);
+
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -56,6 +57,7 @@ public class IfExpressionStatementElseSimilarExpressionStatementTest {
         new String[] { "Distinct receiver no arguments", "if (a) y.f(); else x.f();", "(a ?y :x).f();" }, //
         new String[] { "Distinct receiver two arguments", "if (a) y.f(a,b,c); else x.f(a,b,c);", "(a ?y :x).f(a,b,c);" }, //
         null);
+
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -68,7 +70,9 @@ public class IfExpressionStatementElseSimilarExpressionStatementTest {
       super(WRING);
     }
   }
+
   static final IfExpressionStatementElseSimilarExpressionStatement WRING = new IfExpressionStatementElseSimilarExpressionStatement();
+
   @Test public void checkSteps() {
     final Statement s = asSingle("if (a) f(b); else f(c);");
     azzert.notNull(s);

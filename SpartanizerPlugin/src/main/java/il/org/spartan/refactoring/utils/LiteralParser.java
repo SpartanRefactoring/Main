@@ -1,4 +1,5 @@
 package il.org.spartan.refactoring.utils;
+
 /** A utility to determine the exact type of a Java character or numerical
  * literal.
  * @author Yossi Gil
@@ -20,7 +21,9 @@ public class LiteralParser {
     /** <code>double</code> */
     DOUBLE;
   }
+
   final String literal;
+
   /** Instantiates this class.
    * @param literal JD */
   public LiteralParser(final String literal) {

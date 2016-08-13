@@ -4,6 +4,7 @@ import org.eclipse.jdt.core.dom.*;
 
 public class PlantStatement {
   private final Statement inner;
+
   public PlantStatement(final Statement inner) {
     this.inner = inner;
   }

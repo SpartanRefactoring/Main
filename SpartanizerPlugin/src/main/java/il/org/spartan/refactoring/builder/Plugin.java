@@ -14,6 +14,7 @@ import il.org.spartan.*;
  * @since 2015/09/06 (Updated - auto initialization of the plugin) */
 public class Plugin extends AbstractUIPlugin implements IStartup {
   public static Plugin plugin;
+
   /** Add nature to one project */
   private static void addNature(final IProject p) throws CoreException {
     final IProjectDescription description = p.getDescription();

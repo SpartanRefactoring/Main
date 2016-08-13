@@ -14,6 +14,7 @@ import il.org.spartan.refactoring.wring.*;
 @SuppressWarnings("javadoc") public enum TESTUtils {
   ;
   static final String WHITES = "(?m)\\s+";
+
   static String apply(final Trimmer t, final String from) {
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
     azzert.notNull(u);

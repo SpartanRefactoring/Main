@@ -50,6 +50,7 @@ public class Specificity implements Comparator<Expression> {
     }
     abstract boolean includes(final ASTNode n);
   }
+
   /** Determine
    * @param e JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter has a defined

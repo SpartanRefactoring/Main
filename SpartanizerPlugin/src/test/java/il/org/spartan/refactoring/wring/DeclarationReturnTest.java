@@ -28,6 +28,7 @@ public class DeclarationReturnTest {
         new String[] { "Vanilla", "int a = 2; if (b) a =3;", }, //
         new String[] { "Vanilla", "int a = 3, b; return;", }, //
         null);
+
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -55,6 +56,7 @@ public class DeclarationReturnTest {
                 + "   return $;", //
             "return messageRead?!messageFlagged?mReadColorChip:mFlaggedReadColorChip:!messageFlagged?mUnreadColorChip:mFlaggedUnreadColorChip;" },
         null);
+
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -79,7 +81,9 @@ public class DeclarationReturnTest {
       r.replace(s, Subject.operand(initializer).toReturn(), null);
     }
   }
+
   static final Wring<VariableDeclarationFragment> WRING = new DeclarationInitializerReturnVariable();
+
   @Test public void placeHolder() {
     azzert.notNull(WRING);
   }

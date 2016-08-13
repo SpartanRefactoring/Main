@@ -10,6 +10,7 @@ import il.org.spartan.*;
 @SuppressWarnings("javadoc") public class Subject {
   public static class Claimer {
     protected final AST ast;
+
     public Claimer(final ASTNode n) {
       ast = n == null ? null : n.getAST();
     }
@@ -24,6 +25,7 @@ import il.org.spartan.*;
 
   public static class Operand extends Claimer {
     private final Expression inner;
+
     Operand(final Expression inner) {
       super(inner);
       this.inner = claim(inner);
@@ -73,6 +75,7 @@ import il.org.spartan.*;
 
   public static class Pair extends Claimer {
     final Expression left, right;
+
     Pair(final Expression left, final Expression right) {
       super(left);
       this.left = claim(left);
@@ -106,6 +109,7 @@ import il.org.spartan.*;
 
   public static class Several extends Claimer {
     private final List<Expression> operands;
+
     public Several(final List<Expression> operands) {
       super(operands.get(0));
       this.operands = new ArrayList<>();
@@ -123,6 +127,7 @@ import il.org.spartan.*;
 
   public static class SeveralStatements extends Claimer {
     private final List<Statement> inner;
+
     public SeveralStatements(final List<Statement> inner) {
       super(inner.isEmpty() ? null : inner.get(0));
       this.inner = new ArrayList<>();
@@ -152,6 +157,7 @@ import il.org.spartan.*;
   public static class StatementPair extends Claimer {
     private final Statement elze;
     private final Statement then;
+
     StatementPair(final Statement then, final Statement elze) {
       super(then);
       this.then = claim(then);
@@ -170,6 +176,7 @@ import il.org.spartan.*;
       return toIf(logicalNot(condition));
     }
   }
+
   public static Operand operand(final Expression inner) {
     return new Operand(inner);
   }

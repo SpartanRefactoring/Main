@@ -29,6 +29,7 @@ public enum extract {
   public static Iterable<ASTNode> ancestors(final ASTNode ¢) {
     return () -> new Iterator<ASTNode>() {
       ASTNode current = ¢;
+
       @Override public boolean hasNext() {
         return current != null;
       }

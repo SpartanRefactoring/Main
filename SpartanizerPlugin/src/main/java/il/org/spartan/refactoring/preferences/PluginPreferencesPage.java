@@ -22,7 +22,9 @@ public class PluginPreferencesPage extends FieldEditorPreferencePage implements 
       }
     }
   }
+
   private final SpartanPropertyListener listener;
+
   public PluginPreferencesPage() {
     super(GRID);
     listener = new SpartanPropertyListener();
