@@ -2,7 +2,9 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.utils.Utils.*;
+
 import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 abstract class HidingDepth extends ScopeManager {

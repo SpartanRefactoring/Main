@@ -1,9 +1,12 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
+
 import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
+
 import il.org.spartan.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) public class MethodExplorerTest {

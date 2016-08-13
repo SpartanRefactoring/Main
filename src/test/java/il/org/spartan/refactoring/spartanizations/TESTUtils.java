@@ -2,9 +2,11 @@ package il.org.spartan.refactoring.spartanizations;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.utils.Utils.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.*;

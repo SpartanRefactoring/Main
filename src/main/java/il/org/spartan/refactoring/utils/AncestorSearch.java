@@ -1,7 +1,9 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.idiomatic.*;
+
 import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 /** A class to search in the ancestry line of a given node.
