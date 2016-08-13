@@ -2,8 +2,6 @@ language: java
 jdk:
   - oraclejdk8
 
-before_script: cd SpartanRefactoring
-
 branches:
   only:
     - master
