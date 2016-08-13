@@ -71,10 +71,7 @@ import il.org.spartan.refactoring.wring.Wring.*;
     return "Change name of unused variable " + d.getName().getIdentifier() + " to __";
   }
   @SuppressWarnings("unchecked") @Override ASTNode replacement(final SingleVariableDeclaration n, final ExclusionManager m) {
-    final ASTNode p = n.getParent();
-    if (p == null || !(p instanceof MethodDeclaration))
-      return null;
-    final MethodDeclaration d = (MethodDeclaration) p;
+    MethodDeclaration d = getMethod(n);
     for (final SingleVariableDeclaration svd : expose.parameters(d))
       if (unusedVariableName().equals(svd.getName().getIdentifier()))
         return null;
@@ -91,6 +88,10 @@ import il.org.spartan.refactoring.wring.Wring.*;
     $.setType(Funcs.duplicate(n.getType()));
     duplicateModifiers(expose.modifiers(n), expose.modifiers($));
     return $;
+  }
+  MethodDeclaration getMethod(SingleVariableDeclaration d) {
+    final ASTNode $ = d.getParent();
+    return $ == null || !($ instanceof MethodDeclaration) ? null : (MethodDeclaration) $;
   }
   @Override WringGroup wringGroup() {
     return WringGroup.RENAME_PARAMETERS;
