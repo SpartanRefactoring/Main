@@ -75,12 +75,14 @@ import il.org.spartan.refactoring.wring.Wring.*;
   @Override String description(final SingleVariableDeclaration d) {
     return "Change name of unused variable " + d.getName().getIdentifier() + " to __";
   }
-  MethodDeclaration getMethod(final SingleVariableDeclaration d) {
+  static MethodDeclaration getMethod(final SingleVariableDeclaration d) {
     final ASTNode $ = d.getParent();
     return $ == null || !($ instanceof MethodDeclaration) ? null : (MethodDeclaration) $;
   }
   @Override ASTNode replacement(final SingleVariableDeclaration n, final ExclusionManager m) {
     final MethodDeclaration d = getMethod(n);
+    if (d == null)
+      return null;
     for (final SingleVariableDeclaration svd : expose.parameters(d))
       if (unusedVariableName().equals(svd.getName().getIdentifier()))
         return null;
@@ -90,12 +92,15 @@ import il.org.spartan.refactoring.wring.Wring.*;
       for (final SingleVariableDeclaration svd : expose.parameters(d))
         if (!n.equals(svd))
           m.exclude(svd);
-    final SingleVariableDeclaration $ = n.getAST().newSingleVariableDeclaration();
-    $.setName(n.getAST().newSimpleName(unusedVariableName()));
+    return replacement(n);
+  }
+  private static ASTNode replacement(final SingleVariableDeclaration ¢) {
+    final SingleVariableDeclaration $ = ¢.getAST().newSingleVariableDeclaration();
+    $.setName(¢.getAST().newSimpleName(unusedVariableName()));
     $.setFlags($.getFlags());
     $.setInitializer($.getInitializer());
-    $.setType(Funcs.duplicate(n.getType()));
-    duplicateModifiers(expose.modifiers(n), expose.modifiers($));
+    $.setType(Funcs.duplicate(¢.getType()));
+    duplicateModifiers(expose.modifiers(¢), expose.modifiers($));
     return $;
   }
   @Override WringGroup wringGroup() {
