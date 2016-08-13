@@ -1,5 +1,5 @@
 package il.org.spartan.refactoring.preferences;
-
+import static il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup.*;
 import org.eclipse.jface.preference.*;
 import org.eclipse.jface.util.*;
 import org.eclipse.ui.*;
@@ -35,15 +35,15 @@ public class PluginPreferencesPage extends FieldEditorPreferencePage implements 
     addField(new BooleanFieldEditor(PluginPreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_ID,
         PluginPreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT, getFieldEditorParent()));
     // Create and fill the "enabled spartanizations" group box
-    final GroupFieldEditor gr = new GroupFieldEditor("Enabled spartanizations", getFieldEditorParent());
-    for (final WringGroup wring : WringGroup.values())
-      gr.add(new ComboFieldEditor(wring.getId(), wring.getLabel(), PluginPreferencesResources.WRING_COMBO_OPTIONS, gr.getFieldEditor()));
-    addField(gr);
-    gr.init();
+    final GroupFieldEditor g = new GroupFieldEditor("Enabled spartanizations", getFieldEditorParent());
+    for (final WringGroup w : WringGroup.values())
+      g.add(new ComboFieldEditor(w.id, w.label, PluginPreferencesResources.WRING_COMBO_OPTIONS, g.getFieldEditor()));
+    addField(g);
+    g.init();
   }
   @Override public void init(final IWorkbench w) {
-    setPreferenceStore(Plugin.getDefault().getPreferenceStore());
+    setPreferenceStore(WringGroup.store());
     setDescription(PluginPreferencesResources.PAGE_DESCRIPTION);
-    Plugin.getDefault().getPreferenceStore().addPropertyChangeListener(listener);
+    store().addPropertyChangeListener(listener);
   }
 }
