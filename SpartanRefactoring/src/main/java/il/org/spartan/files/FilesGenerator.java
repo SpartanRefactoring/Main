@@ -22,10 +22,11 @@ import java.util.*;
  * <code>/home</code> directories.
  * @author Yossi Gil
  * @since 2015-09-23. */
+
 public class FilesGenerator {
   public static class as {
     @SafeVarargs public static <T> Iterable<T> iterable(final T... ts) {
-      return () -> new Iterator<T>() {
+      return ts == null ? null : () -> new Iterator<T>() {
         private int next = 0;
         @Override public boolean hasNext() {
           return next < ts.length;
