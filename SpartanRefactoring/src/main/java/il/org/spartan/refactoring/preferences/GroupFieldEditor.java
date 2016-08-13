@@ -67,19 +67,6 @@ public class GroupFieldEditor extends FieldEditor {
     parent.layout();
     parent.redraw();
   }
-  private void gridLayout(int n) {
-    final GridLayout groupLayout = new GridLayout();
-    groupLayout.marginWidth = groupLayout.marginHeight = GROUP_PADDING;
-    groupLayout.numColumns = n;
-    group.setLayout(groupLayout);
-  }
-  private void gridData(int n) {
-    final GridData data = new GridData(SWT.FILL, SWT.CENTER, true, false);
-    data.horizontalIndent = 2;
-    data.verticalIndent = GROUP_PADDING;
-    data.horizontalSpan = n;
-    group.setLayoutData(data);
-  }
   /* (non-Javadoc) Method declared on FieldEditor. Loads the value from the
    * preference store and sets it to the check box. */
   @Override protected void doLoad() {
@@ -106,6 +93,19 @@ public class GroupFieldEditor extends FieldEditor {
   /* (non-Javadoc) Method declared on FieldEditor. */
   @Override public int getNumberOfControls() {
     return members.size();
+  }
+  private void gridData(final int n) {
+    final GridData data = new GridData(SWT.FILL, SWT.CENTER, true, false);
+    data.horizontalIndent = 2;
+    data.verticalIndent = GROUP_PADDING;
+    data.horizontalSpan = n;
+    group.setLayoutData(data);
+  }
+  private void gridLayout(final int n) {
+    final GridLayout groupLayout = new GridLayout();
+    groupLayout.marginWidth = groupLayout.marginHeight = GROUP_PADDING;
+    groupLayout.numColumns = n;
+    group.setLayout(groupLayout);
   }
   /** Initializes using the currently added field editors. */
   public void init() {

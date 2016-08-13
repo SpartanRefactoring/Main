@@ -10,6 +10,18 @@ import org.eclipse.jdt.core.dom.*;
  * @author Yossi Gil
  * @since 2016-08-08 18:11:23 +0300 */
 public abstract class VariableBindingVisitor extends ASTVisitor {
+  public class Binding {
+    // To be written
+  }
+  /** stores binding information of all nodes */
+  final Map<ASTNode, Binding> environmentOf = new HashMap<>();
+  /** collects all binding information, starting at the {@link ASTNode} of the
+   * root of the parameter
+   * @param ¢ a node on the tree, whose root is the strarting point of the
+   *          collection */
+  void collect(final ASTNode ¢) {
+    // TBD
+  }
   /** This function listens to the visiting actions and intercepts the calls as
    * necessary. At the first call to it during an invocation of
    * {@link ASTNode#accept(ASTVisitor)} on this object, it conducts a
@@ -21,25 +33,12 @@ public abstract class VariableBindingVisitor extends ASTVisitor {
       collect(¢);
     preVisit0(¢);
   }
-  /** collects all binding information, starting at the {@link ASTNode} of the
-   * root of the parameter
-   * @param ¢ a node on the tree, whose root is the strarting point of the
-   *          collection */
-  void collect(ASTNode ¢) {
-    // TBD
-  }
-  /** stores binding information of all nodes */
-  final Map<ASTNode, Binding> environmentOf = new HashMap<>();
-  boolean seen(ASTNode ¢) {
-    return environmentOf.containsKey(¢);
-  }
-
-  public class Binding {
-    // To be written
-  }
   /** replaces {@link #preVisit(ASTNode)}
    * @param n JD */
-  public void preVisit0(ASTNode n) {
+  public void preVisit0(final ASTNode n) {
     // To be realized by user
+  }
+  boolean seen(final ASTNode ¢) {
+    return environmentOf.containsKey(¢);
   }
 }

@@ -51,6 +51,9 @@ import il.org.spartan.*;
       $.setName(ast.newSimpleName(methodName));
       return $;
     }
+    public Expression toQualifier(final String name) {
+      return ast.newQualifiedName((SimpleName) inner, ast.newSimpleName(name));
+    }
     /** Create a new {@link ReturnStatement} which returns our operand
      * @return the new return statement */
     public ReturnStatement toReturn() {
@@ -65,9 +68,6 @@ import il.org.spartan.*;
       final ThrowStatement $ = ast.newThrowStatement();
       $.setExpression(inner);
       return $;
-    }
-    public Expression toQualifier(String name) {
-      return ast.newQualifiedName((SimpleName) inner, ast.newSimpleName(name));
     }
   }
 
