@@ -41,7 +41,7 @@ public class PluginPreferencesPage extends FieldEditorPreferencePage implements 
     addField(g);
     g.init();
   }
-  @Override public void init(final IWorkbench w) {
+  @Override public void init(@SuppressWarnings("unused") final IWorkbench __) {
     setPreferenceStore(WringGroup.store());
     setDescription(PAGE_DESCRIPTION);
     store().addPropertyChangeListener(listener);
