@@ -20,6 +20,9 @@ public class Nature implements IProjectNature {
     for (final ICommand c : cs)
       if (c.getBuilderName().equals(Builder.BUILDER_ID))
         return;
+    set(d, cs);
+  }
+  private void set(final IProjectDescription d, final ICommand[] cs) throws CoreException {
     final ICommand c = d.newCommand();
     c.setBuilderName(Builder.BUILDER_ID);
     d.setBuildSpec(Utils.append(cs, c));

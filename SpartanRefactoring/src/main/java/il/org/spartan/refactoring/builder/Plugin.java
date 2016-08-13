@@ -13,7 +13,7 @@ import il.org.spartan.*;
  * @author Ofir Elmakias
  * @since 2015/09/06 (Updated - auto initialization of the plugin) */
 public class Plugin extends AbstractUIPlugin implements IStartup {
-  private static Plugin plugin;
+  public static Plugin plugin;
   /** Add nature to one project */
   private static void addNature(final IProject p) throws CoreException {
     final IProjectDescription description = p.getDescription();
@@ -33,14 +33,10 @@ public class Plugin extends AbstractUIPlugin implements IStartup {
         e.printStackTrace();
       }
   }
-  /** @return the (single) instance of the plugin */
-  public static Plugin getDefault() {
-    return plugin;
-  }
   /** logs an error in the plugin
    * @param t an error */
   public static void log(final Throwable t) {
-    getDefault().getLog().log(new Status(IStatus.ERROR, "org.spartan.refactoring", 0, t.getMessage(), t));
+    plugin.getLog().log(new Status(IStatus.ERROR, "org.spartan.refactoring", 0, t.getMessage(), t));
   }
   public static void refreshAllProjects() {
     for (final IProject p : ResourcesPlugin.getWorkspace().getRoot().getProjects())
