@@ -2,8 +2,10 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Into.*;
+
 import org.junit.*;
 import org.junit.runners.*;
+
 import il.org.spartan.*;
 
 /** Test class for {@link ExpressionComparator}

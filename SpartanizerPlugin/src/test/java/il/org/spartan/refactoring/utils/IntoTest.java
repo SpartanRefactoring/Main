@@ -1,7 +1,9 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
+
 import org.junit.*;
+
 import il.org.spartan.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) public class IntoTest {

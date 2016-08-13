@@ -2,8 +2,10 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Into.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
+
 import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 

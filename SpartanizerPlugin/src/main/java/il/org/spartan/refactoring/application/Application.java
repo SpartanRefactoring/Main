@@ -2,11 +2,13 @@ package il.org.spartan.refactoring.application;
 
 import java.io.*;
 import java.util.*;
+
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.equinox.app.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.*;
 import il.org.spartan.files.*;
 import il.org.spartan.refactoring.handlers.*;
