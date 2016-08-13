@@ -234,10 +234,10 @@ public enum Collect {
     };
   }
   // didn't find any use case in which it will be different of usesCollector
-  /** TODO find any use case in which it will be different of usesCollector
-   * @param into
-   * @param what
-   * @return */
+  /** Creates an ASTVisitor that adds all explicit uses (by name) of a SimpleName to the provided list.
+   * @param into JD
+   * @param what JD
+   * @return ASTVisitor that adds uses by name of the SimpleName 'what' to the list 'into' */
   static ASTVisitor lexicalUsesCollector(final List<SimpleName> into, final SimpleName what) {
     return usesCollector(what, into, true);
   }
@@ -255,6 +255,14 @@ public enum Collect {
       }
     };
   }
+  /**
+   * Creates an ASTVisitor that returns all the instances in which the provided SimpleName was used. 
+   * The instances will be inserted into the provided list. 
+   * @param what JD
+   * @param into JD
+   * @param lexicalOnly - True if only explicit matches (by name) are required. 
+   * @return ASTVisitor that adds all the uses of the SimpleName to the provided list.
+   */
   private static ASTVisitor usesCollector(final SimpleName what, final List<SimpleName> into, final boolean lexicalOnly) {
     return new ASTVisitor() {
       private int loopDepth = 0;
