@@ -23,7 +23,9 @@ public class MethodExplorer {
       return false;
     }
   }
+
   final MethodDeclaration inner;
+
   /** Instantiate this class
    * @param inner JD */
   public MethodExplorer(final MethodDeclaration inner) {

@@ -46,7 +46,9 @@ public abstract class BaseHandler extends AbstractHandler {
   static Object getResource(final IEditorPart ep) {
     return ep.getEditorInput().getAdapter(IResource.class);
   }
+
   private final Spartanization inner;
+
   /** Instantiates this class
    * @param inner JD */
   protected BaseHandler(final Spartanization inner) {

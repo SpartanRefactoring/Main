@@ -15,6 +15,7 @@ import il.org.spartan.refactoring.wring.Wring.*;
   public static class IsUsed extends ASTVisitor {
     boolean c = true;
     String n;
+
     public IsUsed(final SimpleName sn) {
       n = sn.getIdentifier();
     }
@@ -45,8 +46,10 @@ import il.org.spartan.refactoring.wring.Wring.*;
       return false;
     }
   }
+
   // true iff renaming annotated variables only
   final static boolean BY_ANNOTATION = true;
+
   public static boolean isUsed(final MethodDeclaration d, final SimpleName n) {
     final IsUsed u = new IsUsed(n);
     d.getBody().accept(u);

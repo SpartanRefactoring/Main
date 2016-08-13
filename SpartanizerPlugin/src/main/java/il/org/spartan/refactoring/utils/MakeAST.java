@@ -111,7 +111,9 @@ public enum MakeAST {
       return new StringBuilder("");
     }
   }
+
   final int kind;
+
   private MakeAST(final int kind) {
     this.kind = kind;
   }

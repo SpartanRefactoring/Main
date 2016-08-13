@@ -60,6 +60,7 @@ public class TrimmerTestsUtils {
 
   static class OperandToWring<N extends ASTNode> extends TrimmerTestsUtils.Operand {
     final Class<N> clazz;
+
     public OperandToWring(final String from, final Class<N> clazz) {
       super(from);
       this.clazz = clazz;
@@ -107,6 +108,7 @@ public class TrimmerTestsUtils {
       return this;
     }
   }
+
   static String apply(final Trimmer t, final String from) {
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
     azzert.notNull(u);

@@ -24,6 +24,7 @@ import il.org.spartan.refactoring.wring.Wring.*;
 public class StringEqualsConstant extends ReplaceCurrentNode<MethodInvocation> {
   final static String[] _mns = { "equals", "equalsIgnoreCase" };
   final static List<String> mns = as.list(_mns);
+
   @Override String description(final MethodInvocation i) {
     return "use " + i.arguments().get(0) + "." + i.getName() + "(" + i.getExpression() + ") instead of " + i;
   }

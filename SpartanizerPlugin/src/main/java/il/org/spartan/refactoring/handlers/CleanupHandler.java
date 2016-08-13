@@ -18,6 +18,7 @@ import il.org.spartan.refactoring.spartanizations.*;
  * @since 2015/08/01 */
 public class CleanupHandler extends BaseHandler {
   static final int MAX_PASSES = 20;
+
   /** Returns the number of Spartanizaion suggestions for this compilation unit
    * @param u JD
    * @return the number of suggesions available for the compilation unit */

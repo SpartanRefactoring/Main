@@ -37,6 +37,7 @@ public enum Wrap {
   //
   ;
   public static final Wrap[] WRAPS = new Wrap[] { Statement, Expression, Method, OUTER };
+
   public static String essence(final String codeFragment) {
     return gist(removeComments(codeFragment));
   }
@@ -71,8 +72,10 @@ public enum Wrap {
         .replaceAll("//.*?\n", "\n")//
         .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
   }
+
   private final String before;
   private final String after;
+
   Wrap(final String before, final String after) {
     this.before = before;
     this.after = after;

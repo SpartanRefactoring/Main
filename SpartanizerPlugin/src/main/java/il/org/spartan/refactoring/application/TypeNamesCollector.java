@@ -9,6 +9,7 @@ import il.org.spartan.utils.*;
 
 public class TypeNamesCollector {
   private static Set<String> basket = new TreeSet<>();
+
   private static void collect(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       SimpleName last(final Name n) {

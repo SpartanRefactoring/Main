@@ -22,6 +22,7 @@ public class Spartanizations {
         put(s.getClass().getSimpleName(), s);
     }
   };
+
   /** @return all the registered spartanization refactoring objects */
   public static Iterable<Spartanization> all() {
     return map.values();
@@ -57,7 +58,9 @@ public class Spartanizations {
     for (final Spartanization s : all)
       map.put(s.getClass().getSimpleName(), s);
   }
+
   private final Spartanization value;
+
   private Spartanizations(final Spartanization value) {
     this.value = value;
   }

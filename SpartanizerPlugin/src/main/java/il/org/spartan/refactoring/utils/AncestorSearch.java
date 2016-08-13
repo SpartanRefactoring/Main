@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 public abstract class AncestorSearch {
   static class ByNodeClass extends AncestorSearch {
     private final Class<? extends ASTNode> clazz;
+
     public ByNodeClass(final Class<? extends ASTNode> clazz) {
       this.clazz = clazz;
     }
@@ -24,6 +25,7 @@ public abstract class AncestorSearch {
 
   static class ByNodeType extends AncestorSearch {
     final int type;
+
     public ByNodeType(final int type) {
       this.type = type;
     }
@@ -38,12 +40,14 @@ public abstract class AncestorSearch {
 
   public static class Until {
     final ASTNode until;
+
     Until(final ASTNode until) {
       this.until = until;
     }
     public Iterable<ASTNode> ancestors(final SimpleName n) {
       return () -> new Iterator<ASTNode>() {
         ASTNode next = n;
+
         @Override public boolean hasNext() {
           return next != null;
         }
@@ -58,6 +62,7 @@ public abstract class AncestorSearch {
       };
     }
   }
+
   /** Factory method, returning an instance which can search by a node class
    * @param c JD
    * @return a newly created instance

@@ -30,11 +30,12 @@ public class GroupFieldEditor extends FieldEditor {
   private final Group group;
   private final Composite parent;
   private boolean initialized = false;
+
   /** Create a group of {@link FieldEditor} objects
    * @param labelText (optional) the text that will appear in the top label. For
-   *          no label, pass {@code null}
+   *        no label, pass {@code null}
    * @param fieldEditorParent the widget's parent, usually
-   *          {@link FieldEditorPreferencePage#getFieldEditorParent()} */
+   *        {@link FieldEditorPreferencePage#getFieldEditorParent()} */
   public GroupFieldEditor(final String labelText, final Composite fieldEditorParent) {
     title = labelText == null ? "" : labelText;
     parent = fieldEditorParent;
