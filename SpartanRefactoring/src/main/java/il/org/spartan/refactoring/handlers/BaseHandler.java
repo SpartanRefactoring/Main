@@ -35,9 +35,6 @@ public abstract class BaseHandler extends AbstractHandler {
   private static ICompilationUnit getCompilationUnit(final IEditorPart ep) {
     return ep == null ? null : getCompilationUnit((IResource) getResource(ep));
   }
-  static Object getResource(final IEditorPart ep) {
-    return ep.getEditorInput().getAdapter(IResource.class);
-  }
   private static ICompilationUnit getCompilationUnit(final IResource r) {
     return r == null ? null : JavaCore.createCompilationUnitFrom((IFile) r);
   }
@@ -45,6 +42,9 @@ public abstract class BaseHandler extends AbstractHandler {
    * @return the current {@link IWorkbenchWindow} */
   public static IWorkbenchWindow getCurrentWorkbenchWindow() {
     return PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+  }
+  static Object getResource(final IEditorPart ep) {
+    return ep.getEditorInput().getAdapter(IResource.class);
   }
   private final Spartanization inner;
   /** Instantiates this class

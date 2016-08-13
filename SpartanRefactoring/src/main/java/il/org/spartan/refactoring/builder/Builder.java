@@ -80,19 +80,19 @@ public class Builder extends IncrementalProjectBuilder {
   private static String prefix() {
     return SPARTANIZATION_SHORT_PREFIX;
   }
-  private void build(final int kind) throws CoreException {
-    if (kind == FULL_BUILD) {
-      fullBuild();
-      return;
-    }
-    build();
-  }
   private void build() throws CoreException {
     final IResourceDelta d = getDelta(getProject());
     if (d == null)
       fullBuild();
     else
       incrementalBuild(d);
+  }
+  private void build(final int kind) throws CoreException {
+    if (kind == FULL_BUILD) {
+      fullBuild();
+      return;
+    }
+    build();
   }
   @Override protected IProject[] build(final int kind, @SuppressWarnings({ "unused", "rawtypes" }) final Map __, final IProgressMonitor m)
       throws CoreException {

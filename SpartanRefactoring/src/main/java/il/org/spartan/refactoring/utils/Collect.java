@@ -233,6 +233,14 @@ public enum Collect {
       }
     };
   }
+  // didn't find any use case in which it will be different of usesCollector
+  /** TODO find any use case in which it will be different of usesCollector
+   * @param into
+   * @param what
+   * @return */
+  static ASTVisitor lexicalUsesCollector(final List<SimpleName> into, final SimpleName what) {
+    return usesCollector(what, into, true);
+  }
   /** finds all the occurrences of the given name (n) in which it is a
    * {@link ClassInstanceCreation}
    * @param n JD
@@ -246,14 +254,6 @@ public enum Collect {
         return $;
       }
     };
-  }
-  // didn't find any use case in which it will be different of usesCollector
-  /** TODO find any use case in which it will be different of usesCollector
-   * @param into
-   * @param what
-   * @return */
-  static ASTVisitor lexicalUsesCollector(final List<SimpleName> into, final SimpleName what) {
-    return usesCollector(what, into, true);
   }
   private static ASTVisitor usesCollector(final SimpleName what, final List<SimpleName> into, final boolean lexicalOnly) {
     return new ASTVisitor() {

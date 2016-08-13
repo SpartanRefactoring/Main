@@ -16,6 +16,9 @@ public class PluginPreferencesResources {
     REORDER_EXPRESSIONS(REORDER_EXPRESSIONS_ID, REORDER_EXPRESSIONS_TEXT), //
     RENAME_PARAMETERS(RENAME_PARAMETERS_ID, RENAME_PARAMETERS_TEXT), //
     RENAME_RETURN_VARIABLE(RENAME_RETURN_VARIABLE_ID, RENAME_RETURN_VARIABLE_TEXT),;
+    static IPreferenceStore store() {
+      return Plugin.plugin.getPreferenceStore();
+    }
     final String id;
     final String label;
     private WringGroup(final String id, final String label) {
@@ -24,9 +27,6 @@ public class PluginPreferencesResources {
     }
     public boolean isEnabled() {
       return Plugin.plugin == null || "on".equals(store().getString(id));
-    }
-    static IPreferenceStore store() {
-      return Plugin.plugin.getPreferenceStore();
     }
   }
   /** Page description **/

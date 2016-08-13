@@ -9,17 +9,17 @@ import il.org.spartan.refactoring.utils.*;
 
 /** A {@link Wring} to remove unnecessary uses of Boolean.valueOf, for example
  * by converting <code>
- * 
+ *
  * <pre>
  * Boolean b = Boolean.valueOf(true)
  * </pre>
- * 
+ *
  * <code> into <code>
- * 
+ *
  * <pre>
  * Boolean b = Boolean.TRUE
  * </pre>
- * 
+ *
  * <code>
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-04 */
@@ -30,7 +30,7 @@ public class BooleanConstants extends Wring.ReplaceCurrentNode<MethodInvocation>
   @Override Expression replacement(final MethodInvocation i) {
     if (!"valueOf".equals(i.getName().getIdentifier()))
       return null;
-    List<Expression> arguments = arguments(i);
+    final List<Expression> arguments = arguments(i);
     if (arguments.size() != 1)
       return null;
     final Expression e = i.getExpression();
