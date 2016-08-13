@@ -68,17 +68,17 @@ public class GroupFieldEditor extends FieldEditor {
     parent.layout();
     parent.redraw();
   }
-  private void gridLayout(int numColumns) {
+  private void gridLayout(int n) {
     final GridLayout groupLayout = new GridLayout();
     groupLayout.marginWidth = groupLayout.marginHeight = GROUP_PADDING;
-    groupLayout.numColumns = numColumns;
+    groupLayout.numColumns = n;
     group.setLayout(groupLayout);
   }
-  private void gridData(int numColumns) {
+  private void gridData(int n) {
     final GridData data = new GridData(SWT.FILL, SWT.CENTER, true, false);
     data.horizontalIndent = 2;
     data.verticalIndent = GROUP_PADDING;
-    data.horizontalSpan = numColumns;
+    data.horizontalSpan = n;
     group.setLayoutData(data);
   }
   /* (non-Javadoc) Method declared on FieldEditor. Loads the value from the
