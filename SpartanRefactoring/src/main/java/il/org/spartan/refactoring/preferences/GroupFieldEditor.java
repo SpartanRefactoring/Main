@@ -1,4 +1,5 @@
 package il.org.spartan.refactoring.preferences;
+import static il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup.*;
 
 import java.util.*;
 import java.util.List;
@@ -60,19 +61,25 @@ public class GroupFieldEditor extends FieldEditor {
     if (numColumns == 0)
       for (final FieldEditor fe : members)
         numColumns = Math.max(numColumns, fe.getNumberOfControls());
+    gridData(numColumns);
+    gridLayout(numColumns);
+    for (final FieldEditor editor : members)
+      editor.fillIntoGrid(parentParam, numColumns);
+    parent.layout();
+    parent.redraw();
+  }
+  private void gridLayout(int numColumns) {
+    final GridLayout groupLayout = new GridLayout();
+    groupLayout.marginWidth = groupLayout.marginHeight = GROUP_PADDING;
+    groupLayout.numColumns = numColumns;
+    group.setLayout(groupLayout);
+  }
+  private void gridData(int numColumns) {
     final GridData data = new GridData(SWT.FILL, SWT.CENTER, true, false);
     data.horizontalIndent = 2;
     data.verticalIndent = GROUP_PADDING;
     data.horizontalSpan = numColumns;
     group.setLayoutData(data);
-    final GridLayout groupLayout = new GridLayout();
-    groupLayout.marginWidth = groupLayout.marginHeight = GROUP_PADDING;
-    groupLayout.numColumns = numColumns;
-    group.setLayout(groupLayout);
-    for (final FieldEditor editor : members)
-      editor.fillIntoGrid(parentParam, numColumns);
-    parent.layout();
-    parent.redraw();
   }
   /* (non-Javadoc) Method declared on FieldEditor. Loads the value from the
    * preference store and sets it to the check box. */
