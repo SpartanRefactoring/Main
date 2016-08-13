@@ -3,7 +3,7 @@
 <plugin>
    <extension
          id="il.org.spartan.refactoring.BuilderID"
-         name="Spartanization Checker"
+         name="Spartanization Suggestions"
          point="org.eclipse.core.resources.builders">
       <builder hasNature="true">
          <run class="il.org.spartan.refactoring.builder.Builder"/> 
