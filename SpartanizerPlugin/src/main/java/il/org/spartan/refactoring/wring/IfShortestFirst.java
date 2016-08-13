@@ -1,7 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.wring.Wrings.*;
+
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 
 /** A {@link Wring} to convert

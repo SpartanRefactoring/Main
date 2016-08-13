@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.handlers;
 
 import java.util.*;
+
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -10,6 +11,7 @@ import org.eclipse.jface.viewers.*;
 import org.eclipse.ltk.ui.refactoring.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.handlers.*;
+
 import il.org.spartan.refactoring.spartanizations.*;
 
 /** @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>:

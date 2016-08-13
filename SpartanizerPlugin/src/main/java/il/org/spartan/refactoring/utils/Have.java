@@ -2,7 +2,9 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.extract.*;
+
 import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should

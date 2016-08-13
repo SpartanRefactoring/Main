@@ -1,8 +1,10 @@
 package il.org.spartan.refactoring.spartanizations;
 
 import static il.org.spartan.refactoring.spartanizations.DialogBoxes.*;
+
 import java.util.*;
 import java.util.List;
+
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
@@ -13,6 +15,7 @@ import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.ltk.ui.refactoring.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
+
 import il.org.spartan.*;
 import il.org.spartan.refactoring.handlers.*;
 import il.org.spartan.refactoring.utils.*;

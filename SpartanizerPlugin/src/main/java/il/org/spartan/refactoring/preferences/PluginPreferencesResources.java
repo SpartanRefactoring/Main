@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.preferences;
 
 import org.eclipse.jface.preference.*;
+
 import il.org.spartan.refactoring.builder.*;
 
 public class PluginPreferencesResources {

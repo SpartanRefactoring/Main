@@ -3,8 +3,10 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.utils.Utils.*;
+
 import org.junit.*;
 import org.junit.runners.*;
+
 import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 

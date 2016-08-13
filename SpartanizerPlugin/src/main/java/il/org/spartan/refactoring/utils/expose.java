@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should

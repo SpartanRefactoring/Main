@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 public interface spartan {

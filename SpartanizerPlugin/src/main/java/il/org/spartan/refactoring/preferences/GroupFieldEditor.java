@@ -2,6 +2,7 @@ package il.org.spartan.refactoring.preferences;
 
 import java.util.*;
 import java.util.List;
+
 import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.preference.*;
 import org.eclipse.swt.*;

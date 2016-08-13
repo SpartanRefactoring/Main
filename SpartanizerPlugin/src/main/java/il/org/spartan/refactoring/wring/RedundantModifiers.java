@@ -1,9 +1,12 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
+
 import java.util.*;
 import java.util.function.*;
+
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
