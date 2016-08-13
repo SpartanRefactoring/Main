@@ -247,7 +247,7 @@ class UsesCollectorIgnoreDefinitions extends UsesCollector {
   @Override public boolean visit(final Assignment a) {
     return recurse(right(a));
   }
-  //changed Prefix and Postfix on the two next visitors.
+  // changed Prefix and Postfix on the two next visitors.
   @Override public boolean visit(@SuppressWarnings("unused") final PrefixExpression __) {
     return false;
   }
