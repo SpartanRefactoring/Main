@@ -247,10 +247,6 @@ public interface Utils {
    * does not have it. Doing so a is plain clutter. Since the compiler cannot assist you,
    * you will have to be on the guard.
    *
-   * &#64;param <T> some arbitrary type
-   * &#64;param $ an instance of the type parameter
-   * &#64;return its parameter, after verifying that it is not <code><b>null</b>
-   *         </code>
    * @param $ result
    * @param <T> JD
    * @return the parameter, but guaranteed to be {@link NonNull}
