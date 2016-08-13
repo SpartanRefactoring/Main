@@ -37,6 +37,7 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> {
   private class DefinitionsCollector extends ASTVisitor {
     private boolean notAllDefined;
     private final Statement[] l;
+
     public DefinitionsCollector(final List<Statement> l) {
       notAllDefined = false;
       this.l = l.toArray(new Statement[l.size()]);
@@ -50,6 +51,7 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> {
       return false;
     }
   }
+
   private static List<Statement> commmonSuffix(final List<Statement> ss1, final List<Statement> ss2) {
     final List<Statement> $ = new ArrayList<>();
     while (!ss1.isEmpty() && !ss2.isEmpty()) {

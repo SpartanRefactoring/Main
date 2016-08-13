@@ -23,7 +23,7 @@ public enum Into {
   /** Convert a given {@link String} into an {@link ConditionalExpression}, or
    * fail the current test, if such a conversion is not possible
    * @param conditionalExpression a {@link String} that represents a
-   *          "conditional" (also known as "ternary") expression.
+   *        "conditional" (also known as "ternary") expression.
    * @return an {@link Statement} data structure representing the parameter. */
   public static ConditionalExpression c(final String conditionalExpression) {
     final Expression $ = e(conditionalExpression);
@@ -36,7 +36,7 @@ public enum Into {
    * {@link CompilationUnit}, parsing it, and then extracting the first method
    * in it. possible
    * @param methodDelclaration a {@link String} that represents a Java method
-   *          declaration
+   *        declaration
    * @return an {@link MethodDeclaration} data structure representing the
    *         parameter. */
   public static MethodDeclaration d(final String methodDelclaration) {
@@ -54,7 +54,7 @@ public enum Into {
    * {@link Expression}, or fail the current test, if such a conversion is not
    * possible
    * @param expressions an array of {@link String}s, each representing a Java
-   *          expression
+   *        expression
    * @return a {@link List} of {@link Expression} data structures, each
    *         representing an element of the input. */
   public static List<Expression> es(final String... expressions) {

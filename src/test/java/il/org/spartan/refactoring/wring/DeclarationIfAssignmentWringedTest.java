@@ -37,6 +37,7 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
               "    n2 = 2;", //
           "int n2 = d ? 2 : 0, n3;" },
       null);
+
   /** Generate test cases for this parameterized class.
    * @return a collection of cases, where each case is an array of three
    *         objects, the test case name, the input, and the file. */
@@ -46,8 +47,10 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
   public static Collection<Object[]> cases() {
     return collect(cases);
   }
+
   /** What should the output be */
   @Parameter(2) public String expected;
+
   /** Instantiates the enclosing class ({@link Wringed}) */
   public DeclarationIfAssignmentWringedTest() {
     super(WRING);

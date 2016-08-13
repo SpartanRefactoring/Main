@@ -50,6 +50,7 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
         new String[] { "", "true != true", "false" }, //
         new String[] { "", "true == true", "true" }, //
         null);
+
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -89,7 +90,9 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
       azzert.that(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
     }
   }
+
   static final InfixComparisonBooleanLiteral WRING = new InfixComparisonBooleanLiteral();
+
   static public void fail() {
     fail(null);
   }

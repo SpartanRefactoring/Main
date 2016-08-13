@@ -46,6 +46,7 @@ public enum Collect {
    * @since 2015-09-06 */
   public abstract static class Collector {
     protected final SimpleName name;
+
     Collector(final SimpleName name) {
       this.name = name;
     }
@@ -76,7 +77,9 @@ public enum Collect {
      * @return a list of occurrences of the captured value in the parameter. */
     public abstract List<SimpleName> in(ASTNode... ns);
   }
+
   static final ASTMatcher matcher = new ASTMatcher();
+
   /** Creates an ASTVisitor that adds to the provided SimpleName list all the
    * identifiers of variable declarations expressions, which are identical the
    * provided ASTNode's.
@@ -88,7 +91,7 @@ public enum Collect {
       /** Adds to the list provided by the closure (into) the name of the given
        * candidate.
        * @param candidate to be inserter to the list provided by the closure
-       *          (into).
+       *        (into).
        * @return <code><b>true</b></code> <i>iff</i> the identifier of the given
        *         {@SimpleName} is equal to the ASTnode's provided by the closure
        *         (n) */
@@ -108,7 +111,7 @@ public enum Collect {
        * identifiers from all the {@link VariableDeclarationExpression}s from
        * the given list (es).
        * @param es is a {@link List} of any type which extends a
-       *          {@link Expression}
+       *        {@link Expression}
        * @return <code><b>true</b></code> <i>iff</i> addFragment() succeeds with
        *         the {@link VariableDeclarationFragment}s from each (extended)
        *         Expression in the param (es). */
@@ -234,10 +237,12 @@ public enum Collect {
     };
   }
   // didn't find any use case in which it will be different of usesCollector
-  /** Creates an ASTVisitor that adds all explicit uses (by name) of a SimpleName to the provided list.
+  /** Creates an ASTVisitor that adds all explicit uses (by name) of a
+   * SimpleName to the provided list.
    * @param into JD
    * @param what JD
-   * @return ASTVisitor that adds uses by name of the SimpleName 'what' to the list 'into' */
+   * @return ASTVisitor that adds uses by name of the SimpleName 'what' to the
+   *         list 'into' */
   static ASTVisitor lexicalUsesCollector(final List<SimpleName> into, final SimpleName what) {
     return usesCollector(what, into, true);
   }
@@ -255,17 +260,17 @@ public enum Collect {
       }
     };
   }
-  /**
-   * Creates an ASTVisitor that returns all the instances in which the provided SimpleName was used. 
-   * The instances will be inserted into the provided list. 
+  /** Creates an ASTVisitor that returns all the instances in which the provided
+   * SimpleName was used. The instances will be inserted into the provided list.
    * @param what JD
    * @param into JD
-   * @param lexicalOnly - True if only explicit matches (by name) are required. 
-   * @return ASTVisitor that adds all the uses of the SimpleName to the provided list.
-   */
+   * @param lexicalOnly - True if only explicit matches (by name) are required.
+   * @return ASTVisitor that adds all the uses of the SimpleName to the provided
+   *         list. */
   private static ASTVisitor usesCollector(final SimpleName what, final List<SimpleName> into, final boolean lexicalOnly) {
     return new ASTVisitor() {
       private int loopDepth = 0;
+
       boolean add(final Object o) {
         return collect((Expression) o);
       }

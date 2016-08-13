@@ -27,6 +27,7 @@ public class IfEmptyElseTest {
         new String[] { "Simply nested if return", "{if (a)  return b; else return c;}" }, //
         new String[] { "Nested if return", "if (a) {;{{;;return b; }}} else {{{;return c;};;};}" }, //
         null);
+
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -48,6 +49,7 @@ public class IfEmptyElseTest {
         new String[] { "Vanilla ; ", "if (a) f(); else ;", "if (a) f();" }, //
         new String[] { "Vanilla {;{;;};} ", "if (a) f(); else {;{;{};};{;{}}}", "if (a) f();" }, //
         null);
+
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -76,5 +78,6 @@ public class IfEmptyElseTest {
       azzert.that(extract.statements(elze(s)).size(), is(0));
     }
   }
+
   static final Wring<IfStatement> WRING = new IfDegenerateElse();
 }

@@ -35,6 +35,7 @@ public class DeclarationIfAssginmentTest {
         new String[] { "Not plain assignment", "int a = 2; if (b) a +=a+2;", }, //
         new String[] { "Uses later variable", "int a = 2,b = true; if (b) a =3;", }, //
         null);
+
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -94,7 +95,9 @@ public class DeclarationIfAssginmentTest {
       assertSimilar(Wrap.Statement.on(expected), actual);
     }
   }
+
   static final DeclarationInitializerIfAssignment WRING = new DeclarationInitializerIfAssignment();
+
   @Test public void traceForbiddenSiblings() {
     azzert.notNull(WRING);
     final String from = "int a = 2,b; if (b) a =3;";

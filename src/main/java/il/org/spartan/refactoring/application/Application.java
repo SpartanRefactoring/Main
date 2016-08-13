@@ -24,6 +24,7 @@ import il.org.spartan.utils.*;
     final int linesBefore;
     int linesAfter;
     final List<Integer> roundStats = new ArrayList<>();
+
     public FileStats(final File file) throws IOException {
       linesBefore = countLines(this.file = file);
     }
@@ -51,6 +52,7 @@ import il.org.spartan.utils.*;
       }
     }
   }
+
   static int countLines(final File f) throws IOException {
     try (LineNumberReader lr = new LineNumberReader(new FileReader(f))) {
       lr.skip(Long.MAX_VALUE);
@@ -60,6 +62,7 @@ import il.org.spartan.utils.*;
   static int countLines(final String fileName) throws IOException {
     return countLines(new File(fileName));
   }
+
   IJavaProject javaProject;
   IPackageFragmentRoot srcRoot;
   IPackageFragment pack;
@@ -67,6 +70,7 @@ import il.org.spartan.utils.*;
   boolean optStatsLines = false, optStatsChanges = false;
   int optRounds = 20;
   String optPath;
+
   String determineOutputFilename(final String path) {
     return !optDoNotOverwrite ? path : path.substring(0, path.lastIndexOf('.')) + "_new.java";
   }

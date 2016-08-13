@@ -47,6 +47,7 @@ public class IfReturnNoElseReturnTest {
         new String[] { "Simple if plus assign", "if (a) a *= b; else a *= c;" }, //
         new String[] { "Simple if return empty else", "if (a) return b; else ;" }, //
         null);
+
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -101,6 +102,7 @@ public class IfReturnNoElseReturnTest {
                 " g();\n" + //
                 "" }, //
         null };
+
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -137,7 +139,9 @@ public class IfReturnNoElseReturnTest {
       azzert.notNull(extract.returnStatement(then(asMe())));
     }
   }
+
   static final Wring<IfStatement> WRING = new IfReturnNoElseReturn();
+
   @Test public void checkFirstIfStatement1() {
     final String s = "if (a) return b; return a();";
     final IfStatement i = extract.firstIfStatement(MakeAST.STATEMENTS.from(s));

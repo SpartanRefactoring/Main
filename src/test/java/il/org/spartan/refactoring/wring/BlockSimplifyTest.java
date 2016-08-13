@@ -24,6 +24,7 @@ public enum BlockSimplifyTest {
         new String[] { "Nested if return", "if (a) {;{{;;return b; }}} else {{{;return c;};;};}" }, //
         new String[] { "Simple block", "{a(); b(); c();}" }, //
         null);
+
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -49,6 +50,7 @@ public enum BlockSimplifyTest {
         new String[] { "Complex singleton", "{;{{;;return b; }}}", " return b;" }, //
         new String[] { "Three statements ", "{i++;{{;;return b; }}j++;}", " i++;return b;j++;" }, //
         null);
+
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -61,5 +63,6 @@ public enum BlockSimplifyTest {
       super(WRING);
     }
   }
+
   static final Wring<Block> WRING = new BlockSimplify();
 }

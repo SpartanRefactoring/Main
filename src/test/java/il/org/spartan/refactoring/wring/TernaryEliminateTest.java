@@ -35,6 +35,7 @@ public class TernaryEliminateTest {
         new String[] { "function call", "a ? f(b) : f(c)" }, //
         new String[] { "a method call", "a ? y.f(b) :y.f(c)" }, //
         null);
+
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -58,6 +59,7 @@ public class TernaryEliminateTest {
         new String[] { "identical increment", "a ? b++ :b++", "b++" }, //
         new String[] { "identical addition", "a ? b+d :b+ d", "b+d" }, //
         null);
+
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -73,5 +75,6 @@ public class TernaryEliminateTest {
       azzert.notNull(asConditionalExpression());
     }
   }
+
   static final Wring<ConditionalExpression> WRING = new TernaryEliminate();
 }

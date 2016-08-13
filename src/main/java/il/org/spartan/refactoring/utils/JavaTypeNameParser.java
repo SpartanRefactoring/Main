@@ -22,10 +22,11 @@ import java.util.regex.*;
 @SuppressWarnings("static-method") public class JavaTypeNameParser {
   /** The type name managed by this instance */
   public final String typeName;
+
   /** Instantiates this class
    * @param typeName the Java type name to parse
    * @param isCollection denotes whether the type is a collection or a variadic
-   *          parameter */
+   *        parameter */
   public JavaTypeNameParser(final String typeName) {
     this.typeName = typeName;
   }

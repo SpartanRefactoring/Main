@@ -29,6 +29,7 @@ public enum Precedence {
       return precedence >= 1 && precedence <= 15;
     }
   }
+
   final static int UNDEFINED = -1;
   private static final ChainStringToIntegerMap of = new ChainStringToIntegerMap()//
       .putOn(1, "[]", ".", "() invoke", "++ post", "-- post", "MethodInvocation", "PostfixExpression", "ArrayAccess", "FieldAccess", "QualifiedName") //
@@ -51,6 +52,7 @@ public enum Precedence {
           "&=", "^=", "|=", // assignment, bitwise
           "<<=", ">>=", ">>>="// assignment, shift
   );
+
   /** Compare precedence of two expressions.
    * @param host JD
    * @param e2 JD

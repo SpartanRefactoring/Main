@@ -45,6 +45,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
   /** Threshold for comparing nodes; a difference in the number of nodes between
    * two nodes is considered zero, if it is the less than this value, */
   public static final int NODES_THRESHOLD = 1;
+
   /** Lexicographical comparison expressions by their number of characters
    * @param e1 JD
    * @param e2 JD

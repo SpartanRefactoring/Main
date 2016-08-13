@@ -27,13 +27,15 @@ public abstract class Rewrite extends Range {
     final int from = n.getStartPosition();
     return new Range(from, from + n.getLength());
   }
+
   /** A textual description of the action to be performed **/
   public final String description;
   /** The line number of the first character to be rewritten **/
   public int lineNumber = -1;
+
   /** Instantiates this class
    * @param description a textual description of the changes described by this
-   *          instance
+   *        instance
    * @param n the node on which change is to be carried out
    * @param ns additional nodes, defining the scope of this action. */
   public Rewrite(final String description, final ASTNode n, final ASTNode... ns) {

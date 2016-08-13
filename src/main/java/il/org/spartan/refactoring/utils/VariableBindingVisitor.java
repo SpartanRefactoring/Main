@@ -13,12 +13,14 @@ public abstract class VariableBindingVisitor extends ASTVisitor {
   public class Binding {
     // To be written
   }
+
   /** stores binding information of all nodes */
   final Map<ASTNode, Binding> environmentOf = new HashMap<>();
+
   /** collects all binding information, starting at the {@link ASTNode} of the
    * root of the parameter
    * @param ¢ a node on the tree, whose root is the strarting point of the
-   *          collection */
+   *        collection */
   void collect(final ASTNode ¢) {
     // TBD
   }

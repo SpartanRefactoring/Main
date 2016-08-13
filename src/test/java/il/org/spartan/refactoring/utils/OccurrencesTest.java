@@ -23,6 +23,7 @@ public class OccurrencesTest {
   private final SimpleName b = ((VariableDeclarationFragment) ab.fragments().get(1)).getName();
   private final IfStatement s = extract.nextIfStatement(a);
   private final InfixExpression e = (InfixExpression) s.getExpression();
+
   @Test public void correctSettings() {
     azzert.that(ab, iz("int a=2,b;"));
     azzert.that(b.toString(), is("b"));

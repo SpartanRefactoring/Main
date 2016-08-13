@@ -24,6 +24,7 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2015-07-17 */
 public final class InfixComparisonSpecific extends Wring.ReplaceCurrentNode<InfixExpression> {
   private static final Specificity specifity = new Specificity();
+
   @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Exchange left and right operands of comparison";
   }

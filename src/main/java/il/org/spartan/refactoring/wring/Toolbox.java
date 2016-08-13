@@ -34,8 +34,10 @@ public class Toolbox {
       return this;
     }
   }
+
   /** The default instance of this class */
   static Toolbox instance;
+
   private static <N extends ASTNode> Wring<N> find(final N n, final List<Wring<N>> ws) {
     for (final Wring<N> $ : ws)
       if ($.scopeIncludes(n))
@@ -135,7 +137,9 @@ public class Toolbox {
   public static Toolbox instance() {
     return instance;
   }
+
   private final Map<Class<? extends ASTNode>, List<Object>> inner = new HashMap<>();
+
   /** Find the first {@link Wring} appropriate for an {@link ASTNode}
    * @param n JD
    * @return the first {@link Wring} for which the parameter is within scope, or

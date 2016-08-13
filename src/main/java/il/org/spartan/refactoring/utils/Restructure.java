@@ -20,8 +20,7 @@ public enum Restructure {
   /** Compute the "de Morgan" conjugate of the operator present on an
    * {@link InfixExpression}.
    * @param e an expression whose operator is either
-   *          {@link Operator#CONDITIONAL_AND} or
-   *          {@link Operator#CONDITIONAL_OR}
+   *        {@link Operator#CONDITIONAL_AND} or {@link Operator#CONDITIONAL_OR}
    * @return {@link Operator#CONDITIONAL_AND} if the operator present on the
    *         parameter is {@link Operator#CONDITIONAL_OR}, or
    *         {@link Operator#CONDITIONAL_OR} if this operator is
@@ -32,7 +31,7 @@ public enum Restructure {
   }
   /** Compute the "de Morgan" conjugate of an operator.
    * @param o must be either {@link Operator#CONDITIONAL_AND} or
-   *          {@link Operator#CONDITIONAL_OR}
+   *        {@link Operator#CONDITIONAL_OR}
    * @return {@link Operator#CONDITIONAL_AND} if the parameter is
    *         {@link Operator#CONDITIONAL_OR}, or {@link Operator#CONDITIONAL_OR}
    *         if the parameter is {@link Operator#CONDITIONAL_AND}

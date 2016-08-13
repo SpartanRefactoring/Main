@@ -66,6 +66,7 @@ public enum InfixConditionalAndTrueTest {
         new String[] { "AND of 7 without boolean with parenthesis", "(a && b) && (c && (d && (e && false)))" }, //
         new String[] { "AND of 7 without boolean and multiple false value", "(a && (b && false)) && (c && (d && (e && (false && false))))" }, //
         null);
+
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -98,6 +99,7 @@ public enum InfixConditionalAndTrueTest {
         new String[] { "AND of 7 with true with parenthesis", "true && (a && b) && (c && (d && (e && true)))", "a && b && c && d && e" }, //
         new String[] { "AND of 7 with multiple true value", "(a && (b && true)) && (c && (d && (e && (true && true))))", "a&&b&&c&&d&&e" }, //
         null);
+
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the expected
@@ -124,5 +126,6 @@ public enum InfixConditionalAndTrueTest {
       azzert.that(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
     }
   }
+
   static final Wring<InfixExpression> WRING = new InfixConditionalAndTrue();
 }

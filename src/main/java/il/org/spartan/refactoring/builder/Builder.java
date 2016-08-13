@@ -26,6 +26,7 @@ public class Builder extends IncrementalProjectBuilder {
   /** the key in the marker's properties map under which the type of the
    * spartanization is stored */
   public static final String SPARTANIZATION_TYPE_KEY = "org.spartan.refactoring.spartanizationType";
+
   private static void addMarker(final Spartanization s, final Rewrite r, final IMarker m) throws CoreException {
     m.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
     m.setAttribute(SPARTANIZATION_TYPE_KEY, s.toString());
@@ -53,10 +54,10 @@ public class Builder extends IncrementalProjectBuilder {
   /** deletes all spartanization suggestion markers
    * @param f the file from which to delete the markers
    * @throws CoreException if this method fails. Reasons include: This resource
-   *           does not exist. This resource is a project that is not open.
-   *           Resource changes are disallowed during certain types of resource
-   *           change event notification. See {@link IResourceChangeEvent} for
-   *           more details. */
+   *         does not exist. This resource is a project that is not open.
+   *         Resource changes are disallowed during certain types of resource
+   *         change event notification. See {@link IResourceChangeEvent} for
+   *         more details. */
   public static void deleteMarkers(final IFile f) throws CoreException {
     f.deleteMarkers(MARKER_TYPE, false, IResource.DEPTH_ONE);
   }

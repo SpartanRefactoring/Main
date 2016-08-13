@@ -25,7 +25,7 @@ import org.eclipse.jdt.internal.corext.dom.*;
    * @param mn method name
    * @param bs method parameters
    * @param n original {@link ASTNode} containing the method invocation. Used in
-   *          order to determine the context in which the method is being used
+   *        order to determine the context in which the method is being used
    * @param u current {@link CompilationUnit}
    * @return the method's binding if it is visible from context, else null */
   public static IMethodBinding getVisibleMethod(final ITypeBinding b, final String mn, final ITypeBinding[] bs, final ASTNode n,

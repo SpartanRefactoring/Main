@@ -17,6 +17,7 @@ public class Range {
   public final int from;
   /** the end of the range (exclusive) */
   public final int to;
+
   /** Instantiates from beginning and end locations
    * @param from JD
    * @param to JD */

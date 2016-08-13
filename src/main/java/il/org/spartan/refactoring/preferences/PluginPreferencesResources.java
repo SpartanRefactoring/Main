@@ -19,8 +19,10 @@ public class PluginPreferencesResources {
     static IPreferenceStore store() {
       return Plugin.plugin.getPreferenceStore();
     }
+
     final String id;
     final String label;
+
     private WringGroup(final String id, final String label) {
       this.id = id;
       this.label = label;
@@ -29,6 +31,7 @@ public class PluginPreferencesResources {
       return Plugin.plugin == null || "on".equals(store().getString(id));
     }
   }
+
   /** Page description **/
   public static final String PAGE_DESCRIPTION = "Preferences for the Spartan Refactoring plug-in";
   /** General preferences **/

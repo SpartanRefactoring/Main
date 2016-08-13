@@ -64,6 +64,7 @@ public enum InfixConditionalOrFalseTest {
         new String[] { "AND of 6 with true with parenthesis", "x && (true && (a && b && true)) && (c && (d && e))" }, //
         new String[] { "AND with true", "true && b && a" }, //
         null);
+
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -98,6 +99,7 @@ public enum InfixConditionalOrFalseTest {
         new String[] { "OR of 6 with two false", "a || false || b || false || c || d || e", "a || b || c || d || e" }, //
         new String[] { "OR of 6 with false with parenthesis", "(a || b) || false || (c || false || (d || e || false))", "a || b || c || d || e" }, //
         null);
+
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the expected
@@ -124,5 +126,6 @@ public enum InfixConditionalOrFalseTest {
       azzert.that(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
     }
   }
+
   static final Wring<InfixExpression> WRING = new InfixConditionalOrFalse();
 }

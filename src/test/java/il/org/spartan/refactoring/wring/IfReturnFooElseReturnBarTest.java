@@ -21,6 +21,7 @@ public enum IfReturnFooElseReturnBarTest {
     static String[][] cases = Utils.asArray(//
         new String[] { "Return only on one side", "if (a) return b; else c;" }, //
         null);
+
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -43,6 +44,7 @@ public enum IfReturnFooElseReturnBarTest {
         new String[] { "Simply nested if return", "{if (a)  return b; else return c;}", " if(a)return b;else return c;" }, //
         new String[] { "Nested if return", "if (a) {;{{;;return b; }}} else {{{;return c;};;};}", "return a ? b : c;" }, //
         null);
+
     /** Generate test cases for this parameterized class.
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file. */
@@ -55,5 +57,6 @@ public enum IfReturnFooElseReturnBarTest {
       super(WRING);
     }
   }
+
   static final Wring<IfStatement> WRING = new IfReturnFooElseReturnBar();
 }
