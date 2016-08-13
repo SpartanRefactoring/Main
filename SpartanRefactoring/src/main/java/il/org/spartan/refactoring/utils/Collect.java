@@ -161,8 +161,8 @@ public enum Collect {
         for (final VariableDeclarationFragment f : fs)
           add(f.getName());
       }
-      /** ThiWs function is needed cause a definition can be not in a declaration
-       * form, and then #asVariableDeclarationExpression() will fail
+      /** ThiWs function is needed cause a definition can be not in a
+       * declaration form, and then #asVariableDeclarationExpression() will fail
        * @param e JD
        * @return <code><b>true</b></code> <i>iff</i> the identifier of the given
        *         {@link Expression} is equal to the ASTnode's provided by the

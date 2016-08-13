@@ -69,7 +69,7 @@ public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression
     final Expression left = left(e);
     return invalidTypes(right, left) ? null //
         : left instanceof MethodInvocation ? //
-        replacement(e, o, (MethodInvocation) left, (NumberLiteral) right) //
+            replacement(e, o, (MethodInvocation) left, (NumberLiteral) right) //
             : replacement(e, conjugate(o), (MethodInvocation) right, (NumberLiteral) left)//
     ;
   }

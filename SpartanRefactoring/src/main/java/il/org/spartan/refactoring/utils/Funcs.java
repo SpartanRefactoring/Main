@@ -300,8 +300,8 @@ public enum Funcs {
     return ¢.getElseStatement();
   }
   /** Find the first matching expression to the given boolean (b).
-   * @param b JD, 
-   *@param es JD
+   * @param b JD,
+   * @param es JD
    * @return the first expression from the given list (es) whose boolean value
    *         matches to the given boolean (b). */
   private static Expression find(final boolean b, final List<Expression> es) {
