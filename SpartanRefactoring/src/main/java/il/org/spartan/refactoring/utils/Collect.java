@@ -13,20 +13,20 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil <yossi.gil @ gmail.com> (major refactoring 2013/07/10)
  * @since 2013/07/01 */
 public enum Collect {
-  /** collects semantic (multiple uses for loops) uses of an expression */
+  /** collects semantic (multiple uses for loops) uses of an variable */
   USES_SEMANTIC {
     @Override ASTVisitor[] collectors(final SimpleName n, final List<SimpleName> into) {
       return asArray(new UsesCollector(into, n));
     }
   },
-  /** collects assignments of an expression */
+  /** collects assignments of an variable */
   DEFINITIONS {
     @Override ASTVisitor[] collectors(final SimpleName n, final List<SimpleName> into) {
       return asArray(definitionsCollector(into, n));
     }
   },
-  /** collects assignments AND semantic (multiple uses for loops) uses of an
-   * expression */
+  /** collects assignments AND semantic (multiple uses for loops) uses of a
+   * variable */
   BOTH_SEMANTIC {
     @Override ASTVisitor[] collectors(final SimpleName n, final List<SimpleName> into) {
       return asArray(new UsesCollector(into, n), lexicalUsesCollector(into, n), definitionsCollector(into, n));
@@ -77,36 +77,41 @@ public enum Collect {
     public abstract List<SimpleName> in(ASTNode... ns);
   }
   static final ASTMatcher matcher = new ASTMatcher();
-  /** Creates an ASTVisitor that adds to the provided SimpleName list all the identifiers of variable declarations
-   * expressions, which are identical the provided ASTNode's.
+  /** Creates an ASTVisitor that adds to the provided SimpleName list all the
+   * identifiers of variable declarations expressions, which are identical the
+   * provided ASTNode's.
    * @param into - The ASTVisitor's output parameter
    * @param n JD
-   * @return <b>ASTVisitor</b> as described above.*/
+   * @return <b>ASTVisitor</b> as described above. */
   static ASTVisitor declarationsCollector(final List<SimpleName> into, final ASTNode n) {
     return new MethodExplorer.IgnoreNestedMethods() {
-      /**Adds to the list provided by the closure (into) the name of the given candidate.
-       * @param candidate to be inserter to the list provided by the closure (into).
-       * @return <code><b>true</b></code> <i>iff</i> the identifier of the given {@SimpleName} is equal to the
-       * ASTnode's provided by the closure (n)
-       */
+      /** Adds to the list provided by the closure (into) the name of the given
+       * candidate.
+       * @param candidate to be inserter to the list provided by the closure
+       *          (into).
+       * @return <code><b>true</b></code> <i>iff</i> the identifier of the given
+       *         {@SimpleName} is equal to the ASTnode's provided by the closure
+       *         (n) */
       boolean add(final SimpleName candidate) {
         if (same(candidate, n))
           into.add(candidate);
         return true;
       }
-      /**Tries to add to the list provided by the closure (into) the names of the {@VariableDeclarationFragment}s given in the param (fs).
-       * @param fs is a {@link List} of a {@link VariableDeclarationFragment}
-       */
+      /** Tries to add to the list provided by the closure (into) the names of
+       * the {@VariableDeclarationFragment}s given in the param (fs).
+       * @param fs is a {@link List} of a {@link VariableDeclarationFragment} */
       void addFragments(final List<VariableDeclarationFragment> fs) {
         for (final VariableDeclarationFragment f : fs)
           add(f.getName());
       }
-      /**Tries to add to the list provided by the closure (into) the identifiers from all the {@link VariableDeclarationExpression}s
-       * from the given list (es).
-       * @param es is a {@link List} of any type which extends a {@link Expression}
-       * @return <code><b>true</b></code> <i>iff</i> addFragment() succeeds with the {@link VariableDeclarationFragment}s
-       * from each (extended) Expression in the param (es).
-       */
+      /** Tries to add to the list provided by the closure (into) the
+       * identifiers from all the {@link VariableDeclarationExpression}s from
+       * the given list (es).
+       * @param es is a {@link List} of any type which extends a
+       *          {@link Expression}
+       * @return <code><b>true</b></code> <i>iff</i> addFragment() succeeds with
+       *         the {@link VariableDeclarationFragment}s from each (extended)
+       *         Expression in the param (es). */
       boolean consider(final List<? extends Expression> es) {
         for (final Expression e : es)
           addFragments(fragments(asVariableDeclarationExpression(e)));
@@ -127,10 +132,11 @@ public enum Collect {
       }
     };
   }
-  /**Creates a new Collector which holds the occurrences of the provided name in declarations.
+  /** Creates a new Collector which holds the occurrences of the provided name
+   * in declarations.
    * @param n JD
-   * @return A {@link Collector}, with the uses of the provided identifier within declarations.
-   */
+   * @return A {@link Collector}, with the uses of the provided identifier
+   *         within declarations. */
   public static Collector declarationsOf(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
@@ -141,9 +147,9 @@ public enum Collect {
       }
     };
   }
-  /**@see {@link declarationsCollector}
-   * specific comments are provided to methods which are not taking place in the {@link declarationsCollector}.
-   */
+  /** @see {@link declarationsCollector} specific comments are provided to
+   *      methods which are not taking place in the
+   *      {@link declarationsCollector}. */
   static ASTVisitor definitionsCollector(final List<SimpleName> into, final ASTNode n) {
     return new MethodExplorer.IgnoreNestedMethods() {
       boolean add(final SimpleName candidate) {
@@ -155,12 +161,12 @@ public enum Collect {
         for (final VariableDeclarationFragment f : fs)
           add(f.getName());
       }
-      /**Ths function is needed cause a definition can be not in a declaration form, and then asVariableDeclarationExpression()
-       * will fail
+      /** ThiWs function is needed cause a definition can be not in a declaration
+       * form, and then #asVariableDeclarationExpression() will fail
        * @param e JD
-       * @return <code><b>true</b></code> <i>iff</i> the identifier of the given {@link Expression} is equal to the
-       * ASTnode's provided by the closure (n)
-       */
+       * @return <code><b>true</b></code> <i>iff</i> the identifier of the given
+       *         {@link Expression} is equal to the ASTnode's provided by the
+       *         closure (n) */
       boolean consider(final Expression e) {
         return add(asSimpleName(e));
       }
@@ -175,20 +181,20 @@ public enum Collect {
       @Override public boolean visit(final ForStatement s) {
         return consider(initializers(s));
       }
-      /**{@link PostfixExpression} can be only INCREMENT OR DECREMENT.
+      /** {@link PostfixExpression} can be only INCREMENT OR DECREMENT.
        * @param it JD
-       * @return the identifier of the operand.
-       */
+       * @return the identifier of the operand. */
       @Override public boolean visit(final PostfixExpression it) {
-        //return !in(it.getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT) || consider(it.getOperand());
+        // return !in(it.getOperator(), PostfixExpression.Operator.INCREMENT,
+        // PostfixExpression.Operator.DECREMENT) || consider(it.getOperand());
         return consider(it.getOperand());
       }
-      /**{@link PrefixExpression} can be more then only INCREMENT OR DECREMENT, but only on that cases it is a definition.
+      /** {@link PrefixExpression} can be more then only INCREMENT OR DECREMENT,
+       * but only on that cases it is a definition.
        * @param it JD
-       * @return the identifier of the operand.
-       */
+       * @return the identifier of the operand. */
       @Override public boolean visit(final PrefixExpression it) {
-        //return consider(it.getOperand());
+        // return consider(it.getOperand());
         return !in(it.getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT) || consider(it.getOperand());
       }
       @Override public boolean visit(final TryStatement s) {
@@ -203,8 +209,7 @@ public enum Collect {
       }
     };
   }
-  /**@see declarationsOf
-   */
+  /** @see declarationsOf */
   public static Collector definitionsOf(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
@@ -215,10 +220,9 @@ public enum Collect {
       }
     };
   }
-  /**Finds all the rest (not declarations or definitions) identifier (n) uses.  
+  /** Finds all the rest (not declarations or definitions) identifier (n) uses.
    * @param n same as "name"
-   * @return {@link Collector} of all occurrences which are not definitions.
-   */
+   * @return {@link Collector} of all occurrences which are not definitions. */
   public static Collector forAllOccurencesExcludingDefinitions(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
@@ -229,10 +233,10 @@ public enum Collect {
       }
     };
   }
-  /**finds all the occurrences of the given name (n) in which it is a {@link ClassInstanceCreation}
+  /** finds all the occurrences of the given name (n) in which it is a
+   * {@link ClassInstanceCreation}
    * @param n JD
-   * @return a Collector with all unsafe uses of the identifier (n)
-   */
+   * @return a Collector with all unsafe uses of the identifier (n) */
   public static Collector unsafeUsesOf(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
@@ -243,12 +247,11 @@ public enum Collect {
       }
     };
   }
-  //didn't find any use case in which it will be different of usesCollector
-  /**TODO find any use case in which it will be different of usesCollector
+  // didn't find any use case in which it will be different of usesCollector
+  /** TODO find any use case in which it will be different of usesCollector
    * @param into
    * @param what
-   * @return
-   */
+   * @return */
   static ASTVisitor lexicalUsesCollector(final List<SimpleName> into, final SimpleName what) {
     return usesCollector(what, into, true);
   }
@@ -366,11 +369,11 @@ public enum Collect {
       }
     };
   }
-  /**Creates a new Collector which holds all the occurrences of the provided name.
+  /** Creates a new Collector which holds all the occurrences of the provided
+   * name.
    * @param n JD
-   * @return A {@link Collector}, with the uses of the provided identifier within the provided
-   * {@link ASTNode)s array to the in function..
-   */
+   * @return A {@link Collector}, with the uses of the provided identifier
+   *         within the provided {@link ASTNode)s array to the in function.. */
   public static Collector usesOf(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
