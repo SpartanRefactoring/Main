@@ -21,7 +21,6 @@ Bundle-ClassPath: .,
  lib/hamcrest-all-1.3.jar,
  lib/junit-4.12.jar,
  lib/mockito-all-2.0.2-beta.jar,
- lib/cli-1.0.jar,
  lib/spartan-1.1.jar
 Export-Package: il.org.spartan.refactoring.builder;
   uses:="org.osgi.framework,
