@@ -3,8 +3,8 @@ import static il.org.spartan.refactoring.preferences.PluginPreferencesResources.
 import org.eclipse.jface.preference.*;
 import org.eclipse.jface.util.*;
 import org.eclipse.ui.*;
+import static il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.builder.*;
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.wring.*;
 
 public class PluginPreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
@@ -29,21 +29,21 @@ public class PluginPreferencesPage extends FieldEditorPreferencePage implements 
   /** Build the preferences page by adding controls */
   @Override public void createFieldEditors() {
     // Add the startup behavior combo box
-    addField(new ComboFieldEditor(PluginPreferencesResources.PLUGIN_STARTUP_BEHAVIOR_ID, PluginPreferencesResources.PLUGIN_STARTUP_BEHAVIOR_TEXT,
+    addField(new ComboFieldEditor(PLUGIN_STARTUP_BEHAVIOR_ID, PLUGIN_STARTUP_BEHAVIOR_TEXT,
         PluginPreferencesResources.PLUGIN_STARTUP_BEHAVIOR_OPTIONS, getFieldEditorParent()));
     // Add the enabled for new projects checkbox
-    addField(new BooleanFieldEditor(PluginPreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_ID,
-        PluginPreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT, getFieldEditorParent()));
+    addField(new BooleanFieldEditor(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID,
+        NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT, getFieldEditorParent()));
     // Create and fill the "enabled spartanizations" group box
     final GroupFieldEditor g = new GroupFieldEditor("Enabled spartanizations", getFieldEditorParent());
     for (final WringGroup w : WringGroup.values())
-      g.add(new ComboFieldEditor(w.id, w.label, PluginPreferencesResources.WRING_COMBO_OPTIONS, g.getFieldEditor()));
+      g.add(new ComboFieldEditor(w.id, w.label, WRING_COMBO_OPTIONS, g.getFieldEditor()));
     addField(g);
     g.init();
   }
   @Override public void init(final IWorkbench w) {
     setPreferenceStore(WringGroup.store());
-    setDescription(PluginPreferencesResources.PAGE_DESCRIPTION);
+    setDescription(PAGE_DESCRIPTION);
     store().addPropertyChangeListener(listener);
   }
 }
