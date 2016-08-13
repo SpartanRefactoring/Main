@@ -1,9 +1,9 @@
 package il.org.spartan.refactoring.preferences;
+
 import static il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup.*;
+import static il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import org.eclipse.core.runtime.preferences.*;
 import org.eclipse.jface.preference.*;
-import il.org.spartan.refactoring.builder.*;
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 
 /** This class is called by Eclipse when the plugin is first loaded and has no
  * default preference values. These are set by the values specified here.
@@ -12,9 +12,9 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 public class PluginPreferencesDefaultValuesInitializer extends AbstractPreferenceInitializer {
   @Override public void initializeDefaultPreferences() {
     final IPreferenceStore s = store();
-    s.setDefault(PluginPreferencesResources.PLUGIN_STARTUP_BEHAVIOR_ID, "remember");
-    s.setDefault(PluginPreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, true);
-    for (final PluginPreferencesResources.WringGroup w : WringGroup.values())
+    s.setDefault(PLUGIN_STARTUP_BEHAVIOR_ID, "remember");
+    s.setDefault(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, true);
+    for (final WringGroup w : WringGroup.values())
       s.setDefault(w.id, "on");
   }
 }
