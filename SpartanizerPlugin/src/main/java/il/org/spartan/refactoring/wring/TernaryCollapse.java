@@ -42,9 +42,9 @@ public class TernaryCollapse extends Wring.ReplaceCurrentNode<ConditionalExpress
     final Expression elseElse = core(elze.getElseExpression());
     return !same(then, elseElse) && !same(then, elseThen) ? null
         : same(then, elseElse)
-            ? Subject.pair(elseThen, then).toCondition(Subject.pair(logicalNot(e.getExpression()), elze.getExpression()).to(CONDITIONAL_AND))
-            : Subject.pair(elseElse, then)
-                .toCondition(Subject.pair(logicalNot(e.getExpression()), logicalNot(elze.getExpression())).to(CONDITIONAL_AND));
+            ? subject.pair(elseThen, then).toCondition(subject.pair(logicalNot(e.getExpression()), elze.getExpression()).to(CONDITIONAL_AND))
+            : subject.pair(elseElse, then)
+                .toCondition(subject.pair(logicalNot(e.getExpression()), logicalNot(elze.getExpression())).to(CONDITIONAL_AND));
   }
   private static Expression collaspeOnThen(final ConditionalExpression e) {
     final ConditionalExpression then = asConditionalExpression(core(e.getThenExpression()));
@@ -53,9 +53,9 @@ public class TernaryCollapse extends Wring.ReplaceCurrentNode<ConditionalExpress
     final Expression elze = core(e.getElseExpression());
     final Expression thenThen = core(then.getThenExpression());
     final Expression thenElse = core(then.getElseExpression());
-    return same(thenElse, elze) ? Subject.pair(thenThen, elze).toCondition(Subject.pair(e.getExpression(), then.getExpression()).to(CONDITIONAL_AND))
+    return same(thenElse, elze) ? subject.pair(thenThen, elze).toCondition(subject.pair(e.getExpression(), then.getExpression()).to(CONDITIONAL_AND))
         : same(thenThen, elze)
-            ? Subject.pair(thenElse, elze).toCondition(Subject.pair(e.getExpression(), logicalNot(then.getExpression())).to(CONDITIONAL_AND)) : null;
+            ? subject.pair(thenElse, elze).toCondition(subject.pair(e.getExpression(), logicalNot(then.getExpression())).to(CONDITIONAL_AND)) : null;
   }
   @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Eliminate nested conditional expression";

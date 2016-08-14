@@ -40,7 +40,7 @@ public final class IfThrowNoElseThrow extends Wring.ReplaceToNextStatement<IfSta
     if (e1 == null)
       return null;
     final Expression e2 = getThrowExpression(nextStatement);
-    return e2 == null ? null : Wrings.replaceTwoStatements(r, s, Subject.operand(Subject.pair(e1, e2).toCondition(s.getExpression())).toThrow(), g);
+    return e2 == null ? null : Wrings.replaceTwoStatements(r, s, subject.operand(subject.pair(e1, e2).toCondition(s.getExpression())).toThrow(), g);
   }
   @Override WringGroup wringGroup() {
     return WringGroup.IF_TO_TERNARY;

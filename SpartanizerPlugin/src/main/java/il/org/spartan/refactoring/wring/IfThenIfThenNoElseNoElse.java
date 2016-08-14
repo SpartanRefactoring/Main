@@ -30,7 +30,7 @@ import il.org.spartan.refactoring.utils.*;
 public final class IfThenIfThenNoElseNoElse extends Wring<IfStatement> {
   static void collapse(final IfStatement s, final ASTRewrite r, final TextEditGroup g) {
     final IfStatement then = asIfStatement(extract.singleThen(s));
-    final InfixExpression e = Subject.pair(s.getExpression(), then.getExpression()).to(CONDITIONAL_AND);
+    final InfixExpression e = subject.pair(s.getExpression(), then.getExpression()).to(CONDITIONAL_AND);
     r.replace(s.getExpression(), e, g);
     r.replace(then, duplicate(then(then)), g);
   }

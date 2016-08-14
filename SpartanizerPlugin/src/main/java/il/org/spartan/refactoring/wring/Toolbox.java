@@ -64,6 +64,7 @@ public class Toolbox {
             new InfixConditionalAndTrue(), //
             new InfixConditionalOrFalse(), //
             new InfixComparisonSpecific(), //
+            new InfixMultiplicationNeturalElement(), //
             new InfixSortMultiplication(), //
             new InfixSortPseudoAddition(), //
             new InfixSortSubstraction(), //

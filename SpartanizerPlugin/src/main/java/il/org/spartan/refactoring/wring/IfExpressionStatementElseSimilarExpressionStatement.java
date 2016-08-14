@@ -36,8 +36,8 @@ public final class IfExpressionStatementElseSimilarExpressionStatement extends W
     final Expression elze = extract.expression(extract.expressionStatement(elze(s)));
     if (elze == null)
       return null;
-    final Expression e = pushdown(Subject.pair(then, elze).toCondition(s.getExpression()));
-    return e == null ? null : Subject.operand(e).toStatement();
+    final Expression e = pushdown(subject.pair(then, elze).toCondition(s.getExpression()));
+    return e == null ? null : subject.operand(e).toStatement();
   }
   @Override WringGroup wringGroup() {
     return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;

@@ -41,7 +41,7 @@ public class PrefixIncrementDecrementReturn extends Wring.ReplaceToNextStatement
     if (s == null || !same(e.getOperand(), core(s.getExpression())))
       return null;
     r.remove(parent, g);
-    r.replace(s, Subject.operand(e).toReturn(), g);
+    r.replace(s, subject.operand(e).toReturn(), g);
     return r;
   }
   @Override WringGroup wringGroup() {

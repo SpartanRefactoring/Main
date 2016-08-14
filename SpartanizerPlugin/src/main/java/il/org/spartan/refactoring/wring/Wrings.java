@@ -32,7 +32,7 @@ public enum Wrings {
   static IfStatement blockIfNeeded(final IfStatement s, final ASTRewrite r, final TextEditGroup g) {
     if (!Is.blockRequired(s))
       return s;
-    final Block b = Subject.statement(s).toBlock();
+    final Block b = subject.statement(s).toBlock();
     r.replace(s, b, g);
     return (IfStatement) b.statements().get(0);
   }
@@ -45,7 +45,7 @@ public enum Wrings {
       case 1:
         return duplicate(operands.get(0));
       default:
-        return Subject.operands(operands).to(e.getOperator());
+        return subject.operands(operands).to(e.getOperator());
     }
   }
   static boolean endsWithSequencer(final Statement s) {
@@ -64,7 +64,7 @@ public enum Wrings {
     return $;
   }
   static IfStatement invert(final IfStatement s) {
-    return Subject.pair(elze(s), then(s)).toNot(s.getExpression());
+    return subject.pair(elze(s), then(s)).toNot(s.getExpression());
   }
   static int length(final ASTNode... ns) {
     int $ = 0;

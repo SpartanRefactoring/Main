@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 
 // TODO: document this class
-@SuppressWarnings("javadoc") public class Subject {
+@SuppressWarnings("javadoc") public class subject {
   public static class Claimer {
     protected final AST ast;
 
@@ -106,7 +106,7 @@ import il.org.spartan.*;
       return $;
     }
     public Statement toStatement(final Assignment.Operator o) {
-      return Subject.operand(to(o)).toStatement();
+      return subject.operand(to(o)).toStatement();
     }
   }
 
@@ -121,7 +121,7 @@ import il.org.spartan.*;
     }
     public InfixExpression to(final InfixExpression.Operator o) {
       assert operands.size() >= 2;
-      final InfixExpression $ = Subject.pair(operands.get(0), operands.get(1)).to(o);
+      final InfixExpression $ = subject.pair(operands.get(0), operands.get(1)).to(o);
       for (int i = 2; i < operands.size(); ++i)
         extendedOperands($).add(new Plant(operands.get(i)).into($));
       return $;

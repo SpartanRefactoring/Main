@@ -10,7 +10,7 @@ import il.org.spartan.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) public class PlantTest {
   @Test public void plantIntoLess() {
-    azzert.that(Subject.pair(Into.e("a + 2"), Into.e("b")).to(InfixExpression.Operator.LESS), iz("a+2<b"));
+    azzert.that(subject.pair(Into.e("a + 2"), Into.e("b")).to(InfixExpression.Operator.LESS), iz("a+2<b"));
   }
   @Test public void plantIntoNull() {
     final String s = "a?b:c";

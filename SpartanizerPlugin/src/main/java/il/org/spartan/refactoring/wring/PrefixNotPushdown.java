@@ -22,10 +22,10 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
     final List<Expression> operands = new ArrayList<>();
     for (final Expression e : extract.operands(flatten(inner)))
       operands.add(logicalNot(e));
-    return Subject.operands(operands).to(conjugate(inner.getOperator()));
+    return subject.operands(operands).to(conjugate(inner.getOperator()));
   }
   private static Expression comparison(final InfixExpression e) {
-    return Subject.pair(left(e), right(e)).to(conjugate(e.getOperator()));
+    return subject.pair(left(e), right(e)).to(conjugate(e.getOperator()));
   }
   /** @param o JD
    * @return the operator that produces the logical negation of the parameter */

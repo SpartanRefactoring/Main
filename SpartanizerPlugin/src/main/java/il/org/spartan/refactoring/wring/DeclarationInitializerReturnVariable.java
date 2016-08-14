@@ -40,7 +40,7 @@ public final class DeclarationInitializerReturnVariable extends Wring.VariableDe
     if (returnValue == null || !same(n, returnValue))
       return null;
     eliminate(f, r, g);
-    r.replace(s, Subject.operand(initializer).toReturn(), g);
+    r.replace(s, subject.operand(initializer).toReturn(), g);
     return r;
   }
   @Override WringGroup wringGroup() {
