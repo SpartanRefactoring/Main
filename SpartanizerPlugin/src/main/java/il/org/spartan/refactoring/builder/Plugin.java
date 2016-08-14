@@ -15,7 +15,7 @@ import il.org.spartan.*;
  * @author Ofir Elmakias
  * @since 2015/09/06 (Updated - auto initialization of the plugin) */
 public class Plugin extends AbstractUIPlugin implements IStartup {
-  public static Plugin plugin;
+  private static Plugin plugin;
 
   /** Add nature to one project */
   private static void addNature(final IProject p) throws CoreException {
@@ -70,5 +70,8 @@ public class Plugin extends AbstractUIPlugin implements IStartup {
   @Override public void stop(final BundleContext c) throws Exception {
     plugin = null;
     super.stop(c);
+  }
+  public static AbstractUIPlugin plugin() {
+    return plugin;
   }
 }
