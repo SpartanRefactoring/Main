@@ -11,6 +11,8 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
 
+import il.org.spartan.refactoring.contexts.*;
+
 /**
  * A handler for {@link Spartanizations}. This handler executes all safe
  * Spartanizations on all java files in the current project.

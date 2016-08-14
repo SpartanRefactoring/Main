@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.contexts;
 
-
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -8,11 +7,10 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.lazy.*;
 import il.org.spartan.lazy.Cookbook.*;
 
-
 /** @author Yossi Gil
  * @since 2016` */
-@SuppressWarnings("javadoc")//
-public class CurrentRewrite extends CurrentAST.Context {
+@SuppressWarnings("javadoc") //
+public class CurrentRewrite extends CurrentAST.¢ {
   /** instantiates this class */
   public CurrentRewrite(CurrentAST ¢) {
     ¢.clone().super();
@@ -61,7 +59,7 @@ public class CurrentRewrite extends CurrentAST.Context {
         return go(f);
       }
       private <N extends ASTNode> boolean go(final N n) {
-        return !applicable(n); 
+        return !applicable(n);
       }
       private boolean applicable(@SuppressWarnings("unused") ASTNode n) {
         return false;

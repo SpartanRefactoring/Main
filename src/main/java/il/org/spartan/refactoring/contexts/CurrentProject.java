@@ -1,5 +1,6 @@
 package il.org.spartan.refactoring.contexts;
 
+import static il.org.spartan.lazy.Environment.*;
 
 import static il.org.spartan.refactoring.suggestions.DialogBoxes.*;
 
@@ -30,10 +31,10 @@ public class CurrentProject extends CurrentCompilationUnit.Environment {
       return announce("Cannot find current compilation unit ");
     work();
     if (parent.javaProject() == null)
-      return announce("Cannot find project of " +parent.compilationUnit());
+      return announce("Cannot find project of " + parent.compilationUnit());
     work();
     if (packageFragmentRoots() == null)
-      return announce("Cannot find roots of " +parent.javaProject());
+      return announce("Cannot find roots of " + parent.javaProject());
     final List<ICompilationUnit> $ = new ArrayList<>();
     for (final IPackageFragmentRoot r : packageFragmentRoots()) {
       work();
@@ -53,21 +54,20 @@ public class CurrentProject extends CurrentCompilationUnit.Environment {
     work();
     return $;
   }
-
   /** @return contents of the underlying cell; may trigger computation */
   final IPackageFragmentRoot[] packageFragmentRoots() {
     return packageFragmentRoots.get();
   }
+
   /** Direct access to the underlying cell */
   final Property<List<ICompilationUnit>> compilationUnits = function(parent.compilationUnit).make(//
       () -> {
         begin("Collecting all project's compilation units...", 1);
-        final List<ICompilationUnit> $ = idiomatic.<List<ICompilationUnit>>katching(() -> collect());
+        final List<ICompilationUnit> $ = idiomatic.<List<ICompilationUnit>> katching(() -> collect());
         end();
         return $;
       });
-
   /** Direct access to the underlying cell */
   final Property<IPackageFragmentRoot[]> packageFragmentRoots = from(parent.javaProject).make(//
-      ()-> idiomatic.<IPackageFragmentRoot[]>  katching(() -> context.javaProject().getPackageFragmentRoots()));
+      () -> idiomatic.<IPackageFragmentRoot[]> katching(() -> context.javaProject().getPackageFragmentRoots()));
 }

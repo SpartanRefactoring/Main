@@ -15,60 +15,61 @@ import il.org.spartan.*;
  * @since 2016 */
 @SuppressWarnings("javadoc") public class CurrentCompilationUnit extends Monitored {
   public static class __META {
-
-  @SuppressWarnings("static-method") public static class TEST {
-    @Test public void sessionA01() {
-      azzert.notNull(new CurrentCompilationUnit());
-    }
-    @Test public void sessionA02() {
-      azzert.notNull(PlatformUI.getWorkbench());
-      azzert.notNull(PlatformUI.getWorkbench().getActiveWorkbenchWindow());
-      azzert.notNull(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor());
-      azzert.notNull(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().getEditorInput());
-      azzert.notNull(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().getEditorInput().getAdapter(IResource.class));
-      azzert.that(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().getEditorInput().getAdapter(IResource.class), azzert.instanceOf(IFile.class));
-      azzert.notNull(JavaCore.createCompilationUnitFrom((IFile) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().getEditorInput().getAdapter(IResource.class)));
-    }
-    @Test public void sessionA03() {
-      final IWorkbenchWindow ¢ = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-      azzert.notNull(¢);
-      azzert.notNull(¢.getPages());
-      azzert.positive(¢.getPages().length);
-    }
-    @Test public void sessionA04() {
-      azzert.notNull(PlatformUI.getWorkbench().getActiveWorkbenchWindow());
-    }
-    @Test public void sessionA05() {
-      PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPages();
-    }
-    @Test public void sessionA06() {
-      azzert.positive(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPages().length);
-    }
-    @Test public void sessionA07() {
-      final IWorkbenchPage ¢ = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-      azzert.notNull(¢);
-      azzert.isNull(¢.getActiveEditor());
-    }
-    @Test public void sessionA08() {
-      azzert.isNull(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor());
+    @SuppressWarnings("static-method") public static class TEST {
+      @Test public void sessionA01() {
+        azzert.notNull(new CurrentCompilationUnit());
+      }
+      @Test public void sessionA02() {
+        azzert.notNull(PlatformUI.getWorkbench());
+        azzert.notNull(PlatformUI.getWorkbench().getActiveWorkbenchWindow());
+        azzert.notNull(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor());
+        azzert.notNull(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().getEditorInput());
+        azzert.notNull(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().getEditorInput().getAdapter(IResource.class));
+        azzert.that(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().getEditorInput().getAdapter(IResource.class), azzert.instanceOf(IFile.class));
+        azzert.notNull(JavaCore.createCompilationUnitFrom((IFile) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().getEditorInput().getAdapter(IResource.class)));
+      }
+      @Test public void sessionA03() {
+        final IWorkbenchWindow ¢ = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+        azzert.notNull(¢);
+        azzert.notNull(¢.getPages());
+        azzert.positive(¢.getPages().length);
+      }
+      @Test public void sessionA04() {
+        azzert.notNull(PlatformUI.getWorkbench().getActiveWorkbenchWindow());
+      }
+      @Test public void sessionA05() {
+        PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPages();
+      }
+      @Test public void sessionA06() {
+        azzert.positive(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPages().length);
+      }
+      @Test public void sessionA07() {
+        final IWorkbenchPage ¢ = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+        azzert.notNull(¢);
+        azzert.isNull(¢.getActiveEditor());
+      }
+      @Test public void sessionA08() {
+        azzert.isNull(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor());
+      }
     }
   }
-}
+
   // @formatter:on
   /** Inner class, inheriting all of its container's {@link Property}s, and
-   * adding some of its own. Access to container's  {@link Properties} is through
+   * adding some of its own. Access to container's {@link Properties} is through
    * the {@link #parent} variable.
    * @author Yossi Gil
    * @since 2016` */
-  public abstract class  Environment extends Described.Monitored {
+  public abstract class ¢ extends Described.Monitored {
     /** the containing instance */
     protected final CurrentCompilationUnit parent = CurrentCompilationUnit.this;
 
     /** instantiates this class */
-    public Environment() {
+    public ¢() {
       new Described().super();
     }
   }
+
   // @formatter:off
   // Suppliers: may be sorted.
   // Sort alphabetically, organize in columns, indent. VIM: /^\s*[^*\/][^*\/]/,/^\s*\/\//-!sort -u | column -t | sed "s/^/  /"
@@ -83,15 +84,4 @@ import il.org.spartan.*;
   final  Property<IFile>             iFile            =  bind((IResource         ¢)  ->  (IFile)¢).to(resource);
   final  Property<ICompilationUnit>  compilationUnit  =  bind((IFile             ¢)  ->  JavaCore.createCompilationUnitFrom(¢)).to(iFile);
   final  Property<IJavaProject>      javaProject      =  bind((ICompilationUnit  ¢)  ->  ¢.getJavaProject()).to(compilationUnit);
-  // Getters: can be sorter
-  // Sort alphabetically, organize in columns, indent. VIM: /^\s*[^*\/][^*\/]/,/^\s*\/\//-!sort -u | column -t | sed "s/^/  /"
-  public  final  ICompilationUnit  compilationUnit()  {  return  compilationUnit.get();  }
-  public  final  IEditorInput      editorInput()      {  return  editorInput.get();      }
-  public  final  IFile             iFile()            {  return  iFile.get();            }
-  public  final  IJavaProject      javaProject()      {  return  javaProject.get();      }
-  public  final  IResource         resource()         {  return  resource.get();         }
-  public  final  IWorkbench        workbench()        {  return  workbench.get();        }
-  public  final  IEditorPart       activeEditor()     {  return  activeEditor.get();     }
-  public  final  IWorkbenchPage    activePage()       {  return  activePage.get();       }
-  public  final  IWorkbenchWindow  activeWorkbench()  {  return  activeWorkbench.get();  }
 }

@@ -39,6 +39,7 @@ public abstract class CurrentRoot extends Described.Monitored.¢ implements Curr
   }
   @Override public abstract Property<ASTParser> parser();
   public abstract Property<ASTNode> root();
+
   /** Inner class, inheriting all of its container's {@link Property}s, and
    * possibly adding some of its own. Access to container's c {@link Property}
    * is through the {@link #¢} variable.
@@ -50,13 +51,13 @@ public abstract class CurrentRoot extends Described.Monitored.¢ implements Curr
    * @see {@link Environment#bind(Function2)}
    * @see {@link Environment#bind(Function3)}
    * @see {@link Environment#bind(Function4)}
-   * @since 2016` 
-   * @author Yossi Gil
-   * */
+   * @since 2016`
+   * @author Yossi Gil */
   public abstract class ¢ {
     /** the containing instance */
     @SuppressWarnings("hiding") public final CurrentRoot ¢ = CurrentRoot.this;
   }
+
   @SuppressWarnings("static-method") public static class __META {
     public static class TEST {
       @Test public void sessionA01() {
@@ -69,5 +70,4 @@ public abstract class CurrentRoot extends Described.Monitored.¢ implements Curr
       }
     }
   }
-  
 }

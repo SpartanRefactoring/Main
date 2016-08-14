@@ -19,7 +19,6 @@ public class CurrentVisitor extends CurrentRoot.¢ {
   public CurrentVisitor(CurrentRoot ¢) {
     ¢.super();
   }
-
   /** Returns an exact copy of this instance
    * @return Created clone object */
   @Override public CurrentVisitor clone() {
@@ -50,7 +49,7 @@ public class CurrentVisitor extends CurrentRoot.¢ {
     });
     return $;
   }).to(¢.root());
-  final Property<Integer> nodeCount = bind((final List<@NonNull ASTNode> c)->Integer.valueOf(c.size())).to(allNodes);
+  final Property<Integer> nodeCount = bind((final List<@NonNull ASTNode> c) -> Integer.valueOf(c.size())).to(allNodes);
   // Simple recipes:
   final Property<List<Suggestion>> suggestions = bind((final ASTNode n, Integer work) -> {
     ¢.¢.begin("Searching for suggestions...", work.intValue());
@@ -70,8 +69,6 @@ public class CurrentVisitor extends CurrentRoot.¢ {
   // Sort alphabetically and placed columns; VIM: +,/^\s*\/\//-!sort -u | column
   // -t | sed "s/^/ /"
   final Property<?> toolbox = from().make(() -> new Toolbox());
-
-
 
   public abstract class ProgressVisitor extends ASTVisitor {
     public boolean filter(final ASTNode n) {

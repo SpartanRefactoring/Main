@@ -32,9 +32,8 @@ import il.org.spartan.utils.*;
   final  Property<char[]>          array      =  bind((String ¢)   ->  ¢.toCharArray()).to(text);
 // @formatter:on
   private Document newDocument(String ¢) {
-    return new         Document(¢);
+    return new Document(¢);
   }
-  
   private Range computeRange() {
     return idiomatic.<Range> katching(() -> new Range(intValue(IMarker.CHAR_START), intValue(IMarker.CHAR_END)));
   }

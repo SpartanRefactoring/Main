@@ -12,6 +12,10 @@ import il.org.spartan.lazy.*;
 /** @author Yossi Gil
  * @since 2016` */
 public class Monitored implements Environment {
+  static void bug(CloneNotSupportedException x) {
+   x.printStackTrace(); 
+   throw new RuntimeException(x);
+  }
   /** Inner class, inheriting all of its container's {@link Property}s, and
    * possibly adding some of its own. Access to container's c {@link Property}
    * is through the {@link #parent} variable.
@@ -24,6 +28,7 @@ public class Monitored implements Environment {
     /** the containing instance */
     @SuppressWarnings("hiding") protected final Monitored parent = Monitored.this;
   }
+
   /** notify of work being done
    * @param <T> JD
    * @return OK */
