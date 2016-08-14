@@ -190,6 +190,12 @@ public class azzert extends org.junit.Assert {
   public static <T> Matcher<T> equalTo(final T operand) {
     return IsEqual.<T> equalTo(operand);
   }
+  public static Matcher<String> equalToIgnoringCase(final String expectedString) {
+    return org.hamcrest.Matchers.equalToIgnoringCase(expectedString);
+  }
+  public static Matcher<String> equalToIgnoringWhiteSpace(final String expectedString) {
+    return org.hamcrest.Matchers.equalToIgnoringWhiteSpace(expectedString);
+  }
   public static <U> Matcher<java.lang.Iterable<U>> everyItem(final Matcher<U> itemMatcher) {
     return Every.<U> everyItem(itemMatcher);
   }
