@@ -12,18 +12,15 @@ import il.org.spartan.refactoring.wring.Wring.*;
  * Used to replace
  *
  * <pre>
- * <code>
  * s.equals("s")
  * </pre>
  *
- * </code> with safer
+ * with safer
  *
  * <pre>
- * <code>
+ * 
  * "s".equals(s)
  * </pre>
- *
- * </code>
  *
  * @author Ori Roth
  * @since 2016/05/08
@@ -43,7 +40,6 @@ public class StringEqualsConstant extends ReplaceCurrentNode<MethodInvocation> i
     return $;
   }
   @Override String description(final MethodInvocation i) {
-    return "use " + i.arguments().get(0) + "." + i.getName().toString() + "(" + i.getExpression().toString() + ") instead of "
-        + i.toString();
+    return "use " + i.arguments().get(0) + "." + i.getName() + "(" + i.getExpression() + ") instead of " + i;
   }
 }
