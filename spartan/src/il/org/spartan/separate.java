@@ -3,13 +3,11 @@ package il.org.spartan;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
-
 import java.util.*;
 import java.util.function.*;
-
 import org.junit.*;
 import org.junit.runners.*;
-
+import il.org.spartan.Utils.*;
 import il.org.spartan.iterables.*;
 
 /** A utility class providing library functions that take an array or a
@@ -55,9 +53,7 @@ public enum separate {
         $.append(s).append(o);
       return as.string($);
     }
-
     public final Iterable<?> os;
-
     public SeparationSubject(final Iterable<?> os) {
       this.os = os;
     }
@@ -118,7 +114,9 @@ public enum separate {
   @SuppressWarnings({ "static-method", "javadoc", "synthetic-access" }) //
   public static class TEST {
     private static final Function<Object, String> quote = t -> "'" + t + "'";
-
+    static <T> void assertEquals(final String reason, final T t1, final T t2) {
+      azzert.that(reason, t2, is(t1));
+    }
     @Test public final void asArrayBetweenChar() {
       azzert.that(separate.these(as.array("Hello", "World")).by(','), is("Hello,World"));
     }
@@ -232,9 +230,6 @@ public enum separate {
     @Test public final void nlStringArray() {
       azzert.that(separate.these("Hello", "World").byNLs(), is("Hello\nWorld"));
     }
-    static <T> void assertEquals(final String reason, final T t1, final T t2) {
-      azzert.that(reason, t2, is(t1));
-    }
     @Test public final void separateByNoItemslPruneWhitesSpaceSeparated() {
       final SeparationSubject these = separate.these();
       azzert.notNull(null, these);
@@ -309,7 +304,6 @@ public enum separate {
       azzert.that(separate.these(new String[] {}).bySpaces(), is(""));
     }
   }
-
   /** The comma character */
   public static final String COMMA = ",";
   /** The dot character */
@@ -318,7 +312,27 @@ public enum separate {
   public static final String NL = "\n";
   /** The space character */
   public static final String SPACE = " ";
-
+  static <T> void assertEquals(final String reason, final T t1, final T t2) {
+    azzert.that(reason, t2, is(t1));
+  }
+  static <T> void assertEquals(final T t1, final T t2) {
+    azzert.that(t2, is(t1));
+  }
+  static void assertFalse(final boolean b) {
+    azzert.nay(b);
+  }
+  static void assertFalse(final String reason, final boolean b) {
+    azzert.nay(reason, b);
+  }
+  static <T> void assertNotEquals(final T t1, final T t2) {
+    azzert.that(t2, is(t1));
+  }
+  static void assertTrue(final boolean b) {
+    azzert.aye(b);
+  }
+  static void assertTrue(final String reason, final boolean b) {
+    azzert.aye(reason, b);
+  }
   /** Separates a sequence of strings by {@link #SPACE} characters
    * @param $ what needs to be separated
    * @return the parameters, separated by {@link #SPACE} */
@@ -427,7 +441,7 @@ public enum separate {
    * @param <Key> type of elements serving as keys of the map.
    * @param <Value> type of elements serving as values of the map.
    * @param map a non-<code><b>null</b></code> {@link Map} objects whose entries
-   *        are to be separated.
+   *          are to be separated.
    * @return a concatenation of all map entries, separated by
    *         <code>separator</code>, and where the key of each entry is
    *         separated from the value by <code>arrow</code>. */
@@ -452,26 +466,5 @@ public enum separate {
    * @param ts the objects to be separated. */
   @SafeVarargs public static <T> SeparationSubject these(final T... ts) {
     return new SeparationSubject(ts);
-  }
-  static <T> void assertEquals(final T t1, final T t2) {
-    azzert.that(t2, is(t1));
-  }
-  static <T> void assertEquals(final String reason, final T t1, final T t2) {
-    azzert.that(reason, t2, is(t1));
-  }
-  static <T> void assertNotEquals(final T t1, final T t2) {
-    azzert.that(t2, is(t1));
-  }
-  static void assertFalse(final String reason, final boolean b) {
-    azzert.nay(reason, b);
-  }
-  static void assertFalse(final boolean b) {
-    azzert.nay(b);
-  }
-  static void assertTrue(final String reason, final boolean b) {
-    azzert.aye(reason, b);
-  }
-  static void assertTrue(final boolean b) {
-    azzert.aye(b);
   }
 }

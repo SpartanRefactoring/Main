@@ -95,6 +95,8 @@ public final class Separator {
       $.append(s).append(t);
     return as.string($.append(end));
   }
+  private boolean first = true;
+  private final String s;
   /** Instantiates this class.
    * @param c JD */
   public Separator(final char c) {
@@ -111,7 +113,4 @@ public final class Separator {
     first = false;
     return "";
   }
-
-  private boolean first = true;
-  private final String s;
 }

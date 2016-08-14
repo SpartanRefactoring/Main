@@ -52,53 +52,6 @@ import il.org.spartan.lazy.Cookbook.*;
  * @author Yossi Gil <Yossi.Gil@GMail.COM>
  * @since 2016 */
 @SuppressWarnings("javadoc") public interface Environment {
-  static <@Nullable T, @Nullable A> Binder1<T, A> bind(final Function1<T, A> f) {
-    return new Property<T>().bind(f);
-  }
-  static <@Nullable T, @Nullable A1, @Nullable A2> Binder2<@Nullable T, @Nullable A1, @Nullable A2> bind(final Function2<T, A1, A2> f) {
-    return new Property<T>().bind(f);
-  }
-  static <@Nullable T, @Nullable A1, @Nullable A2, @Nullable A3> Binder3<T, A1, A2, A3> bind(final Function3<T, A1, A2, A3> f) {
-    return new Property<T>().bind(f);
-  }
-  static <@Nullable T, @Nullable A1, @Nullable A2, @Nullable A3, @Nullable A4> Binder4<T, A1, A2, A3, A4> bind(final Function4<T, A1, A2, A3, A4> f) {
-    return new Property<T>().bind(f);
-  }
-  static <@Nullable T> Property<T> function(final Function0<T> f) {
-    return new Property<T>().set(f);
-  }
-  /** A factory method of class {@link Property} returning an undefined value
-   * for a cell
-   * @param < T > JD
-   * @return the newly created instance of {@link Property} containing null
-   *         value of the type parameter */
-  static <@Nullable T> Property<T> undefined() {
-    return new Property<>();
-  }
-  /** A factory method of class {@link Property} of an {@link Integer} as in
-   *
-   * <pre>
-   * Property&lt;Integer&gt; genesis = {@link Environment}.value(2);
-   * </pre>
-   *
-   * @param i JD
-   * @return the newly created instance of {@link Ingredient} */
-  public static Property<@Nullable Integer> value(final int i) {
-    return new Property<>(Integer.valueOf(i));
-  }
-  /** A factory method for class {@link Ingredient} as in
-   *
-   * <pre>
-   * Property&lt;String&gt; genesis = Cookbook.value(&quot;&quot;);
-   * </pre>
-   *
-   * @param < T > JD
-   * @param t JD
-   * @return the newly created instance of {@link Property} */
-  static <@Nullable T> Property<@Nullable T> value(final T t) {
-    return new Property<>(t);
-  }
-
   @FunctionalInterface interface Binder1<@Nullable T, @Nullable A> {
     Property<T> to(Property<A> ¢);
   }
@@ -131,6 +84,16 @@ import il.org.spartan.lazy.Cookbook.*;
         $ = max($, c.version());
       return $;
     }
+    /** The last value computed for this instance */
+    @Nullable T cache = null;
+    /** other properties that depend on this instance */
+    final List<Property<?>> dependents = new ArrayList<>();
+    /** other properties on which this instance depends */
+    final List<Property<?>> prerequisites = new ArrayList<>();
+    /** version of this instance */
+    long version = 0;
+    /** returns the instance updated value when invoked */
+    @Nullable Function0<? extends @Nullable T> ϑ = null;
     /** Instantiates this class. */
     public Property() {
       // Nothing to do, we start with a default null value
@@ -145,11 +108,27 @@ import il.org.spartan.lazy.Cookbook.*;
     public Property(final T t) {
       cache(t);
     }
+    /** @return current value stored in this instance, recomputed if
+     *         necessary */
+    @Override public T ¢() {
+      if (updated())
+        return cache();
+      for (final Property<?> ¢ : prerequisites)
+        ¢.update();
+      version = latestPrequisiteVersion() + 1;
+      assert ϑ != null;
+      try {
+        return set(ϑ.¢());
+      } catch (final Exception x) {
+        undefine();
+        return null;
+      }
+    }
     /** Used for fluent API; sets the current value of this instance to a be a
      * function taking one argument
      * @param <A> argument's type
      * @param f a one argument function that returns a new value for this
-     *        instance
+     *          instance
      * @return a function with one argument named {@link Binder#to(Object...)}
      *         which when applied
      *         <ol>
@@ -165,7 +144,7 @@ import il.org.spartan.lazy.Cookbook.*;
      * @param <A1> 1st argument's type
      * @param <A2> 2nd argument's type
      * @param f a two argument function that returns a new value for this
-     *        instance
+     *          instance
      * @return a function with two arguments named {@link Binder2#to} which when
      *         applied changes the current instance returning
      *         <code><b>this</b></code> */
@@ -178,7 +157,7 @@ import il.org.spartan.lazy.Cookbook.*;
      * @param <A2> 2nd argument's type
      * @param <A3> 3rd argument's type
      * @param f a one argument function that returns a new value for this
-     *        instance
+     *          instance
      * @return a function with four arguments named {@link #toString()} which
      *         when applied changes the current instance and returning
      *         <code><b>this</b></code> */
@@ -192,7 +171,7 @@ import il.org.spartan.lazy.Cookbook.*;
      * @param <A3> 3rd argument's type
      * @param <A4> 4th argument's type
      * @param f a one argument function that returns a new value for this
-     *        instance
+     *          instance
      * @return a function with four arguments named {@link #toString()} which
      *         when applied changes the current instance and returning
      *         <code><b>this</b></code> */
@@ -202,6 +181,9 @@ import il.org.spartan.lazy.Cookbook.*;
     /** @return the last value computed or set for this instance. */
     public final T cache() {
       return cache;
+    }
+    @Nullable T cache(@SuppressWarnings("hiding") final T cache) {
+      return this.cache = cache;
     }
     @Override @SuppressWarnings("unchecked") public Property<T> clone() {
       try {
@@ -231,6 +213,12 @@ import il.org.spartan.lazy.Cookbook.*;
         ingredient(¢);
       return this;
     }
+    final long latestDependentVersion() {
+      return maxVersion(dependents);
+    }
+    long latestPrequisiteVersion() {
+      return maxVersion(prerequisites);
+    }
     /** Used for fluent API; sets the current value of this instance to a be a
      * function taking four arguments
      * @param <A1> 1st argument's type
@@ -238,7 +226,7 @@ import il.org.spartan.lazy.Cookbook.*;
      * @param <A3> 3rd argument's type
      * @param <A4> 4th argument's type
      * @param ϑ a one argument function that returns a new value for this
-     *        instance
+     *          instance
      * @return a function with three arguments named
      *         {@link Binder3#to(Object, Object, Object)} which when applied
      *         changes the current instance and returning
@@ -259,6 +247,18 @@ import il.org.spartan.lazy.Cookbook.*;
       prerequisites.clear();
       return this;
     }
+    /** @param ϑ a no-arguments function that returns a value for this instance
+     * @param cs instances on which the cell depends
+     * @return <code><b>this</b></code> **/
+    Property<T> set(final Function0<T> ϑ, final Property<?>... cs) {
+      this.ϑ = ϑ; // Set the encapsulated function
+      // Clear prerequisites
+      dependents.removeAll(prerequisites);
+      prerequisites.clear();
+      ingredients(cs);
+      version = 0;
+      return this;
+    }
     /** forcibly set the value stored in this instance, ignoring the function
      * used for computing it, and marks this instance as updated with respect to
      * all prerequisites.
@@ -273,38 +273,6 @@ import il.org.spartan.lazy.Cookbook.*;
     public Property<@Nullable T> undefine() {
       cache(null);
       return this;
-    }
-    /** @return <code><b>true</b></code> <em>iff</em> the value in this cell is
-     *         updated with respect to all its prerequisites */
-    public boolean updated() {
-      if (ϑ == null)
-        return true;
-      if (cache() == null)
-        return false;
-      for (final Property<?> ¢ : prerequisites)
-        if (version() <= ¢.version() || !¢.updated())
-          return false;
-      return true;
-    }
-    /** @return the version of this instance */
-    public long version() {
-      return version;
-    }
-    /** @return current value stored in this instance, recomputed if
-     *         necessary */
-    @Override public T ¢() {
-      if (updated())
-        return cache();
-      for (final Property<?> ¢ : prerequisites)
-        ¢.update();
-      version = latestPrequisiteVersion() + 1;
-      assert ϑ != null;
-      try {
-        return set(ϑ.¢());
-      } catch (final Exception x) {
-        undefine();
-        return null;
-      }
     }
     /** TODO Javadoc(2016): automatically generated for method
      * <code>update</code> <em>iff</em> <code>s</code> ends with any
@@ -353,38 +321,22 @@ import il.org.spartan.lazy.Cookbook.*;
       // Make sure the value on the instance is as updated as possible
       get();
     }
-    @Nullable T cache(@SuppressWarnings("hiding") final T cache) {
-      return this.cache = cache;
+    /** @return <code><b>true</b></code> <em>iff</em> the value in this cell is
+     *         updated with respect to all its prerequisites */
+    public boolean updated() {
+      if (ϑ == null)
+        return true;
+      if (cache() == null)
+        return false;
+      for (final Property<?> ¢ : prerequisites)
+        if (version() <= ¢.version() || !¢.updated())
+          return false;
+      return true;
     }
-    final long latestDependentVersion() {
-      return maxVersion(dependents);
+    /** @return the version of this instance */
+    public long version() {
+      return version;
     }
-    long latestPrequisiteVersion() {
-      return maxVersion(prerequisites);
-    }
-    /** @param ϑ a no-arguments function that returns a value for this instance
-     * @param cs instances on which the cell depends
-     * @return <code><b>this</b></code> **/
-    Property<T> set(final Function0<T> ϑ, final Property<?>... cs) {
-      this.ϑ = ϑ; // Set the encapsulated function
-      // Clear prerequisites
-      dependents.removeAll(prerequisites);
-      prerequisites.clear();
-      ingredients(cs);
-      version = 0;
-      return this;
-    }
-
-    /** The last value computed for this instance */
-    @Nullable T cache = null;
-    /** other properties that depend on this instance */
-    final List<Property<?>> dependents = new ArrayList<>();
-    /** other properties on which this instance depends */
-    final List<Property<?>> prerequisites = new ArrayList<>();
-    /** version of this instance */
-    long version = 0;
-    /** returns the instance updated value when invoked */
-    @Nullable Function0<? extends @Nullable T> ϑ = null;
   }
 
   @SuppressWarnings({ "static-method", "null" }) public static class TEST {
@@ -394,7 +346,18 @@ import il.org.spartan.lazy.Cookbook.*;
     private static final int SECOND_MAGIC_NUMBER = FIRST_MAGIC_NUMBER << 1 ^ FIRST_MAGIC_NUMBER;
     private static final String SEPARATOR = ", ";
     private static final String WORLD = "World!";
-
+    private Property<String> emptyString;
+    private Property<String> hello;
+    private Property<String> helloWorld;
+    private Property<String> nullProperty;
+    private Property<String> separator;
+    private int supplierCalls;
+    private Property<String> undefinedProperty = undefined();
+    private Property<String> world;
+    Property<Integer> integer = function(() -> {
+      ++supplierCalls;
+      return Integer.valueOf(FIRST_MAGIC_NUMBER);
+    });
     @Before public void init() {
       nullProperty = null;
       undefinedProperty = undefined();
@@ -513,18 +476,51 @@ import il.org.spartan.lazy.Cookbook.*;
       b.bind((final String ¢) -> "Hello, " + a.¢()).to(a);
       b.bind((final String ¢) -> "Hello, " + a.¢()).to(a);
     }
-
-    private Property<String> emptyString;
-    private Property<String> hello;
-    private Property<String> helloWorld;
-    private Property<String> nullProperty;
-    private Property<String> separator;
-    private int supplierCalls;
-    private Property<String> undefinedProperty = undefined();
-    private Property<String> world;
-    Property<Integer> integer = function(() -> {
-      ++supplierCalls;
-      return Integer.valueOf(FIRST_MAGIC_NUMBER);
-    });
+  }
+  static <@Nullable T, @Nullable A> Binder1<T, A> bind(final Function1<T, A> f) {
+    return new Property<T>().bind(f);
+  }
+  static <@Nullable T, @Nullable A1, @Nullable A2> Binder2<@Nullable T, @Nullable A1, @Nullable A2> bind(final Function2<T, A1, A2> f) {
+    return new Property<T>().bind(f);
+  }
+  static <@Nullable T, @Nullable A1, @Nullable A2, @Nullable A3> Binder3<T, A1, A2, A3> bind(final Function3<T, A1, A2, A3> f) {
+    return new Property<T>().bind(f);
+  }
+  static <@Nullable T, @Nullable A1, @Nullable A2, @Nullable A3, @Nullable A4> Binder4<T, A1, A2, A3, A4> bind(final Function4<T, A1, A2, A3, A4> f) {
+    return new Property<T>().bind(f);
+  }
+  static <@Nullable T> Property<T> function(final Function0<T> f) {
+    return new Property<T>().set(f);
+  }
+  /** A factory method of class {@link Property} returning an undefined value
+   * for a cell
+   * @param < T > JD
+   * @return the newly created instance of {@link Property} containing null
+   *         value of the type parameter */
+  static <@Nullable T> Property<T> undefined() {
+    return new Property<>();
+  }
+  /** A factory method of class {@link Property} of an {@link Integer} as in
+   *
+   * <pre>
+   * Property&lt;Integer&gt; genesis = {@link Environment}.value(2);
+   * </pre>
+   *
+   * @param i JD
+   * @return the newly created instance of {@link Ingredient} */
+  public static Property<@Nullable Integer> value(final int i) {
+    return new Property<>(Integer.valueOf(i));
+  }
+  /** A factory method for class {@link Ingredient} as in
+   *
+   * <pre>
+   * Property&lt;String&gt; genesis = Cookbook.value(&quot;&quot;);
+   * </pre>
+   *
+   * @param < T > JD
+   * @param t JD
+   * @return the newly created instance of {@link Property} */
+  static <@Nullable T> Property<@Nullable T> value(final T t) {
+    return new Property<>(t);
   }
 }

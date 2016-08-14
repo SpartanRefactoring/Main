@@ -17,8 +17,6 @@ public enum as {
   // No values in an 'enum' which serves as a name space for a collection of
   // 'static' functions.
   ;
-
-
   /** A static nested class hosting unit tests for the nesting class Unit test
    * for the containing class. Note the naming convention: a) names of test
    * methods do not use are not prefixed by "test". This prefix is redundant. b)
@@ -45,11 +43,9 @@ public enum as {
       azzert.that(is.get(2), is(box.it(14)));
       azzert.that(is.size(), is(3));
     }
-
     @Test public void stringOfNull() {
       azzert.that(as.string(null), is("null"));
     }
-
     @Test public void stringWhenToStringReturnsNull() {
       azzert.that(as.string(new Object() {
         @Override public @Nullable String toString() {
@@ -83,6 +79,17 @@ public enum as {
   public static Iterable<Integer> asIterable(final Integer... is) {
     // Create an object of a new <em>anonymous</em> class that
     // <code><b>implements</b></code> {@link Iterable}
+    return () -> new Iterator<Integer>() {
+      int current = 0;
+      @Override public boolean hasNext() {
+        return current < is.length;
+      }
+      @Override public Integer next() {
+        return is[current++];
+      }
+    };
+  }
+  static Iterable<Integer> asIterableEssence(final Integer... is) {
     return () -> new Iterator<Integer>() {
       int current = 0;
       @Override public boolean hasNext() {
@@ -176,7 +183,6 @@ public enum as {
   @SafeVarargs public static <T> PureIterator<T> iterator(final T... ts) {
     return iterable(ts).iterator();
   }
-
   /** Converts a list of <code><b>int</b></code>s into a {@link List} of
    * {@link Integer}s
    * @param is what to convert
@@ -255,17 +261,5 @@ public enum as {
       if (o != null)
         $.add("" + o);
     return Utils.cantBeNull($.toArray(new String @NonNull [$.size()]));
-  }
-
-  static Iterable<Integer> asIterableEssence(final Integer... is) {
-    return () -> new Iterator<Integer>() {
-      int current = 0;
-      @Override public boolean hasNext() {
-        return current < is.length;
-      }
-      @Override public Integer next() {
-        return is[current++];
-      }
-    };
   }
 }

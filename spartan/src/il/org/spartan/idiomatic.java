@@ -11,77 +11,6 @@ import org.junit.*;
  * @author Yossi Gil <code><yossi.gil [at] gmail.com></code>
  * @since 2013/07/01 */
 public interface idiomatic {
-  /** TODO Javadoc(2016): automatically generated for method <code>yield</code>
-   * @param <T> JD
-   * @param t JD
-   * @return Yielder<T> TODO Javadoc(2016) automatically generated for returned
-   *         value of method <code>yield</code> */
-  static <T> Storer<T> take(final T t) {
-    return new Storer<>(t);
-  }
-  /** @param r JD
-   * @return an identical runnable which is also a {@link Runner} */
-  static Runner run(final Runnable r) {
-    return new Runner(r);
-  }
-  /** TODO Javadoc(2016): automatically generated for method <code>yield</code>
-   * @param <T> JD
-   * @param $ result
-   * @return an identical supplier which is also a {@link Holder} */
-  static <T> Holder<T> eval(final Supplier<@Nullable T> $) {
-    return () -> $.get();
-  }
-  /** @param condition JD
-   * @return TODO document return type */
-  /** TODO Javadoc(2016): automatically generated for method <code>incase</code>
-   * @param <T> JD
-   * @param condition TODO
-   * @param t JD
-   * @return T TODO Javadoc(2016) automatically generated for returned value of
-   *         method <code>incase</code> */
-  static <T> @Nullable T incase(final boolean condition, final T t) {
-    return condition ? t : null;
-  }
-  /** Quote a given {@link String}
-   * @param $ some {@link String} to be quoted
-   * @return the parameter, quoted */
-  static String quote(final @Nullable String $) {
-    return $ != null ? QUOTE + $ + QUOTE : "<null reference>";
-  }
-  /** @param condition JD
-   * @return TODO document return type */
-  static Trigger unless(final boolean condition) {
-    return when(!condition);
-  }
-  /** @param <T> JD
-   * @param condition when should the action take place
-   * @param t JD
-   * @return the non-boolean parameter, in case the boolean parameter is true,
-   *         or null, otherwise */
-  static <T> @Nullable T unless(final boolean condition, final T t) {
-    return incase(!condition, t);
-  }
-  /** @param condition JD
-   * @return TODO document return type */
-  static Trigger when(final boolean condition) {
-    return condition ? eval : ignore;
-  }
-
-  /** Single quote: */
-  static final String QUOTE = "'";
-  /** an evaluating trigger */
-  static final Trigger eval = new Trigger() {
-    @Override public <@Nullable T> T eval(final Supplier<T> s) {
-      return s.get();
-    }
-  };
-  /** an ignoring trigger */
-  static final Trigger ignore = new Trigger() {
-    @Override public <@Nullable T> T eval(final Supplier<T> __) {
-      return null;
-    }
-  };
-
   /** Supplier with {@link #when(boolean)} method
    * @param <T> JD
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
@@ -103,11 +32,51 @@ public interface idiomatic {
     }
   }
 
+  /** A class which is just like {@link Supplier}, except that it uses the
+   * shorter name ({@link #λ()} and that it allows for {@link Exception}s to be
+   * thrown by the getters.
+   * @author Yossi Gil
+   * @param <T> JD
+   * @since 2016` */
+  @FunctionalInterface public interface Producer<@Nullable T> {
+    /** @return the next value provided by this instance
+     * @throws Exception JD */
+    T λ() throws Exception;
+  }
+
+  /** Evaluate a {@link Runnable} when a condition applies or unless a condition
+   * applies.
+   * @author Yossi Gil <Yossi.Gil@GMail.COM>
+   * @since 2016 */
+  static class Runner implements Runnable {
+    private final Runnable run;
+    /** Instantiates this class.
+     * @param run JD */
+    Runner(final Runnable run) {
+      this.run = run;
+    }
+    @Override public void run() {
+      run.run();
+    }
+    /** TODO Javadoc(2016): automatically generated for method
+     * <code>unless</code>
+     * @param unless condition n which execution occurs. */
+    public void unless(final boolean unless) {
+      when(!unless);
+    }
+    void when(final boolean when) {
+      if (when)
+        run();
+    }
+  }
+
   /** Store a value to be returned with {@link #get()} function
    * @param <T> JD
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016 */
   static class Storer<T> implements Holder<T> {
+    /** */
+    final T inner;
     /** Instantiates this class.
      * @param inner JD */
     Storer(final T inner) {
@@ -117,33 +86,27 @@ public interface idiomatic {
     @Override public T get() {
       return inner;
     }
-
-    /** */
-    final T inner;
-  }
-
-  /** @author Yossi Gil <Yossi.Gil@GMail.COM>
-   * @since 2016 */
-  interface Trigger {
-    /** @param <T> JD
-     * @param t JD
-     * @return TODO document return type */
-    <@Nullable T> T eval(final Supplier<T> t);
-    /** @param <T> JD
-     * @param $ JD
-     * @return TODO document return type */
-    default <@Nullable T> T eval(final T $) {
-      return eval(() -> $);
-    }
   }
 
   @SuppressWarnings({ "javadoc", "static-method" }) public static class TEST {
     @Test public void use0() {
       azzert.notNull(new Storer<>(this));
     }
+    @Test public void use08() {
+      azzert.isNull(unless(true).eval(() -> new Object()));
+    }
+    @Test public void use09() {
+      azzert.notNull(unless(false).eval(() -> new Object()));
+    }
     @Test public void use1() {
       azzert.notNull(new Storer<>(this));
       new Storer<>(this).when(true);
+    }
+    @Test public void use10() {
+      azzert.notNull(when(true).eval(() -> new Object()));
+    }
+    @Test public void use11() {
+      azzert.isNull(when(false).eval(() -> new Object()));
     }
     @Test public void use2() {
       azzert.notNull(take(this));
@@ -166,59 +129,54 @@ public interface idiomatic {
       azzert.isNull(take(null).unless(true));
       azzert.isNull(take(null).unless(false));
     }
-    @Test public void use08() {
-      azzert.isNull(unless(true).eval(() -> new Object()));
-    }
-    @Test public void use09() {
-      azzert.notNull(unless(false).eval(() -> new Object()));
-    }
-    @Test public void use10() {
-      azzert.notNull(when(true).eval(() -> new Object()));
-    }
-    @Test public void use11() {
-      azzert.isNull(when(false).eval(() -> new Object()));
-    }
   }
 
-  /** Evaluate a {@link Runnable} when a condition applies or unless a condition
-   * applies.
-   * @author Yossi Gil <Yossi.Gil@GMail.COM>
+  /** @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016 */
-  static class Runner implements Runnable {
-    @Override public void run() {
-      run.run();
+  interface Trigger {
+    /** @param <T> JD
+     * @param t JD
+     * @return TODO document return type */
+    <@Nullable T> T eval(final Supplier<T> t);
+    /** @param <T> JD
+     * @param $ JD
+     * @return TODO document return type */
+    default <@Nullable T> T eval(final T $) {
+      return eval(() -> $);
     }
-    /** TODO Javadoc(2016): automatically generated for method
-     * <code>unless</code>
-     * @param unless condition n which execution occurs. */
-    public void unless(final boolean unless) {
-      when(!unless);
-    }
-    void when(final boolean when) {
-      if (when)
-        run();
-    }
-    /** Instantiates this class.
-     * @param run JD */
-    Runner(final Runnable run) {
-      this.run = run;
-    }
-
-    private final Runnable run;
   }
-
-  /** A class which is just like {@link Supplier}, except that it uses the
-   * shorter name ({@link #λ()} and that it allows for {@link Exception}s to be
-   * thrown by the getters.
-   * @author Yossi Gil
+  /** Single quote: */
+  static final String QUOTE = "'";
+  /** an evaluating trigger */
+  static final Trigger eval = new Trigger() {
+    @Override public <@Nullable T> T eval(final Supplier<T> s) {
+      return s.get();
+    }
+  };
+  /** an ignoring trigger */
+  static final Trigger ignore = new Trigger() {
+    @Override public <@Nullable T> T eval(final Supplier<T> __) {
+      return null;
+    }
+  };
+  /** TODO Javadoc(2016): automatically generated for method <code>yield</code>
    * @param <T> JD
-   * @since 2016` */
-  @FunctionalInterface public interface Producer<@Nullable T> {
-    /** @return the next value provided by this instance
-     * @throws Exception JD */
-    T λ() throws Exception;
+   * @param $ result
+   * @return an identical supplier which is also a {@link Holder} */
+  static <T> Holder<T> eval(final Supplier<@Nullable T> $) {
+    return () -> $.get();
   }
-
+  /** @param condition JD
+   * @return TODO document return type */
+  /** TODO Javadoc(2016): automatically generated for method <code>incase</code>
+   * @param <T> JD
+   * @param condition TODO
+   * @param t JD
+   * @return T TODO Javadoc(2016) automatically generated for returned value of
+   *         method <code>incase</code> */
+  static <T> @Nullable T incase(final boolean condition, final T t) {
+    return condition ? t : null;
+  }
   /** A filter, which prints an appropriate log message and returns null in case
    * of {@link Exception} thrown by {@link Producer#λ()}
    * @param <T> JD
@@ -232,5 +190,42 @@ public interface idiomatic {
       ¢.printStackTrace();
       return null;
     }
+  }
+  /** Quote a given {@link String}
+   * @param $ some {@link String} to be quoted
+   * @return the parameter, quoted */
+  static String quote(final @Nullable String $) {
+    return $ != null ? QUOTE + $ + QUOTE : "<null reference>";
+  }
+  /** @param r JD
+   * @return an identical runnable which is also a {@link Runner} */
+  static Runner run(final Runnable r) {
+    return new Runner(r);
+  }
+  /** TODO Javadoc(2016): automatically generated for method <code>yield</code>
+   * @param <T> JD
+   * @param t JD
+   * @return Yielder<T> TODO Javadoc(2016) automatically generated for returned
+   *         value of method <code>yield</code> */
+  static <T> Storer<T> take(final T t) {
+    return new Storer<>(t);
+  }
+  /** @param condition JD
+   * @return TODO document return type */
+  static Trigger unless(final boolean condition) {
+    return when(!condition);
+  }
+  /** @param <T> JD
+   * @param condition when should the action take place
+   * @param t JD
+   * @return the non-boolean parameter, in case the boolean parameter is true,
+   *         or null, otherwise */
+  static <T> @Nullable T unless(final boolean condition, final T t) {
+    return incase(!condition, t);
+  }
+  /** @param condition JD
+   * @return TODO document return type */
+  static Trigger when(final boolean condition) {
+    return condition ? eval : ignore;
   }
 }

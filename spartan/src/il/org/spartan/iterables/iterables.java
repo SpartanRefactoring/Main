@@ -14,6 +14,43 @@ import il.org.spartan.*;
 public enum iterables {
   //
   ;
+  /** A static nested class hosting unit tests for the nesting class Unit test
+   * for the containing class. Note the naming convention: a) names of test
+   * methods do not use are not prefixed by "test". This prefix is redundant. b)
+   * test methods begin with the name of the method they check.
+   * @author Yossi Gil
+   * @since 2014-05-31 */
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+  @SuppressWarnings({ "static-method", "javadoc" }) //
+  public static class TEST {
+    @Test public void containsDegenerate() {
+      azzert.nay(contains("Hello"));
+    }
+    @Test public void containseturnsFalseTypical() {
+      azzert.nay(contains("Hello", null, "x", "y", null, "z", "w", "u", "v"));
+    }
+    @Test public void containsSimple() {
+      azzert.aye("", contains("Hello", "e"));
+    }
+    @Test public void containsTypical() {
+      azzert.aye("", contains("Hello", "a", "b", "c", "d", "e", "f"));
+    }
+    @Test public void containsWithNulls() {
+      azzert.aye("", contains("Hello", null, "a", "b", null, "c", "d", "e", "f", null));
+    }
+    @Test public void countDoesNotIncludeNull() {
+      assertEquals(3, count(as.iterable(null, "One", null, "Two", null, "Three")));
+    }
+    @Test public void countEmpty() {
+      assertEquals(0, count(iterables.<String> empty()));
+    }
+    @Test public void countSingleton() {
+      assertEquals(1, count(singleton(new Object())));
+    }
+    @Test public void countThree() {
+      assertEquals(3, count(as.iterable("One", "Two", "Three")));
+    }
+  }
   /** Counts the number of items in an {@link Iterable}.
    * @param <T> some arbitrary type
    * @param ts some iterable over items whose type is the type parameter
@@ -53,43 +90,5 @@ public enum iterables {
    * @return the parameter, but in a singleton iterator form */
   public static <T> PureIterator<T> singletonIterator(final T $) {
     return singleton($).iterator();
-  }
-
-  /** A static nested class hosting unit tests for the nesting class Unit test
-   * for the containing class. Note the naming convention: a) names of test
-   * methods do not use are not prefixed by "test". This prefix is redundant. b)
-   * test methods begin with the name of the method they check.
-   * @author Yossi Gil
-   * @since 2014-05-31 */
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-  @SuppressWarnings({ "static-method", "javadoc" }) //
-  public static class TEST {
-    @Test public void containsDegenerate() {
-      azzert.nay(contains("Hello"));
-    }
-    @Test public void containseturnsFalseTypical() {
-      azzert.nay(contains("Hello", null, "x", "y", null, "z", "w", "u", "v"));
-    }
-    @Test public void containsSimple() {
-      azzert.aye("", contains("Hello", "e"));
-    }
-    @Test public void containsTypical() {
-      azzert.aye("", contains("Hello", "a", "b", "c", "d", "e", "f"));
-    }
-    @Test public void containsWithNulls() {
-      azzert.aye("", contains("Hello", null, "a", "b", null, "c", "d", "e", "f", null));
-    }
-    @Test public void countDoesNotIncludeNull() {
-      assertEquals(3, count(as.iterable(null, "One", null, "Two", null, "Three")));
-    }
-    @Test public void countEmpty() {
-      assertEquals(0, count(iterables.<String> empty()));
-    }
-    @Test public void countSingleton() {
-      assertEquals(1, count(singleton(new Object())));
-    }
-    @Test public void countThree() {
-      assertEquals(3, count(as.iterable("One", "Two", "Three")));
-    }
   }
 }

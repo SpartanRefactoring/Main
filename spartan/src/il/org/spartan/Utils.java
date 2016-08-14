@@ -175,7 +175,6 @@ public interface Utils {
       assertArrayEquals(intToIntegers(1, 29, 60), $);
     }
   }
-
   static final String QUOTE = "'";
   static final String WHITES = "(?m)\\s+";
   public static <T, C extends Collection<T>> C add(final C $, final Iterable<? extends T> ts) {
@@ -230,23 +229,24 @@ public interface Utils {
    * function is mainly used to make <code><b>null</b></code<]> checkers happy.
    * <p>
    * The parameter is an instance of an arbitrary type, T. The hidden assumption
-   * is that a @Nullable annotation is present on T.
-   * Thus, the parameter may be either
-   * <code><b>null</b></code<]>, or an actual instance of T.
+   * is that a @Nullable annotation is present on T. Thus, the parameter may be
+   * either <code><b>null</b></code<]>, or an actual instance of T.
    * <p>
-   * The function returns the same instance it received as a parameter, except that
-   * this instance is returned as an instance of the type T <i>without</i> the @Nullable
-   * annotation. Execution is aborted with an {@link AssertionError} if the parameter is null.
+   * The function returns the same instance it received as a parameter, except
+   * that this instance is returned as an instance of the type T <i>without</i>
+   * the @Nullable annotation. Execution is aborted with an
+   * {@link AssertionError} if the parameter is null.
    * <p>
-   * as it turns out, this function is a (slow) logical no-op, but still applicable to
-   * arguments of type T, where T does not have the @Nullable annotation present on it.
-   *  <p>
-   * For reasons related to the way non-nullability is managed in Java, the compiler will
-   * not warn you from doing applying this function to a {@link NonNull} type. However,
-   * there is absolutely no point in removing a @Nullable  annotation if the type that
-   * does not have it. Doing so a is plain clutter. Since the compiler cannot assist you,
-   * you will have to be on the guard.
-   *
+   * as it turns out, this function is a (slow) logical no-op, but still
+   * applicable to arguments of type T, where T does not have the @Nullable
+   * annotation present on it.
+   * <p>
+   * For reasons related to the way non-nullability is managed in Java, the
+   * compiler will not warn you from doing applying this function to a
+   * {@link NonNull} type. However, there is absolutely no point in removing
+   * a @Nullable annotation if the type that does not have it. Doing so a is
+   * plain clutter. Since the compiler cannot assist you, you will have to be on
+   * the guard.
    * @param $ result
    * @param <T> JD
    * @return the parameter, but guaranteed to be {@link NonNull}
@@ -254,7 +254,6 @@ public interface Utils {
   @Nullable public static <T> T canBeNull(final T $) {
     return $;
   }
-
   /** Removes the @Nullable annotation present on the type of a value. This
    * function is mainly used to make <code><b>null</b></code> checkers happy.
    * <p>
@@ -397,7 +396,6 @@ public interface Utils {
   static boolean lastIn(final Object o, final List<?> os) {
     return last(os) == o;
   }
-
   /** Computes the maximum of two or more integers.
    * @param a some integer
    * @param is additional integers
@@ -418,7 +416,6 @@ public interface Utils {
       $ = Math.min($, i);
     return $;
   }
-
   /** Aborts in case a given value is <code><b>null</b></code>.
    * <p>
    * This function is the lesser used dual of {@link #cantBeNull(Object)} .
@@ -430,7 +427,6 @@ public interface Utils {
     assert $ == null;
     return null;
   }
-
   /** @param f JD
    * @return the name of the parameter, which must not be
    *         <code><b>null</b></code> */
@@ -468,8 +464,6 @@ public interface Utils {
   static StringBuilder prepend(final StringBuilder $, final char c) {
     return cantBeNull($.insert(0, c));
   }
-
-
   /** Prepend a given {@link String} to a {@link StringBuilder}
    * @param $ prepend to what
    * @param s what needs to be prepended
@@ -484,7 +478,6 @@ public interface Utils {
   public static String quote(final @Nullable String $) {
     return $ != null ? QUOTE + $ + QUOTE : "<null reference>";
   }
-
   /** Remove any duplicates that may be present in a given {@link List}
    * @param < T > JD
    * @param ts JD */
@@ -524,14 +517,12 @@ public interface Utils {
     Arrays.sort(is);
     return is;
   }
-
   /** Computes the square of a given double
    * @param d some number
    * @return the square of the parameter */
   public static double sqr(final double d) {
     return d * d;
   }
-
   /** Computes the square of a given integer
    * @param i some integer
    * @return the square of the parameter */

@@ -15,17 +15,6 @@ import org.eclipse.jdt.annotation.*;
  * @author Yossi Gil
  * @since December 2010 */
 public class Integers {
-  private static int roundUp(final int i) {
-    int $ = 1;
-    while ($ < i)
-      $ <<= 1;
-    return $;
-  }
-  static int hash(final int i) {
-    final int $ = i ^ i >>> 12 ^ i >>> 20;
-    return $ ^ $ >>> 4 ^ $ >>> 7;
-  }
-
   /** */
   public static final float MAX_LOAD = 0.75f;
   /** */
@@ -34,14 +23,28 @@ public class Integers {
   public static final float MIN_LOAD = 0.25f;
   /** */
   public static final float REMOVE_LOAD = 0.20f;
-
+  static int hash(final int i) {
+    final int $ = i ^ i >>> 12 ^ i >>> 20;
+    return $ ^ $ >>> 4 ^ $ >>> 7;
+  }
+  private static int roundUp(final int i) {
+    int $ = 1;
+    while ($ < i)
+      $ <<= 1;
+    return $;
+  }
+  private boolean[] occupied;
+  private boolean[] placeholder;
+  private int removed;
+  private int size;
+  protected int[] data;
   /** Instantiates this class */
   public Integers() {
     this(MIN_CAPACITY);
   }
   /** Instantiate this class, using a given size for the hash table.
    * @param initialCapacity suggests a hash table size, will be rounded up to
-   *        the next power of two. */
+   *          the next power of two. */
   public Integers(final int initialCapacity) {
     final int capacity = Math.max(MIN_CAPACITY, roundUp(initialCapacity));
     data = new int @NonNull [capacity];
@@ -66,7 +69,7 @@ public class Integers {
   }
   /** Add an array of integers to this set, if they are not already in it.
    * @param is an arbitrary array of integers; ; must not be
-   *        <code><b>null</b></code>.
+   *          <code><b>null</b></code>.
    * @return <code><b>this</b></code> */
   public Integers add(final int... is) {
     for (final int n : is)
@@ -119,10 +122,51 @@ public class Integers {
         $[j++] = data[i];
     return $;
   }
+  /** Find the index in the hash table into which the parameter could be
+   * inserted.
+   * @param n some integer
+   * @return -1 if the parameter is in the table already, otherwise, the index
+   *         at which it could be safely inserted. */
+  protected int find(final int n) {
+    int $ = -1;
+    for (int i = hash(n), t = 0;; i += ++t) {
+      i &= data.length - 1;
+      if (placeholder[i] || !occupied[i])
+        $ = $ < 0 ? i : $;
+      if (!occupied[i])
+        return $;
+      if (n == data[i])
+        return -1;
+    }
+  }
+  /** Find the index in the hash table of the parameter
+   * @param i some integer
+   * @return index of the element if the parameter is in the table, otherwise,
+   *         -1; */
+  private int location(final int i) {
+    for (int $ = hash(i), t = 0;; $ += ++t) {
+      $ &= data.length - 1;
+      if (!occupied[$])
+        return -1;
+      if (placeholder[$])
+        continue;
+      if (i == data[$])
+        return $;
+    }
+  }
   /** Recreate the table, inserting all elements in it afresh.
    * @return <code><b>this</b></code> */
   public Integers rehash() {
     return rehash(capacity());
+  }
+  /** resize internal storage to the specified capacity, which must be a power
+   * of two.
+   * @param newCapacity new initialCapacity for the internal array
+   * @return <code><b>this</b></code> */
+  protected Integers rehash(final int newCapacity) {
+    assert (newCapacity & newCapacity - 1) == 0;
+    assert newCapacity >= MIN_CAPACITY;
+    return reset(newCapacity).add(entries());
   }
   /** Remove an element from this set, it is in it
    * @param n some integer to be removed from the set
@@ -145,52 +189,6 @@ public class Integers {
       remove(n);
     return this;
   }
-  /** How many elements are there in this set?
-   * @return the number of values in the set. */
-  public int size() {
-    return size;
-  }
-  /** Find the index in the hash table of the parameter
-   * @param i some integer
-   * @return index of the element if the parameter is in the table, otherwise,
-   *         -1; */
-  private int location(final int i) {
-    for (int $ = hash(i), t = 0;; $ += ++t) {
-      $ &= data.length - 1;
-      if (!occupied[$])
-        return -1;
-      if (placeholder[$])
-        continue;
-      if (i == data[$])
-        return $;
-    }
-  }
-  /** Find the index in the hash table into which the parameter could be
-   * inserted.
-   * @param n some integer
-   * @return -1 if the parameter is in the table already, otherwise, the index
-   *         at which it could be safely inserted. */
-  protected int find(final int n) {
-    int $ = -1;
-    for (int i = hash(n), t = 0;; i += ++t) {
-      i &= data.length - 1;
-      if (placeholder[i] || !occupied[i])
-        $ = $ < 0 ? i : $;
-      if (!occupied[i])
-        return $;
-      if (n == data[i])
-        return -1;
-    }
-  }
-  /** resize internal storage to the specified capacity, which must be a power
-   * of two.
-   * @param newCapacity new initialCapacity for the internal array
-   * @return <code><b>this</b></code> */
-  protected Integers rehash(final int newCapacity) {
-    assert (newCapacity & newCapacity - 1) == 0;
-    assert newCapacity >= MIN_CAPACITY;
-    return reset(newCapacity).add(entries());
-  }
   final protected Integers reset(final int capacity) {
     data = new int @NonNull [capacity];
     occupied = new boolean @NonNull [capacity];
@@ -199,14 +197,13 @@ public class Integers {
     subclassReset(capacity);
     return this;
   }
+  /** How many elements are there in this set?
+   * @return the number of values in the set. */
+  public int size() {
+    return size;
+  }
   /** @param capacity new hash table size */
   protected void subclassReset(final int capacity) {
     //
   }
-
-  private boolean[] occupied;
-  private boolean[] placeholder;
-  private int removed;
-  private int size;
-  protected int[] data;
 }

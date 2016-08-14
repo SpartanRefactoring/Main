@@ -11,6 +11,41 @@ import org.junit.*;
  * @since 2015-07-18 */
 @SuppressWarnings({ "javadoc", "null" }) //
 public class azzert extends org.junit.Assert {
+  public static class __META {
+    static class Inline {
+      static <T> void assertEquals(final String reason, final T t1, final T t2) {
+        azzert.that(reason, t2, is(t1));
+      }
+      static <T> void assertEquals(final T t1, final T t2) {
+        azzert.that(t2, is(t1));
+      }
+      static void assertFalse(final boolean b) {
+        azzert.nay(b);
+      }
+      static void assertFalse(final String reason, final boolean b) {
+        azzert.nay(reason, b);
+      }
+      static <T> void assertNotEquals(final T t1, final T t2) {
+        azzert.that(t2, is(t1));
+      }
+      static <T> void assertNotNull(final T t) {
+        azzert.notNull(t);
+      }
+      static <T> void assertNull(final T t) {
+        azzert.isNull(t);
+      }
+      static void assertTrue(final boolean b) {
+        azzert.aye(b);
+      }
+      static void assertTrue(final String reason, final boolean b) {
+        azzert.aye(reason, b);
+      }
+      static void assertZero(final int i) {
+        azzert.zero(i);
+      }
+    }
+  }
+
   public static class Asserter {
     public @NonNull Asserter andAye(final boolean claim) {
       return andAye("", claim);
@@ -27,43 +62,6 @@ public class azzert extends org.junit.Assert {
       return this;
     }
   }
-
-  public static class __META {
-    static class Inline {
-      static <T> void assertNull(final T t) {
-        azzert.isNull(t);
-      }
-      static <T> void assertNotNull(final T t) {
-        azzert.notNull(t);
-      }
-      static <T> void assertEquals(final String reason, final T t1, final T t2) {
-        azzert.that(reason, t2, is(t1));
-      }
-      static <T> void assertEquals(final T t1, final T t2) {
-        azzert.that(t2, is(t1));
-      }
-      static void assertFalse(final boolean b) {
-        azzert.nay(b);
-      }
-      static void assertFalse(final String reason, final boolean b) {
-        azzert.nay(reason, b);
-      }
-      static <T> void assertNotEquals(final T t1, final T t2) {
-        azzert.that(t2, is(t1));
-      }
-      static void assertTrue(final boolean b) {
-        azzert.aye(b);
-      }
-      static void assertTrue(final String reason, final boolean b) {
-        azzert.aye(reason, b);
-      }
-      static void assertZero(final int i) {
-        azzert.zero(i);
-      }
-    }
-  }
-
-
   public static <T> Matcher<T> allOf(final java.lang.Iterable<Matcher<? super T>> matchers) {
     return AllOf.<T> allOf(matchers);
   }
@@ -305,7 +303,7 @@ public class azzert extends org.junit.Assert {
   }
   /** @param message what to print
    * @param o what to examine */
-  public static void isNull(String message, @Nullable Object o) {
+  public static void isNull(final String message, @Nullable final Object o) {
     assertNull(message, o);
   }
   public static Wrapper<String> iz(final String s) {

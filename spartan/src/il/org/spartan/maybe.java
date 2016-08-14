@@ -26,7 +26,6 @@ public class maybe<@Nullable T> {
       azzert.notNull(m.get());
     }
   }
-
   /** @param <T> JD
    * @return TODO document return type */
   public static <@Nullable T> maybe<T> no() {
@@ -38,13 +37,14 @@ public class maybe<@Nullable T> {
   public static <@Nullable T> maybe<T> yes(final T t) {
     return new maybe<>(t);
   }
+  private @Nullable T inner;
+  private maybe() {
+    inner = null;
+  }
   /** Instantiates this class.
    * @param inner JD */
   public maybe(final @Nullable T inner) {
     this.inner = inner;
-  }
-  private maybe() {
-    inner = null;
   }
   /** @return TODO document return type */
   public maybe<@Nullable T> clear() {
@@ -69,6 +69,4 @@ public class maybe<@Nullable T> {
     this.inner = inner;
     return this;
   }
-
-  private @Nullable T inner;
 }
