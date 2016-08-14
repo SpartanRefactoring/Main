@@ -13,6 +13,7 @@ import org.eclipse.text.edits.*;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.suggestions.*;
 import il.org.spartan.refactoring.utils.*;
