@@ -90,8 +90,7 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
         new String[] { "Constant first", "a*2", "2*a" }, //
         new String[] { "Constant first two arguments", "a*2*b", "2*a*b" }, //
         new String[] { "Function with fewer arguments first", "f(a,b,c)*f(a,b)*f(a)", "f(a)*f(a,b)*f(a,b,c)" }, //
-        new String[] { "Literals of distinct length", "123*12*1", "1*12*123" }, //
-        new String[] { "Sort expressions by size", "1*f(a,b,c,d) * 2*f(a,b) * 3*f()", "1*2*3*f()*f(a,b)*f(a,b,c,d)" }, //
+        new String[] { "Literals of distinct length", "1234*123*12", "12*123*1234" }, //
         new String[] { "Long alphabetical sorting", "f(t)*g(h1,h2)*y*a*2*b*x", "2*a*b*x*y*f(t)*g(h1,h2)" }, //
         new String[] { "Plain alphabetical sorting", "f(y)*f(x)", "f(x)*f(y)" }, //
         null);

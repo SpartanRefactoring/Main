@@ -84,7 +84,7 @@ public class InfixSortAdditionTest {
         new String[] { "Add 1", "1+a*b", "a*b+1" }, //
         new String[] { "Add 1", "1+c*d", "c*d+1" }, //
         new String[] { "Literals of distinct length", "123+12+1", "1+12+123" }, //
-        new String[] { "Sort expressions by size", "1*f(a,b,c,d) + 2*f(a,b) + 3*f()", "3*f() +2*f(a,b)+ 1*f(a,b,c,d)" }, //
+        new String[] { "Sort expressions by size", "2*f(a,b,c,d) + 3*f(a,b) + 4*f()", "4*f() +3*f(a,b)+ 2*f(a,b,c,d)" }, //
         null);
 
     /** Generate test cases for this parameterized class.
