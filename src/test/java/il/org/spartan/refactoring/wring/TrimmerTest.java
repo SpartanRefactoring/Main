@@ -319,28 +319,31 @@ import il.org.spartan.refactoring.utils.*;
     trimming("int a = 2; return a; ").to("return 2;");
   }
   @Test public void canonicalFragementExamplesWithExraFragments() {
-    trimming("int a,b; a = 3;").to("int a = 3, b;");
-    trimming("int a,b=2; a = b;").to("int a;a=2;").to("int a=2;");
-    trimming("int a = 2,b=1; if (b) a = 3; ").to("int a=2;if(1)a=3;").to("int a=1?3:2;");
+    trimming("int a = 2; a = 3 * a * b; ").to("int a = 3 * 2 * b;");
+    trimming("int a = 2; a = 3 * a; ").to("int a = 3 * 2;");
     trimming("int a = 2; a += 3; ").to("int a = 2 + 3;");
     trimming("int a = 2; a += b; ").to("int a = 2 + b;");
-    trimming("int a = 2, b; a += b; ").to("");
+    trimming("int a = 2, b = 11; a = 3 * a * b; ")//
+    .to("int a=2;a=3*a*11;")//
+    .to("int a=3*2*11;")//
+    .to("int a=2*3* 11;");
     trimming("int a = 2, b=1; a += b; ").to("int a=2;a+=1;").to("int a=2+1;");
-    trimming("int a = 2; a = 3 * a; ").to("int a = 3 * 2;");
-    trimming("int a = 2; a = 3 * a * b; ").to("int a = 3 * 2 * b;");
+    trimming("int a = 2,b=1; if (b) a = 3; ").to("int a=2;if(1)a=3;").to("int a=1?3:2;");
+    trimming("int a = 2, b = 1; return a + 3 * b; ").to("int b=1;return 2+3*b;");
+    trimming("int a =2,b=2; if (x) a = 2*a;").to("int a=x?2*2:2, b=2;");
     trimming("int a = 2, b; a = 3 * a * b; ").to("");
-    trimming("int a = 2, b = 1; a = 3 * a * b; ").to("int a=2;a=3*a*1;").to("int a=3*2*1;").to("int a=1*2*3;");
+    trimming("int a = 2, b; a += b; ").to("");
+    trimming("int a =2,b; if (x) a = 2*a;").to("int a=x?2*2:2, b;");
+    trimming("int a = 2, b; return a + 3 * b; ").to("return 2 + 3*b;");
+    trimming("int a =2; if (x) a = 3*a;").to("int a=x?3*2:2;");
     trimming("int a = 2; return 3 * a * a; ").to("return 3 * 2 * 2;");
     trimming("int a = 2; return 3 * a * b; ").to("return 3 * 2 * b;");
-    trimming("int b=5,a = 2,c; return 3 * a * b * c; ").to("int a = 2; return 3 * a * 5 * c;");
-    trimming("int b=5,a = 2,c=4; return 3 * a * b * c; ").to("int a=2,c=4;return 3*a*5*c;");
-    trimming("int a = 2, b; return a + 3 * b; ").to("return 2 + 3*b;");
-    trimming("int a = 2, b = 1; return a + 3 * b; ").to("int b=1;return 2+3*b;");
     trimming("int a = 2; return a; ").to("return 2;");
+    trimming("int a,b=2; a = b;").to("int a;a=2;").to("int a=2;");
+    trimming("int a,b; a = 3;").to("int a = 3, b;");
     trimming("int a; if (x) a = 3; else a++;").to("int a;if(x)a=3;else++a;");
-    trimming("int a =2; if (x) a = 3*a;").to("int a=x?3*2:2;");
-    trimming("int a =2,b; if (x) a = 2*a;").to("int a=x?2*2:2, b;");
-    trimming("int a =2,b=2; if (x) a = 2*a;").to("int a=x?2*2:2, b=2;");
+    trimming("int b=5,a = 2,c=4; return 3 * a * b * c; ").to("int a=2,c=4;return 3*a*5*c;");
+    trimming("int b=5,a = 2,c; return 3 * a * b * c; ").to("int a = 2; return 3 * a * 5 * c;");
   }
   @Test public void canonicalFragementExamplesWithExraFragmentsX() {
     trimming("int a; if (x) a = 3; else a++;").to("int a;if(x)a=3;else++a;");
@@ -2929,13 +2932,13 @@ import il.org.spartan.refactoring.utils.*;
     trimming("1.0*2222*3").to("");
   }
   @Test public void sortThreeOperands2() {
-    trimming("1.0*1*124*1").to("");
+    trimming("1.0*11*124").to("");
   }
   @Test public void sortThreeOperands3() {
-    trimming("1*2F*33*142*1").to("");
+    trimming("2*2F*33*142").to("");
   }
   @Test public void sortThreeOperands4() {
-    trimming("1*2*'a'").to("");
+    trimming("2*3*'a'").to("");
   }
   @Test public void sortTwoOperands0CheckThatWeSortByLength_a() {
     trimming("1111*211").to("211*1111");
@@ -2944,16 +2947,16 @@ import il.org.spartan.refactoring.utils.*;
     trimming("211*1111").to("");
   }
   @Test public void sortTwoOperands1() {
-    trimming("1*2F").to("");
+    trimming("1F*2F").to("");
   }
   @Test public void sortTwoOperands2() {
-    trimming("2.0*1").to("1*2.0");
+    trimming("2.0*2").to("2*2.0");
   }
   @Test public void sortTwoOperands3() {
-    trimming("1*2L").to("");
+    trimming("2*3L").to("");
   }
   @Test public void sortTwoOperands4() {
-    trimming("2L*1").to("1*2L");
+    trimming("2L*1L").to("1L*2L");
   }
   @Test public void synchronizedBraces() {
     trimming("" //
