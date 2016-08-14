@@ -106,7 +106,7 @@ public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<Condit
     final boolean takeThen = !Is.booleanLiteral(then);
     final Expression other = takeThen ? then : elze;
     final boolean literal = asBooleanLiteral(takeThen ? elze : then).booleanValue();
-    return Subject.pair(literal != takeThen ? main : logicalNot(main), other).to(literal ? CONDITIONAL_OR : CONDITIONAL_AND);
+    return subject.pair(literal != takeThen ? main : logicalNot(main), other).to(literal ? CONDITIONAL_OR : CONDITIONAL_AND);
   }
   @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Convert conditional expression into logical expression";

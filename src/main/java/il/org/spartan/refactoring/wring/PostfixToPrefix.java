@@ -27,7 +27,7 @@ public final class PostfixToPrefix extends Wring.ReplaceCurrentNode<PostfixExpre
         && AncestorSearch.forType(ASTNode.VARIABLE_DECLARATION_EXPRESSION).from(e) == null;
   }
   @Override PrefixExpression replacement(final PostfixExpression e) {
-    return Subject.operand(e.getOperand()).to(pre2post(e.getOperator()));
+    return subject.operand(e.getOperand()).to(pre2post(e.getOperator()));
   }
   @Override boolean scopeIncludes(@SuppressWarnings("unused") final PostfixExpression __) {
     return true;

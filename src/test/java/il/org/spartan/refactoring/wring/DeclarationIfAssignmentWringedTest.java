@@ -143,7 +143,7 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     final Assignment a = extract.assignment(then(s));
     azzert.notNull(a);
     azzert.aye(same(left(a), f.getName()));
-    r.replace(initializer, Subject.pair(right(a), initializer).toCondition(s.getExpression()), null);
+    r.replace(initializer, subject.pair(right(a), initializer).toCondition(s.getExpression()), null);
     r.remove(s, null);
   }
 }

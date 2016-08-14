@@ -48,7 +48,7 @@ public final class DeclarationInitializerIfAssignment extends Wring.VariableDecl
     final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
     if (!i.canInlineInto(condition, right(a)))
       return null;
-    final ConditionalExpression newInitializer = Subject.pair(right(a), initializer).toCondition(condition);
+    final ConditionalExpression newInitializer = subject.pair(right(a), initializer).toCondition(condition);
     final int spending = i.replacedSize(newInitializer);
     final int savings = size(nextStatement, initializer);
     if (spending > savings)

@@ -40,7 +40,7 @@ public class BooleanConstants extends Wring.ReplaceCurrentNode<MethodInvocation>
     if (e == null || !"Boolean".equals(e.toString()))
       return null;
     final BooleanLiteral b = asBooleanLiteral(arguments.get(0));
-    return b == null ? null : Subject.operand(e).toQualifier(b.booleanValue() ? "TRUE" : "FALSE");
+    return b == null ? null : subject.operand(e).toQualifier(b.booleanValue() ? "TRUE" : "FALSE");
   }
   @Override WringGroup wringGroup() {
     return WringGroup.REMOVE_SYNTACTIC_BAGGAGE;

@@ -23,7 +23,7 @@ public final class InfixSortAddition extends Wring.InfixSorting {
     final List<Expression> operands = extract.allOperands(e);
     final boolean notString = Is.notString(e);
     final boolean canSort = sort(operands);
-    return !notString || !canSort ? null : Subject.operands(operands).to(e.getOperator());
+    return !notString || !canSort ? null : subject.operands(operands).to(e.getOperator());
   }
   @Override boolean scopeIncludes(final InfixExpression e) {
     return e.getOperator() == PLUS;

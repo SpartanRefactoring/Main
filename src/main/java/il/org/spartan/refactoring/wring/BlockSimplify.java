@@ -155,7 +155,7 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> {
       case 1:
         final Statement s = ss.get(0);
         if (Is.blockEssential(s))
-          return Subject.statement(s).toBlock();
+          return subject.statement(s).toBlock();
         return duplicate(s);
       default:
         return reorganizeNestedStatement(b);

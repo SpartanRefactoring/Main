@@ -116,7 +116,7 @@ public abstract class Wring<N extends ASTNode> {
     }
     @Override Expression replacement(final InfixExpression e) {
       final List<Expression> operands = extract.allOperands(e);
-      return !sort(operands) ? null : Subject.operands(operands).to(e.getOperator());
+      return !sort(operands) ? null : subject.operands(operands).to(e.getOperator());
     }
   }
 
@@ -132,7 +132,7 @@ public abstract class Wring<N extends ASTNode> {
       if (!sort(operands))
         return null;
       operands.add(0, first);
-      return Subject.operands(operands).to(e.getOperator());
+      return subject.operands(operands).to(e.getOperator());
     }
   }
 
@@ -264,7 +264,7 @@ public abstract class Wring<N extends ASTNode> {
     }
     static Expression assignmentAsExpression(final Assignment a) {
       final Operator o = a.getOperator();
-      return o == ASSIGN ? duplicate(right(a)) : Subject.pair(left(a), right(a)).to(asInfix(o));
+      return o == ASSIGN ? duplicate(right(a)) : subject.pair(left(a), right(a)).to(asInfix(o));
     }
     static boolean doesUseForbiddenSiblings(final VariableDeclarationFragment f, final ASTNode... ns) {
       for (final VariableDeclarationFragment b : forbiddenSiblings(f))

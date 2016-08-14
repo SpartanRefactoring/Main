@@ -53,7 +53,7 @@ import il.org.spartan.refactoring.utils.*;
     final Assignment a = (Assignment) returnStatement.getExpression();
     final Operator o = a.getOperator();
     azzert.that(o, iz("+="));
-    final InfixExpression alternateInitializer = Subject.pair(left(a), right(a)).to(Wring.VariableDeclarationFragementAndStatement.asInfix(o));
+    final InfixExpression alternateInitializer = subject.pair(left(a), right(a)).to(Wring.VariableDeclarationFragementAndStatement.asInfix(o));
     azzert.that(alternateInitializer, iz("a + 2 * a"));
     azzert.that(Is.sideEffectFree(initializer), is(false));
     azzert.that(Collect.usesOf(n).in(alternateInitializer).size(), is(2));

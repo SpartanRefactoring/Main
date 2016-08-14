@@ -67,7 +67,7 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> {
         if (!Is.block(s.getParent())) {
           if (newIf != null)
             commonPrefix.add(newIf);
-          r.replace(s, Subject.ss(commonPrefix).toBlock(), g);
+          r.replace(s, subject.ss(commonPrefix).toBlock(), g);
         } else {
           final ListRewrite lr = insertBefore(s, commonPrefix, r, g);
           if (newIf != null)
@@ -76,11 +76,11 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> {
         }
       }
       IfStatement replacement() {
-        return replacement(s.getExpression(), Subject.ss(then).toOneStatementOrNull(), Subject.ss(elze).toOneStatementOrNull());
+        return replacement(s.getExpression(), subject.ss(then).toOneStatementOrNull(), subject.ss(elze).toOneStatementOrNull());
       }
       IfStatement replacement(final Expression condition, final Statement trimmedThen, final Statement trimmedElse) {
         return trimmedThen == null && trimmedElse == null ? null
-            : trimmedThen == null ? Subject.pair(trimmedElse, null).toNot(condition) : Subject.pair(trimmedThen, trimmedElse).toIf(condition);
+            : trimmedThen == null ? subject.pair(trimmedElse, null).toNot(condition) : subject.pair(trimmedThen, trimmedElse).toIf(condition);
       }
     };
   }
