@@ -1,0 +1,33 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Spartan Refactoring
+Bundle-SymbolicName: il.org.spartan.refactoring-revolutionary;singleton:=true
+Bundle-Version: 2.4.0
+Bundle-Activator: il.org.spartan.refactoring.builder.Plugin
+Bundle-Vendor: Technion - Israel Institute of Technology
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.ltk.core.refactoring,
+ org.eclipse.ltk.ui.refactoring,
+ org.eclipse.jdt.core,
+ org.eclipse.jdt.ui,
+ org.eclipse.jface.text,
+ org.eclipse.core.resources,
+ org.eclipse.ui.ide;bundle-version="3.7.0",
+ org.junit,
+ org.eclipse.jdt.annotation
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ClassPath: .,
+ lib/hamcrest-all-1.3.jar,
+ lib/junit-4.12.jar,
+ lib/mockito-all-2.0.2-beta.jar,
+ lib/cli-1.0.jar,
+ lib/spartan-1.1.jar
+Export-Package: il.org.spartan.refactoring.builder;
+  uses:="org.osgi.framework,
+   org.eclipse.ui,
+   org.eclipse.core.runtime,
+   org.eclipse.core.resources,
+   org.eclipse.ui.plugin",
+ il.org.spartan.refactoring.utils

@@ -141,3 +141,4 @@ doc/tags
 out/
 
 # User defined (add below this line) // vim: +,$!sort -u
+/target/
