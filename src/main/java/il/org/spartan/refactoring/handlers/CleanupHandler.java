@@ -67,7 +67,7 @@ public class CleanupHandler extends BaseHandler {
     throw new ExecutionException("Too many iterations");
   }
   /**
-   * Returns the number of Spartanization suggestions for this compilation unit
+   * Returns the number of  suggestions for this compilation unit
    *
    * @param u
    *          JD
