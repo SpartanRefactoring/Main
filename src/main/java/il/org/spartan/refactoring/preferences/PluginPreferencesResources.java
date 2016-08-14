@@ -18,7 +18,7 @@ public class PluginPreferencesResources {
     RENAME_PARAMETERS(RENAME_PARAMETERS_ID, RENAME_PARAMETERS_TEXT), //
     RENAME_RETURN_VARIABLE(RENAME_RETURN_VARIABLE_ID, RENAME_RETURN_VARIABLE_TEXT),;
     static IPreferenceStore store() {
-      return Plugin.plugin.getPreferenceStore();
+      return Plugin.plugin().getPreferenceStore();
     }
 
     final String id;
@@ -29,7 +29,7 @@ public class PluginPreferencesResources {
       this.label = label;
     }
     public boolean isEnabled() {
-      return Plugin.plugin == null || "on".equals(store().getString(id));
+      return Plugin.plugin() == null || "on".equals(store().getString(id));
     }
   }
 
