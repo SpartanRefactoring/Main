@@ -13,7 +13,7 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
-import il.org.spartan.collections.*;
+import il.org.spartan.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
@@ -161,7 +161,7 @@ public class TrimmerTestsUtils {
   }
   static String applyCompilationUnit(final Trimmer t, final String from) {
     final ASTParser p = ASTParser.newParser(AST.JLS8);
-    @SuppressWarnings("unchecked") final Map<String, String> options = JavaCore.getOptions();
+    final Map<String, String> options = JavaCore.getOptions();
     JavaCore.setComplianceOptions(JavaCore.VERSION_1_8, options);
     p.setCompilerOptions(options);
     p.setSource(from.toCharArray());

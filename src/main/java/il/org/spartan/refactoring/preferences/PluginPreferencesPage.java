@@ -7,8 +7,8 @@ import org.eclipse.ui.*;
 import il.org.spartan.refactoring.builder.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 
-@SuppressWarnings("javadoc") public class PluginPreferencesPage extends FieldEditorPreferencePage implements
-    IWorkbenchPreferencePage {
+@SuppressWarnings("javadoc") public class PluginPreferencesPage extends FieldEditorPreferencePage
+    implements IWorkbenchPreferencePage {
   private final SpartanPropertyListener listener;
 
   @SuppressWarnings("synthetic-access") public PluginPreferencesPage() {
@@ -40,8 +40,8 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
     // Create and fill the "enabled spartanizations" group box
     final GroupFieldEditor gr = new GroupFieldEditor("Enabled spartanizations", getFieldEditorParent());
     for (final WringGroup wring : WringGroup.values())
-      gr.add(new ComboFieldEditor(wring.getId(), wring.getLabel(), PluginPreferencesResources.WRING_COMBO_OPTIONS, gr
-          .getFieldEditor()));
+      gr.add(new ComboFieldEditor(wring.getId(), wring.getLabel(), PluginPreferencesResources.WRING_COMBO_OPTIONS,
+          gr.getFieldEditor()));
     addField(gr);
     gr.init();
   }

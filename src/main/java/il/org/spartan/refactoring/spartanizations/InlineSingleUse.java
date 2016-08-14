@@ -68,7 +68,7 @@ public class InlineSingleUse extends Spartanization {
         final SimpleName n = node.getName();
         final VariableDeclarationStatement parent = (VariableDeclarationStatement) node.getParent();
         if (numOfOccur(Collect.USES_SEMANTIC, n, parent.getParent()) == 1 && (Is._final(parent) || //
-            numOfOccur(Collect.DEFINITIONS, n, parent.getParent()) == 1))
+        numOfOccur(Collect.DEFINITIONS, n, parent.getParent()) == 1))
           $.add(new Rewrite("", node) {
             @Override public void go(final ASTRewrite r, final TextEditGroup g) {
               // TODO Auto-generated method stub

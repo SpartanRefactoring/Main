@@ -8,8 +8,8 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 
-@FixMethodOrder(MethodSorters.JVM)//
-@SuppressWarnings({ "static-method", "javadoc", })//
+@FixMethodOrder(MethodSorters.JVM) //
+@SuppressWarnings({ "static-method", "javadoc", }) //
 public class UtilsTest {
   @Test public void compareFF() {
     that(Utils.compare(false, false), is(0));

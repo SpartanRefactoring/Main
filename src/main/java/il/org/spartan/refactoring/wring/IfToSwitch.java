@@ -48,26 +48,29 @@ import il.org.spartan.refactoring.wring.Wring.*;
 
   static boolean isSimpleComparison(final Expression e) {
     return e instanceof InfixExpression && ((InfixExpression) e).getOperator().equals(Operator.EQUALS)
-        && BindingUtils.isSimple(((InfixExpression) e).getRightOperand()) || e instanceof MethodInvocation
-        && "equals".equals(((MethodInvocation) e).getName().getIdentifier()) && ((MethodInvocation) e).arguments().size() == 1
-        && BindingUtils.isSimple((Expression) ((MethodInvocation) e).arguments().get(0));
+        && BindingUtils.isSimple(((InfixExpression) e).getRightOperand())
+        || e instanceof MethodInvocation && "equals".equals(((MethodInvocation) e).getName().getIdentifier())
+            && ((MethodInvocation) e).arguments().size() == 1
+            && BindingUtils.isSimple((Expression) ((MethodInvocation) e).arguments().get(0));
   }
   static boolean isSimpleComparison(final Expression e, final Expression v) {
     return e instanceof InfixExpression && ((InfixExpression) e).getOperator().equals(Operator.EQUALS)
         && getLeftFromComparison(e).subtreeMatch(m, v) && BindingUtils.isSimple(getRightFromComparison(e))
         || e instanceof MethodInvocation && "equals".equals(((MethodInvocation) e).getName().getIdentifier())
-        && getLeftFromComparison(e).subtreeMatch(m, v) && ((MethodInvocation) e).arguments().size() == 1
-        && BindingUtils.isSimple(getRightFromComparison(e));
+            && getLeftFromComparison(e).subtreeMatch(m, v) && ((MethodInvocation) e).arguments().size() == 1
+            && BindingUtils.isSimple(getRightFromComparison(e));
   }
   static Expression getLeftFromComparison(final Expression e) {
-    return e instanceof InfixExpression ? ((InfixExpression) e).getLeftOperand() : !(e instanceof MethodInvocation) ? null
-        : !(((MethodInvocation) e).getExpression() instanceof StringLiteral) ? ((MethodInvocation) e).getExpression()
-            : (Expression) ((MethodInvocation) e).arguments().get(0);
+    return e instanceof InfixExpression ? ((InfixExpression) e).getLeftOperand()
+        : !(e instanceof MethodInvocation) ? null
+            : !(((MethodInvocation) e).getExpression() instanceof StringLiteral) ? ((MethodInvocation) e).getExpression()
+                : (Expression) ((MethodInvocation) e).arguments().get(0);
   }
   static Expression getRightFromComparison(final Expression e) {
-    return e instanceof InfixExpression ? ((InfixExpression) e).getRightOperand() : !(e instanceof MethodInvocation) ? null
-        : ((MethodInvocation) e).getExpression() instanceof StringLiteral ? ((MethodInvocation) e).getExpression()
-            : (Expression) ((MethodInvocation) e).arguments().get(0);
+    return e instanceof InfixExpression ? ((InfixExpression) e).getRightOperand()
+        : !(e instanceof MethodInvocation) ? null
+            : ((MethodInvocation) e).getExpression() instanceof StringLiteral ? ((MethodInvocation) e).getExpression()
+                : (Expression) ((MethodInvocation) e).arguments().get(0);
   }
   @SuppressWarnings("unchecked") protected void addStatements(final SwitchStatement $, final Statement s) {
     final int i = $.statements().size();

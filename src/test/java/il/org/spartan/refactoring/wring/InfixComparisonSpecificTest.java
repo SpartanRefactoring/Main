@@ -24,8 +24,8 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2014-07-13
  */
-@SuppressWarnings({ "javadoc", "static-method" })//
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
+@SuppressWarnings({ "javadoc", "static-method" }) //
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpression> {
   static final InfixComparisonSpecific WRING = new InfixComparisonSpecific();
 
@@ -135,7 +135,7 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
     azzert.that(WRING.scopeIncludes(i("13455643294 < 22")), is(true));
   }
 
-  @RunWith(Parameterized.class)//
+  @RunWith(Parameterized.class) //
   public static class Noneligible extends AbstractWringTest.Noneligible.Infix {
     static String[][] cases = as.array(//
         // Literal
@@ -176,7 +176,7 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file.
      */
-    @Parameters(name = DESCRIPTION)//
+    @Parameters(name = DESCRIPTION) //
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
@@ -196,7 +196,7 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
     }
   }
 
-  @RunWith(Parameterized.class)//
+  @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Exprezzion.Infix {
     static String[][] cases = as.array(//
         new String[] { "Expression vs. Expression", " 6 - 7 < 2 + 1   " }, //
@@ -209,7 +209,7 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file.
      */
-    @Parameters(name = DESCRIPTION)//
+    @Parameters(name = DESCRIPTION) //
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
@@ -219,8 +219,8 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
     }
   }
 
-  @RunWith(Parameterized.class)//
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
+  @RunWith(Parameterized.class) //
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
   public static class Wringed extends AbstractWringTest.WringedExpression.Infix {
     private static String[][] cases = as.array(//
         // Literal
@@ -263,7 +263,7 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file.
      */
-    @Parameters(name = DESCRIPTION)//
+    @Parameters(name = DESCRIPTION) //
     public static Collection<Object[]> cases() {
       return collect(cases);
     }

@@ -42,8 +42,8 @@ import il.org.spartan.refactoring.wring.Wring.*;
  * @author Ori Roth
  * @since 2016/05/09
  */
-@SuppressWarnings("unchecked") public class SwitchFewCasesReplaceWithIf extends ReplaceCurrentNode<SwitchStatement> implements
-    Kind.SWITCH_IF_CONVERTION {
+@SuppressWarnings("unchecked") public class SwitchFewCasesReplaceWithIf extends ReplaceCurrentNode<SwitchStatement>
+    implements Kind.SWITCH_IF_CONVERTION {
   protected IfStatement buildIfStatement(final AST a, final List<Statement> ss, final Expression e, final Expression t) {
     final IfStatement $ = a.newIfStatement();
     final Expression de = Funcs.duplicate(e), dt = Funcs.duplicate(t);

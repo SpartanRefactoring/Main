@@ -16,11 +16,11 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2015-08-14
  */
-public final class TernaryShortestFirst extends Wring.ReplaceCurrentNode<ConditionalExpression> implements
-    Kind.ReorganizeExpression {
+public final class TernaryShortestFirst extends Wring.ReplaceCurrentNode<ConditionalExpression>
+    implements Kind.ReorganizeExpression {
   @Override ConditionalExpression replacement(final ConditionalExpression e) {
-    final ConditionalExpression $ = Subject.pair(core(e.getElseExpression()), core(e.getThenExpression())).toCondition(
-        logicalNot(e.getExpression()));
+    final ConditionalExpression $ = Subject.pair(core(e.getElseExpression()), core(e.getThenExpression()))
+        .toCondition(logicalNot(e.getExpression()));
     final Expression then = $.getElseExpression();
     final Expression elze = $.getThenExpression();
     if (!Is.conditional(then) && Is.conditional(elze))

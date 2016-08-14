@@ -22,12 +22,12 @@ import il.org.spartan.refactoring.utils.*;
  *        warning in selected places. Consider this example:
  *
  *        <pre>
- * public static &lt;T&gt; void swap(final T[] ts, final int i, final int j) {
- *   final T t = ts[i];
- *   ts[i] = ts[j];
- *   ts[j] = t;
- * }
- * </pre>
+ *        public static &lt;T&gt; void swap(final T[] ts, final int i, final int j) {
+ *          final T t = ts[i];
+ *          ts[i] = ts[j];
+ *          ts[j] = t;
+ *        }
+ *        </pre>
  *
  *        Require comment
  *
@@ -35,7 +35,7 @@ import il.org.spartan.refactoring.utils.*;
  *  public static &lt;T&gt; void swap(final T[] ts, final int i,
  *        final int j) { final T t = ts[i]; // Don't move! ts[i] = ts[j]; ts[j]
  *        = t; }
- * </pre>
+ *        </pre>
  */
 public class ForwardDeclaration extends Spartanization {
   /** Instantiates this class */

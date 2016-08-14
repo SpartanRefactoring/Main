@@ -10,20 +10,20 @@ import il.org.spartan.*;
  * over files in the file system.
  * <p>
  * Typical uses are<code>
- * 
+ *
  * <pre>
  *   <b>for</b> ({@link File} f: <b>new</b> {@link FilesGenerator}(".java").from("."))
  *     System.out.println(f);
  * </pre>
- * 
+ *
  * to recursively iterate over all files whose extension is ".java" in the
  * current directory, or
- * 
+ *
  * <pre>
  *   <b>for</b> ({@link File} f: <b>new</b> {@link FilesGenerator}().from("/bin", "/home"))
  *     System.out.println(f);
  * </pre>
- * 
+ *
  * to recursively iterate (over all files in the <code>/bin</code> and
  * <code>/home</code> directories.
  *

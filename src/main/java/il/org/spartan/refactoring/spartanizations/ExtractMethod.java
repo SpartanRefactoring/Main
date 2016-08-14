@@ -16,7 +16,7 @@ import il.org.spartan.refactoring.utils.*;
  *         24.06.2015)
  * @since 2015/06/24
  */
-@SuppressWarnings("restriction")// "internal use only" for
+@SuppressWarnings("restriction") // "internal use only" for
 // "ExtractMethodRefactoring" import static
 // il.org.spartan.hamcrest.SpartanAssert.*; import,
 // which is supposed to be fine due to the

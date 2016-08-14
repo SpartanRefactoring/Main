@@ -1,5 +1,6 @@
 package il.org.spartan.refactoring.spartanizations;
 
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.core.dom.*;

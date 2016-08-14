@@ -13,6 +13,7 @@ import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -248,11 +249,17 @@ public abstract class Wring<N extends ASTNode> implements Kind {
 
   static abstract class VariableDeclarationFragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
     static InfixExpression.Operator asInfix(final Assignment.Operator o) {
-      return o == PLUS_ASSIGN ? PLUS : o == MINUS_ASSIGN ? MINUS : o == TIMES_ASSIGN ? TIMES : o == DIVIDE_ASSIGN ? DIVIDE
-          : o == BIT_AND_ASSIGN ? AND : o == BIT_OR_ASSIGN ? OR : o == BIT_XOR_ASSIGN ? XOR : o == REMAINDER_ASSIGN ? REMAINDER
-              : o == LEFT_SHIFT_ASSIGN ? LEFT_SHIFT //
-                  : o == RIGHT_SHIFT_SIGNED_ASSIGN ? RIGHT_SHIFT_SIGNED //
-                      : o == RIGHT_SHIFT_UNSIGNED_ASSIGN ? RIGHT_SHIFT_UNSIGNED : null;
+      return o == PLUS_ASSIGN ? PLUS
+          : o == MINUS_ASSIGN ? MINUS
+              : o == TIMES_ASSIGN ? TIMES
+                  : o == DIVIDE_ASSIGN ? DIVIDE
+                      : o == BIT_AND_ASSIGN ? AND
+                          : o == BIT_OR_ASSIGN ? OR
+                              : o == BIT_XOR_ASSIGN ? XOR
+                                  : o == REMAINDER_ASSIGN ? REMAINDER
+                                      : o == LEFT_SHIFT_ASSIGN ? LEFT_SHIFT //
+                                          : o == RIGHT_SHIFT_SIGNED_ASSIGN ? RIGHT_SHIFT_SIGNED //
+                                              : o == RIGHT_SHIFT_UNSIGNED_ASSIGN ? RIGHT_SHIFT_UNSIGNED : null;
     }
     static boolean hasAnnotation(final VariableDeclarationFragment f) {
       return hasAnnotation((VariableDeclarationStatement) f.getParent());
@@ -388,10 +395,10 @@ final class LocalInliner {
   LocalInliner(final SimpleName n) {
     this(n, null, null);
   }
-  LocalInliner(final SimpleName n, final ASTRewrite rewriter, final TextEditGroup g) {
-    name = n;
+  LocalInliner(final SimpleName name, final ASTRewrite rewriter, final TextEditGroup editGroup) {
+    this.name = name;
     this.rewriter = rewriter;
-    editGroup = g;
+    this.editGroup = editGroup;
   }
   LocalInlineWithValue byValue(final Expression replacement) {
     return new LocalInlineWithValue(replacement);

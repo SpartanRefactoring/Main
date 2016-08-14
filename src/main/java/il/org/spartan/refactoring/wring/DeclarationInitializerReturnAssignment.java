@@ -20,10 +20,10 @@ import il.org.spartan.refactoring.wring.LocalInliner.*;
  * @author Yossi Gil
  * @since 2015-08-07
  */
-public final class DeclarationInitializerReturnAssignment extends Wring.VariableDeclarationFragementAndStatement implements
-    Kind.InlineVariable {
-  @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n,
-      final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
+public final class DeclarationInitializerReturnAssignment extends Wring.VariableDeclarationFragementAndStatement
+    implements Kind.InlineVariable {
+  @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+      final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || hasAnnotation(f))
       return null;
     final ReturnStatement s = asReturnStatement(nextStatement);

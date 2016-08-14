@@ -27,8 +27,8 @@ public enum Wrings {
     new LocalInliner(oldName, r, g).byValue(newName)//
         .inlineInto(Collect.usesOf(oldName).in(d).toArray(new Expression[] {}));
   }
-  static void addAllReplacing(final List<Statement> to, final List<Statement> from, final Statement substitute,
-      final Statement by1, final List<Statement> by2) {
+  static void addAllReplacing(final List<Statement> to, final List<Statement> from, final Statement substitute, final Statement by1,
+      final List<Statement> by2) {
     for (final Statement s : from)
       if (s != substitute)
         duplicateInto(s, to);

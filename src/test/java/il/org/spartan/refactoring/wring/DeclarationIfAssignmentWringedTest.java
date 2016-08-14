@@ -1,10 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.azzert.assertTrue;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.util.*;
 
@@ -22,9 +23,9 @@ import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 
-@SuppressWarnings({ "javadoc" })//
-@RunWith(Parameterized.class)//
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
+@SuppressWarnings({ "javadoc" }) //
+@RunWith(Parameterized.class) //
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<VariableDeclarationFragment> {
   final static DeclarationInitializerIfAssignment WRING = new DeclarationInitializerIfAssignment();
   /** Description of a test case for {@link Parameter} annotation */
@@ -38,7 +39,8 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
           "int n2 = 0, n3;" + //
               "  if (d)\n" + //
               "    n2 = 2;", //
-          "int n2 = d ? 2 : 0, n3;" }, null);
+          "int n2 = d ? 2 : 0, n3;" },
+      null);
 
   /**
    * Generate test cases for this parameterized class.
@@ -48,7 +50,7 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
    */
   // TODO: JUnit bug: gets confused when value contains new line characters:
   // @Parameters(name = "Test #{index}. ({0}) \"{1}\" ==> \"{2}\"") //
-  @Parameters(name = "Test #{index}. ({0}) ")//
+  @Parameters(name = "Test #{index}. ({0}) ") //
   public static Collection<Object[]> cases() {
     return collect(cases);
   }

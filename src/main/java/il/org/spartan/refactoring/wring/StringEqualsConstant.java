@@ -18,7 +18,6 @@ import il.org.spartan.refactoring.wring.Wring.*;
  * with safer
  *
  * <pre>
- * 
  * "s".equals(s)
  * </pre>
  *

@@ -21,10 +21,10 @@ import il.org.spartan.refactoring.wring.LocalInliner.*;
  * @author Yossi Gil
  * @since 2015-08-07
  */
-public final class DeclarationInitializerStatementTerminatingScope extends Wring.VariableDeclarationFragementAndStatement implements
-    Kind.ConsolidateStatements {
-  @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n,
-      final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
+public final class DeclarationInitializerStatementTerminatingScope extends Wring.VariableDeclarationFragementAndStatement
+    implements Kind.ConsolidateStatements {
+  @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+      final Statement nextStatement, final TextEditGroup g) {
     // TODO Ori: allow final consolidation
     if (initializer == null || hasAnnotation(f) || initializer instanceof ArrayInitializer
         || Modifier.isFinal(((VariableDeclarationStatement) f.getParent()).getModifiers()))

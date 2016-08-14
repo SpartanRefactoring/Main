@@ -30,8 +30,8 @@ public class ToggleSpartanizationHandler extends AbstractHandler {
     return null;
   }
   private static IProject extractProject(final Object o) {
-    return o instanceof IProject ? (IProject) o : o instanceof IAdaptable ? (IProject) ((IAdaptable) o).getAdapter(IProject.class)
-        : null;
+    return o instanceof IProject ? (IProject) o
+        : o instanceof IAdaptable ? (IProject) ((IAdaptable) o).getAdapter(IProject.class) : null;
   }
   private static void toggleNature(final IProject p, final boolean state) throws CoreException {
     // NOTE: In order to ensure that we're not adding the nature when it's

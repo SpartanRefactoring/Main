@@ -9,8 +9,9 @@ import org.junit.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) public class MethodExplorerTest {
   @Test public void localVariablesCatchExpression() {
-    that(new MethodExplorer(Into.d("" + "  void f() {\n" + "    try {\n" + "      f();\n"
-        + "    } catch (final Exception|RuntimeException e) {\n" + "      f();\n" + "    }\n" + "  }")).localVariables().size(),
+    that(
+        new MethodExplorer(Into.d("" + "  void f() {\n" + "    try {\n" + "      f();\n"
+            + "    } catch (final Exception|RuntimeException e) {\n" + "      f();\n" + "    }\n" + "  }")).localVariables().size(),
         is(1));
   }
   @Test public void localVariablesExtendedForLoop() {
@@ -34,14 +35,15 @@ import org.junit.*;
     that(new MethodExplorer(Into.d("  int f() {\n" + "int a,b;\n" + "  {int c, d;}}")).localVariables().size(), is(4));
   }
   @Test public void localVariablesNone() {
-    that(new MethodExplorer(Into.d("  int f() {\n" + "    return new Object() {\n"
-        + "      @Override public boolean equals(Object obj) {\n" + "        return super.equals(obj);\n" + "      }\n"
-        + "      @Override public int hashCode() {\n" + "        return super.hashCode();\n" + "      }\n" + "    }.hashCode();\n"
-        + "  }")).localVariables().size(), is(0));
+    that(
+        new MethodExplorer(
+            Into.d("  int f() {\n" + "    return new Object() {\n" + "      @Override public boolean equals(Object obj) {\n"
+                + "        return super.equals(obj);\n" + "      }\n" + "      @Override public int hashCode() {\n"
+                + "        return super.hashCode();\n" + "      }\n" + "    }.hashCode();\n" + "  }")).localVariables().size(),
+        is(0));
   }
   @Test public void localVariablesRepeatedNestedFragments() {
-    that(
-        new MethodExplorer(Into.d("  int f() {\n" + "int a,b,c,d;\n" + "  {int i, j;} {int i,j; int k;}")).localVariables().size(),
+    that(new MethodExplorer(Into.d("  int f() {\n" + "int a,b,c,d;\n" + "  {int i, j;} {int i,j; int k;}")).localVariables().size(),
         is(9));
   }
   @Test public void localVariablesTryClause() {
@@ -105,9 +107,10 @@ import org.junit.*;
     that(a.size(), is(2));
   }
   @Test public void returnStatementsWithNestedEnum() {
-    that(new MethodExplorer(Into.d("  int f() {\n" + "    return new Object() {\n"
-        + "      @Override public boolean equals(Object obj) {\n" + "        return super.equals(obj);\n" + "      }\n"
-        + "      @Override public int hashCode() {\n" + "        return super.hashCode();\n" + "      }\n" + "    }.hashCode();\n"
-        + "  }")).returnStatements().size(), is(1));
+    that(new MethodExplorer(
+        Into.d("  int f() {\n" + "    return new Object() {\n" + "      @Override public boolean equals(Object obj) {\n"
+            + "        return super.equals(obj);\n" + "      }\n" + "      @Override public int hashCode() {\n"
+            + "        return super.hashCode();\n" + "      }\n" + "    }.hashCode();\n" + "  }")).returnStatements().size(),
+        is(1));
   }
 }

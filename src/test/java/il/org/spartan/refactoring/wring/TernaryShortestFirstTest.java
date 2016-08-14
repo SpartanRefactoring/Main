@@ -20,8 +20,8 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2014-07-13
  */
-@SuppressWarnings({ "javadoc", "static-method" })//
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
+@SuppressWarnings({ "javadoc", "static-method" }) //
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class TernaryShortestFirstTest {
   static final Wring<ConditionalExpression> WRING = new TernaryShortestFirst();
 
@@ -40,9 +40,8 @@ public class TernaryShortestFirstTest {
   @Test public void trace1() {
     final ConditionalExpression e = Into.c("a?f(b,c,d):a");
     that(e, notNullValue());
-    that(
-        Subject.pair(extract.core(e.getElseExpression()), extract.core(e.getThenExpression())).toCondition(
-            logicalNot(e.getExpression())), iz("!a?a:f(b,c,d)"));
+    that(Subject.pair(extract.core(e.getElseExpression()), extract.core(e.getThenExpression()))
+        .toCondition(logicalNot(e.getExpression())), iz("!a?a:f(b,c,d)"));
   }
   @Test public void trace2() {
     final ConditionalExpression e = Into.c("!f(o) ? null : x.f(a).to(e.g())");
@@ -56,7 +55,7 @@ public class TernaryShortestFirstTest {
     that($, iz("f(o) ? x.f(a).to(e.g()) : null"));
   }
 
-  @RunWith(Parameterized.class)//
+  @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Exprezzion<ConditionalExpression> {
     static String[][] cases = as.array(//
         new String[] { "Strange cyclic buc",
@@ -100,7 +99,7 @@ public class TernaryShortestFirstTest {
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file.
      */
-    @Parameters(name = DESCRIPTION)//
+    @Parameters(name = DESCRIPTION) //
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
@@ -110,8 +109,8 @@ public class TernaryShortestFirstTest {
     }
   }
 
-  @RunWith(Parameterized.class)//
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
+  @RunWith(Parameterized.class) //
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
   public static class Wringed extends AbstractWringTest.WringedExpression.Conditional {
     private static String[][] cases = as.array(//
         new String[] { "Vanilla", "a?f(a,b,c):f(b)", "!a?f(b):f(a,b,c)" }, //
@@ -127,7 +126,7 @@ public class TernaryShortestFirstTest {
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file.
      */
-    @Parameters(name = DESCRIPTION)//
+    @Parameters(name = DESCRIPTION) //
     public static Collection<Object[]> cases() {
       return collect(cases);
     }

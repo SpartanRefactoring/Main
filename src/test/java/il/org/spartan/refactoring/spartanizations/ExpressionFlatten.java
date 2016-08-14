@@ -11,8 +11,8 @@ import org.junit.runners.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-@SuppressWarnings({ "javadoc", "static-method" })//
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
+@SuppressWarnings({ "javadoc", "static-method" }) //
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class ExpressionFlatten {
   @Test public void flattenExists() {
     flatten(i("1+2"));

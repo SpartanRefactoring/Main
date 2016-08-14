@@ -20,8 +20,8 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-07-29
  */
-public final class IfFooSequencerIfFooSameSequencer extends Wring.ReplaceToNextStatement<IfStatement> implements
-    Kind.ConsolidateStatements {
+public final class IfFooSequencerIfFooSameSequencer extends Wring.ReplaceToNextStatement<IfStatement>
+    implements Kind.ConsolidateStatements {
   private static IfStatement makeIfWithoutElse(final Statement s, final InfixExpression condition) {
     final IfStatement $ = condition.getAST().newIfStatement();
     $.setExpression(condition);

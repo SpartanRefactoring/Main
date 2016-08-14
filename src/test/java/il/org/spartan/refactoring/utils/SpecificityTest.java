@@ -6,8 +6,8 @@ import static il.org.spartan.refactoring.utils.Into.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
-@SuppressWarnings({ "javadoc", "static-method" })//
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@SuppressWarnings({ "javadoc", "static-method" }) //
 public class SpecificityTest {
   private static final Specificity SPECIFICITY = new Specificity();
 

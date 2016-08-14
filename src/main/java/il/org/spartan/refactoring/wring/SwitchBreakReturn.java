@@ -50,8 +50,8 @@ public class SwitchBreakReturn extends Wring.MultipleReplaceToNextStatement<Swit
     }
     return false;
   }
-  @SuppressWarnings("unchecked") @Override ASTRewrite go(final ASTRewrite r, final SwitchStatement s,
-      final Statement nextStatement, final TextEditGroup g, final List<ASTNode> bss, final List<ASTNode> crs) {
+  @SuppressWarnings("unchecked") @Override ASTRewrite go(final ASTRewrite r, final SwitchStatement s, final Statement nextStatement,
+      final TextEditGroup g, final List<ASTNode> bss, final List<ASTNode> crs) {
     if (!Is.sequencer(nextStatement) || nextStatement instanceof BreakStatement)
       return null;
     crs.add(nextStatement);

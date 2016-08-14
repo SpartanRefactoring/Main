@@ -9,7 +9,7 @@ import org.eclipse.equinox.app.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.collections.*;
+import il.org.spartan.*;
 import il.org.spartan.files.*;
 import il.org.spartan.refactoring.handlers.*;
 import il.org.spartan.utils.*;
@@ -69,7 +69,7 @@ import il.org.spartan.utils.*;
    * @throws FileNotFoundException
    * @throws JavaModelException
    */
-  private FileStats a(final File f, ICompilationUnit u) throws IOException, FileNotFoundException, JavaModelException {
+  private FileStats a(final File f, final ICompilationUnit u) throws IOException, FileNotFoundException, JavaModelException {
     final FileStats s = new FileStats(f);
     for (int i = 0; i < optRounds; ++i) {
       final int n = CleanupHandler.countSuggestions(u);
@@ -201,7 +201,7 @@ import il.org.spartan.utils.*;
 
   static class AutoCloseableCompilationUnit extends Wrapper<ICompilationUnit> implements AutoCloseable {
     /** instantiates this class */
-    public AutoCloseableCompilationUnit(ICompilationUnit u) {
+    public AutoCloseableCompilationUnit(final ICompilationUnit u) {
       super(u);
     }
     @Override public void close() throws JavaModelException {

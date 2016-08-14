@@ -18,8 +18,8 @@ import il.org.spartan.refactoring.utils.*;
  */
 public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.DiscardRedundant {
   // list of accepted operators
-  final List<InfixExpression.Operator> ao = Arrays.asList(new Operator[] { InfixExpression.Operator.EQUALS,
-      InfixExpression.Operator.NOT_EQUALS, InfixExpression.Operator.GREATER });
+  final List<InfixExpression.Operator> ao = Arrays.asList(
+      new Operator[] { InfixExpression.Operator.EQUALS, InfixExpression.Operator.NOT_EQUALS, InfixExpression.Operator.GREATER });
 
   @Override ASTNode replacement(final InfixExpression e) {
     if (!e.getAST().hasResolvedBindings() || !(e.getLeftOperand() instanceof MethodInvocation)
@@ -32,8 +32,8 @@ public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression
     final Expression mie = mi.getExpression();
     final IMethodBinding iemb = BindingUtils.getVisibleMethod(mie != null ? mie.resolveTypeBinding() : BindingUtils.getClass(e),
         "isEmpty", null, e, compilationUnit);
-    if (iemb == null || !"boolean".equals(iemb.getReturnType().toString())
-        && !"java.lang.Boolean".equals(iemb.getReturnType().getBinaryName()))
+    if (iemb == null
+        || !"boolean".equals(iemb.getReturnType().toString()) && !"java.lang.Boolean".equals(iemb.getReturnType().getBinaryName()))
       return null;
     final MethodInvocation ie = e.getAST().newMethodInvocation();
     ie.setExpression((Expression) ASTNode.copySubtree(e.getAST(), mi.getExpression()));

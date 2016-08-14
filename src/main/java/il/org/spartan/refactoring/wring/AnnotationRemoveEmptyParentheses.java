@@ -14,8 +14,8 @@ import il.org.spartan.refactoring.preferences.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-02
  */
-public class AnnotationRemoveEmptyParentheses extends Wring.ReplaceCurrentNode<NormalAnnotation> implements
-    Kind.OPTIMIZE_ANNOTATIONS {
+public class AnnotationRemoveEmptyParentheses extends Wring.ReplaceCurrentNode<NormalAnnotation>
+    implements Kind.OPTIMIZE_ANNOTATIONS {
   @Override ASTNode replacement(final NormalAnnotation a) {
     if (a.values().size() > 0)
       return null;

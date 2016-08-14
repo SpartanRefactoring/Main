@@ -1,9 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
-import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -46,10 +46,10 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
     final TextEdit x = r.rewriteAST(d, null);
     x.apply(d);
     final String unpeeled = d.get();
-    assertThat("Nothing done on " + s, wrap, not(unpeeled));
+    azzert.that("Nothing done on " + s, wrap, not(unpeeled));
     final String peeled = Wrap.Expression.off(unpeeled);
-    assertThat("No similification of " + s, s, not(peeled));
-    assertThat("Simpification of " + s + " is just reformatting", compressSpaces(peeled), not(compressSpaces(s)));
+    azzert.that("No similification of " + s, s, not(peeled));
+    azzert.that("Simpification of " + s + " is just reformatting", compressSpaces(peeled), not(compressSpaces(s)));
     assertSimilar(" 2 ", peeled);
   }
 

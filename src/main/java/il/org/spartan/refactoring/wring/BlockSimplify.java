@@ -1,11 +1,10 @@
 package il.org.spartan.refactoring.wring;
 
-import static org.junit.Assert.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -23,7 +22,7 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> implements Ki
       case 0:
         return s.getAST().newEmptyStatement();
       case 1:
-        assertNotNull(scalpel);
+        azzert.notNull(scalpel);
         assert scalpel != null;
         assert ss != null;
         assert ss.get(0) != null;
@@ -43,7 +42,7 @@ public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> implements Ki
   private static Block reorganizeStatement(final Statement s, final Scalpel scalpel) {
     final List<Statement> ss = extract.statements(s);
     final Block $ = s.getAST().newBlock();
-    assertNotNull(scalpel);
+    azzert.notNull(scalpel);
     scalpel.duplicateInto(ss, expose.statements($));
     return $;
   }

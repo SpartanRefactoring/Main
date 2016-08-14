@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
-import static org.hamcrest.text.IsEqualIgnoringWhiteSpace.*;
 
 import org.junit.*;
 
@@ -37,7 +36,7 @@ import il.org.spartan.refactoring.utils.LiteralParser.*;
     that(new LiteralParser("2F").type(), greaterThanOrEqualTo(0));
   }
   @Test public void hasVisibleValue() {
-    that(new LiteralParser("2F").literal, equalToIgnoringWhiteSpace("2F"));
+    that(new LiteralParser("2F").literal, iz("2F"));
   }
   @Test public void kindCharacter() {
     that(new LiteralParser("'l'").type(), is(Types.CHARACTER.ordinal()));

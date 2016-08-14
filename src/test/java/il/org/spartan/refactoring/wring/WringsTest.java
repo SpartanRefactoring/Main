@@ -15,7 +15,7 @@ import org.junit.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 
-@SuppressWarnings({ "javadoc", "static-method" })//
+@SuppressWarnings({ "javadoc", "static-method" }) //
 public class WringsTest {
   @Test public void renameIntoDoWhile() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = "void f() { int b = 3; do ; while(b != 0); }";
@@ -87,8 +87,8 @@ public class WringsTest {
     final Assignment a = (Assignment) returnStatement.getExpression();
     final Operator o = a.getOperator();
     that(o, iz("+="));
-    final InfixExpression alternateInitializer = Subject.pair(left(a), right(a)).to(
-        Wring.VariableDeclarationFragementAndStatement.asInfix(o));
+    final InfixExpression alternateInitializer = Subject.pair(left(a), right(a))
+        .to(Wring.VariableDeclarationFragementAndStatement.asInfix(o));
     that(alternateInitializer, iz("a + 2 * a"));
     that(Is.sideEffectFree(initializer), is(false));
     that(Collect.usesOf(n).in(alternateInitializer).size(), is(2));

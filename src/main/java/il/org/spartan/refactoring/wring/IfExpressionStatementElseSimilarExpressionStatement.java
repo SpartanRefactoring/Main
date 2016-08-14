@@ -15,8 +15,8 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-07-29
  */
-public final class IfExpressionStatementElseSimilarExpressionStatement extends Wring.ReplaceCurrentNode<IfStatement> implements
-    Kind.ConsolidateStatements {
+public final class IfExpressionStatementElseSimilarExpressionStatement extends Wring.ReplaceCurrentNode<IfStatement>
+    implements Kind.ConsolidateStatements {
   @Override Statement replacement(final IfStatement s) {
     final Expression then = extract.expression(extract.expressionStatement(then(s)));
     if (then == null)

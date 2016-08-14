@@ -16,8 +16,8 @@ import il.org.spartan.refactoring.preferences.*;
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-11
  */
-public class StringFromStringBuilder extends Wring.ReplaceCurrentNode<MethodInvocation> implements
-    Kind.REPLACE_CLASS_INSTANCE_CREATION {
+public class StringFromStringBuilder extends Wring.ReplaceCurrentNode<MethodInvocation>
+    implements Kind.REPLACE_CLASS_INSTANCE_CREATION {
   // list of class extending Expression class, that need to be surrounded by
   // parenthesis
   // when put out of method arguments list

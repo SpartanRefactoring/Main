@@ -6,7 +6,7 @@ import static il.org.spartan.refactoring.utils.Into.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-@SuppressWarnings({ "javadoc", "static-method" })//
+@SuppressWarnings({ "javadoc", "static-method" }) //
 public class PlantTest {
   @Test public void plantIntoLess() {
     that(Subject.pair(Into.e("a + 2"), Into.e("b")).to(InfixExpression.Operator.LESS), iz("a+2<b"));

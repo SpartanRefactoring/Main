@@ -26,16 +26,16 @@ public class IfLastInMethod extends Wring<IfStatement> implements Kind.Simplify 
     if (Is.vacuousThen(s) || !Is.vacuousElse(s) || extract.statements(then(s)).size() < 2)
       return null;
     final Block b = asBlock(s.getParent());
-    return b == null || !lastIn(s, b.statements()) || !(b.getParent() instanceof MethodDeclaration) ? null : new Rewrite(
-        description(s), s) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Wrings.insertAfter(s, extract.statements(then(s)), r, g);
-        final IfStatement newIf = duplicate(s);
-        newIf.setExpression(duplicate(logicalNot(s.getExpression())));
-        newIf.setThenStatement(s.getAST().newReturnStatement());
-        newIf.setElseStatement(null);
-        r.replace(s, newIf, g);
-      }
-    };
+    return b == null || !lastIn(s, b.statements()) || !(b.getParent() instanceof MethodDeclaration) ? null
+        : new Rewrite(description(s), s) {
+          @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+            Wrings.insertAfter(s, extract.statements(then(s)), r, g);
+            final IfStatement newIf = duplicate(s);
+            newIf.setExpression(duplicate(logicalNot(s.getExpression())));
+            newIf.setThenStatement(s.getAST().newReturnStatement());
+            newIf.setElseStatement(null);
+            r.replace(s, newIf, g);
+          }
+        };
   }
 }

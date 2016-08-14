@@ -12,8 +12,8 @@ import org.junit.runners.*;
  * @author Yossi Gil
  * @since 2015-07-17
  */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
-@SuppressWarnings({ "javadoc", "static-method" })//
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@SuppressWarnings({ "javadoc", "static-method" }) //
 public class ExpressionComparatorTest {
   @Test public void alphabeticalCompare() {
     that(ExpressionComparator.alphabeticalCompare(e("1+2"), e("6+7")), lessThan(0));

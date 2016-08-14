@@ -1,9 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static org.hamcrest.text.IsEqualIgnoringWhiteSpace.*;
 import static org.junit.Assert.*;
 
 import java.util.*;
@@ -27,30 +27,30 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2014-07-13
  */
-@SuppressWarnings({ "javadoc", "static-method" })//
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
+@SuppressWarnings({ "javadoc", "static-method" }) //
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class IfCommandsSequencerElseSomethingTest {
   static final IfThenOrElseIsCommandsFollowedBySequencer WRING = new IfThenOrElseIsCommandsFollowedBySequencer();
 
   @Test public void checkSteps() {
     final Statement s = asSingle("if (a) return a = b; else a = c;");
-    that(s, notNullValue());
-    that(asIfStatement(s), notNullValue());
+    azzert.that(s, notNullValue());
+    azzert.that(asIfStatement(s), notNullValue());
   }
   @Test public void checkStepsFull() throws MalformedTreeException, BadLocationException {
     final IfStatement s = (IfStatement) asSingle("if (a) return b; else a();");
-    that(WRING.scopeIncludes(s), is(true));
-    that(WRING.eligible(s), is(true));
+    azzert.that(WRING.scopeIncludes(s), is(true));
+    azzert.that(WRING.eligible(s), is(true));
     final Rewrite m = WRING.make(s);
-    that(m, notNullValue());
+    azzert.that(m, notNullValue());
     final Wring<IfStatement> w = Toolbox.instance.find(s);
-    that(w, notNullValue());
-    that(w, instanceOf(WRING.getClass()));
+    azzert.that(w, notNullValue());
+    azzert.that(w, instanceOf(WRING.getClass()));
     final String wrap = Wrap.Statement.on(s.toString());
     final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(wrap);
-    that(u, notNullValue());
+    azzert.that(u, notNullValue());
     final Document d = new Document(wrap);
-    that(d, notNullValue());
+    azzert.that(d, notNullValue());
     final Trimmer t = new Trimmer();
     final ASTRewrite r = t.createRewrite(u, null);
     final TextEdit x = r.rewriteAST(d, null);
@@ -66,23 +66,23 @@ public class IfCommandsSequencerElseSomethingTest {
     final String input = "if (a) return b; else a();";
     final String wrap = Wrap.Statement.on(input);
     final CompilationUnit u = (CompilationUnit) ast.COMPILIATION_UNIT.from(wrap);
-    that(u, notNullValue());
+    azzert.that(u, notNullValue());
     final IfStatement s = extract.firstIfStatement(u);
-    that(s, notNullValue());
-    that(s.toString(), equalToIgnoringWhiteSpace(input));
+    azzert.that(s, notNullValue());
+    azzert.that(s.toString(), equalToIgnoringWhiteSpace(input));
     final Wring<IfStatement> w = Toolbox.instance.find(s);
-    that(w, notNullValue());
-    that(w.scopeIncludes(s), is(true));
-    that(w.eligible(s), is(true));
-    that(w, instanceOf(WRING.getClass()));
+    azzert.that(w, notNullValue());
+    azzert.that(w.scopeIncludes(s), is(true));
+    azzert.that(w.eligible(s), is(true));
+    azzert.that(w, instanceOf(WRING.getClass()));
     final Rewrite m = w.make(s);
-    that(m, notNullValue());
+    azzert.that(m, notNullValue());
     final ASTRewrite r = ASTRewrite.create(s.getAST());
     m.go(r, null);
-    that(r.toString(), allOf(startsWith("Events:"), containsString("[replaced:"), containsString("]")));
+    azzert.that(r.toString(), allOf(startsWith("Events:"), containsString("[replaced:"), containsString("]")));
     final Document d = new Document(wrap);
-    that(d, notNullValue());
-    that(d.get(), equalToIgnoringWhiteSpace(wrap.toString()));
+    azzert.that(d, notNullValue());
+    azzert.that(d.get(), equalToIgnoringWhiteSpace(wrap.toString()));
     final TextEdit x = r.rewriteAST(d, null);
     x.apply(d);
     final String unpeeled = d.get();
@@ -94,16 +94,17 @@ public class IfCommandsSequencerElseSomethingTest {
   }
   @Test public void checkStepsWRING() throws MalformedTreeException {
     final IfStatement s = (IfStatement) asSingle("if (a) return b; else a();");
-    that(WRING.scopeIncludes(s), is(true));
-    that(WRING.eligible(s), is(true));
+    azzert.that(WRING.scopeIncludes(s), is(true));
+    azzert.that(WRING.eligible(s), is(true));
     final Rewrite m = WRING.make(s);
-    that(m, notNullValue());
+    azzert.notNull(m);
     final ASTRewrite r = ASTRewrite.create(s.getAST());
+    azzert.notNull(r);
     m.go(r, null);
-    that(r.toString(), allOf(startsWith("Events:"), containsString("[replaced:"), containsString("]")));
+    azzert.that(r.toString(), allOf(startsWith("Events:"), containsString("[replaced:"), containsString("]")));
   }
 
-  @RunWith(Parameterized.class)//
+  @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope<IfStatement> {
     static String[][] cases = as.array(//
         new String[] { "Literal vs. Literal", "if (a) return b; else c;" }, //
@@ -123,7 +124,7 @@ public class IfCommandsSequencerElseSomethingTest {
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file.
      */
-    @Parameters(name = DESCRIPTION)//
+    @Parameters(name = DESCRIPTION) //
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
@@ -133,8 +134,8 @@ public class IfCommandsSequencerElseSomethingTest {
     }
   }
 
-  @RunWith(Parameterized.class)//
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
+  @RunWith(Parameterized.class) //
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
   public static class Wringed extends AbstractWringTest.Wringed.IfStatementAndSurrounding {
     private static String[][] cases = as.array(//
         new String[] { "Vanilla: sequencer in then", "if (a) return b; else a();", "if(a)return b;a();" }, //
@@ -146,32 +147,35 @@ public class IfCommandsSequencerElseSomethingTest {
         null, //
         new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}",
             "  if(x){;f();;;return a;;;} g();" }, //
-        new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}", "" + //
-            " if (x) {\n" + //
-            "   f();\n" + //
-            "   return a;\n" + //
-            " }\n" + //
-            " g();\n" + //
-            "" }, //
+        new String[] { "Compressed complex", " if (x) {;f();;;return a;;;} else {;g();{;;{}}{}}",
+            "" + //
+                " if (x) {\n" + //
+                "   f();\n" + //
+                "   return a;\n" + //
+                " }\n" + //
+                " g();\n" + //
+                "" }, //
         null, //
-        new String[] { "Complex with many junk statements", "" + //
-            " if (x) {\n" + //
-            "   ;\n" + //
-            "   f();\n" + //
-            "   return a;\n" + //
-            " } else {\n" + //
-            "   ;\n" + //
-            "   g();\n" + //
-            "   {\n" + //
-            "   }\n" + //
-            " }\n" + //
-            "", "" + //
-            " if (x) {\n" + //
-            "   f();\n" + //
-            "   return a;\n" + //
-            " }\n" + //
-            " g();\n" + //
-            "" }, //
+        new String[] { "Complex with many junk statements",
+            "" + //
+                " if (x) {\n" + //
+                "   ;\n" + //
+                "   f();\n" + //
+                "   return a;\n" + //
+                " } else {\n" + //
+                "   ;\n" + //
+                "   g();\n" + //
+                "   {\n" + //
+                "   }\n" + //
+                " }\n" + //
+                "",
+            "" + //
+                " if (x) {\n" + //
+                "   f();\n" + //
+                "   return a;\n" + //
+                " }\n" + //
+                " g();\n" + //
+                "" }, //
         null);
 
     /**
@@ -180,7 +184,7 @@ public class IfCommandsSequencerElseSomethingTest {
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file.
      */
-    @Parameters(name = DESCRIPTION)//
+    @Parameters(name = DESCRIPTION) //
     public static Collection<Object[]> cases() {
       return collect(cases);
     }

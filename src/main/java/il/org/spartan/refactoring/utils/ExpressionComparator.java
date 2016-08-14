@@ -7,6 +7,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
+
 /**
  * Various methods for comparing
  *
@@ -122,9 +124,9 @@ public enum ExpressionComparator implements Comparator<Expression> {
   }
   private static boolean isLonger(final Expression e1, final Expression e2) {
     return !has.nulls(e1, e2) && (//
-        nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD || //
+    nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD || //
         nodesCount(e1) >= nodesCount(e2) && moreArguments(e1, e2)//
-        );
+    );
   }
 
   /**

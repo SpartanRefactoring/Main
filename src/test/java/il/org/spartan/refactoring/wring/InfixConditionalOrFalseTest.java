@@ -21,13 +21,13 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2014-07-13
  */
-@SuppressWarnings("javadoc")//
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)//
+@SuppressWarnings("javadoc") //
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public enum InfixConditionalOrFalseTest {
   ;
   static final Wring<InfixExpression> WRING = new InfixConditionalOrFalse();
 
-  @RunWith(Parameterized.class)//
+  @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Exprezzion.Infix {
     static String[][] cases = as.array(//
         new String[] { "Product is not AND/OR", "2*a" }, //
@@ -79,7 +79,7 @@ public enum InfixConditionalOrFalseTest {
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the file.
      */
-    @Parameters(name = DESCRIPTION)//
+    @Parameters(name = DESCRIPTION) //
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
@@ -89,8 +89,8 @@ public enum InfixConditionalOrFalseTest {
     }
   }
 
-  @RunWith(Parameterized.class)//
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING)//
+  @RunWith(Parameterized.class) //
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
   public static class Wringed extends AbstractWringTest.WringedExpression.Infix {
     static String[][] cases = as.array(//
         new String[] { "Many parenthesis", "a || (((false))) || b", "a || b" }, //
@@ -119,7 +119,7 @@ public enum InfixConditionalOrFalseTest {
      * @return a collection of cases, where each case is an array of three
      *         objects, the test case name, the input, and the expected output
      */
-    @Parameters(name = DESCRIPTION)//
+    @Parameters(name = DESCRIPTION) //
     public static Collection<Object[]> cases() {
       return collect(cases);
     }

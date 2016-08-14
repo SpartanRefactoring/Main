@@ -19,8 +19,8 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-08-28
  */
-public class PrefixIncrementDecrementReturn extends Wring.ReplaceToNextStatement<PrefixExpression> implements
-    Kind.ConsolidateStatements {
+public class PrefixIncrementDecrementReturn extends Wring.ReplaceToNextStatement<PrefixExpression>
+    implements Kind.ConsolidateStatements {
   @Override ASTRewrite go(final ASTRewrite r, final PrefixExpression e, final Statement nextStatement,
       @SuppressWarnings("unused") final TextEditGroup __) {
     if (!in(e.getOperator(), INCREMENT, DECREMENT))

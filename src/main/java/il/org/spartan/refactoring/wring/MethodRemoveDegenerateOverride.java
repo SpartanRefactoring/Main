@@ -10,13 +10,13 @@ import il.org.spartan.refactoring.utils.*;
 /**
  * A {@link Wring} to remove overriding methods that only call their counterpart
  * in the parent class, for example: <code>
- * 
+ *
  * <pre>
  * &#64;Override void foo() {
  *   super.foo();
  * }
  * </pre>
- * 
+ *
  * </code> will be completely removed.
  *
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
@@ -27,10 +27,10 @@ public class MethodRemoveDegenerateOverride extends Wring<MethodDeclaration> imp
     final ExpressionStatement s = extract.expressionStatement(d);
     return s == null || !(s.getExpression() instanceof SuperMethodInvocation)
         || !shouldRemove(d, (SuperMethodInvocation) s.getExpression()) ? null : new Rewrite(description(d), d) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.remove(d, g);
-      }
-    };
+          @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+            r.remove(d, g);
+          }
+        };
   }
   private static boolean shouldRemove(final MethodDeclaration d, final SuperMethodInvocation i) {
     for (final Object m : d.modifiers())
