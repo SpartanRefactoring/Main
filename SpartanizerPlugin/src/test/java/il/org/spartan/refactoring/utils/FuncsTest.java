@@ -77,6 +77,12 @@ public class FuncsTest {
   @Test public void listOfInts() {
     azzert.that(spartan.shorten(t("List<Set<Integer>> _;")), equalTo("iss"));
   }
+  @Test public void negationOfMinusOneA() {
+    azzert.that(negationLevel(e("-1")), is(1));
+  }
+  @Test public void negationOfMinusOneB() {
+    azzert.that(countNegations((InfixExpression)e("-1 *-1")), is(2));
+  }
   @Test public void negationOfExpressionManyNegation() {
     azzert.that(negationLevel(e("- - - - (- (-a))")), is(6));
   }

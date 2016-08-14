@@ -103,7 +103,7 @@ public class TernaryShortestFirstTest {
     azzert.notNull(e);
     final Expression elze = extract.core(e.getElseExpression());
     final Expression then = extract.core(e.getThenExpression());
-    final Expression $ = Subject.pair(elze, then).toCondition(logicalNot(e.getExpression()));
+    final Expression $ = subject.pair(elze, then).toCondition(logicalNot(e.getExpression()));
     azzert.nay(then.toString(), Is.conditional(then));
     azzert.nay(elze.toString(), Is.conditional(elze));
     azzert.that($.toString().length(), greaterThan(0));
@@ -112,7 +112,7 @@ public class TernaryShortestFirstTest {
   @Test public void trace1() {
     final ConditionalExpression e = Into.c("a?f(b,c,d):a");
     azzert.notNull(e);
-    azzert.that(Subject.pair(extract.core(e.getElseExpression()), extract.core(e.getThenExpression())).toCondition(logicalNot(e.getExpression())),
+    azzert.that(subject.pair(extract.core(e.getElseExpression()), extract.core(e.getThenExpression())).toCondition(logicalNot(e.getExpression())),
         iz("!a?a:f(b,c,d)"));
   }
   @Test public void trace2() {
@@ -120,7 +120,7 @@ public class TernaryShortestFirstTest {
     azzert.notNull(e);
     final Expression elze = extract.core(e.getElseExpression());
     final Expression then = extract.core(e.getThenExpression());
-    final Expression $ = Subject.pair(elze, then).toCondition(logicalNot(e.getExpression()));
+    final Expression $ = subject.pair(elze, then).toCondition(logicalNot(e.getExpression()));
     azzert.nay(then.toString(), Is.conditional(then));
     azzert.nay(elze.toString(), Is.conditional(elze));
     azzert.that($.toString().length(), greaterThan(0));

@@ -95,15 +95,15 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> {
         } else {
           if (newIf != null)
             commmonSuffix.add(0, newIf);
-          r.replace(s, Subject.ss(commmonSuffix).toBlock(), g);
+          r.replace(s, subject.ss(commmonSuffix).toBlock(), g);
         }
       }
       IfStatement replacement() {
-        return replacement(s.getExpression(), Subject.ss(then).toOneStatementOrNull(), Subject.ss(elze).toOneStatementOrNull());
+        return replacement(s.getExpression(), subject.ss(then).toOneStatementOrNull(), subject.ss(elze).toOneStatementOrNull());
       }
       IfStatement replacement(final Expression condition, final Statement trimmedThen, final Statement trimmedElse) {
         return trimmedThen == null && trimmedElse == null ? null
-            : trimmedThen == null ? Subject.pair(trimmedElse, null).toNot(condition) : Subject.pair(trimmedThen, trimmedElse).toIf(condition);
+            : trimmedThen == null ? subject.pair(trimmedElse, null).toNot(condition) : subject.pair(trimmedThen, trimmedElse).toIf(condition);
       }
     };
   }

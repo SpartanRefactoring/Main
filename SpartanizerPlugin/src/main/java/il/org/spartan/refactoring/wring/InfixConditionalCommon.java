@@ -31,7 +31,7 @@ public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<Infix
   private static Expression chopHead(final InfixExpression e) {
     final List<Expression> es = extract.allOperands(e);
     es.remove(0);
-    return es.size() < 2 ? duplicate(es.get(0)) : Subject.operands(es).to(e.getOperator());
+    return es.size() < 2 ? duplicate(es.get(0)) : subject.operands(es).to(e.getOperator());
   }
   private static Operator conjugate(final Operator o) {
     return o == null ? null
@@ -55,7 +55,7 @@ public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<Infix
       return null;
     final Expression leftLeft = left(left);
     return !Is.sideEffectFree(leftLeft) || !same(leftLeft, left(right)) ? null
-        : Subject.pair(leftLeft, Subject.pair(chopHead(left), chopHead(right)).to(o)).to(conjugate);
+        : subject.pair(leftLeft, subject.pair(chopHead(left), chopHead(right)).to(o)).to(conjugate);
   }
   @Override WringGroup wringGroup() {
     return WringGroup.REFACTOR_INEFFECTIVE;

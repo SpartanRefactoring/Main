@@ -36,7 +36,7 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
   }
   static Expression pushdown(final ConditionalExpression e, final Assignment a1, final Assignment a2) {
     return a1.getOperator() != a2.getOperator() || !same(left(a1), left(a2)) ? null
-        : new Plant(Subject.pair(left(a1), Subject.pair(right(a1), right(a2)).toCondition(e.getExpression())).to(a1.getOperator()))
+        : new Plant(subject.pair(left(a1), subject.pair(right(a1), right(a2)).toCondition(e.getExpression())).to(a1.getOperator()))
             .into(e.getParent());
   }
   private static Expression pushdown(final ConditionalExpression e, final ClassInstanceCreation e1, final ClassInstanceCreation e2) {
@@ -51,7 +51,7 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
       return null;
     final ClassInstanceCreation $ = duplicate(e1);
     arguments($).remove(i);
-    arguments($).add(i, Subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression()));
+    arguments($).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression()));
     return $;
   }
   private static Expression pushdown(final ConditionalExpression e, final Expression e1, final Expression e2) {
@@ -78,7 +78,7 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
     if (!same(e1.getName(), e2.getName()))
       return null;
     final FieldAccess $ = duplicate(e1);
-    $.setExpression(parenthesize(Subject.pair(e1.getExpression(), e2.getExpression()).toCondition(e.getExpression())));
+    $.setExpression(parenthesize(subject.pair(e1.getExpression(), e2.getExpression()).toCondition(e.getExpression())));
     return $;
   }
   private static Expression pushdown(final ConditionalExpression e, final InfixExpression e1, final InfixExpression e2) {
@@ -94,8 +94,8 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
     final InfixExpression $ = duplicate(e1);
     final List<Expression> operands = extract.operands($);
     operands.remove(i);
-    operands.add(i, p($, Subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression())));
-    return p(e, Subject.operands(operands).to($.getOperator()));
+    operands.add(i, p($, subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression())));
+    return p(e, subject.operands(operands).to($.getOperator()));
   }
   private static Expression pushdown(final ConditionalExpression e, final MethodInvocation e1, final MethodInvocation e2) {
     if (!same(e1.getName(), e2.getName()))
@@ -108,7 +108,7 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
       if (receiver1 == null || !same(es1, es2))
         return null;
       final MethodInvocation $ = duplicate(e1);
-      $.setExpression(parenthesize(Subject.pair(receiver1, receiver2).toCondition(e.getExpression())));
+      $.setExpression(parenthesize(subject.pair(receiver1, receiver2).toCondition(e.getExpression())));
       return $;
     }
     if (es1.size() != es2.size())
@@ -118,7 +118,7 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
       return null;
     final MethodInvocation $ = duplicate(e1);
     arguments($).remove(i);
-    arguments($).add(i, Subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression()));
+    arguments($).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression()));
     return $;
   }
   private static Expression pushdown(final ConditionalExpression e, final SuperMethodInvocation e1, final SuperMethodInvocation e2) {
@@ -133,7 +133,7 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
       return null;
     final SuperMethodInvocation $ = duplicate(e1);
     arguments($).remove(i);
-    arguments($).add(i, Subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression()));
+    arguments($).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression()));
     return $;
   }
   public static Expression right(final Assignment a1) {

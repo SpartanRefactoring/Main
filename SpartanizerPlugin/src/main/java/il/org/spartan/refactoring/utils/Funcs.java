@@ -104,6 +104,13 @@ public enum Funcs {
   public static Expression asExpression(final ASTNode ¢) {
     return !(¢ instanceof Expression) ? null : (Expression) ¢;
   }
+  /** Down-cast, if possible, to {@link NumberLiteral}
+   * @param ¢ JD
+   * @return the parameter down-casted to the returned type, or
+   *         <code><b>null</b></code> if no such down-casting is possible. */
+  public static NumberLiteral asNumberLiteral(final ASTNode ¢) {
+    return !(¢ instanceof NumberLiteral) ? null : (NumberLiteral) ¢;
+  }
   /** Down-cast, if possible, to {@link ExpressionStatement}
    * @param ¢ JD
    * @return the parameter down-casted to the returned type, or
@@ -323,7 +330,7 @@ public enum Funcs {
   public static InfixExpression flip(final InfixExpression ¢) {
     if (¢.hasExtendedOperands())
       throw new IllegalArgumentException(¢ + ": flipping undefined for an expression with extra operands ");
-    return Subject.pair(right(¢), left(¢)).to(conjugate(¢.getOperator()));
+    return subject.pair(right(¢), left(¢)).to(conjugate(¢.getOperator()));
   }
   /** @param n the node from which to extract the proper fragment
    * @param e the name by which to look for the fragment
@@ -484,14 +491,14 @@ public enum Funcs {
   /** @param ¢ JD
    * @return the parameter, but logically negated and simplified */
   public static Expression logicalNot(final Expression ¢) {
-    final PrefixExpression $ = Subject.operand(¢).to(NOT);
+    final PrefixExpression $ = subject.operand(¢).to(NOT);
     final Expression $$ = PrefixNotPushdown.simplifyNot($);
     return $$ == null ? $ : $$;
   }
   /** @param ¢ the expression to return in the return statement
    * @return the new return statement */
   public static ThrowStatement makeThrowStatement(final Expression ¢) {
-    return Subject.operand(¢).toThrow();
+    return subject.operand(¢).toThrow();
   }
   public static int negationLevel(final Expression ¢) {
     return ¢ instanceof PrefixExpression ? negationLevel((PrefixExpression) ¢)
@@ -647,5 +654,14 @@ public enum Funcs {
    * @return the then statement of the parameter */
   public static Statement then(final IfStatement ¢) {
     return ¢.getThenStatement();
+  }
+  public static int countNegations(final List<Expression> es) {
+    int $ = 0;
+    for (final Expression e : es)
+      $ += negationLevel(e);
+    return $;
+  }
+  public static int countNegations(final InfixExpression e) {
+    return countNegations(extract.operands(e));
   }
 }

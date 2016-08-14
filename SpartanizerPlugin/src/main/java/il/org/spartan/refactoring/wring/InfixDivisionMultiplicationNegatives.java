@@ -9,25 +9,45 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} that sorts the arguments of a {@link Operator#DIVIDE}
- * expression.
- * @author Yossi Gil
- * @since 2015-09-05 */
+/** A {@link Wring} to convert an expression such as
+ * 
+ * <pre>
+ * 1 * i
+ * </pre>
+ * 
+ * or
+ * 
+ * <pre>
+ * i * 1
+ * </pre>
+ * 
+ * to
+ * 
+ * <pre>
+ * i
+ * </i> 
+ * or 
+ * <pre>
+ * i * 1 * jasLiteral
+ * </pre>
+ * 
+ * to
+ * 
+ * <pre>
+ * i * j
+ * </pre>
+ * 
+ * @author Matteo Orrù
+ * @since 2016 */
 public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpression> {
-  private static int countNegations(final List<Expression> es) {
-    int $ = 0;
-    for (final Expression e : es)
-      $ += negationLevel(e);
-    return $;
-  }
-  private static List<Expression> gather(final Expression e, final List<Expression> $) {
+
+   private static List<Expression> gather(final Expression e, final List<Expression> $) {
     if (e instanceof InfixExpression)
       return gather(asInfixExpression(e), $);
     $.add(e);
@@ -80,7 +100,7 @@ public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpre
           if (¢ != first && negationLevel(¢) > 0)
             r.replace(¢, new Plant(duplicate(peelNegation(¢))).into(¢.getParent()), g);
         if (first != null)
-          r.replace(first, new Plant(Subject.operand(peelNegation(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
+          r.replace(first, new Plant(subject.operand(peelNegation(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
       }
     };
   }

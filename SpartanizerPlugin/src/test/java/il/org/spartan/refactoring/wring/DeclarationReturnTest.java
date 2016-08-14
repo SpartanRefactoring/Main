@@ -81,7 +81,7 @@ public class DeclarationReturnTest {
       azzert.notNull(s);
       azzert.aye(same(f.getName(), extract.expression(s)));
       r.remove(extract.statement(f), null);
-      r.replace(s, Subject.operand(initializer).toReturn(), null);
+      r.replace(s, subject.operand(initializer).toReturn(), null);
     }
   }
 

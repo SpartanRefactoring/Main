@@ -145,7 +145,7 @@ public class InfixSortAdditionTest {
     azzert.aye(Is.notString(plus));
     final List<Expression> operands = extract.operands(flatten(plus));
     azzert.that(operands.size(), is(2));
-    final InfixExpression r = Subject.operands(operands).to(plus.getOperator());
+    final InfixExpression r = subject.operands(operands).to(plus.getOperator());
     azzert.that(r, iz("2+a"));
     azzert.that(new InfixSortAddition().replacement(plus), iz("a+2"));
   }

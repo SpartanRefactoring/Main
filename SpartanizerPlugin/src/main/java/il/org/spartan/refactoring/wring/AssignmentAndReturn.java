@@ -37,7 +37,7 @@ public class AssignmentAndReturn extends Wring.ReplaceToNextStatement<Assignment
     if (s == null || !same(left(a), core(s.getExpression())))
       return null;
     r.remove(parent, g);
-    r.replace(s, Subject.operand(a).toReturn(), g);
+    r.replace(s, subject.operand(a).toReturn(), g);
     return r;
   }
   @Override WringGroup wringGroup() {

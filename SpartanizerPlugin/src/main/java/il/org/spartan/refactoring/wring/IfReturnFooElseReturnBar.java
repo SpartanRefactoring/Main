@@ -32,7 +32,7 @@ public final class IfReturnFooElseReturnBar extends Wring.ReplaceCurrentNode<IfS
     final Expression condition = s.getExpression();
     final Expression then = extract.returnExpression(then(s));
     final Expression elze = extract.returnExpression(elze(s));
-    return then == null || elze == null ? null : Subject.operand(Subject.pair(then, elze).toCondition(condition)).toReturn();
+    return then == null || elze == null ? null : subject.operand(subject.pair(then, elze).toCondition(condition)).toReturn();
   }
   @Override boolean scopeIncludes(final IfStatement s) {
     return s != null && extract.returnExpression(then(s)) != null && extract.returnExpression(elze(s)) != null;

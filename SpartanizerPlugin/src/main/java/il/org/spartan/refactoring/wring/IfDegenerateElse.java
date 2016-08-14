@@ -35,7 +35,7 @@ public final class IfDegenerateElse extends Wring.ReplaceCurrentNode<IfStatement
   @Override Statement replacement(final IfStatement s) {
     final IfStatement $ = duplicate(s);
     $.setElseStatement(null);
-    return !Is.blockRequiredInReplacement(s, $) ? $ : Subject.statement($).toBlock();
+    return !Is.blockRequiredInReplacement(s, $) ? $ : subject.statement($).toBlock();
   }
   @Override boolean scopeIncludes(final IfStatement s) {
     return s != null && then(s) != null && degenerateElse(s);

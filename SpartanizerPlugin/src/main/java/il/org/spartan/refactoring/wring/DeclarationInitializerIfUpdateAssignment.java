@@ -47,7 +47,7 @@ public final class DeclarationInitializerIfUpdateAssignment extends Wring.Variab
     final Operator o = a.getOperator();
     if (o == Assignment.Operator.ASSIGN)
       return null;
-    final ConditionalExpression newInitializer = Subject.pair(assignmentAsExpression(a), initializer).toCondition(condition);
+    final ConditionalExpression newInitializer = subject.pair(assignmentAsExpression(a), initializer).toCondition(condition);
     final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
     if (!i.canInlineInto(newInitializer) || i.replacedSize(newInitializer) - size(nextStatement, initializer) > 0)
       return null;

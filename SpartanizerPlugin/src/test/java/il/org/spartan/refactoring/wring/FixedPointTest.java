@@ -2,6 +2,7 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
+import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
 import static il.org.spartan.utils.Utils.*;
 
 import org.junit.*;
@@ -20,6 +21,8 @@ import il.org.spartan.refactoring.spartanizations.*;
   private static void assertConvertsTo(final String from, final String expected) {
     assertWrappedTranslation(from, expected, Wrap.Statement);
   }
+
+
   private static void assertSimplifiesTo(final String from, final String expected) {
     assertWrappedTranslation(from, expected, Wrap.Expression);
   }
