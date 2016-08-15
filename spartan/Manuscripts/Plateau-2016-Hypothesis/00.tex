@@ -17,8 +17,10 @@
 \copyrightdoi{nnnnnnn.nnnnnnn}
 
 \def\ignore#1{}
-\newcommand\yossi[1]{\marginpar[Y$⇒$]{$⇐$Y}\textcolor{red}{\textsf{#1}}}
-\newcommand\matteo[1]{\marginpar[M$⇒$]{$⇐$M}\textcolor{red}{\textsf{#1}}}
+\newcommand\yossi[1]{\marginpar[Y$⇒$]{$⇐$Y}\yos{#1}}
+\newcommand\matteo[1]{\marginpar[M$⇒$]{$⇐$M}\mat{#1}}
+\newcommand\mat[1]{\textcolor{blue}{\textsf{#1}}}
+\newcommand\yos[1]{\textcolor{red}{\textsf{#1}}}
 
 \begin{document}
 \maketitle
