@@ -149,7 +149,7 @@
   fontadjust,
   showstringspaces=true,
   extendedchars=true,       
-  escapechar=£,
+  escapeinside=`',
   columns={fullflexible},
   keepspaces=true,
   tabsize=2,                 
@@ -273,7 +273,8 @@
 \newLanguage[alsoletter={-}]{HTML}{HTML}
 \newLanguage[morekeywords={Ok,Oz,Integer,String,Real},alsoletter={@}]{Java}{JAVA}
 \newLanguage[morekeywords={
-  Ok, Oz, Boolean, Character, Integer,String,Real},
+  Ok, Oz, Boolean, Character, Integer, String, Real, parent
+},
   alsoletter={@},literate={->}{$\rightarrow$}1]{Java}{REAP}
 \newLanguage{Oberon-2}{OBERON}
 \newLanguage{Pascal}{PASCAL}
