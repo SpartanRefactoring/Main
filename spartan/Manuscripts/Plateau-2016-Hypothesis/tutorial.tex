@@ -125,13 +125,19 @@ To evaluate
 \end{java}
 replace~$h→9, m→11, s→⊥$
 to obtain 
-\begin{align}
-  ((60·9 + 11) + ⊥)/24./60 & ⏎
-  ((540 + 11) + ⊥)/24./60 & ⏎
-  (551 + ⊥)/1440 & ⏎
-  ⊥/1440 &⏎
-  ⊥ &.
-\end{align}
+
+{\scriptsize
+\begin{equation}
+\begin{split}
+  ¢ & = ((60·9 + 11) + ⊥)/24./60  ⏎
+  & = ((540 + 11) + ⊥)/24./60  ⏎
+  & = (551 + ⊥)/1440. & ⏎
+  & = ⊥/1440. ⏎
+  & = ⊥ 
+\end{split}
+.
+\end{equation}
+}
 
 \begin{code}{JAVA}
 .Fraction.Checked {££
@@ -269,13 +275,17 @@ Type system is~$𝕋$. In addition to \kk{Ok} and \kk{Oz}, we have atomic types
 ∀τ∈𝕋 ∙ ⊥≤τ≤⊤.
 \end{equation}
 
-\begin{code}{JAVA}
+\matteo{read about type Unity which is also OK which is also top in our case}
+\begin{code}[width=50ex,minipage]{JAVA}
 .Fraction.Checked {££
-  Ok ok() ->
-    0 < h ** h < 24 **
-    0 < m ** m < 60 **
-    0 < s ** s < 60 ;
-  Real ¢()-> ok ** super.¢;
+  Ok ok() -> 
+  // Up casting into type £$⊤ = \kk{Ok}$£, of £…£  
+  // an Expression of type £\kk{Boolean}£
+    0 < h && h < 24 &&
+    0 < m && m < 60 &&
+    0 < s && s < 60
+  ;
+  Real ¢()-> ok && super.¢;
 }
 \end{code}
 
@@ -288,10 +298,10 @@ Integer c, h, g;
 \begin{code}{JAVA}
 .Fraction.Checked {££
   Ok ok() ->
-    0 < h ** h < 24 **
-    0 < m ** m < 60 **
-    0 < s ** s < 60 ;
-  Real ¢()-> ok ** super.¢;
+  0 < h && h < 24 &&
+  0 < m && m < 60 &&
+  0 < s && s < 60 ;
+  Real ¢()-> ok && super.¢;
 }
 \end{code}
 
