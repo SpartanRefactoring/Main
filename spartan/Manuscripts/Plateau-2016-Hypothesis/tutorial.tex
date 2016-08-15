@@ -1,0 +1,177 @@
+\begin{code}{JAVA}
+.Fraction.Checked {££
+  Ok ok() -> 
+    0 < h ** h < 24 ** 
+    0 < m ** m < 60 ** 
+    0 < s ** s < 60 ;
+  Real ¢()->  ok ** super.¢; 
+}
+\end{code}
+
+
+\begin{code}{JAVA}
+.Brothers {££
+Integer c, h, g;
+}
+\end{code}
+
+\begin{code}{JAVA}
+.Time {££
+  Integer h 10; // Hours, defaults to 10 
+  Integer m 20; // Minutes, defaults to 20 
+  Integer s;    // Seconds, defaults to £$⊥$£  
+}
+\end{code}
+Remove the "=" sign in initialization but not assignment 
+\begin{java}
+class Time extends Object {££
+  Integer h = 10; // Hours, initially, £$\cc{10}$ 10 
+  Integer m = 20; // Minutes, initially £$\cc{20}$ 20 
+  Integer s;      // Seconds, initially £$\kk{null}$ 
+}
+\end{java}
+
+\begin{code}{JAVA}
+.Time.Display {££
+  String ¢ = h + ":" + m + ":" + s;    
+}
+\end{code}
+reaches fields directly, just like inheritance.
+
+\begin{code}{JAVA}
+.Time.AMPM {££
+  Boolean isAM  super.h < 12;
+  Boolean isPM  !isAM;
+  String  ampm  isAM ? "AM" : "PM"; 
+  String  h     super.h - (isAM ? 0 : 12);    
+}
+\end{code}
+
+\begin{code}{JAVA}
+.Time.Fraction {££
+  Real ¢() -> ((60*h + m) + s)/24./60 ;
+}
+\end{code}
+
+
+\begin{code}{JAVA}
+.Time.Guess {££
+  Integer s = 0; 
+}
+\end{code}
+
+\begin{code}{JAVA}
+.Time.Fraction {££
+  Real ¢() -> ((60*h + m) + s)/24./60 ;
+}
+\end{code}
+
+%\begin{code}{JAVA}
+%.Fraction.Checked {££
+%  Ok ok() -> 
+%    0 < h && h < 24 && 
+%    0 < m && m < 60 && 
+%    0 < s && s < 60 ;
+%  Real ¢()->  ok && super.¢; 
+%}
+%\end{code}
+
+\def\ignore#1{}
+
+Note the use of \verb_&&_ and \verb_||_.
+\begin{code}{JAVA}{
+.Checked.Greeting {££
+  fraction = super.¢ || 0.5;
+  String name "David";
+  String now ->
+      fraction < 0.50 ? "morning" :
+      fraction < 0.75 ? "day" :
+      "evening"
+  ;
+  £\ignore$£$ -> "Hi " + name + ", good " + now + " to you.";
+}
+\end{code}
+
+\begin{code}{JAVA}
+.Hamlet {££
+  Boolean toBe() {££ toBe = () -> !toBe; return false; } 
+}
+\end{code}
+behaves like flip flop or maybe a clock? bad metaphors
+
+\begin{code}{JAVA}
+.Hamlet {££
+  Boolean ¢() {££ ¢ = () -> !¢; return false; } 
+}
+\end{code}
+
+\begin{code}{JAVA}
+.Ticker [
+  Integer start 1;
+  Integer ¢ {££
+      ¢()  -> ¢ + 1;
+      return start;
+  };
+\end{code}
+
+Remove the "=" sign in initialization but not assignment 
+\begin{java}
+   a()  -> a + 1;
+\end{java}
+    means
+\begin{java}
+  ¢ = () -> ¢ + 1;
+\end{java}
+
+
+\begin{java}
+  Integer curr() {££ prev = ¢;}
+\end{java}
+Is actually 
+\begin{java}
+  Integer curr = () -> {££ prev = ¢;}
+\end{java}
+
+\begin{code}{JAVA}
+.Fibonacci {££
+  Integer prev 1;
+  Integer curr() {££ prev = ¢;}
+}
+\end{code}
+
+\begin{code}{JAVA}
+.Constants {££ // Of Arithmetic Progression
+  Integer a1;
+  Integer d;
+  Integer curr() {¢=()->¢ + d; prev = ¢;}
+}
+\end{code}
+
+\begin{code}{JAVA}
+.Constants.AP {££ // Arithmetic Progression
+  Integer curr() {¢=()->¢ + d; return a1;} 
+}
+\end{code}
+
+Interesting step wise! Try to do Fibonacci? Try Fibonacci as a function which creates zillion cells?
+\begin{code}{JAVA}
+.Constants.AP {££ // Arithmetic Progression
+  Integer ¢() -> a1 -> ¢ + d; 
+}
+\end{code}
+
+
+\begin{align}
+  \label{eq:ok}
+  ⊤ & = \kk{Ok} = \cc{Void}⏎
+  \label{eq:oz}
+  ⊥ & = \kk{Oz} = \kk{None} = \cc{@NonNull Void}
+\end{align}
+Type system is~$𝕋$.  In addition to \kk{Ok} and \kk{Oz}, we have atomic types
+\kk{Boolean}, \kk{String}, \kk{Integer}, \kk{Real}, and, \kk{Character}.
+\begin{equation}
+\label{eq:bounds}
+∀τ∈𝕋 ∙ ⊥≤τ≤⊤.  
+\end{equation}
+
+
