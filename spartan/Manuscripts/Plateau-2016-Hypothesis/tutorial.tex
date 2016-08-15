@@ -1,49 +1,50 @@
 \begin{code}{JAVA}
-.Fraction.Checked {££
-  Ok ok() -> 
-    0 < h ** h < 24 ** 
-    0 < m ** m < 60 ** 
-    0 < s ** s < 60 ;
-  Real ¢()->  ok ** super.¢; 
-}
-\end{code}
-
-
-\begin{code}{JAVA}
-.Brothers {££
-Integer c, h, g;
-}
-\end{code}
-
-\begin{code}{JAVA}
 .Time {££
-  Integer h 10; // Hours, defaults to 10 
-  Integer m 20; // Minutes, defaults to 20 
-  Integer s;    // Seconds, defaults to £$⊥$£  
+  Integer h 9; // Hours, defaults to 9
+  Integer m 11; // Minutes, defaults to 11
+  Integer s; // Seconds, defaults to £$⊥$£
 }
 \end{code}
-Remove the "=" sign in initialization but not assignment 
+Remove the "=" sign in initialization but not assignment.`
 \begin{java}
 class Time extends Object {££
-  Integer h = 10; // Hours, initially, £$\cc{10}$ 10 
-  Integer m = 20; // Minutes, initially £$\cc{20}$ 20 
-  Integer s;      // Seconds, initially £$\kk{null}$ 
+  Integer h = 9; // Hours, initially, £$\cc{9}$ 9
+  Integer m = 11; // Minutes, initially £$\cc{11}$ 11
+  Integer s; // Seconds, initially £$\kk{null}$
 }
 \end{java}
 
 \begin{code}{JAVA}
 .Time.Display {££
-  String ¢ = h + ":" + m + ":" + s;    
+  String ¢ = h + ":" + m + ":" + s;
 }
 \end{code}
 reaches fields directly, just like inheritance.
 
 \begin{code}{JAVA}
+class Display extends Time {££
+  String ¢() {££
+     h + ":" + m + ":" + s;
+  }
+}
+\end{code}
+
+\begin{code}{JAVA}
+class Time {££
+  public static class Display extends Time {££
+    String ¢() {££
+       h + ":" + m + ":" + s;
+    }
+  }
+}
+\end{code}
+
+\begin{code}{JAVA}
 .Time.AMPM {££
-  Boolean isAM  super.h < 12;
-  Boolean isPM  !isAM;
-  String  ampm  isAM ? "AM" : "PM"; 
-  String  h     super.h - (isAM ? 0 : 12);    
+  Boolean isAM super.h < 12;
+  Boolean isPM !isAM;
+  String ampm isAM ? "AM" : "PM";
+  String h super.h - (isAM ? 0 : 12);
 }
 \end{code}
 
@@ -52,82 +53,152 @@ reaches fields directly, just like inheritance.
   Real ¢() -> ((60*h + m) + s)/24./60 ;
 }
 \end{code}
+reads as
+\begin{code}{JAVA}
+class Fraction extends Time {££
+  Real ¢ = ()-> ((60*h + m) + s)/24./60 ; 
+}
+\end{code}
+or so
+\begin{code}{JAVA}
+class Fraction extends Time {££
+  Real ¢() {££ return ((60*h + m) + s)/24./60 ; }
+}
+\end{code}
 
+\begin{code}{JAVA}
+class Time {££
+  static class AMPM extends Time {££ /* £$⋯$ £*/ }
+  static class Fraction extends Time {££ /* £$⋯$ £*/}
+}
+\end{code}
+
+\matteo{read about mixins and traits.start with mixins}
+
+\begin{code}{JAVA}
+.Time.AMPM.Fraction;
+\end{code}
+
+\begin{code}{JAVA}
+class Time {££
+  static class AMPM extends Time {££
+      /* £$⋯$ £*/
+    static class Fraction extends Time {££ /* £$⋯$ £*/}
+  }
+  static class Fraction extends Time {££ /* £$⋯$ £*/}
+}
+\end{code}
+
+\begin{code}{JAVA}
+.Time.Fraction.AMPM;
+\end{code}
+
+\begin{code}{JAVA}
+class Time {££
+  static class AMPM extends Time {££
+    /** £$⋯$£*/
+    static class Fraction extends Time {££ /* £$⋯$ £*/}
+  }
+  static class Fraction extends Time {££
+    /** £$⋯$£*/
+    static class AMPM extends Fraction {££ /* £$⋯$ £*/}
+  }
+}
+\end{code}
 
 \begin{code}{JAVA}
 .Time.Guess {££
-  Integer s = 0; 
+  Integer s 0;
 }
 \end{code}
 
+Whenever a property is undefined it is like a function that throws an exception.
+Any time you use it, the called would also be throwing an exception.
 \begin{code}{JAVA}
 .Time.Fraction {££
   Real ¢() -> ((60*h + m) + s)/24./60 ;
 }
 \end{code}
+To evaluate
+\begin{java}
+  ((60*h + m) + s)/24./60
+\end{java}
+replace~$h→9, m→11, s→⊥$
+to obtain 
+\begin{align}
+  ((60·9 + 11) + ⊥)/24./60 & ⏎
+  ((540 + 11) + ⊥)/24./60 & ⏎
+  (551 + ⊥)/1440 & ⏎
+  ⊥/1440 &⏎
+  ⊥ &.
+\end{align}
 
-%\begin{code}{JAVA}
-%.Fraction.Checked {££
-%  Ok ok() -> 
-%    0 < h && h < 24 && 
-%    0 < m && m < 60 && 
-%    0 < s && s < 60 ;
-%  Real ¢()->  ok && super.¢; 
-%}
-%\end{code}
+\begin{code}{JAVA}
+.Fraction.Checked {££
+ Ok ok() ->
+   -1 < h && h < 24 &&
+   -1 < m && m < 60 &&
+   -1 < s && s < 60 ;
+ Real ¢()-> ok && super.¢;
+}
+\end{code}
 
-\def\ignore#1{}
-
-Note the use of \verb_&&_ and \verb_||_.
-\begin{code}{JAVA}{
+Note the use of \verb+&&+ and \verb+||+. they also deal with undefined.
+Different from Java.
+\begin{code}{JAVA}
 .Checked.Greeting {££
-  fraction = super.¢ || 0.5;
-  String name "David";
-  String now ->
+  fraction     super.¢ || 0.5;
+  String name  "David";
+  String now() ->
       fraction < 0.50 ? "morning" :
       fraction < 0.75 ? "day" :
       "evening"
   ;
-  £\ignore$£$ -> "Hi " + name + ", good " + now + " to you.";
+  ¢() -> "Hi " + name + ", good " + now + " to you.";
 }
 \end{code}
 
+Linear 
 \begin{code}{JAVA}
 .Hamlet {££
-  Boolean toBe() {££ toBe = () -> !toBe; return false; } 
+  Boolean toBe() {££ 
+    toBe = () -> !toBe; 
+    return true; 
+  }
 }
 \end{code}
 behaves like flip flop or maybe a clock? bad metaphors
 
+
+Penny pool notation:
 \begin{code}{JAVA}
 .Hamlet {££
-  Boolean ¢() {££ ¢ = () -> !¢; return false; } 
+  Boolean ¢() {££ ¢ = () -> !¢; return false; }
 }
 \end{code}
 
 \begin{code}{JAVA}
-.Ticker [
+.Ticker {££ 
   Integer start 1;
-  Integer ¢ {££
-      ¢()  -> ¢ + 1;
+  Integer ¢() {££
+      ¢ = () -> ¢ + 1; // Change gate of cell ¢
       return start;
   };
+}
 \end{code}
 
-Remove the "=" sign in initialization but not assignment 
 \begin{java}
-   a()  -> a + 1;
+   a() -> a + 1;
 \end{java}
     means
 \begin{java}
   ¢ = () -> ¢ + 1;
 \end{java}
 
-
 \begin{java}
   Integer curr() {££ prev = ¢;}
 \end{java}
-Is actually 
+Is actually
 \begin{java}
   Integer curr = () -> {££ prev = ¢;}
 \end{java}
@@ -140,26 +211,50 @@ Is actually
 \end{code}
 
 \begin{code}{JAVA}
-.Constants {££ // Of Arithmetic Progression
+.Constants {££ // Constant of Arithmetic Progression
   Integer a1;
   Integer d;
-  Integer curr() {¢=()->¢ + d; prev = ¢;}
 }
 \end{code}
 
 \begin{code}{JAVA}
 .Constants.AP {££ // Arithmetic Progression
-  Integer curr() {¢=()->¢ + d; return a1;} 
+  Integer ¢() {¢=()->¢ + d; return a1;}
 }
 \end{code}
+
+\begin{code}{JAVA}
+.Constants.AP {££ // Arithmetic Progression
+  Integer ¢() -> (a1,¢=()->¢ + d); 
+}
+\end{code}
+
+\begin{code}{JAVA}
+.Fibonacci {££ 
+  Integer a1;
+  Integer a2;
+  Integer ¢() -> (a1, a2, ¢=()->¢ + d); 
+}
+\end{code}
+
+\begin{code}{JAVA}
+class Fibonacci {££ 
+  Integer a1;
+  Integer a2;
+  Integer ¢() {££
+    ¢ = () {££ ¢ = () -> ¢ + prev(¢); return a2;};
+    return a1;
+  }
+}
+\end{code}
+
 
 Interesting step wise! Try to do Fibonacci? Try Fibonacci as a function which creates zillion cells?
 \begin{code}{JAVA}
 .Constants.AP {££ // Arithmetic Progression
-  Integer ¢() -> a1 -> ¢ + d; 
+  Integer ¢() -> a1 -> ¢ + d;
 }
 \end{code}
-
 
 \begin{align}
   \label{eq:ok}
@@ -167,11 +262,41 @@ Interesting step wise! Try to do Fibonacci? Try Fibonacci as a function which cr
   \label{eq:oz}
   ⊥ & = \kk{Oz} = \kk{None} = \cc{@NonNull Void}
 \end{align}
-Type system is~$𝕋$.  In addition to \kk{Ok} and \kk{Oz}, we have atomic types
+Type system is~$𝕋$. In addition to \kk{Ok} and \kk{Oz}, we have atomic types
 \kk{Boolean}, \kk{String}, \kk{Integer}, \kk{Real}, and, \kk{Character}.
 \begin{equation}
 \label{eq:bounds}
-∀τ∈𝕋 ∙ ⊥≤τ≤⊤.  
+∀τ∈𝕋 ∙ ⊥≤τ≤⊤.
 \end{equation}
 
+\begin{code}{JAVA}
+.Fraction.Checked {££
+  Ok ok() ->
+    0 < h ** h < 24 **
+    0 < m ** m < 60 **
+    0 < s ** s < 60 ;
+  Real ¢()-> ok ** super.¢;
+}
+\end{code}
 
+\begin{code}{JAVA}
+.Brothers {££
+Integer c, h, g;
+}
+\end{code}
+
+\begin{code}{JAVA}
+.Fraction.Checked {££
+  Ok ok() ->
+    0 < h ** h < 24 **
+    0 < m ** m < 60 **
+    0 < s ** s < 60 ;
+  Real ¢()-> ok ** super.¢;
+}
+\end{code}
+
+\begin{code}{JAVA}
+.Brothers {££
+Integer c, h, g;
+}
+\end{code}
