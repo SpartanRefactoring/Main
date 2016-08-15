@@ -17,9 +17,9 @@
 
 % These two macros are defined for quick and trouble free placement of short
 % code and keywords of any programming language within the document.
-\newcommand\kk[1]{\textcolor{RoyalBlue}{\text{\textup{\textbf{\texttt{#1}}}}}}
+\newcommand\kk[1]{\textcolor{RoyalPurple}{\text{\textup{\textbf{\texttt{#1}}}}}}
 \newcommand\kkn[1]{\text{\textup{\textbf{\texttt{#1}}}}}
-\newcommand\cc[1]{\textcolor{Sepia}{\text{\textup{\textbf{\texttt{#1}}}}}}
+\newcommand\cc[1]{\textcolor{darkgray}{\text{\textup{\textbf{\texttt{#1}}}}}}
 \newcommand\ccn[1]{\text{\textup{\texttt{#1}}}}
 \def\tt#1{\textup{\texttt{#1}}}
 
@@ -28,6 +28,7 @@
 
 \def\ameBASH{\Bash}
 \def\nameADA{\Ada}
+\def\nameREAP{\textsc{Reap}}
 \def\nameAWKPROG{\AWK}
 \def\nameCEEPL{\CPL}
 \def\nameCPLUSPLUS{\CC}
@@ -245,6 +246,7 @@
 
 \lstnewenvironment{Session}{\lstset{style=display}}{}
 \lstnewenvironment{java}{\lstset{style=java}}{}
+\lstnewenvironment{reap}{\lstset{style=reap}}{}
 
 %	#1 Changes to the language definition, as in the listing package 
 %	#2 Language name, as it is known to the listing package.
@@ -269,9 +271,10 @@
 \newLanguage{php}{PEEAGEPEE}
 \newLanguage{GoOH}{GO}
 \newLanguage[alsoletter={-}]{HTML}{HTML}
-\newLanguage[morekeywords={enum,strictfp,@interface,inherited,reap,
-  Integer,String,Real},
-  alsoletter={@},literate={->}{$\rightarrow$}1]{Java}{JAVA}
+\newLanguage[morekeywords={Ok,Oz,Integer,String,Real},alsoletter={@}]{Java}{JAVA}
+\newLanguage[morekeywords={
+  Ok, Oz, Boolean, Character, Integer,String,Real},
+  alsoletter={@},literate={->}{$\rightarrow$}1]{Java}{REAP}
 \newLanguage{Oberon-2}{OBERON}
 \newLanguage{Pascal}{PASCAL}
 \newLanguage{Prolog}{PROLOG}

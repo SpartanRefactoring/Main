@@ -1,35 +1,39 @@
-\begin{code}{JAVA}
-.Time {££
+\begin{Code}{REAP}{Time environment}
+££.Time {££
   Integer h 9; // Hours, defaults to 9
   Integer m 11; // Minutes, defaults to 11
   Integer s; // Seconds, defaults to £$⊥$£
 }
-\end{code}
+\end{Code}
 Remove the "=" sign in initialization but not assignment.`
-\begin{java}
+% vim: /\^:
+\begin{Code}[minipage,width=20em]{JAVA}{Time environment transliterated to \Java}
 class Time extends Object {££
-  Integer h = 9; // Hours, initially, £$\cc{9}$ 9
-  Integer m = 11; // Minutes, initially £$\cc{11}$ 11
-  Integer s; // Seconds, initially £$\kk{null}$
+  Integer h = 9; // Hours, initially set to £$\cc{9}$£
+  Integer m = 11; // Minutes, initially set to £$\cc{11}$£
+  Integer s; // Seconds, initially set to £$\kk{null}$£
 }
-\end{java}
+\end{Code}
 
-\begin{code}{JAVA}
-.Time.Display {££
+\begin{Code}{REAP}{Environment }
+££.Time.Display {££
   String ¢ = h + ":" + m + ":" + s;
 }
-\end{code}
+\end{Code}
 reaches fields directly, just like inheritance.
 
-\begin{code}{JAVA}
+\begin{Code}[minipage,width=22em]{JAVA}
+{\Java transliteration of \texttt{Time.Display}}
 class Display extends Time {££
   String ¢() {££
      h + ":" + m + ":" + s;
   }
 }
-\end{code}
+\end{Code}
 
-\begin{code}{JAVA}
+\begin{Code}[minipage,width=20em]{JAVA}%
+{More accurate \Java transliteration \\
+of \Java \texttt{Time.Display}}
 class Time {££
   public static class Display extends Time {££
     String ¢() {££
@@ -37,63 +41,63 @@ class Time {££
     }
   }
 }
-\end{code}
+\end{Code}
 
-\begin{code}{JAVA}
-.Time.AMPM {££
+\begin{Code}{REAP}{Environment }
+££.Time.AMPM {££
   Boolean isAM super.h < 12;
-  Boolean isPM !isAM;
-  String ampm isAM ? "AM" : "PM";
-  String h super.h - (isAM ? 0 : 12);
+  Boolean isPM ££!isAM;
+  String ampm isAM ££? "AM" : "PM";
+  String h super.h - (isAM ££? 0 : 12);
 }
-\end{code}
+\end{Code}
 
-\begin{code}{JAVA}
-.Time.Fraction {££
+\begin{Code}{REAP}{Environment }
+££.Time.Fraction {££
   Real ¢() -> ((60*h + m) + s)/24./60 ;
 }
-\end{code}
+\end{Code}
 reads as
-\begin{code}{JAVA}
+\begin{Code}[minipage,width=20em]{JAVA}{ … \Java … }
 class Fraction extends Time {££
-  Real ¢ = ()-> ((60*h + m) + s)/24./60 ; 
+  Real ¢ = ()-> ((60*h + m) + s)/24./60 ;
 }
-\end{code}
+\end{Code}
 or so
-\begin{code}{JAVA}
+\begin{Code}[minipage,width=20em]{JAVA}{ … \Java … }
 class Fraction extends Time {££
   Real ¢() {££ return ((60*h + m) + s)/24./60 ; }
 }
-\end{code}
+\end{Code}
 
-\begin{code}{JAVA}
+\begin{Code}[minipage,width=20em]{JAVA}{ … \Java … }
 class Time {££
   static class AMPM extends Time {££ /* £$⋯$ £*/ }
   static class Fraction extends Time {££ /* £$⋯$ £*/}
 }
-\end{code}
+\end{Code}
 
 \matteo{read about mixins and traits.start with mixins}
 
-\begin{code}{JAVA}
-.Time.AMPM.Fraction;
-\end{code}
+\begin{Code}{REAP}{Environment }
+££.Time.AMPM.Fraction;
+\end{Code}
 
-\begin{code}{JAVA}
+\begin{Code}[minipage,width=20em]{JAVA}{ … \Java … }
 class Time {££
   static class AMPM extends Time {££
-      /* £$⋯$ £*/
+    /* £$⋯$ £*/
     static class Fraction extends Time {££ /* £$⋯$ £*/}
   }
   static class Fraction extends Time {££ /* £$⋯$ £*/}
 }
+\end{Code}
+
+\begin{code}{REAP}
+££.Time.Fraction.AMPM;
 \end{code}
 
-\begin{code}{JAVA}
-.Time.Fraction.AMPM;
-\end{code}
-
-\begin{code}{JAVA}
+\begin{Code}[minipage,width=26em]{JAVA}{ … \Java … }
 class Time {££
   static class AMPM extends Time {££
     /** £$⋯$£*/
@@ -104,94 +108,93 @@ class Time {££
     static class AMPM extends Fraction {££ /* £$⋯$ £*/}
   }
 }
-\end{code}
+\end{Code}
 
-\begin{code}{JAVA}
-.Time.Guess {££
+\begin{Code}{REAP}{Environment }
+££.Time.Guess {££
   Integer s 0;
 }
-\end{code}
+\end{Code}
 
 Whenever a property is undefined it is like a function that throws an exception.
 Any time you use it, the called would also be throwing an exception.
-\begin{code}{JAVA}
-.Time.Fraction {££
+\begin{Code}{REAP}{Environment }
+££.Time.Fraction {££
   Real ¢() -> ((60*h + m) + s)/24./60 ;
 }
-\end{code}
+\end{Code}
 To evaluate
 \begin{java}
   ((60*h + m) + s)/24./60
 \end{java}
 replace~$h→9, m→11, s→⊥$
-to obtain 
+to obtain
 
 {\scriptsize
 \begin{equation}
 \begin{split}
-  ¢ & = ((60·9 + 11) + ⊥)/24./60  ⏎
-  & = ((540 + 11) + ⊥)/24./60  ⏎
-  & = (551 + ⊥)/1440. & ⏎
-  & = ⊥/1440. ⏎
-  & = ⊥ 
+  ¢ & = ((60·9 + 11) + ⊥)/24./60⏎
+  & = ((540 + 11) + ⊥)/24./60⏎
+  & = (551 + ⊥)/1440. &⏎
+  & = ⊥/1440.⏎
+  & = ⊥
 \end{split}
-.
+££.
 \end{equation}
 }
 
-\begin{code}{JAVA}
-.Fraction.Checked {££
+\begin{Code}{REAP}{Environment }
+££.Fraction.Checked {££
  Ok ok() ->
    -1 < h && h < 24 &&
    -1 < m && m < 60 &&
    -1 < s && s < 60 ;
  Real ¢()-> ok && super.¢;
 }
-\end{code}
+\end{Code}
 
 Note the use of \verb+&&+ and \verb+||+. they also deal with undefined.
 Different from Java.
-\begin{code}{JAVA}
-.Checked.Greeting {££
-  fraction     super.¢ || 0.5;
-  String name  "David";
+\begin{Code}{REAP}{Environment }
+££.Checked.Greeting {££
+  fraction super.¢ || 0.5;
+  String name "David";
   String now() ->
-      fraction < 0.50 ? "morning" :
-      fraction < 0.75 ? "day" :
+      fraction < 0.50 ££? "morning" :
+      fraction < 0.75 ££? "day" :
       "evening"
   ;
   ¢() -> "Hi " + name + ", good " + now + " to you.";
 }
-\end{code}
+\end{Code}
 
-Linear 
-\begin{code}{JAVA}
-.Hamlet {££
-  Boolean toBe() {££ 
-    toBe = () -> !toBe; 
-    return true; 
+Linear
+\begin{Code}{REAP}{Environment }
+££.Hamlet {££
+  Boolean toBe() {££
+    toBe = () -> ££!toBe;
+    return true;
   }
 }
-\end{code}
+\end{Code}
 behaves like flip flop or maybe a clock? bad metaphors
 
-
 Penny pool notation:
-\begin{code}{JAVA}
-.Hamlet {££
-  Boolean ¢() {££ ¢ = () -> !¢; return false; }
+\begin{Code}{REAP}{Environment }
+££.Hamlet {££
+  Boolean ¢() {££ ¢ = () -> ££!¢; return false; }
 }
-\end{code}
+\end{Code}
 
-\begin{code}{JAVA}
-.Ticker {££ 
+\begin{Code}{REAP}{Environment }
+££.Ticker {££
   Integer start 1;
   Integer ¢() {££
       ¢ = () -> ¢ + 1; // Change gate of cell ¢
       return start;
   };
 }
-\end{code}
+\end{Code}
 
 \begin{java}
    a() -> a + 1;
@@ -209,42 +212,43 @@ Is actually
   Integer curr = () -> {££ prev = ¢;}
 \end{java}
 
-\begin{code}{JAVA}
-.Fibonacci {££
+\begin{Code}{REAP}{Environment }
+££.Fibonacci {££
   Integer prev 1;
   Integer curr() {££ prev = ¢;}
 }
-\end{code}
+\end{Code}
 
-\begin{code}{JAVA}
-.Constants {££ // Constant of Arithmetic Progression
+\begin{Code}{REAP}{Environment }
+££.Constants {££ // Constant of Arithmetic Progression
   Integer a1;
   Integer d;
 }
-\end{code}
+\end{Code}
 
-\begin{code}{JAVA}
-.Constants.AP {££ // Arithmetic Progression
+\begin{Code}{REAP}{Environment }
+££.Constants.AP {££ // Arithmetic Progression
   Integer ¢() {¢=()->¢ + d; return a1;}
 }
-\end{code}
+\end{Code}
 
-\begin{code}{JAVA}
-.Constants.AP {££ // Arithmetic Progression
-  Integer ¢() -> (a1,¢=()->¢ + d); 
+\begin{Code}{REAP}{Environment }
+££.Constants.AP {££ // Arithmetic Progression
+  Integer ¢() -> (a1,¢=()->¢ + d);
 }
-\end{code}
+\end{Code}
 
-\begin{code}{JAVA}
-.Fibonacci {££ 
+\begin{Code}[minipage,width=22em]{REAP}
+{A reap for computing the Fibonacci sequence}
+££.Fibonacci {££
   Integer a1;
   Integer a2;
-  Integer ¢() -> (a1, a2, ¢=()->¢ + d); 
+  Integer ¢() -> (a1, a2, ¢=()->¢ + ¢[1]);
 }
-\end{code}
+\end{Code}
 
-\begin{code}{JAVA}
-class Fibonacci {££ 
+\begin{Code}{REAP}{Environment }
+class Fibonacci {££
   Integer a1;
   Integer a2;
   Integer ¢() {££
@@ -252,15 +256,14 @@ class Fibonacci {££
     return a1;
   }
 }
-\end{code}
-
+\end{Code}
 
 Interesting step wise! Try to do Fibonacci? Try Fibonacci as a function which creates zillion cells?
-\begin{code}{JAVA}
-.Constants.AP {££ // Arithmetic Progression
+\begin{Code}{REAP}{Environment }
+££.Constants.AP {££ // Arithmetic Progression
   Integer ¢() -> a1 -> ¢ + d;
 }
-\end{code}
+\end{Code}
 
 \begin{align}
   \label{eq:ok}
@@ -276,10 +279,10 @@ Type system is~$𝕋$. In addition to \kk{Ok} and \kk{Oz}, we have atomic types
 \end{equation}
 
 \matteo{read about type Unity which is also OK which is also top in our case}
-\begin{code}[width=50ex,minipage]{JAVA}
-.Fraction.Checked {££
-  Ok ok() -> 
-  // Up casting into type £$⊤ = \kk{Ok}$£, of £…£  
+\begin{Code}[width=50ex,minipage]{REAP}{Environment }
+££.Fraction.Checked {££
+  Ok ok() ->
+  // Up casting into type £$⊤ = \kk{Ok}$£, of £…£
   // £…£ an expression of type £\kk{Boolean}£
     0 < h && h < 24 &&
     0 < m && m < 60 &&
@@ -287,26 +290,29 @@ Type system is~$𝕋$. In addition to \kk{Ok} and \kk{Oz}, we have atomic types
   ;
   Real ¢()-> ok && super.¢;
 }
-\end{code}
+\end{Code}
 
-\begin{code}{JAVA}
-.Brothers {££
+\begin{Code}{REAP}{Environment }
+££.Brothers {££
 Integer c, h, g;
 }
-\end{code}
+\end{Code}
 
-\begin{code}{JAVA}
-.Fraction.Checked {££
+\begin{Code}{REAP}{Environment }
+££.Fraction.Checked {££
   Ok ok() ->
   0 < h && h < 24 &&
   0 < m && m < 60 &&
   0 < s && s < 60 ;
   Real ¢()-> ok && super.¢;
 }
-\end{code}
+\end{Code}
 
-\begin{code}{JAVA}
-.Brothers {££
+\begin{Code}{REAP}{Environment }
+££.Brothers {££
 Integer c, h, g;
 }
-\end{code}
+\end{Code}
+
+
+Arrays may be represented as previous versions of a cell.
