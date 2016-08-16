@@ -42,7 +42,7 @@ that the semantics of an \emph{environment}, the \Reap reificication of a
 Makefile, is different than that of a \Java class, even though environments
 resembles classes in certain ways.
 
-\Cref{figurre:date} shows side by a side a \Reap environment and its \Java
+\cref{figure:date} shows side by a side a \Reap environment and its \Java
 class lookalike.
 
 \begin{figure}
@@ -151,8 +151,9 @@ notice the following parallels and differences:
 
   In contrast, properties are computed lazily---a recipe is only invoked
   when the property is read. Properties cache their value, so a second read
-  of the property, does not usually trigger the recipe again. If the cell's
-  value changed. When a property is read, the versions of all prerequisite
+  of the property, does not usually trigger the recipe again. 
+%   If the cell's value changed. 
+  When a property is read, the versions of all prerequisite
   properties are examined, and if none of these are changed, then no
   recomputation is triggered.
 
@@ -163,7 +164,7 @@ notice the following parallels and differences:
   by \Java~$0$-arity~$λ$-expressions of \Java.
 
   We overload the term ‟recipe” to refer also to a property defined by a recipe.
-  In the figure, properties~\cc{n} and~\cc{d} contain plain values; all others properties
+  In \cref{figure:rational}, properties~\cc{n} and~\cc{d} contain plain values; all others properties
   are recipes.
 
   \item\emph{Missing value.} The value of a property, just like the value
@@ -182,20 +183,19 @@ notice the following parallels and differences:
           Bound properties are either recipes, or properties whose value was
           set.
 
-          In the figure only properties~\cc{n} and~\cc{d} are free.
+          In \cref{figure:rational} only properties~\cc{n} and~\cc{d} are free.
 
     \item \emph{Missing prerequisite:} If the property's recipe depends on
           properties whose value is missing, as it is the case for all
-          remaining properties in the figure.
+          remaining properties in \cref{figure:rational}.
 
           Consider environment \cc{.Rational} after the assignment~\cc{d=0}.
           The assignment binds a value to property~\cc{d}; this property
           is no longer free.
 
-
           The lazy caching semantics means that an assignment to a property
           invalidates all properties that depend on it, directly, or indirectly.
-          Since from each recipe in the grape there is a path that leads
+          Since from each recipe in the graph there is a path that leads % grape?
           to~\cc{d}, all recipes are invalidated.
 
           A read of property \cc{infinite} trigger a computation of the
