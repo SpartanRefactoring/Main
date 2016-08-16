@@ -55,7 +55,7 @@ fill=ProcessBlue!20
     \node [l,valueIsSet,at=(infinite.south)] {\scriptsize\texttt{True}};
     \node [l,at=(abs.south),invalidated] {$\bot$};
     \node [l,at=(zero.south),invalidated] {$\bot$};
-    \node [l,at=(positive.south)] {$\bot$};
+    \node [l,at=(positive.south),invalidated] {$\bot$};
     \path[fill=yellow!30,opacity=0.4,fill=white,] 
     (current bounding box.south west) 
     rectangle 

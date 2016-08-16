@@ -117,7 +117,7 @@ comprising seven properties:~\cc{n},~\cc{d} for which there is no recipe, and
 five properties~\cc{r}, \cc{abs}, \cc{positive}, \cc{infinite}, and, \cc{zero},
 which are defined by recipes.
 
-\begin{figure}[H]\caption{\label{figure:rational}%
+\begin{figure}\caption{\label{figure:rational}%
       A \Reap environment to represent a rational number.
     }
 %Vim:/\/\//,/^\s*}/-!awk -F' *// *' '{printf"\%-19s// \%s\n",$1,$2}'
@@ -154,7 +154,7 @@ will refer to properties without a recipe.
 of~\cc{.Rational}. Evidently, ingredients~\cc{n} and~\cc{d} are sources of the
 graph. The remaining five are recipes.
 
-\begin{figure}[H]
+\begin{figure}
   \caption{\label{figure:rational:prerequisites}%
     The prerequisites graph of \Reap environment \cc{.Rational} of
     \cref{figure:rational}.
@@ -212,7 +212,7 @@ we notice these parallels and differences:
 The value of a property is \emph{missing} or~$⊥$ in one of three cases: free
 ingredients, missing prerequisite, and errors in computation.
 
-\paragraph{Free ignredients.}
+\paragraph{Free ingredients.}
 An ingredient is \emph{free} is said to be free if its value was \emph{not
 set}. Free properties resemble the empty cells of a spreadsheet---placeholders
 to be filled in later. In \cref{figure:rational} both ingredients~\cc{n}
@@ -227,13 +227,12 @@ Values of all properties in \cref{figure:rational} are missing. To create
 concrete non-missing values, assignments to ingredients must take place.
 \Cref{figure:rational:1} depicts the state of affairs in
 environment~\cc{.Rational} after two operations have taken place:
-
 \begin{enumerate}
   \item assignment of~\cc{0} to property~\cc{d}; followed by,
   \item a read of property~\cc{infinite}.
 \end{enumerate}
 
-  \begin{figure}[H]
+  \begin{figure}
     \caption{\label{figure:rational:1}%
       The prerequisites' graph of \cref{figure:rational},
       after the assignment \cc{d=0} and a read of \cc{infinite}.
@@ -281,13 +280,13 @@ to to~$⊥$.
 Consider the state of affairs in~\cc{.Rational}, after we applying further:
 \begin{enumerate}
   \item assignment of~\cc{1} to property~\cc{d}; followed by,
-  \item a read of property~\cc{positive}; and,
+  \item a read of property~\cc{positive}; and (collaterally),
   \item a read of property~\cc{r}.
 \end{enumerate}
 
 The prerequisites' graph after these is depicted in \Cref{figure:rational:2}.
 
-\begin{figure}[H]
+\begin{figure}
   \caption{\label{figure:rational:2}%
     The prerequisites' graph of \cref{figure:rational:1},
     followed by the assignment \cc{n=1} and a read

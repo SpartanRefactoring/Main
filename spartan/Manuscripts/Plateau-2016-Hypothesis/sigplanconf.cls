@@ -902,7 +902,7 @@
     {paragraph}%
     {4}%
     {0pt}%
-    {\@paragraphaboveskip}
+    {0\@paragraphaboveskip}
     {-1em}%
     {\normalsize \bfseries \if \@times \itshape \fi}}
 
