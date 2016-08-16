@@ -140,15 +140,9 @@ which are defined by recipes.
  % Real abs() -> r > 0 ? r : -r; // Only defined if not `\cc{infinite}'
  % Boolean zero() -> abs == 0; // Only defined if not `\cc{infinite}'
 
-<<<<<<< HEAD
-Let us overload the term ‟recipe” to refer also to a property defined by a
+Let us overload the term ‟\emph{recipe}” to refer also to a property defined by a
 recipe; no confusion should arise. Furthering the gastronomical parable, the
 term ‟\emph{ingredient}” shall refer to a property without a recipe.
-=======
-Let us overload the term ‟\emph{recipe}” to refer also to a property defined by a
-recipe; no confusion should arise. In contrast, the term ‟\emph{ingredient}”
-will refer to properties without a recipe.
->>>>>>> 862feb9d8eee016600a5f702e967c813b8e16d15
 
 \Cref{figure:rational:prerequisites} depicts prerequisites' graph
 of~\cc{.Rational}. Evidently, ingredients~\cc{n} and~\cc{d} are sources of the
@@ -213,12 +207,12 @@ The value of a property is \emph{missing} or~$⊥$ in one of three cases: free
 ingredients, missing prerequisite, and errors in computation.
 
 \paragraph{Free ingredients.}
-An ingredient is \emph{free} is said to be free if its value was \emph{not
+An ingredient is said to be \emph{free} if its value was \emph{not
 set}. Free properties resemble the empty cells of a spreadsheet---placeholders
 to be filled in later. In \cref{figure:rational} both ingredients~\cc{n}
 and~\cc{d} are initially free.
 
-\paragraph{Missing prerequisite.}
+\paragraph{Missing prerequisites.}
 Values of \emph{free} are missing by definition. Inductively, if a certain
 recipe depends on properties whose value is missing, then this recipe's value
 is also missing.
@@ -246,7 +240,7 @@ By employing a visual convention of drawing a border around non-missing values
 the figure shows that values of~\cc{d} and \cc{infinite} are non-missing.
 
 To explain, lazy caching semantics means the assignment to~\cc{d} invalidates
-the cached value of properties that depend on it directly,
+the cached value of properties that depend on it directly
 or indirectly. Since each recipe in the graph has a directed path
 leading to to~\cc{d}, the assignment to~\cc{d} invalidates all recipes.
 
