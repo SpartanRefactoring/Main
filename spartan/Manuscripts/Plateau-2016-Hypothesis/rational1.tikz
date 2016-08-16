@@ -1,0 +1,41 @@
+\usegdlibrary{layered}
+
+\begin{tikzpicture}[
+    shorten >=3pt,
+    -stealth,
+    p/.style = {% Property
+      minimum width=3.5em,
+      rounded corners,
+      font=\footnotesize,
+      rectangle split parts=2,
+    },
+    f/.style = {p,fill=olive!30}, % value
+    v/.style = {p,fill=green!30}, % final 
+    r/.style = {p,rectangle split,fill=red!30},   % recipe
+]
+\def\cc#1{{\scriptsize{#1}}}
+  \graph [ 
+    branch up,
+    layered layout,
+    grow'=up,
+    level distance=11ex,
+    sibling distance=12ex
+    ] {% 
+    % vim: +,/^\s}$/-!column -t
+    d /{\cc{d}  $(\cc{0})$}[v,draw,thick],
+    n /{\cc{n}  $(\bot)$}[v],
+    r /{\cc{n/d} \nodepart{two} \cc{r} $(\bot)$}[r],
+      infinite /{\cc{d == 0} \nodepart{two} \cc{infinite} $(\kk{True})$}[r,draw,thick],
+    abs /{\cc{r > 0 \relax? r : -r} \nodepart{two} \cc{abs} $(\bot)$ }[r],
+    zero /{\cc{abs == 0} \nodepart{two} \cc{zero} $(\bot)$ }[r],
+    positive /{\cc{n < 0 == d < 0} \nodepart{two} \cc{positive} $(\bot)$}[r],
+    infinite -> d,
+    zero->abs->r,
+    r->{n, d},
+    positive->{n, d},
+    }; %
+\path[fill=yellow!30,opacity=0.4,fill=white,] 
+    (current bounding box.south west) 
+    rectangle 
+    (current bounding box.north east); 
+\end{tikzpicture}

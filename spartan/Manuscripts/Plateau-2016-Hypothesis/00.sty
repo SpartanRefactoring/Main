@@ -1,5 +1,4 @@
 \def\passOptions#1#2{\PassOptionsToPackage{#2}{#1}}
-\def\Reap{\textsf{Reap}}
 
 % This style files assumes a recent 2015+ version of TeXLive. Installation
 % instructions on Ubuntu 14+ are available here:
@@ -19,6 +18,7 @@
 \usepackage{booktabs}    % Typography of tables
 \usepackage{code}  % AMS fonts
 \usepackage{float}
+\usepackage{adjustbox}
 \usepackage{fontspec}
 \usepackage{graphicx}
 \usepackage{hyperref,cleveref}
@@ -30,7 +30,13 @@
 \usepackage{tikz}
 
 % Tikz libraries
+\usetikzlibrary{graphdrawing}
+\usetikzlibrary{graphs} 
+\usetikzlibrary{arrows}
+\usetikzlibrary{graphs}
 \usetikzlibrary{shapes} 
+\usegdlibrary{layered,trees}
+
 
 % Comment out if you cannot find these
 \usepackage{yogi-lang}

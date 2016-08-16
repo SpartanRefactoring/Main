@@ -1,5 +1,4 @@
 \section{Introduction}
-\newcommand\zz[1]{\texttt{#1}}
 
 Much of the work of a software engineers is to build the software they produce.
 There is much automation to engineer in managing versions and branches,
@@ -13,351 +12,269 @@ even aspect-oriented paradigms
 
 Our interest here is in the programming paradigm behind these way of thinking.
 Concretely, \Reap is a programming language under design whose main constructs
-resemble underlying concepts of these building systems. In \zz{make} for
-example, these concepts include basics such as `'target”, `'recipe”, and
-`'Makefile”, and more advanced such as `'default rule”, `'variable” and `'nested
-Makefile”. Note that these concepts are not unique to \zz{make}. They are
-fundamental, under different names sometimes, in other sofware build tools.
+resemble underlying concepts of these building systems.
 
-Development of \Reap begun we started when realized that the semi-declarative,
-semi-procedural paradigm behind inference engines, is applicable in the domain
+In \zz{make} for example, these concepts include basics such as ‟target”,
+‟prerequisite”, ‟recipe”, and ‟Makefile”, and more advanced such as ‟default
+rule”, ‟variable” and ‟nested Makefile”. The concepts are not unique to
+\zz{make}. But, these concepts occur, sometimes under different, in all
+software building tools.
+
+Development of \Reap begun started when we realized that the semi-declarative,
+semi-procedural paradigm behind inference engines is applicable in the domain
 of managing user interaction, specifically, the development of an Eclipse
-plugin. This manuscript describes it as a general purpose programming language.
+plugin. Even though \Reap was conceived as a DSL for specific kinds of
+computation, the language seems to be growing to be general purpose.
+The examples used in this exposition demonstrate \Reap also by showing the
+emulation of language constructs drawn from other paradigms: function, method,
+instantiation, etc.
 
 Currently, \Reap is at an early design stage, and for this reason, this
-manuscript is also a call for comments, questions, and thoughts. \Reap has no
-compiler yet. To run a program in \Reap, the program must to be manually
-transliterated to \Java. This is not difficult since \Reap is a DSL extension
-of \Java, and borrows \Java's syntax, most concretely,~$λ$-expressions.
-Semantics is also similar, except within an \emph{environment}, the \Reap
-reificication of a Makefile, semantics is different than that of a \Java class,
-even though an environment may syntactically resemble a class containing
-functions and methods.
+document is also a call for comments, questions, and thoughts. \Reap has no
+compiler yet: To run a program in \Reap, the program must to be manually
+transliterated to \Java.
 
-\section{Environments and acquisition}
+This chore of transliteration is ameliorated by the fact that \Reap is defined
+as an extension of \Java. \Reap borrows, with a bit of simplification, \Java's
+syntax, most importantly,~$λ$-expressions. Semantics is also similar, except
+that the semantics of an \emph{environment}, the \Reap reificication of a
+Makefile, is different than that of a \Java class, even though environments
+resembles classes in certain ways.
 
-\begin{reap}
-`'.square {`'
-  Real x;
-  Real x2() -> x * x;
-}
-\end{reap}
+\Cref{figurre:date} shows side by a side a \Reap environment and its \Java
+class lookalike.
 
-\begin{reap}
-`'.square {`'
-  Real x;
-  Real ¢() -> x * x;
-}
-\end{reap}
-
-\begin{reap}
-`'.square {`'
-  Real `\_';
-  Real ¢() -> x * x;
-}
-\end{reap}
-
-\begin{reap}
-`'.power {`'
-  Real x;
-  Real abs() -> abs(x);
-  Boolean positive() -> x > 0;
-  Integer n;
-  Real ¢() -> exp(n * log(abs)) * (positive ? 1 : -1) || 0;
-}
-\end{reap}
-
-\
-\begin{reap}
-`'.power {`' // Global math constants
-  Real x;
-  Integer n;
-  Real ¢() ->
-}
-\end{reap}
-
-\begin{reap}
-`'.Math {`' // Global math constants
-  Real E 2.7182818284590452354;
-  Real PI 3.14159265358979323846;
-  Real PI2() -> 2 * PI;
-}
-\end{reap}
-
-\begin{reap}
-`'.Math.Sin0 {`' // A function to compute`~$\sin(x)$' //
-  Real `\_';
-  Real positive() -> `\_' > 0 `'? `\_' : -`\_';
-  Real cycles() -> (int)(positive() / PI2);
-  Real normalized() -> positive - PI2 * cycles;
-  Real ¢() -> normalized;
-}
-\end{reap}
-
-\begin{reap}
-`'.Sin0 + .Sin1 {`' // A function to compute`~$\sin(x)$' //
-  Real `\_' '\^'.¢;
-  Real ¢() -> '\_- \_*\_ * \_/6';
-}
-\end{reap}
-
-\begin{reap}
-`'.Math.Sin2 {`' // A function to compute'~$\sin(x)$' //
-  Real ¢() -> `\^.¢ - power.n=5,x='\_`.¢ /120';
-}
-\end{reap}
-
-% vim:: /\/\//,/^\s*}/- !awk -F // '{printf "％-20s //％s\n",~$1,~$2}'
-\begin{reap}
-`'.Time {`' // Time environment
-  Integer h 9; // Hours, defaults to 9
-  Integer m 11; // Minutes, defaults to 11
-  Integer s; // Seconds, defaults to `$⊥$'
-}
-\end{reap}
-
-Remove the "=" sign in initialization but not assignment.
-% vim:: /\/\//,/^\s*}/- !awk -F // '{printf "％-20s //％s\n",~$1,~$2}'
-\begin{java}
-class Time extends Object {`'// Time environment transliterated to \Java
-  Integer h = 9; // Hours, initially set to `$\cc{9}$'
-  Integer m = 11; // Minutes, initially set to `$\cc{11}$'
-  Integer s; // Seconds, initially set to `$\kk{null}$'
-}
-\end{java}
-
-\section{Methods}
-\begin{reap}
-`'.Time.toString {`'
-  String ¢ = h + ":" + m + ":" + s;
-}
-\end{reap}
-reaches fields directly, just like inheritance.
-
-\begin{java}
-class toString extends Time {`' // `\Java' transliteration of~$\cc{Time.toString}$
-  String ¢() -> h + ":" + m + ":" + s;
-}
-\end{java}
-
-\begin{java}
-class Time {`' // More accurate `\Java' transliteration of~$\cc{Time.toString}$
-  public static class toString extends Time {`'
-    String ¢() {`'
-       h + ":" + m + ":" + s;
+\begin{figure}
+  \caption{\label{figure:date}%
+    A \Reap environment (a) and its \Java lookalike (b).
+  }
+  \begin{tabular}{c|c}
+    \begin{reap}
+    `'.Date {
+    Integer d, m, y,
+    String toString () ->
+    y + "-" + m "-" + d;
     }
+    \end{reap}
+
+    \begin{java}
+    class Date {
+    Integer d, m, y,
+    String toString() {
+    return
+    y + "-" + m + "-" + d;
+    }
+    }
+    \end{java}
+      \\ \multicolumn1c{(a)} & \multicolumn1c{(b)}
+  \end{tabular}
+\end{figure}
+
+Avery environment defines a set of \emph{properties} and the interdependencies
+between them, e.g., environment \cc{.Date} in the figure, contains four
+properties:~\cc{d},~\cc{m},~\cc{y}, and, \cc{toString}. Conceptually,
+properties are the equivalent of \emph{targets} of a Makefile.
+
+Properties defined by \emph{recipes} (\cc{toString} in \cref{figure:date})
+visually resemble function members; properties with no recipe
+(\cc{d},~\cc{m},~\cc{y} in the figure) resemble data members.
+The recipes themselves, e.g., \[
+\cc{ () -> y + "-" + m "-" + d}
+\] look like and are in fact \Java~$λ$-expressions taking no parameters.
+
+An environment differs from its class lookalike mainly in the semantics of
+evaluation: functions are re-evaluated each time they are invoked. Properties
+(just like targets in a Makefile) are only evaluated if their current value
+is outdated with respect to its prerequisites.
+
+For this reason, the transliteration of environments to \Java demands close
+attention to the semantics of~$λ$-expressions and anonymous functions---the
+\Java clockwork used to realize the semantics of environments.
+
+\section{Environments \emph{vs.} Spreadsheets}
+
+An \emph{environment} is a directed graph of computational dependencies between
+values. Nodes in the graph are called \emph{properties}, which are named
+container of values.
+
+\Cref{figure:rational} compares the \Reap code of an environment side by side
+with its properties' graph . In the figure, we see seven properties
+named,~\cc{n},~\cc{d},~\cc{r}, \cc{abs}, \cc{positive}, and, \cc{infinite} and
+\cc{zero}.
+
+\begin{figure}
+  \caption{\label{figure:rational}%
+    The \Reap code of environment \cc{.Rational} (a) and
+    its dependency graph (b).
   }
-}
-\end{java}
+  % vim:: /\/\//+,/^\s*}/-!awk -F' *// *' '{printf"\%-28s// \%s\n",$1,$2}'
+  \begin{tabular}{m{0.5\columnwidth}m{0.5\columnwidth}}
+    \begin{minipage}[t]{\columnwidth}
+    \begin{reap}
+    `'.Rational {`'
+    Integer n; // Numerator
+    Integer d; // Denominator
+    Real r() -> n/d; // Real value
+    Real abs() -> r > 0 \relax? r : 0;
+    Boolean positive() -> n < 0 == d < 0;
+    Boolean infinite() -> d == 0;
+    Boolean zero() -> abs == 0;
+    }
+    \end{reap}
+    \end{minipage}
+    &
+    \begin{minipage}[t]{0.5\columnwidth}
+    \begin{adjustbox}{width=\columnwidth}
+    \input{rational.tikz}
+    \end{adjustbox}
+    \end{minipage}
+      \\ \multicolumn1c{(a)} & \multicolumn1c{(b)}
+  \end{tabular}
+\end{figure}
 
-\begin{reap}
-`'.Time.AMPM {`'
-  Boolean isAM `\^'.h < 12;
-  Boolean isPM `'!isAM;
-  String ampm isAM `'? "AM" : "PM";
-  String h `\^'.h - (isAM `'? 0 : 12);
-}
-\end{reap}
 
-\begin{reap}
-`'.Time.fraction {`'
-  Real hour 24 * 60;
-  Real ¢() -> ((60*h + m) + s)/24./60 ;
-}
-\end{reap}
-reads as
-\begin{java}
-/** `\Java' transliteration of `\cc{.Time.fraction}'
-*/
-class fraction extends Time {`'
-  double hour() {`' return 24 * 60; }
-  double ¢() {`' return ((60*h + m) + s)/hour; }
-}
-\end{java}
-or so
-\begin{java}
-/* more efficient `\Java' transliteration of `\cc{.Time.fraction}'
-**/
-class fraction extends Time {`'
-  double ¢() {`' return ((60*h + m) + s)/(double) (24*60) ; }
-}
-\end{java}
+Comparing an environment to a spreadsheet, and properties in it to cells, we
+notice the following parallels and differences:
 
-\begin{java}
-class Time {`'
-  static class AMPM extends Time {`' /* `$⋯$ '*/ }
-  static class fraction extends Time {`' /* `$⋯$ '*/}
-}
-\end{java}
+\begin{enumerate}
+  \item{Addressing:} Unlike cells, which are referenced by their Cartesian coordinates,
+  properties are referenced by their \emph{name}---a plain identifier.
 
-\matteo{read about mixins and traits.start with mixins}
+  \item{Type:} Properties, like cells, contain scalar values, but unlike cells,
+  properties are typed, with type being one of \kk{Boolean}, \kk{Character},
+  \kk{Integer}, \kk{Real}, \emph{or,} \kk{String}.
 
-\begin{reap}
-`'.Time.AMPM.fraction;
-\end{reap}
+  \item{Semantics of evaluation:} Cells in spreadsheets are computed
+  eagerly---whenever a cell's value changes, all dependents cells change
+  dynamically.
 
-\begin{java}
-class Time {`'
-  static class AMPM extends Time {`'
-    /* `$⋯$ '*/
-    static class fraction extends Time {`' /* `$⋯$ '*/}
-  }
-  static class fraction extends Time {`' /* `$⋯$ '*/}
-}
-\end{java}
+  In contrast, properties are computed lazily---a recipe is only invoked
+  when the property is read. Properties cache their value, so a second read
+  of the property, does not usually trigger the recipe again. If the cell's
+  value changed. When a property is read, the versions of all prerequisite
+  properties are examined, and if none of these are changed, then no
+  recomputation is triggered.
 
-\begin{reap}
-`'.Time.fraction.AMPM;
-\end{reap}
+  \item\emph{Values and how they are computed:} Just like a cell, a property
+  stores a \emph{value}, or a \emph{recipe} for computing this value from the
+  values of other cells.
+  Recipes are called formulas in spreadsheets. In \Reap they are realized
+  by \Java~$0$-arity~$λ$-expressions of \Java.
 
-\begin{java}
-class Time {`'
-  static class AMPM extends Time {`'
-    /** `$⋯$'*/
-    static class fraction extends Time {`' /* `$⋯$ '*/}
-  }
-  static class fraction extends Time {`'
-    /** `$⋯$'*/
-    static class AMPM extends fraction {`' /* `$⋯$ '*/}
-  }
-}
-\end{java}
+  We overload the term ‟recipe” to refer also to a property defined by a recipe.
+  In the figure, properties~\cc{n} and~\cc{d} contain plain values; all others properties
+  are recipes.
 
-\begin{reap}
-`'.Time.GuessSeconds {`' // A function to set the number of seconds to 0
-  Integer s 0;
-}
-\end{reap}
-Whenever a property is undefined it is like a function that throws an exception.
-Any time you use it, the called would also be throwing an exception.
-\begin{reap}
-`'.Time.fraction {`'
-  Real ¢() -> ((60*h + m) + s)/24./60 ;
-}
-\end{reap}
-To evaluate
-\begin{java}
-  ((60*h + m) + s)/24./60
-\end{java}
-replace~$h→9, m→11, s→⊥$
-to obtain
+  \item\emph{Missing value.} The value of a property, just like the value
+  of a cell, might be missing. In fact, the values of all properties in
+  the figure are missing. The bottom symbol,~$⊥$, denotes a missing value.
+  In the transliteration, the missing value is represented as \Java's
+  \kk{null}.
 
-{\scriptsize
-\begin{equation}
-\begin{split}
-  ¢ & = ((60·9 + 11) + ⊥)/24./60⏎
-  & = ((540 + 11) + ⊥)/24./60⏎
-  & = (551 + ⊥)/1440. &⏎
-  & = ⊥/1440.⏎
-  & = ⊥
-\end{split}
-`'.
-\end{equation}
-}
+  Similarly to, but not exactly the same as cells, the value of a property
+  is \emph{missing} if any one of the following conditions holds.
 
-\begin{reap}
-`'.fraction.Checked {`'
- Ok ok() ->
-   -1 < h && h < 24 &&
-   -1 < m && m < 60 &&
-   -1 < s && s < 60 ;
- Real ¢()-> ok && `\^'.¢;
-}
-\end{reap}
+  \begin{enumerate}
+    \item \emph{Free property:} The property is not a recipe and the its
+          value was not explicitly set. Such properties are called \emph{free};
+          properties which are not free are \cc{bound}.
+          Bound properties are either recipes, or properties whose value was
+          set.
 
-Note the use of \verb+&&+ and \verb+||+. they also deal with undefined.
-Different from Java.
-\begin{reap}
-`'.Checked.Greeting {`'
-  fraction `\^'.¢ || 0.5;
-  String name "David";
-  String now() ->
-      fraction < 0.50 `'? "morning" :
-      fraction < 0.75 `'? "day" :
-      "evening"
-  ;
-  ¢() -> "Hi " + name + ", good " + now + " to you.";
-}
-\end{reap}
+          In the figure only properties~\cc{n} and~\cc{d} are free.
 
-Linear
-\begin{reap}
-`'.Hamlet {`'
-  Boolean toBe() {`'
-    toBe = () -> `'!toBe;
-    return true;
-  }
-}
-\end{reap}
-behaves like flip flop or maybe a clock? bad metaphors
+    \item \emph{Missing prerequisite:} If the property's recipe depends on
+          properties whose value is missing, as it is the case for all
+          remaining properties in the figure.
 
-Penny pool notation:
-\begin{reap}
-`'.Hamlet {`'
-  Boolean ¢() {`' ¢ = () -> `'!¢; return false; }
-}
-\end{reap}
+          Consider environment \cc{.Rational} after the assignment~\cc{d=0}.
+          The assignment binds a value to property~\cc{d}; this property
+          is no longer free.
 
-\begin{reap}
-`'.Ticker {`'
-  Integer start 1;
-  Integer ¢() {`'
-      ¢ = () -> ¢ + 1; // Change gate of cell ¢
-      return start;
-  };
-}
-\end{reap}
 
-\begin{java}
-   a() -> a + 1;
-\end{java}
-    means
-\begin{java}
-  ¢ = () -> ¢ + 1;
-\end{java}
+          The lazy caching semantics means that an assignment to a property
+          invalidates all properties that depend on it, directly, or indirectly.
+          Since from each recipe in the grape there is a path that leads
+          to~\cc{d}, all recipes are invalidated.
 
-\begin{java}
-  Integer curr() {`' prev = ¢;}
-\end{java}
-Is actually
-\begin{java}
-  Integer curr = () -> {`' prev = ¢;}
-\end{java}
+          A read of property \cc{infinite} trigger a computation of the
+          recipe, which returns \kk{True}. As shown in \cref{figure:assignments}(a),
+          properties \cc{d} and \cc{infinite} are non-missing (border drawn).
 
-\begin{reap}
-`'.Fibonacci {`'
-  Integer prev 1;
-  Integer curr() {`' prev = ¢;}
-}
-\end{reap}
+          \begin{figure}[H]
+            \caption{\label{figure:assignments}%
+              The dependency graph of \cref{figure:rational},
+              after the assignment \cc{d=0} and a read of \cc{infinite} (a), 
+              followed by the assignment \cc{n=1} and a read of 
+              \cc{positive} (b).
+            }
+            \begin{tabular}{m{0.5\columnwidth}m{0.5\columnwidth}}
+              \begin{minipage}[t]{0.5\columnwidth}
+              \begin{adjustbox}{width=\columnwidth}
+              \input{rational1.tikz}
+              \end{adjustbox}
+              \end{minipage}
+              & 
+              \begin{minipage}[t]{0.5\columnwidth}
+              \begin{adjustbox}{width=\columnwidth}
+              \input{rational2.tikz}
+              \end{adjustbox}
+              \end{minipage}
+                \\ \multicolumn1c{(a)} & \multicolumn1c{(b)}
+            \end{tabular}
+          \end{figure}
 
-\begin{reap}
-`'.AP.Constants {`' // Constant of Arithmetic Progression
-  Real a1;
-  Real d;
-}
-\end{reap}
+          However a read of any other
+          recipe yields~$⊥$ \emph{without} recomputation: For example, reading
+          \cc{positive} immediately returns~$⊥$: Even though~\cc{d} is defined,
+          computation of the recipe \cc{n < 0 == d < 0} cannot commence
+          while~\cc{n=$⊥$}. By the same consideration, property~\cc{r} remains
+          in the missing prerequisite state. Since~\cc{r} does not change,
+          properties \cc{abs} and \cc{zero} retain their current~$⊥$ value
 
-\begin{reap}
-`'.AP.nTh {`' // Arithmetic Progression
-  Integer ¢() -> (a1,¢=()->¢ + d);
-}
-\end{reap}
+          \item\emph{Errors:} If the recipe itself fails, i.e., the \Java
+          evaluation of the~$λ$-expression throws an exception, then the
+          recipe's value becomes~$⊥$.
 
-\begin{reap}
-`'.Fibonacci {`' // Compute the Fibonacci sequence
-  Integer a1;
-  Integer a2;
-  Integer ¢ = {`' a1, a2, ¢ = () -> ¢ + ¢[1] };
-}
-\end{reap}
+          Let us add now the assignment~\cc{n = 1} to the previous \cc{d = 0}.
+          With this assignment, no more free variables remain in the
+          environment.
 
-Interesting step wise! Try to do Fibonacci? Try Fibonacci as a function which creates zillion cells?
-\begin{reap}
-`'.Constants.AP {`' // Arithmetic Progression
-  Integer ¢() -> a1 -> ¢ + d;
-}
-\end{reap}
+          The new assignment invalidates \cc{positive}. Examining this property
+          will now trigger recomputation yielding \kk{True}. Indeed, in the
+          \cc{.Rational} environment the undefined fraction~$1/0$ is considered
+          both positive and infinite, and the bordered nodes in
+          \cref{figure:assignments}(b) are properties \cc{d}, \cc{n}, 
+          \cc{infinite} and \cc{positive}. 
+
+          Property~\cc{r} is likewise invalidated by the assignment~\cc{n=1}.
+          Since both~\cc{n} and~\cc{d}, the two prerequisites of
+          recipe~\cc{n/d}, are defined, this recipe is triggered to compute a
+          new value when~\cc{r} is examined. This computation however aborts
+          due to division by zero. Property~\cc{r} then retains its missing
+          value. No recomputation will be attempted before one of~\cc{n}
+          or~\cc{d} are updated.  Note that recipe properties \cc{abs} and
+          \cc{zero} retain their cached missing value.
+  \end{enumerate}
+\end{enumerate}
+
+\section{Edges and Types}
+
+Edges in the graph are defined by the recipes present on the properties. There
+is a dependency edge leading from property~$u$ to property~$v$, if~$u$ is an
+implicit prerequisite of~$v$. Specifically, if the recipe of~$v$ involves~$u$.
+
+Prerequisites are computed by (manually) examining the \Java code that makes
+the recipe of~$u$. All properties defined in the environment are accessible to
+this \Java code. If a property~$v$ is read in this code, then~$u$ is a
+prerequisite of~$v$.
+For example, the recipe \[
+\cc{n < 0 == d < 0}
+\] of property \cc{positive},  implicitly defines that \cc{n} and \cc{d} are
+prerequisites of \c{positive}.
+
+In certain occasions, it is useful to define cells of the top type, \cc{Ok},
+\kk{Character}, \kk{Integer}, \kk{Real}, \text
 
 \begin{align}
   \label{eq:ok}
@@ -365,57 +282,386 @@ Interesting step wise! Try to do Fibonacci? Try Fibonacci as a function which cr
   \label{eq:oz}
   ⊥ & = \kk{Oz} = \kk{None} = \cc{@NonNull Void}
 \end{align}
-Type system is~$𝕋$. In addition to \kk{Ok} and \kk{Oz}, we have atomic types
-\kk{Boolean}, \kk{String}, \kk{Integer}, \kk{Real}, and, \kk{Character}.
+
+Let the set of all types of \Reap be denoted by $\mathbb T$, then
+we have
 \begin{equation}
-\label{eq:bounds}
-∀τ∈𝕋 ∙ ⊥≤τ≤⊤.
+  \label{eq:bounds}
+  ∀τ∈𝕋 ∙ ⊥≤τ≤⊤.
 \end{equation}
 
+Any time you use it, the called would also be throwing an exception.
+
+In i.e., the expression/function
+making the
+recipe of~$u$, uses~$v$. This uses relationship is implicit: If the
+expression/function
+functions,
+there is a
+Type system is~$𝕋$.
+and edges are defined by recipes. Names are plain
+identifierso called,
+properties, carry ordinary identifiers as names.
+identifiers.
+A \emph{recipe}
+is a function attached to a property, defining how the property's value
+is to be computed from those of other properties. If the recipe
+interdependencies between values
+of the properties. The graph is not necessarily connected, and although it may
+contain cycles,
+Each node in the graph is a typed
+\emph{property}. whose nodes are properties.
+In this definition of environment \cc{.pred}
+% vim:: /\/\//,/^\s*}/- !awk -F // '{printf "％-20s //％s\n",~$1,~$2}'
+\begin{reap}
+  `'.Temperature {`'
+    Real f0 0;
+    Real c()-> 5*(f0-32);
+    Real f0 0;
+  }
+\end{reap}
+in the case that no value was assigned to a property
+\begin{reap} \end{reap}
+The edges in the graph
+A \emph{property}
+contains a value, which might be computed
+is replaced by that of an \emph{environment} defining \emph{properties}, some
+of which are adorned by \emph{recipes}. Properties are similar to variables,
+except that a property whose value was not explicitly set, may still yield a
+value: \Reap's underlying inference engine applies any required recipes to
+compute this value from values of other properties.
+properties scalar
+and,
+\kk{String}.
+Whenever a property is undefined it is like a function that throws an exception.
+
+
+\begin{reap}
+  `'.square {`'
+    Real x;
+    Real x2() -> x * x;
+  }
+\end{reap}
+\begin{reap}
+  `'.square {`'
+    Real x;
+    Real ¢() -> x * x;
+  }
+\end{reap}
+\begin{reap}
+  `'.square {`'
+    Real `\_';
+    Real ¢() -> x * x;
+  }
+\end{reap}
+\begin{reap}
+  `'.power {`'
+    Real x;
+    Real abs() -> abs(x);
+    Boolean positive() -> x > 0;
+    Integer n;
+    Real ¢() -> exp(n * log(abs)) * (positive ? 1 : -1) || 0;
+  }
+\end{reap}
+\
+\begin{reap}
+  `'.power {`' // Global math constants
+    Real x;
+    Integer n;
+    Real ¢() ->
+  }
+\end{reap}
+\begin{reap}
+  `'.Math {`' // Global math constants
+    Real E 2.7182818284590452354;
+    Real PI 3.14159265358979323846;
+    Real PI2() -> 2 * PI;
+  }
+\end{reap}
+\begin{reap}
+  `'.Math.Sin0 {`' // A function to compute`~$\sin(x)$' //
+    Real `\_';
+    Real positive() -> `\_' > 0 `'? `\_' : -`\_';
+    Real cycles() -> (int)(positive() / PI2);
+    Real normalized() -> positive - PI2 * cycles;
+    Real ¢() -> normalized;
+  }
+\end{reap}
+\begin{reap}
+  `'.Sin0 + .Sin1 {`' // A function to compute`~$\sin(x)$' //
+    Real `\_' '\^'.¢;
+    Real ¢() -> '\_- \_*\_ * \_/6';
+  }
+\end{reap}
+\begin{reap}
+  `'.Math.Sin2 {`' // A function to compute'~$\sin(x)$' //
+    Real ¢() -> `\^.¢ - power.n=5,x='\_`.¢ /120';
+  }
+\end{reap}
+% vim:: /\/\//,/^\s*}/- !awk -F // '{printf "％-20s //％s\n",~$1,~$2}'
+\begin{reap}
+  `'.Time {`' // Time environment
+    Integer h 9; // Hours, defaults to 9
+    Integer m 11; // Minutes, defaults to 11
+    Integer s; // Seconds, defaults to `$⊥$'
+  }
+\end{reap}
+Remove the "=" sign in initialization but not assignment.
+% vim:: /\/\//,/^\s*}/- !awk -F // '{printf "％-20s //％s\n",~$1,~$2}'
+\begin{java}
+  class Time extends Object {`'// Time environment transliterated to \Java
+    Integer h = 9; // Hours, initially set to `$\cc{9}$'
+    Integer m = 11; // Minutes, initially set to `$\cc{11}$'
+    Integer s; // Seconds, initially set to `$\kk{null}$'
+  }
+\end{java}
+
+\section{Methods}
+
+\begin{reap}
+  `'.Time.toString {`'
+    String ¢ = h + ":" + m + ":" + s;
+  }
+\end{reap}
+reaches fields directly, just like inheritance.
+\begin{java}
+  class toString extends Time {`' // `\Java' transliteration of~$\cc{Time.toString}$
+    String ¢() -> h + ":" + m + ":" + s;
+  }
+\end{java}
+\begin{java}
+  class Time {`' // More accurate `\Java' transliteration of~$\cc{Time.toString}$
+    public static class toString extends Time {`'
+      String ¢() {`'
+        h + ":" + m + ":" + s;
+      }
+    }
+  }
+\end{java}
+\begin{reap}
+  `'.Time.AMPM {`'
+    Boolean isAM `\^'.h < 12;
+    Boolean isPM `'!isAM;
+    String ampm isAM `'? "AM" : "PM";
+    String h `\^'.h - (isAM `'? 0 : 12);
+  }
+\end{reap}
+\begin{reap}
+  `'.Time.fraction {`'
+    Real hour 24 * 60;
+    Real ¢() -> ((60*h + m) + s)/24./60 ;
+  }
+\end{reap}
+reads as
+\begin{java}
+  /** `\Java' transliteration of `\cc{.Time.fraction}'
+  */
+  class fraction extends Time {`'
+    double hour() {`' return 24 * 60; }
+    double ¢() {`' return ((60*h + m) + s)/hour; }
+  }
+\end{java}
+or so
+\begin{java}
+  /* more efficient `\Java' transliteration of `\cc{.Time.fraction}'
+  **/
+  class fraction extends Time {`'
+    double ¢() {`' return ((60*h + m) + s)/(double) (24*60) ; }
+  }
+\end{java}
+\begin{java}
+  class Time {`'
+    static class AMPM extends Time {`' /* `$⋯$ '*/ }
+    static class fraction extends Time {`' /* `$⋯$ '*/}
+  }
+\end{java}
+\matteo{read about mixins and traits.start with mixins}
+\begin{reap}
+  `'.Time.AMPM.fraction;
+\end{reap}
+\begin{java}
+  class Time {`'
+    static class AMPM extends Time {`'
+      /* `$⋯$ '*/
+      static class fraction extends Time {`' /* `$⋯$ '*/}
+    }
+    static class fraction extends Time {`' /* `$⋯$ '*/}
+  }
+\end{java}
+\begin{reap}
+  `'.Time.fraction.AMPM;
+\end{reap}
+\begin{java}
+  class Time {`'
+    static class AMPM extends Time {`'
+      /** `$⋯$'*/
+      static class fraction extends Time {`' /* `$⋯$ '*/}
+    }
+    static class fraction extends Time {`'
+      /** `$⋯$'*/
+      static class AMPM extends fraction {`' /* `$⋯$ '*/}
+    }
+  }
+\end{java}
+\begin{reap}
+  `'.Time.GuessSeconds {`' // A function to set the number of seconds to 0
+    Integer s 0;
+  }
+\end{reap}
+\begin{reap}
+  `'.Time.fraction {`'
+    Real ¢() -> ((60*h + m) + s)/24./60 ;
+  }
+\end{reap}
+To evaluate
+\begin{java}
+  ((60*h + m) + s)/24./60
+\end{java}
+replace~$h→9, m→11, s→⊥$
+to obtain
+{\scriptsize
+  \begin{equation}
+    \begin{split}
+      ¢ & = ((60·9 + 11) + ⊥)/24./60⏎
+      & = ((540 + 11) + ⊥)/24./60⏎
+      & = (551 + ⊥)/1440. &⏎
+      & = ⊥/1440.⏎
+      & = ⊥
+    \end{split}
+    `'.
+  \end{equation}
+}
+\begin{reap}
+  `'.fraction.Checked {`'
+    Ok ok() ->
+    -1 < h && h < 24 &&
+    -1 < m && m < 60 &&
+    -1 < s && s < 60 ;
+    Real ¢()-> ok && `\^'.¢;
+  }
+\end{reap}
+Note the use of \verb+&&+ and \verb+||+. they also deal with undefined.
+Different from Java.
+\begin{reap}
+  `'.Checked.Greeting {`'
+    fraction `\^'.¢ || 0.5;
+    String name "David";
+    String now() ->
+    fraction < 0.50 `'? "morning" :
+    fraction < 0.75 `'? "day" :
+    "evening"
+    ;
+    ¢() -> "Hi " + name + ", good " + now + " to you.";
+  }
+\end{reap}
+Linear
+\begin{reap}
+  `'.Hamlet {`'
+    Boolean toBe() {`'
+      toBe = () -> `'!toBe;
+      return true;
+    }
+  }
+\end{reap}
+behaves like flip flop or maybe a clock? bad metaphors
+Penny pool notation:
+\begin{reap}
+  `'.Hamlet {`'
+    Boolean ¢() {`' ¢ = () -> `'!¢; return false; }
+  }
+\end{reap}
+\begin{reap}
+  `'.Ticker {`'
+    Integer start 1;
+    Integer ¢() {`'
+      ¢ = () -> ¢ + 1; // Change gate of cell ¢
+      return start;
+    };
+  }
+\end{reap}
+\begin{java}
+  a() -> a + 1;
+\end{java}
+means
+\begin{java}
+  ¢ = () -> ¢ + 1;
+\end{java}
+\begin{java}
+  Integer curr() {`' prev = ¢;}
+\end{java}
+Is actually
+\begin{java}
+  Integer curr = () -> {`' prev = ¢;}
+\end{java}
+\begin{reap}
+  `'.Fibonacci {`'
+    Integer prev 1;
+    Integer curr() {`' prev = ¢;}
+  }
+\end{reap}
+\begin{reap}
+  `'.AP.Constants {`' // Constant of Arithmetic Progression
+    Real a1;
+    Real d;
+  }
+\end{reap}
+\begin{reap}
+  `'.AP.nTh {`' // Arithmetic Progression
+    Integer ¢() -> (a1,¢=()->¢ + d);
+  }
+\end{reap}
+\begin{reap}
+  `'.Fibonacci {`' // Compute the Fibonacci sequence
+    Integer a1;
+    Integer a2;
+    Integer ¢ = {`' a1, a2, ¢ = () -> ¢ + ¢[1] };
+  }
+\end{reap}
+Interesting step wise! Try to do Fibonacci? Try Fibonacci as a function which creates zillion cells?
+\begin{reap}
+  `'.Constants.AP {`' // Arithmetic Progression
+    Integer ¢() -> a1 -> ¢ + d;
+  }
+\end{reap}
 \matteo{read about type Unity which is also OK which is also top in our case}
 \begin{reap}
-`'.fraction.Checked {`'
-  Ok ok() ->
-  // Up casting into type `$⊤ = \kk{Ok}$', of `…'
-  // `…' an expression of type `\kk{Boolean}'
+  `'.fraction.Checked {`'
+    Ok ok() ->
+    // Up casting into type `$⊤ = \kk{Ok}$', of `…'
+    // `…' an expression of type `\kk{Boolean}'
     0 < h && h < 24 &&
     0 < m && m < 60 &&
     0 < s && s < 60
-  ;
-  Real ¢()-> ok && `\^'.¢;
-}
-\end{reap}
-
-\begin{reap}
-`'.Brothers {`'
-Integer c, h, g;
-}
-\end{reap}
-
-\begin{reap}
-`'.fraction.Checked {`'
-  Ok ok() ->
-  0 < h && h < 24 &&
-  0 < m && m < 60 &&
-  0 < s && s < 60 ;
-  Real ¢()-> ok && `\^'.¢;
-}
-\end{reap}
-
-\begin{reap}
-`'.Brothers {`'
-Integer c, h, g;
-}
-\end{reap}
-
-Arrays may be represented as previous versions of a cellimport java.util.function.Function;
-
-\begin{reap}
-class Test {
-  public static void main(final String[] args) {
-    final int Z = 0;
-    final Function<Integer, Function<Integer, Integer>> f = X -> Y -> Z;
-    System.out.println(f.apply(0).apply(0));
+    ;
+    Real ¢()-> ok && `\^'.¢;
   }
-}
+\end{reap}
+\begin{reap}
+  `'.Brothers {`'
+    Integer c, h, g;
+  }
+\end{reap}
+\begin{reap}
+  `'.fraction.Checked {`'
+    Ok ok() ->
+    0 < h && h < 24 &&
+    0 < m && m < 60 &&
+    0 < s && s < 60 ;
+    Real ¢()-> ok && `\^'.¢;
+  }
+\end{reap}
+\begin{reap}
+  `'.Brothers {`'
+    Integer c, h, g;
+  }
+\end{reap}
+Arrays may be represented as previous versions of a cellimport java.util.function.Function;
+\begin{reap}
+  class Test {
+    public static void main(final String[] args) {
+      final int Z = 0;
+      final Function<Integer, Function<Integer, Integer>> f = X -> Y -> Z;
+      System.out.println(f.apply(0).apply(0));
+    }
+  }
 \end{reap}

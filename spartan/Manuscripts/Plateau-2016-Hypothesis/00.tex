@@ -11,51 +11,29 @@
 \usepackage{\jobname}
 
 
-\conferenceinfo{PLDI ’05}{June 12--15, 2005, Chicago, Illinois, USA}
-\copyrightyear{2005}
+\conferenceinfo{PLATEAU ’16}{Oct 31, Amsterdam, the Netherlands}
+\copyrightyear{2016}
 \copyrightdata{1-59593-056-6/05/0006}
 \copyrightdoi{nnnnnnn.nnnnnnn}
 
 \def\ignore#1{}
+\newcommand\zz[1]{\texttt{#1}}
 \newcommand\yossi[1]{\marginpar[Y$⇒$]{$⇐$Y}\yos{#1}}
 \newcommand\matteo[1]{\marginpar[M$⇒$]{$⇐$M}\mat{#1}}
 \newcommand\mat[1]{\textcolor{blue}{\textsf{#1}}}
 \newcommand\yos[1]{\textcolor{red}{\textsf{#1}}}
+\def\Reap{\textsf{Reap}\xspace}
 
 \begin{document}
 \maketitle
 \eject
 
-\begin{flushright}
-  \begin{minipage}{2.5in}
-    \normalsize \rmfamily\scshape
-    \color{red}{%
-      suum cuique \newline
-      Tu mortale, essere avvertiti. \newline
-      Tu non Shallt Rimuovere \newline
-      Questo comandamento \newline
-      Mentre ci sono segni di Haste \newline
-      in questo documento !!!! \newline
-    }
-  \end{minipage}
-\end{flushright}
-
 \begin{abstract}
   \input{abstract}
 \end{abstract}
-\section{Introduction}
-\input{aa}
 
-\paragraph{Outline}
-Finally, \cref{section:zz} concludes.
-
-\section{Tutorial}
 \label{section:tutorial}
 \input{tutorial}
-
-\section{Discussion}
-\label{section:zz}
-\input{zz}
 
 \bibliographystyle{abbrv}\small
 \bibliography{%
