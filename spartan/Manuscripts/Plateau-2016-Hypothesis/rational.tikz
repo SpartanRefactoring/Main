@@ -22,7 +22,7 @@
     sibling distance=12ex
     ] {% 
     % vim: +,/^\s}$/-!column -t
-    d /{\cc{d}  $(\bot)$}[v],
+    d /{\cc{d}  $(\bot)$}[v,label=d],
     n /{\cc{n}  $(\bot)$}[v],
     r /{\cc{n/d} \nodepart{two} \cc{r} $(\bot)$}[r],
     infinite /{\cc{d == 0} \nodepart{two} \cc{infinite} $(\bot)$}[r],
