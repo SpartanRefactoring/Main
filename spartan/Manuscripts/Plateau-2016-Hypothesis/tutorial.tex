@@ -6,16 +6,16 @@ regression testing, performance tests, dependency management, and, packaging.
 Familiar tools to be managed by engineers include %\matteo{supply urlrefs}
 \zz{git}\urlref{https://git-scm.com/}, \zz{maven}\urlref{https://maven.apache.org/}, 
 \zz{jazz}\urlref{https://jazz.net}, \zz{junit}\urlref{http://junit.org/}. And, much in common to these is a
-rule based inference engine, such as that of \zz{make}\urlref{https://www.gnu.org/software/make/}, \zz{maven}, and
+rule-based inference engine, such as that of \zz{make}\urlref{https://www.gnu.org/software/make/}, \zz{maven}, and
 \zz{gradle}\urlref{https://gradle.org/}. Reasoning about and working with these tools requires a different
-way of thinking than that of the declarative, object oriented, functional, and
+way of thinking than that of the declarative, object-oriented, functional, and
 even aspect-oriented paradigms
 
 Our interest here is in the programming paradigm behind these way of thinking.
 Concretely, \Reap is a programming language under design whose main constructs
 resemble underlying concepts of these building systems.
 
-In \zz{make} for example, these concepts include basics such as ‟target”,
+In \zz{make}, for example, these concepts include basics such as ‟target”,
 ‟prerequisite”, ‟recipe”, and ‟Makefile”, and more advanced such as ‟default
 rule”, ‟variable” and ‟nested Makefile”. The concepts are not unique to
 \zz{make}. But, these concepts occur, sometimes under different, in all
@@ -32,13 +32,13 @@ instantiation, etc.
 
 Currently, \Reap is at an early design stage, and for this reason, this
 document is also a call for comments, questions, and thoughts. \Reap has no
-compiler yet: To run a program in \Reap, the program must to be manually
+compiler yet: To run a program in \Reap, the program must be manually
 transliterated to \Java.
 
 This chore of transliteration is ameliorated by the fact that \Reap is defined
 as an extension of \Java. \Reap borrows, with a bit of simplification, \Java's
 syntax, most importantly,~$λ$-expressions. Semantics is also similar, except
-that the semantics of an \emph{environment}, the \Reap reificication of a
+that the semantics of an \emph{environment}, the \Reap reification of a
 Makefile, is different than that of a \Java class, even though environments
 resembles classes in certain ways.
 
@@ -151,7 +151,7 @@ notice the following parallels and differences:
 
   In contrast, properties are computed lazily---a recipe is only invoked
   when the property is read. Properties cache their value, so a second read
-  of the property, does not usually trigger the recipe again. 
+  of the property does not usually trigger the recipe again. 
 %   If the cell's value changed. 
   When a property is read, the versions of all prerequisite
   properties are examined, and if none of these are changed, then no
