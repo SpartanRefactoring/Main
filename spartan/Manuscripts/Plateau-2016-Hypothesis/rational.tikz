@@ -4,7 +4,8 @@
     shorten >=3pt,
     -stealth,
     p/.style = {% Property
-      label=above left:\cc{#1},
+      label=above left:\cc{#1},label distance=12pt,
+%       label=above left:\cc{#1},
       rounded corners,
       font=\footnotesize,
       rectangle split parts=2,
@@ -40,8 +41,8 @@ fill=ProcessBlue!20
 \def\cc#1{{\normalsize\texttt{\textbf{#1}}}}
   \graph [ 
      layered layout,
-    level distance=12ex,
-    sibling distance=12ex
+    level distance=13ex,
+    sibling distance=15ex
     ] {% 
     % vim: +,/^\s}$/-!column -t
     d /{$\bot$}[v=d],
@@ -50,7 +51,7 @@ fill=ProcessBlue!20
     positive /{\cc{n < 0 == d < 0}}[r=positive],
     abs /{\cc{r > 0 \relax? r : -r}  }[r=abs],
     infinite /{\cc{d == 0}}[r=infinite],
-    zero /{\cc{abs == 0}  }[r=zero],
+    zero /{\cc{ !infinite \&\& abs==0}  }[r=zero],
 % 
     infinite <- d,
     zero<-abs<-r,
@@ -58,7 +59,7 @@ fill=ProcessBlue!20
 zero<-infinite,
     positive<-{n, d},
     }; %
-    \node [l,at=(r.south)] {$\bot$};
+     \node [l,at=(r.south)] {$\bot$};
     \node [l,at=(infinite.south)] {$\bot$};
     \node [l,at=(abs.south)] {$\bot$};
     \node [l,at=(zero.south)] {$\bot$};
