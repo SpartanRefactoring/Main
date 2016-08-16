@@ -141,8 +141,8 @@ which are defined by recipes.
  % Boolean zero() -> abs == 0; // Only defined if not `\cc{infinite}'
 
 Let us overload the term ‟recipe” to refer also to a property defined by a
-recipe; no confusion should arise. In contrast, the term ‟\emph{ingredient}”
-will refer to properties without a recipe.
+recipe; no confusion should arise. Furthering the gastronomical parable, the
+term ‟\emph{ingredient}” shall refer to a property without a recipe.
 
 \Cref{figure:rational:prerequisites} depicts prerequisites' graph
 of~\cc{.Rational}. Evidently, ingredients~\cc{n} and~\cc{d} are sources of the
@@ -195,128 +195,122 @@ we notice these parallels and differences:
   by \Java~$0$-arity~$λ$-expressions.
 
   \item\emph{Missing values.} The value of a property, just like the value
-  of a cell, might be missing. In fact, the values of all properties in
-  the figure are missing. The bottom symbol,~$⊥$, denotes a missing value.
-  In the transliteration, the missing value is represented as \Java's
-  \kk{null}.
+  of a cell, might be missing. In fact, the values of all properties in the
+  figure are missing. The bottom symbol,~$⊥$, denotes a missing value. In
+  transliteration, the missing value is converted to literal \kk{null} which
+  belongs to all types.
 
 \end{enumerate}
 
-\section{Invalidation and caching}
-The value of a property is \emph{missing} if any one of the following conditions holds.
+\section{Invalidation and Caching}
+The value of a property is \emph{missing} or~$⊥$ in one of three cases: free
+ingredients, missing prerequisite, and errors in computation.
 
-  \begin{enumerate}
-    \item \emph{Empty cells:} We say that a property is \emph{free} if this property
-        is an ingredient whose value was not set. Free properties resemble the
-        empty cells of a spreadsheet---placeholders to be filled in later. In
-        \cref{figure:rational} both ingredients~\cc{n} and~\cc{d} are initially
-        free.
+\paragraph{Free ignredients.}
+An ingredient is \emph{free} is said to be free if its value was \emph{not
+set}. Free properties resemble the empty cells of a spreadsheet---placeholders
+to be filled in later. In \cref{figure:rational} both ingredients~\cc{n}
+and~\cc{d} are initially free.
 
-        To further the gastronomical parable, a cell may depend on empty cells---likewise, a
-        recipe, such as \cc{positive}, may depend on free properties.
+\paragraph{Missing prerequisite.}
+Values of \emph{free} are missing by definition. Inductively, if a certain
+recipe depends on properties whose value is missing, then this recipe's value
+is also missing.
 
-        If a property is \emph{free}, then its value is said to be
-        \emph{missing}†{we also may say that the property itself is
-        \emph{missing}}. Inductively, if a certain recipe depends on properties
-        whose value is missing, then this recipe's value is also missing.
+Values of all properties in \cref{figure:rational} are missing. To create
+concrete non-missing values, assignments to ingredients must take place.
+\Cref{figure:rational:1} depicts the state of affairs in
+environment~\cc{.Rational} after two operations have taken place:
 
-        Values of all properties in \cref{figure:rational} is missing. To
-        create concrete values, assignments to ingredients must take place.
-        \Cref{figure:rational:1} depicts the state of affairs in
-        environment~\cc{.Rational} after two operations have taken place:
-
-        \begin{enumerate}
-          \item assignment of~\cc{0} to property~\cc{d}; followed by,
-          \item a read of property~\cc{infinite}.
-        \end{enumerate}
-
-          \begin{figure}[H]
-            \caption{\label{figure:rational:1}%
-              The prerequisites' graph of \cref{figure:rational},
-              after the assignment \cc{d=0} and a read of \cc{infinite}.
-            }
-              \begin{adjustbox}{max width=\columnwidth}
-              \input{rational1.tikz}
-              \end{adjustbox}
-          \end{figure}
-
-        In the figure we employ a visual convention of drawing a border around
-        non-missing values. The figure shows that values of~\cc{d} and
-        \cc{infinite} are non-missing.
-
-        To elaborate, lazy caching semantics means the assignment to~\cc{d}
-        invalidates the cached value of properties that depend on it directly,
-        or indirectly.  Since each recipe in the graph has a directed path
-        leading to to~\cc{d}, the assignment to~\cc{d} invalidates all recipes. 
-
-        As a visual hint, invalidated cache values are drawn in a brigher 
-        background. The value on property \cc{infinite} is not shaded, 
-        since the read of property \cc{infinite} triggers a computation of the
-        recipe, which returns \kk{True}. 
-        
-        Even though the cache is invalidated on the other recipes, they stil 
-        yield~$⊥$ \emph{without} recomputation: For example, reading
-        \cc{positive} immediately returns~$⊥$: Even though~\cc{d} is defined,
-        computation of the recipe \[
-          \cc{n < 0 == d < 0}
-        \] cannot commence
-        while~\cc{n=$⊥$}.
-
-        By the same consideration, property~\cc{r} remains in the missing
-        prerequisite state. Since~\cc{r} does not change, properties \cc{abs}
-        and \cc{zero} retain their current~$⊥$ value as well: An attempt to
-        read these will check that \cc{⊥} present in the cache still cannot 
-        be computed. If this is the case, the cache is simply marked valid
-        without changing its value.
-
-          \item\emph{Errors:} If the recipe itself fails, i.e., the \Java
-          evaluation of the~$λ$-expression throws an exception, then the
-          recipe's value becomes~$⊥$.
-
-          As an example, consider the state of affairs in~\cc{.Rational},
-          after we have further applied:
-
-        \begin{enumerate}
-          \item assignment of~\cc{1} to property~\cc{d}; followed by,
-          \item a read of property~\cc{positive}; and,
-          \item a read of property~\cc{r}.
-        \end{enumerate}
-
-        The resulting prerequisites' is portrayed in \Cref{figure:rational:2}.
-
-          \begin{figure}[H]
-            \caption{\label{figure:rational:2}%
-              The prerequisites' graph of \cref{figure:rational:1},
-              followed by the assignment \cc{n=1} and a read
-              of~\cc{positive} and of~\cc{r}.
-            }
-              \begin{adjustbox}{max width=\columnwidth}
-              \input{rational2.tikz}
-              \end{adjustbox}
-          \end{figure}
-
-          In the figure, we see that even though there are no more free
-          ingredients the values of some properties is still missing.
-
-          To understand why, notice that assignment \cc{n=1} invalidated all
-          properties except for \cc{infinite}. In particular, property~\cc{r} is
-          invalidated by the assignment~\cc{n=1}. In reading~\cc{r},
-          the recipe is triggered, since bot of~\cc{n} and~\cc{d}, the two
-          prerequisites are no longer free.
-          This recipe however aborts due to division by zero.
-
-          The abortion makes property~\cc{r} retain its previous missing value.
-          A subsequent read of~\cc{r} will trigger the recipe, unless one or
-          more of~\cc{n} or~\cc{d} was updated prior to the read.
-
-          The result of~\cc{r} retaining its missing value, makes recipes
-          \cc{abs} and \cc{zero} retain their cached
-          missing value as well.
-
-          The read of \cc{positive} triggers recomputation of of its recipe,
-          and this recomputation returns \kk{True}.†{In the~\cc{.Rational}
-            environment the undefined fraction~$1/0$ is considered $+∞$.}
+\begin{enumerate}
+  \item assignment of~\cc{0} to property~\cc{d}; followed by,
+  \item a read of property~\cc{infinite}.
 \end{enumerate}
+
+  \begin{figure}[H]
+    \caption{\label{figure:rational:1}%
+      The prerequisites' graph of \cref{figure:rational},
+      after the assignment \cc{d=0} and a read of \cc{infinite}.
+    }
+    \begin{adjustbox}{max width=\columnwidth}
+      \input{rational1.tikz}
+    \end{adjustbox}
+  \end{figure}
+
+By employing a visual convention of drawing a border around non-missing values
+the figure shows that values of~\cc{d} and \cc{infinite} are non-missing.
+
+To explain, lazy caching semantics means the assignment to~\cc{d} invalidates
+the cached value of properties that depend on it directly,
+or indirectly. Since each recipe in the graph has a directed path
+leading to to~\cc{d}, the assignment to~\cc{d} invalidates all recipes.
+
+As a visual hint, invalidated cache values are drawn on a ligther background.
+We see that property \cc{infinite} is different than the others in this
+respect: the read of of this property triggered computation of recipe
+\cc{d==0}, which returned \kk{True}. Storing this returned value in the cache
+of \cc{infinite} marks this cache valid.
+
+Even though the cache is invalidated on the other recipes, they stil
+yield~$⊥$ \emph{without} recomputation: For example, reading
+\cc{positive} immediately returns~$⊥$: Even though~\cc{d} is defined,
+computation of the recipe \[
+  \cc{n < 0 == d < 0}
+\] cannot commence
+while~\cc{n=$⊥$}.
+
+By the same consideration, property~\cc{r} remains in the missing
+prerequisite state. Since~\cc{r} does not change, properties \cc{abs}
+and \cc{zero} retain their current~$⊥$ value as well: An attempt to
+read these will check that~\cc{⊥} present in the cache still cannot
+be computed. If this is the case, the cache is simply marked valid
+without changing its value.
+
+\paragraph{Errors.}
+The value of a property might be missing even if none of its prerequisites is
+missing. This happens if computing the recipe fails, e.g., the \Java
+evaluation of the~$λ$-expression throwing an exception, which sets its value
+to to~$⊥$.
+
+Consider the state of affairs in~\cc{.Rational}, after we applying further:
+\begin{enumerate}
+  \item assignment of~\cc{1} to property~\cc{d}; followed by,
+  \item a read of property~\cc{positive}; and,
+  \item a read of property~\cc{r}.
+\end{enumerate}
+
+The prerequisites' graph after these is depicted in \Cref{figure:rational:2}.
+
+\begin{figure}[H]
+  \caption{\label{figure:rational:2}%
+    The prerequisites' graph of \cref{figure:rational:1},
+    followed by the assignment \cc{n=1} and a read
+    of~\cc{positive} and of~\cc{r}.
+  }
+  \begin{adjustbox}{max width=\columnwidth}
+    \input{rational2.tikz}
+  \end{adjustbox}
+\end{figure}
+
+In the figure, we see that even though there are no more free ingredients the
+values of some properties are still missing. To understand why, notice that
+assignment \cc{n=1} invalidated all properties except for \cc{infinite}. In
+particular, property~\cc{r} is invalidated by the assignment~\cc{n=1}. In
+reading~\cc{r}, recipe can be triggered, since both of~\cc{n} and~\cc{d}, the
+two prerequisites are no longer free.
+
+The attempted division by zero aborts the triggered recipe. Consuequently,
+property~\cc{r} retains its previous~$⊥$ value.  A subsequent read of~\cc{r}
+will \emph{not} trigger the recipe, unless one or more of~\cc{n} or~\cc{d} was
+updated inbetween the reads. 
+
+The result of~\cc{r} retaining its missing value is that if recipes \cc{abs}
+and \cc{zero} are accessed, they will retain their cached missing value as
+well. 
+
+The read of \cc{positive} triggers recomputation of of its recipe,
+and this recomputation returns \kk{True}.†{In the~\cc{.Rational}
+environment the undefined fraction~$1/0$ is considered~$+∞$.}
 
 \section{Edges and Types}
 
