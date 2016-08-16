@@ -160,7 +160,7 @@ notice the following parallels and differences:
   \item\emph{Values and how they are computed:} Just like a cell, a property
   stores a \emph{value}, or a \emph{recipe} for computing this value from the
   values of other cells.
-  Recipes are called formulas in spreadsheets. In \Reap they are realized
+  Recipes are called formulas in spreadsheets. In \Reap, they are realized
   by \Java~$0$-arity~$λ$-expressions of \Java.
 
   We overload the term ‟recipe” to refer also to a property defined by a recipe.
@@ -180,7 +180,7 @@ notice the following parallels and differences:
     \item \emph{Free property:} The property is not a recipe and its
           value was not explicitly set. Such properties are called \emph{free};
           properties which are not free are \cc{bound}.
-          Bound properties are either recipes, or properties whose value was
+          Bound properties are either recipes or properties whose value was
           set.
 
           In \cref{figure:rational} only properties~\cc{n} and~\cc{d} are free.
@@ -198,7 +198,7 @@ notice the following parallels and differences:
           Since from each recipe in the graph there is a path that leads % grape?
           to~\cc{d}, all recipes are invalidated.
 
-          A read of property \cc{infinite} trigger a computation of the
+          A read of property \cc{infinite} triggers a computation of the
           recipe, which returns \kk{True}. As shown in \cref{figure:assignments}(a),
           properties \cc{d} and \cc{infinite} are non-missing (border drawn).
 
@@ -251,7 +251,7 @@ notice the following parallels and differences:
           Property~\cc{r} is likewise invalidated by the assignment~\cc{n=1}.
           Since both~\cc{n} and~\cc{d}, the two prerequisites of
           recipe~\cc{n/d}, are defined, this recipe is triggered to compute a
-          new value when~\cc{r} is examined. This computation however aborts
+          new value when~\cc{r} is examined. This computation, however, aborts
           due to division by zero. Property~\cc{r} then retains its missing
           value. No recomputation will be attempted before one of~\cc{n}
           or~\cc{d} are updated.  Note that recipe properties \cc{abs} and
