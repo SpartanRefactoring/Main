@@ -4,37 +4,52 @@
     shorten >=3pt,
     -stealth,
     p/.style = {% Property
+      label=above left:\cc{#1},
+minimum height=2em,
       minimum width=3.5em,
       rounded corners,
       font=\footnotesize,
       rectangle split parts=2,
     },
-    f/.style = {p,fill=olive!30}, % value
-    v/.style = {p,fill=green!30}, % final 
-    r/.style = {p,rectangle split,fill=red!30},   % recipe
+    f/.style = {fill=olive!30,p=#1}, % cvalue
+    v/.style = {fill=Yellow,p=#1,ellipse,minimum height=0pt,minimum width=0pt,}, % final 
+    r/.style = {fill=YellowGreen,
+      p=#1,
+      trapezium,
+      trapezium left angle=130, 
+      trapezium right angle=130,
+    },   % recipe
+    l/.style = {
+      circle,
+      font=\scriptsize,
+      fill=ProcessBlue,
+    },
 ]
-\def\cc#1{{\scriptsize{#1}}}
+\def\cc#1{{\normalsize\texttt{\textbf{#1}}}}
   \graph [ 
-    branch up,
-    layered layout,
-    grow'=up,
-    level distance=11ex,
+     layered layout,
+    level distance=12ex,
     sibling distance=12ex
     ] {% 
     % vim: +,/^\s}$/-!column -t
-    d /{\cc{d}  $(\bot)$}[v,label=d],
-    n /{\cc{n}  $(\bot)$}[v],
-    r /{\cc{n/d} \nodepart{two} \cc{r} $(\bot)$}[r],
-    infinite /{\cc{d == 0} \nodepart{two} \cc{infinite} $(\bot)$}[r],
-    abs /{\cc{r > 0 \relax? r : -r} \nodepart{two} \cc{abs} $(\bot)$ }[r],
-    zero /{\cc{abs == 0} \nodepart{two} \cc{zero} $(\bot)$ }[r],
-    positive /{\cc{n < 0 == d < 0} \nodepart{two} \cc{positive} $(\bot)$}[r],
-    infinite -> d,
-    zero->abs->r,
-    r->{n, d},
-    positive->{n, d},
+    d /{$\bot$}[v=d],
+    n /{$\bot$}[v=n],
+    r /{\cc{n/d}}[r=r],
+    infinite /{\cc{d == 0}}[r=infinite],
+    abs /{\cc{r > 0 \relax? r : -r}  }[r=abs],
+    zero /{\cc{abs == 0}  }[r=zero],
+    positive /{\cc{n < 0 == d < 0}}[r=positive],
+    infinite <- d,
+    zero<-abs<-r,
+    r<-{n, d},
+    positive<-{n, d},
     }; %
-\path[fill=yellow!30,opacity=0.4,fill=white,] 
+    \node [l,at=(r.south)] {$\bot$};
+    \node [l,at=(infinite.south)] {$\bot$};
+    \node [l,at=(abs.south)] {$\bot$};
+    \node [l,at=(zero.south)] {$\bot$};
+    \node [l,at=(positive.south)] {$\bot$};
+    \path[fill=yellow!30,opacity=0.4,fill=white,] 
     (current bounding box.south west) 
     rectangle 
     (current bounding box.north east); 
