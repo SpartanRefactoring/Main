@@ -2,7 +2,7 @@
 
 Much of the work of software engineers is to build the software they produce.
 There is much automation to engineer in managing versions and branches,
-regression testing, performance tests, dependency management, and, packaging.
+regression testing, performance tests, dependency management and packaging.
 Familiar tools to be managed by engineers include
 \zz{git}\urlref{https://git-scm.com/},
 \zz{maven}\urlref{https://maven.apache.org/},
@@ -11,7 +11,7 @@ much in common to these is a rule-based inference engine, such as that of
 \zz{make}\urlref{https://www.gnu.org/software/make/}, \zz{maven}, and
 \zz{gradle}\urlref{https://gradle.org/}. Reasoning about and working with these
 tools requires a different way of thinking than that of the declarative,
-object-oriented, functional, and even aspect-oriented paradigms
+object-oriented, functional, and even aspect-oriented paradigms.
 
 Our interest here is in the \emph{programming paradigm} behind these way of
 thinking. Concretely, \Reap is a programming language under design whose main
@@ -20,7 +20,7 @@ constructs resemble underlying concepts of these building systems.
 In \zz{make}, for example, these concepts include basics such as ‟target”,
 ‟prerequisite”, ‟recipe”, and ‟Makefile”, and more advanced such as ‟default
 rule”, ‟variable” and ‟nested Makefile”. The concepts are not unique to
-\zz{make}. But, these concepts occur, sometimes under different, in all
+\zz{make}. But, these concepts occur, sometimes with differences, in all
 software building tools.
 
 Development of \Reap begun when we realized that the semi-declarative,
@@ -40,15 +40,15 @@ manually \emph{transliterated} to \Java.
 This chore of transliteration is ameliorated by the fact that \Reap is defined
 as an extension of \Java. \Reap borrows, with a bit of simplification, \Java's
 syntax, most importantly,~$λ$-expressions. Semantics is also similar, except
-that the semantics of an \emph{environment}, the \Reap reification of a
-Makefile, is different than that of a \Java class, even though environments
-resembles classes in certain ways.
+in the case of an \emph{environment}, the \Reap reification of a
+Makefile, for which the semantics is different than that of a \Java class, 
+even though environments resembles classes in certain ways.
 
 To environments with classes, consider \cref{figure:date:reap} showing a \Reap
 environment for the representation of dates.
 
 \begin{figure}
-  \caption{\label{figure:date}%
+  \caption{\label{figure:date:reap}%
     A \Reap environment to represent a date.
   }
 \begin{reap}
@@ -60,12 +60,12 @@ environment for the representation of dates.
 \end{figure}
 
 \Cref{figure:date:java} depicts the \Java \kk{class} lookalike of environment
-\cc{.Date} defined from \cref{figure:data:reap}.
+\cc{.Date} defined from \cref{figure:date:reap}.
 
 \begin{figure}
   \caption{\label{figure:date:java}%
 The \Java \kk{class} lookalike of environment~\cc{.Date} of
-\cref{figure:data:reap}.
+\cref{figure:date:reap}.
   }
 \begin{java}
 class Date {
@@ -83,7 +83,7 @@ properties: properties~\cc{d},~\cc{m},~\cc{y} are free, while property
 \cc{toString} depends on the three. Conceptually, properties can be thought of
 as {targets} of a Makefile.
 
-Properties defined by \emph{recipes} (\cc{toString} in \cref{figure:date})
+Properties defined by \emph{recipes} (\cc{toString} in \cref{figure:date:reap})
 visually resemble function members; properties with no recipe
 (\cc{d},~\cc{m},~\cc{y} in the figure) resemble data members.
 The recipes themselves, e.g.,
@@ -95,8 +95,8 @@ look like, and are in fact,~$0$-arity \Java~$λ$-expressions.
 An environment differs from its class lookalike mainly in the semantics of
 evaluation: functions are re-evaluated each time they are invoked. Properties
 (just like targets in a Makefile) are only evaluated if their current value is
-outdated with respect to its prerequisites: Property \cc{toSring}
-(\cref{figure:data:reap}) caches the last value it returns, invalidating the
+outdated with respect to its prerequisites: Property \cc{toString}
+(\cref{figure:date:reap}) caches the last value it returns, invalidating the
 cache only if~\cc{d},~\cc{m}, and~\cc{y} changes, whereas no-arguments function
 \cc{toString()} (\cref{figure:date:java}) recomputes whenever it is invoked.
 
@@ -140,9 +140,15 @@ which are defined by recipes.
  % Real abs() -> r > 0 ? r : -r; // Only defined if not `\cc{infinite}'
  % Boolean zero() -> abs == 0; // Only defined if not `\cc{infinite}'
 
+<<<<<<< HEAD
 Let us overload the term ‟recipe” to refer also to a property defined by a
 recipe; no confusion should arise. Furthering the gastronomical parable, the
 term ‟\emph{ingredient}” shall refer to a property without a recipe.
+=======
+Let us overload the term ‟\emph{recipe}” to refer also to a property defined by a
+recipe; no confusion should arise. In contrast, the term ‟\emph{ingredient}”
+will refer to properties without a recipe.
+>>>>>>> 862feb9d8eee016600a5f702e967c813b8e16d15
 
 \Cref{figure:rational:prerequisites} depicts prerequisites' graph
 of~\cc{.Rational}. Evidently, ingredients~\cc{n} and~\cc{d} are sources of the
