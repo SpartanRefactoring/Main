@@ -49,7 +49,7 @@ class lookalike.
   \caption{\label{figure:date}%
     A \Reap environment (a) and its \Java lookalike (b).
   }
-  \begin{tabular}{c|c}
+  \begin{tabular}{cc}
     \begin{reap}
     `'.Date {
     Integer d, m, y,
@@ -284,6 +284,8 @@ In certain occasions, it is useful to define cells of the top type, \cc{Ok},
   ⊥ & = \kk{Oz} = \kk{None} = \cc{@NonNull Void}
 \end{align}
 
+\endinput
+
 Let the set of all types of \Reap be denoted by $\mathbb T$, then
 we have
 \begin{equation}
@@ -292,7 +294,7 @@ we have
 \end{equation}
 
 Any time you use it, the called would also be throwing an exception.
-
+% \endinput
 In i.e., the expression/function
 making the
 recipe of~$u$, uses~$v$. This uses relationship is implicit: If the
