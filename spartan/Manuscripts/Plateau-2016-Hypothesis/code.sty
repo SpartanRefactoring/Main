@@ -10,7 +10,10 @@
 \tcbuselibrary{skins}
 \tcbset{listing utf8=latin1}% optional; ’latin1’ is the default.
 
-\def\codesize{\scriptsize}
+\def\codesize{\scriptsize}   % Last definition is the only one that matters 
+\def\codesize{\footnotesize} % Last definition is the only one that matters 
+\def\codesize{\normalsize}   % Last definition is the only one that matters 
+
 \def\codedisplayspace{0pt}
 
 \ProcessOptions
@@ -272,10 +275,17 @@
 \newLanguage{GoOH}{GO}
 \newLanguage[alsoletter={-}]{HTML}{HTML}
 \newLanguage[morekeywords={Ok,Oz,Integer,String,Real},alsoletter={@}]{Java}{JAVA}
-\newLanguage[morekeywords={
-  Ok, Oz, Boolean, Character, Integer, String, Real, parent
-},
-  alsoletter={@},literate={->}{$\rightarrow$}1]{Java}{REAP}
+\newLanguage[morekeywords={ 
+    Ok, Oz, 
+    Boolean, 
+    Character, 
+    Integer, 
+    String, 
+    Real, 
+    parent, 
+    True, 
+    False,
+},alsoletter={@}]{Java}{REAP}
 \newLanguage{Oberon-2}{OBERON}
 \newLanguage{Pascal}{PASCAL}
 \newLanguage{Prolog}{PROLOG}

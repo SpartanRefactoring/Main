@@ -24,9 +24,12 @@ minimum height=2.3em,
       font=\scriptsize,
       fill=ProcessBlue,
     },
-    valueIsSet/.style = { % Set 
+    valueIsSet/.style = {% Set 
       draw,
       very thick,
+    }, 
+    invalidated/.style = {% Set 
+fill=ProcessBlue!20
     },
 ]
 \def\cc#1{{\normalsize\texttt{\textbf{#1}}}}
@@ -50,8 +53,8 @@ minimum height=2.3em,
     }; %
     \node [l,at=(r.south)] {$\bot$};
     \node [l,valueIsSet,at=(infinite.south)] {\scriptsize\texttt{True}};
-    \node [l,at=(abs.south)] {$\bot$};
-    \node [l,at=(zero.south)] {$\bot$};
+    \node [l,at=(abs.south),invalidated] {$\bot$};
+    \node [l,at=(zero.south),invalidated] {$\bot$};
     \node [l,valueIsSet,at=(positive.south)] {\scriptsize\texttt{True}};
     \path[fill=yellow!30,opacity=0.4,fill=white,] 
     (current bounding box.south west) 

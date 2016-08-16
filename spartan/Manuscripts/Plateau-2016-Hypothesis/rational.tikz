@@ -5,24 +5,31 @@
     -stealth,
     p/.style = {% Property
       label=above left:\cc{#1},
-minimum height=2em,
-      minimum width=3.5em,
       rounded corners,
       font=\footnotesize,
       rectangle split parts=2,
     },
     f/.style = {fill=olive!30,p=#1}, % cvalue
-    v/.style = {fill=Yellow,p=#1,ellipse,minimum height=0pt,minimum width=0pt,}, % final 
+    v/.style = {fill=Yellow,p=#1,circle,minimum height=0pt,minimum width=0pt,}, % final 
     r/.style = {fill=YellowGreen,
+minimum height=2.3em,
+      minimum width=3.5em,
       p=#1,
       trapezium,
       trapezium left angle=130, 
       trapezium right angle=130,
     },   % recipe
-    l/.style = {
-      circle,
+    l/.style = { % label
+      ellipse,
       font=\scriptsize,
       fill=ProcessBlue,
+    },
+    valueIsSet/.style = {% Set 
+      draw,
+      very thick,
+    }, 
+    invalidated/.style = {% Set 
+fill=ProcessBlue!20
     },
 ]
 \def\cc#1{{\normalsize\texttt{\textbf{#1}}}}
