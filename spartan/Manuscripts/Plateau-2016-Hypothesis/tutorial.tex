@@ -116,7 +116,7 @@ named,~\cc{n},~\cc{d},~\cc{r}, \cc{abs}, \cc{positive}, and, \cc{infinite} and
     Integer n; // Numerator
     Integer d; // Denominator
     Real r() -> n/d; // Real value
-    Real abs() -> r > 0 \relax? r : 0;
+    Real abs() -> r > 0 ? r : -r;
     Boolean positive() -> n < 0 == d < 0;
     Boolean infinite() -> d == 0;
     Boolean zero() -> abs == 0;
