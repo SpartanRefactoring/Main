@@ -27,10 +27,12 @@ Development of \Reap begun when we realized that the semi-declarative,
 semi-procedural paradigm behind inference engines is applicable in the domain
 of managing user interaction, specifically, the development of an Eclipse
 plugin. Even though \Reap was conceived as a DSL for specific kinds of
-computation, the language seems to be growing to be general purpose. The
-examples used in this exposition demonstrate \Reap also by showing the
-emulation of language constructs drawn from other paradigms: function, method,
-instantiation, etc.
+computation, the language seems to be growing to be general purpose. 
+
+%The
+%examples used in this exposition demonstrate \Reap also by showing the
+%emulation of language constructs drawn from other paradigms: function, method,
+%instantiation, etc.
 
 Currently, \Reap is at an early design stage, and for this reason, this
 document (not an article) is also a call for comments, questions, and thoughts.
@@ -78,7 +80,7 @@ class Date {
 \end{figure}
 
 Every environment defines a set of \emph{properties} and the interdependencies
-between them, e.g., environment \cc{.Date} in the figure, contains four
+between them, e.g., environment \cc{.Date} in the figure contains four
 properties: properties~\cc{d},~\cc{m},~\cc{y} are free, while property
 \cc{toString} depends on the three. Conceptually, properties can be thought of
 as {targets} of a Makefile.
@@ -109,8 +111,7 @@ attention to the semantics of~$λ$-expressions and anonymous functions---the
 Every \emph{environment} is essentially a textual representation of a
 \emph{prerequisites graph}, which is a directed graph of computational
 dependencies between values. Nodes in the graph are called \emph{properties},
-which are named containers of values. Edges in the graph represent prerequisite
-relationships.
+which are named containers of values. 
 
 \Cref{figure:rational} shows the \Reap code of environment \cc{.Rational},
 comprising seven properties:~\cc{n},~\cc{d} for which there is no recipe, and
@@ -144,11 +145,24 @@ Let us overload the term ‟\emph{recipe}” to refer also to a property defined
 recipe; no confusion should arise. Furthering the gastronomical parable, the
 term ‟\emph{ingredient}” shall refer to a property without a recipe.
 
-\Cref{figure:rational:prerequisites} depicts prerequisites' graph
+Edges in the prerequisites' represent prerequisite relationships and are
+defined by the recipes present on the properties. There is a \emph{prerequisite
+edge} leading from property~$v$ to property~$u$, if~$u$ is an implicit
+prerequisite of~$v$. Specifically, if the recipe of~$v$ involves~$u$.
+
+Prerequisites are computed by (manually) examining the \Java code that makes
+the recipe of~$u$. All properties defined in the environment are accessible to
+this \Java code. If a property~$v$ is read in this code, then~$u$ is a
+prerequisite of~$v$.  For example, the recipe \[
+  \cc{n < 0 == d < 0}
+\] of property \cc{positive}, \emph{implicitly} defines that~\cc{n} and~\cc{d}
+are prerequisites of \c{positive}.
+
+\Cref{figure:rational:prerequisites} depicts the prerequisites' graph
 of~\cc{.Rational}. Evidently, ingredients~\cc{n} and~\cc{d} are sources of the
 graph. The remaining five are recipes.
 
-\begin{figure}
+\begin{figure}[!hb]
   \caption{\label{figure:rational:prerequisites}%
     The prerequisites graph of \Reap environment \cc{.Rational} of
     \cref{figure:rational}.
@@ -158,10 +172,10 @@ graph. The remaining five are recipes.
   \end{adjustbox}
 \end{figure}
 
-In \cref{figure:rational:prerequisites} we also see that recipes~\cc{r} and
-\cc{positive} depend directly on ingredient~\cc{n}, and that recipe \cc{zero}
-depends on recipe \cc{abs}, which in turn, depends on~\cc{r}. Therefore,
-\cc{abs} and \cc{zero} \emph{indirectly} depend on~\cc{n} and~\cc{r}.
+We also see in the figure that recipes~\cc{r} and \cc{positive} depend directly
+on ingredient~\cc{n}, and that recipe \cc{zero} depends on recipe \cc{abs},
+which in turn, depends on~\cc{r}. Therefore, \cc{abs} and \cc{zero}
+\emph{indirectly} depend on~\cc{n} and~\cc{r}.
 
 \section{Environments \emph{vs.} Spreadsheets}
 Comparing an environment with its properties to a spreadsheet with its cells,
@@ -183,13 +197,13 @@ we notice these parallels and differences:
   when the property is read. Properties cache their value, so a second read
   of the property does not usually trigger the recipe again.
 
-  When a property is read, the versions of all prerequisite
-  properties are examined, and if none of these changed, no recomputation is
+  When a property is read, the versions of all prerequisite properties are
+  examined, and if none of these changed, no recomputation is
   triggered.
 
   \item\emph{Values and how they are computed:} Just like a cell, a property
-  stores a \emph{value}, or a \emph{recipe} for computing this value from the
-  values of other cells.
+    stores a \emph{value}, or a \emph{recipe} for computing this value from the
+    values of other cells.
 
   Recipes are called formulas in spreadsheets. In \Reap, they are realized
   by \Java~$0$-arity~$λ$-expressions.
@@ -203,6 +217,7 @@ we notice these parallels and differences:
 \end{enumerate}
 
 \section{Invalidation and Caching}
+
 The value of a property is \emph{missing} or~$⊥$ in one of three cases: free
 ingredients, missing prerequisite, and errors in computation.
 
@@ -226,15 +241,15 @@ environment~\cc{.Rational} after two operations have taken place:
   \item a read of property~\cc{infinite}.
 \end{enumerate}
 
-  \begin{figure}
-    \caption{\label{figure:rational:1}%
-      The prerequisites' graph of \cref{figure:rational},
-      after the assignment \cc{d=0} and a read of \cc{infinite}.
-    }
-    \begin{adjustbox}{max width=\columnwidth}
-      \input{rational1.tikz}
-    \end{adjustbox}
-  \end{figure}
+\begin{figure}
+  \caption{\label{figure:rational:1}%
+    The prerequisites' graph of \cref{figure:rational},
+    after the assignment \cc{d=0} and a read of \cc{infinite}.
+  }
+  \begin{adjustbox}{max width=\columnwidth}
+    \input{rational1.tikz}
+  \end{adjustbox}
+\end{figure}
 
 By employing a visual convention of drawing a border around non-missing values
 the figure shows that values of~\cc{d} and \cc{infinite} are non-missing.
@@ -255,8 +270,7 @@ yield~$⊥$ \emph{without} recomputation: For example, reading
 \cc{positive} immediately returns~$⊥$: Even though~\cc{d} is defined,
 computation of the recipe \[
   \cc{n < 0 == d < 0}
-\] cannot commence
-while~\cc{n=$⊥$}.
+\] cannot commence while~\cc{n=$⊥$}.
 
 By the same consideration, property~\cc{r} remains in the missing
 prerequisite state. Since~\cc{r} does not change, properties \cc{abs}
@@ -267,9 +281,8 @@ without changing its value.
 
 \paragraph{Errors.}
 The value of a property might be missing even if none of its prerequisites is
-missing. This happens if computing the recipe fails, e.g., the \Java
-evaluation of the~$λ$-expression throwing an exception, which sets its value
-to to~$⊥$.
+missing. This happens if computing the recipe fails, e.g., the \Java evaluation
+of the~$λ$-expression throwing an exception, which sets its value to to~$⊥$.
 
 Consider the state of affairs in~\cc{.Rational}, after we applying further:
 \begin{enumerate}
@@ -307,38 +320,33 @@ The result of~\cc{r} retaining its missing value is that if recipes \cc{abs}
 and \cc{zero} are accessed, they will retain their cached missing value as
 well. 
 
-The read of \cc{positive} triggers recomputation of of its recipe,
-and this recomputation returns \kk{True}.†{In the~\cc{.Rational}
-environment the undefined fraction~${1\over0}$ is considered~$+∞$.}
-
-\section{Edges and Types}
-
-Edges in the graph are defined by the recipes present on the properties. There
-is a \emph{prerequisite edge} leading from property~$v$ to property~$u$, if~$u$
-is an implicit prerequisite of~$v$. Specifically, if the recipe of~$v$
-involves~$u$.
-
-Prerequisites are computed by (manually) examining the \Java code that makes
-the recipe of~$u$. All properties defined in the environment are accessible to
-this \Java code. If a property~$v$ is read in this code, then~$u$ is a
-prerequisite of~$v$.
-For example, the recipe \[
-\cc{n < 0 == d < 0}
-\] of property \cc{positive}, implicitly defines that~\cc{n} and~\cc{d} are
-prerequisites of \c{positive}.
-
-In certain occasions, it is useful to define cells of the top type, \cc{Ok},
-\kk{Character}, \kk{Integer}, \kk{Real},
-
-\begin{align}
-  \label{eq:ok}
-  ⊤ & = \kk{Ok} = \cc{Void}⏎
-  \label{eq:oz}
-  ⊥ & = \kk{Oz} = \kk{None} = \cc{@NonNull Void}
-\end{align}
+The read of \cc{positive} triggers recomputation of of its recipe, and this
+recomputation returns \kk{True}.†{Indeed, in the~\cc{.Rational} environment we
+have~${1\over0}=+∞$.}
 
 \endinput
 
+\section{Emulating Functions, Procedures, and ,Methods}
+\begin{reap}
+  `'.square {`'
+    Real x;
+    Real x2() -> x * x;
+  }
+\end{reap}
+\begin{reap}
+  `'.square {`'
+    Real x;
+    Real ¢() -> x * x;
+  }
+\end{reap}
+\begin{reap}
+  `'.square {`'
+    Real `\_';
+    Real ¢() -> x * x;
+  }
+\end{reap}
+
+\endinput
 Let the set of all types of \Reap be denoted by~$𝕋$, then
 we have
 \begin{equation}
@@ -390,25 +398,6 @@ properties scalar
 and,
 \kk{String}.
 Whenever a property is undefined it is like a function that throws an exception.
-
-\begin{reap}
-  `'.square {`'
-    Real x;
-    Real x2() -> x * x;
-  }
-\end{reap}
-\begin{reap}
-  `'.square {`'
-    Real x;
-    Real ¢() -> x * x;
-  }
-\end{reap}
-\begin{reap}
-  `'.square {`'
-    Real `\_';
-    Real ¢() -> x * x;
-  }
-\end{reap}
 \begin{reap}
   `'.power {`'
     Real x;
@@ -720,3 +709,17 @@ Arrays may be represented as previous versions of a cellimport java.util.functio
     }
   }
 \end{reap}
+
+In certain occasions, it is useful to define properties 
+of the top type, \cc{Ok},
+\kk{Character}, \kk{Integer}, \kk{Real},
+
+\begin{align}
+  \label{eq:ok}
+  ⊤ & = \kk{Ok} = \cc{Void}⏎
+  \label{eq:oz}
+  ⊥ & = \kk{Oz} = \kk{None} = \cc{@NonNull Void}
+\end{align}
+
+
+

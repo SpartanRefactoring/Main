@@ -9,9 +9,40 @@ of user interaction, like in the case of the development of an Eclipse plugin.
 In the present work we described the basic features of \Reap: the concepts
 of \emph{environment}, \emph{property} and \emph{recipe} are illustrated
 with the help of some example in a transliterated \Java code.
-Presently \Reap is at an early design stage. This hypothesis paper
-is aimed at fostering the discussion during the workshop as well as gathering 
-comments, questions, and thoughts. 
+
+We believe \Reap should be emulated higher level constructs by as follows:
+\begin{description}
+  \item[Variables in methods] By environmental acquisition. 
+    environments rather than just plain scalars for the four basic types.
+  \item [Flip flops] 
+  \item [Arrays] This is made by noting that a property can remember, if
+    required to, all of its previous values.
+  \item [Infinite loops]
+  \item[Methods] By environmental acquisition. Can even be defined out of 
+    classes. There are two shortcuts: \cc{\$} and \cc{\_} that makes this
+    simple. Note that this allows for both positional and named parameter
+    passing, e.g., the phrase
+\begin{reap}
+.Rational.n=3.d=4.r  
+\end{reap}
+returns $0.75$, whereas 
+\begin{reap}
+.Rational.n=3.d=0.positive  
+\end{reap}
+is \kk{True}
+
+  \item[Compound structures] This can be done by allowing properties to contain
+    environments rather than just plain scalars of the four basic types. When a
+    property is an environment, then its prerequisites' graph is merged into
+    the containing environment. The inner properties can then be accessed using
+    a Dewey like notation as used in nested records, e.g., \cc{r1.infinite}
+    denotes property \cc{infinite} within a property of type \cc{.Rational}.
+
+\end{description}
+
+Presently \Reap is at an early design stage. This hypothesis paper is aimed at
+fostering the discussion during the workshop as well as gathering comments,
+questions, and thoughts. 
 
 % Inspired by the declarative features of \cc{make}, we propose \Reap: a tiny
 % programming language in which the notion of a class defining methods and fields
