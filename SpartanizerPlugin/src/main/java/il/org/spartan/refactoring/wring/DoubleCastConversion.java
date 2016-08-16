@@ -1,21 +1,18 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.wring.Wring.*;
 
 /** A {@link Wring} that replaces the (double)X cast {@link Expressions} with the form of '1.*X'
  * @author Alex and Dan
  * @since 2016-09-15 */
-public final class DoubleCastConversion extends ReplaceCurrentNode<CastExpression> {
+public final class DoubleCastConversion extends Wring.ReplaceCurrentNode<CastExpression> {
   @Override String description(final CastExpression e) {
     return "Replace all (double) casts to 1.* in " + e;
   }
@@ -28,7 +25,7 @@ public final class DoubleCastConversion extends ReplaceCurrentNode<CastExpressio
    */
   private static ASTNode replaceDoubleToOne(final CastExpression e) {
     List<Expression> $ = new ArrayList<>();
-    $.add("1."); //how to convert a string
+    $.add((Expression)MakeAST.EXPRESSION.from("1.")); //how to convert a string to Expression
     $.add(e.getExpression());
     return subject.operands($).to(TIMES);
   }
