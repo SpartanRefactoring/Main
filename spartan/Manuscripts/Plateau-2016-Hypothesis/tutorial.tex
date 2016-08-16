@@ -64,14 +64,14 @@ environment for the representation of dates.
 
 \begin{figure}
   \caption{\label{figure:date:java}%
-The \Java \kk{class} lookalike of environment
-\cc{.Date} of \cref{figure:data:reap}.
+The \Java \kk{class} lookalike of environment~\cc{.Date} of
+\cref{figure:data:reap}.
   }
 \begin{java}
 class Date {
   Integer d, m, y;
-  String toString() { 
-    return y + "-" + m + "-" + d; 
+  String toString() {
+    return y + "-" + m + "-" + d;
   }
 }
 \end{java}
@@ -124,8 +124,8 @@ which are defined by recipes.
     \begin{adjustbox}{max width=\columnwidth}
 \begin{reap}
 `'.Rational {`'
-  Integer n;       // Numerator
-  Integer d;       // Denominator
+  Integer n; // Numerator
+  Integer d; // Denominator
   Real r() -> n/d; // Real value
   Boolean positive() -> n < 0 == d < 0;
   Boolean infinite() -> d == 0;
@@ -141,12 +141,12 @@ which are defined by recipes.
  % Boolean zero() -> abs == 0; // Only defined if not `\cc{infinite}'
 
 Let us overload the term ‟recipe” to refer also to a property defined by a
-recipe; no confusion should arise.  In contrast, the term ``\emph{ingredient}''
-will refer to  properties without a recipe.
+recipe; no confusion should arise. In contrast, the term ‟\emph{ingredient}”
+will refer to properties without a recipe.
 
 \Cref{figure:rational:prerequisites} depicts prerequisites' graph
 of~\cc{.Rational}. Evidently, ingredients~\cc{n} and~\cc{d} are sources of the
-graph. The remaining five are recipes. 
+graph. The remaining five are recipes.
 
 \begin{figure}[H]
   \caption{\label{figure:rational:prerequisites}%
@@ -160,9 +160,8 @@ graph. The remaining five are recipes.
 
 In \cref{figure:rational:prerequisites} we also see that recipes~\cc{r} and
 \cc{positive} depend directly on ingredient~\cc{n}, and that recipe \cc{zero}
-depends on recipe \cc{abs}, which in turn, depends on~\cc{r}.  Therefore,
+depends on recipe \cc{abs}, which in turn, depends on~\cc{r}. Therefore,
 \cc{abs} and \cc{zero} \emph{indirectly} depend on~\cc{n} and~\cc{r}.
-
 
 \section{Environments \emph{vs.} Spreadsheets}
 Comparing an environment with its properties to a spreadsheet with its cells,
@@ -201,23 +200,25 @@ we notice these parallels and differences:
   In the transliteration, the missing value is represented as \Java's
   \kk{null}.
 
-  Similarly to, but not exactly the same as cells, the value of a property
-  is \emph{missing} if any one of the following conditions holds.
+\end{enumerate}
+
+\section{Invalidation and caching}
+The value of a property is \emph{missing} if any one of the following conditions holds.
 
   \begin{enumerate}
     \item \emph{Empty cells:} We say that a property is \emph{free} if this property
         is an ingredient whose value was not set. Free properties resemble the
-        empty cells of a spreadsheet---placeholders to be filled in later.  In
+        empty cells of a spreadsheet---placeholders to be filled in later. In
         \cref{figure:rational} both ingredients~\cc{n} and~\cc{d} are initially
-        free. 
-        
+        free.
+
         To further the gastronomical parable, a cell may depend on empty cells---likewise, a
         recipe, such as \cc{positive}, may depend on free properties.
 
         If a property is \emph{free}, then its value is said to be
-        \emph{missing}\footnote{we also may say that the property itself is
+        \emph{missing}†{we also may say that the property itself is
         \emph{missing}}. Inductively, if a certain recipe depends on properties
-        whose value is missing, then this recipe's value is also missing. 
+        whose value is missing, then this recipe's value is also missing.
 
         Values of all properties in \cref{figure:rational} is missing. To
         create concrete values, assignments to ingredients must take place.
@@ -225,10 +226,9 @@ we notice these parallels and differences:
         environment~\cc{.Rational} after two operations have taken place:
 
         \begin{enumerate}
-          \item assignment of \cc{0} to property~\cc{d}; followed by,
-          \item a read of property~\cc{infinite}. 
+          \item assignment of~\cc{0} to property~\cc{d}; followed by,
+          \item a read of property~\cc{infinite}.
         \end{enumerate}
-            
 
           \begin{figure}[H]
             \caption{\label{figure:rational:1}%
@@ -240,27 +240,34 @@ we notice these parallels and differences:
               \end{adjustbox}
           \end{figure}
 
+        In the figure we employ a visual convention of drawing a border around
+        non-missing values. The figure shows that values of~\cc{d} and
+        \cc{infinite} are non-missing.
 
-        The figure employs the visual convention of drawing a border around non-missing
-        values. We see that values of~\cc{d} and \cc{infinite} are non-missing.
+        To elaborate, lazy caching semantics means the assignment to~\cc{d}
+        invalidates the cached value of properties that depend on it directly,
+        or indirectly.  Since each recipe in the graph has a directed path
+        leading to to~\cc{d}, the assignment to~\cc{d} invalidates all recipes. 
 
-        The reason is that by the lazy caching semantics means the assignment to \cc{d} 
-        invalidates all properties that depend on it directly, or indirectly.
-        (Note that each recipe in the graph has a directed path leading to  
-        to~\cc{d}.) 
-         
-        The  read of property \cc{infinite} triggers a computation of
-        the recipe, which returns \kk{True}.  However a read of any other
-        recipe yields~$⊥$ \emph{without} recomputation: For example, reading
+        As a visual hint, invalidated cache values are drawn in a brigher 
+        background. The value on property \cc{infinite} is not shaded, 
+        since the read of property \cc{infinite} triggers a computation of the
+        recipe, which returns \kk{True}. 
+        
+        Even though the cache is invalidated on the other recipes, they stil 
+        yield~$⊥$ \emph{without} recomputation: For example, reading
         \cc{positive} immediately returns~$⊥$: Even though~\cc{d} is defined,
         computation of the recipe \[
-          \cc{n < 0 == d < 0} 
+          \cc{n < 0 == d < 0}
         \] cannot commence
-        while~\cc{n=$⊥$}. 
+        while~\cc{n=$⊥$}.
 
         By the same consideration, property~\cc{r} remains in the missing
         prerequisite state. Since~\cc{r} does not change, properties \cc{abs}
-        and \cc{zero} retain their current~$⊥$ value as well.
+        and \cc{zero} retain their current~$⊥$ value as well: An attempt to
+        read these will check that \cc{⊥} present in the cache still cannot 
+        be computed. If this is the case, the cache is simply marked valid
+        without changing its value.
 
           \item\emph{Errors:} If the recipe itself fails, i.e., the \Java
           evaluation of the~$λ$-expression throws an exception, then the
@@ -270,9 +277,9 @@ we notice these parallels and differences:
           after we have further applied:
 
         \begin{enumerate}
-          \item assignment of \cc{1} to property~\cc{d}; followed by,  
-          \item a read of property~\cc{positive}; and, 
-          \item a read of property~\cc{r}. 
+          \item assignment of~\cc{1} to property~\cc{d}; followed by,
+          \item a read of property~\cc{positive}; and,
+          \item a read of property~\cc{r}.
         \end{enumerate}
 
         The resulting prerequisites' is portrayed in \Cref{figure:rational:2}.
@@ -280,7 +287,7 @@ we notice these parallels and differences:
           \begin{figure}[H]
             \caption{\label{figure:rational:2}%
               The prerequisites' graph of \cref{figure:rational:1},
-              followed by the assignment \cc{n=1} and a read 
+              followed by the assignment \cc{n=1} and a read
               of~\cc{positive} and of~\cc{r}.
             }
               \begin{adjustbox}{max width=\columnwidth}
@@ -289,32 +296,26 @@ we notice these parallels and differences:
           \end{figure}
 
           In the figure, we see that even though there are no more free
-          ingredients the values of some properties is still missing. 
+          ingredients the values of some properties is still missing.
 
           To understand why, notice that assignment \cc{n=1} invalidated all
-          properties except for \cc{infinite}. In particular, property~\cc{r} is 
-          invalidated by the assignment~\cc{n=1}.  In reading \cc{r},
-          the recipe is triggered, none of~\cc{n} and~\cc{d}, the two
-          prerequisites of recipe~\cc{n/d}, is free.
-          This recipe however aborts due to division by zero.  
+          properties except for \cc{infinite}. In particular, property~\cc{r} is
+          invalidated by the assignment~\cc{n=1}. In reading~\cc{r},
+          the recipe is triggered, since bot of~\cc{n} and~\cc{d}, the two
+          prerequisites are no longer free.
+          This recipe however aborts due to division by zero.
 
           The abortion makes property~\cc{r} retain its previous missing value.
           A subsequent read of~\cc{r} will trigger the recipe, unless one or
-          more of~\cc{n} or~\cc{d} was updated prior to the read.  
-          
-          The result of \cc{r} retaining its missing value, makes recipes
+          more of~\cc{n} or~\cc{d} was updated prior to the read.
+
+          The result of~\cc{r} retaining its missing value, makes recipes
           \cc{abs} and \cc{zero} retain their cached
           missing value as well.
 
-         
           The read of \cc{positive} triggers recomputation of of its recipe,
-          and this recomputation returns \kk{True}.\footnote{% 
-            Indeed, in the~\cc{.Rational} environment the undefined fraction~$1/0$ is
-          considered both positive and infinite.}
-          
-         
-                    
-  \end{enumerate}
+          and this recomputation returns \kk{True}.†{In the~\cc{.Rational}
+            environment the undefined fraction~$1/0$ is considered $+∞$.}
 \end{enumerate}
 
 \section{Edges and Types}
