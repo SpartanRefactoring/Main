@@ -1,20 +1,24 @@
-\usegdlibrary{layered}
-
+++\usegdlibrary{layered}
+\usegdlibrary{routing}
 \begin{tikzpicture}[
-    shorten >=3pt,
-    -stealth,
+    every label/.style={draw,fill=purple!20},
+thick,
+    shorten <= 7pt,
+    -latex,
+stealth-,
     p/.style = {% Property
-      label=above left:\cc{#1},label distance=12pt,
+      label=above right:$#1$,label distance=12pt,
 %       label=above left:\cc{#1},
       rounded corners,
       font=\footnotesize,
       rectangle split parts=2,
 	minimum height=0pt,
 	minimum width=0pt,
+ outer sep=-3pt,
     },
     f/.style = {fill=olive!30,p=#1}, % cvalue
-    v/.style = {fill=Yellow,p=#1,circle,inner sep=2pt,}, % final 
-    r/.style = {fill=YellowGreen,
+    ingredient/.style = {fill=Yellow,p=#1,circle,inner sep=2pt,}, % final 
+    recipe/.style = {fill=YellowGreen,
       p=#1,
 minimum height=2em,
       trapezium,
@@ -22,7 +26,7 @@ minimum height=2em,
       trapezium right angle=130,
 	inner sep=8pt,
 % inner sep=0pt,
-%  outer sep=0pt,
+% outer sep=0pt,
     },   % recipe
     l/.style = { % label
       ellipse,
@@ -41,29 +45,31 @@ fill=ProcessBlue!20
 \def\cc#1{{\normalsize\texttt{\textbf{#1}}}}
   \graph [ 
      layered layout,
-    level distance=13ex,
-    sibling distance=15ex
+    level distance=12ex,
+    sibling distance=15ex,
+%      edges=rounded corners,
     ] {% 
     % vim: +,/^\s}$/-!column -t
-    d /{$\bot$}[v=d],
-    n /{$\bot$}[v=n],
-    r /{\cc{n/d}}[r=r],
-    positive /{\cc{n < 0 == d < 0}}[r=positive],
-    abs /{\cc{r > 0 \relax? r : -r}  }[r=abs],
-    infinite /{\cc{d == 0}}[r=infinite],
-    zero /{\cc{ !infinite \&\& abs==0}  }[r=zero],
+    d /{$\bot$}[ingredient=d],
+    n /{$\bot$}[ingredient=n],
+    P /{$(n<0)=(d<0)$}[recipe=P,nudge=(-40:25pt)],
+    R /{$n/d$}[recipe=R,nudge=(20:22pt)],
+    A /{$\max(R,-R)$  }[recipe=A],
+    I /{$d = 0$}[recipe=I,nudge=(70:39pt)],
+    Z /{$ \neg I \wedge A =0$}  [recipe=Z],
 % 
-    infinite <- d,
-    zero<-abs<-r,
-    r<-{n, d},
-zero<-infinite,
-    positive<-{n, d},
+    P <-{n, d},
+    I <- d,
+    Z <- A <- R,
+    R<- {n, d},
+Z<-I,
+% c[recipe,fill=black!20,opacity=0.5]<-e[recipe],
     }; %
-     \node [l,at=(r.south)] {$\bot$};
-    \node [l,at=(infinite.south)] {$\bot$};
-    \node [l,at=(abs.south)] {$\bot$};
-    \node [l,at=(zero.south)] {$\bot$};
-    \node [l,at=(positive.south)] {$\bot$};
+    \node [l,at=(R.south)] {$\bot$};
+    \node [l,at=(I.south)] {$\bot$};
+    \node [l,at=(A.south)] {$\bot$};
+    \node [l,at=(Z.south)] {$\bot$};
+    \node [l,at=(P.south)] {$\bot$};
     \path[fill=yellow!30,opacity=0.4,fill=white,] 
     (current bounding box.south west) 
     rectangle 

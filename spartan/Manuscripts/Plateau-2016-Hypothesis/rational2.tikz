@@ -1,6 +1,7 @@
 \usegdlibrary{layered}
 
 \begin{tikzpicture}[
+thick,
     shorten >=3pt,
     -stealth,
     p/.style = {% Property
@@ -40,6 +41,7 @@ fill=ProcessBlue!20
 \def\cc#1{{\normalsize\texttt{\textbf{#1}}}}
   \graph [ 
      layered layout,
+edges=rounded corners,
     level distance=12ex,
     sibling distance=12ex
     ] {% 

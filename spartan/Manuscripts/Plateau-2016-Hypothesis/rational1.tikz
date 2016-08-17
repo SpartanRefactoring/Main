@@ -6,23 +6,29 @@
     p/.style = {% Property
       label=above left:\cc{#1},
       rounded corners,
+     anchor=north,
       font=\footnotesize,
       rectangle split parts=2,
+	minimum height=0pt,
+	minimum width=0pt,
     },
     f/.style = {fill=olive!30,p=#1}, % cvalue
-    v/.style = {fill=Yellow,p=#1,circle,minimum height=0pt,minimum width=0pt,}, % final 
+    v/.style = {fill=Yellow,p=#1,circle,inner sep=2pt,}, % final 
     r/.style = {fill=YellowGreen,
-minimum height=2.3em,
-      minimum width=3.5em,
       p=#1,
+minimum height=2em,
       trapezium,
       trapezium left angle=130, 
       trapezium right angle=130,
+	inner sep=8pt,
+% inner sep=0pt,
+%  outer sep=0pt,
     },   % recipe
     l/.style = { % label
       ellipse,
       font=\scriptsize,
-      fill=ProcessBlue,
+      fill=ProcessBlue!90,
+inner sep=2pt,
     },
     valueIsSet/.style = {% Set 
       draw,
