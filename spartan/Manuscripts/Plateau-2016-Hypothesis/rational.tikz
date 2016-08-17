@@ -1,77 +1,112 @@
-++\usegdlibrary{layered}
+\usetikzlibrary{quotes}
+\usegdlibrary{layered}
 \usegdlibrary{routing}
-\begin{tikzpicture}[
-    every label/.style={draw,fill=purple!20},
-thick,
-    shorten <= 7pt,
-    -latex,
-stealth-,
-    p/.style = {% Property
-      label=above right:$#1$,label distance=12pt,
-%       label=above left:\cc{#1},
-      rounded corners,
-      font=\footnotesize,
-      rectangle split parts=2,
-	minimum height=0pt,
-	minimum width=0pt,
- outer sep=-3pt,
-    },
-    f/.style = {fill=olive!30,p=#1}, % cvalue
-    ingredient/.style = {fill=Yellow,p=#1,circle,inner sep=2pt,}, % final 
-    recipe/.style = {fill=YellowGreen,
-      p=#1,
+
+\tikzset{property/.style= {%
+  thick,
+  label={[label distance=-0.8ex,font=\footnotesize]45:$#1$},
+  rounded corners,
+  font=\footnotesize,
+  rectangle split parts=2,
+  minimum height=0pt,
+  minimum width=0pt,
+  %   outer sep=-3pt,
+}}
+\tikzset{ingredient/.style = {%
+  property=#1,
+  fill=Yellow,
+  rectangle,
+  %inner sep=2pt,
+}}
+\tikzset{recipe/.style = {%
+  property=#1,
+  fill=YellowGreen,
 minimum height=2em,
-      trapezium,
-      trapezium left angle=130, 
-      trapezium right angle=130,
-	inner sep=8pt,
-% inner sep=0pt,
-% outer sep=0pt,
-    },   % recipe
-    l/.style = { % label
-      ellipse,
-      font=\scriptsize,
-      fill=ProcessBlue!90,
-inner sep=2pt,
-    },
-    valueIsSet/.style = {% Set 
-      draw,
-      very thick,
-    }, 
-    invalidated/.style = {% Set 
-fill=ProcessBlue!20
-    },
-]
-\def\cc#1{{\normalsize\texttt{\textbf{#1}}}}
-  \graph [ 
-     layered layout,
-    level distance=12ex,
-    sibling distance=15ex,
-%      edges=rounded corners,
-    ] {% 
-    % vim: +,/^\s}$/-!column -t
-    d /{$\bot$}[ingredient=d],
-    n /{$\bot$}[ingredient=n],
-    P /{$(n<0)=(d<0)$}[recipe=P,nudge=(-40:25pt)],
-    R /{$n/d$}[recipe=R,nudge=(20:22pt)],
-    A /{$\max(R,-R)$  }[recipe=A],
-    I /{$d = 0$}[recipe=I,nudge=(70:39pt)],
-    Z /{$ \neg I \wedge A =0$}  [recipe=Z],
-% 
-    P <-{n, d},
-    I <- d,
-    Z <- A <- R,
-    R<- {n, d},
-Z<-I,
-% c[recipe,fill=black!20,opacity=0.5]<-e[recipe],
-    }; %
-    \node [l,at=(R.south)] {$\bot$};
-    \node [l,at=(I.south)] {$\bot$};
-    \node [l,at=(A.south)] {$\bot$};
-    \node [l,at=(Z.south)] {$\bot$};
-    \node [l,at=(P.south)] {$\bot$};
-    \path[fill=yellow!30,opacity=0.4,fill=white,] 
-    (current bounding box.south west) 
-    rectangle 
-    (current bounding box.north east); 
+ minimum width=3em,
+%   trapezium,
+%   trapezium left angle=130,
+%   trapezium right angle=130,
+%   semicircle,
+%   regular polygon,
+% kite,
+% kite upper vertex angle=135, kite lower vertex angle=90,
+%   semicircle,
+%  shape border rotate=180,
+signal to=down,
+signal,
+signal pointer angle=120,
+%   inner sep=0pt,
+ anchor=south,
+}},
+\tikzset{value/.style = {%
+  circle,
+  inner sep=1pt,
+ minimum width=1em,
+  node distance=0,
+  fill=ProcessBlue!90,
+anchor=south,
+% outer sep=-1ex,
+}}
+\tikzset{valid/.style = {%
+  value,
+  draw,
+  very thick,
+}}
+\tikzset{invalid/.style = {%
+  fill=ProcessBlue!20
+}}
+\tikzset{xnudge/.style = {%
+  fill=ProcessBlue!20
+}}
+\newcommand\XX[2]{
+  \begin{minipage}{#1ex}#1
+  \end{minipage}
+}
+\newcommand\Y {
+  \begin{minipage}{14ex}
+    \scriptsize\tiny
+    \begin{equation*}
+      \begin{cases}
+        R  & R > 0            \\
+        -R & \text{otherwise}
+      \end{cases}
+    \end{equation*}
+  \end{minipage}
+}
+
+\begin{tikzpicture}[auto,-latex,shorten <=0.3ex,thick]
+  \graph [
+    layered layout,
+    level distance = 12ex,
+    sibling distance = 18ex,
+    edges={}, % rounded corners,
+  ] {%
+    % Nodes. Columnize: +,/end./-!column -t|sed 's/^/    /'
+    d  /{$\bot$}                   [ingredient=d,nudge  up=0ex,nudge  left=6ex],
+    n  /{$\bot$}                   [ingredient=n,nudge  up=0ex,nudge=(120:5ex)],
+    P  /{$(n<0)=(d<0)$}            [recipe=P,nudge      up=0ex,nudge  left=0ex],
+    R  /{$n/d$}                    [recipe=R,nudge      up=0ex,nudge  left=-1ex],
+    A  /{\Y}             [recipe=A,nudge      up=0ex,nudge  left=20ex],
+    I  /{$d=0$}                    [recipe=I,nudge      up=7ex,nudge  up=7ex],
+    Z  /{$\neg{}I\wedge{}AP{}=0$}  [recipe=Z,,nudge     up=0ex,nudge  left=0ex],
+    % end.
+    % Edges. Columnize: +,/end./-!column -t|sed 's/^/    /'
+    P  <-  {n,d},
+    R  <-  {n,d},
+    I  <-  d,
+    Z  <-  A,
+    Z  <-  I,
+    A  <-  R,
+    % end.
+    % c[recipe,fill=black!20,opacity=0.5]<-e[recipe],
+  }; %
+  \node [value,at=(R.south)] {$\bot$};
+  \node [value,at=(I.south)] {$\bot$};
+  \node [value,at=(A.south)] {$\bot$};
+  \node [value,at=(Z.south)] {$\bot$};
+  \node [value,at=(P.south)] {$\bot$};
+  \path[fill=yellow!30,opacity=0.4,fill=white,]
+  (current bounding box.south west)
+  rectangle
+  (current bounding box.north east);
 \end{tikzpicture}

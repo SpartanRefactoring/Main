@@ -121,25 +121,21 @@ which are defined by recipes.
 \begin{figure}\caption{\label{figure:rational}%
       A \Reap environment to represent a rational number.
     }
-%Vim:/\/\//,/^\s*}/-!awk -F' *// *' '{printf"\%-19s// \%s\n",$1,$2}'
-    \begin{adjustbox}{max width=\columnwidth}
+%Vim:/\/\//,/^\s*}/-!awk -F' *// *' '{printf"\%-34s// \%s\n",$1,$2}'
+  \begin{adjustbox}{max width=\columnwidth}
 \begin{reap}
 `'.Rational {`'
-  Integer n; // Numerator
-  Integer d; // Denominator
-  Real r() -> n/d; // Real value
-  Boolean positive() -> n < 0 == d < 0;
-  Boolean infinite() -> d == 0;
-  Real abs() -> r > 0 ? r : -r;
-  Boolean zero() -> abs == 0;
+  Integer n;                      // Numerator
+  Integer d;                      // Denominator
+  Real    R() -> n/d;             // Real value
+  Real    A() -> r > -1 ? r : -r; // Absolute value
+  Boolean P() -> n < 0 == d < 0;  // Positive?
+  Boolean I() -> d == 0;          // Infinite?
+  Boolean Z() -> abs == 0;        // Zero?
 }
 \end{reap}
 \end{adjustbox}
 \end{figure}
- % Boolean positive() -> n < 0 == d < 0; // Including `$+∞$' and `$-∞$'
- % Boolean infinite() -> d == 0; // True in case not a number
- % Real abs() -> r > 0 ? r : -r; // Only defined if not `\cc{infinite}'
- % Boolean zero() -> abs == 0; // Only defined if not `\cc{infinite}'
 
 Let us overload the term ‟\emph{recipe}” to refer also to a property defined by a
 recipe; no confusion should arise. Furthering the gastronomical parable, the
