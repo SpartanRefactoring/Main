@@ -2,12 +2,13 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.utils.Utils.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import static il.org.spartan.refactoring.utils.extract.*;
+
 import il.org.spartan.utils.*;
 /** A utility class for finding occurrences of an {@link Expression} in an
  * {@link ASTNode}.
