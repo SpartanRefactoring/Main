@@ -15,7 +15,8 @@ import il.org.spartan.refactoring.utils.*;
  * {@link Operator#PLUS} for the concatenation of {@link String}s.
  * @author Yossi Gil
  * @since 2015-07-17 */
-public final class InfixSortAddition extends Wring.InfixSorting {
+public class InfixSortAddition extends Wring.InfixSorting 
+  implements Kind.Canonicalization {
   @Override boolean eligible(final InfixExpression e) {
     return Is.notString(e) && super.eligible(e);
   }
@@ -31,7 +32,5 @@ public final class InfixSortAddition extends Wring.InfixSorting {
   @Override boolean sort(final List<Expression> es) {
     return ExpressionComparator.ADDITION.sort(es);
   }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REORDER_EXPRESSIONS;
-  }
+
 }

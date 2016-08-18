@@ -9,7 +9,6 @@ import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.LocalInliner.*;
 
@@ -28,7 +27,7 @@ import il.org.spartan.refactoring.wring.LocalInliner.*;
  *
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class DeclarationInitialiazelUpdateAssignment extends Wring.VariableDeclarationFragementAndStatement {
+public class DeclarationInitialiazelUpdateAssignment extends Wring.VariableDeclarationFragementAndStatement implements Kind.Canonicalization{
   @Override String description(final VariableDeclarationFragment f) {
     return "Consolidate declaration of " + f.getName() + " with its subsequent initialization";
   }
@@ -50,8 +49,5 @@ public final class DeclarationInitialiazelUpdateAssignment extends Wring.Variabl
     i.inlineInto(newInitializer);
     r.remove(nextStatement, g);
     return r;
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }

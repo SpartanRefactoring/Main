@@ -6,7 +6,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** A {@link Wring} to convert
@@ -25,7 +24,8 @@ import il.org.spartan.refactoring.utils.*;
  * https://docs.oracle.com/javase/tutorial/java/nutsandbolts/op1.html
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class DeclarationInitializerReturnVariable extends Wring.VariableDeclarationFragementAndStatement {
+public class DeclarationInitializerReturnVariable extends Wring.VariableDeclarationFragementAndStatement 
+  implements Kind.Inlining {
   @Override String description(final VariableDeclarationFragment f) {
     return "Eliminate temporary " + f.getName() + " and return its value";
   }
@@ -42,8 +42,5 @@ public final class DeclarationInitializerReturnVariable extends Wring.VariableDe
     eliminate(f, r, g);
     r.replace(s, subject.operand(initializer).toReturn(), g);
     return r;
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.ELIMINATE_TEMP;
   }
 }

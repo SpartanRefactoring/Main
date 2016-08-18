@@ -12,7 +12,8 @@ import il.org.spartan.refactoring.utils.*;
  * increment/decrement to prefix increment/decrement
  * @author Yossi Gil
  * @since 2015-7-17 */
-public final class PostfixToPrefix extends Wring.ReplaceCurrentNode<PostfixExpression> {
+public class PostfixToPrefix extends Wring.ReplaceCurrentNode<PostfixExpression> 
+  implements Kind.Canonicalization {
   private static String description(final Operator o) {
     return o == PostfixExpression.Operator.DECREMENT ? "decrement" : "increment";
   }
@@ -33,8 +34,5 @@ public final class PostfixToPrefix extends Wring.ReplaceCurrentNode<PostfixExpre
   }
   @Override boolean scopeIncludes(@SuppressWarnings("unused") final PostfixExpression __) {
     return true;
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REORDER_EXPRESSIONS;
   }
 }

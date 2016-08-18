@@ -7,7 +7,6 @@ import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** A {@link Wring} to convert
@@ -25,7 +24,7 @@ import il.org.spartan.refactoring.utils.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public abstract class RedundantModifiers<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> {
+public abstract class RedundantModifiers<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> implements Kind.SyntacticBaggage {
   public static class OfAnnotation extends RedundantModifiers<AnnotationTypeDeclaration> { /* empty */
   }
 
@@ -120,8 +119,5 @@ public abstract class RedundantModifiers<N extends BodyDeclaration> extends Wrin
   @Override boolean scopeIncludes(final BodyDeclaration ¢) {
     final Set<Predicate<Modifier>> ps = redundancies(¢);
     return !ps.isEmpty() && !matchess(¢, ps).isEmpty();
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REMOVE_SYNTACTIC_BAGGAGE;
   }
 }

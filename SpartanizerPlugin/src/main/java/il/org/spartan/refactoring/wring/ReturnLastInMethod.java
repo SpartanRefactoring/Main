@@ -14,7 +14,8 @@ import il.org.spartan.refactoring.utils.*;
  * last in method.
  * @author Yossi Gil
  * @since 2015-7-17 */
-public final class ReturnLastInMethod extends Wring<ReturnStatement> {
+public class ReturnLastInMethod extends Wring<ReturnStatement> 
+  implements Kind.SyntacticBaggage {
   @Override String description(@SuppressWarnings("unused") final ReturnStatement __) {
     return "Remove redundant return statement";
   }
@@ -28,8 +29,5 @@ public final class ReturnLastInMethod extends Wring<ReturnStatement> {
             r.remove(s, g);
           }
         };
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

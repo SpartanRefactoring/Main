@@ -27,7 +27,8 @@ import il.org.spartan.refactoring.utils.*;
  * <code>
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-04 */
-public class BooleanConstants extends Wring.ReplaceCurrentNode<MethodInvocation> {
+public class BooleanConstants extends Wring.ReplaceCurrentNode<MethodInvocation> 
+  implements Kind.Canonicalization {
   @Override String description(@SuppressWarnings("unused") final MethodInvocation __) {
     return "Use built-in boolean constants instead of valueOf()";
   }
@@ -42,8 +43,5 @@ public class BooleanConstants extends Wring.ReplaceCurrentNode<MethodInvocation>
       return null;
     final BooleanLiteral b = asBooleanLiteral(arguments.get(0));
     return b == null ? null : subject.operand(e).toQualifier(b.booleanValue() ? "TRUE" : "FALSE");
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REMOVE_SYNTACTIC_BAGGAGE;
   }
 }

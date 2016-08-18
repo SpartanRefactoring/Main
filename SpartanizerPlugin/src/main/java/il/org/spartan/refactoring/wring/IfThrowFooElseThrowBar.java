@@ -24,7 +24,8 @@ import il.org.spartan.refactoring.utils.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class IfThrowFooElseThrowBar extends Wring.ReplaceCurrentNode<IfStatement> {
+public class IfThrowFooElseThrowBar extends Wring.ReplaceCurrentNode<IfStatement> 
+  implements Kind.Ternarization {
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate 'if' into a 'throw' statement of a conditional expression";
   }
@@ -36,8 +37,5 @@ public final class IfThrowFooElseThrowBar extends Wring.ReplaceCurrentNode<IfSta
   }
   @Override boolean scopeIncludes(final IfStatement s) {
     return s != null && extract.throwExpression(then(s)) != null && extract.throwExpression(elze(s)) != null;
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.IF_TO_TERNARY;
   }
 }

@@ -9,7 +9,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** A {@link Wring} to convert
@@ -36,7 +35,7 @@ import il.org.spartan.refactoring.utils.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> {
+public class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements Kind.DistributiveRefactoring{
   private static List<Statement> commonPrefix(final List<Statement> ss1, final List<Statement> ss2) {
     final List<Statement> $ = new ArrayList<>();
     while (!ss1.isEmpty() && !ss2.isEmpty()) {
@@ -89,8 +88,5 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> {
   }
   @Override boolean scopeIncludes(final IfStatement s) {
     return make(s) != null;
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

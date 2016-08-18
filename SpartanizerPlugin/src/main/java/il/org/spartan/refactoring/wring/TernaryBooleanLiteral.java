@@ -58,7 +58,8 @@ import il.org.spartan.refactoring.utils.*;
  * .
  * @author Yossi Gil
  * @since 2015-07-20 */
-public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<ConditionalExpression> {
+public class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<ConditionalExpression> 
+  implements Kind.NoImpact {
   private static boolean isTernaryOfBooleanLitreral(final ConditionalExpression e) {
     return e != null && Have.booleanLiteral(core(e.getThenExpression()), core(e.getElseExpression()));
   }
@@ -116,8 +117,5 @@ public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<Condit
   }
   @Override boolean scopeIncludes(final ConditionalExpression e) {
     return isTernaryOfBooleanLitreral(e);
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.IF_TO_TERNARY;
   }
 }

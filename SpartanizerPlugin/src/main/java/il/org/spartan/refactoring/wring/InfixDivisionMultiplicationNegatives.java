@@ -45,7 +45,8 @@ import il.org.spartan.refactoring.utils.*;
  *
  * @author Matteo Orrù
  * @since 2016 */
-public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpression> {
+public class InfixDivisionMultiplicationNegatives extends Wring<InfixExpression> 
+  implements Kind.NoImpact {
   private static List<Expression> gather(final Expression e, final List<Expression> $) {
     if (e instanceof InfixExpression)
       return gather(asInfixExpression(e), $);
@@ -102,8 +103,5 @@ public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpre
           r.replace(first, new Plant(subject.operand(peelNegation(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
       }
     };
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REORDER_EXPRESSIONS;
   }
 }

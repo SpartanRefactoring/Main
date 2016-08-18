@@ -26,7 +26,8 @@ import il.org.spartan.refactoring.wring.LocalInliner.*;
  *
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class DeclarationInitializerReturnExpression extends Wring.VariableDeclarationFragementAndStatement {
+public class DeclarationInitializerReturnExpression extends Wring.VariableDeclarationFragementAndStatement 
+  implements Kind.Inlining {
   @Override String description(final VariableDeclarationFragment f) {
     return "Eliminate temporary " + f.getName() + " and inline its value into the expression of the subsequent return statement";
   }
@@ -48,8 +49,5 @@ public final class DeclarationInitializerReturnExpression extends Wring.Variable
     i.inlineInto(newReturnValue);
     eliminate(f, r, g);
     return r;
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.ELIMINATE_TEMP;
   }
 }

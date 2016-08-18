@@ -6,7 +6,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** A {@link Wring} to convert
@@ -25,7 +24,8 @@ import il.org.spartan.refactoring.utils.*;
  *
  * @author Yossi Gil
  * @since 2015-09-09 */
-public final class IfThrowNoElseThrow extends Wring.ReplaceToNextStatement<IfStatement> {
+public class IfThrowNoElseThrow extends Wring.ReplaceToNextStatement<IfStatement> 
+  implements Kind.Ternarization {
   static Expression getThrowExpression(final Statement s) {
     final ThrowStatement $ = extract.throwStatement(s);
     return $ == null ? null : extract.core($.getExpression());
@@ -41,8 +41,5 @@ public final class IfThrowNoElseThrow extends Wring.ReplaceToNextStatement<IfSta
       return null;
     final Expression e2 = getThrowExpression(nextStatement);
     return e2 == null ? null : Wrings.replaceTwoStatements(r, s, subject.operand(subject.pair(e1, e2).toCondition(s.getExpression())).toThrow(), g);
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.IF_TO_TERNARY;
   }
 }
