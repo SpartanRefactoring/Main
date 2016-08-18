@@ -2,16 +2,6 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
 
-import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
-import static il.org.spartan.utils.Utils.*;
-
-import org.junit.*;
-import org.junit.runners.*;
-
-import il.org.spartan.*;
-import il.org.spartan.refactoring.spartanizations.*;
-
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -23,6 +13,67 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class TrimmerTest250 {
+  @Test public void issue70_01() {
+    trimming("(double)5").to("1.*5");
+  }
+  @Test public void issue70_02() {
+    trimming("(double)4").to("1.*4");
+  }
+  @Test public void issue70_03() {
+    trimming("(double)1.2").to("1.*1.2");
+  }
+  @Test public void issue70_04() {
+    trimming("(double)'a'").to("1.*'a'");
+  }
+  @Test public void issue70_05() {
+    trimming("(double)A").to("1.*A");
+  }
+  @Test public void issue70_06() {
+    trimming("(double)a.b").to("1.*a.b");
+  }
+  @Test public void issue70_07() {
+    trimming("(double)5").to("1.*5");
+  }
+  @Test public void issue70_08() {
+    trimming("(double)5").to("1.*5");
+  }
+  @Test public void issue70_09() {
+    trimming("(double) 2. * (double)5")//
+        .to("(double)5 * (double)2.") //
+        .to("1. * 5  * 1. * 2.")//
+        .to("");
+  }
+  @Test public void issue70_10() {
+    trimming("(double)5").to("1.*5");
+  }
+  @Test public void issue70_11() {
+    trimming("(double)5").to("1.*5");
+  }
+  @Test public void issue70_12() {
+    trimming("(double)5").to("1.*5");
+  }
+  @Test public void issue70_13() {
+    trimming("(double)5").to("1.*5");
+  }
+  @Test public void issue70_14() {
+    trimming("(double)5").to("1.*5");
+  }
+  @Test public void issue70_15() {
+    trimming("(double)5").to("1.*5");
+    trimming("(double)5").to("1.*5");
+  }
+  @Test public void issue70_16() {
+    trimming("(double)5").to("1.*5");
+  }
+  @Test public void issue70_17() {
+    trimming("(double)5").to("1.*5");
+  }
+  @Test public void issue70_18() {
+    trimming("(double)5").to("1.*5");
+  }
+  @Test public void issue70_19() {
+    trimming("(double)5").to("1.*5");
+  }
   @Test public void issue71a() {
     trimming("1*a").to("a");
   }
@@ -71,5 +122,10 @@ public class TrimmerTest250 {
   @Test public void issue71p() {
     trimming("((1)*((a)))").to("(a)");
   }
-
+  @Test public void issue71q() {
+    trimming("1L*1").to("1L");
+  }
+  @Test public void issue71r() {
+    trimming("1L*a").to("");
+  }
 }
