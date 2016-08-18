@@ -17,6 +17,7 @@ public class PluginPreferencesResources {
     Inlining(Kind.Inlining.class), //
     NoImpact(Kind.NoImpact.class), //
     ScopeReduction(Kind.ScopeReduction.class), //
+    Sorting(Kind.Sorting.class), //
     SyntacticBaggage(Kind.SyntacticBaggage.class), //
     Ternarization(Kind.Ternarization.class), //
     UnusedArguments(Kind.UnusedArguments.class),//
@@ -46,11 +47,11 @@ public class PluginPreferencesResources {
       return Plugin.plugin() == null || "on".equals(store().getString(id));
     }
     public static WringGroup find(final Kind ¢) {
-      return find(Kind.class);
+      return find(¢.getClass());
     }
     private static WringGroup find(final Class<? extends Kind> c) {
       for (final WringGroup $ : WringGroup.values())
-        if ($.clazz == c)
+        if ($.clazz.isAssignableFrom(c))
           return $;
       return null;
     }
