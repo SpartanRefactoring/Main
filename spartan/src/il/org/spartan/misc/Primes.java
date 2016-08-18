@@ -88,7 +88,7 @@ public class Primes {
         || ¢ > 1 && isPrime¢(¢); // any integer >- 2
   }
   private static boolean isPrime¢(final int ¢) {
-    for (int d = 2; d * d <= ¢; d++)
+    for (int d = 2; d * d <= ¢; ++d)
       if (¢ % d == 0)
         return false;
     return true;

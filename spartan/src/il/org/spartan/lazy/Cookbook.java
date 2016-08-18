@@ -142,12 +142,12 @@ public interface Cookbook {
       }
       @Test public void sessionA02() {
         final Cell<Integer> a = value(Integer.valueOf(12));
-        final Cell<String> f = compute((final Integer ¢) -> "(" + ¢.toString() + ")").from(a);
+        final Cell<String> f = compute((final Integer ¢) -> "(" + ¢ + ")").from(a);
         azzert.that(f.get(), is("(12)"));
       }
       @Test public void sessionA03() {
         final Cell<Integer> a = value(Integer.valueOf(12));
-        final Cell<String> f = compute((final Integer ¢) -> "(" + ¢.toString() + ")").from(a);
+        final Cell<String> f = compute((final Integer ¢) -> "(" + ¢ + ")").from(a);
         azzert.that(f.get(), is("(12)"));
       }
       @Test public void sessionA04() {

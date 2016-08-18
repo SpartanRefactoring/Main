@@ -24,9 +24,8 @@ public class Test {
         return false; // do not continue to avoid usage info
       }
       public boolean visit(SimpleName node) {
-        if (this.names.contains(node.getIdentifier())) {
-          System.out.println("Usage of '" + node + "' at line " + cu.getLineNumber(node.getStartPosition()));
-        }
+        if (this.names.contains(node.getIdentifier())) 
+        System.out.println("Usage of '" + node + "' at line " + cu.getLineNumber(node.getStartPosition()));
         return true;
       }
     });

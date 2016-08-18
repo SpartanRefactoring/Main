@@ -159,11 +159,12 @@ of~\cc{.Rational}. Evidently, ingredients~\cc{n} and~\cc{d} are sources of the
 graph. The remaining five are recipes.
 
 \begin{figure}[!hb]
+  \centering
   \caption{\label{figure:rational:prerequisites}%
     The prerequisites graph of \Reap environment \cc{.Rational} of
     \cref{figure:rational}.
-  }
-  \begin{adjustbox}{max width=\columnwidth}
+  }%
+  \begin{adjustbox}{width=4in}
       \input{rational.tikz}
   \end{adjustbox}
 \end{figure}
@@ -307,10 +308,10 @@ particular, property~\cc{r} is invalidated by the assignment~\cc{n=1}. In
 reading~\cc{r}, recipe can be triggered, since both of~\cc{n} and~\cc{d}, the
 two prerequisites are no longer free.
 
-The attempted division by zero aborts the triggered recipe. Consuequently,
+The attempted division by zero aborts the triggered recipe. Consequently,
 property~\cc{r} retains its previous~$⊥$ value.  A subsequent read of~\cc{r}
 will \emph{not} trigger the recipe, unless one or more of~\cc{n} or~\cc{d} was
-updated inbetween the reads. 
+updated in between the reads. 
 
 The result of~\cc{r} retaining its missing value is that if recipes \cc{abs}
 and \cc{zero} are accessed, they will retain their cached missing value as
@@ -319,6 +320,14 @@ well.
 The read of \cc{positive} triggers recomputation of of its recipe, and this
 recomputation returns \kk{True}.†{Indeed, in the~\cc{.Rational} environment we
 have~${1\over0}=+∞$.}
+
+Let the set of all types of \Reap be denoted by~$𝕋$, then
+we have
+\begin{equation}
+  \label{eq:bounds}
+  ∀τ∈𝕋 ∙ ⊥≤τ≤⊤.
+\end{equation}
+
 
 \endinput
 
@@ -329,12 +338,17 @@ have~${1\over0}=+∞$.}
     Real x2() -> x * x;
   }
 \end{reap}
+
+Also, change all \cc{¢} to \$.
+
 \begin{reap}
   `'.square {`'
     Real x;
-    Real ¢() -> x * x;
+    Real $`\ingore$'() -> x * x;
   }
 \end{reap}
+
+the utlimate argument is \_.
 \begin{reap}
   `'.square {`'
     Real `\_';
@@ -342,13 +356,19 @@ have~${1\over0}=+∞$.}
   }
 \end{reap}
 
+\begin{reap}
+.square(2) 
+\end{reap}
+is short hand for
+\begin{reap}
+.square.\_=2.() 
+\end{reap}
+which is short hand for 
+\begin{reap}
+.square.\_=2.$
+\end{reap}
+
 \endinput
-Let the set of all types of \Reap be denoted by~$𝕋$, then
-we have
-\begin{equation}
-  \label{eq:bounds}
-  ∀τ∈𝕋 ∙ ⊥≤τ≤⊤.
-\end{equation}
 
 Any time you use it, the called would also be throwing an exception.
 % \endinput

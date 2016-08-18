@@ -9,7 +9,7 @@ align=left,
   label =above:$#1$,
   rounded corners=true,
   rounded corners=false,
-  font=\footnotesize,
+%   font=\footnotesize,
   minimum height=0pt,
   minimum width=0pt,
   %   outer sep=-3pt,
@@ -110,8 +110,8 @@ anchor=shape center,fill=yellow!75!black]  at (R.west) {};
 
 %     % c[recipe,fill=black!20,opacity=0.5]<-e[recipe],
 %   }; %
-%   \path[fill=yellow!30,opacity=0.4,fill=white,]
-%   (current bounding box.south west)
-%   rectangle
-%   (current bounding box.north east);
+  \path[fill=yellow!30,opacity=0.4,fill=white,draw]
+  (current bounding box.south west)
+  rectangle
+   (current bounding box.north east);
 \end{tikzpicture}
