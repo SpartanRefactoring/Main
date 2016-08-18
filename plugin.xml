@@ -26,7 +26,10 @@
      <run class="il.org.spartan.refactoring.application.Application"></run>
      </application>
    </extension>
-  <extension id="il.org.spartan.refactoring.startupExtension" point="org.eclipse.ui.startup"/>
+      <extension point="org.eclipse.ui.startup">
+     <startup class="il.org.spartan.refactoring.builder.Plugin"/>
+   </extension>
+
 <extension
     id="il.org.spartan.refactoring.spartanizationSuggestion"
     name="Spartanization Suggestion"
