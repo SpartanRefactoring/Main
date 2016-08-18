@@ -28,8 +28,7 @@ import il.org.spartan.refactoring.wring.LocalInliner.*;
  *
  * @author Yossi Gil
  * @since 2015-08-07 */
-public class DeclarationInitializerReturnUpdateAssignment extends Wring.VariableDeclarationFragementAndStatement 
-  implements Kind.Inlining {
+public class DeclarationInitializerReturnUpdateAssignment extends Wring.VariableDeclarationFragementAndStatement implements Kind.Inlining {
   @Override String description(final VariableDeclarationFragment f) {
     return "Eliminate temporary " + f.getName() + " and inline its value into the expression of the subsequent return statement";
   }

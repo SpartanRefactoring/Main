@@ -38,8 +38,7 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @author Daniel Mittelman <tt><mittelmania [at] gmail.com></tt>
  * @since 2015-09-09 */
-public class IfLastInMethodElseEndingWithEmptyReturn extends Wring<IfStatement> 
-  implements Kind.Canonicalization {
+public class IfLastInMethodElseEndingWithEmptyReturn extends Wring<IfStatement> implements Kind.Canonicalization {
   @SuppressWarnings("unused") @Override String description(final IfStatement __) {
     return "Remove redundant return statement in 'else' branch of if statement that terminates this method";
   }

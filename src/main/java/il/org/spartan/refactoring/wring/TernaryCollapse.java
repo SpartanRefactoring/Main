@@ -26,8 +26,7 @@ import il.org.spartan.refactoring.utils.*;
  * .
  * @author Yossi Gil
  * @since 2015-9-19 */
-public class TernaryCollapse extends Wring.ReplaceCurrentNode<ConditionalExpression> 
-  implements Kind.DistributiveRefactoring {
+public class TernaryCollapse extends Wring.ReplaceCurrentNode<ConditionalExpression> implements Kind.DistributiveRefactoring {
   private static Expression collapse(final ConditionalExpression e) {
     if (e == null)
       return null;

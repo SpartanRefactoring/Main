@@ -16,8 +16,7 @@ import il.org.spartan.refactoring.utils.*;
  * {@link Operator#PLUS} for the concatenation of {@link String}s.
  * @author Yossi Gil
  * @since 2015-07-17 */
-public class InfixSortMultiplication extends Wring.InfixSorting 
-  implements Kind.Sorting {
+public class InfixSortMultiplication extends Wring.InfixSorting implements Kind.Sorting {
   @Override boolean scopeIncludes(final InfixExpression e) {
     return in(e.getOperator(), TIMES);
   }

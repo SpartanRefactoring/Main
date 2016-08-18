@@ -19,8 +19,7 @@ import il.org.spartan.refactoring.utils.*;
  * </code> will be completely removed.
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-06 */
-public class MethodRemoveDegenerateOverride extends Wring<MethodDeclaration> 
-  implements Kind.Canonicalization {
+public class MethodRemoveDegenerateOverride extends Wring<MethodDeclaration> implements Kind.Canonicalization {
   @Override Rewrite make(final MethodDeclaration d) {
     final ExpressionStatement s = extract.expressionStatement(d);
     return s == null || !(s.getExpression() instanceof SuperMethodInvocation) || !shouldRemove(d, (SuperMethodInvocation) s.getExpression()) ? null
