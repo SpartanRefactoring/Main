@@ -20,8 +20,6 @@ import il.org.spartan.refactoring.spartanizations.*;
   private static void assertConvertsTo(final String from, final String expected) {
     assertWrappedTranslation(from, expected, Wrap.Statement);
   }
-
-
   private static void assertSimplifiesTo(final String from, final String expected) {
     assertWrappedTranslation(from, expected, Wrap.Expression);
   }

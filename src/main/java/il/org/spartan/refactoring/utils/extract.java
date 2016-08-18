@@ -18,10 +18,10 @@ import il.org.spartan.*;
  * @since 2015-07-28 */
 public enum extract {
   ;
-  public static SimpleName name(MethodInvocation i) {
+  public static SimpleName name(final MethodInvocation i) {
     return i.getName();
   }
-  public static SimpleName name(SuperMethodInvocation i) {
+  public static SimpleName name(final SuperMethodInvocation i) {
     return i.getName();
   }
   /** Retrieve all operands, including parenthesized ones, under an expression
@@ -122,19 +122,19 @@ public enum extract {
         return null;
     }
   }
-  public static Expression expression(ExpressionStatement $) {
+  public static Expression expression(final ExpressionStatement $) {
     return core($.getExpression());
   }
-  public static Expression expression(MethodInvocation $) {
+  public static Expression expression(final MethodInvocation $) {
     return core($.getExpression());
   }
-  public static Expression expression(CastExpression $) {
+  public static Expression expression(final CastExpression $) {
     return core($.getExpression());
   }
-  public static Expression expression(ThrowStatement $) {
+  public static Expression expression(final ThrowStatement $) {
     return core($.getExpression());
   }
-  public static Expression expression(ReturnStatement $) {
+  public static Expression expression(final ReturnStatement $) {
     return core($.getExpression());
   }
   /** Convert, is possible, an {@link ASTNode} to a {@link ExpressionStatement}
@@ -422,7 +422,7 @@ public enum extract {
   public static ThrowStatement throwStatement(final ASTNode n) {
     return asThrowStatement(extract.singleStatement(n));
   }
-  public static Type type(CastExpression e) {
+  public static Type type(final CastExpression e) {
     return e.getType();
   }
 }
