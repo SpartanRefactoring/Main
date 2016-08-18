@@ -1,5 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
+import static il.org.spartan.refactoring.utils.extract.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.PostfixExpression.*;
 
@@ -18,7 +20,7 @@ public final class PostfixToPrefix extends Wring.ReplaceCurrentNode<PostfixExpre
     return o == PostfixExpression.Operator.DECREMENT ? PrefixExpression.Operator.DECREMENT : PrefixExpression.Operator.INCREMENT;
   }
   @Override String description(final PostfixExpression e) {
-    return "Convert post-" + description(e.getOperator()) + " of " + e.getOperand() + " to pre-" + description(e.getOperator());
+    return "Convert post-" + description(e.getOperator()) + " of " + operand(e) + " to pre-" + description(e.getOperator());
   }
   @Override protected boolean eligible(final PostfixExpression e) {
     return !(e.getParent() instanceof Expression) //
@@ -27,7 +29,7 @@ public final class PostfixToPrefix extends Wring.ReplaceCurrentNode<PostfixExpre
         && AncestorSearch.forType(ASTNode.VARIABLE_DECLARATION_EXPRESSION).from(e) == null;
   }
   @Override PrefixExpression replacement(final PostfixExpression e) {
-    return subject.operand(e.getOperand()).to(pre2post(e.getOperator()));
+    return subject.operand(extract.operand(e)).to(pre2post(e.getOperator()));
   }
   @Override boolean scopeIncludes(@SuppressWarnings("unused") final PostfixExpression __) {
     return true;

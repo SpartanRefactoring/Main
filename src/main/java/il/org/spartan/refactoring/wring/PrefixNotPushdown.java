@@ -44,7 +44,7 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
     return Is.booleanLiteral(inner) || asNot(inner) != null || asAndOrOr(inner) != null || asComparison(inner) != null;
   }
   private static boolean hasOpportunity(final PrefixExpression e) {
-    return e != null && hasOpportunity(core(e.getOperand()));
+    return e != null && hasOpportunity(core(operand(e)));
   }
   static Expression notOfLiteral(final BooleanLiteral l) {
     final BooleanLiteral $ = duplicate(l);
@@ -67,7 +67,7 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
     return perhapsDoubleNegation(asNot(e));
   }
   private static Expression perhapsDoubleNegation(final PrefixExpression e) {
-    return e == null ? null : tryToSimplify(core(e.getOperand()));
+    return e == null ? null : tryToSimplify(operand(e));
   }
   static Expression perhapsNotOfLiteral(final Expression e) {
     return !Is.booleanLiteral(e) ? null : notOfLiteral(asBooleanLiteral(e));
@@ -81,7 +81,7 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
             ? $ : null;
   }
   private static Expression pushdownNot(final PrefixExpression e) {
-    return e == null ? null : pushdownNot(core(e.getOperand()));
+    return e == null ? null : pushdownNot(operand(e));
   }
   /** A utility function, which tries to simplify a boolean expression, whose
    * top most parameter is logical negation.

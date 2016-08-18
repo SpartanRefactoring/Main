@@ -598,7 +598,7 @@ public class TrimmerTest240 {
   @Test public void declarationInitializerReturnExpression() {
     trimming("" //
         + "String t = Bob + Wants + To + \"Sleep \"; "//
-        + "  return (right_now + t);    ").to("return(right_now+Bob+Wants+To+\"Sleep \");");
+        + "  return (right_now + t);    ").to("return (right_now+Bob+Wants+To+\"Sleep \");");
   }
   @Test public void declarationInitializesRotate() {
     trimming("int a = 3;a>>>=2;").to("int a = 3 >>> 2;");
