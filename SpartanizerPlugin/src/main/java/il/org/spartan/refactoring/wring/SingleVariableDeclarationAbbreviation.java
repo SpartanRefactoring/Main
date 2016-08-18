@@ -21,8 +21,7 @@ import il.org.spartan.refactoring.utils.*;
  * This wring is applied to all methods in the code, excluding constructors.
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015/09/24 */
-public class SingleVariableDeclarationAbbreviation extends Wring<SingleVariableDeclaration> 
-  implements Kind.Abbreviation {
+public class SingleVariableDeclarationAbbreviation extends Wring<SingleVariableDeclaration> implements Kind.Abbreviation {
   private static boolean isShort(final SingleVariableDeclaration d) {
     final String n = spartan.shorten(d.getType());
     return n != null && (n + pluralVariadic(d)).equals(d.getName().getIdentifier());

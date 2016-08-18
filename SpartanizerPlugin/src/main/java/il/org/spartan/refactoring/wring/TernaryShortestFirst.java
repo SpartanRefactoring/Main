@@ -23,8 +23,7 @@ import il.org.spartan.utils.*;
  *
  * @author Yossi Gil
  * @since 2015-08-14 */
-public class TernaryShortestFirst extends Wring.ReplaceCurrentNode<ConditionalExpression> 
-  implements Kind.Canonicalization {
+public class TernaryShortestFirst extends Wring.ReplaceCurrentNode<ConditionalExpression> implements Kind.Canonicalization {
   private static double align(final Expression e1, final Expression e2) {
     return new LongestCommonSubsequence(e1.toString(), e2.toString()).similarity();
   }

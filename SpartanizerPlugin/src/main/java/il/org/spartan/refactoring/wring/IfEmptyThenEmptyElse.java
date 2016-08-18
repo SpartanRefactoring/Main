@@ -18,8 +18,7 @@ import il.org.spartan.refactoring.utils.*;
  *
  * @author Yossi Gil
  * @since 2015-08-26 */
-public class IfEmptyThenEmptyElse extends Wring<IfStatement> 
-  implements Kind.Canonicalization {
+public class IfEmptyThenEmptyElse extends Wring<IfStatement> implements Kind.Canonicalization {
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Remove 'if' statement with vacous 'then' and 'else' parts";
   }
