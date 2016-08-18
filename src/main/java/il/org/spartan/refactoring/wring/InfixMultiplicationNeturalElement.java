@@ -12,8 +12,7 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.Wring.*;
 
-/** A {@link Wring} that sorts the arguments of a {@link Operator#DIVIDE}
- * expression.
+/** Replace <code>1*X</code> by <code>X</code> 
  * @author Yossi Gil
  * @since 2015-09-05 */
 public final class InfixMultiplicationNeturalElement extends ReplaceCurrentNode<InfixExpression> {
