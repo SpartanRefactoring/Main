@@ -9,18 +9,7 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.Wring.*;
 
-/** Used to replace
- *
- * <pre>
- * s.equals("s")
- * </pre>
- *
- * </code> with safer
- *
- * <pre>
- * "s".equals(s)
- * </pre>
- *
+/** Replace <code> s.equals("s")</code> by <code>"s".equals(s)</code>
  * @author Ori Roth
  * @since 2016/05/08 */
 public class StringEqualsConstant extends ReplaceCurrentNode<MethodInvocation> {
