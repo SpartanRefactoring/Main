@@ -369,7 +369,7 @@ public enum Collect {
       }
       @Override public boolean visit(final MethodInvocation i) {
         collect(i.getExpression());
-        collect(i.arguments());
+        collect(arguments(i));
         return false;
       }
       @Override public boolean visit(final QualifiedName n) {
