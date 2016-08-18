@@ -108,9 +108,15 @@ public enum extract {
         return ((ReturnStatement) n).getExpression();
       case ASTNode.THROW_STATEMENT:
         return ((ThrowStatement) n).getExpression();
+      case ASTNode.CAST_EXPRESSION:
+        return ((CastExpression) n).getExpression();
       default:
         return null;
     }
+  }
+  
+  public static Expression expression(CastExpression $) {
+   return $.getExpression(); 
   }
   /** Convert, is possible, an {@link ASTNode} to a {@link ExpressionStatement}
    * @param n a statement or a block to extract the expression statement from
@@ -396,5 +402,8 @@ public enum extract {
    *         exists. */
   public static ThrowStatement throwStatement(final ASTNode n) {
     return asThrowStatement(extract.singleStatement(n));
+  }
+  public static Type type(CastExpression e) {
+    return e.getType();
   }
 }
