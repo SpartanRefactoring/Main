@@ -1,5 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.utils.extract.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -7,9 +11,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
-import static il.org.spartan.refactoring.utils.expose.*;
-import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.extract.*;
 import il.org.spartan.refactoring.wring.Wring.*;
 
 /** Replace <code> s.equals("s")</code> by <code>"s".equals(s)</code>

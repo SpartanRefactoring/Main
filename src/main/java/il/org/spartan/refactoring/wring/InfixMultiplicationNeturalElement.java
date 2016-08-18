@@ -6,7 +6,6 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
