@@ -18,7 +18,7 @@ public class StringEqualsConstant extends ReplaceCurrentNode<MethodInvocation> {
   final static List<String> mns = as.list(_mns);
 
   @Override String description(final MethodInvocation i) {
-    return "use " + arguments(i).get(0) + "." + i.getName() + "(" + i.getExpression() + ") instead of " + i;
+    return "use " + arguments(i).get(0) + "." + i.getName() + "(" + extract.expression(i) + ") instead of " + i;
   }
   @SuppressWarnings("unchecked") @Override ASTNode replacement(final MethodInvocation i) {
     if (!mns.contains(i.getName().toString()) || i.arguments().size() != 1 || i.getExpression() == null || i.getExpression() instanceof StringLiteral
