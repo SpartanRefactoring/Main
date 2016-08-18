@@ -81,7 +81,7 @@ public class FuncsTest {
     azzert.that(negationLevel(e("-1")), is(1));
   }
   @Test public void negationOfMinusOneB() {
-    azzert.that(countNegations((InfixExpression)e("-1 *-1")), is(2));
+    azzert.that(countNegations((InfixExpression) e("-1 *-1")), is(2));
   }
   @Test public void negationOfExpressionManyNegation() {
     azzert.that(negationLevel(e("- - - - (- (-a))")), is(6));

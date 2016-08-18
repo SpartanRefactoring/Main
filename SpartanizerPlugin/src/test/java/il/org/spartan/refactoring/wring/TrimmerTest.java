@@ -324,9 +324,9 @@ import il.org.spartan.refactoring.utils.*;
     trimming("int a = 2; a += 3; ").to("int a = 2 + 3;");
     trimming("int a = 2; a += b; ").to("int a = 2 + b;");
     trimming("int a = 2, b = 11; a = 3 * a * b; ")//
-    .to("int a=2;a=3*a*11;")//
-    .to("int a=3*2*11;")//
-    .to("int a=2*3* 11;");
+        .to("int a=2;a=3*a*11;")//
+        .to("int a=3*2*11;")//
+        .to("int a=2*3* 11;");
     trimming("int a = 2, b=1; a += b; ").to("int a=2;a+=1;").to("int a=2+1;");
     trimming("int a = 2,b=1; if (b) a = 3; ").to("int a=2;if(1)a=3;").to("int a=1?3:2;");
     trimming("int a = 2, b = 1; return a + 3 * b; ").to("int b=1;return 2+3*b;");
