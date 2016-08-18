@@ -7,9 +7,8 @@ import static il.org.spartan.utils.Utils.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-
+import static il.org.spartan.refactoring.utils.extract.*;
 import il.org.spartan.utils.*;
-
 /** A utility class for finding occurrences of an {@link Expression} in an
  * {@link ASTNode}.
  * @author Boris van Sosin <boris.van.sosin @ gmail.com>
@@ -368,7 +367,7 @@ public enum Collect {
         return true;
       }
       @Override public boolean visit(final MethodInvocation i) {
-        collect(i.getExpression());
+        collect(expression(i));
         collect(arguments(i));
         return false;
       }
