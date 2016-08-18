@@ -50,8 +50,8 @@ public class DeclarationReturnTest {
   public static class Wringed extends AbstractWringTest.Wringed.WringedVariableDeclarationFragmentAndSurrounding {
     private static String[][] cases = Utils.asArray(
         //
-        new String[] { "Vanilla", "int a = 3; return a;", "return 3;" }, //
-        new String[] { "Vanilla", "int a = 3, b; return a;", "return 3;" }, //
+        new String[] { "Vanilla A", "int a = 3; return a;", "return 3;" }, //
+        new String[] { "Vanilla A,B", "int a = 3, b; return a;", "return 3;" }, //
         new String[] { "Actual",
             "ColorChip $ " + "= messageRead ? "//
                 + "   !messageFlagged ? mReadColorChip : mFlaggedReadColorChip: " //
