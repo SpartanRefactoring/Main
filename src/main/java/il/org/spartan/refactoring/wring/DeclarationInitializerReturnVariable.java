@@ -24,7 +24,7 @@ import il.org.spartan.refactoring.utils.*;
  * https://docs.oracle.com/javase/tutorial/java/nutsandbolts/op1.html
  * @author Yossi Gil
  * @since 2015-08-07 */
-public class DeclarationInitializerReturnVariable extends Wring.VariableDeclarationFragementAndStatement implements Kind.Inlining {
+public final class DeclarationInitializerReturnVariable extends Wring.VariableDeclarationFragementAndStatement implements Kind.Inlining {
   @Override String description(final VariableDeclarationFragment f) {
     return "Eliminate temporary " + f.getName() + " and return its value";
   }

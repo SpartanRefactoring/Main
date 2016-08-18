@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.*;
  * <code><pre>@Override</pre></code>
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-02 */
-public class AnnotationRemoveEmptyParentheses extends Wring.ReplaceCurrentNode<NormalAnnotation> implements Kind.SyntacticBaggage {
+public final class AnnotationRemoveEmptyParentheses extends Wring.ReplaceCurrentNode<NormalAnnotation> implements Kind.SyntacticBaggage {
   @Override String description(final NormalAnnotation a) {
     return "Remove redundant parentheses from the @" + a.getTypeName().getFullyQualifiedName() + " annotation";
   }

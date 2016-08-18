@@ -16,7 +16,7 @@ import il.org.spartan.refactoring.utils.*;
  * constructors.
  * @author Daniel Mittelman?
  * @since 2015-08-26 */
-public class SuperConstructorInvocationRemover extends Wring<SuperConstructorInvocation> implements Kind.SyntacticBaggage {
+public final class SuperConstructorInvocationRemover extends Wring<SuperConstructorInvocation> implements Kind.SyntacticBaggage {
   @Override String description(@SuppressWarnings("unused") final SuperConstructorInvocation __) {
     return "Remove empty 'super()' invocation";
   }

@@ -17,7 +17,7 @@ import il.org.spartan.refactoring.utils.*;
  * @see InfixSortAddition
  * @author Yossi Gil
  * @since 2015-07-17 */
-public class InfixSortPseudoAddition extends Wring.InfixSorting implements Kind.Sorting {
+public final class InfixSortPseudoAddition extends Wring.InfixSorting implements Kind.Sorting {
   @Override boolean scopeIncludes(final InfixExpression e) {
     return in(e.getOperator(), OR, XOR, AND);
   }

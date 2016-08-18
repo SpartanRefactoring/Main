@@ -26,7 +26,7 @@ import il.org.spartan.refactoring.utils.*;
  * <code>
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-04 */
-public class BooleanConstants extends Wring.ReplaceCurrentNode<MethodInvocation> implements Kind.Canonicalization {
+public final class BooleanConstants extends Wring.ReplaceCurrentNode<MethodInvocation> implements Kind.Canonicalization {
   @Override String description(@SuppressWarnings("unused") final MethodInvocation __) {
     return "Use built-in boolean constants instead of valueOf()";
   }

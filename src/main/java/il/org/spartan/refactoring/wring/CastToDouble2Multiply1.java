@@ -12,7 +12,7 @@ import il.org.spartan.refactoring.utils.*;
  * @author Alex Kopzon
  * @author Dan Greenstein
  * @since 2016 */
-public class CastToDouble2Multiply1 extends Wring.ReplaceCurrentNode<CastExpression> implements Kind.NoImpact {
+public final class CastToDouble2Multiply1 extends Wring.ReplaceCurrentNode<CastExpression> implements Kind.NoImpact {
   @Override String description(final CastExpression e) {
     return "Use 1.*" + expression(e) + " instead of (double)" + expression(e);
   }

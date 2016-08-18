@@ -26,7 +26,7 @@ import il.org.spartan.refactoring.wring.LocalInliner.*;
  *
  * @author Yossi Gil
  * @since 2015-08-07 */
-public class DeclarationInitializerIfAssignment //
+public final class DeclarationInitializerIfAssignment //
     extends Wring.VariableDeclarationFragementAndStatement implements Kind.Inlining {
   @Override public String description(final VariableDeclarationFragment f) {
     return "Consolidate initialization of " + f.getName() + " with the subsequent conditional assignment to it";

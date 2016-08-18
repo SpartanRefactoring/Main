@@ -13,7 +13,7 @@ import il.org.spartan.refactoring.utils.*;
  * {@link Spartanization}
  * @author Yossi Gil
  * @since 2015/07/25 */
-public class AsSpartanization extends Spartanization {
+public final class AsSpartanization extends Spartanization {
   final Wring<ASTNode> inner;
 
   /** Instantiates this class

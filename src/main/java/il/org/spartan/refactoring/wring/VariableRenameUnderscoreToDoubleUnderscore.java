@@ -6,7 +6,7 @@ import org.eclipse.jdt.core.dom.*;
  * @author Ori Roth
  * @param <N> either SingleVariableDeclaration or VariableDeclarationFragment
  * @since 2016/05/08 */
-public class VariableRenameUnderscoreToDoubleUnderscore<N extends VariableDeclaration> //
+public final class VariableRenameUnderscoreToDoubleUnderscore<N extends VariableDeclaration> //
     extends VariableChangeName<N> implements Kind.UnusedArguments {
   @Override boolean change(final N n) {
     return "_".equals(n.getName().toString());
