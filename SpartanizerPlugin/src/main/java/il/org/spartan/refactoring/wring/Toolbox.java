@@ -5,7 +5,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 /** Singleton containing all {@link Wring}s which are active, allowing selecting
-*and applying the most appropriate such object for a given {@link ASTNode}.
+ * and applying the most appropriate such object for a given {@link ASTNode}.
  * @author Yossi Gil
  * @since 2015-08-22 */
 public class Toolbox {

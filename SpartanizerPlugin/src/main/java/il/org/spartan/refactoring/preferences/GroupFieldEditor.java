@@ -78,7 +78,6 @@ public class GroupFieldEditor extends FieldEditor {
   /* (non-Javadoc) Method declared on FieldEditor. Loads the default value from
    * the preference store and sets it to the check box. */
   @Override protected void doLoadDefault() {
-
     for (final FieldEditor ¢ : members)
       ¢.loadDefault();
   }

@@ -10,6 +10,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.utils.*;
+
 /** A utility class for finding occurrences of an {@link Expression} in an
  * {@link ASTNode}.
  * @author Boris van Sosin <boris.van.sosin @ gmail.com>
