@@ -1,5 +1,6 @@
 package il.org.spartan.refactoring.wring;
-
+import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
@@ -42,12 +43,12 @@ public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression
         && ¢2 instanceof NumberLiteral == ¢1 instanceof NumberLiteral;
   }
   private static ASTNode replacement(final InfixExpression e, final Operator o, final MethodInvocation i, final NumberLiteral l) {
-    if (!"size".equals(i.getName().getIdentifier()) || Double.parseDouble(l.getToken()) != 0)
+    if (!"size".equals(name(i).getIdentifier()) || Double.parseDouble(l.getToken()) != 0)
       return null;
-    final CompilationUnit u = extract.compilationUnit(e);
+    final CompilationUnit u = compilationUnit(e);
     if (u == null)
       return null;
-    final Expression receiver = i.getExpression();
+    final Expression receiver = expression(i);
     final IMethodBinding b = BindingUtils.getVisibleMethod(receiver == null ? BindingUtils.container(e) : receiver.resolveTypeBinding(), "isEmpty",
         null, e, u);
     if (b == null)

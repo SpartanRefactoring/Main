@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.wring;
-
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 
 import java.util.*;
 
@@ -31,12 +31,12 @@ public class BooleanConstants extends Wring.ReplaceCurrentNode<MethodInvocation>
     return "Use built-in boolean constant instead of valueOf()";
   }
   @Override Expression replacement(final MethodInvocation i) {
-    if (!"valueOf".equals(i.getName().getIdentifier()))
+    if (!"valueOf".equals(name(i).getIdentifier()))
       return null;
     final List<Expression> arguments = arguments(i);
     if (arguments.size() != 1)
       return null;
-    final Expression e = i.getExpression();
+    final Expression e = expression(i);
     if (e == null || !"Boolean".equals(e.toString()))
       return null;
     final BooleanLiteral b = asBooleanLiteral(arguments.get(0));
