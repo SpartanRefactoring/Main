@@ -33,7 +33,6 @@ public class Trimmer extends Spartanization {
         return $.get();
     }
   }
-
   static boolean prune(final Rewrite r, final List<Rewrite> rs) {
     if (r != null) {
       r.pruneIncluders(rs);
@@ -72,6 +71,7 @@ public class Trimmer extends Spartanization {
   @SuppressWarnings("static-method") ExclusionManager makeExcluder() {
     return new ExclusionManager();
   }
+
   abstract class DispatchingVisitor extends ASTVisitor {
     final ExclusionManager exclude = makeExcluder();
 

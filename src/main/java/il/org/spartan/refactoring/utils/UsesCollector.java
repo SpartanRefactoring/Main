@@ -1,4 +1,5 @@
 package il.org.spartan.refactoring.utils;
+
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.refactoring.utils.extract.*;
@@ -236,7 +237,6 @@ class UsesCollector extends HidingDepth {
     ingore(name(i));
     return recurse(arguments(i));
   }
-
   @Override public boolean visit(final VariableDeclarationFragment f) {
     return !declaredIn(f) && recurse(f.getInitializer());
   }

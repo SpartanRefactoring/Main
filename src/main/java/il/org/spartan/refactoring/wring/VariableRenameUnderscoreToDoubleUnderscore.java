@@ -4,15 +4,11 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 
-/**
- * Replaces name of variables named "_" into "__"
- *
+/** Replaces name of variables named "_" into "__"
  * @author Ori Roth
  * @param <N> either SingleVariableDeclaration or VariableDeclarationFragment
- * @since 2016/05/08
- */
-public class VariableRenameUnderscoreToDoubleUnderscore<N extends VariableDeclaration> extends VariableChangeName<N>
-    implements Kind.N1{
+ * @since 2016/05/08 */
+public class VariableRenameUnderscoreToDoubleUnderscore<N extends VariableDeclaration> extends VariableChangeName<N> implements Kind.N1 {
   @Override boolean change(final N n) {
     return "_".equals(n.getName().toString());
   }
