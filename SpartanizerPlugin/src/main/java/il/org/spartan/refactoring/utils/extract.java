@@ -18,6 +18,12 @@ import il.org.spartan.*;
  * @since 2015-07-28 */
 public enum extract {
   ;
+  public static SimpleName name(MethodInvocation i) {
+    return i.getName();
+  }
+  public static SimpleName name(SuperMethodInvocation i) {
+    return i.getName();
+  }
   /** Retrieve all operands, including parenthesized ones, under an expression
    * @param e JD
    * @return a {@link List} of all operands to the parameter */

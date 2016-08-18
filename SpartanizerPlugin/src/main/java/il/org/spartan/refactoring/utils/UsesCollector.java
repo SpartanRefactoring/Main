@@ -1,5 +1,6 @@
 package il.org.spartan.refactoring.utils;
-
+import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.utils.Utils.*;
 
@@ -172,14 +173,14 @@ class UsesCollector extends HidingDepth {
   }
   @Override boolean go(final AbstractTypeDeclaration d) {
     ingore(d.getName());
-    return !declaredIn(d) && recurse(expose.bodyDeclarations(d));
+    return !declaredIn(d) && recurse(bodyDeclarations(d));
   }
   boolean go(final AnnotationTypeDeclaration d) {
     ingore(d.getName());
-    return !declaredIn(d) && recurse(expose.bodyDeclarations(d));
+    return !declaredIn(d) && recurse(bodyDeclarations(d));
   }
   @Override boolean go(final AnonymousClassDeclaration d) {
-    return !declaredIn(d) && recurse(expose.bodyDeclarations(d));
+    return !declaredIn(d) && recurse(bodyDeclarations(d));
   }
   @Override boolean go(final EnhancedForStatement s) {
     final SimpleName name = s.getParameter().getName();
@@ -220,9 +221,9 @@ class UsesCollector extends HidingDepth {
     return !declaredIn(d) && recurse(d.getBody());
   }
   @Override public boolean visit(final MethodInvocation i) {
-    ingore(i.getName());
-    recurse(i.getExpression());
-    return recurse(expose.arguments(i));
+    ingore(name(i));
+    recurse(expression(i));
+    return recurse(arguments(i));
   }
   @Override public boolean visit(final QualifiedName n) {
     return recurse(n.getQualifier());
@@ -232,9 +233,10 @@ class UsesCollector extends HidingDepth {
     return false;
   }
   @Override public boolean visit(final SuperMethodInvocation i) {
-    ingore(i.getName());
-    return recurse(expose.arguments(i));
+    ingore(name(i));
+    return recurse(arguments(i));
   }
+
   @Override public boolean visit(final VariableDeclarationFragment f) {
     return !declaredIn(f) && recurse(f.getInitializer());
   }
