@@ -3,41 +3,46 @@ package il.org.spartan.refactoring.wring;
 public interface Kind {
   String description();
 
-  interface S0 extends S {
+  interface NoImpact extends S {
     @Override default String description() {
       return "Neutral elements and null impact";
     }
   }
 
-  interface S1 extends S {
+  interface SyntacticBaggage extends S {
     @Override default String description() {
       return "Syntactic baggage";
     }
   }
 
-  interface S2 extends S {
+  interface DistributiveRefactoring extends S {
     @Override default String description() {
       return "Distributive refactoring";
     }
   }
 
-  interface S3 extends S {
+  interface Ternarization extends S {
     @Override default String description() {
       return "Ternarization";
     }
   }
 
-  interface S4 extends S {
+  interface Canonicalization extends S {
     @Override default String description() {
       return "Canonicalization";
     }
   }
-
-  interface S5 extends S {
+  interface Inlining extends S {
     @Override default String description() {
-      return "Inlining and scope reduction";
+      return "Inlining";
     }
   }
+  interface ScopeReduction extends S {
+    @Override default String description() {
+      return "Scope reduction";
+    }
+  }
+
 
   interface N1 extends N {
     @Override default String description() {
