@@ -24,7 +24,7 @@ public class StringEqualsConstant extends ReplaceCurrentNode<MethodInvocation> {
     return "use " + arguments(i).get(0) + "." + name(i) + "(" + extract.expression(i) + ") instead of " + i;
   }
   @SuppressWarnings("unchecked") @Override ASTNode replacement(final MethodInvocation i) {
-    List<Expression> as = arguments(i);
+    final List<Expression> as = arguments(i);
     if (!mns.contains(name(i).toString()) || as.size() != 1 || expression(i) == null || expression(i) instanceof StringLiteral
         || !(as.get(0) instanceof StringLiteral))
       return null;
@@ -34,7 +34,6 @@ public class StringEqualsConstant extends ReplaceCurrentNode<MethodInvocation> {
     $.arguments().add(duplicate(expression(i)));
     return $;
   }
-
   @Override WringGroup wringGroup() {
     return WringGroup.REORDER_EXPRESSIONS;
   }

@@ -60,8 +60,8 @@ import il.org.spartan.*;
       return ast.newQualifiedName((SimpleName) inner, ast.newSimpleName(name));
     }
     // ** TODO: YG; integrate with fluent API
-    public NumberLiteral literal(String text) {
-      NumberLiteral $ = ast.newNumberLiteral();
+    public NumberLiteral literal(final String text) {
+      final NumberLiteral $ = ast.newNumberLiteral();
       $.setToken(text);
       return $;
     }
