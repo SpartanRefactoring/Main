@@ -103,20 +103,33 @@ public enum extract {
       return null;
     switch (n.getNodeType()) {
       case ASTNode.EXPRESSION_STATEMENT:
-        return ((ExpressionStatement) n).getExpression();
+        return expression((ExpressionStatement) n);
       case ASTNode.RETURN_STATEMENT:
-        return ((ReturnStatement) n).getExpression();
+        return expression((ReturnStatement) n);
       case ASTNode.THROW_STATEMENT:
-        return ((ThrowStatement) n).getExpression();
+        return expression((ThrowStatement) n);
       case ASTNode.CAST_EXPRESSION:
-        return ((CastExpression) n).getExpression();
+        return expression((CastExpression) n);
+      case ASTNode.METHOD_INVOCATION:
+        return expression((MethodInvocation) n));
       default:
         return null;
     }
   }
-  
+  public static Expression expression(ExpressionStatement $) {
+    return core($.getExpression());
+  }
+  public static Expression expression(MethodInvocation $) {
+    return core($.getExpression());
+  }
   public static Expression expression(CastExpression $) {
-   return $.getExpression(); 
+    return core($.getExpression());
+  }
+  public static Expression expression(ThrowStatement $) {
+    return core($.getExpression());
+  }
+  public static Expression expression(ReturnStatement $) {
+    return core($.getExpression());
   }
   /** Convert, is possible, an {@link ASTNode} to a {@link ExpressionStatement}
    * @param n a statement or a block to extract the expression statement from
