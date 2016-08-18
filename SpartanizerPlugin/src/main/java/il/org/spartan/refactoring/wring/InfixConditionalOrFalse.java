@@ -19,7 +19,8 @@ import il.org.spartan.refactoring.utils.*;
  *
  * @author Yossi Gil
  * @since 2015-07-20 */
-public final class InfixConditionalOrFalse extends Wring.ReplaceCurrentNode<InfixExpression> {
+public class InfixConditionalOrFalse extends Wring.ReplaceCurrentNode<InfixExpression> 
+  implements Kind.NoImpact {
   @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Remove 'false' argument to '||'";
   }
@@ -28,8 +29,5 @@ public final class InfixConditionalOrFalse extends Wring.ReplaceCurrentNode<Infi
   }
   @Override boolean scopeIncludes(final InfixExpression e) {
     return e != null && Is.conditionalOr(e) && Have.falseLiteral(extract.allOperands(e));
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

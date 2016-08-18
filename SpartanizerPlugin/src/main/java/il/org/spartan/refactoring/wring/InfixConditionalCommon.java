@@ -27,7 +27,8 @@ import il.org.spartan.refactoring.utils.*;
  *
  * @author Yossi Gil
  * @since 2015-07-20 */
-public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<InfixExpression> {
+public class InfixConditionalCommon extends Wring.ReplaceCurrentNode<InfixExpression> 
+  implements Kind.NoImpact {
   private static Expression chopHead(final InfixExpression e) {
     final List<Expression> es = extract.allOperands(e);
     es.remove(0);
@@ -56,8 +57,5 @@ public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<Infix
     final Expression leftLeft = left(left);
     return !Is.sideEffectFree(leftLeft) || !same(leftLeft, left(right)) ? null
         : subject.pair(leftLeft, subject.pair(chopHead(left), chopHead(right)).to(o)).to(conjugate);
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

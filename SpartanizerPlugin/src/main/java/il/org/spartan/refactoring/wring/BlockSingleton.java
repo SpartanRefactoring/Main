@@ -25,7 +25,8 @@ import il.org.spartan.refactoring.utils.*;
  *
  * @author Yossi Gil
  * @since 2015-09-09 */
-public class BlockSingleton extends Wring.ReplaceCurrentNode<Block> {
+public class BlockSingleton extends Wring.ReplaceCurrentNode<Block> 
+  implements Kind.SyntacticBaggage {
   @Override String description(@SuppressWarnings("unused") final Block __) {
     return "Remove redundant curly braces.";
   }
@@ -38,8 +39,5 @@ public class BlockSingleton extends Wring.ReplaceCurrentNode<Block> {
       return null;
     final Statement $ = ss.get(0);
     return Is.blockEssential($) ? null : duplicate($);
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REMOVE_SYNTACTIC_BAGGAGE;
   }
 }

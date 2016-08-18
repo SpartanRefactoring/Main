@@ -22,7 +22,8 @@ import il.org.spartan.refactoring.utils.*;
  * useless in the near future, delete this class. Otherwise, remove the
  *
  * @Deprecated annotation */
-@Deprecated public class MethodAbbreviateParameterNames extends Wring<MethodDeclaration> {
+@Deprecated public class MethodAbbreviateParameterNames extends Wring<MethodDeclaration> 
+  implements Kind.Abbreviation {
   private static boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m, final Collection<SimpleName> newNames) {
     if (spartan.shorten(d.getType()) == null)
       return false;
@@ -78,8 +79,5 @@ import il.org.spartan.refactoring.utils.*;
   }
   private boolean suitable(final SingleVariableDeclaration d) {
     return new JavaTypeNameParser(d.getType().toString()).isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.RENAME_PARAMETERS;
   }
 }

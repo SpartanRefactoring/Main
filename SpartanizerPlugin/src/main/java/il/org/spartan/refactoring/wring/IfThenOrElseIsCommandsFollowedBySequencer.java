@@ -40,7 +40,8 @@ import il.org.spartan.refactoring.utils.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfStatement> {
+public class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfStatement> 
+  implements Kind.DistributiveRefactoring {
   static boolean endsWithSequencer(final Statement s) {
     return Is.sequencer(extract.lastStatement(s));
   }
@@ -68,8 +69,5 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
   }
   @Override boolean scopeIncludes(final IfStatement s) {
     return elze(s) != null && (endsWithSequencer(then(s)) || endsWithSequencer(elze(s)));
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.SIMPLIFY_NESTED_BLOCKS;
   }
 }

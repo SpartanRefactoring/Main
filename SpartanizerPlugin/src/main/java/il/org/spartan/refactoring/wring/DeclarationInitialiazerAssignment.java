@@ -27,7 +27,8 @@ import il.org.spartan.refactoring.wring.LocalInliner.*;
  *
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class DeclarationInitialiazerAssignment extends Wring.VariableDeclarationFragementAndStatement {
+public class DeclarationInitialiazerAssignment extends Wring.VariableDeclarationFragementAndStatement 
+  implements Kind.Canonicalization {
   @Override String description(final VariableDeclarationFragment f) {
     return "Consolidate declaration of " + f.getName() + " with its subsequent initialization";
   }
@@ -48,8 +49,5 @@ public final class DeclarationInitialiazerAssignment extends Wring.VariableDecla
     i.inlineInto(newInitializer);
     r.remove(nextStatement, g);
     return r;
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }

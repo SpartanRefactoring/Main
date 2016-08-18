@@ -11,7 +11,8 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
  * <code><pre>@Override</pre></code>
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-02 */
-public class AnnotationRemoveEmptyParentheses extends Wring.ReplaceCurrentNode<NormalAnnotation> {
+public class AnnotationRemoveEmptyParentheses extends Wring.ReplaceCurrentNode<NormalAnnotation> 
+  implements Kind.SyntacticBaggage {
   @Override String description(final NormalAnnotation a) {
     return "Remove redundant parentheses from the @" + a.getTypeName().getFullyQualifiedName() + " annotation";
   }
@@ -21,8 +22,5 @@ public class AnnotationRemoveEmptyParentheses extends Wring.ReplaceCurrentNode<N
     final MarkerAnnotation $ = a.getAST().newMarkerAnnotation();
     $.setTypeName(duplicate(a.getTypeName()));
     return $;
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REMOVE_SYNTACTIC_BAGGAGE;
   }
 }

@@ -7,7 +7,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.LocalInliner.*;
 
@@ -27,7 +26,8 @@ import il.org.spartan.refactoring.wring.LocalInliner.*;
  *
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class DeclarationInitializerIfAssignment extends Wring.VariableDeclarationFragementAndStatement {
+public class DeclarationInitializerIfAssignment //
+    extends Wring.VariableDeclarationFragementAndStatement implements Kind.Inlining {
   @Override public String description(final VariableDeclarationFragment f) {
     return "Consolidate initialization of " + f.getName() + " with the subsequent conditional assignment to it";
   }
@@ -57,8 +57,5 @@ public final class DeclarationInitializerIfAssignment extends Wring.VariableDecl
     i.inlineInto(then(newInitializer), newInitializer.getExpression());
     r.remove(nextStatement, g);
     return r;
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.IF_TO_TERNARY;
   }
 }

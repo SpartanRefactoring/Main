@@ -10,10 +10,10 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
-final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpression> {
+public class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpression> 
+  implements Kind.DistributiveRefactoring {
   private static int findSingleDifference(final List<Expression> es1, final List<Expression> es2) {
     int $ = -1;
     for (int i = 0; i < es1.size(); ++i)
@@ -147,8 +147,5 @@ final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpressi
   }
   @Override boolean scopeIncludes(final ConditionalExpression e) {
     return pushdown(e) != null;
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REORDER_EXPRESSIONS;
   }
 }

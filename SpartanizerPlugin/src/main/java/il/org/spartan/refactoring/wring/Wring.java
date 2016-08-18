@@ -101,7 +101,7 @@ final class LocalInliner {
  * @author Yossi Gil
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-07-09 */
-public abstract class Wring<N extends ASTNode> {
+public abstract class Wring<N extends ASTNode> implements Kind {
   static abstract class AbstractSorting extends ReplaceCurrentNode<InfixExpression> {
     @Override final String description(final InfixExpression e) {
       return "Reorder operands of " + e.getOperator();
@@ -193,9 +193,6 @@ public abstract class Wring<N extends ASTNode> {
     }
     @Override boolean scopeIncludes(final N ¢) {
       return firstBad(¢) != null;
-    }
-    @Override final WringGroup wringGroup() {
-      return WringGroup.REMOVE_SYNTACTIC_BAGGAGE;
     }
   }
 
@@ -406,9 +403,4 @@ public abstract class Wring<N extends ASTNode> {
   boolean scopeIncludes(final N n) {
     return make(n, null) != null;
   }
-  /** Returns the preference group to which the wring belongs to. This method
-   * should be overriden for each wring and should return one of the values of
-   * {@link WringGroup}
-   * @return the preference group this wring belongs to */
-  abstract WringGroup wringGroup();
 }

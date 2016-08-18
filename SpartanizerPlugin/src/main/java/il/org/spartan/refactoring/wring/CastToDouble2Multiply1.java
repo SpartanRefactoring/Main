@@ -13,7 +13,8 @@ import il.org.spartan.refactoring.utils.*;
  * @author Alex Kopzon
  * @author Dan Greenstein
  * @since 2016 */
-public final class CastToDouble2Multiply1 extends Wring.ReplaceCurrentNode<CastExpression> {
+public class CastToDouble2Multiply1 extends Wring.ReplaceCurrentNode<CastExpression> implements
+Kind.NoImpact {
   @Override String description(final CastExpression e) {
     return "Use 1.*" + expression(e) + " instead of (double)" + expression(e);
   }
@@ -31,8 +32,5 @@ public final class CastToDouble2Multiply1 extends Wring.ReplaceCurrentNode<CastE
     final NumberLiteral $ = e.getAST().newNumberLiteral();
     $.setToken("1.");
     return $;
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REORDER_EXPRESSIONS;
   }
 }
