@@ -78,6 +78,7 @@ public class GroupFieldEditor extends FieldEditor {
   /* (non-Javadoc) Method declared on FieldEditor. Loads the default value from
    * the preference store and sets it to the check box. */
   @Override protected void doLoadDefault() {
+
     for (final FieldEditor ¢ : members)
       ¢.loadDefault();
   }
@@ -96,17 +97,17 @@ public class GroupFieldEditor extends FieldEditor {
   @Override public int getNumberOfControls() {
     return members.size();
   }
-  private void gridData(final int n) {
+  private void gridData(final int i) {
     final GridData data = new GridData(SWT.FILL, SWT.CENTER, true, false);
     data.horizontalIndent = 2;
     data.verticalIndent = GROUP_PADDING;
-    data.horizontalSpan = n;
+    data.horizontalSpan = i;
     group.setLayoutData(data);
   }
-  private void gridLayout(final int n) {
+  private void gridLayout(final int i) {
     final GridLayout groupLayout = new GridLayout();
     groupLayout.marginWidth = groupLayout.marginHeight = GROUP_PADDING;
-    groupLayout.numColumns = n;
+    groupLayout.numColumns = i;
     group.setLayout(groupLayout);
   }
   /** Initializes using the currently added field editors. */
