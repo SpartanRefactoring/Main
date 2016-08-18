@@ -111,7 +111,7 @@ public enum extract {
       case ASTNode.CAST_EXPRESSION:
         return expression((CastExpression) n);
       case ASTNode.METHOD_INVOCATION:
-        return expression((MethodInvocation) n));
+        return expression((MethodInvocation) n);
       default:
         return null;
     }
