@@ -37,9 +37,11 @@ public final class DeclarationInitializerReturnExpression extends Wring.Variable
     final ReturnStatement s = asReturnStatement(nextStatement);
     if (s == null)
       return null;
-    final Expression newReturnValue = extract.expression(s);
+    final Expression newReturnValue = s.getExpression(); 
+    if (newReturnValue == null)
+      return null;
     final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
-    if (newReturnValue == null || same(n, newReturnValue) || !i.canSafelyInlineInto(newReturnValue)
+    if (same(n, newReturnValue) || !i.canSafelyInlineInto(newReturnValue)
         || i.replacedSize(newReturnValue) - eliminationSaving(f) - size(newReturnValue) > 0)
       return null;
     r.replace(s.getExpression(), newReturnValue, g);

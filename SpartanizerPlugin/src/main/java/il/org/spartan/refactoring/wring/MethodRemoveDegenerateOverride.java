@@ -4,13 +4,11 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.preferences.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
-/**
- * A {@link Wring} to remove overriding methods that only call their counterpart
- * in the parent class, for example: <code>
+/** A {@link Wring} to remove overriding methods that only call their
+ * counterpart in the parent class, for example: <code>
  *
  * <pre>
  * &#64;Override void foo() {
@@ -19,15 +17,13 @@ import il.org.spartan.refactoring.utils.*;
  * </pre>
  *
  * </code> will be completely removed.
- *
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
- * @since 2016-04-06
- */
+ * @since 2016-04-06 */
 public class MethodRemoveDegenerateOverride extends Wring<MethodDeclaration> {
   @Override Rewrite make(final MethodDeclaration d) {
     final ExpressionStatement s = extract.expressionStatement(d);
-    return s == null || !(s.getExpression() instanceof SuperMethodInvocation)
-        || !shouldRemove(d, (SuperMethodInvocation) s.getExpression()) ? null : new Rewrite(description(d), d) {
+    return s == null || !(s.getExpression() instanceof SuperMethodInvocation) || !shouldRemove(d, (SuperMethodInvocation) s.getExpression()) ? null
+        : new Rewrite(description(d), d) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             r.remove(d, g);
           }
