@@ -11,33 +11,33 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.Wring.*;
 
-/** Replace <code>1*X</code> by <code>X</code> 
+/** Replace <code>1*X</code> by <code>X</code>
  * @author Yossi Gil
  * @since 2015-09-05 */
 public final class InfixMultiplicationNeturalElement extends ReplaceCurrentNode<InfixExpression> {
   @Override String description(final InfixExpression e) {
     return "Remove all multiplications by 1 from " + e;
   }
-  @Override ASTNode replacement(InfixExpression e) {
-    return (e.getOperator() != TIMES) ? null : replacement(extract.allOperands(e));
+  @Override ASTNode replacement(final InfixExpression e) {
+    return e.getOperator() != TIMES ? null : replacement(extract.allOperands(e));
   }
   private static ASTNode replacement(final List<Expression> es) {
-    List<Expression> $ = new ArrayList<>();
-    for (Expression ¢ : es)
+    final List<Expression> $ = new ArrayList<>();
+    for (final Expression ¢ : es)
       if (!isLiteralOne(¢))
         $.add(¢);
     return $.size() == es.size() ? null : $.size() == 0 ? duplicate(es.get(0)) : $.size() == 1 ? duplicate($.get(0)) : subject.operands($).to(TIMES);
   }
-  private static boolean isLiteralOne(Expression ¢) {
+  private static boolean isLiteralOne(final Expression ¢) {
     return isLiteralOne(asNumberLiteral(¢));
   }
-  private static boolean isLiteralOne(NumberLiteral ¢) {
+  private static boolean isLiteralOne(final NumberLiteral ¢) {
     return ¢ != null && isLiteralOne(¢.getToken());
   }
-  private static boolean isLiteralOne(String ¢) {
+  private static boolean isLiteralOne(final String ¢) {
     try {
       return Integer.parseInt(¢) == 1;
-    } catch (@SuppressWarnings("unused") NumberFormatException __) {
+    } catch (@SuppressWarnings("unused") final NumberFormatException __) {
       return false;
     }
   }
