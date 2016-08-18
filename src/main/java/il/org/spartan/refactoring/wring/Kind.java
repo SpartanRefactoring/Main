@@ -1,79 +1,125 @@
 package il.org.spartan.refactoring.wring;
 
+import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+
 public interface Kind {
+  interface Sorting extends Structural{
+    static final String label = "Sorting";
+
+    @Override default String description() {
+      return label;
+    }
+  }
+
   String description();
+  /** Returns the preference group to which the wring belongs to. This method
+   * should be overridden for each wring and should return one of the values of
+   * {@link WringGroup}
+   * @return the preference group this wring belongs to */
+  default WringGroup wringGroup() {
+    return WringGroup.find(this);
+  }
 
-  interface NoImpact extends S {
+  interface Abbreviation extends Nominal {
+    static final String label = "Abbreviation";
+
     @Override default String description() {
-      return "Neutral elements and null impact";
+      return label;
     }
   }
 
-  interface SyntacticBaggage extends S {
+  interface Canonicalization extends Structural { // S4
+    static final String label = "Canonicalization";
+
     @Override default String description() {
-      return "Syntactic baggage";
+      return label;
     }
   }
 
-  interface DistributiveRefactoring extends S {
+  interface Centification extends Nominal {
+    String label = "Centification";
+
     @Override default String description() {
-      return "Distributive refactoring";
+      return label;
     }
   }
 
-  interface Ternarization extends S {
+  interface DistributiveRefactoring extends Structural { // S2
+    static String label = "Distributive refactoring";
+
     @Override default String description() {
-      return "Ternarization";
+      return label;
     }
   }
 
-  interface Canonicalization extends S {
+  interface Dollarization extends Nominal {
+    static final String label = "Dollarization";
+
     @Override default String description() {
-      return "Canonicalization";
-    }
-  }
-  interface Inlining extends S {
-    @Override default String description() {
-      return "Inlining";
-    }
-  }
-  interface ScopeReduction extends S {
-    @Override default String description() {
-      return "Scope reduction";
+      return label;
     }
   }
 
+  interface Inlining extends Structural { // S5
+    static final String label = "Inlining";
 
-  interface N1 extends N {
     @Override default String description() {
-      return "Unused arguments";
+      return label;
     }
   }
 
-  interface N2 extends N {
+  interface NoImpact extends Structural { // S0
+    static final String label = "0+x, 1*y, 0*y, true, false, and other neutral elements and null impact operations";
+
     @Override default String description() {
-      return "Centification";
+      return label;
     }
   }
 
-  interface N3 extends N {
+  interface ScopeReduction extends Structural { // S6
+    static final String label = "Scope reduction";
+
     @Override default String description() {
-      return "Abbreviation";
+      return label;
     }
   }
 
-  interface N4 extends N {
+  interface SyntacticBaggage extends Structural {// S1
+    static final String label = "Syntactic baggage";
+
     @Override default String description() {
-      return "Dollarization";
+      return label;
+    }
+  }
+
+  interface Ternarization extends Structural { // S3
+    static String label = "Ternarization";
+
+    @Override default String description() {
+      return label;
+    }
+  }
+
+  interface UnusedArguments extends Nominal {
+    static final String label = "Unused arguments";
+
+    @Override default String description() {
+      return label;
     }
   }
 }
 
-interface N extends Kind {
+/** Auxiliary type: non public intentionally */
+interface Modular extends Kind {
+  /* Empty intentionally */
 }
 
-interface S extends Kind {
+/** Auxiliary type: non public intentionally */
+interface Nominal extends Kind {
+  /* Empty intentionally */
 }
 
-interface M extends Kind {
+/** Auxiliary type: non public intentionally */
+interface Structural extends Kind {
+  /* Empty intentionally */
 }

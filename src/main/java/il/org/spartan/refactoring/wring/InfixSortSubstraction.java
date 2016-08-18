@@ -16,14 +16,12 @@ import il.org.spartan.refactoring.utils.*;
  * {@link Operator#PLUS} for the concatenation of {@link String}s.
  * @author Yossi Gil
  * @since 2015-07-17 */
-public final class InfixSortSubstraction extends Wring.InfixSortingOfCDR {
+public class InfixSortSubstraction extends Wring.InfixSortingOfCDR 
+  implements Kind.Sorting {
   @Override boolean scopeIncludes(final InfixExpression e) {
     return in(e.getOperator(), MINUS);
   }
   @Override boolean sort(final List<Expression> es) {
     return ExpressionComparator.ADDITION.sort(es);
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REORDER_EXPRESSIONS;
   }
 }

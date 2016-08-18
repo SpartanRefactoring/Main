@@ -24,7 +24,8 @@ import il.org.spartan.refactoring.utils.*;
  *
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class DeclarationAssignment extends Wring.VariableDeclarationFragementAndStatement {
+public class DeclarationAssignment extends Wring.VariableDeclarationFragementAndStatement 
+  implements Kind.Canonicalization {
   private static VariableDeclarationFragment makeVariableDeclarationFragement(final VariableDeclarationFragment f, final Expression e) {
     final VariableDeclarationFragment $ = duplicate(f);
     $.setInitializer(duplicate(e));
@@ -43,8 +44,5 @@ public final class DeclarationAssignment extends Wring.VariableDeclarationFragem
     r.replace(f, makeVariableDeclarationFragement(f, right(a)), g);
     r.remove(extract.statement(a), g);
     return r;
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }

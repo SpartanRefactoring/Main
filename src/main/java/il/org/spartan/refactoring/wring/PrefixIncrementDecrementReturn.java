@@ -27,7 +27,8 @@ import il.org.spartan.refactoring.utils.*;
  *
  * @author Yossi Gil
  * @since 2015-08-28 */
-public class PrefixIncrementDecrementReturn extends Wring.ReplaceToNextStatement<PrefixExpression> {
+public class PrefixIncrementDecrementReturn extends Wring.ReplaceToNextStatement<PrefixExpression> 
+  implements Kind.Canonicalization {
   @Override String description(final PrefixExpression e) {
     return "Consolidate " + e + " with subsequent 'return' of " + operand(e);
   }
@@ -43,8 +44,5 @@ public class PrefixIncrementDecrementReturn extends Wring.ReplaceToNextStatement
     r.remove(parent, g);
     r.replace(s, subject.operand(e).toReturn(), g);
     return r;
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }

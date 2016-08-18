@@ -26,7 +26,8 @@ import il.org.spartan.refactoring.utils.*;
  *
  * @author Yossi Gil
  * @since 2015-08-28 */
-public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assignment> {
+public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assignment> 
+  implements Kind.DistributiveRefactoring {
   static Expression extractRight(final Assignment a) {
     final Expression $ = extract.core(right(a));
     return !($ instanceof Assignment) || ((Assignment) $).getOperator() != ASSIGN ? $ : extractRight((Assignment) $);
@@ -53,8 +54,5 @@ public class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assign
     r.remove(parent, g);
     r.replace(right1, duplicate(a), g);
     return r;
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.CONSOLIDATE_ASSIGNMENTS_STATEMENTS;
   }
 }

@@ -6,7 +6,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** A {@link Wring} to convert
@@ -27,7 +26,7 @@ import il.org.spartan.refactoring.utils.*;
  * </pre>
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class IfReturnNoElseReturn extends Wring.ReplaceToNextStatement<IfStatement> {
+public class IfReturnNoElseReturn extends Wring.ReplaceToNextStatement<IfStatement> implements Kind.Ternarization{
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate into a single 'return'";
   }
@@ -48,8 +47,5 @@ public final class IfReturnNoElseReturn extends Wring.ReplaceToNextStatement<IfS
   }
   @Override boolean scopeIncludes(final IfStatement s) {
     return Is.vacuousElse(s) && extract.returnStatement(then(s)) != null && extract.nextReturn(s) != null;
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.IF_TO_TERNARY;
   }
 }

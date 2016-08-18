@@ -37,7 +37,8 @@ import il.org.spartan.refactoring.utils.*;
  * .
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-24 */
-public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression> {
+public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression> 
+  implements Kind.Canonicalization {
   static boolean invalidTypes(final Expression ¢1, final Expression ¢2) {
     return ¢2 instanceof MethodInvocation == ¢1 instanceof MethodInvocation //
         && ¢2 instanceof NumberLiteral == ¢1 instanceof NumberLiteral;
@@ -76,8 +77,5 @@ public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression
             replacement(e, o, (MethodInvocation) left, (NumberLiteral) right) //
             : replacement(e, conjugate(o), (MethodInvocation) right, (NumberLiteral) left)//
     ;
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

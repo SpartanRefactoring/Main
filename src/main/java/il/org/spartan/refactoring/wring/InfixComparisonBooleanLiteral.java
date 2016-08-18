@@ -26,7 +26,8 @@ import il.org.spartan.refactoring.utils.*;
  * .
  * @author Yossi Gil
  * @since 2015-07-17 */
-public final class InfixComparisonBooleanLiteral extends Wring.ReplaceCurrentNode<InfixExpression> {
+public class InfixComparisonBooleanLiteral extends Wring.ReplaceCurrentNode<InfixExpression> 
+  implements Kind.NoImpact {
   private static BooleanLiteral literal(final InfixExpression e) {
     return asBooleanLiteral(core(literalOnLeft(e) ? left(e) : right(e)));
   }
@@ -52,8 +53,5 @@ public final class InfixComparisonBooleanLiteral extends Wring.ReplaceCurrentNod
   }
   @Override public boolean scopeIncludes(final InfixExpression e) {
     return !e.hasExtendedOperands() && in(e.getOperator(), EQUALS, NOT_EQUALS) && (literalOnLeft(e) || literalOnRight(e));
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

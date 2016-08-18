@@ -23,7 +23,8 @@ import il.org.spartan.refactoring.utils.*;
  * .
  * @author Yossi Gil
  * @since 2015-08-26 */
-public final class IfEmptyThen extends Wring.ReplaceCurrentNode<IfStatement> {
+public class IfEmptyThen extends Wring.ReplaceCurrentNode<IfStatement> 
+  implements Kind.Canonicalization{
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Invert conditional and remove vacuous 'then' branch";
   }
@@ -33,8 +34,5 @@ public final class IfEmptyThen extends Wring.ReplaceCurrentNode<IfStatement> {
   }
   @Override boolean scopeIncludes(final IfStatement s) {
     return s != null && Is.vacuousThen(s) && !Is.vacuousElse(s);
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REFACTOR_INEFFECTIVE;
   }
 }

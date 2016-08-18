@@ -17,7 +17,8 @@ import il.org.spartan.refactoring.utils.*;
  * much as possible, using the de-Morgan and other simplification rules.
  * @author Yossi Gil
  * @since 2015-7-17 */
-public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpression> {
+public class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpression> 
+  implements Kind.Canonicalization {
   private static Expression applyDeMorgan(final InfixExpression inner) {
     final List<Expression> operands = new ArrayList<>();
     for (final Expression e : extract.operands(flatten(inner)))
@@ -102,8 +103,5 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
   }
   @Override public boolean scopeIncludes(final PrefixExpression e) {
     return e != null && asNot(e) != null && hasOpportunity(asNot(e));
-  }
-  @Override WringGroup wringGroup() {
-    return WringGroup.REORDER_EXPRESSIONS;
   }
 }
