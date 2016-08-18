@@ -4,8 +4,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-/** A class that contains a bunch of {@link Wring} objects, allowing selecting
- * and applying the most appropriate such object for a given {@link ASTNode}.
+/** Singleton containing all {@link Wring}s which are active, allowing selecting
+*and applying the most appropriate such object for a given {@link ASTNode}.
  * @author Yossi Gil
  * @since 2015-08-22 */
 public class Toolbox {
@@ -130,6 +130,7 @@ public class Toolbox {
         .add(EnumDeclaration.class, new EnumClean(), null) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover(), null) //
         .add(ReturnStatement.class, new ReturnLastInMethod()) //
+        .add(CastExpression.class, new CastToDouble2Multiply1()) //
         .add(NormalAnnotation.class, //
             new AnnotationDiscardValueName(), //
             new AnnotationRemoveEmptyParentheses(), //
