@@ -4,8 +4,6 @@ import static il.org.spartan.idiomatic.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
