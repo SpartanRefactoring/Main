@@ -29,12 +29,12 @@ public class PluginPreferencesResources {
     final String id;
     final String label;
 
-    private WringGroup(Class<? extends Kind> clazz) {
+    private WringGroup(final Class<? extends Kind> clazz) {
       this.clazz = clazz;
-      this.id = clazz.getCanonicalName();
-      this.label = "" + getLabel(clazz);
+      id = clazz.getCanonicalName();
+      label = "" + getLabel(clazz);
     }
-    private static Object getLabel(Class<? extends Kind> c) {
+    private static Object getLabel(final Class<? extends Kind> c) {
       try {
         return c.getField("label").get(null);
       } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
@@ -45,11 +45,11 @@ public class PluginPreferencesResources {
     public boolean isEnabled() {
       return Plugin.plugin() == null || "on".equals(store().getString(id));
     }
-    public static WringGroup find(Kind ¢) {
+    public static WringGroup find(final Kind ¢) {
       return find(Kind.class);
     }
-    private static WringGroup find(Class<? extends Kind> c) {
-      for (WringGroup $ : WringGroup.values())
+    private static WringGroup find(final Class<? extends Kind> c) {
+      for (final WringGroup $ : WringGroup.values())
         if ($.clazz == c)
           return $;
       return null;
