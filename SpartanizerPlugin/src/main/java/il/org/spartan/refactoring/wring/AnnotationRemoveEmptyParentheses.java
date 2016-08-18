@@ -4,8 +4,6 @@ import static il.org.spartan.refactoring.utils.Funcs.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
-
 /** A {@link Wring} to remove the parentheses from annotations that do not take
  * arguments, converting <code><pre>@Override()</pre></code> to
  * <code><pre>@Override</pre></code>
