@@ -7,7 +7,6 @@ import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** A {@link Wring} to change emptiness check from

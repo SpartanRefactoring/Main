@@ -5,7 +5,6 @@ import static il.org.spartan.refactoring.utils.extract.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.utils.*;
 
