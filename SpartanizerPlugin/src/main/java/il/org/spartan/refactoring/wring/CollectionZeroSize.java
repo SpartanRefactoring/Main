@@ -38,7 +38,8 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2016-04-24 */
 public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression> {
   static boolean invalidTypes(final Expression ¢1, final Expression ¢2) {
-    return ¢2 instanceof MethodInvocation == ¢1 instanceof MethodInvocation || ¢2 instanceof NumberLiteral == ¢1 instanceof NumberLiteral;
+    return ¢2 instanceof MethodInvocation == ¢1 instanceof MethodInvocation //
+        && ¢2 instanceof NumberLiteral == ¢1 instanceof NumberLiteral;
   }
   private static ASTNode replacement(final InfixExpression e, final Operator o, final MethodInvocation i, final NumberLiteral l) {
     if (!"size".equals(i.getName().getIdentifier()) || Double.parseDouble(l.getToken()) != 0)
@@ -59,7 +60,7 @@ public class CollectionZeroSize extends Wring.ReplaceCurrentNode<InfixExpression
   }
   @Override String description(final InfixExpression n) {
     final Expression e = ((MethodInvocation) n.getLeftOperand()).getExpression();
-    return e == null ? "Use isEmpty()" : "Use " + e.toString() + ".isEmpty()";
+    return e == null ? "Use isEmpty()" : "Use " + e + ".isEmpty()";
   }
   @Override ASTNode replacement(final InfixExpression e) {
     if (!e.getAST().hasResolvedBindings())
