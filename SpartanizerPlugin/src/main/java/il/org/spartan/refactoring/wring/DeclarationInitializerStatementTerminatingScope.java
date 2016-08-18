@@ -28,7 +28,7 @@ import il.org.spartan.refactoring.wring.LocalInliner.*;
  *
  * @author Yossi Gil
  * @since 2015-08-07 */
-public class DeclarationInitializerStatementTerminatingScope extends Wring.VariableDeclarationFragementAndStatement implements Kind.Inlining {
+public final class DeclarationInitializerStatementTerminatingScope extends Wring.VariableDeclarationFragementAndStatement implements Kind.Inlining {
   private static boolean forbidden(final SimpleName n, final Statement s) {
     ASTNode child = null;
     for (final ASTNode ancestor : AncestorSearch.until(s).ancestors(n)) {

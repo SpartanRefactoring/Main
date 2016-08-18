@@ -35,7 +35,7 @@ import il.org.spartan.refactoring.utils.*;
  *
  * @author Yossi Gil
  * @since 2015-09-05 */
-public class IfBarFooElseBazFoo extends Wring<IfStatement> implements Kind.Ternarization {
+public final class IfBarFooElseBazFoo extends Wring<IfStatement> implements Kind.Ternarization {
   private class DefinitionsCollector extends ASTVisitor {
     private boolean notAllDefined;
     private final Statement[] l;

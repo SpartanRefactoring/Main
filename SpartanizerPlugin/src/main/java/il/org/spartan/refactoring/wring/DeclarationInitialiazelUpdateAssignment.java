@@ -27,7 +27,7 @@ import il.org.spartan.refactoring.wring.LocalInliner.*;
  *
  * @author Yossi Gil
  * @since 2015-08-07 */
-public class DeclarationInitialiazelUpdateAssignment extends Wring.VariableDeclarationFragementAndStatement implements Kind.Canonicalization {
+public final class DeclarationInitialiazelUpdateAssignment extends Wring.VariableDeclarationFragementAndStatement implements Kind.Canonicalization {
   @Override String description(final VariableDeclarationFragment f) {
     return "Consolidate declaration of " + f.getName() + " with its subsequent initialization";
   }

@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.*;
  * <code>@SuppressWarnings("unchecked")</code>
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-02 */
-public class AnnotationDiscardValueName //
+public final class AnnotationDiscardValueName //
     extends Wring.ReplaceCurrentNode<NormalAnnotation> implements Kind.SyntacticBaggage {
   @Override String description(final NormalAnnotation a) {
     return "Discard the \"value\" member from the @" + a.getTypeName().getFullyQualifiedName() + " annotation";
