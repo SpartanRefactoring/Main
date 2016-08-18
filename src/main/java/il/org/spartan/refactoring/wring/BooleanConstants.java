@@ -29,7 +29,7 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2016-04-04 */
 public class BooleanConstants extends Wring.ReplaceCurrentNode<MethodInvocation> {
   @Override String description(@SuppressWarnings("unused") final MethodInvocation __) {
-    return "Use built-in boolean constant instead of valueOf()";
+    return "Use built-in boolean constants instead of valueOf()";
   }
   @Override Expression replacement(final MethodInvocation i) {
     if (!"valueOf".equals(name(i).getIdentifier()))
