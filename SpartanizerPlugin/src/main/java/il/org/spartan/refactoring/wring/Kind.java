@@ -3,7 +3,7 @@ package il.org.spartan.refactoring.wring;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 
 public interface Kind {
-  interface Sorting extends Structural{
+  interface Sorting extends Structural {
     static final String label = "Sorting";
 
     @Override default String description() {

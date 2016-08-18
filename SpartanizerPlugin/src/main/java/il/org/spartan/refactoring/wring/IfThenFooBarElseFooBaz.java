@@ -35,7 +35,7 @@ import il.org.spartan.refactoring.utils.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements Kind.DistributiveRefactoring{
+public class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements Kind.DistributiveRefactoring {
   private static List<Statement> commonPrefix(final List<Statement> ss1, final List<Statement> ss2) {
     final List<Statement> $ = new ArrayList<>();
     while (!ss1.isEmpty() && !ss2.isEmpty()) {

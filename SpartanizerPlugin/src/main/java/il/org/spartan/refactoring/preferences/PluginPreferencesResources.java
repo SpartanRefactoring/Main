@@ -9,19 +9,18 @@ public class PluginPreferencesResources {
   /** An enum holding together all the "enabled spartanizations" options, also
    * allowing to get the set preference value for each of them */
   public enum WringGroup {
-    Abbreviation(Kind.Abbreviation.class),//
-    Canonicalization(Kind.Canonicalization.class),//
-    Centification(Kind.Centification.class),//
-    DistributiveRefactoring(Kind.DistributiveRefactoring.class),//
-    Dollarization(Kind.Dollarization.class),//
-    Inlining(Kind.Inlining.class),//
-    NoImpact(Kind.NoImpact.class),//
-    ScopeReduction(Kind.ScopeReduction.class),//
-    SyntacticBaggage(Kind.SyntacticBaggage.class),//
-    Ternarization(Kind.Ternarization.class),//
+    Abbreviation(Kind.Abbreviation.class), //
+    Canonicalization(Kind.Canonicalization.class), //
+    Centification(Kind.Centification.class), //
+    DistributiveRefactoring(Kind.DistributiveRefactoring.class), //
+    Dollarization(Kind.Dollarization.class), //
+    Inlining(Kind.Inlining.class), //
+    NoImpact(Kind.NoImpact.class), //
+    ScopeReduction(Kind.ScopeReduction.class), //
+    SyntacticBaggage(Kind.SyntacticBaggage.class), //
+    Ternarization(Kind.Ternarization.class), //
     UnusedArguments(Kind.UnusedArguments.class),//
     ;
-
     static IPreferenceStore store() {
       return Plugin.plugin().getPreferenceStore();
     }
@@ -62,12 +61,13 @@ public class PluginPreferencesResources {
   /** General preferences **/
   public static final String PLUGIN_STARTUP_BEHAVIOR_ID = "pref_startup_behavior";
   public static final String PLUGIN_STARTUP_BEHAVIOR_TEXT = "Plugin startup behavior:";
-  public static final String[][] PLUGIN_STARTUP_BEHAVIOR_OPTIONS = { { "Remember individual project settings",//
-      "remember" },
-      { "Enable for all projects",//
-      "always_on" },//
-      { "Disable for all projects",//
-      "always_off" } };
+  public static final String[][] PLUGIN_STARTUP_BEHAVIOR_OPTIONS = {
+      { "Remember individual project settings", //
+          "remember" },
+      { "Enable for all projects", //
+          "always_on" }, //
+      { "Disable for all projects", //
+          "always_off" } };
   public static final String NEW_PROJECTS_ENABLE_BY_DEFAULT_ID = "pref_enable_by_default_for_new_projects";
   public static final String NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT = "Enable by default for newly created projects";
 }

@@ -13,8 +13,8 @@ import il.org.spartan.refactoring.wring.Wring.*;
  * ReplaceCurrentNodeExclude
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-05-08 */
-@SuppressWarnings("javadoc") public class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCurrentNodeExclude<SingleVariableDeclaration> 
-  implements Kind.UnusedArguments {
+@SuppressWarnings("javadoc") public class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCurrentNodeExclude<SingleVariableDeclaration>
+    implements Kind.UnusedArguments {
   public static class IsUsed extends ASTVisitor {
     boolean c = true;
     String n;

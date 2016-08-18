@@ -31,8 +31,7 @@ import il.org.spartan.refactoring.utils.*;
  * statement is the last statement in a method.
  * @author Yossi Gil
  * @since 2015-09-09 */
-public class IfLastInMethod extends Wring<IfStatement> 
-  implements Kind.Canonicalization {
+public class IfLastInMethod extends Wring<IfStatement> implements Kind.Canonicalization {
   @Override String description(final IfStatement s) {
     return "Invert conditional " + s.getExpression() + " for early return";
   }

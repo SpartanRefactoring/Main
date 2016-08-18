@@ -42,8 +42,7 @@ import il.org.spartan.refactoring.utils.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> 
-  implements Kind.SyntacticBaggage {
+public class BlockSimplify extends Wring.ReplaceCurrentNode<Block> implements Kind.SyntacticBaggage {
   public static boolean hasHidings(final List<Statement> ss) {
     return new Predicate<List<Statement>>() {
       final Set<String> dictionary = new HashSet<>();
