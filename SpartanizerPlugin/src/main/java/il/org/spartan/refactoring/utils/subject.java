@@ -59,6 +59,12 @@ import il.org.spartan.*;
     public Expression toQualifier(final String name) {
       return ast.newQualifiedName((SimpleName) inner, ast.newSimpleName(name));
     }
+    //** TODO: YG; integrate with fluent API
+    public NumberLiteral literal(String text) {
+      NumberLiteral $ = ast.newNumberLiteral();
+      $.setToken(text);
+      return $;
+    }
     /** Create a new {@link ReturnStatement} which returns our operand
      * @return the new return statement */
     public ReturnStatement toReturn() {
