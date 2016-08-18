@@ -26,7 +26,7 @@ import il.org.spartan.refactoring.utils.*;
  * </pre>
  * @author Yossi Gil
  * @since 2015-07-29 */
-public class IfReturnNoElseReturn extends Wring.ReplaceToNextStatement<IfStatement> implements Kind.Ternarization {
+public final class IfReturnNoElseReturn extends Wring.ReplaceToNextStatement<IfStatement> implements Kind.Ternarization {
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate into a single 'return'";
   }

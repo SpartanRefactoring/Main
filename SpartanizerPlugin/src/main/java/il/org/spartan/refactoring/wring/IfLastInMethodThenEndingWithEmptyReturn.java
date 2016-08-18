@@ -38,7 +38,7 @@ import il.org.spartan.refactoring.utils.*;
  *         </pre>
  *
  * @since 2015-09-09 */
-public class IfLastInMethodThenEndingWithEmptyReturn extends Wring<IfStatement> implements Kind.Canonicalization {
+public final class IfLastInMethodThenEndingWithEmptyReturn extends Wring<IfStatement> implements Kind.Canonicalization {
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Remove redundant return statement in 'then' branch of if statement that terminates this method";
   }

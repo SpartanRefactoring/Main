@@ -24,7 +24,7 @@ import il.org.spartan.refactoring.utils.*;
  *
  * @author Yossi Gil
  * @since 2015-09-09 */
-public class IfThrowNoElseThrow extends Wring.ReplaceToNextStatement<IfStatement> implements Kind.Ternarization {
+public final class IfThrowNoElseThrow extends Wring.ReplaceToNextStatement<IfStatement> implements Kind.Ternarization {
   static Expression getThrowExpression(final Statement s) {
     final ThrowStatement $ = extract.throwStatement(s);
     return $ == null ? null : extract.core($.getExpression());

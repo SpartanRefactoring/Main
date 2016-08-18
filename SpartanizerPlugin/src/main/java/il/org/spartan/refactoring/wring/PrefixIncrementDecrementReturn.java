@@ -26,7 +26,7 @@ import il.org.spartan.refactoring.utils.*;
  *
  * @author Yossi Gil
  * @since 2015-08-28 */
-public class PrefixIncrementDecrementReturn extends Wring.ReplaceToNextStatement<PrefixExpression> implements Kind.Canonicalization {
+public final class PrefixIncrementDecrementReturn extends Wring.ReplaceToNextStatement<PrefixExpression> implements Kind.Canonicalization {
   @Override String description(final PrefixExpression e) {
     return "Consolidate " + e + " with subsequent 'return' of " + operand(e);
   }
