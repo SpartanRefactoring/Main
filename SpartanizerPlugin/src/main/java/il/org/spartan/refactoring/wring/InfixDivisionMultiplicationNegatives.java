@@ -16,38 +16,37 @@ import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** A {@link Wring} to convert an expression such as
- * 
+ *
  * <pre>
  * 1 * i
  * </pre>
- * 
+ *
  * or
- * 
+ *
  * <pre>
  * i * 1
  * </pre>
- * 
+ *
  * to
- * 
+ *
  * <pre>
  * i
- * </i> 
- * or 
+ * </i>
+ * or
  * <pre>
  * i * 1 * jasLiteral
  * </pre>
- * 
+ *
  * to
- * 
+ *
  * <pre>
  * i * j
  * </pre>
- * 
+ *
  * @author Matteo Orrù
  * @since 2016 */
 public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpression> {
-
-   private static List<Expression> gather(final Expression e, final List<Expression> $) {
+  private static List<Expression> gather(final Expression e, final List<Expression> $) {
     if (e instanceof InfixExpression)
       return gather(asInfixExpression(e), $);
     $.add(e);
