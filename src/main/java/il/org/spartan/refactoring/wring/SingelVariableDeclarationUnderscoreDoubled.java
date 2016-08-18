@@ -13,7 +13,7 @@ import il.org.spartan.refactoring.wring.Wring.*;
  * ReplaceCurrentNodeExclude
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-05-08 */
-@SuppressWarnings("javadoc") public class MethodRenameUnusedVariableToUnderscore extends ReplaceCurrentNodeExclude<SingleVariableDeclaration> {
+@SuppressWarnings("javadoc") public class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCurrentNodeExclude<SingleVariableDeclaration> {
   public static class IsUsed extends ASTVisitor {
     boolean c = true;
     String n;
