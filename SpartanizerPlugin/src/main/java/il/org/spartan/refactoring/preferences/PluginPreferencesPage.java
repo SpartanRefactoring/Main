@@ -25,6 +25,7 @@ public class PluginPreferencesPage extends FieldEditorPreferencePage implements 
       }
     }
   }
+
   public static final String WRING_COMBO_OPTIONS[][] = { { "Enabled", "on" }, { "Disabled", "off" } };
   private final SpartanPropertyListener listener;
 
