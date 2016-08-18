@@ -29,7 +29,7 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2015-08-28 */
 public class PrefixIncrementDecrementReturn extends Wring.ReplaceToNextStatement<PrefixExpression> {
   @Override String description(final PrefixExpression e) {
-    return "Consolidate " + e + " with subsequent 'return' of " + e.getOperand();
+    return "Consolidate " + e + " with subsequent 'return' of " + operand(e);
   }
   @Override ASTRewrite go(final ASTRewrite r, final PrefixExpression e, final Statement nextStatement, final TextEditGroup g) {
     if (!in(e.getOperator(), INCREMENT, DECREMENT))
@@ -38,7 +38,7 @@ public class PrefixIncrementDecrementReturn extends Wring.ReplaceToNextStatement
     if (parent == null || parent instanceof ForStatement)
       return null;
     final ReturnStatement s = asReturnStatement(nextStatement);
-    if (s == null || !same(e.getOperand(), core(s.getExpression())))
+    if (s == null || !same(operand(e), expression(s)))
       return null;
     r.remove(parent, g);
     r.replace(s, subject.operand(e).toReturn(), g);

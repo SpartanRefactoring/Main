@@ -18,12 +18,6 @@ import il.org.spartan.*;
  * @since 2015-07-28 */
 public enum extract {
   ;
-  public static SimpleName name(final MethodInvocation i) {
-    return i.getName();
-  }
-  public static SimpleName name(final SuperMethodInvocation i) {
-    return i.getName();
-  }
   /** Retrieve all operands, including parenthesized ones, under an expression
    * @param e JD
    * @return a {@link List} of all operands to the parameter */
@@ -122,19 +116,19 @@ public enum extract {
         return null;
     }
   }
-  public static Expression expression(final ExpressionStatement $) {
+  public static Expression expression(final CastExpression $) {
     return core($.getExpression());
+  }
+  public static Expression expression(final ExpressionStatement $) {
+    return $ == null ? null : core($.getExpression());
   }
   public static Expression expression(final MethodInvocation $) {
     return core($.getExpression());
   }
-  public static Expression expression(final CastExpression $) {
+  public static Expression expression(final ReturnStatement $) {
     return core($.getExpression());
   }
   public static Expression expression(final ThrowStatement $) {
-    return core($.getExpression());
-  }
-  public static Expression expression(final ReturnStatement $) {
     return core($.getExpression());
   }
   /** Convert, is possible, an {@link ASTNode} to a {@link ExpressionStatement}
@@ -276,11 +270,11 @@ public enum extract {
   public static MethodInvocation methodInvocation(final ASTNode n) {
     return asMethodInvocation(extract.expressionStatement(n).getExpression());
   }
-  private static Statement next(final Statement s, final List<Statement> ss) {
-    for (int i = 0; i < ss.size() - 1; ++i)
-      if (ss.get(i) == s)
-        return ss.get(i + 1);
-    return null;
+  public static SimpleName name(final MethodInvocation i) {
+    return i.getName();
+  }
+  public static SimpleName name(final SuperMethodInvocation i) {
+    return i.getName();
   }
   /** Find the {@link Assignment} that follows a given node.
    * @param n JD
@@ -319,6 +313,12 @@ public enum extract {
       return null;
     final Block b = asBlock(s.getParent());
     return b == null ? null : next(s, extract.statements(b));
+  }
+  public static Expression operand(final PrefixExpression ¢) {
+    return core(¢.getOperand());
+  }
+  public static Expression operand(final PostfixExpression ¢) {
+    return core(¢.getOperand());
   }
   /** Makes a list of all operands of an expression, comprising the left
    * operand, the right operand, followed by extra operands when they exist.
@@ -391,22 +391,6 @@ public enum extract {
     final List<Statement> $ = new ArrayList<>();
     return n == null || !(n instanceof Statement) ? $ : extract.statementsInto((Statement) n, $);
   }
-  private static List<Statement> statementsInto(final Block b, final List<Statement> $) {
-    for (final Object statement : b.statements())
-      extract.statementsInto((Statement) statement, $);
-    return $;
-  }
-  private static List<Statement> statementsInto(final Statement ¢, final List<Statement> $) {
-    switch (¢.getNodeType()) {
-      case EMPTY_STATEMENT:
-        return $;
-      case BLOCK:
-        return extract.statementsInto((Block) ¢, $);
-      default:
-        $.add(¢);
-        return $;
-    }
-  }
   /** @param n a node to extract an expression from
    * @return null if the statement is not an expression or return statement or
    *         the expression if they are */
@@ -424,5 +408,27 @@ public enum extract {
   }
   public static Type type(final CastExpression e) {
     return e.getType();
+  }
+  private static Statement next(final Statement s, final List<Statement> ss) {
+    for (int i = 0; i < ss.size() - 1; ++i)
+      if (ss.get(i) == s)
+        return ss.get(i + 1);
+    return null;
+  }
+  private static List<Statement> statementsInto(final Block b, final List<Statement> $) {
+    for (final Object statement : b.statements())
+      extract.statementsInto((Statement) statement, $);
+    return $;
+  }
+  private static List<Statement> statementsInto(final Statement ¢, final List<Statement> $) {
+    switch (¢.getNodeType()) {
+      case EMPTY_STATEMENT:
+        return $;
+      case BLOCK:
+        return extract.statementsInto((Block) ¢, $);
+      default:
+        $.add(¢);
+        return $;
+    }
   }
 }

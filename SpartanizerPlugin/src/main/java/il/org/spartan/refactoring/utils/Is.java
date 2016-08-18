@@ -459,7 +459,7 @@ public enum Is {
   }
   static boolean sideEffectFreePrefixExpression(final PrefixExpression e) {
     return in(e.getOperator(), PrefixExpression.Operator.PLUS, PrefixExpression.Operator.MINUS, PrefixExpression.Operator.COMPLEMENT,
-        PrefixExpression.Operator.NOT) && sideEffectFree(e.getOperand());
+        PrefixExpression.Operator.NOT) && sideEffectFree(extract.operand(e));
   }
   private static boolean sideEffectsFree(final Expression... es) {
     for (final Expression e : es)

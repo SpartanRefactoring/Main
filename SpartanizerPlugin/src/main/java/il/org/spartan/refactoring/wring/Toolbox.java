@@ -74,7 +74,7 @@ public class Toolbox {
         .add(MethodDeclaration.class, //
             new MethodRenameReturnToDollar(), //
             new RedundantModifiers.OfMethod(), //
-             null)
+            null)
         .add(MethodInvocation.class, //
             new StringEqualsConstant(), //
             new BooleanConstants(), null)

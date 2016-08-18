@@ -16,7 +16,7 @@ import il.org.spartan.refactoring.wring.Wring.*;
  * @author Ori Roth
  * @since 2016/05/08
  * @param <N> either SingleVariableDeclaration or VariableDeclarationFragment */
-public abstract class VariableChangeName<N extends VariableDeclaration> extends MultipleReplaceCurrentNode<N> {
+abstract class VariableChangeName<N extends VariableDeclaration> extends MultipleReplaceCurrentNode<N> {
   abstract boolean change(N n);
   @Override public ASTRewrite go(final ASTRewrite r, final N n, @SuppressWarnings("unused") final TextEditGroup __, final List<ASTNode> uses,
       final List<ASTNode> replacement) {

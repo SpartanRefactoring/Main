@@ -101,7 +101,7 @@ public class PrefixNotPushdownTest {
     azzert.that(WRING.scopeIncludes(e), is(true));
     azzert.that(WRING.eligible(e), is(true));
     azzert.notNull(asNot(e));
-    final Expression inner = core(e.getOperand());
+    final Expression inner = operand(e);
     azzert.notNull(inner);
     azzert.that(inner.toString(), is("false"));
     azzert.that(Is.booleanLiteral(inner), is(true));
