@@ -84,6 +84,6 @@ public abstract class AncestorSearch {
     return new Until(n);
   }
   /** @param n JD
-   * @return the closest ancestor whose type matches the given type. */
+   * @return  closest ancestor whose type matches the given type. */
   public abstract ASTNode from(final ASTNode n);
 }

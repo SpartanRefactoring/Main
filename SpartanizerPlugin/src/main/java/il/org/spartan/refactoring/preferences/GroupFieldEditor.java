@@ -88,7 +88,7 @@ public class GroupFieldEditor extends FieldEditor {
   }
   /** Returns the parent for all the FieldEditors inside of this group. In this
    * class, the actual {@link Group} object is returned
-   * @return the parent {@link Composite} object */
+   * @return  parent {@link Composite} object */
   public Composite getFieldEditor() {
     return group;
   }

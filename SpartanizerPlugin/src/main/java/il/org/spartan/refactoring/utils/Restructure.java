@@ -97,7 +97,7 @@ public enum Restructure {
   /** Determine whether a give {@link ASTNode} includes precisely one
    * {@link Statement}, and return this statement.
    * @param n JD
-   * @return the single statement contained in the parameter, or
+   * @return  single statement contained in the parameter, or
    *         <code><b>null</b></code> if not value exists. */
   public static Statement singleStatement(final ASTNode n) {
     final List<Statement> $ = extract.statements(n);

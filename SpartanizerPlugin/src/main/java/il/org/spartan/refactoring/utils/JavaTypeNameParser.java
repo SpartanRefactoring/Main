@@ -80,7 +80,7 @@ import java.util.regex.*;
     return s.toLowerCase().contains(substring.toLowerCase());
   }
   /** Returns the calculated short name for the type
-   * @return the type's short name */
+   * @return  type's short name */
   public String shortName() {
     return String.valueOf(Character.toLowerCase(lastName().charAt(0)));
   }

@@ -94,7 +94,7 @@ public abstract class FileTestUtils {
   /** Convert a canonical name of a class into a {@link Class} object, if
    * possible, otherwise generate an assertion failure
    * @param name the canonical name of some class
-   * @return the object representing this class
+   * @return  object representing this class
    * @since 2014/05/23 */
   private static Class<?> asClass(final String name) {
     try {

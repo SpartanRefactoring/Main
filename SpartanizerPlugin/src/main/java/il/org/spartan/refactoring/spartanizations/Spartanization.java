@@ -103,7 +103,7 @@ public abstract class Spartanization extends Refactoring {
   /** Count the number files that would change after Spartanization.
    * <p>
    * This is an slow operation. Do not call light-headedly.
-   * @return the total number of files with suggestions */
+   * @return  total number of files with suggestions */
   public int countFilesChanges() {
     // TODO not sure if this function is necessary - if it is, it could be
     // easily optimized when called after countSuggestions()
@@ -120,7 +120,7 @@ public abstract class Spartanization extends Refactoring {
   /** Count the number of suggestions offered by this instance.
    * <p>
    * This is an slow operation. Do not call light-headedly.
-   * @return the total number of suggestions offered by this instance */
+   * @return  total number of suggestions offered by this instance */
   public int countSuggestions() {
     setMarker(null);
     try {
@@ -172,7 +172,7 @@ public abstract class Spartanization extends Refactoring {
     u.accept(collect($));
     return $;
   }
-  /** @return the compilationUnit */
+  /** @return  compilationUnit */
   public ICompilationUnit getCompilationUnit() {
     return compilationUnit;
   }
@@ -228,7 +228,7 @@ public abstract class Spartanization extends Refactoring {
   @Override public final String getName() {
     return name;
   }
-  /** @return the selection */
+  /** @return  selection */
   public ITextSelection getSelection() {
     return selection;
   }
