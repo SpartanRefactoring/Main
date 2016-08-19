@@ -89,7 +89,11 @@ public enum Wrap {
   }
 
   private boolean contains(final String wrap, final String inner) {
-    return essence(off(wrap)).contains(essence(inner)); 
+    String off = off(wrap);
+    String essence = essence(inner);
+    String essence2 = essence(off);
+    azzert.notNull(essence2);
+    return essence2.contains(essence); 
   }
   /** Wrap a given code fragment, and then parse it, converting it into a
    * {@link CompilationUnit}.
