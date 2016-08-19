@@ -131,6 +131,7 @@ public class Toolbox {
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover(), null) //
         .add(ReturnStatement.class, new ReturnLastInMethod()) //
         .add(CastExpression.class, new CastToDouble2Multiply1()) //
+        .add(FieldDeclaration.class, new RedundantModifiers.OfField()) //
         .add(NormalAnnotation.class, //
             new AnnotationDiscardValueName(), //
             new AnnotationRemoveEmptyParentheses(), //
