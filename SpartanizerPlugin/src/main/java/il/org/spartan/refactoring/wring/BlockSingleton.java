@@ -28,6 +28,7 @@ public final class BlockSingleton extends Wring.ReplaceCurrentNode<Block> implem
   @Override String description(@SuppressWarnings("unused") final Block __) {
     return "Remove redundant curly braces.";
   }
+
   @Override Statement replacement(final Block b) {
     final ASTNode parent = parent(b);
     if (!(parent instanceof Statement) || parent instanceof TryStatement || parent instanceof SynchronizedStatement)

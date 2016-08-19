@@ -1908,7 +1908,7 @@ import il.org.spartan.refactoring.utils.*;
         "enum A {a1, a2; static enum B {b1, b2; static class C { static enum D {c1, c2}}}")//
             .to("enum A {a1, a2; enum B {b1, b2; static class C { static enum D {c1, c2}}}")//
             .to("enum A {a1, a2; enum B {b1, b2; static class C { enum D {c1, c2}}}")//
-            ;
+    ;
   }
 
   @Test public void issue53() {
@@ -4047,92 +4047,110 @@ import il.org.spartan.refactoring.utils.*;
   @Test public void xorSortClassConstantsAtEnd() {
     trimming("f(a,b,c,d) ^ BOB").to("");
   }
+
   @Test public void RedundantModifierSimpleWorking1() {
     trimming("abstract abstract interface a"//
-            +"{}").to("interface a {}");
-  }
-  @Test public void RedundantModifierSimpleWorking2() {
-    trimming("abstract interface a"//
-            +"{}").to("interface a {}");
-  }
-  @Test public void RedundantModifierSimpleDontWorking() {
-    trimming("interface a"//
-            +"{}").to("");
-  }
-  @Test public void RedundantModifierInterfaceMethods1() {
-    trimming("public interface Int1 {\n"//
-        +"public void add();\n"//
-        +"void remove()\n; "//
-        +"}").to("public interface Int1 {\n"//
-            +"void add();\n"//
-            +"void remove()\n; "//
-            +"}");
-  }
-  @Test public void RedundantModifierInterfaceMethods2() {
-    trimming("public interface Int1 {\n"//
-        +"public abstract void add();\n"//
-        +"abstract void remove()\n; "//
-        +"}").to("public interface Int1 {\n"//
-            +"void add();\n"//
-            +"void remove()\n; "//
-            +"}");
-  }
-  @Test public void RedundantModifierInterfaceMethods3() {
-    trimming("public interface Int1 {\n"//
-        +"abstract void add();\n"//
-        +"void remove()\n; "//
-        +"}").to("public interface Int1 {\n"//
-            +"void add();\n"//
-            +"void remove()\n; "//
-            +"}");
-  }
-  @Test public void RedundantModifierFinalClassMethods() {
-    trimming("final class ClassTest {\n"//
-        +"final void remove();\n"//
-        +"}").to("final class ClassTest {\n"//
-            +"void remove();\n "//
-            +"}");
-  }
-  @Test public void RedundantModifierFinalClassMethodsOnlyRightModifierRemoved() {
-    trimming("final class ClassTest {\n"//
-        +"public final void remove();\n"//
-        +"}").to("final class ClassTest {\n"//
-            +"public void remove();\n "//
-            +"}");
-  }
-  @Test public void RedundantModifierEnums() {
-    trimming("public class ClassTest {\n"//
-        +"static enum Day {\n"//
-        +"SUNDAY, MONDAY\n"//
-        +"}").to("public class ClassTest {\n"//
-            +"enum Day {\n"//
-            +"SUNDAY, MONDAY\n"//
-            +"}");
-  }
-  @Test public void RedundantModifierEnumsOnlyRightModifierRemoved() {
-    trimming("public class ClassTest {\n"//
-        +"private static enum Day {\n"//
-        +"SUNDAY, MONDAY\n"//
-        +"}").to("public class ClassTest {\n"//
-            +"private enum Day {\n"//
-            +"SUNDAY, MONDAY\n"//
-            +"}");
-  }
-  @Test public void RedundantModifierConstructors1() {
-    trimming("public class ClassTest {\n"//
-        +"public  ClassTest(){}\n"//
-        +"}").to("");
-  } 
-  @Test public void RedundantModifierEnumInInterface1() {
-    trimming("public interface Int1 {\n"//
-        +"static enum Day {\n"//
-        +"SUNDAY, MONDAY\n"//
-        +"}"//
-        +"}").to("public interface Int1 {\n"//
-        +"enum Day {\n"//
-        +"SUNDAY, MONDAY\n"//
-        +"}"
-        +"}");
+        + "{}").to("interface a {}");
   }
 
+  @Test public void RedundantModifierSimpleWorking2() {
+    trimming("abstract interface a"//
+        + "{}").to("interface a {}");
+  }
+
+  @Test public void RedundantModifierSimpleDontWorking() {
+    trimming("interface a"//
+        + "{}").to("");
+  }
+
+  @Test public void RedundantModifierInterfaceMethods1() {
+    trimming("public interface Int1 {\n"//
+        + "public void add();\n"//
+        + "void remove()\n; "//
+        + "}")
+            .to("public interface Int1 {\n"//
+                + "void add();\n"//
+                + "void remove()\n; "//
+                + "}");
+  }
+
+  @Test public void RedundantModifierInterfaceMethods2() {
+    trimming("public interface Int1 {\n"//
+        + "public abstract void add();\n"//
+        + "abstract void remove()\n; "//
+        + "}")
+            .to("public interface Int1 {\n"//
+                + "void add();\n"//
+                + "void remove()\n; "//
+                + "}");
+  }
+
+  @Test public void RedundantModifierInterfaceMethods3() {
+    trimming("public interface Int1 {\n"//
+        + "abstract void add();\n"//
+        + "void remove()\n; "//
+        + "}")
+            .to("public interface Int1 {\n"//
+                + "void add();\n"//
+                + "void remove()\n; "//
+                + "}");
+  }
+
+  @Test public void RedundantModifierFinalClassMethods() {
+    trimming("final class ClassTest {\n"//
+        + "final void remove();\n"//
+        + "}")
+            .to("final class ClassTest {\n"//
+                + "void remove();\n "//
+                + "}");
+  }
+
+  @Test public void RedundantModifierFinalClassMethodsOnlyRightModifierRemoved() {
+    trimming("final class ClassTest {\n"//
+        + "public final void remove();\n"//
+        + "}")
+            .to("final class ClassTest {\n"//
+                + "public void remove();\n "//
+                + "}");
+  }
+
+  @Test public void RedundantModifierEnums() {
+    trimming("public class ClassTest {\n"//
+        + "static enum Day {\n"//
+        + "SUNDAY, MONDAY\n"//
+        + "}")
+            .to("public class ClassTest {\n"//
+                + "enum Day {\n"//
+                + "SUNDAY, MONDAY\n"//
+                + "}");
+  }
+
+  @Test public void RedundantModifierEnumsOnlyRightModifierRemoved() {
+    trimming("public class ClassTest {\n"//
+        + "private static enum Day {\n"//
+        + "SUNDAY, MONDAY\n"//
+        + "}")
+            .to("public class ClassTest {\n"//
+                + "private enum Day {\n"//
+                + "SUNDAY, MONDAY\n"//
+                + "}");
+  }
+
+  @Test public void RedundantModifierConstructors1() {
+    trimming("public class ClassTest {\n"//
+        + "public  ClassTest(){}\n"//
+        + "}").to("");
+  }
+
+  @Test public void RedundantModifierEnumInInterface1() {
+    trimming("public interface Int1 {\n"//
+        + "static enum Day {\n"//
+        + "SUNDAY, MONDAY\n"//
+        + "}"//
+        + "}")
+            .to("public interface Int1 {\n"//
+                + "enum Day {\n"//
+                + "SUNDAY, MONDAY\n"//
+                + "}" + "}");
+  }
 }

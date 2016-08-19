@@ -30,6 +30,7 @@ public final class BooleanConstants extends Wring.ReplaceCurrentNode<MethodInvoc
   @Override String description(@SuppressWarnings("unused") final MethodInvocation __) {
     return "Use built-in boolean constants instead of valueOf()";
   }
+
   @Override Expression replacement(final MethodInvocation i) {
     if (!"valueOf".equals(name(i).getIdentifier()))
       return null;

@@ -61,6 +61,7 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
+
     static Document rewrite(final Spartanization s, final CompilationUnit u, final Document d) {
       try {
         s.createRewrite(u, null).rewriteAST(d, null).apply(d);
@@ -74,21 +75,26 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
       }
       return null;
     }
+
     public WringedInput() {
       super(WRING);
     }
+
     @Override @Test public void flattenIsIdempotentt() {
       final InfixExpression flatten = flatten(asInfixExpression());
       azzert.that(flatten(flatten).toString(), is(flatten.toString()));
     }
+
     @Override @Test public void inputIsInfixExpression() {
       azzert.notNull(asInfixExpression());
     }
+
     @Test public void sortTwice() {
       final List<Expression> operands = extract.operands(flatten(asInfixExpression()));
       ExpressionComparator.ADDITION.sort(operands);
       azzert.nay(ExpressionComparator.ADDITION.sort(operands));
     }
+
     @Test public void twoOrMoreArguments() {
       azzert.that(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
     }
@@ -99,12 +105,15 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
   static public void fail() {
     fail(null);
   }
+
   static public void fail(final String message) {
     throw message == null ? new AssertionError() : new AssertionError(message);
   }
+
   public InfixComparisonBooleanLiteralTest() {
     super(WRING);
   }
+
   @Test public void removeParenthesis() throws MalformedTreeException, BadLocationException {
     final String s = " (2) == true";
     final String wrap = Wrap.Expression.on(s);

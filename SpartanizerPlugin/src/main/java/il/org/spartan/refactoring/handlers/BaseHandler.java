@@ -29,22 +29,27 @@ public abstract class BaseHandler extends AbstractHandler {
     }
     return null;
   }
+
   /** Retrieves the current {@link ICompilationUnit}
-   * @return  current {@link ICompilationUnit} */
+   * @return current {@link ICompilationUnit} */
   public static ICompilationUnit currentCompilationUnit() {
     return getCompilationUnit(getCurrentWorkbenchWindow().getActivePage().getActiveEditor());
   }
+
   private static ICompilationUnit getCompilationUnit(final IEditorPart ep) {
     return ep == null ? null : getCompilationUnit((IResource) getResource(ep));
   }
+
   private static ICompilationUnit getCompilationUnit(final IResource r) {
     return r == null ? null : JavaCore.createCompilationUnitFrom((IFile) r);
   }
+
   /** Retrieves the current {@link IWorkbenchWindow}
-   * @return  current {@link IWorkbenchWindow} */
+   * @return current {@link IWorkbenchWindow} */
   public static IWorkbenchWindow getCurrentWorkbenchWindow() {
     return PlatformUI.getWorkbench().getActiveWorkbenchWindow();
   }
+
   static Object getResource(final IEditorPart ep) {
     return ep.getEditorInput().getAdapter(IResource.class);
   }
@@ -56,6 +61,7 @@ public abstract class BaseHandler extends AbstractHandler {
   protected BaseHandler(final Spartanization inner) {
     this.inner = inner;
   }
+
   @Override public Void execute(final ExecutionEvent e) throws ExecutionException {
     try {
       return execute(HandlerUtil.getCurrentSelection(e));
@@ -63,22 +69,28 @@ public abstract class BaseHandler extends AbstractHandler {
       throw new ExecutionException(x.getMessage());
     }
   }
+
   private Void execute(final ISelection s) throws InterruptedException {
     return !(s instanceof ITextSelection) ? null : execute((ITextSelection) s);
   }
+
   private Void execute(final ITextSelection s) throws InterruptedException {
     return execute(new RefactoringWizardOpenOperation(getWizard(s, currentCompilationUnit())));
   }
+
   private Void execute(final RefactoringWizardOpenOperation wop) throws InterruptedException {
     wop.run(getCurrentWorkbenchWindow().getShell(), getDialogTitle());
     return null;
   }
+
   protected final String getDialogTitle() {
     return inner.getName();
   }
+
   protected Spartanization getRefactoring() {
     return inner;
   }
+
   private RefactoringWizard getWizard(final ITextSelection s, final ICompilationUnit cu) {
     final Spartanization $ = getRefactoring();
     $.setSelection(s);

@@ -51,9 +51,11 @@ public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpre
     $.add(e);
     return $;
   }
+
   private static List<Expression> gather(final InfixExpression e) {
     return gather(e, new ArrayList<Expression>());
   }
+
   private static List<Expression> gather(final InfixExpression e, final List<Expression> $) {
     if (e == null)
       return $;
@@ -67,14 +69,17 @@ public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpre
       gather(extendedOperands(e), $);
     return $;
   }
+
   private static List<Expression> gather(final List<Expression> es, final List<Expression> $) {
     for (final Expression e : es)
       gather(e, $);
     return $;
   }
+
   @Override String description(final InfixExpression e) {
     return "Use at most one arithmetical negation, for first factor of " + e.getOperator();
   }
+
   @Override Rewrite make(final InfixExpression e, final ExclusionManager exclude) {
     final List<Expression> es = gather(e);
     if (es.size() < 2)

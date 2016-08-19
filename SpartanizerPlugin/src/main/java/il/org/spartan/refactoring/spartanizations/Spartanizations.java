@@ -28,14 +28,17 @@ public class Spartanizations {
   public static Iterable<Spartanization> all() {
     return map.values();
   }
+
   /** @return Iteration over all Spartanization class instances */
   public static Iterable<Spartanization> allAvailableSpartanizations() {
     return as.iterable(all);
   }
+
   /** @return all the registered spartanization refactoring objects names */
   public static Set<String> allRulesNames() {
     return map.keySet();
   }
+
   /** @param c Spartanization rule
    * @return Spartanization class rule instance */
   @SuppressWarnings("unchecked") //
@@ -45,12 +48,14 @@ public class Spartanizations {
         return (T) $;
     return null;
   }
+
   /** @param name the name of the spartanization
    * @return an instance of the spartanization */
   public static Spartanization get(final String name) {
     assert name != null;
     return map.get(name);
   }
+
   /** Resets the enumeration with the current values from the preferences file.
    * Letting the rules notification decisions be updated without restarting
    * eclipse. */
@@ -65,6 +70,7 @@ public class Spartanizations {
   private Spartanizations(final Spartanization value) {
     this.value = value;
   }
+
   /** @return Spartanization class rule instance */
   public Spartanization value() {
     return value;

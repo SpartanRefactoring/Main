@@ -22,12 +22,15 @@ public enum MakeAST {
     @Override public CompilationUnit from(final File f) {
       return from(string(f));
     }
+
     @Override public CompilationUnit from(final IFile f) {
       return (CompilationUnit) Make.COMPILATION_UNIT.parser(f).createAST(null);
     }
+
     @Override public CompilationUnit from(final IMarker m, final IProgressMonitor pm) {
       return (CompilationUnit) Make.COMPILATION_UNIT.parser(m).createAST(pm);
     }
+
     @Override public CompilationUnit from(final String s) {
       return (CompilationUnit) makeParser(s).createAST(null);
     }
@@ -37,12 +40,15 @@ public enum MakeAST {
     @Override public Expression from(final File f) {
       return from(string(f));
     }
+
     @Override public Expression from(final IFile f) {
       return (Expression) Make.EXPRESSION.parser(f).createAST(null);
     }
+
     @Override public Expression from(final IMarker m, final IProgressMonitor pm) {
       return (Expression) Make.EXPRESSION.parser(m).createAST(pm);
     }
+
     @Override public Expression from(final String s) {
       return (Expression) makeParser(s).createAST(null);
     }
@@ -66,9 +72,11 @@ public enum MakeAST {
         return null;
     }
   }
+
   private static ReturnStatement asReturn(final Block b) {
     return b.statements().size() != 1 ? null : asReturn((Statement) b.statements().get(0));
   }
+
   /** Converts a boolean into a bit value
    * @param $ JD
    * @return 1 if the parameter is <code><b>true</b></code>, 0 if it is
@@ -76,21 +84,24 @@ public enum MakeAST {
   public static int bit(final boolean $) {
     return $ ? 1 : 0;
   }
+
   /** IFile -> ICompilationUnit converter
    * @param f File
    * @return ICompilationUnit */
   public static ICompilationUnit iCompilationUnit(final IFile f) {
     return JavaCore.createCompilationUnitFrom(f);
   }
+
   /** IMarker -> ICompilationUnit converter
    * @param m IMarker
    * @return CompilationUnit */
   public static ICompilationUnit iCompilationUnit(final IMarker m) {
     return iCompilationUnit((IFile) m.getResource());
   }
+
   /** Convert file contents into a {@link String}
    * @param f JD
-   * @return  entire contents of this file, as one string */
+   * @return entire contents of this file, as one string */
   public static String string(final File f) {
     try (final BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(f)))) {
       final StringBuilder $ = new StringBuilder();
@@ -101,6 +112,7 @@ public enum MakeAST {
       throw new RuntimeException(e);
     }
   }
+
   /** Creates a {@link StringBuilder} object out of a file object.
    * @param f JD
    * @return {@link StringBuilder} whose content is the same as the contents of
@@ -119,23 +131,27 @@ public enum MakeAST {
   private MakeAST(final int kind) {
     this.kind = kind;
   }
+
   /** Parses a given {@link Document}.
    * @param d JD
-   * @return  {@link ASTNode} obtained by parsing */
+   * @return {@link ASTNode} obtained by parsing */
   public final ASTNode from(final Document d) {
     return from(d.get());
   }
+
   /** File -> ASTNode converter
    * @param f File
    * @return ASTNode */
   public ASTNode from(final File f) {
     return from(string(f));
   }
+
   /** @param f IFile
    * @return ASTNode */
   public ASTNode from(final IFile f) {
     return Make.of(this).parser(f).createAST(null);
   }
+
   /** IMarker, SubProgressMonitor -> ASTNode converter
    * @param m Marker
    * @param pm ProgressMonitor
@@ -143,12 +159,14 @@ public enum MakeAST {
   public ASTNode from(final IMarker m, final IProgressMonitor pm) {
     return Make.of(this).parser(m).createAST(pm);
   }
+
   /** String -> ASTNode converter
    * @param s String
    * @return ASTNode */
   public ASTNode from(final String s) {
     return makeParser(s).createAST(null);
   }
+
   /** Creates a no-binding parser for a given text
    * @param text what to parse
    * @return a newly created parser for the parameter */
@@ -157,6 +175,7 @@ public enum MakeAST {
     $.setSource(text);
     return $;
   }
+
   /** Creates a no-binding parser for a given compilation unit
    * @param u what to parse
    * @return a newly created parser for the parameter */
@@ -165,6 +184,7 @@ public enum MakeAST {
     $.setSource(u);
     return $;
   }
+
   /** Creates a no-binding parser for a given text
    * @param text what to parse
    * @return a newly created parser for the parameter */

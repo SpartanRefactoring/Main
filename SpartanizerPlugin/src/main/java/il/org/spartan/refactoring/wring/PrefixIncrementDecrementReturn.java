@@ -30,6 +30,7 @@ public final class PrefixIncrementDecrementReturn extends Wring.ReplaceToNextSta
   @Override String description(final PrefixExpression e) {
     return "Consolidate " + e + " with subsequent 'return' of " + operand(e);
   }
+
   @Override ASTRewrite go(final ASTRewrite r, final PrefixExpression e, final Statement nextStatement, final TextEditGroup g) {
     if (!in(e.getOperator(), INCREMENT, DECREMENT))
       return null;

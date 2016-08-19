@@ -16,6 +16,7 @@ public abstract class AncestorSearch {
     public ByNodeClass(final Class<? extends ASTNode> clazz) {
       this.clazz = clazz;
     }
+
     @Override public ASTNode from(final ASTNode n) {
       if (n != null)
         for (ASTNode $ = n.getParent(); $ != null; $ = $.getParent())
@@ -31,6 +32,7 @@ public abstract class AncestorSearch {
     public ByNodeType(final int type) {
       this.type = type;
     }
+
     @Override public ASTNode from(final ASTNode n) {
       if (n != null)
         for (ASTNode $ = n.getParent(); $ != null; $ = $.getParent())
@@ -46,6 +48,7 @@ public abstract class AncestorSearch {
     Until(final ASTNode until) {
       this.until = until;
     }
+
     public Iterable<ASTNode> ancestors(final SimpleName n) {
       return () -> new Iterator<ASTNode>() {
         ASTNode next = n;
@@ -53,11 +56,13 @@ public abstract class AncestorSearch {
         @Override public boolean hasNext() {
           return next != null;
         }
+
         @Override public ASTNode next() {
           final ASTNode $ = next;
           next = eval(() -> next.getParent()).unless(next == until);
           return $;
         }
+
         @Override public void remove() {
           throw new UnsupportedOperationException();
         }
@@ -72,6 +77,7 @@ public abstract class AncestorSearch {
   public static <N extends ASTNode> AncestorSearch forClass(final Class<N> c) {
     return new ByNodeClass(c);
   }
+
   /** Factory method, returning an instance which can search by the integer
    * present on a node.
    * @param type JD
@@ -80,10 +86,12 @@ public abstract class AncestorSearch {
   public static AncestorSearch forType(final int type) {
     return new ByNodeType(type);
   }
+
   public static Until until(final ASTNode n) {
     return new Until(n);
   }
+
   /** @param n JD
-   * @return  closest ancestor whose type matches the given type. */
+   * @return closest ancestor whose type matches the given type. */
   public abstract ASTNode from(final ASTNode n);
 }

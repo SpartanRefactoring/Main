@@ -27,12 +27,14 @@ public final class IfAssignToFooElseAssignToFoo extends Wring.ReplaceCurrentNode
   @Override String description(final IfStatement s) {
     return "Consolidate assignments to " + left(extract.assignment(then(s)));
   }
+
   @Override Statement replacement(final IfStatement s) {
     final Assignment then = extract.assignment(then(s));
     final Assignment elze = extract.assignment(elze(s));
     return !compatible(then, elze) ? null
         : subject.pair(left(then), subject.pair(right(then), right(elze)).toCondition(s.getExpression())).toStatement(then.getOperator());
   }
+
   @Override boolean scopeIncludes(final IfStatement s) {
     return s != null && compatible(extract.assignment(then(s)), extract.assignment(elze(s)));
   }

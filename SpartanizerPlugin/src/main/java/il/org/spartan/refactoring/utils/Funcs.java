@@ -119,7 +119,6 @@ public enum Funcs {
     return isLiteral((¢), false);
   }
 
-
   public static StringLiteral asStringLiteral(ASTNode ¢) {
     return !(is(¢, STRING_LITERAL)) ? null : (StringLiteral) ¢;
   }

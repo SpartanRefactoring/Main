@@ -22,7 +22,7 @@ public enum Make {
   /** Converts the {@link MakeAST} value to its corresponding {@link Make} enum
    * value
    * @param t The {@link MakeAST} type
-   * @return  corresponding {@link Make} value to the argument */
+   * @return corresponding {@link Make} value to the argument */
   public static Make of(final MakeAST t) {
     switch (t) {
       case STATEMENTS:
@@ -43,6 +43,7 @@ public enum Make {
   private Make(final int kind) {
     this.kind = kind;
   }
+
   /** Creates a no-binding parser for a given text
    * @param text what to parse
    * @return a newly created parser for the parameter */
@@ -51,14 +52,16 @@ public enum Make {
     $.setSource(text);
     return $;
   }
+
   /** Creates a parser for a given {@link Document}
    * @param d JD
-   * @return  created parser */
+   * @return created parser */
   public ASTParser parser(final Document d) {
     final ASTParser $ = Funcs.parser(kind);
     $.setSource(d.get().toCharArray());
     return $;
   }
+
   /** Creates a no-binding parser for a given compilation unit
    * @param u what to parse
    * @return a newly created parser for the parameter */
@@ -67,18 +70,21 @@ public enum Make {
     $.setSource(u);
     return $;
   }
+
   /** Creates a parser for a given {@link IFile}
    * @param f JD
-   * @return  created parser */
+   * @return created parser */
   public ASTParser parser(final IFile f) {
     return parser(JavaCore.createCompilationUnitFrom(f));
   }
+
   /** Creates a parser for a given marked text.
    * @param m JD
-   * @return  created parser */
+   * @return created parser */
   public ASTParser parser(final IMarker m) {
     return parser(MakeAST.iCompilationUnit(m));
   }
+
   /** Creates a no-binding parser for a given text
    * @param text what to parse
    * @return a newly created parser for the parameter */

@@ -32,6 +32,7 @@ public final class TernaryCollapse extends Wring.ReplaceCurrentNode<ConditionalE
     Expression $;
     return ($ = collapseOnElse(e)) != null || ($ = collaspeOnThen(e)) != null ? $ : null;
   }
+
   private static Expression collapseOnElse(final ConditionalExpression e) {
     final ConditionalExpression elze = asConditionalExpression(core(e.getElseExpression()));
     if (elze == null)
@@ -45,6 +46,7 @@ public final class TernaryCollapse extends Wring.ReplaceCurrentNode<ConditionalE
             : subject.pair(elseElse, then)
                 .toCondition(subject.pair(logicalNot(e.getExpression()), logicalNot(elze.getExpression())).to(CONDITIONAL_AND));
   }
+
   private static Expression collaspeOnThen(final ConditionalExpression e) {
     final ConditionalExpression then = asConditionalExpression(core(e.getThenExpression()));
     if (then == null)
@@ -56,12 +58,15 @@ public final class TernaryCollapse extends Wring.ReplaceCurrentNode<ConditionalE
         : same(thenThen, elze)
             ? subject.pair(thenElse, elze).toCondition(subject.pair(e.getExpression(), logicalNot(then.getExpression())).to(CONDITIONAL_AND)) : null;
   }
+
   @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Eliminate nested conditional expression";
   }
+
   @Override Expression replacement(final ConditionalExpression e) {
     return collapse(e);
   }
+
   @Override boolean scopeIncludes(final ConditionalExpression e) {
     return collapse(e) != null;
   }

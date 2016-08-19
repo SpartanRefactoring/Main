@@ -37,9 +37,11 @@ import il.org.spartan.refactoring.utils.*;
         return false;
     return !m.getName().getIdentifier().equalsIgnoreCase(spartan.shorten(d.getType()));
   }
+
   @Override String description(final MethodDeclaration d) {
     return d.getName().toString();
   }
+
   private List<SingleVariableDeclaration> find(final List<SingleVariableDeclaration> ds) {
     final List<SingleVariableDeclaration> $ = new ArrayList<>();
     for (final SingleVariableDeclaration d : ds)
@@ -47,10 +49,12 @@ import il.org.spartan.refactoring.utils.*;
         $.add(d);
     return $.size() != 0 ? $ : null;
   }
+
   private boolean isShort(final SingleVariableDeclaration d) {
     final String n = spartan.shorten(d.getType());
     return n != null && (n + pluralVariadic(d)).equals(d.getName().getIdentifier());
   }
+
   @Override Rewrite make(final MethodDeclaration d, final ExclusionManager exclude) {
     if (d.isConstructor())
       return null;
@@ -72,9 +76,11 @@ import il.org.spartan.refactoring.utils.*;
       }
     };
   }
+
   @SuppressWarnings("static-method") private String pluralVariadic(final SingleVariableDeclaration d) {
     return d.isVarargs() ? "s" : "";
   }
+
   private boolean suitable(final SingleVariableDeclaration d) {
     return new JavaTypeNameParser(d.getType().toString()).isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
   }

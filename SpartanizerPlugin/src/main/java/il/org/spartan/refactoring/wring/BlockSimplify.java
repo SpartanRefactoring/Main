@@ -49,62 +49,76 @@ public final class BlockSimplify extends Wring.ReplaceCurrentNode<Block> impleme
       boolean ¢(final CatchClause c) {
         return ¢(c.getException());
       }
+
       boolean ¢(final ForStatement ¢) {
         return ¢(expose.initializers(¢));
       }
+
       boolean ¢(final List<Expression> es) {
         for (final Expression e : es)
           if (e instanceof VariableDeclarationExpression && ¢((VariableDeclarationExpression) e))
             return true;
         return false;
       }
+
       boolean ¢(final SimpleName ¢) {
         return ¢(¢.getIdentifier());
       }
+
       boolean ¢(final SingleVariableDeclaration d) {
         return ¢(d.getName());
       }
+
       boolean ¢(final Statement ¢) {
         return ¢ instanceof VariableDeclarationStatement ? ¢((VariableDeclarationStatement) ¢) //
             : ¢ instanceof ForStatement ? ¢((ForStatement) ¢) //
                 : ¢ instanceof TryStatement && ¢((TryStatement) ¢);
       }
+
       boolean ¢(final String ¢) {
         if (dictionary.contains(¢))
           return true;
         dictionary.add(¢);
         return false;
       }
+
       boolean ¢(final TryStatement s) {
         return ¢¢¢(expose.resources(s)) || ¢¢(expose.catchClauses(s));
       }
+
       boolean ¢(final VariableDeclarationExpression ¢) {
         return ¢¢¢¢(expose.fragments(¢));
       }
+
       boolean ¢(final VariableDeclarationFragment f) {
         return ¢(f.getName());
       }
+
       boolean ¢(final VariableDeclarationStatement s) {
         return ¢¢¢¢(fragments(s));
       }
+
       boolean ¢¢(final List<CatchClause> cs) {
         for (final CatchClause c : cs)
           if (¢(c))
             return true;
         return false;
       }
+
       boolean ¢¢¢(final List<VariableDeclarationExpression> es) {
         for (final VariableDeclarationExpression e : es)
           if (¢(e))
             return true;
         return false;
       }
+
       boolean ¢¢¢¢(final List<VariableDeclarationFragment> fs) {
         for (final VariableDeclarationFragment x : fs)
           if (¢(x))
             return true;
         return false;
       }
+
       @Override public boolean test(final List<Statement> ¢¢) {
         for (final Statement ¢ : ¢¢)
           if (¢(¢))
@@ -113,6 +127,7 @@ public final class BlockSimplify extends Wring.ReplaceCurrentNode<Block> impleme
       }
     }.test(ss);
   }
+
   private static boolean identical(final List<Statement> os1, final List<Statement> os2) {
     if (os1.size() != os2.size())
       return false;
@@ -121,6 +136,7 @@ public final class BlockSimplify extends Wring.ReplaceCurrentNode<Block> impleme
         return false;
     return true;
   }
+
   static Statement reorganizeNestedStatement(final Statement s) {
     final List<Statement> ss = extract.statements(s);
     switch (ss.size()) {
@@ -132,15 +148,18 @@ public final class BlockSimplify extends Wring.ReplaceCurrentNode<Block> impleme
         return reorganizeStatement(s);
     }
   }
+
   private static Block reorganizeStatement(final Statement s) {
     final List<Statement> ss = extract.statements(s);
     final Block $ = s.getAST().newBlock();
     duplicateInto(ss, statements($));
     return $;
   }
+
   @Override String description(@SuppressWarnings("unused") final Block __) {
     return "Simplify block";
   }
+
   @Override Statement replacement(final Block b) {
     final List<Statement> ss = extract.statements(b);
     if (identical(ss, statements(b)) || hasHidings(ss))

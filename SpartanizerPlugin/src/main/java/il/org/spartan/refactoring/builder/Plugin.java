@@ -26,6 +26,7 @@ public class Plugin extends AbstractUIPlugin implements IStartup {
     description.setNatureIds(append(natures, Nature.NATURE_ID));
     p.setDescription(description, null);
   }
+
   /** Add nature to all opened projects */
   private static void applyPluginToAllProjects() {
     for (final IProject p : ResourcesPlugin.getWorkspace().getRoot().getProjects())
@@ -36,11 +37,13 @@ public class Plugin extends AbstractUIPlugin implements IStartup {
         e.printStackTrace();
       }
   }
+
   /** logs an error in the plugin
    * @param t an error */
   public static void log(final Throwable t) {
     plugin.getLog().log(new Status(IStatus.ERROR, "org.spartan.refactoring", 0, t.getMessage(), t));
   }
+
   public static void refreshAllProjects() {
     for (final IProject p : ResourcesPlugin.getWorkspace().getRoot().getProjects())
       try {
@@ -50,27 +53,33 @@ public class Plugin extends AbstractUIPlugin implements IStartup {
         e.printStackTrace();
       }
   }
+
   private static void startSpartan() {
     applyPluginToAllProjects();
     refreshAllProjects();
   }
+
   /** an empty c'tor. creates an instance of the plugin. */
   public Plugin() {
     plugin = this;
   }
+
   /** Called whenever the plugin is first loaded into the workbench */
   @Override public void earlyStartup() {
     System.out.println("Loaded Spartan Refactoring plugin");
     startSpartan();
   }
+
   @Override public void start(final BundleContext c) throws Exception {
     super.start(c);
     startSpartan();
   }
+
   @Override public void stop(final BundleContext c) throws Exception {
     plugin = null;
     super.stop(c);
   }
+
   public static AbstractUIPlugin plugin() {
     return plugin;
   }

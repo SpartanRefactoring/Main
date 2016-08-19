@@ -38,21 +38,25 @@ public class Builder extends IncrementalProjectBuilder {
     m.setAttribute(IMarker.TRANSIENT, false);
     m.setAttribute(IMarker.LINE_NUMBER, r.lineNumber);
   }
+
   private static void addMarkers(final IFile f) throws CoreException {
     Spartanizations.reset();
     deleteMarkers(f);
     addMarkers(f, (CompilationUnit) MakeAST.COMPILATION_UNIT.from(f));
   }
+
   private static void addMarkers(final IFile f, final CompilationUnit u) throws CoreException {
     for (final Spartanization s : Spartanizations.all())
       for (final Rewrite r : s.findOpportunities(u))
         if (r != null)
           addMarker(s, r, f.createMarker(MARKER_TYPE));
   }
+
   static void addMarkers(final IResource r) throws CoreException {
     if (r instanceof IFile && r.getName().endsWith(".java"))
       addMarkers((IFile) r);
   }
+
   /** deletes all spartanization suggestion markers
    * @param f the file from which to delete the markers
    * @throws CoreException if this method fails. Reasons include: This resource
@@ -63,6 +67,7 @@ public class Builder extends IncrementalProjectBuilder {
   public static void deleteMarkers(final IFile f) throws CoreException {
     f.deleteMarkers(MARKER_TYPE, false, IResource.DEPTH_ONE);
   }
+
   public static void incrementalBuild(final IResourceDelta d) throws CoreException {
     d.accept(internalDelta -> {
       switch (internalDelta.getKind()) {
@@ -80,9 +85,11 @@ public class Builder extends IncrementalProjectBuilder {
       }
     });
   }
+
   private static String prefix() {
     return SPARTANIZATION_SHORT_PREFIX;
   }
+
   private void build() throws CoreException {
     final IResourceDelta d = getDelta(getProject());
     if (d == null)
@@ -90,6 +97,7 @@ public class Builder extends IncrementalProjectBuilder {
     else
       incrementalBuild(d);
   }
+
   private void build(final int kind) throws CoreException {
     if (kind == FULL_BUILD) {
       fullBuild();
@@ -97,6 +105,7 @@ public class Builder extends IncrementalProjectBuilder {
     }
     build();
   }
+
   @Override protected IProject[] build(final int kind, @SuppressWarnings({ "unused", "rawtypes" }) final Map __, final IProgressMonitor m)
       throws CoreException {
     if (m != null)
@@ -106,6 +115,7 @@ public class Builder extends IncrementalProjectBuilder {
       m.done();
     return null;
   }
+
   protected void fullBuild() {
     try {
       getProject().accept(r -> {

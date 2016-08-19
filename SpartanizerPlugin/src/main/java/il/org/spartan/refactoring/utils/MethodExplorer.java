@@ -15,12 +15,15 @@ public class MethodExplorer {
     @Override public final boolean visit(final AnnotationTypeDeclaration __) {
       return false;
     }
+
     @Override public final boolean visit(final AnonymousClassDeclaration __) {
       return false;
     }
+
     @Override public final boolean visit(final EnumDeclaration __) {
       return false;
     }
+
     @Override public final boolean visit(final TypeDeclaration __) {
       return false;
     }
@@ -33,6 +36,7 @@ public class MethodExplorer {
   public MethodExplorer(final MethodDeclaration inner) {
     this.inner = inner;
   }
+
   /** Computes the list of all local variable declarations found in a method.
    * {@link MethodDeclaration}.
    * <p>
@@ -48,26 +52,33 @@ public class MethodExplorer {
           addFragments(fragments(asVariableDeclarationExpression(e)));
         return true;
       }
+
       boolean add(final SingleVariableDeclaration d) {
         $.add(d.getName());
         return true;
       }
+
       void addFragments(final List<VariableDeclarationFragment> fs) {
         for (final VariableDeclarationFragment f : fs)
           $.add(f.getName());
       }
+
       @Override public boolean visit(final CatchClause c) {
         return add(c.getException());
       }
+
       @Override public boolean visit(final EnhancedForStatement s) {
         return add(s.getParameter());
       }
+
       @Override public boolean visit(final ForStatement s) {
         return add(initializers(s));
       }
+
       @Override public boolean visit(final TryStatement s) {
         return add(resources(s));
       }
+
       @Override public boolean visit(final VariableDeclarationStatement s) {
         addFragments(fragments(s));
         return true;
@@ -75,6 +86,7 @@ public class MethodExplorer {
     });
     return $;
   }
+
   /** Computes the list of all return statements found in a
    * {@link MethodDeclaration}.
    * <p>

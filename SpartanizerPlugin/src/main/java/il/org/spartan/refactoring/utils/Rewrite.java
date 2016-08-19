@@ -18,12 +18,14 @@ public abstract class Rewrite extends Range {
   static Range range(final ASTNode n, final ASTNode... ns) {
     return range(singleNodeRange(n), ns);
   }
+
   static Range range(final Range r, final ASTNode... ns) {
     Range $ = r;
     for (final ASTNode n : ns)
       $ = $.merge(singleNodeRange(n));
     return $;
   }
+
   static Range singleNodeRange(final ASTNode n) {
     final int from = n.getStartPosition();
     return new Range(from, from + n.getLength());
@@ -43,10 +45,12 @@ public abstract class Rewrite extends Range {
     this(description, range(n, ns));
     lineNumber = ((CompilationUnit) AncestorSearch.forClass(CompilationUnit.class).from(n)).getLineNumber(from);
   }
+
   Rewrite(final String description, final Range other) {
     super(other);
     this.description = description;
   }
+
   /** Convert the rewrite into changes on an {@link ASTRewrite}
    * @param r where to place the changes
    * @param g to be associated with these changes */

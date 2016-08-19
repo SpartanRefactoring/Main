@@ -21,29 +21,37 @@ import il.org.spartan.refactoring.wring.Wring.*;
     public IsUsed(final SimpleName sn) {
       n = sn.getIdentifier();
     }
+
     public IsUsed(final String sn) {
       n = sn;
     }
+
     public boolean conclusion() {
       return !c;
     }
+
     @Override public boolean preVisit2(@SuppressWarnings("unused") final ASTNode __) {
       return c;
     }
+
     @Override public final boolean visit(@SuppressWarnings("unused") final AnnotationTypeDeclaration __) {
       return false;
     }
+
     @Override public final boolean visit(@SuppressWarnings("unused") final AnonymousClassDeclaration __) {
       return false;
     }
+
     @Override public final boolean visit(@SuppressWarnings("unused") final EnumDeclaration __) {
       return false;
     }
+
     @Override public boolean visit(final SimpleName sn) {
       if (n.equals(sn.getIdentifier()))
         c = false;
       return c;
     }
+
     @Override public final boolean visit(@SuppressWarnings("unused") final TypeDeclaration __) {
       return false;
     }
@@ -57,6 +65,7 @@ import il.org.spartan.refactoring.wring.Wring.*;
     d.getBody().accept(u);
     return u.conclusion();
   }
+
   @SuppressWarnings("unchecked") public static boolean suppressedUnused(final SingleVariableDeclaration d) {
     for (final IExtendedModifier m : (Iterable<IExtendedModifier>) d.modifiers())
       if (m instanceof SingleMemberAnnotation && "SuppressWarnings".equals(((SingleMemberAnnotation) m).getTypeName().toString())) {
@@ -69,16 +78,20 @@ import il.org.spartan.refactoring.wring.Wring.*;
       }
     return false;
   }
+
   private static final String unusedVariableName() {
     return "__";
   }
+
   @Override String description(final SingleVariableDeclaration d) {
     return "Change name of unused variable " + d.getName().getIdentifier() + " to __";
   }
+
   static MethodDeclaration getMethod(final SingleVariableDeclaration d) {
     final ASTNode $ = d.getParent();
     return $ == null || !($ instanceof MethodDeclaration) ? null : (MethodDeclaration) $;
   }
+
   @Override ASTNode replacement(final SingleVariableDeclaration n, final ExclusionManager m) {
     final MethodDeclaration d = getMethod(n);
     if (d == null)
@@ -94,6 +107,7 @@ import il.org.spartan.refactoring.wring.Wring.*;
           m.exclude(svd);
     return replacement(n);
   }
+
   private static ASTNode replacement(final SingleVariableDeclaration ¢) {
     final SingleVariableDeclaration $ = ¢.getAST().newSingleVariableDeclaration();
     $.setName(¢.getAST().newSimpleName(unusedVariableName()));

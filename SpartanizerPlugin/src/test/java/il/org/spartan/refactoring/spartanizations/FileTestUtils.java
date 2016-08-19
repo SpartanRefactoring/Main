@@ -28,6 +28,7 @@ public abstract class FileTestUtils {
       if (c != null)
         $.add(c);
     }
+
     abstract Object[] makeCase(File d);
   }
 
@@ -51,6 +52,7 @@ public abstract class FileTestUtils {
             $.add(c);
         }
     }
+
     abstract Object[] makeCase(final Spartanization s, final File d, final File f, final String name);
   }
 
@@ -77,6 +79,7 @@ public abstract class FileTestUtils {
       }
       return $;
     }
+
     /** Collect test cases from each file in {@link #location}
      * @param $ where to save the collected test cases
      * @param f an entry in {@link #location} */
@@ -94,7 +97,7 @@ public abstract class FileTestUtils {
   /** Convert a canonical name of a class into a {@link Class} object, if
    * possible, otherwise generate an assertion failure
    * @param name the canonical name of some class
-   * @return  object representing this class
+   * @return object representing this class
    * @since 2014/05/23 */
   private static Class<?> asClass(final String name) {
     try {
@@ -104,6 +107,7 @@ public abstract class FileTestUtils {
       return null;
     }
   }
+
   /** Creates a temporary file - including lazy deletion.
    * @param b
    * @param d
@@ -112,6 +116,7 @@ public abstract class FileTestUtils {
   static File createTempFile(final StringBuilder b, final TestDirection d, final File f) {
     return createTemporaryRandomAccessFile(createTempFile(d, f), b.toString());
   }
+
   private static File createTempFile(final TestDirection d, final File f) {
     try {
       return File.createTempFile(f.getName().replace(".", ""), d == TestDirection.In ? ".in" : ".out");
@@ -119,6 +124,7 @@ public abstract class FileTestUtils {
       return null; // Failed to create temporary file
     }
   }
+
   private static File createTemporaryRandomAccessFile(final File $, final String s) {
     try (final RandomAccessFile fh = new RandomAccessFile($, "rw")) {
       fh.writeBytes(s);
@@ -129,15 +135,18 @@ public abstract class FileTestUtils {
     }
     return $;
   }
+
   private static StringBuilder deleteTestKeyword(final StringBuilder $) {
     if ($.indexOf(testKeyword) > 0)
       $.delete($.indexOf(testKeyword), $.length());
     return $;
   }
+
   private static Spartanization error(final String message, final Class<?> c, final Throwable t) {
     System.err.println(message + " '" + c.getCanonicalName() + "' " + t.getMessage());
     return null;
   }
+
   /** Instantiates a {@link Class} object if possible, otherwise generate an
    * assertion failure
    * @param c an arbitrary class object
@@ -156,10 +165,12 @@ public abstract class FileTestUtils {
     }
     return null;
   }
+
   /** Makes an Input file out of a Test file */
   protected static File makeInFile(final File f) {
     return createTempFile(deleteTestKeyword(MakeAST.stringBuilder(f)), TestDirection.In, f);
   }
+
   /** Makes an Output file out of a Test file */
   protected static File makeOutFile(final File f) {
     final StringBuilder $ = MakeAST.stringBuilder(f);
@@ -167,9 +178,11 @@ public abstract class FileTestUtils {
       $.delete(0, $.indexOf(testKeyword) + testKeyword.length() + ($.indexOf("\r\n") > 0 ? 2 : 1));
     return createTempFile($, TestDirection.Out, f);
   }
+
   static Spartanization makeSpartanizationObject(final File f) {
     return makeSpartanizationObject(f.getName());
   }
+
   static Spartanization makeSpartanizationObject(final String folderForClass) {
     final Class<?> c = asClass(folderForClass);
     azzert.notNull(c);

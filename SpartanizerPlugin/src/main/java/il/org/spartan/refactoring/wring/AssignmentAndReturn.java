@@ -28,6 +28,7 @@ public final class AssignmentAndReturn extends Wring.ReplaceToNextStatement<Assi
   @Override String description(final Assignment a) {
     return "Inline assignment to " + left(a) + " with its subsequent 'return'";
   }
+
   @Override ASTRewrite go(final ASTRewrite r, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
     final Statement parent = asStatement(a.getParent());
     if (parent == null || parent instanceof ForStatement)

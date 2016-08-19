@@ -11,16 +11,18 @@ import org.eclipse.jdt.internal.corext.dom.*;
  * @since 2016-04-24 */
 @SuppressWarnings("restriction") public class BindingUtils {
   /** @param n an {@link ASTNode}
-   * @return  type in which n is placed, or null if there is none */
+   * @return type in which n is placed, or null if there is none */
   public static ITypeBinding container(final ASTNode n) {
     final ASTNode $ = containerType(n);
     return eval(() -> ((TypeDeclaration) $).resolveBinding()).when($ != null && $ instanceof TypeDeclaration);
   }
+
   /** @param u current compilation unit
    * @return current package */
   public static IPackageBinding getPackage(final CompilationUnit u) {
     return u.getPackage().resolveBinding();
   }
+
   /** Finds visible method in hierarchy.
    * @param b base type
    * @param mn method name
@@ -28,7 +30,7 @@ import org.eclipse.jdt.internal.corext.dom.*;
    * @param n original {@link ASTNode} containing the method invocation. Used in
    *        order to determine the context in which the method is being used
    * @param u current {@link CompilationUnit}
-   * @return  method's binding if it is visible from context, else null */
+   * @return method's binding if it is visible from context, else null */
   public static IMethodBinding getVisibleMethod(final ITypeBinding b, final String mn, final ITypeBinding[] bs, final ASTNode n,
       final CompilationUnit u) {
     if (b == null)
@@ -36,6 +38,7 @@ import org.eclipse.jdt.internal.corext.dom.*;
     final IMethodBinding $ = Bindings.findMethodInHierarchy(b, mn, bs);
     return take($).when(isVisible($, n, u));
   }
+
   /** Checks if expression is simple.
    * @param e an expression
    * @return true iff e is simple */
@@ -43,6 +46,7 @@ import org.eclipse.jdt.internal.corext.dom.*;
     return e instanceof Name || e instanceof NumberLiteral || e instanceof BooleanLiteral || e instanceof CharacterLiteral || e instanceof NullLiteral
         || e instanceof StringLiteral || e instanceof ThisExpression || e instanceof TypeLiteral;
   }
+
   /** Determines whether an invocation of a method is legal in a specific
    * context.
    * @param b a method

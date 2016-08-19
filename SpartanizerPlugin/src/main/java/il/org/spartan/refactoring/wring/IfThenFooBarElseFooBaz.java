@@ -49,9 +49,11 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements 
     }
     return $;
   }
+
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Condolidate commmon prefix of then and else branches to just before if statement";
   }
+
   @Override Rewrite make(final IfStatement s) {
     final List<Statement> then = extract.statements(then(s));
     if (then.isEmpty())
@@ -74,18 +76,22 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements 
           lr.remove(s, g);
         }
       }
+
       IfStatement replacement() {
         return replacement(s.getExpression(), subject.ss(then).toOneStatementOrNull(), subject.ss(elze).toOneStatementOrNull());
       }
+
       IfStatement replacement(final Expression condition, final Statement trimmedThen, final Statement trimmedElse) {
         return trimmedThen == null && trimmedElse == null ? null
             : trimmedThen == null ? subject.pair(trimmedElse, null).toNot(condition) : subject.pair(trimmedThen, trimmedElse).toIf(condition);
       }
     };
   }
+
   @Override Rewrite make(final IfStatement s, final ExclusionManager exclude) {
     return super.make(s, exclude);
   }
+
   @Override boolean scopeIncludes(final IfStatement s) {
     return make(s) != null;
   }
