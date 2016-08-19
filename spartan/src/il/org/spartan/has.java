@@ -17,7 +17,8 @@ public enum has {
     @Test public void seriesA01() {
       azzert.aye(has.nulls(nul));
     }
-    @Test public void seriesA02() {
+
+    @SuppressWarnings("static-method") @Test public void seriesA02() {
       azzert.nay(has.nulls("A"));
     }
   }

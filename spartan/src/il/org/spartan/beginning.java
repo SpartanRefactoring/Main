@@ -8,7 +8,7 @@ import il.org.spartan.iterables.*;
 
 @SuppressWarnings("javadoc") public interface beginning {
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-  @SuppressWarnings({ "static-method", "javadoc" }) //
+  @SuppressWarnings({ "static-method" }) //
   public static class TEST {
     @Test public void with() {
       azzert.that("" + beginning.with("a").separate("x", "y").by(",").endingWith("c"), is("ax,yc"));
