@@ -13,7 +13,7 @@ import il.org.spartan.refactoring.utils.*;
 /** convert
  *
  * <pre>
- * <b>abstract</b>abstract <b>interface</b> a
+ * <b>abstract</b> <b>interface</b> a
  * {}
  * </pre>
  *
@@ -94,6 +94,7 @@ public class RedundantModifiers<N extends BodyDeclaration> extends Wring.Replace
       if (isMethodDeclaration(¢))
         $.add(Modifier::isFinal);
     }
+   
     return $;
   }
 
