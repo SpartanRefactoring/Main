@@ -21,18 +21,23 @@ public class IfEmptyThenEmptyElseTest {
   @Test public void eligible() {
     azzert.aye(WRING.eligible(IF));
   }
+
   @Test public void emptyElse() {
     azzert.aye(Is.vacuousElse(IF));
   }
+
   @Test public void emptyThen() {
     azzert.aye(Is.vacuousThen(IF));
   }
+
   @Test public void extractFirstIf() {
     azzert.notNull(IF);
   }
+
   @Test public void inputType() {
     azzert.that(INPUT, instanceOf(Block.class));
   }
+
   @Test public void runGo() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = Wrap.Statement.on(INPUT + "");
     final Document d = new Document(input);
@@ -48,6 +53,7 @@ public class IfEmptyThenEmptyElseTest {
     e.apply(d);
     azzert.isNull(extract.firstIfStatement(MakeAST.COMPILATION_UNIT.from(d.get())));
   }
+
   @Test public void scopeIncludes() {
     azzert.aye(WRING.scopeIncludes(IF));
   }

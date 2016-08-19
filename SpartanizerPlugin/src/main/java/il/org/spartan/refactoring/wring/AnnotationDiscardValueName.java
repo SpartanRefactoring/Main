@@ -15,6 +15,7 @@ public final class AnnotationDiscardValueName //
   @Override String description(final NormalAnnotation a) {
     return "Discard the \"value\" member from the @" + a.getTypeName().getFullyQualifiedName() + " annotation";
   }
+
   @Override ASTNode replacement(final NormalAnnotation a) {
     if (a.values().size() != 1)
       return null;

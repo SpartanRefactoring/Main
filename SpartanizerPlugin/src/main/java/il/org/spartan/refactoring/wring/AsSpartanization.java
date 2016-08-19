@@ -23,6 +23,7 @@ public final class AsSpartanization extends Spartanization {
     super(name);
     this.inner = (Wring<ASTNode>) inner;
   }
+
   @Override protected ASTVisitor collect(final List<Rewrite> $) {
     return new ASTVisitor() {
       <N extends ASTNode> boolean process(final N n) {
@@ -31,26 +32,33 @@ public final class AsSpartanization extends Spartanization {
         $.add(inner.make(n));
         return true;
       }
+
       @Override public boolean visit(final Block it) {
         return process(it);
       }
+
       @Override public boolean visit(final ConditionalExpression e) {
         return process(e);
       }
+
       @Override public boolean visit(final IfStatement it) {
         return process(it);
       }
+
       @Override public boolean visit(final InfixExpression it) {
         return process(it);
       }
+
       @Override public boolean visit(final PrefixExpression it) {
         return process(it);
       }
+
       @Override public boolean visit(final VariableDeclarationFragment it) {
         return process(it);
       }
     };
   }
+
   @Override protected final void fillRewrite(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
     u.accept(new ASTVisitor() {
       <N extends ASTNode> boolean go(final N n) {
@@ -58,21 +66,27 @@ public final class AsSpartanization extends Spartanization {
           inner.make(n).go(r, null);
         return true;
       }
+
       @Override public boolean visit(final Block e) {
         return go(e);
       }
+
       @Override public boolean visit(final ConditionalExpression e) {
         return go(e);
       }
+
       @Override public boolean visit(final IfStatement s) {
         return go(s);
       }
+
       @Override public boolean visit(final InfixExpression e) {
         return go(e);
       }
+
       @Override public boolean visit(final PrefixExpression e) {
         return go(e);
       }
+
       @Override public boolean visit(final VariableDeclarationFragment f) {
         return go(f);
       }

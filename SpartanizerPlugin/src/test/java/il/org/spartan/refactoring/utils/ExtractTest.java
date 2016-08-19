@@ -14,18 +14,23 @@ import il.org.spartan.refactoring.spartanizations.*;
     azzert.isNull(extract.core((Expression) null));
     azzert.isNull(extract.core((Statement) null));
   }
+
   @Test public void firstMethdoDeclaration() {
     azzert.that(extract.firstMethodDeclaration(Wrap.Method.intoCompilationUnit("int f() { return a; }")), iz("int f() { return a; }"));
   }
+
   @Test public void operandsCount() {
     azzert.that(extract.operands(i("a+b+c+(d+e)+f")).size(), is(5));
   }
+
   @Test public void operandsOfNullIsNull() {
     azzert.that(extract.operands(null), is(nullValue()));
   }
+
   @Test public void plus() {
     azzert.that(extract.firstPlus(Into.e("a + 2 < b")), iz("a+2"));
   }
+
   @Test public void prefixToPostfixDecrement() {
     final String from = "for (int i = 0; i < 100;  i--)  i--;";
     final Statement s = s(from);

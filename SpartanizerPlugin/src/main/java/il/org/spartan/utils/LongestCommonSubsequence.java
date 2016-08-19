@@ -22,12 +22,15 @@ public class LongestCommonSubsequence {
     for (int i = 0; i < as.length; ++i)
       Arrays.fill(length[i] = new int[bs.length], -1);
   }
+
   private int compute(final int i, final int j) {
     return i < 0 || j < 0 ? 0 : threeWayDynamicProgramingStep(i, j);
   }
+
   private int length() {
     return as.length <= 0 || bs.length <= 0 ? 0 : length(as.length - 1, bs.length - 1); //
   }
+
   /** Returns the length of the LCS of two prefixes of the current strings,
    * <code>as[0]...as[i]</code>, and <code>as[0]...as[i]</code>, i (respectively
    * j) must be a valid index of array a (respectively b), or else, the
@@ -38,13 +41,16 @@ public class LongestCommonSubsequence {
   private int length(final int i, final int j) {
     return i < 0 || j < 0 ? 0 : obtainLength(i, j);
   }
+
   private int obtainLength(final int i, final int j) {
     return length[i][j] != -1 ? length[i][j] : (length[i][j] = compute(i, j));
   }
+
   /** @return A value between 0 and 1 */
   public double similarity() {
     return 2. * length() / (as.length + bs.length);
   }
+
   private int threeWayDynamicProgramingStep(final int i, final int j) {
     return max(length(i - 1, j), length(i, j - 1), length(i - 1, j - 1) + As.bit(as[i] == bs[j]));
   }

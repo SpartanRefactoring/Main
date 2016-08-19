@@ -58,25 +58,31 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
   public DeclarationIfAssignmentWringedTest() {
     super(WRING);
   }
+
   DeclarationIfAssignmentWringedTest(final Wring<VariableDeclarationFragment> inner) {
     super(inner);
   }
+
   @Override protected CompilationUnit asCompilationUnit() {
     final CompilationUnit $ = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(Wrap.Statement.on(input));
     azzert.notNull($);
     return $;
   }
+
   @Override protected VariableDeclarationFragment asMe() {
     return extract.firstVariableDeclarationFragment(MakeAST.STATEMENTS.from(input));
   }
+
   @Test public void checkIf() {
     final IfStatement s = findIf();
     azzert.notNull(s);
     azzert.that(Is.vacuousElse(s), is(true));
   }
+
   @Test public void correctSimplifier() {
     azzert.that(asMe().toString(), Toolbox.instance.find(asMe()), instanceOf(inner.getClass()));
   }
+
   @Test public void createRewrite() throws MalformedTreeException, IllegalArgumentException, BadLocationException {
     final String s = input;
     final Document d = new Document(Wrap.Statement.on(s));
@@ -86,36 +92,46 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     azzert.notNull(e);
     azzert.notNull(e.apply(d));
   }
+
   @Test public void eligible() {
     final VariableDeclarationFragment s = asMe();
     azzert.aye(s.toString(), inner.eligible(s));
   }
+
   private IfStatement findIf() {
     return extract.firstIfStatement(MakeAST.STATEMENTS.from(input));
   }
+
   @Test public void findsSimplifier() {
     azzert.notNull(Toolbox.instance.find(asMe()));
   }
+
   @Test public void hasOpportunity() {
     azzert.aye(inner.scopeIncludes(asMe()));
     final CompilationUnit u = asCompilationUnit();
     azzert.that(u.toString(), new Trimmer().findOpportunities(u).size(), is(greaterThanOrEqualTo(1)));
   }
+
   @Test public void hasSimplifier() {
     azzert.notNull(asMe().toString(), Toolbox.instance.find(asMe()));
   }
+
   @Test public void noneligible() {
     azzert.nay(inner.nonEligible(asMe()));
   }
+
   @Test public void peelableOutput() {
     azzert.that(Wrap.Statement.off(Wrap.Statement.on(expected)), is(expected));
   }
+
   @Test public void rewriteNotEmpty() throws MalformedTreeException, IllegalArgumentException {
     azzert.notNull(new Trimmer().createRewrite(asCompilationUnit(), null));
   }
+
   @Test public void scopeIncludesAsMe() {
     azzert.that(asMe().toString(), inner.scopeIncludes(asMe()), is(true));
   }
+
   @Test public void simiplifies() throws MalformedTreeException, IllegalArgumentException {
     if (inner == null)
       return;
@@ -132,6 +148,7 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
     assertSimilar(expected, peeled);
     assertSimilar(Wrap.Statement.on(expected), actual);
   }
+
   @Test public void traceLegiblity() {
     final VariableDeclarationFragment f = asMe();
     final ASTRewrite r = ASTRewrite.create(f.getAST());

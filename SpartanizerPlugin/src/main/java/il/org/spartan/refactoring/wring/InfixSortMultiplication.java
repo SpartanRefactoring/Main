@@ -19,6 +19,7 @@ public final class InfixSortMultiplication extends Wring.InfixSorting implements
   @Override boolean scopeIncludes(final InfixExpression e) {
     return in(e.getOperator(), TIMES);
   }
+
   @Override boolean sort(final List<Expression> es) {
     return ExpressionComparator.MULTIPLICATION.sort(es);
   }

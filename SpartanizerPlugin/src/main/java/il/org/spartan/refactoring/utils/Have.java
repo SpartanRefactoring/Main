@@ -24,6 +24,7 @@ public enum Have {
         return true;
     return false;
   }
+
   /** Determine whether a boolean literal is present
    * @param es JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
@@ -34,6 +35,7 @@ public enum Have {
         return true;
     return false;
   }
+
   /** Determine whether the boolean literal <code><b>false</b></code> is present
    * @param es JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements is
@@ -44,6 +46,7 @@ public enum Have {
         return true;
     return false;
   }
+
   /** Determine whether a literal is present
    * @param es JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
@@ -54,6 +57,7 @@ public enum Have {
         return true;
     return false;
   }
+
   /** Determine whether a literal is present
    * @param es JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
@@ -64,6 +68,7 @@ public enum Have {
         return true;
     return false;
   }
+
   /** Determine whether a numerical literal is present
    * @param es JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
@@ -74,6 +79,7 @@ public enum Have {
         return true;
     return false;
   }
+
   /** Determine whether a numerical literal is present
    * @param es JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
@@ -84,6 +90,7 @@ public enum Have {
         return true;
     return false;
   }
+
   /** Determine whether the boolean literal <code><b>true</b></code> is present
    * @param es JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements is

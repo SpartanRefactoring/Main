@@ -22,6 +22,7 @@ final class LocalInliner {
     LocalInlineWithValue(final Expression replacement) {
       super(extract.core(replacement));
     }
+
     /** Computes the number of AST nodes added as a result of the replacement
      * operation.
      * @param es JD
@@ -31,19 +32,24 @@ final class LocalInliner {
     int addedSize(final ASTNode... ns) {
       return uses(ns).size() * (size(get()) - 1);
     }
+
     boolean canInlineInto(final ASTNode... ns) {
       return Collect.definitionsOf(name).in(ns).isEmpty() && (Is.sideEffectFree(get()) || uses(ns).size() <= 1);
     }
+
     boolean canSafelyInlineInto(final ASTNode... ns) {
       return canInlineInto(ns) && unsafeUses(ns).isEmpty();
     }
+
     @SafeVarargs protected final void inlineInto(final ASTNode... ns) {
       inlineInto(wrap(ns));
     }
+
     private void inlineInto(final Wrapper<ASTNode>... ns) {
       for (final Wrapper<ASTNode> n : ns)
         inlineIntoSingleton(get(), n);
     }
+
     private void inlineIntoSingleton(final ASTNode replacement, final Wrapper<ASTNode> ns) {
       final ASTNode oldExpression = ns.get();
       final ASTNode newExpression = duplicate(ns.get());
@@ -52,6 +58,7 @@ final class LocalInliner {
       for (final ASTNode use : Collect.usesOf(name).in(newExpression))
         rewriter.replace(use, !(use instanceof Expression) ? replacement : new Plant((Expression) replacement).into(use.getParent()), editGroup);
     }
+
     /** Computes the total number of AST nodes in the replaced parameters
      * @param es JD
      * @return A non-negative integer, computed from original size of the
@@ -60,9 +67,11 @@ final class LocalInliner {
     int replacedSize(final ASTNode... ns) {
       return size(ns) + uses(ns).size() * (size(get()) - 1);
     }
+
     private List<SimpleName> unsafeUses(final ASTNode... ns) {
       return Collect.unsafeUsesOf(name).in(ns);
     }
+
     private List<SimpleName> uses(final ASTNode... ns) {
       return Collect.usesOf(name).in(ns);
     }
@@ -83,11 +92,13 @@ final class LocalInliner {
   LocalInliner(final SimpleName n) {
     this(n, null, null);
   }
+
   LocalInliner(final SimpleName n, final ASTRewrite rewriter, final TextEditGroup g) {
     name = n;
     this.rewriter = rewriter;
     editGroup = g;
   }
+
   LocalInlineWithValue byValue(final Expression replacement) {
     return new LocalInlineWithValue(replacement);
   }
@@ -105,6 +116,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
     @Override final String description(final InfixExpression e) {
       return "Reorder operands of " + e.getOperator();
     }
+
     abstract boolean sort(List<Expression> operands);
   }
 
@@ -113,6 +125,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
       final List<Expression> es = extract.allOperands(e);
       return !Wrings.mixedLiteralKind(es) && sort(es);
     }
+
     @Override Expression replacement(final InfixExpression e) {
       final List<Expression> operands = extract.allOperands(e);
       return !sort(operands) ? null : subject.operands(operands).to(e.getOperator());
@@ -125,6 +138,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
       es.remove(0);
       return !Wrings.mixedLiteralKind(es) && sort(es);
     }
+
     @Override Expression replacement(final InfixExpression e) {
       final List<Expression> operands = extract.allOperands(e);
       final Expression first = operands.remove(0);
@@ -141,6 +155,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
    * @since 2016-04-25 */
   static abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends Wring<N> {
     abstract ASTRewrite go(ASTRewrite r, N n, TextEditGroup g, List<ASTNode> bss, List<ASTNode> crs);
+
     @Override Rewrite make(final N n) {
       return new Rewrite(description(n), n) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -156,6 +171,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
         }
       };
     }
+
     @Override boolean scopeIncludes(final N n) {
       return go(ASTRewrite.create(n.getAST()), n, null, new ArrayList<>(), new ArrayList<>()) != null;
     }
@@ -165,31 +181,39 @@ public abstract class Wring<N extends ASTNode> implements Kind {
     @Override String description(@SuppressWarnings("unused") final N __) {
       return "remove redundant modifier";
     }
+
     private IExtendedModifier firstBad(final N n) {
       return firstThat(n, (final Modifier ¢) -> redundant(¢));
     }
+
     IExtendedModifier firstThat(final N n, final Predicate<Modifier> f) {
       for (final IExtendedModifier $ : expose.modifiers(n))
         if ($.isModifier() && f.test((Modifier) $))
           return $;
       return null;
     }
+
     private N go(final N $) {
       for (final Iterator<IExtendedModifier> ¢ = expose.modifiers($).iterator(); ¢.hasNext();)
         if (redundant(¢.next()))
           ¢.remove();
       return $;
     }
+
     boolean has(final N ¢, final Predicate<Modifier> p) {
       return firstThat(¢, p) != null;
     }
+
     private boolean redundant(final IExtendedModifier m) {
       return redundant((Modifier) m);
     }
+
     abstract boolean redundant(Modifier m);
+
     @Override N replacement(final N $) {
       return go(duplicate($));
     }
+
     @Override boolean scopeIncludes(final N ¢) {
       return firstBad(¢) != null;
     }
@@ -203,7 +227,9 @@ public abstract class Wring<N extends ASTNode> implements Kind {
         }
       };
     }
+
     abstract ASTNode replacement(N n);
+
     @Override boolean scopeIncludes(final N n) {
       return replacement(n) != null;
     }
@@ -219,7 +245,9 @@ public abstract class Wring<N extends ASTNode> implements Kind {
         }
       };
     }
+
     abstract ASTNode replacement(N n, final ExclusionManager m);
+
     @Override boolean scopeIncludes(final N n) {
       return replacement(n, new ExclusionManager()) != null;
     }
@@ -227,6 +255,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
 
   static abstract class ReplaceToNextStatement<N extends ASTNode> extends Wring<N> {
     abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g);
+
     @Override Rewrite make(final N n, final ExclusionManager exclude) {
       final Statement nextStatement = extract.nextStatement(n);
       if (nextStatement == null || !eligible(n))
@@ -238,6 +267,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
         }
       };
     }
+
     @Override boolean scopeIncludes(final N n) {
       final Statement nextStatement = extract.nextStatement(n);
       return nextStatement != null && go(ASTRewrite.create(n.getAST()), n, nextStatement, null) != null;
@@ -258,16 +288,19 @@ public abstract class Wring<N extends ASTNode> implements Kind {
                                           : o == RIGHT_SHIFT_SIGNED_ASSIGN ? RIGHT_SHIFT_SIGNED //
                                               : o == RIGHT_SHIFT_UNSIGNED_ASSIGN ? RIGHT_SHIFT_UNSIGNED : null;
     }
+
     static Expression assignmentAsExpression(final Assignment a) {
       final Operator o = a.getOperator();
       return o == ASSIGN ? duplicate(right(a)) : subject.pair(left(a), right(a)).to(asInfix(o));
     }
+
     static boolean doesUseForbiddenSiblings(final VariableDeclarationFragment f, final ASTNode... ns) {
       for (final VariableDeclarationFragment b : forbiddenSiblings(f))
         if (Collect.BOTH_SEMANTIC.of(b).existIn(ns))
           return true;
       return false;
     }
+
     /** Eliminates a {@link VariableDeclarationFragment}, with any other
      * fragment fragments which are not live in the containing
      * {@link VariabelDeclarationStatement}. If no fragments are left, then this
@@ -287,6 +320,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
       fragments(newParent).addAll(live);
       r.replace(parent, newParent, g);
     }
+
     static int eliminationSaving(final VariableDeclarationFragment f) {
       final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
       final List<VariableDeclarationFragment> live = live(f, fragments(parent));
@@ -298,6 +332,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
       fragments(newParent).addAll(live);
       return $ - size(newParent);
     }
+
     static List<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
       final List<VariableDeclarationFragment> $ = new ArrayList<>();
       boolean collecting = false;
@@ -312,18 +347,22 @@ public abstract class Wring<N extends ASTNode> implements Kind {
       }
       return $;
     }
+
     static boolean hasAnnotation(final List<IExtendedModifier> ms) {
       for (final IExtendedModifier m : ms)
         if (m.isAnnotation())
           return true;
       return false;
     }
+
     static boolean hasAnnotation(final VariableDeclarationFragment f) {
       return hasAnnotation((VariableDeclarationStatement) f.getParent());
     }
+
     static boolean hasAnnotation(final VariableDeclarationStatement s) {
       return hasAnnotation(expose.modifiers(s));
     }
+
     private static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final List<VariableDeclarationFragment> fs) {
       final List<VariableDeclarationFragment> $ = new ArrayList<>();
       for (final VariableDeclarationFragment brother : fs)
@@ -331,6 +370,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
           $.add(duplicate(brother));
       return $;
     }
+
     static int removalSaving(final VariableDeclarationFragment f) {
       final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
       final int $ = size(parent);
@@ -340,6 +380,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
       newParent.fragments().remove(parent.fragments().indexOf(f));
       return $ - size(newParent);
     }
+
     /** Removes a {@link VariableDeclarationFragment}, leaving intact any other
      * fragment fragments in the containing {@link VariabelDeclarationStatement}
      * . Still, if the containing node left empty, it is removed as well.
@@ -350,14 +391,17 @@ public abstract class Wring<N extends ASTNode> implements Kind {
       final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
       r.remove(parent.fragments().size() > 1 ? f : parent, g);
     }
+
     abstract ASTRewrite go(ASTRewrite r, VariableDeclarationFragment f, SimpleName n, Expression initializer, Statement nextStatement,
         TextEditGroup g);
+
     @Override final ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
       if (!Is.variableDeclarationStatement(f.getParent()))
         return null;
       final SimpleName n = f.getName();
       return n == null ? null : go(r, f, n, f.getInitializer(), nextStatement, g);
     }
+
     @Override Rewrite make(final VariableDeclarationFragment f, final ExclusionManager exclude) {
       final Rewrite $ = super.make(f, exclude);
       if ($ != null && exclude != null)
@@ -367,6 +411,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
   }
 
   abstract String description(N n);
+
   /** Determine whether the parameter is "eligible" for application of this
    * instance. The parameter must be within the scope of the current instance.
    * @param n JD
@@ -375,12 +420,15 @@ public abstract class Wring<N extends ASTNode> implements Kind {
   boolean eligible(@SuppressWarnings("unused") final N __) {
     return true;
   }
-  Rewrite make (final N n) {
+
+  Rewrite make(final N n) {
     return make(n, null);
   }
+
   Rewrite make(final N n, final ExclusionManager m) {
     return m != null && m.isExcluded(n) ? null : make(n);
   }
+
   /** Determines whether this {@link Wring} object is not applicable for a given
    * {@link PrefixExpression} is within the "scope" of this . Note that a
    * {@link Wring} is applicable in principle to an object, but that actual
@@ -392,6 +440,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
   final boolean nonEligible(final N n) {
     return !eligible(n);
   }
+
   /** Determines whether this {@link Wring} object is applicable for a given
    * {@link InfixExpression} is within the "scope" of this . Note that it could
    * be the case that a {@link Wring} is applicable in principle to an object,

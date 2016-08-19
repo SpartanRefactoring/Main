@@ -30,12 +30,15 @@ public final class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<
     final Expression $ = extract.core(right(a));
     return !($ instanceof Assignment) || ((Assignment) $).getOperator() != ASSIGN ? $ : extractRight((Assignment) $);
   }
+
   static Expression getRight(final Assignment a) {
     return a.getOperator() != ASSIGN ? null : extractRight(a);
   }
+
   @Override String description(final Assignment a) {
     return "Consolidate assignment to " + left(a) + " with subsequent similar assignment";
   }
+
   @Override ASTRewrite go(final ASTRewrite r, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
     final ASTNode parent = a.getParent();
     if (!(parent instanceof Statement))

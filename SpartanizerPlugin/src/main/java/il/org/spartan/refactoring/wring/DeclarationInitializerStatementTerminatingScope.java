@@ -52,15 +52,18 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
     }
     return false;
   }
+
   private static boolean never(final SimpleName n, final Statement s) {
     for (final ASTNode ancestor : AncestorSearch.until(s).ancestors(n))
       if (Funcs.intIsIn(ancestor.getNodeType(), TRY_STATEMENT, SYNCHRONIZED_STATEMENT))
         return true;
     return false;
   }
+
   @Override String description(final VariableDeclarationFragment f) {
     return "Inline local " + f.getName() + " into subsequent statement";
   }
+
   @SuppressWarnings("unchecked") @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n,
       final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || hasAnnotation(f) || initializer instanceof ArrayInitializer)

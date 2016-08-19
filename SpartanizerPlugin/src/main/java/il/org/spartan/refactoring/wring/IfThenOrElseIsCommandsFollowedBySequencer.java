@@ -43,9 +43,11 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
   static boolean endsWithSequencer(final Statement s) {
     return Is.sequencer(extract.lastStatement(s));
   }
+
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Remove redundant else (possibly after inverting if statement)";
   }
+
   @Override Rewrite make(final IfStatement s) {
     return new Rewrite(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -65,6 +67,7 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
       }
     };
   }
+
   @Override boolean scopeIncludes(final IfStatement s) {
     return elze(s) != null && (endsWithSequencer(then(s)) || endsWithSequencer(elze(s)));
   }

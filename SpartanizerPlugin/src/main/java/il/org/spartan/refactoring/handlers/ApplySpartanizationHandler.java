@@ -23,6 +23,7 @@ public class ApplySpartanizationHandler extends BaseHandler {
   public static void apply(final ICompilationUnit cu) {
     apply(cu, new Range(0, 0));
   }
+
   public static void apply(final ICompilationUnit cu, final ITextSelection t) {
     for (final Spartanization s : safeSpartanizations)
       try {
@@ -33,18 +34,22 @@ public class ApplySpartanizationHandler extends BaseHandler {
         x.printStackTrace();
       }
   }
+
   public static void apply(final ICompilationUnit cu, final Range r) {
     apply(cu, r == null || r.size() <= 0 ? new TextSelection(0, 0) : new TextSelection(r.from, r.size()));
   }
+
   private static ITextSelection getSelectedText() {
     final IEditorPart ep = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
     final ISelection s = ep.getEditorSite().getSelectionProvider().getSelection();
     return !(s instanceof ITextSelection) ? null : (ITextSelection) s;
   }
+
   /** Instantiates this class */
   public ApplySpartanizationHandler() {
     super(null);
   }
+
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     apply(currentCompilationUnit(), getSelectedText());
     return null;

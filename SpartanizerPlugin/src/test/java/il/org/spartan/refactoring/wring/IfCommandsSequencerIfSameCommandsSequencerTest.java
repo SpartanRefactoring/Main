@@ -77,6 +77,7 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
+
     /** Instantiates the enclosing class ({@link OutOfScope}) */
     public OutOfScope() {
       super(WRING);
@@ -109,28 +110,35 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
+
     /** Instantiates the enclosing class ({@link Wringed}) */
     public Wringed() {
       super(WRING);
     }
+
     @Test public void asMeNotNull() {
       azzert.notNull(asMe());
     }
+
     @Test public void followedByReturn() {
       azzert.notNull(extract.nextIfStatement(asMe()));
     }
+
     @Test public void isfStatementElseIsEmpty() {
       azzert.that(extract.statements(elze(extract.firstIfStatement(MakeAST.STATEMENTS.from(input)))).size(), is(0));
     }
+
     @Test public void isIfStatement() {
       azzert.notNull(input, asMe());
     }
+
     @Test public void myScopeIncludes() {
       final IfStatement s = asMe();
       azzert.notNull(s);
       azzert.notNull(extract.statements(elze(s)));
       azzert.that(extract.statements(elze(s)).size(), is(0));
     }
+
     @Test public void noElse() {
       azzert.that(extract.statements(elze(asMe())).size(), is(0));
     }
@@ -146,12 +154,14 @@ public class IfCommandsSequencerIfSameCommandsSequencerTest {
     azzert.notNull(n.toString(), i);
     azzert.that(i.toString(), WRING.scopeIncludes(i), is(true));
   }
+
   @Test public void checkFirstIfStatement2() {
     final String s = "if (a) return b; else return a();";
     final IfStatement i = extract.firstIfStatement(MakeAST.STATEMENTS.from(s));
     azzert.notNull(i);
     azzert.that(i.toString(), WRING.scopeIncludes(i), is(false));
   }
+
   @Test public void checkFirstIfStatement3() {
     final String s = "if (a) a= b; else a=c;";
     final IfStatement i = extract.firstIfStatement(MakeAST.STATEMENTS.from(s));

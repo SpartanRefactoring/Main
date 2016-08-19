@@ -56,38 +56,49 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       WringedInput(final Wring<N> w) {
         super(w);
       }
+
       protected abstract Document asDocument();
+
       @Test public void correctSimplifier() {
         azzert.that(Toolbox.instance.find(asExpression()), is(inner));
       }
+
       @Test public void createRewrite() throws MalformedTreeException, IllegalArgumentException, BadLocationException {
         final String s = input;
         final Document d = new Document(Wrap.Expression.on(s));
         azzert.notNull(trimmer.createRewrite(asCompilationUnit(), null).rewriteAST(d, null).apply(d));
       }
+
       @Test public void eligible() {
         azzert.aye(inner.eligible((N) asExpression()));
       }
+
       @Test public void findsSimplifier() {
         azzert.notNull(Toolbox.instance.find(asExpression()));
       }
+
       @Test public void hasReplacement() {
         azzert.notNull(((Wring.ReplaceCurrentNode<N>) inner).replacement((N) asExpression()));
       }
+
       @Test public void noneligible() {
         azzert.nay(inner.nonEligible((N) asExpression()));
       }
+
       @Test public void oneOpporunity() {
         final CompilationUnit u = asCompilationUnit();
         azzert.that(u.toString(), trimmer.findOpportunities(u).size(), is(1));
         azzert.aye(inner.scopeIncludes((N) asExpression()));
       }
+
       @Test public void peelableOutput() {
         azzert.that(Wrap.Expression.off(Wrap.Expression.on(output)), is(output));
       }
+
       @Test public void scopeIncludes() {
         azzert.nay(inner.scopeIncludes((N) asExpression()));
       }
+
       @Test public void simiplifies() throws MalformedTreeException, IllegalArgumentException {
         final CompilationUnit u = asCompilationUnit();
         final String s = input;
@@ -108,16 +119,20 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     public InScope() {
       this(null);
     }
+
     InScope(final Wring<N> inner) {
       super(inner);
     }
+
     @SuppressWarnings("static-method") protected Document asDocument() {
       return null;
     }
+
     @Test public void correctSimplifier() {
       if (inner != null)
         azzert.that(Toolbox.instance.find(asExpression()), is(inner));
     }
+
     @Test public void findsSimplifier() {
       if (inner != null)
         azzert.notNull(Toolbox.instance.find(asExpression()));
@@ -131,26 +146,31 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       public Infix() {
         this(null);
       }
+
       /** Instantiates the enclosing class ({@link Infix})@param simplifier */
       Infix(final Wring<InfixExpression> e) {
         super(e);
       }
+
       @Override protected InfixExpression asMe() {
         final InfixExpression $ = i(input);
         azzert.notNull($);
         return $;
       }
+
       @Test public void correctSimplifieInfix() {
         if (inner == null)
           return;
         azzert.that(Toolbox.instance.find(asInfixExpression()), instanceOf(inner.getClass()));
       }
+
       @Test public void flattenIsIdempotentt() {
         if (input == null)
           return;
         final InfixExpression flatten = flatten(asInfixExpression());
         azzert.that(flatten(flatten).toString(), is(flatten.toString()));
       }
+
       @Test public void inputIsInfixExpression() {
         if (inner == null)
           return;
@@ -164,38 +184,46 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     public Noneligible() {
       this(null);
     }
+
     /** Instantiates the enclosing class ({@link Noneligible})
      * @param inner JD */
     Noneligible(final Wring<N> inner) {
       super(inner);
     }
+
     @Override protected final Document asDocument() {
       return new Document(Wrap.Expression.on(input));
     }
+
     @Override @Test public void correctSimplifier() {
       if (inner == null)
         return;
       azzert.that(Toolbox.instance.find(asExpression()), instanceOf(inner.getClass()));
     }
+
     @Test public void eligible() {
       if (inner == null)
         return;
       azzert.nay(inner.eligible((N) asExpression()));
     }
+
     @Override @Test public void findsSimplifier() {
       if (inner == null)
         return;
       azzert.notNull(Toolbox.instance.find(asExpression()));
     }
+
     @Test public void noneligible() {
       if (inner == null)
         return;
       azzert.aye(inner.nonEligible((N) asExpression()));
     }
+
     @Test public void noOpporunity() {
       final CompilationUnit u = asCompilationUnit();
       azzert.that(u.toString() + wringer.findOpportunities(u), wringer.findOpportunities(u).size(), is(0));
     }
+
     @Test public void simiplifies() throws MalformedTreeException, IllegalArgumentException, BadLocationException {
       if (input == null)
         return;
@@ -213,16 +241,20 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       public Declaration() {
         this(null);
       }
+
       Declaration(final Wring<VariableDeclarationFragment> inner) {
         super(inner);
       }
+
       @Override protected VariableDeclarationFragment asMe() {
         return extract.firstVariableDeclarationFragment(MakeAST.STATEMENTS.from(input));
       }
+
       @Test public void asMeNotNull() {
         if (inner != null)
           azzert.notNull(asMe());
       }
+
       @Test public void scopeDoesNotInclude() {
         if (inner != null)
           azzert.that(inner.scopeIncludes(asMe()), is(false));
@@ -234,10 +266,12 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
         public Infix() {
           this(null);
         }
+
         /** Instantiates the enclosing class ({@link Infix})@param simplifier */
         Infix(final Wring<InfixExpression> e) {
           super(e);
         }
+
         @Test public void inputIsInfixExpression() {
           if (input != null)
             azzert.notNull(asInfixExpression());
@@ -247,9 +281,11 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       public Exprezzion() {
         this(null);
       }
+
       Exprezzion(final Wring<E> inner) {
         super(inner);
       }
+
       @Override protected E asMe() {
         final E $ = (E) e(input);
         azzert.notNull($);
@@ -263,6 +299,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     public OutOfScope() {
       super(null);
     }
+
     /** Instantiates the enclosing class ({@link OutOfScope})@param inner */
     OutOfScope(final Wring<N> inner) {
       super(inner);
@@ -275,15 +312,18 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       public Conditional() {
         this(null);
       }
+
       /** Instantiates the enclosing class ({@link Conditional})
        * @param w JD */
       Conditional(final Wring<ConditionalExpression> e) {
         super(e);
       }
+
       @Test public void inputIsConditionalExpression() {
         if (input != null)
           azzert.notNull(asConditionalExpression());
       }
+
       @Test public void isConditionalExpression() {
         if (input != null)
           azzert.that(asMe(), instanceOf(ConditionalExpression.class));
@@ -294,19 +334,23 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       public IfStatementAndSurrounding() {
         this(null);
       }
+
       /** Instantiates the enclosing class ({@link IfStatementAndSurrounding})
        * @param inner */
       IfStatementAndSurrounding(final Wring<IfStatement> inner) {
         super(inner);
       }
+
       /** In case of an IfStatemnet and surrounding, we search and then find the
        * first If statement in the input. */
       @Override protected IfStatement asMe() {
         return extract.firstIfStatement(MakeAST.STATEMENTS.from(input));
       }
+
       @Override @Test public void hasReplacement() {
         // Eliminate test; in surrounding, you do not replace the text.
       }
+
       @Override @Test public void simiplifies() throws MalformedTreeException, IllegalArgumentException {
         if (input == null)
           return;
@@ -326,10 +370,12 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       public Infix() {
         this(null);
       }
+
       /** Instantiates the enclosing class ({@link Infix})@param simplifier */
       Infix(final Wring<InfixExpression> e) {
         super(e);
       }
+
       @Override protected final CompilationUnit asCompilationUnit() {
         final String s = input;
         final ASTNode $ = MakeAST.COMPILATION_UNIT.from(Wrap.Statement.on(s));
@@ -337,17 +383,20 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
         azzert.that($, is(instanceOf(CompilationUnit.class)));
         return (CompilationUnit) $;
       }
+
       @Test public void flattenIsIdempotentt() {
         if (inner == null)
           return;
         final InfixExpression flatten = flatten(asInfixExpression());
         azzert.that(flatten(flatten).toString(), is(flatten.toString()));
       }
+
       @Test public void hasReplacementAsInfix() {
         if (inner == null)
           return;
         azzert.notNull(((Wring.ReplaceCurrentNode<InfixExpression>) inner).replacement(asInfixExpression()));
       }
+
       @Test public void inputIsInfixExpression() {
         if (inner == null)
           return;
@@ -364,9 +413,11 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     public Wringed() {
       this(null);
     }
+
     Wringed(final Wring<N> inner) {
       super(inner);
     }
+
     @Override protected Document asDocument() {
       return new Document(Wrap.Expression.on(input));
     }
@@ -381,11 +432,13 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     public WringedBlock() {
       super(null);
     }
+
     /** Instantiates the enclosing class ({@link WringedBlock})
      * @param inner */
     WringedBlock(final Wring<Block> inner) {
       super(inner);
     }
+
     @Override protected Block asMe() {
       final Statement s = s(input);
       azzert.notNull(s);
@@ -393,26 +446,31 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       azzert.notNull($);
       return $;
     }
+
     @Test public void correctSimplifierAsBlock() {
       if (inner == null)
         return;
       azzert.that(Toolbox.instance.find(asBlock(asMe())), instanceOf(inner.getClass()));
     }
+
     @Test public void createRewrite() throws MalformedTreeException, IllegalArgumentException, BadLocationException {
       final String s = input;
       final Document d = new Document(Wrap.Statement.on(s));
       azzert.notNull(wringer.createRewrite(asCompilationUnit(), null).rewriteAST(d, null).apply(d));
     }
+
     @Test public void eligible() {
       if (inner == null)
         return;
       azzert.aye(inner.eligible(asMe()));
     }
+
     @Test public void findsSimplifierAsBlock() {
       if (inner == null)
         return;
       azzert.notNull(Toolbox.instance.find(asMe()));
     }
+
     @Test public void hasOpportunity() {
       if (inner == null)
         return;
@@ -420,26 +478,31 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       final CompilationUnit u = asCompilationUnit();
       azzert.that(u.toString(), wringer.findOpportunities(u).size(), is(greaterThanOrEqualTo(0)));
     }
+
     @Test public void hasReplacement() {
       if (inner == null)
         return;
       azzert.notNull(((Wring.ReplaceCurrentNode<Block>) inner).replacement(asMe()));
     }
+
     @Test public void noneligible() {
       if (inner == null)
         return;
       azzert.nay(inner.nonEligible(asMe()));
     }
+
     @Test public void peelableOutput() {
       if (inner == null)
         return;
       azzert.that(Wrap.Statement.off(Wrap.Statement.on(expected)), is(expected));
     }
+
     @Test public void scopeIncludes() {
       if (inner == null)
         return;
       azzert.aye(inner.scopeIncludes(asMe()));
     }
+
     @Test public void simiplifies() throws MalformedTreeException, IllegalArgumentException {
       if (inner == null)
         return;
@@ -463,17 +526,20 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       public Conditional() {
         this(null);
       }
+
       /** Instantiates the enclosing class ({@link Infix})
        * @param w JD */
       Conditional(final Wring<ConditionalExpression> e) {
         super(e);
       }
+
       @Test public void inputIsConditionalExpression() {
         if (inner == null)
           return;
         azzert.that(asExpression(), instanceOf(ConditionalExpression.class));
         azzert.notNull(asConditionalExpression());
       }
+
       @Test public void scopeIncludesAsConditionalExpression() {
         if (inner == null)
           return;
@@ -485,21 +551,25 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       public Infix() {
         this(null);
       }
+
       /** Instantiates the enclosing class ({@link Infix})@param simplifier */
       Infix(final Wring<InfixExpression> e) {
         super(e);
       }
+
       @Test public void flattenIsIdempotentt() {
         if (input == null)
           return;
         final InfixExpression flatten = flatten(asInfixExpression());
         azzert.that(flatten(flatten).toString(), is(flatten.toString()));
       }
+
       @Test public void hasReplacementAsInfix() {
         if (input == null)
           return;
         azzert.notNull(((Wring.ReplaceCurrentNode<InfixExpression>) inner).replacement(asInfixExpression()));
       }
+
       @Test public void inputIsInfixExpression() {
         if (input == null)
           return;
@@ -515,10 +585,12 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     public WringedExpression() {
       this(null);
     }
+
     /** Instantiates the enclosing class ( {@link WringedExpression}) */
     WringedExpression(final Wring<E> inner) {
       super(inner);
     }
+
     @Override protected CompilationUnit asCompilationUnit() {
       final String s = input;
       final ASTNode $ = MakeAST.COMPILATION_UNIT.from(Wrap.Expression.on(s));
@@ -526,34 +598,41 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       azzert.that($, is(instanceOf(CompilationUnit.class)));
       return (CompilationUnit) $;
     }
+
     @Override protected Document asDocument() {
       return new Document(Wrap.Expression.on(input));
     }
+
     @Override protected E asMe() {
       final E $ = (E) e(input);
       azzert.notNull($);
       return $;
     }
+
     @Override @Test public void correctSimplifier() {
       if (inner == null)
         return;
       azzert.that(Toolbox.instance.find(asExpression()), instanceOf(inner.getClass()));
     }
+
     @Test public void createRewrite() throws MalformedTreeException, IllegalArgumentException, BadLocationException {
       final String s = input;
       final Document d = new Document(Wrap.Expression.on(s));
       azzert.notNull(wringer.createRewrite(asCompilationUnit(), null).rewriteAST(d, null).apply(d));
     }
+
     @Test public void eligible() {
       if (inner == null)
         return;
       azzert.aye(inner.eligible((E) asExpression()));
     }
+
     @Override @Test public void findsSimplifier() {
       if (inner == null)
         return;
       azzert.notNull(Toolbox.instance.find(asExpression()));
     }
+
     @Test public void hasOpportunity() {
       if (inner == null)
         return;
@@ -561,26 +640,31 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       final CompilationUnit u = asCompilationUnit();
       azzert.that(u.toString(), wringer.findOpportunities(u).size(), is(greaterThanOrEqualTo(1)));
     }
+
     @Test public void hasReplacement() {
       if (inner == null)
         return;
       azzert.notNull(((Wring.ReplaceCurrentNode<E>) inner).replacement((E) asExpression()));
     }
+
     @Test public void noneligible() {
       if (inner == null)
         return;
       azzert.nay(inner.nonEligible((E) asExpression()));
     }
+
     @Test public void peelableOutput() {
       if (input == null)
         return;
       azzert.that(Wrap.Expression.off(Wrap.Expression.on(expected)), is(expected));
     }
+
     @Test public void scopeIncludes() {
       if (inner == null)
         return;
       azzert.aye(inner.scopeIncludes((E) asExpression()));
     }
+
     @Test public void simiplifies() throws MalformedTreeException, IllegalArgumentException {
       if (inner == null)
         return;
@@ -594,6 +678,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       assertSimilar(expected, peeled);
       assertSimilar(Wrap.Expression.on(expected), actual);
     }
+
     @Test public void simiplifiesExpanded() throws MalformedTreeException, IllegalArgumentException {
       if (inner == null)
         return;
@@ -633,37 +718,44 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     public WringedIfStatement() {
       this(null);
     }
+
     /** Instantiates the enclosing class ({@link WringedInput})
      * @param inner */
     WringedIfStatement(final Wring<IfStatement> inner) {
       super(inner);
     }
+
     @Override protected IfStatement asMe() {
       final Statement $ = asSingle(input);
       azzert.notNull($);
       return asIfStatement($);
     }
+
     @Override @Test public void correctSimplifier() {
       if (input == null)
         return;
       azzert.that(asMe().toString(), Toolbox.instance.find(asMe()), instanceOf(inner.getClass()));
     }
+
     @Test public void createRewrite() throws MalformedTreeException, IllegalArgumentException, BadLocationException {
       final String s = input;
       final Document d = new Document(Wrap.Statement.on(s));
       azzert.notNull(wringer.createRewrite(asCompilationUnit(), null).rewriteAST(d, null).apply(d));
     }
+
     @Test public void eligible() {
       if (input == null)
         return;
       final IfStatement s = asMe();
       azzert.aye(s.toString(), inner.eligible(s));
     }
+
     @Override @Test public void findsSimplifier() {
       if (input == null)
         return;
       azzert.notNull(Toolbox.instance.find(asMe()));
     }
+
     @Test public void hasOpportunity() {
       if (inner == null)
         return;
@@ -671,31 +763,37 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       final CompilationUnit u = asCompilationUnit();
       azzert.that(u.toString(), wringer.findOpportunities(u).size(), is(greaterThanOrEqualTo(0)));
     }
+
     @Test public void hasReplacement() {
       if (inner == null)
         return;
       azzert.notNull(((Wring.ReplaceCurrentNode<IfStatement>) inner).replacement(asMe()));
     }
+
     @Test public void hasSimplifier() {
       if (inner == null)
         return;
       azzert.notNull(asMe().toString(), Toolbox.instance.find(asMe()));
     }
+
     @Test public void noneligible() {
       if (input == null)
         return;
       azzert.nay(inner.nonEligible(asMe()));
     }
+
     @Test public void peelableOutput() {
       if (input == null)
         return;
       azzert.that(Wrap.Statement.off(Wrap.Statement.on(expected)), is(expected));
     }
+
     @Test public void scopeIncludesAsMe() {
       if (input == null)
         return;
       azzert.that(asMe().toString(), inner.scopeIncludes(asMe()), is(true));
     }
+
     @Test public void simiplifies() throws MalformedTreeException, IllegalArgumentException {
       if (inner == null)
         return;
@@ -718,9 +816,11 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     public WringedStatement() {
       super(null);
     }
+
     WringedStatement(final Wring<N> inner) {
       super(inner);
     }
+
     @Override protected final CompilationUnit asCompilationUnit() {
       final String s = input;
       final ASTNode $ = MakeAST.COMPILATION_UNIT.from(Wrap.Statement.on(s));
@@ -728,19 +828,23 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       azzert.that($, is(instanceOf(CompilationUnit.class)));
       return (CompilationUnit) $;
     }
+
     @Override protected final Document asDocument() {
       return new Document(Wrap.Statement.on(input));
     }
+
     @Override protected N asMe() {
       final N $ = (N) s(input);
       azzert.notNull($);
       return $;
     }
+
     @Override @Test public void correctSimplifier() {
       if (inner == null)
         return;
       azzert.that(Toolbox.instance.find(asMe()), instanceOf(inner.getClass()));
     }
+
     @Override @Test public void findsSimplifier() {
       if (inner == null)
         return;
@@ -752,26 +856,32 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
     public WringedVariableDeclarationFragmentAndSurrounding() {
       this(null);
     }
+
     WringedVariableDeclarationFragmentAndSurrounding(final Wring<VariableDeclarationFragment> inner) {
       super(inner);
     }
+
     @Override protected CompilationUnit asCompilationUnit() {
       final CompilationUnit $ = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(Wrap.Statement.on(input));
       azzert.notNull($);
       return $;
     }
+
     /** Instantiates the enclosing class ({@link WringedInput})
      * @param inner */
     @Override protected final Document asDocument() {
       return new Document(Wrap.Statement.on(input));
     }
+
     @Override protected VariableDeclarationFragment asMe() {
       return extract.firstVariableDeclarationFragment(MakeAST.STATEMENTS.from(input));
     }
+
     @Override @Test public void correctSimplifier() {
       if (input != null)
         azzert.that(asMe().toString(), Toolbox.instance.find(asMe()), instanceOf(inner.getClass()));
     }
+
     @Test public void createRewrite() throws MalformedTreeException, IllegalArgumentException, BadLocationException {
       final String s = input;
       final Document d = new Document(Wrap.Statement.on(s));
@@ -781,17 +891,20 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       azzert.notNull(e);
       azzert.notNull(e.apply(d));
     }
+
     @Test public void eligible() {
       if (inner == null)
         return;
       final VariableDeclarationFragment s = asMe();
       azzert.aye(s.toString(), inner.eligible(s));
     }
+
     @Override @Test public void findsSimplifier() {
       if (inner == null)
         return;
       azzert.notNull(Toolbox.instance.find(asMe()));
     }
+
     @Test public void hasOpportunity() {
       if (inner == null)
         return;
@@ -799,29 +912,35 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       final CompilationUnit u = asCompilationUnit();
       azzert.that(u.toString(), wringer.findOpportunities(u).size(), is(greaterThanOrEqualTo(1)));
     }
+
     @Test public void hasSimplifier() {
       if (input == null)
         return;
       azzert.notNull(asMe().toString(), Toolbox.instance.find(asMe()));
     }
+
     @Test public void noneligible() {
       if (inner == null)
         return;
       azzert.nay(inner.nonEligible(asMe()));
     }
+
     @Test public void peelableOutput() {
       if (expected == null)
         return;
       azzert.that(Wrap.Statement.off(Wrap.Statement.on(expected)), is(expected));
     }
+
     @Test public void rewriteNotEmpty() throws MalformedTreeException, IllegalArgumentException {
       azzert.notNull(wringer.createRewrite(asCompilationUnit(), null));
     }
+
     @Test public void scopeIncludesAsMe() {
       if (inner == null)
         return;
       azzert.that(asMe().toString(), inner.scopeIncludes(asMe()), is(true));
     }
+
     @Test public void simiplifies() throws MalformedTreeException, IllegalArgumentException {
       if (input == null)
         return;
@@ -845,55 +964,69 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
   public AbstractWringTest() {
     this(null);
   }
+
   /** Instantiates the enclosing class ({@link AbstractWringTest})
    * @param inner JD */
   AbstractWringTest(final Wring<N> inner) {
     this.inner = inner;
   }
+
   protected CompilationUnit asCompilationUnit() {
     return Wrap.Expression.intoCompilationUnit(input);
   }
+
   protected ConditionalExpression asConditionalExpression() {
     final ConditionalExpression $ = c(input);
     azzert.notNull($);
     return $;
   }
+
   protected Expression asExpression() {
     final Expression $ = e(input);
     azzert.notNull($);
     return $;
   }
+
   protected InfixExpression asInfixExpression() {
     final InfixExpression $ = i(input);
     azzert.notNull($);
     return $;
   }
+
   protected N asMe() {
     return null;
   }
+
   protected PrefixExpression asPrefixExpression() {
     final PrefixExpression $ = p(input);
     azzert.notNull($);
     return $;
   }
+
   void assertLegible(final String expression) {
     azzert.aye(inner.eligible((N) MakeAST.EXPRESSION.from(expression)));
   }
+
   void assertNotLegible(final Block b) {
     azzert.that(inner.eligible((N) b), is(false));
   }
+
   void assertNotLegible(final Expression e) {
     azzert.that(inner.eligible((N) e), is(false));
   }
+
   void assertNotLegible(final IfStatement b) {
     azzert.that(inner.eligible((N) b), is(false));
   }
+
   void assertWithinScope(final Expression e) {
     azzert.aye(inner.scopeIncludes((N) e));
   }
+
   void assertWithinScope(final String expression) {
     assertWithinScope(e(expression));
   }
+
   void correctScopeExpression(final ASTNode n) {
     assertWithinScope(Funcs.asExpression(n));
   }

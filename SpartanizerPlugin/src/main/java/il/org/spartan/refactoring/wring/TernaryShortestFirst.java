@@ -26,16 +26,20 @@ public final class TernaryShortestFirst extends Wring.ReplaceCurrentNode<Conditi
   private static double align(final Expression e1, final Expression e2) {
     return new LongestCommonSubsequence(e1.toString(), e2.toString()).similarity();
   }
+
   private static boolean compatible(final Expression e1, final Expression e2) {
     return e1.getNodeType() == e2.getNodeType()
         && (e1 instanceof InstanceofExpression || e1 instanceof InfixExpression || e1 instanceof MethodInvocation);
   }
+
   private static boolean compatibleCondition(final Expression e1, final Expression e2) {
     return compatible(e1, e2) || compatible(e1, logicalNot(e2));
   }
+
   @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Invert logical condition and exhange order of '?' and ':' operands to conditional expression";
   }
+
   @Override ConditionalExpression replacement(final ConditionalExpression e) {
     final ConditionalExpression $ = subject.pair(core(e.getElseExpression()), core(e.getThenExpression())).toCondition(logicalNot(e.getExpression()));
     final Expression then = $.getElseExpression();

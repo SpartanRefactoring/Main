@@ -17,18 +17,20 @@ public enum Utils {
    * greater by one and placing the element at the last position.
    * @param ts an arbitrary array
    * @param t an element
-   * @return  newly created array */
+   * @return newly created array */
   public static <T> T[] append(final T[] ts, final T t) {
     final T[] $ = Arrays.copyOf(ts, 1 + ts.length);
     $[ts.length] = t;
     return $;
   }
+
   /** Convert multiple arguments into an array
    * @param ts a sequence of arguments of the same type
    * @return an array representation of the parameter */
   @SafeVarargs public static <T> T[] asArray(final T... ts) {
     return ts;
   }
+
   /** Convert multiple arguments into a {@link List}
    * @param ts a sequence of arguments of the same type
    * @return a newly created {@link List} representation of the parameter */
@@ -38,6 +40,7 @@ public enum Utils {
       $.add(t);
     return $;
   }
+
   /** Impose an ordering on type <code><b>boolean</b></code> by which
    * <code><b>true</b></code> is greater than <code><b>false</b></code>.
    * @param b1 JD
@@ -50,19 +53,21 @@ public enum Utils {
   public static int compare(final boolean b1, final boolean b2) {
     return b1 == b2 ? 0 : b1 ? 1 : -1;
   }
+
   /** Deletes a specified element from an array, by reallocating an array whose
    * size is smaller by one and shifting the other elements down.
    * @param ts an arbitrary array
    * @param i position of element to be deleted
-   * @return  newly created array */
+   * @return newly created array */
   public static <T> T[] delete(final T[] ts, final int i) {
     final T[] $ = Arrays.copyOf(ts, ts.length - 1);
     System.arraycopy(ts, i + 1, $, i, $.length - i);
     return $;
   }
+
   /** Remove all non-essential spaces from a string that represents Java code.
    * @param javaCodeFragment JD
-   * @return  parameter, with all redundant spaces removes from it */
+   * @return parameter, with all redundant spaces removes from it */
   public static String gist(final String javaCodeFragment) {
     String $ = javaCodeFragment//
         .replaceAll("(?m)\\s+", " ") // Squeeze whites
@@ -77,6 +82,7 @@ public enum Utils {
       ;
     return $;
   }
+
   /** determine whether there is a null in a sequence of object
    * @param os an unknown number of objects
    * @return true if one of the objects is a null or false otherwise */
@@ -86,6 +92,7 @@ public enum Utils {
         return true;
     return false;
   }
+
   /** Determine if an item can be found in a list of values
    * @param candidate what to search for
    * @param ts where to search
@@ -96,6 +103,7 @@ public enum Utils {
         return true;
     return false;
   }
+
   /** Determine whether an integer is a valid list index
    * @param i some integer
    * @param ts a list of things
@@ -104,12 +112,14 @@ public enum Utils {
   public static <T> boolean inRange(final int i, final List<T> ts) {
     return i >= 0 && i < ts.size();
   }
+
   /** @param ts a list
-   * @return  last item in a list or <code><b>null</b></code> if the
-   *         parameter is <code><b>null</b></code> or empty */
+   * @return last item in a list or <code><b>null</b></code> if the parameter is
+   *         <code><b>null</b></code> or empty */
   public static <T> T last(final List<T> ts) {
     return ts == null || ts.isEmpty() ? null : ts.get(ts.size() - 1);
   }
+
   /** Determine whether an {@link Object} is the last in a {@link List}.
    * @param o JD
    * @param os JD
@@ -118,28 +128,32 @@ public enum Utils {
   public static boolean lastIn(final Object o, final List<?> os) {
     return last(os) == o;
   }
+
   /** Computes the maximum of two or more integers.
    * @param a some integer
    * @param is additional integers
-   * @return  largest of the parameters */
+   * @return largest of the parameters */
   public static int max(final int a, final int... is) {
     int $ = a;
     for (final int i : is)
       $ = Math.max($, i);
     return $;
   }
+
   /** Convert variadic list of arguments into an array
    * @param os JD _
-   * @return  parameter, as an array. */
+   * @return parameter, as an array. */
   public static Object[] objects(final Object... os) {
     return os;
   }
+
   /** @param ts a list
-   * @return  last item in a list or <code><b>null</b></code> if the
-   *         parameter is <code><b>null</b></code> or empty */
+   * @return last item in a list or <code><b>null</b></code> if the parameter is
+   *         <code><b>null</b></code> or empty */
   public static <T> T penultimate(final List<T> ts) {
     return ts == null || ts.size() < 2 ? null : ts.get(ts.size() - 2);
   }
+
   /** Determine whether an {@link Object} is penultimate in its {@link Block}.
    * @param o JD
    * @param os JD
@@ -148,6 +162,7 @@ public enum Utils {
   public static boolean penultimateIn(final Object o, final List<?> os) {
     return penultimate(os) == o;
   }
+
   /** Remove any duplicates that may be present in a given {@link List}
    * @param ts JD */
   public static <T> void removeDuplicates(final List<T> ts) {
@@ -155,37 +170,42 @@ public enum Utils {
     ts.clear();
     ts.addAll(noDuplicates);
   }
+
   /** Remove all occurrences of a given prefix from a given {@link String}.
    * @param s JD
    * @param prefix what should be removed
-   * @return  parameter after all such occurrences are removed. */
+   * @return parameter after all such occurrences are removed. */
   public static String removePrefix(final String s, final String prefix) {
     for (String $ = s;; $ = $.substring(prefix.length()))
       if (!$.startsWith(prefix))
         return $;
   }
+
   /** Remove all occurrences of a given suffix from a given string.
    * @param s JD
    * @param suffix what should be removed
-   * @return  parameter after all such occurrences are removed. */
+   * @return parameter after all such occurrences are removed. */
   public static String removeSuffix(final String s, final String suffix) {
     for (String $ = s;; $ = $.substring(0, $.length() - suffix.length()))
       if (!$.endsWith(suffix))
         return $;
   }
+
   /** Remove all occurrences of white space character in a given {@link String}
    * @param s JD
-   * @return  parameter after all such occurrences are removed. */
+   * @return parameter after all such occurrences are removed. */
   public static String removeWhites(final String s) {
     return s.replaceAll("\\s+", "");
   }
+
   /** Sorts an array
    * @param is what to sort
-   * @return  given array with elements in sorted order */
+   * @return given array with elements in sorted order */
   public static int[] sort(final int[] is) {
     Arrays.sort(is);
     return is;
   }
+
   /** Determine whether a file name ends with any one of the supplied
    * extensions.
    * @param f a file to examine
@@ -195,6 +215,7 @@ public enum Utils {
   public static boolean suffixedBy(final File f, final Iterable<String> suffixes) {
     return suffixedBy(f.getName(), suffixes);
   }
+
   /** Determine whether a file name ends with any one of the supplied
    * extensions.
    * @param f a file to examine
@@ -204,6 +225,7 @@ public enum Utils {
   public static boolean suffixedBy(final File f, final String... suffixes) {
     return suffixedBy(f.getName(), suffixes);
   }
+
   /** Determine whether a string ends with any one of the supplied suffixes.
    * @param s a string to examine
    * @param suffixes a list of potential suffixes
@@ -215,6 +237,7 @@ public enum Utils {
         return true;
     return false;
   }
+
   /** Determine whether a string ends with any one of the supplied suffixes.
    * @param s a string to examine
    * @param suffixes a list of potential suffixes

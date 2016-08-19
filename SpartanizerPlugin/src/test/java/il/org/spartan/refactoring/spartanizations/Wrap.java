@@ -92,8 +92,9 @@ public enum Wrap {
     String essence = essence(inner);
     String essence2 = essence(off);
     azzert.notNull(essence2);
-    return essence2.contains(essence); 
+    return essence2.contains(essence);
   }
+
   /** Wrap a given code fragment, and then parse it, converting it into a
    * {@link CompilationUnit}.
    * @param codeFragment JD

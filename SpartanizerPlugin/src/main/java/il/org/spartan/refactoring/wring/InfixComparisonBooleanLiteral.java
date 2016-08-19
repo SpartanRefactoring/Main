@@ -29,26 +29,33 @@ public final class InfixComparisonBooleanLiteral extends Wring.ReplaceCurrentNod
   private static BooleanLiteral literal(final InfixExpression e) {
     return asBooleanLiteral(core(literalOnLeft(e) ? left(e) : right(e)));
   }
+
   private static boolean literalOnLeft(final InfixExpression e) {
     return Is.booleanLiteral(core(left(e)));
   }
+
   private static boolean literalOnRight(final InfixExpression e) {
     return Is.booleanLiteral(core(right(e)));
   }
+
   private static boolean negating(final InfixExpression e, final BooleanLiteral l) {
     return l.booleanValue() != (e.getOperator() == EQUALS);
   }
+
   private static Expression nonLiteral(final InfixExpression e) {
     return literalOnLeft(e) ? right(e) : left(e);
   }
+
   @Override String description(final InfixExpression e) {
     return "Eliminate redundant comparison with '" + literal(e) + "'";
   }
+
   @Override Expression replacement(final InfixExpression e) {
     final BooleanLiteral literal = literal(e);
     final Expression nonliteral = core(nonLiteral(e));
     return new Plant(!negating(e, literal) ? nonliteral : logicalNot(nonliteral)).into(e.getParent());
   }
+
   @Override public boolean scopeIncludes(final InfixExpression e) {
     return !e.hasExtendedOperands() && in(e.getOperator(), EQUALS, NOT_EQUALS) && (literalOnLeft(e) || literalOnRight(e));
   }

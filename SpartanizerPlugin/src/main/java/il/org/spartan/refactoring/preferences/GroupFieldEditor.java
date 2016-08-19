@@ -44,6 +44,7 @@ public class GroupFieldEditor extends FieldEditor {
     group = new Group(parent, SWT.SHADOW_OUT);
     group.setText(title);
   }
+
   /** Adds a new {@link FieldEditor} object to the group. Controls must be added
    * before the group is drawn to the parent. */
   public void add(final FieldEditor e) {
@@ -51,10 +52,12 @@ public class GroupFieldEditor extends FieldEditor {
       throw new RuntimeException("The GroupFieldEditor has already been drawn, new fields cannot be added at this time");
     members.add(e);
   }
+
   /* (non-Javadoc) Method declared on FieldEditor. */
   @Override protected void adjustForNumColumns(@SuppressWarnings("hiding") final int numColumns) {
     this.numColumns = numColumns;
   }
+
   /* (non-Javadoc) Method declared on FieldEditor. */
   @Override protected void doFillIntoGrid(final Composite parentParam, @SuppressWarnings("hiding") int numColumns) {
     if (members == null || members.isEmpty())
@@ -69,33 +72,39 @@ public class GroupFieldEditor extends FieldEditor {
     parent.layout();
     parent.redraw();
   }
+
   /* (non-Javadoc) Method declared on FieldEditor. Loads the value from the
    * preference store and sets it to the check box. */
   @Override protected void doLoad() {
     for (final FieldEditor ¢ : members)
       ¢.load();
   }
+
   /* (non-Javadoc) Method declared on FieldEditor. Loads the default value from
    * the preference store and sets it to the check box. */
   @Override protected void doLoadDefault() {
     for (final FieldEditor ¢ : members)
       ¢.loadDefault();
   }
+
   /* (non-Javadoc) Method declared on FieldEditor. */
   @Override protected void doStore() {
     for (final FieldEditor ¢ : members)
       ¢.store();
   }
+
   /** Returns the parent for all the FieldEditors inside of this group. In this
    * class, the actual {@link Group} object is returned
-   * @return  parent {@link Composite} object */
+   * @return parent {@link Composite} object */
   public Composite getFieldEditor() {
     return group;
   }
+
   /* (non-Javadoc) Method declared on FieldEditor. */
   @Override public int getNumberOfControls() {
     return members.size();
   }
+
   private void gridData(final int i) {
     final GridData data = new GridData(SWT.FILL, SWT.CENTER, true, false);
     data.horizontalIndent = 2;
@@ -103,12 +112,14 @@ public class GroupFieldEditor extends FieldEditor {
     data.horizontalSpan = i;
     group.setLayoutData(data);
   }
+
   private void gridLayout(final int i) {
     final GridLayout groupLayout = new GridLayout();
     groupLayout.marginWidth = groupLayout.marginHeight = GROUP_PADDING;
     groupLayout.numColumns = i;
     group.setLayout(groupLayout);
   }
+
   /** Initializes using the currently added field editors. */
   public void init() {
     if (initialized)
@@ -116,31 +127,37 @@ public class GroupFieldEditor extends FieldEditor {
     doFillIntoGrid(getFieldEditor(), numColumns);
     initialized = true;
   }
+
   @Override public boolean isValid() {
     for (final FieldEditor ¢ : members)
       if (!¢.isValid())
         return false;
     return true;
   }
+
   /* @see FieldEditor.setEnabled */
   @Override public void setEnabled(final boolean enabled, final Composite parentParam) {
     for (final FieldEditor ¢ : members)
       ¢.setEnabled(enabled, parentParam);
   }
+
   /* (non-Javadoc) Method declared on FieldEditor. */
   @Override public void setFocus() {
     if (members != null && !members.isEmpty())
       members.iterator().next().setFocus();
   }
+
   @Override public void setPage(final DialogPage p) {
     for (final FieldEditor ¢ : members)
       ¢.setPage(p);
   }
+
   @Override public void setPreferenceStore(final IPreferenceStore s) {
     super.setPreferenceStore(s);
     for (final FieldEditor ¢ : members)
       ¢.setPreferenceStore(s);
   }
+
   @Override public void store() {
     doStore();
   }

@@ -13,6 +13,7 @@ public final class AnnotationRemoveEmptyParentheses extends Wring.ReplaceCurrent
   @Override String description(final NormalAnnotation a) {
     return "Remove redundant parentheses from the @" + a.getTypeName().getFullyQualifiedName() + " annotation";
   }
+
   @Override ASTNode replacement(final NormalAnnotation a) {
     if (a.values().size() > 0)
       return null;

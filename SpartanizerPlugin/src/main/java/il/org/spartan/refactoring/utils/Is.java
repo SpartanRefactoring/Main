@@ -26,6 +26,7 @@ public enum Is {
   public static boolean _final(final VariableDeclarationStatement s) {
     return (Modifier.FINAL & s.getModifiers()) != 0;
   }
+
   /** @param n the statement or block to check if it is an assignment
    * @return <code><b>true</b></code> if the parameter an assignment or false if
    *         the parameter not or if the block Contains more than one
@@ -33,6 +34,7 @@ public enum Is {
   public static boolean assignment(final ASTNode n) {
     return is(n, ASSIGNMENT);
   }
+
   /** Determine whether a node is a {@link Block}
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a block
@@ -40,6 +42,7 @@ public enum Is {
   public static boolean block(final ASTNode n) {
     return is(n, BLOCK);
   }
+
   /** Determine whether the curly brackets of an {@link IfStatement} are
    * vacuous.
    * @param s JD
@@ -55,16 +58,20 @@ public enum Is {
     return parent != null && (elze(parent) == null || recursiveElze(s) == null)
         && (elze(parent) != null || recursiveElze(s) != null || blockRequiredInReplacement(parent, s));
   }
+
   public static boolean blockEssential(final Statement s) {
     return blockEssential(asIfStatement(s));
   }
+
   public static boolean blockRequired(final IfStatement s) {
     return blockRequiredInReplacement(s, s);
   }
+
   public static boolean blockRequired(final Statement s) {
     final IfStatement s1 = asIfStatement(s);
     return blockRequiredInReplacement(s1, s1);
   }
+
   public static boolean blockRequiredInReplacement(final IfStatement old, final IfStatement newIf) {
     if (newIf == null || old != newIf && elze(old) == null == (elze(newIf) == null))
       return false;
@@ -72,6 +79,7 @@ public enum Is {
     return parent != null && then(parent) == old && (elze(parent) == null || elze(newIf) == null)
         && (elze(parent) != null || elze(newIf) != null || blockRequiredInReplacement(parent, newIf));
   }
+
   /** Determine whether a node is a boolean literal
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a boolean
@@ -79,12 +87,14 @@ public enum Is {
   public static boolean booleanLiteral(final ASTNode n) {
     return is(n, BOOLEAN_LITERAL);
   }
+
   /** @param e JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a comparison
    *         expression. */
   public static boolean comparison(final InfixExpression e) {
     return in(e.getOperator(), EQUALS, GREATER, GREATER_EQUALS, LESS, LESS_EQUALS, NOT_EQUALS);
   }
+
   /** @param es JD
    * @return <code><b>true</b></code> <i>iff</i> one of the parameters is a
    *         conditional or parenthesized conditional expression */
@@ -104,6 +114,7 @@ public enum Is {
     }
     return false;
   }
+
   /** Check whether an expression is a "conditional and" (&&)
    * @param e JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an expression
@@ -112,6 +123,7 @@ public enum Is {
   public static boolean conditionalAnd(final InfixExpression e) {
     return e.getOperator() == CONDITIONAL_AND;
   }
+
   /** Check whether an expression is a "conditional or" (||)
    * @param e JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an expression
@@ -120,6 +132,7 @@ public enum Is {
   public static boolean conditionalOr(final Expression e) {
     return conditionalOr(asInfixExpression(e));
   }
+
   /** Check whether an expression is a "conditional or" (||)
    * @param e JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an expression
@@ -128,6 +141,7 @@ public enum Is {
   public static boolean conditionalOr(final InfixExpression e) {
     return e != null && e.getOperator() == CONDITIONAL_OR;
   }
+
   /** Determine whether a node is a "specific", i.e., <code><b>null</b></code>
    * or <code><b>this</b></code> or literal.
    * @param e JD
@@ -146,6 +160,7 @@ public enum Is {
         return false;
     }
   }
+
   /** Check whether the operator of an expression is susceptible for applying
    * one of the two de Morgan laws.
    * @param e InfixExpression
@@ -154,6 +169,7 @@ public enum Is {
   public static boolean deMorgan(final InfixExpression e) {
     return Is.deMorgan(e.getOperator());
   }
+
   /** Check whether an operator is susceptible for applying one of the two de
    * Morgan laws.
    * @param o JD
@@ -162,6 +178,7 @@ public enum Is {
   public static boolean deMorgan(final Operator o) {
     return in(o, CONDITIONAL_AND, CONDITIONAL_OR);
   }
+
   public static boolean deterministic(final Expression e) {
     if (!sideEffectFree(e))
       return false;
@@ -174,6 +191,7 @@ public enum Is {
     });
     return $.get().booleanValue();
   }
+
   /** Determine whether a node is an {@link EmptyStatement}
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an
@@ -181,6 +199,7 @@ public enum Is {
   public static boolean emptyStatement(final ASTNode n) {
     return is(n, EMPTY_STATEMENT);
   }
+
   /** Determine whether a node is an "expression statement"
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an
@@ -188,6 +207,7 @@ public enum Is {
   public static boolean expression(final ASTNode n) {
     return n != null && n instanceof Expression;
   }
+
   /** Determine whether a node is an "expression statement"
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an
@@ -195,6 +215,7 @@ public enum Is {
   public static boolean expressionStatement(final ASTNode n) {
     return is(n, EXPRESSION_STATEMENT);
   }
+
   /** @param o The operator to check
    * @return True - if the operator have opposite one in terms of operands
    *         swap. */
@@ -213,15 +234,18 @@ public enum Is {
         XOR, //
         null);
   }
+
   /** @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an infix
    *         expression. */
   public static boolean infix(final ASTNode n) {
     return is(n, INFIX_EXPRESSION);
   }
+
   private static boolean is(final ASTNode n, final int type) {
     return n != null && type == n.getNodeType();
   }
+
   /** @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the node is an Expression
    *         Statement of type Post or Pre Expression with ++ or -- operator
@@ -239,12 +263,14 @@ public enum Is {
         return false;
     }
   }
+
   private static boolean isOneOf(final int i, final int... is) {
     for (final int j : is)
       if (i == j)
         return true;
     return false;
   }
+
   /** Determine whether an item is the last one in a list
    * @param t a list item
    * @param ts a list
@@ -253,17 +279,20 @@ public enum Is {
   public static <T> boolean last(final T t, final List<T> ts) {
     return ts.indexOf(t) == ts.size() - 1;
   }
+
   /** @param n Expression node
    * @return <code><b>true</b></code> <i>iff</i> the Expression is literal */
   public static boolean literal(final ASTNode n) {
-    return n != null &&  Funcs.intIsIn(n.getNodeType(), NULL_LITERAL, CHARACTER_LITERAL, NUMBER_LITERAL, STRING_LITERAL, BOOLEAN_LITERAL);
+    return n != null && Funcs.intIsIn(n.getNodeType(), NULL_LITERAL, CHARACTER_LITERAL, NUMBER_LITERAL, STRING_LITERAL, BOOLEAN_LITERAL);
   }
+
   /** @param s JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter return a
    *         literal */
   public static boolean literal(final ReturnStatement s) {
     return literal(s.getExpression());
   }
+
   /** Determine whether a node is a {@link MethodDeclaration}
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a method
@@ -271,6 +300,7 @@ public enum Is {
   public static boolean methodDeclaration(final ASTNode n) {
     return is(n, METHOD_DECLARATION);
   }
+
   /** Determine whether a node is a {@link MethodInvocation}
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a method
@@ -278,12 +308,15 @@ public enum Is {
   public static boolean methodInvocation(final ASTNode n) {
     return is(n, METHOD_INVOCATION);
   }
+
   public static boolean negative(final Expression e) {
     return e.toString().startsWith("-") || e instanceof PrefixExpression && negative((PrefixExpression) e);
   }
+
   public static boolean negative(final PrefixExpression e) {
     return e.getOperator() == PrefixExpression.Operator.MINUS;
   }
+
   /** Determine whether a node is an infix expression whose operator is
    * non-associative.
    * @param n JD
@@ -292,9 +325,11 @@ public enum Is {
   public static boolean nonAssociative(final ASTNode n) {
     return nonAssociative(asInfixExpression(n));
   }
+
   private static boolean nonAssociative(final InfixExpression e) {
     return e != null && in(e.getOperator(), MINUS, DIVIDE, REMAINDER);
   }
+
   /** @param e JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an expression
    *         whose type is provably not of type {@link String}, in the sense
@@ -303,6 +338,7 @@ public enum Is {
   public static boolean notString(final Expression e) {
     return notStringSelf(e) || notStringUp(e) || notStringDown(asInfixExpression(e));
   }
+
   /** Determine whether an {@link Expression} could not be evaluated as a
    * string.
    * @param e JD
@@ -311,9 +347,11 @@ public enum Is {
   static boolean notStringDown(final Expression e) {
     return notStringSelf(e) || notStringDown(asInfixExpression(e));
   }
+
   static boolean notStringDown(final InfixExpression e) {
     return e != null && (e.getOperator() != PLUS || Are.notString(extract.allOperands(e)));
   }
+
   static boolean notStringSelf(final Expression e) {
     return Funcs.intIsIn(e.getNodeType(), //
         ARRAY_CREATION, //
@@ -326,6 +364,7 @@ public enum Is {
     //
     );
   }
+
   private static boolean notStringUp(final Expression e) {
     for (ASTNode context = e.getParent(); context != null; context = context.getParent())
       switch (context.getNodeType()) {
@@ -344,6 +383,7 @@ public enum Is {
       }
     return false;
   }
+
   /** Determine whether a node is the <code><b>null</b></code> keyword
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i>is thee <code><b>null</b></code>
@@ -351,6 +391,7 @@ public enum Is {
   public static boolean null_(final ASTNode n) {
     return is(n, NULL_LITERAL);
   }
+
   /** Determine whether a node is <code><b>this</b></code> or
    * <code><b>null</b></code>
    * @param e JD
@@ -359,6 +400,7 @@ public enum Is {
   public static boolean numericLiteral(final Expression e) {
     return Is.oneOf(e, CHARACTER_LITERAL, NUMBER_LITERAL);
   }
+
   /** Determine whether the type of an {@link ASTNode} node is one of given list
    * @param n a node
    * @param types a list of types
@@ -367,17 +409,20 @@ public enum Is {
   public static boolean oneOf(final ASTNode n, final int... types) {
     return n != null && isOneOf(n.getNodeType(), types);
   }
+
   /** @param a the assignment who's operator we want to check
    * @return true is the assignment's operator is assign */
   public static boolean plainAssignment(final Assignment a) {
     return a != null && a.getOperator() == Assignment.Operator.ASSIGN;
   }
+
   /** @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a prefix
    *         expression. */
   public static boolean prefix(final ASTNode n) {
     return is(n, PREFIX_EXPRESSION);
   }
+
   /** Determine whether a node is a return statement
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a return
@@ -385,6 +430,7 @@ public enum Is {
   public static boolean return_(final ASTNode n) {
     return is(n, RETURN_STATEMENT);
   }
+
   /** Determine whether a node is a "sequencer", i.e.,
    * <code><b>return</b></code> , <code><b>break</b></code>,
    * <code><b>continue</b></code> or <code><b>throw</b></code>
@@ -393,6 +439,7 @@ public enum Is {
   public static boolean sequencer(final ASTNode n) {
     return Is.oneOf(n, RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT);
   }
+
   /** Determine whether the evaluation of an expression is guaranteed to be free
    * of any side effects.
    * @param e JD
@@ -447,26 +494,31 @@ public enum Is {
         return false;
     }
   }
+
   static boolean sideEffectFreeArrayCreation(final ArrayCreation c) {
     final ArrayInitializer i = c.getInitializer();
     return sideEffectsFree(c.dimensions()) && (i == null || sideEffectsFree(i.expressions()));
   }
+
   static boolean sideEffectFreePrefixExpression(final PrefixExpression e) {
     return in(e.getOperator(), PrefixExpression.Operator.PLUS, PrefixExpression.Operator.MINUS, PrefixExpression.Operator.COMPLEMENT,
         PrefixExpression.Operator.NOT) && sideEffectFree(extract.operand(e));
   }
+
   private static boolean sideEffectsFree(final Expression... es) {
     for (final Expression e : es)
       if (!sideEffectFree(e))
         return false;
     return true;
   }
+
   private static boolean sideEffectsFree(final List<?> os) {
     for (final Object o : os)
       if (o == null || !sideEffectFree(Funcs.asExpression((ASTNode) o)))
         return false;
     return true;
   }
+
   /** Determine whether an {@link Expression} is so basic that it never needs to
    * be placed in parenthesis.
    * @param e JD
@@ -492,6 +544,7 @@ public enum Is {
         TypeLiteral.class, //
         null);
   }
+
   /** Determine whether a node is a simple name
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a simple
@@ -499,6 +552,7 @@ public enum Is {
   public static boolean simpleName(final ASTNode n) {
     return is(n, SIMPLE_NAME);
   }
+
   /** Determine whether a node is a singleton statement, i.e., not a block.
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a singleton
@@ -506,6 +560,7 @@ public enum Is {
   public static boolean singletonStatement(final ASTNode n) {
     return extract.statements(n).size() == 1;
   }
+
   /** Determine whether the "then" branch of an {@link Statement} is a single
    * statement.
    * @param s JD
@@ -513,18 +568,21 @@ public enum Is {
   public static boolean singletonThen(final IfStatement s) {
     return Is.singletonStatement(then(s));
   }
+
   /** Determine whether a node is a {@link Statement}
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a statement */
   public static boolean statement(final ASTNode n) {
     return n instanceof Statement;
   }
+
   /** @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a string
    *         literal */
   public static boolean stringLiteral(final ASTNode n) {
     return n != null && n.getNodeType() == STRING_LITERAL;
   }
+
   /** Determine whether a node is the <code><b>this</b></code> keyword
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> is the <code><b>this</b></code>
@@ -532,6 +590,7 @@ public enum Is {
   public static boolean this_(final ASTNode n) {
     return is(n, THIS_EXPRESSION);
   }
+
   /** Determine whether a node is <code><b>this</b></code> or
    * <code><b>null</b></code>
    * @param e JD
@@ -540,6 +599,7 @@ public enum Is {
   public static boolean thisOrNull(final Expression e) {
     return Is.oneOf(e, NULL_LITERAL, THIS_EXPRESSION);
   }
+
   /** Determine whether a given {@link Statement} is an {@link EmptyStatement}
    * or has nothing but empty statements in it.
    * @param s JD
@@ -548,6 +608,7 @@ public enum Is {
   public static boolean vacuous(final Statement s) {
     return extract.statements(s).size() == 0;
   }
+
   /** Determine whether the 'else' part of an {@link IfStatement} is vacuous.
    * @param s JD
    * @return <code><b>true</b></code> <i>iff</i> there are no non-empty
@@ -555,6 +616,7 @@ public enum Is {
   public static boolean vacuousElse(final IfStatement s) {
     return vacuous(elze(s));
   }
+
   /** Determine whether a statement is an {@link EmptyStatement} or has nothing
    * but empty statements in it.
    * @param s JD
@@ -563,6 +625,7 @@ public enum Is {
   public static boolean vacuousThen(final IfStatement s) {
     return vacuous(then(s));
   }
+
   /** @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a variable
    *         declaration statement. */

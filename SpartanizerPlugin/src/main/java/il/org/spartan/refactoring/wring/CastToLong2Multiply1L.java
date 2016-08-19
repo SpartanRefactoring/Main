@@ -16,6 +16,7 @@ public final class CastToLong2Multiply1L extends Wring.ReplaceCurrentNode<CastEx
   @Override String description(final CastExpression e) {
     return "Use 1L*" + expression(e) + " instead of (long)" + expression(e);
   }
+
   @Override ASTNode replacement(final CastExpression e) {
     return eval(//
         () -> replacement(expression(e))//
@@ -23,6 +24,7 @@ public final class CastToLong2Multiply1L extends Wring.ReplaceCurrentNode<CastEx
         type(e).isPrimitiveType() && "long".equals("" + type(e)) //
     );
   }
+
   private static InfixExpression replacement(final Expression $) {
     return subject.pair(literal($), $).to(TIMES);
   }

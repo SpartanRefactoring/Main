@@ -62,6 +62,7 @@ public enum Precedence {
   public static boolean equal(final ASTNode host, final ASTNode e2) {
     return Precedence.of(host) == Precedence.of(e2);
   }
+
   /** Compare precedence of two expressions.
    * @param e1 JD
    * @param e2 JD
@@ -70,6 +71,7 @@ public enum Precedence {
   public static boolean greater(final ASTNode e1, final ASTNode e2) {
     return !Precedence.known(e1) || !Precedence.known(e2) || Precedence.of(e1) > Precedence.of(e2);
   }
+
   /** determine whether the precedence of a given {@link Expression} can be
    * determined.
    * @param n JD
@@ -78,25 +80,29 @@ public enum Precedence {
   public static boolean known(final ASTNode n) {
     return Is.legal(Precedence.of(n));
   }
+
   private static int of(final Assignment a) {
     return of(a.getOperator());
   }
+
   /** Determine the precedence of an
    * {@link org.eclipse.jdt.core.dom.Assignment.Operator}
    * @param o JD
-   * @return  precedence of the parameter */
+   * @return precedence of the parameter */
   private static int of(final Assignment.Operator o) {
     return of(o.toString());
   }
+
   /** Determine the precedence of an arbitrary {@link ASTNode}
    * @param n JD
-   * @return  precedence of the parameter */
+   * @return precedence of the parameter */
   public static int of(final ASTNode n) {
     return !il.org.spartan.refactoring.utils.Is.expression(n) ? UNDEFINED : Precedence.of(asExpression(n));
   }
+
   /** Determine the precedence of the operator present on an {@link Expression}
    * @param e JD
-   * @return  precedence of the parameter */
+   * @return precedence of the parameter */
   public static int of(final Expression e) {
     if (e == null)
       return UNDEFINED;
@@ -109,26 +115,31 @@ public enum Precedence {
         return of(e.getClass().getSimpleName());
     }
   }
+
   private static int of(final InfixExpression e) {
     return of(e.getOperator());
   }
+
   /** Determine the precedence of an
    * {@link org.eclipse.jdt.core.dom.InfixExpression.Operator}
    * @param o JD
-   * @return  precedence of the parameter */
+   * @return precedence of the parameter */
   public static int of(final InfixExpression.Operator o) {
     return of(o.toString());
   }
+
   private static int of(final String key) {
     return !of.containsKey(key) ? UNDEFINED : of.get(key);
   }
+
   /** Determine the precedence of two expressions is the same.
    * @param e1 JD
    * @param e2 JD
-   * @return  precedence of the parameter */
+   * @return precedence of the parameter */
   public static boolean same(final Expression e1, final Expression e2) {
     return Precedence.of(e1) == Precedence.of(e2);
   }
+
   /** Determine whether an expression has the same precedence as that of a given
    * operator.
    * @param o JD
