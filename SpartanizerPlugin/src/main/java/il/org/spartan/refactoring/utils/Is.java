@@ -256,13 +256,7 @@ public enum Is {
   /** @param n Expression node
    * @return <code><b>true</b></code> <i>iff</i> the Expression is literal */
   public static boolean literal(final ASTNode n) {
-    return Funcs.intIsIn(n.getNodeType(), //
-        NULL_LITERAL, //
-        CHARACTER_LITERAL, //
-        NUMBER_LITERAL, //
-        STRING_LITERAL, //
-        BOOLEAN_LITERAL //
-    );
+    return n != null &&  Funcs.intIsIn(n.getNodeType(), NULL_LITERAL, CHARACTER_LITERAL, NUMBER_LITERAL, STRING_LITERAL, BOOLEAN_LITERAL);
   }
   /** @param s JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter return a
