@@ -17,6 +17,7 @@ public final class ReturnLastInMethod extends Wring<ReturnStatement> implements 
   @Override String description(@SuppressWarnings("unused") final ReturnStatement __) {
     return "Remove redundant return statement";
   }
+
   @Override Rewrite make(final ReturnStatement s) {
     if (s.getExpression() != null)
       return null;

@@ -21,6 +21,7 @@ public final class InfixSortPseudoAddition extends Wring.InfixSorting implements
   @Override boolean scopeIncludes(final InfixExpression e) {
     return in(e.getOperator(), OR, XOR, AND);
   }
+
   @Override boolean sort(final List<Expression> es) {
     return ExpressionComparator.ADDITION.sort(es);
   }

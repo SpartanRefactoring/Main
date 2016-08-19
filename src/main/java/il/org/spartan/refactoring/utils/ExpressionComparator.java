@@ -58,15 +58,19 @@ public enum ExpressionComparator implements Comparator<Expression> {
   static int alphabeticalCompare(final Expression e1, final Expression e2) {
     return asString(e1).compareTo(asString(e2));
   }
+
   static int argumentsCompare(final Expression e1, final Expression e2) {
     return !Is.methodInvocation(e1) || !Is.methodInvocation(e2) ? 0 : argumentsCompare((MethodInvocation) e1, (MethodInvocation) e2);
   }
+
   static int argumentsCompare(final MethodInvocation i1, final MethodInvocation i2) {
     return i1.arguments().size() - i2.arguments().size();
   }
+
   static int asBit(final boolean b) {
     return b ? 1 : 0;
   }
+
   /** Compare expressions by their number of characters
    * @param e1 JD
    * @param e2 JD
@@ -76,18 +80,21 @@ public enum ExpressionComparator implements Comparator<Expression> {
   static int characterCompare(final Expression e1, final Expression e2) {
     return countNonWhites(e1) - countNonWhites(e2);
   }
+
   /** Counts the number of non-space characters in a tree rooted at a given node
    * @param n JD
    * @return Number of abstract syntax tree nodes under the parameter. */
   public static int countNonWhites(final ASTNode n) {
     return asString(n).length();
   }
+
   private static boolean isLonger(final Expression e1, final Expression e2) {
     return !hasNulls(e1, e2) && (//
     nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD || //
         nodesCount(e1) >= nodesCount(e2) && moreArguments(e1, e2)//
     );
   }
+
   /** Counts the number of statements in a tree rooted at a given node
    * @param n JD
    * @return Number of abstract syntax tree nodes under the parameter. */
@@ -124,9 +131,11 @@ public enum ExpressionComparator implements Comparator<Expression> {
     });
     return $.inner;
   }
+
   static int literalCompare(final Expression e1, final Expression e2) {
     return -specificity.compare(e1, e2);
   }
+
   /** Compare the length of the left and right arguments of an infix expression
    * @param e JD
    * @return <code><b>true</b></code> <i>iff</i> if the left operand of the
@@ -134,6 +143,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
   public static boolean longerFirst(final InfixExpression e) {
     return isLonger(left(e), right(e));
   }
+
   /** Compare method invocations by the number of arguments
    * @param e1 JD
    * @param e2 JD
@@ -142,9 +152,11 @@ public enum ExpressionComparator implements Comparator<Expression> {
   public static boolean moreArguments(final Expression e1, final Expression e2) {
     return argumentsCompare(e1, e2) > 0;
   }
+
   static int nodesCompare(final Expression e1, final Expression e2) {
     return round(nodesCount(e1) - nodesCount(e2), NODES_THRESHOLD);
   }
+
   /** Counts the number of nodes in a tree rooted at a given node
    * @param n JD
    * @return Number of abstract syntax tree nodes under the parameter. */
@@ -160,9 +172,11 @@ public enum ExpressionComparator implements Comparator<Expression> {
     });
     return $.inner;
   }
+
   static int round(final int $, final int threshold) {
     return Math.abs($) > threshold ? $ : 0;
   }
+
   /** Sorts the {@link Expression} list
    * @param es an {@link Expression} list to sort
    * @return True if the list was modified */

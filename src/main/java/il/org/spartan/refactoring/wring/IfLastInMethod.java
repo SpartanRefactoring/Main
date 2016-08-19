@@ -34,6 +34,7 @@ public final class IfLastInMethod extends Wring<IfStatement> implements Kind.Can
   @Override String description(final IfStatement s) {
     return "Invert conditional " + s.getExpression() + " for early return";
   }
+
   @Override Rewrite make(final IfStatement s) {
     if (Is.vacuousThen(s) || !Is.vacuousElse(s) || extract.statements(then(s)).size() < 2)
       return null;

@@ -8,6 +8,7 @@ public class PlantStatement {
   public PlantStatement(final Statement inner) {
     this.inner = inner;
   }
+
   public void intoThen(final IfStatement s) {
     final IfStatement plant = Funcs.asIfStatement(inner);
     s.setThenStatement(plant == null || plant.getElseStatement() != null ? inner : subject.statements(inner).toBlock());

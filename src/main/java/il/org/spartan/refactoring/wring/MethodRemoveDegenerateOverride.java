@@ -28,12 +28,14 @@ public final class MethodRemoveDegenerateOverride extends Wring<MethodDeclaratio
           }
         };
   }
+
   private static boolean shouldRemove(final MethodDeclaration d, final SuperMethodInvocation i) {
     for (final Object m : d.modifiers())
       if (m instanceof MarkerAnnotation && ((MarkerAnnotation) m).getTypeName().toString().contains("Deprecated"))
         return false;
     return i.getName().toString().equals(d.getName().toString()) && i.arguments().size() == expose.parameters(d).size();
   }
+
   @Override String description(final MethodDeclaration d) {
     return "Remove useless '" + d.getName() + "' overriding method";
   }

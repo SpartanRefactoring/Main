@@ -18,6 +18,7 @@ abstract class AbstractRenamePolicy {
         return true;
     return false;
   }
+
   private static List<ReturnStatement> prune(final List<ReturnStatement> $) {
     if ($ == null || $.isEmpty())
       return null;
@@ -41,7 +42,9 @@ abstract class AbstractRenamePolicy {
     localVariables = explorer.localVariables();
     returnStatements = prune(explorer.returnStatements());
   }
+
   abstract SimpleName innerSelectReturnVariable();
+
   final SimpleName selectReturnVariable() {
     return returnStatements == null || localVariables == null || localVariables.isEmpty() || hasDollar(localVariables) ? null
         : innerSelectReturnVariable();
@@ -57,27 +60,32 @@ class Aggressive extends AbstractRenamePolicy {
           return noRivals($, ns, ss) ? $ : null;
     return null;
   }
+
   private static int bestScore(final List<SimpleName> ns, final List<ReturnStatement> ss) {
     int $ = 0;
     for (final SimpleName n : ns)
       $ = Math.max($, score(n, ss));
     return $;
   }
+
   private static boolean noRivals(final SimpleName candidate, final List<SimpleName> ns, final List<ReturnStatement> ss) {
     for (final SimpleName rival : ns)
       if (rival != candidate && score(rival, ss) >= score(candidate, ss))
         return false;
     return true;
   }
+
   private static int score(final SimpleName n, final List<ReturnStatement> ss) {
     int $ = 0;
     for (final ReturnStatement r : ss)
       $ += Collect.BOTH_LEXICAL.of(n).in(r).size();
     return $;
   }
+
   public Aggressive(final MethodDeclaration inner) {
     super(inner);
   }
+
   @Override SimpleName innerSelectReturnVariable() {
     return bestCandidate(localVariables, returnStatements);
   }
@@ -87,12 +95,14 @@ class Conservative extends AbstractRenamePolicy {
   public Conservative(final MethodDeclaration inner) {
     super(inner);
   }
+
   @Override SimpleName innerSelectReturnVariable() {
     for (final Iterator<SimpleName> i = localVariables.iterator(); i.hasNext();)
       if (unused(i.next()))
         i.remove();
     return localVariables.size() != 1 ? null : localVariables.get(0);
   }
+
   private boolean unused(final SimpleName n) {
     for (final ReturnStatement s : returnStatements)
       if (same(n, s.getExpression()))
@@ -109,6 +119,7 @@ public final class MethodRenameReturnToDollar extends Wring<MethodDeclaration> i
   @Override String description(final MethodDeclaration d) {
     return d.getName().toString();
   }
+
   @Override Rewrite make(final MethodDeclaration d, final ExclusionManager exclude) {
     final Type t = d.getReturnType2();
     if (t instanceof PrimitiveType && ((PrimitiveType) t).getPrimitiveTypeCode() == PrimitiveType.VOID)
@@ -122,6 +133,7 @@ public final class MethodRenameReturnToDollar extends Wring<MethodDeclaration> i
       SimpleName $() {
         return d.getAST().newSimpleName("$");
       }
+
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         rename(n, $(), d, r, g);
       }

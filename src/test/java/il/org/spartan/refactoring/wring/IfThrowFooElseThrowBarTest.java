@@ -34,6 +34,7 @@ public enum IfThrowFooElseThrowBarTest {
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
+
     /** Instantiates the enclosing class ({@link OutOfScope}) */
     public OutOfScope() {
       super(WRING);
@@ -57,6 +58,7 @@ public enum IfThrowFooElseThrowBarTest {
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
+
     /** Instantiates the enclosing class ({@link Wringed}) */
     public Wringed() {
       super(WRING);

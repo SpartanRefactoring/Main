@@ -20,6 +20,7 @@ public final class SuperConstructorInvocationRemover extends Wring<SuperConstruc
   @Override String description(@SuppressWarnings("unused") final SuperConstructorInvocation __) {
     return "Remove empty 'super()' invocation";
   }
+
   @Override Rewrite make(final SuperConstructorInvocation i) {
     return new Rewrite(description(i), i) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -27,6 +28,7 @@ public final class SuperConstructorInvocationRemover extends Wring<SuperConstruc
       }
     };
   }
+
   @Override boolean scopeIncludes(final SuperConstructorInvocation i) {
     return i.arguments().isEmpty();
   }

@@ -31,6 +31,7 @@ public final class DeclarationInitializerReturnUpdateAssignment extends Wring.Va
   @Override String description(final VariableDeclarationFragment f) {
     return "Eliminate temporary " + f.getName() + " and inline its value into the expression of the subsequent return statement";
   }
+
   @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || hasAnnotation(f))

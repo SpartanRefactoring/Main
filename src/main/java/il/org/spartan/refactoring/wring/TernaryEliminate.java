@@ -13,9 +13,11 @@ public final class TernaryEliminate extends Wring.ReplaceCurrentNode<Conditional
   @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Eliminate conditional exprssion with identical branches";
   }
+
   @Override Expression replacement(final ConditionalExpression e) {
     return new Plant(extract.core(e.getThenExpression())).into(e.getParent());
   }
+
   @Override boolean scopeIncludes(final ConditionalExpression e) {
     return e != null && same(e.getThenExpression(), e.getElseExpression());
   }

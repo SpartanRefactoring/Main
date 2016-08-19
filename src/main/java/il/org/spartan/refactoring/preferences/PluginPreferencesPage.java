@@ -33,6 +33,7 @@ public class PluginPreferencesPage extends FieldEditorPreferencePage implements 
     super(GRID);
     listener = new SpartanPropertyListener();
   }
+
   /** Build the preferences page by adding controls */
   @Override public void createFieldEditors() {
     // Add the startup behavior combo box
@@ -47,6 +48,7 @@ public class PluginPreferencesPage extends FieldEditorPreferencePage implements 
     addField(g);
     g.init();
   }
+
   @Override public void init(@SuppressWarnings("unused") final IWorkbench __) {
     setPreferenceStore(WringGroup.store());
     setDescription(PAGE_DESCRIPTION);

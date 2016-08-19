@@ -17,9 +17,11 @@ public final class InfixMultiplicationNeturalElement extends ReplaceCurrentNode<
   @Override String description(final InfixExpression e) {
     return "Remove all multiplications by 1 from " + e;
   }
+
   @Override ASTNode replacement(final InfixExpression e) {
     return e.getOperator() != TIMES ? null : replacement(extract.allOperands(e));
   }
+
   private static ASTNode replacement(final List<Expression> es) {
     final List<Expression> $ = new ArrayList<>();
     for (final Expression ¢ : es)
@@ -27,12 +29,15 @@ public final class InfixMultiplicationNeturalElement extends ReplaceCurrentNode<
         $.add(¢);
     return $.size() == es.size() ? null : $.size() == 0 ? duplicate(es.get(0)) : $.size() == 1 ? duplicate($.get(0)) : subject.operands($).to(TIMES);
   }
+
   private static boolean isLiteralOne(final Expression ¢) {
     return isLiteralOne(asNumberLiteral(¢));
   }
+
   private static boolean isLiteralOne(final NumberLiteral ¢) {
     return ¢ != null && isLiteralOne(¢.getToken());
   }
+
   private static boolean isLiteralOne(final String ¢) {
     try {
       return Integer.parseInt(¢) == 1;

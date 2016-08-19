@@ -77,6 +77,7 @@ public enum InfixConditionalAndTrueTest {
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
+
     /** Instantiates the enclosing class ({@link Noneligible}) */
     public OutOfScope() {
       super(WRING);
@@ -111,20 +112,25 @@ public enum InfixConditionalAndTrueTest {
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
+
     /** Instantiates the enclosing class ({@link WringedExpression}) */
     public Wringed() {
       super(WRING);
     }
+
     @Override @Test public void flattenIsIdempotentt() {
       final InfixExpression flatten = flatten(asInfixExpression());
       azzert.that(flatten(flatten).toString(), is(flatten.toString()));
     }
+
     @Override @Test public void inputIsInfixExpression() {
       azzert.notNull(asInfixExpression());
     }
+
     @Test public void isANDorOR() {
       azzert.that(asInfixExpression().getOperator(), is(CONDITIONAL_AND));
     }
+
     @Test public void twoOrMoreArguments() {
       azzert.that(extract.operands(asInfixExpression()).size(), greaterThanOrEqualTo(2));
     }

@@ -22,6 +22,7 @@ public final class StringEqualsConstant extends ReplaceCurrentNode<MethodInvocat
   @Override String description(final MethodInvocation i) {
     return "use " + arguments(i).get(0) + "." + name(i) + "(" + extract.expression(i) + ") instead of " + i;
   }
+
   @SuppressWarnings("unchecked") @Override ASTNode replacement(final MethodInvocation i) {
     final List<Expression> as = arguments(i);
     if (!mns.contains(name(i).toString()) || as.size() != 1 || expression(i) == null || expression(i) instanceof StringLiteral

@@ -24,6 +24,7 @@ public class Nature implements IProjectNature {
         return;
     set(d, cs);
   }
+
   /* (non-Javadoc)
    *
    * @see org.eclipse.core.resources.IProjectNature#deconfigure() */
@@ -37,15 +38,18 @@ public class Nature implements IProjectNature {
         return;
       }
   }
+
   @Override public IProject getProject() {
     return project;
   }
+
   private void set(final IProjectDescription d, final ICommand[] cs) throws CoreException {
     final ICommand c = d.newCommand();
     c.setBuilderName(Builder.BUILDER_ID);
     d.setBuildSpec(Utils.append(cs, c));
     project.setDescription(d, null);
   }
+
   @Override public void setProject(final IProject p) {
     project = p;
   }
