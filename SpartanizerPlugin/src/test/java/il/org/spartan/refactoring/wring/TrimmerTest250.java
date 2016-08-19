@@ -193,14 +193,59 @@ public class TrimmerTest250 {
     trimming("(double)(long)a").to("1.*(long)a").to("1.*1L*a");
   }
 
-  @Test public void issue50_inEnumMember() {
+  // @formatter:off
+        enum A { a1() {{ f(); }
+            public final void f() {g();} 
+             protected final void g() {h();} 
+             private final void h() {i();}  
+             final void i() {f();} 
+          }, a2() {{ f(); }
+            final protected void f() {g();} 
+            final void g() {h();} 
+            final private void h() {i();} 
+            final public void i() {f();} 
+          }
+        }
+  // @formatter:on
+
+  @Test public void issue50_inEnumMemberComplex() {
     trimming(//
-        "enum A { final void f() {} final static void g() {} }"//
-    ).to(//
-        "enum A { void f() {} void g() {} }"//
-        );
+        "enum A { a1 {{ f(); } \n" + //
+            "public final void f() {g();}  \n" + //
+             "protected final void g() {h();}  \n" + //
+             "private final void h() {i();}   \n" + //
+             "final void i() {f();}  \n" + //
+          "}, a2 {{ f(); } \n" + //
+            "final protected void f() {g();}  \n" + //
+            "final void g() {h();}  \n" + //
+            "final private void h() {i();}  \n" + //
+            "final public void i() {f();}  \n" + //
+          "} \n" + //
+        "} \n"//
+          ).to(//
+        "enum A { a1 {{ f(); } \n" + //
+            "void f() {g();}  \n" + //
+             "final void g() {h();}  \n" + //
+             "final void h() {i();}   \n" + //
+             "final void i() {f();}  \n" + //
+          "}, a2 {{ f(); } \n" + //
+            "void f() {g();}  \n" + //
+            "void g() {h();}  \n" + //
+            "void h() {i();}  \n" + //
+            "void i() {f();}  \n" + //
+          "} \n" + //
+        "} \n"//
+     );
   }
 
+
+  @Test public void issue50_inEnumMember() {
+    trimming(//
+        "enum A {; final void f() {} public final void g() {} }"//
+    ).to(//
+        "enum A {; void f() {} void g() {} }"//
+    );
+  }
   @Test public void issue50_Constructors1() {
     trimming("public class ClassTest {\n"//
         + "public  ClassTest(){}\n"//
