@@ -3204,10 +3204,44 @@ import il.org.spartan.refactoring.utils.*;
   @Test public void xorSortClassConstantsAtEnd() {
     trimming("f(a,b,c,d) ^ BOB").to("");
   }
-  @Test public void RedundantModifiereSimple() {
+  @Test public void RedundantModifiereSimpleWorking1() {
     trimming("abstract abstract interface a"//
             +"{}").to("interface a {}");
   }
-
+  @Test public void RedundantModifiereSimpleWorking2() {
+    trimming("abstract interface a"//
+            +"{}").to("interface a {}");
+  }
+  @Test public void RedundantModifiereSimpleDontWorking() {
+    trimming("interface a"//
+            +"{}").to("");
+  }
+  @Test public void RedundantModifiereInterfaceMethods1() {
+    trimming("public interface Int1 {\n"//
+        +"public void add();\n"//
+        +"void remove()\n; "//
+        +"}").to("public interface Int1 {\n"//
+            +"void add();\n"//
+            +"void remove()\n; "//
+            +"}");
+  }
+  @Test public void RedundantModifiereInterfaceMethods2() {
+    trimming("public interface Int1 {\n"//
+        +"public abstract void add();\n"//
+        +"void remove()\n; "//
+        +"}").to("public interface Int1 {\n"//
+            +"void add();\n"//
+            +"void remove()\n; "//
+            +"}");
+  }
+  @Test public void RedundantModifiereInterfaceMethods3() {
+    trimming("public interface Int1 {\n"//
+        +"abstract void add();\n"//
+        +"void remove()\n; "//
+        +"}").to("public interface Int1 {\n"//
+            +"void add();\n"//
+            +"void remove()\n; "//
+            +"}");
+  }
   
 }
