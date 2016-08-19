@@ -2,6 +2,7 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.idiomatic.*;
 import static il.org.spartan.utils.Utils.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
@@ -18,18 +19,7 @@ import il.org.spartan.refactoring.wring.*;
 /** Useful Functions */
 public enum Funcs {
   ;
-  @SuppressWarnings("serial") private static Map<Operator, Operator> conjugate = new HashMap<Operator, Operator>() {
-    {
-      put(GREATER, LESS);
-      put(LESS, GREATER);
-      put(GREATER_EQUALS, LESS_EQUALS);
-      put(LESS_EQUALS, GREATER_EQUALS);
-    }
-  };
-
-  public static BooleanLiteral asBooleanLiteral(final ASTNode $) {
-    return !is($, BOOLEAN_LITERAL) ? null : (BooleanLiteral) $;
-  }
+  @SuppressWarnings("serial") private static Map<Operator, Operator> conjugate=new HashMap<Operator,Operator>(){{put(GREATER,LESS);put(LESS,GREATER);put(GREATER_EQUALS,LESS_EQUALS);put(LESS_EQUALS,GREATER_EQUALS);}};
 
   public static AbstractTypeDeclaration asAbstractTypeDeclaration(final ASTNode ¢) {
     return eval(() -> ((AbstractTypeDeclaration) ¢)).when(¢ instanceof AbstractTypeDeclaration);
@@ -69,8 +59,8 @@ public enum Funcs {
    * @param ¢ JD
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
-  public static BooleanLiteral asBooleanLiteral(final Expression ¢) {
-    return !(¢ instanceof BooleanLiteral) ? null : (BooleanLiteral) ¢;
+  public static BooleanLiteral asBooleanLiteral(final ASTNode $) {
+    return !is($, BOOLEAN_LITERAL) ? null : (BooleanLiteral) $;
   }
 
   /** Convert an {@link Expression} into {@link InfixExpression} whose operator
@@ -212,7 +202,11 @@ public enum Funcs {
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static NumberLiteral asNumberLiteral(final ASTNode ¢) {
-    return !(¢ instanceof NumberLiteral) ? null : (NumberLiteral) ¢;
+    return !isNumberLiteral(¢)? null : (NumberLiteral) ¢;
+  }
+
+  static boolean isNumberLiteral(final ASTNode ¢) {
+    return is(¢,NUMBER_LITERAL);
   }
 
   /** Down-cast, if possible, to {@link ExpressionStatement}
@@ -665,7 +659,7 @@ public enum Funcs {
   public static int negationLevel(final Expression ¢) {
     return ¢ instanceof PrefixExpression ? negationLevel((PrefixExpression) ¢)
         : ¢ instanceof ParenthesizedExpression ? negationLevel(((ParenthesizedExpression) ¢).getExpression())
-            : asBit(¢ instanceof NumberLiteral && ((NumberLiteral) ¢).getToken().startsWith("-"));
+            : asBit(isNumberLiteral(¢) && asNumberLiteral(¢).getToken().startsWith("-"));
   }
 
   private static int negationLevel(final PrefixExpression ¢) {

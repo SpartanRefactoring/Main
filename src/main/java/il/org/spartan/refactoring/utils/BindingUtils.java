@@ -1,5 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
+import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static il.org.spartan.idiomatic.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 
@@ -41,10 +42,19 @@ import org.eclipse.jdt.internal.corext.dom.*;
 
   /** Checks if expression is simple.
    * @param e an expression
-   * @return true iff e is simple */
+   * @return true iff argument is simple */
   public static boolean isSimple(final Expression e) {
-    return e instanceof Name || e instanceof NumberLiteral || e instanceof BooleanLiteral || e instanceof CharacterLiteral || e instanceof NullLiteral
-        || e instanceof StringLiteral || e instanceof ThisExpression || e instanceof TypeLiteral;
+    return Funcs.is(e, //
+        BOOLEAN_LITERAL, //
+        CHARACTER_LITERAL, //
+        NULL_LITERAL, //
+        NUMBER_LITERAL, //
+        QUALIFIED_NAME, //
+        SIMPLE_NAME, //
+        STRING_LITERAL, //
+        THIS_EXPRESSION, //
+        TYPE_LITERAL //
+    );
   }
 
   /** Determines whether an invocation of a method is legal in a specific
