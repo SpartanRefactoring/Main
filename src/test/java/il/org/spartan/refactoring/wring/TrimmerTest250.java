@@ -131,6 +131,9 @@ public class TrimmerTest250 {
   @Test public void issue72a() {
     trimming("x+0").to("x");
   }
+  @Test public void issue72b() {
+    trimming("0+x").to("x");
+  }
   @Test public void issue82a() {
     trimming("(long)5").to("1L*5");
   }
