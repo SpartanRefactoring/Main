@@ -23,7 +23,7 @@ public enum as {
   /** Converts a sequence of values into an array.
    * @param <T> some arbitrary type
    * @param $ some sequence of values of the type parameter
-   * @return the parameter, organized as an array with entries whose type is the
+   * @return  parameter, organized as an array with entries whose type is the
    *         type parameter */
   @SafeVarargs public static <T> T[] array(final T... $) {
     return $;
@@ -92,7 +92,7 @@ public enum as {
   /** Converts a sequence of <code><b>int</b></code> values into a {@link List}
    * of non-<code><b>null</b></code> {@link Integer}s.
    * @param is what to covert
-   * @return the parameter, converted to the {@link List} of non-
+   * @return  parameter, converted to the {@link List} of non-
    *         <code><b>int</b></code> {@link Integer}s form. */
   public static List<Integer> ingeterList(final int... is) {
     final List<Integer> $ = new ArrayList<>();
@@ -103,7 +103,7 @@ public enum as {
 
   /** Converts a sequence of integer values into an array.
    * @param $ some sequence of values of the type parameter
-   * @return the parameters, organized as an array with entries whose type is
+   * @return  parameters, organized as an array with entries whose type is
    *         the type parameter */
   public static int[] intArray(final int... $) {
     return $;
@@ -168,7 +168,7 @@ public enum as {
    * of this type.
    * @param <T> type of items to be converted
    * @param $ what to convert
-   * @return the parameter, converted to the {@link List} of the given type */
+   * @return  parameter, converted to the {@link List} of the given type */
   public static <T> List<T> list(final Iterable<? extends T> $) {
     return accumulate.to(new ArrayList<T>()).add($).elements();
   }
@@ -177,7 +177,7 @@ public enum as {
    * of values
    * @param <T> type of objects to be converted
    * @param $ what to covert
-   * @return the result parameter, converted into a {@link List} */
+   * @return  result parameter, converted into a {@link List} */
   @SafeVarargs public static <T> List<T> list(final @Nullable T @Nullable... $) {
     return accumulate.to(new ArrayList<T>()).add($).elements();
   }
@@ -212,7 +212,7 @@ public enum as {
    * values
    * @param <T> type of objects to be converted
    * @param ts what to covert
-   * @return the parameter, converted into a {@link Set} */
+   * @return  parameter, converted into a {@link Set} */
   @SafeVarargs public static <T> Set<? extends T> set(final @Nullable T @Nullable... ts) {
     return accumulate.to(new HashSet<T>()).add(ts).elements();
   }
@@ -220,7 +220,7 @@ public enum as {
   /** Converts a value, which can be either a <code><b>null</b></code> or
    * references to valid instances, into a {@link NonNull}
    * @param $ some value
-   * @return the parameter, after bing to a non-null string. */
+   * @return  parameter, after bing to a non-null string. */
   public static String string(@Nullable final Object $) {
     return $ == null ? "null" : as.string($.toString());
   }
@@ -228,7 +228,7 @@ public enum as {
   /** Converts a {@link String}, which can be either a <code><b>null</b></code>
    * or an actual String, into a {@link NonNull} String.
    * @param $ some value
-   * @return the parameter, after bing to a non-null string. */
+   * @return  parameter, after bing to a non-null string. */
   public static String string(@Nullable final String $) {
     return $ != null ? $ : "null";
   }

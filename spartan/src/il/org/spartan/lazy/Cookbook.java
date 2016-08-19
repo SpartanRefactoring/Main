@@ -89,7 +89,7 @@ public interface Cookbook {
 
   /** creates a new ingredient with a specific type
    * @param <T> JD
-   * @return the newly created instance */
+   * @return  newly created instance */
   public static <T> Cell<T> input() {
     return new Ingredient<>();
   }
@@ -97,7 +97,7 @@ public interface Cookbook {
   /** Fluent API factory method that returns a recipe
    * @param <T> JD
    * @param supplier JD
-   * @return the newly created {@link Recipe} object */
+   * @return  newly created {@link Recipe} object */
   public static <T> Recipe<@Nullable T> recipe(final Supplier<T> supplier) {
     return new Recipe<>(supplier);
   }
@@ -109,7 +109,7 @@ public interface Cookbook {
    * </pre>
    *
    * @param i JD
-   * @return the newly created instance of {@link Ingredient} */
+   * @return  newly created instance of {@link Ingredient} */
   public static Cell<Integer> value(final int i) {
     return new Ingredient<>(Integer.valueOf(i));
   }
@@ -122,13 +122,13 @@ public interface Cookbook {
    *
    * @param <T> JD
    * @param t JD
-   * @return the newly created instance of {@link Ingredient} */
+   * @return  newly created instance of {@link Ingredient} */
   public static <@Nullable T> Cell<@Nullable T> value(final T t) {
     return new Ingredient<>(t);
   }
 
   /** @param $ result
-   * @return the parameter */
+   * @return  parameter */
   static Cell<?>[] asArray(final Collection<Cell<?>> $) {
     return $.toArray(new Cell<?>[$.size()]);
   }
@@ -913,7 +913,7 @@ public interface Cookbook {
     final List<Cell<?>> dependents = new ArrayList<>();
     long version = 0;
 
-    /** @return the last value computed or set for this cell. */
+    /** @return  last value computed or set for this cell. */
     public final T cache() {
       return cache;
     }
@@ -1138,7 +1138,7 @@ public interface Cookbook {
 
     /** To be overridden by extending classes for e.g., null protection
      * @param $ result
-     * @return the parameter */
+     * @return  parameter */
     @SuppressWarnings("static-method") <N> N filter(final N n) {
       return n;
     }

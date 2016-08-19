@@ -85,7 +85,7 @@ public class Integers {
   }
 
   /** What's the underlying table size?
-   * @return the hash table size (always a power of two) */
+   * @return  hash table size (always a power of two) */
   public int capacity() {
     return data.length;
   }
@@ -166,7 +166,7 @@ public class Integers {
   }
 
   /** How many elements are there in this set?
-   * @return the number of values in the set. */
+   * @return  number of values in the set. */
   public int size() {
     return size;
   }

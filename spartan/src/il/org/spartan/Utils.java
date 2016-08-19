@@ -81,7 +81,7 @@ public interface Utils {
    * the guard.
    * @param $ result
    * @param <T> JD
-   * @return the parameter, but guaranteed to be {@link NonNull}
+   * @return  parameter, but guaranteed to be {@link NonNull}
    * @see #mustBeNull(Object) */
   @Nullable public static <T> T canBeNull(final T $) {
     return $;
@@ -114,7 +114,7 @@ public interface Utils {
   /** Computes the maximum of two or more integers.
    * @param a some integer
    * @param is additional integers
-   * @return the largest of the parameters */
+   * @return  largest of the parameters */
   public static int max(final int a, final int... is) {
     int $ = a;
     for (final int i : is)
@@ -125,7 +125,7 @@ public interface Utils {
   /** Prepend a given {@link String} to a {@link StringBuilder}
    * @param $ prepend to what
    * @param s what needs to be prepended
-   * @return the {@link StringBuilder} parameter with the {@link String}
+   * @return  {@link StringBuilder} parameter with the {@link String}
    *         parameter prepended to it */
   public static StringBuilder prepend(final StringBuilder $, final String s) {
     return cantBeNull($.insert(0, s));
@@ -133,21 +133,21 @@ public interface Utils {
 
   /** Quote a given {@link String}
    * @param $ some {@link String} to be quoted
-   * @return the parameter, quoted */
+   * @return  parameter, quoted */
   public static String quote(final @Nullable String $) {
     return $ != null ? QUOTE + $ + QUOTE : "<null reference>";
   }
 
   /** Computes the square of a given double
    * @param d some number
-   * @return the square of the parameter */
+   * @return  square of the parameter */
   public static double sqr(final double d) {
     return d * d;
   }
 
   /** Computes the square of a given integer
    * @param i some integer
-   * @return the square of the parameter */
+   * @return  square of the parameter */
   public static int sqr(final int i) {
     return i * i;
   }
@@ -168,7 +168,7 @@ public interface Utils {
    * @param < T > JD
    * @param ts an arbitrary array
    * @param t an element
-   * @return the newly created array */
+   * @return  newly created array */
   static <T> T[] append(final T[] ts, final T t) {
     @SuppressWarnings("null") final T @NonNull [] $ = Arrays.copyOf(ts, 1 + ts.length);
     $[ts.length] = t;
@@ -230,7 +230,7 @@ public interface Utils {
 
   /** Remove all non-essential spaces from a string that represents Java code.
    * @param javaCodeFragment JD
-   * @return the parameter, with all redundant spaces removed from it */
+   * @return  parameter, with all redundant spaces removed from it */
   static String compressSpaces(final String javaCodeFragment) {
     String $ = javaCodeFragment.replaceAll("(?m)\\s+", " ").replaceAll("^\\s", "").replaceAll("\\s$", "");
     for (final String operator : new String @NonNull [] { ":", "/", "%", ",", "\\{", "\\}", "=", ":", "\\?", ";", "\\+", ">", ">=", "!=", "==", "<",
@@ -244,7 +244,7 @@ public interface Utils {
    * @param < T > JD
    * @param ts an arbitrary array
    * @param i position of element to be deleted
-   * @return the newly created array */
+   * @return  newly created array */
   static <T> T[] delete(final T[] ts, final int i) {
     @SuppressWarnings("null") final T @NonNull [] $ = Arrays.copyOf(ts, ts.length - 1);
     System.arraycopy(ts, i + 1, $, i, $.length - i);
@@ -299,7 +299,7 @@ public interface Utils {
 
   /** @param < T > JD
    * @param ts JD
-   * @return the last item in a list or <code><b>null</b></code> if the
+   * @return  last item in a list or <code><b>null</b></code> if the
    *         parameter is <code><b>null</b></code> or empty */
   @SuppressWarnings("null") static <T> @Nullable T last(final @Nullable List<T> ts) {
     return eval(() -> ts.get(ts.size() - 1)).unless(ts == null || ts.isEmpty());
@@ -317,7 +317,7 @@ public interface Utils {
   /** Computes the minimum of two or more integers
    * @param a some integer
    * @param is additional
-   * @return the smallest of the parameters */
+   * @return  smallest of the parameters */
   static int min(final int a, final int... is) {
     int $ = a;
     for (final int i : is)
@@ -331,14 +331,14 @@ public interface Utils {
    * @param < T > some arbitrary type
    * @param $ an instance of the type parameter which is required to be
    *        <code><b>null</b></code>.
-   * @return the parameter */
+   * @return  parameter */
   static <@Nullable T> @Nullable Void mustBeNull(final T $) {
     assert $ == null;
     return null;
   }
 
   /** @param f JD
-   * @return the name of the parameter, which must not be
+   * @return  name of the parameter, which must not be
    *         <code><b>null</b></code> */
   static String name(final File f) {
     return cantBeNull(f.getName());
@@ -346,14 +346,14 @@ public interface Utils {
 
   /** Convert variadic list of arguments into an array
    * @param os JD _
-   * @return the parameter, as an array. */
+   * @return  parameter, as an array. */
   static Object[] objects(final Object... os) {
     return os;
   }
 
   /** @param < T > JD
    * @param ts a list
-   * @return the last item in a list or <code><b>null</b></code> if the
+   * @return  last item in a list or <code><b>null</b></code> if the
    *         parameter is <code><b>null</b></code> or empty */
   @SuppressWarnings("null") static <T> @Nullable T penultimate(final List<T> ts) {
     return eval(() -> ts.get(ts.size() - 2)).unless(ts == null || ts.size() < 2);
@@ -373,7 +373,7 @@ public interface Utils {
   /** Prepend a given <code><b>char</b></code> to a {@link StringBuilder}
    * @param $ prepend to what
    * @param c what needs to be prepended
-   * @return the {@link StringBuilder} parameter with the
+   * @return  {@link StringBuilder} parameter with the
    *         <code><b>char</b></code> parameter prepended to it */
   static StringBuilder prepend(final StringBuilder $, final char c) {
     return cantBeNull($.insert(0, c));
@@ -391,7 +391,7 @@ public interface Utils {
   /** Remove all occurrences of a given prefix from a given {@link String} .
    * @param s JD
    * @param prefix what should be removed
-   * @return the parameter after all such occurrences are removed. */
+   * @return  parameter after all such occurrences are removed. */
   static String removePrefix(final String s, final String prefix) {
     for (String $ = s;; $ = $.substring(prefix.length()))
       if (!$.startsWith(prefix))
@@ -401,7 +401,7 @@ public interface Utils {
   /** Remove all occurrences of a given suffix from a given string.
    * @param s JD
    * @param suffix what should be removed
-   * @return the parameter after all such occurrences are removed. */
+   * @return  parameter after all such occurrences are removed. */
   static String removeSuffix(final String s, final String suffix) {
     for (String $ = s;; $ = $.substring(0, $.length() - suffix.length()))
       if (!$.endsWith(suffix))
@@ -410,14 +410,14 @@ public interface Utils {
 
   /** Remove all occurrences of white space character in a given {@link String}
    * @param s JD
-   * @return the parameter after all such occurrences are removed. */
+   * @return  parameter after all such occurrences are removed. */
   static String removeWhites(final String s) {
     return cantBeNull(s.replaceAll("\\s+", ""));
   }
 
   /** Sorts an array
    * @param is what to sort
-   * @return the given array with elements in sorted order */
+   * @return  given array with elements in sorted order */
   static int[] sort(final int[] is) {
     Arrays.sort(is);
     return is;

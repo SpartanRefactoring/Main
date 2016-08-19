@@ -31,7 +31,7 @@ public enum separate {
 
   /** Separates a sequence of strings by {@link #SPACE} characters
    * @param $ what needs to be separated
-   * @return the parameters, separated by {@link #SPACE} */
+   * @return  parameters, separated by {@link #SPACE} */
   public static String bySpaces(final String... $) {
     return separateBySpaces(as.iterable($));
   }
@@ -46,7 +46,7 @@ public enum separate {
 
   /** Separates an {@link Iterable} strings by {@link #SPACE} characters
    * @param $ what needs to be separated
-   * @return the parameters, separated by {@link #SPACE} */
+   * @return  parameters, separated by {@link #SPACE} */
   public static String separateBySpaces(final Iterable<String> $) {
     return as.string(separateBySpaces($.iterator()));
   }
@@ -54,7 +54,7 @@ public enum separate {
   /** Separates an {@link Iterable} strings (specified by an {@link Iterator}
    * over it by {@link #SPACE} characters
    * @param ss what needs to be separated
-   * @return the parameters, separated by {@link #SPACE} */
+   * @return  parameters, separated by {@link #SPACE} */
   public static String separateBySpaces(final Iterator<String> ss) {
     final StringBuilder $ = new StringBuilder();
     final Separator s = new Separator(SPACE);
@@ -299,7 +299,7 @@ public enum separate {
     }
 
     /** Separates the objects in some order
-     * @return the */
+     * @return  */
     public String byNothing() {
       return separateBy(prune.whites(as.strings(os)), "");
     }

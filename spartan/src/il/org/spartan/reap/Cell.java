@@ -28,7 +28,7 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
   final List<Cell<?>> dependents = new ArrayList<>();
   long version = 0;
 
-  /** @return the last value computed or set for this cell. */
+  /** @return  last value computed or set for this cell. */
   public final T cache() {
     return cache;
   }

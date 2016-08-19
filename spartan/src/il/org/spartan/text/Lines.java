@@ -28,14 +28,14 @@ public enum Lines {
 
   /** Counts the number of liens in a given text
    * @param text count the number of lines in this parameter
-   * @return the number of lines in the parameter */
+   * @return  number of lines in the parameter */
   public static int count(final @Nullable String text) {
     return Lines.scatter(text).length;
   }
 
   /** Builds text from an array of lines
    * @param lines what needs to be concatenated
-   * @return the parameters, concatenated together, with
+   * @return  parameters, concatenated together, with
    *         {@link #END_OF_LINE_MARKER} separating consecutive arguments */
   public static String gather(final String... lines) {
     return separate.these(lines).by(END_OF_LINE_MARKER);
@@ -43,7 +43,7 @@ public enum Lines {
 
   /** Breaks text into lines
    * @param text some string of characters
-   * @return the parameter, split into an array if lines
+   * @return  parameter, split into an array if lines
    * @see #gather */
   public static String[] scatter(final @Nullable String text) {
     return text == null || text.isEmpty() ? NO_LINES : cantBeNull(text.split(END_OF_LINE_MARKER));

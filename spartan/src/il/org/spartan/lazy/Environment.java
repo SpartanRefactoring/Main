@@ -63,7 +63,7 @@ import il.org.spartan.lazy.Cookbook.*;
    * </pre>
    *
    * @param i JD
-   * @return the newly created instance of {@link Ingredient} */
+   * @return  newly created instance of {@link Ingredient} */
   public static Property<@Nullable Integer> value(final int i) {
     return new Property<>(Integer.valueOf(i));
   }
@@ -91,7 +91,7 @@ import il.org.spartan.lazy.Cookbook.*;
   /** A factory method of class {@link Property} returning an undefined value
    * for a cell
    * @param < T > JD
-   * @return the newly created instance of {@link Property} containing null
+   * @return  newly created instance of {@link Property} containing null
    *         value of the type parameter */
   static <@Nullable T> Property<T> undefined() {
     return new Property<>();
@@ -105,7 +105,7 @@ import il.org.spartan.lazy.Cookbook.*;
    *
    * @param < T > JD
    * @param t JD
-   * @return the newly created instance of {@link Property} */
+   * @return  newly created instance of {@link Property} */
   static <@Nullable T> Property<@Nullable T> value(final T t) {
     return new Property<>(t);
   }
@@ -425,7 +425,7 @@ import il.org.spartan.lazy.Cookbook.*;
       return this;
     }
 
-    /** @return the last value computed or set for this instance. */
+    /** @return  last value computed or set for this instance. */
     public final T cache() {
       return cache;
     }
@@ -555,7 +555,7 @@ import il.org.spartan.lazy.Cookbook.*;
       return true;
     }
 
-    /** @return the version of this instance */
+    /** @return  version of this instance */
     public long version() {
       return version;
     }

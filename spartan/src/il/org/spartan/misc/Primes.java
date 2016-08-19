@@ -29,7 +29,7 @@ public class Primes {
   private int current = 1;
 
   /** A generator for the sequence of primes: 2, 3, 5, 7, 11, 13, 17, 19, 23,...
-   * @return the next value in the sequence of primes; the first value returned
+   * @return  next value in the sequence of primes; the first value returned
    *         is 2. */
   public int next() {
     for (;;)

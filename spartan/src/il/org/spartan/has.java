@@ -18,7 +18,7 @@ public enum has {
    * @param <T> JD
    * @param i an index of specific item in a list
    * @param ts the indexed list
-   * @return the following item in the list, if such such an item exists,
+   * @return  following item in the list, if such such an item exists,
    *         otherwise, the last node */
   public static <@Nullable T> @Nullable T next(final int i, final List<T> ts) {
     return !inRange(i + 1, ts) ? last(ts) : ts.get(i + 1);

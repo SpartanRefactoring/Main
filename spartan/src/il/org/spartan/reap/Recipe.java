@@ -79,7 +79,7 @@ public class Recipe<@Nullable T> extends Cell<T> {
 
   /** To be overridden by extending classes for e.g., null protection
    * @param $ result
-   * @return the parameter */
+   * @return  parameter */
   @SuppressWarnings("static-method") <N> N filter(final N n) {
     return n;
   }

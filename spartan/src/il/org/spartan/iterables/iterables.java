@@ -19,7 +19,7 @@ public enum iterables {
   /** Counts the number of items in an {@link Iterable}.
    * @param <T> some arbitrary type
    * @param ts some iterable over items whose type is the type parameter
-   * @return the number of items the given iterable yields. */
+   * @return  number of items the given iterable yields. */
   public static <T> int count(final @Nullable Iterable<T> ts) {
     int $ = 0;
     if (ts != null)
@@ -56,7 +56,7 @@ public enum iterables {
   /** wraps a value in a singleton iterator form
    * @param <T> JD
    * @param $ JD
-   * @return the parameter, but in a singleton iterator form */
+   * @return  parameter, but in a singleton iterator form */
   public static <T> PureIterator<T> singletonIterator(final T $) {
     return singleton($).iterator();
   }

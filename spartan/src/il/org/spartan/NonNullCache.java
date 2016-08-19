@@ -18,7 +18,7 @@ public abstract class NonNullCache<T> {
 
   /** Compute the cached value, either by looking up the memoized valued, or by
    * actual computation
-   * @return the cached value */
+   * @return  cached value */
   public T value() {
     return value != null ? value : (value = __());
   }
@@ -26,7 +26,7 @@ public abstract class NonNullCache<T> {
   /** This function is to be implemented by clients, giving a method for
    * computing the cached value. This class protects this function, guaranteeing
    * that it would only be called once.
-   * @return the value to be cached */
+   * @return  value to be cached */
   protected abstract T __();
 
   @SuppressWarnings("javadoc") //
