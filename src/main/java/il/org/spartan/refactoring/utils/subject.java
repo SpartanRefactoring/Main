@@ -11,15 +11,33 @@ import il.org.spartan.*;
 
 // TODO: document this class
 @SuppressWarnings("javadoc") public class subject {
+
   public static class Claimer {
     protected final AST ast;
-
+    
+    /**Assign to ast the AST that owns the node n (the parameter)  
+     * @param n an AST node
+     */
     public Claimer(final ASTNode n) {
       ast = n == null ? null : n.getAST();
     }
+    
+    /** Make a deep copy of expression and assign it to ast 
+     * @param e an Expression
+     * @return a copy of the expression e
+     * @see rebase
+     * @see duplicate
+     */
     Expression claim(final Expression e) {
       return rebase(duplicate(extract.core(e)), ast);
     }
+    
+    /** Make a deep copy of statement and assign it to ast, if the statement exists 
+     * @param s a Statement
+     * @return a copy of the statement s if it is'nt null, elese returns null
+     * @see rebase
+     * @see duplicate
+     */
     Statement claim(final Statement s) {
       final Statement core = extract.core(s);
       return core == null ? null : rebase(duplicate(core), ast);
@@ -29,33 +47,60 @@ import il.org.spartan.*;
   public static class Operand extends Claimer {
     private final Expression inner;
 
+    /** Assign the expression inner to the parameter inner
+     * @param inner an Expression
+     */
     Operand(final Expression inner) {
       super(inner);
       this.inner = claim(inner);
     }
+    
+    /** Create a new parenthesis expression owned by ast and
+     * put the expression inner (a field of Operand) between the parenthesis of the new expression
+     * @return the expression inner between parenthesis
+     */
     public ParenthesizedExpression parenthesis() {
       final ParenthesizedExpression $ = ast.newParenthesizedExpression();
       $.setExpression(inner);
       return $;
     }
+    
+    /**Create a new expression with postfix operator owned by this ast, 
+     * the expression is a combination of the expression inner with a postfix operator
+     * @param o a postfix operator
+     * @return the expression inner togther with the postfix operator o
+     */
     public Expression to(final PostfixExpression.Operator o) {
       final PostfixExpression $ = ast.newPostfixExpression();
       $.setOperator(o);
       $.setOperand(new Plant(inner).into($));
       return $;
     }
+    
+    /**Create a new expression with prefix operator owned by this ast, 
+     * the expression is a combination of the expression inner with a prefix operator
+     * @param o a prefix operator
+     * @return the expression inner togther with the prefix operator o
+     */
     public PrefixExpression to(final PrefixExpression.Operator o) {
       final PrefixExpression $ = ast.newPrefixExpression();
       $.setOperator(o);
       $.setOperand(new Plant(inner).into($));
       return $;
     }
+    
+
+    /**Create a new expression of method invocation owned by this ast
+     * @param methodName a string contains the method name
+     * @return a method invocation expression of the method methodName with inner as an expression
+     */
     public MethodInvocation toMethod(final String methodName) {
       final MethodInvocation $ = ast.newMethodInvocation();
       $.setExpression(inner);
       $.setName(ast.newSimpleName(methodName));
       return $;
     }
+    
     public Expression toQualifier(final String name) {
       return ast.newQualifiedName((SimpleName) inner, ast.newSimpleName(name));
     }
