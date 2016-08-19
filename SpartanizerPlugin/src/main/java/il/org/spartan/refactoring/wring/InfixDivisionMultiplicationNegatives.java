@@ -14,7 +14,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} to convert an expression such as
+/** convert an expression such as
  *
  * <pre>
  * 1 * i
