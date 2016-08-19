@@ -71,12 +71,12 @@ public class Specificity implements Comparator<Expression> {
     },
     ZERO_DOUBLE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        return isLiteral((¢), 0.0);
+        return isLiteral(¢, 0.0);
       }
     },
     ONE_DOUBLE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        return isLiteral((¢), 1.0);
+        return isLiteral(¢, 1.0);
       }
     },
     EMPTY_STRING {
