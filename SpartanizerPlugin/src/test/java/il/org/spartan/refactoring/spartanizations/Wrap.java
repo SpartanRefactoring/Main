@@ -88,9 +88,9 @@ public enum Wrap {
   }
 
   private boolean contains(final String wrap, final String inner) {
-    String off = off(wrap);
-    String essence = essence(inner);
-    String essence2 = essence(off);
+    final String off = off(wrap);
+    final String essence = essence(inner);
+    final String essence2 = essence(off);
     azzert.notNull(essence2);
     return essence2.contains(essence);
   }
