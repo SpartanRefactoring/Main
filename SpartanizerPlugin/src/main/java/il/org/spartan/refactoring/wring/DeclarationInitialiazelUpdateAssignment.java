@@ -12,7 +12,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.LocalInliner.*;
 
-/** A {@link Wring} to convert
+/** convert
  *
  * <pre>
  * int a;

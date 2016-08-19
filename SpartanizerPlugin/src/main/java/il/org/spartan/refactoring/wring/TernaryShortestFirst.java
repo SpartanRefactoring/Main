@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.utils.*;
 
-/** A {@link Wring} to convert
+/** convert
  *
  * <pre>
  * a ? (f,g,h) : c(d,e)
