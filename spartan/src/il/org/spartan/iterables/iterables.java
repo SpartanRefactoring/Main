@@ -3,9 +3,11 @@ package il.org.spartan.iterables;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
+
 import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 import org.junit.runners.*;
+
 import il.org.spartan.*;
 
 /** No values in an 'enum' used as name space for a collection of 'static'

@@ -2,10 +2,14 @@
 package il.org.spartan;
 
 import static il.org.spartan.azzert.*;
+import static org.junit.Assert.*;
+
 import java.util.*;
+
 import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 import org.junit.runners.*;
+
 import il.org.spartan.iterables.*;
 
 /** A collection of <code><b>static</b></code> functions for converting from one

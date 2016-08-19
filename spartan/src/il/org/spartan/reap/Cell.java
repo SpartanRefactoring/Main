@@ -2,8 +2,10 @@
 package il.org.spartan.reap;
 
 import static java.lang.Math.*;
+
 import java.util.*;
 import java.util.function.*;
+
 import org.eclipse.jdt.annotation.*;
 
 /** A cell stores a value of some type (which is passed by parameter). A cell

@@ -4,12 +4,15 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.azzert.fail;
 import static il.org.spartan.idiomatic.*;
 import static org.junit.Assert.*;
+
 import java.io.*;
 import java.util.*;
 import java.util.function.*;
+
 import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 import org.junit.runners.*;
+
 import il.org.spartan.Utils.FoundHandleForT.*;
 
 /** An empty <code><b>interface</b></code> with a variety of <code>public

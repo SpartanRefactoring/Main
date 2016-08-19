@@ -16,7 +16,6 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.lazy.Cookbook.*;
-import il.org.spartan.lazy.Environment.*;
 
 /** This interface represents the concept of a <i>lazy symbolic spreadsheet</i>,
  * made by DAG of interdependent {@link Property}s. A {@link Property} is either

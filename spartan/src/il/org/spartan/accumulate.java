@@ -2,6 +2,7 @@
 package il.org.spartan;
 
 import java.util.*;
+
 import org.eclipse.jdt.annotation.*;
 
 /** @author Yossi Gil <Yossi.Gil@GMail.COM>

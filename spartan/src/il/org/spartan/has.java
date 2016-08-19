@@ -2,7 +2,9 @@
 package il.org.spartan;
 
 import static il.org.spartan.Utils.*;
+
 import java.util.*;
+
 import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 

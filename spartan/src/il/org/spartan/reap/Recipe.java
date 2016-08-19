@@ -3,8 +3,10 @@ package il.org.spartan.reap;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.idiomatic.*;
+
 import java.util.*;
 import java.util.function.*;
+
 import org.eclipse.jdt.annotation.*;
 
 /** A cell that may depend on others.

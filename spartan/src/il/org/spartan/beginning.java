@@ -2,8 +2,10 @@
 package il.org.spartan;
 
 import static il.org.spartan.azzert.*;
+
 import org.junit.*;
 import org.junit.runners.*;
+
 import il.org.spartan.iterables.*;
 
 @SuppressWarnings("javadoc") public interface beginning {

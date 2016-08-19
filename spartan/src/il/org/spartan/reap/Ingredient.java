@@ -2,6 +2,7 @@
 package il.org.spartan.reap;
 
 import org.eclipse.jdt.annotation.*;
+
 import il.org.spartan.*;
 
 /** cell which does not depend on others

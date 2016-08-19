@@ -1,6 +1,7 @@
 package il.org.spartan;
 
 import static il.org.spartan.Utils.*;
+
 import org.eclipse.jdt.annotation.*;
 import org.hamcrest.*;
 import org.hamcrest.core.*;

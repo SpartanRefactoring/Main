@@ -2,7 +2,9 @@
 package il.org.spartan.misc;
 
 import static il.org.spartan.azzert.*;
+
 import org.junit.*;
+
 import il.org.spartan.*;
 
 /** Primality testing and generation of primes.

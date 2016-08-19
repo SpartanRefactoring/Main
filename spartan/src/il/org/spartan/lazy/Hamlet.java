@@ -1,12 +1,14 @@
 /** Part of the "Spartan Blog"; mutate the rest, but leave this line as is */
 package il.org.spartan.lazy;
 
+import static il.org.spartan.azzert.*;
+import static il.org.spartan.lazy.Environment.*;
+
 import org.eclipse.jdt.annotation.*;
 import org.junit.*;
+
 import il.org.spartan.*;
-import static il.org.spartan.azzert.*;
 import il.org.spartan.lazy.Environment.*;
-import static il.org.spartan.lazy.Environment.*;
 
 @SuppressWarnings({ "boxing", "javadoc", "null" }) //
 public class Hamlet {

@@ -3,10 +3,13 @@ package il.org.spartan;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
+
 import java.util.*;
 import java.util.function.*;
+
 import org.junit.*;
 import org.junit.runners.*;
+
 import il.org.spartan.Utils.*;
 import il.org.spartan.iterables.*;
 

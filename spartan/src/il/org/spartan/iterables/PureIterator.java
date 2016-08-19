@@ -3,9 +3,12 @@ package il.org.spartan.iterables;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
+
 import java.util.*;
+
 import org.eclipse.jdt.annotation.*;
 import org.junit.*;
+
 import il.org.spartan.*;
 
 /** A kind of {@link Iterator} which does not support the rarely used

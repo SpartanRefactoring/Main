@@ -3,10 +3,13 @@ package il.org.spartan.misc;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
+
 import java.util.*;
+
 import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 import org.junit.runners.*;
+
 import il.org.spartan.*;
 import il.org.spartan.text.*;
 

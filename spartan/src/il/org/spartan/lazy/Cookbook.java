@@ -5,11 +5,14 @@ import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.idiomatic.*;
 import static java.lang.Math.max;
+
 import java.util.*;
 import java.util.function.*;
+
 import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 import org.junit.runners.*;
+
 import il.org.spartan.*;
 import il.org.spartan.lazy.Cookbook.Internal.*;
 import il.org.spartan.lazy.Cookbook.Internal.Function2;

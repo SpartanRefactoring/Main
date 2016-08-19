@@ -3,6 +3,7 @@ package il.org.spartan;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
+
 import org.junit.*;
 
 /** A class for lazy, memoizing evaluation of integers.

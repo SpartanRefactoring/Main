@@ -2,6 +2,7 @@
 package il.org.spartan.iterables;
 
 import java.util.*;
+
 import org.eclipse.jdt.annotation.*;
 
 /** A kind of {@link Iterable} which does not permit the rarely used
