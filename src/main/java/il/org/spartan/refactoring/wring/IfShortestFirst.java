@@ -4,7 +4,7 @@ import static il.org.spartan.refactoring.wring.Wrings.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-/** A {@link Wring} to convert
+/** convert
  *
  * <pre>
  * a ? (f,g,h) : c(d,e)
