@@ -76,7 +76,7 @@ public class Toolbox {
             null)
         .add(MethodDeclaration.class, //
             new MethodRenameReturnToDollar(), //
-            new RedundantModifiers.OfMethod(), //
+            new BodeDeclarationRemoveModifiers.OfMethod(), //
             null)
         .add(MethodInvocation.class, //
             new StringEqualsConstant(), //
@@ -133,10 +133,13 @@ public class Toolbox {
         .add(EnumDeclaration.class, new EnumClean(), null) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover(), null) //
         .add(ReturnStatement.class, new ReturnLastInMethod()) //
-        .add(FieldDeclaration.class, new RedundantModifiers.OfField()) //
+        .add(FieldDeclaration.class, new BodeDeclarationRemoveModifiers.OfField()) //
         .add(CastExpression.class, //
             new CastToDouble2Multiply1(), //
             new CastToLong2Multiply1L(), //
+            null) //
+        .add(EnumConstantDeclaration.class, //
+            new BodeDeclarationRemoveModifiers.OfEnumConstant(), //
             null) //
         .add(NormalAnnotation.class, //
             new AnnotationDiscardValueName(), //
