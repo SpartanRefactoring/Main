@@ -71,24 +71,16 @@ public class Primes {
       azzert.aye(b);
     }
 
-    static void assertTrue(final String reason, final boolean b) {
-      azzert.aye(reason, b);
-    }
-
-    static void assertZero(final int i) {
-      azzert.zero(i);
-    }
-
     @Test public void firstIsTwo() {
-      assertEquals(2, new Primes().next());
+      azzert.that(new Primes().next(), is(2));
     }
 
     @Test public void isPrimeOf_1() {
-      assertFalse(isPrime(-1));
+      azzert.nay(isPrime(-1));
     }
 
     @Test public void isPrimeOf_2() {
-      assertTrue(isPrime(-2));
+      azzert.aye(isPrime(-2));
     }
 
     @Test public void isPrimeOf_3() {
@@ -110,7 +102,7 @@ public class Primes {
     @Test public void secondIsThree() {
       final Primes p = new Primes();
       p.next();
-      assertEquals(3, p.next());
+      azzert.that(p.next(), is(3));
     }
 
     @Test public void selfConsistentUntil1000() {
@@ -124,7 +116,7 @@ public class Primes {
       final Primes p = new Primes();
       p.next();
       p.next();
-      assertEquals(5, p.next());
+      azzert.that(p.next(), is(5));
     }
   }
 }

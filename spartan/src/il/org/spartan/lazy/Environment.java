@@ -84,8 +84,8 @@ import il.org.spartan.lazy.Cookbook.*;
     return new Property<T>().bind(f);
   }
 
-  static <@Nullable T> Property<T> function(final Function0<T> f) {
-    return new Property<T>().ϑ(f);
+  static <@Nullable T> Property<T> function(final Function0<T> ¢) {
+    return new Property<T>().ϑ(¢);
   }
 
   /** A factory method of class {@link Property} returning an undefined value
@@ -577,8 +577,6 @@ import il.org.spartan.lazy.Cookbook.*;
      * @return <code><b>this</b></code> **/
     Property<T> ϑ(@SuppressWarnings("hiding") final Function0<T> ϑ, final Property<?>... cs) {
       this.ϑ = ϑ; // Set the encapsulated function
-      // Clear prerequisites
-      dependents.removeAll(prerequisites);
       prerequisites.clear();
       ingredients(cs);
       version = 0;

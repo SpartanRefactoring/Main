@@ -1,7 +1,6 @@
 package il.org.spartan;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.azzert.fail;
 import static il.org.spartan.idiomatic.*;
 import static org.junit.Assert.*;
 
@@ -601,7 +600,7 @@ public interface Utils {
     @Test public void isNullTypical() {
       try {
         isNull(mustBeNull(null));
-        fail("AssertionError expected prior to this line.");
+        azzert.fail("AssertionError expected prior to this line.");
       } catch (final AssertionError e) {
         azzert.aye("", true);
       }
@@ -610,7 +609,7 @@ public interface Utils {
     @Test public void mustBeNullOfNonNull() {
       try {
         mustBeNull(new Object());
-        fail("AssertionError expected prior to this line.");
+        azzert.fail("AssertionError expected prior to this line.");
       } catch (final AssertionError e) {
         azzert.aye("", true);
       }

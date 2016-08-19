@@ -8,10 +8,9 @@ import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.lazy.Environment.*;
 
 @SuppressWarnings({ "boxing", "javadoc", "null" }) //
-public class Hamlet {
+public class Hamlet implements Environment {
   private Property<Boolean> hamlet = undefined();
   {
     hamlet = function(() -> {

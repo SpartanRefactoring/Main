@@ -62,7 +62,7 @@ import il.org.spartan.iterables.*;
       return beginWith;
     }
 
-    public C separate(final Iterable<? extends Object> os) {
+    public C separate(final Iterable<?> os) {
       return new C(os);
     }
 
@@ -71,9 +71,9 @@ import il.org.spartan.iterables.*;
     }
 
     public final class C {
-      private final Iterable<? extends Object> os;
+      private final Iterable<?> os;
 
-      C(final Iterable<? extends Object> os) {
+      C(final Iterable<?> os) {
         this.os = os;
       }
 
