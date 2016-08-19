@@ -84,19 +84,19 @@ public enum Precedence {
   /** Determine the precedence of an
    * {@link org.eclipse.jdt.core.dom.Assignment.Operator}
    * @param o JD
-   * @return the precedence of the parameter */
+   * @return  precedence of the parameter */
   private static int of(final Assignment.Operator o) {
     return of(o.toString());
   }
   /** Determine the precedence of an arbitrary {@link ASTNode}
    * @param n JD
-   * @return the precedence of the parameter */
+   * @return  precedence of the parameter */
   public static int of(final ASTNode n) {
     return !il.org.spartan.refactoring.utils.Is.expression(n) ? UNDEFINED : Precedence.of(asExpression(n));
   }
   /** Determine the precedence of the operator present on an {@link Expression}
    * @param e JD
-   * @return the precedence of the parameter */
+   * @return  precedence of the parameter */
   public static int of(final Expression e) {
     if (e == null)
       return UNDEFINED;
@@ -115,7 +115,7 @@ public enum Precedence {
   /** Determine the precedence of an
    * {@link org.eclipse.jdt.core.dom.InfixExpression.Operator}
    * @param o JD
-   * @return the precedence of the parameter */
+   * @return  precedence of the parameter */
   public static int of(final InfixExpression.Operator o) {
     return of(o.toString());
   }
@@ -125,7 +125,7 @@ public enum Precedence {
   /** Determine the precedence of two expressions is the same.
    * @param e1 JD
    * @param e2 JD
-   * @return the precedence of the parameter */
+   * @return  precedence of the parameter */
   public static boolean same(final Expression e1, final Expression e2) {
     return Precedence.of(e1) == Precedence.of(e2);
   }

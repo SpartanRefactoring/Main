@@ -56,7 +56,7 @@ public class FileUtils {
   }
   /** Returns the contents of a source file
    * @param fileName The source file's path
-   * @return the source file's contents, or an empty string in case of an error
+   * @return  source file's contents, or an empty string in case of an error
    * @throws IOException in case of error */
   public static String readFromFile(final String fileName) throws IOException {
     return read(Paths.get(fileName));

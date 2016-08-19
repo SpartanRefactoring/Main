@@ -27,7 +27,7 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
     return subject.pair(left(e), right(e)).to(conjugate(e.getOperator()));
   }
   /** @param o JD
-   * @return the operator that produces the logical negation of the parameter */
+   * @return  operator that produces the logical negation of the parameter */
   public static Operator conjugate(final Operator o) {
     return o == null ? null
         : o.equals(CONDITIONAL_AND) ? CONDITIONAL_OR //
@@ -85,7 +85,7 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
   /** A utility function, which tries to simplify a boolean expression, whose
    * top most parameter is logical negation.
    * @param e JD
-   * @return the simplified parameter */
+   * @return  simplified parameter */
   public static Expression simplifyNot(final PrefixExpression e) {
     return pushdownNot(asNot(extract.core(e)));
   }

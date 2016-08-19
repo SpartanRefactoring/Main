@@ -24,7 +24,7 @@ public class CleanupHandler extends BaseHandler {
 
   /** Returns the number of Spartanizaion suggestions for this compilation unit
    * @param u JD
-   * @return the number of suggesions available for the compilation unit */
+   * @return  number of suggesions available for the compilation unit */
   public static int countSuggestions(final ICompilationUnit u) {
     int $ = 0;
     for (final Spartanization s : ApplySpartanizationHandler.safeSpartanizations) {

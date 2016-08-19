@@ -190,7 +190,7 @@ public enum Collect {
       }
       /** {@link PostfixExpression} can be only INCREMENT OR DECREMENT.
        * @param it JD
-       * @return the identifier of the operand. */
+       * @return  identifier of the operand. */
       @Override public boolean visit(final PostfixExpression it) {
         // return !in(it.getOperator(), PostfixExpression.Operator.INCREMENT,
         // PostfixExpression.Operator.DECREMENT) || consider(it.getOperand());
@@ -199,7 +199,7 @@ public enum Collect {
       /** {@link PrefixExpression} can be more then only INCREMENT OR DECREMENT,
        * but only on that cases it is a definition.
        * @param it JD
-       * @return the identifier of the operand. */
+       * @return  identifier of the operand. */
       @Override public boolean visit(final PrefixExpression it) {
         // return consider(it.getOperand());
         return !in(it.getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT) || consider(it.getOperand());
@@ -404,7 +404,7 @@ public enum Collect {
   /** Lists the required occurrences
    * @param what the expression to search for
    * @param ns the n in which to counted
-   * @return the list of uses */
+   * @return  list of uses */
   final List<SimpleName> collect(final SimpleName what, final ASTNode... ns) {
     final List<SimpleName> $ = new ArrayList<>();
     for (final ASTNode n : ns)
