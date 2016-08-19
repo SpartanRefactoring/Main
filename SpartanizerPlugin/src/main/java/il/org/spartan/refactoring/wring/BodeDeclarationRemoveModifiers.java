@@ -87,15 +87,14 @@ public class BodeDeclarationRemoveModifiers<N extends BodyDeclaration> extends W
       if (isMethodDeclaration(¢))
         $.add(Modifier::isAbstract);
     }
+    if (isEnumDeclaration(container)) 
+      $.add(Modifier::isProtected);
     if (isAnonymousClassDeclaration(container)) {
       $.add(Modifier::isPrivate);
       if (isMethodDeclaration(¢))
         $.add(Modifier::isFinal);
-      if (isEnumConstantDeclaration(extract.containerType(container))) {
-        $.add(Modifier::isPublic);
-        $.add(Modifier::isPrivate);
-        $.add(Modifier::isProtected);
-      }
+      if (isEnumConstantDeclaration(extract.containerType(container))) 
+      $.add(Modifier::isProtected);
     }
     return $;
   }

@@ -534,7 +534,7 @@ public enum Funcs {
     return in(o, EQUALS, NOT_EQUALS, GREATER_EQUALS, GREATER, LESS, LESS_EQUALS);
   }
 
-  public static boolean isEnumDeclaration(final BodyDeclaration ¢) {
+  public static boolean isEnumDeclaration(final ASTNode ¢) {
     return is(¢, ENUM_DECLARATION);
   }
 
