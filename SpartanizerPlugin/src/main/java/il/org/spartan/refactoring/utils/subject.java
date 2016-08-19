@@ -44,6 +44,7 @@ import il.org.spartan.*;
     }
   }
 
+
   public static class Operand extends Claimer {
     private final Expression inner;
 
@@ -101,15 +102,19 @@ import il.org.spartan.*;
       return $;
     }
     
+    // ** TODO: Document it !!!
     public Expression toQualifier(final String name) {
       return ast.newQualifiedName((SimpleName) inner, ast.newSimpleName(name));
     }
+    
+    // ** TODO: Document it !!!
     // ** TODO: YG; integrate with fluent API
     public NumberLiteral literal(final String text) {
       final NumberLiteral $ = ast.newNumberLiteral();
       $.setToken(text);
       return $;
     }
+   
     /** Create a new {@link ReturnStatement} which returns our operand
      * @return  new return statement */
     public ReturnStatement toReturn() {
@@ -117,9 +122,15 @@ import il.org.spartan.*;
       $.setExpression(inner);
       return $;
     }
+    
+    // ** TODO: Document it !!!
     public ExpressionStatement toStatement() {
       return ast.newExpressionStatement(inner);
     }
+    
+    /**Create a new throw statement owned by this ast
+     * @return a throw statement of the expression inner
+     */
     public ThrowStatement toThrow() {
       final ThrowStatement $ = ast.newThrowStatement();
       $.setExpression(inner);
@@ -128,13 +139,26 @@ import il.org.spartan.*;
   }
 
   public static class Pair extends Claimer {
-    final Expression left, right;
+    final Expression left, right; //here we have to expression and an operator between them
 
+    
+
+    /**Assign the expressions left and right to the parameters, the newly-
+     * created ast will own the left node
+     * @param left an Expression
+     * @param right an Expression
+     */
     Pair(final Expression left, final Expression right) {
       super(left);
       this.left = claim(left);
       this.right = claim(right);
     }
+    
+    /**Create a new assignment expression owned by ast
+     * the left/right hand side of the assignment expression is the field left/right respectively,
+     * @param o an assignment operator
+     * @return an assignment expression with operator o
+     */
     public Assignment to(final Assignment.Operator o) {
       final Assignment $ = ast.newAssignment();
       $.setOperator(o);
@@ -142,6 +166,13 @@ import il.org.spartan.*;
       $.setRightHandSide(new Plant(right).into($));
       return $;
     }
+    
+    /**Create a new infix expression owned by ast
+     *  the left/right hand side of the assignment expression is the field left/right respectively,
+     *  and the operator is the given one
+     * @param o
+     * @return an expression with the parameter o as an operator 
+     */
     public InfixExpression to(final InfixExpression.Operator o) {
       final InfixExpression $ = ast.newInfixExpression();
       $.setOperator(o);
@@ -149,6 +180,13 @@ import il.org.spartan.*;
       $.setRightOperand(new Plant(right).into($));
       return $;
     }
+    
+    /**Create a new conditional expression owned by ast
+     * the condition is given as a parameter, the true path is
+     * the left field and the false is the right field
+     * @param condition an expression of the condition
+     * @return a conditional expression with the parameter condition as a condition
+     */
     public ConditionalExpression toCondition(final Expression condition) {
       final ConditionalExpression $ = ast.newConditionalExpression();
       $.setExpression(new Plant(claim(condition)).into($));
@@ -156,20 +194,33 @@ import il.org.spartan.*;
       $.setElseExpression(new Plant(right).into($));
       return $;
     }
+    
+    // ** TODO: Document it !!!
     public Statement toStatement(final Assignment.Operator o) {
       return subject.operand(to(o)).toStatement();
     }
   }
 
   public static class Several extends Claimer {
-    private final List<Expression> operands;
+    private final List<Expression> operands; //In that case with have more than 2 operands
+                                             // so we use a list of operands
 
+    /**assign each of the given operands to the operands list
+     * the left operand is the owner
+     * @param operands a list of expression, these are the operands
+     */
     public Several(final List<Expression> operands) {
       super(operands.get(0));
       this.operands = new ArrayList<>();
       for (final Expression e : operands)
         this.operands.add(claim(e));
     }
+    
+    /** TODO: Document it !!!
+     * 
+     * @param o
+     * @return
+     */
     public InfixExpression to(final InfixExpression.Operator o) {
       assert operands.size() >= 2;
       final InfixExpression $ = subject.pair(operands.get(0), operands.get(1)).to(o);
@@ -180,7 +231,7 @@ import il.org.spartan.*;
   }
 
   public static class SeveralStatements extends Claimer {
-    private final List<Statement> inner;
+    private final List<Statement> inner; //here we work with several statements so we have a statements list
 
     public SeveralStatements(final List<Statement> inner) {
       super(inner.isEmpty() ? null : inner.get(0));
