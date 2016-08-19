@@ -128,4 +128,10 @@ public class TrimmerTest250 {
   @Test public void issue71r() {
     trimming("1L*a").to("");
   }
+  @Test public void issue82a() {
+    trimming("(long)5").to("1L*5");
+  }
+  @Test public void issue82b() {
+    trimming("(long)a").to("1L*a");
+  }
 }

@@ -130,7 +130,9 @@ public class Toolbox {
         .add(EnumDeclaration.class, new EnumClean(), null) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover(), null) //
         .add(ReturnStatement.class, new ReturnLastInMethod()) //
-        .add(CastExpression.class, new CastToDouble2Multiply1()) //
+        .add(CastExpression.class, //
+            new CastToDouble2Multiply1(), //
+            new CastToLong2Multiply1L()) //
         .add(NormalAnnotation.class, //
             new AnnotationDiscardValueName(), //
             new AnnotationRemoveEmptyParentheses(), //
