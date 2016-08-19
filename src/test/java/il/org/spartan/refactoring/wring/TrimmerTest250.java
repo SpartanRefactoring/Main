@@ -211,41 +211,45 @@ public class TrimmerTest250 {
   @Test public void issue50_inEnumMemberComplex() {
     trimming(//
         "enum A { a1 {{ f(); } \n" + //
-            "public final void f() {g();}  \n" + //
-             "protected final void g() {h();}  \n" + //
-             "private final void h() {i();}   \n" + //
-             "final void i() {f();}  \n" + //
-          "}, a2 {{ f(); } \n" + //
+            "protected final void f() {g();}  \n" + //
+            "public final void g() {h();}  \n" + //
+            "private final void h() {i();}   \n" + //
+            "final void i() {f();}  \n" + //
+            "}, a2 {{ f(); } \n" + //
             "final protected void f() {g();}  \n" + //
             "final void g() {h();}  \n" + //
             "final private void h() {i();}  \n" + //
-            "final public void i() {f();}  \n" + //
-          "} \n" + //
-        "} \n"//
-          ).to(//
-        "enum A { a1 {{ f(); } \n" + //
+            "final protected void i() {f();}  \n" + //
+            "};\n" + //
+            "protected abstract void f();\n" + //
+            "protected void ia() {}\n" + //
+            "void i() {}\n" + //
+            "} \n"//
+    ).to( "enum A { a1 {{ f(); } \n" + //
             "void f() {g();}  \n" + //
-             "final void g() {h();}  \n" + //
-             "final void h() {i();}   \n" + //
-             "final void i() {f();}  \n" + //
-          "}, a2 {{ f(); } \n" + //
+            "public void g() {h();}  \n" + //
+            "void h() {i();}   \n" + //
+            "void i() {f();}  \n" + //
+            "}, a2 {{ f(); } \n" + //
             "void f() {g();}  \n" + //
             "void g() {h();}  \n" + //
             "void h() {i();}  \n" + //
             "void i() {f();}  \n" + //
-          "} \n" + //
-        "} \n"//
-     );
-  }
+            "};\n" + //
+            "abstract void f();\n" + //
+            "void ia() {}\n" + //
+            "void i() {}\n" + //
+            "} \n"//
+            );
 
+  }
 
   @Test public void issue50_inEnumMember() {
     trimming(//
         "enum A {; final void f() {} public final void g() {} }"//
-    ).to(//
-        "enum A {; void f() {} void g() {} }"//
-    );
+    ).to(null);
   }
+
   @Test public void issue50_Constructors1() {
     trimming("public class ClassTest {\n"//
         + "public  ClassTest(){}\n"//
