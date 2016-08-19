@@ -143,4 +143,7 @@ public class TrimmerTest250 {
   @Test public void issue82e() {
     trimming("(double)(long)a").to("1.*(long)a").to("1.*1L*a");
   }
+  @Test public void issue72a() {
+    trimming("x+0").to("x");
+  }
 }
