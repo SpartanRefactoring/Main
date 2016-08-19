@@ -26,11 +26,13 @@ public interface Utils {
    * @param <T> the type of the function's result */
   public static class Applicator<F, T> {
     private final Function<F, T> function;
+
     /** Instantiates this class
      * @param function which function to apply? */
     public Applicator(final Function<F, T> function) {
       this.function = function;
     }
+
     /** @param fs JD
      * @return TODO document return type of this function */
     @SafeVarargs public final Iterable<T> to(final F... fs) {
@@ -40,6 +42,7 @@ public interface Utils {
           $.add(function.apply(f));
       return $;
     }
+
     /** @param <FS> JD
      * @param s JD
      * @return TODO document return type */
@@ -60,11 +63,13 @@ public interface Utils {
      * @since 2016 */
     public static class FoundHandleForInt {
       final int candidate;
+
       /** Instantiates this class.
        * @param candidate what to search for */
       public FoundHandleForInt(final int candidate) {
         this.candidate = candidate;
       }
+
       /** Determine if an integer can be found in a list of values
        * @param is where to search
        * @return true if the the item is found in the list */
@@ -75,12 +80,15 @@ public interface Utils {
         return false;
       }
     }
+
     final T candidate;
+
     /** Instantiates this class. *
      * @param candidate what to search for */
     public FoundHandleForT(final T candidate) {
       this.candidate = candidate;
     }
+
     /** Determine if an integer can be found in a list of values
      * @param ts where to search
      * @return true if the the item is found in the list */
@@ -107,6 +115,7 @@ public interface Utils {
         $[i] = box.it(is[i]);
       return $;
     }
+
     @Test public void addAllTypical() {
       final Set<String> ss = new HashSet<>();
       accumulate.to(ss).addAll(as.set("A", "B"), null, as.set("B", "C", "D"));
@@ -116,6 +125,7 @@ public interface Utils {
       for (final String s : ss)
         azzert.aye("", ss.contains(s));
     }
+
     @Test public void addTypical() {
       final Set<String> ss = new HashSet<>();
       accumulate.to(ss).add(null, "A", null, "B", "B", null, "C", "D", null);
@@ -126,6 +136,7 @@ public interface Utils {
         azzert.aye("", ss.contains(s));
       azzert.aye(ss.contains("A"));
     }
+
     @Test public void cantBeNullOfNull() {
       try {
         cantBeNull(null);
@@ -134,9 +145,11 @@ public interface Utils {
         azzert.aye("", true);
       }
     }
+
     @Test public void cantBeNullTypical() {
       notNull(cantBeNull(new Object()));
     }
+
     @Test public void isNullTypical() {
       try {
         isNull(mustBeNull(null));
@@ -145,6 +158,7 @@ public interface Utils {
         azzert.aye("", true);
       }
     }
+
     @Test public void mustBeNullOfNonNull() {
       try {
         mustBeNull(new Object());
@@ -153,63 +167,76 @@ public interface Utils {
         azzert.aye("", true);
       }
     }
+
     @Test public void quoteEmptyString() {
       azzert.that(idiomatic.quote(""), is("''"));
     }
+
     @Test public void quoteNull() {
       azzert.that(idiomatic.quote(null), is("<null reference>"));
     }
+
     @Test public void quoteSimpleString() {
       azzert.that(idiomatic.quote("A"), is("'A'"));
     }
+
     @Test public void swapDegenerate() {
       final String @NonNull [] ss = as.array("A", "B", "C", "D");
       swap(ss, 1, 1);
       assertArrayEquals(as.array("A", "B", "C", "D"), ss);
     }
+
     @Test public void swapTypical() {
       final String @NonNull [] ss = as.array("A", "B", "C", "D");
       swap(ss, 1, 2);
       assertArrayEquals(as.array("A", "C", "B", "D"), ss);
     }
+
     @Test public void swapTypicalCase() {
       final Integer @NonNull [] $ = intToIntegers(29, 1, 60);
       swap($, 0, 1);
       assertArrayEquals(intToIntegers(1, 29, 60), $);
     }
   }
+
   static final String QUOTE = "'";
   static final String WHITES = "(?m)\\s+";
+
   public static <T, C extends Collection<T>> C add(final C $, final Iterable<? extends T> ts) {
     for (final T t : ts)
       if (t != null)
         $.add(t);
     return $;
   }
+
   @SafeVarargs public static <T, C extends Collection<T>> C add(final C $, final T... ts) {
     for (final T t : ts)
       if (t != null)
         $.add(t);
     return $;
   }
+
   @SafeVarargs public static <T, C extends Collection<T>> C addAll(final C $, final Collection<? extends T>... tss) {
     for (final Collection<? extends T> ts : tss)
       if (ts != null)
         $.addAll(ts);
     return $;
   }
+
   @SafeVarargs public static <T, C extends Collection<T>> C addAll(final C $, final Iterable<? extends T>... tss) {
     for (final Iterable<? extends T> ts : tss)
       if (ts != null)
         add($, ts);
     return $;
   }
+
   @SafeVarargs public static <T, C extends Collection<T>> C addAll(final C $, final T... ts) {
     for (final T t : ts)
       if (t != null)
         add($, t);
     return $;
   }
+
   /** Appends an element to an array, by reallocating an array whose size is
    * greater by one and placing the element at the last position.
    * @param < T > JD
@@ -221,6 +248,7 @@ public interface Utils {
     $[ts.length] = t;
     return $;
   }
+
   /** @param < F > JD
    * @param < T > JD
    * @param f JD
@@ -228,6 +256,7 @@ public interface Utils {
   static <F, T> Applicator<F, T> apply(final Function<F, T> f) {
     return new Applicator<>(f);
   }
+
   /** Removes the @Nullable annotation present on the type of a value. This
    * function is mainly used to make <code><b>null</b></code<]> checkers happy.
    * <p>
@@ -257,6 +286,7 @@ public interface Utils {
   @Nullable public static <T> T canBeNull(final T $) {
     return $;
   }
+
   /** Removes the @Nullable annotation present on the type of a value. This
    * function is mainly used to make <code><b>null</b></code> checkers happy.
    * <p>
@@ -288,6 +318,7 @@ public interface Utils {
     assert $ != null;
     return $;
   }
+
   /** Impose an ordering on type <code><b>boolean</b></code> by which
    * <code><b>true</b></code> is greater than <code><b>false</b></code>.
    * @param b1 JD
@@ -300,6 +331,7 @@ public interface Utils {
   static int compare(final boolean b1, final boolean b2) {
     return b1 == b2 ? 0 : b1 ? 1 : -1;
   }
+
   /** Remove all non-essential spaces from a string that represents Java code.
    * @param javaCodeFragment JD
    * @return the parameter, with all redundant spaces removed from it */
@@ -310,6 +342,7 @@ public interface Utils {
       $ = $.replaceAll(WHITES + operator, operator).replaceAll(operator + WHITES, operator);
     return cantBeNull($);
   }
+
   /** Determine whether a string contains any of a list of patterns.
    * @param text string to be tested
    * @param patterns a list of substrings
@@ -321,6 +354,7 @@ public interface Utils {
         return true;
     return false;
   }
+
   /** Deletes a specified element from an array, by reallocating an array whose
    * size is smaller by one and shifting the other elements down.
    * @param < T > JD
@@ -332,17 +366,20 @@ public interface Utils {
     System.arraycopy(ts, i + 1, $, i, $.length - i);
     return $;
   }
+
   /** @param i JD
    * @return TODO document return type */
   static FoundHandleForInt found(final int i) {
     return new FoundHandleForInt(i);
   }
+
   /** @param < T > JD
    * @param t JD
    * @return TODO document return type */
   static <T> FoundHandleForT<T> found(final T t) {
     return new FoundHandleForT<>(t);
   }
+
   /** Determine whether a <code><b>null</b></code> occurs in a sequence of
    * objects
    * @param os an unknown number of objects
@@ -354,6 +391,7 @@ public interface Utils {
         return true;
     return false;
   }
+
   /** Determine if an item can be found in a list of values
    * @param < T > JD
    * @param candidate what to search for
@@ -365,6 +403,7 @@ public interface Utils {
         return true;
     return false;
   }
+
   /** Determine whether an integer is a valid list index
    * @param < T > JD
    * @param i some integer
@@ -374,6 +413,7 @@ public interface Utils {
   static <T> boolean inRange(final int i, final List<T> ts) {
     return i >= 0 && i < ts.size();
   }
+
   /** Determine if an integer can be found in a list of values
    * @param candidate what to search for
    * @param is where to search
@@ -384,6 +424,7 @@ public interface Utils {
         return true;
     return false;
   }
+
   /** @param < T > JD
    * @param ts JD
    * @return the last item in a list or <code><b>null</b></code> if the
@@ -391,6 +432,7 @@ public interface Utils {
   @SuppressWarnings("null") static <T> @Nullable T last(final @Nullable List<T> ts) {
     return eval(() -> ts.get(ts.size() - 1)).unless(ts == null || ts.isEmpty());
   }
+
   /** Determine whether an {@link Object} is the last in a {@link List} .
    * @param o JD
    * @param os JD
@@ -399,6 +441,7 @@ public interface Utils {
   static boolean lastIn(final Object o, final List<?> os) {
     return last(os) == o;
   }
+
   /** Computes the maximum of two or more integers.
    * @param a some integer
    * @param is additional integers
@@ -409,6 +452,7 @@ public interface Utils {
       $ = Math.max($, i);
     return $;
   }
+
   /** Computes the minimum of two or more integers
    * @param a some integer
    * @param is additional
@@ -419,29 +463,33 @@ public interface Utils {
       $ = Math.min($, i);
     return $;
   }
+
   /** Aborts in case a given value is <code><b>null</b></code>.
    * <p>
    * This function is the lesser used dual of {@link #cantBeNull(Object)} .
    * @param < T > some arbitrary type
    * @param $ an instance of the type parameter which is required to be
-   *          <code><b>null</b></code>.
+   *        <code><b>null</b></code>.
    * @return the parameter */
   static <@Nullable T> @Nullable Void mustBeNull(final T $) {
     assert $ == null;
     return null;
   }
+
   /** @param f JD
    * @return the name of the parameter, which must not be
    *         <code><b>null</b></code> */
   static String name(final File f) {
     return cantBeNull(f.getName());
   }
+
   /** Convert variadic list of arguments into an array
    * @param os JD _
    * @return the parameter, as an array. */
   static Object[] objects(final Object... os) {
     return os;
   }
+
   /** @param < T > JD
    * @param ts a list
    * @return the last item in a list or <code><b>null</b></code> if the
@@ -449,6 +497,7 @@ public interface Utils {
   @SuppressWarnings("null") static <T> @Nullable T penultimate(final List<T> ts) {
     return eval(() -> ts.get(ts.size() - 2)).unless(ts == null || ts.size() < 2);
   }
+
   /** Determine whether an {@link Object} is penultimate in its {@link List} .
    * @param < T > JD
    * @param o JD
@@ -459,6 +508,7 @@ public interface Utils {
     assert os != null;
     return penultimate(os) == o;
   }
+
   /** Prepend a given <code><b>char</b></code> to a {@link StringBuilder}
    * @param $ prepend to what
    * @param c what needs to be prepended
@@ -467,6 +517,7 @@ public interface Utils {
   static StringBuilder prepend(final StringBuilder $, final char c) {
     return cantBeNull($.insert(0, c));
   }
+
   /** Prepend a given {@link String} to a {@link StringBuilder}
    * @param $ prepend to what
    * @param s what needs to be prepended
@@ -475,12 +526,14 @@ public interface Utils {
   public static StringBuilder prepend(final StringBuilder $, final String s) {
     return cantBeNull($.insert(0, s));
   }
+
   /** Quote a given {@link String}
    * @param $ some {@link String} to be quoted
    * @return the parameter, quoted */
   public static String quote(final @Nullable String $) {
     return $ != null ? QUOTE + $ + QUOTE : "<null reference>";
   }
+
   /** Remove any duplicates that may be present in a given {@link List}
    * @param < T > JD
    * @param ts JD */
@@ -489,6 +542,7 @@ public interface Utils {
     ts.clear();
     ts.addAll(noDuplicates);
   }
+
   /** Remove all occurrences of a given prefix from a given {@link String} .
    * @param s JD
    * @param prefix what should be removed
@@ -498,6 +552,7 @@ public interface Utils {
       if (!$.startsWith(prefix))
         return $;
   }
+
   /** Remove all occurrences of a given suffix from a given string.
    * @param s JD
    * @param suffix what should be removed
@@ -507,12 +562,14 @@ public interface Utils {
       if (!$.endsWith(suffix))
         return $;
   }
+
   /** Remove all occurrences of white space character in a given {@link String}
    * @param s JD
    * @return the parameter after all such occurrences are removed. */
   static String removeWhites(final String s) {
     return cantBeNull(s.replaceAll("\\s+", ""));
   }
+
   /** Sorts an array
    * @param is what to sort
    * @return the given array with elements in sorted order */
@@ -520,18 +577,21 @@ public interface Utils {
     Arrays.sort(is);
     return is;
   }
+
   /** Computes the square of a given double
    * @param d some number
    * @return the square of the parameter */
   public static double sqr(final double d) {
     return d * d;
   }
+
   /** Computes the square of a given integer
    * @param i some integer
    * @return the square of the parameter */
   public static int sqr(final int i) {
     return i * i;
   }
+
   /** Determine whether a file name ends with any one of the supplied
    * extensions.
    * @param f a file to examine
@@ -541,6 +601,7 @@ public interface Utils {
   static boolean suffixedBy(final File f, final Iterable<String> suffixes) {
     return suffixedBy(name(f), suffixes);
   }
+
   /** Determine whether a file name ends with any one of the supplied
    * extensions.
    * @param f a file to examine
@@ -550,6 +611,7 @@ public interface Utils {
   static boolean suffixedBy(final File f, final String... suffixes) {
     return suffixedBy(name(f), suffixes);
   }
+
   /** Determine whether a string ends with any one of the supplied suffixes.
    * @param s a string to examine
    * @param suffixes a list of potential suffixes
@@ -561,6 +623,7 @@ public interface Utils {
         return true;
     return false;
   }
+
   /** Determine whether a string ends with any one of the supplied suffixes.
    * @param s a string to examine
    * @param suffixes a list of potential suffixes
@@ -572,6 +635,7 @@ public interface Utils {
         return true;
     return false;
   }
+
   /** Swap the contents of two cells in a given array
    * @param <T> type of array elements
    * @param ts the given array

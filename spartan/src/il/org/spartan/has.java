@@ -16,6 +16,7 @@ public enum has {
   ;
   @SuppressWarnings("javadoc") public static class TEST {
     private final @Nullable String nul = null;
+
     @Test public void seriesA01() {
       azzert.aye(has.nulls(nul));
     }
@@ -24,6 +25,7 @@ public enum has {
       azzert.nay(has.nulls("A"));
     }
   }
+
   /** Retrieve next item in a list
    * @param <T> JD
    * @param i an index of specific item in a list
@@ -33,6 +35,7 @@ public enum has {
   public static <@Nullable T> @Nullable T next(final int i, final List<T> ts) {
     return !inRange(i + 1, ts) ? last(ts) : ts.get(i + 1);
   }
+
   /** Determine whether a <code><b>null</b></code> occurs in a sequence of
    * objects
    * @param os JD
@@ -44,6 +47,7 @@ public enum has {
         return true;
     return false;
   }
+
   /** Determine whether a <code><b>null</b></code> occurs in a sequence of
    * objects
    * @param os JD

@@ -53,22 +53,27 @@ public enum prune {
     };
     final String[] alternatingArray = new String @NonNull [] { null, "A", null, null, "B", null, null, null, "C", null };
     final String[] nonNullArray = { "1", "2", "4" };
+
     @Test public void nullsNonNullArrayLength() {
       assertEquals(nonNullArray.length, nulls(nonNullArray).length);
     }
+
     @Test public void nullsNullArrayItems() {
       assertEquals("1", nulls(nonNullArray)[0]);
       assertEquals("2", nulls(nonNullArray)[1]);
       assertEquals("4", nulls(nonNullArray)[2]);
     }
+
     @Test public void nullsPruneArrayAltenatingItems() {
       assertEquals("A", nulls(alternatingArray)[0]);
       assertEquals("B", nulls(alternatingArray)[1]);
       assertEquals("C", nulls(alternatingArray)[2]);
     }
+
     @Test public void nullsPruneArrayAltenatingLength() {
       assertEquals(3, nulls(alternatingArray).length);
     }
+
     @Test public void nullsPruneSparseCollectionContents() {
       final String[] a = nulls(sparseCollection.value()).toArray(new String[3]);
       assertEquals("A", a[0]);
@@ -76,30 +81,38 @@ public enum prune {
       assertEquals("C", a[2]);
       assertEquals(3, a.length);
     }
+
     @Test public void nullsPruneSparseCollectionLength() {
       assertEquals(3, nulls(sparseCollection.value()).size());
     }
+
     @Test public void nullsPrunNotNull() {
       notNull(nulls(sparseCollection.value()));
     }
+
     @Test public void shrinkArray() {
       assertEquals(0, shrink(new Object @Nullable [10]).length);
     }
+
     @Test public void shrinkEmptyArray() {
       assertEquals(0, shrink(new Object @Nullable [0]).length);
     }
+
     @Test public void whitesEmptyArray() {
       assertEquals(0, prune.whites(new String @NonNull [] {}).length);
     }
+
     @Test public void whitesEmptyList() {
       assertEquals(0, prune.whites().length);
     }
   }
+
   /** @param $
    * @return TODO document return type */
   private static String[] asArrray(final List<String> $) {
     return cantBeNull($.toArray(new String @NonNull [0]));
   }
+
   /** @param <T> JD
    * @param <C> JD
    * @param ts JD
@@ -110,6 +123,7 @@ public enum prune {
         i.remove();
     return ts;
   }
+
   /** Prune <code><b>null</b></code> elements from a given collection.
    * @param <T> type of elements in the collection.
    * @param ts a collection of values.
@@ -124,6 +138,7 @@ public enum prune {
         $.add(t);
     return $;
   }
+
   /** Prune <code><b>null</b></code> elements from a given array.
    * @param <T> type of elements in the array.
    * @param ts an array of values.
@@ -138,6 +153,7 @@ public enum prune {
         $.add(t);
     return cantBeNull($.toArray(shrink(ts)));
   }
+
   /** Shrink an array size to zero.
    * @param <T> type of elements in the input array.
    * @param ts an array of values.
@@ -145,6 +161,7 @@ public enum prune {
   private static <T> T[] shrink(final T @Nullable [] ts) {
     return cantBeNull(Arrays.copyOf(ts, 0));
   }
+
   /** @param ss JD
    * @return TODO document return type */
   @SafeVarargs public static String[] whites(final String... ss) {

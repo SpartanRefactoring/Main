@@ -19,6 +19,7 @@ public class Hamlet {
       return false;
     });
   }
+
   @Test public void seriesA01() {
     @Nullable Boolean first = hamlet.¢();
     azzert.notNull(first);

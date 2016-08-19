@@ -41,8 +41,10 @@ public interface PureIterable<@NonNull T> extends Iterable<T> {
       // TODO Auto-generated method stub
       return null;
     }
+
     /** @return how many elements are there in this instance */
     public abstract int size();
   }
+
   @Override public PureIterator<@NonNull T> iterator();
 }

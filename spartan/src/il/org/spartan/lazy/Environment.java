@@ -344,7 +344,8 @@ import il.org.spartan.lazy.Cookbook.*;
      *         </ol>
     */
     public <@Nullable A> Property<@Nullable T> bind2(final Function0<T> f) {
-      this.ϑ = (Function0<@Nullable T>) () -> f.¢(); // Set the encapsulated function
+      this.ϑ = (Function0<@Nullable T>) () -> f.¢(); // Set the encapsulated
+                                                     // function
       prerequisites.clear();
       ingredients(this);
       return this;
@@ -423,7 +424,6 @@ import il.org.spartan.lazy.Cookbook.*;
     public <@Nullable A1, @Nullable A2, @Nullable A3, @Nullable A4> Binder4<T, A1, A2, A3, A4> bind(final Function4<T, A1, A2, A3, A4> f) {
       return (¢1, ¢2, ¢3, ¢4) -> ϑ(() -> f.ϑ(¢1.¢(), ¢2.¢(), ¢3.¢(), ¢4.¢()), ¢1, ¢2, ¢3, ¢4);
     }
-
 
     /** @return the last value computed or set for this instance. */
     public final T cache() {

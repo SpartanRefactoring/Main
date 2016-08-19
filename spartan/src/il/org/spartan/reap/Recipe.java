@@ -21,28 +21,34 @@ public class Recipe<@Nullable T> extends Cell<T> {
   @SuppressWarnings("null") public static class NotNull<T> extends Recipe<T> {
     private final List<Cell<?>> prerequisites = new ArrayList<>();
     private @Nullable Supplier<? extends @Nullable T> supplier;
+
     /** Instantiates this class.
      * @param supplier JD */
     public NotNull(final Supplier<? extends @NonNull T> supplier) {
       super(cantBeNull(supplier));
       cache(cantBeNull(supplier).get());
     }
+
     @SuppressWarnings({}) @Override public Recipe.NotNull<T> clone() {
       return (Recipe.NotNull<T>) super.clone();
     }
+
     @Override T eval() {
       assert supplier != null;
       return supplier.get();
     }
+
     @Override final <N> N filter(final N $) {
       return cantBeNull($);
     }
+
     /** Add another cell on which this instance depends
      * @param cs JD
      * @return <code><b>this</b></code> */
     @Override public Recipe.NotNull<T> ingredients(final Cell<?>... cs) {
       return (Recipe.NotNull<T>) super.ingredients(cs);
     }
+
     @Override public final boolean updated() {
       if (supplier == null)
         return true;
@@ -64,6 +70,7 @@ public class Recipe<@Nullable T> extends Cell<T> {
       super(supplier);
       assert supplier != null;
     }
+
     @Override void cache(@SuppressWarnings("hiding") @Nullable final T cache) {
       try {
         super.cache(cache);
@@ -71,9 +78,11 @@ public class Recipe<@Nullable T> extends Cell<T> {
         x.printStackTrace();
       }
     }
+
     @SuppressWarnings({}) @Override public Cell<T> clone() {
       return super.clone();
     }
+
     @Override @Nullable T eval() {
       try {
         return super.eval();
@@ -81,6 +90,7 @@ public class Recipe<@Nullable T> extends Cell<T> {
         return null;
       }
     }
+
     @Override public T get() {
       try {
         return super.get();
@@ -88,6 +98,7 @@ public class Recipe<@Nullable T> extends Cell<T> {
         return null;
       }
     }
+
     /** Add another cell on which this instance depends
      * @param cs JD
      * @return <code><b>this</b></code> */
@@ -96,26 +107,32 @@ public class Recipe<@Nullable T> extends Cell<T> {
       return this;
     }
   }
+
   final List<Cell<?>> prerequisites = new ArrayList<>();
   @Nullable Supplier<? extends @Nullable T> supplier;
+
   /** Instantiates this class.
    * @param supplier JD */
   public Recipe(final Supplier<? extends T> supplier) {
     this.supplier = supplier;
   }
+
   @Override public Cell<T> clone() {
     return super.clone();
   }
+
   @Nullable T eval() {
     assert supplier != null;
     return supplier.get();
   }
+
   /** To be overridden by extending classes for e.g., null protection
    * @param $ result
    * @return the parameter */
   @SuppressWarnings("static-method") <N> N filter(final N n) {
     return n;
   }
+
   @Override public T get() {
     if (updated())
       return cache();
@@ -127,6 +144,7 @@ public class Recipe<@Nullable T> extends Cell<T> {
     version = latestPrequisiteVersion() + 1;
     return cache();
   }
+
   /** Add another cell on which this instance depends
    * @param e JD
    * @return <code><b>this</b></code> */
@@ -139,6 +157,7 @@ public class Recipe<@Nullable T> extends Cell<T> {
     }).unless(prerequisites.contains(this));
     return this;
   }
+
   /** Add another cell on which this instance depends
    * @param es JD
    * @return <code><b>this</b></code> */
@@ -147,6 +166,7 @@ public class Recipe<@Nullable T> extends Cell<T> {
       ingredient(e);
     return this;
   }
+
   final long latestPrequisiteVersion() {
     long $ = 0;
     for (final Cell<?> c : prerequisites)
@@ -154,6 +174,7 @@ public class Recipe<@Nullable T> extends Cell<T> {
         $ = c.version();
     return $;
   }
+
   @Override public boolean updated() {
     if (supplier == null)
       return true;
@@ -164,6 +185,7 @@ public class Recipe<@Nullable T> extends Cell<T> {
         return false;
     return true;
   }
+
   @Override void uponForcedSet() {
     supplier = null;
   }

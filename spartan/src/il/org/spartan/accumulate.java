@@ -22,11 +22,13 @@ public interface accumulate<T, C extends Collection<T>> {
         c.add(t);
         return this;
       }
+
       @Override public C elements() {
         return c;
       }
     };
   }
+
   /** @param ts JD
    * @return <code><b>this</b></code> */
   default accumulate<T, C> add(final Iterable<? extends @Nullable T> ts) {
@@ -35,9 +37,11 @@ public interface accumulate<T, C extends Collection<T>> {
         add(t);
     return this;
   }
+
   /** @param t JD
    * @return <code><b>this</b></code> */
   accumulate<T, C> add(final @Nullable T t);
+
   /** @param ts JD
    * @return <code><b>this</b></code> */
   default accumulate<T, C> add(@SuppressWarnings("unchecked") final @Nullable T @Nullable... ts) {
@@ -47,6 +51,7 @@ public interface accumulate<T, C extends Collection<T>> {
           add(t);
     return this;
   }
+
   /** @param ts JD
    * @return <code><b>this</b></code> */
   default accumulate<T, C> addAll(final @Nullable Iterable<? extends T> ts) {
@@ -56,6 +61,7 @@ public interface accumulate<T, C extends Collection<T>> {
           add(t);
     return this;
   }
+
   /** @param tss JD
    * @return <code><b>this</b></code> */
   default accumulate<T, C> addAll(final Iterable<? extends T>... tss) {
@@ -63,6 +69,7 @@ public interface accumulate<T, C extends Collection<T>> {
       addAll(ts);
     return this;
   }
+
   /** @return TODO document return type */
   C elements();
 }

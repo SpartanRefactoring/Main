@@ -28,31 +28,40 @@ public enum iterables {
     @Test public void containsDegenerate() {
       azzert.nay(contains("Hello"));
     }
+
     @Test public void containseturnsFalseTypical() {
       azzert.nay(contains("Hello", null, "x", "y", null, "z", "w", "u", "v"));
     }
+
     @Test public void containsSimple() {
       azzert.aye("", contains("Hello", "e"));
     }
+
     @Test public void containsTypical() {
       azzert.aye("", contains("Hello", "a", "b", "c", "d", "e", "f"));
     }
+
     @Test public void containsWithNulls() {
       azzert.aye("", contains("Hello", null, "a", "b", null, "c", "d", "e", "f", null));
     }
+
     @Test public void countDoesNotIncludeNull() {
       assertEquals(3, count(as.iterable(null, "One", null, "Two", null, "Three")));
     }
+
     @Test public void countEmpty() {
       assertEquals(0, count(iterables.<String> empty()));
     }
+
     @Test public void countSingleton() {
       assertEquals(1, count(singleton(new Object())));
     }
+
     @Test public void countThree() {
       assertEquals(3, count(as.iterable("One", "Two", "Three")));
     }
   }
+
   /** Counts the number of items in an {@link Iterable}.
    * @param <T> some arbitrary type
    * @param ts some iterable over items whose type is the type parameter
@@ -64,11 +73,13 @@ public enum iterables {
         $ += as.bit(t != null);
     return $;
   }
+
   /** @param <T> JD
    * @return <code><b>true</b></code> <i>iff</i> the receive is empty */
   public static <T> PureIterable.Sized<T> empty() {
     return as.nonNullIterable();
   }
+
   /** @param os JD
    * @return TODO document return type */
   public static boolean isEmpty(final Iterable<?> os) {
@@ -77,6 +88,7 @@ public enum iterables {
         return false;
     return true;
   }
+
   /** TODO Javadoc(2016): automatically generated for method
    * <code>singleton</code>
    * @param <T> JD
@@ -86,6 +98,7 @@ public enum iterables {
   public static <T> PureIterable.Sized<T> singleton(final T t) {
     return as.nonNullIterable(t);
   }
+
   /** wraps a value in a singleton iterator form
    * @param <T> JD
    * @param $ JD

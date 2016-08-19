@@ -32,13 +32,16 @@ public enum as {
     @Test public void asBitOfFalse() {
       azzert.that(as.bit(false), is(0));
     }
+
     @Test public void asBitOfTrue() {
       azzert.that(as.bit(true), is(1));
     }
+
     @Test public void asIntArraySimple() {
       final int @NonNull [] is = as.intArray(100, 200, 200, 12, 13, 0);
       assertArrayEquals(is, as.intArray(as.ingeterList(is)));
     }
+
     @Test public void asListSimple() {
       final List<Integer> is = as.list(12, 13, 14);
       azzert.that(is.get(0), is(box.it(12)));
@@ -46,9 +49,11 @@ public enum as {
       azzert.that(is.get(2), is(box.it(14)));
       azzert.that(is.size(), is(3));
     }
+
     @Test public void stringOfNull() {
       azzert.that(as.string(null), is("null"));
     }
+
     @Test public void stringWhenToStringReturnsNull() {
       azzert.that(as.string(new Object() {
         @Override public @Nullable String toString() {
@@ -57,6 +62,7 @@ public enum as {
       }), is("null"));
     }
   }
+
   /** Converts a sequence of values into an array.
    * @param <T> some arbitrary type
    * @param $ some sequence of values of the type parameter
@@ -65,6 +71,7 @@ public enum as {
   @SafeVarargs public static <T> T[] array(final T... $) {
     return $;
   }
+
   /** Convert an array of {@link Integer}s into an {@link Iterable}. For
    * example, to print the first Fibonacci numbers multiplied by the first prime
    * numbers, write:
@@ -76,7 +83,7 @@ public enum as {
    * </pre>
    *
    * @param is what to iterate on (recall that a list of arguments of the same
-   *          type is isomorphic to array parameters in Java
+   *        type is isomorphic to array parameters in Java
    * @return an {@link Iterable} over the array, which can then be used to to
    *         iterate over the parameter(s) */
   public static Iterable<Integer> asIterable(final Integer... is) {
@@ -84,42 +91,52 @@ public enum as {
     // <code><b>implements</b></code> {@link Iterable}
     return () -> new Iterator<Integer>() {
       int current = 0;
+
       @Override public boolean hasNext() {
         return current < is.length;
       }
+
       @Override public Integer next() {
         return is[current++];
       }
     };
   }
+
   static Iterable<Integer> asIterableEssence(final Integer... is) {
     return () -> new Iterator<Integer>() {
       int current = 0;
+
       @Override public boolean hasNext() {
         return current < is.length;
       }
+
       @Override public Integer next() {
         return is[current++];
       }
     };
   }
+
   public static Iterable<Integer> asIterableLambda(final Integer... is) {
     return () -> new Iterator<Integer>() {
       int current = 0;
+
       @Override public boolean hasNext() {
         return current < is.length;
       }
+
       @Override public Integer next() {
         return is[current++];
       }
     };
   }
+
   /** Converts a boolean into a bit value
    * @param $ some boolean value
    * @return 1 if the parameter is true, 0 otherwise */
   public static int bit(final boolean $) {
     return $ ? 1 : 0;
   }
+
   /** C like conversion of a reference to an {@link Object} into a 0/1 bit.
    * @param o some object
    * @return <code>0</code> if the parameter is <code><b>null</b></code>.
@@ -128,6 +145,7 @@ public enum as {
   public static int bit(final @Nullable Object o) {
     return o == null ? 0 : 1;
   }
+
   /** Converts a sequence of <code><b>int</b></code> values into a {@link List}
    * of non-<code><b>null</b></code> {@link Integer}s.
    * @param is what to covert
@@ -139,6 +157,7 @@ public enum as {
       $.add(box.it(i));
     return $;
   }
+
   /** Converts a sequence of integer values into an array.
    * @param $ some sequence of values of the type parameter
    * @return the parameters, organized as an array with entries whose type is
@@ -146,10 +165,11 @@ public enum as {
   public static int[] intArray(final int... $) {
     return $;
   }
+
   /** Return a compact representation of a list of {@link Integer}s as an array
    * of type <code><b>int</b></code>.
    * @param is the list to be converted, none of the elements in it can be
-   *          <code><b>null</b></code>
+   *        <code><b>null</b></code>
    * @return an array of <code><b>int</b></code>. representing the input. */
   public static int[] intArray(final List<Integer> is) {
     final int @NonNull [] $ = new int @NonNull [is.size()];
@@ -157,6 +177,7 @@ public enum as {
       $[¢] = is.get(¢).intValue();
     return $;
   }
+
   /** Creates an iterable for an array of objects
    * @param <T> an arbitrary type
    * @param ts what to iterate on
@@ -166,19 +187,23 @@ public enum as {
       @Override public PureIterator<T> iterator() {
         return new PureIterator<T>() {
           int current = 0;
+
           @Override public boolean hasNext() {
             return current < ts.length;
           }
+
           @Override public T next() {
             return ts[current++];
           }
         };
       }
+
       @Override public int size() {
         return ts.length;
       }
     };
   }
+
   /** Creates an iterable for an array of objects
    * @param <T> an arbitrary type
    * @param ts what to iterate on
@@ -186,6 +211,7 @@ public enum as {
   @SafeVarargs public static <T> PureIterator<T> iterator(final T... ts) {
     return iterable(ts).iterator();
   }
+
   /** Converts a list of <code><b>int</b></code>s into a {@link List} of
    * {@link Integer}s
    * @param is what to convert
@@ -194,6 +220,7 @@ public enum as {
   public static List<Integer> list(final int... is) {
     return as.list(box.it(is));
   }
+
   /** Converts an {@link Iterable} of a given type into a {@link List} of values
    * of this type.
    * @param <T> type of items to be converted
@@ -202,6 +229,7 @@ public enum as {
   public static <T> List<T> list(final Iterable<? extends T> $) {
     return accumulate.to(new ArrayList<T>()).add($).elements();
   }
+
   /** Converts a sequence of objects of some common type T into a {@link List}
    * of values
    * @param <T> type of objects to be converted
@@ -210,6 +238,7 @@ public enum as {
   @SafeVarargs public static <T> List<T> list(final @Nullable T @Nullable... $) {
     return accumulate.to(new ArrayList<T>()).add($).elements();
   }
+
   /** Creates an iterable for an array of objects
    * @param <T> an arbitrary type
    * @param ts what to iterate on
@@ -219,19 +248,23 @@ public enum as {
       @Override public PureIterator<T> iterator() {
         return new PureIterator<T>() {
           int current = 0;
+
           @Override public boolean hasNext() {
             return current < ts.length;
           }
+
           @Override public T next() {
             return ts[current++];
           }
         };
       }
+
       @Override public int size() {
         return ts.length;
       }
     };
   }
+
   /** Converts a sequence of objects of a given type into a {@link Set} of
    * values
    * @param <T> type of objects to be converted
@@ -240,6 +273,7 @@ public enum as {
   @SafeVarargs public static <T> Set<? extends T> set(final @Nullable T @Nullable... ts) {
     return accumulate.to(new HashSet<T>()).add(ts).elements();
   }
+
   /** Converts a value, which can be either a <code><b>null</b></code> or
    * references to valid instances, into a {@link NonNull}
    * @param $ some value
@@ -247,6 +281,7 @@ public enum as {
   public static String string(@Nullable final Object $) {
     return $ == null ? "null" : as.string($.toString());
   }
+
   /** Converts a {@link String}, which can be either a <code><b>null</b></code>
    * or an actual String, into a {@link NonNull} String.
    * @param $ some value
@@ -254,6 +289,7 @@ public enum as {
   public static String string(@Nullable final String $) {
     return $ != null ? $ : "null";
   }
+
   /** Converts an {@link Iterable} into an array of {@link String}.
    * @param os what to covert
    * @return an array of the parameter values, each converted to i

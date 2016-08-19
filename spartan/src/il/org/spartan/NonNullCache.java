@@ -17,12 +17,15 @@ public abstract class NonNullCache<T> {
   public static class TEST extends NonNullCache<String> {
     private static final int SOME_OFFSET = 17;
     private int evaluations = 0;
+
     @Override protected String __() {
       return SOME_OFFSET + "x" + sqr(evaluations++);
     }
+
     @Test public void firstReturnsFirstOffset() {
       azzert.that(value(), is(SOME_OFFSET + "x0"));
     }
+
     @Test public void restReturnsFirstOffset() {
       value();
       azzert.that(value(), is(SOME_OFFSET + "x0"));
@@ -30,13 +33,16 @@ public abstract class NonNullCache<T> {
         azzert.that(value(), is(SOME_OFFSET + "x0"));
     }
   }
+
   /** The cached value, null when the cache was not populated */
   private @Nullable T value = null;
+
   /** This function is to be implemented by clients, giving a method for
    * computing the cached value. This class protects this function, guaranteeing
    * that it would only be called once.
    * @return the value to be cached */
   protected abstract T __();
+
   /** Compute the cached value, either by looking up the memoized valued, or by
    * actual computation
    * @return the cached value */

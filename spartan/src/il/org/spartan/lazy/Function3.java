@@ -1,5 +1,6 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.lazy;
+
 /** A {@link FunctionalInterface} encapsulating a function with three arguments
  * @param <T> type of the function result
  * @param <A1> type of the 1st argument

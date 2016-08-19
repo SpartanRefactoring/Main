@@ -32,36 +32,45 @@ public enum Lines {
     @Test public void countEmpty() {
       azzert.that(count(""), is(0));
     }
+
     @Test public void countNewLine() {
       azzert.that(count("\n"), is(0));
     }
+
     @Test public void countOneLine() {
       azzert.that(count("A"), is(1));
     }
+
     @Test public void countTwo() {
       azzert.that(count("A\nB\n"), is(2));
     }
+
     @Test public void countTwoVariant() {
       azzert.that(count("A\nB"), is(2));
     }
+
     @Test public void scatterSanity() {
       azzert.that(Lines.scatter("A").length, is(1));
     }
   }
+
   /** The string which this module considers as line separator. */
   public static final String END_OF_LINE_MARKER = "\n";
   /** A longer and more meaningful name for the array of length zero with
    * {@link String} elements. */
   public static final String[] NO_LINES = new String @NonNull [0];
+
   static void assertFalse(final String reason, final boolean b) {
     azzert.nay(reason, b);
   }
+
   /** Counts the number of liens in a given text
    * @param text count the number of lines in this parameter
    * @return the number of lines in the parameter */
   public static int count(final @Nullable String text) {
     return Lines.scatter(text).length;
   }
+
   /** Builds text from an array of lines
    * @param lines what needs to be concatenated
    * @return the parameters, concatenated together, with
@@ -69,6 +78,7 @@ public enum Lines {
   public static String gather(final String... lines) {
     return separate.these(lines).by(END_OF_LINE_MARKER);
   }
+
   /** Breaks text into lines
    * @param text some string of characters
    * @return the parameter, split into an array if lines

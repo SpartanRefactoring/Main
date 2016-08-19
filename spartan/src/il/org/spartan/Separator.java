@@ -28,6 +28,7 @@ public final class Separator {
     for (final String a : args)
       System.out.print(s + a);
   }
+
   /** TODO Javadoc(2016): automatically generated for method
    * <code>separateBy</code>
    * @param is JD
@@ -43,6 +44,7 @@ public final class Separator {
       $ += s + new Integer(i).toString();
     return $;
   }
+
   /** TODO Javadoc(2016): automatically generated for method
    * <code>separateBy</code> returning String
    * @param <T> JD
@@ -53,6 +55,7 @@ public final class Separator {
   public static <T> String separateBy(final String between, final T[] ts) {
     return wrap("", "", ts, between);
   }
+
   /** TODO Javadoc(2016): automatically generated for method <code>wrap</code>
    * @param <T> JD
    * @param wrap TODO
@@ -63,6 +66,7 @@ public final class Separator {
   public static <T> String wrap(final String wrap, final Iterable<T> ts, final String between) {
     return wrap(wrap, wrap, ts, between);
   }
+
   /** TODO Javadoc(2016): automatically generated for method <code>wrap</code>
    * @param <T> JD
    * @param begin what to place before the items
@@ -80,6 +84,7 @@ public final class Separator {
       $.append(s).append(t);
     return as.string($.append(end));
   }
+
   /** @param <T> JD
    * @param begin what to place before the items
    * @param end what to place after the items
@@ -95,18 +100,22 @@ public final class Separator {
       $.append(s).append(t);
     return as.string($.append(end));
   }
+
   private boolean first = true;
   private final String s;
+
   /** Instantiates this class.
    * @param c JD */
   public Separator(final char c) {
     this("" + c);
   }
+
   /** Instantiates this class.
    * @param s JD */
   public Separator(final String s) {
     this.s = s;
   }
+
   @Override public String toString() {
     if (!first)
       return s;

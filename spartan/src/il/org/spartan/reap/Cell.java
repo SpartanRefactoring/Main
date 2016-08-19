@@ -52,6 +52,7 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
     @FunctionalInterface interface Function3<T1, T2, T3, R> {
       R apply(T1 ¢1, T2 ¢2, T3 ¢3);
     }
+
     /** @return never! The <code><b>none</b></code> type. There is no legal
      *         value that this function can return, since the type
      *         <code>@NonNull</code> {@link Void} is empty. (
@@ -62,6 +63,7 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
       throw new RuntimeException();
     }
   }
+
   /** TODO */
   public static Set<Cell<?>> trace;
   /** The last value computed for this cell */
@@ -69,13 +71,16 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
   /** other cells that depend on this cell */
   final List<Cell<?>> dependents = new ArrayList<>();
   long version = 0;
+
   /** @return the last value computed or set for this cell. */
   public final T cache() {
     return cache;
   }
+
   void cache(@SuppressWarnings("hiding") final T cache) {
     this.cache = cache;
   }
+
   @SuppressWarnings("unchecked") @Override protected Cell<T> clone() {
     try {
       return (Cell<T>) super.clone();
@@ -83,8 +88,10 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
       return null;
     }
   }
+
   /** see @see java.util.function.Supplier#get() (auto-generated) */
   @Override public abstract @Nullable T get();
+
   /** Used for fluent API, synonym of {@link Cell#set(Object)}. sets the current
    * value of this cell
    * @param t JD
@@ -92,12 +99,14 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
   public final Cell<T> of(final T t) {
     return set(t);
   }
+
   private final long oldestDependent() {
     long $ = 0;
     for (final Cell<?> c : dependents)
       $ = max($, c.version);
     return $;
   }
+
   /** sets the current value of this cell
    * @param t JD
    * @return <code><b>this</b></code> */
@@ -107,17 +116,20 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
     version = oldestDependent() + 1; // Invalidate all dependents
     return this;
   }
+
   /** template function to be implemented by clients; normally an ingredient is
    * always updated and a dish is updated if all its ingredients are updated,
    * and the recipe was applied <i>after</i> all the ingredients where updated.
    * @return <code><b>true</b></code> <i>iff</i> the contents of the cache
    *         stored in this node is updated. */
   public abstract boolean updated();
+
   /** by overriding this function, inheriting classes can ask to be notified
    * when this cell was set. */
   void uponForcedSet() {
     // empty by default
   }
+
   protected long version() {
     return version;
   }
