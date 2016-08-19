@@ -27,7 +27,7 @@ public enum Funcs {
     }
   };
 
-  public static BooleanLiteral asBooleanLiteral(ASTNode $) {
+  public static BooleanLiteral asBooleanLiteral(final ASTNode $) {
     return !is($, BOOLEAN_LITERAL) ? null : (BooleanLiteral) $;
   }
 
@@ -83,91 +83,91 @@ public enum Funcs {
     return !(¢ instanceof InfixExpression) ? null : asComparison((InfixExpression) ¢);
   }
 
-  static boolean isLiteral(ASTNode ¢, boolean b) {
+  static boolean isLiteral(final ASTNode ¢, final boolean b) {
     return isLiteral(asBooleanLiteral(¢), b);
   }
 
-  static boolean isLiteral(final ASTNode ¢, double d) {
+  static boolean isLiteral(final ASTNode ¢, final double d) {
     return isLiteral(asNumberLiteral(¢), d);
   }
 
-  static boolean isLiteral(final ASTNode ¢, long l) {
+  static boolean isLiteral(final ASTNode ¢, final long l) {
     return isLiteral(asNumberLiteral(¢), l);
   }
 
-  static boolean isLiteral(final ASTNode ¢, String s) {
+  static boolean isLiteral(final ASTNode ¢, final String s) {
     return isLiteral(asStringLiteral(¢), s);
   }
 
   public static boolean isEmptyStringLiteral(final ASTNode ¢) {
-    return isLiteral((¢), "");
+    return isLiteral(¢, "");
   }
 
   public static boolean isLiteralZero(final ASTNode ¢) {
-    return isLiteral((¢), 0);
+    return isLiteral(¢, 0);
   }
 
   public static boolean isLiteralOne(final ASTNode ¢) {
-    return isLiteral((¢), 1);
+    return isLiteral(¢, 1);
   }
 
   public static boolean isLiteralTrue(final ASTNode ¢) {
-    return isLiteral((¢), true);
+    return isLiteral(¢, true);
   }
 
   public static boolean isLiteralFalse(final ASTNode ¢) {
-    return isLiteral((¢), false);
+    return isLiteral(¢, false);
   }
 
-  public static StringLiteral asStringLiteral(ASTNode ¢) {
-    return !(is(¢, STRING_LITERAL)) ? null : (StringLiteral) ¢;
+  public static StringLiteral asStringLiteral(final ASTNode ¢) {
+    return !is(¢, STRING_LITERAL) ? null : (StringLiteral) ¢;
   }
 
-  private static boolean isLiteral(final BooleanLiteral ¢, boolean b) {
+  private static boolean isLiteral(final BooleanLiteral ¢, final boolean b) {
     return ¢ != null && ¢.booleanValue() == b;
   }
 
-  private static boolean isLiteral(final NumberLiteral ¢, double d) {
+  private static boolean isLiteral(final NumberLiteral ¢, final double d) {
     return ¢ != null && isLiteral(¢.getToken(), d);
   }
 
-  private static boolean isLiteral(final NumberLiteral ¢, int i) {
+  private static boolean isLiteral(final NumberLiteral ¢, final int i) {
     return ¢ != null && isLiteral(¢.getToken(), i);
   }
 
-  private static boolean isLiteral(final NumberLiteral ¢, long l) {
+  private static boolean isLiteral(final NumberLiteral ¢, final long l) {
     return isLiteral(¢.getToken(), l);
   }
 
-  private static boolean isLiteral(String token, double d) {
+  private static boolean isLiteral(final String token, final double d) {
     try {
       return Double.parseDouble(token) == d;
-    } catch (@SuppressWarnings("unused") IllegalArgumentException __) {
+    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
       return false;
     }
   }
 
-  private static boolean isLiteral(String token, int i) {
+  private static boolean isLiteral(final String token, final int i) {
     try {
       return Integer.parseInt(token) == i;
-    } catch (@SuppressWarnings("unused") IllegalArgumentException __) {
+    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
       return false;
     }
   }
 
-  private static boolean isLiteral(String token, long l) {
+  private static boolean isLiteral(final String token, final long l) {
     try {
       return Long.parseLong(token) == l;
-    } catch (@SuppressWarnings("unused") IllegalArgumentException __) {
+    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
       return false;
     }
   }
 
-  static boolean isLiteral(StringLiteral ¢, String s) {
+  static boolean isLiteral(final StringLiteral ¢, final String s) {
     return ¢ != null && ¢.equals(s);
   }
 
-  static boolean isLiteral(final ASTNode ¢, int i) {
+  static boolean isLiteral(final ASTNode ¢, final int i) {
     return isLiteral(asNumberLiteral(¢), i);
   }
 
