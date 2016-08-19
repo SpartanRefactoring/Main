@@ -1710,16 +1710,6 @@ import il.org.spartan.refactoring.utils.*;
         .to("int f(){int $=0;for(int i:X)$+=f(i);return $;}");
   }
 
-  enum X {
-    A {
-      final void f() {
-      }
-
-      final static void g() {
-      }
-    }
-  }
-
   @Test public void issue51g() {
     trimming("abstract abstract interface a"//
         + "{}").to("interface a {}");

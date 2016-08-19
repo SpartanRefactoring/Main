@@ -121,9 +121,14 @@ public enum extract {
         return expression((CastExpression) n);
       case ASTNode.METHOD_INVOCATION:
         return expression((MethodInvocation) n);
+      case ASTNode.PARENTHESIZED_EXPRESSION:
+        return expression((ParenthesizedExpression) n);
       default:
         return null;
     }
+  }
+  public static Expression expression(final ParenthesizedExpression $) {
+    return core($);
   }
 
   public static Expression expression(final CastExpression $) {
