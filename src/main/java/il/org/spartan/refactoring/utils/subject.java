@@ -66,7 +66,7 @@ import il.org.spartan.*;
       return $;
     }
     /** Create a new {@link ReturnStatement} which returns our operand
-     * @return the new return statement */
+     * @return  new return statement */
     public ReturnStatement toReturn() {
       final ReturnStatement $ = ast.newReturnStatement();
       $.setExpression(inner);

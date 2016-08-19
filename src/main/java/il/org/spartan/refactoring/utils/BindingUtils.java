@@ -11,7 +11,7 @@ import org.eclipse.jdt.internal.corext.dom.*;
  * @since 2016-04-24 */
 @SuppressWarnings("restriction") public class BindingUtils {
   /** @param n an {@link ASTNode}
-   * @return the type in which n is placed, or null if there is none */
+   * @return  type in which n is placed, or null if there is none */
   public static ITypeBinding container(final ASTNode n) {
     final ASTNode $ = containerType(n);
     return eval(() -> ((TypeDeclaration) $).resolveBinding()).when($ != null && $ instanceof TypeDeclaration);
@@ -28,7 +28,7 @@ import org.eclipse.jdt.internal.corext.dom.*;
    * @param n original {@link ASTNode} containing the method invocation. Used in
    *        order to determine the context in which the method is being used
    * @param u current {@link CompilationUnit}
-   * @return the method's binding if it is visible from context, else null */
+   * @return  method's binding if it is visible from context, else null */
   public static IMethodBinding getVisibleMethod(final ITypeBinding b, final String mn, final ITypeBinding[] bs, final ASTNode n,
       final CompilationUnit u) {
     if (b == null)

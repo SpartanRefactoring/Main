@@ -45,7 +45,7 @@ public enum Wrap {
   }
   /** Finds the most appropriate Wrap for a given code fragment
    * @param codeFragment JD
-   * @return the most appropriate Wrap, or null, if the parameter could not be
+   * @return  most appropriate Wrap, or null, if the parameter could not be
    *         parsed appropriately. */
   public static Wrap find(final String codeFragment) {
     for (final Wrap $ : WRAPS)
@@ -102,13 +102,13 @@ public enum Wrap {
   }
   /** Remove a wrap from around a phrase
    * @param codeFragment a wrapped program phrase
-   * @return the unwrapped phrase */
+   * @return  unwrapped phrase */
   public final String off(final String codeFragment) {
     return removeSuffix(removePrefix(codeFragment, before), after);
   }
   /** Place a wrap around a phrase
    * @param codeFragment some program phrase
-   * @return the wrapped phrase */
+   * @return  wrapped phrase */
   public final String on(final String codeFragment) {
     return before + codeFragment + after;
   }

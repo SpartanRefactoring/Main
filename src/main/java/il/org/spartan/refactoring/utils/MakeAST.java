@@ -90,7 +90,7 @@ public enum MakeAST {
   }
   /** Convert file contents into a {@link String}
    * @param f JD
-   * @return the entire contents of this file, as one string */
+   * @return  entire contents of this file, as one string */
   public static String string(final File f) {
     try (final BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(f)))) {
       final StringBuilder $ = new StringBuilder();
@@ -121,7 +121,7 @@ public enum MakeAST {
   }
   /** Parses a given {@link Document}.
    * @param d JD
-   * @return the {@link ASTNode} obtained by parsing */
+   * @return  {@link ASTNode} obtained by parsing */
   public final ASTNode from(final Document d) {
     return from(d.get());
   }

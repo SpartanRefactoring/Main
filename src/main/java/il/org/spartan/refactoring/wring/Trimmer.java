@@ -16,7 +16,7 @@ import il.org.spartan.refactoring.utils.*;
 public final class Trimmer extends Spartanization {
   /** Apply trimming repeatedly, until no more changes
    * @param from what to process
-   * @return the trimmed text */
+   * @return  trimmed text */
   public static String fixedPoint(final String from) {
     final Trimmer trimmer = new Trimmer();
     final Document $ = new Document(from);
