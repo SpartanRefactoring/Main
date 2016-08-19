@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.expose.*;
 
 import java.util.*;
 import java.util.function.*;
@@ -28,23 +29,21 @@ public class RedundantModifiers<N extends BodyDeclaration> extends Wring.Replace
   public static class OfAnnotation extends RedundantModifiers<AnnotationTypeDeclaration> { /* empty */
   }
 
-  // @formatter:on
-  public static class OfEnum extends RedundantModifiers<TypeDeclaration> { /* empty */
-  }
-
-  public static class OfField extends RedundantModifiers<FieldDeclaration> { /* empty */
-  }
-
-  //@formatter:off
-  public static class OfMethod extends RedundantModifiers<MethodDeclaration> { /* empty */ }
+  // @formatter:off
+  public static class OfEnum extends RedundantModifiers<TypeDeclaration> { /* empty */ }
+  public static class OfField extends RedundantModifiers<FieldDeclaration> { /* empty */ }
+  public static class OfMethod extends RedundantModifiers<MethodDeclaration> { /* empty */ } 
   public static class OfType extends RedundantModifiers<TypeDeclaration> { /* empty */ }
+  // @formatter: on
+
   private static Set<Modifier> matches(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ps) {
     final Set<Modifier> $ = new LinkedHashSet<>();
-    for (final IExtendedModifier m : expose.modifiers(¢))
+    for (final IExtendedModifier m : modifiers(¢))
       if (test(m, ps))
         $.add((Modifier) m);
     return $;
   }
+
   private static Set<Modifier> matches(final List<IExtendedModifier> ms, final Set<Predicate<Modifier>> ps) {
     final Set<Modifier> $ = new LinkedHashSet<>();
     for (final IExtendedModifier m : ms)
@@ -52,18 +51,21 @@ public class RedundantModifiers<N extends BodyDeclaration> extends Wring.Replace
         $.add((Modifier) m);
     return $;
   }
+
   private static Set<Modifier> matchess(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ps) {
-    return matches(expose.modifiers(¢), ps);
+    return matches(modifiers(¢), ps);
   }
+
   private static BodyDeclaration prune(final BodyDeclaration $, final Set<Predicate<Modifier>> ps) {
-    for (final Iterator<IExtendedModifier> ¢ = expose.modifiers($).iterator(); ¢.hasNext();)
+    for (final Iterator<IExtendedModifier> ¢ = modifiers($).iterator(); ¢.hasNext();)
       if (test(¢.next(), ps))
         ¢.remove();
     return $;
   }
+
   private static Set<Predicate<Modifier>> redundancies(final BodyDeclaration ¢) {
     final Set<Predicate<Modifier>> $ = new LinkedHashSet<>();
-    if (expose.modifiers(¢).isEmpty())
+    if (modifiers(¢).isEmpty())
       return $;
     if (isEnumDeclaration(¢))
       $.add(Modifier::isStatic);
@@ -94,9 +96,11 @@ public class RedundantModifiers<N extends BodyDeclaration> extends Wring.Replace
     }
     return $;
   }
+
   private static Set<Modifier> redundants(final BodyDeclaration ¢) {
     return matches(¢, redundancies(¢));
   }
+
   private static boolean test(final IExtendedModifier m, final Set<Predicate<Modifier>> ps) {
     return m instanceof Modifier && test((Modifier) m, ps);
   }

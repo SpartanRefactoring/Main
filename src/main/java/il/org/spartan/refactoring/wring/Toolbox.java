@@ -130,6 +130,7 @@ public class Toolbox {
         .add(EnumDeclaration.class, new EnumClean(), null) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover(), null) //
         .add(ReturnStatement.class, new ReturnLastInMethod()) //
+        .add(FieldDeclaration.class, new RedundantModifiers.OfField()) //
         .add(CastExpression.class, //
             new CastToDouble2Multiply1(), //
             new CastToLong2Multiply1L()) //

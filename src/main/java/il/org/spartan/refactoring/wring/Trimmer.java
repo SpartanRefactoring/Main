@@ -96,6 +96,9 @@ public final class Trimmer extends Spartanization {
     @Override public final boolean visit(final InfixExpression ¢) {
       return cautiousGo(¢);
     }
+    @Override public final boolean visit(final FieldDeclaration ¢) {
+      return cautiousGo(¢);
+    }
     @Override public final boolean visit(final MethodDeclaration ¢) {
       return cautiousGo(¢);
     }
