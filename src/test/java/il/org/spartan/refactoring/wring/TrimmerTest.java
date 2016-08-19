@@ -3228,7 +3228,7 @@ import il.org.spartan.refactoring.utils.*;
   @Test public void RedundantModifiereInterfaceMethods2() {
     trimming("public interface Int1 {\n"//
         +"public abstract void add();\n"//
-        +"void remove()\n; "//
+        +"abstract void remove()\n; "//
         +"}").to("public interface Int1 {\n"//
             +"void add();\n"//
             +"void remove()\n; "//
@@ -3243,5 +3243,43 @@ import il.org.spartan.refactoring.utils.*;
             +"void remove()\n; "//
             +"}");
   }
-  
+
+  @Test public void RedundantModifiereFinalClassMethods() {
+    trimming("final class ClassTest {\n"//
+        +"final void remove();\n"//
+        +"}").to("final class ClassTest {\n"//
+            +"void remove();\n "//
+            +"}");
+  }
+  @Test public void RedundantModifiereFinalClassMethodsOnlyRightModifierRemoved() {
+    trimming("final class ClassTest {\n"//
+        +"public final void remove();\n"//
+        +"}").to("final class ClassTest {\n"//
+            +"public void remove();\n "//
+            +"}");
+  }
+  @Test public void RedundantModifiereEnums() {
+    trimming("public class ClassTest {\n"//
+        +"static enum Day {\n"//
+        +"SUNDAY, MONDAY\n"//
+        +"}").to("public class ClassTest {\n"//
+            +"enum Day {\n"//
+            +"SUNDAY, MONDAY\n"//
+            +"}");
+  }
+  @Test public void RedundantModifiereEnumsOnlyRightModifierRemoved() {
+    trimming("public class ClassTest {\n"//
+        +"private static enum Day {\n"//
+        +"SUNDAY, MONDAY\n"//
+        +"}").to("public class ClassTest {\n"//
+            +"private enum Day {\n"//
+            +"SUNDAY, MONDAY\n"//
+            +"}");
+  }
+  @Test public void RedundantModifiereConstructors1() {
+    trimming("public class ClassTest {\n"//
+        +"public  ClassTest(){}\n"//
+        +"}").to("");
+  }
+
 }
