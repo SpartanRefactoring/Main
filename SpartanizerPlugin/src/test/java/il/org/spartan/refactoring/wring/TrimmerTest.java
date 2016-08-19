@@ -997,19 +997,18 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test public void IfBarFooElseBazFooExtractUndefinedSuffix() {
     trimming("" //
-        + "public static void f() {\n" //
+        + "public final static final void f() {\n" //
         + "  if (true) {\n" //
         + "    int i = 0;\n" //
         + "    System.out.println(i + 0);\n" //
         + "    ++i;\n" //
         + "  } else {\n" //
         + "    int i = 1;\n" //
-        + "    System.out.println(i + 1);\n" //
+        + "    System.out.println(i * 1);\n" //
         + "    ++i;\n" //
         + "  }\n" //
-        + "}").to("");
-  }
-
+        + "}");
+  } 
   @Test public void ifBugSecondTry() {
     trimming("" + //
         " final int c = 2;\n" + //

@@ -284,7 +284,7 @@ import il.org.spartan.refactoring.spartanizations.*;
   @Test(timeout = 2000) public void ternarize04() {
     assertConvertsTo(
         "  int res = 0;if (s.equals(532))    res += 6;else    res += 9;/*if (s.equals(532))    res += 6;else    res += 9;*/   return res;",
-        "return 0+(s.equals(532)?6:9);");
+        "return (s.equals(532)?6:9);");
   }
 
   @Test(timeout = 2000) public void ternarize06() {
@@ -341,13 +341,13 @@ import il.org.spartan.refactoring.spartanizations.*;
             "      System.out.println(tH3 + res);\n" + //
             "    else\n" + //
             "      System.out.println(h2A+ res + a + s);",
-        "System.out.println(X.equals(X)?tH3+X:h2A+X+0+X);");
+        "System.out.println(X.equals(X)?tH3+X:h2A+X+X);");
   }
 
   @Test(timeout = 2000) public void ternarize23() {
     assertConvertsTo(//
         "int a=0;if (s.equals(532))   a+=y(2)+10;else a+=r(3)-6;", //
-        "int a=0+(s.equals(532)?y(2)+10:r(3)-6);");
+        "int a=(s.equals(532)?y(2)+10:r(3)-6);");
   }
 
   @Test(timeout = 2000) public void ternarize24() {
