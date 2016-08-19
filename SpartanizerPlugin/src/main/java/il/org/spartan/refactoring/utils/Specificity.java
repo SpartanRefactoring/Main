@@ -19,7 +19,6 @@ public class Specificity implements Comparator<Expression> {
     return Level.defined(e);
   }
 
-
   /** A comparison of two {@link Expression} by their level of specificity.
    * @param e1 JD
    * @param e2 JD
@@ -61,16 +60,6 @@ public class Specificity implements Comparator<Expression> {
         return Is.this_(n);
       }
     },
-    TRUE_LITERAL {
-      @Override boolean includes(final ASTNode ¢) {
-        return is(¢, true);
-      }
-    },
-    FALSE_LITERAL {
-      @Override boolean includes(final ASTNode ¢) {
-        return is(¢, false);
-      }
-    },
     ZERO_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
         return isLiteral(asNumberLiteral(¢), 0);
@@ -95,17 +84,16 @@ public class Specificity implements Comparator<Expression> {
       @Override boolean includes(final ASTNode ¢) {
         return isEmptyStringLiteral(¢);
       }
-<<<<<<< b67b65cd2e60e8d8282df4e23c701b5b407a3943
-    }, TRUE_LITERAL{
+    },
+    TRUE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        return isLiteral(¢, true);
+        return isLiteralTrue(¢);
       }
-    }, FALSE_LITERAL{
+    },
+    FALSE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        return isLiteral(¢, false);
+        return isLiteralFalse(¢);
       }
-=======
->>>>>>> Fix rogue files
     },;
     static boolean defined(final Expression e) {
       return of(e) != values().length;
@@ -118,54 +106,7 @@ public class Specificity implements Comparator<Expression> {
           return l.ordinal();
       return values().length;
     }
-<<<<<<< b67b65cd2e60e8d8282df4e23c701b5b407a3943
-=======
 
-    static boolean is(final ASTNode ¢, String s) {
-      return is(asStringLiteral(¢), s);
-    }
-
-    private static boolean is(final BooleanLiteral ¢, boolean b) {
-      return ¢ != null && ¢.booleanValue() == b;
-    }
-
-    private static boolean is(final NumberLiteral ¢, double d) {
-      return ¢ != null && is(¢.getToken(), d);
-    }
-
-    private static boolean is(final NumberLiteral ¢, int i) {
-      return ¢ != null && is(¢.getToken(), i);
-    }
-
-    private static boolean is(final NumberLiteral ¢, long l) {
-      return is(¢.getToken(), l);
-    }
-
-    private static boolean is(String token, double d) {
-      try {
-        return Double.parseDouble(token) == d;
-      } catch (@SuppressWarnings("unused") IllegalArgumentException __) {
-        return false;
-      }
-    }
-
-    private static boolean is(String token, int i) {
-      try {
-        return Integer.parseInt(token) == i;
-      } catch (@SuppressWarnings("unused") IllegalArgumentException __) {
-        return false;
-      }
-    }
-
-    private static boolean is(String token, long l) {
-      try {
-        return Long.parseLong(token) == l;
-      } catch (@SuppressWarnings("unused") IllegalArgumentException __) {
-        return false;
-      }
-    }
-
->>>>>>> Fix rogue files
     abstract boolean includes(final ASTNode ¢);
   }
 }
