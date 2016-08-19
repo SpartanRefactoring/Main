@@ -32,49 +32,70 @@ public class Specificity implements Comparator<Expression> {
 
   enum Level {
     NULL {
-      @Override boolean includes(final ASTNode ¢) {
-        return Is.null_(¢);
+      @Override boolean includes(final ASTNode n) {
+        return Is.null_(n);
+      }
+    },
+    BOOLEAN {
+      @Override boolean includes(final ASTNode n) {
+        return Is.booleanLiteral(n);
       }
     },
     LITERAL {
-      @Override boolean includes(final ASTNode ¢) {
-        return Is.literal(¢);
+      @Override boolean includes(final ASTNode n) {
+        return Is.literal(n);
       }
     },
     CONSTANT {
-      @Override boolean includes(final ASTNode ¢) {
-        return Is.literal(operand(asPrefixExpression(¢)));
+      @Override boolean includes(final ASTNode n) {
+        return n.getNodeType() == PREFIX_EXPRESSION && Is.literal(extract.core(((PrefixExpression) n).getOperand()));
       }
     },
     CLASS_CONSTANT {
-      @Override boolean includes(final ASTNode ¢) {
-        return ¢.getNodeType() == SIMPLE_NAME && ((SimpleName) ¢).getIdentifier().matches("[A-Z_0-9]+");
+      @Override boolean includes(final ASTNode n) {
+        return n.getNodeType() == SIMPLE_NAME && ((SimpleName) n).getIdentifier().matches("[A-Z_0-9]+");
       }
     },
-    THIS{
-      @Override boolean includes(final ASTNode ¢) {
-        return Is.this_(¢);
+    THIS {
+      @Override boolean includes(final ASTNode n) {
+        return Is.this_(n);
       }
-    }, ZERO_LITERAL{
+    },
+    TRUE_LITERAL {
+      @Override boolean includes(final ASTNode ¢) {
+        return is(¢, true);
+      }
+    },
+    FALSE_LITERAL {
+      @Override boolean includes(final ASTNode ¢) {
+        return is(¢, false);
+      }
+    },
+    ZERO_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
         return isLiteral(asNumberLiteral(¢), 0);
       }
-    }, ONE_LITERAL{
+    },
+    ONE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
         return isLiteral(asNumberLiteral(¢), 1);
       }
-    }, ZERO_DOUBLE_LITERAL{
+    },
+    ZERO_DOUBLE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
         return isLiteral((¢), 0.0);
       }
-    }, ONE_DOUBLE_LITERAL{
+    },
+    ONE_DOUBLE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
         return isLiteral((¢), 1.0);
       }
-    }, EMPTY_STRING{
+    },
+    EMPTY_STRING {
       @Override boolean includes(final ASTNode ¢) {
         return isEmptyStringLiteral(¢);
       }
+<<<<<<< b67b65cd2e60e8d8282df4e23c701b5b407a3943
     }, TRUE_LITERAL{
       @Override boolean includes(final ASTNode ¢) {
         return isLiteral(¢, true);
@@ -83,6 +104,8 @@ public class Specificity implements Comparator<Expression> {
       @Override boolean includes(final ASTNode ¢) {
         return isLiteral(¢, false);
       }
+=======
+>>>>>>> Fix rogue files
     },;
     static boolean defined(final Expression e) {
       return of(e) != values().length;
@@ -95,6 +118,54 @@ public class Specificity implements Comparator<Expression> {
           return l.ordinal();
       return values().length;
     }
+<<<<<<< b67b65cd2e60e8d8282df4e23c701b5b407a3943
+=======
+
+    static boolean is(final ASTNode ¢, String s) {
+      return is(asStringLiteral(¢), s);
+    }
+
+    private static boolean is(final BooleanLiteral ¢, boolean b) {
+      return ¢ != null && ¢.booleanValue() == b;
+    }
+
+    private static boolean is(final NumberLiteral ¢, double d) {
+      return ¢ != null && is(¢.getToken(), d);
+    }
+
+    private static boolean is(final NumberLiteral ¢, int i) {
+      return ¢ != null && is(¢.getToken(), i);
+    }
+
+    private static boolean is(final NumberLiteral ¢, long l) {
+      return is(¢.getToken(), l);
+    }
+
+    private static boolean is(String token, double d) {
+      try {
+        return Double.parseDouble(token) == d;
+      } catch (@SuppressWarnings("unused") IllegalArgumentException __) {
+        return false;
+      }
+    }
+
+    private static boolean is(String token, int i) {
+      try {
+        return Integer.parseInt(token) == i;
+      } catch (@SuppressWarnings("unused") IllegalArgumentException __) {
+        return false;
+      }
+    }
+
+    private static boolean is(String token, long l) {
+      try {
+        return Long.parseLong(token) == l;
+      } catch (@SuppressWarnings("unused") IllegalArgumentException __) {
+        return false;
+      }
+    }
+
+>>>>>>> Fix rogue files
     abstract boolean includes(final ASTNode ¢);
   }
 }
