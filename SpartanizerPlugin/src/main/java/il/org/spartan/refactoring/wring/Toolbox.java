@@ -29,8 +29,9 @@ public class Toolbox {
       }
       return this;
     }
+
     /** Terminate a fluent API chain.
-     * @return  newly created object */
+     * @return newly created object */
     public Toolbox seal() {
       return this;
     }
@@ -45,6 +46,7 @@ public class Toolbox {
         return $;
     return null;
   }
+
   /** Initialize this class' internal instance object */
   public static void generate() {
     instance = new Maker()//
@@ -133,13 +135,15 @@ public class Toolbox {
         .add(FieldDeclaration.class, new RedundantModifiers.OfField()) //
         .add(CastExpression.class, //
             new CastToDouble2Multiply1(), //
-            new CastToLong2Multiply1L()) //
+            new CastToLong2Multiply1L(), //
+            null) //
         .add(NormalAnnotation.class, //
             new AnnotationDiscardValueName(), //
             new AnnotationRemoveEmptyParentheses(), //
             null) //
         .seal();
   }
+
   public static Toolbox instance() {
     return instance;
   }
@@ -148,16 +152,18 @@ public class Toolbox {
 
   /** Find the first {@link Wring} appropriate for an {@link ASTNode}
    * @param n JD
-   * @return  first {@link Wring} for which the parameter is within scope, or
+   * @return first {@link Wring} for which the parameter is within scope, or
    *         <code><b>null</b></code> if no such {@link Wring} is found. */
   public <N extends ASTNode> Wring<N> find(final N n) {
     return find(n, get(n));
   }
+
   @SuppressWarnings("unchecked") <N extends ASTNode> List<Wring<N>> get(final Class<? extends ASTNode> n) {
     if (!inner.containsKey(n))
       inner.put(n, new ArrayList<>());
     return (List<Wring<N>>) (List<?>) inner.get(n);
   }
+
   <N extends ASTNode> List<Wring<N>> get(final N n) {
     return get(n.getClass());
   }

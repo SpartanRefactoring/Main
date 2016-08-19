@@ -375,11 +375,11 @@ public abstract class Wring<N extends ASTNode> implements Kind {
   boolean eligible(@SuppressWarnings("unused") final N __) {
     return true;
   }
-  Rewrite make(final N n) {
+  Rewrite make (final N n) {
     return make(n, null);
   }
-  Rewrite make(final N n, @SuppressWarnings("unused") final ExclusionManager __) {
-    return make(n);
+  Rewrite make(final N n, final ExclusionManager m) {
+    return m != null && m.isExcluded(n) ? null : make(n);
   }
   /** Determines whether this {@link Wring} object is not applicable for a given
    * {@link PrefixExpression} is within the "scope" of this . Note that a

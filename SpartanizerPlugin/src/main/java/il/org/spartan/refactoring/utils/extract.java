@@ -315,10 +315,10 @@ public enum extract {
     return b == null ? null : next(s, extract.statements(b));
   }
   public static Expression operand(final PrefixExpression ¢) {
-    return core(¢.getOperand());
+    return ¢ == null ? null :core(¢.getOperand());
   }
   public static Expression operand(final PostfixExpression ¢) {
-    return core(¢.getOperand());
+    return ¢ == null ? null :core(¢.getOperand());
   }
   /** Makes a list of all operands of an expression, comprising the left
    * operand, the right operand, followed by extra operands when they exist.
