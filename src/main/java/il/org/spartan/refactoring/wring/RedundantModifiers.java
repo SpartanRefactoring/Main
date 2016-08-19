@@ -30,6 +30,7 @@ public class RedundantModifiers<N extends BodyDeclaration> extends Wring.Replace
   }
 
   // @formatter:off
+  public static class OfEnumConstant extends RedundantModifiers<EnumConstantDeclaration> { /* empty */ }
   public static class OfEnum extends RedundantModifiers<TypeDeclaration> { /* empty */ }
   public static class OfField extends RedundantModifiers<FieldDeclaration> { /* empty */ }
   public static class OfMethod extends RedundantModifiers<MethodDeclaration> { /* empty */ }
