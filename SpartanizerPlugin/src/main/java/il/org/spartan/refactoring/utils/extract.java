@@ -67,6 +67,7 @@ public enum extract {
           , ANNOTATION_TYPE_DECLARATION //
           , ENUM_DECLARATION //
           , TYPE_DECLARATION //
+          , ENUM_CONSTANT_DECLARATION //
       ))
         return $;
     return null;
