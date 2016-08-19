@@ -21,12 +21,12 @@ public class Hamlet {
   }
 
   @Test public void seriesA01() {
-    @Nullable Boolean first = hamlet.¢();
+    @Nullable final Boolean first = hamlet.¢();
     azzert.notNull(first);
     azzert.notNull(hamlet.cache);
-    @Nullable Boolean second = hamlet.get();
-    @Nullable Boolean third = hamlet.get();
-    @Nullable Boolean fourth = hamlet.get();
+    @Nullable final Boolean second = hamlet.get();
+    @Nullable final Boolean third = hamlet.get();
+    @Nullable final Boolean fourth = hamlet.get();
     azzert.that("" + first, is("false"));
     azzert.that("" + second, is("true"));
     azzert.that("" + third, is("false"));

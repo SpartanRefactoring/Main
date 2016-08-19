@@ -22,6 +22,14 @@ import il.org.spartan.*;
  * @since 2014-06-03
  * @param <T> some arbitrary type */
 public abstract class PureIterator<T> implements Iterator<T> {
+  /** This <code><b>final</b></code> implementation of the method, prevents
+   * descendants from giving {link #remove} semantics other than immediately
+   * throwing a fresh instance of {@link IllegalArgumentException}.
+   * @see java.util.Iterator#remove() */
+  @Override public final void remove() {
+    throw new IllegalArgumentException();
+  }
+
   /** @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @param <T> JD
    * @since 2016 */
@@ -30,15 +38,15 @@ public abstract class PureIterator<T> implements Iterator<T> {
      * content only after {@link #hasNext} returned true. */
     private @Nullable T next = null;
 
-    protected final void clearNext() {
-      cantBeNull(next);
-      next = null;
-    }
-
     @Override public final T next() {
       final @NonNull T $ = cantBeNull(next);
       clearNext();
       return $;
+    }
+
+    protected final void clearNext() {
+      cantBeNull(next);
+      next = null;
     }
 
     protected final boolean setNext(final T next) {
@@ -77,13 +85,5 @@ public abstract class PureIterator<T> implements Iterator<T> {
     @Test(expected = IllegalArgumentException.class) public void tryToRemove() {
       remove();
     }
-  }
-
-  /** This <code><b>final</b></code> implementation of the method, prevents
-   * descendants from giving {link #remove} semantics other than immediately
-   * throwing a fresh instance of {@link IllegalArgumentException}.
-   * @see java.util.Iterator#remove() */
-  @Override public final void remove() {
-    throw new IllegalArgumentException();
   }
 }

@@ -343,26 +343,6 @@ import il.org.spartan.lazy.Cookbook.*;
      *         <li>returns <code><b>this</b></code>
      *         </ol>
     */
-    public <@Nullable A> Property<@Nullable T> bind2(final Function0<T> f) {
-      this.ϑ = (Function0<@Nullable T>) () -> f.¢(); // Set the encapsulated
-                                                     // function
-      prerequisites.clear();
-      ingredients(this);
-      return this;
-    }
-
-    /** Used for fluent API; sets the current value of this instance to a be a
-     * function taking one argument
-     * @param <A> argument's type
-     * @param f a one argument function that returns a new value for this
-     *        instance
-     * @return a function with one argument named {@link Binder#to(Object...)}
-     *         which when applied
-     *         <ol>
-     *         <li>changes the current instance
-     *         <li>returns <code><b>this</b></code>
-     *         </ol>
-    */
     public <@Nullable A> Property<@Nullable T> bind(final Function0<T> f) {
       return ϑ(() -> f.¢());
     }
@@ -423,6 +403,26 @@ import il.org.spartan.lazy.Cookbook.*;
      *         <code><b>this</b></code> */
     public <@Nullable A1, @Nullable A2, @Nullable A3, @Nullable A4> Binder4<T, A1, A2, A3, A4> bind(final Function4<T, A1, A2, A3, A4> f) {
       return (¢1, ¢2, ¢3, ¢4) -> ϑ(() -> f.ϑ(¢1.¢(), ¢2.¢(), ¢3.¢(), ¢4.¢()), ¢1, ¢2, ¢3, ¢4);
+    }
+
+    /** Used for fluent API; sets the current value of this instance to a be a
+     * function taking one argument
+     * @param <A> argument's type
+     * @param f a one argument function that returns a new value for this
+     *        instance
+     * @return a function with one argument named {@link Binder#to(Object...)}
+     *         which when applied
+     *         <ol>
+     *         <li>changes the current instance
+     *         <li>returns <code><b>this</b></code>
+     *         </ol>
+    */
+    public <@Nullable A> Property<@Nullable T> bind2(final Function0<T> f) {
+      this.ϑ = (Function0<@Nullable T>) () -> f.¢(); // Set the encapsulated
+                                                     // function
+      prerequisites.clear();
+      ingredients(this);
+      return this;
     }
 
     /** @return the last value computed or set for this instance. */
