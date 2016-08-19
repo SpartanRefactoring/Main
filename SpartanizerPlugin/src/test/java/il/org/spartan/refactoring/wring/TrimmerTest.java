@@ -3204,4 +3204,10 @@ import il.org.spartan.refactoring.utils.*;
   @Test public void xorSortClassConstantsAtEnd() {
     trimming("f(a,b,c,d) ^ BOB").to("");
   }
+  @Test public void RedundantModifiereSimple() {
+    trimming("abstract abstract interface a"//
+            +"{}").to("interface a {}");
+  }
+
+  
 }
