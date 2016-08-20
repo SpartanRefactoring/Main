@@ -19,29 +19,29 @@ public class Plugin extends AbstractUIPlugin implements IStartup {
 
   /** Add nature to one project */
   private static void addNature(final IProject p) throws CoreException {
-    final IProjectDescription description = p.getDescription();
-    final String[] natures = description.getNatureIds();
+    final IProjectDescription d = p.getDescription();
+    final String[] natures = d.getNatureIds();
     if (as.list(natures).contains(Nature.NATURE_ID))
       return; // Already got the nature
-    description.setNatureIds(append(natures, Nature.NATURE_ID));
-    p.setDescription(description, null);
+    d.setNatureIds(append(natures, Nature.NATURE_ID));
+    p.setDescription(d, null);
   }
 
   /** Add nature to all opened projects */
   private static void applyPluginToAllProjects() {
     for (final IProject p : ResourcesPlugin.getWorkspace().getRoot().getProjects())
-      if (p.isOpen())      try {
-
+      if (p.isOpen())
+        try {
           addNature(p);
-      } catch (final CoreException e) {
-        e.printStackTrace();
-      }
+        } catch (final CoreException e) {
+          log(e);
+        }
   }
 
   /** logs an error in the plugin
    * @param t an error */
   public static void log(final Throwable t) {
-    plugin.getLog().log(new Status(IStatus.ERROR, "org.spartan.refactoring", 0, t.getMessage(), t));
+    plugin.getLog().log(new Status(IStatus.ERROR, "il.org.spartan.refactoring", 0, t.getMessage(), t));
   }
 
   public static void refreshAllProjects() {
@@ -50,7 +50,7 @@ public class Plugin extends AbstractUIPlugin implements IStartup {
         if (p.isOpen())
           p.build(IncrementalProjectBuilder.FULL_BUILD, null);
       } catch (final CoreException e) {
-        e.printStackTrace();
+        log(e);
       }
   }
 
