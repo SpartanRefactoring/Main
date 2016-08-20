@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.utils.Utils.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -39,7 +40,7 @@ public final class IfLastInMethod extends Wring<IfStatement> implements Kind.Can
     if (Is.vacuousThen(s) || !Is.vacuousElse(s) || extract.statements(then(s)).size() < 2)
       return null;
     final Block b = asBlock(s.getParent());
-    return b == null || !lastIn(s, b.statements()) || !(b.getParent() instanceof MethodDeclaration) ? null : new Rewrite(description(s), s) {
+    return b == null || !lastIn(s, statements(b)) || !(b.getParent() instanceof MethodDeclaration) ? null : new Rewrite(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Wrings.insertAfter(s, extract.statements(then(s)), r, g);
         final IfStatement newIf = duplicate(s);

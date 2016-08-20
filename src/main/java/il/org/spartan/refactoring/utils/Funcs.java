@@ -285,23 +285,13 @@ public enum Funcs {
     return eval(() -> (PrefixExpression) ¢).when(¢ instanceof PrefixExpression);
   }
 
-  /** @param ¢ The node from which to return statement.
-   * @return null if it is not possible to extract the return statement. */
+  /** Determines whether a give {@link ASTNode} includes precisely one
+   * {@link Statement}, and return this statement.
+   * @param ¢ The node from which to return statement.
+   * @return single return statement contained in the parameter, or
+   *         <code><b>null</b></code> if no such value exists. */
   public static ReturnStatement asReturn(final ASTNode ¢) {
-    if (¢ == null)
-      return null;
-    switch (¢.getNodeType()) {
-      case ASTNode.BLOCK:
-        return asReturn((Block) ¢);
-      case ASTNode.RETURN_STATEMENT:
-        return (ReturnStatement) ¢;
-      default:
-        return null;
-    }
-  }
-
-  static ReturnStatement asReturn(final Block b) {
-    return b.statements().size() != 1 ? null : Funcs.asReturn((Statement) b.statements().get(0));
+    return asReturn(singleStatement(¢));
   }
 
   /** Down-cast, if possible, to {@link ReturnStatement}
@@ -500,7 +490,7 @@ public enum Funcs {
     return false;
   }
 
-  static boolean is(final ASTNode ¢, final int... types) {
+  public static boolean is(final ASTNode ¢, final int... types) {
     return ¢ != null && intIsIn(¢.getNodeType(), types);
   }
 
@@ -810,6 +800,18 @@ public enum Funcs {
       if (!Funcs.same(¢, e))
         return false;
     return true;
+  }
+
+  public static <T> T onlyOne(final List<T> ts) {
+    return ts == null || ts.size() != 1 ? null : ts.get(0);
+  }
+
+  public static <T> T first(final List<T> ts) {
+    return ts == null || ts.isEmpty() ? null : ts.get(0);
+  }
+
+  public static <T> T second(final List<T> ts) {
+    return ts == null || ts.size() < 2 ? null : ts.get(1);
   }
 
   /** Determine whether two lists of nodes are the same, in the sense that their

@@ -65,16 +65,12 @@ public enum MakeAST {
       return null;
     switch (n.getNodeType()) {
       case ASTNode.BLOCK:
-        return asReturn((Block) n);
+        return asReturn(n);
       case ASTNode.RETURN_STATEMENT:
         return (ReturnStatement) n;
       default:
         return null;
     }
-  }
-
-  private static ReturnStatement asReturn(final Block b) {
-    return b.statements().size() != 1 ? null : asReturn((Statement) b.statements().get(0));
   }
 
   /** Converts a boolean into a bit value

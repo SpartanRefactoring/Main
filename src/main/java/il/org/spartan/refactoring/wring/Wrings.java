@@ -3,6 +3,7 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.refactoring.utils.ExpressionComparator.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
+import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
@@ -35,7 +36,7 @@ public enum Wrings {
       return s;
     final Block b = subject.statement(s).toBlock();
     r.replace(s, b, g);
-    return (IfStatement) b.statements().get(0);
+    return (IfStatement) first(statements(b));
   }
 
   static Expression eliminateLiteral(final InfixExpression e, final boolean b) {
