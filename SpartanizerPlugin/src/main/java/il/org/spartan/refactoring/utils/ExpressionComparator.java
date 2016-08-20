@@ -1,5 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
+import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
@@ -64,7 +65,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
   }
 
   static int argumentsCompare(final MethodInvocation i1, final MethodInvocation i2) {
-    return i1.arguments().size() - i2.arguments().size();
+    return arguments(i1).size() - arguments(i2).size();
   }
 
   static int asBit(final boolean b) {
