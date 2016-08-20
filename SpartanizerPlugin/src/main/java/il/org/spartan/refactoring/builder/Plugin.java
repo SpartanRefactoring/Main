@@ -30,8 +30,8 @@ public class Plugin extends AbstractUIPlugin implements IStartup {
   /** Add nature to all opened projects */
   private static void applyPluginToAllProjects() {
     for (final IProject p : ResourcesPlugin.getWorkspace().getRoot().getProjects())
-      try {
-        if (p.isOpen())
+      if (p.isOpen())      try {
+
           addNature(p);
       } catch (final CoreException e) {
         e.printStackTrace();
