@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.utils.Utils.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -45,7 +46,7 @@ public final class IfLastInMethodThenEndingWithEmptyReturn extends Wring<IfState
 
   @Override Rewrite make(final IfStatement s, final ExclusionManager exclude) {
     final Block b = asBlock(s.getParent());
-    if (b == null || !(b.getParent() instanceof MethodDeclaration) || !lastIn(s, b.statements()))
+    if (b == null || !(b.getParent() instanceof MethodDeclaration) || !lastIn(s, statements(b)))
       return null;
     final ReturnStatement deleteMe = asReturnStatement(extract.lastStatement(then(s)));
     if (deleteMe == null || deleteMe.getExpression() != null)

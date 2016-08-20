@@ -100,7 +100,7 @@ class Conservative extends AbstractRenamePolicy {
     for (final Iterator<SimpleName> i = localVariables.iterator(); i.hasNext();)
       if (unused(i.next()))
         i.remove();
-    return localVariables.size() != 1 ? null : localVariables.get(0);
+    return first(localVariables);
   }
 
   private boolean unused(final SimpleName n) {

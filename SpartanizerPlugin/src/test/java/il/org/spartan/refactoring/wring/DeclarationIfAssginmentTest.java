@@ -135,7 +135,7 @@ public class DeclarationIfAssginmentTest {
     final List<VariableDeclarationFragment> x = VariableDeclarationFragementAndStatement.forbiddenSiblings(f);
     azzert.that(x.size(), greaterThan(0));
     azzert.that(x.size(), is(1));
-    final VariableDeclarationFragment b = x.get(0);
+    final VariableDeclarationFragment b = first(x);
     azzert.that(b.toString(), is("b"));
     final Of of = Collect.BOTH_SEMANTIC.of(b);
     azzert.notNull(of);

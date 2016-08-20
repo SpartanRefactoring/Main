@@ -4,6 +4,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.utils.*;
+
 public interface spartan {
   static String repeat(final int i, final char c) {
     return new String(new char[i]).replace('\0', c);
@@ -18,7 +20,7 @@ public interface spartan {
   }
 
   static String shorten(final List<? extends Type> ts) {
-    return ts == null || ts.size() != 1 ? null : shorten(ts.get(0));
+    return shorten(Utils.onlyOne(ts));
   }
 
   static String shorten(final Name n) {
