@@ -19,15 +19,12 @@ public final class InfixNeutralAdditionSubtruction extends ReplaceCurrentNode<In
     return "Remove all additions and substructions of 0 to and from " + e;
   }
   @Override ASTNode replacement(final InfixExpression e) {
-    //return e.getOperator() == PLUS ? replacementPlus(extract.allOperands(e), e) : e.getOperator() == MINUS ? replacementMinus(extract.allOperands(e), e) : null;
-    return e.getOperator() == MINUS ? replacementMinus(extract.allOperands(e), e) : e.getOperator() == PLUS ? replacementPlus(extract.allOperands(e), e) : null;
+    return e.getOperator() == MINUS ? replacementMinus(extract.allOperands(e)) : e.getOperator() == PLUS ? replacementPlus(extract.allOperands(e)) : null;
   }
-  private static ASTNode replacementPlus(final List<Expression> es, final InfixExpression e) {
-    System.out.println("" + e.getOperator());
+  private static ASTNode replacementPlus(final List<Expression> es) {
     return isLiteralZero(es.get(0)) ? duplicate(es.get(1)) : isLiteralZero(es.get(1)) ? duplicate(es.get(0)) : null;
   }
-  private static ASTNode replacementMinus(final List<Expression> es, final InfixExpression e) {
-    System.out.println("" + e.getOperator());
+  private static ASTNode replacementMinus(final List<Expression> es) {
     return isLiteralZero(es.get(1)) ? duplicate(es.get(0)) : null;
   }
   private static boolean isLiteralZero(final Expression ¢) {
