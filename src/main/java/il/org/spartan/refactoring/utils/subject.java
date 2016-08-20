@@ -37,7 +37,7 @@ import il.org.spartan.*;
     /** Make a deep copy of statement and assign it to ast, if the statement
      * exists
      * @param s a Statement
-     * @return a copy of the statement s if it is'nt null, elese returns null
+     * @return a copy of the statement s if it is'nt null, else returns null
      * @see rebase
      * @see duplicate */
     Statement claim(final Statement s) {
@@ -72,7 +72,7 @@ import il.org.spartan.*;
      * expression is a combination of the expression inner with a postfix
      * operator
      * @param o a postfix operator
-     * @return the expression inner togther with the postfix operator o */
+     * @return the expression inner together with the postfix operator o */
     public Expression to(final PostfixExpression.Operator o) {
       final PostfixExpression $ = ast.newPostfixExpression();
       $.setOperator(o);
@@ -84,7 +84,7 @@ import il.org.spartan.*;
      * expression is a combination of the expression inner with a prefix
      * operator
      * @param o a prefix operator
-     * @return the expression inner togther with the prefix operator o */
+     * @return the expression inner together with the prefix operator o */
     public PrefixExpression to(final PrefixExpression.Operator o) {
       final PrefixExpression $ = ast.newPrefixExpression();
       $.setOperator(o);
@@ -248,7 +248,7 @@ import il.org.spartan.*;
     private final List<Statement> inner; // here we work with several statements
                                          // so we have a statements list
 
-    /**assign each of the given operands to the innner list
+    /**assign each of the given operands to the inner list
      * the left operand is the owner
      * @param inner a list of statements
      */
@@ -350,7 +350,7 @@ import il.org.spartan.*;
   }
 
   /**Create an instance of several operands together <br />
-   * here we get the expressions in seperate and not as a list
+   * here we get the expressions in separate and not as a list
    * @param e some expressions
    * @return a new Several instance using the given expressions
    */
@@ -404,7 +404,7 @@ import il.org.spartan.*;
   }
 
   /**Create an instance of several statements together <br />
-   * here we get the statements in seperate and not as a list
+   * here we get the statements in separate and not as a list
    * @param ss some statements
    * @return a new SeveralStatements instance using the given statements
    */
