@@ -14,7 +14,7 @@ import il.org.spartan.refactoring.wring.Wring.*;
  * @author Alex Kopzon
  * @author Dan Greenstein
  * @since 2016 */
-public final class InfixNeutralAdditionSubstruction extends ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
+public final class InfixNeutralAdditionSubtruction extends ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
   @Override String description(final InfixExpression e) {
     return "Remove all additions and substructions of 0 to and from " + e;
   }
