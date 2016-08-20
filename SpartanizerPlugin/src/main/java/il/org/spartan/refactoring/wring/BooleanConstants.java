@@ -35,12 +35,14 @@ public final class BooleanConstants extends Wring.ReplaceCurrentNode<MethodInvoc
     if (!"valueOf".equals(name(i).getIdentifier()))
       return null;
     final List<Expression> arguments = arguments(i);
-    if (arguments.size() != 1)
-      return null;
-    final Expression e = expression(i);
-    if (e == null || !"Boolean".equals(e.toString()))
-      return null;
-    final BooleanLiteral b = asBooleanLiteral(arguments.get(0));
-    return b == null ? null : subject.operand(e).toQualifier(b.booleanValue() ? "TRUE" : "FALSE");
+    return arguments.size() != 1 ? null : replacement(expression(i), arguments.get(0));
+  }
+
+  private static Expression replacement(final Expression e, Expression $) {
+    return e == null || !"Boolean".equals(e.toString()) ? null : replacement(e, asBooleanLiteral($));
+  }
+
+  private static Expression replacement(final Expression e, final BooleanLiteral l) {
+    return l == null ? null : subject.operand(e).toQualifier(l.booleanValue() ? "TRUE" : "FALSE");
   }
 }
