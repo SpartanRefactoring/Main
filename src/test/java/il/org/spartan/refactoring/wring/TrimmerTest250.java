@@ -195,15 +195,15 @@ public class TrimmerTest250 {
 
   // @formatter:off
         enum A { a1() {{ f(); }
-            public final void f() {g();} 
-             protected final void g() {h();} 
-             private final void h() {i();}  
-             final void i() {f();} 
+            public final void f() {g();}
+             protected final void g() {h();}
+             private final void h() {i();}
+             final void i() {f();}
           }, a2() {{ f(); }
-            final protected void f() {g();} 
-            final void g() {h();} 
-            final private void h() {i();} 
-            final public void i() {f();} 
+            final protected void f() {g();}
+            final void g() {h();}
+            final private void h() {i();}
+            final public void i() {f();}
           }
         }
   // @formatter:on
@@ -225,23 +225,22 @@ public class TrimmerTest250 {
             "protected void ia() {}\n" + //
             "void i() {}\n" + //
             "} \n"//
-    ).to( "enum A { a1 {{ f(); } \n" + //
-            "void f() {g();}  \n" + //
-            "public void g() {h();}  \n" + //
-            "void h() {i();}   \n" + //
-            "void i() {f();}  \n" + //
-            "}, a2 {{ f(); } \n" + //
-            "void f() {g();}  \n" + //
-            "void g() {h();}  \n" + //
-            "void h() {i();}  \n" + //
-            "void i() {f();}  \n" + //
-            "};\n" + //
-            "abstract void f();\n" + //
-            "void ia() {}\n" + //
-            "void i() {}\n" + //
-            "} \n"//
-            );
-
+    ).to("enum A { a1 {{ f(); } \n" + //
+        "void f() {g();}  \n" + //
+        "public void g() {h();}  \n" + //
+        "void h() {i();}   \n" + //
+        "void i() {f();}  \n" + //
+        "}, a2 {{ f(); } \n" + //
+        "void f() {g();}  \n" + //
+        "void g() {h();}  \n" + //
+        "void h() {i();}  \n" + //
+        "void i() {f();}  \n" + //
+        "};\n" + //
+        "abstract void f();\n" + //
+        "void ia() {}\n" + //
+        "void i() {}\n" + //
+        "} \n"//
+    );
   }
 
   @Test public void issue50_inEnumMember() {

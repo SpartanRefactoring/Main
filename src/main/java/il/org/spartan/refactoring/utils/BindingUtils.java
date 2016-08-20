@@ -1,8 +1,8 @@
 package il.org.spartan.refactoring.utils;
 
-import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static il.org.spartan.idiomatic.*;
 import static il.org.spartan.refactoring.utils.extract.*;
+import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.internal.corext.dom.*;

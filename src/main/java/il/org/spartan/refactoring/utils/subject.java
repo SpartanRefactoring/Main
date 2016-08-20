@@ -320,16 +320,16 @@ public class subject {
     return new Operand(inner);
   }
 
-  /** Create an instance of several operands together 
-   * here we get the expressions in separate and not as a list
-   * @param e JD 
+  /** Create an instance of several operands together here we get the
+   * expressions in separate and not as a list
+   * @param e JD
    * @return a new instance using the given expressions */
   public static Several operands(final Expression... e) {
     return new Several(as.list(e));
   }
 
-  /** Create an instance of several operands together 
-   * here we get the expressions as a list
+  /** Create an instance of several operands together here we get the
+   * expressions as a list
    * @param es a list of expressions
    * @return a new Several instance using the given list of expressions */
   public static Several operands(final List<Expression> es) {
@@ -352,25 +352,25 @@ public class subject {
     return new StatementPair(s1, s2);
   }
 
-  /** Create an instance of several statements together
-   * here we get the statements as a list
+  /** Create an instance of several statements together here we get the
+   * statements as a list
    * @param ss a list of statements
    * @return a new instance using the given statements */
   public static SeveralStatements ss(final List<Statement> ss) {
     return new SeveralStatements(ss);
   }
 
-  /** Create an instance of several statements together 
-   * here we get only one statement
+  /** Create an instance of several statements together here we get only one
+   * statement
    * @param s JD
    * @return a new instance using the given statement */
   public static SeveralStatements statement(final Statement s) {
     return statements(s);
   }
 
-  /** Create an instance of several statements together 
-   * here we get the statements in separate and not as a list
-   * @param ss JD 
+  /** Create an instance of several statements together here we get the
+   * statements in separate and not as a list
+   * @param ss JD
    * @return a new instance using the given statements */
   public static SeveralStatements statements(final Statement... ss) {
     return ss(as.list(ss));
