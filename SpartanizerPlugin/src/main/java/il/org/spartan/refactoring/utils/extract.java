@@ -2,6 +2,7 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
+import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
@@ -10,6 +11,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
+import il.org.spartan.utils.Utils;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -73,12 +75,10 @@ public enum extract {
     return null;
   }
 
-  /** Find the "core" of a given {@link Expression}, by peeling of any
-   * parenthesis that may wrap it.
+  /** Peels any parenthesis that may wrap an {@Link Expression}
    * @param $ JD
-   * @return parameter itself, if not parenthesized, or the result of applying
-   *         this function (@link {@link #getClass()}) to whatever is wrapped in
-   *         these parenthesis. */
+   * @return the parameter if not parenthesized, or the unparenthesized this
+   *         version of it */
   public static Expression core(final Expression $) {
     return $ == null || $.getNodeType() != PARENTHESIZED_EXPRESSION ? $ : core(((ParenthesizedExpression) $).getExpression());
   }
@@ -353,6 +353,14 @@ public enum extract {
     return b == null ? null : next(s, extract.statements(b));
   }
 
+  public static Expression onlyExpression(final List<Expression> $) {
+    return core(Utils.onlyOne($));
+  }
+
+  public static Expression onlyArgument(final MethodInvocation i) {
+    return onlyExpression(arguments(i));
+  }
+
   public static Expression operand(final PostfixExpression ¢) {
     return ¢ == null ? null : core(¢.getOperand());
   }
@@ -408,8 +416,7 @@ public enum extract {
    * @return if b is a block with just 1 statement it returns that statement, if
    *         b is statement it returns b and if b is null it returns a null */
   public static Statement singleStatement(final ASTNode n) {
-    final List<Statement> $ = extract.statements(n);
-    return $.size() != 1 ? null : (Statement) $.get(0);
+    return Utils.onlyOne(extract.statements(n));
   }
 
   /** Finds the single statement in the "then" branch of an {@link IfStatement}
@@ -437,7 +444,8 @@ public enum extract {
    * @return list of such statements. */
   public static List<Statement> statements(final ASTNode n) {
     final List<Statement> $ = new ArrayList<>();
-    return n == null || !(n instanceof Statement) ? $ : extract.statementsInto((Statement) n, $);
+    return n == null || !(n instanceof Statement) ? $ : //
+        extract.statementsInto((Statement) n, $);
   }
 
   /** @param n a node to extract an expression from
@@ -468,8 +476,8 @@ public enum extract {
   }
 
   private static List<Statement> statementsInto(final Block b, final List<Statement> $) {
-    for (final Object statement : b.statements())
-      extract.statementsInto((Statement) statement, $);
+    for (final Statement s : expose.statements(b))
+      extract.statementsInto(s, $);
     return $;
   }
 

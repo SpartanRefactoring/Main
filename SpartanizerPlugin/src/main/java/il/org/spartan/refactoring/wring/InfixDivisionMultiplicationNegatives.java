@@ -91,14 +91,14 @@ public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpre
       case 0:
         return null;
       case 1:
-        if (negationLevel(es.get(0)) == 1)
+        if (negationLevel(first(es)) == 1)
           return null;
     }
     if (exclude != null)
       exclude.exclude(e);
     return new Rewrite(description(e), e) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        final Expression first = totalNegation % 2 == 0 ? null : es.get(0);
+        final Expression first = totalNegation % 2 == 0 ? null : first(es);
         for (final Expression ¢ : es)
           if (¢ != first && negationLevel(¢) > 0)
             r.replace(¢, new Plant(duplicate(peelNegation(¢))).into(¢.getParent()), g);

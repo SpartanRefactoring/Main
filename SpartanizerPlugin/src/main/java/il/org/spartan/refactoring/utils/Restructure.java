@@ -103,14 +103,4 @@ public enum Restructure {
     $.setExpression(e.getParent() == null ? e : duplicate(e));
     return $;
   }
-
-  /** Determine whether a give {@link ASTNode} includes precisely one
-   * {@link Statement}, and return this statement.
-   * @param n JD
-   * @return single statement contained in the parameter, or
-   *         <code><b>null</b></code> if not value exists. */
-  public static Statement singleStatement(final ASTNode n) {
-    final List<Statement> $ = extract.statements(n);
-    return $.size() != 1 ? null : $.get(0);
-  }
 }

@@ -147,6 +147,10 @@ public enum Utils {
     return os;
   }
 
+  public static <T> T onlyOne(final List<T> ts) {
+    return ts == null || ts.size() != 1 ? null : ts.get(0);
+  }
+
   /** @param ts a list
    * @return last item in a list or <code><b>null</b></code> if the parameter is
    *         <code><b>null</b></code> or empty */

@@ -9,29 +9,39 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
-import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.Wring.*;
 
 /** Replace <code> s.equals("s")</code> by <code>"s".equals(s)</code>
  * @author Ori Roth
  * @since 2016/05/08 */
 public final class StringEqualsConstant extends ReplaceCurrentNode<MethodInvocation> implements Kind.Canonicalization {
-  final static String[] _mns = { "equals", "equalsIgnoreCase" };
-  final static List<String> mns = as.list(_mns);
+  final static List<String> mns = as.list("equals", "equalsIgnoreCase");
 
   @Override String description(final MethodInvocation i) {
-    return "use " + arguments(i).get(0) + "." + name(i) + "(" + extract.expression(i) + ") instead of " + i;
+    return "Write " + first(arguments(i)) + "." + name(i) + "(" + expression(i) + ") instead of " + i;
   }
 
-  @SuppressWarnings("unchecked") @Override ASTNode replacement(final MethodInvocation i) {
-    final List<Expression> as = arguments(i);
-    if (!mns.contains(name(i).toString()) || as.size() != 1 || expression(i) == null || expression(i) instanceof StringLiteral
-        || !(as.get(0) instanceof StringLiteral))
+  /* (non-Javadoc)
+   *
+   * @see
+   * il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode#replacement(org.
+   * eclipse.jdt.core.dom.ASTNode) */
+  @Override ASTNode replacement(final MethodInvocation i) {
+    final SimpleName n = name(i);
+    if (!mns.contains(n.toString()))
       return null;
-    final MethodInvocation $ = i.getAST().newMethodInvocation();
-    $.setExpression(duplicate(as.get(0)));
-    $.setName(duplicate(name(i)));
-    $.arguments().add(duplicate(expression(i)));
+    final Expression ¢ = onlyOne(arguments(i));
+    if (¢ == null || !(¢ instanceof StringLiteral))
+      return null;
+    final Expression e = expression(i);
+    return e == null || e instanceof StringLiteral ? null : replacement(n, ¢, e);
+  }
+
+  private static ASTNode replacement(final SimpleName n, final Expression ¢, final Expression e) {
+    final MethodInvocation $ = n.getAST().newMethodInvocation();
+    $.setExpression(duplicate(¢));
+    $.setName(duplicate(n));
+    arguments($).add(duplicate(e));
     return $;
   }
 }

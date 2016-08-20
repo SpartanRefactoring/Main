@@ -132,4 +132,8 @@ public enum expose {
   public static List<ParameterizedType> typeArguments(final ParameterizedType ¢) {
     return ¢.typeArguments();
   }
+
+  public static List<MemberValuePair> values(final NormalAnnotation ¢) {
+    return ¢.values();
+  }
 }

@@ -4,6 +4,7 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
+import static il.org.spartan.refactoring.utils.expose.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
@@ -318,7 +319,7 @@ import il.org.spartan.refactoring.utils.Collect.*;
   @Test public void forEnhancedAsParemeter() {
     final Statement s = s("for (int a: as) return a; ");
     final Block b = (Block) s;
-    final EnhancedForStatement s2 = (EnhancedForStatement) b.statements().get(0);
+    final EnhancedForStatement s2 = (EnhancedForStatement) first(statements(b));
     final SimpleName a = s2.getParameter().getName();
     azzert.that(a, iz("a"));
     azzert.that(Collect.usesOf(a).in(s).size(), is(2));

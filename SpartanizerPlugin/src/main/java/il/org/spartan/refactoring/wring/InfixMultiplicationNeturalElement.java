@@ -27,7 +27,7 @@ public final class InfixMultiplicationNeturalElement extends ReplaceCurrentNode<
     for (final Expression ¢ : es)
       if (!isLiteralOne(¢))
         $.add(¢);
-    return $.size() == es.size() ? null : $.size() == 0 ? duplicate(es.get(0)) : $.size() == 1 ? duplicate($.get(0)) : subject.operands($).to(TIMES);
+    return $.size() == es.size() ? null : $.size() == 0 ? duplicate(first(es)) : $.size() == 1 ? duplicate(first($)) : subject.operands($).to(TIMES);
   }
 
   private static boolean isLiteralOne(final Expression ¢) {

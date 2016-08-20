@@ -3,11 +3,10 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.utils.*;
 
 /** convert
  *
@@ -31,12 +30,11 @@ public final class BlockSingleton extends Wring.ReplaceCurrentNode<Block> implem
 
   @Override Statement replacement(final Block b) {
     final ASTNode parent = parent(b);
-    if (!(parent instanceof Statement) || parent instanceof TryStatement || parent instanceof SynchronizedStatement)
-      return null;
-    final List<Statement> ss = statements(b);
-    if (ss.size() != 1)
-      return null;
-    final Statement $ = ss.get(0);
-    return Is.blockEssential($) ? null : duplicate($);
+    return !(parent instanceof Statement) || Funcs.is(parent, ASTNode.TRY_STATEMENT, ASTNode.SYNCHRONIZED_STATEMENT) ? null
+        : replacement(Utils.onlyOne(statements(b)));
+  }
+
+  private static Statement replacement(final Statement $) {
+    return $ == null || Is.blockEssential($) ? null : duplicate($);
   }
 }
