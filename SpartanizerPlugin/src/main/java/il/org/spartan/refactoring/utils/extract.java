@@ -127,9 +127,6 @@ public enum extract {
         return null;
     }
   }
-  public static Expression expression(final ParenthesizedExpression $) {
-    return core($);
-  }
 
   public static Expression expression(final CastExpression $) {
     return core($.getExpression());
@@ -141,6 +138,10 @@ public enum extract {
 
   public static Expression expression(final MethodInvocation $) {
     return core($.getExpression());
+  }
+
+  public static Expression expression(final ParenthesizedExpression $) {
+    return core($);
   }
 
   public static Expression expression(final ReturnStatement $) {
@@ -352,11 +353,11 @@ public enum extract {
     return b == null ? null : next(s, extract.statements(b));
   }
 
-  public static Expression operand(final PrefixExpression ¢) {
+  public static Expression operand(final PostfixExpression ¢) {
     return ¢ == null ? null : core(¢.getOperand());
   }
 
-  public static Expression operand(final PostfixExpression ¢) {
+  public static Expression operand(final PrefixExpression ¢) {
     return ¢ == null ? null : core(¢.getOperand());
   }
 

@@ -26,7 +26,6 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 public class BodeDeclarationRemoveModifiers<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> implements Kind.SyntacticBaggage {
-
   // @formatter:off
   public static class OfAnnotation extends BodeDeclarationRemoveModifiers<AnnotationTypeDeclaration> { /* empty */ }
   public static class OfEnumConstant extends BodeDeclarationRemoveModifiers<EnumConstantDeclaration> { /* empty */ }
@@ -87,14 +86,14 @@ public class BodeDeclarationRemoveModifiers<N extends BodyDeclaration> extends W
       if (isMethodDeclaration(¢))
         $.add(Modifier::isAbstract);
     }
-    if (isEnumDeclaration(container)) 
+    if (isEnumDeclaration(container))
       $.add(Modifier::isProtected);
     if (isAnonymousClassDeclaration(container)) {
       $.add(Modifier::isPrivate);
       if (isMethodDeclaration(¢))
         $.add(Modifier::isFinal);
-      if (isEnumConstantDeclaration(extract.containerType(container))) 
-      $.add(Modifier::isProtected);
+      if (isEnumConstantDeclaration(extract.containerType(container)))
+        $.add(Modifier::isProtected);
     }
     return $;
   }
