@@ -9,13 +9,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 
-/*TODO: update the links of the @see anotations */
- 
-/**
- * Contains Subclasses and tools to build expressions and statements
- */
-@SuppressWarnings("javadoc") public class subject {
-  
+/** Contains subclasses and tools to build expressions and statements */
+public class subject {
   public static class Claimer {
     protected final AST ast;
 
@@ -26,16 +21,15 @@ import il.org.spartan.*;
     }
 
     /** Make a deep copy of expression and assign it to ast
-     * @param e an Expression
+     * @param e JD
      * @return a copy of the expression e
-     * @see rebase
-     * @see duplicate */
+     * @see #rebase
+     * @see Funcs#duplicate */
     Expression claim(final Expression e) {
       return rebase(duplicate(extract.core(e)), ast);
     }
 
-    /** Make a deep copy of statement and assign it to ast, if the statement
-     * exists
+    /** A deep copy of statement and assign it to ast, if the statement exists
      * @param s a Statement
      * @return a copy of the statement s if it is'nt null, else returns null
      * @see rebase
@@ -46,9 +40,7 @@ import il.org.spartan.*;
     }
   }
 
-  /**
-   * All the expressions that use a single operand
-   */
+  /** All the expressions that use a single operand */
   public static class Operand extends Claimer {
     private final Expression inner;
 
@@ -105,18 +97,15 @@ import il.org.spartan.*;
 
     /** Creates and returns a new qualified name node for inner.
      * @param name a string of the name to be qualified
-     * @return a qualified name node with name
-     */
+     * @return a qualified name node with name */
     public Expression toQualifier(final String name) {
       return ast.newQualifiedName((SimpleName) inner, ast.newSimpleName(name));
     }
 
-    
     // ** TODO: YG; integrate with fluent API
-    /**Create a number literal node owned by ast
+    /** Create a number literal node owned by ast
      * @param text the number of the literal node
-     * @return the number literal node with text as a number
-     */
+     * @return the number literal node with text as a number */
     public NumberLiteral literal(final String text) {
       final NumberLiteral $ = ast.newNumberLiteral();
       $.setToken(text);
@@ -132,8 +121,7 @@ import il.org.spartan.*;
     }
 
     /** convert the expression inner into statement
-     * @return an ExpressionStatement of inner
-     */
+     * @return an ExpressionStatement of inner */
     public ExpressionStatement toStatement() {
       return ast.newExpressionStatement(inner);
     }
@@ -147,13 +135,10 @@ import il.org.spartan.*;
     }
   }
 
-  /**
-   * All the expressions that use 2 operands
-   *
-   */
+  /** All the expressions that use two operands */
   public static class Pair extends Claimer {
-    final Expression left, right; // here we have to expression and an operator
-                                  // between them
+    /** The two expressions in the pair */
+    final Expression left, right;
 
     /** Assign the expressions left and right to the parameters, the newly-
      * created ast will own the left node
@@ -204,19 +189,17 @@ import il.org.spartan.*;
       return $;
     }
 
-    /**Convert the assignment operator into a statement
+    /** Convert the assignment operator into a statement
      * @param o JD
-     * @return a statement of the operator
-     */
+     * @return a statement of the operator */
     public Statement toStatement(final Assignment.Operator o) {
       return subject.operand(to(o)).toStatement();
     }
   }
 
   public static class Several extends Claimer {
-    private final List<Expression> operands; // In that case with have more than
-                                             // 2 operands
-                                             // so we use a list of operands
+    /** To deal with more than 2 operands, we maintain a list */
+    private final List<Expression> operands;
 
     /** assign each of the given operands to the operands list the left operand
      * is the owner
@@ -230,8 +213,7 @@ import il.org.spartan.*;
 
     /** Create an infix expression from the given operator and the operands
      * @param o JD
-     * @return JD
-     */
+     * @return JD */
     public InfixExpression to(final InfixExpression.Operator o) {
       assert operands.size() >= 2;
       final InfixExpression $ = subject.pair(operands.get(0), operands.get(1)).to(o);
@@ -241,17 +223,14 @@ import il.org.spartan.*;
     }
   }
 
-  /**
-   * Some Statements
-   */
+  /** Some Statements */
   public static class SeveralStatements extends Claimer {
     private final List<Statement> inner; // here we work with several statements
                                          // so we have a statements list
 
-    /**assign each of the given operands to the inner list
-     * the left operand is the owner
-     * @param inner a list of statements
-     */
+    /** assign each of the given operands to the inner list the left operand is
+     * the owner
+     * @param inner a list of statements */
     public SeveralStatements(final List<Statement> inner) {
       super(inner.isEmpty() ? null : inner.get(0));
       this.inner = new ArrayList<>();
@@ -260,30 +239,28 @@ import il.org.spartan.*;
     }
 
     /** Transform the inner into a block
-     * @return a Block statement
-     */
+     * @return a Block statement */
     public Block toBlock() {
       final Block $ = ast.newBlock();
       expose.statements($).addAll(inner);
       return $;
     }
 
-    /**  Transform the inner into a block if it's possible
-     * 
-     * @return a Block statement <code>or</code> a <code>null</code>
-     */
+    /** Transform the inner into a block if it's possible
+     * @return a Block statement <code>or</code> a <code>null</code> */
     public Statement toOneStatementOrNull() {
       return inner.isEmpty() ? null : toOptionalBlock();
     }
 
-    /**use the inner list to make a block depending on it's size 
-     * (only in case there are more than 2 elements)
-     * @return a Statement : <br />
-     * - empty statement if inner is empty <br />
-     * - single statement if |inner|==1 <br />              
-     * - a block statement if |inner|>1 <br />    
-     * @see subject#toBlock                   
-     */
+    /** use the inner list to make a block depending on it's size (only in case
+     * there are more than 2 elements)
+     * @return
+     *         <ol>
+     *         <li>empty statement, if inner is empty
+     *         <li>single statement, if |inner|==1
+     *         <li>a block statement, if |inner|>1
+     *         </ol>
+     * @see subject#toBlock */
     public Statement toOptionalBlock() {
       switch (inner.size()) {
         case 0:
@@ -296,28 +273,24 @@ import il.org.spartan.*;
     }
   }
 
-  /**
-   * A pair of statements
-   */
+  /** A pair of statements */
   public static class StatementPair extends Claimer {
     private final Statement elze;
     private final Statement then;
 
-    /**assign then and elze to the matching fields
-     * the then operand is the owner
-     * @param inner a list of statements
-     */
+    /** assign then and elze to the matching fields the then operand is the
+     * owner
+     * @param inner a list of statements */
     StatementPair(final Statement then, final Statement elze) {
       super(then);
       this.then = claim(then);
       this.elze = claim(elze);
     }
 
-    /**Create a new if statement owned by ast
-     * the if statement contains a given condition and uses the class parameters (then, elze)
+    /** Create a new if statement owned by ast the if statement contains a given
+     * condition and uses the class parameters (then, elze)
      * @param condition the condition of the if statement
-     * @return an If statement with the given condition
-     */
+     * @return an If statement with the given condition */
     public IfStatement toIf(final Expression condition) {
       final IfStatement $ = ast.newIfStatement();
       $.setExpression(claim(condition));
@@ -328,14 +301,13 @@ import il.org.spartan.*;
       return $;
     }
 
-    /**Create a new if statement owned by ast
-     * the if statement contains the logical not of the given <br />
-     * condition and uses the class parameters (then, elze)
+    /** Create a new if statement owned by ast the if statement contains the
+     * logical not of the given condition and uses the class parameters (then,
+     * elze)
      * @param condition the logical not of the condition of the if statement
      * @return an If statement with the logical not of the given condition
      * @see toIf
-     * @see logicalNot
-     */
+     * @see logicalNot */
     public IfStatement toNot(final Expression condition) {
       return toIf(logicalNot(condition));
     }
@@ -343,26 +315,23 @@ import il.org.spartan.*;
 
   /** Create a new Operand
    * @param inner the expression of the operand
-   * @return the new operand
-   */
+   * @return the new operand */
   public static Operand operand(final Expression inner) {
     return new Operand(inner);
   }
 
-  /**Create an instance of several operands together <br />
+  /** Create an instance of several operands together 
    * here we get the expressions in separate and not as a list
-   * @param e some expressions
-   * @return a new Several instance using the given expressions
-   */
+   * @param e JD 
+   * @return a new instance using the given expressions */
   public static Several operands(final Expression... e) {
     return new Several(as.list(e));
   }
 
-  /**Create an instance of several operands together <br/>
+  /** Create an instance of several operands together 
    * here we get the expressions as a list
    * @param es a list of expressions
-   * @return a new Several instance using the given list of expressions
-   */
+   * @return a new Several instance using the given list of expressions */
   public static Several operands(final List<Expression> es) {
     return new Several(es);
   }
@@ -370,8 +339,7 @@ import il.org.spartan.*;
   /** Create an instance of 2 expressions together
    * @param left the left expression
    * @param right the right expression
-   * @return a new instance of the class pair
-   */
+   * @return a new instance of the class pair */
   public static Pair pair(final Expression left, final Expression right) {
     return new Pair(left, right);
   }
@@ -379,35 +347,31 @@ import il.org.spartan.*;
   /** Create an instance of 2 statements together
    * @param s1 the first statement
    * @param s2 the second statement
-   * @return a new instance of the class StatementPair
-   */
+   * @return a new instance of the class StatementPair */
   public static StatementPair pair(final Statement s1, final Statement s2) {
     return new StatementPair(s1, s2);
   }
 
-  /**Create an instance of several statements together <br />
+  /** Create an instance of several statements together
    * here we get the statements as a list
    * @param ss a list of statements
-   * @return a new SeveralStatements instance using the given statements
-   */
+   * @return a new instance using the given statements */
   public static SeveralStatements ss(final List<Statement> ss) {
     return new SeveralStatements(ss);
   }
 
-  /**Create an instance of several statements together <br />
+  /** Create an instance of several statements together 
    * here we get only one statement
    * @param s JD
-   * @return a new SeveralStatements instance using the given statement
-   */
+   * @return a new instance using the given statement */
   public static SeveralStatements statement(final Statement s) {
     return statements(s);
   }
 
-  /**Create an instance of several statements together <br />
+  /** Create an instance of several statements together 
    * here we get the statements in separate and not as a list
-   * @param ss some statements
-   * @return a new SeveralStatements instance using the given statements
-   */
+   * @param ss JD 
+   * @return a new instance using the given statements */
   public static SeveralStatements statements(final Statement... ss) {
     return ss(as.list(ss));
   }
