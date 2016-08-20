@@ -60,7 +60,6 @@ public class Toolbox {
             null) //
         .add(PostfixExpression.class, new PostfixToPrefix()) //
         .add(InfixExpression.class, //
-            new InfixAdditionNeutralElement(), //
             new InfixDivisionMultiplicationNegatives(), //
             new InfixNeutralAdditionSubtruction(), //
             new InfixSortAddition(), //
