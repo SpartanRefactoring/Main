@@ -16,7 +16,7 @@ import il.org.spartan.refactoring.utils.*;
 public final class Trimmer extends Spartanization {
   /** Apply trimming repeatedly, until no more changes
    * @param from what to process
-   * @return  trimmed text */
+   * @return trimmed text */
   public static String fixedPoint(final String from) {
     final Trimmer trimmer = new Trimmer();
     final Document $ = new Document(from);
@@ -33,6 +33,7 @@ public final class Trimmer extends Spartanization {
         return $.get();
     }
   }
+
   static boolean prune(final Rewrite r, final List<Rewrite> rs) {
     if (r != null) {
       r.pruneIncluders(rs);
@@ -40,11 +41,13 @@ public final class Trimmer extends Spartanization {
     }
     return true;
   }
+
   /** Instantiates this class */
   public Trimmer() {
     super("Trimmer");
     Toolbox.generate();
   }
+
   @Override protected ASTVisitor collect(final List<Rewrite> $) {
     return new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
@@ -53,6 +56,7 @@ public final class Trimmer extends Spartanization {
       }
     };
   }
+
   @Override protected final void fillRewrite(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
     u.accept(new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
@@ -68,6 +72,7 @@ public final class Trimmer extends Spartanization {
       }
     });
   }
+
   @SuppressWarnings("static-method") ExclusionManager makeExcluder() {
     return new ExclusionManager();
   }
@@ -78,58 +83,77 @@ public final class Trimmer extends Spartanization {
     @Override public final boolean visit(final Assignment ¢) {
       return cautiousGo(¢);
     }
+
     @Override public final boolean visit(final Block ¢) {
       return cautiousGo(¢);
     }
+
     @Override public final boolean visit(final CastExpression ¢) {
       return cautiousGo(¢);
     }
+
     @Override public final boolean visit(final ConditionalExpression e) {
       return cautiousGo(e);
     }
+
     @Override public final boolean visit(final EnumDeclaration ¢) {
       return cautiousGo(¢);
     }
+
     @Override public final boolean visit(final IfStatement ¢) {
       return cautiousGo(¢);
     }
+
     @Override public final boolean visit(final InfixExpression ¢) {
       return cautiousGo(¢);
     }
+
     @Override public final boolean visit(final FieldDeclaration ¢) {
       return cautiousGo(¢);
     }
+
     @Override public final boolean visit(final MethodDeclaration ¢) {
       return cautiousGo(¢);
     }
+
     @Override public final boolean visit(final MethodInvocation ¢) {
       return cautiousGo(¢);
     }
+
     @Override public final boolean visit(final NormalAnnotation ¢) {
       return cautiousGo(¢);
     }
+
     @Override public final boolean visit(final PostfixExpression ¢) {
       return cautiousGo(¢);
     }
+
     @Override public final boolean visit(final PrefixExpression ¢) {
       return cautiousGo(¢);
     }
+
     @Override public final boolean visit(final ReturnStatement ¢) {
       return cautiousGo(¢);
     }
+
     @Override public final boolean visit(final SingleVariableDeclaration d) {
       return cautiousGo(d);
     }
+
     @Override public final boolean visit(final SuperConstructorInvocation ¢) {
       return cautiousGo(¢);
     }
+
     @Override public final boolean visit(final TypeDeclaration ¢) {
       return cautiousGo(¢);
     }
+
     @Override public final boolean visit(final VariableDeclarationFragment ¢) {
       return cautiousGo(¢);
     }
+
     abstract <N extends ASTNode> boolean go(final N n);
+
     private boolean cautiousGo(final ASTNode n) {
       return !exclude.isExcluded(n) && go(n);
     }

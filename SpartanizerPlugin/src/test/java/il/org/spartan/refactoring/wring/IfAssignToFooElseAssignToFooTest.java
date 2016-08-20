@@ -42,6 +42,7 @@ public class IfAssignToFooElseAssignToFooTest {
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
+
     /** Instantiates the enclosing class ({@link OutOfScope}) */
     public OutOfScope() {
       super(WRING);
@@ -64,6 +65,7 @@ public class IfAssignToFooElseAssignToFooTest {
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
+
     /** Instantiates the enclosing class ({@link Wringed}) */
     public Wringed() {
       super(WRING);
@@ -90,6 +92,7 @@ public class IfAssignToFooElseAssignToFooTest {
     azzert.nay(incompatible(a1, a2));
     azzert.aye(compatible(a1, a2));
   }
+
   @Test public void checkSteps() {
     azzert.notNull(asSingle("if (a) a = b; else a = c;"));
     final IfStatement s = asIfStatement(asSingle("if (a) a = b; else a = c;"));

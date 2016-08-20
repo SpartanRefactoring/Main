@@ -15,6 +15,7 @@ public class Ancestors implements Iterable<ASTNode> {
   public Ancestors(final ASTNode from) {
     this.from = from;
   }
+
   @Override public Iterator<ASTNode> iterator() {
     return new Iterator<ASTNode>() {
       ASTNode current = from;
@@ -22,11 +23,13 @@ public class Ancestors implements Iterable<ASTNode> {
       @Override public boolean hasNext() {
         return current != null;
       }
+
       @Override public ASTNode next() {
         final ASTNode $ = current;
         current = current.getParent();
         return $;
       }
+
       @Override public void remove() {
         throw new UnsupportedOperationException();
       }

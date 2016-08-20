@@ -10,10 +10,10 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} to convert
+/** convert
  *
  * <pre>
- * <b>abstract</b>abstract <b>interface</b> a
+ * <b>abstract</b> <b>interface</b> a
  * {}
  * </pre>
  *
@@ -25,16 +25,15 @@ import il.org.spartan.refactoring.utils.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public class RedundantModifiers<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> implements Kind.SyntacticBaggage {
-  public static class OfAnnotation extends RedundantModifiers<AnnotationTypeDeclaration> { /* empty */
-  }
-
+public class BodeDeclarationRemoveModifiers<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> implements Kind.SyntacticBaggage {
   // @formatter:off
-  public static class OfEnum extends RedundantModifiers<TypeDeclaration> { /* empty */ }
-  public static class OfField extends RedundantModifiers<FieldDeclaration> { /* empty */ }
-  public static class OfMethod extends RedundantModifiers<MethodDeclaration> { /* empty */ } 
-  public static class OfType extends RedundantModifiers<TypeDeclaration> { /* empty */ }
-  // @formatter: on
+  public static class OfAnnotation extends BodeDeclarationRemoveModifiers<AnnotationTypeDeclaration> { /* empty */ }
+  public static class OfEnumConstant extends BodeDeclarationRemoveModifiers<EnumConstantDeclaration> { /* empty */ }
+  public static class OfEnum extends BodeDeclarationRemoveModifiers<TypeDeclaration> { /* empty */ }
+  public static class OfField extends BodeDeclarationRemoveModifiers<FieldDeclaration> { /* empty */ }
+  public static class OfMethod extends BodeDeclarationRemoveModifiers<MethodDeclaration> { /* empty */ }
+  public static class OfType extends BodeDeclarationRemoveModifiers<TypeDeclaration> { /* empty */ }
+  // @formatter:on
 
   private static Set<Modifier> matches(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ps) {
     final Set<Modifier> $ = new LinkedHashSet<>();
@@ -82,17 +81,19 @@ public class RedundantModifiers<N extends BodyDeclaration> extends Wring.Replace
       $.add(Modifier::isFinal);
     if (isInterface(container)) {
       $.add(Modifier::isPublic);
-      $.add(Modifier::isPublic);
       $.add(Modifier::isPrivate);
       $.add(Modifier::isProtected);
       if (isMethodDeclaration(¢))
         $.add(Modifier::isAbstract);
     }
+    if (isEnumDeclaration(container))
+      $.add(Modifier::isProtected);
     if (isAnonymousClassDeclaration(container)) {
       $.add(Modifier::isPrivate);
-      $.add(Modifier::isStatic);
       if (isMethodDeclaration(¢))
         $.add(Modifier::isFinal);
+      if (isEnumConstantDeclaration(extract.containerType(container)))
+        $.add(Modifier::isProtected);
     }
     return $;
   }

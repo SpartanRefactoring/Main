@@ -13,9 +13,11 @@ public class EnvironmentMaker {
   EnvironmentMaker(final ASTNode location) {
     this.location = location;
   }
+
   String[] identifiers() {
     return new String[] { location.toString(), getClass().getSimpleName(), location.getClass().getCanonicalName() };
   }
+
   boolean isAllowed(final String newIdentifier) {
     return (location + newIdentifier).hashCode() % 2 == 0;
   }

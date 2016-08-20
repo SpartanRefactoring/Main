@@ -19,6 +19,7 @@ public final class InfixSortSubstraction extends Wring.InfixSortingOfCDR impleme
   @Override boolean scopeIncludes(final InfixExpression e) {
     return in(e.getOperator(), MINUS);
   }
+
   @Override boolean sort(final List<Expression> es) {
     return ExpressionComparator.ADDITION.sort(es);
   }

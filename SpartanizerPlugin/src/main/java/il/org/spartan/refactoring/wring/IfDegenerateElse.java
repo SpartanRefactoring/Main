@@ -6,7 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/** /** A {@link Wring} to convert
+/** /** convert
  *
  * <pre>
  * if (x)
@@ -28,14 +28,17 @@ public final class IfDegenerateElse extends Wring.ReplaceCurrentNode<IfStatement
   static boolean degenerateElse(final IfStatement s) {
     return elze(s) != null && Is.vacuousElse(s);
   }
+
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Remove vacuous 'else' branch";
   }
+
   @Override Statement replacement(final IfStatement s) {
     final IfStatement $ = duplicate(s);
     $.setElseStatement(null);
     return !Is.blockRequiredInReplacement(s, $) ? $ : subject.statement($).toBlock();
   }
+
   @Override boolean scopeIncludes(final IfStatement s) {
     return s != null && then(s) != null && degenerateElse(s);
   }

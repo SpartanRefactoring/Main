@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.utils.Utils.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -17,11 +18,12 @@ public final class ReturnLastInMethod extends Wring<ReturnStatement> implements 
   @Override String description(@SuppressWarnings("unused") final ReturnStatement __) {
     return "Remove redundant return statement";
   }
+
   @Override Rewrite make(final ReturnStatement s) {
     if (s.getExpression() != null)
       return null;
     final Block b = asBlock(s.getParent());
-    return b == null || !lastIn(s, b.statements()) || !(b.getParent() instanceof MethodDeclaration) ? null //
+    return b == null || !lastIn(s, statements(b)) || !(b.getParent() instanceof MethodDeclaration) ? null //
         : new Rewrite(description(s), s) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             r.remove(s, g);

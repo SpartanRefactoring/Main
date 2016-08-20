@@ -4,22 +4,23 @@ import static il.org.spartan.refactoring.utils.Funcs.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-/** A {@link Wring} to remove the "value" member from annotations that only have
- * a single member, converting
- * <code>@SuppressWarnings(value = "unchecked")</code> to
+import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.utils.*;
+
+/** Removes the "value" member from annotations that only have a single member,
+ * converting <code>@SuppressWarnings(value = "unchecked")</code> to
  * <code>@SuppressWarnings("unchecked")</code>
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-02 */
 public final class AnnotationDiscardValueName //
     extends Wring.ReplaceCurrentNode<NormalAnnotation> implements Kind.SyntacticBaggage {
   @Override String description(final NormalAnnotation a) {
-    return "Discard the \"value\" member from the @" + a.getTypeName().getFullyQualifiedName() + " annotation";
+    return "Remove the \"value\" member from the @" + a.getTypeName().getFullyQualifiedName() + " annotation";
   }
+
   @Override ASTNode replacement(final NormalAnnotation a) {
-    if (a.values().size() != 1)
-      return null;
-    final MemberValuePair p = (MemberValuePair) a.values().get(0);
-    if (!"value".equals(p.getName().toString()))
+    final MemberValuePair p = Utils.onlyOne(expose.values(a));
+    if (p == null || !"value".equals(p.getName().toString()))
       return null;
     final SingleMemberAnnotation $ = a.getAST().newSingleMemberAnnotation();
     $.setTypeName(newSimpleName(a, a.getTypeName().getFullyQualifiedName()));

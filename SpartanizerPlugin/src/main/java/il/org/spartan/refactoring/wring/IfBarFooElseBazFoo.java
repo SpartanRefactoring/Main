@@ -11,7 +11,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} to convert
+/** convert
  *
  * <pre>
  * if (X) {
@@ -44,9 +44,11 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> implements Kind
       notAllDefined = false;
       this.l = l.toArray(new Statement[l.size()]);
     }
+
     public boolean notAllDefined() {
       return notAllDefined;
     }
+
     @Override public boolean visit(final SimpleName n) {
       if (!Collect.declarationsOf(n).in(l).isEmpty())
         notAllDefined = true;
@@ -67,9 +69,11 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> implements Kind
     }
     return $;
   }
+
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate commmon suffix of then and else branches to just after if statement";
   }
+
   @Override Rewrite make(final IfStatement s) {
     final List<Statement> then = extract.statements(then(s));
     if (then.isEmpty())
@@ -97,15 +101,18 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> implements Kind
           r.replace(s, subject.ss(commmonSuffix).toBlock(), g);
         }
       }
+
       IfStatement replacement() {
         return replacement(s.getExpression(), subject.ss(then).toOneStatementOrNull(), subject.ss(elze).toOneStatementOrNull());
       }
+
       IfStatement replacement(final Expression condition, final Statement trimmedThen, final Statement trimmedElse) {
         return trimmedThen == null && trimmedElse == null ? null
             : trimmedThen == null ? subject.pair(trimmedElse, null).toNot(condition) : subject.pair(trimmedThen, trimmedElse).toIf(condition);
       }
     };
   }
+
   @Override Rewrite make(final IfStatement s, final ExclusionManager exclude) {
     return super.make(s, exclude);
   }

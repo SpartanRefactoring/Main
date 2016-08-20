@@ -25,6 +25,7 @@ public final class SingleVariableDeclarationAbbreviation extends Wring<SingleVar
     final String n = spartan.shorten(d.getType());
     return n != null && (n + pluralVariadic(d)).equals(d.getName().getIdentifier());
   }
+
   private static boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m) {
     if (spartan.shorten(d.getType()) == null)
       return false;
@@ -37,15 +38,19 @@ public final class SingleVariableDeclarationAbbreviation extends Wring<SingleVar
         return false;
     return !m.getName().getIdentifier().equalsIgnoreCase(spartan.shorten(d.getType()));
   }
+
   private static String pluralVariadic(final SingleVariableDeclaration d) {
     return d.isVarargs() ? "s" : "";
   }
+
   private static boolean suitable(final SingleVariableDeclaration d) {
     return new JavaTypeNameParser(d.getType().toString()).isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
   }
+
   @Override String description(final SingleVariableDeclaration d) {
     return d.getName().toString();
   }
+
   @Override Rewrite make(final SingleVariableDeclaration d, final ExclusionManager exclude) {
     final ASTNode parent = d.getParent();
     if (parent == null || !(parent instanceof MethodDeclaration))

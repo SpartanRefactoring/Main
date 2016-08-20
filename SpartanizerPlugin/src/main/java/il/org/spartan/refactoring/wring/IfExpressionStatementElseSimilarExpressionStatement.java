@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} to convert
+/** convert
  *
  * <pre>
  * if (x)
@@ -29,6 +29,7 @@ public final class IfExpressionStatementElseSimilarExpressionStatement extends W
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate two branches of an 'if' into a single ";
   }
+
   @Override Statement replacement(final IfStatement s) {
     final Expression then = extract.expression(extract.expressionStatement(then(s)));
     if (then == null)

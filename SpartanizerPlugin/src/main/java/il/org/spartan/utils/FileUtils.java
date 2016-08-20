@@ -27,6 +27,7 @@ public class FileUtils {
     }
     return $;
   }
+
   private static void iterateFiles(final File dir, final List<String> files) {
     if (dir == null)
       return;
@@ -37,6 +38,7 @@ public class FileUtils {
         files.add(f.getAbsolutePath());
     }
   }
+
   /** Converts the entire contents of a file into a {@link String}
    * @param f JD
    * @return a string representing the contents of a file.
@@ -51,16 +53,19 @@ public class FileUtils {
     }
     return $.toString();
   }
+
   private static String read(final Path p) throws IOException {
     return new String(Files.readAllBytes(p), StandardCharsets.UTF_8);
   }
+
   /** Returns the contents of a source file
    * @param fileName The source file's path
-   * @return  source file's contents, or an empty string in case of an error
+   * @return source file's contents, or an empty string in case of an error
    * @throws IOException in case of error */
   public static String readFromFile(final String fileName) throws IOException {
     return read(Paths.get(fileName));
   }
+
   /** @param fileName where to write
    * @param text what to write
    * @throws FileNotFoundException in case the file could not be found */

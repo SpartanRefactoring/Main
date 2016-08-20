@@ -2,7 +2,7 @@ package il.org.spartan.refactoring.wring;
 
 import org.eclipse.jdt.core.dom.*;
 
-/** A {@link Wring} to convert
+/** convert
  *
  * <pre>
  * <b>abstract</b>abstract <b>interface</b> a
@@ -21,9 +21,11 @@ public final class InterfaceClean extends Wring.RemoveModifier<TypeDeclaration> 
   @Override String description(final TypeDeclaration ¢) {
     return "Remove redundant 'abstract'/'static' modifier from interface " + ¢.getName();
   }
+
   @Override boolean eligible(final TypeDeclaration ¢) {
     return ¢.isInterface();
   }
+
   @Override boolean redundant(final Modifier ¢) {
     return ¢.isAbstract() || ¢.isStatic();
   }

@@ -10,7 +10,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.LocalInliner.*;
 
-/** A {@link Wring} to convert
+/** convert
  *
  * <pre>
  * int a = 2;
@@ -31,6 +31,7 @@ public final class DeclarationInitializerIfAssignment //
   @Override public String description(final VariableDeclarationFragment f) {
     return "Consolidate initialization of " + f.getName() + " with the subsequent conditional assignment to it";
   }
+
   @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)

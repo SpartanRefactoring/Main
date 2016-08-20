@@ -10,9 +10,11 @@ import il.org.spartan.*;
   @Test public void dCorrect() {
     azzert.that(Into.d("int f() { return a; }"), iz("int f() { return a; }"));
   }
+
   @Test public void dNotNull() {
     azzert.notNull(Into.d("int f() { return a; }"));
   }
+
   @Test(expected = AssertionError.class) public void dOnNull() {
     Into.d(null);
   }

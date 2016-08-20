@@ -12,6 +12,7 @@ import il.org.spartan.*;
   @Test public void plantIntoLess() {
     azzert.that(subject.pair(Into.e("a + 2"), Into.e("b")).to(InfixExpression.Operator.LESS), iz("a+2<b"));
   }
+
   @Test public void plantIntoNull() {
     final String s = "a?b:c";
     final Expression e = e(s);
@@ -20,12 +21,14 @@ import il.org.spartan.*;
     azzert.notNull(e1);
     azzert.that(e1, iz(s));
   }
+
   @Test public void plantIntoReturn() {
     final Expression e = Into.e("2");
     final Plant plant = new Plant(e);
     plant.into(e.getAST().newReturnStatement());
     azzert.that(plant.into(e.getAST().newReturnStatement()), iz("2"));
   }
+
   @Test public void plus() {
     final Expression e = Into.e("a + 2 < b");
     final Expression plus = extract.firstPlus(e);

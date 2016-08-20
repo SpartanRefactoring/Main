@@ -32,9 +32,11 @@ public class FilesGenerator {
         @Override public boolean hasNext() {
           return next < ts.length;
         }
+
         @Override public T next() {
           return ts[next++];
         }
+
         @Override public void remove() {
           throw new UnsupportedOperationException("Cannot remove an element of an array.");
         }
@@ -55,6 +57,7 @@ public class FilesGenerator {
       public FilesIterator(final Iterator<File> i) {
         stack.push(i);
       }
+
       @Override public boolean hasNext() {
         for (;;) {
           if (stack.isEmpty())
@@ -73,15 +76,18 @@ public class FilesGenerator {
             return true;
         }
       }
+
       @Override public File next() {
         return next;
       }
+
       private boolean ofInterest() {
         for (final String extension : extensions)
           if (next.getName().endsWith(extension))
             return true;
         return false;
       }
+
       @Override public void remove() {
         throw new UnsupportedOperationException();
       }
@@ -92,6 +98,7 @@ public class FilesGenerator {
     From(final Iterable<File> from) {
       this.from = from;
     }
+
     @Override public Iterator<File> iterator() {
       return new FilesIterator(from.iterator());
     }
@@ -103,6 +110,7 @@ public class FilesGenerator {
       $.add(new File(fileName));
     return $;
   }
+
   /** @param directory should be a directory, but we still need to account for
    *        weird creatures such as "System Volume Information" */
   static Iterator<File> directoryIterator(final File directory) {
@@ -123,14 +131,17 @@ public class FilesGenerator {
           return true;
         }
       }
+
       @Override public File next() {
         return next;
       }
+
       @Override public void remove() {
         throw new UnsupportedOperationException();
       }
     };
   }
+
   public static void main(final String[] args) {
     for (final File f : new FilesGenerator(".java").from("."))
       System.out.println(f);
@@ -152,6 +163,7 @@ public class FilesGenerator {
   public FilesGenerator(final String... extensions) {
     this.extensions = asList(extensions);
   }
+
   /** @param from an array of names of directories from which the traversal
    *        should begin
    * @return an instance of an internal (yet <code><b>public</b></code>)
@@ -160,6 +172,7 @@ public class FilesGenerator {
   public From from(final Iterable<String> from) {
     return new From(asFiles(from));
   }
+
   /** @param from an array of names of directories from which the traversal
    *        should begin
    * @return an instance of an internal (yet <code><b>public</b></code>)
