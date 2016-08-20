@@ -12,7 +12,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} to convert
+/** convert
  *
  * <pre>
  * if (X)
@@ -38,9 +38,11 @@ public final class IfFooSequencerIfFooSameSequencer extends Wring.ReplaceToNextS
     $.setElseStatement(null);
     return $;
   }
+
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate two 'if' statements with identical body";
   }
+
   @Override ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!Is.vacuousElse(s))
       return null;

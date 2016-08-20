@@ -23,6 +23,7 @@ public enum Into {
   public static Assignment a(final String expression) {
     return (Assignment) e(expression);
   }
+
   /** Convert a given {@link String} into an {@link ConditionalExpression}, or
    * fail the current test, if such a conversion is not possible
    * @param conditionalExpression a {@link String} that represents a
@@ -34,6 +35,7 @@ public enum Into {
     azzert.that(conditionalExpression, $, instanceOf(ConditionalExpression.class));
     return (ConditionalExpression) $;
   }
+
   /** Convert a given {@link String} into an {@link MethodDeclaration} by
    * appropriately wrapping it with text to make it a reasonably looking
    * {@link CompilationUnit}, parsing it, and then extracting the first method
@@ -46,6 +48,7 @@ public enum Into {
     azzert.notNull(methodDelclaration);
     return extract.firstMethodDeclaration(Wrap.Method.intoCompilationUnit(methodDelclaration));
   }
+
   /** Convert a given {@link String} into an {@link Expression}, or fail the
    * current test, if such a conversion is not possible
    * @param expression a {@link String} that represents a Java expression
@@ -53,6 +56,7 @@ public enum Into {
   public static Expression e(final String expression) {
     return (Expression) MakeAST.EXPRESSION.from(expression);
   }
+
   /** Convert an array of {@link String} into a {@link List} of
    * {@link Expression}, or fail the current test, if such a conversion is not
    * possible
@@ -66,6 +70,7 @@ public enum Into {
       $.add(e(expression));
     return $;
   }
+
   /** Convert a given {@link String} into an {@link InfixExpression}, or fail
    * the current test, if such a conversion is not possible
    * @param expression a {@link String} that represents a Java expression
@@ -74,6 +79,7 @@ public enum Into {
   public static InfixExpression i(final String expression) {
     return (InfixExpression) e(expression);
   }
+
   /** Convert a given {@link String} into an {@link PrefixExpression}, or fail
    * the current test, if such a conversion is not possible
    * @param expression a {@link String} that represents a Java expression
@@ -82,6 +88,7 @@ public enum Into {
   public static PrefixExpression p(final String expression) {
     return (PrefixExpression) e(expression);
   }
+
   /** Convert a given {@link String} into an {@link Statement}, or fail the
    * current test, if such a conversion is not possible
    * @param statement a {@link String} that represents a Java statement

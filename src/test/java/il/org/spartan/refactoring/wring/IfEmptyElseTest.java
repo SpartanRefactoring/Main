@@ -38,6 +38,7 @@ public class IfEmptyElseTest {
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
+
     /** Instantiates the enclosing class ({@link OutOfScope}) */
     public OutOfScope() {
       super(WRING);
@@ -60,19 +61,24 @@ public class IfEmptyElseTest {
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
+
     /** Instantiates the enclosing class ({@link Wringed}) */
     public Wringed() {
       super(WRING);
     }
+
     @Test public void isfStatementElseIsEmpty() {
       azzert.that(extract.statements(asMe().getElseStatement()).size(), is(0));
     }
+
     @Test public void isfStatementElseNotNull() {
       azzert.notNull(elze(asMe()));
     }
+
     @Test public void isIfStatement() {
       azzert.notNull(asMe());
     }
+
     @Test public void myScopeIncludes() {
       final IfStatement s = asMe();
       azzert.notNull(s);

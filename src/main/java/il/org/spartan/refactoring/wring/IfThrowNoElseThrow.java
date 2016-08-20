@@ -8,7 +8,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} to convert
+/** convert
  *
  * <pre>
  * if (x)
@@ -29,9 +29,11 @@ public final class IfThrowNoElseThrow extends Wring.ReplaceToNextStatement<IfSta
     final ThrowStatement $ = extract.throwStatement(s);
     return $ == null ? null : extract.core($.getExpression());
   }
+
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate into a single 'throw'";
   }
+
   @Override ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!Is.vacuousElse(s))
       return null;

@@ -35,6 +35,7 @@ public class PluginPreferencesResources {
       id = clazz.getCanonicalName();
       label = "" + getLabel(clazz);
     }
+
     private static Object getLabel(final Class<? extends Kind> c) {
       try {
         return c.getField("label").get(null);
@@ -43,12 +44,15 @@ public class PluginPreferencesResources {
         return null;
       }
     }
+
     public boolean isEnabled() {
       return Plugin.plugin() == null || "on".equals(store().getString(id));
     }
+
     public static WringGroup find(final Kind ¢) {
       return find(¢.getClass());
     }
+
     private static WringGroup find(final Class<? extends Kind> c) {
       for (final WringGroup $ : WringGroup.values())
         if ($.clazz.isAssignableFrom(c))

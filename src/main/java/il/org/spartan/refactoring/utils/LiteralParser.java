@@ -29,6 +29,7 @@ public class LiteralParser {
   public LiteralParser(final String literal) {
     this.literal = literal;
   }
+
   /** @return an integer representing the type of this literal.
    * @see LiteralParser.Types */
   public int type() {

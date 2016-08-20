@@ -4,7 +4,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} to convert
+/** convert
  *
  * <pre>
  * b || false
@@ -22,9 +22,11 @@ public final class InfixConditionalOrFalse extends Wring.ReplaceCurrentNode<Infi
   @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Remove 'false' argument to '||'";
   }
+
   @Override Expression replacement(final InfixExpression e) {
     return Wrings.eliminateLiteral(e, false);
   }
+
   @Override boolean scopeIncludes(final InfixExpression e) {
     return e != null && Is.conditionalOr(e) && Have.falseLiteral(extract.allOperands(e));
   }

@@ -61,6 +61,7 @@ public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<Condit
   private static boolean isTernaryOfBooleanLitreral(final ConditionalExpression e) {
     return e != null && Have.booleanLiteral(core(e.getThenExpression()), core(e.getElseExpression()));
   }
+
   /** Consider an expression
    *
    * <pre>
@@ -101,18 +102,22 @@ public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<Condit
   private static Expression simplifyTernary(final ConditionalExpression e) {
     return simplifyTernary(core(e.getThenExpression()), core(e.getElseExpression()), duplicate(e.getExpression()));
   }
+
   private static Expression simplifyTernary(final Expression then, final Expression elze, final Expression main) {
     final boolean takeThen = !Is.booleanLiteral(then);
     final Expression other = takeThen ? then : elze;
     final boolean literal = asBooleanLiteral(takeThen ? elze : then).booleanValue();
     return subject.pair(literal != takeThen ? main : logicalNot(main), other).to(literal ? CONDITIONAL_OR : CONDITIONAL_AND);
   }
+
   @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Convert conditional expression into logical expression";
   }
+
   @Override Expression replacement(final ConditionalExpression e) {
     return simplifyTernary(e);
   }
+
   @Override boolean scopeIncludes(final ConditionalExpression e) {
     return isTernaryOfBooleanLitreral(e);
   }

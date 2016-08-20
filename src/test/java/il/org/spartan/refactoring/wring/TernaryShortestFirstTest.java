@@ -66,6 +66,7 @@ public class TernaryShortestFirstTest {
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
+
     /** Instantiates the enclosing class ({@link OutOfScope}) */
     public OutOfScope() {
       super(WRING);
@@ -90,6 +91,7 @@ public class TernaryShortestFirstTest {
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
+
     /** Instantiates the enclosing class ({@link WringedExpression}) */
     public Wringed() {
       super(WRING);
@@ -109,12 +111,14 @@ public class TernaryShortestFirstTest {
     azzert.that($.toString().length(), greaterThan(0));
     azzert.that($, iz("length(not(notConditional)) + length(then) >= length(notConditional) + length(elze) ? $ : null"));
   }
+
   @Test public void trace1() {
     final ConditionalExpression e = Into.c("a?f(b,c,d):a");
     azzert.notNull(e);
     azzert.that(subject.pair(extract.core(e.getElseExpression()), extract.core(e.getThenExpression())).toCondition(logicalNot(e.getExpression())),
         iz("!a?a:f(b,c,d)"));
   }
+
   @Test public void trace2() {
     final ConditionalExpression e = Into.c("!f(o) ? null : x.f(a).to(e.g())");
     azzert.notNull(e);

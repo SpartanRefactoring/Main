@@ -12,7 +12,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} to convert
+/** convert
  *
  * <pre>
  * b &amp;&amp; true
@@ -30,17 +30,20 @@ public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<Infix
   private static Expression chopHead(final InfixExpression e) {
     final List<Expression> es = extract.allOperands(e);
     es.remove(0);
-    return es.size() < 2 ? duplicate(es.get(0)) : subject.operands(es).to(e.getOperator());
+    return es.size() < 2 ? duplicate(first(es)) : subject.operands(es).to(e.getOperator());
   }
+
   private static Operator conjugate(final Operator o) {
     return o == null ? null
         : o == CONDITIONAL_AND ? CONDITIONAL_OR //
             : o == CONDITIONAL_OR ? CONDITIONAL_AND //
                 : null;
   }
+
   @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Factor out common logical component of ||";
   }
+
   @Override Expression replacement(final InfixExpression e) {
     final Operator o = e.getOperator();
     if (!in(o, CONDITIONAL_AND, CONDITIONAL_OR))

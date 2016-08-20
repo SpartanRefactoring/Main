@@ -17,15 +17,19 @@ public class IfEmptyThenTest {
   @Test public void eligible() {
     azzert.aye(WRING.eligible(IF));
   }
+
   @Test public void emptyThen() {
     azzert.aye(Is.vacuousThen(IF));
   }
+
   @Test public void extractFirstIf() {
     azzert.notNull(IF);
   }
+
   @Test public void inputType() {
     azzert.that(INPUT, instanceOf(Block.class));
   }
+
   @Test public void scopeIncludes() {
     azzert.aye(WRING.scopeIncludes(IF));
   }
