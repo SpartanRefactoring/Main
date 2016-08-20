@@ -31,12 +31,14 @@ public class ToggleSpartanizationHandler extends AbstractHandler {
         });
       }
   }
+
   private static void enableNature(final IProject p) throws CoreException {
     final IProjectDescription description = p.getDescription();
     final String[] natures = description.getNatureIds();
     description.setNatureIds(append(natures, Nature.NATURE_ID));
     p.setDescription(description, null);
   }
+
   private static Void execute(final ISelection s, final boolean state) throws CoreException {
     if (s instanceof IStructuredSelection)
       for (final Object o : ((IStructuredSelection) s).toList()) {
@@ -46,9 +48,11 @@ public class ToggleSpartanizationHandler extends AbstractHandler {
       }
     return null;
   }
+
   private static IProject extractProject(final Object o) {
     return o instanceof IProject ? (IProject) o : o instanceof IAdaptable ? (IProject) ((IAdaptable) o).getAdapter(IProject.class) : null;
   }
+
   private static void toggleNature(final IProject p, final boolean state) throws CoreException {
     // NOTE: In order to ensure that we're not adding the nature when it's
     // already associated with the project, when asked to add the nature
@@ -58,6 +62,7 @@ public class ToggleSpartanizationHandler extends AbstractHandler {
     if (state)
       enableNature(p);
   }
+
   /** the main method of the command handler, runs when the command is
    * called. */
   @Override public Void execute(final ExecutionEvent e) throws ExecutionException {

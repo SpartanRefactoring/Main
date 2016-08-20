@@ -4,6 +4,7 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
+import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -25,13 +26,14 @@ import il.org.spartan.refactoring.utils.*;
     final MethodDeclaration m = extract.firstMethodDeclaration(u);
     azzert.that(m, iz(input));
     final Block b = m.getBody();
-    final EnhancedForStatement s = (EnhancedForStatement) b.statements().get(0);
+    final EnhancedForStatement s = (EnhancedForStatement) first(statements(b));
     final SingleVariableDeclaration p = s.getParameter();
     azzert.notNull(p);
     final SimpleName a = p.getName();
     azzert.that(a, iz("a"));
     azzert.that(Collect.usesOf(a).in(m).size(), is(2));
   }
+
   @Test public void inlineExpressionWithSideEffect() {
     final Expression e = Into.e("f()");
     azzert.that(Is.sideEffectFree(e), is(false));
@@ -59,18 +61,23 @@ import il.org.spartan.refactoring.utils.*;
     azzert.that(Collect.usesOf(n).in(alternateInitializer).size(), is(2));
     azzert.that(new LocalInliner(n).byValue(initializer).canInlineInto(alternateInitializer), is(false));
   }
+
   @Test public void mixedLiteralKindEmptyList() {
     azzert.that(mixedLiteralKind(es()), is(false));
   }
+
   @Test public void mixedLiteralKindnPairList() {
     azzert.that(mixedLiteralKind(es("1", "1.0")), is(false));
   }
+
   @Test public void mixedLiteralKindnTripleList() {
     azzert.that(mixedLiteralKind(es("1", "1.0", "a")), is(true));
   }
+
   @Test public void mixedLiteralKindSingletonList() {
     azzert.that(mixedLiteralKind(es("1")), is(false));
   }
+
   @Test public void renameInEnhancedFor() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = "int f() { for (int a: as) return a; }";
     final Document d = Wrap.Method.intoDocument(input);
@@ -78,7 +85,7 @@ import il.org.spartan.refactoring.utils.*;
     final MethodDeclaration m = extract.firstMethodDeclaration(u);
     azzert.that(m, iz(input));
     final Block b = m.getBody();
-    final EnhancedForStatement s = (EnhancedForStatement) b.statements().get(0);
+    final EnhancedForStatement s = (EnhancedForStatement) first(statements(b));
     final SingleVariableDeclaration p = s.getParameter();
     azzert.notNull(p);
     final SimpleName n = p.getName();
@@ -90,6 +97,7 @@ import il.org.spartan.refactoring.utils.*;
     azzert.notNull(output);
     azzert.that(output, iz(" int f() {for(int $:as)return $;}"));
   }
+
   @Test public void renameIntoDoWhile() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = "void f() { int b = 3; do ; while(b != 0); }";
     final Document d = Wrap.Method.intoDocument(input);

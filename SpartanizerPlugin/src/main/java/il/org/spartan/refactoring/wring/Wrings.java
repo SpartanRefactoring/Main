@@ -3,6 +3,7 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.refactoring.utils.ExpressionComparator.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
+import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
@@ -29,13 +30,15 @@ public enum Wrings {
         duplicateInto(by2, to);
       }
   }
+
   static IfStatement blockIfNeeded(final IfStatement s, final ASTRewrite r, final TextEditGroup g) {
     if (!Is.blockRequired(s))
       return s;
     final Block b = subject.statement(s).toBlock();
     r.replace(s, b, g);
-    return (IfStatement) b.statements().get(0);
+    return (IfStatement) first(statements(b));
   }
+
   static Expression eliminateLiteral(final InfixExpression e, final boolean b) {
     final List<Expression> operands = extract.allOperands(e);
     removeAll(b, operands);
@@ -48,30 +51,36 @@ public enum Wrings {
         return subject.operands(operands).to(e.getOperator());
     }
   }
+
   static boolean endsWithSequencer(final Statement s) {
     return Is.sequencer(extract.lastStatement(s));
   }
+
   static ListRewrite insertAfter(final Statement where, final List<Statement> what, final ASTRewrite r, final TextEditGroup g) {
     final ListRewrite $ = r.getListRewrite(where.getParent(), Block.STATEMENTS_PROPERTY);
     for (int i = what.size() - 1; i >= 0; --i)
       $.insertAfter(what.get(i), where, g);
     return $;
   }
+
   static ListRewrite insertBefore(final Statement where, final List<Statement> what, final ASTRewrite r, final TextEditGroup g) {
     final ListRewrite $ = r.getListRewrite(where.getParent(), Block.STATEMENTS_PROPERTY);
     for (final Statement s : what)
       $.insertBefore(s, where, g);
     return $;
   }
+
   static IfStatement invert(final IfStatement s) {
     return subject.pair(elze(s), then(s)).toNot(s.getExpression());
   }
+
   static int length(final ASTNode... ns) {
     int $ = 0;
     for (final ASTNode n : ns)
       $ += n.toString().length();
     return $;
   }
+
   static IfStatement makeShorterIf(final IfStatement s) {
     final List<Statement> then = extract.statements(then(s));
     final List<Statement> elze = extract.statements(elze(s));
@@ -85,6 +94,7 @@ public enum Wrings {
     final int rankElse = Wrings.sequencerRank(last(elze));
     return rankElse <= rankThen && (rankThen != rankElse || Wrings.thenIsShorter(s)) ? main : inverse;
   }
+
   static boolean mixedLiteralKind(final List<Expression> es) {
     if (es.size() <= 2)
       return false;
@@ -100,13 +110,16 @@ public enum Wrings {
       }
     return false;
   }
+
   private static int positivePrefixLength(final IfStatement $) {
     return Wrings.length($.getExpression(), then($));
   }
+
   static void rename(final SimpleName oldName, final SimpleName newName, final MethodDeclaration d, final ASTRewrite r, final TextEditGroup g) {
     new LocalInliner(oldName, r, g).byValue(newName)//
         .inlineInto(Collect.usesOf(oldName).in(d).toArray(new Expression[] {}));
   }
+
   static ASTRewrite replaceTwoStatements(final ASTRewrite r, final Statement what, final Statement by, final TextEditGroup g) {
     final Block parent = asBlock(what.getParent());
     final List<Statement> siblings = extract.statements(parent);
@@ -119,6 +132,7 @@ public enum Wrings {
     r.replace(parent, $, g);
     return r;
   }
+
   private static int sequencerRank(final ASTNode n) {
     switch (n.getNodeType()) {
       default:
@@ -133,17 +147,20 @@ public enum Wrings {
         return 3;
     }
   }
+
   static boolean shoudlInvert(final IfStatement s) {
     final int rankThen = sequencerRank(extract.lastStatement(then(s)));
     final int rankElse = sequencerRank(extract.lastStatement(elze(s)));
     return rankElse > rankThen || rankThen == rankElse && !Wrings.thenIsShorter(s);
   }
+
   static int size(final ASTNode... ns) {
     int $ = 0;
     for (final ASTNode n : ns)
       $ += nodesCount(n);
     return $;
   }
+
   static boolean thenIsShorter(final IfStatement s) {
     final Statement then = then(s);
     final Statement elze = elze(s);

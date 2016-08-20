@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
@@ -13,7 +14,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.LocalInliner.*;
 
-/** A {@link Wring} to convert
+/** convert
  *
  * <pre>
  * int a = 3;
@@ -52,15 +53,18 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
     }
     return false;
   }
+
   private static boolean never(final SimpleName n, final Statement s) {
     for (final ASTNode ancestor : AncestorSearch.until(s).ancestors(n))
       if (Funcs.intIsIn(ancestor.getNodeType(), TRY_STATEMENT, SYNCHRONIZED_STATEMENT))
         return true;
     return false;
   }
+
   @Override String description(final VariableDeclarationFragment f) {
     return "Inline local " + f.getName() + " into subsequent statement";
   }
+
   @SuppressWarnings("unchecked") @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n,
       final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || hasAnnotation(f) || initializer instanceof ArrayInitializer)
@@ -74,7 +78,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
     final Block parent = asBlock(s.getParent());
     if (parent == null)
       return null;
-    final List<Statement> ss = parent.statements();
+    final List<Statement> ss = statements(parent);
     if (!lastIn(nextStatement, ss) || !penultimateIn(s, ss) || !Collect.definitionsOf(n).in(nextStatement).isEmpty())
       return null;
     final List<SimpleName> uses = Collect.usesOf(f.getName()).in(nextStatement);

@@ -18,24 +18,28 @@ public enum expose {
   public static List<Expression> arguments(final ClassInstanceCreation ¢) {
     return ¢.arguments();
   }
+
   /** Expose the list of arguments in a {@link MethodInvocation}
    * @param ¢ JD
    * @return reference to the list of arguments in the argument */
   public static List<Expression> arguments(final MethodInvocation ¢) {
     return ¢.arguments();
   }
+
   /** Expose the list of arguments in a {@link SuperMethodInvocation}
    * @param ¢ JD
    * @return reference to the list of arguments in the argument */
   public static List<Expression> arguments(final SuperMethodInvocation ¢) {
     return ¢.arguments();
   }
+
   /** Expose the list of bodyDeclarations in an {@link AbstractTypeDeclaration}
    * @param ¢ JD
    * @return reference to the list of bodyDeclarations in the argument */
   public static List<BodyDeclaration> bodyDeclarations(final AbstractTypeDeclaration ¢) {
     return ¢.bodyDeclarations();
   }
+
   /** Expose the list of bodyDeclarations in an
    * {@link AnonymousClassDeclaration}
    * @param ¢ JD
@@ -43,12 +47,14 @@ public enum expose {
   public static List<BodyDeclaration> bodyDeclarations(final AnonymousClassDeclaration ¢) {
     return ¢.bodyDeclarations();
   }
+
   /** Expose the list of catchClauses in a {@link TryStatement}
    * @param ¢ JD
    * @return reference to the list of catchClauses in the argument */
   public static List<CatchClause> catchClauses(final TryStatement ¢) {
     return ¢.catchClauses();
   }
+
   /** Expose the list of extended operands in an {@link InfixExpression}
    * @param ¢ JD
    * @return reference to the list of extended operands contained in the
@@ -56,39 +62,47 @@ public enum expose {
   public static List<Expression> extendedOperands(final InfixExpression ¢) {
     return ¢.extendedOperands();
   }
+
   /** Expose the list of fragments in a {@link FieldDeclaration}
    * @param ¢ JD
    * @return reference to the list of fragments in the argument */
   public static List<VariableDeclarationFragment> fragments(final FieldDeclaration ¢) {
     return ¢.fragments();
   }
+
   /** Expose the list of fragments in a {@link VariableDeclarationExpression}
    * @param ¢ JD
    * @return reference to the list of fragments in the argument */
   public static List<VariableDeclarationFragment> fragments(final VariableDeclarationExpression ¢) {
     return ¢ != null ? ¢.fragments() : new ArrayList<>();
   }
+
   /** Expose the list of fragments in a {@link VariableDeclarationStatement}
    * @param ¢ JD
    * @return reference to the list of fragments in the argument */
   public static List<VariableDeclarationFragment> fragments(final VariableDeclarationStatement ¢) {
     return ¢.fragments();
   }
+
   /** Expose the list of initializers contained in a {@link ForStatement}
    * @param ¢ JD
    * @return reference to the list of initializers contained in the argument */
   public static List<Expression> initializers(final ForStatement ¢) {
     return ¢.initializers();
   }
+
   public static List<IExtendedModifier> modifiers(final BodyDeclaration ¢) {
     return ¢.modifiers();
   }
+
   public static List<IExtendedModifier> modifiers(final SingleVariableDeclaration ¢) {
     return ¢.modifiers();
   }
+
   public static List<IExtendedModifier> modifiers(final VariableDeclarationStatement ¢) {
     return ¢.modifiers();
   }
+
   /** Expose the list of parameters in a {@link MethodDeclaration}
    * @param ¢ JD
    * @return result of method {@link MethodDeclaration#parameters} downcasted to
@@ -96,22 +110,30 @@ public enum expose {
   public static List<SingleVariableDeclaration> parameters(final MethodDeclaration ¢) {
     return ¢.parameters();
   }
+
   /** Expose the list of resources contained in a {@link TryStatement}
    * @param ¢ JD
    * @return reference to the list of resources contained in the argument */
   public static List<VariableDeclarationExpression> resources(final TryStatement ¢) {
     return ¢.resources();
   }
+
   /** Expose the list of statements contained in a {@link Block}
    * @param ¢ JD
    * @return reference to the list of statements contained in the argument */
   public static List<Statement> statements(final Block ¢) {
     return ¢.statements();
   }
+
   public static List<TagElement> tags(final Javadoc ¢) {
     return ¢.tags();
   }
+
   public static List<ParameterizedType> typeArguments(final ParameterizedType ¢) {
     return ¢.typeArguments();
+  }
+
+  public static List<MemberValuePair> values(final NormalAnnotation ¢) {
+    return ¢.values();
   }
 }

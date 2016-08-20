@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.extract.*;
 
 import java.util.*;
 
@@ -24,6 +23,7 @@ public enum Have {
         return true;
     return false;
   }
+
   /** Determine whether a boolean literal is present
    * @param es JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
@@ -34,16 +34,18 @@ public enum Have {
         return true;
     return false;
   }
+
   /** Determine whether the boolean literal <code><b>false</b></code> is present
    * @param es JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements is
    *         the boolean literal <code><b>false</b></code> */
   public static boolean falseLiteral(final List<Expression> es) {
     for (final Expression e : es)
-      if (Is.booleanLiteral(core(e)) && !asBooleanLiteral(core(e)).booleanValue())
+      if (isLiteralFalse(e))
         return true;
     return false;
   }
+
   /** Determine whether a literal is present
    * @param es JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
@@ -54,6 +56,7 @@ public enum Have {
         return true;
     return false;
   }
+
   /** Determine whether a literal is present
    * @param es JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
@@ -64,6 +67,7 @@ public enum Have {
         return true;
     return false;
   }
+
   /** Determine whether a numerical literal is present
    * @param es JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
@@ -74,6 +78,7 @@ public enum Have {
         return true;
     return false;
   }
+
   /** Determine whether a numerical literal is present
    * @param es JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
@@ -84,13 +89,14 @@ public enum Have {
         return true;
     return false;
   }
+
   /** Determine whether the boolean literal <code><b>true</b></code> is present
    * @param es JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements is
    *         the boolean literal <code><b>true</b></code> */
   public static boolean trueLiteral(final List<Expression> es) {
     for (final Expression e : es)
-      if (Is.booleanLiteral(core(e)) && asBooleanLiteral(core(e)).booleanValue())
+      if (isLiteralTrue(e))
         return true;
     return false;
   }

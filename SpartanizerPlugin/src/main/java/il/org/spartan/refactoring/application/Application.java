@@ -30,21 +30,27 @@ import il.org.spartan.utils.*;
     public FileStats(final File file) throws IOException {
       linesBefore = countLines(this.file = file);
     }
+
     public void addRoundStat(final int i) {
       roundStats.add(Integer.valueOf(i));
     }
+
     public void countLinesAfter() throws IOException {
       linesAfter = countLines(determineOutputFilename(file.getAbsolutePath()));
     }
+
     public String fileName() {
       return file.getName();
     }
+
     public int getLinesAfter() {
       return linesAfter;
     }
+
     public int getLinesBefore() {
       return linesBefore;
     }
+
     public int getRoundStat(final int r) {
       try {
         return roundStats.get(r).intValue();
@@ -61,6 +67,7 @@ import il.org.spartan.utils.*;
       return lr.getLineNumber();
     }
   }
+
   static int countLines(final String fileName) throws IOException {
     return countLines(new File(fileName));
   }
@@ -76,6 +83,7 @@ import il.org.spartan.utils.*;
   String determineOutputFilename(final String path) {
     return !optDoNotOverwrite ? path : path.substring(0, path.lastIndexOf('.')) + "_new.java";
   }
+
   void discardCompilationUnit(final ICompilationUnit u) {
     try {
       u.close();
@@ -83,9 +91,10 @@ import il.org.spartan.utils.*;
     } catch (final JavaModelException e) {
       e.printStackTrace();
     } catch (final NullPointerException e) {
-      // Ignore
+      Plugin.log(e);
     }
   }
+
   void discardTempIProject() {
     try {
       javaProject.close();
@@ -94,6 +103,7 @@ import il.org.spartan.utils.*;
       e.printStackTrace();
     }
   }
+
   MethodInvocation getMethodInvocation(final CompilationUnit u, final int lineNumber, final MethodInvocation i) {
     final Wrapper<MethodInvocation> $ = new Wrapper<>();
     u.accept(new ASTVisitor() {
@@ -105,11 +115,13 @@ import il.org.spartan.utils.*;
     });
     return $.get() == null ? i : $.get();
   }
+
   String getPackageNameFromSource(final String source) {
     final ASTParser p = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     p.setSource(source.toCharArray());
     return getPackageNameFromSource(new Wrapper<>(""), p.createAST(null));
   }
+
   private String getPackageNameFromSource(final Wrapper<String> $, final ASTNode n) {
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final PackageDeclaration d) {
@@ -119,11 +131,13 @@ import il.org.spartan.utils.*;
     });
     return $.get();
   }
+
   ICompilationUnit openCompilationUnit(final File f) throws IOException, JavaModelException {
     final String source = FileUtils.read(f);
     setPackage(getPackageNameFromSource(source));
     return pack.createCompilationUnit(f.getName(), source, false, null);
   }
+
   boolean parseArguments(final List<String> args) {
     if (args == null || args.size() == 0) {
       printHelpPrompt();
@@ -151,6 +165,7 @@ import il.org.spartan.utils.*;
     }
     return optPath == null;
   }
+
   void prepareTempIJavaProject() throws CoreException {
     final IProject p = ResourcesPlugin.getWorkspace().getRoot().getProject("spartanTemp");
     if (p.exists())
@@ -171,6 +186,7 @@ import il.org.spartan.utils.*;
     buildPath[0] = JavaCore.newSourceEntry(srcRoot.getPath());
     javaProject.setRawClasspath(buildPath, null);
   }
+
   private void printChangeStatistics(final List<FileStats> ss) {
     System.out.println("\nTotal changes made: ");
     if (optIndividualStatistics)
@@ -187,6 +203,7 @@ import il.org.spartan.utils.*;
         System.out.println("    Round #" + (i + 1) + ": " + (i < 9 ? " " : "") + roundSum);
       }
   }
+
   void printHelpPrompt() {
     System.out.println("Spartan Refactoring plugin command line");
     System.out.println("Usage: eclipse -application il.org.spartan.refactoring.application -nosplash [OPTIONS] PATH");
@@ -203,6 +220,7 @@ import il.org.spartan.utils.*;
     System.out.println("  -l       Show the number of lines before and after Spartanization");
     System.out.println("  -r       Show the number of Spartanizaion made in each round");
   }
+
   void printLineStatistics(final List<FileStats> ss) {
     System.out.println("\nLine differences:");
     if (optIndividualStatistics)
@@ -221,9 +239,11 @@ import il.org.spartan.utils.*;
       System.out.println("  Lines after: " + totalAfter);
     }
   }
+
   void setPackage(final String name) throws JavaModelException {
     pack = srcRoot.createPackageFragment(name, false, null);
   }
+
   @Override public Object start(final IApplicationContext arg0) {
     if (parseArguments(as.list((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS))))
       return IApplication.EXIT_OK;
@@ -271,6 +291,7 @@ import il.org.spartan.utils.*;
       printLineStatistics(fileStats);
     return IApplication.EXIT_OK;
   }
+
   @Override public void stop() {
     // Unused
   }

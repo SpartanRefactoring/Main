@@ -24,7 +24,7 @@ public class CleanupHandler extends BaseHandler {
 
   /** Returns the number of Spartanizaion suggestions for this compilation unit
    * @param u JD
-   * @return  number of suggesions available for the compilation unit */
+   * @return number of suggesions available for the compilation unit */
   public static int countSuggestions(final ICompilationUnit u) {
     int $ = 0;
     for (final Spartanization s : ApplySpartanizationHandler.safeSpartanizations) {
@@ -34,6 +34,7 @@ public class CleanupHandler extends BaseHandler {
     }
     return $;
   }
+
   private static List<ICompilationUnit> getAllCompilationUnits(final ICompilationUnit u) {
     try {
       return Spartanization.getAllProjectCompilationUnits(u, new NullProgressMonitor());
@@ -42,10 +43,12 @@ public class CleanupHandler extends BaseHandler {
       return null;
     }
   }
+
   /** Instantiates this class */
   public CleanupHandler() {
     super(null);
   }
+
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) throws ExecutionException {
     final StringBuilder message = new StringBuilder();
     final ICompilationUnit currentCompilationUnit = currentCompilationUnit();

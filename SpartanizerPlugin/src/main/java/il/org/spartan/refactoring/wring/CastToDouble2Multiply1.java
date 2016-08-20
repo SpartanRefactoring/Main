@@ -16,6 +16,7 @@ public final class CastToDouble2Multiply1 extends Wring.ReplaceCurrentNode<CastE
   @Override String description(final CastExpression e) {
     return "Use 1.*" + expression(e) + " instead of (double)" + expression(e);
   }
+
   @Override ASTNode replacement(final CastExpression e) {
     return eval(//
         () -> replacement(expression(e))//
@@ -23,9 +24,11 @@ public final class CastToDouble2Multiply1 extends Wring.ReplaceCurrentNode<CastE
         type(e).isPrimitiveType() && "double".equals("" + type(e)) //
     );
   }
+
   private static InfixExpression replacement(final Expression $) {
     return subject.pair(literal($), $).to(TIMES);
   }
+
   private static NumberLiteral literal(final Expression e) {
     final NumberLiteral $ = e.getAST().newNumberLiteral();
     $.setToken("1.");

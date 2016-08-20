@@ -8,7 +8,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} to convert
+/** convert
  *
  * <pre>
  * int a;
@@ -29,9 +29,11 @@ public final class DeclarationAssignment extends Wring.VariableDeclarationFragem
     $.setInitializer(duplicate(e));
     return $;
   }
+
   @Override String description(final VariableDeclarationFragment f) {
     return "Consolidate declaration of " + f.getName() + " with its subsequent initialization";
   }
+
   @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer != null)

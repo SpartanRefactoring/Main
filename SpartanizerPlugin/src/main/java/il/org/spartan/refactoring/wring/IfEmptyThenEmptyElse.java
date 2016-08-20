@@ -21,6 +21,7 @@ public final class IfEmptyThenEmptyElse extends Wring<IfStatement> implements Ki
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Remove 'if' statement with vacous 'then' and 'else' parts";
   }
+
   @Override Rewrite make(final IfStatement s) {
     return new Rewrite(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -29,6 +30,7 @@ public final class IfEmptyThenEmptyElse extends Wring<IfStatement> implements Ki
       }
     };
   }
+
   @Override boolean scopeIncludes(final IfStatement s) {
     return s != null && Is.vacuousThen(s) && Is.vacuousElse(s);
   }

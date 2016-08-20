@@ -46,6 +46,7 @@ public class DeclarationIfAssginmentTest {
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
+
     /** Instantiates the enclosing class ({@link OutOfScope}) */
     public OutOfScope() {
       super(WRING);
@@ -58,6 +59,7 @@ public class DeclarationIfAssginmentTest {
     public Wringed() {
       super(WRING);
     }
+
     @Test public void newlineBug() throws MalformedTreeException, BadLocationException {
       final String from = "int a = 2;\n if (b) a =3;";
       final String expected = "int a = b ? 3 : 2;";
@@ -80,9 +82,11 @@ public class DeclarationIfAssginmentTest {
       assertSimilar(expected, peeled);
       assertSimilar(Wrap.Statement.on(expected), d);
     }
+
     @Test public void nonNullWring() {
       azzert.notNull(WRING);
     }
+
     @Test public void vanilla() throws MalformedTreeException, IllegalArgumentException {
       final String from = "int a = 2; if (b) a =3;";
       final String expected = "int a = b ? 3 : 2;";
@@ -110,6 +114,7 @@ public class DeclarationIfAssginmentTest {
     azzert.notNull(f);
     azzert.that(WRING.scopeIncludes(f), is(false));
   }
+
   @Test public void traceForbiddenSiblingsExpanded() {
     final String from = "int a = 2,b; if (a+b) a =3;";
     final String wrap = Wrap.Statement.on(from);
@@ -130,7 +135,7 @@ public class DeclarationIfAssginmentTest {
     final List<VariableDeclarationFragment> x = VariableDeclarationFragementAndStatement.forbiddenSiblings(f);
     azzert.that(x.size(), greaterThan(0));
     azzert.that(x.size(), is(1));
-    final VariableDeclarationFragment b = x.get(0);
+    final VariableDeclarationFragment b = first(x);
     azzert.that(b.toString(), is("b"));
     final Of of = Collect.BOTH_SEMANTIC.of(b);
     azzert.notNull(of);

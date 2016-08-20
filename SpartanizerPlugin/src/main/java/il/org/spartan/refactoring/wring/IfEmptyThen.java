@@ -6,7 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} to convert
+/** convert
  *
  * <pre>
  * if (x) ; else {a;}
@@ -26,10 +26,12 @@ public final class IfEmptyThen extends Wring.ReplaceCurrentNode<IfStatement> imp
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Invert conditional and remove vacuous 'then' branch";
   }
+
   @Override Statement replacement(final IfStatement s) {
     final IfStatement $ = subject.pair(elze(s), null).toNot(s.getExpression());
     return !Is.blockRequiredInReplacement(s, $) ? $ : subject.statement($).toBlock();
   }
+
   @Override boolean scopeIncludes(final IfStatement s) {
     return s != null && Is.vacuousThen(s) && !Is.vacuousElse(s);
   }

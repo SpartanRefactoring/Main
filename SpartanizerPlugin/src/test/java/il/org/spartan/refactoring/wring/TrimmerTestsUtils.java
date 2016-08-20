@@ -16,6 +16,7 @@ public class TrimmerTestsUtils {
     public Operand(final String inner) {
       super(inner);
     }
+
     void checkExpected(final String expected) {
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get());
@@ -29,6 +30,7 @@ public class TrimmerTestsUtils {
         azzert.that("Trimming of " + get() + "is just reformatting", gist(get()), is(not(gist(peeled))));
       assertSimilar(expected, peeled);
     }
+
     private void checkSame() {
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get());
@@ -40,6 +42,7 @@ public class TrimmerTestsUtils {
         return;
       assertSimilar(get(), peeled);
     }
+
     public Operand to(final String expected) {
       if (expected == null || expected.isEmpty())
         checkSame();
@@ -67,6 +70,7 @@ public class TrimmerTestsUtils {
       super(from);
       this.clazz = clazz;
     }
+
     private N findNode(final Wring<N> w) {
       azzert.notNull(w);
       final Wrap wrap = Wrap.find(get());
@@ -77,6 +81,7 @@ public class TrimmerTestsUtils {
       azzert.notNull($);
       return $;
     }
+
     private N firstInstance(final CompilationUnit u) {
       final Wrapper<N> $ = new Wrapper<>();
       u.accept(new ASTVisitor() {
@@ -100,11 +105,13 @@ public class TrimmerTestsUtils {
       });
       return $.get();
     }
+
     public OperandToWring<N> in(final Wring<N> w) {
       final N findNode = findNode(w);
       azzert.that(w.scopeIncludes(findNode), is(true));
       return this;
     }
+
     public OperandToWring<N> notIn(final Wring<N> w) {
       azzert.that(w.scopeIncludes(findNode(w)), is(false));
       return this;
@@ -120,6 +127,7 @@ public class TrimmerTestsUtils {
     azzert.notNull($);
     return $.get();
   }
+
   static String apply(final Wring<? extends ASTNode> ns, final String from) {
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
     azzert.notNull(u);
@@ -127,6 +135,7 @@ public class TrimmerTestsUtils {
     azzert.notNull(d);
     return TESTUtils.rewrite(new AsSpartanization(ns, "Tested Refactoring"), u, d).get();
   }
+
   static void assertSimplifiesTo(final String from, final String expected, final Wring<? extends ASTNode> ns, final Wrap wrapper) {
     final String wrap = wrapper.on(from);
     final String unpeeled = apply(ns, wrap);
@@ -139,12 +148,15 @@ public class TrimmerTestsUtils {
       azzert.that("Simpification of " + from + " is just reformatting", gist(from), is(not(gist(peeled))));
     assertSimilar(expected, peeled);
   }
+
   public static int countOpportunities(final Spartanization s, final CompilationUnit u) {
     return s.findOpportunities(u).size();
   }
+
   static <N extends ASTNode> OperandToWring<N> included(final String from, final Class<N> clazz) {
     return new OperandToWring<>(from, clazz);
   }
+
   static Operand trimming(final String from) {
     return new Operand(from);
   }

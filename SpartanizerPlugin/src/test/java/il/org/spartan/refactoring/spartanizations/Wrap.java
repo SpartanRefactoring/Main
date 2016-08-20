@@ -6,7 +6,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
 import il.org.spartan.*;
-import il.org.spartan.misc.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
@@ -19,22 +18,22 @@ public enum Wrap {
   /** Algorithm for wrapping/unwrapping a method */
   Method("" + //
       "package p;\n" + //
-      "public class SpongeBob {\n" + //
+      "public class C {\n" + //
       "", "" + //
-          "} // END OF PACKAGE\n" + //
+          "} // END p\n" + //
           ""), //
   /** Algorithm for wrapping/unwrapping a statement */
   Statement("" + Method.before + //
-      "public void squarePants(){\n" + //
+      "public void m(){\n" + //
       "", "" + //
-          "} // END OF METHOD \n" + //
+          "} // END m \n" + //
           "" + Method.after + //
           ""), //
   /** Algorithm for wrapping/unwrapping an expression */
   Expression(//
       Statement.before //
           + "   if (", //
-      ") patrick();\n" //
+      ") f();\n" //
           + Statement.after //
   ), //
   //
@@ -89,8 +88,13 @@ public enum Wrap {
   }
 
   private boolean contains(final String wrap, final String inner) {
-    return essence(off(wrap)).contains(essence(inner)); 
+    final String off = off(wrap);
+    final String essence = essence(inner);
+    final String essence2 = essence(off);
+    azzert.notNull(essence2);
+    return essence2.contains(essence);
   }
+
   /** Wrap a given code fragment, and then parse it, converting it into a
    * {@link CompilationUnit}.
    * @param codeFragment JD

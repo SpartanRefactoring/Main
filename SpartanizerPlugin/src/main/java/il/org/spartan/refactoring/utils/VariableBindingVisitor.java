@@ -25,6 +25,7 @@ public abstract class VariableBindingVisitor extends ASTVisitor {
   void collect(final ASTNode ¢) {
     // TBD
   }
+
   /** This function listens to the visiting actions and intercepts the calls as
    * necessary. At the first call to it during an invocation of
    * {@link ASTNode#accept(ASTVisitor)} on this object, it conducts a
@@ -36,11 +37,13 @@ public abstract class VariableBindingVisitor extends ASTVisitor {
       collect(¢);
     preVisit0(¢);
   }
+
   /** replaces {@link #preVisit(ASTNode)}
    * @param n JD */
   public void preVisit0(final ASTNode n) {
     // To be realized by user
   }
+
   boolean seen(final ASTNode ¢) {
     return environmentOf.containsKey(¢);
   }

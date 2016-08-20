@@ -1,13 +1,15 @@
 package il.org.spartan.refactoring.wring;
 
+import static il.org.spartan.refactoring.utils.expose.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} to remove overriding methods that only call their
- * counterpart in the parent class, for example: <code>
+/** Removes overriding methods that only call their counterpart in the parent
+ * class, for example: <code>
  *
  * <pre>
  * &#64;Override void foo() {
@@ -28,12 +30,14 @@ public final class MethodRemoveDegenerateOverride extends Wring<MethodDeclaratio
           }
         };
   }
+
   private static boolean shouldRemove(final MethodDeclaration d, final SuperMethodInvocation i) {
     for (final Object m : d.modifiers())
       if (m instanceof MarkerAnnotation && ((MarkerAnnotation) m).getTypeName().toString().contains("Deprecated"))
         return false;
-    return i.getName().toString().equals(d.getName().toString()) && i.arguments().size() == expose.parameters(d).size();
+    return i.getName().toString().equals(d.getName().toString()) && arguments(i).size() == parameters(d).size();
   }
+
   @Override String description(final MethodDeclaration d) {
     return "Remove useless '" + d.getName() + "' overriding method";
   }

@@ -9,7 +9,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} to convert
+/** convert
  *
  * <pre>
  * if (x)
@@ -33,12 +33,15 @@ public final class IfThenIfThenNoElseNoElse extends Wring<IfStatement> implement
     r.replace(s.getExpression(), e, g);
     r.replace(then, duplicate(then(then)), g);
   }
+
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Merge conditionals of nested if staement";
   }
+
   @Override Rewrite make(final IfStatement s) {
     return make(s, null);
   }
+
   @Override Rewrite make(final IfStatement s, final ExclusionManager exclude) {
     if (!Is.vacuousElse(s))
       return null;

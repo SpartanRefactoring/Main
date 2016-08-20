@@ -51,6 +51,7 @@ public class IfCommandsSequencerElseSomethingTest {
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
+
     /** Instantiates the enclosing class ({@link OutOfScope}) */
     public OutOfScope() {
       super(WRING);
@@ -106,6 +107,7 @@ public class IfCommandsSequencerElseSomethingTest {
     public static Collection<Object[]> cases() {
       return collect(cases);
     }
+
     /** Instantiates the enclosing class ({@link Wringed}) */
     public Wringed() {
       super(WRING);
@@ -117,14 +119,17 @@ public class IfCommandsSequencerElseSomethingTest {
   static public void fail() {
     fail(null);
   }
+
   static public void fail(final String message) {
     throw message == null ? new AssertionError() : new AssertionError(message);
   }
+
   @Test public void checkSteps() {
     final Statement s = asSingle("if (a) return a = b; else a = c;");
     azzert.notNull(s);
     azzert.notNull(asIfStatement(s));
   }
+
   @Test public void checkStepsFull() throws MalformedTreeException, BadLocationException {
     final IfStatement s = (IfStatement) asSingle("if (a) return b; else a();");
     azzert.that(WRING.scopeIncludes(s), is(true));
@@ -153,6 +158,7 @@ public class IfCommandsSequencerElseSomethingTest {
     azzert.that("Simpification of " + s + " is just reformatting", compressSpaces, not(compressSpaces2));
     assertSimilar(" if(a)return b;a(); ", peeled);
   }
+
   @Test public void checkStepsTrimmer() throws MalformedTreeException, BadLocationException {
     final String input = "if (a) return b; else a();";
     final String wrap = Wrap.Statement.on(input);
@@ -186,6 +192,7 @@ public class IfCommandsSequencerElseSomethingTest {
       azzert.that("Simpification of " + s + " is just reformatting", gist(s.toString()), is(not(gist(peeled))));
     assertSimilar(" if (a) return b; a(); ", peeled);
   }
+
   @Test public void checkStepsWRING() throws MalformedTreeException {
     final IfStatement s = (IfStatement) asSingle("if (a) return b; else a();");
     azzert.that(WRING.scopeIncludes(s), is(true));

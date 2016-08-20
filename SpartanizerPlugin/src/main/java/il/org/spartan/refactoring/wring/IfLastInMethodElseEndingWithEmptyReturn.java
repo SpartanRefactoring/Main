@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.utils.Utils.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -9,7 +10,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} to convert
+/** convert
  *
  * <pre>
  * if (a) {
@@ -41,9 +42,10 @@ public final class IfLastInMethodElseEndingWithEmptyReturn extends Wring<IfState
   @SuppressWarnings("unused") @Override String description(final IfStatement __) {
     return "Remove redundant return statement in 'else' branch of if statement that terminates this method";
   }
+
   @Override Rewrite make(final IfStatement s) {
     final Block b = asBlock(s.getParent());
-    if (b == null || !(b.getParent() instanceof MethodDeclaration) || !lastIn(s, b.statements()))
+    if (b == null || !(b.getParent() instanceof MethodDeclaration) || !lastIn(s, statements(b)))
       return null;
     final ReturnStatement deleteMe = asReturnStatement(extract.lastStatement(elze(s)));
     return deleteMe == null || deleteMe.getExpression() != null ? null : new Rewrite(description(s), s) {

@@ -20,6 +20,7 @@ public class Plant {
   public Plant(final Expression inner) {
     this.inner = inner;
   }
+
   /** Executes conditional wrapping in parenthesis.
    * @param host the destined parent
    * @return either the expression itself, or the expression wrapped in
@@ -28,9 +29,11 @@ public class Plant {
   public Expression into(final ASTNode host) {
     return noParenthesisRequiredIn(host) ? inner : parenthesize(inner);
   }
+
   private boolean noParenthesisRequiredIn(final ASTNode host) {
     return Precedence.greater(host, inner) || Precedence.equal(host, inner) && !Is.nonAssociative(host);
   }
+
   private ParenthesizedExpression parenthesize(final Expression e) {
     final ParenthesizedExpression $ = inner.getAST().newParenthesizedExpression();
     $.setExpression(duplicate(e));

@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.idiomatic.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -30,48 +31,143 @@ public enum Funcs {
   public static AbstractTypeDeclaration asAbstractTypeDeclaration(final ASTNode ¢) {
     return eval(() -> ((AbstractTypeDeclaration) ¢)).when(¢ instanceof AbstractTypeDeclaration);
   }
+
   /** Convert an {@link Expression} into {@link InfixExpression} whose operator
    * is either {@link org.eclipse.jdt.core.dom.InfixExpression.Operator#AND} or
    * {@link org.eclipse.jdt.core.dom.InfixExpression.Operator#OR}.
    * @param ¢ JD
-   * @return  parameter thus converted, or <code><b>null</b> if the
-   *         conversion is not possible for it */
+   * @return parameter thus converted, or <code><b>null</b> if the conversion is
+   *         not possible for it */
   public static InfixExpression asAndOrOr(final Expression ¢) {
     return !Is.infix(¢) || !Is.deMorgan(asInfixExpression(¢).getOperator()) ? null : asInfixExpression(¢);
   }
+
   /** Convert, is possible, an {@link ASTNode} to an {@link Assignment}
    * @param $ JD
-   * @return  argument, but down-casted to a {@link Assignment}, or
+   * @return argument, but down-casted to a {@link Assignment}, or
    *         <code><b>null</b></code> if the downcast is impossible. */
   public static Assignment asAssignment(final ASTNode $) {
     return !is($, ASSIGNMENT) ? null : (Assignment) $;
   }
+
   private static int asBit(final boolean ¢) {
     return ¢ ? 1 : 0;
   }
+
   /** Convert, is possible, an {@link ASTNode} to a {@link Block}
    * @param $ JD
-   * @return  argument, but down-casted to a {@link Block}, or
+   * @return argument, but down-casted to a {@link Block}, or
    *         <code><b>null</b></code> if no such down-cast is possible.. */
   public static Block asBlock(final ASTNode $) {
     return !is($, BLOCK) ? null : (Block) $;
   }
+
   /** Down-cast, if possible, to {@link BooleanLiteral}
    * @param ¢ JD
-   * @return  parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
-  public static BooleanLiteral asBooleanLiteral(final Expression ¢) {
-    return !(¢ instanceof BooleanLiteral) ? null : (BooleanLiteral) ¢;
+  public static BooleanLiteral asBooleanLiteral(final ASTNode $) {
+    return !is($, BOOLEAN_LITERAL) ? null : (BooleanLiteral) $;
   }
+
   /** Convert an {@link Expression} into {@link InfixExpression} whose operator
    * is one of the six comparison operators: <code><</code>, <code><=</code>,
    * <code>></code>, <code>>=</code>, <code>!=</code>, or <code>==</code>.
    * @param ¢ JD
-   * @return  parameter thus converted, or <code><b>null</b> if the
-   *         conversion is not possible for it */
+   * @return parameter thus converted, or <code><b>null</b> if the conversion is
+   *         not possible for it */
   public static InfixExpression asComparison(final Expression ¢) {
     return !(¢ instanceof InfixExpression) ? null : asComparison((InfixExpression) ¢);
   }
+
+  static boolean isLiteral(final ASTNode ¢, final boolean b) {
+    return isLiteral(asBooleanLiteral(¢), b);
+  }
+
+  static boolean isLiteral(final ASTNode ¢, final double d) {
+    return isLiteral(asNumberLiteral(¢), d);
+  }
+
+  static boolean isLiteral(final ASTNode ¢, final long l) {
+    return isLiteral(asNumberLiteral(¢), l);
+  }
+
+  static boolean isLiteral(final ASTNode ¢, final String s) {
+    return isLiteral(asStringLiteral(¢), s);
+  }
+
+  public static boolean isEmptyStringLiteral(final ASTNode ¢) {
+    return isLiteral(¢, "");
+  }
+
+  public static boolean isLiteralZero(final ASTNode ¢) {
+    return isLiteral(¢, 0);
+  }
+
+  public static boolean isLiteralOne(final ASTNode ¢) {
+    return isLiteral(¢, 1);
+  }
+
+  public static boolean isLiteralTrue(final ASTNode ¢) {
+    return isLiteral(¢, true);
+  }
+
+  public static boolean isLiteralFalse(final ASTNode ¢) {
+    return isLiteral(¢, false);
+  }
+
+  public static StringLiteral asStringLiteral(final ASTNode ¢) {
+    return !is(¢, STRING_LITERAL) ? null : (StringLiteral) ¢;
+  }
+
+  private static boolean isLiteral(final BooleanLiteral ¢, final boolean b) {
+    return ¢ != null && ¢.booleanValue() == b;
+  }
+
+  private static boolean isLiteral(final NumberLiteral ¢, final double d) {
+    return ¢ != null && isLiteral(¢.getToken(), d);
+  }
+
+  private static boolean isLiteral(final NumberLiteral ¢, final int i) {
+    return ¢ != null && isLiteral(¢.getToken(), i);
+  }
+
+  private static boolean isLiteral(final NumberLiteral ¢, final long l) {
+    return isLiteral(¢.getToken(), l);
+  }
+
+  private static boolean isLiteral(final String token, final double d) {
+    try {
+      return Double.parseDouble(token) == d;
+    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
+      return false;
+    }
+  }
+
+  private static boolean isLiteral(final String token, final int i) {
+    try {
+      return Integer.parseInt(token) == i;
+    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
+      return false;
+    }
+  }
+
+  private static boolean isLiteral(final String token, final long l) {
+    try {
+      return Long.parseLong(token) == l;
+    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
+      return false;
+    }
+  }
+
+  static boolean isLiteral(final StringLiteral ¢, final String s) {
+    return ¢ != null && ¢.equals(s);
+  }
+
+  static boolean isLiteral(final ASTNode ¢, final int i) {
+    return isLiteral(asNumberLiteral(¢), i);
+  }
+
   private static InfixExpression asComparison(final InfixExpression ¢) {
     return in(¢.getOperator(), //
         GREATER, //
@@ -82,156 +178,172 @@ public enum Funcs {
         NOT_EQUALS //
     ) ? ¢ : null;
   }
+
   /** Convert, is possible, an {@link ASTNode} to a
    * {@link ConditionalExpression}
    * @param ¢ JD
-   * @return  argument, but down-casted to a {@link ConditionalExpression},
-   *         or <code><b>null</b></code> if no such down-cast is possible.. */
+   * @return argument, but down-casted to a {@link ConditionalExpression}, or
+   *         <code><b>null</b></code> if no such down-cast is possible.. */
   public static ConditionalExpression asConditionalExpression(final ASTNode ¢) {
     return !(¢ instanceof ConditionalExpression) ? null : (ConditionalExpression) ¢;
   }
+
   /** Down-cast, if possible, to {@link ConditionalExpression}
    * @param ¢ JD
-   * @return  parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static ConditionalExpression asConditionalExpression(final Expression ¢) {
     return !(¢ instanceof ConditionalExpression) ? null : (ConditionalExpression) ¢;
   }
+
   /** Down-cast, if possible, to {@link Expression}
    * @param ¢ JD
-   * @return  parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static Expression asExpression(final ASTNode ¢) {
     return !(¢ instanceof Expression) ? null : (Expression) ¢;
   }
+
   /** Down-cast, if possible, to {@link NumberLiteral}
    * @param ¢ JD
-   * @return  parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static NumberLiteral asNumberLiteral(final ASTNode ¢) {
-    return !(¢ instanceof NumberLiteral) ? null : (NumberLiteral) ¢;
+    return !isNumberLiteral(¢) ? null : (NumberLiteral) ¢;
   }
+
+  static boolean isNumberLiteral(final ASTNode ¢) {
+    return is(¢, NUMBER_LITERAL);
+  }
+
   /** Down-cast, if possible, to {@link ExpressionStatement}
    * @param ¢ JD
-   * @return  parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static ExpressionStatement asExpressionStatement(final ASTNode ¢) {
     return !(¢ instanceof ExpressionStatement) ? null : (ExpressionStatement) ¢;
   }
+
   /** Down-cast, if possible, to {@link IfStatement}
    * @param $ JD
-   * @return  parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static IfStatement asIfStatement(final ASTNode $) {
     return !is($, IF_STATEMENT) ? null : (IfStatement) $;
   }
+
   /** Down-cast, if possible, to {@link InfixExpression}
    * @param ¢ JD
-   * @return  parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static InfixExpression asInfixExpression(final ASTNode ¢) {
     return !(¢ instanceof InfixExpression) ? null : (InfixExpression) ¢;
   }
+
   /** Convert, is possible, an {@link ASTNode} to a {@link MethodDeclaration}
    * @param $ JD
-   * @return  argument, but down-casted to a {@link MethodDeclaration}, or
+   * @return argument, but down-casted to a {@link MethodDeclaration}, or
    *         <code><b>null</b></code> if no such down-cast is possible.. */
   public static MethodDeclaration asMethodDeclaration(final ASTNode $) {
     return eval(() -> ((MethodDeclaration) $)).when($ instanceof MethodDeclaration);
   }
+
   /** Down-cast, if possible, to {@link MethodInvocation}
    * @param ¢ JD
-   * @return  parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static MethodInvocation asMethodInvocation(final Expression ¢) {
     return !(¢ instanceof MethodInvocation) ? null : (MethodInvocation) ¢;
   }
+
   /** Convert an {@link Expression} into a {@link PrefixExpression} whose
    * operator is <code>!</code>,
    * @param ¢ JD
-   * @return  parameter thus converted, or <code><b>null</b> if the
-   *         conversion is not possible for it */
+   * @return parameter thus converted, or <code><b>null</b> if the conversion is
+   *         not possible for it */
   public static PrefixExpression asNot(final Expression ¢) {
     return !(¢ instanceof PrefixExpression) ? null : asNot(asPrefixExpression(¢));
   }
+
   static PrefixExpression asNot(final PrefixExpression ¢) {
     return NOT.equals(¢.getOperator()) ? ¢ : null;
   }
+
   /** Down-cast, if possible, to {@link InfixExpression}
    * @param ¢ JD
-   * @return  parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static PostfixExpression asPostfixExpression(final ASTNode ¢) {
     return eval(() -> (PostfixExpression) ¢).when(¢ instanceof PostfixExpression);
   }
+
   /** Down-cast, if possible, to {@link PrefixExpression}
    * @param ¢ JD
-   * @return  parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static PrefixExpression asPrefixExpression(final ASTNode ¢) {
     return eval(() -> (PrefixExpression) ¢).when(¢ instanceof PrefixExpression);
   }
-  /** @param ¢ The node from which to return statement.
-   * @return null if it is not possible to extract the return statement. */
+
+  /** Determines whether a give {@link ASTNode} includes precisely one
+   * {@link Statement}, and return this statement.
+   * @param ¢ The node from which to return statement.
+   * @return single return statement contained in the parameter, or
+   *         <code><b>null</b></code> if no such value exists. */
   public static ReturnStatement asReturn(final ASTNode ¢) {
-    if (¢ == null)
-      return null;
-    switch (¢.getNodeType()) {
-      case ASTNode.BLOCK:
-        return asReturn((Block) ¢);
-      case ASTNode.RETURN_STATEMENT:
-        return (ReturnStatement) ¢;
-      default:
-        return null;
-    }
+    return asReturn(singleStatement(¢));
   }
-  static ReturnStatement asReturn(final Block b) {
-    return b.statements().size() != 1 ? null : Funcs.asReturn((Statement) b.statements().get(0));
-  }
+
   /** Down-cast, if possible, to {@link ReturnStatement}
    * @param $ JD
-   * @return  parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static ReturnStatement asReturnStatement(final ASTNode $) {
     return !is($, RETURN_STATEMENT) ? null : (ReturnStatement) $;
   }
+
   /** Convert, is possible, an {@link ASTNode} to a {@link SimpleName}
    * @param $ JD
-   * @return  argument, but down-casted to a {@link SimpleName}, or
+   * @return argument, but down-casted to a {@link SimpleName}, or
    *         <code><b>null</b></code> if no such down-cast is possible.. */
   public static SimpleName asSimpleName(final ASTNode $) {
     return eval(() -> (SimpleName) $).when($ instanceof SimpleName);
   }
+
   /** Down-cast, if possible, to {@link Statement}
    * @param ¢ JD
-   * @return  parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static Statement asStatement(final ASTNode ¢) {
     return !isStatement(¢) ? null : (Statement) ¢;
   }
+
   /** Obtain a condensed textual representation of an {@link ASTNode}
    * @param ¢ JD
-   * @return  textual representation of the parameter, */
+   * @return textual representation of the parameter, */
   public static String asString(final ASTNode ¢) {
     return removeWhites(¢.toString());
   }
+
   /** Convert, is possible, an {@link ASTNode} to a
    * {@link ConditionalExpression}
    * @param ¢ JD
-   * @return  argument, but down-casted to a {@link ConditionalExpression},
-   *         or <code><b>null</b></code> if no such down-cast is possible.. */
+   * @return argument, but down-casted to a {@link ConditionalExpression}, or
+   *         <code><b>null</b></code> if no such down-cast is possible.. */
   public static ThrowStatement asThrowStatement(final ASTNode ¢) {
     return !(¢ instanceof ThrowStatement) ? null : (ThrowStatement) ¢;
   }
+
   /** Convert, if possible, an {@link Expression} to a
    * {@link VariableDeclarationExpression}
    * @param ¢ JD
-   * @return  argument, but down-casted to a
+   * @return argument, but down-casted to a
    *         {@link VariableDeclarationExpression}, or <code><b>null</b></code>
    *         if no such down-cast is possible.. */
   public static VariableDeclarationExpression asVariableDeclarationExpression(final Expression ¢) {
     return ¢.getNodeType() != VARIABLE_DECLARATION_EXPRESSION ? null : (VariableDeclarationExpression) ¢;
   }
+
   /** @param root the node whose children we return
    * @return A list containing all the nodes in the given root'¢ sub tree */
   public static List<ASTNode> collectDescendants(final ASTNode root) {
@@ -246,6 +358,7 @@ public enum Funcs {
     $.remove(0);
     return $;
   }
+
   /** the function checks if all the given assignments have the same left hand
    * side(variable) and operator
    * @param base The assignment to compare all others to
@@ -260,6 +373,7 @@ public enum Funcs {
         return false;
     return true;
   }
+
   /** @param cmpTo the assignment operator to compare all to
    * @param os A unknown number of assignments operators
    * @return true if all the operator are the same or false otherwise */
@@ -271,15 +385,17 @@ public enum Funcs {
         return false;
     return true;
   }
+
   /** Makes an opposite operator from a given one, which keeps its logical
    * operation after the node swapping. ¢.¢. "&" is commutative, therefore no
    * change needed. "<" isn'¢ commutative, but it has its opposite: ">=".
    * @param ¢ The operator to flip
-   * @return  correspond operator - ¢.¢. "<=" will become ">", "+" will stay
+   * @return correspond operator - ¢.¢. "<=" will become ">", "+" will stay
    *         "+". */
   public static Operator conjugate(final Operator ¢) {
     return !conjugate.containsKey(¢) ? ¢ : conjugate.get(¢);
   }
+
   /** @param ns unknown number of nodes to check
    * @return true if one of the nodes is an Expression Statement of type Post or
    *         Pre Expression with ++ or -- operator. false if none of them are or
@@ -292,28 +408,32 @@ public enum Funcs {
         return true;
     return false;
   }
+
   /** Make a duplicate, suitable for tree rewrite, of the parameter
    * @param ¢ JD
    * @return a duplicate of the parameter, downcasted to the returned type. */
   @SuppressWarnings("unchecked") public static <¢ extends ASTNode> ¢ duplicate(final ¢ ¢) {
     return (¢) copySubtree(¢.getAST(), ¢);
   }
+
   /** Shorthand for {@link ConditionalExpression#getElseExpression()}
    * @param ¢ JD
-   * @return  else part of the parameter */
+   * @return else part of the parameter */
   public static Expression elze(final ConditionalExpression ¢) {
     return ¢.getElseExpression();
   }
+
   /** Shorthand for {@link IfStatement#getElseStatement}
    * @param ¢ JD
-   * @return  else statement of the parameter */
+   * @return else statement of the parameter */
   public static Statement elze(final IfStatement ¢) {
     return ¢.getElseStatement();
   }
+
   /** Find the first matching expression to the given boolean (b).
    * @param b JD,
    * @param es JD
-   * @return  first expression from the given list (es) whose boolean value
+   * @return first expression from the given list (es) whose boolean value
    *         matches to the given boolean (b). */
   private static Expression find(final boolean b, final List<Expression> es) {
     for (final Expression $ : es)
@@ -321,6 +441,7 @@ public enum Funcs {
         return $;
     return null;
   }
+
   /** Swap the order of the left and right operands to an expression, changing
    * the operator if necessary.
    * @param ¢ JD
@@ -332,27 +453,32 @@ public enum Funcs {
       throw new IllegalArgumentException(¢ + ": flipping undefined for an expression with extra operands ");
     return subject.pair(right(¢), left(¢)).to(conjugate(¢.getOperator()));
   }
+
   /** @param n the node from which to extract the proper fragment
    * @param e the name by which to look for the fragment
-   * @return  fragment if such with the given name exists or null otherwise
-   *         (or if ¢ or name are null) */
+   * @return fragment if such with the given name exists or null otherwise (or
+   *         if ¢ or name are null) */
   // TODO this seems a bug
   public static VariableDeclarationFragment getDefinition(final ASTNode n, final Expression e) {
     return hasNulls(n, e) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || e.getNodeType() != SIMPLE_NAME ? null
         : getDefinition((VariableDeclarationStatement) n, (SimpleName) e);
   }
+
   private static VariableDeclarationFragment getDefinition(final VariableDeclarationStatement s, final SimpleName n) {
     return getVarDeclFrag(expose.fragments(s), n);
   }
+
   private static VariableDeclarationFragment getVarDeclFrag(final List<VariableDeclarationFragment> fs, final SimpleName ¢) {
     for (final VariableDeclarationFragment $ : fs)
       if (same(¢, $.getName()))
         return $;
     return null;
   }
+
   public static boolean incompatible(final Assignment a1, final Assignment a2) {
     return hasNulls(a1, a2) || !compatibleOps(a1.getOperator(), a2.getOperator()) || !same(left(a1), left(a2));
   }
+
   /** Determine if an integer can be found in a list of values
    * @param candidate what to search for
    * @param is where to search
@@ -363,67 +489,86 @@ public enum Funcs {
         return true;
     return false;
   }
-  static boolean is(final ASTNode ¢, final int... types) {
+
+  public static boolean is(final ASTNode ¢, final int... types) {
     return ¢ != null && intIsIn(¢.getNodeType(), types);
   }
+
+  public static boolean isEnumConstantDeclaration(final ASTNode ¢) {
+    return is(¢, ENUM_CONSTANT_DECLARATION);
+  }
+
   public static boolean isAbstractTypeDeclaration(final ASTNode ¢) {
     return ¢ != null && ¢ instanceof AbstractTypeDeclaration;
   }
+
   public static boolean isAnonymousClassDeclaration(final ASTNode ¢) {
     return is(¢, ANONYMOUS_CLASS_DECLARATION);
   }
+
   /** Determine whether a node is a return statement
    * @param ¢ node to check
    * @return true if the given node is a block statement */
   public static boolean isBlock(final ASTNode ¢) {
     return is(¢, BLOCK);
   }
+
   /** @param ¢ node to check
    * @return true if the given node is a boolean or null literal or false
    *         otherwise */
   public static boolean isBoolOrNull(final ASTNode ¢) {
     return is(¢, BOOLEAN_LITERAL, NULL_LITERAL);
   }
+
   public static boolean isComparison(final Operator o) {
     return in(o, EQUALS, NOT_EQUALS, GREATER_EQUALS, GREATER, LESS, LESS_EQUALS);
   }
-  public static boolean isEnumDeclaration(final BodyDeclaration ¢) {
+
+  public static boolean isEnumDeclaration(final ASTNode ¢) {
     return is(¢, ENUM_DECLARATION);
   }
+
   /** Determined if a node is an "expression statement"
    * @param ¢ node to check
    * @return true if the given node is expression statement */
   public static boolean isExpressionStatement(final ASTNode ¢) {
     return is(¢, EXPRESSION_STATEMENT);
   }
+
   /** Determine whether a declaration is final or not
    * @param ¢ JD
    * @return true if declaration is final */
   public static boolean isFinal(final BodyDeclaration ¢) {
     return (Modifier.FINAL & ¢.getModifiers()) != 0;
   }
+
   /** Determine whether a variable declaration is final or not
    * @param ¢ JD
    * @return true if the variable is declared as final */
   public static boolean isFinal(final VariableDeclarationStatement ¢) {
     return (Modifier.FINAL & ¢.getModifiers()) != 0;
   }
+
   /** @param ¢ JD
    * @return true if the given node is an infix expression or false otherwise */
   public static boolean isInfix(final ASTNode ¢) {
     return is(¢, INFIX_EXPRESSION);
   }
+
   public static boolean isInterface(final ASTNode ¢) {
     return is(¢, TYPE_DECLARATION) && ((TypeDeclaration) ¢).isInterface();
   }
+
   public static boolean isMethodDeclaration(final ASTNode $) {
     return is($, METHOD_DECLARATION);
   }
+
   /** @param ¢ node to check
    * @return true if the given node is a method invocation or false otherwise */
   public static boolean isMethodInvocation(final ASTNode ¢) {
     return is(¢, METHOD_INVOCATION);
   }
+
   /** @param ¢ node to check
    * @return true if node is an Expression Statement of type Post or Pre
    *         Expression with ++ or -- operator false if node is not an
@@ -441,73 +586,86 @@ public enum Funcs {
         return false;
     }
   }
+
   /** @param a the assignment who'¢ operator we want to check
    * @return true is the assignment'¢ operator is assign */
   public static boolean isOpAssign(final Assignment a) {
     return a != null && a.getOperator() == Assignment.Operator.ASSIGN;
   }
+
   /** Determine whether a declaration is private
    * @param ¢ JD
    * @return true if declaration is private */
   public static boolean isPrivate(final BodyDeclaration ¢) {
     return (Modifier.PRIVATE & ¢.getModifiers()) != 0;
   }
+
   public static boolean isSimpleName(final ASTNode $) {
     return is($, SIMPLE_NAME);
   }
+
   public static boolean isStatement(final ASTNode ¢) {
     return ¢ instanceof Statement;
   }
+
   /** Determine whether a declaration is static or not
    * @param ¢ JD
    * @return true if declaration is static */
   public static boolean isStatic(final BodyDeclaration ¢) {
     return (Modifier.STATIC & ¢.getModifiers()) != 0;
   }
+
   /** @param ¢ node to check
    * @return true if the given node is a variable declaration statement or false
    *         otherwise */
   public static boolean isVariableDeclarationStatement(final ASTNode ¢) {
     return is(¢, VARIABLE_DECLARATION_STATEMENT);
   }
+
   /** Shorthand for {@link Assignment#getLeftHandSide()}
    * @param a JD
-   * @return  left operand of the parameter */
+   * @return left operand of the parameter */
   public static Expression left(final Assignment a) {
     return a.getLeftHandSide();
   }
+
   /** Shorthand for {@link InfixExpression#getLeftOperand()}
    * @param ¢ JD
-   * @return  left operand of the parameter */
+   * @return left operand of the parameter */
   public static Expression left(final InfixExpression ¢) {
     return ¢.getLeftOperand();
   }
+
   /** Shorthand for {@link InstanceofExpression#getLeftOperand()}
    * @param ¢ JD
-   * @return  left operand of the parameter */
+   * @return left operand of the parameter */
   public static Expression left(final InstanceofExpression ¢) {
     return ¢.getLeftOperand();
   }
+
   /** @param ¢ JD
-   * @return  parameter, but logically negated and simplified */
+   * @return parameter, but logically negated and simplified */
   public static Expression logicalNot(final Expression ¢) {
     final PrefixExpression $ = subject.operand(¢).to(NOT);
     final Expression $$ = PrefixNotPushdown.simplifyNot($);
     return $$ == null ? $ : $$;
   }
+
   /** @param ¢ the expression to return in the return statement
-   * @return  new return statement */
+   * @return new return statement */
   public static ThrowStatement makeThrowStatement(final Expression ¢) {
     return subject.operand(¢).toThrow();
   }
+
   public static int negationLevel(final Expression ¢) {
-    return ¢ instanceof PrefixExpression ? negationLevel((PrefixExpression) ¢)
-        : ¢ instanceof ParenthesizedExpression ? negationLevel(((ParenthesizedExpression) ¢).getExpression())
-            : asBit(¢ instanceof NumberLiteral && ((NumberLiteral) ¢).getToken().startsWith("-"));
+    return is(¢, PREFIX_EXPRESSION) ? negationLevel((PrefixExpression) ¢)
+        : is(¢, PARENTHESIZED_EXPRESSION) ? negationLevel(expression(¢)) : asBit(isNumberLiteral(¢) && asNumberLiteral(¢).getToken().startsWith("-"));
   }
+
   private static int negationLevel(final PrefixExpression ¢) {
     return asBit(¢.getOperator() == PrefixExpression.Operator.MINUS) + negationLevel(¢.getOperand());
   }
+
   /** Create a new {@link SimpleName} instance at the AST of the parameter
    * @param n JD
    * @param newName the name that the returned value shall bear
@@ -515,20 +673,23 @@ public enum Funcs {
   public static SimpleName newSimpleName(final ASTNode n, final String newName) {
     return n.getAST().newSimpleName(newName);
   }
+
   /** Retrieve next item in a list
    * @param i an index of specific item in a list
    * @param ts the indexed list
-   * @return  following item in the list, if such such an item exists,
-   *         otherwise, the last node */
+   * @return following item in the list, if such such an item exists, otherwise,
+   *         the last node */
   public static <T> T next(final int i, final List<T> ts) {
     return !inRange(i + 1, ts) ? last(ts) : ts.get(i + 1);
   }
+
   /** Shorthand for {@link ASTNode#getParent()}
    * @param ¢ JD
-   * @return  parent of the parameter */
+   * @return parent of the parameter */
   public static ASTNode parent(final ASTNode ¢) {
     return ¢.getParent();
   }
+
   public static ASTParser parser(final int kind) {
     final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     $.setKind(kind);
@@ -539,26 +700,31 @@ public enum Funcs {
     $.setCompilerOptions(options);
     return $;
   }
+
   public static Expression peelNegation(final Expression $) {
     return //
     $ instanceof PrefixExpression ? peelNegation((PrefixExpression) $) //
         : $ instanceof ParenthesizedExpression ? peelNegation(((ParenthesizedExpression) $).getExpression()) //
             : $ instanceof NumberLiteral ? peelNegation((NumberLiteral) $) : $;
   }
+
   private static Expression peelNegation(final NumberLiteral $) {
     return !$.getToken().startsWith("-") ? $ : $.getAST().newNumberLiteral($.getToken().substring(1));
   }
+
   private static Expression peelNegation(final PrefixExpression $) {
     return $.getOperator() != PrefixExpression.Operator.MINUS ? $ : peelNegation($.getOperand());
   }
+
   /** Retrieve previous item in a list
    * @param i an index of specific item in a list
    * @param ts the indexed list
-   * @return  previous item in the list, if such an item exists, otherwise,
-   *         the last node */
+   * @return previous item in the list, if such an item exists, otherwise, the
+   *         last node */
   public static <T> T prev(final int i, final List<T> ts) {
     return ts.get(i < 1 ? 0 : i - 1);
   }
+
   /** Make a duplicate, suitable for tree rewrite, of the parameter
    * @param ¢ JD
    * @param ¢ JD
@@ -568,6 +734,7 @@ public enum Funcs {
   @SuppressWarnings("unchecked") public static <N extends ASTNode> N rebase(final N n, final AST t) {
     return (N) copySubtree(t, n);
   }
+
   /** As {@link #elze(ConditionalExpression)} but returns the last else
    * statement in "if - else if - ... - else" statement
    * @param ¢ JD
@@ -578,6 +745,7 @@ public enum Funcs {
       $ = ((IfStatement) $).getElseStatement();
     return $;
   }
+
   /** Remove all occurrences of a boolean literal from a list of
    * {@link Expression}¢
    * @param ¢ JD
@@ -590,24 +758,28 @@ public enum Funcs {
       es.remove(¢);
     }
   }
+
   /** Shorthand for {@link Assignment#getRightHandSide()}
    * @param ¢ JD
-   * @return  left operand of the parameter */
+   * @return left operand of the parameter */
   public static Expression right(final Assignment ¢) {
     return ¢.getRightHandSide();
   }
+
   /** Shorthand for {@link CastExpression#getExpression()}
    * @param ¢ JD
-   * @return  right operand of the parameter */
+   * @return right operand of the parameter */
   public static Expression right(final CastExpression ¢) {
     return ¢.getExpression();
   }
+
   /** Shorthand for {@link InfixExpression#getRightOperand()}
    * @param ¢ JD
-   * @return  right operand of the parameter */
+   * @return right operand of the parameter */
   public static Expression right(final InfixExpression ¢) {
     return ¢.getRightOperand();
   }
+
   /** Determine whether two nodes are the same, in the sense that their textual
    * representations is identical. <¢> Each of the parameters may be
    * <code><b>null</b></code>; a <code><b>null</b></code> is only equal to<
@@ -618,6 +790,7 @@ public enum Funcs {
   public static boolean same(final ASTNode n1, final ASTNode n2) {
     return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType() && n1.toString().equals(n2.toString());
   }
+
   /** String wise comparison of all the given SimpleNames
    * @param ¢ string to compare all names to
    * @param es SimplesNames to compare by their string value to cmpTo
@@ -628,6 +801,19 @@ public enum Funcs {
         return false;
     return true;
   }
+
+  public static <T> T onlyOne(final List<T> ts) {
+    return ts == null || ts.size() != 1 ? null : ts.get(0);
+  }
+
+  public static <T> T first(final List<T> ts) {
+    return ts == null || ts.isEmpty() ? null : ts.get(0);
+  }
+
+  public static <T> T second(final List<T> ts) {
+    return ts == null || ts.size() < 2 ? null : ts.get(1);
+  }
+
   /** Determine whether two lists of nodes are the same, in the sense that their
    * textual representations is identical.
    * @param ns1 first list to compare
@@ -643,24 +829,28 @@ public enum Funcs {
         return false;
     return true;
   }
+
   /** Shorthand for {@link ConditionalExpression#getThenExpression()}
    * @param ¢ JD
-   * @return  then part of the parameter */
+   * @return then part of the parameter */
   public static Expression then(final ConditionalExpression ¢) {
     return ¢.getThenExpression();
   }
+
   /** Shorthand for {@link IfStatement#getThenStatement}
    * @param ¢ JD
-   * @return  then statement of the parameter */
+   * @return then statement of the parameter */
   public static Statement then(final IfStatement ¢) {
     return ¢.getThenStatement();
   }
+
   public static int countNegations(final List<Expression> es) {
     int $ = 0;
     for (final Expression e : es)
       $ += negationLevel(e);
     return $;
   }
+
   public static int countNegations(final InfixExpression e) {
     return countNegations(extract.operands(e));
   }
