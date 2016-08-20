@@ -2,6 +2,7 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -144,6 +145,15 @@ public class TrimmerTest250 {
     trimming("(double)(long)a").to("1.*(long)a").to("1.*1L*a");
   }
   @Test public void issue72a() {
+    trimming("x-0").to("x");
+  }
+  @Test public void issue72b() {
     trimming("x+0").to("x");
+  }
+  @Test public void issue72c() {
+    trimming("0+x").to("x");
+  }
+  @Test public void issue72d() {
+    trimming("0-x").to(null);
   }
 }
