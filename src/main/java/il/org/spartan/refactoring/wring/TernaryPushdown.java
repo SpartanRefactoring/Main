@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
-
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Plant.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.refactoring.utils.extract.*;
@@ -38,7 +38,7 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
 
   static Expression pushdown(final ConditionalExpression e, final Assignment a1, final Assignment a2) {
     return a1.getOperator() != a2.getOperator() || !same(left(a1), left(a2)) ? null
-        : new Plant(subject.pair(left(a1), subject.pair(right(a1), right(a2)).toCondition(e.getExpression())).to(a1.getOperator()))
+        : plant(subject.pair(left(a1), subject.pair(right(a1), right(a2)).toCondition(e.getExpression())).to(a1.getOperator()))
             .into(e.getParent());
   }
 

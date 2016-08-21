@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.utils;
-
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Plant.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 
 import java.util.*;
@@ -68,7 +68,7 @@ public class subject {
     public Expression to(final PostfixExpression.Operator o) {
       final PostfixExpression $ = ast.newPostfixExpression();
       $.setOperator(o);
-      $.setOperand(new Plant(inner).into($));
+      $.setOperand(plant(inner).into($));
       return $;
     }
 
@@ -80,7 +80,7 @@ public class subject {
     public PrefixExpression to(final PrefixExpression.Operator o) {
       final PrefixExpression $ = ast.newPrefixExpression();
       $.setOperator(o);
-      $.setOperand(new Plant(inner).into($));
+      $.setOperand(plant(inner).into($));
       return $;
     }
 
@@ -157,8 +157,8 @@ public class subject {
     public Assignment to(final Assignment.Operator o) {
       final Assignment $ = ast.newAssignment();
       $.setOperator(o);
-      $.setLeftHandSide(new Plant(left).into($));
-      $.setRightHandSide(new Plant(right).into($));
+      $.setLeftHandSide(plant(left).into($));
+      $.setRightHandSide(plant(right).into($));
       return $;
     }
 
@@ -170,7 +170,7 @@ public class subject {
     public InfixExpression to(final InfixExpression.Operator o) {
       final InfixExpression $ = ast.newInfixExpression();
       $.setOperator(o);
-      $.setLeftOperand(new Plant(left).into($));
+      $.setLeftOperand(plant(left).into($));
       $.setRightOperand(new Plant(right).into($));
       return $;
     }
@@ -183,9 +183,9 @@ public class subject {
      *         condition */
     public ConditionalExpression toCondition(final Expression condition) {
       final ConditionalExpression $ = ast.newConditionalExpression();
-      $.setExpression(new Plant(claim(condition)).into($));
-      $.setThenExpression(new Plant(left).into($));
-      $.setElseExpression(new Plant(right).into($));
+      $.setExpression(plant(claim(condition)).into($));
+      $.setThenExpression(plant(left).into($));
+      $.setElseExpression(plant(right).into($));
       return $;
     }
 
@@ -220,7 +220,7 @@ public class subject {
       assert operands.size() >= 2;
       final InfixExpression $ = subject.pair(first(operands), second(operands)).to(o);
       for (int i = 2; i < operands.size(); ++i)
-        extendedOperands($).add(new Plant(operands.get(i)).into($));
+        extendedOperands($).add(plant(operands.get(i)).into($));
       return $;
     }
   }

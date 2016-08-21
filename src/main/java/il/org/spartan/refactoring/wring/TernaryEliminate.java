@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
-
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Plant.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -15,7 +15,7 @@ public final class TernaryEliminate extends Wring.ReplaceCurrentNode<Conditional
   }
 
   @Override Expression replacement(final ConditionalExpression e) {
-    return new Plant(extract.core(e.getThenExpression())).into(e.getParent());
+    return plant(extract.core(e.getThenExpression())).into(e.getParent());
   }
 
   @Override boolean scopeIncludes(final ConditionalExpression e) {
