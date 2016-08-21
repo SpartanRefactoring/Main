@@ -13,7 +13,7 @@ import il.org.spartan.refactoring.wring.Wring.*;
 /** Replace <code>1*X</code> by <code>X</code>
  * @author Yossi Gil
  * @since 2015-09-05 */
-public final class InfixMultiplicationNeturalElement extends ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
+public final class InfixMultiplicationByOne extends ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
   @Override String description(final InfixExpression e) {
     return "Remove all multiplications by 1 from " + e;
   }

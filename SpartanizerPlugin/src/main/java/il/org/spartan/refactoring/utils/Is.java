@@ -289,6 +289,24 @@ public enum Is {
     return (Modifier.FINAL & ¢.getModifiers()) != 0;
   }
 
+  /** @param n JD
+   * @return <code><b>true</b></code> <i>iff</i> the node is an Expression
+   *         Statement of type Post or Pre Expression with ++ or -- operator
+   *         false if node is not an Expression Statement or its a Post or Pre
+   *         fix expression that its operator is not ++ or -- */
+  public static boolean isIncrementOrDecrement(final ASTNode n) {
+    switch (n.getNodeType()) {
+      case EXPRESSION_STATEMENT:
+        return isIncrementOrDecrement(extract.expression(n));
+      case POSTFIX_EXPRESSION:
+        return in(((PostfixExpression) n).getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
+      case PREFIX_EXPRESSION:
+        return in(asPrefixExpression(n).getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT);
+      default:
+        return false;
+    }
+  }
+
   /** @param ¢ JD
    * @return true if the given node is an infix expression or false otherwise */
   public static boolean isInfix(final ASTNode ¢) {
@@ -337,28 +355,10 @@ public enum Is {
    * @return <code><b>true</b></code> <i>iff</i> the node is an Expression
    *         Statement of type Post or Pre Expression with ++ or -- operator
    *         false if node is not an Expression Statement or its a Post or Pre
-   *         fix expression that its operator is not ++ or -- 
-   * @deprecated Use {@link #isIncrementOrDecrement(ASTNode)} instead*/
-  public static boolean isNodeIncOrDecExp(final ASTNode n) {
+   *         fix expression that its operator is not ++ or --
+   * @deprecated Use {@link #isIncrementOrDecrement(ASTNode)} instead */
+  @Deprecated public static boolean isNodeIncOrDecExp(final ASTNode n) {
     return isIncrementOrDecrement(n);
-  }
-
-  /** @param n JD
-   * @return <code><b>true</b></code> <i>iff</i> the node is an Expression
-   *         Statement of type Post or Pre Expression with ++ or -- operator
-   *         false if node is not an Expression Statement or its a Post or Pre
-   *         fix expression that its operator is not ++ or -- */
-  public static boolean isIncrementOrDecrement(final ASTNode n) {
-    switch (n.getNodeType()) {
-      case EXPRESSION_STATEMENT:
-        return isIncrementOrDecrement(extract.expression(n));
-      case POSTFIX_EXPRESSION:
-        return in(((PostfixExpression) n).getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
-      case PREFIX_EXPRESSION:
-        return in(asPrefixExpression(n).getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT);
-      default:
-        return false;
-    }
   }
 
   /** @param a the assignment who'¢ operator we want to check
@@ -435,11 +435,15 @@ public enum Is {
   }
 
   public static boolean negative(final Expression e) {
-    return e.toString().startsWith("-") || e instanceof PrefixExpression && negative((PrefixExpression) e);
+    return negative(asPrefixExpression(e)) || negative(asNumberLiteral(e));
   }
 
-  public static boolean negative(final PrefixExpression e) {
-    return e.getOperator() == PrefixExpression.Operator.MINUS;
+  public static boolean negative(final NumberLiteral ¢) {
+    return ¢ != null && ¢.getToken().startsWith("-");
+  }
+
+  public static boolean negative(final PrefixExpression ¢) {
+    return ¢ != null && ¢.getOperator() == PrefixExpression.Operator.MINUS;
   }
 
   /** Determine whether a node is an infix expression whose operator is
@@ -701,6 +705,28 @@ public enum Is {
         && (elze(parent) != null || recursiveElze(s) != null || blockRequiredInReplacement(parent, s));
   }
 
+  static boolean isLiteral(final ASTNode ¢, final boolean b) {
+    return isLiteral(Funcs.asBooleanLiteral(¢), b);
+  }
+
+  static boolean isLiteral(final ASTNode ¢, final double d) {
+    final NumberLiteral ¢1 = Funcs.asNumberLiteral(¢);
+    return ¢1 != null && isLiteral(¢1.getToken(), d);
+  }
+
+  static boolean isLiteral(final ASTNode ¢, final int i) {
+    final NumberLiteral ¢1 = Funcs.asNumberLiteral(¢);
+    return ¢1 != null && isLiteral(¢1.getToken(), i);
+  }
+
+  static boolean isLiteral(final ASTNode ¢, final long l) {
+    return isLiteral(Funcs.asNumberLiteral(¢).getToken(), l);
+  }
+
+  static boolean isLiteral(final ASTNode ¢, final String s) {
+    return isLiteral(Funcs.asStringLiteral(¢), s);
+  }
+
   static boolean isLiteral(final BooleanLiteral ¢, final boolean b) {
     return ¢ != null && ¢.booleanValue() == b;
   }
@@ -719,6 +745,14 @@ public enum Is {
     } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
       return false;
     }
+  }
+
+  static boolean isLiteral(final StringLiteral ¢, final String s) {
+    return ¢ != null && ¢.equals(s);
+  }
+
+  static boolean isNumberLiteral(final ASTNode ¢) {
+    return is(¢, NUMBER_LITERAL);
   }
 
   /** Determine whether an {@link Expression} could not be evaluated as a
@@ -798,35 +832,5 @@ public enum Is {
       if (o == null || !sideEffectFree(Funcs.asExpression((ASTNode) o)))
         return false;
     return true;
-  }
-
-  static boolean isLiteral(final ASTNode ¢, final boolean b) {
-    return isLiteral(Funcs.asBooleanLiteral(¢), b);
-  }
-
-  static boolean isLiteral(final ASTNode ¢, final double d) {
-    final NumberLiteral ¢1 = Funcs.asNumberLiteral(¢);
-    return ¢1 != null && isLiteral(¢1.getToken(), d);
-  }
-
-  static boolean isLiteral(final ASTNode ¢, final int i) {
-    final NumberLiteral ¢1 = Funcs.asNumberLiteral(¢);
-    return ¢1 != null && isLiteral(¢1.getToken(), i);
-  }
-
-  static boolean isLiteral(final ASTNode ¢, final long l) {
-    return isLiteral(Funcs.asNumberLiteral(¢).getToken(), l);
-  }
-
-  static boolean isLiteral(final ASTNode ¢, final String s) {
-    return isLiteral(Funcs.asStringLiteral(¢), s);
-  }
-
-  static boolean isLiteral(final StringLiteral ¢, final String s) {
-    return ¢ != null && ¢.equals(s);
-  }
-
-  static boolean isNumberLiteral(final ASTNode ¢) {
-    return is(¢, NUMBER_LITERAL);
   }
 }

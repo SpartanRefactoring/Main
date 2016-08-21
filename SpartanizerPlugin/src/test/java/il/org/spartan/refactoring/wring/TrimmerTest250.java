@@ -1,9 +1,13 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
-
+import static il.org.spartan.azzert.*;
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
+
+import il.org.spartan.*;
+import il.org.spartan.refactoring.utils.*;
 
 /** * Unit tests for the nesting class Unit test for the containing class. Note
  * our naming convention: a) test methods do not use the redundant "test"
@@ -229,11 +233,51 @@ public class TrimmerTest250 {
     trimming("0-(x-0)").to("-x").to(null);
   }
 
-  @Ignore("Bug!") @Test public void issue72mf1() {
+  @Test public void issue72me1() {
+    azzert.nay(Is.negative(Into.e("0")));
+  }
+
+  @Test public void issue72me2() {
+    azzert.aye(Is.negative(Into.e("-1")));
+    azzert.nay(Is.negative(Into.e("+1")));
+    azzert.nay(Is.negative(Into.e("1")));
+  }
+
+  @Test public void issue72me3() {
+    azzert.aye(Is.negative(Into.e("-x")));
+    azzert.nay(Is.negative(Into.e("+x")));
+    azzert.nay(Is.negative(Into.e("x")));
+  }
+
+  @Test public void issue72me4() {
+    azzert.that(Restructure.minus(Into.e("-x")), iz("x"));
+  }
+
+  @Test public void issue72me5() {
+    azzert.that(Restructure.minus(Into.e("x")), iz("-x"));
+  }
+
+  @Test public void issue72me6() {
+    azzert.that(Restructure.minus(Into.e("+x")), iz("-x"));
+  }
+
+  @Test public void issue72me7() {
+    azzert.that(Restructure.minus(Into.e("-0")), iz("0"));
+  }
+
+  @Test public void issue72me8() {
+    azzert.that(Restructure.minus(Into.e("+0")), iz("0"));
+  }
+
+  @Test public void issue72me9() {
+    azzert.that(Restructure.minus(Into.e("0")), iz("0"));
+  }
+
+  @Test public void issue72mf1() {
     trimming("0-(x-y)").to("-(x-y)").to(null);
   }
 
-  @Ignore("Bug!") @Test public void issue72mf2() {
+  @Test public void issue72mf2() {
     trimming("0-(x-(y-z))").to("-(x-y)").to(null);
   }
 
@@ -492,7 +536,7 @@ public class TrimmerTest250 {
     trimming("static abstract final enum a {x,y,z; void f() {}}")//
         .to("enum a {x,y,z; void f() {}}");//
   }
-  
+
   @Test public void issue75a() {
     trimming("int i = 0").to(null);
   }
