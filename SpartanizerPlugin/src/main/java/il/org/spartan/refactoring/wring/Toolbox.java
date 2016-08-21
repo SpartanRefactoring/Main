@@ -102,6 +102,7 @@ public class Toolbox {
             new DeclarationInitializerStatementTerminatingScope(), //
             new VariableRenameUnderscoreToDoubleUnderscore<>(), null) //
         .add(IfStatement.class, //
+            new IfTrueOrFalse(), //
             new IfLastInMethodThenEndingWithEmptyReturn(), //
             new IfLastInMethodElseEndingWithEmptyReturn(), //
             new IfLastInMethod(), //

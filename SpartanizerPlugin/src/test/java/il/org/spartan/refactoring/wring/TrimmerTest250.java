@@ -628,4 +628,95 @@ public class TrimmerTest250 {
   @Test public void issue75n() {
     trimming("(2*+(a+b))").to("(2*(a+b))");
   }
+  
+  @Ignore public void issue85_86a() {
+    trimming("if(true){   \n"
+        + "x(); }   \n"
+        + "else{   \n"
+        + "y();   \n"
+        + "}").to("x();");
+  }
+  
+  @Ignore public void issue85_86b() {
+    trimming("if(false){   \n"
+        + "x(); }   \n"
+        + "else{   \n"
+        + "y();   \n"
+        + "}").to("y();");
+  }
+
+  @Ignore public void issue85_86c() {
+    trimming("if(false)   \n"
+        + "x();    \n"
+        + "else   \n"
+        + "y();   \n").to("y();");
+  }
+
+  @Ignore public void issue85_86d() {
+    trimming("if(false){   \n"
+        + "x(); }   \n"
+        + "else{   \n"
+        + "if(false) a();   \n"
+        + "else b();"
+        + "}").to("b();");
+  }
+
+  @Ignore public void issue85_86e() {
+    trimming("if(false){   \n"
+        + "x(); }   \n"
+        + "else{   \n"
+        + "if(true) a();   \n"
+        + "else b();"
+        + "}").to("a();");
+  }
+
+  @Ignore public void issue85_86f() {
+    trimming("if(true){   \n"
+        + "if(true) a();   \n"
+        + "else b(); }   \n"
+        + "else{   \n"
+        + "if(false) a();   \n"
+        + "else b();"
+        + "}").to("a();");
+  }
+
+  @Ignore public void issue85_86g() {
+    trimming("if(z==k)   \n"
+        + "x();    \n"
+        + "else   \n"
+        + "y();   \n").to(null);
+  }
+
+  @Ignore public void issue85_86h() {
+    trimming("if(5==5)   \n"
+        + "x();    \n"
+        + "else   \n"
+        + "y();   \n").to(null);
+  }
+
+  @Ignore public void issue85_86i() {
+    trimming("if(z){   \n"
+        + "if(true) a();   \n"
+        + "else b(); }   \n"
+        + "else{   \n"
+        + "if(false) a();   \n"
+        + "else b();"
+        + "}").to("if(z){   \n"
+            + "a(); }   \n"
+            + "else{   \n"
+            + "b();   \n"
+            + "}");
+  }
+
+  @Ignore public void issue85_86j() {
+    trimming("").to("(2*(a+b))");
+  }
+
+  @Ignore public void issue85_86k() {
+    trimming("").to("(2*(a+b))");
+  }
+
+  @Ignore public void issue85_86l() {
+    trimming("").to("(2*(a+b))");
+  }
 }
