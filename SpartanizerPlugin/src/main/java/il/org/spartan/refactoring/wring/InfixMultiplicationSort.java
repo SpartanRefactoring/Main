@@ -10,13 +10,14 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} that sorts the arguments of a {@link Operator#DIVIDE}
- * expression.
+/** A {@link Wring} that sorts the arguments of a {@link Operator#PLUS}
+ * expression. Extra care is taken to leave intact the use of
+ * {@link Operator#PLUS} for the concatenation of {@link String}s.
  * @author Yossi Gil
- * @since 2015-09-05 */
-public final class InfixSortDivision extends Wring.InfixSortingOfCDR implements Kind.Sorting {
+ * @since 2015-07-17 */
+public final class InfixMultiplicationSort extends Wring.InfixSorting implements Kind.Sorting {
   @Override boolean scopeIncludes(final InfixExpression e) {
-    return in(e.getOperator(), DIVIDE);
+    return in(e.getOperator(), TIMES);
   }
 
   @Override boolean sort(final List<Expression> es) {
