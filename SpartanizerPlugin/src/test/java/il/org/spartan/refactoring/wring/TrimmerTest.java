@@ -2886,7 +2886,7 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Test public void pushdownTernaryNotOnPLUS() {
-    trimming("a ? +x : +y").to("");
+    trimming("a ? +x : +y").to("a ? x : y").to(null);
   }
 
   @Test public void pushdownTernaryNotOnPLUSPLUS() {

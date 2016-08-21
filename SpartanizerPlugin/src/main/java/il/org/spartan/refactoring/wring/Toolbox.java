@@ -58,7 +58,9 @@ public class Toolbox {
             new BlockSimplify(), //
             new BlockSingleton(), //
             null) //
-        .add(PostfixExpression.class, new PostfixToPrefix()) //
+        .add(PostfixExpression.class, //
+            new PostfixToPrefix(), //
+            null) //
         .add(InfixExpression.class, //
             new InfixSubtractionZero(), //
             new InfixDivisionMultiplicationNegatives(), //
@@ -122,7 +124,9 @@ public class Toolbox {
             null)//
         .add(PrefixExpression.class, //
             new PrefixIncrementDecrementReturn(), //
-            new PrefixNotPushdown()) //
+            new PrefixNotPushdown(), //
+            new PrefixPlusRemove(), //
+            null) //
         .add(ConditionalExpression.class, //
             new TernaryBooleanLiteral(), //
             new TernaryCollapse(), //

@@ -17,8 +17,14 @@ public class Plant {
 
   /** Instantiates this class, recording the expression that might be wrapped.
    * @param inner JD */
-  public Plant(final Expression inner) {
+  Plant(final Expression inner) {
     this.inner = inner;
+  }
+
+  /** Factory method recording the expression that might be wrapped.
+   * @param inner JD */
+  public static Plant plant(Expression inner) {
+    return new Plant(inner);
   }
 
   /** Executes conditional wrapping in parenthesis.

@@ -63,6 +63,7 @@ public final class Trimmer extends Spartanization {
         if (!inRange(m, n))
           return true;
         final Wring<N> w = Toolbox.instance().find(n);
+        System.out.println(w);
         if (w != null) {
           final Rewrite make = w.make(n, exclude);
           if (make != null)
