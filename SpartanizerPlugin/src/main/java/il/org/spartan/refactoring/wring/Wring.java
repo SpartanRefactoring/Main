@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
-
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Plant.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
@@ -56,7 +56,7 @@ final class LocalInliner {
       ns.set(newExpression);
       rewriter.replace(oldExpression, newExpression, editGroup);
       for (final ASTNode use : Collect.usesOf(name).in(newExpression))
-        rewriter.replace(use, !(use instanceof Expression) ? replacement : new Plant((Expression) replacement).into(use.getParent()), editGroup);
+        rewriter.replace(use, !(use instanceof Expression) ? replacement : plant((Expression) replacement).into(use.getParent()), editGroup);
     }
 
     /** Computes the total number of AST nodes in the replaced parameters
@@ -275,8 +275,10 @@ public abstract class Wring<N extends ASTNode> implements Kind {
   }
 
   static abstract class VariableDeclarationFragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
+    private static final org.eclipse.jdt.core.dom.InfixExpression.Operator PLUS2 = InfixExpression.Operator.PLUS;
+
     static InfixExpression.Operator asInfix(final Assignment.Operator o) {
-      return o == PLUS_ASSIGN ? PLUS
+      return o == PLUS_ASSIGN ? InfixExpression.Operator.PLUS
           : o == MINUS_ASSIGN ? MINUS
               : o == TIMES_ASSIGN ? TIMES
                   : o == DIVIDE_ASSIGN ? DIVIDE

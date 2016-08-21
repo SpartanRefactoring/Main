@@ -58,10 +58,13 @@ public class Toolbox {
             new BlockSimplify(), //
             new BlockSingleton(), //
             null) //
-        .add(PostfixExpression.class, new PostfixToPrefix()) //
+        .add(PostfixExpression.class, //
+            new PostfixToPrefix(), //
+            null) //
         .add(InfixExpression.class, //
             new InfixDivisionMultiplicationNegatives(), //
-            new InfixNeutralAdditionSubtruction(), // must appear before InfixNeutralAdditionSubtruction
+            new InfixNeutralAdditionSubtruction(), // must appear before
+                                                   // InfixNeutralAdditionSubtruction
             new InfixSortAddition(), //
             new InfixComparisonBooleanLiteral(), //
             new InfixConditionalAndTrue(), //
@@ -121,7 +124,9 @@ public class Toolbox {
             null)//
         .add(PrefixExpression.class, //
             new PrefixIncrementDecrementReturn(), //
-            new PrefixNotPushdown()) //
+            new PrefixNotPushdown(), //
+            new PrefixPlusRemove(), //
+            null) //
         .add(ConditionalExpression.class, //
             new TernaryBooleanLiteral(), //
             new TernaryCollapse(), //

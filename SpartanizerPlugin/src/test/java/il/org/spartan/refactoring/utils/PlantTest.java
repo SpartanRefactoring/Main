@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.utils;
-
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Into.*;
+import static il.org.spartan.refactoring.utils.Plant.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
@@ -17,14 +17,14 @@ import il.org.spartan.*;
     final String s = "a?b:c";
     final Expression e = e(s);
     azzert.notNull(e);
-    final Expression e1 = new Plant(e).into(null);
+    final Expression e1 = plant(e).into(null);
     azzert.notNull(e1);
     azzert.that(e1, iz(s));
   }
 
   @Test public void plantIntoReturn() {
     final Expression e = Into.e("2");
-    final Plant plant = new Plant(e);
+    final Plant plant = plant(e);
     plant.into(e.getAST().newReturnStatement());
     azzert.that(plant.into(e.getAST().newReturnStatement()), iz("2"));
   }

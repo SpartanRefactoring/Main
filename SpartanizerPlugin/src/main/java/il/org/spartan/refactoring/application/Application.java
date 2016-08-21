@@ -91,7 +91,7 @@ import il.org.spartan.utils.*;
     } catch (final JavaModelException e) {
       e.printStackTrace();
     } catch (final NullPointerException e) {
-      Plugin.log(e);
+//      Plugin.log(e);
     }
   }
 
