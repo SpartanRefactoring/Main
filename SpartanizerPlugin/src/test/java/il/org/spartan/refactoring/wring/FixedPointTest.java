@@ -341,7 +341,7 @@ import il.org.spartan.refactoring.spartanizations.*;
             "      System.out.println(tH3 + res);\n" + //
             "    else\n" + //
             "      System.out.println(h2A+ res + a + s);",
-        "System.out.println(X.equals(X)?tH3+X:h2A+X+0+X);");
+        "System.out.println(X.equals(X)?tH3+X:h2A+X+X);");
   }
 
   @Test(timeout = 2000) public void ternarize23() {
