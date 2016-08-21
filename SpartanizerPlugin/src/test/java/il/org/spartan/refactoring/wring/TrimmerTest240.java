@@ -2716,7 +2716,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void pushdownTernaryNotOnPLUS() {
-    trimming("a ? +x : +y").to("");
+    trimming("a ? +x : +y").to("a ? x : y").to(null);
   }
 
   @Test public void pushdownTernaryNotOnPLUSPLUS() {
