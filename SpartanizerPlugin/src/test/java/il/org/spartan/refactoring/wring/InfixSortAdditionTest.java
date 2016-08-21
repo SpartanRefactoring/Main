@@ -152,7 +152,7 @@ public class InfixSortAdditionTest {
     }
   }
 
-  static final Wring<InfixExpression> WRING = new InfixSortAddition();
+  static final Wring<InfixExpression> WRING = new InfixAdditionSort();
   static final ExpressionComparator COMPARATOR = ExpressionComparator.ADDITION;
 
   @Test public void subjectOperandsWithParenthesis() {
@@ -164,6 +164,6 @@ public class InfixSortAdditionTest {
     azzert.that(operands.size(), is(2));
     final InfixExpression r = subject.operands(operands).to(plus.getOperator());
     azzert.that(r, iz("2+a"));
-    azzert.that(new InfixSortAddition().replacement(plus), iz("a+2"));
+    azzert.that(new InfixAdditionSort().replacement(plus), iz("a+2"));
   }
 }

@@ -1423,7 +1423,7 @@ public class TrimmerTest240 {
     that(right(e).toString(), is("f(a,b,c)"));
     that(left(e).toString(), is("f(a,b,c,d,e)"));
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
-    that(s, instanceOf(InfixSortMultiplication.class));
+    that(s, instanceOf(InfixMultiplicationSort.class));
     that(s, notNullValue());
     that(s.scopeIncludes(e), is(true));
     final Expression e1 = left(e);
@@ -1444,7 +1444,7 @@ public class TrimmerTest240 {
     that(right(e).toString(), is("f(a,b,c)"));
     that(left(e).toString(), is("f(a,b,c,d)"));
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
-    that(s, instanceOf(InfixSortMultiplication.class));
+    that(s, instanceOf(InfixMultiplicationSort.class));
     that(s, notNullValue());
     that(s.scopeIncludes(e), is(true));
     final Expression e1 = left(e);

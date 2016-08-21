@@ -122,7 +122,7 @@ public enum Collect {
        *        {@link Expression}
        * @return <code><b>true</b></code> <i>iff</i> addFragment() succeeds with
        *         the {@link VariableDeclarationFragment}s from each (extended)
-       *         Expression in the param (es). */
+       *         Expression in the parameter. */
       boolean consider(final List<? extends Expression> es) {
         for (final Expression e : es)
           addFragments(fragments(asVariableDeclarationExpression(e)));
@@ -371,17 +371,17 @@ public enum Collect {
       }
 
       @Override public boolean visit(final CastExpression e) {
-        return collect(e.getExpression());
+        return collect(expression(e));
       }
 
       @Override public boolean visit(final ClassInstanceCreation c) {
-        collect(c.getExpression());
-        return collect(c.arguments());
+        collect(expression(c));
+        return collect(arguments(c));
       }
 
       @Override public boolean visit(final DoStatement s) {
         ++loopDepth;
-        return collect(s.getExpression());
+        return collect(expression(s));
       }
 
       @Override public boolean visit(@SuppressWarnings("unused") final EnhancedForStatement __) {
@@ -408,8 +408,8 @@ public enum Collect {
          * anonymous classes in which the formal parameters hide variables in
          * the enclosing scope. We don't want to collect them as uses of the
          * variable */
-        for (final Object o : d.parameters())
-          if (((SingleVariableDeclaration) o).getName().subtreeMatch(matcher, what))
+        for (final SingleVariableDeclaration o : parameters(d))
+          if (o.getName().subtreeMatch(matcher, what))
             return false;
         return true;
       }
