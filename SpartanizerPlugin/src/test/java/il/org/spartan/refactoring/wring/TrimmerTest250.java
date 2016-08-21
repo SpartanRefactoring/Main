@@ -165,22 +165,90 @@ public class TrimmerTest250 {
     trimming("1L*a").to("");
   }
 
-  @Test public void issue72a() {
+  @Test public void issue72pa() {
     trimming("x+0").to("x");
   }
 
-  @Test public void issue72b() {
+  @Test public void issue72pb() {
     trimming("0+x").to("x");
   }
   
-  @Test public void issue72c() {
+  @Test public void issue72pc() {
+    trimming("0+x").to("x");
+  }
+  
+  @Test public void issue72pd() {
+    trimming("0+x+0").to("x").to(null);
+  }
+  
+  @Test public void issue72pe() {
+    trimming("x+0+x").to("x+x").to(null);
+  }
+  
+  @Test public void issue72pf() {
+    trimming("x+0+x+0+0+y+0+0+0+0+z+0+h+0").to("x+x+y+z+h").to(null);
+  }
+  
+  @Test public void issue72pg() {
+    trimming("0+(x+y)").to("x+y");
+  }
+  
+  @Test public void issue72ph() {
+    trimming("0+((x+y)+0+(z+h))+0").to("x+y+z+h");
+  }
+  
+  @Test public void issue72pi() {
+    trimming("0+(0+x+y+(4+0))").to("x+y+4").to(null);
+  }
+  
+  @Test public void issue72ma() {
     trimming("0-x").to("-x");
   }
 
-  @Test public void issue72d() {
+  @Test public void issue72mb() {
     trimming("x-0").to("x");
   }
 
+  @Test public void issue72mc() {
+    trimming("x-0-x").to("x-x-0").to("x-x").to(null);
+  }
+  
+  @Test public void issue72md1() {
+    trimming("0-x-0").to("-x").to(null);
+  }
+  
+  @Test public void issue72md2() {
+    trimming("0-x-0-y").to("-x-y").to(null);
+  }
+  
+  @Test public void issue72md3() {
+    trimming("0-x-0-y-0-z-0-0").to("-x-y-z").to(null);
+  }
+  
+  @Test public void issue72me() {
+    trimming("0-(x-0)").to("-(x-0)").to("-(x)").to(null);
+  }
+  
+  @Test public void issue72mf() {
+    trimming("0-(x-y)").to("-(x-y)").to(null);
+  }
+  
+  @Test public void issue72mg() {
+    trimming("(x-0)-0").to("(x-0)").to("(x)").to(null);
+  }
+  
+  @Test public void issue72mh() {
+    trimming("x-0-y").to("x-y-0").to("x-y").to(null);
+  }
+  
+  @Test public void issue72mi() {
+    trimming("0-x-0-y-0-z-0").to("0-x-y-z-0-0-0").to("x-y-z").to(null);
+  }
+  
+  @Test public void issue72mj() {
+    trimming("0-0").to("0");
+  }
+  
   @Test public void issue82a() {
     trimming("(long)5").to("1L*5");
   }
