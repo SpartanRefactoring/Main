@@ -117,18 +117,30 @@ public enum extract {
         return expression((ReturnStatement) n);
       case ASTNode.THROW_STATEMENT:
         return expression((ThrowStatement) n);
+      case ASTNode.CLASS_INSTANCE_CREATION:
+        return expression((ClassInstanceCreation) n);
       case ASTNode.CAST_EXPRESSION:
         return expression((CastExpression) n);
       case ASTNode.METHOD_INVOCATION:
         return expression((MethodInvocation) n);
       case ASTNode.PARENTHESIZED_EXPRESSION:
         return expression((ParenthesizedExpression) n);
+      case ASTNode.DO_STATEMENT:
+        return expression((DoStatement) n);
       default:
         return null;
     }
   }
 
+  public static Expression expression(final ClassInstanceCreation $) {
+    return core($.getExpression());
+  }
+
   public static Expression expression(final CastExpression $) {
+    return core($.getExpression());
+  }
+
+  public static Expression expression(final DoStatement $) {
     return core($.getExpression());
   }
 
@@ -353,12 +365,12 @@ public enum extract {
     return b == null ? null : next(s, extract.statements(b));
   }
 
-  public static Expression onlyExpression(final List<Expression> $) {
-    return core(Utils.onlyOne($));
-  }
-
   public static Expression onlyArgument(final MethodInvocation i) {
     return onlyExpression(arguments(i));
+  }
+
+  public static Expression onlyExpression(final List<Expression> $) {
+    return core(Utils.onlyOne($));
   }
 
   public static Expression operand(final PostfixExpression ¢) {
