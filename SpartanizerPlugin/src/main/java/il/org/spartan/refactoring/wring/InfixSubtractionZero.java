@@ -1,17 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
-//import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-//import static il.org.spartan.refactoring.utils.expose.*;
-//import static il.org.spartan.refactoring.utils.Funcs.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
-
 import java.util.*;
-
-//import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.Wring.*;
 
@@ -38,8 +30,4 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
     return $.size() == es.size() ? null : $.size() == 0 ? duplicate(first(es)) : $.size() == 1 ? 
         isLiteralZero(left(e)) ? subject.operand(right(e)).to(PrefixExpression.Operator.MINUS) : duplicate(left(e)) : null;
   }
-  /*private static ASTNode replacementMinus(final InfixExpression e) {
-    return isLiteralZero(left(e)) ? subject.operand(right(e)).to(PrefixExpression.Operator.MINUS)
-        : isLiteralZero(right(e)) ? duplicate(left(e)) : null;
-  }*/
 }
