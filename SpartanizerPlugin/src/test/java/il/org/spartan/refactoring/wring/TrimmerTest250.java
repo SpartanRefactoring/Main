@@ -172,7 +172,7 @@ public class TrimmerTest250 {
   @Test public void issue72b() {
     trimming("0+x").to("x");
   }
-  
+
   @Test public void issue72c() {
     trimming("0-x").to("-x");
   }
