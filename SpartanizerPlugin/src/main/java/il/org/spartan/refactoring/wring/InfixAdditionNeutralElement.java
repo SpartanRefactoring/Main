@@ -29,5 +29,4 @@ public final class InfixAdditionNeutralElement extends ReplaceCurrentNode<InfixE
         $.add(¢);
     return $.size() == es.size() ? null : $.size() == 0 ? duplicate(first(es)) : $.size() == 1 ? duplicate(first($)) : subject.operands($).to(PLUS);
   }
-
 }

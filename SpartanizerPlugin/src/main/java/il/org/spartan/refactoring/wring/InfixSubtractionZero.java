@@ -19,9 +19,8 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
   }
 
   @Override ASTNode replacement(final InfixExpression e) {
-    return e.getOperator() != MINUS?null:replacementMinus(e);
+    return e.getOperator() != MINUS ? null : replacementMinus(e);
   }
-
 
   private static ASTNode replacementMinus(final InfixExpression e) {
     return isLiteralZero(left(e)) ? subject.operand(right(e)).to(PrefixExpression.Operator.MINUS)
