@@ -60,18 +60,19 @@ public class Toolbox {
             null) //
         .add(PostfixExpression.class, new PostfixToPrefix()) //
         .add(InfixExpression.class, //
+            new InfixSubtractionZero(),
+            new InfixAdditionNeutralElement(),
             new InfixDivisionMultiplicationNegatives(), //
-            new InfixNeutralAdditionSubtruction(), // must appear before InfixSortAddition
-            new InfixSortAddition(), //
+            new InfixAdditionSort(), //
             new InfixComparisonBooleanLiteral(), //
             new InfixConditionalAndTrue(), //
             new InfixConditionalOrFalse(), //
             new InfixComparisonSpecific(), //
             new InfixMultiplicationNeturalElement(), //
-            new InfixSortMultiplication(), //
-            new InfixSortPseudoAddition(), //
-            new InfixSortSubstraction(), //
-            new InfixSortDivision(), //
+            new InfixMultiplicationSort(), //
+            new InfixPseudoAdditionSort(), //
+            new InfixSubstractionSort(), //
+            new InfixDivisonSort(), //
             new InfixConditionalCommon(), //
             null)
         .add(MethodDeclaration.class, //

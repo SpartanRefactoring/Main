@@ -146,7 +146,7 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
     }
   }
 
-  static final InfixSortMultiplication WRING = new InfixSortMultiplication();
+  static final InfixMultiplicationSort WRING = new InfixMultiplicationSort();
   static final ExpressionComparator COMPARATOR = ExpressionComparator.MULTIPLICATION;
 
   public InfixSortMultiplicationTest() {
@@ -163,7 +163,7 @@ public class InfixSortMultiplicationTest extends AbstractWringTest<InfixExpressi
     azzert.that(inner.scopeIncludes(e), is(true));
     azzert.that(inner.eligible(e), is(true));
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
-    azzert.that(s, instanceOf(InfixSortMultiplication.class));
+    azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     azzert.notNull(s);
     azzert.aye(s.scopeIncludes(e));
     azzert.aye(s.eligible(e));
