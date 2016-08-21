@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
-
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Plant.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -53,7 +53,7 @@ public final class InfixComparisonBooleanLiteral extends Wring.ReplaceCurrentNod
   @Override Expression replacement(final InfixExpression e) {
     final BooleanLiteral literal = literal(e);
     final Expression nonliteral = core(nonLiteral(e));
-    return new Plant(!negating(e, literal) ? nonliteral : logicalNot(nonliteral)).into(e.getParent());
+    return plant(!negating(e, literal) ? nonliteral : logicalNot(nonliteral)).into(e.getParent());
   }
 
   @Override public boolean scopeIncludes(final InfixExpression e) {
