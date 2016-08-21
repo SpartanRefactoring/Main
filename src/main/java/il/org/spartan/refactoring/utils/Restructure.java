@@ -20,6 +20,22 @@ public enum Restructure {
     return $;
   }
 
+  public static Expression minus(final Expression e) {
+    final PrefixExpression ¢ = asPrefixExpression(e);
+    return ¢ == null ? minus(e, asNumberLiteral(e))
+        : ¢.getOperator() == MINUS1 ? ¢.getOperand() //
+            : ¢.getOperator() == PLUS1 ? subject.operand(¢.getOperand()).to(MINUS1)//
+                : e;
+  }
+
+  private static Expression minus(final Expression e, final NumberLiteral l) {
+    if (l == null || !l.getToken().startsWith("-"))
+      return e;
+    NumberLiteral $ = l.getAST().newNumberLiteral();
+    $.setToken(l.getToken().substring(1));
+    return $;
+  }
+
   /** Compute the "de Morgan" conjugate of the operator present on an
    * {@link InfixExpression}.
    * @param e an expression whose operator is either
@@ -81,9 +97,27 @@ public enum Restructure {
   }
 
   private static List<Expression> flattenInto(final Operator o, final Expression e, final List<Expression> $) {
+    if (o == DIVIDE) {
+      $.add(e);
+      return $;
+    }
     final Expression core = core(e);
-    return !Is.infix(core) || asInfixExpression(core).getOperator() != o ? add(!Is.simple(core) ? e : core, $)
-        : flattenInto(o, extract.operands(asInfixExpression(core)), $);
+    final InfixExpression inner = asInfixExpression(core);
+    return inner == null || inner.getOperator() != o ? add(!Is.simple(core) ? e : core, $) : flattenInto(o, adjust(o, extract.operands(inner)), $);
+  }
+
+  static final PrefixExpression.Operator MINUS1 = PrefixExpression.Operator.MINUS;
+  static final PrefixExpression.Operator PLUS1 = PrefixExpression.Operator.PLUS;
+  static final InfixExpression.Operator MINUS2 = InfixExpression.Operator.MINUS;
+  static final InfixExpression.Operator PLUS2 = InfixExpression.Operator.PLUS;
+
+  private static List<Expression> adjust(final Operator o, final List<Expression> es) {
+    if (o != MINUS2)
+      return es;
+    final List<Expression> $ = new ArrayList<>();
+    for (final Expression e : es)
+      $.add(subject.operand(e).to(MINUS1));
+    return $;
   }
 
   private static List<Expression> flattenInto(final Operator o, final List<Expression> es, final List<Expression> $) {
