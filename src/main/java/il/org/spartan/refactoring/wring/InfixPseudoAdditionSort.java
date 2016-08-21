@@ -10,14 +10,16 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} that sorts the arguments of a {@link Operator#PLUS}
- * expression. Extra care is taken to leave intact the use of
- * {@link Operator#PLUS} for the concatenation of {@link String}s.
+/** A {@link Wring} that sorts the arguments of an expression using the same
+ * sorting order as {@link Operator#PLUS} expression, except that we do not
+ * worry about commutativity. Unlike {@link InfixAdditionSort}, we know that the
+ * reordering is always possible.
+ * @see InfixAdditionSort
  * @author Yossi Gil
  * @since 2015-07-17 */
-public final class InfixSortSubstraction extends Wring.InfixSortingOfCDR implements Kind.Sorting {
+public final class InfixPseudoAdditionSort extends Wring.InfixSorting implements Kind.Sorting {
   @Override boolean scopeIncludes(final InfixExpression e) {
-    return in(e.getOperator(), MINUS);
+    return in(e.getOperator(), OR, XOR, AND);
   }
 
   @Override boolean sort(final List<Expression> es) {
