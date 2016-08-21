@@ -47,7 +47,7 @@ public enum Funcs {
    * @return argument, but down-casted to a {@link Assignment}, or
    *         <code><b>null</b></code> if the downcast is impossible. */
   public static Assignment asAssignment(final ASTNode $) {
-    return !is($, ASSIGNMENT) ? null : (Assignment) $;
+    return !Is.is($, ASSIGNMENT) ? null : (Assignment) $;
   }
 
   /** Convert, is possible, an {@link ASTNode} to a {@link Block}
@@ -55,7 +55,7 @@ public enum Funcs {
    * @return argument, but down-casted to a {@link Block}, or
    *         <code><b>null</b></code> if no such down-cast is possible.. */
   public static Block asBlock(final ASTNode $) {
-    return !is($, BLOCK) ? null : (Block) $;
+    return !Is.is($, BLOCK) ? null : (Block) $;
   }
 
   /** Down-cast, if possible, to {@link BooleanLiteral}
@@ -63,7 +63,7 @@ public enum Funcs {
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static BooleanLiteral asBooleanLiteral(final ASTNode $) {
-    return !is($, BOOLEAN_LITERAL) ? null : (BooleanLiteral) $;
+    return !Is.is($, BOOLEAN_LITERAL) ? null : (BooleanLiteral) $;
   }
 
   /** Convert an {@link Expression} into {@link InfixExpression} whose operator
@@ -114,7 +114,7 @@ public enum Funcs {
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static IfStatement asIfStatement(final ASTNode $) {
-    return !is($, IF_STATEMENT) ? null : (IfStatement) $;
+    return !Is.is($, IF_STATEMENT) ? null : (IfStatement) $;
   }
 
   /** Down-cast, if possible, to {@link InfixExpression}
@@ -155,7 +155,7 @@ public enum Funcs {
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static NumberLiteral asNumberLiteral(final ASTNode ¢) {
-    return !isNumberLiteral(¢) ? null : (NumberLiteral) ¢;
+    return !Is.isNumberLiteral(¢) ? null : (NumberLiteral) ¢;
   }
 
   /** Down-cast, if possible, to {@link InfixExpression}
@@ -188,7 +188,7 @@ public enum Funcs {
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static ReturnStatement asReturnStatement(final ASTNode $) {
-    return !is($, RETURN_STATEMENT) ? null : (ReturnStatement) $;
+    return !Is.is($, RETURN_STATEMENT) ? null : (ReturnStatement) $;
   }
 
   /** Convert, is possible, an {@link ASTNode} to a {@link SimpleName}
@@ -204,7 +204,7 @@ public enum Funcs {
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static Statement asStatement(final ASTNode ¢) {
-    return !isStatement(¢) ? null : (Statement) ¢;
+    return !Is.isStatement(¢) ? null : (Statement) ¢;
   }
 
   /** Obtain a condensed textual representation of an {@link ASTNode}
@@ -215,7 +215,7 @@ public enum Funcs {
   }
 
   public static StringLiteral asStringLiteral(final ASTNode ¢) {
-    return !is(¢, STRING_LITERAL) ? null : (StringLiteral) ¢;
+    return !Is.is(¢, STRING_LITERAL) ? null : (StringLiteral) ¢;
   }
 
   /** Convert, is possible, an {@link ASTNode} to a
@@ -297,7 +297,7 @@ public enum Funcs {
     if (ns == null)
       return false;
     for (final ASTNode ¢ : ns)
-      if (¢ != null && Is.isNodeIncOrDecExp(¢))
+      if (¢ != null && Is.isIncrementOrDecrement(¢))
         return true;
     return false;
   }
@@ -373,159 +373,7 @@ public enum Funcs {
       if (¢ == candidate)
         return true;
     return false;
-  }
-
-  public static boolean is(final ASTNode ¢, final int... types) {
-    return ¢ != null && intIsIn(¢.getNodeType(), types);
-  }
-
-  public static boolean isAbstractTypeDeclaration(final ASTNode ¢) {
-    return ¢ != null && ¢ instanceof AbstractTypeDeclaration;
-  }
-
-  public static boolean isAnonymousClassDeclaration(final ASTNode ¢) {
-    return is(¢, ANONYMOUS_CLASS_DECLARATION);
-  }
-
-  /** Determine whether a node is a return statement
-   * @param ¢ node to check
-   * @return true if the given node is a block statement */
-  public static boolean isBlock(final ASTNode ¢) {
-    return is(¢, BLOCK);
-  }
-
-  /** @param ¢ node to check
-   * @return true if the given node is a boolean or null literal or false
-   *         otherwise */
-  public static boolean isBoolOrNull(final ASTNode ¢) {
-    return is(¢, BOOLEAN_LITERAL, NULL_LITERAL);
-  }
-
-  public static boolean isComparison(final Operator o) {
-    return in(o, EQUALS, NOT_EQUALS, GREATER_EQUALS, GREATER, LESS, LESS_EQUALS);
-  }
-
-  public static boolean isEmptyStringLiteral(final ASTNode ¢) {
-    return isLiteral(¢, "");
-  }
-
-  public static boolean isEnumConstantDeclaration(final ASTNode ¢) {
-    return is(¢, ENUM_CONSTANT_DECLARATION);
-  }
-
-  public static boolean isEnumDeclaration(final ASTNode ¢) {
-    return is(¢, ENUM_DECLARATION);
-  }
-
-  /** Determined if a node is an "expression statement"
-   * @param ¢ node to check
-   * @return true if the given node is expression statement */
-  public static boolean isExpressionStatement(final ASTNode ¢) {
-    return is(¢, EXPRESSION_STATEMENT);
-  }
-
-  /** Determine whether a declaration is final or not
-   * @param ¢ JD
-   * @return true if declaration is final */
-  public static boolean isFinal(final BodyDeclaration ¢) {
-    return (Modifier.FINAL & ¢.getModifiers()) != 0;
-  }
-
-  /** Determine whether a variable declaration is final or not
-   * @param ¢ JD
-   * @return true if the variable is declared as final */
-  public static boolean isFinal(final VariableDeclarationStatement ¢) {
-    return (Modifier.FINAL & ¢.getModifiers()) != 0;
-  }
-
-  /** @param ¢ JD
-   * @return true if the given node is an infix expression or false otherwise */
-  public static boolean isInfix(final ASTNode ¢) {
-    return is(¢, INFIX_EXPRESSION);
-  }
-
-  public static boolean isInterface(final ASTNode ¢) {
-    return is(¢, TYPE_DECLARATION) && ((TypeDeclaration) ¢).isInterface();
-  }
-
-  public static boolean isLiteralFalse(final ASTNode ¢) {
-    return isLiteral(¢, false);
-  }
-
-  public static boolean isLiteralOne(final ASTNode ¢) {
-    return isLiteral(¢, 1);
-  }
-
-  public static boolean isLiteralTrue(final ASTNode ¢) {
-    return isLiteral(¢, true);
-  }
-
-  public static boolean isLiteralZero(final ASTNode ¢) {
-    return isLiteral(¢, 0);
-  }
-
-  public static boolean isMethodDeclaration(final ASTNode $) {
-    return is($, METHOD_DECLARATION);
-  }
-
-  /** @param ¢ node to check
-   * @return true if the given node is a method invocation or false otherwise */
-  public static boolean isMethodInvocation(final ASTNode ¢) {
-    return is(¢, METHOD_INVOCATION);
-  }
-
-  /** @param ¢ node to check
-   * @return true if node is an Expression Statement of type Post or Pre
-   *         Expression with ++ or -- operator false if node is not an
-   *         Expression Statement or its a Post or Pre fix expression that its
-   *         operator is not ++ or -- */
-  public static boolean isNodeIncOrDecExp(final ASTNode ¢) {
-    switch (¢.getNodeType()) {
-      case EXPRESSION_STATEMENT:
-        return isNodeIncOrDecExp(((ExpressionStatement) ¢).getExpression());
-      case POSTFIX_EXPRESSION:
-        return in(((PostfixExpression) ¢).getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
-      case PREFIX_EXPRESSION:
-        return in(asPrefixExpression(¢).getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT);
-      default:
-        return false;
-    }
-  }
-
-  /** @param a the assignment who'¢ operator we want to check
-   * @return true is the assignment'¢ operator is assign */
-  public static boolean isOpAssign(final Assignment a) {
-    return a != null && a.getOperator() == Assignment.Operator.ASSIGN;
-  }
-
-  /** Determine whether a declaration is private
-   * @param ¢ JD
-   * @return true if declaration is private */
-  public static boolean isPrivate(final BodyDeclaration ¢) {
-    return (Modifier.PRIVATE & ¢.getModifiers()) != 0;
-  }
-
-  public static boolean isSimpleName(final ASTNode $) {
-    return is($, SIMPLE_NAME);
-  }
-
-  public static boolean isStatement(final ASTNode ¢) {
-    return ¢ instanceof Statement;
-  }
-
-  /** Determine whether a declaration is static or not
-   * @param ¢ JD
-   * @return true if declaration is static */
-  public static boolean isStatic(final BodyDeclaration ¢) {
-    return (Modifier.STATIC & ¢.getModifiers()) != 0;
-  }
-
-  /** @param ¢ node to check
-   * @return true if the given node is a variable declaration statement or false
-   *         otherwise */
-  public static boolean isVariableDeclarationStatement(final ASTNode ¢) {
-    return is(¢, VARIABLE_DECLARATION_STATEMENT);
-  }
+  } 
 
   /** Shorthand for {@link Assignment#getLeftHandSide()}
    * @param a JD
@@ -563,8 +411,8 @@ public enum Funcs {
   }
 
   public static int negationLevel(final Expression ¢) {
-    return is(¢, PREFIX_EXPRESSION) ? negationLevel((PrefixExpression) ¢)
-        : is(¢, PARENTHESIZED_EXPRESSION) ? negationLevel(expression(¢)) : asBit(isNumberLiteral(¢) && asNumberLiteral(¢).getToken().startsWith("-"));
+    return Is.is(¢, PREFIX_EXPRESSION) ? negationLevel((PrefixExpression) ¢)
+        : Is.is(¢, PARENTHESIZED_EXPRESSION) ? negationLevel(expression(¢)) : asBit(Is.isNumberLiteral(¢) && asNumberLiteral(¢).getToken().startsWith("-"));
   }
 
   /** Create a new {@link SimpleName} instance at the AST of the parameter
@@ -737,34 +585,6 @@ public enum Funcs {
     return NOT.equals(¢.getOperator()) ? ¢ : null;
   }
 
-  static boolean isLiteral(final ASTNode ¢, final boolean b) {
-    return isLiteral(asBooleanLiteral(¢), b);
-  }
-
-  static boolean isLiteral(final ASTNode ¢, final double d) {
-    return isLiteral(asNumberLiteral(¢), d);
-  }
-
-  static boolean isLiteral(final ASTNode ¢, final int i) {
-    return isLiteral(asNumberLiteral(¢), i);
-  }
-
-  static boolean isLiteral(final ASTNode ¢, final long l) {
-    return isLiteral(asNumberLiteral(¢), l);
-  }
-
-  static boolean isLiteral(final ASTNode ¢, final String s) {
-    return isLiteral(asStringLiteral(¢), s);
-  }
-
-  static boolean isLiteral(final StringLiteral ¢, final String s) {
-    return ¢ != null && ¢.equals(s);
-  }
-
-  static boolean isNumberLiteral(final ASTNode ¢) {
-    return is(¢, NUMBER_LITERAL);
-  }
-
   private static int asBit(final boolean ¢) {
     return ¢ ? 1 : 0;
   }
@@ -803,45 +623,7 @@ public enum Funcs {
     return null;
   }
 
-  private static boolean isLiteral(final BooleanLiteral ¢, final boolean b) {
-    return ¢ != null && ¢.booleanValue() == b;
-  }
 
-  private static boolean isLiteral(final NumberLiteral ¢, final double d) {
-    return ¢ != null && isLiteral(¢.getToken(), d);
-  }
-
-  private static boolean isLiteral(final NumberLiteral ¢, final int i) {
-    return ¢ != null && isLiteral(¢.getToken(), i);
-  }
-
-  private static boolean isLiteral(final NumberLiteral ¢, final long l) {
-    return isLiteral(¢.getToken(), l);
-  }
-
-  private static boolean isLiteral(final String token, final double d) {
-    try {
-      return Double.parseDouble(token) == d;
-    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
-      return false;
-    }
-  }
-
-  private static boolean isLiteral(final String token, final int i) {
-    try {
-      return Integer.parseInt(token) == i;
-    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
-      return false;
-    }
-  }
-
-  private static boolean isLiteral(final String token, final long l) {
-    try {
-      return Long.parseLong(token) == l;
-    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
-      return false;
-    }
-  }
 
   private static int negationLevel(final PrefixExpression ¢) {
     return asBit(¢.getOperator() == PrefixExpression.Operator.MINUS) + negationLevel(¢.getOperand());
