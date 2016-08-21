@@ -50,10 +50,6 @@ public enum Funcs {
     return !is($, ASSIGNMENT) ? null : (Assignment) $;
   }
 
-  private static int asBit(final boolean ¢) {
-    return ¢ ? 1 : 0;
-  }
-
   /** Convert, is possible, an {@link ASTNode} to a {@link Block}
    * @param $ JD
    * @return argument, but down-casted to a {@link Block}, or
@@ -80,105 +76,6 @@ public enum Funcs {
     return !(¢ instanceof InfixExpression) ? null : asComparison((InfixExpression) ¢);
   }
 
-  static boolean isLiteral(final ASTNode ¢, final boolean b) {
-    return isLiteral(asBooleanLiteral(¢), b);
-  }
-
-  static boolean isLiteral(final ASTNode ¢, final double d) {
-    return isLiteral(asNumberLiteral(¢), d);
-  }
-
-  static boolean isLiteral(final ASTNode ¢, final long l) {
-    return isLiteral(asNumberLiteral(¢), l);
-  }
-
-  static boolean isLiteral(final ASTNode ¢, final String s) {
-    return isLiteral(asStringLiteral(¢), s);
-  }
-
-  public static boolean isEmptyStringLiteral(final ASTNode ¢) {
-    return isLiteral(¢, "");
-  }
-
-  public static boolean isLiteralZero(final ASTNode ¢) {
-    return isLiteral(¢, 0);
-  }
-
-  public static boolean isLiteralOne(final ASTNode ¢) {
-    return isLiteral(¢, 1);
-  }
-
-  public static boolean isLiteralTrue(final ASTNode ¢) {
-    return isLiteral(¢, true);
-  }
-
-  public static boolean isLiteralFalse(final ASTNode ¢) {
-    return isLiteral(¢, false);
-  }
-
-  public static StringLiteral asStringLiteral(final ASTNode ¢) {
-    return !is(¢, STRING_LITERAL) ? null : (StringLiteral) ¢;
-  }
-
-  private static boolean isLiteral(final BooleanLiteral ¢, final boolean b) {
-    return ¢ != null && ¢.booleanValue() == b;
-  }
-
-  private static boolean isLiteral(final NumberLiteral ¢, final double d) {
-    return ¢ != null && isLiteral(¢.getToken(), d);
-  }
-
-  private static boolean isLiteral(final NumberLiteral ¢, final int i) {
-    return ¢ != null && isLiteral(¢.getToken(), i);
-  }
-
-  private static boolean isLiteral(final NumberLiteral ¢, final long l) {
-    return isLiteral(¢.getToken(), l);
-  }
-
-  private static boolean isLiteral(final String token, final double d) {
-    try {
-      return Double.parseDouble(token) == d;
-    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
-      return false;
-    }
-  }
-
-  private static boolean isLiteral(final String token, final int i) {
-    try {
-      return Integer.parseInt(token) == i;
-    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
-      return false;
-    }
-  }
-
-  private static boolean isLiteral(final String token, final long l) {
-    try {
-      return Long.parseLong(token) == l;
-    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
-      return false;
-    }
-  }
-
-  static boolean isLiteral(final StringLiteral ¢, final String s) {
-    return ¢ != null && ¢.equals(s);
-  }
-
-  static boolean isLiteral(final ASTNode ¢, final int i) {
-    return isLiteral(asNumberLiteral(¢), i);
-  }
-
-  private static InfixExpression asComparison(final InfixExpression ¢) {
-    return in(¢.getOperator(), //
-        GREATER, //
-        GREATER_EQUALS, //
-        LESS, //
-        LESS_EQUALS, //
-        EQUALS, //
-        NOT_EQUALS //
-    ) ? ¢ : null;
-  }
-
   /** Convert, is possible, an {@link ASTNode} to a
    * {@link ConditionalExpression}
    * @param ¢ JD
@@ -202,18 +99,6 @@ public enum Funcs {
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static Expression asExpression(final ASTNode ¢) {
     return !(¢ instanceof Expression) ? null : (Expression) ¢;
-  }
-
-  /** Down-cast, if possible, to {@link NumberLiteral}
-   * @param ¢ JD
-   * @return parameter down-casted to the returned type, or
-   *         <code><b>null</b></code> if no such down-casting is possible. */
-  public static NumberLiteral asNumberLiteral(final ASTNode ¢) {
-    return !isNumberLiteral(¢) ? null : (NumberLiteral) ¢;
-  }
-
-  static boolean isNumberLiteral(final ASTNode ¢) {
-    return is(¢, NUMBER_LITERAL);
   }
 
   /** Down-cast, if possible, to {@link ExpressionStatement}
@@ -265,8 +150,12 @@ public enum Funcs {
     return !(¢ instanceof PrefixExpression) ? null : asNot(asPrefixExpression(¢));
   }
 
-  static PrefixExpression asNot(final PrefixExpression ¢) {
-    return NOT.equals(¢.getOperator()) ? ¢ : null;
+  /** Down-cast, if possible, to {@link NumberLiteral}
+   * @param ¢ JD
+   * @return parameter down-casted to the returned type, or
+   *         <code><b>null</b></code> if no such down-casting is possible. */
+  public static NumberLiteral asNumberLiteral(final ASTNode ¢) {
+    return !isNumberLiteral(¢) ? null : (NumberLiteral) ¢;
   }
 
   /** Down-cast, if possible, to {@link InfixExpression}
@@ -323,6 +212,10 @@ public enum Funcs {
    * @return textual representation of the parameter, */
   public static String asString(final ASTNode ¢) {
     return removeWhites(¢.toString());
+  }
+
+  public static StringLiteral asStringLiteral(final ASTNode ¢) {
+    return !is(¢, STRING_LITERAL) ? null : (StringLiteral) ¢;
   }
 
   /** Convert, is possible, an {@link ASTNode} to a
@@ -409,6 +302,17 @@ public enum Funcs {
     return false;
   }
 
+  public static int countNegations(final InfixExpression e) {
+    return countNegations(extract.operands(e));
+  }
+
+  public static int countNegations(final List<Expression> es) {
+    int $ = 0;
+    for (final Expression e : es)
+      $ += negationLevel(e);
+    return $;
+  }
+
   /** Make a duplicate, suitable for tree rewrite, of the parameter
    * @param ¢ JD
    * @return a duplicate of the parameter, downcasted to the returned type. */
@@ -430,16 +334,8 @@ public enum Funcs {
     return ¢.getElseStatement();
   }
 
-  /** Find the first matching expression to the given boolean (b).
-   * @param b JD,
-   * @param es JD
-   * @return first expression from the given list (es) whose boolean value
-   *         matches to the given boolean (b). */
-  private static Expression find(final boolean b, final List<Expression> es) {
-    for (final Expression $ : es)
-      if (Is.booleanLiteral($) && b == asBooleanLiteral($).booleanValue())
-        return $;
-    return null;
+  public static <T> T first(final List<T> ts) {
+    return ts == null || ts.isEmpty() ? null : ts.get(0);
   }
 
   /** Swap the order of the left and right operands to an expression, changing
@@ -464,17 +360,6 @@ public enum Funcs {
         : getDefinition((VariableDeclarationStatement) n, (SimpleName) e);
   }
 
-  private static VariableDeclarationFragment getDefinition(final VariableDeclarationStatement s, final SimpleName n) {
-    return getVarDeclFrag(expose.fragments(s), n);
-  }
-
-  private static VariableDeclarationFragment getVarDeclFrag(final List<VariableDeclarationFragment> fs, final SimpleName ¢) {
-    for (final VariableDeclarationFragment $ : fs)
-      if (same(¢, $.getName()))
-        return $;
-    return null;
-  }
-
   public static boolean incompatible(final Assignment a1, final Assignment a2) {
     return hasNulls(a1, a2) || !compatibleOps(a1.getOperator(), a2.getOperator()) || !same(left(a1), left(a2));
   }
@@ -492,10 +377,6 @@ public enum Funcs {
 
   public static boolean is(final ASTNode ¢, final int... types) {
     return ¢ != null && intIsIn(¢.getNodeType(), types);
-  }
-
-  public static boolean isEnumConstantDeclaration(final ASTNode ¢) {
-    return is(¢, ENUM_CONSTANT_DECLARATION);
   }
 
   public static boolean isAbstractTypeDeclaration(final ASTNode ¢) {
@@ -522,6 +403,14 @@ public enum Funcs {
 
   public static boolean isComparison(final Operator o) {
     return in(o, EQUALS, NOT_EQUALS, GREATER_EQUALS, GREATER, LESS, LESS_EQUALS);
+  }
+
+  public static boolean isEmptyStringLiteral(final ASTNode ¢) {
+    return isLiteral(¢, "");
+  }
+
+  public static boolean isEnumConstantDeclaration(final ASTNode ¢) {
+    return is(¢, ENUM_CONSTANT_DECLARATION);
   }
 
   public static boolean isEnumDeclaration(final ASTNode ¢) {
@@ -557,6 +446,22 @@ public enum Funcs {
 
   public static boolean isInterface(final ASTNode ¢) {
     return is(¢, TYPE_DECLARATION) && ((TypeDeclaration) ¢).isInterface();
+  }
+
+  public static boolean isLiteralFalse(final ASTNode ¢) {
+    return isLiteral(¢, false);
+  }
+
+  public static boolean isLiteralOne(final ASTNode ¢) {
+    return isLiteral(¢, 1);
+  }
+
+  public static boolean isLiteralTrue(final ASTNode ¢) {
+    return isLiteral(¢, true);
+  }
+
+  public static boolean isLiteralZero(final ASTNode ¢) {
+    return isLiteral(¢, 0);
   }
 
   public static boolean isMethodDeclaration(final ASTNode $) {
@@ -662,10 +567,6 @@ public enum Funcs {
         : is(¢, PARENTHESIZED_EXPRESSION) ? negationLevel(expression(¢)) : asBit(isNumberLiteral(¢) && asNumberLiteral(¢).getToken().startsWith("-"));
   }
 
-  private static int negationLevel(final PrefixExpression ¢) {
-    return asBit(¢.getOperator() == PrefixExpression.Operator.MINUS) + negationLevel(¢.getOperand());
-  }
-
   /** Create a new {@link SimpleName} instance at the AST of the parameter
    * @param n JD
    * @param newName the name that the returned value shall bear
@@ -681,6 +582,10 @@ public enum Funcs {
    *         the last node */
   public static <T> T next(final int i, final List<T> ts) {
     return !inRange(i + 1, ts) ? last(ts) : ts.get(i + 1);
+  }
+
+  public static <T> T onlyOne(final List<T> ts) {
+    return ts == null || ts.size() != 1 ? null : ts.get(0);
   }
 
   /** Shorthand for {@link ASTNode#getParent()}
@@ -706,14 +611,6 @@ public enum Funcs {
     $ instanceof PrefixExpression ? peelNegation((PrefixExpression) $) //
         : $ instanceof ParenthesizedExpression ? peelNegation(((ParenthesizedExpression) $).getExpression()) //
             : $ instanceof NumberLiteral ? peelNegation((NumberLiteral) $) : $;
-  }
-
-  private static Expression peelNegation(final NumberLiteral $) {
-    return !$.getToken().startsWith("-") ? $ : $.getAST().newNumberLiteral($.getToken().substring(1));
-  }
-
-  private static Expression peelNegation(final PrefixExpression $) {
-    return $.getOperator() != PrefixExpression.Operator.MINUS ? $ : peelNegation($.getOperand());
   }
 
   /** Retrieve previous item in a list
@@ -802,18 +699,6 @@ public enum Funcs {
     return true;
   }
 
-  public static <T> T onlyOne(final List<T> ts) {
-    return ts == null || ts.size() != 1 ? null : ts.get(0);
-  }
-
-  public static <T> T first(final List<T> ts) {
-    return ts == null || ts.isEmpty() ? null : ts.get(0);
-  }
-
-  public static <T> T second(final List<T> ts) {
-    return ts == null || ts.size() < 2 ? null : ts.get(1);
-  }
-
   /** Determine whether two lists of nodes are the same, in the sense that their
    * textual representations is identical.
    * @param ns1 first list to compare
@@ -830,6 +715,10 @@ public enum Funcs {
     return true;
   }
 
+  public static <T> T second(final List<T> ts) {
+    return ts == null || ts.size() < 2 ? null : ts.get(1);
+  }
+
   /** Shorthand for {@link ConditionalExpression#getThenExpression()}
    * @param ¢ JD
    * @return then part of the parameter */
@@ -844,14 +733,125 @@ public enum Funcs {
     return ¢.getThenStatement();
   }
 
-  public static int countNegations(final List<Expression> es) {
-    int $ = 0;
-    for (final Expression e : es)
-      $ += negationLevel(e);
-    return $;
+  static PrefixExpression asNot(final PrefixExpression ¢) {
+    return NOT.equals(¢.getOperator()) ? ¢ : null;
   }
 
-  public static int countNegations(final InfixExpression e) {
-    return countNegations(extract.operands(e));
+  static boolean isLiteral(final ASTNode ¢, final boolean b) {
+    return isLiteral(asBooleanLiteral(¢), b);
+  }
+
+  static boolean isLiteral(final ASTNode ¢, final double d) {
+    return isLiteral(asNumberLiteral(¢), d);
+  }
+
+  static boolean isLiteral(final ASTNode ¢, final int i) {
+    return isLiteral(asNumberLiteral(¢), i);
+  }
+
+  static boolean isLiteral(final ASTNode ¢, final long l) {
+    return isLiteral(asNumberLiteral(¢), l);
+  }
+
+  static boolean isLiteral(final ASTNode ¢, final String s) {
+    return isLiteral(asStringLiteral(¢), s);
+  }
+
+  static boolean isLiteral(final StringLiteral ¢, final String s) {
+    return ¢ != null && ¢.equals(s);
+  }
+
+  static boolean isNumberLiteral(final ASTNode ¢) {
+    return is(¢, NUMBER_LITERAL);
+  }
+
+  private static int asBit(final boolean ¢) {
+    return ¢ ? 1 : 0;
+  }
+
+  private static InfixExpression asComparison(final InfixExpression ¢) {
+    return in(¢.getOperator(), //
+        GREATER, //
+        GREATER_EQUALS, //
+        LESS, //
+        LESS_EQUALS, //
+        EQUALS, //
+        NOT_EQUALS //
+    ) ? ¢ : null;
+  }
+
+  /** Find the first matching expression to the given boolean (b).
+   * @param b JD,
+   * @param es JD
+   * @return first expression from the given list (es) whose boolean value
+   *         matches to the given boolean (b). */
+  private static Expression find(final boolean b, final List<Expression> es) {
+    for (final Expression $ : es)
+      if (Is.booleanLiteral($) && b == asBooleanLiteral($).booleanValue())
+        return $;
+    return null;
+  }
+
+  private static VariableDeclarationFragment getDefinition(final VariableDeclarationStatement s, final SimpleName n) {
+    return getVarDeclFrag(expose.fragments(s), n);
+  }
+
+  private static VariableDeclarationFragment getVarDeclFrag(final List<VariableDeclarationFragment> fs, final SimpleName ¢) {
+    for (final VariableDeclarationFragment $ : fs)
+      if (same(¢, $.getName()))
+        return $;
+    return null;
+  }
+
+  private static boolean isLiteral(final BooleanLiteral ¢, final boolean b) {
+    return ¢ != null && ¢.booleanValue() == b;
+  }
+
+  private static boolean isLiteral(final NumberLiteral ¢, final double d) {
+    return ¢ != null && isLiteral(¢.getToken(), d);
+  }
+
+  private static boolean isLiteral(final NumberLiteral ¢, final int i) {
+    return ¢ != null && isLiteral(¢.getToken(), i);
+  }
+
+  private static boolean isLiteral(final NumberLiteral ¢, final long l) {
+    return isLiteral(¢.getToken(), l);
+  }
+
+  private static boolean isLiteral(final String token, final double d) {
+    try {
+      return Double.parseDouble(token) == d;
+    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
+      return false;
+    }
+  }
+
+  private static boolean isLiteral(final String token, final int i) {
+    try {
+      return Integer.parseInt(token) == i;
+    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
+      return false;
+    }
+  }
+
+  private static boolean isLiteral(final String token, final long l) {
+    try {
+      return Long.parseLong(token) == l;
+    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
+      return false;
+    }
+  }
+
+  private static int negationLevel(final PrefixExpression ¢) {
+    return asBit(¢.getOperator() == PrefixExpression.Operator.MINUS) + negationLevel(¢.getOperand());
+  }
+
+  private static Expression peelNegation(final NumberLiteral $) {
+    return !$.getToken().startsWith("-") ? $ : $.getAST().newNumberLiteral($.getToken().substring(1));
+  }
+
+  private static Expression peelNegation(final PrefixExpression $) {
+    return $.getOperator() != PrefixExpression.Operator.MINUS ? $ : peelNegation($.getOperand());
   }
 }
