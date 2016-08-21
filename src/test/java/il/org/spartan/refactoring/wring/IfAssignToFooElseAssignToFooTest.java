@@ -82,8 +82,8 @@ public class IfAssignToFooElseAssignToFooTest {
     azzert.that(a1.toString(), is("x=a1"));
     azzert.that(a2.toString(), is("x=a2"));
     azzert.aye(compatibleOps(a1.getOperator(), a2.getOperator()));
-    azzert.aye(isSimpleName(left(a1)));
-    azzert.aye(isSimpleName(left(a2)));
+    azzert.aye(Is.isSimpleName(left(a1)));
+    azzert.aye(Is.isSimpleName(left(a2)));
     final SimpleName n1 = asSimpleName(left(a1));
     final SimpleName n2 = asSimpleName(left(a2));
     azzert.that(n1.toString(), is("x"));

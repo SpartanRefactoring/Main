@@ -23,7 +23,7 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
   }
 
   private static ASTNode replacementMinus(final InfixExpression e) {
-    return isLiteralZero(left(e)) ? subject.operand(right(e)).to(PrefixExpression.Operator.MINUS)
-        : isLiteralZero(right(e)) ? duplicate(left(e)) : null;
+    return Is.isLiteralZero(left(e)) ? subject.operand(right(e)).to(PrefixExpression.Operator.MINUS)
+        : Is.isLiteralZero(right(e)) ? duplicate(left(e)) : null;
   }
 }

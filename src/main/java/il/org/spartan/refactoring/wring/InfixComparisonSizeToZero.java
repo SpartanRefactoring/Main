@@ -69,7 +69,7 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
     if (!e.getAST().hasResolvedBindings())
       return null;
     final Operator o = e.getOperator();
-    if (!isComparison(o))
+    if (!Is.isComparison(o))
       return null;
     final Expression right = right(e);
     final Expression left = left(e);
