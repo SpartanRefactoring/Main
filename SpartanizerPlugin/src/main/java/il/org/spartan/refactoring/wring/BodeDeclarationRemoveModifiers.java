@@ -66,33 +66,33 @@ public class BodeDeclarationRemoveModifiers<N extends BodyDeclaration> extends W
     final Set<Predicate<Modifier>> $ = new LinkedHashSet<>();
     if (modifiers(¢).isEmpty())
       return $;
-    if (isEnumDeclaration(¢))
+    if (Is.isEnumDeclaration(¢))
       $.add(Modifier::isStatic);
-    if (isInterface(¢) || ¢ instanceof AnnotationTypeDeclaration) {
+    if (Is.isInterface(¢) || ¢ instanceof AnnotationTypeDeclaration) {
       $.add(Modifier::isStatic);
       $.add(Modifier::isAbstract);
     }
-    if (isMethodDeclaration(¢) && (isPrivate(¢) || isStatic(¢)))
+    if (Is.isMethodDeclaration(¢) && (Is.isPrivate(¢) || Is.isStatic(¢)))
       $.add(Modifier::isFinal);
     final ASTNode container = extract.containerType(¢);
     if (container == null)
       return $;
-    if (isAbstractTypeDeclaration(container) && isFinal(asAbstractTypeDeclaration(container)) && isMethodDeclaration(¢))
+    if (Is.isAbstractTypeDeclaration(container) && Is.isFinal(asAbstractTypeDeclaration(container)) && Is.isMethodDeclaration(¢))
       $.add(Modifier::isFinal);
-    if (isInterface(container)) {
+    if (Is.isInterface(container)) {
       $.add(Modifier::isPublic);
       $.add(Modifier::isPrivate);
       $.add(Modifier::isProtected);
-      if (isMethodDeclaration(¢))
+      if (Is.isMethodDeclaration(¢))
         $.add(Modifier::isAbstract);
     }
-    if (isEnumDeclaration(container))
+    if (Is.isEnumDeclaration(container))
       $.add(Modifier::isProtected);
-    if (isAnonymousClassDeclaration(container)) {
+    if (Is.isAnonymousClassDeclaration(container)) {
       $.add(Modifier::isPrivate);
-      if (isMethodDeclaration(¢))
+      if (Is.isMethodDeclaration(¢))
         $.add(Modifier::isFinal);
-      if (isEnumConstantDeclaration(extract.containerType(container)))
+      if (Is.isEnumConstantDeclaration(extract.containerType(container)))
         $.add(Modifier::isProtected);
     }
     return $;

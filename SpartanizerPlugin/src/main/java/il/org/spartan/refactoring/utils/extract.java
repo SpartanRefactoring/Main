@@ -65,7 +65,7 @@ public enum extract {
    *         type and null otherwise */
   public static ASTNode containerType(final ASTNode ¢) {
     for (final ASTNode $ : ancestors(¢.getParent()))
-      if (is($, ANONYMOUS_CLASS_DECLARATION //
+      if (Is.is($, ANONYMOUS_CLASS_DECLARATION //
           , ANNOTATION_TYPE_DECLARATION //
           , ENUM_DECLARATION //
           , TYPE_DECLARATION //

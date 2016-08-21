@@ -44,7 +44,7 @@ import org.eclipse.jdt.internal.corext.dom.*;
    * @param e an expression
    * @return true iff argument is simple */
   public static boolean isSimple(final Expression e) {
-    return Funcs.is(e, //
+    return Is.is(e, //
         BOOLEAN_LITERAL, //
         CHARACTER_LITERAL, //
         NULL_LITERAL, //
