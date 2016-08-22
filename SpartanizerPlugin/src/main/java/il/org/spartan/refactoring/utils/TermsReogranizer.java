@@ -30,8 +30,13 @@ public class TermsReogranizer {
     }
   }
 
-  private static Expression buildMinus(List<Expression> rest) {
-    return subject.operands(rest).to(MINUS2);
+  private static Expression buildMinus(final List<Expression> es) {
+    final Expression $ = subject.operand(first(es)).to(MINUS1);
+    if (es.size() == 1)
+      return $;
+    es.remove(0);
+    es.add(0, $);
+    return subject.operands(es).to(MINUS2);
   }
 
   private static Expression buildPlus(List<Expression> es) {
