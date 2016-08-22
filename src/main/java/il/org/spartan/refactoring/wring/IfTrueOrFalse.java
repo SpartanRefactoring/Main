@@ -3,10 +3,8 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Is.*;
 
-
 import org.eclipse.jdt.core.dom.*;
 
-//import il.org.spartan.refactoring.utils.*;
 
 /** convert
  *
@@ -20,7 +18,7 @@ import org.eclipse.jdt.core.dom.*;
  * x;
  * </pre>
  ***********************************
- *<pre>
+ * <pre>
  * if (false) x; else {y;}
  * </pre>
  *
@@ -36,8 +34,7 @@ import org.eclipse.jdt.core.dom.*;
  * @since 2016 */
 public final class IfTrueOrFalse extends Wring.ReplaceCurrentNode<IfStatement> implements Kind.Canonicalization {
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
-    return "if the condition is 'true'  convert to 'then' statement,"
-        + " if the condition is 'false' convert to 'else' statement";
+    return "if the condition is 'true'  convert to 'then' statement," + " if the condition is 'false' convert to 'else' statement";
   }
 
   @Override Statement replacement(final IfStatement s) {
