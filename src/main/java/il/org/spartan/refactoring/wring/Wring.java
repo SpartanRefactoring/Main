@@ -1,4 +1,5 @@
 package il.org.spartan.refactoring.wring;
+
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Plant.*;
 import static il.org.spartan.refactoring.utils.expose.*;
@@ -275,8 +276,6 @@ public abstract class Wring<N extends ASTNode> implements Kind {
   }
 
   static abstract class VariableDeclarationFragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
-    private static final org.eclipse.jdt.core.dom.InfixExpression.Operator PLUS2 = InfixExpression.Operator.PLUS;
-
     static InfixExpression.Operator asInfix(final Assignment.Operator o) {
       return o == PLUS_ASSIGN ? InfixExpression.Operator.PLUS
           : o == MINUS_ASSIGN ? MINUS

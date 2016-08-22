@@ -65,8 +65,8 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
     return "Inline local " + f.getName() + " into subsequent statement";
   }
 
-  @SuppressWarnings("unchecked") @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n,
-      final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
+  @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+      final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || hasAnnotation(f) || initializer instanceof ArrayInitializer)
       return null;
     for (final IExtendedModifier m : expose.modifiers((VariableDeclarationStatement) f.getParent()))

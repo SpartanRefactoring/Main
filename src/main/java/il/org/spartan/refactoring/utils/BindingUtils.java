@@ -2,7 +2,6 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.idiomatic.*;
 import static il.org.spartan.refactoring.utils.extract.*;
-import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.internal.corext.dom.*;
@@ -38,23 +37,6 @@ import org.eclipse.jdt.internal.corext.dom.*;
       return null;
     final IMethodBinding $ = Bindings.findMethodInHierarchy(b, mn, bs);
     return take($).when(isVisible($, n, u));
-  }
-
-  /** Checks if expression is simple.
-   * @param e an expression
-   * @return true iff argument is simple */
-  public static boolean isSimple(final Expression e) {
-    return Funcs.is(e, //
-        BOOLEAN_LITERAL, //
-        CHARACTER_LITERAL, //
-        NULL_LITERAL, //
-        NUMBER_LITERAL, //
-        QUALIFIED_NAME, //
-        SIMPLE_NAME, //
-        STRING_LITERAL, //
-        THIS_EXPRESSION, //
-        TYPE_LITERAL //
-    );
   }
 
   /** Determines whether an invocation of a method is legal in a specific

@@ -60,12 +60,24 @@ public enum extract {
     return (CompilationUnit) AncestorSearch.forType(COMPILATION_UNIT).from(¢);
   }
 
+  public static InfixExpression.Operator operator(final InfixExpression e) {
+    return e == null ? null : e.getOperator();
+  }
+
+  public static PrefixExpression.Operator operator(final PrefixExpression e) {
+    return e == null ? null : e.getOperator();
+  }
+
+  public static PostfixExpression.Operator operator(final PostfixExpression e) {
+    return e == null ? null : e.getOperator();
+  }
+
   /** @param ¢ JD
    * @return ASTNode of the type if one of ¢'s parent ancestors is a container
    *         type and null otherwise */
   public static ASTNode containerType(final ASTNode ¢) {
     for (final ASTNode $ : ancestors(¢.getParent()))
-      if (is($, ANONYMOUS_CLASS_DECLARATION //
+      if (Is.is($, ANONYMOUS_CLASS_DECLARATION //
           , ANNOTATION_TYPE_DECLARATION //
           , ENUM_DECLARATION //
           , TYPE_DECLARATION //

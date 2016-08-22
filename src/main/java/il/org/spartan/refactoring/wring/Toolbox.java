@@ -71,7 +71,7 @@ public class Toolbox {
             new InfixConditionalAndTrue(), //
             new InfixConditionalOrFalse(), //
             new InfixComparisonSpecific(), //
-            new InfixMultiplicationNeturalElement(), //
+            new InfixMultiplicationByOne(), //
             new InfixMultiplicationSort(), //
             new InfixPseudoAdditionSort(), //
             new InfixSubstractionSort(), //
@@ -103,6 +103,7 @@ public class Toolbox {
             new DeclarationInitializerStatementTerminatingScope(), //
             new VariableRenameUnderscoreToDoubleUnderscore<>(), null) //
         .add(IfStatement.class, //
+            new IfTrueOrFalse(), //
             new IfLastInMethodThenEndingWithEmptyReturn(), //
             new IfLastInMethodElseEndingWithEmptyReturn(), //
             new IfLastInMethod(), //

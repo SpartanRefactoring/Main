@@ -61,37 +61,39 @@ public class Specificity implements Comparator<Expression> {
     },
     ZERO_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        return isLiteral(asNumberLiteral(¢), 0);
+        final NumberLiteral ¢1 = asNumberLiteral(¢);
+        return ¢1 != null && Is.isLiteral(¢1.getToken(), 0);
       }
     },
     ONE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        return isLiteral(asNumberLiteral(¢), 1);
+        final NumberLiteral ¢1 = asNumberLiteral(¢);
+        return ¢1 != null && Is.isLiteral(¢1.getToken(), 1);
       }
     },
     ZERO_DOUBLE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        return isLiteral(¢, 0.0);
+        return Is.isLiteral(¢, 0.0);
       }
     },
     ONE_DOUBLE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        return isLiteral(¢, 1.0);
+        return Is.isLiteral(¢, 1.0);
       }
     },
     EMPTY_STRING {
       @Override boolean includes(final ASTNode ¢) {
-        return isEmptyStringLiteral(¢);
+        return Is.isEmptyStringLiteral(¢);
       }
     },
     TRUE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        return isLiteralTrue(¢);
+        return Is.isLiteralTrue(¢);
       }
     },
     FALSE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        return isLiteralFalse(¢);
+        return Is.isLiteralFalse(¢);
       }
     },;
     static boolean defined(final Expression e) {

@@ -1,4 +1,5 @@
 package il.org.spartan.refactoring.wring;
+
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Plant.*;
 import static il.org.spartan.refactoring.utils.expose.*;
@@ -50,19 +51,19 @@ public final class InfixZeroAddition extends Wring<InfixExpression> {
   @Override String description(final InfixExpression e) {
     return "remove 0 in X + 0 expressions";
   }
+
   @Override public WringGroup wringGroup() {
     return WringGroup.Abbreviation;
   }
+
   @Override Rewrite make(final InfixExpression e, final ExclusionManager exclude) {
-    System.out.println(e.toString());
     final List<Expression> es = gather(e);
-    System.out.println(es.size());
-    if(es.size() < 2)
+    if (es.size() < 2)
       return null;
     final int totalNegation = countNegations(es);
-    switch(totalNegation) {
+    switch (totalNegation) {
       default:
-       break;
+        break;
       case 0:
         return null;
       case 1:
@@ -71,7 +72,7 @@ public final class InfixZeroAddition extends Wring<InfixExpression> {
     }
     if (exclude != null)
       exclude.exclude(e);
-    return new Rewrite(description(e), e){
+    return new Rewrite(description(e), e) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Expression first = totalNegation % 2 == 0 ? null : es.get(0);
         for (final Expression ¢ : es)
@@ -80,20 +81,20 @@ public final class InfixZeroAddition extends Wring<InfixExpression> {
         if (first != null)
           r.replace(first, plant(subject.operand(peelNegation(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
       }
-      
     };
   }
-  
-  private static List<Expression> gather(final Expression e, final List<Expression> $){
+
+  private static List<Expression> gather(final Expression e, final List<Expression> $) {
     if (e instanceof InfixExpression)
       return gather(asInfixExpression(e), $);
     $.add(e);
     return $;
   }
-  
+
   private static List<Expression> gather(final InfixExpression e) {
     return gather(e, new ArrayList<Expression>());
   }
+
   private static List<Expression> gather(final InfixExpression e, final List<Expression> $) {
     if (e == null)
       return $;
@@ -107,11 +108,13 @@ public final class InfixZeroAddition extends Wring<InfixExpression> {
       gather(extendedOperands(e), $);
     return $;
   }
+
   private static List<Expression> gather(final List<Expression> es, final List<Expression> $) {
     for (final Expression e : es)
       gather(e, $);
     return $;
   }
+
   @Override public String description() {
     // TODO Auto-generated method stub
     return null;
