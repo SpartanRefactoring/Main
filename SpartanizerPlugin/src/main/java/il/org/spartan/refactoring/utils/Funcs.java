@@ -567,6 +567,7 @@ public enum Funcs {
   public static <T> T second(final List<T> ts) {
     return ts == null || ts.size() < 2 ? null : ts.get(1);
   }
+
   public static <T> Iterable<T> rest2(final Iterable<T> ts) {
     return rest(rest(ts));
   }

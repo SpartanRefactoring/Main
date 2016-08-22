@@ -1511,8 +1511,8 @@ import il.org.spartan.refactoring.utils.*;
   @Test public void issue06() {
     trimming("a*-b").to("-a * b");
   }
-@Ignore("bug")
-  @Test public void issue06A() {
+
+  @Ignore("bug") @Test public void issue06A() {
     trimming("x/a*-b/-c*- - - d / d")//
         .to("-x/a * b/ c * d/d")//
         .to(null);
@@ -1527,12 +1527,12 @@ import il.org.spartan.refactoring.utils.*;
   @Test public void issue06C1() {
     trimming("a*-b/-c*- - - d / d").to("-a * b/ c * d/d");
   }
-  @Ignore("bug")
-  @Test public void issue06C2() {
+
+  @Ignore("bug") @Test public void issue06C2() {
     trimming("-a * b/ c * d/d").to(null);
   }
-  @Ignore("bug")
-  @Test public void issue06C3() {
+
+  @Ignore("bug") @Test public void issue06C3() {
     trimming("-a * b/ c * d").to(null);
   }
 
@@ -3360,8 +3360,8 @@ import il.org.spartan.refactoring.utils.*;
     trimming("    W s = new W(\"bob\");\n" + //
         "    return s.l(hZ).l(\"-ba\").toString() == \"bob-ha-banai\";").to("return(new W(\"bob\")).l(hZ).l(\"-ba\").toString()==\"bob-ha-banai\";");
   }
-  @Ignore("bug")
-  @Test public void shortestOperand09() {
+
+  @Ignore("bug") @Test public void shortestOperand09() {
     trimming("return 2 - 4 < 50 - 20 - 10 - 5;").to("return 2 - 4 < 50 - 5 - 10 - 20 ;");
   }
 
@@ -3658,8 +3658,8 @@ import il.org.spartan.refactoring.utils.*;
   @Test public void sortDivisionNo() {
     trimming("2.1/3").to(null);
   }
-  @Ignore("bug")
-  @Test public void sortSubstraction() {
+
+  @Ignore("bug") @Test public void sortSubstraction() {
     trimming("1-c-b").to("1-b-c");
   }
 

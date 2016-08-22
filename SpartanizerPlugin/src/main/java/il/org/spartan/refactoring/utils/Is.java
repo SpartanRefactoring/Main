@@ -835,11 +835,11 @@ public enum Is {
     return true;
   }
 
-  public static boolean infixPlus(Expression e) {
+  public static boolean infixPlus(final Expression e) {
     return operator(asInfixExpression(e)) == PLUS2;
   }
 
-  public static boolean infixMinus(Expression e) {
+  public static boolean infixMinus(final Expression e) {
     return operator(asInfixExpression(e)) == MINUS2;
   }
 

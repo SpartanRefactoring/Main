@@ -59,14 +59,16 @@ public enum extract {
   public static CompilationUnit compilationUnit(final ASTNode ¢) {
     return (CompilationUnit) AncestorSearch.forType(COMPILATION_UNIT).from(¢);
   }
-  
-  public static InfixExpression.Operator operator(InfixExpression e) {
+
+  public static InfixExpression.Operator operator(final InfixExpression e) {
     return e == null ? null : e.getOperator();
   }
-  public static PrefixExpression.Operator operator(PrefixExpression e) {
+
+  public static PrefixExpression.Operator operator(final PrefixExpression e) {
     return e == null ? null : e.getOperator();
   }
-  public static PostfixExpression.Operator operator(PostfixExpression e) {
+
+  public static PostfixExpression.Operator operator(final PostfixExpression e) {
     return e == null ? null : e.getOperator();
   }
 
