@@ -33,7 +33,7 @@ import il.org.spartan.refactoring.utils.subject.*;
   }
 
   @Test public void divisionDoesntAssociate() {
-    azzert.that(subject.pair(e("a*B"), e("c*d")).to(InfixExpression.Operator.DIVIDE), iz("(a * B) / (c * d)"));
+    azzert.that(subject.pair(e("a*B"), e("c*d")).to(InfixExpression.Operator.DIVIDE), iz("a * B / (c * d)"));
   }
 
   @Test public void extractcoreLeft() {
@@ -127,7 +127,7 @@ import il.org.spartan.refactoring.utils.subject.*;
   }
 
   @Test public void remainderDoesntAssociate() {
-    azzert.that(subject.pair(e("a*B"), e("c*d")).to(InfixExpression.Operator.REMAINDER), iz("(a * B) % (c * d)"));
+    azzert.that(subject.pair(e("a*B"), e("c*d")).to(InfixExpression.Operator.REMAINDER), iz("a * B % (c * d)"));
   }
 
   @Test public void subjectOperands() {
@@ -172,7 +172,7 @@ import il.org.spartan.refactoring.utils.subject.*;
   }
 
   @Test public void substractionsDoesntAssociate() {
-    azzert.that(subject.pair(e("a-B"), e("c-d")).to(InfixExpression.Operator.MINUS), iz("(a - B) - (c - d)"));
+    azzert.that(subject.pair(e("a-B"), e("c-d")).to(InfixExpression.Operator.MINUS), iz("a - B - (c - d)"));
   }
 
   @Test public void vanilla() {
