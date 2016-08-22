@@ -7,12 +7,12 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-public class MinusPlusRestructuring {
-  /** Opens the parenthesis in +/-_expressions, e.g.,
-   * <code>a - (b + c - (d+e))</code> becomes <code> a - b - c + d - e</code>
+public class AdditiveTermsCollector {
+  /** Opens the parenthesis in +/-_expressions, e.g., <code>a-(b+c-(d+e))</code>
+   * becomes <code>a-b-c+d-e</code>
    * @param e
    * @return */
-  public final Expression simplfy(final InfixExpression e) {
+  public final Expression collect(final InfixExpression e) {
     if (e == null || isLeafTerm(e)) // Nothing to do
       return null;
     collectPlusPrefix(e);
@@ -73,9 +73,6 @@ public class MinusPlusRestructuring {
     return null;
   }
 
-  private final List<Expression> plus = new ArrayList<>();
-  private final List<Expression> minus = new ArrayList<>();
-
   private final Void addPlusTerm(final Expression e) {
     plus.add(e);
     return null;
@@ -90,4 +87,7 @@ public class MinusPlusRestructuring {
     plus.addAll(minus);
     return null;
   }
+
+  public final List<Expression> plus = new ArrayList<>();
+  public final List<Expression> minus = new ArrayList<>();
 }
