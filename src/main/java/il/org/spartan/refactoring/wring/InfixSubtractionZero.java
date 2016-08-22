@@ -35,13 +35,13 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
                 : null;
   }
 
-  private static Expression go(List<Expression> es) {
-    List<Expression> $ = new ArrayList<>(es);
+  private static Expression go(final List<Expression> es) {
+    final List<Expression> $ = new ArrayList<>(es);
     if (isLiteralZero(first($))) {
       $.remove(0);
       $.set(0, minus(first($)));
     } else
-      for (int i = 1, size = $.size(); i < size; ++i) 
+      for (int i = 1, size = $.size(); i < size; ++i)
         if (isLiteralZero($.get(i))) {
           $.remove(i);
           break;

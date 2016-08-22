@@ -24,7 +24,7 @@ public class Plant {
 
   /** Factory method recording the expression that might be wrapped.
    * @param inner JD */
-  public static Plant plant(Expression inner) {
+  public static Plant plant(final Expression inner) {
     return new Plant(inner);
   }
 
@@ -34,7 +34,7 @@ public class Plant {
    *         parenthesis, depending on the relative precedences of the
    *         expression and its host. */
   public Expression into(final ASTNode host) {
-    return noParenthesisRequiredIn(host) || isSimple(inner)? inner : parenthesize(inner);
+    return noParenthesisRequiredIn(host) || isSimple(inner) ? inner : parenthesize(inner);
   }
 
   private boolean noParenthesisRequiredIn(final ASTNode host) {
