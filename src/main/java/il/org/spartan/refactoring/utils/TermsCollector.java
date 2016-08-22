@@ -14,7 +14,6 @@ public class TermsCollector {
   }
 
   public final List<Expression> plus = new ArrayList<>();
-
   public final List<Expression> minus = new ArrayList<>();
 
   public TermsCollector(final InfixExpression e) {
@@ -102,6 +101,7 @@ public class TermsCollector {
   private Void collectPositiveTerm(final Expression e) {
     return isLeafTerm(e) ? addPlusTerm(e) : collectPlusPrefix(asInfixExpression(e));
   }
+
   private Void collectPositiveTerms(final Iterable<Expression> es) {
     for (final Expression e : es)
       collectPositiveTerm(core(e));

@@ -70,7 +70,8 @@ import il.org.spartan.*;
   @Test public void seriesA_14() {
     azzert.that(TermsReogranizer.simplify(i("-a + + - - - (b -(-c))")), iz(" -a -b-c"));
   }
+
   @Test public void test15() {
-       azzert.that(TermsReogranizer.simplify(i("-a-b")), iz("-a-b"));
-       }
+    azzert.that(TermsReogranizer.simplify(i("-a-b")), iz("-a-b"));
+  }
 }

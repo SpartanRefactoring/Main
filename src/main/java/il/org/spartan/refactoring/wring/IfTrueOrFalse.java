@@ -5,7 +5,6 @@ import static il.org.spartan.refactoring.utils.Is.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-
 /** convert
  *
  * <pre>
