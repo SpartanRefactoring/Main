@@ -92,7 +92,14 @@ public enum extract {
    * @return the parameter if not parenthesized, or the unparenthesized this
    *         version of it */
   public static Expression core(final Expression $) {
-    return $ == null || $.getNodeType() != PARENTHESIZED_EXPRESSION ? $ : core(((ParenthesizedExpression) $).getExpression());
+    return $ == null ? $ //
+        : Is.is($, PARENTHESIZED_EXPRESSION) ? core(Funcs.asParenthesizedExpression($).getExpression()) //
+            : Is.is($, PREFIX_EXPRESSION) ? core(asPrefixExpression($)) //
+                : $;
+  }
+
+  public static Expression core(final PrefixExpression $) {
+    return $.getOperator() != PLUS1 ? $ : core($.getOperand());
   }
 
   /** Computes the "essence" of a statement, i.e., if a statement is essentially
@@ -165,7 +172,7 @@ public enum extract {
   }
 
   public static Expression expression(final ParenthesizedExpression $) {
-    return core($);
+    return core($.getExpression());
   }
 
   public static Expression expression(final ReturnStatement $) {
