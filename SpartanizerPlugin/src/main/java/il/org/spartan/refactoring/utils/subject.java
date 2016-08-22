@@ -171,8 +171,8 @@ public class subject {
     public InfixExpression to(final InfixExpression.Operator o) {
       final InfixExpression $ = ast.newInfixExpression();
       $.setOperator(o);
-      $.setLeftOperand(plant(left).into($));
-      $.setRightOperand(new Plant(right).into($));
+      $.setLeftOperand(plant(left).intoLeft($));
+      $.setRightOperand(plant(right).into($));
       return $;
     }
 
