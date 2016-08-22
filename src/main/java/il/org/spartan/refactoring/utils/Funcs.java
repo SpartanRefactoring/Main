@@ -373,7 +373,7 @@ public enum Funcs {
       if (¢ == candidate)
         return true;
     return false;
-  } 
+  }
 
   /** Shorthand for {@link Assignment#getLeftHandSide()}
    * @param a JD
@@ -412,7 +412,8 @@ public enum Funcs {
 
   public static int negationLevel(final Expression ¢) {
     return Is.is(¢, PREFIX_EXPRESSION) ? negationLevel((PrefixExpression) ¢)
-        : Is.is(¢, PARENTHESIZED_EXPRESSION) ? negationLevel(expression(¢)) : asBit(Is.isNumberLiteral(¢) && asNumberLiteral(¢).getToken().startsWith("-"));
+        : Is.is(¢, PARENTHESIZED_EXPRESSION) ? negationLevel(expression(¢))
+            : asBit(Is.isNumberLiteral(¢) && asNumberLiteral(¢).getToken().startsWith("-"));
   }
 
   /** Create a new {@link SimpleName} instance at the AST of the parameter
@@ -567,6 +568,29 @@ public enum Funcs {
     return ts == null || ts.size() < 2 ? null : ts.get(1);
   }
 
+  public static <T> Iterable<T> rest2(final Iterable<T> ts) {
+    return rest(rest(ts));
+  }
+
+  public static <T> Iterable<T> rest(final Iterable<T> ts) {
+    return () -> {
+      return new Iterator<T>() {
+        final Iterator<T> $ = ts.iterator();
+        {
+          $.next();
+        }
+
+        @Override public boolean hasNext() {
+          return $.hasNext();
+        }
+
+        @Override public T next() {
+          return $.next();
+        }
+      };
+    };
+  }
+
   /** Shorthand for {@link ConditionalExpression#getThenExpression()}
    * @param ¢ JD
    * @return then part of the parameter */
@@ -623,8 +647,6 @@ public enum Funcs {
     return null;
   }
 
-
-
   private static int negationLevel(final PrefixExpression ¢) {
     return asBit(¢.getOperator() == PrefixExpression.Operator.MINUS) + negationLevel(¢.getOperand());
   }
@@ -636,4 +658,9 @@ public enum Funcs {
   private static Expression peelNegation(final PrefixExpression $) {
     return $.getOperator() != PrefixExpression.Operator.MINUS ? $ : peelNegation($.getOperand());
   }
+
+  static final PrefixExpression.Operator MINUS1 = PrefixExpression.Operator.MINUS;
+  static final PrefixExpression.Operator PLUS1 = PrefixExpression.Operator.PLUS;
+  static final InfixExpression.Operator MINUS2 = InfixExpression.Operator.MINUS;
+  static final InfixExpression.Operator PLUS2 = InfixExpression.Operator.PLUS;
 }
