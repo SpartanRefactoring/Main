@@ -3419,7 +3419,6 @@ public class TrimmerTest240 {
     trimming("2.1/3").to("");
   }
 
-
   @Test public void sortThreeOperands1() {
     trimming("1.0*2222*3").to("");
   }

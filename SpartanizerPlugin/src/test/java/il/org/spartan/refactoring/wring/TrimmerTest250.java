@@ -371,8 +371,8 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue72ma() {
-    String s = "0-x";
-    InfixExpression i = Into.i(s);
+    final String s = "0-x";
+    final InfixExpression i = Into.i(s);
     azzert.that(i, iz(s));
     azzert.that(left(i), iz("0"));
     azzert.that(right(i), iz("x"));
