@@ -1,7 +1,5 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -41,7 +39,7 @@ public enum Have {
    *         the boolean literal <code><b>false</b></code> */
   public static boolean falseLiteral(final List<Expression> es) {
     for (final Expression e : es)
-      if (isLiteralFalse(e))
+      if (Is.isLiteralFalse(e))
         return true;
     return false;
   }
@@ -96,7 +94,7 @@ public enum Have {
    *         the boolean literal <code><b>true</b></code> */
   public static boolean trueLiteral(final List<Expression> es) {
     for (final Expression e : es)
-      if (isLiteralTrue(e))
+      if (Is.isLiteralTrue(e))
         return true;
     return false;
   }

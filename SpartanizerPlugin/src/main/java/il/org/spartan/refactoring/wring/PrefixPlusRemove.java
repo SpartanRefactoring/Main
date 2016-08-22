@@ -1,4 +1,5 @@
 package il.org.spartan.refactoring.wring;
+
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Plant.*;
 import static il.org.spartan.refactoring.utils.extract.*;
@@ -21,7 +22,7 @@ public class PrefixPlusRemove extends ReplaceCurrentNode<PrefixExpression> imple
   }
 
   private Expression heart(final Expression e) {
-    if (Funcs.is(e, PARENTHESIZED_EXPRESSION))
+    if (Is.is(e, PARENTHESIZED_EXPRESSION))
       return heart(expression(e));
     final PrefixExpression p = asPrefixExpression(e);
     return p == null || p.getOperator() != PLUS ? e : heart(p.getOperand());
