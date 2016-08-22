@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -832,5 +833,30 @@ public enum Is {
       if (o == null || !sideEffectFree(Funcs.asExpression((ASTNode) o)))
         return false;
     return true;
+  }
+
+  public static boolean infixPlus(final Expression e) {
+    return operator(asInfixExpression(e)) == PLUS2;
+  }
+
+  public static boolean infixMinus(final Expression e) {
+    return operator(asInfixExpression(e)) == MINUS2;
+  }
+
+  /** Checks if expression is simple.
+   * @param e an expression
+   * @return true iff argument is simple */
+  public static boolean isSimple(final Expression e) {
+    return is(e, //
+        BOOLEAN_LITERAL, //
+        CHARACTER_LITERAL, //
+        NULL_LITERAL, //
+        NUMBER_LITERAL, //
+        QUALIFIED_NAME, //
+        SIMPLE_NAME, //
+        STRING_LITERAL, //
+        THIS_EXPRESSION, //
+        TYPE_LITERAL //
+    );
   }
 }

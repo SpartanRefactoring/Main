@@ -1,4 +1,5 @@
 package il.org.spartan.refactoring.utils;
+
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Plant.*;
 import static il.org.spartan.refactoring.utils.expose.*;
