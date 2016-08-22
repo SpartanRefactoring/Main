@@ -11,6 +11,10 @@ import org.junit.*;
 import il.org.spartan.*;
 
 @SuppressWarnings("static-method") public class TermsReogranizerTest {
+  @Test public void test00() {
+    azzert.that(TermsReogranizer.simplify(i("a-b")), iz("a-b"));
+  }
+
   @Test public void seriesA_01() {
     azzert.that(TermsReogranizer.simplify(i("a+b+c")), iz("a + b + c"));
   }
@@ -58,7 +62,15 @@ import il.org.spartan.*;
   @Test public void seriesA_12() {
     azzert.that(TermsReogranizer.simplify(i("a + + - - - (b -c)")), iz("a +c -b"));
   }
+
   @Test public void seriesA_13() {
-    azzert.that(TermsReogranizer.simplify(i("-a + + - - - (b -c)")), iz("c -b -a"));
+    azzert.that(TermsReogranizer.simplify(i("-a + + - - - (b -c)")), iz("c -a -b"));
   }
+
+  @Test public void seriesA_14() {
+    azzert.that(TermsReogranizer.simplify(i("-a + + - - - (b -(-c))")), iz(" -a -b-c"));
+  }
+  @Test public void test15() {
+       azzert.that(TermsReogranizer.simplify(i("-a-b")), iz("-a-b"));
+       }
 }
