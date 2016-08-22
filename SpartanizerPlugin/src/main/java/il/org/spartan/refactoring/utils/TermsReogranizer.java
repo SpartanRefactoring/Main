@@ -1,24 +1,25 @@
 package il.org.spartan.refactoring.utils;
 
-import java.util.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
+
+import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 public class TermsReogranizer {
-  public static Expression simplify(InfixExpression e) {
+  public static Expression simplify(final InfixExpression e) {
     return build(new TermsCollector(e));
   }
 
-  private static Expression build(TermsCollector c) {
+  private static Expression build(final TermsCollector c) {
     return build(c.plus, c.minus);
   }
 
-  private static Expression build(List<Expression> plus, List<Expression> minus) {
+  private static Expression build(final List<Expression> plus, final List<Expression> minus) {
     return buildMinus(buildPlus(plus), minus);
   }
 
-  private static Expression buildMinus(Expression first, List<Expression> rest) {
+  private static Expression buildMinus(final Expression first, final List<Expression> rest) {
     if (first == null)
       return buildMinus(rest);
     switch (rest.size()) {
@@ -39,7 +40,7 @@ public class TermsReogranizer {
     return subject.operands(es).to(MINUS2);
   }
 
-  private static Expression buildPlus(List<Expression> es) {
+  private static Expression buildPlus(final List<Expression> es) {
     switch (es.size()) {
       case 0:
         return null;

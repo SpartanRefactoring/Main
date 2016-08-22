@@ -162,7 +162,7 @@ public enum Funcs {
     return !Is.isNumberLiteral(¢) ? null : (NumberLiteral) ¢;
   }
 
-  public static ParenthesizedExpression asParenthesizedExpression(Expression $) {
+  public static ParenthesizedExpression asParenthesizedExpression(final Expression $) {
     return !Is.is($, PARENTHESIZED_EXPRESSION) ? null : (ParenthesizedExpression) $;
   }
 
@@ -664,7 +664,7 @@ public enum Funcs {
   }
 
   private static Expression peelNegation(final PrefixExpression $) {
-    org.eclipse.jdt.core.dom.PrefixExpression.Operator o = $.getOperator();
+    final org.eclipse.jdt.core.dom.PrefixExpression.Operator o = $.getOperator();
     return o != MINUS1 && o != PLUS1 ? $ : peelNegation($.getOperand());
   }
 }

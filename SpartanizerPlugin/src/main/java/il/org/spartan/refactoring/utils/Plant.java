@@ -47,7 +47,7 @@ public class Plant {
     return $;
   }
 
-  public Expression intoLeft(InfixExpression host) {
+  public Expression intoLeft(final InfixExpression host) {
     return Precedence.greater(host, inner) || Precedence.equal(host, inner) || isSimple(inner) ? inner : parenthesize(inner);
   }
 }
