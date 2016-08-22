@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Is.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -33,7 +34,7 @@ public class Plant {
    *         parenthesis, depending on the relative precedences of the
    *         expression and its host. */
   public Expression into(final ASTNode host) {
-    return noParenthesisRequiredIn(host) ? inner : parenthesize(inner);
+    return noParenthesisRequiredIn(host) || isSimple(inner)? inner : parenthesize(inner);
   }
 
   private boolean noParenthesisRequiredIn(final ASTNode host) {

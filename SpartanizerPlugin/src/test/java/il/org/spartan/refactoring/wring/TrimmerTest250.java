@@ -1,7 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Is.*;
+import static il.org.spartan.refactoring.utils.Restructure.*;
+import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
@@ -17,6 +21,203 @@ import il.org.spartan.refactoring.utils.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class TrimmerTest250 {
+  @Test public void issue50_Constructors1() {
+    trimming("public class ClassTest {\n"//
+        + "public  ClassTest(){}\n"//
+        + "}").to("");
+  }
+
+  @Test public void issue50_EnumInInterface1() {
+    trimming("public interface Int1 {\n"//
+        + "static enum Day {\n"//
+        + "SUNDAY, MONDAY\n"//
+        + "}"//
+        + "}")
+            .to("public interface Int1 {\n"//
+                + "enum Day {\n"//
+                + "SUNDAY, MONDAY\n"//
+                + "}" + "}");
+  }
+
+  @Test public void issue50_Enums() {
+    trimming("public class ClassTest {\n"//
+        + "static enum Day {\n"//
+        + "SUNDAY, MONDAY\n"//
+        + "}")
+            .to("public class ClassTest {\n"//
+                + "enum Day {\n"//
+                + "SUNDAY, MONDAY\n"//
+                + "}");
+  }
+
+  @Test public void issue50_EnumsOnlyRightModifierRemoved() {
+    trimming("public class ClassTest {\n"//
+        + "private static enum Day {\n"//
+        + "SUNDAY, MONDAY\n"//
+        + "}")
+            .to("public class ClassTest {\n"//
+                + "private enum Day {\n"//
+                + "SUNDAY, MONDAY\n"//
+                + "}");
+  }
+
+  @Test public void issue50_FinalClassMethods() {
+    trimming("final class ClassTest {\n"//
+        + "final void remove();\n"//
+        + "}")
+            .to("final class ClassTest {\n"//
+                + "void remove();\n "//
+                + "}");
+  }
+
+  @Test public void issue50_FinalClassMethodsOnlyRightModifierRemoved() {
+    trimming("final class ClassTest {\n"//
+        + "public final void remove();\n"//
+        + "}")
+            .to("final class ClassTest {\n"//
+                + "public void remove();\n "//
+                + "}");
+  }
+
+  @Test public void issue50_inEnumMember() {
+    trimming(//
+        "enum A {; final void f() {} public final void g() {} }"//
+    ).to(null);
+  }
+
+  @Test public void issue50_inEnumMemberComplex() {
+    trimming(//
+        "enum A { a1 {{ f(); } \n" + //
+            "protected final void f() {g();}  \n" + //
+            "public final void g() {h();}  \n" + //
+            "private final void h() {i();}   \n" + //
+            "final void i() {f();}  \n" + //
+            "}, a2 {{ f(); } \n" + //
+            "final protected void f() {g();}  \n" + //
+            "final void g() {h();}  \n" + //
+            "final private void h() {i();}  \n" + //
+            "final protected void i() {f();}  \n" + //
+            "};\n" + //
+            "protected abstract void f();\n" + //
+            "protected void ia() {}\n" + //
+            "void i() {}\n" + //
+            "} \n"//
+    ).to("enum A { a1 {{ f(); } \n" + //
+        "void f() {g();}  \n" + //
+        "public void g() {h();}  \n" + //
+        "void h() {i();}   \n" + //
+        "void i() {f();}  \n" + //
+        "}, a2 {{ f(); } \n" + //
+        "void f() {g();}  \n" + //
+        "void g() {h();}  \n" + //
+        "void h() {i();}  \n" + //
+        "void i() {f();}  \n" + //
+        "};\n" + //
+        "abstract void f();\n" + //
+        "void ia() {}\n" + //
+        "void i() {}\n" + //
+        "} \n"//
+    );
+  }
+
+  @Test public void issue50_InterfaceMethods1() {
+    trimming("public interface Int1 {\n"//
+        + "public void add();\n"//
+        + "void remove()\n; "//
+        + "}")
+            .to("public interface Int1 {\n"//
+                + "void add();\n"//
+                + "void remove()\n; "//
+                + "}");
+  }
+
+  @Test public void issue50_InterfaceMethods2() {
+    trimming("public interface Int1 {\n"//
+        + "public abstract void add();\n"//
+        + "abstract void remove()\n; "//
+        + "}")
+            .to("public interface Int1 {\n"//
+                + "void add();\n"//
+                + "void remove()\n; "//
+                + "}");
+  }
+
+  @Test public void issue50_InterfaceMethods3() {
+    trimming("public interface Int1 {\n"//
+        + "abstract void add();\n"//
+        + "void remove()\n; "//
+        + "}")
+            .to("public interface Int1 {\n"//
+                + "void add();\n"//
+                + "void remove()\n; "//
+                + "}");
+  }
+
+  @Test public void issue50_SimpleDontWorking() {
+    trimming("interface a"//
+        + "{}").to("");
+  }
+
+  @Test public void issue50_SimpleWorking1() {
+    trimming("abstract abstract interface a"//
+        + "{}").to("interface a {}");
+  }
+
+  @Test public void issue50_SimpleWorking2() {
+    trimming("abstract interface a"//
+        + "{}").to("interface a {}");
+  }
+
+  @Test public void issue50a() {
+    trimming("abstract interface a {}")//
+        .to("interface a {}");//
+  }
+
+  @Test public void issue50b() {
+    trimming("abstract static interface a {}")//
+        .to("interface a {}");//
+  }
+
+  @Test public void issue50c() {
+    trimming("static abstract interface a {}")//
+        .to("interface a {}");//
+  }
+
+  @Test public void issue50d() {
+    trimming("static interface a {}")//
+        .to("interface a {}");//
+  }
+
+  @Test public void issue50e() {
+    trimming("enum a {a,b}")//
+        .to(null);//
+  }
+
+  @Test public void issue50e1() {
+    trimming("enum a {a}")//
+        .to(null);//
+  }
+
+  @Test public void issue50e2() {
+    trimming("enum a {}")//
+        .to(null);//
+  }
+
+  @Test public void issue50f() {
+    trimming("static enum a {a, b}")//
+        .to("enum a {a, b}");//
+  }
+
+  @Test public void issue50g() {
+    trimming("static abstract enum a {x,y,z; void f() {}}")//
+        .to("enum a {x,y,z; void f() {}}");//
+  }
+
+  @Test public void issue50h() {
+    trimming("static abstract final enum a {x,y,z; void f() {}}")//
+        .to("enum a {x,y,z; void f() {}}");//
+  }
+
   @Test public void issue70_01() {
     trimming("(double)5").to("1.*5");
   }
@@ -169,6 +370,108 @@ public class TrimmerTest250 {
     trimming("1L*a").to("");
   }
 
+  @Test public void issue72ma() {
+    String s = "0-x";
+    InfixExpression i = Into.i(s);
+    azzert.that(i, iz(s));
+    azzert.that(left(i), iz("0"));
+    azzert.that(right(i), iz("x"));
+    azzert.nay(i.hasExtendedOperands());
+    azzert.aye(isLiteralZero(left(i)));
+    azzert.nay(isLiteralZero(right(i)));
+    azzert.that(minus(left(i)), iz("0"));
+    azzert.that(minus(right(i)), iz("-x"));
+    trimming(s).to("-x");
+  }
+
+  @Test public void issue72mb() {
+    trimming("x-0").to("x");
+  }
+
+  @Test public void issue72mc() {
+    trimming("x-0-y").to("x-y").to(null);
+  }
+
+  @Test public void issue72md1() {
+    trimming("0-x-0").to("-x-0").to("-x").to(null);
+  }
+
+  @Test public void issue72md2() {
+    trimming("0-x-0-y").to("-x-0-y").to("-x-y").to(null);
+  }
+
+  @Test public void issue72md3() {
+    trimming("0-x-0-y-0-z-0-0")//
+        .to("-x-0-y-0-z-0-0")//
+        .to("-x-y-0-z-0-0")//
+        .to("-x-y-z-0-0")//
+        .to("-x-y-z-0")//
+        .to("-x-y-z")//
+        .to(null);
+  }
+
+  @Test public void issue72me() {
+    trimming("0-(x-0)").to("-(x-0)").to("-(x)").to(null);
+  }
+
+  @Test public void issue72me1() {
+    azzert.nay(Is.negative(Into.e("0")));
+  }
+
+  @Test public void issue72me2() {
+    azzert.aye(Is.negative(Into.e("-1")));
+    azzert.nay(Is.negative(Into.e("+1")));
+    azzert.nay(Is.negative(Into.e("1")));
+  }
+
+  @Test public void issue72me3() {
+    azzert.aye(Is.negative(Into.e("-x")));
+    azzert.nay(Is.negative(Into.e("+x")));
+    azzert.nay(Is.negative(Into.e("x")));
+  }
+
+  @Test public void issue72meA() {
+    trimming("(x-0)").to("(x)").to(null);
+  }
+
+  @Test public void issue72mf1() {
+    trimming("0-(x-y)").to("-(x-y)").to(null);
+  }
+
+  @Ignore("bug") @Test public void issue72mf1A() {
+    trimming("0-(x-0)").to("-(x-0)").to("-x");
+  }
+
+  @Ignore("bug") @Test public void issue72mf1B() {
+    azzert.aye(Is.isSimple(Into.e("x")));
+    trimming("-(x-0)").to("-(x-0)").to("-x");
+  }
+
+  @Test public void issue72mg() {
+    trimming("(x-0)-0").to("(x)").to(null);
+  }
+
+  @Test public void issue72mg1() {
+    trimming("-(x-0)-0").to("-(x)").to(null);
+  }
+
+  @Test public void issue72mh() {
+    trimming("x-0-y").to("x-y").to(null);
+  }
+
+  @Test public void issue72mi() {
+    trimming("0-x-0-y-0-z-0")//
+        .to("-x-0-y-0-z-0")//
+        .to("-x-y-0-z-0")//
+        .to("-x-y-z-0")//
+        .to("-x-y-z")//
+        .to(null);
+  }
+
+  @Test public void issue72mj() {
+    trimming("0-0").to("0");
+  }
+
   @Test public void issue72pa() {
     trimming("x+0").to("x");
   }
@@ -203,338 +506,6 @@ public class TrimmerTest250 {
 
   @Test public void issue72pi() {
     trimming("0+(0+x+y+(4+0))").to("x+y+4").to(null);
-  }
-
-  @Test public void issue72ma() {
-    trimming("0-x").to("-x");
-  }
-
-  @Test public void issue72mb() {
-    trimming("x-0").to("x");
-  }
-
-  @Test public void issue72mc() {
-    trimming("x-0-y").to("x-y").to(null);
-  }
-
-  @Test public void issue72md1() {
-    trimming("0-x-0").to("-x").to(null);
-  }
-
-  @Test public void issue72md2() {
-    trimming("0-x-0-y").to("-x-y").to(null);
-  }
-
-  @Test public void issue72md3() {
-    trimming("0-x-0-y-0-z-0-0").to("-x-y-z").to(null);
-  }
-
-  @Test public void issue72me() {
-    trimming("0-(x-0)").to("-x").to(null);
-  }
-
-  @Test public void issue72me1() {
-    azzert.nay(Is.negative(Into.e("0")));
-  }
-
-  @Test public void issue72me2() {
-    azzert.aye(Is.negative(Into.e("-1")));
-    azzert.nay(Is.negative(Into.e("+1")));
-    azzert.nay(Is.negative(Into.e("1")));
-  }
-
-  @Test public void issue72me3() {
-    azzert.aye(Is.negative(Into.e("-x")));
-    azzert.nay(Is.negative(Into.e("+x")));
-    azzert.nay(Is.negative(Into.e("x")));
-  }
-
-  @Test public void issue72me4() {
-    azzert.that(Restructure.minus(Into.e("-x")), iz("x"));
-  }
-
-  @Test public void issue72me5() {
-    azzert.that(Restructure.minus(Into.e("x")), iz("-x"));
-  }
-
-  @Test public void issue72me6() {
-    azzert.that(Restructure.minus(Into.e("+x")), iz("-x"));
-  }
-
-  @Test public void issue72me7() {
-    azzert.that(Restructure.minus(Into.e("-0")), iz("0"));
-  }
-
-  @Test public void issue72me8() {
-    azzert.that(Restructure.minus(Into.e("+0")), iz("0"));
-  }
-
-  @Test public void issue72me9() {
-    azzert.that(Restructure.minus(Into.e("0")), iz("0"));
-  }
-
-  @Test public void issue72mf1() {
-    trimming("0-(x-y)").to("-(x-y)").to(null);
-  }
-
-  @Test public void issue72mf2() {
-    trimming("0-(x-(y-z))").to("-(x-y)").to(null);
-  }
-
-  @Test public void issue72mg() {
-    trimming("(x-0)-0").to("x").to(null);
-  }
-
-  @Test public void issue72mg1() {
-    trimming("-(x-0)-0").to("-(x-0)").to("-(x)").to(null);
-  }
-
-  @Test public void issue72mg2() {
-    trimming("0-A-b-0-d-0-e-A-0-0-0").to("-A-b-d-e-A").to(null);
-  }
-
-  @Test public void issue72mh() {
-    trimming("x-0-y").to("x-y").to(null);
-  }
-
-  @Test public void issue72mi() {
-    trimming("0-x-0-y-0-z-0").to("-x-y-z").to(null);
-  }
-
-  @Test public void issue72mj() {
-    trimming("0-0").to("0");
-  }
-
-  @Test public void issue82a() {
-    trimming("(long)5").to("1L*5");
-  }
-
-  @Test public void issue82b() {
-    trimming("(long)a").to("1L*a");
-  }
-
-  @Test public void issue82c() {
-    trimming("(long)(long)a").to("1L*(long)a").to("1L*1L*a");
-  }
-
-  @Test public void issue82d() {
-    trimming("(long)a*(long)b").to("1L*a*1L*b");
-  }
-
-  @Test public void issue82e() {
-    trimming("(double)(long)a").to("1.*(long)a").to("1.*1L*a");
-  }
-
-  // @formatter:off
-        enum A { a1() {{ f(); }
-            public final void f() {g();}
-             protected final void g() {h();}
-             private final void h() {i();}
-             final void i() {f();}
-          }, a2() {{ f(); }
-            final protected void f() {g();}
-            final void g() {h();}
-            final private void h() {i();}
-            final public void i() {f();}
-          }
-        }
-  // @formatter:on
-
-  @Test public void issue50_inEnumMemberComplex() {
-    trimming(//
-        "enum A { a1 {{ f(); } \n" + //
-            "protected final void f() {g();}  \n" + //
-            "public final void g() {h();}  \n" + //
-            "private final void h() {i();}   \n" + //
-            "final void i() {f();}  \n" + //
-            "}, a2 {{ f(); } \n" + //
-            "final protected void f() {g();}  \n" + //
-            "final void g() {h();}  \n" + //
-            "final private void h() {i();}  \n" + //
-            "final protected void i() {f();}  \n" + //
-            "};\n" + //
-            "protected abstract void f();\n" + //
-            "protected void ia() {}\n" + //
-            "void i() {}\n" + //
-            "} \n"//
-    ).to("enum A { a1 {{ f(); } \n" + //
-        "void f() {g();}  \n" + //
-        "public void g() {h();}  \n" + //
-        "void h() {i();}   \n" + //
-        "void i() {f();}  \n" + //
-        "}, a2 {{ f(); } \n" + //
-        "void f() {g();}  \n" + //
-        "void g() {h();}  \n" + //
-        "void h() {i();}  \n" + //
-        "void i() {f();}  \n" + //
-        "};\n" + //
-        "abstract void f();\n" + //
-        "void ia() {}\n" + //
-        "void i() {}\n" + //
-        "} \n"//
-    );
-  }
-
-  @Test public void issue50_inEnumMember() {
-    trimming(//
-        "enum A {; final void f() {} public final void g() {} }"//
-    ).to(null);
-  }
-
-  @Test public void issue50_Constructors1() {
-    trimming("public class ClassTest {\n"//
-        + "public  ClassTest(){}\n"//
-        + "}").to("");
-  }
-
-  @Test public void issue50_EnumInInterface1() {
-    trimming("public interface Int1 {\n"//
-        + "static enum Day {\n"//
-        + "SUNDAY, MONDAY\n"//
-        + "}"//
-        + "}")
-            .to("public interface Int1 {\n"//
-                + "enum Day {\n"//
-                + "SUNDAY, MONDAY\n"//
-                + "}" + "}");
-  }
-
-  @Test public void issue50_Enums() {
-    trimming("public class ClassTest {\n"//
-        + "static enum Day {\n"//
-        + "SUNDAY, MONDAY\n"//
-        + "}")
-            .to("public class ClassTest {\n"//
-                + "enum Day {\n"//
-                + "SUNDAY, MONDAY\n"//
-                + "}");
-  }
-
-  @Test public void issue50_EnumsOnlyRightModifierRemoved() {
-    trimming("public class ClassTest {\n"//
-        + "private static enum Day {\n"//
-        + "SUNDAY, MONDAY\n"//
-        + "}")
-            .to("public class ClassTest {\n"//
-                + "private enum Day {\n"//
-                + "SUNDAY, MONDAY\n"//
-                + "}");
-  }
-
-  @Test public void issue50_FinalClassMethods() {
-    trimming("final class ClassTest {\n"//
-        + "final void remove();\n"//
-        + "}")
-            .to("final class ClassTest {\n"//
-                + "void remove();\n "//
-                + "}");
-  }
-
-  @Test public void issue50_FinalClassMethodsOnlyRightModifierRemoved() {
-    trimming("final class ClassTest {\n"//
-        + "public final void remove();\n"//
-        + "}")
-            .to("final class ClassTest {\n"//
-                + "public void remove();\n "//
-                + "}");
-  }
-
-  @Test public void issue50_InterfaceMethods1() {
-    trimming("public interface Int1 {\n"//
-        + "public void add();\n"//
-        + "void remove()\n; "//
-        + "}")
-            .to("public interface Int1 {\n"//
-                + "void add();\n"//
-                + "void remove()\n; "//
-                + "}");
-  }
-
-  @Test public void issue50_InterfaceMethods2() {
-    trimming("public interface Int1 {\n"//
-        + "public abstract void add();\n"//
-        + "abstract void remove()\n; "//
-        + "}")
-            .to("public interface Int1 {\n"//
-                + "void add();\n"//
-                + "void remove()\n; "//
-                + "}");
-  }
-
-  @Test public void issue50_InterfaceMethods3() {
-    trimming("public interface Int1 {\n"//
-        + "abstract void add();\n"//
-        + "void remove()\n; "//
-        + "}")
-            .to("public interface Int1 {\n"//
-                + "void add();\n"//
-                + "void remove()\n; "//
-                + "}");
-  }
-
-  @Test public void issue50_SimpleDontWorking() {
-    trimming("interface a"//
-        + "{}").to("");
-  }
-
-  @Test public void issue50_SimpleWorking1() {
-    trimming("abstract abstract interface a"//
-        + "{}").to("interface a {}");
-  }
-
-  @Test public void issue50_SimpleWorking2() {
-    trimming("abstract interface a"//
-        + "{}").to("interface a {}");
-  }
-
-  @Test public void issue50a() {
-    trimming("abstract interface a {}")//
-        .to("interface a {}");//
-  }
-
-  @Test public void issue50b() {
-    trimming("abstract static interface a {}")//
-        .to("interface a {}");//
-  }
-
-  @Test public void issue50c() {
-    trimming("static abstract interface a {}")//
-        .to("interface a {}");//
-  }
-
-  @Test public void issue50d() {
-    trimming("static interface a {}")//
-        .to("interface a {}");//
-  }
-
-  @Test public void issue50e() {
-    trimming("enum a {a,b}")//
-        .to(null);//
-  }
-
-  @Test public void issue50e1() {
-    trimming("enum a {a}")//
-        .to(null);//
-  }
-
-  @Test public void issue50e2() {
-    trimming("enum a {}")//
-        .to(null);//
-  }
-
-  @Test public void issue50f() {
-    trimming("static enum a {a, b}")//
-        .to("enum a {a, b}");//
-  }
-
-  @Test public void issue50g() {
-    trimming("static abstract enum a {x,y,z; void f() {}}")//
-        .to("enum a {x,y,z; void f() {}}");//
-  }
-
-  @Test public void issue50h() {
-    trimming("static abstract final enum a {x,y,z; void f() {}}")//
-        .to("enum a {x,y,z; void f() {}}");//
   }
 
   @Test public void issue75a() {
@@ -609,16 +580,16 @@ public class TrimmerTest250 {
     trimming("+0L").to("0L");
   }
 
+  @Test public void issue75il() {
+    trimming("+(a+b)").to("a+b");
+  }
+
   @Test public void issue75j() {
     trimming("+1E3").to("1E3");
   }
 
   @Test public void issue75k() {
     trimming("(+(+(+x)))").to("(x)");
-  }
-
-  @Test public void issue75il() {
-    trimming("+(a+b)").to("a+b");
   }
 
   @Test public void issue75m() {
@@ -628,4 +599,39 @@ public class TrimmerTest250 {
   @Test public void issue75n() {
     trimming("(2*+(a+b))").to("(2*(a+b))");
   }
+
+  @Test public void issue82a() {
+    trimming("(long)5").to("1L*5");
+  }
+
+  @Test public void issue82b() {
+    trimming("(long)a").to("1L*a");
+  }
+
+  @Test public void issue82c() {
+    trimming("(long)(long)a").to("1L*(long)a").to("1L*1L*a");
+  }
+
+  @Test public void issue82d() {
+    trimming("(long)a*(long)b").to("1L*a*1L*b");
+  }
+
+  @Test public void issue82e() {
+    trimming("(double)(long)a").to("1.*(long)a").to("1.*1L*a");
+  }
+
+  // @formatter:off
+  enum A { a1() {{ f(); }
+      public final void f() {g();}
+       protected final void g() {h();}
+       final void i() {f();}
+       private final void h() {i();}
+    }, a2() {{ f(); }
+      final public void i() {f();}
+      final protected void f() {g();}
+      final void g() {h();}
+      final private void h() {i();}
+    }
+  }
+ // @formatter:on
 }
