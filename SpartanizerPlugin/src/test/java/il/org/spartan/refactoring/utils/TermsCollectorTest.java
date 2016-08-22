@@ -271,19 +271,23 @@ import il.org.spartan.*;
     c.collect(i("-a + + - - - (b -c)"));
     azzert.that(c.minus, iz("[a,b]"));
   }
+
   @Test public void test_43() {
     c.collect(i("-a + + - - - (b -c)"));
     azzert.that(c.plus, iz("[c]"));
   }
+
   @Test public void test_44() {
     c.collect(i("-a- b -c"));
     azzert.that(c.plus, iz("[]"));
     azzert.that(c.minus, iz("[a,b,c]"));
   }
+
   @Test public void test_45() {
     c.collect(i("-a- b"));
     azzert.that(c.plus, iz("[]"));
     azzert.that(c.minus, iz("[a,b]"));
   }
+
   private final TermsCollector c = new TermsCollector();
 }

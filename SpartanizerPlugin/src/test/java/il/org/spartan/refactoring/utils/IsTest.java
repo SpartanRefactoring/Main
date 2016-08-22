@@ -45,6 +45,7 @@ public class IsTest {
   @Test public void deterministicArray1() {
     azzert.that(Is.deterministic(e("new a[3]")), is(false));
   }
+
   @Test public void seriesA_3() {
     azzert.nay(Is.infixPlus(e("(i+j)")));
     azzert.aye(Is.infixPlus(core(e("(i+j)"))));
