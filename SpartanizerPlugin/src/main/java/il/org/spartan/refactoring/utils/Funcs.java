@@ -27,13 +27,9 @@ public enum Funcs {
       put(LESS_EQUALS, GREATER_EQUALS);
     }
   };
-
   static final PrefixExpression.Operator MINUS1 = PrefixExpression.Operator.MINUS;
-
   static final PrefixExpression.Operator PLUS1 = PrefixExpression.Operator.PLUS;
-
   static final InfixExpression.Operator MINUS2 = InfixExpression.Operator.MINUS;
-
   static final InfixExpression.Operator PLUS2 = InfixExpression.Operator.PLUS;
 
   public static AbstractTypeDeclaration asAbstractTypeDeclaration(final ASTNode ¢) {
@@ -167,7 +163,7 @@ public enum Funcs {
   }
 
   public static ParenthesizedExpression asParenthesizedExpression(Expression $) {
-    return !Is.is($,PARENTHESIZED_EXPRESSION) ? null : (ParenthesizedExpression)$;
+    return !Is.is($, PARENTHESIZED_EXPRESSION) ? null : (ParenthesizedExpression) $;
   }
 
   /** Down-cast, if possible, to {@link InfixExpression}
@@ -651,21 +647,24 @@ public enum Funcs {
   private static VariableDeclarationFragment getDefinition(final VariableDeclarationStatement s, final SimpleName n) {
     return getVarDeclFrag(expose.fragments(s), n);
   }
+
   private static VariableDeclarationFragment getVarDeclFrag(final List<VariableDeclarationFragment> fs, final SimpleName ¢) {
     for (final VariableDeclarationFragment $ : fs)
       if (same(¢, $.getName()))
         return $;
     return null;
   }
+
   private static int negationLevel(final PrefixExpression ¢) {
     return asBit(¢.getOperator() == PrefixExpression.Operator.MINUS) + negationLevel(¢.getOperand());
   }
+
   private static Expression peelNegation(final NumberLiteral $) {
     return !$.getToken().startsWith("-") ? $ : $.getAST().newNumberLiteral($.getToken().substring(1));
   }
 
   private static Expression peelNegation(final PrefixExpression $) {
     org.eclipse.jdt.core.dom.PrefixExpression.Operator o = $.getOperator();
-    return o != MINUS1  && o != PLUS1 ? $ : peelNegation($.getOperand());
+    return o != MINUS1 && o != PLUS1 ? $ : peelNegation($.getOperand());
   }
 }
