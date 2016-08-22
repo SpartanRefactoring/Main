@@ -59,6 +59,16 @@ public enum extract {
   public static CompilationUnit compilationUnit(final ASTNode ¢) {
     return (CompilationUnit) AncestorSearch.forType(COMPILATION_UNIT).from(¢);
   }
+  
+  public static InfixExpression.Operator operator(InfixExpression e) {
+    return e == null ? null : e.getOperator();
+  }
+  public static PrefixExpression.Operator operator(PrefixExpression e) {
+    return e == null ? null : e.getOperator();
+  }
+  public static PostfixExpression.Operator operator(PostfixExpression e) {
+    return e == null ? null : e.getOperator();
+  }
 
   /** @param ¢ JD
    * @return ASTNode of the type if one of ¢'s parent ancestors is a container

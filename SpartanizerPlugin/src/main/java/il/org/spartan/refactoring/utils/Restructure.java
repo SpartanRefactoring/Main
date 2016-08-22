@@ -1,6 +1,8 @@
 package il.org.spartan.refactoring.utils;
 
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Is.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
@@ -8,6 +10,9 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
+import org.junit.*;
+
+import il.org.spartan.*;
 
 /** An empty <code><b>enum</b></code> with a variety of <code>public
  * static</code> functions for restructuring expressions.
@@ -15,27 +20,6 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
  * @since 2015-07-21 */
 public enum Restructure {
   ;
-  private static List<Expression> add(final Expression e, final List<Expression> $) {
-    $.add(e);
-    return $;
-  }
-
-  public static Expression minus(final Expression e) {
-    final PrefixExpression ¢ = asPrefixExpression(e);
-    return ¢ == null ? minus(e, asNumberLiteral(e))
-        : ¢.getOperator() == MINUS1 ? ¢.getOperand() //
-            : ¢.getOperator() == PLUS1 ? subject.operand(¢.getOperand()).to(MINUS1)//
-                : e;
-  }
-
-  private static Expression minus(final Expression e, final NumberLiteral l) {
-    if (l == null || !l.getToken().startsWith("-"))
-      return e;
-    NumberLiteral $ = l.getAST().newNumberLiteral();
-    $.setToken(l.getToken().substring(1));
-    return $;
-  }
-
   /** Compute the "de Morgan" conjugate of the operator present on an
    * {@link InfixExpression}.
    * @param e an expression whose operator is either
@@ -96,34 +80,12 @@ public enum Restructure {
     return subject.operands(flattenInto($.getOperator(), extract.operands($), new ArrayList<Expression>())).to(duplicate($).getOperator());
   }
 
-  private static List<Expression> flattenInto(final Operator o, final Expression e, final List<Expression> $) {
-    if (o == DIVIDE) {
-      $.add(e);
-      return $;
-    }
-    final Expression core = core(e);
-    final InfixExpression inner = asInfixExpression(core);
-    return inner == null || inner.getOperator() != o ? add(!Is.simple(core) ? e : core, $) : flattenInto(o, adjust(o, extract.operands(inner)), $);
-  }
-
-  static final PrefixExpression.Operator MINUS1 = PrefixExpression.Operator.MINUS;
-  static final PrefixExpression.Operator PLUS1 = PrefixExpression.Operator.PLUS;
-  static final InfixExpression.Operator MINUS2 = InfixExpression.Operator.MINUS;
-  static final InfixExpression.Operator PLUS2 = InfixExpression.Operator.PLUS;
-
-  private static List<Expression> adjust(final Operator o, final List<Expression> es) {
-    if (o != MINUS2)
-      return es;
-    final List<Expression> $ = new ArrayList<>();
-    for (final Expression e : es)
-      $.add(subject.operand(e).to(MINUS1));
-    return $;
-  }
-
-  private static List<Expression> flattenInto(final Operator o, final List<Expression> es, final List<Expression> $) {
-    for (final Expression e : es)
-      flattenInto(o, e, $);
-    return $;
+  public static Expression minus(final Expression e) {
+    final PrefixExpression ¢ = asPrefixExpression(e);
+    return ¢ == null ? minus(e, asNumberLiteral(e))
+        : ¢.getOperator() == MINUS1 ? ¢.getOperand() //
+            : ¢.getOperator() == PLUS1 ? subject.operand(¢.getOperand()).to(MINUS1)//
+                : e;
   }
 
   /** Parenthesize an expression (if necessary).
@@ -136,5 +98,86 @@ public enum Restructure {
     final ParenthesizedExpression $ = e.getAST().newParenthesizedExpression();
     $.setExpression(e.getParent() == null ? e : duplicate(e));
     return $;
+  }
+
+  static Expression minus(final Expression e, final NumberLiteral l) {
+    return l == null ? newMinus(e) //
+        : newLiteral(l, isLiteralZero(l) ? "0" : signAdjust(l.getToken())) //
+    ;
+  }
+
+  static List<Expression> minus(final List<Expression> es) {
+    final List<Expression> $ = new ArrayList<>();
+    $.add(first(es));
+    for (final Expression e : rest(es))
+      $.add(newMinus(e));
+    return $;
+  }
+
+  static Expression newMinus(final Expression e) {
+    return isLiteralZero(e) ? e : subject.operand(e).to(Funcs.MINUS1);
+  }
+
+  private static List<Expression> add(final Expression e, final List<Expression> $) {
+    $.add(e);
+    return $;
+  }
+
+  private static List<Expression> adjust(final Operator o, final List<Expression> es) {
+    if (o != MINUS2)
+      return es;
+    final List<Expression> $ = new ArrayList<>();
+    for (final Expression e : es)
+      $.add(subject.operand(e).to(MINUS1));
+    return $;
+  }
+
+  private static List<Expression> flattenInto(final Operator o, final Expression e, final List<Expression> $) {
+    final Expression core = core(e);
+    final InfixExpression inner = asInfixExpression(core);
+    return inner == null || inner.getOperator() != o ? add(!Is.simple(core) ? e : core, $) : flattenInto(o, adjust(o, extract.operands(inner)), $);
+  }
+
+  private static List<Expression> flattenInto(final Operator o, final List<Expression> es, final List<Expression> $) {
+    for (final Expression e : es)
+      flattenInto(o, e, $);
+    return $;
+  }
+
+  private static NumberLiteral newLiteral(final ASTNode n, final String token) {
+    final NumberLiteral $ = n.getAST().newNumberLiteral();
+    $.setToken(token);
+    return $;
+  }
+
+  private static String signAdjust(final String token) {
+    return token.startsWith("-") ? token.substring(1) //
+        : "-" + token.substring(token.startsWith("+") ? 1 : 0);
+  }
+
+  @SuppressWarnings("static-method") public static class TEST {
+    @Test public void issue72me4xA() {
+      azzert.that(minus(Into.e("-x")), iz("x"));
+    }
+
+    @Test public void issue72me4xB() {
+      azzert.that(minus(Into.e("x")), iz("-x"));
+    }
+
+    @Test public void issue72me4xC() {
+      azzert.that(minus(Into.e("+x")), iz("-x"));
+    }
+
+    @Test public void issue72me4xD() {
+      azzert.that(minus(Into.e("-x")), iz("x"));
+    }
+
+    @Test public void issue72me4xF() {
+      azzert.that(minus(Into.e("x")), iz("-x"));
+    }
+
+    @Test public void issue72me4xG() {
+      azzert.that(minus(Into.e("+x")), iz("-x"));
+    }
   }
 }
