@@ -2,7 +2,6 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.azzert.is;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.ExpressionComparator.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
@@ -1464,28 +1463,10 @@ public class TrimmerTest240 {
     trimming("a*-b").to("-a * b");
   }
 
-  @Test public void issue06A() {
-    trimming("x/a*-b/-c*- - - d / d")//
-        .to("-x/a * b/ c * d/d")//
-        .to("");
-  }
-
   @Test public void issue06B() {
     trimming("x/a*-b/-c*- - - d / -d")//
         .to("x/a * b/ c * d/d")//
         .to("d*x/a*b/c/d");
-  }
-
-  @Test public void issue06C1() {
-    trimming("a*-b/-c*- - - d / d").to("-a * b/ c * d/d");
-  }
-
-  @Test public void issue06C2() {
-    trimming("-a * b/ c * d/d").to("");
-  }
-
-  @Test public void issue06C3() {
-    trimming("-a * b/ c * d").to("");
   }
 
   @Test public void issue06C4() {
@@ -3160,10 +3141,6 @@ public class TrimmerTest240 {
         "    return s.l(hZ).l(\"-ba\").toString() == \"bob-ha-banai\";").to("return(new W(\"bob\")).l(hZ).l(\"-ba\").toString()==\"bob-ha-banai\";");
   }
 
-  @Test public void shortestOperand09() {
-    trimming("return 2 - 4 < 50 - 20 - 10 - 5;").to("return 2 - 4 < 50 - 5 - 10 - 20 ;");
-  }
-
   @Test public void shortestOperand10() {
     trimming("return b == true;} ").to("return b;}");
   }
@@ -3442,9 +3419,6 @@ public class TrimmerTest240 {
     trimming("2.1/3").to("");
   }
 
-  @Test public void sortSubstraction() {
-    trimming("1-c-b").to("1-b-c");
-  }
 
   @Test public void sortThreeOperands1() {
     trimming("1.0*2222*3").to("");

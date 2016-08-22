@@ -54,9 +54,7 @@ public final class InfixZeroAddition extends Wring<InfixExpression> {
     return WringGroup.Abbreviation;
   }
   @Override Rewrite make(final InfixExpression e, final ExclusionManager exclude) {
-    System.out.println(e.toString());
     final List<Expression> es = gather(e);
-    System.out.println(es.size());
     if(es.size() < 2)
       return null;
     final int totalNegation = countNegations(es);
