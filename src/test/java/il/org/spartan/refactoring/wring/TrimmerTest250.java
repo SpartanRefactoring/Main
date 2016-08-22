@@ -42,11 +42,11 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue70_07() {
-    trimming("(double)5").to("1.*5");
+    trimming("(double)(double)5").to("1.*(double)5").to("1.*1.*5");
   }
 
   @Test public void issue70_08() {
-    trimming("(double)5").to("1.*5");
+    trimming("(double)((double)5)").to("1.*(double)5").to("1.*1.*5");
   }
 
   @Test public void issue70_09() {
@@ -57,44 +57,15 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue70_10() {
-    trimming("(double)5").to("1.*5");
+    trimming("(double)5 - (double)3").to("1.*5-1.*3");
   }
 
   @Test public void issue70_11() {
-    trimming("(double)5").to("1.*5");
+    trimming("(double)f + (int)g").to("1.*f + (int)g");
   }
 
   @Test public void issue70_12() {
-    trimming("(double)5").to("1.*5");
-  }
-
-  @Test public void issue70_13() {
-    trimming("(double)5").to("1.*5");
-  }
-
-  @Test public void issue70_14() {
-    trimming("(double)5").to("1.*5");
-  }
-
-  @Test public void issue70_15() {
-    trimming("(double)5").to("1.*5");
-    trimming("(double)5").to("1.*5");
-  }
-
-  @Test public void issue70_16() {
-    trimming("(double)5").to("1.*5");
-  }
-
-  @Test public void issue70_17() {
-    trimming("(double)5").to("1.*5");
-  }
-
-  @Test public void issue70_18() {
-    trimming("(double)5").to("1.*5");
-  }
-
-  @Test public void issue70_19() {
-    trimming("(double)5").to("1.*5");
+    trimming("foo((double)18)").to("foo(1.*18)");
   }
 
   @Test public void issue71a() {
