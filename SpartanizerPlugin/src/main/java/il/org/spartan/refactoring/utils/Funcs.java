@@ -467,7 +467,8 @@ public enum Funcs {
     return //
     $ instanceof PrefixExpression ? peelNegation((PrefixExpression) $) //
         : $ instanceof ParenthesizedExpression ? peelNegation(core($)) //
-            : $ instanceof NumberLiteral ? peelNegation((NumberLiteral) $) : $;
+            : $ instanceof NumberLiteral ? peelNegation((NumberLiteral) $) //
+                : $;
   }
 
   /** Retrieve previous item in a list
