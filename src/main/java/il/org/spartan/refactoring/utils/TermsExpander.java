@@ -1,8 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.Plant.*;
-import static il.org.spartan.refactoring.utils.expose.*;
 
 import java.util.*;
 
@@ -23,8 +21,8 @@ public class TermsExpander {
     assert es.size() >= 2;
     final SignedExpression first = first(es);
     final SignedExpression second = second(es);
-    Expression $ = base(first, second);
-    List<SignedExpression> remainder = chop(chop(es));
+    final Expression $ = base(first, second);
+    final List<SignedExpression> remainder = chop(chop(es));
     return remainder.isEmpty() ? $ : recurse($, remainder);
   }
 
@@ -47,7 +45,7 @@ public class TermsExpander {
   }
 
   private static InfixExpression appendPlus(final InfixExpression base, final SignedExpression add) {
-    Expression e = duplicate(add.expression);
+    final Expression e = duplicate(add.expression);
     return add.positive() ? subject.append(base, e) : subject.pair(base, e).to(MINUS2);
   }
 

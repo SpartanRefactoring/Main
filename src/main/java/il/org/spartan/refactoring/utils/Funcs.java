@@ -246,7 +246,7 @@ public enum Funcs {
     return ¢.getNodeType() != VARIABLE_DECLARATION_EXPRESSION ? null : (VariableDeclarationExpression) ¢;
   }
 
-  public static <T> List<T> chop(List<T> ts) {
+  public static <T> List<T> chop(final List<T> ts) {
     if (ts.isEmpty())
       return null;
     ts.remove(0);
