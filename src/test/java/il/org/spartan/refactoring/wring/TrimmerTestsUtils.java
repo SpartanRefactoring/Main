@@ -2,7 +2,6 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
-import static il.org.spartan.utils.Utils.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
@@ -26,8 +25,8 @@ public class TrimmerTestsUtils {
       final String peeled = w.off(unpeeled);
       if (peeled.equals(get()))
         azzert.that("No trimming of " + get(), peeled, is(not(get())));
-      if (gist(peeled).equals(gist(get())))
-        azzert.that("Trimming of " + get() + "is just reformatting", gist(get()), is(not(gist(peeled))));
+      if (Funcs.gist(peeled).equals(Funcs.gist(get())))
+        azzert.that("Trimming of " + get() + "is just reformatting", Funcs.gist(get()), is(not(Funcs.gist(peeled))));
       assertSimilar(expected, peeled);
     }
 
@@ -38,7 +37,7 @@ public class TrimmerTestsUtils {
       if (wrap.equals(unpeeled))
         return;
       final String peeled = w.off(unpeeled);
-      if (peeled.equals(get()) || gist(peeled).equals(gist(get())))
+      if (peeled.equals(get()) || Funcs.gist(peeled).equals(Funcs.gist(get())))
         return;
       assertSimilar(get(), peeled);
     }
@@ -50,14 +49,14 @@ public class TrimmerTestsUtils {
         final Wrap w = Wrap.find(get());
         final String wrap = w.on(get());
         final String unpeeled = TrimmerTestsUtils.apply(new Trimmer(), wrap);
-        System.out.println(unpeeled);
+        //System.out.println(unpeeled);
         if (wrap.equals(unpeeled))
           azzert.fail("Nothing done on " + get());
         final String peeled = w.off(unpeeled);
         if (peeled.equals(get()))
           azzert.that("No trimming of " + get(), peeled, is(not(get())));
-        if (gist(peeled).equals(gist(get())))
-          azzert.that("Trimming of " + get() + "is just reformatting", gist(get()), is(not(gist(peeled))));
+        if (Funcs.gist(peeled).equals(Funcs.gist(get())))
+          azzert.that("Trimming of " + get() + "is just reformatting", Funcs.gist(get()), is(not(Funcs.gist(peeled))));
         assertSimilar(expected, peeled);
       }
       return new Operand(expected);
@@ -145,8 +144,8 @@ public class TrimmerTestsUtils {
     final String peeled = wrapper.off(unpeeled);
     if (peeled.equals(from))
       azzert.that("No similification of " + from, peeled, is(not(from)));
-    if (gist(peeled).equals(gist(from)))
-      azzert.that("Simpification of " + from + " is just reformatting", gist(from), is(not(gist(peeled))));
+    if (Funcs.gist(peeled).equals(Funcs.gist(from)))
+      azzert.that("Simpification of " + from + " is just reformatting", Funcs.gist(from), is(not(Funcs.gist(peeled))));
     assertSimilar(expected, peeled);
   }
 

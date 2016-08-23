@@ -3,7 +3,6 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.utils.Utils.*;
 
 import java.util.*;
 
@@ -19,7 +18,6 @@ import org.junit.runners.Parameterized.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.utils.Utils;
 
 @SuppressWarnings({ "javadoc" }) //
 @RunWith(Parameterized.class) //
@@ -28,7 +26,7 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
   final static DeclarationInitializerIfAssignment WRING = new DeclarationInitializerIfAssignment();
   /** Description of a test case for {@link Parameter} annotation */
   protected static final String DESCRIPTION = "Test #{index}. ({0}) \"{1}\" ==> \"{2}\"";
-  private static String[][] cases = Utils.asArray(//
+  private static String[][] cases = as.array(//
       new String[] { "Vanilla with newline", "int a = 2; \n if (b) a =3;", "int a= b?3:2;" }, //
       new String[] { "Empty else", "int a=2; if (x) a = 3; else ;", " int a = x ? 3 : 2;" }, //
       new String[] { "Vanilla", "int a = 2; if (b) a =3;", "int a= b?3:2;" }, //
@@ -142,8 +140,8 @@ public class DeclarationIfAssignmentWringedTest extends AbstractWringTest<Variab
       return;
     if (input.equals(peeled))
       azzert.fail("Nothing done on " + input);
-    if (gist(peeled).equals(gist(input)))
-      azzert.that("Wringing of " + input + " amounts to mere reformatting", gist(input), is(not(gist(peeled))));
+    if (Funcs.gist(peeled).equals(Funcs.gist(input)))
+      azzert.that("Wringing of " + input + " amounts to mere reformatting", Funcs.gist(input), is(not(Funcs.gist(peeled))));
     assertSimilar(expected, peeled);
     assertSimilar(Wrap.Statement.on(expected), actual);
   }
