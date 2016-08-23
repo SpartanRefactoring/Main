@@ -1,6 +1,6 @@
 package il.org.spartan.utils;
 
-import static il.org.spartan.utils.Utils.*;
+import static il.org.spartan.Utils.*;
 
 import java.util.*;
 
@@ -16,8 +16,8 @@ public class LongestCommonSubsequence {
   private final int[][] length;
 
   public LongestCommonSubsequence(final String a, final String b) {
-    as = gist(a).toCharArray();
-    bs = gist(b).toCharArray();
+    as = Funcs.gist(a).toCharArray();
+    bs = Funcs.gist(b).toCharArray();
     length = new int[as.length][];
     for (int i = 0; i < as.length; ++i)
       Arrays.fill(length[i] = new int[bs.length], -1);

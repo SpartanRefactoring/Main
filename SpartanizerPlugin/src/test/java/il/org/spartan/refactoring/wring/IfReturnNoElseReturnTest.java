@@ -14,7 +14,6 @@ import org.junit.runners.Parameterized.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
-import il.org.spartan.utils.Utils;
 
 /** Unit tests for
  * {@link Wrings#IFX_SINGLE_RETURN_MISSING_ELSE_FOLLOWED_BY_RETURN}.
@@ -25,7 +24,7 @@ import il.org.spartan.utils.Utils;
 public class IfReturnNoElseReturnTest {
   @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope<IfStatement> {
-    static String[][] cases = Utils.asArray(//
+    static String[][] cases = as.array(//
         new String[] { "Another distinct assignment", "if (a) a /= b; else a %= c;" }, //
         new String[] { "Literal vs. Literal", "if (a) return b; else c;" }, //
         new String[] { "Nested if return", "if (a) {;{{;;return b; }}} else {{{;return c;};;};}" }, //

@@ -3,7 +3,6 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
-import static il.org.spartan.utils.Utils.*;
 
 import java.util.*;
 
@@ -19,7 +18,6 @@ import org.junit.runners.Parameterized.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.utils.Utils;
 
 /** Unit tests for {@link Wrings#ADDITION_SORTER}.
  * @author Yossi Gil
@@ -29,7 +27,7 @@ import il.org.spartan.utils.Utils;
 public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixExpression> {
   @RunWith(Parameterized.class) //
   public static class WringedInput extends AbstractWringTest.WringedExpression.Infix {
-    static String[][] cases = Utils.asArray(//
+    static String[][] cases = as.array(//
         new String[] { "", "a == b == c == true", "a == b == c" }, //
         new String[] { "", "a == true", "a" }, //
         new String[] { "", "a == false", "!a" }, //
@@ -130,8 +128,8 @@ public class InfixComparisonBooleanLiteralTest extends AbstractWringTest<InfixEx
       fail("Nothing done on " + s);
     final String peeled = Wrap.Expression.off(unpeeled);
     azzert.that("No similification of " + s, s, not(peeled));
-    if (gist(peeled).equals(gist(s)))
-      azzert.that("Simpification of " + s + " is just reformatting", gist(peeled), not(gist(s)));
+    if (Funcs.gist(peeled).equals(Funcs.gist(s)))
+      azzert.that("Simpification of " + s + " is just reformatting", Funcs.gist(peeled), not(Funcs.gist(s)));
     assertSimilar(" 2 ", peeled);
   }
 }

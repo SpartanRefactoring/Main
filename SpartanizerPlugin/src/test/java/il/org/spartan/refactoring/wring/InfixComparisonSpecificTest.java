@@ -17,7 +17,6 @@ import org.junit.runners.Parameterized.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
-import il.org.spartan.utils.Utils;
 
 /** Unit tests for {@link Wrings#ADDITION_SORTER}.
  * @author Yossi Gil
@@ -27,7 +26,7 @@ import il.org.spartan.utils.Utils;
 public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpression> {
   @RunWith(Parameterized.class) //
   public static class Noneligible extends AbstractWringTest.Noneligible.Infix {
-    static String[][] cases = Utils.asArray(//
+    static String[][] cases = as.array(//
         // Literal
         new String[] { "LT/literal", "a<2" }, //
         new String[] { "LE/literal", "a<=2" }, //
@@ -89,7 +88,7 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
 
   @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Exprezzion.Infix {
-    static String[][] cases = Utils.asArray(//
+    static String[][] cases = as.array(//
         new String[] { "Expression vs. Expression", " 6 - 7 < 2 + 1   " }, //
         new String[] { "Literal vs. Literal", "1 < 102333" }, //
         null);
@@ -111,7 +110,7 @@ public class InfixComparisonSpecificTest extends AbstractWringTest<InfixExpressi
   @RunWith(Parameterized.class) //
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
   public static class Wringed extends AbstractWringTest.WringedExpression.Infix {
-    private static String[][] cases = Utils.asArray(//
+    private static String[][] cases = as.array(//
         // Literal
         new String[] { "LT/literal", "2<a", "a>2" }, //
         new String[] { "LE/literal", "2<=a", "a>=2" }, //

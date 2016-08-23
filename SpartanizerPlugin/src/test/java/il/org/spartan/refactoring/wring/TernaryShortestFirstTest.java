@@ -14,7 +14,6 @@ import org.junit.runners.Parameterized.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
-import il.org.spartan.utils.Utils;
 
 /** Unit tests for {@link Wrings#ADDITION_SORTER}.
  * @author Yossi Gil
@@ -24,7 +23,7 @@ import il.org.spartan.utils.Utils;
 public class TernaryShortestFirstTest {
   @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Exprezzion<ConditionalExpression> {
-    static String[][] cases = Utils.asArray(//
+    static String[][] cases = as.array(//
         new String[] { "Strange cyclic buc", "length(not(notConditional))+length(then)>=length(notConditional)+length(elze)?$:null", }, //
         new String[] { "Actual simplified 3", "!f(o) ? null : x.f(a).to(e.g())" }, //
         new String[] { "Actual simplified 2", "!f(o) ? null : Subject.operands(operands).to(e.getOperator())" }, //
@@ -76,7 +75,7 @@ public class TernaryShortestFirstTest {
   @RunWith(Parameterized.class) //
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
   public static class Wringed extends AbstractWringTest.WringedExpression.Conditional {
-    private static String[][] cases = Utils.asArray(//
+    private static String[][] cases = as.array(//
         new String[] { "Vanilla", "a?f(a,b,c):f(b)", "!a?f(b):f(a,b,c)" }, //
         new String[] { "Bug of being cyclice", //
             "length(not(notConditional)) + length(then) < length(notConditional) + length(elze) ? null : $", //

@@ -5,10 +5,12 @@ import static il.org.spartan.azzert.*;
 import java.util.*;
 
 import org.junit.*;
+import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
 
 import il.org.spartan.refactoring.spartanizations.*;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc" }) //
 public class AbstractTestBase {
   protected static Collection<Object[]> collect(final String[][] cases) {

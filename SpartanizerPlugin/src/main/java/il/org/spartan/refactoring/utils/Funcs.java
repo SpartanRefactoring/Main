@@ -1,8 +1,8 @@
 package il.org.spartan.refactoring.utils;
 
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.idiomatic.*;
 import static il.org.spartan.refactoring.utils.extract.*;
-import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
@@ -27,6 +27,10 @@ public enum Funcs {
       put(LESS_EQUALS, GREATER_EQUALS);
     }
   };
+  static final PrefixExpression.Operator MINUS1 = PrefixExpression.Operator.MINUS;
+  static final PrefixExpression.Operator PLUS1 = PrefixExpression.Operator.PLUS;
+  static final InfixExpression.Operator MINUS2 = InfixExpression.Operator.MINUS;
+  public static final InfixExpression.Operator PLUS2 = InfixExpression.Operator.PLUS;
 
   public static AbstractTypeDeclaration asAbstractTypeDeclaration(final ASTNode ¢) {
     return eval(() -> ((AbstractTypeDeclaration) ¢)).when(¢ instanceof AbstractTypeDeclaration);
@@ -158,6 +162,10 @@ public enum Funcs {
     return !Is.isNumberLiteral(¢) ? null : (NumberLiteral) ¢;
   }
 
+  public static ParenthesizedExpression asParenthesizedExpression(final Expression $) {
+    return !Is.is($, PARENTHESIZED_EXPRESSION) ? null : (ParenthesizedExpression) $;
+  }
+
   /** Down-cast, if possible, to {@link InfixExpression}
    * @param ¢ JD
    * @return parameter down-casted to the returned type, or
@@ -211,7 +219,7 @@ public enum Funcs {
    * @param ¢ JD
    * @return textual representation of the parameter, */
   public static String asString(final ASTNode ¢) {
-    return removeWhites(¢.toString());
+    return removeWhites(body(¢));
   }
 
   public static StringLiteral asStringLiteral(final ASTNode ¢) {
@@ -237,6 +245,13 @@ public enum Funcs {
     return ¢.getNodeType() != VARIABLE_DECLARATION_EXPRESSION ? null : (VariableDeclarationExpression) ¢;
   }
 
+  public static <T> List<T> chop(final List<T> ts) {
+    if (ts.isEmpty())
+      return null;
+    ts.remove(0);
+    return ts;
+  }
+
   /** @param root the node whose children we return
    * @return A list containing all the nodes in the given root'¢ sub tree */
   public static List<ASTNode> collectDescendants(final ASTNode root) {
@@ -259,7 +274,7 @@ public enum Funcs {
    * @return true if all assignments has the same left hand side and operator as
    *         the first one or false otherwise */
   public static boolean compatible(final Assignment base, final Assignment... as) {
-    if (hasNulls(base, as))
+    if (hasNull(base, as))
       return false;
     for (final Assignment a : as)
       if (incompatible(base, a))
@@ -271,7 +286,7 @@ public enum Funcs {
    * @param os A unknown number of assignments operators
    * @return true if all the operator are the same or false otherwise */
   public static boolean compatibleOps(final Assignment.Operator cmpTo, final Assignment.Operator... os) {
-    if (hasNulls(cmpTo, os))
+    if (hasNull(cmpTo, os))
       return false;
     for (final Assignment.Operator ¢ : os)
       if (¢ == null || ¢ != cmpTo)
@@ -356,12 +371,12 @@ public enum Funcs {
    *         if ¢ or name are null) */
   // TODO this seems a bug
   public static VariableDeclarationFragment getDefinition(final ASTNode n, final Expression e) {
-    return hasNulls(n, e) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || e.getNodeType() != SIMPLE_NAME ? null
+    return hasNull(n, e) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || e.getNodeType() != SIMPLE_NAME ? null
         : getDefinition((VariableDeclarationStatement) n, (SimpleName) e);
   }
 
   public static boolean incompatible(final Assignment a1, final Assignment a2) {
-    return hasNulls(a1, a2) || !compatibleOps(a1.getOperator(), a2.getOperator()) || !same(left(a1), left(a2));
+    return hasNull(a1, a2) || !compatibleOps(a1.getOperator(), a2.getOperator()) || !same(left(a1), left(a2));
   }
 
   /** Determine if an integer can be found in a list of values
@@ -458,8 +473,9 @@ public enum Funcs {
   public static Expression peelNegation(final Expression $) {
     return //
     $ instanceof PrefixExpression ? peelNegation((PrefixExpression) $) //
-        : $ instanceof ParenthesizedExpression ? peelNegation(((ParenthesizedExpression) $).getExpression()) //
-            : $ instanceof NumberLiteral ? peelNegation((NumberLiteral) $) : $;
+        : $ instanceof ParenthesizedExpression ? peelNegation(core($)) //
+            : $ instanceof NumberLiteral ? peelNegation((NumberLiteral) $) //
+                : $;
   }
 
   /** Retrieve previous item in a list
@@ -505,6 +521,29 @@ public enum Funcs {
     }
   }
 
+  public static <T> Iterable<T> rest(final Iterable<T> ts) {
+    return () -> {
+      return new Iterator<T>() {
+        final Iterator<T> $ = ts.iterator();
+        {
+          $.next();
+        }
+
+        @Override public boolean hasNext() {
+          return $.hasNext();
+        }
+
+        @Override public T next() {
+          return $.next();
+        }
+      };
+    };
+  }
+
+  public static <T> Iterable<T> rest2(final Iterable<T> ts) {
+    return rest(rest(ts));
+  }
+
   /** Shorthand for {@link Assignment#getRightHandSide()}
    * @param ¢ JD
    * @return left operand of the parameter */
@@ -534,7 +573,11 @@ public enum Funcs {
    * @param n2 JD
    * @return <code><b>true</b></code> if the parameters are the same. */
   public static boolean same(final ASTNode n1, final ASTNode n2) {
-    return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType() && n1.toString().equals(n2.toString());
+    return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType() && body(n1).equals(body(n2));
+  }
+
+  private static String body(final ASTNode ¢) {
+    return Funcs.gist(¢.toString());
   }
 
   /** String wise comparison of all the given SimpleNames
@@ -566,29 +609,6 @@ public enum Funcs {
 
   public static <T> T second(final List<T> ts) {
     return ts == null || ts.size() < 2 ? null : ts.get(1);
-  }
-
-  public static <T> Iterable<T> rest2(final Iterable<T> ts) {
-    return rest(rest(ts));
-  }
-
-  public static <T> Iterable<T> rest(final Iterable<T> ts) {
-    return () -> {
-      return new Iterator<T>() {
-        final Iterator<T> $ = ts.iterator();
-        {
-          $.next();
-        }
-
-        @Override public boolean hasNext() {
-          return $.hasNext();
-        }
-
-        @Override public T next() {
-          return $.next();
-        }
-      };
-    };
   }
 
   /** Shorthand for {@link ConditionalExpression#getThenExpression()}
@@ -656,11 +676,27 @@ public enum Funcs {
   }
 
   private static Expression peelNegation(final PrefixExpression $) {
-    return $.getOperator() != PrefixExpression.Operator.MINUS ? $ : peelNegation($.getOperand());
+    final org.eclipse.jdt.core.dom.PrefixExpression.Operator o = $.getOperator();
+    return o != MINUS1 && o != PLUS1 ? $ : peelNegation($.getOperand());
   }
 
-  static final PrefixExpression.Operator MINUS1 = PrefixExpression.Operator.MINUS;
-  static final PrefixExpression.Operator PLUS1 = PrefixExpression.Operator.PLUS;
-  static final InfixExpression.Operator MINUS2 = InfixExpression.Operator.MINUS;
-  static final InfixExpression.Operator PLUS2 = InfixExpression.Operator.PLUS;
+  /** Remove all non-essential spaces from a string that represents Java code.
+   * @param javaCodeFragment JD
+   * @return parameter, with all redundant spaces removes from it */
+  public static String gist(final String javaCodeFragment) {
+    String $ = javaCodeFragment//
+        .replaceAll("(?m)\\s+", " ") // Squeeze whites
+        .replaceAll("^\\s", "") // Opening whites
+        .replaceAll("\\s$", "") // Closing whites
+    ;
+    for (final String operator : new String[] { ":", "/", "%", ",", "\\{", "\\}", "=", ":", "\\?", ";", "\\+", ">", ">=", "!=", "==", "<", "<=", "-",
+        "\\*", "\\|", "\\&", "%", "\\(", "\\)", "[\\^]" })
+      $ = $ //
+          .replaceAll(Funcs.WHITES + operator, operator) // Preceding whites
+          .replaceAll(operator + Funcs.WHITES, operator) // Trailing whites
+      ;
+    return $;
+  }
+
+  public static final String WHITES = "(?m)\\s+";
 }
