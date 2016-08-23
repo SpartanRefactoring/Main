@@ -63,6 +63,7 @@ public class Toolbox {
             null) //
         .add(InfixExpression.class, //
             new InfixSubtractionZero(), //
+            new InfixAdditionSubtractionExpand(), //
             new InfixDivisionMultiplicationNegatives(), //
             new InfixAdditionZero(), // must be before InfixAdditionSort
             new InfixAdditionSort(), //

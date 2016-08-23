@@ -1,15 +1,16 @@
 package il.org.spartan.refactoring.utils;
 
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.refactoring.utils.extract.*;
-import static il.org.spartan.utils.Utils.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.utils.*;
+import il.org.spartan.*;
+import il.org.spartan.utils.Utils;
 
 /** A utility class for finding occurrences of an {@link Expression} in an
  * {@link ASTNode}.
@@ -20,27 +21,27 @@ public enum Collect {
   /** collects semantic (multiple uses for loops) uses of an variable */
   USES_SEMANTIC {
     @Override ASTVisitor[] collectors(final SimpleName n, final List<SimpleName> into) {
-      return asArray(new UsesCollector(into, n));
+      return as.array(new UsesCollector(into, n));
     }
   },
   /** collects assignments of an variable */
   DEFINITIONS {
     @Override ASTVisitor[] collectors(final SimpleName n, final List<SimpleName> into) {
-      return asArray(definitionsCollector(into, n));
+      return as.array(definitionsCollector(into, n));
     }
   },
   /** collects assignments AND semantic (multiple uses for loops) uses of a
    * variable */
   BOTH_SEMANTIC {
     @Override ASTVisitor[] collectors(final SimpleName n, final List<SimpleName> into) {
-      return asArray(new UsesCollector(into, n), lexicalUsesCollector(into, n), definitionsCollector(into, n));
+      return as.array(new UsesCollector(into, n), lexicalUsesCollector(into, n), definitionsCollector(into, n));
     }
   },
   /** collects assignments AND lexical (single use for loops) uses of an
    * expression */
   BOTH_LEXICAL {
     @Override ASTVisitor[] collectors(final SimpleName n, final List<SimpleName> into) {
-      return asArray(lexicalUsesCollector(into, n), definitionsCollector(into, n));
+      return as.array(lexicalUsesCollector(into, n), definitionsCollector(into, n));
     }
   };
   /** An abstract class to carry out the collection process. Should not be

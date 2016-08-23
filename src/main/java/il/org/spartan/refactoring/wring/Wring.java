@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.Plant.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
@@ -15,95 +14,7 @@ import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
-
-final class LocalInliner {
-  class LocalInlineWithValue extends Wrapper<Expression> {
-    LocalInlineWithValue(final Expression replacement) {
-      super(extract.core(replacement));
-    }
-
-    /** Computes the number of AST nodes added as a result of the replacement
-     * operation.
-     * @param es JD
-     * @return A non-negative integer, computed from the number of occurrences
-     *         of {@link #name} in the operands, and the size of the
-     *         replacement. */
-    int addedSize(final ASTNode... ns) {
-      return uses(ns).size() * (size(get()) - 1);
-    }
-
-    boolean canInlineInto(final ASTNode... ns) {
-      return Collect.definitionsOf(name).in(ns).isEmpty() && (Is.sideEffectFree(get()) || uses(ns).size() <= 1);
-    }
-
-    boolean canSafelyInlineInto(final ASTNode... ns) {
-      return canInlineInto(ns) && unsafeUses(ns).isEmpty();
-    }
-
-    @SafeVarargs protected final void inlineInto(final ASTNode... ns) {
-      inlineInto(wrap(ns));
-    }
-
-    private void inlineInto(final Wrapper<ASTNode>... ns) {
-      for (final Wrapper<ASTNode> n : ns)
-        inlineIntoSingleton(get(), n);
-    }
-
-    private void inlineIntoSingleton(final ASTNode replacement, final Wrapper<ASTNode> ns) {
-      final ASTNode oldExpression = ns.get();
-      final ASTNode newExpression = duplicate(ns.get());
-      ns.set(newExpression);
-      rewriter.replace(oldExpression, newExpression, editGroup);
-      for (final ASTNode use : Collect.usesOf(name).in(newExpression))
-        rewriter.replace(use, !(use instanceof Expression) ? replacement : plant((Expression) replacement).into(use.getParent()), editGroup);
-    }
-
-    /** Computes the total number of AST nodes in the replaced parameters
-     * @param es JD
-     * @return A non-negative integer, computed from original size of the
-     *         parameters, the number of occurrences of {@link #name} in the
-     *         operands, and the size of the replacement. */
-    int replacedSize(final ASTNode... ns) {
-      return size(ns) + uses(ns).size() * (size(get()) - 1);
-    }
-
-    private List<SimpleName> unsafeUses(final ASTNode... ns) {
-      return Collect.unsafeUsesOf(name).in(ns);
-    }
-
-    private List<SimpleName> uses(final ASTNode... ns) {
-      return Collect.usesOf(name).in(ns);
-    }
-  }
-
-  static Wrapper<ASTNode>[] wrap(final ASTNode[] ns) {
-    @SuppressWarnings("unchecked") final Wrapper<ASTNode>[] $ = new Wrapper[ns.length];
-    int i = 0;
-    for (final ASTNode t : ns)
-      $[i++] = new Wrapper<>(t);
-    return $;
-  }
-
-  final SimpleName name;
-  final ASTRewrite rewriter;
-  final TextEditGroup editGroup;
-
-  LocalInliner(final SimpleName n) {
-    this(n, null, null);
-  }
-
-  LocalInliner(final SimpleName n, final ASTRewrite rewriter, final TextEditGroup g) {
-    name = n;
-    this.rewriter = rewriter;
-    editGroup = g;
-  }
-
-  LocalInlineWithValue byValue(final Expression replacement) {
-    return new LocalInlineWithValue(replacement);
-  }
-}
 
 /** A wring is a transformation that works on an AstNode. Such a transformation
  * make a single simplification of the tree. A wring is so small that it is
@@ -113,6 +24,90 @@ final class LocalInliner {
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-07-09 */
 public abstract class Wring<N extends ASTNode> implements Kind {
+  abstract String description(N n);
+
+  /** Determine whether the parameter is "eligible" for application of this
+   * instance. The parameter must be within the scope of the current instance.
+   * @param n JD
+   * @return <code><b>true</b></code> <i>iff</i> the argument is eligible for
+   *         the simplification offered by this object. */
+  boolean eligible(@SuppressWarnings("unused") final N __) {
+    return true;
+  }
+
+  Rewrite make(final N n) {
+    return make(n, null);
+  }
+
+  Rewrite make(final N n, final ExclusionManager m) {
+    return m != null && m.isExcluded(n) ? null : make(n);
+  }
+
+  /** Determines whether this {@link Wring} object is not applicable for a given
+   * {@link PrefixExpression} is within the "scope" of this . Note that a
+   * {@link Wring} is applicable in principle to an object, but that actual
+   * application will be vacuous.
+   * @param e JD
+   * @return <code><b>true</b></code> <i>iff</i> the argument is noneligible for
+   *         the simplification offered by this object.
+   * @see #eligible(InfixExpression) */
+  final boolean nonEligible(final N n) {
+    return !eligible(n);
+  }
+
+  /** Determines whether this {@link Wring} object is applicable for a given
+   * {@link InfixExpression} is within the "scope" of this . Note that it could
+   * be the case that a {@link Wring} is applicable in principle to an object,
+   * but that actual application will be vacuous.
+   * @param n JD
+   * @return <code><b>true</b></code> <i>iff</i> the argument is within the
+   *         scope of this object */
+  boolean scopeIncludes(final N n) {
+    return make(n, null) != null;
+  }
+
+  public static abstract class RemoveModifier<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> {
+    @Override String description(@SuppressWarnings("unused") final N __) {
+      return "remove redundant modifier";
+    }
+
+    IExtendedModifier firstThat(final N n, final Predicate<Modifier> f) {
+      for (final IExtendedModifier $ : expose.modifiers(n))
+        if ($.isModifier() && f.test((Modifier) $))
+          return $;
+      return null;
+    }
+
+    boolean has(final N ¢, final Predicate<Modifier> p) {
+      return firstThat(¢, p) != null;
+    }
+
+    abstract boolean redundant(Modifier m);
+
+    @Override N replacement(final N $) {
+      return go(duplicate($));
+    }
+
+    @Override boolean scopeIncludes(final N ¢) {
+      return firstBad(¢) != null;
+    }
+
+    private IExtendedModifier firstBad(final N n) {
+      return firstThat(n, (final Modifier ¢) -> redundant(¢));
+    }
+
+    private N go(final N $) {
+      for (final Iterator<IExtendedModifier> ¢ = expose.modifiers($).iterator(); ¢.hasNext();)
+        if (redundant(¢.next()))
+          ¢.remove();
+      return $;
+    }
+
+    private boolean redundant(final IExtendedModifier m) {
+      return redundant((Modifier) m);
+    }
+  }
+
   static abstract class AbstractSorting extends ReplaceCurrentNode<InfixExpression> {
     @Override final String description(final InfixExpression e) {
       return "Reorder operands of " + e.getOperator();
@@ -175,48 +170,6 @@ public abstract class Wring<N extends ASTNode> implements Kind {
 
     @Override boolean scopeIncludes(final N n) {
       return go(ASTRewrite.create(n.getAST()), n, null, new ArrayList<>(), new ArrayList<>()) != null;
-    }
-  }
-
-  public static abstract class RemoveModifier<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> {
-    @Override String description(@SuppressWarnings("unused") final N __) {
-      return "remove redundant modifier";
-    }
-
-    private IExtendedModifier firstBad(final N n) {
-      return firstThat(n, (final Modifier ¢) -> redundant(¢));
-    }
-
-    IExtendedModifier firstThat(final N n, final Predicate<Modifier> f) {
-      for (final IExtendedModifier $ : expose.modifiers(n))
-        if ($.isModifier() && f.test((Modifier) $))
-          return $;
-      return null;
-    }
-
-    private N go(final N $) {
-      for (final Iterator<IExtendedModifier> ¢ = expose.modifiers($).iterator(); ¢.hasNext();)
-        if (redundant(¢.next()))
-          ¢.remove();
-      return $;
-    }
-
-    boolean has(final N ¢, final Predicate<Modifier> p) {
-      return firstThat(¢, p) != null;
-    }
-
-    private boolean redundant(final IExtendedModifier m) {
-      return redundant((Modifier) m);
-    }
-
-    abstract boolean redundant(Modifier m);
-
-    @Override N replacement(final N $) {
-      return go(duplicate($));
-    }
-
-    @Override boolean scopeIncludes(final N ¢) {
-      return firstBad(¢) != null;
     }
   }
 
@@ -364,14 +317,6 @@ public abstract class Wring<N extends ASTNode> implements Kind {
       return hasAnnotation(expose.modifiers(s));
     }
 
-    private static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final List<VariableDeclarationFragment> fs) {
-      final List<VariableDeclarationFragment> $ = new ArrayList<>();
-      for (final VariableDeclarationFragment brother : fs)
-        if (brother != null && brother != f && brother.getInitializer() != null)
-          $.add(duplicate(brother));
-      return $;
-    }
-
     static int removalSaving(final VariableDeclarationFragment f) {
       final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
       final int $ = size(parent);
@@ -393,6 +338,14 @@ public abstract class Wring<N extends ASTNode> implements Kind {
       r.remove(parent.fragments().size() > 1 ? f : parent, g);
     }
 
+    private static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final List<VariableDeclarationFragment> fs) {
+      final List<VariableDeclarationFragment> $ = new ArrayList<>();
+      for (final VariableDeclarationFragment brother : fs)
+        if (brother != null && brother != f && brother.getInitializer() != null)
+          $.add(duplicate(brother));
+      return $;
+    }
+
     abstract ASTRewrite go(ASTRewrite r, VariableDeclarationFragment f, SimpleName n, Expression initializer, Statement nextStatement,
         TextEditGroup g);
 
@@ -409,47 +362,5 @@ public abstract class Wring<N extends ASTNode> implements Kind {
         exclude.exclude(f.getParent());
       return $;
     }
-  }
-
-  abstract String description(N n);
-
-  /** Determine whether the parameter is "eligible" for application of this
-   * instance. The parameter must be within the scope of the current instance.
-   * @param n JD
-   * @return <code><b>true</b></code> <i>iff</i> the argument is eligible for
-   *         the simplification offered by this object. */
-  boolean eligible(@SuppressWarnings("unused") final N __) {
-    return true;
-  }
-
-  Rewrite make(final N n) {
-    return make(n, null);
-  }
-
-  Rewrite make(final N n, final ExclusionManager m) {
-    return m != null && m.isExcluded(n) ? null : make(n);
-  }
-
-  /** Determines whether this {@link Wring} object is not applicable for a given
-   * {@link PrefixExpression} is within the "scope" of this . Note that a
-   * {@link Wring} is applicable in principle to an object, but that actual
-   * application will be vacuous.
-   * @param e JD
-   * @return <code><b>true</b></code> <i>iff</i> the argument is noneligible for
-   *         the simplification offered by this object.
-   * @see #eligible(InfixExpression) */
-  final boolean nonEligible(final N n) {
-    return !eligible(n);
-  }
-
-  /** Determines whether this {@link Wring} object is applicable for a given
-   * {@link InfixExpression} is within the "scope" of this . Note that it could
-   * be the case that a {@link Wring} is applicable in principle to an object,
-   * but that actual application will be vacuous.
-   * @param n JD
-   * @return <code><b>true</b></code> <i>iff</i> the argument is within the
-   *         scope of this object */
-  boolean scopeIncludes(final N n) {
-    return make(n, null) != null;
   }
 }

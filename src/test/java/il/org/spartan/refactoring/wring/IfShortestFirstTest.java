@@ -15,7 +15,6 @@ import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
-import il.org.spartan.utils.Utils;
 
 /** Unit tests for {@link Wrings#ADDITION_SORTER}.
  * @author Yossi Gil
@@ -24,7 +23,7 @@ import il.org.spartan.utils.Utils;
 @SuppressWarnings({ "static-method", "javadoc" }) public class IfShortestFirstTest {
   @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope<IfStatement> {
-    static String[][] cases = Utils.asArray(//
+    static String[][] cases = as.array(//
         new String[] { "Return only on one side", "if (a) return b; else c;" }, //
         new String[] { "Simple if return", "if (a) return b; else return c;" }, //
         new String[] { "Simply nested if return", "{if (a)  return b; else return c;}" }, //
@@ -52,7 +51,7 @@ import il.org.spartan.utils.Utils;
   @RunWith(Parameterized.class) //
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
   public static class Wringed extends AbstractWringTest.WringedIfStatement {
-    private static String[][] cases = Utils.asArray(//
+    private static String[][] cases = as.array(//
         new String[] { "Vanilla", "if (a) a(x,y,z,w); else b();", "if (!a) b(); else a(x,y,z,w);" }, //
         new String[] { //
             "Two statemens are greater than one", //

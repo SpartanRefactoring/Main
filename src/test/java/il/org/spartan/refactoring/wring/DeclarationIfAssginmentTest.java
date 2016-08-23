@@ -3,7 +3,6 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.utils.Utils.*;
 
 import java.util.*;
 
@@ -22,7 +21,6 @@ import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.utils.Collect.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
 import il.org.spartan.refactoring.wring.Wring.*;
-import il.org.spartan.utils.Utils;
 
 /** @author Yossi Gil
  * @since 2014-07-13 */
@@ -31,7 +29,7 @@ import il.org.spartan.utils.Utils;
 public class DeclarationIfAssginmentTest {
   @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Declaration {
-    static String[][] cases = Utils.asArray(//
+    static String[][] cases = as.array(//
         new String[] { "Vanilla", "int a; a =3;", }, //
         new String[] { "Not empty else", "int a; if (x) a = 3; else a++;", }, //
         new String[] { "Not plain assignment", "int a = 2; if (b) a +=a+2;", }, //
@@ -76,8 +74,8 @@ public class DeclarationIfAssginmentTest {
         return;
       if (from.equals(peeled))
         azzert.fail("Nothing done on " + from);
-      if (gist(peeled).equals(gist(from)))
-        azzert.that("Wringing of " + from + " amounts to mere reformatting", gist(from), is(not(gist(peeled))));
+      if (Funcs.gist(peeled).equals(Funcs.gist(from)))
+        azzert.that("Wringing of " + from + " amounts to mere reformatting", Funcs.gist(from), is(not(Funcs.gist(peeled))));
       assertSimilar(expected, peeled);
       assertSimilar(Wrap.Statement.on(expected), d);
     }
@@ -96,7 +94,7 @@ public class DeclarationIfAssginmentTest {
       if (expected.equals(peeled))
         return;
       azzert.that("Nothing done on " + from, peeled, not(from));
-      azzert.that("Wringing of " + from + " amounts to mere reformatting", gist(from), is(not(gist(peeled))));
+      azzert.that("Wringing of " + from + " amounts to mere reformatting", Funcs.gist(from), is(not(Funcs.gist(peeled))));
       assertSimilar(expected, peeled);
       assertSimilar(Wrap.Statement.on(expected), actual);
     }

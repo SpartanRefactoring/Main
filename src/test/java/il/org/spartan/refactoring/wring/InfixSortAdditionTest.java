@@ -15,7 +15,6 @@ import org.junit.runners.Parameterized.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
-import il.org.spartan.utils.Utils;
 
 /** Unit tests for {@link Wrings#ADDITION_SORTER}.
  * @author Yossi Gil
@@ -25,7 +24,7 @@ import il.org.spartan.utils.Utils;
 public class InfixSortAdditionTest {
   @RunWith(Parameterized.class) //
   public static class Noneligible extends AbstractWringTest.Noneligible.Infix {
-    static String[][] cases = Utils.asArray(//
+    static String[][] cases = as.array(//
         new String[] { "Add 1", "2*a+1" }, //
         new String[] { "Add '1'", "2*a+'1'" }, //
         new String[] { "Add '\\0'", "3*a+'\\0'" }, //
@@ -82,7 +81,7 @@ public class InfixSortAdditionTest {
   @RunWith(Parameterized.class) //
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
   public static class Wringed extends AbstractWringTest.WringedExpression.Infix {
-    private static String[][] cases = Utils.asArray(//
+    private static String[][] cases = as.array(//
         new String[] { "Add 1 to 2*3", "1+2*3", "2*3+1" }, //
         new String[] { "Add '1' to a*b", "'1'+a*b", "a*b+'1'" }, //
         new String[] { "Add '\\0' to a*.b", "'\0'+a*b", "a*b+'\0'" }, //
