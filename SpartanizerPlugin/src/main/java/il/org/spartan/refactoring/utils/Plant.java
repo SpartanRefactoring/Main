@@ -46,4 +46,8 @@ public class Plant {
     $.setExpression(duplicate(e));
     return $;
   }
+
+  public Expression intoLeft(final InfixExpression host) {
+    return Precedence.greater(host, inner) || Precedence.equal(host, inner) || isSimple(inner) ? inner : parenthesize(inner);
+  }
 }

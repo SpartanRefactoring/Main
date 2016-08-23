@@ -14,7 +14,6 @@ import org.junit.runners.Parameterized.*;
 
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.utils.Utils;
 
 /** Unit tests for {@link Wrings#MULTIPLCATION_SORTER}.
  * @author Yossi Gil
@@ -25,7 +24,7 @@ public enum InfixConditionalAndTrueTest {
   ;
   @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Exprezzion.Infix {
-    static String[][] cases = Utils.asArray(//
+    static String[][] cases = as.array(//
         new String[] { "F || F", "false ||false" }, //
         new String[] { "3 OR TRUE", "true || true || true" }, //
         new String[] { "4 OR TRUE", "true || true || true || true" }, //
@@ -87,7 +86,7 @@ public enum InfixConditionalAndTrueTest {
   @RunWith(Parameterized.class) //
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
   public static class Wringed extends AbstractWringTest.WringedExpression.Infix {
-    static String[][] cases = Utils.asArray(//
+    static String[][] cases = as.array(//
         new String[] { "Many parenthesis", "a && (((true)))  && b", "a && b" }, //
         new String[] { "true && true", "true && true", "true" }, //
         new String[] { "AND of 3 with true", "true && x && true && a && b", "x && a && b" }, //

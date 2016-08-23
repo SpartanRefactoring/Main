@@ -1,5 +1,7 @@
 package il.org.spartan.refactoring.builder;
 
+import static il.org.spartan.Utils.*;
+
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 
@@ -46,7 +48,7 @@ public class Nature implements IProjectNature {
   private void set(final IProjectDescription d, final ICommand[] cs) throws CoreException {
     final ICommand c = d.newCommand();
     c.setBuilderName(Builder.BUILDER_ID);
-    d.setBuildSpec(Utils.append(cs, c));
+    d.setBuildSpec(append(cs, c));
     project.setDescription(d, null);
   }
 

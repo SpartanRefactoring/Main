@@ -3,7 +3,6 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.utils.Utils.*;
 import static org.hamcrest.text.IsEqualIgnoringWhiteSpace.*;
 
 import java.util.*;
@@ -21,7 +20,6 @@ import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
-import il.org.spartan.utils.Utils;
 
 /** Unit tests for {@link Wrings#ADDITION_SORTER}.
  * @author Yossi Gil
@@ -31,7 +29,7 @@ import il.org.spartan.utils.Utils;
 public class IfCommandsSequencerElseSomethingTest {
   @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope<IfStatement> {
-    static String[][] cases = Utils.asArray(//
+    static String[][] cases = as.array(//
         new String[] { "Literal vs. Literal", "if (a) return b; else c;" }, //
         new String[] { "Simple if return", "if (a) return b; else return c;" }, //
         new String[] { "Simply nested if return", "{if (a)  return b; else return c;}" }, //
@@ -60,7 +58,7 @@ public class IfCommandsSequencerElseSomethingTest {
   @RunWith(Parameterized.class) //
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
   public static class Wringed extends AbstractWringTest.Wringed.IfStatementAndSurrounding {
-    private static String[][] cases = Utils.asArray(//
+    private static String[][] cases = as.array(//
         new String[] { "Vanilla: sequencer in then", "if (a) return b; else a();", "if(a)return b;a();" }, //
         new String[] { "Vanilla: sequencer in else", "if (a) return b; else a();", "if(a)return b;a();" }, //
         new String[] { "Plant two statements", "if (a) return b; else a(); f();", "if(a)return b;a(); f();" }, //
@@ -152,8 +150,8 @@ public class IfCommandsSequencerElseSomethingTest {
       fail("Nothing done on " + s);
     final String peeled = Wrap.Statement.off(unpeeled);
     azzert.that("No similification of " + s, s, not(peeled));
-    final String compressSpaces = gist(peeled);
-    final String compressSpaces2 = gist(s.toString());
+    final String compressSpaces = Funcs.gist(peeled);
+    final String compressSpaces2 = Funcs.gist(s.toString());
     azzert.that("Simpification of " + s + " is just reformatting", compressSpaces, not(compressSpaces2));
     assertSimilar(" if(a)return b;a(); ", peeled);
   }
@@ -187,8 +185,8 @@ public class IfCommandsSequencerElseSomethingTest {
     final String peeled = Wrap.Statement.off(unpeeled);
     if (peeled.equals(s))
       azzert.that("No similification of " + s, peeled, is(not(s.toString())));
-    if (gist(peeled).equals(gist(s.toString())))
-      azzert.that("Simpification of " + s + " is just reformatting", gist(s.toString()), is(not(gist(peeled))));
+    if (Funcs.gist(peeled).equals(Funcs.gist(s.toString())))
+      azzert.that("Simpification of " + s + " is just reformatting", Funcs.gist(s.toString()), is(not(Funcs.gist(peeled))));
     assertSimilar(" if (a) return b; a(); ", peeled);
   }
 

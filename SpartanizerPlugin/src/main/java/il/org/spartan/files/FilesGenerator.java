@@ -1,9 +1,9 @@
 package il.org.spartan.files;
 
-import static il.org.spartan.utils.Utils.*;
-
 import java.io.*;
 import java.util.*;
+
+import il.org.spartan.*;
 
 /** Provides, employing fluent API, a {@link Iterable} interface for iteration
  * over files in the file system.
@@ -24,26 +24,6 @@ import java.util.*;
  * @author Yossi Gil
  * @since 2015-09-23. */
 public class FilesGenerator {
-  public static class as {
-    @SafeVarargs public static <T> Iterable<T> iterable(final T... ts) {
-      return ts == null ? null : () -> new Iterator<T>() {
-        private int next = 0;
-
-        @Override public boolean hasNext() {
-          return next < ts.length;
-        }
-
-        @Override public T next() {
-          return ts[next++];
-        }
-
-        @Override public void remove() {
-          throw new UnsupportedOperationException("Cannot remove an element of an array.");
-        }
-      };
-    }
-  }
-
   /** An internal (yet <code><b>public</b></code>) <code><b>class</b></code>
    * which <code><b>implements</b></code> the {@link Iterable}
    * <code><b>interface</b></code>.
@@ -116,7 +96,7 @@ public class FilesGenerator {
   static Iterator<File> directoryIterator(final File directory) {
     if (directory == null || !directory.isDirectory() || directory.list() == null)
       return null;
-    final Iterator<String> generator = asList(directory.list()).iterator();
+    final Iterator<String> generator = as.list(directory.list()).iterator();
     return new Iterator<File>() {
       private File next;
 
@@ -161,7 +141,7 @@ public class FilesGenerator {
    *        in the scanned locations.
    * @see FilesGenerator#from */
   public FilesGenerator(final String... extensions) {
-    this.extensions = asList(extensions);
+    this.extensions = as.list(extensions);
   }
 
   /** @param from an array of names of directories from which the traversal

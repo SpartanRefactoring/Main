@@ -14,7 +14,6 @@ import org.junit.runners.Parameterized.*;
 
 import il.org.spartan.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
-import il.org.spartan.utils.Utils;
 
 /** Unit tests for {@link Wrings#ADDITION_SORTER}.
  * @author Yossi Gil
@@ -24,7 +23,7 @@ import il.org.spartan.utils.Utils;
 public class TernaryCollapseTest {
   @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Exprezzion<ConditionalExpression> {
-    static String[][] cases = Utils.asArray(
+    static String[][] cases = as.array(
         //
         new String[] { "No boolean", "a?b:c" }, //
         new String[] { "F X", "a ? false : c" }, //
@@ -87,7 +86,7 @@ public class TernaryCollapseTest {
   @RunWith(Parameterized.class) //
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
   public static class Wringed extends AbstractWringTest.WringedExpression.Conditional {
-    private static String[][] cases = Utils.asArray(//
+    private static String[][] cases = as.array(//
         new String[] { "Vanilla", "a ? b ? x : z :z", "a && b ? x : z" }, //
         new String[] { "Vanilla too", "a ? b ? z : x :z", "a && !b ? x : z" }, //
         new String[] { "Vanilla 3", "a ? z : b ? x :z", "!a && b ? x : z" }, //
