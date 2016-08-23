@@ -49,7 +49,7 @@ public class TrimmerTestsUtils {
         final Wrap w = Wrap.find(get());
         final String wrap = w.on(get());
         final String unpeeled = TrimmerTestsUtils.apply(new Trimmer(), wrap);
-        System.out.println(unpeeled);
+        //System.out.println(unpeeled);
         if (wrap.equals(unpeeled))
           azzert.fail("Nothing done on " + get());
         final String peeled = w.off(unpeeled);
