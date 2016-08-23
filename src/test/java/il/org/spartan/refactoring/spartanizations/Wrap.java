@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.spartanizations;
 
-import static il.org.spartan.utils.Utils.*;
+import static il.org.spartan.Utils.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
@@ -32,8 +32,8 @@ public enum Wrap {
   /** Algorithm for wrapping/unwrapping an expression */
   Expression(//
       Statement.before //
-          + "   if (", //
-      ") f();\n" //
+          + "   while (", //
+      ");\n" //
           + Statement.after //
   ), //
   //

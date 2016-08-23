@@ -1,10 +1,10 @@
 package il.org.spartan.refactoring.utils;
+import static il.org.spartan.refactoring.utils.Funcs.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.utils.*;
 
 public interface spartan {
   static String repeat(final int i, final char c) {
@@ -20,7 +20,7 @@ public interface spartan {
   }
 
   static String shorten(final List<? extends Type> ts) {
-    return shorten(Utils.onlyOne(ts));
+    return shorten(onlyOne(ts));
   }
 
   static String shorten(final Name n) {

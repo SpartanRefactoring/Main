@@ -5,8 +5,6 @@ import static il.org.spartan.Utils.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 
-import il.org.spartan.utils.*;
-
 /** @author Artium Nihamkin
  * @since 2013/07/01 */
 public class Nature implements IProjectNature {
@@ -35,7 +33,7 @@ public class Nature implements IProjectNature {
     final ICommand[] cs = description.getBuildSpec();
     for (int i = 0; i < cs.length; ++i)
       if (cs[i].getBuilderName().equals(Builder.BUILDER_ID)) {
-        description.setBuildSpec(Utils.delete(cs, i));
+        description.setBuildSpec(delete(cs, i));
         project.setDescription(description, null);
         return;
       }
