@@ -15,6 +15,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 
 import il.org.spartan.refactoring.wring.*;
+import il.org.spartan.utils.*;
 
 /** Useful Functions */
 public enum Funcs {
@@ -30,7 +31,7 @@ public enum Funcs {
   static final PrefixExpression.Operator MINUS1 = PrefixExpression.Operator.MINUS;
   static final PrefixExpression.Operator PLUS1 = PrefixExpression.Operator.PLUS;
   static final InfixExpression.Operator MINUS2 = InfixExpression.Operator.MINUS;
-  static final InfixExpression.Operator PLUS2 = InfixExpression.Operator.PLUS;
+  public static final InfixExpression.Operator PLUS2 = InfixExpression.Operator.PLUS;
 
   public static AbstractTypeDeclaration asAbstractTypeDeclaration(final ASTNode ¢) {
     return eval(() -> ((AbstractTypeDeclaration) ¢)).when(¢ instanceof AbstractTypeDeclaration);
@@ -219,7 +220,7 @@ public enum Funcs {
    * @param ¢ JD
    * @return textual representation of the parameter, */
   public static String asString(final ASTNode ¢) {
-    return removeWhites(¢.toString());
+    return removeWhites(body(¢));
   }
 
   public static StringLiteral asStringLiteral(final ASTNode ¢) {
@@ -573,7 +574,11 @@ public enum Funcs {
    * @param n2 JD
    * @return <code><b>true</b></code> if the parameters are the same. */
   public static boolean same(final ASTNode n1, final ASTNode n2) {
-    return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType() && n1.toString().equals(n2.toString());
+    return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType() && body(n1).equals(body(n2));
+  }
+
+  private static String body(final ASTNode ¢) {
+    return Utils.gist(¢.toString());
   }
 
   /** String wise comparison of all the given SimpleNames
