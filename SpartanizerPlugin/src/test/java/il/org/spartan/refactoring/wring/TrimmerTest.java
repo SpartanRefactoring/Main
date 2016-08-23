@@ -966,7 +966,7 @@ import il.org.spartan.refactoring.utils.*;
     trimming("" //
         + "public static void f() {\n" //
         + "  int i = 0;\n" //
-        + "  if (true) {\n" //
+        + "  if (f()) {\n" //
         + "    i += 1;\n" //
         + "    System.out.println('!');\n" //
         + "    System.out.println('!');\n" //
@@ -981,7 +981,7 @@ import il.org.spartan.refactoring.utils.*;
             .to("" //
                 + "public static void f() {\n" //
                 + "  int i = 0;\n" //
-                + "  if (true) {\n" //
+                + "  if (f()) {\n" //
                 + "    i += 1;\n" //
                 + "    System.out.println('!');\n" //
                 + "    System.out.println('!');\n" //
@@ -997,7 +997,7 @@ import il.org.spartan.refactoring.utils.*;
   @Test public void IfBarFooElseBazFooExtractUndefinedSuffix() {
     trimming("" //
         + "public final static final void f() {\n" //
-        + "  if (true) {\n" //
+        + "  if (tr()) {\n" //
         + "    int i = 0;\n" //
         + "    System.out.println(i + 0);\n" //
         + "    ++i;\n" //
@@ -2164,7 +2164,10 @@ import il.org.spartan.refactoring.utils.*;
     trimming("null").to(null);
     trimming("on*of*no*notion*notion").to("no*of*on*notion*notion");
   }
-
+  @Test public void noChangeA() {
+    trimming("true").to(null);
+  }
+  
   @Test public void noChange0() {
     trimming("kludge + the * plain ").to(null);
   }

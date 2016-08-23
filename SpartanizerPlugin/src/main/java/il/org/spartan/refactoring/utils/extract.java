@@ -11,7 +11,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
-import il.org.spartan.utils.Utils;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -389,7 +388,7 @@ public enum extract {
   }
 
   public static Expression onlyExpression(final List<Expression> $) {
-    return core(Utils.onlyOne($));
+    return core(onlyOne($));
   }
 
   public static Expression operand(final PostfixExpression ¢) {
@@ -447,7 +446,7 @@ public enum extract {
    * @return if b is a block with just 1 statement it returns that statement, if
    *         b is statement it returns b and if b is null it returns a null */
   public static Statement singleStatement(final ASTNode n) {
-    return Utils.onlyOne(extract.statements(n));
+    return onlyOne(extract.statements(n));
   }
 
   /** Finds the single statement in the "then" branch of an {@link IfStatement}
