@@ -14,7 +14,6 @@ import org.junit.runners.Parameterized.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
-import il.org.spartan.utils.Utils;
 
 /** Unit tests for {@link Wrings#ADDITION_SORTER}.
  * @author Yossi Gil
@@ -24,7 +23,7 @@ import il.org.spartan.utils.Utils;
 public class DeclarationReturnTest {
   @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope<VariableDeclarationFragment> {
-    static String[][] cases = Utils.asArray(//
+    static String[][] cases = as.array(//
         new String[] { "Simple if return TWO STATEMENTS", "if (a) return b; else a(); f();" }, //
         new String[] { "Vanilla", "int a; a =3;", }, //
         new String[] { "Vanilla", "int a; if (x) b = 3; else ;", }, //
@@ -49,7 +48,7 @@ public class DeclarationReturnTest {
   @RunWith(Parameterized.class) //
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
   public static class Wringed extends AbstractWringTest.Wringed.WringedVariableDeclarationFragmentAndSurrounding {
-    private static String[][] cases = Utils.asArray(
+    private static String[][] cases = as.array(
         //
         new String[] { "Vanilla A", "int a = 3; return a;", "return 3;" }, //
         new String[] { "Vanilla A,B", "int a = 3, b; return a;", "return 3;" }, //

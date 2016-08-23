@@ -1,8 +1,11 @@
 package il.org.spartan.refactoring.utils;
 
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.idiomatic.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.utils.Utils.*;
+import static il.org.spartan.utils.Utils.last;
+import static il.org.spartan.utils.Utils.removeWhites;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
@@ -15,7 +18,6 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 
 import il.org.spartan.refactoring.wring.*;
-import il.org.spartan.utils.*;
 
 /** Useful Functions */
 public enum Funcs {
@@ -578,7 +580,7 @@ public enum Funcs {
   }
 
   private static String body(final ASTNode ¢) {
-    return Utils.gist(¢.toString());
+    return Funcs.gist(¢.toString());
   }
 
   /** String wise comparison of all the given SimpleNames
@@ -680,4 +682,24 @@ public enum Funcs {
     final org.eclipse.jdt.core.dom.PrefixExpression.Operator o = $.getOperator();
     return o != MINUS1 && o != PLUS1 ? $ : peelNegation($.getOperand());
   }
+
+  /** Remove all non-essential spaces from a string that represents Java code.
+   * @param javaCodeFragment JD
+   * @return parameter, with all redundant spaces removes from it */
+  public static String gist(final String javaCodeFragment) {
+    String $ = javaCodeFragment//
+        .replaceAll("(?m)\\s+", " ") // Squeeze whites
+        .replaceAll("^\\s", "") // Opening whites
+        .replaceAll("\\s$", "") // Closing whites
+    ;
+    for (final String operator : new String[] { ":", "/", "%", ",", "\\{", "\\}", "=", ":", "\\?", ";", "\\+", ">", ">=", "!=", "==", "<", "<=", "-",
+        "\\*", "\\|", "\\&", "%", "\\(", "\\)", "[\\^]" })
+      $ = $ //
+          .replaceAll(Funcs.WHITES + operator, operator) // Preceding whites
+          .replaceAll(operator + Funcs.WHITES, operator) // Trailing whites
+      ;
+    return $;
+  }
+
+  public static final String WHITES = "(?m)\\s+";
 }

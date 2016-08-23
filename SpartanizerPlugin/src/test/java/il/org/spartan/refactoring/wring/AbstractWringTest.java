@@ -5,7 +5,6 @@ import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
-import static il.org.spartan.utils.Utils.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -108,8 +107,8 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
         if (output.equals(peeled))
           return;
         azzert.that("Nothing done on " + input, peeled, not(input));
-        if (gist(peeled).equals(gist(input)))
-          azzert.that("Wringing of " + input + " amounts to mere reformatting", gist(peeled), not(gist(input)));
+        if (Funcs.gist(peeled).equals(Funcs.gist(input)))
+          azzert.that("Wringing of " + input + " amounts to mere reformatting", Funcs.gist(peeled), not(Funcs.gist(input)));
         assertSimilar(output, peeled);
         assertSimilar(Wrap.Expression.on(output), excpected);
       }
@@ -230,7 +229,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
         return;
       final Document d = asDocument();
       wringer.createRewrite(asCompilationUnit(), null).rewriteAST(d, null).apply(d);
-      assertSimilar(gist(Wrap.Expression.off(d.get())), gist(input));
+      assertSimilar(Funcs.gist(Wrap.Expression.off(d.get())), Funcs.gist(input));
       assertSimilar(Wrap.Expression.on(input), d.get());
     }
   }
@@ -361,7 +360,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
         if (expected.equals(peeled))
           return;
         azzert.that("Nothing done on " + input, peeled, not(input));
-        azzert.that("Wringing of " + input + " amounts to mere reformatting", gist(input), is(not(gist(peeled))));
+        azzert.that("Wringing of " + input + " amounts to mere reformatting", Funcs.gist(input), is(not(Funcs.gist(peeled))));
         assertSimilar(expected, peeled);
         assertSimilar(Wrap.Statement.on(expected), excpected);
       }
@@ -514,7 +513,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       if (expected.equals(peeled))
         return;
       azzert.that("Nothing done on " + input, peeled, is(not(input)));
-      azzert.that("Wringing of " + input + " amounts to mere reformatting", gist(peeled), is(not(gist(input))));
+      azzert.that("Wringing of " + input + " amounts to mere reformatting", Funcs.gist(peeled), is(not(Funcs.gist(input))));
       assertSimilar(expected, peeled);
       assertSimilar(Wrap.Statement.on(expected), output);
     }
@@ -675,7 +674,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       if (expected.equals(peeled))
         return;
       azzert.that("Nothing done on " + input, peeled, not(input));
-      azzert.that("Wringing of " + input + " amounts to mere reformatting", gist(peeled), not(gist(input)));
+      azzert.that("Wringing of " + input + " amounts to mere reformatting", Funcs.gist(peeled), not(Funcs.gist(input)));
       assertSimilar(expected, peeled);
       assertSimilar(Wrap.Expression.on(expected), actual);
     }
@@ -704,7 +703,7 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
       if (expected.equals(peeled))
         return;
       azzert.that("Nothing done on " + input, peeled, not(input));
-      azzert.that("Wringing of " + input + " amounts to mere reformatting", gist(peeled), not(gist(input)));
+      azzert.that("Wringing of " + input + " amounts to mere reformatting", Funcs.gist(peeled), not(Funcs.gist(input)));
       assertSimilar(expected, peeled);
       assertSimilar(Wrap.Expression.on(expected), actual);
     }
@@ -806,8 +805,8 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
         return;
       if (input.equals(peeled))
         azzert.fail("Nothing done on " + input);
-      if (gist(peeled).equals(gist(input)))
-        assertNotEquals("Wringing of " + input + " amounts to mere reformatting", gist(peeled), gist(input));
+      if (Funcs.gist(peeled).equals(Funcs.gist(input)))
+        assertNotEquals("Wringing of " + input + " amounts to mere reformatting", Funcs.gist(peeled), Funcs.gist(input));
       assertSimilar(expected, peeled);
       assertSimilar(Wrap.Statement.on(expected), excpected);
     }
@@ -953,8 +952,8 @@ public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
         return;
       if (input.equals(peeled))
         azzert.fail("Nothing done on " + input);
-      if (gist(peeled).equals(gist(input)))
-        assertNotEquals("Wringing of " + input + " amounts to mere reformatting", gist(peeled), gist(input));
+      if (Funcs.gist(peeled).equals(Funcs.gist(input)))
+        assertNotEquals("Wringing of " + input + " amounts to mere reformatting", Funcs.gist(peeled), Funcs.gist(input));
       assertSimilar(expected, peeled);
       assertSimilar(Wrap.Statement.on(expected), actual);
     }
