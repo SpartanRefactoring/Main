@@ -62,6 +62,7 @@ public class Toolbox {
             new PostfixToPrefix(), //
             null) //
         .add(InfixExpression.class, //
+            new InfixMultiplicationDistributive(), //
             new InfixSubtractionZero(), //
             new InfixAdditionSubtractionExpand(), //
             new InfixDivisionMultiplicationNegatives(), //
