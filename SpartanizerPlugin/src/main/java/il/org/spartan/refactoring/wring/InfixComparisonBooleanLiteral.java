@@ -10,8 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/**  eliminates redundant comparison with the two boolean
- * literals:
+/** eliminates redundant comparison with the two boolean literals:
  *
  * <pre>
  * <b>true</b>
