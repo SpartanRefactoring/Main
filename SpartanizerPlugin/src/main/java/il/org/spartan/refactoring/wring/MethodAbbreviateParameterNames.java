@@ -11,9 +11,9 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} that abbreviates the names of variables that have a generic
- * variation. The abbreviated name is the first character in the last word of
- * the variable's name.
+/** abbreviates the names of variables that have a generic variation. The
+ * abbreviated name is the first character in the last word of the variable's
+ * name.
  * @author Daniel Mittelman <tt><mittelmania [at] gmail.com></tt>
  * @since 2015/08/24 */
 /* TODO This is a previous version of the MethodParameterAbbreviate wring that

@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.spartanizations;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.utils.Utils.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
@@ -35,7 +34,7 @@ import il.org.spartan.refactoring.wring.*;
   }
 
   static void assertNotEvenSimilar(final String expected, final String actual) {
-    azzert.that(gist(actual), is(gist(expected)));
+    azzert.that(Funcs.gist(actual), is(Funcs.gist(expected)));
   }
 
   static void assertOneOpportunity(final Spartanization s, final String from) {

@@ -41,7 +41,7 @@ public enum Wrap {
   public static final Wrap[] WRAPS = new Wrap[] { Statement, Expression, Method, OUTER };
 
   public static String essence(final String codeFragment) {
-    return gist(removeComments(codeFragment));
+    return Funcs.gist(removeComments(codeFragment));
   }
 
   /** Finds the most appropriate Wrap for a given code fragment

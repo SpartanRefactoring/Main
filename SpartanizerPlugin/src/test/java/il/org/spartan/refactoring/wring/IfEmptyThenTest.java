@@ -4,10 +4,12 @@ import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
+import org.junit.runners.*;
 
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public class IfEmptyThenTest {
   private static final IfEmptyThen WRING = new IfEmptyThen();
