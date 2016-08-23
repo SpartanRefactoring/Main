@@ -1,8 +1,8 @@
 package il.org.spartan.refactoring.utils;
 
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.expose.*;
-import static il.org.spartan.utils.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
@@ -90,7 +90,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
   }
 
   private static boolean isLonger(final Expression e1, final Expression e2) {
-    return !hasNulls(e1, e2) && (//
+    return !hasNull(e1, e2) && (//
     nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD || //
         nodesCount(e1) >= nodesCount(e2) && moreArguments(e1, e2)//
     );

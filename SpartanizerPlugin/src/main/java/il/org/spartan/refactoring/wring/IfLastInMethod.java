@@ -1,8 +1,8 @@
 package il.org.spartan.refactoring.wring;
 
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.expose.*;
-import static il.org.spartan.utils.Utils.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
