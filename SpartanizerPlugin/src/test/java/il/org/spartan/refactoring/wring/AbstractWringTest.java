@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 import org.junit.*;
+import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
 
 import il.org.spartan.*;
@@ -21,6 +22,7 @@ import il.org.spartan.refactoring.wring.AbstractWringTest.WringedExpression.*;
 
 /** @author Yossi Gil
  * @since 2015-07-18 */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "unchecked" }) //
 public class AbstractWringTest<N extends ASTNode> extends AbstractTestBase {
   /** @author Yossi Gil
