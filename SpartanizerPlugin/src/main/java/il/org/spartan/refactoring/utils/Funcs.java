@@ -245,6 +245,13 @@ public enum Funcs {
     return ¢.getNodeType() != VARIABLE_DECLARATION_EXPRESSION ? null : (VariableDeclarationExpression) ¢;
   }
 
+  public static <T> List<T> chop(List<T> ts) {
+    if (ts.isEmpty())
+      return null;
+    ts.remove(0);
+    return ts;
+  }
+
   /** @param root the node whose children we return
    * @return A list containing all the nodes in the given root'¢ sub tree */
   public static List<ASTNode> collectDescendants(final ASTNode root) {
