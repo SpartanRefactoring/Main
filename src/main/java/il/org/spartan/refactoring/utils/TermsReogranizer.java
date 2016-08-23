@@ -12,7 +12,7 @@ public class TermsReogranizer {
   }
 
   private static Expression build(final TermsCollector c) {
-    return build(c.plus, c.minus);
+    return build(c.plus(), c.minus());
   }
 
   private static Expression build(final List<Expression> plus, final List<Expression> minus) {

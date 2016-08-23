@@ -6,9 +6,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/**  reorder comparisons so that the specific value is
- * placed on the right. Specific value means a literal, or any of the two
- * keywords
+/** reorder comparisons so that the specific value is placed on the right.
+ * Specific value means a literal, or any of the two keywords
  *
  * <pre>
  * <b>this</b>

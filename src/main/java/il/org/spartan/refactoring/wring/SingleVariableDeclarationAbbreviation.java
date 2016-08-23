@@ -12,10 +12,10 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/**  abbreviates the name of a method parameter that is a
- * viable candidate for abbreviation (meaning that its name is suitable for
- * renaming, and isn't the desired name). The abbreviated name is the first
- * character in the last word of the variable's name.
+/** abbreviates the name of a method parameter that is a viable candidate for
+ * abbreviation (meaning that its name is suitable for renaming, and isn't the
+ * desired name). The abbreviated name is the first character in the last word
+ * of the variable's name.
  * <p>
  * This wring is applied to all methods in the code, excluding constructors.
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>

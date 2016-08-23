@@ -10,8 +10,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/**  removes empty return statements, provided that they are
- * last in method.
+/** removes empty return statements, provided that they are last in method.
  * @author Yossi Gil
  * @since 2015-7-17 */
 public final class ReturnLastInMethod extends Wring<ReturnStatement> implements Kind.SyntacticBaggage {
