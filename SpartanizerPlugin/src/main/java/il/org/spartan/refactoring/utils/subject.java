@@ -13,7 +13,7 @@ import il.org.spartan.*;
 /** Contains subclasses and tools to build expressions and statements */
 public class subject {
   public static InfixExpression append(final InfixExpression base, final Expression add) {
-    InfixExpression $ = duplicate(base);
+    final InfixExpression $ = duplicate(base);
     extendedOperands($).add(plant(duplicate(add)).into($));
     return $;
   }

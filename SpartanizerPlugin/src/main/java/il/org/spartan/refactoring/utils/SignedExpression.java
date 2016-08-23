@@ -9,15 +9,15 @@ class SignedExpression {
   public final Expression expression;
 
   SignedExpression(final boolean minus, final Expression expression) {
-    this.negative = minus;
+    negative = minus;
     this.expression = expression;
   }
 
-  static SignedExpression plus(Expression e) {
+  static SignedExpression plus(final Expression e) {
     return new SignedExpression(false, e);
   }
 
-  static SignedExpression minus(Expression e) {
+  static SignedExpression minus(final Expression e) {
     return new SignedExpression(true, e);
   }
 
@@ -28,7 +28,7 @@ class SignedExpression {
   Expression asExpression() {
     if (!negative)
       return expression;
-    PrefixExpression $ = expression.getAST().newPrefixExpression();
+    final PrefixExpression $ = expression.getAST().newPrefixExpression();
     $.setOperand(expression);
     $.setOperator(MINUS1);
     return $;

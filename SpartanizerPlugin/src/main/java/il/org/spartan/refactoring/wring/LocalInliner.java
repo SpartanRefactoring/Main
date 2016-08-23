@@ -12,7 +12,6 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.wring.LocalInliner.*;
 
 final class LocalInliner {
   class LocalInlineWithValue extends Wrapper<Expression> {
