@@ -6,7 +6,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-public class TermsReogranizer {
+public class TermsReorganizer {
   public static Expression simplify(final InfixExpression e) {
     return build(new TermsCollector(e));
   }
