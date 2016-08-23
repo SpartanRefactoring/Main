@@ -7,11 +7,13 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 import org.junit.*;
+import org.junit.runners.*;
 
 import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public class IfEmptyThenEmptyElseTest {
   private static final IfEmptyThenEmptyElse WRING = new IfEmptyThenEmptyElse();

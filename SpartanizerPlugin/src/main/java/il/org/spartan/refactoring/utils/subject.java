@@ -12,6 +12,12 @@ import il.org.spartan.*;
 
 /** Contains subclasses and tools to build expressions and statements */
 public class subject {
+  public static InfixExpression append(final InfixExpression base, final Expression add) {
+    final InfixExpression $ = duplicate(base);
+    extendedOperands($).add(plant(duplicate(add)).into($));
+    return $;
+  }
+
   public static class Claimer {
     protected final AST ast;
 
@@ -171,8 +177,8 @@ public class subject {
     public InfixExpression to(final InfixExpression.Operator o) {
       final InfixExpression $ = ast.newInfixExpression();
       $.setOperator(o);
-      $.setLeftOperand(plant(left).into($));
-      $.setRightOperand(new Plant(right).into($));
+      $.setLeftOperand(plant(left).intoLeft($));
+      $.setRightOperand(plant(right).into($));
       return $;
     }
 

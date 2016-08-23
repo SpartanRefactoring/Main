@@ -26,7 +26,7 @@ import il.org.spartan.refactoring.utils.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class TrimmerTest240 {
   @Test public void actualExampleForSortAddition() {
-    trimming("1 + b.statements().indexOf(declarationStmt)").to("");
+    trimming("1 + b.statements().indexOf(declarationStmt)").to(null);
   }
 
   @Test public void actualExampleForSortAdditionInContext() {
@@ -45,16 +45,16 @@ public class TrimmerTest240 {
   }
 
   @Test public void andWithCLASS_CONSTANT() {
-    trimming("(x >> 18) & MASK_BITS").to("");
-    trimming("(x >> 18) & MASK_6BITS").to("");
+    trimming("(x >> 18) & MASK_BITS").to(null);
+    trimming("(x >> 18) & MASK_6BITS").to(null);
   }
 
   @Test public void annotationDoNotRemoveSingleMemberNotCalledValue() {
-    trimming("@SuppressWarnings(sky = \"blue\") void m() {}").to("");
+    trimming("@SuppressWarnings(sky = \"blue\") void m() {}").to(null);
   }
 
   @Test public void annotationDoNotRemoveValueAndSomethingElse() {
-    trimming("@SuppressWarnings(value = \"something\", x = 2) void m() {}").to("");
+    trimming("@SuppressWarnings(value = \"something\", x = 2) void m() {}").to(null);
   }
 
   @Test public void annotationRemoveEmptyParentheses() {
@@ -99,19 +99,19 @@ public class TrimmerTest240 {
   }
 
   @Test public void assignmentAssignmentNew() {
-    trimming("a = new B(); b= new B();").to("");
+    trimming("a = new B(); b= new B();").to(null);
   }
 
   @Test public void assignmentAssignmentNewArray() {
-    trimming("a = new A[3]; b= new A[3];").to("");
+    trimming("a = new A[3]; b= new A[3];").to(null);
   }
 
   @Test public void assignmentAssignmentNull() {
-    trimming("c = a = null; b = null;").to("");
+    trimming("c = a = null; b = null;").to(null);
   }
 
   @Test public void assignmentAssignmentSideEffect() {
-    trimming("a = f(); b= f();").to("");
+    trimming("a = f(); b= f();").to(null);
   }
 
   @Test public void assignmentAssignmentVanilla() {
@@ -147,7 +147,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void assignmentReturniNo() {
-    trimming("b = a = 3; return a;").to("");
+    trimming("b = a = 3; return a;").to(null);
   }
 
   @Test public void blockSimplifyVanilla() {
@@ -164,7 +164,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void booleanChangeValueOfToConstantNotConstant() {
-    trimming("Boolean.valueOf(expected);").to(""); // from junit source
+    trimming("Boolean.valueOf(expected);").to(null); // from junit source
   }
 
   @Test public void bugInLastIfInMethod() {
@@ -598,15 +598,15 @@ public class TrimmerTest240 {
   }
 
   @Test public void comparison01() {
-    trimming("1+2+3<3").to("");
+    trimming("1+2+3<3").to(null);
   }
 
   @Test public void comparison02() {
-    trimming("f(2)<a").to("");
+    trimming("f(2)<a").to(null);
   }
 
   @Test public void comparison03() {
-    trimming("this==null").to("");
+    trimming("this==null").to(null);
   }
 
   @Test public void comparison04() {
@@ -614,15 +614,15 @@ public class TrimmerTest240 {
   }
 
   @Test public void comparison05() {
-    trimming("a==11").to("");
+    trimming("a==11").to(null);
   }
 
   @Test public void comparison06() {
-    trimming("1<102333").to("");
+    trimming("1<102333").to(null);
   }
 
   @Test public void comparison08() {
-    trimming("a==this").to("");
+    trimming("a==this").to(null);
   }
 
   @Test public void comparison09() {
@@ -630,7 +630,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void comparison10() {
-    trimming("1+2+3<3-4").to("");
+    trimming("1+2+3<3-4").to(null);
   }
 
   @Test public void comparison11() {
@@ -642,7 +642,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void comparison13() {
-    trimming("13455643294<22").to("");
+    trimming("13455643294<22").to(null);
   }
 
   @Test public void comparisonWithCharacterConstant() {
@@ -659,19 +659,19 @@ public class TrimmerTest240 {
   }
 
   @Test public void declarationAssignmentUpdateWithIncrement() {
-    trimming("int a=0; a+=++a;").to("");
+    trimming("int a=0; a+=++a;").to(null);
   }
 
   @Test public void declarationAssignmentUpdateWithPostIncrement() {
-    trimming("int a=0; a+=a++;").to("");
+    trimming("int a=0; a+=a++;").to(null);
   }
 
   @Test public void declarationAssignmentWithIncrement() {
-    trimming("int a=0; a=++a;").to("");
+    trimming("int a=0; a=++a;").to(null);
   }
 
   @Test public void declarationAssignmentWithPostIncrement() {
-    trimming("int a=0; a=a++;").to("");
+    trimming("int a=0; a=a++;").to(null);
   }
 
   @Test public void declarationIfAssignment() {
@@ -709,7 +709,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void declarationIfUsesLaterVariable1() {
-    trimming("int a=0, b=0;if (b==3)   a=4; f();").to("");
+    trimming("int a=0, b=0;if (b==3)   a=4; f();").to(null);
   }
 
   @Test public void declarationInitializeRightShift() {
@@ -751,7 +751,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void declarationInitializeUpdateAssignmentIncrementTwice() {
-    trimming("int a = ++i;a += a + j;").to("");
+    trimming("int a = ++i;a += a + j;").to(null);
   }
 
   @Test public void declarationInitializeUpdateAssignmentWithReuse() {
@@ -795,7 +795,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void declarationUpdateReturnNone() {
-    trimming("int a = f(); return a += 2 * a;").to("");
+    trimming("int a = f(); return a += 2 * a;").to(null);
   }
 
   @Test public void declarationUpdateReturnTwice() {
@@ -809,26 +809,26 @@ public class TrimmerTest240 {
   @Test public void doNotConsolidateNewArrayActual() {
     trimming("" + //
         "occupied = new boolean[capacity];\n" + //
-        "placeholder = new boolean[capacity];").to("");
+        "placeholder = new boolean[capacity];").to(null);
   }
 
   @Test public void doNotConsolidateNewArraySimplifiedl() {
     trimming("" + //
         "a = new int[1];\n" + //
-        "b = new int[1];").to("");
+        "b = new int[1];").to(null);
   }
 
   @Test public void doNotConsolidatePlainNew() {
     trimming("" + //
         "a = new A();\n" + //
-        "b = new B();").to("");
+        "b = new B();").to(null);
   }
 
   @Test public void doNotInlineDeclarationWithAnnotationSimplified() {
     trimming("" + //
         "    @SuppressWarnings int $ = (Class<T>) findClass(className);\n" + //
         "    return $;\n" + //
-        "  }").to("");
+        "  }").to(null);
   }
 
   @Test public void doNotInlineWithDeclaration() {
@@ -836,7 +836,7 @@ public class TrimmerTest240 {
         "    nonnull(className);\n" + //
         "    @SuppressWarnings(\"unchecked\") final Class<T> $ = (Class<T>) findClass(className);\n" + //
         "    return $;\n" + //
-        "  }").to("");
+        "  }").to(null);
   }
 
   @Test public void doNotIntroduceDoubleNegation() {
@@ -844,15 +844,15 @@ public class TrimmerTest240 {
   }
 
   @Test public void donotSorMixedTypes() {
-    trimming("if (2 * 3.1415 * 180 > a || t.concat(sS) ==1922 && t.length() > 3)    return c > 5;").to("");
+    trimming("if (2 * 3.1415 * 180 > a || t.concat(sS) ==1922 && t.length() > 3)    return c > 5;").to(null);
   }
 
   @Test public void dontELiminateCatchBlock() {
-    trimming("try { f(); } catch (Exception e) { } finally {}").to("");
+    trimming("try { f(); } catch (Exception e) { } finally {}").to(null);
   }
 
   @Ignore @Test public void dontELiminateSwitch() {
-    trimming("switch (a) { default: }").to("");
+    trimming("switch (a) { default: }").to(null);
   }
 
   @Test public void dontSimplifyCatchBlock() {
@@ -888,11 +888,11 @@ public class TrimmerTest240 {
   }
 
   @Test public void emptyIsNotChangedExpression() {
-    trimming("").to("");
+    trimming("").to(null);
   }
 
   @Test public void emptyIsNotChangedStatement() {
-    trimming("").to("");
+    trimming("").to(null);
   }
 
   @Test public void emptyThen1() {
@@ -924,7 +924,7 @@ public class TrimmerTest240 {
         + "       if (s.charAt(i) == 'd')\n" + //
         "          res -= 1;\n" + //
         "      return res;\n" + //
-        " if (b) i = 3;").to("");
+        " if (b) i = 3;").to(null);
   }
 
   @Ignore @Test public void forwardDeclaration1() {
@@ -1025,11 +1025,11 @@ public class TrimmerTest240 {
   }
 
   @Ignore("which is the correct behavior?") public void ifDoNotRemoveBracesWithVariableDeclarationStatement() {
-    trimming("if(a) { int i = 3; }").to("");
+    trimming("if(a) { int i = 3; }").to(null);
   }
 
   @Ignore("Which is the correct behavior?") public void ifDoNotRemoveBracesWithVariableDeclarationStatement2() {
-    trimming("if(a) { Object o; }").to("");
+    trimming("if(a) { Object o; }").to(null);
   }
 
   @Test public void ifEmptyElsewWithinIf() {
@@ -1085,23 +1085,23 @@ public class TrimmerTest240 {
   }
 
   @Test public void ifPlusPlusPostExpression() {
-    trimming("x? a++:b++").to("");
+    trimming("x? a++:b++").to(null);
   }
 
   @Test public void ifPlusPlusPre() {
-    trimming("if (x) ++a; else ++b;").to("");
+    trimming("if (x) ++a; else ++b;").to(null);
   }
 
   @Test public void ifPlusPlusPreExpression() {
-    trimming("x? ++a:++b").to("");
+    trimming("x? ++a:++b").to(null);
   }
 
   @Test public void ifSequencerNoElseSequencer0() {
-    trimming("if (a) return; break;").to("");
+    trimming("if (a) return; break;").to(null);
   }
 
   @Test public void ifSequencerNoElseSequencer01() {
-    trimming("if (a) throw e; break;").to("");
+    trimming("if (a) throw e; break;").to(null);
   }
 
   @Test public void ifSequencerNoElseSequencer02() {
@@ -1109,7 +1109,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void ifSequencerNoElseSequencer03() {
-    trimming("if (a) continue; break;").to("");
+    trimming("if (a) continue; break;").to(null);
   }
 
   @Test public void ifSequencerNoElseSequencer04() {
@@ -1117,11 +1117,11 @@ public class TrimmerTest240 {
   }
 
   @Test public void ifSequencerNoElseSequencer05() {
-    trimming("if (a) {x(); return;} continue;").to("");
+    trimming("if (a) {x(); return;} continue;").to(null);
   }
 
   @Test public void ifSequencerNoElseSequencer06() {
-    trimming("if (a) throw e; break;").to("");
+    trimming("if (a) throw e; break;").to(null);
   }
 
   @Test public void ifSequencerNoElseSequencer07() {
@@ -1129,7 +1129,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void ifSequencerNoElseSequencer08() {
-    trimming("if (a) throw e; continue;").to("");
+    trimming("if (a) throw e; continue;").to(null);
   }
 
   @Test public void ifSequencerNoElseSequencer09() {
@@ -1228,7 +1228,7 @@ public class TrimmerTest240 {
   @Test public void infiniteLoopBug1() {
     trimming("static boolean hasAnnotation(final VariableDeclarationFragment f) {\n" + //
         "      return hasAnnotation((VariableDeclarationStatement) f.getParent());\n" + //
-        "    }").to("");
+        "    }").to(null);
   }
 
   @Test public void infiniteLoopBug2() {
@@ -1315,7 +1315,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void inlineIntoNextStatementWithSideEffects() {
-    trimming("int a = f(); if (a) g(a); else h(u(a));").to("");
+    trimming("int a = f(); if (a) g(a); else h(u(a));").to(null);
   }
 
   @Ignore @Test public void inlineSingleUse01() {
@@ -1346,31 +1346,31 @@ public class TrimmerTest240 {
   @Ignore @Test public void inlineSingleUse06() {
     trimming(
         "   final Collection<Integer> outdated = new ArrayList<>();     int x = 6, y = 7;     S.out.println(x+y);     final Collection<Integer> coes = new ArrayList<>();     for (final Integer pi : coes)      if (pi.intValue() < x - y)       outdated.add(pi);     for (final Integer pi : outdated)      coes.remove(pi);     S.out.println(coes.size()); ")
-            .to("");
+            .to(null);
   }
 
   @Test public void inlineSingleUse07() {
     trimming(
         "   final Collection<Integer> outdated = new ArrayList<>();     int x = 6, y = 7;     S.out.println(x+y);     final Collection<Integer> coes = new ArrayList<>();     for (final Integer pi : coes)      if (pi.intValue() < x - y)       outdated.add(pi);     S.out.println(coes.size()); ")
-            .to("");
+            .to(null);
   }
 
   @Ignore @Test public void inlineSingleUse08() {
     trimming(
         "   final Collection<Integer> outdated = new ArrayList<>();     int x = 6, y = 7;     S.out.println(x+y);     final Collection<Integer> coes = new ArrayList<>();     for (final Integer pi : coes)      if (pi.intValue() < x - y)       outdated.add(pi);     S.out.println(coes.size());     S.out.println(outdated.size()); ")
-            .to("");
+            .to(null);
   }
 
   @Ignore @Test public void inlineSingleUse09() {
     trimming(
         " final A a = new D().new A(V){\nABRA\n{\nCADABRA\n{V;);   assertEquals(5, a.new Context().lineCount());   final PureIterable&lt;Mutant&gt; ms = a.generateMutants();   assertEquals(2, count(ms));   final PureIterator&lt;Mutant&gt; i = ms.iterator();   assertTrue(i.hasNext());   assertEquals(V;{\nABRA\nABRA\n{\nCADABRA\n{\nV;, i.next().text);   assertTrue(i.hasNext());   assertEquals(V;{\nABRA\n{\nCADABRA\nCADABRA\n{\nV;, i.next().text);   assertFalse(i.hasNext());  ")
-            .to("");
+            .to(null);
   }
 
   @Ignore @Test public void inlineSingleUse10() {
     trimming(
         "      final A a = new A(\"{\nABRA\n{\nCADABRA\n{\");        assertEquals(5, a.new Context().lineCount());        final PureIterable<Mutant> ms = a.mutantsGenerator();        assertEquals(2, count(ms));        final PureIterator<Mutant> i = ms.iterator();        assertTrue(i.hasNext());        assertEquals(\"{\nABRA\nABRA\n{\nCADABRA\n{\n\", i.next().text);        assertTrue(i.hasNext());        assertEquals(\"{\nABRA\n{\nCADABRA\nCADABRA\n{\n\", i.next().text);        assertFalse(i.hasNext());")
-            .to("");
+            .to(null);
   }
 
   @Test public void inlineSingleUseKillingVariable() {
@@ -1404,11 +1404,11 @@ public class TrimmerTest240 {
 
   @Test public void inlineSingleUseWithAssignment() {
     trimming("int a = 2; while (true) if (f()) f(a); else a = 2;")//
-        .to("");
+        .to(null);
   }
 
   @Test public void inlineSingleVariableIntoPlusPlus() {
-    trimming("int $ = 0;  if (a)  ++$;  else --$;").to("");
+    trimming("int $ = 0;  if (a)  ++$;  else --$;").to(null);
   }
 
   @Test public void inliningWithVariableAssignedTo() {
@@ -1470,27 +1470,27 @@ public class TrimmerTest240 {
   }
 
   @Test public void issue06C4() {
-    trimming("-a * b/ c ").to("");
+    trimming("-a * b/ c ").to(null);
   }
 
   @Test public void issue06D() {
-    trimming("a*b*c*d*-e").to("-a*b*c*d*e").to("");
+    trimming("a*b*c*d*-e").to("-a*b*c*d*e").to(null);
   }
 
   @Test public void issue06E() {
-    trimming("-a*b*c*d*f*g*h*i*j*k").to("");
+    trimming("-a*b*c*d*f*g*h*i*j*k").to(null);
   }
 
   @Test public void issue06F() {
     trimming("x*a*-b*-c*- - - d * d")//
         .to("-x*a*b*c*d*d")//
-        .to("");
+        .to(null);
   }
 
   @Test public void issue06G() {
     trimming("x*a*-b*-c*- - - d / d")//
         .to("-x*a*b*c*d/d")//
-        .to("");
+        .to(null);
   }
 
   @Test public void issue06H() {
@@ -1550,14 +1550,14 @@ public class TrimmerTest240 {
     trimming("    return o == null ? null\n" + //
         "        : o == CONDITIONAL_AND ? CONDITIONAL_OR \n" + //
         "            : o == CONDITIONAL_OR ? CONDITIONAL_AND \n" + //
-        "                : null;").to("");
+        "                : null;").to(null);
   }
 
   @Test public void issue38Simplfiied() {
     trimming(//
         "         o == CONDITIONAL_AND ? CONDITIONAL_OR \n" + //
             "            : o == CONDITIONAL_OR ? CONDITIONAL_AND \n" + //
-            "                : null").to("");
+            "                : null").to(null);
   }
 
   @Test public void issue39base() {
@@ -1567,7 +1567,7 @@ public class TrimmerTest240 {
         "        return false;\n" + //
         "} else if (!name.equals(other.name))\n" + //
         "    return false;\n" + //
-        "return true;").to(""); //
+        "return true;").to(null);
   }
 
   public void issue39baseDual() {
@@ -1612,7 +1612,7 @@ public class TrimmerTest240 {
         "} else if (argumentTypes.length < parameterTypes.length - 1) {\n" + //
         "    return false;\n" + //
         "}" + //
-        "").to("");
+        "").to(null);
   }
 
   @Test public void issue41FunctionCall() {
@@ -1668,7 +1668,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void issue52A1() {
-    trimming("void m() { return a; }").to("");
+    trimming("void m() { return a; }").to(null);
   }
 
   @Test public void issue52B1() {
@@ -1691,22 +1691,22 @@ public class TrimmerTest240 {
 
   @Test public void issue54DoNonSideEffectEmptyBody() {
     trimming("int a = f(); do ; while (a != 1);")//
-        .to("");
+        .to(null);
   }
 
   @Test public void issue54DoWhile() {
     trimming("int a  = f(); do { b[i] = 2; ++i; } while (b[i] != a);")//
-        .to("");
+        .to(null);
   }
 
   @Test public void issue54DoWithBlock() {
     trimming("int a  = f(); do { b[i] = a;  ++i; } while (b[i] != a);")//
-        .to("");
+        .to(null);
   }
 
   @Test public void issue54doWithoutBlock() {
     trimming("int a  = f(); do b[i] = a; while (b[i] != a);")//
-        .to("");
+        .to(null);
   }
 
   @Test public void issue54ForEnhanced() {
@@ -1726,7 +1726,7 @@ public class TrimmerTest240 {
 
   @Test public void issue54ForPlain() {
     trimming("int a  = f(); for (int i = 0; i < 100;  ++i) b[i] = a;")//
-        .to("");
+        .to(null);
   }
 
   @Test public void issue54ForPlainNonSideEffect() {
@@ -1736,7 +1736,7 @@ public class TrimmerTest240 {
 
   @Test public void issue54ForPlainUseInCondition() {
     trimming("int a  = f(); for (int i = 0; a < 100;  ++i) b[i] = 3;")//
-        .to("");
+        .to(null);
   }
 
   @Test public void issue54ForPlainUseInConditionNonSideEffect() {
@@ -1756,7 +1756,7 @@ public class TrimmerTest240 {
 
   @Test public void issue54ForPlainUseInUpdaters() {
     trimming("int a  = f(); for (int i = 0; i < 100; i *= a) b[i] = 3;")//
-        .to("");
+        .to(null);
   }
 
   @Test public void issue54ForPlainUseInUpdatersNonSideEffect() {
@@ -1766,7 +1766,7 @@ public class TrimmerTest240 {
 
   @Test public void issue54While() {
     trimming("int a  = f(); while (c) b[i] = a;")//
-        .to("");
+        .to(null);
   }
 
   @Test public void issue54WhileNonSideEffect() {
@@ -1816,15 +1816,15 @@ public class TrimmerTest240 {
   }
 
   @Test public void issue62a() {
-    trimming("int f(int i) { for(;;++i) if(false) break; return i; }").to("");
+    trimming("int f(int i) { for(;;++i) if(false) break; return i; }").to(null);
   }
 
   @Test public void issue62b() {
-    trimming("int f(int i) { for(;i<100;i=i+1) if(false) break; return i; }").to("");
+    trimming("int f(int i) { for(;i<100;i=i+1) if(false) break; return i; }").to(null);
   }
 
   @Test public void issue62c() {
-    trimming("int f(int i) { while(++i > 999) if(i>99) break; return i;}").to("");
+    trimming("int f(int i) { while(++i > 999) if(i>99) break; return i;}").to(null);
   }
 
   @Test public void issue64a() {
@@ -1832,7 +1832,7 @@ public class TrimmerTest240 {
         "    final int a = f();\n" + //
         "    new Object() {\n" + //
         "      @Override public int hashCode() { return a; }\n" + //
-        "    };" + "}").to("");
+        "    };" + "}").to(null);
   }
 
   @Test public void issue64b() {
@@ -1840,7 +1840,7 @@ public class TrimmerTest240 {
         "    final int a = 3;\n" + //
         "    new Object() {\n" + //
         "      @Override public int hashCode() { return a; }\n" + //
-        "    };" + "}").to("");
+        "    };" + "}").to(null);
   }
 
   @Test public void issue64c() {
@@ -1849,7 +1849,7 @@ public class TrimmerTest240 {
         "    final int a = x;\n" + //
         "    new Object() {\n" + //
         "      @Override public int hashCode() { return a; }\n" + //
-        "    };" + "}").to("");
+        "    };" + "}").to(null);
   }
 
   @Test public void issue73a() {
@@ -1869,29 +1869,29 @@ public class TrimmerTest240 {
   }
 
   @Test public void literalVsLiteral() {
-    trimming("1 < 102333").to("");
+    trimming("1 < 102333").to(null);
   }
 
   @Test public void longChainComparison() {
-    trimming("a == b == c == d").to("");
+    trimming("a == b == c == d").to(null);
   }
 
   @Test public void longChainParenthesisComparison() {
-    trimming("(a == b == c) == d").to("");
+    trimming("(a == b == c) == d").to(null);
   }
 
   @Test public void longChainParenthesisNotComparison() {
-    trimming("(a == b == c) != d").to("");
+    trimming("(a == b == c) != d").to(null);
   }
 
   @Test public void longerChainParenthesisComparison() {
-    trimming("(a == b == c == d == e) == d").to("");
+    trimming("(a == b == c == d == e) == d").to(null);
   }
 
   @Test public void massiveInlining() {
     trimming("int a,b,c;String t = zE4;if (2 * 3.1415 * 180 > a || t.concat(sS) ==1922 && t.length() > 3)    return c > 5;")//
         .to("int a,b,c;if(2*3.1415*180>a||zE4.concat(sS)==1922&&zE4.length()>3)return c>5;") //
-        .to("");
+        .to(null);
   }
 
   @Test public void methodWithLastIf() {
@@ -1971,42 +1971,42 @@ public class TrimmerTest240 {
   }
 
   @Test public void noChange() {
-    trimming("12").to("");
-    trimming("true").to("");
-    trimming("null").to("");
+    trimming("12").to(null);
+    trimming("true").to(null);
+    trimming("null").to(null);
     trimming("on*of*no*notion*notion").to("no*of*on*notion*notion");
   }
 
   @Test public void noChange0() {
-    trimming("kludge + the * plain ").to("");
+    trimming("kludge + the * plain ").to(null);
   }
 
   @Test public void noChange1() {
-    trimming("the * plain").to("");
+    trimming("the * plain").to(null);
   }
 
   @Test public void noChange2() {
-    trimming("plain + kludge").to("");
+    trimming("plain + kludge").to(null);
   }
 
   @Test public void noinliningIntoSynchronizedStatement() {
     trimming("int a  = f(); synchronized(this) { int b = a; }")//
-        .to("");
+        .to(null);
   }
 
   @Test public void noinliningIntoSynchronizedStatementEvenWithoutSideEffect() {
     trimming("int a  = f; synchronized(this) { int b = a; }")//
-        .to("");
+        .to(null);
   }
 
   @Test public void noinliningIntoTryStatement() {
     trimming("int a  = f(); try { int b = a; } catch (Exception E) {}")//
-        .to("");
+        .to(null);
   }
 
   @Test public void noinliningIntoTryStatementEvenWithoutSideEffect() {
     trimming("int a  = f; try { int b = a; } catch (Exception E) {}")//
-        .to("");
+        .to(null);
   }
 
   @Test public void notOfAnd() {
@@ -2030,11 +2030,11 @@ public class TrimmerTest240 {
   }
 
   @Test public void orFalseANDOf3WithoutBoolean() {
-    trimming("a && b && false").to("");
+    trimming("a && b && false").to(null);
   }
 
   @Test public void orFalseANDOf3WithoutBooleanA() {
-    trimming("x && a && b").to("");
+    trimming("x && a && b").to(null);
   }
 
   @Test public void orFalseANDOf3WithTrue() {
@@ -2046,11 +2046,11 @@ public class TrimmerTest240 {
   }
 
   @Test public void orFalseANDOf4WithoutBoolean() {
-    trimming("a && b && c && false").to("");
+    trimming("a && b && c && false").to(null);
   }
 
   @Test public void orFalseANDOf4WithoutBooleanA() {
-    trimming("x && a && b && c").to("");
+    trimming("x && a && b && c").to(null);
   }
 
   @Test public void orFalseANDOf4WithTrue() {
@@ -2062,11 +2062,11 @@ public class TrimmerTest240 {
   }
 
   @Test public void orFalseANDOf5WithoutBoolean() {
-    trimming("false && a && b && c && d").to("");
+    trimming("false && a && b && c && d").to(null);
   }
 
   @Test public void orFalseANDOf5WithoutBooleanA() {
-    trimming("x && a && b && c && d").to("");
+    trimming("x && a && b && c && d").to(null);
   }
 
   @Test public void orFalseANDOf5WithTrue() {
@@ -2078,15 +2078,15 @@ public class TrimmerTest240 {
   }
 
   @Test public void orFalseANDOf6WithoutBoolean() {
-    trimming("a && b && c && false && d && e").to("");
+    trimming("a && b && c && false && d && e").to(null);
   }
 
   @Test public void orFalseANDOf6WithoutBooleanA() {
-    trimming("x && a && b && c && d && e").to("");
+    trimming("x && a && b && c && d && e").to(null);
   }
 
   @Test public void orFalseANDOf6WithoutBooleanWithParenthesis() {
-    trimming("(x && (a && b)) && (c && (d && e))").to("");
+    trimming("(x && (a && b)) && (c && (d && e))").to(null);
   }
 
   @Test public void orFalseANDOf6WithTrue() {
@@ -2106,11 +2106,11 @@ public class TrimmerTest240 {
   }
 
   @Test public void orFalseANDOf7WithoutBooleanAndMultipleFalseValue() {
-    trimming("(a && (b && false)) && (c && (d && (e && (false && false))))").to("");
+    trimming("(a && (b && false)) && (c && (d && (e && (false && false))))").to(null);
   }
 
   @Test public void orFalseANDOf7WithoutBooleanWithParenthesis() {
-    trimming("(a && b) && (c && (d && (e && false)))").to("");
+    trimming("(a && b) && (c && (d && (e && false)))").to(null);
   }
 
   @Test public void orFalseANDOf7WithTrueWithParenthesis() {
@@ -2118,11 +2118,11 @@ public class TrimmerTest240 {
   }
 
   @Test public void orFalseANDWithFalse() {
-    trimming("b && a").to("");
+    trimming("b && a").to(null);
   }
 
   @Test public void orFalseANDWithoutBoolean() {
-    trimming("b && a").to("");
+    trimming("b && a").to(null);
   }
 
   @Test public void orFalseANDWithTrue() {
@@ -2134,7 +2134,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void orFalseORFalseWithSomething() {
-    trimming("true || a").to("");
+    trimming("true || a").to(null);
   }
 
   @Test public void orFalseORFalseWithSomethingB() {
@@ -2150,11 +2150,11 @@ public class TrimmerTest240 {
   }
 
   @Test public void orFalseOROf3WithoutBoolean() {
-    trimming("a || b").to("");
+    trimming("a || b").to(null);
   }
 
   @Test public void orFalseOROf3WithoutBooleanA() {
-    trimming("x || a || b").to("");
+    trimming("x || a || b").to(null);
   }
 
   @Test public void orFalseOROf4WithFalse() {
@@ -2166,11 +2166,11 @@ public class TrimmerTest240 {
   }
 
   @Test public void orFalseOROf4WithoutBoolean() {
-    trimming("a || b || c").to("");
+    trimming("a || b || c").to(null);
   }
 
   @Test public void orFalseOROf4WithoutBooleanA() {
-    trimming("x || a || b || c").to("");
+    trimming("x || a || b || c").to(null);
   }
 
   @Test public void orFalseOROf5WithFalse() {
@@ -2182,11 +2182,11 @@ public class TrimmerTest240 {
   }
 
   @Test public void orFalseOROf5WithoutBoolean() {
-    trimming("a || b || c || d").to("");
+    trimming("a || b || c || d").to(null);
   }
 
   @Test public void orFalseOROf5WithoutBooleanA() {
-    trimming("x || a || b || c || d").to("");
+    trimming("x || a || b || c || d").to(null);
   }
 
   @Test public void orFalseOROf6WithFalse() {
@@ -2202,19 +2202,19 @@ public class TrimmerTest240 {
   }
 
   @Test public void orFalseOROf6WithoutBoolean() {
-    trimming("a || b || c || d || e").to("");
+    trimming("a || b || c || d || e").to(null);
   }
 
   @Test public void orFalseOROf6WithoutBooleanA() {
-    trimming("x || a || b || c || d || e").to("");
+    trimming("x || a || b || c || d || e").to(null);
   }
 
   @Test public void orFalseOROf6WithoutBooleanWithParenthesis() {
-    trimming("(a || b) || (c || (d || e))").to("");
+    trimming("(a || b) || (c || (d || e))").to(null);
   }
 
   @Test public void orFalseOROf6WithoutBooleanWithParenthesisA() {
-    trimming("x || (a || b) || (c || (d || e))").to("");
+    trimming("x || (a || b) || (c || (d || e))").to(null);
   }
 
   @Test public void orFalseOROf6WithTwoFalse() {
@@ -2226,15 +2226,15 @@ public class TrimmerTest240 {
   }
 
   @Test public void orFalseORSomethingWithTrue() {
-    trimming("a || true").to("");
+    trimming("a || true").to(null);
   }
 
   @Test public void orFalseORWithoutBoolean() {
-    trimming("b || a").to("");
+    trimming("b || a").to(null);
   }
 
   @Test public void orFalseProductIsNotANDDivOR() {
-    trimming("2*a").to("");
+    trimming("2*a").to(null);
   }
 
   @Test public void orFalseTrueAndTrueA() {
@@ -2293,7 +2293,7 @@ public class TrimmerTest240 {
 
   @Test public void paramAbbreviateConflictingWithMethodName() {
     trimming("void m(BitmapManipulator bitmapManipulator) {" + //
-        "bitmapManipulator.x().y();").to("");
+        "bitmapManipulator.x().y();").to(null);
   }
 
   @Test public void paramAbbreviateMultiple() {
@@ -2327,15 +2327,15 @@ public class TrimmerTest240 {
   }
 
   @Test public void postDecremntInFunctionCall() {
-    trimming("f(a++, i--, b++, ++b);").to("");
+    trimming("f(a++, i--, b++, ++b);").to(null);
   }
 
   @Test public void postfixToPrefixAvoidChangeOnLoopCondition() {
-    trimming("for (int s = i; ++i; ++s);").to("");
+    trimming("for (int s = i; ++i; ++s);").to(null);
   }
 
   @Test public void postfixToPrefixAvoidChangeOnLoopInitializer() {
-    trimming("for (int s = i++; i < 10; ++s);").to("");
+    trimming("for (int s = i++; i < 10; ++s);").to(null);
   }
 
   @Test public void postfixToPrefixAvoidChangeOnVariableDeclaration() {
@@ -2346,7 +2346,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void postIncrementInFunctionCall() {
-    trimming("f(i++);").to("");
+    trimming("f(i++);").to(null);
   }
 
   @Test public void postIncrementReturn() {
@@ -2440,7 +2440,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void pushdownNotActualExample() {
-    trimming("!inRange(m, e)").to("");
+    trimming("!inRange(m, e)").to(null);
   }
 
   @Test public void pushdownNotDoubleNot() {
@@ -2456,11 +2456,11 @@ public class TrimmerTest240 {
   }
 
   @Test public void pushdownNotEND() {
-    trimming("a&&b").to("");
+    trimming("a&&b").to(null);
   }
 
   @Test public void pushdownNotMultiplication() {
-    trimming("a*b").to("");
+    trimming("a*b").to(null);
   }
 
   @Test public void pushdownNotNotOfAND() {
@@ -2528,23 +2528,23 @@ public class TrimmerTest240 {
   }
 
   @Test public void pushdownNotOR() {
-    trimming("a||b").to("");
+    trimming("a||b").to(null);
   }
 
   @Test public void pushdownNotSimpleNot() {
-    trimming("!a").to("");
+    trimming("!a").to(null);
   }
 
   @Test public void pushdownNotSimpleNotOfFunction() {
-    trimming("!f(a)").to("");
+    trimming("!f(a)").to(null);
   }
 
   @Test public void pushdownNotSummation() {
-    trimming("a+b").to("");
+    trimming("a+b").to(null);
   }
 
   @Test public void pushdownTernaryActualExample() {
-    trimming("next < values().length").to("");
+    trimming("next < values().length").to(null);
   }
 
   @Test public void pushdownTernaryActualExample2() {
@@ -2588,7 +2588,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void pushdownTernaryAMethodCallDistinctReceiver() {
-    trimming("a ? x.f(c) : y.f(d)").to("");
+    trimming("a ? x.f(c) : y.f(d)").to(null);
   }
 
   @Test public void pushdownTernaryDifferentTargetFieldRefernce() {
@@ -2596,7 +2596,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void pushdownTernaryFieldReferneceShort() {
-    trimming("a ? R.b.c : R.b.d").to("");
+    trimming("a ? R.b.c : R.b.d").to(null);
   }
 
   @Test public void pushdownTernaryFunctionCall() {
@@ -2673,27 +2673,27 @@ public class TrimmerTest240 {
   }
 
   @Test public void pushdownTernaryNoBoolean() {
-    trimming("a?b:c").to("");
+    trimming("a?b:c").to(null);
   }
 
   @Test public void pushdownTernaryNoReceiverReceiver() {
-    trimming("a < b ? f() : a.f()").to("");
+    trimming("a < b ? f() : a.f()").to(null);
   }
 
   @Test public void pushdownTernaryNotOnMINUS() {
-    trimming("a ? -c :-d").to("");
+    trimming("a ? -c :-d").to(null);
   }
 
   @Test public void pushdownTernaryNotOnMINUSMINUS1() {
-    trimming("a ? --c :--d").to("");
+    trimming("a ? --c :--d").to(null);
   }
 
   @Test public void pushdownTernaryNotOnMINUSMINUS2() {
-    trimming("a ? c-- :d--").to("");
+    trimming("a ? c-- :d--").to(null);
   }
 
   @Test public void pushdownTernaryNotOnNOT() {
-    trimming("a ? !c :!d").to("");
+    trimming("a ? !c :!d").to(null);
   }
 
   @Test public void pushdownTernaryNotOnPLUS() {
@@ -2701,15 +2701,15 @@ public class TrimmerTest240 {
   }
 
   @Test public void pushdownTernaryNotOnPLUSPLUS() {
-    trimming("a ? x++ :y++").to("");
+    trimming("a ? x++ :y++").to(null);
   }
 
   @Test public void pushdownTernaryNotSameFunctionInvocation() {
-    trimming("a?b(x):d(x)").to("");
+    trimming("a?b(x):d(x)").to(null);
   }
 
   @Test public void pushdownTernaryNotSameFunctionInvocation2() {
-    trimming("a?x.f(x):x.d(x)").to("");
+    trimming("a?x.f(x):x.d(x)").to(null);
   }
 
   @Test public void pushdownTernaryOnMethodCall() {
@@ -2741,11 +2741,11 @@ public class TrimmerTest240 {
   }
 
   @Test public void pushdownTernaryToClasConstrctorTwoDifferenes() {
-    trimming("a ? new B(a,b,c) : new B(a,x,y)").to("");
+    trimming("a ? new B(a,b,c) : new B(a,x,y)").to(null);
   }
 
   @Test public void pushdownTernaryToClassConstrctorNotSameNumberOfArgument() {
-    trimming("a ? new B(a,b) : new B(a,b,c)").to("");
+    trimming("a ? new B(a,b) : new B(a,b,c)").to(null);
   }
 
   @Test public void pushdownTernaryTX() {
@@ -2779,7 +2779,7 @@ public class TrimmerTest240 {
   }
 
   @Ignore @Test public void reanmeReturnVariableToDollar04() {
-    trimming("int res = 0;   String $ = blah + known;   y(res + $.length());   return res + $.length();").to("");
+    trimming("int res = 0;   String $ = blah + known;   y(res + $.length());   return res + $.length();").to(null);
   }
 
   @Ignore @Test public void reanmeReturnVariableToDollar05() {
@@ -2809,7 +2809,7 @@ public class TrimmerTest240 {
   @Ignore @Test public void reanmeReturnVariableToDollar09() {
     trimming(
         " public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass res = new BlahClass(6);   if (res.j == 0)    return null;   S.out.println(res.j);   return null;")
-            .to("");
+            .to(null);
   }
 
   @Ignore @Test public void reanmeReturnVariableToDollar10() {
@@ -2819,7 +2819,7 @@ public class TrimmerTest240 {
   }
 
   @Ignore @Test public void reanmeReturnVariableToDollar11() {
-    trimming("").to("");
+    trimming("").to(null);
   }
 
   @Test public void removeSuper() {
@@ -2827,7 +2827,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void removeSuperWithArgument() {
-    trimming("class T { T() { super(a); a();}").to("");
+    trimming("class T { T() { super(a); a();}").to(null);
   }
 
   @Test public void removeSuperWithStatemen() {
@@ -2860,11 +2860,11 @@ public class TrimmerTest240 {
   }
 
   @Test public void renameUnusedVariableToDoubleUnderscore1() {
-    trimming("void f(int x) {System.out.println(x);}").to("");
+    trimming("void f(int x) {System.out.println(x);}").to(null);
   }
 
   @Test public void renameUnusedVariableToDoubleUnderscore2() {
-    trimming("void f(int x) {}").to("");
+    trimming("void f(int x) {}").to(null);
   }
 
   @Test public void renameUnusedVariableToDoubleUnderscore3() {
@@ -2925,15 +2925,15 @@ public class TrimmerTest240 {
   }
 
   @Test public void shorterChainParenthesisComparison() {
-    trimming("a == b == c").to("");
+    trimming("a == b == c").to(null);
   }
 
   @Test public void shorterChainParenthesisComparisonLast() {
-    trimming("b == a * b * c * d * e * f * g * h == a").to("");
+    trimming("b == a * b * c * d * e * f * g * h == a").to(null);
   }
 
   @Test public void shortestBranchIfWithComplexNestedIf3() {
-    trimming("if (a) {f(); g(); h();} else if (a) ++i; else ++j;").to("");
+    trimming("if (a) {f(); g(); h();} else if (a) ++i; else ++j;").to(null);
   }
 
   @Test public void shortestBranchIfWithComplexNestedIf4() {
@@ -2979,22 +2979,22 @@ public class TrimmerTest240 {
   @Test public void shortestFirstAlignment() {
     trimming("n.isSimpleName() ? (SimpleName) n //\n" + //
         "            : n.isQualifiedName() ? ((QualifiedName) n).getName() //\n" + //
-        "                : null").to("");//
+        "                : null").to(null);
   }
 
   @Test public void shortestFirstAlignmentShortened() {
     trimming("n.isF() ? (SimpleName) n \n" + //
         "            : n.isG() ? ((QualifiedName) n).getName() \n" + //
-        "                : null").to("");//
+        "                : null").to(null);
   }
 
   @Test public void shortestFirstAlignmentShortenedFurther() {
     trimming("n.isF() ? (A) n : n.isG() ? ((B) n).f() \n" + //
-        "                : null").to("");//
+        "                : null").to(null);
   }
 
   @Test public void shortestFirstAlignmentShortenedFurtherAndFurther() {
-    trimming("n.isF() ? (A) n : n.isG() ? (B) n :  null").to("");//
+    trimming("n.isF() ? (A) n : n.isG() ? (B) n :  null").to(null);
   }
 
   @Test public void shortestIfBranchFirst01() {
@@ -3084,7 +3084,7 @@ public class TrimmerTest240 {
         "       if (s.charAt(i) == 'd')\n" + //
         "          res -= 1;\n" + //
         "      return res;\n" + //
-        "").to("");
+        "").to(null);
   }
 
   @Test public void shortestIfBranchFirst02c() {
@@ -3129,11 +3129,11 @@ public class TrimmerTest240 {
   }
 
   @Test public void shortestOperand01() {
-    trimming("x + y > z").to("");
+    trimming("x + y > z").to(null);
   }
 
   @Test public void shortestOperand02() {
-    trimming("k = k + 4;if (2 * 6 + 4 == k) return true;").to("");
+    trimming("k = k + 4;if (2 * 6 + 4 == k) return true;").to(null);
   }
 
   @Ignore("string builder") public void shortestOperand05() {
@@ -3186,11 +3186,11 @@ public class TrimmerTest240 {
   }
 
   @Test public void shortestOperand22() {
-    trimming("return f(a,b,c,d,e) + f(a,b,c,d) + f(a,b,c) + f(a,b) + f(a) + f();").to("");
+    trimming("return f(a,b,c,d,e) + f(a,b,c,d) + f(a,b,c) + f(a,b) + f(a) + f();").to(null);
   }
 
   @Test public void shortestOperand23() {
-    trimming("return f() + \".\";     }").to("");
+    trimming("return f() + \".\";     }").to(null);
   }
 
   @Test public void shortestOperand24() {
@@ -3202,7 +3202,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void shortestOperand27() {
-    trimming("return f(a,b,c,d) + f(a,b,c) + f();     } ").to("");
+    trimming("return f(a,b,c,d) + f(a,b,c) + f();     } ").to(null);
   }
 
   @Test public void shortestOperand28() {
@@ -3218,23 +3218,23 @@ public class TrimmerTest240 {
   }
 
   @Test public void shortestOperand31() {
-    trimming("return f(a,b,c,d) | \".\";     }").to("");
+    trimming("return f(a,b,c,d) | \".\";     }").to(null);
   }
 
   @Test public void shortestOperand32() {
-    trimming("return f(a,b,c,d) && f();     }").to("");
+    trimming("return f(a,b,c,d) && f();     }").to(null);
   }
 
   @Test public void shortestOperand33() {
-    trimming("return f(a,b,c,d) || f();     }").to("");
+    trimming("return f(a,b,c,d) || f();     }").to(null);
   }
 
   @Test public void shortestOperand34() {
-    trimming("return f(a,b,c,d) + someVar; ").to("");
+    trimming("return f(a,b,c,d) + someVar; ").to(null);
   }
 
   @Test public void shortestOperand37() {
-    trimming("return sansJavaExtension(f) + n + \".\"+ extension(f);").to("");
+    trimming("return sansJavaExtension(f) + n + \".\"+ extension(f);").to(null);
   }
 
   @Test public void simpleBooleanMethod() {
@@ -3331,16 +3331,12 @@ public class TrimmerTest240 {
     trimming("!(f() || f(5))").to("!f() && !f(5)");
   }
 
-  @Test public void sortAddition1() {
-    trimming("1 + 2 - 3 - 4 + 5 / 6 - 7 + 8 * 9  + A> k + 4").to("8*9+1+2-3-4+5 / 6-7+A>k+4");
-  }
-
   @Test public void sortAddition2() {
     trimming("1 + 2 < 3 & 7 + 4 > 2 + 1 || 6 - 7 < 2 + 1").to("1+2 <3&4+7>1+2||6-7<1+2");
   }
 
   @Test public void sortAddition3() {
-    trimming("6 - 7 < 1 + 2").to("");
+    trimming("6 - 7 < 1 + 2").to(null);
   }
 
   @Test public void sortAddition4() {
@@ -3356,19 +3352,19 @@ public class TrimmerTest240 {
   }
 
   @Test public void sortAdditionThreeOperands1() {
-    trimming("1.0+2222+3").to("");
+    trimming("1.0+2222+3").to(null);
   }
 
   @Test public void sortAdditionThreeOperands2() {
-    trimming("1.0+1+124+1").to("");
+    trimming("1.0+1+124+1").to(null);
   }
 
   @Test public void sortAdditionThreeOperands3() {
-    trimming("1+2F+33+142+1").to("");
+    trimming("1+2F+33+142+1").to(null);
   }
 
   @Test public void sortAdditionThreeOperands4() {
-    trimming("1+2+'a'").to("");
+    trimming("1+2+'a'").to(null);
   }
 
   @Test public void sortAdditionTwoOperands0CheckThatWeSortByLength_a() {
@@ -3376,11 +3372,11 @@ public class TrimmerTest240 {
   }
 
   @Test public void sortAdditionTwoOperands0CheckThatWeSortByLength_b() {
-    trimming("211+1111").to("");
+    trimming("211+1111").to(null);
   }
 
   @Test public void sortAdditionTwoOperands1() {
-    trimming("1+2F").to("");
+    trimming("1+2F").to(null);
   }
 
   @Test public void sortAdditionTwoOperands2() {
@@ -3388,7 +3384,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void sortAdditionTwoOperands3() {
-    trimming("1+2L").to("");
+    trimming("1+2L").to(null);
   }
 
   @Test public void sortAdditionTwoOperands4() {
@@ -3396,7 +3392,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void sortAdditionUncertain() {
-    trimming("1+a").to("");
+    trimming("1+a").to(null);
   }
 
   @Test public void sortAdditionVariableClassConstantAndLiteral() {
@@ -3416,11 +3412,11 @@ public class TrimmerTest240 {
   }
 
   @Test public void sortDivisionNo() {
-    trimming("2.1/3").to("");
+    trimming("2.1/3").to(null);
   }
 
   @Test public void sortThreeOperands1() {
-    trimming("1.0*2222*3").to("");
+    trimming("1.0*2222*3").to(null);
   }
 
   @Test public void sortTwoOperands0CheckThatWeSortByLength_a() {
@@ -3428,7 +3424,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void sortTwoOperands0CheckThatWeSortByLength_b() {
-    trimming("211*1111").to("");
+    trimming("211*1111").to(null);
   }
 
   @Ignore("string builder") public void stringFromBuilderAddParenthesis() {
@@ -3580,7 +3576,7 @@ public class TrimmerTest240 {
         + "  return 2;\n" //
         + "case THROW_STATEMENT:\n" //
         + "  return 3;\n" //
-        + "}").to("");
+        + "}").to(null);
   }
 
   @Test public void switchSimplifyCaseAfterDefault1() {
@@ -3596,7 +3592,7 @@ public class TrimmerTest240 {
         + "    return 2;" //
         + "  case THROW_STATEMENT:" //
         + "    return 3;" //
-        + "  }").to("");
+        + "  }").to(null);
   }
 
   @Ignore("switch") public void switchSimplifyCaseAfterDefault2() {
@@ -3765,7 +3761,7 @@ public class TrimmerTest240 {
         + "  return true;" //
         + "default:" //
         + "  return true; // return true to continue visiting children." //
-        + "}").to("");
+        + "}").to(null);
   }
 
   @Ignore("switch") public void switchSimplifyWithDefault1() {
@@ -3820,7 +3816,7 @@ public class TrimmerTest240 {
         + "  } catch (final NumberFormatException e) {" //
         + "    throw e;" //
         + "  }" //
-        + "}").to("");
+        + "}").to(null);
   }
 
   @Test public void synchronizedBraces() {
@@ -3828,7 +3824,7 @@ public class TrimmerTest240 {
         + "    synchronized (variables) {\n" //
         + "      for (final String key : variables.keySet())\n"//
         + "        $.variables.put(key, variables.get(key));\n" //
-        + "    }").to("");
+        + "    }").to(null);
   }
 
   @Test public void ternarize05() {
@@ -3945,7 +3941,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void ternarize16() {
-    trimming("String res = m;  int num1, num2, num3;  if (m.equals(f()))   num2 = 2; ").to("");
+    trimming("String res = m;  int num1, num2, num3;  if (m.equals(f()))   num2 = 2; ").to(null);
   }
 
   @Test public void ternarize16a() {
@@ -3960,7 +3956,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void ternarize21() {
-    trimming("if (s.equals(532)){    S.out.println(gG);    S.out.l(kKz);} f(); ").to("");
+    trimming("if (s.equals(532)){    S.out.println(gG);    S.out.l(kKz);} f(); ").to(null);
   }
 
   @Test public void ternarize21a() {
@@ -3972,11 +3968,11 @@ public class TrimmerTest240 {
   }
 
   @Test public void ternarize22() {
-    trimming("int a=0;   if (s.equals(532)){    S.console();    a=3;} f(); ").to("");
+    trimming("int a=0;   if (s.equals(532)){    S.console();    a=3;} f(); ").to(null);
   }
 
   @Test public void ternarize26() {
-    trimming("int a=0;   if (s.equals(532)){    a+=2;   a-=2; } f(); ").to("");
+    trimming("int a=0;   if (s.equals(532)){    a+=2;   a-=2; } f(); ").to(null);
   }
 
   @Test public void ternarize33() {
@@ -3996,7 +3992,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void ternarize38() {
-    trimming("int a, b=0;if (b==3){    a+=2+r();a-=6;} f();").to("");
+    trimming("int a, b=0;if (b==3){    a+=2+r();a-=6;} f();").to(null);
   }
 
   @Test public void ternarize41() {
@@ -4011,7 +4007,7 @@ public class TrimmerTest240 {
         .to("int b=5;if(3==4)if(b==3)b=2;else{b=3;b=3;}else if(b==3)b=2;else{b=3*3;b=3;}") //
         .to("int b=5;if(3==4)if(b==3)b=2;else{b=b=3;}else if(b==3)b=2;else{b=3*3;b=3;}")//
         .to("int b=5;if(3==4)b=b==3?2:(b=3);else if(b==3)b=2;else{b=3*3;b=3;}")//
-        .to("");
+        .to(null);
   }
 
   @Test public void ternarize45() {
@@ -4037,12 +4033,12 @@ public class TrimmerTest240 {
   }
 
   @Test public void ternarize49() {
-    trimming("if (s.equals(532)){ S.out.println(gG); S.out.l(kKz); } f();").to("");
+    trimming("if (s.equals(532)){ S.out.println(gG); S.out.l(kKz); } f();").to(null);
   }
 
   @Test public void ternarize52() {
     trimming("int a=0,b = 0,c,d = 0,e = 0;if (a < b) {c = d;c = e;} f();")//
-        .to("");
+        .to(null);
   }
 
   @Test public void ternarize54() {
@@ -4091,10 +4087,10 @@ public class TrimmerTest240 {
   }
 
   @Test public void vanillaShortestFirstConditionalNoChange() {
-    trimming("literal ? CONDITIONAL_OR : CONDITIONAL_AND").to("");
+    trimming("literal ? CONDITIONAL_OR : CONDITIONAL_AND").to(null);
   }
 
   @Test public void xorSortClassConstantsAtEnd() {
-    trimming("f(a,b,c,d) ^ BOB").to("");
+    trimming("f(a,b,c,d) ^ BOB").to(null);
   }
 }

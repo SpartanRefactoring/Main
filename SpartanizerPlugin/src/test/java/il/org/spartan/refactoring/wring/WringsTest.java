@@ -12,12 +12,15 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 import org.junit.*;
+import org.junit.runners.*;
 
 import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 
-@SuppressWarnings({ "javadoc", "static-method" }) public class WringsTest {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@SuppressWarnings({ "javadoc", "static-method" }) //
+public class WringsTest {
   @Test public void countInEnhancedFor() throws IllegalArgumentException, MalformedTreeException {
     final String input = "int f() { for (int a: as) return a; }";
     final Document d = Wrap.Method.intoDocument(input);

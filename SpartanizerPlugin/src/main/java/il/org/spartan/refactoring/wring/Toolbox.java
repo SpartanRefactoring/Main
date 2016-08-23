@@ -64,6 +64,7 @@ public class Toolbox {
         .add(InfixExpression.class, //
             new InfixMultiplicationDistributive(), //
             new InfixSubtractionZero(), //
+            new InfixAdditionSubtractionExpand(), //
             new InfixDivisionMultiplicationNegatives(), //
             new InfixAdditionZero(), // must be before InfixAdditionSort
             new InfixAdditionSort(), //
