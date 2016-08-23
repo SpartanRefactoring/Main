@@ -11,36 +11,6 @@ import org.eclipse.jdt.core.dom.*;
  * @since 2013/07/01 */
 public enum Utils {
   ;
-  static final String WHITES = "(?m)\\s+";
-
-  /** Appends an element to an array, by reallocating an array whose size is
-   * greater by one and placing the element at the last position.
-   * @param ts an arbitrary array
-   * @param t an element
-   * @return newly created array */
-  public static <T> T[] append(final T[] ts, final T t) {
-    final T[] $ = Arrays.copyOf(ts, 1 + ts.length);
-    $[ts.length] = t;
-    return $;
-  }
-
-  /** Convert multiple arguments into an array
-   * @param ts a sequence of arguments of the same type
-   * @return an array representation of the parameter */
-  @SafeVarargs public static <T> T[] asArray(final T... ts) {
-    return ts;
-  }
-
-  /** Convert multiple arguments into a {@link List}
-   * @param ts a sequence of arguments of the same type
-   * @return a newly created {@link List} representation of the parameter */
-  @SafeVarargs public static <T> List<T> asList(final T... ts) {
-    final List<T> $ = new ArrayList<>(ts.length);
-    for (final T t : ts)
-      $.add(t);
-    return $;
-  }
-
   /** Impose an ordering on type <code><b>boolean</b></code> by which
    * <code><b>true</b></code> is greater than <code><b>false</b></code>.
    * @param b1 JD
@@ -65,24 +35,6 @@ public enum Utils {
     return $;
   }
 
-  /** Remove all non-essential spaces from a string that represents Java code.
-   * @param javaCodeFragment JD
-   * @return parameter, with all redundant spaces removes from it */
-  public static String gist(final String javaCodeFragment) {
-    String $ = javaCodeFragment//
-        .replaceAll("(?m)\\s+", " ") // Squeeze whites
-        .replaceAll("^\\s", "") // Opening whites
-        .replaceAll("\\s$", "") // Closing whites
-    ;
-    for (final String operator : new String[] { ":", "/", "%", ",", "\\{", "\\}", "=", ":", "\\?", ";", "\\+", ">", ">=", "!=", "==", "<", "<=", "-",
-        "\\*", "\\|", "\\&", "%", "\\(", "\\)", "[\\^]" })
-      $ = $ //
-          .replaceAll(WHITES + operator, operator) // Preceding whites
-          .replaceAll(operator + WHITES, operator) // Trailing whites
-      ;
-    return $;
-  }
-
   /** determine whether there is a null in a sequence of object
    * @param os an unknown number of objects
    * @return true if one of the objects is a null or false otherwise */
@@ -91,26 +43,6 @@ public enum Utils {
       if (o == null)
         return true;
     return false;
-  }
-
-  /** Determine if an item can be found in a list of values
-   * @param candidate what to search for
-   * @param ts where to search
-   * @return true if the the item is found in the list */
-  @SafeVarargs public static <T> boolean in(final T candidate, final T... ts) {
-    for (final T t : ts)
-      if (t != null && t.equals(candidate))
-        return true;
-    return false;
-  }
-
-  /** Determine whether an integer is a valid list index
-   * @param i some integer
-   * @param ts a list of things
-   * @return <code><b>true</b></code> <i>iff</i> the index is valid index into
-   *         the list. and it is the last one in it. */
-  public static <T> boolean inRange(final int i, final List<T> ts) {
-    return i >= 0 && i < ts.size();
   }
 
   /** @param ts a list
@@ -127,17 +59,6 @@ public enum Utils {
    *         the same as the last element of the {@link List} parameter */
   public static boolean lastIn(final Object o, final List<?> os) {
     return last(os) == o;
-  }
-
-  /** Computes the maximum of two or more integers.
-   * @param a some integer
-   * @param is additional integers
-   * @return largest of the parameters */
-  public static int max(final int a, final int... is) {
-    int $ = a;
-    for (final int i : is)
-      $ = Math.max($, i);
-    return $;
   }
 
   /** Convert variadic list of arguments into an array

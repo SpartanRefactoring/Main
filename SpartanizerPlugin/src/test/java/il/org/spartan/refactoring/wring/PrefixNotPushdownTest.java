@@ -16,7 +16,6 @@ import org.junit.runners.Parameterized.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.AbstractWringTest.*;
-import il.org.spartan.utils.Utils;
 
 /** Unit tests for {@link Wrings#ADDITION_SORTER}.
  * @author Yossi Gil
@@ -26,7 +25,7 @@ import il.org.spartan.utils.Utils;
 public class PrefixNotPushdownTest {
   @RunWith(Parameterized.class) //
   public static class OutOfScope extends AbstractWringTest.OutOfScope.Exprezzion<PrefixExpression> {
-    static String[][] cases = Utils.asArray(//
+    static String[][] cases = as.array(//
         new String[] { "Simple not", "!a" }, //
         new String[] { "Simple not of function", "!f(a)" }, //
         new String[] { "Actual example", "!inRange(m, e)" }, //
@@ -49,7 +48,7 @@ public class PrefixNotPushdownTest {
   @RunWith(Parameterized.class) //
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
   public static class Wringed extends AbstractWringTest.WringedExpression<PrefixExpression> {
-    private static String[][] cases = Utils.asArray(//
+    private static String[][] cases = as.array(//
         new String[] { "2 level not of false", "!!false", "false" }, //
         new String[] { "2 level not of true", "!!true", "true" }, //
         new String[] { "double not deeply nested", "!(((!f())))", "f()" }, //

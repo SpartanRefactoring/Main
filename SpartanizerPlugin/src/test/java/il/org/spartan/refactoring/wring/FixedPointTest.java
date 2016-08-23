@@ -9,6 +9,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.utils.*;
 
 /** * Unit tests for the nesting class Unit test for the containing class. Note
  * our naming convention: a) test methods do not use the redundant "test"
@@ -34,8 +35,8 @@ import il.org.spartan.refactoring.spartanizations.*;
     final String peeled = w.off(unpeeled);
     if (peeled.equals(from))
       assertNotEquals("No similification of " + from, from, peeled);
-    if (gist(peeled).equals(gist(from)))
-      assertNotEquals("Simpification of " + from + "is just reformatting", gist(peeled), gist(from));
+    if (Funcs.gist(peeled).equals(Funcs.gist(from)))
+      assertNotEquals("Simpification of " + from + "is just reformatting", Funcs.gist(peeled), Funcs.gist(from));
     assertSimilar(expected, peeled);
   }
 

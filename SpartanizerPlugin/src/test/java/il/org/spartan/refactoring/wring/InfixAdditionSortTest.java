@@ -10,7 +10,6 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.utils.Utils;
 
 /** Unit tests for {@link Wrings#ADDITION_SORTER}.
  * @author Yossi Gil
@@ -95,7 +94,7 @@ public class InfixAdditionSortTest {
     azzert.notNull(i);
     azzert.nay(i == INPUT);
     azzert.notNull(INPUT);
-    azzert.that(Utils.gist("" + i), is(Utils.gist("" + INPUT)));
+    azzert.that(Funcs.gist("" + i), is(Funcs.gist("" + INPUT)));
   }
 
   @Test public void test13() {

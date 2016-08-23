@@ -1,5 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.ExpressionComparator.*;
@@ -43,8 +44,8 @@ import il.org.spartan.refactoring.utils.*;
     final String peeled = w.off(unpeeled);
     if (peeled.equals(from))
       azzert.that("No similification of " + from, from, is(not(peeled)));
-    final String compressSpaces = gist(peeled);
-    final String compressSpaces2 = gist(from);
+    final String compressSpaces = Funcs.gist(peeled);
+    final String compressSpaces2 = Funcs.gist(from);
     azzert.that("Simpification of " + from + " is just reformatting", compressSpaces2, not(compressSpaces));
     assertSimilar(expected, peeled);
   }
