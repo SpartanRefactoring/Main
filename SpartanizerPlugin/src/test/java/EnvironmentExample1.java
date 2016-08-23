@@ -1,6 +1,12 @@
 import static java.lang.System.out;
 
 public class EnvironmentExample1 {
+  {
+    
+  }
+  static {
+    
+  }
   void m() {
     String s = "a";
     s.equals("a");
