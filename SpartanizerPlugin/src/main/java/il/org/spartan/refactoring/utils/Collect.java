@@ -10,7 +10,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
-import il.org.spartan.utils.Utils;
 
 /** A utility class for finding occurrences of an {@link Expression} in an
  * {@link ASTNode}.
@@ -462,7 +461,7 @@ public enum Collect {
     for (final ASTNode n : ns)
       for (final ASTVisitor v : collectors(what, $))
         n.accept(v);
-    Utils.removeDuplicates($);
+    removeDuplicates($);
     Collections.sort($, (e1, e2) -> e1.getStartPosition() - e2.getStartPosition());
     return $;
   }

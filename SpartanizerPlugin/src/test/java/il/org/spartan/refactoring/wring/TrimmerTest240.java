@@ -1970,13 +1970,6 @@ public class TrimmerTest240 {
     trimming("int b=3==4?5==3?2:3:5==3?2:3*3;").to("int b=3==4?5==3?2:3:5!=3?3*3:2;");
   }
 
-  @Test public void noChange() {
-    trimming("12").to(null);
-    trimming("true").to(null);
-    trimming("null").to(null);
-    trimming("on*of*no*notion*notion").to("no*of*on*notion*notion");
-  }
-
   @Test public void noChange0() {
     trimming("kludge + the * plain ").to(null);
   }

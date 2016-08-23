@@ -5,29 +5,10 @@ import static il.org.spartan.refactoring.utils.Is.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-/** convert
- *
- * <pre>
- * if (true) x; else {y;}
- * </pre>
- *
- * into
- *
- * <pre>
- * x;
- * </pre>
- ***********************************
- * <pre>
- * if (false) x; else {y;}
- * </pre>
- *
- * into
- *
- * <pre>
+/** convert <code>if (true) x; else {y;} </code> into <code>x;</code> and
+ * <code>if (false) x; else {y;}  </code> into <code>
  * y;
- * </pre>
- *
- * .
+ * </code> .
  * @author Alex Kopzon
  * @author Dan Greenstein
  * @since 2016 */
@@ -37,8 +18,9 @@ public final class IfTrueOrFalse extends Wring.ReplaceCurrentNode<IfStatement> i
   }
 
   @Override Statement replacement(final IfStatement s) {
-    //Prior test in scopeIncludes makes sure that only IfStatements containing a 'true' or 'false'
-    //get into the replace.
+    // Prior test in scopeIncludes makes sure that only IfStatements containing
+    // a 'true' or 'false'
+    // get into the replace.
     return isLiteralTrue(s.getExpression()) ? then(s) : elze(s);
   }
 

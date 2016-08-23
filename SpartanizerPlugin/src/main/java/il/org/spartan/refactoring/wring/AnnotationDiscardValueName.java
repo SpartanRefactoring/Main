@@ -5,7 +5,6 @@ import static il.org.spartan.refactoring.utils.Funcs.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.utils.*;
 
 /** Removes the "value" member from annotations that only have a single member,
  * converting <code>@SuppressWarnings(value = "unchecked")</code> to
@@ -19,7 +18,7 @@ public final class AnnotationDiscardValueName //
   }
 
   @Override ASTNode replacement(final NormalAnnotation a) {
-    final MemberValuePair p = Utils.onlyOne(expose.values(a));
+    final MemberValuePair p = onlyOne(expose.values(a));
     if (p == null || !"value".equals(p.getName().toString()))
       return null;
     final SingleMemberAnnotation $ = a.getAST().newSingleMemberAnnotation();
