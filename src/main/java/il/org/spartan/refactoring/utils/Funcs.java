@@ -3,9 +3,6 @@ package il.org.spartan.refactoring.utils;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.idiomatic.*;
 import static il.org.spartan.refactoring.utils.extract.*;
-import static il.org.spartan.utils.Utils.*;
-import static il.org.spartan.utils.Utils.last;
-import static il.org.spartan.utils.Utils.removeWhites;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
@@ -277,7 +274,7 @@ public enum Funcs {
    * @return true if all assignments has the same left hand side and operator as
    *         the first one or false otherwise */
   public static boolean compatible(final Assignment base, final Assignment... as) {
-    if (hasNulls(base, as))
+    if (hasNull(base, as))
       return false;
     for (final Assignment a : as)
       if (incompatible(base, a))
@@ -289,7 +286,7 @@ public enum Funcs {
    * @param os A unknown number of assignments operators
    * @return true if all the operator are the same or false otherwise */
   public static boolean compatibleOps(final Assignment.Operator cmpTo, final Assignment.Operator... os) {
-    if (hasNulls(cmpTo, os))
+    if (hasNull(cmpTo, os))
       return false;
     for (final Assignment.Operator ¢ : os)
       if (¢ == null || ¢ != cmpTo)
@@ -374,12 +371,12 @@ public enum Funcs {
    *         if ¢ or name are null) */
   // TODO this seems a bug
   public static VariableDeclarationFragment getDefinition(final ASTNode n, final Expression e) {
-    return hasNulls(n, e) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || e.getNodeType() != SIMPLE_NAME ? null
+    return hasNull(n, e) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || e.getNodeType() != SIMPLE_NAME ? null
         : getDefinition((VariableDeclarationStatement) n, (SimpleName) e);
   }
 
   public static boolean incompatible(final Assignment a1, final Assignment a2) {
-    return hasNulls(a1, a2) || !compatibleOps(a1.getOperator(), a2.getOperator()) || !same(left(a1), left(a2));
+    return hasNull(a1, a2) || !compatibleOps(a1.getOperator(), a2.getOperator()) || !same(left(a1), left(a2));
   }
 
   /** Determine if an integer can be found in a list of values
