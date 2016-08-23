@@ -147,11 +147,11 @@ public class TermsCollector {
 }
 
 class SignedExpression {
-  private final boolean minus;
+  private final boolean negative;
   public final Expression expression;
 
   SignedExpression(final boolean minus, final Expression expression) {
-    this.minus = minus;
+    this.negative = minus;
     this.expression = expression;
   }
 
@@ -164,15 +164,19 @@ class SignedExpression {
   }
 
   boolean negative() {
-    return minus;
+    return negative;
   }
 
   Expression asExpression() {
-    if (!minus)
+    if (!negative)
       return expression;
     PrefixExpression $ = expression.getAST().newPrefixExpression();
     $.setOperand(expression);
     $.setOperator(MINUS1);
     return $;
+  }
+
+  public boolean positive() {
+    return !negative;
   }
 }
