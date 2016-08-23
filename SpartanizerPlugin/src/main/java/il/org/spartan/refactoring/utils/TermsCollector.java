@@ -14,6 +14,7 @@ public class TermsCollector {
 
   private final List<Expression> plus = new ArrayList<>();
   private final List<Expression> minus = new ArrayList<>();
+  private final List<SignedExpression> all = new ArrayList<>();
 
   public TermsCollector(final InfixExpression e) {
     collect(e);
@@ -48,7 +49,8 @@ public class TermsCollector {
 
   private Void addMinus(final Expression e) {
     assert e != null;
-    minus().add(e);
+    all.add(SignedExpression.minus(e));
+    minus.add(e);
     return null;
   }
 
@@ -60,7 +62,8 @@ public class TermsCollector {
 
   private Void addPlus(final Expression e) {
     assert e != null;
-    plus().add(e);
+    plus.add(e);
+    all.add(SignedExpression.plus(e));
     return null;
   }
 
@@ -136,5 +139,40 @@ public class TermsCollector {
 
   public List<Expression> plus() {
     return plus;
+  }
+
+  public List<SignedExpression> all() {
+    return all;
+  }
+}
+
+class SignedExpression {
+  private final boolean minus;
+  public final Expression expression;
+
+  SignedExpression(final boolean minus, final Expression expression) {
+    this.minus = minus;
+    this.expression = expression;
+  }
+
+  static SignedExpression plus(Expression e) {
+    return new SignedExpression(false, e);
+  }
+
+  static SignedExpression minus(Expression e) {
+    return new SignedExpression(true, e);
+  }
+
+  boolean negative() {
+    return minus;
+  }
+
+  Expression asExpression() {
+    if (!minus)
+      return expression;
+    PrefixExpression $ = expression.getAST().newPrefixExpression();
+    $.setOperand(expression);
+    $.setOperator(MINUS1);
+    return $;
   }
 }
