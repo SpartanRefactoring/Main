@@ -12,7 +12,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} that abbreviates the name of a method parameter that is a
+/**  abbreviates the name of a method parameter that is a
  * viable candidate for abbreviation (meaning that its name is suitable for
  * renaming, and isn't the desired name). The abbreviated name is the first
  * character in the last word of the variable's name.

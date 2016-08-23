@@ -2,6 +2,7 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Is.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
@@ -468,15 +469,15 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue72pg() {
-    trimming("0+(x+y)").to("x+y");
+    trimming("0+(x+y)").to("0+x+y").to("x+y").to(null);
   }
 
   @Test public void issue72ph() {
-    trimming("0+((x+y)+0+(z+h))+0").to("x+y+z+h");
+    trimming("0+((x+y)+0+(z+h))+0").to("0+x+y+0+z+h+0").to("x+y+z+h").to(null);
   }
 
   @Test public void issue72pi() {
-    trimming("0+(0+x+y+(4+0))").to("x+y+4").to(null);
+    trimming("0+(0+x+y+(4+0))").to("0+0+x+y+4+0"). to("x+y+4").to(null);
   }
 
   @Test public void issue75a() {
@@ -639,7 +640,13 @@ public class TrimmerTest250 {
   @Ignore public void issue85_86l() {
     trimming("").to("(2*(a+b))");
   }
+  @Test public void issue87a() {
+    trimming("a-b*c - (x - - - (d*e))").to("a + d*e - b*c -x");
+  }
 
+  @Test public void issue87b() {
+    trimming("a-b*c").to(null);
+  }
   // @formatter:off
   enum A { a1() {{ f(); }
       public final void f() {g();}

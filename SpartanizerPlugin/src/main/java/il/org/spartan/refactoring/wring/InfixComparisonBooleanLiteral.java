@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} that eliminates redundant comparison with the two boolean
+/**  eliminates redundant comparison with the two boolean
  * literals:
  *
  * <pre>

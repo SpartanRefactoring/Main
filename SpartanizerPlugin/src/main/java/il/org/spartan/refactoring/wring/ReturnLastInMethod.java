@@ -10,7 +10,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} that removes empty return statements, provided that they are
+/**  removes empty return statements, provided that they are
  * last in method.
  * @author Yossi Gil
  * @since 2015-7-17 */

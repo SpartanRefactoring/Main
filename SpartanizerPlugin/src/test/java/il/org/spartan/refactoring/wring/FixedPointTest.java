@@ -228,7 +228,7 @@ import il.org.spartan.refactoring.spartanizations.*;
         "    }", "return 0>0?6:b;");
   }
 
-  @Test(timeout = 2000) public void shortestOperand03() {
+  @Test(timeout = 24000) public void shortestOperand03() {
     assertConvertsTo(//
         "k = k * 4;if (1 + 2 - 3 - 4 + 5 / 6 - 7 + 8 * 9 > 4+k) return true;", //
         "k=4*k;if(5 / 6+8*9+1+2-3-4-7>k+4)return true;");
