@@ -1,8 +1,8 @@
 package il.org.spartan.refactoring.wring;
 
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
-import static il.org.spartan.utils.Utils.*;
 
 import org.junit.*;
 import org.junit.runners.*;
@@ -87,17 +87,17 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test public void hasNullsTest() {
     final Object a = null;
-    azzert.aye(hasNulls(a));
-    azzert.nay(hasNulls(new Object()));
-    azzert.aye(hasNulls(new Object(), null));
-    azzert.nay(hasNulls(new Object(), new Object()));
-    azzert.nay(hasNulls(new Object(), new Object()));
-    azzert.nay(hasNulls(new Object(), new Object(), new Object()));
-    azzert.nay(hasNulls(new Object(), new Object(), new Object(), new Object()));
-    azzert.aye(hasNulls(null, new Object(), new Object(), new Object(), new Object()));
-    azzert.aye(hasNulls(new Object(), new Object(), null, new Object(), new Object()));
-    azzert.aye(hasNulls(new Object(), new Object(), new Object(), null, new Object()));
-    azzert.aye(hasNulls(new Object(), new Object(), new Object(), new Object(), null));
+    azzert.aye(hasNull(a));
+    azzert.nay(hasNull(new Object()));
+    azzert.aye(hasNull(new Object(), null));
+    azzert.nay(hasNull(new Object(), new Object()));
+    azzert.nay(hasNull(new Object(), new Object()));
+    azzert.nay(hasNull(new Object(), new Object(), new Object()));
+    azzert.nay(hasNull(new Object(), new Object(), new Object(), new Object()));
+    azzert.aye(hasNull(null, new Object(), new Object(), new Object(), new Object()));
+    azzert.aye(hasNull(new Object(), new Object(), null, new Object(), new Object()));
+    azzert.aye(hasNull(new Object(), new Object(), new Object(), null, new Object()));
+    azzert.aye(hasNull(new Object(), new Object(), new Object(), new Object(), null));
   }
 
   @Test(timeout = 2000) public void inlineInitializers() {

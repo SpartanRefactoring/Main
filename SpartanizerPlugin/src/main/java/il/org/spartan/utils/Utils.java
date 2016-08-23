@@ -35,32 +35,6 @@ public enum Utils {
     return $;
   }
 
-  /** determine whether there is a null in a sequence of object
-   * @param os an unknown number of objects
-   * @return true if one of the objects is a null or false otherwise */
-  public static boolean hasNulls(final Object... os) {
-    for (final Object o : os)
-      if (o == null)
-        return true;
-    return false;
-  }
-
-  /** @param ts a list
-   * @return last item in a list or <code><b>null</b></code> if the parameter is
-   *         <code><b>null</b></code> or empty */
-  public static <T> T last(final List<T> ts) {
-    return ts == null || ts.isEmpty() ? null : ts.get(ts.size() - 1);
-  }
-
-  /** Determine whether an {@link Object} is the last in a {@link List}.
-   * @param o JD
-   * @param os JD
-   * @return <code><b>true</b></code> <i>iff</i> the {@link Object} parameter is
-   *         the same as the last element of the {@link List} parameter */
-  public static boolean lastIn(final Object o, final List<?> os) {
-    return last(os) == o;
-  }
-
   /** Convert variadic list of arguments into an array
    * @param os JD _
    * @return parameter, as an array. */
@@ -114,13 +88,6 @@ public enum Utils {
     for (String $ = s;; $ = $.substring(0, $.length() - suffix.length()))
       if (!$.endsWith(suffix))
         return $;
-  }
-
-  /** Remove all occurrences of white space character in a given {@link String}
-   * @param s JD
-   * @return parameter after all such occurrences are removed. */
-  public static String removeWhites(final String s) {
-    return s.replaceAll("\\s+", "");
   }
 
   /** Sorts an array

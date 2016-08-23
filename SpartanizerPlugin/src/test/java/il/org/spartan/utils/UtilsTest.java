@@ -12,19 +12,19 @@ import il.org.spartan.*;
 @SuppressWarnings({ "static-method", "javadoc", }) //
 public class UtilsTest {
   @Test public void compareFF() {
-    azzert.that(Utils.compare(false, false), is(0));
+    azzert.that(compare(false, false), is(0));
   }
 
   @Test public void compareFT() {
-    azzert.that(Utils.compare(false, true), lessThan(0));
+    azzert.that(compare(false, true), lessThan(0));
   }
 
   @Test public void compareTF() {
-    azzert.that(Utils.compare(true, false), greaterThan(0));
+    azzert.that(compare(true, false), greaterThan(0));
   }
 
   @Test public void compareTT() {
-    azzert.that(Utils.compare(true, true), is(0));
+    azzert.that(compare(true, true), is(0));
   }
 
   @Test public void inTypicalFalse() {
@@ -36,36 +36,36 @@ public class UtilsTest {
   }
 
   @Test public void removePrefiEmpty() {
-    assertEquals(Utils.removePrefix("BAAAAB", "A"), "BAAAAB");
+    assertEquals(removePrefix("BAAAAB", "A"), "BAAAAB");
   }
 
   @Test public void removePrefiExhaustive() {
-    assertEquals(Utils.removePrefix("AXAXAXAXAXAXAXAX", "AX"), "");
+    assertEquals(removePrefix("AXAXAXAXAXAXAXAX", "AX"), "");
   }
 
   @Test public void removePrefixTypical() {
-    assertEquals(Utils.removePrefix("AAAABC", "AA"), "BC");
+    assertEquals(removePrefix("AAAABC", "AA"), "BC");
   }
 
   @Test public void removeSuffiEmpty() {
-    assertEquals(Utils.removeSuffix("BAAAAB", "A"), "BAAAAB");
+    assertEquals(removeSuffix("BAAAAB", "A"), "BAAAAB");
   }
 
   @Test public void removeSuffiExhaustive() {
-    assertEquals(Utils.removeSuffix("AXAXAXAXAXAXAXAX", "AX"), "");
+    assertEquals(removeSuffix("AXAXAXAXAXAXAXAX", "AX"), "");
   }
 
   @Test public void removeSuffixTypical() {
-    assertEquals(Utils.removeSuffix("AAAABC", "BC"), "AAAA");
+    assertEquals(removeSuffix("AAAABC", "BC"), "AAAA");
   }
 
-  @Test public void removeWhites() {
-    azzert.that(Utils.removeWhites("ABC"), is("ABC"));
-    azzert.that(Utils.removeWhites("ABC\n"), is("ABC"));
-    azzert.that(Utils.removeWhites(" ABC\n"), is("ABC"));
-    azzert.that(Utils.removeWhites("A BC"), is("ABC"));
-    azzert.that(Utils.removeWhites("AB\rC\n"), is("ABC"));
-    azzert.that(Utils.removeWhites("A\fB\rC\n"), is("ABC"));
-    azzert.that(Utils.removeWhites("\t\tA\fB\rC\n"), is("ABC"));
+  @Test public void removeWhitesTest() {
+    azzert.that(removeWhites("ABC"), is("ABC"));
+    azzert.that(removeWhites("ABC\n"), is("ABC"));
+    azzert.that(removeWhites(" ABC\n"), is("ABC"));
+    azzert.that(removeWhites("A BC"), is("ABC"));
+    azzert.that(removeWhites("AB\rC\n"), is("ABC"));
+    azzert.that(removeWhites("A\fB\rC\n"), is("ABC"));
+    azzert.that(removeWhites("\t\tA\fB\rC\n"), is("ABC"));
   }
 }
