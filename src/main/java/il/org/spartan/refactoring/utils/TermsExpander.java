@@ -12,7 +12,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 /** Expands terms of +/- expressions without reordering.
  * @author Yossi Gil
  * @since 2016-08 */
-public class TermsPlacer {
+public class TermsExpander {
   public static Expression simplify(final InfixExpression e) {
     return build(new TermsCollector(e));
   }
