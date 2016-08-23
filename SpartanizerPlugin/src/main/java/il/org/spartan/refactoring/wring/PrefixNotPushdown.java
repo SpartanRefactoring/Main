@@ -12,7 +12,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} that pushes down "<code>!</code>", the negation operator as
+/**  pushes down "<code>!</code>", the negation operator as
  * much as possible, using the de-Morgan and other simplification rules.
  * @author Yossi Gil
  * @since 2015-7-17 */

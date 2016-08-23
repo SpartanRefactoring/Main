@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} that sorts the arguments of an expression using the same
+/**  sorts the arguments of an expression using the same
  * sorting order as {@link Operator#PLUS} expression, except that we do not
  * worry about commutativity. Unlike {@link InfixAdditionSort}, we know that the
  * reordering is always possible.

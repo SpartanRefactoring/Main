@@ -8,7 +8,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 public class TermsCollector {
-  static boolean isLeafTerm(final Expression e) {
+  public static boolean isLeafTerm(final Expression e) {
     return !Is.infixPlus(e) && !Is.infixMinus(e);
   }
 
@@ -70,6 +70,10 @@ public class TermsCollector {
     return negationLevel(e) % 2 == 0 ? collectPlusPrefix(n) : collectMinusPrefix(n);
   }
 
+  private Void addPositiveTerm(final Expression e) {
+    return isLeafTerm(e) ? addPlusTerm(e) : collectPlusNonLeaf(asInfixExpression(e));
+  }
+
   private Void collectMinusPrefix(final Expression e) {
     assert e != null;
     return isLeafTerm(e) ? addMinus(e) : collectMinusPrefix(asInfixExpression(e));
@@ -117,10 +121,6 @@ public class TermsCollector {
     assert !isLeafTerm(e);
     assert Is.infixPlus(e);
     return collectPositiveTerms(operands(e));
-  }
-
-  private Void addPositiveTerm(final Expression e) {
-    return isLeafTerm(e) ? addPlusTerm(e) : collectPlusNonLeaf(asInfixExpression(e));
   }
 
   private Void collectPositiveTerms(final Iterable<Expression> es) {
