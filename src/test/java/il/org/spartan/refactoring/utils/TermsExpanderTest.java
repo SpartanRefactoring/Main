@@ -29,7 +29,7 @@ import il.org.spartan.*;
   }
 
   @Test public void test05() {
-    azzert.that(TermsExpander.simplify(i("a + b -c + d -e + f")), iz("a + b + d + f -c -e"));
+    azzert.that(TermsExpander.simplify(i("a + b -c + d -e + f")), iz("a + b -c + d -e + f"));
   }
 
   @Test public void test06() {
@@ -37,7 +37,7 @@ import il.org.spartan.*;
   }
 
   @Test public void test07() {
-    azzert.that(TermsExpander.simplify(i("a - (c -d)")), iz("a + d -c"));
+    azzert.that(TermsExpander.simplify(i("a - (c -d)")), iz("a - c + d"));
   }
 
   @Test public void test08() {
@@ -57,11 +57,11 @@ import il.org.spartan.*;
   }
 
   @Test public void test12() {
-    azzert.that(TermsExpander.simplify(i("a + + - - - (b -c)")), iz("a +c -b"));
+    azzert.that(TermsExpander.simplify(i("a + + - - - (b -c)")), iz("a -b +c"));
   }
 
   @Test public void test13() {
-    azzert.that(TermsExpander.simplify(i("-a + + - - - (b -c)")), iz("c -a -b"));
+    azzert.that(TermsExpander.simplify(i("-a + + - - - (b -c)")), iz("-a -b +c"));
   }
 
   @Test public void test14() {
@@ -77,19 +77,27 @@ import il.org.spartan.*;
   }
 
   @Test public void test17() {
-    azzert.that(TermsExpander.simplify(i("x-a-b + y")), iz("x + y-a-b"));
+    azzert.that(TermsExpander.simplify(i("x-a-(-((-b)) - (((-(((-(y))))))))")), iz("x-a-b+y"));
   }
 
   @Test public void test18() {
-    azzert.that(TermsExpander.simplify(i("(-(x-a))-+ + (y -b)")), iz("a + b-x-y"));
+    azzert.that(TermsExpander.simplify(i("(-(x-a))-+ + (y -b)")), iz("a-x-y+b"));
   }
 
   @Test public void test19() {
     azzert.that(TermsExpander.simplify(i("a-b*c - (x - - - (d*e))")), //
-        iz("a + d*e - b*c -x"));
+        iz("a - b*c -x + d*e"));
   }
 
   @Test public void test20() {
     azzert.that(TermsExpander.simplify(i("a-b*c")), iz("a - b*c"));
+  }
+
+  @Test public void test21() {
+    azzert.that(TermsExpander.simplify(i("-a+b")), iz("b-a"));
+  }
+
+  @Test public void test22() {
+    azzert.that(TermsExpander.simplify(i("-a-b")), iz("-a-b"));
   }
 }

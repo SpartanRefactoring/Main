@@ -409,13 +409,18 @@ public class TrimmerTest250 {
     trimming("0-(x-y)").to("-(x-y)").to(null);
   }
 
-  @Ignore("bug") @Test public void issue72mf1A() {
-    trimming("0-(x-0)").to("-(x-0)").to("-x");
+  @Test public void issue72mf1A() {
+    trimming("0-(x-0)")//
+        .to("-(x-0)")//
+        .to("-(x)") //
+        .to(null);
   }
 
-  @Ignore("bug") @Test public void issue72mf1B() {
+  @Test public void issue72mf1B() {
     azzert.aye(Is.isSimple(Into.e("x")));
-    trimming("-(x-0)").to("-(x-0)").to("-x");
+    trimming("-(x-0)")//
+        .to("-(x)")//
+        .to(null);
   }
 
   @Test public void issue72mg() {
@@ -472,7 +477,10 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue72ph() {
-    trimming("0+((x+y)+0+(z+h))+0").to("0+x+y+0+z+h+0").to("x+y+z+h").to(null);
+    trimming("0+((x+y)+0+(z+h))+0")//
+        .to("0+x+y+0+z+h+0")//
+        .to("x+y+z+h")//
+        .to(null);
   }
 
   @Test public void issue72pi() {
@@ -641,7 +649,15 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue87a() {
-    trimming("a-b*c - (x - - - (d*e))").to("a + d*e - b*c -x");
+    trimming("a-b*c - (x - - - (d*e))").to("a  - b*c -x + d*e");
+  }
+
+  @Test public void issue87c() {
+    trimming("a + (b-c)").to("a + b -c");
+  }
+
+  @Test public void issue87d() {
+    trimming("a - (b-c)").to("a - b + c");
   }
 
   @Test public void issue87b() {
