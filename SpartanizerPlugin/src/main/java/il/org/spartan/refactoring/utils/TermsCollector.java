@@ -12,8 +12,8 @@ public class TermsCollector {
     return !Is.infixPlus(e) && !Is.infixMinus(e);
   }
 
-  public final List<Expression> plus = new ArrayList<>();
-  public final List<Expression> minus = new ArrayList<>();
+  private final List<Expression> plus = new ArrayList<>();
+  private final List<Expression> minus = new ArrayList<>();
 
   public TermsCollector(final InfixExpression e) {
     collect(e);
@@ -48,7 +48,7 @@ public class TermsCollector {
 
   private Void addMinus(final Expression e) {
     assert e != null;
-    minus.add(e);
+    minus().add(e);
     return null;
   }
 
@@ -60,7 +60,7 @@ public class TermsCollector {
 
   private Void addPlus(final Expression e) {
     assert e != null;
-    plus.add(e);
+    plus().add(e);
     return null;
   }
 
@@ -128,5 +128,13 @@ public class TermsCollector {
     for (final Expression e : es)
       addPositiveTerm(core(e));
     return null;
+  }
+
+  public List<Expression> minus() {
+    return minus;
+  }
+
+  public List<Expression> plus() {
+    return plus;
   }
 }

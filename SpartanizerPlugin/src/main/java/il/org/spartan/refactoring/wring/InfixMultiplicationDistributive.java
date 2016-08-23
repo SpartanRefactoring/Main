@@ -49,22 +49,16 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
       }
     }
     Expression addition = null;
-    for (int i = 0; i < different.size() - 1; ++i)
-      if (addition == null)
-        addition = subject.pair(different.get(i), different.get(i + 1)).to(Operator.PLUS);
-      else
-        addition = subject.pair(addition, different.get(i + 1)).to(Operator.PLUS);
+    for (int i = 0; i < different.size() - 1; ++i) addition = addition == null ? subject.pair(different.get(i), different.get(i + 1)).to(Operator.PLUS)
+        : subject.pair(addition, different.get(i + 1)).to(Operator.PLUS);
     Expression multiplication = null;
     if (common.size() == 0)
       return addition;
     if (common.size() == 1)
       return subject.pair(common.get(0), addition).to(Operator.TIMES);
     if (common.size() > 1) {
-      for (int i = 0; i < common.size() - 1; ++i)
-        if (multiplication == null)
-          multiplication = subject.pair(common.get(i), common.get(i + 1)).to(Operator.TIMES);
-        else
-          multiplication = subject.pair(multiplication, different.get(i + 1)).to(Operator.TIMES);
+      for (int i = 0; i < common.size() - 1; ++i) multiplication = multiplication == null ? subject.pair(common.get(i), common.get(i + 1)).to(Operator.TIMES)
+          : subject.pair(multiplication, different.get(i + 1)).to(Operator.TIMES);
       return subject.pair(multiplication, addition).to(Operator.TIMES);
     }
     return null;
