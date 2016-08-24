@@ -6,78 +6,104 @@ import il.org.spartan.*;
 
 public class EnvironmentExample1 {
   void EX1() {
-    String s = "a";
+    @Environment({}) String s = "a";
     s.equals("a");
     "a".equals(s);
-    @Environment({}) int a = 0;
+    @Environment({ "s" }) int a = 0;
     out.print("a");
-    @Environment({ "a" }) int b = 0;
-    @Begin class A {
-      /* empty */ }
+    @Environment({ "a", "s" }) int b = 0;
+    @Begin class A {}
     ++a;
-    @End("a") class B {
-      /* empty */ }
+    @End("a") class B {}
+    @Environment({ "a", "s" , "b" }) int c = 0;
     class Z {
       void g() {
         new Z() {
           int f(int a) {
             class Y {
               Y() {
-                a = 3;
+                @Environment({"a", "s" , "b"}) int d = 0;
+                @Begin class A {}
+                d = 3;
+                @End("d") class B {}
+                @Environment({ "a","s","b","d" }) int e = 0;
               }
-
-              int a;
+              @Environment({}) int f;
             }
             return new Y().hashCode();
           }
-        };
+        }.g();
       }
     }
   }
   
-  {
-    EX2.x =0;
+  {  
+    @Begin class A {}
+    EX2.x = 0;
+    @End("x") class B {}
   }
   public static class EX2 {
-    static int x;
-    int y;
+    @Environment({}) static int x;
+    @Environment({"x"}) int y;
     EX2() {
+      @Begin class A {}
       x = 1;
+      @End("x") class B {}
     }
     {
+      @Begin class A {}
       C1.x = 2;
+      @End("x") class B {}
     }
-    static class C1{
-      public static int x;
+    @Environment({"x","y"}) static class C1{
+      @Environment({"x","C1"}) public static int y; //doesn't know 'y' cause it is a static class (x is static also)
+      @Environment({"x","C1","y"}) public static int x;
       public static void change_x() {
-        x = 3;
+        @Begin class A {}
+        x = 3; //interesting... what does it do? lol
+        @End("x") class B {}
+      }
+      public static void change_y() {
+        @Begin class A {}
+        y = 3;
+        @End("x") class B {}
       }
     }
   }
   
   
   public static class EX3 {
-    int x, y;
+    @Environment({}) int x, y;
     EX3(){
+      @Begin class A {}
       x = y = 0;
+      @End({"x","y"}) class B {}
+      @Begin class C {}
       y = 1;
       x = 1;
+      @End({"x","y"}) class D {}
     }
-    static class x_hiding {
-      public static int x;
-      y_hiding xsy;
+    @Environment({"x","y"}) static class x_hiding {
+      @Environment({"x_hiding"}) public static int x; // may be @Environment({}) 
+      @Environment({"x_hiding","x"}) y_hiding xsy;
       x_hiding(){
         x = 2;
         xsy = new y_hiding();
       }
-      public class y_hiding { //not static in purpose!
-        public int y;
+      @Environment({"x_hiding","x","xsy"}) public class y_hiding { //not static in purpose!
+        @Environment({"x_hiding","x","xsy","y_hiding"}) public int y;
+        @Begin class C {}
         y_hiding(){
+          @Begin class E {}
           y = 2;
+          @End({"y"}) class F {}
         }
+        @End({"y"}) class D {}
       }
     }
+    @Environment({"x","y","x_hiding"}) int q; //should not recognize y_hiding
     static void func(){
+      @Begin class Q {}
       EX3 top = new EX3();
       x_hiding X = new x_hiding();
       x_hiding.y_hiding Y = X.new y_hiding();
@@ -85,6 +111,7 @@ public class EnvironmentExample1 {
       X.x = 4;
       X.xsy.y = 5;
       Y.y = 6;
+      @End({"top","X","x","xsy","Y","y"}) class QQ {}
     }
   }
 
