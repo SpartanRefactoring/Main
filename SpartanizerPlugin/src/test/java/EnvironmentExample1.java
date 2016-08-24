@@ -110,20 +110,89 @@ public class EnvironmentExample1 {
     class Child2 extends Parent{
       int x;
       Child2(){
-        x = 2;
+        x = 4;
       }
       @Override
       void set_x(){
-        x = 3;
+        x = 5;
       }
     }
-    Parent p = new Parent();
-    Child1 c1 = new Child1();
-    Child2 c2 = new Child2();
+    void func() {
+      Parent p = new Parent();
+      Child1 c1 = new Child1();
+      Child2 c2 = new Child2();
+      p.set_x();
+      c1.set_x();
+      c2.set_x();
+    }
   }
   
-
+  {
+    EX5.x = 0;
+  }
   public static class EX5 {
+    static int x;
+    class a{
+      int a_x;
+      class b{
+        int b_x;
+        class c{
+          int c_x;
+          class d{
+            int d_x;
+            void d_func(){
+              ++a_x;
+              ++b_x;
+              ++c_x;
+              ++d_x;
+            }
+          }
+          void c_func(){
+            ++a_x;
+            ++b_x;
+            ++c_x;
+          }
+        }
+        void b_func(){
+          ++a_x;
+          ++b_x;
+        }
+      }
+      void a_func(){
+        ++a_x;
+      }
+    }
+  }
+  
+  public static class EX6 {
+    class Outer{
+      int x;
+      class Inner{
+        final Outer outer = Outer.this;
+        void func(Inner p){
+          // working on the current instance
+          x = 0;
+          Outer.this.x = 1;
+          // working on another instance
+          p.outer.x = 2; 
+        }
+      } 
+    }
+    class Outer2{
+      int x;
+      class Inner2{
+        int x;
+        final Outer2 outer2 = Outer2.this;
+        void func(Inner2 p){
+          x = 0;
+          Outer2.this.x = 1;
+          p.outer2.x = 2; 
+        }
+      } 
+    } 
+  }
+
+  public static class EX_for_testing_the_use_of_names {
     class Oompa_Loompa {
       Oompa_Loompa Oompa_Loompa; /*A*/
       <Oompa_Loompa> Oompa_Loompa() {}
