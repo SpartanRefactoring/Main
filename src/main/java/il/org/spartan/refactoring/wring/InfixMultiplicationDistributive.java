@@ -21,6 +21,9 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
   }
 
   @Override ASTNode replacement(final InfixExpression e) {
+    // TODO: YG/Matteo: the following is a hack
+    if (e == null)
+      return null;
     return e.getOperator() != PLUS ? null : replacement(extract.allOperands(e));
   }
 
@@ -90,7 +93,8 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
   private ASTNode replacement(final InfixExpression e1, final InfixExpression e2) {
     final List<Expression> common = new ArrayList<>();
     final List<Expression> different = new ArrayList<>();
-    for (final Expression op : extract.allOperands(e1)) (isIn(op, extract.allOperands(e2)) ? common : different).add(op);
+    for (final Expression op : extract.allOperands(e1))
+      (isIn(op, extract.allOperands(e2)) ? common : different).add(op);
     for (final Expression op : extract.allOperands(e2)) // [a c]
       if (!isIn(op, common))
         different.add(op);
@@ -106,7 +110,4 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     return false;
   }
 
-  @Override boolean scopeIncludes(final InfixExpression $) {
-    return super.scopeIncludes($);
-  }
 }

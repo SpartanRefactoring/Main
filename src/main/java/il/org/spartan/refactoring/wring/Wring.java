@@ -31,7 +31,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is eligible for
    *         the simplification offered by this object. */
-  boolean eligible(@SuppressWarnings("unused") final N __) {
+  boolean canMake(@SuppressWarnings("unused") final N __) {
     return true;
   }
 
@@ -50,9 +50,9 @@ public abstract class Wring<N extends ASTNode> implements Kind {
    * @param e JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is noneligible for
    *         the simplification offered by this object.
-   * @see #eligible(InfixExpression) */
-  final boolean nonEligible(final N n) {
-    return !eligible(n);
+   * @see #canMake(InfixExpression) */
+  final boolean cantMake(final N n) {
+    return !canMake(n);
   }
 
   /** Determines whether this {@link Wring} object is applicable for a given
@@ -62,7 +62,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is within the
    *         scope of this object */
-  boolean scopeIncludes(final N n) {
+  boolean claims(final N n) {
     return make(n, null) != null;
   }
 
@@ -88,7 +88,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
       return go(duplicate($));
     }
 
-    @Override boolean scopeIncludes(final N ¢) {
+    @Override boolean claims(final N ¢) {
       return firstBad(¢) != null;
     }
 
@@ -117,7 +117,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
   }
 
   static abstract class InfixSorting extends AbstractSorting {
-    @Override boolean eligible(final InfixExpression e) {
+    @Override boolean canMake(final InfixExpression e) {
       final List<Expression> es = extract.allOperands(e);
       return !Wrings.mixedLiteralKind(es) && sort(es);
     }
@@ -129,7 +129,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
   }
 
   static abstract class InfixSortingOfCDR extends AbstractSorting {
-    @Override boolean eligible(final InfixExpression e) {
+    @Override boolean canMake(final InfixExpression e) {
       final List<Expression> es = extract.allOperands(e);
       es.remove(0);
       return !Wrings.mixedLiteralKind(es) && sort(es);
@@ -168,14 +168,14 @@ public abstract class Wring<N extends ASTNode> implements Kind {
       };
     }
 
-    @Override boolean scopeIncludes(final N n) {
+    @Override boolean claims(final N n) {
       return go(ASTRewrite.create(n.getAST()), n, null, new ArrayList<>(), new ArrayList<>()) != null;
     }
   }
 
   static abstract class ReplaceCurrentNode<N extends ASTNode> extends Wring<N> {
     @Override final Rewrite make(final N n) {
-      return !eligible(n) ? null : new Rewrite(description(n), n) {
+      return !canMake(n) ? null : new Rewrite(description(n), n) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
           r.replace(n, replacement(n), g);
         }
@@ -184,7 +184,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
 
     abstract ASTNode replacement(N n);
 
-    @Override boolean scopeIncludes(final N n) {
+    @Override boolean claims(final N n) {
       return replacement(n) != null;
     }
   }
@@ -193,7 +193,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
    * {@link ExclusionManager} */
   static abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends Wring<N> {
     @Override final Rewrite make(final N n, final ExclusionManager m) {
-      return !eligible(n) ? null : new Rewrite(description(n), n) {
+      return !canMake(n) ? null : new Rewrite(description(n), n) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
           r.replace(n, replacement(n, m), g);
         }
@@ -202,7 +202,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
 
     abstract ASTNode replacement(N n, final ExclusionManager m);
 
-    @Override boolean scopeIncludes(final N n) {
+    @Override boolean claims(final N n) {
       return replacement(n, new ExclusionManager()) != null;
     }
   }
@@ -212,7 +212,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
 
     @Override Rewrite make(final N n, final ExclusionManager exclude) {
       final Statement nextStatement = extract.nextStatement(n);
-      if (nextStatement == null || !eligible(n))
+      if (nextStatement == null || !canMake(n))
         return null;
       exclude.exclude(nextStatement);
       return new Rewrite(description(n), n, nextStatement) {
@@ -222,7 +222,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
       };
     }
 
-    @Override boolean scopeIncludes(final N n) {
+    @Override boolean claims(final N n) {
       final Statement nextStatement = extract.nextStatement(n);
       return nextStatement != null && go(ASTRewrite.create(n.getAST()), n, nextStatement, null) != null;
     }

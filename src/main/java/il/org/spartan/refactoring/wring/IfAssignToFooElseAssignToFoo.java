@@ -35,7 +35,7 @@ public final class IfAssignToFooElseAssignToFoo extends Wring.ReplaceCurrentNode
         : subject.pair(left(then), subject.pair(right(then), right(elze)).toCondition(s.getExpression())).toStatement(then.getOperator());
   }
 
-  @Override boolean scopeIncludes(final IfStatement s) {
+  @Override boolean claims(final IfStatement s) {
     return s != null && compatible(extract.assignment(then(s)), extract.assignment(elze(s)));
   }
 }

@@ -52,7 +52,7 @@ public final class Trimmer extends Spartanization {
     return new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
         final Wring<N> w = Toolbox.instance().find(n);
-        return w == null || w.nonEligible(n) || prune(w.make(n, exclude), $);
+        return w == null || w.cantMake(n) || prune(w.make(n, exclude), $);
       }
     };
   }

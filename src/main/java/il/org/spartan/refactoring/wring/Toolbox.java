@@ -42,7 +42,7 @@ public class Toolbox {
 
   private static <N extends ASTNode> Wring<N> find(final N n, final List<Wring<N>> ws) {
     for (final Wring<N> $ : ws)
-      if ($.scopeIncludes(n))
+      if ($.claims(n))
         return $;
     return null;
   }
@@ -62,7 +62,6 @@ public class Toolbox {
             new PostfixToPrefix(), //
             null) //
         .add(InfixExpression.class, //
-            new InfixMultiplicationDistributive(), //
             new InfixSubtractionZero(), //
             new InfixAdditionSubtractionExpand(), //
             new InfixDivisionMultiplicationNegatives(), //
@@ -78,6 +77,7 @@ public class Toolbox {
             new InfixSubstractionSort(), //
             new InfixDivisonSort(), //
             new InfixConditionalCommon(), //
+            new InfixMultiplicationDistributive(), //
             null)
         .add(MethodDeclaration.class, //
             new MethodRenameReturnToDollar(), //

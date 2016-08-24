@@ -24,7 +24,7 @@ public final class IfTrueOrFalse extends Wring.ReplaceCurrentNode<IfStatement> i
     return isLiteralTrue(s.getExpression()) ? then(s) : elze(s);
   }
 
-  @Override boolean scopeIncludes(final IfStatement s) {
+  @Override boolean claims(final IfStatement s) {
     return s != null && (isLiteralTrue(s.getExpression()) || isLiteralFalse(s.getExpression()));
   }
 }

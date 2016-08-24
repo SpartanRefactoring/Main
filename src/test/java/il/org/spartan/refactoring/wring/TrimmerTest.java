@@ -33,7 +33,7 @@ import il.org.spartan.refactoring.utils.*;
   @Test public void actualExampleForSortAdditionInContext() {
     final String from = "2 + a < b";
     final String expected = "a + 2 < b";
-    final Wrap w = Wrap.Expression;
+    final Wrap w = Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT;
     final String wrap = w.on(from);
     azzert.that(from, is(w.off(wrap)));
     final Trimmer t = new Trimmer();
@@ -1473,7 +1473,7 @@ import il.org.spartan.refactoring.utils.*;
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
     azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     azzert.notNull(s);
-    azzert.aye(s.scopeIncludes(e));
+    azzert.aye(s.claims(e));
     final Expression e1 = left(e);
     final Expression e2 = right(e);
     azzert.nay(hasNull(e1, e2));
@@ -1481,7 +1481,7 @@ import il.org.spartan.refactoring.utils.*;
     azzert.aye(tokenWiseGreater);
     azzert.aye(ExpressionComparator.moreArguments(e1, e2));
     azzert.aye(ExpressionComparator.longerFirst(e));
-    azzert.aye(e.toString(), s.eligible(e));
+    azzert.aye(e.toString(), s.canMake(e));
     final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) s).replacement(e);
     azzert.notNull(replacement);
     azzert.that(replacement.toString(), is("f(a,b,c) * f(a,b,c,d,e)"));
@@ -1494,7 +1494,7 @@ import il.org.spartan.refactoring.utils.*;
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
     azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     azzert.notNull(s);
-    azzert.aye(s.scopeIncludes(e));
+    azzert.aye(s.claims(e));
     final Expression e1 = left(e);
     final Expression e2 = right(e);
     azzert.nay(hasNull(e1, e2));
@@ -1502,7 +1502,7 @@ import il.org.spartan.refactoring.utils.*;
     azzert.nay(tokenWiseGreater);
     azzert.aye(ExpressionComparator.moreArguments(e1, e2));
     azzert.aye(ExpressionComparator.longerFirst(e));
-    azzert.aye(e.toString(), s.eligible(e));
+    azzert.aye(e.toString(), s.canMake(e));
     final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) s).replacement(e);
     azzert.notNull(replacement);
     azzert.that(replacement.toString(), is("f(a,b,c) * f(a,b,c,d)"));
@@ -2572,8 +2572,8 @@ import il.org.spartan.refactoring.utils.*;
     azzert.notNull(parent);
     azzert.that(parent, iz(from));
     azzert.that(parent, is(not(instanceOf(Expression.class))));
-    azzert.that(new PostfixToPrefix().scopeIncludes(e), is(true));
-    azzert.that(new PostfixToPrefix().eligible(e), is(true));
+    azzert.that(new PostfixToPrefix().claims(e), is(true));
+    azzert.that(new PostfixToPrefix().canMake(e), is(true));
     final Expression r = new PostfixToPrefix().replacement(e);
     azzert.that(r, iz("--i"));
     trimming(from).to("for(int i=0;i<100;--i)--i;");
@@ -3122,8 +3122,8 @@ import il.org.spartan.refactoring.utils.*;
     final InfixExpression e = i("null != a");
     final Wring<InfixExpression> w = Toolbox.instance.find(e);
     azzert.notNull(w);
-    azzert.aye(w.scopeIncludes(e));
-    azzert.aye(w.eligible(e));
+    azzert.aye(w.claims(e));
+    azzert.aye(w.canMake(e));
     final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) w).replacement(e);
     azzert.notNull(replacement);
     azzert.that(replacement.toString(), is("a != null"));
@@ -3311,7 +3311,7 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Test public void shortestIfBranchFirst02c() {
-    final CompilationUnit u = Wrap.Statement.intoCompilationUnit("" + //
+    final CompilationUnit u = Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD.intoCompilationUnit("" + //
         "      int res = 0;\n" + //
         "      for (int i = 0;i < s.length();++i)\n" + //
         "       if (s.charAt(i) == 'a')\n" + //
@@ -3494,16 +3494,16 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Test public void simplifyBlockComplexSingleton() {
-    assertSimplifiesTo("{;{{;;return b; }}}", "return b;", new BlockSimplify(), Wrap.Statement);
+    assertSimplifiesTo("{;{{;;return b; }}}", "return b;", new BlockSimplify(), Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD);
   }
 
   @Test public void simplifyBlockDeeplyNestedReturn() {
-    assertSimplifiesTo("{{{;return c;};;};}", "return c;", new BlockSimplify(), Wrap.Statement);
+    assertSimplifiesTo("{{{;return c;};;};}", "return c;", new BlockSimplify(), Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD);
   }
 
   /* Begin of already good tests */
   @Test public void simplifyBlockEmpty() {
-    assertSimplifiesTo("{;;}", "", new BlockSimplify(), Wrap.Statement);
+    assertSimplifiesTo("{;;}", "", new BlockSimplify(), Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD);
   }
 
   @Test public void simplifyBlockExpressionVsExpression() {
@@ -3515,7 +3515,7 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Test public void simplifyBlockThreeStatements() {
-    assertSimplifiesTo("{i++;{{;;return b; }}j++;}", "i++;return b;j++;", new BlockSimplify(), Wrap.Statement);
+    assertSimplifiesTo("{i++;{{;;return b; }}j++;}", "i++;return b;j++;", new BlockSimplify(), Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD);
   }
 
   @Test public void simplifyLogicalNegationNested() {
@@ -3954,7 +3954,7 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Test public void testPeel() {
-    azzert.that(Wrap.Expression.off(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge")),
+    azzert.that(Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT.off(Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT.on("on * notion * of * no * nothion != the * plain + kludge")),
         is("on * notion * of * no * nothion != the * plain + kludge"));
   }
 
@@ -3964,9 +3964,9 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test public void twoOpportunityExample() {
     azzert.that(TrimmerTestsUtils.countOpportunities(new Trimmer(),
-        (CompilationUnit) MakeAST.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
+        (CompilationUnit) MakeAST.COMPILATION_UNIT.from(Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
     azzert.that(TrimmerTestsUtils.countOpportunities(new Trimmer(),
-        (CompilationUnit) MakeAST.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
+        (CompilationUnit) MakeAST.COMPILATION_UNIT.from(Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
   }
 
   @Test public void unsafeBlockSimlify() {

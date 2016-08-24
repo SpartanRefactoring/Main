@@ -56,7 +56,7 @@ public final class InfixComparisonBooleanLiteral extends Wring.ReplaceCurrentNod
     return plant(!negating(e, literal) ? nonliteral : logicalNot(nonliteral)).into(e.getParent());
   }
 
-  @Override public boolean scopeIncludes(final InfixExpression e) {
+  @Override public boolean claims(final InfixExpression e) {
     return !e.hasExtendedOperands() && in(e.getOperator(), EQUALS, NOT_EQUALS) && (literalOnLeft(e) || literalOnRight(e));
   }
 }

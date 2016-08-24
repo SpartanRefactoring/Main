@@ -35,7 +35,7 @@ public final class IfThrowFooElseThrowBar extends Wring.ReplaceCurrentNode<IfSta
     return then == null || elze == null ? null : makeThrowStatement(subject.pair(then, elze).toCondition(condition));
   }
 
-  @Override boolean scopeIncludes(final IfStatement s) {
+  @Override boolean claims(final IfStatement s) {
     return s != null && extract.throwExpression(then(s)) != null && extract.throwExpression(elze(s)) != null;
   }
 }

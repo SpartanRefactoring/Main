@@ -27,7 +27,7 @@ public final class InfixConditionalOrFalse extends Wring.ReplaceCurrentNode<Infi
     return Wrings.eliminateLiteral(e, false);
   }
 
-  @Override boolean scopeIncludes(final InfixExpression e) {
+  @Override boolean claims(final InfixExpression e) {
     return e != null && Is.conditionalOr(e) && Have.falseLiteral(extract.allOperands(e));
   }
 }

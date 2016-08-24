@@ -57,7 +57,7 @@ public class TrimmerTestsUtils {
           azzert.that("No trimming of " + get(), peeled, is(not(get())));
         if (Funcs.gist(peeled).equals(Funcs.gist(get())))
           azzert.that("Trimming of " + get() + "is just reformatting", Funcs.gist(get()), is(not(Funcs.gist(peeled))));
-        assertSimilar(expected, peeled);
+        assertSimilar("Attempting " ,expected, peeled);
       }
       return new Operand(expected);
     }
@@ -108,12 +108,12 @@ public class TrimmerTestsUtils {
 
     public OperandToWring<N> in(final Wring<N> w) {
       final N findNode = findNode(w);
-      azzert.that(w.scopeIncludes(findNode), is(true));
+      azzert.that(w.claims(findNode), is(true));
       return this;
     }
 
     public OperandToWring<N> notIn(final Wring<N> w) {
-      azzert.that(w.scopeIncludes(findNode(w)), is(false));
+      azzert.that(w.claims(findNode(w)), is(false));
       return this;
     }
   }

@@ -342,7 +342,8 @@ public class subject {
    * @param es a list of expressions
    * @return a new Several instance using the given list of expressions */
   public static Several operands(final List<Expression> es) {
-    return new Several(es);
+    assert es != null;
+    return new Several(es); // Pun intended
   }
 
   /** Create an instance of 2 expressions together

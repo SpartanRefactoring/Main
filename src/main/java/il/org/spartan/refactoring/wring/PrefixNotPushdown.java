@@ -118,7 +118,7 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
     return simplifyNot(e);
   }
 
-  @Override public boolean scopeIncludes(final PrefixExpression e) {
+  @Override public boolean claims(final PrefixExpression e) {
     return e != null && asNot(e) != null && hasOpportunity(asNot(e));
   }
 }

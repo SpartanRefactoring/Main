@@ -15,8 +15,8 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class InfixAdditionSort extends Wring.InfixSorting implements Kind.Canonicalization {
-  @Override boolean eligible(final InfixExpression e) {
-    return Is.notString(e) && super.eligible(e);
+  @Override boolean canMake(final InfixExpression e) {
+    return Is.notString(e) && super.canMake(e);
   }
 
   @Override Expression replacement(final InfixExpression e) {
@@ -26,7 +26,7 @@ public final class InfixAdditionSort extends Wring.InfixSorting implements Kind.
     return !notString || !canSort ? null : subject.operands(operands).to(e.getOperator());
   }
 
-  @Override boolean scopeIncludes(final InfixExpression e) {
+  @Override boolean claims(final InfixExpression e) {
     return e.getOperator() == PLUS;
   }
 

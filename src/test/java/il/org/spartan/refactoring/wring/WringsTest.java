@@ -23,7 +23,7 @@ import il.org.spartan.refactoring.utils.*;
 public class WringsTest {
   @Test public void countInEnhancedFor() throws IllegalArgumentException, MalformedTreeException {
     final String input = "int f() { for (int a: as) return a; }";
-    final Document d = Wrap.Method.intoDocument(input);
+    final Document d = Wrap.A_CLASS_MEMBER_OF_SOME_SORT.intoDocument(input);
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(d);
     final MethodDeclaration m = extract.firstMethodDeclaration(u);
     azzert.that(m, iz(input));
@@ -40,7 +40,7 @@ public class WringsTest {
     final Expression e = Into.e("f()");
     azzert.that(Is.sideEffectFree(e), is(false));
     final String input = "int a = f(); return a += 2 * a;";
-    final CompilationUnit u = Wrap.Statement.intoCompilationUnit(input);
+    final CompilationUnit u = Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD.intoCompilationUnit(input);
     final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
     azzert.that(f, iz("a=f()"));
     final SimpleName n = f.getName();
@@ -82,7 +82,7 @@ public class WringsTest {
 
   @Test public void renameInEnhancedFor() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = "int f() { for (int a: as) return a; }";
-    final Document d = Wrap.Method.intoDocument(input);
+    final Document d = Wrap.A_CLASS_MEMBER_OF_SOME_SORT.intoDocument(input);
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(d);
     final MethodDeclaration m = extract.firstMethodDeclaration(u);
     azzert.that(m, iz(input));
@@ -95,14 +95,14 @@ public class WringsTest {
     Wrings.rename(n, n.getAST().newSimpleName("$"), m, r, null);
     final TextEdit e = r.rewriteAST(d, null);
     e.apply(d);
-    final String output = Wrap.Method.off(d.get());
+    final String output = Wrap.A_CLASS_MEMBER_OF_SOME_SORT.off(d.get());
     azzert.notNull(output);
     azzert.that(output, iz(" int f() {for(int $:as)return $;}"));
   }
 
   @Test public void renameIntoDoWhile() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = "void f() { int b = 3; do ; while(b != 0); }";
-    final Document d = Wrap.Method.intoDocument(input);
+    final Document d = Wrap.A_CLASS_MEMBER_OF_SOME_SORT.intoDocument(input);
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(d);
     final MethodDeclaration m = extract.firstMethodDeclaration(u);
     azzert.that(m, iz(input));
@@ -114,6 +114,6 @@ public class WringsTest {
     Wrings.rename(b, b.getAST().newSimpleName("c"), m, r, null);
     final TextEdit e = r.rewriteAST(d, null);
     e.apply(d);
-    azzert.that(Wrap.Method.off(d.get()), iz("void f() { int c = 3; do ; while(c != 0); }"));
+    azzert.that(Wrap.A_CLASS_MEMBER_OF_SOME_SORT.off(d.get()), iz("void f() { int c = 3; do ; while(c != 0); }"));
   }
 }

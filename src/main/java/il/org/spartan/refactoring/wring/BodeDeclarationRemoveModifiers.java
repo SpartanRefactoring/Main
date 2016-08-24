@@ -121,7 +121,7 @@ public class BodeDeclarationRemoveModifiers<N extends BodyDeclaration> extends W
     return prune(duplicate($), redundancies($));
   }
 
-  @Override boolean scopeIncludes(final BodyDeclaration ¢) {
+  @Override boolean   claims(final BodyDeclaration ¢) {
     final Set<Predicate<Modifier>> ps = redundancies(¢);
     return !ps.isEmpty() && !matchess(¢, ps).isEmpty();
   }

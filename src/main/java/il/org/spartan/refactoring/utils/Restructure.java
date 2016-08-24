@@ -139,6 +139,7 @@ public enum Restructure {
   }
 
   private static List<Expression> flattenInto(final Operator o, final List<Expression> es, final List<Expression> $) {
+    assert $ != null;
     for (final Expression e : es)
       flattenInto(o, e, $);
     return $;

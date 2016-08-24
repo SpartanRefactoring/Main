@@ -24,7 +24,7 @@ public final class PostfixToPrefix extends Wring.ReplaceCurrentNode<PostfixExpre
     return "Convert post-" + description(e.getOperator()) + " of " + operand(e) + " to pre-" + description(e.getOperator());
   }
 
-  @Override protected boolean eligible(final PostfixExpression e) {
+  @Override protected boolean canMake(final PostfixExpression e) {
     return !(e.getParent() instanceof Expression) //
         && AncestorSearch.forType(ASTNode.VARIABLE_DECLARATION_STATEMENT).from(e) == null //
         && AncestorSearch.forType(ASTNode.SINGLE_VARIABLE_DECLARATION).from(e) == null //
@@ -35,7 +35,7 @@ public final class PostfixToPrefix extends Wring.ReplaceCurrentNode<PostfixExpre
     return subject.operand(extract.operand(e)).to(pre2post(e.getOperator()));
   }
 
-  @Override boolean scopeIncludes(@SuppressWarnings("unused") final PostfixExpression __) {
+  @Override boolean claims(@SuppressWarnings("unused") final PostfixExpression __) {
     return true;
   }
 }

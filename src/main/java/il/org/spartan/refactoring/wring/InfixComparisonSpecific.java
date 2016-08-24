@@ -29,7 +29,7 @@ public final class InfixComparisonSpecific extends Wring.ReplaceCurrentNode<Infi
     return "Exchange left and right operands of comparison";
   }
 
-  @Override boolean eligible(final InfixExpression e) {
+  @Override boolean canMake(final InfixExpression e) {
     return specifity.compare(left(e), right(e)) < 0;
   }
 
@@ -37,7 +37,7 @@ public final class InfixComparisonSpecific extends Wring.ReplaceCurrentNode<Infi
     return flip(e);
   }
 
-  @Override public boolean scopeIncludes(final InfixExpression e) {
+  @Override public boolean claims(final InfixExpression e) {
     return !e.hasExtendedOperands() && Is.comparison(e) && (Specificity.defined(left(e)) || Specificity.defined(right(e)));
   }
 }

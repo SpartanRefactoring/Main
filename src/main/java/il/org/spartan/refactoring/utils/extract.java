@@ -23,7 +23,7 @@ public enum extract {
    * @param e JD
    * @return a {@link List} of all operands to the parameter */
   public static List<Expression> allOperands(final InfixExpression e) {
-    return extract.operands(flatten(e));
+    return e == null ? null : extract.operands(flatten(e));
   }
 
   /** Retrieves the ancestors of the ASTNode, via an Iterator.
