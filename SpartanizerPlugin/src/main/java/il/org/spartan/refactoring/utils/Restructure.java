@@ -78,7 +78,7 @@ public enum Restructure {
    *         operands. */
   public static InfixExpression flatten(final InfixExpression $) {
     assert $ != null;
-    Operator o = $.getOperator();
+    final Operator o = $.getOperator();
     assert o != null;
     return subject.operands(flattenInto(o, extract.operands($), new ArrayList<Expression>())).to(duplicate($).getOperator());
   }
