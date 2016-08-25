@@ -9,7 +9,7 @@ import org.eclipse.core.runtime.*;
  * @since 2013/07/01 */
 public class Nature implements IProjectNature {
   /** ID of this project nature */
-  public static final String NATURE_ID = "org.spartan.refactoring.NatureID";
+  public static final String NATURE_ID = "il.org.spartan.refactoring.NatureID";
   /** The project to which we relate */
   private IProject project;
 
