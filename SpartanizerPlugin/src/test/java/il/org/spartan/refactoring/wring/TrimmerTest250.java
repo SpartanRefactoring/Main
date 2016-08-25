@@ -578,18 +578,16 @@ public class TrimmerTest250 {
   @Test public void issue75n() {
     trimming("(2*+(a+b))").to("(2*(a+b))");
   }
- @Ignore("Disabled: there is some bug in distributive rule") 
-  @Test public void issue76a() {
+
+  @Ignore("Disabled: there is some bug in distributive rule") @Test public void issue76a() {
     trimming("a*b + a*c").to("a*(b+c)");
   }
-  
- @Ignore("Disabled: there is some bug in distributive rule") 
-  @Test public void issue76b() {
+
+  @Ignore("Disabled: there is some bug in distributive rule") @Test public void issue76b() {
     trimming("b*a + c*a").to("a*(b+c)");
   }
-  
- @Ignore("Disabled: there is some bug in distributive rule") 
-  @Test public void issue76c() {
+
+  @Ignore("Disabled: there is some bug in distributive rule") @Test public void issue76c() {
     trimming("b*a + c*a + d*a").to("a*(b+c+d)");
   }
 
@@ -634,7 +632,8 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue85_86f() {
-    trimming("if(true){   \n" + "if(true) a();   \n" + "else b(); }   \n" + "else{   \n" + "if(false) a();   \n" + "else b();" + "}").to("{a();}").to("a();");
+    trimming("if(true){   \n" + "if(true) a();   \n" + "else b(); }   \n" + "else{   \n" + "if(false) a();   \n" + "else b();" + "}").to("{a();}")
+        .to("a();");
   }
 
   @Test public void issue85_86g() {
@@ -652,35 +651,15 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue85_86j() {
-    trimming("if(true){ \n"
-            +  "if(true) \n"
-               +   "a(); \n"
-              +"else \n"
-               +   "b(); \n"
-            + "} \n"
-            + "else c();").to("{a();}")
-    .to("a();");
+    trimming("if(true){ \n" + "if(true) \n" + "a(); \n" + "else \n" + "b(); \n" + "} \n" + "else c();").to("{a();}").to("a();");
   }
 
   @Test public void issue85_86k() {
-    trimming("if(false){ \n"
-        +  "if(true) \n"
-        +   "a(); \n"
-       +"else \n"
-        +   "b(); \n"
-     + "} \n"
-     + "else c();").to("c();");
+    trimming("if(false){ \n" + "if(true) \n" + "a(); \n" + "else \n" + "b(); \n" + "} \n" + "else c();").to("c();");
   }
 
   @Test public void issue85_86l() {
-    trimming("if(false)"
-        + "c();"
-     + "else {\n"
-     +    "if(true) \n"
-     +      "a(); \n"
-     +    "else \n"
-     +      "b(); \n"
-     + "} \n").to("{a();}").to("a();");
+    trimming("if(false)" + "c();" + "else {\n" + "if(true) \n" + "a(); \n" + "else \n" + "b(); \n" + "} \n").to("{a();}").to("a();");
   }
 
   @Test public void issue87a() {
