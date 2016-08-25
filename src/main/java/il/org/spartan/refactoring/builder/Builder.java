@@ -23,11 +23,11 @@ public class Builder extends IncrementalProjectBuilder {
   /** Empty prefix for brevity */
   public static final String EMPTY_PREFIX = "";
   /** the ID under which this builder is registered */
-  public static final String BUILDER_ID = "org.spartan.refactoring.BuilderID";
-  private static final String MARKER_TYPE = "org.spartan.refactoring.spartanizationSuggestion";
+  public static final String BUILDER_ID = "il.org.spartan.refactoring.BuilderID";
+  private static final String MARKER_TYPE = "il.org.spartan.refactoring.spartanizationSuggestion";
   /** the key in the marker's properties map under which the type of the
    * spartanization is stored */
-  public static final String SPARTANIZATION_TYPE_KEY = "org.spartan.refactoring.spartanizationType";
+  public static final String SPARTANIZATION_TYPE_KEY = "il.org.spartan.refactoring.spartanizationType";
 
   private static void addMarker(final Spartanization s, final Rewrite r, final IMarker m) throws CoreException {
     m.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
