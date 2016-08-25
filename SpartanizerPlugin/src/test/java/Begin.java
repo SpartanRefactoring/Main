@@ -1,3 +1,2 @@
-
 public @interface Begin {
 }
