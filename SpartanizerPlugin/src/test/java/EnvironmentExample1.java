@@ -56,8 +56,9 @@ public class EnvironmentExample1 {
       @End("x") class B {}
     }
     @Environment({"x","y"}) static class C1{
-      @Environment({"x","C1"}) public static int y; //doesn't know 'y' cause it is a static class (x is static also)
-      @Environment({"x","C1","y"}) public static int x;
+      @Environment({"x"}) public static int y; //doesn't know 'y' cause it is a static class (x is static also)
+      C1 c1;
+      @Environment({"x","y","c1"}) public static int x;
       public static void change_x() {
         @Begin class A {}
         x = 3; //interesting... what does it do? lol
@@ -84,14 +85,14 @@ public class EnvironmentExample1 {
       @End({"x","y"}) class D {}
     }
     @Environment({"x","y"}) static class x_hiding {
-      @Environment({"x_hiding"}) public static int x; // may be @Environment({}) 
-      @Environment({"x_hiding","x"}) y_hiding xsy;
+      @Environment({}) public static int x; // may be @Environment({}) 
+      @Environment({"x"}) y_hiding xsy;
       x_hiding(){
         x = 2;
         xsy = new y_hiding();
       }
-      @Environment({"x_hiding","x","xsy"}) public class y_hiding { //not static in purpose!
-        @Environment({"x_hiding","x","xsy","y_hiding"}) public int y;
+      @Environment({"x","xsy"}) public class y_hiding { //not static in purpose!
+        @Environment({"x","xsy"}) public int y;
         @Begin class C {}
         y_hiding(){
           @Begin class E {}
@@ -116,22 +117,30 @@ public class EnvironmentExample1 {
   }
 
   public static class EX4 {
-    int x;
+    @Environment({}) int x;
     class Parent{
+      @Begin class Q {}
       Parent(){
         x = 0;
       }
+      @End({"x"}) class QQ {}
       void set_x(){
+        @Begin class Q {}
         x = 1;
+        @End({"x"}) class QQ {}
       }
     }
     class Child1 extends Parent{
       Child1(){
+        @Begin class Q {}
         x = 2;
+        @End({"x"}) class QQ {}
       }
       @Override
       void set_x(){
+        @Begin class Q {}
         x = 3;
+        @End({"x"}) class QQ {}
       }
     }
     class Child2 extends Parent{
@@ -141,16 +150,20 @@ public class EnvironmentExample1 {
       }
       @Override
       void set_x(){
+        @Begin class Q {}
         x = 5;
+        @End({"x"}) class QQ {}
       }
     }
     void func() {
-      Parent p = new Parent();
-      Child1 c1 = new Child1();
-      Child2 c2 = new Child2();
+      @Begin class Q {}
+      @Environment({"x"}) Parent p = new Parent();
+      @Environment({"x","p"})Child1 c1 = new Child1();
+      @Environment({"x","p","c1"})Child2 c2 = new Child2();
       p.set_x();
       c1.set_x();
       c2.set_x();
+      @End({"x"}) class QQ {}
     }
   }
   
