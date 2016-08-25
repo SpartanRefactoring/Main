@@ -170,36 +170,44 @@ public class EnvironmentExample1 {
   {
     EX5.x = 0;
   }
-  public static class EX5 {
+  @Environment({"x"}) public static class EX5 {
     static int x;
-    class a{
+    @Environment({"x"}) class a{
       int a_x;
-      class b{
+      @Environment({"x", "a_x"}) class b{
         int b_x;
-        class c{
+        @Environment({"x", "a_x", "b_x"}) class c{
           int c_x;
-          class d{
+          @Environment({"x", "a_x", "b_x", "c_x"}) class d{
             int d_x;
-            void d_func(){
+            @Environment({"x", "a_x", "b_x", "c_x", "d_x"}) void d_func(){
+              @Begin class opening {/**/} 
               ++a_x;
               ++b_x;
               ++c_x;
               ++d_x;
+              @End({"a_x", "b_x", "c_x", "d_x"}) class closing {/**/}
             }
           }
-          void c_func(){
+          @Environment({"x", "a_x", "b_x", "c_x"}) void c_func(){
+            @Begin class opening {/**/}
             ++a_x;
             ++b_x;
             ++c_x;
+            @End({"a_x", "b_x", "c_x"}) class closing {/**/}
           }
         }
-        void b_func(){
+        @Environment({"x", "a_x", "b_x"}) void b_func(){
+          @Begin class opening {/**/}
           ++a_x;
           ++b_x;
+          @End({"a_x", "b_x"}) class closing {/**/}
         }
       }
-      void a_func(){
+      @Environment({"x", "a_x", "b_x"}) void a_func(){
+        @Begin class opening {/**/}
         ++a_x;
+        @End({"a_x"}) class closing {/**/}
       }
     }
   }
