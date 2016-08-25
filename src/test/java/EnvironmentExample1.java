@@ -8,16 +8,16 @@ import il.org.spartan.*;
 
 public class EnvironmentExample1 {
   void EX1() {
-    @NastedEnvironment({}) @FlatEnvironment({}) String s = "a";
+    @NestedEnvironment({}) @FlatEnvironment({}) String s = "a";
     s.equals("a");
     "a".equals(s);
-    @NastedEnvironment({"EX1.s#String"}) @FlatEnvironment({ "s" }) int a = 0;
+    @NestedEnvironment({"EX1.s#String"}) @FlatEnvironment({ "s" }) int a = 0;
     out.print("a");
-    @NastedEnvironment({ "EX1.a#int", "EX1.s#String" }) @FlatEnvironment({ "a","s" }) int b = 0;
+    @NestedEnvironment({ "EX1.a#int", "EX1.s#String" }) @FlatEnvironment({ "a","s" }) int b = 0;
     @Begin class A {}
     ++a;
     @End("a") class B {}
-    @NastedEnvironment({ "EX1.a#int", "EX1.s#String" , "EX1.b#int" }) @FlatEnvironment({ "a","s","b" }) int c = 0;
+    @NestedEnvironment({ "EX1.a#int", "EX1.s#String" , "EX1.b#int" }) @FlatEnvironment({ "a","s","b" }) int c = 0;
     class Z {
       void g() {
         new Z() {
@@ -25,7 +25,7 @@ public class EnvironmentExample1 {
             class Y {
               Y() {
                 int q;
-                @NastedEnvironment({"EX1.a#int", "EX1.s#String" , "EX1.b#int", "EX1.c#int", "EX1.Z.Y.q#int"}) int d = 0;
+                @NestedEnvironment({"EX1.a#int", "EX1.s#String" , "EX1.b#int", "EX1.c#int", "EX1.Z.Y.q#int"}) int d = 0;
                 @Begin class A {}
                 d = 3;
                 @End("d") class B {}
@@ -45,8 +45,8 @@ public class EnvironmentExample1 {
     @End("x") class B {}
   }
   public static class EX2 { // initializator
-    @NastedEnvironment({}) @FlatEnvironment({}) static int x;
-    @NastedEnvironment({"EX2.x#int"}) @FlatEnvironment({"x"}) int y;
+    @NestedEnvironment({}) @FlatEnvironment({}) static int x;
+    @NestedEnvironment({"EX2.x#int"}) @FlatEnvironment({"x"}) int y;
     EX2() {
       @Begin class A {}
       x = 1;
@@ -58,9 +58,9 @@ public class EnvironmentExample1 {
       @End("x") class B {}
     }
     @FlatEnvironment({"x","y"}) static class C1{
-      @NastedEnvironment({"EX2.C1.x#int"}) @FlatEnvironment({"x"}) public static int y; //doesn't know 'y' cause it is a static class (x is static also)
+      @NestedEnvironment({"EX2.C1.x#int"}) @FlatEnvironment({"x"}) public static int y; //no 'y' cause it is a static class (x is static also)
       C1 c1;
-      @NastedEnvironment({"EX2.C1.x#int","EX2.C1.y#int","EX2.C1.c1#C1"}) @FlatEnvironment({"x","y","c1"}) public static int x;
+      @NestedEnvironment({"EX2.C1.x#int","EX2.C1.y#int","EX2.C1.c1#C1"}) @FlatEnvironment({"x","y","c1"}) public static int x;
       public static void change_x() {
         @Begin class A {}
         x = 3; //interesting... what does it do? lol
@@ -76,7 +76,7 @@ public class EnvironmentExample1 {
   
   
   public static class EX3 { // hiding
-    @NastedEnvironment({}) @FlatEnvironment({}) int x, y;
+    @NestedEnvironment({}) @FlatEnvironment({}) int x, y;
     EX3(){
       @Begin class A {}
       x = y = 0;
@@ -86,14 +86,14 @@ public class EnvironmentExample1 {
       x = 1;
       @End({"x","y"}) class D {}
     }
-    @NastedEnvironment({"EX3.x", "EX3.y"}) @FlatEnvironment({"x","y"}) static class x_hiding {
+    @NestedEnvironment({"EX3.x", "EX3.y"}) @FlatEnvironment({"x","y"}) static class x_hiding {
       @FlatEnvironment({}) public static int x; 
-      @NastedEnvironment({"EX3.x_hiding.x#int"}) @FlatEnvironment({"x"}) y_hiding xsy;
+      @NestedEnvironment({"EX3.x_hiding.x#int"}) @FlatEnvironment({"x"}) y_hiding xsy;
       x_hiding(){
         x = 2;
         xsy = new y_hiding();
       }
-      @NastedEnvironment({"EX3.x_hiding.x#int", "EX3.x_hiding.xsy#y_hiding"}) @FlatEnvironment({"x","xsy"}) public class y_hiding { //not static in purpose!
+      @NestedEnvironment({"EX3.x_hiding.x#int", "EX3.x_hiding.xsy#y_hiding"}) @FlatEnvironment({"x","xsy"}) public class y_hiding { //not static in purpose!
         @FlatEnvironment({"x","xsy"}) public int y;
         @Begin class C {}
         y_hiding(){
@@ -104,7 +104,7 @@ public class EnvironmentExample1 {
         @End({"y"}) class D {}
       }
     }
-    @NastedEnvironment({"EX3.x", "EX3.y"}) @FlatEnvironment({"x","y"}) int q; //should not recognize xsy
+    @NestedEnvironment({"EX3.x", "EX3.y"}) @FlatEnvironment({"x","y"}) int q; //should not recognize xsy
     static void func(){
       @Begin class Q {}
       EX3 top = new EX3();
@@ -161,7 +161,7 @@ public class EnvironmentExample1 {
       @Begin class Q {}
       @FlatEnvironment({"x"}) Parent p = new Parent();
       @FlatEnvironment({"x","p"})Child1 c1 = new Child1();
-      @NastedEnvironment({"EX4.x#int", "EX4.p#Parent", "EX4.c1#C1"})@FlatEnvironment({"x","p","c1"})Child2 c2 = new Child2();
+      @NestedEnvironment({"EX4.x#int", "EX4.p#Parent", "EX4.c1#C1"})@FlatEnvironment({"x","p","c1"})Child2 c2 = new Child2();
       p.set_x();
       c1.set_x();
       c2.set_x();
@@ -215,34 +215,38 @@ public class EnvironmentExample1 {
   }
   
   public static class EX6 {
-    class Outer{
+    @FlatEnvironment({}) class Outer{
       int x;
-      class Inner{
-        final Outer outer = Outer.this;
-        void func(Inner p){
+      @FlatEnvironment({"x"}) class Inner{
+        final Outer outer = Outer.this; //Supposedly, this should allow us to access the outer x.
+        @FlatEnvironment({"x", "outer"}) void func(Inner p){
+          @Begin class m{/**/} 
           // working on the current instance
           x = 0;
           Outer.this.x = 1;
           // working on another instance
           p.outer.x = 2; 
+          @End({"x"}) class n {/**/} 
         }
       } 
     }
     class Outer2{
       int x;
-      class Inner2{
+      @FlatEnvironment({"x"}) class Inner2{
         int x;
         final Outer2 outer2 = Outer2.this;
-        void func(Inner2 p){
+        @FlatEnvironment({"x","outer2"}) void func(Inner2 p){
+          @Begin class A{/**/}
           x = 0;
           Outer2.this.x = 1;
-          p.outer2.x = 2; 
+          p.outer2.x = 2;
+          @End({"x"}) class B {/**/}
         }
       } 
     } 
   }
 
-  public static class EX7_func_param_name_to_ENV {
+  public static class EX7 { // func_param_name_to_ENV
     Integer x = 1;
     class Complex{
       int r;
@@ -255,7 +259,18 @@ public class EnvironmentExample1 {
     Integer o = func(x, "Alex&Dan", new Complex());
   }
   
-  public static class EX9_template {
+  public static class EX8 {
+    class Arr{
+      String[] arr;
+      @NestedEnvironment({"EX8.Arr.arr#String[]"}) @FlatEnvironment({"arr"}) void foo(){
+        @Begin class m {/**/}
+        arr[2] = "$$$";
+        @End({"arr"}) class n{/**/}
+      }
+    }
+  }
+  
+  public static class EX9 { // template
     public class SOList<Type> implements Iterable<Type> {
       private Type[] arrayList;
       @FlatEnvironment({"arrayList"}) private int currentSize;
@@ -300,7 +315,7 @@ public class EnvironmentExample1 {
   
   
   //for the end
-  public static class EX_for_testing_the_use_of_names {
+  public static class EX99 { // for_testing_the_use_of_names
     class Oompa_Loompa {
       Oompa_Loompa Oompa_Loompa; /*A*/
       <Oompa_Loompa> Oompa_Loompa() {}
