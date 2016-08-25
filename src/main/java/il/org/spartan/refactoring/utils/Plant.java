@@ -38,7 +38,7 @@ public class Plant {
   }
 
   private boolean noParenthesisRequiredIn(final ASTNode host) {
-    return Precedence.greater(host, inner) || Precedence.equal(host, inner) && !Is.nonAssociative(host);
+    return Precedence.greater(host, inner) || Precedence.equal(host, inner) && Is.associative(host);
   }
 
   private ParenthesizedExpression parenthesize(final Expression e) {

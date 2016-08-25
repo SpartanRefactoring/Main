@@ -8,7 +8,7 @@ import il.org.spartan.refactoring.utils.*;
  * code>a-b-c</code>
  * @author Yossi Gil
  * @since 2016 */
-public final class InfixAdditionSubtractionExpand extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.Canonicalization {
+public final class InfixTermsExpand extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.Canonicalization {
   @Override Expression replacement(final InfixExpression e) {
     if (TermsCollector.isLeafTerm(e))
       return null;

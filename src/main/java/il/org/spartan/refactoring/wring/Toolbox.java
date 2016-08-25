@@ -9,47 +9,16 @@ import org.eclipse.jdt.core.dom.*;
  * @author Yossi Gil
  * @since 2015-08-22 */
 public class Toolbox {
-  /** A builder for the enclosing class.
-   * @author Yossi Gil
-   * @since 2015-08-22 */
-  public static class Maker extends Toolbox {
-    /** Associate a bunch of{@link Wring} with a given sub-class of
-     * {@link ASTNode}.
-     * @param c JD
-     * @param ws JD
-     * @return <code><b>this</b></code>, for easy chaining. */
-    @SafeVarargs public final <N extends ASTNode> Maker add(final Class<N> c, final Wring<N>... ws) {
-      final List<Wring<N>> l = get(c);
-      for (final Wring<N> w : ws) {
-        if (w == null)
-          break;
-        if (!w.wringGroup().isEnabled())
-          continue;
-        l.add(w);
-      }
-      return this;
-    }
-
-    /** Terminate a fluent API chain.
-     * @return newly created object */
-    public Toolbox seal() {
-      return this;
-    }
-  }
-
   /** The default instance of this class */
-  static Toolbox instance;
-
-  private static <N extends ASTNode> Wring<N> find(final N n, final List<Wring<N>> ws) {
-    for (final Wring<N> $ : ws)
-      if ($.claims(n))
-        return $;
-    return null;
+  public static Toolbox defaultInstance() {
+    return fullSuite;
   }
 
-  /** Initialize this class' internal instance object */
-  public static void generate() {
-    instance = new Maker()//
+  /** Initialize this class's default instance object */
+  private static Toolbox fullSuite;
+
+  public static void recollect() {
+    fullSuite = new Maker()//
         .add(Assignment.class, //
             new AssignmentAndAssignment(), //
             new AssignmentAndReturn(), //
@@ -63,9 +32,9 @@ public class Toolbox {
             null) //
         .add(InfixExpression.class, //
             new InfixSubtractionZero(), //
-            new InfixAdditionSubtractionExpand(), //
+            new InfixTermsExpand(), //
             new InfixDivisionMultiplicationNegatives(), //
-            new InfixAdditionZero(), // must be before InfixAdditionSort
+            new InfixAdditionZero(), // must be prior to InfixAdditionSort
             new InfixAdditionSort(), //
             new InfixComparisonBooleanLiteral(), //
             new InfixConditionalAndTrue(), //
@@ -156,11 +125,11 @@ public class Toolbox {
         .seal();
   }
 
-  public static Toolbox instance() {
-    return instance;
-  }
-
   private final Map<Class<? extends ASTNode>, List<Object>> inner = new HashMap<>();
+
+  public Toolbox(final Wring<?> w) {
+    // TODO Auto-generated constructor stub
+  }
 
   /** Find the first {@link Wring} appropriate for an {@link ASTNode}
    * @param n JD
@@ -178,5 +147,40 @@ public class Toolbox {
 
   <N extends ASTNode> List<Wring<N>> get(final N n) {
     return get(n.getClass());
+  }
+
+  private <N extends ASTNode> Wring<N> find(final N n, final List<Wring<N>> ws) {
+    for (final Wring<N> $ : ws)
+      if ($.claims(n))
+        return $;
+    return null;
+  }
+
+  /** A builder for the enclosing class.
+   * @author Yossi Gil
+   * @since 2015-08-22 */
+  public static class Maker extends Toolbox {
+    /** Associate a bunch of{@link Wring} with a given sub-class of
+     * {@link ASTNode}.
+     * @param c JD
+     * @param ws JD
+     * @return <code><b>this</b></code>, for easy chaining. */
+    @SafeVarargs public final <N extends ASTNode> Maker add(final Class<N> c, final Wring<N>... ws) {
+      final List<Wring<N>> l = get(c);
+      for (final Wring<N> w : ws) {
+        if (w == null)
+          break;
+        if (!w.wringGroup().isEnabled())
+          continue;
+        l.add(w);
+      }
+      return this;
+    }
+
+    /** Terminate a fluent API chain.
+     * @return newly created object */
+    public Toolbox seal() {
+      return this;
+    }
   }
 }

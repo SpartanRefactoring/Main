@@ -856,7 +856,17 @@ public enum Is {
         SIMPLE_NAME, //
         STRING_LITERAL, //
         THIS_EXPRESSION, //
+        PREFIX_EXPRESSION, //
+        POSTFIX_EXPRESSION, //
         TYPE_LITERAL //
     );
+  }
+
+  static boolean associative(ASTNode n) {
+    return associative(asInfixExpression(n));
+  }
+
+  static boolean associative(final InfixExpression e) {
+    return e == null || !in(e.getOperator(),MINUS,DIVIDE,REMAINDER);
   }
 }

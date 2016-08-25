@@ -145,6 +145,13 @@ public abstract class Spartanization extends Refactoring {
 
   /** creates an ASTRewrite which contains the changes
    * @param u the Compilation Unit (outermost ASTNode in the Java Grammar)
+   * @return an ASTRewrite which contains the changes */
+  public final ASTRewrite createRewrite(final CompilationUnit u) {
+    return createRewrite(u, null);
+  }
+
+  /** creates an ASTRewrite which contains the changes
+   * @param u the Compilation Unit (outermost ASTNode in the Java Grammar)
    * @param pm a progress monitor in which the progress of the refactoring is
    *        displayed
    * @return an ASTRewrite which contains the changes */

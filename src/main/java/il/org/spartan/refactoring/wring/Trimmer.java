@@ -42,16 +42,26 @@ public final class Trimmer extends Spartanization {
     return true;
   }
 
+  public final Toolbox toolbox;
+
   /** Instantiates this class */
   public Trimmer() {
+    this(Toolbox.defaultInstance());
+  }
+
+  public Trimmer(Toolbox toolbox) {
     super("Trimmer");
-    Toolbox.generate();
+    this.toolbox = toolbox;
+  }
+
+  public Trimmer(Wring<?> w) {
+    this(new Toolbox(w));
   }
 
   @Override protected ASTVisitor collect(final List<Rewrite> $) {
     return new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
-        final Wring<N> w = Toolbox.instance().find(n);
+        final Wring<N> w = toolbox.find(n);
         return w == null || w.cantMake(n) || prune(w.make(n, exclude), $);
       }
     };
@@ -62,7 +72,7 @@ public final class Trimmer extends Spartanization {
       @Override <N extends ASTNode> boolean go(final N n) {
         if (!inRange(m, n))
           return true;
-        final Wring<N> w = Toolbox.instance().find(n);
+        final Wring<N> w = toolbox.find(n);
         if (w != null) {
           final Rewrite make = w.make(n, exclude);
           if (make != null)
