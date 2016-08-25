@@ -13,23 +13,24 @@ public class EnvironmentExample1 {
     "a".equals(s);
     @NastedEnvironment({"EX1.s#String"}) @FlatEnvironment({ "s" }) int a = 0;
     out.print("a");
-    @FlatEnvironment({ "EX1.a#int", "EX1.s#String" }) int b = 0;
+    @NastedEnvironment({ "EX1.a#int", "EX1.s#String" }) @FlatEnvironment({ "a","s" }) int b = 0;
     @Begin class A {}
     ++a;
     @End("a") class B {}
-    @FlatEnvironment({ "EX1.a#int", "EX1.s#String" , "EX1.b#int" }) int c = 0;
+    @NastedEnvironment({ "EX1.a#int", "EX1.s#String" , "EX1.b#int" }) @FlatEnvironment({ "a","s","b" }) int c = 0;
     class Z {
       void g() {
         new Z() {
           int f(int a) {
             class Y {
               Y() {
-                @FlatEnvironment({"EX1.a#int", "EX1.s#String" , "EX1.b#int", "EX1.c#int"}) int d = 0;
+                int q;
+                @NastedEnvironment({"EX1.a#int", "EX1.s#String" , "EX1.b#int", "EX1.c#int", "EX1.Z.Y.q#int"}) int d = 0;
                 @Begin class A {}
                 d = 3;
                 @End("d") class B {}
               }
-              @FlatEnvironment({}) int f;
+              @FlatEnvironment({"a","s","b","c"}) int f; //not q!
             }
             return new Y().hashCode();
           }
@@ -40,13 +41,13 @@ public class EnvironmentExample1 {
   
   {  
     @Begin class A {}
-    EX2_initializator.x = 0;
+    EX2.x = 0;
     @End("x") class B {}
   }
-  public static class EX2_initializator {
-    @FlatEnvironment({}) static int x;
-    @FlatEnvironment({"x"}) int y;
-    EX2_initializator() {
+  public static class EX2 { // initializator
+    @NastedEnvironment({}) @FlatEnvironment({}) static int x;
+    @NastedEnvironment({"EX2.x#int"}) @FlatEnvironment({"x"}) int y;
+    EX2() {
       @Begin class A {}
       x = 1;
       @End("x") class B {}
@@ -57,9 +58,9 @@ public class EnvironmentExample1 {
       @End("x") class B {}
     }
     @FlatEnvironment({"x","y"}) static class C1{
-      @FlatEnvironment({"x"}) public static int y; //doesn't know 'y' cause it is a static class (x is static also)
+      @NastedEnvironment({"EX2.C1.x#int"}) @FlatEnvironment({"x"}) public static int y; //doesn't know 'y' cause it is a static class (x is static also)
       C1 c1;
-      @FlatEnvironment({"x","y","c1"}) public static int x;
+      @NastedEnvironment({"EX2.C1.x#int","EX2.C1.y#int","EX2.C1.c1#C1"}) @FlatEnvironment({"x","y","c1"}) public static int x;
       public static void change_x() {
         @Begin class A {}
         x = 3; //interesting... what does it do? lol
@@ -74,9 +75,9 @@ public class EnvironmentExample1 {
   }
   
   
-  public static class EX3_hiding {
-    @FlatEnvironment({}) int x, y;
-    EX3_hiding(){
+  public static class EX3 { // hiding
+    @NastedEnvironment({}) @FlatEnvironment({}) int x, y;
+    EX3(){
       @Begin class A {}
       x = y = 0;
       @End({"x","y"}) class B {}
@@ -85,14 +86,14 @@ public class EnvironmentExample1 {
       x = 1;
       @End({"x","y"}) class D {}
     }
-    @FlatEnvironment({"x","y"}) static class x_hiding {
-      @FlatEnvironment({}) public static int x; // may be @Environment({}) 
-      @FlatEnvironment({"x"}) y_hiding xsy;
+    @NastedEnvironment({"EX3.x", "EX3.y"}) @FlatEnvironment({"x","y"}) static class x_hiding {
+      @FlatEnvironment({}) public static int x; 
+      @NastedEnvironment({"EX3.x_hiding.x#int"}) @FlatEnvironment({"x"}) y_hiding xsy;
       x_hiding(){
         x = 2;
         xsy = new y_hiding();
       }
-      @FlatEnvironment({"x","xsy"}) public class y_hiding { //not static in purpose!
+      @NastedEnvironment({"EX3.x_hiding.x#int", "EX3.x_hiding.xsy#y_hiding"}) @FlatEnvironment({"x","xsy"}) public class y_hiding { //not static in purpose!
         @FlatEnvironment({"x","xsy"}) public int y;
         @Begin class C {}
         y_hiding(){
@@ -103,10 +104,10 @@ public class EnvironmentExample1 {
         @End({"y"}) class D {}
       }
     }
-    @FlatEnvironment({"x","y","x_hiding"}) int q; //should not recognize y_hiding
+    @NastedEnvironment({"EX3.x", "EX3.y"}) @FlatEnvironment({"x","y"}) int q; //should not recognize xsy
     static void func(){
       @Begin class Q {}
-      EX3_hiding top = new EX3_hiding();
+      EX3 top = new EX3();
       x_hiding X = new x_hiding();
       x_hiding.y_hiding Y = X.new y_hiding();
       top.x = 3;
@@ -117,7 +118,7 @@ public class EnvironmentExample1 {
     }
   }
 
-  public static class EX4_inharitance {
+  public static class EX4 { // Inheritance
     @FlatEnvironment({}) int x;
     class Parent{
       @Begin class Q {}
@@ -160,7 +161,7 @@ public class EnvironmentExample1 {
       @Begin class Q {}
       @FlatEnvironment({"x"}) Parent p = new Parent();
       @FlatEnvironment({"x","p"})Child1 c1 = new Child1();
-      @FlatEnvironment({"x","p","c1"})Child2 c2 = new Child2();
+      @NastedEnvironment({"EX4.x#int", "EX4.p#Parent", "EX4.c1#C1"})@FlatEnvironment({"x","p","c1"})Child2 c2 = new Child2();
       p.set_x();
       c1.set_x();
       c2.set_x();
