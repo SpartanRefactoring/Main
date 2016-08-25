@@ -200,10 +200,11 @@ public class EnvironmentExample1 {
   }
   
   public static class EX6 {
-    @FlatEnvironment({}) class Outer{
+    @NestedEnvironment({}) @FlatEnvironment({}) class Outer{
       int x;
-      @FlatEnvironment({"x"}) class Inner{
+      @NestedEnvironment({"EX6.Outer.x#int"}) @FlatEnvironment({"x"}) class Inner{
         final Outer outer = Outer.this; //Supposedly, this should allow us to access the outer x.
+        @NestedEnvironment({"EX6.Outer.x#int","EX6.Outer.Inner.outer#Outer"}) 
         @FlatEnvironment({"x", "outer"}) void func(Inner p){
           @Begin class m{/**/} 
           // working on the current instance
@@ -217,9 +218,11 @@ public class EnvironmentExample1 {
     }
     class Outer2{
       int x;
+      @NestedEnvironment({"EX6.Outer2.x#int"})
       @FlatEnvironment({"x"}) class Inner2{
         int x;
         final Outer2 outer2 = Outer2.this;
+        @NestedEnvironment({"EX6.Outer2.x#int","EX6.Outer2.Inner2.x#int","EX6.Outer2.Inner2.outer2#Outer2"}) 
         @FlatEnvironment({"x","outer2"}) void func(Inner2 p){
           @Begin class A{/**/}
           x = 0;
