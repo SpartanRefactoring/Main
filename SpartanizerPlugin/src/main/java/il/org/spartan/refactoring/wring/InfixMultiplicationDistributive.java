@@ -50,7 +50,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     }
     Expression addition = null;
     for (int i = 0; i < different.size() - 1; ++i)
-      addition = (subject.pair(addition != null?addition:different.get(i),different.get(i + 1))).to(Operator.PLUS);
+      addition = subject.pair(addition != null ? addition : different.get(i), different.get(i + 1)).to(Operator.PLUS);
     Expression multiplication = null;
     if (common.size() == 0)
       return addition;
@@ -59,7 +59,8 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     if (common.size() <= 1)
       return null;
     for (int i = 0; i < common.size() - 1; ++i)
-    multiplication = (multiplication == null?subject.pair(common.get(i),common.get(i + 1)):subject.pair(multiplication,different.get(i + 1))).to(Operator.TIMES);
+      multiplication = (multiplication == null ? subject.pair(common.get(i), common.get(i + 1)) : subject.pair(multiplication, different.get(i + 1)))
+          .to(Operator.TIMES);
     return subject.pair(multiplication, addition).to(Operator.TIMES);
   }
 
@@ -88,15 +89,37 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
   }
 
   private ASTNode replacement(final InfixExpression e1, final InfixExpression e2) {
+    assert e1 != null;
+    assert e2 != null;
     final List<Expression> common = new ArrayList<>();
     final List<Expression> different = new ArrayList<>();
-    for (final Expression op : extract.allOperands(e1)) (isIn(op, extract.allOperands(e2)) ? common : different).add(op);
-    for (final Expression op : extract.allOperands(e2)) // [a c]
-      if (!isIn(op, common))
-        different.add(op);
+    final List<Expression> es1 = extract.allOperands(e1);
+    assert es1 != null;
+    final List<Expression> es2 = extract.allOperands(e2);
+    assert es2 != null;
+    for (final Expression e : es1) {
+      assert e != null;
+      (isIn(e, es2) ? common : different).add(e);
+    }
+    for (final Expression e : es2) { // [a c]
+      assert e != null;
+      if (!isIn(e, common))
+        different.add(e);
+    }
+    assert common != null;
     if (!common.isEmpty())
       different.remove(common);
-    return subject.pair(common.get(0), subject.pair(different.get(0), different.get(1)).to(Operator.PLUS)).to(Operator.TIMES);
+    assert first(common) != null;
+    assert first(different) != null;
+    assert second(different) != null;
+    return subject.pair(first(common), //
+        subject.pair(//
+            first(different), second(different)//
+        ).to(//
+            Operator.PLUS)//
+    ).to(//
+        Operator.TIMES//
+    );
   }
 
   @SuppressWarnings("static-method") private boolean isIn(final Expression op, final List<Expression> allOperands) {

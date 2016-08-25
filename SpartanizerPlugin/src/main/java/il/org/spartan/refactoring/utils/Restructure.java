@@ -77,7 +77,10 @@ public enum Restructure {
    * @return a duplicate of the argument, with the a flattened list of
    *         operands. */
   public static InfixExpression flatten(final InfixExpression $) {
-    return subject.operands(flattenInto($.getOperator(), extract.operands($), new ArrayList<Expression>())).to(duplicate($).getOperator());
+    assert $ != null;
+    final Operator o = $.getOperator();
+    assert o != null;
+    return subject.operands(flattenInto(o, extract.operands($), new ArrayList<Expression>())).to(duplicate($).getOperator());
   }
 
   public static Expression minus(final Expression e) {
