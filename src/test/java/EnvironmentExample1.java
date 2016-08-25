@@ -200,28 +200,32 @@ public class EnvironmentExample1 {
   }
   
   public static class EX6 {
-    class Outer{
+    @Environment({}) class Outer{
       int x;
-      class Inner{
-        final Outer outer = Outer.this;
-        void func(Inner p){
+      @Environment({"x"}) class Inner{
+        final Outer outer = Outer.this; //Supposedly, this should allow us to access the outer x.
+        @Environment({"x", "outer"}) void func(Inner p){
+          @Begin class m{/**/} 
           // working on the current instance
           x = 0;
           Outer.this.x = 1;
           // working on another instance
           p.outer.x = 2; 
+          @End({"x", "p.outer.x", "Outer/x"}) class n {/**/} 
         }
       } 
     }
     class Outer2{
       int x;
-      class Inner2{
+      @Environment({"x"}) class Inner2{
         int x;
         final Outer2 outer2 = Outer2.this;
-        void func(Inner2 p){
+        @Environment({"Outer2/x","outer2","x"}) void func(Inner2 p){
+          @Begin class A{/**/}
           x = 0;
           Outer2.this.x = 1;
-          p.outer2.x = 2; 
+          p.outer2.x = 2;
+          @End({"x","Outer2/x","p.outer2,x"}) class B {/**/}
         }
       } 
     } 
