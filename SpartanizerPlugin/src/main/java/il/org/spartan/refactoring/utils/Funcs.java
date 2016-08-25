@@ -699,5 +699,4 @@ public enum Funcs {
   }
 
   public static final String WHITES = "(?m)\\s+";
-
 }
