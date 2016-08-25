@@ -225,10 +225,23 @@ public class EnvironmentExample1 {
           x = 0;
           Outer2.this.x = 1;
           p.outer2.x = 2;
-          @End({"x","Outer2/x","p.outer2,x"}) class B {/**/}
+          @End({"x","Outer2/x","p.outer2.x"}) class B {/**/}
         }
       } 
     } 
+  }
+  
+  public static class EX8 {
+    class Arr{
+      String[] arr;
+      InnerArr arrArr = new InnerArr();
+      class InnerArr{
+        final String[] arr = {""};
+      }
+      @Environment({"arr", "InnerArr"}) class ArrArr{
+        
+      }
+    }
   }
 
   public static class EX_for_testing_the_use_of_names {
