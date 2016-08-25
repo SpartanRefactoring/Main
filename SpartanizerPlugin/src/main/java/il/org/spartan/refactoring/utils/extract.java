@@ -23,6 +23,7 @@ public enum extract {
    * @param e JD
    * @return a {@link List} of all operands to the parameter */
   public static List<Expression> allOperands(final InfixExpression e) {
+    assert e != null;
     return extract.operands(flatten(e));
   }
 
