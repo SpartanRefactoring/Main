@@ -62,7 +62,9 @@ public class Toolbox {
             new PostfixToPrefix(), //
             null) //
         .add(InfixExpression.class, //
-            new InfixMultiplicationDistributive(), //
+            /* The following line was intentionally commented: Matteo, I believe
+             * this generates many bugs --yg */
+            // new InfixMultiplicationDistributive(), //
             new InfixSubtractionZero(), //
             new InfixAdditionSubtractionExpand(), //
             new InfixDivisionMultiplicationNegatives(), //
