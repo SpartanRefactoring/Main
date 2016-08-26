@@ -1,46 +1,21 @@
-import static il.org.spartan.Utils.*;
-import static il.org.spartan.azzert.*;
 import static java.lang.System.*;
-import java.util.Iterator;
 
-import il.org.spartan.*;
+import java.util.*;
 
 public class EnvironmentExample1 {
   void EX1() {
-    @NestedEnvironment({}) @FlatEnvironment({}) String s = "a";
+    @NestedEnvironment({}) @FlatEnvironment({}) final String s = "a";
     s.equals("a");
     "a".equals(s);
     @NestedEnvironment({ "EX1.s#String" }) @FlatEnvironment({ "s" }) int a = 0;
     out.print("a");
-    @NestedEnvironment({ "EX1.a#int", "EX1.s#String" }) @FlatEnvironment({ "a", "s" }) int b = 0;
+    @NestedEnvironment({ "EX1.a#int", "EX1.s#String" }) @FlatEnvironment({ "a", "s" }) final int b = 0;
     @Begin class A {
     }
     ++a;
     @End("a") class B {
     }
-    @NestedEnvironment({ "EX1.a#int", "EX1.s#String", "EX1.b#int" }) @FlatEnvironment({ "a", "s", "b" }) int c = 0;
-    class Z {
-      void g() {
-        new Z() {
-          int f(int a) {
-            class Y {
-              Y() {
-                int q;
-                @NestedEnvironment({ "EX1.a#int", "EX1.s#String", "EX1.b#int", "EX1.c#int", "EX1.Z.Y.q#int" }) int d = 0;
-                @Begin class A {
-                }
-                d = 3;
-                @End("d") class B {
-                }
-              }
-
-              @FlatEnvironment({ "a", "s", "b", "c" }) int f; // not q!
-            }
-            return new Y().hashCode();
-          }
-        }.g();
-      }
-    }
+    @NestedEnvironment({ "EX1.a#int", "EX1.s#String", "EX1.b#int" }) @FlatEnvironment({ "a", "s", "b" }) final int c = 0;
   }
 
   {
@@ -161,11 +136,11 @@ public class EnvironmentExample1 {
     static void func() {
       @Begin class Q {
       }
-      EX3 top = new EX3();
-      x_hiding X = new x_hiding();
-      x_hiding.y_hiding Y = X.new y_hiding();
+      final EX3 top = new EX3();
+      final x_hiding X = new x_hiding();
+      final x_hiding.y_hiding Y = X.new y_hiding();
       top.x = 3;
-      X.x = 4;
+      x_hiding.x = 4;
       X.xsy.y = 5;
       Y.y = 6;
       @End({ "top", "X", "x", "xsy", "Y", "y" }) class QQ {
@@ -233,9 +208,9 @@ public class EnvironmentExample1 {
     void func() {
       @Begin class Q {
       }
-      @FlatEnvironment({ "x" }) Parent p = new Parent();
-      @FlatEnvironment({ "x", "p" }) Child1 c1 = new Child1();
-      @NestedEnvironment({ "EX4.x#int", "EX4.p#Parent", "EX4.c1#C1" }) @FlatEnvironment({ "x", "p", "c1" }) Child2 c2 = new Child2();
+      @FlatEnvironment({ "x" }) final Parent p = new Parent();
+      @FlatEnvironment({ "x", "p" }) final Child1 c1 = new Child1();
+      @NestedEnvironment({ "EX4.x#int", "EX4.p#Parent", "EX4.c1#C1" }) @FlatEnvironment({ "x", "p", "c1" }) final Child2 c2 = new Child2();
       p.set_x();
       c1.set_x();
       c2.set_x();
@@ -314,12 +289,12 @@ public class EnvironmentExample1 {
         final Outer outer = Outer.this; // Supposedly, this should allow us to
                                         // access the outer x.
 
-        @NestedEnvironment({ "EX6.Outer.x#int", "EX6.Outer.Inner.outer#Outer" }) @FlatEnvironment({ "x", "outer" }) void func(Inner p) {
+        @NestedEnvironment({ "EX6.Outer.x#int", "EX6.Outer.Inner.outer#Outer" }) @FlatEnvironment({ "x", "outer" }) void func(final Inner p) {
           @Begin class m {
             /**/}
           // working on the current instance
           x = 0;
-          Outer.this.x = 1;
+          x = 1;
           // working on another instance
           p.outer.x = 2;
           @End({ "x" }) class n {
@@ -336,7 +311,7 @@ public class EnvironmentExample1 {
         final Outer2 outer2 = Outer2.this;
 
         @NestedEnvironment({ "EX6.Outer2.x#int", "EX6.Outer2.Inner2.x#int", "EX6.Outer2.Inner2.outer2#Outer2" }) @FlatEnvironment({ "x",
-            "outer2" }) void func(Inner2 p) {
+            "outer2" }) void func(final Inner2 p) {
           @Begin class A {
             /**/}
           x = 0;
@@ -357,8 +332,8 @@ public class EnvironmentExample1 {
       int i;
     }
 
-    static Integer func(Integer n1, String n2, Complex n3) {
-      @FlatEnvironment({ "n1", "n2", "n3" }) int q;
+    static Integer func(final Integer n1, final String n2, final Complex n3) {
+      @FlatEnvironment({ "n1", "n2", "n3" }) final int q;
       return n1;
     }
 
@@ -381,10 +356,10 @@ public class EnvironmentExample1 {
 
   public static class EX9 { // template
     public class SOList<Type> implements Iterable<Type> {
-      private Type[] arrayList;
+      private final Type[] arrayList;
       @FlatEnvironment({ "arrayList" }) int currentSize;
 
-      @FlatEnvironment({ "arrayList", "currentSize" }) public SOList(Type[] newArray) {
+      @FlatEnvironment({ "arrayList", "currentSize" }) public SOList(final Type[] newArray) {
         @Begin class opening {
           /**/}
         this.arrayList = newArray;
@@ -394,7 +369,7 @@ public class EnvironmentExample1 {
       }
 
       @Override public Iterator<Type> iterator() {
-        Iterator<Type> $ = new Iterator<Type>() {
+        final Iterator<Type> $ = new Iterator<Type>() {
           @FlatEnvironment({ "arrayList", "currentSize", "it" }) private int currentIndex = 0;
 
           @Override public boolean hasNext() {
@@ -409,9 +384,9 @@ public class EnvironmentExample1 {
             throw new UnsupportedOperationException();
           }
         };
-        @FlatEnvironment({ "arrayList", "currentSize" }) int q; // currentIndex
-                                                                // shouldn't be
-                                                                // recognized
+        @FlatEnvironment({ "arrayList", "currentSize" }) final int q; // currentIndex
+        // shouldn't be
+        // recognized
         return $;
       }
     }
