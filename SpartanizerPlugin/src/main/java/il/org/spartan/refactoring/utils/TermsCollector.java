@@ -14,7 +14,7 @@ public class TermsCollector {
 
   private final List<Expression> plus = new ArrayList<>();
   private final List<Expression> minus = new ArrayList<>();
-  private final List<SignedExpression> all = new ArrayList<>();
+  private final List<Term> all = new ArrayList<>();
 
   public TermsCollector(final InfixExpression e) {
     collect(e);
@@ -49,7 +49,7 @@ public class TermsCollector {
 
   private Void addMinus(final Expression e) {
     assert e != null;
-    all.add(SignedExpression.minus(e));
+    all.add(Term.minus(e));
     minus.add(e);
     return null;
   }
@@ -63,7 +63,7 @@ public class TermsCollector {
   private Void addPlus(final Expression e) {
     assert e != null;
     plus.add(e);
-    all.add(SignedExpression.plus(e));
+    all.add(Term.plus(e));
     return null;
   }
 
@@ -141,7 +141,7 @@ public class TermsCollector {
     return plus;
   }
 
-  public List<SignedExpression> all() {
+  public List<Term> all() {
     return all;
   }
 }
