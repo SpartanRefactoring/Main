@@ -17,12 +17,12 @@ public class TermsExpander {
     return base(new TermsCollector(e));
   }
 
-  static Expression base(final List<SignedExpression> es) {
-    assert es.size() >= 2;
-    final SignedExpression first = first(es);
-    final SignedExpression second = second(es);
+  private static Expression base(final List<Term> ts) {
+    assert ts.size() >= 2;
+    final Term first = first(ts);
+    final Term second = second(ts);
     final Expression $ = base(first, second);
-    final List<SignedExpression> remainder = chop(chop(es));
+    final List<Term> remainder = chop(chop(ts));
     return remainder.isEmpty() ? $ : recurse($, remainder);
   }
 
@@ -30,43 +30,52 @@ public class TermsExpander {
     return base(c.all());
   }
 
-  private static InfixExpression base(final SignedExpression e1, final SignedExpression e2) {
-    if (e1.positive())
-      return subject.pair(e1.expression, e2.expression).to(e2.positive() ? PLUS2 : MINUS2);
-    e1.negative();
+  private static InfixExpression base(final Term t1, final Term t2) {
+    if (t1.positive())
+      return subject.pair(t1.expression, t2.expression).to(t2.positive() ? PLUS2 : MINUS2);
+    assert t1.negative();
     return (//
-    e2.positive() ? subject.pair(e2.expression, e1.expression) : //
-        subject.pair(subject.operand(e1.expression).to(MINUS1), e2.expression)//
+    t2.positive() ? subject.pair(t2.expression, t1.expression) : //
+        subject.pair(subject.operand(t1.expression).to(MINUS1), t2.expression)//
     ).to(MINUS2);
   }
 
-  private static InfixExpression appendMinus(final InfixExpression base, final SignedExpression add) {
-    return add.negative() ? subject.append(base, add.expression) : subject.pair(base, add.expression).to(PLUS2);
+  /** @see #recurse(InfixExpression, List) */
+  private static InfixExpression appendMinus(final InfixExpression $, final Term ¢) {
+    return ¢.negative() ? subject.append($, ¢.expression) : subject.pair($, ¢.expression).to(PLUS2);
   }
 
-  private static InfixExpression appendPlus(final InfixExpression base, final SignedExpression add) {
-    final Expression e = duplicate(add.expression);
-    return add.positive() ? subject.append(base, e) : subject.pair(base, e).to(MINUS2);
+  /** @see #recurse(InfixExpression, List) */
+  private static InfixExpression appendPlus(final InfixExpression $, final Term e) {
+    final Expression ¢ = duplicate(e.expression);
+    return e.positive() ? subject.append($, ¢) : subject.pair($, ¢).to(MINUS2);
   }
 
-  private static Expression recurse(final Expression first, final List<SignedExpression> rest) {
-    assert first != null;
-    if (rest == null || rest.isEmpty())
-      return first;
-    assert first instanceof InfixExpression;
-    return recurse((InfixExpression) first, rest);
+  /** @param $ The accumulator, to which one more {@link Term} should be added
+   *        optimally
+   * @param es a list
+   * @return the $ parameter, after all elements of the list parameter are added
+   *         to it */
+  private static Expression recurse(final Expression $, final List<Term> es) {
+    assert $ != null;
+    if (es == null || es.isEmpty())
+      return $;
+    assert $ instanceof InfixExpression;
+    return recurse((InfixExpression) $, es);
   }
 
-  private static Expression recurse(final InfixExpression first, final List<SignedExpression> rest) {
-    assert first != null;
-    if (rest == null)
-      return first;
-    assert rest != null;
-    final Operator o = first.getOperator();
+  /** @see #recurse(InfixExpression, List) */
+  private static Expression recurse(final InfixExpression $, final List<Term> es) {
+    assert $ != null;
+    if (es == null || es.isEmpty())
+      return $;
+    assert es != null;
+    assert !es.isEmpty();
+    final Operator o = $.getOperator();
+    assert o != null;
     assert o == PLUS2 || o == MINUS2;
-    final SignedExpression next = first(rest);
-    assert next != null;
-    final Expression $ = o == PLUS2 ? appendPlus(first, next) : appendMinus(first, next);
-    return recurse($, chop(rest));
+    final Term first = first(es);
+    assert first != null;
+    return recurse((o == PLUS2 ? appendPlus($, first) : appendMinus($, first)), chop(es));
   }
 }

@@ -4,21 +4,21 @@ import static il.org.spartan.refactoring.utils.Funcs.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-class SignedExpression {
+class Term {
   private final boolean negative;
   public final Expression expression;
 
-  SignedExpression(final boolean minus, final Expression expression) {
+  Term(final boolean minus, final Expression expression) {
     negative = minus;
     this.expression = expression;
   }
 
-  static SignedExpression plus(final Expression e) {
-    return new SignedExpression(false, e);
+  static Term plus(final Expression e) {
+    return new Term(false, e);
   }
 
-  static SignedExpression minus(final Expression e) {
-    return new SignedExpression(true, e);
+  static Term minus(final Expression e) {
+    return new Term(true, e);
   }
 
   boolean negative() {
