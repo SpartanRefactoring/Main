@@ -415,7 +415,7 @@ public enum Collect {
       }
 
       @Override public boolean visit(final MethodInvocation i) {
-        collect(expression(i));
+        collect(receiver(i));
         collect(arguments(i));
         return false;
       }

@@ -271,7 +271,7 @@ class UsesCollector extends HidingDepth {
 
   @Override public boolean visit(final MethodInvocation i) {
     ingore(name(i));
-    recurse(expression(i));
+    recurse(receiver(i));
     return recurse(arguments(i));
   }
 

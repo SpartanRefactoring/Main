@@ -48,7 +48,7 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
     final CompilationUnit u = compilationUnit(e);
     if (u == null)
       return null;
-    final Expression receiver = expression(i);
+    final Expression receiver = receiver(i);
     final IMethodBinding b = BindingUtils.getVisibleMethod(receiver == null ? BindingUtils.container(e) : receiver.resolveTypeBinding(), "isEmpty",
         null, e, u);
     if (b == null)
