@@ -76,6 +76,6 @@ public class TermsExpander {
     assert o == PLUS2 || o == MINUS2;
     final Term first = first(es);
     assert first != null;
-    return recurse((o == PLUS2 ? appendPlus($, first) : appendMinus($, first)), chop(es));
+    return recurse(o == PLUS2 ? appendPlus($, first) : appendMinus($, first), chop(es));
   }
 }
