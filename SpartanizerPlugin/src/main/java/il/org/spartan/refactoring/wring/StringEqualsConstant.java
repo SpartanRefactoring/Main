@@ -18,7 +18,7 @@ public final class StringEqualsConstant extends ReplaceCurrentNode<MethodInvocat
   final static List<String> mns = as.list("equals", "equalsIgnoreCase");
 
   @Override String description(final MethodInvocation i) {
-    return "Write " + first(arguments(i)) + "." + name(i) + "(" + expression(i) + ") instead of " + i;
+    return "Write " + first(arguments(i)) + "." + name(i) + "(" + receiver(i) + ") instead of " + i;
   }
 
   /* (non-Javadoc)
@@ -33,7 +33,7 @@ public final class StringEqualsConstant extends ReplaceCurrentNode<MethodInvocat
     final Expression ¢ = onlyOne(arguments(i));
     if (¢ == null || !(¢ instanceof StringLiteral))
       return null;
-    final Expression e = expression(i);
+    final Expression e = receiver(i);
     return e == null || e instanceof StringLiteral ? null : replacement(n, ¢, e);
   }
 

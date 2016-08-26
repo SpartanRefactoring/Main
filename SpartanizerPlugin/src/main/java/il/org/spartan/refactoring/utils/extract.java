@@ -141,7 +141,7 @@ public enum extract {
       case ASTNode.CAST_EXPRESSION:
         return expression((CastExpression) n);
       case ASTNode.METHOD_INVOCATION:
-        return expression((MethodInvocation) n);
+        return receiver((MethodInvocation) n);
       case ASTNode.PARENTHESIZED_EXPRESSION:
         return expression((ParenthesizedExpression) n);
       case ASTNode.DO_STATEMENT:
@@ -167,7 +167,7 @@ public enum extract {
     return $ == null ? null : core($.getExpression());
   }
 
-  public static Expression expression(final MethodInvocation $) {
+  public static Expression receiver(final MethodInvocation $) {
     return core($.getExpression());
   }
 
