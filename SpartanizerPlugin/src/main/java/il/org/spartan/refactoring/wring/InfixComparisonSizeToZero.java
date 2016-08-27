@@ -57,15 +57,13 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
           return subject.operand($).to(NOT);
       case ">=":
         if (number <= 0)
-          // return true
-          return null;
+          return e.getAST().newBooleanLiteral(true);
       case "<=":
         if (number == 0)
           return $;
       case "<":
         if (number >= 0)
-          // return false
-          return null;
+          return  e.getAST().newBooleanLiteral(false);
       default:
         return null;
     }
