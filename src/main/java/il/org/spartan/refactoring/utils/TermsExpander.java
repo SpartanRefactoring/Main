@@ -23,9 +23,9 @@ public class TermsExpander {
   }
 
   /** @see #recurse(InfixExpression, List) */
-  private static InfixExpression appendPlus(final InfixExpression $, final Term e) {
-    final Expression ¢ = duplicate(e.expression);
-    return e.positive() ? subject.append($, ¢) : subject.pair($, ¢).to(MINUS2);
+  private static InfixExpression appendPlus(final InfixExpression $, final Term t) {
+    final Expression ¢ = duplicate(t.expression);
+    return t.positive() ? subject.append($, ¢) : subject.pair($, ¢).to(MINUS2);
   }
 
   private static Expression base(final List<Term> ts) {
@@ -56,30 +56,30 @@ public class TermsExpander {
 
   /** @param $ The accumulator, to which one more {@link Term} should be added
    *        optimally
-   * @param es a list
+   * @param ts a list
    * @return the $ parameter, after all elements of the list parameter are added
    *         to it */
-  private static Expression recurse(final Expression $, final List<Term> es) {
+  private static Expression recurse(final Expression $, final List<Term> ts) {
     assert $ != null;
-    if (es == null || es.isEmpty())
+    if (ts == null || ts.isEmpty())
       return $;
     assert $ instanceof InfixExpression;
-    return recurse((InfixExpression) $, es);
+    return recurse((InfixExpression) $, ts);
   }
 
   /** @see #recurse(InfixExpression, List) */
-  private static Expression recurse(final InfixExpression $, final List<Term> es) {
+  private static Expression recurse(final InfixExpression $, final List<Term> ts) {
     assert $ != null;
-    if (es == null || es.isEmpty())
+    if (ts == null || ts.isEmpty())
       return $;
-    assert es != null;
-    assert !es.isEmpty();
+    assert ts != null;
+    assert !ts.isEmpty();
     final Operator o = $.getOperator();
     assert o != null;
     assert o == PLUS2 || o == MINUS2;
-    final Term first = first(es);
+    final Term first = first(ts);
     assert first != null;
-    return recurse(o == PLUS2 ? appendPlus($, first) : appendMinus($, first), chop(es));
+    return recurse(o == PLUS2 ? appendPlus($, first) : appendMinus($, first), chop(ts));
   }
 
   private static Expression step(final Expression $, final List<Term> ¢) {
