@@ -3,9 +3,13 @@ package il.org.spartan.refactoring.utils;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
+
+import javax.management.*;
+
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.omg.CORBA.*;
 
 /** Tells how much we know about the type of of a variable, function, or
  * expression.
@@ -53,12 +57,9 @@ enum Kind {
   }
 
   public final String fullName() {
-    return name + "(" + description + ")";
+    return this + "=" + name + " (" + description + ")";
   }
 
-  @Override public final String toString() {
-    return name;
-  }
 
   public final Kind under(final PrefixExpression.Operator o) {
     assert o != null;
@@ -158,5 +159,9 @@ enum Kind {
     if (!in(this, TIMES, DIVIDE, MINUS2))
       throw new IllegalArgumentException("o=" + o + " k=" + k.fullName() + "this=" + this);
     return asNumeric(k);
+  }
+
+  public static boolean kind(Expression e) {
+    throw new RuntimeException("Team3 needs to implement this: " + e);
   }
 }
