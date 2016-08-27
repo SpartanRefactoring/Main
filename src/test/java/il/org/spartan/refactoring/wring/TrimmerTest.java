@@ -2052,42 +2052,18 @@ import il.org.spartan.refactoring.utils.*;
     trimming("void foo(Integer integer, ASTNode astn) {}").to("void foo(Integer i, ASTNode astn) {}");
   }
   
-  @Test  public void issue83a() {
-    trimming("if(lst.size()>=0) return a;").to("if(true) return a;");
+  @Test @Ignore("Under Construction") public void issue74a() {
+    trimming("int[] a = new int[] {,};").to("int[] a = new int[] {};");
   }
   
-  @Test  public void issue83b() {
-    trimming("if(lst.size()<0) return a;").to("if(false) return a;");
+  @Test  @Ignore("Under Construction") public void issue74b() {
+    trimming("int[] a = new int[] {2,3,};").to("int[] a = new int[] {2,3};");
   }
   
-  @Test public void issue83c() {
-    trimming("if(x.size()>0)return a;").to("if(!x.isEmpty())return a;");
+  @Test  public void issue74c() {
+    trimming("int[] a = new int[] {2,3};").to(null);
   }
   
-  @Ignore("This checks for singleton, and cannot be simplified")
-  @Test public void issue83d() {
-    trimming("if(x.size()==1) return a;").to(null);
-  }
-  
-  @Ignore("This checks for singleton, and cannot be simplified")
-  @Test public void issue83e() {
-    trimming("if(x.size()==2) return a;").to(null);
-  }
- 
-  @Ignore("This checks for singleton, and cannot be simplified")
-  @Test public void issue83f() {
-    trimming("if(2==lst.size()) return a;").to(null);
-  }
-  
-  @Test public void issue83g() {
-    trimming("if(lst.size()==4) return a;").to(null);
-  }
-  
-  @Test public void issue83h() {
-    trimming("if(lst.size()==0) return a;").to("if(lst.isEmpty()) return a;");
-  }
-
-
   @Test public void linearTransformation() {
     trimming("plain * the + kludge").to("the*plain+kludge");
   }
