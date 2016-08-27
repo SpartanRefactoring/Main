@@ -2,20 +2,22 @@ import static java.lang.System.*;
 
 import java.util.*;
 
-public class EnvironmentExample1 {
+public class EnvironmentTests {
   void EX1() {
-    @NestedEnvironment({}) @FlatEnvironment({}) final String s = "a";
+    @NestedENV({}) @OutOfOrderFlatENV({}) final String s = "a";
     s.equals("a");
     "a".equals(s);
-    @NestedEnvironment({ "EX1.s#String" }) @FlatEnvironment({ "s" }) int a = 0;
+    @NestedENV({ "EX1.s#String" }) @OutOfOrderFlatENV({ "s" }) int a = 0;
     out.print("a");
-    @NestedEnvironment({ "EX1.a#int", "EX1.s#String" }) @FlatEnvironment({ "a", "s" }) final int b = 0;
+    @InOrderFlatENV({ "s", "a" })
+    @NestedENV({ "EX1.a#int", "EX1.s#String" }) @OutOfOrderFlatENV({ "a", "s" }) final int b = 0;
     @Begin class A {
     }
     ++a;
     @End("a") class B {
     }
-    @NestedEnvironment({ "EX1.a#int", "EX1.s#String", "EX1.b#int" }) @FlatEnvironment({ "a", "s", "b" }) final int c = 0;
+    @InOrderFlatENV({ "s", "a","b" })
+    @NestedENV({ "EX1.a#int", "EX1.s#String", "EX1.b#int" }) @OutOfOrderFlatENV({ "a", "s", "b" }) final int c = 0;
   }
 
   {
@@ -27,8 +29,12 @@ public class EnvironmentExample1 {
   }
 
   public static class EX2 { // initializator
-    @NestedEnvironment({}) @FlatEnvironment({}) static int x;
-    @NestedEnvironment({ "EX2.x#int" }) @FlatEnvironment({ "x" }) int y;
+    @NestedENV({})
+    @OutOfOrderFlatENV({})
+    static int x;
+    @NestedENV({ "EX2.x#int" })
+    @OutOfOrderFlatENV({ "x" })
+    int y;
 
     EX2() {
       @Begin class A {
@@ -46,21 +52,15 @@ public class EnvironmentExample1 {
       }
     }
 
-    @FlatEnvironment({ "x", "y" }) static class C1 {
-      @NestedEnvironment({ "EX2.C1.x#int" }) @FlatEnvironment({ "x" }) public static int y; // no
-                                                                                            // 'y'
-                                                                                            // cause
-                                                                                            // it
-                                                                                            // is
-                                                                                            // a
-                                                                                            // static
-                                                                                            // class
-                                                                                            // (x
-                                                                                            // is
-                                                                                            // static
-                                                                                            // also)
+    @OutOfOrderFlatENV({ "x", "y" }) static class C1 {
+      @NestedENV({ "EX2.C1.x#int" })
+      @OutOfOrderFlatENV({ "x" })
+      public static int y; // no 'y' cause static class
       C1 c1;
-      @NestedEnvironment({ "EX2.C1.x#int", "EX2.C1.y#int", "EX2.C1.c1#C1" }) @FlatEnvironment({ "x", "y", "c1" }) public static int x;
+      @InOrderFlatENV({ "x", "y","c1" })
+      @NestedENV({ "EX2.C1.x#int", "EX2.C1.y#int", "EX2.C1.c1#C1" })
+      @OutOfOrderFlatENV({ "c1", "y", "x" })
+      public static int x;
 
       public static void change_x() {
         @Begin class A {
@@ -81,7 +81,9 @@ public class EnvironmentExample1 {
   }
 
   public static class EX3 { // hiding
-    @NestedEnvironment({}) @FlatEnvironment({}) int x, y;
+    @NestedENV({})
+    @OutOfOrderFlatENV({})
+    int x, y;
 
     EX3() {
       @Begin class A {
@@ -97,21 +99,21 @@ public class EnvironmentExample1 {
       }
     }
 
-    @NestedEnvironment({ "EX3.x", "EX3.y" }) @FlatEnvironment({ "x", "y" }) static class x_hiding {
-      @FlatEnvironment({}) public static int x;
-      @NestedEnvironment({ "EX3.x_hiding.x#int" }) @FlatEnvironment({ "x" }) y_hiding xsy;
+    @NestedENV({ "EX3.x", "EX3.y" }) @OutOfOrderFlatENV({ "x", "y" }) static class x_hiding {
+      @OutOfOrderFlatENV({}) public static int x;
+      @NestedENV({ "EX3.x_hiding.x#int" }) @OutOfOrderFlatENV({ "x" }) y_hiding xsy;
 
       x_hiding() {
         x = 2;
         xsy = new y_hiding();
       }
 
-      @NestedEnvironment({ "EX3.x_hiding.x#int", "EX3.x_hiding.xsy#y_hiding" }) @FlatEnvironment({ "x", "xsy" }) public class y_hiding { // not
-                                                                                                                                         // static
-                                                                                                                                         // in
-                                                                                                                                         // purpose!
-        @FlatEnvironment({ "x", "xsy" }) public int y;
-
+      @NestedENV({ "EX3.x_hiding.x#int", "EX3.x_hiding.xsy#y_hiding" })
+      @OutOfOrderFlatENV({ "x", "xsy" })
+      public class y_hiding {                                                                                                            // purpose!
+        @InOrderFlatENV({"x","xsy"})
+        @OutOfOrderFlatENV({ "xsy", "x" })
+        public int y;
         @Begin class C {
         }
 
@@ -128,16 +130,18 @@ public class EnvironmentExample1 {
       }
     }
 
-    @NestedEnvironment({ "EX3.x", "EX3.y" }) @FlatEnvironment({ "x", "y" }) int q; // should
-                                                                                   // not
-                                                                                   // recognize
-                                                                                   // xsy
+    @NestedENV({ "EX3.x", "EX3.y" })
+    @InOrderFlatENV({"x","y"})
+    @OutOfOrderFlatENV({ "y", "x" })
+    int q; // no xsy
 
     static void func() {
       @Begin class Q {
       }
       final EX3 top = new EX3();
       final x_hiding X = new x_hiding();
+      @InOrderFlatENV({"x","y"})
+      @OutOfOrderFlatENV({ "y", "x" })
       final x_hiding.y_hiding Y = X.new y_hiding();
       top.x = 3;
       x_hiding.x = 4;
@@ -149,7 +153,7 @@ public class EnvironmentExample1 {
   }
 
   public static class EX4 { // Inheritance
-    @FlatEnvironment({}) int x;
+    @OutOfOrderFlatENV({}) int x;
 
     class Parent {
       @Begin class Q {
@@ -208,9 +212,14 @@ public class EnvironmentExample1 {
     void func() {
       @Begin class Q {
       }
-      @FlatEnvironment({ "x" }) final Parent p = new Parent();
-      @FlatEnvironment({ "x", "p" }) final Child1 c1 = new Child1();
-      @NestedEnvironment({ "EX4.x#int", "EX4.p#Parent", "EX4.c1#C1" }) @FlatEnvironment({ "x", "p", "c1" }) final Child2 c2 = new Child2();
+      @OutOfOrderFlatENV({ "x" })
+      final Parent p = new Parent();
+      @OutOfOrderFlatENV({ "x", "p" })
+      final Child1 c1 = new Child1();
+      @NestedENV({ "EX4.x#int", "EX4.p#Parent", "EX4.c1#C1" })
+      @InOrderFlatENV({"x","p","c1"})
+      @OutOfOrderFlatENV({ "p", "c1", "x" })
+      final Child2 c2 = new Child2();
       p.set_x();
       c1.set_x();
       c2.set_x();
@@ -223,22 +232,26 @@ public class EnvironmentExample1 {
     EX5.x = 0;
   }
 
-  @FlatEnvironment({ "x" }) public static class EX5 {
+  @OutOfOrderFlatENV({ "x" })
+  public static class EX5 {
     static int x;
-
-    @FlatEnvironment({ "x" }) class a {
+    @OutOfOrderFlatENV({ "x" })
+    class a {
       int a_x;
-
-      @FlatEnvironment({ "x", "a_x" }) class b {
+      @InOrderFlatENV({"x","a_x"})
+      @OutOfOrderFlatENV({ "a_x", "x" })
+      class b {
         int b_x;
-
-        @FlatEnvironment({ "x", "a_x", "b_x" }) class c {
+        @InOrderFlatENV({ "x", "a_x", "b_x" })
+        @OutOfOrderFlatENV({ "b_x", "a_x", "x" })
+        class c {
           int c_x;
-
-          @FlatEnvironment({ "x", "a_x", "b_x", "c_x" }) class d {
+          @InOrderFlatENV({"x", "a_x", "b_x", "c_x"})
+          @OutOfOrderFlatENV({ "x", "a_x", "b_x", "c_x" })
+          class d {
             int d_x;
-
-            @FlatEnvironment({ "x", "a_x", "b_x", "c_x", "d_x" }) void d_func() {
+            @OutOfOrderFlatENV({ "x", "a_x", "b_x", "c_x", "d_x" })
+            void d_func() {
               @Begin class opening {
                 /**/}
               ++a_x;
@@ -249,8 +262,9 @@ public class EnvironmentExample1 {
                 /**/}
             }
           }
-
-          @FlatEnvironment({ "x", "a_x", "b_x", "c_x" }) void c_func() {
+          @InOrderFlatENV({ "x", "a_x", "b_x", "c_x" })
+          @OutOfOrderFlatENV({ "c_x", "b_x", "a_x", "x" })
+          void c_func() {
             @Begin class opening {
               /**/}
             ++a_x;
@@ -260,8 +274,8 @@ public class EnvironmentExample1 {
               /**/}
           }
         }
-
-        @FlatEnvironment({ "x", "a_x", "b_x" }) void b_func() {
+        @OutOfOrderFlatENV({ "x", "a_x", "b_x" })
+        void b_func() {
           @Begin class opening {
             /**/}
           ++a_x;
@@ -270,8 +284,8 @@ public class EnvironmentExample1 {
             /**/}
         }
       }
-
-      @FlatEnvironment({ "x", "a_x", "b_x" }) void a_func() {
+      @OutOfOrderFlatENV({ "x", "a_x", "b_x" })
+      void a_func() {
         @Begin class opening {
           /**/}
         ++a_x;
@@ -282,16 +296,19 @@ public class EnvironmentExample1 {
   }
 
   public static class EX6 {
-    @NestedEnvironment({}) @FlatEnvironment({}) class Outer {
+    @NestedENV({})
+    @OutOfOrderFlatENV({})
+    class Outer {
       int x;
-
-      @NestedEnvironment({ "EX6.Outer.x#int" }) @FlatEnvironment({ "x" }) class Inner {
+      @NestedENV({ "EX6.Outer.x#int" })
+      @OutOfOrderFlatENV({ "x" })
+      class Inner {
         final Outer outer = Outer.this; // Supposedly, this should allow us to
                                         // access the outer x.
-
-        @NestedEnvironment({ "EX6.Outer.x#int", "EX6.Outer.Inner.outer#Outer" }) @FlatEnvironment({ "x", "outer" }) void func(final Inner p) {
-          @Begin class m {
-            /**/}
+        @NestedENV({ "EX6.Outer.x#int", "EX6.Outer.Inner.outer#Outer" })
+        @OutOfOrderFlatENV({ "x", "outer" })
+        void func(final Inner p) {
+          @Begin class m {/**/}
           // working on the current instance
           x = 0;
           x = 1;
@@ -302,16 +319,16 @@ public class EnvironmentExample1 {
         }
       }
     }
-
     class Outer2 {
       int x;
-
-      @NestedEnvironment({ "EX6.Outer2.x#int" }) @FlatEnvironment({ "x" }) class Inner2 {
+      @NestedENV({ "EX6.Outer2.x#int" })
+      @OutOfOrderFlatENV({ "x" })
+      class Inner2 {
         int x;
         final Outer2 outer2 = Outer2.this;
-
-        @NestedEnvironment({ "EX6.Outer2.x#int", "EX6.Outer2.Inner2.x#int", "EX6.Outer2.Inner2.outer2#Outer2" }) @FlatEnvironment({ "x",
-            "outer2" }) void func(final Inner2 p) {
+        @NestedENV({ "EX6.Outer2.x#int", "EX6.Outer2.Inner2.x#int", "EX6.Outer2.Inner2.outer2#Outer2" })
+        @OutOfOrderFlatENV({ "x","outer2" })
+        void func(final Inner2 p) {
           @Begin class A {
             /**/}
           x = 0;
@@ -333,18 +350,20 @@ public class EnvironmentExample1 {
     }
 
     static Integer func(final Integer n1, final String n2, final Complex n3) {
-      @FlatEnvironment({ "n1", "n2", "n3" }) final int q;
+      @InOrderFlatENV({ "n1", "n2", "n3" })
+      @OutOfOrderFlatENV({ "n2", "n3", "n1" })
+      final int q;
       return n1;
     }
 
     Integer o = func(x, "Alex&Dan", new Complex());
   }
-
   public static class EX8 {
     class Arr {
       String[] arr;
-
-      @NestedEnvironment({ "EX8.Arr.arr#String[]" }) @FlatEnvironment({ "arr" }) void foo() {
+      @NestedENV({ "EX8.Arr.arr#String[]" })
+      @OutOfOrderFlatENV({ "arr" })
+      void foo() {
         @Begin class m {
           /**/}
         arr[2] = "$$$";
@@ -357,9 +376,10 @@ public class EnvironmentExample1 {
   public static class EX9 { // template
     public class SOList<Type> implements Iterable<Type> {
       private final Type[] arrayList;
-      @FlatEnvironment({ "arrayList" }) int currentSize;
-
-      @FlatEnvironment({ "arrayList", "currentSize" }) public SOList(final Type[] newArray) {
+      @OutOfOrderFlatENV({ "arrayList" })
+      int currentSize;
+      @InOrderFlatENV({ "arrayList", "currentSize" })
+      public SOList(final Type[] newArray) {
         @Begin class opening {
           /**/}
         this.arrayList = newArray;
@@ -370,8 +390,9 @@ public class EnvironmentExample1 {
 
       @Override public Iterator<Type> iterator() {
         final Iterator<Type> $ = new Iterator<Type>() {
-          @FlatEnvironment({ "arrayList", "currentSize", "it" }) private int currentIndex = 0;
-
+          @InOrderFlatENV({ "arrayList", "currentSize", "it" })
+          @OutOfOrderFlatENV({ "it", "currentSize", "arrayList" })
+          private int currentIndex = 0;
           @Override public boolean hasNext() {
             return currentIndex < currentSize && arrayList[currentIndex] != null;
           }
@@ -384,7 +405,8 @@ public class EnvironmentExample1 {
             throw new UnsupportedOperationException();
           }
         };
-        @FlatEnvironment({ "arrayList", "currentSize" }) final int q; // currentIndex
+        @OutOfOrderFlatENV({ "arrayList", "currentSize" })
+        final int q; // currentIndex
         // shouldn't be
         // recognized
         return $;
