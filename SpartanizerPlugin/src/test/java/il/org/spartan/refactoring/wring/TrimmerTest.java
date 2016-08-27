@@ -2052,11 +2052,11 @@ import il.org.spartan.refactoring.utils.*;
     trimming("void foo(Integer integer, ASTNode astn) {}").to("void foo(Integer i, ASTNode astn) {}");
   }
   
-  @Test @Ignore("Not Done Yet") public void issue83a() {
+  @Test  public void issue83a() {
     trimming("if(lst.size()>=0) return a;").to("if(true) return a;");
   }
   
-  @Test @Ignore("Not Done Yet") public void issue83b() {
+  @Test  public void issue83b() {
     trimming("if(lst.size()<0) return a;").to("if(false) return a;");
   }
   
