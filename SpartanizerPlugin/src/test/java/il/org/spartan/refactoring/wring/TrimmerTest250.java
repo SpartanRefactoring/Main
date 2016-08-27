@@ -645,7 +645,18 @@ public class TrimmerTest250 {
   @Test public void issue83h() {
     trimming("if(lst.size()==0) return a;").to("if(lst.isEmpty()) return a;");
   }
-  
+  @Test public void issue83i() {
+    trimming("if(es.size() >= 2) return a;").to(null);
+  }
+  @Test public void issue83j() {
+    trimming("if(es.size() > 2) return a;").to(null);
+  }
+  @Test public void issue83k() {
+    trimming("if(es.size() < 2) return a;").to(null);
+  }
+  @Test public void issue83l() {
+    trimming("uses(ns).size() <= 1").to(null);
+  }
   @Test public void issue85_86a() {
     trimming("if(true){   \n" + "x(); }   \n" + "else{   \n" + "y();   \n" + "}").to("{x();}").to("x();");
   }
