@@ -1,0 +1,298 @@
+\NeedsTeXFormat{LaTeX2e}
+
+\RequirePackage{amstext}
+\RequirePackage{listings}
+\PassOptionsToPackage{dvipsnames}{xcolor}
+\RequirePackage{tcolorbox}
+
+\tcbuselibrary{listings}
+\tcbuselibrary{listingsutf8}
+\tcbuselibrary{skins}
+\tcbset{listing utf8=latin1}% optional; ’latin1’ is the default.
+
+\def\codesize{\normalsize}   % Last definition is the only one that matters 
+\def\codesize{\scriptsize}   % Last definition is the only one that matters 
+\def\codesize{\footnotesize} % Last definition is the only one that matters 
+
+\def\codedisplayspace{0pt}
+
+\ProcessOptions
+
+% These two macros are defined for quick and trouble free placement of short
+% code and keywords of any programming language within the document.
+\newcommand\kk[1]{\textcolor{RoyalPurple}{\text{\textup{\textbf{\texttt{#1}}}}}}
+\newcommand\kkn[1]{\text{\textup{\textbf{\texttt{#1}}}}}
+\newcommand\cc[1]{\textcolor{darkgray}{\text{\textup{\textbf{\texttt{#1}}}}}}
+\newcommand\ccn[1]{\text{\textup{\texttt{#1}}}}
+\def\tt#1{\textup{\texttt{#1}}}
+
+\providecommand{\listingsfont}{\ttfamily}
+\providecommand{\commentsfont}{\rmfamily}
+
+\def\ameBASH{\Bash}
+\def\nameADA{\Ada}
+\def\nameREAP{\textsc{Reap}}
+\def\nameAWKPROG{\AWK}
+\def\nameCEEPL{\CPL}
+\def\nameCPLUSPLUS{\CC}
+\def\nameCSHARP{\CSharp}
+\def\nameEMEL{\ML}
+\def\nameFORTRAN{\Fortran}
+\def\nameGO{\Go}
+\def\nameHASKELL{\Haskell}
+\def\nameJAVA{\Java}
+\def\nameLISP{\Lisp}
+\def\nameOCCAM{\Occam}
+\def\namePASCAL{\Pascal}
+\def\namePEEAGEPEE{\PHP}
+\def\namePEEELONE{PL/I}
+\def\namePERL{\Perl}
+\def\namePROLOG{\Prolog}
+\def\namePYTHON{\Python}
+
+\tcbuselibrary{fitting}
+
+\tcbset{codebox/.style={
+  after=\par,
+  before=\par\smallskip\centering,
+  boxrule=0pt,
+  boxsep=2pt,
+  clip title=false,
+  colbacklower=blue!90,
+  colback=olive!6!white,
+  colbacktitle=olive,
+  colframe=olive!70!black,
+  collower=Blue,
+  coltitle=white,
+  drop shadow=black!60,
+  enhanced,
+  fontlower=\footnotesize\ttfamily\slshape\bfseries,
+  hbox,
+%  interior style={left color=olive!9!white,right color=olive!16!white},
+  listing only,
+  listing remove caption=true,
+  listing style=#1,
+  notitle,
+  size=small,
+  watermark text=\csname name#1\endcsname,
+  watermark color=blue!20!red,
+  outer arc=6pt,
+  arc=6pt,
+  watermark opacity=0.10,
+}}
+
+\tcbset{output/.style={
+    minipage,
+    width=0.95\linewidth,
+    comment=#1,
+    listing and comment,
+}}
+
+\newtcblisting{code}[2][]{%
+  codebox=#2,
+  #1
+}
+
+\newtcblisting{lcode}[2][]{%
+  codebox=#2,
+  before=\par\smallskip,
+  #1
+}
+
+\newtcblisting{Code}[3][]{%
+  codebox=#2,
+  title={#3},
+  #1
+}
+
+\newtcblisting{lCode}[3][]{%
+  codebox=#2,
+  title={#3},
+  before=\par\smallskip,
+  #1
+}
+
+\newtcbinputlisting[]{\listFile}[2][]{%
+  listing file={#2},
+  codebox=display,
+  minipage,
+  width=0.95\linewidth,
+  colback=Aquamarine!20,
+  title={File \cc{#2}},
+  #1
+}
+
+\newtcblisting{session}[1][]{%
+  codebox=printout,
+  size=small,
+  minipage,
+  outer arc=12pt,
+  sharp corners=downhill,
+  arc=12pt,
+  colback=Blue,
+  #1
+}
+
+\newtcbinputlisting[]{\importOutput}[2][]{%
+  listing file={#2},
+  codebox=printout,
+  minipage,
+  width=0.95\linewidth,
+  outer arc=12pt,
+  sharp corners=downhill,
+  arc=12pt,
+  colback=Blue,
+  #1
+}
+
+% Begin with generating a general purpose ``code style''. Use a mono-spaced font
+% for everything; set tabs, escape, etc. 
+
+\lstdefinestyle{basic}{%
+  fontadjust,
+  showstringspaces=true,
+  extendedchars=true,       
+  escapeinside=`',
+  columns={fullflexible},
+  keepspaces=true,
+  tabsize=2,                 
+  aboveskip=\codedisplayspace,
+  belowskip=\codedisplayspace,
+  xleftmargin=\codedisplayspace,
+  xrightmargin=\codedisplayspace,
+  resetmargins=true,
+  breaklines=true,
+%  linewidth=0.96\columnwidth,
+}
+
+\lstdefinestyle{printout}{%
+  style=basic,
+  basicstyle=\color{White}\listingsfont\codesize\slshape,
+  keywordstyle=\color{White}\listingsfont\codesize\slshape,
+  commentstyle=\color{White}\listingsfont\codesize\slshape,
+  stringstyle=\color{White}\listingsfont\codesize\slshape,
+}
+
+\lstdefinestyle{code}{%
+  style=basic,
+  basicstyle=\color{Sepia}\listingsfont\codesize\upshape,
+  keywordstyle=\color{RoyalBlue}\listingsfont\codesize\textup\bfseries,
+  commentstyle=\color{ForestGreen}\commentsfont\codesize\slshape,
+  stringstyle=\color{OliveGreen}\listingsfont\codesize\itshape,
+}
+
+
+% Begin with generating a general purpose code style. Use a mono-spaced font
+% for everything but comments.  Keywords are bold face, strings are in italics,
+% while comments are in italics roman font. The escape character is back-quote.
+
+\lstdefinestyle{display}{%
+  style=code,
+  basicstyle=\color{Sepia}\listingsfont\codesize\upshape,
+  keywordstyle=\color{RoyalBlue}\listingsfont\codesize\textup\bfseries,
+  commentstyle=\color{ForestGreen}\commentsfont\codesize\slshape,
+  stringstyle=\color{OliveGreen}\listingsfont\codesize\itshape,
+}
+
+\lstdefinestyle{inline}{%
+  style=code,
+}
+
+% General style for numbered displayed code. Same as "display" style,
+% but with minimal spacing for the numbering.
+\lstdefinestyle{numbered}{%
+  style=display,
+  numbers=right,
+  stepnumber=1,
+  numbersep=2pt,
+  xleftmargin=3ex,
+  numberblanklines=false,
+  numberstyle=\tiny\bf,
+}
+
+\lstset{defaultdialect=[GNU]C++}
+
+\lstdefinelanguage{GoOH}{% Keywords as defined in the BNF
+	morekeywords=[1]{break,default,func,interface,%
+		case,defer,go,map,struct,chan,else,goto,package,%
+		switch,const,fallthrough,if,range,type,continue,%
+	for,import,return,var,select},
+	% Special identifiers, builtin functions
+	morekeywords=[2]{make,new,nil,len,cap,copy,cmplx,%
+		real,imag,panic,recover,print,println,iota,close,%
+		closed,\ignore$_\ignore$}, % Make gvim happy.
+	% Basic types
+	morekeywords=[3]{%
+		string,int,uint,uintptr,double,float,complex,byte,%
+		int8,int16,int32,int64,int128,%
+		uint8,uint16,uint32,uint64,uint128,%
+	float32,float64,complex64,complex128},
+	% Strings : "toto", 'toto', `toto`
+	morestring=[b]{"},
+	morestring=[b]{'},
+	morestring=[b]{`},
+	% Comments : /* comment */ and // comment
+	comment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	% Options
+	sensitive=true
+}
+
+
+\lstdefinelanguage{Occam}{%
+  morekeywords={PROC,CHAN,ALT,INT,WHILE,TRUE,SEQ,PAR,out},
+  sensitive=false,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]",
+}
+
+\lstnewenvironment{Session}{\lstset{style=display}}{}
+\lstnewenvironment{java}{\lstset{style=java}}{}
+\lstnewenvironment{reap}{\lstset{style=reap}}{}
+
+%	#1 Changes to the language definition, as in the listing package 
+%	#2 Language name, as it is known to the listing package.
+% #3 Name of the environment of the newly defined language.
+\newcommand\newLanguage[3][]{%
+	\lstdefinestyle{#3}{language={#2},style=display,#1}%
+  \lstnewenvironment{#3}[1][]{\lstset{style=#3,##1}}{}%
+}
+
+%---- Concrete Common Languages (Sorted Alphabetically --------------
+
+\newLanguage{Ada}{ADA}
+\newLanguage{Algol}{ALGOL}
+\newLanguage[morekeywords={else,in}]{AWK}{AWKPROG}
+\newLanguage{Bash}{BASH}
+\newLanguage[directivestyle={\listingsfont\bfseries\codesize\color{olive}}]{[GNU]C++}{CEEPL}
+\newLanguage[directivestyle={\listingsfont\bfseries\codesize\color{olive}}]{[GNU]C++}{CPLUSPLUS}
+\newLanguage[morekeywords={select,in,from,where,var,yield},deletekeywords={base}]{[Sharp]C}{CSHARP}
+\newLanguage{Cobol}{COBOL}
+\newLanguage[morekeywords={yield}]{Python}{PYTHON}
+\newLanguage[morekeywords={create,factory,note}]{Eiffel}{EIFFEL}
+\newLanguage{php}{PEEAGEPEE}
+\newLanguage{GoOH}{GO}
+\newLanguage[alsoletter={-}]{HTML}{HTML}
+\newLanguage[morekeywords={Ok,Oz,Integer,String,Real},alsoletter={@}]{Java}{JAVA}
+\newLanguage[morekeywords={ 
+    Ok, Oz, 
+    Boolean, 
+    Character, 
+    Integer, 
+    String, 
+    Real, 
+    parent, 
+    True, 
+    False,
+},alsoletter={@}]{Java}{REAP}
+\newLanguage{Oberon-2}{OBERON}
+\newLanguage{Pascal}{PASCAL}
+\newLanguage{Prolog}{PROLOG}
+\newLanguage[morekeywords={car,cdr,caar,cddr,cadr,cdar}]{Lisp}{LISP}
+\newLanguage{Fortran}{FORTRAN}
+\newLanguage{Perl}{PERL}
+\newLanguage{ML}{EMEL}
+\newLanguage{PL/I}{PEEELONE}
+\newLanguage{Haskell}{HASKELL}
+\newLanguage{Occam}{OCCAM}
