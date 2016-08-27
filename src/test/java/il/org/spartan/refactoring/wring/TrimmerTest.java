@@ -2052,6 +2052,18 @@ import il.org.spartan.refactoring.utils.*;
     trimming("void foo(Integer integer, ASTNode astn) {}").to("void foo(Integer i, ASTNode astn) {}");
   }
   
+  @Test @Ignore("Under Construction") public void issue74a() {
+    trimming("int[] a = new int[] {,};").to("int[] a = new int[] {};");
+  }
+  
+  @Test  @Ignore("Under Construction") public void issue74b() {
+    trimming("int[] a = new int[] {2,3,};").to("int[] a = new int[] {2,3};");
+  }
+  
+  @Test  public void issue74c() {
+    trimming("int[] a = new int[] {2,3};").to(null);
+  }
+  
   @Test public void linearTransformation() {
     trimming("plain * the + kludge").to("the*plain+kludge");
   }
