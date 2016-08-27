@@ -30,8 +30,8 @@ public interface Environment {
     return emptyEntries;
   }
 
-  default int totalSize() {
-    return size() + (nest() == null ? 0 : nest().totalSize());
+  default int fullSize() {
+    return size() + (nest() == null ? 0 : nest().fullSize());
   }
 
   /** TODO: Document */
@@ -44,10 +44,10 @@ public interface Environment {
     return true;
   }
 
-  default Set<Entry<String, Information>> totalEntries() {
+  default Set<Entry<String, Information>> fullEntries() {
     final Set<Entry<String, Information>> $ = new HashSet<>(entries());
     if (nest() != null)
-      $.addAll(nest().totalEntries())
+      $.addAll(nest().fullEntries());
     return $;
   }
 
@@ -72,11 +72,21 @@ public interface Environment {
     return emptySet;
   }
 
-  /** Document */
-  default Set<String> totalNames() {
+  /** TODO: Document */
+  default String fullName() {
+    String $ = (nest() == null ? null : nest().fullName());
+    return ($ == null ? "" : $ + "." ) + name();
+  }
+
+  default String name() {
+    return "";
+  }
+
+  /** TODO: Document */
+  default Set<String> fullNames() {
     final Set<String> $ = new HashSet<>(names());
     if (nest() != null)
-      $.addAll(nest().totalNames());
+      $.addAll(nest().fullNames());
     return $;
   }
 

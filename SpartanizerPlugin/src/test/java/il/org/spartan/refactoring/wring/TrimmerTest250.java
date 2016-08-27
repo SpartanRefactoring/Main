@@ -347,9 +347,9 @@ public class TrimmerTest250 {
     azzert.that(i, iz(s));
     azzert.that(left(i), iz("0"));
     azzert.that(right(i), iz("x"));
-    azzert.nay(i.hasExtendedOperands());
-    azzert.aye(isLiteralZero(left(i)));
-    azzert.nay(isLiteralZero(right(i)));
+    assert !(i.hasExtendedOperands());
+    assert (isLiteralZero(left(i)));
+    assert !(isLiteralZero(right(i)));
     azzert.that(minus(left(i)), iz("0"));
     azzert.that(minus(right(i)), iz("-x"));
     trimming(s).to("-x");
@@ -386,19 +386,19 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue72me1() {
-    azzert.nay(Is.negative(Into.e("0")));
+    assert !(Is.negative(Into.e("0")));
   }
 
   @Test public void issue72me2() {
-    azzert.aye(Is.negative(Into.e("-1")));
-    azzert.nay(Is.negative(Into.e("+1")));
-    azzert.nay(Is.negative(Into.e("1")));
+    assert (Is.negative(Into.e("-1")));
+    assert !(Is.negative(Into.e("+1")));
+    assert !(Is.negative(Into.e("1")));
   }
 
   @Test public void issue72me3() {
-    azzert.aye(Is.negative(Into.e("-x")));
-    azzert.nay(Is.negative(Into.e("+x")));
-    azzert.nay(Is.negative(Into.e("x")));
+    assert (Is.negative(Into.e("-x")));
+    assert !(Is.negative(Into.e("+x")));
+    assert !(Is.negative(Into.e("x")));
   }
 
   @Test public void issue72meA() {
@@ -417,7 +417,7 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue72mf1B() {
-    azzert.aye(Is.isSimple(Into.e("x")));
+    assert (Is.isSimple(Into.e("x")));
     trimming("-(x-0)")//
         .to("-(x)")//
         .to(null);
