@@ -289,7 +289,7 @@ public class subject {
 
     /** assign then and elze to the matching fields the then operand is the
      * owner
-     * @param inner a list of statements */
+     * @param flat a list of statements */
     StatementPair(final Statement then, final Statement elze) {
       super(then);
       this.then = claim(then);
