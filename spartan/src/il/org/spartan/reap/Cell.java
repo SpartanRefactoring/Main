@@ -83,7 +83,7 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
     // empty by default
   }
 
-  private final long oldestDependent() {
+  private long oldestDependent() {
     long $ = 0;
     for (final Cell<?> c : dependents)
       $ = max($, c.version);

@@ -22,35 +22,35 @@ public interface Utils {
   static final String QUOTE = "'";
   static final String WHITES = "(?m)\\s+";
 
-  public static <T, C extends Collection<T>> C add(final C $, final Iterable<? extends T> ts) {
+  static <T, C extends Collection<T>> C add(final C $, final Iterable<? extends T> ts) {
     for (final T t : ts)
       if (t != null)
         $.add(t);
     return $;
   }
 
-  @SafeVarargs public static <T, C extends Collection<T>> C add(final C $, final T... ts) {
+  @SafeVarargs static <T, C extends Collection<T>> C add(final C $, final T... ts) {
     for (final T t : ts)
       if (t != null)
         $.add(t);
     return $;
   }
 
-  @SafeVarargs public static <T, C extends Collection<T>> C addAll(final C $, final Collection<? extends T>... tss) {
+  @SafeVarargs static <T, C extends Collection<T>> C addAll(final C $, final Collection<? extends T>... tss) {
     for (final Collection<? extends T> ts : tss)
       if (ts != null)
         $.addAll(ts);
     return $;
   }
 
-  @SafeVarargs public static <T, C extends Collection<T>> C addAll(final C $, final Iterable<? extends T>... tss) {
+  @SafeVarargs static <T, C extends Collection<T>> C addAll(final C $, final Iterable<? extends T>... tss) {
     for (final Iterable<? extends T> ts : tss)
       if (ts != null)
         add($, ts);
     return $;
   }
 
-  @SafeVarargs public static <T, C extends Collection<T>> C addAll(final C $, final T... ts) {
+  @SafeVarargs static <T, C extends Collection<T>> C addAll(final C $, final T... ts) {
     for (final T t : ts)
       if (t != null)
         add($, t);
@@ -83,7 +83,7 @@ public interface Utils {
    * @param <T> JD
    * @return  parameter, but guaranteed to be {@link NonNull}
    * @see #mustBeNull(Object) */
-  @Nullable public static <T> T canBeNull(final T $) {
+  @Nullable static <T> T canBeNull(final T $) {
     return $;
   }
 
@@ -92,7 +92,7 @@ public interface Utils {
    * @param patterns a list of substrings
    * @return tree iff the the first parameter contains any of the substrings
    *         found in the second parameter */
-  public static boolean contains(final String text, final String... patterns) {
+  static boolean contains(final String text, final String... patterns) {
     for (final String pattern : patterns)
       if (pattern != null && text.contains(pattern))
         return true;
@@ -104,7 +104,7 @@ public interface Utils {
    * @param os an unknown number of objects
    * @return <code><b>null</b></code> <i>iff</i> one of the parameters is
    *         <code><b>null</b></code> */
-  public static boolean hasNull(final Object... os) {
+  static boolean hasNull(final Object... os) {
     for (final Object o : os)
       if (o == null)
         return true;
@@ -115,7 +115,7 @@ public interface Utils {
    * @param a some integer
    * @param is additional integers
    * @return  largest of the parameters */
-  public static int max(final int a, final int... is) {
+  static int max(final int a, final int... is) {
     int $ = a;
     for (final int i : is)
       $ = Math.max($, i);
@@ -127,28 +127,28 @@ public interface Utils {
    * @param s what needs to be prepended
    * @return  {@link StringBuilder} parameter with the {@link String}
    *         parameter prepended to it */
-  public static StringBuilder prepend(final StringBuilder $, final String s) {
+  static StringBuilder prepend(final StringBuilder $, final String s) {
     return cantBeNull($.insert(0, s));
   }
 
   /** Quote a given {@link String}
    * @param $ some {@link String} to be quoted
    * @return  parameter, quoted */
-  public static String quote(final @Nullable String $) {
+  static String quote(final @Nullable String $) {
     return $ != null ? QUOTE + $ + QUOTE : "<null reference>";
   }
 
   /** Computes the square of a given double
    * @param d some number
    * @return  square of the parameter */
-  public static double sqr(final double d) {
+  static double sqr(final double d) {
     return d * d;
   }
 
   /** Computes the square of a given integer
    * @param i some integer
    * @return  square of the parameter */
-  public static int sqr(final int i) {
+  static int sqr(final int i) {
     return i * i;
   }
 
@@ -157,7 +157,7 @@ public interface Utils {
    * @param ts the given array
    * @param i index of one cell
    * @param j index of another cell */
-  public static <T> void swap(final T[] ts, final int i, final int j) {
+  static <T> void swap(final T[] ts, final int i, final int j) {
     final T t = ts[i];
     ts[i] = ts[j];
     ts[j] = t;
@@ -471,18 +471,18 @@ public interface Utils {
    * @author Yossi Gil
    * @param <F> the type of the function's argument
    * @param <T> the type of the function's result */
-  public static class Applicator<F, T> {
+  static class Applicator<F, T> {
     private final Function<F, T> function;
 
     /** Instantiates this class
      * @param function which function to apply? */
-    public Applicator(final Function<F, T> function) {
+    Applicator(final Function<F, T> function) {
       this.function = function;
     }
 
     /** @param fs JD
      * @return TODO document return type of this function */
-    @SafeVarargs public final Iterable<T> to(final F... fs) {
+    @SafeVarargs final Iterable<T> to(final F... fs) {
       final List<T> $ = new ArrayList<>();
       for (final F f : fs)
         if (f != null)
@@ -493,7 +493,7 @@ public interface Utils {
     /** @param <FS> JD
      * @param s JD
      * @return TODO document return type */
-    public <FS extends Iterable<? extends F>> Iterable<T> to(final FS s) {
+    <FS extends Iterable<? extends F>> Iterable<T> to(final FS s) {
       final List<T> $ = new ArrayList<>();
       for (final @Nullable F f : s)
         if (f != null)

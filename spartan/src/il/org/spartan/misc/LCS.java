@@ -29,6 +29,10 @@ public class LCS {
     return new LCS(ia, is2).length();
   }
 
+  static double distance(String s1, String s2) {
+    return 2. * LCS.length(s1, s2) / (s1.length() + s2.length());
+  }
+
   /** @param a JD
    * @param s2 JD
    * @return TODO document return type */

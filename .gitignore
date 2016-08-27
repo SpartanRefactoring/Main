@@ -125,6 +125,7 @@ Backup*/
 /backups/
 [Bb]in/
 /bin
+/doc
 bin/
 bld/
 /build

@@ -15,7 +15,7 @@ import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.lazy.Cookbook.*;
+import il.org.spartan.reap.Cookbook.*;
 
 /** This interface represents the concept of a <i>lazy symbolic spreadsheet</i>,
  * made by DAG of interdependent {@link Property}s. A {@link Property} is either
@@ -57,15 +57,27 @@ import il.org.spartan.lazy.Cookbook.*;
  * @since 2016 */
 @SuppressWarnings("javadoc") public interface Environment {
   /** A factory method of class {@link Property} of an {@link Integer} as in
-   *
+   * 
    * <pre>
-   * Property&lt;Integer&gt; genesis = {@link Environment}.value(2);
+   *  Property&lt;Integer&gt; genesis =  {@link Environment} .value(2);
    * </pre>
-   *
+   * 
    * @param i JD
-   * @return  newly created instance of {@link Ingredient} */
-  public static Property<@Nullable Integer> value(final int i) {
+   * @return newly created instance of {@link Ingredient} */
+  static Property<@Nullable Integer> value(final int i) {
     return new Property<>(Integer.valueOf(i));
+  }
+
+  /** A factory method of class {@link Property} of an {@link Integer} as in
+   * 
+   * <pre>
+   *  Property&lt;Integer&gt; genesis =  {@link Environment} .value(2);
+   * </pre>
+   * 
+   * @param i JD
+   * @return newly created instance of {@link Ingredient} */
+  static Property<@Nullable Boolean> value(final boolean ¢) {
+    return new Property<>(Boolean.valueOf(¢));
   }
 
   static <@Nullable T, @Nullable A> Binder1<T, A> bind(final Function1<T, A> f) {
@@ -91,8 +103,8 @@ import il.org.spartan.lazy.Cookbook.*;
   /** A factory method of class {@link Property} returning an undefined value
    * for a cell
    * @param < T > JD
-   * @return  newly created instance of {@link Property} containing null
-   *         value of the type parameter */
+   * @return newly created instance of {@link Property} containing null value of
+   *         the type parameter */
   static <@Nullable T> Property<T> undefined() {
     return new Property<>();
   }
@@ -105,7 +117,7 @@ import il.org.spartan.lazy.Cookbook.*;
    *
    * @param < T > JD
    * @param t JD
-   * @return  newly created instance of {@link Property} */
+   * @return newly created instance of {@link Property} */
   static <@Nullable T> Property<@Nullable T> value(final T t) {
     return new Property<>(t);
   }
@@ -425,7 +437,7 @@ import il.org.spartan.lazy.Cookbook.*;
       return this;
     }
 
-    /** @return  last value computed or set for this instance. */
+    /** @return last value computed or set for this instance. */
     public final T cache() {
       return cache;
     }
@@ -507,6 +519,10 @@ import il.org.spartan.lazy.Cookbook.*;
       return this;
     }
 
+    public Property<T> push(T t) {
+      return this;
+    }
+
     /** forcibly set the value stored in this instance, ignoring the function
      * used for computing it, and marks this instance as updated with respect to
      * all prerequisites.
@@ -555,7 +571,7 @@ import il.org.spartan.lazy.Cookbook.*;
       return true;
     }
 
-    /** @return  version of this instance */
+    /** @return version of this instance */
     public long version() {
       return version;
     }
@@ -580,6 +596,10 @@ import il.org.spartan.lazy.Cookbook.*;
       prerequisites.clear();
       ingredients(cs);
       version = 0;
+      return this;
+    }
+
+    public Property<T> push(Function0<T> f) {
       return this;
     }
   }

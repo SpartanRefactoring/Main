@@ -15,7 +15,7 @@ import il.org.spartan.*;
  * @author Yossi Gil <Yossi.Gil@GMail.COM> */
 public enum iterables {
   //
-  ;
+
   /** Counts the number of items in an {@link Iterable}.
    * @param <T> some arbitrary type
    * @param ts some iterable over items whose type is the type parameter
