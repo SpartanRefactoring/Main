@@ -657,6 +657,13 @@ public class TrimmerTest250 {
   @Test public void issue83l() {
     trimming("uses(ns).size() <= 1").to(null);
   }
+  @Test public void issue83m() {
+    trimming("if(a.size() >= -3) ++a;").to("if(true) ++a;");
+  }
+  @Ignore("Under Construction")
+  @Test public void issue83n() {
+    trimming("if(a.size() <= -9) ++a;").to("if(false) ++a");
+  }
   @Test public void issue85_86a() {
     trimming("if(true){   \n" + "x(); }   \n" + "else{   \n" + "y();   \n" + "}").to("{x();}").to("x();");
   }
