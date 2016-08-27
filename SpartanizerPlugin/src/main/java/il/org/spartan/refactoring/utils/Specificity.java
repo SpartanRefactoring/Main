@@ -100,15 +100,15 @@ public class Specificity implements Comparator<Expression> {
       return of(e) != values().length;
     }
 
-    static int of(final ASTNode ¢) {
-      return of(extract.core((Expression) ¢));
+    static int of(final Expression ¢) {
+      return ofCore(extract.core(¢));
     }
 
-    private static int of(final Expression ¢) {
+    private static int ofCore(final Expression ¢) {
       for (final Level $ : values())
         if ($.includes(¢))
           return $.ordinal();
-      return values().length;
+      return values().length; 
     }
 
     abstract boolean includes(final ASTNode ¢);
