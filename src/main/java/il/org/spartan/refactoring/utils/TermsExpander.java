@@ -17,17 +17,27 @@ public class TermsExpander {
     return base(new TermsCollector(e));
   }
 
-  private static Expression base(final List<Term> ts) {
-    assert ts.size() >= 2;
-    final Term first = first(ts);
-    final Term second = second(ts);
-    final Expression $ = base(first, second);
-    final List<Term> remainder = chop(chop(ts));
-    return remainder.isEmpty() ? $ : recurse($, remainder);
+  /** @see #recurse(InfixExpression, List) */
+  private static InfixExpression appendMinus(final InfixExpression $, final Term ¢) {
+    return ¢.negative() ? subject.append($, ¢.expression) : subject.pair($, ¢.expression).to(PLUS2);
   }
 
-  static Expression base(final TermsCollector c) {
-    return base(c.all());
+  /** @see #recurse(InfixExpression, List) */
+  private static InfixExpression appendPlus(final InfixExpression $, final Term e) {
+    final Expression ¢ = duplicate(e.expression);
+    return e.positive() ? subject.append($, ¢) : subject.pair($, ¢).to(MINUS2);
+  }
+
+  private static Expression base(final List<Term> ts) {
+    assert ts != null;
+    assert !ts.isEmpty();
+    final Term first = first(ts);
+    assert first != null;
+    final Term second = second(ts);
+    assert second != null;
+    final Expression $ = base(first, second);
+    assert $ != null;
+    return step($, chop(chop(ts)));
   }
 
   private static InfixExpression base(final Term t1, final Term t2) {
@@ -40,15 +50,8 @@ public class TermsExpander {
     ).to(MINUS2);
   }
 
-  /** @see #recurse(InfixExpression, List) */
-  private static InfixExpression appendMinus(final InfixExpression $, final Term ¢) {
-    return ¢.negative() ? subject.append($, ¢.expression) : subject.pair($, ¢.expression).to(PLUS2);
-  }
-
-  /** @see #recurse(InfixExpression, List) */
-  private static InfixExpression appendPlus(final InfixExpression $, final Term e) {
-    final Expression ¢ = duplicate(e.expression);
-    return e.positive() ? subject.append($, ¢) : subject.pair($, ¢).to(MINUS2);
+  private static Expression base(final TermsCollector c) {
+    return base(c.all());
   }
 
   /** @param $ The accumulator, to which one more {@link Term} should be added
@@ -77,5 +80,10 @@ public class TermsExpander {
     final Term first = first(es);
     assert first != null;
     return recurse(o == PLUS2 ? appendPlus($, first) : appendMinus($, first), chop(es));
+  }
+
+  private static Expression step(final Expression $, final List<Term> ¢) {
+    assert ¢ != null;
+    return ¢.isEmpty() ? $ : recurse($, ¢);
   }
 }
