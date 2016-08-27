@@ -23,7 +23,7 @@ import org.junit.*;
  * @author Yossi Gil
  * @since 27/08/2008 */
 public enum prune {
-  ;
+
   /** @param <T> JD
    * @param <C> JD
    * @param ts JD

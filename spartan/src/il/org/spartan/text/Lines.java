@@ -19,7 +19,7 @@ import il.org.spartan.*;
  * @since 2014-7-31 */
 public enum Lines {
   // No enum values in this fake module
-  ;
+
   /** The string which this module considers as line separator. */
   public static final String END_OF_LINE_MARKER = "\n";
   /** A longer and more meaningful name for the array of length zero with

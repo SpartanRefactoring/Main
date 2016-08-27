@@ -1,5 +1,5 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
-package il.org.spartan.lazy;
+package il.org.spartan.reap;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
@@ -14,9 +14,8 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
-import il.org.spartan.lazy.Cookbook.Internal.*;
-import il.org.spartan.lazy.Cookbook.Internal.Function2;
-import il.org.spartan.lazy.Cookbook.Recipe.*;
+import il.org.spartan.reap.Cookbook.Internal.*;
+import il.org.spartan.reap.Cookbook.Recipe.*;
 
 /** This interface represents the concept of a <i>lazy symbolic spreadsheet</i>,
  * made by DAG of interdependent {@link Cell}s. A {@link Cell} is either an
@@ -57,12 +56,13 @@ import il.org.spartan.lazy.Cookbook.Recipe.*;
  * @author Yossi Gil <Yossi.Gil@GMail.COM>
  * @since 2016 */
 public interface Cookbook {
-  /** TODO Javadoc(2016): automatically generated for method
-   * <code>traceWizard</code>
-   * @param <T> JD
-   * @param $ JD
-   * @return a newly created {@link Cell} */
-  public static <@Nullable T> Cell<T> cook(final Supplier<T> $) {
+  /**
+   * TODO Javadoc(2016): automatically generated for method <code>traceWizard</code>
+   * @param < T >  JD
+   * @param $  JD
+   * @return  a newly created  {@link Cell}  
+   */
+  static <@Nullable T> Cell<T> cook(final Supplier<T> $) {
     Cell.trace = new HashSet<>();
     $.get();
     final Cell<?>[] trace = asArray(Cell.trace);
@@ -70,16 +70,12 @@ public interface Cookbook {
     return new Recipe<>($).ingredients(trace);
   }
 
-  /** Fluent API function to be used as in
-   *
-   * <pre>
-   * Cell<Integer> d = from(a,b,c).make(.....)
-   * </pre>
-   *
-   * @param ingredients list of ingredients
-   * @return a {@link $$RecipeMaker} which can be used to continue the fluent
-   *         API chain. */
-  public static $$RecipeMaker from(final Cell<?>... ingredients) {
+  /**
+   * Fluent API function to be used as in <pre> Cell<Integer> d = from(a,b,c).make(.....) </pre>
+   * @param ingredients  list of ingredients
+   * @return  a  {@link $$RecipeMaker}  which can be used to continue the fluent API chain. 
+   */
+  static $$RecipeMaker from(final Cell<?>... ingredients) {
     return new $$RecipeMaker() {
       @Override public <T> Cell<@Nullable T> make(final Supplier<T> s) {
         return new Recipe<>(s).ingredients(ingredients);
@@ -87,43 +83,41 @@ public interface Cookbook {
     };
   }
 
-  /** creates a new ingredient with a specific type
-   * @param <T> JD
-   * @return  newly created instance */
-  public static <T> Cell<T> input() {
+  /**
+   * creates a new ingredient with a specific type
+   * @param < T >  JD
+   * @return   newly created instance 
+   */
+  static <T> Cell<T> input() {
     return new Ingredient<>();
   }
 
-  /** Fluent API factory method that returns a recipe
-   * @param <T> JD
-   * @param supplier JD
-   * @return  newly created {@link Recipe} object */
-  public static <T> Recipe<@Nullable T> recipe(final Supplier<T> supplier) {
+  /**
+   * Fluent API factory method that returns a recipe
+   * @param < T >  JD
+   * @param supplier  JD
+   * @return   newly created  {@link Recipe}  object 
+   */
+  static <T> Recipe<@Nullable T> recipe(final Supplier<T> supplier) {
     return new Recipe<>(supplier);
   }
 
-  /** A factory method for class {@link Ingredient} of an {@link Integer} as in
-   *
-   * <pre>
-   * Cell&lt;String&gt; genesis = Cookbook.value(2);
-   * </pre>
-   *
-   * @param i JD
-   * @return  newly created instance of {@link Ingredient} */
-  public static Cell<Integer> value(final int i) {
+  /**
+   * A factory method for class  {@link Ingredient}  of an  {@link Integer}  as in <pre> Cell&lt;String&gt; genesis = Cookbook.value(2); </pre>
+   * @param i  JD
+   * @return   newly created instance of  {@link Ingredient}  
+   */
+  static Cell<Integer> value(final int i) {
     return new Ingredient<>(Integer.valueOf(i));
   }
 
-  /** A factory method for class {@link Ingredient} as in
-   *
-   * <pre>
-   * Cell&lt;String&gt; genesis = Cookbook.value(&quot;&quot;);
-   * </pre>
-   *
-   * @param <T> JD
-   * @param t JD
-   * @return  newly created instance of {@link Ingredient} */
-  public static <@Nullable T> Cell<@Nullable T> value(final T t) {
+  /**
+   * A factory method for class  {@link Ingredient}  as in <pre> Cell&lt;String&gt; genesis = Cookbook.value(&quot;&quot;); </pre>
+   * @param < T >  JD
+   * @param t  JD
+   * @return   newly created instance of  {@link Ingredient}  
+   */
+  static <@Nullable T> Cell<@Nullable T> value(final T t) {
     return new Ingredient<>(t);
   }
 
@@ -160,8 +154,8 @@ public interface Cookbook {
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016 */
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-  public static enum __META {
-    ;
+  public enum __META {
+
     @SuppressWarnings("javadoc") public static class A {
       final Cell<String> begin = value("<");
       final Cell<String> end = new Ingredient<>(">");
@@ -969,7 +963,7 @@ public interface Cookbook {
       // empty by default
     }
 
-    private final long oldestDependent() {
+    private long oldestDependent() {
       long $ = 0;
       for (final Cell<?> c : dependents)
         $ = max($, c.version);

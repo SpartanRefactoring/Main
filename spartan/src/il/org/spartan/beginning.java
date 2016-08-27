@@ -9,12 +9,12 @@ import org.junit.runners.*;
 import il.org.spartan.iterables.*;
 
 @SuppressWarnings("javadoc") public interface beginning {
-  public static final String COMMA = ",";
-  public static final String DOT = ".";
-  public static final String NL = "\n";
-  public static final String SPACE = " ";
+  static final String COMMA = ",";
+  static final String DOT = ".";
+  static final String NL = "\n";
+  static final String SPACE = " ";
 
-  public static void main(final String[] args) {
+  static void main(final String[] args) {
     System.out.println("Arguments are: " + //
         beginning.with('(') //
             .separate(args).by(", ") //
@@ -27,11 +27,11 @@ import il.org.spartan.iterables.*;
     );
   }
 
-  public static with with(final char c) {
+  static with with(final char c) {
     return with("" + c);
   }
 
-  public static with with(final String s) {
+  static with with(final String s) {
     return new with(s);
   }
 

@@ -13,7 +13,7 @@ import org.junit.*;
  * @author Yossi Gil
  * @since Jul 8, 2014 */
 public enum has {
-  ;
+
   /** Retrieve next item in a list
    * @param <T> JD
    * @param i an index of specific item in a list

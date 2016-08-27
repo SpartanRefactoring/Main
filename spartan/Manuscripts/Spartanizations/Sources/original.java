@@ -21,11 +21,8 @@ public class Test0 { // comments and £\kk{import}£ directives omitted for brev
         return false;
       }
       public boolean visit(SimpleName node) {
-        if (this.names.contains(node.getIdentifier())) {
-          System.out.println(
-            "Usage of '" + node + "' at line " +//
-            cu.getLineNumber(node.getStartPosition()));
-        }
+        if (this.names.contains(node.getIdentifier()))
+          System.out.println("Usage of '" + node + "' at line " + cu.getLineNumber(node.getStartPosition()));
         return true;
       }
     });

@@ -45,7 +45,7 @@ public class FilesGenerator {
     @NonNull final Sized<@Nullable String> iterable = as.iterable(directory.list());
     final Iterator<String> generator = iterable.iterator();
     return new Iterator<File>() {
-      private File next;
+      File next;
 
       @Override public boolean hasNext() {
         for (;;) {

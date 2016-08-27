@@ -19,7 +19,7 @@ import il.org.spartan.iterables.*;
  * @author Yossi Gil
  * @since 07/08/2008 */
 public enum separate {
-  ;
+
   /** The comma character */
   public static final String COMMA = ",";
   /** The dot character */
@@ -31,7 +31,7 @@ public enum separate {
 
   /** Separates a sequence of strings by {@link #SPACE} characters
    * @param $ what needs to be separated
-   * @return  parameters, separated by {@link #SPACE} */
+   * @return parameters, separated by {@link #SPACE} */
   public static String bySpaces(final String... $) {
     return separateBySpaces(as.iterable($));
   }
@@ -46,7 +46,7 @@ public enum separate {
 
   /** Separates an {@link Iterable} strings by {@link #SPACE} characters
    * @param $ what needs to be separated
-   * @return  parameters, separated by {@link #SPACE} */
+   * @return parameters, separated by {@link #SPACE} */
   public static String separateBySpaces(final Iterable<String> $) {
     return as.string(separateBySpaces($.iterator()));
   }
@@ -54,7 +54,7 @@ public enum separate {
   /** Separates an {@link Iterable} strings (specified by an {@link Iterator}
    * over it by {@link #SPACE} characters
    * @param ss what needs to be separated
-   * @return  parameters, separated by {@link #SPACE} */
+   * @return parameters, separated by {@link #SPACE} */
   public static String separateBySpaces(final Iterator<String> ss) {
     final StringBuilder $ = new StringBuilder();
     final Separator s = new Separator(SPACE);
@@ -73,8 +73,8 @@ public enum separate {
   /** Separate elements of a given array of <code><b>boolean</b></code>s by a
    * given <code><b>char</b></code>
    * @param bs an array of elements to be separated
-   * @return a {{@link String}} obtained by concatenating the textual representation of
-   *         the elements in <code>bs</code> separated by
+   * @return a {{@link String}} obtained by concatenating the textual
+   *         representation of the elements in <code>bs</code> separated by
    *         <code>between</code> */
   public static SeparationSubject these(final boolean[] bs) {
     return these(box.it(bs));
@@ -83,8 +83,8 @@ public enum separate {
   /** Separate elements of a given array of <code><b>byte</b></code>s by a given
    * <code><b>char</b></code>
    * @param bs an array of elements to be separated
-   * @return a {{@link String}} obtained by concatenating the textual representation of
-   *         the elements in <code>bs</code> separated by
+   * @return a {{@link String}} obtained by concatenating the textual
+   *         representation of the elements in <code>bs</code> separated by
    *         <code>between</code> */
   public static SeparationSubject these(final byte[] bs) {
     return these(box.it(bs));
@@ -93,8 +93,8 @@ public enum separate {
   /** Separate elements of a given array of <code><b>char</b></code>s by a given
    * <code><b>char</b></code>
    * @param cs an array of elements to be separated
-   * @return a {{@link String}} obtained by concatenating the textual representation of
-   *         the elements in <code>cs</code> separated by
+   * @return a {{@link String}} obtained by concatenating the textual
+   *         representation of the elements in <code>cs</code> separated by
    *         <code>between</code> */
   public static SeparationSubject these(final char[] cs) {
     return these(box.it(cs));
@@ -103,8 +103,8 @@ public enum separate {
   /** Separate elements of a given array of <code><b>double</b></code>s by a
    * given <code><b>char</b></code>
    * @param ds an array of elements to be separated
-   * @return a {{@link String}} obtained by concatenating the textual representation of
-   *         the elements in <code>ds</code> separated by
+   * @return a {{@link String}} obtained by concatenating the textual
+   *         representation of the elements in <code>ds</code> separated by
    *         <code>between</code> */
   public static SeparationSubject these(final double[] ds) {
     return these(box.it(ds));
@@ -113,8 +113,8 @@ public enum separate {
   /** Separate elements of a given array of <code><b>float</b></code>s by a
    * given <code><b>char</b></code>
    * @param fs an array of elements to be separated
-   * @return a {{@link String}} obtained by concatenating the textual representation of
-   *         the elements in <code>fs</code> separated by
+   * @return a {{@link String}} obtained by concatenating the textual
+   *         representation of the elements in <code>fs</code> separated by
    *         <code>between</code> */
   public static SeparationSubject these(final float[] fs) {
     return these(box.it(fs));
@@ -155,8 +155,8 @@ public enum separate {
   /** Separate elements of a given array of <code><b>short</b></code>s by a
    * given <code><b>char</b></code>
    * @param ss an array of elements to be separated
-   * @return a {{@link String}} obtained by concatenating the textual representation of
-   *         the elements in <code>ss</code> separated by
+   * @return a {{@link String}} obtained by concatenating the textual
+   *         representation of the elements in <code>ss</code> separated by
    *         <code>between</code> */
   public static SeparationSubject these(final short[] ss) {
     return these(box.it(ss));
@@ -200,8 +200,8 @@ public enum separate {
   /** Separate elements of a given array of <code><b>int</b></code>s by a given
    * <code><b>char</b></code>
    * @param is an array of elements to be separated
-   * @return a {{@link String}} obtained by concatenating the textual representation of
-   *         the elements in <code>is</code> separated by
+   * @return a {{@link String}} obtained by concatenating the textual
+   *         representation of the elements in <code>is</code> separated by
    *         <code>between</code> */
   private static SeparationSubject these(final int[] is) {
     return these(box.it(is));
@@ -213,8 +213,8 @@ public enum separate {
      * @param ts an {@link Iterable} collection of elements to be separated
      * @param <T> type of elements in the {@link Iterable} collection parameter
      * @param between what should be used for separating these elements
-     * @return a {{@link String}} obtained by concatenating the textual representation
-     *         of the elements in <code>ts</code> separated by
+     * @return a {{@link String}} obtained by concatenating the textual
+     *         representation of the elements in <code>ts</code> separated by
      *         <code>between</code> */
     static <T> String by(final Iterable<? extends T> ts, final String between) {
       final Separator s = new Separator(between);
@@ -227,8 +227,8 @@ public enum separate {
     /** Separate a list of elements by a given {{@link String}}
      * @param os what needs to be separated
      * @param between what should be used for separating these elements
-     * @return a {{@link String}} obtained by concatenating the textual representation
-     *         of the elements in <code>ts</code> separated by
+     * @return a {{@link String}} obtained by concatenating the textual
+     *         representation of the elements in <code>ts</code> separated by
      *         <code>between</code> */
     static String separateBy(final Iterable<?> os, final String between) {
       final Separator s = new Separator(between);
@@ -269,8 +269,8 @@ public enum separate {
     /** Separate elements of a given array of <code><b>boolean</b></code>s by a
      * given {{@link String}}
      * @param between what should be used for separating these elements
-     * @return a {{@link String}} obtained by concatenating the textual representation
-     *         of the elements in <code>bs</code> separated by
+     * @return a {{@link String}} obtained by concatenating the textual
+     *         representation of the elements in <code>bs</code> separated by
      *         <code>between</code> */
     public String by(final String between) {
       return separateBy(os, between);
@@ -298,8 +298,8 @@ public enum separate {
       return separateBy(prune.whites(as.strings(os)), NL);
     }
 
-    /** Separates the objects in some order
-     * @return  */
+    /** Separates the objects by nothing
+     * @return separated text */
     public String byNothing() {
       return separateBy(prune.whites(as.strings(os)), "");
     }
