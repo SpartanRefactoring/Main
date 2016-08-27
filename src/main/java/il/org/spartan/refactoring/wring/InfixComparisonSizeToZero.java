@@ -63,7 +63,7 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
           return $;
       case "<":
         if (number >= 0)
-          return  e.getAST().newBooleanLiteral(false);
+          return e.getAST().newBooleanLiteral(false);
       default:
         return null;
     }
@@ -76,7 +76,7 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
   @Override String description(final InfixExpression e) {
     final Expression right = right(e);
     final Expression left = left(e);
-    return left instanceof MethodInvocation ? descriptionAux(left) : descriptionAux(right);
+    return descriptionAux(left instanceof MethodInvocation?left:right);
   }
 
   @Override ASTNode replacement(final InfixExpression e) {
@@ -97,11 +97,9 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
     if (!Is.isComparison(o))
       return false;
     final Expression right = right(e);
+    assert right != null;
     final Expression left = left(e);
-    if (!validTypes(right, left)) {
-      return false;
-    }
-    return left instanceof MethodInvocation ? "size".equals(name((MethodInvocation) left).getIdentifier())
-        : "size".equals(name((MethodInvocation) right).getIdentifier());
+    assert left != null;
+    return validTypes(right,left) && "size".equals((name(left instanceof MethodInvocation?(MethodInvocation)left:(MethodInvocation)right)).getIdentifier());
   }
 }
