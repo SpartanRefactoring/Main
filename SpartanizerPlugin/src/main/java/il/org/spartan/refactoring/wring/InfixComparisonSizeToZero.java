@@ -55,19 +55,21 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
       l = (NumberLiteral)n;
       sign = 1;
     }
-    
-    /* final CompilationUnit u = compilationUnit(e); if (u == null) return
-     * null; */
     final Expression receiver = receiver(i);
-    /* final IMethodBinding b = BindingUtils.getVisibleMethod(receiver == null ?
-     * BindingUtils.container(e) : receiver.resolveTypeBinding(), "isEmpty",
-     * null, e, u); if (b == null) return null; final ITypeBinding t =
-     * b.getReturnType(); if (!"boolean".equals("" + t) &&
-     * !"java.lang.Boolean".equals(t.getBinaryName())) return null; final
-     * MethodInvocation $ = subject.operand(receiver).toMethod("isEmpty");
-     * return o.equals(InfixExpression.Operator.EQUALS) ? $ :
-     * subject.operand($).to(NOT); */ // The original case assumes there is
-                                      // Binding
+    /* In case binding is available, uses it to ensure that isEmpty() is accessible from current scope.
+     * Currently untested */
+    if (e.getAST().hasResolvedBindings()){
+      final CompilationUnit u = compilationUnit(e); 
+      if (u == null) 
+        return null;
+      final IMethodBinding b = BindingUtils.getVisibleMethod(receiver == null ? BindingUtils.container(e)
+          : receiver.resolveTypeBinding(), "isEmpty",null, e, u);
+      if (b == null)
+        return null;
+      final ITypeBinding t = b.getReturnType();
+      if (!"boolean".equals("" + t) && !"java.lang.Boolean".equals(t.getBinaryName())) 
+        return null;   
+    }
     final MethodInvocation $ = subject.operand(receiver).toMethod("isEmpty");
     int number = sign * Integer.parseInt(l.getToken());
     switch (o.toString()) {
@@ -111,9 +113,6 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
   }
 
   @Override ASTNode replacement(final InfixExpression e) {
-    /* if (!e.getAST().hasResolvedBindings()) return null; */ // Yossi Told To
-                                                              // Remove That For
-                                                              // Tests
     final Operator o = e.getOperator();
     if (!Is.isComparison(o))
       return null;
