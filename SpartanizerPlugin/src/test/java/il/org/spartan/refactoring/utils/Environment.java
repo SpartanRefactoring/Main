@@ -47,7 +47,7 @@ public interface Environment {
   default Set<Entry<String, Information>> totalEntries() {
     final Set<Entry<String, Information>> $ = new HashSet<>(entries());
     if (nest() != null)
-      $.addAll(nest().totalEntries())
+      $.addAll(nest().totalEntries());
     return $;
   }
 
