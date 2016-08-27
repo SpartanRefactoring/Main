@@ -31,6 +31,10 @@ public enum Funcs {
   static final PrefixExpression.Operator PLUS1 = PrefixExpression.Operator.PLUS;
   static final InfixExpression.Operator MINUS2 = InfixExpression.Operator.MINUS;
   public static final InfixExpression.Operator PLUS2 = InfixExpression.Operator.PLUS;
+  static final PostfixExpression.Operator DECREMENT_POST = PostfixExpression.Operator.DECREMENT;
+  static final PostfixExpression.Operator INCREMENT_POST = PostfixExpression.Operator.INCREMENT;
+  static final PrefixExpression.Operator DECREMENT_PRE = PrefixExpression.Operator.DECREMENT;
+  static final PrefixExpression.Operator INCREMENT_PRE = PrefixExpression.Operator.INCREMENT;
 
   public static AbstractTypeDeclaration asAbstractTypeDeclaration(final ASTNode ¢) {
     return eval(() -> ((AbstractTypeDeclaration) ¢)).when(¢ instanceof AbstractTypeDeclaration);
