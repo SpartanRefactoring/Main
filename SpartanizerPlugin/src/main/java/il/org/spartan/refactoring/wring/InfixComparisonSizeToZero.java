@@ -9,33 +9,16 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/** A {@link Wring} to change emptiness check from
- *
- * <pre>
- * x.size() != 0
- * </pre>
- *
- * or
- *
- * <pre>
- * x.size() &gt; 0
- * </pre>
- *
- * or
- *
- * <pre>
- * x.size() &gt;= 1
- * </pre>
- *
- * to
- *
- * <pre>
- * !x.isEmpty()
- * </pre>
- *
- * .
+/** Converts code>x.size()==0</code> to <code>x.isEmpty()</code>,
+ * <code>x.size()!=0 </code> and <code>x.size()>=1</code>
+ * <code>!x.isEmpty()</code>, <code>x.size()<0</code> to
+ * <code><b>false</b>,and
+ * <code>x.size()>=0</code> to <code><b>true</b>. 
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
- * @since 2016-04-24 */
+ * @author Yossi Gil 
+ * @since 2016-04-24 
+ * TODO DOR: Add your name
+ */
 public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.Canonicalization {
   static boolean invalidTypes(final Expression ¢1, final Expression ¢2) {
     return ¢2 instanceof MethodInvocation == ¢1 instanceof MethodInvocation //
