@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 import il.org.spartan.refactoring.utils.*;
 
-/** Converts code>x.size()==0</code> to <code>x.isEmpty()</code>,
+/** Converts <code>x.size()==0</code> to <code>x.isEmpty()</code>,
  * <code>x.size()!=0 </code> and <code>x.size()>=1</code>
  * <code>!x.isEmpty()</code>, <code>x.size()<0</code> to <code><b>false</b>,and
  * <code>x.size()>=0</code> to <code><b>true</b>. 
@@ -27,6 +27,9 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
 
   @SuppressWarnings("fallthrough") private static ASTNode replacement(final InfixExpression e, final Operator o, final MethodInvocation i,
       final NumberLiteral l) {
+    if(!"size".equals((name(i).getIdentifier()))){
+      return null;
+    }
     /* final CompilationUnit u = compilationUnit(e); if (u == null) return
      * null; */
     final Expression receiver = receiver(i);
@@ -86,22 +89,16 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
                                                               // Remove That For
                                                               // Tests
     final Operator o = e.getOperator();
-    final Expression right = right(e);
-    final Expression left = left(e);
-    return left instanceof MethodInvocation ? //
-        replacement(e, o, (MethodInvocation) left, (NumberLiteral) right) //
-        : replacement(e, conjugate(o), (MethodInvocation) right, (NumberLiteral) left)//
-    ;
-  }
-
-  @Override boolean scopeIncludes(final InfixExpression e) {
-    final Operator o = e.getOperator();
     if (!Is.isComparison(o))
-      return false;
+      return null;
     final Expression right = right(e);
     assert right != null;
     final Expression left = left(e);
     assert left != null;
-    return validTypes(right,left) && "size".equals((name(left instanceof MethodInvocation?(MethodInvocation)left:(MethodInvocation)right)).getIdentifier());
+    return !validTypes(right,left) ? null 
+        : left instanceof MethodInvocation ? //
+        replacement(e, o, (MethodInvocation) left, (NumberLiteral) right) //
+        : replacement(e, conjugate(o), (MethodInvocation) right, (NumberLiteral) left)//
+    ;
   }
 }
