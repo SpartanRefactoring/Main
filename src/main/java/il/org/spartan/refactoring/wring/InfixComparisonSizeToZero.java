@@ -20,16 +20,42 @@ import il.org.spartan.refactoring.utils.*;
  * @author Stav Namir <code><stav1472 [at] gmail.com></code>
  * @since 2016-04-24 */
 public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.Canonicalization {
+  private static NumberLiteral getNegativeNumber(final PrefixExpression ¢){
+    if (¢.getOperator() == PrefixExpression.Operator.MINUS){
+      return ¢.getOperand() instanceof NumberLiteral ? (NumberLiteral)¢.getOperand() : null;
+    }
+    return null;
+  }
+  
+  private static NumberLiteral getNegativeNumber(final Expression ¢){
+    return ¢ instanceof PrefixExpression ? getNegativeNumber((PrefixExpression)¢) : null;
+  }
+  
+  private static boolean isNumber(final Expression ¢){
+    return ¢ instanceof NumberLiteral || getNegativeNumber(¢) != null;
+  }
+  
   static boolean validTypes(final Expression ¢1, final Expression ¢2) {
-    return (¢2 instanceof MethodInvocation && ¢1 instanceof NumberLiteral) //
-        || (¢2 instanceof NumberLiteral && ¢1 instanceof MethodInvocation);
+    return (¢2 instanceof MethodInvocation && isNumber(¢1)) //
+        || (isNumber(¢2) && ¢1 instanceof MethodInvocation);
   }
 
   @SuppressWarnings("fallthrough") private static ASTNode replacement(final InfixExpression e, final Operator o, final MethodInvocation i,
-      final NumberLiteral l) {
+      final Expression n) {
     if(!"size".equals((name(i).getIdentifier()))){
       return null;
     }
+    int sign = -1;
+    NumberLiteral l = getNegativeNumber(n);
+    if (l == null){
+      /*should be unnecessary since validTypes uses isNumber
+      * so n is either a NumberLiteral or an PrefixExpression which is a negative number */ 
+      if (!(n instanceof NumberLiteral))
+        return null;
+      l = (NumberLiteral)n;
+      sign = 1;
+    }
+    
     /* final CompilationUnit u = compilationUnit(e); if (u == null) return
      * null; */
     final Expression receiver = receiver(i);
@@ -43,7 +69,7 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
      * subject.operand($).to(NOT); */ // The original case assumes there is
                                       // Binding
     final MethodInvocation $ = subject.operand(receiver).toMethod("isEmpty");
-    int number = Integer.parseInt(l.getToken());
+    int number = sign * Integer.parseInt(l.getToken());
     switch (o.toString()) {
       case "==":
         if (number == 0)
@@ -97,8 +123,8 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
     assert left != null;
     return !validTypes(right,left) ? null 
         : left instanceof MethodInvocation ? //
-        replacement(e, o, (MethodInvocation) left, (NumberLiteral) right) //
-        : replacement(e, conjugate(o), (MethodInvocation) right, (NumberLiteral) left)//
+        replacement(e, o, (MethodInvocation) left, right) //
+        : replacement(e, conjugate(o), (MethodInvocation) right, left)//
     ;
   }
 }
