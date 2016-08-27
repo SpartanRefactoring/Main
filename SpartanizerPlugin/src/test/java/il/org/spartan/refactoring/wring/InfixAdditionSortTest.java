@@ -35,11 +35,11 @@ public class InfixAdditionSortTest {
   }
 
   @Test public void test02() {
-    azzert.aye(new InfixAdditionSort().scopeIncludes(INPUT));
+    assert (new InfixAdditionSort().scopeIncludes(INPUT));
   }
 
   @Test public void test03() {
-    azzert.aye(new InfixAdditionSort().eligible(INPUT));
+    assert (new InfixAdditionSort().eligible(INPUT));
   }
 
   @Test public void test04() {
@@ -47,23 +47,23 @@ public class InfixAdditionSortTest {
   }
 
   @Test public void test05() {
-    azzert.nay(new InfixAdditionSubtractionExpand().scopeIncludes(INPUT));
+    assert !(new InfixAdditionSubtractionExpand().scopeIncludes(INPUT));
   }
 
   @Test public void test06() {
-    azzert.aye(new InfixAdditionSubtractionExpand().eligible(INPUT));
+    assert (new InfixAdditionSubtractionExpand().eligible(INPUT));
   }
 
   @Test public void test07() {
-    azzert.isNull(new InfixAdditionSubtractionExpand().replacement(INPUT));
+    assert null ==(new InfixAdditionSubtractionExpand().replacement(INPUT));
   }
 
   @Test public void test08() {
     final InfixAdditionSubtractionExpand e = new InfixAdditionSubtractionExpand();
-    azzert.notNull(e);
-    azzert.nay(TermsCollector.isLeafTerm(INPUT));
-    azzert.notNull(TermsExpander.simplify(INPUT));
-    azzert.isNull(e.replacement(INPUT));
+assert    null != (e);
+    assert !(TermsCollector.isLeafTerm(INPUT));
+assert    null != (TermsExpander.simplify(INPUT));
+    assert null ==(e.replacement(INPUT));
   }
 
   @Test public void test09() {
@@ -71,43 +71,43 @@ public class InfixAdditionSortTest {
     azzert.that(e, instanceOf(InfixExpression.class));
     final InfixExpression i = (InfixExpression) e;
     azzert.that(i.getOperator(), is(PLUS2));
-    azzert.notNull(extract.operands(i));
+assert    null != (extract.operands(i));
     azzert.that(extract.operands(i).size(), is(nTERMS));
-    azzert.aye(Funcs.same(i, INPUT));
+    assert (Funcs.same(i, INPUT));
   }
 
   @Test public void test10() {
     final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
-    azzert.notNull(i);
-    azzert.aye(Funcs.same(i, INPUT));
+assert    null != (i);
+    assert (Funcs.same(i, INPUT));
   }
 
   @Test public void test11() {
     final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
-    azzert.notNull(i);
-    azzert.notNull(INPUT);
-    azzert.aye(Funcs.same(i, INPUT));
+    assert null != (i);
+    assert null != (INPUT);
+    assert (Funcs.same(i, INPUT));
   }
 
   @Test public void test12() {
     final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
-    azzert.notNull(i);
-    azzert.nay(i == INPUT);
-    azzert.notNull(INPUT);
+    assert null != (i);
+    assert !(i == INPUT);
+    assert null != (INPUT);
     azzert.that(Funcs.gist("" + i), is(Funcs.gist("" + INPUT)));
   }
 
   @Test public void test13() {
     final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
-    azzert.notNull(i);
-    azzert.nay(i == INPUT);
-    azzert.aye(i.getNodeType() == INPUT.getNodeType());
+    assert null != (i);
+    assert !(i == INPUT);
+    assert (i.getNodeType() == INPUT.getNodeType());
   }
 
   @Test public void test14() {
     final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
-    azzert.notNull(i);
-    azzert.nay(i == INPUT);
+    assert null != (i);
+    assert !(i == INPUT);
     azzert.that(i, iz("" + INPUT));
   }
 
