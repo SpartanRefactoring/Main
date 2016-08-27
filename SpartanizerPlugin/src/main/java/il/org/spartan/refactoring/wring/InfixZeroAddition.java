@@ -49,7 +49,7 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2016 */
 public final class InfixZeroAddition extends Wring<InfixExpression> {
   @Override String description(final InfixExpression e) {
-    return "remove 0 in X + 0 expressions";
+    return "remove 0 in X + 0 expressions from " + e;
   }
 
   @Override public WringGroup wringGroup() {
