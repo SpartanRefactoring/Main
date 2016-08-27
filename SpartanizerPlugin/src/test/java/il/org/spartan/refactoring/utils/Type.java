@@ -60,7 +60,6 @@ enum Kind {
     return this + "=" + name + " (" + description + ")";
   }
 
-
   public final Kind under(final PrefixExpression.Operator o) {
     assert o != null;
     assert in(o, BOOLEAN, MINUS1, PLUS1, COMPLEMENT, DECREMENT_POST, DECREMENT_PRE);
