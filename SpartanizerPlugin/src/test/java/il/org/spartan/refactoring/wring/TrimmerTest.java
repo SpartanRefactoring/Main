@@ -2061,19 +2061,22 @@ import il.org.spartan.refactoring.utils.*;
   }
   
   @Test public void issue83c() {
-    trimming("if(lst.size()>0)return a;").to("if(!lst.isEmpty())return a;");
+    trimming("if(x.size()>0)return a;").to("if(!x.isEmpty())return a;");
   }
   
+  @Ignore("This checks for singleton, and cannot be simplified")
   @Test public void issue83d() {
-    trimming("if(lst.size()==1) return a;").to("if(!lst.isEmpty()) return a;");
+    trimming("if(x.size()==1) return a;").to(null);
   }
   
+  @Ignore("This checks for singleton, and cannot be simplified")
   @Test public void issue83e() {
-    trimming("if(lst.size()==2) return a;").to("if(!lst.isEmpty()) return a;");
+    trimming("if(x.size()==2) return a;").to(null);
   }
  
+  @Ignore("This checks for singleton, and cannot be simplified")
   @Test public void issue83f() {
-    trimming("if(2==lst.size()) return a;").to("if(!lst.isEmpty()) return a;");
+    trimming("if(2==lst.size()) return a;").to(null);
   }
   
   @Test public void issue83g() {
