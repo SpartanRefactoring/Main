@@ -40,7 +40,7 @@ public class TypeTest {
     }
     
     @Test public void test15(){
-      azzert.that(STRING.underPlus(STRING), is(STRING));
+      azzert.that(STRING.underBinaryOperator(PLUS2, STRING), is(STRING));
     }
     
     @Test public void test03(){
@@ -52,64 +52,91 @@ public class TypeTest {
     }
   
     @Test public void test07(){
-      azzert.that(NOTHING.underPlus(NOTHING), is(ALPHANUMERIC));
+      azzert.that(NOTHING.underBinaryOperator(PLUS2, NOTHING), is(ALPHANUMERIC));
     }
     
     @Test public void test13(){
-      azzert.that(INT.underPlus(DOUBLE), is(DOUBLE));
+      azzert.that(INT.underBinaryOperator(PLUS2, DOUBLE), is(DOUBLE));
     }
     
     @Test public void test14(){
-      azzert.that(INT.underPlus(INT), is(INT));
+      azzert.that(INT.underBinaryOperator(PLUS2, INT), is(INT));
     }
     
     @Test public void test16(){
-      azzert.that(STRING.underPlus(NULL), is(STRING));
+      azzert.that(STRING.underBinaryOperator(PLUS2, NULL), is(STRING));
     }
     
     @Test public void test17(){
-      azzert.that(NUMERIC.underPlus(NULL), is(STRING));
+      azzert.that(NUMERIC.underBinaryOperator(PLUS2, NULL), is(STRING));
     }
     
     @Test public void test18(){
-      azzert.that(LONG.underPlus(INT), is(LONG));
+      azzert.that(LONG.underBinaryOperator(PLUS2, INT), is(LONG));
     }
     
     @Test public void test19(){
-      azzert.that(LONG.underPlus(INTEGRAL), is(LONG));
+      azzert.that(LONG.underBinaryOperator(PLUS2, INTEGRAL), is(LONG));
     }
     
     @Test public void test20(){
-      azzert.that(LONG.underPlus(NUMERIC), is(NUMERIC));
+      azzert.that(LONG.underBinaryOperator(PLUS2, NUMERIC), is(NUMERIC));
     }
     
     @Test public void test21(){
-      azzert.that(INT.underPlus(INTEGRAL), is(INTEGRAL));
+      azzert.that(INT.underBinaryOperator(PLUS2, INTEGRAL), is(INTEGRAL));
     }
     
     @Test public void test22(){
-      azzert.that(INT.underIntegersOnlyOperator(INT), is(INT));
+      azzert.that(INT.underBinaryOperator(InfixExpression.Operator.AND, INT), is(INT));
     }
     
     @Test public void test23(){
-      azzert.that(INT.underIntegersOnlyOperator(LONG), is(LONG));
+      azzert.that(INT.underBinaryOperator(InfixExpression.Operator.OR, LONG), is(LONG));
     }
     
     @Test public void test24(){
-      azzert.that(INTEGRAL.underIntegersOnlyOperator(LONG), is(LONG));
+      azzert.that(INTEGRAL.underBinaryOperator(InfixExpression.Operator.LEFT_SHIFT, LONG), is(LONG));
     }
     
     @Test public void test25(){
-      azzert.that(NUMERIC.underIntegersOnlyOperator(NOTHING), is(INTEGRAL));
+      azzert.that(NUMERIC.underBinaryOperator(InfixExpression.Operator.REMAINDER, NOTHING), is(INTEGRAL));
     }
     
     @Test public void test26(){
-      azzert.that(LONG.underIntegersOnlyOperator(INTEGRAL), is(LONG));
+      azzert.that(LONG.underBinaryOperator(InfixExpression.Operator.RIGHT_SHIFT_SIGNED, INTEGRAL), is(LONG));
     }
     
     @Test public void test27(){
-      azzert.that(STRING.underIntegersOnlyOperator(INTEGRAL), is(INTEGRAL));
+      azzert.that(STRING.underBinaryOperator(InfixExpression.Operator.XOR, INTEGRAL), is(INTEGRAL));
     }
- 
+    
+    @Test public void test28(){
+      azzert.that(INT.underBinaryOperator(InfixExpression.Operator.GREATER, INTEGRAL), is(BOOLEAN));
+    }
+    
+    @Test public void test29(){
+      azzert.that(NONNULL.underBinaryOperator(InfixExpression.Operator.EQUALS, STRING), is(BOOLEAN));
+    }
+    
+    @Test public void test30(){
+      azzert.that(NUMERIC.underBinaryOperator(InfixExpression.Operator.NOT_EQUALS, BAPTIZED), is(BOOLEAN));
+    }
+    
+    @Test public void test31(){
+      azzert.that(BOOLEAN.underBinaryOperator(InfixExpression.Operator.CONDITIONAL_AND, BOOLEAN), is(BOOLEAN));
+    }
+    
+    @Test public void test32(){
+      azzert.that(DOUBLE.underBinaryOperator(InfixExpression.Operator.TIMES, INTEGRAL), is(DOUBLE));
+    }
+    
+    @Test public void test33(){
+      azzert.that(DOUBLE.underBinaryOperator(InfixExpression.Operator.DIVIDE, NUMERIC), is(DOUBLE));
+    }
+    
+    @Test public void test34(){
+      azzert.that(INTEGRAL.underBinaryOperator(MINUS2, LONG), is(LONG));
+    }
   }
 }
