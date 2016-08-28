@@ -1,6 +1,9 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Type.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
@@ -16,15 +19,72 @@ public class TypeTest {
     }
 
     @Test public void test02() {
-      azzert.that(Type.kind(Into.e("2 + (2.0)*1L")),is(Type.DOUBLE));
+      azzert.that(kind(Into.e("2 + (2.0)*1L")),is(Type.DOUBLE));
+    }
+    
+    @Test public void test03(){
+      azzert.that(DOUBLE.under(DECREMENT_PRE), is(DOUBLE));
+    }
+    
+    @Test public void test05(){
+      azzert.that(NOTHING.under(PrefixExpression.Operator.NOT), is(BOOLEAN));
+    }
+  
+    @Test public void test13(){
+      azzert.that(INT.underPlus(DOUBLE), is(DOUBLE));
+    }
+    
+    @Test public void test14(){
+      azzert.that(INT.underPlus(INT), is(INT));
+    }
+    
+    @Test public void test16(){
+      azzert.that(STRING.underPlus(NULL), is(STRING));
     }
   }
 
   public static class Working {
     @Test public void test01() {
-      for (Type t : Type.values())
-        System.err.println("Erase me after you figured this out\n\t" + t.fullName());
+//      for (Type t : Type.values())
+//        System.err.println("Erase me after you figured this out\n\t" + t.fullName());
       azzert.that(Type.BOOLEAN, is(Type.BOOLEAN));
     }
+    
+    @Test public void test04(){
+      azzert.that(INT.under(PLUS1), is(INT));
+    }
+    
+    @Test public void test06(){
+      azzert.that(ALPHANUMERIC.under(PrefixExpression.Operator.COMPLEMENT), is(INTEGRAL));
+    }
+    
+    @Test public void test07(){
+      azzert.that(ALPHANUMERIC.underIntegersOnlyOperator(), is(INTEGRAL));
+    }
+    
+    @Test public void test08(){
+      azzert.that(LONG.underIntegersOnlyOperator(), is(LONG));
+    }
+    
+    @Test public void test09(){
+      azzert.that(NONNULL.asNumeric(), is(NUMERIC));
+    }
+    
+    @Test public void test10(){
+      azzert.that(NUMERIC.asNumeric(), is(NUMERIC));
+    }
+    
+    @Test public void test11(){
+      azzert.that(DOUBLE.asNumeric(), is(DOUBLE));
+    }
+    
+    @Test public void test12(){
+      azzert.that(INT.asNumeric(), is(INT));
+    }
+    
+    @Test public void test15(){
+      azzert.that(STRING.underPlus(STRING), is(STRING));
+    }
+    
   }
 }

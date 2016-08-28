@@ -35,10 +35,16 @@ public class EvaluateAdditionInt extends Wring.ReplaceCurrentNode<InfixExpressio
     return e.getOperator() != PLUS ? null : replacement(extract.allOperands(e),e);
   }
   
+  private static boolean isInt(Expression e){
+    if(!(e instanceof NumberLiteral))
+      return false;
+    return ((NumberLiteral) e).getToken().matches("[0-9]+");
+  }
+  
   private static ASTNode replacement(final List<Expression> es, InfixExpression e) {
     int sum = 0;
     for (final Expression ¢ : es){
-      if (!(¢ instanceof NumberLiteral))
+      if (!(¢ instanceof NumberLiteral && isInt(¢)))
         return null;
       sum=sum + Integer.parseInt(((NumberLiteral) ¢).getToken());
     }  

@@ -379,7 +379,7 @@ import il.org.spartan.refactoring.utils.*;
     trimming("int a = 2, b = 11; a = 3 * a * b; ")//
         .to("int a=2;a=3*a*11;")//
         .to("int a=3*2*11;")//
-        .to("int a=2*3* 11;");
+        .to("int a=66;");
     trimming("int a = 2, b=1; a += b; ").to("int a=2;a+=1;").to("int a=2+1;");
     trimming("int a = 2,b=1; if (b) a = 3; ").to("int a=2;if(1)a=3;").to("int a=1?3:2;");
     trimming("int a = 2, b = 1; return a + 3 * b; ").to("int b=1;return 2+3*b;");
@@ -595,7 +595,7 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Test public void comparison01() {
-    trimming("1+2+3<3").to(null);
+    trimming("1+2+3<3").to("6<3").to(null);
   }
 
   @Test public void comparison02() {
@@ -607,7 +607,7 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Test public void comparison04() {
-    trimming("6-7<2+1").to("6-7<1+2");
+    trimming("6-7<2+1").to("-1<3");
   }
 
   @Test public void comparison05() {
@@ -623,11 +623,7 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Test public void comparison09() {
-    trimming("1+2<3&7+4>2+1").to("1+2<3&4+7>1+2");
-  }
-
-  @Test public void comparison10() {
-    trimming("1+2+3<3-4").to(null);
+    trimming("1+2<3&7+4>2+1").to("3<3&11>3");
   }
 
   @Test public void comparison11() {
@@ -635,7 +631,7 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Test public void comparison12() {
-    trimming("1+2<3&7+4>2+1||6-7<2+1").to("1+2<3&4+7>1+2||6-7<1+2");
+    trimming("1+2<3&7+4>2+1||6-7<2+1").to("3<3&11>3||-1<3").to(null);
   }
 
   @Test public void comparison13() {
@@ -647,7 +643,7 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Test public void compreaeExpressionToExpression() {
-    trimming("6 - 7 < 2 + 1   ").to("6 -7 < 1 + 2");
+    trimming("6 - 7 < 2 + 1   ").to("-1<3");
   }
 
   @Test public void correctSubstitutionInIfAssignment() {
@@ -1568,7 +1564,7 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test public void issue06I() {
     trimming("41 * - 19")//
-        .to("-41 * 19 ") //
+        .to("-779 ") //
     ;
   }
 
@@ -2059,6 +2055,7 @@ import il.org.spartan.refactoring.utils.*;
   @Test @Ignore("Under Construction") public void issue74b() {
     trimming("int[] a = new int[] {2,3,};").to("int[] a = new int[] {2,3};");
   }
+
 
   @Test @Ignore("Under Construction") public void issue74c() {
     trimming("a = new int[]{2,3,};").to("a = new int[] {2,3};");
@@ -3373,7 +3370,7 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Test public void shortestOperand02() {
-    trimming("k = k + 4;if (2 * 6 + 4 == k) return true;").to(null);
+    trimming("k = k + 4;if (2 * 6 + 4 == k) return true;").to("k = k + 4;if (12 + 4 == k) return true;");
   }
 
   @Test public void shortestOperand05() {
@@ -3524,7 +3521,7 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Test public void simplifyBlockExpressionVsExpression() {
-    trimming("6 - 7 < a * 3").to("6 - 7 < 3 * a");
+    trimming("6 - 7 < a * 3").to("-1 < 3 * a");
   }
 
   @Test public void simplifyBlockLiteralVsLiteral() {
@@ -3596,11 +3593,11 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Test public void sortAddition2() {
-    trimming("1 + 2 < 3 & 7 + 4 > 2 + 1 || 6 - 7 < 2 + 1").to("1+2 <3&4+7>1+2||6-7<1+2");
+    trimming("1 + 2 < 3 & 7 + 4 > 2 + 1 || 6 - 7 < 2 + 1").to("3 <3&11>3||-1<3");
   }
 
   @Test public void sortAddition3() {
-    trimming("6 - 7 < 1 + 2").to(null);
+    trimming("6 - 7 < 1 + 2").to("-1<3").to(null);
   }
 
   @Test public void sortAddition4() {
@@ -3632,11 +3629,11 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Test public void sortAdditionTwoOperands0CheckThatWeSortByLength_a() {
-    trimming("1111+211").to("211+1111");
+    trimming("1111+211").to("1322");
   }
 
   @Test public void sortAdditionTwoOperands0CheckThatWeSortByLength_b() {
-    trimming("211+1111").to(null);
+    trimming("211+1111").to("1322").to(null);
   }
 
   @Test public void sortAdditionTwoOperands1() {
@@ -3700,11 +3697,11 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Test public void sortTwoOperands0CheckThatWeSortByLength_a() {
-    trimming("1111*211").to("211*1111");
+    trimming("1111*211").to("234421");
   }
 
   @Test public void sortTwoOperands0CheckThatWeSortByLength_b() {
-    trimming("211*1111").to(null);
+    trimming("211*1111").to("234421");
   }
 
   @Test public void sortTwoOperands1() {
@@ -3909,8 +3906,8 @@ import il.org.spartan.refactoring.utils.*;
         .to("int a=3,b;b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}") //
         .to("int a=3,b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}") //
         .to("int b=5;if(3==4)if(b==3)b=2;else{b=3;b=3;}else if(b==3)b=2;else{b=3*3;b=3;}") //
-        .to("int b=5;if(3==4)if(b==3)b=2;else{b=b=3;}else if(b==3)b=2;else{b=3*3;b=3;}")//
-        .to("int b=5;if(3==4)b=b==3?2:(b=3);else if(b==3)b=2;else{b=3*3;b=3;}")//
+        .to("int b=5;if(3==4)if(b==3)b=2;else{b=b=3;}else if(b==3)b=2;else{b=9;b=3;}")//
+        .to("int b=5;if(3==4)b=b==3?2:(b=3);else if(b==3)b=2;else{b=9;b=3;}")//
         .to(null);
   }
 
