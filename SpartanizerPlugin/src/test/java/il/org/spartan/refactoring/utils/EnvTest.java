@@ -83,6 +83,9 @@ public class EnvTest {
   @Test public void NestOne() {
     azzert.that(e1.nest(), is(e0));
   }
+  @Test public void DoesntHaveFalseResult(){
+    azzert.that(e1.nest().doesntHave("Yossi"),is(false));
+  }
   @Test public void putOne() {
     assert (e1.put("Kopzon1", new Information()) == null);
   }
@@ -110,11 +113,45 @@ public class EnvTest {
   @Test public void hasInParent() {
     azzert.that(e1.has("Dan"), is(true));
   }
+  @Test public void hasInBoth(){
+    e1.put("Yossi", new Information());
+    azzert.that(e1.has("Yossi"), is(true));
+  }
+  @Test public void hasNowhere(){
+    azzert.that(e1.has("Onoes"), is(false));
+  }
   @Test public void putOneAndHide() {
     assert (e1.put("Alex", new Information()) != null);
   }
   @Test public void hidingOne() {
     assert (e1.hiding("Alex") != null);
+  }
+  @Test public void putTest(){
+    try{
+      e0.nest().put("Dan",new Information());
+    }
+    catch(IllegalArgumentException e){/**/}
+  }
+  
+//=================== Empty Tests - Require Genesis ===================
+  Environment ee0 = Environment.genesis();
+  Environment ee1 = ee0.spawn();
+  
+  @Test public void emptyTestBothEmpty(){
+    azzert.that(ee1.empty(), is(true));
+  }
+  @Test public void emptyTestFlatEmptyNestNot(){
+    ee0.put("Alex", new Information());
+    azzert.that(ee1.empty(), is(false));
+  }
+  @Test public void emptyTestNestEmptyFlatNot(){
+    ee1.put("Dan", new Information());
+    azzert.that(ee1.empty(), is(false));
+  }
+  @Test public void emptyTestNeitherEmpty(){
+    ee0.put("Yossi", new Information());
+    ee1.put("Gill", new Information());
+    azzert.that(ee1.empty(), is(false));
   }
  //DONE
 //=================== nesting complex ===================
