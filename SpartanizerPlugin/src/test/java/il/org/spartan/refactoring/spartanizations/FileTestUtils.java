@@ -11,7 +11,7 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2014/05/24
  * @author Yossi GIl */
-public abstract class FileTestUtils {
+@SuppressWarnings({"unused"}) public abstract class FileTestUtils {
   /** An abstract class to be extended and implemented by client, while
    * overriding {@link #go(List, File)} as per customer's need.
    * @seTestUtils.SATestSuite.Files

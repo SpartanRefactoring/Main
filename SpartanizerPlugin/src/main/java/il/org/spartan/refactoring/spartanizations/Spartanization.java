@@ -27,7 +27,7 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil <code><yossi.gil [at] gmail.com></code>: major refactoring
  *         2013/07/10
  * @since 2013/01/01 */
-public abstract class Spartanization extends Refactoring {
+@SuppressWarnings({"unused"}) public abstract class Spartanization extends Refactoring {
   /** @param u A compilation unit for reference - you give me an arbitrary
    *        compilation unit from the project and I'll find the root of the
    *        project and do my magic.
@@ -96,7 +96,7 @@ public abstract class Spartanization extends Refactoring {
     return new RefactoringStatus();
   }
 
-  @Override public RefactoringStatus checkInitialConditions(@SuppressWarnings("unused") final IProgressMonitor __) {
+  @Override public RefactoringStatus checkInitialConditions(final IProgressMonitor __) {
     final RefactoringStatus $ = new RefactoringStatus();
     if (compilationUnit == null && marker == null)
       $.merge(RefactoringStatus.createFatalErrorStatus("Nothing to refactor."));
@@ -139,7 +139,7 @@ public abstract class Spartanization extends Refactoring {
     return totalChanges;
   }
 
-  @Override public final Change createChange(@SuppressWarnings("unused") final IProgressMonitor __) throws OperationCanceledException {
+  @Override public final Change createChange(final IProgressMonitor __) throws OperationCanceledException {
     return new CompositeChange(getName(), changes.toArray(new Change[changes.size()]));
   }
 
