@@ -61,87 +61,44 @@ enum Type {
   public final String fullName() {
     return this + "=" + name + " (" + description + ")";
   }
+  
+  public static boolean kind(Expression e) {
+    throw new RuntimeException("Team3 needs to implement this: " + e);
+  }
 
-  public final Type under(final PrefixExpression.Operator o) {
+  /** @return one of {@link #BOOLEAN}, {@link #INT}, {@link #LONG}, {@link #DOUBLE},
+   *         {@link #INTEGRAL} or {@link #NUMERIC}, in case it cannot decide */
+  //TODO: should be private once kind is finished
+  final Type under(final PrefixExpression.Operator o) {
     assert o != null;
-    assert in(o, BOOLEAN, MINUS1, PLUS1, COMPLEMENT, DECREMENT_POST, DECREMENT_PRE);
     return o == NOT ? BOOLEAN //
-        : in(o, MINUS1, PLUS1) ? asNumeric() //
-            : underIntegersOnlyOperator();
+        : o == COMPLEMENT ? asIntegral() //
+            : asNumeric();
   }
-
-  /** @return one of {@link #INT}, {@link #LONG}, or {@link #INTEGRAL}, in case
-   *         it cannot decide */
-  public Type underIntegersOnlyOperator() {
-    return in(this, LONG, INT) ? this : INTEGRAL;
-  }
-
-  /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE},
-   *         {@link #INTEGRAL} or {@link #NUMERIC}, in case no further
-   *         information is available */
-  public Type asNumeric() {
-    return in(this, DOUBLE, LONG, INT, INTEGRAL) ? this : NUMERIC;
+  
+  //TODO: should be private once kind is finished
+  Type underIntegersOnlyOperator(Type k) {
+    final Type ¢ = k.asIntegral();
+    return !in(¢, this, INTEGRAL) ? max(¢) : ¢ != Type.ALPHANUMERIC ? ¢ : INTEGRAL;
   }
 
   /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE},
    *         {@link #STRING} or {@link #ALPHANUMERIC}, in case it cannot
    *         decide */
-  public Type underPlus(Type k) {
-    return k == STRING && this == STRING ? STRING : ALPHANUMERIC;
+  //TODO: should be private once kind is finished
+  Type underPlus(Type k) {
+    //addition with NULL or String must be a String
+    if (in(STRING, this, k) || in(NULL, this , k))
+      return STRING;
+    //not String, null or numeric, so we can't determine anything
+    if (!isNumeric() && !k.isNumeric()){
+      return ALPHANUMERIC;
+    }
+    return asNumeric(k);
   }
 
-  /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE}, or
-   *         {@link #NUMERIC}, in case it cannot decide */
-  private Type asNumeric(Type k) {
-    if (k == this)
-      return k;
-    if (!isNumeric())
-      return asNumeric().asNumeric(k);
-    assert (k != null);
-    assert this != ALPHANUMERIC : "Don't confuse " + NUMERIC + " with " + ALPHANUMERIC;
-    assert in(this, INT, DOUBLE, LONG, INTEGRAL, NUMERIC) : this + ": does not fit our list of numeric types";
-    assert isNumeric() : this + ": is for some reason not numeric ";
-    final Type $ = k.asNumeric();
-    assert $ != null;
-    assert $.isNumeric() : this + ": is for some reason not numeric ";
-    assert in($, INT, DOUBLE, LONG, INTEGRAL, NUMERIC) : $ + ": does not fit our list of numeric types";
-    if ($ == this)
-      return $;
-    if (in(DOUBLE, $, this))
-      return DOUBLE;
-    assert in($, INT, LONG, INTEGRAL, NUMERIC) : $ + ": does not fit our narrowed list";
-    assert in(this, INT, LONG, INTEGRAL, NUMERIC) : this + ": does not fit our narrowed list";
-    if (in(NUMERIC, $, this))
-      return NUMERIC;
-    assert in($, INT, LONG, INTEGRAL) : $ + ": does not fit our narrowed list";
-    assert in(this, INT, LONG, INTEGRAL) : this + ": does not fit our narrowed list";
-    // Numeric contaminates INTEGRAL
-    if (in(INTEGRAL, $, this))
-      return INTEGRAL;
-    assert in($, INT, LONG) : $ + ": does not fit our narrowed list";
-    assert in(this, INT, LONG) : this + ": does not fit our narrowed list";
-    // LONG contaminates INTEGRAL
-    if (in(LONG, $, this))
-      return LONG;
-    assert in($, INT) : $ + ": does not fit our narrowed list";
-    assert in(this, INT) : this + ": does not fit our narrowed list";
-    return INT;
-  }
-
-  private boolean isNumeric() {
-    return in(this, INT, LONG, DOUBLE, INTEGRAL, NUMERIC);
-  }
-
-  private Type underIntegersOnlyOperator(Type k) {
-    final Type ¢ = k.underIntegersOnlyOperator();
-    return !in(¢, this, INTEGRAL) ? max(¢) : ¢ != Type.ALPHANUMERIC ? ¢ : INTEGRAL;
-  }
-
-  private Type max(Type ¢) {
-    return ¢.ordinal() > ordinal() ? ¢ : this;
-  }
-
-  public final Type underBinaryOperator(InfixExpression.Operator o, Type k) {
+  //TODO: should be private once kind is finished
+  final Type underBinaryOperator(InfixExpression.Operator o, Type k) {
     if (o == PLUS2)
       return underPlus(k);
     if (in(this, //
@@ -162,7 +119,76 @@ enum Type {
     return asNumeric(k);
   }
 
-  public static boolean kind(Expression e) {
-    throw new RuntimeException("Team3 needs to implement this: " + e);
+  /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE}, or
+   *         {@link #NUMERIC}, in case it cannot decide */
+  //TODO: decide if should be renamed to under function
+  private Type asNumeric(Type k) {
+    if (k == this)
+      return k;
+    if (!isNumeric())
+      return asNumeric().asNumeric(k);
+    assert (k != null);
+    assert this != ALPHANUMERIC : "Don't confuse " + NUMERIC + " with " + ALPHANUMERIC;
+    assert in(this, INT, DOUBLE, LONG, INTEGRAL, NUMERIC) : this + ": does not fit our list of numeric types";
+    assert isNumeric() : this + ": is for some reason not numeric ";
+    final Type $ = k.asNumeric();
+    assert $ != null;
+    assert $.isNumeric() : this + ": is for some reason not numeric ";
+    assert in($, INT, DOUBLE, LONG, INTEGRAL, NUMERIC) : $ + ": does not fit our list of numeric types";
+    if ($ == this)
+      return $;
+    // Double contaminates Numeric
+    if (in(DOUBLE, $, this))
+      return DOUBLE;
+    assert in($, INT, LONG, INTEGRAL, NUMERIC) : $ + ": does not fit our narrowed list";
+    assert in(this, INT, LONG, INTEGRAL, NUMERIC) : this + ": does not fit our narrowed list";
+    // Numeric contaminates INTEGRAL
+    if (in(NUMERIC, $, this))
+      return NUMERIC;
+    assert in($, INT, LONG, INTEGRAL) : $ + ": does not fit our narrowed list";
+    assert in(this, INT, LONG, INTEGRAL) : this + ": does not fit our narrowed list";
+    // LONG contaminates INTEGRAL
+    if (in(LONG, $, this))
+      return LONG;
+    assert in($, INT, INTEGRAL) : $ + ": does not fit our narrowed list";
+    assert in(this, INT, INTEGRAL) : this + ": does not fit our narrowed list";
+    if (in(INTEGRAL, $, this))
+      return INTEGRAL;
+    assert in($, INT) : $ + ": does not fit our narrowed list";
+    assert in(this, INT) : this + ": does not fit our narrowed list";
+    return INT;
+  }
+
+  private boolean isNumeric() {
+    return in(this, INT, LONG, DOUBLE, INTEGRAL, NUMERIC);
+  }
+
+  /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE},
+   *         {@link #INTEGRAL} or {@link #NUMERIC}, in case no further
+   *         information is available */
+  private Type asNumeric() {
+    return isNumeric() ? this : NUMERIC;
+  }
+
+  private boolean isIntegral(){
+    return in(this, LONG, INT , INTEGRAL);
+  }
+  
+  /** @return one of {@link #INT}, {@link #LONG}, or {@link #INTEGRAL}, in case
+   *         it cannot decide */
+  private Type asIntegral() {
+    return isIntegral() ? this : INTEGRAL;
+  }
+
+  private boolean isAlphaNumeric(){
+    return in(this, INT, LONG, INTEGRAL, DOUBLE, NUMERIC, STRING, ALPHANUMERIC);
+  }
+  
+  private Type asAlphaNumeric(){
+    return isAlphaNumeric() ? this : ALPHANUMERIC;
+  }
+
+  private Type max(Type ¢) {
+    return ¢.ordinal() > ordinal() ? ¢ : this;
   }
 }

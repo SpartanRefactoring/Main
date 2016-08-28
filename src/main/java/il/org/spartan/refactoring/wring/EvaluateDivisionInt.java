@@ -9,31 +9,30 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.refactoring.utils.*;
 
 /**
- * Evaluate the multiplication of integer numbers :
+ * Evaluate the division of integer numbers --> the result is also an integer :
  * <pre>
- * 3*4*2
+ * 7/8
  * </pre>
  * to:
  * <pre>
- * 24
+ * 0
  * </pre>
  * @author Dor Ma'ayan 
  * @since 2016
  */
-public class EvaluateMultiplicationInt extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
+public class EvaluateDivisionInt extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
 
   @Override public String description() {
-      return "Evaluate multiplication of int numbers";
+      return "Evaluate division of int numbers";
   }
 
   @Override String description(@SuppressWarnings("unused") InfixExpression e) {
-    return "Evaluate multiplication of int numbers";
+    return "Evaluate division of int numbers";
   }
 
   @Override ASTNode replacement(InfixExpression e) {
-    return e.getOperator() != TIMES ? null : replacement(extract.allOperands(e),e);
+    return e.getOperator() != DIVIDE ? null : replacement(extract.allOperands(e),e);
   }
-  
   
   private static int extractNumber(Expression e){
     if(!(e instanceof PrefixExpression))
@@ -46,17 +45,28 @@ public class EvaluateMultiplicationInt extends Wring.ReplaceCurrentNode<InfixExp
       return false;
     return ((NumberLiteral) e).getToken().matches("[0-9]+");
   }
+
+  private static boolean isCompitable(Expression e){
+    return (!((e instanceof NumberLiteral &&
+        isInt(e) || (e instanceof PrefixExpression &&
+        ((PrefixExpression)e).getOperator()==PrefixExpression.Operator.MINUS &&
+        ((PrefixExpression)e).getOperand() instanceof NumberLiteral))));
+  }
   
   private static ASTNode replacement(final List<Expression> es, InfixExpression e) {
-    int mul = 1;
+    if(es.isEmpty())
+      return null;
+    if (isCompitable(es.get(0)))
+      return null;
+    int divide = extractNumber(es.get(0));
+    int index=0;
     for (final Expression ¢ : es){
-      if (!((¢ instanceof NumberLiteral &&
-          isInt(¢)) || (¢ instanceof PrefixExpression &&
-          ((PrefixExpression)¢).getOperator()==PrefixExpression.Operator.MINUS &&
-          ((PrefixExpression)¢).getOperand() instanceof NumberLiteral)))
+      if (isCompitable(¢))
         return null;
-        mul = mul * extractNumber(¢);
+      if(index!=0)
+        divide = divide /  extractNumber(¢);
+      index++;
     }  
-    return e.getAST().newNumberLiteral(Integer.toString(mul));
+    return e.getAST().newNumberLiteral(Integer.toString(divide));
   }
 }
