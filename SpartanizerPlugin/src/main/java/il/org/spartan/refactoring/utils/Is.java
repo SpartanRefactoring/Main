@@ -663,7 +663,7 @@ public enum Is {
    * @return <code><b>true</b></code> <i>iff</i> there are no non-empty
    *         statements in the parameter */
   public static boolean vacuous(final Statement s) {
-    return extract.statements(s).size() == 0;
+    return extract.statements(s).isEmpty();
   }
 
   /** Determine whether the 'else' part of an {@link IfStatement} is vacuous.

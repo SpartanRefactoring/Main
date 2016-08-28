@@ -59,11 +59,11 @@ public class KindTest {
     }
 
     @Test public void test07() {
-      azzert.that(ALPHANUMERIC.underIntegersOnlyOperator(), is(INTEGRAL));
+      azzert.that(ALPHANUMERIC.asIntegral(), is(INTEGRAL));
     }
 
     @Test public void test08() {
-      azzert.that(LONG.underIntegersOnlyOperator(), is(LONG));
+      azzert.that(LONG.asIntegral(), is(LONG));
     }
 
     @Test public void test09() {

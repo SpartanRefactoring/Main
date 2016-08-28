@@ -47,7 +47,7 @@ import il.org.spartan.refactoring.utils.*;
     for (final SingleVariableDeclaration d : ds)
       if (suitable(d))
         $.add(d);
-    return $.size() != 0 ? $ : null;
+    return !$.isEmpty() ? $ : null;
   }
 
   private boolean isShort(final SingleVariableDeclaration d) {

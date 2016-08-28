@@ -25,7 +25,8 @@ public class IfEmptyThenTest {
   }
 
   @Test public void extractFirstIf() {
-    assert null != IF;
+    assert
+IF != null;
   }
 
   @Test public void inputType() {
