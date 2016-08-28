@@ -74,8 +74,8 @@ public interface Environment {
 
   /** TODO: Document */
   default String fullName() {
-    String $ = (nest() == null ? null : nest().fullName());
-    return ($ == null ? "" : $ + "." ) + name();
+    final String $ = nest() == null ? null : nest().fullName();
+    return ($ == null ? "" : $ + ".") + name();
   }
 
   default String name() {
@@ -122,7 +122,7 @@ public interface Environment {
       return flat.isEmpty() || nest.empty();
     }
 
-    public Set<Map.Entry<String, Information>> entries() {
+    @Override public Set<Map.Entry<String, Information>> entries() {
       return flat.entrySet();
     }
 

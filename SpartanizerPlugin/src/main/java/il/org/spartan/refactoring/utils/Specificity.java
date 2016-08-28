@@ -108,7 +108,7 @@ public class Specificity implements Comparator<Expression> {
       for (final Level $ : values())
         if ($.includes(¢))
           return $.ordinal();
-      return values().length; 
+      return values().length;
     }
 
     abstract boolean includes(final ASTNode ¢);
