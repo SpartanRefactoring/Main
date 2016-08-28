@@ -7,7 +7,7 @@ import java.util.*;
 public class EnvironmentCodeExamples {
   void EX1() {
     @NestedENV({}) @OutOfOrderFlatENV({}) final String s = "a";
-    s.equals("a");
+    "a".equals(s);
     "a".equals(s);
     @NestedENV({ "EX1.s#String" }) @OutOfOrderFlatENV({ "s" }) int a = 0;
     out.print("a");
@@ -392,9 +392,7 @@ public class EnvironmentCodeExamples {
 
       @Override public Iterator<Type> iterator() {
         final Iterator<Type> $ = new Iterator<Type>() {
-          @InOrderFlatENV({ "arrayList", "currentSize", "it" })
-          @OutOfOrderFlatENV({ "it", "currentSize", "arrayList" })
-          private int currentIndex = 0;
+          @InOrderFlatENV({ "arrayList", "currentSize", "it" }) @OutOfOrderFlatENV({ "it", "currentSize", "arrayList" }) int currentIndex = 0;
           @Override public boolean hasNext() {
             return currentIndex < currentSize && arrayList[currentIndex] != null;
           }
@@ -453,7 +451,7 @@ public class EnvironmentCodeExamples {
         try{
           @OutOfOrderFlatENV({}) @Begin int a;
           String s = "onoes";
-          dangerousFunc(s.equals("yay"));
+          dangerousFunc("yay".equals(s));
           @OutOfOrderFlatENV({"s"}) @End({"s"}) int b;
         }
         catch(UnsupportedOperationException e){
@@ -466,7 +464,7 @@ public class EnvironmentCodeExamples {
         try{
           @OutOfOrderFlatENV({}) int a;
           s = "onoes";
-          dangerousFunc(s.equals("yay"));
+          dangerousFunc("yay".equals(s));
           @OutOfOrderFlatENV({"s"}) @End({"s"}) int b;
         }
         catch(UnsupportedOperationException e){
@@ -492,20 +490,20 @@ public class EnvironmentCodeExamples {
         this();
       }
 
-      Oompa_Loompa Oompa_Loompa(final Oompa_Loompa Oompa_Loompa) {
-        Oompa_Loompa: for (;;)
+      Oompa_Loompa Oompa_Loompa(final Oompa_Loompa l) {
+        l: for (;;)
           for (;;)
-            if (new Oompa_Loompa(Oompa_Loompa) { /* D */
+            if (new Oompa_Loompa(l) { /* D */
               @Override Oompa_Loompa Oompa_Loompa(final Oompa_Loompa Oompa_Loompa) {
                 return Oompa_Loompa != null ? /* C */
                 super.Oompa_Loompa(Oompa_Loompa) /* B */
                     : Oompa_Loompa.this.Oompa_Loompa(Oompa_Loompa);
               }
-            }.Oompa_Loompa(Oompa_Loompa) != null)
-              break Oompa_Loompa;
+            }.Oompa_Loompa(l) != null)
+              break l;
             else
-              continue Oompa_Loompa;
-        return Oompa_Loompa;
+              continue l;
+        return l;
       }
     }
   }

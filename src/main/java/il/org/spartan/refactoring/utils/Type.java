@@ -73,8 +73,7 @@ enum Type {
   final Type under(final PrefixExpression.Operator o) {
     assert o != null;
     return o == NOT ? BOOLEAN //
-        : o == COMPLEMENT ? asIntegral() //
-            : asNumeric();
+        : o != COMPLEMENT ? asNumeric() : asIntegral();
   }
   
   private Type underIntegersOnlyOperator(Type k) {
@@ -89,9 +88,8 @@ enum Type {
     if (in(STRING, this, k) || in(NULL, this , k))
       return STRING;
     //not String, null or numeric, so we can't determine anything
-    if (!isNumeric() && !k.isNumeric()){
+    if (!isNumeric() && !k.isNumeric())
       return ALPHANUMERIC;
-    }
     return underNumericOnlyOperator(k);
   }
   

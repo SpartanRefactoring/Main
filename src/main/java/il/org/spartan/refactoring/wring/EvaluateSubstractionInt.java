@@ -26,14 +26,12 @@ public class EvaluateSubstractionInt extends Wring.ReplaceCurrentNode<InfixExpre
       return "Evaluate substraction of int numbers";
   }
 
-  @Override String description(@SuppressWarnings("unused") InfixExpression e) {
+  @Override String description(@SuppressWarnings("unused") InfixExpression __) {
     return "Evaluate substraction of int numbers";
   }
 
   private static boolean isInt(Expression e){
-    if(!(e instanceof NumberLiteral))
-      return false;
-    return ((NumberLiteral) e).getToken().matches("[0-9]+");
+    return e instanceof NumberLiteral && ((NumberLiteral) e).getToken().matches("[0-9]+");
   }
 
   @Override ASTNode replacement(InfixExpression e) {
@@ -41,19 +39,17 @@ public class EvaluateSubstractionInt extends Wring.ReplaceCurrentNode<InfixExpre
   }
   
   private static ASTNode replacement(final List<Expression> es, InfixExpression e) {
-    if(es.isEmpty())
-      return null;
-    if (!(es.get(0) instanceof NumberLiteral && isInt(es.get(0))))
+    if (es.isEmpty() || !(es.get(0) instanceof NumberLiteral) || !isInt(es.get(0)))
       return null;
     int sub = Integer.parseInt(((NumberLiteral) (es.get(0))).getToken());
-    int index=0;
-    for (final Expression ¢ : es){
-      if (!(¢ instanceof NumberLiteral && isInt(¢)))
+    int index = 0;
+    for (final Expression ¢ : es) {
+      if (!(¢ instanceof NumberLiteral) || !isInt(¢))
         return null;
-      if(index!=0)
+      if (index != 0)
         sub = sub - Integer.parseInt(((NumberLiteral) ¢).getToken());
-      index++;
-    }  
+      ++index;
+    }
     return e.getAST().newNumberLiteral(Integer.toString(sub));
   }
 }
