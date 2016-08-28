@@ -12,7 +12,7 @@ import il.org.spartan.refactoring.wring.Wring.*;
  * ReplaceCurrentNodeExclude
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-05-08 */
-@SuppressWarnings("javadoc") public final class SingelVariableDeclarationUnderscoreDoubled
+@SuppressWarnings({"javadoc","unused","hiding","unchecked"}) public final class SingelVariableDeclarationUnderscoreDoubled
     extends ReplaceCurrentNodeExclude<SingleVariableDeclaration> implements Kind.UnusedArguments {
   public static class IsUsed extends ASTVisitor {
     boolean c = true;
@@ -30,19 +30,19 @@ import il.org.spartan.refactoring.wring.Wring.*;
       return !c;
     }
 
-    @Override public boolean preVisit2(@SuppressWarnings("unused") final ASTNode __) {
+    @Override public boolean preVisit2(final ASTNode __) {
       return c;
     }
 
-    @Override public final boolean visit(@SuppressWarnings("unused") final AnnotationTypeDeclaration __) {
+    @Override public final boolean visit(final AnnotationTypeDeclaration __) {
       return false;
     }
 
-    @Override public final boolean visit(@SuppressWarnings("unused") final AnonymousClassDeclaration __) {
+    @Override public final boolean visit(final AnonymousClassDeclaration __) {
       return false;
     }
 
-    @Override public final boolean visit(@SuppressWarnings("unused") final EnumDeclaration __) {
+    @Override public final boolean visit(final EnumDeclaration __) {
       return false;
     }
 
@@ -52,7 +52,7 @@ import il.org.spartan.refactoring.wring.Wring.*;
       return c;
     }
 
-    @Override public final boolean visit(@SuppressWarnings("unused") final TypeDeclaration __) {
+    @Override public final boolean visit(final TypeDeclaration __) {
       return false;
     }
   }
@@ -66,7 +66,7 @@ import il.org.spartan.refactoring.wring.Wring.*;
     return u.conclusion();
   }
 
-  @SuppressWarnings("unchecked") public static boolean suppressedUnused(final SingleVariableDeclaration d) {
+  public static boolean suppressedUnused(final SingleVariableDeclaration d) {
     for (final IExtendedModifier m : (Iterable<IExtendedModifier>) d.modifiers())
       if (m instanceof SingleMemberAnnotation && "SuppressWarnings".equals(((SingleMemberAnnotation) m).getTypeName().toString())) {
         final Expression e = ((SingleMemberAnnotation) m).getValue();

@@ -4,12 +4,9 @@ import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
-import javax.management.*;
-
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.omg.CORBA.*;
 
 /** TODO: Niv Issue*94
  * 
@@ -84,13 +81,7 @@ enum Type {
    *         {@link #STRING}, {@link #INTEGRAL}, {@link #NUMERIC} or {@link #ALPHANUMERIC},
    *         in case it cannot decide */
   private Type underPlus(Type k) {
-    //addition with NULL or String must be a String
-    if (in(STRING, this, k) || in(NULL, this , k))
-      return STRING;
-    //not String, null or numeric, so we can't determine anything
-    if (!isNumeric() && !k.isNumeric())
-      return ALPHANUMERIC;
-    return underNumericOnlyOperator(k);
+    return in(STRING, this, k) || in(NULL, this, k) ? STRING : !isNumeric() && !k.isNumeric() ? ALPHANUMERIC : underNumericOnlyOperator(k);
   }
   
   /** @return one of {@link #BOOLEAN}, {@link #INT}, {@link #LONG}, {@link #DOUBLE},
