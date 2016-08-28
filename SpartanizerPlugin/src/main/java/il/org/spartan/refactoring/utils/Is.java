@@ -44,10 +44,18 @@ public enum Is {
     return is(n, BLOCK);
   }
 
+  /**
+   * @param s JD
+   * @return true if the parameter is an essential block or false otherwise
+   */
   public static boolean blockEssential(final Statement s) {
     return blockEssential(asIfStatement(s));
   }
 
+  /**
+   * @param s JD
+   * @return
+   */
   public static boolean blockRequired(final IfStatement s) {
     return blockRequiredInReplacement(s, s);
   }
@@ -314,10 +322,18 @@ public enum Is {
     return is(¢, INFIX_EXPRESSION);
   }
 
+  /**
+   * @param ¢ JD
+   * @return true if the given node is an interface or false otherwise
+   */
   public static boolean isInterface(final ASTNode ¢) {
     return is(¢, TYPE_DECLARATION) && ((TypeDeclaration) ¢).isInterface();
   }
 
+  /**
+   * @param ¢ JD
+   * @return true if the given node is a literal or false otherwise
+   */
   public static boolean isLiteral(final String token, final double d) {
     try {
       return Double.parseDouble(token) == d;
@@ -326,24 +342,44 @@ public enum Is {
     }
   }
 
+  /**
+   * @param ¢ JD
+   * @return true if the given node is a literal false or false otherwise
+   */
   public static boolean isLiteralFalse(final ASTNode ¢) {
     return Is.isLiteral(¢, false);
   }
 
+  /**
+   * @param ¢ JD
+   * @return true if the given node is a literal 1 or false otherwise
+   */
   public static boolean isLiteralOne(final ASTNode ¢) {
     return Is.isLiteral(¢, 1);
   }
 
+  /**
+   * @param ¢ JD
+   * @return true if the given node is a literal true or false otherwise
+   */
   public static boolean isLiteralTrue(final ASTNode ¢) {
     return Is.isLiteral(¢, true);
   }
 
+  /**
+   * @param ¢ JD
+   * @return true if the given node is a literal 0 or false otherwise
+   */
   public static boolean isLiteralZero(final ASTNode ¢) {
     return Is.isLiteral(¢, 0);
   }
 
-  public static boolean isMethodDeclaration(final ASTNode $) {
-    return is($, METHOD_DECLARATION);
+  /**
+   * @param ¢ JD
+   * @return true if the given node is a method decleration or false otherwise
+   */
+  public static boolean isMethodDeclaration(final ASTNode ¢) {
+    return is(¢, METHOD_DECLARATION);
   }
 
   /** @param ¢ node to check
@@ -375,10 +411,18 @@ public enum Is {
     return (Modifier.PRIVATE & ¢.getModifiers()) != 0;
   }
 
-  public static boolean isSimpleName(final ASTNode $) {
-    return is($, SIMPLE_NAME);
+  /**
+   * @param ¢ JD
+   * @return true if the given node is a simple name or false otherwise
+   */
+  public static boolean isSimpleName(final ASTNode ¢) {
+    return is(¢, SIMPLE_NAME);
   }
 
+  /**
+   * @param ¢ JD
+   * @return true if the given node is a statement or false otherwise
+   */
   public static boolean isStatement(final ASTNode ¢) {
     return ¢ instanceof Statement;
   }

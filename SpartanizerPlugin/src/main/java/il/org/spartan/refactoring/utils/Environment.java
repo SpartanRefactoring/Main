@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 
 /** TODO: Document what is it for users? how should clients use this
  * class/method, same for all TODO: Document */
-public interface Environment {
+@SuppressWarnings({"unused"}) public interface Environment {
   /** Document properly, this is the parent of all all */
   static final Environment EMPTY = new Environment() {
     /* Empty */
