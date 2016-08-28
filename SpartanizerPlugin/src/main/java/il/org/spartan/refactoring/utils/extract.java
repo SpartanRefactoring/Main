@@ -492,6 +492,8 @@ public enum extract {
    * @return single {@link ThrowStatement} embedded in the parameter, and return
    *         it; <code><b>null</b></code> if not such statements exists. */
   public static ThrowStatement throwStatement(final ASTNode n) {
+
+    
     return asThrowStatement(extract.singleStatement(n));
   }
 
