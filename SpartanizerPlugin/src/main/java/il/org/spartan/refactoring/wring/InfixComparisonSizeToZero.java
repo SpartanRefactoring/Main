@@ -21,14 +21,11 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2016-04-24 */
 public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.Canonicalization {
   private static NumberLiteral getNegativeNumber(final PrefixExpression ¢){
-    if (¢.getOperator() == PrefixExpression.Operator.MINUS){
-      return ¢.getOperand() instanceof NumberLiteral ? (NumberLiteral)¢.getOperand() : null;
-    }
-    return null;
+    return ¢.getOperator() != PrefixExpression.Operator.MINUS || !(¢.getOperand() instanceof NumberLiteral) ? null : (NumberLiteral) ¢.getOperand();
   }
   
   private static NumberLiteral getNegativeNumber(final Expression ¢){
-    return ¢ instanceof PrefixExpression ? getNegativeNumber((PrefixExpression)¢) : null;
+    return !(¢ instanceof PrefixExpression) ? null : getNegativeNumber((PrefixExpression) ¢);
   }
   
   private static boolean isNumber(final Expression ¢){
@@ -42,9 +39,8 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
 
   @SuppressWarnings("fallthrough") private static ASTNode replacement(final InfixExpression e, final Operator o, final MethodInvocation i,
       final Expression n) {
-    if(!"size".equals((name(i).getIdentifier()))){
+    if(!"size".equals((name(i).getIdentifier())))
       return null;
-    }
     int sign = -1;
     NumberLiteral l = getNegativeNumber(n);
     if (l == null){

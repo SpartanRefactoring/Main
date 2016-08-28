@@ -84,15 +84,15 @@ public enum Wrings {
   static IfStatement makeShorterIf(final IfStatement s) {
     final List<Statement> then = extract.statements(then(s));
     final List<Statement> elze = extract.statements(elze(s));
-    final IfStatement inverse = invert(s);
+    final IfStatement $ = invert(s);
     if (then.isEmpty())
-      return inverse;
+      return $;
     final IfStatement main = duplicate(s);
     if (elze.isEmpty())
       return main;
     final int rankThen = Wrings.sequencerRank(last(then));
     final int rankElse = Wrings.sequencerRank(last(elze));
-    return rankElse <= rankThen && (rankThen != rankElse || Wrings.thenIsShorter(s)) ? main : inverse;
+    return rankElse > rankThen || rankThen == rankElse && !Wrings.thenIsShorter(s) ? $ : main;
   }
 
   static boolean mixedLiteralKind(final List<Expression> es) {

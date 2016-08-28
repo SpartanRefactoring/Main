@@ -298,7 +298,7 @@ public enum Collect {
    *         list. */
   private static ASTVisitor usesCollector(final SimpleName what, final List<SimpleName> into, final boolean lexicalOnly) {
     return new ASTVisitor() {
-      private int loopDepth = 0;
+      int loopDepth = 0;
 
       boolean add(final Object o) {
         return collect((Expression) o);

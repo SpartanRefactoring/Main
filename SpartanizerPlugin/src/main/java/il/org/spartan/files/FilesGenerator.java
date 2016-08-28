@@ -98,7 +98,7 @@ public class FilesGenerator {
       return null;
     final Iterator<String> generator = as.list(directory.list()).iterator();
     return new Iterator<File>() {
-      private File next;
+      File next;
 
       @Override public boolean hasNext() {
         for (;;) {
