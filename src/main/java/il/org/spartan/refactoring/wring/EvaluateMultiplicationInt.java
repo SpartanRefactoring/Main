@@ -23,35 +23,31 @@ import il.org.spartan.refactoring.utils.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public class EvaluateMultiplicationInt extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
-  @Override public String description() {
-    return "Evaluate multiplication of int numbers";
-  }
-
-  @Override String description(@SuppressWarnings("unused") final InfixExpression e) {
+  @Override String description(@SuppressWarnings("unused") InfixExpression __) {
     return "Evaluate multiplication of int numbers";
   }
 
   @Override ASTNode replacement(final InfixExpression e) {
     return e.getOperator() != TIMES ? null : replacement(extract.allOperands(e), e);
   }
-
-  private static int extractNumber(final Expression e) {
-    if (!(e instanceof PrefixExpression))
-      return Integer.parseInt(((NumberLiteral) e).getToken());
-    return -1 * Integer.parseInt(((NumberLiteral) ((PrefixExpression) e).getOperand()).getToken());
+  
+  private static int extractNumber(Expression e){
+    return !(e instanceof PrefixExpression) ? Integer.parseInt(((NumberLiteral) e).getToken())
+        : - Integer.parseInt(((NumberLiteral) ((PrefixExpression) e).getOperand()).getToken());
   }
+
 
   private static boolean isInt(final Expression e) {
-    if (!(e instanceof NumberLiteral))
-      return false;
-    return ((NumberLiteral) e).getToken().matches("[0-9]+");
+    return e instanceof NumberLiteral && ((NumberLiteral)e).getToken().matches("[0-9]+");
+  
   }
 
-  private static ASTNode replacement(final List<Expression> es, final InfixExpression e) {
+  private static ASTNode replacement(final List<Expression> es, InfixExpression e) {
     int mul = 1;
-    for (final Expression ¢ : es) {
-      if (!(¢ instanceof NumberLiteral && isInt(¢) || ¢ instanceof PrefixExpression
-          && ((PrefixExpression) ¢).getOperator() == PrefixExpression.Operator.MINUS && ((PrefixExpression) ¢).getOperand() instanceof NumberLiteral))
+    for (final Expression ¢ : es){
+      if ((!(¢ instanceof NumberLiteral) || !isInt(¢))
+          && (!(¢ instanceof PrefixExpression) || ((PrefixExpression) ¢).getOperator() != PrefixExpression.Operator.MINUS
+              || !(((PrefixExpression) ¢).getOperand() instanceof NumberLiteral)))
         return null;
       mul = mul * extractNumber(¢);
     }

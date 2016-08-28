@@ -66,11 +66,12 @@ public class Toolbox {
              * this generates many bugs --yg */
             // new InfixMultiplicationDistributive(), //
             new EvaluateMultiplicationInt(), //
+            new EvaluateDivisionInt(), //
             new InfixComparisonSizeToZero(), //
             new InfixSubtractionZero(), //
             new InfixAdditionSubtractionExpand(), //
             new InfixDivisionMultiplicationNegatives(), //
-            new EvaluateAdditionInt(), //
+            new EvaluateAddition(), //
             new EvaluateSubstractionInt(), //
             new InfixAdditionZero(), // must be before InfixAdditionSort
             new InfixAdditionSort(), //

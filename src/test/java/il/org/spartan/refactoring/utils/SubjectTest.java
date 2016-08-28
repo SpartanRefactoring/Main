@@ -22,13 +22,13 @@ import il.org.spartan.refactoring.utils.subject.*;
 
   @Test public void conditionalExtract() {
     final Pair pair = subject.pair(e("a-B"), e("(c-d)"));
-    assert null != pair;
+    assert pair != null;
     azzert.that(pair.toCondition(e("(x)")), iz("x ? a-B : c-d"));
   }
 
   @Test public void conditionalSimple() {
     final Pair pair = subject.pair(e("a-B"), e("(c-d)"));
-    assert null != pair;
+    assert pair != null;
     azzert.that(pair.toCondition(e("x")), iz("x ? a-B : c-d"));
   }
 
@@ -156,7 +156,7 @@ import il.org.spartan.refactoring.utils.subject.*;
   }
 
   @Test public void subjectOperandsNotNull() {
-    assert null != subject.operands(extract.operands(Funcs.duplicate(i("a+b+c")))).to(i("1+2+3").getOperator());
+    assert subject.operands(extract.operands(Funcs.duplicate(i("a+b+c")))).to(i("1+2+3").getOperator()) != null;
   }
 
   @Test public void subjectOperandsWithParenthesis() {
