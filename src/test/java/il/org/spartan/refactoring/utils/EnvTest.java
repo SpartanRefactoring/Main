@@ -3,14 +3,10 @@ package il.org.spartan.refactoring.utils;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Environment.*;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.Type;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 
-
+@SuppressWarnings({"unused"})
 public class EnvTest {
 //  =================== default ===================
   Environment e_bad = EMPTY; //bad exercise.
@@ -29,12 +25,14 @@ public class EnvTest {
   @Test public void defaultfullEntries() {
     try {
       azzert.that(e0.fullEntries(), is(null));
-    } catch (NullPointerException e) {}
+    } catch (NullPointerException e) {//
+    }
   }
   @Test public void defaultGet() {
     try {
       azzert.that(e0.get("Alex"), is(null));
-    } catch (NullPointerException e) {}
+    } catch (NullPointerException e) {//
+    }
   }
   @Test public void defaultHas() {
     azzert.that(e0.has("Alex"), is(false));
@@ -48,7 +46,8 @@ public class EnvTest {
   @Test public void defaultFullNames() {
     try {
       azzert.that(e0.fullNames(), is(null));
-    } catch(NullPointerException e) {}
+    } catch(NullPointerException e) {//
+    }
   }
   
 //=================== basic ===================
@@ -58,14 +57,16 @@ public class EnvTest {
   @Test public void put() {
     try {
       azzert.that(e0.put("Alex", new Information()), is(null));
-    } catch (NullPointerException e) {}
+    } catch (NullPointerException e) {//
+    }
     //azzert.that(e0.put("Dan", new Information()), is(null));
     //azzert.that(e0.put("Yossi", new Information()), is(null));
   }
   @Test public void get() {
     try {
       azzert.that(e0.get("Alex").blockScope, is(null));
-    } catch (NullPointerException e) {}
+    } catch (NullPointerException e) {//
+    }
     //azzert.that(e0.get("Alex").hiding, is(null));
     //azzert.that(e0.get("Alex").type, is(null));
     //azzert.that(e0.get("Alex").self, is(null));
@@ -92,7 +93,8 @@ public class EnvTest {
   @Test public void putOne() {
     try {
       azzert.that(e1.put("Kopzon", new Information()), is(null));
-    } catch (NullPointerException e) {}
+    } catch (NullPointerException e) {//
+    }
     //azzert.that(e1.put("Greenstien", new Information()), is(null));
     //azzert.that(e1.put("Gill", new Information()), is(null));
     // not returning null, but Information about hiding!!!
@@ -101,7 +103,8 @@ public class EnvTest {
   @Test public void getOne() {
     try {
       azzert.that(e1.get("Kopzon").blockScope, is(null));
-    } catch (NullPointerException e) {}
+    } catch (NullPointerException e) {//
+    }
     //azzert.that(e1.get("Alex").hiding, is(null));
     //azzert.that(e1.get("Alex").type, is(null));
     //azzert.that(e1.get("Alex").self, is(null));
@@ -120,7 +123,8 @@ public class EnvTest {
   @Test public void getFromParent() {
     try {
       azzert.that(e1.get("Alex").blockScope, is(null));
-    } catch (NullPointerException e) {}
+    } catch (NullPointerException e) {//
+    }
   }
   @Test public void hasInParent() {
     azzert.that(e1.has("Alex"), is(true));
@@ -131,12 +135,14 @@ public class EnvTest {
   @Test public void putOneAndHide() {
     try {
       azzert.that(e1.put("Alex", new Information()).blockScope, is(null));
-    } catch (NullPointerException e) {}
+    } catch (NullPointerException e) {//
+    }
   }
   @Test public void hidingOne() {
     try {
       azzert.that(e1.hiding("Alex").blockScope, is(null));
-    } catch (NullPointerException e) {}
+    } catch (NullPointerException e) {//
+    }
   }
   
 //=================== nesting complex ===================
