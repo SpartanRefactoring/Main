@@ -16,7 +16,7 @@ public final class AnnotationRemoveEmptyParentheses extends Wring.ReplaceCurrent
   }
 
   @Override ASTNode replacement(final NormalAnnotation a) {
-    if (values(a).size() > 0)
+    if (!values(a).isEmpty())
       return null;
     final MarkerAnnotation $ = a.getAST().newMarkerAnnotation();
     $.setTypeName(duplicate(a.getTypeName()));
