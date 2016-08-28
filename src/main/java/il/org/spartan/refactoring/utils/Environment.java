@@ -72,7 +72,7 @@ public interface Environment {
     return emptySet;
   }
 
-  /** Get full path of the current element. */
+  /** Get full path of the current Env (all scope hierarchy). */
   default String fullName() {
     String $ = (nest() == null ? null : nest().fullName());
     return ($ == null ? "" : $ + "." ) + name();
