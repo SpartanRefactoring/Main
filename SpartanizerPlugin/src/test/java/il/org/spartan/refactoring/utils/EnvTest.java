@@ -9,7 +9,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
-
+ 
 
 public class EnvTest {
 //  =================== default ===================
@@ -35,8 +35,11 @@ public class EnvTest {
     azzert.that(e0.nest().has("Alex"), is(false));
   }
   @Test public void defaultFullName() {
-    azzert.that(e0.fullName(), is("."));
-  }  
+    azzert.that(e0.fullName(), is(""));
+  }
+  @Test public void defaultEMPTYFullName() {
+    azzert.that(e0.nest().fullName(), is(""));
+  }
   @Test public void defaultName() {
     azzert.that(e0.name(), is(""));
   }

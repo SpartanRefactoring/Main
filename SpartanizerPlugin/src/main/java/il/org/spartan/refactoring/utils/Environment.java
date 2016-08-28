@@ -76,7 +76,7 @@ public interface Environment {
 
   /** Get full path of the current Env (all scope hierarchy). */
   default String fullName() {
-    String $ = (nest() == null ? null : nest().fullName());
+    String $ = ((nest() == null) || (nest() == EMPTY) ? null : nest().fullName());
     return ($ == null ? "" : $ + "." ) + name();
   }
 
