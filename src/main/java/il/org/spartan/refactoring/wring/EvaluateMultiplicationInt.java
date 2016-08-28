@@ -26,7 +26,7 @@ public class EvaluateMultiplicationInt extends Wring.ReplaceCurrentNode<InfixExp
       return "Evaluate multiplication of int numbers";
   }
 
-  @Override String description(@SuppressWarnings("unused") InfixExpression e) {
+  @Override String description(@SuppressWarnings("unused") InfixExpression __) {
     return "Evaluate multiplication of int numbers";
   }
 
@@ -36,24 +36,20 @@ public class EvaluateMultiplicationInt extends Wring.ReplaceCurrentNode<InfixExp
   
   
   private static int extractNumber(Expression e){
-    if(!(e instanceof PrefixExpression))
-      return  Integer.parseInt(((NumberLiteral) e).getToken());
-    return -1* Integer.parseInt(((NumberLiteral) ((PrefixExpression)e).getOperand()).getToken());
+    return !(e instanceof PrefixExpression) ? Integer.parseInt(((NumberLiteral) e).getToken())
+        : -1 * Integer.parseInt(((NumberLiteral) ((PrefixExpression) e).getOperand()).getToken());
   }
   
   private static boolean isInt(Expression e){
-    if(!(e instanceof NumberLiteral))
-      return false;
-    return ((NumberLiteral) e).getToken().matches("[0-9]+");
+    return e instanceof NumberLiteral && ((NumberLiteral) e).getToken().matches("[0-9]+");
   }
   
   private static ASTNode replacement(final List<Expression> es, InfixExpression e) {
     int mul = 1;
     for (final Expression ¢ : es){
-      if (!((¢ instanceof NumberLiteral &&
-          isInt(¢)) || (¢ instanceof PrefixExpression &&
-          ((PrefixExpression)¢).getOperator()==PrefixExpression.Operator.MINUS &&
-          ((PrefixExpression)¢).getOperand() instanceof NumberLiteral)))
+      if ((!(¢ instanceof NumberLiteral) || !isInt(¢))
+          && (!(¢ instanceof PrefixExpression) || ((PrefixExpression) ¢).getOperator() != PrefixExpression.Operator.MINUS
+              || !(((PrefixExpression) ¢).getOperand() instanceof NumberLiteral)))
         return null;
         mul = mul * extractNumber(¢);
     }  

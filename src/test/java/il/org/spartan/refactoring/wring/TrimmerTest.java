@@ -1479,7 +1479,7 @@ import il.org.spartan.refactoring.utils.*;
     assert (ExpressionComparator.longerFirst(e));
     assert s.eligible(e) : "e=" + e + " s=" + s;
     final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) s).replacement(e);
-    assert null != (replacement);
+    assert replacement != null;
     azzert.that(replacement.toString(), is("f(a,b,c) * f(a,b,c,d,e)"));
   }
 
@@ -1489,7 +1489,7 @@ import il.org.spartan.refactoring.utils.*;
     azzert.that(left(e).toString(), is("f(a,b,c,d)"));
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
     azzert.that(s, instanceOf(InfixMultiplicationSort.class));
-    assert null != (s);
+    assert s != null;
     assert (s.scopeIncludes(e));
     final Expression e1 = left(e);
     final Expression e2 = right(e);
@@ -1500,7 +1500,7 @@ import il.org.spartan.refactoring.utils.*;
     assert (ExpressionComparator.longerFirst(e));
     assert s.eligible(e) : "e=" + e + " s=" + s;
     final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) s).replacement(e);
-    assert null != (replacement);
+    assert replacement != null;
     azzert.that(replacement.toString(), is("f(a,b,c) * f(a,b,c,d)"));
   }
 
@@ -2578,12 +2578,12 @@ import il.org.spartan.refactoring.utils.*;
     final String from = "for (int i = 0; i < 100;  i--)  i--;";
     final Statement s = s(from);
     azzert.that(s, iz("{" + from + "}"));
-    assert null != (s);
+    assert s != null;
     final PostfixExpression e = extract.findFirstPostfix(s);
-    assert null != (e);
+    assert e != null;
     azzert.that(e, iz("i--"));
     final ASTNode parent = e.getParent();
-    assert null != (parent);
+    assert parent != null;
     azzert.that(parent, iz(from));
     azzert.that(parent, is(not(instanceOf(Expression.class))));
     azzert.that(new PostfixToPrefix().scopeIncludes(e), is(true));
@@ -3135,11 +3135,11 @@ import il.org.spartan.refactoring.utils.*;
   @Test public void rightSimplificatioForNulNNVariableReplacement() {
     final InfixExpression e = i("null != a");
     final Wring<InfixExpression> w = Toolbox.instance.find(e);
-    assert null != (w);
+    assert w != null;
     assert (w.scopeIncludes(e));
     assert (w.eligible(e));
     final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) w).replacement(e);
-    assert null != (replacement);
+    assert replacement != null;
     azzert.that(replacement.toString(), is("a != null"));
   }
 
@@ -3337,7 +3337,7 @@ import il.org.spartan.refactoring.utils.*;
         ""//
     );
     final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
-    assert null != (f);
+    assert f != null;
     azzert.that(f, iz(" res = 0"));
     azzert.that(extract.nextStatement(f),
         iz(" for (int i = 0;i < s.length();++i)\n"//
@@ -3613,11 +3613,11 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Test public void sortAdditionThreeOperands1() {
-    trimming("1.0+2222+3").to(null);
+    trimming("1.0+2222+3").to("2226.0").to(null);
   }
 
   @Test public void sortAdditionThreeOperands2() {
-    trimming("1.0+1+124+1").to(null);
+    trimming("1.0+1+124+1").to("127.0");
   }
 
   @Test public void sortAdditionThreeOperands3() {
@@ -3641,7 +3641,7 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Test public void sortAdditionTwoOperands2() {
-    trimming("2.0+1").to("1+2.0");
+    trimming("2.0+1").to("3.0");
   }
 
   @Test public void sortAdditionTwoOperands3() {

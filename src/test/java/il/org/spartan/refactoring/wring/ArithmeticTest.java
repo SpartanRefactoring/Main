@@ -27,16 +27,8 @@ public class ArithmeticTest {
       trimming("1+1").to("2");
     }
 
-    @Test public void issue92_3a() {
-      trimming("1+1").to("2");
-    }
-
     @Test public void issue92_4a() {
       trimming("1+1+3").to("2+3").to("5");
-    }
-
-    @Test public void issue92_4() {
-      trimming("1.+1.").to("2.");
     }
 
     @Test @Ignore("#92:under construction") public void issue92_5() {
@@ -138,5 +130,12 @@ public class ArithmeticTest {
     @Test public void issue92_27() {
       trimming("1.9+2.2").to("4.1");
     }
+    @Test public void issue92_28() {
+      trimming("1+2.2").to("3.2");
+    }
+    @Test public void issue92_29() {
+      trimming("1.+1.").to("2.0");
+    }
+
   }
 }

@@ -55,15 +55,15 @@ public class InfixAdditionSortTest {
   }
 
   @Test public void test07() {
-    assert null ==(new InfixAdditionSubtractionExpand().replacement(INPUT));
+    assert new InfixAdditionSubtractionExpand().replacement(INPUT) == null;
   }
 
   @Test public void test08() {
     final InfixAdditionSubtractionExpand e = new InfixAdditionSubtractionExpand();
-assert    null != (e);
+assert    e != null;
     assert !(TermsCollector.isLeafTerm(INPUT));
-assert    null != (TermsExpander.simplify(INPUT));
-    assert null ==(e.replacement(INPUT));
+assert    TermsExpander.simplify(INPUT) != null;
+    assert e.replacement(INPUT) == null;
   }
 
   @Test public void test09() {
@@ -71,43 +71,43 @@ assert    null != (TermsExpander.simplify(INPUT));
     azzert.that(e, instanceOf(InfixExpression.class));
     final InfixExpression i = (InfixExpression) e;
     azzert.that(i.getOperator(), is(PLUS2));
-assert    null != (extract.operands(i));
+assert    extract.operands(i) != null;
     azzert.that(extract.operands(i).size(), is(nTERMS));
     assert (Funcs.same(i, INPUT));
   }
 
   @Test public void test10() {
     final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
-assert    null != (i);
+assert    i != null;
     assert (Funcs.same(i, INPUT));
   }
 
   @Test public void test11() {
     final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
-    assert null != (i);
-    assert null != (INPUT);
+    assert i != null;
+    assert INPUT != null;
     assert (Funcs.same(i, INPUT));
   }
 
   @Test public void test12() {
     final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
-    assert null != (i);
-    assert !(i == INPUT);
-    assert null != (INPUT);
+    assert i != null;
+    assert i != INPUT;
+    assert INPUT != null;
     azzert.that(Funcs.gist("" + i), is(Funcs.gist("" + INPUT)));
   }
 
   @Test public void test13() {
     final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
-    assert null != (i);
-    assert !(i == INPUT);
+    assert i != null;
+    assert i != INPUT;
     assert (i.getNodeType() == INPUT.getNodeType());
   }
 
   @Test public void test14() {
     final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
-    assert null != (i);
-    assert !(i == INPUT);
+    assert i != null;
+    assert i != INPUT;
     azzert.that(i, iz("" + INPUT));
   }
 

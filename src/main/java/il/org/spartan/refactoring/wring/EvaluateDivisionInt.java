@@ -26,7 +26,7 @@ public class EvaluateDivisionInt extends Wring.ReplaceCurrentNode<InfixExpressio
       return "Evaluate division of int numbers";
   }
 
-  @Override String description(@SuppressWarnings("unused") InfixExpression e) {
+  @Override String description(@SuppressWarnings("unused") InfixExpression __) {
     return "Evaluate division of int numbers";
   }
 
@@ -35,38 +35,31 @@ public class EvaluateDivisionInt extends Wring.ReplaceCurrentNode<InfixExpressio
   }
   
   private static int extractNumber(Expression e){
-    if(!(e instanceof PrefixExpression))
-      return  Integer.parseInt(((NumberLiteral) e).getToken());
-    return -1* Integer.parseInt(((NumberLiteral) ((PrefixExpression)e).getOperand()).getToken());
+    return !(e instanceof PrefixExpression) ? Integer.parseInt(((NumberLiteral) e).getToken())
+        : -1 * Integer.parseInt(((NumberLiteral) ((PrefixExpression) e).getOperand()).getToken());
   }
   
   private static boolean isInt(Expression e){
-    if(!(e instanceof NumberLiteral))
-      return false;
-    return ((NumberLiteral) e).getToken().matches("[0-9]+");
+    return e instanceof NumberLiteral && ((NumberLiteral) e).getToken().matches("[0-9]+");
   }
 
   private static boolean isCompitable(Expression e){
-    return (!((e instanceof NumberLiteral &&
-        isInt(e) || (e instanceof PrefixExpression &&
-        ((PrefixExpression)e).getOperator()==PrefixExpression.Operator.MINUS &&
-        ((PrefixExpression)e).getOperand() instanceof NumberLiteral))));
+    return ((!(e instanceof NumberLiteral) || !isInt(e)) && (!(e instanceof PrefixExpression)
+        || ((PrefixExpression) e).getOperator() != PrefixExpression.Operator.MINUS || !(((PrefixExpression) e).getOperand() instanceof NumberLiteral)));
   }
   
   private static ASTNode replacement(final List<Expression> es, InfixExpression e) {
-    if(es.isEmpty())
-      return null;
-    if (isCompitable(es.get(0)))
+    if (es.isEmpty() || isCompitable(es.get(0)))
       return null;
     int divide = extractNumber(es.get(0));
-    int index=0;
-    for (final Expression ¢ : es){
+    int index = 0;
+    for (final Expression ¢ : es) {
       if (isCompitable(¢))
         return null;
-      if(index!=0)
-        divide = divide /  extractNumber(¢);
-      index++;
-    }  
+      if (index != 0)
+        divide = divide / extractNumber(¢);
+      ++index;
+    }
     return e.getAST().newNumberLiteral(Integer.toString(divide));
   }
 }
