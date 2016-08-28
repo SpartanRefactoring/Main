@@ -5,20 +5,21 @@ import java.util.Map.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-/** TODO: Document what is it for users? how should clients use this
- * class/method, same for all TODO: Document */
+/** Interface to Environment. Holds all the names defined till current PC.
+ * In other words the 'names Environment' at every point of the program flow. */
 @SuppressWarnings({"unused"}) public interface Environment {
-  /** Document properly, this is the parent of all all */
+  /** The Environment structure is in some like a Linked list, where EMPTY is
+   * like the NULL at the end. */
   static final Environment EMPTY = new Environment() {
     /* Empty */
   };
-  /** TODO: Document */
+  /** Initializer for EMPTY */
   static final Set<Entry<String, Information>> emptyEntries = Collections.unmodifiableSet(new HashSet<>());
-  /** TODO: Document */
+  /** Initializer for EMPTY */
   static final Set<String> emptySet = Collections.unmodifiableSet(new HashSet<>());
 
   /**
-   * Spawns a new Nested Env. Should be used when a block is opened. 
+   * Spawns the first Nested Env. Should be used when the first block is opened. 
    */
   static Environment genesis() {
     return EMPTY.spawn();
@@ -36,7 +37,7 @@ import org.eclipse.jdt.core.dom.*;
     return size() + (nest() == null ? 0 : nest().fullSize());
   }
 
-  /** Return true iff Env doesn't uses the name. */
+  /** Return true iff Env doesn't have the name. */
   default boolean doesntHave(final String name) {
     return !has(name);
   }
@@ -53,28 +54,29 @@ import org.eclipse.jdt.core.dom.*;
     return $;
   }
 
-  /** May return null, iff the name is not in use in the Env. */
+  /** 
+   * @return null iff the name is not in use in the Env. */  
   default Information get(final String name) {
     return null;
   }
 
-  /** Answer the question whether the name is in use in the Env */
+  /** Answer the question whether the name is in use in the current Env */
   default boolean has(final String name) {
     return false;
   }
 
-  /** Returns null iff the name is not hiding anything from outer scopes. */
+  /** @return null iff the name is not hiding anything from outer scopes. */
   default Information hiding(final String name) {
     return nest().get(name);
   }
 
-  /** upper level only. If you want the parent, go to the parent.
-   * the names used in the top scope. */
+  /** @return The names used in the current scope. */
   default Set<String> names() {
     return emptySet;
   }
 
-  /** Get full path of the current Env (all scope hierarchy). */
+  /** Get full path of the current Env (all scope hierarchy).
+   * Used for full names of the variables. */
   default String fullName() {
     String $ = ((nest() == null) || (nest() == EMPTY) ? null : nest().fullName());
     return ($ == null ? "" : $ + "." ) + name();
@@ -84,7 +86,7 @@ import org.eclipse.jdt.core.dom.*;
     return "";
   }
 
-  /** Get all the full names of the Env. */
+  /** @return all the full names of the Env. */
   default Set<String> fullNames() {
     final Set<String> $ = new HashSet<>(names());
     if (nest() != null)
@@ -92,7 +94,7 @@ import org.eclipse.jdt.core.dom.*;
     return $;
   }
 
-  /** May return null! the most outer scope (block) will have null.
+  /** @return null at the most outer block.
    * This method is similar to the 'next()' method in a linked list. */
   default Environment nest() {
     return null;
@@ -105,8 +107,7 @@ import org.eclipse.jdt.core.dom.*;
   default Information put(final String name, final Information i) {
     throw new IllegalArgumentException(name + "/" + i);
   }
-  /* Used when new block (scope) is opened.
-   */
+  /* Used when new block (scope) is opened. */
   default Environment spawn() {
     return new Nested(this);
   }
@@ -115,8 +116,8 @@ import org.eclipse.jdt.core.dom.*;
    * Insertions go the current node, searches start at the current note and
    * deleegate to the parent unless it is null. */
   
-  /* Nested environment which has it's own Map of names declared in the current
-   * scope 'flat', and a reference to the parent scope 'nest'. */
+  /* Nested environment which has it's own Map of names 'flat',
+   * and an instance to the parent scope 'nest'. */
   final class Nested implements Environment {
     public final Map<String, Information> flat = new LinkedHashMap<>();
     public final Environment nest;
@@ -124,29 +125,29 @@ import org.eclipse.jdt.core.dom.*;
     Nested(final Environment parent) {
       nest = parent;
     }
-    /* Returns true iff Env is empty. */
+    /* @return true iff Env is empty. */
     @Override public boolean empty() {
       return flat.isEmpty() && nest.empty();
     }
-    /* Returns a set of map entries used in the current scope. */
+    /* @return Map entries used in the current scope. */
     @Override
     public Set<Map.Entry<String, Information>> entries() {
       return flat.entrySet();
     }
-    /* Get the information about the name in current Env. */
+    /* @return The information about the name in current Env. */
     @Override public Information get(final String name) {
       final Information $ = flat.get(name);
       return $ != null ? $ : nest.get(name);
     }
-    /* Check whether the Env is already using the name. */
+    /* Check whether the Env already has the name. */
     @Override public boolean has(final String name) {
       return flat.containsKey(name) || nest.has(name);
     }
-    /* Get the names used in current scope. */
+    /* @return Names used in current scope. */
     @Override public Set<String> names() {
       return flat.keySet();
     }
-    /* One step up in the Env tree. */
+    /* One step up in the Env tree. Funny but it even sounds like next().*/
     @Override public Environment nest() {
       return nest;
     }
