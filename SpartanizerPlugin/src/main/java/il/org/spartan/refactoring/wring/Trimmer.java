@@ -57,7 +57,7 @@ public final class Trimmer extends Spartanization {
     };
   }
 
-  @Override protected final void fillRewrite(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
+  @Override protected void fillRewrite(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
     u.accept(new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
         if (!inRange(m, n))
