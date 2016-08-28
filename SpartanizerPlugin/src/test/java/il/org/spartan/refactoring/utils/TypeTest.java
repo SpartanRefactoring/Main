@@ -62,5 +62,23 @@ public class TypeTest {
     @Test public void test16(){
       azzert.that(STRING.underPlus(NULL), is(STRING));
     }
+    
+    @Test public void test17(){
+      azzert.that(NUMERIC.underPlus(NULL), is(STRING));
+    }
+    
+    @Test public void test18(){
+      azzert.that(LONG.underPlus(INT), is(LONG));
+    }
+    
+    @Test public void test19(){
+      azzert.that(LONG.underPlus(INTEGRAL), is(LONG));
+    }
+    
+    @Test public void test20(){
+      azzert.that(LONG.underPlus(NUMERIC), is(NUMERIC));
+    }
+    
+ 
   }
 }
