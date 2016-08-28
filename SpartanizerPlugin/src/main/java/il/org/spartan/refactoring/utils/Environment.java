@@ -17,8 +17,10 @@ public interface Environment {
   /** TODO: Document */
   static final Set<String> emptySet = Collections.unmodifiableSet(new HashSet<>());
 
-  /** Spawns a new Nested Env. Should be used when a block is opened. */
-  public static Environment genesis() {
+  /**
+   * Spawns a new Nested Env. Should be used when a block is opened. 
+   */
+  static Environment genesis() {
     return EMPTY.spawn();
   }
 

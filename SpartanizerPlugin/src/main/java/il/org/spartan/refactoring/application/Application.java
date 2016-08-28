@@ -139,7 +139,7 @@ import il.org.spartan.utils.*;
   }
 
   boolean parseArguments(final List<String> args) {
-    if (args == null || args.size() == 0) {
+    if (args == null || args.isEmpty()) {
       printHelpPrompt();
       return true;
     }
