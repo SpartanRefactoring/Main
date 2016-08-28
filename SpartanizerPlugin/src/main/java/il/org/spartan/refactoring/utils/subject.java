@@ -222,7 +222,7 @@ public class subject {
      * @param o JD
      * @return JD */
     public InfixExpression to(final InfixExpression.Operator o) {
-      assert operands.size() != 0;
+      assert !operands.isEmpty();
       assert operands.size() != 1;
       assert operands.size() >= 2;
       final InfixExpression $ = subject.pair(first(operands), second(operands)).to(o);

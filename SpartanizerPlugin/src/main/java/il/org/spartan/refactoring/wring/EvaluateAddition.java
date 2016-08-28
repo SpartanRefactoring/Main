@@ -30,7 +30,7 @@ public class EvaluateAddition extends Wring.ReplaceCurrentNode<InfixExpression> 
       return "Evaluate addition of int numbers";
   }
 
-  @Override String description(@SuppressWarnings("unused") InfixExpression e) {
+  @Override String description(@SuppressWarnings("unused") InfixExpression __) {
     return "Evaluate addition of int numbers";
   }
   
@@ -47,15 +47,11 @@ public class EvaluateAddition extends Wring.ReplaceCurrentNode<InfixExpression> 
   }
     
   private static boolean isInt(Expression e){
-    if(!(e instanceof NumberLiteral))
-      return false;
-    return ((NumberLiteral) e).getToken().matches("[0-9]+");
+    return e instanceof NumberLiteral && ((NumberLiteral) e).getToken().matches("[0-9]+");
   }
   
   private static boolean isDouble(Expression e){
-    if(!(e instanceof NumberLiteral))
-      return false;
-    return ((NumberLiteral) e).getToken().matches("[0-9]+\\.[0-9]?");
+    return e instanceof NumberLiteral && ((NumberLiteral) e).getToken().matches("[0-9]+\\.[0-9]?");
   }
   
  /* private static boolean isLong(Expression e){
@@ -81,7 +77,7 @@ public class EvaluateAddition extends Wring.ReplaceCurrentNode<InfixExpression> 
     
     int sum = 0;
     for (final Expression ¢ : es){
-      if (!(¢ instanceof NumberLiteral && isInt(¢)))
+      if (!(¢ instanceof NumberLiteral) || !isInt(¢))
         return null;
       sum=sum + Integer.parseInt(((NumberLiteral) ¢).getToken());
     }  
@@ -91,7 +87,7 @@ public class EvaluateAddition extends Wring.ReplaceCurrentNode<InfixExpression> 
  private static ASTNode replacementDouble(final List<Expression> es, InfixExpression e) {
    double sum = 0;
    for (final Expression ¢ : es){
-     if (!(¢ instanceof NumberLiteral && (isInt(¢) || isDouble(¢))))
+     if (!(¢ instanceof NumberLiteral) || !isInt(¢) && !isDouble(¢))
        return null;
      sum=sum + Double.parseDouble(((NumberLiteral) ¢).getToken());
    }  

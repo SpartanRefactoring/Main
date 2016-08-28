@@ -52,7 +52,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     for (int i = 0; i < different.size() - 1; ++i)
       addition = subject.pair(addition != null ? addition : different.get(i), different.get(i + 1)).to(Operator.PLUS);
     Expression multiplication = null;
-    if (common.size() == 0)
+    if (common.isEmpty())
       return addition;
     if (common.size() == 1)
       return subject.pair(common.get(0), addition).to(Operator.TIMES);
