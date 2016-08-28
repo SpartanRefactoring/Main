@@ -72,13 +72,13 @@ public class TrimmerTestsUtils {
     }
 
     private N findNode(final Wring<N> w) {
-      assert null != (w);
+      assert w != null;
       final Wrap wrap = Wrap.find(get());
-      assert null != (wrap);
+      assert wrap != null;
       final CompilationUnit u = wrap.intoCompilationUnit(get());
-      assert null != (u);
+      assert u != null;
       final N $ = firstInstance(u);
-      assert null != ($);
+      assert $ != null;
       return $;
     }
 
@@ -120,19 +120,19 @@ public class TrimmerTestsUtils {
 
   static String apply(final Trimmer t, final String from) {
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
-    assert null != (u);
+    assert u != null;
     final Document d = new Document(from);
-    assert null != (d);
+    assert d != null;
     final Document $ = TESTUtils.rewrite(t, u, d);
-    assert null != ($);
+    assert $ != null;
     return $.get();
   }
 
   static String apply(final Wring<? extends ASTNode> ns, final String from) {
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
-    assert null != (u);
+    assert u != null;
     final Document d = new Document(from);
-    assert null != (d);
+    assert d != null;
     return TESTUtils.rewrite(new AsSpartanization(ns, "Tested Refactoring"), u, d).get();
   }
 

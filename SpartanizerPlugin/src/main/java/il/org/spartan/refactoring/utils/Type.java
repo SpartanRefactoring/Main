@@ -73,35 +73,34 @@ enum Type {
   final Type under(final PrefixExpression.Operator o) {
     assert o != null;
     return o == NOT ? BOOLEAN //
-        : o == COMPLEMENT ? asIntegral() //
-            : asNumeric();
+        : o != COMPLEMENT ? asNumeric() : asIntegral();
   }
   
-  //TODO: should be private once kind is finished
-  Type underIntegersOnlyOperator(Type k) {
+  private Type underIntegersOnlyOperator(Type k) {
     return max(k.asIntegral(), asIntegral());
   }
 
   /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE},
-   *         {@link #STRING} or {@link #ALPHANUMERIC}, in case it cannot
-   *         decide */
-  //TODO: should be private once kind is finished
-  Type underPlus(Type k) {
+   *         {@link #STRING}, {@link #INTEGRAL}, {@link #NUMERIC} or {@link #ALPHANUMERIC},
+   *         in case it cannot decide */
+  private Type underPlus(Type k) {
     //addition with NULL or String must be a String
     if (in(STRING, this, k) || in(NULL, this , k))
       return STRING;
     //not String, null or numeric, so we can't determine anything
-    if (!isNumeric() && !k.isNumeric()){
+    if (!isNumeric() && !k.isNumeric())
       return ALPHANUMERIC;
-    }
-    return asNumeric(k);
+    return underNumericOnlyOperator(k);
   }
-
+  
+  /** @return one of {@link #BOOLEAN}, {@link #INT}, {@link #LONG}, {@link #DOUBLE},
+   *         {@link #STRING}, {@link #INTEGRAL}, {@link #NUMERIC}, or {@link #ALPHANUMERIC},
+   *         in case it cannot decide */
   //TODO: should be private once kind is finished
   final Type underBinaryOperator(InfixExpression.Operator o, Type k) {
     if (o == PLUS2)
       return underPlus(k);
-    if (in(this, //
+    if (in(o, //
         LESS, //
         GREATER, //
         LESS_EQUALS, //
@@ -114,19 +113,18 @@ enum Type {
       return BOOLEAN;
     if (in(o, REMAINDER, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED, XOR, OR, AND))
       return underIntegersOnlyOperator(k);
-    if (!in(this, TIMES, DIVIDE, MINUS2))
+    if (!in(o, TIMES, DIVIDE, MINUS2))
       throw new IllegalArgumentException("o=" + o + " k=" + k.fullName() + "this=" + this);
-    return asNumeric(k);
+    return underNumericOnlyOperator(k);
   }
 
-  /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE}, or
+  /** @return one of {@link #INT}, {@link #LONG}, {@link #INTEGRAL}, {@link #DOUBLE}, or
    *         {@link #NUMERIC}, in case it cannot decide */
-  //TODO: decide if should be renamed to under function
-  private Type asNumeric(Type k) {
+  private Type underNumericOnlyOperator(Type k) {
     if (k == this)
       return k;
     if (!isNumeric())
-      return asNumeric().asNumeric(k);
+      return asNumeric().underNumericOnlyOperator(k);
     assert (k != null);
     assert this != ALPHANUMERIC : "Don't confuse " + NUMERIC + " with " + ALPHANUMERIC;
     assert in(this, INT, DOUBLE, LONG, INTEGRAL, NUMERIC) : this + ": does not fit our list of numeric types";
@@ -178,14 +176,6 @@ enum Type {
    *         it cannot decide */
   private Type asIntegral() {
     return isIntegral() ? this : INTEGRAL;
-  }
-
-  private boolean isAlphaNumeric(){
-    return in(this, INT, LONG, INTEGRAL, DOUBLE, NUMERIC, STRING, ALPHANUMERIC);
-  }
-  
-  private Type asAlphaNumeric(){
-    return isAlphaNumeric() ? this : ALPHANUMERIC;
   }
 
   private static Type max(Type ¢1, Type ¢2) {

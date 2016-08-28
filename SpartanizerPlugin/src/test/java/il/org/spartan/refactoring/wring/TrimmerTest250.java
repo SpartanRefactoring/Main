@@ -732,15 +732,31 @@ public class TrimmerTest250 {
 
   // @formatter:off
   enum A { a1() {{ f(); }
-      public final void f() {g();}
-       protected final void g() {h();}
-       final void i() {f();}
-       private final void h() {i();}
+      public void f() {
+        g();
+      }
+       void g() {
+        h();
+      }
+       void i() {
+        f();
+      }
+       void h() {
+        i();
+      }
     }, a2() {{ f(); }
-      final public void i() {f();}
-      final protected void f() {g();}
-      final void g() {h();}
-      final private void h() {i();}
+      public void i() {
+        f();
+      }
+      void f() {
+        g();
+      }
+      void g() {
+        h();
+      }
+      void h() {
+        i();
+      }
     }
   }
  // @formatter:on
