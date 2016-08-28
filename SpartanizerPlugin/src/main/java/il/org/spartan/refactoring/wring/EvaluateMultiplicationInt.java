@@ -48,7 +48,7 @@ public class EvaluateMultiplicationInt extends Wring.ReplaceCurrentNode<InfixExp
     int mul = 1;
     for (final Expression ¢ : es){
       if (!((¢ instanceof NumberLiteral &&
-          isInt(e)) || (¢ instanceof PrefixExpression &&
+          isInt(¢)) || (¢ instanceof PrefixExpression &&
           ((PrefixExpression)¢).getOperator()==PrefixExpression.Operator.MINUS &&
           ((PrefixExpression)¢).getOperand() instanceof NumberLiteral)))
         return null;

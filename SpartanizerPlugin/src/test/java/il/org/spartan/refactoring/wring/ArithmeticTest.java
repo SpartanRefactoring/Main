@@ -41,7 +41,7 @@ public class ArithmeticTest {
     }
   }
 
-  @Ignore("#92:under construction") public static class Working {
+  public static class Working {
     @Test public void issue92_3() {
       trimming("1+1").to("2");
     }
@@ -77,6 +77,9 @@ public class ArithmeticTest {
     }
     @Test public void issue92_19() {
       trimming("4 * -9 + 5*5").to("5*5 +4*-9").to("25+-36").to("25-36").to("-11");
+    }
+    @Test public void issue92_20() {
+      trimming("5*5+6*7-9").to("25+42-9");
     }
   }
 }
