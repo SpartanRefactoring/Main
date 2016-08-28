@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 
 /** TODO: Document what is it for users? how should clients use this
  * class/method, same for all TODO: Document */
-public interface Environment {
+@SuppressWarnings({"unused"}) public interface Environment {
   /** Document properly, this is the parent of all all */
   static final Environment EMPTY = new Environment() {
     /* Empty */
@@ -39,7 +39,7 @@ public interface Environment {
     return !has(name);
   }
 
-  /** Return true iff Env is empty. Are there some names used already? */
+  /** Return true iff Env is empty. */
   default boolean empty() {
     return true;
   }
@@ -125,7 +125,7 @@ public interface Environment {
     /** Returns true iff there wasn't any name in use yet (all the Env in
      * empty). */
     @Override public boolean empty() {
-      return flat.isEmpty() || nest.empty();
+      return flat.isEmpty() && nest.empty();
     }
 
     @Override public Set<Map.Entry<String, Information>> entries() {
@@ -156,6 +156,7 @@ public interface Environment {
     /** Add name to the current scope in the Env. */
     @Override public Information put(final String name, final Information value) {
       flat.put(name, value);
+      assert (!flat.isEmpty());
       return hiding(name);
     }
   }

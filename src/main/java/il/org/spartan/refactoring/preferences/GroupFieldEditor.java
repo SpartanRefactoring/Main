@@ -60,15 +60,16 @@ public class GroupFieldEditor extends FieldEditor {
 
   /* (non-Javadoc) Method declared on FieldEditor. */
   @Override protected void doFillIntoGrid(final Composite parentParam, @SuppressWarnings("hiding") int numColumns) {
+    int c = numColumns;
     if (members == null || members.isEmpty())
       return;
-    if (numColumns == 0)
+    if (c == 0)
       for (final FieldEditor fe : members)
-        numColumns = Math.max(numColumns, fe.getNumberOfControls());
-    gridData(numColumns);
-    gridLayout(numColumns);
+        c = Math.max(c, fe.getNumberOfControls());
+    gridData(c);
+    gridLayout(c);
     for (final FieldEditor ¢ : members)
-      ¢.fillIntoGrid(parentParam, numColumns);
+      ¢.fillIntoGrid(parentParam, c);
     parent.layout();
     parent.redraw();
   }
