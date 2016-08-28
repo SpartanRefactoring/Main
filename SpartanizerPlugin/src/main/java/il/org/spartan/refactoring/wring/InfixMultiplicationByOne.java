@@ -27,7 +27,7 @@ public final class InfixMultiplicationByOne extends ReplaceCurrentNode<InfixExpr
     for (final Expression ¢ : es)
       if (!isLiteralOne(¢))
         $.add(¢);
-    return $.size() == es.size() ? null : $.size() == 0 ? duplicate(first(es)) : $.size() == 1 ? duplicate(first($)) : subject.operands($).to(TIMES);
+    return $.size() == es.size() ? null : $.isEmpty() ? duplicate(first(es)) : $.size() == 1 ? duplicate(first($)) : subject.operands($).to(TIMES);
   }
 
   private static boolean isLiteralOne(final Expression ¢) {

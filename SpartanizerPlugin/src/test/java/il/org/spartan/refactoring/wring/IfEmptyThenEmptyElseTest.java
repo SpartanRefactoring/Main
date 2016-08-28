@@ -33,7 +33,7 @@ public class IfEmptyThenEmptyElseTest {
   }
 
   @Test public void extractFirstIf() {
-assert    null != (IF);
+assert    IF != null;
   }
 
   @Test public void inputType() {
@@ -50,7 +50,7 @@ assert    null != (IF);
     final Rewrite t = WRING.make(s);
     t.go(r, null);
     final TextEdit e = r.rewriteAST(d, null);
-assert    null != (e);
+assert    e != null;
     azzert.that(e.getChildren().length, greaterThan(0));
     e.apply(d);
     azzert.isNull(extract.firstIfStatement(MakeAST.COMPILATION_UNIT.from(d.get())));
