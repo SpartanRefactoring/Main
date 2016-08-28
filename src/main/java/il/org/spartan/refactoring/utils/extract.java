@@ -9,6 +9,7 @@ import static org.eclipse.jdt.core.dom.ASTNode.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.Type;
 
 import il.org.spartan.*;
 

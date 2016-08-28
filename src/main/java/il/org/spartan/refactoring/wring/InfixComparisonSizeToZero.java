@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 import il.org.spartan.refactoring.utils.*;
 
-/** Converts code>x.size()==0</code> to <code>x.isEmpty()</code>,
+/** Converts <code>x.size()==0</code> to <code>x.isEmpty()</code>,
  * <code>x.size()!=0 </code> and <code>x.size()>=1</code>
  * <code>!x.isEmpty()</code>, <code>x.size()<0</code> to <code><b>false</b>,and
  * <code>x.size()>=0</code> to <code><b>true</b>. 
@@ -20,27 +20,54 @@ import il.org.spartan.refactoring.utils.*;
  * @author Stav Namir <code><stav1472 [at] gmail.com></code>
  * @since 2016-04-24 */
 public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.Canonicalization {
+  private static NumberLiteral getNegativeNumber(final PrefixExpression ¢){
+    return ¢.getOperator() != PrefixExpression.Operator.MINUS || !(¢.getOperand() instanceof NumberLiteral) ? null : (NumberLiteral) ¢.getOperand();
+  }
+  
+  private static NumberLiteral getNegativeNumber(final Expression ¢){
+    return !(¢ instanceof PrefixExpression) ? null : getNegativeNumber((PrefixExpression) ¢);
+  }
+  
+  private static boolean isNumber(final Expression ¢){
+    return ¢ instanceof NumberLiteral || getNegativeNumber(¢) != null;
+  }
+  
   static boolean validTypes(final Expression ¢1, final Expression ¢2) {
-    return (¢2 instanceof MethodInvocation && ¢1 instanceof NumberLiteral) //
-        || (¢2 instanceof NumberLiteral && ¢1 instanceof MethodInvocation);
+    return (¢2 instanceof MethodInvocation && isNumber(¢1)) //
+        || (isNumber(¢2) && ¢1 instanceof MethodInvocation);
   }
 
   @SuppressWarnings("fallthrough") private static ASTNode replacement(final InfixExpression e, final Operator o, final MethodInvocation i,
-      final NumberLiteral l) {
-    /* final CompilationUnit u = compilationUnit(e); if (u == null) return
-     * null; */
+      final Expression n) {
+    if(!"size".equals((name(i).getIdentifier())))
+      return null;
+    int sign = -1;
+    NumberLiteral l = getNegativeNumber(n);
+    if (l == null){
+      /*should be unnecessary since validTypes uses isNumber
+      * so n is either a NumberLiteral or an PrefixExpression which is a negative number */ 
+      if (!(n instanceof NumberLiteral))
+        return null;
+      l = (NumberLiteral)n;
+      sign = 1;
+    }
     final Expression receiver = receiver(i);
-    /* final IMethodBinding b = BindingUtils.getVisibleMethod(receiver == null ?
-     * BindingUtils.container(e) : receiver.resolveTypeBinding(), "isEmpty",
-     * null, e, u); if (b == null) return null; final ITypeBinding t =
-     * b.getReturnType(); if (!"boolean".equals("" + t) &&
-     * !"java.lang.Boolean".equals(t.getBinaryName())) return null; final
-     * MethodInvocation $ = subject.operand(receiver).toMethod("isEmpty");
-     * return o.equals(InfixExpression.Operator.EQUALS) ? $ :
-     * subject.operand($).to(NOT); */ // The original case assumes there is
-                                      // Binding
+    /* In case binding is available, uses it to ensure that isEmpty() is accessible from current scope.
+     * Currently untested */
+    if (e.getAST().hasResolvedBindings()){
+      final CompilationUnit u = compilationUnit(e); 
+      if (u == null) 
+        return null;
+      final IMethodBinding b = BindingUtils.getVisibleMethod(receiver == null ? BindingUtils.container(e)
+          : receiver.resolveTypeBinding(), "isEmpty",null, e, u);
+      if (b == null)
+        return null;
+      final ITypeBinding t = b.getReturnType();
+      if (!"boolean".equals("" + t) && !"java.lang.Boolean".equals(t.getBinaryName())) 
+        return null;   
+    }
     final MethodInvocation $ = subject.operand(receiver).toMethod("isEmpty");
-    int number = Integer.parseInt(l.getToken());
+    int number = sign * Integer.parseInt(l.getToken());
     switch (o.toString()) {
       case "==":
         if (number == 0)
@@ -58,12 +85,14 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
       case ">=":
         if (number <= 0)
           return e.getAST().newBooleanLiteral(true);
+        return null;
       case "<=":
         if (number == 0)
           return $;
       case "<":
-        if (number >= 0)
+        if (number <= 0)
           return e.getAST().newBooleanLiteral(false);
+        return null;
       default:
         return null;
     }
@@ -80,26 +109,17 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
   }
 
   @Override ASTNode replacement(final InfixExpression e) {
-    /* if (!e.getAST().hasResolvedBindings()) return null; */ // Yossi Told To
-                                                              // Remove That For
-                                                              // Tests
-    final Operator o = e.getOperator();
-    final Expression right = right(e);
-    final Expression left = left(e);
-    return left instanceof MethodInvocation ? //
-        replacement(e, o, (MethodInvocation) left, (NumberLiteral) right) //
-        : replacement(e, conjugate(o), (MethodInvocation) right, (NumberLiteral) left)//
-    ;
-  }
-
-  @Override boolean scopeIncludes(final InfixExpression e) {
     final Operator o = e.getOperator();
     if (!Is.isComparison(o))
-      return false;
+      return null;
     final Expression right = right(e);
     assert right != null;
     final Expression left = left(e);
     assert left != null;
-    return validTypes(right,left) && "size".equals((name(left instanceof MethodInvocation?(MethodInvocation)left:(MethodInvocation)right)).getIdentifier());
+    return !validTypes(right,left) ? null 
+        : left instanceof MethodInvocation ? //
+        replacement(e, o, (MethodInvocation) left, right) //
+        : replacement(e, conjugate(o), (MethodInvocation) right, left)//
+    ;
   }
 }
