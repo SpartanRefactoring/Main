@@ -120,7 +120,7 @@ import il.org.spartan.refactoring.utils.*;
             "    a = 31 * a;\n" + //
             "    return a;\n" + //
             "", //
-        "return 3 * 31;");
+        "return 93;");
   }
 
   @Test public void issue43() {
@@ -138,11 +138,11 @@ import il.org.spartan.refactoring.utils.*;
   @Test(timeout = 2000) public void multipleIfDeclarationAssignment() {
     assertConvertsTo(//
         "int a, b;a = 3;b = 5;if (a == 4)  if (b == 3) b = 2;else b = a;else if (b == 3) b = 2;else b = a*a;", //
-        "int b = 3==4? 5==3 ? 2 :3:5!=3?3*3:2;");
+        "int b = 3==4? 5==3 ? 2 :3:5==3?2:9;");
   }
 
   @Test(timeout = 2000) public void multipleInline() {
-    assertConvertsTo("int b=5,a = 2,c=4; return 3 * a * b * c; ", "return 2*3*4*5;");
+    assertConvertsTo("int b=5,a = 2,c=4; return 3 * a * b * c; ", "return 120;");
   }
 
   @Test(timeout = 2000) public void shortestIfBranchFirst02() {
@@ -213,7 +213,7 @@ import il.org.spartan.refactoring.utils.*;
             + "      return b;\n" //
             + "    }\n" //
             + "    ;", //
-        "return 0>0?6:9*9;");
+        "return 0>0?6:81;");
   }
 
   @Test(timeout = 2000) public void shortestIfBranchFirst14() {
@@ -359,7 +359,7 @@ import il.org.spartan.refactoring.utils.*;
   @Test(timeout = 2000) public void ternarize40() {
     assertConvertsTo(//
         "int a, b, c;a = 3;b = 5;if (a == 4)     while (b == 3)     c = a;else    while (b == 3)     c = a*a;", //
-        "int c;if(3==4)while(5==3)c=3;else while(5==3)c=3*3;");
+        "int c;if(3==4)while(5==3)c=3;else while(5==3)c=9;");
   }
 
   @Test public void ternarize49a() {
