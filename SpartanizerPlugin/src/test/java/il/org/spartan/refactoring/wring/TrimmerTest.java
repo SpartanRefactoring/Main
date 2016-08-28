@@ -2061,10 +2061,6 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   
-  @Test @Ignore("Under Construction") public void issue74b() {
-    trimming("int[] a = new int[]{2,3,};").to("int[] a = new int[] {2,3};");
-  }
-  
   @Test @Ignore("Under Construction") public void issue74c() {
     trimming("a = new int[]{2,3,};").to("a = new int[] {2,3};");
   }
