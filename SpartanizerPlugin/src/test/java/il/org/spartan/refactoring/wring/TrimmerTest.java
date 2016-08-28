@@ -379,7 +379,7 @@ import il.org.spartan.refactoring.utils.*;
     trimming("int a = 2, b = 11; a = 3 * a * b; ")//
         .to("int a=2;a=3*a*11;")//
         .to("int a=3*2*11;")//
-        .to("int a=2*3* 11;");
+        .to("int a=66;");
     trimming("int a = 2, b=1; a += b; ").to("int a=2;a+=1;").to("int a=2+1;");
     trimming("int a = 2,b=1; if (b) a = 3; ").to("int a=2;if(1)a=3;").to("int a=1?3:2;");
     trimming("int a = 2, b = 1; return a + 3 * b; ").to("int b=1;return 2+3*b;");
@@ -1564,7 +1564,7 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test public void issue06I() {
     trimming("41 * - 19")//
-        .to("-41 * 19 ") //
+        .to("-779 ") //
     ;
   }
 
@@ -3369,7 +3369,7 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Test public void shortestOperand02() {
-    trimming("k = k + 4;if (2 * 6 + 4 == k) return true;").to(null);
+    trimming("k = k + 4;if (2 * 6 + 4 == k) return true;").to("k = k + 4;if (12 + 4 == k) return true;");
   }
 
   @Test public void shortestOperand05() {
@@ -3696,11 +3696,11 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Test public void sortTwoOperands0CheckThatWeSortByLength_a() {
-    trimming("1111*211").to("211*1111");
+    trimming("1111*211").to("234421");
   }
 
   @Test public void sortTwoOperands0CheckThatWeSortByLength_b() {
-    trimming("211*1111").to(null);
+    trimming("211*1111").to("234421");
   }
 
   @Test public void sortTwoOperands1() {
@@ -3905,8 +3905,8 @@ import il.org.spartan.refactoring.utils.*;
         .to("int a=3,b;b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}") //
         .to("int a=3,b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}") //
         .to("int b=5;if(3==4)if(b==3)b=2;else{b=3;b=3;}else if(b==3)b=2;else{b=3*3;b=3;}") //
-        .to("int b=5;if(3==4)if(b==3)b=2;else{b=b=3;}else if(b==3)b=2;else{b=3*3;b=3;}")//
-        .to("int b=5;if(3==4)b=b==3?2:(b=3);else if(b==3)b=2;else{b=3*3;b=3;}")//
+        .to("int b=5;if(3==4)if(b==3)b=2;else{b=b=3;}else if(b==3)b=2;else{b=9;b=3;}")//
+        .to("int b=5;if(3==4)b=b==3?2:(b=3);else if(b==3)b=2;else{b=9;b=3;}")//
         .to(null);
   }
 

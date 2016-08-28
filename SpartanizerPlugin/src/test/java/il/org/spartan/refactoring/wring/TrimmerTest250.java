@@ -314,11 +314,11 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue71l() {
-    trimming("1*1*-1*-1").to("1*1*1*1").to("1");
+    trimming("1*1*-1*-1").to("1");
   }
 
   @Test public void issue71m() {
-    trimming("1*1*-1*-1*-1*1*-1").to("1*1*1*1*1*1*1").to("1");
+    trimming("1*1*-1*-1*-1*1*-1").to("1");
   }
 
   @Test public void issue71n() {
