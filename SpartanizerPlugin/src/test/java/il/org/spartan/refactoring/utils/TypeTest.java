@@ -79,6 +79,33 @@ public class TypeTest {
       azzert.that(LONG.underPlus(NUMERIC), is(NUMERIC));
     }
     
+    @Test public void test21(){
+      azzert.that(INT.underPlus(INTEGRAL), is(INTEGRAL));
+    }
+    
+    @Test public void test22(){
+      azzert.that(INT.underIntegersOnlyOperator(INT), is(INT));
+    }
+    
+    @Test public void test23(){
+      azzert.that(INT.underIntegersOnlyOperator(LONG), is(LONG));
+    }
+    
+    @Test public void test24(){
+      azzert.that(INTEGRAL.underIntegersOnlyOperator(LONG), is(LONG));
+    }
+    
+    @Test public void test25(){
+      azzert.that(NUMERIC.underIntegersOnlyOperator(NOTHING), is(INTEGRAL));
+    }
+    
+    @Test public void test26(){
+      azzert.that(LONG.underIntegersOnlyOperator(INTEGRAL), is(LONG));
+    }
+    
+    @Test public void test27(){
+      azzert.that(STRING.underIntegersOnlyOperator(INTEGRAL), is(INTEGRAL));
+    }
  
   }
 }

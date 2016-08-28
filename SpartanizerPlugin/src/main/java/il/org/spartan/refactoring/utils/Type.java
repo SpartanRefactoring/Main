@@ -78,8 +78,9 @@ enum Type {
   
   //TODO: should be private once kind is finished
   Type underIntegersOnlyOperator(Type k) {
-    final Type ¢ = k.asIntegral();
-    return !in(¢, this, INTEGRAL) ? max(¢) : ¢ != Type.ALPHANUMERIC ? ¢ : INTEGRAL;
+    final Type ¢1 = k.asIntegral();
+    final Type ¢2 = asIntegral();
+    return (¢1 != INTEGRAL) || (¢2 != INTEGRAL) ? max(¢1,¢2) : INTEGRAL;
   }
 
   /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE},
@@ -188,7 +189,7 @@ enum Type {
     return isAlphaNumeric() ? this : ALPHANUMERIC;
   }
 
-  private Type max(Type ¢) {
-    return ¢.ordinal() > ordinal() ? ¢ : this;
+  private static Type max(Type ¢1, Type ¢2) {
+    return ¢1.ordinal() > ¢2.ordinal() ? ¢1 : ¢2;
   }
 }
