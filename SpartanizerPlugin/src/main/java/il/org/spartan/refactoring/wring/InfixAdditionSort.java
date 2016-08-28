@@ -21,9 +21,7 @@ public final class InfixAdditionSort extends Wring.InfixSorting implements Kind.
 
   @Override Expression replacement(final InfixExpression e) {
     final List<Expression> operands = extract.allOperands(e);
-    final boolean notString = Is.notString(e);
-    final boolean canSort = sort(operands);
-    return !notString || !canSort ? null : subject.operands(operands).to(e.getOperator());
+    return !Is.notString(e) || !sort(operands) ? null : subject.operands(operands).to(e.getOperator());
   }
 
   @Override boolean scopeIncludes(final InfixExpression e) {

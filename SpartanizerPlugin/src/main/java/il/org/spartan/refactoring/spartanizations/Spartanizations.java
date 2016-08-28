@@ -17,7 +17,7 @@ public class Spartanizations {
   };
   @SuppressWarnings("synthetic-access") //
   private static final Map<String, Spartanization> map = new HashMap<String, Spartanization>() {
-    private static final long serialVersionUID = -8921699276699040030L;
+    static final long serialVersionUID = -8921699276699040030L;
     {
       for (final Spartanization s : all)
         put(s.getClass().getSimpleName(), s);
