@@ -1,10 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
-
-
 /**
  * Remove unnecessary ',' from array initialization list
  * <pre>
