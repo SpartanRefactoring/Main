@@ -113,7 +113,7 @@ import il.org.spartan.refactoring.utils.subject.*;
     azzert.that(refit.toString(), is("3 * 4 + 5"));
   }
 
-  @Test public void refitWithSort() {
+  @Test @Ignore public void refitWithSort() {
     final InfixExpression e = i("1 + 2 * 3");
     final List<Expression> operands = extract.operands(flatten(e));
     azzert.that(operands.size(), is(2));

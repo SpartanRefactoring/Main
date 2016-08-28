@@ -39,10 +39,16 @@ public class EvaluateMultiplicationInt extends Wring.ReplaceCurrentNode<InfixExp
       return  Integer.parseInt(((NumberLiteral) e).getToken());
     return -1* Integer.parseInt(((NumberLiteral) ((PrefixExpression)e).getOperand()).getToken());
   }
+  private static boolean isInt(Expression e){
+    if(!(e instanceof NumberLiteral))
+      return false;
+    return ((NumberLiteral) e).getToken().matches("[0-9]+");
+  }
   private static ASTNode replacement(final List<Expression> es, InfixExpression e) {
     int mul = 1;
     for (final Expression ¢ : es){
-      if (!(¢ instanceof NumberLiteral || (¢ instanceof PrefixExpression &&
+      if (!((¢ instanceof NumberLiteral &&
+          isInt(¢)) || (¢ instanceof PrefixExpression &&
           ((PrefixExpression)¢).getOperator()==PrefixExpression.Operator.MINUS &&
           ((PrefixExpression)¢).getOperand() instanceof NumberLiteral)))
         return null;

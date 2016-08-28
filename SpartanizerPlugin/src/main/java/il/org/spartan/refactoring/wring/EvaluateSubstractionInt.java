@@ -37,6 +37,8 @@ public class EvaluateSubstractionInt extends Wring.ReplaceCurrentNode<InfixExpre
   private static ASTNode replacement(final List<Expression> es, InfixExpression e) {
     if(es.isEmpty())
       return null;
+    if (!(es.get(0) instanceof NumberLiteral))
+      return null;
     int sub = Integer.parseInt(((NumberLiteral) (es.get(0))).getToken());
     int index=0;
     for (final Expression ¢ : es){
