@@ -17,7 +17,7 @@ public interface Environment {
   /** TODO: Document */
   static final Set<String> emptySet = Collections.unmodifiableSet(new HashSet<>());
 
-  /** TODO: Document */
+  /** Spawns a new Nested Env. Should be used when a block is opened. */
   public static Environment genesis() {
     return EMPTY.spawn();
   }
@@ -34,12 +34,12 @@ public interface Environment {
     return size() + (nest() == null ? 0 : nest().fullSize());
   }
 
-  /** TODO: Document */
+  /** Return true iff Env doesn't uses the name. */
   default boolean doesntHave(final String name) {
     return !has(name);
   }
 
-  /** TODO: Document */
+  /** Return true iff Env is empty. Are there some names used already? */
   default boolean empty() {
     return true;
   }
@@ -51,28 +51,28 @@ public interface Environment {
     return $;
   }
 
-  /** May return null! Document */
+  /** May return null, iff the name is not in use in the Env. */
   default Information get(final String name) {
     return null;
   }
 
-  /** TODO: Document */
+  /** Answer the question whether the name is in use in the Env */
   default boolean has(final String name) {
     return false;
   }
 
-  /** May return null! Document when and document it from the client side */
+  /** Returns null iff the name is not hiding anything from outer scopes. */
   default Information hiding(final String name) {
     return nest().get(name);
   }
 
-  /** upper level only. If you want the parent, go to the parent TODO:
-   * Document */
+  /** upper level only. If you want the parent, go to the parent.
+   * the names used in the top scope. */
   default Set<String> names() {
     return emptySet;
   }
 
-  /** TODO: Document */
+  /** Get full path of the current element. */
   default String fullName() {
     String $ = (nest() == null ? null : nest().fullName());
     return ($ == null ? "" : $ + "." ) + name();
@@ -82,7 +82,7 @@ public interface Environment {
     return "";
   }
 
-  /** TODO: Document */
+  /** Get all the full names of the Env. */
   default Set<String> fullNames() {
     final Set<String> $ = new HashSet<>(names());
     if (nest() != null)
@@ -90,7 +90,8 @@ public interface Environment {
     return $;
   }
 
-  /** May return null! Document why */
+  /** May return null! the most outer scope (block) will have null.
+   * This method is similar to the 'next()' method in a linked list. */
   default Environment nest() {
     return null;
   }
@@ -102,7 +103,8 @@ public interface Environment {
   default Information put(final String name, final Information i) {
     throw new IllegalArgumentException(name + "/" + i);
   }
-
+  /* Used when new block is opened.
+   */
   default Environment spawn() {
     return new Nested(this);
   }
@@ -110,6 +112,9 @@ public interface Environment {
   /** TODO: document propertly, but essentially is a dictionary with a parent.
    * Insertions go the current node, searches start at the current note and
    * deleegate to the parent unless it is null. */
+  
+  /* Nested environment which has it's own Map <name, info> of names declared
+   * in the current scope (flat), and a reference to the parent scope 'nest'. */
   final class Nested implements Environment {
     public final Map<String, Information> flat = new LinkedHashMap<>();
     public final Environment nest;
@@ -117,32 +122,33 @@ public interface Environment {
     Nested(final Environment parent) {
       nest = parent;
     }
-
+    /* Returns true iff there wasn't any name in use yet (all the Env in empty). */
     @Override public boolean empty() {
       return flat.isEmpty() || nest.empty();
     }
-
+    /* Returns a set of map entries used in the current scope. */
+    @Override
     public Set<Map.Entry<String, Information>> entries() {
       return flat.entrySet();
     }
-
+    /* Get the information about the name in current Env. */
     @Override public Information get(final String name) {
       final Information $ = flat.get(name);
       return $ != null ? $ : nest.get(name);
     }
-
+    /* Check whether the Env is already using the name. */
     @Override public boolean has(final String name) {
       return flat.containsKey(name) || nest.has(name);
     }
-
+    /* Get the names used in current scope. */
     @Override public Set<String> names() {
       return flat.keySet();
     }
-
+    /* One step up in the Env tree. */
     @Override public Environment nest() {
       return nest;
     }
-
+    /* Add name to the current scope in the Env. */
     @Override public Information put(final String name, final Information value) {
       flat.put(name, value);
       return hiding(name);
