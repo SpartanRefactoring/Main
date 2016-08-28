@@ -1,15 +1,14 @@
 package il.org.spartan.refactoring.utils;
 
+import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static il.org.spartan.refactoring.utils.expose.*;
-import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.Type;
 
 import il.org.spartan.*;
 
@@ -493,6 +492,8 @@ public enum extract {
    * @return single {@link ThrowStatement} embedded in the parameter, and return
    *         it; <code><b>null</b></code> if not such statements exists. */
   public static ThrowStatement throwStatement(final ASTNode n) {
+
+    
     return asThrowStatement(extract.singleStatement(n));
   }
 
