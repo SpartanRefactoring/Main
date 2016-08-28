@@ -27,7 +27,7 @@ import org.eclipse.jdt.core.dom.*;
  *
  * @author Yossi Gil
  * @since 2016-08-XX */
-enum Type {
+enum Kind {
   // Those anonymous characters that known little or nothing about themselves
   NOTHING("none", "when nothing can be said, e.g., f(f(),f(f(f()),f()))"), //
   NONNULL("!null", "e.g., new Object() and that's about it"), //
@@ -49,7 +49,7 @@ enum Type {
   final String description;
   final String name;
 
-  Type(final String name, final String description) {
+  Kind(final String name, final String description) {
     this.name = name;
     this.description = description;
   }
@@ -58,7 +58,7 @@ enum Type {
     return this + "=" + name + " (" + description + ")";
   }
 
-  public final Type under(final PrefixExpression.Operator o) {
+  public final Kind under(final PrefixExpression.Operator o) {
     assert o != null;
     assert in(o, BOOLEAN, MINUS1, PLUS1, COMPLEMENT, DECREMENT_POST, DECREMENT_PRE);
     return o == NOT ? BOOLEAN //
@@ -68,27 +68,27 @@ enum Type {
 
   /** @return one of {@link #INT}, {@link #LONG}, or {@link #INTEGRAL}, in case
    *         it cannot decide */
-  public Type underIntegersOnlyOperator() {
+  public Kind underIntegersOnlyOperator() {
     return in(this, LONG, INT) ? this : INTEGRAL;
   }
 
   /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE},
    *         {@link #INTEGRAL} or {@link #NUMERIC}, in case no further
    *         information is available */
-  public Type asNumeric() {
+  public Kind asNumeric() {
     return in(this, DOUBLE, LONG, INT, INTEGRAL) ? this : NUMERIC;
   }
 
   /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE},
    *         {@link #STRING} or {@link #ALPHANUMERIC}, in case it cannot
    *         decide */
-  public Type underPlus(final Type k) {
+  public Kind underPlus(final Kind k) {
     return k == STRING && this == STRING ? STRING : ALPHANUMERIC;
   }
 
   /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE}, or
    *         {@link #NUMERIC}, in case it cannot decide */
-  private Type asNumeric(final Type k) {
+  private Kind asNumeric(final Kind k) {
     if (k == this)
       return k;
     if (!isNumeric())
@@ -97,7 +97,7 @@ enum Type {
     assert this != ALPHANUMERIC : "Don't confuse " + NUMERIC + " with " + ALPHANUMERIC;
     assert in(this, INT, DOUBLE, LONG, INTEGRAL, NUMERIC) : this + ": does not fit our list of numeric types";
     assert isNumeric() : this + ": is for some reason not numeric ";
-    final Type $ = k.asNumeric();
+    final Kind $ = k.asNumeric();
     assert $ != null;
     assert $.isNumeric() : this + ": is for some reason not numeric ";
     assert in($, INT, DOUBLE, LONG, INTEGRAL, NUMERIC) : $ + ": does not fit our list of numeric types";
@@ -128,16 +128,16 @@ enum Type {
     return in(this, INT, LONG, DOUBLE, INTEGRAL, NUMERIC);
   }
 
-  private Type underIntegersOnlyOperator(final Type k) {
-    final Type ¢ = k.underIntegersOnlyOperator();
-    return !in(¢, this, INTEGRAL) ? max(¢) : ¢ != Type.ALPHANUMERIC ? ¢ : INTEGRAL;
+  private Kind underIntegersOnlyOperator(final Kind k) {
+    final Kind ¢ = k.underIntegersOnlyOperator();
+    return !in(¢, this, INTEGRAL) ? max(¢) : ¢ != Kind.ALPHANUMERIC ? ¢ : INTEGRAL;
   }
 
-  private Type max(final Type ¢) {
+  private Kind max(final Kind ¢) {
     return ¢.ordinal() > ordinal() ? ¢ : this;
   }
 
-  public final Type underBinaryOperator(final InfixExpression.Operator o, final Type k) {
+  public final Kind underBinaryOperator(final InfixExpression.Operator o, final Kind k) {
     if (o == PLUS2)
       return underPlus(k);
     if (in(this, //

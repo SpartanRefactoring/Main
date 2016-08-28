@@ -2,24 +2,23 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.Type.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
-
+import static il.org.spartan.refactoring.utils.Kind.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "static-method" }) //
-public class TypeTest {
+public class KindTest {
   @Ignore public static class Pending {
     @Test public void test00() {
       fail("Not yet implemented");
     }
 
     @Test public void test02() {
-      azzert.that(kind(Into.e("2 + (2.0)*1L")), is(Type.DOUBLE));
+      azzert.that(Kind.kind(Into.e("2 + (2.0)*1L")), is(Kind.DOUBLE));
     }
 
     @Test public void test03() {
@@ -48,7 +47,7 @@ public class TypeTest {
       // for (Type t : Type.values())
       // System.err.println("Erase me after you figured this out\n\t" +
       // t.fullName());
-      azzert.that(Type.BOOLEAN, is(Type.BOOLEAN));
+      azzert.that(Kind.BOOLEAN, is(Kind.BOOLEAN));
     }
 
     @Test public void test04() {
