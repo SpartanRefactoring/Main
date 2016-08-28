@@ -103,7 +103,7 @@ public interface Environment {
   default Information put(final String name, final Information i) {
     throw new IllegalArgumentException(name + "/" + i);
   }
-  /* Used when new block is opened.
+  /* Used when new block (scope) is opened.
    */
   default Environment spawn() {
     return new Nested(this);
@@ -113,8 +113,8 @@ public interface Environment {
    * Insertions go the current node, searches start at the current note and
    * deleegate to the parent unless it is null. */
   
-  /* Nested environment which has it's own Map <name, info> of names declared
-   * in the current scope (flat), and a reference to the parent scope 'nest'. */
+  /* Nested environment which has it's own Map of names declared in the current
+   * scope 'flat', and a reference to the parent scope 'nest'. */
   final class Nested implements Environment {
     public final Map<String, Information> flat = new LinkedHashMap<>();
     public final Environment nest;
