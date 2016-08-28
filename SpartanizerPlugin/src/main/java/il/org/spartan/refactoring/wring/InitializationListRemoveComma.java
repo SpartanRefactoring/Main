@@ -1,13 +1,8 @@
 package il.org.spartan.refactoring.wring;
 
 /** Remove unnecessary ',' from array initialization list
- * 
- * <pre>
  * <code>"int[] a = new int[] {..,..,..,};"</code>
- * </pre>
- * 
  * to :
- * 
  * <pre>
  * <code>"int[] a = new int[] {..,..,..};"</code>
  * </pre>

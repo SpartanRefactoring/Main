@@ -1,7 +1,5 @@
 import static java.lang.System.*;
 
-import static il.org.spartan.idiomatic.*;
-
 import java.util.*;
 
 import org.junit.*;
@@ -17,20 +15,20 @@ public class EnvironmentCodeExamples {
     out.print("a");
     @InOrderFlatENV({ "s", "a" })
     @NestedENV({ "EX1.a#int", "EX1.s#String" }) @OutOfOrderFlatENV({ "a", "s" }) final int b = 0;
-    @Begin class A {
+    @Begin class A {//
     }
     ++a;
-    @End("a") class B {
+    @End("a") class B {//
     }
     @InOrderFlatENV({ "s", "a","b" })
     @NestedENV({ "EX1.a#int", "EX1.s#String", "EX1.b#int" }) @OutOfOrderFlatENV({ "a", "s", "b" }) final int c = 0;
   }
 
   {
-    @Begin class A {
+    @Begin class A {//
     }
     EX2.x = 0;
-    @End("x") class B {
+    @End("x") class B {//
     }
   }
 
@@ -43,18 +41,18 @@ public class EnvironmentCodeExamples {
     int y;
 
     EX2() {
-      @Begin class A {
+      @Begin class A {//
       }
       x = 1;
-      @End("x") class B {
+      @End("x") class B {//
       }
     }
 
     {
-      @Begin class A {
+      @Begin class A {//
       }
       C1.x = 2;
-      @End("x") class B {
+      @End("x") class B {//
       }
     }
 
@@ -69,18 +67,18 @@ public class EnvironmentCodeExamples {
       public static int x;
 
       public static void change_x() {
-        @Begin class A {
+        @Begin class A {//
         }
         x = 3; // interesting... what does it do? lol
-        @End("x") class B {
+        @End("x") class B {//
         }
       }
 
       public static void change_y() {
-        @Begin class A {
+        @Begin class A {//
         }
         y = 3;
-        @End("x") class B {
+        @End("x") class B {//
         }
       }
     }
@@ -92,16 +90,16 @@ public class EnvironmentCodeExamples {
     int x, y;
 
     EX3() {
-      @Begin class A {
+      @Begin class A {//
       }
       x = y = 0;
-      @End({ "x", "y" }) class B {
+      @End({ "x", "y" }) class B {//
       }
-      @Begin class C {
+      @Begin class C {//
       }
       y = 1;
       x = 2;
-      @End({ "x", "y" }) class D {
+      @End({ "x", "y" }) class D {//
       }
     }
 
@@ -120,18 +118,18 @@ public class EnvironmentCodeExamples {
         @InOrderFlatENV({"x","xsy"})
         @OutOfOrderFlatENV({ "xsy", "x" })
         public int y;
-        @Begin class C {
+        @Begin class C {//
         }
 
         y_hiding() {
-          @Begin class E {
+          @Begin class E {//
           }
           y = 2;
-          @End({ "y" }) class F {
+          @End({ "y" }) class F {//
           }
         }
 
-        @End({ "y" }) class D {
+        @End({ "y" }) class D {//
         }
       }
     }
@@ -142,7 +140,7 @@ public class EnvironmentCodeExamples {
     int q; // no xsy
 
     static void func() {
-      @Begin class Q {
+      @Begin class Q {//
       }
       final EX3 top = new EX3();
       final x_hiding X = new x_hiding();
@@ -153,48 +151,47 @@ public class EnvironmentCodeExamples {
       x_hiding.x = 4;
       X.xsy.y = 5;
       Y.y = 6;
-      @End({ "top", "X", "x", "xsy", "Y", "y" }) class QQ {
+      @End({ "top", "X", "x", "xsy", "Y", "y" }) class QQ {//
       }
     }
   }
-
   public static class EX4 { // Inheritance
     @OutOfOrderFlatENV({}) int x;
 
     class Parent {
-      @Begin class Q {
+      @Begin class Q {//
       }
 
       Parent() {
         x = 0;
       }
 
-      @End({ "x" }) class QQ {
+      @End({ "x" }) class QQ {//
       }
 
       void set_x() {
-        @Begin class Q {
+        @Begin class Q {//
         }
         x = 1;
-        @End({ "x" }) class QQ {
+        @End({ "x" }) class QQ {//
         }
       }
     }
 
     class Child1 extends Parent {
       Child1() {
-        @Begin class Q {
+        @Begin class Q {//
         }
         x = 2;
-        @End({ "x" }) class QQ {
+        @End({ "x" }) class QQ {//
         }
       }
 
       @Override void set_x() {
-        @Begin class Q {
+        @Begin class Q {//
         }
         x = 3;
-        @End({ "x" }) class QQ {
+        @End({ "x" }) class QQ {//
         }
       }
     }
@@ -207,16 +204,16 @@ public class EnvironmentCodeExamples {
       }
 
       @Override void set_x() {
-        @Begin class Q {
+        @Begin class Q {//
         }
         x = 5;
-        @End({ "x" }) class QQ {
+        @End({ "x" }) class QQ {//
         }
       }
     }
 
     void func() {
-      @Begin class Q {
+      @Begin class Q {//
       }
       @OutOfOrderFlatENV({ "x" })
       final Parent p = new Parent();
@@ -229,7 +226,7 @@ public class EnvironmentCodeExamples {
       p.set_x();
       c1.set_x();
       c2.set_x();
-      @End({ "x" }) class QQ {
+      @End({ "x" }) class QQ {//
       }
     }
   }
@@ -348,7 +345,7 @@ public class EnvironmentCodeExamples {
   }
 
   public static class EX7 { // func_param_name_to_ENV
-    Integer x = 1;
+    Integer x = new Integer(1);
 
     class Complex {
       int r;
@@ -496,7 +493,7 @@ public class EnvironmentCodeExamples {
 
       Oompa_Loompa Oompa_Loompa(final Oompa_Loompa l) {
         l: for (;;)
-          for (;;)
+          for (;;) {
             if (new Oompa_Loompa(l) { /* D */
               @Override Oompa_Loompa Oompa_Loompa(final Oompa_Loompa Oompa_Loompa) {
                 return Oompa_Loompa != null ? /* C */
@@ -505,8 +502,8 @@ public class EnvironmentCodeExamples {
               }
             }.Oompa_Loompa(l) != null)
               break l;
-            else
-              continue l;
+            continue l;
+          }
         return l;
       }
     }

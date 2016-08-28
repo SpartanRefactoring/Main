@@ -18,7 +18,7 @@ import il.org.spartan.utils.*;
  * plug-in from the command line.
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015/09/19 */
-@SuppressWarnings("static-method") public class Application implements IApplication {
+@SuppressWarnings({"static-method","unused"}) public class Application implements IApplication {
   /** Data structure designed to hold and compute information about a single
    * file, in order to produce statistics when completed execution */
   private class FileStats {

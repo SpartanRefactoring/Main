@@ -463,7 +463,7 @@ public enum Funcs {
     return ¢.getParent();
   }
 
-  public static ASTParser parser(final int kind) {
+  @SuppressWarnings("unchecked") public static ASTParser parser(final int kind) {
     final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     $.setKind(kind);
     $.setResolveBindings(false);
