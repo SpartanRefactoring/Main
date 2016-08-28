@@ -4,7 +4,7 @@ import static il.org.spartan.idiomatic.*;
 
 import java.util.*;
 
-public class EnvironmentTests {
+public class EnvironmentCodeExamples {
   void EX1() {
     @NestedENV({}) @OutOfOrderFlatENV({}) final String s = "a";
     s.equals("a");
