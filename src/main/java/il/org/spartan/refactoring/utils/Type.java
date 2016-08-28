@@ -75,8 +75,9 @@ enum Type {
         : o == COMPLEMENT ? asIntegral() //
             : asNumeric();
   }
-
-  private Type underIntegersOnlyOperator(Type k) {
+  
+  //TODO: should be private once kind is finished
+  Type underIntegersOnlyOperator(Type k) {
     final Type ¢ = k.asIntegral();
     return !in(¢, this, INTEGRAL) ? max(¢) : ¢ != Type.ALPHANUMERIC ? ¢ : INTEGRAL;
   }
@@ -136,22 +137,23 @@ enum Type {
     assert in($, INT, DOUBLE, LONG, INTEGRAL, NUMERIC) : $ + ": does not fit our list of numeric types";
     if ($ == this)
       return $;
+    // Double contaminates Numeric
     if (in(DOUBLE, $, this))
       return DOUBLE;
     assert in($, INT, LONG, INTEGRAL, NUMERIC) : $ + ": does not fit our narrowed list";
     assert in(this, INT, LONG, INTEGRAL, NUMERIC) : this + ": does not fit our narrowed list";
+    // Numeric contaminates INTEGRAL
     if (in(NUMERIC, $, this))
       return NUMERIC;
     assert in($, INT, LONG, INTEGRAL) : $ + ": does not fit our narrowed list";
     assert in(this, INT, LONG, INTEGRAL) : this + ": does not fit our narrowed list";
-    // Numeric contaminates INTEGRAL
-    if (in(INTEGRAL, $, this))
-      return INTEGRAL;
-    assert in($, INT, LONG) : $ + ": does not fit our narrowed list";
-    assert in(this, INT, LONG) : this + ": does not fit our narrowed list";
     // LONG contaminates INTEGRAL
     if (in(LONG, $, this))
       return LONG;
+    assert in($, INT, INTEGRAL) : $ + ": does not fit our narrowed list";
+    assert in(this, INT, INTEGRAL) : this + ": does not fit our narrowed list";
+    if (in(INTEGRAL, $, this))
+      return INTEGRAL;
     assert in($, INT) : $ + ": does not fit our narrowed list";
     assert in(this, INT) : this + ": does not fit our narrowed list";
     return INT;
