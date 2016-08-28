@@ -1,5 +1,7 @@
 import static java.lang.System.*;
 
+import static il.org.spartan.idiomatic.*;
+
 import java.util.*;
 
 public class EnvironmentTests {
@@ -413,7 +415,67 @@ public class EnvironmentTests {
       }
     }
   }
+  
+  public static class EX10 {
+    @InOrderFlatENV({}) class forTest{
+      int x;
+      String y;
+      @NestedENV({"EX10.forTest.x#int", "EX10.forTest.y#String"}) void f(){
+        for(int i = 0; i < 10; ++i){
+          @Begin int a;
+          x = i;
+          @End({"i"}) int b;
+        }
+      }
+      
+      @NestedENV({"EX10.forTest.x#int", "EX10.forTest.y#String"}) void g(){
+        final List<String> tmp = new ArrayList<>();
+        tmp.add("a");
+        for(final String s : tmp){
+          @Begin int a;
+          y = s;
+          @End({"s"}) int b;
+        }
+      }
+    }
+  }
 
+  static public class EX11 {
+    //Variables defined in try blocks behave like variables declared in any other
+    //block - their scope spans only as far as the block does.
+    public class tryCatchTest{
+      boolean dangerousFunc(boolean b){
+        if(b)
+          throw new UnsupportedOperationException();
+        return false;
+      }
+      void foo(){
+        try{
+          @OutOfOrderFlatENV({}) @Begin int a;
+          String s = "onoes";
+          dangerousFunc(s.equals("yay"));
+          @OutOfOrderFlatENV({"s"}) @End({"s"}) int b;
+        }
+        catch(UnsupportedOperationException e){
+          @OutOfOrderFlatENV({"e"}) int a;
+        }
+      }
+      
+      void f(){
+        String s;
+        try{
+          @OutOfOrderFlatENV({}) int a;
+          s = "onoes";
+          dangerousFunc(s.equals("yay"));
+          @OutOfOrderFlatENV({"s"}) @End({"s"}) int b;
+        }
+        catch(UnsupportedOperationException e){
+          @OutOfOrderFlatENV({"s","e"}) int a;
+        }
+      }
+    }
+  }
+  
   // for the end
   public static class EX99 { // for_testing_the_use_of_names
     class Oompa_Loompa {
