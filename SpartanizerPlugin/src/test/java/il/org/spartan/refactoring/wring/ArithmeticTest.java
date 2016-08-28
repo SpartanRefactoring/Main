@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
+
 import org.junit.*;
 import org.junit.runners.*;
 

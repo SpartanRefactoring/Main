@@ -8,7 +8,7 @@ public class LiteralParser {
   /** An <code><b>enum</b></code> to give symbolic names to the literal types.
    * @author Yossi Gil
    * @since 2015-08-30
-   * @see LiteralParser#type */
+   * @see LiteralParser#persuation */
   public enum Types {
     /** <code>int</code> */
     INTEGER, //
