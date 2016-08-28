@@ -11,7 +11,7 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 
 
-public class EnvTest {
+public class EnvironmentTest {
 //  =================== default ===================
   Environment e_bad = EMPTY; //bad exercise.
   Environment e0 = Environment.genesis();
