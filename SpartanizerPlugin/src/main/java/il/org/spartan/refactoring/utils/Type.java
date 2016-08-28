@@ -30,6 +30,7 @@ import org.omg.CORBA.*;
  * </pre>
  * 
  * @author Yossi Gil
+ * @author Niv Shalmon
  * @since 2016-08-XX */
 enum Type {
   // Those anonymous characters that known little or nothing about themselves
@@ -78,8 +79,7 @@ enum Type {
   
   //TODO: should be private once kind is finished
   Type underIntegersOnlyOperator(Type k) {
-    final Type ¢ = k.asIntegral();
-    return !in(¢, this, INTEGRAL) ? max(¢) : ¢ != Type.ALPHANUMERIC ? ¢ : INTEGRAL;
+    return max(k.asIntegral(), asIntegral());
   }
 
   /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE},
@@ -188,7 +188,7 @@ enum Type {
     return isAlphaNumeric() ? this : ALPHANUMERIC;
   }
 
-  private Type max(Type ¢) {
-    return ¢.ordinal() > ordinal() ? ¢ : this;
+  private static Type max(Type ¢1, Type ¢2) {
+    return ¢1.ordinal() > ¢2.ordinal() ? ¢1 : ¢2;
   }
 }
