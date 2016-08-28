@@ -117,5 +117,26 @@ public class ArithmeticTest {
     @Test public void issue92_20() {
       trimming("5*5+6*7-9").to("25+42-9");
     }
+    @Test public void issue92_21() {
+      trimming("12/3").to("4");
+    }
+    @Test public void issue92_22() {
+      trimming("12/5").to("2");
+    }
+    @Test public void issue92_23() {
+      trimming("-12/5").to("-2");
+    }
+    @Test public void issue92_24() {
+      trimming("12/-5").to("-2");
+    }
+    @Test public void issue92_25() {
+      trimming("12/-5/2").to("-1");
+    }
+    @Test public void issue92_26() {
+      trimming("1.0+2.0").to("3.0");
+    }
+    @Test public void issue92_27() {
+      trimming("1.9+2.2").to("4.1");
+    }
   }
 }
