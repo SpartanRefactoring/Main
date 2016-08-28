@@ -61,37 +61,66 @@ enum Type {
   public final String fullName() {
     return this + "=" + name + " (" + description + ")";
   }
+  
+  public static boolean kind(Expression e) {
+    throw new RuntimeException("Team3 needs to implement this: " + e);
+  }
 
-  public final Type under(final PrefixExpression.Operator o) {
+  /** @return one of {@link #BOOLEAN}, {@link #INT}, {@link #LONG}, {@link #DOUBLE},
+   *         {@link #INTEGRAL} or {@link #NUMERIC}, in case it cannot decide */
+  //TODO: should be private once kind is finished
+  final Type under(final PrefixExpression.Operator o) {
     assert o != null;
-    assert in(o, BOOLEAN, MINUS1, PLUS1, COMPLEMENT, DECREMENT_POST, DECREMENT_PRE);
     return o == NOT ? BOOLEAN //
-        : in(o, MINUS1, PLUS1) ? asNumeric() //
-            : underIntegersOnlyOperator();
+        : o == COMPLEMENT ? asIntegral() //
+            : asNumeric();
   }
 
-  /** @return one of {@link #INT}, {@link #LONG}, or {@link #INTEGRAL}, in case
-   *         it cannot decide */
-  public Type underIntegersOnlyOperator() {
-    return in(this, LONG, INT) ? this : INTEGRAL;
-  }
-
-  /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE},
-   *         {@link #INTEGRAL} or {@link #NUMERIC}, in case no further
-   *         information is available */
-  public Type asNumeric() {
-    return in(this, DOUBLE, LONG, INT, INTEGRAL) ? this : NUMERIC;
+  private Type underIntegersOnlyOperator(Type k) {
+    final Type ¢ = k.asIntegral();
+    return !in(¢, this, INTEGRAL) ? max(¢) : ¢ != Type.ALPHANUMERIC ? ¢ : INTEGRAL;
   }
 
   /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE},
    *         {@link #STRING} or {@link #ALPHANUMERIC}, in case it cannot
    *         decide */
-  public Type underPlus(Type k) {
-    return k == STRING && this == STRING ? STRING : ALPHANUMERIC;
+  //TODO: should be private once kind is finished
+  Type underPlus(Type k) {
+    //addition with NULL or String must be a String
+    if (in(STRING, this, k) || in(NULL, this , k))
+      return STRING;
+    //not String, null or numeric, so we can't determine anything
+    if (!isNumeric() && !k.isNumeric()){
+      return ALPHANUMERIC;
+    }
+    return asNumeric(k);
+  }
+
+  //TODO: should be private once kind is finished
+  final Type underBinaryOperator(InfixExpression.Operator o, Type k) {
+    if (o == PLUS2)
+      return underPlus(k);
+    if (in(this, //
+        LESS, //
+        GREATER, //
+        LESS_EQUALS, //
+        GREATER_EQUALS, //
+        EQUALS, //
+        NOT_EQUALS, //
+        CONDITIONAL_OR, //
+        CONDITIONAL_AND//
+    ))
+      return BOOLEAN;
+    if (in(o, REMAINDER, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED, XOR, OR, AND))
+      return underIntegersOnlyOperator(k);
+    if (!in(this, TIMES, DIVIDE, MINUS2))
+      throw new IllegalArgumentException("o=" + o + " k=" + k.fullName() + "this=" + this);
+    return asNumeric(k);
   }
 
   /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE}, or
    *         {@link #NUMERIC}, in case it cannot decide */
+  //TODO: decide if should be renamed to under function
   private Type asNumeric(Type k) {
     if (k == this)
       return k;
@@ -132,37 +161,32 @@ enum Type {
     return in(this, INT, LONG, DOUBLE, INTEGRAL, NUMERIC);
   }
 
-  private Type underIntegersOnlyOperator(Type k) {
-    final Type ¢ = k.underIntegersOnlyOperator();
-    return !in(¢, this, INTEGRAL) ? max(¢) : ¢ != Type.ALPHANUMERIC ? ¢ : INTEGRAL;
+  /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE},
+   *         {@link #INTEGRAL} or {@link #NUMERIC}, in case no further
+   *         information is available */
+  private Type asNumeric() {
+    return isNumeric() ? this : NUMERIC;
+  }
+
+  private boolean isIntegral(){
+    return in(this, LONG, INT , INTEGRAL);
+  }
+  
+  /** @return one of {@link #INT}, {@link #LONG}, or {@link #INTEGRAL}, in case
+   *         it cannot decide */
+  private Type asIntegral() {
+    return isIntegral() ? this : INTEGRAL;
+  }
+
+  private boolean isAlphaNumeric(){
+    return in(this, INT, LONG, INTEGRAL, DOUBLE, NUMERIC, STRING, ALPHANUMERIC);
+  }
+  
+  private Type asAlphaNumeric(){
+    return isAlphaNumeric() ? this : ALPHANUMERIC;
   }
 
   private Type max(Type ¢) {
     return ¢.ordinal() > ordinal() ? ¢ : this;
-  }
-
-  public final Type underBinaryOperator(InfixExpression.Operator o, Type k) {
-    if (o == PLUS2)
-      return underPlus(k);
-    if (in(this, //
-        LESS, //
-        GREATER, //
-        LESS_EQUALS, //
-        GREATER_EQUALS, //
-        EQUALS, //
-        NOT_EQUALS, //
-        CONDITIONAL_OR, //
-        CONDITIONAL_AND//
-    ))
-      return BOOLEAN;
-    if (in(o, REMAINDER, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED, XOR, OR, AND))
-      return underIntegersOnlyOperator(k);
-    if (!in(this, TIMES, DIVIDE, MINUS2))
-      throw new IllegalArgumentException("o=" + o + " k=" + k.fullName() + "this=" + this);
-    return asNumeric(k);
-  }
-
-  public static boolean kind(Expression e) {
-    throw new RuntimeException("Team3 needs to implement this: " + e);
   }
 }
