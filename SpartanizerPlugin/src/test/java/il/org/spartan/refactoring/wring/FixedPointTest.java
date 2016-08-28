@@ -236,7 +236,7 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test(timeout = 2000) public void shortestOperand04() {
     assertConvertsTo("return (1 + 2 < 3 & 7 + 4 > 2 + 1 || 6 - 7 < 2 + 1);", //
-        "return(1+2<3&4+7>1+2||6-7<1+2);");
+        "return(3<3&11>3||-1<3);");
   }
 
   @Test(timeout = 2000) public void shortestOperand07() {
@@ -259,7 +259,7 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Test(timeout = 2000) public void sortAddition5() {
-    assertSimplifiesTo("1 + 2  + 3 + a < 3 -4", "a + 1 + 2 + 3 < 3-4");
+    assertSimplifiesTo("1 + 2  + 3 + a < 3 -4", "a + 1 + 2 + 3 < -1");
   }
 
   @Test(timeout = 2000) public void ternarize01() {
