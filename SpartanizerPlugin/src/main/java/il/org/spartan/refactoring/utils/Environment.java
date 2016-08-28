@@ -41,7 +41,7 @@ import org.eclipse.jdt.core.dom.*;
     return !has(name);
   }
 
-  /** Return true iff Env is empty. Are there some names used already? */
+  /** Return true iff Env is empty. */
   default boolean empty() {
     return true;
   }
@@ -124,9 +124,9 @@ import org.eclipse.jdt.core.dom.*;
     Nested(final Environment parent) {
       nest = parent;
     }
-    /* Returns true iff there wasn't any name in use yet (all the Env in empty). */
+    /* Returns true iff Env is empty. */
     @Override public boolean empty() {
-      return flat.isEmpty() || nest.empty();
+      return flat.isEmpty() && nest.empty();
     }
     /* Returns a set of map entries used in the current scope. */
     @Override
@@ -153,6 +153,7 @@ import org.eclipse.jdt.core.dom.*;
     /* Add name to the current scope in the Env. */
     @Override public Information put(final String name, final Information value) {
       flat.put(name, value);
+      assert (!flat.isEmpty());
       return hiding(name);
     }
   }
