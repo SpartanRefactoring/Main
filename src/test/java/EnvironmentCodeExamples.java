@@ -4,6 +4,10 @@ import static il.org.spartan.idiomatic.*;
 
 import java.util.*;
 
+import org.junit.*;
+
+@Ignore("This should never be furn")
+@SuppressWarnings("all") //
 public class EnvironmentCodeExamples {
   void EX1() {
     @NestedENV({}) @OutOfOrderFlatENV({}) final String s = "a";
