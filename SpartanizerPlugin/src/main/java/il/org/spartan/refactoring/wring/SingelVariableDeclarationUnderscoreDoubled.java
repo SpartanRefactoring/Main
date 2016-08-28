@@ -46,8 +46,8 @@ import il.org.spartan.refactoring.wring.Wring.*;
       return false;
     }
 
-    @Override public boolean visit(final SimpleName sn) {
-      if (n.equals(sn.getIdentifier()))
+    @Override public boolean visit(final SimpleName n) {
+      if (n.equals(n.getIdentifier()))
         c = false;
       return c;
     }
@@ -79,7 +79,7 @@ import il.org.spartan.refactoring.wring.Wring.*;
     return false;
   }
 
-  private static final String unusedVariableName() {
+  private static String unusedVariableName() {
     return "__";
   }
 
