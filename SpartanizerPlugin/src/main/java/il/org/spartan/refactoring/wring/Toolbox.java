@@ -72,6 +72,7 @@ public class Toolbox {
             new InfixAdditionSubtractionExpand(), //
             new InfixDivisionMultiplicationNegatives(), //
             new EvaluateAdditionInt(), //
+            new EvaluateAdditionDouble(), //
             new EvaluateSubstractionInt(), //
             new InfixAdditionZero(), // must be before InfixAdditionSort
             new InfixAdditionSort(), //
