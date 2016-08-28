@@ -44,7 +44,7 @@ public class EvaluateAdditionInt extends Wring.ReplaceCurrentNode<InfixExpressio
   private static ASTNode replacement(final List<Expression> es, final InfixExpression e) {
     int sum = 0;
     for (final Expression ¢ : es) {
-      if (!(¢ instanceof NumberLiteral && isInt(¢)))
+      if (!(¢ instanceof NumberLiteral) || !isInt(¢))
         return null;
       sum = sum + Integer.parseInt(((NumberLiteral) ¢).getToken());
     }

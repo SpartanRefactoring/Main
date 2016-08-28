@@ -101,7 +101,7 @@ public class InfixAdditionSortTest {
     final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
     assert null != i;
     assert !(i == INPUT);
-    assert null != INPUT;
+    assert INPUT != null;
     assert i != null;
     assert i != INPUT;
     assert INPUT != null;
@@ -120,8 +120,6 @@ public class InfixAdditionSortTest {
 
   @Test public void test14() {
     final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
-    assert null != i;
-    assert !(i == INPUT);
     assert i != null;
     assert i != INPUT;
     azzert.that(i, iz("" + INPUT));
