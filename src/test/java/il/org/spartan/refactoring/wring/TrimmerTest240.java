@@ -628,7 +628,7 @@ public class TrimmerTest240 {
   @Test public void comparison09() {
     trimming("1+2<3&7+4>2+1").to("3<3&11>3");
   }
-  
+
   @Test public void comparison11() {
     trimming("12==this").to("this==12");
   }

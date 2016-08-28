@@ -7,7 +7,7 @@ import org.junit.*;
 import il.org.spartan.*;
  
 
-public class EnvTest {
+public class EnvironmentTest {
 //  =================== default ===================
   
   //Environment e0 = Environment.genesis();

@@ -1,7 +1,11 @@
 import static java.lang.System.*;
 
 import java.util.*;
-@SuppressWarnings({"static-method","hiding","synthetic-access","unused"}) 
+
+import org.junit.*;
+
+@Ignore("This should never be furn")
+@SuppressWarnings("all") //
 public class EnvironmentCodeExamples {
   void EX1() {
     @NestedENV({}) @OutOfOrderFlatENV({}) final String s = "a";

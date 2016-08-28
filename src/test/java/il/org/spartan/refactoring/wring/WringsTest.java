@@ -30,8 +30,9 @@ public class WringsTest {
     final Block b = m.getBody();
     final EnhancedForStatement s = (EnhancedForStatement) first(statements(b));
     final SingleVariableDeclaration p = s.getParameter();
-    assert p != null;
+    assert p!=null;
     final SimpleName a = p.getName();
+    assert a != null;
     azzert.that(a, iz("a"));
     azzert.that(Collect.usesOf(a).in(m).size(), is(2));
   }
@@ -89,7 +90,7 @@ public class WringsTest {
     final Block b = m.getBody();
     final EnhancedForStatement s = (EnhancedForStatement) first(statements(b));
     final SingleVariableDeclaration p = s.getParameter();
-    assert p != null;
+    assert  p!=null;
     final SimpleName n = p.getName();
     final ASTRewrite r = ASTRewrite.create(b.getAST());
     Wrings.rename(n, n.getAST().newSimpleName("$"), m, r, null);

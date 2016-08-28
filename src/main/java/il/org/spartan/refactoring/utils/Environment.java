@@ -21,6 +21,7 @@ import org.eclipse.jdt.core.dom.*;
   /**
    * Spawns the first Nested Env. Should be used when the first block is opened. 
    */
+
   static Environment genesis() {
     return EMPTY.spawn();
   }
@@ -112,7 +113,7 @@ import org.eclipse.jdt.core.dom.*;
     return new Nested(this);
   }
 
-  /** TODO: document propertly, but essentially is a dictionary with a parent.
+  /** TODO: document properly, but essentially is a dictionary with a parent.
    * Insertions go the current node, searches start at the current note and
    * deleegate to the parent unless it is null. */
   
@@ -125,6 +126,7 @@ import org.eclipse.jdt.core.dom.*;
     Nested(final Environment parent) {
       nest = parent;
     }
+    
     /* @return true iff Env is empty. */
     @Override public boolean empty() {
       return flat.isEmpty() && nest.empty();
@@ -134,24 +136,29 @@ import org.eclipse.jdt.core.dom.*;
     public Set<Map.Entry<String, Information>> entries() {
       return flat.entrySet();
     }
+
     /* @return The information about the name in current Env. */
     @Override public Information get(final String name) {
       final Information $ = flat.get(name);
       return $ != null ? $ : nest.get(name);
     }
+
     /* Check whether the Env already has the name. */
     @Override public boolean has(final String name) {
       return flat.containsKey(name) || nest.has(name);
     }
+    
     /* @return Names used in current scope. */
     @Override public Set<String> names() {
       return flat.keySet();
     }
+
     /* One step up in the Env tree. Funny but it even sounds like next().*/
     @Override public Environment nest() {
       return nest;
     }
-    /* Add name to the current scope in the Env. */
+
+    /** Add name to the current scope in the Env. */
     @Override public Information put(final String name, final Information value) {
       flat.put(name, value);
       assert (!flat.isEmpty());
@@ -172,12 +179,12 @@ class Information {
   /** The node at which this entry was created */
   public final ASTNode self;
   /** What do we know about the type of this definition */
-  public final Type type;
+  public final Kind kind;
 
   // For now, nothing is known, we only maintain lists
   Information() {
     blockScope = self = null;
-    type = null;
+    kind = null;
     hiding = null;
   }
 }
