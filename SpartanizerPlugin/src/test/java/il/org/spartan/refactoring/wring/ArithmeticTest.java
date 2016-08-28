@@ -41,7 +41,7 @@ public class ArithmeticTest {
     }
   }
 
-  public static class Working {
+  @Ignore("#92:under construction") public static class Working {
     @Test public void issue92_3() {
       trimming("1+1").to("2");
     }
