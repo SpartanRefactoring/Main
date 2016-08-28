@@ -8,7 +8,6 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.mockito.Mockito.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.Type;
 import org.junit.*;
 import org.junit.runners.*;
 

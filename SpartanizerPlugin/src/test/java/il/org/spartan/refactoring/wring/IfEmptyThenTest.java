@@ -17,15 +17,15 @@ public class IfEmptyThenTest {
   private static final IfStatement IF = extract.firstIfStatement(INPUT);
 
   @Test public void eligible() {
-    assert (WRING.eligible(IF));
+    assert WRING.eligible(IF);
   }
 
   @Test public void emptyThen() {
-    assert (Is.vacuousThen(IF));
+    assert Is.vacuousThen(IF);
   }
 
   @Test public void extractFirstIf() {
-assert    null != (IF);
+    assert null != IF;
   }
 
   @Test public void inputType() {
@@ -33,6 +33,6 @@ assert    null != (IF);
   }
 
   @Test public void scopeIncludes() {
-    assert (WRING.scopeIncludes(IF));
+    assert WRING.scopeIncludes(IF);
   }
 }

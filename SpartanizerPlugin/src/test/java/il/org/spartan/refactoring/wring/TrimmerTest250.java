@@ -347,9 +347,9 @@ public class TrimmerTest250 {
     azzert.that(i, iz(s));
     azzert.that(left(i), iz("0"));
     azzert.that(right(i), iz("x"));
-    assert !(i.hasExtendedOperands());
-    assert (isLiteralZero(left(i)));
-    assert !(isLiteralZero(right(i)));
+    assert !i.hasExtendedOperands();
+    assert isLiteralZero(left(i));
+    assert !isLiteralZero(right(i));
     azzert.that(minus(left(i)), iz("0"));
     azzert.that(minus(right(i)), iz("-x"));
     trimming(s).to("-x");
@@ -386,19 +386,19 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue72me1() {
-    assert !(Is.negative(Into.e("0")));
+    assert !Is.negative(Into.e("0"));
   }
 
   @Test public void issue72me2() {
-    assert (Is.negative(Into.e("-1")));
-    assert !(Is.negative(Into.e("+1")));
-    assert !(Is.negative(Into.e("1")));
+    assert Is.negative(Into.e("-1"));
+    assert !Is.negative(Into.e("+1"));
+    assert !Is.negative(Into.e("1"));
   }
 
   @Test public void issue72me3() {
-    assert (Is.negative(Into.e("-x")));
-    assert !(Is.negative(Into.e("+x")));
-    assert !(Is.negative(Into.e("x")));
+    assert Is.negative(Into.e("-x"));
+    assert !Is.negative(Into.e("+x"));
+    assert !Is.negative(Into.e("x"));
   }
 
   @Test public void issue72meA() {
@@ -417,7 +417,7 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue72mf1B() {
-    assert (Is.isSimple(Into.e("x")));
+    assert Is.isSimple(Into.e("x"));
     trimming("-(x-0)")//
         .to("-(x)")//
         .to(null);
@@ -611,58 +611,62 @@ public class TrimmerTest250 {
     trimming("(double)(long)a").to("1.*(long)a").to("1.*1L*a");
   }
 
-  @Test  public void issue83a() {
+  @Test public void issue83a() {
     trimming("if(lst.size()>=0) return a;").to("if(true) return a;");
   }
-  
-  @Test  public void issue83b() {
+
+  @Test public void issue83b() {
     trimming("if(lst.size()<0) return a;").to("if(false) return a;");
   }
-  
+
   @Test public void issue83c() {
     trimming("if(x.size()>0)return a;").to("if(!x.isEmpty())return a;");
   }
-  
-  @Ignore("This checks for singleton, and cannot be simplified")
-  @Test public void issue83d() {
+
+  @Ignore("This checks for singleton, and cannot be simplified") @Test public void issue83d() {
     trimming("if(x.size()==1) return a;").to(null);
   }
-  
-  @Ignore("This checks for singleton, and cannot be simplified")
-  @Test public void issue83e() {
+
+  @Ignore("This checks for singleton, and cannot be simplified") @Test public void issue83e() {
     trimming("if(x.size()==2) return a;").to(null);
   }
- 
-  @Ignore("This checks for singleton, and cannot be simplified")
-  @Test public void issue83f() {
+
+  @Ignore("This checks for singleton, and cannot be simplified") @Test public void issue83f() {
     trimming("if(2==lst.size()) return a;").to(null);
   }
-  
+
   @Test public void issue83g() {
     trimming("if(lst.size()==4) return a;").to(null);
   }
-  
+
   @Test public void issue83h() {
     trimming("if(lst.size()==0) return a;").to("if(lst.isEmpty()) return a;");
   }
+
   @Test public void issue83i() {
     trimming("if(es.size() >= 2) return a;").to(null);
   }
+
   @Test public void issue83j() {
     trimming("if(es.size() > 2) return a;").to(null);
   }
+
   @Test public void issue83k() {
     trimming("if(es.size() < 2) return a;").to(null);
   }
+
   @Test public void issue83l() {
     trimming("uses(ns).size() <= 1").to(null);
   }
+
   @Test public void issue83m() {
     trimming("if(a.size() >= -3) ++a;").to("if(true) ++a;");
   }
+
   @Test public void issue83n() {
     trimming("if(a.size() <= -9) ++a;").to("if(false) ++a;");
   }
+
   @Test public void issue85_86a() {
     trimming("if(true){   \n" + "x(); }   \n" + "else{   \n" + "y();   \n" + "}").to("{x();}").to("x();");
   }

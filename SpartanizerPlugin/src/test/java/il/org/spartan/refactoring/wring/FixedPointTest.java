@@ -7,7 +7,6 @@ import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -84,19 +83,20 @@ import il.org.spartan.refactoring.utils.*;
   @Test(timeout = 2000) public void eliminateRedundantIf4() {
     assertConvertsTo("{if (a) {;}} ", "");
   }
+
   @Test public void hasNullsTest() {
     final Object a = null;
-    assert (hasNull(a));
-    assert !(hasNull(new Object()));
-    assert (hasNull(new Object(), null));
-    assert !(hasNull(new Object(), new Object()));
-    assert !(hasNull(new Object(), new Object()));
-    assert !(hasNull(new Object(), new Object(), new Object()));
-    assert !(hasNull(new Object(), new Object(), new Object(), new Object()));
-    assert (hasNull(null, new Object(), new Object(), new Object(), new Object()));
-    assert (hasNull(new Object(), new Object(), null, new Object(), new Object()));
-    assert (hasNull(new Object(), new Object(), new Object(), null, new Object()));
-    assert (hasNull(new Object(), new Object(), new Object(), new Object(), null));
+    assert hasNull(a);
+    assert !hasNull(new Object());
+    assert hasNull(new Object(), null);
+    assert !hasNull(new Object(), new Object());
+    assert !hasNull(new Object(), new Object());
+    assert !hasNull(new Object(), new Object(), new Object());
+    assert !hasNull(new Object(), new Object(), new Object(), new Object());
+    assert hasNull(null, new Object(), new Object(), new Object(), new Object());
+    assert hasNull(new Object(), new Object(), null, new Object(), new Object());
+    assert hasNull(new Object(), new Object(), new Object(), null, new Object());
+    assert hasNull(new Object(), new Object(), new Object(), new Object(), null);
   }
 
   @Test(timeout = 2000) public void inlineInitializers() {

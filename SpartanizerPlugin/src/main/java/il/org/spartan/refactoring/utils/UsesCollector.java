@@ -9,7 +9,6 @@ import static il.org.spartan.refactoring.utils.extract.name;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.Type;
 
 abstract class HidingDepth extends ScopeManager {
   private int depth = 0;
