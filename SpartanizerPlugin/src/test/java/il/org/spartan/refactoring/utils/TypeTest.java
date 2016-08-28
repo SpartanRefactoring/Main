@@ -51,6 +51,10 @@ public class TypeTest {
       azzert.that(NOTHING.under(PrefixExpression.Operator.NOT), is(BOOLEAN));
     }
   
+    @Test public void test07(){
+      azzert.that(NOTHING.underPlus(NOTHING), is(ALPHANUMERIC));
+    }
+    
     @Test public void test13(){
       azzert.that(INT.underPlus(DOUBLE), is(DOUBLE));
     }

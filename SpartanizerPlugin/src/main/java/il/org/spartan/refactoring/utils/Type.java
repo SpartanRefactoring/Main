@@ -30,6 +30,7 @@ import org.omg.CORBA.*;
  * </pre>
  * 
  * @author Yossi Gil
+ * @author Niv Shalmon
  * @since 2016-08-XX */
 enum Type {
   // Those anonymous characters that known little or nothing about themselves
@@ -78,9 +79,7 @@ enum Type {
   
   //TODO: should be private once kind is finished
   Type underIntegersOnlyOperator(Type k) {
-    final Type ¢1 = k.asIntegral();
-    final Type ¢2 = asIntegral();
-    return (¢1 != INTEGRAL) || (¢2 != INTEGRAL) ? max(¢1,¢2) : INTEGRAL;
+    return max(k.asIntegral(), asIntegral());
   }
 
   /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE},
