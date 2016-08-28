@@ -431,10 +431,10 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test public void comaprisonWithSpecific0Legibiliy00() {
     final InfixExpression e = i("this != a");
-    assert (in(e.getOperator(), Operator.EQUALS, Operator.NOT_EQUALS));
-    assert !(Is.booleanLiteral(right(e)));
-    assert !(Is.booleanLiteral(left(e)));
-    assert (in(e.getOperator(), Operator.EQUALS, Operator.NOT_EQUALS));
+    assert in(e.getOperator(), Operator.EQUALS, Operator.NOT_EQUALS);
+    assert !Is.booleanLiteral(right(e));
+    assert !Is.booleanLiteral(left(e));
+    assert in(e.getOperator(), Operator.EQUALS, Operator.NOT_EQUALS);
   }
 
   @Test public void comaprisonWithSpecific1() {
@@ -1469,17 +1469,17 @@ import il.org.spartan.refactoring.utils.*;
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
     azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     assert s != null;
-    assert (s.scopeIncludes(e));
+    assert s.scopeIncludes(e);
     final Expression e1 = left(e);
     final Expression e2 = right(e);
-    assert !(hasNull(e1, e2));
+    assert !hasNull(e1, e2);
     final boolean tokenWiseGreater = nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD;
-    assert (tokenWiseGreater);
-    assert (ExpressionComparator.moreArguments(e1, e2));
-    assert (ExpressionComparator.longerFirst(e));
+    assert tokenWiseGreater;
+    assert ExpressionComparator.moreArguments(e1, e2);
+    assert ExpressionComparator.longerFirst(e);
     assert s.eligible(e) : "e=" + e + " s=" + s;
     final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) s).replacement(e);
-    assert null != (replacement);
+    assert null != replacement;
     azzert.that(replacement.toString(), is("f(a,b,c) * f(a,b,c,d,e)"));
   }
 
@@ -1489,18 +1489,18 @@ import il.org.spartan.refactoring.utils.*;
     azzert.that(left(e).toString(), is("f(a,b,c,d)"));
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
     azzert.that(s, instanceOf(InfixMultiplicationSort.class));
-    assert null != (s);
-    assert (s.scopeIncludes(e));
+    assert null != s;
+    assert s.scopeIncludes(e);
     final Expression e1 = left(e);
     final Expression e2 = right(e);
-    assert !(hasNull(e1, e2));
+    assert !hasNull(e1, e2);
     final boolean tokenWiseGreater = nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD;
-    assert !(tokenWiseGreater);
-    assert (ExpressionComparator.moreArguments(e1, e2));
-    assert (ExpressionComparator.longerFirst(e));
+    assert !tokenWiseGreater;
+    assert ExpressionComparator.moreArguments(e1, e2);
+    assert ExpressionComparator.longerFirst(e);
     assert s.eligible(e) : "e=" + e + " s=" + s;
     final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) s).replacement(e);
-    assert null != (replacement);
+    assert null != replacement;
     azzert.that(replacement.toString(), is("f(a,b,c) * f(a,b,c,d)"));
   }
 
@@ -2056,12 +2056,11 @@ import il.org.spartan.refactoring.utils.*;
     trimming("int[] a = new int[] {2,3,};").to("int[] a = new int[] {2,3};");
   }
 
-
   @Test @Ignore("Under Construction") public void issue74c() {
     trimming("a = new int[]{2,3,};").to("a = new int[] {2,3};");
   }
-  
-  @Test  public void issue74d() {
+
+  @Test public void issue74d() {
     trimming("int[] a = new int[] {2,3};").to(null);
   }
 
@@ -2578,12 +2577,12 @@ import il.org.spartan.refactoring.utils.*;
     final String from = "for (int i = 0; i < 100;  i--)  i--;";
     final Statement s = s(from);
     azzert.that(s, iz("{" + from + "}"));
-    assert null != (s);
+    assert null != s;
     final PostfixExpression e = extract.findFirstPostfix(s);
-    assert null != (e);
+    assert null != e;
     azzert.that(e, iz("i--"));
     final ASTNode parent = e.getParent();
-    assert null != (parent);
+    assert null != parent;
     azzert.that(parent, iz(from));
     azzert.that(parent, is(not(instanceOf(Expression.class))));
     azzert.that(new PostfixToPrefix().scopeIncludes(e), is(true));
@@ -3135,11 +3134,11 @@ import il.org.spartan.refactoring.utils.*;
   @Test public void rightSimplificatioForNulNNVariableReplacement() {
     final InfixExpression e = i("null != a");
     final Wring<InfixExpression> w = Toolbox.instance.find(e);
-    assert null != (w);
-    assert (w.scopeIncludes(e));
-    assert (w.eligible(e));
+    assert null != w;
+    assert w.scopeIncludes(e);
+    assert w.eligible(e);
     final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) w).replacement(e);
-    assert null != (replacement);
+    assert null != replacement;
     azzert.that(replacement.toString(), is("a != null"));
   }
 
@@ -3337,7 +3336,7 @@ import il.org.spartan.refactoring.utils.*;
         ""//
     );
     final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
-    assert null != (f);
+    assert null != f;
     azzert.that(f, iz(" res = 0"));
     azzert.that(extract.nextStatement(f),
         iz(" for (int i = 0;i < s.length();++i)\n"//

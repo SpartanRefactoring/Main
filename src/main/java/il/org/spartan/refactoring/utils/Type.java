@@ -2,18 +2,14 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
-import javax.management.*;
-
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
-
 import org.eclipse.jdt.core.dom.*;
-import org.omg.CORBA.*;
 
 /** TODO: Niv Issue*94
- * 
- * <p>Tells how much we know about the type of of a variable, function, or
+ * <p>
+ * Tells how much we know about the type of of a variable, function, or
  * expression.
  * <p>
  * Dispatching in this class should emulate the type inference of Java. It is
@@ -22,13 +18,13 @@ import org.omg.CORBA.*;
  * This type should never be <code><b>null</b></code>. Don't bother to check
  * that it is. We want a {@link NullPointerException} thrown if this is the
  * case. or, you may as well write
- * 
+ *
  * <pre>
  * Kind k = f();
  * assert k != null : //
  * "Implementation of Kind is buggy";
  * </pre>
- * 
+ *
  * @author Yossi Gil
  * @since 2016-08-XX */
 enum Type {
@@ -86,18 +82,18 @@ enum Type {
   /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE},
    *         {@link #STRING} or {@link #ALPHANUMERIC}, in case it cannot
    *         decide */
-  public Type underPlus(Type k) {
+  public Type underPlus(final Type k) {
     return k == STRING && this == STRING ? STRING : ALPHANUMERIC;
   }
 
   /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE}, or
    *         {@link #NUMERIC}, in case it cannot decide */
-  private Type asNumeric(Type k) {
+  private Type asNumeric(final Type k) {
     if (k == this)
       return k;
     if (!isNumeric())
       return asNumeric().asNumeric(k);
-    assert (k != null);
+    assert k != null;
     assert this != ALPHANUMERIC : "Don't confuse " + NUMERIC + " with " + ALPHANUMERIC;
     assert in(this, INT, DOUBLE, LONG, INTEGRAL, NUMERIC) : this + ": does not fit our list of numeric types";
     assert isNumeric() : this + ": is for some reason not numeric ";
@@ -132,16 +128,16 @@ enum Type {
     return in(this, INT, LONG, DOUBLE, INTEGRAL, NUMERIC);
   }
 
-  private Type underIntegersOnlyOperator(Type k) {
+  private Type underIntegersOnlyOperator(final Type k) {
     final Type ¢ = k.underIntegersOnlyOperator();
     return !in(¢, this, INTEGRAL) ? max(¢) : ¢ != Type.ALPHANUMERIC ? ¢ : INTEGRAL;
   }
 
-  private Type max(Type ¢) {
+  private Type max(final Type ¢) {
     return ¢.ordinal() > ordinal() ? ¢ : this;
   }
 
-  public final Type underBinaryOperator(InfixExpression.Operator o, Type k) {
+  public final Type underBinaryOperator(final InfixExpression.Operator o, final Type k) {
     if (o == PLUS2)
       return underPlus(k);
     if (in(this, //
@@ -162,7 +158,7 @@ enum Type {
     return asNumeric(k);
   }
 
-  public static boolean kind(Expression e) {
+  public static boolean kind(final Expression e) {
     throw new RuntimeException("Team3 needs to implement this: " + e);
   }
 }

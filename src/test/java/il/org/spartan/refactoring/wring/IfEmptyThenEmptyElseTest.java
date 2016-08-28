@@ -21,19 +21,19 @@ public class IfEmptyThenEmptyElseTest {
   private static final IfStatement IF = extract.firstIfStatement(INPUT);
 
   @Test public void eligible() {
-    assert (WRING.eligible(IF));
+    assert WRING.eligible(IF);
   }
 
   @Test public void emptyElse() {
-    assert (Is.vacuousElse(IF));
+    assert Is.vacuousElse(IF);
   }
 
   @Test public void emptyThen() {
-    assert (Is.vacuousThen(IF));
+    assert Is.vacuousThen(IF);
   }
 
   @Test public void extractFirstIf() {
-assert    null != (IF);
+    assert null != IF;
   }
 
   @Test public void inputType() {
@@ -50,13 +50,13 @@ assert    null != (IF);
     final Rewrite t = WRING.make(s);
     t.go(r, null);
     final TextEdit e = r.rewriteAST(d, null);
-assert    null != (e);
+    assert null != e;
     azzert.that(e.getChildren().length, greaterThan(0));
     e.apply(d);
     azzert.isNull(extract.firstIfStatement(MakeAST.COMPILATION_UNIT.from(d.get())));
   }
 
   @Test public void scopeIncludes() {
-    assert (WRING.scopeIncludes(IF));
+    assert WRING.scopeIncludes(IF);
   }
 }
