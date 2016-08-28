@@ -7,7 +7,6 @@ import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 

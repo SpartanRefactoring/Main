@@ -1,2 +1,2 @@
-public @interface Begin {
+public @interface Begin {//
 }
