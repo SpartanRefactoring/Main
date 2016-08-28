@@ -598,7 +598,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void comparison01() {
-    trimming("1+2+3<3").to(null);
+    trimming("1+2+3<3").to("6<3").to(null);
   }
 
   @Test public void comparison02() {
@@ -610,7 +610,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void comparison04() {
-    trimming("6-7<2+1").to("6-7<1+2");
+    trimming("6-7<2+1").to("-1<3");
   }
 
   @Test public void comparison05() {
@@ -626,19 +626,15 @@ public class TrimmerTest240 {
   }
 
   @Test public void comparison09() {
-    trimming("1+2<3&7+4>2+1").to("1+2<3&4+7>1+2");
+    trimming("1+2<3&7+4>2+1").to("3<3&11>3");
   }
-
-  @Test public void comparison10() {
-    trimming("1+2+3<3-4").to(null);
-  }
-
+  
   @Test public void comparison11() {
     trimming("12==this").to("this==12");
   }
 
   @Test public void comparison12() {
-    trimming("1+2<3&7+4>2+1||6-7<2+1").to("1+2<3&4+7>1+2||6-7<1+2");
+    trimming("1+2<3&7+4>2+1||6-7<2+1").to("3<3&11>3||-1<3");
   }
 
   @Test public void comparison13() {
@@ -650,7 +646,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void compreaeExpressionToExpression() {
-    trimming("6 - 7 < 2 + 1   ").to("6 -7 < 1 + 2");
+    trimming("6 - 7 < 2 + 1   ").to("-1<3");
   }
 
   @Test public void correctSubstitutionInIfAssignment() {
@@ -3257,7 +3253,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void simplifyBlockExpressionVsExpression() {
-    trimming("6 - 7 < a * 3").to("6 - 7 < 3 * a");
+    trimming("6 - 7 < a * 3").to("-1 < 3 * a");
   }
 
   @Test public void simplifyBlockLiteralVsLiteral() {
@@ -3325,11 +3321,11 @@ public class TrimmerTest240 {
   }
 
   @Test public void sortAddition2() {
-    trimming("1 + 2 < 3 & 7 + 4 > 2 + 1 || 6 - 7 < 2 + 1").to("1+2 <3&4+7>1+2||6-7<1+2");
+    trimming("1 + 2 < 3 & 7 + 4 > 2 + 1 || 6 - 7 < 2 + 1").to("3 <3&11>3||-1<3");
   }
 
   @Test public void sortAddition3() {
-    trimming("6 - 7 < 1 + 2").to(null);
+    trimming("6 - 7 < 1 + 2").to("-1<3").to(null);
   }
 
   @Test public void sortAddition4() {
@@ -3361,11 +3357,11 @@ public class TrimmerTest240 {
   }
 
   @Test public void sortAdditionTwoOperands0CheckThatWeSortByLength_a() {
-    trimming("1111+211").to("211+1111");
+    trimming("1111+211").to("1322");
   }
 
   @Test public void sortAdditionTwoOperands0CheckThatWeSortByLength_b() {
-    trimming("211+1111").to(null);
+    trimming("211+1111").to("1322").to(null);
   }
 
   @Test public void sortAdditionTwoOperands1() {
