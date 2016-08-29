@@ -3678,11 +3678,11 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Test public void sortThreeOperands1() {
-    trimming("1.0*2222*3").to(null);
+    trimming("1.0*2222*3").to("6666.0");
   }
 
   @Test public void sortThreeOperands2() {
-    trimming("1.0*11*124").to(null);
+    trimming("1.0*11*124").to("1364.0");
   }
 
   @Test public void sortThreeOperands3() {
@@ -3706,7 +3706,7 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Test public void sortTwoOperands2() {
-    trimming("2.0*2").to("2*2.0");
+    trimming("2.0*2").to("4.0");
   }
 
   @Test public void sortTwoOperands3() {

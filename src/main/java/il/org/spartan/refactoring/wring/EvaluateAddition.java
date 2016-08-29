@@ -24,7 +24,7 @@ import il.org.spartan.refactoring.utils.*;
  */
 public class EvaluateAddition extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
 
-  private enum Type {INT,LONG,DOUBLE,BAD}
+ 
   
   @Override public String description() {
       return "Evaluate addition of int numbers";
@@ -34,36 +34,10 @@ public class EvaluateAddition extends Wring.ReplaceCurrentNode<InfixExpression> 
     return "Evaluate addition of int numbers";
   }
   
-  private static Type getEvaluatedType(InfixExpression e){
-    //boolean isLong = false;
-    List<Expression> operands = extract.allOperands(e);
-    for (final Expression ¢ : operands){
-      if(!(¢ instanceof NumberLiteral))
-        return Type.BAD;
-      if(isDouble(¢))
-        return Type.DOUBLE;
-    }
-    return Type.INT;
-  }
-    
-  private static boolean isInt(Expression e){
-    return e instanceof NumberLiteral && ((NumberLiteral) e).getToken().matches("[0-9]+");
-  }
-  
-  private static boolean isDouble(Expression e){
-    return e instanceof NumberLiteral && ((NumberLiteral) e).getToken().matches("[0-9]+\\.[0-9]?");
-  }
-  
- /* private static boolean isLong(Expression e){
-    if(!(e instanceof NumberLiteral))
-      return false;
-    return ((NumberLiteral) e).getToken().matches("[0-9]+");
-  }*/ //TODO: Add supprot for long
-  
   @Override ASTNode replacement(InfixExpression e) {
     if( e.getOperator() != PLUS )
       return null;
-    switch(getEvaluatedType(e)){
+    switch(EvaluateAux.getEvaluatedType(e)){
       case INT :
         return replacementInt(extract.allOperands(e),e);
       case DOUBLE :
@@ -77,7 +51,7 @@ public class EvaluateAddition extends Wring.ReplaceCurrentNode<InfixExpression> 
     
     int sum = 0;
     for (final Expression ¢ : es){
-      if (!(¢ instanceof NumberLiteral) || !isInt(¢))
+      if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isInt(¢))
         return null;
       sum=sum + Integer.parseInt(((NumberLiteral) ¢).getToken());
     }  
@@ -87,7 +61,7 @@ public class EvaluateAddition extends Wring.ReplaceCurrentNode<InfixExpression> 
  private static ASTNode replacementDouble(final List<Expression> es, InfixExpression e) {
    double sum = 0;
    for (final Expression ¢ : es){
-     if (!(¢ instanceof NumberLiteral) || !isInt(¢) && !isDouble(¢))
+     if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isInt(¢) && !EvaluateAux.isDouble(¢))
        return null;
      sum=sum + Double.parseDouble(((NumberLiteral) ¢).getToken());
    }  
