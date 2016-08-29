@@ -2,6 +2,8 @@ package il.org.spartan.refactoring.wring;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.refactoring.handlers.*;
+import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** expand additive terms, e.g., convert <code>a-(b+c)</code> to /**
