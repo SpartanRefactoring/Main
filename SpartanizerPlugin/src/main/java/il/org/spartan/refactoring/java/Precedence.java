@@ -22,6 +22,15 @@ public enum Precedence {
     return e != null && in(e.getOperator(), MINUS, DIVIDE, REMAINDER);
   }
 
+  /** Determine whether a node is an infix expression whose operator is
+   * non-associative.
+   * @param n JD
+   * @return <code><b>true</b></code> <i>iff</i> the parameter is a node which
+   *         is an infix expression whose operator is */
+  public static boolean nonAssociative(final ASTNode n) {
+    return nonAssociative(asInfixExpression(n));
+  }
+
   /** *An empty <code><b>enum</b></code> for fluent programming. The name should
    * say it all: The name, followed by a dot, followed by a method name, should
    * read like a sentence phrase.

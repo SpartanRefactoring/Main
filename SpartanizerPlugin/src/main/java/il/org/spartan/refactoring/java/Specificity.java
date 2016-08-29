@@ -33,7 +33,7 @@ public class Specificity implements Comparator<Expression> {
   enum Level {
     NULL {
       @Override boolean includes(final ASTNode n) {
-        return Is.null_(n);
+        return Is.nullLiteral(n);
       }
     },
     BOOLEAN {
@@ -58,7 +58,7 @@ public class Specificity implements Comparator<Expression> {
     },
     THIS {
       @Override boolean includes(final ASTNode n) {
-        return Is.this_(n);
+        return Is.thisLiteral(n);
       }
     },
     ZERO_LITERAL {

@@ -96,7 +96,7 @@ public enum Restructure {
    * @return a {@link Funcs#duplicate(Expression)} of the parameter wrapped in
    *         parenthesis. */
   public static Expression parenthesize(final Expression e) {
-    if (Is.simple(e))
+    if (Is.noParenthesisRequired(e))
       return duplicate(e);
     final ParenthesizedExpression $ = e.getAST().newParenthesizedExpression();
     $.setExpression(e.getParent() == null ? e : duplicate(e));
@@ -138,7 +138,8 @@ public enum Restructure {
   private static List<Expression> flattenInto(final Operator o, final Expression e, final List<Expression> $) {
     final Expression core = core(e);
     final InfixExpression inner = asInfixExpression(core);
-    return inner == null || inner.getOperator() != o ? add(!Is.simple(core) ? e : core, $) : flattenInto(o, adjust(o, extract.operands(inner)), $);
+    return inner == null || inner.getOperator() != o ? add(!Is.noParenthesisRequired(core) ? e : core, $)
+        : flattenInto(o, adjust(o, extract.operands(inner)), $);
   }
 
   private static List<Expression> flattenInto(final Operator o, final List<Expression> es, final List<Expression> $) {
