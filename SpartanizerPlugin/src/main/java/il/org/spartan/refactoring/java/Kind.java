@@ -1,4 +1,4 @@
-package il.org.spartan.refactoring.utils;
+package il.org.spartan.refactoring.java;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
@@ -6,6 +6,8 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.refactoring.utils.*;
 
 /** TODO: Niv Issue*94
  * <p>
@@ -28,7 +30,7 @@ import org.eclipse.jdt.core.dom.*;
  * @author Yossi Gil
  * @author Niv Shalmon
  * @since 2016-08-XX */
-enum Type {
+enum Kind {
   // Those anonymous characters that known little or nothing about themselves
   NOTHING("none", "when nothing can be said, e.g., f(f(),f(f(f()),f()))"), //
   NONNULL("!null", "e.g., new Object() and that's about it"), //
@@ -52,14 +54,14 @@ enum Type {
    * @return The most specific Type information that can be deduced about the
    *         expression, or {@link #NOTHING} if it cannot decide. Will never
    *         return null */
-  public static Type kind(final Expression e) {
+  public static Kind kind(final Expression e) {
     return kind(e, null, null);
   }
 
   /** A version of {@link #kind(Expression)} that receives the operand's type
    * for a single operand expression. The call kind(e,null) is equivalent to
    * kind(e) */
-  static Type kind(final Expression e, final Type t) {
+  static Kind kind(final Expression e, final Kind t) {
     return kind(e, t, null);
   }
 
@@ -70,7 +72,7 @@ enum Type {
    *        unknown
    * @param t2 the type of the left hand operand of the expression, or null if
    *        unknown */
-  static Type kind(final Expression e, final Type t1, final Type t2) {
+  static Kind kind(final Expression e, final Kind t1, final Kind t2) {
     if (e instanceof NullLiteral)
       return NULL;
     if (e instanceof CharacterLiteral)
@@ -92,7 +94,7 @@ enum Type {
     return NOTHING;
   }
 
-  private static Type kind(final NumberLiteral e) {
+  private static Kind kind(final NumberLiteral e) {
     final String ¢ = e.getToken();
     if (¢.matches("[0-9]+"))
       return INT;
@@ -103,7 +105,7 @@ enum Type {
     return NUMERIC;
   }
 
-  private static Type kind(final CastExpression e) {
+  private static Kind kind(final CastExpression e) {
     switch ("" + extract.type(e)) {
       case "char":
       case "Character":
@@ -127,27 +129,27 @@ enum Type {
     }
   }
 
-  private static Type kind(final PrefixExpression e, final Type t1) {
+  private static Kind kind(final PrefixExpression e, final Kind t1) {
     final PrefixExpression.Operator o = e.getOperator();
-    final Type ¢ = t1 != null ? t1 : kind(e.getOperand());
+    final Kind ¢ = t1 != null ? t1 : kind(e.getOperand());
     return ¢.under(o);
   }
 
-  private static Type kind(final InfixExpression e, final Type t1, final Type t2) {
+  private static Kind kind(final InfixExpression e, final Kind t1, final Kind t2) {
     final InfixExpression.Operator o = e.getOperator();
-    final Type ¢1 = t1 != null ? t1 : kind(e.getLeftOperand());
-    final Type ¢2 = t2 != null ? t2 : kind(e.getRightOperand());
+    final Kind ¢1 = t1 != null ? t1 : kind(e.getLeftOperand());
+    final Kind ¢2 = t2 != null ? t2 : kind(e.getRightOperand());
     return ¢1.underBinaryOperator(o, ¢2);
   }
 
-  private static Type kind(final ParenthesizedExpression e, final Type t) {
+  private static Kind kind(final ParenthesizedExpression e, final Kind t) {
     return t != null ? t : kind(e.getExpression());
   }
 
   final String description;
   final String name;
 
-  Type(final String name, final String description) {
+  Kind(final String name, final String description) {
     this.name = name;
     this.description = description;
   }
@@ -160,7 +162,7 @@ enum Type {
    *         {@link #DOUBLE}, {@link #INTEGRAL} or {@link #NUMERIC}, in case it
    *         cannot decide */
   // TODO: should be private once kind is finished
-  private final Type under(final PrefixExpression.Operator o) {
+  private final Kind under(final PrefixExpression.Operator o) {
     assert o != null;
     return o == NOT ? BOOLEAN //
         : o != COMPLEMENT ? asNumeric() : asIntegralNonChar();
@@ -171,7 +173,7 @@ enum Type {
    *         {@link #NUMERIC}, or {@link #ALPHANUMERIC}, in case it cannot
    *         decide */
   // TODO: should be private once kind is finished
-  private final Type underBinaryOperator(final InfixExpression.Operator o, final Type k) {
+  private final Kind underBinaryOperator(final InfixExpression.Operator o, final Kind k) {
     if (o == PLUS2)
       return underPlus(k);
     if (in(o, //
@@ -199,7 +201,7 @@ enum Type {
   /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE},
    *         {@link #STRING}, {@link #INTEGRAL}, {@link #NUMERIC} or
    *         {@link #ALPHANUMERIC}, in case it cannot decide */
-  private Type underPlus(final Type k) {
+  private Kind underPlus(final Kind k) {
     // addition with NULL or String must be a String
     if (in(STRING, this, k) || in(NULL, this, k))
       return STRING;
@@ -211,13 +213,13 @@ enum Type {
 
   /** @return one of {@link #INT}, {@link #LONG}, {@link #INTEGRAL},
    *         {@link #DOUBLE}, or {@link #NUMERIC}, in case it cannot decide */
-  private Type underNumericOnlyOperator(final Type k) {
+  private Kind underNumericOnlyOperator(final Kind k) {
     if (!isNumeric())
       return asNumeric().underNumericOnlyOperator(k);
     assert k != null;
     assert this != ALPHANUMERIC : "Don't confuse " + NUMERIC + " with " + ALPHANUMERIC;
     assert isNumeric() : this + ": is for some reason not numeric ";
-    final Type $ = k.asNumeric();
+    final Kind $ = k.asNumeric();
     assert $ != null;
     assert $.isNumeric() : this + ": is for some reason not numeric ";
     // Double contaminates Numeric
@@ -236,9 +238,9 @@ enum Type {
     return INT;
   }
 
-  private Type underIntegersOnlyOperator(final Type k) {
-    final Type ¢1 = asIntegralNonChar();
-    final Type ¢2 = k.asIntegralNonChar();
+  private Kind underIntegersOnlyOperator(final Kind k) {
+    final Kind ¢1 = asIntegralNonChar();
+    final Kind ¢2 = k.asIntegralNonChar();
     return ¢1 == INTEGRAL && ¢2 == INTEGRAL ? INTEGRAL : ¢1.max(¢2);
   }
 
@@ -248,13 +250,13 @@ enum Type {
 
   /** @return one of {@link #INT}, {@link #LONG}, {@link #CHAR}, or
    *         {@link #INTEGRAL}, in case it cannot decide */
-  private Type asIntegral() {
+  private Kind asIntegral() {
     return isIntegral() ? this : INTEGRAL;
   }
 
   /** @return one of {@link #INT}, {@link #LONG}, or {@link #INTEGRAL}, in case
    *         it cannot decide */
-  private Type asIntegralNonChar() {
+  private Kind asIntegralNonChar() {
     return in(this, CHAR, INT) ? INT : asIntegral();
   }
 
@@ -265,11 +267,11 @@ enum Type {
   /** @return one of {@link #INT}, {@link #LONG}, {@link #CHAR},
    *         {@link #DOUBLE}, {@link #INTEGRAL} or {@link #NUMERIC}, in case no
    *         further information is available */
-  private Type asNumeric() {
+  private Kind asNumeric() {
     return isNumeric() ? this : NUMERIC;
   }
 
-  private Type max(final Type ¢) {
+  private Kind max(final Kind ¢) {
     return ordinal() > ¢.ordinal() ? this : ¢;
   }
 }
