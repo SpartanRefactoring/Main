@@ -1,4 +1,4 @@
-package il.org.spartan.refactoring.utils;
+package il.org.spartan.refactoring.java;
 
 /** A utility to determine the exact type of a Java character or numerical
  * literal.
