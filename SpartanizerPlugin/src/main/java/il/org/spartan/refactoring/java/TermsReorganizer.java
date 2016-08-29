@@ -6,7 +6,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.handlers.*;
 import il.org.spartan.refactoring.utils.*;
 
 public class TermsReorganizer {

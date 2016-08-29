@@ -2,7 +2,6 @@ package il.org.spartan.refactoring.java;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.java.Precedence.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should

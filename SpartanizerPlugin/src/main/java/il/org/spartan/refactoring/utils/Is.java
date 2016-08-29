@@ -11,7 +11,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import il.org.spartan.*;
 import il.org.spartan.refactoring.java.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
@@ -521,61 +520,6 @@ public enum Is {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a sequencer */
   public static boolean sequencer(final ASTNode n) {
     return Is.oneOf(n, RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT);
-  }
-
-  /** Determine whether the evaluation of an expression is guaranteed to be free
-   * of any side effects.
-   * @param e JD
-   * @return <code><b>true</b></code> <i>iff</i> the parameter is an expression
-   *         whose computation is guaranteed to be free of any side effects. */
-  public static boolean sideEffectFree(final Expression e) {
-    if (e == null)
-      return true;
-    switch (e.getNodeType()) {
-      case STRING_LITERAL:
-      case NULL_LITERAL:
-      case NUMBER_LITERAL:
-      case THIS_EXPRESSION:
-      case SIMPLE_NAME:
-      case TYPE_LITERAL:
-      case CHARACTER_LITERAL:
-      case BOOLEAN_LITERAL:
-      case QUALIFIED_NAME:
-      case FIELD_ACCESS:
-      case SUPER_FIELD_ACCESS:
-        return true;
-      case SUPER_CONSTRUCTOR_INVOCATION:
-      case SUPER_METHOD_INVOCATION:
-      case METHOD_INVOCATION:
-      case CLASS_INSTANCE_CREATION:
-      case ASSIGNMENT:
-      case POSTFIX_EXPRESSION:
-        return false;
-      case ARRAY_CREATION:
-        return sideEffects.sideEffectFreeArrayCreation((ArrayCreation) e);
-      case ARRAY_ACCESS:
-        final ArrayAccess x = (ArrayAccess) e;
-        return sideEffects.sideEffectsFree(x.getArray(), x.getIndex());
-      case CAST_EXPRESSION:
-        final CastExpression c = (CastExpression) e;
-        return sideEffectFree(c.getExpression());
-      case INSTANCEOF_EXPRESSION:
-        return sideEffectFree(left((InstanceofExpression) e));
-      case PREFIX_EXPRESSION:
-        return sideEffects.sideEffectFreePrefixExpression((PrefixExpression) e);
-      case PARENTHESIZED_EXPRESSION:
-        return sideEffectFree(((ParenthesizedExpression) e).getExpression());
-      case INFIX_EXPRESSION:
-        return sideEffects.sideEffectsFree(extract.allOperands((InfixExpression) e));
-      case CONDITIONAL_EXPRESSION:
-        final ConditionalExpression ce = (ConditionalExpression) e;
-        return sideEffects.sideEffectsFree(ce.getExpression(), ce.getThenExpression(), ce.getElseExpression());
-      case ARRAY_INITIALIZER:
-        return sideEffects.sideEffectsFree(((ArrayInitializer) e).expressions());
-      default:
-        System.err.println("Missing handler for class: " + e.getClass().getSimpleName());
-        return false;
-    }
   }
 
   /** Determine whether an {@link Expression} is so basic that it never needs to

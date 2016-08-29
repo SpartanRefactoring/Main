@@ -10,6 +10,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
+import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** convert
@@ -56,7 +57,7 @@ public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<Infix
     if (right == null || right.getOperator() != conjugate)
       return null;
     final Expression leftLeft = left(left);
-    return !Is.sideEffectFree(leftLeft) || !same(leftLeft, left(right)) ? null
+    return !sideEffects.free(leftLeft) || !same(leftLeft, left(right)) ? null
         : subject.pair(leftLeft, subject.pair(chopHead(left), chopHead(right)).to(o)).to(conjugate);
   }
 }

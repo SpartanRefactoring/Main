@@ -9,7 +9,6 @@ import static org.eclipse.jdt.core.dom.ASTNode.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.Type;
 
 import il.org.spartan.*;
 
@@ -182,6 +181,10 @@ public enum extract {
 
   public static Expression expression(final ThrowStatement $) {
     return core($.getExpression());
+  }
+
+  public static Expression expression(final ConditionalExpression e) {
+    return core(e.getExpression());
   }
 
   /** Convert, is possible, an {@link ASTNode} to a {@link ExpressionStatement}

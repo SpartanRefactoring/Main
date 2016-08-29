@@ -15,6 +15,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
+import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -39,7 +40,7 @@ public class WringsTest {
 
   @Test public void inlineExpressionWithSideEffect() {
     final Expression e = Into.e("f()");
-    azzert.that(Is.sideEffectFree(e), is(false));
+    azzert.that(sideEffects.free(e), is(false));
     final String input = "int a = f(); return a += 2 * a;";
     final CompilationUnit u = Wrap.Statement.intoCompilationUnit(input);
     final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
@@ -48,7 +49,7 @@ public class WringsTest {
     azzert.that(n, iz("a"));
     final Expression initializer = f.getInitializer();
     azzert.that(initializer, iz("f()"));
-    azzert.that(Is.sideEffectFree(initializer), is(false));
+    azzert.that(sideEffects.free(initializer), is(false));
     final ASTNode parent = f.getParent();
     azzert.that(parent, iz("int a = f();"));
     final ASTNode block = parent.getParent();
@@ -60,7 +61,7 @@ public class WringsTest {
     azzert.that(o, iz("+="));
     final InfixExpression alternateInitializer = subject.pair(left(a), right(a)).to(Wring.VariableDeclarationFragementAndStatement.asInfix(o));
     azzert.that(alternateInitializer, iz("a + 2 * a"));
-    azzert.that(Is.sideEffectFree(initializer), is(false));
+    azzert.that(sideEffects.free(initializer), is(false));
     azzert.that(Collect.usesOf(n).in(alternateInitializer).size(), is(2));
     azzert.that(new LocalInliner(n).byValue(initializer).canInlineInto(alternateInitializer), is(false));
   }
