@@ -84,6 +84,7 @@ enum Kind {
       case PREFIX_EXPRESSION: return kind((PrefixExpression) e, t1);
       case INFIX_EXPRESSION: return kind((InfixExpression) e, t1, t2);
       case PARENTHESIZED_EXPRESSION: return kind((ParenthesizedExpression) e, t1);
+      case CLASS_INSTANCE_CREATION: return kind((ClassInstanceCreation)e);
       default: return NOTHING;
     } 
   }
@@ -100,27 +101,7 @@ enum Kind {
   }
 
   private static Kind kind(final CastExpression e) {
-    switch ("" + extract.type(e)) {
-      case "char":
-      case "Character":
-        return CHAR;
-      case "int":
-      case "Integer":
-        return INT;
-      case "double":
-      case "Double":
-        return DOUBLE;
-      case "long":
-      case "Long":
-        return LONG;
-      case "boolean":
-      case "Boolean":
-        return BOOLEAN;
-      case "String":
-        return STRING;
-      default:
-        return BAPTIZED;
-    }
+    return typeSwitch(""+extract.type(e), BAPTIZED);
   }
 
   private static Kind kind(final PrefixExpression e, final Kind t1) {
@@ -140,6 +121,34 @@ enum Kind {
     return t != null ? t : kind(e.getExpression());
   }
 
+  private static Kind kind(final ClassInstanceCreation e){
+    return typeSwitch(""+e.getType(),NONNULL);
+  }
+  
+  private static Kind typeSwitch(final String s,final Kind $){
+    switch (s) {
+      case "char":
+      case "Character":
+        return CHAR;
+      case "int":
+      case "Integer":
+        return INT;
+      case "double":
+      case "Double":
+        return DOUBLE;
+      case "long":
+      case "Long":
+        return LONG;
+      case "boolean":
+      case "Boolean":
+        return BOOLEAN;
+      case "String":
+        return STRING;
+      default:
+        return $;
+    }
+  }
+  
   final String description;
   final String name;
 
