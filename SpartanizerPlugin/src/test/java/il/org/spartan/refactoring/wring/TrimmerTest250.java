@@ -254,7 +254,7 @@ public class TrimmerTest250 {
     trimming("(double) 2. * (double)5")//
         .to("(double)5 * (double)2.") //
         .to("1. * 5  * 1. * 2.")//
-        .to("");
+        .to("10.0");
   }
 
   @Test public void issue70_10() {

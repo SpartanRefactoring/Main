@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
-
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -137,6 +136,8 @@ public class ArithmeticTest {
     @Test public void issue92_29() {
       trimming("1.+1.").to("2.0");
     }
-
+    @Test public void issue92_30() {
+      trimming("2*1.0").to("2.0");
+    }
   }
 }
