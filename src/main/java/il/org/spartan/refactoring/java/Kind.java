@@ -6,6 +6,7 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
+import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import il.org.spartan.refactoring.utils.*;
 
@@ -73,25 +74,18 @@ enum Kind {
    * @param t2 the type of the left hand operand of the expression, or null if
    *        unknown */
   static Kind kind(final Expression e, final Kind t1, final Kind t2) {
-    if (e instanceof NullLiteral)
-      return NULL;
-    if (e instanceof CharacterLiteral)
-      return CHAR;
-    if (e instanceof StringLiteral)
-      return STRING;
-    if (e instanceof BooleanLiteral)
-      return BOOLEAN;
-    if (e instanceof NumberLiteral)
-      return kind((NumberLiteral) e);
-    if (e instanceof CastExpression)
-      return kind((CastExpression) e);
-    if (e instanceof PrefixExpression)
-      return kind((PrefixExpression) e, t1);
-    if (e instanceof InfixExpression)
-      return kind((InfixExpression) e, t1, t2);
-    if (e instanceof ParenthesizedExpression)
-      return kind((ParenthesizedExpression) e, t1);
-    return NOTHING;
+    switch(e.getNodeType()){
+      case NULL_LITERAL: return NULL;
+      case CHARACTER_LITERAL: return CHAR;
+      case STRING_LITERAL: return STRING;
+      case BOOLEAN_LITERAL: return BOOLEAN;
+      case NUMBER_LITERAL: return kind((NumberLiteral) e);
+      case CAST_EXPRESSION: return kind((CastExpression) e);
+      case PREFIX_EXPRESSION: return kind((PrefixExpression) e, t1);
+      case INFIX_EXPRESSION: return kind((InfixExpression) e, t1, t2);
+      case PARENTHESIZED_EXPRESSION: return kind((ParenthesizedExpression) e, t1);
+      default: return NOTHING;
+    } 
   }
 
   private static Kind kind(final NumberLiteral e) {
@@ -244,7 +238,10 @@ enum Kind {
     return ¢1 == INTEGRAL && ¢2 == INTEGRAL ? INTEGRAL : ¢1.max(¢2);
   }
 
-  private boolean isIntegral() {
+  /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
+   *         {@link #INTEGRAL} or false otherwise
+   */
+  public boolean isIntegral() {
     return in(this, LONG, INT, CHAR, INTEGRAL);
   }
 
@@ -260,7 +257,11 @@ enum Kind {
     return in(this, CHAR, INT) ? INT : asIntegral();
   }
 
-  private boolean isNumeric() {
+  /** @return true if one of @link #INT}, {@link #LONG}, {@link #CHAR},
+   *         {@link #DOUBLE}, {@link #INTEGRAL}, {@link #NUMERIC} or
+   *         false otherwise
+   */
+  public boolean isNumeric() {
     return in(this, INT, LONG, CHAR, DOUBLE, INTEGRAL, NUMERIC);
   }
 
@@ -269,6 +270,13 @@ enum Kind {
    *         further information is available */
   private Kind asNumeric() {
     return isNumeric() ? this : NUMERIC;
+  }
+  
+  /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
+   *         {@link #DOUBLE}, {@link #INTEGRAL} or {@link #NUMERIC},
+   *         {@link #STRING}, {@link #ALPHANUMERIC} or false otherwise */
+  public boolean isAlphaNumeric(){
+    return in(this,  INT, LONG, CHAR, DOUBLE, INTEGRAL, NUMERIC, STRING, ALPHANUMERIC);
   }
 
   private Kind max(final Kind ¢) {
