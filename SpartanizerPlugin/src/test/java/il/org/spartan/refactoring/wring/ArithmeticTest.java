@@ -11,16 +11,7 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class ArithmeticTest {
   @Ignore("#92:under construction") public static class NotWorking {
-
-
-    @Test @Ignore("#92:under construction") public void issue92_8() {
-      trimming("1L*2+1L*99").to("1L*100");
-    }
-
-    @Test @Ignore("#92:under construction") public void issue92_8a() {
-      trimming("1L*2+1L*99").to("1L*100").to("100L");
-    }
-
+    //
   }
 
   public static class Working {
@@ -139,7 +130,15 @@ public class ArithmeticTest {
     @Test  public void issue92_39() {
       trimming("100L*9.0").to("900.0");
     }
-    
+    @Test  public void issue92_40() {
+      trimming("100L-9L").to("91L");
+    }
+    @Test  public void issue92_41() {
+      trimming("100L-9.0").to("91.0");
+    }
+    @Test  public void issue92_42() {
+      trimming("100L-9").to("91L");
+    }
     @Test public void issue92_1a() {
       trimming("1.+2*3 / 4 - 5").to("2*3/4+1.-5").to("6/4+1.-5").to("1+1.-5").to("2.0-5").to("-3.0");
     }
@@ -151,6 +150,11 @@ public class ArithmeticTest {
     @Test public void issue92_15() {
       trimming("9*6-4").to("54-4").to("50");
     }
+    
+    @Test public void issue92_8() {
+      trimming("1L*2+1L*99").to("2L+99L").to("101L");
+    }
+
     
   }
 }

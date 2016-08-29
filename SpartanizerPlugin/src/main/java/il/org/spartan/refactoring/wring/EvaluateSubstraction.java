@@ -37,6 +37,8 @@ public class EvaluateSubstraction extends Wring.ReplaceCurrentNode<InfixExpressi
         return replacementInt(extract.allOperands(e),e);
       case DOUBLE :
         return replacementDouble(extract.allOperands(e),e);
+      case LONG :
+        return replacementLong(extract.allOperands(e),e);
       default:
         return null;
     }
@@ -70,5 +72,20 @@ public class EvaluateSubstraction extends Wring.ReplaceCurrentNode<InfixExpressi
       index++;
     }
     return e.getAST().newNumberLiteral(Double.toString(sub));
+  }
+  
+  private static ASTNode replacementLong(final List<Expression> es, InfixExpression e) {
+    if (es.isEmpty()&& !EvaluateAux.isCompitable(es.get(0)))
+      return null;
+    long sub = EvaluateAux.extractLong(es.get(0));
+    int index = 0;
+    for (final Expression ¢ : es) {
+      if ((!(¢ instanceof NumberLiteral) || !EvaluateAux.isNumber(¢)))
+        return null;
+      if (index != 0)
+        sub = sub - EvaluateAux.extractLong(¢);
+      index++;
+    }
+    return e.getAST().newNumberLiteral(Long.toString(sub)+"L");
   }
 }
