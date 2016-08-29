@@ -22,11 +22,11 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2016 */
 public class EvaluateDivision extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
   @Override public String description() {
-    return "Evaluate division of int numbers";
+    return "Evaluate division of numbers";
   }
 
   @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
-    return "Evaluate division of int numbers";
+    return "Evaluate division of numbers";
   }
 
   @Override ASTNode replacement(final InfixExpression e) {
