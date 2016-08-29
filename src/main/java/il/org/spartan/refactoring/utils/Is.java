@@ -11,8 +11,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import il.org.spartan.refactoring.java.*;
-
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
  * read like a sentence phrase.
@@ -218,6 +216,14 @@ public enum Is {
     return is(n, INFIX_EXPRESSION);
   }
 
+  public static boolean infixMinus(final Expression e) {
+    return operator(asInfixExpression(e)) == MINUS2;
+  }
+
+  public static boolean infixPlus(final Expression e) {
+    return operator(asInfixExpression(e)) == PLUS2;
+  }
+
   public static boolean is(final ASTNode ¢, final int... types) {
     return ¢ != null && Funcs.intIsIn(¢.getNodeType(), types);
   }
@@ -311,6 +317,11 @@ public enum Is {
     return is(¢, TYPE_DECLARATION) && ((TypeDeclaration) ¢).isInterface();
   }
 
+  public static boolean isLiteral(final ASTNode ¢, final double d) {
+    final NumberLiteral ¢1 = Funcs.asNumberLiteral(¢);
+    return ¢1 != null && isLiteral(¢1.getToken(), d);
+  }
+
   /** @param ¢ JD
    * @return true if the given node is a literal or false otherwise */
   public static boolean isLiteral(final String token, final double d) {
@@ -358,16 +369,6 @@ public enum Is {
     return is(¢, METHOD_INVOCATION);
   }
 
-  /** @param n JD
-   * @return <code><b>true</b></code> <i>iff</i> the node is an Expression
-   *         Statement of type Post or Pre Expression with ++ or -- operator
-   *         false if node is not an Expression Statement or its a Post or Pre
-   *         fix expression that its operator is not ++ or --
-   * @deprecated Use {@link #isIncrementOrDecrement(ASTNode)} instead */
-  @Deprecated public static boolean isNodeIncOrDecExp(final ASTNode n) {
-    return isIncrementOrDecrement(n);
-  }
-
   /** @param a the assignment who'¢ operator we want to check
    * @return true is the assignment'¢ operator is assign */
   public static boolean isOpAssign(final Assignment a) {
@@ -379,6 +380,23 @@ public enum Is {
    * @return true if declaration is private */
   public static boolean isPrivate(final BodyDeclaration ¢) {
     return (Modifier.PRIVATE & ¢.getModifiers()) != 0;
+  }
+
+  /** Checks if expression is simple.
+   * @param e an expression
+   * @return true iff argument is simple */
+  public static boolean isSimple(final Expression e) {
+    return is(e, //
+        BOOLEAN_LITERAL, //
+        CHARACTER_LITERAL, //
+        NULL_LITERAL, //
+        NUMBER_LITERAL, //
+        QUALIFIED_NAME, //
+        SIMPLE_NAME, //
+        STRING_LITERAL, //
+        THIS_EXPRESSION, //
+        TYPE_LITERAL //
+    );
   }
 
   /** @param ¢ JD
@@ -457,20 +475,37 @@ public enum Is {
     return ¢ != null && ¢.getOperator() == PrefixExpression.Operator.MINUS;
   }
 
-  /** Determine whether a node is an infix expression whose operator is
-   * non-associative.
-   * @param n JD
-   * @return <code><b>true</b></code> <i>iff</i> the parameter is a node which
-   *         is an infix expression whose operator is */
-  public static boolean nonAssociative(final ASTNode n) {
-    return Precedence.nonAssociative(asInfixExpression(n));
+  /** Determine whether an {@link Expression} is so basic that it never needs to
+   * be placed in parenthesis.
+   * @param e JD
+   * @return <code><b>true</b></code> <i>iff</i> the parameter is so basic that
+   *         it never needs to be placed in parenthesis. */
+  public static boolean noParenthesisRequired(final Expression e) {
+    return in(e.getClass(), //
+        BooleanLiteral.class, //
+        CharacterLiteral.class, //
+        ClassInstanceCreation.class, //
+        FieldAccess.class, //
+        MethodInvocation.class, //
+        Name.class, //
+        NullLiteral.class, //
+        NumberLiteral.class, //
+        ParenthesizedExpression.class, //
+        QualifiedName.class, //
+        SimpleName.class, //
+        StringLiteral.class, //
+        SuperFieldAccess.class, //
+        SuperMethodInvocation.class, //
+        ThisExpression.class, //
+        TypeLiteral.class, //
+        null);
   }
 
   /** Determine whether a node is the <code><b>null</b></code> keyword
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i>is thee <code><b>null</b></code>
    *         literal */
-  public static boolean null_(final ASTNode n) {
+  public static boolean nullLiteral(final ASTNode n) {
     return is(n, NULL_LITERAL);
   }
 
@@ -501,7 +536,7 @@ public enum Is {
   /** @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a prefix
    *         expression. */
-  public static boolean prefix(final ASTNode n) {
+  public static boolean prefixExpression(final ASTNode n) {
     return is(n, PREFIX_EXPRESSION);
   }
 
@@ -509,7 +544,7 @@ public enum Is {
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a return
    *         statement. */
-  public static boolean return_(final ASTNode n) {
+  public static boolean returnStatement(final ASTNode n) {
     return is(n, RETURN_STATEMENT);
   }
 
@@ -520,32 +555,6 @@ public enum Is {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a sequencer */
   public static boolean sequencer(final ASTNode n) {
     return Is.oneOf(n, RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT);
-  }
-
-  /** Determine whether an {@link Expression} is so basic that it never needs to
-   * be placed in parenthesis.
-   * @param e JD
-   * @return <code><b>true</b></code> <i>iff</i> the parameter is so basic that
-   *         it never needs to be placed in parenthesis. */
-  public static boolean simple(final Expression e) {
-    return in(e.getClass(), //
-        BooleanLiteral.class, //
-        CharacterLiteral.class, //
-        ClassInstanceCreation.class, //
-        FieldAccess.class, //
-        MethodInvocation.class, //
-        Name.class, //
-        NullLiteral.class, //
-        NumberLiteral.class, //
-        ParenthesizedExpression.class, //
-        QualifiedName.class, //
-        SimpleName.class, //
-        StringLiteral.class, //
-        SuperFieldAccess.class, //
-        SuperMethodInvocation.class, //
-        ThisExpression.class, //
-        TypeLiteral.class, //
-        null);
   }
 
   /** Determine whether a node is a simple name
@@ -590,7 +599,7 @@ public enum Is {
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> is the <code><b>this</b></code>
    *         keyword */
-  public static boolean this_(final ASTNode n) {
+  public static boolean thisLiteral(final ASTNode n) {
     return is(n, THIS_EXPRESSION);
   }
 
@@ -656,11 +665,6 @@ public enum Is {
     return isLiteral(Funcs.asBooleanLiteral(¢), b);
   }
 
-  public static boolean isLiteral(final ASTNode ¢, final double d) {
-    final NumberLiteral ¢1 = Funcs.asNumberLiteral(¢);
-    return ¢1 != null && isLiteral(¢1.getToken(), d);
-  }
-
   static boolean isLiteral(final ASTNode ¢, final int i) {
     final NumberLiteral ¢1 = Funcs.asNumberLiteral(¢);
     return ¢1 != null && isLiteral(¢1.getToken(), i);
@@ -711,30 +715,5 @@ public enum Is {
       if (i == j)
         return true;
     return false;
-  }
-
-  public static boolean infixPlus(final Expression e) {
-    return operator(asInfixExpression(e)) == PLUS2;
-  }
-
-  public static boolean infixMinus(final Expression e) {
-    return operator(asInfixExpression(e)) == MINUS2;
-  }
-
-  /** Checks if expression is simple.
-   * @param e an expression
-   * @return true iff argument is simple */
-  public static boolean isSimple(final Expression e) {
-    return is(e, //
-        BOOLEAN_LITERAL, //
-        CHARACTER_LITERAL, //
-        NULL_LITERAL, //
-        NUMBER_LITERAL, //
-        QUALIFIED_NAME, //
-        SIMPLE_NAME, //
-        STRING_LITERAL, //
-        THIS_EXPRESSION, //
-        TYPE_LITERAL //
-    );
   }
 }
