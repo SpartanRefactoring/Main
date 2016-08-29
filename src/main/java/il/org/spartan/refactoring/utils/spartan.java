@@ -5,7 +5,6 @@ import static il.org.spartan.refactoring.utils.Funcs.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.Type;
 
 public interface spartan {
   static String repeat(final int i, final char c) {

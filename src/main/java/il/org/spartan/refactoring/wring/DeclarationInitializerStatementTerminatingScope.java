@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.LocalInliner.*;
 
@@ -82,7 +83,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
     if (!lastIn(nextStatement, ss) || !penultimateIn(s, ss) || !Collect.definitionsOf(n).in(nextStatement).isEmpty())
       return null;
     final List<SimpleName> uses = Collect.usesOf(f.getName()).in(nextStatement);
-    if (!Is.sideEffectFree(initializer)) {
+    if (!sideEffects.free(initializer)) {
       if (uses.size() > 1)
         return null;
       for (final SimpleName use : uses)

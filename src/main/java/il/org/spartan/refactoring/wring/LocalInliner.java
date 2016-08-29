@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
+import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.utils.*;
 
 final class LocalInliner {
@@ -30,7 +31,7 @@ final class LocalInliner {
     }
 
     boolean canInlineInto(final ASTNode... ns) {
-      return Collect.definitionsOf(name).in(ns).isEmpty() && (Is.sideEffectFree(get()) || uses(ns).size() <= 1);
+      return Collect.definitionsOf(name).in(ns).isEmpty() && (sideEffects.free(get()) || uses(ns).size() <= 1);
     }
 
     boolean canSafelyInlineInto(final ASTNode... ns) {

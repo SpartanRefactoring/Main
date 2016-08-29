@@ -9,11 +9,10 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.utils.*;
-/**
- * @author Yossi Gil
+
+/** @author Yossi Gil
  * @since 2016 */
 public interface StringAnalyzer {
-
   /** Determine whether a <i>all</i> elements list of {@link Expression} are
    * provably not a string.
    * @param es JD

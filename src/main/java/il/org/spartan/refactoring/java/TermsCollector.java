@@ -7,7 +7,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.utils.*;
 
 public class TermsCollector {
