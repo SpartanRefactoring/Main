@@ -13,7 +13,8 @@ import il.org.spartan.refactoring.utils.*;
 /** TODO: Niv Issue*94
  * <p>
  * Tells how much we know about the type of of a variable, function, or
- * expression.
+ * expression. This should be conservative approximation to the real type of the
+ * entity, what a rational, but prudent programmer would case about the type
  * <p>
  * Dispatching in this class should emulate the type inference of Java. It is
  * simple to that by hard coding constants.
@@ -31,7 +32,7 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @author Niv Shalmon
  * @since 2016-08-XX */
-public enum RationalType {
+public enum PrudentType {
   // Those anonymous characters that known little or nothing about themselves
   NOTHING("none", "when nothing can be said, e.g., f(f(),f(f(f()),f()))"), //
   NONNULL("!null", "e.g., new Object() and that's about it"), //
@@ -55,25 +56,25 @@ public enum RationalType {
    * @return The most specific Type information that can be deduced about the
    *         expression, or {@link #NOTHING} if it cannot decide. Will never
    *         return null */
-  public static RationalType rationalType(final Expression e) {
-    return rationalType(e, null, null);
+  public static PrudentType prudent(final Expression e) {
+    return prudent(e, null, null);
   }
 
-  /** A version of {@link #rationalType(Expression)} that receives the operand's type
-   * for a single operand expression. The call kind(e,null) is equivalent to
-   * kind(e) */
-  static RationalType rationalType(final Expression e, final RationalType t) {
-    return rationalType(e, t, null);
+  /** A version of {@link #prudent(Expression)} that receives the operand's
+   * type for a single operand expression. The call kind(e,null) is equivalent
+   * to kind(e) */
+  static PrudentType prudent(final Expression e, final PrudentType t) {
+    return prudent(e, t, null);
   }
 
-  /** A version of {@link #rationalType(Expression)} that receives the operands' type
-   * for a two operand expression. The call kind(e,null,null) is equivalent to
-   * kind(e)
+  /** A version of {@link #prudent(Expression)} that receives the operands'
+   * type for a two operand expression. The call kind(e,null,null) is equivalent
+   * to kind(e)
    * @param t1 the type of the left hand operand of the expression, or null if
    *        unknown
    * @param t2 the type of the left hand operand of the expression, or null if
    *        unknown */
-  static RationalType rationalType(final Expression e, final RationalType t1, final RationalType t2) {
+  static PrudentType prudent(final Expression e, final PrudentType t1, final PrudentType t2) {
     switch (e.getNodeType()) {
       case NULL_LITERAL:
         return NULL;
@@ -84,25 +85,25 @@ public enum RationalType {
       case BOOLEAN_LITERAL:
         return BOOLEAN;
       case NUMBER_LITERAL:
-        return rationalType((NumberLiteral) e);
+        return prudentType((NumberLiteral) e);
       case CAST_EXPRESSION:
-        return rationalType((CastExpression) e);
+        return prudentType((CastExpression) e);
       case PREFIX_EXPRESSION:
-        return rationalType((PrefixExpression) e, t1);
+        return prudentType((PrefixExpression) e, t1);
       case INFIX_EXPRESSION:
-        return rationalType((InfixExpression) e, t1, t2);
+        return prudentType((InfixExpression) e, t1, t2);
       case POSTFIX_EXPRESSION:
-        return rationalType((PostfixExpression) e, t1);
+        return prudentType((PostfixExpression) e, t1);
       case PARENTHESIZED_EXPRESSION:
-        return rationalType((ParenthesizedExpression) e, t1);
+        return prudentType((ParenthesizedExpression) e, t1);
       case CLASS_INSTANCE_CREATION:
-        return rationalType((ClassInstanceCreation) e);
+        return prudentType((ClassInstanceCreation) e);
       default:
         return NOTHING;
     }
   }
 
-  private static RationalType rationalType(final NumberLiteral e) {
+  private static PrudentType prudentType(final NumberLiteral e) {
     final String ¢ = e.getToken();
     if (¢.matches("[0-9]+"))
       return INT;
@@ -113,37 +114,37 @@ public enum RationalType {
     return NUMERIC;
   }
 
-  private static RationalType rationalType(final CastExpression e) {
+  private static PrudentType prudentType(final CastExpression e) {
     return typeSwitch("" + extract.type(e), BAPTIZED);
   }
 
-  private static RationalType rationalType(final PrefixExpression e, final RationalType t1) {
+  private static PrudentType prudentType(final PrefixExpression e, final PrudentType t1) {
     final PrefixExpression.Operator o = e.getOperator();
-    final RationalType ¢ = t1 != null ? t1 : rationalType(e.getOperand());
+    final PrudentType ¢ = t1 != null ? t1 : prudent(e.getOperand());
     return ¢.under(o);
   }
 
-  private static RationalType rationalType(final InfixExpression e, final RationalType t1, final RationalType t2) {
+  private static PrudentType prudentType(final InfixExpression e, final PrudentType t1, final PrudentType t2) {
     final InfixExpression.Operator o = e.getOperator();
-    final RationalType ¢1 = t1 != null ? t1 : rationalType(e.getLeftOperand());
-    final RationalType ¢2 = t2 != null ? t2 : rationalType(e.getRightOperand());
+    final PrudentType ¢1 = t1 != null ? t1 : prudent(e.getLeftOperand());
+    final PrudentType ¢2 = t2 != null ? t2 : prudent(e.getRightOperand());
     return ¢1.underBinaryOperator(o, ¢2);
   }
 
-  private static RationalType rationalType(final PostfixExpression e, final RationalType t1) {
-    final RationalType ¢ = t1 != null ? t1 : rationalType(e.getOperand());
+  private static PrudentType prudentType(final PostfixExpression e, final PrudentType t1) {
+    final PrudentType ¢ = t1 != null ? t1 : prudent(e.getOperand());
     return ¢.asNumeric();
   }
 
-  private static RationalType rationalType(final ParenthesizedExpression e, final RationalType t) {
-    return t != null ? t : rationalType(e.getExpression());
+  private static PrudentType prudentType(final ParenthesizedExpression e, final PrudentType t) {
+    return t != null ? t : prudent(e.getExpression());
   }
 
-  private static RationalType rationalType(final ClassInstanceCreation e) {
+  private static PrudentType prudentType(final ClassInstanceCreation e) {
     return typeSwitch("" + e.getType(), NONNULL);
   }
 
-  private static RationalType typeSwitch(final String s, final RationalType $) {
+  private static PrudentType typeSwitch(final String s, final PrudentType $) {
     switch (s) {
       case "char":
       case "Character":
@@ -170,7 +171,7 @@ public enum RationalType {
   final String description;
   final String name;
 
-  RationalType(final String name, final String description) {
+  PrudentType(final String name, final String description) {
     this.name = name;
     this.description = description;
   }
@@ -182,7 +183,7 @@ public enum RationalType {
   /** @return one of {@link #BOOLEAN}, {@link #INT}, {@link #LONG},
    *         {@link #DOUBLE}, {@link #INTEGRAL} or {@link #NUMERIC}, in case it
    *         cannot decide */
-  private final RationalType under(final PrefixExpression.Operator o) {
+  private final PrudentType under(final PrefixExpression.Operator o) {
     assert o != null;
     return o == NOT ? BOOLEAN //
         : o != COMPLEMENT ? asNumeric() : asIntegralNonChar();
@@ -192,7 +193,7 @@ public enum RationalType {
    *         {@link #DOUBLE}, {@link #STRING}, {@link #INTEGRAL},
    *         {@link #NUMERIC}, or {@link #ALPHANUMERIC}, in case it cannot
    *         decide */
-  private final RationalType underBinaryOperator(final InfixExpression.Operator o, final RationalType k) {
+  private final PrudentType underBinaryOperator(final InfixExpression.Operator o, final PrudentType k) {
     if (o == PLUS2)
       return underPlus(k);
     if (in(o, //
@@ -220,7 +221,7 @@ public enum RationalType {
   /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE},
    *         {@link #STRING}, {@link #INTEGRAL}, {@link #NUMERIC} or
    *         {@link #ALPHANUMERIC}, in case it cannot decide */
-  private RationalType underPlus(final RationalType k) {
+  private PrudentType underPlus(final PrudentType k) {
     // addition with NULL or String must be a String
     if (in(STRING, this, k) || in(NULL, this, k))
       return STRING;
@@ -232,13 +233,13 @@ public enum RationalType {
 
   /** @return one of {@link #INT}, {@link #LONG}, {@link #INTEGRAL},
    *         {@link #DOUBLE}, or {@link #NUMERIC}, in case it cannot decide */
-  private RationalType underNumericOnlyOperator(final RationalType k) {
+  private PrudentType underNumericOnlyOperator(final PrudentType k) {
     if (!isNumeric())
       return asNumeric().underNumericOnlyOperator(k);
     assert k != null;
     assert this != ALPHANUMERIC : "Don't confuse " + NUMERIC + " with " + ALPHANUMERIC;
     assert isNumeric() : this + ": is for some reason not numeric ";
-    final RationalType $ = k.asNumeric();
+    final PrudentType $ = k.asNumeric();
     assert $ != null;
     assert $.isNumeric() : this + ": is for some reason not numeric ";
     // Double contaminates Numeric
@@ -257,9 +258,9 @@ public enum RationalType {
     return INT;
   }
 
-  private RationalType underIntegersOnlyOperator(final RationalType k) {
-    final RationalType ¢1 = asIntegralNonChar();
-    final RationalType ¢2 = k.asIntegralNonChar();
+  private PrudentType underIntegersOnlyOperator(final PrudentType k) {
+    final PrudentType ¢1 = asIntegralNonChar();
+    final PrudentType ¢2 = k.asIntegralNonChar();
     return ¢1 == INTEGRAL && ¢2 == INTEGRAL ? INTEGRAL : ¢1.max(¢2);
   }
 
@@ -271,13 +272,13 @@ public enum RationalType {
 
   /** @return one of {@link #INT}, {@link #LONG}, {@link #CHAR}, or
    *         {@link #INTEGRAL}, in case it cannot decide */
-  private RationalType asIntegral() {
+  private PrudentType asIntegral() {
     return isIntegral() ? this : INTEGRAL;
   }
 
   /** @return one of {@link #INT}, {@link #LONG}, or {@link #INTEGRAL}, in case
    *         it cannot decide */
-  private RationalType asIntegralNonChar() {
+  private PrudentType asIntegralNonChar() {
     return in(this, CHAR, INT) ? INT : asIntegral();
   }
 
@@ -291,7 +292,7 @@ public enum RationalType {
   /** @return one of {@link #INT}, {@link #LONG}, {@link #CHAR},
    *         {@link #DOUBLE}, {@link #INTEGRAL} or {@link #NUMERIC}, in case no
    *         further information is available */
-  private RationalType asNumeric() {
+  private PrudentType asNumeric() {
     return !isNumeric() ? NUMERIC : this != CHAR ? this : INT;
   }
 
@@ -302,7 +303,7 @@ public enum RationalType {
     return in(this, INT, LONG, CHAR, DOUBLE, INTEGRAL, NUMERIC, STRING, ALPHANUMERIC);
   }
 
-  private RationalType max(final RationalType ¢) {
+  private PrudentType max(final PrudentType ¢) {
     return ordinal() > ¢.ordinal() ? this : ¢;
   }
 }

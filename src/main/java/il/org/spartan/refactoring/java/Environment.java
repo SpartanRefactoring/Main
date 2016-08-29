@@ -176,12 +176,12 @@ class Information {
   /** The node at which this entry was created */
   public final ASTNode self;
   /** What do we know about the type of this definition */
-  public final RationalType rationalType;
+  public final PrudentType prudentType;
 
   // For now, nothing is known, we only maintain lists
   Information() {
     blockScope = self = null;
-    rationalType = null;
+    prudentType = null;
     hiding = null;
   }
 }
