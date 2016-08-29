@@ -12,13 +12,6 @@ import org.junit.runners.*;
 public class ArithmeticTest {
   @Ignore("#92:under construction") public static class NotWorking {
 
-    @Test public void issue92_1a() {
-      trimming("1.+2*3 / 4 - 5").to("-3.0"); // check it out...
-    }
-
-    @Test @Ignore("#92:under construction") public void issue92_7() {
-      trimming("3./4").to("0.75").to(null);
-    }
 
     @Test @Ignore("#92:under construction") public void issue92_8() {
       trimming("1L*2+1L*99").to("1L*100");
@@ -28,9 +21,6 @@ public class ArithmeticTest {
       trimming("1L*2+1L*99").to("1L*100").to("100L");
     }
 
-    @Test @Ignore("#92:under construction") public void issue92_15() {
-      trimming("9*6-4").to("54-4").to("50");
-    }
   }
 
   public static class Working {
@@ -122,17 +112,29 @@ public class ArithmeticTest {
     @Test public void issue92_4a() {
       trimming("1+1+3").to("5");
     }
-    @Test @Ignore("#92:under construction") public void issue92_6() {
-      trimming("5.*5.").to("25.");
+    @Test public void issue92_6() {
+      trimming("5.*5.").to("25.0");
     }
-    @Test @Ignore("#92:under construction") public void issue92_31() {
+    @Test public void issue92_31() {
       trimming("4-5.0").to("-1.0");
     }
-    @Test @Ignore("#92:under construction") public void issue92_32() {
-      trimming("4-5.0-9").to("-10.0");
+    @Test  public void issue92_33() {
+      trimming("5 *-9.0 +3").to("-45.0+3").to("3-45.0").to("-42.0");
     }
-    @Test @Ignore("#92:under construction") public void issue92_33() {
-      trimming("5 *-9.0 +3").to("-42.0");
+    @Test  public void issue92_34() {
+      trimming("100/2/5").to("10");
     }
+    @Test public void issue92_1a() {
+      trimming("1.+2*3 / 4 - 5").to("2*3/4+1.-5").to("6/4+1.-5").to("1+1.-5").to("2.0-5").to("-3.0");
+    }
+    
+    @Test public void issue92_7() {
+      trimming("3./4").to("0.75").to(null);
+    }
+    
+    @Test public void issue92_15() {
+      trimming("9*6-4").to("54-4").to("50");
+    }
+    
   }
 }

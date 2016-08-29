@@ -43,31 +43,31 @@ public class EvaluateSubstraction extends Wring.ReplaceCurrentNode<InfixExpressi
   }
 
   private static ASTNode replacementInt(final List<Expression> es, InfixExpression e) {
-    if (es.isEmpty() || !(es.get(0) instanceof NumberLiteral) || !EvaluateAux.isInt(es.get(0)))
+    if (es.isEmpty() && !EvaluateAux.isCompitable(es.get(0)))
       return null;
-    int sub = Integer.parseInt(((NumberLiteral) es.get(0)).getToken());
+    int sub = EvaluateAux.extractInt(es.get(0));
     int index = 0;
     for (final Expression ¢ : es) {
       if ((!(¢ instanceof NumberLiteral) || !EvaluateAux.isInt(¢)))
         return null;
       if (index != 0)
-        sub = sub - Integer.parseInt(((NumberLiteral) ¢).getToken());
+        sub = sub - EvaluateAux.extractInt(¢);
       ++index;
     }
     return e.getAST().newNumberLiteral(Integer.toString(sub));
   }
   
   private static ASTNode replacementDouble(final List<Expression> es, InfixExpression e) {
-    if (es.isEmpty() || !(es.get(0) instanceof NumberLiteral) || !EvaluateAux.isNumber(es.get(0)))
+    if (es.isEmpty()&& !EvaluateAux.isCompitable(es.get(0)))
       return null;
-    double sub = Double.parseDouble(((NumberLiteral) es.get(0)).getToken());
+    double sub = EvaluateAux.extractDouble(es.get(0));
     int index = 0;
     for (final Expression ¢ : es) {
       if ((!(¢ instanceof NumberLiteral) || !EvaluateAux.isNumber(¢)))
         return null;
       if (index != 0)
-        sub = sub - Integer.parseInt(((NumberLiteral) ¢).getToken());
-      ++index;
+        sub = sub - EvaluateAux.extractDouble(¢);
+      index++;
     }
     return e.getAST().newNumberLiteral(Double.toString(sub));
   }

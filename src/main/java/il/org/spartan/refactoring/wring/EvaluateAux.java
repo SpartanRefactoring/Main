@@ -18,6 +18,19 @@ public class EvaluateAux {
     return e instanceof NumberLiteral && ((NumberLiteral) e).getToken().matches("[0-9]+\\.[0-9]?");
   }
   
+  public static boolean isMinusDouble(Expression e){
+    return (e instanceof PrefixExpression) && ((PrefixExpression) e).getOperator() == PrefixExpression.Operator.MINUS
+        && (((PrefixExpression) e).getOperand() instanceof NumberLiteral) 
+        && ((NumberLiteral)((PrefixExpression) e).getOperand()).getToken().matches("[0-9]+\\.[0-9]?");
+  }
+  
+  public static boolean isMinusInt(Expression e){
+    return (e instanceof PrefixExpression) && ((PrefixExpression) e).getOperator() == PrefixExpression.Operator.MINUS
+        && (((PrefixExpression) e).getOperand() instanceof NumberLiteral) 
+        && ((NumberLiteral)((PrefixExpression) e).getOperand()).getToken().matches("[0-9]+");
+  }
+  
+  
   /* private static boolean isLong(Expression e){
   if(!(e instanceof NumberLiteral))
     return false;
@@ -26,14 +39,13 @@ public class EvaluateAux {
   
  
  static boolean isCompitable(Expression e){
-    
    return ((e instanceof NumberLiteral && isNumber(e))
        || ((e instanceof PrefixExpression) && ((PrefixExpression) e).getOperator() == PrefixExpression.Operator.MINUS
        && (((PrefixExpression) e).getOperand() instanceof NumberLiteral)));
   } 
  
  static boolean isNumber(Expression e) {
-   return isInt(e)||isDouble(e);
+   return isInt(e)||isDouble(e)||isMinusDouble(e)||isMinusInt(e);
 }
 
 static EvaluateAux.Type getEvaluatedType(InfixExpression e){
@@ -42,7 +54,7 @@ static EvaluateAux.Type getEvaluatedType(InfixExpression e){
     for (final Expression ¢ : operands){
       if(!isCompitable(¢))
         return EvaluateAux.Type.BAD;
-      if(EvaluateAux.isDouble(¢))
+      if(EvaluateAux.isDouble(¢) || isMinusDouble(¢) )
         return EvaluateAux.Type.DOUBLE;
     }
     return EvaluateAux.Type.INT;

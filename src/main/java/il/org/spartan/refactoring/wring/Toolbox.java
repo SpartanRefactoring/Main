@@ -66,7 +66,7 @@ public class Toolbox {
              * this generates many bugs --yg */
             // new InfixMultiplicationDistributive(), //
             new EvaluateMultiplication(), //
-            new EvaluateDivisionInt(), //
+            new EvaluateDivision(), //
             new InfixComparisonSizeToZero(), //
             new InfixSubtractionZero(), //
             new InfixAdditionSubtractionExpand(), //
