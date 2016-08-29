@@ -21,7 +21,7 @@ public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<I
   // o, final IVariableBinding b, final StringLiteral l) {
   // }
   @Override ASTNode replacement(InfixExpression e) {
-    if (!Is.infixPlus(e))
+    if (!iz.infixPlus(e))
       return null;
     final Expression right = right(e);
     assert right != null;
