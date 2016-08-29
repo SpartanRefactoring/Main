@@ -48,28 +48,25 @@ public enum extract {
     };
   }
 
+  /** Determines whether a give {@link ASTNode} includes precisely one
+   * {@link Statement}, and return this statement.
+   * @param ¢ The node from which to return statement.
+   * @return single return statement contained in the parameter, or
+   *         <code><b>null</b></code> if no such value exists. */
+  public static ReturnStatement asReturn(final ASTNode ¢) {
+    return asReturn(singleStatement(¢));
+  }
+
   /** @param n a statement or block to extract the assignment from
    * @return null if the block contains more than one statement or if the
    *         statement is not an assignment or the assignment if it exists */
   public static Assignment assignment(final ASTNode n) {
     final ExpressionStatement e = extract.expressionStatement(n);
-    return e == null ? null : asAssignment(e.getExpression());
+    return e == null ? null : az.assignment(e.getExpression());
   }
 
   public static CompilationUnit compilationUnit(final ASTNode ¢) {
     return (CompilationUnit) AncestorSearch.forType(COMPILATION_UNIT).from(¢);
-  }
-
-  public static InfixExpression.Operator operator(final InfixExpression e) {
-    return e == null ? null : e.getOperator();
-  }
-
-  public static PrefixExpression.Operator operator(final PrefixExpression e) {
-    return e == null ? null : e.getOperator();
-  }
-
-  public static PostfixExpression.Operator operator(final PostfixExpression e) {
-    return e == null ? null : e.getOperator();
   }
 
   /** @param ¢ JD
@@ -77,7 +74,7 @@ public enum extract {
    *         type and null otherwise */
   public static ASTNode containerType(final ASTNode ¢) {
     for (final ASTNode $ : ancestors(¢.getParent()))
-      if (Is.is($, ANONYMOUS_CLASS_DECLARATION //
+      if (iz.is($, ANONYMOUS_CLASS_DECLARATION //
           , ANNOTATION_TYPE_DECLARATION //
           , ENUM_DECLARATION //
           , TYPE_DECLARATION //
@@ -93,8 +90,8 @@ public enum extract {
    *         version of it */
   public static Expression core(final Expression $) {
     return $ == null ? $ //
-        : Is.is($, PARENTHESIZED_EXPRESSION) ? core(Funcs.asParenthesizedExpression($).getExpression()) //
-            : Is.is($, PREFIX_EXPRESSION) ? core(asPrefixExpression($)) //
+        : iz.is($, PARENTHESIZED_EXPRESSION) ? core(az.parenthesizedExpression($).getExpression()) //
+            : iz.is($, PREFIX_EXPRESSION) ? core(az.prefixExpression($)) //
                 : $;
   }
 
@@ -151,12 +148,16 @@ public enum extract {
     }
   }
 
+  public static Expression expression(final CastExpression $) {
+    return core($.getExpression());
+  }
+
   public static Expression expression(final ClassInstanceCreation $) {
     return core($.getExpression());
   }
 
-  public static Expression expression(final CastExpression $) {
-    return core($.getExpression());
+  public static Expression expression(final ConditionalExpression e) {
+    return core(e.getExpression());
   }
 
   public static Expression expression(final DoStatement $) {
@@ -165,10 +166,6 @@ public enum extract {
 
   public static Expression expression(final ExpressionStatement $) {
     return $ == null ? null : core($.getExpression());
-  }
-
-  public static Expression receiver(final MethodInvocation $) {
-    return core($.getExpression());
   }
 
   public static Expression expression(final ParenthesizedExpression $) {
@@ -183,17 +180,13 @@ public enum extract {
     return core($.getExpression());
   }
 
-  public static Expression expression(final ConditionalExpression e) {
-    return core(e.getExpression());
-  }
-
   /** Convert, is possible, an {@link ASTNode} to a {@link ExpressionStatement}
    * @param n a statement or a block to extract the expression statement from
    * @return expression statement if n is a block or an expression statement or
    *         null if it not an expression statement or if the block contains
    *         more than one statement */
   public static ExpressionStatement expressionStatement(final ASTNode n) {
-    return n == null ? null : asExpressionStatement(extract.singleStatement(n));
+    return n == null ? null : az.expressionStatement(extract.singleStatement(n));
   }
 
   /** Search for a {@link PrefixExpression} in the tree rooted at an
@@ -307,7 +300,7 @@ public enum extract {
    * @return single {@link IfStatement} embedded in the parameter or
    *         <code><b>null</b></code> if not such statements exists. */
   public static IfStatement ifStatement(final ASTNode n) {
-    return asIfStatement(extract.singleStatement(n));
+    return az.ifStatement(extract.singleStatement(n));
   }
 
   /** Find the last statement residing under a given {@link Statement}
@@ -325,8 +318,8 @@ public enum extract {
    *         exists. */
   public static MethodDeclaration methodDeclaration(final ASTNode n) {
     for (ASTNode $ = n; $ != null; $ = $.getParent())
-      if (Is.methodDeclaration($))
-        return asMethodDeclaration($);
+      if (iz.methodDeclaration($))
+        return az.methodDeclaration($);
     return null;
   }
 
@@ -334,7 +327,7 @@ public enum extract {
    * @return method invocation if it exists or null if it doesn't or if the
    *         block contains more than one statement */
   public static MethodInvocation methodInvocation(final ASTNode n) {
-    return asMethodInvocation(extract.expressionStatement(n).getExpression());
+    return az.methodInvocation(extract.expressionStatement(n).getExpression());
   }
 
   public static SimpleName name(final MethodInvocation i) {
@@ -358,7 +351,7 @@ public enum extract {
    * @return {@link IfStatement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
   public static IfStatement nextIfStatement(final ASTNode n) {
-    return asIfStatement(nextStatement(n));
+    return az.ifStatement(nextStatement(n));
   }
 
   /** Extract the {@link ReturnStatement} that immediately follows a given node
@@ -366,7 +359,7 @@ public enum extract {
    * @return {@link ReturnStatement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
   public static ReturnStatement nextReturn(final ASTNode n) {
-    return asReturnStatement(nextStatement(n));
+    return az.returnStatement(nextStatement(n));
   }
 
   /** Extract the {@link Statement} that immediately follows a given node.
@@ -384,7 +377,7 @@ public enum extract {
   public static Statement nextStatement(final Statement s) {
     if (s == null)
       return null;
-    final Block b = asBlock(s.getParent());
+    final Block b = az.block(s.getParent());
     return b == null ? null : next(s, extract.statements(b));
   }
 
@@ -419,6 +412,22 @@ public enum extract {
     return $;
   }
 
+  public static InfixExpression.Operator operator(final InfixExpression e) {
+    return e == null ? null : e.getOperator();
+  }
+
+  public static PostfixExpression.Operator operator(final PostfixExpression e) {
+    return e == null ? null : e.getOperator();
+  }
+
+  public static PrefixExpression.Operator operator(final PrefixExpression e) {
+    return e == null ? null : e.getOperator();
+  }
+
+  public static Expression receiver(final MethodInvocation $) {
+    return core($.getExpression());
+  }
+
   /** Finds the expression returned by a return statement
    * @param n a node to extract an expression from
    * @return null if the statement is not an expression or return statement or
@@ -434,7 +443,7 @@ public enum extract {
    *         return it; <code><b>null</b></code> if not such statements
    *         exists. */
   public static ReturnStatement returnStatement(final ASTNode n) {
-    return asReturnStatement(extract.singleStatement(n));
+    return az.returnStatement(extract.singleStatement(n));
   }
 
   /** Finds the single statement in the <code><b>else</b></code> branch of an
@@ -468,8 +477,8 @@ public enum extract {
    *         <code><b>null</b></code>, if no such statement exists. */
   public static Statement statement(final ASTNode n) {
     for (ASTNode $ = n; $ != null; $ = $.getParent())
-      if (Is.statement($))
-        return asStatement($);
+      if (iz.statement($))
+        return az.asStatement($);
     return null;
   }
 
@@ -487,7 +496,7 @@ public enum extract {
    * @return null if the statement is not an expression or return statement or
    *         the expression if they are */
   public static Expression throwExpression(final ASTNode n) {
-    final ThrowStatement $ = asThrowStatement(extract.singleStatement(n));
+    final ThrowStatement $ = az.throwStatement(extract.singleStatement(n));
     return $ == null ? null : $.getExpression();
   }
 
@@ -496,7 +505,7 @@ public enum extract {
    * @return single {@link ThrowStatement} embedded in the parameter, and return
    *         it; <code><b>null</b></code> if not such statements exists. */
   public static ThrowStatement throwStatement(final ASTNode n) {
-    return asThrowStatement(extract.singleStatement(n));
+    return az.throwStatement(extract.singleStatement(n));
   }
 
   public static Type type(final CastExpression e) {

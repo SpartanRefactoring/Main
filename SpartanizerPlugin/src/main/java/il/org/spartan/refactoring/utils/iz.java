@@ -16,7 +16,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
  * read like a sentence phrase.
  * @author Yossi Gil
  * @since 2015-07-16 */
-public enum Is {
+public enum iz {
   ;
   /** Determine whether a variable declaration is final or not
    * @param s some declaration
@@ -45,7 +45,7 @@ public enum Is {
   /** @param s JD
    * @return true if the parameter is an essential block or false otherwise */
   public static boolean blockEssential(final Statement s) {
-    return blockEssential(asIfStatement(s));
+    return blockEssential(az.ifStatement(s));
   }
 
   /** @param s JD
@@ -55,14 +55,14 @@ public enum Is {
   }
 
   public static boolean blockRequired(final Statement s) {
-    final IfStatement s1 = asIfStatement(s);
+    final IfStatement s1 = az.ifStatement(s);
     return blockRequiredInReplacement(s1, s1);
   }
 
   public static boolean blockRequiredInReplacement(final IfStatement old, final IfStatement newIf) {
     if (newIf == null || old != newIf && elze(old) == null == (elze(newIf) == null))
       return false;
-    final IfStatement parent = asIfStatement(parent(old));
+    final IfStatement parent = az.ifStatement(parent(old));
     return parent != null && then(parent) == old && (elze(parent) == null || elze(newIf) == null)
         && (elze(parent) != null || elze(newIf) != null || blockRequiredInReplacement(parent, newIf));
   }
@@ -117,7 +117,7 @@ public enum Is {
    *         whose operator is
    *         {@link org.eclipse.jdt.core.dom.InfixExpression.Operator#CONDITIONAL_OR} */
   public static boolean conditionalOr(final Expression e) {
-    return conditionalOr(asInfixExpression(e));
+    return conditionalOr(az.infixExpression(e));
   }
 
   /** Check whether an expression is a "conditional or" (||)
@@ -142,7 +142,7 @@ public enum Is {
       case THIS_EXPRESSION:
         return true;
       case PREFIX_EXPRESSION:
-        return Is.constant(extract.core(((PrefixExpression) e).getOperand()));
+        return iz.constant(extract.core(((PrefixExpression) e).getOperand()));
       default:
         return false;
     }
@@ -154,7 +154,7 @@ public enum Is {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an operator on
    *         which the de Morgan laws apply. */
   public static boolean deMorgan(final InfixExpression e) {
-    return Is.deMorgan(e.getOperator());
+    return iz.deMorgan(e.getOperator());
   }
 
   /** Check whether an operator is susceptible for applying one of the two de
@@ -217,11 +217,11 @@ public enum Is {
   }
 
   public static boolean infixMinus(final Expression e) {
-    return operator(asInfixExpression(e)) == MINUS2;
+    return operator(az.infixExpression(e)) == MINUS2;
   }
 
   public static boolean infixPlus(final Expression e) {
-    return operator(asInfixExpression(e)) == PLUS2;
+    return operator(az.infixExpression(e)) == PLUS2;
   }
 
   public static boolean is(final ASTNode ¢, final int... types) {
@@ -255,7 +255,7 @@ public enum Is {
   }
 
   public static boolean isEmptyStringLiteral(final ASTNode ¢) {
-    return Is.isLiteral(¢, "");
+    return iz.isLiteral(¢, "");
   }
 
   public static boolean isEnumConstantDeclaration(final ASTNode ¢) {
@@ -299,7 +299,7 @@ public enum Is {
       case POSTFIX_EXPRESSION:
         return in(((PostfixExpression) n).getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
       case PREFIX_EXPRESSION:
-        return in(asPrefixExpression(n).getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT);
+        return in(az.prefixExpression(n).getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT);
       default:
         return false;
     }
@@ -318,7 +318,7 @@ public enum Is {
   }
 
   public static boolean isLiteral(final ASTNode ¢, final double d) {
-    final NumberLiteral ¢1 = Funcs.asNumberLiteral(¢);
+    final NumberLiteral ¢1 = az.numberLiteral(¢);
     return ¢1 != null && isLiteral(¢1.getToken(), d);
   }
 
@@ -335,25 +335,25 @@ public enum Is {
   /** @param ¢ JD
    * @return true if the given node is a literal false or false otherwise */
   public static boolean isLiteralFalse(final ASTNode ¢) {
-    return Is.isLiteral(¢, false);
+    return iz.isLiteral(¢, false);
   }
 
   /** @param ¢ JD
    * @return true if the given node is a literal 1 or false otherwise */
   public static boolean isLiteralOne(final ASTNode ¢) {
-    return Is.isLiteral(¢, 1);
+    return iz.isLiteral(¢, 1);
   }
 
   /** @param ¢ JD
    * @return true if the given node is a literal true or false otherwise */
   public static boolean isLiteralTrue(final ASTNode ¢) {
-    return Is.isLiteral(¢, true);
+    return iz.isLiteral(¢, true);
   }
 
   /** @param ¢ JD
    * @return true if the given node is a literal 0 or false otherwise */
   public static boolean isLiteralZero(final ASTNode ¢) {
-    return Is.isLiteral(¢, 0);
+    return iz.isLiteral(¢, 0);
   }
 
   /** @param ¢ JD
@@ -464,7 +464,7 @@ public enum Is {
   }
 
   public static boolean negative(final Expression e) {
-    return negative(asPrefixExpression(e)) || negative(asNumberLiteral(e));
+    return negative(az.prefixExpression(e)) || negative(az.numberLiteral(e));
   }
 
   public static boolean negative(final NumberLiteral ¢) {
@@ -515,7 +515,7 @@ public enum Is {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a block
    *         statement */
   public static boolean numericLiteral(final Expression e) {
-    return Is.oneOf(e, CHARACTER_LITERAL, NUMBER_LITERAL);
+    return iz.oneOf(e, CHARACTER_LITERAL, NUMBER_LITERAL);
   }
 
   /** Determine whether the type of an {@link ASTNode} node is one of given list
@@ -525,6 +525,10 @@ public enum Is {
    *         returns one of the types provided as parameters */
   public static boolean oneOf(final ASTNode n, final int... types) {
     return n != null && isOneOf(n.getNodeType(), types);
+  }
+
+  public static boolean parenthesizeExpression(final Expression ¢) {
+    return is(¢, PARENTHESIZED_EXPRESSION);
   }
 
   /** @param a the assignment who's operator we want to check
@@ -554,7 +558,7 @@ public enum Is {
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a sequencer */
   public static boolean sequencer(final ASTNode n) {
-    return Is.oneOf(n, RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT);
+    return iz.oneOf(n, RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT);
   }
 
   /** Determine whether a node is a simple name
@@ -578,7 +582,7 @@ public enum Is {
    * @param s JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a statement */
   public static boolean singletonThen(final IfStatement s) {
-    return Is.singletonStatement(then(s));
+    return iz.singletonStatement(then(s));
   }
 
   /** Determine whether a node is a {@link Statement}
@@ -609,7 +613,7 @@ public enum Is {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a block
    *         statement */
   public static boolean thisOrNull(final Expression e) {
-    return Is.oneOf(e, NULL_LITERAL, THIS_EXPRESSION);
+    return iz.oneOf(e, NULL_LITERAL, THIS_EXPRESSION);
   }
 
   /** Determine whether a given {@link Statement} is an {@link EmptyStatement}
@@ -653,29 +657,29 @@ public enum Is {
   static boolean blockEssential(final IfStatement s) {
     if (s == null)
       return false;
-    final Block b = asBlock(parent(s));
+    final Block b = az.block(parent(s));
     if (b == null)
       return false;
-    final IfStatement parent = asIfStatement(parent(b));
+    final IfStatement parent = az.ifStatement(parent(b));
     return parent != null && (elze(parent) == null || recursiveElze(s) == null)
         && (elze(parent) != null || recursiveElze(s) != null || blockRequiredInReplacement(parent, s));
   }
 
   static boolean isLiteral(final ASTNode ¢, final boolean b) {
-    return isLiteral(Funcs.asBooleanLiteral(¢), b);
+    return isLiteral(az.booleanLiteral(¢), b);
   }
 
   static boolean isLiteral(final ASTNode ¢, final int i) {
-    final NumberLiteral ¢1 = Funcs.asNumberLiteral(¢);
+    final NumberLiteral ¢1 = az.numberLiteral(¢);
     return ¢1 != null && isLiteral(¢1.getToken(), i);
   }
 
   static boolean isLiteral(final ASTNode ¢, final long l) {
-    return isLiteral(Funcs.asNumberLiteral(¢).getToken(), l);
+    return isLiteral(az.numberLiteral(¢).getToken(), l);
   }
 
   static boolean isLiteral(final ASTNode ¢, final String s) {
-    return isLiteral(Funcs.asStringLiteral(¢), s);
+    return isLiteral(az.stringLiteral(¢), s);
   }
 
   static boolean isLiteral(final BooleanLiteral ¢, final boolean b) {

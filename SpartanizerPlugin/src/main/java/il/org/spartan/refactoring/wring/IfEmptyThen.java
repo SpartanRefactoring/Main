@@ -29,10 +29,10 @@ public final class IfEmptyThen extends Wring.ReplaceCurrentNode<IfStatement> imp
 
   @Override Statement replacement(final IfStatement s) {
     final IfStatement $ = subject.pair(elze(s), null).toNot(s.getExpression());
-    return !Is.blockRequiredInReplacement(s, $) ? $ : subject.statement($).toBlock();
+    return !iz.blockRequiredInReplacement(s, $) ? $ : subject.statement($).toBlock();
   }
 
   @Override boolean scopeIncludes(final IfStatement s) {
-    return s != null && Is.vacuousThen(s) && !Is.vacuousElse(s);
+    return s != null && iz.vacuousThen(s) && !iz.vacuousElse(s);
   }
 }

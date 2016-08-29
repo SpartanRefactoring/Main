@@ -17,7 +17,7 @@ public enum Have {
    *         that is a boolean literal. */
   public static boolean booleanLiteral(final Expression... es) {
     for (final Expression e : es)
-      if (Is.booleanLiteral(e))
+      if (iz.booleanLiteral(e))
         return true;
     return false;
   }
@@ -28,7 +28,7 @@ public enum Have {
    *         that is a boolean literal. */
   public static boolean booleanLiteral(final Iterable<Expression> es) {
     for (final Expression e : es)
-      if (Is.booleanLiteral(e))
+      if (iz.booleanLiteral(e))
         return true;
     return false;
   }
@@ -39,7 +39,7 @@ public enum Have {
    *         the boolean literal <code><b>false</b></code> */
   public static boolean falseLiteral(final List<Expression> es) {
     for (final Expression e : es)
-      if (Is.isLiteralFalse(e))
+      if (iz.isLiteralFalse(e))
         return true;
     return false;
   }
@@ -50,7 +50,7 @@ public enum Have {
    *         that is a literal. */
   public static boolean literal(final Expression... es) {
     for (final Expression e : es)
-      if (Is.literal(e))
+      if (iz.literal(e))
         return true;
     return false;
   }
@@ -61,7 +61,7 @@ public enum Have {
    *         that is a literal. */
   public static boolean literal(final List<Expression> es) {
     for (final Expression e : es)
-      if (Is.literal(e))
+      if (iz.literal(e))
         return true;
     return false;
   }
@@ -72,7 +72,7 @@ public enum Have {
    *         that is a numeric literal. */
   public static boolean numericLiteral(final Expression... es) {
     for (final Expression e : es)
-      if (Is.numericLiteral(e))
+      if (iz.numericLiteral(e))
         return true;
     return false;
   }
@@ -83,7 +83,7 @@ public enum Have {
    *         that is a numeric literal. */
   public static boolean numericLiteral(final Iterable<Expression> es) {
     for (final Expression e : es)
-      if (Is.numericLiteral(e))
+      if (iz.numericLiteral(e))
         return true;
     return false;
   }
@@ -94,7 +94,7 @@ public enum Have {
    *         the boolean literal <code><b>true</b></code> */
   public static boolean trueLiteral(final List<Expression> es) {
     for (final Expression e : es)
-      if (Is.isLiteralTrue(e))
+      if (iz.isLiteralTrue(e))
         return true;
     return false;
   }

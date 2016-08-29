@@ -65,7 +65,7 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements 
     return commonPrefix.isEmpty() ? null : new Rewrite(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final IfStatement newIf = replacement();
-        if (!Is.block(s.getParent())) {
+        if (!iz.block(s.getParent())) {
           if (newIf != null)
             commonPrefix.add(newIf);
           r.replace(s, subject.ss(commonPrefix).toBlock(), g);

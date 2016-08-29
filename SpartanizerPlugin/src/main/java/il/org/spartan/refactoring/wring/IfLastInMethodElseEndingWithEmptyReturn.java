@@ -44,10 +44,10 @@ public final class IfLastInMethodElseEndingWithEmptyReturn extends Wring<IfState
   }
 
   @Override Rewrite make(final IfStatement s) {
-    final Block b = asBlock(s.getParent());
+    final Block b = az.block(s.getParent());
     if (b == null || !(b.getParent() instanceof MethodDeclaration) || !lastIn(s, statements(b)))
       return null;
-    final ReturnStatement deleteMe = asReturnStatement(extract.lastStatement(elze(s)));
+    final ReturnStatement deleteMe = az.returnStatement(extract.lastStatement(elze(s)));
     return deleteMe == null || deleteMe.getExpression() != null ? null : new Rewrite(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(deleteMe, s.getAST().newEmptyStatement(), g);

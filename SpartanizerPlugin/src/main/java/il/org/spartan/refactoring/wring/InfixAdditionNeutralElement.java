@@ -25,7 +25,7 @@ public final class InfixAdditionNeutralElement extends ReplaceCurrentNode<InfixE
   private static ASTNode replacement(final List<Expression> es) {
     final List<Expression> $ = new ArrayList<>();
     for (final Expression ¢ : es)
-      if (!Is.isLiteralZero(¢))
+      if (!iz.isLiteralZero(¢))
         $.add(¢);
     return $.size() == es.size() ? null : $.isEmpty() ? duplicate(first(es)) : $.size() == 1 ? duplicate(first($)) : subject.operands($).to(PLUS);
   }

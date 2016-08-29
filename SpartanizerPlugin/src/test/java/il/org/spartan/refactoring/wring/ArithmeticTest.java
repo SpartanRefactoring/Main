@@ -62,7 +62,19 @@ public class ArithmeticTest {
     }
 
     @Test public void issue92_19() {
-      trimming("4 * -9 + 5*5").to("5*5 +4*-9").to("25+-36").to("25-36").to("-11");
+      trimming("4*-9 + 5*5")//
+          .to("5*5 -4*-9")//
+          .to("5*5 +4*-9")//
+          .to("25+-36")//
+          .to("25-36")//
+          .to("-11");
+    }
+
+    @Test public void issue92_19a() {
+      trimming("4*-9")//
+          .to("-36")//
+          .to(null)//
+      ;
     }
 
     @Test public void issue92_20() {
@@ -126,7 +138,10 @@ public class ArithmeticTest {
     }
 
     @Test public void issue92_33() {
-      trimming("5 *-9.0 +3").to("-45.0+3").to("3-45.0").to("-42.0");
+      trimming("5 *-9.0 +3")//
+          .to("-45.0+3")//
+          .to("3-45.0")//
+          .to("-42.0").to(null);
     }
 
     @Test public void issue92_34() {

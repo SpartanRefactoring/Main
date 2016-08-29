@@ -350,7 +350,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
         TextEditGroup g);
 
     @Override final ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
-      if (!Is.variableDeclarationStatement(f.getParent()))
+      if (!iz.variableDeclarationStatement(f.getParent()))
         return null;
       final SimpleName n = f.getName();
       return n == null ? null : go(r, f, n, f.getInitializer(), nextStatement, g);

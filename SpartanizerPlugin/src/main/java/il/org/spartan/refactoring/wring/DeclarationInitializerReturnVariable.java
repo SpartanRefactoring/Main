@@ -33,7 +33,7 @@ public final class DeclarationInitializerReturnVariable extends Wring.VariableDe
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || hasAnnotation(f) || initializer instanceof ArrayInitializer)
       return null;
-    final ReturnStatement s = asReturnStatement(nextStatement);
+    final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null)
       return null;
     final Expression returnValue = extract.expression(s);

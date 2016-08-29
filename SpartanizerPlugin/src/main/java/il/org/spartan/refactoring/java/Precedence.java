@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.java;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.Funcs.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
@@ -28,7 +27,7 @@ public enum Precedence {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a node which
    *         is an infix expression whose operator is */
   public static boolean nonAssociative(final ASTNode n) {
-    return nonAssociative(asInfixExpression(n));
+    return nonAssociative(az.infixExpression(n));
   }
 
   /** *An empty <code><b>enum</b></code> for fluent programming. The name should
@@ -114,7 +113,7 @@ public enum Precedence {
    * @param n JD
    * @return precedence of the parameter */
   public static int of(final ASTNode n) {
-    return !il.org.spartan.refactoring.utils.Is.expression(n) ? UNDEFINED : Precedence.of(asExpression(n));
+    return !il.org.spartan.refactoring.utils.iz.expression(n) ? UNDEFINED : Precedence.of(az.expression(n));
   }
 
   /** Determine the precedence of the operator present on an {@link Expression}

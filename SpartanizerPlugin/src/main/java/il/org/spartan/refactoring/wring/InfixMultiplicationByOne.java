@@ -31,7 +31,7 @@ public final class InfixMultiplicationByOne extends ReplaceCurrentNode<InfixExpr
   }
 
   private static boolean isLiteralOne(final Expression ¢) {
-    return isLiteralOne(asNumberLiteral(¢));
+    return isLiteralOne(az.numberLiteral(¢));
   }
 
   private static boolean isLiteralOne(final NumberLiteral ¢) {

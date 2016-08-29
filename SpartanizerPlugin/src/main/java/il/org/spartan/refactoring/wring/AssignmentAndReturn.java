@@ -30,10 +30,10 @@ public final class AssignmentAndReturn extends Wring.ReplaceToNextStatement<Assi
   }
 
   @Override ASTRewrite go(final ASTRewrite r, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
-    final Statement parent = asStatement(a.getParent());
+    final Statement parent = az.asStatement(a.getParent());
     if (parent == null || parent instanceof ForStatement)
       return null;
-    final ReturnStatement s = asReturnStatement(nextStatement);
+    final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null || !same(left(a), core(s.getExpression())))
       return null;
     r.remove(parent, g);

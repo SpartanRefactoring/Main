@@ -172,7 +172,7 @@ public final class BlockSimplify extends Wring.ReplaceCurrentNode<Block> impleme
         return b.getAST().newEmptyStatement();
       case 1:
         final Statement s = first(ss);
-        if (Is.blockEssential(s))
+        if (iz.blockEssential(s))
           return subject.statement(s).toBlock();
         return duplicate(s);
       default:

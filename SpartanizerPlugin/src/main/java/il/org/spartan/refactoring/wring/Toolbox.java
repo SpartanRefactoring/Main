@@ -75,7 +75,7 @@ public class Toolbox {
             new InfixDivisionMultiplicationNegatives(), //
             new EvaluateAddition(), //
             new EvaluateSubstraction(), //
-            new InfixAdditionZero(), // must be before InfixAdditionSort
+            new InfixTermsZero(), // must be before InfixAdditionSort
             new InfixAdditionSort(), //
             new InfixComparisonBooleanLiteral(), //
             new InfixConditionalAndTrue(), //
@@ -84,7 +84,7 @@ public class Toolbox {
             new InfixMultiplicationByOne(), //
             new InfixMultiplicationSort(), //
             new InfixPseudoAdditionSort(), //
-            new InfixSubstractionSort(), //
+            new InfixSubtractionSort(), //
             new InfixDivisonSort(), //
             new InfixConditionalCommon(), //
             null)

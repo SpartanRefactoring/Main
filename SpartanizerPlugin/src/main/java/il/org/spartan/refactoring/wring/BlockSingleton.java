@@ -29,11 +29,11 @@ public final class BlockSingleton extends Wring.ReplaceCurrentNode<Block> implem
 
   @Override Statement replacement(final Block b) {
     final ASTNode parent = parent(b);
-    return !(parent instanceof Statement) || Is.is(parent, ASTNode.TRY_STATEMENT, ASTNode.SYNCHRONIZED_STATEMENT) ? null
+    return !(parent instanceof Statement) || iz.is(parent, ASTNode.TRY_STATEMENT, ASTNode.SYNCHRONIZED_STATEMENT) ? null
         : replacement(onlyOne(statements(b)));
   }
 
   private static Statement replacement(final Statement $) {
-    return $ == null || Is.blockEssential($) ? null : duplicate($);
+    return $ == null || iz.blockEssential($) ? null : duplicate($);
   }
 }

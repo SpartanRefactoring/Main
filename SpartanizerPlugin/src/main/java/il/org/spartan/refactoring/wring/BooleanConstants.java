@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -13,7 +12,7 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2016-04-04 */
 public final class BooleanConstants extends Wring.ReplaceCurrentNode<MethodInvocation> implements Kind.Canonicalization {
   @Override String description(final MethodInvocation i) {
-    return "Replace valueOf (" + onlyArgument(i) + ") with Boolean." + asString(asBooleanLiteral(onlyArgument(i)));
+    return "Replace valueOf (" + onlyArgument(i) + ") with Boolean." + asString(az.booleanLiteral(onlyArgument(i)));
   }
 
   @Override Expression replacement(final MethodInvocation i) {
@@ -21,7 +20,7 @@ public final class BooleanConstants extends Wring.ReplaceCurrentNode<MethodInvoc
   }
 
   private static Expression replacement(final Expression e, final Expression $) {
-    return e == null || !"Boolean".equals(e.toString()) ? null : replacement(e, asBooleanLiteral($));
+    return e == null || !"Boolean".equals(e.toString()) ? null : replacement(e, az.booleanLiteral($));
   }
 
   private static Expression replacement(final Expression e, final BooleanLiteral l) {

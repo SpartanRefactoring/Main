@@ -125,7 +125,7 @@ public enum Collect {
        *         Expression in the parameter. */
       boolean consider(final List<? extends Expression> es) {
         for (final Expression e : es)
-          addFragments(fragments(asVariableDeclarationExpression(e)));
+          addFragments(fragments(az.variableDeclarationExpression(e)));
         return true;
       }
 
@@ -187,12 +187,12 @@ public enum Collect {
        *         {@link Expression} is equal to the ASTnode's provided by the
        *         closure (n) */
       boolean consider(final Expression e) {
-        return add(asSimpleName(e));
+        return add(az.asSimpleName(e));
       }
 
       boolean consider(final List<? extends Expression> initializers) {
         for (final Expression e : initializers)
-          addFragments(fragments(asVariableDeclarationExpression(e)));
+          addFragments(fragments(az.variableDeclarationExpression(e)));
         return true;
       }
 
