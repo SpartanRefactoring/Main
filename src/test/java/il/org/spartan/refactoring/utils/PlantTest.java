@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.refactoring.java.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) public class PlantTest {
   @Test public void plantIntoLess() {
@@ -33,7 +34,7 @@ import il.org.spartan.*;
   @Test public void plus() {
     final Expression e = Into.e("a + 2 < b");
     final Expression plus = extract.firstPlus(e);
-    azzert.that(plus.toString(), Is.notString(plus), is(true));
-    azzert.that(e.toString(), Is.notString(plus), is(true));
+    azzert.that(plus.toString(), StringAnalyzer.notString(plus), is(true));
+    azzert.that(e.toString(), StringAnalyzer.notString(plus), is(true));
   }
 }

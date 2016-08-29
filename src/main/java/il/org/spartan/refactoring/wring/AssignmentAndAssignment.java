@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** convert
@@ -50,7 +51,7 @@ public final class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<
     if (a1 == null)
       return null;
     final Expression right1 = getRight(a1);
-    if (right1 == null || !same(right, right1) || !Is.deterministic(right))
+    if (right1 == null || !same(right, right1) || !sideEffects.deterministic(right))
       return null;
     r.remove(parent, g);
     r.replace(right1, duplicate(a), g);
