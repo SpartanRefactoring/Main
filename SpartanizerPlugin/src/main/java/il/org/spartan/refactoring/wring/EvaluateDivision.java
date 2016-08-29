@@ -39,6 +39,8 @@ public class EvaluateDivision extends Wring.ReplaceCurrentNode<InfixExpression> 
         return replacementInt(extract.allOperands(e),e);
       case DOUBLE :
         return replacementDouble(extract.allOperands(e),e);
+      case LONG :
+        return replacementLong(extract.allOperands(e),e);
       default:
         return null;
     }
@@ -73,5 +75,20 @@ public class EvaluateDivision extends Wring.ReplaceCurrentNode<InfixExpression> 
       ++index;
     }
     return e.getAST().newNumberLiteral(Double.toString(divide));
+  }
+  
+  private static ASTNode replacementLong(final List<Expression> es, InfixExpression e) {
+    if (es.isEmpty() || !EvaluateAux.isCompitable(es.get(0)))
+      return null;
+    long divide = EvaluateAux.extractLong(es.get(0));
+    int index = 0;
+    for (final Expression ¢ : es) {
+      if (!EvaluateAux.isCompitable(¢))
+        return null;
+      if (index != 0)
+        divide = divide / EvaluateAux.extractLong(¢);
+      ++index;
+    }
+    return e.getAST().newNumberLiteral(Long.toString(divide)+"L");
   }
 }
