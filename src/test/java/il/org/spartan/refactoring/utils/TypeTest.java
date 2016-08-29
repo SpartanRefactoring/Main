@@ -18,135 +18,135 @@ public class TypeTest {
       fail("Not yet implemented");
     }
 
-    @Test public void test02() {
+    @Test public void test01() {
       azzert.that(kind(Into.e("2 + (2.0)*1L")),is(Type.DOUBLE));
     }
     
   }
 
+ 
   public static class Working {
-    @Test public void test01() {
-      azzert.that(Type.BOOLEAN, is(Type.BOOLEAN));
-    }
     
-    @Test public void test04(){
-      azzert.that(INT.under(PLUS1), is(INT));
-    }
-    
-    @Test public void test06(){
-      azzert.that(ALPHANUMERIC.under(PrefixExpression.Operator.COMPLEMENT), is(INTEGRAL));
-    }
-    
-    @Test public void test15(){
-      azzert.that(STRING.underBinaryOperator(PLUS2, STRING), is(STRING));
+    /* first batch of tests looks into specific inner cases of the under methods*/
+    @Test public void test02(){
+      azzert.that(kind(Into.e("+2"),INT), is(INT));
     }
     
     @Test public void test03(){
-      azzert.that(DOUBLE.under(DECREMENT_PRE), is(DOUBLE));
+      azzert.that(kind(Into.e("~2"),ALPHANUMERIC), is(INTEGRAL));
+    }
+     
+    @Ignore("creates NumberLiteral instead of PrefixExpression, need to figure out why")
+    @Test public void test04(){
+      azzert.that(kind(Into.e("++3"),DOUBLE), is(DOUBLE));
     }
     
     @Test public void test05(){
-      azzert.that(NOTHING.under(PrefixExpression.Operator.NOT), is(BOOLEAN));
+      azzert.that(kind(Into.e("!x"),NOTHING), is(BOOLEAN));
+    }
+    
+    @Test public void test06(){
+      azzert.that(kind(Into.e("~'x'"),CHAR), is(INT));
     }
   
     @Test public void test07(){
-      azzert.that(NOTHING.underBinaryOperator(PLUS2, NOTHING), is(ALPHANUMERIC));
+      azzert.that(kind(Into.e("x+y"),NOTHING,NOTHING), is(ALPHANUMERIC));
+    }
+    
+    @Test public void test08(){
+      azzert.that(kind(Into.e("x+y"),INT,DOUBLE), is(DOUBLE));
+    }
+    
+    @Test public void test09(){
+      azzert.that(kind(Into.e("x+y"),INT,INT), is(INT));
+    }
+    
+    @Test public void test10(){
+      azzert.that(kind(Into.e("x+y"),STRING,STRING), is(STRING));
+    }
+    
+    @Test public void test11(){
+      azzert.that(kind(Into.e("x+y"),STRING,NULL), is(STRING));
+    }
+    
+    @Test public void test12(){
+      azzert.that(kind(Into.e("x+y"),NUMERIC,NULL), is(STRING));
     }
     
     @Test public void test13(){
-      azzert.that(INT.underBinaryOperator(PLUS2, DOUBLE), is(DOUBLE));
+      azzert.that(kind(Into.e("x+y"),LONG,INT), is(LONG));
     }
     
     @Test public void test14(){
-      azzert.that(INT.underBinaryOperator(PLUS2, INT), is(INT));
+      azzert.that(kind(Into.e("x+y"),LONG,INTEGRAL), is(LONG));
+    }
+    
+    @Test public void test15(){
+      azzert.that(kind(Into.e("x+y"),LONG,NUMERIC), is(NUMERIC));
     }
     
     @Test public void test16(){
-      azzert.that(STRING.underBinaryOperator(PLUS2, NULL), is(STRING));
+      azzert.that(kind(Into.e("x+y"),INT,INTEGRAL), is(INTEGRAL));
     }
     
     @Test public void test17(){
-      azzert.that(NUMERIC.underBinaryOperator(PLUS2, NULL), is(STRING));
+      azzert.that(kind(Into.e("x&y"),INT,INT), is(INT));
     }
     
     @Test public void test18(){
-      azzert.that(LONG.underBinaryOperator(PLUS2, INT), is(LONG));
+      azzert.that(kind(Into.e("x|y"),INT,LONG), is(LONG));
     }
     
     @Test public void test19(){
-      azzert.that(LONG.underBinaryOperator(PLUS2, INTEGRAL), is(LONG));
+      azzert.that(kind(Into.e("x<<y"),INTEGRAL,LONG), is(INTEGRAL));
     }
     
     @Test public void test20(){
-      azzert.that(LONG.underBinaryOperator(PLUS2, NUMERIC), is(NUMERIC));
+      azzert.that(kind(Into.e("x%y"),NUMERIC,NOTHING), is(INTEGRAL));
     }
     
     @Test public void test21(){
-      azzert.that(INT.underBinaryOperator(PLUS2, INTEGRAL), is(INTEGRAL));
+      azzert.that(kind(Into.e("x>>y"),LONG,INTEGRAL), is(LONG));
     }
     
     @Test public void test22(){
-      azzert.that(INT.underBinaryOperator(InfixExpression.Operator.AND, INT), is(INT));
+      azzert.that(kind(Into.e("x^y"),NONNULL,INTEGRAL), is(INTEGRAL));
     }
     
     @Test public void test23(){
-      azzert.that(INT.underBinaryOperator(InfixExpression.Operator.OR, LONG), is(LONG));
+      azzert.that(kind(Into.e("x>y"),INT,INTEGRAL), is(BOOLEAN));
     }
     
     @Test public void test24(){
-      azzert.that(INTEGRAL.underBinaryOperator(InfixExpression.Operator.LEFT_SHIFT, LONG), is(LONG));
+      azzert.that(kind(Into.e("x==y"),NONNULL,INTEGRAL), is(BOOLEAN));
     }
     
     @Test public void test25(){
-      azzert.that(NUMERIC.underBinaryOperator(InfixExpression.Operator.REMAINDER, NOTHING), is(INTEGRAL));
+      azzert.that(kind(Into.e("x!=y"),NUMERIC,BAPTIZED), is(BOOLEAN));
     }
     
     @Test public void test26(){
-      azzert.that(LONG.underBinaryOperator(InfixExpression.Operator.RIGHT_SHIFT_SIGNED, INTEGRAL), is(LONG));
+      azzert.that(kind(Into.e("x&&y"),BOOLEAN,BOOLEAN), is(BOOLEAN));
     }
     
     @Test public void test27(){
-      azzert.that(STRING.underBinaryOperator(InfixExpression.Operator.XOR, INTEGRAL), is(INTEGRAL));
+      azzert.that(kind(Into.e("x*y"),DOUBLE,NUMERIC), is(DOUBLE));
     }
     
     @Test public void test28(){
-      azzert.that(INT.underBinaryOperator(InfixExpression.Operator.GREATER, INTEGRAL), is(BOOLEAN));
+      azzert.that(kind(Into.e("x/y"),DOUBLE,INTEGRAL), is(DOUBLE));
     }
     
     @Test public void test29(){
-      azzert.that(NONNULL.underBinaryOperator(InfixExpression.Operator.EQUALS, STRING), is(BOOLEAN));
+      azzert.that(kind(Into.e("x-y"),INTEGRAL,LONG), is(LONG));
     }
     
     @Test public void test30(){
-      azzert.that(NUMERIC.underBinaryOperator(InfixExpression.Operator.NOT_EQUALS, BAPTIZED), is(BOOLEAN));
+      azzert.that(kind(Into.e("x+y"),CHAR,CHAR), is(INT));
     }
     
     @Test public void test31(){
-      azzert.that(BOOLEAN.underBinaryOperator(InfixExpression.Operator.CONDITIONAL_AND, BOOLEAN), is(BOOLEAN));
-    }
-    
-    @Test public void test32(){
-      azzert.that(DOUBLE.underBinaryOperator(InfixExpression.Operator.TIMES, INTEGRAL), is(DOUBLE));
-    }
-    
-    @Test public void test33(){
-      azzert.that(DOUBLE.underBinaryOperator(InfixExpression.Operator.DIVIDE, NUMERIC), is(DOUBLE));
-    }
-    
-    @Test public void test34(){
-      azzert.that(INTEGRAL.underBinaryOperator(MINUS2, LONG), is(LONG));
-    }
-    
-    @Test public void test35(){
-      azzert.that(CHAR.underBinaryOperator(PLUS2, CHAR), is(CHAR));
-    }
-    
-    @Test public void test36(){
-      azzert.that(CHAR.underBinaryOperator(MINUS2, INT), is(INT));
-    }
-    
-    @Test public void test37(){
-      azzert.that(CHAR.under(PrefixExpression.Operator.COMPLEMENT), is(CHAR));
+      azzert.that(kind(Into.e("x-y"),CHAR,INT), is(INT));
     }
   }
 }
