@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/** Evaluate the multiplication of integer numbers according to the following
+/** Evaluate the multiplication of numbers according to the following
  * rules : </br>
  * </br>
  * <code>
@@ -23,11 +23,11 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2016 */
 public class EvaluateMultiplication extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
   @Override public String description() {
-    return "Evaluate multiplication of int numbers";
+    return "Evaluate multiplication of numbers";
   }
 
   @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
-    return "Evaluate multiplication of int numbers";
+    return "Evaluate multiplication numbers";
   }
 
   @Override ASTNode replacement(final InfixExpression e) {

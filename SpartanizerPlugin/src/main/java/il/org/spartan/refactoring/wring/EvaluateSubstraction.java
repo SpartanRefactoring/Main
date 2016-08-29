@@ -22,7 +22,7 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2016 */
 public class EvaluateSubstraction extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
   @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
-    return "Evaluate substraction of int numbers";
+    return "Evaluate substraction of numbers";
   }
 
   @Override ASTNode replacement(final InfixExpression e) {
