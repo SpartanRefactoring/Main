@@ -311,7 +311,7 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Test public void test50() {
-    azzert.that(Funcs.peelNegation(e("a*b")), iz("a*b"));
+    azzert.that(negation.peel(e("a*b")), iz("a*b"));
   }
 
   @Test public void test51() {

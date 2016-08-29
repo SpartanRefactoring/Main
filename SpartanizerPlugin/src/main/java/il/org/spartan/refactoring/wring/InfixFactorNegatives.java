@@ -45,7 +45,7 @@ import il.org.spartan.refactoring.utils.*;
  *
  * @author Matteo Orrù
  * @since 2016 */
-public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpression> implements Kind.NoImpact {
+public final class InfixFactorNegatives extends Wring<InfixExpression> implements Kind.NoImpact {
   private static List<Expression> gather(final Expression e, final List<Expression> $) {
     if (e instanceof InfixExpression)
       return gather(az.infixExpression(e), $);
@@ -85,16 +85,9 @@ public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpre
     final List<Expression> es = gather(e);
     if (es.size() < 2)
       return null;
-    final int totalNegation = negation.level(es);
-    switch (totalNegation) {
-      default:
-        break;
-      case 0:
-        return null;
-      case 1:
-        if (negation.level(first(es)) == 1)
+    final int totalNegation = negation.level(e);
+    if (totalNegation == 0 || totalNegation == 1 && negation.level(left(e)) == 1)
           return null;
-    }
     if (exclude != null)
       exclude.exclude(e);
     return new Rewrite(description(e), e) {
@@ -102,9 +95,9 @@ public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpre
         final Expression first = totalNegation % 2 == 0 ? null : first(es);
         for (final Expression ¢ : es)
           if (¢ != first && negation.level(¢) > 0)
-            r.replace(¢, plant(duplicate(peelNegation(¢))).into(¢.getParent()), g);
+            r.replace(¢, plant(duplicate(negation.peel(¢))).into(¢.getParent()), g);
         if (first != null)
-          r.replace(first, plant(subject.operand(peelNegation(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
+          r.replace(first, plant(subject.operand(negation.peel(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
       }
     };
   }

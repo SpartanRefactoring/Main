@@ -19,6 +19,13 @@ import il.org.spartan.refactoring.utils.*;
   @Test public void negationOfAddition() {
     azzert.that(negation.level(e("-a+-2")), is(0));
   }
+  @Test public void levelComplex() {
+    azzert.that(negation.level(e("-1/-2*-3/-4*-5*-6/-7/-8/-9")), is(9));
+  } 
+  @Test public void peelComplex() {
+    azzert.that(negation.peel(e("-1/-2*-3/-4*-5*-6/-7/-8/-9")), //
+        iz("1/2*3/4*5*6/7/8/9"));
+  } 
 
   @Test public void negationOfDivision() {
     azzert.that(negation.level(e("+-a/-2")), is(2));

@@ -58,7 +58,7 @@ public class TermsCollector {
 
   private Void addMinusTerm(final Expression e) {
     assert e != null;
-    final Expression n = peelNegation(e);
+    final Expression n = negation.peel(e);
     return negation.level(e) % 2 != 0 ? collectPlusPrefix(n) : collectMinusPrefix(n);
   }
 
@@ -71,7 +71,7 @@ public class TermsCollector {
 
   private Void addPlusTerm(final Expression e) {
     assert e != null;
-    final Expression n = peelNegation(e);
+    final Expression n = negation.peel(e);
     return negation.level(e) % 2 == 0 ? collectPlusPrefix(n) : collectMinusPrefix(n);
   }
 
