@@ -8,7 +8,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
-import static il.org.spartan.refactoring.utils.Kind.*;
+import static il.org.spartan.refactoring.utils.Type.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public class KindTest {
@@ -18,7 +18,7 @@ public class KindTest {
     }
 
     @Test public void test02() {
-      azzert.that(Kind.kind(Into.e("2 + (2.0)*1L")), is(Kind.DOUBLE));
+      azzert.that(Type.kind(Into.e("2 + (2.0)*1L")), is(Type.DOUBLE));
     }
 
     @Test public void test03() {
@@ -47,7 +47,7 @@ public class KindTest {
       // for (Type t : Type.values())
       // System.err.println("Erase me after you figured this out\n\t" +
       // t.fullName());
-      azzert.that(Kind.BOOLEAN, is(Kind.BOOLEAN));
+      azzert.that(Type.BOOLEAN, is(Type.BOOLEAN));
     }
 
     @Test public void test04() {
