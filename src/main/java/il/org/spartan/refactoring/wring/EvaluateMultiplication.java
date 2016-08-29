@@ -40,6 +40,8 @@ public class EvaluateMultiplication extends Wring.ReplaceCurrentNode<InfixExpres
         return replacementInt(extract.allOperands(e),e);
       case DOUBLE :
         return replacementDouble(extract.allOperands(e),e);
+      case LONG :
+        return replacementLong(extract.allOperands(e),e);
       default:
         return null;
     }
@@ -63,5 +65,15 @@ public class EvaluateMultiplication extends Wring.ReplaceCurrentNode<InfixExpres
         mul = mul *  EvaluateAux.extractDouble(¢);
     }  
     return e.getAST().newNumberLiteral(Double.toString(mul));
+  }
+  
+  private static ASTNode replacementLong(final List<Expression> es, InfixExpression e) {
+    long mul = 1;
+    for (final Expression ¢ : es){
+      if (!EvaluateAux.isCompitable(¢))
+        return null;
+        mul = mul *  EvaluateAux.extractLong(¢);
+    }  
+    return e.getAST().newNumberLiteral(Long.toString(mul)+"L");
   }
 }

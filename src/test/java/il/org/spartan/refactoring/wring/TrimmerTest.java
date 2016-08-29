@@ -3710,11 +3710,11 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Test public void sortTwoOperands3() {
-    trimming("2*3L").to(null);
+    trimming("2*3L").to("6L");
   }
 
   @Test public void sortTwoOperands4() {
-    trimming("2L*1L").to("1L*2L");
+    trimming("2L*1L").to("2L");
   }
 
   @Test public void synchronizedBraces() {
