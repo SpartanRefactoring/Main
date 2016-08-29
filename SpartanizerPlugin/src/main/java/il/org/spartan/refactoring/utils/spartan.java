@@ -19,7 +19,7 @@ public interface spartan {
     return null;
   }
 
-  static String shorten(final List<? extends Type> ts) {
+  static String shorten(final List<? extends org.eclipse.jdt.core.dom.Type> ts) {
     return shorten(onlyOne(ts));
   }
 
@@ -65,7 +65,7 @@ public interface spartan {
     return new JavaTypeNameParser(s).shortName();
   }
 
-  static String shorten(final Type t) {
+  static String shorten(final org.eclipse.jdt.core.dom.Type t) {
     return t instanceof NameQualifiedType ? shorten((NameQualifiedType) t)
         : t instanceof PrimitiveType ? shorten((PrimitiveType) t)
             : t instanceof QualifiedType ? shorten((QualifiedType) t)
