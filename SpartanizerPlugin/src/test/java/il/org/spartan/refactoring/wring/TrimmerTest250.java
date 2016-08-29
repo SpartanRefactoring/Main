@@ -579,12 +579,12 @@ public class TrimmerTest250 {
     trimming("(2*+(a+b))").to("(2*(a+b))");
   }
 
-  @Ignore("Disabled: there is some bug in distributive rule") 
+  // @Ignore("Disabled: there is some bug in distributive rule") 
   @Test public void issue76a() {
     trimming("a*b + a*c").to("a*(b+c)");
   }
 
-  @Ignore("Disabled: there is some bug in distributive rule") 
+  // @Ignore("Disabled: there is some bug in distributive rule") 
   @Test public void issue76b() {
     trimming("b*a + c*a").to("a*(b+c)");
   }
