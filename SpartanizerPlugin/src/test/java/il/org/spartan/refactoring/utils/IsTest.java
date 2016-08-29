@@ -47,13 +47,6 @@ public class IsTest {
     azzert.that(sideEffects.deterministic(e("new a[3]")), is(false));
   }
 
-  @Test public void seriesA_3() {
-    azzert.nay(Is.infixPlus(e("(i+j)")));
-    azzert.aye(Is.infixPlus(core(e("(i+j)"))));
-    azzert.nay(Is.infixMinus(e("(i-j)")));
-    azzert.aye(Is.infixMinus(core(e("(i-j)"))));
-  }
-
   @Test public void deterministicArray2() {
     azzert.that(sideEffects.deterministic(e("new int[] {12,13}")), is(false));
   }
@@ -71,15 +64,15 @@ public class IsTest {
   }
 
   @Test public void isNullFalse1() {
-    azzert.that(Is.null_(e("this")), is(false));
+    azzert.that(Is.nullLiteral(e("this")), is(false));
   }
 
   @Test public void isNullFalse2() {
-    azzert.that(Is.this_(e("this.a")), is(false));
+    azzert.that(Is.thisLiteral(e("this.a")), is(false));
   }
 
   @Test public void isNullTrue() {
-    azzert.that(Is.null_(e("null")), is(true));
+    azzert.that(Is.nullLiteral(e("null")), is(true));
   }
 
   @Test public void isOneOf() {
@@ -87,15 +80,15 @@ public class IsTest {
   }
 
   @Test public void isThisFalse1() {
-    azzert.that(Is.this_(e("null")), is(false));
+    azzert.that(Is.thisLiteral(e("null")), is(false));
   }
 
   @Test public void isThisFalse2() {
-    azzert.that(Is.this_(e("this.a")), is(false));
+    azzert.that(Is.thisLiteral(e("this.a")), is(false));
   }
 
   @Test public void isThisTrue() {
-    azzert.that(Is.this_(e("this")), is(true));
+    azzert.that(Is.thisLiteral(e("this")), is(true));
   }
 
   @Test public void negative0() {
@@ -123,14 +116,14 @@ public class IsTest {
   }
 
   @Test public void nonnAssociative() {
-    azzert.that(Is.nonAssociative(e("1")), is(false));
-    azzert.that(Is.nonAssociative(e("-1")), is(false));
-    azzert.that(Is.nonAssociative(e("-1+2")), is(false));
-    azzert.that(Is.nonAssociative(e("1+2")), is(false));
-    azzert.that(Is.nonAssociative(e("2-1")), is(true));
-    azzert.that(Is.nonAssociative(e("2/1")), is(true));
-    azzert.that(Is.nonAssociative(e("2%1")), is(true));
-    azzert.that(Is.nonAssociative(e("2*1")), is(false));
+    azzert.that(Precedence.nonAssociative(e("1")), is(false));
+    azzert.that(Precedence.nonAssociative(e("-1")), is(false));
+    azzert.that(Precedence.nonAssociative(e("-1+2")), is(false));
+    azzert.that(Precedence.nonAssociative(e("1+2")), is(false));
+    azzert.that(Precedence.nonAssociative(e("2-1")), is(true));
+    azzert.that(Precedence.nonAssociative(e("2/1")), is(true));
+    azzert.that(Precedence.nonAssociative(e("2%1")), is(true));
+    azzert.that(Precedence.nonAssociative(e("2*1")), is(false));
   }
 
   @Test public void numericLiteralFalse1() {
@@ -143,5 +136,12 @@ public class IsTest {
 
   @Test public void numericLiteralTrue() {
     azzert.that(Is.numericLiteral(e("1")), is(true));
+  }
+
+  @Test public void seriesA_3() {
+    azzert.nay(Is.infixPlus(e("(i+j)")));
+    azzert.aye(Is.infixPlus(core(e("(i+j)"))));
+    azzert.nay(Is.infixMinus(e("(i-j)")));
+    azzert.aye(Is.infixMinus(core(e("(i-j)"))));
   }
 }
