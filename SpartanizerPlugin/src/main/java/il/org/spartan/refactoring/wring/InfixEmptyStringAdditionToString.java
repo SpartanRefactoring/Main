@@ -3,23 +3,16 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 
 import org.eclipse.jdt.core.dom.*;
+import static il.org.spartan.refactoring.java.Kind.kind;
+import static il.org.spartan.refactoring.java.Kind.STRING;
+
 import il.org.spartan.refactoring.utils.*;
 
-public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
+public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<InfixExpression> implements il.org.spartan.refactoring.wring.Kind.NoImpact {
   static boolean validTypes(final Expression e, final Expression ¢1, final Expression ¢2) {
-    System.out.println(e.getAST().hasResolvedBindings());
-    System.out.println(¢2 instanceof IVariableBinding);
-    System.out.println(((IVariableBinding)¢2).getType().getName());
-    return e.getAST().hasResolvedBindings()
-        ? (¢2 instanceof IVariableBinding && ¢1 instanceof StringLiteral && ((StringLiteral) ¢1).getEscapedValue().equals("\"\"")
-            || ¢2 instanceof StringLiteral && ((StringLiteral) ¢2).getEscapedValue().equals("\"\"") && ¢1 instanceof IVariableBinding)
-        : (¢2 instanceof SimpleName && ¢1 instanceof StringLiteral && ((StringLiteral) ¢1).getEscapedValue().equals("\"\"")
-            || ¢2 instanceof StringLiteral && ((StringLiteral) ¢2).getEscapedValue().equals("\"\"") && ¢1 instanceof SimpleName);
+    return ((¢2 instanceof StringLiteral && ¢1 instanceof StringLiteral && ((StringLiteral) ¢1).getEscapedValue().equals("\"\""))
+        || (¢2 instanceof StringLiteral && ((StringLiteral) ¢2).getEscapedValue().equals("\"\"") && ¢1 instanceof StringLiteral));
   }
-
-  // private static ASTNode replacement(final InfixExpression e, final Operator
-  // o, final IVariableBinding b, final StringLiteral l) {
-  // }
   @Override ASTNode replacement(InfixExpression e) {
     if (!iz.infixPlus(e))
       return null;
@@ -27,7 +20,7 @@ public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<I
     assert right != null;
     final Expression left = left(e);
     assert left != null;
-    return !validTypes(e, right, left) ? null : left instanceof IVariableBinding ? left : right;
+    return !validTypes(e, right, left) ? null : !((StringLiteral) left).getEscapedValue().equals("\"\"") ? left : right;
   }
 
   private static String descriptionAux(final Expression e) {
@@ -37,6 +30,10 @@ public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<I
   @Override String description(final InfixExpression e) {
     final Expression right = right(e);
     final Expression left = left(e);
-    return descriptionAux(left instanceof IVariableBinding ? left : right);
+    return descriptionAux(!((StringLiteral) left).getEscapedValue().equals("\"\"") ? left : right);
+  }
+
+  @Override public String description() {
+    return "Remove \"\" from \"\" + X if X is a String";
   }
 }
