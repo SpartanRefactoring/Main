@@ -69,6 +69,7 @@ public class Toolbox {
             // new InfixMultiplicationDistributive(), //
             new EvaluateMultiplication(), //
             new EvaluateDivision(), //
+            new EvaluateRemainder(), //
             new InfixComparisonSizeToZero(), //
             new InfixSubtractionZero(), //
             new InfixAdditionSubtractionExpand(), //
