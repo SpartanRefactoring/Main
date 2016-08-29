@@ -133,9 +133,9 @@ import il.org.spartan.refactoring.utils.subject.*;
 
   @Test public void subjectOperands() {
     final Expression e = Into.e("2 + a < b");
-    assert StringAnalyzer.notString(e);
+    assert stringType.isNot(e);
     final InfixExpression plus = extract.firstPlus(e);
-    assert StringAnalyzer.notString(plus);
+    assert stringType.isNot(plus);
     final List<Expression> operands = extract.operands(flatten(plus));
     azzert.that(operands.size(), is(2));
     final boolean b = ExpressionComparator.ADDITION.sort(operands);
@@ -162,9 +162,9 @@ import il.org.spartan.refactoring.utils.subject.*;
 
   @Test public void subjectOperandsWithParenthesis() {
     final Expression e = Into.e("(2 + a) * b");
-    assert StringAnalyzer.notString(e);
+    assert stringType.isNot(e);
     final InfixExpression plus = extract.firstPlus(e);
-    assert StringAnalyzer.notString(plus);
+    assert stringType.isNot(plus);
     final List<Expression> operands = extract.operands(flatten(plus));
     azzert.that(operands.size(), is(2));
     final boolean b = ExpressionComparator.ADDITION.sort(operands);

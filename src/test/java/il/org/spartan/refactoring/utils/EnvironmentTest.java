@@ -186,28 +186,28 @@ public class EnvironmentTest {
   // DONE
   // =================== nesting complex ===================
   /* EMPTY{
-   * 
+   *
    * env0{ (Alex, Dan, Yossi)
-   * 
+   *
    * env1{ (Kopzon, Greenstien, Gill, Alex')
-   * 
+   *
    * env2{ (JAVA, SPARTANIZATION)
-   * 
+   *
    * env3{ (IS) }
-   * 
+   *
    * env4{ (FUN) } }
-   * 
+   *
    * env5{ (Alex'') }
-   * 
+   *
    * }
-   * 
+   *
    * }
    *
    * } */
   /* Environment e0 = Environment.genesis(); Environment e1 = e0.spawn();
    * Environment e2 = e1.spawn(); Environment e3 = e2.spawn(); Environment e4 =
    * e2.spawn(); Environment e5 = e1.spawn();
-   * 
+   *
    * @Before public void init_complex () { e0.put("Alex", new Information());
    * e0.put("Dan", new Information()); e0.put("Yossi", new Information());
    * e1.put("Kopzon", new Information()); e1.put("Greenstein", new
