@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.*;
  * {@link #preBindingVisit()}
  * @author Yossi Gil
  * @since 2016-08-08 18:11:23 +0300 */
-@SuppressWarnings({"unused"}) public abstract class VariableBindingVisitor extends ASTVisitor {
+@SuppressWarnings({ "unused" }) public abstract class VariableBindingVisitor extends ASTVisitor {
   public class Binding {
     // To be written
   }

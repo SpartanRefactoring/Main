@@ -5,9 +5,9 @@ import java.util.Map.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-/** Interface to Environment. Holds all the names defined till current PC.
- * In other words the 'names Environment' at every point of the program flow. */
-@SuppressWarnings({"unused"}) public interface Environment {
+/** Interface to Environment. Holds all the names defined till current PC. In
+ * other words the 'names Environment' at every point of the program flow. */
+@SuppressWarnings({ "unused" }) public interface Environment {
   /** The Environment structure is in some like a Linked list, where EMPTY is
    * like the NULL at the end. */
   static final Environment EMPTY = new Environment() {
@@ -18,10 +18,8 @@ import org.eclipse.jdt.core.dom.*;
   /** Initializer for EMPTY */
   static final Set<String> emptySet = Collections.unmodifiableSet(new HashSet<>());
 
-  /**
-   * Spawns the first Nested Env. Should be used when the first block is opened. 
-   */
-
+  /** Spawns the first Nested Env. Should be used when the first block is
+   * opened. */
   static Environment genesis() {
     return EMPTY.spawn();
   }
@@ -55,8 +53,7 @@ import org.eclipse.jdt.core.dom.*;
     return $;
   }
 
-  /** 
-   * @return null iff the name is not in use in the Env. */  
+  /** @return null iff the name is not in use in the Env. */
   default Information get(final String name) {
     return null;
   }
@@ -76,11 +73,11 @@ import org.eclipse.jdt.core.dom.*;
     return emptySet;
   }
 
-  /** Get full path of the current Env (all scope hierarchy).
-   * Used for full names of the variables. */
+  /** Get full path of the current Env (all scope hierarchy). Used for full
+   * names of the variables. */
   default String fullName() {
-    String $ = ((nest() == null) || (nest() == EMPTY) ? null : nest().fullName());
-    return ($ == null ? "" : $ + "." ) + name();
+    final String $ = nest() == null || nest() == EMPTY ? null : nest().fullName();
+    return ($ == null ? "" : $ + ".") + name();
   }
 
   default String name() {
@@ -95,8 +92,8 @@ import org.eclipse.jdt.core.dom.*;
     return $;
   }
 
-  /** @return null at the most outer block.
-   * This method is similar to the 'next()' method in a linked list. */
+  /** @return null at the most outer block. This method is similar to the
+   *         'next()' method in a linked list. */
   default Environment nest() {
     return null;
   }
@@ -108,6 +105,7 @@ import org.eclipse.jdt.core.dom.*;
   default Information put(final String name, final Information i) {
     throw new IllegalArgumentException(name + "/" + i);
   }
+
   /* Used when new block (scope) is opened. */
   default Environment spawn() {
     return new Nested(this);
@@ -116,9 +114,8 @@ import org.eclipse.jdt.core.dom.*;
   /** TODO: document properly, but essentially is a dictionary with a parent.
    * Insertions go the current node, searches start at the current note and
    * deleegate to the parent unless it is null. */
-  
-  /* Nested environment which has it's own Map of names 'flat',
-   * and an instance to the parent scope 'nest'. */
+  /* Nested environment which has it's own Map of names 'flat', and an instance
+   * to the parent scope 'nest'. */
   final class Nested implements Environment {
     public final Map<String, Information> flat = new LinkedHashMap<>();
     public final Environment nest;
@@ -126,14 +123,14 @@ import org.eclipse.jdt.core.dom.*;
     Nested(final Environment parent) {
       nest = parent;
     }
-    
+
     /* @return true iff Env is empty. */
     @Override public boolean empty() {
       return flat.isEmpty() && nest.empty();
     }
+
     /* @return Map entries used in the current scope. */
-    @Override
-    public Set<Map.Entry<String, Information>> entries() {
+    @Override public Set<Map.Entry<String, Information>> entries() {
       return flat.entrySet();
     }
 
@@ -147,13 +144,13 @@ import org.eclipse.jdt.core.dom.*;
     @Override public boolean has(final String name) {
       return flat.containsKey(name) || nest.has(name);
     }
-    
+
     /* @return Names used in current scope. */
     @Override public Set<String> names() {
       return flat.keySet();
     }
 
-    /* One step up in the Env tree. Funny but it even sounds like next().*/
+    /* One step up in the Env tree. Funny but it even sounds like next(). */
     @Override public Environment nest() {
       return nest;
     }
@@ -161,7 +158,7 @@ import org.eclipse.jdt.core.dom.*;
     /** Add name to the current scope in the Env. */
     @Override public Information put(final String name, final Information value) {
       flat.put(name, value);
-      assert (!flat.isEmpty());
+      assert !flat.isEmpty();
       return hiding(name);
     }
   }

@@ -4,6 +4,8 @@ import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.refactoring.utils.extract.*;
+import static il.org.spartan.refactoring.utils.extract.name;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;

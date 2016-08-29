@@ -41,7 +41,7 @@ public abstract class AncestorSearch {
       return null;
     }
   }
-  
+
   public static class Until {
     final ASTNode until;
 
