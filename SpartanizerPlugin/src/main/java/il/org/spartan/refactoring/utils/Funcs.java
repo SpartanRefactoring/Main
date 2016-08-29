@@ -259,14 +259,6 @@ public enum Funcs {
     return $;
   }
 
-  public static Expression peelNegation(final Expression $) {
-    return //
-    $ instanceof PrefixExpression ? negation.peel((PrefixExpression) $) //
-        : $ instanceof ParenthesizedExpression ? peelNegation(core($)) //
-            : $ instanceof NumberLiteral ? negation.peel((NumberLiteral) $) //
-                : $;
-  }
-
   /** Retrieve previous item in a list
    * @param i an index of specific item in a list
    * @param ts the indexed list
