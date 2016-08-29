@@ -66,7 +66,7 @@ public class InfixAdditionSortTest {
     assert null != TermsExpander.simplify(INPUT);
     assert null == e.replacement(INPUT);
     assert e != null;
-    assert !(TermsCollector.isLeafTerm(INPUT));
+    assert !TermsCollector.isLeafTerm(INPUT);
     assert TermsExpander.simplify(INPUT) != null;
     assert e.replacement(INPUT) == null;
   }
@@ -94,7 +94,7 @@ public class InfixAdditionSortTest {
     assert Funcs.same(i, INPUT);
     assert i != null;
     assert INPUT != null;
-    assert (Funcs.same(i, INPUT));
+    assert Funcs.same(i, INPUT);
   }
 
   @Test public void test12() {
@@ -115,7 +115,7 @@ public class InfixAdditionSortTest {
     assert i.getNodeType() == INPUT.getNodeType();
     assert i != null;
     assert i != INPUT;
-    assert (i.getNodeType() == INPUT.getNodeType());
+    assert i.getNodeType() == INPUT.getNodeType();
   }
 
   @Test public void test14() {
