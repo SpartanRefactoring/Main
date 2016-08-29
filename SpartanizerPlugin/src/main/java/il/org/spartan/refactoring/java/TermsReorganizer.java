@@ -1,10 +1,13 @@
-package il.org.spartan.refactoring.utils;
+package il.org.spartan.refactoring.java;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.refactoring.handlers.*;
+import il.org.spartan.refactoring.utils.*;
 
 public class TermsReorganizer {
   public static Expression simplify(final InfixExpression e) {

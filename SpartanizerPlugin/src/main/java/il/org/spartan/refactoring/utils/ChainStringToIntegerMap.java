@@ -3,7 +3,7 @@ package il.org.spartan.refactoring.utils;
 import java.util.*;
 import java.util.Map.*;
 
-class ChainStringToIntegerMap {
+public class ChainStringToIntegerMap {
   public Map<String, Integer> inner = new HashMap<>();
 
   public boolean containsKey(final String key) {

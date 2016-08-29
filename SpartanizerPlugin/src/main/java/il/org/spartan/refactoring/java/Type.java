@@ -1,4 +1,4 @@
-package il.org.spartan.refactoring.utils;
+package il.org.spartan.refactoring.java;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
@@ -6,6 +6,8 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.refactoring.utils.*;
 
 /** TODO: Niv Issue*94
  * <p>

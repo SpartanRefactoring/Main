@@ -27,9 +27,9 @@ public enum Funcs {
       put(LESS_EQUALS, GREATER_EQUALS);
     }
   };
-  static final PrefixExpression.Operator MINUS1 = PrefixExpression.Operator.MINUS;
+  public static final PrefixExpression.Operator MINUS1 = PrefixExpression.Operator.MINUS;
   static final PrefixExpression.Operator PLUS1 = PrefixExpression.Operator.PLUS;
-  static final InfixExpression.Operator MINUS2 = InfixExpression.Operator.MINUS;
+  public static final InfixExpression.Operator MINUS2 = InfixExpression.Operator.MINUS;
   public static final InfixExpression.Operator PLUS2 = InfixExpression.Operator.PLUS;
   static final PostfixExpression.Operator DECREMENT_POST = PostfixExpression.Operator.DECREMENT;
   static final PostfixExpression.Operator INCREMENT_POST = PostfixExpression.Operator.INCREMENT;

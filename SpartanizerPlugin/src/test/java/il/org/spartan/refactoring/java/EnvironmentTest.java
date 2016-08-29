@@ -1,11 +1,12 @@
-package il.org.spartan.refactoring.utils;
+package il.org.spartan.refactoring.java;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.utils.Environment.*;
+import static il.org.spartan.refactoring.java.Environment.*;
 
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.refactoring.java.*;
 
 public class EnvironmentTest {
   // =================== default ===================

@@ -733,7 +733,7 @@ public enum Is {
     return isLiteral(Funcs.asBooleanLiteral(¢), b);
   }
 
-  static boolean isLiteral(final ASTNode ¢, final double d) {
+  public static boolean isLiteral(final ASTNode ¢, final double d) {
     final NumberLiteral ¢1 = Funcs.asNumberLiteral(¢);
     return ¢1 != null && isLiteral(¢1.getToken(), d);
   }

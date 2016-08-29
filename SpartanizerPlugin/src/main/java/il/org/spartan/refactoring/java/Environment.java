@@ -1,4 +1,4 @@
-package il.org.spartan.refactoring.utils;
+package il.org.spartan.refactoring.java;
 
 import java.util.*;
 import java.util.Map.*;
