@@ -37,9 +37,9 @@ enum Type {
   VOID("void", "nothing at all"),
   // Doubtful types, from four fold uncertainty down to bilalteral
   // schizophrenia" .
-  ALPHANUMERIC("String|double|long|int|", "only in binary plus: f()+g(), not 2 + f(), nor f() + null"), //
-  NUMERIC("double|long|int", "must be either f()*g(), 2L*f(), 2.*a(), not 2 %a(), nor 2"), //
-  INTEGRAL("long|int", "must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() "), //
+  ALPHANUMERIC("String|double|long|int|char", "only in binary plus: f()+g(), not 2 + f(), nor f() + null"), //
+  NUMERIC("double|long|int|char", "must be either f()*g(), 2L*f(), 2.*a(), not 2 %a(), nor 2"), //
+  INTEGRAL("long|int|char", "must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() "), //
   // Certain types
   NULL("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"), //
   CHAR("char", "must be char: 'a', (char)97, nothing else"), //
@@ -57,32 +57,48 @@ enum Type {
     return kind(e,null,null);
   }
   
+  /**A version of {@link #kind(Expression)} that receives the operand's type for a single
+   * operand expression. The call kind(e,null) is equivalent to kind(e) */
   static Type kind(Expression e, final Type t){
     return kind(e,t,null);
   }
   
+  /**A version of {@link #kind(Expression)} that receives the operands' type for a two
+   * operand expression. The call kind(e,null,null) is equivalent to kind(e) 
+   * @param t1 the type of the left hand operand of the expression, or null if unknown
+   * @param t2 the type of the left hand operand of the expression, or null if unknown */
   static Type kind(Expression e, final Type t1, final Type t2){
-   if (e instanceof NullLiteral){
+    if (e instanceof NullLiteral)
       return NULL;
-    }
     if (e instanceof CharacterLiteral)
       return CHAR;
-    if (e instanceof NumberLiteral){
+    if (e instanceof StringLiteral)
+      return STRING;
+    if (e instanceof BooleanLiteral)
+      return BOOLEAN;
+    if (e instanceof NumberLiteral)
       return kind((NumberLiteral)e);
-    }
-    if (e instanceof CastExpression){
+    if (e instanceof CastExpression)
       return kind((CastExpression)e);
-    }
-    if (e instanceof PrefixExpression){
+    if (e instanceof PrefixExpression)
       return kind((PrefixExpression)e, t1);
-    }
-    if (e instanceof InfixExpression){
+    if (e instanceof InfixExpression)
       return kind((InfixExpression)e, t1, t2);
-    }
+    if (e instanceof ParenthesizedExpression)
+      return kind((ParenthesizedExpression)e, t1);
     return NOTHING;
   }
   
   private static Type kind(NumberLiteral e){
+    String ¢ = e.getToken();
+    if (¢.matches("[0-9]+")){
+      return INT;
+    }
+    if (¢.matches("[0-9]+\\.[0-9]?")){
+      return DOUBLE;
+    }
+    if (¢.matches("[0-9]+L"))
+      return LONG;
     return NUMERIC;
   }
   
@@ -123,6 +139,10 @@ enum Type {
     return ¢1.underBinaryOperator(o, ¢2);
   }
   
+  private static Type kind(ParenthesizedExpression e, final Type t){
+    return t != null ? t : kind(e.getExpression());
+  }
+  
   final String description;
 
   final String name;
@@ -138,7 +158,7 @@ enum Type {
    *         {@link #DOUBLE}, {@link #INTEGRAL} or {@link #NUMERIC}, in case it
    *         cannot decide */
   // TODO: should be private once kind is finished
-  final Type under(final PrefixExpression.Operator o) {
+  private final Type under(final PrefixExpression.Operator o) {
     assert o != null;
     return o == NOT ? BOOLEAN //
         : o != COMPLEMENT ? asNumeric() : asIntegralNonChar();
@@ -148,7 +168,7 @@ enum Type {
    *         {@link #NUMERIC}, or {@link #ALPHANUMERIC}, in case it cannot
    *         decide */
   // TODO: should be private once kind is finished
-  final Type underBinaryOperator(InfixExpression.Operator o, Type k) {
+  private final Type underBinaryOperator(InfixExpression.Operator o, Type k) {
     if (o == PLUS2)
       return underPlus(k);
     if (in(o, //
@@ -212,7 +232,9 @@ enum Type {
      return INT;
   }
   private Type underIntegersOnlyOperator(Type k) {
-    return asIntegralNonChar().max(k.asIntegralNonChar());
+    Type ¢1 = asIntegralNonChar();
+    Type ¢2 = k.asIntegralNonChar();
+    return (¢1 == INTEGRAL && ¢2 == INTEGRAL) ? INTEGRAL : ¢1.max(¢2);
   }
   
   private boolean isIntegral() {
