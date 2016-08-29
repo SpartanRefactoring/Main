@@ -51,6 +51,7 @@ enum Kind {
   BOOLEAN("boolean", "must be boolean: !f(), f() || g() "), //
   STRING("String", "must be string: \"\"+a, a.toString(), f()+null, not f()+g()"),//
   ;
+  
   /** @param e JD
    * @return The most specific Type information that can be deduced about the
    *         expression, or {@link #NOTHING} if it cannot decide. Will never
@@ -83,6 +84,7 @@ enum Kind {
       case CAST_EXPRESSION: return kind((CastExpression) e);
       case PREFIX_EXPRESSION: return kind((PrefixExpression) e, t1);
       case INFIX_EXPRESSION: return kind((InfixExpression) e, t1, t2);
+      case POSTFIX_EXPRESSION: return kind((PostfixExpression)e, t1);
       case PARENTHESIZED_EXPRESSION: return kind((ParenthesizedExpression) e, t1);
       case CLASS_INSTANCE_CREATION: return kind((ClassInstanceCreation)e);
       default: return NOTHING;
@@ -117,6 +119,11 @@ enum Kind {
     return ¢1.underBinaryOperator(o, ¢2);
   }
 
+  private static Kind kind(final PostfixExpression e, final Kind t1) {
+    final Kind ¢ = t1 != null ? t1 : kind(e.getOperand());
+    return ¢.asNumeric();
+  }
+  
   private static Kind kind(final ParenthesizedExpression e, final Kind t) {
     return t != null ? t : kind(e.getExpression());
   }
@@ -164,7 +171,6 @@ enum Kind {
   /** @return one of {@link #BOOLEAN}, {@link #INT}, {@link #LONG},
    *         {@link #DOUBLE}, {@link #INTEGRAL} or {@link #NUMERIC}, in case it
    *         cannot decide */
-  // TODO: should be private once kind is finished
   private final Kind under(final PrefixExpression.Operator o) {
     assert o != null;
     return o == NOT ? BOOLEAN //
@@ -175,7 +181,6 @@ enum Kind {
    *         {@link #DOUBLE}, {@link #STRING}, {@link #INTEGRAL},
    *         {@link #NUMERIC}, or {@link #ALPHANUMERIC}, in case it cannot
    *         decide */
-  // TODO: should be private once kind is finished
   private final Kind underBinaryOperator(final InfixExpression.Operator o, final Kind k) {
     if (o == PLUS2)
       return underPlus(k);
@@ -278,7 +283,7 @@ enum Kind {
    *         {@link #DOUBLE}, {@link #INTEGRAL} or {@link #NUMERIC}, in case no
    *         further information is available */
   private Kind asNumeric() {
-    return isNumeric() ? this : NUMERIC;
+    return !isNumeric() ? NUMERIC : this != CHAR ? this : INT;
   }
   
   /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
