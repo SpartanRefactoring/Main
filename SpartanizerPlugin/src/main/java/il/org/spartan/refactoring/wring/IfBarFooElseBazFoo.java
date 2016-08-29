@@ -91,7 +91,7 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> implements Kind
     return then.isEmpty() && elze.isEmpty() || commmonSuffix.isEmpty() ? null : new Rewrite(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final IfStatement newIf = replacement();
-        if (Is.block(s.getParent())) {
+        if (iz.block(s.getParent())) {
           final ListRewrite lr = insertAfter(s, commmonSuffix, r, g);
           lr.insertAfter(newIf, s, g);
           lr.remove(s, g);

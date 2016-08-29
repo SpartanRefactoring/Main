@@ -26,37 +26,37 @@ public class FuncsTest {
   @Test public void asComparisonPrefixlExpression() {
     final PrefixExpression p = mock(PrefixExpression.class);
     doReturn(PrefixExpression.Operator.NOT).when(p).getOperator();
-    azzert.isNull(asComparison(p));
+    azzert.isNull(az.comparison(p));
   }
 
   @Test public void asComparisonTypicalExpression() {
     final InfixExpression i = mock(InfixExpression.class);
     doReturn(GREATER).when(i).getOperator();
-    azzert.notNull(asComparison(i));
+    azzert.notNull(az.comparison(i));
   }
 
   @Test public void asComparisonTypicalExpressionFalse() {
     final InfixExpression i = mock(InfixExpression.class);
     doReturn(CONDITIONAL_OR).when(i).getOperator();
-    azzert.isNull(asComparison(i));
+    azzert.isNull(az.comparison(i));
   }
 
   @Test public void asComparisonTypicalInfixFalse() {
     final InfixExpression i = mock(InfixExpression.class);
     doReturn(CONDITIONAL_AND).when(i).getOperator();
-    azzert.isNull(asComparison(i));
+    azzert.isNull(az.comparison(i));
   }
 
   @Test public void asComparisonTypicalInfixIsCorrect() {
     final InfixExpression i = mock(InfixExpression.class);
     doReturn(GREATER).when(i).getOperator();
-    assertEquals(i, asComparison(i));
+    assertEquals(i, az.comparison(i));
   }
 
   @Test public void asComparisonTypicalInfixIsNotNull() {
     final InfixExpression e = mock(InfixExpression.class);
     doReturn(GREATER).when(e).getOperator();
-    azzert.notNull(asComparison(e));
+    azzert.notNull(az.comparison(e));
   }
 
   @Test public void chainComparison() {
@@ -72,39 +72,23 @@ public class FuncsTest {
   }
 
   @Test public void isDeMorganAND() {
-    azzert.aye(Is.deMorgan(CONDITIONAL_AND));
+    azzert.aye(iz.deMorgan(CONDITIONAL_AND));
   }
 
   @Test public void isDeMorganGreater() {
-    azzert.nay(Is.deMorgan(GREATER));
+    azzert.nay(iz.deMorgan(GREATER));
   }
 
   @Test public void isDeMorganGreaterEuals() {
-    azzert.nay(Is.deMorgan(GREATER_EQUALS));
+    azzert.nay(iz.deMorgan(GREATER_EQUALS));
   }
 
   @Test public void isDeMorganOR() {
-    azzert.aye(Is.deMorgan(CONDITIONAL_OR));
+    azzert.aye(iz.deMorgan(CONDITIONAL_OR));
   }
 
   @Test public void listOfInts() {
     azzert.that(spartan.shorten(t("List<Set<Integer>> _;")), equalTo("iss"));
-  }
-
-  @Test public void negationOfMinusOneA() {
-    azzert.that(negationLevel(e("-1")), is(1));
-  }
-
-  @Test public void negationOfMinusOneB() {
-    azzert.that(countNegations((InfixExpression) e("-1 *-1")), is(2));
-  }
-
-  @Test public void negationOfExpressionManyNegation() {
-    azzert.that(negationLevel(e("- - - - (- (-a))")), is(6));
-  }
-
-  @Test public void negationOfExpressionNoNegation() {
-    azzert.that(negationLevel(e("((((4))))")), is(0));
   }
 
   @Test public void sameOfNullAndSomething() {

@@ -435,8 +435,8 @@ public class TrimmerTest240 {
   @Test public void comaprisonWithSpecific0Legibiliy00() {
     final InfixExpression e = i("this != a");
     that(in(e.getOperator(), Operator.EQUALS, Operator.NOT_EQUALS), is(true));
-    that(Is.booleanLiteral(right(e)), is(false));
-    that(Is.booleanLiteral(left(e)), is(false));
+    that(iz.booleanLiteral(right(e)), is(false));
+    that(iz.booleanLiteral(left(e)), is(false));
     that(in(e.getOperator(), Operator.EQUALS, Operator.NOT_EQUALS), is(true));
   }
 

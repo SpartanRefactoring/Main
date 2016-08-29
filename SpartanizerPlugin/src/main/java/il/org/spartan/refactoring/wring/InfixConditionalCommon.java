@@ -50,10 +50,10 @@ public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<Infix
     if (!in(o, CONDITIONAL_AND, CONDITIONAL_OR))
       return null;
     final Operator conjugate = conjugate(o);
-    final InfixExpression left = asInfixExpression(core(left(e)));
+    final InfixExpression left = az.infixExpression(core(left(e)));
     if (left == null || left.getOperator() != conjugate)
       return null;
-    final InfixExpression right = asInfixExpression(core(right(e)));
+    final InfixExpression right = az.infixExpression(core(right(e)));
     if (right == null || right.getOperator() != conjugate)
       return null;
     final Expression leftLeft = left(left);

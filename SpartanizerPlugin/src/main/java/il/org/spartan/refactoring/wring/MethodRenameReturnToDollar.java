@@ -27,7 +27,7 @@ abstract class AbstractRenamePolicy {
       // Empty returns stop the search. Something wrong is going on.
       if (r.getExpression() == null)
         return null;
-      if (Is.literal(r))
+      if (iz.literal(r))
         i.remove();
     }
     return $;

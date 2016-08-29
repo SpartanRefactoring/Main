@@ -43,7 +43,7 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
   }
 
   private static boolean hasOpportunity(final Expression inner) {
-    return Is.booleanLiteral(inner) || asNot(inner) != null || asAndOrOr(inner) != null || asComparison(inner) != null;
+    return iz.booleanLiteral(inner) || az.not(inner) != null || az.andOrOr(inner) != null || az.comparison(inner) != null;
   }
 
   private static boolean hasOpportunity(final PrefixExpression e) {
@@ -57,7 +57,7 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
   }
 
   private static Expression perhapsComparison(final Expression inner) {
-    return perhapsComparison(asComparison(inner));
+    return perhapsComparison(az.comparison(inner));
   }
 
   private static Expression perhapsComparison(final InfixExpression inner) {
@@ -65,7 +65,7 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
   }
 
   private static Expression perhapsDeMorgan(final Expression e) {
-    return perhapsDeMorgan(asAndOrOr(e));
+    return perhapsDeMorgan(az.andOrOr(e));
   }
 
   private static Expression perhapsDeMorgan(final InfixExpression e) {
@@ -73,7 +73,7 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
   }
 
   private static Expression perhapsDoubleNegation(final Expression e) {
-    return perhapsDoubleNegation(asNot(e));
+    return perhapsDoubleNegation(az.not(e));
   }
 
   private static Expression perhapsDoubleNegation(final PrefixExpression e) {
@@ -81,7 +81,7 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
   }
 
   static Expression perhapsNotOfLiteral(final Expression e) {
-    return !Is.booleanLiteral(e) ? null : notOfLiteral(asBooleanLiteral(e));
+    return !iz.booleanLiteral(e) ? null : notOfLiteral(az.booleanLiteral(e));
   }
 
   static Expression pushdownNot(final Expression e) {
@@ -102,11 +102,11 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
    * @param e JD
    * @return simplified parameter */
   public static Expression simplifyNot(final PrefixExpression e) {
-    return pushdownNot(asNot(extract.core(e)));
+    return pushdownNot(az.not(extract.core(e)));
   }
 
   private static Expression tryToSimplify(final Expression e) {
-    final Expression $ = pushdownNot(asNot(e));
+    final Expression $ = pushdownNot(az.not(e));
     return $ != null ? $ : e;
   }
 
@@ -119,6 +119,6 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
   }
 
   @Override public boolean scopeIncludes(final PrefixExpression e) {
-    return e != null && asNot(e) != null && hasOpportunity(asNot(e));
+    return e != null && az.not(e) != null && hasOpportunity(az.not(e));
   }
 }

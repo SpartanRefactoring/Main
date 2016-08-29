@@ -36,10 +36,10 @@ public final class DeclarationInitializerReturnUpdateAssignment extends Wring.Va
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || hasAnnotation(f))
       return null;
-    final ReturnStatement s = asReturnStatement(nextStatement);
+    final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null)
       return null;
-    final Assignment a = asAssignment(extract.expression(s));
+    final Assignment a = az.assignment(extract.expression(s));
     if (a == null || !same(n, left(a)))
       return null;
     final Operator o = a.getOperator();

@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.java;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
@@ -33,22 +32,22 @@ public class Specificity implements Comparator<Expression> {
   enum Level {
     NULL {
       @Override boolean includes(final ASTNode n) {
-        return Is.nullLiteral(n);
+        return iz.nullLiteral(n);
       }
     },
     BOOLEAN {
       @Override boolean includes(final ASTNode n) {
-        return Is.booleanLiteral(n);
+        return iz.booleanLiteral(n);
       }
     },
     LITERAL {
       @Override boolean includes(final ASTNode n) {
-        return Is.literal(n);
+        return iz.literal(n);
       }
     },
     CONSTANT {
       @Override boolean includes(final ASTNode n) {
-        return n.getNodeType() == PREFIX_EXPRESSION && Is.literal(extract.core(((PrefixExpression) n).getOperand()));
+        return n.getNodeType() == PREFIX_EXPRESSION && iz.literal(extract.core(((PrefixExpression) n).getOperand()));
       }
     },
     CLASS_CONSTANT {
@@ -58,44 +57,44 @@ public class Specificity implements Comparator<Expression> {
     },
     THIS {
       @Override boolean includes(final ASTNode n) {
-        return Is.thisLiteral(n);
+        return iz.thisLiteral(n);
       }
     },
     ZERO_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        final NumberLiteral ¢1 = asNumberLiteral(¢);
-        return ¢1 != null && Is.isLiteral(¢1.getToken(), 0);
+        final NumberLiteral ¢1 = az.numberLiteral(¢);
+        return ¢1 != null && iz.isLiteral(¢1.getToken(), 0);
       }
     },
     ONE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        final NumberLiteral ¢1 = asNumberLiteral(¢);
-        return ¢1 != null && Is.isLiteral(¢1.getToken(), 1);
+        final NumberLiteral ¢1 = az.numberLiteral(¢);
+        return ¢1 != null && iz.isLiteral(¢1.getToken(), 1);
       }
     },
     ZERO_DOUBLE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        return Is.isLiteral(¢, 0.0);
+        return iz.isLiteral(¢, 0.0);
       }
     },
     ONE_DOUBLE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        return Is.isLiteral(¢, 1.0);
+        return iz.isLiteral(¢, 1.0);
       }
     },
     EMPTY_STRING {
       @Override boolean includes(final ASTNode ¢) {
-        return Is.isEmptyStringLiteral(¢);
+        return iz.isEmptyStringLiteral(¢);
       }
     },
     TRUE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        return Is.isLiteralTrue(¢);
+        return iz.isLiteralTrue(¢);
       }
     },
     FALSE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        return Is.isLiteralFalse(¢);
+        return iz.isLiteralFalse(¢);
       }
     },;
     static boolean defined(final Expression e) {

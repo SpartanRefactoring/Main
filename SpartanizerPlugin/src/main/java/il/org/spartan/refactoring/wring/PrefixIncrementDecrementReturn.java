@@ -34,10 +34,10 @@ public final class PrefixIncrementDecrementReturn extends Wring.ReplaceToNextSta
   @Override ASTRewrite go(final ASTRewrite r, final PrefixExpression e, final Statement nextStatement, final TextEditGroup g) {
     if (!in(e.getOperator(), INCREMENT, DECREMENT))
       return null;
-    final Statement parent = asStatement(e.getParent());
+    final Statement parent = az.asStatement(e.getParent());
     if (parent == null || parent instanceof ForStatement)
       return null;
-    final ReturnStatement s = asReturnStatement(nextStatement);
+    final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null || !same(operand(e), expression(s)))
       return null;
     r.remove(parent, g);

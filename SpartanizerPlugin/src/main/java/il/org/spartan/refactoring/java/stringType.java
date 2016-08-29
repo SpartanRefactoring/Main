@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.java;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
@@ -20,7 +19,7 @@ public enum stringType {
    *         used in applying the <code>+</code> operator to concatenate
    *         strings. concatenation. */
   public static boolean isNot(final Expression e) {
-    return stringType.notStringSelf(e) || stringType.isNotFromContext(e) || stringType.isNotFromStructure(asInfixExpression(e));
+    return stringType.notStringSelf(e) || stringType.isNotFromContext(e) || stringType.isNotFromStructure(az.infixExpression(e));
   }
 
   /** Determine whether a <i>all</i> elements list of {@link Expression} are
@@ -40,7 +39,7 @@ public enum stringType {
     for (ASTNode context = e.getParent(); context != null; context = context.getParent())
       switch (context.getNodeType()) {
         case INFIX_EXPRESSION:
-          if (asInfixExpression(context).getOperator().equals(PLUS))
+          if (az.infixExpression(context).getOperator().equals(PLUS))
             continue;
           return true;
         case ARRAY_ACCESS:
@@ -61,7 +60,7 @@ public enum stringType {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is not a string
    *         or composed of appended strings */
   private static boolean isNotFromStructure(final Expression e) {
-    return notStringSelf(e) || isNotFromStructure(asInfixExpression(e));
+    return notStringSelf(e) || isNotFromStructure(az.infixExpression(e));
   }
 
   private static boolean isNotFromStructure(final InfixExpression e) {

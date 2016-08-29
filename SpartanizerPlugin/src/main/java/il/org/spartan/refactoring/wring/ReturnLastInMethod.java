@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -21,7 +20,7 @@ public final class ReturnLastInMethod extends Wring<ReturnStatement> implements 
   @Override Rewrite make(final ReturnStatement s) {
     if (s.getExpression() != null)
       return null;
-    final Block b = asBlock(s.getParent());
+    final Block b = az.block(s.getParent());
     return b == null || !lastIn(s, statements(b)) || !(b.getParent() instanceof MethodDeclaration) ? null //
         : new Rewrite(description(s), s) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {

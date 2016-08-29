@@ -36,8 +36,8 @@ public final class DeclarationInitializerIfUpdateAssignment extends Wring.Variab
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
       return null;
-    final IfStatement s = asIfStatement(nextStatement);
-    if (s == null || !Is.vacuousElse(s))
+    final IfStatement s = az.ifStatement(nextStatement);
+    if (s == null || !iz.vacuousElse(s))
       return null;
     s.setElseStatement(null);
     final Expression condition = s.getExpression();

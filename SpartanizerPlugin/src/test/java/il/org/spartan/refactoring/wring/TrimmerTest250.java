@@ -2,8 +2,8 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.Is.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
+import static il.org.spartan.refactoring.utils.iz.*;
 import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -386,19 +386,19 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue72me1() {
-    assert !Is.negative(Into.e("0"));
+    assert !iz.negative(Into.e("0"));
   }
 
   @Test public void issue72me2() {
-    assert Is.negative(Into.e("-1"));
-    assert !Is.negative(Into.e("+1"));
-    assert !Is.negative(Into.e("1"));
+    assert iz.negative(Into.e("-1"));
+    assert !iz.negative(Into.e("+1"));
+    assert !iz.negative(Into.e("1"));
   }
 
   @Test public void issue72me3() {
-    assert Is.negative(Into.e("-x"));
-    assert !Is.negative(Into.e("+x"));
-    assert !Is.negative(Into.e("x"));
+    assert iz.negative(Into.e("-x"));
+    assert !iz.negative(Into.e("+x"));
+    assert !iz.negative(Into.e("x"));
   }
 
   @Test public void issue72meA() {
@@ -417,7 +417,7 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue72mf1B() {
-    assert Is.isSimple(Into.e("x"));
+    assert iz.isSimple(Into.e("x"));
     trimming("-(x-0)")//
         .to("-(x)")//
         .to(null);

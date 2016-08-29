@@ -25,11 +25,11 @@ public class IfEmptyThenEmptyElseTest {
   }
 
   @Test public void emptyElse() {
-    assert Is.vacuousElse(IF);
+    assert iz.vacuousElse(IF);
   }
 
   @Test public void emptyThen() {
-    assert Is.vacuousThen(IF);
+    assert iz.vacuousThen(IF);
   }
 
   @Test public void extractFirstIf() {

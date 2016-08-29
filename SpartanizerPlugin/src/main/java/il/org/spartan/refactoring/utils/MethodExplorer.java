@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 
 import java.util.*;
@@ -49,7 +48,7 @@ public class MethodExplorer {
     inner.accept(new IgnoreNestedMethods() {
       boolean add(final List<? extends Expression> es) {
         for (final Expression e : es)
-          addFragments(fragments(asVariableDeclarationExpression(e)));
+          addFragments(fragments(az.variableDeclarationExpression(e)));
         return true;
       }
 

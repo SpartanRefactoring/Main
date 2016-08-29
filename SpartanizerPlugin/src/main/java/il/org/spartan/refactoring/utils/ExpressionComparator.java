@@ -59,11 +59,11 @@ public enum ExpressionComparator implements Comparator<Expression> {
    *         same place, or after then the second argument in lexicographical
    *         order. */
   static int alphabeticalCompare(final Expression e1, final Expression e2) {
-    return asString(e1).compareTo(asString(e2));
+    return removeWhites(Funcs.body(e1)).compareTo(removeWhites(Funcs.body(e2)));
   }
 
   static int argumentsCompare(final Expression e1, final Expression e2) {
-    return !Is.methodInvocation(e1) || !Is.methodInvocation(e2) ? 0 : argumentsCompare((MethodInvocation) e1, (MethodInvocation) e2);
+    return !iz.methodInvocation(e1) || !iz.methodInvocation(e2) ? 0 : argumentsCompare((MethodInvocation) e1, (MethodInvocation) e2);
   }
 
   static int argumentsCompare(final MethodInvocation i1, final MethodInvocation i2) {
@@ -88,7 +88,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
    * @param n JD
    * @return Number of abstract syntax tree nodes under the parameter. */
   public static int countNonWhites(final ASTNode n) {
-    return asString(n).length();
+    return removeWhites(Funcs.body(n)).length();
   }
 
   private static boolean isLonger(final Expression e1, final Expression e2) {
@@ -123,7 +123,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
               return;
             case IF_STATEMENT:
               $.inner += 4;
-              final IfStatement i = asIfStatement(child);
+              final IfStatement i = az.ifStatement(child);
               if (elze(i) != null)
                 ++$.inner;
               return;
@@ -190,7 +190,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
       for (int j = 0; j < size - 1; ++j) {
         final Expression e0 = es.get(j);
         final Expression e1 = es.get(j + 1);
-        if (Is.negative(e0) || Is.negative(e1) || compare(e0, e1) <= 0)
+        if (iz.negative(e0) || iz.negative(e1) || compare(e0, e1) <= 0)
           continue;
         es.remove(j);
         es.remove(j);

@@ -111,7 +111,7 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
 
   @Override ASTNode replacement(final InfixExpression e) {
     final Operator o = e.getOperator();
-    if (!Is.isComparison(o))
+    if (!iz.isComparison(o))
       return null;
     final Expression right = right(e);
     assert right != null;

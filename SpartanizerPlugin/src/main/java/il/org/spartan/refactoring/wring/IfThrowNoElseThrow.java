@@ -35,7 +35,7 @@ public final class IfThrowNoElseThrow extends Wring.ReplaceToNextStatement<IfSta
   }
 
   @Override ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
-    if (!Is.vacuousElse(s))
+    if (!iz.vacuousElse(s))
       return null;
     final Expression e1 = getThrowExpression(then(s));
     if (e1 == null)
