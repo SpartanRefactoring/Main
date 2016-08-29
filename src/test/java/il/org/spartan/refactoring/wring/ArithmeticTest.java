@@ -10,25 +10,20 @@ import org.junit.runners.*;
  * @since 2016-08-26 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
+@Ignore //
 public class ArithmeticTest {
   @Ignore("#92:under construction") public static class NotWorking {
     //
   }
-
+  @Test public void issue92_46() {
+    trimming("-1/-2*-3/-4*-5*-6/-7/-8/-9") //
+        .to("-1/2*3/4*5*6/7/8/9") //
+        .to("5*6*-1/2*3/4/7/8/9") //
+        .to("-5*6*1/2*3/4/7/8/9") //
+        .to("3*-5*6*1/2*3/4/7/8/9") //
+        .to(null);
+  }
   public static class Working {
-    /** Empty for now */
-    @Test public void issue92_3() {
-      trimming("1+1").to("2");
-    }
-
-    @Test public void issue92_4() {
-      trimming("1+1+3").to("5");
-    }
-
-    @Test public void issue92_9() {
-      trimming("3*4*2").to("24");
-    }
-
     @Test public void issue92_10() {
       trimming("3*4+2").to("12+2").to("14");
     }
@@ -49,6 +44,10 @@ public class ArithmeticTest {
       trimming("-9*2").to("-18");
     }
 
+    @Test public void issue92_15() {
+      trimming("9*6-4").to("54-4").to("50");
+    }
+
     @Test public void issue92_16() {
       trimming("4 + -9").to("4-9").to("-5");
     }
@@ -63,11 +62,16 @@ public class ArithmeticTest {
 
     @Test public void issue92_19() {
       trimming("4*-9 + 5*5")//
-          .to("5*5 -4*-9")//
-          .to("5*5 +4*-9")//
-          .to("25+-36")//
+          .to("5*5 -4*9")//
           .to("25-36")//
-          .to("-11");
+          .to("-11")//
+          .to(null);
+    }
+
+    @Test public void issue92_19abstracted() {
+      trimming("a*-q + s*s")//
+          .to("s*s -a*q")//
+          .to(null);
     }
 
     @Test public void issue92_19a() {
@@ -75,6 +79,14 @@ public class ArithmeticTest {
           .to("-36")//
           .to(null)//
       ;
+    }
+
+    @Test public void issue92_1a() {
+      trimming("1.+2*3 / 4 - 5").to("2*3/4+1.-5").to("6/4+1.-5").to("1+1.-5").to("2.0-5").to("-3.0");
+    }
+
+    @Test public void issue92_2() {
+      trimming("1.").to(null);
     }
 
     @Test public void issue92_20() {
@@ -117,20 +129,13 @@ public class ArithmeticTest {
       trimming("1.+1.").to("2.0");
     }
 
+    /** Empty for now */
+    @Test public void issue92_3() {
+      trimming("1+1").to("2");
+    }
+
     @Test public void issue92_30() {
       trimming("2*1.0").to("2.0");
-    }
-
-    @Test public void issue92_2() {
-      trimming("1.").to(null);
-    }
-
-    @Test public void issue92_4a() {
-      trimming("1+1+3").to("5");
-    }
-
-    @Test public void issue92_6() {
-      trimming("5.*5.").to("25.0");
     }
 
     @Test public void issue92_31() {
@@ -139,9 +144,18 @@ public class ArithmeticTest {
 
     @Test public void issue92_33() {
       trimming("5 *-9.0 +3")//
-          .to("-45.0+3")//
+          .to("3-5*9.0")//
           .to("3-45.0")//
-          .to("-42.0").to(null);
+          .to("-42.0")//
+          .to(null);
+    }
+
+
+
+    @Test public void issue92_33a() {
+      trimming("-a+5")//
+          .to("5-a")//
+          .to(null);
     }
 
     @Test public void issue92_34() {
@@ -168,6 +182,10 @@ public class ArithmeticTest {
       trimming("100L*9.0").to("900.0");
     }
 
+    @Test public void issue92_4() {
+      trimming("1+1+3").to("5");
+    }
+
     @Test public void issue92_40() {
       trimming("100L-9L").to("91L");
     }
@@ -192,20 +210,24 @@ public class ArithmeticTest {
       trimming("1.+2*3 / 4 - 5*48L").to("2*3/4+1.-240L").to("6/4+1.-240L").to("1+1.-240L").to("2.0-240L").to("-238.0");
     }
 
-    @Test public void issue92_1a() {
-      trimming("1.+2*3 / 4 - 5").to("2*3/4+1.-5").to("6/4+1.-5").to("1+1.-5").to("2.0-5").to("-3.0");
+    @Test public void issue92_4a() {
+      trimming("1+1+3").to("5");
+    }
+
+    @Test public void issue92_6() {
+      trimming("5.*5.").to("25.0");
     }
 
     @Test public void issue92_7() {
       trimming("3./4").to("0.75").to(null);
     }
 
-    @Test public void issue92_15() {
-      trimming("9*6-4").to("54-4").to("50");
-    }
-
     @Test public void issue92_8() {
       trimming("1L*2+1L*99").to("2L+99L").to("101L");
+    }
+
+    @Test public void issue92_9() {
+      trimming("3*4*2").to("24");
     }
   }
 }
