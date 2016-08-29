@@ -34,7 +34,7 @@ import il.org.spartan.refactoring.java.*;
   @Test public void plus() {
     final Expression e = Into.e("a + 2 < b");
     final Expression plus = extract.firstPlus(e);
-    azzert.that(plus.toString(), StringAnalyzer.notString(plus), is(true));
-    azzert.that(e.toString(), StringAnalyzer.notString(plus), is(true));
+    azzert.that(plus.toString(), stringType.isNot(plus), is(true));
+    azzert.that(e.toString(), stringType.isNot(plus), is(true));
   }
 }

@@ -96,12 +96,12 @@ public enum sideEffects {
 
   private static boolean free(final ArrayCreation c) {
     final ArrayInitializer i = c.getInitializer();
-    return free(c.dimensions()) && (i == null || free(i.expressions()));
+    return free(c.dimensions()) && (i == null || free(expose.expressions(i)));
   }
 
   private static boolean free(final Expression... es) {
     for (final Expression e : es)
-      if (free(e))
+      if (!free(e))
         return false;
     return true;
   }

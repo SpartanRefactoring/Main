@@ -17,12 +17,12 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2015-07-17 */
 public final class InfixAdditionSort extends Wring.InfixSorting implements Kind.Canonicalization {
   @Override boolean eligible(final InfixExpression e) {
-    return StringAnalyzer.notString(e) && super.eligible(e);
+    return stringType.isNot(e) && super.eligible(e);
   }
 
   @Override Expression replacement(final InfixExpression e) {
     final List<Expression> operands = extract.allOperands(e);
-    return !StringAnalyzer.notString(e) || !sort(operands) ? null : subject.operands(operands).to(e.getOperator());
+    return !stringType.isNot(e) || !sort(operands) ? null : subject.operands(operands).to(e.getOperator());
   }
 
   @Override boolean scopeIncludes(final InfixExpression e) {

@@ -55,6 +55,10 @@ public enum expose {
     return ¢.catchClauses();
   }
 
+  public static List<Expression> expressions(final ArrayInitializer ¢) {
+    return ¢.expressions();
+  }
+
   /** Expose the list of extended operands in an {@link InfixExpression}
    * @param ¢ JD
    * @return reference to the list of extended operands contained in the
