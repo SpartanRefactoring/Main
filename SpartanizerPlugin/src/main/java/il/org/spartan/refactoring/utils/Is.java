@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.*;
+import il.org.spartan.refactoring.java.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -166,19 +167,6 @@ public enum Is {
    *         which the de Morgan laws apply. */
   public static boolean deMorgan(final Operator o) {
     return in(o, CONDITIONAL_AND, CONDITIONAL_OR);
-  }
-
-  public static boolean deterministic(final Expression e) {
-    if (!sideEffectFree(e))
-      return false;
-    final Wrapper<Boolean> $ = new Wrapper<>(Boolean.TRUE);
-    e.accept(new ASTVisitor() {
-      @Override public boolean visit(@SuppressWarnings("unused") final ArrayCreation __) {
-        $.set(Boolean.FALSE);
-        return false;
-      }
-    });
-    return $.get().booleanValue();
   }
 
   /** Determine whether a node is an {@link EmptyStatement}
@@ -476,16 +464,7 @@ public enum Is {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a node which
    *         is an infix expression whose operator is */
   public static boolean nonAssociative(final ASTNode n) {
-    return nonAssociative(asInfixExpression(n));
-  }
-
-  /** @param e JD
-   * @return <code><b>true</b></code> <i>iff</i> the parameter is an expression
-   *         whose type is provably not of type {@link String}, in the sense
-   *         used in applying the <code>+</code> operator to concatenate
-   *         strings. concatenation. */
-  public static boolean notString(final Expression e) {
-    return notStringSelf(e) || notStringUp(e) || notStringDown(asInfixExpression(e));
+    return Precedence.nonAssociative(asInfixExpression(n));
   }
 
   /** Determine whether a node is the <code><b>null</b></code> keyword
@@ -573,26 +552,26 @@ public enum Is {
       case POSTFIX_EXPRESSION:
         return false;
       case ARRAY_CREATION:
-        return sideEffectFreeArrayCreation((ArrayCreation) e);
+        return sideEffects.sideEffectFreeArrayCreation((ArrayCreation) e);
       case ARRAY_ACCESS:
         final ArrayAccess x = (ArrayAccess) e;
-        return sideEffectsFree(x.getArray(), x.getIndex());
+        return sideEffects.sideEffectsFree(x.getArray(), x.getIndex());
       case CAST_EXPRESSION:
         final CastExpression c = (CastExpression) e;
         return sideEffectFree(c.getExpression());
       case INSTANCEOF_EXPRESSION:
         return sideEffectFree(left((InstanceofExpression) e));
       case PREFIX_EXPRESSION:
-        return sideEffectFreePrefixExpression((PrefixExpression) e);
+        return sideEffects.sideEffectFreePrefixExpression((PrefixExpression) e);
       case PARENTHESIZED_EXPRESSION:
         return sideEffectFree(((ParenthesizedExpression) e).getExpression());
       case INFIX_EXPRESSION:
-        return sideEffectsFree(extract.allOperands((InfixExpression) e));
+        return sideEffects.sideEffectsFree(extract.allOperands((InfixExpression) e));
       case CONDITIONAL_EXPRESSION:
         final ConditionalExpression ce = (ConditionalExpression) e;
-        return sideEffectsFree(ce.getExpression(), ce.getThenExpression(), ce.getElseExpression());
+        return sideEffects.sideEffectsFree(ce.getExpression(), ce.getThenExpression(), ce.getElseExpression());
       case ARRAY_INITIALIZER:
-        return sideEffectsFree(((ArrayInitializer) e).expressions());
+        return sideEffects.sideEffectsFree(((ArrayInitializer) e).expressions());
       default:
         System.err.println("Missing handler for class: " + e.getClass().getSimpleName());
         return false;
@@ -779,37 +758,6 @@ public enum Is {
     return is(¢, NUMBER_LITERAL);
   }
 
-  /** Determine whether an {@link Expression} could not be evaluated as a
-   * string.
-   * @param e JD
-   * @return <code><b>true</b></code> <i>iff</i> the parameter is not a string
-   *         or composed of appended strings */
-  static boolean notStringDown(final Expression e) {
-    return notStringSelf(e) || notStringDown(asInfixExpression(e));
-  }
-
-  static boolean notStringDown(final InfixExpression e) {
-    return e != null && (e.getOperator() != PLUS || Are.notString(extract.allOperands(e)));
-  }
-
-  static boolean notStringSelf(final Expression e) {
-    final int[] is = { ARRAY_CREATION, BOOLEAN_LITERAL, CHARACTER_LITERAL, INSTANCEOF_EXPRESSION, NULL_LITERAL, NUMBER_LITERAL, PREFIX_EXPRESSION };
-    for (final int ¢ : is)
-      if (¢ == e.getNodeType())
-        return true;
-    return false;
-  }
-
-  static boolean sideEffectFreeArrayCreation(final ArrayCreation c) {
-    final ArrayInitializer i = c.getInitializer();
-    return sideEffectsFree(c.dimensions()) && (i == null || sideEffectsFree(i.expressions()));
-  }
-
-  static boolean sideEffectFreePrefixExpression(final PrefixExpression e) {
-    return in(e.getOperator(), PrefixExpression.Operator.PLUS, PrefixExpression.Operator.MINUS, PrefixExpression.Operator.COMPLEMENT,
-        PrefixExpression.Operator.NOT) && sideEffectFree(extract.operand(e));
-  }
-
   private static boolean is(final ASTNode n, final int type) {
     return n != null && type == n.getNodeType();
   }
@@ -819,43 +767,6 @@ public enum Is {
       if (i == j)
         return true;
     return false;
-  }
-
-  private static boolean nonAssociative(final InfixExpression e) {
-    return e != null && in(e.getOperator(), MINUS, DIVIDE, REMAINDER);
-  }
-
-  private static boolean notStringUp(final Expression e) {
-    for (ASTNode context = e.getParent(); context != null; context = context.getParent())
-      switch (context.getNodeType()) {
-        case INFIX_EXPRESSION:
-          if (asInfixExpression(context).getOperator().equals(PLUS))
-            continue;
-          return true;
-        case ARRAY_ACCESS:
-        case PREFIX_EXPRESSION:
-        case POSTFIX_EXPRESSION:
-          return true;
-        case PARENTHESIZED_EXPRESSION:
-          continue;
-        default:
-          return false;
-      }
-    return false;
-  }
-
-  private static boolean sideEffectsFree(final Expression... es) {
-    for (final Expression e : es)
-      if (!sideEffectFree(e))
-        return false;
-    return true;
-  }
-
-  private static boolean sideEffectsFree(final List<?> os) {
-    for (final Object o : os)
-      if (o == null || !sideEffectFree(Funcs.asExpression((ASTNode) o)))
-        return false;
-    return true;
   }
 
   public static boolean infixPlus(final Expression e) {

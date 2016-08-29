@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.utils.subject.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) public class SubjectTest {
@@ -132,9 +133,9 @@ import il.org.spartan.refactoring.utils.subject.*;
 
   @Test public void subjectOperands() {
     final Expression e = Into.e("2 + a < b");
-    assert Is.notString(e);
+    assert StringAnalyzer.notString(e);
     final InfixExpression plus = extract.firstPlus(e);
-    assert Is.notString(plus);
+    assert StringAnalyzer.notString(plus);
     final List<Expression> operands = extract.operands(flatten(plus));
     azzert.that(operands.size(), is(2));
     final boolean b = ExpressionComparator.ADDITION.sort(operands);
@@ -161,9 +162,9 @@ import il.org.spartan.refactoring.utils.subject.*;
 
   @Test public void subjectOperandsWithParenthesis() {
     final Expression e = Into.e("(2 + a) * b");
-    assert Is.notString(e);
+    assert StringAnalyzer.notString(e);
     final InfixExpression plus = extract.firstPlus(e);
-    assert Is.notString(plus);
+    assert StringAnalyzer.notString(plus);
     final List<Expression> operands = extract.operands(flatten(plus));
     azzert.that(operands.size(), is(2));
     final boolean b = ExpressionComparator.ADDITION.sort(operands);

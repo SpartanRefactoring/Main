@@ -7,6 +7,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
+import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** sorts the arguments of a {@link Operator#PLUS} expression. Extra care is
@@ -16,12 +17,12 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2015-07-17 */
 public final class InfixAdditionSort extends Wring.InfixSorting implements Kind.Canonicalization {
   @Override boolean eligible(final InfixExpression e) {
-    return Is.notString(e) && super.eligible(e);
+    return StringAnalyzer.notString(e) && super.eligible(e);
   }
 
   @Override Expression replacement(final InfixExpression e) {
     final List<Expression> operands = extract.allOperands(e);
-    return !Is.notString(e) || !sort(operands) ? null : subject.operands(operands).to(e.getOperator());
+    return !StringAnalyzer.notString(e) || !sort(operands) ? null : subject.operands(operands).to(e.getOperator());
   }
 
   @Override boolean scopeIncludes(final InfixExpression e) {
