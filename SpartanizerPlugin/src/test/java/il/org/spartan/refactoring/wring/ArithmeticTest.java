@@ -133,6 +133,12 @@ public class ArithmeticTest {
     @Test  public void issue92_37() {
       trimming("100L+2+1.0").to("103.0");
     }
+    @Test  public void issue92_38() {
+      trimming("100L*2+1.0").to("200L+1.0").to("201.0");
+    }
+    @Test  public void issue92_39() {
+      trimming("100L*9.0").to("900.0");
+    }
     
     @Test public void issue92_1a() {
       trimming("1.+2*3 / 4 - 5").to("2*3/4+1.-5").to("6/4+1.-5").to("1+1.-5").to("2.0-5").to("-3.0");
