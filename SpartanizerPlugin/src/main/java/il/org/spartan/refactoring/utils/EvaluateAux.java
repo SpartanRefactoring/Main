@@ -1,4 +1,4 @@
-package il.org.spartan.refactoring.wring;
+package il.org.spartan.refactoring.utils;
 
 import java.util.*;
 
@@ -41,19 +41,16 @@ public class EvaluateAux {
         && ((NumberLiteral) ((PrefixExpression) e).getOperand()).getToken().matches("[0-9]+L");
   }
 
-  /* private static boolean isLong(Expression e){ if(!(e instanceof
-   * NumberLiteral)) return false; return ((NumberLiteral)
-   * e).getToken().matches("[0-9]+"); } */ // TODO: Add supprot for long
-  static boolean isCompitable(final Expression e) {
+  public static boolean isCompitable(final Expression e) {
     return e instanceof NumberLiteral && isNumber(e) || e instanceof PrefixExpression
         && ((PrefixExpression) e).getOperator() == PrefixExpression.Operator.MINUS && ((PrefixExpression) e).getOperand() instanceof NumberLiteral;
   }
 
-  static boolean isNumber(final Expression e) {
+  public static boolean isNumber(final Expression e) {
     return isInt(e) || isDouble(e) || isMinusDouble(e) || isMinusInt(e) || isLong(e) || isMinusLong(e);
   }
 
-  static EvaluateAux.Type getEvaluatedType(final InfixExpression e) {
+  public static EvaluateAux.Type getEvaluatedType(final InfixExpression e) {
     boolean isLong = false;
     final List<Expression> operands = extract.allOperands(e);
     for (final Expression ¢ : operands) {
@@ -67,12 +64,12 @@ public class EvaluateAux {
     return isLong ? EvaluateAux.Type.LONG : EvaluateAux.Type.INT;
   }
 
-  static int extractInt(final Expression e) {
+  public static int extractInt(final Expression e) {
     return !(e instanceof PrefixExpression) ? Integer.parseInt(((NumberLiteral) e).getToken())
         : -1 * Integer.parseInt(((NumberLiteral) ((PrefixExpression) e).getOperand()).getToken());
   }
 
-  static double extractDouble(final Expression e) {
+  public static double extractDouble(final Expression e) {
     if (isLong(e)) {
       final String token = ((NumberLiteral) e).getToken();
       if (!(e instanceof PrefixExpression))
@@ -84,7 +81,7 @@ public class EvaluateAux {
         : -1 * Double.parseDouble(((NumberLiteral) ((PrefixExpression) e).getOperand()).getToken());
   }
 
-  static long extractLong(final Expression e) {
+  public static long extractLong(final Expression e) {
     final String token = ((NumberLiteral) e).getToken();
     if (isInt(e) || isMinusInt(e))
       return Long.parseLong(token);
