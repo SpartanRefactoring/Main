@@ -31,7 +31,7 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @author Niv Shalmon
  * @since 2016-08-XX */
-public enum Kind {
+public enum RationalType {
   // Those anonymous characters that known little or nothing about themselves
   NOTHING("none", "when nothing can be said, e.g., f(f(),f(f(f()),f()))"), //
   NONNULL("!null", "e.g., new Object() and that's about it"), //
@@ -55,25 +55,25 @@ public enum Kind {
    * @return The most specific Type information that can be deduced about the
    *         expression, or {@link #NOTHING} if it cannot decide. Will never
    *         return null */
-  public static Kind kind(final Expression e) {
-    return kind(e, null, null);
+  public static RationalType rationalType(final Expression e) {
+    return rationalType(e, null, null);
   }
 
-  /** A version of {@link #kind(Expression)} that receives the operand's type
+  /** A version of {@link #rationalType(Expression)} that receives the operand's type
    * for a single operand expression. The call kind(e,null) is equivalent to
    * kind(e) */
-  static Kind kind(final Expression e, final Kind t) {
-    return kind(e, t, null);
+  static RationalType rationalType(final Expression e, final RationalType t) {
+    return rationalType(e, t, null);
   }
 
-  /** A version of {@link #kind(Expression)} that receives the operands' type
+  /** A version of {@link #rationalType(Expression)} that receives the operands' type
    * for a two operand expression. The call kind(e,null,null) is equivalent to
    * kind(e)
    * @param t1 the type of the left hand operand of the expression, or null if
    *        unknown
    * @param t2 the type of the left hand operand of the expression, or null if
    *        unknown */
-  static Kind kind(final Expression e, final Kind t1, final Kind t2) {
+  static RationalType rationalType(final Expression e, final RationalType t1, final RationalType t2) {
     switch (e.getNodeType()) {
       case NULL_LITERAL:
         return NULL;
@@ -84,25 +84,25 @@ public enum Kind {
       case BOOLEAN_LITERAL:
         return BOOLEAN;
       case NUMBER_LITERAL:
-        return kind((NumberLiteral) e);
+        return rationalType((NumberLiteral) e);
       case CAST_EXPRESSION:
-        return kind((CastExpression) e);
+        return rationalType((CastExpression) e);
       case PREFIX_EXPRESSION:
-        return kind((PrefixExpression) e, t1);
+        return rationalType((PrefixExpression) e, t1);
       case INFIX_EXPRESSION:
-        return kind((InfixExpression) e, t1, t2);
+        return rationalType((InfixExpression) e, t1, t2);
       case POSTFIX_EXPRESSION:
-        return kind((PostfixExpression) e, t1);
+        return rationalType((PostfixExpression) e, t1);
       case PARENTHESIZED_EXPRESSION:
-        return kind((ParenthesizedExpression) e, t1);
+        return rationalType((ParenthesizedExpression) e, t1);
       case CLASS_INSTANCE_CREATION:
-        return kind((ClassInstanceCreation) e);
+        return rationalType((ClassInstanceCreation) e);
       default:
         return NOTHING;
     }
   }
 
-  private static Kind kind(final NumberLiteral e) {
+  private static RationalType rationalType(final NumberLiteral e) {
     final String ¢ = e.getToken();
     if (¢.matches("[0-9]+"))
       return INT;
@@ -113,37 +113,37 @@ public enum Kind {
     return NUMERIC;
   }
 
-  private static Kind kind(final CastExpression e) {
+  private static RationalType rationalType(final CastExpression e) {
     return typeSwitch("" + extract.type(e), BAPTIZED);
   }
 
-  private static Kind kind(final PrefixExpression e, final Kind t1) {
+  private static RationalType rationalType(final PrefixExpression e, final RationalType t1) {
     final PrefixExpression.Operator o = e.getOperator();
-    final Kind ¢ = t1 != null ? t1 : kind(e.getOperand());
+    final RationalType ¢ = t1 != null ? t1 : rationalType(e.getOperand());
     return ¢.under(o);
   }
 
-  private static Kind kind(final InfixExpression e, final Kind t1, final Kind t2) {
+  private static RationalType rationalType(final InfixExpression e, final RationalType t1, final RationalType t2) {
     final InfixExpression.Operator o = e.getOperator();
-    final Kind ¢1 = t1 != null ? t1 : kind(e.getLeftOperand());
-    final Kind ¢2 = t2 != null ? t2 : kind(e.getRightOperand());
+    final RationalType ¢1 = t1 != null ? t1 : rationalType(e.getLeftOperand());
+    final RationalType ¢2 = t2 != null ? t2 : rationalType(e.getRightOperand());
     return ¢1.underBinaryOperator(o, ¢2);
   }
 
-  private static Kind kind(final PostfixExpression e, final Kind t1) {
-    final Kind ¢ = t1 != null ? t1 : kind(e.getOperand());
+  private static RationalType rationalType(final PostfixExpression e, final RationalType t1) {
+    final RationalType ¢ = t1 != null ? t1 : rationalType(e.getOperand());
     return ¢.asNumeric();
   }
 
-  private static Kind kind(final ParenthesizedExpression e, final Kind t) {
-    return t != null ? t : kind(e.getExpression());
+  private static RationalType rationalType(final ParenthesizedExpression e, final RationalType t) {
+    return t != null ? t : rationalType(e.getExpression());
   }
 
-  private static Kind kind(final ClassInstanceCreation e) {
+  private static RationalType rationalType(final ClassInstanceCreation e) {
     return typeSwitch("" + e.getType(), NONNULL);
   }
 
-  private static Kind typeSwitch(final String s, final Kind $) {
+  private static RationalType typeSwitch(final String s, final RationalType $) {
     switch (s) {
       case "char":
       case "Character":
@@ -170,7 +170,7 @@ public enum Kind {
   final String description;
   final String name;
 
-  Kind(final String name, final String description) {
+  RationalType(final String name, final String description) {
     this.name = name;
     this.description = description;
   }
@@ -182,7 +182,7 @@ public enum Kind {
   /** @return one of {@link #BOOLEAN}, {@link #INT}, {@link #LONG},
    *         {@link #DOUBLE}, {@link #INTEGRAL} or {@link #NUMERIC}, in case it
    *         cannot decide */
-  private final Kind under(final PrefixExpression.Operator o) {
+  private final RationalType under(final PrefixExpression.Operator o) {
     assert o != null;
     return o == NOT ? BOOLEAN //
         : o != COMPLEMENT ? asNumeric() : asIntegralNonChar();
@@ -192,7 +192,7 @@ public enum Kind {
    *         {@link #DOUBLE}, {@link #STRING}, {@link #INTEGRAL},
    *         {@link #NUMERIC}, or {@link #ALPHANUMERIC}, in case it cannot
    *         decide */
-  private final Kind underBinaryOperator(final InfixExpression.Operator o, final Kind k) {
+  private final RationalType underBinaryOperator(final InfixExpression.Operator o, final RationalType k) {
     if (o == PLUS2)
       return underPlus(k);
     if (in(o, //
@@ -220,7 +220,7 @@ public enum Kind {
   /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE},
    *         {@link #STRING}, {@link #INTEGRAL}, {@link #NUMERIC} or
    *         {@link #ALPHANUMERIC}, in case it cannot decide */
-  private Kind underPlus(final Kind k) {
+  private RationalType underPlus(final RationalType k) {
     // addition with NULL or String must be a String
     if (in(STRING, this, k) || in(NULL, this, k))
       return STRING;
@@ -232,13 +232,13 @@ public enum Kind {
 
   /** @return one of {@link #INT}, {@link #LONG}, {@link #INTEGRAL},
    *         {@link #DOUBLE}, or {@link #NUMERIC}, in case it cannot decide */
-  private Kind underNumericOnlyOperator(final Kind k) {
+  private RationalType underNumericOnlyOperator(final RationalType k) {
     if (!isNumeric())
       return asNumeric().underNumericOnlyOperator(k);
     assert k != null;
     assert this != ALPHANUMERIC : "Don't confuse " + NUMERIC + " with " + ALPHANUMERIC;
     assert isNumeric() : this + ": is for some reason not numeric ";
-    final Kind $ = k.asNumeric();
+    final RationalType $ = k.asNumeric();
     assert $ != null;
     assert $.isNumeric() : this + ": is for some reason not numeric ";
     // Double contaminates Numeric
@@ -257,9 +257,9 @@ public enum Kind {
     return INT;
   }
 
-  private Kind underIntegersOnlyOperator(final Kind k) {
-    final Kind ¢1 = asIntegralNonChar();
-    final Kind ¢2 = k.asIntegralNonChar();
+  private RationalType underIntegersOnlyOperator(final RationalType k) {
+    final RationalType ¢1 = asIntegralNonChar();
+    final RationalType ¢2 = k.asIntegralNonChar();
     return ¢1 == INTEGRAL && ¢2 == INTEGRAL ? INTEGRAL : ¢1.max(¢2);
   }
 
@@ -271,13 +271,13 @@ public enum Kind {
 
   /** @return one of {@link #INT}, {@link #LONG}, {@link #CHAR}, or
    *         {@link #INTEGRAL}, in case it cannot decide */
-  private Kind asIntegral() {
+  private RationalType asIntegral() {
     return isIntegral() ? this : INTEGRAL;
   }
 
   /** @return one of {@link #INT}, {@link #LONG}, or {@link #INTEGRAL}, in case
    *         it cannot decide */
-  private Kind asIntegralNonChar() {
+  private RationalType asIntegralNonChar() {
     return in(this, CHAR, INT) ? INT : asIntegral();
   }
 
@@ -291,7 +291,7 @@ public enum Kind {
   /** @return one of {@link #INT}, {@link #LONG}, {@link #CHAR},
    *         {@link #DOUBLE}, {@link #INTEGRAL} or {@link #NUMERIC}, in case no
    *         further information is available */
-  private Kind asNumeric() {
+  private RationalType asNumeric() {
     return !isNumeric() ? NUMERIC : this != CHAR ? this : INT;
   }
 
@@ -302,7 +302,7 @@ public enum Kind {
     return in(this, INT, LONG, CHAR, DOUBLE, INTEGRAL, NUMERIC, STRING, ALPHANUMERIC);
   }
 
-  private Kind max(final Kind ¢) {
+  private RationalType max(final RationalType ¢) {
     return ordinal() > ¢.ordinal() ? this : ¢;
   }
 }
