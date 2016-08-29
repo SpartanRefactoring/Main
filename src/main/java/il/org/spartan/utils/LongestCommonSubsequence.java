@@ -52,6 +52,6 @@ public class LongestCommonSubsequence {
   }
 
   private int threeWayDynamicProgramingStep(final int i, final int j) {
-    return max(length(i - 1, j), length(i, j - 1), length(i - 1, j - 1) + As.bit(as[i] == bs[j]));
+    return max(length(i - 1, j), length(i, j - 1), length(i - 1, j - 1) + az.bit(as[i] == bs[j]));
   }
 }

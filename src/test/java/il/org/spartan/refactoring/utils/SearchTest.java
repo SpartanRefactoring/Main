@@ -12,7 +12,7 @@ import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.Collect.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) public class SearchTest {
-  private final SimpleName n = asSimpleName(e("n"));
+  private final SimpleName n = az.asSimpleName(e("n"));
 
   @Test public void awful() {
     azzert.that(searcher().in(d("Object n() {\n" + //

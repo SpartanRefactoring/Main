@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.LocalInliner.*;
 
 /** convert
@@ -33,7 +34,7 @@ public final class DeclarationInitializerReturnExpression extends Wring.Variable
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || hasAnnotation(f))
       return null;
-    final ReturnStatement s = asReturnStatement(nextStatement);
+    final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null)
       return null;
     final Expression newReturnValue = s.getExpression();

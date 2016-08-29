@@ -48,7 +48,7 @@ import il.org.spartan.refactoring.utils.*;
 public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpression> implements Kind.NoImpact {
   private static List<Expression> gather(final Expression e, final List<Expression> $) {
     if (e instanceof InfixExpression)
-      return gather(asInfixExpression(e), $);
+      return gather(az.infixExpression(e), $);
     $.add(e);
     return $;
   }
@@ -85,14 +85,14 @@ public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpre
     final List<Expression> es = gather(e);
     if (es.size() < 2)
       return null;
-    final int totalNegation = countNegations(es);
+    final int totalNegation = negation.level(es);
     switch (totalNegation) {
       default:
         break;
       case 0:
         return null;
       case 1:
-        if (negationLevel(first(es)) == 1)
+        if (negation.level(first(es)) == 1)
           return null;
     }
     if (exclude != null)
@@ -101,7 +101,7 @@ public final class InfixDivisionMultiplicationNegatives extends Wring<InfixExpre
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Expression first = totalNegation % 2 == 0 ? null : first(es);
         for (final Expression ¢ : es)
-          if (¢ != first && negationLevel(¢) > 0)
+          if (¢ != first && negation.level(¢) > 0)
             r.replace(¢, plant(duplicate(peelNegation(¢))).into(¢.getParent()), g);
         if (first != null)
           r.replace(first, plant(subject.operand(peelNegation(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);

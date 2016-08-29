@@ -59,7 +59,7 @@ import il.org.spartan.refactoring.utils.*;
   @Test public void test06() {
     final InfixExpression i = i("a + b -c");
     azzert.that(i.getOperator(), is(MINUS2));
-    azzert.that(asInfixExpression(left(i)).getOperator(), is(PLUS2));
+    azzert.that(az.infixExpression(left(i)).getOperator(), is(PLUS2));
     c.collect(i);
     azzert.that(c.plus().size(), is(2));
     azzert.that(c.minus().size(), is(1));

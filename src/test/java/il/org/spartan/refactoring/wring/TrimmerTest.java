@@ -432,8 +432,8 @@ import il.org.spartan.refactoring.utils.*;
   @Test public void comaprisonWithSpecific0Legibiliy00() {
     final InfixExpression e = i("this != a");
     assert in(e.getOperator(), Operator.EQUALS, Operator.NOT_EQUALS);
-    assert !Is.booleanLiteral(right(e));
-    assert !Is.booleanLiteral(left(e));
+    assert !iz.booleanLiteral(right(e));
+    assert !iz.booleanLiteral(left(e));
     assert in(e.getOperator(), Operator.EQUALS, Operator.NOT_EQUALS);
   }
 

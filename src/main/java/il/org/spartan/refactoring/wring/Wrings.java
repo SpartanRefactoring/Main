@@ -33,7 +33,7 @@ public enum Wrings {
   }
 
   static IfStatement blockIfNeeded(final IfStatement s, final ASTRewrite r, final TextEditGroup g) {
-    if (!Is.blockRequired(s))
+    if (!iz.blockRequired(s))
       return s;
     final Block b = subject.statement(s).toBlock();
     r.replace(s, b, g);
@@ -54,7 +54,7 @@ public enum Wrings {
   }
 
   static boolean endsWithSequencer(final Statement s) {
-    return Is.sequencer(extract.lastStatement(s));
+    return iz.sequencer(extract.lastStatement(s));
   }
 
   static ListRewrite insertAfter(final Statement where, final List<Statement> what, final ASTRewrite r, final TextEditGroup g) {
@@ -122,7 +122,7 @@ public enum Wrings {
   }
 
   static ASTRewrite replaceTwoStatements(final ASTRewrite r, final Statement what, final Statement by, final TextEditGroup g) {
-    final Block parent = asBlock(what.getParent());
+    final Block parent = az.block(what.getParent());
     final List<Statement> siblings = extract.statements(parent);
     final int i = siblings.indexOf(what);
     siblings.remove(i);

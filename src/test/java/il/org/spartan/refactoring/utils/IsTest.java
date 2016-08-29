@@ -10,33 +10,33 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.java.*;
 
-/** Test class for class {@link Is}
+/** Test class for class {@link iz}
  * @author Yossi Gil
  * @since 2015-07-17 */
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public class IsTest {
   @Test public void booleanLiteralFalseOnNull() {
-    azzert.that(Is.booleanLiteral(e("null")), is(false));
+    azzert.that(iz.booleanLiteral(e("null")), is(false));
   }
 
   @Test public void booleanLiteralFalseOnNumeric() {
-    azzert.that(Is.booleanLiteral(e("12")), is(false));
+    azzert.that(iz.booleanLiteral(e("12")), is(false));
   }
 
   @Test public void booleanLiteralFalseOnThis() {
-    azzert.that(Is.booleanLiteral(e("this")), is(false));
+    azzert.that(iz.booleanLiteral(e("this")), is(false));
   }
 
   @Test public void booleanLiteralTrueOnFalse() {
-    azzert.that(Is.booleanLiteral(e("false")), is(true));
+    azzert.that(iz.booleanLiteral(e("false")), is(true));
   }
 
   @Test public void booleanLiteralTrueOnTrue() {
-    azzert.that(Is.booleanLiteral(e("true")), is(true));
+    azzert.that(iz.booleanLiteral(e("true")), is(true));
   }
 
   @Test public void callIsSpecificTrue() {
-    azzert.that(Is.constant(e("this")), is(true));
+    azzert.that(iz.constant(e("this")), is(true));
   }
 
   @Test public void canMakeExpression() {
@@ -60,59 +60,59 @@ public class IsTest {
   }
 
   @Test public void isConstantFalse() {
-    azzert.that(Is.constant(e("a")), is(false));
+    azzert.that(iz.constant(e("a")), is(false));
   }
 
   @Test public void isNullFalse1() {
-    azzert.that(Is.nullLiteral(e("this")), is(false));
+    azzert.that(iz.nullLiteral(e("this")), is(false));
   }
 
   @Test public void isNullFalse2() {
-    azzert.that(Is.thisLiteral(e("this.a")), is(false));
+    azzert.that(iz.thisLiteral(e("this.a")), is(false));
   }
 
   @Test public void isNullTrue() {
-    azzert.that(Is.nullLiteral(e("null")), is(true));
+    azzert.that(iz.nullLiteral(e("null")), is(true));
   }
 
   @Test public void isOneOf() {
-    azzert.that(Is.oneOf(e("this"), CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION), is(true));
+    azzert.that(iz.oneOf(e("this"), CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION), is(true));
   }
 
   @Test public void isThisFalse1() {
-    azzert.that(Is.thisLiteral(e("null")), is(false));
+    azzert.that(iz.thisLiteral(e("null")), is(false));
   }
 
   @Test public void isThisFalse2() {
-    azzert.that(Is.thisLiteral(e("this.a")), is(false));
+    azzert.that(iz.thisLiteral(e("this.a")), is(false));
   }
 
   @Test public void isThisTrue() {
-    azzert.that(Is.thisLiteral(e("this")), is(true));
+    azzert.that(iz.thisLiteral(e("this")), is(true));
   }
 
   @Test public void negative0() {
-    azzert.that(Is.negative(e("0")), is(false));
+    azzert.that(iz.negative(e("0")), is(false));
   }
 
   @Test public void negative1() {
-    azzert.that(Is.negative(e("0")), is(false));
+    azzert.that(iz.negative(e("0")), is(false));
   }
 
   @Test public void negativeMinus1() {
-    azzert.that(Is.negative(e("- 1")), is(true));
+    azzert.that(iz.negative(e("- 1")), is(true));
   }
 
   @Test public void negativeMinus2() {
-    azzert.that(Is.negative(e("- 2")), is(true));
+    azzert.that(iz.negative(e("- 2")), is(true));
   }
 
   @Test public void negativeMinusA() {
-    azzert.that(Is.negative(e("- a")), is(true));
+    azzert.that(iz.negative(e("- a")), is(true));
   }
 
   @Test public void negativeNull() {
-    azzert.that(Is.negative(e("null")), is(false));
+    azzert.that(iz.negative(e("null")), is(false));
   }
 
   @Test public void nonnAssociative() {
@@ -127,21 +127,21 @@ public class IsTest {
   }
 
   @Test public void numericLiteralFalse1() {
-    azzert.that(Is.numericLiteral(e("2*3")), is(false));
+    azzert.that(iz.numericLiteral(e("2*3")), is(false));
   }
 
   @Test public void numericLiteralFalse2() {
-    azzert.that(Is.numericLiteral(e("2*3")), is(false));
+    azzert.that(iz.numericLiteral(e("2*3")), is(false));
   }
 
   @Test public void numericLiteralTrue() {
-    azzert.that(Is.numericLiteral(e("1")), is(true));
+    azzert.that(iz.numericLiteral(e("1")), is(true));
   }
 
   @Test public void seriesA_3() {
-    azzert.nay(Is.infixPlus(e("(i+j)")));
-    azzert.aye(Is.infixPlus(core(e("(i+j)"))));
-    azzert.nay(Is.infixMinus(e("(i-j)")));
-    azzert.aye(Is.infixMinus(core(e("(i-j)"))));
+    azzert.nay(iz.infixPlus(e("(i+j)")));
+    azzert.aye(iz.infixPlus(core(e("(i+j)"))));
+    azzert.nay(iz.infixMinus(e("(i-j)")));
+    azzert.aye(iz.infixMinus(core(e("(i-j)"))));
   }
 }

@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.idiomatic.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -36,217 +35,11 @@ public enum Funcs {
   static final PrefixExpression.Operator DECREMENT_PRE = PrefixExpression.Operator.DECREMENT;
   static final PrefixExpression.Operator INCREMENT_PRE = PrefixExpression.Operator.INCREMENT;
 
-  public static AbstractTypeDeclaration asAbstractTypeDeclaration(final ASTNode ¢) {
-    return eval(() -> ((AbstractTypeDeclaration) ¢)).when(¢ instanceof AbstractTypeDeclaration);
-  }
-
-  /** Convert an {@link Expression} into {@link InfixExpression} whose operator
-   * is either {@link org.eclipse.jdt.core.dom.InfixExpression.Operator#AND} or
-   * {@link org.eclipse.jdt.core.dom.InfixExpression.Operator#OR}.
-   * @param ¢ JD
-   * @return parameter thus converted, or <code><b>null</b> if the conversion is
-   *         not possible for it */
-  public static InfixExpression asAndOrOr(final Expression ¢) {
-    return !Is.infix(¢) || !Is.deMorgan(asInfixExpression(¢).getOperator()) ? null : asInfixExpression(¢);
-  }
-
-  /** Convert, is possible, an {@link ASTNode} to an {@link Assignment}
-   * @param $ JD
-   * @return argument, but down-casted to a {@link Assignment}, or
-   *         <code><b>null</b></code> if the downcast is impossible. */
-  public static Assignment asAssignment(final ASTNode $) {
-    return !Is.is($, ASSIGNMENT) ? null : (Assignment) $;
-  }
-
-  /** Convert, is possible, an {@link ASTNode} to a {@link Block}
-   * @param $ JD
-   * @return argument, but down-casted to a {@link Block}, or
-   *         <code><b>null</b></code> if no such down-cast is possible.. */
-  public static Block asBlock(final ASTNode $) {
-    return !Is.is($, BLOCK) ? null : (Block) $;
-  }
-
-  /** Down-cast, if possible, to {@link BooleanLiteral}
-   * @param ¢ JD
-   * @return parameter down-casted to the returned type, or
-   *         <code><b>null</b></code> if no such down-casting is possible. */
-  public static BooleanLiteral asBooleanLiteral(final ASTNode $) {
-    return !Is.is($, BOOLEAN_LITERAL) ? null : (BooleanLiteral) $;
-  }
-
-  /** Convert an {@link Expression} into {@link InfixExpression} whose operator
-   * is one of the six comparison operators: <code><</code>, <code><=</code>,
-   * <code>></code>, <code>>=</code>, <code>!=</code>, or <code>==</code>.
-   * @param ¢ JD
-   * @return parameter thus converted, or <code><b>null</b> if the conversion is
-   *         not possible for it */
-  public static InfixExpression asComparison(final Expression ¢) {
-    return !(¢ instanceof InfixExpression) ? null : asComparison((InfixExpression) ¢);
-  }
-
-  /** Convert, is possible, an {@link ASTNode} to a
-   * {@link ConditionalExpression}
-   * @param ¢ JD
-   * @return argument, but down-casted to a {@link ConditionalExpression}, or
-   *         <code><b>null</b></code> if no such down-cast is possible.. */
-  public static ConditionalExpression asConditionalExpression(final ASTNode ¢) {
-    return !(¢ instanceof ConditionalExpression) ? null : (ConditionalExpression) ¢;
-  }
-
-  /** Down-cast, if possible, to {@link ConditionalExpression}
-   * @param ¢ JD
-   * @return parameter down-casted to the returned type, or
-   *         <code><b>null</b></code> if no such down-casting is possible. */
-  public static ConditionalExpression asConditionalExpression(final Expression ¢) {
-    return !(¢ instanceof ConditionalExpression) ? null : (ConditionalExpression) ¢;
-  }
-
-  /** Down-cast, if possible, to {@link Expression}
-   * @param ¢ JD
-   * @return parameter down-casted to the returned type, or
-   *         <code><b>null</b></code> if no such down-casting is possible. */
-  public static Expression asExpression(final ASTNode ¢) {
-    return !(¢ instanceof Expression) ? null : (Expression) ¢;
-  }
-
-  /** Down-cast, if possible, to {@link ExpressionStatement}
-   * @param ¢ JD
-   * @return parameter down-casted to the returned type, or
-   *         <code><b>null</b></code> if no such down-casting is possible. */
-  public static ExpressionStatement asExpressionStatement(final ASTNode ¢) {
-    return !(¢ instanceof ExpressionStatement) ? null : (ExpressionStatement) ¢;
-  }
-
-  /** Down-cast, if possible, to {@link IfStatement}
-   * @param $ JD
-   * @return parameter down-casted to the returned type, or
-   *         <code><b>null</b></code> if no such down-casting is possible. */
-  public static IfStatement asIfStatement(final ASTNode $) {
-    return !Is.is($, IF_STATEMENT) ? null : (IfStatement) $;
-  }
-
-  /** Down-cast, if possible, to {@link InfixExpression}
-   * @param ¢ JD
-   * @return parameter down-casted to the returned type, or
-   *         <code><b>null</b></code> if no such down-casting is possible. */
-  public static InfixExpression asInfixExpression(final ASTNode ¢) {
-    return !(¢ instanceof InfixExpression) ? null : (InfixExpression) ¢;
-  }
-
-  /** Convert, is possible, an {@link ASTNode} to a {@link MethodDeclaration}
-   * @param $ JD
-   * @return argument, but down-casted to a {@link MethodDeclaration}, or
-   *         <code><b>null</b></code> if no such down-cast is possible.. */
-  public static MethodDeclaration asMethodDeclaration(final ASTNode $) {
-    return eval(() -> ((MethodDeclaration) $)).when($ instanceof MethodDeclaration);
-  }
-
-  /** Down-cast, if possible, to {@link MethodInvocation}
-   * @param ¢ JD
-   * @return parameter down-casted to the returned type, or
-   *         <code><b>null</b></code> if no such down-casting is possible. */
-  public static MethodInvocation asMethodInvocation(final Expression ¢) {
-    return !(¢ instanceof MethodInvocation) ? null : (MethodInvocation) ¢;
-  }
-
-  /** Convert an {@link Expression} into a {@link PrefixExpression} whose
-   * operator is <code>!</code>,
-   * @param ¢ JD
-   * @return parameter thus converted, or <code><b>null</b> if the conversion is
-   *         not possible for it */
-  public static PrefixExpression asNot(final Expression ¢) {
-    return !(¢ instanceof PrefixExpression) ? null : asNot(asPrefixExpression(¢));
-  }
-
-  /** Down-cast, if possible, to {@link NumberLiteral}
-   * @param ¢ JD
-   * @return parameter down-casted to the returned type, or
-   *         <code><b>null</b></code> if no such down-casting is possible. */
-  public static NumberLiteral asNumberLiteral(final ASTNode ¢) {
-    return !Is.isNumberLiteral(¢) ? null : (NumberLiteral) ¢;
-  }
-
-  public static ParenthesizedExpression asParenthesizedExpression(final Expression $) {
-    return !Is.is($, PARENTHESIZED_EXPRESSION) ? null : (ParenthesizedExpression) $;
-  }
-
-  /** Down-cast, if possible, to {@link InfixExpression}
-   * @param ¢ JD
-   * @return parameter down-casted to the returned type, or
-   *         <code><b>null</b></code> if no such down-casting is possible. */
-  public static PostfixExpression asPostfixExpression(final ASTNode ¢) {
-    return eval(() -> (PostfixExpression) ¢).when(¢ instanceof PostfixExpression);
-  }
-
-  /** Down-cast, if possible, to {@link PrefixExpression}
-   * @param ¢ JD
-   * @return parameter down-casted to the returned type, or
-   *         <code><b>null</b></code> if no such down-casting is possible. */
-  public static PrefixExpression asPrefixExpression(final ASTNode ¢) {
-    return eval(() -> (PrefixExpression) ¢).when(¢ instanceof PrefixExpression);
-  }
-
-  /** Determines whether a give {@link ASTNode} includes precisely one
-   * {@link Statement}, and return this statement.
-   * @param ¢ The node from which to return statement.
-   * @return single return statement contained in the parameter, or
-   *         <code><b>null</b></code> if no such value exists. */
-  public static ReturnStatement asReturn(final ASTNode ¢) {
-    return asReturn(singleStatement(¢));
-  }
-
-  /** Down-cast, if possible, to {@link ReturnStatement}
-   * @param $ JD
-   * @return parameter down-casted to the returned type, or
-   *         <code><b>null</b></code> if no such down-casting is possible. */
-  public static ReturnStatement asReturnStatement(final ASTNode $) {
-    return !Is.is($, RETURN_STATEMENT) ? null : (ReturnStatement) $;
-  }
-
-  /** Convert, is possible, an {@link ASTNode} to a {@link SimpleName}
-   * @param $ JD
-   * @return argument, but down-casted to a {@link SimpleName}, or
-   *         <code><b>null</b></code> if no such down-cast is possible.. */
-  public static SimpleName asSimpleName(final ASTNode $) {
-    return eval(() -> (SimpleName) $).when($ instanceof SimpleName);
-  }
-
-  /** Down-cast, if possible, to {@link Statement}
-   * @param ¢ JD
-   * @return parameter down-casted to the returned type, or
-   *         <code><b>null</b></code> if no such down-casting is possible. */
-  public static Statement asStatement(final ASTNode ¢) {
-    return !Is.isStatement(¢) ? null : (Statement) ¢;
-  }
-
   /** Obtain a condensed textual representation of an {@link ASTNode}
    * @param ¢ JD
    * @return textual representation of the parameter, */
   public static String asString(final ASTNode ¢) {
-    return removeWhites(body(¢));
-  }
-
-  public static StringLiteral asStringLiteral(final ASTNode ¢) {
-    return !Is.is(¢, STRING_LITERAL) ? null : (StringLiteral) ¢;
-  }
-
-  /** Convert, is possible, an {@link ASTNode} to a
-   * {@link ConditionalExpression}
-   * @param ¢ JD
-   * @return argument, but down-casted to a {@link ConditionalExpression}, or
-   *         <code><b>null</b></code> if no such down-cast is possible.. */
-  public static ThrowStatement asThrowStatement(final ASTNode ¢) {
-    return !(¢ instanceof ThrowStatement) ? null : (ThrowStatement) ¢;
-  }
-
-  /** Convert, if possible, an {@link Expression} to a
-   * {@link VariableDeclarationExpression}
-   * @param ¢ JD
-   * @return argument, but down-casted to a
-   *         {@link VariableDeclarationExpression}, or <code><b>null</b></code>
-   *         if no such down-cast is possible.. */
-  public static VariableDeclarationExpression asVariableDeclarationExpression(final Expression ¢) {
-    return ¢.getNodeType() != VARIABLE_DECLARATION_EXPRESSION ? null : (VariableDeclarationExpression) ¢;
+    return removeWhites(Funcs.body(¢));
   }
 
   public static <T> List<T> chop(final List<T> ts) {
@@ -316,20 +109,18 @@ public enum Funcs {
     if (ns == null)
       return false;
     for (final ASTNode ¢ : ns)
-      if (¢ != null && Is.isIncrementOrDecrement(¢))
+      if (¢ != null && iz.isIncrementOrDecrement(¢))
         return true;
     return false;
   }
 
-  public static int countNegations(final InfixExpression e) {
-    return countNegations(extract.operands(e));
-  }
-
-  public static int countNegations(final List<Expression> es) {
-    int $ = 0;
-    for (final Expression e : es)
-      $ += negationLevel(e);
-    return $;
+  /** Determine if an item is not included in a list of values
+   * @param < T > JD
+   * @param candidate what to search for
+   * @param ts where to search
+   * @return true if the the item is not found in the list */
+  @SafeVarargs static <T> boolean out(final T candidate, final T... ts) {
+    return !in(candidate, ts);
   }
 
   /** Make a duplicate, suitable for tree rewrite, of the parameter
@@ -429,12 +220,6 @@ public enum Funcs {
     return subject.operand(¢).toThrow();
   }
 
-  public static int negationLevel(final Expression ¢) {
-    return Is.is(¢, PREFIX_EXPRESSION) ? negationLevel((PrefixExpression) ¢)
-        : Is.is(¢, PARENTHESIZED_EXPRESSION) ? negationLevel(expression(¢))
-            : asBit(Is.isNumberLiteral(¢) && asNumberLiteral(¢).getToken().startsWith("-"));
-  }
-
   /** Create a new {@link SimpleName} instance at the AST of the parameter
    * @param n JD
    * @param newName the name that the returned value shall bear
@@ -476,9 +261,9 @@ public enum Funcs {
 
   public static Expression peelNegation(final Expression $) {
     return //
-    $ instanceof PrefixExpression ? peelNegation((PrefixExpression) $) //
+    $ instanceof PrefixExpression ? negation.peel((PrefixExpression) $) //
         : $ instanceof ParenthesizedExpression ? peelNegation(core($)) //
-            : $ instanceof NumberLiteral ? peelNegation((NumberLiteral) $) //
+            : $ instanceof NumberLiteral ? negation.peel((NumberLiteral) $) //
                 : $;
   }
 
@@ -580,7 +365,7 @@ public enum Funcs {
     return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType() && body(n1).equals(body(n2));
   }
 
-  private static String body(final ASTNode ¢) {
+  static String body(final ASTNode ¢) {
     return Funcs.gist(¢.toString());
   }
 
@@ -629,25 +414,6 @@ public enum Funcs {
     return ¢.getThenStatement();
   }
 
-  static PrefixExpression asNot(final PrefixExpression ¢) {
-    return NOT.equals(¢.getOperator()) ? ¢ : null;
-  }
-
-  private static int asBit(final boolean ¢) {
-    return ¢ ? 1 : 0;
-  }
-
-  private static InfixExpression asComparison(final InfixExpression ¢) {
-    return in(¢.getOperator(), //
-        GREATER, //
-        GREATER_EQUALS, //
-        LESS, //
-        LESS_EQUALS, //
-        EQUALS, //
-        NOT_EQUALS //
-    ) ? ¢ : null;
-  }
-
   /** Find the first matching expression to the given boolean (b).
    * @param b JD,
    * @param es JD
@@ -655,7 +421,7 @@ public enum Funcs {
    *         matches to the given boolean (b). */
   private static Expression find(final boolean b, final List<Expression> es) {
     for (final Expression $ : es)
-      if (Is.booleanLiteral($) && b == asBooleanLiteral($).booleanValue())
+      if (iz.booleanLiteral($) && b == az.booleanLiteral($).booleanValue())
         return $;
     return null;
   }
@@ -669,19 +435,6 @@ public enum Funcs {
       if (same(¢, $.getName()))
         return $;
     return null;
-  }
-
-  private static int negationLevel(final PrefixExpression ¢) {
-    return asBit(¢.getOperator() == PrefixExpression.Operator.MINUS) + negationLevel(¢.getOperand());
-  }
-
-  private static Expression peelNegation(final NumberLiteral $) {
-    return !$.getToken().startsWith("-") ? $ : $.getAST().newNumberLiteral($.getToken().substring(1));
-  }
-
-  private static Expression peelNegation(final PrefixExpression $) {
-    final org.eclipse.jdt.core.dom.PrefixExpression.Operator o = $.getOperator();
-    return o != MINUS1 && o != PLUS1 ? $ : peelNegation($.getOperand());
   }
 
   /** Remove all non-essential spaces from a string that represents Java code.

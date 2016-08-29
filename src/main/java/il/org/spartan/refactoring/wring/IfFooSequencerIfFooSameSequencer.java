@@ -44,14 +44,14 @@ public final class IfFooSequencerIfFooSameSequencer extends Wring.ReplaceToNextS
   }
 
   @Override ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
-    if (!Is.vacuousElse(s))
+    if (!iz.vacuousElse(s))
       return null;
-    final IfStatement s2 = asIfStatement(nextStatement);
-    if (s2 == null || !Is.vacuousElse(s2))
+    final IfStatement s2 = az.ifStatement(nextStatement);
+    if (s2 == null || !iz.vacuousElse(s2))
       return null;
     final Statement then = then(s);
     final List<Statement> ss1 = extract.statements(then);
-    return !same(ss1, extract.statements(then(s2))) || !Is.sequencer(last(ss1)) ? null
+    return !same(ss1, extract.statements(then(s2))) || !iz.sequencer(last(ss1)) ? null
         : Wrings.replaceTwoStatements(r, s,
             makeIfWithoutElse(BlockSimplify.reorganizeNestedStatement(then), subject.pair(s.getExpression(), s2.getExpression()).to(CONDITIONAL_OR)),
             g);

@@ -36,9 +36,9 @@ public enum sideEffects {
       SUPER_CONSTRUCTOR_INVOCATION, SUPER_METHOD_INVOCATION, METHOD_INVOCATION, CLASS_INSTANCE_CREATION, ASSIGNMENT, POSTFIX_EXPRESSION, };
 
   public static boolean free(final Expression e) {
-    if (e == null || Is.is(e, alwaysFree))
+    if (e == null || iz.is(e, alwaysFree))
       return true;
-    if (Is.is(e, alwaysHave))
+    if (iz.is(e, alwaysHave))
       return false;
     switch (e.getNodeType()) {
       case ARRAY_CREATION:
@@ -108,7 +108,7 @@ public enum sideEffects {
 
   private static boolean free(final List<?> os) {
     for (final Object o : os)
-      if (o == null || !free(Funcs.asExpression((ASTNode) o)))
+      if (o == null || !free(az.expression((ASTNode) o)))
         return false;
     return true;
   }

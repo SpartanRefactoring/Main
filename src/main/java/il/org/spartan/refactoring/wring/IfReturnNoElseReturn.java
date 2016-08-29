@@ -32,7 +32,7 @@ public final class IfReturnNoElseReturn extends Wring.ReplaceToNextStatement<IfS
   }
 
   @Override ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
-    if (!Is.vacuousElse(s))
+    if (!iz.vacuousElse(s))
       return null;
     final ReturnStatement r1 = extract.returnStatement(then(s));
     if (r1 == null)
@@ -48,6 +48,6 @@ public final class IfReturnNoElseReturn extends Wring.ReplaceToNextStatement<IfS
   }
 
   @Override boolean scopeIncludes(final IfStatement s) {
-    return Is.vacuousElse(s) && extract.returnStatement(then(s)) != null && extract.nextReturn(s) != null;
+    return iz.vacuousElse(s) && extract.returnStatement(then(s)) != null && extract.nextReturn(s) != null;
   }
 }

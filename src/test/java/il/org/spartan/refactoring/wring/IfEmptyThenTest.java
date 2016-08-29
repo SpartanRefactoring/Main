@@ -21,7 +21,7 @@ public class IfEmptyThenTest {
   }
 
   @Test public void emptyThen() {
-    assert Is.vacuousThen(IF);
+    assert iz.vacuousThen(IF);
   }
 
   @Test public void extractFirstIf() {

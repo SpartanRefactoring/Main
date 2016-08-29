@@ -2,8 +2,8 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.Is.*;
 import static il.org.spartan.refactoring.utils.extract.*;
+import static il.org.spartan.refactoring.utils.iz.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
@@ -41,7 +41,7 @@ public enum Restructure {
    *         if the parameter is {@link Operator#CONDITIONAL_AND}
    * @see Restructure#conjugate(InfixExpression) */
   public static Operator conjugate(final Operator o) {
-    assert Is.deMorgan(o);
+    assert iz.deMorgan(o);
     return o.equals(CONDITIONAL_AND) ? CONDITIONAL_OR : CONDITIONAL_AND;
   }
 
@@ -84,8 +84,8 @@ public enum Restructure {
   }
 
   public static Expression minus(final Expression e) {
-    final PrefixExpression ¢ = asPrefixExpression(e);
-    return ¢ == null ? minus(e, asNumberLiteral(e))
+    final PrefixExpression ¢ = az.prefixExpression(e);
+    return ¢ == null ? minus(e, az.numberLiteral(e))
         : ¢.getOperator() == MINUS1 ? ¢.getOperand() //
             : ¢.getOperator() == PLUS1 ? subject.operand(¢.getOperand()).to(MINUS1)//
                 : e;
@@ -96,7 +96,7 @@ public enum Restructure {
    * @return a {@link Funcs#duplicate(Expression)} of the parameter wrapped in
    *         parenthesis. */
   public static Expression parenthesize(final Expression e) {
-    if (Is.noParenthesisRequired(e))
+    if (iz.noParenthesisRequired(e))
       return duplicate(e);
     final ParenthesizedExpression $ = e.getAST().newParenthesizedExpression();
     $.setExpression(e.getParent() == null ? e : duplicate(e));
@@ -137,8 +137,8 @@ public enum Restructure {
 
   private static List<Expression> flattenInto(final Operator o, final Expression e, final List<Expression> $) {
     final Expression core = core(e);
-    final InfixExpression inner = asInfixExpression(core);
-    return inner == null || inner.getOperator() != o ? add(!Is.noParenthesisRequired(core) ? e : core, $)
+    final InfixExpression inner = az.infixExpression(core);
+    return inner == null || inner.getOperator() != o ? add(!iz.noParenthesisRequired(core) ? e : core, $)
         : flattenInto(o, adjust(o, extract.operands(inner)), $);
   }
 

@@ -8,7 +8,7 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 
-/** Test class for class {@link Is}
+/** Test class for class {@link iz}
  * @author Yossi Gil
  * @since 2015-07-17 */
 @SuppressWarnings({ "javadoc", "static-method" }) //

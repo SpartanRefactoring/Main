@@ -104,9 +104,9 @@ public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<Condit
   }
 
   private static Expression simplifyTernary(final Expression then, final Expression elze, final Expression main) {
-    final boolean takeThen = !Is.booleanLiteral(then);
+    final boolean takeThen = !iz.booleanLiteral(then);
     final Expression other = takeThen ? then : elze;
-    final boolean literal = asBooleanLiteral(takeThen ? elze : then).booleanValue();
+    final boolean literal = az.booleanLiteral(takeThen ? elze : then).booleanValue();
     return subject.pair(literal != takeThen ? main : logicalNot(main), other).to(literal ? CONDITIONAL_OR : CONDITIONAL_AND);
   }
 

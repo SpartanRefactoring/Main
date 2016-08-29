@@ -44,11 +44,11 @@ public final class TernaryShortestFirst extends Wring.ReplaceCurrentNode<Conditi
     final ConditionalExpression $ = subject.pair(core(e.getElseExpression()), core(e.getThenExpression())).toCondition(logicalNot(e.getExpression()));
     final Expression then = $.getElseExpression();
     final Expression elze = $.getThenExpression();
-    if (!Is.conditional(then) && Is.conditional(elze))
+    if (!iz.conditional(then) && iz.conditional(elze))
       return null;
-    if (Is.conditional(then) && !Is.conditional(elze))
+    if (iz.conditional(then) && !iz.conditional(elze))
       return $;
-    final ConditionalExpression parent = asConditionalExpression(e.getParent());
+    final ConditionalExpression parent = az.conditionalExpression(e.getParent());
     if (parent != null && parent.getElseExpression() == e && compatibleCondition(parent.getExpression(), e.getExpression())) {
       final Expression alignTo = parent.getThenExpression();
       final double a1 = align(elze, alignTo);

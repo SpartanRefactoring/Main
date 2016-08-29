@@ -34,7 +34,7 @@ public final class TernaryCollapse extends Wring.ReplaceCurrentNode<ConditionalE
   }
 
   private static Expression collapseOnElse(final ConditionalExpression e) {
-    final ConditionalExpression elze = asConditionalExpression(core(e.getElseExpression()));
+    final ConditionalExpression elze = az.conditionalExpression(core(e.getElseExpression()));
     if (elze == null)
       return null;
     final Expression then = core(e.getThenExpression());
@@ -48,7 +48,7 @@ public final class TernaryCollapse extends Wring.ReplaceCurrentNode<ConditionalE
   }
 
   private static Expression collaspeOnThen(final ConditionalExpression e) {
-    final ConditionalExpression then = asConditionalExpression(core(e.getThenExpression()));
+    final ConditionalExpression then = az.conditionalExpression(core(e.getThenExpression()));
     if (then == null)
       return null;
     final Expression elze = core(e.getElseExpression());

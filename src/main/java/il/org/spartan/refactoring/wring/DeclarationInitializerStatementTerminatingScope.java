@@ -76,7 +76,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
     final Statement s = extract.statement(f);
     if (s == null)
       return null;
-    final Block parent = asBlock(s.getParent());
+    final Block parent = az.block(s.getParent());
     if (parent == null)
       return null;
     final List<Statement> ss = statements(parent);

@@ -27,15 +27,15 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2015-07-17 */
 public final class InfixComparisonBooleanLiteral extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
   private static BooleanLiteral literal(final InfixExpression e) {
-    return asBooleanLiteral(core(literalOnLeft(e) ? left(e) : right(e)));
+    return az.booleanLiteral(core(literalOnLeft(e) ? left(e) : right(e)));
   }
 
   private static boolean literalOnLeft(final InfixExpression e) {
-    return Is.booleanLiteral(core(left(e)));
+    return iz.booleanLiteral(core(left(e)));
   }
 
   private static boolean literalOnRight(final InfixExpression e) {
-    return Is.booleanLiteral(core(right(e)));
+    return iz.booleanLiteral(core(right(e)));
   }
 
   private static boolean negating(final InfixExpression e, final BooleanLiteral l) {

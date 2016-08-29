@@ -45,10 +45,10 @@ public final class IfLastInMethodThenEndingWithEmptyReturn extends Wring<IfState
   }
 
   @Override Rewrite make(final IfStatement s, final ExclusionManager exclude) {
-    final Block b = asBlock(s.getParent());
+    final Block b = az.block(s.getParent());
     if (b == null || !(b.getParent() instanceof MethodDeclaration) || !lastIn(s, statements(b)))
       return null;
-    final ReturnStatement deleteMe = asReturnStatement(extract.lastStatement(then(s)));
+    final ReturnStatement deleteMe = az.returnStatement(extract.lastStatement(then(s)));
     if (deleteMe == null || deleteMe.getExpression() != null)
       return null;
     if (exclude != null)

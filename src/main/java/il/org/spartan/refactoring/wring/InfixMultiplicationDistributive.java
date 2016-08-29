@@ -41,23 +41,23 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
 
   private ASTNode replacement(final List<Expression> es) {
     if (es.size() == 1)
-      return asInfixExpression(es.get(0)).getOperator() != TIMES ? null : es.get(0);
+      return az.infixExpression(es.get(0)).getOperator() != TIMES ? null : es.get(0);
     if (es.size() == 2)
-      return replacement(asInfixExpression(es.get(0)), asInfixExpression(es.get(1)));
+      return replacement(az.infixExpression(es.get(0)), az.infixExpression(es.get(1)));
     final List<Expression> common = new ArrayList<>();
     final List<Expression> different = new ArrayList<>();
     List<Expression> temp = new ArrayList<>(es);
     for (int i = 0; i < es.size(); ++i) {
       System.out.println(" === " + es.get(i));
       temp = removeFirstEl(temp);
-      for (final Expression op : extract.allOperands(asInfixExpression(es.get(i)))) { // b
+      for (final Expression op : extract.allOperands(az.infixExpression(es.get(i)))) { // b
         for (final Expression ops : temp)
-          if (isIn(op, extract.allOperands(asInfixExpression(ops))))
+          if (isIn(op, extract.allOperands(az.infixExpression(ops))))
             addCommon(op, common);
           else
             addDifferent(op, different);
         if (temp.size() == 1)
-          for (final Expression $ : extract.allOperands(asInfixExpression(temp.get(0))))
+          for (final Expression $ : extract.allOperands(az.infixExpression(temp.get(0))))
             if (!isIn($, common))
               addDifferent($, different);
         removeElFromList(different, common);
@@ -145,10 +145,10 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
   }
 
   @Override boolean scopeIncludes(final InfixExpression $) {
-    return $ != null && Is.infixPlus($) && IsSimpleMultiplication(left($)) && IsSimpleMultiplication(right($)); // super.scopeIncludes($);
+    return $ != null && iz.infixPlus($) && IsSimpleMultiplication(left($)) && IsSimpleMultiplication(right($)); // super.scopeIncludes($);
   }
 
   private static boolean IsSimpleMultiplication(final Expression $) {
-    return !Is.simpleName($) && ((InfixExpression) $).getOperator() == TIMES ? true : false;
+    return !iz.simpleName($) && ((InfixExpression) $).getOperator() == TIMES ? true : false;
   }
 }

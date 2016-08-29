@@ -44,7 +44,7 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends Wring.Rep
   }
 
   @Override ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
-    if (!Is.vacuousElse(s) || !Is.sequencer(nextStatement) || !endsWithSequencer(then(s)))
+    if (!iz.vacuousElse(s) || !iz.sequencer(nextStatement) || !endsWithSequencer(then(s)))
       return null;
     final IfStatement asVirtualIf = subject.pair(then(s), nextStatement).toIf(s.getExpression());
     if (same(then(asVirtualIf), elze(asVirtualIf))) {
@@ -57,7 +57,7 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends Wring.Rep
     final IfStatement canonicalIf = invert(asVirtualIf);
     final List<Statement> ss = extract.statements(elze(canonicalIf));
     canonicalIf.setElseStatement(null);
-    if (!Is.block(s.getParent())) {
+    if (!iz.block(s.getParent())) {
       ss.add(0, canonicalIf);
       r.replace(s, subject.ss(ss).toBlock(), g);
       r.remove(nextStatement, g);

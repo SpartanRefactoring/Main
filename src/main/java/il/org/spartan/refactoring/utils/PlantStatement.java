@@ -10,7 +10,7 @@ public class PlantStatement {
   }
 
   public void intoThen(final IfStatement s) {
-    final IfStatement plant = Funcs.asIfStatement(inner);
+    final IfStatement plant = az.ifStatement(inner);
     s.setThenStatement(plant == null || plant.getElseStatement() != null ? inner : subject.statements(inner).toBlock());
   }
 }

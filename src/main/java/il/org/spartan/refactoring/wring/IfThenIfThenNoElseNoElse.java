@@ -28,7 +28,7 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2015-09-01 */
 public final class IfThenIfThenNoElseNoElse extends Wring<IfStatement> implements Kind.DistributiveRefactoring {
   static void collapse(final IfStatement s, final ASTRewrite r, final TextEditGroup g) {
-    final IfStatement then = asIfStatement(extract.singleThen(s));
+    final IfStatement then = az.ifStatement(extract.singleThen(s));
     final InfixExpression e = subject.pair(s.getExpression(), then.getExpression()).to(CONDITIONAL_AND);
     r.replace(s.getExpression(), e, g);
     r.replace(then, duplicate(then(then)), g);
@@ -43,10 +43,10 @@ public final class IfThenIfThenNoElseNoElse extends Wring<IfStatement> implement
   }
 
   @Override Rewrite make(final IfStatement s, final ExclusionManager exclude) {
-    if (!Is.vacuousElse(s))
+    if (!iz.vacuousElse(s))
       return null;
-    final IfStatement then = asIfStatement(extract.singleThen(s));
-    if (then == null || !Is.vacuousElse(then))
+    final IfStatement then = az.ifStatement(extract.singleThen(s));
+    if (then == null || !iz.vacuousElse(then))
       return null;
     if (exclude != null)
       exclude.exclude(then);

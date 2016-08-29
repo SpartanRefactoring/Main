@@ -75,7 +75,7 @@ public class ExpressionFlatten {
   }
 
   @Test public void leftOperandIsNumeric() {
-    azzert.aye(Is.numericLiteral(left(i("1+2"))));
+    azzert.aye(iz.numericLiteral(left(i("1+2"))));
   }
 
   @Test public void leftOperandIsOne() {
