@@ -6,8 +6,6 @@ import static il.org.spartan.refactoring.utils.Into.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.refactoring.handlers.*;
-import il.org.spartan.refactoring.java.*;
 
 @SuppressWarnings("static-method") public class TermsReogranizerTest {
   @Test public void test00() {

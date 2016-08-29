@@ -7,7 +7,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.refactoring.java.*;
 
 /** @author Yossi Gil
  * @since 2015-07-17 */
