@@ -9,6 +9,8 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
+import il.org.spartan.refactoring.handlers.*;
+import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** Unit tests for {@link Wrings#ADDITION_SORTER}.

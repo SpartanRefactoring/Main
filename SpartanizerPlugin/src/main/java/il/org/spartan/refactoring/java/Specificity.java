@@ -1,4 +1,4 @@
-package il.org.spartan.refactoring.utils;
+package il.org.spartan.refactoring.java;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
@@ -6,6 +6,8 @@ import static org.eclipse.jdt.core.dom.ASTNode.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.refactoring.utils.*;
 
 /** @author Yossi Gil
  * @since 2015-08-23 */

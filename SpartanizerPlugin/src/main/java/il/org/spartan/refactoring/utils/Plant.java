@@ -5,6 +5,8 @@ import static il.org.spartan.refactoring.utils.Is.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.refactoring.java.*;
+
 /** A fluent API class that wraps an {@link Expression} with parenthesis, if the
  * location in which this expression occurs requires such wrapping.
  * <p>

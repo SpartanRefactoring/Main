@@ -1,4 +1,4 @@
-package il.org.spartan.refactoring.utils;
+package il.org.spartan.refactoring.java;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Into.*;
@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.refactoring.java.*;
 
 /** @author Yossi Gil
  * @since 2015-07-17 */

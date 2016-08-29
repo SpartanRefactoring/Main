@@ -1,4 +1,4 @@
-package il.org.spartan.refactoring.utils;
+package il.org.spartan.refactoring.java;
 
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.utils.extract.*;
@@ -6,6 +6,9 @@ import static il.org.spartan.refactoring.utils.extract.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.refactoring.java.*;
+import il.org.spartan.refactoring.utils.*;
 
 public class TermsCollector {
   public static boolean isLeafTerm(final Expression e) {

@@ -9,6 +9,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.refactoring.java.*;
+
 /** Various methods for comparing
  * @author Yossi Gil
  * @since 2015-07-19 */
