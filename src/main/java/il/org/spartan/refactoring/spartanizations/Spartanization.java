@@ -27,7 +27,7 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil <code><yossi.gil [at] gmail.com></code>: major refactoring
  *         2013/07/10
  * @since 2013/01/01 */
-@SuppressWarnings({"unused"}) public abstract class Spartanization extends Refactoring {
+@SuppressWarnings({ "unused" }) public abstract class Spartanization extends Refactoring {
   /** @param u A compilation unit for reference - you give me an arbitrary
    *        compilation unit from the project and I'll find the root of the
    *        project and do my magic.
