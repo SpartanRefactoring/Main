@@ -3373,11 +3373,11 @@ public class TrimmerTest240 {
   }
 
   @Test public void sortAdditionTwoOperands3() {
-    trimming("1+2L").to(null);
+    trimming("1+2L").to("3L");
   }
 
   @Test public void sortAdditionTwoOperands4() {
-    trimming("2L+1").to("1+2L");
+    trimming("2L+1").to("3L");
   }
 
   @Test public void sortAdditionUncertain() {
