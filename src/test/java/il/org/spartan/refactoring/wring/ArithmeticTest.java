@@ -176,6 +176,26 @@ public class ArithmeticTest {
     @Test public void issue92_45() {
       trimming("1.+2*3 / 4 - 5*48L").to("2*3/4+1.-240L").to("6/4+1.-240L").to("1+1.-240L").to("2.0-240L").to("-238.0");
     }
+    
+    @Test public void issue92_46() {
+      trimming("10%2").to("0");
+    }
+    
+    @Test public void issue92_47() {
+      trimming("10%3").to("1");
+    }
+    
+    @Test public void issue92_48() {
+      trimming("10L%3").to("1L");
+    }
+    
+    @Test public void issue92_49() {
+      trimming("100L%3%1").to("0L");
+    }
+    
+    @Test public void issue92_50() {
+      trimming("100%3L%1").to("0L");
+    }
 
     @Test public void issue92_1a() {
       trimming("1.+2*3 / 4 - 5").to("2*3/4+1.-5").to("6/4+1.-5").to("1+1.-5").to("2.0-5").to("-3.0");
