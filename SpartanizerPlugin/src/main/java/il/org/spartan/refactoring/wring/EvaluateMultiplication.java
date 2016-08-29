@@ -8,8 +8,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/** Evaluate the multiplication of numbers according to the following
- * rules : </br>
+/** Evaluate the multiplication of numbers according to the following rules :
+ * </br>
  * </br>
  * <code>
  * int * int --> int <br/>

@@ -15,6 +15,7 @@ public class ArithmeticTest {
   @Ignore("#92:under construction") public static class NotWorking {
     //
   }
+
   @Test public void issue92_46() {
     trimming("-1/-2*-3/-4*-5*-6/-7/-8/-9") //
         .to("-1/2*3/4*5*6/7/8/9") //
@@ -23,6 +24,7 @@ public class ArithmeticTest {
         .to("3*-5*6*1/2*3/4/7/8/9") //
         .to(null);
   }
+
   public static class Working {
     @Test public void issue92_10() {
       trimming("3*4+2").to("12+2").to("14");
@@ -150,8 +152,6 @@ public class ArithmeticTest {
           .to(null);
     }
 
-
-
     @Test public void issue92_33a() {
       trimming("-a+5")//
           .to("5-a")//
@@ -209,23 +209,23 @@ public class ArithmeticTest {
     @Test public void issue92_45() {
       trimming("1.+2*3 / 4 - 5*48L").to("2*3/4+1.-240L").to("6/4+1.-240L").to("1+1.-240L").to("2.0-240L").to("-238.0");
     }
-    
+
     @Test public void issue92_46() {
       trimming("10%2").to("0");
     }
-    
+
     @Test public void issue92_47() {
       trimming("10%3").to("1");
     }
-    
+
     @Test public void issue92_48() {
       trimming("10L%3").to("1L");
     }
-    
+
     @Test public void issue92_49() {
       trimming("100L%3%1").to("0L");
     }
-    
+
     @Test public void issue92_50() {
       trimming("100%3L%1").to("0L");
     }

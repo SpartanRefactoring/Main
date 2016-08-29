@@ -87,7 +87,7 @@ public final class InfixFactorNegatives extends Wring<InfixExpression> implement
       return null;
     final int totalNegation = negation.level(e);
     if (totalNegation == 0 || totalNegation == 1 && negation.level(left(e)) == 1)
-          return null;
+      return null;
     if (exclude != null)
       exclude.exclude(e);
     return new Rewrite(description(e), e) {
