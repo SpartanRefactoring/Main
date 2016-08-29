@@ -53,7 +53,7 @@ public class EvaluateAddition extends Wring.ReplaceCurrentNode<InfixExpression> 
     for (final Expression ¢ : es){
       if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isInt(¢))
         return null;
-      sum=sum + Integer.parseInt(((NumberLiteral) ¢).getToken());
+      sum=sum + EvaluateAux.extractInt(¢);
     }  
     return e.getAST().newNumberLiteral(Integer.toString(sum));
   }
@@ -63,7 +63,7 @@ public class EvaluateAddition extends Wring.ReplaceCurrentNode<InfixExpression> 
    for (final Expression ¢ : es){
      if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isNumber(¢))
        return null;
-     sum=sum + Double.parseDouble(((NumberLiteral) ¢).getToken());
+     sum=sum + EvaluateAux.extractDouble(¢);
    }  
    return e.getAST().newNumberLiteral(Double.toString(sum));
  }
