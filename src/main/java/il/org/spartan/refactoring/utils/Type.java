@@ -42,8 +42,8 @@ enum Type {
   INTEGRAL("long|int", "must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() "), //
   // Certain types
   NULL("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"), //
-  CHAR("char", "must be char: 'a', (char)97, pretty much nothing else"), //
-  INT("int", "must be int: 2, 2*(int)f(), 2%(int)f(), no 2*f()"), //
+  CHAR("char", "must be char: 'a', (char)97, nothing else"), //
+  INT("int", "must be int: 2, 2*(int)f(), 2%(int)f(), 'a'+2 , no 2*f()"), //
   LONG("long", "must be long: 2L, 2*(long)f(), 2%(long)f(), no 2*f()"), //
   DOUBLE("double", "must be double: 2.0, 2.0*a()+g(), no 2%a(), yes 2*f()"), //
   BOOLEAN("boolean", "must be boolean: !f(), f() || g() "), //
@@ -52,7 +52,7 @@ enum Type {
   
   /**@param e JD
    * @return The most specific Type information that can be deduced about the expression,
-   * will never return null */
+   * or {@link #NOTHING} if it cannot decide. Will never return null */
   public static Type kind(Expression e) {
     return kind(e,null,null);
   }
@@ -62,8 +62,7 @@ enum Type {
   }
   
   static Type kind(Expression e, final Type t1, final Type t2){
-    throw new RuntimeException("Not implemented yet");
-   /* if (e instanceof NullLiteral){
+   if (e instanceof NullLiteral){
       return NULL;
     }
     if (e instanceof CharacterLiteral)
@@ -80,7 +79,7 @@ enum Type {
     if (e instanceof InfixExpression){
       return kind((InfixExpression)e, t1, t2);
     }
-    return NOTHING;*/
+    return NOTHING;
   }
   
   private static Type kind(NumberLiteral e){
@@ -124,10 +123,6 @@ enum Type {
     return ¢1.underBinaryOperator(o, ¢2);
   }
   
-  private static Type max(Type ¢1, Type ¢2) {
-    return ¢1.ordinal() > ¢2.ordinal() ? ¢1 : ¢2;
-  }
-
   final String description;
 
   final String name;
@@ -146,7 +141,7 @@ enum Type {
   final Type under(final PrefixExpression.Operator o) {
     assert o != null;
     return o == NOT ? BOOLEAN //
-        : o != COMPLEMENT ? asNumeric() : asIntegral();
+        : o != COMPLEMENT ? asNumeric() : asIntegralNonChar();
   }
   /** @return one of {@link #BOOLEAN}, {@link #INT}, {@link #LONG},
    *         {@link #DOUBLE}, {@link #STRING}, {@link #INTEGRAL},
@@ -167,8 +162,11 @@ enum Type {
         CONDITIONAL_AND//
     ))
       return BOOLEAN;
-    if (in(o, REMAINDER, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED, XOR, OR, AND))
+    if (in(o, REMAINDER, XOR, OR, AND))
       return underIntegersOnlyOperator(k);
+    if (in(o, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED))
+      //shift is unique in that the left hand operand's type doesn't affect the result's type
+      return asIntegralNonChar();
     if (!in(o, TIMES, DIVIDE, MINUS2))
       throw new IllegalArgumentException("o=" + o + " k=" + k.fullName() + "this=" + this);
     return underNumericOnlyOperator(k);
@@ -190,8 +188,6 @@ enum Type {
   /** @return one of {@link #INT}, {@link #LONG}, {@link #INTEGRAL},
    *         {@link #DOUBLE}, or {@link #NUMERIC}, in case it cannot decide */
   private Type underNumericOnlyOperator(Type k) {
-    if (k == this)
-      return k;
     if (!isNumeric())
       return asNumeric().underNumericOnlyOperator(k);
     assert (k != null);
@@ -200,8 +196,6 @@ enum Type {
     final Type $ = k.asNumeric();
     assert $ != null;
     assert $.isNumeric() : this + ": is for some reason not numeric ";
-    if ($ == this)
-      return $;
     // Double contaminates Numeric
     if (in(DOUBLE, $, this))
       return DOUBLE;
@@ -214,16 +208,13 @@ enum Type {
     //INTEGRAL contaminates INT
     if (in(INTEGRAL, $, this))
       return INTEGRAL;
-    //CHAR contaminates INT
-    if (in(INT, $, this)){
-      return INT;
-    }
-    return CHAR;
+    //plus contaminates CHAR
+     return INT;
   }
   private Type underIntegersOnlyOperator(Type k) {
-    return max(asIntegral(), k.asIntegral());
+    return asIntegralNonChar().max(k.asIntegralNonChar());
   }
-
+  
   private boolean isIntegral() {
     return in(this, LONG, INT, CHAR, INTEGRAL);
   }
@@ -233,6 +224,11 @@ enum Type {
     return isIntegral() ? this : INTEGRAL;
   }
   
+  /** @return one of {@link #INT}, {@link #LONG}, or {@link #INTEGRAL}, in case
+   *         it cannot decide */
+  private Type asIntegralNonChar(){
+    return in(this, CHAR, INT) ? INT : asIntegral();
+  }
 
   private boolean isNumeric() {
     return in(this, INT, LONG, CHAR, DOUBLE, INTEGRAL, NUMERIC);
@@ -242,5 +238,9 @@ enum Type {
    *         information is available */
   private Type asNumeric() {
     return isNumeric() ? this : NUMERIC;
+  }
+
+  private Type max(Type ¢) {
+    return ordinal() > ¢.ordinal() ? this : ¢;
   }
 }
