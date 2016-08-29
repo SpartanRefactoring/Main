@@ -3405,7 +3405,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void sortThreeOperands1() {
-    trimming("1.0*2222*3").to(null);
+    trimming("1.0*2222*3").to("6666.0");
   }
 
   @Test public void sortTwoOperands0CheckThatWeSortByLength_a() {
