@@ -32,7 +32,8 @@ public class KindTest {
       azzert.that(kind(Into.e("~2"), ALPHANUMERIC), is(INTEGRAL));
     }
 
-    @Ignore("creates NumberLiteral instead of PrefixExpression, need to figure out why") @Test public void test03() {
+    @Ignore("creates NumberLiteral instead of PrefixExpression, need to figure out why")
+    @Test public void test03() {
       azzert.that(kind(Into.e("++3"), DOUBLE), is(DOUBLE));
     }
 
@@ -183,7 +184,7 @@ public class KindTest {
     }
     
     @Test public void test110() {
-      azzert.that(kind(Into.e("new List()")), is(NONNULL));
+      azzert.that(kind(Into.e("new List<Integer>()")), is(NONNULL));
     }
 
     @Test public void test111() {
@@ -191,7 +192,7 @@ public class KindTest {
     }
     
     @Test public void test112() {
-      azzert.that(kind(Into.e("new String()")), is(STRING));
+      azzert.that(kind(Into.e("new String(\"hello\")")), is(STRING));
     }
 
     @Test public void test113() {
@@ -280,6 +281,27 @@ public class KindTest {
 
     @Test public void test129() {
       azzert.that(kind(Into.e("(String)x")), is(STRING));
+    }
+    
+    @Test public void test130() {
+      azzert.that(kind(Into.e("x++")), is(NUMERIC));
+    }
+    
+    @Test public void test131() {
+      azzert.that(kind(Into.e("7++")), is(INT));
+    }
+    
+    @Ignore("creates CharacterLiteral instead of PrefixExpression, need to figure out why")
+    @Test public void test132() {
+      azzert.that(kind(Into.e("'a'--")), is(INT));
+    }
+    
+    @Test public void test133() {
+      azzert.that(kind(Into.e("2L++")), is(LONG));
+    }
+    
+    @Test public void test134(){
+      azzert.that(kind(Into.e("(-3.0)--")), is(DOUBLE));
     }
   }
 }
