@@ -42,6 +42,8 @@ public class EvaluateAddition extends Wring.ReplaceCurrentNode<InfixExpression> 
         return replacementInt(extract.allOperands(e),e);
       case DOUBLE :
         return replacementDouble(extract.allOperands(e),e);
+      case LONG :
+        return replacementLong(extract.allOperands(e),e);
       default:
         return null;
     }
@@ -66,6 +68,16 @@ public class EvaluateAddition extends Wring.ReplaceCurrentNode<InfixExpression> 
      sum=sum + EvaluateAux.extractDouble(¢);
    }  
    return e.getAST().newNumberLiteral(Double.toString(sum));
+ }
+ 
+ private static ASTNode replacementLong(final List<Expression> es, InfixExpression e) {
+   long sum = 0;
+   for (final Expression ¢ : es){
+     if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isNumber(¢))
+       return null;
+     sum=sum + EvaluateAux.extractLong(¢);
+   }  
+   return e.getAST().newNumberLiteral(Long.toString(sum)+"L");
  }
   
 }
