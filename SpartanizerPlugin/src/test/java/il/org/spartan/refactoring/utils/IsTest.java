@@ -8,6 +8,7 @@ import static org.eclipse.jdt.core.dom.ASTNode.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.refactoring.java.*;
 
 /** Test class for class {@link Is}
  * @author Yossi Gil
@@ -43,7 +44,7 @@ public class IsTest {
   }
 
   @Test public void deterministicArray1() {
-    azzert.that(Is.deterministic(e("new a[3]")), is(false));
+    azzert.that(sideEffects.deterministic(e("new a[3]")), is(false));
   }
 
   @Test public void seriesA_3() {
@@ -54,15 +55,15 @@ public class IsTest {
   }
 
   @Test public void deterministicArray2() {
-    azzert.that(Is.deterministic(e("new int[] {12,13}")), is(false));
+    azzert.that(sideEffects.deterministic(e("new int[] {12,13}")), is(false));
   }
 
   @Test public void deterministicArray3() {
-    azzert.that(Is.deterministic(e("new int[] {12,13, i++}")), is(false));
+    azzert.that(sideEffects.deterministic(e("new int[] {12,13, i++}")), is(false));
   }
 
   @Test public void deterministicArray4() {
-    azzert.that(Is.deterministic(e("new int[f()]")), is(false));
+    azzert.that(sideEffects.deterministic(e("new int[f()]")), is(false));
   }
 
   @Test public void isConstantFalse() {

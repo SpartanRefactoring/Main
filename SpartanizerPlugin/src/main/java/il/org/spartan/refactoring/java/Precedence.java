@@ -1,7 +1,9 @@
 package il.org.spartan.refactoring.java;
 
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -16,6 +18,10 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2015-07-14 */
 public enum Precedence {
   ;
+  public static boolean nonAssociative(final InfixExpression e) {
+    return e != null && in(e.getOperator(), MINUS, DIVIDE, REMAINDER);
+  }
+
   /** *An empty <code><b>enum</b></code> for fluent programming. The name should
    * say it all: The name, followed by a dot, followed by a method name, should
    * read like a sentence phrase.

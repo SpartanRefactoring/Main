@@ -10,6 +10,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
+import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.utils.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) //
@@ -62,15 +63,15 @@ public class ExpressionFlatten {
   }
 
   @Test public void isNotStringInfixFalse() {
-    azzert.nay(Is.notString(i("1+f")));
+    azzert.nay(StringAnalyzer.notString(i("1+f")));
   }
 
   @Test public void isNotStringInfixPlain() {
-    azzert.nay(Is.notString(e("1+f")));
+    azzert.nay(StringAnalyzer.notString(e("1+f")));
   }
 
   @Test public void leftOperandIsNotString() {
-    azzert.aye(Is.notString(left(i("1+2"))));
+    azzert.aye(StringAnalyzer.notString(left(i("1+2"))));
   }
 
   @Test public void leftOperandIsNumeric() {
