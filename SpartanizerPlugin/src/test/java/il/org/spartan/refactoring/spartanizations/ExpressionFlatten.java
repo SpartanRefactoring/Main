@@ -63,15 +63,15 @@ public class ExpressionFlatten {
   }
 
   @Test public void isNotStringInfixFalse() {
-    azzert.nay(StringAnalyzer.notString(i("1+f")));
+    azzert.nay(stringType.isNot(i("1+f")));
   }
 
   @Test public void isNotStringInfixPlain() {
-    azzert.nay(StringAnalyzer.notString(e("1+f")));
+    azzert.nay(stringType.isNot(e("1+f")));
   }
 
   @Test public void leftOperandIsNotString() {
-    azzert.aye(StringAnalyzer.notString(left(i("1+2"))));
+    azzert.aye(stringType.isNot(left(i("1+2"))));
   }
 
   @Test public void leftOperandIsNumeric() {

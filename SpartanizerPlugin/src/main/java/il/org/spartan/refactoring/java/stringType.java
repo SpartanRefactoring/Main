@@ -12,30 +12,31 @@ import il.org.spartan.refactoring.utils.*;
 
 /** @author Yossi Gil
  * @since 2016 */
-public interface StringAnalyzer {
-  /** Determine whether a <i>all</i> elements list of {@link Expression} are
-   * provably not a string.
-   * @param es JD
-   * @return <code><b>true</b></code> <i>iff</i> all elements in the argument
-   *         are provably not a {@link String}.
-   * @see StringAnalyzer#notString(Expression) */
-  static boolean areNotString(final List<Expression> es) {
-    for (final Expression e : es)
-      if (!StringAnalyzer.notStringDown(e))
-        return false;
-    return true;
-  }
-
+public enum stringType {
+  ;
   /** @param e JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an expression
    *         whose type is provably not of type {@link String}, in the sense
    *         used in applying the <code>+</code> operator to concatenate
    *         strings. concatenation. */
-  static boolean notString(final Expression e) {
-    return StringAnalyzer.notStringSelf(e) || StringAnalyzer.notStringUp(e) || StringAnalyzer.notStringDown(asInfixExpression(e));
+  public static boolean isNot(final Expression e) {
+    return stringType.notStringSelf(e) || stringType.isNotFromContext(e) || stringType.isNotFromStructure(asInfixExpression(e));
   }
 
-  static boolean notStringUp(final Expression e) {
+  /** Determine whether a <i>all</i> elements list of {@link Expression} are
+   * provably not a string.
+   * @param es JD
+   * @return <code><b>true</b></code> <i>iff</i> all elements in the argument
+   *         are provably not a {@link String}.
+   * @see stringType#isNot(Expression) */
+  private static boolean areNot(final List<Expression> es) {
+    for (final Expression e : es)
+      if (!stringType.isNotFromStructure(e))
+        return false;
+    return true;
+  }
+
+  private static boolean isNotFromContext(final Expression e) {
     for (ASTNode context = e.getParent(); context != null; context = context.getParent())
       switch (context.getNodeType()) {
         case INFIX_EXPRESSION:
@@ -59,15 +60,15 @@ public interface StringAnalyzer {
    * @param e JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is not a string
    *         or composed of appended strings */
-  static boolean notStringDown(final Expression e) {
-    return notStringSelf(e) || notStringDown(asInfixExpression(e));
+  private static boolean isNotFromStructure(final Expression e) {
+    return notStringSelf(e) || isNotFromStructure(asInfixExpression(e));
   }
 
-  static boolean notStringDown(final InfixExpression e) {
-    return e != null && (e.getOperator() != PLUS || areNotString(extract.allOperands(e)));
+  private static boolean isNotFromStructure(final InfixExpression e) {
+    return e != null && (e.getOperator() != PLUS || areNot(extract.allOperands(e)));
   }
 
-  static boolean notStringSelf(final Expression e) {
+  private static boolean notStringSelf(final Expression e) {
     final int[] is = { ARRAY_CREATION, BOOLEAN_LITERAL, CHARACTER_LITERAL, INSTANCEOF_EXPRESSION, NULL_LITERAL, NUMBER_LITERAL, PREFIX_EXPRESSION };
     for (final int ¢ : is)
       if (¢ == e.getNodeType())
