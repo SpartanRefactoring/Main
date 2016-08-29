@@ -487,12 +487,16 @@ public class TrimmerTest250 {
     trimming("0+(0+x+y+(4+0))").to("0+0+x+y+4+0").to("x+y+4").to(null);
   }
   
-  @Ignore @Test public void issue73_01() {
-    trimming("String x = \"abc\"; foo(x); String y = \"\" + x;").to("String x = \"abc\"; foo(x); String y = x;");
+  @Test public void issue73_01() {
+    trimming("\"\" + \"abc\"").to("\"abc\"");
   }
   
-  @Ignore @Test public void issue73_02() {
-    trimming("String x = \"abc\"; foo(x); if(\"\" + x == \"abc\") return x;").to("String x = \"abc\"; foo(x); if(x == \"abc\") return x;");
+  @Test public void issue73_02() {
+    trimming("\"\" + \"abc\" + \"\"").to("\"abc\"");
+  }
+  
+  @Test public void issue73_03() {
+    trimming("\"abc\" + \"\"").to("\"abc\"");
   }
   
   @Test public void issue75a() {

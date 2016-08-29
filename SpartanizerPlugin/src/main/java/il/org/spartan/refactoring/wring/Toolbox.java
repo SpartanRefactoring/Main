@@ -70,6 +70,7 @@ public class Toolbox {
             new EvaluateMultiplication(), //
             new EvaluateDivision(), //
             new EvaluateRemainder(), //
+            new InfixEmptyStringAdditionToString(),
             new InfixComparisonSizeToZero(), //
             new InfixSubtractionZero(), //
             new InfixAdditionSubtractionExpand(), //

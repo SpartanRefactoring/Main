@@ -2049,19 +2049,19 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Test @Ignore("Under Construction") public void issue74a() {
-    trimming("int[] a = new int[] {,};").to("int[] a = new int[] {};");
+    trimming("int[] a = new int[] {,}").to("int[] a = new int[] {}");
   }
 
   @Test @Ignore("Under Construction") public void issue74b() {
-    trimming("int[] a = new int[] {2,3,};").to("int[] a = new int[] {2,3};");
+    trimming("int[] a = new int[] {2,3,}").to("int[] a = new int[] {2,3}");
   }
 
   @Test @Ignore("Under Construction") public void issue74c() {
-    trimming("a = new int[]{2,3,};").to("a = new int[] {2,3};");
+    trimming("a = new int[]{2,3,}").to("a = new int[] {2,3}");
   }
 
   @Test public void issue74d() {
-    trimming("int[] a = new int[] {2,3};").to(null);
+    trimming("int[] a = new int[] {2,3}").to(null);
   }
 
   @Test public void linearTransformation() {

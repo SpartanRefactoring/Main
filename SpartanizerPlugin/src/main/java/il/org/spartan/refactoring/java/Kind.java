@@ -31,7 +31,7 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @author Niv Shalmon
  * @since 2016-08-XX */
-enum Kind {
+public enum Kind {
   // Those anonymous characters that known little or nothing about themselves
   NOTHING("none", "when nothing can be said, e.g., f(f(),f(f(f()),f()))"), //
   NONNULL("!null", "e.g., new Object() and that's about it"), //
