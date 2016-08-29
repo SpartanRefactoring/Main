@@ -61,7 +61,7 @@ public class EvaluateAddition extends Wring.ReplaceCurrentNode<InfixExpression> 
  private static ASTNode replacementDouble(final List<Expression> es, InfixExpression e) {
    double sum = 0;
    for (final Expression ¢ : es){
-     if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isInt(¢) && !EvaluateAux.isDouble(¢))
+     if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isNumber(¢))
        return null;
      sum=sum + Double.parseDouble(((NumberLiteral) ¢).getToken());
    }  
