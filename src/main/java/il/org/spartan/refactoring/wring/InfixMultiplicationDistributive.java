@@ -7,7 +7,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
-
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.Wring.*;
 
@@ -130,6 +129,10 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
   }
 
   @Override boolean scopeIncludes(final InfixExpression $) {
-    return super.scopeIncludes($);
+    return $ != null && Is.infixPlus($) && IsSimpleMultiplication(left($)) && IsSimpleMultiplication(right($)); // super.scopeIncludes($);
+  }
+
+  private static boolean IsSimpleMultiplication(Expression $) {
+    return !Is.simpleName($) && ((InfixExpression) $).getOperator() == TIMES ? true : false;
   }
 }
