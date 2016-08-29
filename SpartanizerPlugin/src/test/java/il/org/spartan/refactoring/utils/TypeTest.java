@@ -136,5 +136,17 @@ public class TypeTest {
     @Test public void test34(){
       azzert.that(INTEGRAL.underBinaryOperator(MINUS2, LONG), is(LONG));
     }
+    
+    @Test public void test35(){
+      azzert.that(CHAR.underBinaryOperator(PLUS2, CHAR), is(CHAR));
+    }
+    
+    @Test public void test36(){
+      azzert.that(CHAR.underBinaryOperator(MINUS2, INT), is(INT));
+    }
+    
+    @Test public void test37(){
+      azzert.that(CHAR.under(PrefixExpression.Operator.COMPLEMENT), is(CHAR));
+    }
   }
 }
