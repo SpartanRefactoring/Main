@@ -124,7 +124,7 @@ public class TrimmerTestsUtils {
     final Document d = new Document(from);
     assert d != null;
     final Document $ = TESTUtils.rewrite(t, u, d);
-    assert $!=null;
+    assert $ != null;
     return $.get();
   }
 

@@ -1,8 +1,8 @@
 import static java.lang.System.*;
 
 import java.util.*;
-@SuppressWarnings("all")
-public class EnvironmentTests {
+
+@SuppressWarnings("all") public class EnvironmentTests {
   void EX1() {
     @NestedENV({}) @OutOfOrderFlatENV({}) final String s = "a";
     s.equals("a");
