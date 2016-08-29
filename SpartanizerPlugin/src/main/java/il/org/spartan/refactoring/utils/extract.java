@@ -9,6 +9,7 @@ import static il.org.spartan.refactoring.utils.expose.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.Type;
 
 import il.org.spartan.*;
 

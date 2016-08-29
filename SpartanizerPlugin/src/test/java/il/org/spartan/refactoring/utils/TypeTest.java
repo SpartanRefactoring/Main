@@ -2,7 +2,7 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.Kind.*;
+import static il.org.spartan.refactoring.utils.Type.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
@@ -19,14 +19,14 @@ public class TypeTest {
     }
 
     @Test public void test02() {
-      azzert.that(kind(Into.e("2 + (2.0)*1L")),is(Kind.DOUBLE));
+      azzert.that(kind(Into.e("2 + (2.0)*1L")),is(Type.DOUBLE));
     }
     
   }
 
   public static class Working {
     @Test public void test01() {
-      azzert.that(Kind.BOOLEAN, is(Kind.BOOLEAN));
+      azzert.that(Type.BOOLEAN, is(Type.BOOLEAN));
     }
     
     @Test public void test04(){
