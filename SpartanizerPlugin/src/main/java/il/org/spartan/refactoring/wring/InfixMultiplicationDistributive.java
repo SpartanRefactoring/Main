@@ -10,6 +10,22 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.Wring.*;
 
+/** Apply the distributive rule to multiplication:
+*
+* <pre>
+* <b>a*b + a*c</b>
+* </pre>
+*
+* to
+*
+* <pre>
+* <b>a * (b + c)</b>
+* </pre>
+*
+* .
+* @author Matteo Orru'
+* @since 2015-07-17 */
+
 public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<InfixExpression> implements Kind.DistributiveRefactoring {
   @Override String description(final InfixExpression e) {
     return "Apply the distributive rule to " + e;

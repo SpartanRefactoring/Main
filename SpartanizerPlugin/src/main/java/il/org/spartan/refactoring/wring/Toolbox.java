@@ -64,7 +64,8 @@ public class Toolbox {
         .add(InfixExpression.class, //
             /* The following line was intentionally commented: Matteo, I believe
              * this generates many bugs --yg 
-             * Bug Fixed, but not integrated, as per request. Waiting for the enhancement (Term, Factor, etc.) --mo*/
+             * Bug Fixed, but not integrated, as per request. Waiting for the enhancement (Term, Factor, etc.) -- mo
+             * */
 //            new InfixMultiplicationDistributive(), //
             new EvaluateMultiplication(), //
             new EvaluateDivision(), //
