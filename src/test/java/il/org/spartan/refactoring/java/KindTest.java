@@ -1,16 +1,17 @@
-package il.org.spartan.refactoring.utils;
+package il.org.spartan.refactoring.java;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.utils.Type.*;
+import static il.org.spartan.refactoring.java.Kind.*;
 
 import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
+import il.org.spartan.refactoring.utils.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "static-method" }) //
-public class TypeTest {
+public class KindTest {
   @Ignore public static class Pending {
     // class for Pending tests that don't currently pass
     // TODO: look into constructors

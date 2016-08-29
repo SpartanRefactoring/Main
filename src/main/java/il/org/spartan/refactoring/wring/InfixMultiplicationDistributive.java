@@ -7,25 +7,25 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
+
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.Wring.*;
 
 /** Apply the distributive rule to multiplication:
-*
-* <pre>
+ *
+ * <pre>
 * <b>a*b + a*c</b>
-* </pre>
-*
-* to
-*
-* <pre>
+ * </pre>
+ *
+ * to
+ *
+ * <pre>
 * <b>a * (b + c)</b>
-* </pre>
-*
-* .
-* @author Matteo Orru'
-* @since 2015-07-17 */
-
+ * </pre>
+ *
+ * .
+ * @author Matteo Orru'
+ * @since 2015-07-17 */
 public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<InfixExpression> implements Kind.DistributiveRefactoring {
   @Override String description(final InfixExpression e) {
     return "Apply the distributive rule to " + e;
@@ -148,7 +148,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     return $ != null && Is.infixPlus($) && IsSimpleMultiplication(left($)) && IsSimpleMultiplication(right($)); // super.scopeIncludes($);
   }
 
-  private static boolean IsSimpleMultiplication(Expression $) {
+  private static boolean IsSimpleMultiplication(final Expression $) {
     return !Is.simpleName($) && ((InfixExpression) $).getOperator() == TIMES ? true : false;
   }
 }
