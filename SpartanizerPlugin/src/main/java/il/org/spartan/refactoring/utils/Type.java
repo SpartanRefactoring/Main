@@ -29,7 +29,7 @@ import org.eclipse.jdt.core.dom.*;
  * @author Yossi Gil
  * @author Niv Shalmon
  * @since 2016-08-XX */
-enum Kind {
+enum Type {
   // Those anonymous characters that known little or nothing about themselves
   NOTHING("none", "when nothing can be said, e.g., f(f(),f(f(f()),f()))"), //
   NONNULL("!null", "e.g., new Object() and that's about it"), //
@@ -51,7 +51,7 @@ enum Kind {
   public static boolean kind(Expression e) {
     throw new RuntimeException("Team3 needs to implement this: " + e);
   }
-  private static Kind max(Kind ¢1, Kind ¢2) {
+  private static Type max(Type ¢1, Type ¢2) {
     return ¢1.ordinal() > ¢2.ordinal() ? ¢1 : ¢2;
   }
 
@@ -59,7 +59,7 @@ enum Kind {
 
   final String name;
 
-  Kind(final String name, final String description) {
+  Type(final String name, final String description) {
     this.name = name;
     this.description = description;
   }
@@ -70,7 +70,7 @@ enum Kind {
 
   /** @return one of {@link #INT}, {@link #LONG}, or {@link #INTEGRAL}, in case
    *         it cannot decide */
-  Kind asIntegral() {
+  Type asIntegral() {
     return isIntegral() ? this : INTEGRAL;
   }
   
@@ -78,7 +78,7 @@ enum Kind {
   /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE},
    *         {@link #INTEGRAL} or {@link #NUMERIC}, in case no further
    *         information is available */
-  Kind asNumeric() {
+  Type asNumeric() {
     return isNumeric() ? this : NUMERIC;
   }
 
@@ -90,7 +90,7 @@ enum Kind {
    *         {@link #DOUBLE}, {@link #INTEGRAL} or {@link #NUMERIC}, in case it
    *         cannot decide */
   // TODO: should be private once kind is finished
-  final Kind under(final PrefixExpression.Operator o) {
+  final Type under(final PrefixExpression.Operator o) {
     assert o != null;
     return o == NOT ? BOOLEAN //
         : o != COMPLEMENT ? asNumeric() : asIntegral();
@@ -101,7 +101,7 @@ enum Kind {
    *         {@link #NUMERIC}, or {@link #ALPHANUMERIC}, in case it cannot
    *         decide */
   // TODO: should be private once kind is finished
-  final Kind underBinaryOperator(InfixExpression.Operator o, Kind k) {
+  final Type underBinaryOperator(InfixExpression.Operator o, Type k) {
     if (o == PLUS2)
       return underPlus(k);
     if (in(o, //
@@ -122,13 +122,13 @@ enum Kind {
     return underNumericOnlyOperator(k);
   }
 
-  Kind underIntegersOnlyOperator(Kind k) {
+  Type underIntegersOnlyOperator(Type k) {
     return max(k.asIntegral(), asIntegral());
   }
 
   /** @return one of {@link #INT}, {@link #LONG}, {@link #INTEGRAL},
    *         {@link #DOUBLE}, or {@link #NUMERIC}, in case it cannot decide */
-  Kind underNumericOnlyOperator(Kind k) {
+  Type underNumericOnlyOperator(Type k) {
     if (k == this)
       return k;
     if (!isNumeric())
@@ -137,7 +137,7 @@ enum Kind {
     assert this != ALPHANUMERIC : "Don't confuse " + NUMERIC + " with " + ALPHANUMERIC;
     assert in(this, INT, DOUBLE, LONG, INTEGRAL, NUMERIC) : this + ": does not fit our list of numeric types";
     assert isNumeric() : this + ": is for some reason not numeric ";
-    final Kind $ = k.asNumeric();
+    final Type $ = k.asNumeric();
     assert $ != null;
     assert $.isNumeric() : this + ": is for some reason not numeric ";
     assert in($, INT, DOUBLE, LONG, INTEGRAL, NUMERIC) : $ + ": does not fit our list of numeric types";
@@ -168,7 +168,7 @@ enum Kind {
   /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE},
    *         {@link #STRING}, {@link #INTEGRAL}, {@link #NUMERIC} or
    *         {@link #ALPHANUMERIC}, in case it cannot decide */
-  Kind underPlus(Kind k) {
+  Type underPlus(Type k) {
     // addition with NULL or String must be a String
     if (in(STRING, this, k) || in(NULL, this, k))
       return STRING;
