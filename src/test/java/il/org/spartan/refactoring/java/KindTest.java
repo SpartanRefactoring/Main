@@ -14,18 +14,6 @@ import il.org.spartan.refactoring.utils.*;
 public class KindTest {
   @Ignore public static class Pending {
     // class for Pending tests that don't currently pass
-    // TODO: look into constructors
-    @Test public void test110() {
-      azzert.that(kind(Into.e("new List()")), is(BAPTIZED));
-    }
-
-    @Test public void test111() {
-      azzert.that(kind(Into.e("new Object()")), is(NONNULL));
-    }
-
-    @Test public void test112() {
-      azzert.that(kind(Into.e("new String()")), is(STRING));
-    }
 
     // TODO: look into toStrihg()
     @Test public void test124() {
@@ -192,6 +180,18 @@ public class KindTest {
 
     @Test public void test109() {
       azzert.that(kind(Into.e("(List)f()")), is(BAPTIZED));
+    }
+    
+    @Test public void test110() {
+      azzert.that(kind(Into.e("new List()")), is(NONNULL));
+    }
+
+    @Test public void test111() {
+      azzert.that(kind(Into.e("new Object()")), is(NONNULL));
+    }
+    
+    @Test public void test112() {
+      azzert.that(kind(Into.e("new String()")), is(STRING));
     }
 
     @Test public void test113() {
