@@ -3,17 +3,17 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.refactoring.utils.Funcs.*;
 
 import org.eclipse.jdt.core.dom.*;
-import static il.org.spartan.refactoring.java.Kind.kind;
-import static il.org.spartan.refactoring.java.Kind.STRING;
 
 import il.org.spartan.refactoring.utils.*;
 
-public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<InfixExpression> implements il.org.spartan.refactoring.wring.Kind.NoImpact {
+public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<InfixExpression>
+    implements il.org.spartan.refactoring.wring.Kind.NoImpact {
   static boolean validTypes(final Expression e, final Expression ¢1, final Expression ¢2) {
-    return ((¢2 instanceof StringLiteral && ¢1 instanceof StringLiteral && ((StringLiteral) ¢1).getEscapedValue().equals("\"\""))
-        || (¢2 instanceof StringLiteral && ((StringLiteral) ¢2).getEscapedValue().equals("\"\"") && ¢1 instanceof StringLiteral));
+    return ¢2 instanceof StringLiteral && ¢1 instanceof StringLiteral && ((StringLiteral) ¢1).getEscapedValue().equals("\"\"")
+        || ¢2 instanceof StringLiteral && ((StringLiteral) ¢2).getEscapedValue().equals("\"\"") && ¢1 instanceof StringLiteral;
   }
-  @Override ASTNode replacement(InfixExpression e) {
+
+  @Override ASTNode replacement(final InfixExpression e) {
     if (!iz.infixPlus(e))
       return null;
     final Expression right = right(e);

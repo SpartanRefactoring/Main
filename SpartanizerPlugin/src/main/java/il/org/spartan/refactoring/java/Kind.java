@@ -2,11 +2,11 @@ package il.org.spartan.refactoring.java;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.utils.Funcs.*;
+import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
-import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import il.org.spartan.refactoring.utils.*;
 
@@ -51,7 +51,6 @@ public enum Kind {
   BOOLEAN("boolean", "must be boolean: !f(), f() || g() "), //
   STRING("String", "must be string: \"\"+a, a.toString(), f()+null, not f()+g()"),//
   ;
-  
   /** @param e JD
    * @return The most specific Type information that can be deduced about the
    *         expression, or {@link #NOTHING} if it cannot decide. Will never
@@ -75,20 +74,32 @@ public enum Kind {
    * @param t2 the type of the left hand operand of the expression, or null if
    *        unknown */
   static Kind kind(final Expression e, final Kind t1, final Kind t2) {
-    switch(e.getNodeType()){
-      case NULL_LITERAL: return NULL;
-      case CHARACTER_LITERAL: return CHAR;
-      case STRING_LITERAL: return STRING;
-      case BOOLEAN_LITERAL: return BOOLEAN;
-      case NUMBER_LITERAL: return kind((NumberLiteral) e);
-      case CAST_EXPRESSION: return kind((CastExpression) e);
-      case PREFIX_EXPRESSION: return kind((PrefixExpression) e, t1);
-      case INFIX_EXPRESSION: return kind((InfixExpression) e, t1, t2);
-      case POSTFIX_EXPRESSION: return kind((PostfixExpression)e, t1);
-      case PARENTHESIZED_EXPRESSION: return kind((ParenthesizedExpression) e, t1);
-      case CLASS_INSTANCE_CREATION: return kind((ClassInstanceCreation)e);
-      default: return NOTHING;
-    } 
+    switch (e.getNodeType()) {
+      case NULL_LITERAL:
+        return NULL;
+      case CHARACTER_LITERAL:
+        return CHAR;
+      case STRING_LITERAL:
+        return STRING;
+      case BOOLEAN_LITERAL:
+        return BOOLEAN;
+      case NUMBER_LITERAL:
+        return kind((NumberLiteral) e);
+      case CAST_EXPRESSION:
+        return kind((CastExpression) e);
+      case PREFIX_EXPRESSION:
+        return kind((PrefixExpression) e, t1);
+      case INFIX_EXPRESSION:
+        return kind((InfixExpression) e, t1, t2);
+      case POSTFIX_EXPRESSION:
+        return kind((PostfixExpression) e, t1);
+      case PARENTHESIZED_EXPRESSION:
+        return kind((ParenthesizedExpression) e, t1);
+      case CLASS_INSTANCE_CREATION:
+        return kind((ClassInstanceCreation) e);
+      default:
+        return NOTHING;
+    }
   }
 
   private static Kind kind(final NumberLiteral e) {
@@ -103,7 +114,7 @@ public enum Kind {
   }
 
   private static Kind kind(final CastExpression e) {
-    return typeSwitch(""+extract.type(e), BAPTIZED);
+    return typeSwitch("" + extract.type(e), BAPTIZED);
   }
 
   private static Kind kind(final PrefixExpression e, final Kind t1) {
@@ -123,16 +134,16 @@ public enum Kind {
     final Kind ¢ = t1 != null ? t1 : kind(e.getOperand());
     return ¢.asNumeric();
   }
-  
+
   private static Kind kind(final ParenthesizedExpression e, final Kind t) {
     return t != null ? t : kind(e.getExpression());
   }
 
-  private static Kind kind(final ClassInstanceCreation e){
-    return typeSwitch(""+e.getType(),NONNULL);
+  private static Kind kind(final ClassInstanceCreation e) {
+    return typeSwitch("" + e.getType(), NONNULL);
   }
-  
-  private static Kind typeSwitch(final String s,final Kind $){
+
+  private static Kind typeSwitch(final String s, final Kind $) {
     switch (s) {
       case "char":
       case "Character":
@@ -155,7 +166,7 @@ public enum Kind {
         return $;
     }
   }
-  
+
   final String description;
   final String name;
 
@@ -253,8 +264,7 @@ public enum Kind {
   }
 
   /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
-   *         {@link #INTEGRAL} or false otherwise
-   */
+   *         {@link #INTEGRAL} or false otherwise */
   public boolean isIntegral() {
     return in(this, LONG, INT, CHAR, INTEGRAL);
   }
@@ -272,9 +282,8 @@ public enum Kind {
   }
 
   /** @return true if one of @link #INT}, {@link #LONG}, {@link #CHAR},
-   *         {@link #DOUBLE}, {@link #INTEGRAL}, {@link #NUMERIC} or
-   *         false otherwise
-   */
+   *         {@link #DOUBLE}, {@link #INTEGRAL}, {@link #NUMERIC} or false
+   *         otherwise */
   public boolean isNumeric() {
     return in(this, INT, LONG, CHAR, DOUBLE, INTEGRAL, NUMERIC);
   }
@@ -285,12 +294,12 @@ public enum Kind {
   private Kind asNumeric() {
     return !isNumeric() ? NUMERIC : this != CHAR ? this : INT;
   }
-  
+
   /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
    *         {@link #DOUBLE}, {@link #INTEGRAL} or {@link #NUMERIC},
    *         {@link #STRING}, {@link #ALPHANUMERIC} or false otherwise */
-  public boolean isAlphaNumeric(){
-    return in(this,  INT, LONG, CHAR, DOUBLE, INTEGRAL, NUMERIC, STRING, ALPHANUMERIC);
+  public boolean isAlphaNumeric() {
+    return in(this, INT, LONG, CHAR, DOUBLE, INTEGRAL, NUMERIC, STRING, ALPHANUMERIC);
   }
 
   private Kind max(final Kind ¢) {

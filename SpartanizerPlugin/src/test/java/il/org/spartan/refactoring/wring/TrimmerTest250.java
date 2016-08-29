@@ -486,19 +486,19 @@ public class TrimmerTest250 {
   @Test public void issue72pi() {
     trimming("0+(0+x+y+(4+0))").to("0+0+x+y+4+0").to("x+y+4").to(null);
   }
-  
+
   @Test public void issue73_01() {
     trimming("\"\" + \"abc\"").to("\"abc\"");
   }
-  
+
   @Test public void issue73_02() {
     trimming("\"\" + \"abc\" + \"\"").to("\"abc\"");
   }
-  
+
   @Test public void issue73_03() {
     trimming("\"abc\" + \"\"").to("\"abc\"");
   }
-  
+
   @Test public void issue75a() {
     trimming("int i = 0").to(null);
   }

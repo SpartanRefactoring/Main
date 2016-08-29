@@ -4,8 +4,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.utils.*;
-
 public class EvaluateAux {
   public enum Type {
     INT, LONG, DOUBLE, BAD
