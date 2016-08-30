@@ -2,183 +2,335 @@ package il.org.spartan.refactoring.java;
 
 /** Fluent API ... */
 public interface atomic {
-  static boolean isChar(@SuppressWarnings("unused") boolean __) {
-    return false;
-  }
-
-  static boolean isChar(@SuppressWarnings("unused") byte __) {
-    return false;
-  }
-
-  static boolean isChar(@SuppressWarnings("unused") char __) {
+  static boolean isBoolean(final boolean __) {
     return true;
   }
 
-  static boolean isChar(@SuppressWarnings("unused") double __) {
+  static boolean isBoolean(final byte __) {
     return false;
   }
 
-  static boolean isChar(@SuppressWarnings("unused") float __) {
+  static boolean isBoolean(final char __) {
     return false;
   }
 
-  static boolean isChar(@SuppressWarnings("unused") int __) {
+  static boolean isBoolean(final double __) {
     return false;
   }
 
-  static boolean isChar(@SuppressWarnings("unused") long __) {
+  static boolean isBoolean(final float __) {
     return false;
   }
 
-  static boolean isChar(@SuppressWarnings("unused") Object __) {
+  static boolean isBoolean(final Object __) {
     return false;
   }
 
-  static boolean isChar(@SuppressWarnings("unused") String __) {
+  static boolean isBoolean(final short __) {
     return false;
   }
 
-  static boolean isDouble(@SuppressWarnings("unused") boolean __) {
+  static boolean isBoolean(final String __) {
     return false;
   }
 
-  static boolean isDouble(@SuppressWarnings("unused") byte __) {
+  static boolean isByte(@SuppressWarnings("unused") final boolean __) {
     return false;
   }
 
-  static boolean isDouble(@SuppressWarnings("unused") char __) {
-    return false;
-  }
-
-  static boolean isDouble(@SuppressWarnings("unused") double __) {
+  static boolean isByte(@SuppressWarnings("unused") final byte __) {
     return true;
   }
 
-  static boolean isDouble(@SuppressWarnings("unused") float __) {
+  static boolean isByte(@SuppressWarnings("unused") final char __) {
     return false;
   }
 
-  static boolean isDouble(@SuppressWarnings("unused") int __) {
+  static boolean isByte(@SuppressWarnings("unused") final double __) {
     return false;
   }
 
-  static boolean isDouble(@SuppressWarnings("unused") long __) {
+  static boolean isByte(@SuppressWarnings("unused") final float __) {
     return false;
   }
 
-  static boolean isDouble(@SuppressWarnings("unused") Object __) {
+  static boolean isByte(@SuppressWarnings("unused") final int __) {
     return false;
   }
 
-  static boolean isDouble(@SuppressWarnings("unused") String __) {
+  static boolean isByte(@SuppressWarnings("unused") final long __) {
     return false;
   }
 
-  static boolean isFloat(@SuppressWarnings("unused") boolean __) {
+  static boolean isByte(@SuppressWarnings("unused") final Object __) {
     return false;
   }
 
-  static boolean isFloat(@SuppressWarnings("unused") byte __) {
+  static boolean isByte(@SuppressWarnings("unused") final short __) {
     return false;
   }
 
-  static boolean isFloat(@SuppressWarnings("unused") char __) {
+  static boolean isByte(@SuppressWarnings("unused") final String __) {
     return false;
   }
 
-  static boolean isFloat(@SuppressWarnings("unused") double __) {
+  static boolean isChar(@SuppressWarnings("unused") final byte __) {
     return false;
   }
 
-  static boolean isFloat(@SuppressWarnings("unused") float __) {
+  static boolean isChar(@SuppressWarnings("unused") final char __) {
     return true;
   }
 
-  static boolean isFloat(@SuppressWarnings("unused") int __) {
+  static boolean isChar(@SuppressWarnings("unused") final double __) {
     return false;
   }
 
-  static boolean isFloat(@SuppressWarnings("unused") long __) {
+  static boolean isChar(@SuppressWarnings("unused") final float __) {
     return false;
   }
 
-  static boolean isFloat(@SuppressWarnings("unused") Object __) {
+  static boolean isChar(@SuppressWarnings("unused") final int __) {
     return false;
   }
 
-  static boolean isFloat(@SuppressWarnings("unused") String __) {
+  static boolean isChar(@SuppressWarnings("unused") final long __) {
     return false;
   }
 
-  static boolean isInt(@SuppressWarnings("unused") boolean __) {
+  static boolean isChar(@SuppressWarnings("unused") final Object __) {
     return false;
   }
 
-  static boolean isInt(@SuppressWarnings("unused") byte __) {
+  static boolean isChar(@SuppressWarnings("unused") final short __) {
     return false;
   }
 
-  static boolean isInt(@SuppressWarnings("unused") char __) {
+  static boolean isChar(@SuppressWarnings("unused") final String __) {
     return false;
   }
 
-  static boolean isInt(@SuppressWarnings("unused") double __) {
+  static boolean isDouble(@SuppressWarnings("unused") final boolean __) {
     return false;
   }
 
-  static boolean isInt(@SuppressWarnings("unused") float __) {
+  static boolean isDouble(@SuppressWarnings("unused") final byte __) {
     return false;
   }
 
-  static boolean isInt(@SuppressWarnings("unused") int __) {
+  static boolean isDouble(@SuppressWarnings("unused") final char __) {
+    return false;
+  }
+
+  static boolean isDouble(@SuppressWarnings("unused") final double __) {
     return true;
   }
 
-  static boolean isInt(@SuppressWarnings("unused") long __) {
+  static boolean isDouble(@SuppressWarnings("unused") final float __) {
     return false;
   }
 
-  static boolean isInt(@SuppressWarnings("unused") Object __) {
+  static boolean isDouble(@SuppressWarnings("unused") final int __) {
     return false;
   }
 
-  static boolean isInt(@SuppressWarnings("unused") String __) {
+  static boolean isDouble(@SuppressWarnings("unused") final long __) {
     return false;
   }
 
-  static boolean isLong(@SuppressWarnings("unused") boolean __) {
+  static boolean isDouble(@SuppressWarnings("unused") final Object __) {
     return false;
   }
 
-  static boolean isLong(@SuppressWarnings("unused") byte __) {
+  static boolean isDouble(@SuppressWarnings("unused") final short __) {
     return false;
   }
 
-  static boolean isLong(@SuppressWarnings("unused") char __) {
+  static boolean isDouble(@SuppressWarnings("unused") final String __) {
     return false;
   }
 
-  static boolean isLong(@SuppressWarnings("unused") double __) {
+  static boolean isFloat(@SuppressWarnings("unused") final boolean __) {
     return false;
   }
 
-  static boolean isLong(@SuppressWarnings("unused") float __) {
+  static boolean isFloat(@SuppressWarnings("unused") final byte __) {
     return false;
   }
 
-  static boolean isLong(@SuppressWarnings("unused") int __) {
+  static boolean isFloat(@SuppressWarnings("unused") final char __) {
+    return false;
+  }
+
+  static boolean isFloat(@SuppressWarnings("unused") final double __) {
+    return false;
+  }
+
+  static boolean isFloat(@SuppressWarnings("unused") final float __) {
     return true;
   }
 
-  static boolean isLong(@SuppressWarnings("unused") long __) {
-    return true;
-  }
-
-  static boolean isLong(@SuppressWarnings("unused") Object __) {
+  static boolean isFloat(@SuppressWarnings("unused") final int __) {
     return false;
   }
 
-  static boolean isLong(@SuppressWarnings("unused") String __) {
+  static boolean isFloat(@SuppressWarnings("unused") final long __) {
+    return false;
+  }
+
+  static boolean isFloat(@SuppressWarnings("unused") final Object __) {
+    return false;
+  }
+
+  static boolean isFloat(@SuppressWarnings("unused") final short __) {
+    return false;
+  }
+
+  static boolean isFloat(@SuppressWarnings("unused") final String __) {
+    return false;
+  }
+
+  static boolean isInt(@SuppressWarnings("unused") final boolean __) {
+    return false;
+  }
+
+  static boolean isInt(@SuppressWarnings("unused") final byte __) {
+    return false;
+  }
+
+  static boolean isInt(@SuppressWarnings("unused") final char __) {
+    return false;
+  }
+
+  static boolean isInt(@SuppressWarnings("unused") final double __) {
+    return false;
+  }
+
+  static boolean isInt(@SuppressWarnings("unused") final float __) {
+    return false;
+  }
+
+  static boolean isInt(@SuppressWarnings("unused") final int __) {
+    return true;
+  }
+
+  static boolean isInt(@SuppressWarnings("unused") final long __) {
+    return false;
+  }
+
+  static boolean isInt(@SuppressWarnings("unused") final Object __) {
+    return false;
+  }
+
+  static boolean isInt(@SuppressWarnings("unused") final short __) {
+    return false;
+  }
+
+  static boolean isInt(@SuppressWarnings("unused") final String __) {
+    return false;
+  }
+
+  static boolean isLong(@SuppressWarnings("unused") final boolean __) {
+    return false;
+  }
+
+  static boolean isLong(@SuppressWarnings("unused") final byte __) {
+    return false;
+  }
+
+  static boolean isLong(@SuppressWarnings("unused") final char __) {
+    return false;
+  }
+
+  static boolean isLong(@SuppressWarnings("unused") final double __) {
+    return false;
+  }
+
+  static boolean isLong(@SuppressWarnings("unused") final float __) {
+    return false;
+  }
+
+  static boolean isLong(@SuppressWarnings("unused") final int __) {
+    return true;
+  }
+
+  static boolean isLong(@SuppressWarnings("unused") final long __) {
+    return true;
+  }
+
+  static boolean isLong(@SuppressWarnings("unused") final Object __) {
+    return false;
+  }
+
+  static boolean isLong(@SuppressWarnings("unused") final short __) {
+    return false;
+  }
+
+  static boolean isLong(@SuppressWarnings("unused") final String __) {
+    return true;
+  }
+
+  static boolean isObject(@SuppressWarnings("unused") final short __) {
+    return false;
+  }
+
+  static boolean isShort(@SuppressWarnings("unused") final boolean __) {
+    return false;
+  }
+
+  static boolean isShort(@SuppressWarnings("unused") final byte __) {
+    return true;
+  }
+
+  static boolean isShort(@SuppressWarnings("unused") final char __) {
+    return false;
+  }
+
+  static boolean isShort(@SuppressWarnings("unused") final double __) {
+    return false;
+  }
+
+  static boolean isShort(@SuppressWarnings("unused") final float __) {
+    return false;
+  }
+
+  static boolean isShort(@SuppressWarnings("unused") final int __) {
+    return false;
+  }
+
+  static boolean isShort(@SuppressWarnings("unused") final long __) {
+    return false;
+  }
+
+  static boolean isShort(@SuppressWarnings("unused") final Object __) {
+    return false;
+  }
+
+  static boolean isShort(@SuppressWarnings("unused") final short __) {
+    return true;
+  }
+
+  static boolean isShort(@SuppressWarnings("unused") final String __) {
+    return false;
+  }
+
+  static boolean isString(@SuppressWarnings("unused") final double __) {
+    return false;
+  }
+
+  static boolean isString(@SuppressWarnings("unused") final float __) {
+    return false;
+  }
+
+  static boolean isString(@SuppressWarnings("unused") final Object __) {
+    return false;
+  }
+
+  static boolean isString(@SuppressWarnings("unused") final short __) {
+    return false;
+  }
+
+  static boolean isString(@SuppressWarnings("unused") final String __) {
     return true;
   }
 }
