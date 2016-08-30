@@ -106,25 +106,6 @@ public enum PrudentType {
     }
   }
 
-  private static PrudentType prudentType(ConditionalExpression e, PrudentType t1, PrudentType t2) {
-    PrudentType ¢1 = t1 != null ? t1 : prudent(e.getThenExpression());
-    PrudentType ¢2 = t2 != null ? t2 : prudent(e.getElseExpression());
-    if (¢1 == ¢2){
-      return ¢1;
-    }
-    if (¢1.isIntegral() && ¢2.isIntegral()){
-      return ¢1.underIntegersOnlyOperator(¢2);
-    }
-    if (¢1.isNumeric() && ¢2.isNumeric()){
-      return ¢1.underNumericOnlyOperator(¢2);
-    }
-    //I don't think this case can happen in real code, here just in case
-    if (¢1.isAlphaNumeric() && ¢2.isAlphaNumeric()){
-      return ALPHANUMERIC;
-    }
-    return NOTHING;
-  }
-
   private static PrudentType prudentType(MethodInvocation e) {
     return "toString".equals(e.getName()+"") ? STRING : NOTHING;
   }
@@ -193,6 +174,44 @@ public enum PrudentType {
         return $;
     }
   }
+  
+  private static PrudentType prudentType(ConditionalExpression e, PrudentType t1, PrudentType t2) {
+    PrudentType ¢1 = t1 != null ? t1 : prudent(e.getThenExpression());
+    PrudentType ¢2 = t2 != null ? t2 : prudent(e.getElseExpression());
+    if (¢1 == ¢2){
+      return ¢1;
+    }
+    //If we don't know much about one operand but do know enough about the other, we can still learn something
+    if (¢1.isNoInfo() || ¢2.isNoInfo()){
+      return conditionalWithNothing(¢1.isNoInfo() ? ¢2 : ¢1);
+    }
+    if (¢1.isIntegral() && ¢2.isIntegral()){
+      return ¢1.underIntegersOnlyOperator(¢2);
+    }
+    if (¢1.isNumeric() && ¢2.isNumeric()){
+      return ¢1.underNumericOnlyOperator(¢2);
+    }
+    return NOTHING;
+  }
+
+  private static PrudentType conditionalWithNothing(PrudentType t) {
+    switch (t){
+      case CHAR:
+      case INT:
+      case INTEGRAL:
+      case LONG:
+      case NUMERIC:
+        return NUMERIC;
+      case DOUBLE:
+        return DOUBLE;
+      case STRING:
+        return STRING;
+      case BOOLEAN:
+        return BOOLEAN;
+      default:
+        return NOTHING;
+    }
+  }
 
   final String description;
   final String name;
@@ -233,6 +252,10 @@ public enum PrudentType {
         CONDITIONAL_AND//
     ))
       return BOOLEAN;
+    //XOR, OR and AND support BOOLEAN if both operands are BOOLEAN
+    if (in(o, XOR, OR, AND) && this == BOOLEAN && k == BOOLEAN){
+      return BOOLEAN;
+    }
     if (in(o, REMAINDER, XOR, OR, AND))
       return underIntegersOnlyOperator(k);
     if (in(o, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED))
@@ -287,7 +310,7 @@ public enum PrudentType {
   private PrudentType underIntegersOnlyOperator(final PrudentType k) {
     final PrudentType ¢1 = asIntegralNonChar();
     final PrudentType ¢2 = k.asIntegralNonChar();
-    return ¢1 == INTEGRAL && ¢2 == INTEGRAL ? INTEGRAL : ¢1.max(¢2);
+    return in(LONG, ¢1, ¢2) ? LONG : in(INTEGRAL, ¢1, ¢2) ? INTEGRAL : INT;
   }
 
   /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
@@ -328,8 +351,10 @@ public enum PrudentType {
   public boolean isAlphaNumeric() {
     return in(this, INT, LONG, CHAR, DOUBLE, INTEGRAL, NUMERIC, STRING, ALPHANUMERIC);
   }
-
-  private PrudentType max(final PrudentType ¢) {
-    return ordinal() > ¢.ordinal() ? this : ¢;
+  
+  /** @return true if one of {@link #NOTHING}, {@link #BAPTIZED}, {@link #NONNULL},
+   *         {@link #VOID}, {@link #NULL} or false otherwise */
+  private boolean isNoInfo() {
+    return in(this, NOTHING, BAPTIZED, NONNULL, VOID, NULL);    
   }
 }
