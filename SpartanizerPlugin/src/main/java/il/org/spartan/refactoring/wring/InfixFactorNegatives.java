@@ -84,8 +84,8 @@ public final class InfixFactorNegatives extends Wring<InfixExpression> implement
     final List<Expression> es = gather(e);
     if (es.size() < 2)
       return null;
-    final int totalNegation = negation.level(e);
-    if (totalNegation == 0 || totalNegation == 1 && negation.level(step.left(e)) == 1)
+    final int totalNegation = minus.level(e);
+    if (totalNegation == 0 || totalNegation == 1 && minus.level(step.left(e)) == 1)
       return null;
     if (exclude != null)
       exclude.exclude(e);
@@ -93,10 +93,10 @@ public final class InfixFactorNegatives extends Wring<InfixExpression> implement
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Expression first = totalNegation % 2 == 0 ? null : lisp.first(es);
         for (final Expression ¢ : es)
-          if (¢ != first && negation.level(¢) > 0)
-            r.replace(¢, plant(wizard.duplicate(negation.peel(¢))).into(¢.getParent()), g);
+          if (¢ != first && minus.level(¢) > 0)
+            r.replace(¢, plant(wizard.duplicate(minus.peel(¢))).into(¢.getParent()), g);
         if (first != null)
-          r.replace(first, plant(subject.operand(negation.peel(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
+          r.replace(first, plant(subject.operand(minus.peel(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
       }
     };
   }
