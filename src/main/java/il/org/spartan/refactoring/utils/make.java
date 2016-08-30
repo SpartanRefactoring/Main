@@ -1,5 +1,6 @@
 package il.org.spartan.refactoring.utils;
-
+import static il.org.spartan.refactoring.utils.navigate.*;
+import static il.org.spartan.refactoring.utils.iz.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -28,5 +29,15 @@ public interface make {
     final PrefixExpression $ = subject.operand(¢).to(NOT);
     final Expression $$ = PrefixNotPushdown.simplifyNot($);
     return $$ == null ? $ : $$;
+  }
+
+  static Expression newMinus(final Expression e) {
+    return isLiteralZero(e) ? e : subject.operand(e).to(navigate.MINUS1);
+  }
+
+  static ParenthesizedExpression parethesized(final Expression e) {
+    final ParenthesizedExpression $ = e.getAST().newParenthesizedExpression();
+    $.setExpression(parent(e) == null ? e : wizard.duplicate(e));
+    return $;
   }
 }
