@@ -39,4 +39,10 @@ public interface make {
     $.setExpression(expose.parent(e) == null ? e : wizard.duplicate(e));
     return $;
   }
+
+  static NumberLiteral newLiteral(final ASTNode n, final String token) {
+    final NumberLiteral $ = n.getAST().newNumberLiteral();
+    $.setToken(token);
+    return $;
+  }
 }
