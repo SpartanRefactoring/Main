@@ -748,6 +748,37 @@ public class TrimmerTest250 {
   @Test public void issue87b() {
     trimming("a-b*c").to(null);
   }
+  @Test public void issue103ma() {
+    trimming("x=x*y").to("x*=y");
+  }
+  @Ignore public void issue103mb() {
+    trimming("x=y*x").to("x*=y");
+  }
+  @Ignore public void issue103mc() {
+    trimming("x=y*z").to(null);
+  }
+  @Ignore public void issue103md() {
+    trimming("x = x * x").to("x*=x");
+  }
+  @Ignore public void issue103me() {
+    trimming("x = y * x * z * x * k * 9").to("x *= y * z * x * k * 9");
+  }
+  @Ignore public void issue103mf() {
+    trimming("a=a*5").to("a*=5");
+  }
+  @Ignore public void issue103mg() {
+    trimming("a=a*(alex)").to("a*=(alex)");
+  }
+  @Ignore public void issue103mh() {
+    trimming("a = a * (c = c * kif)").to("a = a * (c *= kif)").to("a *= (c *= kif)").to(null);
+  }
+  @Ignore public void issue103mj() {
+    trimming("x=x*foo(x,y)").to("x*=foo(x,y)");
+  }
+  @Ignore public void issue103mk() {
+    trimming("z=foo(x=(y=y*u),17)").to("z=foo(x=(y*=u),17)");
+  }
+  
   @Ignore public void issue103a() {
     trimming("x=x+y").to("x+=y");
   }
@@ -772,7 +803,7 @@ public class TrimmerTest250 {
   @Ignore public void issue103h() {
     trimming("a = a + (c = c + kif)").to("a = a + (c += kif)").to("a += (c += kif)").to(null);
   }
-  @Ignore public void issue103i() {
+  @Ignore public void issue103i_mixed() {
     trimming("a = a - (x = x + (y = y*(z=z+3)))").to("a = a - (x = x + (y = y*(z+=3)))").to("a = a - (x += (y = y*(z+=3)))");
   }
   @Ignore public void issue103j() {
@@ -782,6 +813,9 @@ public class TrimmerTest250 {
     trimming("z=foo(x=(y=y+u),17)").to("z=foo(x=(y+=u),17)");
   }
 
+  @Test public void AssignmentAndReturn() {
+    trimming("a=5; \n return a;").to("return a=5;");
+  }
   
   // @formatter:off
   enum A { a1() {{ f(); }
