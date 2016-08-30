@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
@@ -96,7 +95,7 @@ public enum extract {
   }
 
   public static Expression core(final PrefixExpression $) {
-    return $.getOperator() != PLUS1 ? $ : core($.getOperand());
+    return $.getOperator() != wizard.PLUS1 ? $ : core($.getOperand());
   }
 
   /** Computes the "essence" of a statement, i.e., if a statement is essentially
@@ -405,8 +404,8 @@ public enum extract {
     if (e == null)
       return null;
     final List<Expression> $ = new ArrayList<>();
-    $.add(left(e));
-    $.add(right(e));
+    $.add(expose.left(e));
+    $.add(expose.right(e));
     if (e.hasExtendedOperands())
       $.addAll(expose.extendedOperands(e));
     return $;
@@ -453,7 +452,7 @@ public enum extract {
    *         parameter, or <code><b>null</b></code>, if no such statement
    *         exists. */
   public static Statement singleElse(final IfStatement s) {
-    return extract.singleStatement(elze(s));
+    return extract.singleStatement(expose.elze(s));
   }
 
   /** @param n JD
@@ -468,7 +467,7 @@ public enum extract {
    * @return single statement in the "then" branch of the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
   public static Statement singleThen(final IfStatement s) {
-    return extract.singleStatement(then(s));
+    return extract.singleStatement(expose.then(s));
   }
 
   /** Extract the {@link Statement} that contains a given node.

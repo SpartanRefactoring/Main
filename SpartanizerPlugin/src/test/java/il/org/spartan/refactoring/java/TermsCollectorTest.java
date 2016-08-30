@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.java;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 
@@ -38,9 +37,9 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test public void test04() {
     final InfixExpression i = i("a-c");
-    azzert.that(i.getOperator(), is(MINUS2));
-    azzert.that(left(i), iz("a"));
-    azzert.that(right(i), iz("c"));
+    azzert.that(i.getOperator(), is(wizard.MINUS2));
+    azzert.that(expose.left(i), iz("a"));
+    azzert.that(expose.right(i), iz("c"));
     c.collect(i);
     azzert.that(c.plus().size(), is(1));
     azzert.that(c.minus().size(), is(1));
@@ -48,9 +47,9 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test public void test05() {
     final InfixExpression i = i("a-c");
-    azzert.that(i.getOperator(), is(MINUS2));
-    azzert.that(left(i), iz("a"));
-    azzert.that(right(i), iz("c"));
+    azzert.that(i.getOperator(), is(wizard.MINUS2));
+    azzert.that(expose.left(i), iz("a"));
+    azzert.that(expose.right(i), iz("c"));
     c.collectPlusNonLeaf(i);
     azzert.that(c.plus().size(), is(1));
     azzert.that(c.minus().size(), is(1));
@@ -58,8 +57,8 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test public void test06() {
     final InfixExpression i = i("a + b -c");
-    azzert.that(i.getOperator(), is(MINUS2));
-    azzert.that(az.infixExpression(left(i)).getOperator(), is(PLUS2));
+    azzert.that(i.getOperator(), is(wizard.MINUS2));
+    azzert.that(az.infixExpression(expose.left(i)).getOperator(), is(wizard.PLUS2));
     c.collect(i);
     azzert.that(c.plus().size(), is(2));
     azzert.that(c.minus().size(), is(1));

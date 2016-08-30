@@ -1,7 +1,5 @@
 package il.org.spartan.refactoring.java;
 
-import static il.org.spartan.refactoring.utils.navigate.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -21,13 +19,13 @@ public class TermsExpander {
 
   /** @see #recurse(InfixExpression, List) */
   private static InfixExpression appendMinus(final InfixExpression $, final Term ¢) {
-    return ¢.negative() ? subject.append($, ¢.expression) : subject.pair($, ¢.expression).to(PLUS2);
+    return ¢.negative() ? subject.append($, ¢.expression) : subject.pair($, ¢.expression).to(wizard.PLUS2);
   }
 
   /** @see #recurse(InfixExpression, List) */
   private static InfixExpression appendPlus(final InfixExpression $, final Term t) {
     final Expression ¢ = wizard.duplicate(t.expression);
-    return t.positive() ? subject.append($, ¢) : subject.pair($, ¢).to(MINUS2);
+    return t.positive() ? subject.append($, ¢) : subject.pair($, ¢).to(wizard.MINUS2);
   }
 
   private static Expression base(final List<Term> ts) {
@@ -44,12 +42,12 @@ public class TermsExpander {
 
   private static InfixExpression base(final Term t1, final Term t2) {
     if (t1.positive())
-      return subject.pair(t1.expression, t2.expression).to(t2.positive() ? PLUS2 : MINUS2);
+      return subject.pair(t1.expression, t2.expression).to(t2.positive() ? wizard.PLUS2 : wizard.MINUS2);
     assert t1.negative();
     return (//
     t2.positive() ? subject.pair(t2.expression, t1.expression) : //
-        subject.pair(subject.operand(t1.expression).to(MINUS1), t2.expression)//
-    ).to(MINUS2);
+        subject.pair(subject.operand(t1.expression).to(wizard.MINUS1), t2.expression)//
+    ).to(wizard.MINUS2);
   }
 
   private static Expression base(final TermsCollector c) {
@@ -78,10 +76,10 @@ public class TermsExpander {
     assert !ts.isEmpty();
     final Operator o = $.getOperator();
     assert o != null;
-    assert o == PLUS2 || o == MINUS2;
+    assert o == wizard.PLUS2 || o == wizard.MINUS2;
     final Term first = lisp.first(ts);
     assert first != null;
-    return recurse(o == PLUS2 ? appendPlus($, first) : appendMinus($, first), lisp.chop(ts));
+    return recurse(o == wizard.PLUS2 ? appendPlus($, first) : appendMinus($, first), lisp.chop(ts));
   }
 
   private static Expression step(final Expression $, final List<Term> ¢) {

@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.java;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
@@ -50,7 +49,7 @@ public enum sideEffects {
         final CastExpression c = (CastExpression) e;
         return free(c.getExpression());
       case INSTANCEOF_EXPRESSION:
-        return free(left((InstanceofExpression) e));
+        return free(expose.left((InstanceofExpression) e));
       case PREFIX_EXPRESSION:
         return free((PrefixExpression) e);
       case PARENTHESIZED_EXPRESSION:
@@ -78,7 +77,7 @@ public enum sideEffects {
   }
 
   private static boolean free(final ConditionalExpression e) {
-    return free(expression(e)) && free(then(e)) && free(elze(e));
+    return free(expression(e)) && free(expose.then(e)) && free(expose.elze(e));
   }
 
   public static boolean deterministic(final Expression e) {

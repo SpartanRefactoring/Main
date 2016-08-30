@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.java;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.navigate.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
@@ -60,16 +59,16 @@ public enum PrudentType {
     return prudent(e, null, null);
   }
 
-  /** A version of {@link #prudent(Expression)} that receives the operand's
-   * type for a single operand expression. The call kind(e,null) is equivalent
-   * to kind(e) */
+  /** A version of {@link #prudent(Expression)} that receives the operand's type
+   * for a single operand expression. The call kind(e,null) is equivalent to
+   * kind(e) */
   static PrudentType prudent(final Expression e, final PrudentType t) {
     return prudent(e, t, null);
   }
 
-  /** A version of {@link #prudent(Expression)} that receives the operands'
-   * type for a two operand expression. The call kind(e,null,null) is equivalent
-   * to kind(e)
+  /** A version of {@link #prudent(Expression)} that receives the operands' type
+   * for a two operand expression. The call kind(e,null,null) is equivalent to
+   * kind(e)
    * @param t1 the type of the left hand operand of the expression, or null if
    *        unknown
    * @param t2 the type of the left hand operand of the expression, or null if
@@ -194,7 +193,7 @@ public enum PrudentType {
    *         {@link #NUMERIC}, or {@link #ALPHANUMERIC}, in case it cannot
    *         decide */
   private final PrudentType underBinaryOperator(final InfixExpression.Operator o, final PrudentType k) {
-    if (o == PLUS2)
+    if (o == wizard.PLUS2)
       return underPlus(k);
     if (in(o, //
         LESS, //
@@ -213,7 +212,7 @@ public enum PrudentType {
       // shift is unique in that the left hand operand's type doesn't affect the
       // result's type
       return asIntegralNonChar();
-    if (!in(o, TIMES, DIVIDE, MINUS2))
+    if (!in(o, TIMES, DIVIDE, wizard.MINUS2))
       throw new IllegalArgumentException("o=" + o + " k=" + k.fullName() + "this=" + this);
     return underNumericOnlyOperator(k);
   }

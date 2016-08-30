@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.utils.navigate.*;
 
 import java.util.*;
 
@@ -35,7 +34,7 @@ public class OccurrencesTest {
   }
 
   @Test public void exploreLeftOfE() {
-    azzert.that(left(e), iz("a"));
+    azzert.that(expose.left(e), iz("a"));
   }
 
   @Test public void lexicalUsesCollector() {
@@ -58,15 +57,15 @@ public class OccurrencesTest {
   }
 
   @Test public void occurencesAinLeftOfE() {
-    azzert.that(Collect.BOTH_SEMANTIC.of(a).in(left(e)).size(), is(1));
+    azzert.that(Collect.BOTH_SEMANTIC.of(a).in(expose.left(e)).size(), is(1));
   }
 
   @Test public void occurencesAinLeftOfEsame() {
-    azzert.that(wizard.same(left(e), a), is(true));
+    azzert.that(wizard.same(expose.left(e), a), is(true));
   }
 
   @Test public void occurencesAinRightOfE() {
-    azzert.that(Collect.BOTH_SEMANTIC.of(a).in(right(e)).size(), is(0));
+    azzert.that(Collect.BOTH_SEMANTIC.of(a).in(expose.right(e)).size(), is(0));
   }
 
   @Test public void occurencesBinE() {
@@ -74,14 +73,14 @@ public class OccurrencesTest {
   }
 
   @Test public void occurencesBinRightOfE() {
-    azzert.that(Collect.BOTH_SEMANTIC.of(b).in(right(e)).size(), is(1));
+    azzert.that(Collect.BOTH_SEMANTIC.of(b).in(expose.right(e)).size(), is(1));
   }
 
   @Test public void sameAandLeftOfE() {
-    azzert.that(wizard.same(a, left(e)), is(true));
+    azzert.that(wizard.same(a, expose.left(e)), is(true));
   }
 
   @Test public void sameTypeAandLeftOfE() {
-    azzert.that(a, instanceOf(left(e).getClass()));
+    azzert.that(a, instanceOf(expose.left(e).getClass()));
   }
 }

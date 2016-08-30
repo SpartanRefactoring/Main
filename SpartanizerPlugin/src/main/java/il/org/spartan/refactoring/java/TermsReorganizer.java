@@ -1,7 +1,5 @@
 package il.org.spartan.refactoring.java;
 
-import static il.org.spartan.refactoring.utils.navigate.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -29,17 +27,17 @@ public class TermsReorganizer {
         return first;
       default:
         rest.add(0, first);
-        return subject.operands(rest).to(MINUS2);
+        return subject.operands(rest).to(wizard.MINUS2);
     }
   }
 
   private static Expression buildMinus(final List<Expression> es) {
-    final Expression $ = subject.operand(lisp.first(es)).to(MINUS1);
+    final Expression $ = subject.operand(lisp.first(es)).to(wizard.MINUS1);
     if (es.size() == 1)
       return $;
     es.remove(0);
     es.add(0, $);
-    return subject.operands(es).to(MINUS2);
+    return subject.operands(es).to(wizard.MINUS2);
   }
 
   private static Expression buildPlus(final List<Expression> es) {
@@ -49,9 +47,9 @@ public class TermsReorganizer {
       case 1:
         return lisp.first(es);
       case 2:
-        return subject.pair(lisp.first(es), lisp.second(es)).to(PLUS2);
+        return subject.pair(lisp.first(es), lisp.second(es)).to(wizard.PLUS2);
       default:
-        return subject.operands(es).to(PLUS2);
+        return subject.operands(es).to(wizard.PLUS2);
     }
   }
 }

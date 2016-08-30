@@ -2,7 +2,7 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
-import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
 
@@ -10,9 +10,6 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
-
-import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.wring.*;
 
 public interface wizard {
   /** the function checks if all the given assignments have the same left hand
@@ -73,7 +70,7 @@ public interface wizard {
   }
 
   static boolean incompatible(final Assignment a1, final Assignment a2) {
-    return hasNull(a1, a2) || !compatibleOps(a1.getOperator(), a2.getOperator()) || !wizard.same(navigate.left(a1), navigate.left(a2));
+    return hasNull(a1, a2) || !compatibleOps(a1.getOperator(), a2.getOperator()) || !wizard.same(expose.left(a1), expose.left(a2));
   }
 
   /** Determine whether two nodes are the same, in the sense that their textual
@@ -150,7 +147,7 @@ public interface wizard {
     return (N) copySubtree(t, n);
   }
 
-  /** As {@link navigate#elze(ConditionalExpression)} but returns the last else
+  /** As {@link expose#elze(ConditionalExpression)} but returns the last else
    * statement in "if - else if - ... - else" statement
    * @param ¢ JD
    * @return last nested else statement */
@@ -193,4 +190,31 @@ public interface wizard {
       es.remove(¢);
     }
   }
+
+  /** Makes an opposite operator from a given one, which keeps its logical
+   * operation after the node swapping. ¢.¢. "&" is commutative, therefore no
+   * change needed. "<" isn'¢ commutative, but it has its opposite: ">=".
+   * @param ¢ The operator to flip
+   * @return correspond operator - ¢.¢. "<=" will become ">", "+" will stay
+   *         "+". */
+  static Operator conjugate(final Operator ¢) {
+    return !wizard.conjugate.containsKey(¢) ? ¢ : wizard.conjugate.get(¢);
+  }
+
+  @SuppressWarnings("serial") Map<Operator, Operator> conjugate = new HashMap<Operator, Operator>() {
+    {
+      put(GREATER, LESS);
+      put(LESS, GREATER);
+      put(GREATER_EQUALS, LESS_EQUALS);
+      put(LESS_EQUALS, GREATER_EQUALS);
+    }
+  };
+  PrefixExpression.Operator MINUS1 = PrefixExpression.Operator.MINUS;
+  PrefixExpression.Operator PLUS1 = PrefixExpression.Operator.PLUS;
+  InfixExpression.Operator MINUS2 = InfixExpression.Operator.MINUS;
+  InfixExpression.Operator PLUS2 = InfixExpression.Operator.PLUS;
+  PostfixExpression.Operator DECREMENT_POST = PostfixExpression.Operator.DECREMENT;
+  PostfixExpression.Operator INCREMENT_POST = PostfixExpression.Operator.INCREMENT;
+  PrefixExpression.Operator DECREMENT_PRE = PrefixExpression.Operator.DECREMENT;
+  PrefixExpression.Operator INCREMENT_PRE = PrefixExpression.Operator.INCREMENT;
 }

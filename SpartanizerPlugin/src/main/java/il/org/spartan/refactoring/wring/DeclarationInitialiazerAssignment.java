@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
@@ -36,9 +35,9 @@ public final class DeclarationInitialiazerAssignment extends Wring.VariableDecla
     if (initializer == null)
       return null;
     final Assignment a = extract.assignment(nextStatement);
-    if (a == null || !wizard.same(n, left(a)) || a.getOperator() != ASSIGN)
+    if (a == null || !wizard.same(n, expose.left(a)) || a.getOperator() != ASSIGN)
       return null;
-    final Expression newInitializer = wizard.duplicate(right(a));
+    final Expression newInitializer = wizard.duplicate(expose.right(a));
     if (doesUseForbiddenSiblings(f, newInitializer))
       return null;
     final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);

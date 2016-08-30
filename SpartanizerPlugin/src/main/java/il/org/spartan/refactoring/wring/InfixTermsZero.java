@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.iz.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
@@ -29,6 +28,7 @@ public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression> im
     for (final Expression ¢ : es)
       if (!isLiteralZero(¢))
         $.add(¢);
-    return $.size() == es.size() ? null : $.isEmpty() ? wizard.duplicate(lisp.first(es)) : $.size() == 1 ? wizard.duplicate(lisp.first($)) : subject.operands($).to(PLUS);
+    return $.size() == es.size() ? null
+        : $.isEmpty() ? wizard.duplicate(lisp.first(es)) : $.size() == 1 ? wizard.duplicate(lisp.first($)) : subject.operands($).to(PLUS);
   }
 }

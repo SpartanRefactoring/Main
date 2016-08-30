@@ -4,7 +4,6 @@ import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.ExpressionComparator.*;
-import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
 
@@ -408,7 +407,7 @@ public class TrimmerTest240 {
 
   @Test public void chainComparison() {
     final InfixExpression e = i("a == true == b == c");
-    that(right(e).toString(), iz("c"));
+    that(expose.right(e).toString(), iz("c"));
     trimming("a == true == b == c").to("a == b == c");
   }
 
@@ -435,8 +434,8 @@ public class TrimmerTest240 {
   @Test public void comaprisonWithSpecific0Legibiliy00() {
     final InfixExpression e = i("this != a");
     that(in(e.getOperator(), Operator.EQUALS, Operator.NOT_EQUALS), is(true));
-    that(iz.booleanLiteral(right(e)), is(false));
-    that(iz.booleanLiteral(left(e)), is(false));
+    that(iz.booleanLiteral(expose.right(e)), is(false));
+    that(iz.booleanLiteral(expose.left(e)), is(false));
     that(in(e.getOperator(), Operator.EQUALS, Operator.NOT_EQUALS), is(true));
   }
 
@@ -1415,14 +1414,14 @@ public class TrimmerTest240 {
 
   @Test public void isGreaterTrue() {
     final InfixExpression e = i("f(a,b,c,d,e) * f(a,b,c)");
-    that(right(e).toString(), is("f(a,b,c)"));
-    that(left(e).toString(), is("f(a,b,c,d,e)"));
+    that(expose.right(e).toString(), is("f(a,b,c)"));
+    that(expose.left(e).toString(), is("f(a,b,c,d,e)"));
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
     that(s, instanceOf(InfixMultiplicationSort.class));
     that(s, notNullValue());
     that(s.scopeIncludes(e), is(true));
-    final Expression e1 = left(e);
-    final Expression e2 = right(e);
+    final Expression e1 = expose.left(e);
+    final Expression e2 = expose.right(e);
     that(has.nulls(e1, e2), is(false));
     final boolean tokenWiseGreater = nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD;
     that(tokenWiseGreater, is(true));
@@ -1436,14 +1435,14 @@ public class TrimmerTest240 {
 
   @Test public void isGreaterTrueButAlmostNot() {
     final InfixExpression e = i("f(a,b,c,d) * f(a,b,c)");
-    that(right(e).toString(), is("f(a,b,c)"));
-    that(left(e).toString(), is("f(a,b,c,d)"));
+    that(expose.right(e).toString(), is("f(a,b,c)"));
+    that(expose.left(e).toString(), is("f(a,b,c,d)"));
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
     that(s, instanceOf(InfixMultiplicationSort.class));
     that(s, notNullValue());
     that(s.scopeIncludes(e), is(true));
-    final Expression e1 = left(e);
-    final Expression e2 = right(e);
+    final Expression e1 = expose.left(e);
+    final Expression e2 = expose.right(e);
     that(has.nulls(e1, e2), is(false));
     final boolean tokenWiseGreater = nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD;
     that(tokenWiseGreater, is(false));

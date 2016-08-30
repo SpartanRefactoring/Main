@@ -2,7 +2,6 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.ExpressionComparator.*;
-import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.mockito.Mockito.*;
@@ -60,7 +59,7 @@ public class FuncsTest {
   }
 
   @Test public void chainComparison() {
-    assertEquals("c", right(i("a == true == b == c")).toString());
+    assertEquals("c", expose.right(i("a == true == b == c")).toString());
   }
 
   @Test public void countNonWhiteCharacters() {

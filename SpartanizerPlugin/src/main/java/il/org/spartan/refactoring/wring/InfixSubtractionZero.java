@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.Plant.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static il.org.spartan.refactoring.utils.extract.*;
@@ -29,9 +28,9 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
   }
 
   private static ASTNode go(final InfixExpression e) {
-    return e.hasExtendedOperands() ? plant(go(operands(e))).into(parent(e))
-        : isLiteralZero(left(e)) ? plant(minus(right(e))).into(parent(e)) //
-            : isLiteralZero(right(e)) ? plant(left(e)).into(parent(e)) //
+    return e.hasExtendedOperands() ? plant(go(operands(e))).into(expose.parent(e))
+        : isLiteralZero(expose.left(e)) ? plant(minus(expose.right(e))).into(expose.parent(e)) //
+            : isLiteralZero(expose.right(e)) ? plant(expose.left(e)).into(expose.parent(e)) //
                 : null;
   }
 

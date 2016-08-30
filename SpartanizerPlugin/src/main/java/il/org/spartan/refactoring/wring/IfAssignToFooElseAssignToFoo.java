@@ -1,7 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.navigate.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.utils.*;
@@ -25,17 +23,18 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2015-07-29 */
 public final class IfAssignToFooElseAssignToFoo extends Wring.ReplaceCurrentNode<IfStatement> implements Kind.Ternarization {
   @Override String description(final IfStatement s) {
-    return "Consolidate assignments to " + left(extract.assignment(then(s)));
+    return "Consolidate assignments to " + expose.left(extract.assignment(expose.then(s)));
   }
 
   @Override Statement replacement(final IfStatement s) {
-    final Assignment then = extract.assignment(then(s));
-    final Assignment elze = extract.assignment(elze(s));
+    final Assignment then = extract.assignment(expose.then(s));
+    final Assignment elze = extract.assignment(expose.elze(s));
     return !wizard.compatible(then, elze) ? null
-        : subject.pair(left(then), subject.pair(right(then), right(elze)).toCondition(s.getExpression())).toStatement(then.getOperator());
+        : subject.pair(expose.left(then), subject.pair(expose.right(then), expose.right(elze)).toCondition(s.getExpression()))
+            .toStatement(then.getOperator());
   }
 
   @Override boolean scopeIncludes(final IfStatement s) {
-    return s != null && wizard.compatible(extract.assignment(then(s)), extract.assignment(elze(s)));
+    return s != null && wizard.compatible(extract.assignment(expose.then(s)), extract.assignment(expose.elze(s)));
   }
 }

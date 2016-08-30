@@ -1,7 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.navigate.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.utils.*;
@@ -26,7 +24,7 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2015-08-01 */
 public final class IfDegenerateElse extends Wring.ReplaceCurrentNode<IfStatement> implements Kind.Canonicalization {
   static boolean degenerateElse(final IfStatement s) {
-    return elze(s) != null && iz.vacuousElse(s);
+    return expose.elze(s) != null && iz.vacuousElse(s);
   }
 
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
@@ -40,6 +38,6 @@ public final class IfDegenerateElse extends Wring.ReplaceCurrentNode<IfStatement
   }
 
   @Override boolean scopeIncludes(final IfStatement s) {
-    return s != null && then(s) != null && degenerateElse(s);
+    return s != null && expose.then(s) != null && degenerateElse(s);
   }
 }

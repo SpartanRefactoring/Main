@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -76,7 +75,7 @@ public class InfixAdditionSortTest {
     final Expression e = TermsExpander.simplify(INPUT);
     azzert.that(e, instanceOf(InfixExpression.class));
     final InfixExpression i = (InfixExpression) e;
-    azzert.that(i.getOperator(), is(PLUS2));
+    azzert.that(i.getOperator(), is(wizard.PLUS2));
     assert extract.operands(i) != null;
     azzert.that(extract.operands(i).size(), is(nTERMS));
     assert wizard.same(i, INPUT);

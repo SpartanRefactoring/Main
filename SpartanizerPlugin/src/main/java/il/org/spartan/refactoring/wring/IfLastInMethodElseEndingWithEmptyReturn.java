@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -47,7 +46,7 @@ public final class IfLastInMethodElseEndingWithEmptyReturn extends Wring<IfState
     final Block b = az.block(s.getParent());
     if (b == null || !(b.getParent() instanceof MethodDeclaration) || !lastIn(s, statements(b)))
       return null;
-    final ReturnStatement deleteMe = az.returnStatement(extract.lastStatement(elze(s)));
+    final ReturnStatement deleteMe = az.returnStatement(extract.lastStatement(expose.elze(s)));
     return deleteMe == null || deleteMe.getExpression() != null ? null : new Rewrite(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(deleteMe, s.getAST().newEmptyStatement(), g);

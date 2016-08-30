@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.Plant.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 
@@ -9,7 +8,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
-import il.org.spartan.refactoring.java.*;
 
 /** Contains subclasses and tools to build expressions and statements */
 public class subject {

@@ -1,8 +1,8 @@
 package il.org.spartan.refactoring.java;
 
-import static il.org.spartan.refactoring.utils.navigate.*;
-
 import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.refactoring.utils.*;
 
 class Term {
   private final boolean negative;
@@ -30,7 +30,7 @@ class Term {
       return expression;
     final PrefixExpression $ = expression.getAST().newPrefixExpression();
     $.setOperand(expression);
-    $.setOperator(MINUS1);
+    $.setOperator(wizard.MINUS1);
     return $;
   }
 

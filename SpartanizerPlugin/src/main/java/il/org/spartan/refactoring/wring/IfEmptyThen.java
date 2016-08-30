@@ -1,7 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.navigate.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.utils.*;
@@ -28,7 +26,7 @@ public final class IfEmptyThen extends Wring.ReplaceCurrentNode<IfStatement> imp
   }
 
   @Override Statement replacement(final IfStatement s) {
-    final IfStatement $ = subject.pair(elze(s), null).toNot(s.getExpression());
+    final IfStatement $ = subject.pair(expose.elze(s), null).toNot(s.getExpression());
     return !iz.blockRequiredInReplacement(s, $) ? $ : subject.statement($).toBlock();
   }
 
