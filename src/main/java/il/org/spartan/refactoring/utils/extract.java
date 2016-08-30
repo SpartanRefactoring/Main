@@ -24,7 +24,18 @@ public enum extract {
     assert e != null;
     return hop.operands(flatten(e));
   }
-
+  public static List<InfixExpression.Operator> allOperators(final InfixExpression e) {
+    assert e != null;
+    List<InfixExpression.Operator> $ = new ArrayList<>();
+    findOperators(e, $);
+    return $;
+  }
+  private static void findOperators(final InfixExpression e, List<InfixExpression.Operator> $) {
+    if (e == null) return;
+    $.add(e.getOperator());
+    findOperators(az.infixExpression(e.getLeftOperand()), $);
+    findOperators(az.infixExpression(e.getRightOperand()), $);
+  }
   /** Determines whether a give {@link ASTNode} includes precisely one
    * {@link Statement}, and return this statement.
    * @param ¢ The node from which to return statement.
