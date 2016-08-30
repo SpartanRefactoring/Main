@@ -42,7 +42,7 @@ public final class AssignmentMulExpressionSelf extends Wring.ReplaceCurrentNode<
     return $;
   }
   
-  static InfixExpression rebuildInfix(InfixExpression e, Expression left) {
+  static Expression rebuildInfix(InfixExpression e, Expression left) {
     List<Expression> es = extract.allOperands(e);
     for (final Expression ¢ : es)
       if (¢.equals(left)){
