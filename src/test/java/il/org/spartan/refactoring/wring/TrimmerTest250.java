@@ -761,7 +761,10 @@ public class TrimmerTest250 {
     trimming("x = x * x").to("x*=x");
   }
   @Ignore public void issue103me() {
-    trimming("x = y * x * z * x * k * 9").to("x *= y * z * x * k * 9");
+    trimming("x = y * z * x * k * 9").to("x *= y * z * k * 9");
+  }
+  @Ignore public void issue103_1me() {
+    trimming("a = y * z * a").to("a *= y * z");
   }
   @Ignore public void issue103mf() {
     trimming("a=a*5").to("a*=5");
