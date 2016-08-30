@@ -38,8 +38,8 @@ import il.org.spartan.refactoring.utils.*;
   @Test public void test04() {
     final InfixExpression i = i("a-c");
     azzert.that(i.getOperator(), is(wizard.MINUS2));
-    azzert.that(navigate.left(i), iz("a"));
-    azzert.that(navigate.right(i), iz("c"));
+    azzert.that(step.left(i), iz("a"));
+    azzert.that(step.right(i), iz("c"));
     c.collect(i);
     azzert.that(c.plus().size(), is(1));
     azzert.that(c.minus().size(), is(1));
@@ -48,8 +48,8 @@ import il.org.spartan.refactoring.utils.*;
   @Test public void test05() {
     final InfixExpression i = i("a-c");
     azzert.that(i.getOperator(), is(wizard.MINUS2));
-    azzert.that(navigate.left(i), iz("a"));
-    azzert.that(navigate.right(i), iz("c"));
+    azzert.that(step.left(i), iz("a"));
+    azzert.that(step.right(i), iz("c"));
     c.collectPlusNonLeaf(i);
     azzert.that(c.plus().size(), is(1));
     azzert.that(c.minus().size(), is(1));
@@ -58,7 +58,7 @@ import il.org.spartan.refactoring.utils.*;
   @Test public void test06() {
     final InfixExpression i = i("a + b -c");
     azzert.that(i.getOperator(), is(wizard.MINUS2));
-    azzert.that(az.infixExpression(navigate.left(i)).getOperator(), is(wizard.PLUS2));
+    azzert.that(az.infixExpression(step.left(i)).getOperator(), is(wizard.PLUS2));
     c.collect(i);
     azzert.that(c.plus().size(), is(2));
     azzert.that(c.minus().size(), is(1));

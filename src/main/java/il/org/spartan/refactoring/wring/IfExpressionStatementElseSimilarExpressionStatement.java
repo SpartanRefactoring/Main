@@ -30,10 +30,10 @@ public final class IfExpressionStatementElseSimilarExpressionStatement extends W
   }
 
   @Override Statement replacement(final IfStatement s) {
-    final Expression then = navigate.expression(extract.expressionStatement(navigate.then(s)));
+    final Expression then = step.expression(extract.expressionStatement(step.then(s)));
     if (then == null)
       return null;
-    final Expression elze = navigate.expression(extract.expressionStatement(navigate.elze(s)));
+    final Expression elze = step.expression(extract.expressionStatement(step.elze(s)));
     if (elze == null)
       return null;
     final Expression e = pushdown(subject.pair(then, elze).toCondition(s.getExpression()));

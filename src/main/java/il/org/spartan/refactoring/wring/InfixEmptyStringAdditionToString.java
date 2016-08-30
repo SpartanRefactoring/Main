@@ -14,9 +14,9 @@ public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<I
   @Override ASTNode replacement(final InfixExpression e) {
     if (!iz.infixPlus(e))
       return null;
-    final Expression right = navigate.right(e);
+    final Expression right = step.right(e);
     assert right != null;
-    final Expression left = navigate.left(e);
+    final Expression left = step.left(e);
     assert left != null;
     return !validTypes(e, right, left) ? null : !((StringLiteral) left).getEscapedValue().equals("\"\"") ? left : right;
   }
@@ -26,8 +26,8 @@ public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<I
   }
 
   @Override String description(final InfixExpression e) {
-    final Expression right = navigate.right(e);
-    final Expression left = navigate.left(e);
+    final Expression right = step.right(e);
+    final Expression left = step.left(e);
     return descriptionAux(!((StringLiteral) left).getEscapedValue().equals("\"\"") ? left : right);
   }
 

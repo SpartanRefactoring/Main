@@ -38,8 +38,8 @@ public final class DeclarationInitializerReturnUpdateAssignment extends Wring.Va
     final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null)
       return null;
-    final Assignment a = az.assignment(navigate.expression(s));
-    if (a == null || !wizard.same(n, navigate.left(a)))
+    final Assignment a = az.assignment(step.expression(s));
+    if (a == null || !wizard.same(n, step.left(a)))
       return null;
     final Operator o = a.getOperator();
     if (o == ASSIGN)

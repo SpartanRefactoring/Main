@@ -34,7 +34,7 @@ public class ExpressionFlatten {
   }
 
   @Test public void flattenLeftArgument() {
-    azzert.that(navigate.left(flatten(i("1+2"))).toString(), is("1"));
+    azzert.that(step.left(flatten(i("1+2"))).toString(), is("1"));
   }
 
   @Test public void flattenOfDeepParenthesisIsCorrect() {
@@ -70,22 +70,22 @@ public class ExpressionFlatten {
   }
 
   @Test public void leftOperandIsNotString() {
-    azzert.aye(stringType.isNot(navigate.left(i("1+2"))));
+    azzert.aye(stringType.isNot(step.left(i("1+2"))));
   }
 
   @Test public void leftOperandIsNumeric() {
-    azzert.aye(iz.numericLiteral(navigate.left(i("1+2"))));
+    azzert.aye(iz.numericLiteral(step.left(i("1+2"))));
   }
 
   @Test public void leftOperandIsOne() {
-    azzert.that(navigate.left(i("1+2")).toString(), is("1"));
+    azzert.that(step.left(i("1+2")).toString(), is("1"));
   }
 
   @Test public void leftOperandNotNull() {
-    azzert.notNull(navigate.left(i("1+2")));
+    azzert.notNull(step.left(i("1+2")));
   }
 
   @Test public void rightOperandNotNull() {
-    azzert.notNull(navigate.left(i("1+2")));
+    azzert.notNull(step.left(i("1+2")));
   }
 }

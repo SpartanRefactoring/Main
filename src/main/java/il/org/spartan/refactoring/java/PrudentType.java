@@ -114,7 +114,7 @@ public enum PrudentType {
   }
 
   private static PrudentType prudentType(final CastExpression e) {
-    return typeSwitch("" + navigate.type(e), BAPTIZED);
+    return typeSwitch("" + step.type(e), BAPTIZED);
   }
 
   private static PrudentType prudentType(final PrefixExpression e, final PrudentType t1) {

@@ -16,7 +16,7 @@ class ExclusionManager {
   }
 
   boolean isExcluded(final ASTNode n) {
-    for (final ASTNode ancestor : navigate.ancestors(n))
+    for (final ASTNode ancestor : hop.ancestors(n))
       if (inner.contains(ancestor))
         return true;
     return false;

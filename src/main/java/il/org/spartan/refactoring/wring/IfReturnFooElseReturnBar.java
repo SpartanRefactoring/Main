@@ -28,12 +28,12 @@ public final class IfReturnFooElseReturnBar extends Wring.ReplaceCurrentNode<IfS
 
   @Override Statement replacement(final IfStatement s) {
     final Expression condition = s.getExpression();
-    final Expression then = extract.returnExpression(navigate.then(s));
-    final Expression elze = extract.returnExpression(navigate.elze(s));
+    final Expression then = extract.returnExpression(step.then(s));
+    final Expression elze = extract.returnExpression(step.elze(s));
     return then == null || elze == null ? null : subject.operand(subject.pair(then, elze).toCondition(condition)).toReturn();
   }
 
   @Override boolean scopeIncludes(final IfStatement s) {
-    return s != null && extract.returnExpression(navigate.then(s)) != null && extract.returnExpression(navigate.elze(s)) != null;
+    return s != null && extract.returnExpression(step.then(s)) != null && extract.returnExpression(step.elze(s)) != null;
   }
 }

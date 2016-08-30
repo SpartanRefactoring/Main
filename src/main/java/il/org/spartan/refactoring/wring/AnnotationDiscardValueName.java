@@ -16,7 +16,7 @@ public final class AnnotationDiscardValueName //
   }
 
   @Override ASTNode replacement(final NormalAnnotation a) {
-    final MemberValuePair p = lisp.onlyOne(navigate.values(a));
+    final MemberValuePair p = lisp.onlyOne(step.values(a));
     if (p == null || !"value".equals(p.getName().toString()))
       return null;
     final SingleMemberAnnotation $ = a.getAST().newSingleMemberAnnotation();

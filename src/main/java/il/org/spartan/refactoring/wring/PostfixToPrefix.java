@@ -21,7 +21,7 @@ public final class PostfixToPrefix extends Wring.ReplaceCurrentNode<PostfixExpre
   }
 
   @Override String description(final PostfixExpression e) {
-    return "Convert post-" + description(e.getOperator()) + " of " + navigate.operand(e) + " to pre-" + description(e.getOperator());
+    return "Convert post-" + description(e.getOperator()) + " of " + step.operand(e) + " to pre-" + description(e.getOperator());
   }
 
   @Override protected boolean eligible(final PostfixExpression e) {
@@ -32,7 +32,7 @@ public final class PostfixToPrefix extends Wring.ReplaceCurrentNode<PostfixExpre
   }
 
   @Override PrefixExpression replacement(final PostfixExpression e) {
-    return subject.operand(navigate.operand(e)).to(pre2post(e.getOperator()));
+    return subject.operand(step.operand(e)).to(pre2post(e.getOperator()));
   }
 
   @Override boolean scopeIncludes(@SuppressWarnings("unused") final PostfixExpression __) {
