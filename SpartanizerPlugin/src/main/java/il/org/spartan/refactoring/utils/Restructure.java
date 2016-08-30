@@ -98,13 +98,11 @@ public enum Restructure {
   public static Expression parenthesize(final Expression e) {
     if (iz.noParenthesisRequired(e))
       return wizard.duplicate(e);
-    final ParenthesizedExpression $ = e.getAST().newParenthesizedExpression();
-    $.setExpression(e.getParent() == null ? e : wizard.duplicate(e));
-    return $;
+    return make.parethesized(e);
   }
 
   static Expression minus(final Expression e, final NumberLiteral l) {
-    return l == null ? newMinus(e) //
+    return l == null ? make.newMinus(e) //
         : newLiteral(l, isLiteralZero(l) ? "0" : signAdjust(l.getToken())) //
     ;
   }
@@ -113,12 +111,8 @@ public enum Restructure {
     final List<Expression> $ = new ArrayList<>();
     $.add(lisp.first(es));
     for (final Expression e : lisp.rest(es))
-      $.add(newMinus(e));
+      $.add(make.newMinus(e));
     return $;
-  }
-
-  static Expression newMinus(final Expression e) {
-    return isLiteralZero(e) ? e : subject.operand(e).to(navigate.MINUS1);
   }
 
   private static List<Expression> add(final Expression e, final List<Expression> $) {
