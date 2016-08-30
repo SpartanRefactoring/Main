@@ -32,7 +32,7 @@ public final class AssignmentMulExpressionSelf extends Wring.ReplaceCurrentNode<
   }
   
   @Override ASTNode replacement(Assignment $) {
-    if (!iz.isOpAssign(a) || !areAllOperatorsTIMES(az.infixExpression(a.getRightHandSide()))) return null;
+    if (!iz.isOpAssign($) || !areAllOperatorsTIMES(az.infixExpression($.getRightHandSide()))) return null;
     return replace($);
   }
   
