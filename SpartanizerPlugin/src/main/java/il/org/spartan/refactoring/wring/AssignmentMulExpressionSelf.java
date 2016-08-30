@@ -45,11 +45,12 @@ public final class AssignmentMulExpressionSelf extends Wring.ReplaceCurrentNode<
   static Expression rebuildInfix(InfixExpression e, Expression left) {
     List<Expression> es = extract.allOperands(e);
     for (final Expression ¢ : es)
-      if (¢.equals(left)){
+      if (¢.toString().equals(left.toString())){
         es.remove(¢);
         break;
       }
-    return subject.operands(es).to(Operator.TIMES);
+    Expression $ = es.size() >= 2 ? subject.operands(es).to(Operator.TIMES) : es.get(0);
+    return $;
   }
   
   static boolean areAllOperatorsTIMES(InfixExpression e) {
