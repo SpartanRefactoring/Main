@@ -15,30 +15,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
  * @since 2015-07-21 */
 public enum Restructure {
   ;
-  /** Compute the "de Morgan" conjugate of the operator present on an
-   * {@link InfixExpression}.
-   * @param e an expression whose operator is either
-   *        {@link Operator#CONDITIONAL_AND} or {@link Operator#CONDITIONAL_OR}
-   * @return {@link Operator#CONDITIONAL_AND} if the operator present on the
-   *         parameter is {@link Operator#CONDITIONAL_OR}, or
-   *         {@link Operator#CONDITIONAL_OR} if this operator is
-   *         {@link Operator#CONDITIONAL_AND}
-   * @see Restructure#conjugate(Operator) */
-  public static Operator conjugate(final InfixExpression e) {
-    return conjugate(e.getOperator());
-  }
 
-  /** Compute the "de Morgan" conjugate of an operator.
-   * @param o must be either {@link Operator#CONDITIONAL_AND} or
-   *        {@link Operator#CONDITIONAL_OR}
-   * @return {@link Operator#CONDITIONAL_AND} if the parameter is
-   *         {@link Operator#CONDITIONAL_OR}, or {@link Operator#CONDITIONAL_OR}
-   *         if the parameter is {@link Operator#CONDITIONAL_AND}
-   * @see Restructure#conjugate(InfixExpression) */
-  public static Operator conjugate(final Operator o) {
-    assert iz.deMorgan(o);
-    return o.equals(CONDITIONAL_AND) ? CONDITIONAL_OR : CONDITIONAL_AND;
-  }
 
   /** Duplicate all {@link ASTNode} objects found in a given list into another
    * list.
@@ -80,7 +57,7 @@ public enum Restructure {
 
   public static Expression minus(final Expression e) {
     final PrefixExpression ¢ = az.prefixExpression(e);
-    return ¢ == null ? minus(e, az.numberLiteral(e))
+    return ¢ == null ? make.minus(e, az.numberLiteral(e))
         : ¢.getOperator() == wizard.MINUS1 ? ¢.getOperand() //
             : ¢.getOperator() == wizard.PLUS1 ? subject.operand(¢.getOperand()).to(wizard.MINUS1)//
                 : e;
@@ -94,20 +71,6 @@ public enum Restructure {
     if (iz.noParenthesisRequired(e))
       return wizard.duplicate(e);
     return make.parethesized(e);
-  }
-
-  static Expression minus(final Expression e, final NumberLiteral l) {
-    return l == null ? make.minusOf(e) //
-        : make.newLiteral(l, isLiteralZero(l) ? "0" : signAdjust(l.getToken())) //
-    ;
-  }
-
-  static List<Expression> minus(final List<Expression> es) {
-    final List<Expression> $ = new ArrayList<>();
-    $.add(lisp.first(es));
-    for (final Expression e : lisp.rest(es))
-      $.add(make.minusOf(e));
-    return $;
   }
 
   private static List<Expression> add(final Expression e, final List<Expression> $) {
@@ -137,7 +100,7 @@ public enum Restructure {
     return $;
   }
 
-  private static String signAdjust(final String token) {
+  static String signAdjust(final String token) {
     return token.startsWith("-") ? token.substring(1) //
         : "-" + token.substring(token.startsWith("+") ? 1 : 0);
   }
