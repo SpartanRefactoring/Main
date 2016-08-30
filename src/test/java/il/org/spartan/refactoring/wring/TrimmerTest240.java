@@ -839,7 +839,8 @@ public class TrimmerTest240 {
   }
 
   @Test public void donotSorMixedTypes() {
-    trimming("if (2 * 3.1415 * 180 > a || t.concat(sS) ==1922 && t.length() > 3)    return c > 5;").to(null);
+    trimming("if (2 * 3.1415 * 180 > a || t.concat(sS) ==1922 && t.length() > 3)    return c > 5;") //
+    .to("if (1130.94 > a || t.concat(sS) ==1922 && t.length() > 3)    return c > 5;");
   }
 
   @Test public void dontELiminateCatchBlock() {
@@ -1886,7 +1887,7 @@ public class TrimmerTest240 {
   @Test public void massiveInlining() {
     trimming("int a,b,c;String t = zE4;if (2 * 3.1415 * 180 > a || t.concat(sS) ==1922 && t.length() > 3)    return c > 5;")//
         .to("int a,b,c;if(2*3.1415*180>a||zE4.concat(sS)==1922&&zE4.length()>3)return c>5;") //
-        .to(null);
+        .to("int a,b,c;if(1130.94>a||zE4.concat(sS)==1922&&zE4.length()>3)return c>5;");
   }
 
   @Test public void methodWithLastIf() {
