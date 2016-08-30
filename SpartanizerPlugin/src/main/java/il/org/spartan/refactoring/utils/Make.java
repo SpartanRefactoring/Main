@@ -8,20 +8,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.refactoring.wring.*;
 
 public interface make {
-  /** Create a new {@link SimpleName} instance at the AST of the parameter
-   * @param n JD
-   * @param newName the name that the returned value shall bear
-   * @return a new {@link SimpleName} instance at the AST of the parameter */
-  static SimpleName newSimpleName(final ASTNode n, final String newName) {
-    return n.getAST().newSimpleName(newName);
-  }
-
-  /** @param ¢ the expression to return in the return statement
-   * @return new return statement */
-  static ThrowStatement makeThrowStatement(final Expression ¢) {
-    return subject.operand(¢).toThrow();
-  }
-
   /** @param ¢ JD
    * @return parameter, but logically negated and simplified */
   static Expression logicalNot(final Expression ¢) {
@@ -30,8 +16,22 @@ public interface make {
     return $$ == null ? $ : $$;
   }
 
+  /** @param ¢ the expression to return in the return statement
+   * @return new return statement */
+  static ThrowStatement makeThrowStatement(final Expression ¢) {
+    return subject.operand(¢).toThrow();
+  }
+
   static Expression newMinus(final Expression e) {
     return isLiteralZero(e) ? e : subject.operand(e).to(wizard.MINUS1);
+  }
+
+  /** Create a new {@link SimpleName} instance at the AST of the parameter
+   * @param n JD
+   * @param newName the name that the returned value shall bear
+   * @return a new {@link SimpleName} instance at the AST of the parameter */
+  static SimpleName newSimpleName(final ASTNode n, final String newName) {
+    return n.getAST().newSimpleName(newName);
   }
 
   static ParenthesizedExpression parethesized(final Expression e) {
