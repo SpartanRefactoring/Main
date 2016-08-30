@@ -14,10 +14,6 @@ import il.org.spartan.refactoring.utils.*;
 public class PrudentTypeTest {
   @Ignore public static class Pending {
     // class for Pending tests that don't currently pass
-    // TODO: look into toStrihg()
-    @Test public void test124() {
-      azzert.that(prudent(Into.e("a.toString()")), is(STRING));
-    }
   }
 
   public static class Working {
@@ -142,6 +138,41 @@ public class PrudentTypeTest {
     @Test public void test30() {
       azzert.that(prudent(Into.e("x-y"), CHAR, INT), is(INT));
     }
+    
+    //tests for NumeberLiterals
+    
+    @Test public void test31() {
+      azzert.that(prudent(Into.e("3")), is(INT));
+    }
+    
+    @Test public void test32() {
+      azzert.that(prudent(Into.e("3l")), is(LONG));
+    }
+    
+    @Test public void test33() {
+      azzert.that(prudent(Into.e("3L")), is(LONG));
+    }
+    
+    @Test public void test34() {
+      azzert.that(prudent(Into.e("3d")), is(DOUBLE));
+    }
+    
+    @Test public void test35() {
+      azzert.that(prudent(Into.e("3D")), is(DOUBLE));
+    }
+    
+    @Test public void test36() {
+      azzert.that(prudent(Into.e("3.0d")), is(DOUBLE));
+    }
+    
+    @Test public void test37() {
+      azzert.that(prudent(Into.e("3.02D")), is(DOUBLE));
+    }
+    
+    @Test public void test38() {
+      azzert.that(prudent(Into.e("3.098")), is(DOUBLE));
+    }
+
 
     /* Second batch of tests uses kind with various, complex expression, as
      * users are expected to use it */
@@ -299,6 +330,51 @@ public class PrudentTypeTest {
 
     @Test public void test134() {
       azzert.that(prudent(Into.e("(-3.0)--")), is(DOUBLE));
+    }
+    
+    @Test public void test135() {
+      azzert.that(prudent(Into.e("a.toString()")), is(STRING));
+    }
+    
+    @Test public void test136() {
+      azzert.that(prudent(Into.e("a.fo()")), is(NOTHING));
+    }
+    
+    @Test public void test137() {
+      azzert.that(prudent(Into.e("f() ? 3 : 7")), is(INT));
+    }
+    
+    @Test public void test138() {
+      azzert.that(prudent(Into.e("f() ? 3L : 7")), is(LONG));
+    }
+    
+    @Test public void test139() {
+      azzert.that(prudent(Into.e("f() ? 3L : 7.")), is(DOUBLE));
+    }
+    
+    @Test public void test140() {
+      azzert.that(prudent(Into.e("f() ? 3L : 7.")), is(DOUBLE));
+    }
+    
+    @Test public void test141() {
+      azzert.that(prudent(Into.e("f() ? 'a' : 7.")), is(DOUBLE));
+    }
+    
+    @Test public void test142() {
+      azzert.that(prudent(Into.e("f() ? 'a' : 'b'")), is(CHAR));
+    }
+    
+    @Test public void test143() {
+      azzert.that(prudent(Into.e("f() ? \"abc\" : \"def\"")), is(STRING));
+    }
+    
+    @Test public void test144() {
+      azzert.that(prudent(Into.e("f() ? true : false")), is(BOOLEAN));
+    }
+    
+    //perhaps this should return boolean?
+    @Test public void test145() {
+      azzert.that(prudent(Into.e("f() ? f() : false")), is(NOTHING));
     }
   }
 }

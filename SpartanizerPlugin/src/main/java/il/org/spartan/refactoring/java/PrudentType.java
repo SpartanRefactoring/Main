@@ -69,10 +69,10 @@ public enum PrudentType {
   /** A version of {@link #prudent(Expression)} that receives the operands' type
    * for a two operand expression. The call kind(e,null,null) is equivalent to
    * kind(e)
-   * @param t1 the type of the left hand operand of the expression, or null if
-   *        unknown
-   * @param t2 the type of the left hand operand of the expression, or null if
-   *        unknown */
+   * @param t1 the type of the left hand operand of the expression, the type of
+   *        the then expression of the conditional, or null if unknown
+   * @param t2 the type of the left hand operand of the expression, the type of
+   *        the else expression of the conditional, or null if unknown */
   static PrudentType prudent(final Expression e, final PrudentType t1, final PrudentType t2) {
     switch (e.getNodeType()) {
       case NULL_LITERAL:
@@ -97,18 +97,45 @@ public enum PrudentType {
         return prudentType((ParenthesizedExpression) e, t1);
       case CLASS_INSTANCE_CREATION:
         return prudentType((ClassInstanceCreation) e);
+      case METHOD_INVOCATION:
+        return prudentType((MethodInvocation)e);
+      case CONDITIONAL_EXPRESSION:
+        return prudentType((ConditionalExpression)e, t1, t2);
       default:
         return NOTHING;
     }
+  }
+
+  private static PrudentType prudentType(ConditionalExpression e, PrudentType t1, PrudentType t2) {
+    PrudentType ¢1 = t1 != null ? t1 : prudent(e.getThenExpression());
+    PrudentType ¢2 = t2 != null ? t2 : prudent(e.getElseExpression());
+    if (¢1 == ¢2){
+      return ¢1;
+    }
+    if (¢1.isIntegral() && ¢2.isIntegral()){
+      return ¢1.underIntegersOnlyOperator(¢2);
+    }
+    if (¢1.isNumeric() && ¢2.isNumeric()){
+      return ¢1.underNumericOnlyOperator(¢2);
+    }
+    //I don't think this case can happen in real code, here just in case
+    if (¢1.isAlphaNumeric() && ¢2.isAlphaNumeric()){
+      return ALPHANUMERIC;
+    }
+    return NOTHING;
+  }
+
+  private static PrudentType prudentType(MethodInvocation e) {
+    return "toString".equals(e.getName()+"") ? STRING : NOTHING;
   }
 
   private static PrudentType prudentType(final NumberLiteral e) {
     final String ¢ = e.getToken();
     if (¢.matches("[0-9]+"))
       return INT;
-    if (¢.matches("[0-9]+\\.[0-9]?"))
+    if (¢.matches("[0-9]+\\.[0-9]*[d,D]?") || ¢.matches("[0-9]+[d,D]"))
       return DOUBLE;
-    if (¢.matches("[0-9]+L"))
+    if (¢.matches("[0-9]+[l,L]"))
       return LONG;
     return NUMERIC;
   }
