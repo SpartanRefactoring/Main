@@ -4,39 +4,38 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.refactoring.java.*;
+
 public class EvaluateAux {
   public enum Type {
     INT, LONG, DOUBLE, BAD
   }
 
   public static boolean isInt(final Expression e) {
-    return e instanceof NumberLiteral && ((NumberLiteral) e).getToken().matches("[0-9]+");
+    return PrudentType.prudent(e)==PrudentType.INT;
   }
 
   public static boolean isDouble(final Expression e) {
-    return e instanceof NumberLiteral && ((NumberLiteral) e).getToken().matches("[0-9]+\\.[0-9]?");
+    return PrudentType.prudent(e)==PrudentType.DOUBLE;
   }
 
   public static boolean isLong(final Expression e) {
-    return e instanceof NumberLiteral && ((NumberLiteral) e).getToken().matches("[0-9]+L");
+    return PrudentType.prudent(e)==PrudentType.LONG;
   }
 
   public static boolean isMinusDouble(final Expression e) {
     return e instanceof PrefixExpression && ((PrefixExpression) e).getOperator() == PrefixExpression.Operator.MINUS
-        && ((PrefixExpression) e).getOperand() instanceof NumberLiteral
-        && ((NumberLiteral) ((PrefixExpression) e).getOperand()).getToken().matches("[0-9]+\\.[0-9]?");
+        && isDouble(((PrefixExpression) e).getOperand());
   }
 
   public static boolean isMinusInt(final Expression e) {
     return e instanceof PrefixExpression && ((PrefixExpression) e).getOperator() == PrefixExpression.Operator.MINUS
-        && ((PrefixExpression) e).getOperand() instanceof NumberLiteral
-        && ((NumberLiteral) ((PrefixExpression) e).getOperand()).getToken().matches("[0-9]+");
+        && isInt(((PrefixExpression) e).getOperand());
   }
 
   public static boolean isMinusLong(final Expression e) {
     return e instanceof PrefixExpression && ((PrefixExpression) e).getOperator() == PrefixExpression.Operator.MINUS
-        && ((PrefixExpression) e).getOperand() instanceof NumberLiteral
-        && ((NumberLiteral) ((PrefixExpression) e).getOperand()).getToken().matches("[0-9]+L");
+        && isLong(((PrefixExpression) e).getOperand());
   }
 
   public static boolean isCompitable(final Expression e) {
