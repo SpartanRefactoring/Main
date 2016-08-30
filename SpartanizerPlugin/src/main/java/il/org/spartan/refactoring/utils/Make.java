@@ -3,6 +3,8 @@ package il.org.spartan.refactoring.utils;
 import static il.org.spartan.refactoring.utils.iz.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.wring.*;
@@ -52,9 +54,23 @@ public interface make {
    * @return a newly created expression with its operands thus swapped.
    * @throws IllegalArgumentException when the parameter has extra operands.
    * @see InfixExpression#hasExtendedOperands */
-  static InfixExpression flip(final InfixExpression ¢) {
+  static InfixExpression conjugate(final InfixExpression ¢) {
     if (¢.hasExtendedOperands())
       throw new IllegalArgumentException(¢ + ": flipping undefined for an expression with extra operands ");
     return subject.pair(step.right(¢), step.left(¢)).to(wizard.conjugate(¢.getOperator()));
+  }
+
+  static Expression minus(final Expression e, final NumberLiteral l) {
+    return l == null ? minusOf(e) //
+        : newLiteral(l, isLiteralZero(l) ? "0" : Restructure.signAdjust(l.getToken())) //
+    ;
+  }
+
+  static List<Expression> minus(final List<Expression> es) {
+    final List<Expression> $ = new ArrayList<>();
+    $.add(lisp.first(es));
+    for (final Expression e : lisp.rest(es))
+      $.add(minusOf(e));
+    return $;
   }
 }

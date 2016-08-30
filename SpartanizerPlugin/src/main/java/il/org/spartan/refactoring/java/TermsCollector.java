@@ -13,8 +13,8 @@ public class TermsCollector {
     return !iz.infixPlus(e) && !iz.infixMinus(e);
   }
 
-  private final List<Expression> plus = new ArrayList<>();
-  private final List<Expression> minus = new ArrayList<>();
+  private final List<Expression> positive = new ArrayList<>();
+  private final List<Expression> negative = new ArrayList<>();
   private final List<Term> all = new ArrayList<>();
 
   public TermsCollector(final InfixExpression e) {
@@ -51,27 +51,27 @@ public class TermsCollector {
   private Void addMinus(final Expression e) {
     assert e != null;
     all.add(Term.minus(e));
-    minus.add(e);
+    negative.add(e);
     return null;
   }
 
   private Void addMinusTerm(final Expression e) {
     assert e != null;
-    final Expression n = negation.peel(e);
-    return negation.level(e) % 2 != 0 ? collectPlusPrefix(n) : collectMinusPrefix(n);
+    final Expression n = minus.peel(e);
+    return minus.level(e) % 2 != 0 ? collectPlusPrefix(n) : collectMinusPrefix(n);
   }
 
   private Void addPlus(final Expression e) {
     assert e != null;
-    plus.add(e);
+    positive.add(e);
     all.add(Term.plus(e));
     return null;
   }
 
   private Void addPlusTerm(final Expression e) {
     assert e != null;
-    final Expression n = negation.peel(e);
-    return negation.level(e) % 2 == 0 ? collectPlusPrefix(n) : collectMinusPrefix(n);
+    final Expression n = minus.peel(e);
+    return minus.level(e) % 2 == 0 ? collectPlusPrefix(n) : collectMinusPrefix(n);
   }
 
   private Void addPositiveTerm(final Expression e) {
@@ -135,11 +135,11 @@ public class TermsCollector {
   }
 
   public List<Expression> minus() {
-    return minus;
+    return negative;
   }
 
   public List<Expression> plus() {
-    return plus;
+    return positive;
   }
 
   public List<Term> all() {

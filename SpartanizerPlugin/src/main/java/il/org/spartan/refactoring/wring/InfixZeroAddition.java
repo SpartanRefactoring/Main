@@ -59,14 +59,14 @@ public final class InfixZeroAddition extends Wring<InfixExpression> {
     final List<Expression> es = gather(e);
     if (es.size() < 2)
       return null;
-    final int totalNegation = negation.level(es);
+    final int totalNegation = minus.level(es);
     switch (totalNegation) {
       default:
         break;
       case 0:
         return null;
       case 1:
-        if (negation.level(es.get(0)) == 1)
+        if (minus.level(es.get(0)) == 1)
           return null;
     }
     if (exclude != null)
@@ -75,10 +75,10 @@ public final class InfixZeroAddition extends Wring<InfixExpression> {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Expression first = totalNegation % 2 == 0 ? null : es.get(0);
         for (final Expression ¢ : es)
-          if (¢ != first && negation.level(¢) > 0)
-            r.replace(¢, plant(wizard.duplicate(negation.peel(¢))).into(¢.getParent()), g);
+          if (¢ != first && minus.level(¢) > 0)
+            r.replace(¢, plant(wizard.duplicate(minus.peel(¢))).into(¢.getParent()), g);
         if (first != null)
-          r.replace(first, plant(subject.operand(negation.peel(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
+          r.replace(first, plant(subject.operand(minus.peel(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
       }
     };
   }

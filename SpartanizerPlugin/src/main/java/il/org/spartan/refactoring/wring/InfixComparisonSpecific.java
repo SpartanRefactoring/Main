@@ -33,7 +33,7 @@ public final class InfixComparisonSpecific extends Wring.ReplaceCurrentNode<Infi
   }
 
   @Override Expression replacement(final InfixExpression e) {
-    return il.org.spartan.refactoring.utils.make.flip(e);
+    return il.org.spartan.refactoring.utils.make.conjugate(e);
   }
 
   @Override public boolean scopeIncludes(final InfixExpression e) {
