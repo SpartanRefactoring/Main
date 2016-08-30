@@ -69,7 +69,7 @@ public interface wizard {
   // TODO this seems a bug
   static VariableDeclarationFragment getDefinition(final ASTNode n, final Expression e) {
     return hasNull(n, e) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || e.getNodeType() != SIMPLE_NAME ? null
-        : getDefinition((VariableDeclarationStatement) n, (SimpleName) e);
+        : findDefinition((VariableDeclarationStatement) n, (SimpleName) e);
   }
 
   static boolean incompatible(final Assignment a1, final Assignment a2) {
@@ -111,11 +111,11 @@ public interface wizard {
     return null;
   }
 
-  static VariableDeclarationFragment getDefinition(final VariableDeclarationStatement s, final SimpleName n) {
-    return getVarDeclFrag(expose.fragments(s), n);
+  static VariableDeclarationFragment findDefinition(final VariableDeclarationStatement s, final SimpleName n) {
+    return findVariableDeclarationFragment(expose.fragments(s), n);
   }
 
-  static VariableDeclarationFragment getVarDeclFrag(final List<VariableDeclarationFragment> fs, final SimpleName ¢) {
+  static VariableDeclarationFragment findVariableDeclarationFragment(final List<VariableDeclarationFragment> fs, final SimpleName ¢) {
     for (final VariableDeclarationFragment $ : fs)
       if (same(¢, $.getName()))
         return $;
