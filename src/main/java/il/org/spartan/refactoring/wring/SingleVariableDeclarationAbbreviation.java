@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 
 import java.util.*;
@@ -67,7 +67,7 @@ public final class SingleVariableDeclarationAbbreviation extends Wring<SingleVar
         final Javadoc j = m.getJavadoc();
         if (j == null)
           return;
-        final List<TagElement> ts = expose.tags(j);
+        final List<TagElement> ts = navigate.tags(j);
         if (ts == null)
           return;
         for (final TagElement t : ts) {

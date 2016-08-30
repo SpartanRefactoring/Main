@@ -101,7 +101,7 @@ public enum Restructure {
   }
 
   static Expression minus(final Expression e, final NumberLiteral l) {
-    return l == null ? make.newMinus(e) //
+    return l == null ? make.minusOf(e) //
         : make.newLiteral(l, isLiteralZero(l) ? "0" : signAdjust(l.getToken())) //
     ;
   }
@@ -110,7 +110,7 @@ public enum Restructure {
     final List<Expression> $ = new ArrayList<>();
     $.add(lisp.first(es));
     for (final Expression e : lisp.rest(es))
-      $.add(make.newMinus(e));
+      $.add(make.minusOf(e));
     return $;
   }
 

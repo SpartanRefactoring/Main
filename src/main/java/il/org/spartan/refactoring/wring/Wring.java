@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -71,7 +71,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
     }
 
     IExtendedModifier firstThat(final N n, final Predicate<Modifier> f) {
-      for (final IExtendedModifier $ : expose.modifiers(n))
+      for (final IExtendedModifier $ : navigate.modifiers(n))
         if ($.isModifier() && f.test((Modifier) $))
           return $;
       return null;
@@ -96,7 +96,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
     }
 
     private N go(final N $) {
-      for (final Iterator<IExtendedModifier> ¢ = expose.modifiers($).iterator(); ¢.hasNext();)
+      for (final Iterator<IExtendedModifier> ¢ = navigate.modifiers($).iterator(); ¢.hasNext();)
         if (redundant(¢.next()))
           ¢.remove();
       return $;
@@ -244,7 +244,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
 
     static Expression assignmentAsExpression(final Assignment a) {
       final Operator o = a.getOperator();
-      return o == ASSIGN ? wizard.duplicate(expose.right(a)) : subject.pair(expose.left(a), expose.right(a)).to(asInfix(o));
+      return o == ASSIGN ? wizard.duplicate(navigate.right(a)) : subject.pair(navigate.left(a), navigate.right(a)).to(asInfix(o));
     }
 
     static boolean doesUseForbiddenSiblings(final VariableDeclarationFragment f, final ASTNode... ns) {
@@ -313,7 +313,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
     }
 
     static boolean hasAnnotation(final VariableDeclarationStatement s) {
-      return hasAnnotation(expose.modifiers(s));
+      return hasAnnotation(navigate.modifiers(s));
     }
 
     static int removalSaving(final VariableDeclarationFragment f) {

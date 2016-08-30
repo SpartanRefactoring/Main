@@ -37,9 +37,9 @@ public final class DeclarationAssignment extends Wring.VariableDeclarationFragem
     if (initializer != null)
       return null;
     final Assignment a = extract.assignment(nextStatement);
-    if (a == null || !wizard.same(n, expose.left(a)) || doesUseForbiddenSiblings(f, expose.right(a)))
+    if (a == null || !wizard.same(n, navigate.left(a)) || doesUseForbiddenSiblings(f, navigate.right(a)))
       return null;
-    r.replace(f, makeVariableDeclarationFragement(f, expose.right(a)), g);
+    r.replace(f, makeVariableDeclarationFragement(f, navigate.right(a)), g);
     r.remove(extract.statement(a), g);
     return r;
   }

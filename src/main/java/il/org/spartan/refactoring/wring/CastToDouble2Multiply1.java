@@ -14,12 +14,12 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2016 */
 public final class CastToDouble2Multiply1 extends Wring.ReplaceCurrentNode<CastExpression> implements Kind.NoImpact {
   @Override String description(final CastExpression e) {
-    return "Use 1.*" + expression(e) + " instead of (double)" + expression(e);
+    return "Use 1.*" + navigate.expression(e) + " instead of (double)" + navigate.expression(e);
   }
 
   @Override ASTNode replacement(final CastExpression e) {
     return eval(//
-        () -> replacement(expression(e))//
+        () -> replacement(navigate.expression(e))//
     ).when(//
         type(e).isPrimitiveType() && "double".equals("" + type(e)) //
     );

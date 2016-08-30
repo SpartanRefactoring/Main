@@ -54,10 +54,10 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements 
   }
 
   @Override Rewrite make(final IfStatement s) {
-    final List<Statement> then = extract.statements(expose.then(s));
+    final List<Statement> then = extract.statements(navigate.then(s));
     if (then.isEmpty())
       return null;
-    final List<Statement> elze = extract.statements(expose.elze(s));
+    final List<Statement> elze = extract.statements(navigate.elze(s));
     if (elze.isEmpty())
       return null;
     final List<Statement> commonPrefix = commonPrefix(then, elze);

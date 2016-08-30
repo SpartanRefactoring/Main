@@ -32,7 +32,7 @@ public final class TernaryShortestFirst extends Wring.ReplaceCurrentNode<Conditi
   }
 
   private static boolean compatibleCondition(final Expression e1, final Expression e2) {
-    return compatible(e1, e2) || compatible(e1, il.org.spartan.refactoring.utils.make.logicalNot(e2));
+    return compatible(e1, e2) || compatible(e1, il.org.spartan.refactoring.utils.make.notOf(e2));
   }
 
   @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
@@ -41,7 +41,7 @@ public final class TernaryShortestFirst extends Wring.ReplaceCurrentNode<Conditi
 
   @Override ConditionalExpression replacement(final ConditionalExpression e) {
     final ConditionalExpression $ = subject.pair(core(e.getElseExpression()), core(e.getThenExpression()))
-        .toCondition(il.org.spartan.refactoring.utils.make.logicalNot(e.getExpression()));
+        .toCondition(il.org.spartan.refactoring.utils.make.notOf(e.getExpression()));
     final Expression then = $.getElseExpression();
     final Expression elze = $.getThenExpression();
     if (!iz.conditional(then) && iz.conditional(elze))
@@ -56,7 +56,7 @@ public final class TernaryShortestFirst extends Wring.ReplaceCurrentNode<Conditi
       if (Math.abs(a1 - a2) > 0.1)
         return a1 > a2 ? $ : null;
     }
-    final Expression condition = il.org.spartan.refactoring.utils.make.logicalNot($.getExpression());
-    return Wrings.length(condition, then) > Wrings.length(il.org.spartan.refactoring.utils.make.logicalNot(condition), elze) ? $ : null;
+    final Expression condition = il.org.spartan.refactoring.utils.make.notOf($.getExpression());
+    return Wrings.length(condition, then) > Wrings.length(il.org.spartan.refactoring.utils.make.notOf(condition), elze) ? $ : null;
   }
 }

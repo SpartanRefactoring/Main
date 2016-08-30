@@ -3,7 +3,7 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.utils.ExpressionComparator.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
-import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
@@ -71,7 +71,7 @@ public enum Wrings {
   }
 
   static IfStatement invert(final IfStatement s) {
-    return subject.pair(expose.elze(s), expose.then(s)).toNot(s.getExpression());
+    return subject.pair(navigate.elze(s), navigate.then(s)).toNot(s.getExpression());
   }
 
   static int length(final ASTNode... ns) {
@@ -82,8 +82,8 @@ public enum Wrings {
   }
 
   static IfStatement makeShorterIf(final IfStatement s) {
-    final List<Statement> then = extract.statements(expose.then(s));
-    final List<Statement> elze = extract.statements(expose.elze(s));
+    final List<Statement> then = extract.statements(navigate.then(s));
+    final List<Statement> elze = extract.statements(navigate.elze(s));
     final IfStatement $ = invert(s);
     if (then.isEmpty())
       return $;
@@ -112,7 +112,7 @@ public enum Wrings {
   }
 
   private static int positivePrefixLength(final IfStatement $) {
-    return Wrings.length($.getExpression(), expose.then($));
+    return Wrings.length($.getExpression(), navigate.then($));
   }
 
   static void rename(final SimpleName oldName, final SimpleName newName, final MethodDeclaration d, final ASTRewrite r, final TextEditGroup g) {
@@ -128,7 +128,7 @@ public enum Wrings {
     siblings.remove(i);
     siblings.add(i, by);
     final Block $ = parent.getAST().newBlock();
-    duplicateInto(siblings, expose.statements($));
+    duplicateInto(siblings, navigate.statements($));
     r.replace(parent, $, g);
     return r;
   }
@@ -149,8 +149,8 @@ public enum Wrings {
   }
 
   static boolean shoudlInvert(final IfStatement s) {
-    final int rankThen = sequencerRank(extract.lastStatement(expose.then(s)));
-    final int rankElse = sequencerRank(extract.lastStatement(expose.elze(s)));
+    final int rankThen = sequencerRank(extract.lastStatement(navigate.then(s)));
+    final int rankElse = sequencerRank(extract.lastStatement(navigate.elze(s)));
     return rankElse > rankThen || rankThen == rankElse && !Wrings.thenIsShorter(s);
   }
 
@@ -162,8 +162,8 @@ public enum Wrings {
   }
 
   static boolean thenIsShorter(final IfStatement s) {
-    final Statement then = expose.then(s);
-    final Statement elze = expose.elze(s);
+    final Statement then = navigate.then(s);
+    final Statement elze = navigate.elze(s);
     if (elze == null)
       return true;
     final int s1 = ExpressionComparator.lineCount(then);

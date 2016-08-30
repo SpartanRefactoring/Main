@@ -59,11 +59,11 @@ public enum iz {
   }
 
   public static boolean blockRequiredInReplacement(final IfStatement old, final IfStatement newIf) {
-    if (newIf == null || old != newIf && expose.elze(old) == null == (expose.elze(newIf) == null))
+    if (newIf == null || old != newIf && navigate.elze(old) == null == (navigate.elze(newIf) == null))
       return false;
-    final IfStatement parent = az.ifStatement(expose.parent(old));
-    return parent != null && expose.then(parent) == old && (expose.elze(parent) == null || expose.elze(newIf) == null)
-        && (expose.elze(parent) != null || expose.elze(newIf) != null || blockRequiredInReplacement(parent, newIf));
+    final IfStatement parent = az.ifStatement(navigate.parent(old));
+    return parent != null && navigate.then(parent) == old && (navigate.elze(parent) == null || navigate.elze(newIf) == null)
+        && (navigate.elze(parent) != null || navigate.elze(newIf) != null || blockRequiredInReplacement(parent, newIf));
   }
 
   /** Determine whether a node is a boolean literal
@@ -294,7 +294,7 @@ public enum iz {
   public static boolean isIncrementOrDecrement(final ASTNode n) {
     switch (n.getNodeType()) {
       case EXPRESSION_STATEMENT:
-        return isIncrementOrDecrement(extract.expression(n));
+        return isIncrementOrDecrement(navigate.expression(n));
       case POSTFIX_EXPRESSION:
         return in(((PostfixExpression) n).getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
       case PREFIX_EXPRESSION:
@@ -581,7 +581,7 @@ public enum iz {
    * @param s JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a statement */
   public static boolean singletonThen(final IfStatement s) {
-    return iz.singletonStatement(expose.then(s));
+    return iz.singletonStatement(navigate.then(s));
   }
 
   /** Determine whether a node is a {@link Statement}
@@ -629,7 +629,7 @@ public enum iz {
    * @return <code><b>true</b></code> <i>iff</i> there are no non-empty
    *         statements in the 'else' part of the parameter */
   public static boolean vacuousElse(final IfStatement s) {
-    return vacuous(expose.elze(s));
+    return vacuous(navigate.elze(s));
   }
 
   /** Determine whether a statement is an {@link EmptyStatement} or has nothing
@@ -638,7 +638,7 @@ public enum iz {
    * @return <code><b>true</b></code> <i>iff</i> there are no non-empty
    *         statements in the parameter */
   public static boolean vacuousThen(final IfStatement s) {
-    return vacuous(expose.then(s));
+    return vacuous(navigate.then(s));
   }
 
   /** @param n JD
@@ -656,12 +656,12 @@ public enum iz {
   static boolean blockEssential(final IfStatement s) {
     if (s == null)
       return false;
-    final Block b = az.block(expose.parent(s));
+    final Block b = az.block(navigate.parent(s));
     if (b == null)
       return false;
-    final IfStatement parent = az.ifStatement(expose.parent(b));
-    return parent != null && (expose.elze(parent) == null || wizard.recursiveElze(s) == null)
-        && (expose.elze(parent) != null || wizard.recursiveElze(s) != null || blockRequiredInReplacement(parent, s));
+    final IfStatement parent = az.ifStatement(navigate.parent(b));
+    return parent != null && (navigate.elze(parent) == null || wizard.recursiveElze(s) == null)
+        && (navigate.elze(parent) != null || wizard.recursiveElze(s) != null || blockRequiredInReplacement(parent, s));
   }
 
   static boolean isLiteral(final ASTNode ¢, final boolean b) {

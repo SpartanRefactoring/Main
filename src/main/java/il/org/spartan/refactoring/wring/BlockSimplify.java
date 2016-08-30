@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Restructure.*;
-import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 
 import java.util.*;
 import java.util.function.*;
@@ -50,7 +50,7 @@ public final class BlockSimplify extends Wring.ReplaceCurrentNode<Block> impleme
       }
 
       boolean ¢(final ForStatement ¢) {
-        return ¢(expose.initializers(¢));
+        return ¢(navigate.initializers(¢));
       }
 
       boolean ¢(final List<Expression> es) {
@@ -82,11 +82,11 @@ public final class BlockSimplify extends Wring.ReplaceCurrentNode<Block> impleme
       }
 
       boolean ¢(final TryStatement s) {
-        return ¢¢¢(expose.resources(s)) || ¢¢(expose.catchClauses(s));
+        return ¢¢¢(navigate.resources(s)) || ¢¢(navigate.catchClauses(s));
       }
 
       boolean ¢(final VariableDeclarationExpression ¢) {
-        return ¢¢¢¢(expose.fragments(¢));
+        return ¢¢¢¢(navigate.fragments(¢));
       }
 
       boolean ¢(final VariableDeclarationFragment f) {

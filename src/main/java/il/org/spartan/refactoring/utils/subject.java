@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.refactoring.utils.Plant.*;
-import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 
 import java.util.*;
 
@@ -250,7 +250,7 @@ public class subject {
      * @return a Block statement */
     public Block toBlock() {
       final Block $ = ast.newBlock();
-      expose.statements($).addAll(inner);
+      navigate.statements($).addAll(inner);
       return $;
     }
 
@@ -317,7 +317,7 @@ public class subject {
      * @see toIf
      * @see logicalNot */
     public IfStatement toNot(final Expression condition) {
-      return toIf(make.logicalNot(condition));
+      return toIf(make.notOf(condition));
     }
   }
 
