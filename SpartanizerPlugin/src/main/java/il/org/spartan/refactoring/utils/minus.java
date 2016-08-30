@@ -8,7 +8,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-public enum negation {
+public enum minus {
   ;
   public static int level(final InfixExpression e) {
     return lisp.out(e.getOperator(), TIMES, DIVIDE) ? 0 : level(hop.operands(e));
@@ -17,7 +17,7 @@ public enum negation {
   public static int level(final List<Expression> es) {
     int $ = 0;
     for (final Expression e : es)
-      $ += negation.level(e);
+      $ += minus.level(e);
     return $;
   }
 
