@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
@@ -85,7 +85,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
     abstract boolean redundant(Modifier m);
 
     @Override N replacement(final N $) {
-      return go(duplicate($));
+      return go(wizard.duplicate($));
     }
 
     @Override boolean scopeIncludes(final N ¢) {
@@ -245,7 +245,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
 
     static Expression assignmentAsExpression(final Assignment a) {
       final Operator o = a.getOperator();
-      return o == ASSIGN ? duplicate(right(a)) : subject.pair(left(a), right(a)).to(asInfix(o));
+      return o == ASSIGN ? wizard.duplicate(right(a)) : subject.pair(left(a), right(a)).to(asInfix(o));
     }
 
     static boolean doesUseForbiddenSiblings(final VariableDeclarationFragment f, final ASTNode... ns) {
@@ -269,7 +269,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
         r.remove(parent, g);
         return;
       }
-      final VariableDeclarationStatement newParent = duplicate(parent);
+      final VariableDeclarationStatement newParent = wizard.duplicate(parent);
       fragments(newParent).clear();
       fragments(newParent).addAll(live);
       r.replace(parent, newParent, g);
@@ -281,7 +281,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
       final int $ = size(parent);
       if (live.isEmpty())
         return $;
-      final VariableDeclarationStatement newParent = duplicate(parent);
+      final VariableDeclarationStatement newParent = wizard.duplicate(parent);
       fragments(newParent).clear();
       fragments(newParent).addAll(live);
       return $ - size(newParent);
@@ -322,7 +322,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
       final int $ = size(parent);
       if (parent.fragments().size() <= 1)
         return $;
-      final VariableDeclarationStatement newParent = duplicate(parent);
+      final VariableDeclarationStatement newParent = wizard.duplicate(parent);
       newParent.fragments().remove(parent.fragments().indexOf(f));
       return $ - size(newParent);
     }
@@ -342,7 +342,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
       final List<VariableDeclarationFragment> $ = new ArrayList<>();
       for (final VariableDeclarationFragment brother : fs)
         if (brother != null && brother != f && brother.getInitializer() != null)
-          $.add(duplicate(brother));
+          $.add(wizard.duplicate(brother));
       return $;
     }
 

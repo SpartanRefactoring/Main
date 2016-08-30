@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.java;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 
 import java.util.*;
 
@@ -26,20 +26,20 @@ public class TermsExpander {
 
   /** @see #recurse(InfixExpression, List) */
   private static InfixExpression appendPlus(final InfixExpression $, final Term t) {
-    final Expression ¢ = duplicate(t.expression);
+    final Expression ¢ = wizard.duplicate(t.expression);
     return t.positive() ? subject.append($, ¢) : subject.pair($, ¢).to(MINUS2);
   }
 
   private static Expression base(final List<Term> ts) {
     assert ts != null;
     assert !ts.isEmpty();
-    final Term first = first(ts);
+    final Term first = lisp.first(ts);
     assert first != null;
-    final Term second = second(ts);
+    final Term second = lisp.second(ts);
     assert second != null;
     final Expression $ = base(first, second);
     assert $ != null;
-    return step($, chop(chop(ts)));
+    return step($, lisp.chop(lisp.chop(ts)));
   }
 
   private static InfixExpression base(final Term t1, final Term t2) {
@@ -79,9 +79,9 @@ public class TermsExpander {
     final Operator o = $.getOperator();
     assert o != null;
     assert o == PLUS2 || o == MINUS2;
-    final Term first = first(ts);
+    final Term first = lisp.first(ts);
     assert first != null;
-    return recurse(o == PLUS2 ? appendPlus($, first) : appendMinus($, first), chop(ts));
+    return recurse(o == PLUS2 ? appendPlus($, first) : appendMinus($, first), lisp.chop(ts));
   }
 
   private static Expression step(final Expression $, final List<Term> ¢) {

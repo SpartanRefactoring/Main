@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -31,7 +31,7 @@ public final class IfThenIfThenNoElseNoElse extends Wring<IfStatement> implement
     final IfStatement then = az.ifStatement(extract.singleThen(s));
     final InfixExpression e = subject.pair(s.getExpression(), then.getExpression()).to(CONDITIONAL_AND);
     r.replace(s.getExpression(), e, g);
-    r.replace(then, duplicate(then(then)), g);
+    r.replace(then, wizard.duplicate(then(then)), g);
   }
 
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {

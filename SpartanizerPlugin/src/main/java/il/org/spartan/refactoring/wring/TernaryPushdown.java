@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.Plant.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static il.org.spartan.refactoring.utils.expose.*;
@@ -18,7 +18,7 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
   private static int findSingleDifference(final List<Expression> es1, final List<Expression> es2) {
     int $ = -1;
     for (int i = 0; i < es1.size(); ++i)
-      if (!same(es1.get(i), es2.get(i))) {
+      if (!wizard.same(es1.get(i), es2.get(i))) {
         if ($ >= 0)
           return -1;
         $ = i;
@@ -35,16 +35,16 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
       return null;
     final Expression then = core(e.getThenExpression());
     final Expression elze = core(e.getElseExpression());
-    return same(then, elze) ? null : pushdown(e, then, elze);
+    return wizard.same(then, elze) ? null : pushdown(e, then, elze);
   }
 
   static Expression pushdown(final ConditionalExpression e, final Assignment a1, final Assignment a2) {
-    return a1.getOperator() != a2.getOperator() || !same(left(a1), left(a2)) ? null
+    return a1.getOperator() != a2.getOperator() || !wizard.same(left(a1), left(a2)) ? null
         : plant(subject.pair(left(a1), subject.pair(right(a1), right(a2)).toCondition(e.getExpression())).to(a1.getOperator())).into(e.getParent());
   }
 
   private static Expression pushdown(final ConditionalExpression e, final ClassInstanceCreation e1, final ClassInstanceCreation e2) {
-    if (!same(e1.getType(), e2.getType()) || !same(e1.getExpression(), e2.getExpression()))
+    if (!wizard.same(e1.getType(), e2.getType()) || !wizard.same(e1.getExpression(), e2.getExpression()))
       return null;
     final List<Expression> es1 = arguments(e1);
     final List<Expression> es2 = arguments(e2);
@@ -53,7 +53,7 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
     final int i = findSingleDifference(es1, es2);
     if (i < 0)
       return null;
-    final ClassInstanceCreation $ = duplicate(e1);
+    final ClassInstanceCreation $ = wizard.duplicate(e1);
     arguments($).remove(i);
     arguments($).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression()));
     return $;
@@ -81,9 +81,9 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
   }
 
   private static Expression pushdown(final ConditionalExpression e, final FieldAccess e1, final FieldAccess e2) {
-    if (!same(e1.getName(), e2.getName()))
+    if (!wizard.same(e1.getName(), e2.getName()))
       return null;
-    final FieldAccess $ = duplicate(e1);
+    final FieldAccess $ = wizard.duplicate(e1);
     $.setExpression(parenthesize(subject.pair(e1.getExpression(), e2.getExpression()).toCondition(e.getExpression())));
     return $;
   }
@@ -98,7 +98,7 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
     final int i = findSingleDifference(es1, es2);
     if (i < 0)
       return null;
-    final InfixExpression $ = duplicate(e1);
+    final InfixExpression $ = wizard.duplicate(e1);
     final List<Expression> operands = extract.operands($);
     operands.remove(i);
     operands.add(i, p($, subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression())));
@@ -106,16 +106,16 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
   }
 
   private static Expression pushdown(final ConditionalExpression e, final MethodInvocation e1, final MethodInvocation e2) {
-    if (!same(e1.getName(), e2.getName()))
+    if (!wizard.same(e1.getName(), e2.getName()))
       return null;
     final List<Expression> es1 = arguments(e1);
     final List<Expression> es2 = arguments(e2);
     final Expression receiver1 = e1.getExpression();
     final Expression receiver2 = e2.getExpression();
-    if (!same(receiver1, receiver2)) {
-      if (receiver1 == null || !same(es1, es2))
+    if (!wizard.same(receiver1, receiver2)) {
+      if (receiver1 == null || !wizard.same(es1, es2))
         return null;
-      final MethodInvocation $ = duplicate(e1);
+      final MethodInvocation $ = wizard.duplicate(e1);
       $.setExpression(parenthesize(subject.pair(receiver1, receiver2).toCondition(e.getExpression())));
       return $;
     }
@@ -124,14 +124,14 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
     final int i = findSingleDifference(es1, es2);
     if (i < 0)
       return null;
-    final MethodInvocation $ = duplicate(e1);
+    final MethodInvocation $ = wizard.duplicate(e1);
     arguments($).remove(i);
     arguments($).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression()));
     return $;
   }
 
   private static Expression pushdown(final ConditionalExpression e, final SuperMethodInvocation e1, final SuperMethodInvocation e2) {
-    if (!same(e1.getName(), e2.getName()))
+    if (!wizard.same(e1.getName(), e2.getName()))
       return null;
     final List<Expression> es1 = arguments(e1);
     final List<Expression> es2 = arguments(e2);
@@ -140,7 +140,7 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
     final int i = findSingleDifference(es1, es2);
     if (i < 0)
       return null;
-    final SuperMethodInvocation $ = duplicate(e1);
+    final SuperMethodInvocation $ = wizard.duplicate(e1);
     arguments($).remove(i);
     arguments($).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression()));
     return $;

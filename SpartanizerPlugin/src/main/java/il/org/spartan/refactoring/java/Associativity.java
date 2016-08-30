@@ -33,6 +33,10 @@ public enum Associativity {
 
   private static boolean isRightToLeft(final int precedence) {
     assert Precedence.Is.legal(precedence);
-    return Funcs.intIsIn(precedence, 2, 3, 14, 15);
+    int[] is = { 2, 3, 14, 15 };
+    for (final int ¢ : is)
+      if (¢ == precedence)
+        return true;
+    return false;
   }
 }

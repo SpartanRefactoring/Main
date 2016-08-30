@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 
 import java.util.*;
 
@@ -20,7 +20,7 @@ public interface spartan {
   }
 
   static String shorten(final List<? extends org.eclipse.jdt.core.dom.Type> ts) {
-    return shorten(onlyOne(ts));
+    return shorten(lisp.onlyOne(ts));
   }
 
   static String shorten(final Name n) {

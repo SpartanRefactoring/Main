@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.Plant.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.refactoring.utils.extract.*;
@@ -77,7 +77,7 @@ public final class InfixZeroAddition extends Wring<InfixExpression> {
         final Expression first = totalNegation % 2 == 0 ? null : es.get(0);
         for (final Expression ¢ : es)
           if (¢ != first && negation.level(¢) > 0)
-            r.replace(¢, plant(duplicate(negation.peel(¢))).into(¢.getParent()), g);
+            r.replace(¢, plant(wizard.duplicate(negation.peel(¢))).into(¢.getParent()), g);
         if (first != null)
           r.replace(first, plant(subject.operand(negation.peel(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
       }

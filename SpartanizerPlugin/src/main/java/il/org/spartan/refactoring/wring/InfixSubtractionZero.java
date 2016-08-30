@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.Plant.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static il.org.spartan.refactoring.utils.extract.*;
@@ -37,9 +37,9 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
 
   private static Expression go(final List<Expression> es) {
     final List<Expression> $ = new ArrayList<>(es);
-    if (isLiteralZero(first($))) {
+    if (isLiteralZero(lisp.first($))) {
       $.remove(0);
-      $.set(0, minus(first($)));
+      $.set(0, minus(lisp.first($)));
     } else
       for (int i = 1, size = $.size(); i < size; ++i)
         if (isLiteralZero($.get(i))) {

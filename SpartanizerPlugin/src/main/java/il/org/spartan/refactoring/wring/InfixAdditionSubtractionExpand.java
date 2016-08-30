@@ -14,7 +14,7 @@ public final class InfixAdditionSubtractionExpand extends Wring.ReplaceCurrentNo
     if (TermsCollector.isLeafTerm(e))
       return null;
     final Expression $ = TermsExpander.simplify(e);
-    return !Funcs.same($, e) ? $ : null;
+    return !wizard.same($, e) ? $ : null;
   }
 
   @Override String description(final InfixExpression e) {

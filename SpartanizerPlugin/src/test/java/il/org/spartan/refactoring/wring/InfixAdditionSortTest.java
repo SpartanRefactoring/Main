@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -79,23 +79,23 @@ public class InfixAdditionSortTest {
     azzert.that(i.getOperator(), is(PLUS2));
     assert extract.operands(i) != null;
     azzert.that(extract.operands(i).size(), is(nTERMS));
-    assert Funcs.same(i, INPUT);
+    assert wizard.same(i, INPUT);
   }
 
   @Test public void test10() {
     final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
     assert i != null;
-    assert Funcs.same(i, INPUT);
+    assert wizard.same(i, INPUT);
   }
 
   @Test public void test11() {
     final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
     assert null != i;
     assert null != INPUT;
-    assert Funcs.same(i, INPUT);
+    assert wizard.same(i, INPUT);
     assert i != null;
     assert INPUT != null;
-    assert Funcs.same(i, INPUT);
+    assert wizard.same(i, INPUT);
   }
 
   @Test public void test12() {
@@ -106,7 +106,7 @@ public class InfixAdditionSortTest {
     assert i != null;
     assert i != INPUT;
     assert INPUT != null;
-    azzert.that(Funcs.gist("" + i), is(Funcs.gist("" + INPUT)));
+    azzert.that(tide.clean("" + i), is(tide.clean("" + INPUT)));
   }
 
   @Test public void test13() {

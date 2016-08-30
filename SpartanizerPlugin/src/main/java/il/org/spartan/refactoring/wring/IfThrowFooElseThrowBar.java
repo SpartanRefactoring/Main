@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -32,7 +32,7 @@ public final class IfThrowFooElseThrowBar extends Wring.ReplaceCurrentNode<IfSta
     final Expression condition = s.getExpression();
     final Expression then = extract.throwExpression(then(s));
     final Expression elze = extract.throwExpression(elze(s));
-    return then == null || elze == null ? null : makeThrowStatement(subject.pair(then, elze).toCondition(condition));
+    return then == null || elze == null ? null : il.org.spartan.refactoring.utils.make.makeThrowStatement(subject.pair(then, elze).toCondition(condition));
   }
 
   @Override boolean scopeIncludes(final IfStatement s) {

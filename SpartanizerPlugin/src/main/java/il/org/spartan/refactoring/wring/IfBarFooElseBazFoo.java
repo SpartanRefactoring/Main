@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 
 import java.util.*;
@@ -61,7 +61,7 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> implements Kind
     while (!ss1.isEmpty() && !ss2.isEmpty()) {
       final Statement s1 = ss1.get(ss1.size() - 1);
       final Statement s2 = ss2.get(ss2.size() - 1);
-      if (!same(s1, s2))
+      if (!wizard.same(s1, s2))
         break;
       $.add(s1);
       ss1.remove(ss1.size() - 1);

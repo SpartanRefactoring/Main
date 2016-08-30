@@ -16,8 +16,8 @@ public class LongestCommonSubsequence {
   private final int[][] length;
 
   public LongestCommonSubsequence(final String a, final String b) {
-    as = Funcs.gist(a).toCharArray();
-    bs = Funcs.gist(b).toCharArray();
+    as = tide.clean(a).toCharArray();
+    bs = tide.clean(b).toCharArray();
     length = new int[as.length][];
     for (int i = 0; i < as.length; ++i)
       Arrays.fill(length[i] = new int[bs.length], -1);

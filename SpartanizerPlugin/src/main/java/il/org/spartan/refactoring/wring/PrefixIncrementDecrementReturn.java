@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
@@ -38,7 +38,7 @@ public final class PrefixIncrementDecrementReturn extends Wring.ReplaceToNextSta
     if (parent == null || parent instanceof ForStatement)
       return null;
     final ReturnStatement s = az.returnStatement(nextStatement);
-    if (s == null || !same(operand(e), expression(s)))
+    if (s == null || !wizard.same(operand(e), expression(s)))
       return null;
     r.remove(parent, g);
     r.replace(s, subject.operand(e).toReturn(), g);

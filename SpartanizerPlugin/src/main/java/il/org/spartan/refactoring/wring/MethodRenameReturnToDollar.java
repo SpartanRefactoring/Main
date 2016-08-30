@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 
 import java.util.*;
@@ -100,12 +100,12 @@ class Conservative extends AbstractRenamePolicy {
     for (final Iterator<SimpleName> i = localVariables.iterator(); i.hasNext();)
       if (unused(i.next()))
         i.remove();
-    return first(localVariables);
+    return lisp.first(localVariables);
   }
 
   private boolean unused(final SimpleName n) {
     for (final ReturnStatement s : returnStatements)
-      if (same(n, s.getExpression()))
+      if (wizard.same(n, s.getExpression()))
         return false;
     return true;
   }

@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
@@ -57,7 +57,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
 
   private static boolean never(final SimpleName n, final Statement s) {
     for (final ASTNode ancestor : AncestorSearch.until(s).ancestors(n))
-      if (Funcs.intIsIn(ancestor.getNodeType(), TRY_STATEMENT, SYNCHRONIZED_STATEMENT))
+      if (lisp.intIsIn(ancestor.getNodeType(), TRY_STATEMENT, SYNCHRONIZED_STATEMENT))
         return true;
     return false;
   }
@@ -94,7 +94,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
       if (never(use, nextStatement))
         return null;
     final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
-    final Statement newStatement = duplicate(nextStatement);
+    final Statement newStatement = wizard.duplicate(nextStatement);
     final int addedSize = i.addedSize(newStatement);
     final int removalSaving = removalSaving(f);
     if (addedSize - removalSaving > 0)

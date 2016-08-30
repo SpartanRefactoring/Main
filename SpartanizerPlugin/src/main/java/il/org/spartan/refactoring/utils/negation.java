@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -12,7 +12,7 @@ import org.eclipse.jdt.core.dom.*;
 public enum negation {
   ;
   public static int level(final InfixExpression e) {
-    return out(e.getOperator(), TIMES, DIVIDE) ? 0 : level(extract.operands(e));
+    return lisp.out(e.getOperator(), TIMES, DIVIDE) ? 0 : level(extract.operands(e));
   }
 
   public static int level(final List<Expression> es) {
@@ -43,11 +43,11 @@ public enum negation {
   }
 
   public static Expression peel(final PrefixExpression $) {
-    return out($.getOperator(), MINUS1, PLUS1) ? $ : peel($.getOperand());
+    return lisp.out($.getOperator(), MINUS1, PLUS1) ? $ : peel($.getOperand());
   }
 
   public static Expression peel(final InfixExpression e) {
-    return out(e.getOperator(), TIMES, DIVIDE) ? e : subject.operands(peel(extract.operands(e))).to(e.getOperator());
+    return lisp.out(e.getOperator(), TIMES, DIVIDE) ? e : subject.operands(peel(extract.operands(e))).to(e.getOperator());
   }
 
   private static List<Expression> peel(final List<Expression> es) {

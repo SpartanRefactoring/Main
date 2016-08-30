@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
@@ -51,10 +51,10 @@ public final class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<
     if (a1 == null)
       return null;
     final Expression right1 = getRight(a1);
-    if (right1 == null || !same(right, right1) || !sideEffects.deterministic(right))
+    if (right1 == null || !wizard.same(right, right1) || !sideEffects.deterministic(right))
       return null;
     r.remove(parent, g);
-    r.replace(right1, duplicate(a), g);
+    r.replace(right1, wizard.duplicate(a), g);
     return r;
   }
 }

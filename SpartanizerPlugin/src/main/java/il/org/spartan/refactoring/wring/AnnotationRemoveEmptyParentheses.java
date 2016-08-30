@@ -1,9 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.refactoring.utils.*;
 
 /** Removes the parentheses from annotations that do not take arguments,
  * converting <code><pre>@Override()</pre></code> to
@@ -19,7 +21,7 @@ public final class AnnotationRemoveEmptyParentheses extends Wring.ReplaceCurrent
     if (!values(a).isEmpty())
       return null;
     final MarkerAnnotation $ = a.getAST().newMarkerAnnotation();
-    $.setTypeName(duplicate(a.getTypeName()));
+    $.setTypeName(wizard.duplicate(a.getTypeName()));
     return $;
   }
 }

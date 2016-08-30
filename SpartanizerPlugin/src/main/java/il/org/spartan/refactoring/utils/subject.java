@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.Plant.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 
@@ -9,12 +9,13 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
+import il.org.spartan.refactoring.java.*;
 
 /** Contains subclasses and tools to build expressions and statements */
 public class subject {
   public static InfixExpression append(final InfixExpression base, final Expression add) {
-    final InfixExpression $ = duplicate(base);
-    extendedOperands($).add(plant(duplicate(add)).into($));
+    final InfixExpression $ = wizard.duplicate(base);
+    extendedOperands($).add(plant(wizard.duplicate(add)).into($));
     return $;
   }
 
@@ -31,9 +32,9 @@ public class subject {
      * @param e JD
      * @return a copy of the expression e
      * @see #rebase
-     * @see Funcs#duplicate */
+     * @see wizard#duplicate */
     Expression claim(final Expression e) {
-      return rebase(duplicate(extract.core(e)), ast);
+      return wizard.rebase(wizard.duplicate(extract.core(e)), ast);
     }
 
     /** A deep copy of statement and assign it to ast, if the statement exists
@@ -43,7 +44,7 @@ public class subject {
      * @see duplicate */
     Statement claim(final Statement s) {
       final Statement core = extract.core(s);
-      return core == null ? null : rebase(duplicate(core), ast);
+      return core == null ? null : wizard.rebase(wizard.duplicate(core), ast);
     }
   }
 
@@ -212,7 +213,7 @@ public class subject {
      * is the owner
      * @param operands a list of expression, these are the operands */
     public Several(final List<Expression> operands) {
-      super(first(operands));
+      super(lisp.first(operands));
       this.operands = new ArrayList<>();
       for (final Expression e : operands)
         this.operands.add(claim(e));
@@ -225,7 +226,7 @@ public class subject {
       assert !operands.isEmpty();
       assert operands.size() != 1;
       assert operands.size() >= 2;
-      final InfixExpression $ = subject.pair(first(operands), second(operands)).to(o);
+      final InfixExpression $ = subject.pair(lisp.first(operands), lisp.second(operands)).to(o);
       for (int i = 2; i < operands.size(); ++i)
         extendedOperands($).add(plant(operands.get(i)).into($));
       return $;
@@ -241,7 +242,7 @@ public class subject {
      * the owner
      * @param inner a list of statements */
     public SeveralStatements(final List<Statement> inner) {
-      super(first(inner));
+      super(lisp.first(inner));
       this.inner = new ArrayList<>();
       for (final Statement s : inner)
         this.inner.add(claim(s));
@@ -318,7 +319,7 @@ public class subject {
      * @see toIf
      * @see logicalNot */
     public IfStatement toNot(final Expression condition) {
-      return toIf(logicalNot(condition));
+      return toIf(make.logicalNot(condition));
     }
   }
 

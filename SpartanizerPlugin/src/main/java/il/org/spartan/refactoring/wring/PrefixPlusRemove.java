@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.Plant.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
@@ -18,7 +18,7 @@ import il.org.spartan.refactoring.wring.Wring.*;
  * @since 2016 */
 public class PrefixPlusRemove extends ReplaceCurrentNode<PrefixExpression> implements Kind.NoImpact {
   @Override ASTNode replacement(final PrefixExpression e) {
-    return e.getOperator() != PLUS ? null : plant(duplicate(heart(e.getOperand()))).into(e.getParent());
+    return e.getOperator() != PLUS ? null : plant(wizard.duplicate(heart(e.getOperand()))).into(e.getParent());
   }
 
   private Expression heart(final Expression e) {

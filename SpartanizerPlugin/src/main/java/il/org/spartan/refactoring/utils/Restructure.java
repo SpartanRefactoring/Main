@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.refactoring.utils.iz.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -58,15 +58,15 @@ public enum Restructure {
    * @param from JD
    * @param into JD */
   public static <N extends ASTNode> void duplicateInto(final N from, final List<N> into) {
-    into.add(duplicate(from));
+    into.add(wizard.duplicate(from));
   }
 
   public static void duplicateModifiers(final List<IExtendedModifier> from, final List<IExtendedModifier> to) {
     for (final IExtendedModifier m : from)
       if (m.isModifier())
-        to.add(duplicate((Modifier) m));
+        to.add(wizard.duplicate((Modifier) m));
       else if (m.isAnnotation())
-        to.add(duplicate((Annotation) m));
+        to.add(wizard.duplicate((Annotation) m));
   }
 
   /** Flatten the list of arguments to an {@link InfixExpression}, e.g., convert
@@ -80,7 +80,7 @@ public enum Restructure {
     assert $ != null;
     final Operator o = $.getOperator();
     assert o != null;
-    return subject.operands(flattenInto(o, extract.operands($), new ArrayList<Expression>())).to(duplicate($).getOperator());
+    return subject.operands(flattenInto(o, extract.operands($), new ArrayList<Expression>())).to(wizard.duplicate($).getOperator());
   }
 
   public static Expression minus(final Expression e) {
@@ -93,13 +93,13 @@ public enum Restructure {
 
   /** Parenthesize an expression (if necessary).
    * @param e JD
-   * @return a {@link Funcs#duplicate(Expression)} of the parameter wrapped in
+   * @return a {@link wizard#duplicate(Expression)} of the parameter wrapped in
    *         parenthesis. */
   public static Expression parenthesize(final Expression e) {
     if (iz.noParenthesisRequired(e))
-      return duplicate(e);
+      return wizard.duplicate(e);
     final ParenthesizedExpression $ = e.getAST().newParenthesizedExpression();
-    $.setExpression(e.getParent() == null ? e : duplicate(e));
+    $.setExpression(e.getParent() == null ? e : wizard.duplicate(e));
     return $;
   }
 
@@ -111,14 +111,14 @@ public enum Restructure {
 
   static List<Expression> minus(final List<Expression> es) {
     final List<Expression> $ = new ArrayList<>();
-    $.add(first(es));
-    for (final Expression e : rest(es))
+    $.add(lisp.first(es));
+    for (final Expression e : lisp.rest(es))
       $.add(newMinus(e));
     return $;
   }
 
   static Expression newMinus(final Expression e) {
-    return isLiteralZero(e) ? e : subject.operand(e).to(Funcs.MINUS1);
+    return isLiteralZero(e) ? e : subject.operand(e).to(navigate.MINUS1);
   }
 
   private static List<Expression> add(final Expression e, final List<Expression> $) {

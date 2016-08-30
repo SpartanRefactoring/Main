@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 
@@ -143,7 +143,7 @@ public final class BlockSimplify extends Wring.ReplaceCurrentNode<Block> impleme
       case 0:
         return s.getAST().newEmptyStatement();
       case 1:
-        return duplicate(first(ss));
+        return wizard.duplicate(lisp.first(ss));
       default:
         return reorganizeStatement(s);
     }
@@ -171,10 +171,10 @@ public final class BlockSimplify extends Wring.ReplaceCurrentNode<Block> impleme
       case 0:
         return b.getAST().newEmptyStatement();
       case 1:
-        final Statement s = first(ss);
+        final Statement s = lisp.first(ss);
         if (iz.blockEssential(s))
           return subject.statement(s).toBlock();
-        return duplicate(s);
+        return wizard.duplicate(s);
       default:
         return reorganizeNestedStatement(b);
     }

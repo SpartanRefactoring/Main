@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -41,7 +41,7 @@ public final class DeclarationInitializerReturnExpression extends Wring.Variable
     if (newReturnValue == null)
       return null;
     final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
-    if (same(n, newReturnValue) || !i.canSafelyInlineInto(newReturnValue)
+    if (wizard.same(n, newReturnValue) || !i.canSafelyInlineInto(newReturnValue)
         || i.replacedSize(newReturnValue) - eliminationSaving(f) - size(newReturnValue) > 0)
       return null;
     r.replace(s.getExpression(), newReturnValue, g);
