@@ -6,14 +6,19 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 @SuppressWarnings({ "all", "Dor should remove this" })
-/** @author Dor */
+/**
+ *  @author Dor Ma'ayan
+ *  @since 2016
+ */
 public class Recurser<T> {
   private final ASTNode root;
   private T current;
+  private ASTNode startPoint;
 
   private Recurser(final ASTNode root, final T current) {
     this.root = root;
     this.current = current;
+    startPoint = null;
   }
 
   private Recurser(final ASTNode root) {
@@ -27,14 +32,19 @@ public class Recurser<T> {
   public ASTNode getRoot() {
     return root;
   }
+  
+  public Recurser from(final ASTNode startPoint){
+    this.startPoint= startPoint;
+    return this;
+  }
 
   /** T is the type of accumulator that is passed to each function, */
-  public T go(final Function<Recurser<T>, T> f) {
+  public T preVisit(final Function<Recurser<T>, T> f) {
     return null;
   }
 
   /** supply self to each node in the tree. */
-  public T go(final Consumer<Recurser<T>> f) {
+  public T preVisit(final Consumer<Recurser<T>> f) {
     return null;
   }
 
@@ -63,7 +73,7 @@ public class Recurser<T> {
     final ASTNode ourCase = makeCaseNode();
 
     @Ignore("Until we can make a real case by Mockito") @Test(expected = NullPointerException.class) public void explainAPI_briefly() {
-      final Integer i = recurse(null, 0).go((r) -> (1 + r.getCurrent().hashCode())//
+      final Integer i = recurse(null, 0).preVisit((r) -> (1 + r.getCurrent().hashCode())//
       );
       assert barrier() : "Hold the stpartanization horses from inlining";
       assert i != 0 : "wow, we really got unlucky; run again";
@@ -71,7 +81,7 @@ public class Recurser<T> {
 
     @Ignore("Until we can make a real case by Mockito") @Test public void explainAPI_differently() {
       final Integer i = recurse(makeCaseNode(), Integer.valueOf(0))//
-          .go(//
+          .preVisit(//
               (r) -> (2 + r.hashCode())//
       );
       assert barrier() : "Hold the stpartanization horses from inlining";
@@ -79,7 +89,7 @@ public class Recurser<T> {
     }
 
     @Ignore("Until we can make a real case by Mockito") @Test public void explainAPI_shortly() {
-      final Integer i = recurse(ourCase, 0).go(//
+      final Integer i = recurse(ourCase, 0).preVisit(//
           (r) -> (2 + r.hashCode())//
       );
       assert barrier() : "Hold the stpartanization horses from inlining";
@@ -87,15 +97,15 @@ public class Recurser<T> {
     }
 
     @Ignore("Until we can make a real case by Mockito") @Test public void explainAPI_cryptically() {
-      recurse(ourCase, 0).go((r) -> 0);
+      recurse(ourCase, 0).preVisit((r) -> 0);
     }
 
     @Ignore("Until we can make a real case by Mockito") @Test public void explainAPI_RSA() {
-      recurse(ourCase).go((__) -> 0);
+      recurse(ourCase).preVisit((__) -> 0);
     }
 
     @Ignore("Until we can make a real case by Mockito") @Test public void explainAPI_laconically() {
-      recurse(ourCase).go((__) -> {
+      recurse(ourCase).preVisit((__) -> {
         return (Void) null;
       });
     }
@@ -107,7 +117,7 @@ public class Recurser<T> {
       assert barrier() : "Hold the stpartanization horses from inlining";
       final Function<Recurser<Integer>, Integer> random = (x) -> (2 + x.hashCode());
       assert barrier() : "Hold the stpartanization horses from inlining";
-      final Integer i = r.go(random);
+      final Integer i = r.preVisit(random);
       assert barrier() : "Hold the stpartanization horses from inlining";
       assert i != 0 : "wow, we really got unlucky; run again";
     }
