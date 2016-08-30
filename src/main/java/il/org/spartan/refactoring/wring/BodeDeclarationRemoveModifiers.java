@@ -73,7 +73,7 @@ public class BodeDeclarationRemoveModifiers<N extends BodyDeclaration> extends W
     }
     if (iz.isMethodDeclaration(¢) && (iz.isPrivate(¢) || iz.isStatic(¢)))
       $.add(Modifier::isFinal);
-    final ASTNode container = extract.containerType(¢);
+    final ASTNode container = jump.containerType(¢);
     if (container == null)
       return $;
     if (iz.isAbstractTypeDeclaration(container) && iz.isFinal(az.abstractTypeDeclaration(container)) && iz.isMethodDeclaration(¢))
@@ -91,7 +91,7 @@ public class BodeDeclarationRemoveModifiers<N extends BodyDeclaration> extends W
       $.add(Modifier::isPrivate);
       if (iz.isMethodDeclaration(¢))
         $.add(Modifier::isFinal);
-      if (iz.isEnumConstantDeclaration(extract.containerType(container)))
+      if (iz.isEnumConstantDeclaration(jump.containerType(container)))
         $.add(Modifier::isProtected);
     }
     return $;

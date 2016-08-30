@@ -73,7 +73,7 @@ public enum sideEffects {
 
   public static boolean sideEffectFreePrefixExpression(final PrefixExpression e) {
     return in(e.getOperator(), PrefixExpression.Operator.PLUS, PrefixExpression.Operator.MINUS, PrefixExpression.Operator.COMPLEMENT,
-        PrefixExpression.Operator.NOT) && free(extract.operand(e));
+        PrefixExpression.Operator.NOT) && free(navigate.operand(e));
   }
 
   private static boolean free(final ConditionalExpression e) {
@@ -114,6 +114,6 @@ public enum sideEffects {
 
   private static boolean free(final PrefixExpression e) {
     return in(e.getOperator(), PrefixExpression.Operator.PLUS, PrefixExpression.Operator.MINUS, PrefixExpression.Operator.COMPLEMENT,
-        PrefixExpression.Operator.NOT) && free(extract.operand(e));
+        PrefixExpression.Operator.NOT) && free(navigate.operand(e));
   }
 }

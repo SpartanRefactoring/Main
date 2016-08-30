@@ -216,11 +216,11 @@ public enum iz {
   }
 
   public static boolean infixMinus(final Expression e) {
-    return operator(az.infixExpression(e)) == wizard.MINUS2;
+    return navigate.operator(az.infixExpression(e)) == wizard.MINUS2;
   }
 
   public static boolean infixPlus(final Expression e) {
-    return operator(az.infixExpression(e)) == wizard.PLUS2;
+    return navigate.operator(az.infixExpression(e)) == wizard.PLUS2;
   }
 
   public static boolean is(final ASTNode ¢, final int... types) {

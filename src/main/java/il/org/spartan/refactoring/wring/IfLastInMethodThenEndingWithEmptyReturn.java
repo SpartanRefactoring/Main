@@ -47,7 +47,7 @@ public final class IfLastInMethodThenEndingWithEmptyReturn extends Wring<IfState
     final Block b = az.block(s.getParent());
     if (b == null || !(b.getParent() instanceof MethodDeclaration) || !lastIn(s, statements(b)))
       return null;
-    final ReturnStatement deleteMe = az.returnStatement(extract.lastStatement(navigate.then(s)));
+    final ReturnStatement deleteMe = az.returnStatement(jump.lastStatement(navigate.then(s)));
     if (deleteMe == null || deleteMe.getExpression() != null)
       return null;
     if (exclude != null)

@@ -114,7 +114,7 @@ import il.org.spartan.refactoring.utils.subject.*;
 
   @Test @Ignore public void refitWithSort() {
     final InfixExpression e = i("1 + 2 * 3");
-    final List<Expression> operands = extract.operands(flatten(e));
+    final List<Expression> operands = jump.operands(flatten(e));
     azzert.that(operands.size(), is(2));
     azzert.that(operands.get(0).toString(), is("1"));
     azzert.that(operands.get(1).toString(), is("2 * 3"));
@@ -135,7 +135,7 @@ import il.org.spartan.refactoring.utils.subject.*;
     assert stringType.isNot(e);
     final InfixExpression plus = extract.firstPlus(e);
     assert stringType.isNot(plus);
-    final List<Expression> operands = extract.operands(flatten(plus));
+    final List<Expression> operands = jump.operands(flatten(plus));
     azzert.that(operands.size(), is(2));
     final boolean b = ExpressionComparator.ADDITION.sort(operands);
     azzert.that(b, is(true));
@@ -143,7 +143,7 @@ import il.org.spartan.refactoring.utils.subject.*;
   }
 
   @Test public void subjectOperandsDoesNotIntroduceList() {
-    final List<Expression> operands = extract.operands(wizard.duplicate(i("a*b")));
+    final List<Expression> operands = jump.operands(wizard.duplicate(i("a*b")));
     azzert.that(operands.size(), is(2));
     final InfixExpression e = i("1+2");
     final InfixExpression refit = subject.operands(operands).to(e.getOperator());
@@ -152,11 +152,11 @@ import il.org.spartan.refactoring.utils.subject.*;
   }
 
   @Test public void subjectOperandsIsCorrect() {
-    azzert.that(subject.operands(extract.operands(wizard.duplicate(i("a*b*c")))).to(i("1+2+3").getOperator()).toString(), is("a + b + c"));
+    azzert.that(subject.operands(jump.operands(wizard.duplicate(i("a*b*c")))).to(i("1+2+3").getOperator()).toString(), is("a + b + c"));
   }
 
   @Test public void subjectOperandsNotNull() {
-    assert subject.operands(extract.operands(wizard.duplicate(i("a+b+c")))).to(i("1+2+3").getOperator()) != null;
+    assert subject.operands(jump.operands(wizard.duplicate(i("a+b+c")))).to(i("1+2+3").getOperator()) != null;
   }
 
   @Test public void subjectOperandsWithParenthesis() {
@@ -164,7 +164,7 @@ import il.org.spartan.refactoring.utils.subject.*;
     assert stringType.isNot(e);
     final InfixExpression plus = extract.firstPlus(e);
     assert stringType.isNot(plus);
-    final List<Expression> operands = extract.operands(flatten(plus));
+    final List<Expression> operands = jump.operands(flatten(plus));
     azzert.that(operands.size(), is(2));
     final boolean b = ExpressionComparator.ADDITION.sort(operands);
     azzert.that(b, is(true));
