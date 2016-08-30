@@ -102,7 +102,7 @@ public enum Restructure {
 
   static Expression minus(final Expression e, final NumberLiteral l) {
     return l == null ? make.newMinus(e) //
-        : newLiteral(l, isLiteralZero(l) ? "0" : signAdjust(l.getToken())) //
+        : make.newLiteral(l, isLiteralZero(l) ? "0" : signAdjust(l.getToken())) //
     ;
   }
 
@@ -141,40 +141,8 @@ public enum Restructure {
     return $;
   }
 
-  private static NumberLiteral newLiteral(final ASTNode n, final String token) {
-    final NumberLiteral $ = n.getAST().newNumberLiteral();
-    $.setToken(token);
-    return $;
-  }
-
   private static String signAdjust(final String token) {
     return token.startsWith("-") ? token.substring(1) //
         : "-" + token.substring(token.startsWith("+") ? 1 : 0);
-  }
-
-  @SuppressWarnings("static-method") public static class TEST {
-    @Test public void issue72me4xA() {
-      azzert.that(minus(Into.e("-x")), iz("x"));
-    }
-
-    @Test public void issue72me4xB() {
-      azzert.that(minus(Into.e("x")), iz("-x"));
-    }
-
-    @Test public void issue72me4xC() {
-      azzert.that(minus(Into.e("+x")), iz("-x"));
-    }
-
-    @Test public void issue72me4xD() {
-      azzert.that(minus(Into.e("-x")), iz("x"));
-    }
-
-    @Test public void issue72me4xF() {
-      azzert.that(minus(Into.e("x")), iz("-x"));
-    }
-
-    @Test public void issue72me4xG() {
-      azzert.that(minus(Into.e("+x")), iz("-x"));
-    }
   }
 }
