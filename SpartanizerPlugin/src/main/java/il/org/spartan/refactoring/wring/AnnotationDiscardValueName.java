@@ -1,10 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.navigate.*;
-
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** Removes the "value" member from annotations that only have a single member,

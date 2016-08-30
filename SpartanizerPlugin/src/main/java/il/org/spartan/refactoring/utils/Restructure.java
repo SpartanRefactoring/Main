@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.refactoring.utils.iz.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -86,8 +85,8 @@ public enum Restructure {
   public static Expression minus(final Expression e) {
     final PrefixExpression ¢ = az.prefixExpression(e);
     return ¢ == null ? minus(e, az.numberLiteral(e))
-        : ¢.getOperator() == MINUS1 ? ¢.getOperand() //
-            : ¢.getOperator() == PLUS1 ? subject.operand(¢.getOperand()).to(MINUS1)//
+        : ¢.getOperator() == wizard.MINUS1 ? ¢.getOperand() //
+            : ¢.getOperator() == wizard.PLUS1 ? subject.operand(¢.getOperand()).to(wizard.MINUS1)//
                 : e;
   }
 
@@ -121,11 +120,11 @@ public enum Restructure {
   }
 
   private static List<Expression> adjust(final Operator o, final List<Expression> es) {
-    if (o != MINUS2)
+    if (o != wizard.MINUS2)
       return es;
     final List<Expression> $ = new ArrayList<>();
     for (final Expression e : es)
-      $.add(subject.operand(e).to(MINUS1));
+      $.add(subject.operand(e).to(wizard.MINUS1));
     return $;
   }
 

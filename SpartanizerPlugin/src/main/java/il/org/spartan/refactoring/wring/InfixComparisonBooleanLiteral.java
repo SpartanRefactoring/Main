@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.Plant.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -27,15 +26,15 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2015-07-17 */
 public final class InfixComparisonBooleanLiteral extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
   private static BooleanLiteral literal(final InfixExpression e) {
-    return az.booleanLiteral(core(literalOnLeft(e) ? left(e) : right(e)));
+    return az.booleanLiteral(core(literalOnLeft(e) ? expose.left(e) : expose.right(e)));
   }
 
   private static boolean literalOnLeft(final InfixExpression e) {
-    return iz.booleanLiteral(core(left(e)));
+    return iz.booleanLiteral(core(expose.left(e)));
   }
 
   private static boolean literalOnRight(final InfixExpression e) {
-    return iz.booleanLiteral(core(right(e)));
+    return iz.booleanLiteral(core(expose.right(e)));
   }
 
   private static boolean negating(final InfixExpression e, final BooleanLiteral l) {
@@ -43,7 +42,7 @@ public final class InfixComparisonBooleanLiteral extends Wring.ReplaceCurrentNod
   }
 
   private static Expression nonLiteral(final InfixExpression e) {
-    return literalOnLeft(e) ? right(e) : left(e);
+    return literalOnLeft(e) ? expose.right(e) : expose.left(e);
   }
 
   @Override String description(final InfixExpression e) {

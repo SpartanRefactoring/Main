@@ -2,8 +2,6 @@ package il.org.spartan.refactoring.java;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.utils.*;
-
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
  * read like a sentence phrase.
@@ -33,7 +31,7 @@ public enum Associativity {
 
   private static boolean isRightToLeft(final int precedence) {
     assert Precedence.Is.legal(precedence);
-    int[] is = { 2, 3, 14, 15 };
+    final int[] is = { 2, 3, 14, 15 };
     for (final int ¢ : is)
       if (¢ == precedence)
         return true;

@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -41,7 +40,8 @@ public final class TernaryShortestFirst extends Wring.ReplaceCurrentNode<Conditi
   }
 
   @Override ConditionalExpression replacement(final ConditionalExpression e) {
-    final ConditionalExpression $ = subject.pair(core(e.getElseExpression()), core(e.getThenExpression())).toCondition(il.org.spartan.refactoring.utils.make.logicalNot(e.getExpression()));
+    final ConditionalExpression $ = subject.pair(core(e.getElseExpression()), core(e.getThenExpression()))
+        .toCondition(il.org.spartan.refactoring.utils.make.logicalNot(e.getExpression()));
     final Expression then = $.getElseExpression();
     final Expression elze = $.getThenExpression();
     if (!iz.conditional(then) && iz.conditional(elze))

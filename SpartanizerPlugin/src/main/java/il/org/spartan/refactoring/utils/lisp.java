@@ -5,7 +5,6 @@ import static il.org.spartan.Utils.*;
 import java.util.*;
 
 public interface lisp {
-
   static <T> List<T> chop(final List<T> ts) {
     if (ts.isEmpty())
       return null;
@@ -41,11 +40,11 @@ public interface lisp {
         {
           $.next();
         }
-  
+
         @Override public boolean hasNext() {
           return $.hasNext();
         }
-  
+
         @Override public T next() {
           return $.next();
         }

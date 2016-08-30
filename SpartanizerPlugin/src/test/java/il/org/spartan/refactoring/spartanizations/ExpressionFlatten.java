@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.spartanizations;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 
@@ -35,7 +34,7 @@ public class ExpressionFlatten {
   }
 
   @Test public void flattenLeftArgument() {
-    azzert.that(left(flatten(i("1+2"))).toString(), is("1"));
+    azzert.that(expose.left(flatten(i("1+2"))).toString(), is("1"));
   }
 
   @Test public void flattenOfDeepParenthesisIsCorrect() {
@@ -71,22 +70,22 @@ public class ExpressionFlatten {
   }
 
   @Test public void leftOperandIsNotString() {
-    azzert.aye(stringType.isNot(left(i("1+2"))));
+    azzert.aye(stringType.isNot(expose.left(i("1+2"))));
   }
 
   @Test public void leftOperandIsNumeric() {
-    azzert.aye(iz.numericLiteral(left(i("1+2"))));
+    azzert.aye(iz.numericLiteral(expose.left(i("1+2"))));
   }
 
   @Test public void leftOperandIsOne() {
-    azzert.that(left(i("1+2")).toString(), is("1"));
+    azzert.that(expose.left(i("1+2")).toString(), is("1"));
   }
 
   @Test public void leftOperandNotNull() {
-    azzert.notNull(left(i("1+2")));
+    azzert.notNull(expose.left(i("1+2")));
   }
 
   @Test public void rightOperandNotNull() {
-    azzert.notNull(left(i("1+2")));
+    azzert.notNull(expose.left(i("1+2")));
   }
 }

@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 
 import java.util.*;
@@ -75,10 +74,10 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> implements Kind
   }
 
   @Override Rewrite make(final IfStatement s) {
-    final List<Statement> then = extract.statements(then(s));
+    final List<Statement> then = extract.statements(expose.then(s));
     if (then.isEmpty())
       return null;
-    final List<Statement> elze = extract.statements(elze(s));
+    final List<Statement> elze = extract.statements(expose.elze(s));
     if (elze.isEmpty())
       return null;
     final List<Statement> commmonSuffix = commmonSuffix(then, elze);

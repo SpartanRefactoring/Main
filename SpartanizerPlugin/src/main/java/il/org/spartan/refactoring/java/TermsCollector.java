@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.java;
 
-import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 
 import java.util.*;

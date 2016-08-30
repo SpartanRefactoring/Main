@@ -1,7 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.navigate.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.java.*;
@@ -31,14 +29,14 @@ public final class InfixComparisonSpecific extends Wring.ReplaceCurrentNode<Infi
   }
 
   @Override boolean eligible(final InfixExpression e) {
-    return specifity.compare(left(e), right(e)) < 0;
+    return specifity.compare(expose.left(e), expose.right(e)) < 0;
   }
 
   @Override Expression replacement(final InfixExpression e) {
-    return flip(e);
+    return expose.flip(e);
   }
 
   @Override public boolean scopeIncludes(final InfixExpression e) {
-    return !e.hasExtendedOperands() && iz.comparison(e) && (Specificity.defined(left(e)) || Specificity.defined(right(e)));
+    return !e.hasExtendedOperands() && iz.comparison(e) && (Specificity.defined(expose.left(e)) || Specificity.defined(expose.right(e)));
   }
 }

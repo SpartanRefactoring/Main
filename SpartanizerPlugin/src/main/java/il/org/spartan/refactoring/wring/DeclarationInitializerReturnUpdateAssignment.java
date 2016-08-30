@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
@@ -40,7 +39,7 @@ public final class DeclarationInitializerReturnUpdateAssignment extends Wring.Va
     if (s == null)
       return null;
     final Assignment a = az.assignment(extract.expression(s));
-    if (a == null || !wizard.same(n, left(a)))
+    if (a == null || !wizard.same(n, expose.left(a)))
       return null;
     final Operator o = a.getOperator();
     if (o == ASSIGN)

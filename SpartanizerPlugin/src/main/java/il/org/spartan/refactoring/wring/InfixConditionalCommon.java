@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
@@ -50,14 +49,14 @@ public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<Infix
     if (!in(o, CONDITIONAL_AND, CONDITIONAL_OR))
       return null;
     final Operator conjugate = conjugate(o);
-    final InfixExpression left = az.infixExpression(core(left(e)));
+    final InfixExpression left = az.infixExpression(core(expose.left(e)));
     if (left == null || left.getOperator() != conjugate)
       return null;
-    final InfixExpression right = az.infixExpression(core(right(e)));
+    final InfixExpression right = az.infixExpression(core(expose.right(e)));
     if (right == null || right.getOperator() != conjugate)
       return null;
-    final Expression leftLeft = left(left);
-    return !sideEffects.free(leftLeft) || !wizard.same(leftLeft, left(right)) ? null
+    final Expression leftLeft = expose.left(left);
+    return !sideEffects.free(leftLeft) || !wizard.same(leftLeft, expose.left(right)) ? null
         : subject.pair(leftLeft, subject.pair(chopHead(left), chopHead(right)).to(o)).to(conjugate);
   }
 }
