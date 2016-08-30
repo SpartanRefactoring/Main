@@ -72,7 +72,8 @@ public class Toolbox {
             new EvaluateMultiplication(), //
             new EvaluateDivision(), //
             new EvaluateRemainder(), //
-            new InfixEmptyStringAdditionToString(), new InfixComparisonSizeToZero(), //
+//            new InfixEmptyStringAdditionToString(), //under construction
+            new InfixComparisonSizeToZero(), //
             new InfixSubtractionZero(), //
             new InfixAdditionSubtractionExpand(), //
             new InfixFactorNegatives(), //
