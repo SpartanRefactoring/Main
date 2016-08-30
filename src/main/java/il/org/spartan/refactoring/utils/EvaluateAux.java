@@ -61,6 +61,19 @@ public class EvaluateAux {
     }
     return isLong ? EvaluateAux.Type.LONG : EvaluateAux.Type.INT;
   }
+  
+  public static EvaluateAux.Type getEvaluatedTypeForShift(final InfixExpression e) {
+    boolean isLong = false;
+    final List<Expression> operands = extract.allOperands(e);
+    isLong = isCompitable(operands.get(0))&&(isLong(operands.get(0)) || isMinusLong(operands.get(0)));
+    for (final Expression ¢ : operands) {
+      if (!isCompitable(¢))
+        return EvaluateAux.Type.BAD;
+      if (!isCompitable(¢)&&(EvaluateAux.isDouble(¢) || isMinusDouble(¢)))
+        return EvaluateAux.Type.BAD;
+    }
+    return isLong ? EvaluateAux.Type.LONG : EvaluateAux.Type.INT;
+  }
 
   public static int extractInt(final Expression e) {
     return !(e instanceof PrefixExpression) ? Integer.parseInt(((NumberLiteral) e).getToken())
