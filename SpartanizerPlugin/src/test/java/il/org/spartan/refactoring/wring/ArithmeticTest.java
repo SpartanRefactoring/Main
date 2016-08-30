@@ -281,5 +281,10 @@ public class ArithmeticTest {
           .to("3*5*6*-1.0/2/4/7/8/9") //
           .to("-90.0/2/4/7/8/9").to("-0.022321428571428572");
     }
+    
+    @Test public void issue92_62() {
+      trimming("1.984+0.006").to("1.99");
+
+    }
   }
 }

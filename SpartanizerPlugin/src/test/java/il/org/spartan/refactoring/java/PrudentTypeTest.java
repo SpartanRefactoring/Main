@@ -172,6 +172,12 @@ public class PrudentTypeTest {
     @Test public void test38() {
       azzert.that(prudent(Into.e("3.098")), is(DOUBLE));
     }
+    
+    //end of tests for NumeberLiterals
+    
+    @Test public void test39() {
+      azzert.that(prudent(Into.e("x^y"), BOOLEAN, BOOLEAN), is(BOOLEAN));
+    }
 
 
     /* Second batch of tests uses kind with various, complex expression, as
@@ -253,7 +259,7 @@ public class PrudentTypeTest {
     }
 
     @Test public void test120() {
-      azzert.that(prudent(Into.e("2%f()")), is(INT));
+      azzert.that(prudent(Into.e("2%f()")), is(INTEGRAL));
     }
 
     @Test public void test121() {
@@ -372,9 +378,36 @@ public class PrudentTypeTest {
       azzert.that(prudent(Into.e("f() ? true : false")), is(BOOLEAN));
     }
     
-    //perhaps this should return boolean?
     @Test public void test145() {
-      azzert.that(prudent(Into.e("f() ? f() : false")), is(NOTHING));
+      azzert.that(prudent(Into.e("f() ? f() : false")), is(BOOLEAN));
+    }
+    
+    @Test public void test146() {
+      azzert.that(prudent(Into.e("f() ? f() : 2")), is(NUMERIC));
+    }
+    
+    @Test public void test147() {
+      azzert.that(prudent(Into.e("f() ? f() : 2l")), is(NUMERIC));
+    }
+    
+    @Test public void test148() {
+      azzert.that(prudent(Into.e("f() ? 2. : g()")), is(DOUBLE));
+    }
+    
+    @Test public void test149() {
+      azzert.that(prudent(Into.e("f() ? 2 : 2%f()")), is(INTEGRAL));
+    }
+    
+    @Test public void test150() {
+      azzert.that(prudent(Into.e("f() ? x : 'a'")), is(NUMERIC));
+    }
+    
+    @Test public void test151() {
+      azzert.that(prudent(Into.e("f() ? x : g()")), is(NOTHING));
+    }
+    
+    @Test public void test152() {
+      azzert.that(prudent(Into.e("f() ? \"a\" : h()")), is(STRING));
     }
   }
 }
