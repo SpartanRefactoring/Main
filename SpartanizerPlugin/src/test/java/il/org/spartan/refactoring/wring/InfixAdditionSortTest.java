@@ -76,8 +76,8 @@ public class InfixAdditionSortTest {
     azzert.that(e, instanceOf(InfixExpression.class));
     final InfixExpression i = (InfixExpression) e;
     azzert.that(i.getOperator(), is(wizard.PLUS2));
-    assert extract.operands(i) != null;
-    azzert.that(extract.operands(i).size(), is(nTERMS));
+    assert jump.operands(i) != null;
+    azzert.that(jump.operands(i).size(), is(nTERMS));
     assert wizard.same(i, INPUT);
   }
 

@@ -39,7 +39,7 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
 
   @SuppressWarnings("fallthrough") private static ASTNode replacement(final InfixExpression e, final Operator o, final MethodInvocation i,
       final Expression n) {
-    if (!"size".equals(name(i).getIdentifier()))
+    if (!"size".equals(navigate.name(i).getIdentifier()))
       return null;
     int sign = -1;
     NumberLiteral l = getNegativeNumber(n);
@@ -51,11 +51,11 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
       l = (NumberLiteral) n;
       sign = 1;
     }
-    final Expression receiver = receiver(i);
+    final Expression receiver = navigate.receiver(i);
     /* In case binding is available, uses it to ensure that isEmpty() is
      * accessible from current scope. Currently untested */
     if (e.getAST().hasResolvedBindings()) {
-      final CompilationUnit u = compilationUnit(e);
+      final CompilationUnit u = jump.compilationUnit(e);
       if (u == null)
         return null;
       final IMethodBinding b = BindingUtils.getVisibleMethod(receiver == null ? BindingUtils.container(e) : receiver.resolveTypeBinding(), "isEmpty",

@@ -18,7 +18,7 @@ import il.org.spartan.refactoring.utils.*;
 public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpression> implements Kind.Canonicalization {
   private static Expression applyDeMorgan(final InfixExpression inner) {
     final List<Expression> operands = new ArrayList<>();
-    for (final Expression e : extract.operands(flatten(inner)))
+    for (final Expression e : jump.operands(flatten(inner)))
       operands.add(il.org.spartan.refactoring.utils.make.notOf(e));
     return subject.operands(operands).to(conjugate(inner.getOperator()));
   }
@@ -46,7 +46,7 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
   }
 
   private static boolean hasOpportunity(final PrefixExpression e) {
-    return e != null && hasOpportunity(core(operand(e)));
+    return e != null && hasOpportunity(core(navigate.operand(e)));
   }
 
   static Expression notOfLiteral(final BooleanLiteral l) {
@@ -76,7 +76,7 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
   }
 
   private static Expression perhapsDoubleNegation(final PrefixExpression e) {
-    return e == null ? null : tryToSimplify(operand(e));
+    return e == null ? null : tryToSimplify(navigate.operand(e));
   }
 
   static Expression perhapsNotOfLiteral(final Expression e) {
@@ -93,7 +93,7 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
   }
 
   private static Expression pushdownNot(final PrefixExpression e) {
-    return e == null ? null : pushdownNot(operand(e));
+    return e == null ? null : pushdownNot(navigate.operand(e));
   }
 
   /** A utility function, which tries to simplify a boolean expression, whose

@@ -53,7 +53,7 @@ public enum Wrings {
   }
 
   static boolean endsWithSequencer(final Statement s) {
-    return iz.sequencer(extract.lastStatement(s));
+    return iz.sequencer(jump.lastStatement(s));
   }
 
   static ListRewrite insertAfter(final Statement where, final List<Statement> what, final ASTRewrite r, final TextEditGroup g) {
@@ -149,8 +149,8 @@ public enum Wrings {
   }
 
   static boolean shoudlInvert(final IfStatement s) {
-    final int rankThen = sequencerRank(extract.lastStatement(navigate.then(s)));
-    final int rankElse = sequencerRank(extract.lastStatement(navigate.elze(s)));
+    final int rankThen = sequencerRank(jump.lastStatement(navigate.then(s)));
+    final int rankElse = sequencerRank(jump.lastStatement(navigate.elze(s)));
     return rankElse > rankThen || rankThen == rankElse && !Wrings.thenIsShorter(s);
   }
 

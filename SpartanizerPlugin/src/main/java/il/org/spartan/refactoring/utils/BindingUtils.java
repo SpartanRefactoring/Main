@@ -13,7 +13,7 @@ import org.eclipse.jdt.internal.corext.dom.*;
   /** @param n an {@link ASTNode}
    * @return type in which n is placed, or null if there is none */
   public static ITypeBinding container(final ASTNode n) {
-    final ASTNode $ = containerType(n);
+    final ASTNode $ = jump.containerType(n);
     return eval(() -> ((TypeDeclaration) $).resolveBinding()).when($ != null && $ instanceof TypeDeclaration);
   }
 

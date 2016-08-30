@@ -79,7 +79,7 @@ public enum Restructure {
     assert $ != null;
     final Operator o = $.getOperator();
     assert o != null;
-    return subject.operands(flattenInto(o, extract.operands($), new ArrayList<Expression>())).to(wizard.duplicate($).getOperator());
+    return subject.operands(flattenInto(o, jump.operands($), new ArrayList<Expression>())).to(wizard.duplicate($).getOperator());
   }
 
   public static Expression minus(final Expression e) {
@@ -132,7 +132,7 @@ public enum Restructure {
     final Expression core = core(e);
     final InfixExpression inner = az.infixExpression(core);
     return inner == null || inner.getOperator() != o ? add(!iz.noParenthesisRequired(core) ? e : core, $)
-        : flattenInto(o, adjust(o, extract.operands(inner)), $);
+        : flattenInto(o, adjust(o, jump.operands(inner)), $);
   }
 
   private static List<Expression> flattenInto(final Operator o, final List<Expression> es, final List<Expression> $) {

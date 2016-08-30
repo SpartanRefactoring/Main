@@ -20,11 +20,11 @@ import il.org.spartan.refactoring.spartanizations.*;
   }
 
   @Test public void operandsCount() {
-    azzert.that(extract.operands(i("a+b+c+(d+e)+f")).size(), is(5));
+    azzert.that(jump.operands(i("a+b+c+(d+e)+f")).size(), is(5));
   }
 
   @Test public void operandsOfNullIsNull() {
-    azzert.that(extract.operands(null), is(nullValue()));
+    azzert.that(jump.operands(null), is(nullValue()));
   }
 
   @Test public void plus() {

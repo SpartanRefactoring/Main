@@ -2,8 +2,6 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.utils.navigate.*;
-import static il.org.spartan.refactoring.utils.extract.*;
-import static il.org.spartan.refactoring.utils.extract.name;
 
 import java.util.*;
 
@@ -269,8 +267,8 @@ class UsesCollector extends HidingDepth {
   }
 
   @Override public boolean visit(final MethodInvocation i) {
-    ingore(name(i));
-    recurse(receiver(i));
+    ingore(navigate.name(i));
+    recurse(navigate.receiver(i));
     return recurse(arguments(i));
   }
 
@@ -284,7 +282,7 @@ class UsesCollector extends HidingDepth {
   }
 
   @Override public boolean visit(final SuperMethodInvocation i) {
-    ingore(name(i));
+    ingore(navigate.name(i));
     return recurse(arguments(i));
   }
 
