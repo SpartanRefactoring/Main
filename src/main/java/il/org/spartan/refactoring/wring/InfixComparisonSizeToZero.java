@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.navigate.*;
 // import static il.org.spartan.refactoring.utils.Is.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
@@ -104,8 +103,8 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
   }
 
   @Override String description(final InfixExpression e) {
-    final Expression right = right(e);
-    final Expression left = left(e);
+    final Expression right = expose.right(e);
+    final Expression left = expose.left(e);
     return descriptionAux(left instanceof MethodInvocation ? left : right);
   }
 
@@ -113,14 +112,14 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
     final Operator o = e.getOperator();
     if (!iz.isComparison(o))
       return null;
-    final Expression right = right(e);
+    final Expression right = expose.right(e);
     assert right != null;
-    final Expression left = left(e);
+    final Expression left = expose.left(e);
     assert left != null;
     return !validTypes(right, left) ? null
         : left instanceof MethodInvocation ? //
             replacement(e, o, (MethodInvocation) left, right) //
-            : replacement(e, navigate.conjugate(o), (MethodInvocation) right, left)//
+            : replacement(e, wizard.conjugate(o), (MethodInvocation) right, left)//
     ;
   }
 }

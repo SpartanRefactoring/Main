@@ -1,7 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.navigate.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -39,9 +37,9 @@ public final class DeclarationAssignment extends Wring.VariableDeclarationFragem
     if (initializer != null)
       return null;
     final Assignment a = extract.assignment(nextStatement);
-    if (a == null || !wizard.same(n, left(a)) || doesUseForbiddenSiblings(f, right(a)))
+    if (a == null || !wizard.same(n, expose.left(a)) || doesUseForbiddenSiblings(f, expose.right(a)))
       return null;
-    r.replace(f, makeVariableDeclarationFragement(f, right(a)), g);
+    r.replace(f, makeVariableDeclarationFragement(f, expose.right(a)), g);
     r.remove(extract.statement(a), g);
     return r;
   }

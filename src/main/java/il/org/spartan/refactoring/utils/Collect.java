@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 
@@ -197,7 +196,7 @@ public enum Collect {
       }
 
       @Override public boolean visit(final Assignment a) {
-        return consider(left(a));
+        return consider(expose.left(a));
       }
 
       @Override public boolean visit(final ForStatement s) {
@@ -367,7 +366,7 @@ public enum Collect {
       }
 
       @Override public boolean visit(final Assignment a) {
-        return collect(right(a));
+        return collect(expose.right(a));
       }
 
       @Override public boolean visit(final CastExpression e) {
@@ -400,7 +399,7 @@ public enum Collect {
       }
 
       @Override public boolean visit(final InstanceofExpression e) {
-        return collect(left(e));
+        return collect(expose.left(e));
       }
 
       @Override public boolean visit(final MethodDeclaration d) {

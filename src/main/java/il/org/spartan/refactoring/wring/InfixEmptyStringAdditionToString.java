@@ -1,7 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.navigate.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.utils.*;
@@ -16,9 +14,9 @@ public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<I
   @Override ASTNode replacement(final InfixExpression e) {
     if (!iz.infixPlus(e))
       return null;
-    final Expression right = right(e);
+    final Expression right = expose.right(e);
     assert right != null;
-    final Expression left = left(e);
+    final Expression left = expose.left(e);
     assert left != null;
     return !validTypes(e, right, left) ? null : !((StringLiteral) left).getEscapedValue().equals("\"\"") ? left : right;
   }
@@ -28,8 +26,8 @@ public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<I
   }
 
   @Override String description(final InfixExpression e) {
-    final Expression right = right(e);
-    final Expression left = left(e);
+    final Expression right = expose.right(e);
+    final Expression left = expose.left(e);
     return descriptionAux(!((StringLiteral) left).getEscapedValue().equals("\"\"") ? left : right);
   }
 

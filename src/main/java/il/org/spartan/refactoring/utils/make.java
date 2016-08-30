@@ -1,5 +1,5 @@
 package il.org.spartan.refactoring.utils;
-import static il.org.spartan.refactoring.utils.navigate.*;
+
 import static il.org.spartan.refactoring.utils.iz.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
@@ -8,7 +8,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.refactoring.wring.*;
 
 public interface make {
-
   /** Create a new {@link SimpleName} instance at the AST of the parameter
    * @param n JD
    * @param newName the name that the returned value shall bear
@@ -32,12 +31,12 @@ public interface make {
   }
 
   static Expression newMinus(final Expression e) {
-    return isLiteralZero(e) ? e : subject.operand(e).to(navigate.MINUS1);
+    return isLiteralZero(e) ? e : subject.operand(e).to(wizard.MINUS1);
   }
 
   static ParenthesizedExpression parethesized(final Expression e) {
     final ParenthesizedExpression $ = e.getAST().newParenthesizedExpression();
-    $.setExpression(parent(e) == null ? e : wizard.duplicate(e));
+    $.setExpression(expose.parent(e) == null ? e : wizard.duplicate(e));
     return $;
   }
 }

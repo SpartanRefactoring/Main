@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static il.org.spartan.refactoring.utils.iz.*;
 import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
@@ -345,13 +344,13 @@ public class TrimmerTest250 {
     final String s = "0-x";
     final InfixExpression i = Into.i(s);
     azzert.that(i, iz(s));
-    azzert.that(left(i), iz("0"));
-    azzert.that(right(i), iz("x"));
+    azzert.that(expose.left(i), iz("0"));
+    azzert.that(expose.right(i), iz("x"));
     assert !i.hasExtendedOperands();
-    assert isLiteralZero(left(i));
-    assert !isLiteralZero(right(i));
-    azzert.that(minus(left(i)), iz("0"));
-    azzert.that(minus(right(i)), iz("-x"));
+    assert isLiteralZero(expose.left(i));
+    assert !isLiteralZero(expose.right(i));
+    azzert.that(minus(expose.left(i)), iz("0"));
+    azzert.that(minus(expose.right(i)), iz("-x"));
     trimming(s).to("-x");
   }
 

@@ -4,7 +4,6 @@ import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.ExpressionComparator.*;
-import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
 import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.apply;
@@ -405,7 +404,7 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test public void chainComparison() {
     final InfixExpression e = i("a == true == b == c");
-    azzert.that(right(e).toString(), is("c"));
+    azzert.that(expose.right(e).toString(), is("c"));
     trimming("a == true == b == c").to("a == b == c");
   }
 
@@ -432,8 +431,8 @@ import il.org.spartan.refactoring.utils.*;
   @Test public void comaprisonWithSpecific0Legibiliy00() {
     final InfixExpression e = i("this != a");
     assert in(e.getOperator(), Operator.EQUALS, Operator.NOT_EQUALS);
-    assert !iz.booleanLiteral(right(e));
-    assert !iz.booleanLiteral(left(e));
+    assert !iz.booleanLiteral(expose.right(e));
+    assert !iz.booleanLiteral(expose.left(e));
     assert in(e.getOperator(), Operator.EQUALS, Operator.NOT_EQUALS);
   }
 
@@ -1464,14 +1463,14 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test public void isGreaterTrue() {
     final InfixExpression e = i("f(a,b,c,d,e) * f(a,b,c)");
-    azzert.that(right(e).toString(), is("f(a,b,c)"));
-    azzert.that(left(e).toString(), is("f(a,b,c,d,e)"));
+    azzert.that(expose.right(e).toString(), is("f(a,b,c)"));
+    azzert.that(expose.left(e).toString(), is("f(a,b,c,d,e)"));
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
     azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     assert s != null;
     assert s.scopeIncludes(e);
-    final Expression e1 = left(e);
-    final Expression e2 = right(e);
+    final Expression e1 = expose.left(e);
+    final Expression e2 = expose.right(e);
     assert !hasNull(e1, e2);
     final boolean tokenWiseGreater = nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD;
     assert tokenWiseGreater;
@@ -1485,14 +1484,14 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test public void isGreaterTrueButAlmostNot() {
     final InfixExpression e = i("f(a,b,c,d) * f(a,b,c)");
-    azzert.that(right(e).toString(), is("f(a,b,c)"));
-    azzert.that(left(e).toString(), is("f(a,b,c,d)"));
+    azzert.that(expose.right(e).toString(), is("f(a,b,c)"));
+    azzert.that(expose.left(e).toString(), is("f(a,b,c,d)"));
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
     azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     assert s != null;
     assert s.scopeIncludes(e);
-    final Expression e1 = left(e);
-    final Expression e2 = right(e);
+    final Expression e1 = expose.left(e);
+    final Expression e2 = expose.right(e);
     assert !hasNull(e1, e2);
     final boolean tokenWiseGreater = nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD;
     assert !tokenWiseGreater;

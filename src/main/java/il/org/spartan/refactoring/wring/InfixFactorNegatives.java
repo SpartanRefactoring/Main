@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.Plant.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.refactoring.utils.extract.*;
@@ -64,8 +63,8 @@ public final class InfixFactorNegatives extends Wring<InfixExpression> implement
       $.add(e);
       return $;
     }
-    gather(core(left(e)), $);
-    gather(core(right(e)), $);
+    gather(core(expose.left(e)), $);
+    gather(core(expose.right(e)), $);
     if (e.hasExtendedOperands())
       gather(extendedOperands(e), $);
     return $;
@@ -86,7 +85,7 @@ public final class InfixFactorNegatives extends Wring<InfixExpression> implement
     if (es.size() < 2)
       return null;
     final int totalNegation = negation.level(e);
-    if (totalNegation == 0 || totalNegation == 1 && negation.level(left(e)) == 1)
+    if (totalNegation == 0 || totalNegation == 1 && negation.level(expose.left(e)) == 1)
       return null;
     if (exclude != null)
       exclude.exclude(e);

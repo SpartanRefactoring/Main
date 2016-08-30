@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -43,7 +42,7 @@ public enum negation {
   }
 
   public static Expression peel(final PrefixExpression $) {
-    return lisp.out($.getOperator(), MINUS1, PLUS1) ? $ : peel($.getOperand());
+    return lisp.out($.getOperator(), wizard.MINUS1, wizard.PLUS1) ? $ : peel($.getOperand());
   }
 
   public static Expression peel(final InfixExpression e) {
@@ -58,6 +57,6 @@ public enum negation {
   }
 
   private static int level(final PrefixExpression ¢) {
-    return az.bit(¢.getOperator() == MINUS1) + level(¢.getOperand());
+    return az.bit(¢.getOperator() == wizard.MINUS1) + level(¢.getOperand());
   }
 }
