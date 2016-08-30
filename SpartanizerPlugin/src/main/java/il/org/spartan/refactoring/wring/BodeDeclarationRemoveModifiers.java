@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.navigate.*;
+import static il.org.spartan.refactoring.utils.step.*;
 
 import java.util.*;
 import java.util.function.*;
@@ -73,7 +73,7 @@ public class BodeDeclarationRemoveModifiers<N extends BodyDeclaration> extends W
     }
     if (iz.isMethodDeclaration(¢) && (iz.isPrivate(¢) || iz.isStatic(¢)))
       $.add(Modifier::isFinal);
-    final ASTNode container = jump.containerType(¢);
+    final ASTNode container = hop.containerType(¢);
     if (container == null)
       return $;
     if (iz.isAbstractTypeDeclaration(container) && iz.isFinal(az.abstractTypeDeclaration(container)) && iz.isMethodDeclaration(¢))
@@ -91,7 +91,7 @@ public class BodeDeclarationRemoveModifiers<N extends BodyDeclaration> extends W
       $.add(Modifier::isPrivate);
       if (iz.isMethodDeclaration(¢))
         $.add(Modifier::isFinal);
-      if (iz.isEnumConstantDeclaration(jump.containerType(container)))
+      if (iz.isEnumConstantDeclaration(hop.containerType(container)))
         $.add(Modifier::isProtected);
     }
     return $;

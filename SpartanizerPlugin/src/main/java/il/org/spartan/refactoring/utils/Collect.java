@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.navigate.*;
+import static il.org.spartan.refactoring.utils.step.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 
 import java.util.*;
@@ -186,7 +186,7 @@ public enum Collect {
        *         {@link Expression} is equal to the ASTnode's provided by the
        *         closure (n) */
       boolean consider(final Expression e) {
-        return add(az.asSimpleName(e));
+        return add(az.simpleName(e));
       }
 
       boolean consider(final List<? extends Expression> initializers) {
@@ -196,7 +196,7 @@ public enum Collect {
       }
 
       @Override public boolean visit(final Assignment a) {
-        return consider(navigate.left(a));
+        return consider(step.left(a));
       }
 
       @Override public boolean visit(final ForStatement s) {
@@ -366,21 +366,21 @@ public enum Collect {
       }
 
       @Override public boolean visit(final Assignment a) {
-        return collect(navigate.right(a));
+        return collect(step.right(a));
       }
 
       @Override public boolean visit(final CastExpression e) {
-        return collect(navigate.expression(e));
+        return collect(step.expression(e));
       }
 
       @Override public boolean visit(final ClassInstanceCreation c) {
-        collect(navigate.expression(c));
+        collect(step.expression(c));
         return collect(arguments(c));
       }
 
       @Override public boolean visit(final DoStatement s) {
         ++loopDepth;
-        return collect(navigate.expression(s));
+        return collect(step.expression(s));
       }
 
       @Override public boolean visit(@SuppressWarnings("unused") final EnhancedForStatement __) {
@@ -399,7 +399,7 @@ public enum Collect {
       }
 
       @Override public boolean visit(final InstanceofExpression e) {
-        return collect(navigate.left(e));
+        return collect(step.left(e));
       }
 
       @Override public boolean visit(final MethodDeclaration d) {
@@ -414,7 +414,7 @@ public enum Collect {
       }
 
       @Override public boolean visit(final MethodInvocation i) {
-        collect(navigate.receiver(i));
+        collect(step.receiver(i));
         collect(arguments(i));
         return false;
       }

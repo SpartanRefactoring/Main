@@ -29,7 +29,7 @@ public final class InfixComparisonSpecific extends Wring.ReplaceCurrentNode<Infi
   }
 
   @Override boolean eligible(final InfixExpression e) {
-    return specifity.compare(navigate.left(e), navigate.right(e)) < 0;
+    return specifity.compare(step.left(e), step.right(e)) < 0;
   }
 
   @Override Expression replacement(final InfixExpression e) {
@@ -37,6 +37,6 @@ public final class InfixComparisonSpecific extends Wring.ReplaceCurrentNode<Infi
   }
 
   @Override public boolean scopeIncludes(final InfixExpression e) {
-    return !e.hasExtendedOperands() && iz.comparison(e) && (Specificity.defined(navigate.left(e)) || Specificity.defined(navigate.right(e)));
+    return !e.hasExtendedOperands() && iz.comparison(e) && (Specificity.defined(step.left(e)) || Specificity.defined(step.right(e)));
   }
 }

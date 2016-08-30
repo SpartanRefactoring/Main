@@ -9,29 +9,8 @@ import org.eclipse.jdt.core.dom.*;
  * read like a sentence phrase.
  * @author Yossi Gil
  * @since 2015-07-16 */
-public enum navigate {
+public enum step {
   ;
-  /** Retrieves the ancestors of the ASTNode, via an Iterator.
-   * @param ¢ JD
-   * @return an {@link Iterable} that traverses the ancestors of the ASTNode.
-   *         Use case: Counting the number of Expressions among a given
-   *         ASTNode's ancestors */
-  public static Iterable<ASTNode> ancestors(final ASTNode ¢) {
-    return () -> new Iterator<ASTNode>() {
-      ASTNode current = ¢;
-  
-      @Override public boolean hasNext() {
-        return current != null;
-      }
-  
-      @Override public ASTNode next() {
-        final ASTNode $ = current;
-        current = current.getParent();
-        return $;
-      }
-    };
-  }
-
   /** Expose the list of arguments in a {@link ClassInstanceCreation}
    * @param ¢ JD
    * @return reference to the list of arguments in the argument */
@@ -107,7 +86,7 @@ public enum navigate {
       case ASTNode.CAST_EXPRESSION:
         return expression((CastExpression) n);
       case ASTNode.METHOD_INVOCATION:
-        return navigate.receiver((MethodInvocation) n);
+        return step.receiver((MethodInvocation) n);
       case ASTNode.PARENTHESIZED_EXPRESSION:
         return expression((ParenthesizedExpression) n);
       case ASTNode.DO_STATEMENT:

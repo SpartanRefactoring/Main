@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.navigate.*;
+import static il.org.spartan.refactoring.utils.step.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
@@ -39,7 +39,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
         case ANONYMOUS_CLASS_DECLARATION:
           return true;
         case FOR_STATEMENT:
-          if (navigate.initializers((ForStatement) ancestor).indexOf(child) != -1)
+          if (step.initializers((ForStatement) ancestor).indexOf(child) != -1)
             break;
           return true;
         case ENHANCED_FOR_STATEMENT:
@@ -69,7 +69,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || hasAnnotation(f) || initializer instanceof ArrayInitializer)
       return null;
-    for (final IExtendedModifier m : navigate.modifiers((VariableDeclarationStatement) f.getParent()))
+    for (final IExtendedModifier m : step.modifiers((VariableDeclarationStatement) f.getParent()))
       if (m.isModifier() && ((Modifier) m).isFinal())
         return null;
     final Statement s = extract.statement(f);

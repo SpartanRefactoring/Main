@@ -34,7 +34,7 @@ public final class DeclarationInitializerReturnVariable extends Wring.VariableDe
     final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null)
       return null;
-    final Expression returnValue = navigate.expression(s);
+    final Expression returnValue = step.expression(s);
     if (returnValue == null || !wizard.same(n, returnValue))
       return null;
     eliminate(f, r, g);

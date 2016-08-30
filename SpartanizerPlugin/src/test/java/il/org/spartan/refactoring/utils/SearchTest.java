@@ -2,7 +2,7 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.Into.*;
-import static il.org.spartan.refactoring.utils.navigate.*;
+import static il.org.spartan.refactoring.utils.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
@@ -11,7 +11,7 @@ import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.Collect.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) public class SearchTest {
-  private final SimpleName n = az.asSimpleName(e("n"));
+  private final SimpleName n = az.simpleName(e("n"));
 
   @Test public void awful() {
     azzert.that(searcher().in(d("Object n() {\n" + //

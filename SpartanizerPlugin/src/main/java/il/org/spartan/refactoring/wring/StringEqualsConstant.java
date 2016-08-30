@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.navigate.*;
+import static il.org.spartan.refactoring.utils.step.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 
 import java.util.*;
@@ -18,7 +18,7 @@ public final class StringEqualsConstant extends ReplaceCurrentNode<MethodInvocat
   final static List<String> mns = as.list("equals", "equalsIgnoreCase");
 
   @Override String description(final MethodInvocation i) {
-    return "Write " + lisp.first(arguments(i)) + "." + navigate.name(i) + "(" + navigate.receiver(i) + ") instead of " + i;
+    return "Write " + lisp.first(arguments(i)) + "." + step.name(i) + "(" + step.receiver(i) + ") instead of " + i;
   }
 
   /* (non-Javadoc)
@@ -27,13 +27,13 @@ public final class StringEqualsConstant extends ReplaceCurrentNode<MethodInvocat
    * il.org.spartan.refactoring.wring.Wring.ReplaceCurrentNode#replacement(org.
    * eclipse.jdt.core.dom.ASTNode) */
   @Override ASTNode replacement(final MethodInvocation i) {
-    final SimpleName n = navigate.name(i);
+    final SimpleName n = step.name(i);
     if (!mns.contains(n.toString()))
       return null;
     final Expression ¢ = lisp.onlyOne(arguments(i));
     if (¢ == null || !(¢ instanceof StringLiteral))
       return null;
-    final Expression e = navigate.receiver(i);
+    final Expression e = step.receiver(i);
     return e == null || e instanceof StringLiteral ? null : replacement(n, ¢, e);
   }
 

@@ -43,7 +43,7 @@ public class TermsCollector {
     assert e != null;
     assert !isLeafTerm(e);
     assert iz.infixMinus(e);
-    final List<Expression> es = jump.operands(e);
+    final List<Expression> es = hop.operands(e);
     addPositiveTerm(core(lisp.first(es)));
     return collectNegativeTerms(lisp.rest(es));
   }
@@ -91,7 +91,7 @@ public class TermsCollector {
 
   private Void collectMinusPrefixMinusExprssion(final InfixExpression e) {
     assert e != null;
-    final List<Expression> es = jump.operands(e);
+    final List<Expression> es = hop.operands(e);
     collectNegativeTerm(core(lisp.first(es)));
     return collectPositiveTerms(lisp.rest(es));
   }
@@ -100,7 +100,7 @@ public class TermsCollector {
     assert e != null;
     assert !isLeafTerm(e);
     assert iz.infixPlus(e);
-    return collectNegativeTerms(jump.operands(e));
+    return collectNegativeTerms(hop.operands(e));
   }
 
   private Void collectNegativeTerm(final Expression e) {
@@ -124,7 +124,7 @@ public class TermsCollector {
     assert e != null;
     assert !isLeafTerm(e);
     assert iz.infixPlus(e);
-    return collectPositiveTerms(jump.operands(e));
+    return collectPositiveTerms(hop.operands(e));
   }
 
   private Void collectPositiveTerms(final Iterable<Expression> es) {

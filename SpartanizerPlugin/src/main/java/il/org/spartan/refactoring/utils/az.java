@@ -39,7 +39,7 @@ public enum az {
    * @param $ JD
    * @return argument, but down-casted to a {@link SimpleName}, or
    *         <code><b>null</b></code> if no such down-cast is possible.. */
-  public static SimpleName asSimpleName(final ASTNode $) {
+  public static SimpleName simpleName(final ASTNode $) {
     return eval(() -> (SimpleName) $).when($ instanceof SimpleName);
   }
 

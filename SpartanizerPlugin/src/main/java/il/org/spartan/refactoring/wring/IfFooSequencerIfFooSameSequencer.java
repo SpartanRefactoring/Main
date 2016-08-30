@@ -48,9 +48,9 @@ public final class IfFooSequencerIfFooSameSequencer extends Wring.ReplaceToNextS
     final IfStatement s2 = az.ifStatement(nextStatement);
     if (s2 == null || !iz.vacuousElse(s2))
       return null;
-    final Statement then = navigate.then(s);
+    final Statement then = step.then(s);
     final List<Statement> ss1 = extract.statements(then);
-    return !wizard.same(ss1, extract.statements(navigate.then(s2))) || !iz.sequencer(last(ss1)) ? null
+    return !wizard.same(ss1, extract.statements(step.then(s2))) || !iz.sequencer(last(ss1)) ? null
         : Wrings.replaceTwoStatements(r, s,
             makeIfWithoutElse(BlockSimplify.reorganizeNestedStatement(then), subject.pair(s.getExpression(), s2.getExpression()).to(CONDITIONAL_OR)),
             g);

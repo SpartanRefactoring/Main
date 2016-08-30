@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.refactoring.utils.Plant.*;
-import static il.org.spartan.refactoring.utils.navigate.*;
+import static il.org.spartan.refactoring.utils.step.*;
 
 import java.util.*;
 
@@ -250,7 +250,7 @@ public class subject {
      * @return a Block statement */
     public Block toBlock() {
       final Block $ = ast.newBlock();
-      navigate.statements($).addAll(inner);
+      step.statements($).addAll(inner);
       return $;
     }
 

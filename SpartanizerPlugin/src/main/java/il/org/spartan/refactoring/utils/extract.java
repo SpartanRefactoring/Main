@@ -2,7 +2,7 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
-import static il.org.spartan.refactoring.utils.navigate.*;
+import static il.org.spartan.refactoring.utils.step.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
@@ -23,7 +23,7 @@ public enum extract {
    * @return a {@link List} of all operands to the parameter */
   public static List<Expression> allOperands(final InfixExpression e) {
     assert e != null;
-    return jump.operands(flatten(e));
+    return hop.operands(flatten(e));
   }
 
   /** Determines whether a give {@link ASTNode} includes precisely one
@@ -202,18 +202,6 @@ public enum extract {
     return az.ifStatement(extract.singleStatement(n));
   }
 
-  /** Extract the {@link MethodDeclaration} that contains a given node.
-   * @param n JD
-   * @return inner most {@link MethodDeclaration} in which the parameter is
-   *         nested, or <code><b>null</b></code>, if no such statement
-   *         exists. */
-  public static MethodDeclaration methodDeclaration(final ASTNode n) {
-    for (ASTNode $ = n; $ != null; $ = $.getParent())
-      if (iz.methodDeclaration($))
-        return az.methodDeclaration($);
-    return null;
-  }
-
   /** @param n JD
    * @return method invocation if it exists or null if it doesn't or if the
    *         block contains more than one statement */
@@ -297,7 +285,7 @@ public enum extract {
    *         parameter, or <code><b>null</b></code>, if no such statement
    *         exists. */
   public static Statement singleElse(final IfStatement s) {
-    return extract.singleStatement(navigate.elze(s));
+    return extract.singleStatement(step.elze(s));
   }
 
   /** @param n JD
@@ -312,7 +300,7 @@ public enum extract {
    * @return single statement in the "then" branch of the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
   public static Statement singleThen(final IfStatement s) {
-    return extract.singleStatement(navigate.then(s));
+    return extract.singleStatement(step.then(s));
   }
 
   /** Extract the {@link Statement} that contains a given node.
@@ -360,7 +348,7 @@ public enum extract {
   }
 
   private static List<Statement> statementsInto(final Block b, final List<Statement> $) {
-    for (final Statement s : navigate.statements(b))
+    for (final Statement s : step.statements(b))
       extract.statementsInto(s, $);
     return $;
   }

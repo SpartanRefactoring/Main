@@ -12,10 +12,10 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 
-/** A test suite for class {@link navigate}
+/** A test suite for class {@link step}
  * @author Yossi Gil
  * @since 2015-07-18
- * @see navigate */
+ * @see step */
 @SuppressWarnings({ "static-method", "javadoc" }) @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class FuncsTest {
   @Test public void arrayOfInts() {
@@ -59,7 +59,7 @@ public class FuncsTest {
   }
 
   @Test public void chainComparison() {
-    assertEquals("c", navigate.right(i("a == true == b == c")).toString());
+    assertEquals("c", step.right(i("a == true == b == c")).toString());
   }
 
   @Test public void countNonWhiteCharacters() {

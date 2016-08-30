@@ -36,7 +36,7 @@ public interface make {
 
   static ParenthesizedExpression parethesized(final Expression e) {
     final ParenthesizedExpression $ = e.getAST().newParenthesizedExpression();
-    $.setExpression(navigate.parent(e) == null ? e : wizard.duplicate(e));
+    $.setExpression(step.parent(e) == null ? e : wizard.duplicate(e));
     return $;
   }
 
@@ -55,6 +55,6 @@ public interface make {
   static InfixExpression flip(final InfixExpression ¢) {
     if (¢.hasExtendedOperands())
       throw new IllegalArgumentException(¢ + ": flipping undefined for an expression with extra operands ");
-    return subject.pair(navigate.right(¢), navigate.left(¢)).to(wizard.conjugate(¢.getOperator()));
+    return subject.pair(step.right(¢), step.left(¢)).to(wizard.conjugate(¢.getOperator()));
   }
 }

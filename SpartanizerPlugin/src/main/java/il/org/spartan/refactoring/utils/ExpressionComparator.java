@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.navigate.*;
+import static il.org.spartan.refactoring.utils.step.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
@@ -123,7 +123,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
             case IF_STATEMENT:
               $.inner += 4;
               final IfStatement i = az.ifStatement(child);
-              if (navigate.elze(i) != null)
+              if (step.elze(i) != null)
                 ++$.inner;
               return;
             default:
@@ -143,7 +143,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
    * @return <code><b>true</b></code> <i>iff</i> if the left operand of the
    *         parameter is is longer than the second argument */
   public static boolean longerFirst(final InfixExpression e) {
-    return isLonger(navigate.left(e), navigate.right(e));
+    return isLonger(step.left(e), step.right(e));
   }
 
   /** Compare method invocations by the number of arguments
