@@ -18,7 +18,7 @@ public class ArithmeticTest {
 
   public static class Working {
     @Test public void additionIsLong() {
-    assert atomic.isLong(1L+1);
+    assert atomic.isLong(1 + 1L);
     
   }
     @Test public void issue92_1() {
