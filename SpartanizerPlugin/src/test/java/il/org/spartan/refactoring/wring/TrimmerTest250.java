@@ -217,6 +217,23 @@ public class TrimmerTest250 {
         .to("enum a {x,y,z; void f() {}}");//
   }
 
+  @Ignore @Test public void issue54_01() {
+    trimming("x.toString()").to("\"\" + x");
+  }
+
+  @Ignore @Test public void issue54_02() {
+    trimming("if(x.toString() == \"abc\") return a;").to("if(\"\" + x == \"abc\") return a;");
+  }
+
+  @Ignore @Test public void issue54_03() {
+    trimming("((Integer)6).toString()").to("\"\"+ ((Integer)6)");
+  }
+
+  @Ignore @Test public void issue54_04() {
+    trimming("switch(x.toString()){ case \"1\": return; case \"2\": return; default: return; }")
+        .to("switch(\"\" + x){ case \"1\": return; case \"2\": return; default: return; }");
+  }
+
   @Test public void issue70_01() {
     trimming("(double)5").to("1.*5");
   }
@@ -486,16 +503,28 @@ public class TrimmerTest250 {
     trimming("0+(0+x+y+(4+0))").to("0+0+x+y+4+0").to("x+y+4").to(null);
   }
 
-  @Test public void issue73_01() {
+  @Ignore @Test public void issue73_01() {
     trimming("\"\" + \"abc\"").to("\"abc\"");
   }
 
-  @Test public void issue73_02() {
+  @Ignore @Test public void issue73_02() {
     trimming("\"\" + \"abc\" + \"\"").to("\"abc\"");
   }
 
-  @Test public void issue73_03() {
+  @Ignore @Test public void issue73_03() {
     trimming("\"abc\" + \"\"").to("\"abc\"");
+  }
+
+  @Ignore @Test public void issue73_04() {
+    trimming("x + \"\"").to(null);
+  }
+
+  @Ignore @Test public void issue73_05() {
+    trimming("\"\" + x").to(null);
+  }
+
+  @Ignore @Test public void issue73_06() {
+    trimming("\"abc\" + \"\" + x").to("\"abc\" + x");
   }
 
   @Test public void issue75a() {
@@ -748,70 +777,91 @@ public class TrimmerTest250 {
   @Test public void issue87b() {
     trimming("a-b*c").to(null);
   }
+
   @Ignore public void issue103ma() {
     trimming("x=x*y").to("x*=y");
   }
+
   @Ignore public void issue103mb() {
     trimming("x=y*x").to("x=x*y").to("x*=y");
   }
+
   @Ignore public void issue103mc() {
     trimming("x=y*z").to(null);
   }
+
   @Ignore public void issue103md() {
     trimming("x = x * x").to("x*=x");
   }
+
   @Ignore public void issue103me() {
     trimming("x = y * z * x * k * 9").to("x *= y * z * k * 9");
   }
+
   @Ignore public void issue103_1me() {
     trimming("a = y * z * a").to("a *= y * z");
   }
+
   @Ignore public void issue103mf() {
     trimming("a=a*5").to("a*=5");
   }
+
   @Ignore public void issue103mg() {
     trimming("a=a*(alex)").to("a*=(alex)");
   }
+
   @Ignore public void issue103mh() {
     trimming("a = a * (c = c * kif)").to("a = a * (c *= kif)").to("a *= (c *= kif)").to(null);
   }
+
   @Ignore public void issue103mj() {
     trimming("x=x*foo(x,y)").to("x*=foo(x,y)");
   }
+
   @Ignore public void issue103mk() {
     trimming("z=foo(x=(y=y*u),17)").to("z=foo(x=(y*=u),17)");
   }
-  
+
   @Ignore public void issue103a() {
     trimming("x=x+y").to("x+=y");
   }
+
   @Ignore public void issue103b() {
     trimming("x=y+x").to("x+=y");
   }
+
   @Ignore public void issue103c() {
     trimming("x=y+z").to(null);
   }
+
   @Ignore public void issue103d() {
     trimming("x = x + x").to("x+=x");
   }
+
   @Ignore public void issue103e() {
     trimming("x = y + x + z + x + k + 9").to("x += y + z + x + k + 9");
   }
+
   @Ignore public void issue103f() {
     trimming("a=a+5").to("a+=5");
   }
+
   @Ignore public void issue103g() {
     trimming("a=a+(alex)").to("a+=(alex)");
   }
+
   @Ignore public void issue103h() {
     trimming("a = a + (c = c + kif)").to("a = a + (c += kif)").to("a += (c += kif)").to(null);
   }
+
   @Ignore public void issue103i_mixed() {
     trimming("a = a - (x = x + (y = y*(z=z+3)))").to("a = a - (x = x + (y = y*(z+=3)))").to("a = a - (x += (y = y*(z+=3)))");
   }
+
   @Ignore public void issue103j() {
     trimming("x=x+foo(x,y)").to("x+=foo(x,y)");
   }
+
   @Ignore public void issue103k() {
     trimming("z=foo(x=(y=y+u),17)").to("z=foo(x=(y+=u),17)");
   }
@@ -819,7 +869,7 @@ public class TrimmerTest250 {
   @Test public void AssignmentAndReturn() {
     trimming("a=5; \n return a;").to("return a=5;");
   }
-  
+
   // @formatter:off
   enum A { a1() {{ f(); }
       public void f() {
