@@ -243,6 +243,26 @@ public class ArithmeticTest {
     @Test public void issue92_55() {
       trimming("100>>2L").to("25");
     }
+    
+    @Test public void issue92_56() {
+      trimming("100<<2").to("400");
+    }
+    
+    @Test public void issue92_57() {
+      trimming("100L<<2").to("400L");
+    }
+   
+    @Test public void issue92_58() {
+      trimming("100<<2L").to("400");
+    }
+    
+    @Test public void issue92_59() {
+      trimming("100L<<2L").to("400L");
+    }
+    
+    @Test public void issue92_60() {
+      trimming("100L<<2L>>2L").to("400L>>2L").to("100L");
+    }
 
     @Test public void issue92_4a() {
       trimming("1+1+3").to("5");
