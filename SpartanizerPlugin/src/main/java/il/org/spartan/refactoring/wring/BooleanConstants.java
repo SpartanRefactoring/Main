@@ -16,7 +16,7 @@ public final class BooleanConstants extends Wring.ReplaceCurrentNode<MethodInvoc
   }
 
   @Override Expression replacement(final MethodInvocation i) {
-    return !"valueOf".equals(name(i).getIdentifier()) ? null : replacement(receiver(i), onlyArgument(i));
+    return !"valueOf".equals(navigate.name(i).getIdentifier()) ? null : replacement(navigate.receiver(i), onlyArgument(i));
   }
 
   private static Expression replacement(final Expression e, final Expression $) {

@@ -23,7 +23,7 @@ public enum extract {
    * @return a {@link List} of all operands to the parameter */
   public static List<Expression> allOperands(final InfixExpression e) {
     assert e != null;
-    return extract.operands(flatten(e));
+    return jump.operands(flatten(e));
   }
 
   /** Determines whether a give {@link ASTNode} includes precisely one
@@ -41,25 +41,6 @@ public enum extract {
   public static Assignment assignment(final ASTNode n) {
     final ExpressionStatement e = extract.expressionStatement(n);
     return e == null ? null : az.assignment(e.getExpression());
-  }
-
-  public static CompilationUnit compilationUnit(final ASTNode ¢) {
-    return (CompilationUnit) AncestorSearch.forType(COMPILATION_UNIT).from(¢);
-  }
-
-  /** @param ¢ JD
-   * @return ASTNode of the type if one of ¢'s parent ancestors is a container
-   *         type and null otherwise */
-  public static ASTNode containerType(final ASTNode ¢) {
-    for (final ASTNode $ : navigate.ancestors(¢.getParent()))
-      if (iz.is($, ANONYMOUS_CLASS_DECLARATION //
-          , ANNOTATION_TYPE_DECLARATION //
-          , ENUM_DECLARATION //
-          , TYPE_DECLARATION //
-          , ENUM_CONSTANT_DECLARATION //
-      ))
-        return $;
-    return null;
   }
 
   /** Peels any parenthesis that may wrap an {@Link Expression}
@@ -221,14 +202,6 @@ public enum extract {
     return az.ifStatement(extract.singleStatement(n));
   }
 
-  /** Find the last statement residing under a given {@link Statement}
-   * @param s JD
-   * @return last statement residing under a given {@link Statement}, or
-   *         <code><b>null</b></code> if not such statements exists. */
-  public static ASTNode lastStatement(final Statement s) {
-    return last(statements(s));
-  }
-
   /** Extract the {@link MethodDeclaration} that contains a given node.
    * @param n JD
    * @return inner most {@link MethodDeclaration} in which the parameter is
@@ -246,14 +219,6 @@ public enum extract {
    *         block contains more than one statement */
   public static MethodInvocation methodInvocation(final ASTNode n) {
     return az.methodInvocation(extract.expressionStatement(n).getExpression());
-  }
-
-  public static SimpleName name(final MethodInvocation i) {
-    return i.getName();
-  }
-
-  public static SimpleName name(final SuperMethodInvocation i) {
-    return i.getName();
   }
 
   /** Find the {@link Assignment} that follows a given node.
@@ -305,45 +270,6 @@ public enum extract {
 
   public static Expression onlyExpression(final List<Expression> $) {
     return core(lisp.onlyOne($));
-  }
-
-  public static Expression operand(final PostfixExpression ¢) {
-    return ¢ == null ? null : core(¢.getOperand());
-  }
-
-  public static Expression operand(final PrefixExpression ¢) {
-    return ¢ == null ? null : core(¢.getOperand());
-  }
-
-  /** Makes a list of all operands of an expression, comprising the left
-   * operand, the right operand, followed by extra operands when they exist.
-   * @param e JD
-   * @return a list of all operands of an expression */
-  public static List<Expression> operands(final InfixExpression e) {
-    if (e == null)
-      return null;
-    final List<Expression> $ = new ArrayList<>();
-    $.add(navigate.left(e));
-    $.add(navigate.right(e));
-    if (e.hasExtendedOperands())
-      $.addAll(navigate.extendedOperands(e));
-    return $;
-  }
-
-  public static InfixExpression.Operator operator(final InfixExpression e) {
-    return e == null ? null : e.getOperator();
-  }
-
-  public static PostfixExpression.Operator operator(final PostfixExpression e) {
-    return e == null ? null : e.getOperator();
-  }
-
-  public static PrefixExpression.Operator operator(final PrefixExpression e) {
-    return e == null ? null : e.getOperator();
-  }
-
-  public static Expression receiver(final MethodInvocation $) {
-    return core($.getExpression());
   }
 
   /** Finds the expression returned by a return statement
@@ -424,10 +350,6 @@ public enum extract {
    *         it; <code><b>null</b></code> if not such statements exists. */
   public static ThrowStatement throwStatement(final ASTNode n) {
     return az.throwStatement(extract.singleStatement(n));
-  }
-
-  public static Type type(final CastExpression e) {
-    return e.getType();
   }
 
   private static Statement next(final Statement s, final List<Statement> ss) {

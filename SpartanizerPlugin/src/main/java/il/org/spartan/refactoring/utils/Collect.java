@@ -414,7 +414,7 @@ public enum Collect {
       }
 
       @Override public boolean visit(final MethodInvocation i) {
-        collect(receiver(i));
+        collect(navigate.receiver(i));
         collect(arguments(i));
         return false;
       }

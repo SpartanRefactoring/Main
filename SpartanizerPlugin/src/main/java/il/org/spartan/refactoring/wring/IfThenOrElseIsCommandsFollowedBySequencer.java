@@ -40,7 +40,7 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2015-07-29 */
 public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfStatement> implements Kind.DistributiveRefactoring {
   static boolean endsWithSequencer(final Statement s) {
-    return iz.sequencer(extract.lastStatement(s));
+    return iz.sequencer(jump.lastStatement(s));
   }
 
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {

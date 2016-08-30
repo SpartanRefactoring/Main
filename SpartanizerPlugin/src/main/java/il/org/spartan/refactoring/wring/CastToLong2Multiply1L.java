@@ -21,7 +21,7 @@ public final class CastToLong2Multiply1L extends Wring.ReplaceCurrentNode<CastEx
     return eval(//
         () -> replacement(navigate.expression(e))//
     ).when(//
-        type(e).isPrimitiveType() && "long".equals("" + type(e)) //
+        navigate.type(e).isPrimitiveType() && "long".equals("" + navigate.type(e)) //
     );
   }
 

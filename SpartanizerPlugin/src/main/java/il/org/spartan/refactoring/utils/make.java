@@ -45,4 +45,16 @@ public interface make {
     $.setToken(token);
     return $;
   }
+
+  /** Swap the order of the left and right operands to an expression, changing
+   * the operator if necessary.
+   * @param ¢ JD
+   * @return a newly created expression with its operands thus swapped.
+   * @throws IllegalArgumentException when the parameter has extra operands.
+   * @see InfixExpression#hasExtendedOperands */
+  static InfixExpression flip(final InfixExpression ¢) {
+    if (¢.hasExtendedOperands())
+      throw new IllegalArgumentException(¢ + ": flipping undefined for an expression with extra operands ");
+    return subject.pair(navigate.right(¢), navigate.left(¢)).to(wizard.conjugate(¢.getOperator()));
+  }
 }

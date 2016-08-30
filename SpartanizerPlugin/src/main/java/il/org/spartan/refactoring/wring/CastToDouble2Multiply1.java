@@ -21,7 +21,7 @@ public final class CastToDouble2Multiply1 extends Wring.ReplaceCurrentNode<CastE
     return eval(//
         () -> replacement(navigate.expression(e))//
     ).when(//
-        type(e).isPrimitiveType() && "double".equals("" + type(e)) //
+        navigate.type(e).isPrimitiveType() && "double".equals("" + navigate.type(e)) //
     );
   }
 
