@@ -23,7 +23,7 @@ abstract class VariableChangeName<N extends VariableDeclaration> extends Multipl
       final List<ASTNode> replacement) {
     if (!change(n))
       return null;
-    uses.addAll(Collect.usesOf(n.getName()).in(jump.containerType(n)));
+    uses.addAll(Collect.usesOf(n.getName()).in(hop.containerType(n)));
     replacement.add(replacement(n));
     return r;
   }

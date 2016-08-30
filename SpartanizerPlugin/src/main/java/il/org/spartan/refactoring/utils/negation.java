@@ -11,7 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 public enum negation {
   ;
   public static int level(final InfixExpression e) {
-    return lisp.out(e.getOperator(), TIMES, DIVIDE) ? 0 : level(jump.operands(e));
+    return lisp.out(e.getOperator(), TIMES, DIVIDE) ? 0 : level(hop.operands(e));
   }
 
   public static int level(final List<Expression> es) {
@@ -46,7 +46,7 @@ public enum negation {
   }
 
   public static Expression peel(final InfixExpression e) {
-    return lisp.out(e.getOperator(), TIMES, DIVIDE) ? e : subject.operands(peel(jump.operands(e))).to(e.getOperator());
+    return lisp.out(e.getOperator(), TIMES, DIVIDE) ? e : subject.operands(peel(hop.operands(e))).to(e.getOperator());
   }
 
   private static List<Expression> peel(final List<Expression> es) {

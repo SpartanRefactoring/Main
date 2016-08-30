@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.refactoring.utils.navigate.*;
+import static il.org.spartan.refactoring.utils.step.*;
 
 import java.util.*;
 

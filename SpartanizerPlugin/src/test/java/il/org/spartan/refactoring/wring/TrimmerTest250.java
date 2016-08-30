@@ -344,13 +344,13 @@ public class TrimmerTest250 {
     final String s = "0-x";
     final InfixExpression i = Into.i(s);
     azzert.that(i, iz(s));
-    azzert.that(navigate.left(i), iz("0"));
-    azzert.that(navigate.right(i), iz("x"));
+    azzert.that(step.left(i), iz("0"));
+    azzert.that(step.right(i), iz("x"));
     assert !i.hasExtendedOperands();
-    assert isLiteralZero(navigate.left(i));
-    assert !isLiteralZero(navigate.right(i));
-    azzert.that(minus(navigate.left(i)), iz("0"));
-    azzert.that(minus(navigate.right(i)), iz("-x"));
+    assert isLiteralZero(step.left(i));
+    assert !isLiteralZero(step.right(i));
+    azzert.that(minus(step.left(i)), iz("0"));
+    azzert.that(minus(step.right(i)), iz("-x"));
     trimming(s).to("-x");
   }
 

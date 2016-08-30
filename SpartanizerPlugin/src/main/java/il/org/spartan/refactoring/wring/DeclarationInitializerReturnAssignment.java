@@ -38,13 +38,13 @@ public final class DeclarationInitializerReturnAssignment extends Wring.Variable
     final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null)
       return null;
-    final Assignment a = az.assignment(navigate.expression(s));
-    if (a == null || !wizard.same(n, navigate.left(a)))
+    final Assignment a = az.assignment(step.expression(s));
+    if (a == null || !wizard.same(n, step.left(a)))
       return null;
     final Operator o = a.getOperator();
     if (o != ASSIGN)
       return null;
-    final Expression newReturnValue = wizard.duplicate(navigate.right(a));
+    final Expression newReturnValue = wizard.duplicate(step.right(a));
     final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
     if (!i.canInlineInto(newReturnValue) || i.replacedSize(newReturnValue) - eliminationSaving(f) - size(newReturnValue) > 0)
       return null;

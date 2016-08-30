@@ -42,20 +42,20 @@ public final class DeclarationInitializerIfAssignment //
     final Expression condition = s.getExpression();
     if (condition == null)
       return null;
-    final Assignment a = extract.assignment(navigate.then(s));
-    if (a == null || !wizard.same(navigate.left(a), n) || a.getOperator() != Assignment.Operator.ASSIGN
-        || doesUseForbiddenSiblings(f, condition, navigate.right(a)))
+    final Assignment a = extract.assignment(step.then(s));
+    if (a == null || !wizard.same(step.left(a), n) || a.getOperator() != Assignment.Operator.ASSIGN
+        || doesUseForbiddenSiblings(f, condition, step.right(a)))
       return null;
     final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
-    if (!i.canInlineInto(condition, navigate.right(a)))
+    if (!i.canInlineInto(condition, step.right(a)))
       return null;
-    final ConditionalExpression newInitializer = subject.pair(navigate.right(a), initializer).toCondition(condition);
+    final ConditionalExpression newInitializer = subject.pair(step.right(a), initializer).toCondition(condition);
     final int spending = i.replacedSize(newInitializer);
     final int savings = size(nextStatement, initializer);
     if (spending > savings)
       return null;
     r.replace(initializer, newInitializer, g);
-    i.inlineInto(navigate.then(newInitializer), newInitializer.getExpression());
+    i.inlineInto(step.then(newInitializer), newInitializer.getExpression());
     r.remove(nextStatement, g);
     return r;
   }

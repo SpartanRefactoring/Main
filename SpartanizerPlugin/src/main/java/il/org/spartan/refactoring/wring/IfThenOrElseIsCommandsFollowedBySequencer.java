@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Restructure.*;
-import static il.org.spartan.refactoring.utils.navigate.*;
+import static il.org.spartan.refactoring.utils.step.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 
 import java.util.*;
@@ -40,7 +40,7 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2015-07-29 */
 public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfStatement> implements Kind.DistributiveRefactoring {
   static boolean endsWithSequencer(final Statement s) {
-    return iz.sequencer(jump.lastStatement(s));
+    return iz.sequencer(hop.lastStatement(s));
   }
 
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
@@ -51,7 +51,7 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
     return new Rewrite(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final IfStatement shorterIf = makeShorterIf(s);
-        final List<Statement> remainder = extract.statements(navigate.elze(shorterIf));
+        final List<Statement> remainder = extract.statements(step.elze(shorterIf));
         shorterIf.setElseStatement(null);
         final Block parent = az.block(s.getParent());
         final Block newParent = s.getAST().newBlock();
@@ -68,6 +68,6 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
   }
 
   @Override boolean scopeIncludes(final IfStatement s) {
-    return navigate.elze(s) != null && (endsWithSequencer(navigate.then(s)) || endsWithSequencer(navigate.elze(s)));
+    return step.elze(s) != null && (endsWithSequencer(step.then(s)) || endsWithSequencer(step.elze(s)));
   }
 }

@@ -2,7 +2,7 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Plant.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
-import static il.org.spartan.refactoring.utils.navigate.*;
+import static il.org.spartan.refactoring.utils.step.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
@@ -38,8 +38,8 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
   }
 
   static Expression pushdown(final ConditionalExpression e, final Assignment a1, final Assignment a2) {
-    return a1.getOperator() != a2.getOperator() || !wizard.same(navigate.left(a1), navigate.left(a2)) ? null
-        : plant(subject.pair(navigate.left(a1), subject.pair(right(a1), right(a2)).toCondition(e.getExpression())).to(a1.getOperator()))
+    return a1.getOperator() != a2.getOperator() || !wizard.same(step.left(a1), step.left(a2)) ? null
+        : plant(subject.pair(step.left(a1), subject.pair(right(a1), right(a2)).toCondition(e.getExpression())).to(a1.getOperator()))
             .into(e.getParent());
   }
 
@@ -91,15 +91,15 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
   private static Expression pushdown(final ConditionalExpression e, final InfixExpression e1, final InfixExpression e2) {
     if (e1.getOperator() != e2.getOperator())
       return null;
-    final List<Expression> es1 = jump.operands(e1);
-    final List<Expression> es2 = jump.operands(e2);
+    final List<Expression> es1 = hop.operands(e1);
+    final List<Expression> es2 = hop.operands(e2);
     if (es1.size() != es2.size())
       return null;
     final int i = findSingleDifference(es1, es2);
     if (i < 0)
       return null;
     final InfixExpression $ = wizard.duplicate(e1);
-    final List<Expression> operands = jump.operands($);
+    final List<Expression> operands = hop.operands($);
     operands.remove(i);
     operands.add(i, p($, subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression())));
     return p(e, subject.operands(operands).to($.getOperator()));

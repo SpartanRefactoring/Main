@@ -407,7 +407,7 @@ public class TrimmerTest240 {
 
   @Test public void chainComparison() {
     final InfixExpression e = i("a == true == b == c");
-    that(navigate.right(e).toString(), iz("c"));
+    that(step.right(e).toString(), iz("c"));
     trimming("a == true == b == c").to("a == b == c");
   }
 
@@ -434,8 +434,8 @@ public class TrimmerTest240 {
   @Test public void comaprisonWithSpecific0Legibiliy00() {
     final InfixExpression e = i("this != a");
     that(in(e.getOperator(), Operator.EQUALS, Operator.NOT_EQUALS), is(true));
-    that(iz.booleanLiteral(navigate.right(e)), is(false));
-    that(iz.booleanLiteral(navigate.left(e)), is(false));
+    that(iz.booleanLiteral(step.right(e)), is(false));
+    that(iz.booleanLiteral(step.left(e)), is(false));
     that(in(e.getOperator(), Operator.EQUALS, Operator.NOT_EQUALS), is(true));
   }
 
@@ -1414,14 +1414,14 @@ public class TrimmerTest240 {
 
   @Test public void isGreaterTrue() {
     final InfixExpression e = i("f(a,b,c,d,e) * f(a,b,c)");
-    that(navigate.right(e).toString(), is("f(a,b,c)"));
-    that(navigate.left(e).toString(), is("f(a,b,c,d,e)"));
+    that(step.right(e).toString(), is("f(a,b,c)"));
+    that(step.left(e).toString(), is("f(a,b,c,d,e)"));
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
     that(s, instanceOf(InfixMultiplicationSort.class));
     that(s, notNullValue());
     that(s.scopeIncludes(e), is(true));
-    final Expression e1 = navigate.left(e);
-    final Expression e2 = navigate.right(e);
+    final Expression e1 = step.left(e);
+    final Expression e2 = step.right(e);
     that(has.nulls(e1, e2), is(false));
     final boolean tokenWiseGreater = nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD;
     that(tokenWiseGreater, is(true));
@@ -1435,14 +1435,14 @@ public class TrimmerTest240 {
 
   @Test public void isGreaterTrueButAlmostNot() {
     final InfixExpression e = i("f(a,b,c,d) * f(a,b,c)");
-    that(navigate.right(e).toString(), is("f(a,b,c)"));
-    that(navigate.left(e).toString(), is("f(a,b,c,d)"));
+    that(step.right(e).toString(), is("f(a,b,c)"));
+    that(step.left(e).toString(), is("f(a,b,c,d)"));
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
     that(s, instanceOf(InfixMultiplicationSort.class));
     that(s, notNullValue());
     that(s.scopeIncludes(e), is(true));
-    final Expression e1 = navigate.left(e);
-    final Expression e2 = navigate.right(e);
+    final Expression e1 = step.left(e);
+    final Expression e2 = step.right(e);
     that(has.nulls(e1, e2), is(false));
     final boolean tokenWiseGreater = nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD;
     that(tokenWiseGreater, is(false));

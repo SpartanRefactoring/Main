@@ -28,13 +28,13 @@ public final class IfThrowFooElseThrowBar extends Wring.ReplaceCurrentNode<IfSta
 
   @Override Statement replacement(final IfStatement s) {
     final Expression condition = s.getExpression();
-    final Expression then = extract.throwExpression(navigate.then(s));
-    final Expression elze = extract.throwExpression(navigate.elze(s));
+    final Expression then = extract.throwExpression(step.then(s));
+    final Expression elze = extract.throwExpression(step.elze(s));
     return then == null || elze == null ? null
         : il.org.spartan.refactoring.utils.make.throwOf(subject.pair(then, elze).toCondition(condition));
   }
 
   @Override boolean scopeIncludes(final IfStatement s) {
-    return s != null && extract.throwExpression(navigate.then(s)) != null && extract.throwExpression(navigate.elze(s)) != null;
+    return s != null && extract.throwExpression(step.then(s)) != null && extract.throwExpression(step.elze(s)) != null;
   }
 }

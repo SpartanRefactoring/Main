@@ -96,13 +96,13 @@ import il.org.spartan.refactoring.wring.Wring.*;
     final MethodDeclaration d = getMethod(n);
     if (d == null)
       return null;
-    for (final SingleVariableDeclaration svd : navigate.parameters(d))
+    for (final SingleVariableDeclaration svd : step.parameters(d))
       if (unusedVariableName().equals(svd.getName().getIdentifier()))
         return null;
     if (BY_ANNOTATION && !suppressedUnused(n) || isUsed(d, n.getName()))
       return null;
     if (m != null)
-      for (final SingleVariableDeclaration svd : navigate.parameters(d))
+      for (final SingleVariableDeclaration svd : step.parameters(d))
         if (!n.equals(svd))
           m.exclude(svd);
     return replacement(n);
@@ -114,7 +114,7 @@ import il.org.spartan.refactoring.wring.Wring.*;
     $.setFlags($.getFlags());
     $.setInitializer($.getInitializer());
     $.setType(wizard.duplicate(¢.getType()));
-    duplicateModifiers(navigate.modifiers(¢), navigate.modifiers($));
+    duplicateModifiers(step.modifiers(¢), step.modifiers($));
     return $;
   }
 }

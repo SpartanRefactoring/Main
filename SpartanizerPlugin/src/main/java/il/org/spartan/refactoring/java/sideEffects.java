@@ -49,7 +49,7 @@ public enum sideEffects {
         final CastExpression c = (CastExpression) e;
         return free(c.getExpression());
       case INSTANCEOF_EXPRESSION:
-        return free(navigate.left((InstanceofExpression) e));
+        return free(step.left((InstanceofExpression) e));
       case PREFIX_EXPRESSION:
         return free((PrefixExpression) e);
       case PARENTHESIZED_EXPRESSION:
@@ -73,11 +73,11 @@ public enum sideEffects {
 
   public static boolean sideEffectFreePrefixExpression(final PrefixExpression e) {
     return in(e.getOperator(), PrefixExpression.Operator.PLUS, PrefixExpression.Operator.MINUS, PrefixExpression.Operator.COMPLEMENT,
-        PrefixExpression.Operator.NOT) && free(navigate.operand(e));
+        PrefixExpression.Operator.NOT) && free(step.operand(e));
   }
 
   private static boolean free(final ConditionalExpression e) {
-    return free(navigate.expression(e)) && free(navigate.then(e)) && free(navigate.elze(e));
+    return free(step.expression(e)) && free(step.then(e)) && free(step.elze(e));
   }
 
   public static boolean deterministic(final Expression e) {
@@ -95,7 +95,7 @@ public enum sideEffects {
 
   private static boolean free(final ArrayCreation c) {
     final ArrayInitializer i = c.getInitializer();
-    return free(c.dimensions()) && (i == null || free(navigate.expressions(i)));
+    return free(c.dimensions()) && (i == null || free(step.expressions(i)));
   }
 
   private static boolean free(final Expression... es) {
@@ -114,6 +114,6 @@ public enum sideEffects {
 
   private static boolean free(final PrefixExpression e) {
     return in(e.getOperator(), PrefixExpression.Operator.PLUS, PrefixExpression.Operator.MINUS, PrefixExpression.Operator.COMPLEMENT,
-        PrefixExpression.Operator.NOT) && free(navigate.operand(e));
+        PrefixExpression.Operator.NOT) && free(step.operand(e));
   }
 }

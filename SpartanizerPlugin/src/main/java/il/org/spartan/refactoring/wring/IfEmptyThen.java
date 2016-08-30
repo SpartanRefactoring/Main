@@ -26,7 +26,7 @@ public final class IfEmptyThen extends Wring.ReplaceCurrentNode<IfStatement> imp
   }
 
   @Override Statement replacement(final IfStatement s) {
-    final IfStatement $ = subject.pair(navigate.elze(s), null).toNot(s.getExpression());
+    final IfStatement $ = subject.pair(step.elze(s), null).toNot(s.getExpression());
     return !iz.blockRequiredInReplacement(s, $) ? $ : subject.statement($).toBlock();
   }
 
