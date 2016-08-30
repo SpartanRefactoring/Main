@@ -71,14 +71,6 @@ public enum MakeAST {
     }
   }
 
-  /** Converts a boolean into a bit value
-   * @param $ JD
-   * @return 1 if the parameter is <code><b>true</b></code>, 0 if it is
-   *         <code><b>false</b></code> */
-  public static int bit(final boolean $) {
-    return $ ? 1 : 0;
-  }
-
   /** IFile -> ICompilationUnit converter
    * @param f File
    * @return ICompilationUnit */
