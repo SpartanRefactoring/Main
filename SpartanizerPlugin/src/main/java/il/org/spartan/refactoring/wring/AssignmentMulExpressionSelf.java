@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.utils.subject.*;
 
 /** convert
  *
@@ -29,23 +30,28 @@ public final class AssignmentMulExpressionSelf extends Wring.ReplaceCurrentNode<
   @Override String description(final Assignment a) {
     return "Abbreviate " + a + " as x = x*y to x *= y";
   }
-  @Override ASTNode replacement(Assignment a) {
-    if (!iz.isOpAssign(a) ||
-        !areAllOperatorsTIMES(az.infixExpression(a.getRightHandSide()))) return null;
-    if (a.getLeftHandSide() == az.infixExpression(a.getRightHandSide()).getLeftOperand()) return leftSame(a);
-    else if ((a.getLeftHandSide() == az.infixExpression(a.getRightHandSide()).getRightOperand())) return rightSame(a);
-    return null;
+  
+  @Override ASTNode replacement(Assignment $) {
+    if (!iz.isOpAssign(a) || !areAllOperatorsTIMES(az.infixExpression(a.getRightHandSide()))) return null;
+    return replace($);
   }
-  static ASTNode leftSame(Assignment $) {
+  
+  static Assignment replace(Assignment $) {
     $.setOperator(Assignment.Operator.TIMES_ASSIGN);
-    $.setRightHandSide(az.infixExpression($.getRightHandSide()).getRightOperand());
+    $.setRightHandSide(rebuildInfix(az.infixExpression($.getRightHandSide()), $.getLeftHandSide()));
     return $;
   }
-  static ASTNode rightSame(Assignment $) {
-    $.setOperator(Assignment.Operator.TIMES_ASSIGN);
-    $.setRightHandSide(az.infixExpression($.getRightHandSide()).getLeftOperand());
-    return $;
+  
+  static InfixExpression rebuildInfix(InfixExpression e, Expression left) {
+    List<Expression> es = extract.allOperands(e);
+    for (final Expression ¢ : es)
+      if (¢.equals(left)){
+        es.remove(¢);
+        break;
+      }
+    return subject.operands(es).to(Operator.TIMES);
   }
+  
   static boolean areAllOperatorsTIMES(InfixExpression e) {
     List<InfixExpression.Operator> l = extract.allOperators(e);
     for (final InfixExpression.Operator ¢ : l)
