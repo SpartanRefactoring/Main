@@ -1,11 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.extract.*;
+import static il.org.spartan.refactoring.utils.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
 
 import il.org.spartan.refactoring.utils.*;
 
@@ -28,11 +26,19 @@ public final class AssignmentMulExpressionSelf extends Wring.ReplaceCurrentNode<
     return "Abbreviate " + a + " as x = x*y to x *= y";
   }
   @Override ASTNode replacement(Assignment a) {
-    if (!iz.isOpAssign(a) ||
-        az.infixExpression(a.getRightHandSide()).getOperator() != Operator.TIMES) return null;
-    if (a.getLeftHandSide() == az.infixExpression(a.getRightHandSide()).getLeftOperand()) return leftSame(a);
-    else if ((a.getLeftHandSide() == az.infixExpression(a.getRightHandSide()).getRightOperand())) return rightSame(a);
-    return null;
+    Expression right = right(a);
+    assert right != null;
+    Expression left = left(a);
+    assert left != null;
+    Expression leftOperand = left(az.infixExpression(right));
+    if (leftOperand == null)
+      return null;
+    Expression rightOperand = az.infixExpression(right).getRightOperand();
+    if (rightOperand == null)
+      return null;
+    return !iz.isOpAssign(a) || az.infixExpression(right).getOperator() != Operator.TIMES ? null
+        : left == leftOperand ? leftSame(a)
+            : left == rightOperand ? rightSame(a) : null;
   }
   static ASTNode leftSame(Assignment $) {
     $.setOperator(Assignment.Operator.TIMES_ASSIGN);
