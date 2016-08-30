@@ -751,8 +751,8 @@ public class TrimmerTest250 {
   @Test public void issue103ma() {
     trimming("x=x*y").to("x*=y");
   }
-  @Ignore public void issue103mb() {
-    trimming("x=y*x").to("x*=y");
+  @Test public void issue103mb() {
+    trimming("x=y*x").to("x=x*y").to("x*=y");
   }
   @Ignore public void issue103mc() {
     trimming("x=y*z").to(null);
