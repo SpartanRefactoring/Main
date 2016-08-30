@@ -2,7 +2,6 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.utils.step.*;
-import static il.org.spartan.refactoring.utils.extract.*;
 
 import java.util.*;
 
