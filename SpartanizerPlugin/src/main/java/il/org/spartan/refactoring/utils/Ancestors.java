@@ -1,5 +1,5 @@
 package il.org.spartan.refactoring.utils;
-
+import static il.org.spartan.refactoring.utils.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -26,7 +26,7 @@ public class Ancestors implements Iterable<ASTNode> {
 
       @Override public ASTNode next() {
         final ASTNode $ = current;
-        current = current.getParent();
+        current = parent(current);
         return $;
       }
 

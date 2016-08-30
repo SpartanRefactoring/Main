@@ -1,5 +1,5 @@
 package il.org.spartan.refactoring.java;
-
+import static il.org.spartan.refactoring.utils.step.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
@@ -36,7 +36,7 @@ public enum stringType {
   }
 
   private static boolean isNotFromContext(final Expression e) {
-    for (ASTNode context = e.getParent(); context != null; context = context.getParent())
+    for (ASTNode context = parent(e); context != null; context = parent(context))
       switch (context.getNodeType()) {
         case INFIX_EXPRESSION:
           if (az.infixExpression(context).getOperator().equals(PLUS))
