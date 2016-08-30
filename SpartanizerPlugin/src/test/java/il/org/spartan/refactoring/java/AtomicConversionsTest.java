@@ -37,13 +37,13 @@ public class AtomicConversionsTest {
     azzert.aye(atomic.isLong(i % l));
   }
 
+  private final char c =  'c';
   private final int i = hashCode();
   private final long l = 1L * (i + "").hashCode() * new Object().hashCode();
 
   @Test public void shift() {
-    azzert.aye(atomic.isLong(l / i));
-    azzert.aye(atomic.isLong(l + i));
-    azzert.aye(atomic.isLong(l % i));
-    azzert.aye(atomic.isLong(i % l));
+    azzert.aye(atomic.isInt(c << l));
+    azzert.aye(atomic.isInt(i << l));
+    azzert.aye(atomic.isLong(l << l));
   }
 }
