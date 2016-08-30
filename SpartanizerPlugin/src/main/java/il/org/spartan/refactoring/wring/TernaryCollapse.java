@@ -42,9 +42,9 @@ public final class TernaryCollapse extends Wring.ReplaceCurrentNode<ConditionalE
     return !wizard.same(then, elseElse) && !wizard.same(then, elseThen) ? null
         : wizard.same(then, elseElse)
             ? subject.pair(elseThen, then).toCondition(
-                subject.pair(il.org.spartan.refactoring.utils.make.logicalNot(e.getExpression()), elze.getExpression()).to(CONDITIONAL_AND))
-            : subject.pair(elseElse, then).toCondition(subject.pair(il.org.spartan.refactoring.utils.make.logicalNot(e.getExpression()),
-                il.org.spartan.refactoring.utils.make.logicalNot(elze.getExpression())).to(CONDITIONAL_AND));
+                subject.pair(il.org.spartan.refactoring.utils.make.notOf(e.getExpression()), elze.getExpression()).to(CONDITIONAL_AND))
+            : subject.pair(elseElse, then).toCondition(subject.pair(il.org.spartan.refactoring.utils.make.notOf(e.getExpression()),
+                il.org.spartan.refactoring.utils.make.notOf(elze.getExpression())).to(CONDITIONAL_AND));
   }
 
   private static Expression collaspeOnThen(final ConditionalExpression e) {
@@ -59,7 +59,7 @@ public final class TernaryCollapse extends Wring.ReplaceCurrentNode<ConditionalE
             ? subject.pair(thenThen, elze).toCondition(subject.pair(e.getExpression(), then.getExpression()).to(CONDITIONAL_AND))
             : wizard.same(thenThen, elze)
                 ? subject.pair(thenElse, elze).toCondition(
-                    subject.pair(e.getExpression(), il.org.spartan.refactoring.utils.make.logicalNot(then.getExpression())).to(CONDITIONAL_AND))
+                    subject.pair(e.getExpression(), il.org.spartan.refactoring.utils.make.notOf(then.getExpression())).to(CONDITIONAL_AND))
                 : null;
   }
 

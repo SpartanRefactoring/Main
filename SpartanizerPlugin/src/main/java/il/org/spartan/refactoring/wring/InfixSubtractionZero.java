@@ -28,9 +28,9 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
   }
 
   private static ASTNode go(final InfixExpression e) {
-    return e.hasExtendedOperands() ? plant(go(operands(e))).into(expose.parent(e))
-        : isLiteralZero(expose.left(e)) ? plant(minus(expose.right(e))).into(expose.parent(e)) //
-            : isLiteralZero(expose.right(e)) ? plant(expose.left(e)).into(expose.parent(e)) //
+    return e.hasExtendedOperands() ? plant(go(operands(e))).into(navigate.parent(e))
+        : isLiteralZero(navigate.left(e)) ? plant(minus(navigate.right(e))).into(navigate.parent(e)) //
+            : isLiteralZero(navigate.right(e)) ? plant(navigate.left(e)).into(navigate.parent(e)) //
                 : null;
   }
 

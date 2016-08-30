@@ -38,7 +38,7 @@ public interface spartan {
       case "List":
       case "Queue":
       case "Set":
-        final String $ = shorten(expose.typeArguments(t));
+        final String $ = shorten(navigate.typeArguments(t));
         if ($ == null)
           return null;
         return $ + "s";

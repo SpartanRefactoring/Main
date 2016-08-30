@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.refactoring.utils.extract.name;
 
@@ -257,7 +257,7 @@ class UsesCollector extends HidingDepth {
   }
 
   @Override public boolean visit(final CastExpression e) {
-    return recurse(expose.right(e));
+    return recurse(navigate.right(e));
   }
 
   @Override public boolean visit(final FieldAccess n) {
@@ -307,7 +307,7 @@ class UsesCollectorIgnoreDefinitions extends UsesCollector {
   }
 
   @Override public boolean visit(final Assignment a) {
-    return recurse(expose.right(a));
+    return recurse(navigate.right(a));
   }
 
   @Override public boolean visit(final PostfixExpression it) {

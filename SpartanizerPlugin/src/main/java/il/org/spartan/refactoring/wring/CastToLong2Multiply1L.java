@@ -14,12 +14,12 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2016 */
 public final class CastToLong2Multiply1L extends Wring.ReplaceCurrentNode<CastExpression> implements Kind.NoImpact {
   @Override String description(final CastExpression e) {
-    return "Use 1L*" + expression(e) + " instead of (long)" + expression(e);
+    return "Use 1L*" + navigate.expression(e) + " instead of (long)" + navigate.expression(e);
   }
 
   @Override ASTNode replacement(final CastExpression e) {
     return eval(//
-        () -> replacement(expression(e))//
+        () -> replacement(navigate.expression(e))//
     ).when(//
         type(e).isPrimitiveType() && "long".equals("" + type(e)) //
     );

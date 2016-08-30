@@ -29,14 +29,14 @@ public final class InfixComparisonSpecific extends Wring.ReplaceCurrentNode<Infi
   }
 
   @Override boolean eligible(final InfixExpression e) {
-    return specifity.compare(expose.left(e), expose.right(e)) < 0;
+    return specifity.compare(navigate.left(e), navigate.right(e)) < 0;
   }
 
   @Override Expression replacement(final InfixExpression e) {
-    return expose.flip(e);
+    return navigate.flip(e);
   }
 
   @Override public boolean scopeIncludes(final InfixExpression e) {
-    return !e.hasExtendedOperands() && iz.comparison(e) && (Specificity.defined(expose.left(e)) || Specificity.defined(expose.right(e)));
+    return !e.hasExtendedOperands() && iz.comparison(e) && (Specificity.defined(navigate.left(e)) || Specificity.defined(navigate.right(e)));
   }
 }

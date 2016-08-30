@@ -19,12 +19,12 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
   private static Expression applyDeMorgan(final InfixExpression inner) {
     final List<Expression> operands = new ArrayList<>();
     for (final Expression e : extract.operands(flatten(inner)))
-      operands.add(il.org.spartan.refactoring.utils.make.logicalNot(e));
+      operands.add(il.org.spartan.refactoring.utils.make.notOf(e));
     return subject.operands(operands).to(conjugate(inner.getOperator()));
   }
 
   private static Expression comparison(final InfixExpression e) {
-    return subject.pair(expose.left(e), expose.right(e)).to(conjugate(e.getOperator()));
+    return subject.pair(navigate.left(e), navigate.right(e)).to(conjugate(e.getOperator()));
   }
 
   /** @param o JD

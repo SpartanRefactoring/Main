@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -47,7 +47,7 @@ public final class IfLastInMethodThenEndingWithEmptyReturn extends Wring<IfState
     final Block b = az.block(s.getParent());
     if (b == null || !(b.getParent() instanceof MethodDeclaration) || !lastIn(s, statements(b)))
       return null;
-    final ReturnStatement deleteMe = az.returnStatement(extract.lastStatement(expose.then(s)));
+    final ReturnStatement deleteMe = az.returnStatement(extract.lastStatement(navigate.then(s)));
     if (deleteMe == null || deleteMe.getExpression() != null)
       return null;
     if (exclude != null)

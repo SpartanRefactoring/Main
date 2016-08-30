@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.Restructure.*;
-import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 
 import java.util.*;
@@ -51,7 +51,7 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
     return new Rewrite(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final IfStatement shorterIf = makeShorterIf(s);
-        final List<Statement> remainder = extract.statements(expose.elze(shorterIf));
+        final List<Statement> remainder = extract.statements(navigate.elze(shorterIf));
         shorterIf.setElseStatement(null);
         final Block parent = az.block(s.getParent());
         final Block newParent = s.getAST().newBlock();
@@ -68,6 +68,6 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
   }
 
   @Override boolean scopeIncludes(final IfStatement s) {
-    return expose.elze(s) != null && (endsWithSequencer(expose.then(s)) || endsWithSequencer(expose.elze(s)));
+    return navigate.elze(s) != null && (endsWithSequencer(navigate.then(s)) || endsWithSequencer(navigate.elze(s)));
   }
 }

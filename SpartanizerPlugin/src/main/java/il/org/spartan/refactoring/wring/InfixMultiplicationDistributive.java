@@ -144,7 +144,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
   }
 
   @Override boolean scopeIncludes(final InfixExpression $) {
-    return $ != null && iz.infixPlus($) && IsSimpleMultiplication(expose.left($)) && IsSimpleMultiplication(expose.right($)); // super.scopeIncludes($);
+    return $ != null && iz.infixPlus($) && IsSimpleMultiplication(navigate.left($)) && IsSimpleMultiplication(navigate.right($)); // super.scopeIncludes($);
   }
 
   private static boolean IsSimpleMultiplication(final Expression $) {

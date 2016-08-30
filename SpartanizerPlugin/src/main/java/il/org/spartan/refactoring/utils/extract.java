@@ -2,7 +2,7 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
-import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
@@ -24,27 +24,6 @@ public enum extract {
   public static List<Expression> allOperands(final InfixExpression e) {
     assert e != null;
     return extract.operands(flatten(e));
-  }
-
-  /** Retrieves the ancestors of the ASTNode, via an Iterator.
-   * @param ¢ JD
-   * @return an {@link Iterable} that traverses the ancestors of the ASTNode.
-   *         Use case: Counting the number of Expressions among a given
-   *         ASTNode's ancestors */
-  public static Iterable<ASTNode> ancestors(final ASTNode ¢) {
-    return () -> new Iterator<ASTNode>() {
-      ASTNode current = ¢;
-
-      @Override public boolean hasNext() {
-        return current != null;
-      }
-
-      @Override public ASTNode next() {
-        final ASTNode $ = current;
-        current = current.getParent();
-        return $;
-      }
-    };
   }
 
   /** Determines whether a give {@link ASTNode} includes precisely one
@@ -72,7 +51,7 @@ public enum extract {
    * @return ASTNode of the type if one of ¢'s parent ancestors is a container
    *         type and null otherwise */
   public static ASTNode containerType(final ASTNode ¢) {
-    for (final ASTNode $ : ancestors(¢.getParent()))
+    for (final ASTNode $ : navigate.ancestors(¢.getParent()))
       if (iz.is($, ANONYMOUS_CLASS_DECLARATION //
           , ANNOTATION_TYPE_DECLARATION //
           , ENUM_DECLARATION //
@@ -117,66 +96,6 @@ public enum extract {
       default:
         return s;
     }
-  }
-
-  /** @param n a node to extract an expression from
-   * @return null if the statement is not an expression, nor a return statement,
-   *         nor a throw statement. Otherwise, the expression in these. */
-  public static Expression expression(final ASTNode n) {
-    if (n == null)
-      return null;
-    switch (n.getNodeType()) {
-      case ASTNode.EXPRESSION_STATEMENT:
-        return expression((ExpressionStatement) n);
-      case ASTNode.RETURN_STATEMENT:
-        return expression((ReturnStatement) n);
-      case ASTNode.THROW_STATEMENT:
-        return expression((ThrowStatement) n);
-      case ASTNode.CLASS_INSTANCE_CREATION:
-        return expression((ClassInstanceCreation) n);
-      case ASTNode.CAST_EXPRESSION:
-        return expression((CastExpression) n);
-      case ASTNode.METHOD_INVOCATION:
-        return receiver((MethodInvocation) n);
-      case ASTNode.PARENTHESIZED_EXPRESSION:
-        return expression((ParenthesizedExpression) n);
-      case ASTNode.DO_STATEMENT:
-        return expression((DoStatement) n);
-      default:
-        return null;
-    }
-  }
-
-  public static Expression expression(final CastExpression $) {
-    return core($.getExpression());
-  }
-
-  public static Expression expression(final ClassInstanceCreation $) {
-    return core($.getExpression());
-  }
-
-  public static Expression expression(final ConditionalExpression e) {
-    return core(e.getExpression());
-  }
-
-  public static Expression expression(final DoStatement $) {
-    return core($.getExpression());
-  }
-
-  public static Expression expression(final ExpressionStatement $) {
-    return $ == null ? null : core($.getExpression());
-  }
-
-  public static Expression expression(final ParenthesizedExpression $) {
-    return core($.getExpression());
-  }
-
-  public static Expression expression(final ReturnStatement $) {
-    return core($.getExpression());
-  }
-
-  public static Expression expression(final ThrowStatement $) {
-    return core($.getExpression());
   }
 
   /** Convert, is possible, an {@link ASTNode} to a {@link ExpressionStatement}
@@ -404,10 +323,10 @@ public enum extract {
     if (e == null)
       return null;
     final List<Expression> $ = new ArrayList<>();
-    $.add(expose.left(e));
-    $.add(expose.right(e));
+    $.add(navigate.left(e));
+    $.add(navigate.right(e));
     if (e.hasExtendedOperands())
-      $.addAll(expose.extendedOperands(e));
+      $.addAll(navigate.extendedOperands(e));
     return $;
   }
 
@@ -452,7 +371,7 @@ public enum extract {
    *         parameter, or <code><b>null</b></code>, if no such statement
    *         exists. */
   public static Statement singleElse(final IfStatement s) {
-    return extract.singleStatement(expose.elze(s));
+    return extract.singleStatement(navigate.elze(s));
   }
 
   /** @param n JD
@@ -467,7 +386,7 @@ public enum extract {
    * @return single statement in the "then" branch of the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
   public static Statement singleThen(final IfStatement s) {
-    return extract.singleStatement(expose.then(s));
+    return extract.singleStatement(navigate.then(s));
   }
 
   /** Extract the {@link Statement} that contains a given node.
@@ -519,7 +438,7 @@ public enum extract {
   }
 
   private static List<Statement> statementsInto(final Block b, final List<Statement> $) {
-    for (final Statement s : expose.statements(b))
+    for (final Statement s : navigate.statements(b))
       extract.statementsInto(s, $);
     return $;
   }

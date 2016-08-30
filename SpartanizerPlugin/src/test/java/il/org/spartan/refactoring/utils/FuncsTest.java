@@ -59,7 +59,7 @@ public class FuncsTest {
   }
 
   @Test public void chainComparison() {
-    assertEquals("c", expose.right(i("a == true == b == c")).toString());
+    assertEquals("c", navigate.right(i("a == true == b == c")).toString());
   }
 
   @Test public void countNonWhiteCharacters() {
