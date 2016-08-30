@@ -2,6 +2,8 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.extract.*;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -29,7 +31,7 @@ public final class AssignmentMulExpressionSelf extends Wring.ReplaceCurrentNode<
   }
   @Override ASTNode replacement(Assignment a) {
     if (!iz.isOpAssign(a) ||
-        az.infixExpression(a.getRightHandSide()).getOperator() != Operator.TIMES) return null;
+        !areAllOperatorsTIMES(az.infixExpression(a.getRightHandSide()))) return null;
     if (a.getLeftHandSide() == az.infixExpression(a.getRightHandSide()).getLeftOperand()) return leftSame(a);
     else if ((a.getLeftHandSide() == az.infixExpression(a.getRightHandSide()).getRightOperand())) return rightSame(a);
     return null;
@@ -44,7 +46,13 @@ public final class AssignmentMulExpressionSelf extends Wring.ReplaceCurrentNode<
     $.setRightHandSide(az.infixExpression($.getRightHandSide()).getLeftOperand());
     return $;
   }
-  
+  static boolean areAllOperatorsTIMES(InfixExpression e) {
+    List<InfixExpression.Operator> l = extract.allOperators(e);
+    for (final InfixExpression.Operator ¢ : l)
+      if (¢ != Operator.TIMES)
+        return false;
+    return true;
+  }
   
 /*
   @Override ASTRewrite go(final ASTRewrite r, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
