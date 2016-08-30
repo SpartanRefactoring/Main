@@ -76,6 +76,7 @@ public class Toolbox {
             new InfixFactorNegatives(), //
             new EvaluateAddition(), //
             new EvaluateSubstraction(), //
+            new EvaluateShiftRight(), //
             new InfixTermsZero(), // must be before InfixAdditionSort
             new InfixAdditionSort(), //
             new InfixComparisonBooleanLiteral(), //

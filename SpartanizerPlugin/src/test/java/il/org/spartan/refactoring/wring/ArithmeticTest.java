@@ -12,20 +12,22 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 @Ignore //
 public class ArithmeticTest {
-  @Ignore("#92:under construction") public static class NotWorking {
-    //
-  }
-
-  @Test public void issue92_46() {
-    trimming("-1/-2*-3/-4*-5*-6/-7/-8/-9") //
-        .to("-1/2*3/4*5*6/7/8/9") //
-        .to("5*6*-1/2*3/4/7/8/9") //
-        .to("-5*6*1/2*3/4/7/8/9") //
-        .to("3*-5*6*1/2*3/4/7/8/9") //
-        .to(null);
-  }
 
   public static class Working {
+    
+    @Test @Ignore("Check It Out...") public void issue92_52() {
+      trimming("-1/-2*-3/-4*-5*-6/-7/-8/-9") //
+          .to("-1/2*3/4*5*6/7/8/9") //
+          .to("5*6*-1/2*3/4/7/8/9") //
+          .to("-5*6*1/2*3/4/7/8/9") //
+          .to("3*-5*6*1/2*3/4/7/8/9") //
+          .to(null);
+    }
+    
+    @Test @Ignore("Check It Out...") public void issue92_53() {
+      trimming("10-2-3").to("5");
+    }
+    
     @Test public void issue92_10() {
       trimming("3*4+2").to("12+2").to("14");
     }
@@ -228,6 +230,18 @@ public class ArithmeticTest {
 
     @Test public void issue92_50() {
       trimming("100%3L%1").to("0L");
+    }
+    
+    @Test public void issue92_51() {
+      trimming("100>>2").to("25");
+    }
+    
+    @Test public void issue92_54() {
+      trimming("100L>>2").to("25L");
+    }
+   
+    @Test public void issue92_55() {
+      trimming("100>>2L").to("25");
     }
 
     @Test public void issue92_4a() {
