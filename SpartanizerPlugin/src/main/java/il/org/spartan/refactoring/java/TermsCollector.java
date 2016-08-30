@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.java;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 
 import java.util.*;
@@ -45,8 +45,8 @@ public class TermsCollector {
     assert !isLeafTerm(e);
     assert iz.infixMinus(e);
     final List<Expression> es = operands(e);
-    addPositiveTerm(core(first(es)));
-    return collectNegativeTerms(rest(es));
+    addPositiveTerm(core(lisp.first(es)));
+    return collectNegativeTerms(lisp.rest(es));
   }
 
   private Void addMinus(final Expression e) {
@@ -93,8 +93,8 @@ public class TermsCollector {
   private Void collectMinusPrefixMinusExprssion(final InfixExpression e) {
     assert e != null;
     final List<Expression> es = operands(e);
-    collectNegativeTerm(core(first(es)));
-    return collectPositiveTerms(rest(es));
+    collectNegativeTerm(core(lisp.first(es)));
+    return collectPositiveTerms(lisp.rest(es));
   }
 
   private Void collectMinusPrefixPlusExpression(final InfixExpression e) {

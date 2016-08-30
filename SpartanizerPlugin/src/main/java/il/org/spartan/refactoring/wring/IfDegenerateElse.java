@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -34,7 +34,7 @@ public final class IfDegenerateElse extends Wring.ReplaceCurrentNode<IfStatement
   }
 
   @Override Statement replacement(final IfStatement s) {
-    final IfStatement $ = duplicate(s);
+    final IfStatement $ = wizard.duplicate(s);
     $.setElseStatement(null);
     return !iz.blockRequiredInReplacement(s, $) ? $ : subject.statement($).toBlock();
   }

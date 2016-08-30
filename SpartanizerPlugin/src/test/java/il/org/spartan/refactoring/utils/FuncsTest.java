@@ -2,7 +2,7 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.ExpressionComparator.*;
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.mockito.Mockito.*;
@@ -13,10 +13,10 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 
-/** A test suite for class {@link Funcs}
+/** A test suite for class {@link navigate}
  * @author Yossi Gil
  * @since 2015-07-18
- * @see Funcs */
+ * @see navigate */
 @SuppressWarnings({ "static-method", "javadoc" }) @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class FuncsTest {
   @Test public void arrayOfInts() {
@@ -92,23 +92,23 @@ public class FuncsTest {
   }
 
   @Test public void sameOfNullAndSomething() {
-    azzert.nay(Funcs.same(null, e("a")));
+    azzert.nay(wizard.same(null, e("a")));
   }
 
   @Test public void sameOfNulls() {
-    azzert.aye(Funcs.same((ASTNode) null, (ASTNode) null));
+    azzert.aye(wizard.same((ASTNode) null, (ASTNode) null));
   }
 
   @Test public void sameOfSomethingAndNull() {
-    azzert.nay(Funcs.same(e("a"), (Expression) null));
+    azzert.nay(wizard.same(e("a"), (Expression) null));
   }
 
   @Test public void sameOfTwoExpressionsIdentical() {
-    azzert.aye(Funcs.same(e("a+b"), e("a+b")));
+    azzert.aye(wizard.same(e("a+b"), e("a+b")));
   }
 
   @Test public void sameOfTwoExpressionsNotSame() {
-    azzert.nay(Funcs.same(e("a+b+c"), e("a+b")));
+    azzert.nay(wizard.same(e("a+b+c"), e("a+b")));
   }
 
   @Test public void shortNameASTRewriter() {

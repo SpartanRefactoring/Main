@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -30,10 +30,10 @@ public final class BlockSingleton extends Wring.ReplaceCurrentNode<Block> implem
   @Override Statement replacement(final Block b) {
     final ASTNode parent = parent(b);
     return !(parent instanceof Statement) || iz.is(parent, ASTNode.TRY_STATEMENT, ASTNode.SYNCHRONIZED_STATEMENT) ? null
-        : replacement(onlyOne(statements(b)));
+        : replacement(lisp.onlyOne(statements(b)));
   }
 
   private static Statement replacement(final Statement $) {
-    return $ == null || iz.blockEssential($) ? null : duplicate($);
+    return $ == null || iz.blockEssential($) ? null : wizard.duplicate($);
   }
 }

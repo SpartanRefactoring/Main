@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 
 import java.util.*;
@@ -39,9 +39,9 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements 
   private static List<Statement> commonPrefix(final List<Statement> ss1, final List<Statement> ss2) {
     final List<Statement> $ = new ArrayList<>();
     while (!ss1.isEmpty() && !ss2.isEmpty()) {
-      final Statement s1 = first(ss1);
-      final Statement s2 = first(ss2);
-      if (!same(s1, s2))
+      final Statement s1 = lisp.first(ss1);
+      final Statement s2 = lisp.first(ss2);
+      if (!wizard.same(s1, s2))
         break;
       $.add(s1);
       ss1.remove(0);

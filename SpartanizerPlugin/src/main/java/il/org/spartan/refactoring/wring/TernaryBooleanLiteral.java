@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
@@ -100,14 +100,14 @@ public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<Condit
    * </ol>
   */
   private static Expression simplifyTernary(final ConditionalExpression e) {
-    return simplifyTernary(core(e.getThenExpression()), core(e.getElseExpression()), duplicate(e.getExpression()));
+    return simplifyTernary(core(e.getThenExpression()), core(e.getElseExpression()), wizard.duplicate(e.getExpression()));
   }
 
   private static Expression simplifyTernary(final Expression then, final Expression elze, final Expression main) {
     final boolean takeThen = !iz.booleanLiteral(then);
     final Expression other = takeThen ? then : elze;
     final boolean literal = az.booleanLiteral(takeThen ? elze : then).booleanValue();
-    return subject.pair(literal != takeThen ? main : logicalNot(main), other).to(literal ? CONDITIONAL_OR : CONDITIONAL_AND);
+    return subject.pair(literal != takeThen ? main : il.org.spartan.refactoring.utils.make.logicalNot(main), other).to(literal ? CONDITIONAL_OR : CONDITIONAL_AND);
   }
 
   @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {

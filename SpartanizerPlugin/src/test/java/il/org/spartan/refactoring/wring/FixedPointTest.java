@@ -34,8 +34,8 @@ import il.org.spartan.refactoring.utils.*;
     final String peeled = w.off(unpeeled);
     if (peeled.equals(from))
       assertNotEquals("No similification of " + from, from, peeled);
-    if (Funcs.gist(peeled).equals(Funcs.gist(from)))
-      assertNotEquals("Simpification of " + from + "is just reformatting", Funcs.gist(peeled), Funcs.gist(from));
+    if (tide.clean(peeled).equals(tide.clean(from)))
+      assertNotEquals("Simpification of " + from + "is just reformatting", tide.clean(peeled), tide.clean(from));
     assertSimilar(expected, peeled);
   }
 

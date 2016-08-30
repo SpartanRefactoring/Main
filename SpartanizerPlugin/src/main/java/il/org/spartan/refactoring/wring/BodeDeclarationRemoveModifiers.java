@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 
 import java.util.*;
@@ -118,7 +118,7 @@ public class BodeDeclarationRemoveModifiers<N extends BodyDeclaration> extends W
   }
 
   @Override BodyDeclaration replacement(final BodyDeclaration $) {
-    return prune(duplicate($), redundancies($));
+    return prune(wizard.duplicate($), redundancies($));
   }
 
   @Override boolean scopeIncludes(final BodyDeclaration ¢) {

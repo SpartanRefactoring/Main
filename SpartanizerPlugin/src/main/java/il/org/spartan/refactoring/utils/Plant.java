@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.iz.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -45,7 +45,7 @@ public class Plant {
 
   private ParenthesizedExpression parenthesize(final Expression e) {
     final ParenthesizedExpression $ = inner.getAST().newParenthesizedExpression();
-    $.setExpression(duplicate(e));
+    $.setExpression(wizard.duplicate(e));
     return $;
   }
 

@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 
 import java.util.*;
 
@@ -50,7 +50,7 @@ public class OccurrencesTest {
   }
 
   @Test public void occurencesAinAsame() {
-    azzert.that(same(a, a), is(true));
+    azzert.that(wizard.same(a, a), is(true));
   }
 
   @Test public void occurencesAinE() {
@@ -62,7 +62,7 @@ public class OccurrencesTest {
   }
 
   @Test public void occurencesAinLeftOfEsame() {
-    azzert.that(same(left(e), a), is(true));
+    azzert.that(wizard.same(left(e), a), is(true));
   }
 
   @Test public void occurencesAinRightOfE() {
@@ -78,7 +78,7 @@ public class OccurrencesTest {
   }
 
   @Test public void sameAandLeftOfE() {
-    azzert.that(same(a, left(e)), is(true));
+    azzert.that(wizard.same(a, left(e)), is(true));
   }
 
   @Test public void sameTypeAandLeftOfE() {

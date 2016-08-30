@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -34,7 +34,7 @@ public final class AssignmentAndReturn extends Wring.ReplaceToNextStatement<Assi
     if (parent == null || parent instanceof ForStatement)
       return null;
     final ReturnStatement s = az.returnStatement(nextStatement);
-    if (s == null || !same(left(a), core(s.getExpression())))
+    if (s == null || !wizard.same(left(a), core(s.getExpression())))
       return null;
     r.remove(parent, g);
     r.replace(s, subject.operand(a).toReturn(), g);

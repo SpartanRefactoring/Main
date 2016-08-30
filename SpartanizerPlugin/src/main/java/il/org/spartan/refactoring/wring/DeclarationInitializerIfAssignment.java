@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -44,7 +44,7 @@ public final class DeclarationInitializerIfAssignment //
     if (condition == null)
       return null;
     final Assignment a = extract.assignment(then(s));
-    if (a == null || !same(left(a), n) || a.getOperator() != Assignment.Operator.ASSIGN || doesUseForbiddenSiblings(f, condition, right(a)))
+    if (a == null || !wizard.same(left(a), n) || a.getOperator() != Assignment.Operator.ASSIGN || doesUseForbiddenSiblings(f, condition, right(a)))
       return null;
     final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
     if (!i.canInlineInto(condition, right(a)))

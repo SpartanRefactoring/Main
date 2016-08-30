@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 
@@ -75,7 +75,7 @@ public final class SingleVariableDeclarationAbbreviation extends Wring<SingleVar
           if (!TagElement.TAG_PARAM.equals(t.getTagName()))
             continue;
           for (final Object o : t.fragments())
-            if (o instanceof SimpleName && same((SimpleName) o, oldName)) {
+            if (o instanceof SimpleName && wizard.same((SimpleName) o, oldName)) {
               r.replace((SimpleName) o, d.getAST().newSimpleName(newName), g);
               return;
             }

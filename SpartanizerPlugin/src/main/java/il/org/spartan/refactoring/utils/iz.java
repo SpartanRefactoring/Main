@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -225,7 +225,7 @@ public enum iz {
   }
 
   public static boolean is(final ASTNode ¢, final int... types) {
-    return ¢ != null && Funcs.intIsIn(¢.getNodeType(), types);
+    return ¢ != null && lisp.intIsIn(¢.getNodeType(), types);
   }
 
   public static boolean isAbstractTypeDeclaration(final ASTNode ¢) {
@@ -437,7 +437,7 @@ public enum iz {
   /** @param n Expression node
    * @return <code><b>true</b></code> <i>iff</i> the Expression is literal */
   public static boolean literal(final ASTNode n) {
-    return n != null && Funcs.intIsIn(n.getNodeType(), NULL_LITERAL, CHARACTER_LITERAL, NUMBER_LITERAL, STRING_LITERAL, BOOLEAN_LITERAL);
+    return n != null && lisp.intIsIn(n.getNodeType(), NULL_LITERAL, CHARACTER_LITERAL, NUMBER_LITERAL, STRING_LITERAL, BOOLEAN_LITERAL);
   }
 
   /** @param s JD
@@ -661,8 +661,8 @@ public enum iz {
     if (b == null)
       return false;
     final IfStatement parent = az.ifStatement(parent(b));
-    return parent != null && (elze(parent) == null || recursiveElze(s) == null)
-        && (elze(parent) != null || recursiveElze(s) != null || blockRequiredInReplacement(parent, s));
+    return parent != null && (elze(parent) == null || wizard.recursiveElze(s) == null)
+        && (elze(parent) != null || wizard.recursiveElze(s) != null || blockRequiredInReplacement(parent, s));
   }
 
   static boolean isLiteral(final ASTNode ¢, final boolean b) {

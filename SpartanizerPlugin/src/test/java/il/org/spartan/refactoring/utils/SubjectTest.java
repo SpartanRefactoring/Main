@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.Into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 
@@ -106,8 +106,8 @@ import il.org.spartan.refactoring.utils.subject.*;
   @Test public void refitPreservesOrder() {
     final InfixExpression e = i("1 + 2 * 3");
     final List<Expression> operands = new ArrayList<>();
-    operands.add(duplicate(e("3*4")));
-    operands.add(duplicate(e("5")));
+    operands.add(wizard.duplicate(e("3*4")));
+    operands.add(wizard.duplicate(e("5")));
     final InfixExpression refit = subject.operands(operands).to(e.getOperator());
     azzert.that(refit, is(not(e)));
     azzert.that(refit.toString(), is("3 * 4 + 5"));
@@ -144,7 +144,7 @@ import il.org.spartan.refactoring.utils.subject.*;
   }
 
   @Test public void subjectOperandsDoesNotIntroduceList() {
-    final List<Expression> operands = extract.operands(Funcs.duplicate(i("a*b")));
+    final List<Expression> operands = extract.operands(wizard.duplicate(i("a*b")));
     azzert.that(operands.size(), is(2));
     final InfixExpression e = i("1+2");
     final InfixExpression refit = subject.operands(operands).to(e.getOperator());
@@ -153,11 +153,11 @@ import il.org.spartan.refactoring.utils.subject.*;
   }
 
   @Test public void subjectOperandsIsCorrect() {
-    azzert.that(subject.operands(extract.operands(Funcs.duplicate(i("a*b*c")))).to(i("1+2+3").getOperator()).toString(), is("a + b + c"));
+    azzert.that(subject.operands(extract.operands(wizard.duplicate(i("a*b*c")))).to(i("1+2+3").getOperator()).toString(), is("a + b + c"));
   }
 
   @Test public void subjectOperandsNotNull() {
-    assert subject.operands(extract.operands(Funcs.duplicate(i("a+b+c")))).to(i("1+2+3").getOperator()) != null;
+    assert subject.operands(extract.operands(wizard.duplicate(i("a+b+c")))).to(i("1+2+3").getOperator()) != null;
   }
 
   @Test public void subjectOperandsWithParenthesis() {

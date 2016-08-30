@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
@@ -59,7 +59,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
    *         same place, or after then the second argument in lexicographical
    *         order. */
   static int alphabeticalCompare(final Expression e1, final Expression e2) {
-    return removeWhites(Funcs.body(e1)).compareTo(removeWhites(Funcs.body(e2)));
+    return removeWhites(wizard.body(e1)).compareTo(removeWhites(wizard.body(e2)));
   }
 
   static int argumentsCompare(final Expression e1, final Expression e2) {
@@ -88,7 +88,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
    * @param n JD
    * @return Number of abstract syntax tree nodes under the parameter. */
   public static int countNonWhites(final ASTNode n) {
-    return removeWhites(Funcs.body(n)).length();
+    return removeWhites(wizard.body(n)).length();
   }
 
   private static boolean isLonger(final Expression e1, final Expression e2) {

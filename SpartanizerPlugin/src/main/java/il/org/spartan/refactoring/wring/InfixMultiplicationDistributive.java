@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
@@ -124,12 +124,12 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     assert common != null;
     if (!common.isEmpty())
       different.remove(common);
-    assert first(common) != null;
-    assert first(different) != null;
-    assert second(different) != null;
-    return subject.pair(first(common), //
+    assert lisp.first(common) != null;
+    assert lisp.first(different) != null;
+    assert lisp.second(different) != null;
+    return subject.pair(lisp.first(common), //
         subject.pair(//
-            first(different), second(different)//
+            lisp.first(different), lisp.second(different)//
         ).to(//
             Operator.PLUS)//
     ).to(//
@@ -139,7 +139,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
 
   @SuppressWarnings("static-method") private boolean isIn(final Expression op, final List<Expression> allOperands) {
     for (final Expression $ : allOperands)
-      if (same(op, $))
+      if (wizard.same(op, $))
         return true;
     return false;
   }
