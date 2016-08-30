@@ -8,7 +8,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 public interface hop {
-
   static CompilationUnit compilationUnit(final ASTNode ¢) {
     return (CompilationUnit) AncestorSearch.forType(COMPILATION_UNIT).from(¢);
   }
@@ -74,11 +73,11 @@ public interface hop {
   static Iterable<ASTNode> ancestors(final ASTNode ¢) {
     return () -> new Iterator<ASTNode>() {
       ASTNode current = ¢;
-  
+
       @Override public boolean hasNext() {
         return current != null;
       }
-  
+
       @Override public ASTNode next() {
         final ASTNode $ = current;
         current = current.getParent();

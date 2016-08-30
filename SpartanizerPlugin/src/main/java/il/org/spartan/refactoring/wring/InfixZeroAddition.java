@@ -2,8 +2,8 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.utils.Plant.*;
-import static il.org.spartan.refactoring.utils.step.*;
 import static il.org.spartan.refactoring.utils.extract.*;
+import static il.org.spartan.refactoring.utils.step.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.MINUS;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.PLUS;
 

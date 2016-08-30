@@ -14,28 +14,28 @@ public enum step {
   /** Expose the list of arguments in a {@link ClassInstanceCreation}
    * @param ¢ JD
    * @return reference to the list of arguments in the argument */
-  @SuppressWarnings("unchecked")  public static List<Expression> arguments(final ClassInstanceCreation ¢) {
+  @SuppressWarnings("unchecked") public static List<Expression> arguments(final ClassInstanceCreation ¢) {
     return ¢.arguments();
   }
 
   /** Expose the list of arguments in a {@link MethodInvocation}
    * @param ¢ JD
    * @return reference to the list of arguments in the argument */
-  @SuppressWarnings("unchecked")  public static List<Expression> arguments(final MethodInvocation ¢) {
+  @SuppressWarnings("unchecked") public static List<Expression> arguments(final MethodInvocation ¢) {
     return ¢.arguments();
   }
 
   /** Expose the list of arguments in a {@link SuperMethodInvocation}
    * @param ¢ JD
    * @return reference to the list of arguments in the argument */
-  @SuppressWarnings("unchecked")  public static List<Expression> arguments(final SuperMethodInvocation ¢) {
+  @SuppressWarnings("unchecked") public static List<Expression> arguments(final SuperMethodInvocation ¢) {
     return ¢.arguments();
   }
 
   /** Expose the list of bodyDeclarations in an {@link AbstractTypeDeclaration}
    * @param ¢ JD
    * @return reference to the list of bodyDeclarations in the argument */
-  @SuppressWarnings("unchecked")  public static List<BodyDeclaration> bodyDeclarations(final AbstractTypeDeclaration ¢) {
+  @SuppressWarnings("unchecked") public static List<BodyDeclaration> bodyDeclarations(final AbstractTypeDeclaration ¢) {
     return ¢.bodyDeclarations();
   }
 
@@ -43,14 +43,14 @@ public enum step {
    * {@link AnonymousClassDeclaration}
    * @param ¢ JD
    * @return reference to the list of bodyDeclarations in the argument */
-  @SuppressWarnings("unchecked")  public static List<BodyDeclaration> bodyDeclarations(final AnonymousClassDeclaration ¢) {
+  @SuppressWarnings("unchecked") public static List<BodyDeclaration> bodyDeclarations(final AnonymousClassDeclaration ¢) {
     return ¢.bodyDeclarations();
   }
 
   /** Expose the list of catchClauses in a {@link TryStatement}
    * @param ¢ JD
    * @return reference to the list of catchClauses in the argument */
-  @SuppressWarnings("unchecked")  public static List<CatchClause> catchClauses(final TryStatement ¢) {
+  @SuppressWarnings("unchecked") public static List<CatchClause> catchClauses(final TryStatement ¢) {
     return ¢.catchClauses();
   }
 
@@ -128,7 +128,7 @@ public enum step {
     return extract.core($.getExpression());
   }
 
- @SuppressWarnings("unchecked") public static List<Expression> expressions(final ArrayInitializer ¢) {
+  @SuppressWarnings("unchecked") public static List<Expression> expressions(final ArrayInitializer ¢) {
     return ¢.expressions();
   }
 
@@ -136,35 +136,35 @@ public enum step {
    * @param ¢ JD
    * @return reference to the list of extended operands contained in the
    *         parameter */
- @SuppressWarnings("unchecked") public static List<Expression> extendedOperands(final InfixExpression ¢) {
+  @SuppressWarnings("unchecked") public static List<Expression> extendedOperands(final InfixExpression ¢) {
     return ¢.extendedOperands();
   }
 
   /** Expose the list of fragments in a {@link FieldDeclaration}
    * @param ¢ JD
    * @return reference to the list of fragments in the argument */
- @SuppressWarnings("unchecked") public static List<VariableDeclarationFragment> fragments(final FieldDeclaration ¢) {
+  @SuppressWarnings("unchecked") public static List<VariableDeclarationFragment> fragments(final FieldDeclaration ¢) {
     return ¢.fragments();
   }
 
   /** Expose the list of fragments in a {@link VariableDeclarationExpression}
    * @param ¢ JD
    * @return reference to the list of fragments in the argument */
- @SuppressWarnings("unchecked") public static List<VariableDeclarationFragment> fragments(final VariableDeclarationExpression ¢) {
+  @SuppressWarnings("unchecked") public static List<VariableDeclarationFragment> fragments(final VariableDeclarationExpression ¢) {
     return ¢ != null ? ¢.fragments() : new ArrayList<>();
   }
 
   /** Expose the list of fragments in a {@link VariableDeclarationStatement}
    * @param ¢ JD
    * @return reference to the list of fragments in the argument */
- @SuppressWarnings("unchecked") public static List<VariableDeclarationFragment> fragments(final VariableDeclarationStatement ¢) {
+  @SuppressWarnings("unchecked") public static List<VariableDeclarationFragment> fragments(final VariableDeclarationStatement ¢) {
     return ¢.fragments();
   }
 
   /** Expose the list of initializers contained in a {@link ForStatement}
    * @param ¢ JD
    * @return reference to the list of initializers contained in the argument */
- @SuppressWarnings("unchecked") public static List<Expression> initializers(final ForStatement ¢) {
+  @SuppressWarnings("unchecked") public static List<Expression> initializers(final ForStatement ¢) {
     return ¢.initializers();
   }
 
@@ -192,12 +192,12 @@ public enum step {
   @SuppressWarnings("unchecked") public static List<IExtendedModifier> modifiers(final BodyDeclaration ¢) {
     return ¢.modifiers();
   }
-  @SuppressWarnings("unchecked")
-  public static List<IExtendedModifier> modifiers(final SingleVariableDeclaration ¢) {
+
+  @SuppressWarnings("unchecked") public static List<IExtendedModifier> modifiers(final SingleVariableDeclaration ¢) {
     return ¢.modifiers();
   }
-  @SuppressWarnings("unchecked")
-  public static List<IExtendedModifier> modifiers(final VariableDeclarationStatement ¢) {
+
+  @SuppressWarnings("unchecked") public static List<IExtendedModifier> modifiers(final VariableDeclarationStatement ¢) {
     return ¢.modifiers();
   }
 
@@ -305,7 +305,7 @@ public enum step {
     return e.getType();
   }
 
-  @SuppressWarnings("unchecked")  public static List<ParameterizedType> typeArguments(final ParameterizedType ¢) {
+  @SuppressWarnings("unchecked") public static List<ParameterizedType> typeArguments(final ParameterizedType ¢) {
     return ¢.typeArguments();
   }
 

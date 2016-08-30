@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static il.org.spartan.refactoring.utils.step.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
