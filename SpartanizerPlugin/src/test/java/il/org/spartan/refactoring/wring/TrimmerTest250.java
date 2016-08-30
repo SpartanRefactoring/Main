@@ -748,7 +748,41 @@ public class TrimmerTest250 {
   @Test public void issue87b() {
     trimming("a-b*c").to(null);
   }
+  @Ignore public void issue103a() {
+    trimming("x=x+y").to("x+=y");
+  }
+  @Ignore public void issue103b() {
+    trimming("x=y+x").to("x+=y");
+  }
+  @Ignore public void issue103c() {
+    trimming("x=y+z").to(null);
+  }
+  @Ignore public void issue103d() {
+    trimming("x = x + x").to("x+=x");
+  }
+  @Ignore public void issue103e() {
+    trimming("x = y + x + z + x + k + 9").to("x += y + z + x + k + 9");
+  }
+  @Ignore public void issue103f() {
+    trimming("a=a+5").to("a+=5");
+  }
+  @Ignore public void issue103g() {
+    trimming("a=a+(alex)").to("a+=(alex)");
+  }
+  @Ignore public void issue103h() {
+    trimming("a = a + (c = c + kif)").to("a = a + (c += kif)").to("a += (c += kif)").to(null);
+  }
+  @Ignore public void issue103i() {
+    trimming("a = a - (x = x + (y = y*(z=z+3)))").to("a = a - (x = x + (y = y*(z+=3)))").to("a = a - (x += (y = y*(z+=3)))");
+  }
+  @Ignore public void issue103j() {
+    trimming("x=x+foo(x,y)").to("x+=foo(x,y)");
+  }
+  @Ignore public void issue103k() {
+    trimming("z=foo(x=(y=y+u),17)").to("z=foo(x=(y+=u),17)");
+  }
 
+  
   // @formatter:off
   enum A { a1() {{ f(); }
       public void f() {
@@ -778,5 +812,6 @@ public class TrimmerTest250 {
       }
     }
   }
+  
  // @formatter:on
 }
