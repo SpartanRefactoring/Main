@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
@@ -386,7 +386,7 @@ public enum extract {
   }
 
   public static Expression onlyExpression(final List<Expression> $) {
-    return core(onlyOne($));
+    return core(lisp.onlyOne($));
   }
 
   public static Expression operand(final PostfixExpression ¢) {
@@ -460,7 +460,7 @@ public enum extract {
    * @return if b is a block with just 1 statement it returns that statement, if
    *         b is statement it returns b and if b is null it returns a null */
   public static Statement singleStatement(final ASTNode n) {
-    return onlyOne(extract.statements(n));
+    return lisp.onlyOne(extract.statements(n));
   }
 
   /** Finds the single statement in the "then" branch of an {@link IfStatement}

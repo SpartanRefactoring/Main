@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -42,7 +42,7 @@ public final class DeclarationInitializerIfUpdateAssignment extends Wring.Variab
     s.setElseStatement(null);
     final Expression condition = s.getExpression();
     final Assignment a = extract.assignment(then(s));
-    if (a == null || !same(left(a), n) || doesUseForbiddenSiblings(f, condition, right(a)))
+    if (a == null || !wizard.same(left(a), n) || doesUseForbiddenSiblings(f, condition, right(a)))
       return null;
     final Operator o = a.getOperator();
     if (o == Assignment.Operator.ASSIGN)

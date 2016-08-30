@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.java;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 
 import java.util.*;
 
@@ -34,7 +34,7 @@ public class TermsReorganizer {
   }
 
   private static Expression buildMinus(final List<Expression> es) {
-    final Expression $ = subject.operand(first(es)).to(MINUS1);
+    final Expression $ = subject.operand(lisp.first(es)).to(MINUS1);
     if (es.size() == 1)
       return $;
     es.remove(0);
@@ -47,9 +47,9 @@ public class TermsReorganizer {
       case 0:
         return null;
       case 1:
-        return first(es);
+        return lisp.first(es);
       case 2:
-        return subject.pair(first(es), second(es)).to(PLUS2);
+        return subject.pair(lisp.first(es), lisp.second(es)).to(PLUS2);
       default:
         return subject.operands(es).to(PLUS2);
     }

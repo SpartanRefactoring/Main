@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 
@@ -102,7 +102,7 @@ public enum Collect {
        *         {@SimpleName} is equal to the ASTnode's provided by the closure
        *         (n) */
       boolean add(final SimpleName candidate) {
-        if (same(candidate, n))
+        if (wizard.same(candidate, n))
           into.add(candidate);
         return true;
       }
@@ -170,7 +170,7 @@ public enum Collect {
   static ASTVisitor definitionsCollector(final List<SimpleName> into, final ASTNode n) {
     return new MethodExplorer.IgnoreNestedMethods() {
       boolean add(final SimpleName candidate) {
-        if (same(candidate, n))
+        if (wizard.same(candidate, n))
           into.add(candidate);
         return true;
       }
@@ -321,7 +321,7 @@ public enum Collect {
       }
 
       void collectExpression(final SimpleName n) {
-        if (!same(what, n))
+        if (!wizard.same(what, n))
           return;
         into.add(n);
         if (repeated())

@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.expose.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 import static il.org.spartan.refactoring.utils.extract.name;
@@ -231,7 +231,7 @@ class UsesCollector extends HidingDepth {
   }
 
   private boolean hit(final SimpleName ¢) {
-    return same(¢, focus);
+    return wizard.same(¢, focus);
   }
 
   /** This is where we ignore all occurrences of {@link SimpleName} which are

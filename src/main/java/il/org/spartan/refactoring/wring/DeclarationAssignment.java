@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -25,8 +25,8 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2015-08-07 */
 public final class DeclarationAssignment extends Wring.VariableDeclarationFragementAndStatement implements Kind.Canonicalization {
   private static VariableDeclarationFragment makeVariableDeclarationFragement(final VariableDeclarationFragment f, final Expression e) {
-    final VariableDeclarationFragment $ = duplicate(f);
-    $.setInitializer(duplicate(e));
+    final VariableDeclarationFragment $ = wizard.duplicate(f);
+    $.setInitializer(wizard.duplicate(e));
     return $;
   }
 
@@ -39,7 +39,7 @@ public final class DeclarationAssignment extends Wring.VariableDeclarationFragem
     if (initializer != null)
       return null;
     final Assignment a = extract.assignment(nextStatement);
-    if (a == null || !same(n, left(a)) || doesUseForbiddenSiblings(f, right(a)))
+    if (a == null || !wizard.same(n, left(a)) || doesUseForbiddenSiblings(f, right(a)))
       return null;
     r.replace(f, makeVariableDeclarationFragement(f, right(a)), g);
     r.remove(extract.statement(a), g);

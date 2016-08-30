@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 
 import java.util.*;
@@ -47,7 +47,7 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends Wring.Rep
     if (!iz.vacuousElse(s) || !iz.sequencer(nextStatement) || !endsWithSequencer(then(s)))
       return null;
     final IfStatement asVirtualIf = subject.pair(then(s), nextStatement).toIf(s.getExpression());
-    if (same(then(asVirtualIf), elze(asVirtualIf))) {
+    if (wizard.same(then(asVirtualIf), elze(asVirtualIf))) {
       r.replace(s, then(asVirtualIf), g);
       r.remove(nextStatement, g);
       return r;

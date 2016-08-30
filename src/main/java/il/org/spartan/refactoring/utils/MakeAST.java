@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 
 import java.io.*;
 import java.util.*;
@@ -167,7 +167,7 @@ public enum MakeAST {
    * @param text what to parse
    * @return a newly created parser for the parameter */
   public ASTParser makeParser(final char[] text) {
-    final ASTParser $ = parser(kind);
+    final ASTParser $ = wizard.parser(kind);
     $.setSource(text);
     return $;
   }
@@ -176,7 +176,7 @@ public enum MakeAST {
    * @param u what to parse
    * @return a newly created parser for the parameter */
   public ASTParser makeParser(final ICompilationUnit u) {
-    final ASTParser $ = parser(kind);
+    final ASTParser $ = wizard.parser(kind);
     $.setSource(u);
     return $;
   }

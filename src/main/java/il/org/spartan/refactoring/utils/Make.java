@@ -48,7 +48,7 @@ public enum Make {
    * @param text what to parse
    * @return a newly created parser for the parameter */
   public ASTParser parser(final char[] text) {
-    final ASTParser $ = Funcs.parser(kind);
+    final ASTParser $ = wizard.parser(kind);
     $.setSource(text);
     return $;
   }
@@ -57,7 +57,7 @@ public enum Make {
    * @param d JD
    * @return created parser */
   public ASTParser parser(final Document d) {
-    final ASTParser $ = Funcs.parser(kind);
+    final ASTParser $ = wizard.parser(kind);
     $.setSource(d.get().toCharArray());
     return $;
   }
@@ -66,7 +66,7 @@ public enum Make {
    * @param u what to parse
    * @return a newly created parser for the parameter */
   public ASTParser parser(final ICompilationUnit u) {
-    final ASTParser $ = Funcs.parser(kind);
+    final ASTParser $ = wizard.parser(kind);
     $.setSource(u);
     return $;
   }

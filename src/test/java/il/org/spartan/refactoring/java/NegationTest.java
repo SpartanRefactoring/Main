@@ -13,7 +13,7 @@ import il.org.spartan.refactoring.utils.*;
 /** A test suite for class {@link negation}
  * @author Yossi Gil
  * @since 2015-07-18
- * @see Funcs */
+ * @see navigate */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) public class NegationTest {
   @Test public void negationOfAddition() {

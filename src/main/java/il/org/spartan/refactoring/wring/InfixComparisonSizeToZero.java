@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 // import static il.org.spartan.refactoring.utils.Is.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
@@ -120,7 +120,7 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
     return !validTypes(right, left) ? null
         : left instanceof MethodInvocation ? //
             replacement(e, o, (MethodInvocation) left, right) //
-            : replacement(e, conjugate(o), (MethodInvocation) right, left)//
+            : replacement(e, navigate.conjugate(o), (MethodInvocation) right, left)//
     ;
   }
 }

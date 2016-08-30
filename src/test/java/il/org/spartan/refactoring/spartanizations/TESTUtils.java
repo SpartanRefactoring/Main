@@ -34,7 +34,7 @@ import il.org.spartan.refactoring.wring.*;
   }
 
   static void assertNotEvenSimilar(final String expected, final String actual) {
-    azzert.that(Funcs.gist(actual), is(Funcs.gist(expected)));
+    azzert.that(tide.clean(actual), is(tide.clean(expected)));
   }
 
   static void assertOneOpportunity(final Spartanization s, final String from) {
