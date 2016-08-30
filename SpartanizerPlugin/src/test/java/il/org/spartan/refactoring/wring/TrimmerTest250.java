@@ -748,10 +748,10 @@ public class TrimmerTest250 {
   @Test public void issue87b() {
     trimming("a-b*c").to(null);
   }
-  @Test public void issue103ma() {
+  @Ignore public void issue103ma() {
     trimming("x=x*y").to("x*=y");
   }
-  @Test public void issue103mb() {
+  @Ignore public void issue103mb() {
     trimming("x=y*x").to("x=x*y").to("x*=y");
   }
   @Ignore public void issue103mc() {
@@ -760,10 +760,10 @@ public class TrimmerTest250 {
   @Ignore public void issue103md() {
     trimming("x = x * x").to("x*=x");
   }
-  @Test public void issue103me() {
+  @Ignore public void issue103me() {
     trimming("x = y * z * x * k * 9").to("x *= y * z * k * 9");
   }
-  @Test public void issue103_1me() {
+  @Ignore public void issue103_1me() {
     trimming("a = y * z * a").to("a *= y * z");
   }
   @Ignore public void issue103mf() {
