@@ -1,7 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-// import static il.org.spartan.refactoring.utils.Is.*;
-import static il.org.spartan.refactoring.utils.extract.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
