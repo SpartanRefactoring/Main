@@ -49,7 +49,7 @@ public enum sideEffects {
         final CastExpression c = (CastExpression) e;
         return free(c.getExpression());
       case INSTANCEOF_EXPRESSION:
-        return free(expose.left((InstanceofExpression) e));
+        return free(navigate.left((InstanceofExpression) e));
       case PREFIX_EXPRESSION:
         return free((PrefixExpression) e);
       case PARENTHESIZED_EXPRESSION:
@@ -77,7 +77,7 @@ public enum sideEffects {
   }
 
   private static boolean free(final ConditionalExpression e) {
-    return free(expression(e)) && free(expose.then(e)) && free(expose.elze(e));
+    return free(navigate.expression(e)) && free(navigate.then(e)) && free(navigate.elze(e));
   }
 
   public static boolean deterministic(final Expression e) {
@@ -95,7 +95,7 @@ public enum sideEffects {
 
   private static boolean free(final ArrayCreation c) {
     final ArrayInitializer i = c.getInitializer();
-    return free(c.dimensions()) && (i == null || free(expose.expressions(i)));
+    return free(c.dimensions()) && (i == null || free(navigate.expressions(i)));
   }
 
   private static boolean free(final Expression... es) {

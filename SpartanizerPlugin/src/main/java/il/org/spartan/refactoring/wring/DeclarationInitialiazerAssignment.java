@@ -35,9 +35,9 @@ public final class DeclarationInitialiazerAssignment extends Wring.VariableDecla
     if (initializer == null)
       return null;
     final Assignment a = extract.assignment(nextStatement);
-    if (a == null || !wizard.same(n, expose.left(a)) || a.getOperator() != ASSIGN)
+    if (a == null || !wizard.same(n, navigate.left(a)) || a.getOperator() != ASSIGN)
       return null;
-    final Expression newInitializer = wizard.duplicate(expose.right(a));
+    final Expression newInitializer = wizard.duplicate(navigate.right(a));
     if (doesUseForbiddenSiblings(f, newInitializer))
       return null;
     final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);

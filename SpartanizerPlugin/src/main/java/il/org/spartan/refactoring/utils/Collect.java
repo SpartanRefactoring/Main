@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 
 import java.util.*;
@@ -196,7 +196,7 @@ public enum Collect {
       }
 
       @Override public boolean visit(final Assignment a) {
-        return consider(expose.left(a));
+        return consider(navigate.left(a));
       }
 
       @Override public boolean visit(final ForStatement s) {
@@ -366,21 +366,21 @@ public enum Collect {
       }
 
       @Override public boolean visit(final Assignment a) {
-        return collect(expose.right(a));
+        return collect(navigate.right(a));
       }
 
       @Override public boolean visit(final CastExpression e) {
-        return collect(expression(e));
+        return collect(navigate.expression(e));
       }
 
       @Override public boolean visit(final ClassInstanceCreation c) {
-        collect(expression(c));
+        collect(navigate.expression(c));
         return collect(arguments(c));
       }
 
       @Override public boolean visit(final DoStatement s) {
         ++loopDepth;
-        return collect(expression(s));
+        return collect(navigate.expression(s));
       }
 
       @Override public boolean visit(@SuppressWarnings("unused") final EnhancedForStatement __) {
@@ -399,7 +399,7 @@ public enum Collect {
       }
 
       @Override public boolean visit(final InstanceofExpression e) {
-        return collect(expose.left(e));
+        return collect(navigate.left(e));
       }
 
       @Override public boolean visit(final MethodDeclaration d) {

@@ -103,8 +103,8 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
   }
 
   @Override String description(final InfixExpression e) {
-    final Expression right = expose.right(e);
-    final Expression left = expose.left(e);
+    final Expression right = navigate.right(e);
+    final Expression left = navigate.left(e);
     return descriptionAux(left instanceof MethodInvocation ? left : right);
   }
 
@@ -112,9 +112,9 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
     final Operator o = e.getOperator();
     if (!iz.isComparison(o))
       return null;
-    final Expression right = expose.right(e);
+    final Expression right = navigate.right(e);
     assert right != null;
-    final Expression left = expose.left(e);
+    final Expression left = navigate.left(e);
     assert left != null;
     return !validTypes(right, left) ? null
         : left instanceof MethodInvocation ? //

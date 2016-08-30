@@ -9,8 +9,7 @@ import org.eclipse.jdt.core.dom.*;
  * read like a sentence phrase.
  * @author Yossi Gil
  * @since 2015-07-16 */
-@SuppressWarnings("unchecked") //
-public enum expose {
+public enum navigate {
   ;
   /** Expose the list of arguments in a {@link ClassInstanceCreation}
    * @param ¢ JD
@@ -243,5 +242,86 @@ public enum expose {
     });
     $.remove(0);
     return $;
+  }
+
+  /** Retrieves the ancestors of the ASTNode, via an Iterator.
+   * @param ¢ JD
+   * @return an {@link Iterable} that traverses the ancestors of the ASTNode.
+   *         Use case: Counting the number of Expressions among a given
+   *         ASTNode's ancestors */
+  public static Iterable<ASTNode> ancestors(final ASTNode ¢) {
+    return () -> new Iterator<ASTNode>() {
+      ASTNode current = ¢;
+  
+      @Override public boolean hasNext() {
+        return current != null;
+      }
+  
+      @Override public ASTNode next() {
+        final ASTNode $ = current;
+        current = current.getParent();
+        return $;
+      }
+    };
+  }
+
+  /** @param n a node to extract an expression from
+   * @return null if the statement is not an expression, nor a return statement,
+   *         nor a throw statement. Otherwise, the expression in these. */
+  public static Expression expression(final ASTNode n) {
+    if (n == null)
+      return null;
+    switch (n.getNodeType()) {
+      case ASTNode.EXPRESSION_STATEMENT:
+        return expression((ExpressionStatement) n);
+      case ASTNode.RETURN_STATEMENT:
+        return expression((ReturnStatement) n);
+      case ASTNode.THROW_STATEMENT:
+        return expression((ThrowStatement) n);
+      case ASTNode.CLASS_INSTANCE_CREATION:
+        return expression((ClassInstanceCreation) n);
+      case ASTNode.CAST_EXPRESSION:
+        return expression((CastExpression) n);
+      case ASTNode.METHOD_INVOCATION:
+        return extract.receiver((MethodInvocation) n);
+      case ASTNode.PARENTHESIZED_EXPRESSION:
+        return expression((ParenthesizedExpression) n);
+      case ASTNode.DO_STATEMENT:
+        return expression((DoStatement) n);
+      default:
+        return null;
+    }
+  }
+
+  public static Expression expression(final CastExpression $) {
+    return extract.core($.getExpression());
+  }
+
+  public static Expression expression(final ClassInstanceCreation $) {
+    return extract.core($.getExpression());
+  }
+
+  public static Expression expression(final ConditionalExpression e) {
+    return extract.core(e.getExpression());
+  }
+
+  public static Expression expression(final DoStatement $) {
+    return extract.core($.getExpression());
+  }
+
+  public static Expression expression(final ExpressionStatement $) {
+    return $ == null ? null : extract.core($.getExpression());
+  }
+
+  public static Expression expression(final ParenthesizedExpression $) {
+    return extract.core($.getExpression());
+  }
+
+  public static Expression expression(final ReturnStatement $) {
+    return extract.core($.getExpression());
+  }
+
+  public static Expression expression(final ThrowStatement $) {
+    return extract.core($.getExpression());
   }
 }

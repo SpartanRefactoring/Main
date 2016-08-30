@@ -2,7 +2,7 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.utils.Plant.*;
-import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.utils.navigate.*;
 import static il.org.spartan.refactoring.utils.extract.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.MINUS;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.PLUS;
@@ -101,8 +101,8 @@ public final class InfixZeroAddition extends Wring<InfixExpression> {
       $.add(e);
       return $;
     }
-    gather(core(expose.left(e)), $);
-    gather(core(expose.right(e)), $);
+    gather(core(navigate.left(e)), $);
+    gather(core(navigate.right(e)), $);
     if (e.hasExtendedOperands())
       gather(extendedOperands(e), $);
     return $;

@@ -23,18 +23,18 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2015-07-29 */
 public final class IfAssignToFooElseAssignToFoo extends Wring.ReplaceCurrentNode<IfStatement> implements Kind.Ternarization {
   @Override String description(final IfStatement s) {
-    return "Consolidate assignments to " + expose.left(extract.assignment(expose.then(s)));
+    return "Consolidate assignments to " + navigate.left(extract.assignment(navigate.then(s)));
   }
 
   @Override Statement replacement(final IfStatement s) {
-    final Assignment then = extract.assignment(expose.then(s));
-    final Assignment elze = extract.assignment(expose.elze(s));
+    final Assignment then = extract.assignment(navigate.then(s));
+    final Assignment elze = extract.assignment(navigate.elze(s));
     return !wizard.compatible(then, elze) ? null
-        : subject.pair(expose.left(then), subject.pair(expose.right(then), expose.right(elze)).toCondition(s.getExpression()))
+        : subject.pair(navigate.left(then), subject.pair(navigate.right(then), navigate.right(elze)).toCondition(s.getExpression()))
             .toStatement(then.getOperator());
   }
 
   @Override boolean scopeIncludes(final IfStatement s) {
-    return s != null && wizard.compatible(extract.assignment(expose.then(s)), extract.assignment(expose.elze(s)));
+    return s != null && wizard.compatible(extract.assignment(navigate.then(s)), extract.assignment(navigate.elze(s)));
   }
 }

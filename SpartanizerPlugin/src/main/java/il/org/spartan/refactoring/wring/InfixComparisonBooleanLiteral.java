@@ -26,15 +26,15 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2015-07-17 */
 public final class InfixComparisonBooleanLiteral extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
   private static BooleanLiteral literal(final InfixExpression e) {
-    return az.booleanLiteral(core(literalOnLeft(e) ? expose.left(e) : expose.right(e)));
+    return az.booleanLiteral(core(literalOnLeft(e) ? navigate.left(e) : navigate.right(e)));
   }
 
   private static boolean literalOnLeft(final InfixExpression e) {
-    return iz.booleanLiteral(core(expose.left(e)));
+    return iz.booleanLiteral(core(navigate.left(e)));
   }
 
   private static boolean literalOnRight(final InfixExpression e) {
-    return iz.booleanLiteral(core(expose.right(e)));
+    return iz.booleanLiteral(core(navigate.right(e)));
   }
 
   private static boolean negating(final InfixExpression e, final BooleanLiteral l) {
@@ -42,7 +42,7 @@ public final class InfixComparisonBooleanLiteral extends Wring.ReplaceCurrentNod
   }
 
   private static Expression nonLiteral(final InfixExpression e) {
-    return literalOnLeft(e) ? expose.right(e) : expose.left(e);
+    return literalOnLeft(e) ? navigate.right(e) : navigate.left(e);
   }
 
   @Override String description(final InfixExpression e) {
@@ -52,7 +52,7 @@ public final class InfixComparisonBooleanLiteral extends Wring.ReplaceCurrentNod
   @Override Expression replacement(final InfixExpression e) {
     final BooleanLiteral literal = literal(e);
     final Expression nonliteral = core(nonLiteral(e));
-    return plant(!negating(e, literal) ? nonliteral : il.org.spartan.refactoring.utils.make.logicalNot(nonliteral)).into(e.getParent());
+    return plant(!negating(e, literal) ? nonliteral : il.org.spartan.refactoring.utils.make.notOf(nonliteral)).into(e.getParent());
   }
 
   @Override public boolean scopeIncludes(final InfixExpression e) {

@@ -10,7 +10,7 @@ import il.org.spartan.refactoring.wring.*;
 public interface make {
   /** @param ¢ JD
    * @return parameter, but logically negated and simplified */
-  static Expression logicalNot(final Expression ¢) {
+  static Expression notOf(final Expression ¢) {
     final PrefixExpression $ = subject.operand(¢).to(NOT);
     final Expression $$ = PrefixNotPushdown.simplifyNot($);
     return $$ == null ? $ : $$;
@@ -18,11 +18,11 @@ public interface make {
 
   /** @param ¢ the expression to return in the return statement
    * @return new return statement */
-  static ThrowStatement makeThrowStatement(final Expression ¢) {
+  static ThrowStatement throwOf(final Expression ¢) {
     return subject.operand(¢).toThrow();
   }
 
-  static Expression newMinus(final Expression e) {
+  static Expression minusOf(final Expression e) {
     return isLiteralZero(e) ? e : subject.operand(e).to(wizard.MINUS1);
   }
 
@@ -36,7 +36,7 @@ public interface make {
 
   static ParenthesizedExpression parethesized(final Expression e) {
     final ParenthesizedExpression $ = e.getAST().newParenthesizedExpression();
-    $.setExpression(expose.parent(e) == null ? e : wizard.duplicate(e));
+    $.setExpression(navigate.parent(e) == null ? e : wizard.duplicate(e));
     return $;
   }
 

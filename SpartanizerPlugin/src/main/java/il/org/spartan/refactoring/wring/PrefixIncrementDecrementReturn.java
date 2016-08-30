@@ -37,7 +37,7 @@ public final class PrefixIncrementDecrementReturn extends Wring.ReplaceToNextSta
     if (parent == null || parent instanceof ForStatement)
       return null;
     final ReturnStatement s = az.returnStatement(nextStatement);
-    if (s == null || !wizard.same(operand(e), expression(s)))
+    if (s == null || !wizard.same(operand(e), navigate.expression(s)))
       return null;
     r.remove(parent, g);
     r.replace(s, subject.operand(e).toReturn(), g);

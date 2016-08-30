@@ -70,7 +70,7 @@ public interface wizard {
   }
 
   static boolean incompatible(final Assignment a1, final Assignment a2) {
-    return hasNull(a1, a2) || !compatibleOps(a1.getOperator(), a2.getOperator()) || !wizard.same(expose.left(a1), expose.left(a2));
+    return hasNull(a1, a2) || !compatibleOps(a1.getOperator(), a2.getOperator()) || !wizard.same(navigate.left(a1), navigate.left(a2));
   }
 
   /** Determine whether two nodes are the same, in the sense that their textual
@@ -109,7 +109,7 @@ public interface wizard {
   }
 
   static VariableDeclarationFragment findDefinition(final VariableDeclarationStatement s, final SimpleName n) {
-    return findVariableDeclarationFragment(expose.fragments(s), n);
+    return findVariableDeclarationFragment(navigate.fragments(s), n);
   }
 
   static VariableDeclarationFragment findVariableDeclarationFragment(final List<VariableDeclarationFragment> fs, final SimpleName ¢) {
@@ -147,7 +147,7 @@ public interface wizard {
     return (N) copySubtree(t, n);
   }
 
-  /** As {@link expose#elze(ConditionalExpression)} but returns the last else
+  /** As {@link navigate#elze(ConditionalExpression)} but returns the last else
    * statement in "if - else if - ... - else" statement
    * @param ¢ JD
    * @return last nested else statement */

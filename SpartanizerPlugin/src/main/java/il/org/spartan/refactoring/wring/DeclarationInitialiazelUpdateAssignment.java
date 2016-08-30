@@ -36,12 +36,12 @@ public final class DeclarationInitialiazelUpdateAssignment extends Wring.Variabl
     if (initializer == null)
       return null;
     final Assignment a = extract.assignment(nextStatement);
-    if (a == null || !wizard.same(n, expose.left(a)) || doesUseForbiddenSiblings(f, expose.right(a)))
+    if (a == null || !wizard.same(n, navigate.left(a)) || doesUseForbiddenSiblings(f, navigate.right(a)))
       return null;
     final Operator o = a.getOperator();
     if (o == ASSIGN)
       return null;
-    final InfixExpression newInitializer = subject.pair(expose.left(a), expose.right(a)).to(asInfix(o));
+    final InfixExpression newInitializer = subject.pair(navigate.left(a), navigate.right(a)).to(asInfix(o));
     final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
     if (!i.canInlineInto(newInitializer) || i.replacedSize(newInitializer) - size(nextStatement, initializer) > 0)
       return null;
