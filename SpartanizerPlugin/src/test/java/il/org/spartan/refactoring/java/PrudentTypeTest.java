@@ -463,7 +463,7 @@ public class PrudentTypeTest {
     }
     
     @Test public void test159() {
-      azzert.that(prudent(Into.e("((BYTE)1)+((BYTE)2)")), is(INT));
+      azzert.that(prudent(Into.e("((byte)1)+((byte)2)")), is(INT));
     }
     
     @Test public void test160() {
