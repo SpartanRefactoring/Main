@@ -5,6 +5,8 @@ import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.utils.*;
@@ -77,6 +79,20 @@ public enum PrudentType {
    * @param t2 the type of the left hand operand of the expression, the type of
    *        the else expression of the conditional, or null if unknown */
   static PrudentType prudent(final Expression e, final PrudentType t1, final PrudentType t2) {
+    List<PrudentType> ¢ = new ArrayList<PrudentType>();
+    ¢.add(t1);
+    ¢.add(t2);
+    return prudent(e,¢);    
+  }
+
+  /** A version of {@link #prudent(Expression)} that receives the a list of the
+   *  operands' type for all operands of an expression. To be used for InfixExpression
+   *  that has extended operand.
+   *  The order of the type's should much the order of the operands returned by extract.allOperands,
+   *  and for any operand whose type is unknown, there should be a null. The list won't be
+   *  used if the size of the lists don't match.
+   * @param ts JD */
+  static PrudentType prudent(final Expression e, final List<PrudentType> ts){
     switch (e.getNodeType()) {
       case NULL_LITERAL:
         return NULL;
@@ -91,24 +107,24 @@ public enum PrudentType {
       case CAST_EXPRESSION:
         return prudentType((CastExpression) e);
       case PREFIX_EXPRESSION:
-        return prudentType((PrefixExpression) e, t1);
+        return prudentType((PrefixExpression) e, lisp.first(ts));
       case INFIX_EXPRESSION:
-        return prudentType((InfixExpression) e, t1, t2);
+        return prudentType((InfixExpression) e, ts);
       case POSTFIX_EXPRESSION:
-        return prudentType((PostfixExpression) e, t1);
+        return prudentType((PostfixExpression) e, lisp.first(ts));
       case PARENTHESIZED_EXPRESSION:
-        return prudentType((ParenthesizedExpression) e, t1);
+        return prudentType((ParenthesizedExpression) e, lisp.first(ts));
       case CLASS_INSTANCE_CREATION:
         return prudentType((ClassInstanceCreation) e);
       case METHOD_INVOCATION:
         return prudentType((MethodInvocation)e);
       case CONDITIONAL_EXPRESSION:
-        return prudentType((ConditionalExpression)e, t1, t2);
+        return prudentType((ConditionalExpression)e, lisp.first(ts), lisp.second(ts));
       default:
         return NOTHING;
     }
   }
-
+  
   private static PrudentType prudentType(MethodInvocation e) {
     return "toString".equals(e.getName()+"") ? STRING : NOTHING;
   }
@@ -136,11 +152,24 @@ public enum PrudentType {
     return ¢.under(o);
   }
 
-  private static PrudentType prudentType(final InfixExpression e, final PrudentType t1, final PrudentType t2) {
+  private static PrudentType prudentType(final InfixExpression e, final List<PrudentType> ts) {
     final InfixExpression.Operator o = e.getOperator();
-    final PrudentType ¢1 = t1 != null ? t1 : prudent(e.getLeftOperand());
-    final PrudentType ¢2 = t2 != null ? t2 : prudent(e.getRightOperand());
-    return ¢1.underBinaryOperator(o, ¢2);
+    final List<Expression> es = extract.allOperands(e);
+    assert es.size() >= 2;
+    List<PrudentType> ¢ = new ArrayList<PrudentType>();
+    if (ts.size() == es.size())
+      for (int i = 0; i < ts.size(); ++i)
+        ¢.add(i, ts.get(i) != null ? ts.get(i) : prudent(es.get(i)));
+    else
+      for (int i = 0; i < es.size(); ++i)
+        ¢.add(i, prudent(es.get(i)));
+    PrudentType $ = lisp.first(¢).underBinaryOperator(o, lisp.second(¢));
+    lisp.chop(lisp.chop(¢));
+    while(!¢.isEmpty()){
+      $ = $.underBinaryOperator(o, lisp.first(¢));
+      lisp.chop(¢);
+    }
+    return $;
   }
 
   private static PrudentType prudentType(final PostfixExpression e, final PrudentType t1) {
