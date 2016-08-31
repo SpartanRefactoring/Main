@@ -217,19 +217,19 @@ public class TrimmerTest250 {
         .to("enum a {x,y,z; void f() {}}");//
   }
 
-  @Ignore @Test public void issue54_01() {
+  @Test public void issue54_01() {
     trimming("x.toString()").to("\"\" + x");
   }
 
-  @Ignore @Test public void issue54_02() {
+  @Test public void issue54_02() {
     trimming("if(x.toString() == \"abc\") return a;").to("if(\"\" + x == \"abc\") return a;");
   }
 
-  @Ignore @Test public void issue54_03() {
-    trimming("((Integer)6).toString()").to("\"\"+ ((Integer)6)");
+  @Test public void issue54_03() {
+    trimming("((Integer)6).toString()").to("\"\"+ (Integer)6");
   }
 
-  @Ignore @Test public void issue54_04() {
+  @Test public void issue54_04() {
     trimming("switch(x.toString()){ case \"1\": return; case \"2\": return; default: return; }")
         .to("switch(\"\" + x){ case \"1\": return; case \"2\": return; default: return; }");
   }
