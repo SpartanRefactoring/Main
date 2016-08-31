@@ -43,11 +43,14 @@ public enum PrudentType {
   NUMERIC("double|long|int|char", "must be either f()*g(), 2L*f(), 2.*a(), not 2 %a(), nor 2"), //
   INTEGRAL("long|int|char", "must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() "), //
   // Certain types
-  NULL("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"), //
+  NULL("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"),
+  BYTE("byte","must be byte: (byte)1, nothing else"),//
+  SHORT("short","must be short: (short)15, nothing else"),//
   CHAR("char", "must be char: 'a', (char)97, nothing else"), //
   INT("int", "must be int: 2, 2*(int)f(), 2%(int)f(), 'a'+2 , no 2*f()"), //
   LONG("long", "must be long: 2L, 2*(long)f(), 2%(long)f(), no 2*f()"), //
-  DOUBLE("double", "must be double: 2.0, 2.0*a()+g(), no 2%a(), yes 2*f()"), //
+  FLOAT("float","must be float: 2f, 2.3f+1, 2F+f()"), //
+  DOUBLE("double", "must be double: 2.0, 2.0*a()+g(), no 2%a(), no 2*f()"), //
   BOOLEAN("boolean", "must be boolean: !f(), f() || g() "), //
   STRING("String", "must be string: \"\"+a, a.toString(), f()+null, not f()+g()"),//
   ;
@@ -114,10 +117,12 @@ public enum PrudentType {
     final String ¢ = e.getToken();
     if (¢.matches("[0-9]+"))
       return INT;
-    if (¢.matches("[0-9]+\\.[0-9]*[d,D]?") || ¢.matches("[0-9]+[d,D]"))
-      return DOUBLE;
     if (¢.matches("[0-9]+[l,L]"))
       return LONG;
+    if (¢.matches("[0-9]+\\.[0-9]*[f,F]") || ¢.matches("[0-9]+[f,F]"))
+      return FLOAT;
+    if (¢.matches("[0-9]+\\.[0-9]*[d,D]?") || ¢.matches("[0-9]+[d,D]"))
+      return DOUBLE;
     return NUMERIC;
   }
 
@@ -151,30 +156,6 @@ public enum PrudentType {
     return typeSwitch("" + e.getType(), NONNULL);
   }
 
-  private static PrudentType typeSwitch(final String s, final PrudentType $) {
-    switch (s) {
-      case "char":
-      case "Character":
-        return CHAR;
-      case "int":
-      case "Integer":
-        return INT;
-      case "double":
-      case "Double":
-        return DOUBLE;
-      case "long":
-      case "Long":
-        return LONG;
-      case "boolean":
-      case "Boolean":
-        return BOOLEAN;
-      case "String":
-        return STRING;
-      default:
-        return $;
-    }
-  }
-  
   private static PrudentType prudentType(ConditionalExpression e, PrudentType t1, PrudentType t2) {
     PrudentType ¢1 = t1 != null ? t1 : prudent(e.getThenExpression());
     PrudentType ¢2 = t2 != null ? t2 : prudent(e.getElseExpression());
@@ -194,12 +175,48 @@ public enum PrudentType {
     return NOTHING;
   }
 
+  private static PrudentType typeSwitch(final String s, final PrudentType $) {
+    switch (s) {
+      case "byte":
+      case "Byte":
+        return BYTE;
+      case "short":
+      case "Short":
+        return SHORT;
+      case "char":
+      case "Character":
+        return CHAR;
+      case "int":
+      case "Integer":
+        return INT;
+      case "long":
+      case "Long":
+        return LONG;
+      case "float":
+      case "Float":
+        return FLOAT;
+      case "double":
+      case "Double":
+        return DOUBLE;
+      case "boolean":
+      case "Boolean":
+        return BOOLEAN;
+      case "String":
+        return STRING;
+      default:
+        return $;
+    }
+  }
+  
   private static PrudentType conditionalWithNothing(PrudentType t) {
     switch (t){
+      case BYTE:
+      case SHORT:
       case CHAR:
       case INT:
       case INTEGRAL:
       case LONG:
+      case FLOAT:
       case NUMERIC:
         return NUMERIC;
       case DOUBLE:
@@ -231,7 +248,7 @@ public enum PrudentType {
   private final PrudentType under(final PrefixExpression.Operator o) {
     assert o != null;
     return o == NOT ? BOOLEAN //
-        : o != COMPLEMENT ? asNumeric() : asIntegralNonChar();
+        : o != COMPLEMENT ? asNumeric() : asIntegralUnderOperation();
   }
 
   /** @return one of {@link #BOOLEAN}, {@link #INT}, {@link #LONG},
@@ -261,7 +278,7 @@ public enum PrudentType {
     if (in(o, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED))
       // shift is unique in that the left hand operand's type doesn't affect the
       // result's type
-      return asIntegralNonChar();
+      return asIntegralUnderOperation();
     if (!in(o, TIMES, DIVIDE, wizard.MINUS2))
       throw new IllegalArgumentException("o=" + o + " k=" + k.fullName() + "this=" + this);
     return underNumericOnlyOperator(k);
@@ -294,32 +311,45 @@ public enum PrudentType {
     // Double contaminates Numeric
     if (in(DOUBLE, $, this))
       return DOUBLE;
-    // Numeric contaminates INTEGRAL
+    // Numeric contaminates Float
     if (in(NUMERIC, $, this))
       return NUMERIC;
+  //FLOAT contaminates Integral
+    if (in(FLOAT, $, this))
+      return FLOAT;
     // LONG contaminates INTEGRAL
     if (in(LONG, $, this))
       return LONG;
     // INTEGRAL contaminates INT
     if (in(INTEGRAL, $, this))
       return INTEGRAL;
-    // plus contaminates CHAR
+    // Everything else is INT after an operation
     return INT;
   }
 
   private PrudentType underIntegersOnlyOperator(final PrudentType k) {
-    final PrudentType ¢1 = asIntegralNonChar();
-    final PrudentType ¢2 = k.asIntegralNonChar();
+    final PrudentType ¢1 = asIntegralUnderOperation();
+    final PrudentType ¢2 = k.asIntegralUnderOperation();
     return in(LONG, ¢1, ¢2) ? LONG : in(INTEGRAL, ¢1, ¢2) ? INTEGRAL : INT;
   }
 
   /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
-   *         {@link #INTEGRAL} or false otherwise */
+   *         {@link BYTE}, {@link SHORT}, {@link #INTEGRAL} or false otherwise */
   public boolean isIntegral() {
-    return in(this, LONG, INT, CHAR, INTEGRAL);
+    return in(this, LONG, INT, CHAR, BYTE, SHORT, INTEGRAL);
+  }
+  
+  /** used to determine whether an integral type behaves as itself under operations
+   *  or as an INT. 
+   * @return true if one of  {@link #CHAR}, {@link BYTE}, {@link SHORT}
+   *         or false otherwise.
+   */
+  private boolean isIntUnderOperation(){
+      return in(this, CHAR, BYTE, SHORT);
   }
 
-  /** @return one of {@link #INT}, {@link #LONG}, {@link #CHAR}, or
+  /** @return one of {@link #INT}, {@link #LONG}, {@link #CHAR},
+   *         {@link BYTE}, {@link SHORT} or
    *         {@link #INTEGRAL}, in case it cannot decide */
   private PrudentType asIntegral() {
     return isIntegral() ? this : INTEGRAL;
@@ -327,29 +357,31 @@ public enum PrudentType {
 
   /** @return one of {@link #INT}, {@link #LONG}, or {@link #INTEGRAL}, in case
    *         it cannot decide */
-  private PrudentType asIntegralNonChar() {
-    return in(this, CHAR, INT) ? INT : asIntegral();
+  private PrudentType asIntegralUnderOperation() {
+    return isIntUnderOperation() ? INT : asIntegral();
   }
 
-  /** @return true if one of @link #INT}, {@link #LONG}, {@link #CHAR},
+  /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
+   *         {@link BYTE}, {@link SHORT}, {@link FLOAT},
    *         {@link #DOUBLE}, {@link #INTEGRAL}, {@link #NUMERIC} or false
    *         otherwise */
   public boolean isNumeric() {
-    return in(this, INT, LONG, CHAR, DOUBLE, INTEGRAL, NUMERIC);
+    return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC);
   }
-
+  
   /** @return one of {@link #INT}, {@link #LONG}, {@link #CHAR},
    *         {@link #DOUBLE}, {@link #INTEGRAL} or {@link #NUMERIC}, in case no
    *         further information is available */
   private PrudentType asNumeric() {
-    return !isNumeric() ? NUMERIC : this != CHAR ? this : INT;
+    return !isNumeric() ? NUMERIC : isIntUnderOperation() ? INT : this;
   }
 
   /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
+   *         {@link BYTE}, {@link SHORT}, {@link FLOAT},
    *         {@link #DOUBLE}, {@link #INTEGRAL} or {@link #NUMERIC},
    *         {@link #STRING}, {@link #ALPHANUMERIC} or false otherwise */
   public boolean isAlphaNumeric() {
-    return in(this, INT, LONG, CHAR, DOUBLE, INTEGRAL, NUMERIC, STRING, ALPHANUMERIC);
+    return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC, STRING, ALPHANUMERIC);
   }
   
   /** @return true if one of {@link #NOTHING}, {@link #BAPTIZED}, {@link #NONNULL},
