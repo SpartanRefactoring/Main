@@ -10,8 +10,8 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.utils.*;
 
-@Ignore("Under construction issue #101")
 @SuppressWarnings("static-method") public class FactorsCollectorTest {
+  
   @Test public void test00() {
     azzert.that(c.collect(i("a*b")), is(c));
   }
@@ -51,7 +51,7 @@ import il.org.spartan.refactoring.utils.*;
     azzert.that(i.getOperator(), is(wizard.DIVIDE));
     azzert.that(step.left(i), iz("a"));
     azzert.that(step.right(i), iz("c"));
-    c.collectPlusNonLeaf(i);
+    c.collectTimesNonLeaf(i);
     azzert.that(c.multipliers().size(), is(1));
     azzert.that(c.dividers().size(), is(1));
   }
@@ -203,10 +203,11 @@ import il.org.spartan.refactoring.utils.*;
     azzert.that(core(e(" +(+ (+a))")), iz("a"));
   }
 
+  //TODO: should probably simplify -+-+-+-+-+(a) to -a
   @Test public void test31() {
     c.collect(i("-+  -+ -+-+-+(a) * b"));
-    azzert.that(c.multipliers(), iz("[b]"));
-    azzert.that(c.dividers(), iz("[a]"));
+    azzert.that(c.multipliers(), iz("[-+-+-+-+-+(a),b]"));
+    azzert.that(c.dividers(), iz("[]"));
   }
 
   @Ignore("no similar case fo multification")
