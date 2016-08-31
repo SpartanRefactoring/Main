@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.utils.Into.*;
+import static il.org.spartan.refactoring.utils.into.*;
 import static il.org.spartan.refactoring.utils.Restructure.*;
 
 import java.util.*;
@@ -131,7 +131,7 @@ import il.org.spartan.refactoring.utils.subject.*;
   }
 
   @Test public void subjectOperands() {
-    final Expression e = Into.e("2 + a < b");
+    final Expression e = into.e("2 + a < b");
     assert stringType.isNot(e);
     final InfixExpression plus = extract.firstPlus(e);
     assert stringType.isNot(plus);
@@ -160,7 +160,7 @@ import il.org.spartan.refactoring.utils.subject.*;
   }
 
   @Test public void subjectOperandsWithParenthesis() {
-    final Expression e = Into.e("(2 + a) * b");
+    final Expression e = into.e("(2 + a) * b");
     assert stringType.isNot(e);
     final InfixExpression plus = extract.firstPlus(e);
     assert stringType.isNot(plus);

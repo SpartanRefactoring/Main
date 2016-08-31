@@ -41,10 +41,10 @@ public final class DeclarationInitialiazerAssignment extends Wring.VariableDecla
     if (doesUseForbiddenSiblings(f, newInitializer))
       return null;
     final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
-    if (!i.canInlineInto(newInitializer) || i.replacedSize(newInitializer) - size(nextStatement, initializer) > 0)
+    if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - size(nextStatement, initializer) > 0)
       return null;
     r.replace(initializer, newInitializer, g);
-    i.inlineInto(newInitializer);
+    i.inlineinto(newInitializer);
     r.remove(nextStatement, g);
     return r;
   }

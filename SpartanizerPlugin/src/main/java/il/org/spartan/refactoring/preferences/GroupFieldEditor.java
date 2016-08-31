@@ -59,7 +59,7 @@ public class GroupFieldEditor extends FieldEditor {
   }
 
   /* (non-Javadoc) Method declared on FieldEditor. */
-  @Override protected void doFillIntoGrid(final Composite parentParam, @SuppressWarnings("hiding") final int numColumns) {
+  protected void doFillintoGrid(final Composite parentParam, @SuppressWarnings("hiding") final int numColumns) {
     int c = numColumns;
     if (members == null || members.isEmpty())
       return;
@@ -125,7 +125,7 @@ public class GroupFieldEditor extends FieldEditor {
   public void init() {
     if (initialized)
       return;
-    doFillIntoGrid(getFieldEditor(), numColumns);
+    doFillintoGrid(getFieldEditor(), numColumns);
     initialized = true;
   }
 
@@ -161,5 +161,10 @@ public class GroupFieldEditor extends FieldEditor {
 
   @Override public void store() {
     doStore();
+  }
+
+  @Override protected void doFillIntoGrid(Composite parent, int numColumns) {
+    // TODO Auto-generated method stub
+    
   }
 }

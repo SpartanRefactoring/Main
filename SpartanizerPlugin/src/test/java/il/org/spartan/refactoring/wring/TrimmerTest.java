@@ -4,7 +4,7 @@ import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.utils.ExpressionComparator.*;
-import static il.org.spartan.refactoring.utils.Into.*;
+import static il.org.spartan.refactoring.utils.into.*;
 import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
 import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.apply;
 
@@ -1340,7 +1340,7 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   /** START OF STABLING TESTS */
-  @Test public void inlineIntoInstanceCreation() {
+  @Test public void inlineintoInstanceCreation() {
     trimming("" //
         + "public Statement methodBlock(FrameworkMethod m) {\n" //
         + "  final Statement statement = methodBlock(m);\n" //
@@ -1359,7 +1359,7 @@ import il.org.spartan.refactoring.utils.*;
         + "}").to(null);
   }
 
-  @Test public void inlineIntoNextStatementWithSideEffects() {
+  @Test public void inlineintoNextStatementWithSideEffects() {
     trimming("int a = f(); if (a) g(a); else h(u(a));").to(null);
   }
 
@@ -1452,7 +1452,7 @@ import il.org.spartan.refactoring.utils.*;
         .to(null);
   }
 
-  @Test public void inlineSingleVariableIntoPlusPlus() {
+  @Test public void inlineSingleVariableintoPlusPlus() {
     trimming("int $ = 0;  if (a)  ++$;  else --$;").to(null);
   }
 
@@ -2192,22 +2192,22 @@ import il.org.spartan.refactoring.utils.*;
     trimming("plain + kludge").to(null);
   }
 
-  @Test public void noinliningIntoSynchronizedStatement() {
+  @Test public void noinliningintoSynchronizedStatement() {
     trimming("int a  = f(); synchronized(this) { int b = a; }")//
         .to(null);
   }
 
-  @Test public void noinliningIntoSynchronizedStatementEvenWithoutSideEffect() {
+  @Test public void noinliningintoSynchronizedStatementEvenWithoutSideEffect() {
     trimming("int a  = f; synchronized(this) { int b = a; }")//
         .to(null);
   }
 
-  @Test public void noinliningIntoTryStatement() {
+  @Test public void noinliningintoTryStatement() {
     trimming("int a  = f(); try { int b = a; } catch (Exception E) {}")//
         .to(null);
   }
 
-  @Test public void noinliningIntoTryStatementEvenWithoutSideEffect() {
+  @Test public void noinliningintoTryStatementEvenWithoutSideEffect() {
     trimming("int a  = f; try { int b = a; } catch (Exception E) {}")//
         .to(null);
   }
@@ -2838,28 +2838,28 @@ import il.org.spartan.refactoring.utils.*;
     trimming("a ? y.f(b) :y.f(b)").to("y.f(b)");
   }
 
-  @Test public void pushdownTernaryIntoConstructor1Div1Location() {
+  @Test public void pushdownTernaryintoConstructor1Div1Location() {
     trimming("a.equal(b) ? new S(new Integer(4)) : new S(new Ineger(3))").to("new S(a.equal(b)? new Integer(4): new Ineger(3))");
   }
 
-  @Test public void pushdownTernaryIntoConstructor1Div3() {
+  @Test public void pushdownTernaryintoConstructor1Div3() {
     trimming("a.equal(b) ? new S(new Integer(4),a,b) : new S(new Ineger(3),a,b)").to("new S(a.equal(b)? new Integer(4): new Ineger(3), a, b)");
   }
 
-  @Test public void pushdownTernaryIntoConstructor2Div3() {
+  @Test public void pushdownTernaryintoConstructor2Div3() {
     trimming("a.equal(b) ? new S(a,new Integer(4),b) : new S(a, new Ineger(3), b)").to("new S(a,a.equal(b)? new Integer(4): new Ineger(3),b)");
   }
 
-  @Test public void pushdownTernaryIntoConstructor3Div3() {
+  @Test public void pushdownTernaryintoConstructor3Div3() {
     trimming("a.equal(b) ? new S(a,b,new Integer(4)) : new S(a,b,new Ineger(3))").to("new S(a, b, a.equal(b)? new Integer(4): new Ineger(3))");
   }
 
-  @Test public void pushdownTernaryIntoConstructorNotSameArity() {
+  @Test public void pushdownTernaryintoConstructorNotSameArity() {
     trimming("a ? new S(a,new Integer(4),b) : new S(new Ineger(3))").to(
         "!a?new S(new Ineger(3)):new S(a,new Integer(4),b)                                                                                                                  ");
   }
 
-  @Test public void pushdownTernaryIntoPrintln() {
+  @Test public void pushdownTernaryintoPrintln() {
     trimming("    if (s.equals(t))\n"//
         + "      S.out.println(Hey + res);\n"//
         + "    else\n"//
@@ -3957,7 +3957,7 @@ import il.org.spartan.refactoring.utils.*;
         .to("if(target==0){p.f(X);p.v(0);p.f(q+target);p.v(100*q / target); } f();");
   }
 
-  @Test public void ternarizeIntoSuperMethodInvocation() {
+  @Test public void ternarizeintoSuperMethodInvocation() {
     trimming("a ? super.f(a, b, c) : super.f(a, x, c)").to("super.f(a, a ? b : x, c)");
   }
 

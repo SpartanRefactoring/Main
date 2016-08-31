@@ -151,7 +151,7 @@ public final class BlockSimplify extends Wring.ReplaceCurrentNode<Block> impleme
   private static Block reorganizeStatement(final Statement s) {
     final List<Statement> ss = extract.statements(s);
     final Block $ = s.getAST().newBlock();
-    duplicateInto(ss, statements($));
+    duplicateinto(ss, statements($));
     return $;
   }
 
