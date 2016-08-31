@@ -7,10 +7,11 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/** Expands terms of +/- expressions without reordering.
+/** Expands terms of * or / expressions without reordering.
  * <p>
  * Functions named {@link #base} are non-recursive
  * @author Yossi Gil
+ * @author Niv Shalmon
  * @since 2016-08 */
 public class FactorsExpander {
   public static Expression simplify(final InfixExpression e) {
@@ -18,14 +19,14 @@ public class FactorsExpander {
   }
 
   /** @see #recurse(InfixExpression, List) */
-  private static InfixExpression appendMinus(final InfixExpression $, final Factor ¢) {
-    return ¢.divider() ? subject.append($, ¢.expression) : subject.pair($, ¢.expression).to(wizard.PLUS2);
+  private static InfixExpression appendDivide(final InfixExpression $, final Factor ¢) {
+    return ¢.divider() ? subject.append($, ¢.expression) : subject.pair($, ¢.expression).to(wizard.TIMES);
   }
 
   /** @see #recurse(InfixExpression, List) */
-  private static InfixExpression appendPlus(final InfixExpression $, final Factor t) {
+  private static InfixExpression appendTimes(final InfixExpression $, final Factor t) {
     final Expression ¢ = wizard.duplicate(t.expression);
-    return t.multiplier() ? subject.append($, ¢) : subject.pair($, ¢).to(wizard.MINUS2);
+    return t.multiplier() ? subject.append($, ¢) : subject.pair($, ¢).to(wizard.DIVIDE);
   }
 
   private static Expression base(final List<Factor> ts) {
@@ -42,12 +43,15 @@ public class FactorsExpander {
 
   private static InfixExpression base(final Factor t1, final Factor t2) {
     if (t1.multiplier())
-      return subject.pair(t1.expression, t2.expression).to(t2.multiplier() ? wizard.PLUS2 : wizard.MINUS2);
+      return subject.pair(t1.expression, t2.expression).to(t2.multiplier() ? wizard.TIMES : wizard.DIVIDE);
     assert t1.divider();
     return (//
     t2.multiplier() ? subject.pair(t2.expression, t1.expression) : //
-        subject.pair(subject.operand(t1.expression).to(wizard.MINUS1), t2.expression)//
-    ).to(wizard.MINUS2);
+        subject.pair( //
+              subject.pair(t1.expression.getAST().newNumberLiteral("1"),t1.expression //
+                  ).to(wizard.DIVIDE) //
+              ,t2.expression) //
+        ).to(wizard.DIVIDE);
   }
 
   private static Expression base(final FactorsCollector c) {
@@ -76,10 +80,10 @@ public class FactorsExpander {
     assert !ts.isEmpty();
     final Operator o = $.getOperator();
     assert o != null;
-    assert o == wizard.PLUS2 || o == wizard.MINUS2;
+    assert o == wizard.TIMES || o == wizard.DIVIDE;
     final Factor first = lisp.first(ts);
     assert first != null;
-    return recurse(o == wizard.PLUS2 ? appendPlus($, first) : appendMinus($, first), lisp.chop(ts));
+    return recurse(o == wizard.TIMES ? appendTimes($, first) : appendDivide($, first), lisp.chop(ts));
   }
 
   private static Expression step(final Expression $, final List<Factor> ¢) {
