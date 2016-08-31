@@ -88,11 +88,12 @@ public enum PrudentType {
   /** A version of {@link #prudent(Expression)} that receives the a list of the
    *  operands' type for all operands of an expression. To be used for InfixExpression
    *  that has extended operand.
-   *  The order of the type's should much the order of the operands returned by extract.allOperands,
+   *  The order of the type's should much the order of the operands returned by extract.allOperands(),
    *  and for any operand whose type is unknown, there should be a null. The list won't be
-   *  used if the size of the lists don't match.
-   * @param ts JD */
+   *  used if the size of the list doesn't match that of extract.allOperands().
+   * @param ts list of types of operands. Must be at least of size 2 */
   static PrudentType prudent(final Expression e, final List<PrudentType> ts){
+    assert ts.size() >= 2;
     switch (e.getNodeType()) {
       case NULL_LITERAL:
         return NULL;
