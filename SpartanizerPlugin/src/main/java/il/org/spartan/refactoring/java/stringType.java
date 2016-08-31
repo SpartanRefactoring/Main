@@ -1,4 +1,5 @@
 package il.org.spartan.refactoring.java;
+
 import static il.org.spartan.refactoring.utils.step.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;

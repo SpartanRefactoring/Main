@@ -17,9 +17,7 @@ public class PrudentTypeTest {
   }
 
   public static class Working {
-    
-    //Tests made for the inner under methods
-    
+    // Tests made for the inner under methods
     @Test public void under01() {
       azzert.that(prudent(Into.e("+2"), INT), is(INT));
     }
@@ -139,13 +137,12 @@ public class PrudentTypeTest {
     @Test public void under30() {
       azzert.that(prudent(Into.e("x-y"), CHAR, INT), is(INT));
     }
-    
+
     @Test public void under31() {
       azzert.that(prudent(Into.e("x^y"), BOOLEAN, BOOLEAN), is(BOOLEAN));
     }
-    
-    //tests for recognition of literals
-    
+
+    // tests for recognition of literals
     @Test public void literal01() {
       azzert.that(prudent(Into.e("3")), is(INT));
     }
@@ -209,13 +206,12 @@ public class PrudentTypeTest {
     @Test public void literals16() {
       azzert.that(prudent(Into.e("true")), is(BOOLEAN));
     }
-    
-    //tests for casting expression
-    
+
+    // tests for casting expression
     @Test public void cast01() {
       azzert.that(prudent(Into.e("(List)f()")), is(BAPTIZED));
     }
-    
+
     @Test public void cast02() {
       azzert.that(prudent(Into.e("(char)x")), is(CHAR));
     }
@@ -259,37 +255,36 @@ public class PrudentTypeTest {
     @Test public void cast12() {
       azzert.that(prudent(Into.e("(String)x")), is(STRING));
     }
-    
+
     @Test public void cast13() {
       azzert.that(prudent(Into.e("(byte)1")), is(BYTE));
     }
-    
+
     @Test public void cast14() {
       azzert.that(prudent(Into.e("(Byte)1")), is(BYTE));
     }
-    
+
     @Test public void cast15() {
       azzert.that(prudent(Into.e("(short)1")), is(SHORT));
     }
-    
+
     @Test public void cast16() {
       azzert.that(prudent(Into.e("(Short)1")), is(SHORT));
     }
-    
+
     @Test public void cast17() {
       azzert.that(prudent(Into.e("(float)1")), is(FLOAT));
     }
-    
+
     @Test public void cast18() {
       azzert.that(prudent(Into.e("(Float)1")), is(FLOAT));
     }
-    
+
     @Test public void cast19() {
       azzert.that(prudent(Into.e("(float)1d")), is(FLOAT));
     }
-    
-    //tests for constructors
 
+    // tests for constructors
     @Test public void constructors01() {
       azzert.that(prudent(Into.e("new List<Integer>()")), is(NONNULL));
     }
@@ -301,97 +296,94 @@ public class PrudentTypeTest {
     @Test public void constructors03() {
       azzert.that(prudent(Into.e("new String(\"hello\")")), is(STRING));
     }
-    
+
     @Test public void constructors04() {
       azzert.that(prudent(Into.e("new Byte()")), is(BYTE));
     }
-    
+
     @Test public void constructors05() {
       azzert.that(prudent(Into.e("new Double()")), is(DOUBLE));
     }
-    
-    //tests for conditionals
-    
+
+    // tests for conditionals
     @Test public void conditional01() {
       azzert.that(prudent(Into.e("f() ? 3 : 7")), is(INT));
     }
-    
+
     @Test public void conditional02() {
       azzert.that(prudent(Into.e("f() ? 3L : 7")), is(LONG));
     }
-    
+
     @Test public void conditional03() {
       azzert.that(prudent(Into.e("f() ? 3L : 7.")), is(DOUBLE));
     }
-    
+
     @Test public void conditional04() {
       azzert.that(prudent(Into.e("f() ? 3L : 7.")), is(DOUBLE));
     }
-    
+
     @Test public void conditional05() {
       azzert.that(prudent(Into.e("f() ? 'a' : 7.")), is(DOUBLE));
     }
-    
+
     @Test public void conditional06() {
       azzert.that(prudent(Into.e("f() ? 'a' : 'b'")), is(CHAR));
     }
-    
+
     @Test public void conditional07() {
       azzert.that(prudent(Into.e("f() ? \"abc\" : \"def\"")), is(STRING));
     }
-    
+
     @Test public void conditional08() {
       azzert.that(prudent(Into.e("f() ? true : false")), is(BOOLEAN));
     }
-    
+
     @Test public void conditional09() {
       azzert.that(prudent(Into.e("f() ? f() : false")), is(BOOLEAN));
     }
-    
+
     @Test public void conditional10() {
       azzert.that(prudent(Into.e("f() ? f() : 2")), is(NUMERIC));
     }
-    
+
     @Test public void conditional11() {
       azzert.that(prudent(Into.e("f() ? f() : 2l")), is(NUMERIC));
     }
-    
+
     @Test public void conditional12() {
       azzert.that(prudent(Into.e("f() ? 2. : g()")), is(DOUBLE));
     }
-    
+
     @Test public void conditional13() {
       azzert.that(prudent(Into.e("f() ? 2 : 2%f()")), is(INTEGRAL));
     }
-    
+
     @Test public void conditional14() {
       azzert.that(prudent(Into.e("f() ? x : 'a'")), is(NUMERIC));
     }
-    
+
     @Test public void conditional15() {
       azzert.that(prudent(Into.e("f() ? x : g()")), is(NOTHING));
     }
-    
+
     @Test public void conditional16() {
       azzert.that(prudent(Into.e("f() ? \"a\" : h()")), is(STRING));
     }
-    
-    //tests for method calls. currently only toString()
-    
+
+    // tests for method calls. currently only toString()
     @Test public void methods1() {
       azzert.that(prudent(Into.e("a.toString()")), is(STRING));
     }
-    
+
     @Test public void methods2() {
       azzert.that(prudent(Into.e("a.fo()")), is(NOTHING));
     }
-    
+
     @Test public void methods3() {
       azzert.that(prudent(Into.e("toString()")), is(STRING));
     }
-    
-    //basic tests for Pre/in/postfix expression
-    
+
+    // basic tests for Pre/in/postfix expression
     @Test public void basicExpressions01() {
       azzert.that(prudent(Into.e("2 + (2.0)*1L")), is(DOUBLE));
     }
@@ -463,144 +455,143 @@ public class PrudentTypeTest {
     @Test public void basicExpressions18() {
       azzert.that(prudent(Into.e("((short)1)+((short)2)")), is(INT));
     }
-    
+
     @Test public void basicExpressions19() {
       azzert.that(prudent(Into.e("((byte)1)+((byte)2)")), is(INT));
     }
-    
+
     @Test public void basicExpressions20() {
       azzert.that(prudent(Into.e("1f + 1")), is(FLOAT));
     }
-    
+
     @Test public void basicExpressions21() {
       azzert.that(prudent(Into.e("1f + 1l")), is(FLOAT));
     }
-    
+
     @Test public void basicExpressions22() {
       azzert.that(prudent(Into.e("1F + 'a'")), is(FLOAT));
     }
-    
+
     @Test public void basicExpressions23() {
       azzert.that(prudent(Into.e("1f + 1.")), is(DOUBLE));
     }
-    
+
     @Test public void basicExpressions24() {
       azzert.that(prudent(Into.e("1f + f()")), is(NUMERIC));
     }
-    
+
     @Test public void basicExpressions25() {
       azzert.that(prudent(Into.e("1+2+3l")), is(LONG));
     }
-    
+
     @Test public void basicExpressions26() {
       azzert.that(prudent(Into.e("1+2f+3l-5-4d")), is(DOUBLE));
     }
-    
-    //tests for the axiom methods
-    
-    @Test public void axiomChar1(){
+
+    // tests for the axiom methods
+    @Test public void axiomChar1() {
       azzert.that(axiom('a'), is(CHAR));
     }
-   
-    @Test public void axiomByte(){
-      azzert.that(axiom((byte)1), is(BYTE));
+
+    @Test public void axiomByte() {
+      azzert.that(axiom((byte) 1), is(BYTE));
     }
-    
-    @Test public void axiomShort(){
-      azzert.that(axiom((short)3), is(SHORT));
+
+    @Test public void axiomShort() {
+      azzert.that(axiom((short) 3), is(SHORT));
     }
-    
-    @Test public void axiomInt1(){
+
+    @Test public void axiomInt1() {
       azzert.that(axiom(7), is(INT));
     }
-    
-    @Test public void axiomInt2(){
-      azzert.that(axiom('a'+4), is(INT));
+
+    @Test public void axiomInt2() {
+      azzert.that(axiom('a' + 4), is(INT));
     }
-    
-    @Test public void axiomLong(){
+
+    @Test public void axiomLong() {
       azzert.that(axiom(7l), is(LONG));
     }
-    
-    @Test public void axiomFloat(){
+
+    @Test public void axiomFloat() {
       azzert.that(axiom(7f), is(FLOAT));
     }
-    
-    @Test public void axiomDouble(){
+
+    @Test public void axiomDouble() {
       azzert.that(axiom(7.), is(DOUBLE));
     }
-    
-    @Test public void axiomBoolean1(){
+
+    @Test public void axiomBoolean1() {
       azzert.that(axiom(true), is(BOOLEAN));
     }
-    
-    @SuppressWarnings("unused") @Test public void axiomBoolean2(){
-      azzert.that(axiom(true||(false&&true)), is(BOOLEAN));
+
+    @SuppressWarnings("unused") @Test public void axiomBoolean2() {
+      azzert.that(axiom(true || false && true), is(BOOLEAN));
     }
-    
-    @SuppressWarnings("unused") @Test public void axiomBoolean3(){
-      azzert.that(axiom(5>6 && 8!=14), is(BOOLEAN));
+
+    @SuppressWarnings("unused") @Test public void axiomBoolean3() {
+      azzert.that(axiom(5 > 6 && 8 != 14), is(BOOLEAN));
     }
-    
-    @Test public void axiomString1(){
+
+    @Test public void axiomString1() {
       azzert.that(axiom("string"), is(STRING));
     }
-    
-    @Test public void axiomString2(){
-      azzert.that(axiom("string"+9.0), is(STRING));
+
+    @Test public void axiomString2() {
+      azzert.that(axiom("string" + 9.0), is(STRING));
     }
-    
-    @Test public void axiomString3(){
-      azzert.that(axiom("string"+'d'), is(STRING));
+
+    @Test public void axiomString3() {
+      azzert.that(axiom("string" + 'd'), is(STRING));
     }
-    
-    @Test public void axiomString4(){
+
+    @Test public void axiomString4() {
       azzert.that(axiom(Integer.toString(15)), is(STRING));
     }
-    
-    @Test public void axiomExpression1(){
-      azzert.that(axiom(7+3/2.), is(DOUBLE));
+
+    @Test public void axiomExpression1() {
+      azzert.that(axiom(7 + 3 / 2.), is(DOUBLE));
     }
-    
-    @Test public void axiomExpression2(){
-      azzert.that(axiom(7+3/2l), is(LONG));
+
+    @Test public void axiomExpression2() {
+      azzert.that(axiom(7 + 3 / 2l), is(LONG));
     }
-    
-    @Test public void axiomExpression3(){
-      azzert.that(axiom(67>>2l), is(INT));
+
+    @Test public void axiomExpression3() {
+      azzert.that(axiom(67 >> 2l), is(INT));
     }
-    
-    @Test public void axiomExpression4(){
-      azzert.that(axiom(67L>>2l), is(LONG));
+
+    @Test public void axiomExpression4() {
+      azzert.that(axiom(67L >> 2l), is(LONG));
     }
-    
-    @Test public void axiomExpression5(){
-      azzert.that(axiom(1.+2*3 / 4 - 5), is(DOUBLE));
+
+    @Test public void axiomExpression5() {
+      azzert.that(axiom(1. + 2 * 3 / 4 - 5), is(DOUBLE));
     }
-    
-    @Test public void axiomExpression6(){
-      azzert.that(axiom((1.+2*3 / 4 - 5)%4), is(DOUBLE));
+
+    @Test public void axiomExpression6() {
+      azzert.that(axiom((1. + 2 * 3 / 4 - 5) % 4), is(DOUBLE));
     }
-    
-    @Test public void axiomExpression7(){
-      azzert.that(axiom((1+2*3 / 4 - 5)%4), is(INT));
+
+    @Test public void axiomExpression7() {
+      azzert.that(axiom((1 + 2 * 3 / 4 - 5) % 4), is(INT));
     }
-    
-    @Test public void axiomExpression8(){
-      azzert.that(axiom((1L+2*3 / 4 - 5)%4), is(LONG));
+
+    @Test public void axiomExpression8() {
+      azzert.that(axiom((1L + 2 * 3 / 4 - 5) % 4), is(LONG));
     }
-    
-    @Test public void axiomExpression9(){
-      azzert.that(axiom( -1.0/-2*-3/-4*-5*-6/-7/-8/-9), is(DOUBLE));
+
+    @Test public void axiomExpression9() {
+      azzert.that(axiom(-1.0 / -2 * -3 / -4 * -5 * -6 / -7 / -8 / -9), is(DOUBLE));
     }
-    
-    @Test public void axiomExpression10(){
-      azzert.that(axiom(9f/9), is(FLOAT));
+
+    @Test public void axiomExpression10() {
+      azzert.that(axiom(9f / 9), is(FLOAT));
     }
-     
-    //tests using axiom to check complex expressions and interesting cases
+
+    // tests using axiom to check complex expressions and interesting cases
     @Test public void makeSureIUnderstandSemanticsOfShift() {
-      azzert.that(PrudentType.axiom(((short)1)<<1L),is(PrudentType.INT));
-      }
+      azzert.that(PrudentType.axiom((short) 1 << 1L), is(PrudentType.INT));
+    }
   }
 }

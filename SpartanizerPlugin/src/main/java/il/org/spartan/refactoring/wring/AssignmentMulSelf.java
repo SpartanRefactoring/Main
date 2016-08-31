@@ -19,37 +19,35 @@ public final class AssignmentMulSelf extends ReplaceCurrentNode<Assignment> impl
   }
 
   @Override ASTNode replacement(final Assignment a) {
-    //InfixExpression ¢ = az.infixExpression(a.getRightHandSide());
+    // InfixExpression ¢ = az.infixExpression(a.getRightHandSide());
     return !iz.isOpAssign(a) || isNotRightMul(a) ? null : replace(a);
   }
-  
-  private static boolean isNotRightMul(Assignment a) {
+
+  private static boolean isNotRightMul(final Assignment a) {
     return az.infixExpression(a.getRightHandSide()).getOperator() == TIMES;
   }
-  
+
   private static ASTNode replace(final Assignment a) {
-    InfixExpression ¢ = az.infixExpression(a.getRightHandSide());
-    Expression e = (az.expression(rightInfixReplacement(extract.allOperands(¢), a.getLeftHandSide())));
-    ASTNode $ = e == null ? null : subject.pair(a.getLeftHandSide(), e).to(Operator.TIMES_ASSIGN);
+    final InfixExpression ¢ = az.infixExpression(a.getRightHandSide());
+    final Expression e = az.expression(rightInfixReplacement(extract.allOperands(¢), a.getLeftHandSide()));
+    final ASTNode $ = e == null ? null : subject.pair(a.getLeftHandSide(), e).to(Operator.TIMES_ASSIGN);
     return $;
   }
 
-  private static ASTNode rightInfixReplacement(final List<Expression> es, Expression left) {
+  private static ASTNode rightInfixReplacement(final List<Expression> es, final Expression left) {
     final List<Expression> $ = new ArrayList<>(es);
     for (final Expression ¢ : es)
       if (asLeft(¢, left)) {
         $.remove(¢);
         break;
       }
-    assert(es.size() >= 2);
-    assert($.size() >= 1);
+    assert es.size() >= 2;
+    assert $.size() >= 1;
     return $.size() == es.size() ? null : $.size() == 1 ? wizard.duplicate(lisp.first($)) : subject.operands($).to(TIMES);
   }
-  
+
   private static boolean asLeft(final Expression ¢, final Expression left) {
-    //return ¢.equals(left);
+    // return ¢.equals(left);
     return ¢.toString().equals(left.toString());
   }
 }
-
-

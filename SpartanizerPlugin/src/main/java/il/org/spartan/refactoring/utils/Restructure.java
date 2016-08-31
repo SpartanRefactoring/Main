@@ -1,8 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.refactoring.utils.extract.*;
-import static il.org.spartan.refactoring.utils.iz.*;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
 
@@ -15,8 +13,6 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
  * @since 2015-07-21 */
 public enum Restructure {
   ;
-
-
   /** Duplicate all {@link ASTNode} objects found in a given list into another
    * list.
    * @param from JD
