@@ -6,7 +6,6 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.refactoring.java.*;
-import il.org.spartan.refactoring.utils.*;
 
 /** * Unit tests for Arithmetic Operations Calculations
  * @author Dor Ma'ayan <code><dor.d.ma [at] gmail.com></code>
@@ -15,12 +14,11 @@ import il.org.spartan.refactoring.utils.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 @Ignore //
 public class ArithmeticTest {
-
   public static class Working {
     @Test public void additionIsLong() {
-    assert atomic.isLong(1 + 1L);
-    
-  }
+      assert atomic.isLong(1 + 1L);
+    }
+
     @Test public void issue92_1() {
       trimming("1.+2*3 / 4 - 5").to("2*3/4+1.-5").to("6/4+1.-5").to("1+1.-5").to("2.0-5").to("-3.0");
     }
@@ -28,11 +26,11 @@ public class ArithmeticTest {
     @Test public void issue92_2() {
       trimming("1.").to(null);
     }
-    
+
     @Test public void issue92_3() {
       trimming("1+1+3").to("5");
     }
-    
+
     @Test public void issue92_4() {
       trimming("1+1+3").to("5");
     }
@@ -109,7 +107,7 @@ public class ArithmeticTest {
           .to(null)//
       ;
     }
-    
+
     @Test public void issue92_21() {
       trimming("5*5+6*7-9").to("25+42-9");
     }
@@ -239,11 +237,11 @@ public class ArithmeticTest {
     @Test public void issue92_51() {
       trimming("100%3L%1").to("0L");
     }
-    
+
     @Test public void issue92_52() {
       trimming("100>>2").to("25");
     }
-    
+
     @Test public void issue92_53() {
       trimming("-1/-2*-3/-4*-5*-6/-7/-8/-9") //
           .to("-1/2*3/4*5*6/7/8/9") //
@@ -251,35 +249,35 @@ public class ArithmeticTest {
           .to("3*5*6*-1/2/4/7/8/9") //
           .to("-90/2/4/7/8/9").to("0");
     }
-    
+
     @Test public void issue92_54() {
       trimming("100L>>2").to("25L");
     }
-   
+
     @Test public void issue92_55() {
       trimming("100>>2L").to("25");
     }
-    
+
     @Test public void issue92_56() {
       trimming("100<<2").to("400");
     }
-    
+
     @Test public void issue92_57() {
       trimming("100L<<2").to("400L");
     }
-   
+
     @Test public void issue92_58() {
       trimming("100<<2L").to("400");
     }
-    
+
     @Test public void issue92_59() {
       trimming("100L<<2L").to("400L");
     }
-    
+
     @Test public void issue92_60() {
       trimming("100L<<2L>>2L").to("400L>>2L").to("100L");
     }
-    
+
     @Test public void issue92_61() {
       trimming("-1.0/-2*-3/-4*-5*-6/-7/-8/-9") //
           .to("-1.0/2*3/4*5*6/7/8/9") //
@@ -287,10 +285,9 @@ public class ArithmeticTest {
           .to("3*5*6*-1.0/2/4/7/8/9") //
           .to("-90.0/2/4/7/8/9").to("-0.022321428571428572");
     }
-    
+
     @Test public void issue92_62() {
       trimming("1.984+0.006").to("1.99");
-
     }
   }
 }

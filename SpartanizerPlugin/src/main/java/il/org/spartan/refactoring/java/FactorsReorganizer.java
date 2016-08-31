@@ -33,7 +33,7 @@ public class FactorsReorganizer {
 
   private static Expression buildDividers(final List<Expression> es) {
     final Expression one = lisp.first(es).getAST().newNumberLiteral("1");
-    final Expression $ = subject.pair(one,lisp.first(es)).to(wizard.DIVIDE);
+    final Expression $ = subject.pair(one, lisp.first(es)).to(wizard.DIVIDE);
     if (es.size() == 1)
       return $;
     es.remove(0);

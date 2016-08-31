@@ -840,7 +840,7 @@ public class TrimmerTest240 {
 
   @Test public void donotSorMixedTypes() {
     trimming("if (2 * 3.1415 * 180 > a || t.concat(sS) ==1922 && t.length() > 3)    return c > 5;") //
-    .to("if (1130.94 > a || t.concat(sS) ==1922 && t.length() > 3)    return c > 5;");
+        .to("if (1130.94 > a || t.concat(sS) ==1922 && t.length() > 3)    return c > 5;");
   }
 
   @Test public void dontELiminateCatchBlock() {

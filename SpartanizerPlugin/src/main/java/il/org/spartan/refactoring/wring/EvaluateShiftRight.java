@@ -8,7 +8,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.utils.*;
 
-/** Evaluate the arithmetic shift right of numbers according to the following rules <br/>
+/** Evaluate the arithmetic shift right of numbers according to the following
+ * rules <br/>
  * <br/>
  * <code>
  * int >> int --> int <br/>
@@ -24,7 +25,7 @@ public class EvaluateShiftRight extends Wring.ReplaceCurrentNode<InfixExpression
   }
 
   @Override ASTNode replacement(final InfixExpression e) {
-    if (e.getOperator() !=  RIGHT_SHIFT_SIGNED)
+    if (e.getOperator() != RIGHT_SHIFT_SIGNED)
       return null;
     switch (EvaluateAux.getEvaluatedTypeForShift(e)) {
       case INT:
@@ -44,10 +45,10 @@ public class EvaluateShiftRight extends Wring.ReplaceCurrentNode<InfixExpression
     for (final Expression ¢ : es) {
       if (!(¢ instanceof NumberLiteral) && !EvaluateAux.isInt(¢) && !EvaluateAux.isLong(¢))
         return null;
-      if (index != 0){
-        if(EvaluateAux.isInt(¢))
+      if (index != 0) {
+        if (EvaluateAux.isInt(¢))
           shifted = shifted >> EvaluateAux.extractInt(¢);
-        if(EvaluateAux.isLong(¢))
+        if (EvaluateAux.isLong(¢))
           shifted = shifted >> EvaluateAux.extractLong(¢);
       }
       ++index;
@@ -63,14 +64,14 @@ public class EvaluateShiftRight extends Wring.ReplaceCurrentNode<InfixExpression
     for (final Expression ¢ : es) {
       if (!(¢ instanceof NumberLiteral) && !EvaluateAux.isInt(¢) && !EvaluateAux.isLong(¢))
         return null;
-      if (index != 0){
-        if(EvaluateAux.isInt(¢))
+      if (index != 0) {
+        if (EvaluateAux.isInt(¢))
           shifted = shifted >> EvaluateAux.extractInt(¢);
-        if(EvaluateAux.isLong(¢))
+        if (EvaluateAux.isLong(¢))
           shifted = shifted >> EvaluateAux.extractLong(¢);
       }
       ++index;
     }
-    return e.getAST().newNumberLiteral(Long.toString(shifted)+"L");
+    return e.getAST().newNumberLiteral(Long.toString(shifted) + "L");
   }
 }

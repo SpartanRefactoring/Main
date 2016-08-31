@@ -20,25 +20,15 @@ public interface wizard {
       put(LESS_EQUALS, GREATER_EQUALS);
     }
   };
-
   PrefixExpression.Operator MINUS1 = PrefixExpression.Operator.MINUS;
-
   PrefixExpression.Operator PLUS1 = PrefixExpression.Operator.PLUS;
-
   InfixExpression.Operator MINUS2 = InfixExpression.Operator.MINUS;
-
   InfixExpression.Operator PLUS2 = InfixExpression.Operator.PLUS;
-  
   InfixExpression.Operator TIMES = InfixExpression.Operator.TIMES;
-  
   InfixExpression.Operator DIVIDE = InfixExpression.Operator.DIVIDE;
-
   PostfixExpression.Operator DECREMENT_POST = PostfixExpression.Operator.DECREMENT;
-
   PostfixExpression.Operator INCREMENT_POST = PostfixExpression.Operator.INCREMENT;
-
   PrefixExpression.Operator DECREMENT_PRE = PrefixExpression.Operator.DECREMENT;
-
   PrefixExpression.Operator INCREMENT_PRE = PrefixExpression.Operator.INCREMENT;
 
   /** Obtain a condensed textual representation of an {@link ASTNode}
@@ -101,6 +91,7 @@ public interface wizard {
   static Operator conjugate(final Operator ¢) {
     return !wizard.conjugate.containsKey(¢) ? ¢ : wizard.conjugate.get(¢);
   }
+
   /** Compute the "de Morgan" conjugate of an operator.
    * @param o must be either {@link Operator#CONDITIONAL_AND} or
    *        {@link Operator#CONDITIONAL_OR}
@@ -112,6 +103,7 @@ public interface wizard {
     assert iz.deMorgan(o);
     return o.equals(CONDITIONAL_AND) ? CONDITIONAL_OR : CONDITIONAL_AND;
   }
+
   /** @param ns unknown number of nodes to check
    * @return true if one of the nodes is an Expression Statement of type Post or
    *         Pre Expression with ++ or -- operator. false if none of them are or
@@ -154,6 +146,7 @@ public interface wizard {
         return $;
     return null;
   }
+
   /** @param n the node from which to extract the proper fragment
    * @param e the name by which to look for the fragment
    * @return fragment if such with the given name exists or null otherwise (or
@@ -163,9 +156,11 @@ public interface wizard {
     return hasNull(n, e) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || e.getNodeType() != SIMPLE_NAME ? null
         : findDefinition((VariableDeclarationStatement) n, (SimpleName) e);
   }
+
   static boolean incompatible(final Assignment a1, final Assignment a2) {
     return hasNull(a1, a2) || !compatibleOps(a1.getOperator(), a2.getOperator()) || !wizard.same(step.left(a1), step.left(a2));
   }
+
   @SuppressWarnings("unchecked") static ASTParser parser(final int kind) {
     final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     $.setKind(kind);
@@ -176,6 +171,7 @@ public interface wizard {
     $.setCompilerOptions(options);
     return $;
   }
+
   /** Make a duplicate, suitable for tree rewrite, of the parameter
    * @param ¢ JD
    * @param ¢ JD
@@ -185,6 +181,7 @@ public interface wizard {
   @SuppressWarnings("unchecked") static <N extends ASTNode> N rebase(final N n, final AST t) {
     return (N) copySubtree(t, n);
   }
+
   /** As {@link step#elze(ConditionalExpression)} but returns the last else
    * statement in "if - else if - ... - else" statement
    * @param ¢ JD
@@ -195,6 +192,7 @@ public interface wizard {
       $ = ((IfStatement) $).getElseStatement();
     return $;
   }
+
   /** Remove all occurrences of a boolean literal from a list of
    * {@link Expression}¢
    * @param ¢ JD
@@ -207,6 +205,7 @@ public interface wizard {
       es.remove(¢);
     }
   }
+
   /** Determine whether two nodes are the same, in the sense that their textual
    * representations is identical.
    * <p>
@@ -218,6 +217,7 @@ public interface wizard {
   static boolean same(final ASTNode n1, final ASTNode n2) {
     return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType() && wizard.body(n1).equals(wizard.body(n2));
   }
+
   /** String wise comparison of all the given SimpleNames
    * @param ¢ string to compare all names to
    * @param es SimplesNames to compare by their string value to cmpTo
@@ -228,6 +228,7 @@ public interface wizard {
         return false;
     return true;
   }
+
   /** Determine whether two lists of nodes are the same, in the sense that their
    * textual representations is identical.
    * @param ns1 first list to compare

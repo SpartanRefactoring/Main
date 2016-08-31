@@ -12,15 +12,15 @@ public class EvaluateAux {
   }
 
   public static boolean isInt(final Expression e) {
-    return PrudentType.prudent(e)==PrudentType.INT;
+    return PrudentType.prudent(e) == PrudentType.INT;
   }
 
   public static boolean isDouble(final Expression e) {
-    return PrudentType.prudent(e)==PrudentType.DOUBLE;
+    return PrudentType.prudent(e) == PrudentType.DOUBLE;
   }
 
   public static boolean isLong(final Expression e) {
-    return PrudentType.prudent(e)==PrudentType.LONG;
+    return PrudentType.prudent(e) == PrudentType.LONG;
   }
 
   public static boolean isMinusDouble(final Expression e) {
@@ -60,15 +60,15 @@ public class EvaluateAux {
     }
     return isLong ? EvaluateAux.Type.LONG : EvaluateAux.Type.INT;
   }
-  
+
   public static EvaluateAux.Type getEvaluatedTypeForShift(final InfixExpression e) {
     boolean isLong = false;
     final List<Expression> operands = extract.allOperands(e);
-    isLong = isCompitable(operands.get(0))&&(isLong(operands.get(0)) || isMinusLong(operands.get(0)));
+    isLong = isCompitable(operands.get(0)) && (isLong(operands.get(0)) || isMinusLong(operands.get(0)));
     for (final Expression ¢ : operands) {
       if (!isCompitable(¢))
         return EvaluateAux.Type.BAD;
-      if (!isCompitable(¢)&&(EvaluateAux.isDouble(¢) || isMinusDouble(¢)))
+      if (!isCompitable(¢) && (EvaluateAux.isDouble(¢) || isMinusDouble(¢)))
         return EvaluateAux.Type.BAD;
     }
     return isLong ? EvaluateAux.Type.LONG : EvaluateAux.Type.INT;

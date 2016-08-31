@@ -219,24 +219,19 @@ public class EnvironmentCodeExamples {
   @OutOfOrderFlatENV({ "x" }) public static class EX5 {
     static int x;
 
-    @OutOfOrderFlatENV({ "x" })
-    class a {
+    @OutOfOrderFlatENV({ "x" }) class a {
       int a_x;
 
-      @InOrderFlatENV({ "x", "a_x" }) @OutOfOrderFlatENV({ "a_x", "x" })
-      class b {
+      @InOrderFlatENV({ "x", "a_x" }) @OutOfOrderFlatENV({ "a_x", "x" }) class b {
         int b_x;
 
-        @InOrderFlatENV({ "x", "a_x", "b_x" }) @OutOfOrderFlatENV({ "b_x", "a_x", "x" })
-        class c {
+        @InOrderFlatENV({ "x", "a_x", "b_x" }) @OutOfOrderFlatENV({ "b_x", "a_x", "x" }) class c {
           int c_x;
 
-          @InOrderFlatENV({ "x", "a_x", "b_x", "c_x" }) @OutOfOrderFlatENV({ "x", "a_x", "b_x", "c_x" })
-          class d {
+          @InOrderFlatENV({ "x", "a_x", "b_x", "c_x" }) @OutOfOrderFlatENV({ "x", "a_x", "b_x", "c_x" }) class d {
             int d_x;
 
-            @OutOfOrderFlatENV({ "x", "a_x", "b_x", "c_x", "d_x" })
-            void d_func() {
+            @OutOfOrderFlatENV({ "x", "a_x", "b_x", "c_x", "d_x" }) void d_func() {
               @Begin class opening {
                 /**/}
               ++a_x;
@@ -248,8 +243,7 @@ public class EnvironmentCodeExamples {
             }
           }
 
-          @InOrderFlatENV({ "x", "a_x", "b_x", "c_x" }) @OutOfOrderFlatENV({ "c_x", "b_x", "a_x", "x" })
-          void c_func() {
+          @InOrderFlatENV({ "x", "a_x", "b_x", "c_x" }) @OutOfOrderFlatENV({ "c_x", "b_x", "a_x", "x" }) void c_func() {
             @Begin class opening {
               /**/}
             ++a_x;
@@ -260,20 +254,17 @@ public class EnvironmentCodeExamples {
           }
         }
 
-        @OutOfOrderFlatENV({ "x", "a_x", "b_x" })
-        void b_func() {
+        @OutOfOrderFlatENV({ "x", "a_x", "b_x" }) void b_func() {
           @Begin class opening {
             /**/}
           ++a_x;
           ++b_x;
-          @End({ "a_x", "b_x" })
-          class closing {
+          @End({ "a_x", "b_x" }) class closing {
             /**/}
         }
       }
 
-      @OutOfOrderFlatENV({ "x", "a_x", "b_x" })
-      void a_func() {
+      @OutOfOrderFlatENV({ "x", "a_x", "b_x" }) void a_func() {
         @Begin class opening {
           /**/}
         ++a_x;
@@ -284,17 +275,14 @@ public class EnvironmentCodeExamples {
   }
 
   public static class EX6 {
-    @NestedENV({}) @OutOfOrderFlatENV({})
-    class Outer {
+    @NestedENV({}) @OutOfOrderFlatENV({}) class Outer {
       int x;
 
-      @NestedENV({ "EX6.Outer.x#int" }) @OutOfOrderFlatENV({ "x" })
-      class Inner {
+      @NestedENV({ "EX6.Outer.x#int" }) @OutOfOrderFlatENV({ "x" }) class Inner {
         final Outer outer = Outer.this; // Supposedly, this should allow us to
                                         // access the outer x.
 
-        @NestedENV({ "EX6.Outer.x#int", "EX6.Outer.Inner.outer#Outer" }) @OutOfOrderFlatENV({ "x", "outer" })
-        void func(final Inner p) {
+        @NestedENV({ "EX6.Outer.x#int", "EX6.Outer.Inner.outer#Outer" }) @OutOfOrderFlatENV({ "x", "outer" }) void func(final Inner p) {
           @Begin class m {
             /**/}
           // working on the current instance
@@ -311,14 +299,12 @@ public class EnvironmentCodeExamples {
     class Outer2 {
       int x;
 
-      @NestedENV({ "EX6.Outer2.x#int" }) @OutOfOrderFlatENV({ "x" })
-      class Inner2 {
+      @NestedENV({ "EX6.Outer2.x#int" }) @OutOfOrderFlatENV({ "x" }) class Inner2 {
         int x;
         final Outer2 outer2 = Outer2.this;
 
-        @NestedENV({ "EX6.Outer2.x#int", "EX6.Outer2.Inner2.x#int", "EX6.Outer2.Inner2.outer2#Outer2" })
-        @OutOfOrderFlatENV({ "x","outer2" })
-        void func(final Inner2 p) {
+        @NestedENV({ "EX6.Outer2.x#int", "EX6.Outer2.Inner2.x#int", "EX6.Outer2.Inner2.outer2#Outer2" }) @OutOfOrderFlatENV({ "x",
+            "outer2" }) void func(final Inner2 p) {
           @Begin class A {
             /**/}
           x = 0;
@@ -455,65 +441,50 @@ public class EnvironmentCodeExamples {
           @OutOfOrderFlatENV({ "s" }) @End({ "s" }) final int b;
         } catch (final UnsupportedOperationException e) {
           @OutOfOrderFlatENV({ "s", "e" }) final int a;
-        } 
+        }
       }
-      
+
       void h() {
-        try { 
+        try {
           class C {
-            int x;
           }
           C c = new C();
           c = null;
-          c.x = 5;
         } catch (final NullPointerException e) {
-          @OutOfOrderFlatENV({ "e" }) final int a;          
+          @OutOfOrderFlatENV({ "e" }) final int a;
         }
       }
     }
   }
 
-  static public class EX12 { //Lambda use
-    public static void main(String args[]){
-       EX12 tester = new EX12();
-     
-       //with type declaration
-       MathOperation addition = (int a, int b) -> a + b;
-     
-       //with out type declaration
-       MathOperation subtraction = (a, b) -> a - b;
-     
-       //with return statement along with curly braces
-       MathOperation multiplication = (int a, int b) -> { return a * b; };
-     
-       //without return statement and without curly braces
-       MathOperation division = (int a, int b) -> a / b;
-     
-       //with parenthesis
-       GreetingService greetService1 = message ->
-       System.out.println("Hello " + message);
-     
-       //without parenthesis
-       GreetingService greetService2 = (message) ->
-       System.out.println("Hello " + message);
-     
+  static public class EX12 { // Lambda use
+    public static void main(final String args[]) {
+      final EX12 tester = new EX12();
+      // with type declaration
+      final MathOperation addition = (final int a, final int b) -> a + b;
+      // with out type declaration
+      final MathOperation subtraction = (a, b) -> a - b;
+      // with return statement along with curly braces
+      final MathOperation multiplication = (final int a, final int b) -> {
+        return a * b;
+      };
+      // without return statement and without curly braces
+      final MathOperation division = (final int a, final int b) -> a / b;
+      // with parenthesis
+      final GreetingService greetService1 = message -> System.out.println("Hello " + message);
+      // without parenthesis
+      final GreetingService greetService2 = (message) -> System.out.println("Hello " + message);
     }
-   
+
     interface MathOperation {
-       int operation(int a, int b);
+      int operation(int a, int b);
     }
-   
+
     interface GreetingService {
-       void sayMessage(String message);
+      void sayMessage(String message);
     }
-   
-    private int operate(int a, int b, MathOperation mathOperation){
-       return mathOperation.operation(a, b);
-    }
-
-
   }
-  
+
   // for the end
   public static class EX99 { // for_testing_the_use_of_names
     class Oompa_Loompa {
