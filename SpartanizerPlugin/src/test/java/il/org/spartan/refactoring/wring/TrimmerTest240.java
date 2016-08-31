@@ -1815,7 +1815,6 @@ public class TrimmerTest240 {
     trimming("int f(int i) { for(;;++i) if(false) break; return i; }").to(null);
   }
 
-
   @Test public void issue62c() {
     trimming("int f(int i) { while(++i > 999) if(i>99) break; return i;}").to(null);
   }

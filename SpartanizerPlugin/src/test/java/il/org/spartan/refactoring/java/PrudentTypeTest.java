@@ -588,21 +588,27 @@ public class PrudentTypeTest {
     @Test public void axiomExpression10() {
       azzert.that(axiom(9f / 9), is(FLOAT));
     }
+
     @Test public void axiomExpression11() {
-      azzert.that(axiom((float)1 / (int)1L), is(FLOAT));
+      azzert.that(axiom((float) 1 / (int) 1L), is(FLOAT));
     }
+
     @Test public void axiomExpression12() {
-      azzert.that(axiom((float)1 / (long)1), is(FLOAT));
+      azzert.that(axiom((float) 1 / (long) 1), is(FLOAT));
     }
+
     @Test public void axiomExpression13() {
-      azzert.that(axiom((float)1 / (short)1), is(FLOAT));
+      azzert.that(axiom((float) 1 / (short) 1), is(FLOAT));
     }
+
     @Test public void axiomExpression14() {
-      azzert.that(axiom((float)1 + (long)1), is(FLOAT));
+      azzert.that(axiom((float) 1 + (long) 1), is(FLOAT));
     }
+
     @Test public void axiomExpression15() {
-      azzert.that(axiom((float)1 + (char)1), is(FLOAT));
+      azzert.that(axiom((float) 1 + (char) 1), is(FLOAT));
     }
+
     // tests using axiom to check complex expressions and interesting cases
     @Test public void makeSureIUnderstandSemanticsOfShift() {
       azzert.that(PrudentType.axiom((short) 1 << 1L), is(PrudentType.INT));
