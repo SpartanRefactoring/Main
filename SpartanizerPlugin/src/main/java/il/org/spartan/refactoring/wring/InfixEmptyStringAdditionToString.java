@@ -2,16 +2,18 @@ package il.org.spartan.refactoring.wring;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.refactoring.java.*;
+import static il.org.spartan.refactoring.java.PrudentType.STRING;
 import il.org.spartan.refactoring.utils.*;
 
-/**
+/** transforms "" + x to x when x is of type String
 * @author Stav Namir
 * @since 2016-08-29 */
 public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<InfixExpression>
     implements il.org.spartan.refactoring.wring.Kind.NoImpact {
   @SuppressWarnings("unused") static boolean validTypes(final Expression e, final Expression ¢1, final Expression ¢2) {
-    return ¢2 instanceof StringLiteral && ¢1 instanceof StringLiteral && ((StringLiteral) ¢1).getEscapedValue().equals("\"\"")
-        || ¢2 instanceof StringLiteral && ((StringLiteral) ¢2).getEscapedValue().equals("\"\"") && ¢1 instanceof StringLiteral;
+    return PrudentType.prudent(¢2) == STRING && ¢1 instanceof StringLiteral && ((StringLiteral) ¢1).getEscapedValue().equals("\"\"")
+        || ¢2 instanceof StringLiteral && ((StringLiteral) ¢2).getEscapedValue().equals("\"\"") && PrudentType.prudent(¢1) == STRING;
   }
 
   @Override ASTNode replacement(final InfixExpression e) {
