@@ -2014,7 +2014,7 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test public void issue62b() {
     trimming("int f(int i) { for(;i<100;i=i+1) if(false) break; return i; }")//
-    . to("int f(int i) { for(;i<100;i+=1) if(false) break; return i; }").to(null);
+        .to("int f(int i) { for(;i<100;i+=1) if(false) break; return i; }").to(null);
   }
 
   @Test public void issue62c() {
