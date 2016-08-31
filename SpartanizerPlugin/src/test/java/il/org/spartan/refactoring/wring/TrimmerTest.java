@@ -2013,7 +2013,8 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Test public void issue62b() {
-    trimming("int f(int i) { for(;i<100;i=i+1) if(false) break; return i; }").to(null);
+    trimming("int f(int i) { for(;i<100;i=i+1) if(false) break; return i; }")//
+    . to("int f(int i) { for(;i<100;i+=1) if(false) break; return i; }").to(null);
   }
 
   @Test public void issue62c() {
@@ -3368,7 +3369,7 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Test public void shortestOperand02() {
-    trimming("k = k + 4;if (2 * 6 + 4 == k) return true;").to("k = k + 4;if (12 + 4 == k) return true;");
+    trimming("k = k + 4;if (2 * 6 + 4 == k) return true;").to("k += 4;if (12 + 4 == k) return true;");
   }
 
   @Test public void shortestOperand05() {
