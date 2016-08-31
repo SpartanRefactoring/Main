@@ -100,7 +100,9 @@ public class Toolbox {
             null)
         .add(MethodInvocation.class, //
             new StringEqualsConstant(), //
-            new BooleanConstants(), null)
+            new BooleanConstants(),
+            new ToStringToEmptyStringAddition(), //
+            null)
         .add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //
             new SingelVariableDeclarationUnderscoreDoubled(), //
