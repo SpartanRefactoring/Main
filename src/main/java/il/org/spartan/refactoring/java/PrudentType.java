@@ -419,4 +419,52 @@ public enum PrudentType {
   private boolean isNoInfo() {
     return in(this, NOTHING, BAPTIZED, NONNULL, VOID, NULL);    
   }
+  
+  //from here on is the axiom method used for testing of PrudentType. see issue #105 for more details
+  
+  @SuppressWarnings("unused")
+  static PrudentType axiom(byte x){
+    return BYTE;
+  }
+  
+  @SuppressWarnings("unused")
+  static PrudentType axiom(char x){
+    return CHAR;
+  }
+  
+  @SuppressWarnings("unused")
+  static PrudentType axiom(short x){
+    return SHORT;
+  }
+  
+  @SuppressWarnings("unused")
+  static PrudentType axiom(int x){
+    return INT;
+  }
+  
+  @SuppressWarnings("unused")
+  static PrudentType axiom(long x){
+    return LONG;
+  }
+  
+  @SuppressWarnings("unused")
+  static PrudentType axiom(float x){
+    return FLOAT;
+  }
+  
+  @SuppressWarnings("unused")
+  static PrudentType axiom(double x){
+    return DOUBLE;
+  }
+  
+  @SuppressWarnings("unused")
+  static PrudentType axiom(boolean x){
+    return BOOLEAN;
+  }
+  
+  @SuppressWarnings("unused")
+  static PrudentType axiom(String x){
+    return STRING;
+  }
+  
 }
