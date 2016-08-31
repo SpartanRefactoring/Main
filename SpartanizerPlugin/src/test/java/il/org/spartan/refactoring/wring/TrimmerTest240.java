@@ -1815,9 +1815,6 @@ public class TrimmerTest240 {
     trimming("int f(int i) { for(;;++i) if(false) break; return i; }").to(null);
   }
 
-  @Test public void issue62b() {
-    trimming("int f(int i) { for(;i<100;i=i+1) if(false) break; return i; }").to(null);
-  }
 
   @Test public void issue62c() {
     trimming("int f(int i) { while(++i > 999) if(i>99) break; return i;}").to(null);
@@ -3119,10 +3116,6 @@ public class TrimmerTest240 {
 
   @Test public void shortestOperand01() {
     trimming("x + y > z").to(null);
-  }
-
-  @Test public void shortestOperand02() {
-    trimming("k = k + 4;if (2 * 6 + 4 == k) return true;").to("k = k + 4;if (12 + 4 == k) return true;");
   }
 
   @Ignore("string builder") public void shortestOperand05() {
