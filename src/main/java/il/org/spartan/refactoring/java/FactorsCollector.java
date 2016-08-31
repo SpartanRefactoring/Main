@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.java;
 
-//Under construction issue #101
-
+// Under construction issue #101
 import static il.org.spartan.refactoring.utils.extract.*;
 
 import java.util.*;

@@ -6,8 +6,8 @@ import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** transforms "" + x to x when x is of type String
-* @author Stav Namir
-* @since 2016-08-29 */
+ * @author Stav Namir
+ * @since 2016-08-29 */
 public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<InfixExpression>
     implements il.org.spartan.refactoring.wring.Kind.NoImpact {
   @SuppressWarnings("unused") static boolean validTypes(final Expression e, final Expression ¢1, final Expression ¢2) {

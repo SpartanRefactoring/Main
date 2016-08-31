@@ -1,5 +1,7 @@
 package il.org.spartan.refactoring.utils;
+
 import static il.org.spartan.refactoring.utils.step.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;

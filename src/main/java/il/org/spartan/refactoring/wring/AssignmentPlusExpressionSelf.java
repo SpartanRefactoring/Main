@@ -7,7 +7,8 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.utils.*;
-/**convert
+
+/** convert
  *
  * <pre>
  * x = x + y;
@@ -20,39 +21,39 @@ import il.org.spartan.refactoring.utils.*;
  * </pre>
  *
  * @author Dan Greenstein
- * @author Alex Kopzon
- *
- */
-public class AssignmentPlusExpressionSelf extends Wring.ReplaceCurrentNode<Assignment> implements Kind.Abbreviation{
+ * @author Alex Kopzon */
+public class AssignmentPlusExpressionSelf extends Wring.ReplaceCurrentNode<Assignment> implements Kind.Abbreviation {
   @Override String description(final Assignment a) {
     return "switch occurences of x=x+y in " + a + " with x+=y";
   }
-  
-  @Override ASTNode replacement(final Assignment a){
+
+  @Override ASTNode replacement(final Assignment a) {
     return !iz.isOpAssign(a) || !isInfixPlus(a.getRightHandSide()) ? null : replace(a);
   }
-  
-  private static ASTNode replace(final Assignment a){
-    Expression e = a.getLeftHandSide();
-    List<Expression> $ = extract.allOperands(az.infixExpression(a.getRightHandSide()));
+
+  private static ASTNode replace(final Assignment a) {
+    final Expression e = a.getLeftHandSide();
+    final List<Expression> $ = extract.allOperands(az.infixExpression(a.getRightHandSide()));
     for (final Expression ¢ : $)
-      if(e.toString().equals(¢.toString())){
+      if (e.toString().equals(¢.toString())) {
         $.remove(¢);
-        Assignment r = wizard.duplicate(a);
+        final Assignment r = wizard.duplicate(a);
         r.setOperator(Assignment.Operator.PLUS_ASSIGN);
         r.setRightHandSide($.size() <= 1 ? $.get(0) : subject.operands($).to(PLUS));
         return r;
       }
     return null;
   }
-  
-  private static boolean isInfixPlus(Expression $){
+
+  private static boolean isInfixPlus(final Expression $) {
     return isInfixPlus(az.infixExpression($));
   }
-  
-  private static boolean isInfixPlus(InfixExpression $){
-    return $ != null && $.getOperator() != PLUS /*&& (az.infixExpression($.getLeftOperand()) == null || isInfixPlus($.getLeftOperand())) && (az.infixExpression($.getRightOperand()) == null || isInfixPlus($.getRightOperand()))*/; 
+
+  private static boolean isInfixPlus(final InfixExpression $) {
+    return $ != null && $
+        .getOperator() != PLUS /* && (az.infixExpression($.getLeftOperand()) ==
+                                * null || isInfixPlus($.getLeftOperand())) &&
+                                * (az.infixExpression($.getRightOperand()) ==
+                                * null || isInfixPlus($.getRightOperand())) */;
   }
-  
-  
 }

@@ -825,6 +825,7 @@ public class TrimmerTest250 {
   @Test public void issue103a() {
     trimming("x=x+y").to("x+=y");
   }
+
   @Ignore public void issue103mma() {
     trimming("x=x*y").to("x*=y");
   }
@@ -902,6 +903,6 @@ public class TrimmerTest250 {
       }
     }
   }
-  
+
  // @formatter:on
 }

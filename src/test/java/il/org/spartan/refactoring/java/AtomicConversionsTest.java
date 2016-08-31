@@ -9,16 +9,16 @@ import il.org.spartan.*;
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public class AtomicConversionsTest {
   private final byte b = (byte) hashCode();
-  private boolean b1 = equals(getClass());
-  private boolean b2 = !b1 | b << b == (b &1); 
+  private final boolean b1 = equals(getClass());
+  private final boolean b2 = !b1 | b << b == (b & 1);
   private final char c = 'c';
   private final double d = Math.sin(b * c);
   private final float f = (float) Math.cos(d);
   private final int i = hashCode();
   private final long l = 1L * (i + "").hashCode() * new Object().hashCode();
   private final short s = (short) (i * (l % i * (b + c)));
-  private final Object o = getClass().getClassLoader().getClass(); 
-  private final String S = toString(); 
+  private final Object o = getClass().getClassLoader().getClass();
+  private final String S = toString();
 
   @Test public void booleans() {
     azzert.aye(atomic.isBoolean(b1));
@@ -40,7 +40,7 @@ public class AtomicConversionsTest {
   @Test public void booleansAsSemiIntegers() {
     azzert.aye(atomic.isBoolean(b1 & b2));
     azzert.aye(atomic.isBoolean(b1 | b2));
-    azzert.aye(atomic.isBoolean(b1 ? b2: !b2));
+    azzert.aye(atomic.isBoolean(b1 ? b2 : !b2));
     azzert.aye(atomic.isBoolean(b1 | b2 & b2));
     azzert.aye(atomic.isBoolean(b1 ^ b2));
   }

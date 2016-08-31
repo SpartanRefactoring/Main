@@ -40,39 +40,31 @@ import il.org.spartan.*;
     azzert.that(FactorsExpander.simplify(i("a / (c /d)")), iz("a / c * d"));
   }
 
-  @Ignore("no similar case fo multification")
-  @Test public void test08() {
+  @Ignore("no similar case fo multification") @Test public void test08() {
     azzert.that(FactorsExpander.simplify(i("a + -a")), iz("a - a"));
   }
 
-
-  @Ignore("not implemented yet")
-  @Test public void test09() {
+  @Ignore("not implemented yet") @Test public void test09() {
     azzert.that(FactorsExpander.simplify(i("+a + +a")), iz("a + a"));
   }
 
-  @Ignore("no similar case fo multification")
-  @Test public void test10() {
+  @Ignore("no similar case fo multification") @Test public void test10() {
     azzert.that(FactorsExpander.simplify(i("a - -b")), iz("a + b"));
   }
 
-  @Ignore("no similar case fo multification")
-  @Test public void test11() {
+  @Ignore("no similar case fo multification") @Test public void test11() {
     azzert.that(FactorsExpander.simplify(i("a + - - (b + c)")), iz("a + b + c"));
   }
 
-  @Ignore("no similar case fo multification")
-  @Test public void test12() {
+  @Ignore("no similar case fo multification") @Test public void test12() {
     azzert.that(FactorsExpander.simplify(i("a + + - - - (b -c)")), iz("a -b +c"));
   }
 
-  @Ignore("no similar case fo multification")
-  @Test public void test13() {
+  @Ignore("no similar case fo multification") @Test public void test13() {
     azzert.that(FactorsExpander.simplify(i("-a + + - - - (b -c)")), iz("-a -b +c"));
   }
 
-  @Ignore("no similar case fo multification")
-  @Test public void test14() {
+  @Ignore("no similar case fo multification") @Test public void test14() {
     azzert.that(FactorsExpander.simplify(i("-a + + - - - (b -(-c))")), iz(" -a -b-c"));
   }
 
@@ -84,18 +76,15 @@ import il.org.spartan.*;
     azzert.that(FactorsExpander.simplify(i("x/a/b")), iz("x/a/b"));
   }
 
-  @Ignore("not implemented yet")
-  @Test public void test17() {
+  @Ignore("not implemented yet") @Test public void test17() {
     azzert.that(FactorsExpander.simplify(i("x-a-(-((-b)) - (((-(((-(y))))))))")), iz("x-a-b+y"));
   }
 
-  @Ignore("not implemented yet")
-  @Test public void test18() {
+  @Ignore("not implemented yet") @Test public void test18() {
     azzert.that(FactorsExpander.simplify(i("(-(x-a))-+ + (y -b)")), iz("a-x-y+b"));
   }
 
-  @Ignore("not implemented yet")
-  @Test public void test19() {
+  @Ignore("not implemented yet") @Test public void test19() {
     azzert.that(FactorsExpander.simplify(i("a-b*c - (x - - - (d*e))")), //
         iz("a - b*c -x + d*e"));
   }
@@ -104,8 +93,7 @@ import il.org.spartan.*;
     azzert.that(FactorsExpander.simplify(i("a/(b+c)")), iz("a / (b+c)"));
   }
 
-  @Ignore("not implemeted yet")
-  @Test public void test21() {
+  @Ignore("not implemeted yet") @Test public void test21() {
     azzert.that(FactorsExpander.simplify(i("1/a*b")), iz("b/a"));
   }
 

@@ -54,7 +54,7 @@ public class Toolbox {
             new AssignmentAndAssignment(), //
             new AssignmentAndReturn(), //
             new AssignmentPlusSelf(), //
-            //new AssignmentMulSelf(), //
+            // new AssignmentMulSelf(), //
             null) //
         .add(Block.class, //
             new BlockSimplify(), //
@@ -72,7 +72,7 @@ public class Toolbox {
             new EvaluateMultiplication(), //
             new EvaluateDivision(), //
             new EvaluateRemainder(), //
-//            new InfixEmptyStringAdditionToString(), //under construction
+            // new InfixEmptyStringAdditionToString(), //under construction
             new InfixComparisonSizeToZero(), //
             new InfixSubtractionZero(), //
             new InfixAdditionSubtractionExpand(), //
@@ -100,8 +100,7 @@ public class Toolbox {
             null)
         .add(MethodInvocation.class, //
             new StringEqualsConstant(), //
-            new BooleanConstants(),
-            new ToStringToEmptyStringAddition(), //
+            new BooleanConstants(), new ToStringToEmptyStringAddition(), //
             null)
         .add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //

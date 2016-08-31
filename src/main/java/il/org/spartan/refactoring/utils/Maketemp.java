@@ -9,7 +9,7 @@ import org.eclipse.jface.text.*;
  * say it all: The name, followed by a dot, followed by a method name, should
  * read like a sentence phrase.
  * @author Yossi Gil
- * @since 2015-07-16 */ 
+ * @since 2015-07-16 */
 public enum Maketemp {
   /** Strategy for conversion into a compilation unit */
   COMPILATION_UNIT(ASTParser.K_COMPILATION_UNIT), //
@@ -19,8 +19,8 @@ public enum Maketemp {
   STATEMENTS(ASTParser.K_STATEMENTS), //
   /** Strategy for conversion into a class body */
   CLASS_BODY_DECLARATIONS(ASTParser.K_CLASS_BODY_DECLARATIONS); //
-  /** Converts the {@link MakeAST} value to its corresponding {@link Maketemp} enum
-   * value
+  /** Converts the {@link MakeAST} value to its corresponding {@link Maketemp}
+   * enum value
    * @param t The {@link MakeAST} type
    * @return corresponding {@link Maketemp} value to the argument */
   public static Maketemp of(final MakeAST t) {

@@ -48,10 +48,10 @@ public class FactorsExpander {
     return (//
     t2.multiplier() ? subject.pair(t2.expression, t1.expression) : //
         subject.pair( //
-              subject.pair(t1.expression.getAST().newNumberLiteral("1"),t1.expression //
-                  ).to(wizard.DIVIDE) //
-              ,t2.expression) //
-        ).to(wizard.DIVIDE);
+            subject.pair(t1.expression.getAST().newNumberLiteral("1"), t1.expression //
+            ).to(wizard.DIVIDE) //
+            , t2.expression) //
+    ).to(wizard.DIVIDE);
   }
 
   private static Expression base(final FactorsCollector c) {
