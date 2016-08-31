@@ -6,8 +6,8 @@ class Factor {
   private final boolean divider;
   public final Expression expression;
 
-  Factor(final boolean minus, final Expression expression) {
-    divider = minus;
+  Factor(final boolean divide, final Expression expression) {
+    divider = divide;
     this.expression = expression;
   }
 
@@ -19,17 +19,18 @@ class Factor {
     return new Factor(true, e);
   }
 
-  boolean divier() {
+  boolean divider() {
     return divider;
   }
 
+  //doesn't work for division, need to figure out why
   Expression asExpression() {
     if (!divider)
       return expression;
     final InfixExpression $ = expression.getAST().newInfixExpression();
-    $.setRightOperand(expression);
     $.setOperator(InfixExpression.Operator.DIVIDE);
     $.setLeftOperand(expression.getAST().newNumberLiteral("1"));
+    $.setRightOperand(expression);
     return $;
   }
 
