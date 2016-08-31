@@ -144,7 +144,7 @@ public enum PrudentType {
   }
 
   private static PrudentType prudentType(final ParenthesizedExpression e, final PrudentType t) {
-    return t != null ? t : prudent(e.getExpression());
+    return t != null ? t : prudent(extract.core(e));
   }
 
   private static PrudentType prudentType(final ClassInstanceCreation e) {
