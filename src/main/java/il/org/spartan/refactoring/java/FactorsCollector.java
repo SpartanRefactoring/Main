@@ -15,8 +15,8 @@ public class FactorsCollector {
     return !iz.infixTimes(e) && !iz.infixDivide(e);
   }
 
-  private final List<Expression> positive = new ArrayList<>();
-  private final List<Expression> negative = new ArrayList<>();
+  private final List<Expression> multipliers = new ArrayList<>();
+  private final List<Expression> dividers = new ArrayList<>();
   private final List<Factor> all = new ArrayList<>();
 
   public FactorsCollector(final InfixExpression e) {
@@ -29,119 +29,117 @@ public class FactorsCollector {
 
   final FactorsCollector collect(final InfixExpression e) {
     if (e != null && !isLeafFactor(e))
-      collectPlusNonLeaf(e);
+      collectTimesNonLeaf(e);
     return this;
   }
 
-  Void collectPlusNonLeaf(final InfixExpression e) {
+  Void collectTimesNonLeaf(final InfixExpression e) {
     assert e != null;
     assert !isLeafFactor(e);
-    assert iz.infixPlus(e) || iz.infixMinus(e);
-    return iz.infixPlus(e) ? collectPlusPrefixPlusExpression(e) //
-        : collectPlusPrefixMinusExpression(e);
+    assert iz.infixTimes(e) || iz.infixDivide(e);
+    return iz.infixTimes(e) ? collectTimesPrefixTimesExpression(e) //
+        : collectTimesPrefixDivdeExpression(e);
   }
 
-  Void collectPlusPrefixMinusExpression(final InfixExpression e) {
+  Void collectTimesPrefixDivdeExpression(final InfixExpression e) {
     assert e != null;
     assert !isLeafFactor(e);
-    assert iz.infixMinus(e);
+    assert iz.infixDivide(e);
     final List<Expression> es = hop.operands(e);
-    addPositiveFactor(core(lisp.first(es)));
-    return collectNegativeFactors(lisp.rest(es));
+    addMultiplierFactor(core(lisp.first(es)));
+    return collectDividersFactors(lisp.rest(es));
   }
 
-  private Void addMinus(final Expression e) {
+  private Void addDivide(final Expression e) {
     assert e != null;
     all.add(Factor.divide(e));
-    negative.add(e);
+    dividers.add(e);
     return null;
   }
 
-  private Void addMinusFactor(final Expression e) {
+  private Void addDivideFactor(final Expression e) {
     assert e != null;
-    final Expression n = minus.peel(e);
-    return minus.level(e) % 2 != 0 ? collectPlusPrefix(n) : collectMinusPrefix(n);
+    return collectDividePrefix(e);
   }
 
-  private Void addPlus(final Expression e) {
+  private Void addTimes(final Expression e) {
     assert e != null;
-    positive.add(e);
+    multipliers.add(e);
     all.add(Factor.times(e));
     return null;
   }
 
-  private Void addPlusFactor(final Expression e) {
+  private Void addTimesFactor(final Expression e) {
     assert e != null;
-    final Expression n = minus.peel(e);
-    return minus.level(e) % 2 == 0 ? collectPlusPrefix(n) : collectMinusPrefix(n);
+    return collectTimesPrefix(e);
   }
 
-  private Void addPositiveFactor(final Expression e) {
-    return isLeafFactor(e) ? addPlusFactor(e) : collectPlusNonLeaf(az.infixExpression(e));
+  private Void addMultiplierFactor(final Expression e) {
+    return isLeafFactor(e) ? addTimesFactor(e) : collectTimesNonLeaf(az.infixExpression(e));
   }
 
-  private Void collectMinusPrefix(final Expression e) {
+  private Void collectDividePrefix(final Expression e) {
     assert e != null;
-    return isLeafFactor(e) ? addMinus(e) : collectMinusPrefix(az.infixExpression(e));
+    return isLeafFactor(e) ? addDivide(e) : collectDividePrefix(az.infixExpression(e));
   }
 
-  private Void collectMinusPrefix(final InfixExpression e) {
+  private Void collectDividePrefix(final InfixExpression e) {
     assert e != null;
     assert !isLeafFactor(e);
-    return iz.infixPlus(e) ? collectMinusPrefixPlusExpression(e) : collectMinusPrefixMinusExprssion(e);
+    return iz.infixTimes(e) ? collectDividePrefixTimesExpression(e) : collectDividePrefixDivideExprssion(e);
   }
 
-  private Void collectMinusPrefixMinusExprssion(final InfixExpression e) {
+  private Void collectDividePrefixDivideExprssion(final InfixExpression e) {
     assert e != null;
     final List<Expression> es = hop.operands(e);
-    collectNegativeFactor(core(lisp.first(es)));
-    return collectPositiveFactors(lisp.rest(es));
+    collectDividerFactor(core(lisp.first(es)));
+    return collectMultiplierFactors(lisp.rest(es));
   }
 
-  private Void collectMinusPrefixPlusExpression(final InfixExpression e) {
+  private Void collectDividePrefixTimesExpression(final InfixExpression e) {
     assert e != null;
     assert !isLeafFactor(e);
-    assert iz.infixPlus(e);
-    return collectNegativeFactors(hop.operands(e));
+    assert iz.infixTimes(e);
+    return collectDividersFactors(hop.operands(e));
   }
 
-  private Void collectNegativeFactor(final Expression e) {
+  private Void collectDividerFactor(final Expression e) {
     assert e != null;
-    return isLeafFactor(e) ? addMinusFactor(e) : collectMinusPrefix(az.infixExpression(e));
+    return isLeafFactor(e) ? addDivideFactor(e) : collectDividePrefix(az.infixExpression(e));
   }
 
-  private Void collectNegativeFactors(final Iterable<Expression> es) {
+  private Void collectDividersFactors(final Iterable<Expression> es) {
     assert es != null;
     for (final Expression e : es)
-      collectNegativeFactor(core(e));
+      collectDividerFactor(core(e));
     return null;
   }
 
-  private Void collectPlusPrefix(final Expression e) {
+  private Void collectTimesPrefix(final Expression e) {
     assert e != null;
-    return isLeafFactor(e) ? addPlus(e) : collectPlusNonLeaf(az.infixExpression(e));
+    return isLeafFactor(e) ? addTimes(e) : collectTimesNonLeaf(az.infixExpression(e));
   }
 
-  private Void collectPlusPrefixPlusExpression(final InfixExpression e) {
+  private Void collectTimesPrefixTimesExpression(final InfixExpression e) {
     assert e != null;
     assert !isLeafFactor(e);
-    assert iz.infixPlus(e);
-    return collectPositiveFactors(hop.operands(e));
+    assert iz.infixTimes(e);
+    return collectMultiplierFactors(hop.operands(e));
   }
 
-  private Void collectPositiveFactors(final Iterable<Expression> es) {
+  private Void collectMultiplierFactors(final Iterable<Expression> es) {
     assert es != null;
     for (final Expression e : es)
-      addPositiveFactor(core(e));
+      addMultiplierFactor(core(e));
     return null;
   }
 
   public List<Expression> dividers() {
-    return negative;
+    return dividers;
   }
 
   public List<Expression> multipliers() {
-    return positive;
+    return multipliers;
   }
 
   public List<Factor> all() {
