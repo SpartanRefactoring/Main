@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.utils.Into.*;
+import static il.org.spartan.refactoring.utils.into.*;
 import static il.org.spartan.refactoring.utils.step.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 
@@ -38,7 +38,7 @@ public class WringsTest {
   }
 
   @Test public void inlineExpressionWithSideEffect() {
-    final Expression e = Into.e("f()");
+    final Expression e = into.e("f()");
     azzert.that(sideEffects.free(e), is(false));
     final String input = "int a = f(); return a += 2 * a;";
     final CompilationUnit u = Wrap.Statement.intoCompilationUnit(input);
@@ -63,7 +63,7 @@ public class WringsTest {
     azzert.that(alternateInitializer, iz("a + 2 * a"));
     azzert.that(sideEffects.free(initializer), is(false));
     azzert.that(Collect.usesOf(n).in(alternateInitializer).size(), is(2));
-    azzert.that(new LocalInliner(n).byValue(initializer).canInlineInto(alternateInitializer), is(false));
+    azzert.that(new LocalInliner(n).byValue(initializer).canInlineinto(alternateInitializer), is(false));
   }
 
   @Test public void mixedLiteralKindEmptyList() {
@@ -102,7 +102,7 @@ public class WringsTest {
     azzert.that(output, iz(" int f() {for(int $:as)return $;}"));
   }
 
-  @Test public void renameIntoDoWhile() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
+  @Test public void renameintoDoWhile() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = "void f() { int b = 3; do ; while(b != 0); }";
     final Document d = Wrap.Method.intoDocument(input);
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(d);

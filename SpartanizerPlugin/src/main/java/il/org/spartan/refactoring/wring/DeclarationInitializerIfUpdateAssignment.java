@@ -48,10 +48,10 @@ public final class DeclarationInitializerIfUpdateAssignment extends Wring.Variab
       return null;
     final ConditionalExpression newInitializer = subject.pair(assignmentAsExpression(a), initializer).toCondition(condition);
     final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
-    if (!i.canInlineInto(newInitializer) || i.replacedSize(newInitializer) - size(nextStatement, initializer) > 0)
+    if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - size(nextStatement, initializer) > 0)
       return null;
     r.replace(initializer, newInitializer, g);
-    i.inlineInto(step.then(newInitializer), newInitializer.getExpression());
+    i.inlineinto(step.then(newInitializer), newInitializer.getExpression());
     r.remove(nextStatement, g);
     return r;
   }

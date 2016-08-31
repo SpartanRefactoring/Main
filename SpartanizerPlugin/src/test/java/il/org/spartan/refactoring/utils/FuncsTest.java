@@ -2,7 +2,7 @@ package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.utils.ExpressionComparator.*;
-import static il.org.spartan.refactoring.utils.Into.*;
+import static il.org.spartan.refactoring.utils.into.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.mockito.Mockito.*;
 

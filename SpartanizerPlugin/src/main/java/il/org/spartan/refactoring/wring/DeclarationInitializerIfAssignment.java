@@ -47,7 +47,7 @@ public final class DeclarationInitializerIfAssignment //
         || doesUseForbiddenSiblings(f, condition, step.right(a)))
       return null;
     final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
-    if (!i.canInlineInto(condition, step.right(a)))
+    if (!i.canInlineinto(condition, step.right(a)))
       return null;
     final ConditionalExpression newInitializer = subject.pair(step.right(a), initializer).toCondition(condition);
     final int spending = i.replacedSize(newInitializer);
@@ -55,7 +55,7 @@ public final class DeclarationInitializerIfAssignment //
     if (spending > savings)
       return null;
     r.replace(initializer, newInitializer, g);
-    i.inlineInto(step.then(newInitializer), newInitializer.getExpression());
+    i.inlineinto(step.then(newInitializer), newInitializer.getExpression());
     r.remove(nextStatement, g);
     return r;
   }

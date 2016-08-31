@@ -29,24 +29,24 @@ final class LocalInliner {
       return uses(ns).size() * (size(get()) - 1);
     }
 
-    boolean canInlineInto(final ASTNode... ns) {
+    boolean canInlineinto(final ASTNode... ns) {
       return Collect.definitionsOf(name).in(ns).isEmpty() && (sideEffects.free(get()) || uses(ns).size() <= 1);
     }
 
-    boolean canSafelyInlineInto(final ASTNode... ns) {
-      return canInlineInto(ns) && unsafeUses(ns).isEmpty();
+    boolean canSafelyInlineinto(final ASTNode... ns) {
+      return canInlineinto(ns) && unsafeUses(ns).isEmpty();
     }
 
-    @SafeVarargs protected final void inlineInto(final ASTNode... ns) {
-      inlineInto(wrap(ns));
+    @SafeVarargs protected final void inlineinto(final ASTNode... ns) {
+      inlineinto(wrap(ns));
     }
 
-    @SuppressWarnings("unchecked") private void inlineInto(final Wrapper<ASTNode>... ns) {
+    @SuppressWarnings("unchecked") private void inlineinto(final Wrapper<ASTNode>... ns) {
       for (final Wrapper<ASTNode> n : ns)
-        inlineIntoSingleton(get(), n);
+        inlineintoSingleton(get(), n);
     }
 
-    private void inlineIntoSingleton(final ASTNode replacement, final Wrapper<ASTNode> ns) {
+    private void inlineintoSingleton(final ASTNode replacement, final Wrapper<ASTNode> ns) {
       final ASTNode oldExpression = ns.get();
       final ASTNode newExpression = wizard.duplicate(ns.get());
       ns.set(newExpression);
