@@ -18,31 +18,29 @@ public final class AssignmentPlusSelf extends ReplaceCurrentNode<Assignment> imp
     return "Replace x = x + a; to x += a;";
   }
 
-  @Override ASTNode replacement(Assignment a) {
-    InfixExpression ¢ = az.infixExpression(a.getRightHandSide());
+  @Override ASTNode replacement(final Assignment a) {
+    final InfixExpression ¢ = az.infixExpression(a.getRightHandSide());
     return !iz.isOpAssign(a) || !iz.infixPlus(¢) ? null : replace(a);
   }
-  
-  private static ASTNode replace(Assignment a) {
-    InfixExpression ¢ = az.infixExpression(a.getRightHandSide());
-    a.setOperator(Operator.PLUS_ASSIGN);
-    a.setRightHandSide(az.expression(rightInfixReplacement(extract.allOperands(¢), a.getLeftHandSide())));
-    return a;
+
+  private static ASTNode replace(final Assignment a) {
+    final InfixExpression ¢ = az.infixExpression(a.getRightHandSide());
+    final Expression newRightExpr = az.expression(rightInfixReplacement(extract.allOperands(¢), a.getLeftHandSide()));
+    return newRightExpr == null ? null : subject.pair(a.getLeftHandSide(), newRightExpr).to(Operator.PLUS_ASSIGN);
   }
 
-  private static ASTNode rightInfixReplacement(final List<Expression> es, Expression left) {
-    final List<Expression> $ = new ArrayList<>();
+  private static ASTNode rightInfixReplacement(final List<Expression> es, final Expression left) {
+    final List<Expression> $ = new ArrayList<>(es);
     for (final Expression ¢ : es)
-      if (isNotAsLeft(¢, left))
-        $.add(¢);
-    return $.size() == es.size() ? null
-        : $.isEmpty() ? wizard.duplicate(lisp.first(es)) : $.size() == 1 ? wizard.duplicate(lisp.first($)) : subject.operands($).to(PLUS);
+      if (asLeft(¢, left)) {
+        $.remove(¢);
+        break;
+      }
+    return $.size() == es.size() ? null : $.size() == 1 ? wizard.duplicate(lisp.first($)) : subject.operands($).to(PLUS);
   }
-  
-  private static boolean isNotAsLeft(Expression ¢, Expression left) {
-    //return ¢.equals(left);
-    return !¢.toString().equals(left.toString());
+
+  private static boolean asLeft(final Expression ¢, final Expression left) {
+    // return ¢.equals(left); // Doesn't work...
+    return ¢.toString().equals(left.toString());
   }
 }
-
-
