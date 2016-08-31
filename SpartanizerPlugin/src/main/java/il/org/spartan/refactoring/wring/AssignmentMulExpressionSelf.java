@@ -2,10 +2,13 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.utils.step.*;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.utils.subject.*;
 
 /** convert
  *
@@ -40,17 +43,31 @@ public final class AssignmentMulExpressionSelf extends Wring.ReplaceCurrentNode<
         : left == leftOperand ? leftSame(a)
             : left == rightOperand ? rightSame(a) : null;
   }
-  static ASTNode leftSame(Assignment $) {
+  
+  static Assignment replace(Assignment $) {
     $.setOperator(Assignment.Operator.TIMES_ASSIGN);
-    $.setRightHandSide(az.infixExpression($.getRightHandSide()).getRightOperand());
-    return $;
-  }
-  static ASTNode rightSame(Assignment $) {
-    $.setOperator(Assignment.Operator.TIMES_ASSIGN);
-    $.setRightHandSide(az.infixExpression($.getRightHandSide()).getLeftOperand());
+    $.setRightHandSide(rebuildInfix(az.infixExpression($.getRightHandSide()), $.getLeftHandSide()));
     return $;
   }
   
+  static Expression rebuildInfix(InfixExpression e, Expression left) {
+    List<Expression> es = extract.allOperands(e);
+    for (final Expression ¢ : es)
+      if (¢.toString().equals(left.toString())){
+        es.remove(¢);
+        break;
+      }
+    Expression $ = es.size() >= 2 ? subject.operands(es).to(Operator.TIMES) : es.get(0);
+    return $;
+  }
+  
+  static boolean areAllOperatorsTIMES(InfixExpression e) {
+    List<InfixExpression.Operator> l = extract.allOperators(e);
+    for (final InfixExpression.Operator ¢ : l)
+      if (¢ != Operator.TIMES)
+        return false;
+    return true;
+  }
   
 /*
   @Override ASTRewrite go(final ASTRewrite r, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
