@@ -53,6 +53,8 @@ public class Toolbox {
         .add(Assignment.class, //
             new AssignmentAndAssignment(), //
             new AssignmentAndReturn(), //
+            //new AssignmentPlusSelf(), //
+            //new AssignmentMulSelf(), //
             null) //
         .add(Block.class, //
             new BlockSimplify(), //
