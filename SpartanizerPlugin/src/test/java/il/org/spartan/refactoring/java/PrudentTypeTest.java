@@ -173,9 +173,21 @@ public class PrudentTypeTest {
       azzert.that(prudent(Into.e("3.098")), is(DOUBLE));
     }
     
+    @Test public void test39() {
+      azzert.that(prudent(Into.e("3f")), is(FLOAT));
+    }
+    
+    @Test public void test40() {
+      azzert.that(prudent(Into.e("3.f")), is(FLOAT));
+    }
+    
+    @Test public void test41() {
+      azzert.that(prudent(Into.e("3.0f")), is(FLOAT));
+    }
+    
     //end of tests for NumeberLiterals
     
-    @Test public void test39() {
+    @Test public void test42() {
       azzert.that(prudent(Into.e("x^y"), BOOLEAN, BOOLEAN), is(BOOLEAN));
     }
 
@@ -408,6 +420,78 @@ public class PrudentTypeTest {
     
     @Test public void test152() {
       azzert.that(prudent(Into.e("f() ? \"a\" : h()")), is(STRING));
+    }
+    
+    @Test public void test153a() {
+      azzert.that(prudent(Into.e("(byte)1")), is(BYTE));
+    }
+    
+    @Test public void test153b() {
+      azzert.that(prudent(Into.e("(Byte)1")), is(BYTE));
+    }
+    
+    @Test public void test154a() {
+      azzert.that(prudent(Into.e("(short)1")), is(SHORT));
+    }
+    
+    @Test public void test154b() {
+      azzert.that(prudent(Into.e("(Short)1")), is(SHORT));
+    }
+    
+    @Test public void test155a() {
+      azzert.that(prudent(Into.e("(float)1")), is(FLOAT));
+    }
+    
+    @Test public void test155b() {
+      azzert.that(prudent(Into.e("(Float)1")), is(FLOAT));
+    }
+    
+    @Test public void test155c() {
+      azzert.that(prudent(Into.e("(float)1d")), is(FLOAT));
+    }
+    
+    @Test public void test156() {
+      azzert.that(prudent(Into.e("new Byte()")), is(BYTE));
+    }
+    
+    @Test public void test157() {
+      azzert.that(prudent(Into.e("new Double()")), is(DOUBLE));
+    }
+    
+    @Test public void test158() {
+      azzert.that(prudent(Into.e("((short)1)+((short)2)")), is(INT));
+    }
+    
+    @Test public void test159() {
+      azzert.that(prudent(Into.e("((byte)1)+((byte)2)")), is(INT));
+    }
+    
+    @Test public void test160() {
+      azzert.that(prudent(Into.e("1f + 1")), is(FLOAT));
+    }
+    
+    @Test public void test161() {
+      azzert.that(prudent(Into.e("1f + 1l")), is(FLOAT));
+    }
+    
+    @Test public void test162() {
+      azzert.that(prudent(Into.e("1F + 'a'")), is(FLOAT));
+    }
+    
+    @Test public void test163() {
+      azzert.that(prudent(Into.e("1f + 1.")), is(DOUBLE));
+    }
+    
+    @Test public void test164() {
+      azzert.that(prudent(Into.e("1f + f()")), is(NUMERIC));
+    }
+    
+    @Test public void test165() {
+      azzert.that(prudent(Into.e("1+2+3l")), is(LONG));
+    }
+    
+    @Test public void test166() {
+      azzert.that(prudent(Into.e("1+2f+3l-5-4d")), is(DOUBLE));
     }
   }
 }

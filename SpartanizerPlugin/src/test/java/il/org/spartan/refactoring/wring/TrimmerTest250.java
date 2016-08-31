@@ -822,39 +822,39 @@ public class TrimmerTest250 {
     trimming("z=foo(x=(y=y*u),17)").to("z=foo(x=(y*=u),17)");
   }
 
-  @Ignore public void issue103a() {
+  @Test public void issue103a() {
     trimming("x=x+y").to("x+=y");
   }
   @Ignore public void issue103mma() {
     trimming("x=x*y").to("x*=y");
   }
 
-  @Ignore public void issue103b() {
+  @Test public void issue103b() {
     trimming("x=y+x").to("x+=y");
   }
 
-  @Ignore public void issue103c() {
+  @Test public void issue103c() {
     trimming("x=y+z").to(null);
   }
 
-  @Ignore public void issue103d() {
+  @Test public void issue103d() {
     trimming("x = x + x").to("x+=x");
   }
 
-  @Ignore public void issue103e() {
+  @Test public void issue103e() {
     trimming("x = y + x + z + x + k + 9").to("x += y + z + x + k + 9");
   }
 
-  @Ignore public void issue103f() {
+  @Test public void issue103f() {
     trimming("a=a+5").to("a+=5");
   }
 
-  @Ignore public void issue103g() {
-    trimming("a=a+(alex)").to("a+=(alex)");
+  @Test public void issue103g() {
+    trimming("a=a+(alex)").to("a+=alex");
   }
 
-  @Ignore public void issue103h() {
-    trimming("a = a + (c = c + kif)").to("a = a + (c += kif)").to("a += (c += kif)").to(null);
+  @Test public void issue103h() {
+    trimming("a = a + (c = c + kif)").to("a += c = c + kif").to("a += c += kif").to(null);
   }
 
   @Ignore public void issue103i_mixed() {
