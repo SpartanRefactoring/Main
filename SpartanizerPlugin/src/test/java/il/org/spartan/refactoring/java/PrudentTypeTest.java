@@ -495,5 +495,52 @@ public class PrudentTypeTest {
     @Test public void basicExpressions26() {
       azzert.that(prudent(Into.e("1+2f+3l-5-4d")), is(DOUBLE));
     }
+    
+    //tests for the axiom methods
+    
+    @Test public void axiomChar(){
+      azzert.that(axiom('a'), is(CHAR));
+    }
+    
+    @Test public void axiomByte(){
+      azzert.that(axiom((byte)1), is(BYTE));
+    }
+    
+    @Test public void axiomShort(){
+      azzert.that(axiom((short)3), is(SHORT));
+    }
+    
+    @Test public void axiomInt(){
+      azzert.that(axiom(7), is(INT));
+    }
+    
+    @Test public void axiomLong(){
+      azzert.that(axiom(7l), is(LONG));
+    }
+    
+    @Test public void axiomFloat(){
+      azzert.that(axiom(7f), is(FLOAT));
+    }
+    
+    @Test public void axiomDouble(){
+      azzert.that(axiom(7.), is(DOUBLE));
+    }
+    
+    @Test public void axiomBoolean(){
+      azzert.that(axiom(true), is(BOOLEAN));
+    }
+    
+    @Test public void axiomString(){
+      azzert.that(axiom("string"), is(STRING));
+    }
+    
+    @Test public void axiomExpression(){
+      azzert.that(axiom(7+3/2.), is(DOUBLE));
+    }
+    
+    //tests using axiom to check complex expressions and interesting cases
+    @Test public void makeSureIUnderstandSemanticsOfShift() {
+      azzert.that(PrudentType.axiom(((short)1)<<1L),is(PrudentType.INT));
+      }
   }
 }
