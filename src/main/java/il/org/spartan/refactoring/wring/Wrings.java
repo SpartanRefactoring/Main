@@ -24,10 +24,10 @@ public enum Wrings {
       final List<Statement> by2) {
     for (final Statement s : from)
       if (s != substitute)
-        duplicateInto(s, to);
+        duplicateinto(s, to);
       else {
-        duplicateInto(by1, to);
-        duplicateInto(by2, to);
+        duplicateinto(by1, to);
+        duplicateinto(by2, to);
       }
   }
 
@@ -117,7 +117,7 @@ public enum Wrings {
 
   static void rename(final SimpleName oldName, final SimpleName newName, final MethodDeclaration d, final ASTRewrite r, final TextEditGroup g) {
     new LocalInliner(oldName, r, g).byValue(newName)//
-        .inlineInto(Collect.usesOf(oldName).in(d).toArray(new Expression[] {}));
+        .inlineinto(Collect.usesOf(oldName).in(d).toArray(new Expression[] {}));
   }
 
   static ASTRewrite replaceTwoStatements(final ASTRewrite r, final Statement what, final Statement by, final TextEditGroup g) {
@@ -128,7 +128,7 @@ public enum Wrings {
     siblings.remove(i);
     siblings.add(i, by);
     final Block $ = parent.getAST().newBlock();
-    duplicateInto(siblings, step.statements($));
+    duplicateinto(siblings, step.statements($));
     r.replace(parent, $, g);
     return r;
   }
