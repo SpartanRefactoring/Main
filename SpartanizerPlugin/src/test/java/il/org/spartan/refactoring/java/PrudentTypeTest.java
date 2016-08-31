@@ -485,5 +485,13 @@ public class PrudentTypeTest {
     @Test public void test164() {
       azzert.that(prudent(Into.e("1f + f()")), is(NUMERIC));
     }
+    
+    @Test public void test165() {
+      azzert.that(prudent(Into.e("1+2+3l")), is(LONG));
+    }
+    
+    @Test public void test166() {
+      azzert.that(prudent(Into.e("1+2f+3l-5-4d")), is(DOUBLE));
+    }
   }
 }
