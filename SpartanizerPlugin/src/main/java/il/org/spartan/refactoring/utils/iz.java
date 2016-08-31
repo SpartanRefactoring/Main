@@ -221,6 +221,14 @@ public enum iz {
   public static boolean infixPlus(final Expression e) {
     return step.operator(az.infixExpression(e)) == wizard.PLUS2;
   }
+  
+  public static boolean infixTimes(final Expression e) {
+    return step.operator(az.infixExpression(e)) == wizard.TIMES;
+  }
+  
+  public static boolean infixDivide(final Expression e) {
+    return step.operator(az.infixExpression(e)) == wizard.DIVIDE;
+  }
 
   public static boolean is(final ASTNode ¢, final int... types) {
     return ¢ != null && lisp.intIsIn(¢.getNodeType(), types);
