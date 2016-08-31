@@ -28,6 +28,10 @@ public interface wizard {
   InfixExpression.Operator MINUS2 = InfixExpression.Operator.MINUS;
 
   InfixExpression.Operator PLUS2 = InfixExpression.Operator.PLUS;
+  
+  InfixExpression.Operator TIMES = InfixExpression.Operator.TIMES;
+  
+  InfixExpression.Operator DIVIDE = InfixExpression.Operator.DIVIDE;
 
   PostfixExpression.Operator DECREMENT_POST = PostfixExpression.Operator.DECREMENT;
 
