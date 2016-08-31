@@ -498,10 +498,10 @@ public class PrudentTypeTest {
     
     //tests for the axiom methods
     
-    @Test public void axiomChar(){
+    @Test public void axiomChar1(){
       azzert.that(axiom('a'), is(CHAR));
     }
-    
+   
     @Test public void axiomByte(){
       azzert.that(axiom((byte)1), is(BYTE));
     }
@@ -510,8 +510,12 @@ public class PrudentTypeTest {
       azzert.that(axiom((short)3), is(SHORT));
     }
     
-    @Test public void axiomInt(){
+    @Test public void axiomInt1(){
       azzert.that(axiom(7), is(INT));
+    }
+    
+    @Test public void axiomInt2(){
+      azzert.that(axiom('a'+4), is(INT));
     }
     
     @Test public void axiomLong(){
@@ -526,18 +530,74 @@ public class PrudentTypeTest {
       azzert.that(axiom(7.), is(DOUBLE));
     }
     
-    @Test public void axiomBoolean(){
+    @Test public void axiomBoolean1(){
       azzert.that(axiom(true), is(BOOLEAN));
     }
     
-    @Test public void axiomString(){
+    @SuppressWarnings("unused") @Test public void axiomBoolean2(){
+      azzert.that(axiom(true||(false&&true)), is(BOOLEAN));
+    }
+    
+    @SuppressWarnings("unused") @Test public void axiomBoolean3(){
+      azzert.that(axiom(5>6 && 8!=14), is(BOOLEAN));
+    }
+    
+    @Test public void axiomString1(){
       azzert.that(axiom("string"), is(STRING));
     }
     
-    @Test public void axiomExpression(){
+    @Test public void axiomString2(){
+      azzert.that(axiom("string"+9.0), is(STRING));
+    }
+    
+    @Test public void axiomString3(){
+      azzert.that(axiom("string"+'d'), is(STRING));
+    }
+    
+    @Test public void axiomString4(){
+      azzert.that(axiom(Integer.toString(15)), is(STRING));
+    }
+    
+    @Test public void axiomExpression1(){
       azzert.that(axiom(7+3/2.), is(DOUBLE));
     }
     
+    @Test public void axiomExpression2(){
+      azzert.that(axiom(7+3/2l), is(LONG));
+    }
+    
+    @Test public void axiomExpression3(){
+      azzert.that(axiom(67>>2l), is(INT));
+    }
+    
+    @Test public void axiomExpression4(){
+      azzert.that(axiom(67L>>2l), is(LONG));
+    }
+    
+    @Test public void axiomExpression5(){
+      azzert.that(axiom(1.+2*3 / 4 - 5), is(DOUBLE));
+    }
+    
+    @Test public void axiomExpression6(){
+      azzert.that(axiom((1.+2*3 / 4 - 5)%4), is(DOUBLE));
+    }
+    
+    @Test public void axiomExpression7(){
+      azzert.that(axiom((1+2*3 / 4 - 5)%4), is(INT));
+    }
+    
+    @Test public void axiomExpression8(){
+      azzert.that(axiom((1L+2*3 / 4 - 5)%4), is(LONG));
+    }
+    
+    @Test public void axiomExpression9(){
+      azzert.that(axiom( -1.0/-2*-3/-4*-5*-6/-7/-8/-9), is(DOUBLE));
+    }
+    
+    @Test public void axiomExpression10(){
+      azzert.that(axiom(9f/9), is(FLOAT));
+    }
+     
     //tests using axiom to check complex expressions and interesting cases
     @Test public void makeSureIUnderstandSemanticsOfShift() {
       azzert.that(PrudentType.axiom(((short)1)<<1L),is(PrudentType.INT));
