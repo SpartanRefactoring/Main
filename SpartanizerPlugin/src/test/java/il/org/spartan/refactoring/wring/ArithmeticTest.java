@@ -5,6 +5,9 @@ import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
+import il.org.spartan.refactoring.java.*;
+import il.org.spartan.refactoring.utils.*;
+
 /** * Unit tests for Arithmetic Operations Calculations
  * @author Dor Ma'ayan <code><dor.d.ma [at] gmail.com></code>
  * @since 2016-08-26 */
@@ -14,7 +17,10 @@ import org.junit.runners.*;
 public class ArithmeticTest {
 
   public static class Working {
-   
+    @Test public void additionIsLong() {
+    assert atomic.isLong(1 + 1L);
+    
+  }
     @Test public void issue92_1() {
       trimming("1.+2*3 / 4 - 5").to("2*3/4+1.-5").to("6/4+1.-5").to("1+1.-5").to("2.0-5").to("-3.0");
     }
