@@ -19,17 +19,17 @@ public final class AssignmentPlusSelf extends ReplaceCurrentNode<Assignment> imp
   }
 
   @Override ASTNode replacement(final Assignment a) {
-    InfixExpression ¢ = az.infixExpression(a.getRightHandSide());
+    final InfixExpression ¢ = az.infixExpression(a.getRightHandSide());
     return !iz.isOpAssign(a) || !iz.infixPlus(¢) ? null : replace(a);
   }
-  
+
   private static ASTNode replace(final Assignment a) {
-    InfixExpression ¢ = az.infixExpression(a.getRightHandSide());
-    Expression newRightExpr = (az.expression(rightInfixReplacement(extract.allOperands(¢), a.getLeftHandSide())));
+    final InfixExpression ¢ = az.infixExpression(a.getRightHandSide());
+    final Expression newRightExpr = az.expression(rightInfixReplacement(extract.allOperands(¢), a.getLeftHandSide()));
     return newRightExpr == null ? null : subject.pair(a.getLeftHandSide(), newRightExpr).to(Operator.PLUS_ASSIGN);
   }
 
-  private static ASTNode rightInfixReplacement(final List<Expression> es, Expression left) {
+  private static ASTNode rightInfixReplacement(final List<Expression> es, final Expression left) {
     final List<Expression> $ = new ArrayList<>(es);
     for (final Expression ¢ : es)
       if (asLeft(¢, left)) {
@@ -38,11 +38,9 @@ public final class AssignmentPlusSelf extends ReplaceCurrentNode<Assignment> imp
       }
     return $.size() == es.size() ? null : $.size() == 1 ? wizard.duplicate(lisp.first($)) : subject.operands($).to(PLUS);
   }
-  
+
   private static boolean asLeft(final Expression ¢, final Expression left) {
-    //return ¢.equals(left); // Doesn't work...
+    // return ¢.equals(left); // Doesn't work...
     return ¢.toString().equals(left.toString());
   }
 }
-
-
