@@ -4,6 +4,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.refactoring.java.*;
 import il.org.spartan.utils.*;
 
 /** A function object representing a sequence of operations on an
@@ -53,6 +54,7 @@ public abstract class Rewrite extends Range {
 
   /** Convert the rewrite into changes on an {@link ASTRewrite}
    * @param r where to place the changes
-   * @param g to be associated with these changes */
+   * @param g to be associated with these changes 
+   * @*/
   public abstract void go(ASTRewrite r, TextEditGroup g);
 }

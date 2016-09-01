@@ -878,6 +878,43 @@ public class TrimmerTest250 {
     trimming("a=5; \n return a;").to("return a=5;");
   }
 
+  @Test public void issue107a() {
+    trimming("a+=1;").to("a++;");
+  }
+  
+  @Ignore public void issue107b() {
+    trimming("c+=1 is nice;").to("c++ is nice;");
+  }
+  
+  @Ignore public void issue107c() {
+    trimming("java is even nice+=1+=1;").to("vaja is even nice++++;");
+  }
+  
+  @Ignore public void issue107d() {
+    trimming("a++=-+=+=1;").to("a++=-+=++;");
+  }
+  
+  @Ignore public void issue107e() {
+    trimming("a+=1+=1+=1+=1;").to("a+++=1+=1+=1;").to("a+++++=1+=1;").to("a +++++++=1;");
+  }
+  
+  @Ignore public void issue107f() {
+    trimming("a+=2;").to(null);
+  }
+  
+  @Ignore public void issue107g() {
+    trimming("a/=1;").to(null);
+  }
+  
+  @Ignore public void issue107h() {
+    trimming("a-+=1;").to("a-++;");
+  }
+
+  @Ignore public void issue107i() {
+    trimming("a+=1 and b+=1;").to("a++ and b+=1;").to("a++ and b++;");
+  }
+
+  
   // @formatter:off
   enum A { a1() {{ f(); }
       public void f() {
