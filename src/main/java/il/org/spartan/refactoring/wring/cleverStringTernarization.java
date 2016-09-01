@@ -5,8 +5,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.builder.*;
 
-/** 
- * convert
+/** convert
  *
  * <pre>
  * polite ? "Eat your meal." :  "Eat your meal, please";
@@ -26,40 +25,46 @@ public final class cleverStringTernarization extends Wring.ReplaceCurrentNode<Co
     return "Replace if with a return of a conditional statement";
   }
 
-  @Override Expression replacement(final ConditionalExpression ce) {
-    final Expression condition = ce.getExpression();
-    final Expression then = ce.getThenExpression();
-    final Expression elze =ce.getElseExpression();
-    if(then.getNodeType()!=ASTNode.STRING_LITERAL || elze.getNodeType()!=ASTNode.STRING_LITERAL)
-      return null;
-    String thenStr = ((StringLiteral) then).getLiteralValue();
-    String elseStr = ((StringLiteral) elze).getLiteralValue();
-    int commonPrefixIndex = findCommonPrefix(thenStr,elseStr);
-    if(commonPrefixIndex!=-1){
-      StringLiteral  prefix = ce.getAST().newStringLiteral();
-      prefix.setLiteralValue(thenStr.substring(0, commonPrefixIndex));
-      StringLiteral  thenPost = ce.getAST().newStringLiteral();
-      thenPost.setLiteralValue(thenStr.length()==commonPrefixIndex ? //
-          "" : thenStr.substring(commonPrefixIndex));
-      StringLiteral  elsePost = ce.getAST().newStringLiteral();
-      elsePost.setLiteralValue( elseStr.length()==commonPrefixIndex ? //
-          "" : elseStr.substring(commonPrefixIndex));
-      return subject.pair(prefix , subject.pair(thenPost, //
-      elsePost).toCondition(condition)).to(wizard.PLUS2);
-    }
-    return null;
+  @Override Expression replacement(final ConditionalExpression e) {
+    // Todo: use navigation functions from 'step'
+    return replacement(e.getExpression(), e.getThenExpression(), e.getElseExpression());
   }
-  
-  private static int findCommonPrefix(String str1, String str2){
-    char[] str1Array = str1.toCharArray();
-    char[] str2Array = str2.toCharArray();
-    int i=0;
-    for (;i<str1Array.length && i<str2Array.length;i++){
-      if(str1Array[i]!=str2Array[i])
-        break;
-    }
-    return i;
-  }
-  
 
+  static Expression replacement(final Expression condition, final Expression then, final Expression elze) {
+    return then.getNodeType() != ASTNode.STRING_LITERAL || elze.getNodeType() != ASTNode.STRING_LITERAL ? null
+        : replacement(condition, ((StringLiteral) then).getLiteralValue(), ((StringLiteral) elze).getLiteralValue());
+  }
+
+  static Expression replacement(final Expression condition, final String then, final String elze) {
+    final int commonPrefixIndex = findCommonPrefix(then, elze);
+    return commonPrefixIndex == -1 ? null : replacement(condition, then, elze, commonPrefixIndex);
+  }
+
+  static Expression replacement(final Expression e, final String then, final String elze, final int i) {
+    return subject.pair(makePrefix(e, then, i), subject.pair(make(e, then, i), //
+        make(e, elze, i)).toCondition(e)).to(wizard.PLUS2);
+  }
+
+  private static StringLiteral makePrefix(final Expression e, final String then, final int i) {
+    final StringLiteral $ = e.getAST().newStringLiteral();
+    $.setLiteralValue(then.substring(0, i));
+    return $;
+  }
+
+  private static StringLiteral make(final Expression e, final String branch, final int i) {
+    final StringLiteral $ = e.getAST().newStringLiteral();
+    $.setLiteralValue(branch.length() == i ? "" : branch.substring(i));
+    return $;
+  }
+
+  // TODO: Niv and Dor: Why don't use substring and startsWith?
+  private static int findCommonPrefix(final String str1, final String str2) {
+    final char[] str1Array = str1.toCharArray();
+    final char[] str2Array = str2.toCharArray();
+    int $ = 0;
+    for (; $ < str1Array.length && $ < str2Array.length; ++$)
+      if (str1Array[$] != str2Array[$])
+        return $;
+    return -1;
+  }
 }

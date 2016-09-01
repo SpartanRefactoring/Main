@@ -20,21 +20,50 @@ import il.org.spartan.refactoring.engine.*;
  * @author Stav Namir <code><stav1472 [at] gmail.com></code>
  * @since 2016-04-24 */
 public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.Canonicalization {
-  private static NumberLiteral getNegativeNumber(final PrefixExpression ¢) {
-    return ¢.getOperator() != PrefixExpression.Operator.MINUS || !(¢.getOperand() instanceof NumberLiteral) ? null : (NumberLiteral) ¢.getOperand();
+  static boolean validTypes(final Expression ¢1, final Expression ¢2) {
+    return ¢2 instanceof MethodInvocation && isNumber(¢1) //
+        || isNumber(¢2) && ¢1 instanceof MethodInvocation;
+  }
+
+  private static String description(final Expression e) {
+    return e == null ? "Use isEmpty()" : "Use " + e + ".isEmpty()";
   }
 
   private static NumberLiteral getNegativeNumber(final Expression ¢) {
     return !(¢ instanceof PrefixExpression) ? null : getNegativeNumber((PrefixExpression) ¢);
   }
 
+  private static NumberLiteral getNegativeNumber(final PrefixExpression ¢) {
+    return ¢.getOperator() != PrefixExpression.Operator.MINUS || !(¢.getOperand() instanceof NumberLiteral) ? null : (NumberLiteral) ¢.getOperand();
+  }
+
   private static boolean isNumber(final Expression ¢) {
     return ¢ instanceof NumberLiteral || getNegativeNumber(¢) != null;
   }
 
-  static boolean validTypes(final Expression ¢1, final Expression ¢2) {
-    return ¢2 instanceof MethodInvocation && isNumber(¢1) //
-        || isNumber(¢2) && ¢1 instanceof MethodInvocation;
+  private static ASTNode replacement(final InfixExpression e, Operator o, int sign, NumberLiteral l, final Expression receiver) {
+    final MethodInvocation $ = subject.operand(receiver).toMethod("isEmpty");
+    int threshold = sign * Integer.parseInt(l.getToken());
+    BooleanLiteral TRUE = e.getAST().newBooleanLiteral(true);
+    BooleanLiteral FALSE = e.getAST().newBooleanLiteral(false);
+    if (o == Operator.GREATER_EQUALS) {
+      o = Operator.GREATER;
+      --threshold;
+    }
+    if (o == Operator.LESS_EQUALS) {
+      o = Operator.LESS;
+      ++threshold;
+    }
+    if (o == Operator.EQUALS)
+      return threshold == 0 ? $ : threshold < 0 ? FALSE : null;
+    if (o == Operator.NOT_EQUALS)
+      return threshold == 0 ? make.notOf($) : threshold >= 0 ? null : TRUE;
+    if (o == Operator.GREATER)
+      return threshold < 0 ? TRUE : threshold != 0 ? null : make.notOf($);
+    if (o == Operator.LESS)
+      return threshold <= 0 ? FALSE : threshold == 1 ? $ : null;
+    assert false : o + ": uncrecognized";
+    return null;
   }
 
   private static ASTNode replacement(final InfixExpression e, Operator o, final MethodInvocation i, final Expression n) {
@@ -65,39 +94,13 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
       if (!"boolean".equals("" + t) && !"java.lang.Boolean".equals(t.getBinaryName()))
         return null;
     }
-    final MethodInvocation $ = subject.operand(receiver).toMethod("isEmpty");
-    int threshold = sign * Integer.parseInt(l.getToken());
-    Expression notOf = make.notOf($);
-    BooleanLiteral TRUE = e.getAST().newBooleanLiteral(true);
-    BooleanLiteral FALSE = e.getAST().newBooleanLiteral(false);
-    if (o == Operator.GREATER_EQUALS) {
-      o = Operator.GREATER;
-      --threshold;
-    }
-    if (o == Operator.LESS_EQUALS) {
-      o = Operator.LESS;
-      ++threshold;
-    }
-    if (o == Operator.EQUALS)
-      return threshold == 0 ? $ : threshold < 0 ? FALSE : null;
-    if (o == Operator.NOT_EQUALS)
-      return threshold == 0 ? notOf : threshold >= 0 ? null : TRUE;
-    if (o == Operator.GREATER)
-      return threshold < 0 ? TRUE : threshold == 0 ? $ : null;
-    if (o == Operator.LESS)
-      return threshold <= 0 ? FALSE : threshold == 1 ? $ : null;
-    assert false : o + ": uncrecognized";
-    return null;
-  }
-
-  private static String descriptionAux(final Expression e) {
-    return e == null ? "Use isEmpty()" : "Use " + e + ".isEmpty()";
+    return replacement(e, o, sign, l, receiver);
   }
 
   @Override String description(final InfixExpression e) {
     final Expression right = step.right(e);
     final Expression left = step.left(e);
-    return descriptionAux(left instanceof MethodInvocation ? left : right);
+    return description(left instanceof MethodInvocation ? left : right);
   }
 
   @Override ASTNode replacement(final InfixExpression e) {

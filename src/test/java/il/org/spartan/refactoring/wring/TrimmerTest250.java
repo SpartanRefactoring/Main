@@ -657,11 +657,11 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue83a() {
-    trimming("if(lst.size()>=0) return a;").to("if(true) return a;");
+    trimming("if(x.size()>=0) return a;").to("if(true) return a;");
   }
 
   @Test public void issue83b() {
-    trimming("if(lst.size()<0) return a;").to("if(false) return a;");
+    trimming("if(x.size()<0) return a;").to("if(false) return a;");
   }
 
   @Test public void issue83c() {
@@ -676,15 +676,15 @@ public class TrimmerTest250 {
   }
 
  @Test public void issue83f() {
-    trimming("if(2==lst.size()) return a;").to(null);
+    trimming("if(2==x.size()) return a;").to("if(x.size()==2) return a;");
   }
 
   @Test public void issue83g() {
-    trimming("if(lst.size()==4) return a;").to(null);
+    trimming("if(x.size()==4) return a;").to(null);
   }
 
   @Test public void issue83h() {
-    trimming("if(lst.size()==0) return a;").to("if(lst.isEmpty()) return a;");
+    trimming("if(x.size()==0) return a;").to("if(x.isEmpty()) return a;");
   }
 
   @Test public void issue83i() {
@@ -704,11 +704,16 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue83m() {
-    trimming("if(a.size() >= -3) ++a;").to("if(true) ++a;");
+    trimming("if(a.size() >= -3) ++a;").to("if(true) ++a;").to("++a;");
   }
 
   @Test public void issue83n() {
-    trimming("if(a.size() <= -9) ++a;").to("if(false) ++a;");
+    trimming("if(a.size() <= -9) ++a;a+=1;")//
+    .to("if(false) ++a;a++;") //
+    .to("{}++a;") //
+    .to("++a;") //
+    .to(null);
+
   }
 
   @Test public void issue85_86a() {
