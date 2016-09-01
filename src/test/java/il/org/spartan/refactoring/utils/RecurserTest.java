@@ -6,6 +6,11 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import static org.mockito.Mockito.*;
 
+/**
+ *  @author Dor Ma'ayan
+ *  @since 2016
+ */
+
 public class RecurserTest {
   /** This is where you place the {@link Test} test methods that work. They
    * should be never {@link Ignored} when pushed.
