@@ -779,47 +779,47 @@ public class TrimmerTest250 {
     trimming("a-b*c").to(null);
   }
 
-  @Ignore public void issue103ma() {
+  @Test public void issue108a() {
     trimming("x=x*y").to("x*=y");
   }
 
-  @Ignore public void issue103mb() {
-    trimming("x=y*x").to("x=x*y").to("x*=y");
+  @Test public void issue108b() {
+    trimming("x=y*x").to("x*=y");
   }
 
-  @Ignore public void issue103mc() {
+  @Test public void issue108c() {
     trimming("x=y*z").to(null);
   }
 
-  @Ignore public void issue103md() {
+  @Test public void issue108d() {
     trimming("x = x * x").to("x*=x");
   }
 
-  @Ignore public void issue103me() {
+  @Test public void issue108e() {
     trimming("x = y * z * x * k * 9").to("x *= y * z * k * 9");
   }
 
-  @Ignore public void issue103_1me() {
+  @Test public void issue108f() {
     trimming("a = y * z * a").to("a *= y * z");
   }
 
-  @Ignore public void issue103mf() {
+  @Test public void issue108g() {
     trimming("a=a*5").to("a*=5");
   }
 
-  @Ignore public void issue103mg() {
-    trimming("a=a*(alex)").to("a*=(alex)");
+  @Test public void issue108h() {
+    trimming("a=a*(alex)").to("a*=alex");
   }
 
-  @Ignore public void issue103mh() {
-    trimming("a = a * (c = c * kif)").to("a = a * (c *= kif)").to("a *= (c *= kif)").to(null);
+  @Test public void issue108i() {
+    trimming("a = a * (c = c * kif)").to("a *= c = c*kif").to("a *= c *= kif").to(null);
   }
 
-  @Ignore public void issue103mj() {
+  @Test public void issue108j() {
     trimming("x=x*foo(x,y)").to("x*=foo(x,y)");
   }
 
-  @Ignore public void issue103mk() {
+  @Test public void issue108k() {
     trimming("z=foo(x=(y=y*u),17)").to("z=foo(x=(y*=u),17)");
   }
 
@@ -858,23 +858,83 @@ public class TrimmerTest250 {
   @Test public void issue103h() {
     trimming("a = a + (c = c + kif)").to("a += c = c + kif").to("a += c += kif").to(null);
   }
-
-  @Ignore public void issue103i_mixed() {
-    trimming("a = a - (x = x + (y = y*(z=z+3)))").to("a = a - (x = x + (y = y*(z+=3)))").to("a = a - (x += (y = y*(z+=3)))");
+  
+  @Test public void issue103i_mixed() {
+    trimming("a = x = x + (y = y*(z=z+3))").to("a = x += y=y*(z=z+3)").to("a = x += y *= z=z+3").to("a = x += y *= z+=3");
   }
 
-  @Ignore public void issue103j() {
+  @Test public void issue103j() {
     trimming("x=x+foo(x,y)").to("x+=foo(x,y)");
   }
 
-  @Ignore public void issue103k() {
+  @Test public void issue103k() {
     trimming("z=foo(x=(y=y+u),17)").to("z=foo(x=(y+=u),17)");
   }
 
+  @Test public void issue103l_mixed() {
+    trimming("a = a - (x = x + (y = y*(z=z+3)))").to("a = a - (x += y=y*(z=z+3))").to("a = a - (x += y *= z=z+3)").to("a = a - (x += y *= z+=3)");
+  }
+  
   @Test public void AssignmentAndReturn() {
     trimming("a=5; \n return a;").to("return a=5;");
   }
 
+  @Test public void issue107a() {
+    trimming("a+=1;").to("a++;").to("++a;").to(null);
+  }
+  
+  @Test public void issue107b() {
+    trimming("c+=1; int nice;").to("c++; int nice;");
+  }
+  
+  @Test public void issue107c() {
+    trimming("java_is_even_nice+=1+=1;").to("java_is_even_nice+=1++;");
+  }
+  
+  @Test public void issue107d() {
+    trimming("for(int a ; a<10 ; a+=1){}").to("for(int a ; a<10 ; a++){}");
+  }
+  
+  @Ignore public void issue107e() {
+    trimming("a+=1+=1+=1+=1;").to("a+=1+=1+=1++;").to("a+=1+=1++++;").to("a+=1++++++;").to("a++++++++").to(null);
+  }
+  
+  @Test public void issue107e_1() {
+    trimming("a+=1+=1+=1+=1;").to("a+=1+=1+=1++;");
+  }
+  
+  @Test public void issue107f() {
+    trimming("a+=2;").to(null);
+  }
+  
+  @Test public void issue107g() {
+    trimming("a/=1;").to(null);
+  }
+  
+  @Ignore public void issue107h() {
+    trimming("a-+=1;").to("a-++;");
+  }
+
+  @Ignore public void issue107i() {
+    trimming("a+=1 and b+=1;").to("a++ and b+=1;").to("a++ and b++;");
+  }
+
+  @Test public void issue107j() {
+    trimming("a-=1;").to("a--;").to("--a;").to(null);
+  }
+  
+  @Test public void issue107k() {
+    trimming("for(int a ; a<10 ; a-=1){}").to("for(int a ; a<10 ; a--){}");
+  }
+  
+  @Test public void issue107l() {
+    trimming("a-=2;").to(null);
+  }
+  
+  @Test public void issue107m() {
+    trimming("while(x-=1){}").to("while(x--){}");
+  }
+  
   // @formatter:off
   enum A { a1() {{ f(); }
       public void f() {
