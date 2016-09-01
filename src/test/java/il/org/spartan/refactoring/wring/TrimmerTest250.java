@@ -761,7 +761,27 @@ public class TrimmerTest250 {
   @Test public void issue85_86l() {
     trimming("if(false)" + "c();" + "else {\n" + "if(true) \n" + "a(); \n" + "else \n" + "b(); \n" + "} \n").to("{a();}").to("a();");
   }
-
+  
+  @Test public void issue86_1() {
+    trimming("if(false)" + "c();\n" +"int a;").to("{}int a;").to("int a;").to(null);
+  }
+  
+  @Test public void issue86_2() {
+    trimming("if(false) {c();\nb();\na();}").to("{}");
+  }
+  
+  @Ignore public void issue86_3() {
+    trimming("if(false) {c();\nb();\na();}").to("{}").to(null);
+  }
+  
+  @Ignore public void issue86_4() {
+    trimming("if(false) {c();\nb();\na();}").to("{}").to("");
+  }
+  
+  @Ignore public void issue86_5() {
+    trimming("if(false) {c();\nb();\na();}").to("{}").to("").to(null);
+  }
+  
   @Test public void issue87a() {
     trimming("a-b*c - (x - - - (d*e))").to("a  - b*c -x + d*e");
   }
