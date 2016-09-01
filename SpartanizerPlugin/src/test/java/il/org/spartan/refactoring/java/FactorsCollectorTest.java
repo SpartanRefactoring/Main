@@ -202,10 +202,9 @@ import il.org.spartan.refactoring.create.*;
     azzert.that(core(e(" +(+ (+a))")), iz("a"));
   }
 
-  // TODO: should probably simplify -+-+-+-+-+(a) to -a
   @Test public void test31() {
     c.collect(i("-+  -+ -+-+-+(a) * b"));
-    azzert.that(c.multipliers(), iz("[-+-+-+-+-+(a),b]"));
+    azzert.that(c.multipliers(), iz("[-a,b]"));
     azzert.that(c.dividers(), iz("[]"));
   }
 
