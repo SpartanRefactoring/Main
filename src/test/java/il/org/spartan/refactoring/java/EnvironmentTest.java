@@ -3,9 +3,14 @@ package il.org.spartan.refactoring.java;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.java.Environment.*;
 
+import java.util.*;
+import java.util.Map.*;
+
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.refactoring.engine.*;
 
 public class EnvironmentTest {
   // =================== default ===================
@@ -215,4 +220,89 @@ public class EnvironmentTest {
    * Information()); e2.put("JAVA", new Information()); e2.put("SPARTANIZATION",
    * new Information()); e3.put("IS", new Information()); e4.put("FUN", new
    * Information()); e5.put("Alex", new Information()); } */
+  
+  //========================= use & define tests ===========================
+  
+  @Ignore public static void define_1() {
+    String code = "int a = 0;";
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
+    final Set<Entry<String, Information>> $ = Environment.defines(u);
+    azzert.that($.contains("a"), is(true));
+  }
+  
+  @Ignore public static void define_2() {
+    String code = "int a = 0;\n" + //
+                  "int b;";
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
+    final Set<Entry<String, Information>> $ = Environment.defines(u);
+    azzert.that($.contains("a"), is(true));
+    azzert.that($.contains("b"), is(true));
+  }
+  
+  @Ignore public static void define_3() {
+    String code = "public void f(int a){}";
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
+    final Set<Entry<String, Information>> $ = Environment.defines(u);
+    azzert.that($.contains("a"), is(true));
+  }
+  
+  @Ignore public static void define_4() {
+    String code = "public void f(int a){String b}";
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
+    final Set<Entry<String, Information>> $ = Environment.defines(u);
+    azzert.that($.contains("a"), is(true));
+    azzert.that($.contains("b"), is(true));
+  }
+  
+  @Ignore public static void define_5() {
+    String code = "a = 0;";
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
+    final Set<Entry<String, Information>> $ = Environment.defines(u);
+    azzert.that($.contains("a"), is(false));
+  }
+  
+  @Ignore public static void define_6() {
+    String code = "int a = 0;\n" + //
+                  "b = 5";
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
+    final Set<Entry<String, Information>> $ = Environment.defines(u);
+    azzert.that($.contains("a"), is(true));
+    azzert.that($.contains("b"), is(false));
+  }
+  
+  @Ignore public static void define_7() {
+    String code = "class MyClass {\n" + //
+                  "int a;\n" + //
+                  "static class Inner {\n" + //
+                  "void func(MyClass my, int b) {String s = 4;\n" +
+                  "not_in_env++;}\n" + //
+                  "}}";
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
+    final Set<Entry<String, Information>> $ = Environment.defines(u);
+    azzert.that($.contains("a"), is(true));
+    azzert.that($.contains("b"), is(true));
+    azzert.that($.contains("my"), is(true));
+    azzert.that($.contains("not_in_env"), is(false));
+  }
+  
+  @Ignore public static void define_8() {
+    String code = "int a = 0;";
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
+    final Set<Entry<String, Information>> $ = Environment.defines(u);
+    azzert.that($.contains("a"), is(true));
+  }
+  
+  @Ignore public static void define_9() {
+    String code = "int a = 0;";
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
+    final Set<Entry<String, Information>> $ = Environment.defines(u);
+    azzert.that($.contains("a"), is(true));
+  }
+
+  @Ignore public static void define_10() {
+    String code = "int a = 0;";
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
+    final Set<Entry<String, Information>> $ = Environment.defines(u);
+    azzert.that($.contains("a"), is(true));
+  }
 }
