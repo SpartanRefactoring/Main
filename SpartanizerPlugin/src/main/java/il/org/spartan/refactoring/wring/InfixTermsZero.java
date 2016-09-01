@@ -10,6 +10,7 @@ import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.builder.*;
 import il.org.spartan.refactoring.engine.*;
+import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.Wring.*;
 
 /** Replace <code>0+X</code>, <code>X+0</code>
@@ -31,6 +32,6 @@ public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression> im
       if (!iz.literal0(¢))
         $.add(¢);
     return $.size() == es.size() ? null
-        : $.isEmpty() ? wizard.duplicate(lisp.first(es)) : $.size() != 1 ? subject.operands($).to(PLUS) : wizard.duplicate(lisp.first($));
+        : $.isEmpty() ? duplicate.of(lisp.first(es)) : $.size() != 1 ? subject.operands($).to(PLUS) : duplicate.of(lisp.first($));
   }
 }

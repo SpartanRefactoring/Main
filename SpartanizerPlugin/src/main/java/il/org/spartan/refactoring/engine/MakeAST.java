@@ -24,11 +24,11 @@ public enum MakeAST {
     }
 
     @Override public CompilationUnit from(final IFile f) {
-      return (CompilationUnit) Maketemp.COMPILATION_UNIT.parser(f).createAST(null);
+      return (CompilationUnit) Make.COMPILATION_UNIT.parser(f).createAST(null);
     }
 
     @Override public CompilationUnit from(final IMarker m, final IProgressMonitor pm) {
-      return (CompilationUnit) Maketemp.COMPILATION_UNIT.parser(m).createAST(pm);
+      return (CompilationUnit) Make.COMPILATION_UNIT.parser(m).createAST(pm);
     }
 
     @Override public CompilationUnit from(final String s) {
@@ -42,11 +42,11 @@ public enum MakeAST {
     }
 
     @Override public Expression from(final IFile f) {
-      return (Expression) Maketemp.EXPRESSION.parser(f).createAST(null);
+      return (Expression) Make.EXPRESSION.parser(f).createAST(null);
     }
 
     @Override public Expression from(final IMarker m, final IProgressMonitor pm) {
-      return (Expression) Maketemp.EXPRESSION.parser(m).createAST(pm);
+      return (Expression) Make.EXPRESSION.parser(m).createAST(pm);
     }
 
     @Override public Expression from(final String s) {
@@ -137,7 +137,7 @@ public enum MakeAST {
   /** @param f IFile
    * @return ASTNode */
   public ASTNode from(final IFile f) {
-    return Maketemp.of(this).parser(f).createAST(null);
+    return Make.of(this).parser(f).createAST(null);
   }
 
   /** IMarker, SubProgressMonitor -> ASTNode converter
@@ -145,7 +145,7 @@ public enum MakeAST {
    * @param pm ProgressMonitor
    * @return ASTNode */
   public ASTNode from(final IMarker m, final IProgressMonitor pm) {
-    return Maketemp.of(this).parser(m).createAST(pm);
+    return Make.of(this).parser(m).createAST(pm);
   }
 
   /** String -> ASTNode converter

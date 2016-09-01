@@ -4,6 +4,7 @@ import static il.org.spartan.refactoring.ast.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
 
 /** Removes the parentheses from annotations that do not take arguments,
@@ -20,7 +21,7 @@ public final class AnnotationRemoveEmptyParentheses extends Wring.ReplaceCurrent
     if (!values(a).isEmpty())
       return null;
     final MarkerAnnotation $ = a.getAST().newMarkerAnnotation();
-    $.setTypeName(wizard.duplicate(a.getTypeName()));
+    $.setTypeName(duplicate.of(a.getTypeName()));
     return $;
   }
 }

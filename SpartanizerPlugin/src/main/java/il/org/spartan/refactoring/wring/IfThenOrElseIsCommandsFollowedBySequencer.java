@@ -62,7 +62,7 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
           r.replace(parent, newParent, g);
         } else {
           statements(newParent).add(shorterIf);
-          duplicate.duplicateInto(remainder, statements(newParent));
+          duplicate.into(remainder, statements(newParent));
           r.replace(s, newParent, g);
         }
       }

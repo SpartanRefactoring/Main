@@ -5,6 +5,7 @@ import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
 
 public abstract class RemoveModifier<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> {
@@ -26,7 +27,7 @@ public abstract class RemoveModifier<N extends BodyDeclaration> extends Wring.Re
   abstract boolean redundant(Modifier m);
 
   @Override N replacement(final N $) {
-    return go(wizard.duplicate($));
+    return go(duplicate.of($));
   }
 
   @Override boolean scopeIncludes(final N ¢) {

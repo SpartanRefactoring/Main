@@ -4,8 +4,10 @@ import static il.org.spartan.refactoring.ast.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.engine.*;
+import il.org.spartan.refactoring.utils.*;
 
 /** convert
  *
@@ -34,6 +36,6 @@ public final class BlockSingleton extends Wring.ReplaceCurrentNode<Block> implem
   }
 
   private static Statement replacement(final Statement $) {
-    return $ == null || iz.blockEssential($) ? null : wizard.duplicate($);
+    return $ == null || iz.blockEssential($) ? null : duplicate.of($);
   }
 }
