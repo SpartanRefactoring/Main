@@ -1,12 +1,11 @@
 package il.org.spartan.refactoring.java;
 
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+
 import java.util.*;
-import java.util.*;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.builder.*;
 import il.org.spartan.refactoring.engine.*;
 

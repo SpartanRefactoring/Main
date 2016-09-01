@@ -15,7 +15,7 @@ import il.org.spartan.refactoring.java.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 @SuppressWarnings({ "javadoc", "static-method" }) //
-public class IsTest {
+public class izTest {
   @Test public void booleanLiteralFalseOnNull() {
     azzert.that(iz.booleanLiteral(e("null")), is(false));
   }

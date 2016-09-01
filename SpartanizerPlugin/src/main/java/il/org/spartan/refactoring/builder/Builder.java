@@ -70,7 +70,7 @@ public class Builder extends IncrementalProjectBuilder {
 
   public static void incrementalBuild(final IResourceDelta d) throws CoreException {
     d.accept(internalDelta -> {
-      int k = internalDelta.getKind();
+      final int k = internalDelta.getKind();
       // return true to continue visiting children.
       if (k != IResourceDelta.ADDED && k != IResourceDelta.CHANGED)
         return true;

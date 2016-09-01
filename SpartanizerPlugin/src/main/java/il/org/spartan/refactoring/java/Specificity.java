@@ -84,7 +84,7 @@ public class Specificity implements Comparator<Expression> {
     },
     EMPTY_STRING {
       @Override boolean includes(final ASTNode ¢) {
-        return iz.isEmptyStringLiteral(¢);
+        return iz.emptyStringLiteral(¢);
       }
     },
     TRUE_LITERAL {

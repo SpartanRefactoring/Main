@@ -41,8 +41,7 @@ public final class TernaryShortestFirst extends Wring.ReplaceCurrentNode<Conditi
   }
 
   @Override ConditionalExpression replacement(final ConditionalExpression e) {
-    final ConditionalExpression $ = subject.pair(core(e.getElseExpression()), core(e.getThenExpression()))
-        .toCondition(make.notOf(e.getExpression()));
+    final ConditionalExpression $ = subject.pair(core(e.getElseExpression()), core(e.getThenExpression())).toCondition(make.notOf(e.getExpression()));
     final Expression then = $.getElseExpression();
     final Expression elze = $.getThenExpression();
     if (!iz.conditional(then) && iz.conditional(elze))

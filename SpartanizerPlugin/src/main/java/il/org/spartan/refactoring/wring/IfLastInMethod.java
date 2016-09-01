@@ -1,5 +1,5 @@
 package il.org.spartan.refactoring.wring;
-import il.org.spartan.refactoring.builder.make;
+
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.ast.step.*;
 
@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.builder.*;
 import il.org.spartan.refactoring.engine.*;
 
 /** convert

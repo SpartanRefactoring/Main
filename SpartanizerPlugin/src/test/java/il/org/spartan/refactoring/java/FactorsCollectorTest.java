@@ -1,10 +1,9 @@
 package il.org.spartan.refactoring.java;
 
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
-import static il.org.spartan.azzert.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.ast.extract.*;
 import static il.org.spartan.refactoring.engine.into.*;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
@@ -12,7 +11,6 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.create.*;
-import il.org.spartan.refactoring.engine.*;
 
 @SuppressWarnings("static-method") public class FactorsCollectorTest {
   @Test public void test00() {

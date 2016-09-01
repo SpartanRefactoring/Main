@@ -78,18 +78,22 @@ public enum Restructure {
       $.add(subject.operand(e).to(wizard.MINUS1));
     return $;
   }
+
   private static List<Expression> add(final Expression e, final List<Expression> $) {
     $.add(e);
     return $;
   }
-    static String signAdjust(final String token) {
+
+  static String signAdjust(final String token) {
     return token.startsWith("-") ? token.substring(1) //
         : "-" + token.substring(token.startsWith("+") ? 1 : 0);
   }
+
   private static List<Expression> flattenInto(final Operator o, final Expression e, final List<Expression> $) {
     final Expression core = core(e);
     final InfixExpression inner = az.infixExpression(core);
-    return inner != null && inner.getOperator() == o?flattenInto(o,adjust(o,hop.operands(inner)),$):add(!iz.noParenthesisRequired(core)?e:core,$);
+    return inner != null && inner.getOperator() == o ? flattenInto(o, adjust(o, hop.operands(inner)), $)
+        : add(!iz.noParenthesisRequired(core) ? e : core, $);
   }
 
   private static List<Expression> flattenInto(final Operator o, final List<Expression> es, final List<Expression> $) {
@@ -97,5 +101,4 @@ public enum Restructure {
       flattenInto(o, e, $);
     return $;
   }
-
 }
