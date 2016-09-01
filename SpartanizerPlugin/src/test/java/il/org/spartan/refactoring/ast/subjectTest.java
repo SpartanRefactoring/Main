@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.ast;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.builder.Restructure.*;
+import static il.org.spartan.refactoring.create.duplicate.*;
 import static il.org.spartan.refactoring.engine.into.*;
 
 import java.util.*;
@@ -11,7 +11,8 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.refactoring.builder.*;
-import il.org.spartan.refactoring.builder.subject.*;
+import il.org.spartan.refactoring.create.*;
+import il.org.spartan.refactoring.create.subject.*;
 import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.java.*;
 

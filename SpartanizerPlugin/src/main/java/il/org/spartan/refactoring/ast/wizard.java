@@ -12,7 +12,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 
-import il.org.spartan.refactoring.builder.Restructure;
+import il.org.spartan.refactoring.create.*;
 import il.org.spartan.refactoring.engine.*;
 
 public interface wizard {
@@ -145,7 +145,7 @@ public interface wizard {
    *         parameter is {@link Operator#CONDITIONAL_OR}, or
    *         {@link Operator#CONDITIONAL_OR} if this operator is
    *         {@link Operator#CONDITIONAL_AND}
-   * @see Restructure#deMorgan(Operator) */
+   * @see duplicate#deMorgan(Operator) */
   static Operator deMorgan(final InfixExpression e) {
     return wizard.deMorgan(e.getOperator());
   }

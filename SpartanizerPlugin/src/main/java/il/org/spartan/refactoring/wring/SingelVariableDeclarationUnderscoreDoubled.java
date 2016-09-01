@@ -1,10 +1,10 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.engine.Restructure.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.create.*;
 import il.org.spartan.refactoring.wring.Wring.*;
 
 /** A {@link Wring} to change name of unused variable to double underscore "__"
@@ -114,7 +114,7 @@ import il.org.spartan.refactoring.wring.Wring.*;
     $.setFlags($.getFlags());
     $.setInitializer($.getInitializer());
     $.setType(wizard.duplicate(¢.getType()));
-    duplicateModifiers(step.modifiers(¢), step.modifiers($));
+    duplicate.duplicateModifiers(step.modifiers(¢), step.modifiers($));
     return $;
   }
 }

@@ -1,4 +1,4 @@
-package il.org.spartan.refactoring.builder;
+package il.org.spartan.refactoring.create;
 
 import static il.org.spartan.refactoring.ast.iz.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
@@ -8,6 +8,8 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.builder.*;
+import il.org.spartan.refactoring.create.duplicate;
 import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.wring.*;
 
@@ -64,7 +66,7 @@ public interface make {
 
   static Expression minus(final Expression e, final NumberLiteral l) {
     return l == null ? minusOf(e) //
-        : newLiteral(l, literal0(l) ? "0" : Restructure.signAdjust(l.getToken())) //
+        : newLiteral(l, literal0(l) ? "0" : duplicate.signAdjust(l.getToken())) //
     ;
   }
 

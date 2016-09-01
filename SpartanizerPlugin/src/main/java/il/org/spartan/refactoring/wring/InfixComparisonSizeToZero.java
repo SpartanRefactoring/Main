@@ -5,6 +5,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.builder.*;
+import il.org.spartan.refactoring.create.*;
 import il.org.spartan.refactoring.engine.*;
 
 /** Converts <code>x.size()==0</code> to <code>x.isEmpty()</code>,

@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.builder.*;
+import il.org.spartan.refactoring.create.*;
 
 /** Replace <code>(double)X</code> by <code>1.*X</code>
  * @author Alex Kopzon
