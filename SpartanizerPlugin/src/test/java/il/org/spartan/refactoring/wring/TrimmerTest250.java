@@ -768,6 +768,18 @@ public class TrimmerTest250 {
   }
   
   @Test public void issue86_2() {
+    trimming("if(false) {c();\nb();\na();}").to("{}");
+  }
+  
+  @Ignore public void issue86_3() {
+    trimming("if(false) {c();\nb();\na();}").to("{}").to(null);
+  }
+  
+  @Ignore public void issue86_4() {
+    trimming("if(false) {c();\nb();\na();}").to("{}").to("");
+  }
+  
+  @Ignore public void issue86_5() {
     trimming("if(false) {c();\nb();\na();}").to("{}").to("").to(null);
   }
   
