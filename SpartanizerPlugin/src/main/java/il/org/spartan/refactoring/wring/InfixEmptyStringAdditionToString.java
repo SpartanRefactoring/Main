@@ -2,8 +2,8 @@ package il.org.spartan.refactoring.wring;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.java.*;
-import il.org.spartan.refactoring.utils.*;
 
 /** transforms "" + x to x when x is of type String
  * @author Stav Namir

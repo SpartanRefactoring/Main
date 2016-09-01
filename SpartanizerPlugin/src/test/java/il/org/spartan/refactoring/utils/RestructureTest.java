@@ -5,6 +5,7 @@ import static il.org.spartan.azzert.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.refactoring.engine.*;
 
 @SuppressWarnings("static-method") public class RestructureTest {
   @Test public void issue72me4xA() {

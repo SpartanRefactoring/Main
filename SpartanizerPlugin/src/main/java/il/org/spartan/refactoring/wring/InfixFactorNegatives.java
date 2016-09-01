@@ -1,9 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.Plant.*;
-import static il.org.spartan.refactoring.utils.extract.*;
-import static il.org.spartan.refactoring.utils.step.*;
+import static il.org.spartan.refactoring.ast.extract.*;
+import static il.org.spartan.refactoring.ast.step.*;
+import static il.org.spartan.refactoring.engine.Plant.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
@@ -12,7 +12,10 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.builder.*;
+import il.org.spartan.refactoring.create.*;
+import il.org.spartan.refactoring.engine.*;
 
 /** convert an expression such as
  *

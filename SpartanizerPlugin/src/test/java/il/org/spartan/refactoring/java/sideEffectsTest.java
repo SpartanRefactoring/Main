@@ -1,19 +1,19 @@
 package il.org.spartan.refactoring.java;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.utils.into.*;
+import static il.org.spartan.refactoring.engine.into.*;
 
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.ast.*;
 
 /** Test class for class {@link iz}
  * @author Yossi Gil
  * @since 2015-07-17 */
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public class sideEffectsTest {
-  @Test public void sideEffectArray1()  {
+  @Test public void sideEffectArray1() {
     azzert.that(sideEffects.free(e("new a[3]")), is(true));
   }
 

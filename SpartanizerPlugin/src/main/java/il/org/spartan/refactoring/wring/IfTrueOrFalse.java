@@ -1,10 +1,10 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.iz.*;
+import static il.org.spartan.refactoring.ast.iz.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.ast.*;
 
 /** convert <code>if (true) x; else {y;} </code> into <code>x;</code> and
  * <code>if (false) x; else {y;}  </code> into <code>
@@ -22,10 +22,10 @@ public final class IfTrueOrFalse extends Wring.ReplaceCurrentNode<IfStatement> i
     // Prior test in scopeIncludes makes sure that only IfStatements containing
     // a 'true' or 'false'
     // get into the replace.
-    return isLiteralTrue(s.getExpression()) ? step.then(s) : step.elze(s);
+    return iz.isLiteralTrue(s.getExpression()) ? step.then(s) : step.elze(s);
   }
 
   @Override boolean scopeIncludes(final IfStatement s) {
-    return s != null && (isLiteralTrue(s.getExpression()) || isLiteralFalse(s.getExpression()));
+    return s != null && (iz.isLiteralTrue(s.getExpression()) || iz.isLiteralFalse(s.getExpression()));
   }
 }

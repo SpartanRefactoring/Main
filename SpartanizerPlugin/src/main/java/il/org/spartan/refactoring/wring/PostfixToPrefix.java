@@ -3,7 +3,9 @@ package il.org.spartan.refactoring.wring;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.PostfixExpression.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.builder.*;
+import il.org.spartan.refactoring.engine.*;
 
 /** converts, whenever possible, postfix increment/decrement to prefix
  * increment/decrement

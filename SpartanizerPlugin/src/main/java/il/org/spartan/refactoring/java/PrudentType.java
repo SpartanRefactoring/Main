@@ -9,7 +9,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.engine.*;
 
 /** TODO: Niv Issue*94
  * <p>
@@ -43,7 +44,7 @@ public enum PrudentType {
   // schizophrenia" .
   ALPHANUMERIC("String|double|float|long|int|char|short|byte", "only in binary plus: f()+g(), not 2 + f(), nor f() + null"), //
   NUMERIC("double|float|long|int|char|short|byte", "must be either f()*g(), 2L*f(), 2.*a(), not 2 %a(), nor 2"), //
-  BOOLEANINTEGRAL("boolean|long|int|char|short|byte","only in x^y,x&y,x|y"),//
+  BOOLEANINTEGRAL("boolean|long|int|char|short|byte", "only in x^y,x&y,x|y"), //
   INTEGRAL("long|int|char|short|byte", "must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() "), //
   // Certain types
   NULL("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"), BYTE("byte", "must be byte: (byte)1, nothing else"), //
@@ -176,7 +177,7 @@ public enum PrudentType {
 
   private static PrudentType prudentType(final PostfixExpression e, final PrudentType t1) {
     final PrudentType ¢ = t1 != null ? t1 : prudent(e.getOperand());
-    return ¢.asNumeric(); //see testInDecreamentSemantics
+    return ¢.asNumeric(); // see testInDecreamentSemantics
   }
 
   private static PrudentType prudentType(final ParenthesizedExpression e, final PrudentType t) {
@@ -278,14 +279,17 @@ public enum PrudentType {
   private final PrudentType under(final PrefixExpression.Operator o) {
     assert o != null;
     return o == NOT ? BOOLEAN //
-        : in(o, DECREMENT, INCREMENT) ? asNumeric() //see testInDecreamentSemantics and testOnaryPlusMinusSemantics
-        :  o != COMPLEMENT ? asNumericUnderOperation() : asIntegralUnderOperation();
+        : in(o, DECREMENT, INCREMENT) ? asNumeric() // see
+                                                    // testInDecreamentSemantics
+                                                    // and
+                                                    // testOnaryPlusMinusSemantics
+            : o != COMPLEMENT ? asNumericUnderOperation() : asIntegralUnderOperation();
   }
 
   /** @return one of {@link #BOOLEAN}, {@link #INT}, {@link #LONG},
-   *         {@link #DOUBLE}, {@link #STRING}, {@link #INTEGRAL}, {@link BOOLEANINTEGRAL}
-   *         {@link #NUMERIC}, or {@link #ALPHANUMERIC}, in case it cannot
-   *         decide */
+   *         {@link #DOUBLE}, {@link #STRING}, {@link #INTEGRAL},
+   *         {@link BOOLEANINTEGRAL} {@link #NUMERIC}, or {@link #ALPHANUMERIC},
+   *         in case it cannot decide */
   private final PrudentType underBinaryOperator(final InfixExpression.Operator o, final PrudentType k) {
     if (o == wizard.PLUS2)
       return underPlus(k);
@@ -308,19 +312,15 @@ public enum PrudentType {
   /** @return one of {@link #BOOLEAN}, {@link #INT}, {@link #LONG},
    *         {@link #INTEGRAL} or {@link BOOLEANINTEGRAL}, in case it cannot
    *         decide */
-  private PrudentType underBitwiseOperation(PrudentType k) {
-    if (this == k){
+  private PrudentType underBitwiseOperation(final PrudentType k) {
+    if (this == k)
       return k;
-    }
-    if (isIntegral() && k.isIntegral()){
+    if (isIntegral() && k.isIntegral())
       return underIntegersOnlyOperator(k);
-    }
-    if (isNoInfo()){
+    if (isNoInfo())
       return k.underBitwiseOperationNoInfo();
-    }
-    if (k.isNoInfo()){
+    if (k.isNoInfo())
       return underBitwiseOperationNoInfo();
-    }
     return BOOLEANINTEGRAL;
   }
 
@@ -328,12 +328,10 @@ public enum PrudentType {
    *         {@link #INTEGRAL} or {@link BOOLEANINTEGRAL}, in case it cannot
    *         decide */
   private PrudentType underBitwiseOperationNoInfo() {
-    if (this == BOOLEAN){
+    if (this == BOOLEAN)
       return BOOLEAN;
-    }
-    if (isIntegral()){
+    if (isIntegral())
       return this == LONG ? LONG : INTEGRAL;
-    }
     return BOOLEANINTEGRAL;
   }
 
@@ -419,11 +417,10 @@ public enum PrudentType {
   public boolean isNumeric() {
     return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC);
   }
-  
-  /** @return one of {@link #INT}, {@link #LONG},, {@link #CHAR},
-   *         {@link BYTE}, {@link SHORT}, {@link FLOAT}, {@link #DOUBLE},
-   *         {@link #INTEGRAL} or {@link #NUMERIC}, in case no
-   *         further information is available */
+
+  /** @return one of {@link #INT}, {@link #LONG},, {@link #CHAR}, {@link BYTE},
+   *         {@link SHORT}, {@link FLOAT}, {@link #DOUBLE}, {@link #INTEGRAL} or
+   *         {@link #NUMERIC}, in case no further information is available */
   private PrudentType asNumeric() {
     return !isNumeric() ? NUMERIC : this;
   }

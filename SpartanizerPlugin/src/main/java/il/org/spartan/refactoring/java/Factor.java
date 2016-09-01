@@ -1,7 +1,8 @@
 package il.org.spartan.refactoring.java;
 
 import org.eclipse.jdt.core.dom.*;
-//TOOD: Who wrote this class?
+
+// TOOD: Who wrote this class?
 class Factor {
   private final boolean divider;
   public final Expression expression;

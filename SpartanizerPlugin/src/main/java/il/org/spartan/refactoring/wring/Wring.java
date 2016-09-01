@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.step.*;
+import static il.org.spartan.refactoring.ast.step.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -13,8 +13,9 @@ import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.java.*;
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.builder.*;
+import il.org.spartan.refactoring.engine.*;
 
 /** A wring is a transformation that works on an AstNode. Such a transformation
  * make a single simplification of the tree. A wring is so small that it is
@@ -61,8 +62,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
    * but that actual application will be vacuous.
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is within the
-   *         scope of this object 
-   * @*/
+   *         scope of this object @ */
   boolean scopeIncludes(final N n) {
     return make(n, null) != null;
   }
@@ -95,17 +95,6 @@ public abstract class Wring<N extends ASTNode> implements Kind {
 
     private IExtendedModifier firstBad(final N n) {
       return firstThat(n, (final Modifier ¢) -> redundant(¢));
-    }
-
-    private N go(final N $) {
-      for (final Iterator<IExtendedModifier> ¢ = step.modifiers($).iterator(); ¢.hasNext();)
-        if (redundant(¢.next()))
-          ¢.remove();
-      return $;
-    }
-
-    private boolean redundant(final IExtendedModifier m) {
-      return redundant((Modifier) m);
     }
   }
 

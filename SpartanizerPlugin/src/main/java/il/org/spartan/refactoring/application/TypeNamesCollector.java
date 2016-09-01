@@ -6,7 +6,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.files.*;
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.utils.*;
 
 public class TypeNamesCollector {

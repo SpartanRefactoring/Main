@@ -8,7 +8,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.ast.*;
 
 public enum sideEffects {
   ;
@@ -73,10 +73,6 @@ public enum sideEffects {
   public static boolean sideEffectFreePrefixExpression(final PrefixExpression e) {
     return in(e.getOperator(), PrefixExpression.Operator.PLUS, PrefixExpression.Operator.MINUS, PrefixExpression.Operator.COMPLEMENT,
         PrefixExpression.Operator.NOT) && free(step.operand(e));
-  }
-
-  private static boolean free(final ConditionalExpression e) {
-    return free(step.expression(e)) && free(step.then(e)) && free(step.elze(e));
   }
 
   public static boolean deterministic(final Expression e) {
