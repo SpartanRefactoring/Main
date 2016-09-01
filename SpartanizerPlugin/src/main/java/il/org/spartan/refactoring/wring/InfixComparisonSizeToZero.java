@@ -37,8 +37,7 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
         || isNumber(¢2) && ¢1 instanceof MethodInvocation;
   }
 
-  @SuppressWarnings("fallthrough") private static ASTNode replacement(final InfixExpression e, final Operator o, final MethodInvocation i,
-      final Expression n) {
+  private static ASTNode replacement(final InfixExpression e, Operator o, final MethodInvocation i, final Expression n) {
     if (!"size".equals(step.name(i).getIdentifier()))
       return null;
     int sign = -1;
@@ -67,41 +66,28 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
         return null;
     }
     final MethodInvocation $ = subject.operand(receiver).toMethod("isEmpty");
-    final int number = sign * Integer.parseInt(l.getToken());
+    int threshold = sign * Integer.parseInt(l.getToken());
     Expression notOf = make.notOf($);
     BooleanLiteral TRUE = e.getAST().newBooleanLiteral(true);
-    switch (o.toString()) {
-      case "==":
-        if (number == 0)
-          return $;
-        // TODO: Niv I think this is a bug. If you compare to 1 or 2, there is
-        // nothing you can do to change it.
-        if (number == 1 || number == 2)
-          return notOf  ;
-        return null;
-      case "!=":
-        make.notOf($);
-        if (number == 0)
-          return notOf;
-        return null;
-      case ">":
-        if (number == 0)
-          return notOf;
-      case ">=":
-        if (number <= 0) {
-          return TRUE;
-        }
-        return null;
-      case "<=":
-        if (number == 0)
-          return $;
-      case "<":
-        if (number <= 0)
-          return e.getAST().newBooleanLiteral(false);
-        return null;
-      default:
-        return null;
+    BooleanLiteral FALSE = e.getAST().newBooleanLiteral(false);
+    if (o == Operator.GREATER_EQUALS) {
+      o = Operator.GREATER;
+      --threshold;
     }
+    if (o == Operator.LESS_EQUALS) {
+      o = Operator.LESS;
+      ++threshold;
+    }
+    if (o == Operator.EQUALS)
+      return threshold == 0 ? $ : threshold < 0 ? FALSE : null;
+    if (o == Operator.NOT_EQUALS)
+      return threshold == 0 ? notOf : threshold >= 0 ? null : TRUE;
+    if (o == Operator.GREATER)
+      return threshold < 0 ? TRUE : threshold == 0 ? $ : null;
+    if (o == Operator.LESS)
+      return threshold <= 0 ? FALSE : threshold == 1 ? $ : null;
+    assert false : o + ": uncrecognized";
+    return null;
   }
 
   private static String descriptionAux(final Expression e) {
