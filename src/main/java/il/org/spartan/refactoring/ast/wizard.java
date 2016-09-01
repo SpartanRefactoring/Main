@@ -63,6 +63,7 @@ public interface wizard {
                                         : o == RIGHT_SHIFT_SIGNED_ASSIGN ? RIGHT_SHIFT_SIGNED //
                                             : o == RIGHT_SHIFT_UNSIGNED_ASSIGN ? RIGHT_SHIFT_UNSIGNED : null;
   }
+
   /** Compute the "de Morgan" conjugate of an operator.
    * @param o must be either {@link Operator#CONDITIONAL_AND} or
    *        {@link Operator#CONDITIONAL_OR}
@@ -131,7 +132,7 @@ public interface wizard {
     if (ns == null)
       return false;
     for (final ASTNode ¢ : ns)
-      if (¢ != null && iz.isIncrementOrDecrement(¢))
+      if (¢ != null && iz.incrementOrDecrement(¢))
         return true;
     return false;
   }
@@ -193,26 +194,31 @@ public interface wizard {
     return hasNull(a1, a2) || !compatibleOps(a1.getOperator(), a2.getOperator()) || !wizard.same(step.left(a1), step.left(a2));
   }
 
-  /** Determine whether an InfixExpression.Operator is a comparison operator or not
+  /** Determine whether an InfixExpression.Operator is a comparison operator or
+   * not
    * @param o JD
-   * @return true if one of {@link #InfixExpression.Operator.XOR}, {@link #InfixExpression.Operator.OR},
-   * {@link #InfixExpression.Operator.AND}, and false otherwise
-   */
-  static boolean isBitwiseOperator(InfixExpression.Operator o){
+   * @return true if one of {@link #InfixExpression.Operator.XOR},
+   *         {@link #InfixExpression.Operator.OR},
+   *         {@link #InfixExpression.Operator.AND}, and false otherwise */
+  static boolean isBitwiseOperator(final InfixExpression.Operator o) {
     return in(o, XOR, OR, AND);
   }
 
-  /** Determine whether an InfixExpression.Operator is a comparison operator or not
+  /** Determine whether an InfixExpression.Operator is a comparison operator or
+   * not
    * @param o JD
-   * @return true if one of {@link #InfixExpression.Operator.LESS}, {@link #InfixExpression.Operator.GREATER},
-   * {@link #InfixExpression.Operator.LESS_EQUALS}, {@link #InfixExpression.Operator.GREATER_EQUALS},
-   * {@link #InfixExpression.Operator.EQUALS}, {@link #InfixExpression.Operator.NOT_EQUALS},
-   * {@link #InfixExpression.Operator.CONDITIONAL_OR}, {@link #InfixExpression.Operator.CONDITIONAL_AND}
-   * and false otherwise
-   */
-  static boolean isComparisonOperator(InfixExpression.Operator o){
+   * @return true if one of {@link #InfixExpression.Operator.LESS},
+   *         {@link #InfixExpression.Operator.GREATER},
+   *         {@link #InfixExpression.Operator.LESS_EQUALS},
+   *         {@link #InfixExpression.Operator.GREATER_EQUALS},
+   *         {@link #InfixExpression.Operator.EQUALS},
+   *         {@link #InfixExpression.Operator.NOT_EQUALS},
+   *         {@link #InfixExpression.Operator.CONDITIONAL_OR},
+   *         {@link #InfixExpression.Operator.CONDITIONAL_AND} and false
+   *         otherwise */
+  static boolean isComparisonOperator(final InfixExpression.Operator o) {
     return in(o, LESS, GREATER, LESS_EQUALS, GREATER_EQUALS, EQUALS, //
-                 NOT_EQUALS, CONDITIONAL_OR, CONDITIONAL_AND);
+        NOT_EQUALS, CONDITIONAL_OR, CONDITIONAL_AND);
   }
 
   @SuppressWarnings("unchecked") static ASTParser parser(final int kind) {
@@ -271,6 +277,7 @@ public interface wizard {
   static boolean same(final ASTNode n1, final ASTNode n2) {
     return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType() && wizard.body(n1).equals(wizard.body(n2));
   }
+
   /** String wise comparison of all the given SimpleNames
    * @param ¢ string to compare all names to
    * @param es SimplesNames to compare by their string value to cmpTo
@@ -281,7 +288,7 @@ public interface wizard {
         return false;
     return true;
   }
-  
+
   /** Determine whether two lists of nodes are the same, in the sense that their
    * textual representations is identical.
    * @param ns1 first list to compare

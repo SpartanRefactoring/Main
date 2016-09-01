@@ -448,7 +448,7 @@ public class EnvironmentCodeExamples {
         try {
           class C {
           }
-          C c = null;
+          final C c = null;
         } catch (final NullPointerException e) {
           @OutOfOrderFlatENV({ "e" }) final int a;
         }

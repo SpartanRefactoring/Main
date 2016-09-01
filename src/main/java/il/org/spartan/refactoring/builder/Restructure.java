@@ -86,7 +86,8 @@ public enum Restructure {
   private static List<Expression> flatteninto(final Operator o, final Expression e, final List<Expression> $) {
     final Expression core = core(e);
     final InfixExpression inner = az.infixExpression(core);
-    return inner != null && inner.getOperator() == o?flatteninto(o,adjust(o,hop.operands(inner)),$):add(!iz.noParenthesisRequired(core)?e:core,$);
+    return inner != null && inner.getOperator() == o ? flatteninto(o, adjust(o, hop.operands(inner)), $)
+        : add(!iz.noParenthesisRequired(core) ? e : core, $);
   }
 
   private static List<Expression> flatteninto(final Operator o, final List<Expression> es, final List<Expression> $) {

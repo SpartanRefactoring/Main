@@ -150,6 +150,6 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
   }
 
   private static boolean IsSimpleMultiplication(final Expression $) {
-    return !iz.simpleName($) && ((InfixExpression)$).getOperator() == TIMES;
+    return !iz.simpleName($) && ((InfixExpression) $).getOperator() == TIMES;
   }
 }
