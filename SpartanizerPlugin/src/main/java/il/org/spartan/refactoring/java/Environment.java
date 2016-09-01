@@ -113,13 +113,13 @@ import org.eclipse.jdt.core.dom.*;
 
   /** @return set of entries defined in the node, including all hiding. */
   static Set<Entry<String, Information>> defines(ASTNode n) {
-    return null;
+    return Collections.unmodifiableSet(new HashSet<>());
   }
   
   /** @return set of entries used in a given node. this includes the list of 
    * entries that were defined in the node */
   static Set<Entry<String, Information>> uses(ASTNode n) {
-    return null;
+    return Collections.unmodifiableSet(new HashSet<>());
   }
   
   /** TODO: document properly, but essentially is a dictionary with a parent.
@@ -171,17 +171,6 @@ import org.eclipse.jdt.core.dom.*;
       flat.put(name, value);
       assert !flat.isEmpty();
       return hiding(name);
-    }
-    
-    /** @return set of entries defined in the node, including all hiding. */
-    public static Set<Entry<String, Information>> defines(ASTNode n) {
-      return null;
-    }
-    
-    /** @return set of entries used in a given node. this includes the list of 
-     * entries that were defined in the node */
-    public static Set<Entry<String, Information>> uses(ASTNode n) {
-      return null;
     }
   }
 }
