@@ -13,6 +13,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
+import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -1814,7 +1815,6 @@ public class TrimmerTest240 {
   @Test public void issue62a() {
     trimming("int f(int i) { for(;;++i) if(false) break; return i; }").to(null);
   }
-
 
   @Test public void issue62c() {
     trimming("int f(int i) { while(++i > 999) if(i>99) break; return i;}").to(null);

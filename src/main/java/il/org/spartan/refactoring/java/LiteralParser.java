@@ -9,18 +9,6 @@ public class LiteralParser {
    * @author Yossi Gil
    * @since 2015-08-30
    * @see LiteralParser#persuation */
-  public enum Types {
-    /** <code>int</code> */
-    INTEGER, //
-    /** <code>long</code> */
-    LONG, //
-    /** <code>char</code> */
-    CHARACTER, //
-    /** <code>float</code> */
-    FLOAT, //
-    /** <code>double</code> */
-    DOUBLE;
-  }
 
   final String literal;
 
@@ -30,29 +18,29 @@ public class LiteralParser {
     this.literal = literal;
   }
 
-  /** @return an integer representing the type of this literal.
-   * @see LiteralParser.Types */
-  public int type() {
+  /** @return an the type of this literal.
+   * @see PrudentType */
+  public PrudentType type() {
     if (literal.charAt(0) == '\'')
-      return Types.CHARACTER.ordinal();
+      return PrudentType.CHAR;
     switch (literal.charAt(literal.length() - 1)) {
       case 'l':
       case 'L':
-        return Types.LONG.ordinal();
+        return PrudentType.LONG;
       case 'f':
       case 'F':
-        return Types.FLOAT.ordinal();
+        return PrudentType.FLOAT;
       case 'd':
       case 'D':
       case 'p':
       case 'P':
-        return Types.DOUBLE.ordinal();
+        return PrudentType.DOUBLE;
       default:
         if (literal.indexOf('.') >= 0)
-          return Types.DOUBLE.ordinal();
+          return PrudentType.DOUBLE;
         if (literal.indexOf('E') >= 0 || literal.indexOf('e') >= 0)
-          return Types.DOUBLE.ordinal();
-        return Types.INTEGER.ordinal();
+          return PrudentType.DOUBLE;
+        return PrudentType.INT;
     }
   }
 }
