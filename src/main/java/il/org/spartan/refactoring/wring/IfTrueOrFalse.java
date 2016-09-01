@@ -22,10 +22,10 @@ public final class IfTrueOrFalse extends Wring.ReplaceCurrentNode<IfStatement> i
     // Prior test in scopeIncludes makes sure that only IfStatements containing
     // a 'true' or 'false'
     // get into the replace.
-    return iz.isLiteralTrue(s.getExpression()) ? step.then(s) : step.elze(s);
+    return iz.literalTrue(s.getExpression()) ? step.then(s) : step.elze(s);
   }
 
   @Override boolean scopeIncludes(final IfStatement s) {
-    return s != null && (iz.isLiteralTrue(s.getExpression()) || iz.isLiteralFalse(s.getExpression()));
+    return s != null && (iz.literalTrue(s.getExpression()) || iz.literalFalse(s.getExpression()));
   }
 }

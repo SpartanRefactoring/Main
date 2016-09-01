@@ -27,7 +27,7 @@ public interface make {
   }
 
   static Expression minusOf(final Expression e) {
-    return isLiteralZero(e) ? e : subject.operand(e).to(wizard.MINUS1);
+    return literal0(e) ? e : subject.operand(e).to(wizard.MINUS1);
   }
 
   /** Create a new {@link SimpleName} instance at the AST of the parameter
@@ -64,7 +64,7 @@ public interface make {
 
   static Expression minus(final Expression e, final NumberLiteral l) {
     return l == null ? minusOf(e) //
-        : newLiteral(l, isLiteralZero(l) ? "0" : Restructure.signAdjust(l.getToken())) //
+        : newLiteral(l, literal0(l) ? "0" : Restructure.signAdjust(l.getToken())) //
     ;
   }
 
@@ -73,6 +73,14 @@ public interface make {
     $.add(lisp.first(es));
     for (final Expression e : lisp.rest(es))
       $.add(minusOf(e));
+    return $;
+  }
+
+  static IfStatement ifWithoutElse(final Statement s, final InfixExpression condition) {
+    final IfStatement $ = condition.getAST().newIfStatement();
+    $.setExpression(condition);
+    $.setThenStatement(s);
+    $.setElseStatement(null);
     return $;
   }
 }
