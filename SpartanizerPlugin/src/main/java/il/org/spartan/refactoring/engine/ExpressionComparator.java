@@ -98,38 +98,40 @@ public enum ExpressionComparator implements Comparator<Expression> {
     );
   }
 
+  static class Int {
+    int inner = 0;
+  }
+
   /** Counts the number of statements in a tree rooted at a given node
    * @param n JD
    * @return Number of abstract syntax tree nodes under the parameter. */
   public static int lineCount(final ASTNode n) {
-    class Integer {
-      int inner = 0;
-    }
-    final Integer $ = new Integer();
+    final Int $ = new Int();
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode child) {
         if (Statement.class.isAssignableFrom(child.getClass()))
-          switch (child.getNodeType()) {
-            case BLOCK:
-              if (extract.statements(child).size() > 1)
-                ++$.inner;
-              return;
-            case EMPTY_STATEMENT:
-              return;
-            case FOR_STATEMENT:
-            case ENHANCED_FOR_STATEMENT:
-            case DO_STATEMENT:
-              $.inner += 4;
-              return;
-            case IF_STATEMENT:
-              $.inner += 4;
-              final IfStatement i = az.ifStatement(child);
-              if (step.elze(i) != null)
-                ++$.inner;
-              return;
-            default:
-              $.inner += 3;
-          }
+          f($, child);
+      }
+
+      private void f(final Int $, final ASTNode n) {
+        if (iz.is(n, BLOCK)) {
+          if (extract.statements(n).size() > 1)
+            ++$.inner;
+          return;
+        }
+        if (iz.is(n, EMPTY_STATEMENT))
+          return;
+        if (iz.is(n, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, DO_STATEMENT)) {
+          $.inner += 4;
+          return;
+        }
+        if (!iz.is(n, IF_STATEMENT))
+          $.inner += 3;
+        else {
+          $.inner += 4;
+          if (step.elze(az.ifStatement(n)) != null)
+            ++$.inner;
+        }
       }
     });
     return $.inner;
