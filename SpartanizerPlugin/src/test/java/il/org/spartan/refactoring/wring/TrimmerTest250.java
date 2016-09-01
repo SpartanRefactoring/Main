@@ -365,8 +365,8 @@ public class TrimmerTest250 {
     azzert.that(step.left(i), iz("0"));
     azzert.that(step.right(i), iz("x"));
     assert !i.hasExtendedOperands();
-    assert isLiteralZero(step.left(i));
-    assert !isLiteralZero(step.right(i));
+    assert literal0(step.left(i));
+    assert !literal0(step.right(i));
     azzert.that(minus(step.left(i)), iz("0"));
     azzert.that(minus(step.right(i)), iz("-x"));
     trimming(s).to("-x");

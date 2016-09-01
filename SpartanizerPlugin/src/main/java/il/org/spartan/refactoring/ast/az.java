@@ -48,7 +48,7 @@ public enum az {
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static Statement asStatement(final ASTNode ¢) {
-    return !iz.isStatement(¢) ? null : (Statement) ¢;
+    return !iz.statement(¢) ? null : (Statement) ¢;
   }
 
   /** Converts a boolean into a bit value

@@ -9,6 +9,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
+import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.engine.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
@@ -213,9 +214,6 @@ public enum iz {
     return step.operator(az.infixExpression(e)) == DIVIDE;
   }
 
-  /** @param n JD
-   * @return <code><b>true</b></code> <i>iff</i> the parameter is an infix
-   *         expression. */
   public static boolean infixExpression(final ASTNode n) {
     return is(n, INFIX_EXPRESSION);
   }
@@ -223,13 +221,14 @@ public enum iz {
   public static boolean infixMinus(final Expression e) {
     return step.operator(az.infixExpression(e)) == wizard.MINUS2;
   }
+
   public static boolean infixPlus(final Expression e) {
     return step.operator(az.infixExpression(e)) == wizard.PLUS2;
   }
+
   public static boolean infixTimes(final Expression e) {
     return step.operator(az.infixExpression(e)) == TIMES;
   }
-
 
   public static boolean is(final ASTNode ¢, final int... types) {
     return ¢ != null && lisp.intIsIn(¢.getNodeType(), types);
@@ -381,6 +380,18 @@ public enum iz {
   public static boolean isOpAssign(final Assignment a) {
     return a != null && a.getOperator() == Assignment.Operator.ASSIGN;
   }
+  
+  /** @param a the assignment who'¢ operator we want to check
+   * @return true is the assignment'¢ operator is plus assign */
+  public static boolean isOpMinusAssign(final Assignment a) {
+    return a != null && a.getOperator() == Assignment.Operator.MINUS_ASSIGN;
+  }
+  
+  /** @param a the assignment who'¢ operator we want to check
+   * @return true is the assignment'¢ operator is plus assign */
+  public static boolean isOpPlusAssign(final Assignment a) {
+    return a != null && a.getOperator() == Assignment.Operator.PLUS_ASSIGN;
+  }
 
   /** Determine whether a declaration is private
    * @param ¢ JD
@@ -447,11 +458,50 @@ public enum iz {
     return n != null && lisp.intIsIn(n.getNodeType(), NULL_LITERAL, CHARACTER_LITERAL, NUMBER_LITERAL, STRING_LITERAL, BOOLEAN_LITERAL);
   }
 
+  public static boolean literal(final ASTNode ¢, final double d) {
+    final NumberLiteral ¢1 = az.numberLiteral(¢);
+    return ¢1 != null && literal(¢1.getToken(), d);
+  }
+
   /** @param s JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter return a
    *         literal */
   public static boolean literal(final ReturnStatement s) {
     return literal(s.getExpression());
+  }
+
+  /** @param ¢ JD
+   * @return true if the given node is a literal or false otherwise */
+  public static boolean literal(final String token, final double d) {
+    try {
+      return Double.parseDouble(token) == d;
+    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
+      return false;
+    }
+  }
+
+  /** @param ¢ JD
+   * @return true if the given node is a literal 0 or false otherwise */
+  public static boolean literal0(final ASTNode ¢) {
+    return iz.isLiteral(¢, 0);
+  }
+
+  /** @param ¢ JD
+   * @return true if the given node is a literal 1 or false otherwise */
+  public static boolean literal1(final ASTNode ¢) {
+    return iz.isLiteral(¢, 1);
+  }
+
+  /** @param ¢ JD
+   * @return true if the given node is a literal false or false otherwise */
+  public static boolean literalFalse(final ASTNode ¢) {
+    return iz.isLiteral(¢, false);
+  }
+
+  /** @param ¢ JD
+   * @return true if the given node is a literal true or false otherwise */
+  public static boolean literalTrue(final ASTNode ¢) {
+    return iz.isLiteral(¢, true);
   }
 
   /** Determine whether a node is a {@link MethodDeclaration}
@@ -591,7 +641,6 @@ public enum iz {
   public static boolean singletonThen(final IfStatement s) {
     return iz.singletonStatement(step.then(s));
   }
-
   /** Determine whether a node is a {@link Statement}
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a statement */
@@ -727,5 +776,4 @@ public enum iz {
         return true;
     return false;
   }
-
 }

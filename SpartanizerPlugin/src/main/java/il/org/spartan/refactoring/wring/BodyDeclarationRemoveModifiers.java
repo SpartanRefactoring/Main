@@ -24,15 +24,15 @@ import il.org.spartan.refactoring.ast.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public class BodeDeclarationRemoveModifiers<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> implements Kind.SyntacticBaggage {
+public class BodyDeclarationRemoveModifiers<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> implements Kind.SyntacticBaggage {
   // @formatter:off
-  public static class OfAnnotation extends BodeDeclarationRemoveModifiers<AnnotationTypeDeclaration> { /* empty */ }
-  public static class OfEnumConstant extends BodeDeclarationRemoveModifiers<EnumConstantDeclaration> { /* empty */ }
-  public static class OfEnum extends BodeDeclarationRemoveModifiers<TypeDeclaration> { /* empty */ }
-  public static class OfField extends BodeDeclarationRemoveModifiers<FieldDeclaration> { /* empty */ }
-  public static class OfMethod extends BodeDeclarationRemoveModifiers<MethodDeclaration> { /* empty */ }
-  public static class OfType extends BodeDeclarationRemoveModifiers<TypeDeclaration> { /* empty */ }
-  // @formatter:on
+    public static class OfAnnotation extends BodyDeclarationRemoveModifiers<AnnotationTypeDeclaration> { /* empty */ }
+    public static class OfEnumConstant extends BodyDeclarationRemoveModifiers<EnumConstantDeclaration> { /* empty */ }
+    public static class OfEnum extends BodyDeclarationRemoveModifiers<TypeDeclaration> { /* empty */ }
+    public static class OfField extends BodyDeclarationRemoveModifiers<FieldDeclaration> { /* empty */ }
+    public static class OfMethod extends BodyDeclarationRemoveModifiers<MethodDeclaration> { /* empty */ }
+    public static class OfType extends BodyDeclarationRemoveModifiers<TypeDeclaration> { /* empty */ }
+    // @formatter:on
 
   private static Set<Modifier> matches(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ps) {
     final Set<Modifier> $ = new LinkedHashSet<>();
@@ -52,6 +52,13 @@ public class BodeDeclarationRemoveModifiers<N extends BodyDeclaration> extends W
 
   private static Set<Modifier> matchess(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ps) {
     return matches(modifiers(¢), ps);
+  }
+
+  private static BodyDeclaration prune(final BodyDeclaration $, final Set<Predicate<Modifier>> ps) {
+    for (final Iterator<IExtendedModifier> ¢ = modifiers($).iterator(); ¢.hasNext();)
+      if (test(¢.next(), ps))
+        ¢.remove();
+    return $;
   }
 
   private static Set<Predicate<Modifier>> redundancies(final BodyDeclaration ¢) {

@@ -1,79 +1,96 @@
 package il.org.spartan.refactoring.engine;
 
-import static il.org.spartan.refactoring.ast.iz.*;
-import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
-
-import java.util.*;
-
+import org.eclipse.core.resources.*;
+import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jface.text.*;
 
 import il.org.spartan.refactoring.ast.*;
-import il.org.spartan.refactoring.builder.*;
-import il.org.spartan.refactoring.wring.*;
 
-public interface make {
-  /** @param ¢ JD
-   * @return parameter, but logically negated and simplified */
-  static Expression notOf(final Expression ¢) {
-    final PrefixExpression $ = subject.operand(¢).to(NOT);
-    final Expression $$ = PrefixNotPushdown.simplifyNot($);
-    return $$ == null ? $ : $$;
+/** An empty <code><b>enum</b></code> for fluent programming. The name should
+ * say it all: The name, followed by a dot, followed by a method name, should
+ * read like a sentence phrase.
+ * @author Yossi Gil
+ * @since 2015-07-16 */
+public enum Make {
+  /** Strategy for conversion into a compilation unit */
+  COMPILATION_UNIT(ASTParser.K_COMPILATION_UNIT), //
+  /** Strategy for conversion into an expression */
+  EXPRESSION(ASTParser.K_EXPRESSION), //
+  /** Strategy for conversion into an sequence of statements */
+  STATEMENTS(ASTParser.K_STATEMENTS), //
+  /** Strategy for conversion into a class body */
+  CLASS_BODY_DECLARATIONS(ASTParser.K_CLASS_BODY_DECLARATIONS); //
+  /** Converts the {@link MakeAST} value to its corresponding {@link Make} enum
+   * value
+   * @param t The {@link MakeAST} type
+   * @return corresponding {@link Make} value to the argument */
+  public static Make of(final MakeAST t) {
+    switch (t) {
+      case STATEMENTS:
+        return Make.STATEMENTS;
+      case EXPRESSION:
+        return Make.EXPRESSION;
+      case COMPILATION_UNIT:
+        return Make.COMPILATION_UNIT;
+      case CLASS_BODY_DECLARATIONS:
+        return Make.CLASS_BODY_DECLARATIONS;
+      default:
+        return null;
+    }
   }
 
-  /** @param ¢ the expression to return in the return statement
-   * @return new return statement */
-  static ThrowStatement throwOf(final Expression ¢) {
-    return subject.operand(¢).toThrow();
+  private final int kind;
+
+  private Make(final int kind) {
+    this.kind = kind;
   }
 
-  static Expression minusOf(final Expression e) {
-    return isLiteralZero(e) ? e : subject.operand(e).to(wizard.MINUS1);
-  }
-
-  /** Create a new {@link SimpleName} instance at the AST of the parameter
-   * @param n JD
-   * @param newName the name that the returned value shall bear
-   * @return a new {@link SimpleName} instance at the AST of the parameter */
-  static SimpleName newSimpleName(final ASTNode n, final String newName) {
-    return n.getAST().newSimpleName(newName);
-  }
-
-  static ParenthesizedExpression parethesized(final Expression e) {
-    final ParenthesizedExpression $ = e.getAST().newParenthesizedExpression();
-    final Object wizard;
-    $.setExpression(step.parent(e) == null ? e : wizard.duplicate(e));
+  /** Creates a no-binding parser for a given text
+   * @param text what to parse
+   * @return a newly created parser for the parameter */
+  public ASTParser parser(final char[] text) {
+    final ASTParser $ = wizard.parser(kind);
+    $.setSource(text);
     return $;
   }
 
-  static NumberLiteral newLiteral(final ASTNode n, final String token) {
-    final NumberLiteral $ = n.getAST().newNumberLiteral();
-    $.setToken(token);
+  /** Creates a parser for a given {@link Document}
+   * @param d JD
+   * @return created parser */
+  public ASTParser parser(final Document d) {
+    final ASTParser $ = wizard.parser(kind);
+    $.setSource(d.get().toCharArray());
     return $;
   }
 
-  /** Swap the order of the left and right operands to an expression, changing
-   * the operator if necessary.
-   * @param ¢ JD
-   * @return a newly created expression with its operands thus swapped.
-   * @throws IllegalArgumentException when the parameter has extra operands.
-   * @see InfixExpression#hasExtendedOperands */
-  static InfixExpression conjugate(final InfixExpression ¢) {
-    if (¢.hasExtendedOperands())
-      throw new IllegalArgumentException(¢ + ": flipping undefined for an expression with extra operands ");
-    return subject.pair(step.right(¢), step.left(¢)).to(wizard.conjugate(¢.getOperator()));
-  }
-
-  static Expression minus(final Expression e, final NumberLiteral l) {
-    return l == null ? minusOf(e) //
-        : newLiteral(l, isLiteralZero(l) ? "0" : Restructure.signAdjust(l.getToken())) //
-    ;
-  }
-
-  static List<Expression> minus(final List<Expression> es) {
-    final List<Expression> $ = new ArrayList<>();
-    $.add(lisp.first(es));
-    for (final Expression e : lisp.rest(es))
-      $.add(minusOf(e));
+  /** Creates a no-binding parser for a given compilation unit
+   * @param u what to parse
+   * @return a newly created parser for the parameter */
+  public ASTParser parser(final ICompilationUnit u) {
+    final ASTParser $ = wizard.parser(kind);
+    $.setSource(u);
     return $;
+  }
+
+  /** Creates a parser for a given {@link IFile}
+   * @param f JD
+   * @return created parser */
+  public ASTParser parser(final IFile f) {
+    return parser(JavaCore.createCompilationUnitFrom(f));
+  }
+
+  /** Creates a parser for a given marked text.
+   * @param m JD
+   * @return created parser */
+  public ASTParser parser(final IMarker m) {
+    return parser(MakeAST.iCompilationUnit(m));
+  }
+
+  /** Creates a no-binding parser for a given text
+   * @param text what to parse
+   * @return a newly created parser for the parameter */
+  public ASTParser parser(final String text) {
+    return parser(text.toCharArray());
   }
 }

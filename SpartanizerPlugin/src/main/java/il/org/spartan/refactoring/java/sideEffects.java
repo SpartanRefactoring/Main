@@ -1,5 +1,7 @@
 package il.org.spartan.refactoring.java;
 
+import static il.org.spartan.refactoring.ast.step.*;
+
 import static il.org.spartan.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
@@ -53,16 +55,20 @@ public enum sideEffects {
       case PREFIX_EXPRESSION:
         return free((PrefixExpression) e);
       case PARENTHESIZED_EXPRESSION:
-        return free(((ParenthesizedExpression) e).getExpression());
+        return free(extract.core(e));
       case INFIX_EXPRESSION:
         return free(extract.allOperands((InfixExpression) e));
       case CONDITIONAL_EXPRESSION:
-        return free(az.conditionalExpression(e));
+        return freeConditionalExpression(az.conditionalExpression(e));
       case ARRAY_INITIALIZER:
         return free(((ArrayInitializer) e).expressions());
       default:
         throw new RuntimeException("Missing handler for class: " + e.getClass().getSimpleName());
     }
+  }
+
+  public static boolean freeConditionalExpression(final ConditionalExpression e) {
+    return free(expression(e), then(e), elze(e));
   }
 
   public static boolean sideEffectFreeArrayCreation(final ArrayCreation c) {

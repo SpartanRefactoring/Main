@@ -1,5 +1,5 @@
 package il.org.spartan.refactoring.wring;
-
+import il.org.spartan.refactoring.builder.make;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.ast.*;
@@ -21,7 +21,7 @@ public final class AnnotationDiscardValueName //
     if (p == null || !"value".equals(p.getName().toString()))
       return null;
     final SingleMemberAnnotation $ = a.getAST().newSingleMemberAnnotation();
-    $.setTypeName(il.org.spartan.refactoring.engine.make.newSimpleName(a, a.getTypeName().getFullyQualifiedName()));
+    $.setTypeName(make.newSimpleName(a, a.getTypeName().getFullyQualifiedName()));
     $.setValue(wizard.duplicate(p.getValue()));
     return $;
   }
