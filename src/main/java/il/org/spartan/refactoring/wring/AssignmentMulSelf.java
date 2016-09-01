@@ -19,19 +19,18 @@ public final class AssignmentMulSelf extends ReplaceCurrentNode<Assignment> impl
   }
 
   @Override ASTNode replacement(final Assignment a) {
-    // InfixExpression ¢ = az.infixExpression(a.getRightHandSide());
-    return !iz.isOpAssign(a) || isNotRightMul(a) ? null : replace(a);
+    final InfixExpression ¢ = az.infixExpression(a.getRightHandSide());
+    return !iz.isOpAssign(a) || ¢ == null ||  !iz.infixTimes(¢) ? null : replace(a);
   }
 
-  private static boolean isNotRightMul(final Assignment a) {
-    return az.infixExpression(a.getRightHandSide()).getOperator() == TIMES;
-  }
+//  private static boolean isNotRightMul(final Assignment a) {
+//    return az.infixExpression(a.getRightHandSide()).getOperator() == TIMES;
+//  }
 
   private static ASTNode replace(final Assignment a) {
     final InfixExpression ¢ = az.infixExpression(a.getRightHandSide());
     final Expression e = az.expression(rightInfixReplacement(extract.allOperands(¢), a.getLeftHandSide()));
-    final ASTNode $ = e == null ? null : subject.pair(a.getLeftHandSide(), e).to(Operator.TIMES_ASSIGN);
-    return $;
+    return e == null ? null : subject.pair(a.getLeftHandSide(), e).to(Operator.TIMES_ASSIGN);
   }
 
   private static ASTNode rightInfixReplacement(final List<Expression> es, final Expression left) {
@@ -47,7 +46,6 @@ public final class AssignmentMulSelf extends ReplaceCurrentNode<Assignment> impl
   }
 
   private static boolean asLeft(final Expression ¢, final Expression left) {
-    // return ¢.equals(left);
-    return ¢.toString().equals(left.toString());
+    return wizard.same(¢, left);
   }
 }
