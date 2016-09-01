@@ -9,6 +9,7 @@ import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.builder.*;
 import il.org.spartan.refactoring.engine.*;
+import il.org.spartan.refactoring.utils.*;
 
 /** Expands terms of +/- expressions without reordering.
  * <p>
@@ -27,7 +28,7 @@ public class TermsExpander {
 
   /** @see #recurse(InfixExpression, List) */
   private static InfixExpression appendPlus(final InfixExpression $, final Term t) {
-    final Expression ¢ = wizard.duplicate(t.expression);
+    final Expression ¢ = duplicate.of(t.expression);
     return t.positive() ? subject.append($, ¢) : subject.pair($, ¢).to(wizard.MINUS2);
   }
 

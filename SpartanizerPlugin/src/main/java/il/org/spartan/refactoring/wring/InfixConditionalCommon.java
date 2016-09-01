@@ -14,6 +14,7 @@ import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.builder.*;
 import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.java.*;
+import il.org.spartan.refactoring.utils.*;
 
 /** convert
  *
@@ -33,7 +34,7 @@ public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<Infix
   private static Expression chopHead(final InfixExpression e) {
     final List<Expression> es = extract.allOperands(e);
     es.remove(0);
-    return es.size() < 2 ? wizard.duplicate(lisp.first(es)) : subject.operands(es).to(e.getOperator());
+    return es.size() < 2 ? duplicate.of(lisp.first(es)) : subject.operands(es).to(e.getOperator());
   }
 
   private static Operator conjugate(final Operator o) {

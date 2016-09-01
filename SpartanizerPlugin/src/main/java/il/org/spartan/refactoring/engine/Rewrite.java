@@ -4,6 +4,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.utils.*;
 
 /** A function object representing a sequence of operations on an

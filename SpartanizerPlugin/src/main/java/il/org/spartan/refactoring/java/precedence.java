@@ -8,6 +8,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.engine.*;
+import il.org.spartan.refactoring.spartanizations.*;
+import il.org.spartan.refactoring.utils.*;
 
 /** *An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -16,27 +18,14 @@ import il.org.spartan.refactoring.engine.*;
  * {@link "http://introcs.cs.princeton.edu/java/11precedence/"}
  * @author Yossi Gil
  * @since 2015-07-14 */
-public enum Precedence {
+public enum precedence {
   ;
-  public static boolean nonAssociative(final InfixExpression e) {
-    return e != null && in(e.getOperator(), MINUS, DIVIDE, REMAINDER);
-  }
-
-  /** Determine whether a node is an infix expression whose operator is
-   * non-associative.
-   * @param n JD
-   * @return <code><b>true</b></code> <i>iff</i> the parameter is a node which
-   *         is an infix expression whose operator is */
-  public static boolean nonAssociative(final ASTNode n) {
-    return nonAssociative(az.infixExpression(n));
-  }
-
   /** *An empty <code><b>enum</b></code> for fluent programming. The name should
    * say it all: The name, followed by a dot, followed by a method name, should
    * read like a sentence phrase.
    * @author Yossi Gil
    * @since 2015-07-14 */
-  public enum Is {
+  public enum is {
     ;
     /** determine whether an integer falls within the legal range of
      * precedences.
@@ -77,7 +66,7 @@ public enum Precedence {
    * @return <code><b>true</b></code> <i>iff</i> the precedence of the first
    *         parameter is equal to that of the second parameter. */
   public static boolean equal(final ASTNode host, final ASTNode e2) {
-    return Precedence.of(host) == Precedence.of(e2);
+    return precedence.of(host) == precedence.of(e2);
   }
 
   /** Compare precedence of two expressions.
@@ -86,7 +75,7 @@ public enum Precedence {
    * @return <code><b>true</b></code> <i>iff</i> the precedence of the first
    *         parameter is strictly greater than that of the second parameter. */
   public static boolean greater(final ASTNode e1, final ASTNode e2) {
-    return !Precedence.known(e1) || !Precedence.known(e2) || Precedence.of(e1) > Precedence.of(e2);
+    return !precedence.known(e1) || !precedence.known(e2) || precedence.of(e1) > precedence.of(e2);
   }
 
   /** determine whether the precedence of a given {@link Expression} can be
@@ -95,7 +84,7 @@ public enum Precedence {
    * @return <code><b>true</b></code> <i>iff</i> the parameter a legal
    *         precedence of Java. */
   public static boolean known(final ASTNode n) {
-    return Is.legal(Precedence.of(n));
+    return is.legal(precedence.of(n));
   }
 
   private static int of(final Assignment a) {
@@ -114,7 +103,7 @@ public enum Precedence {
    * @param n JD
    * @return precedence of the parameter */
   public static int of(final ASTNode n) {
-    return !iz.expression(n) ? UNDEFINED : Precedence.of(az.expression(n));
+    return !iz.expression(n) ? UNDEFINED : precedence.of(az.expression(n));
   }
 
   /** Determine the precedence of the operator present on an {@link Expression}
@@ -154,7 +143,7 @@ public enum Precedence {
    * @param e2 JD
    * @return precedence of the parameter */
   public static boolean same(final Expression e1, final Expression e2) {
-    return Precedence.of(e1) == Precedence.of(e2);
+    return precedence.of(e1) == precedence.of(e2);
   }
 
   /** Determine whether an expression has the same precedence as that of a given
@@ -164,6 +153,6 @@ public enum Precedence {
    * @return <code><b>true</b></code> <i>iff</i> the precedence of the two
    *         parameters is the same. */
   public static boolean same(final InfixExpression.Operator o, final Expression e) {
-    return Precedence.of(o) == Precedence.of(e);
+    return precedence.of(o) == precedence.of(e);
   }
 }

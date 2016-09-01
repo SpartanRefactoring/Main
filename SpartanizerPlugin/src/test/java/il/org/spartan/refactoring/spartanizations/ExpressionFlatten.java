@@ -16,41 +16,41 @@ import il.org.spartan.refactoring.java.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class ExpressionFlatten {
   @Test public void flattenExists() {
-    duplicate.flatten(i("1+2"));
+    flatten.of(i("1+2"));
   }
 
   @Test public void flattenIsDistinct() {
     final InfixExpression e = i("1+2");
-    azzert.that(duplicate.flatten(e), is(not(e)));
+    azzert.that(flatten.of(e), is(not(e)));
   }
 
   @Test public void flattenIsNotNull() {
-    azzert.that(duplicate.flatten(i("1+2")), is(not(nullValue())));
+    azzert.that(flatten.of(i("1+2")), is(not(nullValue())));
   }
 
   @Test public void flattenIsSame() {
     final InfixExpression e = i("1+2");
-    azzert.that(duplicate.flatten(e).toString(), is(e.toString()));
+    azzert.that(flatten.of(e).toString(), is(e.toString()));
   }
 
   @Test public void flattenLeftArgument() {
-    azzert.that(step.left(duplicate.flatten(i("1+2"))).toString(), is("1"));
+    azzert.that(step.left(flatten.of(i("1+2"))).toString(), is("1"));
   }
 
   @Test public void flattenOfDeepParenthesisIsCorrect() {
-    azzert.that(duplicate.flatten(i("(((1+2)))+(((3 + (4+5))))")).toString(), is("1 + 2 + 3+ 4+ 5"));
+    azzert.that(flatten.of(i("(((1+2)))+(((3 + (4+5))))")).toString(), is("1 + 2 + 3+ 4+ 5"));
   }
 
   @Test public void flattenOfDeepParenthesisSize() {
-    azzert.that(duplicate.flatten(i("(1+(2))+(3)")).extendedOperands().size(), is(1));
+    azzert.that(flatten.of(i("(1+(2))+(3)")).extendedOperands().size(), is(1));
   }
 
   @Test public void flattenOfDeepParenthesOtherOperatorsisIsCorrect() {
-    azzert.that(duplicate.flatten(i("(((1+2)))+(((3 + (4*5))))")).toString(), is("1 + 2 + 3+ 4 * 5"));
+    azzert.that(flatten.of(i("(((1+2)))+(((3 + (4*5))))")).toString(), is("1 + 2 + 3+ 4 * 5"));
   }
 
   @Test public void flattenOfParenthesis() {
-    azzert.that(duplicate.flatten(i("1+2+(3)")).extendedOperands().size(), is(1));
+    azzert.that(flatten.of(i("1+2+(3)")).extendedOperands().size(), is(1));
   }
 
   @Test public void flattenOfTrivialDoesNotAddOperands() {

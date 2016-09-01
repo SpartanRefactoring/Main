@@ -11,6 +11,7 @@ import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.builder.*;
 import il.org.spartan.refactoring.engine.*;
+import il.org.spartan.refactoring.utils.*;
 
 /** Expands terms of * or / expressions without reordering.
  * <p>
@@ -30,7 +31,7 @@ public class FactorsExpander {
 
   /** @see #recurse(InfixExpression, List) */
   private static InfixExpression appendTimes(final InfixExpression $, final Factor f) {
-    final Expression ¢ = wizard.duplicate(f.expression);
+    final Expression ¢ = duplicate.of(f.expression);
     return f.multiplier() ? subject.append($, ¢) : subject.pair($, ¢).to(DIVIDE);
   }
 
