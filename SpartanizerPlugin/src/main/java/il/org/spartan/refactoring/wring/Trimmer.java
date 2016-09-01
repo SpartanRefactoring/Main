@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -81,36 +82,35 @@ public final class Trimmer extends Spartanization {
     final ExclusionManager exclude = makeExcluder();
 
     @Override public final boolean visit(final Assignment ¢) {
-      return cautiousGo(¢);
+        return cautiousGo(¢);
     }
-
     @Override public final boolean visit(final Block ¢) {
       return cautiousGo(¢);
-    }
+  }
 
     @Override public final boolean visit(final CastExpression ¢) {
       return cautiousGo(¢);
-    }
+  }
 
     @Override public final boolean visit(final ConditionalExpression e) {
-      return cautiousGo(e);
+        return cautiousGo(e);
+    }
+    @Override public final boolean visit(final EnumDeclaration ¢) {
+        return cautiousGo(¢);
     }
 
-    @Override public final boolean visit(final EnumDeclaration ¢) {
-      return cautiousGo(¢);
-    }
 
     @Override public final boolean visit(final IfStatement ¢) {
-      return cautiousGo(¢);
-    }
+        return cautiousGo(¢);
+        }
 
     @Override public final boolean visit(final InfixExpression ¢) {
-      return cautiousGo(¢);
-    }
+        return cautiousGo(¢);
+      }
 
     @Override public final boolean visit(final FieldDeclaration ¢) {
-      return cautiousGo(¢);
-    }
+        return cautiousGo(¢);
+      }
 
     @Override public final boolean visit(final MethodDeclaration ¢) {
       return cautiousGo(¢);
@@ -148,7 +148,7 @@ public final class Trimmer extends Spartanization {
       return cautiousGo(¢);
     }
 
-    @Override public final boolean visit(final VariableDeclarationFragment ¢) {
+    @Override public final boolean visit (final VariableDeclarationFragment ¢) {
       return cautiousGo(¢);
     }
 

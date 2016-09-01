@@ -6,6 +6,7 @@ import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 
+import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -34,11 +35,11 @@ public final class AsSpartanization extends Spartanization {
       }
 
       @Override public boolean visit(final Block it) {
-        return process(it);
+          return process(it);
       }
-
+      
       @Override public boolean visit(final ConditionalExpression e) {
-        return process(e);
+          return process(e);
       }
 
       @Override public boolean visit(final IfStatement it) {
@@ -46,8 +47,8 @@ public final class AsSpartanization extends Spartanization {
       }
 
       @Override public boolean visit(final InfixExpression it) {
-        return process(it);
-      }
+          return process(it);
+        }
 
       @Override public boolean visit(final PrefixExpression it) {
         return process(it);
@@ -68,28 +69,25 @@ public final class AsSpartanization extends Spartanization {
       }
 
       @Override public boolean visit(final Block e) {
-        return go(e);
+          return go(e);
       }
-
       @Override public boolean visit(final ConditionalExpression e) {
         return go(e);
-      }
-
+    }
       @Override public boolean visit(final IfStatement s) {
         return go(s);
-      }
-
+    }
       @Override public boolean visit(final InfixExpression e) {
         return go(e);
-      }
+    }
 
       @Override public boolean visit(final PrefixExpression e) {
         return go(e);
-      }
+    }
 
       @Override public boolean visit(final VariableDeclarationFragment f) {
         return go(f);
-      }
+    }
     });
   }
 }
