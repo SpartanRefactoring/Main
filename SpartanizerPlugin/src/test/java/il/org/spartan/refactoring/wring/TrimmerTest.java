@@ -384,7 +384,7 @@ import il.org.spartan.refactoring.spartanizations.*;
     trimming("int a = 2,b=1; if (b) a = 3; ").to("int a=2;if(1)a=3;").to("int a=1?3:2;");
     trimming("int a = 2, b = 1; return a + 3 * b; ").to("int b=1;return 2+3*b;");
     trimming("int a =2,b=2; if (x) a = 2*a;").to("int a=x?2*2:2, b=2;");
-    trimming("int a = 2, b; a = 3 * a * b; ").to(null);
+    trimming("int a = 2, b; a = 3 * a * b; ").to("int a = 2, b; a *= 3 * b; ").to(null);
     trimming("int a = 2, b; a += b; ").to(null);
     trimming("int a =2,b; if (x) a = 2*a;").to("int a=x?2*2:2, b;");
     trimming("int a = 2, b; return a + 3 * b; ").to("return 2 + 3*b;");
@@ -918,7 +918,26 @@ import il.org.spartan.refactoring.spartanizations.*;
         + "       if (s.charAt(i) == 'd')\n" + //
         "          res -= 1;\n" + //
         "      return res;\n" + //
-        " if (b) i = 3;").to(null);
+        " if (b) i = 3;")//
+    .to("" + //
+        "      for (int i = 0;i < s.length();++i)\n" + //
+        "       if (s.charAt(i) == 'a')\n" + //
+        "          res += 2;\n" + //
+        "        else "//
+        + "       if (s.charAt(i) == 'd')\n" + //
+        "          res--;\n" + //
+        "      return res;\n" + //
+        " if (b) i = 3;")//
+    .to("" + //
+        "      for (int i = 0;i < s.length();++i)\n" + //
+        "       if (s.charAt(i) == 'a')\n" + //
+        "          res += 2;\n" + //
+        "        else "//
+        + "       if (s.charAt(i) == 'd')\n" + //
+        "          --res;\n" + //
+        "      return res;\n" + //
+        " if (b) i = 3;")//
+    .to(null);
   }
 
   @Ignore @Test public void forwardDeclaration1() {
@@ -2010,12 +2029,24 @@ import il.org.spartan.refactoring.spartanizations.*;
   }
 
   @Test public void issue62a() {
-    trimming("int f(int i) { for(;;++i) if(false) break; return i; }").to(null);
+    trimming("int f(int i) { for(;;++i) if(false) break; return i; }")//
+    .to("int f(int i) { for(;;++i){} return i; }")//
+    .to(null);
   }
 
-  @Test public void issue62b() {
+  @Ignore public void issue62b() {
     trimming("int f(int i) { for(;i<100;i=i+1) if(false) break; return i; }")//
-        .to("int f(int i) { for(;i<100;i+=1) if(false) break; return i; }").to(null);
+        .to("int f(int i) { for(;i<100;i+=1) if(false) break; return i; }")//
+        .to("int f(int i) { for(;i<100;i++) if(false) break; return i; }")//
+        .to("int f(int i) { for(;i<100;++i) if(false) break; return i; }")//
+        .to("int f(int i) { for(;i<100;++i){} return i; }").to(null);
+  }
+  
+  @Test public void issue62b_1() {
+    trimming("int f(int i) { for(;i<100;i=i+1) if(false) break; return i; }")//
+        .to("int f(int i) { for(;i<100;i+=1){} return i; }")//
+        .to("int f(int i) { for(;i<100;i++){} return i; }")//
+        .to("int f(int i) { for(;i<100;++i){} return i; }").to(null);//
   }
 
   @Test public void issue62c() {
@@ -3319,9 +3350,10 @@ import il.org.spartan.refactoring.spartanizations.*;
         "          res += 2;\n" + //
         "        else " + //
         "       if (s.charAt(i) == 'd')\n" + //
-        "          res -= 1;\n" + //
+        "          --res;\n" + //
         "      return res;\n" + //
-        "").to(null);
+        "")//
+    .to(null);
   }
 
   @Test public void shortestIfBranchFirst02c() {
