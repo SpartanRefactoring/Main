@@ -667,16 +667,15 @@ public class TrimmerTest250 {
   @Test public void issue83c() {
     trimming("if(x.size()>0)return a;").to("if(!x.isEmpty())return a;");
   }
-
-  @Ignore("This checks for singleton, and cannot be simplified") @Test public void issue83d() {
+ @Test public void issue83d() {
     trimming("if(x.size()==1) return a;").to(null);
   }
 
-  @Ignore("This checks for singleton, and cannot be simplified") @Test public void issue83e() {
+ @Test public void issue83e() {
     trimming("if(x.size()==2) return a;").to(null);
   }
 
-  @Ignore("This checks for singleton, and cannot be simplified") @Test public void issue83f() {
+ @Test public void issue83f() {
     trimming("if(2==lst.size()) return a;").to(null);
   }
 
