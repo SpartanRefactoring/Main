@@ -9,7 +9,9 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
+import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.engine.*;
+import il.org.spartan.refactoring.utils.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -23,7 +25,7 @@ public enum extract {
    * @return a {@link List} of all operands to the parameter */
   public static List<Expression> allOperands(final InfixExpression e) {
     assert e != null;
-    return hop.operands(flatten(e));
+    return hop.operands(flatten.of(e));
   }
 
   public static List<InfixExpression.Operator> allOperators(final InfixExpression e) {

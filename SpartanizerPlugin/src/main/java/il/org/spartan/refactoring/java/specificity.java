@@ -10,7 +10,7 @@ import il.org.spartan.refactoring.ast.*;
 
 /** @author Yossi Gil
  * @since 2015-08-23 */
-public class Specificity implements Comparator<Expression> {
+public class specificity implements Comparator<Expression> {
   /** Determine
    * @param e JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter has a defined
@@ -47,12 +47,12 @@ public class Specificity implements Comparator<Expression> {
     },
     CONSTANT {
       @Override boolean includes(final ASTNode n) {
-        return n.getNodeType() == PREFIX_EXPRESSION && iz.literal(extract.core(((PrefixExpression) n).getOperand()));
+        return iz.is(n, PREFIX_EXPRESSION) && iz.literal(extract.core(((PrefixExpression) n).getOperand()));
       }
     },
     CLASS_CONSTANT {
       @Override boolean includes(final ASTNode n) {
-        return n.getNodeType() == SIMPLE_NAME && ((SimpleName) n).getIdentifier().matches("[A-Z_0-9]+");
+        return  iz.is(n, SIMPLE_NAME) && ((SimpleName) n).getIdentifier().matches("[A-Z_0-9]+");
       }
     },
     THIS {

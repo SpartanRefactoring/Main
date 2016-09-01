@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.java.*;
 
@@ -53,7 +54,7 @@ public final class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<
     if (right1 == null || !wizard.same(right, right1) || !sideEffects.deterministic(right))
       return null;
     r.remove(parent, g);
-    r.replace(right1, wizard.duplicate(a), g);
+    r.replace(right1, duplicate.of(a), g);
     return r;
   }
 }

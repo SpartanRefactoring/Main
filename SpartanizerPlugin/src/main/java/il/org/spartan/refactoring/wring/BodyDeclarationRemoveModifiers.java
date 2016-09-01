@@ -7,6 +7,7 @@ import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
 
 /** convert
@@ -117,7 +118,7 @@ public class BodyDeclarationRemoveModifiers<N extends BodyDeclaration> extends W
   }
 
   @Override BodyDeclaration replacement(final BodyDeclaration $) {
-    return prune(wizard.duplicate($), redundancies($));
+    return prune(duplicate.of($), redundancies($));
   }
 
   @Override boolean scopeIncludes(final BodyDeclaration ¢) {

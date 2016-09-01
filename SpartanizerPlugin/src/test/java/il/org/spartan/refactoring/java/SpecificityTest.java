@@ -11,7 +11,7 @@ import il.org.spartan.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public class SpecificityTest {
-  private static final Specificity SPECIFICITY = new Specificity();
+  private static final specificity SPECIFICITY = new specificity();
 
   @Test public void characterGreaterThanNull() {
     azzert.that(SPECIFICITY.compare(e("'a'"), e("null")), greaterThan(0));
@@ -22,8 +22,8 @@ public class SpecificityTest {
   }
 
   @Test public void defined() {
-    azzert.that(Specificity.defined(e("12")), is(true));
-    azzert.that(Specificity.defined(e("a+b")), is(false));
+    azzert.that(specificity.defined(e("12")), is(true));
+    azzert.that(specificity.defined(e("a+b")), is(false));
   }
 
   @Test public void generalGreaterThanClassConstant() {
@@ -67,16 +67,16 @@ public class SpecificityTest {
   }
 
   @Test public void hexadecimalConstant() {
-    azzert.that(Specificity.defined(e("0xff")), is(true));
-    azzert.that(Specificity.defined(e("0x7f")), is(true));
+    azzert.that(specificity.defined(e("0xff")), is(true));
+    azzert.that(specificity.defined(e("0x7f")), is(true));
   }
 
   @Test public void hexadecimalConstantIsInteger() {
-    azzert.that(Specificity.Level.of(e("0xff")), is(Specificity.Level.of(e("12"))));
+    azzert.that(specificity.Level.of(e("0xff")), is(specificity.Level.of(e("12"))));
   }
 
   @Test public void hexadecimalConstantIsSame() {
-    azzert.that(Specificity.Level.of(e("0xff")), is(Specificity.Level.of(e("0x7f"))));
+    azzert.that(specificity.Level.of(e("0xff")), is(specificity.Level.of(e("0x7f"))));
   }
 
   @Test public void integerConstantGreaterThanBooleanConstant() {
@@ -112,18 +112,18 @@ public class SpecificityTest {
   }
 
   @Test public void twoDistinctClassConstants() {
-    azzert.that(Specificity.Level.of(e("BOB")), is(Specificity.Level.of(e("SPONGE"))));
+    azzert.that(specificity.Level.of(e("BOB")), is(specificity.Level.of(e("SPONGE"))));
   }
 
   @Test public void twoDistinctClassConstantsWithDigits() {
-    azzert.that(Specificity.Level.of(e("BOB")), is(Specificity.Level.of(e("B2B"))));
+    azzert.that(specificity.Level.of(e("BOB")), is(specificity.Level.of(e("B2B"))));
   }
 
   @Test public void twoIdenticalClassConstants() {
-    azzert.that(Specificity.Level.of(e("SPONGE")), is(Specificity.Level.of(e("SPONGE"))));
+    azzert.that(specificity.Level.of(e("SPONGE")), is(specificity.Level.of(e("SPONGE"))));
   }
 
   @Test public void undefinedLevel() {
-    azzert.that(Specificity.Level.of(e("a+b")), is(Specificity.Level.values().length));
+    azzert.that(specificity.Level.of(e("a+b")), is(specificity.Level.values().length));
   }
 }

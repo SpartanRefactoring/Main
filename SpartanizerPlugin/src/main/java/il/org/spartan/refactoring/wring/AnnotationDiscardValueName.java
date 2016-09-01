@@ -6,6 +6,7 @@ import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.builder.*;
 import il.org.spartan.refactoring.engine.*;
+import il.org.spartan.refactoring.utils.*;
 
 /** Removes the "value" member from annotations that only have a single member,
  * converting <code>@SuppressWarnings(value = "unchecked")</code> to
@@ -24,7 +25,7 @@ public final class AnnotationDiscardValueName //
       return null;
     final SingleMemberAnnotation $ = a.getAST().newSingleMemberAnnotation();
     $.setTypeName(make.newSimpleName(a, a.getTypeName().getFullyQualifiedName()));
-    $.setValue(wizard.duplicate(p.getValue()));
+    $.setValue(duplicate.of(p.getValue()));
     return $;
   }
 }
