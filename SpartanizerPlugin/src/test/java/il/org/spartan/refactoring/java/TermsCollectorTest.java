@@ -1,14 +1,15 @@
 package il.org.spartan.refactoring.java;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.utils.into.*;
-import static il.org.spartan.refactoring.utils.extract.*;
+import static il.org.spartan.refactoring.ast.extract.*;
+import static il.org.spartan.refactoring.engine.into.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.create.*;
 
 @SuppressWarnings("static-method") public class TermsCollectorTest {
   @Test public void test00() {

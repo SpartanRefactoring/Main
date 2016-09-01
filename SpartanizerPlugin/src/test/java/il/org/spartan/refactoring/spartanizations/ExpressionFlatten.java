@@ -1,16 +1,16 @@
 package il.org.spartan.refactoring.spartanizations;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.utils.into.*;
-import static il.org.spartan.refactoring.utils.Restructure.*;
+import static il.org.spartan.refactoring.engine.Restructure.*;
+import static il.org.spartan.refactoring.engine.into.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
+import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.java.*;
-import il.org.spartan.refactoring.utils.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //

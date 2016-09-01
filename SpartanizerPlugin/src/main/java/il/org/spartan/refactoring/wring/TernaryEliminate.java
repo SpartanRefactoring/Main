@@ -1,10 +1,10 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Plant.*;
+import static il.org.spartan.refactoring.engine.Plant.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.ast.*;
 
 /** A {@link Wring} to eliminate a ternary in which both branches are identical
  * @author Yossi Gil

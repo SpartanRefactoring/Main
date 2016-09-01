@@ -1,14 +1,18 @@
 package il.org.spartan.refactoring.java;
 
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.utils.into.*;
-import static il.org.spartan.refactoring.utils.extract.*;
+import static il.org.spartan.azzert.*;
+import static il.org.spartan.refactoring.ast.extract.*;
+import static il.org.spartan.refactoring.engine.into.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.create.*;
+import il.org.spartan.refactoring.engine.*;
 
 @SuppressWarnings("static-method") public class FactorsCollectorTest {
   @Test public void test00() {
@@ -37,7 +41,7 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test public void test04() {
     final InfixExpression i = i("a/c");
-    azzert.that(i.getOperator(), is(wizard.DIVIDE));
+    azzert.that(i.getOperator(), is(DIVIDE));
     azzert.that(step.left(i), iz("a"));
     azzert.that(step.right(i), iz("c"));
     c.collect(i);
@@ -47,7 +51,7 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test public void test05() {
     final InfixExpression i = i("a/c");
-    azzert.that(i.getOperator(), is(wizard.DIVIDE));
+    azzert.that(i.getOperator(), is(DIVIDE));
     azzert.that(step.left(i), iz("a"));
     azzert.that(step.right(i), iz("c"));
     c.collectTimesNonLeaf(i);
@@ -57,8 +61,8 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test public void test06() {
     final InfixExpression i = i("a * b / c");
-    azzert.that(i.getOperator(), is(wizard.DIVIDE));
-    azzert.that(az.infixExpression(step.left(i)).getOperator(), is(wizard.TIMES));
+    azzert.that(i.getOperator(), is(DIVIDE));
+    azzert.that(az.infixExpression(step.left(i)).getOperator(), is(TIMES));
     c.collect(i);
     azzert.that(c.multipliers().size(), is(2));
     azzert.that(c.dividers().size(), is(1));

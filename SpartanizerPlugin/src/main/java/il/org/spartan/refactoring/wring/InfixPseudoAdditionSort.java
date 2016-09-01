@@ -8,7 +8,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.engine.*;
 
 /** sorts the arguments of an expression using the same sorting order as
  * {@link Operator#PLUS} expression, except that we do not worry about

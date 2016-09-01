@@ -1,13 +1,14 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.step.*;
+import static il.org.spartan.refactoring.ast.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.engine.*;
 
 /** convert
  *
@@ -43,7 +44,7 @@ public final class IfLastInMethod extends Wring<IfStatement> implements Kind.Can
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Wrings.insertAfter(s, extract.statements(step.then(s)), r, g);
         final IfStatement newIf = wizard.duplicate(s);
-        newIf.setExpression(wizard.duplicate(il.org.spartan.refactoring.utils.make.notOf(s.getExpression())));
+        newIf.setExpression(wizard.duplicate(il.org.spartan.refactoring.engine.make.notOf(s.getExpression())));
         newIf.setThenStatement(s.getAST().newReturnStatement());
         newIf.setElseStatement(null);
         r.replace(s, newIf, g);

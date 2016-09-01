@@ -1,9 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.ExpressionComparator.*;
-import static il.org.spartan.refactoring.utils.Restructure.*;
-import static il.org.spartan.refactoring.utils.step.*;
+import static il.org.spartan.refactoring.ast.step.*;
+import static il.org.spartan.refactoring.engine.ExpressionComparator.*;
+import static il.org.spartan.refactoring.engine.Restructure.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
@@ -12,8 +12,10 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.builder.*;
+import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.java.*;
-import il.org.spartan.refactoring.utils.*;
 
 /** A number of utility functions common to all wrings.
  * @author Yossi Gil

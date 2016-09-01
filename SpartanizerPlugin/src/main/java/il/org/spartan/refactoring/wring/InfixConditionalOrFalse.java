@@ -2,7 +2,7 @@ package il.org.spartan.refactoring.wring;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.ast.*;
 
 /** convert
  *
@@ -28,6 +28,6 @@ public final class InfixConditionalOrFalse extends Wring.ReplaceCurrentNode<Infi
   }
 
   @Override boolean scopeIncludes(final InfixExpression e) {
-    return e != null && iz.conditionalOr(e) && have.falseLiteral(extract.allOperands(e));
+    return iz.conditionalOr(e) && have.falseLiteral(extract.allOperands(e));
   }
 }

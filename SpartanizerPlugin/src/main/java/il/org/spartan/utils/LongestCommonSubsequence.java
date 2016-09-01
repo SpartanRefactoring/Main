@@ -4,7 +4,8 @@ import static il.org.spartan.Utils.*;
 
 import java.util.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.engine.*;
 
 /** Utility class for computing the "Longest Common Subsequence" of two strings.
  * The LCS is computed after removing all spaces from both strings.

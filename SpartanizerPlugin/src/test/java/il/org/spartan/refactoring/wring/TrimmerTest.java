@@ -2,9 +2,9 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.refactoring.engine.ExpressionComparator.*;
+import static il.org.spartan.refactoring.engine.into.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
-import static il.org.spartan.refactoring.utils.ExpressionComparator.*;
-import static il.org.spartan.refactoring.utils.into.*;
 import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
 import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.apply;
 
@@ -14,9 +14,9 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
-import il.org.spartan.refactoring.java.*;
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.spartanizations.*;
-import il.org.spartan.refactoring.utils.*;
 
 /** * Unit tests for the nesting class Unit test for the containing class. Note
  * our naming convention: a) test methods do not use the redundant "test"

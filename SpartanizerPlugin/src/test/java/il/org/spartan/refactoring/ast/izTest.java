@@ -2,7 +2,7 @@ package il.org.spartan.refactoring.ast;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.ast.extract.*;
-import static il.org.spartan.refactoring.utils.into.*;
+import static il.org.spartan.refactoring.engine.into.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 

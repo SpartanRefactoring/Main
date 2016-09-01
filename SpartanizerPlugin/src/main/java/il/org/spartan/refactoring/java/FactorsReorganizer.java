@@ -4,7 +4,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.builder.*;
+import il.org.spartan.refactoring.engine.*;
 
 public class FactorsReorganizer {
   public static Expression simplify(final InfixExpression e) {

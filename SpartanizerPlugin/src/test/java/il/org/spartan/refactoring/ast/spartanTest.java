@@ -1,13 +1,13 @@
 package il.org.spartan.refactoring.ast;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.utils.into.*;
+import static il.org.spartan.refactoring.engine.into.*;
 
 import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.engine.*;
 
 /** A test suite for class {@link spartan}
  * @author Yossi Gil

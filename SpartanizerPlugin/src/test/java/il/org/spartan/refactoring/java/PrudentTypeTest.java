@@ -7,7 +7,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.engine.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "static-method" }) //
@@ -644,7 +644,7 @@ public class PrudentTypeTest {
     }
 
     @Test public void OnaryPlusMinusSemantics03() {
-      short x = 0;
+      final short x = 0;
       azzert.that(PrudentType.axiom(+x), is(PrudentType.INT));
     }
 
@@ -665,21 +665,21 @@ public class PrudentTypeTest {
     }
 
     @Test public void OnaryPlusMinusSemantics08() {
-      char x = 0;
+      final char x = 0;
       azzert.that(PrudentType.axiom(-x), is(PrudentType.INT));
     }
 
     /** Make sure the compiler cannot optimize this out */
-    private byte b = (byte) (0xDEADdeaf ^ hashCode());
-    private boolean b1 = b > (byte) hashCode();
-    private boolean b2 = (b & (byte)hashCode() << 3) < 0;
-    private char c1 = (char) (hashCode() << 7 ^ hashCode());
-    private char c2 = (char) (c1 << 13 ^ hashCode());
-    private double d = c1/c2;
-    private int i = (int) d; 
-    private float f =  (float) (0xCABAC0DAABBAL * i / b * d -(c1 ^ c2)); 
-    private long l =  (long) (f-- * ++d); 
-    private short s =  (short) ((l ^ i) * ((long) c1 ^ c2 << 0xFF)  / d); 
+    private final byte b = (byte) (0xDEADdeaf ^ hashCode());
+    private final boolean b1 = b > (byte) hashCode();
+    private final boolean b2 = (b & (byte) hashCode() << 3) < 0;
+    private final char c1 = (char) (hashCode() << 7 ^ hashCode());
+    private final char c2 = (char) (c1 << 13 ^ hashCode());
+    private double d = c1 / c2;
+    private int i = (int) d;
+    private float f = (float) (0xCABAC0DAABBAL * i / b * d - (c1 ^ c2));
+    private long l = (long) (f-- * ++d);
+    private short s = (short) ((l ^ i) * ((long) c1 ^ c2 << 0xFF) / d);
 
     @Test public void OnaryPlusMinusSemantics09() {
       azzert.that(PrudentType.axiom(-c1), is(PrudentType.INT));

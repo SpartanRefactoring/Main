@@ -8,7 +8,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.engine.*;
 
 /** sorts the arguments of a {@link Operator#PLUS} expression. Extra care is
  * taken to leave intact the use of {@link Operator#PLUS} for the concatenation
