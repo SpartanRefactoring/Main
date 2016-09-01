@@ -35,7 +35,6 @@ public final class cleverStringTernarization extends Wring.ReplaceCurrentNode<Co
   }
  
   @Override Expression replacement(final ConditionalExpression ce) {
-    final Expression condition = ce.getExpression();
     final Expression then = ce.getThenExpression();
     final Expression elze =ce.getElseExpression();
     if(then.getNodeType()!=ASTNode.STRING_LITERAL || elze.getNodeType()!=ASTNode.STRING_LITERAL)
@@ -43,38 +42,44 @@ public final class cleverStringTernarization extends Wring.ReplaceCurrentNode<Co
     String thenStr = ((StringLiteral) then).getLiteralValue();
     String elseStr = ((StringLiteral) elze).getLiteralValue();
     int commonPrefixIndex = findCommonPrefix(thenStr,elseStr);
-    if(commonPrefixIndex!=0){
-      StringLiteral  prefix = ce.getAST().newStringLiteral();
-      prefix.setLiteralValue(thenStr.substring(0, commonPrefixIndex));
-      StringLiteral  thenPost = ce.getAST().newStringLiteral();
-      thenPost.setLiteralValue(thenStr.length()==commonPrefixIndex ? //
-          "" : thenStr.substring(commonPrefixIndex));
-      StringLiteral  elsePost = ce.getAST().newStringLiteral();
-      elsePost.setLiteralValue( elseStr.length()==commonPrefixIndex ? //
-          "" : elseStr.substring(commonPrefixIndex));
-      return subject.pair(prefix , subject.pair(thenPost, //
-      elsePost).toCondition(condition)).to(wizard.PLUS2);
-    }
-    
+    if(commonPrefixIndex!=0)
+      return replacementPrefix(thenStr,elseStr, commonPrefixIndex ,ce); 
     int commonSuffixLength = findCommonSuffix(thenStr,elseStr);
-    if(commonSuffixLength!=0){
-      StringLiteral  suffix = ce.getAST().newStringLiteral();
-      suffix.setLiteralValue(thenStr.substring(thenStr.length()-commonSuffixLength));
-      
-      StringLiteral  thenPre = ce.getAST().newStringLiteral();
-      thenPre.setLiteralValue(thenStr.length()==commonSuffixLength ? //
-          "" : thenStr.substring(0,thenStr.length()-commonSuffixLength));
-      
-      StringLiteral  elsePre = ce.getAST().newStringLiteral();
-      elsePre.setLiteralValue( elseStr.length()== commonSuffixLength ? //
-          "" : elseStr.substring(0,elseStr.length()-commonSuffixLength));
-      
-      ParenthesizedExpression pe = ce.getAST().newParenthesizedExpression();
-      pe.setExpression(subject.pair(thenPre,elsePre).toCondition(condition));
-      return subject.pair(pe,suffix).to(wizard.PLUS2);
-     
-    }
+    if(commonSuffixLength!=0)
+      return replacementSuffix(thenStr,elseStr,commonSuffixLength,ce);
     return null;
+  }
+  
+  private static Expression replacementPrefix(String thenStr, String elseStr, int commonPrefixIndex , ConditionalExpression ce){
+    final Expression condition = ce.getExpression();
+    StringLiteral  prefix = ce.getAST().newStringLiteral();
+    prefix.setLiteralValue(thenStr.substring(0, commonPrefixIndex));
+    StringLiteral  thenPost = ce.getAST().newStringLiteral();
+    thenPost.setLiteralValue(thenStr.length()==commonPrefixIndex ? //
+        "" : thenStr.substring(commonPrefixIndex));
+    StringLiteral  elsePost = ce.getAST().newStringLiteral();
+    elsePost.setLiteralValue( elseStr.length()==commonPrefixIndex ? //
+        "" : elseStr.substring(commonPrefixIndex));
+    return subject.pair(prefix , subject.pair(thenPost, //
+    elsePost).toCondition(condition)).to(wizard.PLUS2);
+  }
+  
+  private static Expression replacementSuffix(String thenStr, String elseStr, int commonSuffixLength , ConditionalExpression ce){
+    final Expression condition = ce.getExpression();
+    StringLiteral  suffix = ce.getAST().newStringLiteral();
+    suffix.setLiteralValue(thenStr.substring(thenStr.length()-commonSuffixLength));
+    
+    StringLiteral  thenPre = ce.getAST().newStringLiteral();
+    thenPre.setLiteralValue(thenStr.length()==commonSuffixLength ? //
+        "" : thenStr.substring(0,thenStr.length()-commonSuffixLength));
+    
+    StringLiteral  elsePre = ce.getAST().newStringLiteral();
+    elsePre.setLiteralValue( elseStr.length()== commonSuffixLength ? //
+        "" : elseStr.substring(0,elseStr.length()-commonSuffixLength));
+    
+    ParenthesizedExpression pe = ce.getAST().newParenthesizedExpression();
+    pe.setExpression(subject.pair(thenPre,elsePre).toCondition(condition));
+    return subject.pair(pe,suffix).to(wizard.PLUS2);
   }
   
   private static int findCommonPrefix(String str1, String str2){
