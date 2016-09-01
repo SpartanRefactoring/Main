@@ -175,7 +175,7 @@ public enum PrudentType {
 
   private static PrudentType prudentType(final PostfixExpression e, final PrudentType t1) {
     final PrudentType ¢ = t1 != null ? t1 : prudent(e.getOperand());
-    return ¢.asNumeric();
+    return ¢.asNumeric(); //see testInDecreamentSemantics
   }
 
   private static PrudentType prudentType(final ParenthesizedExpression e, final PrudentType t) {
@@ -275,7 +275,8 @@ public enum PrudentType {
   private final PrudentType under(final PrefixExpression.Operator o) {
     assert o != null;
     return o == NOT ? BOOLEAN //
-        : o != COMPLEMENT ? asNumeric() : asIntegralUnderOperation();
+        : in(o, DECREMENT, INCREMENT) ? asNumeric() //see testInDecreamentSemantics and testOnaryPlusMinusSemantics
+        :  o != COMPLEMENT ? asNumericUnderOperation() : asIntegralUnderOperation();
   }
 
   /** @return one of {@link #BOOLEAN}, {@link #INT}, {@link #LONG},
@@ -329,11 +330,11 @@ public enum PrudentType {
    *         {@link #DOUBLE}, or {@link #NUMERIC}, in case it cannot decide */
   private PrudentType underNumericOnlyOperator(final PrudentType k) {
     if (!isNumeric())
-      return asNumeric().underNumericOnlyOperator(k);
+      return asNumericUnderOperation().underNumericOnlyOperator(k);
     assert k != null;
     assert this != ALPHANUMERIC : "Don't confuse " + NUMERIC + " with " + ALPHANUMERIC;
     assert isNumeric() : this + ": is for some reason not numeric ";
-    final PrudentType $ = k.asNumeric();
+    final PrudentType $ = k.asNumericUnderOperation();
     assert $ != null;
     assert $.isNumeric() : this + ": is for some reason not numeric ";
     // Double contaminates Numeric
@@ -394,11 +395,19 @@ public enum PrudentType {
   public boolean isNumeric() {
     return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC);
   }
-
-  /** @return one of {@link #INT}, {@link #LONG}, {@link #CHAR},
-   *         {@link #DOUBLE}, {@link #INTEGRAL} or {@link #NUMERIC}, in case no
+  
+  /** @return one of {@link #INT}, {@link #LONG},, {@link #CHAR},
+   *         {@link BYTE}, {@link SHORT}, {@link FLOAT}, {@link #DOUBLE},
+   *         {@link #INTEGRAL} or {@link #NUMERIC}, in case no
    *         further information is available */
   private PrudentType asNumeric() {
+    return !isNumeric() ? NUMERIC : this;
+  }
+
+  /** @return one of {@link #INT}, {@link #LONG}, {@link #FLOAT},
+   *         {@link #DOUBLE}, {@link #INTEGRAL} or {@link #NUMERIC}, in case no
+   *         further information is available */
+  private PrudentType asNumericUnderOperation() {
     return !isNumeric() ? NUMERIC : isIntUnderOperation() ? INT : this;
   }
 
