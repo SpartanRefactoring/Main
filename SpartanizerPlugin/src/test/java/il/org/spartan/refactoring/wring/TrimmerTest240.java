@@ -1714,12 +1714,10 @@ public class TrimmerTest240 {
         .to(" for(int i:j)b[i]=f; ");
   }
 
-
   @Test public void issue54ForPlainNonSideEffect() {
     trimming("int a  = f; for (int i = 0; i < 100;  ++i) b[i] = a;")//
         .to("for (int i = 0; i < 100;  ++i) b[i] = f;");
   }
-
 
   @Test public void issue54ForPlainUseInConditionNonSideEffect() {
     trimming("int a  = f; for (int i = 0; a < 100;  ++i) b[i] = 3;")//
@@ -1789,8 +1787,8 @@ public class TrimmerTest240 {
 
   @Test public void issue62a() {
     trimming("int f(int i) { for(;;++i) if(false) break; return i; }")//
-    .to("int f(int i) { for(;;++i) {} return i; }")//
-    .to(null);
+        .to("int f(int i) { for(;;++i) {} return i; }")//
+        .to(null);
   }
 
   @Test public void issue62c() {
@@ -3855,8 +3853,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void ternarize12() {
-    trimming("String $ = s;   if (s.equals(532))    $ = $ + 0xABBA;   S.out.println($); ")
-        .to("String $=s.equals(532)?s+0xABBA:s;S.out.println($);");
+    trimming("String $ = s;   if (s.equals(532))    $ = $ + 0xABBA;   S.out.println($); ").to("String $=s.equals(532)?s+0xABBA:s;S.out.println($);");
   }
 
   @Test public void ternarize13() {

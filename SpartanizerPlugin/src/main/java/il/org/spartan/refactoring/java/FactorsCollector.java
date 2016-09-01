@@ -53,7 +53,7 @@ public class FactorsCollector {
 
   private Void addDivide(final Expression e) {
     assert e != null;
-    final Expression ¢ = minus.level(e)%2==0 ? minus.peel(e) : subject.operand(minus.peel(e)).to(wizard.MINUS1);
+    final Expression ¢ = minus.level(e) % 2 == 0 ? minus.peel(e) : subject.operand(minus.peel(e)).to(wizard.MINUS1);
     all.add(Factor.divide(¢));
     dividers.add(¢);
     return null;
@@ -66,7 +66,7 @@ public class FactorsCollector {
 
   private Void addTimes(final Expression e) {
     assert e != null;
-    final Expression ¢ = minus.level(e)%2==0 ? minus.peel(e) : subject.operand(minus.peel(e)).to(wizard.MINUS1);
+    final Expression ¢ = minus.level(e) % 2 == 0 ? minus.peel(e) : subject.operand(minus.peel(e)).to(wizard.MINUS1);
     multipliers.add(¢);
     all.add(Factor.times(¢));
     return null;
