@@ -593,5 +593,30 @@ public class PrudentTypeTest {
     @Test public void makeSureIUnderstandSemanticsOfShift() {
       azzert.that(PrudentType.axiom((short) 1 << 1L), is(PrudentType.INT));
     }
+    
+    @Test public void testInDecreamentSemantics01() {
+      int x = 0;
+      azzert.that(PrudentType.axiom(x++), is(PrudentType.INT));
+    }
+    
+    @Test public void testInDecreamentSemantics02() {
+      long x = 0;
+      azzert.that(PrudentType.axiom(x--), is(PrudentType.LONG));
+    }
+    
+    @Test public void testInDecreamentSemantics03() {
+      short x = 0;
+      azzert.that(PrudentType.axiom(++x), is(PrudentType.SHORT));
+    }
+    
+    @Test public void testInDecreamentSemantics04() {
+      double x = 0;
+      azzert.that(PrudentType.axiom(x++), is(PrudentType.DOUBLE));
+    }
+    
+    @Test public void testInDecreamentSemantics05() {
+      float x = 0;
+      azzert.that(PrudentType.axiom(--x), is(PrudentType.FLOAT));
+    }
   }
 }
