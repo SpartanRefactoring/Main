@@ -149,42 +149,42 @@ import il.org.spartan.refactoring.spartanizations.*;
     assertConvertsTo(
         "" //
             + "if (!s.equals(0xDEAD)) { "//
-            + " int res=0;"//
+            + " int $=0;"//
             + " for (int i=0;i<s.length();++i)     "//
             + "   if (s.charAt(i)=='a')      "//
-            + "     res += 2;"//
+            + "     $ += 2;"//
             + "   else "//
             + "  if (s.charAt(i)=='d')      "//
-            + "       res -= 1;"//
-            + "  return res;"//
+            + "       $ -= 1;"//
+            + "  return $;"//
             + "} else {    "//
             + " return 8;"//
             + "}",
         "" //
             + " if (s.equals(0xDEAD)) \n" + //
             "    return 8;" + //
-            "   int res = 0;\n" + //
+            "   int $ = 0;\n" + //
             "   for (int i = 0;i < s.length();++i)\n" + //
             "     if (s.charAt(i) == 'a')\n" + //
-            "       res += 2;\n" + //
+            "       $ += 2;\n" + //
             "      else " + //
             "       if (s.charAt(i) == 'd')\n" + //
-            "        res -= 1;\n" + //
-            "  return res;\n" //
+            "        --$;\n" + //
+            "  return $;\n" //
     );
   }
 
   @Test(timeout = 2000) public void shortestIfBranchFirst03a() {
     assertConvertsTo(
         "  if ('a' == s.charAt(i))\n" + //
-            "          res += 2;\n" + //
+            "          $ += 2;\n" + //
             "        else if ('d' == s.charAt(i))\n" + //
-            "          res -= 1;\n" + //
+            "          $ -= 1;\n" + //
             "", //
         "  if (s.charAt(i) == 'a')\n" + //
-            "          res += 2;\n" + //
+            "          $ += 2;\n" + //
             "        else if (s.charAt(i) == 'd')\n" + //
-            "          res -= 1;\n" + //
+            "          --$;\n" + //
             "");
   }
 
@@ -265,13 +265,13 @@ import il.org.spartan.refactoring.spartanizations.*;
   @Test(timeout = 2000) public void ternarize01() {
     assertConvertsTo(
         //
-        "String res = s;if (s.equals(532)==true)    res = s + 0xABBA;else    res = SPAM;System.out.println(res);",
+        "String $ = s;if (s.equals(532)==true)    $ = s + 0xABBA;else    $ = SPAM;System.out.println($);",
         "System.out.println((!s.equals(532)?SPAM:s+0xABBA));");
   }
 
   @Test(timeout = 2000) public void ternarize02() {
     assertConvertsTo(//
-        "String res = s;if (s.equals(532)==true)    res = s + 0xABBA;System.out.println(res);", //
+        "String $ = s;if (s.equals(532)==true)    $ = s + 0xABBA;System.out.println($);", //
         "System.out.println((!s.equals(532)?s:s+0xABBA));");
   }
 
@@ -283,38 +283,38 @@ import il.org.spartan.refactoring.spartanizations.*;
 
   @Test(timeout = 2000) public void ternarize04() {
     assertConvertsTo(
-        "  int res = 0;if (s.equals(532))    res += 6;else    res += 9;/*if (s.equals(532))    res += 6;else    res += 9;*/   return res;",
+        "  int $ = 0;if (s.equals(532))    $ += 6;else    $ += 9;/*if (s.equals(532))    $ += 6;else    $ += 9;*/   return $;",
         "return (s.equals(532)?6:9);");
   }
 
   @Test(timeout = 2000) public void ternarize06() {
     assertConvertsTo(//
-        "String res;res = s;if (s.equals(532)==true)    res = s + 0xABBA;System.out.println(res);", //
+        "String $;$ = s;if (s.equals(532)==true)    $ = s + 0xABBA;System.out.println($);", //
         "System.out.println((!s.equals(532)?s:s+0xABBA));");
   }
 
   @Test public void ternarize07a() {
     assertConvertsTo(
         "" //
-            + "String res;" //
-            + "res = s;   " //
-            + "if (res==true)    " //
-            + "  res = s + 0xABBA;   " //
-            + "System.out.println(res); " //
+            + "String $;" //
+            + "$ = s;   " //
+            + "if ($==true)    " //
+            + "  $ = s + 0xABBA;   " //
+            + "System.out.println($); " //
             + "" //
         , "System.out.println((!s?s:s+0xABBA));" //
     );
   }
 
   @Test(timeout = 2000) public void ternarize11() {
-    assertConvertsTo("String res = s, foo = \"bar\";if (s.equals(532)==true)    res = s + 0xABBA;System.out.println(res);",
+    assertConvertsTo("String $ = s, foo = \"bar\";if (s.equals(532)==true)    $ = s + 0xABBA;System.out.println($);",
         "System.out.println((!s.equals(532)?s:s+0xABBA));");
   }
 
   @Test public void ternarize15() {
     assertConvertsTo(
-        "  String res = mode, foo = \"Not in test mode\";int k;k = 1984;if (mode.equals(f())==true)    foo = test-bob;foo = \"sponge-bob\";",
-        "String res=mode,foo=\"Not in test mode\";int k=1984;if(mode.equals(f()))foo=test-bob;foo=\"sponge-bob\";");
+        "  String $ = mode, foo = \"Not in test mode\";int k;k = 1984;if (mode.equals(f())==true)    foo = test-bob;foo = \"sponge-bob\";",
+        "String $=mode,foo=\"Not in test mode\";int k=1984;if(mode.equals(f()))foo=test-bob;foo=\"sponge-bob\";");
   }
 
   @Test(timeout = 2000) public void ternarize17() {
@@ -335,12 +335,12 @@ import il.org.spartan.refactoring.spartanizations.*;
   @Test(timeout = 2000) public void ternarize18() {
     assertConvertsTo(//
         "    String s = X;\n" + //
-            "    String res = s;\n" + //
+            "    String $ = s;\n" + //
             "    int a = 0;\n" + //
-            "    if (s.equals(res))\n" + //
-            "      System.out.println(tH3 + res);\n" + //
+            "    if (s.equals($))\n" + //
+            "      System.out.println(tH3 + $);\n" + //
             "    else\n" + //
-            "      System.out.println(h2A+ res + a + s);",
+            "      System.out.println(h2A+ $ + a + s);",
         "System.out.println(X.equals(X)?tH3+X:h2A+X+X);");
   }
 
