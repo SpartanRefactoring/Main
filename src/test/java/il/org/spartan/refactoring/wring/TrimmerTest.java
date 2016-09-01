@@ -2107,6 +2107,12 @@ import il.org.spartan.refactoring.utils.*;
     trimming("polite ? \"Eat your meal.\" :  \"Eat your meal\"") //
         .to("\"Eat your meal\" + (polite ? \".\" : \"\")");
   }
+  
+  @Test public void issue110_3() {
+    trimming("polite ? \"thanks for the meal\" :  \"I hated the meal\"") //
+        .to("!polite ? \"I hated the meal\": \"thanks for the meal\"") //
+        .to("(!polite ? \"I hated\" : \"thanks for\" )+ \" the meal\"");
+  }
 
   @Test public void linearTransformation() {
     trimming("plain * the + kludge").to("the*plain+kludge");
