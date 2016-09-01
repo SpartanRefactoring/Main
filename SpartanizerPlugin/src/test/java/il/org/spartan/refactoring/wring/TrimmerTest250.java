@@ -434,7 +434,7 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue72mf1B() {
-    assert iz.isSimple(into.e("x"));
+    assert iz.simple(into.e("x"));
     trimming("-(x-0)")//
         .to("-(x)")//
         .to(null);
@@ -858,7 +858,7 @@ public class TrimmerTest250 {
   @Test public void issue103h() {
     trimming("a = a + (c = c + kif)").to("a += c = c + kif").to("a += c += kif").to(null);
   }
-  
+
   @Test public void issue103i_mixed() {
     trimming("a = x = x + (y = y*(z=z+3))").to("a = x += y=y*(z=z+3)").to("a = x += y *= z=z+3").to("a = x += y *= z+=3");
   }
@@ -874,7 +874,7 @@ public class TrimmerTest250 {
   @Test public void issue103l_mixed() {
     trimming("a = a - (x = x + (y = y*(z=z+3)))").to("a = a - (x += y=y*(z=z+3))").to("a = a - (x += y *= z=z+3)").to("a = a - (x += y *= z+=3)");
   }
-  
+
   @Test public void AssignmentAndReturn() {
     trimming("a=5; \n return a;").to("return a=5;");
   }
@@ -882,35 +882,35 @@ public class TrimmerTest250 {
   @Test public void issue107a() {
     trimming("a+=1;").to("a++;").to("++a;").to(null);
   }
-  
+
   @Test public void issue107b() {
     trimming("c+=1; int nice;").to("c++; int nice;");
   }
-  
+
   @Test public void issue107c() {
     trimming("java_is_even_nice+=1+=1;").to("java_is_even_nice+=1++;");
   }
-  
+
   @Test public void issue107d() {
     trimming("for(int a ; a<10 ; a+=1){}").to("for(int a ; a<10 ; a++){}");
   }
-  
+
   @Ignore public void issue107e() {
     trimming("a+=1+=1+=1+=1;").to("a+=1+=1+=1++;").to("a+=1+=1++++;").to("a+=1++++++;").to("a++++++++").to(null);
   }
-  
+
   @Test public void issue107e_1() {
     trimming("a+=1+=1+=1+=1;").to("a+=1+=1+=1++;");
   }
-  
+
   @Test public void issue107f() {
     trimming("a+=2;").to(null);
   }
-  
+
   @Test public void issue107g() {
     trimming("a/=1;").to(null);
   }
-  
+
   @Ignore public void issue107h() {
     trimming("a-+=1;").to("a-++;");
   }
@@ -922,19 +922,19 @@ public class TrimmerTest250 {
   @Test public void issue107j() {
     trimming("a-=1;").to("a--;").to("--a;").to(null);
   }
-  
+
   @Test public void issue107k() {
     trimming("for(int a ; a<10 ; a-=1){}").to("for(int a ; a<10 ; a--){}");
   }
-  
+
   @Test public void issue107l() {
     trimming("a-=2;").to(null);
   }
-  
+
   @Test public void issue107m() {
     trimming("while(x-=1){}").to("while(x--){}");
   }
-  
+
   // @formatter:off
   enum A { a1() {{ f(); }
       public void f() {

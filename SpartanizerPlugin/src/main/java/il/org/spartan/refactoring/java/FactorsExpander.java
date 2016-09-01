@@ -1,5 +1,7 @@
 package il.org.spartan.refactoring.java;
+
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;

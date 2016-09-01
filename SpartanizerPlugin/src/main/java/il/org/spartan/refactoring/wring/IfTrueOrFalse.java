@@ -1,11 +1,8 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.ast.iz.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.ast.*;
-import il.org.spartan.refactoring.builder.*;
 
 /** convert <code>if (true) x; else {y;} </code> into <code>x;</code> and
  * <code>if (false) x; else {y;}  </code> into <code>

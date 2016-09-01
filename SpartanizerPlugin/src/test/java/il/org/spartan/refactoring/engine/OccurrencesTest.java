@@ -10,7 +10,6 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 import il.org.spartan.refactoring.ast.*;
-import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.spartanizations.*;
 
 /** @author Yossi Gil

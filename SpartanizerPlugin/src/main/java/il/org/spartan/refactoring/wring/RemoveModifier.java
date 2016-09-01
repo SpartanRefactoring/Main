@@ -23,7 +23,6 @@ public abstract class RemoveModifier<N extends BodyDeclaration> extends Wring.Re
     return firstThat(¢, p) != null;
   }
 
-
   abstract boolean redundant(Modifier m);
 
   @Override N replacement(final N $) {
@@ -33,7 +32,6 @@ public abstract class RemoveModifier<N extends BodyDeclaration> extends Wring.Re
   @Override boolean scopeIncludes(final N ¢) {
     return firstBad(¢) != null;
   }
-
 
   private IExtendedModifier firstBad(final N n) {
     return firstThat(n, (final Modifier ¢) -> redundant(¢));

@@ -36,7 +36,7 @@ public class Plant {
    *         parenthesis, depending on the relative precedences of the
    *         expression and its host. */
   public Expression into(final ASTNode host) {
-    return noParenthesisRequiredIn(host) || isSimple(inner) ? inner : parenthesize(inner);
+    return noParenthesisRequiredIn(host) || simple(inner) ? inner : parenthesize(inner);
   }
 
   private boolean noParenthesisRequiredIn(final ASTNode host) {
@@ -50,6 +50,6 @@ public class Plant {
   }
 
   public Expression intoLeft(final InfixExpression host) {
-    return Precedence.greater(host, inner) || Precedence.equal(host, inner) || isSimple(inner) ? inner : parenthesize(inner);
+    return Precedence.greater(host, inner) || Precedence.equal(host, inner) || simple(inner) ? inner : parenthesize(inner);
   }
 }

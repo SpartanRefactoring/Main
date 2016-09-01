@@ -1,5 +1,5 @@
 package il.org.spartan.refactoring.wring;
-import il.org.spartan.refactoring.builder.make;
+
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.ast.extract.*;
 import static il.org.spartan.refactoring.engine.Plant.*;
@@ -8,6 +8,7 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.builder.*;
 
 /** eliminates redundant comparison with the two boolean literals:
  *

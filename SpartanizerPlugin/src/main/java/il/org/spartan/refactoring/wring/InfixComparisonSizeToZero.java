@@ -68,23 +68,29 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
     }
     final MethodInvocation $ = subject.operand(receiver).toMethod("isEmpty");
     final int number = sign * Integer.parseInt(l.getToken());
+    Expression notOf = make.notOf($);
+    BooleanLiteral TRUE = e.getAST().newBooleanLiteral(true);
     switch (o.toString()) {
       case "==":
         if (number == 0)
           return $;
+        // TODO: Niv I think this is a bug. If you compare to 1 or 2, there is
+        // nothing you can do to change it.
         if (number == 1 || number == 2)
-          return subject.operand($).to(NOT);
+          return notOf  ;
         return null;
       case "!=":
+        make.notOf($);
         if (number == 0)
-          return subject.operand($).to(NOT);
+          return notOf;
         return null;
       case ">":
         if (number == 0)
-          return subject.operand($).to(NOT);
+          return notOf;
       case ">=":
-        if (number <= 0)
-          return e.getAST().newBooleanLiteral(true);
+        if (number <= 0) {
+          return TRUE;
+        }
         return null;
       case "<=":
         if (number == 0)
@@ -110,7 +116,7 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
 
   @Override ASTNode replacement(final InfixExpression e) {
     final Operator o = e.getOperator();
-    if (!iz.isComparison(o))
+    if (!iz.comparison(o))
       return null;
     final Expression right = step.right(e);
     assert right != null;

@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.ast.iz.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
@@ -31,6 +30,6 @@ public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression> im
       if (!iz.literal0(¢))
         $.add(¢);
     return $.size() == es.size() ? null
-        : $.isEmpty() ? wizard.duplicate(lisp.first(es)) : $.size() != 1?subject.operands($).to(PLUS):wizard.duplicate(lisp.first($));
+        : $.isEmpty() ? wizard.duplicate(lisp.first(es)) : $.size() != 1 ? subject.operands($).to(PLUS) : wizard.duplicate(lisp.first($));
   }
 }

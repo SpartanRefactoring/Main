@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.builder.Restructure.*;
 import static il.org.spartan.refactoring.ast.extract.*;
+import static il.org.spartan.refactoring.builder.Restructure.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;

@@ -46,7 +46,7 @@ public class Recurser<T> {
       recurserList.add(new Recurser<T>(child));
     int index = 0;
     for (final Recurser<T> rec : recurserList) {
-      (rec.from(index == 0?current:recurserList.get(index - 1).getCurrent())).preVisit(f);
+      rec.from(index == 0 ? current : recurserList.get(index - 1).getCurrent()).preVisit(f);
       ++index;
     }
     return recurserList.isEmpty() ? this.current : recurserList.get(index - 1).getCurrent();
@@ -61,7 +61,7 @@ public class Recurser<T> {
       recurserList.add(new Recurser<T>(child));
     int index = 0;
     for (final Recurser<T> rec : recurserList) {
-      (rec.from(index == 0?current:recurserList.get(index - 1).getCurrent())).preVisit(f);
+      rec.from(index == 0 ? current : recurserList.get(index - 1).getCurrent()).preVisit(f);
       ++index;
     }
     this.current = f.apply(this);
@@ -77,7 +77,7 @@ public class Recurser<T> {
       recurserList.add(new Recurser<T>(child));
     int index = 0;
     for (final Recurser<T> rec : recurserList) {
-      (rec.from(index == 0?current:recurserList.get(index - 1).getCurrent())).preVisit(f);
+      rec.from(index == 0 ? current : recurserList.get(index - 1).getCurrent()).preVisit(f);
       ++index;
     }
   }
@@ -89,7 +89,7 @@ public class Recurser<T> {
       recurserList.add(new Recurser<T>(child));
     int index = 0;
     for (final Recurser<T> rec : recurserList) {
-      (rec.from(index == 0?current:recurserList.get(index - 1).getCurrent())).preVisit(f);
+      rec.from(index == 0 ? current : recurserList.get(index - 1).getCurrent()).preVisit(f);
       ++index;
     }
     f.accept(this.from(recurserList.get(index - 1).getCurrent()));
