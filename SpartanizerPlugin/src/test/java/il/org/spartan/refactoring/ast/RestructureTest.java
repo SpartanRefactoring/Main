@@ -5,7 +5,7 @@ import static il.org.spartan.azzert.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.refactoring.create.*;
+import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.engine.*;
 
 @SuppressWarnings("static-method") //

@@ -8,7 +8,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
-import il.org.spartan.refactoring.create.*;
+import il.org.spartan.refactoring.assemble.*;
 
 /** A test suite for class {@link minus}
  * @author Yossi Gil

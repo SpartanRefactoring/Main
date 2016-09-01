@@ -1,17 +1,16 @@
 package il.org.spartan.refactoring.wring;
 
+import static il.org.spartan.refactoring.assemble.Plant.*;
 import static il.org.spartan.refactoring.ast.iz.*;
-import static il.org.spartan.refactoring.engine.Plant.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.builder.*;
-import il.org.spartan.refactoring.create.*;
-import il.org.spartan.refactoring.create.duplicate;
 import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.wring.Wring.*;
 

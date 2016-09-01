@@ -6,8 +6,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.builder.*;
-import il.org.spartan.refactoring.create.*;
 import il.org.spartan.refactoring.engine.*;
 
 public class FactorsReorganizer {
