@@ -1741,19 +1741,9 @@ public class TrimmerTest240 {
         .to("for (int i = 0; f < 100;  ++i) b[i] = 3;");
   }
 
-  @Test public void issue54ForPlainUseInInitializer() {
-    trimming("int a  = f(); for (int i = a; i < 100; i++) b[i] = 3;")//
-        .to(" for (int i = f(); i < 100; i++) b[i] = 3;");
-  }
-
   @Test public void issue54ForPlainUseInInitializerNonSideEffect() {
     trimming("int a  = f; for (int i = a; i < 100; i *= a) b[i] = 3;")//
         .to(" for (int i = f; i < 100; i *= f) b[i] = 3;");
-  }
-
-  @Test public void issue54ForPlainUseInUpdaters() {
-    trimming("int a  = f(); for (int i = 0; i < 100; i *= a) b[i] = 3;")//
-        .to(null);
   }
 
   @Test public void issue54ForPlainUseInUpdatersNonSideEffect() {
