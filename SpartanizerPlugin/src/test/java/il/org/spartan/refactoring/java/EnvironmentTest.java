@@ -7,6 +7,7 @@ import java.util.*;
 import java.util.Map.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jface.text.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -222,6 +223,92 @@ public class EnvironmentTest {
    * Information()); e5.put("Alex", new Information()); } */
   
   //========================= use & define tests ===========================
+  
+  @Test public void useTestMethodDefinition(){
+    Environment.uses(MakeAST.COMPILATION_UNIT.from((new Document("int x = 5;")).get()));
+  }
+  
+  @Test public void defineTestMethodDefinition(){
+    Environment.defines(MakeAST.COMPILATION_UNIT.from((new Document("int x = 5;")).get()));
+  }
+  //Simple definitions
+  @Ignore public void useTestWithDefinitionsOnly(){
+    azzert.that(Environment.uses(MakeAST.COMPILATION_UNIT.from((new Document("int x = 5;")).get())).contains("x"),is(true));
+  }
+  
+  @Ignore public void useTestWithDefinitionsOnly2(){
+    Set<Map.Entry<String, Information>> $ = Environment.uses(MakeAST.COMPILATION_UNIT.from((new Document("int x = 5,y=3,z;")).get()));
+    azzert.that($.contains("x"),is(true));
+    azzert.that($.contains("y"),is(true));
+    azzert.that($.contains("z"),is(true));
+  }
+  
+  @Ignore public void useTestWithDefinitionsOnly3(){
+    Set<Map.Entry<String, Information>> $ = Environment.uses(MakeAST.COMPILATION_UNIT.from((new Document("int x = y = z =5;")).get()));
+    azzert.that($.contains("x"),is(true));
+    azzert.that($.contains("y"),is(true));
+    azzert.that($.contains("z"),is(true));
+  }
+  
+  @Ignore public void useTestWithDefinitionsOnly4(){
+    Set<Map.Entry<String, Information>> $ = Environment.uses(MakeAST.COMPILATION_UNIT.from((new Document("int x = y = z =5; double k;")).get()));
+    azzert.that($.contains("x"),is(true));
+    azzert.that($.contains("y"),is(true));
+    azzert.that($.contains("z"),is(true));
+    azzert.that($.contains("k"),is(true));
+  }
+  
+  //Simple uses.
+  @Ignore public void useTestWithUsesOnly(){
+    Set<Map.Entry<String, Information>> $ = Environment.uses(MakeAST.COMPILATION_UNIT.from((new Document("x=5; y=3.5")).get()));
+    azzert.that($.contains("x"),is(true));
+    azzert.that($.contains("y"),is(true));
+  }
+  
+  @Ignore public void useTestWithUsesOnly2(){
+    azzert.that(Environment.uses(MakeAST.COMPILATION_UNIT.from((new Document("foo(x)")).get())).contains("x"), is(true));
+  }
+  
+  @Ignore public void useTestWithUsesOnly3(){
+    Set<Map.Entry<String, Information>> $ = Environment.uses(MakeAST.COMPILATION_UNIT.from((new Document("foo(x,y)")).get()));
+    azzert.that($.contains("x"),is(true));
+    azzert.that($.contains("y"),is(true));
+  }  
+  
+  @Ignore public void useTestWithUsesOnly4(){
+    Set<Map.Entry<String, Information>> $ = Environment.uses(MakeAST.COMPILATION_UNIT.from((new Document("foo(goo(q,x),hoo(x,y,z))")).get()));
+    azzert.that($.contains("q"),is(true));
+    azzert.that($.contains("x"),is(true));
+    azzert.that($.contains("y"),is(true));
+    azzert.that($.contains("z"),is(true));
+  }
+  
+  @Ignore public void useTestWithUsesOnly5(){
+    azzert.that(Environment.uses(MakeAST.COMPILATION_UNIT.from((new Document("x.foo()")).get())).contains("x"), is(true));
+  }
+
+  @Ignore public void useTestUsesAndDefinitions(){
+    Set<Map.Entry<String, Information>> $ = Environment.uses(MakeAST.COMPILATION_UNIT.from((new Document("int i = 3; x.foo()")).get()));
+    azzert.that($.contains("x"),is(true));
+    azzert.that($.contains("i"),is(true));
+  }
+  
+  @Ignore public void useTestUsesAndDefinitions2(){
+    Set<Map.Entry<String, Information>> $ = Environment.uses(MakeAST.COMPILATION_UNIT.from((new Document(""+
+                                                              "for(int i = 0; i < 10; ++i)" +//
+                                                                  "x+=i")).get()));
+    azzert.that($.contains("x"),is(true));
+    azzert.that($.contains("i"),is(true));
+  }
+  
+  @Ignore public void useTestUsesAndDefinitions3(){
+    Set<Map.Entry<String, Information>> $ = Environment.uses(MakeAST.COMPILATION_UNIT.from((new Document("x=3; try{y=13; foo(x,y);}"+//
+                                                                                                        "catch(final UnsupportedOperationException e)"+//
+                                                                                                        "{z=3;}")).get()));
+    azzert.that($.contains("x"),is(true));
+    azzert.that($.contains("y"),is(true));
+    azzert.that($.contains("z"),is(true));
+  }
   
   @Test public static void define_0() {
     String code = "";
