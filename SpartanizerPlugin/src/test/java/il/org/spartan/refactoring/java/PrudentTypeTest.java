@@ -26,8 +26,8 @@ public class PrudentTypeTest {
       azzert.that(prudent(into.e("~2"), ALPHANUMERIC), is(INTEGRAL));
     }
 
-    @Ignore("creates NumberLiteral instead of PrefixExpression, need to figure out why") @Test public void under03() {
-      azzert.that(prudent(into.e("++3"), DOUBLE), is(DOUBLE));
+    @Test public void under03() {
+      azzert.that(prudent(into.e("++x"), DOUBLE), is(DOUBLE));
     }
 
     @Test public void under04() {
@@ -436,14 +436,6 @@ public class PrudentTypeTest {
       azzert.that(prudent(into.e("x++")), is(NUMERIC));
     }
 
-    @Test public void basicExpressions14() {
-      azzert.that(prudent(into.e("7++")), is(INT));
-    }
-
-    @Ignore("creates CharacterLiteral instead of PrefixExpression, need to figure out why") @Test public void basicExpressions15() {
-      azzert.that(prudent(into.e("'a'--")), is(INT));
-    }
-
     @Test public void basicExpressions16() {
       azzert.that(prudent(into.e("2L++")), is(LONG));
     }
@@ -617,6 +609,61 @@ public class PrudentTypeTest {
     @Test public void testInDecreamentSemantics05() {
       float x = 0;
       azzert.that(PrudentType.axiom(--x), is(PrudentType.FLOAT));
+    }
+    
+    @Test public void testInDecreamentSemantics06() {
+      byte x = 0;
+      azzert.that(PrudentType.axiom(--x), is(PrudentType.BYTE));
+    }
+    
+    @Test public void testInDecreamentSemantics07() {
+      char x = 0;
+      azzert.that(PrudentType.axiom(--x), is(PrudentType.CHAR));
+    }
+    
+    @Test public void testOnaryPlusMinusSemantics01() {
+      int x = 0;
+      azzert.that(PrudentType.axiom(+x), is(PrudentType.INT));
+    }
+    
+    @Test public void testOnaryPlusMinusSemantics02() {
+      long x = 0;
+      azzert.that(PrudentType.axiom(-x), is(PrudentType.LONG));
+    }
+    
+    @Test public void testOnaryPlusMinusSemantics03() {
+      short x = 0;
+      azzert.that(PrudentType.axiom(+x), is(PrudentType.INT));
+    }
+    
+    @Test public void testOnaryPlusMinusSemantics04() {
+      double x = 0;
+      azzert.that(PrudentType.axiom(+x), is(PrudentType.DOUBLE));
+    }
+    
+    @Test public void testOnaryPlusMinusSemantics05() {
+      float x = 0;
+      azzert.that(PrudentType.axiom(-x), is(PrudentType.FLOAT));
+    }
+    
+    @Test public void testOnaryPlusMinusSemantics06() {
+      byte x = 0;
+      azzert.that(PrudentType.axiom(+x), is(PrudentType.INT));
+    }
+    
+    @Test public void testOnaryPlusMinusSemantics07() {
+      byte x = 0;
+      azzert.that(PrudentType.axiom(-x), is(PrudentType.INT));
+    }
+    
+    @Test public void testOnaryPlusMinusSemantics08() {
+      char x = 0;
+      azzert.that(PrudentType.axiom(-x), is(PrudentType.INT));
+    }
+    
+    @Test public void testOnaryPlusMinusSemantics09() {
+      char x = 0;
+      azzert.that(PrudentType.axiom(-x), is(PrudentType.INT));
     }
   }
 }
