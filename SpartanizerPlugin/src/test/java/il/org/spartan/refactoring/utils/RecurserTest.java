@@ -75,7 +75,6 @@ public class RecurserTest {
   }
 
   private ASTNode makeCaseNode() {
-    final SwitchCase caseNode = mock(SwitchCase.class);
-    return caseNode;
+    return mock(SwitchCase.class);
   }
 }

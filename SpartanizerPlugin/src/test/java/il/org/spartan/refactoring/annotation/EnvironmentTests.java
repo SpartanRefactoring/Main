@@ -7,7 +7,7 @@ import java.util.*;
 @SuppressWarnings("all") public class EnvironmentTests {
   void EX1() {
     @NestedENV({}) @OutOfOrderFlatENV({}) final String s = "a";
-    s.equals("a");
+    "a".equals(s);
     "a".equals(s);
     @NestedENV({ "EX1.s#String" }) @OutOfOrderFlatENV({ "s" }) int a = 0;
     out.print("a");
@@ -424,7 +424,7 @@ import java.util.*;
         try {
           @OutOfOrderFlatENV({}) @Begin final int a;
           final String s = "onoes";
-          dangerousFunc(s.equals("yay"));
+          dangerousFunc("yay".equals(s));
           @OutOfOrderFlatENV({ "s" }) @End({ "s" }) final int b;
         } catch (final UnsupportedOperationException e) {
           @OutOfOrderFlatENV({ "e" }) final int a;
@@ -436,7 +436,7 @@ import java.util.*;
         try {
           @OutOfOrderFlatENV({}) final int a;
           s = "onoes";
-          dangerousFunc(s.equals("yay"));
+          dangerousFunc("yay".equals(s));
           @OutOfOrderFlatENV({ "s" }) @End({ "s" }) final int b;
         } catch (final UnsupportedOperationException e) {
           @OutOfOrderFlatENV({ "s", "e" }) final int a;
@@ -461,20 +461,21 @@ import java.util.*;
         this();
       }
 
-      Oompa_Loompa Oompa_Loompa(final Oompa_Loompa Oompa_Loompa) {
-        Oompa_Loompa: for (;;)
-          for (;;)
-            if (new Oompa_Loompa(Oompa_Loompa) { /* D */
-              @Override Oompa_Loompa Oompa_Loompa(final Oompa_Loompa Oompa_Loompa) {
-                return Oompa_Loompa != null ? /* C */
-                super.Oompa_Loompa(Oompa_Loompa) /* B */
-                    : Oompa_Loompa.this.Oompa_Loompa(Oompa_Loompa);
+      Oompa_Loompa Oompa_Loompa(final Oompa_Loompa l) {
+        l: for (;;)
+          for (;;) {
+            /* D */
+            /* C */
+            /* B */
+            if (new Oompa_Loompa(l) {
+              @Override Oompa_Loompa Oompa_Loompa(final Oompa_Loompa l) {
+                return l != null ? super.Oompa_Loompa(l) : Oompa_Loompa.this.Oompa_Loompa(l);
               }
-            }.Oompa_Loompa(Oompa_Loompa) != null)
-              break Oompa_Loompa;
-            else
-              continue Oompa_Loompa;
-        return Oompa_Loompa;
+            }.Oompa_Loompa(l) == null)
+              continue l;
+            break l;
+          }
+        return l;
       }
     }
   }

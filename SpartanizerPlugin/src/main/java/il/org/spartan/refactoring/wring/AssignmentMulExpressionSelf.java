@@ -63,8 +63,7 @@ public final class AssignmentMulExpressionSelf extends Wring.ReplaceCurrentNode<
         es.remove(¢);
         break;
       }
-    final Expression $ = es.size() >= 2 ? subject.operands(es).to(Operator.TIMES) : es.get(0);
-    return $;
+    return es.size() < 2?es.get(0):subject.operands(es).to(Operator.TIMES);
   }
 
   static boolean areAllOperatorsTIMES(final InfixExpression e) {
