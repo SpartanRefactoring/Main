@@ -46,15 +46,10 @@ public class Recurser<T> {
       recurserList.add(new Recurser<T>(child));
     int index = 0;
     for (final Recurser<T> rec : recurserList) {
-      if (index == 0)
-        rec.from(current).preVisit(f);
-      else
-        rec.from(recurserList.get(index - 1).getCurrent()).preVisit(f);
-      index++;
+      (rec.from(index == 0?current:recurserList.get(index - 1).getCurrent())).preVisit(f);
+      ++index;
     }
-    if (recurserList.isEmpty())
-      return this.current;
-    return recurserList.get(index - 1).getCurrent();
+    return recurserList.isEmpty() ? this.current : recurserList.get(index - 1).getCurrent();
   }
 
   public T postVisit(final Function<Recurser<T>, T> f) {
@@ -66,16 +61,11 @@ public class Recurser<T> {
       recurserList.add(new Recurser<T>(child));
     int index = 0;
     for (final Recurser<T> rec : recurserList) {
-      if (index == 0)
-        rec.from(current).preVisit(f);
-      else
-        rec.from(recurserList.get(index - 1).getCurrent()).preVisit(f);
-      index++;
+      (rec.from(index == 0?current:recurserList.get(index - 1).getCurrent())).preVisit(f);
+      ++index;
     }
     this.current = f.apply(this);
-    if (recurserList.isEmpty())
-      return this.current;
-    return recurserList.get(index - 1).getCurrent();
+    return recurserList.isEmpty() ? this.current : recurserList.get(index - 1).getCurrent();
   }
 
   /** supply self to each node in the tree. */
@@ -87,11 +77,8 @@ public class Recurser<T> {
       recurserList.add(new Recurser<T>(child));
     int index = 0;
     for (final Recurser<T> rec : recurserList) {
-      if (index == 0)
-        rec.from(current).preVisit(f);
-      else
-        rec.from(recurserList.get(index - 1).getCurrent()).preVisit(f);
-      index++;
+      (rec.from(index == 0?current:recurserList.get(index - 1).getCurrent())).preVisit(f);
+      ++index;
     }
   }
 
@@ -102,27 +89,24 @@ public class Recurser<T> {
       recurserList.add(new Recurser<T>(child));
     int index = 0;
     for (final Recurser<T> rec : recurserList) {
-      if (index == 0)
-        rec.from(current).preVisit(f);
-      else
-        rec.from(recurserList.get(index - 1).getCurrent()).preVisit(f);
-      index++;
+      (rec.from(index == 0?current:recurserList.get(index - 1).getCurrent())).preVisit(f);
+      ++index;
     }
     f.accept(this.from(recurserList.get(index - 1).getCurrent()));
   }
 
-  public static List<ASTNode> getChildren(final ASTNode node) {
-    if (node == null)
+  public static List<ASTNode> getChildren(final ASTNode n) {
+    if (n == null)
       return new ArrayList<>();
-    final List<ASTNode> childrenList = new ArrayList<>();
+    final List<ASTNode> $ = new ArrayList<>();
     try {
-      @SuppressWarnings("rawtypes") final List lst = node.structuralPropertiesForType();
-      for (int i = 0; i < lst.size(); i++) {
-        final Object child = node.getStructuralProperty((StructuralPropertyDescriptor) lst.get(i));
+      @SuppressWarnings("rawtypes") final List lst = n.structuralPropertiesForType();
+      for (int i = 0; i < lst.size(); ++i) {
+        final Object child = n.getStructuralProperty((StructuralPropertyDescriptor) lst.get(i));
         if (child instanceof ASTNode)
-          childrenList.add((ASTNode) child);
+          $.add((ASTNode) child);
       }
-      return childrenList;
+      return $;
     } catch (final NullPointerException e) {
       return null;
     }

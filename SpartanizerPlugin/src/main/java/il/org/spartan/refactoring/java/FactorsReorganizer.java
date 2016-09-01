@@ -1,4 +1,5 @@
 package il.org.spartan.refactoring.java;
+
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import java.util.*;
 import java.util.*;
@@ -25,13 +26,10 @@ public class FactorsReorganizer {
   private static Expression buildDividers(final Expression first, final List<Expression> rest) {
     if (first == null)
       return buildDividers(rest);
-    switch (rest.size()) {
-      case 0:
-        return first;
-      default:
-        rest.add(0, first);
-        return subject.operands(rest).to(DIVIDE);
-    }
+    if (rest.isEmpty())
+      return first;
+    rest.add(0, first);
+    return subject.operands(rest).to(DIVIDE);
   }
 
   private static Expression buildDividers(final List<Expression> es) {

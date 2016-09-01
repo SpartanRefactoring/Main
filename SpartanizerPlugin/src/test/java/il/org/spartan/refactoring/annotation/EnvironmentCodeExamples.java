@@ -320,7 +320,7 @@ public class EnvironmentCodeExamples {
   }
 
   public static class EX7 { // func_param_name_to_ENV
-    Integer x = new Integer(1);
+    Integer x = Integer.valueOf(1);
 
     class Complex {
       int r;
@@ -467,15 +467,16 @@ public class EnvironmentCodeExamples {
       Oompa_Loompa Oompa_Loompa(final Oompa_Loompa l) {
         l: for (;;)
           for (;;) {
-            if (new Oompa_Loompa(l) { /* D */
-              @Override Oompa_Loompa Oompa_Loompa(final Oompa_Loompa Oompa_Loompa) {
-                return Oompa_Loompa != null ? /* C */
-                super.Oompa_Loompa(Oompa_Loompa) /* B */
-                    : Oompa_Loompa.this.Oompa_Loompa(Oompa_Loompa);
+            /* D */
+            /* C */
+            /* B */
+            if (new Oompa_Loompa(l) {
+              @Override Oompa_Loompa Oompa_Loompa(final Oompa_Loompa l) {
+                return l != null ? super.Oompa_Loompa(l) : Oompa_Loompa.this.Oompa_Loompa(l);
               }
-            }.Oompa_Loompa(l) != null)
-              break l;
-            continue l;
+            }.Oompa_Loompa(l) == null)
+              continue l;
+            break l;
           }
         return l;
       }

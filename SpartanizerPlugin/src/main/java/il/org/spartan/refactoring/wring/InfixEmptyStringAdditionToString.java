@@ -11,8 +11,8 @@ import il.org.spartan.refactoring.java.*;
 public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<InfixExpression>
     implements il.org.spartan.refactoring.wring.Kind.NoImpact {
   @SuppressWarnings("unused") static boolean validTypes(final Expression e, final Expression ¢1, final Expression ¢2) {
-    return !stringType.isNot(¢2) && ¢1 instanceof StringLiteral && ((StringLiteral) ¢1).getEscapedValue().equals("\"\"")
-        || ¢2 instanceof StringLiteral && ((StringLiteral) ¢2).getEscapedValue().equals("\"\"") && !stringType.isNot(¢1);
+    return !stringType.isNot(¢2) && ¢1 instanceof StringLiteral && "\"\"".equals(((StringLiteral)¢1).getEscapedValue())
+        || ¢2 instanceof StringLiteral && "\"\"".equals(((StringLiteral)¢2).getEscapedValue()) && !stringType.isNot(¢1);
   }
 
   @Override ASTNode replacement(final InfixExpression e) {
@@ -22,17 +22,17 @@ public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<I
     assert right != null;
     final Expression left = step.left(e);
     assert left != null;
-    return !validTypes(e, right, left) ? null : !((StringLiteral) left).getEscapedValue().equals("\"\"") ? left : right;
+    return !validTypes(e, right, left) ? null : !"\"\"".equals(((StringLiteral)left).getEscapedValue()) ? left : right;
   }
 
   private static String descriptionAux(final Expression e) {
-    return e == null ? "Use the variable alone" : "Use " + e;
+    return e != null?"Use " + e:"Use the variable alone";
   }
 
   @Override String description(final InfixExpression e) {
     final Expression right = step.right(e);
     final Expression left = step.left(e);
-    return descriptionAux(!((StringLiteral) left).getEscapedValue().equals("\"\"") ? left : right);
+    return descriptionAux(!"\"\"".equals(((StringLiteral)left).getEscapedValue()) ? left : right);
   }
 
   @Override public String description() {

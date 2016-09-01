@@ -8,7 +8,7 @@ import il.org.spartan.refactoring.ast.*;
 
 public interface spartan {
   static String repeat(final int i, final char c) {
-    return new String(new char[i]).replace('\0', c);
+    return String.valueOf(new char[i]).replace('\0', c);
   }
 
   static String shorten(final ArrayType t) {
