@@ -20,7 +20,7 @@ public final class AssignmentPlusSelf extends ReplaceCurrentNode<Assignment> imp
 
   @Override ASTNode replacement(final Assignment a) {
     final InfixExpression ¢ = az.infixExpression(a.getRightHandSide());
-    return !iz.isOpAssign(a) || !iz.infixPlus(¢) ? null : replace(a);
+    return !iz.isOpAssign(a) || ¢ == null || !iz.infixPlus(¢) ? null : replace(a);
   }
 
   private static ASTNode replace(final Assignment a) {
@@ -40,7 +40,6 @@ public final class AssignmentPlusSelf extends ReplaceCurrentNode<Assignment> imp
   }
 
   private static boolean asLeft(final Expression ¢, final Expression left) {
-    // return ¢.equals(left); // Doesn't work...
-    return ¢.toString().equals(left.toString());
+    return wizard.same(¢, left);
   }
 }
