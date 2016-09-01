@@ -13,6 +13,7 @@ import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** A wring is a transformation that works on an AstNode. Such a transformation
@@ -60,7 +61,8 @@ public abstract class Wring<N extends ASTNode> implements Kind {
    * but that actual application will be vacuous.
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is within the
-   *         scope of this object */
+   *         scope of this object 
+   * @*/
   boolean scopeIncludes(final N n) {
     return make(n, null) != null;
   }
