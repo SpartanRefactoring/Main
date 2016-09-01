@@ -27,9 +27,6 @@ public final class AssignmentMulSelf extends ReplaceCurrentNode<Assignment> impl
     return !iz.isOpAssign(a) || ¢ == null || !iz.infixTimes(¢) ? null : replace(a);
   }
 
-  // private static boolean isNotRightMul(final Assignment a) {
-  // return az.infixExpression(a.getRightHandSide()).getOperator() == TIMES;
-  // }
   private static ASTNode replace(final Assignment a) {
     final InfixExpression ¢ = az.infixExpression(a.getRightHandSide());
     final Expression e = az.expression(rightInfixReplacement(extract.allOperands(¢), a.getLeftHandSide()));
