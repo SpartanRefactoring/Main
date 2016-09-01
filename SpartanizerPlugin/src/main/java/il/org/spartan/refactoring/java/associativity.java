@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 public enum associativity {
   ;
   static boolean isLeftToRigh(final Expression e) {
-    return !isRightToLeft(precedence.of(e));
+    return !isRightToLeft(Precedence.of(e));
   }
 
   /** Determine whether associativity is left-to-right
@@ -18,7 +18,7 @@ public enum associativity {
    * @return <code><b>true</b></code> <i>iff</i> the associativity of the
    *         parameter is left-to-right. */
   public static boolean isLeftToRight(final InfixExpression.Operator o) {
-    return isRightToLeft(precedence.of(o));
+    return isRightToLeft(Precedence.of(o));
   }
 
   /** Determine whether associativity is right-to-left
@@ -26,7 +26,7 @@ public enum associativity {
    * @return <code><b>true</b></code> <i>iff</i> the associativity of parameter
    *         present on the parameter is right-to-left. */
   public static boolean isRightToLeft(final Expression e) {
-    return isRightToLeft(precedence.of(e));
+    return isRightToLeft(Precedence.of(e));
   }
 
   private static boolean isRightToLeft(final int precedence) {
