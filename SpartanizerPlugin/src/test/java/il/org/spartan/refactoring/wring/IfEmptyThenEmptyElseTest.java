@@ -17,7 +17,7 @@ import il.org.spartan.refactoring.utils.*;
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public class IfEmptyThenEmptyElseTest {
   private static final IfEmptyThenEmptyElse WRING = new IfEmptyThenEmptyElse();
-  private static final Statement INPUT = Into.s("{if (b) ; else ;}");
+  private static final Statement INPUT = into.s("{if (b) ; else ;}");
   private static final IfStatement IF = extract.firstIfStatement(INPUT);
 
   @Test public void eligible() {

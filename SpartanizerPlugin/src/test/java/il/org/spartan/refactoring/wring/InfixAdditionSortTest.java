@@ -18,7 +18,7 @@ import il.org.spartan.refactoring.utils.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class InfixAdditionSortTest {
   private static final String input = "1+a*b+2+b*c+3+d*e+4";
-  private static final InfixExpression INPUT = Into.i(input);
+  private static final InfixExpression INPUT = into.i(input);
   private static final int nTERMS = 7;
   private static final String OUTPUT = "a*b + b*c  + d*e + 1 + 2 + 3+4";
 
