@@ -879,30 +879,34 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue107a() {
-    trimming("a+=1;").to("a++;");
+    trimming("a+=1;").to("a++;").to("++a;").to(null);
   }
   
-  @Ignore public void issue107b() {
-    trimming("c+=1 is nice;").to("c++ is nice;");
+  @Test public void issue107b() {
+    trimming("c+=1; int nice;").to("c++; int nice;");
   }
   
-  @Ignore public void issue107c() {
-    trimming("java is even nice+=1+=1;").to("vaja is even nice++++;");
+  @Test public void issue107c() {
+    trimming("java_is_even_nice+=1+=1;").to("java_is_even_nice+=1++;");
   }
   
-  @Ignore public void issue107d() {
-    trimming("a++=-+=+=1;").to("a++=-+=++;");
+  @Test public void issue107d() {
+    trimming("for(int a ; a<10 ; a+=1){}").to("for(int a ; a<10 ; a++){}");
   }
   
   @Ignore public void issue107e() {
-    trimming("a+=1+=1+=1+=1;").to("a+++=1+=1+=1;").to("a+++++=1+=1;").to("a +++++++=1;");
+    trimming("a+=1+=1+=1+=1;").to("a+=1+=1+=1++;").to("a+=1+=1++++;").to("a+=1++++++;").to("a++++++++").to(null);
   }
   
-  @Ignore public void issue107f() {
+  @Test public void issue107e_1() {
+    trimming("a+=1+=1+=1+=1;").to("a+=1+=1+=1++;");
+  }
+  
+  @Test public void issue107f() {
     trimming("a+=2;").to(null);
   }
   
-  @Ignore public void issue107g() {
+  @Test public void issue107g() {
     trimming("a/=1;").to(null);
   }
   
