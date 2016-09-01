@@ -7,6 +7,8 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.builder.*;
+import il.org.spartan.refactoring.create.*;
 import il.org.spartan.refactoring.engine.*;
 
 public class FactorsCollector {
@@ -51,8 +53,9 @@ public class FactorsCollector {
 
   private Void addDivide(final Expression e) {
     assert e != null;
-    all.add(Factor.divide(e));
-    dividers.add(e);
+    final Expression ¢ = minus.level(e)%2==0 ? minus.peel(e) : subject.operand(minus.peel(e)).to(wizard.MINUS1);
+    all.add(Factor.divide(¢));
+    dividers.add(¢);
     return null;
   }
 
@@ -63,8 +66,9 @@ public class FactorsCollector {
 
   private Void addTimes(final Expression e) {
     assert e != null;
-    multipliers.add(e);
-    all.add(Factor.times(e));
+    final Expression ¢ = minus.level(e)%2==0 ? minus.peel(e) : subject.operand(minus.peel(e)).to(wizard.MINUS1);
+    multipliers.add(¢);
+    all.add(Factor.times(¢));
     return null;
   }
 

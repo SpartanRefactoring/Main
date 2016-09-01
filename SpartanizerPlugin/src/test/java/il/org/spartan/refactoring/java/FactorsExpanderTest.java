@@ -40,8 +40,8 @@ import il.org.spartan.*;
     azzert.that(FactorsExpander.simplify(i("a / (c /d)")), iz("a / c * d"));
   }
 
-  @Ignore("no similar case fo multification") @Test public void test08() {
-    azzert.that(FactorsExpander.simplify(i("a + -a")), iz("a - a"));
+  @Test public void test08() {
+    azzert.that(FactorsExpander.simplify(i("a * (b+c)")), iz("a * (b+c)"));
   }
 
   @Ignore("not implemented yet") @Test public void test09() {
