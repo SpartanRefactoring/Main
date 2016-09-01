@@ -96,7 +96,7 @@ public final class cleverStringTernarization extends Wring.ReplaceCurrentNode<Co
   private static int findCommonSuffix(String str1, String str2){
     int i=0;
     String sub = "";
-    for (;i<str1.length() && i<str2.length();i++){
+    for (;i<Math.max(str1.length(),str2.length());i++){
       sub = str2.substring(i);
       if(str1.endsWith(sub))
         break;
