@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
+import static il.org.spartan.refactoring.assemble.duplicate.*;
 import static il.org.spartan.refactoring.ast.extract.*;
-import static il.org.spartan.refactoring.create.duplicate.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
@@ -9,9 +9,9 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
+import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.builder.*;
-import il.org.spartan.refactoring.create.*;
 
 /** pushes down "<code>!</code>", the negation operator as much as possible,
  * using the de-Morgan and other simplification rules.

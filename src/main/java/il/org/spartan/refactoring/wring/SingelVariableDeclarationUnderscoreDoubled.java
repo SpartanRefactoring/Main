@@ -3,8 +3,8 @@ package il.org.spartan.refactoring.wring;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
-import il.org.spartan.refactoring.create.*;
 import il.org.spartan.refactoring.wring.Wring.*;
 
 /** A {@link Wring} to change name of unused variable to double underscore "__"
