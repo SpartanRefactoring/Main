@@ -13,7 +13,7 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2015-07-17 */
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public class sideEffectsTest {
-  @Test public void sideEffectArray1() {
+  @Test public void sideEffectArray1()  {
     azzert.that(sideEffects.free(e("new a[3]")), is(true));
   }
 

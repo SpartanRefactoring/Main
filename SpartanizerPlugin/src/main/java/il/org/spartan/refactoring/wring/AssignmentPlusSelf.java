@@ -13,7 +13,7 @@ import il.org.spartan.refactoring.wring.Wring.*;
 /** Replace <code>x = x + a </code> by <code> x += a </code>
  * @author Alex Kopzon
  * @since 2016 */
-public final class AssignmentPlusSelf extends ReplaceCurrentNode<Assignment> implements Kind.NoImpact {
+public final class AssignmentPlusSelf extends ReplaceCurrentNode<Assignment> implements Kind.SyntacticBaggage {
   @Override String description(final Assignment a) {
     return "Replace x = x + a; to x += a;";
   }

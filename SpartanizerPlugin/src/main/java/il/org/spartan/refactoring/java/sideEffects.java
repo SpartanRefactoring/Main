@@ -61,9 +61,7 @@ public enum sideEffects {
       case ARRAY_INITIALIZER:
         return free(((ArrayInitializer) e).expressions());
       default:
-        // TODO: Dor make this into an exception.
-        System.err.println("Missing handler for class: " + e.getClass().getSimpleName());
-        return false;
+        throw new RuntimeException("Missing handler for class: " + e.getClass().getSimpleName());
     }
   }
 

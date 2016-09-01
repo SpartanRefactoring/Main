@@ -380,6 +380,12 @@ public enum iz {
   public static boolean isOpAssign(final Assignment a) {
     return a != null && a.getOperator() == Assignment.Operator.ASSIGN;
   }
+  
+  /** @param a the assignment who'¢ operator we want to check
+   * @return true is the assignment'¢ operator is plus assign */
+  public static boolean isOpPlusAssign(final Assignment a) {
+    return a != null && a.getOperator() == Assignment.Operator.PLUS_ASSIGN;
+  }
 
   /** Determine whether a declaration is private
    * @param ¢ JD
