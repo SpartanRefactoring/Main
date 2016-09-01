@@ -4,6 +4,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.builder.*;
+import il.org.spartan.refactoring.create.*;
 import il.org.spartan.refactoring.java.*;
 
 /** reorder comparisons so that the specific value is placed on the right.

@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.ast;
 
 import static il.org.spartan.refactoring.ast.step.*;
-import static il.org.spartan.refactoring.builder.Restructure.*;
+import static il.org.spartan.refactoring.create.duplicate.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;

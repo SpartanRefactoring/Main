@@ -3,7 +3,6 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.refactoring.ast.extract.*;
 import static il.org.spartan.refactoring.ast.step.*;
 import static il.org.spartan.refactoring.engine.Plant.*;
-import static il.org.spartan.refactoring.engine.Restructure.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
@@ -11,7 +10,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.ast.*;
-import il.org.spartan.refactoring.builder.*;
+import il.org.spartan.refactoring.create.*;
 import il.org.spartan.refactoring.java.*;
 
 public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpression> implements Kind.DistributiveRefactoring {
@@ -27,7 +26,7 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
   }
 
   @SuppressWarnings("unchecked") private static <T extends Expression> T p(final ASTNode n, final T $) {
-    return !Precedence.Is.legal(Precedence.of(n)) || Precedence.of(n) >= Precedence.of($) ? $ : (T) parenthesize($);
+    return !Precedence.Is.legal(Precedence.of(n)) || Precedence.of(n) >= Precedence.of($) ? $ : (T) duplicate.parenthesize($);
   }
 
   static Expression pushdown(final ConditionalExpression e) {
@@ -85,7 +84,7 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
     if (!wizard.same(e1.getName(), e2.getName()))
       return null;
     final FieldAccess $ = wizard.duplicate(e1);
-    $.setExpression(parenthesize(subject.pair(e1.getExpression(), e2.getExpression()).toCondition(e.getExpression())));
+    $.setExpression(duplicate.parenthesize(subject.pair(e1.getExpression(), e2.getExpression()).toCondition(e.getExpression())));
     return $;
   }
 
@@ -117,7 +116,7 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
       if (receiver1 == null || !wizard.same(es1, es2))
         return null;
       final MethodInvocation $ = wizard.duplicate(e1);
-      $.setExpression(parenthesize(subject.pair(receiver1, receiver2).toCondition(e.getExpression())));
+      $.setExpression(duplicate.parenthesize(subject.pair(receiver1, receiver2).toCondition(e.getExpression())));
       return $;
     }
     if (es1.size() != es2.size())
