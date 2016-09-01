@@ -223,6 +223,14 @@ public class EnvironmentTest {
   
   //========================= use & define tests ===========================
   
+  @Test public static void define_0() {
+    String code = "";
+    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
+    final Set<Entry<String, Information>> $ = Environment.defines(u);
+    azzert.that($.contains("a"), is(false));
+    azzert.that($.isEmpty(), is(true));
+  }
+  
   @Ignore public static void define_1() {
     String code = "int a = 0;";
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
