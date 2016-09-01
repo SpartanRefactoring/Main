@@ -101,7 +101,7 @@ public enum Wrings {
     int previousKind = -1;
     for (final Expression e : es)
       if (e instanceof NumberLiteral || e instanceof CharacterLiteral) {
-        final int currentKind = new LiteralParser(e.toString()).type();
+        final int currentKind = new LiteralParser(e.toString()).type().ordinal();
         assert currentKind >= 0;
         if (previousKind == -1)
           previousKind = currentKind;
