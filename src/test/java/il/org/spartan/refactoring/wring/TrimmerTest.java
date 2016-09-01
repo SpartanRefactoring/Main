@@ -2096,7 +2096,17 @@ import il.org.spartan.refactoring.spartanizations.*;
   @Test public void issue74d() {
     trimming("int[] a = new int[] {2,3}").to(null);
   }
-
+  
+  @Test public void issue110_1() {
+    trimming("polite ? \"Eat your meal.\" :  \"Eat your meal, please\"") //
+    .to("\"Eat your meal\" + (polite ? \".\" : \", please\")");
+  }
+  
+  @Test public void issue110_2() {
+    trimming("polite ? \"Eat your meal.\" :  \"Eat your meal\"") //
+    .to("\"Eat your meal\" + (polite ? \".\" : \"\")");
+  }
+    
   @Test public void linearTransformation() {
     trimming("plain * the + kludge").to("the*plain+kludge");
   }
@@ -4045,4 +4055,5 @@ import il.org.spartan.refactoring.spartanizations.*;
   @Test public void xorSortClassConstantsAtEnd() {
     trimming("f(a,b,c,d) ^ BOB").to(null);
   }
+  
 }
