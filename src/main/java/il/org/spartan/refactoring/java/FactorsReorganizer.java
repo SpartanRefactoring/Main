@@ -1,9 +1,11 @@
 package il.org.spartan.refactoring.java;
-
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import java.util.*;
-
+import java.util.*;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.builder.*;
 import il.org.spartan.refactoring.engine.*;
 
@@ -28,18 +30,18 @@ public class FactorsReorganizer {
         return first;
       default:
         rest.add(0, first);
-        return subject.operands(rest).to(wizard.DIVIDE);
+        return subject.operands(rest).to(DIVIDE);
     }
   }
 
   private static Expression buildDividers(final List<Expression> es) {
     final Expression one = lisp.first(es).getAST().newNumberLiteral("1");
-    final Expression $ = subject.pair(one, lisp.first(es)).to(wizard.DIVIDE);
+    final Expression $ = subject.pair(one, lisp.first(es)).to(DIVIDE);
     if (es.size() == 1)
       return $;
     es.remove(0);
     es.add(0, $);
-    return subject.operands(es).to(wizard.DIVIDE);
+    return subject.operands(es).to(DIVIDE);
   }
 
   private static Expression buildMultipliers(final List<Expression> es) {
@@ -49,9 +51,9 @@ public class FactorsReorganizer {
       case 1:
         return lisp.first(es);
       case 2:
-        return subject.pair(lisp.first(es), lisp.second(es)).to(wizard.TIMES);
+        return subject.pair(lisp.first(es), lisp.second(es)).to(TIMES);
       default:
-        return subject.operands(es).to(wizard.TIMES);
+        return subject.operands(es).to(TIMES);
     }
   }
 }
