@@ -244,4 +244,26 @@ public interface wizard {
         return false;
     return true;
   }
+
+  /** Determine whether an InfixExpression.Operator is a comparison operator or not
+   * @param o JD
+   * @return true if one of {@link #InfixExpression.Operator.LESS}, {@link #InfixExpression.Operator.GREATER},
+   * {@link #InfixExpression.Operator.LESS_EQUALS}, {@link #InfixExpression.Operator.GREATER_EQUALS},
+   * {@link #InfixExpression.Operator.EQUALS}, {@link #InfixExpression.Operator.NOT_EQUALS},
+   * {@link #InfixExpression.Operator.CONDITIONAL_OR}, {@link #InfixExpression.Operator.CONDITIONAL_AND}
+   * and false otherwise
+   */
+  static boolean isComparisonOperator(InfixExpression.Operator o){
+    return in(o, LESS, GREATER, LESS_EQUALS, GREATER_EQUALS, EQUALS, //
+                 NOT_EQUALS, CONDITIONAL_OR, CONDITIONAL_AND);
+  }
+  
+  /** Determine whether an InfixExpression.Operator is a comparison operator or not
+   * @param o JD
+   * @return true if one of {@link #InfixExpression.Operator.XOR}, {@link #InfixExpression.Operator.OR},
+   * {@link #InfixExpression.Operator.AND}, and false otherwise
+   */
+  static boolean isBitwiseOperator(InfixExpression.Operator o){
+    return in(o, XOR, OR, AND);
+  }
 }

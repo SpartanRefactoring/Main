@@ -46,10 +46,10 @@ public final class DeclarationInitializerReturnUpdateAssignment extends Wring.Va
       return null;
     final Expression newReturnValue = assignmentAsExpression(a);
     final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
-    if (!i.canInlineInto(newReturnValue) || i.replacedSize(newReturnValue) - eliminationSaving(f) - size(newReturnValue) > 0)
+    if (!i.canInlineinto(newReturnValue) || i.replacedSize(newReturnValue) - eliminationSaving(f) - size(newReturnValue) > 0)
       return null;
     r.replace(a, newReturnValue, g);
-    i.inlineInto(newReturnValue);
+    i.inlineinto(newReturnValue);
     eliminate(f, r, g);
     return r;
   }

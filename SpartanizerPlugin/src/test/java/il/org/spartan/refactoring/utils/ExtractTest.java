@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.utils.Into.*;
+import static il.org.spartan.refactoring.utils.into.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
@@ -28,7 +28,7 @@ import il.org.spartan.refactoring.spartanizations.*;
   }
 
   @Test public void plus() {
-    azzert.that(extract.firstPlus(Into.e("a + 2 < b")), iz("a+2"));
+    azzert.that(extract.firstPlus(into.e("a + 2 < b")), iz("a+2"));
   }
 
   @Test public void prefixToPostfixDecrement() {
