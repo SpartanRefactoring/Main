@@ -918,6 +918,21 @@ public class TrimmerTest250 {
     trimming("a+=1 and b+=1;").to("a++ and b+=1;").to("a++ and b++;");
   }
 
+  @Test public void issue107j() {
+    trimming("a-=1;").to("a--;").to("--a;").to(null);
+  }
+  
+  @Test public void issue107k() {
+    trimming("for(int a ; a<10 ; a-=1){}").to("for(int a ; a<10 ; a--){}");
+  }
+  
+  @Test public void issue107l() {
+    trimming("a-=2;").to(null);
+  }
+  
+  @Test public void issue107m() {
+    trimming("while(x-=1){}").to("while(x--){}");
+  }
   
   // @formatter:off
   enum A { a1() {{ f(); }
