@@ -1,13 +1,14 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.step.*;
+import static il.org.spartan.refactoring.ast.step.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.wring.Wring.*;
 
 /** Replace <code> s.equals("s")</code> by <code>"s".equals(s)</code>

@@ -1,13 +1,13 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.step.*;
+import static il.org.spartan.refactoring.ast.step.*;
 
 import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.ast.*;
 
 /** convert
  *
@@ -52,13 +52,6 @@ public class BodeDeclarationRemoveModifiers<N extends BodyDeclaration> extends W
 
   private static Set<Modifier> matchess(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ps) {
     return matches(modifiers(¢), ps);
-  }
-
-  private static BodyDeclaration prune(final BodyDeclaration $, final Set<Predicate<Modifier>> ps) {
-    for (final Iterator<IExtendedModifier> ¢ = modifiers($).iterator(); ¢.hasNext();)
-      if (test(¢.next(), ps))
-        ¢.remove();
-    return $;
   }
 
   private static Set<Predicate<Modifier>> redundancies(final BodyDeclaration ¢) {

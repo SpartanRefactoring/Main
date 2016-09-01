@@ -7,7 +7,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.engine.*;
 
 public interface hop {
   static CompilationUnit compilationUnit(final ASTNode ¢) {

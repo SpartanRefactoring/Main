@@ -2,7 +2,8 @@ package il.org.spartan.refactoring.wring;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.engine.*;
 
 /** Removes the "value" member from annotations that only have a single member,
  * converting <code>@SuppressWarnings(value = "unchecked")</code> to
@@ -20,7 +21,7 @@ public final class AnnotationDiscardValueName //
     if (p == null || !"value".equals(p.getName().toString()))
       return null;
     final SingleMemberAnnotation $ = a.getAST().newSingleMemberAnnotation();
-    $.setTypeName(il.org.spartan.refactoring.utils.make.newSimpleName(a, a.getTypeName().getFullyQualifiedName()));
+    $.setTypeName(il.org.spartan.refactoring.engine.make.newSimpleName(a, a.getTypeName().getFullyQualifiedName()));
     $.setValue(wizard.duplicate(p.getValue()));
     return $;
   }

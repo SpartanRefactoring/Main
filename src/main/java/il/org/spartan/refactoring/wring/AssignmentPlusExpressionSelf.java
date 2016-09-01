@@ -6,7 +6,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.builder.*;
 
 /** convert
  *
@@ -47,13 +48,5 @@ public class AssignmentPlusExpressionSelf extends Wring.ReplaceCurrentNode<Assig
 
   private static boolean isInfixPlus(final Expression $) {
     return isInfixPlus(az.infixExpression($));
-  }
-
-  private static boolean isInfixPlus(final InfixExpression $) {
-    return $ != null && $
-        .getOperator() != PLUS /* && (az.infixExpression($.getLeftOperand()) ==
-                                * null || isInfixPlus($.getLeftOperand())) &&
-                                * (az.infixExpression($.getRightOperand()) ==
-                                * null || isInfixPlus($.getRightOperand())) */;
   }
 }

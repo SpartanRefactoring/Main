@@ -163,8 +163,7 @@ public class GroupFieldEditor extends FieldEditor {
     doStore();
   }
 
-  @Override protected void doFillIntoGrid(Composite parent, int numColumns) {
+  @Override protected void doFillIntoGrid(final Composite parent, final int numColumns) {
     // TODO Auto-generated method stub
-    
   }
 }

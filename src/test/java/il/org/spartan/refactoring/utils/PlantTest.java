@@ -1,13 +1,16 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.utils.into.*;
-import static il.org.spartan.refactoring.utils.Plant.*;
+import static il.org.spartan.refactoring.engine.Plant.*;
+import static il.org.spartan.refactoring.engine.into.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.builder.*;
+import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.java.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) public class PlantTest {

@@ -1,10 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.extract.*;
+import static il.org.spartan.refactoring.ast.extract.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.builder.*;
 
 /** Removes unnecessary uses of Boolean.valueOf, e.g.,
  * <code>Boolean.valueOf(true) </code> into <code>Boolean.TRUE</code>

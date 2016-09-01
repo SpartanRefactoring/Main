@@ -9,7 +9,6 @@ public class LiteralParser {
    * @author Yossi Gil
    * @since 2015-08-30
    * @see LiteralParser#persuation */
-
   final String literal;
 
   /** Instantiates this class.

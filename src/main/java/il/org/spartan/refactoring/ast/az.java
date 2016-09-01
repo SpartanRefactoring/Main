@@ -24,7 +24,7 @@ public enum az {
    * @return parameter thus converted, or <code><b>null</b> if the conversion is
    *         not possible for it */
   public static InfixExpression andOrOr(final Expression ¢) {
-    return !iz.infix(¢) || !iz.deMorgan(infixExpression(¢).getOperator()) ? null : infixExpression(¢);
+    return !iz.infixExpression(¢) || !iz.deMorgan(infixExpression(¢).getOperator()) ? null : infixExpression(¢);
   }
 
   /** Convert, is possible, an {@link ASTNode} to an {@link Assignment}

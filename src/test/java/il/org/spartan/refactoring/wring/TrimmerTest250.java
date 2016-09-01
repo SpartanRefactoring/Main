@@ -1,8 +1,8 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.utils.Restructure.*;
-import static il.org.spartan.refactoring.utils.iz.*;
+import static il.org.spartan.refactoring.ast.iz.*;
+import static il.org.spartan.refactoring.engine.Restructure.*;
 import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -10,7 +10,8 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.engine.*;
 
 /** * Unit tests for the nesting class Unit test for the containing class. Note
  * our naming convention: a) test methods do not use the redundant "test"

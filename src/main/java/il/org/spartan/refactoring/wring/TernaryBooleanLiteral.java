@@ -1,11 +1,12 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.extract.*;
+import static il.org.spartan.refactoring.ast.extract.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.builder.*;
 
 /** <pre>
  * a ? b : c
@@ -106,7 +107,7 @@ public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<Condit
     final boolean takeThen = !iz.booleanLiteral(then);
     final Expression other = takeThen ? then : elze;
     final boolean literal = az.booleanLiteral(takeThen ? elze : then).booleanValue();
-    return subject.pair(literal != takeThen ? main : il.org.spartan.refactoring.utils.make.notOf(main), other)
+    return subject.pair(literal != takeThen ? main : il.org.spartan.refactoring.engine.make.notOf(main), other)
         .to(literal ? CONDITIONAL_OR : CONDITIONAL_AND);
   }
 

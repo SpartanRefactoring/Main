@@ -1,8 +1,8 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.utils.ExpressionComparator.*;
-import static il.org.spartan.refactoring.utils.into.*;
+import static il.org.spartan.refactoring.engine.ExpressionComparator.*;
+import static il.org.spartan.refactoring.engine.into.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.mockito.Mockito.*;
 
@@ -11,6 +11,8 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.engine.*;
 
 /** A test suite for class {@link step}
  * @author Yossi Gil

@@ -2,7 +2,7 @@ package il.org.spartan.refactoring.java;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.ast.*;
 
 class Term {
   private final boolean negative;

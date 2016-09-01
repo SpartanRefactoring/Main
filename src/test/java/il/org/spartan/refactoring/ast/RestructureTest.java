@@ -5,7 +5,8 @@ import static il.org.spartan.azzert.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.builder.Restructure;
+import il.org.spartan.refactoring.engine.*;
 
 @SuppressWarnings("static-method") //
 public class RestructureTest {

@@ -9,7 +9,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.engine.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -209,20 +209,27 @@ public enum iz {
         null);
   }
 
+  public static boolean infixDivide(final Expression e) {
+    return step.operator(az.infixExpression(e)) == DIVIDE;
+  }
+
   /** @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an infix
    *         expression. */
-  public static boolean infix(final ASTNode n) {
+  public static boolean infixExpression(final ASTNode n) {
     return is(n, INFIX_EXPRESSION);
   }
 
   public static boolean infixMinus(final Expression e) {
     return step.operator(az.infixExpression(e)) == wizard.MINUS2;
   }
-
   public static boolean infixPlus(final Expression e) {
     return step.operator(az.infixExpression(e)) == wizard.PLUS2;
   }
+  public static boolean infixTimes(final Expression e) {
+    return step.operator(az.infixExpression(e)) == TIMES;
+  }
+
 
   public static boolean is(final ASTNode ¢, final int... types) {
     return ¢ != null && lisp.intIsIn(¢.getNodeType(), types);
@@ -720,4 +727,5 @@ public enum iz {
         return true;
     return false;
   }
+
 }

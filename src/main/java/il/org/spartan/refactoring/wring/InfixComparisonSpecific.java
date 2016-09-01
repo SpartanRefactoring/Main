@@ -2,8 +2,8 @@ package il.org.spartan.refactoring.wring;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.java.*;
-import il.org.spartan.refactoring.utils.*;
 
 /** reorder comparisons so that the specific value is placed on the right.
  * Specific value means a literal, or any of the two keywords
@@ -33,7 +33,7 @@ public final class InfixComparisonSpecific extends Wring.ReplaceCurrentNode<Infi
   }
 
   @Override Expression replacement(final InfixExpression e) {
-    return il.org.spartan.refactoring.utils.make.conjugate(e);
+    return il.org.spartan.refactoring.engine.make.conjugate(e);
   }
 
   @Override public boolean scopeIncludes(final InfixExpression e) {

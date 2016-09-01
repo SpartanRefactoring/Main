@@ -6,7 +6,8 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.engine.*;
 
 /** *An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -113,7 +114,7 @@ public enum Precedence {
    * @param n JD
    * @return precedence of the parameter */
   public static int of(final ASTNode n) {
-    return !il.org.spartan.refactoring.utils.iz.expression(n) ? UNDEFINED : Precedence.of(az.expression(n));
+    return !iz.expression(n) ? UNDEFINED : Precedence.of(az.expression(n));
   }
 
   /** Determine the precedence of the operator present on an {@link Expression}

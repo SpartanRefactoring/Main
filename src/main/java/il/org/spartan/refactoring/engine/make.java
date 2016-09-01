@@ -1,0 +1,79 @@
+package il.org.spartan.refactoring.engine;
+
+import static il.org.spartan.refactoring.ast.iz.*;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
+
+import java.util.*;
+
+import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.builder.*;
+import il.org.spartan.refactoring.wring.*;
+
+public interface make {
+  /** @param ¢ JD
+   * @return parameter, but logically negated and simplified */
+  static Expression notOf(final Expression ¢) {
+    final PrefixExpression $ = subject.operand(¢).to(NOT);
+    final Expression $$ = PrefixNotPushdown.simplifyNot($);
+    return $$ == null ? $ : $$;
+  }
+
+  /** @param ¢ the expression to return in the return statement
+   * @return new return statement */
+  static ThrowStatement throwOf(final Expression ¢) {
+    return subject.operand(¢).toThrow();
+  }
+
+  static Expression minusOf(final Expression e) {
+    return isLiteralZero(e) ? e : subject.operand(e).to(wizard.MINUS1);
+  }
+
+  /** Create a new {@link SimpleName} instance at the AST of the parameter
+   * @param n JD
+   * @param newName the name that the returned value shall bear
+   * @return a new {@link SimpleName} instance at the AST of the parameter */
+  static SimpleName newSimpleName(final ASTNode n, final String newName) {
+    return n.getAST().newSimpleName(newName);
+  }
+
+  static ParenthesizedExpression parethesized(final Expression e) {
+    final ParenthesizedExpression $ = e.getAST().newParenthesizedExpression();
+    final Object wizard;
+    $.setExpression(step.parent(e) == null ? e : wizard.duplicate(e));
+    return $;
+  }
+
+  static NumberLiteral newLiteral(final ASTNode n, final String token) {
+    final NumberLiteral $ = n.getAST().newNumberLiteral();
+    $.setToken(token);
+    return $;
+  }
+
+  /** Swap the order of the left and right operands to an expression, changing
+   * the operator if necessary.
+   * @param ¢ JD
+   * @return a newly created expression with its operands thus swapped.
+   * @throws IllegalArgumentException when the parameter has extra operands.
+   * @see InfixExpression#hasExtendedOperands */
+  static InfixExpression conjugate(final InfixExpression ¢) {
+    if (¢.hasExtendedOperands())
+      throw new IllegalArgumentException(¢ + ": flipping undefined for an expression with extra operands ");
+    return subject.pair(step.right(¢), step.left(¢)).to(wizard.conjugate(¢.getOperator()));
+  }
+
+  static Expression minus(final Expression e, final NumberLiteral l) {
+    return l == null ? minusOf(e) //
+        : newLiteral(l, isLiteralZero(l) ? "0" : Restructure.signAdjust(l.getToken())) //
+    ;
+  }
+
+  static List<Expression> minus(final List<Expression> es) {
+    final List<Expression> $ = new ArrayList<>();
+    $.add(lisp.first(es));
+    for (final Expression e : lisp.rest(es))
+      $.add(minusOf(e));
+    return $;
+  }
+}

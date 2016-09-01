@@ -7,9 +7,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
 import il.org.spartan.*;
-import il.org.spartan.refactoring.java.*;
+import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.spartanizations.*;
-import il.org.spartan.refactoring.utils.*;
 
 public class TrimmerTestsUtils {
   static class Operand extends Wrapper<String> {

@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 
 import il.org.spartan.*;
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.engine.*;
 
 /** An abstract representation of our test suite, which is represented in
  * directory tree.
