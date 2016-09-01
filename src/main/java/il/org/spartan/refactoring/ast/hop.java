@@ -99,4 +99,25 @@ public interface hop {
         return az.methodDeclaration($);
     return null;
   }
+
+  static VariableDeclarationFragment findDefinition(final VariableDeclarationStatement s, final SimpleName n) {
+    return hop.findVariableDeclarationFragment(step.fragments(s), n);
+  }
+
+  static VariableDeclarationFragment findVariableDeclarationFragment(final List<VariableDeclarationFragment> fs, final SimpleName ¢) {
+    for (final VariableDeclarationFragment $ : fs)
+      if (wizard.same(¢, $.getName()))
+        return $;
+    return null;
+  }
+
+  /** @param n the node from which to extract the proper fragment
+   * @param e the name by which to look for the fragment
+   * @return fragment if such with the given name exists or null otherwise (or
+   *         if ¢ or name are null) */
+  // TODO this seems a bug
+  static VariableDeclarationFragment getDefinition(final ASTNode n, final Expression e) {
+    return hasNull(n, e) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || e.getNodeType() != SIMPLE_NAME ? null
+        : findDefinition((VariableDeclarationStatement) n, (SimpleName) e);
+  }
 }

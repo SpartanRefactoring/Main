@@ -1,4 +1,4 @@
-package il.org.spartan.refactoring.engine;
+package il.org.spartan.refactoring.utils;
 
 /** Pun intended: <code>tide.WHITES</code>, <code>tide.clean(s)</code>, cleans
  * all <code>tide.WHITES</code> */

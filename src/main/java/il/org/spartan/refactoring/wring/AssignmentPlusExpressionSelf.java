@@ -39,7 +39,7 @@ public class AssignmentPlusExpressionSelf extends Wring.ReplaceCurrentNode<Assig
     for (final Expression ¢ : $)
       if (e.toString().equals(¢.toString())) {
         $.remove(¢);
-        final Assignment r = wizard.duplicate(a);
+        final Assignment r = duplicate.of(a);
         r.setOperator(Assignment.Operator.PLUS_ASSIGN);
         r.setRightHandSide($.size() <= 1 ? $.get(0) : subject.operands($).to(PLUS));
         return r;

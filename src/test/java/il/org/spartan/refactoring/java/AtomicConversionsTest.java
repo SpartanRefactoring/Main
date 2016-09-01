@@ -8,7 +8,7 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@SuppressWarnings({ "javadoc", "static-method" }) //
+@SuppressWarnings({ "javadoc" }) //
 public class AtomicConversionsTest {
   private byte b = (byte) hashCode();
   private final boolean b1 = equals(getClass());

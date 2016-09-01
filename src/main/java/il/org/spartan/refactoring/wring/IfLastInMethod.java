@@ -45,8 +45,8 @@ public final class IfLastInMethod extends Wring<IfStatement> implements Kind.Can
     return b == null || !lastIn(s, statements(b)) || !(b.getParent() instanceof MethodDeclaration) ? null : new Rewrite(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Wrings.insertAfter(s, extract.statements(step.then(s)), r, g);
-        final IfStatement newIf = wizard.duplicate(s);
-        newIf.setExpression(wizard.duplicate(make.notOf(s.getExpression())));
+        final IfStatement newIf = duplicate.of(s);
+        newIf.setExpression(duplicate.of(make.notOf(s.getExpression())));
         newIf.setThenStatement(s.getAST().newReturnStatement());
         newIf.setElseStatement(null);
         r.replace(s, newIf, g);

@@ -9,6 +9,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.engine.*;
+import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.*;
 
 /** @author Yossi Gil

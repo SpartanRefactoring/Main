@@ -40,16 +40,16 @@ public class Plant {
   }
 
   private boolean noParenthesisRequiredIn(final ASTNode host) {
-    return Precedence.greater(host, inner) || Precedence.equal(host, inner) && !Precedence.nonAssociative(host);
+    return precedence.greater(host, inner) || precedence.equal(host, inner) && !wizard.nonAssociative(host);
   }
 
   private ParenthesizedExpression parenthesize(final Expression e) {
     final ParenthesizedExpression $ = inner.getAST().newParenthesizedExpression();
-    $.setExpression(wizard.duplicate(e));
+    $.setExpression(duplicate.of(e));
     return $;
   }
 
   public Expression intoLeft(final InfixExpression host) {
-    return Precedence.greater(host, inner) || Precedence.equal(host, inner) || simple(inner) ? inner : parenthesize(inner);
+    return precedence.greater(host, inner) || precedence.equal(host, inner) || simple(inner) ? inner : parenthesize(inner);
   }
 }

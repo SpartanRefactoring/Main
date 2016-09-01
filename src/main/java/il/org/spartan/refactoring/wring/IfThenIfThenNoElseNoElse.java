@@ -33,7 +33,7 @@ public final class IfThenIfThenNoElseNoElse extends Wring<IfStatement> implement
     final IfStatement then = az.ifStatement(extract.singleThen(s));
     final InfixExpression e = subject.pair(s.getExpression(), then.getExpression()).to(CONDITIONAL_AND);
     r.replace(s.getExpression(), e, g);
-    r.replace(then, wizard.duplicate(step.then(then)), g);
+    r.replace(then, duplicate.of(step.then(then)), g);
   }
 
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
