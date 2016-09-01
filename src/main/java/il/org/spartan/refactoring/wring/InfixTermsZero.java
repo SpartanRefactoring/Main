@@ -31,6 +31,6 @@ public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression> im
       if (!iz.literal0(¢))
         $.add(¢);
     return $.size() == es.size() ? null
-        : $.isEmpty() ? wizard.duplicate(lisp.first(es)) : $.size() == 1 ? wizard.duplicate(lisp.first($)) : subject.operands($).to(PLUS);
+        : $.isEmpty() ? wizard.duplicate(lisp.first(es)) : $.size() != 1?subject.operands($).to(PLUS):wizard.duplicate(lisp.first($));
   }
 }

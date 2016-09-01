@@ -24,13 +24,10 @@ public class TermsReorganizer {
   private static Expression buildMinus(final Expression first, final List<Expression> rest) {
     if (first == null)
       return buildMinus(rest);
-    switch (rest.size()) {
-      case 0:
-        return first;
-      default:
-        rest.add(0, first);
-        return subject.operands(rest).to(wizard.MINUS2);
-    }
+    if (rest.isEmpty())
+      return first;
+    rest.add(0, first);
+    return subject.operands(rest).to(wizard.MINUS2);
   }
 
   private static Expression buildMinus(final List<Expression> es) {

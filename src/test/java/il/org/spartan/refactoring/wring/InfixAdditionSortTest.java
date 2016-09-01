@@ -56,16 +56,16 @@ public class InfixAdditionSortTest {
   }
 
   @Test public void test07() {
-    assert null == new InfixAdditionSubtractionExpand().replacement(INPUT);
+    assert new InfixAdditionSubtractionExpand().replacement(INPUT) == null;
     assert new InfixAdditionSubtractionExpand().replacement(INPUT) == null;
   }
 
   @Test public void test08() {
     final InfixAdditionSubtractionExpand e = new InfixAdditionSubtractionExpand();
-    assert null != e;
+    assert e != null;
     assert !TermsCollector.isLeafTerm(INPUT);
-    assert null != TermsExpander.simplify(INPUT);
-    assert null == e.replacement(INPUT);
+    assert TermsExpander.simplify(INPUT) != null;
+    assert e.replacement(INPUT) == null;
     assert e != null;
     assert !TermsCollector.isLeafTerm(INPUT);
     assert TermsExpander.simplify(INPUT) != null;
@@ -90,8 +90,8 @@ public class InfixAdditionSortTest {
 
   @Test public void test11() {
     final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
-    assert null != i;
-    assert null != INPUT;
+    assert i != null;
+    assert INPUT != null;
     assert wizard.same(i, INPUT);
     assert i != null;
     assert INPUT != null;
@@ -100,21 +100,14 @@ public class InfixAdditionSortTest {
 
   @Test public void test12() {
     final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
-    assert null != i;
-    assert !(i == INPUT);
-    assert INPUT != null;
     assert i != null;
-    assert i != INPUT;
-    assert INPUT != null;
     azzert.that(tide.clean("" + i), is(tide.clean("" + INPUT)));
   }
 
   @Test public void test13() {
     final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
-    assert null != i;
-    assert !(i == INPUT);
-    assert i.getNodeType() == INPUT.getNodeType();
     assert i != null;
+    assert i.getNodeType() == INPUT.getNodeType();
     assert i != INPUT;
     assert i.getNodeType() == INPUT.getNodeType();
   }

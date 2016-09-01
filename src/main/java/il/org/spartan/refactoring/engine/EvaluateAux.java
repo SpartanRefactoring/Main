@@ -66,12 +66,9 @@ public class EvaluateAux {
     boolean isLong = false;
     final List<Expression> operands = extract.allOperands(e);
     isLong = isCompitable(operands.get(0)) && (isLong(operands.get(0)) || isMinusLong(operands.get(0)));
-    for (final Expression ¢ : operands) {
-      if (!isCompitable(¢))
-        return EvaluateAux.Type.BAD;
-      if (!isCompitable(¢) && (EvaluateAux.isDouble(¢) || isMinusDouble(¢)))
-        return EvaluateAux.Type.BAD;
-    }
+    for (final Expression ¢ : operands) 
+    if (!isCompitable(¢) || !isCompitable(¢) && (EvaluateAux.isDouble(¢) || isMinusDouble(¢)))
+    return EvaluateAux.Type.BAD;
     return isLong ? EvaluateAux.Type.LONG : EvaluateAux.Type.INT;
   }
 
@@ -81,15 +78,14 @@ public class EvaluateAux {
   }
 
   public static double extractDouble(final Expression e) {
-    if (isLong(e)) {
-      final String token = ((NumberLiteral) e).getToken();
-      if (!(e instanceof PrefixExpression))
-        return Double.parseDouble(token.substring(0, token.length() - 1));
-      final String negToken = ((NumberLiteral) ((PrefixExpression) e).getOperand()).getToken();
-      return -1 * Double.parseDouble(negToken.substring(0, negToken.length() - 1));
-    }
-    return !(e instanceof PrefixExpression) ? Double.parseDouble(((NumberLiteral) e).getToken())
-        : -1 * Double.parseDouble(((NumberLiteral) ((PrefixExpression) e).getOperand()).getToken());
+    if (!isLong(e))
+      return !(e instanceof PrefixExpression) ? Double.parseDouble(((NumberLiteral) e).getToken())
+          : -1 * Double.parseDouble(((NumberLiteral) ((PrefixExpression) e).getOperand()).getToken());
+    final String token = ((NumberLiteral) e).getToken();
+    if (!(e instanceof PrefixExpression))
+    return Double.parseDouble(token.substring(0, token.length() - 1));
+    final String negToken = ((NumberLiteral) ((PrefixExpression) e).getOperand()).getToken();
+    return -1 * Double.parseDouble(negToken.substring(0, negToken.length() - 1));
   }
 
   public static long extractLong(final Expression e) {

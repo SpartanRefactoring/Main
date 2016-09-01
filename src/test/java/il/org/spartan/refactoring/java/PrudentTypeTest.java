@@ -498,7 +498,7 @@ public class PrudentTypeTest {
     }
 
     @Test public void axiomInt2() {
-      azzert.that(axiom('a' + 4), is(INT));
+      azzert.that(axiom(4 + 'a'), is(INT));
     }
 
     @Test public void axiomLong() {
@@ -518,7 +518,7 @@ public class PrudentTypeTest {
     }
 
     @SuppressWarnings("unused") @Test public void axiomBoolean2() {
-      azzert.that(axiom(true || false && true), is(BOOLEAN));
+      azzert.that(axiom(true || b1 && b2), is(BOOLEAN));
     }
 
     @SuppressWarnings("unused") @Test public void axiomBoolean3() {
@@ -542,11 +542,11 @@ public class PrudentTypeTest {
     }
 
     @Test public void axiomExpression1() {
-      azzert.that(axiom(7 + 3 / 2.), is(DOUBLE));
+      azzert.that(axiom(3 / 2. + 7), is(DOUBLE));
     }
 
     @Test public void axiomExpression2() {
-      azzert.that(axiom(7 + 3 / 2l), is(LONG));
+      azzert.that(axiom(3 / 2l + 7), is(LONG));
     }
 
     @Test public void axiomExpression3() {
@@ -558,23 +558,23 @@ public class PrudentTypeTest {
     }
 
     @Test public void axiomExpression5() {
-      azzert.that(axiom(1. + 2 * 3 / 4 - 5), is(DOUBLE));
+      azzert.that(axiom(2 * 3 / 4 + 1. - 5), is(DOUBLE));
     }
 
     @Test public void axiomExpression6() {
-      azzert.that(axiom((1. + 2 * 3 / 4 - 5) % 4), is(DOUBLE));
+      azzert.that(axiom((2 * 3 / 4 + 1. - 5) % 4), is(DOUBLE));
     }
 
     @Test public void axiomExpression7() {
-      azzert.that(axiom((1 + 2 * 3 / 4 - 5) % 4), is(INT));
+      azzert.that(axiom((2 * 3 / 4 + 1 - 5) % 4), is(INT));
     }
 
     @Test public void axiomExpression8() {
-      azzert.that(axiom((1L + 2 * 3 / 4 - 5) % 4), is(LONG));
+      azzert.that(axiom((2 * 3 / 4 + 1L - 5) % 4), is(LONG));
     }
 
     @Test public void axiomExpression9() {
-      azzert.that(axiom(-1.0 / -2 * -3 / -4 * -5 * -6 / -7 / -8 / -9), is(DOUBLE));
+      azzert.that(axiom(-1.0 / 2 * 3 / 4 * 5 * 6 / 7 / 8 / 9), is(DOUBLE));
     }
 
     @Test public void axiomExpression10() {
@@ -670,16 +670,16 @@ public class PrudentTypeTest {
     }
 
     /** Make sure the compiler cannot optimize this out */
-    private final byte b = (byte) (0xDEADdeaf ^ hashCode());
+    private final byte b = (byte) (hashCode() ^ 0xDEADdeaf);
     private final boolean b1 = b > (byte) hashCode();
     private final boolean b2 = (b & (byte) hashCode() << 3) < 0;
-    private final char c1 = (char) (hashCode() << 7 ^ hashCode());
+    private final char c1 = (char) (hashCode() ^ hashCode() << 7);
     private final char c2 = (char) (c1 << 13 ^ hashCode());
     private double d = c1 / c2;
     private int i = (int) d;
-    private float f = (float) (0xCABAC0DAABBAL * i / b * d - (c1 ^ c2));
-    private long l = (long) (f-- * ++d);
-    private short s = (short) ((l ^ i) * ((long) c1 ^ c2 << 0xFF) / d);
+    private float f = (float) (0xCABAC0DAABBAL * d * i / b - (c1 ^ c2));
+    private long l = (long) (++d * f--);
+    private short s = (short) ((i ^ l) * ((long) c1 ^ c2 << 0xFF) / d);
 
     @Test public void OnaryPlusMinusSemantics09() {
       azzert.that(PrudentType.axiom(-c1), is(PrudentType.INT));

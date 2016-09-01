@@ -87,19 +87,9 @@ public enum iz {
    * @return <code><b>true</b></code> <i>iff</i> one of the parameters is a
    *         conditional or parenthesized conditional expression */
   public static boolean conditional(final Expression... es) {
-    for (final Expression e : es) {
-      if (e == null)
-        continue;
-      switch (e.getNodeType()) {
-        default:
-          break;
-        case CONDITIONAL_EXPRESSION:
-          return true;
-        case PARENTHESIZED_EXPRESSION:
-          if (((ParenthesizedExpression) e).getExpression().getNodeType() == CONDITIONAL_EXPRESSION)
-            return true;
-      }
-    }
+    for (final Expression e : es) 
+      if (is(extract.core(e), CONDITIONAL_EXPRESSION))
+        return true;
     return false;
   }
 

@@ -128,21 +128,17 @@ public enum PrudentType {
     }
   }
 
-  private static PrudentType prudentType(final MethodInvocation e) {
-    return "toString".equals(e.getName() + "") ? STRING : NOTHING;
+  private static PrudentType prudentType(final MethodInvocation i) {
+    return "toString".equals(i.getName() + "") ? STRING : NOTHING;
   }
 
-  private static PrudentType prudentType(final NumberLiteral e) {
-    final String ¢ = e.getToken();
-    if (¢.matches("[0-9]+"))
-      return INT;
-    if (¢.matches("[0-9]+[l,L]"))
-      return LONG;
-    if (¢.matches("[0-9]+\\.[0-9]*[f,F]") || ¢.matches("[0-9]+[f,F]"))
-      return FLOAT;
-    if (¢.matches("[0-9]+\\.[0-9]*[d,D]?") || ¢.matches("[0-9]+[d,D]"))
-      return DOUBLE;
-    return NUMERIC;
+  private static PrudentType prudentType(final NumberLiteral l) {
+    // TODO: Dor use TypeLiteral instead.
+    final String ¢ = l.getToken();
+    return ¢.matches("[0-9]+") ? INT
+        : ¢.matches("[0-9]+[l,L]") ? LONG
+            : ¢.matches("[0-9]+\\.[0-9]*[f,F]") || ¢.matches("[0-9]+[f,F]") ? FLOAT
+                : ¢.matches("[0-9]+\\.[0-9]*[d,D]?") || ¢.matches("[0-9]+[d,D]") ? DOUBLE : NUMERIC;
   }
 
   private static PrudentType prudentType(final CastExpression e) {
@@ -150,9 +146,7 @@ public enum PrudentType {
   }
 
   private static PrudentType prudentType(final PrefixExpression e, final PrudentType t1) {
-    final PrefixExpression.Operator o = e.getOperator();
-    final PrudentType ¢ = t1 != null ? t1 : prudent(e.getOperand());
-    return ¢.under(o);
+    return (t1 != null ? t1 : prudent(e.getOperand())).under(e.getOperator());
   }
 
   private static PrudentType prudentType(final InfixExpression e, final List<PrudentType> ts) {
@@ -160,12 +154,12 @@ public enum PrudentType {
     final List<Expression> es = extract.allOperands(e);
     assert es.size() >= 2;
     final List<PrudentType> ¢ = new ArrayList<>();
-    if (ts.size() == es.size())
-      for (int i = 0; i < ts.size(); ++i)
-        ¢.add(i, ts.get(i) != null ? ts.get(i) : prudent(es.get(i)));
-    else
+    if (ts.size() != es.size())
       for (int i = 0; i < es.size(); ++i)
         ¢.add(i, prudent(es.get(i)));
+    else
+      for (int i = 0; i < ts.size(); ++i)
+        ¢.add(i, ts.get(i) != null ? ts.get(i) : prudent(es.get(i)));
     PrudentType $ = lisp.first(¢).underBinaryOperator(o, lisp.second(¢));
     lisp.chop(lisp.chop(¢));
     while (!¢.isEmpty()) {
@@ -176,32 +170,28 @@ public enum PrudentType {
   }
 
   private static PrudentType prudentType(final PostfixExpression e, final PrudentType t1) {
-    final PrudentType ¢ = t1 != null ? t1 : prudent(e.getOperand());
-    return ¢.asNumeric(); // see testInDecreamentSemantics
+    return (t1 != null ? t1 : prudent(e.getOperand())).asNumeric(); // see
+                                                                    // testInDecreamentSemantics
   }
 
   private static PrudentType prudentType(final ParenthesizedExpression e, final PrudentType t) {
     return t != null ? t : prudent(extract.core(e));
   }
 
-  private static PrudentType prudentType(final ClassInstanceCreation e) {
-    return typeSwitch("" + e.getType(), NONNULL);
+  private static PrudentType prudentType(final ClassInstanceCreation c) {
+    return typeSwitch("" + c.getType(), NONNULL);
   }
 
   private static PrudentType prudentType(final ConditionalExpression e, final PrudentType t1, final PrudentType t2) {
-    final PrudentType ¢1 = t1 != null ? t1 : prudent(e.getThenExpression());
+    final PrudentType $ = t1 != null ? t1 : prudent(e.getThenExpression());
     final PrudentType ¢2 = t2 != null ? t2 : prudent(e.getElseExpression());
-    if (¢1 == ¢2)
-      return ¢1;
     // If we don't know much about one operand but do know enough about the
     // other, we can still learn something
-    if (¢1.isNoInfo() || ¢2.isNoInfo())
-      return conditionalWithNoInfo(¢1.isNoInfo() ? ¢2 : ¢1);
-    if (¢1.isIntegral() && ¢2.isIntegral())
-      return ¢1.underIntegersOnlyOperator(¢2);
-    if (¢1.isNumeric() && ¢2.isNumeric())
-      return ¢1.underNumericOnlyOperator(¢2);
-    return NOTHING;
+    return $ == ¢2 ? $
+        : $.isNoInfo() || ¢2.isNoInfo() ? conditionalWithNoInfo($.isNoInfo() ? ¢2 : $) //
+            : $.isIntegral() && ¢2.isIntegral() ? $.underIntegersOnlyOperator(¢2) //
+                : $.isNumeric() && ¢2.isNumeric() ? $.underNumericOnlyOperator(¢2)//
+                    : NOTHING; //
   }
 
   private static PrudentType typeSwitch(final String s, final PrudentType $) {
@@ -313,26 +303,18 @@ public enum PrudentType {
    *         {@link #INTEGRAL} or {@link BOOLEANINTEGRAL}, in case it cannot
    *         decide */
   private PrudentType underBitwiseOperation(final PrudentType k) {
-    if (this == k)
-      return k;
-    if (isIntegral() && k.isIntegral())
-      return underIntegersOnlyOperator(k);
-    if (isNoInfo())
-      return k.underBitwiseOperationNoInfo();
-    if (k.isNoInfo())
-      return underBitwiseOperationNoInfo();
-    return BOOLEANINTEGRAL;
+    return k == this ? k
+        : isIntegral() && k.isIntegral() ? underIntegersOnlyOperator(k)
+            : isNoInfo() ? k.underBitwiseOperationNoInfo() //
+                : k.isNoInfo() ? underBitwiseOperationNoInfo() //
+                    : BOOLEANINTEGRAL;
   }
 
   /** @return one of {@link #BOOLEAN}, {@link #INT}, {@link #LONG},
    *         {@link #INTEGRAL} or {@link BOOLEANINTEGRAL}, in case it cannot
    *         decide */
   private PrudentType underBitwiseOperationNoInfo() {
-    if (this == BOOLEAN)
-      return BOOLEAN;
-    if (isIntegral())
-      return this == LONG ? LONG : INTEGRAL;
-    return BOOLEANINTEGRAL;
+    return this == BOOLEAN ? BOOLEAN : !isIntegral() ? BOOLEANINTEGRAL : this == LONG ? LONG : INTEGRAL;
   }
 
   /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE},
@@ -340,12 +322,8 @@ public enum PrudentType {
    *         {@link #ALPHANUMERIC}, in case it cannot decide */
   private PrudentType underPlus(final PrudentType k) {
     // addition with NULL or String must be a String
-    if (in(STRING, this, k) || in(NULL, this, k))
-      return STRING;
     // not String, null or numeric, so we can't determine anything
-    if (!isNumeric() && !k.isNumeric())
-      return ALPHANUMERIC;
-    return underNumericOnlyOperator(k);
+    return in(STRING, this, k) || in(NULL, this, k) ? STRING : !isNumeric() && !k.isNumeric() ? ALPHANUMERIC : underNumericOnlyOperator(k);
   }
 
   /** @return one of {@link #INT}, {@link #LONG}, {@link #INTEGRAL},
@@ -360,28 +338,23 @@ public enum PrudentType {
     assert $ != null;
     assert $.isNumeric() : this + ": is for some reason not numeric ";
     // Double contaminates Numeric
-    if (in(DOUBLE, $, this))
-      return DOUBLE;
     // Numeric contaminates Float
-    if (in(NUMERIC, $, this))
-      return NUMERIC;
     // FLOAT contaminates Integral
-    if (in(FLOAT, $, this))
-      return FLOAT;
     // LONG contaminates INTEGRAL
-    if (in(LONG, $, this))
-      return LONG;
     // INTEGRAL contaminates INT
-    if (in(INTEGRAL, $, this))
-      return INTEGRAL;
     // Everything else is INT after an operation
-    return INT;
+    return in(DOUBLE, $, this) ? DOUBLE
+        : in(NUMERIC, $, this) ? NUMERIC //
+            : in(FLOAT, $, this) ? FLOAT //
+                : in(LONG, $, this) ? LONG : //
+                    in(INTEGRAL, $, this) ? INTEGRAL //
+                        : INT;
   }
 
   private PrudentType underIntegersOnlyOperator(final PrudentType k) {
     final PrudentType ¢1 = asIntegralUnderOperation();
     final PrudentType ¢2 = k.asIntegralUnderOperation();
-    return in(LONG, ¢1, ¢2) ? LONG : in(INTEGRAL, ¢1, ¢2) ? INTEGRAL : INT;
+    return in(LONG, ¢1, ¢2) ? LONG : !in(INTEGRAL, ¢1, ¢2) ? INT : INTEGRAL;
   }
 
   /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
@@ -422,7 +395,7 @@ public enum PrudentType {
    *         {@link SHORT}, {@link FLOAT}, {@link #DOUBLE}, {@link #INTEGRAL} or
    *         {@link #NUMERIC}, in case no further information is available */
   private PrudentType asNumeric() {
-    return !isNumeric() ? NUMERIC : this;
+    return isNumeric() ? this : NUMERIC;
   }
 
   /** @return one of {@link #INT}, {@link #LONG}, {@link #FLOAT},

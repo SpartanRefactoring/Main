@@ -26,21 +26,21 @@ public class FactorsExpander {
   }
 
   /** @see #recurse(InfixExpression, List) */
-  private static InfixExpression appendTimes(final InfixExpression $, final Factor t) {
-    final Expression ¢ = wizard.duplicate(t.expression);
-    return t.multiplier() ? subject.append($, ¢) : subject.pair($, ¢).to(DIVIDE);
+  private static InfixExpression appendTimes(final InfixExpression $, final Factor f) {
+    final Expression ¢ = wizard.duplicate(f.expression);
+    return f.multiplier() ? subject.append($, ¢) : subject.pair($, ¢).to(DIVIDE);
   }
 
-  private static Expression base(final List<Factor> ts) {
-    assert ts != null;
-    assert !ts.isEmpty();
-    final Factor first = lisp.first(ts);
+  private static Expression base(final List<Factor> fs) {
+    assert fs != null;
+    assert !fs.isEmpty();
+    final Factor first = lisp.first(fs);
     assert first != null;
-    final Factor second = lisp.second(ts);
+    final Factor second = lisp.second(fs);
     assert second != null;
     final Expression $ = base(first, second);
     assert $ != null;
-    return step($, lisp.chop(lisp.chop(ts)));
+    return step($, lisp.chop(lisp.chop(fs)));
   }
 
   private static InfixExpression base(final Factor t1, final Factor t2) {
@@ -62,30 +62,30 @@ public class FactorsExpander {
 
   /** @param $ The accumulator, to which one more {@link Factor} should be added
    *        optimally
-   * @param ts a list
+   * @param fs a list
    * @return the $ parameter, after all elements of the list parameter are added
    *         to it */
-  private static Expression recurse(final Expression $, final List<Factor> ts) {
+  private static Expression recurse(final Expression $, final List<Factor> fs) {
     assert $ != null;
-    if (ts == null || ts.isEmpty())
+    if (fs == null || fs.isEmpty())
       return $;
     assert $ instanceof InfixExpression;
-    return recurse((InfixExpression) $, ts);
+    return recurse((InfixExpression) $, fs);
   }
 
   /** @see #recurse(InfixExpression, List) */
-  private static Expression recurse(final InfixExpression $, final List<Factor> ts) {
+  private static Expression recurse(final InfixExpression $, final List<Factor> fs) {
     assert $ != null;
-    if (ts == null || ts.isEmpty())
+    if (fs == null || fs.isEmpty())
       return $;
-    assert ts != null;
-    assert !ts.isEmpty();
+    assert fs != null;
+    assert !fs.isEmpty();
     final Operator o = $.getOperator();
     assert o != null;
     assert o == TIMES || o == DIVIDE;
-    final Factor first = lisp.first(ts);
+    final Factor first = lisp.first(fs);
     assert first != null;
-    return recurse(o == TIMES ? appendTimes($, first) : appendDivide($, first), lisp.chop(ts));
+    return recurse(o == TIMES ? appendTimes($, first) : appendDivide($, first), lisp.chop(fs));
   }
 
   private static Expression step(final Expression $, final List<Factor> ¢) {

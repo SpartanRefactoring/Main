@@ -66,9 +66,7 @@ public enum Restructure {
    * @return a {@link wizard#duplicate(Expression)} of the parameter wrapped in
    *         parenthesis. */
   public static Expression parenthesize(final Expression e) {
-    if (iz.noParenthesisRequired(e))
-      return wizard.duplicate(e);
-    return make.parethesized(e);
+    return iz.noParenthesisRequired(e) ? wizard.duplicate(e) : make.parethesized(e);
   }
 
   private static List<Expression> add(final Expression e, final List<Expression> $) {
@@ -88,8 +86,7 @@ public enum Restructure {
   private static List<Expression> flatteninto(final Operator o, final Expression e, final List<Expression> $) {
     final Expression core = core(e);
     final InfixExpression inner = az.infixExpression(core);
-    return inner == null || inner.getOperator() != o ? add(!iz.noParenthesisRequired(core) ? e : core, $)
-        : flatteninto(o, adjust(o, hop.operands(inner)), $);
+    return inner != null && inner.getOperator() == o?flatteninto(o,adjust(o,hop.operands(inner)),$):add(!iz.noParenthesisRequired(core)?e:core,$);
   }
 
   private static List<Expression> flatteninto(final Operator o, final List<Expression> es, final List<Expression> $) {

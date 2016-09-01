@@ -9,15 +9,15 @@ import il.org.spartan.refactoring.builder.*;
  * @author Stav Namir
  * @since 2016-8-31 */
 public final class ToStringToEmptyStringAddition extends Wring.ReplaceCurrentNode<MethodInvocation> implements Kind.Canonicalization {
-  @Override ASTNode replacement(final MethodInvocation n) {
-    if (!"toString".equals(step.name(n).getIdentifier()))
+  @Override ASTNode replacement(final MethodInvocation i) {
+    if (!"toString".equals(step.name(i).getIdentifier()))
       return null;
-    final Expression receiver = step.receiver(n);
-    return receiver == null ? null : subject.pair(n.getAST().newStringLiteral(), receiver).to(InfixExpression.Operator.PLUS);
+    final Expression receiver = step.receiver(i);
+    return receiver == null ? null : subject.pair(i.getAST().newStringLiteral(), receiver).to(InfixExpression.Operator.PLUS);
   }
 
-  @Override String description(final MethodInvocation n) {
-    final Expression receiver = step.receiver(n);
+  @Override String description(final MethodInvocation i) {
+    final Expression receiver = step.receiver(i);
     return receiver == null ? "Use \"\" + x" : "Use \"\" + " + receiver;
   }
 }

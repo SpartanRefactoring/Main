@@ -16,8 +16,7 @@ import il.org.spartan.refactoring.wring.Wring.*;
  * @since 2016 */
 public final class AssignmentToPosrfixIncrement extends ReplaceCurrentNode<Assignment> implements Kind.SyntacticBaggage {
   @Override String description(final Assignment a) {
-    return isIncrement(a) ? "Replace " + a + " to " + a.getRightHandSide() + "++" :
-                            "Replace " + a + " to " + a.getRightHandSide() + "--";
+    return "Replace " + a + " to " + a.getRightHandSide() + (isIncrement(a)?"++":"--");
   }
 
   @Override ASTNode replacement(final Assignment a) {
@@ -25,7 +24,7 @@ public final class AssignmentToPosrfixIncrement extends ReplaceCurrentNode<Assig
   }
 
   private static ASTNode replace(final Assignment a) {
-    return isIncrement(a) ? subject.operand(a.getLeftHandSide()).to(INCREMENT) : subject.operand(a.getLeftHandSide()).to(DECREMENT);
+    return subject.operand(a.getLeftHandSide()).to(isIncrement(a)?INCREMENT:DECREMENT);
   }
   
   private static boolean isIncrement(final Assignment a) {

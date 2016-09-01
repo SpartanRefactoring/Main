@@ -66,7 +66,7 @@ public class EvaluateSubstraction extends Wring.ReplaceCurrentNode<InfixExpressi
         return null;
       if (index != 0)
         sub = sub - EvaluateAux.extractDouble(¢);
-      index++;
+      ++index;
     }
     return e.getAST().newNumberLiteral(Double.toString(sub));
   }
@@ -81,7 +81,7 @@ public class EvaluateSubstraction extends Wring.ReplaceCurrentNode<InfixExpressi
         return null;
       if (index != 0)
         sub = sub - EvaluateAux.extractLong(¢);
-      index++;
+      ++index;
     }
     return e.getAST().newNumberLiteral(Long.toString(sub) + "L");
   }
