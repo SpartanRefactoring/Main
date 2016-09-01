@@ -99,7 +99,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
     if (addedSize - removalSaving > 0)
       return null;
     r.replace(nextStatement, newStatement, g);
-    i.inlineInto(newStatement);
+    i.inlineinto(newStatement);
     remove(f, r, g);
     return r;
   }

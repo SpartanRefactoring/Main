@@ -43,10 +43,10 @@ public final class DeclarationInitialiazelUpdateAssignment extends Wring.Variabl
       return null;
     final InfixExpression newInitializer = subject.pair(step.left(a), step.right(a)).to(asInfix(o));
     final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
-    if (!i.canInlineInto(newInitializer) || i.replacedSize(newInitializer) - size(nextStatement, initializer) > 0)
+    if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - size(nextStatement, initializer) > 0)
       return null;
     r.replace(initializer, newInitializer, g);
-    i.inlineInto(newInitializer);
+    i.inlineinto(newInitializer);
     r.remove(nextStatement, g);
     return r;
   }

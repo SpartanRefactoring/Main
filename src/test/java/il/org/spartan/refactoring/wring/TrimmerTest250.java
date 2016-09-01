@@ -359,7 +359,7 @@ public class TrimmerTest250 {
 
   @Test public void issue72ma() {
     final String s = "0-x";
-    final InfixExpression i = Into.i(s);
+    final InfixExpression i = into.i(s);
     azzert.that(i, iz(s));
     azzert.that(step.left(i), iz("0"));
     azzert.that(step.right(i), iz("x"));
@@ -402,19 +402,19 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue72me1() {
-    assert !iz.negative(Into.e("0"));
+    assert !iz.negative(into.e("0"));
   }
 
   @Test public void issue72me2() {
-    assert iz.negative(Into.e("-1"));
-    assert !iz.negative(Into.e("+1"));
-    assert !iz.negative(Into.e("1"));
+    assert iz.negative(into.e("-1"));
+    assert !iz.negative(into.e("+1"));
+    assert !iz.negative(into.e("1"));
   }
 
   @Test public void issue72me3() {
-    assert iz.negative(Into.e("-x"));
-    assert !iz.negative(Into.e("+x"));
-    assert !iz.negative(Into.e("x"));
+    assert iz.negative(into.e("-x"));
+    assert !iz.negative(into.e("+x"));
+    assert !iz.negative(into.e("x"));
   }
 
   @Test public void issue72meA() {
@@ -433,7 +433,7 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue72mf1B() {
-    assert iz.isSimple(Into.e("x"));
+    assert iz.isSimple(into.e("x"));
     trimming("-(x-0)")//
         .to("-(x)")//
         .to(null);

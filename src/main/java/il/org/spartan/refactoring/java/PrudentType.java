@@ -41,9 +41,10 @@ public enum PrudentType {
   VOID("void", "nothing at all"),
   // Doubtful types, from four fold uncertainty down to bilalteral
   // schizophrenia" .
-  ALPHANUMERIC("String|double|long|int|char", "only in binary plus: f()+g(), not 2 + f(), nor f() + null"), //
-  NUMERIC("double|long|int|char", "must be either f()*g(), 2L*f(), 2.*a(), not 2 %a(), nor 2"), //
-  INTEGRAL("long|int|char", "must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() "), //
+  ALPHANUMERIC("String|double|float|long|int|char|short|byte", "only in binary plus: f()+g(), not 2 + f(), nor f() + null"), //
+  NUMERIC("double|float|long|int|char|short|byte", "must be either f()*g(), 2L*f(), 2.*a(), not 2 %a(), nor 2"), //
+  BOOLEANINTEGRAL("boolean|long|int|char|short|byte","only in x^y,x&y,x|y"),//
+  INTEGRAL("long|int|char|short|byte", "must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() "), //
   // Certain types
   NULL("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"), BYTE("byte", "must be byte: (byte)1, nothing else"), //
   SHORT("short", "must be short: (short)15, nothing else"), //
@@ -175,7 +176,7 @@ public enum PrudentType {
 
   private static PrudentType prudentType(final PostfixExpression e, final PrudentType t1) {
     final PrudentType ¢ = t1 != null ? t1 : prudent(e.getOperand());
-    return ¢.asNumeric();
+    return ¢.asNumeric(); //see testInDecreamentSemantics
   }
 
   private static PrudentType prudentType(final ParenthesizedExpression e, final PrudentType t) {
@@ -194,7 +195,7 @@ public enum PrudentType {
     // If we don't know much about one operand but do know enough about the
     // other, we can still learn something
     if (¢1.isNoInfo() || ¢2.isNoInfo())
-      return conditionalWithNothing(¢1.isNoInfo() ? ¢2 : ¢1);
+      return conditionalWithNoInfo(¢1.isNoInfo() ? ¢2 : ¢1);
     if (¢1.isIntegral() && ¢2.isIntegral())
       return ¢1.underIntegersOnlyOperator(¢2);
     if (¢1.isNumeric() && ¢2.isNumeric())
@@ -235,7 +236,7 @@ public enum PrudentType {
     }
   }
 
-  private static PrudentType conditionalWithNothing(final PrudentType t) {
+  private static PrudentType conditionalWithNoInfo(final PrudentType t) {
     switch (t) {
       case BYTE:
       case SHORT:
@@ -252,6 +253,8 @@ public enum PrudentType {
         return STRING;
       case BOOLEAN:
         return BOOLEAN;
+      case BOOLEANINTEGRAL:
+        return BOOLEANINTEGRAL;
       default:
         return NOTHING;
     }
@@ -275,33 +278,23 @@ public enum PrudentType {
   private final PrudentType under(final PrefixExpression.Operator o) {
     assert o != null;
     return o == NOT ? BOOLEAN //
-        : o != COMPLEMENT ? asNumeric() : asIntegralUnderOperation();
+        : in(o, DECREMENT, INCREMENT) ? asNumeric() //see testInDecreamentSemantics and testOnaryPlusMinusSemantics
+        :  o != COMPLEMENT ? asNumericUnderOperation() : asIntegralUnderOperation();
   }
 
   /** @return one of {@link #BOOLEAN}, {@link #INT}, {@link #LONG},
-   *         {@link #DOUBLE}, {@link #STRING}, {@link #INTEGRAL},
+   *         {@link #DOUBLE}, {@link #STRING}, {@link #INTEGRAL}, {@link BOOLEANINTEGRAL}
    *         {@link #NUMERIC}, or {@link #ALPHANUMERIC}, in case it cannot
    *         decide */
   private final PrudentType underBinaryOperator(final InfixExpression.Operator o, final PrudentType k) {
     if (o == wizard.PLUS2)
       return underPlus(k);
-    // TODO: create a function in {@link wizard}
-    if (in(o, //
-        LESS, //
-        GREATER, //
-        LESS_EQUALS, //
-        GREATER_EQUALS, //
-        EQUALS, //
-        NOT_EQUALS, //
-        CONDITIONAL_OR, //
-        CONDITIONAL_AND//
-    ))
+    if (wizard.isComparisonOperator(o))
       return BOOLEAN;
     // XOR, OR and AND support BOOLEAN if both operands are BOOLEAN
-    // TODO: Niv, again, implement in a wizard.
-    if (in(o, XOR, OR, AND) && this == BOOLEAN && k == BOOLEAN)
-      return BOOLEAN;
-    if (in(o, REMAINDER, XOR, OR, AND))
+    if (wizard.isBitwiseOperator(o))
+      return underBitwiseOperation(k);
+    if (o == REMAINDER)
       return underIntegersOnlyOperator(k);
     if (in(o, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED))
       // shift is unique in that the left hand operand's type doesn't affect the
@@ -310,6 +303,38 @@ public enum PrudentType {
     if (!in(o, TIMES, DIVIDE, wizard.MINUS2))
       throw new IllegalArgumentException("o=" + o + " k=" + k.fullName() + "this=" + this);
     return underNumericOnlyOperator(k);
+  }
+
+  /** @return one of {@link #BOOLEAN}, {@link #INT}, {@link #LONG},
+   *         {@link #INTEGRAL} or {@link BOOLEANINTEGRAL}, in case it cannot
+   *         decide */
+  private PrudentType underBitwiseOperation(PrudentType k) {
+    if (this == k){
+      return k;
+    }
+    if (isIntegral() && k.isIntegral()){
+      return underIntegersOnlyOperator(k);
+    }
+    if (isNoInfo()){
+      return k.underBitwiseOperationNoInfo();
+    }
+    if (k.isNoInfo()){
+      return underBitwiseOperationNoInfo();
+    }
+    return BOOLEANINTEGRAL;
+  }
+
+  /** @return one of {@link #BOOLEAN}, {@link #INT}, {@link #LONG},
+   *         {@link #INTEGRAL} or {@link BOOLEANINTEGRAL}, in case it cannot
+   *         decide */
+  private PrudentType underBitwiseOperationNoInfo() {
+    if (this == BOOLEAN){
+      return BOOLEAN;
+    }
+    if (isIntegral()){
+      return this == LONG ? LONG : INTEGRAL;
+    }
+    return BOOLEANINTEGRAL;
   }
 
   /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE},
@@ -329,11 +354,11 @@ public enum PrudentType {
    *         {@link #DOUBLE}, or {@link #NUMERIC}, in case it cannot decide */
   private PrudentType underNumericOnlyOperator(final PrudentType k) {
     if (!isNumeric())
-      return asNumeric().underNumericOnlyOperator(k);
+      return asNumericUnderOperation().underNumericOnlyOperator(k);
     assert k != null;
     assert this != ALPHANUMERIC : "Don't confuse " + NUMERIC + " with " + ALPHANUMERIC;
     assert isNumeric() : this + ": is for some reason not numeric ";
-    final PrudentType $ = k.asNumeric();
+    final PrudentType $ = k.asNumericUnderOperation();
     assert $ != null;
     assert $.isNumeric() : this + ": is for some reason not numeric ";
     // Double contaminates Numeric
@@ -394,11 +419,19 @@ public enum PrudentType {
   public boolean isNumeric() {
     return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC);
   }
-
-  /** @return one of {@link #INT}, {@link #LONG}, {@link #CHAR},
-   *         {@link #DOUBLE}, {@link #INTEGRAL} or {@link #NUMERIC}, in case no
+  
+  /** @return one of {@link #INT}, {@link #LONG},, {@link #CHAR},
+   *         {@link BYTE}, {@link SHORT}, {@link FLOAT}, {@link #DOUBLE},
+   *         {@link #INTEGRAL} or {@link #NUMERIC}, in case no
    *         further information is available */
   private PrudentType asNumeric() {
+    return !isNumeric() ? NUMERIC : this;
+  }
+
+  /** @return one of {@link #INT}, {@link #LONG}, {@link #FLOAT},
+   *         {@link #DOUBLE}, {@link #INTEGRAL} or {@link #NUMERIC}, in case no
+   *         further information is available */
+  private PrudentType asNumericUnderOperation() {
     return !isNumeric() ? NUMERIC : isIntUnderOperation() ? INT : this;
   }
 
