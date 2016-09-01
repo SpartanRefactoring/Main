@@ -41,6 +41,8 @@ public class Recurser<T> {
   public T preVisit(final Function<Recurser<T>, T> f) {
     this.current=f.apply(this);
     List<ASTNode> childrenList = getChildren(this.root);
+    if(childrenList==null)
+      return this.current;
     List<Recurser<T>> recurserList = new ArrayList<>();
     for(ASTNode child : childrenList){
       recurserList.add(new Recurser<T>(child));
@@ -60,6 +62,8 @@ public class Recurser<T> {
   
   public T postVisit(final Function<Recurser<T>, T> f) {
     List<ASTNode> childrenList = getChildren(this.root);
+    if(childrenList==null)
+      return f.apply(this);
     List<Recurser<T>> recurserList = new ArrayList<>();
     for(ASTNode child : childrenList){
       recurserList.add(new Recurser<T>(child));
@@ -117,14 +121,17 @@ public class Recurser<T> {
     if(node== null)
       return new ArrayList<>();
     List<ASTNode> childrenList = new ArrayList<>();
-    List lst = node.structuralPropertiesForType();
+    try{
+    @SuppressWarnings("rawtypes") List lst = node.structuralPropertiesForType();
     for (int i = 0; i < lst.size(); i++){
       Object child = node.getStructuralProperty((StructuralPropertyDescriptor)lst.get(i));
-    if (child instanceof ASTNode) {
-      childrenList.add((ASTNode) child);
+      if (child instanceof ASTNode) {
+        childrenList.add((ASTNode) child);
+      }
+    }
+    return childrenList;
+    } catch(NullPointerException e){
+      return null;
     }
   }
-    return childrenList;
-  }
-
 } 
