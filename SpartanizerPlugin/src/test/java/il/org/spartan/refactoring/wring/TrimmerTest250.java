@@ -667,15 +667,16 @@ public class TrimmerTest250 {
   @Test public void issue83c() {
     trimming("if(x.size()>0)return a;").to("if(!x.isEmpty())return a;");
   }
- @Test public void issue83d() {
+
+  @Test public void issue83d() {
     trimming("if(x.size()==1) return a;").to(null);
   }
 
- @Test public void issue83e() {
+  @Test public void issue83e() {
     trimming("if(x.size()==2) return a;").to(null);
   }
 
- @Test public void issue83f() {
+  @Test public void issue83f() {
     trimming("if(2==x.size()) return a;").to("if(x.size()==2) return a;");
   }
 
@@ -709,11 +710,10 @@ public class TrimmerTest250 {
 
   @Test public void issue83n() {
     trimming("if(a.size() <= -9) ++a;a+=1;")//
-    .to("if(false) ++a;a++;") //
-    .to("{}++a;") //
-    .to("++a;") //
-    .to(null);
-
+        .to("if(false) ++a;a++;") //
+        .to("{}++a;") //
+        .to("++a;") //
+        .to(null);
   }
 
   @Test public void issue85_86a() {
@@ -766,27 +766,27 @@ public class TrimmerTest250 {
   @Test public void issue85_86l() {
     trimming("if(false)" + "c();" + "else {\n" + "if(true) \n" + "a(); \n" + "else \n" + "b(); \n" + "} \n").to("{a();}").to("a();");
   }
-  
+
   @Test public void issue86_1() {
-    trimming("if(false)" + "c();\n" +"int a;").to("{}int a;").to("int a;").to(null);
+    trimming("if(false)" + "c();\n" + "int a;").to("{}int a;").to("int a;").to(null);
   }
-  
+
   @Test public void issue86_2() {
     trimming("if(false) {c();\nb();\na();}").to("{}");
   }
-  
+
   @Ignore public void issue86_3() {
     trimming("if(false) {c();\nb();\na();}").to("{}").to(null);
   }
-  
+
   @Ignore public void issue86_4() {
     trimming("if(false) {c();\nb();\na();}").to("{}").to("");
   }
-  
+
   @Ignore public void issue86_5() {
     trimming("if(false) {c();\nb();\na();}").to("{}").to("").to(null);
   }
-  
+
   @Test public void issue87a() {
     trimming("a-b*c - (x - - - (d*e))").to("a  - b*c -x + d*e");
   }

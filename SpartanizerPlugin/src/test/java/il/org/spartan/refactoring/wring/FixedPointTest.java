@@ -282,8 +282,7 @@ import il.org.spartan.refactoring.spartanizations.*;
   }
 
   @Test(timeout = 2000) public void ternarize04() {
-    assertConvertsTo(
-        "  int $ = 0;if (s.equals(532))    $ += 6;else    $ += 9;/*if (s.equals(532))    $ += 6;else    $ += 9;*/   return $;",
+    assertConvertsTo("  int $ = 0;if (s.equals(532))    $ += 6;else    $ += 9;/*if (s.equals(532))    $ += 6;else    $ += 9;*/   return $;",
         "return (s.equals(532)?6:9);");
   }
 
