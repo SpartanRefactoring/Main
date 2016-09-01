@@ -1,7 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
@@ -41,11 +39,11 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
     return ¢ instanceof NumberLiteral || getNegativeNumber(¢) != null;
   }
 
-  private static ASTNode replacement(final InfixExpression e, Operator o, int sign, NumberLiteral l, final Expression receiver) {
+  private static ASTNode replacement(final InfixExpression e, Operator o, final int sign, final NumberLiteral l, final Expression receiver) {
     final MethodInvocation $ = subject.operand(receiver).toMethod("isEmpty");
     int threshold = sign * Integer.parseInt(l.getToken());
-    BooleanLiteral TRUE = e.getAST().newBooleanLiteral(true);
-    BooleanLiteral FALSE = e.getAST().newBooleanLiteral(false);
+    final BooleanLiteral TRUE = e.getAST().newBooleanLiteral(true);
+    final BooleanLiteral FALSE = e.getAST().newBooleanLiteral(false);
     if (o == Operator.GREATER_EQUALS) {
       o = Operator.GREATER;
       --threshold;
@@ -66,7 +64,7 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
     return null;
   }
 
-  private static ASTNode replacement(final InfixExpression e, Operator o, final MethodInvocation i, final Expression n) {
+  private static ASTNode replacement(final InfixExpression e, final Operator o, final MethodInvocation i, final Expression n) {
     if (!"size".equals(step.name(i).getIdentifier()))
       return null;
     int sign = -1;
