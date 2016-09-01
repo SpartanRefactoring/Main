@@ -26,13 +26,11 @@ public final class InfixMultiplicationByOne extends ReplaceCurrentNode<InfixExpr
   private static ASTNode replacement(final List<Expression> es) {
     final List<Expression> $ = new ArrayList<>();
     for (final Expression ¢ : es)
-      if (!isLiteralOne(¢))
+      if (!iz.literal1(¢))
         $.add(¢);
     return $.size() == es.size() ? null
         : $.isEmpty() ? wizard.duplicate(lisp.first(es)) : $.size() == 1 ? wizard.duplicate(lisp.first($)) : subject.operands($).to(TIMES);
   }
 
-  private static boolean isLiteralOne(final Expression ¢) {
-    return isLiteralOne(az.numberLiteral(¢));
-  }
+
 }

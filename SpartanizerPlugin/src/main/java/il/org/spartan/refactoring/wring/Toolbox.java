@@ -97,7 +97,7 @@ public class Toolbox {
             null)
         .add(MethodDeclaration.class, //
             new MethodRenameReturnToDollar(), //
-            new BodeDeclarationRemoveModifiers.OfMethod(), //
+            new BodyDeclarationRemoveModifiers.OfMethod(), //
             null)
         .add(MethodInvocation.class, //
             new StringEqualsConstant(), //
@@ -158,13 +158,13 @@ public class Toolbox {
         .add(EnumDeclaration.class, new EnumClean(), null) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover(), null) //
         .add(ReturnStatement.class, new ReturnLastInMethod()) //
-        .add(FieldDeclaration.class, new BodeDeclarationRemoveModifiers.OfField()) //
+        .add(FieldDeclaration.class, new BodyDeclarationRemoveModifiers.OfField()) //
         .add(CastExpression.class, //
             new CastToDouble2Multiply1(), //
             new CastToLong2Multiply1L(), //
             null) //
         .add(EnumConstantDeclaration.class, //
-            new BodeDeclarationRemoveModifiers.OfEnumConstant(), //
+            new BodyDeclarationRemoveModifiers.OfEnumConstant(), //
             null) //
         .add(NormalAnnotation.class, //
             new AnnotationDiscardValueName(), //

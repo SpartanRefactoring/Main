@@ -67,37 +67,6 @@ public abstract class Wring<N extends ASTNode> implements Kind {
     return make(n, null) != null;
   }
 
-  public static abstract class RemoveModifier<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> {
-    @Override String description(@SuppressWarnings("unused") final N __) {
-      return "remove redundant modifier";
-    }
-
-    IExtendedModifier firstThat(final N n, final Predicate<Modifier> f) {
-      for (final IExtendedModifier $ : step.modifiers(n))
-        if ($.isModifier() && f.test((Modifier) $))
-          return $;
-      return null;
-    }
-
-    boolean has(final N ¢, final Predicate<Modifier> p) {
-      return firstThat(¢, p) != null;
-    }
-
-    abstract boolean redundant(Modifier m);
-
-    @Override N replacement(final N $) {
-      return go(wizard.duplicate($));
-    }
-
-    @Override boolean scopeIncludes(final N ¢) {
-      return firstBad(¢) != null;
-    }
-
-    private IExtendedModifier firstBad(final N n) {
-      return firstThat(n, (final Modifier ¢) -> redundant(¢));
-    }
-  }
-
   static abstract class AbstractSorting extends ReplaceCurrentNode<InfixExpression> {
     @Override final String description(final InfixExpression e) {
       return "Reorder operands of " + e.getOperator();

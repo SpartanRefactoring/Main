@@ -30,19 +30,19 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
 
   private static ASTNode go(final InfixExpression e) {
     return e.hasExtendedOperands() ? plant(go(hop.operands(e))).into(step.parent(e))
-        : isLiteralZero(step.left(e)) ? plant(minus(step.right(e))).into(step.parent(e)) //
-            : isLiteralZero(step.right(e)) ? plant(step.left(e)).into(step.parent(e)) //
+        : literal0(step.left(e)) ? plant(minus(step.right(e))).into(step.parent(e)) //
+            : literal0(step.right(e)) ? plant(step.left(e)).into(step.parent(e)) //
                 : null;
   }
 
   private static Expression go(final List<Expression> es) {
     final List<Expression> $ = new ArrayList<>(es);
-    if (isLiteralZero(lisp.first($))) {
+    if (literal0(lisp.first($))) {
       $.remove(0);
       $.set(0, minus(lisp.first($)));
     } else
       for (int i = 1, size = $.size(); i < size; ++i)
-        if (isLiteralZero($.get(i))) {
+        if (literal0($.get(i))) {
           $.remove(i);
           break;
         }

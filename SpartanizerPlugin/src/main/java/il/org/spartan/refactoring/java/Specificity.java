@@ -63,23 +63,23 @@ public class Specificity implements Comparator<Expression> {
     ZERO_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
         final NumberLiteral ¢1 = az.numberLiteral(¢);
-        return ¢1 != null && iz.isLiteral(¢1.getToken(), 0);
+        return ¢1 != null && iz.literal(¢1.getToken(), 0);
       }
     },
     ONE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
         final NumberLiteral ¢1 = az.numberLiteral(¢);
-        return ¢1 != null && iz.isLiteral(¢1.getToken(), 1);
+        return ¢1 != null && iz.literal(¢1.getToken(), 1);
       }
     },
     ZERO_DOUBLE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        return iz.isLiteral(¢, 0.0);
+        return iz.literal(¢, 0.0);
       }
     },
     ONE_DOUBLE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        return iz.isLiteral(¢, 1.0);
+        return iz.literal(¢, 1.0);
       }
     },
     EMPTY_STRING {
@@ -89,12 +89,12 @@ public class Specificity implements Comparator<Expression> {
     },
     TRUE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        return iz.isLiteralTrue(¢);
+        return iz.literalTrue(¢);
       }
     },
     FALSE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        return iz.isLiteralFalse(¢);
+        return iz.literalFalse(¢);
       }
     },;
     static boolean defined(final Expression e) {
