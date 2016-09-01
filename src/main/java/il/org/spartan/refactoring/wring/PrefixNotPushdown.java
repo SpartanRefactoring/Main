@@ -20,7 +20,7 @@ import il.org.spartan.refactoring.builder.*;
 public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpression> implements Kind.Canonicalization {
   private static Expression applyDeMorgan(final InfixExpression inner) {
     final List<Expression> operands = new ArrayList<>();
-    for (final Expression e : hop.operands(flatten(inner)))
+    for (final Expression e : hop.operands(flatten.of(inner)))
       operands.add(make.notOf(e));
     return subject.operands(operands).to(conjugate(inner.getOperator()));
   }
@@ -52,7 +52,7 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
   }
 
   static Expression notOfLiteral(final BooleanLiteral l) {
-    final BooleanLiteral $ = wizard.duplicate(l);
+    final BooleanLiteral $ = duplicate.of(l);
     $.setBooleanValue(!l.booleanValue());
     return $;
   }

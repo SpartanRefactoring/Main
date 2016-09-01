@@ -101,7 +101,7 @@ public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<Condit
    * </ol>
   */
   private static Expression simplifyTernary(final ConditionalExpression e) {
-    return simplifyTernary(core(e.getThenExpression()), core(e.getElseExpression()), wizard.duplicate(e.getExpression()));
+    return simplifyTernary(core(e.getThenExpression()), core(e.getElseExpression()), duplicate.of(e.getExpression()));
   }
 
   private static Expression simplifyTernary(final Expression then, final Expression elze, final Expression main) {

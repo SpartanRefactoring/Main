@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.java.*;
@@ -82,7 +83,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
       if (never(use, nextStatement))
         return null;
     final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
-    final Statement newStatement = wizard.duplicate(nextStatement);
+    final Statement newStatement = duplicate.of(nextStatement);
     final int addedSize = i.addedSize(newStatement);
     final int removalSaving = removalSaving(f);
     if (addedSize - removalSaving > 0)

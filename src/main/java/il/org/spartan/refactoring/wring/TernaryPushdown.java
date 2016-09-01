@@ -26,7 +26,7 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
   }
 
   @SuppressWarnings("unchecked") private static <T extends Expression> T p(final ASTNode n, final T $) {
-    return !Precedence.Is.legal(Precedence.of(n)) || Precedence.of(n) >= Precedence.of($) ? $ : (T) duplicate.parenthesize($);
+    return !precedence.is.legal(precedence.of(n)) || precedence.of(n) >= precedence.of($) ? $ : (T) wizard.parenthesize($);
   }
 
   static Expression pushdown(final ConditionalExpression e) {
@@ -53,7 +53,7 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
     final int i = findSingleDifference(es1, es2);
     if (i < 0)
       return null;
-    final ClassInstanceCreation $ = wizard.duplicate(e1);
+    final ClassInstanceCreation $ = duplicate.of(e1);
     arguments($).remove(i);
     arguments($).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression()));
     return $;
@@ -83,8 +83,8 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
   private static Expression pushdown(final ConditionalExpression e, final FieldAccess e1, final FieldAccess e2) {
     if (!wizard.same(e1.getName(), e2.getName()))
       return null;
-    final FieldAccess $ = wizard.duplicate(e1);
-    $.setExpression(duplicate.parenthesize(subject.pair(e1.getExpression(), e2.getExpression()).toCondition(e.getExpression())));
+    final FieldAccess $ = duplicate.of(e1);
+    $.setExpression(wizard.parenthesize(subject.pair(e1.getExpression(), e2.getExpression()).toCondition(e.getExpression())));
     return $;
   }
 
@@ -98,7 +98,7 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
     final int i = findSingleDifference(es1, es2);
     if (i < 0)
       return null;
-    final InfixExpression $ = wizard.duplicate(e1);
+    final InfixExpression $ = duplicate.of(e1);
     final List<Expression> operands = hop.operands($);
     operands.remove(i);
     operands.add(i, p($, subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression())));
@@ -115,8 +115,8 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
     if (!wizard.same(receiver1, receiver2)) {
       if (receiver1 == null || !wizard.same(es1, es2))
         return null;
-      final MethodInvocation $ = wizard.duplicate(e1);
-      $.setExpression(duplicate.parenthesize(subject.pair(receiver1, receiver2).toCondition(e.getExpression())));
+      final MethodInvocation $ = duplicate.of(e1);
+      $.setExpression(wizard.parenthesize(subject.pair(receiver1, receiver2).toCondition(e.getExpression())));
       return $;
     }
     if (es1.size() != es2.size())
@@ -124,7 +124,7 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
     final int i = findSingleDifference(es1, es2);
     if (i < 0)
       return null;
-    final MethodInvocation $ = wizard.duplicate(e1);
+    final MethodInvocation $ = duplicate.of(e1);
     arguments($).remove(i);
     arguments($).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression()));
     return $;
@@ -140,7 +140,7 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
     final int i = findSingleDifference(es1, es2);
     if (i < 0)
       return null;
-    final SuperMethodInvocation $ = wizard.duplicate(e1);
+    final SuperMethodInvocation $ = duplicate.of(e1);
     arguments($).remove(i);
     arguments($).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression()));
     return $;

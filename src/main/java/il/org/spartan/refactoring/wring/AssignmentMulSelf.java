@@ -11,6 +11,7 @@ import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.builder.*;
 import il.org.spartan.refactoring.engine.*;
+import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.Wring.*;
 
 /** Replace <code>x = x * a </code> by <code> x *= a </code>
@@ -44,7 +45,7 @@ public final class AssignmentMulSelf extends ReplaceCurrentNode<Assignment> impl
       }
     assert es.size() >= 2;
     assert $.size() >= 1;
-    return $.size() == es.size() ? null : $.size() == 1 ? wizard.duplicate(lisp.first($)) : subject.operands($).to(TIMES);
+    return $.size() == es.size() ? null : $.size() == 1 ? duplicate.of(lisp.first($)) : subject.operands($).to(TIMES);
   }
 
   private static boolean asLeft(final Expression ¢, final Expression left) {

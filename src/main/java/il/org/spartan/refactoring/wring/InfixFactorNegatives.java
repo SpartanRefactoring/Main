@@ -16,6 +16,7 @@ import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.builder.*;
 import il.org.spartan.refactoring.engine.*;
+import il.org.spartan.refactoring.utils.*;
 
 /** convert an expression such as
  *
@@ -97,7 +98,7 @@ public final class InfixFactorNegatives extends Wring<InfixExpression> implement
         final Expression first = totalNegation % 2 == 0 ? null : lisp.first(es);
         for (final Expression ¢ : es)
           if (¢ != first && minus.level(¢) > 0)
-            r.replace(¢, plant(wizard.duplicate(minus.peel(¢))).into(¢.getParent()), g);
+            r.replace(¢, plant(duplicate.of(minus.peel(¢))).into(¢.getParent()), g);
         if (first != null)
           r.replace(first, plant(subject.operand(minus.peel(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
       }

@@ -34,7 +34,7 @@ public final class IfDegenerateElse extends Wring.ReplaceCurrentNode<IfStatement
   }
 
   @Override Statement replacement(final IfStatement s) {
-    final IfStatement $ = wizard.duplicate(s);
+    final IfStatement $ = duplicate.of(s);
     $.setElseStatement(null);
     return !iz.blockRequiredInReplacement(s, $) ? $ : subject.statement($).toBlock();
   }

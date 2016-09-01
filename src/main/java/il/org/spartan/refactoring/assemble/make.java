@@ -11,12 +11,14 @@ import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.builder.*;
 import il.org.spartan.refactoring.engine.*;
+import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.*;
 
-public interface make {
+public enum make {
+  ;
   /** @param ¢ JD
    * @return parameter, but logically negated and simplified */
-  static Expression notOf(final Expression ¢) {
+  public static Expression notOf(final Expression ¢) {
     final PrefixExpression $ = subject.operand(¢).to(NOT);
     final Expression $$ = PrefixNotPushdown.simplifyNot($);
     return $$ == null ? $ : $$;
@@ -24,7 +26,7 @@ public interface make {
 
   /** @param ¢ the expression to return in the return statement
    * @return new return statement */
-  static ThrowStatement throwOf(final Expression ¢) {
+  public static ThrowStatement throwOf(final Expression ¢) {
     return subject.operand(¢).toThrow();
   }
 
@@ -36,13 +38,13 @@ public interface make {
    * @param n JD
    * @param newName the name that the returned value shall bear
    * @return a new {@link SimpleName} instance at the AST of the parameter */
-  static SimpleName newSimpleName(final ASTNode n, final String newName) {
+  public static SimpleName newSimpleName(final ASTNode n, final String newName) {
     return n.getAST().newSimpleName(newName);
   }
 
-  static ParenthesizedExpression parethesized(final Expression e) {
+  public static ParenthesizedExpression parethesized(final Expression e) {
     final ParenthesizedExpression $ = e.getAST().newParenthesizedExpression();
-    $.setExpression(step.parent(e) == null ? e : wizard.duplicate(e));
+    $.setExpression(step.parent(e) == null ? e : duplicate.of(e));
     return $;
   }
 
@@ -58,7 +60,7 @@ public interface make {
    * @return a newly created expression with its operands thus swapped.
    * @throws IllegalArgumentException when the parameter has extra operands.
    * @see InfixExpression#hasExtendedOperands */
-  static InfixExpression conjugate(final InfixExpression ¢) {
+  public static InfixExpression conjugate(final InfixExpression ¢) {
     if (¢.hasExtendedOperands())
       throw new IllegalArgumentException(¢ + ": flipping undefined for an expression with extra operands ");
     return subject.pair(step.right(¢), step.left(¢)).to(wizard.conjugate(¢.getOperator()));
@@ -66,10 +68,15 @@ public interface make {
 
   static Expression minus(final Expression e, final NumberLiteral l) {
     return l == null ? minusOf(e) //
-        : newLiteral(l, literal0(l) ? "0" : duplicate.signAdjust(l.getToken())) //
+        : newLiteral(l, literal0(l) ? "0" : signAdjust(l.getToken())) //
     ;
   }
-
+  private static String signAdjust(final String token) {
+    return token.startsWith("-") ? token.substring(1) //
+        : "-" + token.substring(token.startsWith("+") ? 1 : 0);
+  }
+  
+  
   static List<Expression> minus(final List<Expression> es) {
     final List<Expression> $ = new ArrayList<>();
     $.add(lisp.first(es));
@@ -78,11 +85,19 @@ public interface make {
     return $;
   }
 
-  static IfStatement ifWithoutElse(final Statement s, final InfixExpression condition) {
+  public static IfStatement ifWithoutElse(final Statement s, final InfixExpression condition) {
     final IfStatement $ = condition.getAST().newIfStatement();
     $.setExpression(condition);
     $.setThenStatement(s);
     $.setElseStatement(null);
     return $;
+  }
+
+  public static Expression minus(final Expression e) {
+    final PrefixExpression ¢ = az.prefixExpression(e);
+    return ¢ == null ? minus(e, az.numberLiteral(e))
+        : ¢.getOperator() == wizard.MINUS1 ? ¢.getOperand() //
+            : ¢.getOperator() == wizard.PLUS1 ? subject.operand(¢.getOperand()).to(wizard.MINUS1)//
+                : e;
   }
 }

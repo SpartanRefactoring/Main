@@ -11,12 +11,13 @@ import il.org.spartan.*;
 import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.engine.*;
+import il.org.spartan.refactoring.utils.*;
 
 /** Contains subclasses and tools to build expressions and statements */
 public class subject {
   public static InfixExpression append(final InfixExpression base, final Expression add) {
-    final InfixExpression $ = wizard.duplicate(base);
-    extendedOperands($).add(plant(wizard.duplicate(add)).into($));
+    final InfixExpression $ = duplicate.of(base);
+    extendedOperands($).add(plant(duplicate.of(add)).into($));
     return $;
   }
 
@@ -33,9 +34,9 @@ public class subject {
      * @param e JD
      * @return a copy of the expression e
      * @see #rebase
-     * @see wizard#duplicate */
+     * @see duplicate#duplicate */
     Expression claim(final Expression e) {
-      return wizard.rebase(wizard.duplicate(extract.core(e)), ast);
+      return wizard.rebase(duplicate.of(extract.core(e)), ast);
     }
 
     /** A deep copy of statement and assign it to ast, if the statement exists
@@ -45,7 +46,7 @@ public class subject {
      * @see duplicate */
     Statement claim(final Statement s) {
       final Statement core = extract.core(s);
-      return core == null ? null : wizard.rebase(wizard.duplicate(core), ast);
+      return core == null ? null : wizard.rebase(duplicate.of(core), ast);
     }
   }
 

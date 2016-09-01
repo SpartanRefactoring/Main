@@ -14,6 +14,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 
 import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.engine.*;
+import il.org.spartan.refactoring.utils.*;
 
 public interface wizard {
   @SuppressWarnings("serial") Map<Operator, Operator> conjugate = new HashMap<Operator, Operator>() {
@@ -50,7 +51,7 @@ public interface wizard {
   PrefixExpression.Operator PLUS1 = PrefixExpression.Operator.PLUS;
   InfixExpression.Operator PLUS2 = InfixExpression.Operator.PLUS;
 
-  public static InfixExpression.Operator asInfix(final Assignment.Operator o) {
+  public static InfixExpression.Operator assignmentToInfix(final Assignment.Operator o) {
     return o == PLUS_ASSIGN ? InfixExpression.Operator.PLUS
         : o == MINUS_ASSIGN ? MINUS
             : o == TIMES_ASSIGN ? TIMES
@@ -74,6 +75,15 @@ public interface wizard {
   public static Operator deMorgan(final Operator o) {
     assert iz.deMorgan(o);
     return o.equals(CONDITIONAL_AND) ? CONDITIONAL_OR : CONDITIONAL_AND;
+  }
+
+  /** Parenthesize an expression (if necessary).
+   * @param e JD
+   * @return a
+   *         {@link il.org.spartan.refactoring.assemble.duplicate#duplicate(Expression)}
+   *         of the parameter wrapped in parenthesis. */
+  public static Expression parenthesize(final Expression e) {
+    return iz.noParenthesisRequired(e) ? duplicate.of(e) : make.parethesized(e);
   }
 
   /** Obtain a condensed textual representation of an {@link ASTNode}
@@ -150,13 +160,6 @@ public interface wizard {
     return wizard.deMorgan(e.getOperator());
   }
 
-  /** Make a duplicate, suitable for tree rewrite, of the parameter
-   * @param ¢ JD
-   * @return a duplicate of the parameter, downcasted to the returned type. */
-  @SuppressWarnings("unchecked") static <¢ extends ASTNode> ¢ duplicate(final ¢ ¢) {
-    return (¢) copySubtree(¢.getAST(), ¢);
-  }
-
   /** Find the first matching expression to the given boolean (b).
    * @param b JD,
    * @param es JD
@@ -167,27 +170,6 @@ public interface wizard {
       if (iz.booleanLiteral($) && b == az.booleanLiteral($).booleanValue())
         return $;
     return null;
-  }
-
-  static VariableDeclarationFragment findDefinition(final VariableDeclarationStatement s, final SimpleName n) {
-    return findVariableDeclarationFragment(step.fragments(s), n);
-  }
-
-  static VariableDeclarationFragment findVariableDeclarationFragment(final List<VariableDeclarationFragment> fs, final SimpleName ¢) {
-    for (final VariableDeclarationFragment $ : fs)
-      if (same(¢, $.getName()))
-        return $;
-    return null;
-  }
-
-  /** @param n the node from which to extract the proper fragment
-   * @param e the name by which to look for the fragment
-   * @return fragment if such with the given name exists or null otherwise (or
-   *         if ¢ or name are null) */
-  // TODO this seems a bug
-  static VariableDeclarationFragment getDefinition(final ASTNode n, final Expression e) {
-    return hasNull(n, e) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || e.getNodeType() != SIMPLE_NAME ? null
-        : findDefinition((VariableDeclarationStatement) n, (SimpleName) e);
   }
 
   static boolean incompatible(final Assignment a1, final Assignment a2) {
@@ -221,7 +203,20 @@ public interface wizard {
         NOT_EQUALS, CONDITIONAL_OR, CONDITIONAL_AND);
   }
 
-  @SuppressWarnings("unchecked") static ASTParser parser(final int kind) {
+  /** Determine whether a node is an infix expression whose operator is
+   * non-associative.
+   * @param n JD
+   * @return <code><b>true</b></code> <i>iff</i> the parameter is a node which
+   *         is an infix expression whose operator is */
+  static boolean nonAssociative(final ASTNode n) {
+    return nonAssociative(az.infixExpression(n));
+  }
+
+  static boolean nonAssociative(final InfixExpression e) {
+    return e != null && in(e.getOperator(), MINUS, DIVIDE, REMAINDER);
+  }
+
+  static ASTParser parser(final int kind) {
     final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     $.setKind(kind);
     $.setResolveBindings(false);
