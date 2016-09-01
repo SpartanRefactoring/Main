@@ -2,7 +2,6 @@ package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.ast.iz.*;
 import static il.org.spartan.refactoring.engine.Plant.*;
-import static il.org.spartan.refactoring.engine.Restructure.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
@@ -11,6 +10,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.builder.*;
+import il.org.spartan.refactoring.create.*;
+import il.org.spartan.refactoring.create.duplicate;
 import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.wring.Wring.*;
 
@@ -30,7 +31,7 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
 
   private static ASTNode go(final InfixExpression e) {
     return e.hasExtendedOperands() ? plant(go(hop.operands(e))).into(step.parent(e))
-        : literal0(step.left(e)) ? plant(minus(step.right(e))).into(step.parent(e)) //
+        : literal0(step.left(e)) ? plant(duplicate.minus(step.right(e))).into(step.parent(e)) //
             : literal0(step.right(e)) ? plant(step.left(e)).into(step.parent(e)) //
                 : null;
   }
@@ -39,7 +40,7 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
     final List<Expression> $ = new ArrayList<>(es);
     if (literal0(lisp.first($))) {
       $.remove(0);
-      $.set(0, minus(lisp.first($)));
+      $.set(0, duplicate.minus(lisp.first($)));
     } else
       for (int i = 1, size = $.size(); i < size; ++i)
         if (literal0($.get(i))) {

@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.builder.*;
+import il.org.spartan.refactoring.create.*;
 import il.org.spartan.refactoring.engine.*;
 
 /** Expands terms of * or / expressions without reordering.

@@ -3,7 +3,6 @@ package il.org.spartan.refactoring.wring;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.ast.step.*;
 import static il.org.spartan.refactoring.engine.ExpressionComparator.*;
-import static il.org.spartan.refactoring.engine.Restructure.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
@@ -13,7 +12,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.refactoring.ast.*;
-import il.org.spartan.refactoring.builder.*;
+import il.org.spartan.refactoring.create.*;
 import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.java.*;
 
@@ -26,10 +25,10 @@ public enum Wrings {
       final List<Statement> by2) {
     for (final Statement s : from)
       if (s != substitute)
-        duplicateinto(s, to);
+        duplicate.duplicateInto(s, to);
       else {
-        duplicateinto(by1, to);
-        duplicateinto(by2, to);
+        duplicate.duplicateInto(by1, to);
+        duplicate.duplicateInto(by2, to);
       }
   }
 
@@ -130,7 +129,7 @@ public enum Wrings {
     siblings.remove(i);
     siblings.add(i, by);
     final Block $ = parent.getAST().newBlock();
-    duplicateinto(siblings, step.statements($));
+    duplicate.duplicateInto(siblings, step.statements($));
     r.replace(parent, $, g);
     return r;
   }

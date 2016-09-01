@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.ast.step.*;
-import static il.org.spartan.refactoring.engine.Restructure.*;
+import static il.org.spartan.refactoring.create.duplicate.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 
 import java.util.*;
@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.create.duplicate;
 import il.org.spartan.refactoring.engine.*;
 
 /** convert
@@ -61,7 +62,7 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
           r.replace(parent, newParent, g);
         } else {
           statements(newParent).add(shorterIf);
-          duplicateinto(remainder, statements(newParent));
+          duplicate.duplicateInto(remainder, statements(newParent));
           r.replace(s, newParent, g);
         }
       }

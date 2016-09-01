@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.engine.Restructure.*;
 import static il.org.spartan.refactoring.engine.into.*;
 
 import java.util.*;
@@ -11,8 +10,8 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.refactoring.ast.*;
-import il.org.spartan.refactoring.builder.*;
-import il.org.spartan.refactoring.builder.subject.*;
+import il.org.spartan.refactoring.create.*;
+import il.org.spartan.refactoring.create.subject.*;
 import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.java.*;
 
@@ -117,7 +116,7 @@ import il.org.spartan.refactoring.java.*;
 
   @Test @Ignore public void refitWithSort() {
     final InfixExpression e = i("1 + 2 * 3");
-    final List<Expression> operands = hop.operands(flatten(e));
+    final List<Expression> operands = hop.operands(duplicate.flatten(e));
     azzert.that(operands.size(), is(2));
     azzert.that(operands.get(0).toString(), is("1"));
     azzert.that(operands.get(1).toString(), is("2 * 3"));
@@ -138,7 +137,7 @@ import il.org.spartan.refactoring.java.*;
     assert stringType.isNot(e);
     final InfixExpression plus = extract.firstPlus(e);
     assert stringType.isNot(plus);
-    final List<Expression> operands = hop.operands(flatten(plus));
+    final List<Expression> operands = hop.operands(duplicate.flatten(plus));
     azzert.that(operands.size(), is(2));
     final boolean b = ExpressionComparator.ADDITION.sort(operands);
     azzert.that(b, is(true));
@@ -167,7 +166,7 @@ import il.org.spartan.refactoring.java.*;
     assert stringType.isNot(e);
     final InfixExpression plus = extract.firstPlus(e);
     assert stringType.isNot(plus);
-    final List<Expression> operands = hop.operands(flatten(plus));
+    final List<Expression> operands = hop.operands(duplicate.flatten(plus));
     azzert.that(operands.size(), is(2));
     final boolean b = ExpressionComparator.ADDITION.sort(operands);
     azzert.that(b, is(true));

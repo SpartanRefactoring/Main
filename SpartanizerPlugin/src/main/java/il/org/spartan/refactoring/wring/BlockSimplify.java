@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.refactoring.ast.step.*;
-import static il.org.spartan.refactoring.engine.Restructure.*;
 
 import java.util.*;
 import java.util.function.*;
@@ -10,6 +9,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.builder.*;
+import il.org.spartan.refactoring.create.*;
+import il.org.spartan.refactoring.create.duplicate;
 import il.org.spartan.refactoring.engine.*;
 
 /** convert
@@ -153,7 +154,7 @@ public final class BlockSimplify extends Wring.ReplaceCurrentNode<Block> impleme
   private static Block reorganizeStatement(final Statement s) {
     final List<Statement> ss = extract.statements(s);
     final Block $ = s.getAST().newBlock();
-    duplicateinto(ss, statements($));
+    duplicate.duplicateInto(ss, statements($));
     return $;
   }
 
