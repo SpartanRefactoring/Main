@@ -16,7 +16,7 @@ import il.org.spartan.refactoring.engine.*;
  * {@link "http://introcs.cs.princeton.edu/java/11precedence/"}
  * @author Yossi Gil
  * @since 2015-07-14 */
-public enum precedence {
+public enum Precedence {
   ;
   public static boolean nonAssociative(final InfixExpression e) {
     return e != null && in(e.getOperator(), MINUS, DIVIDE, REMAINDER);
@@ -77,7 +77,7 @@ public enum precedence {
    * @return <code><b>true</b></code> <i>iff</i> the precedence of the first
    *         parameter is equal to that of the second parameter. */
   public static boolean equal(final ASTNode host, final ASTNode e2) {
-    return precedence.of(host) == precedence.of(e2);
+    return Precedence.of(host) == Precedence.of(e2);
   }
 
   /** Compare precedence of two expressions.
@@ -86,7 +86,7 @@ public enum precedence {
    * @return <code><b>true</b></code> <i>iff</i> the precedence of the first
    *         parameter is strictly greater than that of the second parameter. */
   public static boolean greater(final ASTNode e1, final ASTNode e2) {
-    return !precedence.known(e1) || !precedence.known(e2) || precedence.of(e1) > precedence.of(e2);
+    return !Precedence.known(e1) || !Precedence.known(e2) || Precedence.of(e1) > Precedence.of(e2);
   }
 
   /** determine whether the precedence of a given {@link Expression} can be
@@ -95,7 +95,7 @@ public enum precedence {
    * @return <code><b>true</b></code> <i>iff</i> the parameter a legal
    *         precedence of Java. */
   public static boolean known(final ASTNode n) {
-    return Is.legal(precedence.of(n));
+    return Is.legal(Precedence.of(n));
   }
 
   private static int of(final Assignment a) {
@@ -114,7 +114,7 @@ public enum precedence {
    * @param n JD
    * @return precedence of the parameter */
   public static int of(final ASTNode n) {
-    return !iz.expression(n) ? UNDEFINED : precedence.of(az.expression(n));
+    return !iz.expression(n) ? UNDEFINED : Precedence.of(az.expression(n));
   }
 
   /** Determine the precedence of the operator present on an {@link Expression}
@@ -154,7 +154,7 @@ public enum precedence {
    * @param e2 JD
    * @return precedence of the parameter */
   public static boolean same(final Expression e1, final Expression e2) {
-    return precedence.of(e1) == precedence.of(e2);
+    return Precedence.of(e1) == Precedence.of(e2);
   }
 
   /** Determine whether an expression has the same precedence as that of a given
@@ -164,6 +164,6 @@ public enum precedence {
    * @return <code><b>true</b></code> <i>iff</i> the precedence of the two
    *         parameters is the same. */
   public static boolean same(final InfixExpression.Operator o, final Expression e) {
-    return precedence.of(o) == precedence.of(e);
+    return Precedence.of(o) == Precedence.of(e);
   }
 }
