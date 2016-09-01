@@ -153,6 +153,7 @@ public class Toolbox {
             new TernaryEliminate(), //
             new TernaryShortestFirst(), //
             new TernaryPushdown(), //
+            new cleverStringTernarization(), //
             null) //
         .add(TypeDeclaration.class, new InterfaceClean(), null) //
         .add(EnumDeclaration.class, new EnumClean(), null) //
