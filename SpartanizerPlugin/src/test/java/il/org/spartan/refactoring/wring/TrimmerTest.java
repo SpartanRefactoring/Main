@@ -2113,7 +2113,12 @@ import il.org.spartan.refactoring.utils.*;
         .to("!polite ? \"I hated the meal\": \"thanks for the meal\"") //
         .to("(!polite ? \"I hated\" : \"thanks for\" )+ \" the meal\"");
   }
-
+  
+  @Test public void issue110_4() {
+    trimming("polite ? \"thanks.\" :  \"I hated the meal.\"") //
+        .to("(polite ? \"thanks\" :\"I hated the meal\")+ \".\"");
+  }
+  
   @Test public void linearTransformation() {
     trimming("plain * the + kludge").to("the*plain+kludge");
   }
