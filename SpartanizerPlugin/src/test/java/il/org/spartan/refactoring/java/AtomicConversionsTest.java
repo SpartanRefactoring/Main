@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.java;
 
 import org.junit.*;
+import static il.org.spartan.azzert.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
@@ -8,15 +9,15 @@ import il.org.spartan.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public class AtomicConversionsTest {
-  private final byte b = (byte) hashCode();
+  private byte b = (byte) hashCode();
   private final boolean b1 = equals(getClass());
   private final boolean b2 = !b1 | b << b == (b & 1);
-  private final char c = 'c';
-  private final double d = Math.sin(b * c);
-  private final float f = (float) Math.cos(d);
-  private final int i = hashCode();
+  private char c = 'c';
+  private double d = Math.sin(b * c);
+  private float f = (float) Math.cos(d);
+  private int i = c ^ (hashCode() << (b & 0xF));
   private final long l = 1L * (i + "").hashCode() * new Object().hashCode();
-  private final short s = (short) (i * (l % i * (b + c)));
+  private short s = (short) (i * (l % i * (b + c)));
   private final Object o = getClass().getClassLoader().getClass();
   private final String S = toString();
 
@@ -137,4 +138,13 @@ public class AtomicConversionsTest {
     azzert.aye(atomic.isLong(l << i));
     azzert.aye(atomic.isLong(l << l));
   }
+  @Test public void preIncrement() {
+    azzert.that(PrudentType.axiom(++d), is (PrudentType.DOUBLE));
+    azzert.that(PrudentType.axiom(++f), is (PrudentType.FLOAT));
+    azzert.that(PrudentType.axiom(++b), is (PrudentType.BYTE));
+    azzert.that(PrudentType.axiom(++c), is (PrudentType.CHAR));
+    azzert.that(PrudentType.axiom(++s), is (PrudentType.SHORT));
+    azzert.that(PrudentType.axiom(++i), is (PrudentType.INT));
+  }
+
 }
