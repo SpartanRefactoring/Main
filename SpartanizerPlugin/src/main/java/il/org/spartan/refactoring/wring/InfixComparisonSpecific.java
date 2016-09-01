@@ -24,7 +24,7 @@ import il.org.spartan.refactoring.java.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class InfixComparisonSpecific extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.Canonicalization {
-  private static final Specificity specifity = new Specificity();
+  private static final specificity specifity = new specificity();
 
   @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Exchange left and right operands of comparison";
@@ -39,6 +39,6 @@ public final class InfixComparisonSpecific extends Wring.ReplaceCurrentNode<Infi
   }
 
   @Override public boolean scopeIncludes(final InfixExpression e) {
-    return !e.hasExtendedOperands() && iz.comparison(e) && (Specificity.defined(step.left(e)) || Specificity.defined(step.right(e)));
+    return !e.hasExtendedOperands() && iz.comparison(e) && (specificity.defined(step.left(e)) || specificity.defined(step.right(e)));
   }
 }

@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.wring.LocalInliner.*;
 
@@ -37,7 +38,7 @@ public final class DeclarationInitialiazerAssignment extends Wring.VariableDecla
     final Assignment a = extract.assignment(nextStatement);
     if (a == null || !wizard.same(n, step.left(a)) || a.getOperator() != ASSIGN)
       return null;
-    final Expression newInitializer = wizard.duplicate(step.right(a));
+    final Expression newInitializer = duplicate.of(step.right(a));
     if (doesUseForbiddenSiblings(f, newInitializer))
       return null;
     final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);

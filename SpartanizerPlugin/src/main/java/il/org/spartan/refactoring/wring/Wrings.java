@@ -15,6 +15,7 @@ import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.java.*;
+import il.org.spartan.refactoring.utils.*;
 
 /** A number of utility functions common to all wrings.
  * @author Yossi Gil
@@ -25,10 +26,10 @@ public enum Wrings {
       final List<Statement> by2) {
     for (final Statement s : from)
       if (s != substitute)
-        duplicate.duplicateInto(s, to);
+        duplicate.into(s, to);
       else {
-        duplicate.duplicateInto(by1, to);
-        duplicate.duplicateInto(by2, to);
+        duplicate.into(by1, to);
+        duplicate.into(by2, to);
       }
   }
 
@@ -47,7 +48,7 @@ public enum Wrings {
       case 0:
         return e.getAST().newBooleanLiteral(b);
       case 1:
-        return wizard.duplicate(operands.get(0));
+        return duplicate.of(operands.get(0));
       default:
         return subject.operands(operands).to(e.getOperator());
     }
@@ -88,7 +89,7 @@ public enum Wrings {
     final IfStatement $ = invert(s);
     if (then.isEmpty())
       return $;
-    final IfStatement main = wizard.duplicate(s);
+    final IfStatement main = duplicate.of(s);
     if (elze.isEmpty())
       return main;
     final int rankThen = Wrings.sequencerRank(last(then));
@@ -129,7 +130,7 @@ public enum Wrings {
     siblings.remove(i);
     siblings.add(i, by);
     final Block $ = parent.getAST().newBlock();
-    duplicate.duplicateInto(siblings, step.statements($));
+    duplicate.into(siblings, step.statements($));
     r.replace(parent, $, g);
     return r;
   }

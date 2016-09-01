@@ -117,14 +117,14 @@ public class izTest {
   }
 
   @Test public void nonnAssociative() {
-    azzert.that(Precedence.nonAssociative(e("1")), is(false));
-    azzert.that(Precedence.nonAssociative(e("-1")), is(false));
-    azzert.that(Precedence.nonAssociative(e("-1+2")), is(false));
-    azzert.that(Precedence.nonAssociative(e("1+2")), is(false));
-    azzert.that(Precedence.nonAssociative(e("2-1")), is(true));
-    azzert.that(Precedence.nonAssociative(e("2/1")), is(true));
-    azzert.that(Precedence.nonAssociative(e("2%1")), is(true));
-    azzert.that(Precedence.nonAssociative(e("2*1")), is(false));
+    azzert.that(wizard.nonAssociative(e("1")), is(false));
+    azzert.that(wizard.nonAssociative(e("-1")), is(false));
+    azzert.that(wizard.nonAssociative(e("-1+2")), is(false));
+    azzert.that(wizard.nonAssociative(e("1+2")), is(false));
+    azzert.that(wizard.nonAssociative(e("2-1")), is(true));
+    azzert.that(wizard.nonAssociative(e("2/1")), is(true));
+    azzert.that(wizard.nonAssociative(e("2%1")), is(true));
+    azzert.that(wizard.nonAssociative(e("2*1")), is(false));
   }
 
   @Test public void numericLiteralFalse1() {

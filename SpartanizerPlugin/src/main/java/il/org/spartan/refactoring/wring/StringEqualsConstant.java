@@ -7,8 +7,10 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
+import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.engine.*;
+import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.Wring.*;
 
 /** Replace <code> s.equals("s")</code> by <code>"s".equals(s)</code>
@@ -39,9 +41,9 @@ public final class StringEqualsConstant extends ReplaceCurrentNode<MethodInvocat
 
   private static ASTNode replacement(final SimpleName n, final Expression ¢, final Expression e) {
     final MethodInvocation $ = n.getAST().newMethodInvocation();
-    $.setExpression(wizard.duplicate(¢));
-    $.setName(wizard.duplicate(n));
-    arguments($).add(wizard.duplicate(e));
+    $.setExpression(duplicate.of(¢));
+    $.setName(duplicate.of(n));
+    arguments($).add(duplicate.of(e));
     return $;
   }
 }

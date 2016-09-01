@@ -204,7 +204,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
 
     static Expression assignmentAsExpression(final Assignment a) {
       final Operator o = a.getOperator();
-      return o == ASSIGN ? wizard.duplicate(step.right(a)) : subject.pair(step.left(a), step.right(a)).to(asInfix(o));
+      return o == ASSIGN ? duplicate.of(step.right(a)) : subject.pair(step.left(a), step.right(a)).to(asInfix(o));
     }
 
     static boolean doesUseForbiddenSiblings(final VariableDeclarationFragment f, final ASTNode... ns) {
@@ -228,7 +228,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
         r.remove(parent, g);
         return;
       }
-      final VariableDeclarationStatement newParent = wizard.duplicate(parent);
+      final VariableDeclarationStatement newParent = duplicate.of(parent);
       fragments(newParent).clear();
       fragments(newParent).addAll(live);
       r.replace(parent, newParent, g);
@@ -240,7 +240,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
       final int $ = size(parent);
       if (live.isEmpty())
         return $;
-      final VariableDeclarationStatement newParent = wizard.duplicate(parent);
+      final VariableDeclarationStatement newParent = duplicate.of(parent);
       fragments(newParent).clear();
       fragments(newParent).addAll(live);
       return $ - size(newParent);
@@ -281,7 +281,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
       final int $ = size(parent);
       if (parent.fragments().size() <= 1)
         return $;
-      final VariableDeclarationStatement newParent = wizard.duplicate(parent);
+      final VariableDeclarationStatement newParent = duplicate.of(parent);
       newParent.fragments().remove(parent.fragments().indexOf(f));
       return $ - size(newParent);
     }
@@ -301,7 +301,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
       final List<VariableDeclarationFragment> $ = new ArrayList<>();
       for (final VariableDeclarationFragment brother : fs)
         if (brother != null && brother != f && brother.getInitializer() != null)
-          $.add(wizard.duplicate(brother));
+          $.add(duplicate.of(brother));
       return $;
     }
 

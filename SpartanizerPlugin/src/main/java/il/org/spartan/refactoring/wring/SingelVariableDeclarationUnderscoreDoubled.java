@@ -113,8 +113,8 @@ import il.org.spartan.refactoring.wring.Wring.*;
     $.setName(¢.getAST().newSimpleName(unusedVariableName()));
     $.setFlags($.getFlags());
     $.setInitializer($.getInitializer());
-    $.setType(wizard.duplicate(¢.getType()));
-    duplicate.duplicateModifiers(step.modifiers(¢), step.modifiers($));
+    $.setType(duplicate.of(¢.getType()));
+    duplicate.modifiers(step.modifiers(¢), step.modifiers($));
     return $;
   }
 }

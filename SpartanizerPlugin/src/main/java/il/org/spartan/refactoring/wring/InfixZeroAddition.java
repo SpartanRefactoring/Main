@@ -18,6 +18,7 @@ import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.builder.*;
 import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.utils.*;
 
 /** A {@link Wring} to convert an expression such as
  *
@@ -72,7 +73,7 @@ public final class InfixZeroAddition extends Wring<InfixExpression> {
         final Expression first = n % 2 == 0 ? null : es.get(0);
         for (final Expression ¢ : es)
           if (¢ != first && minus.level(¢) > 0)
-            r.replace(¢, plant(wizard.duplicate(minus.peel(¢))).into(¢.getParent()), g);
+            r.replace(¢, plant(duplicate.of(minus.peel(¢))).into(¢.getParent()), g);
         if (first != null)
           r.replace(first, plant(subject.operand(minus.peel(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
       }

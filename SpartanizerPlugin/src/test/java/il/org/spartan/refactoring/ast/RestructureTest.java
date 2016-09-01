@@ -11,26 +11,26 @@ import il.org.spartan.refactoring.engine.*;
 @SuppressWarnings("static-method") //
 public class RestructureTest {
   @Test public void issue72me4xA() {
-    azzert.that(duplicate.minus(into.e("-x")), iz("x"));
+    azzert.that(make.minus(into.e("-x")), iz("x"));
   }
 
   @Test public void issue72me4xB() {
-    azzert.that(duplicate.minus(into.e("x")), iz("-x"));
+    azzert.that(make.minus(into.e("x")), iz("-x"));
   }
 
   @Test public void issue72me4xC() {
-    azzert.that(duplicate.minus(into.e("+x")), iz("-x"));
+    azzert.that(make.minus(into.e("+x")), iz("-x"));
   }
 
   @Test public void issue72me4xD() {
-    azzert.that(duplicate.minus(into.e("-x")), iz("x"));
+    azzert.that(make.minus(into.e("-x")), iz("x"));
   }
 
   @Test public void issue72me4xF() {
-    azzert.that(duplicate.minus(into.e("x")), iz("-x"));
+    azzert.that(make.minus(into.e("x")), iz("-x"));
   }
 
   @Test public void issue72me4xG() {
-    azzert.that(duplicate.minus(into.e("+x")), iz("-x"));
+    azzert.that(make.minus(into.e("+x")), iz("-x"));
   }
 }

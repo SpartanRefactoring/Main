@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
+import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.java.*;
@@ -49,7 +50,7 @@ final class LocalInliner {
 
     private void inlineintoSingleton(final ASTNode replacement, final Wrapper<ASTNode> ns) {
       final ASTNode oldExpression = ns.get();
-      final ASTNode newExpression = wizard.duplicate(ns.get());
+      final ASTNode newExpression = duplicate.of(ns.get());
       ns.set(newExpression);
       rewriter.replace(oldExpression, newExpression, editGroup);
       for (final ASTNode use : Collect.usesOf(name).in(newExpression))
