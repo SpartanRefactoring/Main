@@ -1,4 +1,4 @@
-package il.org.spartan.refactoring.create;
+package il.org.spartan.refactoring.assemble;
 
 import static il.org.spartan.refactoring.ast.iz.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
@@ -7,9 +7,9 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.builder.*;
-import il.org.spartan.refactoring.create.duplicate;
 import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.wring.*;
 
