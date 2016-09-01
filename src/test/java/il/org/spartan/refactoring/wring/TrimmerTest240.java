@@ -672,12 +672,12 @@ public class TrimmerTest240 {
 
   @Test public void declarationIfAssignment() {
     trimming("" + //
-        "    String res = s;\n" + //
+        "    String $ = s;\n" + //
         "    if (s.equals(y))\n" + //
-        "      res = s + blah;\n" + //
-        "    S.out.println(res);").to("" + //
-            "    String res = s.equals(y) ? s + blah :s;\n" + //
-            "    S.out.println(res);");
+        "      $ = s + blah;\n" + //
+        "    S.out.println($);").to("" + //
+            "    String $ = s.equals(y) ? s + blah :s;\n" + //
+            "    S.out.println($);");
   }
 
   @Test public void declarationIfAssignment3() {
@@ -690,12 +690,12 @@ public class TrimmerTest240 {
 
   @Test public void declarationIfUpdateAssignment() {
     trimming("" + //
-        "    String res = s;\n" + //
+        "    String $ = s;\n" + //
         "    if (s.equals(y))\n" + //
-        "      res += s + blah;\n" + //
-        "    S.out.println(res);").to("" + //
-            "    String res = s.equals(y) ? s + s + blah :s;\n" + //
-            "    S.out.println(res);");
+        "      $ += s + blah;\n" + //
+        "    S.out.println($);").to("" + //
+            "    String $ = s.equals(y) ? s + s + blah :s;\n" + //
+            "    S.out.println($);");
   }
 
   @Test public void declarationIfUsesLaterVariable() {
@@ -916,11 +916,11 @@ public class TrimmerTest240 {
     trimming("" + //
         "      for (int i = 0;i < s.length();++i)\n" + //
         "       if (s.charAt(i) == 'a')\n" + //
-        "          res += 2;\n" + //
+        "          $ += 2;\n" + //
         "        else "//
         + "       if (s.charAt(i) == 'd')\n" + //
-        "          res -= 1;\n" + //
-        "      return res;\n" + //
+        "          $ -= 3;\n" + //
+        "      return $;\n" + //
         " if (b) i = 3;").to(null);
   }
 
@@ -958,8 +958,8 @@ public class TrimmerTest240 {
 
   @Ignore @Test public void forwardDeclaration7() {
     trimming(
-        "  j = 2*i;   }      public final int j;    private BlahClass yada6() {   final BlahClass res = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     res = new BlahClass(8);     S.out.println(res.j);     doStuff(res);        private void doStuff(BlahClass res2) {     S.out.println(res2.j);        private BlahClass res;   S.out.println(res.j);   return res; ")
-            .to("  j = 2*i;   }      public final int j;    private BlahClass yada6() {   final Runnable r = new Runnable() {        @Override    public void run() {     res = new BlahClass(8);     S.out.println(res.j);     doStuff(res);        private void doStuff(BlahClass res2) {     S.out.println(res2.j);        private BlahClass res;   final BlahClass res = new BlahClass(6);   S.out.println(res.j);   return res; ");
+        "  j = 2*i;   }      public final int j;    private BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     $ = new BlahClass(8);     S.out.println($.j);     doStuff($);        private void doStuff(BlahClass res2) {     S.out.println(res2.j);        private BlahClass $;   S.out.println($.j);   return $; ")
+            .to("  j = 2*i;   }      public final int j;    private BlahClass yada6() {   final Runnable r = new Runnable() {        @Override    public void run() {     $ = new BlahClass(8);     S.out.println($.j);     doStuff($);        private void doStuff(BlahClass res2) {     S.out.println(res2.j);        private BlahClass $;   final BlahClass $ = new BlahClass(6);   S.out.println($.j);   return $; ");
   }
 
   @Test public void ifBugSecondTry() {
@@ -1284,19 +1284,12 @@ public class TrimmerTest240 {
   @Test public void inline01() {
     trimming("" + //
         "  public int y() {\n" + //
-        "    final Z res = new Z(6);\n" + //
-        "    S.out.println(res.j);\n" + //
-        "    return res;\n" + //
+        "    final Z $ = new Z(6);\n" + //
+        "    S.out.println($.j);\n" + //
+        "    return $;\n" + //
         "  }\n" + //
         "}\n" + //
-        "").to(//
-            "  public int y() {\n" + // //
-                "    final Z $ = new Z(6);\n" + // //
-                "    S.out.println($.j);\n" + // //
-                "    return $;\n" + // //
-                "  }\n" + //
-                "}\n" + //
-                "");
+        "").to(null);
   }
 
   @Test public void inlineInitializers() {
@@ -1721,20 +1714,12 @@ public class TrimmerTest240 {
         .to(" for(int i:j)b[i]=f; ");
   }
 
-  @Test public void issue54ForPlain() {
-    trimming("int a  = f(); for (int i = 0; i < 100;  ++i) b[i] = a;")//
-        .to(null);
-  }
 
   @Test public void issue54ForPlainNonSideEffect() {
     trimming("int a  = f; for (int i = 0; i < 100;  ++i) b[i] = a;")//
         .to("for (int i = 0; i < 100;  ++i) b[i] = f;");
   }
 
-  @Test public void issue54ForPlainUseInCondition() {
-    trimming("int a  = f(); for (int i = 0; a < 100;  ++i) b[i] = 3;")//
-        .to(null);
-  }
 
   @Test public void issue54ForPlainUseInConditionNonSideEffect() {
     trimming("int a  = f; for (int i = 0; a < 100;  ++i) b[i] = 3;")//
@@ -1803,7 +1788,9 @@ public class TrimmerTest240 {
   }
 
   @Test public void issue62a() {
-    trimming("int f(int i) { for(;;++i) if(false) break; return i; }").to(null);
+    trimming("int f(int i) { for(;;++i) if(false) break; return i; }")//
+    .to("int f(int i) { for(;;++i) {} return i; }")//
+    .to(null);
   }
 
   @Test public void issue62c() {
@@ -2634,9 +2621,9 @@ public class TrimmerTest240 {
 
   @Test public void pushdownTernaryintoPrintln() {
     trimming("    if (s.equals(t))\n"//
-        + "      S.out.println(Hey + res);\n"//
+        + "      S.out.println(Hey + $);\n"//
         + "    else\n"//
-        + "      S.out.println(Ho + x + a);").to("S.out.println(s.equals(t)?Hey+res:Ho+x+a);");
+        + "      S.out.println(Ho + x + a);").to("S.out.println(s.equals(t)?Hey+$:Ho+x+a);");
   }
 
   @Test public void pushdownTernaryLongFieldRefernece() {
@@ -2738,53 +2725,53 @@ public class TrimmerTest240 {
 
   @Ignore @Test public void reanmeReturnVariableToDollar01() {
     trimming(
-        " public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass res = new BlahClass(6);   S.out.println(res.j);   return res; ")
+        " public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   S.out.println($.j);   return $; ")
             .to(" public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   S.out.println($.j);   return $; ");
   }
 
   @Ignore @Test public void reanmeReturnVariableToDollar02() {
     trimming(
-        " int res = blah.length();   if (blah.contains(0xDEAD))    return res * 2;   if (res % 2 ==0)    return ++res;   if (blah.startsWith(\"y\")) {    return y(res);   int x = res + 6;   if (x>1)    return res + x;   res -= 1;   return res; ")
+        " int $ = blah.length();   if (blah.contains(0xDEAD))    return $ * 2;   if ($ % 2 ==0)    return ++$;   if (blah.startsWith(\"y\")) {    return y($);   int x = $ + 6;   if (x>1)    return $ + x;   $ -= 1;   return $; ")
             .to(" int $ = blah.length();   if (blah.contains(0xDEAD))    return $ * 2;   if ($ % 2 ==0)    return ++$;   if (blah.startsWith(\"y\")) {    return y($);   int x = $ + 6;   if (x>1)    return $ + x;   $ -= 1;   return $; ");
   }
 
   @Ignore @Test public void reanmeReturnVariableToDollar03() {
     trimming(
-        " public BlahClass(int i) {    j = 2*i;      public final int j;   public int yada7(final String blah) {   final BlahClass res = new BlahClass(blah.length());   if (blah.contains(0xDEAD))    return res.j;   int x = blah.length()/2;   if (x==3)    return x;   x = y(res.j - x);   return x; ")
-            .to(" public BlahClass(int i) {    j = 2*i;      public final int j;   public int yada7(final String blah) {   final BlahClass res = new BlahClass(blah.length());   if (blah.contains(0xDEAD))    return res.j;   int $ = blah.length()/2;   if ($==3)    return $;   $ = y(res.j - $);   return $; ");
+        " public BlahClass(int i) {    j = 2*i;      public final int j;   public int yada7(final String blah) {   final BlahClass $ = new BlahClass(blah.length());   if (blah.contains(0xDEAD))    return $.j;   int x = blah.length()/2;   if (x==3)    return x;   x = y($.j - x);   return x; ")
+            .to(" public BlahClass(int i) {    j = 2*i;      public final int j;   public int yada7(final String blah) {   final BlahClass $ = new BlahClass(blah.length());   if (blah.contains(0xDEAD))    return $.j;   int $ = blah.length()/2;   if ($==3)    return $;   $ = y($.j - $);   return $; ");
   }
 
   @Ignore @Test public void reanmeReturnVariableToDollar04() {
-    trimming("int res = 0;   String $ = blah + known;   y(res + $.length());   return res + $.length();").to(null);
+    trimming("int $ = 0;   String $ = blah + known;   y($ + $.length());   return $ + $.length();").to(null);
   }
 
   @Ignore @Test public void reanmeReturnVariableToDollar05() {
     trimming(
-        "  j = 2*i;   }      public final int j;    public BlahClass yada6() {   final BlahClass res = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     final BlahClass res2 = new BlahClass(res.j);     S.out.println(res2.j);     doStuff(res2);        private void doStuff(final BlahClass res) {     S.out.println(res.j);   S.out.println(res.j);   return res; ")
-            .to("  j = 2*i;   }      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     final BlahClass res2 = new BlahClass($.j);     S.out.println(res2.j);     doStuff(res2);        private void doStuff(final BlahClass res) {     S.out.println(res.j);   S.out.println($.j);   return $; ");
+        "  j = 2*i;   }      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     final BlahClass res2 = new BlahClass($.j);     S.out.println(res2.j);     doStuff(res2);        private void doStuff(final BlahClass $) {     S.out.println($.j);   S.out.println($.j);   return $; ")
+            .to("  j = 2*i;   }      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     final BlahClass res2 = new BlahClass($.j);     S.out.println(res2.j);     doStuff(res2);        private void doStuff(final BlahClass $) {     S.out.println($.j);   S.out.println($.j);   return $; ");
   }
 
   @Ignore @Test public void reanmeReturnVariableToDollar06() {
     trimming(
-        "  j = 2*i;   }      public final int j;    public void yada6() {   final BlahClass res = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     final BlahClass res2 = new BlahClass(res.j);     S.out.println(res2.j);     doStuff(res2);        private int doStuff(final BlahClass r) {     final BlahClass res = new BlahClass(r.j);     return res.j + 1;   S.out.println(res.j); ")
-            .to("  j = 2*i;   }      public final int j;    public void yada6() {   final BlahClass res = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     final BlahClass res2 = new BlahClass(res.j);     S.out.println(res2.j);     doStuff(res2);        private int doStuff(final BlahClass r) {     final BlahClass $ = new BlahClass(r.j);     return $.j + 1;   S.out.println(res.j); ");
+        "  j = 2*i;   }      public final int j;    public void yada6() {   final BlahClass $ = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     final BlahClass res2 = new BlahClass($.j);     S.out.println(res2.j);     doStuff(res2);        private int doStuff(final BlahClass r) {     final BlahClass $ = new BlahClass(r.j);     return $.j + 1;   S.out.println($.j); ")
+            .to("  j = 2*i;   }      public final int j;    public void yada6() {   final BlahClass $ = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     final BlahClass res2 = new BlahClass($.j);     S.out.println(res2.j);     doStuff(res2);        private int doStuff(final BlahClass r) {     final BlahClass $ = new BlahClass(r.j);     return $.j + 1;   S.out.println($.j); ");
   }
 
   @Ignore @Test public void reanmeReturnVariableToDollar07() {
     trimming(
-        "  j = 2*i;   }      public final int j;    public BlahClass yada6() {   final BlahClass res = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     res = new BlahClass(8);     S.out.println(res.j);     doStuff(res);        private void doStuff(BlahClass res2) {     S.out.println(res2.j);        private BlahClass res;   S.out.println(res.j);   return res; ")
-            .to("  j = 2*i;   }      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     res = new BlahClass(8);     S.out.println(res.j);     doStuff(res);        private void doStuff(BlahClass res2) {     S.out.println(res2.j);        private BlahClass res;   S.out.println($.j);   return $; ");
+        "  j = 2*i;   }      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     $ = new BlahClass(8);     S.out.println($.j);     doStuff($);        private void doStuff(BlahClass res2) {     S.out.println(res2.j);        private BlahClass $;   S.out.println($.j);   return $; ")
+            .to("  j = 2*i;   }      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     $ = new BlahClass(8);     S.out.println($.j);     doStuff($);        private void doStuff(BlahClass res2) {     S.out.println(res2.j);        private BlahClass $;   S.out.println($.j);   return $; ");
   }
 
   @Ignore @Test public void reanmeReturnVariableToDollar08() {
     trimming(
-        " public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass res = new BlahClass(6);   if (res.j == 0)    return null;   S.out.println(res.j);   return res; ")
+        " public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   if ($.j == 0)    return null;   S.out.println($.j);   return $; ")
             .to(" public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   if ($.j == 0)    return null;   S.out.println($.j);   return $; ");
   }
 
   @Ignore @Test public void reanmeReturnVariableToDollar09() {
     trimming(
-        " public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass res = new BlahClass(6);   if (res.j == 0)    return null;   S.out.println(res.j);   return null;")
+        " public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   if ($.j == 0)    return null;   S.out.println($.j);   return null;")
             .to(null);
   }
 
@@ -2976,115 +2963,115 @@ public class TrimmerTest240 {
   @Test public void shortestIfBranchFirst01() {
     trimming(""//
         + "if (s.equals(0xDEAD)) {\n"//
-        + " int res=0; "//
+        + " int $=0; "//
         + " for (int i=0; i<s.length(); ++i)     "//
         + " if (s.charAt(i)=='a')      "//
-        + "   res += 2;    "//
+        + "   $ += 2;    "//
         + "} else "//
         + " if (s.charAt(i)=='d') "//
-        + "  res -= 1;  "//
-        + "return res;  ")
+        + "  $ -= 1;  "//
+        + "return $;  ")
             .to(""//
                 + "if (!s.equals(0xDEAD)) {"//
                 + " if(s.charAt(i)=='d')"//
-                + "  res-=1;"//
+                + "  $-=1;"//
                 + "} else {"//
-                + "  int res=0;"//
+                + "  int $=0;"//
                 + "  for(int i=0;i<s.length();++i)"//
                 + "   if(s.charAt(i)=='a')"//
-                + "     res+=2;"//
+                + "     $+=2;"//
                 + " }"//
-                + " return res;");
+                + " return $;");
   }
 
   @Test public void shortestIfBranchFirst02() {
     trimming("" //
         + "if (!s.equals(0xDEAD)) { "//
-        + " int res=0;"//
+        + " int $=0;"//
         + " for (int i=0;i<s.length();++i)     "//
         + "   if (s.charAt(i)=='a')      "//
-        + "     res += 2;"//
+        + "     $ += 2;"//
         + "   else "//
         + "  if (s.charAt(i)=='d')      "//
-        + "       res -= 1;"//
-        + "  return res;"//
+        + "       $ -= 1;"//
+        + "  return $;"//
         + "} else {    "//
         + " return 8;"//
         + "}")
             .to("" //
                 + " if (s.equals(0xDEAD)) \n" + //
                 "    return 8;" + //
-                "      int res = 0;\n" + //
+                "      int $ = 0;\n" + //
                 "      for (int i = 0;i < s.length();++i)\n" + //
                 "       if (s.charAt(i) == 'a')\n" + //
-                "          res += 2;\n" + //
+                "          $ += 2;\n" + //
                 "        else " + //
                 "       if (s.charAt(i) == 'd')\n" + //
-                "          res -= 1;\n" + //
-                "      return res;\n");
+                "          $ -= 1;\n" + //
+                "      return $;\n");
   }
 
   @Test public void shortestIfBranchFirst02a() {
     trimming("" + //
         " if (!s.equals(0xDEAD)) {\n" + //
-        "      int res = 0;\n" + //
+        "      int $ = 0;\n" + //
         "      for (int i = 0;i < s.length();++i)\n" + //
         "       if (s.charAt(i) == 'a')\n" + //
-        "          res += 2;\n" + //
+        "          $ += 2;\n" + //
         "        else " + //
         "       if (s.charAt(i) == 'd')\n" + //
-        "          res -= 1;\n" + //
-        "      return res;\n" + //
+        "          $ -= 1;\n" + //
+        "      return $;\n" + //
         "    }\n" + //
         "    return 8;" + //
         "").to(" if (s.equals(0xDEAD)) "//
             + "return 8; " + //
-            "      int res = 0;\n" + //
+            "      int $ = 0;\n" + //
             "      for (int i = 0;i < s.length();++i)\n" + //
             "       if (s.charAt(i) == 'a')\n" + //
-            "          res += 2;\n" + //
+            "          $ += 2;\n" + //
             "        else "//
             + "       if (s.charAt(i) == 'd')\n" + //
-            "          res -= 1;\n" + //
-            "      return res;\n" + //
+            "          $ -= 1;\n" + //
+            "      return $;\n" + //
             "");
   }
 
   @Test public void shortestIfBranchFirst02b() {
     trimming("" + //
-        "      int res = 0;\n" + //
+        "      int $ = 0;\n" + //
         "      for (int i = 0;i < s.length();++i)\n" + //
         "       if (s.charAt(i) == 'a')\n" + //
-        "          res += 2;\n" + //
+        "          $ += 2;\n" + //
         "        else " + //
         "       if (s.charAt(i) == 'd')\n" + //
-        "          res -= 1;\n" + //
-        "      return res;\n" + //
+        "          $ -= 17;\n" + //
+        "      return $;\n" + //
         "").to(null);
   }
 
   @Test public void shortestIfBranchFirst02c() {
     final CompilationUnit u = Wrap.Statement.intoCompilationUnit("" + //
-        "      int res = 0;\n" + //
+        "      int $ = 0;\n" + //
         "      for (int i = 0;i < s.length();++i)\n" + //
         "       if (s.charAt(i) == 'a')\n" + //
-        "          res += 2;\n" + //
+        "          $ += 2;\n" + //
         "        else " + //
         "       if (s.charAt(i) == 'd')\n" + //
-        "          res -= 1;\n" + //
-        "      return res;\n" + //
+        "          $ -= 1;\n" + //
+        "      return $;\n" + //
         ""//
     );
     final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
     that(f, notNullValue());
-    that(f, iz(" res = 0"));
+    that(f, iz(" $ = 0"));
     that(extract.nextStatement(f),
         iz(" for (int i = 0;i < s.length();++i)\n"//
             + "       if (s.charAt(i) == 'a')\n"//
-            + "          res += 2;\n"//
+            + "          $ += 2;\n"//
             + "        else "//
             + "       if (s.charAt(i) == 'd')\n"//
-            + "          res -= 1;\n"));
+            + "          $ -= 1;\n"));
   }
 
   @Test public void shortestIfBranchWithFollowingCommandsSequencer() {
@@ -3800,60 +3787,60 @@ public class TrimmerTest240 {
   }
 
   @Test public void ternarize05() {
-    trimming(" int res = 0; "//
+    trimming(" int $ = 0; "//
         + "if (s.equals(532))    "//
-        + "res += 6;   "//
+        + "$ += 6;   "//
         + "else    "//
-        + "res += 9;      ").to("int res=0;res+=s.equals(532)?6:9;");
+        + "$ += 9;      ").to("int $=0;$+=s.equals(532)?6:9;");
   }
 
   @Test public void ternarize05a() {
-    trimming(" int res = 0; "//
+    trimming(" int $ = 0; "//
         + "if (s.equals(532))    "//
-        + "res += 6;   "//
+        + "$ += 6;   "//
         + "else    "//
-        + "res += 9;      "//
-        + "return res; ").to("int res=0;res+=s.equals(532)?6:9;return res;");
+        + "$ += 9;      "//
+        + "return $; ").to("int $=0;$+=s.equals(532)?6:9;return $;");
   }
 
   @Test public void ternarize07() {
     trimming("" //
-        + "String res;" //
-        + "res = s;   " //
-        + "if (res.equals(532)==true)    " //
-        + "  res = s + 0xABBA;   " //
-        + "S.out.println(res); " //
+        + "String $;" //
+        + "$ = s;   " //
+        + "if ($.equals(532)==true)    " //
+        + "  $ = s + 0xABBA;   " //
+        + "S.out.println($); " //
         + "")
             .to("" //
-                + "String res =s ;" //
-                + "if (res.equals(532))    " //
-                + "  res = s + 0xABBA;   " //
-                + "S.out.println(res); " //
+                + "String $ =s ;" //
+                + "if ($.equals(532))    " //
+                + "  $ = s + 0xABBA;   " //
+                + "S.out.println($); " //
                 + "");
   }
 
   @Test public void ternarize07a() {
     trimming("" //
-        + "String res;" //
-        + "res = s;   " //
-        + "if (res==true)    " //
-        + "  res = s + 0xABBA;   " //
-        + "S.out.println(res); " //
-        + "").to("String res=s;if(res)res=s+0xABBA;S.out.println(res);");
+        + "String $;" //
+        + "$ = s;   " //
+        + "if ($==true)    " //
+        + "  $ = s + 0xABBA;   " //
+        + "S.out.println($); " //
+        + "").to("String $=s;if($)$=s+0xABBA;S.out.println($);");
   }
 
   @Test public void ternarize07aa() {
-    trimming("String res=s;if(res==true)res=s+0xABBA;S.out.println(res);").to("String res=s==true?s+0xABBA:s;S.out.println(res);");
+    trimming("String $=s;if($==true)$=s+0xABBA;S.out.println($);").to("String $=s==true?s+0xABBA:s;S.out.println($);");
   }
 
   @Test public void ternarize07b() {
     trimming("" //
-        + "String res =s ;" //
-        + "if (res.equals(532)==true)    " //
-        + "  res = s + 0xABBA;   " //
-        + "S.out.println(res); ")
+        + "String $ =s ;" //
+        + "if ($.equals(532)==true)    " //
+        + "  $ = s + 0xABBA;   " //
+        + "S.out.println($); ")
             .to("" //
-                + "String res=s.equals(532)==true?s+0xABBA:s;S.out.println(res);");
+                + "String $=s.equals(532)==true?s+0xABBA:s;S.out.println($);");
   }
 
   @Test public void ternarize09() {
@@ -3861,19 +3848,19 @@ public class TrimmerTest240 {
   }
 
   @Test public void ternarize10() {
-    trimming("String res = s, foo = bar;   "//
-        + "if (res.equals(532)==true)    " //
-        + "res = s + 0xABBA;   "//
-        + "S.out.println(res); ").to("String res=s.equals(532)==true?s+0xABBA:s,foo=bar;S.out.println(res);");
+    trimming("String $ = s, foo = bar;   "//
+        + "if ($.equals(532)==true)    " //
+        + "$ = s + 0xABBA;   "//
+        + "S.out.println($); ").to("String $=s.equals(532)==true?s+0xABBA:s,foo=bar;S.out.println($);");
   }
 
   @Test public void ternarize12() {
-    trimming("String res = s;   if (s.equals(532))    res = res + 0xABBA;   S.out.println(res); ")
-        .to("String res=s.equals(532)?s+0xABBA:s;S.out.println(res);");
+    trimming("String $ = s;   if (s.equals(532))    $ = $ + 0xABBA;   S.out.println($); ")
+        .to("String $=s.equals(532)?s+0xABBA:s;S.out.println($);");
   }
 
   @Test public void ternarize13() {
-    trimming("String res = m, foo;  if (m.equals(f())==true)   foo = M; ")//
+    trimming("String $ = m, foo;  if (m.equals(f())==true)   foo = M; ")//
         .to("String foo;if(m.equals(f())==true)foo=M;")//
         .to("String foo;if(m.equals(f()))foo=M;");
   }
@@ -3908,12 +3895,12 @@ public class TrimmerTest240 {
   }
 
   @Test public void ternarize14() {
-    trimming("String res=m,foo=GY;if (res.equals(f())==true){foo = M;int k = 2;k = 8;S.out.println(foo);}f();")
-        .to("String res=m,foo=GY;if(res.equals(f())){foo=M;int k=8;S.out.println(foo);}f();");
+    trimming("String $=m,foo=GY;if ($.equals(f())==true){foo = M;int k = 2;k = 8;S.out.println(foo);}f();")
+        .to("String $=m,foo=GY;if($.equals(f())){foo=M;int k=8;S.out.println(foo);}f();");
   }
 
   @Test public void ternarize16() {
-    trimming("String res = m;  int num1, num2, num3;  if (m.equals(f()))   num2 = 2; ").to(null);
+    trimming("String $ = m;  int num1, num2, num3;  if (m.equals(f()))   num2 = 2; ").to(null);
   }
 
   @Test public void ternarize16a() {
@@ -3923,8 +3910,8 @@ public class TrimmerTest240 {
   }
 
   public void ternarize18() {
-    trimming("final String res=s;System.out.println(s.equals(res)?tH3+res:h2A+res+0);")//
-        .to("System.out.println(s.equals(s)?tH3+res:h2A+s+0);");
+    trimming("final String $=s;System.out.println(s.equals($)?tH3+$:h2A+$+0);")//
+        .to("System.out.println(s.equals(s)?tH3+$:h2A+s+0);");
   }
 
   @Test public void ternarize21() {
