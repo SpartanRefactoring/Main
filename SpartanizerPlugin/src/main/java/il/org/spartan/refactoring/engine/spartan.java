@@ -66,7 +66,7 @@ public interface spartan {
   // the algorithm here? On the face it you may be getting an infinite recursion
   // here. How about "Expression"? "Example"?
   static String shorten(final String s) {
-    return "Exception".equals(s) ? "x" : new JavaTypeNameParser(s).shortName();
+    return new JavaTypeNameParser(s).shortName();
   }
 
   static String shorten(final org.eclipse.jdt.core.dom.Type t) {
