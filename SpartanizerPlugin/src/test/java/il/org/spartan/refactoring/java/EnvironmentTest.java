@@ -13,7 +13,7 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.engine.*;
 
-public class EnvironmentTest {
+@SuppressWarnings("static-method") public class EnvironmentTest {
   // =================== default ===================
   // Environment e0 = Environment.genesis();
   @Test public void defaultSize() {
