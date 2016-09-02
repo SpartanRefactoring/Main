@@ -930,15 +930,11 @@ public class TrimmerTest250 {
     trimming("a=5&a;").to("a&=5;");
   }
 
-//  @Test public void issue103_XOR1() {
-//    trimming("a=a^5;").to("a^=5;");
-//  }
-  
-  @Test public void issue103_XOR1() {
-    trimming("foo(a=(3&4))").to(null);
+  @Ignore public void issue103_XOR1() {
+    trimming("a=a^5;").to("a^=5;");
   }
 
-  @Test public void issue103_XOR2() {
+  @Ignore public void issue103_XOR2() {
     trimming("j=(j^k)")
     .to("i=j+=k");
   }
