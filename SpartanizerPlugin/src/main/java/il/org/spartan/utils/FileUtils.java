@@ -51,7 +51,7 @@ public class FileUtils {
       while ((line = reader.readLine()) != null)
         $.append(line).append(ls);
     }
-    return $.toString();
+    return "" + $;
   }
 
   private static String read(final Path p) throws IOException {

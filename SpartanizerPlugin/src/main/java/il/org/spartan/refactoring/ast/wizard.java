@@ -50,7 +50,7 @@ public interface wizard {
   PrefixExpression.Operator PLUS1 = PrefixExpression.Operator.PLUS;
   InfixExpression.Operator PLUS2 = InfixExpression.Operator.PLUS;
 
-  public static InfixExpression.Operator assignmentToInfix(final Assignment.Operator o) {
+  static InfixExpression.Operator assignmentToInfix(final Assignment.Operator o) {
     return o == PLUS_ASSIGN ? InfixExpression.Operator.PLUS
         : o == MINUS_ASSIGN ? MINUS
             : o == TIMES_ASSIGN ? TIMES
@@ -59,8 +59,8 @@ public interface wizard {
                         : o == BIT_OR_ASSIGN ? OR
                             : o == BIT_XOR_ASSIGN ? XOR
                                 : o == REMAINDER_ASSIGN ? REMAINDER
-                                    : o == LEFT_SHIFT_ASSIGN ? LEFT_SHIFT //
-                                        : o == RIGHT_SHIFT_SIGNED_ASSIGN ? RIGHT_SHIFT_SIGNED //
+                                    : o == LEFT_SHIFT_ASSIGN ? LEFT_SHIFT
+                                        : o == RIGHT_SHIFT_SIGNED_ASSIGN ? RIGHT_SHIFT_SIGNED
                                             : o == RIGHT_SHIFT_UNSIGNED_ASSIGN ? RIGHT_SHIFT_UNSIGNED : null;
   }
 
@@ -107,7 +107,7 @@ public interface wizard {
   }
 
   static String body(final ASTNode ¢) {
-    return tide.clean(¢.toString());
+    return tide.clean("" + ¢);
   }
 
   /** the function checks if all the given assignments have the same left hand
