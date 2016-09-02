@@ -79,7 +79,7 @@ public enum Wrings {
   static int length(final ASTNode... ns) {
     int $ = 0;
     for (final ASTNode n : ns)
-      $ += n.toString().length();
+      $ += ("" + n).length();
     return $;
   }
 
