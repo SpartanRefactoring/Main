@@ -113,15 +113,13 @@ import org.eclipse.jdt.core.dom.*;
 
   /** @return set of entries defined in the node, including all hiding. */
   static Set<Entry<String, Information>> defines(final ASTNode n) {
-    final Set<Entry<String, Information>> $ = Collections.unmodifiableSet(new HashSet<>());
-    return $;
+    return Collections.unmodifiableSet(new HashSet<>());
   }
 
   /** @return set of entries used in a given node. this includes the list of
    *         entries that were defined in the node */
   static Set<Entry<String, Information>> uses(final ASTNode n) {
-    final Set<Entry<String, Information>> $ = Collections.unmodifiableSet(new HashSet<>());
-    return $;
+    return Collections.unmodifiableSet(new HashSet<>());
   }
 
   /** TODO: document properly, but essentially is a dictionary with a parent.

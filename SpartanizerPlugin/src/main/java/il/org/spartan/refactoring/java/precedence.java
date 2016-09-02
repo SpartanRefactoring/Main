@@ -92,7 +92,7 @@ public enum precedence {
    * @param o JD
    * @return precedence of the parameter */
   private static int of(final Assignment.Operator o) {
-    return of(o.toString());
+    return of("" + o);
   }
 
   /** Determine the precedence of an arbitrary {@link ASTNode}

@@ -25,7 +25,7 @@ public interface spartan {
   }
 
   static String shorten(final Name n) {
-    return n instanceof SimpleName ? shorten(n.toString()) //
+    return n instanceof SimpleName ? shorten("" + n) //
         : n instanceof QualifiedName ? shorten(((QualifiedName) n).getName()) //
             : null;
   }
@@ -35,7 +35,7 @@ public interface spartan {
   }
 
   static String shorten(final ParameterizedType t) {
-    switch (t.getType().toString()) {
+    switch ("" + t.getType()) {
       case "Collection":
       case "Iterable":
       case "List":
@@ -63,8 +63,7 @@ public interface spartan {
   }
 
   static String shorten(final String s) {
-    final String $ = s.equals("Exception") ? "x" : new JavaTypeNameParser(s).shortName();
-    return $;
+    return "Exception".equals(s) ? "x" : new JavaTypeNameParser(s).shortName();
   }
 
   static String shorten(final org.eclipse.jdt.core.dom.Type t) {
