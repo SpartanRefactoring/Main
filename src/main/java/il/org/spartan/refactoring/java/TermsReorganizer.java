@@ -9,8 +9,8 @@ import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.utils.*;
 
 public class TermsReorganizer {
-  public static Expression simplify(final InfixExpression e) {
-    return build(new TermsCollector(e));
+  public static Expression simplify(final InfixExpression x) {
+    return build(new TermsCollector(x));
   }
 
   private static Expression build(final TermsCollector c) {
@@ -30,25 +30,25 @@ public class TermsReorganizer {
     return subject.operands(rest).to(wizard.MINUS2);
   }
 
-  private static Expression buildMinus(final List<Expression> es) {
-    final Expression $ = subject.operand(lisp.first(es)).to(wizard.MINUS1);
-    if (es.size() == 1)
+  private static Expression buildMinus(final List<Expression> xs) {
+    final Expression $ = subject.operand(lisp.first(xs)).to(wizard.MINUS1);
+    if (xs.size() == 1)
       return $;
-    es.remove(0);
-    es.add(0, $);
-    return subject.operands(es).to(wizard.MINUS2);
+    xs.remove(0);
+    xs.add(0, $);
+    return subject.operands(xs).to(wizard.MINUS2);
   }
 
-  private static Expression buildPlus(final List<Expression> es) {
-    switch (es.size()) {
+  private static Expression buildPlus(final List<Expression> xs) {
+    switch (xs.size()) {
       case 0:
         return null;
       case 1:
-        return lisp.first(es);
+        return lisp.first(xs);
       case 2:
-        return subject.pair(lisp.first(es), lisp.second(es)).to(wizard.PLUS2);
+        return subject.pair(lisp.first(xs), lisp.second(xs)).to(wizard.PLUS2);
       default:
-        return subject.operands(es).to(wizard.PLUS2);
+        return subject.operands(xs).to(wizard.PLUS2);
     }
   }
 }
