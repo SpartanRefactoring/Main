@@ -51,7 +51,7 @@ public interface spartan {
   }
 
   static String shorten(final PrimitiveType t) {
-    return t.getPrimitiveTypeCode().toString().substring(0, 1);
+    return ("" + t.getPrimitiveTypeCode()).substring(0, 1);
   }
 
   static String shorten(final QualifiedType t) {
