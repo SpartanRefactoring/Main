@@ -45,7 +45,7 @@ public class JavaTypeNameParserTest {
   }
 
   @Test public void infixExpression() {
-    azzert.that(new JavaTypeNameParser("InfixExpression").shortName(), is("e"));
+    azzert.that(new JavaTypeNameParser("InfixExpression").shortName(), is("x"));
   }
 
   @Test public void jUnit() {
