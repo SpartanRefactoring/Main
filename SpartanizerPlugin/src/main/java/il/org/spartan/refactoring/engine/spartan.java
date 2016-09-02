@@ -25,7 +25,7 @@ public interface spartan {
   }
 
   static String shorten(final Name n) {
-    return n instanceof SimpleName ? shorten(n.toString()) //
+    return n instanceof SimpleName ? shorten("" + n) //
         : n instanceof QualifiedName ? shorten(((QualifiedName) n).getName()) //
             : null;
   }
@@ -35,7 +35,7 @@ public interface spartan {
   }
 
   static String shorten(final ParameterizedType t) {
-    switch (t.getType().toString()) {
+    switch ("" + t.getType()) {
       case "Collection":
       case "Iterable":
       case "List":
@@ -51,7 +51,7 @@ public interface spartan {
   }
 
   static String shorten(final PrimitiveType t) {
-    return t.getPrimitiveTypeCode().toString().substring(0, 1);
+    return ("" + t.getPrimitiveTypeCode()).substring(0, 1);
   }
 
   static String shorten(final QualifiedType t) {
@@ -62,6 +62,9 @@ public interface spartan {
     return shorten(t.getName());
   }
 
+  // TODO: How about lists of exceptions? did you checkthem? Did you understand
+  // the algorithm here? On the face it you may be getting an infinite recursion
+  // here. How about "Expression"? "Example"?
   static String shorten(final String s) {
     return new JavaTypeNameParser(s).shortName();
   }

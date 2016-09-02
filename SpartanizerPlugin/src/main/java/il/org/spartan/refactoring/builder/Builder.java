@@ -31,7 +31,7 @@ public class Builder extends IncrementalProjectBuilder {
 
   private static void addMarker(final Spartanization s, final Rewrite r, final IMarker m) throws CoreException {
     m.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
-    m.setAttribute(SPARTANIZATION_TYPE_KEY, s.toString());
+    m.setAttribute(SPARTANIZATION_TYPE_KEY, "" + s);
     m.setAttribute(IMarker.MESSAGE, prefix() + r.description);
     m.setAttribute(IMarker.CHAR_START, r.from);
     m.setAttribute(IMarker.CHAR_END, r.to);

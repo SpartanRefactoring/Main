@@ -5,7 +5,6 @@ import static il.org.spartan.refactoring.ast.step.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.assemble.*;
-import il.org.spartan.refactoring.ast.*;
 
 /** Removes the parentheses from annotations that do not take arguments,
  * converting <code><pre>@Override()</pre></code> to

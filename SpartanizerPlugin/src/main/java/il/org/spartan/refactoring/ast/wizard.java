@@ -13,7 +13,6 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 
 import il.org.spartan.refactoring.assemble.*;
-import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.utils.*;
 
 public interface wizard {
@@ -51,7 +50,7 @@ public interface wizard {
   PrefixExpression.Operator PLUS1 = PrefixExpression.Operator.PLUS;
   InfixExpression.Operator PLUS2 = InfixExpression.Operator.PLUS;
 
-  public static InfixExpression.Operator assignmentToInfix(final Assignment.Operator o) {
+  static InfixExpression.Operator assignmentToInfix(final Assignment.Operator o) {
     return o == PLUS_ASSIGN ? InfixExpression.Operator.PLUS
         : o == MINUS_ASSIGN ? MINUS
             : o == TIMES_ASSIGN ? TIMES
@@ -60,29 +59,42 @@ public interface wizard {
                         : o == BIT_OR_ASSIGN ? OR
                             : o == BIT_XOR_ASSIGN ? XOR
                                 : o == REMAINDER_ASSIGN ? REMAINDER
-                                    : o == LEFT_SHIFT_ASSIGN ? LEFT_SHIFT //
-                                        : o == RIGHT_SHIFT_SIGNED_ASSIGN ? RIGHT_SHIFT_SIGNED //
+                                    : o == LEFT_SHIFT_ASSIGN ? LEFT_SHIFT
+                                        : o == RIGHT_SHIFT_SIGNED_ASSIGN ? RIGHT_SHIFT_SIGNED
                                             : o == RIGHT_SHIFT_UNSIGNED_ASSIGN ? RIGHT_SHIFT_UNSIGNED : null;
   }
 
-  /** Compute the "de Morgan" conjugate of an operator.
-   * @param o must be either {@link Operator#CONDITIONAL_AND} or
-   *        {@link Operator#CONDITIONAL_OR}
-   * @return {@link Operator#CONDITIONAL_AND} if the parameter is
-   *         {@link Operator#CONDITIONAL_OR}, or {@link Operator#CONDITIONAL_OR}
-   *         if the parameter is {@link Operator#CONDITIONAL_AND}
-   * @see wizard#deMorgan(InfixExpression) */
-  public static Operator deMorgan(final Operator o) {
+  static Assignment.Operator InfixToAssignment(final InfixExpression.Operator o) {
+    return o == PLUS ? Assignment.Operator.PLUS_ASSIGN
+        : o == MINUS ? MINUS_ASSIGN
+            : o == TIMES ? TIMES_ASSIGN
+                : o == DIVIDE ? DIVIDE_ASSIGN
+                    : o == AND ? BIT_AND_ASSIGN
+                        : o == OR ? BIT_OR_ASSIGN
+                            : o == XOR ? BIT_XOR_ASSIGN
+                                : o == REMAINDER ? REMAINDER_ASSIGN
+                                    : o == LEFT_SHIFT ? LEFT_SHIFT_ASSIGN
+                                        : o == RIGHT_SHIFT_SIGNED ? RIGHT_SHIFT_SIGNED_ASSIGN
+                                            : o == RIGHT_SHIFT_UNSIGNED ? RIGHT_SHIFT_UNSIGNED_ASSIGN : null;
+  }
+
+  /**
+   * Compute the "de Morgan" conjugate of an operator.
+   * @param o  must be either  {@link Operator#CONDITIONAL_AND}  or {@link Operator#CONDITIONAL_OR}
+   * @return   {@link Operator#CONDITIONAL_AND}  if the parameter is {@link Operator#CONDITIONAL_OR} , or  {@link Operator#CONDITIONAL_OR} if the parameter is  {@link Operator#CONDITIONAL_AND}
+   * @see wizard#deMorgan(InfixExpression)  
+   */
+  static Operator deMorgan(final Operator o) {
     assert iz.deMorgan(o);
     return o.equals(CONDITIONAL_AND) ? CONDITIONAL_OR : CONDITIONAL_AND;
   }
 
-  /** Parenthesize an expression (if necessary).
-   * @param e JD
-   * @return a
-   *         {@link il.org.spartan.refactoring.assemble.duplicate#duplicate(Expression)}
-   *         of the parameter wrapped in parenthesis. */
-  public static Expression parenthesize(final Expression e) {
+  /**
+   * Parenthesize an expression (if necessary).
+   * @param e  JD
+   * @return  a {@link il.org.spartan.refactoring.assemble.duplicate#duplicate(Expression)} of the parameter wrapped in parenthesis. 
+   */
+  static Expression parenthesize(final Expression e) {
     return iz.noParenthesisRequired(e) ? duplicate.of(e) : make.parethesized(e);
   }
 
@@ -94,7 +106,7 @@ public interface wizard {
   }
 
   static String body(final ASTNode ¢) {
-    return tide.clean(¢.toString());
+    return tide.clean("" + ¢);
   }
 
   /** the function checks if all the given assignments have the same left hand
@@ -213,7 +225,7 @@ public interface wizard {
   }
 
   static boolean nonAssociative(final InfixExpression e) {
-    return e != null && in(e.getOperator(), MINUS, DIVIDE, REMAINDER);
+    return e != null && in(e.getOperator(), MINUS, DIVIDE, REMAINDER, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED);
   }
 
   static ASTParser parser(final int kind) {
