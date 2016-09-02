@@ -79,8 +79,7 @@ public class RecurserTest {
   }
   
   private InfixExpression makeSimpleExpression(){
-    InfixExpression exp = mock(InfixExpression.class);
-    return null;
+    return mock(InfixExpression.class);
     
   }
 }

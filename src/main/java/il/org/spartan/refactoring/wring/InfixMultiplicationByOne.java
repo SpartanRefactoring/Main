@@ -29,6 +29,6 @@ public final class InfixMultiplicationByOne extends ReplaceCurrentNode<InfixExpr
       if (!iz.literal1(¢))
         $.add(¢);
     return $.size() == es.size() ? null
-        : $.isEmpty() ? duplicate.of(lisp.first(es)) : $.size() != 1 ? subject.operands($).to(TIMES) : duplicate.of(lisp.first($));
+        : $.isEmpty() ? duplicate.of(lisp.first(es)) : $.size() == 1?duplicate.of(lisp.first($)):subject.operands($).to(TIMES);
   }
 }
