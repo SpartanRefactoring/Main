@@ -41,29 +41,29 @@ public final class cleverStringTernarization extends Wring.ReplaceCurrentNode<Co
     return "Replace ternarization with more clever one";
   }
 
-  @Override Expression replacement(final ConditionalExpression e) {
-    final Expression then = e.getThenExpression();
-    final Expression elze = e.getElseExpression();
+  @Override Expression replacement(final ConditionalExpression x) {
+    final Expression then = x.getThenExpression();
+    final Expression elze = x.getElseExpression();
     if (then.getNodeType() != ASTNode.STRING_LITERAL || elze.getNodeType() != ASTNode.STRING_LITERAL)
       return null;
     final String thenStr = ((StringLiteral) then).getLiteralValue();
     final String elseStr = ((StringLiteral) elze).getLiteralValue();
     final int commonPrefixIndex = findCommonPrefix(thenStr, elseStr);
     if (commonPrefixIndex != 0)
-      return replacementPrefix(thenStr, elseStr, commonPrefixIndex, e);
+      return replacementPrefix(thenStr, elseStr, commonPrefixIndex, x);
     final int commonSuffixLength = findCommonSuffix(thenStr, elseStr);
-    return commonSuffixLength == 0 ? null : replacementSuffix(thenStr, elseStr, commonSuffixLength, e);
+    return commonSuffixLength == 0 ? null : replacementSuffix(thenStr, elseStr, commonSuffixLength, x);
   }
 
   private static Expression replacementPrefix(final String thenStr, final String elseStr, final int commonPrefixIndex,
-      final ConditionalExpression e) {
-    final Expression condition = e.getExpression();
-    final StringLiteral prefix = e.getAST().newStringLiteral();
+      final ConditionalExpression x) {
+    final Expression condition = x.getExpression();
+    final StringLiteral prefix = x.getAST().newStringLiteral();
     prefix.setLiteralValue(thenStr.substring(0, commonPrefixIndex));
-    final StringLiteral thenPost = e.getAST().newStringLiteral();
+    final StringLiteral thenPost = x.getAST().newStringLiteral();
     thenPost.setLiteralValue(thenStr.length() == commonPrefixIndex ? //
         "" : thenStr.substring(commonPrefixIndex));
-    final StringLiteral elsePost = e.getAST().newStringLiteral();
+    final StringLiteral elsePost = x.getAST().newStringLiteral();
     elsePost.setLiteralValue(elseStr.length() == commonPrefixIndex ? //
         "" : elseStr.substring(commonPrefixIndex));
     return subject.pair(prefix, subject.pair(thenPost, //
@@ -71,17 +71,17 @@ public final class cleverStringTernarization extends Wring.ReplaceCurrentNode<Co
   }
 
   private static Expression replacementSuffix(final String thenStr, final String elseStr, final int commonSuffixLength,
-      final ConditionalExpression e) {
-    final Expression condition = e.getExpression();
-    final StringLiteral suffix = e.getAST().newStringLiteral();
+      final ConditionalExpression x) {
+    final Expression condition = x.getExpression();
+    final StringLiteral suffix = x.getAST().newStringLiteral();
     suffix.setLiteralValue(thenStr.substring(thenStr.length() - commonSuffixLength));
-    final StringLiteral thenPre = e.getAST().newStringLiteral();
+    final StringLiteral thenPre = x.getAST().newStringLiteral();
     thenPre.setLiteralValue(thenStr.length() == commonSuffixLength ? //
         "" : thenStr.substring(0, thenStr.length() - commonSuffixLength));
-    final StringLiteral elsePre = e.getAST().newStringLiteral();
+    final StringLiteral elsePre = x.getAST().newStringLiteral();
     elsePre.setLiteralValue(elseStr.length() == commonSuffixLength ? //
         "" : elseStr.substring(0, elseStr.length() - commonSuffixLength));
-    final ParenthesizedExpression pe = e.getAST().newParenthesizedExpression();
+    final ParenthesizedExpression pe = x.getAST().newParenthesizedExpression();
     pe.setExpression(subject.pair(thenPre, elsePre).toCondition(condition));
     return subject.pair(pe, suffix).to(wizard.PLUS2);
   }

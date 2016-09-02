@@ -15,7 +15,8 @@ public final class ToStringToEmptyStringAddition extends Wring.ReplaceCurrentNod
       return null;
     final Expression receiver = step.receiver(i);
     return receiver == null ? null
-        : !(i.getParent() instanceof MethodInvocation)?subject.pair(i.getAST().newStringLiteral(),receiver).to(InfixExpression.Operator.PLUS):parethesized(subject.pair(i.getAST().newStringLiteral(),receiver).to(InfixExpression.Operator.PLUS));
+        : !(i.getParent() instanceof MethodInvocation) ? subject.pair(i.getAST().newStringLiteral(), receiver).to(InfixExpression.Operator.PLUS)
+            : parethesized(subject.pair(i.getAST().newStringLiteral(), receiver).to(InfixExpression.Operator.PLUS));
   }
 
   @Override String description(final MethodInvocation i) {
