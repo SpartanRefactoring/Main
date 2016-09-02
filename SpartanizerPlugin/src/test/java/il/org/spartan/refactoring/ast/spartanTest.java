@@ -32,15 +32,15 @@ public class spartanTest {
   }
 
   @Test public void shortNameExpression() {
-    azzert.that(spartan.shorten(t("Expression _;")), equalTo("e"));
+    azzert.that(spartan.shorten(t("Expression _;")), equalTo("x"));
   }
 
   @Test public void shortNameExpressions() {
-    azzert.that(spartan.shorten(t("Expression[] _;")), equalTo("es"));
+    azzert.that(spartan.shorten(t("Expression[] _;")), equalTo("xs"));
   }
 
   @Test public void shortNameExpressionsList() {
-    azzert.that(spartan.shorten(t("List<Expression> _;")), equalTo("es"));
+    azzert.that(spartan.shorten(t("List<Expression> _;")), equalTo("xs"));
   }
 
   @Test public void shortNameInfrastructure() {
@@ -48,6 +48,6 @@ public class spartanTest {
   }
 
   @Test public void shortNameQualifiedType() {
-    azzert.that(spartan.shorten(t("org.eclipse.jdt.core.dom.InfixExpression _;")), equalTo("e"));
+    azzert.that(spartan.shorten(t("org.eclipse.jdt.core.dom.InfixExpression _;")), equalTo("x"));
   }
 }
