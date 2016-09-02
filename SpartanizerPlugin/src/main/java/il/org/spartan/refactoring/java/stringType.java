@@ -14,30 +14,30 @@ import il.org.spartan.refactoring.ast.*;
  * @since 2016 */
 public enum stringType {
   ;
-  /** @param e JD
+  /** @param x JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an expression
    *         whose type is provably not of type {@link String}, in the sense
    *         used in applying the <code>+</code> operator to concatenate
    *         strings. concatenation. */
-  public static boolean isNot(final Expression e) {
-    return stringType.notStringSelf(e) || stringType.isNotFromContext(e) || stringType.isNotFromStructure(az.infixExpression(e));
+  public static boolean isNot(final Expression x) {
+    return stringType.notStringSelf(x) || stringType.isNotFromContext(x) || stringType.isNotFromStructure(az.infixExpression(x));
   }
 
   /** Determine whether a <i>all</i> elements list of {@link Expression} are
    * provably not a string.
-   * @param es JD
+   * @param xs JD
    * @return <code><b>true</b></code> <i>iff</i> all elements in the argument
    *         are provably not a {@link String}.
    * @see stringType#isNot(Expression) */
-  private static boolean areNot(final List<Expression> es) {
-    for (final Expression e : es)
+  private static boolean areNot(final List<Expression> xs) {
+    for (final Expression e : xs)
       if (!stringType.isNotFromStructure(e))
         return false;
     return true;
   }
 
-  private static boolean isNotFromContext(final Expression e) {
-    for (ASTNode context = parent(e); context != null; context = parent(context))
+  private static boolean isNotFromContext(final Expression x) {
+    for (ASTNode context = parent(x); context != null; context = parent(context))
       switch (context.getNodeType()) {
         case INFIX_EXPRESSION:
           if (az.infixExpression(context).getOperator().equals(PLUS))
@@ -57,21 +57,21 @@ public enum stringType {
 
   /** Determine whether an {@link Expression} could not be evaluated as a
    * string.
-   * @param e JD
+   * @param x JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is not a string
    *         or composed of appended strings */
-  private static boolean isNotFromStructure(final Expression e) {
-    return notStringSelf(e) || isNotFromStructure(az.infixExpression(e));
+  private static boolean isNotFromStructure(final Expression x) {
+    return notStringSelf(x) || isNotFromStructure(az.infixExpression(x));
   }
 
-  private static boolean isNotFromStructure(final InfixExpression e) {
-    return e != null && (e.getOperator() != PLUS || areNot(extract.allOperands(e)));
+  private static boolean isNotFromStructure(final InfixExpression x) {
+    return x != null && (x.getOperator() != PLUS || areNot(extract.allOperands(x)));
   }
 
-  private static boolean notStringSelf(final Expression e) {
+  private static boolean notStringSelf(final Expression x) {
     final int[] is = { ARRAY_CREATION, BOOLEAN_LITERAL, CHARACTER_LITERAL, INSTANCEOF_EXPRESSION, NULL_LITERAL, NUMBER_LITERAL, PREFIX_EXPRESSION };
     for (final int ¢ : is)
-      if (¢ == e.getNodeType())
+      if (¢ == x.getNodeType())
         return true;
     return false;
   }

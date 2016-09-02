@@ -256,8 +256,8 @@ class UsesCollector extends HidingDepth {
     return false;
   }
 
-  @Override public boolean visit(final CastExpression e) {
-    return recurse(step.right(e));
+  @Override public boolean visit(final CastExpression x) {
+    return recurse(step.right(x));
   }
 
   @Override public boolean visit(final FieldAccess n) {

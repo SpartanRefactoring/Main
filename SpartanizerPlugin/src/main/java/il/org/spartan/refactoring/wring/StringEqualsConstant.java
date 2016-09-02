@@ -38,11 +38,11 @@ public final class StringEqualsConstant extends ReplaceCurrentNode<MethodInvocat
     return e == null || e instanceof StringLiteral ? null : replacement(n, ¢, e);
   }
 
-  private static ASTNode replacement(final SimpleName n, final Expression ¢, final Expression e) {
+  private static ASTNode replacement(final SimpleName n, final Expression ¢, final Expression x) {
     final MethodInvocation $ = n.getAST().newMethodInvocation();
     $.setExpression(duplicate.of(¢));
     $.setName(duplicate.of(n));
-    arguments($).add(duplicate.of(e));
+    arguments($).add(duplicate.of(x));
     return $;
   }
 }
