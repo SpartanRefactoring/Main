@@ -930,17 +930,13 @@ public class TrimmerTest250 {
     trimming("a=5&a;").to("a&=5;");
   }
 
-  @Ignore public void issue103_XOR1() {
-    trimming("a=a^5;").to("a^=5;");
+  @Test public void issue103_XOR1() {
+    trimming("x = x ^ a.getNum()").to("x ^= a.getNum()");
   }
 
-  @Ignore public void issue103_XOR2() {
-    trimming("j=(j^k)")
-    .to("i=j+=k");
-  }
-  
-  @Test public void issue103_XOR3() {
-    trimming("f(a,b,c,d) ^ f() ^ 0").to("f()[^]f(a,b,c,d)[^]0");
+  @Test public void issue103_XOR2() {
+    trimming("j = j ^ k")
+    .to("j ^= k");
   }
 
   @Test public void issue103_modulo1() {
