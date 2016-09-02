@@ -74,10 +74,10 @@ public enum make {
         : "-" + token.substring(token.startsWith("+") ? 1 : 0);
   }
 
-  static List<Expression> minus(final List<Expression> xs) {
+  static List<Expression> minus(final List<Expression> es) {
     final List<Expression> $ = new ArrayList<>();
-    $.add(lisp.first(xs));
-    for (final Expression e : lisp.rest(xs))
+    $.add(lisp.first(es));
+    for (final Expression e : lisp.rest(es))
       $.add(minusOf(e));
     return $;
   }
