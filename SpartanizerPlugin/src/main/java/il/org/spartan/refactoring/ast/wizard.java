@@ -64,7 +64,7 @@ public interface wizard {
                                             : o == RIGHT_SHIFT_UNSIGNED_ASSIGN ? RIGHT_SHIFT_UNSIGNED : null;
   }
 
-  public static Assignment.Operator InfixToAssignment(final InfixExpression.Operator o) {
+  static Assignment.Operator InfixToAssignment(final InfixExpression.Operator o) {
     return o == PLUS ? Assignment.Operator.PLUS_ASSIGN
         : o == MINUS ? MINUS_ASSIGN
             : o == TIMES ? TIMES_ASSIGN
@@ -73,29 +73,28 @@ public interface wizard {
                         : o == OR ? BIT_OR_ASSIGN
                             : o == XOR ? BIT_XOR_ASSIGN
                                 : o == REMAINDER ? REMAINDER_ASSIGN
-                                    : o == LEFT_SHIFT ? LEFT_SHIFT_ASSIGN //
-                                        : o == RIGHT_SHIFT_SIGNED ? RIGHT_SHIFT_SIGNED_ASSIGN //
+                                    : o == LEFT_SHIFT ? LEFT_SHIFT_ASSIGN
+                                        : o == RIGHT_SHIFT_SIGNED ? RIGHT_SHIFT_SIGNED_ASSIGN
                                             : o == RIGHT_SHIFT_UNSIGNED ? RIGHT_SHIFT_UNSIGNED_ASSIGN : null;
   }
 
-  /** Compute the "de Morgan" conjugate of an operator.
-   * @param o must be either {@link Operator#CONDITIONAL_AND} or
-   *        {@link Operator#CONDITIONAL_OR}
-   * @return {@link Operator#CONDITIONAL_AND} if the parameter is
-   *         {@link Operator#CONDITIONAL_OR}, or {@link Operator#CONDITIONAL_OR}
-   *         if the parameter is {@link Operator#CONDITIONAL_AND}
-   * @see wizard#deMorgan(InfixExpression) */
-  public static Operator deMorgan(final Operator o) {
+  /**
+   * Compute the "de Morgan" conjugate of an operator.
+   * @param o  must be either  {@link Operator#CONDITIONAL_AND}  or {@link Operator#CONDITIONAL_OR}
+   * @return   {@link Operator#CONDITIONAL_AND}  if the parameter is {@link Operator#CONDITIONAL_OR} , or  {@link Operator#CONDITIONAL_OR} if the parameter is  {@link Operator#CONDITIONAL_AND}
+   * @see wizard#deMorgan(InfixExpression)  
+   */
+  static Operator deMorgan(final Operator o) {
     assert iz.deMorgan(o);
     return o.equals(CONDITIONAL_AND) ? CONDITIONAL_OR : CONDITIONAL_AND;
   }
 
-  /** Parenthesize an expression (if necessary).
-   * @param e JD
-   * @return a
-   *         {@link il.org.spartan.refactoring.assemble.duplicate#duplicate(Expression)}
-   *         of the parameter wrapped in parenthesis. */
-  public static Expression parenthesize(final Expression e) {
+  /**
+   * Parenthesize an expression (if necessary).
+   * @param e  JD
+   * @return  a {@link il.org.spartan.refactoring.assemble.duplicate#duplicate(Expression)} of the parameter wrapped in parenthesis. 
+   */
+  static Expression parenthesize(final Expression e) {
     return iz.noParenthesisRequired(e) ? duplicate.of(e) : make.parethesized(e);
   }
 
