@@ -113,7 +113,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
           f($, child);
       }
 
-      private void f(final Int $, final ASTNode n) {
+      void f(final Int $, final ASTNode n) {
         if (iz.is(n, BLOCK)) {
           if (extract.statements(n).size() > 1)
             ++$.inner;
