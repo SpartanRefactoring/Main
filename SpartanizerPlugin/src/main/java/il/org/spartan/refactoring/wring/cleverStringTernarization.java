@@ -9,11 +9,11 @@ import il.org.spartan.refactoring.builder.*;
 /** convert
  *
  * <pre>
- * polite ? "Eat your meal." :  "Eat your meal, please"
+ * polite ? "Eat your meal." : "Eat your meal, please"
  * </pre>
  * 
  * <pre>
- * polite ? "thanks for the meal" :  "I hated the meal"
+ * polite ? "thanks for the meal" : "I hated the meal"
  * </pre>
  *
  * into
@@ -33,72 +33,65 @@ public final class cleverStringTernarization extends Wring.ReplaceCurrentNode<Co
   @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Replace if with a return of a conditional statement";
   }
- 
-  @Override Expression replacement(final ConditionalExpression ce) {
-    final Expression then = ce.getThenExpression();
-    final Expression elze =ce.getElseExpression();
-    if(then.getNodeType()!=ASTNode.STRING_LITERAL || elze.getNodeType()!=ASTNode.STRING_LITERAL)
+
+  @Override Expression replacement(final ConditionalExpression e) {
+    final Expression then = e.getThenExpression();
+    final Expression elze = e.getElseExpression();
+    if (then.getNodeType() != ASTNode.STRING_LITERAL || elze.getNodeType() != ASTNode.STRING_LITERAL)
       return null;
     String thenStr = ((StringLiteral) then).getLiteralValue();
     String elseStr = ((StringLiteral) elze).getLiteralValue();
-    int commonPrefixIndex = findCommonPrefix(thenStr,elseStr);
-    if(commonPrefixIndex!=0)
-      return replacementPrefix(thenStr,elseStr, commonPrefixIndex ,ce); 
-    int commonSuffixLength = findCommonSuffix(thenStr,elseStr);
-    if(commonSuffixLength!=0)
-      return replacementSuffix(thenStr,elseStr,commonSuffixLength,ce);
-    return null;
+    int commonPrefixIndex = findCommonPrefix(thenStr, elseStr);
+    if (commonPrefixIndex != 0)
+      return replacementPrefix(thenStr, elseStr, commonPrefixIndex, e);
+    int commonSuffixLength = findCommonSuffix(thenStr, elseStr);
+    return commonSuffixLength == 0 ? null : replacementSuffix(thenStr, elseStr, commonSuffixLength, e);
   }
-  
-  private static Expression replacementPrefix(String thenStr, String elseStr, int commonPrefixIndex , ConditionalExpression ce){
-    final Expression condition = ce.getExpression();
-    StringLiteral  prefix = ce.getAST().newStringLiteral();
+
+  private static Expression replacementPrefix(String thenStr, String elseStr, int commonPrefixIndex, ConditionalExpression e) {
+    final Expression condition = e.getExpression();
+    StringLiteral prefix = e.getAST().newStringLiteral();
     prefix.setLiteralValue(thenStr.substring(0, commonPrefixIndex));
-    StringLiteral  thenPost = ce.getAST().newStringLiteral();
-    thenPost.setLiteralValue(thenStr.length()==commonPrefixIndex ? //
+    StringLiteral thenPost = e.getAST().newStringLiteral();
+    thenPost.setLiteralValue(thenStr.length() == commonPrefixIndex ? //
         "" : thenStr.substring(commonPrefixIndex));
-    StringLiteral  elsePost = ce.getAST().newStringLiteral();
-    elsePost.setLiteralValue( elseStr.length()==commonPrefixIndex ? //
+    StringLiteral elsePost = e.getAST().newStringLiteral();
+    elsePost.setLiteralValue(elseStr.length() == commonPrefixIndex ? //
         "" : elseStr.substring(commonPrefixIndex));
-    return subject.pair(prefix , subject.pair(thenPost, //
-    elsePost).toCondition(condition)).to(wizard.PLUS2);
+    return subject.pair(prefix, subject.pair(thenPost, //
+        elsePost).toCondition(condition)).to(wizard.PLUS2);
   }
-  
-  private static Expression replacementSuffix(String thenStr, String elseStr, int commonSuffixLength , ConditionalExpression ce){
-    final Expression condition = ce.getExpression();
-    StringLiteral  suffix = ce.getAST().newStringLiteral();
-    suffix.setLiteralValue(thenStr.substring(thenStr.length()-commonSuffixLength));
-    
-    StringLiteral  thenPre = ce.getAST().newStringLiteral();
-    thenPre.setLiteralValue(thenStr.length()==commonSuffixLength ? //
-        "" : thenStr.substring(0,thenStr.length()-commonSuffixLength));
-    
-    StringLiteral  elsePre = ce.getAST().newStringLiteral();
-    elsePre.setLiteralValue( elseStr.length()== commonSuffixLength ? //
-        "" : elseStr.substring(0,elseStr.length()-commonSuffixLength));
-    
-    ParenthesizedExpression pe = ce.getAST().newParenthesizedExpression();
-    pe.setExpression(subject.pair(thenPre,elsePre).toCondition(condition));
-    return subject.pair(pe,suffix).to(wizard.PLUS2);
+
+  private static Expression replacementSuffix(String thenStr, String elseStr, int commonSuffixLength, ConditionalExpression e) {
+    final Expression condition = e.getExpression();
+    StringLiteral suffix = e.getAST().newStringLiteral();
+    suffix.setLiteralValue(thenStr.substring(thenStr.length() - commonSuffixLength));
+    StringLiteral thenPre = e.getAST().newStringLiteral();
+    thenPre.setLiteralValue(thenStr.length() == commonSuffixLength ? //
+        "" : thenStr.substring(0, thenStr.length() - commonSuffixLength));
+    StringLiteral elsePre = e.getAST().newStringLiteral();
+    elsePre.setLiteralValue(elseStr.length() == commonSuffixLength ? //
+        "" : elseStr.substring(0, elseStr.length() - commonSuffixLength));
+    ParenthesizedExpression pe = e.getAST().newParenthesizedExpression();
+    pe.setExpression(subject.pair(thenPre, elsePre).toCondition(condition));
+    return subject.pair(pe, suffix).to(wizard.PLUS2);
   }
-  
-  private static int findCommonPrefix(String str1, String str2){
+
+  private static int findCommonPrefix(String str1, String str2) {
     char[] str1Array = str1.toCharArray();
     char[] str2Array = str2.toCharArray();
-    int i=0;
-    for (;i<str1Array.length && i<str2Array.length;i++){
-      if(str1Array[i]!=str2Array[i])
-        break;
-    }
-    return i;
+    for (int $ = 0; $ < str1Array.length && $ < str2Array.length; ++$)
+      if (str1Array[$] != str2Array[$])
+        return $;
+    return 0;
   }
-  
-  private static int findCommonSuffix(String str1, String str2){
-    int i=0;
+
+  private static int findCommonSuffix(String str1, String str2) {
+    int i = 0;
     String sub = "";
-    for (;i<Math.max(str1.length(),str2.length());i++){
+    for (; i < Math.max(str1.length(), str2.length()); ++i) {
       sub = str2.substring(i);
-      if(str1.endsWith(sub))
+      if (str1.endsWith(sub))
         break;
     }
     return sub.length();
