@@ -586,7 +586,7 @@ public class PrudentTypeTest {
     }
 
     @Test public void axiomExpression12() {
-      azzert.that(axiom((float) 1 / (long) 1), is(FLOAT));
+      azzert.that(axiom((float) 1 / 1L * 1), is(FLOAT));
     }
 
     @Test public void axiomExpression13() {
@@ -594,7 +594,7 @@ public class PrudentTypeTest {
     }
 
     @Test public void axiomExpression14() {
-      azzert.that(axiom((float) 1 + (long) 1), is(FLOAT));
+      azzert.that(axiom((float) 1 + 1L * 1), is(FLOAT));
     }
 
     @Test public void axiomExpression15() {
@@ -679,7 +679,7 @@ public class PrudentTypeTest {
     private int i = (int) d;
     private float f = (float) (0xCABAC0DAABBAL * d * i / b - (c1 ^ c2));
     private long l = (long) (++d * f--);
-    private short s = (short) ((i ^ l) * ((long) c1 ^ c2 << 0xFF) / d);
+    private short s = (short) ((i ^ l) * (1L * c1 ^ c2 << 0xFF) / d);
 
     @Test public void OnaryPlusMinusSemantics09() {
       azzert.that(PrudentType.axiom(-c1), is(PrudentType.INT));

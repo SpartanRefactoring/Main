@@ -408,7 +408,7 @@ public class TrimmerTest240 {
 
   @Test public void chainComparison() {
     final InfixExpression e = i("a == true == b == c");
-    that(step.right(e).toString(), iz("c"));
+    that("" + step.right(e), iz("c"));
     trimming("a == true == b == c").to("a == b == c");
   }
 
@@ -1409,8 +1409,8 @@ public class TrimmerTest240 {
 
   @Test public void isGreaterTrue() {
     final InfixExpression e = i("f(a,b,c,d,e) * f(a,b,c)");
-    that(step.right(e).toString(), is("f(a,b,c)"));
-    that(step.left(e).toString(), is("f(a,b,c,d,e)"));
+    that("" + step.right(e), is("f(a,b,c)"));
+    that("" + step.left(e), is("f(a,b,c,d,e)"));
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
     that(s, instanceOf(InfixMultiplicationSort.class));
     that(s, notNullValue());
@@ -1425,13 +1425,13 @@ public class TrimmerTest240 {
     that(s.eligible(e), is(true));
     final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) s).replacement(e);
     that(replacement, notNullValue());
-    that(replacement.toString(), is("f(a,b,c) * f(a,b,c,d,e)"));
+    that("" + replacement, is("f(a,b,c) * f(a,b,c,d,e)"));
   }
 
   @Test public void isGreaterTrueButAlmostNot() {
     final InfixExpression e = i("f(a,b,c,d) * f(a,b,c)");
-    that(step.right(e).toString(), is("f(a,b,c)"));
-    that(step.left(e).toString(), is("f(a,b,c,d)"));
+    that("" + step.right(e), is("f(a,b,c)"));
+    that("" + step.left(e), is("f(a,b,c,d)"));
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
     that(s, instanceOf(InfixMultiplicationSort.class));
     that(s, notNullValue());
@@ -1446,7 +1446,7 @@ public class TrimmerTest240 {
     that(s.eligible(e), is(true));
     final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) s).replacement(e);
     that(replacement, notNullValue());
-    that(replacement.toString(), is("f(a,b,c) * f(a,b,c,d)"));
+    that("" + replacement, is("f(a,b,c) * f(a,b,c,d)"));
   }
 
   @Test public void issue06() {
@@ -2874,7 +2874,7 @@ public class TrimmerTest240 {
     that(w.eligible(e), is(true));
     final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) w).replacement(e);
     that(replacement, notNullValue());
-    that(replacement.toString(), is("a != null"));
+    that("" + replacement, is("a != null"));
   }
 
   @Test public void rightSipmlificatioForNulNNVariable() {

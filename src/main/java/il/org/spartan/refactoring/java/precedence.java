@@ -127,7 +127,7 @@ public enum precedence {
    * @param o JD
    * @return precedence of the parameter */
   public static int of(final InfixExpression.Operator o) {
-    return of(o.toString());
+    return of("" + o);
   }
 
   private static int of(final String key) {
