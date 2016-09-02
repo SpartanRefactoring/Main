@@ -12,12 +12,12 @@ class Factor {
     this.expression = expression;
   }
 
-  static Factor times(final Expression e) {
-    return new Factor(false, e);
+  static Factor times(final Expression x) {
+    return new Factor(false, x);
   }
 
-  static Factor divide(final Expression e) {
-    return new Factor(true, e);
+  static Factor divide(final Expression x) {
+    return new Factor(true, x);
   }
 
   boolean divider() {

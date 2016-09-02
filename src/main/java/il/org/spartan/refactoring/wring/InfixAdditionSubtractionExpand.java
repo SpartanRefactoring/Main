@@ -10,14 +10,14 @@ import il.org.spartan.refactoring.java.*;
  * @author Yossi Gil
  * @since 2016 */
 public final class InfixAdditionSubtractionExpand extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.Canonicalization {
-  @Override Expression replacement(final InfixExpression e) {
-    if (TermsCollector.isLeafTerm(e))
+  @Override Expression replacement(final InfixExpression x) {
+    if (TermsCollector.isLeafTerm(x))
       return null;
-    final Expression $ = TermsExpander.simplify(e);
-    return !wizard.same($, e) ? $ : null;
+    final Expression $ = TermsExpander.simplify(x);
+    return !wizard.same($, x) ? $ : null;
   }
 
-  @Override String description(final InfixExpression e) {
-    return "Expand additive terms in " + e;
+  @Override String description(final InfixExpression x) {
+    return "Expand additive terms in " + x;
   }
 }
