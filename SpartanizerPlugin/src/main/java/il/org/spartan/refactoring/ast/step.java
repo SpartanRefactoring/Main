@@ -228,7 +228,7 @@ public enum step {
   public static PrefixExpression.Operator operator(final PrefixExpression e) {
     return e == null ? null : e.getOperator();
   }
-  
+
   public static Assignment.Operator operator(final Assignment a) {
     return a == null ? null : a.getOperator();
   }

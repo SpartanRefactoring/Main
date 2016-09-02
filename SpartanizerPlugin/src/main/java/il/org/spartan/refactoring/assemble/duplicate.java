@@ -48,8 +48,6 @@ public enum duplicate {
     return $;
   }
 
-
-
   /** Make a duplicate, suitable for tree rewrite, of the parameter
    * @param ¢ JD
    * @return a duplicate of the parameter, downcasted to the returned type. */

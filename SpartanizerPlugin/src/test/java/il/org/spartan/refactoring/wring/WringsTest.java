@@ -16,7 +16,6 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
-import il.org.spartan.refactoring.builder.*;
 import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.spartanizations.*;

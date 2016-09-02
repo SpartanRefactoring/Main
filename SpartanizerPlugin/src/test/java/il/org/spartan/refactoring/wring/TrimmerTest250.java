@@ -901,15 +901,15 @@ public class TrimmerTest250 {
   @Test public void issue103_div1() {
     trimming("a=a/5;").to("a/=5;");
   }
-  
+
   @Test public void issue103_div2() {
     trimming("a=5/a;").to(null);
   }
-  
+
   @Test public void issue103_OR1() {
     trimming("a=a|5;").to("a|=5;");
   }
-  
+
   @Test public void issue103_OR2() {
     trimming("a=5|a;").to("a|=5;");
   }
@@ -917,43 +917,43 @@ public class TrimmerTest250 {
   @Test public void issue103_AND1() {
     trimming("a=a&5;").to("a&=5;");
   }
-  
+
   @Test public void issue103_AND2() {
     trimming("a=5&a;").to("a&=5;");
   }
-  
+
   @Test public void issue103_XOR1() {
     trimming("a=a^5;").to("a^=5;");
   }
-  
+
   @Test public void issue103_XOR2() {
     trimming("a=5^a;").to("a^=5;");
   }
-  
+
   @Test public void issue103_modulo1() {
     trimming("a=a%5;").to("a%=5;");
   }
-  
+
   @Test public void issue103_modulo2() {
     trimming("a=5%a;").to(null);
   }
-  
+
   @Test public void issue103_leftShift1() {
     trimming("a=a<<5;").to("a<<=5;");
   }
-  
+
   @Test public void issue103_leftShift2() {
     trimming("a=5<<a;").to(null);
   }
-  
+
   @Test public void issue103_rightShift1() {
     trimming("a=a>>5;").to("a>>=5;");
   }
-  
+
   @Test public void issue103_rightShift2() {
     trimming("a=5>>a;").to(null);
   }
-  
+
   @Test public void issue107a() {
     trimming("a+=1;").to("a++;").to("++a;").to(null);
   }
@@ -1017,48 +1017,48 @@ public class TrimmerTest250 {
             "      return hasAnnotation(s.modifiers());\n" + //
             "    }");
   }
-  
+
   @Test public void issue31b() {
     trimming(" void f(final VariableDeclarationStatement n) {}") //
-    .to("void f(final VariableDeclarationStatement s) {}");
+        .to("void f(final VariableDeclarationStatement s) {}");
   }
-  
+
   @Test public void issue31c() {
     trimming(" void f(final VariableDeclarationAtatement n) {}") //
-    .to("void f(final VariableDeclarationAtatement a) {}");
+        .to("void f(final VariableDeclarationAtatement a) {}");
   }
-  
+
   @Test public void issue31d() {
     trimming(" void f(final Expression n) {}") //
-    .to("void f(final Expression e) {}");
+        .to("void f(final Expression e) {}");
   }
-  
+
   @Test public void issue31e() {
     trimming(" void f(final Exception n) {}") //
-    .to("void f(final Exception x) {}");
+        .to("void f(final Exception x) {}");
   }
-  
+
   @Ignore public void issue31f() {
     trimming(" void f(final Exception n, Expression kooki) {}") //
-    .to("void f(final Exception x, Expression kooki) {}") //
-    .to("void f(final Exception x, Expression e) {}");
+        .to("void f(final Exception x, Expression kooki) {}") //
+        .to("void f(final Exception x, Expression e) {}");
   }
-  
+
   @Ignore public void issue31g() {
     trimming(" catch (Exception e) {throw e;}") //
-    .to("catch (Exception x) {throw x;}");
+        .to("catch (Exception x) {throw x;}");
   }
-  
+
   @Ignore public void issue31h() {
     trimming(" void f(final Exception n) {}") //
-    .to("void f(final Exception x) {}");
+        .to("void f(final Exception x) {}");
   }
-  
+
   @Ignore public void issue31i() {
     trimming(" void f(final Exception n) {}") //
-    .to("void f(final Exception x) {}");
+        .to("void f(final Exception x) {}");
   }
-  
+
   // @formatter:off
   enum A { a1() {{ f(); }
       public void f() {
