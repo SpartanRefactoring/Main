@@ -810,67 +810,67 @@ public class TrimmerTest250 {
     trimming("a-b*c").to(null);
   }
 
-  @Ignore public void issue108a() {
+  @Test public void issue108a() {
     trimming("x=x*y").to("x*=y");
   }
 
-  @Ignore public void issue108b() {
+  @Test public void issue108b() {
     trimming("x=y*x").to("x*=y");
   }
 
-  @Ignore public void issue108c() {
+  @Test public void issue108c() {
     trimming("x=y*z").to(null);
   }
 
-  @Ignore public void issue108d() {
+  @Test public void issue108d() {
     trimming("x = x * x").to("x*=x");
   }
 
-  @Ignore public void issue108e() {
+  @Test public void issue108e() {
     trimming("x = y * z * x * k * 9").to("x *= y * z * k * 9");
   }
 
-  @Ignore public void issue108f() {
+  @Test public void issue108f() {
     trimming("a = y * z * a").to("a *= y * z");
   }
 
-  @Ignore public void issue108g() {
+  @Test public void issue108g() {
     trimming("a=a*5").to("a*=5");
   }
 
-  @Ignore public void issue108h() {
+  @Test public void issue108h() {
     trimming("a=a*(alex)").to("a*=alex");
   }
 
-  @Ignore public void issue108i() {
+  @Test public void issue108i() {
     trimming("a = a * (c = c * kif)").to("a *= c = c*kif").to("a *= c *= kif").to(null);
   }
 
-  @Ignore public void issue108j() {
+  @Test public void issue108j() {
     trimming("x=x*foo(x,y)").to("x*=foo(x,y)");
   }
 
-  @Ignore public void issue108k() {
+  @Test public void issue108k() {
     trimming("z=foo(x=(y=y*u),17)").to("z=foo(x=(y*=u),17)");
   }
 
-  @Ignore public void issue103a() {
+  @Test public void issue103a() {
     trimming("x=x+y").to("x+=y");
   }
 
-  @Ignore public void issue103mma() {
+  @Test public void issue103mma() {
     trimming("x=x*y").to("x*=y");
   }
 
-  @Ignore public void issue103b() {
+  @Test public void issue103b() {
     trimming("x=y+x").to("x+=y");
   }
 
-  @Ignore public void issue103c() {
+  @Test public void issue103c() {
     trimming("x=y+z").to(null);
   }
 
-  @Ignore public void issue103d() {
+  @Test public void issue103d() {
     trimming("x = x + x").to("x+=x");
   }
 
@@ -878,87 +878,96 @@ public class TrimmerTest250 {
     trimming("x = y + x + z + x + k + 9").to("x += y + z + x + k + 9");
   }
 
-  @Ignore public void issue103f() {
+  @Test public void issue103f() {
     trimming("a=a+5").to("a+=5");
   }
 
-  @Ignore public void issue103g() {
+  @Test public void issue103g() {
     trimming("a=a+(alex)").to("a+=alex");
   }
 
-  @Ignore public void issue103h() {
+  @Test public void issue103h() {
     trimming("a = a + (c = c + kif)").to("a += c = c + kif").to("a += c += kif").to(null);
   }
 
-  @Ignore public void issue103i_mixed_associative() {
+  @Test public void issue103i_mixed_associative() {
     trimming("a = x = x + (y = y*(z=z+3))").to("a = x += y=y*(z=z+3)").to("a = x += y *= z=z+3").to("a = x += y *= z+=3");
   }
 
-  @Ignore public void issue103j() {
+  @Test public void issue103j() {
     trimming("x=x+foo(x,y)").to("x+=foo(x,y)");
   }
 
-  @Ignore public void issue103k() {
+  @Test public void issue103k() {
     trimming("z=foo(x=(y=y+u),17)").to("z=foo(x=(y+=u),17)");
   }
 
-  @Ignore public void issue103l_mixed_associative() {
+  @Test public void issue103l_mixed_associative() {
     trimming("a = a - (x = x + (y = y*(z=z+3)))").to("a-=x=x+(y=y*(z=z+3))").to("a-=x+=y=y*(z=z+3)");
   }
 
-  @Ignore public void issue103_div1() {
+  @Test public void issue103_div1() {
     trimming("a=a/5;").to("a/=5;");
   }
 
-  @Ignore public void issue103_div2() {
+  @Test public void issue103_div2() {
     trimming("a=5/a;").to(null);
   }
 
-  @Ignore public void issue103_OR1() {
+  @Test public void issue103_OR1() {
     trimming("a=a|5;").to("a|=5;");
   }
 
-  @Ignore public void issue103_OR2() {
+  @Test public void issue103_OR2() {
     trimming("a=5|a;").to("a|=5;");
   }
 
-  @Ignore public void issue103_AND1() {
+  @Test public void issue103_AND1() {
     trimming("a=a&5;").to("a&=5;");
   }
 
-  @Ignore public void issue103_AND2() {
+  @Test public void issue103_AND2() {
     trimming("a=5&a;").to("a&=5;");
   }
 
-  @Ignore public void issue103_XOR1() {
-    trimming("a=a^5;").to("a^=5;");
+//  @Test public void issue103_XOR1() {
+//    trimming("a=a^5;").to("a^=5;");
+//  }
+  
+  @Test public void issue103_XOR1() {
+    trimming("foo(a=(3&4))").to(null);
   }
 
-  @Ignore public void issue103_XOR2() {
-    trimming("a=5^a;").to("a^=5;");
+  @Test public void issue103_XOR2() {
+    trimming("j=(j^k)")
+    .to("i=j+=k");
+  }
+  
+  @Test public void issue103_XOR3() {
+    trimming("f(a,b,c,d) ^ f() ^ 0").to("f()[^]f(a,b,c,d)[^]0");
   }
 
-  @Ignore public void issue103_modulo1() {
+  @Test public void issue103_modulo1() {
     trimming("a=a%5;").to("a%=5;");
   }
 
-  @Ignore public void issue103_modulo2() {
+  @Test public void issue103_modulo2() {
     trimming("a=5%a;").to(null);
   }
 
-  @Ignore public void issue103_leftShift1() {
+  @Test public void issue103_leftShift1() {
     trimming("a=a<<5;").to("a<<=5;");
   }
 
-  @Ignore public void issue103_leftShift2() {
+  @Test public void issue103_leftShift2() {
     trimming("a=5<<a;").to(null);
   }
 
-  @Ignore public void issue103_rightShift1() {
+  @Test public void issue103_rightShift1() {
     trimming("a=a>>5;").to("a>>=5;");
   }
 
-  @Ignore public void issue103_rightShift2() {
+  @Test public void issue103_rightShift2() {
     trimming("a=5>>a;").to(null);
   }
 

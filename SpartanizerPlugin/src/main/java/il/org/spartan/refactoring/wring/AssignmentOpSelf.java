@@ -28,23 +28,23 @@ public final class AssignmentOpSelf extends ReplaceCurrentNode<Assignment> imple
     return newRightExpr == null ? null : subject.pair(step.left(a), newRightExpr).to(wizard.InfixToAssignment(step.operator(¢)));
   }
 
-  private static ASTNode rightInfixReplacement(final InfixExpression e, final Expression left) {
-    final List<Expression> es = extract.allOperands(e);
-    final InfixExpression.Operator o = step.operator(e);
-    final List<Expression> $ = !wizard.nonAssociative(e)?associativeReplace(es,left):nonAssociativeReplace(es,left);
+  private static ASTNode rightInfixReplacement(final InfixExpression x, final Expression left) {
+    final List<Expression> es = extract.allOperands(x);
+    final InfixExpression.Operator o = step.operator(x);
+    final List<Expression> $ = !wizard.nonAssociative(x)?associativeReplace(es,left):nonAssociativeReplace(es,left);
     return $.size() == es.size() ? null : $.size() == 1 ? duplicate.of(lisp.first($)) : subject.operands($).to(o);
   }
 
-  private static List<Expression> nonAssociativeReplace(final List<Expression> es, final Expression left) {
-    final List<Expression> $ = new ArrayList<>(es);
-    if (asLeft(es.get(0), left))
+  private static List<Expression> nonAssociativeReplace(final List<Expression> xs, final Expression left) {
+    final List<Expression> $ = new ArrayList<>(xs);
+    if (asLeft(xs.get(0), left))
       $.remove(0);
     return $;
   }
 
-  private static List<Expression> associativeReplace(final List<Expression> es, final Expression left) {
-    final List<Expression> $ = new ArrayList<>(es);
-    for (final Expression ¢ : es)
+  private static List<Expression> associativeReplace(final List<Expression> xs, final Expression left) {
+    final List<Expression> $ = new ArrayList<>(xs);
+    for (final Expression ¢ : xs)
       if (asLeft(¢, left)) {
         $.remove(¢);
         break;
