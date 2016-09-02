@@ -586,7 +586,7 @@ public class PrudentTypeTest {
     }
 
     @Test public void axiomExpression12() {
-      azzert.that(axiom((float) 1 / 1L * 1), is(FLOAT));
+      azzert.that(axiom(1 * (float)1 / 1L), is(FLOAT));
     }
 
     @Test public void axiomExpression13() {
@@ -594,7 +594,7 @@ public class PrudentTypeTest {
     }
 
     @Test public void axiomExpression14() {
-      azzert.that(axiom((float) 1 + 1L * 1), is(FLOAT));
+      azzert.that(axiom((float) 1 + 1 * 1L), is(FLOAT));
     }
 
     @Test public void axiomExpression15() {
