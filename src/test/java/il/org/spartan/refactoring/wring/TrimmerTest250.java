@@ -978,7 +978,7 @@ public class TrimmerTest250 {
   
   @Test public void issue31d() {
     trimming(" void f(final Expression n) {}") //
-    .to("void f(final Expression e) {}");
+    .to("void f(final Expression x) {}");
   }
   
   @Test public void issue31e() {
@@ -987,24 +987,48 @@ public class TrimmerTest250 {
   }
   
   @Test public void issue31f() {
-    trimming(" void f(final Exception n, Expression kooki) {}") //
-    .to("void f(final Exception x, Expression kooki) {}") //
-    .to("void f(final Exception x, Expression e) {}");
+    trimming(" void f(final Exception exception, Expression expression) {}") //
+    .to("void f(final Exception x, Expression expression) {}");
   }
   
   @Test public void issue31g() {
-    trimming(" catch (Exception e) {throw e;}") //
-    .to("catch (Exception x) {throw x;}");
+    trimming("void foo(TestExpression exp,TestAssignment testAssignment)") //
+    .to("void foo(TestExpression x,TestAssignment testAssignment)")
+    .to("void foo(TestExpression x,TestAssignment a)");
   }
   
-  @Ignore public void issue31h() {
+  @Test public void issue31h() {
     trimming(" void f(final Exception n) {}") //
     .to("void f(final Exception x) {}");
   }
   
-  @Ignore public void issue31i() {
+  @Test public void issue31i() {
     trimming(" void f(final Exception n) {}") //
     .to("void f(final Exception x) {}");
+  }
+  
+  @Test public void issue31j(){
+    trimming("void foo(Exception exception, Assignment assignment)").to("void foo(Exception x, Assignment assignment)").to("void foo(Exception x, Assignment a)").to(null);
+  }
+  
+  @Test public void issue31k(){
+    trimming("String tellTale(Example example)")
+    .to("String tellTale(Example x)");
+  }
+  
+  @Test public void issue31l(){
+    trimming("String tellTale(Example examp)")
+    .to("String tellTale(Example x)");
+  }
+  
+  @Test public void issue31m(){
+    trimming("String tellTale(ExamplyExamplar lyEx)")
+    .to("String tellTale(ExamplyExamplar x)");
+  }
+  
+  @Test public void issue31n(){
+    trimming("String tellTale(ExamplyExamplar foo)")
+    .to(null);
   }
   
   // @formatter:off
