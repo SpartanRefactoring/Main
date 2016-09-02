@@ -91,7 +91,7 @@ import java.util.regex.*;
   /** Returns the calculated short name for the type
    * @return type's short name */
   public String shortName() {
-    return lastNameCharIndex(0).equals("e") && lastNameCharIndex(1).equals("x") 
+    return "e".equals(lastNameCharIndex(0)) && "x".equals(lastNameCharIndex(1)) 
         ? "x" : lastNameCharIndex(0);
   }
 
