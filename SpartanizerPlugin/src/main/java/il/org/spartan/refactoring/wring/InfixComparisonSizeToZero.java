@@ -23,8 +23,8 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
         || isNumber(¢2) && ¢1 instanceof MethodInvocation;
   }
 
-  private static String description(final Expression e) {
-    return e == null ? "Use isEmpty()" : "Use " + e + ".isEmpty()";
+  private static String description(final Expression x) {
+    return x == null ? "Use isEmpty()" : "Use " + x + ".isEmpty()";
   }
 
   private static NumberLiteral getNegativeNumber(final Expression ¢) {
@@ -39,11 +39,11 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
     return ¢ instanceof NumberLiteral || getNegativeNumber(¢) != null;
   }
 
-  private static ASTNode replacement(final InfixExpression e, Operator o, final int sign, final NumberLiteral l, final Expression receiver) {
+  private static ASTNode replacement(final InfixExpression x, Operator o, final int sign, final NumberLiteral l, final Expression receiver) {
     final MethodInvocation $ = subject.operand(receiver).toMethod("isEmpty");
     int threshold = sign * Integer.parseInt(l.getToken());
-    final BooleanLiteral TRUE = e.getAST().newBooleanLiteral(true);
-    final BooleanLiteral FALSE = e.getAST().newBooleanLiteral(false);
+    final BooleanLiteral TRUE = x.getAST().newBooleanLiteral(true);
+    final BooleanLiteral FALSE = x.getAST().newBooleanLiteral(false);
     if (o == Operator.GREATER_EQUALS) {
       o = Operator.GREATER;
       --threshold;
@@ -64,7 +64,7 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
     return null;
   }
 
-  private static ASTNode replacement(final InfixExpression e, final Operator o, final MethodInvocation i, final Expression n) {
+  private static ASTNode replacement(final InfixExpression x, final Operator o, final MethodInvocation i, final Expression n) {
     if (!"size".equals(step.name(i).getIdentifier()))
       return null;
     int sign = -1;
@@ -80,39 +80,39 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
     final Expression receiver = step.receiver(i);
     /* In case binding is available, uses it to ensure that isEmpty() is
      * accessible from current scope. Currently untested */
-    if (e.getAST().hasResolvedBindings()) {
-      final CompilationUnit u = hop.compilationUnit(e);
+    if (x.getAST().hasResolvedBindings()) {
+      final CompilationUnit u = hop.compilationUnit(x);
       if (u == null)
         return null;
-      final IMethodBinding b = BindingUtils.getVisibleMethod(receiver == null ? BindingUtils.container(e) : receiver.resolveTypeBinding(), "isEmpty",
-          null, e, u);
+      final IMethodBinding b = BindingUtils.getVisibleMethod(receiver == null ? BindingUtils.container(x) : receiver.resolveTypeBinding(), "isEmpty",
+          null, x, u);
       if (b == null)
         return null;
       final ITypeBinding t = b.getReturnType();
       if (!"boolean".equals("" + t) && !"java.lang.Boolean".equals(t.getBinaryName()))
         return null;
     }
-    return replacement(e, o, sign, l, receiver);
+    return replacement(x, o, sign, l, receiver);
   }
 
-  @Override String description(final InfixExpression e) {
-    final Expression right = step.right(e);
-    final Expression left = step.left(e);
+  @Override String description(final InfixExpression x) {
+    final Expression right = step.right(x);
+    final Expression left = step.left(x);
     return description(left instanceof MethodInvocation ? left : right);
   }
 
-  @Override ASTNode replacement(final InfixExpression e) {
-    final Operator o = e.getOperator();
+  @Override ASTNode replacement(final InfixExpression x) {
+    final Operator o = x.getOperator();
     if (!iz.comparison(o))
       return null;
-    final Expression right = step.right(e);
+    final Expression right = step.right(x);
     assert right != null;
-    final Expression left = step.left(e);
+    final Expression left = step.left(x);
     assert left != null;
     return !validTypes(right, left) ? null
         : left instanceof MethodInvocation ? //
-            replacement(e, o, (MethodInvocation) left, right) //
-            : replacement(e, wizard.conjugate(o), (MethodInvocation) right, left)//
+            replacement(x, o, (MethodInvocation) left, right) //
+            : replacement(x, wizard.conjugate(o), (MethodInvocation) right, left)//
     ;
   }
 }

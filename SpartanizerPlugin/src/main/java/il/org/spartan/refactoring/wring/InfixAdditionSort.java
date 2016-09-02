@@ -18,20 +18,20 @@ import il.org.spartan.refactoring.java.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class InfixAdditionSort extends Wring.InfixSorting implements Kind.Canonicalization {
-  @Override boolean eligible(final InfixExpression e) {
-    return stringType.isNot(e) && super.eligible(e);
+  @Override boolean eligible(final InfixExpression x) {
+    return stringType.isNot(x) && super.eligible(x);
   }
 
-  @Override Expression replacement(final InfixExpression e) {
-    final List<Expression> operands = extract.allOperands(e);
-    return !stringType.isNot(e) || !sort(operands) ? null : subject.operands(operands).to(e.getOperator());
+  @Override Expression replacement(final InfixExpression x) {
+    final List<Expression> operands = extract.allOperands(x);
+    return !stringType.isNot(x) || !sort(operands) ? null : subject.operands(operands).to(x.getOperator());
   }
 
-  @Override boolean scopeIncludes(final InfixExpression e) {
-    return e.getOperator() == PLUS;
+  @Override boolean scopeIncludes(final InfixExpression x) {
+    return x.getOperator() == PLUS;
   }
 
-  @Override boolean sort(final List<Expression> es) {
-    return ExpressionComparator.ADDITION.sort(es);
+  @Override boolean sort(final List<Expression> xs) {
+    return ExpressionComparator.ADDITION.sort(xs);
   }
 }
