@@ -2120,6 +2120,14 @@ import il.org.spartan.refactoring.utils.*;
         .to("(polite ? \"thanks\" :\"I hated the meal\")+ \".\"");
   }
   
+  @Test public void issue110_5() {
+    trimming("a ? \"abracadabra\" : \"abba\"") //
+        .to("!a ? \"abba\" : \"abracadabra\"")//
+        .to("\"ab\" +(!a ? \"ba\" : \"racadabra\")")//
+        .to("\"ab\" +((!a ? \"b\" : \"racadabr\")+ \"a\")")//
+        .to("\"ab\" +(!a ? \"b\" : \"racadabr\")+ \"a\"").to(null);
+  }
+  
   @Test public void linearTransformation() {
     trimming("plain * the + kludge").to("the*plain+kludge");
   }
