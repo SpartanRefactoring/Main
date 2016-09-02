@@ -2,35 +2,35 @@ package il.org.spartan.refactoring.java;
 
 /** Fluent API ... */
 public interface atomic {
-  static boolean isBoolean(final boolean __) {
+  static boolean isBoolean(@SuppressWarnings("unused") final boolean __) {
     return true;
   }
 
-  static boolean isBoolean(final byte __) {
+  static boolean isBoolean(@SuppressWarnings("unused") final byte __) {
     return false;
   }
 
-  static boolean isBoolean(final char __) {
+  static boolean isBoolean(@SuppressWarnings("unused") final char __) {
     return false;
   }
 
-  static boolean isBoolean(final double __) {
+  static boolean isBoolean(@SuppressWarnings("unused") final double __) {
     return false;
   }
 
-  static boolean isBoolean(final float __) {
+  static boolean isBoolean(@SuppressWarnings("unused") final float __) {
     return false;
   }
 
-  static boolean isBoolean(final Object __) {
+  static boolean isBoolean(@SuppressWarnings("unused") final Object __) {
     return false;
   }
 
-  static boolean isBoolean(final short __) {
+  static boolean isBoolean(@SuppressWarnings("unused") final short __) {
     return false;
   }
 
-  static boolean isBoolean(final String __) {
+  static boolean isBoolean(@SuppressWarnings("unused") final String __) {
     return false;
   }
 
