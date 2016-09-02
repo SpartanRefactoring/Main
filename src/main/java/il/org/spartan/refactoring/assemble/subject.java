@@ -29,12 +29,12 @@ public class subject {
     }
 
     /** Make a deep copy of expression and assign it to ast
-     * @param e JD
+     * @param x JD
      * @return a copy of the expression e
      * @see #rebase
      * @see duplicate#duplicate */
-    Expression claim(final Expression e) {
-      return wizard.rebase(duplicate.of(extract.core(e)), ast);
+    Expression claim(final Expression x) {
+      return wizard.rebase(duplicate.of(extract.core(x)), ast);
     }
 
     /** A deep copy of statement and assign it to ast, if the statement exists
@@ -332,18 +332,18 @@ public class subject {
 
   /** Create an instance of several operands together here we get the
    * expressions in separate and not as a list
-   * @param e JD
+   * @param xs JD
    * @return a new instance using the given expressions */
-  public static Several operands(final Expression... e) {
-    return new Several(as.list(e));
+  public static Several operands(final Expression... xs) {
+    return new Several(as.list(xs));
   }
 
   /** Create an instance of several operands together here we get the
    * expressions as a list
-   * @param es a list of expressions
+   * @param xs a list of expressions
    * @return a new Several instance using the given list of expressions */
-  public static Several operands(final List<Expression> es) {
-    return new Several(es);
+  public static Several operands(final List<Expression> xs) {
+    return new Several(xs);
   }
 
   /** Create an instance of 2 expressions together

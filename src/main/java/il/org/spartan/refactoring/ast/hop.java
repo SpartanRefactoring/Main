@@ -29,16 +29,16 @@ public interface hop {
 
   /** Makes a list of all operands of an expression, comprising the left
    * operand, the right operand, followed by extra operands when they exist.
-   * @param e JD
+   * @param x JD
    * @return a list of all operands of an expression */
-  static List<Expression> operands(final InfixExpression e) {
-    if (e == null)
+  static List<Expression> operands(final InfixExpression x) {
+    if (x == null)
       return null;
     final List<Expression> $ = new ArrayList<>();
-    $.add(step.left(e));
-    $.add(step.right(e));
-    if (e.hasExtendedOperands())
-      $.addAll(step.extendedOperands(e));
+    $.add(step.left(x));
+    $.add(step.right(x));
+    if (x.hasExtendedOperands())
+      $.addAll(step.extendedOperands(x));
     return $;
   }
 
@@ -110,12 +110,12 @@ public interface hop {
   }
 
   /** @param n the node from which to extract the proper fragment
-   * @param e the name by which to look for the fragment
+   * @param x the name by which to look for the fragment
    * @return fragment if such with the given name exists or null otherwise (or
    *         if ¢ or name are null) */
   // TODO this seems a bug
-  static VariableDeclarationFragment getDefinition(final ASTNode n, final Expression e) {
-    return hasNull(n, e) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || e.getNodeType() != SIMPLE_NAME ? null
-        : findDefinition((VariableDeclarationStatement) n, (SimpleName) e);
+  static VariableDeclarationFragment getDefinition(final ASTNode n, final Expression x) {
+    return hasNull(n, x) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || x.getNodeType() != SIMPLE_NAME ? null
+        : findDefinition((VariableDeclarationStatement) n, (SimpleName) x);
   }
 }
