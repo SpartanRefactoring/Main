@@ -34,9 +34,9 @@ public final class MethodRemoveDegenerateOverride extends Wring<MethodDeclaratio
 
   private static boolean shouldRemove(final MethodDeclaration d, final SuperMethodInvocation i) {
     for (final Object m : d.modifiers())
-      if (m instanceof MarkerAnnotation && ((MarkerAnnotation) m).getTypeName().toString().contains("Deprecated"))
+      if (m instanceof MarkerAnnotation && ("" + ((MarkerAnnotation) m).getTypeName()).contains("Deprecated"))
         return false;
-    return i.getName().toString().equals("" + d.getName()) && arguments(i).size() == parameters(d).size();
+    return ("" + i.getName()).equals("" + d.getName()) && arguments(i).size() == parameters(d).size();
   }
 
   @Override String description(final MethodDeclaration d) {
