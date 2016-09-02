@@ -67,7 +67,7 @@ import il.org.spartan.refactoring.wring.Wring.*;
 
   public static boolean suppressedUnused(final SingleVariableDeclaration d) {
     for (final IExtendedModifier m : (Iterable<IExtendedModifier>) d.modifiers())
-      if (m instanceof SingleMemberAnnotation && "SuppressWarnings".equals(((SingleMemberAnnotation) m).getTypeName().toString())) {
+      if (m instanceof SingleMemberAnnotation && "SuppressWarnings".equals("" + ((SingleMemberAnnotation) m).getTypeName())) {
         final Expression e = ((SingleMemberAnnotation) m).getValue();
         if (e instanceof StringLiteral)
           return "unused".equals(((StringLiteral) e).getLiteralValue());
