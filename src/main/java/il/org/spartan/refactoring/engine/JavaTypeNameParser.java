@@ -91,7 +91,12 @@ import java.util.regex.*;
   /** Returns the calculated short name for the type
    * @return type's short name */
   public String shortName() {
-    return String.valueOf(Character.toLowerCase(lastName().charAt(0)));
+    return lastNameCharIndex(0).equals("e") && lastNameCharIndex(1).equals("x") 
+        ? "x" : lastNameCharIndex(0);
+  }
+
+  private String lastNameCharIndex(int i) {
+    return lastName().length() < i + 1 ? "" : String.valueOf(Character.toLowerCase(lastName().charAt(i)));
   }
 
   private String toSingular(final String s) {
