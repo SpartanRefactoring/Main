@@ -91,11 +91,11 @@ public interface wizard {
 
   /**
    * Parenthesize an expression (if necessary).
-   * @param e  JD
+   * @param x  JD
    * @return  a {@link il.org.spartan.refactoring.assemble.duplicate#duplicate(Expression)} of the parameter wrapped in parenthesis. 
    */
-  static Expression parenthesize(final Expression e) {
-    return iz.noParenthesisRequired(e) ? duplicate.of(e) : make.parethesized(e);
+  static Expression parenthesize(final Expression x) {
+    return iz.noParenthesisRequired(x) ? duplicate.of(x) : make.parethesized(x);
   }
 
   /** Obtain a condensed textual representation of an {@link ASTNode}
@@ -161,24 +161,24 @@ public interface wizard {
 
   /** Compute the "de Morgan" conjugate of the operator present on an
    * {@link InfixExpression}.
-   * @param e an expression whose operator is either
+   * @param x an expression whose operator is either
    *        {@link Operator#CONDITIONAL_AND} or {@link Operator#CONDITIONAL_OR}
    * @return {@link Operator#CONDITIONAL_AND} if the operator present on the
    *         parameter is {@link Operator#CONDITIONAL_OR}, or
    *         {@link Operator#CONDITIONAL_OR} if this operator is
    *         {@link Operator#CONDITIONAL_AND}
    * @see duplicate#deMorgan(Operator) */
-  static Operator deMorgan(final InfixExpression e) {
-    return wizard.deMorgan(e.getOperator());
+  static Operator deMorgan(final InfixExpression x) {
+    return wizard.deMorgan(x.getOperator());
   }
 
   /** Find the first matching expression to the given boolean (b).
    * @param b JD,
-   * @param es JD
+   * @param xs JD
    * @return first expression from the given list (es) whose boolean value
    *         matches to the given boolean (b). */
-  static Expression find(final boolean b, final List<Expression> es) {
-    for (final Expression $ : es)
+  static Expression find(final boolean b, final List<Expression> xs) {
+    for (final Expression $ : xs)
       if (iz.booleanLiteral($) && b == az.booleanLiteral($).booleanValue())
         return $;
     return null;
@@ -224,8 +224,8 @@ public interface wizard {
     return nonAssociative(az.infixExpression(n));
   }
 
-  static boolean nonAssociative(final InfixExpression e) {
-    return e != null && in(e.getOperator(), MINUS, DIVIDE, REMAINDER, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED);
+  static boolean nonAssociative(final InfixExpression x) {
+    return x != null && in(x.getOperator(), MINUS, DIVIDE, REMAINDER, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED);
   }
 
   static ASTParser parser(final int kind) {
@@ -263,13 +263,13 @@ public interface wizard {
   /** Remove all occurrences of a boolean literal from a list of
    * {@link Expression}¢
    * @param ¢ JD
-   * @param es JD */
-  static void removeAll(final boolean b, final List<Expression> es) {
+   * @param xs JD */
+  static void removeAll(final boolean b, final List<Expression> xs) {
     for (;;) {
-      final Expression ¢ = find(b, es);
+      final Expression ¢ = find(b, xs);
       if (¢ == null)
         return;
-      es.remove(¢);
+      xs.remove(¢);
     }
   }
 
@@ -289,9 +289,9 @@ public interface wizard {
    * @param ¢ string to compare all names to
    * @param es SimplesNames to compare by their string value to cmpTo
    * @return true if all names are the same (string wise) or false otherwise */
-  static boolean same(final Expression e, final Expression... es) {
+  static boolean same(final Expression x, final Expression... es) {
     for (final Expression ¢ : es)
-      if (!same(¢, e))
+      if (!same(¢, x))
         return false;
     return true;
   }

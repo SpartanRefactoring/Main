@@ -48,51 +48,51 @@ import il.org.spartan.refactoring.utils.*;
  * @author Matteo Orrù
  * @since 2016 */
 public final class InfixFactorNegatives extends Wring<InfixExpression> implements Kind.NoImpact {
-  private static List<Expression> gather(final Expression e, final List<Expression> $) {
-    if (e instanceof InfixExpression)
-      return gather(az.infixExpression(e), $);
-    $.add(e);
+  private static List<Expression> gather(final Expression x, final List<Expression> $) {
+    if (x instanceof InfixExpression)
+      return gather(az.infixExpression(x), $);
+    $.add(x);
     return $;
   }
 
-  private static List<Expression> gather(final InfixExpression e) {
-    return gather(e, new ArrayList<Expression>());
+  private static List<Expression> gather(final InfixExpression x) {
+    return gather(x, new ArrayList<Expression>());
   }
 
-  private static List<Expression> gather(final InfixExpression e, final List<Expression> $) {
-    if (e == null)
+  private static List<Expression> gather(final InfixExpression x, final List<Expression> $) {
+    if (x == null)
       return $;
-    if (!in(e.getOperator(), TIMES, DIVIDE)) {
-      $.add(e);
+    if (!in(x.getOperator(), TIMES, DIVIDE)) {
+      $.add(x);
       return $;
     }
-    gather(core(step.left(e)), $);
-    gather(core(step.right(e)), $);
-    if (e.hasExtendedOperands())
-      gather(extendedOperands(e), $);
+    gather(core(step.left(x)), $);
+    gather(core(step.right(x)), $);
+    if (x.hasExtendedOperands())
+      gather(extendedOperands(x), $);
     return $;
   }
 
-  private static List<Expression> gather(final List<Expression> es, final List<Expression> $) {
-    for (final Expression e : es)
+  private static List<Expression> gather(final List<Expression> xs, final List<Expression> $) {
+    for (final Expression e : xs)
       gather(e, $);
     return $;
   }
 
-  @Override String description(final InfixExpression e) {
-    return "Use at most one arithmetical negation, for first factor of " + e.getOperator();
+  @Override String description(final InfixExpression x) {
+    return "Use at most one arithmetical negation, for first factor of " + x.getOperator();
   }
 
-  @Override Rewrite make(final InfixExpression e, final ExclusionManager exclude) {
-    final List<Expression> es = gather(e);
+  @Override Rewrite make(final InfixExpression x, final ExclusionManager exclude) {
+    final List<Expression> es = gather(x);
     if (es.size() < 2)
       return null;
-    final int totalNegation = minus.level(e);
-    if (totalNegation == 0 || totalNegation == 1 && minus.level(step.left(e)) == 1)
+    final int totalNegation = minus.level(x);
+    if (totalNegation == 0 || totalNegation == 1 && minus.level(step.left(x)) == 1)
       return null;
     if (exclude != null)
-      exclude.exclude(e);
-    return new Rewrite(description(e), e) {
+      exclude.exclude(x);
+    return new Rewrite(description(x), x) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Expression first = totalNegation % 2 == 0 ? null : lisp.first(es);
         for (final Expression ¢ : es)

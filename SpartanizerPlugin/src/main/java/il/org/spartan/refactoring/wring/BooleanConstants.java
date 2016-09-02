@@ -20,12 +20,12 @@ public final class BooleanConstants extends Wring.ReplaceCurrentNode<MethodInvoc
     return !"valueOf".equals(step.name(i).getIdentifier()) ? null : replacement(step.receiver(i), onlyArgument(i));
   }
 
-  private static Expression replacement(final Expression e, final Expression $) {
-    return e == null || !"Boolean".equals("" + e) ? null : replacement(e, az.booleanLiteral($));
+  private static Expression replacement(final Expression x, final Expression $) {
+    return x == null || !"Boolean".equals("" + x) ? null : replacement(x, az.booleanLiteral($));
   }
 
-  private static Expression replacement(final Expression e, final BooleanLiteral l) {
-    return l == null ? null : subject.operand(e).toQualifier(asString(l));
+  private static Expression replacement(final Expression x, final BooleanLiteral l) {
+    return l == null ? null : subject.operand(x).toQualifier(asString(l));
   }
 
   private static String asString(final BooleanLiteral l) {
