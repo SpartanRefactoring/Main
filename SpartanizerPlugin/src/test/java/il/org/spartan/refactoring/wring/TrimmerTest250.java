@@ -850,7 +850,7 @@ public class TrimmerTest250 {
     trimming("x=x+y").to("x+=y");
   }
 
-  @Ignore public void issue103mma() {
+  @Test public void issue103mma() {
     trimming("x=x*y").to("x*=y");
   }
 
@@ -895,7 +895,7 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue103l_mixed() {
-    trimming("a = a - (x = x + (y = y*(z=z+3)))").to("a = a - (x += y=y*(z=z+3))").to("a = a - (x += y *= z=z+3)").to("a = a - (x += y *= z+=3)");
+    trimming("a = a - (x = x + (y = y*(z=z+3)))").to("a-=x=x+(y=y*(z=z+3))").to("a-=x+=y=y*(z=z+3)");
   }
 
   @Test public void AssignmentAndReturn() {
