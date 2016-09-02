@@ -28,7 +28,7 @@ public class OccurrencesTest {
 
   @Test public void correctSettings() {
     azzert.that(ab, iz("int a=2,b;"));
-    azzert.that(b.toString(), is("b"));
+    azzert.that("" + b, is("b"));
     azzert.that(s, is(extract.firstIfStatement(u)));
     azzert.that(s, iz("if (a + b) a=3;"));
     azzert.that(e, iz("a + b"));
