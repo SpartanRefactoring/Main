@@ -62,6 +62,9 @@ public interface spartan {
     return shorten(t.getName());
   }
 
+  // TODO: How about lists of exceptions? did you checkthem? Did you understand
+  // the algorithm here? On the face it you may be getting an infinite recursion
+  // here. How about "Expression"? "Example"?
   static String shorten(final String s) {
     return "Exception".equals(s) ? "x" : new JavaTypeNameParser(s).shortName();
   }
