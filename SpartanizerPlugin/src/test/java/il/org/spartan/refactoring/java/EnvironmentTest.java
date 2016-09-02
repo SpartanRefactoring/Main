@@ -3,6 +3,7 @@ package il.org.spartan.refactoring.java;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.java.Environment.*;
 
+
 import java.util.*;
 import java.util.Map.*;
 
@@ -224,33 +225,33 @@ import il.org.spartan.refactoring.engine.*;
   
   //========================= use & define tests ===========================
   
-  @Test public void useTestMethodDefinition(){
+  @SuppressWarnings("static-method") @Test public void useTestMethodDefinition(){
     Environment.uses(MakeAST.COMPILATION_UNIT.from((new Document("int x = 5;")).get()));
   }
   
-  @Test public void defineTestMethodDefinition(){
+  @SuppressWarnings("static-method") @Test public void defineTestMethodDefinition(){
     Environment.defines(MakeAST.COMPILATION_UNIT.from((new Document("int x = 5;")).get()));
   }
   //Simple definitions
-  @Ignore public void useTestWithDefinitionsOnly(){
+  @SuppressWarnings("static-method") @Ignore public void useTestWithDefinitionsOnly(){
     azzert.that(Environment.uses(MakeAST.COMPILATION_UNIT.from((new Document("int x = 5;")).get())).contains("x"),is(true));
   }
   
-  @Ignore public void useTestWithDefinitionsOnly2(){
+  @SuppressWarnings("static-method") @Ignore public void useTestWithDefinitionsOnly2(){
     Set<Map.Entry<String, Information>> $ = Environment.uses(MakeAST.COMPILATION_UNIT.from((new Document("int x = 5,y=3,z;")).get()));
     azzert.that($.contains("x"),is(true));
     azzert.that($.contains("y"),is(true));
     azzert.that($.contains("z"),is(true));
   }
   
-  @Ignore public void useTestWithDefinitionsOnly3(){
+  @SuppressWarnings("static-method") @Ignore public void useTestWithDefinitionsOnly3(){
     Set<Map.Entry<String, Information>> $ = Environment.uses(MakeAST.COMPILATION_UNIT.from((new Document("int x = y = z =5;")).get()));
     azzert.that($.contains("x"),is(true));
     azzert.that($.contains("y"),is(true));
     azzert.that($.contains("z"),is(true));
   }
   
-  @Ignore public void useTestWithDefinitionsOnly4(){
+  @SuppressWarnings("static-method") @Ignore public void useTestWithDefinitionsOnly4(){
     Set<Map.Entry<String, Information>> $ = Environment.uses(MakeAST.COMPILATION_UNIT.from((new Document("int x = y = z =5; double k;")).get()));
     azzert.that($.contains("x"),is(true));
     azzert.that($.contains("y"),is(true));
@@ -259,23 +260,23 @@ import il.org.spartan.refactoring.engine.*;
   }
   
   //Simple uses.
-  @Ignore public void useTestWithUsesOnly(){
+  @SuppressWarnings("static-method") @Ignore public void useTestWithUsesOnly(){
     Set<Map.Entry<String, Information>> $ = Environment.uses(MakeAST.COMPILATION_UNIT.from((new Document("x=5; y=3.5")).get()));
     azzert.that($.contains("x"),is(true));
     azzert.that($.contains("y"),is(true));
   }
   
-  @Ignore public void useTestWithUsesOnly2(){
+  @SuppressWarnings("static-method") @Ignore public void useTestWithUsesOnly2(){
     azzert.that(Environment.uses(MakeAST.COMPILATION_UNIT.from((new Document("foo(x)")).get())).contains("x"), is(true));
   }
   
-  @Ignore public void useTestWithUsesOnly3(){
+  @SuppressWarnings("static-method") @Ignore public void useTestWithUsesOnly3(){
     Set<Map.Entry<String, Information>> $ = Environment.uses(MakeAST.COMPILATION_UNIT.from((new Document("foo(x,y)")).get()));
     azzert.that($.contains("x"),is(true));
     azzert.that($.contains("y"),is(true));
   }  
   
-  @Ignore public void useTestWithUsesOnly4(){
+  @SuppressWarnings("static-method") @Ignore public void useTestWithUsesOnly4(){
     Set<Map.Entry<String, Information>> $ = Environment.uses(MakeAST.COMPILATION_UNIT.from((new Document("foo(goo(q,x),hoo(x,y,z))")).get()));
     azzert.that($.contains("q"),is(true));
     azzert.that($.contains("x"),is(true));
@@ -283,17 +284,17 @@ import il.org.spartan.refactoring.engine.*;
     azzert.that($.contains("z"),is(true));
   }
   
-  @Ignore public void useTestWithUsesOnly5(){
+  @SuppressWarnings("static-method") @Ignore public void useTestWithUsesOnly5(){
     azzert.that(Environment.uses(MakeAST.COMPILATION_UNIT.from((new Document("x.foo()")).get())).contains("x"), is(true));
   }
 
-  @Ignore public void useTestUsesAndDefinitions(){
+  @SuppressWarnings("static-method") @Ignore public void useTestUsesAndDefinitions(){
     Set<Map.Entry<String, Information>> $ = Environment.uses(MakeAST.COMPILATION_UNIT.from((new Document("int i = 3; x.foo()")).get()));
     azzert.that($.contains("x"),is(true));
     azzert.that($.contains("i"),is(true));
   }
   
-  @Ignore public void useTestUsesAndDefinitions2(){
+  @SuppressWarnings("static-method") @Ignore public void useTestUsesAndDefinitions2(){
     Set<Map.Entry<String, Information>> $ = Environment.uses(MakeAST.COMPILATION_UNIT.from((new Document(""+
                                                               "for(int i = 0; i < 10; ++i)" +//
                                                                   "x+=i")).get()));
@@ -301,7 +302,7 @@ import il.org.spartan.refactoring.engine.*;
     azzert.that($.contains("i"),is(true));
   }
   
-  @Ignore public void useTestUsesAndDefinitions3(){
+  @SuppressWarnings("static-method") @Ignore public void useTestUsesAndDefinitions3(){
     Set<Map.Entry<String, Information>> $ = Environment.uses(MakeAST.COMPILATION_UNIT.from((new Document("x=3; try{y=13; foo(x,y);}"+//
                                                                                                         "catch(final UnsupportedOperationException e)"+//
                                                                                                         "{z=3;}")).get()));
@@ -310,7 +311,7 @@ import il.org.spartan.refactoring.engine.*;
     azzert.that($.contains("z"),is(true));
   }
   
-  @Test public static void define_0() {
+  @SuppressWarnings("static-method") @Test public void define_0() {
     String code = "";
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
     final Set<Entry<String, Information>> $ = Environment.defines(u);
@@ -318,14 +319,14 @@ import il.org.spartan.refactoring.engine.*;
     azzert.that($.isEmpty(), is(true));
   }
   
-  @Ignore public static void define_1() {
+  @SuppressWarnings("static-method") @Ignore public void define_1() {
     String code = "int a = 0;";
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
     final Set<Entry<String, Information>> $ = Environment.defines(u);
     azzert.that($.contains("a"), is(true));
   }
   
-  @Ignore public static void define_2() {
+  @SuppressWarnings("static-method") @Ignore public void define_2() {
     String code = "int a = 0;\n" + //
                   "int b;";
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
@@ -334,14 +335,14 @@ import il.org.spartan.refactoring.engine.*;
     azzert.that($.contains("b"), is(true));
   }
   
-  @Ignore public static void define_3() {
+  @SuppressWarnings("static-method") @Ignore public void define_3() {
     String code = "public void f(int a){}";
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
     final Set<Entry<String, Information>> $ = Environment.defines(u);
     azzert.that($.contains("a"), is(true));
   }
   
-  @Ignore public static void define_4() {
+  @SuppressWarnings("static-method") @Ignore public void define_4() {
     String code = "public void f(int a){String b}";
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
     final Set<Entry<String, Information>> $ = Environment.defines(u);
@@ -349,14 +350,14 @@ import il.org.spartan.refactoring.engine.*;
     azzert.that($.contains("b"), is(true));
   }
   
-  @Ignore public static void define_5() {
+  @SuppressWarnings("static-method") @Ignore public void define_5() {
     String code = "a = 0;";
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
     final Set<Entry<String, Information>> $ = Environment.defines(u);
     azzert.that($.contains("a"), is(false));
   }
   
-  @Ignore public static void define_6() {
+  @SuppressWarnings("static-method") @Ignore public void define_6() {
     String code = "int a = 0;\n" + //
                   "b = 5";
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
@@ -365,7 +366,7 @@ import il.org.spartan.refactoring.engine.*;
     azzert.that($.contains("b"), is(false));
   }
   
-  @Ignore public static void define_7() {
+  @SuppressWarnings("static-method") @Ignore public void define_7() {
     String code = "class MyClass {\n" + //
                   "int a;\n" + //
                   "static class Inner {\n" + //
@@ -380,21 +381,21 @@ import il.org.spartan.refactoring.engine.*;
     azzert.that($.contains("not_in_env"), is(false));
   }
   
-  @Ignore public static void define_8() {
+  @SuppressWarnings("static-method") @Ignore public void define_8() {
     String code = "int a = 0;";
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
     final Set<Entry<String, Information>> $ = Environment.defines(u);
     azzert.that($.contains("a"), is(true));
   }
   
-  @Ignore public static void define_9() {
+  @SuppressWarnings("static-method") @Ignore public void define_9() {
     String code = "int a = 0;";
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
     final Set<Entry<String, Information>> $ = Environment.defines(u);
     azzert.that($.contains("a"), is(true));
   }
 
-  @Ignore public static void define_10() {
+  @SuppressWarnings("static-method") @Ignore public void define_10() {
     String code = "int a = 0;";
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
     final Set<Entry<String, Information>> $ = Environment.defines(u);
