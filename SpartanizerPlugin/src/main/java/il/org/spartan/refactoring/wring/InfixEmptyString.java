@@ -10,8 +10,8 @@ import il.org.spartan.refactoring.wring.Wring.*;
  * @author Matteo Orru' <code><matt.orru [at] gmail.com></code>
  * @since 2016-08-14 */
 public class InfixEmptyString extends ReplaceCurrentNode<InfixExpression> {
-  @Override ASTNode replacement(final InfixExpression e) {
-    return Wrings.eliminateLiteral(e, true);
+  @Override ASTNode replacement(final InfixExpression x) {
+    return Wrings.eliminateLiteral(x, true);
   }
 
   @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
