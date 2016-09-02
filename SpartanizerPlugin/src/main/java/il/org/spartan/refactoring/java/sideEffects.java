@@ -34,6 +34,7 @@ public enum sideEffects {
   private static final int[] alwaysHave = { //
       SUPER_CONSTRUCTOR_INVOCATION, SUPER_METHOD_INVOCATION, METHOD_INVOCATION, CLASS_INSTANCE_CREATION, ASSIGNMENT, POSTFIX_EXPRESSION, };
 
+  // TODO: Niv, make all cases just like the ones I simplified
   public static boolean free(final Expression e) {
     if (e == null || iz.is(e, alwaysFree))
       return true;
@@ -43,9 +44,11 @@ public enum sideEffects {
       case ARRAY_CREATION:
         return free((ArrayCreation) e);
       case ARRAY_ACCESS:
-        return free(((ArrayAccess) e).getArray(), ((ArrayAccess) e).getIndex());
+        final ArrayAccess x = (ArrayAccess) e;
+        return free(x.getArray(), x.getIndex());
       case CAST_EXPRESSION:
-        return free(step.expression(((CastExpression) e)));
+        final CastExpression c = (CastExpression) e;
+        return free(step.expression(c));
       case INSTANCEOF_EXPRESSION:
         return free(step.left((InstanceofExpression) e));
       case PREFIX_EXPRESSION:
