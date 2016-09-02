@@ -19,23 +19,23 @@ import il.org.spartan.refactoring.wring.Wring.*;
  * @author Dan Greenstein
  * @since 2016 */
 public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
-  @Override String description(final InfixExpression e) {
-    return "Remove subtraction of 0 in " + e;
+  @Override String description(final InfixExpression x) {
+    return "Remove subtraction of 0 in " + x;
   }
 
-  @Override ASTNode replacement(final InfixExpression e) {
-    return e.getOperator() != MINUS ? null : go(e);
+  @Override ASTNode replacement(final InfixExpression x) {
+    return x.getOperator() != MINUS ? null : go(x);
   }
 
-  private static ASTNode go(final InfixExpression e) {
-    return e.hasExtendedOperands() ? plant(go(hop.operands(e))).into(step.parent(e))
-        : literal0(step.left(e)) ? plant(il.org.spartan.refactoring.assemble.make.minus(step.right(e))).into(step.parent(e)) //
-            : literal0(step.right(e)) ? plant(step.left(e)).into(step.parent(e)) //
+  private static ASTNode go(final InfixExpression x) {
+    return x.hasExtendedOperands() ? plant(go(hop.operands(x))).into(step.parent(x))
+        : literal0(step.left(x)) ? plant(il.org.spartan.refactoring.assemble.make.minus(step.right(x))).into(step.parent(x)) //
+            : literal0(step.right(x)) ? plant(step.left(x)).into(step.parent(x)) //
                 : null;
   }
 
-  private static Expression go(final List<Expression> es) {
-    final List<Expression> $ = new ArrayList<>(es);
+  private static Expression go(final List<Expression> xs) {
+    final List<Expression> $ = new ArrayList<>(xs);
     if (literal0(lisp.first($))) {
       $.remove(0);
       $.set(0, il.org.spartan.refactoring.assemble.make.minus(lisp.first($)));
