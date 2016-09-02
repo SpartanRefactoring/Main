@@ -79,7 +79,7 @@ public enum Wrings {
   static int length(final ASTNode... ns) {
     int $ = 0;
     for (final ASTNode n : ns)
-      $ += n.toString().length();
+      $ += ("" + n).length();
     return $;
   }
 
@@ -103,7 +103,7 @@ public enum Wrings {
     int previousKind = -1;
     for (final Expression e : es)
       if (e instanceof NumberLiteral || e instanceof CharacterLiteral) {
-        final int currentKind = new LiteralParser(e.toString()).type().ordinal();
+        final int currentKind = new LiteralParser("" + e).type().ordinal();
         assert currentKind >= 0;
         if (previousKind == -1)
           previousKind = currentKind;

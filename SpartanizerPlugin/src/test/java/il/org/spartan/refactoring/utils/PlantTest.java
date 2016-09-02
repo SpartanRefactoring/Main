@@ -10,7 +10,6 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
-import il.org.spartan.refactoring.builder.*;
 import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.java.*;
 
@@ -38,7 +37,7 @@ import il.org.spartan.refactoring.java.*;
   @Test public void plus() {
     final Expression e = into.e("a + 2 < b");
     final Expression plus = extract.firstPlus(e);
-    azzert.that(plus.toString(), stringType.isNot(plus), is(true));
-    azzert.that(e.toString(), stringType.isNot(plus), is(true));
+    azzert.that("" + plus, stringType.isNot(plus), is(true));
+    azzert.that("" + e, stringType.isNot(plus), is(true));
   }
 }

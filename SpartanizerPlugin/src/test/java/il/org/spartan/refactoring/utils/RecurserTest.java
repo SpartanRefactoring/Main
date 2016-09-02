@@ -77,4 +77,9 @@ public class RecurserTest {
   private ASTNode makeCaseNode() {
     return mock(SwitchCase.class);
   }
+  
+  private InfixExpression makeSimpleExpression(){
+    return mock(InfixExpression.class);
+    
+  }
 }

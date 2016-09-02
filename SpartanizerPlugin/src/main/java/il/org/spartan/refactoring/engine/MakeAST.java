@@ -95,7 +95,7 @@ public enum MakeAST {
       final StringBuilder $ = new StringBuilder();
       for (String line = r.readLine(); line != null; line = r.readLine())
         $.append(line).append(System.lineSeparator());
-      return $.toString();
+      return "" + $;
     } catch (final IOException e) {
       throw new RuntimeException(e);
     }

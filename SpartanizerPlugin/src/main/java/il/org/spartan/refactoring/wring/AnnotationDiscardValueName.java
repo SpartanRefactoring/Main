@@ -4,8 +4,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
-import il.org.spartan.refactoring.builder.*;
-import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** Removes the "value" member from annotations that only have a single member,
@@ -21,7 +19,7 @@ public final class AnnotationDiscardValueName //
 
   @Override ASTNode replacement(final NormalAnnotation a) {
     final MemberValuePair p = lisp.onlyOne(step.values(a));
-    if (p == null || !"value".equals(p.getName().toString()))
+    if (p == null || !"value".equals("" + p.getName()))
       return null;
     final SingleMemberAnnotation $ = a.getAST().newSingleMemberAnnotation();
     $.setTypeName(make.newSimpleName(a, a.getTypeName().getFullyQualifiedName()));

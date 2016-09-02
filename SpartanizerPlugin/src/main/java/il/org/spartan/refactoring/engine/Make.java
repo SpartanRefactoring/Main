@@ -21,8 +21,8 @@ public enum Make {
   STATEMENTS(ASTParser.K_STATEMENTS), //
   /** Strategy for conversion into a class body */
   CLASS_BODY_DECLARATIONS(ASTParser.K_CLASS_BODY_DECLARATIONS); //
-  /** Converts the {@link MakeAST} value to its corresponding {@link Make}
-   * enum value
+  /** Converts the {@link MakeAST} value to its corresponding {@link Make} enum
+   * value
    * @param t The {@link MakeAST} type
    * @return corresponding {@link Make} value to the argument */
   public static Make of(final MakeAST t) {

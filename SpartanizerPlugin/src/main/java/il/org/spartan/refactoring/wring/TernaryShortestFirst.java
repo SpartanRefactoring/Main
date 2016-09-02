@@ -6,7 +6,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
-import il.org.spartan.refactoring.builder.*;
 import il.org.spartan.utils.*;
 
 /** convert
@@ -25,7 +24,7 @@ import il.org.spartan.utils.*;
  * @since 2015-08-14 */
 public final class TernaryShortestFirst extends Wring.ReplaceCurrentNode<ConditionalExpression> implements Kind.Canonicalization {
   private static double align(final Expression e1, final Expression e2) {
-    return new LongestCommonSubsequence(e1.toString(), e2.toString()).similarity();
+    return new LongestCommonSubsequence("" + e1, "" + e2).similarity();
   }
 
   private static boolean compatible(final Expression e1, final Expression e2) {

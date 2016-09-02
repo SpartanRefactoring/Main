@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.ast;
 
-import static il.org.spartan.refactoring.assemble.duplicate.*;
 import static il.org.spartan.refactoring.ast.step.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
@@ -10,7 +9,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.refactoring.assemble.*;
-import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should

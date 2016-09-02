@@ -114,12 +114,12 @@ import il.org.spartan.refactoring.engine.*;
    * @param f
    * @return */
   static File createTempFile(final StringBuilder b, final TestDirection d, final File f) {
-    return createTemporaryRandomAccessFile(createTempFile(d, f), b.toString());
+    return createTemporaryRandomAccessFile(createTempFile(d, f), "" + b);
   }
 
   private static File createTempFile(final TestDirection d, final File f) {
     try {
-      return File.createTempFile(f.getName().replace(".", ""), d == TestDirection.In ? ".in" : ".out");
+      return File.createTempFile(f.getName().replace(".", ""), "." + (d == TestDirection.In ? "in" : "out"));
     } catch (final IOException e) {
       return null; // Failed to create temporary file
     }

@@ -7,8 +7,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.engine.*;
-
 public interface hop {
   static CompilationUnit compilationUnit(final ASTNode ¢) {
     return (CompilationUnit) AncestorSearch.forType(COMPILATION_UNIT).from(¢);

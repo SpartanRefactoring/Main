@@ -32,7 +32,7 @@ import il.org.spartan.refactoring.wring.*;
 
   static void assertNoOpportunity(final Spartanization s, final String from) {
     final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
-    azzert.that(u.toString(), TrimmerTestsUtils.countOpportunities(s, u), is(0));
+    azzert.that("" + u, TrimmerTestsUtils.countOpportunities(s, u), is(0));
   }
 
   static void assertNotEvenSimilar(final String expected, final String actual) {

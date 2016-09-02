@@ -7,10 +7,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
-import il.org.spartan.refactoring.builder.*;
-import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.*;
 
@@ -71,12 +68,12 @@ public enum make {
         : newLiteral(l, literal0(l) ? "0" : signAdjust(l.getToken())) //
     ;
   }
+
   private static String signAdjust(final String token) {
     return token.startsWith("-") ? token.substring(1) //
         : "-" + token.substring(token.startsWith("+") ? 1 : 0);
   }
-  
-  
+
   static List<Expression> minus(final List<Expression> es) {
     final List<Expression> $ = new ArrayList<>();
     $.add(lisp.first(es));
