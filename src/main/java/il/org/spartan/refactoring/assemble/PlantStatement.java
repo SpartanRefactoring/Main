@@ -2,9 +2,7 @@ package il.org.spartan.refactoring.assemble;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
-import il.org.spartan.refactoring.builder.*;
 
 public class PlantStatement {
   private final Statement inner;

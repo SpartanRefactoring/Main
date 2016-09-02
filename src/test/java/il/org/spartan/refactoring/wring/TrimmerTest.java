@@ -1940,7 +1940,7 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test public void issue54ForPlain() {
     trimming("int a  = f(); for (int i = 0; i < 100;  ++i) b[i] = a;")//
-    .to("for (int i = 0; i < 100;  ++i) b[i] = f();")//
+        .to("for (int i = 0; i < 100;  ++i) b[i] = f();")//
         .to(null);
   }
 
@@ -2108,18 +2108,18 @@ import il.org.spartan.refactoring.utils.*;
     trimming("polite ? \"Eat your meal.\" :  \"Eat your meal\"") //
         .to("\"Eat your meal\" + (polite ? \".\" : \"\")");
   }
-  
+
   @Test public void issue110_3() {
     trimming("polite ? \"thanks for the meal\" :  \"I hated the meal\"") //
         .to("!polite ? \"I hated the meal\": \"thanks for the meal\"") //
         .to("(!polite ? \"I hated\" : \"thanks for\" )+ \" the meal\"");
   }
-  
+
   @Test public void issue110_4() {
     trimming("polite ? \"thanks.\" :  \"I hated the meal.\"") //
         .to("(polite ? \"thanks\" :\"I hated the meal\")+ \".\"");
   }
-  
+
   @Test public void issue110_5() {
     trimming("a ? \"abracadabra\" : \"abba\"") //
         .to("!a ? \"abba\" : \"abracadabra\"")//
@@ -2127,7 +2127,7 @@ import il.org.spartan.refactoring.utils.*;
         .to("\"ab\" +((!a ? \"b\" : \"racadabr\")+ \"a\")")//
         .to("\"ab\" +(!a ? \"b\" : \"racadabr\")+ \"a\"").to(null);
   }
-  
+
   @Test public void linearTransformation() {
     trimming("plain * the + kludge").to("the*plain+kludge");
   }

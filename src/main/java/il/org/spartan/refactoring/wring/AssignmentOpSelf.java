@@ -1,20 +1,16 @@
 package il.org.spartan.refactoring.wring;
 
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.Assignment.*;
 
 import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
-import il.org.spartan.refactoring.builder.*;
-import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.Wring.*;
 
-/** Replace <code>x = x # a </code> by <code> x #= a </code> where # can be any operator.
+/** Replace <code>x = x # a </code> by <code> x #= a </code> where # can be any
+ * operator.
  * @author Alex Kopzon
  * @since 2016 */
 public final class AssignmentOpSelf extends ReplaceCurrentNode<Assignment> implements Kind.Abbreviation {
@@ -35,18 +31,18 @@ public final class AssignmentOpSelf extends ReplaceCurrentNode<Assignment> imple
   private static ASTNode rightInfixReplacement(final InfixExpression e, final Expression left) {
     final List<Expression> es = extract.allOperands(e);
     final InfixExpression.Operator o = step.operator(e);
-    final List<Expression> $ = wizard.nonAssociative(e) ? nonAssociativeReplace(es, left) : associativeReplace(es, left); 
+    final List<Expression> $ = wizard.nonAssociative(e) ? nonAssociativeReplace(es, left) : associativeReplace(es, left);
     return $.size() == es.size() ? null : $.size() == 1 ? duplicate.of(lisp.first($)) : subject.operands($).to(o);
   }
-  
-  private static List<Expression> nonAssociativeReplace (final List<Expression> es, final Expression left) {
+
+  private static List<Expression> nonAssociativeReplace(final List<Expression> es, final Expression left) {
     final List<Expression> $ = new ArrayList<>(es);
     if (asLeft(es.get(0), left))
       $.remove(0);
     return $;
   }
-  
-  private static List<Expression> associativeReplace (final List<Expression> es, final Expression left) {
+
+  private static List<Expression> associativeReplace(final List<Expression> es, final Expression left) {
     final List<Expression> $ = new ArrayList<>(es);
     for (final Expression ¢ : es)
       if (asLeft(¢, left)) {
@@ -55,7 +51,7 @@ public final class AssignmentOpSelf extends ReplaceCurrentNode<Assignment> imple
       }
     return $;
   }
-  
+
   private static boolean asLeft(final Expression ¢, final Expression left) {
     return wizard.same(¢, left);
   }
