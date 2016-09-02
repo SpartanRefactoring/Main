@@ -31,7 +31,7 @@ public final class AssignmentOpSelf extends ReplaceCurrentNode<Assignment> imple
   private static ASTNode rightInfixReplacement(final InfixExpression e, final Expression left) {
     final List<Expression> es = extract.allOperands(e);
     final InfixExpression.Operator o = step.operator(e);
-    final List<Expression> $ = wizard.nonAssociative(e) ? nonAssociativeReplace(es, left) : associativeReplace(es, left);
+    final List<Expression> $ = !wizard.nonAssociative(e)?associativeReplace(es,left):nonAssociativeReplace(es,left);
     return $.size() == es.size() ? null : $.size() == 1 ? duplicate.of(lisp.first($)) : subject.operands($).to(o);
   }
 
