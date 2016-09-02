@@ -107,7 +107,7 @@ public interface wizard {
   }
 
   static String body(final ASTNode ¢) {
-    return tide.clean(¢.toString());
+    return tide.clean("" + ¢);
   }
 
   /** the function checks if all the given assignments have the same left hand

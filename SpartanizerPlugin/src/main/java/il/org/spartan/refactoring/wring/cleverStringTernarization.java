@@ -91,11 +91,11 @@ public final class cleverStringTernarization extends Wring.ReplaceCurrentNode<Co
   private static int findCommonPrefix(final String str1, final String str2) {
     final char[] str1Array = str1.toCharArray();
     final char[] str2Array = str2.toCharArray();
-    int i = 0;
-    for (; i < str1Array.length && i < str2Array.length; i++)
-      if (str1Array[i] != str2Array[i])
+    int $ = 0;
+    for (; $ < str1Array.length && $ < str2Array.length; ++$)
+      if (str1Array[$] != str2Array[$])
         break;
-    return i;
+    return $;
   }
 
   private static int findCommonSuffix(final String str1, final String str2) {
@@ -106,8 +106,6 @@ public final class cleverStringTernarization extends Wring.ReplaceCurrentNode<Co
       if (str1.endsWith(sub))
         break;
     }
-    if (i == Math.max(str1.length(), str2.length()))
-      return 0;
-    return sub.length();
+    return i == Math.max(str1.length(), str2.length()) ? 0 : sub.length();
   }
 }
