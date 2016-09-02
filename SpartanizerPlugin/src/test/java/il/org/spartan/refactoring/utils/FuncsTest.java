@@ -61,7 +61,7 @@ public class FuncsTest {
   }
 
   @Test public void chainComparison() {
-    assertEquals("c", step.right(i("a == true == b == c")).toString());
+    assertEquals("c", "" + step.right(i("a == true == b == c")));
   }
 
   @Test public void countNonWhiteCharacters() {

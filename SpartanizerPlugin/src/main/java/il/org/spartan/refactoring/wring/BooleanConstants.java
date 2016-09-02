@@ -21,7 +21,7 @@ public final class BooleanConstants extends Wring.ReplaceCurrentNode<MethodInvoc
   }
 
   private static Expression replacement(final Expression e, final Expression $) {
-    return e == null || !"Boolean".equals(e.toString()) ? null : replacement(e, az.booleanLiteral($));
+    return e == null || !"Boolean".equals("" + e) ? null : replacement(e, az.booleanLiteral($));
   }
 
   private static Expression replacement(final Expression e, final BooleanLiteral l) {
@@ -29,6 +29,6 @@ public final class BooleanConstants extends Wring.ReplaceCurrentNode<MethodInvoc
   }
 
   private static String asString(final BooleanLiteral l) {
-    return l.booleanValue() ? "TRUE" : "FALSE";
+    return (l.booleanValue() ? "TRU" : "FALS") + "E";
   }
 }

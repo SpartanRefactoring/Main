@@ -233,6 +233,14 @@ public class TrimmerTest250 {
     trimming("switch(x.toString()){ case \"1\": return; case \"2\": return; default: return; }")
         .to("switch(\"\" + x){ case \"1\": return; case \"2\": return; default: return; }");
   }
+  
+  @Ignore @Test public void issue54_05() {
+    trimming("x.toString(5)").to(null);
+  }
+
+  @Ignore @Test public void issue54_06() {
+    trimming("a.toString().length()").to("(\"\" + a).length()");    
+  }
 
   @Test public void issue70_01() {
     trimming("(double)5").to("1.*5");

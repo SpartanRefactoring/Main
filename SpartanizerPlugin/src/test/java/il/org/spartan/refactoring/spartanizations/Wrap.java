@@ -66,7 +66,7 @@ public enum Wrap {
       $.append("\n* Attempt ").append(++i).append(": ").append(w);
       $.append("\n* I = <").append(essence(on)).append(">;");
       $.append("\n* O = <").append(essence("" + n)).append(">;");
-      $.append("\n**** PARSED=\n").append(w.intoCompilationUnit(codeFragment).toString());
+      $.append("\n**** PARSED=\n").append("" + w.intoCompilationUnit(codeFragment));
       $.append("\n* AST=").append(essence("" + n.getAST()));
       $.append("\n**** INPUT=\n").append(on);
       $.append("\n**** OUTPUT=\n").append("" + n);
