@@ -406,7 +406,7 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test public void chainComparison() {
     final InfixExpression e = i("a == true == b == c");
-    azzert.that(step.right(e).toString(), is("c"));
+    azzert.that("" + step.right(e), is("c"));
     trimming("a == true == b == c").to("a == b == c");
   }
 
@@ -1485,8 +1485,8 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test public void isGreaterTrue() {
     final InfixExpression e = i("f(a,b,c,d,e) * f(a,b,c)");
-    azzert.that(step.right(e).toString(), is("f(a,b,c)"));
-    azzert.that(step.left(e).toString(), is("f(a,b,c,d,e)"));
+    azzert.that("" + step.right(e), is("f(a,b,c)"));
+    azzert.that("" + step.left(e), is("f(a,b,c,d,e)"));
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
     azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     assert s != null;
@@ -1501,13 +1501,13 @@ import il.org.spartan.refactoring.utils.*;
     assert s.eligible(e) : "e=" + e + " s=" + s;
     final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) s).replacement(e);
     assert replacement != null;
-    azzert.that(replacement.toString(), is("f(a,b,c) * f(a,b,c,d,e)"));
+    azzert.that("" + replacement, is("f(a,b,c) * f(a,b,c,d,e)"));
   }
 
   @Test public void isGreaterTrueButAlmostNot() {
     final InfixExpression e = i("f(a,b,c,d) * f(a,b,c)");
-    azzert.that(step.right(e).toString(), is("f(a,b,c)"));
-    azzert.that(step.left(e).toString(), is("f(a,b,c,d)"));
+    azzert.that("" + step.right(e), is("f(a,b,c)"));
+    azzert.that("" + step.left(e), is("f(a,b,c,d)"));
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
     azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     assert s != null;
@@ -1522,7 +1522,7 @@ import il.org.spartan.refactoring.utils.*;
     assert s.eligible(e) : "e=" + e + " s=" + s;
     final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) s).replacement(e);
     assert replacement != null;
-    azzert.that(replacement.toString(), is("f(a,b,c) * f(a,b,c,d)"));
+    azzert.that("" + replacement, is("f(a,b,c) * f(a,b,c,d)"));
   }
 
   @Test public void issue06() {
@@ -3202,7 +3202,7 @@ import il.org.spartan.refactoring.utils.*;
     assert w.eligible(e);
     final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) w).replacement(e);
     assert replacement != null;
-    azzert.that(replacement.toString(), is("a != null"));
+    azzert.that("" + replacement, is("a != null"));
   }
 
   @Test public void rightSipmlificatioForNulNNVariable() {

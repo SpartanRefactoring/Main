@@ -40,6 +40,6 @@ public class extractTest {
     azzert.that(s, iz("{" + from + "}"));
     final PostfixExpression e = extract.findFirstPostfix(s);
     azzert.notNull(e);
-    azzert.that(e.toString(), is("i--"));
+    azzert.that("" + e, is("i--"));
   }
 }
