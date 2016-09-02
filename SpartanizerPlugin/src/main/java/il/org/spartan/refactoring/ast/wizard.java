@@ -13,7 +13,6 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 
 import il.org.spartan.refactoring.assemble.*;
-import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.utils.*;
 
 public interface wizard {
@@ -64,7 +63,7 @@ public interface wizard {
                                         : o == RIGHT_SHIFT_SIGNED_ASSIGN ? RIGHT_SHIFT_SIGNED //
                                             : o == RIGHT_SHIFT_UNSIGNED_ASSIGN ? RIGHT_SHIFT_UNSIGNED : null;
   }
-  
+
   public static Assignment.Operator InfixToAssignment(final InfixExpression.Operator o) {
     return o == PLUS ? Assignment.Operator.PLUS_ASSIGN
         : o == MINUS ? MINUS_ASSIGN
@@ -227,7 +226,7 @@ public interface wizard {
   }
 
   static boolean nonAssociative(final InfixExpression e) {
-    return e != null && in(e.getOperator(), MINUS, DIVIDE, REMAINDER, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED );
+    return e != null && in(e.getOperator(), MINUS, DIVIDE, REMAINDER, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED);
   }
 
   static ASTParser parser(final int kind) {

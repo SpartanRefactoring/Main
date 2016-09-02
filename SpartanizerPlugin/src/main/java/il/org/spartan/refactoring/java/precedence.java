@@ -1,14 +1,10 @@
 package il.org.spartan.refactoring.java;
 
-import static il.org.spartan.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.ast.*;
-import il.org.spartan.refactoring.engine.*;
-import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** *An empty <code><b>enum</b></code> for fluent programming. The name should

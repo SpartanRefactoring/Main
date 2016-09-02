@@ -14,13 +14,15 @@ public enum flatten {
   private static List<Expression> into(final Operator o, final Expression e, final List<Expression> $) {
     final Expression core = core(e);
     final InfixExpression inner = az.infixExpression(core);
-    return inner == null || inner.getOperator() != o?add(!iz.noParenthesisRequired(core)?e:core,$):flatten.into(o,duplicate.adjust(o,hop.operands(inner)),$);
+    return inner == null || inner.getOperator() != o ? add(!iz.noParenthesisRequired(core) ? e : core, $)
+        : flatten.into(o, duplicate.adjust(o, hop.operands(inner)), $);
   }
 
   private static List<Expression> add(final Expression e, final List<Expression> $) {
     $.add(e);
     return $;
   }
+
   private static List<Expression> into(final Operator o, final List<Expression> es, final List<Expression> $) {
     for (final Expression e : es)
       into(o, e, $);

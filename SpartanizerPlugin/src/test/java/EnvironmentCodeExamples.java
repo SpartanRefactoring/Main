@@ -460,13 +460,12 @@ public class EnvironmentCodeExamples {
     public static void main(final String args[]) {
       final EX12 tester = new EX12();
       // with type declaration
-      final MathOperation addition = (@OutOfOrderFlatENV({"tester"}) final int a, @OutOfOrderFlatENV({ "a" ,"tester"})final int b) -> a + b;
+      final MathOperation addition = (@OutOfOrderFlatENV({ "tester" }) final int a, @OutOfOrderFlatENV({ "a", "tester" }) final int b) -> a + b;
       // with out type declaration
-      @OutOfOrderFlatENV({ "addition" ,"tester"}) 
-      final MathOperation subtraction = (a, b) -> a - b;
+      @OutOfOrderFlatENV({ "addition", "tester" }) final MathOperation subtraction = (a, b) -> a - b;
       // with return statement along with curly braces
       final MathOperation multiplication = (final int a, final int b) -> {
-        @OutOfOrderFlatENV({ "a","b" ,"tester"})int z;
+        @OutOfOrderFlatENV({ "a", "b", "tester" }) final int z;
         return a * b;
       };
       // without return statement and without curly braces
@@ -478,8 +477,7 @@ public class EnvironmentCodeExamples {
     }
 
     interface MathOperation {
-      @OutOfOrderFlatENV({})
-      int operation(int a, int b);
+      @OutOfOrderFlatENV({}) int operation(int a, int b);
     }
 
     interface GreetingService {
