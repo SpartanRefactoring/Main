@@ -15,8 +15,8 @@ import il.org.spartan.refactoring.wring.Wring.*;
  * @author Yossi Gil
  * @since 2015-09-05 */
 public final class InfixMultiplicationByOne extends ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
-  @Override String description(final InfixExpression x) {
-    return "Remove all multiplications by 1 from " + x;
+  @Override String description(final InfixExpression e) {
+    return "Remove all multiplications by 1 from " + e;
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
