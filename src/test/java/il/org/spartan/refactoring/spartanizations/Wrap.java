@@ -51,7 +51,7 @@ public enum Wrap {
    *         parsed appropriately. */
   public static Wrap find(final String codeFragment) {
     for (final Wrap $ : WRAPS)
-      if ($.contains($.intoCompilationUnit(codeFragment).toString(), codeFragment))
+      if ($.contains("" + $.intoCompilationUnit(codeFragment), codeFragment))
         return $;
     azzert.fail("Cannot parse '\n" + codeFragment + "\n********* I tried the following options:" + options(codeFragment));
     throw new RuntimeException();
