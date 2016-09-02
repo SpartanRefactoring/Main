@@ -64,6 +64,20 @@ public interface wizard {
                                         : o == RIGHT_SHIFT_SIGNED_ASSIGN ? RIGHT_SHIFT_SIGNED //
                                             : o == RIGHT_SHIFT_UNSIGNED_ASSIGN ? RIGHT_SHIFT_UNSIGNED : null;
   }
+  
+  public static Assignment.Operator InfixToAssignment(final InfixExpression.Operator o) {
+    return o == PLUS ? Assignment.Operator.PLUS_ASSIGN
+        : o == MINUS ? MINUS_ASSIGN
+            : o == TIMES ? TIMES_ASSIGN
+                : o == DIVIDE ? DIVIDE_ASSIGN
+                    : o == AND ? BIT_AND_ASSIGN
+                        : o == OR ? BIT_OR_ASSIGN
+                            : o == XOR ? BIT_XOR_ASSIGN
+                                : o == REMAINDER ? REMAINDER_ASSIGN
+                                    : o == LEFT_SHIFT ? LEFT_SHIFT_ASSIGN //
+                                        : o == RIGHT_SHIFT_SIGNED ? RIGHT_SHIFT_SIGNED_ASSIGN //
+                                            : o == RIGHT_SHIFT_UNSIGNED ? RIGHT_SHIFT_UNSIGNED_ASSIGN : null;
+  }
 
   /** Compute the "de Morgan" conjugate of an operator.
    * @param o must be either {@link Operator#CONDITIONAL_AND} or
