@@ -958,6 +958,55 @@ public class TrimmerTest250 {
     trimming("while(x-=1){}").to("while(x--){}");
   }
 
+  @Test public void issue31a() {
+    trimming(" static boolean hasAnnotation(final VariableDeclarationStatement n) {\n" + //
+        "      return hasAnnotation(n.modifiers());\n" + //
+        "    }").to(" static boolean hasAnnotation(final VariableDeclarationStatement s) {\n" + //
+            "      return hasAnnotation(s.modifiers());\n" + //
+            "    }");
+  }
+  
+  @Test public void issue31b() {
+    trimming(" void f(final VariableDeclarationStatement n) {}") //
+    .to("void f(final VariableDeclarationStatement s) {}");
+  }
+  
+  @Test public void issue31c() {
+    trimming(" void f(final VariableDeclarationAtatement n) {}") //
+    .to("void f(final VariableDeclarationAtatement a) {}");
+  }
+  
+  @Test public void issue31d() {
+    trimming(" void f(final Expression n) {}") //
+    .to("void f(final Expression e) {}");
+  }
+  
+  @Test public void issue31e() {
+    trimming(" void f(final Exception n) {}") //
+    .to("void f(final Exception x) {}");
+  }
+  
+  @Test public void issue31f() {
+    trimming(" void f(final Exception n, Expression kooki) {}") //
+    .to("void f(final Exception x, Expression kooki) {}") //
+    .to("void f(final Exception x, Expression e) {}");
+  }
+  
+  @Test public void issue31g() {
+    trimming(" catch (Exception e) {throw e;}") //
+    .to("catch (Exception x) {throw x;}");
+  }
+  
+  @Ignore public void issue31h() {
+    trimming(" void f(final Exception n) {}") //
+    .to("void f(final Exception x) {}");
+  }
+  
+  @Ignore public void issue31i() {
+    trimming(" void f(final Exception n) {}") //
+    .to("void f(final Exception x) {}");
+  }
+  
   // @formatter:off
   enum A { a1() {{ f(); }
       public void f() {

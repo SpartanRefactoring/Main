@@ -63,7 +63,8 @@ public interface spartan {
   }
 
   static String shorten(final String s) {
-    return new JavaTypeNameParser(s).shortName();
+    String $ = s.equals("Exception") ? "x" : new JavaTypeNameParser(s).shortName();
+    return $;
   }
 
   static String shorten(final org.eclipse.jdt.core.dom.Type t) {
