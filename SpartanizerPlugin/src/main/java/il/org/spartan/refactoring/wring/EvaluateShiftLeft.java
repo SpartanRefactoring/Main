@@ -25,54 +25,54 @@ public class EvaluateShiftLeft extends Wring.ReplaceCurrentNode<InfixExpression>
     return "Evaluate substraction of numbers";
   }
 
-  @Override ASTNode replacement(final InfixExpression e) {
-    if (e.getOperator() != LEFT_SHIFT)
+  @Override ASTNode replacement(final InfixExpression x) {
+    if (x.getOperator() != LEFT_SHIFT)
       return null;
-    switch (EvaluateAux.getEvaluatedTypeForShift(e)) {
+    switch (EvaluateAux.getEvaluatedTypeForShift(x)) {
       case INT:
-        return replacementInt(extract.allOperands(e), e);
+        return replacementInt(extract.allOperands(x), x);
       case LONG:
-        return replacementLong(extract.allOperands(e), e);
+        return replacementLong(extract.allOperands(x), x);
       default:
         return null;
     }
   }
 
-  private static ASTNode replacementInt(final List<Expression> es, final InfixExpression e) {
-    if (es.isEmpty() && !EvaluateAux.isCompitable(es.get(0)))
+  private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
+    if (xs.isEmpty() && !EvaluateAux.isCompitable(xs.get(0)))
       return null;
-    int shifted = EvaluateAux.extractInt(es.get(0));
+    int shifted = EvaluateAux.extractInt(xs.get(0));
     int index = 0;
-    for (final Expression ¢ : es) {
+    for (final Expression ¢ : xs) {
       if (!(¢ instanceof NumberLiteral) && !EvaluateAux.isInt(¢) && !EvaluateAux.isLong(¢))
         return null;
       if (index != 0) {
         if (EvaluateAux.isInt(¢))
-          shifted = shifted << EvaluateAux.extractInt(¢);
+          shifted <<= EvaluateAux.extractInt(¢);
         if (EvaluateAux.isLong(¢))
-          shifted = shifted << EvaluateAux.extractLong(¢);
+          shifted <<= EvaluateAux.extractLong(¢);
       }
       ++index;
     }
-    return e.getAST().newNumberLiteral(Integer.toString(shifted));
+    return x.getAST().newNumberLiteral(Integer.toString(shifted));
   }
 
-  private static ASTNode replacementLong(final List<Expression> es, final InfixExpression e) {
-    if (es.isEmpty() && !EvaluateAux.isCompitable(es.get(0)))
+  private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
+    if (xs.isEmpty() && !EvaluateAux.isCompitable(xs.get(0)))
       return null;
-    long shifted = EvaluateAux.extractLong(es.get(0));
+    long shifted = EvaluateAux.extractLong(xs.get(0));
     int index = 0;
-    for (final Expression ¢ : es) {
+    for (final Expression ¢ : xs) {
       if (!(¢ instanceof NumberLiteral) && !EvaluateAux.isInt(¢) && !EvaluateAux.isLong(¢))
         return null;
       if (index != 0) {
         if (EvaluateAux.isInt(¢))
-          shifted = shifted << EvaluateAux.extractInt(¢);
+          shifted <<= EvaluateAux.extractInt(¢);
         if (EvaluateAux.isLong(¢))
-          shifted = shifted << EvaluateAux.extractLong(¢);
+          shifted <<= EvaluateAux.extractLong(¢);
       }
       ++index;
     }
-    return e.getAST().newNumberLiteral(Long.toString(shifted) + "L");
+    return x.getAST().newNumberLiteral(Long.toString(shifted) + "L");
   }
 }
