@@ -1940,6 +1940,7 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test public void issue54ForPlain() {
     trimming("int a  = f(); for (int i = 0; i < 100;  ++i) b[i] = a;")//
+    .to("for (int i = 0; i < 100;  ++i) b[i] = f();")//
         .to(null);
   }
 
