@@ -31,48 +31,48 @@ public class EvaluateMultiplication extends Wring.ReplaceCurrentNode<InfixExpres
     return "Evaluate multiplication numbers";
   }
 
-  @Override ASTNode replacement(final InfixExpression e) {
-    if (e.getOperator() != TIMES)
+  @Override ASTNode replacement(final InfixExpression x) {
+    if (x.getOperator() != TIMES)
       return null;
-    switch (EvaluateAux.getEvaluatedType(e)) {
+    switch (EvaluateAux.getEvaluatedType(x)) {
       case INT:
-        return replacementInt(extract.allOperands(e), e);
+        return replacementInt(extract.allOperands(x), x);
       case DOUBLE:
-        return replacementDouble(extract.allOperands(e), e);
+        return replacementDouble(extract.allOperands(x), x);
       case LONG:
-        return replacementLong(extract.allOperands(e), e);
+        return replacementLong(extract.allOperands(x), x);
       default:
         return null;
     }
   }
 
-  private static ASTNode replacementInt(final List<Expression> es, final InfixExpression e) {
+  private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
     int mul = 1;
-    for (final Expression ¢ : es) {
+    for (final Expression ¢ : xs) {
       if (!EvaluateAux.isCompitable(¢))
         return null;
-      mul = mul * EvaluateAux.extractInt(¢);
+      mul *= EvaluateAux.extractInt(¢);
     }
-    return e.getAST().newNumberLiteral(Integer.toString(mul));
+    return x.getAST().newNumberLiteral(Integer.toString(mul));
   }
 
-  private static ASTNode replacementDouble(final List<Expression> es, final InfixExpression e) {
+  private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
     double mul = 1;
-    for (final Expression ¢ : es) {
+    for (final Expression ¢ : xs) {
       if (!EvaluateAux.isCompitable(¢))
         return null;
-      mul = mul * EvaluateAux.extractDouble(¢);
+      mul *= EvaluateAux.extractDouble(¢);
     }
-    return e.getAST().newNumberLiteral(Double.toString(mul));
+    return x.getAST().newNumberLiteral(Double.toString(mul));
   }
 
-  private static ASTNode replacementLong(final List<Expression> es, final InfixExpression e) {
+  private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
     long mul = 1;
-    for (final Expression ¢ : es) {
+    for (final Expression ¢ : xs) {
       if (!EvaluateAux.isCompitable(¢))
         return null;
-      mul = mul * EvaluateAux.extractLong(¢);
+      mul *= EvaluateAux.extractLong(¢);
     }
-    return e.getAST().newNumberLiteral(Long.toString(mul) + "L");
+    return x.getAST().newNumberLiteral(Long.toString(mul) + "L");
   }
 }
