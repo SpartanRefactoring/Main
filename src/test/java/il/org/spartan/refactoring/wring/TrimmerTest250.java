@@ -234,11 +234,11 @@ public class TrimmerTest250 {
         .to("switch(\"\" + x){ case \"1\": return; case \"2\": return; default: return; }");
   }
   
-  @Ignore @Test public void issue54_05() {
+  @Test public void issue54_05() {
     trimming("x.toString(5)").to(null);
   }
 
-  @Ignore @Test public void issue54_06() {
+  @Test public void issue54_06() {
     trimming("a.toString().length()").to("(\"\" + a).length()");    
   }
 
