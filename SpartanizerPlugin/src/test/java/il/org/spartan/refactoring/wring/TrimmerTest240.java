@@ -1750,39 +1750,39 @@ public class TrimmerTest240 {
   }
 
   @Test public void issue57a() {
-    trimming("void m(List<Expression>... expressions) { }").to("void m(List<Expression>... ess) {}");
+    trimming("void m(List<Expression>... expressions) { }").to("void m(List<Expression>... xss) {}");
   }
 
   @Test public void issue57b() {
-    trimming("void m(Expression... expression) { }").to("void m(Expression... es) {}");
+    trimming("void m(Expression... expression) { }").to("void m(Expression... xs) {}");
   }
 
   @Test public void issue58a() {
-    trimming("X f(List<List<Expression>> expressions){}").to("X f(List<List<Expression>> ess){}");
+    trimming("X f(List<List<Expression>> expressions){}").to("X f(List<List<Expression>> xss){}");
   }
 
   @Test public void issue58b() {
-    trimming("X f(List<Expression>[] expressions){}").to("X f(List<Expression>[] ess){}");
+    trimming("X f(List<Expression>[] expressions){}").to("X f(List<Expression>[] xss){}");
   }
 
   @Test public void issue58c() {
-    trimming("X f(List<Expression>[] expressions){}").to("X f(List<Expression>[] ess){}");
+    trimming("X f(List<Expression>[] expressions){}").to("X f(List<Expression>[] xss){}");
   }
 
   @Test public void issue58d() {
-    trimming("X f(List<Expression>... expressions){}").to("X f(List<Expression>... ess){}");
+    trimming("X f(List<Expression>... expressions){}").to("X f(List<Expression>... xss){}");
   }
 
   @Test public void issue58e() {
-    trimming("X f(Expression[]... expressions){}").to("X f(Expression[]... ess){}");
+    trimming("X f(Expression[]... expressions){}").to("X f(Expression[]... xss){}");
   }
 
   @Test public void issue58f() {
-    trimming("X f(Expression[][]... expressions){}").to("X f(Expression[][]... esss){}");
+    trimming("X f(Expression[][]... expressions){}").to("X f(Expression[][]... xsss){}");
   }
 
   @Test public void issue58g() {
-    trimming("X f(List<Expression[][]>... expressions){}").to("X f(List<Expression[][]>... essss){}");
+    trimming("X f(List<Expression[][]>... expressions){}").to("X f(List<Expression[][]>... xssss){}");
   }
 
   @Test public void issue62a() {
@@ -2221,7 +2221,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void paramAbbreviateCollision() {
-    trimming("void m(Expression exp, Expression expresssion) { }").to("void m(Expression e, Expression expresssion) { }");
+    trimming("void m(Expression exp, Expression expresssion) { }").to("void m(Expression x, Expression expresssion) { }");
   }
 
   @Test public void paramAbbreviateConflictingWithLocal1() {
