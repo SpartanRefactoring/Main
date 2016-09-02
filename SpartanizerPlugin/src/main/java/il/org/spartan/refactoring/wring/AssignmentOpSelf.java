@@ -35,9 +35,9 @@ public final class AssignmentOpSelf extends ReplaceCurrentNode<Assignment> imple
     return $.size() == es.size() ? null : $.size() == 1 ? duplicate.of(lisp.first($)) : subject.operands($).to(o);
   }
 
-  private static List<Expression> nonAssociativeReplace(final List<Expression> xs, final Expression left) {
-    final List<Expression> $ = new ArrayList<>(xs);
-    if (asLeft(xs.get(0), left))
+  private static List<Expression> nonAssociativeReplace(final List<Expression> es, final Expression left) {
+    final List<Expression> $ = new ArrayList<>(es);
+    if (asLeft(es.get(0), left))
       $.remove(0);
     return $;
   }
