@@ -19,7 +19,7 @@ public class TypeNamesCollector {
       }
 
       @SuppressWarnings("synthetic-access") @Override public boolean visit(final SimpleType t) {
-        basket.add(last(t.getName()).toString());
+        basket.add("" + last(t.getName()));
         return true;
       }
     });

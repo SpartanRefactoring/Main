@@ -125,7 +125,7 @@ import il.org.spartan.utils.*;
   private String getPackageNameFromSource(final Wrapper<String> $, final ASTNode n) {
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final PackageDeclaration d) {
-        $.set(d.getName().toString());
+        $.set("" + d.getName());
         return false;
       }
     });
@@ -193,7 +193,7 @@ import il.org.spartan.utils.*;
       for (final FileStats f : ss) {
         System.out.println("\n  " + f.fileName());
         for (int i = 0; i < optRounds; ++i)
-          System.out.println("    Round #" + (i + 1) + ": " + (i < 9 ? " " : "") + f.getRoundStat(i));
+          System.out.println("    Round #" + i + 1 + ": " + (i < 9 ? " " : "") + f.getRoundStat(i));
       }
     else
       for (int i = 0; i < optRounds; ++i) {

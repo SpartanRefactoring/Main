@@ -9,7 +9,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
-import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.Wring.*;
 
@@ -30,7 +29,7 @@ public final class StringEqualsConstant extends ReplaceCurrentNode<MethodInvocat
    * eclipse.jdt.core.dom.ASTNode) */
   @Override ASTNode replacement(final MethodInvocation i) {
     final SimpleName n = step.name(i);
-    if (!mns.contains(n.toString()))
+    if (!mns.contains("" + n))
       return null;
     final Expression ¢ = lisp.onlyOne(arguments(i));
     if (¢ == null || !(¢ instanceof StringLiteral))

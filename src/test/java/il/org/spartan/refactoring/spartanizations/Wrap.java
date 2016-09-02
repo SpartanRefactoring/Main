@@ -51,7 +51,7 @@ public enum Wrap {
    *         parsed appropriately. */
   public static Wrap find(final String codeFragment) {
     for (final Wrap $ : WRAPS)
-      if ($.contains($.intoCompilationUnit(codeFragment).toString(), codeFragment))
+      if ($.contains("" + $.intoCompilationUnit(codeFragment), codeFragment))
         return $;
     azzert.fail("Cannot parse '\n" + codeFragment + "\n********* I tried the following options:" + options(codeFragment));
     throw new RuntimeException();
@@ -66,7 +66,7 @@ public enum Wrap {
       $.append("\n* Attempt ").append(++i).append(": ").append(w);
       $.append("\n* I = <").append(essence(on)).append(">;");
       $.append("\n* O = <").append(essence("" + n)).append(">;");
-      $.append("\n**** PARSED=\n").append(w.intoCompilationUnit(codeFragment).toString());
+      $.append("\n**** PARSED=\n").append("" + w.intoCompilationUnit(codeFragment));
       $.append("\n* AST=").append(essence("" + n.getAST()));
       $.append("\n**** INPUT=\n").append(on);
       $.append("\n**** OUTPUT=\n").append("" + n);

@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.assemble.duplicate.*;
 import static il.org.spartan.refactoring.ast.step.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 

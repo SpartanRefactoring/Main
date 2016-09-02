@@ -39,7 +39,7 @@ import il.org.spartan.refactoring.engine.*;
   }
 
   @Override String description(final MethodDeclaration d) {
-    return d.getName().toString();
+    return "" + d.getName();
   }
 
   private List<SingleVariableDeclaration> find(final List<SingleVariableDeclaration> ds) {
@@ -69,7 +69,7 @@ import il.org.spartan.refactoring.engine.*;
       return null;
     if (exclude != null)
       exclude.exclude(d);
-    return new Rewrite("Abbreviate parameters in method " + d.getName().toString(), d) {
+    return new Rewrite("Abbreviate parameters in method " + "" + d.getName(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         for (final SimpleName key : renameMap.keySet())
           rename(key, renameMap.get(key), d, r, g);
@@ -82,6 +82,6 @@ import il.org.spartan.refactoring.engine.*;
   }
 
   private boolean suitable(final SingleVariableDeclaration d) {
-    return new JavaTypeNameParser(d.getType().toString()).isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
+    return new JavaTypeNameParser("" + d.getType()).isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
   }
 }

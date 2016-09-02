@@ -52,7 +52,7 @@ public class specificity implements Comparator<Expression> {
     },
     CLASS_CONSTANT {
       @Override boolean includes(final ASTNode n) {
-        return  iz.is(n, SIMPLE_NAME) && ((SimpleName) n).getIdentifier().matches("[A-Z_0-9]+");
+        return iz.is(n, SIMPLE_NAME) && ((SimpleName) n).getIdentifier().matches("[A-Z_0-9]+");
       }
     },
     THIS {

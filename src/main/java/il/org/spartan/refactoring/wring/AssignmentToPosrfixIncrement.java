@@ -7,7 +7,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
-import il.org.spartan.refactoring.builder.*;
 import il.org.spartan.refactoring.wring.Wring.*;
 
 /** Replace <code>x += 1 </code> by <code> x++ </code> and also

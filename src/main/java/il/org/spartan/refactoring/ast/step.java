@@ -229,6 +229,10 @@ public enum step {
     return e == null ? null : e.getOperator();
   }
 
+  public static Assignment.Operator operator(final Assignment a) {
+    return a == null ? null : a.getOperator();
+  }
+
   /** Expose the list of parameters in a {@link MethodDeclaration}
    * @param ¢ JD
    * @return result of method {@link MethodDeclaration#parameters} downcasted to

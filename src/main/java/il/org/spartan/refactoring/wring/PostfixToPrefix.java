@@ -5,8 +5,6 @@ import org.eclipse.jdt.core.dom.PostfixExpression.*;
 
 import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
-import il.org.spartan.refactoring.builder.*;
-import il.org.spartan.refactoring.engine.*;
 
 /** converts, whenever possible, postfix increment/decrement to prefix
  * increment/decrement
@@ -14,7 +12,7 @@ import il.org.spartan.refactoring.engine.*;
  * @since 2015-7-17 */
 public final class PostfixToPrefix extends Wring.ReplaceCurrentNode<PostfixExpression> implements Kind.Canonicalization {
   private static String description(final Operator o) {
-    return o == PostfixExpression.Operator.DECREMENT ? "decrement" : "increment";
+    return (o == PostfixExpression.Operator.DECREMENT ? "de" : "in") + "crement";
   }
 
   private static PrefixExpression.Operator pre2post(final PostfixExpression.Operator o) {

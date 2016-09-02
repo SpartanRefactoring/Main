@@ -10,7 +10,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.ast.*;
-import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** TODO: Niv Issue*94
@@ -264,36 +263,27 @@ public enum PrudentType {
     return this + "=" + name + " (" + description + ")";
   }
 
-  /** @return one of {@link #BOOLEAN}, {@link #INT}, {@link #LONG},
-   *         {@link #DOUBLE}, {@link #INTEGRAL} or {@link #NUMERIC}, in case it
-   *         cannot decide */
-  private final PrudentType under(final PrefixExpression.Operator o) {
+  /**
+   * @return  one of  {@link #BOOLEAN} ,  {@link #INT} ,  {@link #LONG} , {@link #DOUBLE} ,  {@link #INTEGRAL}  or  {@link #NUMERIC} , in case it cannot decide 
+   */
+  private PrudentType under(final PrefixExpression.Operator o) {
     assert o != null;
-    return o == NOT ? BOOLEAN //
-        : in(o, DECREMENT, INCREMENT) ? asNumeric() // see
-                                                    // testInDecreamentSemantics
-                                                    // and
-                                                    // testOnaryPlusMinusSemantics
-            : o != COMPLEMENT ? asNumericUnderOperation() : asIntegralUnderOperation();
+    return o == NOT ? BOOLEAN : in(o, DECREMENT, INCREMENT) ? asNumeric() : o != COMPLEMENT ? asNumericUnderOperation() : asIntegralUnderOperation();
   }
 
-  /** @return one of {@link #BOOLEAN}, {@link #INT}, {@link #LONG},
-   *         {@link #DOUBLE}, {@link #STRING}, {@link #INTEGRAL},
-   *         {@link BOOLEANINTEGRAL} {@link #NUMERIC}, or {@link #ALPHANUMERIC},
-   *         in case it cannot decide */
-  private final PrudentType underBinaryOperator(final InfixExpression.Operator o, final PrudentType k) {
+  /**
+   * @return  one of  {@link #BOOLEAN} ,  {@link #INT} ,  {@link #LONG} , {@link #DOUBLE} ,  {@link #STRING} ,  {@link #INTEGRAL} , {@link BOOLEANINTEGRAL}   {@link #NUMERIC} , or  {@link #ALPHANUMERIC} , in case it cannot decide 
+   */
+  private PrudentType underBinaryOperator(final InfixExpression.Operator o, final PrudentType k) {
     if (o == wizard.PLUS2)
       return underPlus(k);
     if (wizard.isComparisonOperator(o))
       return BOOLEAN;
-    // XOR, OR and AND support BOOLEAN if both operands are BOOLEAN
     if (wizard.isBitwiseOperator(o))
       return underBitwiseOperation(k);
     if (o == REMAINDER)
       return underIntegersOnlyOperator(k);
     if (in(o, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED))
-      // shift is unique in that the left hand operand's type doesn't affect the
-      // result's type
       return asIntegralUnderOperation();
     if (!in(o, TIMES, DIVIDE, wizard.MINUS2))
       throw new IllegalArgumentException("o=" + o + " k=" + k.fullName() + "this=" + this);

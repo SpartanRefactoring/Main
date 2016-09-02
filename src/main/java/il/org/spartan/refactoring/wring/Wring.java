@@ -14,7 +14,6 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
-import il.org.spartan.refactoring.builder.*;
 import il.org.spartan.refactoring.engine.*;
 
 /** A wring is a transformation that works on an AstNode. Such a transformation
