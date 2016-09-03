@@ -29,9 +29,9 @@ public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<I
     return x != null ? "Use " + x : "Use the variable alone";
   }
 
-  @Override String description(final InfixExpression e) {
-    final Expression right = step.right(e);
-    final Expression left = step.left(e);
+  @Override String description(final InfixExpression x) {
+    final Expression right = step.right(x);
+    final Expression left = step.left(x);
     return descriptionAux(!"\"\"".equals(((StringLiteral) left).getEscapedValue()) ? left : right);
   }
 
