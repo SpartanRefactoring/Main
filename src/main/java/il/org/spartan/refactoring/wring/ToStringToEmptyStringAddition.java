@@ -1,10 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
+import static il.org.spartan.refactoring.assemble.make.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
-import static il.org.spartan.refactoring.assemble.make.parethesized;
 
 /** Transforms x.toString() to "" + x
  * @author Stav Namir

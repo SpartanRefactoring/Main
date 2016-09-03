@@ -45,7 +45,7 @@ public enum sideEffects {
       case ARRAY_ACCESS:
         return free(((ArrayAccess) x).getArray(), ((ArrayAccess) x).getIndex());
       case CAST_EXPRESSION:
-        return free(step.expression(((CastExpression) x)));
+        return free(step.expression((CastExpression) x));
       case INSTANCEOF_EXPRESSION:
         return free(step.left((InstanceofExpression) x));
       case PREFIX_EXPRESSION:

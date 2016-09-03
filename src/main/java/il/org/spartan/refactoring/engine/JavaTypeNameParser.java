@@ -91,11 +91,10 @@ import java.util.regex.*;
   /** Returns the calculated short name for the type
    * @return type's short name */
   public String shortName() {
-    return "e".equals(lastNameCharIndex(0)) && "x".equals(lastNameCharIndex(1)) 
-        ? "x" : lastNameCharIndex(0);
+    return "e".equals(lastNameCharIndex(0)) && "x".equals(lastNameCharIndex(1)) ? "x" : lastNameCharIndex(0);
   }
 
-  private String lastNameCharIndex(int i) {
+  private String lastNameCharIndex(final int i) {
     return lastName().length() < i + 1 ? "" : String.valueOf(Character.toLowerCase(lastName().charAt(i)));
   }
 

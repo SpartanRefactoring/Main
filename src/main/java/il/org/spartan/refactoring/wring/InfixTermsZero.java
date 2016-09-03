@@ -30,6 +30,6 @@ public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression> im
       if (!iz.literal0(¢))
         $.add(¢);
     return $.size() == xs.size() ? null
-        : $.isEmpty() ? duplicate.of(lisp.first(xs)) : $.size() == 1?duplicate.of(lisp.first($)):subject.operands($).to(PLUS);
+        : $.isEmpty() ? duplicate.of(lisp.first(xs)) : $.size() == 1 ? duplicate.of(lisp.first($)) : subject.operands($).to(PLUS);
   }
 }
