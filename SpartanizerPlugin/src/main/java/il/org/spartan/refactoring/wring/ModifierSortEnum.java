@@ -15,7 +15,7 @@ public final class ModifierSortEnum extends ModifierSort<EnumDeclaration> implem
 
   @SuppressWarnings("boxing")
   @Override boolean compare(IExtendedModifier m1, IExtendedModifier m2) {
-    return MODIFIERS.get(m1.toString()) > MODIFIERS.get(m2.toString());
+    return MODIFIERS.get(("" + m1)) > MODIFIERS.get(("" + m2));
   }
   
   @SuppressWarnings({ "boxing", "serial" })
