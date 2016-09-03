@@ -15,7 +15,7 @@ public abstract class ModifierSort<N extends BodyDeclaration> extends Wring.Repl
   
   public static final class ofEnum extends ModifierSort<EnumDeclaration>{}
   public static final class ofEnumConstant extends ModifierSort<EnumConstantDeclaration>{}
-  public static final class ofAnnitation extends ModifierSort<AnnotationTypeDeclaration>{}
+  public static final class ofAnnotation extends ModifierSort<AnnotationTypeDeclaration>{}
   public static final class ofType extends ModifierSort<TypeDeclaration>{}
   public static final class ofField extends ModifierSort<FieldDeclaration>{}
   public static final class ofMethod extends ModifierSort<MethodDeclaration>{}
@@ -48,7 +48,7 @@ public abstract class ModifierSort<N extends BodyDeclaration> extends Wring.Repl
     put("public",         0);
     put("protected",      1);
     put("private",        2);
-    put("abstruct",       3);
+    put("abstract",       3);
     put("default",        4);
     put("static",         5);
     put("final",          6);
