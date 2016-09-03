@@ -93,7 +93,7 @@ public interface lisp {
     return $ ? 1 : 0;
   }
 
-  static<T> List<T> cons(T first, List<T> rest) {
+  static <T> List<T> cons(final T first, final List<T> rest) {
     rest.add(0, first);
     return rest;
   }

@@ -28,7 +28,7 @@ public enum Modifiers {
     return gt(find(modifier1), find(modifier2));
   }
 
-  private static boolean gt(Modifiers m1, Modifiers m2) {
+  private static boolean gt(final Modifiers m1, final Modifiers m2) {
     return m1.ordinal() > m2.ordinal();
   }
 }
