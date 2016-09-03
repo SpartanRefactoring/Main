@@ -172,6 +172,7 @@ public class Toolbox {
             new AnnotationDiscardValueName(), //
             new AnnotationRemoveEmptyParentheses(), //
             null) //
+        .add(EnumDeclaration.class, new ModifierSortEnum(), null)
         .seal();
   }
 
