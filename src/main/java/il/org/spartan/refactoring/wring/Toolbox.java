@@ -157,7 +157,10 @@ public class Toolbox {
             new cleverStringTernarization(), //
             null) //
         .add(TypeDeclaration.class, new ModifierCleanInterface(), null) //
-        .add(EnumDeclaration.class, new ModifierCleanEnum(), null) //
+        .add(EnumDeclaration.class, //
+            //new ModifierSortEnum(), //
+            new ModifierCleanEnum(), //
+            null) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover(), null) //
         .add(ReturnStatement.class, new ReturnLastInMethod()) //
         .add(FieldDeclaration.class, new BodyDeclarationRemoveModifiers.OfField()) //
@@ -165,14 +168,11 @@ public class Toolbox {
             new CastToDouble2Multiply1(), //
             new CastToLong2Multiply1L(), //
             null) //
-        .add(EnumConstantDeclaration.class, //
-            new BodyDeclarationRemoveModifiers.OfEnumConstant(), //
-            null) //
+        .add(EnumConstantDeclaration.class, new BodyDeclarationRemoveModifiers.OfEnumConstant(), null) //
         .add(NormalAnnotation.class, //
             new AnnotationDiscardValueName(), //
             new AnnotationRemoveEmptyParentheses(), //
             null) //
-        .add(EnumDeclaration.class, new ModifierSortEnum(), null)
         .seal();
   }
 

@@ -20,6 +20,23 @@ public final class ModifierSortEnum extends ModifierSort<EnumDeclaration> implem
   
   @SuppressWarnings({ "boxing", "serial" })
   static final Map<String , Integer> MODIFIERS = new HashMap<String , Integer>() {{
+    put("public",         0);
+    put("protected",      1);
+    put("private",        2);
+    put("abstruct",       3);
+    put("default",        4);
+    put("static",         5);
+    put("final",          6);
+    put("trancient",      7);
+    put("volatile",       8);
+    put("synchronized",   9);
+    put("native",         10);
+    put("strictfp",       11);
+    
+  }};
+/*
+  @SuppressWarnings({ "boxing", "serial" })
+  static final Map<String , Integer> MODIFIERS = new HashMap<String , Integer>() {{
     put("PUBLIC",         0);
     put("PROTECTED",      1);
     put("PRIVATE",        2);
@@ -34,4 +51,5 @@ public final class ModifierSortEnum extends ModifierSort<EnumDeclaration> implem
     put("STRICTFP",       11);
     
   }};
+*/
 }
