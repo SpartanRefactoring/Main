@@ -78,22 +78,24 @@ public interface wizard {
                                             : o == RIGHT_SHIFT_UNSIGNED ? RIGHT_SHIFT_UNSIGNED_ASSIGN : null;
   }
 
-  /**
-   * Compute the "de Morgan" conjugate of an operator.
-   * @param o  must be either  {@link Operator#CONDITIONAL_AND}  or {@link Operator#CONDITIONAL_OR}
-   * @return   {@link Operator#CONDITIONAL_AND}  if the parameter is {@link Operator#CONDITIONAL_OR} , or  {@link Operator#CONDITIONAL_OR} if the parameter is  {@link Operator#CONDITIONAL_AND}
-   * @see wizard#deMorgan(InfixExpression)  
-   */
+  /** Compute the "de Morgan" conjugate of an operator.
+   * @param o must be either {@link Operator#CONDITIONAL_AND} or
+   *        {@link Operator#CONDITIONAL_OR}
+   * @return {@link Operator#CONDITIONAL_AND} if the parameter is
+   *         {@link Operator#CONDITIONAL_OR} , or
+   *         {@link Operator#CONDITIONAL_OR} if the parameter is
+   *         {@link Operator#CONDITIONAL_AND}
+   * @see wizard#deMorgan(InfixExpression) */
   static Operator deMorgan(final Operator o) {
     assert iz.deMorgan(o);
     return o.equals(CONDITIONAL_AND) ? CONDITIONAL_OR : CONDITIONAL_AND;
   }
 
-  /**
-   * Parenthesize an expression (if necessary).
-   * @param x  JD
-   * @return  a {@link il.org.spartan.refactoring.assemble.duplicate#duplicate(Expression)} of the parameter wrapped in parenthesis. 
-   */
+  /** Parenthesize an expression (if necessary).
+   * @param x JD
+   * @return a
+   *         {@link il.org.spartan.refactoring.assemble.duplicate#duplicate(Expression)}
+   *         of the parameter wrapped in parenthesis. */
   static Expression parenthesize(final Expression x) {
     return iz.noParenthesisRequired(x) ? duplicate.of(x) : make.parethesized(x);
   }
