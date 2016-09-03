@@ -85,29 +85,29 @@ public class FactorsCollector {
     return isLeafFactor(x) ? addDivide(x) : collectDividePrefix(az.infixExpression(x));
   }
 
-  private Void collectDividePrefix(final InfixExpression e) {
-    assert e != null;
-    assert !isLeafFactor(e);
-    return iz.infixTimes(e) ? collectDividePrefixTimesExpression(e) : collectDividePrefixDivideExprssion(e);
+  private Void collectDividePrefix(final InfixExpression x) {
+    assert x != null;
+    assert !isLeafFactor(x);
+    return iz.infixTimes(x) ? collectDividePrefixTimesExpression(x) : collectDividePrefixDivideExprssion(x);
   }
 
-  private Void collectDividePrefixDivideExprssion(final InfixExpression e) {
-    assert e != null;
-    final List<Expression> es = hop.operands(e);
+  private Void collectDividePrefixDivideExprssion(final InfixExpression x) {
+    assert x != null;
+    final List<Expression> es = hop.operands(x);
     collectDividerFactor(core(lisp.first(es)));
     return collectMultiplierFactors(lisp.rest(es));
   }
 
-  private Void collectDividePrefixTimesExpression(final InfixExpression e) {
-    assert e != null;
-    assert !isLeafFactor(e);
-    assert iz.infixTimes(e);
-    return collectDividersFactors(hop.operands(e));
+  private Void collectDividePrefixTimesExpression(final InfixExpression x) {
+    assert x != null;
+    assert !isLeafFactor(x);
+    assert iz.infixTimes(x);
+    return collectDividersFactors(hop.operands(x));
   }
 
-  private Void collectDividerFactor(final Expression e) {
-    assert e != null;
-    return isLeafFactor(e) ? addDivideFactor(e) : collectDividePrefix(az.infixExpression(e));
+  private Void collectDividerFactor(final Expression x) {
+    assert x != null;
+    return isLeafFactor(x) ? addDivideFactor(x) : collectDividePrefix(az.infixExpression(x));
   }
 
   private Void collectDividersFactors(final Iterable<Expression> xs) {

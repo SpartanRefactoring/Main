@@ -15,8 +15,8 @@ import il.org.spartan.refactoring.wring.Wring.*;
  * @author Yossi Gil
  * @since 2015-09-05 */
 public final class InfixMultiplicationByOne extends ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
-  @Override String description(final InfixExpression e) {
-    return "Remove all multiplications by 1 from " + e;
+  @Override String description(final InfixExpression x) {
+    return "Remove all multiplications by 1 from " + x;
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
@@ -29,6 +29,6 @@ public final class InfixMultiplicationByOne extends ReplaceCurrentNode<InfixExpr
       if (!iz.literal1(¢))
         $.add(¢);
     return $.size() == xs.size() ? null
-        : $.isEmpty() ? duplicate.of(lisp.first(xs)) : $.size() == 1?duplicate.of(lisp.first($)):subject.operands($).to(TIMES);
+        : $.isEmpty() ? duplicate.of(lisp.first(xs)) : $.size() == 1 ? duplicate.of(lisp.first($)) : subject.operands($).to(TIMES);
   }
 }

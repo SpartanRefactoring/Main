@@ -96,4 +96,8 @@ public class Range {
   @Override public String toString() {
     return String.format("[%d, %d]", box.it(from), box.it(to));
   }
+
+  public boolean isEmpty() {
+    return size() <= 0;
+  }
 }
