@@ -42,12 +42,10 @@ public abstract class ModifierSort<N extends BodyDeclaration> extends Wring.Repl
    */
   private N go(final N $) {
     List<IExtendedModifier> unsorted = step.modifiers($);
-    for(int iter =1; iter < unsorted.size(); iter++){
-      for(int inner = 0; inner < (unsorted.size() - iter); inner ++){
-        if(compare(unsorted.get(inner), unsorted.get(inner+1))) // inner > inner+1
-          bubble(unsorted, inner);
-      } 
-    }  
+    for(int iter =1; iter < unsorted.size(); ++iter)
+      for (int inner = 0; inner < (unsorted.size() - iter); ++inner)
+        if (compare(unsorted.get(inner), unsorted.get(inner + 1)))
+          bubble(unsorted, inner);  
     return $;
   }
 }
