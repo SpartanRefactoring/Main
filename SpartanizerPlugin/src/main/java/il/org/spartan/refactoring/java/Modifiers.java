@@ -11,9 +11,7 @@ public enum Modifiers {
   DEFAULT, //
   STATIC, //
   FINAL, //
-  TRANCIENT, // TODO: Alex: there is a spelling error here, I will let you write
-             // a test that
-             // fixes it.
+  TRANSIENT, // TODO: Yossi, MLU :)
   VOLATILE, //
   SYNCHRONIZED, //
   NATIVE, //
@@ -21,7 +19,7 @@ public enum Modifiers {
   ;
   public static Modifiers find(final String modifier) {
     for (Modifiers $ : Modifiers.values())
-      if (modifier.equals($.toString().toLowerCase()))
+      if (modifier.equals(("" + $).toLowerCase()))
         return $;
     return null;
   }
