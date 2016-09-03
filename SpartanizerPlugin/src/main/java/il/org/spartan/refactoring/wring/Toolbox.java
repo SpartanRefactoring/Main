@@ -99,7 +99,7 @@ public class Toolbox {
         .add(MethodDeclaration.class, //
             new MethodRenameReturnToDollar(), //
             new BodyDeclarationRemoveModifiers.OfMethod(), //
-            //new ModifierSort.ofMethod(), //
+            // new ModifierSort.ofMethod(), //
             null)
         .add(MethodInvocation.class, //
             new StringEqualsConstant(), //
@@ -159,7 +159,7 @@ public class Toolbox {
             null) //
         .add(TypeDeclaration.class, //
             new ModifierCleanInterface(), //
-            //new ModifierSort.ofType(), //
+            // new ModifierSort.ofType(), //
             null) //
         .add(EnumDeclaration.class, //
             new ModifierCleanEnum(), //
@@ -180,8 +180,7 @@ public class Toolbox {
             new AnnotationDiscardValueName(), //
             new AnnotationRemoveEmptyParentheses(), //
             null) //
-        .add(FieldDeclaration.class, new ModifierSort.ofField(), null)
-        .add(AnnotationTypeDeclaration.class, new ModifierSort.ofAnnotation(), null)
+        .add(FieldDeclaration.class, new ModifierSort.ofField(), null).add(AnnotationTypeDeclaration.class, new ModifierSort.ofAnnotation(), null)
         .seal();
   }
 

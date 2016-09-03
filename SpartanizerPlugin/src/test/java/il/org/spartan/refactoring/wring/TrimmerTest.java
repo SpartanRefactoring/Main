@@ -1887,17 +1887,13 @@ import il.org.spartan.refactoring.utils.*;
         "abstract class A {\n"//
             + "static void f() {}\n "//
             + "public final static int i = 3; "//
-            + "}").
-    
-    
-    to(//
-        "abstract class A {\n"//
-            + "static void f() {}\n "//
-            + "public static final int i = 3; "//
-            + "}").
-    
-     
-    to(null);
+            + "}")
+                .to(//
+                    "abstract class A {\n"//
+                        + "static void f() {}\n "//
+                        + "public static final int i = 3; "//
+                        + "}")
+                .to(null);
   }
 
   @Test public void issue52o() {
