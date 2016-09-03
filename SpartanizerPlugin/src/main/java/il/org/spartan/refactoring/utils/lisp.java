@@ -92,4 +92,9 @@ public interface lisp {
   static int bit(final boolean $) {
     return $ ? 1 : 0;
   }
+
+  static<T> List<T> cons(T first, List<T> rest) {
+    rest.add(0, first);
+    return rest;
+  }
 }
