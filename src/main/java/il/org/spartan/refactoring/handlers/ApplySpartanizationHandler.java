@@ -36,7 +36,7 @@ public class ApplySpartanizationHandler extends BaseHandler {
   }
 
   public static void apply(final ICompilationUnit cu, final Range r) {
-    apply(cu, r == null || r.size() <= 0 ? new TextSelection(0, 0) : new TextSelection(r.from, r.size()));
+    apply(cu, r == null || r.isEmpty() ? new TextSelection(0, 0) : new TextSelection(r.from, r.size()));
   }
 
   private static ITextSelection getSelectedText() {
