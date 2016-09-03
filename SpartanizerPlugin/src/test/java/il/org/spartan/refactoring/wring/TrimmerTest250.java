@@ -85,7 +85,7 @@ public class TrimmerTest250 {
     ).to(null);
   }
 
-  @Test public void issue50_inEnumMemberComplex() {
+  @Ignore public void issue50_inEnumMemberComplex() {
     trimming(//
         "enum A { a1 {{ f(); } \n" + //
             "protected final void f() {g();}  \n" + //
@@ -538,7 +538,7 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue75a() {
-    trimming("int i = 0").to(null);
+    trimming("int i = 0;").to(null);
   }
 
   @Test public void issue75b() {
@@ -1089,32 +1089,32 @@ public class TrimmerTest250 {
     trimming("String tellTale(ExamplyExamplar foo)").to(null);
   }
   
-  @Ignore public void issue111a(){
+  @Test public void issue111a(){
     trimming("strictfp native synchronized volatile transient final static default abstract private protected public int a;")
     .to("public protected private abstract default static final transient volatile synchronized native strictfp int a;");
   }
   
-  @Ignore public void issue111b(){
-    trimming("strictfp public int a;")
-    .to("public strictfp int a;");
+  @Test public void issue111b(){
+    trimming("volatile public int a;")
+    .to("public volatile int a;");
   }
   
-  @Ignore public void issue111c(){
+  @Test public void issue111c(){
     trimming("protected public void func();")
     .to("public protected void func();");
   }
   
-  @Ignore public void issue111d(){
+  @Test public void issue111d(){
     trimming("protected public class A{}")
     .to("public protected class A{}");
   }
   
-  @Ignore public void issue111e(){
+  @Test public void issue111e(){
     trimming("protected public class A{volatile static int a;}")
     .to("public protected int class A{static volatile int a;}");
   }
   
-  @Ignore public void issue111f(){
+  @Test public void issue111f(){
     trimming("protected public class A{volatile static String method (final abstruct int a){}}")
     .to("public protected int class A{static volatile String method (abstruct final int a){}}");
   }

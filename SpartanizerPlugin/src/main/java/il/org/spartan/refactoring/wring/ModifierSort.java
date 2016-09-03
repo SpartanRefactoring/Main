@@ -11,10 +11,17 @@ import il.org.spartan.refactoring.ast.*;
  * @author Alex Kopzon
  * @since 2016
  */
-public abstract class ModifierSort<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> {
+public abstract class ModifierSort<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> implements Kind.Canonicalization{
+  
+  public static final class ofEnum extends ModifierSort<EnumDeclaration>{}
+  public static final class ofEnumConstant extends ModifierSort<EnumConstantDeclaration>{}
+  public static final class ofAnnitation extends ModifierSort<AnnotationTypeDeclaration>{}
+  public static final class ofType extends ModifierSort<TypeDeclaration>{}
+  public static final class ofField extends ModifierSort<FieldDeclaration>{}
+  public static final class ofMethod extends ModifierSort<MethodDeclaration>{}
   
   @Override String description(@SuppressWarnings("unused") final N __) {
-    return "remove redundant modifier";
+    return "Sort Modifiers as defined at Modifier.class";
   }
 
   @Override N replacement(final N $) {
@@ -29,7 +36,29 @@ public abstract class ModifierSort<N extends BodyDeclaration> extends Wring.Repl
     return step.modifiers(¢) != null;
   }
   
-  abstract boolean compare(IExtendedModifier m1, IExtendedModifier m2);
+  //abstract boolean compare(IExtendedModifier m1, IExtendedModifier m2);
+  
+  @SuppressWarnings("boxing")
+  static boolean compare(IExtendedModifier m1, IExtendedModifier m2) {
+    return MODIFIERS.get(("" + m1)) > MODIFIERS.get(("" + m2));
+  }
+  
+  @SuppressWarnings({ "boxing", "serial" })
+  static final Map<String , Integer> MODIFIERS = new HashMap<String , Integer>() {{
+    put("public",         0);
+    put("protected",      1);
+    put("private",        2);
+    put("abstruct",       3);
+    put("default",        4);
+    put("static",         5);
+    put("final",          6);
+    put("trancient",      7);
+    put("volatile",       8);
+    put("synchronized",   9);
+    put("native",         10);
+    put("strictfp",       11);
+    
+  }};
     
   /** One bubble swap for the bubble sort implementation in go().
    * @param unsorted list to perform one bubble swap on.
