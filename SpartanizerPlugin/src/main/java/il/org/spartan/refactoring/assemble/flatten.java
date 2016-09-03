@@ -23,8 +23,8 @@ public enum flatten {
     return $;
   }
 
-  private static List<Expression> into(final Operator o, final List<Expression> es, final List<Expression> $) {
-    for (final Expression e : es)
+  private static List<Expression> into(final Operator o, final List<Expression> xs, final List<Expression> $) {
+    for (final Expression e : xs)
       into(o, e, $);
     return $;
   }

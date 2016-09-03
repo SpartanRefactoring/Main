@@ -200,7 +200,7 @@ import il.org.spartan.utils.*;
         int roundSum = 0;
         for (final FileStats f : ss)
           roundSum += f.getRoundStat(i);
-        System.out.println("    Round #" + (i + 1) + ": " + (i < 9 ? " " : "") + roundSum);
+        System.out.println("    Round #" + i + 1 + ": " + (i < 9 ? " " : "") + roundSum);
       }
   }
 
