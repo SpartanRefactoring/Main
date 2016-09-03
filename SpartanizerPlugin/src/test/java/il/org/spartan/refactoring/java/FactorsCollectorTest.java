@@ -294,8 +294,8 @@ import il.org.spartan.refactoring.ast.*;
     c.collect(i("a / (b+c)"));
     azzert.that(c.multipliers(), iz("[a]"));
   }
-
-  @Ignore("no similar case fo multification") @Test public void test47() {
+ 
+  @Test public void test47() {
     c.collect(i("a / (b+c)"));
     azzert.that(c.dividers(), iz("[b+c]"));
   }
@@ -309,12 +309,12 @@ import il.org.spartan.refactoring.ast.*;
     c.collect(i("a + (b+c)"));
     azzert.that(c.dividers(), iz("[]"));
   }
-
-  @Ignore("no similar case fo multification") @Test public void test50() {
+ 
+  @Test public void test50() {
     azzert.that(minus.peel(e("a*b")), iz("a*b"));
   }
 
-  @Ignore("no similar case fo multification") @Test public void test51() {
+  @Test public void test51() {
     c.collect(i("(a+b)*(b+c)"));
     azzert.that(c.multipliers(), iz("[a+b,b+c]"));
   }
@@ -333,7 +333,88 @@ import il.org.spartan.refactoring.ast.*;
     c.collect(i("(a+b)/(b+c)"));
     azzert.that(c.dividers(), iz("[b+c]"));
   }
+  
+  @Test public void test62(){
+    c.collect(i("(a/b)*c"));
+    azzert.that(c.dividers(), iz("[b]"));
+    azzert.that(c.multipliers(), iz("[a,c]"));
+  }
+  
+  @Test public void test63(){
+    azzert.aye((wizard.same((new Factor(false, e("x"))).asExpression(),e("x"))));
+  }
+  
+  @Test public void test64(){
+    azzert.aye((wizard.same((new Factor(false, e("x*3+5"))).asExpression(),e("x*3+5"))));
+  }
 
+  @Test public void test65(){
+    azzert.aye((wizard.same((new Factor(false, e("1/x"))).asExpression(),e("1/x"))));
+  }
+  
+  @Test public void test66(){
+    azzert.aye((wizard.same((new Factor(false, e("17.5-x/2-3/2*(17/3/y/z)*k"))).asExpression(),e("17.5-x/2-3/2*(17/3/y/z)*k"))));
+  }
+  
+  @Test public void test67(){
+    azzert.aye((wizard.same((new Factor(true, e("x"))).asExpression(),e("1/x"))));
+  }
+  
+  @Test public void test68(){
+    azzert.aye((wizard.same((new Factor(true, e("17.5-x/2-3/2*(17/3/y/z)*k"))).asExpression(),e("1/(17.5-x/2-3/2*(17/3/y/z)*k)"))));
+  }
+  
+  @Test public void test69(){
+    azzert.aye((wizard.same((new Factor(true, e("u/w/x/y/z"))).asExpression(),e("1/(u/w/x/y/z)"))));
+  }
+  
+  @Test public void test70(){
+    azzert.aye(FactorsCollector.isLeafFactor(e("3+5+7+9")));
+    azzert.aye(FactorsCollector.isLeafFactor(e("(5/6/7/8/9/10)")));
+  }
+
+  @Test public void test71() {
+    final InfixExpression i = i("a * b * c/d/e/f/g");
+    c.collect(i);
+    azzert.that(c.multipliers().size(), is(3));
+    azzert.that(c.dividers().size(), is(4));
+  }
+
+  @Test public void test72() {
+    final InfixExpression i = i("a/d*b/e*c/f");
+    c.collectTimesNonLeaf(i);
+    azzert.that(c.multipliers().size(), is(3));
+    azzert.that(c.dividers().size(), is(3));
+  }
+
+  @Test public void test73() {
+    final InfixExpression i = i("a * (b*(c*d/e) /(f*g/h) )");
+    c.collect(i);
+    azzert.that(c.multipliers().size(), is(5));
+    azzert.that(c.dividers().size(), is(3));
+  }
+
+  @Test public void test74() {
+    final InfixExpression i = i("a * (b * (d *(x*y)*(s*t*(u*w))* c*(y*z)*(y*z)))");
+    c.collect(i);
+    azzert.that(c.multipliers().size(), is(14));
+    azzert.that(c.dividers().size(), is(0));
+  }
+
+  @Test public void test75() {
+    final InfixExpression i = i("a*b / (b / c / (d / e / f / g))");
+    c.collect(i);
+    azzert.that(c.multipliers(), iz("[a,b,c,d]"));
+    azzert.that(c.dividers(), iz("[b,e,f,g]"));
+  }
+
+  @Test public void test76() {
+    final InfixExpression i = i("a / (b / c / d / e )");
+    c.collect(i);
+    azzert.that(c.multipliers().size(), is(4));
+    azzert.that(c.dividers().size(), is(1));
+  }
+  
   private final InfixExpression complex = i("a-b*c - (x - - - (d*e))");
 
   @Ignore("need to make a new complex for Factors") @Test public void test55() {
