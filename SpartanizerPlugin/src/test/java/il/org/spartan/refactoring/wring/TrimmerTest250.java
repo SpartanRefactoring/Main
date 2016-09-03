@@ -546,20 +546,20 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue54_01() {
-    trimming("x.toString()").to("\"\" + x");
+    trimming("x.toString()").to("x + \"\"");
   }
 
   @Test public void issue54_02() {
-    trimming("if(x.toString() == \"abc\") return a;").to("if(\"\" + x == \"abc\") return a;");
+    trimming("if(x.toString() == \"abc\") return a;").to("if(x + \"\" == \"abc\") return a;");
   }
 
   @Test public void issue54_03() {
-    trimming("((Integer)6).toString()").to("\"\"+ (Integer)6");
+    trimming("((Integer)6).toString()").to("(Integer)6 + \"\"");
   }
 
   @Test public void issue54_04() {
     trimming("switch(x.toString()){ case \"1\": return; case \"2\": return; default: return; }")
-        .to("switch(\"\" + x){ case \"1\": return; case \"2\": return; default: return; }");
+        .to("switch(x + \"\"){ case \"1\": return; case \"2\": return; default: return; }");
   }
 
   @Test public void issue54_05() {
@@ -567,7 +567,7 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue54_06() {
-    trimming("a.toString().length()").to("(\"\" + a).length()");
+    trimming("a.toString().length()").to("(a + \"\").length()");
   }
 
   @Test public void issue70_01() {
