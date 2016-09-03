@@ -156,8 +156,8 @@ public class Toolbox {
             new TernaryPushdown(), //
             new cleverStringTernarization(), //
             null) //
-        .add(TypeDeclaration.class, new InterfaceClean(), null) //
-        .add(EnumDeclaration.class, new EnumClean(), null) //
+        .add(TypeDeclaration.class, new ModifierCleanInterface(), null) //
+        .add(EnumDeclaration.class, new ModifierCleanEnum(), null) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover(), null) //
         .add(ReturnStatement.class, new ReturnLastInMethod()) //
         .add(FieldDeclaration.class, new BodyDeclarationRemoveModifiers.OfField()) //

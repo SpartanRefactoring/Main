@@ -17,12 +17,16 @@ import org.eclipse.jdt.core.dom.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class EnumClean extends ModifierRemove<EnumDeclaration> implements Kind.SyntacticBaggage {
-  @Override String description(final EnumDeclaration ¢) {
+public final class ModifierCleanInterface extends ModifierRemove<TypeDeclaration> implements Kind.SyntacticBaggage {
+  @Override String description(final TypeDeclaration ¢) {
     return "Remove redundant 'abstract'/'static' modifier from interface " + ¢.getName();
   }
 
+  @Override boolean eligible(final TypeDeclaration ¢) {
+    return ¢.isInterface();
+  }
+
   @Override boolean redundant(final Modifier ¢) {
-    return ¢.isStatic() || ¢.isAbstract() || ¢.isFinal();
+    return ¢.isAbstract() || ¢.isStatic();
   }
 }
