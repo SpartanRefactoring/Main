@@ -73,14 +73,14 @@ public final class InfixFactorNegatives extends Wring<InfixExpression> implement
     return $;
   }
 
-  private static List<Expression> gather(final List<Expression> es, final List<Expression> $) {
-    for (final Expression e : es)
+  private static List<Expression> gather(final List<Expression> xs, final List<Expression> $) {
+    for (final Expression e : xs)
       gather(e, $);
     return $;
   }
 
-  @Override String description(final InfixExpression e) {
-    return "Use at most one arithmetical negation, for first factor of " + e.getOperator();
+  @Override String description(final InfixExpression x) {
+    return "Use at most one arithmetical negation, for first factor of " + x.getOperator();
   }
 
   @Override Rewrite make(final InfixExpression x, final ExclusionManager exclude) {

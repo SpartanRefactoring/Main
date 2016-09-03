@@ -339,8 +339,7 @@ public enum PrudentType {
         : in(NUMERIC, $, this) ? NUMERIC //
             : in(FLOAT, $, this) ? FLOAT //
                 : in(LONG, $, this) ? LONG : //
-                    in(INTEGRAL, $, this) ? INTEGRAL //
-                        : INT;
+                    !in(INTEGRAL, $, this) ? INT : INTEGRAL;
   }
 
   private PrudentType underIntegersOnlyOperator(final PrudentType k) {
