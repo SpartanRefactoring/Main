@@ -229,54 +229,62 @@ public class TrimmerTest250 {
     trimming("z=foo(x=(y=y*u),17)").to("z=foo(x=(y*=u),17)");
   }
 
-  @Ignore public void issue111a() {
+  @Ignore public void issue111a(){
     trimming("strictfp native synchronized volatile transient final static default abstract private protected public int a;")
-        .to("public protected private abstract default static final transient volatile synchronized native strictfp int a;");
+    .to("public protected private abstract default static final transient volatile synchronized native strictfp int a;");
   }
 
-  @Ignore public void issue111b() {
-    trimming("strictfp public int a;").to("public strictfp int a;");
+  @Ignore public void issue111b(){
+    trimming("strictfp public int a;")
+    .to("public strictfp int a;");
   }
 
-  @Ignore public void issue111c() {
-    trimming("protected public void func();").to("public protected void func();");
+  @Ignore public void issue111c(){
+    trimming("protected public void func();")
+    .to("public protected void func();");
   }
 
-  @Ignore public void issue111d() {
-    trimming("protected public class A{}").to("public protected class A{}");
+  @Ignore public void issue111d(){
+    trimming("protected public class A{}")
+    .to("public protected class A{}");
   }
 
-  @Ignore public void issue111e() {
-    trimming("protected public class A{volatile static int a;}").to("public protected int class A{static volatile int a;}");
+  @Ignore public void issue111e(){
+    trimming("protected public class A{volatile static int a;}")
+    .to("public protected int class A{static volatile int a;}");
   }
 
-  @Ignore public void issue111f() {
+  @Ignore public void issue111f(){
     trimming("protected public class A{volatile static String method (final abstruct int a){}}")
-        .to("public protected int class A{static volatile String method (abstruct final int a){}}");
+    .to("public protected int class A{static volatile String method (abstruct final int a){}}");
   }
 
-  @Test public void issue111g() {
+  @Test public void issue111g(){
     trimming("protected public public enum Level { " + //
-        "HIGH, MEDIUM, LOW" + //
-        "}").to("public public protected enum Level { \n" + //
-            "HIGH, MEDIUM, LOW\n" + //
-            "}");
-  }
-
-  @Test public void issue111g_1() {
-    trimming("final enum Level { \n" + //
+              "HIGH, MEDIUM, LOW" + //
+              "}")
+    .to("public public protected enum Level { \n" + //
         "HIGH, MEDIUM, LOW\n" + //
-        "}").to("enum Level { \n" + //
-            "HIGH, MEDIUM, LOW\n" + //
-            "}");
+        "}");
   }
 
-  @Ignore public void issue111h() {
-    trimming("protected public int a;").to("public protected int a;");
+  @Test public void issue111g_1(){
+    trimming("final enum Level { \n" + //
+              "HIGH, MEDIUM, LOW\n" + //
+              "}")
+    .to("enum Level { \n" + //
+        "HIGH, MEDIUM, LOW\n" + //
+        "}");
   }
 
-  @Ignore public void issue111i() {
-    trimming("protected public int a;").to("public protected int a;");
+  @Ignore public void issue111h(){
+    trimming("protected public int a;")
+    .to("public protected int a;");
+  }
+
+  @Ignore public void issue111i(){
+    trimming("protected public int a;")
+    .to("public protected int a;");
   }
 
   @Test public void issue31a() {
@@ -707,10 +715,6 @@ public class TrimmerTest250 {
     trimming(s).to("-x");
   }
 
-  @Test public void issue72mx() {
-    trimming("0-0").to("0");
-  }
-
   @Test public void issue72mb() {
     trimming("x-0").to("x");
   }
@@ -720,15 +724,20 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue72md1() {
-    trimming("0-x-0").to("-x").to(null);
+    trimming("0-x-0").to("-x-0").to("-x").to(null);
   }
 
   @Test public void issue72md2() {
-    trimming("0-x-0-y").to("-x-y").to(null);
+    trimming("0-x-0-y").to("-x-0-y").to("-x-y").to(null);
   }
 
   @Test public void issue72md3() {
     trimming("0-x-0-y-0-z-0-0")//
+        .to("-x-0-y-0-z-0-0")//
+        .to("-x-y-0-z-0-0")//
+        .to("-x-y-z-0-0-0")//
+        .to("-x-y-z-0-0")
+        .to("-x-y-z-0")//
         .to("-x-y-z")//
         .to(null);
   }
@@ -789,6 +798,10 @@ public class TrimmerTest250 {
 
   @Test public void issue72mi() {
     trimming("0-x-0-y-0-z-0")//
+        .to("-x-0-y-0-z-0")//
+        .to("-x-y-0-z-0")//
+        .to("-x-y-z-0-0")//
+        .to("-x-y-z-0")//
         .to("-x-y-z")//
         .to(null);
   }
@@ -1094,53 +1107,55 @@ public class TrimmerTest250 {
   @Test public void issue85_86k() {
     trimming("if(false){ \n" + "if(true) \n" + "a(); \n" + "else \n" + "b(); \n" + "} \n" + "else c();").to("c();");
   }
-
+  
   @Test public void issue85_86l() {
     trimming("if(false)" + "c();" + "else {\n" + "if(true) \n" + "a(); \n" + "else \n" + "b(); \n" + "} \n").to("{a();}").to("a();");
   }
-
+  
   @Test public void issue86_1() {
     trimming("if(false)" + "c();\n" + "int a;").to("{}int a;").to("int a;").to(null);
   }
-
+  
   @Test public void issue86_2() {
     trimming("if(false) {c();\nb();\na();}").to("{}");
   }
-
+  
   @Ignore public void issue86_3() {
     trimming("if(false) {c();\nb();\na();}").to("{}").to(null);
   }
-
+  
   @Ignore public void issue86_4() {
     trimming("if(false) {c();\nb();\na();}").to("{}").to("");
   }
-
+  
   @Ignore public void issue86_5() {
     trimming("if(false) {c();\nb();\na();}").to("{}").to("").to(null);
   }
-
+  
   @Test public void issue87a() {
     trimming("a-b*c - (x - - - (d*e))").to("a  - b*c -x + d*e");
   }
-
+  
   @Test public void issue87b() {
     trimming("a-b*c").to(null);
   }
-
+  
   @Test public void issue87c() {
     trimming("a + (b-c)").to("a + b -c");
   }
-
+  
   @Test public void issue87d() {
     trimming("a - (b-c)").to("a - b + c");
   }
-
+ 
   @Ignore public void trimmerBugXOR() {
-    trimming("j=j^k").to("j^=k");
+    trimming("j=j^k")
+    .to("j^=k");
   }
-
+  
   @Test public void trimmerBugXORCompiling() {
-    trimming("j = j ^ k").to("j ^= k");
+    trimming("j = j ^ k")
+    .to("j ^= k");
   }
 
   // @formatter:off
