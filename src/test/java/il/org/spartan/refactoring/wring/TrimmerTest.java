@@ -1887,7 +1887,17 @@ import il.org.spartan.refactoring.utils.*;
         "abstract class A {\n"//
             + "static void f() {}\n "//
             + "public final static int i = 3; "//
-            + "}").to(null);
+            + "}").
+    
+    
+    to(//
+        "abstract class A {\n"//
+            + "static void f() {}\n "//
+            + "public static final int i = 3; "//
+            + "}").
+    
+     
+    to(null);
   }
 
   @Test public void issue52o() {
@@ -1895,7 +1905,13 @@ import il.org.spartan.refactoring.utils.*;
         "final class A {\n"//
             + "static void f() {}\n "//
             + "public final static int i = 3; "//
-            + "}").to(null);
+            + "}")//
+                .to(//
+                    "final class A {\n"//
+                        + "static void f() {}\n "//
+                        + "public static final int i = 3; "//
+                        + "}")//
+                .to(null);
   }
 
   @Test public void issue52p() {
@@ -2125,7 +2141,7 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Test public void issue74d() {
-    trimming("int[] a = new int[] {2,3}").to(null);
+    trimming("int[] a = new int[] {2,3};").to(null);
   }
 
   @Test public void linearTransformation() {

@@ -49,40 +49,6 @@ public class TrimmerTest250 {
     trimming("a=a%5;").to("a%=5;");
   }
 
-  @Ignore public void issue50_inEnumMemberComplex() {
-    trimming(//
-        "enum A { a1 {{ f(); } \n" + //
-            "protected final void f() {g();}  \n" + //
-            "public final void g() {h();}  \n" + //
-            "private final void h() {i();}   \n" + //
-            "final void i() {f();}  \n" + //
-            "}, a2 {{ f(); } \n" + //
-            "final protected void f() {g();}  \n" + //
-            "final void g() {h();}  \n" + //
-            "final private void h() {i();}  \n" + //
-            "final protected void i() {f();}  \n" + //
-            "};\n" + //
-            "protected abstract void f();\n" + //
-            "protected void ia() {}\n" + //
-            "void i() {}\n" + //
-            "} \n"//
-    ).to("enum A { a1 {{ f(); } \n" + //
-        "void f() {g();}  \n" + //
-        "public void g() {h();}  \n" + //
-        "void h() {i();}   \n" + //
-        "void i() {f();}  \n" + //
-        "}, a2 {{ f(); } \n" + //
-        "void f() {g();}  \n" + //
-        "void g() {h();}  \n" + //
-        "void h() {i();}  \n" + //
-        "void i() {f();}  \n" + //
-        "};\n" + //
-        "abstract void f();\n" + //
-        "void ia() {}\n" + //
-        "void i() {}\n" + //
-        "} \n"//
-    );
-}
   @Test public void issue103_modulo2() {
     trimming("a=5%a;").to(null);
   }
@@ -263,42 +229,54 @@ public class TrimmerTest250 {
     trimming("z=foo(x=(y=y*u),17)").to("z=foo(x=(y*=u),17)");
   }
 
-  @Test public void issue111g(){
+  @Ignore public void issue111a() {
+    trimming("strictfp native synchronized volatile transient final static default abstract private protected public int a;")
+        .to("public protected private abstract default static final transient volatile synchronized native strictfp int a;");
+  }
+
+  @Ignore public void issue111b() {
+    trimming("strictfp public int a;").to("public strictfp int a;");
+  }
+
+  @Ignore public void issue111c() {
+    trimming("protected public void func();").to("public protected void func();");
+  }
+
+  @Ignore public void issue111d() {
+    trimming("protected public class A{}").to("public protected class A{}");
+  }
+
+  @Ignore public void issue111e() {
+    trimming("protected public class A{volatile static int a;}").to("public protected int class A{static volatile int a;}");
+  }
+
+  @Ignore public void issue111f() {
+    trimming("protected public class A{volatile static String method (final abstruct int a){}}")
+        .to("public protected int class A{static volatile String method (abstruct final int a){}}");
+  }
+
+  @Test public void issue111g() {
     trimming("protected public public enum Level { " + //
-              "HIGH, MEDIUM, LOW" + //
-              "}")
-    .to("public public protected enum Level { \n" + //
-        "HIGH, MEDIUM, LOW\n" + //
-        "}");
+        "HIGH, MEDIUM, LOW" + //
+        "}").to("public public protected enum Level { \n" + //
+            "HIGH, MEDIUM, LOW\n" + //
+            "}");
   }
 
-  @Test public void issue111g_1(){
+  @Test public void issue111g_1() {
     trimming("final enum Level { \n" + //
-              "HIGH, MEDIUM, LOW\n" + //
-              "}")
-    .to("enum Level { \n" + //
         "HIGH, MEDIUM, LOW\n" + //
-        "}");
+        "}").to("enum Level { \n" + //
+            "HIGH, MEDIUM, LOW\n" + //
+            "}");
   }
 
-  @Ignore public void issue111h(){
-    trimming("protected public int a;")
-    .to("public protected int a;");
+  @Ignore public void issue111h() {
+    trimming("protected public int a;").to("public protected int a;");
   }
 
-  @Ignore public void issue111i(){
-    trimming("protected public int a;")
-    .to("public protected int a;");
-  }
-  
-  @Ignore public void issue111z(){
-    trimming("volatile private int a;")
-    .to("private volatile int a;");
-  }
-  
-  @Ignore public void issue111y(){
-    trimming("synchronized volatile public int a;")
-    .to("public volatile synchronized int a;");
+  @Ignore public void issue111i() {
+    trimming("protected public int a;").to("public protected int a;");
   }
 
   @Test public void issue31a() {
@@ -434,7 +412,7 @@ public class TrimmerTest250 {
     ).to(null);
   }
 
-  @Ignore public void issue50_inEnumMemberComplex_1() {
+  @Test public void issue50_inEnumMemberComplex() {
     trimming(//
         "enum A { a1 {{ f(); } \n" + //
             "protected final void f() {g();}  \n" + //
@@ -537,10 +515,6 @@ public class TrimmerTest250 {
         .to("interface a {}");//
   }
 
-  @Test public void issue75a_1() {
-    trimming("int i = 0;").to(null);
-  }
-  
   @Test public void issue50e() {
     trimming("enum a {a,b}")//
         .to(null);//
@@ -572,20 +546,20 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue54_01() {
-    trimming("x.toString()").to("\"\" + x");
+    trimming("x.toString()").to("x + \"\"");
   }
 
   @Test public void issue54_02() {
-    trimming("if(x.toString() == \"abc\") return a;").to("if(\"\" + x == \"abc\") return a;");
+    trimming("if(x.toString() == \"abc\") return a;").to("if(x + \"\" == \"abc\") return a;");
   }
 
   @Test public void issue54_03() {
-    trimming("((Integer)6).toString()").to("\"\"+ (Integer)6");
+    trimming("((Integer)6).toString()").to("(Integer)6 + \"\"");
   }
 
   @Test public void issue54_04() {
     trimming("switch(x.toString()){ case \"1\": return; case \"2\": return; default: return; }")
-        .to("switch(\"\" + x){ case \"1\": return; case \"2\": return; default: return; }");
+        .to("switch(x + \"\"){ case \"1\": return; case \"2\": return; default: return; }");
   }
 
   @Test public void issue54_05() {
@@ -593,7 +567,7 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue54_06() {
-    trimming("a.toString().length()").to("(\"\" + a).length()");
+    trimming("a.toString().length()").to("(a + \"\").length()");
   }
 
   @Test public void issue70_01() {
@@ -733,6 +707,10 @@ public class TrimmerTest250 {
     trimming(s).to("-x");
   }
 
+  @Test public void issue72mx() {
+    trimming("0-0").to("0");
+  }
+
   @Test public void issue72mb() {
     trimming("x-0").to("x");
   }
@@ -742,20 +720,15 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue72md1() {
-    trimming("0-x-0").to("-x-0").to("-x").to(null);
+    trimming("0-x-0").to("-x").to(null);
   }
 
   @Test public void issue72md2() {
-    trimming("0-x-0-y").to("-x-0-y").to("-x-y").to(null);
+    trimming("0-x-0-y").to("-x-y").to(null);
   }
 
   @Test @Ignore("Irrelevant") public void issue72md3() {
     trimming("0-x-0-y-0-z-0-0")//
-        .to("-x-0-y-0-z-0-0")//
-        .to("-x-y-0-z-0-0")//
-        .to("-x-y-z-0-0-0")//
-        .to("-x-y-z-0-0")
-        .to("-x-y-z-0")//
         .to("-x-y-z")//
         .to(null);
   }
@@ -816,10 +789,6 @@ public class TrimmerTest250 {
 
   @Test @Ignore("Irrelevant") public void issue72mi() {
     trimming("0-x-0-y-0-z-0")//
-        .to("-x-0-y-0-z-0")//
-        .to("-x-y-0-z-0")//
-        .to("-x-y-z-0-0")//
-        .to("-x-y-z-0")//
         .to("-x-y-z")//
         .to(null);
   }
@@ -1125,116 +1094,53 @@ public class TrimmerTest250 {
   @Test public void issue85_86k() {
     trimming("if(false){ \n" + "if(true) \n" + "a(); \n" + "else \n" + "b(); \n" + "} \n" + "else c();").to("c();");
   }
-  
-  @Test public void issue111a(){
-    trimming("public class A {" + //
-        "static public int a;" + //
-        "}") //
-    .to("public class A {" + //
-        "public static int a;" + //
-        "}");
-  }
-  
-  @Test public void issue111b(){
-    
-    trimming("public class A {" + //
-        "static final public int a;" + //
-        "}") //
-    .to("public class A {" + //
-        "public static final int a;" + //
-        "}");
-  }
-  
-  @Test public void issue111c(){ //not working cause method sorting is not integrated yet
-    trimming("public class A{" + //
-        "synchronized public void fun(final int a) {}" + //
-        "final private String s = \"Alex\";" + //
-      "}")
-    .to("public class A{" + //
-        "synchronized public void fun(final int a) {}" + //
-        "private final String s = \"Alex\";" + //
-      "}").to(null); //
-  }
-  
-  @Ignore public void issue111c_1(){ //not working cause method sorting is not integrated yet
-    trimming("public class A{" + //
-        "synchronized public void fun(final int a) {}" + //
-        "final private String s = \"Alex\";" + //
-      "}")
-    .to("public class A{" + //
-        "synchronized public void fun(final int a) {}" + //
-        "private final String s = \"Alex\";" + //
-      "}") //
-    .to("public class A{" + // here is the problem - method declaration
-        "public synchronized void fun(final int a) {}" + //
-        "private final String s = \"Alex\";" + //
-      "}") //
-    .to(null);
-  }
-  
-  @Test public void issue111d(){
-    trimming("abstract class A {}")
-    .to(null);
-  }
-  
-  @Ignore public void issue111e(){ //can't understand why not working
-    trimming("final static public class ofEnum extends ModifierSort<EnumDeclaration>{}")
-    .to("public static final class ofEnum extends ModifierSort<EnumDeclaration>{}");
-  }
-  
-  @Ignore public void issue111f(){ //method
-    trimming("protected public class A{volatile static String method (final abstruct int a){}}")
-    .to("public protected int class A{static volatile String method (abstruct final int a){}}");
-  }
-  
-    @Test public void issue85_86l() {
+
+  @Test public void issue85_86l() {
     trimming("if(false)" + "c();" + "else {\n" + "if(true) \n" + "a(); \n" + "else \n" + "b(); \n" + "} \n").to("{a();}").to("a();");
   }
-  
+
   @Test public void issue86_1() {
     trimming("if(false)" + "c();\n" + "int a;").to("{}int a;").to("int a;").to(null);
   }
-  
+
   @Test public void issue86_2() {
     trimming("if(false) {c();\nb();\na();}").to("{}");
   }
-  
+
   @Ignore public void issue86_3() {
     trimming("if(false) {c();\nb();\na();}").to("{}").to(null);
   }
-  
+
   @Ignore public void issue86_4() {
     trimming("if(false) {c();\nb();\na();}").to("{}").to("");
   }
-  
+
   @Ignore public void issue86_5() {
     trimming("if(false) {c();\nb();\na();}").to("{}").to("").to(null);
   }
-  
+
   @Test public void issue87a() {
     trimming("a-b*c - (x - - - (d*e))").to("a  - b*c -x + d*e");
   }
-  
+
   @Test public void issue87b() {
     trimming("a-b*c").to(null);
   }
-  
+
   @Test public void issue87c() {
     trimming("a + (b-c)").to("a + b -c");
   }
-  
+
   @Test public void issue87d() {
     trimming("a - (b-c)").to("a - b + c");
   }
- 
+
   @Ignore public void trimmerBugXOR() {
-    trimming("j=j^k")
-    .to("j^=k");
+    trimming("j=j^k").to("j^=k");
   }
-  
+
   @Test public void trimmerBugXORCompiling() {
-    trimming("j = j ^ k")
-    .to("j ^= k");
+    trimming("j = j ^ k").to("j ^= k");
   }
 
   // @formatter:off
