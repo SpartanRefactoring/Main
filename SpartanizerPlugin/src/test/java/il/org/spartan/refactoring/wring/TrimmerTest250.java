@@ -11,6 +11,7 @@ import il.org.spartan.*;
 import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.engine.*;
+import il.org.spartan.refactoring.utils.*;
 
 /** * Unit tests for the nesting class Unit test for the containing class. Note
  * our naming convention: a) test methods do not use the redundant "test"
@@ -399,7 +400,8 @@ public class TrimmerTest250 {
     trimming("0-x-0-y-0-z-0-0")//
         .to("-x-0-y-0-z-0-0")//
         .to("-x-y-0-z-0-0")//
-        .to("-x-y-z-0-0")//
+        .to("-x-y-z-0-0-0")//
+        .to("-x-y-z-0-0")
         .to("-x-y-z-0")//
         .to("-x-y-z")//
         .to(null);
@@ -463,8 +465,8 @@ public class TrimmerTest250 {
     trimming("0-x-0-y-0-z-0")//
         .to("-x-0-y-0-z-0")//
         .to("-x-y-0-z-0")//
+        .to("-x-y-z-0-0")//
         .to("-x-y-z-0")//
-        .to("-x-y-z")//
         .to(null);
   }
 
@@ -1085,6 +1087,74 @@ public class TrimmerTest250 {
 
   @Test public void issue31n() {
     trimming("String tellTale(ExamplyExamplar foo)").to(null);
+  }
+  
+  @Ignore public void issue111a(){
+    trimming("strictfp native synchronized volatile transient final static default abstract private protected public int a;")
+    .to("public protected private abstract default static final transient volatile synchronized native strictfp int a;");
+  }
+  
+  @Ignore public void issue111b(){
+    trimming("strictfp public int a;")
+    .to("public strictfp int a;");
+  }
+  
+  @Ignore public void issue111c(){
+    trimming("protected public void func();")
+    .to("public protected void func();");
+  }
+  
+  @Ignore public void issue111d(){
+    trimming("protected public class A{}")
+    .to("public protected class A{}");
+  }
+  
+  @Ignore public void issue111e(){
+    trimming("protected public class A{volatile static int a;}")
+    .to("public protected int class A{static volatile int a;}");
+  }
+  
+  @Ignore public void issue111f(){
+    trimming("protected public class A{volatile static String method (final abstruct int a){}}")
+    .to("public protected int class A{static volatile String method (abstruct final int a){}}");
+  }
+  
+  @Test public void issue111g(){
+    trimming("protected public public enum Level { " + //
+              "HIGH, MEDIUM, LOW" + //
+              "}")
+    .to("public public protected enum Level { \n" + //
+        "HIGH, MEDIUM, LOW\n" + //
+        "}");
+  }
+  
+  @Test public void issue111g_1(){
+    trimming("final enum Level { \n" + //
+              "HIGH, MEDIUM, LOW\n" + //
+              "}")
+    .to("enum Level { \n" + //
+        "HIGH, MEDIUM, LOW\n" + //
+        "}");
+  }
+  
+  @Ignore public void issue111h(){
+    trimming("protected public int a;")
+    .to("public protected int a;");
+  }
+  
+  @Ignore public void issue111i(){
+    trimming("protected public int a;")
+    .to("public protected int a;");
+  }
+ 
+  @Ignore public void trimmerBugXOR() {
+    trimming("j=j^k")
+    .to("j^=k");
+  }
+  
+  @Test public void trimmerBugXORCompiling() {
+    trimming("j = j ^ k")
+    .to("j ^= k");
   }
 
   // @formatter:off
