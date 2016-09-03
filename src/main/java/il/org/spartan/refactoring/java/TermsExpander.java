@@ -1,4 +1,5 @@
 package il.org.spartan.refactoring.java;
+
 import static il.org.spartan.refactoring.ast.wizard.*;
 import static il.org.spartan.refactoring.utils.lisp.*;
 
@@ -8,7 +9,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.refactoring.assemble.*;
-import il.org.spartan.refactoring.utils.*;
 
 /** Expands terms of +/- expressions without reordering.
  * <p>
