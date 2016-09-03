@@ -467,6 +467,7 @@ public class TrimmerTest250 {
         .to("-x-y-0-z-0")//
         .to("-x-y-z-0-0")//
         .to("-x-y-z-0")//
+        .to("-x-y-z")//
         .to(null);
   }
 
