@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.ast;
 
-import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.engine.into.*;
 
 import org.junit.*;

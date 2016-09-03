@@ -204,7 +204,6 @@ public interface wizard {
    *         {@link #InfixExpression.Operator.AND}, and false otherwise */
   static boolean isBitwiseOperator(final InfixExpression.Operator o) {
     return in(o, XOR, OR, AND);
-    
   }
 
   /** Determine whether an InfixExpression.Operator is a comparison operator or
