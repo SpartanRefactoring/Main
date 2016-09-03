@@ -21,7 +21,7 @@ public final class Trimmer extends Spartanization {
     final Trimmer trimmer = new Trimmer();
     final Document $ = new Document(from);
     for (;;) {
-      final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from($.get());
+      final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from($.get());
       final ASTRewrite r = trimmer.createRewrite(u, null);
       final TextEdit e = r.rewriteAST($, null);
       try {

@@ -120,7 +120,7 @@ public class TrimmerTestsUtils {
   }
 
   static String apply(final Trimmer t, final String from) {
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
     final Document d = new Document(from);
     assert d != null;
@@ -130,7 +130,7 @@ public class TrimmerTestsUtils {
   }
 
   static String apply(final Wring<? extends ASTNode> ns, final String from) {
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
     final Document d = new Document(from);
     assert d != null;

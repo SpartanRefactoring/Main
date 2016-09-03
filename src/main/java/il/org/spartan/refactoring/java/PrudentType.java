@@ -278,7 +278,7 @@ public enum PrudentType {
   private PrudentType underBinaryOperator(final InfixExpression.Operator o, final PrudentType k) {
     if (o == wizard.PLUS2)
       return underPlus(k);
-    if (wizard.isComparisonOperator(o))
+    if (wizard.isComparison(o))
       return BOOLEAN;
     if (wizard.isBitwiseOperator(o))
       return underBitwiseOperation(k);
