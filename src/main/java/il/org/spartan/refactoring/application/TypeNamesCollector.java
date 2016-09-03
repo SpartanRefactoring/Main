@@ -34,7 +34,7 @@ public class TypeNamesCollector {
   }
 
   private static void collect(final String javaCode) {
-    collect((CompilationUnit) MakeAST.COMPILATION_UNIT.from(javaCode));
+    collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
 
   private static void collect(final String[] where) {
