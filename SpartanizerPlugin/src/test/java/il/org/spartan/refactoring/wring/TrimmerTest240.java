@@ -4033,9 +4033,9 @@ public class TrimmerTest240 {
 
   @Test public void twoOpportunityExample() {
     that(TrimmerTestsUtils.countOpportunities(new Trimmer(),
-        (CompilationUnit) MakeAST.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
+        (CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
     that(TrimmerTestsUtils.countOpportunities(new Trimmer(),
-        (CompilationUnit) MakeAST.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
+        (CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
   }
 
   @Test public void useOutcontextToManageStringAmbiguity() {

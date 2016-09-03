@@ -16,7 +16,7 @@ import il.org.spartan.refactoring.ast.*;
  * read like a sentence phrase.
  * @author Yossi Gil
  * @since 2015-07-16 */
-public enum MakeAST {
+public enum makeAST {
   /** Converts file, string or marker to compilation unit. */
   COMPILATION_UNIT(ASTParser.K_COMPILATION_UNIT) {
     @Override public CompilationUnit from(final File f) {
@@ -116,7 +116,7 @@ public enum MakeAST {
 
   final int kind;
 
-  private MakeAST(final int kind) {
+  private makeAST(final int kind) {
     this.kind = kind;
   }
 

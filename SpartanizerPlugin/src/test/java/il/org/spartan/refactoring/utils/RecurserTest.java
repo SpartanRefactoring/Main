@@ -43,14 +43,14 @@ public class RecurserTest {
   }
 
   @Test public void explainAPI_sensibly() {
-    final Integer i = recurse(ourCase, 0)//
+    @SuppressWarnings("boxing") final Integer i = recurse(ourCase, 0)//
         .preVisit(//
             (x) -> (2 + x.hashCode())//
     );
     assert i != 0 : "wow, we really got unlucky; run again";
   }
 
-  @Test public void explainAPI_shortly() {
+  @SuppressWarnings("boxing") @Test public void explainAPI_shortly() {
     final Integer i = recurse(ourCase, 0).preVisit(//
         (r) -> (2 + r.hashCode())//
     );
@@ -70,11 +70,11 @@ public class RecurserTest {
     assert i != 0 : "wow, we really got unlucky; run again";
   }
 
-  private boolean barrier() {
+  private static boolean barrier() {
     return true;
   }
 
-  private ASTNode makeCaseNode() {
+  private static ASTNode makeCaseNode() {
     return mock(SwitchCase.class);
   }
 }
