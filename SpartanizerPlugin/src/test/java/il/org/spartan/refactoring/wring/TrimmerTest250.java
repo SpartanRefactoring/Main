@@ -861,7 +861,7 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue75a() {
-    trimming("int i = 0").to(null);
+    trimming("int i = 0;").to(null);
   }
 
   @Test public void issue75b() {
