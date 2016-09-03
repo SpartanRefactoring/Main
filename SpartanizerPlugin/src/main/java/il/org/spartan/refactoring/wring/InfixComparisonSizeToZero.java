@@ -1,5 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+import static il.org.spartan.Utils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
@@ -18,9 +20,9 @@ import il.org.spartan.refactoring.engine.*;
  * @author Stav Namir <code><stav1472 [at] gmail.com></code>
  * @since 2016-04-24 */
 public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.Canonicalization {
-  static boolean validTypes(final Expression ¢1, final Expression ¢2) {
-    return ¢2 instanceof MethodInvocation && isNumber(¢1) //
-        || isNumber(¢2) && ¢1 instanceof MethodInvocation;
+  private static boolean validTypes(final Expression ¢1, final Expression ¢2) {
+    return isNumber(¢1) && iz.methodInvocation(¢2) //
+        || isNumber(¢2) && iz.methodInvocation(¢1);
   }
 
   private static String description(final Expression x) {
@@ -39,48 +41,45 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
     return ¢ instanceof NumberLiteral || getNegativeNumber(¢) != null;
   }
 
-  private static ASTNode replacement(final InfixExpression x, Operator o, final int sign, final NumberLiteral l, final Expression receiver) {
-    final MethodInvocation $ = subject.operand(receiver).toMethod("isEmpty");
-    int threshold = sign * Integer.parseInt(l.getToken());
-    final BooleanLiteral TRUE = x.getAST().newBooleanLiteral(true);
-    final BooleanLiteral FALSE = x.getAST().newBooleanLiteral(false);
-    if (o == Operator.GREATER_EQUALS) {
-      o = Operator.GREATER;
-      --threshold;
-    }
-    if (o == Operator.LESS_EQUALS) {
-      o = Operator.LESS;
-      ++threshold;
-    }
-    if (o == Operator.EQUALS)
-      return threshold == 0 ? $ : threshold < 0 ? FALSE : null;
-    if (o == Operator.NOT_EQUALS)
-      return threshold == 0 ? make.notOf($) : threshold >= 0 ? null : TRUE;
-    if (o == Operator.GREATER)
-      return threshold < 0 ? TRUE : threshold != 0 ? null : make.notOf($);
-    if (o == Operator.LESS)
-      return threshold <= 0 ? FALSE : threshold == 1 ? $ : null;
+  private static ASTNode replacement(Operator o, int threshold, final MethodInvocation $) {
+    if (o == Operator.GREATER_EQUALS)
+      return replacement(GREATER, threshold - 1, $);
+    if (o == LESS_EQUALS)
+      return replacement(LESS, threshold + 1, $);
+    AST ast = $.getAST();
+    if (threshold < 0)
+      return ast.newBooleanLiteral(!in(o, EQUALS, LESS));
+    if (o == EQUALS)
+      return threshold == 0 ? $ : null;
+    if (o == NOT_EQUALS || o == GREATER)
+      return threshold != 0 ? null : make.notOf($);
+    if (o == LESS)
+      return threshold == 0 ? ast.newBooleanLiteral(false) : threshold != 1 ? null : $;
     assert false : o + ": uncrecognized";
     return null;
   }
 
-  private static ASTNode replacement(final InfixExpression x, final Operator o, final MethodInvocation i, final Expression n) {
+  private static ASTNode replacement(Operator o, final int sign, final NumberLiteral l, final Expression receiver) {
+    return replacement(o, sign * Integer.parseInt(l.getToken()), subject.operand(receiver).toMethod("isEmpty"));
+  }
+
+  private static ASTNode replacement(final Operator o, final MethodInvocation i, final Expression x) {
     if (!"size".equals(step.name(i).getIdentifier()))
       return null;
     int sign = -1;
-    NumberLiteral l = getNegativeNumber(n);
+    NumberLiteral l = getNegativeNumber(x);
     if (l == null) {
       /* should be unnecessary since validTypes uses isNumber so n is either a
        * NumberLiteral or an PrefixExpression which is a negative number */
-      if (!(n instanceof NumberLiteral))
+      l = az.numberLiteral(x);
+      if (l == null)
         return null;
-      l = (NumberLiteral) n;
       sign = 1;
     }
     final Expression receiver = step.receiver(i);
     /* In case binding is available, uses it to ensure that isEmpty() is
      * accessible from current scope. Currently untested */
-    if (x.getAST().hasResolvedBindings()) {
+    if (i.getAST().hasResolvedBindings()) {
       final CompilationUnit u = hop.compilationUnit(x);
       if (u == null)
         return null;
@@ -92,7 +91,7 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
       if (!"boolean".equals("" + t) && !"java.lang.Boolean".equals(t.getBinaryName()))
         return null;
     }
-    return replacement(x, o, sign, l, receiver);
+    return replacement(o, sign, l, receiver);
   }
 
   @Override String description(final InfixExpression x) {
@@ -106,13 +105,11 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
     if (!iz.comparison(o))
       return null;
     final Expression right = step.right(x);
-    assert right != null;
     final Expression left = step.left(x);
-    assert left != null;
     return !validTypes(right, left) ? null
-        : left instanceof MethodInvocation ? //
-            replacement(x, o, (MethodInvocation) left, right) //
-            : replacement(x, wizard.conjugate(o), (MethodInvocation) right, left)//
+        : iz.methodInvocation(left) ? //
+            replacement(o, az.methodInvocation(left), right) //
+            : replacement(wizard.conjugate(o), az.methodInvocation(right), left)//
     ;
   }
 }
