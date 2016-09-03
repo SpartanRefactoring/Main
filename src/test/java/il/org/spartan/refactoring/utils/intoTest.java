@@ -20,11 +20,11 @@ public class intoTest {
     azzert.notNull(into.d("int f() { return a; }"));
   }
 
-  @Test public void findFirstType() {
-    azzert.notNull(t("int _;"));
-  }
-
   @Test(expected = AssertionError.class) public void dOnNull() {
     into.d(null);
+  }
+
+  @Test public void findFirstType() {
+    azzert.notNull(t("int _;"));
   }
 }

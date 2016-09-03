@@ -13,9 +13,9 @@ import il.org.spartan.refactoring.engine.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public class IfEmptyThenTest {
-  private static final IfEmptyThen WRING = new IfEmptyThen();
   private static final Statement INPUT = into.s("{if (b) ; else ff();}");
   private static final IfStatement IF = extract.firstIfStatement(INPUT);
+  private static final IfEmptyThen WRING = new IfEmptyThen();
 
   @Test public void eligible() {
     assert WRING.eligible(IF);
