@@ -1,7 +1,10 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.assemble.Plant.*;
+import static il.org.spartan.refactoring.assemble.make.*;
+import static il.org.spartan.refactoring.ast.hop.*;
 import static il.org.spartan.refactoring.ast.iz.*;
+import static il.org.spartan.refactoring.ast.wizard.*;
+import static il.org.spartan.refactoring.utils.lisp.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
@@ -9,8 +12,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.assemble.*;
-import il.org.spartan.refactoring.ast.*;
-import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.Wring.*;
 
 /** Replace <code>X-0</code> by <code>X</code> and <code>0-X</code> by
@@ -20,35 +21,37 @@ import il.org.spartan.refactoring.wring.Wring.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
+  private static List<Expression> prune(final List<Expression> xs) {
+    final List<Expression> $ = new ArrayList<>();
+    for (final Expression x : xs)
+      if (!literal0(x))
+        $.add(x);
+    return $.size() != xs.size() ? $ : null;
+  }
+
+  private static ASTNode replacement(final List<Expression> xs) {
+    final List<Expression> prune = prune(xs);
+    if (prune == null)
+      return null;
+    final Expression first = first(xs);
+    if (prune.isEmpty())
+      return make.from(first).literal(0);
+    assert prune.size() >= 1;
+    if (prune.size() == 1)
+      return !literal0(first) ? first : minus(first(prune));
+    assert prune.size() >= 2;
+    return subject.operands(!literal0(first) ? prune : minusFirst(prune)).to(MINUS2);
+  }
+
+  private static List<Expression> minusFirst(final List<Expression> prune) {
+    return cons(minus(first(prune)), chop(prune));
+  }
+
   @Override String description(final InfixExpression x) {
     return "Remove subtraction of 0 in " + x;
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
-    return x.getOperator() != MINUS || !iz.literal0(x.getRightOperand()) && !iz.literal0(x.getLeftOperand()) ? null : go(x);
-  }
-
-  private static ASTNode go(final InfixExpression x) {
-    final Expression right = step.right(x);
-    final Expression left = step.left(x);
-    final ASTNode parent = step.parent(x);
-    return x.hasExtendedOperands() ? plant(go(hop.operands(x))).into(parent)
-        : literal0(left) ? plant(make.minus(right)).into(parent) //
-            : literal0(right) ? plant(left).into(parent) //
-                : null;
-  }
-
-  private static Expression go(final List<Expression> xs) {
-    final List<Expression> $ = new ArrayList<>(xs);
-    if (literal0(lisp.first($))) {
-      $.remove(0);
-      $.set(0, make.minus(lisp.first($)));
-    } else
-      for (int i = 1, size = $.size(); i < size; ++i)
-        if (literal0($.get(i))) {
-          $.remove(i);
-          break;
-        }
-    return subject.operands($).to(MINUS);
+    return x.getOperator() != MINUS ? null : replacement(operands(x));
   }
 }
