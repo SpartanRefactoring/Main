@@ -25,12 +25,12 @@ public class EvaluateAux {
   }
 
   public static boolean isMinusDouble(final Expression x) {
-    return x instanceof PrefixExpression && ((PrefixExpression) x).getOperator() == PrefixExpression.Operator.MINUS
+    return iz.prefixExpression(x ) && ((PrefixExpression) x).getOperator() == PrefixExpression.Operator.MINUS
         && isDouble(((PrefixExpression) x).getOperand());
   }
 
   public static boolean isMinusInt(final Expression x) {
-    return x instanceof PrefixExpression && ((PrefixExpression) x).getOperator() == PrefixExpression.Operator.MINUS
+    return iz.prefixExpression(x) && ((PrefixExpression) x).getOperator() == PrefixExpression.Operator.MINUS
         && isInt(((PrefixExpression) x).getOperand());
   }
 

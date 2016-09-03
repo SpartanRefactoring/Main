@@ -224,34 +224,34 @@ import il.org.spartan.refactoring.engine.*;
 
   // ========================= use & define tests ===========================
   @Test public void useTestMethodDefinition() {
-    Environment.uses(MakeAST.COMPILATION_UNIT.from(new Document("int x = 5;").get()));
+    Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int x = 5;").get()));
   }
 
   @Test public void defineTestMethodDefinition() {
-    Environment.defines(MakeAST.COMPILATION_UNIT.from(new Document("int x = 5;").get()));
+    Environment.defines(makeAST.COMPILATION_UNIT.from(new Document("int x = 5;").get()));
   }
 
   // Simple definitions
   @Ignore public void useTestWithDefinitionsOnly() {
-    azzert.that(Environment.uses(MakeAST.COMPILATION_UNIT.from(new Document("int x = 5;").get())).contains("x"), is(true));
+    azzert.that(Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int x = 5;").get())).contains("x"), is(true));
   }
 
   @Ignore public void useTestWithDefinitionsOnly2() {
-    final Set<Map.Entry<String, Information>> $ = Environment.uses(MakeAST.COMPILATION_UNIT.from(new Document("int x = 5,y=3,z;").get()));
+    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int x = 5,y=3,z;").get()));
     azzert.that($.contains("x"), is(true));
     azzert.that($.contains("y"), is(true));
     azzert.that($.contains("z"), is(true));
   }
 
   @Ignore public void useTestWithDefinitionsOnly3() {
-    final Set<Map.Entry<String, Information>> $ = Environment.uses(MakeAST.COMPILATION_UNIT.from(new Document("int x = y = z =5;").get()));
+    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int x = y = z =5;").get()));
     azzert.that($.contains("x"), is(true));
     azzert.that($.contains("y"), is(true));
     azzert.that($.contains("z"), is(true));
   }
 
   @Ignore public void useTestWithDefinitionsOnly4() {
-    final Set<Map.Entry<String, Information>> $ = Environment.uses(MakeAST.COMPILATION_UNIT.from(new Document("int x = y = z =5; double k;").get()));
+    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int x = y = z =5; double k;").get()));
     azzert.that($.contains("x"), is(true));
     azzert.that($.contains("y"), is(true));
     azzert.that($.contains("z"), is(true));
@@ -260,23 +260,23 @@ import il.org.spartan.refactoring.engine.*;
 
   // Simple uses.
   @Ignore public void useTestWithUsesOnly() {
-    final Set<Map.Entry<String, Information>> $ = Environment.uses(MakeAST.COMPILATION_UNIT.from(new Document("x=5; y=3.5").get()));
+    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("x=5; y=3.5").get()));
     azzert.that($.contains("x"), is(true));
     azzert.that($.contains("y"), is(true));
   }
 
   @Ignore public void useTestWithUsesOnly2() {
-    azzert.that(Environment.uses(MakeAST.COMPILATION_UNIT.from(new Document("foo(x)").get())).contains("x"), is(true));
+    azzert.that(Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("foo(x)").get())).contains("x"), is(true));
   }
 
   @Ignore public void useTestWithUsesOnly3() {
-    final Set<Map.Entry<String, Information>> $ = Environment.uses(MakeAST.COMPILATION_UNIT.from(new Document("foo(x,y)").get()));
+    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("foo(x,y)").get()));
     azzert.that($.contains("x"), is(true));
     azzert.that($.contains("y"), is(true));
   }
 
   @Ignore public void useTestWithUsesOnly4() {
-    final Set<Map.Entry<String, Information>> $ = Environment.uses(MakeAST.COMPILATION_UNIT.from(new Document("foo(goo(q,x),hoo(x,y,z))").get()));
+    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("foo(goo(q,x),hoo(x,y,z))").get()));
     azzert.that($.contains("q"), is(true));
     azzert.that($.contains("x"), is(true));
     azzert.that($.contains("y"), is(true));
@@ -284,24 +284,24 @@ import il.org.spartan.refactoring.engine.*;
   }
 
   @Ignore public void useTestWithUsesOnly5() {
-    azzert.that(Environment.uses(MakeAST.COMPILATION_UNIT.from(new Document("x.foo()").get())).contains("x"), is(true));
+    azzert.that(Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("x.foo()").get())).contains("x"), is(true));
   }
 
   @Ignore public void useTestUsesAndDefinitions() {
-    final Set<Map.Entry<String, Information>> $ = Environment.uses(MakeAST.COMPILATION_UNIT.from(new Document("int i = 3; x.foo()").get()));
+    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int i = 3; x.foo()").get()));
     azzert.that($.contains("x"), is(true));
     azzert.that($.contains("i"), is(true));
   }
 
   @Ignore public void useTestUsesAndDefinitions2() {
-    final Set<Map.Entry<String, Information>> $ = Environment.uses(MakeAST.COMPILATION_UNIT.from(new Document("" + "for(int i = 0; i < 10; ++i)" + //
+    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("" + "for(int i = 0; i < 10; ++i)" + //
         "x+=i").get()));
     azzert.that($.contains("x"), is(true));
     azzert.that($.contains("i"), is(true));
   }
 
   @Ignore public void useTestUsesAndDefinitions3() {
-    final Set<Map.Entry<String, Information>> $ = Environment.uses(MakeAST.COMPILATION_UNIT.from(new Document("x=3; try{y=13; foo(x,y);}" + //
+    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("x=3; try{y=13; foo(x,y);}" + //
         "catch(final UnsupportedOperationException e)" + //
         "{z=3;}").get()));
     azzert.that($.contains("x"), is(true));
@@ -311,7 +311,7 @@ import il.org.spartan.refactoring.engine.*;
 
   @Test public void define_0() {
     final String code = "";
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
     final Set<Entry<String, Information>> $ = Environment.defines(u);
     azzert.that($.contains("a"), is(false));
     azzert.that($.isEmpty(), is(true));
@@ -319,7 +319,7 @@ import il.org.spartan.refactoring.engine.*;
 
   @Ignore public void define_1() {
     final String code = "int a = 0;";
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
     final Set<Entry<String, Information>> $ = Environment.defines(u);
     azzert.that($.contains("a"), is(true));
   }
@@ -327,7 +327,7 @@ import il.org.spartan.refactoring.engine.*;
   @Ignore public void define_2() {
     final String code = "int a = 0;\n" + //
         "int b;";
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
     final Set<Entry<String, Information>> $ = Environment.defines(u);
     azzert.that($.contains("a"), is(true));
     azzert.that($.contains("b"), is(true));
@@ -335,14 +335,14 @@ import il.org.spartan.refactoring.engine.*;
 
   @Ignore public void define_3() {
     final String code = "public void f(int a){}";
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
     final Set<Entry<String, Information>> $ = Environment.defines(u);
     azzert.that($.contains("a"), is(true));
   }
 
   @Ignore public void define_4() {
     final String code = "public void f(int a){String b}";
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
     final Set<Entry<String, Information>> $ = Environment.defines(u);
     azzert.that($.contains("a"), is(true));
     azzert.that($.contains("b"), is(true));
@@ -350,7 +350,7 @@ import il.org.spartan.refactoring.engine.*;
 
   @Ignore public void define_5() {
     final String code = "a = 0;";
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
     final Set<Entry<String, Information>> $ = Environment.defines(u);
     azzert.that($.contains("a"), is(false));
   }
@@ -358,7 +358,7 @@ import il.org.spartan.refactoring.engine.*;
   @Ignore public void define_6() {
     final String code = "int a = 0;\n" + //
         "b = 5";
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
     final Set<Entry<String, Information>> $ = Environment.defines(u);
     azzert.that($.contains("a"), is(true));
     azzert.that($.contains("b"), is(false));
@@ -370,7 +370,7 @@ import il.org.spartan.refactoring.engine.*;
         "static class Inner {\n" + //
         "void func(MyClass my, int b) {String s = 4;\n" + "not_in_env++;}\n" + //
         "}}";
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
     final Set<Entry<String, Information>> $ = Environment.defines(u);
     azzert.that($.contains("a"), is(true));
     azzert.that($.contains("b"), is(true));
@@ -380,21 +380,21 @@ import il.org.spartan.refactoring.engine.*;
 
   @Ignore public void define_8() {
     final String code = "int a = 0;";
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
     final Set<Entry<String, Information>> $ = Environment.defines(u);
     azzert.that($.contains("a"), is(true));
   }
 
   @Ignore public void define_9() {
     final String code = "int a = 0;";
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
     final Set<Entry<String, Information>> $ = Environment.defines(u);
     azzert.that($.contains("a"), is(true));
   }
 
   @Ignore public void define_10() {
     final String code = "int a = 0;";
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(code);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
     final Set<Entry<String, Information>> $ = Environment.defines(u);
     azzert.that($.contains("a"), is(true));
   }

@@ -99,6 +99,7 @@ abstract class ScopeManager extends ASTVisitor {
     push();
     return go(d);
   }
+
 }
 
 class UnsafeUsesCollector extends UsesCollector {

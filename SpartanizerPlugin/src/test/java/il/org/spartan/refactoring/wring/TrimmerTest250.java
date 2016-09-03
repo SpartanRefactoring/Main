@@ -21,6 +21,345 @@ import il.org.spartan.refactoring.utils.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class TrimmerTest250 {
+  @Test public void issue103_AND1() {
+    trimming("a=a&5;").to("a&=5;");
+  }
+
+  @Test public void issue103_AND2() {
+    trimming("a=5&a;").to("a&=5;");
+  }
+
+  @Test public void issue103_div1() {
+    trimming("a=a/5;").to("a/=5;");
+  }
+
+  @Test public void issue103_div2() {
+    trimming("a=5/a;").to(null);
+  }
+
+  @Test public void issue103_leftShift1() {
+    trimming("a=a<<5;").to("a<<=5;");
+  }
+
+  @Test public void issue103_leftShift2() {
+    trimming("a=5<<a;").to(null);
+  }
+
+  @Test public void issue103_modulo1() {
+    trimming("a=a%5;").to("a%=5;");
+  }
+
+  @Ignore public void issue50_inEnumMemberComplex() {
+    trimming(//
+        "enum A { a1 {{ f(); } \n" + //
+            "protected final void f() {g();}  \n" + //
+            "public final void g() {h();}  \n" + //
+            "private final void h() {i();}   \n" + //
+            "final void i() {f();}  \n" + //
+            "}, a2 {{ f(); } \n" + //
+            "final protected void f() {g();}  \n" + //
+            "final void g() {h();}  \n" + //
+            "final private void h() {i();}  \n" + //
+            "final protected void i() {f();}  \n" + //
+            "};\n" + //
+            "protected abstract void f();\n" + //
+            "protected void ia() {}\n" + //
+            "void i() {}\n" + //
+            "} \n"//
+    ).to("enum A { a1 {{ f(); } \n" + //
+        "void f() {g();}  \n" + //
+        "public void g() {h();}  \n" + //
+        "void h() {i();}   \n" + //
+        "void i() {f();}  \n" + //
+        "}, a2 {{ f(); } \n" + //
+        "void f() {g();}  \n" + //
+        "void g() {h();}  \n" + //
+        "void h() {i();}  \n" + //
+        "void i() {f();}  \n" + //
+        "};\n" + //
+        "abstract void f();\n" + //
+        "void ia() {}\n" + //
+        "void i() {}\n" + //
+        "} \n"//
+    );
+}
+  @Test public void issue103_modulo2() {
+    trimming("a=5%a;").to(null);
+  }
+
+  @Test public void issue103_OR1() {
+    trimming("a=a|5;").to("a|=5;");
+  }
+
+  @Test public void issue103_OR2() {
+    trimming("a=5|a;").to("a|=5;");
+  }
+
+  @Test public void issue103_rightShift1() {
+    trimming("a=a>>5;").to("a>>=5;");
+  }
+
+  @Test public void issue103_rightShift2() {
+    trimming("a=5>>a;").to(null);
+  }
+
+  @Test public void issue103_XOR1() {
+    trimming("x = x ^ a.getNum()").to("x ^= a.getNum()");
+  }
+
+  @Test public void issue103_XOR2() {
+    trimming("j = j ^ k").to("j ^= k");
+  }
+
+  @Test public void issue103a() {
+    trimming("x=x+y").to("x+=y");
+  }
+
+  @Test public void issue103b() {
+    trimming("x=y+x").to("x+=y");
+  }
+
+  @Test public void issue103c() {
+    trimming("x=y+z").to(null);
+  }
+
+  @Test public void issue103d() {
+    trimming("x = x + x").to("x+=x");
+  }
+
+  @Ignore public void issue103e() {
+    trimming("x = y + x + z + x + k + 9").to("x += y + z + x + k + 9");
+  }
+
+  @Test public void issue103f() {
+    trimming("a=a+5").to("a+=5");
+  }
+
+  @Test public void issue103g() {
+    trimming("a=a+(alex)").to("a+=alex");
+  }
+
+  @Test public void issue103h() {
+    trimming("a = a + (c = c + kif)").to("a += c = c + kif").to("a += c += kif").to(null);
+  }
+
+  @Test public void issue103i_mixed_associative() {
+    trimming("a = x = x + (y = y*(z=z+3))").to("a = x += y=y*(z=z+3)").to("a = x += y *= z=z+3").to("a = x += y *= z+=3");
+  }
+
+  @Test public void issue103j() {
+    trimming("x=x+foo(x,y)").to("x+=foo(x,y)");
+  }
+
+  @Test public void issue103k() {
+    trimming("z=foo(x=(y=y+u),17)").to("z=foo(x=(y+=u),17)");
+  }
+
+  @Test public void issue103l_mixed_associative() {
+    trimming("a = a - (x = x + (y = y*(z=z+3)))").to("a-=x=x+(y=y*(z=z+3))").to("a-=x+=y=y*(z=z+3)");
+  }
+
+  @Test public void issue103mma() {
+    trimming("x=x*y").to("x*=y");
+  }
+
+  @Test public void issue107a() {
+    trimming("a+=1;").to("a++;").to("++a;").to(null);
+  }
+
+  @Test public void issue107b() {
+    trimming("c+=1; int nice;").to("c++; int nice;");
+  }
+
+  @Test public void issue107c() {
+    trimming("java_is_even_nice+=1+=1;").to("java_is_even_nice+=1++;");
+  }
+
+  @Test public void issue107d() {
+    trimming("for(int a ; a<10 ; a+=1){}").to("for(int a ; a<10 ; a++){}");
+  }
+
+  @Ignore public void issue107e() {
+    trimming("a+=1+=1+=1+=1;").to("a+=1+=1+=1++;").to("a+=1+=1++++;").to("a+=1++++++;").to("a++++++++").to(null);
+  }
+
+  @Test public void issue107e_1() {
+    trimming("a+=1+=1+=1+=1;").to("a+=1+=1+=1++;");
+  }
+
+  @Test public void issue107f() {
+    trimming("a+=2;").to(null);
+  }
+
+  @Test public void issue107g() {
+    trimming("a/=1;").to(null);
+  }
+
+  @Ignore public void issue107h() {
+    trimming("a-+=1;").to("a-++;");
+  }
+
+  @Ignore public void issue107i() {
+    trimming("a+=1 and b+=1;").to("a++ and b+=1;").to("a++ and b++;");
+  }
+
+  @Test public void issue107j() {
+    trimming("a-=1;").to("a--;").to("--a;").to(null);
+  }
+
+  @Test public void issue107k() {
+    trimming("for(int a ; a<10 ; a-=1){}").to("for(int a ; a<10 ; a--){}");
+  }
+
+  @Test public void issue107l() {
+    trimming("a-=2;").to(null);
+  }
+
+  @Test public void issue107m() {
+    trimming("while(x-=1){}").to("while(x--){}");
+  }
+
+  @Test public void issue108a() {
+    trimming("x=x*y").to("x*=y");
+  }
+
+  @Test public void issue108b() {
+    trimming("x=y*x").to("x*=y");
+  }
+
+  @Test public void issue108c() {
+    trimming("x=y*z").to(null);
+  }
+
+  @Test public void issue108d() {
+    trimming("x = x * x").to("x*=x");
+  }
+
+  @Test public void issue108e() {
+    trimming("x = y * z * x * k * 9").to("x *= y * z * k * 9");
+  }
+
+  @Test public void issue108f() {
+    trimming("a = y * z * a").to("a *= y * z");
+  }
+
+  @Test public void issue108g() {
+    trimming("a=a*5").to("a*=5");
+  }
+
+  @Test public void issue108h() {
+    trimming("a=a*(alex)").to("a*=alex");
+  }
+
+  @Test public void issue108i() {
+    trimming("a = a * (c = c * kif)").to("a *= c = c*kif").to("a *= c *= kif").to(null);
+  }
+
+  @Test public void issue108j() {
+    trimming("x=x*foo(x,y)").to("x*=foo(x,y)");
+  }
+
+  @Test public void issue108k() {
+    trimming("z=foo(x=(y=y*u),17)").to("z=foo(x=(y*=u),17)");
+  }
+
+  @Test public void issue111g(){
+    trimming("protected public public enum Level { " + //
+              "HIGH, MEDIUM, LOW" + //
+              "}")
+    .to("public public protected enum Level { \n" + //
+        "HIGH, MEDIUM, LOW\n" + //
+        "}");
+  }
+
+  @Test public void issue111g_1(){
+    trimming("final enum Level { \n" + //
+              "HIGH, MEDIUM, LOW\n" + //
+              "}")
+    .to("enum Level { \n" + //
+        "HIGH, MEDIUM, LOW\n" + //
+        "}");
+  }
+
+  @Ignore public void issue111h(){
+    trimming("protected public int a;")
+    .to("public protected int a;");
+  }
+
+  @Ignore public void issue111i(){
+    trimming("protected public int a;")
+    .to("public protected int a;");
+  }
+
+  @Test public void issue31a() {
+    trimming(" static boolean hasAnnotation(final VariableDeclarationStatement n) {\n" + //
+        "      return hasAnnotation(n.modifiers());\n" + //
+        "    }").to(" static boolean hasAnnotation(final VariableDeclarationStatement s) {\n" + //
+            "      return hasAnnotation(s.modifiers());\n" + //
+            "    }");
+  }
+
+  @Test public void issue31b() {
+    trimming(" void f(final VariableDeclarationStatement n) {}") //
+        .to("void f(final VariableDeclarationStatement s) {}");
+  }
+
+  @Test public void issue31c() {
+    trimming(" void f(final VariableDeclarationAtatement n) {}") //
+        .to("void f(final VariableDeclarationAtatement a) {}");
+  }
+
+  @Test public void issue31d() {
+    trimming(" void f(final Expression n) {}") //
+        .to("void f(final Expression x) {}");
+  }
+
+  @Test public void issue31e() {
+    trimming(" void f(final Exception n) {}") //
+        .to("void f(final Exception x) {}");
+  }
+
+  @Test public void issue31f() {
+    trimming(" void f(final Exception exception, Expression expression) {}") //
+        .to("void f(final Exception x, Expression expression) {}");
+  }
+
+  @Test public void issue31g() {
+    trimming("void foo(TestExpression exp,TestAssignment testAssignment)") //
+        .to("void foo(TestExpression x,TestAssignment testAssignment)").to("void foo(TestExpression x,TestAssignment a)");
+  }
+
+  @Test public void issue31h() {
+    trimming(" void f(final Exception n) {}") //
+        .to("void f(final Exception x) {}");
+  }
+
+  @Test public void issue31i() {
+    trimming(" void f(final Exception n) {}") //
+        .to("void f(final Exception x) {}");
+  }
+
+  @Test public void issue31j() {
+    trimming("void foo(Exception exception, Assignment assignment)").to("void foo(Exception x, Assignment assignment)")
+        .to("void foo(Exception x, Assignment a)").to(null);
+  }
+
+  @Test public void issue31k() {
+    trimming("String tellTale(Example example)").to("String tellTale(Example x)");
+  }
+
+  @Test public void issue31l() {
+    trimming("String tellTale(Example examp)").to("String tellTale(Example x)");
+  }
+
+  @Test public void issue31m() {
+    trimming("String tellTale(ExamplyExamplar lyEx)").to("String tellTale(ExamplyExamplar x)");
+  }
+
+  @Test public void issue31n() {
+    trimming("String tellTale(ExamplyExamplar foo)").to(null);
+  }
+
   @Test public void issue50_Constructors1() {
     trimming("public class ClassTest {\n"//
         + "public  ClassTest(){}\n"//
@@ -85,7 +424,7 @@ public class TrimmerTest250 {
     ).to(null);
   }
 
-  @Test public void issue50_inEnumMemberComplex() {
+  @Test public void issue50_inEnumMemberComplex_1() {
     trimming(//
         "enum A { a1 {{ f(); } \n" + //
             "protected final void f() {g();}  \n" + //
@@ -188,6 +527,10 @@ public class TrimmerTest250 {
         .to("interface a {}");//
   }
 
+  @Test public void issue75a_1() {
+    trimming("int i = 0;").to(null);
+  }
+  
   @Test public void issue50e() {
     trimming("enum a {a,b}")//
         .to(null);//
@@ -467,6 +810,7 @@ public class TrimmerTest250 {
         .to("-x-y-0-z-0")//
         .to("-x-y-z-0-0")//
         .to("-x-y-z-0")//
+        .to("-x-y-z")//
         .to(null);
   }
 
@@ -662,7 +1006,7 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue82e() {
-    trimming("(double)(long)a").to("1.*(long)a").to("1.*1L*a");
+    trimming("(double)(long)a").to("1.*(long)a").to("1.*1L*a").to(null);
   }
 
   @Test public void issue83a() {
@@ -771,380 +1115,74 @@ public class TrimmerTest250 {
   @Test public void issue85_86k() {
     trimming("if(false){ \n" + "if(true) \n" + "a(); \n" + "else \n" + "b(); \n" + "} \n" + "else c();").to("c();");
   }
-
-  @Test public void issue85_86l() {
-    trimming("if(false)" + "c();" + "else {\n" + "if(true) \n" + "a(); \n" + "else \n" + "b(); \n" + "} \n").to("{a();}").to("a();");
-  }
-
-  @Test public void issue86_1() {
-    trimming("if(false)" + "c();\n" + "int a;").to("{}int a;").to("int a;").to(null);
-  }
-
-  @Test public void issue86_2() {
-    trimming("if(false) {c();\nb();\na();}").to("{}");
-  }
-
-  @Ignore public void issue86_3() {
-    trimming("if(false) {c();\nb();\na();}").to("{}").to(null);
-  }
-
-  @Ignore public void issue86_4() {
-    trimming("if(false) {c();\nb();\na();}").to("{}").to("");
-  }
-
-  @Ignore public void issue86_5() {
-    trimming("if(false) {c();\nb();\na();}").to("{}").to("").to(null);
-  }
-
-  @Test public void issue87a() {
-    trimming("a-b*c - (x - - - (d*e))").to("a  - b*c -x + d*e");
-  }
-
-  @Test public void issue87c() {
-    trimming("a + (b-c)").to("a + b -c");
-  }
-
-  @Test public void issue87d() {
-    trimming("a - (b-c)").to("a - b + c");
-  }
-
-  @Test public void issue87b() {
-    trimming("a-b*c").to(null);
-  }
-
-  @Test public void issue108a() {
-    trimming("x=x*y").to("x*=y");
-  }
-
-  @Test public void issue108b() {
-    trimming("x=y*x").to("x*=y");
-  }
-
-  @Test public void issue108c() {
-    trimming("x=y*z").to(null);
-  }
-
-  @Test public void issue108d() {
-    trimming("x = x * x").to("x*=x");
-  }
-
-  @Test public void issue108e() {
-    trimming("x = y * z * x * k * 9").to("x *= y * z * k * 9");
-  }
-
-  @Test public void issue108f() {
-    trimming("a = y * z * a").to("a *= y * z");
-  }
-
-  @Test public void issue108g() {
-    trimming("a=a*5").to("a*=5");
-  }
-
-  @Test public void issue108h() {
-    trimming("a=a*(alex)").to("a*=alex");
-  }
-
-  @Test public void issue108i() {
-    trimming("a = a * (c = c * kif)").to("a *= c = c*kif").to("a *= c *= kif").to(null);
-  }
-
-  @Test public void issue108j() {
-    trimming("x=x*foo(x,y)").to("x*=foo(x,y)");
-  }
-
-  @Test public void issue108k() {
-    trimming("z=foo(x=(y=y*u),17)").to("z=foo(x=(y*=u),17)");
-  }
-
-  @Test public void issue103a() {
-    trimming("x=x+y").to("x+=y");
-  }
-
-  @Test public void issue103mma() {
-    trimming("x=x*y").to("x*=y");
-  }
-
-  @Test public void issue103b() {
-    trimming("x=y+x").to("x+=y");
-  }
-
-  @Test public void issue103c() {
-    trimming("x=y+z").to(null);
-  }
-
-  @Test public void issue103d() {
-    trimming("x = x + x").to("x+=x");
-  }
-
-  @Ignore public void issue103e() {
-    trimming("x = y + x + z + x + k + 9").to("x += y + z + x + k + 9");
-  }
-
-  @Test public void issue103f() {
-    trimming("a=a+5").to("a+=5");
-  }
-
-  @Test public void issue103g() {
-    trimming("a=a+(alex)").to("a+=alex");
-  }
-
-  @Test public void issue103h() {
-    trimming("a = a + (c = c + kif)").to("a += c = c + kif").to("a += c += kif").to(null);
-  }
-
-  @Test public void issue103i_mixed_associative() {
-    trimming("a = x = x + (y = y*(z=z+3))").to("a = x += y=y*(z=z+3)").to("a = x += y *= z=z+3").to("a = x += y *= z+=3");
-  }
-
-  @Test public void issue103j() {
-    trimming("x=x+foo(x,y)").to("x+=foo(x,y)");
-  }
-
-  @Test public void issue103k() {
-    trimming("z=foo(x=(y=y+u),17)").to("z=foo(x=(y+=u),17)");
-  }
-
-  @Test public void issue103l_mixed_associative() {
-    trimming("a = a - (x = x + (y = y*(z=z+3)))").to("a-=x=x+(y=y*(z=z+3))").to("a-=x+=y=y*(z=z+3)");
-  }
-
-  @Test public void issue103_div1() {
-    trimming("a=a/5;").to("a/=5;");
-  }
-
-  @Test public void issue103_div2() {
-    trimming("a=5/a;").to(null);
-  }
-
-  @Test public void issue103_OR1() {
-    trimming("a=a|5;").to("a|=5;");
-  }
-
-  @Test public void issue103_OR2() {
-    trimming("a=5|a;").to("a|=5;");
-  }
-
-  @Test public void issue103_AND1() {
-    trimming("a=a&5;").to("a&=5;");
-  }
-
-  @Test public void issue103_AND2() {
-    trimming("a=5&a;").to("a&=5;");
-  }
-
-  @Test public void issue103_XOR1() {
-    trimming("x = x ^ a.getNum()").to("x ^= a.getNum()");
-  }
-
-  @Test public void issue103_XOR2() {
-    trimming("j = j ^ k").to("j ^= k");
-  }
-
-  @Test public void issue103_modulo1() {
-    trimming("a=a%5;").to("a%=5;");
-  }
-
-  @Test public void issue103_modulo2() {
-    trimming("a=5%a;").to(null);
-  }
-
-  @Test public void issue103_leftShift1() {
-    trimming("a=a<<5;").to("a<<=5;");
-  }
-
-  @Test public void issue103_leftShift2() {
-    trimming("a=5<<a;").to(null);
-  }
-
-  @Test public void issue103_rightShift1() {
-    trimming("a=a>>5;").to("a>>=5;");
-  }
-
-  @Test public void issue103_rightShift2() {
-    trimming("a=5>>a;").to(null);
-  }
-
-  @Test public void issue107a() {
-    trimming("a+=1;").to("a++;").to("++a;").to(null);
-  }
-
-  @Test public void issue107b() {
-    trimming("c+=1; int nice;").to("c++; int nice;");
-  }
-
-  @Test public void issue107c() {
-    trimming("java_is_even_nice+=1+=1;").to("java_is_even_nice+=1++;");
-  }
-
-  @Test public void issue107d() {
-    trimming("for(int a ; a<10 ; a+=1){}").to("for(int a ; a<10 ; a++){}");
-  }
-
-  @Ignore public void issue107e() {
-    trimming("a+=1+=1+=1+=1;").to("a+=1+=1+=1++;").to("a+=1+=1++++;").to("a+=1++++++;").to("a++++++++").to(null);
-  }
-
-  @Test public void issue107e_1() {
-    trimming("a+=1+=1+=1+=1;").to("a+=1+=1+=1++;");
-  }
-
-  @Test public void issue107f() {
-    trimming("a+=2;").to(null);
-  }
-
-  @Test public void issue107g() {
-    trimming("a/=1;").to(null);
-  }
-
-  @Ignore public void issue107h() {
-    trimming("a-+=1;").to("a-++;");
-  }
-
-  @Ignore public void issue107i() {
-    trimming("a+=1 and b+=1;").to("a++ and b+=1;").to("a++ and b++;");
-  }
-
-  @Test public void issue107j() {
-    trimming("a-=1;").to("a--;").to("--a;").to(null);
-  }
-
-  @Test public void issue107k() {
-    trimming("for(int a ; a<10 ; a-=1){}").to("for(int a ; a<10 ; a--){}");
-  }
-
-  @Test public void issue107l() {
-    trimming("a-=2;").to(null);
-  }
-
-  @Test public void issue107m() {
-    trimming("while(x-=1){}").to("while(x--){}");
-  }
-
-  @Test public void issue31a() {
-    trimming(" static boolean hasAnnotation(final VariableDeclarationStatement n) {\n" + //
-        "      return hasAnnotation(n.modifiers());\n" + //
-        "    }").to(" static boolean hasAnnotation(final VariableDeclarationStatement s) {\n" + //
-            "      return hasAnnotation(s.modifiers());\n" + //
-            "    }");
-  }
-
-  @Test public void issue31b() {
-    trimming(" void f(final VariableDeclarationStatement n) {}") //
-        .to("void f(final VariableDeclarationStatement s) {}");
-  }
-
-  @Test public void issue31c() {
-    trimming(" void f(final VariableDeclarationAtatement n) {}") //
-        .to("void f(final VariableDeclarationAtatement a) {}");
-  }
-
-  @Test public void issue31d() {
-    trimming(" void f(final Expression n) {}") //
-        .to("void f(final Expression x) {}");
-  }
-
-  @Test public void issue31e() {
-    trimming(" void f(final Exception n) {}") //
-        .to("void f(final Exception x) {}");
-  }
-
-  @Test public void issue31f() {
-    trimming(" void f(final Exception exception, Expression expression) {}") //
-        .to("void f(final Exception x, Expression expression) {}");
-  }
-
-  @Test public void issue31g() {
-    trimming("void foo(TestExpression exp,TestAssignment testAssignment)") //
-        .to("void foo(TestExpression x,TestAssignment testAssignment)").to("void foo(TestExpression x,TestAssignment a)");
-  }
-
-  @Test public void issue31h() {
-    trimming(" void f(final Exception n) {}") //
-        .to("void f(final Exception x) {}");
-  }
-
-  @Test public void issue31i() {
-    trimming(" void f(final Exception n) {}") //
-        .to("void f(final Exception x) {}");
-  }
-
-  @Test public void issue31j() {
-    trimming("void foo(Exception exception, Assignment assignment)").to("void foo(Exception x, Assignment assignment)")
-        .to("void foo(Exception x, Assignment a)").to(null);
-  }
-
-  @Test public void issue31k() {
-    trimming("String tellTale(Example example)").to("String tellTale(Example x)");
-  }
-
-  @Test public void issue31l() {
-    trimming("String tellTale(Example examp)").to("String tellTale(Example x)");
-  }
-
-  @Test public void issue31m() {
-    trimming("String tellTale(ExamplyExamplar lyEx)").to("String tellTale(ExamplyExamplar x)");
-  }
-
-  @Test public void issue31n() {
-    trimming("String tellTale(ExamplyExamplar foo)").to(null);
-  }
   
-  @Ignore public void issue111a(){
+  @Test public void issue111a(){
     trimming("strictfp native synchronized volatile transient final static default abstract private protected public int a;")
     .to("public protected private abstract default static final transient volatile synchronized native strictfp int a;");
   }
   
-  @Ignore public void issue111b(){
-    trimming("strictfp public int a;")
-    .to("public strictfp int a;");
+  @Test public void issue111b(){
+    trimming("volatile public int a;")
+    .to("public volatile int a;");
   }
   
-  @Ignore public void issue111c(){
+  @Test public void issue111c(){
     trimming("protected public void func();")
     .to("public protected void func();");
   }
   
-  @Ignore public void issue111d(){
+  @Test public void issue111d(){
     trimming("protected public class A{}")
     .to("public protected class A{}");
   }
   
-  @Ignore public void issue111e(){
+  @Test public void issue111e(){
     trimming("protected public class A{volatile static int a;}")
     .to("public protected int class A{static volatile int a;}");
   }
   
-  @Ignore public void issue111f(){
+  @Test public void issue111f(){
     trimming("protected public class A{volatile static String method (final abstruct int a){}}")
     .to("public protected int class A{static volatile String method (abstruct final int a){}}");
   }
-  
-  @Test public void issue111g(){
-    trimming("protected public public enum Level { " + //
-              "HIGH, MEDIUM, LOW" + //
-              "}")
-    .to("public public protected enum Level { \n" + //
-        "HIGH, MEDIUM, LOW\n" + //
-        "}");
+    @Test public void issue85_86l() {
+    trimming("if(false)" + "c();" + "else {\n" + "if(true) \n" + "a(); \n" + "else \n" + "b(); \n" + "} \n").to("{a();}").to("a();");
   }
   
-  @Test public void issue111g_1(){
-    trimming("final enum Level { " + //
-              "HIGH, MEDIUM, LOW" + //
-              "}")
-    .to("enum Level { \n" + //
-        "HIGH, MEDIUM, LOW\n" + //
-        "}");
+  @Test public void issue86_1() {
+    trimming("if(false)" + "c();\n" + "int a;").to("{}int a;").to("int a;").to(null);
   }
   
-  @Ignore public void issue111h(){
-    trimming("protected public int a;")
-    .to("public protected int a;");
+  @Test public void issue86_2() {
+    trimming("if(false) {c();\nb();\na();}").to("{}");
   }
   
-  @Ignore public void issue111i(){
-    trimming("protected public int a;")
-    .to("public protected int a;");
+  @Ignore public void issue86_3() {
+    trimming("if(false) {c();\nb();\na();}").to("{}").to(null);
+  }
+  
+  @Ignore public void issue86_4() {
+    trimming("if(false) {c();\nb();\na();}").to("{}").to("");
+  }
+  
+  @Ignore public void issue86_5() {
+    trimming("if(false) {c();\nb();\na();}").to("{}").to("").to(null);
+  }
+  
+  @Test public void issue87a() {
+    trimming("a-b*c - (x - - - (d*e))").to("a  - b*c -x + d*e");
+  }
+  
+  @Test public void issue87b() {
+    trimming("a-b*c").to(null);
+  }
+  
+  @Test public void issue87c() {
+    trimming("a + (b-c)").to("a + b -c");
+  }
+  
+  @Test public void issue87d() {
+    trimming("a - (b-c)").to("a - b + c");
   }
  
   @Ignore public void trimmerBugXOR() {
@@ -1165,11 +1203,11 @@ public class TrimmerTest250 {
        void g() {
         h();
       }
-       void i() {
-        f();
-      }
        void h() {
         i();
+      }
+       void i() {
+        f();
       }
     }, a2() {{ f(); }
       public void i() {

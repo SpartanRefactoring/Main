@@ -20,17 +20,6 @@ public class PrecedenceTest {
     azzert.that(precedence.of(e("a-b")), is(5));
   }
 
-  @Test public void nonAssociative() {
-    azzert.that(wizard.nonAssociative(e("1")), is(false));
-    azzert.that(wizard.nonAssociative(e("-1")), is(false));
-    azzert.that(wizard.nonAssociative(e("-1+2")), is(false));
-    azzert.that(wizard.nonAssociative(e("1+2")), is(false));
-    azzert.that(wizard.nonAssociative(e("2-1")), is(true));
-    azzert.that(wizard.nonAssociative(e("2/1")), is(true));
-    azzert.that(wizard.nonAssociative(e("2%1")), is(true));
-    azzert.that(wizard.nonAssociative(e("2*1")), is(false));
-  }
-
   @Test public void and() {
     azzert.that(precedence.of(e("a&b")), is(9));
   }
@@ -116,6 +105,17 @@ public class PrecedenceTest {
     azzert.that(precedence.of(e("a*b")), is(4));
     azzert.that(precedence.of(e("a/b")), is(4));
     azzert.that(precedence.of(e("a%b")), is(4));
+  }
+
+  @Test public void nonAssociative() {
+    azzert.that(wizard.nonAssociative(e("1")), is(false));
+    azzert.that(wizard.nonAssociative(e("-1")), is(false));
+    azzert.that(wizard.nonAssociative(e("-1+2")), is(false));
+    azzert.that(wizard.nonAssociative(e("1+2")), is(false));
+    azzert.that(wizard.nonAssociative(e("2-1")), is(true));
+    azzert.that(wizard.nonAssociative(e("2/1")), is(true));
+    azzert.that(wizard.nonAssociative(e("2%1")), is(true));
+    azzert.that(wizard.nonAssociative(e("2*1")), is(false));
   }
 
   @Test public void objectCreation() {
