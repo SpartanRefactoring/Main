@@ -263,17 +263,18 @@ public enum PrudentType {
     return this + "=" + name + " (" + description + ")";
   }
 
-  /**
-   * @return  one of  {@link #BOOLEAN} ,  {@link #INT} ,  {@link #LONG} , {@link #DOUBLE} ,  {@link #INTEGRAL}  or  {@link #NUMERIC} , in case it cannot decide 
-   */
+  /** @return one of {@link #BOOLEAN} , {@link #INT} , {@link #LONG} ,
+   *         {@link #DOUBLE} , {@link #INTEGRAL} or {@link #NUMERIC} , in case
+   *         it cannot decide */
   private PrudentType under(final PrefixExpression.Operator o) {
     assert o != null;
     return o == NOT ? BOOLEAN : in(o, DECREMENT, INCREMENT) ? asNumeric() : o != COMPLEMENT ? asNumericUnderOperation() : asIntegralUnderOperation();
   }
 
-  /**
-   * @return  one of  {@link #BOOLEAN} ,  {@link #INT} ,  {@link #LONG} , {@link #DOUBLE} ,  {@link #STRING} ,  {@link #INTEGRAL} , {@link BOOLEANINTEGRAL}   {@link #NUMERIC} , or  {@link #ALPHANUMERIC} , in case it cannot decide 
-   */
+  /** @return one of {@link #BOOLEAN} , {@link #INT} , {@link #LONG} ,
+   *         {@link #DOUBLE} , {@link #STRING} , {@link #INTEGRAL} ,
+   *         {@link BOOLEANINTEGRAL} {@link #NUMERIC} , or {@link #ALPHANUMERIC}
+   *         , in case it cannot decide */
   private PrudentType underBinaryOperator(final InfixExpression.Operator o, final PrudentType k) {
     if (o == wizard.PLUS2)
       return underPlus(k);
