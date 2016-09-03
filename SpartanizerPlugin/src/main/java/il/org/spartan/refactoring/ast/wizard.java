@@ -15,6 +15,10 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.utils.*;
 
+/** Collection of definitions and functions that capture some of the quircks of
+ * the {@link ASTNode} hierarchy.
+ * @author Yossi Gil
+ * @since 2014 */
 public interface wizard {
   @SuppressWarnings("serial") Map<Operator, Operator> conjugate = new HashMap<Operator, Operator>() {
     {
@@ -64,6 +68,8 @@ public interface wizard {
                                             : o == RIGHT_SHIFT_UNSIGNED_ASSIGN ? RIGHT_SHIFT_UNSIGNED : null;
   }
 
+  // TODO: Alex: please convert this code into table driven. It is much easier
+  // to maintain. The table is already in this file.
   static Assignment.Operator InfixToAssignment(final InfixExpression.Operator o) {
     return o == PLUS ? Assignment.Operator.PLUS_ASSIGN
         : o == MINUS ? MINUS_ASSIGN
@@ -126,14 +132,14 @@ public interface wizard {
     return true;
   }
 
-  /** @param cmpTo the assignment operator to compare all to
+  /** @param o the assignment operator to compare all to
    * @param os A unknown number of assignments operators
    * @return true if all the operator are the same or false otherwise */
-  static boolean compatibleOps(final Assignment.Operator cmpTo, final Assignment.Operator... os) {
-    if (hasNull(cmpTo, os))
+  static boolean compatibleOps(final Assignment.Operator o, final Assignment.Operator... os) {
+    if (hasNull(o, os))
       return false;
     for (final Assignment.Operator ¢ : os)
-      if (¢ == null || ¢ != cmpTo)
+      if (¢ == null || ¢ != o)
         return false;
     return true;
   }
@@ -198,6 +204,7 @@ public interface wizard {
    *         {@link #InfixExpression.Operator.AND}, and false otherwise */
   static boolean isBitwiseOperator(final InfixExpression.Operator o) {
     return in(o, XOR, OR, AND);
+    
   }
 
   /** Determine whether an InfixExpression.Operator is a comparison operator or
@@ -212,7 +219,7 @@ public interface wizard {
    *         {@link #InfixExpression.Operator.CONDITIONAL_OR},
    *         {@link #InfixExpression.Operator.CONDITIONAL_AND} and false
    *         otherwise */
-  static boolean isComparisonOperator(final InfixExpression.Operator o) {
+  static boolean isComparison(final InfixExpression.Operator o) {
     return in(o, LESS, GREATER, LESS_EQUALS, GREATER_EQUALS, EQUALS, //
         NOT_EQUALS, CONDITIONAL_OR, CONDITIONAL_AND);
   }
@@ -284,7 +291,7 @@ public interface wizard {
    * @param n2 JD
    * @return <code><b>true</b></code> if the parameters are the same. */
   static boolean same(final ASTNode n1, final ASTNode n2) {
-    return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType() && wizard.body(n1).equals(wizard.body(n2));
+    return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType() && body(n1).equals(body(n2));
   }
 
   /** String wise comparison of all the given SimpleNames

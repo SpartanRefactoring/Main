@@ -113,23 +113,23 @@ public enum ExpressionComparator implements Comparator<Expression> {
           f($, child);
       }
 
-      void f(final Int $, final ASTNode n) {
-        if (iz.is(n, BLOCK)) {
-          if (extract.statements(n).size() > 1)
+      void f(final Int $, final ASTNode ¢) {
+        if (iz.is(¢, BLOCK)) {
+          if (extract.statements(¢).size() > 1)
             ++$.inner;
           return;
         }
-        if (iz.is(n, EMPTY_STATEMENT))
+        if (iz.is(¢, EMPTY_STATEMENT))
           return;
-        if (iz.is(n, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, DO_STATEMENT)) {
+        if (iz.is(¢, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, DO_STATEMENT)) {
           $.inner += 4;
           return;
         }
-        if (!iz.is(n, IF_STATEMENT))
+        if (!iz.is(¢, IF_STATEMENT))
           $.inner += 3;
         else {
           $.inner += 4;
-          if (step.elze(az.ifStatement(n)) != null)
+          if (step.elze(az.ifStatement(¢)) != null)
             ++$.inner;
         }
       }

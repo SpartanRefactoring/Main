@@ -19,7 +19,7 @@ import il.org.spartan.refactoring.wring.*;
   static final String WHITES = "(?m)\\s+";
 
   static String apply(final Trimmer t, final String from) {
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     azzert.notNull(u);
     final Document d = new Document(from);
     azzert.notNull(d);
@@ -31,7 +31,7 @@ import il.org.spartan.refactoring.wring.*;
   }
 
   static void assertNoOpportunity(final Spartanization s, final String from) {
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     azzert.that("" + u, TrimmerTestsUtils.countOpportunities(s, u), is(0));
   }
 
@@ -40,7 +40,7 @@ import il.org.spartan.refactoring.wring.*;
   }
 
   static void assertOneOpportunity(final Spartanization s, final String from) {
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     azzert.notNull(u);
     azzert.that(TrimmerTestsUtils.countOpportunities(s, u), greaterThanOrEqualTo(1));
   }
@@ -66,7 +66,7 @@ import il.org.spartan.refactoring.wring.*;
    * @return an {@link Statement} data structure representing the parameter. */
   public static Statement asSingle(final String statement) {
     azzert.notNull(statement);
-    final ASTNode n = MakeAST.STATEMENTS.from(statement);
+    final ASTNode n = makeAST.STATEMENTS.from(statement);
     azzert.notNull(n);
     return extract.singleStatement(n);
   }
