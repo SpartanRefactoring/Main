@@ -2,6 +2,9 @@ package il.org.spartan.refactoring.java;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.refactoring.assemble.*;
+import il.org.spartan.refactoring.ast.*;
+
 // TOOD: Who wrote this class?
 class Factor {
   private final boolean divider;
@@ -31,7 +34,7 @@ class Factor {
     final InfixExpression $ = expression.getAST().newInfixExpression();
     $.setOperator(InfixExpression.Operator.DIVIDE);
     $.setLeftOperand(expression.getAST().newNumberLiteral("1"));
-    $.setRightOperand(expression);
+    $.setRightOperand(!iz.infixExpression(expression) ? duplicate.of(expression) : make.parethesized(duplicate.of(expression)));
     return $;
   }
 
