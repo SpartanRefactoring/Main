@@ -12,7 +12,6 @@ import il.org.spartan.refactoring.java.*;
  * @since 2016-08-26 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-@Ignore //
 public class ArithmeticTest {
   public static class Working {
     @Test public void additionIsLong() {

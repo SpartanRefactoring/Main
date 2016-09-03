@@ -66,6 +66,7 @@ public abstract class ModifierSort<N extends BodyDeclaration> extends Wring.Repl
   }
   
   private static void clearList (List<IExtendedModifier> $) {
+    // Why not call a $.clear(), and then  inline into the caller?
     for (final Iterator<IExtendedModifier> ¢ = $.iterator(); ¢.hasNext();) {
       ¢.next();
       ¢.remove();
