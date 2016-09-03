@@ -400,7 +400,8 @@ public class TrimmerTest250 {
     trimming("0-x-0-y-0-z-0-0")//
         .to("-x-0-y-0-z-0-0")//
         .to("-x-y-0-z-0-0")//
-        .to("-x-y-z-0-0")//
+        .to("-x-y-z-0-0-0")//
+        .to("-x-y-z-0-0")
         .to("-x-y-z-0")//
         .to("-x-y-z")//
         .to(null);
@@ -464,8 +465,8 @@ public class TrimmerTest250 {
     trimming("0-x-0-y-0-z-0")//
         .to("-x-0-y-0-z-0")//
         .to("-x-y-0-z-0")//
+        .to("-x-y-z-0-0")//
         .to("-x-y-z-0")//
-        .to("-x-y-z")//
         .to(null);
   }
 
@@ -1118,11 +1119,20 @@ public class TrimmerTest250 {
     .to("public protected int class A{static volatile String method (abstruct final int a){}}");
   }
   
-  @Ignore public void issue111g(){
+  @Test public void issue111g(){
     trimming("protected public public enum Level { " + //
               "HIGH, MEDIUM, LOW" + //
               "}")
     .to("public public protected enum Level { \n" + //
+        "HIGH, MEDIUM, LOW\n" + //
+        "}");
+  }
+  
+  @Test public void issue111g_1(){
+    trimming("final enum Level { " + //
+              "HIGH, MEDIUM, LOW" + //
+              "}")
+    .to("enum Level { \n" + //
         "HIGH, MEDIUM, LOW\n" + //
         "}");
   }

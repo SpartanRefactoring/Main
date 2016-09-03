@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
 
-public abstract class ModifierRemove<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> {
+public abstract class ModifierClean<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> {
   @Override String description(@SuppressWarnings("unused") final N __) {
     return "remove redundant modifier";
   }

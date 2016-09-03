@@ -17,14 +17,19 @@ import il.org.spartan.refactoring.wring.Wring.*;
  * <code>-X<code>
  * @author Alex Kopzon
  * @author Dan Greenstein
+ * @author Dor Ma'ayan
  * @since 2016 */
 public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
   @Override String description(final InfixExpression x) {
     return "Remove subtraction of 0 in " + x;
   }
 
+  private static boolean isZero(final Expression x){
+    return x.getNodeType()==ASTNode.NUMBER_LITERAL && ("0".equals(((NumberLiteral) x).getToken()));
+  }
+  
   @Override ASTNode replacement(final InfixExpression x) {
-    return x.getOperator() != MINUS ? null : go(x);
+    return x.getOperator() != MINUS || !isZero(x.getRightOperand()) && !isZero(x.getLeftOperand()) ? null : go(x);
   }
 
   private static ASTNode go(final InfixExpression x) {
