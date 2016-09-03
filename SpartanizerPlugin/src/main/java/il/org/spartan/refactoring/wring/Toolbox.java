@@ -99,6 +99,7 @@ public class Toolbox {
         .add(MethodDeclaration.class, //
             new MethodRenameReturnToDollar(), //
             new BodyDeclarationRemoveModifiers.OfMethod(), //
+            //new ModifierSort.ofMethod(), //
             null)
         .add(MethodInvocation.class, //
             new StringEqualsConstant(), //
@@ -156,23 +157,31 @@ public class Toolbox {
             new TernaryPushdown(), //
             new cleverStringTernarization(), //
             null) //
-        .add(TypeDeclaration.class, new ModifierCleanInterface(), null) //
+        .add(TypeDeclaration.class, //
+            new ModifierCleanInterface(), //
+            //new ModifierSort.ofType(), //
+            null) //
         .add(EnumDeclaration.class, //
             new ModifierCleanEnum(), //
-            new ModifierSortEnum(), //
+            new ModifierSort.ofEnum(), //
             null) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover(), null) //
         .add(ReturnStatement.class, new ReturnLastInMethod()) //
-        .add(FieldDeclaration.class, new BodyDeclarationRemoveModifiers.OfField()) //
+        .add(FieldDeclaration.class, new BodyDeclarationRemoveModifiers.OfField(), null) //
         .add(CastExpression.class, //
             new CastToDouble2Multiply1(), //
             new CastToLong2Multiply1L(), //
             null) //
-        .add(EnumConstantDeclaration.class, new BodyDeclarationRemoveModifiers.OfEnumConstant(), null) //
+        .add(EnumConstantDeclaration.class, //
+            new BodyDeclarationRemoveModifiers.OfEnumConstant(), //
+            new ModifierSort.ofEnumConstant(), //
+            null) //
         .add(NormalAnnotation.class, //
             new AnnotationDiscardValueName(), //
             new AnnotationRemoveEmptyParentheses(), //
             null) //
+        .add(FieldDeclaration.class, new ModifierSort.ofField(), null)
+        .add(AnnotationTypeDeclaration.class, new ModifierSort.ofAnnotation(), null)
         .seal();
   }
 
