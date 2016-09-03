@@ -727,7 +727,7 @@ public class TrimmerTest250 {
     trimming("0-x-0-y").to("-x-y").to(null);
   }
 
-  @Test @Ignore("Irrelevant") public void issue72md3() {
+  @Test public void issue72md3() {
     trimming("0-x-0-y-0-z-0-0")//
         .to("-x-y-z")//
         .to(null);
@@ -787,7 +787,7 @@ public class TrimmerTest250 {
     trimming("x-0-y").to("x-y").to(null);
   }
 
-  @Test @Ignore("Irrelevant") public void issue72mi() {
+  @Test public void issue72mi() {
     trimming("0-x-0-y-0-z-0")//
         .to("-x-y-z")//
         .to(null);
