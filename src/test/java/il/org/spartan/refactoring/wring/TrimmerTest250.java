@@ -11,7 +11,6 @@ import il.org.spartan.*;
 import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.engine.*;
-import il.org.spartan.refactoring.utils.*;
 
 /** * Unit tests for the nesting class Unit test for the containing class. Note
  * our naming convention: a) test methods do not use the redundant "test"
@@ -724,20 +723,15 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue72md1() {
-    trimming("0-x-0").to("-x-0").to("-x").to(null);
+    trimming("0-x-0").to("-x").to(null);
   }
 
   @Test public void issue72md2() {
-    trimming("0-x-0-y").to("-x-0-y").to("-x-y").to(null);
+    trimming("0-x-0-y").to("-x-y").to(null);
   }
 
   @Test public void issue72md3() {
     trimming("0-x-0-y-0-z-0-0")//
-        .to("-x-0-y-0-z-0-0")//
-        .to("-x-y-0-z-0-0")//
-        .to("-x-y-z-0-0-0")//
-        .to("-x-y-z-0-0")
-        .to("-x-y-z-0")//
         .to("-x-y-z")//
         .to(null);
   }
@@ -798,10 +792,6 @@ public class TrimmerTest250 {
 
   @Test public void issue72mi() {
     trimming("0-x-0-y-0-z-0")//
-        .to("-x-0-y-0-z-0")//
-        .to("-x-y-0-z-0")//
-        .to("-x-y-z-0-0")//
-        .to("-x-y-z-0")//
         .to("-x-y-z")//
         .to(null);
   }
@@ -874,7 +864,7 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue75a() {
-    trimming("int i = 0").to(null);
+    trimming("int i = 0;").to(null);
   }
 
   @Test public void issue75b() {
