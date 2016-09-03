@@ -519,6 +519,42 @@ public class TrimmerTest250 {
     );
   }
 
+  @Test public void issue50_inEnumMemberComplex_1() {
+    trimming(//
+        "enum A { a1 {{ f(); } \n" + //
+            "protected final void f() {g();}  \n" + //
+            "public final void g() {h();}  \n" + //
+            "private final void h() {i();}   \n" + //
+            "final void i() {f();}  \n" + //
+            "}, a2 {{ f(); } \n" + //
+            "final protected void f() {g();}  \n" + //
+            "final void g() {h();}  \n" + //
+            "final private void h() {i();}  \n" + //
+            "final protected void i() {f();}  \n" + //
+            "};\n" + //
+            "protected abstract void f();\n" + //
+            "protected void ia() {}\n" + //
+            "void i() {}\n" + //
+            "} \n"//
+    ).to("enum A { a1 {{ f(); } \n" + //
+        "protected final void f() {g();}  \n" + //
+        "public final void g() {h();}  \n" + //
+        "private final void h() {i();}   \n" + //
+        "final void i() {f();}  \n" + //
+        "}, a2 {{ f(); } \n" + //
+        "final protected void f() {g();}  \n" + //
+        "final void g() {h();}  \n" + //
+        "final private void h() {i();}  \n" + //
+        "final protected void i() {f();}  \n" + //
+        "};\n" + //
+        "protected abstract void f();\n" + //
+        "protected void ia() {}\n" + //
+        "void i() {}\n" + //
+        "} \n"//
+    );
+  }
+
+  
   @Test public void issue50_InterfaceMethods1() {
     trimming("public interface Int1 {\n"//
         + "public void add();\n"//
