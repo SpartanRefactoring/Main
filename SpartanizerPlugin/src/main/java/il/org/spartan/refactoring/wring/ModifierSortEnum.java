@@ -8,8 +8,8 @@ import org.eclipse.jdt.core.dom.*;
 /* @see ModifierSprt.java
  * @author Alex Kopzon
  * @since 2016 */
-public final class ModifierSortEnum extends ModifierSort<EnumDeclaration> implements Kind.Canonicalization {
-  @Override String description(final EnumDeclaration ¢) {
+/*public final class ModifierSortEnum extends ModifierSort<EnumDeclaration>{
+    @Override String description(final EnumDeclaration ¢) {
     return "Sort modifiers of " + ¢.getName();
   }
 
@@ -34,4 +34,4 @@ public final class ModifierSortEnum extends ModifierSort<EnumDeclaration> implem
     put("strictfp",       11);
     
   }};
-}
+}*/
