@@ -181,7 +181,7 @@ public class Toolbox {
             new AnnotationRemoveEmptyParentheses(), //
             null) //
         .add(FieldDeclaration.class, new ModifierSort.ofField(), null)
-        .add(AnnotationTypeDeclaration.class, new ModifierSort.ofAnnitation(), null)
+        .add(AnnotationTypeDeclaration.class, new ModifierSort.ofAnnotation(), null)
         .seal();
   }
 
