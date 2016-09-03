@@ -28,14 +28,6 @@ public abstract class ModifierSort<N extends BodyDeclaration> extends Wring.Repl
     return go(duplicate.of($));
   }
   
-  /**@return step.modfiers() never returns null, but throws an Exception
-   * if there are no modifiers. the comparison to null is here for maybe
-   * future modification of step.modifiers().
-   */
-  @Override boolean scopeIncludes(final N ¢) {
-    return step.modifiers(¢) != null;
-  }
-  
   //abstract boolean compare(IExtendedModifier m1, IExtendedModifier m2);
   
   @SuppressWarnings("boxing")
@@ -63,6 +55,9 @@ public abstract class ModifierSort<N extends BodyDeclaration> extends Wring.Repl
   /** One bubble swap for the bubble sort implementation in go().
    * @param unsorted list to perform one bubble swap on.
    * @param index the index to swap with 'index + 1'
+   * 
+   * TODO: you don't want to bother with sorting. See this one:
+   * http://stackoverflow.com/questions/16252269/how-to-sort-a-list-arraylist-in-java
    */
   private static void bubble(List<IExtendedModifier> unsorted, int index) {
     IExtendedModifier tmp = unsorted.get(index);
