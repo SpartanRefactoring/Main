@@ -1,4 +1,4 @@
-package il.org.spartan.refactoring.spartanizations;
+package il.org.spartan.refactoring.engine;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.engine.into.*;

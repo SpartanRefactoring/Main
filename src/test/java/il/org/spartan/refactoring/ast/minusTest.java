@@ -17,17 +17,12 @@ import il.org.spartan.refactoring.assemble.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class minusTest {
-  @Test public void negationOfAddition() {
-    azzert.that(minus.level(e("-a+-2")), is(0));
-  }
-
   @Test public void levelComplex() {
     azzert.that(minus.level(e("-1/-2*-3/-4*-5*-6/-7/-8/-9")), is(9));
   }
 
-  @Test public void peelComplex() {
-    azzert.that(minus.peel(e("-1/-2*-3/-4*-5*-6/-7/-8/-9")), //
-        iz("1/2*3/4*5*6/7/8/9"));
+  @Test public void negationOfAddition() {
+    azzert.that(minus.level(e("-a+-2")), is(0));
   }
 
   @Test public void negationOfDivision() {
@@ -72,6 +67,11 @@ public class minusTest {
 
   @Test public void negationOfPrefixPlus() {
     azzert.that(minus.level(e("+a")), is(0));
+  }
+
+  @Test public void peelComplex() {
+    azzert.that(minus.peel(e("-1/-2*-3/-4*-5*-6/-7/-8/-9")), //
+        iz("1/2*3/4*5*6/7/8/9"));
   }
 
   @Test public void peelNegationOfAddition() {
@@ -134,12 +134,12 @@ public class minusTest {
     azzert.that(minus.peel(e("+-a")), iz("a"));
   }
 
-  @Test public void peelNegationOfPlusB() {
-    azzert.that(minus.peel(p("+a")), iz("a"));
-  }
-
   @Test public void peelNegationOfPlusA() {
     azzert.that(minus.peel(e("+a")), iz("a"));
+  }
+
+  @Test public void peelNegationOfPlusB() {
+    azzert.that(minus.peel(p("+a")), iz("a"));
   }
 
   @Test public void peelNegationOfPrefixMinus() {

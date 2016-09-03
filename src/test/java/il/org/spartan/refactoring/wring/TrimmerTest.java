@@ -1596,6 +1596,35 @@ import il.org.spartan.refactoring.utils.*;
     ;
   }
 
+  @Test public void issue110_1() {
+    trimming("polite ? \"Eat your meal.\" :  \"Eat your meal, please\"") //
+        .to("\"Eat your meal\" + (polite ? \".\" : \", please\")");
+  }
+
+  @Test public void issue110_2() {
+    trimming("polite ? \"Eat your meal.\" :  \"Eat your meal\"") //
+        .to("\"Eat your meal\" + (polite ? \".\" : \"\")");
+  }
+
+  @Test public void issue110_3() {
+    trimming("polite ? \"thanks for the meal\" :  \"I hated the meal\"") //
+        .to("!polite ? \"I hated the meal\": \"thanks for the meal\"") //
+        .to("(!polite ? \"I hated\" : \"thanks for\" )+ \" the meal\"");
+  }
+
+  @Test public void issue110_4() {
+    trimming("polite ? \"thanks.\" :  \"I hated the meal.\"") //
+        .to("(polite ? \"thanks\" :\"I hated the meal\")+ \".\"");
+  }
+
+  @Test public void issue110_5() {
+    trimming("a ? \"abracadabra\" : \"abba\"") //
+        .to("!a ? \"abba\" : \"abracadabra\"")//
+        .to("\"ab\" +(!a ? \"ba\" : \"racadabra\")")//
+        .to("\"ab\" +((!a ? \"b\" : \"racadabr\")+ \"a\")")//
+        .to("\"ab\" +(!a ? \"b\" : \"racadabr\")+ \"a\"").to(null);
+  }
+
   @Test public void issue37Simplified() {
     trimming("" + //
         "    int a = 3;\n" + //
@@ -2099,35 +2128,6 @@ import il.org.spartan.refactoring.utils.*;
     trimming("int[] a = new int[] {2,3}").to(null);
   }
 
-  @Test public void issue110_1() {
-    trimming("polite ? \"Eat your meal.\" :  \"Eat your meal, please\"") //
-        .to("\"Eat your meal\" + (polite ? \".\" : \", please\")");
-  }
-
-  @Test public void issue110_2() {
-    trimming("polite ? \"Eat your meal.\" :  \"Eat your meal\"") //
-        .to("\"Eat your meal\" + (polite ? \".\" : \"\")");
-  }
-
-  @Test public void issue110_3() {
-    trimming("polite ? \"thanks for the meal\" :  \"I hated the meal\"") //
-        .to("!polite ? \"I hated the meal\": \"thanks for the meal\"") //
-        .to("(!polite ? \"I hated\" : \"thanks for\" )+ \" the meal\"");
-  }
-
-  @Test public void issue110_4() {
-    trimming("polite ? \"thanks.\" :  \"I hated the meal.\"") //
-        .to("(polite ? \"thanks\" :\"I hated the meal\")+ \".\"");
-  }
-
-  @Test public void issue110_5() {
-    trimming("a ? \"abracadabra\" : \"abba\"") //
-        .to("!a ? \"abba\" : \"abracadabra\"")//
-        .to("\"ab\" +(!a ? \"ba\" : \"racadabra\")")//
-        .to("\"ab\" +((!a ? \"b\" : \"racadabr\")+ \"a\")")//
-        .to("\"ab\" +(!a ? \"b\" : \"racadabr\")+ \"a\"").to(null);
-  }
-
   @Test public void linearTransformation() {
     trimming("plain * the + kludge").to("the*plain+kludge");
   }
@@ -2240,10 +2240,6 @@ import il.org.spartan.refactoring.utils.*;
     trimming("on*of*no*notion*notion").to("no*of*on*notion*notion");
   }
 
-  @Test public void noChangeA() {
-    trimming("true").to(null);
-  }
-
   @Test public void noChange0() {
     trimming("kludge + the * plain ").to(null);
   }
@@ -2254,6 +2250,10 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test public void noChange2() {
     trimming("plain + kludge").to(null);
+  }
+
+  @Test public void noChangeA() {
+    trimming("true").to(null);
   }
 
   @Test public void noinliningintoSynchronizedStatement() {
@@ -4041,9 +4041,9 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test public void twoOpportunityExample() {
     azzert.that(TrimmerTestsUtils.countOpportunities(new Trimmer(),
-        (CompilationUnit) MakeAST.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
+        (CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
     azzert.that(TrimmerTestsUtils.countOpportunities(new Trimmer(),
-        (CompilationUnit) MakeAST.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
+        (CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
   }
 
   @Test public void unsafeBlockSimlify() {
