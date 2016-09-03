@@ -1119,7 +1119,7 @@ public class TrimmerTest250 {
     .to("public protected int class A{static volatile String method (abstruct final int a){}}");
   }
   
-  @Ignore public void issue111g(){
+  @Test public void issue111g(){
     trimming("protected public public enum Level { " + //
               "HIGH, MEDIUM, LOW" + //
               "}")

@@ -12,6 +12,7 @@ import il.org.spartan.refactoring.ast.*;
  * @since 2016
  */
 public abstract class ModifierSort<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> {
+  
   @Override String description(@SuppressWarnings("unused") final N __) {
     return "remove redundant modifier";
   }

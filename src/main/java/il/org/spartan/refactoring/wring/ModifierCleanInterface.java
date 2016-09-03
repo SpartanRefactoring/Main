@@ -17,7 +17,7 @@ import org.eclipse.jdt.core.dom.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class ModifierCleanInterface extends ModifierRemove<TypeDeclaration> implements Kind.SyntacticBaggage {
+public final class ModifierCleanInterface extends ModifierClean<TypeDeclaration> implements Kind.SyntacticBaggage {
   @Override String description(final TypeDeclaration ¢) {
     return "Remove redundant 'abstract'/'static' modifier from interface " + ¢.getName();
   }
