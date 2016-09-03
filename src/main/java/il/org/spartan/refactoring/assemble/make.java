@@ -98,19 +98,19 @@ public enum make {
                 : x;
   }
 
-  public static ASTHolder from(Expression x) {
+  public static ASTHolder from(final Expression x) {
     assert x != null;
     return new make.ASTHolder(x.getAST());
   }
 
   public static class ASTHolder {
-    private final AST ast; 
+    private final AST ast;
 
-    public ASTHolder(AST ast) {
+    public ASTHolder(final AST ast) {
       this.ast = ast;
     }
 
-    public NumberLiteral literal(int i) {
+    public NumberLiteral literal(final int i) {
       return ast.newNumberLiteral(i + "");
     }
   }
