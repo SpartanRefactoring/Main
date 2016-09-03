@@ -399,7 +399,8 @@ public class TrimmerTest250 {
     trimming("0-x-0-y-0-z-0-0")//
         .to("-x-0-y-0-z-0-0")//
         .to("-x-y-0-z-0-0")//
-        .to("-x-y-z-0-0")//
+        .to("-x-y-z-0-0-0")//
+        .to("-x-y-z-0-0")
         .to("-x-y-z-0")//
         .to("-x-y-z")//
         .to(null);
@@ -463,8 +464,8 @@ public class TrimmerTest250 {
     trimming("0-x-0-y-0-z-0")//
         .to("-x-0-y-0-z-0")//
         .to("-x-y-0-z-0")//
+        .to("-x-y-z-0-0")//
         .to("-x-y-z-0")//
-        .to("-x-y-z")//
         .to(null);
   }
 
