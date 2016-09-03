@@ -11,6 +11,7 @@ import il.org.spartan.*;
 import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.engine.*;
+import il.org.spartan.refactoring.utils.*;
 
 /** * Unit tests for the nesting class Unit test for the containing class. Note
  * our naming convention: a) test methods do not use the redundant "test"
@@ -1136,7 +1137,17 @@ public class TrimmerTest250 {
     trimming("protected public int a;")
     .to("public protected int a;");
   }
+ 
+  @Ignore public void trimmerBugXOR() {
+    trimming("j=j^k")
+    .to("j^=k");
+  }
   
+  @Test public void trimmerBugXORCompiling() {
+    trimming("j = j ^ k")
+    .to("j ^= k");
+  }
+
   // @formatter:off
   enum A { a1() {{ f(); }
       public void f() {
