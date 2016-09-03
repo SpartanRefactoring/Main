@@ -65,7 +65,7 @@ public class SingletStatementTest {
   }
 
   @Test public void peelIf() {
-    final ASTNode n = MakeAST.STATEMENTS.from("{if (a) return b; else return c;}");
+    final ASTNode n = makeAST.STATEMENTS.from("{if (a) return b; else return c;}");
     azzert.notNull(n);
     final List<Statement> ss = extract.statements(n);
     azzert.notNull(ss);
@@ -74,7 +74,7 @@ public class SingletStatementTest {
   }
 
   @Test public void peelIPlusPlus() {
-    final ASTNode n = MakeAST.STATEMENTS.from("{i++;}");
+    final ASTNode n = makeAST.STATEMENTS.from("{i++;}");
     azzert.notNull(n);
     final List<Statement> ss = extract.statements(n);
     azzert.notNull(ss);

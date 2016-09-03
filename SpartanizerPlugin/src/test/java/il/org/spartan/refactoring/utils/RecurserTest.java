@@ -12,16 +12,12 @@ import il.org.spartan.refactoring.engine.*;
 /** @author Dor Ma'ayan
  * @since 2016 */
 public class RecurserTest {
-  /** This is where you place the {@link Test} test methods that work. They
-   * should be never {@link Ignored} when pushed.
-   * @author Yossi Gil */
-  // TODO: Dor, import here the standard header of test classes
-  public <T> Recurser<T> recurse(final ASTNode root) {
-    return new Recurser<>(root);
+  private static boolean barrier() {
+    return true;
   }
 
-  public <T> Recurser<T> recurse(final ASTNode n, final T t) {
-    return new Recurser<>(n, t);
+  private static ASTNode makeCaseNode() {
+    return mock(SwitchCase.class);
   }
 
   final ASTNode ourCase = makeCaseNode();
@@ -43,14 +39,14 @@ public class RecurserTest {
   }
 
   @Test public void explainAPI_sensibly() {
-    final Integer i = recurse(ourCase, 0)//
+    @SuppressWarnings("boxing") final Integer i = recurse(ourCase, 0)//
         .preVisit(//
             (x) -> (2 + x.hashCode())//
     );
     assert i != 0 : "wow, we really got unlucky; run again";
   }
 
-  @Test public void explainAPI_shortly() {
+  @SuppressWarnings("boxing") @Test public void explainAPI_shortly() {
     final Integer i = recurse(ourCase, 0).preVisit(//
         (r) -> (2 + r.hashCode())//
     );
@@ -70,11 +66,15 @@ public class RecurserTest {
     assert i != 0 : "wow, we really got unlucky; run again";
   }
 
-  private boolean barrier() {
-    return true;
+  /** This is where you place the {@link Test} test methods that work. They
+   * should be never {@link Ignored} when pushed.
+   * @author Yossi Gil */
+  // TODO: Dor, import here the standard header of test classes
+  public <T> Recurser<T> recurse(final ASTNode root) {
+    return new Recurser<>(root);
   }
 
-  private ASTNode makeCaseNode() {
-    return mock(SwitchCase.class);
+  public <T> Recurser<T> recurse(final ASTNode n, final T t) {
+    return new Recurser<>(n, t);
   }
 }

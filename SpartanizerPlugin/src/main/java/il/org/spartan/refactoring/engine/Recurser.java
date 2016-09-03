@@ -108,6 +108,7 @@ public class Recurser<T> {
       }
       return $;
     } catch (final NullPointerException e) {
+      assert e != null;
       return null;
     }
   }
