@@ -97,4 +97,21 @@ public enum make {
             : ¢.getOperator() == wizard.PLUS1 ? subject.operand(¢.getOperand()).to(wizard.MINUS1)//
                 : x;
   }
+
+  public static ASTHolder from(Expression x) {
+    assert x != null;
+    return new make.ASTHolder(x.getAST());
+  }
+
+  public static class ASTHolder {
+    private final AST ast; 
+
+    public ASTHolder(AST ast) {
+      this.ast = ast;
+    }
+
+    public NumberLiteral literal(int i) {
+      return ast.newNumberLiteral(i + "");
+    }
+  }
 }
