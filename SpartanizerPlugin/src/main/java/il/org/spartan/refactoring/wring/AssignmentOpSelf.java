@@ -25,7 +25,7 @@ public final class AssignmentOpSelf extends ReplaceCurrentNode<Assignment> imple
   private static ASTNode replace(final Assignment a) {
     final InfixExpression ¢ = az.infixExpression(step.right(a));
     final Expression newRightExpr = az.expression(rightInfixReplacement(¢, a.getLeftHandSide()));
-    return newRightExpr == null ? null : subject.pair(step.left(a), newRightExpr).to(wizard.infix.get((step.operator(¢))));
+    return newRightExpr == null ? null : subject.pair(step.left(a), newRightExpr).to(wizard.infix.get(step.operator(¢)));
   }
 
   private static ASTNode rightInfixReplacement(final InfixExpression x, final Expression left) {

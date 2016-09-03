@@ -25,7 +25,7 @@ public class EvaluateAux {
   }
 
   public static boolean isMinusDouble(final Expression x) {
-    return iz.prefixExpression(x ) && ((PrefixExpression) x).getOperator() == PrefixExpression.Operator.MINUS
+    return iz.prefixExpression(x) && ((PrefixExpression) x).getOperator() == PrefixExpression.Operator.MINUS
         && isDouble(((PrefixExpression) x).getOperand());
   }
 
