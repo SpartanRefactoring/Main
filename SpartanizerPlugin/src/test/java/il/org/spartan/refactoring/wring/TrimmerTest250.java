@@ -233,13 +233,13 @@ public class TrimmerTest250 {
     trimming("switch(x.toString()){ case \"1\": return; case \"2\": return; default: return; }")
         .to("switch(\"\" + x){ case \"1\": return; case \"2\": return; default: return; }");
   }
-  
+
   @Test public void issue54_05() {
     trimming("x.toString(5)").to(null);
   }
 
   @Test public void issue54_06() {
-    trimming("a.toString().length()").to("(\"\" + a).length()");    
+    trimming("a.toString().length()").to("(\"\" + a).length()");
   }
 
   @Test public void issue70_01() {
@@ -935,8 +935,7 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue103_XOR2() {
-    trimming("j = j ^ k")
-    .to("j ^= k");
+    trimming("j = j ^ k").to("j ^= k");
   }
 
   @Test public void issue103_modulo1() {
@@ -1039,60 +1038,54 @@ public class TrimmerTest250 {
 
   @Test public void issue31d() {
     trimming(" void f(final Expression n) {}") //
-    .to("void f(final Expression x) {}");
+        .to("void f(final Expression x) {}");
   }
 
   @Test public void issue31e() {
     trimming(" void f(final Exception n) {}") //
         .to("void f(final Exception x) {}");
   }
-  
+
   @Test public void issue31f() {
     trimming(" void f(final Exception exception, Expression expression) {}") //
-    .to("void f(final Exception x, Expression expression) {}");
-  }
-  
-  @Test public void issue31g() {
-    trimming("void foo(TestExpression exp,TestAssignment testAssignment)") //
-    .to("void foo(TestExpression x,TestAssignment testAssignment)")
-    .to("void foo(TestExpression x,TestAssignment a)");
-  }
-  
-  @Test public void issue31h() {
-    trimming(" void f(final Exception n) {}") //
-    .to("void f(final Exception x) {}");
+        .to("void f(final Exception x, Expression expression) {}");
   }
 
-  
+  @Test public void issue31g() {
+    trimming("void foo(TestExpression exp,TestAssignment testAssignment)") //
+        .to("void foo(TestExpression x,TestAssignment testAssignment)").to("void foo(TestExpression x,TestAssignment a)");
+  }
+
+  @Test public void issue31h() {
+    trimming(" void f(final Exception n) {}") //
+        .to("void f(final Exception x) {}");
+  }
+
   @Test public void issue31i() {
     trimming(" void f(final Exception n) {}") //
         .to("void f(final Exception x) {}");
   }
-  
-  @Test public void issue31j(){
-    trimming("void foo(Exception exception, Assignment assignment)").to("void foo(Exception x, Assignment assignment)").to("void foo(Exception x, Assignment a)").to(null);
+
+  @Test public void issue31j() {
+    trimming("void foo(Exception exception, Assignment assignment)").to("void foo(Exception x, Assignment assignment)")
+        .to("void foo(Exception x, Assignment a)").to(null);
   }
-  
-  @Test public void issue31k(){
-    trimming("String tellTale(Example example)")
-    .to("String tellTale(Example x)");
+
+  @Test public void issue31k() {
+    trimming("String tellTale(Example example)").to("String tellTale(Example x)");
   }
-  
-  @Test public void issue31l(){
-    trimming("String tellTale(Example examp)")
-    .to("String tellTale(Example x)");
+
+  @Test public void issue31l() {
+    trimming("String tellTale(Example examp)").to("String tellTale(Example x)");
   }
-  
-  @Test public void issue31m(){
-    trimming("String tellTale(ExamplyExamplar lyEx)")
-    .to("String tellTale(ExamplyExamplar x)");
+
+  @Test public void issue31m() {
+    trimming("String tellTale(ExamplyExamplar lyEx)").to("String tellTale(ExamplyExamplar x)");
   }
-  
-  @Test public void issue31n(){
-    trimming("String tellTale(ExamplyExamplar foo)")
-    .to(null);
+
+  @Test public void issue31n() {
+    trimming("String tellTale(ExamplyExamplar foo)").to(null);
   }
-  
 
   // @formatter:off
   enum A { a1() {{ f(); }
