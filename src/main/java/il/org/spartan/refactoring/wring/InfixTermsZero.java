@@ -16,8 +16,8 @@ import il.org.spartan.refactoring.wring.Wring.*;
  * @author Dan Greenstein
  * @since 2016 */
 public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
-  @Override String description(final InfixExpression e) {
-    return "Remove all additions and substructions of 0 to and from " + e;
+  @Override String description(final InfixExpression x) {
+    return "Remove all additions and substructions of 0 to and from " + x;
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
@@ -30,6 +30,6 @@ public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression> im
       if (!iz.literal0(¢))
         $.add(¢);
     return $.size() == xs.size() ? null
-        : $.isEmpty() ? duplicate.of(lisp.first(xs)) : $.size() == 1?duplicate.of(lisp.first($)):subject.operands($).to(PLUS);
+        : $.isEmpty() ? duplicate.of(lisp.first(xs)) : $.size() == 1 ? duplicate.of(lisp.first($)) : subject.operands($).to(PLUS);
   }
 }
