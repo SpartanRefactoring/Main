@@ -19,8 +19,8 @@ import il.org.spartan.refactoring.wring.Wring.*;
  * @author Dan Greenstein
  * @since 2016 */
 public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
-  @Override String description(final InfixExpression e) {
-    return "Remove subtraction of 0 in " + e;
+  @Override String description(final InfixExpression x) {
+    return "Remove subtraction of 0 in " + x;
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
@@ -34,8 +34,8 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
                 : null;
   }
 
-  private static Expression go(final List<Expression> es) {
-    final List<Expression> $ = new ArrayList<>(es);
+  private static Expression go(final List<Expression> xs) {
+    final List<Expression> $ = new ArrayList<>(xs);
     if (literal0(lisp.first($))) {
       $.remove(0);
       $.set(0, il.org.spartan.refactoring.assemble.make.minus(lisp.first($)));
