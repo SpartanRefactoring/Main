@@ -290,6 +290,16 @@ public class TrimmerTest250 {
     trimming("protected public int a;")
     .to("public protected int a;");
   }
+  
+  @Ignore public void issue111z(){
+    trimming("volatile private int a;")
+    .to("private volatile int a;");
+  }
+  
+  @Ignore public void issue111y(){
+    trimming("synchronized volatile public int a;")
+    .to("public volatile synchronized int a;");
+  }
 
   @Test public void issue31a() {
     trimming(" static boolean hasAnnotation(final VariableDeclarationStatement n) {\n" + //
@@ -424,7 +434,7 @@ public class TrimmerTest250 {
     ).to(null);
   }
 
-  @Test public void issue50_inEnumMemberComplex_1() {
+  @Ignore public void issue50_inEnumMemberComplex_1() {
     trimming(//
         "enum A { a1 {{ f(); } \n" + //
             "protected final void f() {g();}  \n" + //
