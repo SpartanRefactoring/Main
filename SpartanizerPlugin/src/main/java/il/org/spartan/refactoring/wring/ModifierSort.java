@@ -41,16 +41,23 @@ public abstract class ModifierSort<N extends BodyDeclaration> extends Wring.Repl
     unsorted.set(index + 1, tmp);
   }
   
+  private static void clearList (List<IExtendedModifier> $) {
+    for (final Iterator<IExtendedModifier> ¢ = $.iterator(); ¢.hasNext();)
+        ¢.remove();
+  }
+  
   /** Sorts the modifiers of the {@link BodyDeclaration} $.
    * @param $ JD
    * @return $ with sorted Modifiers.
    */
   private N go(final N $) {
-    List<IExtendedModifier> unsorted = step.modifiers($);
-    for(int iter =1; iter < unsorted.size(); ++iter)
-      for (int inner = 0; inner < (unsorted.size() - iter); ++inner)
-        if (compare(unsorted.get(inner), unsorted.get(inner + 1)))
-          bubble(unsorted, inner);  
+    List<IExtendedModifier> toSort = new ArrayList<>(step.modifiers($));
+    clearList(step.modifiers($));
+    for(int iter =1; iter < toSort.size(); ++iter)
+      for (int inner = 0; inner < (toSort.size() - iter); ++inner)
+        if (compare(toSort.get(inner), toSort.get(inner + 1)))
+          bubble(toSort, inner); 
+    step.modifiers($).addAll(toSort);
     return $;
   }
 }
