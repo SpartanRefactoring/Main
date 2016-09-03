@@ -47,6 +47,22 @@ public class izTest {
     azzert.that(iz.constant(e("a")), is(false));
   }
 
+  @Test public void isDeMorganAND() {
+    azzert.aye(iz.deMorgan(CONDITIONAL_AND));
+  }
+
+  @Test public void isDeMorganGreater() {
+    azzert.nay(iz.deMorgan(GREATER));
+  }
+
+  @Test public void isDeMorganGreaterEuals() {
+    azzert.nay(iz.deMorgan(GREATER_EQUALS));
+  }
+
+  @Test public void isDeMorganOR() {
+    azzert.aye(iz.deMorgan(CONDITIONAL_OR));
+  }
+
   @Test public void isNullFalse1() {
     azzert.that(iz.nullLiteral(e("this")), is(false));
   }
@@ -116,21 +132,5 @@ public class izTest {
     azzert.aye(iz.infixPlus(core(e("(i+j)"))));
     azzert.nay(iz.infixMinus(e("(i-j)")));
     azzert.aye(iz.infixMinus(core(e("(i-j)"))));
-  }
-
-  @Test public void isDeMorganAND() {
-    azzert.aye(iz.deMorgan(CONDITIONAL_AND));
-  }
-
-  @Test public void isDeMorganGreater() {
-    azzert.nay(iz.deMorgan(GREATER));
-  }
-
-  @Test public void isDeMorganGreaterEuals() {
-    azzert.nay(iz.deMorgan(GREATER_EQUALS));
-  }
-
-  @Test public void isDeMorganOR() {
-    azzert.aye(iz.deMorgan(CONDITIONAL_OR));
   }
 }

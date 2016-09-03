@@ -27,7 +27,7 @@ public class WringsTest {
   @Test public void countInEnhancedFor() throws IllegalArgumentException, MalformedTreeException {
     final String input = "int f() { for (int a: as) return a; }";
     final Document d = Wrap.Method.intoDocument(input);
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(d);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(d);
     final MethodDeclaration m = extract.firstMethodDeclaration(u);
     azzert.that(m, iz(input));
     final Block b = m.getBody();
@@ -88,7 +88,7 @@ public class WringsTest {
   @Test public void renameInEnhancedFor() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = "int f() { for (int a: as) return a; }";
     final Document d = Wrap.Method.intoDocument(input);
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(d);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(d);
     final MethodDeclaration m = extract.firstMethodDeclaration(u);
     azzert.that(m, iz(input));
     final Block b = m.getBody();
@@ -108,7 +108,7 @@ public class WringsTest {
   @Test public void renameintoDoWhile() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = "void f() { int b = 3; do ; while(b != 0); }";
     final Document d = Wrap.Method.intoDocument(input);
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(d);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(d);
     final MethodDeclaration m = extract.firstMethodDeclaration(u);
     azzert.that(m, iz(input));
     final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(m);

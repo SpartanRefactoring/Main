@@ -24,18 +24,17 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
     return "Remove subtraction of 0 in " + x;
   }
 
-  private static boolean isZero(final Expression x){
-    return x.getNodeType()==ASTNode.NUMBER_LITERAL && ("0".equals(((NumberLiteral) x).getToken()));
-  }
-  
   @Override ASTNode replacement(final InfixExpression x) {
-    return x.getOperator() != MINUS || !isZero(x.getRightOperand()) && !isZero(x.getLeftOperand()) ? null : go(x);
+    return x.getOperator() != MINUS || !iz.literal0(x.getRightOperand()) && !iz.literal0(x.getLeftOperand()) ? null : go(x);
   }
 
   private static ASTNode go(final InfixExpression x) {
-    return x.hasExtendedOperands() ? plant(go(hop.operands(x))).into(step.parent(x))
-        : literal0(step.left(x)) ? plant(il.org.spartan.refactoring.assemble.make.minus(step.right(x))).into(step.parent(x)) //
-            : literal0(step.right(x)) ? plant(step.left(x)).into(step.parent(x)) //
+    final Expression right = step.right(x);
+    final Expression left = step.left(x);
+    final ASTNode parent = step.parent(x);
+    return x.hasExtendedOperands() ? plant(go(hop.operands(x))).into(parent)
+        : literal0(left) ? plant(make.minus(right)).into(parent) //
+            : literal0(right) ? plant(left).into(parent) //
                 : null;
   }
 
@@ -43,7 +42,7 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
     final List<Expression> $ = new ArrayList<>(xs);
     if (literal0(lisp.first($))) {
       $.remove(0);
-      $.set(0, il.org.spartan.refactoring.assemble.make.minus(lisp.first($)));
+      $.set(0, make.minus(lisp.first($)));
     } else
       for (int i = 1, size = $.size(); i < size; ++i)
         if (literal0($.get(i))) {

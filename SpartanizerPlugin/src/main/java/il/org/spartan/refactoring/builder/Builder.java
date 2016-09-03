@@ -42,7 +42,7 @@ public class Builder extends IncrementalProjectBuilder {
   private static void addMarkers(final IFile f) throws CoreException {
     Spartanizations.reset();
     deleteMarkers(f);
-    addMarkers(f, (CompilationUnit) MakeAST.COMPILATION_UNIT.from(f));
+    addMarkers(f, (CompilationUnit) makeAST.COMPILATION_UNIT.from(f));
   }
 
   private static void addMarkers(final IFile f, final CompilationUnit u) throws CoreException {
