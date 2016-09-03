@@ -7,12 +7,14 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
 
+/** Sort the {@link Modifier}s of an entity by the order specified in Modifier.class binary.
+ * @author Alex Kopzon
+ * @since 2016
+ */
 public abstract class ModifierSort<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> {
   @Override String description(@SuppressWarnings("unused") final N __) {
     return "remove redundant modifier";
   }
-
-  abstract boolean compare(IExtendedModifier m1, IExtendedModifier m2);
 
   @Override N replacement(final N $) {
     return go(duplicate.of($));
@@ -26,6 +28,8 @@ public abstract class ModifierSort<N extends BodyDeclaration> extends Wring.Repl
     return step.modifiers(¢) != null;
   }
   
+  abstract boolean compare(IExtendedModifier m1, IExtendedModifier m2);
+    
   /** One bubble swap for the bubble sort implementation in go().
    * @param unsorted list to perform one bubble swap on.
    * @param index the index to swap with 'index + 1'
