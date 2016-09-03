@@ -1128,6 +1128,15 @@ public class TrimmerTest250 {
         "}");
   }
   
+  @Test public void issue111g_1(){
+    trimming("final enum Level { " + //
+              "HIGH, MEDIUM, LOW" + //
+              "}")
+    .to("enum Level { \n" + //
+        "HIGH, MEDIUM, LOW\n" + //
+        "}");
+  }
+  
   @Ignore public void issue111h(){
     trimming("protected public int a;")
     .to("public protected int a;");
