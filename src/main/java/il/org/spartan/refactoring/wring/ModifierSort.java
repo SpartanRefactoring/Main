@@ -42,8 +42,10 @@ public abstract class ModifierSort<N extends BodyDeclaration> extends Wring.Repl
   }
   
   private static void clearList (List<IExtendedModifier> $) {
-    for (final Iterator<IExtendedModifier> ¢ = $.iterator(); ¢.hasNext();)
-        ¢.remove();
+    for (final Iterator<IExtendedModifier> ¢ = $.iterator(); ¢.hasNext();) {
+      ¢.next();
+      ¢.remove();
+    }
   }
   
   /** Sorts the modifiers of the {@link BodyDeclaration} $.
