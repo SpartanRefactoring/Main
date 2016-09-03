@@ -100,4 +100,16 @@ import il.org.spartan.*;
   @Test public void test22() {
     azzert.that(FactorsExpander.simplify(i("1/a/b")), iz("1/a/b"));
   }
+  
+  @Test public void test23() {
+    azzert.that(FactorsExpander.simplify(i("a * (b/c/d/e)")), iz("a * b/c/d/e"));
+  }
+  
+  @Test public void test24() {
+    azzert.that(FactorsExpander.simplify(i("a * ((b*x)/(c*y)/d/e)")), iz("a * b*x/c/y/d/e"));
+  }
+  
+  @Test public void test25() {
+    azzert.that(FactorsExpander.simplify(i("a * ((b*x)/c*y/d/e)")), iz("a * b*x/c*y/d/e"));
+  }
 }
