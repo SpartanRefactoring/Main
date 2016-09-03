@@ -17,9 +17,9 @@ public enum minus {
     return lisp.out(x.getOperator(), TIMES, DIVIDE) ? 0 : level(hop.operands(x));
   }
 
-  public static int level(final List<Expression> es) {
+  public static int level(final List<Expression> xs) {
     int $ = 0;
-    for (final Expression e : es)
+    for (final Expression e : xs)
       $ += minus.level(e);
     return $;
   }
@@ -52,9 +52,9 @@ public enum minus {
     return lisp.out(x.getOperator(), TIMES, DIVIDE) ? x : subject.operands(peel(hop.operands(x))).to(x.getOperator());
   }
 
-  private static List<Expression> peel(final List<Expression> es) {
+  private static List<Expression> peel(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
-    for (final Expression e : es)
+    for (final Expression e : xs)
       $.add(peel(e));
     return $;
   }
