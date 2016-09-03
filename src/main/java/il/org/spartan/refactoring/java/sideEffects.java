@@ -1,5 +1,6 @@
 package il.org.spartan.refactoring.java;
 
+import static il.org.spartan.refactoring.ast.extract.*;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.ast.step.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
@@ -18,18 +19,23 @@ public enum sideEffects {
    * @param e JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an expression
    *         whose computation is guaranteed to be free of any side effects. */
+  // VIM: /{/+,/}/-!sort -u
   private static final int[] alwaysFree = { //
-      STRING_LITERAL, //
+      BOOLEAN_LITERAL, //
+      CHARACTER_LITERAL, //
+      CAST_EXPRESSION, //
+      EMPTY_STATEMENT, //
+      FIELD_ACCESS, //
       NULL_LITERAL, //
       NUMBER_LITERAL, //
-      THIS_EXPRESSION, //
-      SIMPLE_NAME, //
-      TYPE_LITERAL, //
-      CHARACTER_LITERAL, //
-      BOOLEAN_LITERAL, //
+      PRIMITIVE_TYPE, //
       QUALIFIED_NAME, //
-      FIELD_ACCESS, //
-      SUPER_FIELD_ACCESS,//
+      SIMPLE_NAME, //
+      SIMPLE_TYPE, //
+      STRING_LITERAL, //
+      SUPER_FIELD_ACCESS, //
+      THIS_EXPRESSION, //
+      TYPE_LITERAL, //
   };
   private static final int[] alwaysHave = { //
       SUPER_CONSTRUCTOR_INVOCATION, SUPER_METHOD_INVOCATION, METHOD_INVOCATION, CLASS_INSTANCE_CREATION, ASSIGNMENT, POSTFIX_EXPRESSION, };
@@ -51,7 +57,7 @@ public enum sideEffects {
       case PREFIX_EXPRESSION:
         return free((PrefixExpression) x);
       case PARENTHESIZED_EXPRESSION:
-        return free(extract.core(x));
+        return free(core(x));
       case INFIX_EXPRESSION:
         return free(extract.allOperands((InfixExpression) x));
       case CONDITIONAL_EXPRESSION:
