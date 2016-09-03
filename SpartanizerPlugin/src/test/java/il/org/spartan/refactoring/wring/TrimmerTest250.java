@@ -228,6 +228,67 @@ public class TrimmerTest250 {
     trimming("z=foo(x=(y=y*u),17)").to("z=foo(x=(y*=u),17)");
   }
 
+  @Test public void issue111a_1(){
+    trimming("public class A {" + //
+        "static public int a;" + //
+        "}") //
+    .to("public class A {" + //
+        "public static int a;" + //
+        "}");
+  }
+  
+  @Test public void issue111b_1(){
+    
+    trimming("public class A {" + //
+        "static final public int a;" + //
+        "}") //
+    .to("public class A {" + //
+        "public static final int a;" + //
+        "}");
+  }
+  
+  @Test public void issue111c_2(){ //not working cause method sorting is not integrated yet
+    trimming("public class A{" + //
+        "synchronized public void fun(final int a) {}" + //
+        "final private String s = \"Alex\";" + //
+      "}")
+    .to("public class A{" + //
+        "synchronized public void fun(final int a) {}" + //
+        "private final String s = \"Alex\";" + //
+      "}").to(null); //
+  }
+  
+  @Ignore public void issue111c_1(){ //not working cause method sorting is not integrated yet
+    trimming("public class A{" + //
+        "synchronized public void fun(final int a) {}" + //
+        "final private String s = \"Alex\";" + //
+      "}")
+    .to("public class A{" + //
+        "synchronized public void fun(final int a) {}" + //
+        "private final String s = \"Alex\";" + //
+      "}") //
+    .to("public class A{" + // here is the problem - method declaration
+        "public synchronized void fun(final int a) {}" + //
+        "private final String s = \"Alex\";" + //
+      "}") //
+    .to(null);
+  }
+  
+  @Test public void issue111d_1(){
+    trimming("abstract class A {}")
+    .to(null);
+  }
+  
+  @Ignore public void issue111e_1(){ //can't understand why not working
+    trimming("final static public class ofEnum extends ModifierSort<EnumDeclaration>{}")
+    .to("public static final class ofEnum extends ModifierSort<EnumDeclaration>{}");
+  }
+  
+  @Ignore public void issue111f_1(){ //method
+    trimming("protected public class A{volatile static String method (final abstruct int a){}}")
+    .to("public protected int class A{static volatile String method (abstruct final int a){}}");
+  }
+  
   @Ignore public void issue111a() {
     trimming("strictfp native synchronized volatile transient final static default abstract private protected public int a;")
         .to("public protected private abstract default static final transient volatile synchronized native strictfp int a;");
@@ -261,13 +322,25 @@ public class TrimmerTest250 {
             "HIGH, MEDIUM, LOW\n" + //
             "}");
   }
+  
+  @Ignore public void issue111w(){
+    trimming("protected public int a;")
+    .to("public protected int a;");
+  }
 
-  @Test public void issue111g_1() {
-    trimming("final enum Level { \n" + //
-        "HIGH, MEDIUM, LOW\n" + //
-        "}").to("enum Level { \n" + //
-            "HIGH, MEDIUM, LOW\n" + //
-            "}");
+  @Ignore public void issue111q(){
+    trimming("protected public int a;")
+    .to("public protected int a;");
+  }
+  
+  @Ignore public void issue111z(){
+    trimming("volatile private int a;")
+    .to("private volatile int a;");
+  }
+  
+  @Ignore public void issue111y(){
+    trimming("synchronized volatile public int a;")
+    .to("public volatile synchronized int a;");
   }
 
   @Ignore public void issue111h() {
