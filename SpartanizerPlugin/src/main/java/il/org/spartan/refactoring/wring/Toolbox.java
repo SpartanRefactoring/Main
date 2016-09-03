@@ -158,8 +158,8 @@ public class Toolbox {
             null) //
         .add(TypeDeclaration.class, new ModifierCleanInterface(), null) //
         .add(EnumDeclaration.class, //
-            //new ModifierSortEnum(), //
             new ModifierCleanEnum(), //
+            new ModifierSortEnum(), //
             null) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover(), null) //
         .add(ReturnStatement.class, new ReturnLastInMethod()) //
