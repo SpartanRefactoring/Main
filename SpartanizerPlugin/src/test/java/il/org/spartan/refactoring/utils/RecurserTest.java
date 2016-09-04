@@ -11,6 +11,8 @@ import il.org.spartan.refactoring.engine.*;
 
 /** @author Dor Ma'ayan
  * @since 2016 */
+
+@SuppressWarnings({ "static-method", "javadoc", "boxing" }) 
 public class RecurserTest {
   @Test public void issue101_1() {
     final Expression simple_exp = into.i("3+4");

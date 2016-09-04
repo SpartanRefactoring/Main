@@ -124,11 +124,8 @@ public class Recurser<T> {
     final List<Recurser<T>> recurserList = new ArrayList<>();
     for (final ASTNode child : childrenList)
       recurserList.add(new Recurser<T>(child));
-    int index = 0;
-    for (final Recurser<T> rec : recurserList) {
+    for (final Recurser<T> rec : recurserList)
       rec.preVisit(f);
-      ++index;
-    }
     return;
   }
 }
