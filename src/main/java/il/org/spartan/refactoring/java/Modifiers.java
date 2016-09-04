@@ -24,11 +24,11 @@ public enum Modifiers {
     return null;
   }
 
-  public static boolean gt(final String modifier1, final String modifier2) {
+  public static int gt(final String modifier1, final String modifier2) {
     return gt(find(modifier1), find(modifier2));
   }
 
-  private static boolean gt(final Modifiers m1, final Modifiers m2) {
-    return m1.ordinal() > m2.ordinal();
+  private static int gt(final Modifiers m1, final Modifiers m2) {
+    return m1.ordinal() > m2.ordinal() ? 1 : m1.ordinal() < m2.ordinal() ? -1 : 0;
   }
 }

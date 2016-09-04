@@ -97,7 +97,7 @@ public class Toolbox {
         .add(MethodDeclaration.class, //
             new MethodRenameReturnToDollar(), //
             new BodyDeclarationRemoveModifiers.OfMethod(), //
-            // new ModifierSort.ofMethod(), //
+            new ModifierSort.ofMethod(), //
             null)
         .add(MethodInvocation.class, //
             new StringEqualsConstant(), //
@@ -157,7 +157,7 @@ public class Toolbox {
             null) //
         .add(TypeDeclaration.class, //
             new ModifierCleanInterface(), //
-            // new ModifierSort.ofType(), //
+            new ModifierSort.ofType(), //
             null) //
         .add(EnumDeclaration.class, //
             new ModifierCleanEnum(), //
@@ -165,7 +165,10 @@ public class Toolbox {
             null) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover(), null) //
         .add(ReturnStatement.class, new ReturnLastInMethod()) //
-        .add(FieldDeclaration.class, new BodyDeclarationRemoveModifiers.OfField(), null) //
+        .add(FieldDeclaration.class, //
+            new BodyDeclarationRemoveModifiers.OfField(), //
+            new ModifierSort.ofField(), //
+            null) //
         .add(CastExpression.class, //
             new CastToDouble2Multiply1(), //
             new CastToLong2Multiply1L(), //
@@ -178,7 +181,9 @@ public class Toolbox {
             new AnnotationDiscardValueName(), //
             new AnnotationRemoveEmptyParentheses(), //
             null) //
-        .add(FieldDeclaration.class, new ModifierSort.ofField(), null).add(AnnotationTypeDeclaration.class, new ModifierSort.ofAnnotation(), null)
+        .add(AnnotationTypeMemberDeclaration.class, new ModifierSort.ofAnnotationTypeMember(), null) //
+        .add(AnnotationTypeDeclaration.class, new ModifierSort.ofAnnotation(), null) //
+        //.add(Initializer, new ModifierSort.ofInitializer(), null) //
         .seal();
   }
 

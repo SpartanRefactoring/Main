@@ -31,6 +31,10 @@ public enum az {
     return !iz.annotation(¢) ? null : (Annotation) ¢;
   }
 
+  public static Modifier modifier(ASTNode ¢) {
+    return !iz.modifier(¢) ? null : (Modifier) ¢;
+  }
+  
   /** Convert, is possible, an {@link ASTNode} to an {@link Assignment}
    * @param $ JD
    * @return argument, but down-casted to a {@link Assignment}, or
