@@ -5,15 +5,26 @@ import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.refactoring.ast.*;
+
 /** @author Dor Ma'ayan
  * @since 2016 */
 public class Recurser<T> {
+  
   /** Get a list of the direct fhildren of a ASTNode
    * @param n an ASTNode
    * @return a list of n's children */
   private static List<ASTNode> getChildren(final ASTNode n) {
     if (n == null)
       return new ArrayList<>();
+    if(n instanceof InfixExpression){
+      final List<ASTNode> $ = new ArrayList<>();
+      $.addAll(extract.allOperands((InfixExpression)n));
+      return $;
+    }
+      
+    
+    
     final List<ASTNode> $ = new ArrayList<>();
     try {
       @SuppressWarnings("rawtypes") final List lst = n.structuralPropertiesForType();
