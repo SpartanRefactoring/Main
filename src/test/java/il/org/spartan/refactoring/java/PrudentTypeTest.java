@@ -141,8 +141,16 @@ public class PrudentTypeTest {
     @Test public void under31() {
       azzert.that(prudent(into.e("x^y"), BOOLEAN, BOOLEAN), is(BOOLEAN));
     }
+    
+    @Test public void under32() {
+      azzert.that(prudent(into.e("x+y"), INT, ALPHANUMERIC), is(ALPHANUMERIC));
+    }
+    
+    @Test public void under33() {
+      azzert.that(prudent(into.e("x+y"), INTEGRAL, NOTHING), is(ALPHANUMERIC));
+    }
 
-    // s for recognition of literals
+    // tests for recognition of literals
     @Test public void literal01() {
       azzert.that(prudent(into.e("3")), is(INT));
     }
