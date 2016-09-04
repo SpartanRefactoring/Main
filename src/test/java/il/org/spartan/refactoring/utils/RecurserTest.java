@@ -29,18 +29,18 @@ public class RecurserTest {
    assertEquals(3,(int)recurse.postVisit(accum));
   }
   
-  @Test  @Ignore("Under checking") public void issue101_3(){
-    Expression simple_exp = into.i("3+4+4+6");
-    Recurser<Integer> recurse = new Recurser<Integer>(simple_exp,0);
-    final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
-   assertEquals(3,(int)recurse.preVisit(accum));
-  }
-  
-  @Test  @Ignore("Under checking") public void issue101_4(){
-    Expression simple_exp = into.i("3+4+4+6");
+  @Test  public void issue101_3(){
+    Expression simple_exp = into.i("5*6+43*2");
     Recurser<Integer> recurse = new Recurser<Integer>(simple_exp,0);
     final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
    assertEquals(7,(int)recurse.preVisit(accum));
+  }
+  
+  @Test public void issue101_4(){
+    Expression simple_exp = into.i("3+4*4+6*7+8");
+    Recurser<Integer> recurse = new Recurser<Integer>(simple_exp,0);
+    final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
+   assertEquals(11,(int)recurse.preVisit(accum));
   }
   
   @Test public void issue101_5(){
