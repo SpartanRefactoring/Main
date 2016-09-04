@@ -16,7 +16,9 @@ import il.org.spartan.refactoring.ast.*;
  * @since 2015-07-18
  * @see step */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@SuppressWarnings({ "static-method", "javadoc" }) public class NegationTest {
+@SuppressWarnings({ "static-method", "javadoc" }) //
+
+public class NegationTest {
   @Test public void negationOfAddition() {
     azzert.that(minus.level(e("-a+-2")), is(0));
   }

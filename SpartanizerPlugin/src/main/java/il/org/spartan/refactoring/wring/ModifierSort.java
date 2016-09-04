@@ -12,7 +12,8 @@ import il.org.spartan.refactoring.ast.*;
  * Modifier.class binary.
  * @author Alex Kopzon
  * @since 2016 */
-public abstract class ModifierSort<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> implements Kind.Canonicalization {
+public abstract class ModifierSort<N extends BodyDeclaration> //
+    extends Wring.ReplaceCurrentNode<N> implements Kind.Canonicalization {
   public static final class ofEnum extends ModifierSort<EnumDeclaration> {
   }
 
@@ -44,13 +45,22 @@ public abstract class ModifierSort<N extends BodyDeclaration> extends Wring.Repl
   }
   
   @Override N replacement(final N $) {
-    return go(duplicate.of($));
+    final N $1 = ($);
+    final List<IExtendedModifier> original = step.modifiers($1);
+    final List<IExtendedModifier> toSort = new ArrayList<>(original);
+    original.clear();
+    for (int iter = 1; iter < toSort.size(); ++iter)
+      for (int inner = 0; inner < toSort.size() - iter; ++inner)
+        if (compare(toSort.get(inner), toSort.get(inner + 1)))
+          bubble(toSort, inner);
+    original.addAll(toSort);
+    return $1;
   }
 
   static boolean compare(final IExtendedModifier m1, final IExtendedModifier m2) {
     return Modifiers.gt(("" + m1), ("" + m2));
   }
-  
+
   /** One bubble swap for the bubble sort implementation in go().
    * @param unsorted list to perform one bubble swap on.
    * @param index the index to swap with 'index + 1' TODO: you don't want to
@@ -60,20 +70,5 @@ public abstract class ModifierSort<N extends BodyDeclaration> extends Wring.Repl
     final IExtendedModifier tmp = unsorted.get(index);
     unsorted.set(index, unsorted.get(index + 1));
     unsorted.set(index + 1, tmp);
-  }
-
-  /** Sorts the modifiers of the {@link BodyDeclaration} $.
-   * @param $ JD
-   * @return $ with sorted Modifiers. */
-  private N go(final N $) {
-    final List<IExtendedModifier> original = step.modifiers($);
-    final List<IExtendedModifier> toSort = new ArrayList<>(original);
-    original.clear();
-    for (int iter = 1; iter < toSort.size(); ++iter)
-      for (int inner = 0; inner < toSort.size() - iter; ++inner)
-        if (compare(toSort.get(inner), toSort.get(inner + 1)))
-          bubble(toSort, inner);
-    original.addAll(toSort);
-    return $;
   }
 }
