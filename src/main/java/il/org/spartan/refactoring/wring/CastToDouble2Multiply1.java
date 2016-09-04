@@ -13,6 +13,16 @@ import il.org.spartan.refactoring.ast.*;
  * @author Dan Greenstein
  * @since 2016 */
 public final class CastToDouble2Multiply1 extends Wring.ReplaceCurrentNode<CastExpression> implements Kind.NoImpact {
+  private static NumberLiteral literal(final Expression x) {
+    final NumberLiteral $ = x.getAST().newNumberLiteral();
+    $.setToken("1.");
+    return $;
+  }
+
+  private static InfixExpression replacement(final Expression $) {
+    return subject.pair(literal($), $).to(TIMES);
+  }
+
   @Override String description(final CastExpression x) {
     return "Use 1.*" + step.expression(x) + " instead of (double)" + step.expression(x);
   }
@@ -23,15 +33,5 @@ public final class CastToDouble2Multiply1 extends Wring.ReplaceCurrentNode<CastE
     ).when(//
         step.type(x).isPrimitiveType() && "double".equals("" + step.type(x)) //
     );
-  }
-
-  private static InfixExpression replacement(final Expression $) {
-    return subject.pair(literal($), $).to(TIMES);
-  }
-
-  private static NumberLiteral literal(final Expression x) {
-    final NumberLiteral $ = x.getAST().newNumberLiteral();
-    $.setToken("1.");
-    return $;
   }
 }

@@ -257,7 +257,7 @@ public class TrimmerTest250 {
   @Test public void issue108k() {
     trimming("z=foo(x=(y=y*u),17)").to("z=foo(x=(y*=u),17)");
   }
-  
+
   @Test public void issue111a_1(){
     trimming("public class A {" + //
         "static public int a;" + //
@@ -266,9 +266,9 @@ public class TrimmerTest250 {
         "public static int a;" + //
         "}");
   }
-  
+
   @Test public void issue111b_1(){
-    
+
     trimming("public class A {" + //
         "static final public int a;" + //
         "}") //
@@ -276,7 +276,7 @@ public class TrimmerTest250 {
         "public static final int a;" + //
         "}");
   }
-  
+
   @Ignore public void issue111c() {
     trimming("protected public void func();").to("public protected void func();");
   }
@@ -307,7 +307,7 @@ public class TrimmerTest250 {
     .to("public protected class A{static volatile int a;}") //
     .to(null);
   }
-  
+
   @Test public void issue111g() {
     trimming("protected public final public enum Level { " + //
         "HIGH, MEDIUM, LOW" + //
@@ -321,11 +321,11 @@ public class TrimmerTest250 {
   @Ignore public void issue111h() {
     trimming("protected public int a;").to("public protected int a;");
   }
-  
+
   @Ignore public void issue111i() {
     trimming("protected public int a;").to("public protected int a;");
   }
-  
+
   @Ignore public void issue111q(){
     trimming("protected public int a;")
     .to("public protected int a;");
@@ -478,7 +478,7 @@ public class TrimmerTest250 {
         "enum A {; final void f() {} public final void g() {} }"//
     ).to(null);
   }
-  
+
   @Test public void issue50_inEnumMemberComplex() {
     trimming(//
         "enum A { a1 {{ f(); } \n" + //

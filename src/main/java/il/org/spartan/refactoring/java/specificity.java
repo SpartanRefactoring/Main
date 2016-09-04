@@ -11,24 +11,6 @@ import il.org.spartan.refactoring.ast.*;
 /** @author Yossi Gil
  * @since 2015-08-23 */
 public class specificity implements Comparator<Expression> {
-  /** Determine
-   * @param x JD
-   * @return <code><b>true</b></code> <i>iff</i> the parameter has a defined
-   *         level of specificity. */
-  public static boolean defined(final Expression x) {
-    return Level.defined(x);
-  }
-
-  /** A comparison of two {@link Expression} by their level of specificity.
-   * @param e1 JD
-   * @param e2 JD
-   * @return a negative, zero, or positive integer, depending on the level of
-   *         specificity the first parameter, is less than, equal, or greater
-   *         than the specificity level of the second parameter. */
-  @Override public int compare(final Expression e1, final Expression e2) {
-    return Level.of(e1) - Level.of(e2);
-  }
-
   enum Level {
     NULL {
       @Override boolean includes(final ASTNode n) {
@@ -113,5 +95,23 @@ public class specificity implements Comparator<Expression> {
     }
 
     abstract boolean includes(final ASTNode ¢);
+  }
+
+  /** Determine
+   * @param x JD
+   * @return <code><b>true</b></code> <i>iff</i> the parameter has a defined
+   *         level of specificity. */
+  public static boolean defined(final Expression x) {
+    return Level.defined(x);
+  }
+
+  /** A comparison of two {@link Expression} by their level of specificity.
+   * @param e1 JD
+   * @param e2 JD
+   * @return a negative, zero, or positive integer, depending on the level of
+   *         specificity the first parameter, is less than, equal, or greater
+   *         than the specificity level of the second parameter. */
+  @Override public int compare(final Expression e1, final Expression e2) {
+    return Level.of(e1) - Level.of(e2);
   }
 }

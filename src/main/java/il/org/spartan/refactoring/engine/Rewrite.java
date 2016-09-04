@@ -44,7 +44,7 @@ public abstract class Rewrite extends Range {
    * @param ns additional nodes, defining the scope of this action. */
   public Rewrite(final String description, final ASTNode n, final ASTNode... ns) {
     this(description, range(n, ns));
-    lineNumber = ((CompilationUnit) AncestorSearch.forClass(CompilationUnit.class).from(n)).getLineNumber(from);
+    lineNumber = ((CompilationUnit) searchAncestors.forClass(CompilationUnit.class).from(n)).getLineNumber(from);
   }
 
   Rewrite(final String description, final Range other) {

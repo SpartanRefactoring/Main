@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.assemble.Plant.*;
+import static il.org.spartan.refactoring.assemble.plant.*;
 import static il.org.spartan.refactoring.engine.into.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -9,6 +9,7 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.refactoring.assemble.*;
+import il.org.spartan.refactoring.assemble.plant.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.java.*;
@@ -29,7 +30,7 @@ import il.org.spartan.refactoring.java.*;
 
   @Test public void plantintoReturn() {
     final Expression e = into.e("2");
-    final Plant plant = plant(e);
+    final PlantingExpression plant = plant(e);
     plant.into(e.getAST().newReturnStatement());
     azzert.that(plant.into(e.getAST().newReturnStatement()), iz("2"));
   }

@@ -13,6 +13,9 @@ import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
 
 @SuppressWarnings("static-method") public class FactorsCollectorTest {
+  private final InfixExpression complex = i("a-b*c - (x - - - (d*e))");
+  private final FactorsCollector c = new FactorsCollector();
+
   @Test public void test00() {
     azzert.that(c.collect(i("a*b")), is(c));
   }
@@ -294,7 +297,7 @@ import il.org.spartan.refactoring.ast.*;
     c.collect(i("a / (b+c)"));
     azzert.that(c.multipliers(), iz("[a]"));
   }
- 
+
   @Test public void test47() {
     c.collect(i("a / (b+c)"));
     azzert.that(c.dividers(), iz("[b+c]"));
@@ -309,7 +312,7 @@ import il.org.spartan.refactoring.ast.*;
     c.collect(i("a + (b+c)"));
     azzert.that(c.dividers(), iz("[]"));
   }
- 
+
   @Test public void test50() {
     azzert.that(minus.peel(e("a*b")), iz("a*b"));
   }
@@ -333,42 +336,77 @@ import il.org.spartan.refactoring.ast.*;
     c.collect(i("(a+b)/(b+c)"));
     azzert.that(c.dividers(), iz("[b+c]"));
   }
-  
-  @Test public void test62(){
+
+  @Ignore("need to make a new complex for Factors") @Test public void test55() {
+    c.collect(complex);
+    azzert.that("" + c.multipliers(), containsString("a"));
+  }
+
+  @Ignore("need to make a new complex for Factors") @Test public void test56() {
+    c.collect(complex);
+    azzert.that("" + c.multipliers(), containsString("d"));
+  }
+
+  @Ignore("need to make a new complex for Factors") @Test public void test57() {
+    c.collect(complex);
+    azzert.that("" + c.multipliers(), containsString("e"));
+  }
+
+  @Ignore("need to make a new complex for Factors") @Test public void test58() {
+    c.collect(complex);
+    azzert.that("" + c.multipliers(), containsString("d * e"));
+  }
+
+  @Ignore("need to make a new complex for Factors") @Test public void test59() {
+    c.collect(complex);
+    azzert.that("" + c.dividers(), containsString("b * c"));
+  }
+
+  @Ignore("need to make a new complex for Factors") @Test public void test60() {
+    c.collect(complex);
+    azzert.that("" + c.multipliers(), iz("[a,d*e]"));
+  }
+
+  @Ignore("need to make a new complex for Factors") @Test public void test61() {
+    c.collect(complex);
+    azzert.that("" + c.dividers(), iz("[b*c,x]"));
+  }
+
+  @Test public void test62() {
     c.collect(i("(a/b)*c"));
     azzert.that(c.dividers(), iz("[b]"));
     azzert.that(c.multipliers(), iz("[a,c]"));
   }
-  
-  @Test public void test63(){
-    azzert.aye((wizard.same((new Factor(false, e("x"))).asExpression(),e("x"))));
-  }
-  
-  @Test public void test64(){
-    azzert.aye((wizard.same((new Factor(false, e("x*3+5"))).asExpression(),e("x*3+5"))));
+
+  @Test public void test63() {
+    azzert.aye(wizard.same(new Factor(false, e("x")).asExpression(), e("x")));
   }
 
-  @Test public void test65(){
-    azzert.aye((wizard.same((new Factor(false, e("1/x"))).asExpression(),e("1/x"))));
+  @Test public void test64() {
+    azzert.aye(wizard.same(new Factor(false, e("x*3+5")).asExpression(), e("x*3+5")));
   }
-  
-  @Test public void test66(){
-    azzert.aye((wizard.same((new Factor(false, e("17.5-x/2-3/2*(17/3/y/z)*k"))).asExpression(),e("17.5-x/2-3/2*(17/3/y/z)*k"))));
+
+  @Test public void test65() {
+    azzert.aye(wizard.same(new Factor(false, e("1/x")).asExpression(), e("1/x")));
   }
-  
-  @Test public void test67(){
-    azzert.aye((wizard.same((new Factor(true, e("x"))).asExpression(),e("1/x"))));
+
+  @Test public void test66() {
+    azzert.aye(wizard.same(new Factor(false, e("17.5-x/2-3/2*(17/3/y/z)*k")).asExpression(), e("17.5-x/2-3/2*(17/3/y/z)*k")));
   }
-  
-  @Test public void test68(){
-    azzert.aye((wizard.same((new Factor(true, e("17.5-x/2-3/2*(17/3/y/z)*k"))).asExpression(),e("1/(17.5-x/2-3/2*(17/3/y/z)*k)"))));
+
+  @Test public void test67() {
+    azzert.aye(wizard.same(new Factor(true, e("x")).asExpression(), e("1/x")));
   }
-  
-  @Test public void test69(){
-    azzert.aye((wizard.same((new Factor(true, e("u/w/x/y/z"))).asExpression(),e("1/(u/w/x/y/z)"))));
+
+  @Test public void test68() {
+    azzert.aye(wizard.same(new Factor(true, e("17.5-x/2-3/2*(17/3/y/z)*k")).asExpression(), e("1/(17.5-x/2-3/2*(17/3/y/z)*k)")));
   }
-  
-  @Test public void test70(){
+
+  @Test public void test69() {
+    azzert.aye(wizard.same(new Factor(true, e("u/w/x/y/z")).asExpression(), e("1/(u/w/x/y/z)")));
+  }
+
+  @Test public void test70() {
     azzert.aye(FactorsCollector.isLeafFactor(e("3+5+7+9")));
     azzert.aye(FactorsCollector.isLeafFactor(e("(5/6/7/8/9/10)")));
   }
@@ -414,43 +452,4 @@ import il.org.spartan.refactoring.ast.*;
     azzert.that(c.multipliers().size(), is(4));
     azzert.that(c.dividers().size(), is(1));
   }
-  
-  private final InfixExpression complex = i("a-b*c - (x - - - (d*e))");
-
-  @Ignore("need to make a new complex for Factors") @Test public void test55() {
-    c.collect(complex);
-    azzert.that("" + c.multipliers(), containsString("a"));
-  }
-
-  @Ignore("need to make a new complex for Factors") @Test public void test56() {
-    c.collect(complex);
-    azzert.that("" + c.multipliers(), containsString("d"));
-  }
-
-  @Ignore("need to make a new complex for Factors") @Test public void test57() {
-    c.collect(complex);
-    azzert.that("" + c.multipliers(), containsString("e"));
-  }
-
-  @Ignore("need to make a new complex for Factors") @Test public void test58() {
-    c.collect(complex);
-    azzert.that("" + c.multipliers(), containsString("d * e"));
-  }
-
-  @Ignore("need to make a new complex for Factors") @Test public void test59() {
-    c.collect(complex);
-    azzert.that("" + c.dividers(), containsString("b * c"));
-  }
-
-  @Ignore("need to make a new complex for Factors") @Test public void test60() {
-    c.collect(complex);
-    azzert.that("" + c.multipliers(), iz("[a,d*e]"));
-  }
-
-  @Ignore("need to make a new complex for Factors") @Test public void test61() {
-    c.collect(complex);
-    azzert.that("" + c.dividers(), iz("[b*c,x]"));
-  }
-
-  private final FactorsCollector c = new FactorsCollector();
 }

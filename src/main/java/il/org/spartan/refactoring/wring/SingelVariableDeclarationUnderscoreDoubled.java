@@ -59,10 +59,25 @@ import il.org.spartan.refactoring.wring.Wring.*;
   // true iff renaming annotated variables only
   final static boolean BY_ANNOTATION = true;
 
+  static MethodDeclaration getMethod(final SingleVariableDeclaration d) {
+    final ASTNode $ = d.getParent();
+    return $ == null || !($ instanceof MethodDeclaration) ? null : (MethodDeclaration) $;
+  }
+
   public static boolean isUsed(final MethodDeclaration d, final SimpleName n) {
     final IsUsed u = new IsUsed(n);
     d.getBody().accept(u);
     return u.conclusion();
+  }
+
+  private static ASTNode replacement(final SingleVariableDeclaration ¢) {
+    final SingleVariableDeclaration $ = ¢.getAST().newSingleVariableDeclaration();
+    $.setName(¢.getAST().newSimpleName(unusedVariableName()));
+    $.setFlags($.getFlags());
+    $.setInitializer($.getInitializer());
+    $.setType(duplicate.of(¢.getType()));
+    duplicate.modifiers(step.modifiers(¢), step.modifiers($));
+    return $;
   }
 
   public static boolean suppressedUnused(final SingleVariableDeclaration d) {
@@ -86,11 +101,6 @@ import il.org.spartan.refactoring.wring.Wring.*;
     return "Change name of unused variable " + d.getName().getIdentifier() + " to __";
   }
 
-  static MethodDeclaration getMethod(final SingleVariableDeclaration d) {
-    final ASTNode $ = d.getParent();
-    return $ == null || !($ instanceof MethodDeclaration) ? null : (MethodDeclaration) $;
-  }
-
   @Override ASTNode replacement(final SingleVariableDeclaration n, final ExclusionManager m) {
     final MethodDeclaration d = getMethod(n);
     if (d == null)
@@ -105,15 +115,5 @@ import il.org.spartan.refactoring.wring.Wring.*;
         if (!n.equals(svd))
           m.exclude(svd);
     return replacement(n);
-  }
-
-  private static ASTNode replacement(final SingleVariableDeclaration ¢) {
-    final SingleVariableDeclaration $ = ¢.getAST().newSingleVariableDeclaration();
-    $.setName(¢.getAST().newSimpleName(unusedVariableName()));
-    $.setFlags($.getFlags());
-    $.setInitializer($.getInitializer());
-    $.setType(duplicate.of(¢.getType()));
-    duplicate.modifiers(step.modifiers(¢), step.modifiers($));
-    return $;
   }
 }

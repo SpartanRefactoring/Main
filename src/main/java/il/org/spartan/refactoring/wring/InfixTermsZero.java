@@ -16,14 +16,6 @@ import il.org.spartan.refactoring.wring.Wring.*;
  * @author Dan Greenstein
  * @since 2016 */
 public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
-  @Override String description(final InfixExpression x) {
-    return "Remove all additions and substructions of 0 to and from " + x;
-  }
-
-  @Override ASTNode replacement(final InfixExpression x) {
-    return x.getOperator() != PLUS ? null : replacement(extract.allOperands(x));
-  }
-
   private static ASTNode replacement(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
     for (final Expression ¢ : xs)
@@ -31,5 +23,13 @@ public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression> im
         $.add(¢);
     return $.size() == xs.size() ? null
         : $.isEmpty() ? duplicate.of(lisp.first(xs)) : $.size() == 1 ? duplicate.of(lisp.first($)) : subject.operands($).to(PLUS);
+  }
+
+  @Override String description(final InfixExpression x) {
+    return "Remove all additions and substructions of 0 to and from " + x;
+  }
+
+  @Override ASTNode replacement(final InfixExpression x) {
+    return x.getOperator() != PLUS ? null : replacement(extract.allOperands(x));
   }
 }

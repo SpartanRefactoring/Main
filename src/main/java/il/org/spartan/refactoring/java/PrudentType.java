@@ -57,33 +57,78 @@ public enum PrudentType {
   BOOLEAN("boolean", "must be boolean: !f(), f() || g() "), //
   STRING("String", "must be string: \"\"+a, a.toString(), f()+null, not f()+g()"),//
   ;
+  @SuppressWarnings("unused") static PrudentType axiom(final boolean x) {
+    return BOOLEAN;
+  }
+
+  // from here on is the axiom method used for testing of PrudentType. see issue
+  // #105 for more details
+  @SuppressWarnings("unused") static PrudentType axiom(final byte x) {
+    return BYTE;
+  }
+
+  @SuppressWarnings("unused") static PrudentType axiom(final char x) {
+    return CHAR;
+  }
+
+  @SuppressWarnings("unused") static PrudentType axiom(final double x) {
+    return DOUBLE;
+  }
+
+  @SuppressWarnings("unused") static PrudentType axiom(final float x) {
+    return FLOAT;
+  }
+
+  @SuppressWarnings("unused") static PrudentType axiom(final int x) {
+    return INT;
+  }
+
+  @SuppressWarnings("unused") static PrudentType axiom(final long x) {
+    return LONG;
+  }
+
+  @SuppressWarnings("unused") static PrudentType axiom(final Object o) {
+    return NOTHING;
+  }
+
+  @SuppressWarnings("unused") static PrudentType axiom(final short x) {
+    return SHORT;
+  }
+
+  @SuppressWarnings("unused") static PrudentType axiom(final String x) {
+    return STRING;
+  }
+
+  private static PrudentType conditionalWithNoInfo(final PrudentType t) {
+    switch (t) {
+      case BYTE:
+      case SHORT:
+      case CHAR:
+      case INT:
+      case INTEGRAL:
+      case LONG:
+      case FLOAT:
+      case NUMERIC:
+        return NUMERIC;
+      case DOUBLE:
+        return DOUBLE;
+      case STRING:
+        return STRING;
+      case BOOLEAN:
+        return BOOLEAN;
+      case BOOLEANINTEGRAL:
+        return BOOLEANINTEGRAL;
+      default:
+        return NOTHING;
+    }
+  }
+
   /** @param x JD
    * @return The most specific Type information that can be deduced about the
    *         expression, or {@link #NOTHING} if it cannot decide. Will never
    *         return null */
   public static PrudentType prudent(final Expression x) {
     return prudent(x, null, null);
-  }
-
-  /** A version of {@link #prudent(Expression)} that receives the operand's type
-   * for a single operand expression. The call kind(e,null) is equivalent to
-   * kind(e) */
-  static PrudentType prudent(final Expression x, final PrudentType t) {
-    return prudent(x, t, null);
-  }
-
-  /** A version of {@link #prudent(Expression)} that receives the operands' type
-   * for a two operand expression. The call kind(e,null,null) is equivalent to
-   * kind(e)
-   * @param t1 the type of the left hand operand of the expression, the type of
-   *        the then expression of the conditional, or null if unknown
-   * @param t2 the type of the left hand operand of the expression, the type of
-   *        the else expression of the conditional, or null if unknown */
-  static PrudentType prudent(final Expression x, final PrudentType t1, final PrudentType t2) {
-    final List<PrudentType> ¢ = new ArrayList<>();
-    ¢.add(t1);
-    ¢.add(t2);
-    return prudent(x, ¢);
   }
 
   /** A version of {@link #prudent(Expression)} that receives the a list of the
@@ -124,36 +169,56 @@ public enum PrudentType {
       case CONDITIONAL_EXPRESSION:
         return prudentType((ConditionalExpression) x, lisp.first(ts), lisp.second(ts));
       case ASSIGNMENT:
-        return prudentType((Assignment) x,lisp.first(ts));
+        return prudentType((Assignment) x, lisp.first(ts));
       default:
         return NOTHING;
     }
   }
 
-  private static PrudentType prudentType(Assignment x, PrudentType t) {
-    PrudentType $ = t != null ? t : prudent(x.getLeftHandSide());
+  /** A version of {@link #prudent(Expression)} that receives the operand's type
+   * for a single operand expression. The call kind(e,null) is equivalent to
+   * kind(e) */
+  static PrudentType prudent(final Expression x, final PrudentType t) {
+    return prudent(x, t, null);
+  }
+
+  /** A version of {@link #prudent(Expression)} that receives the operands' type
+   * for a two operand expression. The call kind(e,null,null) is equivalent to
+   * kind(e)
+   * @param t1 the type of the left hand operand of the expression, the type of
+   *        the then expression of the conditional, or null if unknown
+   * @param t2 the type of the left hand operand of the expression, the type of
+   *        the else expression of the conditional, or null if unknown */
+  static PrudentType prudent(final Expression x, final PrudentType t1, final PrudentType t2) {
+    final List<PrudentType> ¢ = new ArrayList<>();
+    ¢.add(t1);
+    ¢.add(t2);
+    return prudent(x, ¢);
+  }
+
+  private static PrudentType prudentType(final Assignment x, final PrudentType t) {
+    final PrudentType $ = t != null ? t : prudent(x.getLeftHandSide());
     return !$.isNoInfo() ? $ : prudent(x.getRightHandSide()).isNumeric() ? NUMERIC : prudent(x.getRightHandSide());
-  }
-
-  private static PrudentType prudentType(final MethodInvocation i) {
-    return "toString".equals(i.getName() + "") && i.arguments().isEmpty() ? STRING : NOTHING;
-  }
-
-  private static PrudentType prudentType(final NumberLiteral l) {
-    // TODO: Dor use TypeLiteral instead.
-    final String ¢ = l.getToken();
-    return ¢.matches("[0-9]+") ? INT
-        : ¢.matches("[0-9]+[l,L]") ? LONG
-            : ¢.matches("[0-9]+\\.[0-9]*[f,F]") || ¢.matches("[0-9]+[f,F]") ? FLOAT
-                : ¢.matches("[0-9]+\\.[0-9]*[d,D]?") || ¢.matches("[0-9]+[d,D]") ? DOUBLE : NUMERIC;
   }
 
   private static PrudentType prudentType(final CastExpression x) {
     return typeSwitch("" + step.type(x), BAPTIZED);
   }
 
-  private static PrudentType prudentType(final PrefixExpression x, final PrudentType t1) {
-    return (t1 != null ? t1 : prudent(x.getOperand())).under(x.getOperator());
+  private static PrudentType prudentType(final ClassInstanceCreation c) {
+    return typeSwitch("" + c.getType(), NONNULL);
+  }
+
+  private static PrudentType prudentType(final ConditionalExpression x, final PrudentType t1, final PrudentType t2) {
+    final PrudentType $ = t1 != null ? t1 : prudent(x.getThenExpression());
+    final PrudentType ¢2 = t2 != null ? t2 : prudent(x.getElseExpression());
+    // If we don't know much about one operand but do know enough about the
+    // other, we can still learn something
+    return $ == ¢2 ? $
+        : $.isNoInfo() || ¢2.isNoInfo() ? conditionalWithNoInfo($.isNoInfo() ? ¢2 : $) //
+            : $.isIntegral() && ¢2.isIntegral() ? $.underIntegersOnlyOperator(¢2) //
+                : $.isNumeric() && ¢2.isNumeric() ? $.underNumericOnlyOperator(¢2)//
+                    : NOTHING; //
   }
 
   private static PrudentType prudentType(final InfixExpression x, final List<PrudentType> ts) {
@@ -176,29 +241,30 @@ public enum PrudentType {
     return $;
   }
 
-  private static PrudentType prudentType(final PostfixExpression x, final PrudentType t1) {
-    return (t1 != null ? t1 : prudent(x.getOperand())).asNumeric(); // see
-                                                                    // testInDecreamentSemantics
+  private static PrudentType prudentType(final MethodInvocation i) {
+    return "toString".equals(i.getName() + "") && i.arguments().isEmpty() ? STRING : NOTHING;
+  }
+
+  private static PrudentType prudentType(final NumberLiteral l) {
+    // TODO: Dor use TypeLiteral instead.
+    final String ¢ = l.getToken();
+    return ¢.matches("[0-9]+") ? INT
+        : ¢.matches("[0-9]+[l,L]") ? LONG
+            : ¢.matches("[0-9]+\\.[0-9]*[f,F]") || ¢.matches("[0-9]+[f,F]") ? FLOAT
+                : ¢.matches("[0-9]+\\.[0-9]*[d,D]?") || ¢.matches("[0-9]+[d,D]") ? DOUBLE : NUMERIC;
   }
 
   private static PrudentType prudentType(final ParenthesizedExpression x, final PrudentType t) {
     return t != null ? t : prudent(extract.core(x));
   }
 
-  private static PrudentType prudentType(final ClassInstanceCreation c) {
-    return typeSwitch("" + c.getType(), NONNULL);
+  private static PrudentType prudentType(final PostfixExpression x, final PrudentType t1) {
+    return (t1 != null ? t1 : prudent(x.getOperand())).asNumeric(); // see
+                                                                    // testInDecreamentSemantics
   }
 
-  private static PrudentType prudentType(final ConditionalExpression x, final PrudentType t1, final PrudentType t2) {
-    final PrudentType $ = t1 != null ? t1 : prudent(x.getThenExpression());
-    final PrudentType ¢2 = t2 != null ? t2 : prudent(x.getElseExpression());
-    // If we don't know much about one operand but do know enough about the
-    // other, we can still learn something
-    return $ == ¢2 ? $
-        : $.isNoInfo() || ¢2.isNoInfo() ? conditionalWithNoInfo($.isNoInfo() ? ¢2 : $) //
-            : $.isIntegral() && ¢2.isIntegral() ? $.underIntegersOnlyOperator(¢2) //
-                : $.isNumeric() && ¢2.isNumeric() ? $.underNumericOnlyOperator(¢2)//
-                    : NOTHING; //
+  private static PrudentType prudentType(final PrefixExpression x, final PrudentType t1) {
+    return (t1 != null ? t1 : prudent(x.getOperand())).under(x.getOperator());
   }
 
   private static PrudentType typeSwitch(final String s, final PrudentType $) {
@@ -234,30 +300,6 @@ public enum PrudentType {
     }
   }
 
-  private static PrudentType conditionalWithNoInfo(final PrudentType t) {
-    switch (t) {
-      case BYTE:
-      case SHORT:
-      case CHAR:
-      case INT:
-      case INTEGRAL:
-      case LONG:
-      case FLOAT:
-      case NUMERIC:
-        return NUMERIC;
-      case DOUBLE:
-        return DOUBLE;
-      case STRING:
-        return STRING;
-      case BOOLEAN:
-        return BOOLEAN;
-      case BOOLEANINTEGRAL:
-        return BOOLEANINTEGRAL;
-      default:
-        return NOTHING;
-    }
-  }
-
   final String description;
   final String name;
 
@@ -266,8 +308,71 @@ public enum PrudentType {
     this.description = description;
   }
 
+  /** @return one of {@link #INT}, {@link #LONG}, {@link #CHAR}, {@link BYTE},
+   *         {@link SHORT} or {@link #INTEGRAL}, in case it cannot decide */
+  private PrudentType asIntegral() {
+    return isIntegral() ? this : INTEGRAL;
+  }
+
+  /** @return one of {@link #INT}, {@link #LONG}, or {@link #INTEGRAL}, in case
+   *         it cannot decide */
+  private PrudentType asIntegralUnderOperation() {
+    return isIntUnderOperation() ? INT : asIntegral();
+  }
+
+  /** @return one of {@link #INT}, {@link #LONG},, {@link #CHAR}, {@link BYTE},
+   *         {@link SHORT}, {@link FLOAT}, {@link #DOUBLE}, {@link #INTEGRAL} or
+   *         {@link #NUMERIC}, in case no further information is available */
+  private PrudentType asNumeric() {
+    return isNumeric() ? this : NUMERIC;
+  }
+
+  /** @return one of {@link #INT}, {@link #LONG}, {@link #FLOAT},
+   *         {@link #DOUBLE}, {@link #INTEGRAL} or {@link #NUMERIC}, in case no
+   *         further information is available */
+  private PrudentType asNumericUnderOperation() {
+    return !isNumeric() ? NUMERIC : isIntUnderOperation() ? INT : this;
+  }
+
   public final String fullName() {
     return this + "=" + name + " (" + description + ")";
+  }
+
+  /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
+   *         {@link BYTE}, {@link SHORT}, {@link FLOAT}, {@link #DOUBLE},
+   *         {@link #INTEGRAL} or {@link #NUMERIC}, {@link #STRING},
+   *         {@link #ALPHANUMERIC} or false otherwise */
+  public boolean isAlphaNumeric() {
+    return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC, STRING, ALPHANUMERIC);
+  }
+
+  /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
+   *         {@link BYTE}, {@link SHORT}, {@link #INTEGRAL} or false
+   *         otherwise */
+  public boolean isIntegral() {
+    return in(this, LONG, INT, CHAR, BYTE, SHORT, INTEGRAL);
+  }
+
+  /** used to determine whether an integral type behaves as itself under
+   * operations or as an INT.
+   * @return true if one of {@link #CHAR}, {@link BYTE}, {@link SHORT} or false
+   *         otherwise. */
+  private boolean isIntUnderOperation() {
+    return in(this, CHAR, BYTE, SHORT);
+  }
+
+  /** @return true if one of {@link #NOTHING}, {@link #BAPTIZED},
+   *         {@link #NONNULL}, {@link #VOID}, {@link #NULL} or false
+   *         otherwise */
+  private boolean isNoInfo() {
+    return in(this, NOTHING, BAPTIZED, NONNULL, VOID, NULL);
+  }
+
+  /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
+   *         {@link BYTE}, {@link SHORT}, {@link FLOAT}, {@link #DOUBLE},
+   *         {@link #INTEGRAL}, {@link #NUMERIC} or false otherwise */
+  public boolean isNumeric() {
+    return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC);
   }
 
   /** @return one of {@link #BOOLEAN} , {@link #INT} , {@link #LONG} ,
@@ -316,13 +421,10 @@ public enum PrudentType {
     return this == BOOLEAN ? BOOLEAN : !isIntegral() ? BOOLEANINTEGRAL : this == LONG ? LONG : INTEGRAL;
   }
 
-  /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE},
-   *         {@link #STRING}, {@link #INTEGRAL}, {@link #NUMERIC} or
-   *         {@link #ALPHANUMERIC}, in case it cannot decide */
-  private PrudentType underPlus(final PrudentType k) {
-    // addition with NULL or String must be a String
-    // unless both operands are numric, the result may be a String
-    return in(STRING, this, k) || in(NULL, this, k) ? STRING : !isNumeric() || !k.isNumeric() ? ALPHANUMERIC : underNumericOnlyOperator(k);
+  private PrudentType underIntegersOnlyOperator(final PrudentType k) {
+    final PrudentType ¢1 = asIntegralUnderOperation();
+    final PrudentType ¢2 = k.asIntegralUnderOperation();
+    return in(LONG, ¢1, ¢2) ? LONG : !in(INTEGRAL, ¢1, ¢2) ? INT : INTEGRAL;
   }
 
   /** @return one of {@link #INT}, {@link #LONG}, {@link #INTEGRAL},
@@ -349,114 +451,12 @@ public enum PrudentType {
                     !in(INTEGRAL, $, this) ? INT : INTEGRAL;
   }
 
-  private PrudentType underIntegersOnlyOperator(final PrudentType k) {
-    final PrudentType ¢1 = asIntegralUnderOperation();
-    final PrudentType ¢2 = k.asIntegralUnderOperation();
-    return in(LONG, ¢1, ¢2) ? LONG : !in(INTEGRAL, ¢1, ¢2) ? INT : INTEGRAL;
-  }
-
-  /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
-   *         {@link BYTE}, {@link SHORT}, {@link #INTEGRAL} or false
-   *         otherwise */
-  public boolean isIntegral() {
-    return in(this, LONG, INT, CHAR, BYTE, SHORT, INTEGRAL);
-  }
-
-  /** used to determine whether an integral type behaves as itself under
-   * operations or as an INT.
-   * @return true if one of {@link #CHAR}, {@link BYTE}, {@link SHORT} or false
-   *         otherwise. */
-  private boolean isIntUnderOperation() {
-    return in(this, CHAR, BYTE, SHORT);
-  }
-
-  /** @return one of {@link #INT}, {@link #LONG}, {@link #CHAR}, {@link BYTE},
-   *         {@link SHORT} or {@link #INTEGRAL}, in case it cannot decide */
-  private PrudentType asIntegral() {
-    return isIntegral() ? this : INTEGRAL;
-  }
-
-  /** @return one of {@link #INT}, {@link #LONG}, or {@link #INTEGRAL}, in case
-   *         it cannot decide */
-  private PrudentType asIntegralUnderOperation() {
-    return isIntUnderOperation() ? INT : asIntegral();
-  }
-
-  /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
-   *         {@link BYTE}, {@link SHORT}, {@link FLOAT}, {@link #DOUBLE},
-   *         {@link #INTEGRAL}, {@link #NUMERIC} or false otherwise */
-  public boolean isNumeric() {
-    return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC);
-  }
-
-  /** @return one of {@link #INT}, {@link #LONG},, {@link #CHAR}, {@link BYTE},
-   *         {@link SHORT}, {@link FLOAT}, {@link #DOUBLE}, {@link #INTEGRAL} or
-   *         {@link #NUMERIC}, in case no further information is available */
-  private PrudentType asNumeric() {
-    return isNumeric() ? this : NUMERIC;
-  }
-
-  /** @return one of {@link #INT}, {@link #LONG}, {@link #FLOAT},
-   *         {@link #DOUBLE}, {@link #INTEGRAL} or {@link #NUMERIC}, in case no
-   *         further information is available */
-  private PrudentType asNumericUnderOperation() {
-    return !isNumeric() ? NUMERIC : isIntUnderOperation() ? INT : this;
-  }
-
-  /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
-   *         {@link BYTE}, {@link SHORT}, {@link FLOAT}, {@link #DOUBLE},
-   *         {@link #INTEGRAL} or {@link #NUMERIC}, {@link #STRING},
-   *         {@link #ALPHANUMERIC} or false otherwise */
-  public boolean isAlphaNumeric() {
-    return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC, STRING, ALPHANUMERIC);
-  }
-
-  /** @return true if one of {@link #NOTHING}, {@link #BAPTIZED},
-   *         {@link #NONNULL}, {@link #VOID}, {@link #NULL} or false
-   *         otherwise */
-  private boolean isNoInfo() {
-    return in(this, NOTHING, BAPTIZED, NONNULL, VOID, NULL);
-  }
-
-  // from here on is the axiom method used for testing of PrudentType. see issue
-  // #105 for more details
-  @SuppressWarnings("unused") static PrudentType axiom(final byte x) {
-    return BYTE;
-  }
-
-  @SuppressWarnings("unused") static PrudentType axiom(final char x) {
-    return CHAR;
-  }
-
-  @SuppressWarnings("unused") static PrudentType axiom(final short x) {
-    return SHORT;
-  }
-
-  @SuppressWarnings("unused") static PrudentType axiom(final int x) {
-    return INT;
-  }
-
-  @SuppressWarnings("unused") static PrudentType axiom(final long x) {
-    return LONG;
-  }
-
-  @SuppressWarnings("unused") static PrudentType axiom(final float x) {
-    return FLOAT;
-  }
-
-  @SuppressWarnings("unused") static PrudentType axiom(final double x) {
-    return DOUBLE;
-  }
-
-  @SuppressWarnings("unused") static PrudentType axiom(final boolean x) {
-    return BOOLEAN;
-  }
-
-  @SuppressWarnings("unused") static PrudentType axiom(final String x) {
-    return STRING;
-  }
-
-  @SuppressWarnings("unused") static PrudentType axiom(final Object o) {
-    return NOTHING;
+  /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE},
+   *         {@link #STRING}, {@link #INTEGRAL}, {@link #NUMERIC} or
+   *         {@link #ALPHANUMERIC}, in case it cannot decide */
+  private PrudentType underPlus(final PrudentType k) {
+    // addition with NULL or String must be a String
+    // unless both operands are numric, the result may be a String
+    return in(STRING, this, k) || in(NULL, this, k) ? STRING : !isNumeric() || !k.isNumeric() ? ALPHANUMERIC : underNumericOnlyOperator(k);
   }
 }
