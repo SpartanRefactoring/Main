@@ -35,6 +35,14 @@ public abstract class ModifierSort<N extends BodyDeclaration> extends Wring.Repl
     return "Sort Modifiers as defined at Modifier.class";
   }
 
+  private boolean notSorted(final List<Modifier> modifierList) {
+    return true;
+  }
+  
+  @Override boolean scopeIncludes(final N n)  {
+    return notSorted(extract.modifiers(n));
+  }
+  
   @Override N replacement(final N $) {
     return go(duplicate.of($));
   }
