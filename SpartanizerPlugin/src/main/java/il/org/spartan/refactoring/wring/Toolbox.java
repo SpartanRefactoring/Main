@@ -78,6 +78,7 @@ public class Toolbox {
             new InfixAdditionSubtractionExpand(), //
             new InfixFactorNegatives(), //
             new EvaluateAddition(), //
+            new ConcatStrings(), //
             new EvaluateSubstraction(), //
             new EvaluateShiftRight(), //
             new EvaluateShiftLeft(), //
@@ -153,7 +154,7 @@ public class Toolbox {
             new TernaryEliminate(), //
             new TernaryShortestFirst(), //
             new TernaryPushdown(), //
-            new cleverStringTernarization(), //
+            new CleverTernarization(), //
             null) //
         .add(TypeDeclaration.class, //
             new ModifierCleanInterface(), //
