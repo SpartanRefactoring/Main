@@ -21,7 +21,7 @@ public enum stringType {
    *         used in applying the <code>+</code> operator to concatenate
    *         strings. concatenation. */
   public static boolean isNot(final Expression x) {
-    return stringType.isNotFromContext(x) || stringType.isNotFromStructure(az.infixExpression(x));
+    return stringType.isNotFromContext(x) || !in(prudent(x), STRING, ALPHANUMERIC)/*stringType.isNotFromStructure(az.infixExpression(x))*/;
   }
 
   /** Determine whether a <i>all</i> elements list of {@link Expression} are

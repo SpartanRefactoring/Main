@@ -405,7 +405,7 @@ public class PrudentTypeTest {
     }
 
     @Test public void basicExpressions04() {
-      azzert.that(prudent(into.e("9*3.0+f()")), is(DOUBLE));
+      azzert.that(prudent(into.e("9*3.0-f()")), is(DOUBLE));
     }
 
     @Test public void basicExpressions05() {
@@ -421,7 +421,7 @@ public class PrudentTypeTest {
     }
 
     @Test public void basicExpressions08() {
-      azzert.that(prudent(into.e("2+f()")), is(NUMERIC));
+      azzert.that(prudent(into.e("2+f()")), is(ALPHANUMERIC));
     }
 
     @Test public void basicExpressions09() {
@@ -477,7 +477,7 @@ public class PrudentTypeTest {
     }
 
     @Test public void basicExpressions24() {
-      azzert.that(prudent(into.e("1f + f()")), is(NUMERIC));
+      azzert.that(prudent(into.e("1f / f()")), is(NUMERIC));
     }
 
     @Test public void basicExpressions25() {
@@ -486,6 +486,13 @@ public class PrudentTypeTest {
 
     @Test public void basicExpressions26() {
       azzert.that(prudent(into.e("1+2f+3l-5-4d")), is(DOUBLE));
+    }
+    
+    @Test public void basicExpressions27() {
+      azzert.that(prudent(into.e("1+2f+3l+f()-5-4d")), is(DOUBLE));
+    }
+    @Test public void basicExpressions28() {
+      azzert.that(prudent(into.e("1+2f+3l+f()")), is(ALPHANUMERIC));
     }
 
     // s for the axiom methods
