@@ -34,7 +34,7 @@ import il.org.spartan.refactoring.wring.LocalInliner.*;
 public final class DeclarationInitializerStatementTerminatingScope extends Wring.VariableDeclarationFragementAndStatement implements Kind.Inlining {
   private static boolean forbidden(final SimpleName n, final Statement s) {
     ASTNode child = null;
-    for (final ASTNode ancestor : AncestorSearch.until(s).ancestors(n)) {
+    for (final ASTNode ancestor : searchAncestors.until(s).ancestors(n)) {
       if (iz.is(ancestor, WHILE_STATEMENT, DO_STATEMENT, ANONYMOUS_CLASS_DECLARATION)
           || iz.is(ancestor, FOR_STATEMENT) && step.initializers((ForStatement) ancestor).indexOf(child) != -1
           || iz.is(ancestor, ENHANCED_FOR_STATEMENT) && ((EnhancedForStatement) ancestor).getExpression() != child)
@@ -45,7 +45,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
   }
 
   private static boolean never(final SimpleName n, final Statement s) {
-    for (final ASTNode ancestor : AncestorSearch.until(s).ancestors(n))
+    for (final ASTNode ancestor : searchAncestors.until(s).ancestors(n))
       if (iz.is(ancestor, TRY_STATEMENT, SYNCHRONIZED_STATEMENT))
         return true;
     return false;
