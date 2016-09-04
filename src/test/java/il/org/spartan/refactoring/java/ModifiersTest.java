@@ -13,63 +13,63 @@ import il.org.spartan.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class ModifiersTest {
   @Test public void modifierUse_01() {
-    azzert.that(Modifiers.gt("public", "public"), is(false));
+    azzert.that(Modifiers.gt("public", "public"), is(0));
   }
 
   @Test public void modifierUse_03() {
-    azzert.that(Modifiers.gt("private", "public"), is(true));
+    azzert.that(Modifiers.gt("private", "public"), is(1));
   }
 
   @Test public void modifierUse_04() {
-    azzert.that(Modifiers.gt("public", "abstract"), is(false));
+    azzert.that(Modifiers.gt("public", "abstract"), is(-1));
   }
 
   @Test public void modifierUse_05() {
-    azzert.that(Modifiers.gt("public", "default"), is(false));
+    azzert.that(Modifiers.gt("public", "default"), is(-1));
   }
 
   @Test public void modifierUse_06() {
-    azzert.that(Modifiers.gt("public", "static"), is(false));
+    azzert.that(Modifiers.gt("public", "static"), is(-1));
   }
 
   @Test public void modifierUse_07() {
-    azzert.that(Modifiers.gt("public", "final"), is(false));
+    azzert.that(Modifiers.gt("public", "final"), is(-1));
   }
 
   @Test public void modifierUse_08() {
-    azzert.that(Modifiers.gt("public", "transient"), is(false));
+    azzert.that(Modifiers.gt("public", "transient"), is(-1));
   }
 
   @Test public void modifierUse_09() {
-    azzert.that(Modifiers.gt("public", "volatile"), is(false));
+    azzert.that(Modifiers.gt("public", "volatile"), is(-1));
   }
 
   @Test public void modifierUse_10() {
-    azzert.that(Modifiers.gt("public", "synchronized"), is(false));
+    azzert.that(Modifiers.gt("public", "synchronized"), is(-1));
   }
 
   @Test public void modifierUse_11() {
-    azzert.that(Modifiers.gt("public", "native"), is(false));
+    azzert.that(Modifiers.gt("public", "native"), is(-1));
   }
 
   @Test public void modifierUse_12() {
-    azzert.that(Modifiers.gt("public", "strictfp"), is(false));
+    azzert.that(Modifiers.gt("public", "strictfp"), is(-1));
   }
 
   @Test public void modifierUse_13() {
-    azzert.that(Modifiers.gt("strictfp", "synchronized"), is(true));
+    azzert.that(Modifiers.gt("strictfp", "synchronized"), is(1));
   }
 
   @Test public void modifierUse_14() {
-    azzert.that(Modifiers.gt("transient", "abstract"), is(true));
+    azzert.that(Modifiers.gt("transient", "abstract"), is(1));
   }
 
   @Test public void modifierUse_15() {
-    azzert.that(Modifiers.gt("volatile", "abstract"), is(true));
+    azzert.that(Modifiers.gt("volatile", "abstract"), is(1));
   }
 
   @Test public void modifierUse_16() {
-    azzert.that(Modifiers.gt("default", "protected"), is(true));
+    azzert.that(Modifiers.gt("default", "protected"), is(1));
   }
 
   @Test public void modifierUse_17() {
@@ -85,7 +85,7 @@ public class ModifiersTest {
   }
 
   @Test public void modifierUse_2() {
-    azzert.that(Modifiers.gt("protected", "public"), is(true));
+    azzert.that(Modifiers.gt("protected", "public"), is(1));
   }
 
   @Test public void modifierUse_20() {
