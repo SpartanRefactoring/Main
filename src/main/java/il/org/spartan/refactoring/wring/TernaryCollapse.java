@@ -8,21 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
 
-/** A {@link Wring} to simplify a conditional expression containing another
- * conditional expression, when two of the three inner expressions are
- * identical, e.g., converting
- *
- * <pre>
- * a ? b ? x : z : z
- * </pre>
- *
- * into
- *
- * <pre>
- * a &amp;&amp; b ? x : z
- * </pre>
- *
- * .
+/** Converts <code>a?b?x:z:z</code>into <code>a&&b?x:z</code>
  * @author Yossi Gil
  * @since 2015-9-19 */
 public final class TernaryCollapse extends Wring.ReplaceCurrentNode<ConditionalExpression> implements Kind.DistributiveRefactoring {
