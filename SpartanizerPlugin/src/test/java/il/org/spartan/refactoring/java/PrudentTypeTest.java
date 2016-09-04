@@ -391,6 +391,10 @@ public class PrudentTypeTest {
       azzert.that(prudent(into.e("toString()")), is(STRING));
     }
     
+    @Test public void methods4() {
+      azzert.that(prudent(into.e("toString(x,y)")), is(NOTHING));
+    }
+    
     //basic tests for assignments
     @Test public void assingment1(){
       azzert.that(prudent(into.e("x = 2")), is(NUMERIC));
@@ -557,11 +561,11 @@ public class PrudentTypeTest {
       azzert.that(axiom(true), is(BOOLEAN));
     }
 
-    @SuppressWarnings("unused") @Test public void axiomBoolean2() {
+   @Test public void axiomBoolean2() {
       azzert.that(axiom(true || b1 && b2), is(BOOLEAN));
     }
 
-    @SuppressWarnings("unused") @Test public void axiomBoolean3() {
+    @Test public void axiomBoolean3() {
       azzert.that(axiom(5 > 6 && 8 != 14), is(BOOLEAN));
     }
 
