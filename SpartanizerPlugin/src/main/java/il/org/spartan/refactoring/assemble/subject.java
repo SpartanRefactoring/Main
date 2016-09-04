@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.assemble;
 
-import static il.org.spartan.refactoring.assemble.Plant.*;
+import static il.org.spartan.refactoring.assemble.plant.*;
 import static il.org.spartan.refactoring.ast.step.*;
 
 import java.util.*;
@@ -305,7 +305,7 @@ public class subject {
       final IfStatement $ = ast.newIfStatement();
       $.setExpression(claim(condition));
       if (then != null)
-        new PlantStatement(then).intoThen($);
+        plant.plant(then).intoThen($);
       if (elze != null)
         $.setElseStatement(elze);
       return $;
