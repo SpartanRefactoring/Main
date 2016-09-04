@@ -395,8 +395,10 @@ public class EnvironmentCodeExamples {
       }
     }
   }
-/*
-  public static class EX9 { // template
+
+// Some errors with this test, and the desired outcome is yet to be determined.
+  
+/*  public static class EX9 { // template
     public class SOList<Type> implements Iterable<Type> {
       private class __template__0 {}
       private final Type[] arrayList;
@@ -415,17 +417,8 @@ public class EnvironmentCodeExamples {
       @Override public Iterator<Type> iterator() {
         final Iterator<Type> $ = new Iterator<Type>() {
 
-          @Override public boolean hasNext() {
-            // TODO Auto-generated method stub
-            return false;
-          }
-
-          @Override public Type next() {
-            // TODO Auto-generated method stub
-            return null;
-          }
           @InOrderFlatENV({@Id(name="arrayList", clazz=SOList.__template__0.class),@Id(name="currentSize", clazz=int.class),@Id(name="$", clazz=Iterator<SOList.__template__0>.class)}) @OutOfOrderFlatENV({ "it", "currentSize", "arrayList" }) int currentIndex = 0;
-
+          
           @Override public boolean hasNext() {
             return currentIndex < currentSize && arrayList[currentIndex] != null;
           }
@@ -437,6 +430,7 @@ public class EnvironmentCodeExamples {
           @Override public void remove() {
             throw new UnsupportedOperationException();
           }
+          
         };
         @OutOfOrderFlatENV({@Id(name="arrayList", clazz=SOList.__template__0.class),@Id(name="currentSize", clazz=int.class)}) final int q; // currentIndex
         // shouldn't be
@@ -444,8 +438,8 @@ public class EnvironmentCodeExamples {
         return $;
       }
     }
-  }
-*/
+  }*/
+
   public static class EX10 {
     @InOrderFlatENV({}) class forTest {
       int x;
@@ -468,7 +462,7 @@ public class EnvironmentCodeExamples {
         for (final String s : tmp) {
           @Begin final int a;
           y = s;
-          /*@End({ "s" })*/ final int b;
+          @End({@Id(name="EX10.forTest.x", clazz=int.class),@Id(name="EX10.forTest.y", clazz=String.class),@Id(name="EX10.forTest.g.s", clazz=String.class)}) final int b;
         }
       }
     }
@@ -556,17 +550,20 @@ public class EnvironmentCodeExamples {
   static public class EX13{
     class Onoes{
       int x;
+      public Onoes(int y) {
+        int x=y;
+      }
       int giveMeANumber() {return 0;};
     }
     
-    /*Onoes foo(int n,int y){
+    Onoes foo(int n,int y){
       return new Onoes(y){
         @NestedENV({@Id(name="EX13.foo.n",clazz=int.class),@Id(name="EX13.foo.y",clazz=int.class),@Id(name="EX13.foo.__anon__Onoes__0.x",clazz=int.class)}) 
         @Override int giveMeANumber(){
           return n*x;
         }
-      }
-    }*/
+      };
+    }
   }
 
   static public class EX14 {
