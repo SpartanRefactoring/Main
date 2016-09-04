@@ -22,9 +22,6 @@ public class Recurser<T> {
       $.addAll(extract.allOperands((InfixExpression)n));
       return $;
     }
-      
-    
-    
     final List<ASTNode> $ = new ArrayList<>();
     try {
       @SuppressWarnings("rawtypes") final List lst = n.structuralPropertiesForType();
@@ -40,14 +37,14 @@ public class Recurser<T> {
     }
   }
 
-  private final ASTNode root;
+  private ASTNode root;
   private T current;
 
-  public Recurser(final ASTNode root) {
+  public Recurser(ASTNode root) {
     this(root, null);
   }
 
-  public Recurser(final ASTNode root, final T current) {
+  public Recurser(ASTNode root, final T current) {
     this.root = root;
     this.current = current;
     if (this.root == null)
@@ -64,11 +61,11 @@ public class Recurser<T> {
   }
 
   public ASTNode getRoot() {
-    return root;
+    return (ASTNode)root;
   }
 
   public T postVisit(final Function<Recurser<T>, T> f) {
-    final List<ASTNode> childrenList = getChildren(this.root);
+    final List<ASTNode> childrenList = getChildren((ASTNode)this.root);
     if (childrenList == null || childrenList.isEmpty()) {
       this.current = f.apply(this);
       return this.current;
@@ -87,7 +84,7 @@ public class Recurser<T> {
   }
   
   public void postVisit(final Consumer<Recurser<T>> f) {
-    final List<ASTNode> childrenList = getChildren(this.root);
+    final List<ASTNode> childrenList = getChildren((ASTNode)this.root);
     if (childrenList == null || childrenList.isEmpty()) {
       f.accept(this);
       return;
@@ -106,7 +103,7 @@ public class Recurser<T> {
 
   public T preVisit(final Function<Recurser<T>, T> f) {
     this.current = f.apply(this);
-    final List<ASTNode> childrenList = getChildren(this.root);
+    final List<ASTNode> childrenList = getChildren((ASTNode)this.root);
     if (childrenList == null || childrenList.isEmpty())
       return this.current;
     final List<Recurser<T>> recurserList = new ArrayList<>();
@@ -122,15 +119,16 @@ public class Recurser<T> {
   
   public void preVisit(final Consumer<Recurser<T>> f) {
     f.accept(this);
-    final List<ASTNode> childrenList = getChildren(this.root);
-    if (childrenList == null || childrenList.isEmpty())
+    final List<ASTNode> childrenList = getChildren((ASTNode)this.root);
+    if (childrenList == null || childrenList.isEmpty()){
       return ;
+    }
     final List<Recurser<T>> recurserList = new ArrayList<>();
     for (final ASTNode child : childrenList)
       recurserList.add(new Recurser<T>(child));
     int index = 0;
     for (final Recurser<T> rec : recurserList) {
-      rec.from(index == 0 ? current : recurserList.get(index - 1).getCurrent()).preVisit(f);
+      rec.preVisit(f);
       ++index;
     }
     return;
