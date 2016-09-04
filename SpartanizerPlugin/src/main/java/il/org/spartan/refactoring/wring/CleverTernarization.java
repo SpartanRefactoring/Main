@@ -76,8 +76,26 @@ public final class CleverTernarization extends Wring.ReplaceCurrentNode<Conditio
           elzeOperands.add(0,elzePost);
           return subject.pair(prefix, subject.pair(thenPost, //
               subject.operands(elzeOperands).to(wizard.PLUS2)).toCondition(condition)).to(wizard.PLUS2);
+      }        
+    }
+    if(elzeOperands.get(elzeOperands.size()-1).getNodeType()==ASTNode.STRING_LITERAL){
+      String elzeStr = ((StringLiteral)elzeOperands.get(elzeOperands.size()-1)).getLiteralValue();
+      int commonSuffixIndex = findCommonSuffix(thenStr,elzeStr);
+      if(commonSuffixIndex!= 0){
+        final StringLiteral suffix = condition.getAST().newStringLiteral();
+        suffix.setLiteralValue(thenStr.substring(thenStr.length() - commonSuffixIndex));
+        final StringLiteral thenPre = condition.getAST().newStringLiteral();
+        thenPre.setLiteralValue(thenStr.length() == commonSuffixIndex ? //
+            "" : thenStr.substring(0, thenStr.length() - commonSuffixIndex));
+        final StringLiteral elzePre = condition.getAST().newStringLiteral();
+        elzePre.setLiteralValue(elzeStr.length() == commonSuffixIndex ? //
+            "" : elzeStr.substring(0, elzeStr.length() - commonSuffixIndex));
+        elzeOperands.remove(elzeOperands.size()-1);
+        elzeOperands.add(elzeOperands.size(),elzePre);
+        final ParenthesizedExpression pe = condition.getAST().newParenthesizedExpression();
+        pe.setExpression(subject.pair(thenPre, subject.operands(elzeOperands).to(wizard.PLUS2)).toCondition(condition));
+        return subject.pair(pe, suffix).to(wizard.PLUS2);
       }
-        
     }
     return null;
   }
