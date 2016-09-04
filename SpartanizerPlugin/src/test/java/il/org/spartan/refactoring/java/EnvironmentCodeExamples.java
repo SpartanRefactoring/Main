@@ -9,7 +9,6 @@ import il.org.spartan.refactoring.annotations.*;
 
 @Ignore("This should never be furn") @SuppressWarnings("all") //
 public class EnvironmentCodeExamples {
-  /*
   void EX1() {
     
     @NestedENV({}) 
@@ -40,8 +39,7 @@ public class EnvironmentCodeExamples {
     @OutOfOrderFlatENV(@Id(name="b", clazz=int.class),@Id(name="a", clazz=int.class),{@Id(name="s", clazz=String.class)}) 
     final int c = 0;
   }
-*/
-/*  
+  
   {
     @Begin class A {//
     }
@@ -376,11 +374,11 @@ public class EnvironmentCodeExamples {
     class Arr {
       String[] arr;
 
-      @NestedENV({ "EX8.Arr.arr#String[]" }) @OutOfOrderFlatENV({ "arr" }) void foo() {
+      @NestedENV({@Id(name="EX8.Arr.arr",clazz=String[].class)}) @OutOfOrderFlatENV({@Id(name="arr",clazz=String[].class)}) void foo() {
         @Begin class m {
           }
         arr[2] = "$$$";
-        @End({ "arr" }) class n {
+        @End({@Id(name="EX8.Arr.arr",clazz=String[].class)}) class n {
           }
       }
     }
@@ -388,21 +386,23 @@ public class EnvironmentCodeExamples {
 
   public static class EX9 { // template
     public class SOList<Type> implements Iterable<Type> {
+      private class __template__0 {}
       private final Type[] arrayList;
-      @OutOfOrderFlatENV({ "arrayList" }) int currentSize;
+      @OutOfOrderFlatENV({@Id(name="arrayList", clazz=__template__0.class)}) int currentSize;
 
-      @InOrderFlatENV({ "arrayList", "currentSize" }) public SOList(final Type[] newArray) {
+      @InOrderFlatENV({@Id(name="arrayList", clazz=__template__0.class),@Id(name="currentSize", clazz=int.class)}) 
+      public SOList(final Type[] newArray) {
         @Begin class opening {
           }
         this.arrayList = newArray;
         this.currentSize = arrayList.length;
-        @End({ "arrayList", "currentSize" }) class closing {
-          }
+        @End({@Id(name="EX9.SOList.arrayList", clazz=SOList.__template__0.class),@Id(name="EX9.SOList.currentSize", clazz=int.class)}) 
+        class closing {}
       }
 
       @Override public Iterator<Type> iterator() {
         final Iterator<Type> $ = new Iterator<Type>() {
-          @InOrderFlatENV({ "arrayList", "currentSize", "it" }) @OutOfOrderFlatENV({ "it", "currentSize", "arrayList" }) int currentIndex = 0;
+          @InOrderFlatENV({@Id(name="arrayList", clazz=SOList.__template__0.class),@Id(name="currentSize", clazz=int.class),@Id(name="$", clazz=Iterator<SOList.__template__0>.class)}) @OutOfOrderFlatENV({ "it", "currentSize", "arrayList" }) int currentIndex = 0;
 
           @Override public boolean hasNext() {
             return currentIndex < currentSize && arrayList[currentIndex] != null;
@@ -416,7 +416,7 @@ public class EnvironmentCodeExamples {
             throw new UnsupportedOperationException();
           }
         };
-        @OutOfOrderFlatENV({ "arrayList", "currentSize" }) final int q; // currentIndex
+        @OutOfOrderFlatENV({@Id(name="arrayList", clazz=SOList.__template__0.class),@Id(name="currentSize", clazz=int.class)}) final int q; // currentIndex
         // shouldn't be
         // recognized
         return $;
@@ -429,11 +429,14 @@ public class EnvironmentCodeExamples {
       int x;
       String y;
 
-      @NestedENV({ "EX10.forTest.x#int", "EX10.forTest.y#String" }) void f() {
+      @NestedENV({@ID(name="EX10.forTest.x", clazz=int.class),@ID(name="EX10.forTest.y", clazz=String.class)}) 
+      void f() {
+        
         for (int i = 0; i < 10; ++i) {
           @Begin final int a;
           x = i;
-          @End({ "i" }) final int b;
+          @End({@ID(name="EX10.forTest.x", clazz=int.class),@ID(name="EX10.forTest.y", clazz=String.class),@ID(name="EX10.forTest.a", clazz=int.class),@ID(name="EX10.forTest.i", clazz=int.class)}) 
+          final int b;
         }
       }
 
@@ -465,21 +468,21 @@ public class EnvironmentCodeExamples {
           @OutOfOrderFlatENV({}) @Begin final int a;
           final String s = "onoes";
           dangerousFunc("yay".equals(s));
-          @OutOfOrderFlatENV({ "s" }) @End({ "s" }) final int b;
+          @OutOfOrderFlatENV({@Id(name="s", clazz=String.class),@Id(name="a", clazz=int.class)}) @End(@Id(name="EX11.foo.s", clazz=String.class),@Id(name="EX11.foo.a", clazz=int.class)) final int b;
         } catch (final UnsupportedOperationException e) {
-          @OutOfOrderFlatENV({ "e" }) final int a;
+          @OutOfOrderFlatENV({@Id(name="e", clazz=UnsupportedOperationException.class)}) final int a;
         }
       }
 
       void f() {
         String s;
         try {
-          @OutOfOrderFlatENV({}) final int a;
+          @OutOfOrderFlatENV({@Id(name="s", clazz=String.class)}) final int a;
           s = "onoes";
           dangerousFunc("yay".equals(s));
-          @OutOfOrderFlatENV({ "s" }) @End({ "s" }) final int b;
+          @OutOfOrderFlatENV({@Id(name="s", clazz=String.class),@Id(name="a", clazz=int.class)}) @End({@Id(name="EX11.f.s", clazz=String.class),@Id(name="EX11.f.a", clazz=int.class)}) final int b; 
         } catch (final UnsupportedOperationException e) {
-          @OutOfOrderFlatENV({ "s", "e" }) final int a;
+          @OutOfOrderFlatENV({@Id(name="s", clazz=String.class),@Id(name="e", clazz=UnsupportedOperationException.class)}) final int a;
         }
       }
 
@@ -489,7 +492,7 @@ public class EnvironmentCodeExamples {
           }
           final C c = null;
         } catch (final NullPointerException e) {
-          @OutOfOrderFlatENV({ "e" }) final int a;
+          @OutOfOrderFlatENV({@Id(name="e", clazz=NullPointerException.class)}) final int a;
         }
       }
     }
@@ -499,12 +502,16 @@ public class EnvironmentCodeExamples {
     public static void main(final String args[]) {
       final EX12 tester = new EX12();
       // with type declaration
-      final MathOperation addition = (@OutOfOrderFlatENV({ "tester" }) final int a, @OutOfOrderFlatENV({ "a", "tester" }) final int b) -> a + b;
+      final MathOperation addition = 
+          (@OutOfOrderFlatENV({@Id(name="tester", clazz=EX12.class)}) final int a, @OutOfOrderFlatENV({@Id(name="a", clazz=int.class),@Id(name="tester", clazz=EX12.class)}) final int b) -> a + b;
       // with out type declaration
-      @OutOfOrderFlatENV({ "addition", "tester" }) final MathOperation subtraction = (a, b) -> a - b;
+      @OutOfOrderFlatENV({@Id(name="addition", clazz=MathOperation.class),@Id(name="tester", clazz=EX12.class)}) final MathOperation subtraction = (a, b) -> a - b;
       // with return statement along with curly braces
       final MathOperation multiplication = (final int a, final int b) -> {
-        @OutOfOrderFlatENV({ "a", "b", "tester" }) final int z;
+        
+        @OutOfOrderFlatENV({@Id(name="a", clazz=int.class),@Id(name="b", clazz=int.class),@Id(name="tester", clazz=EX12.class)})
+        final int z;
+        
         return a * b;
       };
       // without return statement and without curly braces
@@ -521,6 +528,22 @@ public class EnvironmentCodeExamples {
 
     interface GreetingService {
       void sayMessage(String message);
+    }
+  }
+  
+  static public class EX13{
+    class Onoes{
+      int x;
+      int giveMeANumber() {return 0;};
+    }
+    
+    Onoes foo(int n,int y){
+      return new Onoes(y){
+        @NestedENV({@Id(name="EX13.foo.n",clazz=int.class),@Id(name="EX13.foo.y",clazz=int.class),@Id(name="EX13.foo.__anon__Onoes__0.x",clazz=int.class)}) 
+        @Override int giveMeANumber(){
+          return n*x;
+        }
+      }
     }
   }
 
@@ -557,6 +580,6 @@ public class EnvironmentCodeExamples {
         return l;
       }
     }
-  }*/
+  }
 }
   
