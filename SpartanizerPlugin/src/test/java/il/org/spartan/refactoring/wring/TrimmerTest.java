@@ -1596,45 +1596,7 @@ import il.org.spartan.refactoring.utils.*;
     ;
   }
 
-  @Test public void issue110_1() {
-    trimming("polite ? \"Eat your meal.\" :  \"Eat your meal, please\"") //
-        .to("\"Eat your meal\" + (polite ? \".\" : \", please\")");
-  }
-
-  @Test public void issue110_2() {
-    trimming("polite ? \"Eat your meal.\" :  \"Eat your meal\"") //
-        .to("\"Eat your meal\" + (polite ? \".\" : \"\")");
-  }
-
-  @Test public void issue110_3() {
-    trimming("polite ? \"thanks for the meal\" :  \"I hated the meal\"") //
-        .to("!polite ? \"I hated the meal\": \"thanks for the meal\"") //
-        .to("(!polite ? \"I hated\" : \"thanks for\" )+ \" the meal\"");
-  }
-
-  @Test public void issue110_4() {
-    trimming("polite ? \"thanks.\" :  \"I hated the meal.\"") //
-        .to("(polite ? \"thanks\" :\"I hated the meal\")+ \".\"");
-  }
-
-  @Test public void issue110_5() {
-    trimming("a ? \"abracadabra\" : \"abba\"") //
-        .to("!a ? \"abba\" : \"abracadabra\"")//
-        .to("\"ab\" +(!a ? \"ba\" : \"racadabra\")")//
-        .to("\"ab\" +((!a ? \"b\" : \"racadabr\")+ \"a\")")//
-        .to("\"ab\" +(!a ? \"b\" : \"racadabr\")+ \"a\"").to(null);
-  }
-  
-  @Test public void issue110_6() {
-    trimming("receiver ==null ? \"Use \" + \"x\" : \"Use \" + receiver")//
-      .to("\"Use \"+(receiver==null ? \"x\" : receiver)").to(null);
-  }
-  
-  @Test public void issue110_7() {
-    trimming("receiver ==null ? \"Use x\" : \"Use \" + receiver")//
-      .to("\"Use \"+(receiver==null ? \"x\" : \"\"+receiver)").to(null);
-  }
-
+ 
 
   @Test public void issue37Simplified() {
     trimming("" + //
@@ -2150,6 +2112,61 @@ import il.org.spartan.refactoring.utils.*;
     trimming("int[] a = new int[] {2,3};").to(null);
   }
   
+  @Test public void issue110_1() {
+    trimming("polite ? \"Eat your meal.\" :  \"Eat your meal, please\"") //
+        .to("\"Eat your meal\" + (polite ? \".\" : \", please\")");
+  }
+
+  @Test public void issue110_2() {
+    trimming("polite ? \"Eat your meal.\" :  \"Eat your meal\"") //
+        .to("\"Eat your meal\" + (polite ? \".\" : \"\")");
+  }
+
+  @Test public void issue110_3() {
+    trimming("polite ? \"thanks for the meal\" :  \"I hated the meal\"") //
+        .to("!polite ? \"I hated the meal\": \"thanks for the meal\"") //
+        .to("(!polite ? \"I hated\" : \"thanks for\" )+ \" the meal\"");
+  }
+
+  @Test public void issue110_4() {
+    trimming("polite ? \"thanks.\" :  \"I hated the meal.\"") //
+        .to("(polite ? \"thanks\" :\"I hated the meal\")+ \".\"");
+  }
+
+  @Test public void issue110_5() {
+    trimming("a ? \"abracadabra\" : \"abba\"") //
+        .to("!a ? \"abba\" : \"abracadabra\"")//
+        .to("\"ab\" +(!a ? \"ba\" : \"racadabra\")")//
+        .to("\"ab\" +((!a ? \"b\" : \"racadabr\")+ \"a\")")//
+        .to("\"ab\" +(!a ? \"b\" : \"racadabr\")+ \"a\"").to(null);
+  }
+  
+  @Test public void issue110_6() {
+    trimming("receiver ==null ? \"Use \" + \"x\" : \"Use \" + receiver")//
+      .to("\"Use \"+(receiver==null ? \"x\" : receiver)").to(null);
+  }
+  
+  @Test public void issue110_7() {
+    trimming("receiver ==null ? \"Use x\" : \"Use \" + receiver")//
+      .to("\"Use \"+(receiver==null ? \"x\" : \"\"+receiver)").to(null);
+  }
+  
+  @Test public void issue110_8() {
+    trimming("receiver ==null ? \"Use\" : receiver + \"Use\"")//
+      .to("(receiver==null ? \"\" : receiver+\"\") + \"Use\"").to(null);
+  }
+
+  @Test public void issue110_9() {
+    trimming("receiver ==null ? \"user a\" : receiver + \"something a\"")//
+      .to("(receiver==null ? \"user\" : receiver+\"something\") + \" a\"").to(null);
+  }
+  
+  @Test public void issue110_10() {
+    trimming("receiver ==null ? \"Something Use\" : \"Something\" + receiver + \"Use\"")//
+      .to("\"Something\"+ (receiver==null ? \" Use\" : \"\"+receiver + \"Use\")")//
+      .to("\"Something\"+ ((receiver==null ? \" \" : \"\"+receiver+\"\") + \"Use\")");
+  }
+
   @Test public void issue120_1() {
     trimming("\"a\"+\"b\"").to("\"ab\"");
   }
