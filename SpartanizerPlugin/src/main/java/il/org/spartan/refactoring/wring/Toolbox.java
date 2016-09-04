@@ -97,7 +97,7 @@ public class Toolbox {
         .add(MethodDeclaration.class, //
             new MethodRenameReturnToDollar(), //
             new BodyDeclarationRemoveModifiers.OfMethod(), //
-            new ModifierSort.ofMethod(), //
+            new BodyDeclarationSortModifiers.ofMethod(), //
             null)
         .add(MethodInvocation.class, //
             new StringEqualsConstant(), //
@@ -157,17 +157,17 @@ public class Toolbox {
             null) //
         .add(TypeDeclaration.class, //
             new ModifierCleanInterface(), //
-            new ModifierSort.ofType(), //
+            new BodyDeclarationSortModifiers.ofType(), //
             null) //
         .add(EnumDeclaration.class, //
             new ModifierCleanEnum(), //
-            new ModifierSort.ofEnum(), //
+            new BodyDeclarationSortModifiers.ofEnum(), //
             null) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover(), null) //
         .add(ReturnStatement.class, new ReturnLastInMethod()) //
         .add(FieldDeclaration.class, //
             new BodyDeclarationRemoveModifiers.OfField(), //
-            new ModifierSort.ofField(), //
+            new BodyDeclarationSortModifiers.ofField(), //
             null) //
         .add(CastExpression.class, //
             new CastToDouble2Multiply1(), //
@@ -175,14 +175,14 @@ public class Toolbox {
             null) //
         .add(EnumConstantDeclaration.class, //
             new BodyDeclarationRemoveModifiers.OfEnumConstant(), //
-            new ModifierSort.ofEnumConstant(), //
+            new BodyDeclarationSortModifiers.ofEnumConstant(), //
             null) //
         .add(NormalAnnotation.class, //
             new AnnotationDiscardValueName(), //
             new AnnotationRemoveEmptyParentheses(), //
             null) //
-        .add(AnnotationTypeMemberDeclaration.class, new ModifierSort.ofAnnotationTypeMember(), null) //
-        .add(AnnotationTypeDeclaration.class, new ModifierSort.ofAnnotation(), null) //
+        .add(AnnotationTypeMemberDeclaration.class, new BodyDeclarationSortModifiers.ofAnnotationTypeMember(), null) //
+        .add(AnnotationTypeDeclaration.class, new BodyDeclarationSortModifiers.ofAnnotation(), null) //
         //.add(Initializer, new ModifierSort.ofInitializer(), null) //
         .seal();
   }
