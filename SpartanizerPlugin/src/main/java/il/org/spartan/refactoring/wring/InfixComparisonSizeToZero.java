@@ -21,11 +21,6 @@ import il.org.spartan.refactoring.engine.*;
  * @author Stav Namir <code><stav1472 [at] gmail.com></code>
  * @since 2016-04-24 */
 public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.Canonicalization {
-  private static boolean validTypes(final Expression ¢1, final Expression ¢2) {
-    return isNumber(¢1) && iz.methodInvocation(¢2) //
-        || isNumber(¢2) && iz.methodInvocation(¢1);
-  }
-
   private static String description(final Expression x) {
     return x == null ? "Use isEmpty()" : "Use " + x + ".isEmpty()";
   }
@@ -93,6 +88,11 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
         return null;
     }
     return replacement(o, sign, l, receiver);
+  }
+
+  private static boolean validTypes(final Expression ¢1, final Expression ¢2) {
+    return isNumber(¢1) && iz.methodInvocation(¢2) //
+        || isNumber(¢2) && iz.methodInvocation(¢1);
   }
 
   @Override String description(final InfixExpression x) {

@@ -74,6 +74,10 @@ public class GroupFieldEditor extends FieldEditor {
     parent.redraw();
   }
 
+  @Override protected void doFillIntoGrid(final Composite parent, final int numColumns) {
+    // TODO Auto-generated method stub
+  }
+
   /* (non-Javadoc) Method declared on FieldEditor. Loads the value from the
    * preference store and sets it to the check box. */
   @Override protected void doLoad() {
@@ -161,9 +165,5 @@ public class GroupFieldEditor extends FieldEditor {
 
   @Override public void store() {
     doStore();
-  }
-
-  @Override protected void doFillIntoGrid(final Composite parent, final int numColumns) {
-    // TODO Auto-generated method stub
   }
 }

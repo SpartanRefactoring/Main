@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.assemble;
 
-import static il.org.spartan.refactoring.assemble.Plant.*;
+import static il.org.spartan.refactoring.assemble.plant.*;
 import static il.org.spartan.refactoring.ast.step.*;
 
 import java.util.*;
@@ -13,12 +13,6 @@ import il.org.spartan.refactoring.utils.*;
 
 /** Contains subclasses and tools to build expressions and statements */
 public class subject {
-  public static InfixExpression append(final InfixExpression base, final Expression add) {
-    final InfixExpression $ = duplicate.of(base);
-    extendedOperands($).add(plant(duplicate.of(add)).into($));
-    return $;
-  }
-
   public static class Claimer {
     protected final AST ast;
 
@@ -57,6 +51,16 @@ public class subject {
     Operand(final Expression inner) {
       super(inner);
       this.inner = claim(inner);
+    }
+
+    // ** TODO: YG; integrate with fluent API
+    /** Create a number literal node owned by ast
+     * @param text the number of the literal node
+     * @return the number literal node with text as a number */
+    public NumberLiteral literal(final String text) {
+      final NumberLiteral $ = ast.newNumberLiteral();
+      $.setToken(text);
+      return $;
     }
 
     /** Create a new parenthesis expression owned by ast and put the expression
@@ -108,16 +112,6 @@ public class subject {
      * @return a qualified name node with name */
     public Expression toQualifier(final String name) {
       return ast.newQualifiedName((SimpleName) inner, ast.newSimpleName(name));
-    }
-
-    // ** TODO: YG; integrate with fluent API
-    /** Create a number literal node owned by ast
-     * @param text the number of the literal node
-     * @return the number literal node with text as a number */
-    public NumberLiteral literal(final String text) {
-      final NumberLiteral $ = ast.newNumberLiteral();
-      $.setToken(text);
-      return $;
     }
 
     /** Create a new {@link ReturnStatement} which returns our operand
@@ -305,7 +299,7 @@ public class subject {
       final IfStatement $ = ast.newIfStatement();
       $.setExpression(claim(condition));
       if (then != null)
-        new PlantStatement(then).intoThen($);
+        plant.plant(then).intoThen($);
       if (elze != null)
         $.setElseStatement(elze);
       return $;
@@ -321,6 +315,12 @@ public class subject {
     public IfStatement toNot(final Expression condition) {
       return toIf(make.notOf(condition));
     }
+  }
+
+  public static InfixExpression append(final InfixExpression base, final Expression add) {
+    final InfixExpression $ = duplicate.of(base);
+    extendedOperands($).add(plant(duplicate.of(add)).into($));
+    return $;
   }
 
   /** Create a new Operand
