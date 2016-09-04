@@ -27,20 +27,16 @@ public enum az {
     return !iz.infixExpression(¢) || !iz.deMorgan(infixExpression(¢).getOperator()) ? null : infixExpression(¢);
   }
 
+  public static Annotation annotation(IExtendedModifier ¢) {
+    return !iz.annotation(¢) ? null : (Annotation) ¢;
+  }
+
   /** Convert, is possible, an {@link ASTNode} to an {@link Assignment}
    * @param $ JD
    * @return argument, but down-casted to a {@link Assignment}, or
    *         <code><b>null</b></code> if the downcast is impossible. */
   public static Assignment assignment(final ASTNode $) {
     return !iz.is($, ASSIGNMENT) ? null : (Assignment) $;
-  }
-
-  /** Convert, is possible, an {@link ASTNode} to a {@link SimpleName}
-   * @param $ JD
-   * @return argument, but down-casted to a {@link SimpleName}, or
-   *         <code><b>null</b></code> if no such down-cast is possible.. */
-  public static SimpleName simpleName(final ASTNode $) {
-    return eval(() -> (SimpleName) $).when($ instanceof SimpleName);
   }
 
   /** Down-cast, if possible, to {@link Statement}
@@ -193,6 +189,14 @@ public enum az {
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static ReturnStatement returnStatement(final ASTNode $) {
     return !iz.is($, RETURN_STATEMENT) ? null : (ReturnStatement) $;
+  }
+
+  /** Convert, is possible, an {@link ASTNode} to a {@link SimpleName}
+   * @param $ JD
+   * @return argument, but down-casted to a {@link SimpleName}, or
+   *         <code><b>null</b></code> if no such down-cast is possible.. */
+  public static SimpleName simpleName(final ASTNode $) {
+    return eval(() -> (SimpleName) $).when($ instanceof SimpleName);
   }
 
   public static StringLiteral stringLiteral(final ASTNode ¢) {
