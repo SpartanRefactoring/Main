@@ -37,24 +37,54 @@ public class RecurserTest {
     final Expression simple_exp = into.i("3+4*4+6*7+8");
     final Recurser<Integer> recurse = new Recurser<>(simple_exp, 0);
     final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
-    assertEquals(11, (int) recurse.preVisit(accum));
+    assertEquals(9, (int) recurse.preVisit(accum));
   }
 
   @Test public void issue101_5() {
     final Expression simple_exp = into.i("3+4*4+6*7+8");
     final Recurser<Integer> recurse = new Recurser<>(simple_exp, 0);
     final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
-    assertEquals(11, (int) recurse.postVisit(accum));
+    assertEquals(9, (int) recurse.postVisit(accum));
   }
   
-  /* @Test @Ignore("under working") public void issue101_(){ Expression
-   * simple_exp = into.i("3+4*4+6*7+8"); Recurser<Integer> recurse = new
-   * Recurser<Integer>(simple_exp,0); //Ignore final Consumer<Recurser<Integer>>
-   * accum = (x) -> x.=x.getCurrent()+1); //
-   * assertEquals(11,(int)recurse.preVisit(accum)); }
-   *
-   * @Test public void issue101_7(){ Expression simple_exp = into.e("3");
-   * Recurser<Integer> recurse = new Recurser<Integer>(simple_exp,0); final
-   * Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
-   * assertEquals(1,(int)recurse.preVisit(accum)); } */
+  @Test public void issue101_6() {
+    final Expression simple_exp = into.i("3+4+5+6");
+    final Recurser<Integer> recurse = new Recurser<>(simple_exp, 0);
+    final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
+    assertEquals(5, (int) recurse.postVisit(accum));
+  }
+  
+  @Test public void issue101_7() {
+    final Expression simple_exp = into.e("a==4 ? 34 : 56");
+    final Recurser<Integer> recurse = new Recurser<>(simple_exp, 0);
+    final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
+    assertEquals(6, (int) recurse.postVisit(accum));
+  }
+  
+  @Test public void issue101_8() {
+    final Expression simple_exp = into.e("a==4 ? 34 : 56+34");
+    final Recurser<Integer> recurse = new Recurser<>(simple_exp, 0);
+    final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
+    assertEquals(8, (int) recurse.preVisit(accum));
+  }
+  
+  
+  @Test public void issue101_9() {
+    final Expression simple_exp = into.e("56");
+    final Recurser<Integer> recurse = new Recurser<>(simple_exp, 0);
+    final Consumer<Recurser<Integer>> changeToken = (x) -> {if(x.getRoot().getNodeType()== ASTNode.NUMBER_LITERAL)//
+      ((NumberLiteral)x.getRoot()).setToken("99");};
+   recurse.preVisit(changeToken);
+   assertEquals("99", simple_exp.toString());
+  }
+  
+  @Test @Ignore("Seems like working value/refrence problem") public void issue101_10() {
+    final Expression simple_exp = into.e("56+87");
+    final Recurser<Integer> recurse = new Recurser<>(simple_exp , 0);
+    final Consumer<Recurser<Integer>> changeToken = (x) -> {if(x.getRoot().getNodeType()== ASTNode.NUMBER_LITERAL)//
+      ((NumberLiteral)x.getRoot()).setToken("99");};
+   recurse.preVisit(changeToken);
+   assertEquals("99+99", simple_exp.toString());
+  }
+
 }
