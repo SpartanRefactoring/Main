@@ -253,7 +253,7 @@ public class TrimmerTest250 {
         "final private String s = \"Alex\";" + //
       "}")
     .to("public class A{" + //
-        "synchronized public void fun(final int a) {}" + //
+        "public synchronized void fun(final int a) {}" + //
         "private final String s = \"Alex\";" + //
       "}").to(null); //
   }
