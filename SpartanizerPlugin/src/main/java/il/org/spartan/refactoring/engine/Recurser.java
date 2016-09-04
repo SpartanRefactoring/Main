@@ -54,19 +54,21 @@ public class Recurser<T> {
 
   public T postVisit(final Function<Recurser<T>, T> f) {
     final List<ASTNode> childrenList = getChildren(this.root);
-    if (childrenList == null)
-      return f.apply(this);
+    if (childrenList == null || childrenList.isEmpty()){
+      this.current = f.apply(this);
+      return this.current;
+    }
     final List<Recurser<T>> recurserList = new ArrayList<>();
     for (final ASTNode child : childrenList)
       recurserList.add(new Recurser<T>(child));    
     int index = 0;
     for (final Recurser<T> rec : recurserList) {
-      rec.from(index == 0 ? current : recurserList.get(index - 1).getCurrent()).postVisit(f);
+      this.current = rec.from(index == 0 ? current : recurserList.get(index - 1).getCurrent()).postVisit(f);
       index++;
     }
     this.current = (index == 0 ? current : recurserList.get(index - 1).getCurrent());
     this.current = f.apply(this);
-    return recurserList.isEmpty() ? this.current : recurserList.get(index - 1).getCurrent();
+    return this.current;
   }
 
   /** supply self to each node in the tree. */
