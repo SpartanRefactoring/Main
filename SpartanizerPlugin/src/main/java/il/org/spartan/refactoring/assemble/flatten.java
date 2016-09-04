@@ -11,16 +11,16 @@ import il.org.spartan.refactoring.ast.*;
 
 public enum flatten {
   ;
+  private static List<Expression> add(final Expression x, final List<Expression> $) {
+    $.add(x);
+    return $;
+  }
+
   private static List<Expression> into(final Operator o, final Expression x, final List<Expression> $) {
     final Expression core = core(x);
     final InfixExpression inner = az.infixExpression(core);
     return inner == null || inner.getOperator() != o ? add(!iz.noParenthesisRequired(core) ? x : core, $)
         : flatten.into(o, duplicate.adjust(o, hop.operands(inner)), $);
-  }
-
-  private static List<Expression> add(final Expression x, final List<Expression> $) {
-    $.add(x);
-    return $;
   }
 
   private static List<Expression> into(final Operator o, final List<Expression> xs, final List<Expression> $) {

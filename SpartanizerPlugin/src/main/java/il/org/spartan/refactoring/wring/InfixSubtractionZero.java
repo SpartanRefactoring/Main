@@ -21,6 +21,10 @@ import il.org.spartan.refactoring.wring.Wring.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
+  private static List<Expression> minusFirst(final List<Expression> prune) {
+    return cons(minus(first(prune)), chop(prune));
+  }
+
   private static List<Expression> prune(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
     for (final Expression x : xs)
@@ -41,10 +45,6 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
       return !literal0(first) ? first : minus(first(prune));
     assert prune.size() >= 2;
     return subject.operands(!literal0(first) ? prune : minusFirst(prune)).to(MINUS2);
-  }
-
-  private static List<Expression> minusFirst(final List<Expression> prune) {
-    return cons(minus(first(prune)), chop(prune));
   }
 
   @Override String description(final InfixExpression x) {

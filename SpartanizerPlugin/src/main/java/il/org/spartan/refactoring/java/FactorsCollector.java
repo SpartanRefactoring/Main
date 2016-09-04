@@ -19,35 +19,12 @@ public class FactorsCollector {
   private final List<Expression> dividers = new ArrayList<>();
   private final List<Factor> all = new ArrayList<>();
 
-  public FactorsCollector(final InfixExpression e) {
-    collect(e);
-  }
-
   FactorsCollector() {
     /* For internal use only */
   }
 
-  final FactorsCollector collect(final InfixExpression x) {
-    if (x != null && !isLeafFactor(x))
-      collectTimesNonLeaf(x);
-    return this;
-  }
-
-  Void collectTimesNonLeaf(final InfixExpression x) {
-    assert x != null;
-    assert !isLeafFactor(x);
-    assert iz.infixTimes(x) || iz.infixDivide(x);
-    return iz.infixTimes(x) ? collectTimesPrefixTimesExpression(x) //
-        : collectTimesPrefixDivdeExpression(x);
-  }
-
-  Void collectTimesPrefixDivdeExpression(final InfixExpression x) {
-    assert x != null;
-    assert !isLeafFactor(x);
-    assert iz.infixDivide(x);
-    final List<Expression> es = hop.operands(x);
-    addMultiplierFactor(core(lisp.first(es)));
-    return collectDividersFactors(lisp.rest(es));
+  public FactorsCollector(final InfixExpression e) {
+    collect(e);
   }
 
   private Void addDivide(final Expression x) {
@@ -63,6 +40,10 @@ public class FactorsCollector {
     return collectDividePrefix(x);
   }
 
+  private Void addMultiplierFactor(final Expression x) {
+    return isLeafFactor(x) ? addTimesFactor(x) : collectTimesNonLeaf(az.infixExpression(x));
+  }
+
   private Void addTimes(final Expression x) {
     assert x != null;
     final Expression ¢ = minus.level(x) % 2 == 0 ? minus.peel(x) : subject.operand(minus.peel(x)).to(wizard.MINUS1);
@@ -76,8 +57,14 @@ public class FactorsCollector {
     return collectTimesPrefix(x);
   }
 
-  private Void addMultiplierFactor(final Expression x) {
-    return isLeafFactor(x) ? addTimesFactor(x) : collectTimesNonLeaf(az.infixExpression(x));
+  public List<Factor> all() {
+    return all;
+  }
+
+  final FactorsCollector collect(final InfixExpression x) {
+    if (x != null && !isLeafFactor(x))
+      collectTimesNonLeaf(x);
+    return this;
   }
 
   private Void collectDividePrefix(final Expression x) {
@@ -117,9 +104,33 @@ public class FactorsCollector {
     return null;
   }
 
+  private Void collectMultiplierFactors(final Iterable<Expression> xs) {
+    assert xs != null;
+    for (final Expression e : xs)
+      addMultiplierFactor(core(e));
+    return null;
+  }
+
+  Void collectTimesNonLeaf(final InfixExpression x) {
+    assert x != null;
+    assert !isLeafFactor(x);
+    assert iz.infixTimes(x) || iz.infixDivide(x);
+    return iz.infixTimes(x) ? collectTimesPrefixTimesExpression(x) //
+        : collectTimesPrefixDivdeExpression(x);
+  }
+
   private Void collectTimesPrefix(final Expression x) {
     assert x != null;
     return isLeafFactor(x) ? addTimes(x) : collectTimesNonLeaf(az.infixExpression(x));
+  }
+
+  Void collectTimesPrefixDivdeExpression(final InfixExpression x) {
+    assert x != null;
+    assert !isLeafFactor(x);
+    assert iz.infixDivide(x);
+    final List<Expression> es = hop.operands(x);
+    addMultiplierFactor(core(lisp.first(es)));
+    return collectDividersFactors(lisp.rest(es));
   }
 
   private Void collectTimesPrefixTimesExpression(final InfixExpression x) {
@@ -129,22 +140,11 @@ public class FactorsCollector {
     return collectMultiplierFactors(hop.operands(x));
   }
 
-  private Void collectMultiplierFactors(final Iterable<Expression> xs) {
-    assert xs != null;
-    for (final Expression e : xs)
-      addMultiplierFactor(core(e));
-    return null;
-  }
-
   public List<Expression> dividers() {
     return dividers;
   }
 
   public List<Expression> multipliers() {
     return multipliers;
-  }
-
-  public List<Factor> all() {
-    return all;
   }
 }

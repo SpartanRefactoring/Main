@@ -50,35 +50,6 @@ import il.org.spartan.refactoring.utils.*;
  * @author Matteo Orrù
  * @since 2016 */
 public final class InfixZeroAddition extends Wring<InfixExpression> {
-  @Override String description(final InfixExpression x) {
-    return "remove 0 in X + 0 expressions from " + x;
-  }
-
-  @Override public WringGroup wringGroup() {
-    return WringGroup.Abbreviation;
-  }
-
-  @Override Rewrite make(final InfixExpression x, final ExclusionManager exclude) {
-    final List<Expression> es = gather(x);
-    if (es.size() < 2)
-      return null;
-    final int n = minus.level(es);
-    if (n == 0 || n == 1 && minus.level(lisp.first(es)) == 1)
-      return null;
-    if (exclude != null)
-      exclude.exclude(x);
-    return new Rewrite(description(x), x) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        final Expression first = n % 2 == 0 ? null : es.get(0);
-        for (final Expression ¢ : es)
-          if (¢ != first && minus.level(¢) > 0)
-            r.replace(¢, plant(duplicate.of(minus.peel(¢))).into(¢.getParent()), g);
-        if (first != null)
-          r.replace(first, plant(subject.operand(minus.peel(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
-      }
-    };
-  }
-
   private static List<Expression> gather(final Expression x, final List<Expression> $) {
     if (x instanceof InfixExpression)
       return gather(az.infixExpression(x), $);
@@ -113,5 +84,34 @@ public final class InfixZeroAddition extends Wring<InfixExpression> {
   @Override public String description() {
     // TODO Auto-generated method stub
     return null;
+  }
+
+  @Override String description(final InfixExpression x) {
+    return "remove 0 in X + 0 expressions from " + x;
+  }
+
+  @Override Rewrite make(final InfixExpression x, final ExclusionManager exclude) {
+    final List<Expression> es = gather(x);
+    if (es.size() < 2)
+      return null;
+    final int n = minus.level(es);
+    if (n == 0 || n == 1 && minus.level(lisp.first(es)) == 1)
+      return null;
+    if (exclude != null)
+      exclude.exclude(x);
+    return new Rewrite(description(x), x) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+        final Expression first = n % 2 == 0 ? null : es.get(0);
+        for (final Expression ¢ : es)
+          if (¢ != first && minus.level(¢) > 0)
+            r.replace(¢, plant(duplicate.of(minus.peel(¢))).into(¢.getParent()), g);
+        if (first != null)
+          r.replace(first, plant(subject.operand(minus.peel(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
+      }
+    };
+  }
+
+  @Override public WringGroup wringGroup() {
+    return WringGroup.Abbreviation;
   }
 }

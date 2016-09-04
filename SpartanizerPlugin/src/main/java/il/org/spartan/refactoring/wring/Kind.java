@@ -3,24 +3,6 @@ package il.org.spartan.refactoring.wring;
 import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
 
 public interface Kind {
-  interface Sorting extends Structural {
-    static final String label = "Sorting";
-
-    @Override default String description() {
-      return label;
-    }
-  }
-
-  String description();
-
-  /** Returns the preference group to which the wring belongs to. This method
-   * should be overridden for each wring and should return one of the values of
-   * {@link WringGroup}
-   * @return preference group this wring belongs to */
-  default WringGroup wringGroup() {
-    return WringGroup.find(this);
-  }
-
   interface Abbreviation extends Nominal {
     static final String label = "Abbreviation";
 
@@ -85,6 +67,14 @@ public interface Kind {
     }
   }
 
+  interface Sorting extends Structural {
+    static final String label = "Sorting";
+
+    @Override default String description() {
+      return label;
+    }
+  }
+
   interface SyntacticBaggage extends Structural {// S1
     static final String label = "Syntactic baggage";
 
@@ -107,6 +97,16 @@ public interface Kind {
     @Override default String description() {
       return label;
     }
+  }
+
+  String description();
+
+  /** Returns the preference group to which the wring belongs to. This method
+   * should be overridden for each wring and should return one of the values of
+   * {@link WringGroup}
+   * @return preference group this wring belongs to */
+  default WringGroup wringGroup() {
+    return WringGroup.find(this);
   }
 }
 

@@ -22,6 +22,36 @@ import il.org.spartan.refactoring.engine.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public class EvaluateAddition extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
+  private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
+    double sum = 0;
+    for (final Expression ¢ : xs) {
+      if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isNumber(¢))
+        return null;
+      sum += EvaluateAux.extractDouble(¢);
+    }
+    return x.getAST().newNumberLiteral(Double.toString(sum));
+  }
+
+  private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
+    int sum = 0;
+    for (final Expression ¢ : xs) {
+      if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isInt(¢))
+        return null;
+      sum += EvaluateAux.extractInt(¢);
+    }
+    return x.getAST().newNumberLiteral(Integer.toString(sum));
+  }
+
+  private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
+    long sum = 0;
+    for (final Expression ¢ : xs) {
+      if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isNumber(¢))
+        return null;
+      sum += EvaluateAux.extractLong(¢);
+    }
+    return x.getAST().newNumberLiteral(Long.toString(sum) + "L");
+  }
+
   @Override public String description() {
     return "Evaluate addition of int numbers";
   }
@@ -43,35 +73,5 @@ public class EvaluateAddition extends Wring.ReplaceCurrentNode<InfixExpression> 
       default:
         return null;
     }
-  }
-
-  private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
-    int sum = 0;
-    for (final Expression ¢ : xs) {
-      if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isInt(¢))
-        return null;
-      sum += EvaluateAux.extractInt(¢);
-    }
-    return x.getAST().newNumberLiteral(Integer.toString(sum));
-  }
-
-  private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
-    double sum = 0;
-    for (final Expression ¢ : xs) {
-      if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isNumber(¢))
-        return null;
-      sum += EvaluateAux.extractDouble(¢);
-    }
-    return x.getAST().newNumberLiteral(Double.toString(sum));
-  }
-
-  private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
-    long sum = 0;
-    for (final Expression ¢ : xs) {
-      if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isNumber(¢))
-        return null;
-      sum += EvaluateAux.extractLong(¢);
-    }
-    return x.getAST().newNumberLiteral(Long.toString(sum) + "L");
   }
 }

@@ -105,7 +105,7 @@ import il.org.spartan.utils.*;
   }
 
   MethodInvocation getMethodInvocation(final CompilationUnit u, final int lineNumber, final MethodInvocation i) {
-    //TODO: Dan
+    // TODO: Dan
     final Wrapper<MethodInvocation> $ = new Wrapper<>();
     u.accept(new ASTVisitor() {
       @Override public boolean visit(final MethodInvocation ¢) {

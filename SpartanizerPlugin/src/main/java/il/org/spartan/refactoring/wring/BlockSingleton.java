@@ -24,6 +24,10 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-09-09 */
 public final class BlockSingleton extends Wring.ReplaceCurrentNode<Block> implements Kind.SyntacticBaggage {
+  private static Statement replacement(final Statement $) {
+    return $ == null || iz.blockEssential($) ? null : duplicate.of($);
+  }
+
   @Override String description(@SuppressWarnings("unused") final Block __) {
     return "Remove redundant curly braces.";
   }
@@ -32,9 +36,5 @@ public final class BlockSingleton extends Wring.ReplaceCurrentNode<Block> implem
     final ASTNode parent = step.parent(b);
     return !(parent instanceof Statement) || iz.is(parent, ASTNode.TRY_STATEMENT, ASTNode.SYNCHRONIZED_STATEMENT) ? null
         : replacement(lisp.onlyOne(statements(b)));
-  }
-
-  private static Statement replacement(final Statement $) {
-    return $ == null || iz.blockEssential($) ? null : duplicate.of($);
   }
 }
