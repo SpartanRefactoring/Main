@@ -1914,8 +1914,7 @@ import il.org.spartan.refactoring.utils.*;
     trimming(//
         "enum A {a1, a2; static enum B {b1, b2; static class C { static enum D {c1, c2}}}")//
             .to("enum A {a1, a2; enum B {b1, b2; static class C { static enum D {c1, c2}}}")//
-            .to("enum A {a1, a2; enum B {b1, b2; static class C { enum D {c1, c2}}}")//
-    ;
+            .to("enum A {a1, a2; enum B {b1, b2; static class C { enum D {c1, c2}}}");
   }
 
   @Test public void issue53() {
@@ -2138,6 +2137,23 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test public void issue74d() {
     trimming("int[] a = new int[] {2,3};").to(null);
+  }
+  
+  @Test public void issue120_1() {
+    trimming("\"a\"+\"b\"").to("\"ab\"");
+  }
+  
+  @Test public void issue120_2() {
+    trimming("\"abc\"+\"de\"+\"fgh\"").to("\"abcdefgh\"");
+  }
+  
+  @Test public void issue120_3() {
+    trimming("\"abc\"+a.toString()+\"de\"+\"fgh\"").to("\"abc\"+a.toString()+\"defgh\"");
+  }
+  
+  @Test public void issue120_4() {
+    trimming("c.toString()+\"abc\"+a.toString()+\"de\"+\"fgh\"") //
+    .to("c.toString()+\"abc\"+a.toString()+\"defgh\"");
   }
 
   @Test public void linearTransformation() {
@@ -4088,4 +4104,5 @@ import il.org.spartan.refactoring.utils.*;
   @Test public void xorSortClassConstantsAtEnd() {
     trimming("f(a,b,c,d) ^ BOB").to(null);
   }
+  
 }
