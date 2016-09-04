@@ -12,6 +12,9 @@ import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
 
 @SuppressWarnings("static-method") public class TermsCollectorTest {
+  private final InfixExpression complex = i("a-b*c - (x - - - (d*e))");
+  private final TermsCollector c = new TermsCollector();
+
   @Test public void test00() {
     azzert.that(c.collect(i("a*b")), is(c));
   }
@@ -334,8 +337,6 @@ import il.org.spartan.refactoring.ast.*;
     azzert.that(c.minus(), iz("[b*c]"));
   }
 
-  private final InfixExpression complex = i("a-b*c - (x - - - (d*e))");
-
   @Test public void test55() {
     c.collect(complex);
     azzert.that("" + c.plus(), containsString("a"));
@@ -370,6 +371,4 @@ import il.org.spartan.refactoring.ast.*;
     c.collect(complex);
     azzert.that("" + c.minus(), iz("[b*c,x]"));
   }
-
-  private final TermsCollector c = new TermsCollector();
 }

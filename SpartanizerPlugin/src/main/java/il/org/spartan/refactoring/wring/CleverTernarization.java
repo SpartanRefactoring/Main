@@ -40,111 +40,6 @@ import il.org.spartan.refactoring.utils.*;
  * @author Niv Shalmon
  * @since 2016-09-1 */
 public final class CleverTernarization extends Wring.ReplaceCurrentNode<ConditionalExpression> implements Kind.Ternarization {
-  @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
-    return "Replace ternarization with more clever one";
-  }
-
-  
-  private static Expression simplify(StringLiteral then, StringLiteral elze, Expression condition){
-    final String thenStr =  then.getLiteralValue();
-    final String elseStr = elze.getLiteralValue();
-    final int commonPrefixIndex = findCommonPrefix(thenStr, elseStr);
-    if (commonPrefixIndex != 0)
-      return replacementPrefix(thenStr, elseStr, commonPrefixIndex, condition);
-    final int commonSuffixLength = findCommonSuffix(thenStr, elseStr);
-    return commonSuffixLength == 0 ? null : replacementSuffix(thenStr, elseStr, commonSuffixLength, condition);
-  }
-  
-  
-  private static Expression simplify(StringLiteral then,InfixExpression elze, Expression condition){
-    String thenStr = then.getLiteralValue();
-    assert elze.getOperator()==wizard.PLUS2;
-    final List<Expression> elzeOperands = extract.allOperands(elze);
-    if(elzeOperands.get(0).getNodeType()==ASTNode.STRING_LITERAL){
-      String elzeStr = ((StringLiteral)elzeOperands.get(0)).getLiteralValue();
-      int commonPrefixIndex = findCommonPrefix(thenStr,elzeStr);
-      if(commonPrefixIndex!=0){
-          final StringLiteral prefix = condition.getAST().newStringLiteral();
-          prefix.setLiteralValue(thenStr.substring(0, commonPrefixIndex));
-          final StringLiteral thenPost = condition.getAST().newStringLiteral();
-          thenPost.setLiteralValue(thenStr.length() == commonPrefixIndex ? //
-              "" : thenStr.substring(commonPrefixIndex));
-          final StringLiteral elzePost = condition.getAST().newStringLiteral();
-          elzePost.setLiteralValue(elzeStr.length() == commonPrefixIndex ? //
-              "" : elzeStr.substring(commonPrefixIndex));
-          lisp.chop(elzeOperands);
-          elzeOperands.add(0,elzePost);
-          return subject.pair(prefix, subject.pair(thenPost, //
-              subject.operands(elzeOperands).to(wizard.PLUS2)).toCondition(condition)).to(wizard.PLUS2);
-      }        
-    }
-    if(elzeOperands.get(elzeOperands.size()-1).getNodeType()==ASTNode.STRING_LITERAL){
-      String elzeStr = ((StringLiteral)elzeOperands.get(elzeOperands.size()-1)).getLiteralValue();
-      int commonSuffixIndex = findCommonSuffix(thenStr,elzeStr);
-      if(commonSuffixIndex!= 0){
-        final StringLiteral suffix = condition.getAST().newStringLiteral();
-        suffix.setLiteralValue(thenStr.substring(thenStr.length() - commonSuffixIndex));
-        final StringLiteral thenPre = condition.getAST().newStringLiteral();
-        thenPre.setLiteralValue(thenStr.length() == commonSuffixIndex ? //
-            "" : thenStr.substring(0, thenStr.length() - commonSuffixIndex));
-        final StringLiteral elzePre = condition.getAST().newStringLiteral();
-        elzePre.setLiteralValue(elzeStr.length() == commonSuffixIndex ? //
-            "" : elzeStr.substring(0, elzeStr.length() - commonSuffixIndex));
-        elzeOperands.remove(elzeOperands.size()-1);
-        elzeOperands.add(elzeOperands.size(),elzePre);
-        final ParenthesizedExpression pe = condition.getAST().newParenthesizedExpression();
-        pe.setExpression(subject.pair(thenPre, subject.operands(elzeOperands).to(wizard.PLUS2)).toCondition(condition));
-        return subject.pair(pe, suffix).to(wizard.PLUS2);
-      }
-    }
-    return null;
-  }
-  
-
-  @Override Expression replacement(final ConditionalExpression x) {
-    final Expression then = x.getThenExpression();
-    final Expression elze = x.getElseExpression();
-    final Expression condition = x.getExpression();
-    if (then.getNodeType() == ASTNode.STRING_LITERAL && elze.getNodeType() == ASTNode.STRING_LITERAL)
-     return simplify((StringLiteral)then,(StringLiteral)elze,condition);
-   if (then.getNodeType()==ASTNode.STRING_LITERAL && elze.getNodeType()==ASTNode.INFIX_EXPRESSION)
-     return simplify((StringLiteral)then,(InfixExpression)elze,condition);
-   if (then.getNodeType()==ASTNode.INFIX_EXPRESSION && elze.getNodeType()==ASTNode.STRING_LITERAL)
-     return simplify((StringLiteral)elze,(InfixExpression)then,//
-         subject.operand(condition).to(PrefixExpression.Operator.NOT));
-    return null;
-
-  }
-
-  private static Expression replacementPrefix(final String thenStr, final String elseStr, final int commonPrefixIndex,
-      final Expression condition) {
-    final StringLiteral prefix = condition.getAST().newStringLiteral();
-    prefix.setLiteralValue(thenStr.substring(0, commonPrefixIndex));
-    final StringLiteral thenPost = condition.getAST().newStringLiteral();
-    thenPost.setLiteralValue(thenStr.length() == commonPrefixIndex ? //
-        "" : thenStr.substring(commonPrefixIndex));
-    final StringLiteral elsePost = condition.getAST().newStringLiteral();
-    elsePost.setLiteralValue(elseStr.length() == commonPrefixIndex ? //
-        "" : elseStr.substring(commonPrefixIndex));
-    return subject.pair(prefix, subject.pair(thenPost, //
-        elsePost).toCondition(condition)).to(wizard.PLUS2);
-  }
-
-  private static Expression replacementSuffix(final String thenStr, final String elseStr, final int commonSuffixLength,
-      final Expression condition) {
-    final StringLiteral suffix = condition.getAST().newStringLiteral();
-    suffix.setLiteralValue(thenStr.substring(thenStr.length() - commonSuffixLength));
-    final StringLiteral thenPre = condition.getAST().newStringLiteral();
-    thenPre.setLiteralValue(thenStr.length() == commonSuffixLength ? //
-        "" : thenStr.substring(0, thenStr.length() - commonSuffixLength));
-    final StringLiteral elsePre = condition.getAST().newStringLiteral();
-    elsePre.setLiteralValue(elseStr.length() == commonSuffixLength ? //
-        "" : elseStr.substring(0, elseStr.length() - commonSuffixLength));
-    final ParenthesizedExpression pe = condition.getAST().newParenthesizedExpression();
-    pe.setExpression(subject.pair(thenPre, elsePre).toCondition(condition));
-    return subject.pair(pe, suffix).to(wizard.PLUS2);
-  }
-
   private static int findCommonPrefix(final String str1, final String str2) {
     final char[] str1Array = str1.toCharArray();
     final char[] str2Array = str2.toCharArray();
@@ -164,5 +59,108 @@ public final class CleverTernarization extends Wring.ReplaceCurrentNode<Conditio
         break;
     }
     return i == Math.max(str1.length(), str2.length()) ? 0 : sub.length();
+  }
+
+  /** @param s JD
+   * @param i the length of the prefix
+   * @param n an ASTNode to create the StringLiteral from
+   * @return a StringLiteral whose literal value is the prefix of length i of
+   *         s */
+  private static StringLiteral getPrefix(final String s, final int i, final ASTNode n) {
+    return makeStringLiteral(i == 0 ? "" : s.substring(0, i), n);
+  }
+
+  /** @param s JD
+   * @param i the length of the suffix
+   * @param n an ASTNode to create the StringLiteral from
+   * @return a StringLiteral whose literal value is the suffix which begins on
+   *         the i'th character of s */
+  private static StringLiteral getSuffix(final String s, final int i, final ASTNode n) {
+    return makeStringLiteral(s.length() == i ? "" : s.substring(i), n);
+  }
+
+  private static StringLiteral makeStringLiteral(final String s, final ASTNode n) {
+    final StringLiteral $ = n.getAST().newStringLiteral();
+    $.setLiteralValue(s);
+    return $;
+  }
+
+  private static Expression replacementPrefix(final String thenStr, final String elzeStr, final int commonPrefixIndex, final Expression condition) {
+    final StringLiteral prefix = getPrefix(thenStr, commonPrefixIndex, condition);
+    final StringLiteral thenPost = getSuffix(thenStr, commonPrefixIndex, condition);
+    final StringLiteral elzePost = getSuffix(elzeStr, commonPrefixIndex, condition);
+    return subject.pair(prefix, subject.pair(thenPost, //
+        elzePost).toCondition(condition)).to(wizard.PLUS2);
+  }
+
+  private static Expression replacementSuffix(final String thenStr, final String elzeStr, final int commonSuffixLength, final Expression condition) {
+    final StringLiteral suffix = getSuffix(thenStr, thenStr.length() - commonSuffixLength, condition);
+    final StringLiteral thenPre = getPrefix(thenStr, thenStr.length() - commonSuffixLength, condition);
+    final StringLiteral elzePre = getPrefix(elzeStr, elzeStr.length() - commonSuffixLength, condition);
+    final ParenthesizedExpression pe = condition.getAST().newParenthesizedExpression();
+    pe.setExpression(subject.pair(thenPre, elzePre).toCondition(condition));
+    return subject.pair(pe, suffix).to(wizard.PLUS2);
+  }
+
+  private static Expression simplify(final StringLiteral then, final InfixExpression elze, final Expression condition) {
+    final String thenStr = then.getLiteralValue();
+    assert elze.getOperator() == wizard.PLUS2;
+    final List<Expression> elzeOperands = extract.allOperands(elze);
+    if (elzeOperands.get(0).getNodeType() == ASTNode.STRING_LITERAL) {
+      final String elzeStr = ((StringLiteral) elzeOperands.get(0)).getLiteralValue();
+      final int commonPrefixIndex = findCommonPrefix(thenStr, elzeStr);
+      if (commonPrefixIndex != 0) {
+        final StringLiteral prefix = getPrefix(thenStr, commonPrefixIndex, condition);
+        final StringLiteral thenPost = getSuffix(thenStr, commonPrefixIndex, condition);
+        final StringLiteral elzePost = getSuffix(elzeStr, commonPrefixIndex, condition);
+        lisp.chop(elzeOperands);
+        elzeOperands.add(0, elzePost);
+        return subject.pair(prefix, subject.pair(thenPost, //
+            subject.operands(elzeOperands).to(wizard.PLUS2)).toCondition(condition)).to(wizard.PLUS2);
+      }
+    }
+    if (elzeOperands.get(elzeOperands.size() - 1).getNodeType() == ASTNode.STRING_LITERAL) {
+      final String elzeStr = ((StringLiteral) elzeOperands.get(elzeOperands.size() - 1)).getLiteralValue();
+      final int commonSuffixIndex = findCommonSuffix(thenStr, elzeStr);
+      if (commonSuffixIndex != 0) {
+        final StringLiteral suffix = getSuffix(thenStr, thenStr.length() - commonSuffixIndex, condition);
+        final StringLiteral thenPre = getPrefix(thenStr, thenStr.length() - commonSuffixIndex, condition);
+        final StringLiteral elzePre = getPrefix(elzeStr, elzeStr.length() - commonSuffixIndex, condition);
+        elzeOperands.remove(elzeOperands.size() - 1);
+        elzeOperands.add(elzeOperands.size(), elzePre);
+        final ParenthesizedExpression pe = condition.getAST().newParenthesizedExpression();
+        pe.setExpression(subject.pair(thenPre, subject.operands(elzeOperands).to(wizard.PLUS2)).toCondition(condition));
+        return subject.pair(pe, suffix).to(wizard.PLUS2);
+      }
+    }
+    return null;
+  }
+
+  private static Expression simplify(final StringLiteral then, final StringLiteral elze, final Expression condition) {
+    final String thenStr = then.getLiteralValue();
+    final String elzeStr = elze.getLiteralValue();
+    final int commonPrefixIndex = findCommonPrefix(thenStr, elzeStr);
+    if (commonPrefixIndex != 0)
+      return replacementPrefix(thenStr, elzeStr, commonPrefixIndex, condition);
+    final int commonSuffixLength = findCommonSuffix(thenStr, elzeStr);
+    return commonSuffixLength == 0 ? null : replacementSuffix(thenStr, elzeStr, commonSuffixLength, condition);
+  }
+
+  @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
+    return "Replace ternarization with more clever one";
+  }
+
+  @Override Expression replacement(final ConditionalExpression x) {
+    final Expression then = x.getThenExpression();
+    final Expression elze = x.getElseExpression();
+    final Expression condition = x.getExpression();
+    if (then.getNodeType() == ASTNode.STRING_LITERAL && elze.getNodeType() == ASTNode.STRING_LITERAL)
+      return simplify((StringLiteral) then, (StringLiteral) elze, condition);
+    if (then.getNodeType() == ASTNode.STRING_LITERAL && elze.getNodeType() == ASTNode.INFIX_EXPRESSION)
+      return simplify((StringLiteral) then, (InfixExpression) elze, condition);
+    if (then.getNodeType() == ASTNode.INFIX_EXPRESSION && elze.getNodeType() == ASTNode.STRING_LITERAL)
+      return simplify((StringLiteral) elze, (InfixExpression) then, //
+          subject.operand(condition).to(PrefixExpression.Operator.NOT));
+    return null;
   }
 }

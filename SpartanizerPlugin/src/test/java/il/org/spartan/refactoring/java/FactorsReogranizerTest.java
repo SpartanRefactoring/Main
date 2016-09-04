@@ -2,13 +2,10 @@ package il.org.spartan.refactoring.java;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.engine.into.*;
-import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.refactoring.wring.*;
-
 
 @SuppressWarnings("static-method") public class FactorsReogranizerTest {
   @Test public void test00() {
@@ -95,8 +92,8 @@ import il.org.spartan.refactoring.wring.*;
   @Test public void test20() {
     azzert.that(FactorsReorganizer.simplify(i("a/(b+c)")), iz("a / (b+c)"));
   }
-  
-  @Test public void test21(){
+
+  @Test public void test21() {
     azzert.that(FactorsReorganizer.simplify(i("1/(a/b)")), iz("1*b/a"));
   }
 }
