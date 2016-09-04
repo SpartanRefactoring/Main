@@ -3,11 +3,12 @@ package il.org.spartan.refactoring.java;
 import static il.org.spartan.refactoring.ast.step.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+import static il.org.spartan.Utils.*;
+import static il.org.spartan.refactoring.java.PrudentType.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.refactoring.ast.*;
 
 /** @author Yossi Gil
@@ -20,7 +21,7 @@ public enum stringType {
    *         used in applying the <code>+</code> operator to concatenate
    *         strings. concatenation. */
   public static boolean isNot(final Expression x) {
-    return stringType.notStringSelf(x) || stringType.isNotFromContext(x) || stringType.isNotFromStructure(az.infixExpression(x));
+    return stringType.isNotFromContext(x) || stringType.isNotFromStructure(az.infixExpression(x));
   }
 
   /** Determine whether a <i>all</i> elements list of {@link Expression} are
@@ -68,11 +69,8 @@ public enum stringType {
     return x != null && (x.getOperator() != PLUS || areNot(extract.allOperands(x)));
   }
 
-  private static boolean notStringSelf(final Expression x) {
-    final int[] is = { ARRAY_CREATION, BOOLEAN_LITERAL, CHARACTER_LITERAL, INSTANCEOF_EXPRESSION, NULL_LITERAL, NUMBER_LITERAL, PREFIX_EXPRESSION };
-    for (final int ¢ : is)
-      if (¢ == x.getNodeType())
-        return true;
-    return false;
+  @SuppressWarnings("boxing") private static boolean notStringSelf(final Expression x) {
+    return in(x.getNodeType(), ARRAY_CREATION, BOOLEAN_LITERAL, CHARACTER_LITERAL, INSTANCEOF_EXPRESSION, //
+        NULL_LITERAL, NUMBER_LITERAL, PREFIX_EXPRESSION);
   }
 }
