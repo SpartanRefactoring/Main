@@ -9,8 +9,8 @@ import org.eclipse.jdt.core.dom.*;
 /** A class to search in the ancestry line of a given node.
  * @author Yossi Gil
  * @since 2015-08-22 */
-public abstract class AncestorSearch {
-  static class ByNodeClass extends AncestorSearch {
+public abstract class searchAncestors {
+  static class ByNodeClass extends searchAncestors {
     private final Class<? extends ASTNode> clazz;
 
     public ByNodeClass(final Class<? extends ASTNode> clazz) {
@@ -26,7 +26,7 @@ public abstract class AncestorSearch {
     }
   }
 
-  static class ByNodeType extends AncestorSearch {
+  static class ByNodeType extends searchAncestors {
     final int type;
 
     public ByNodeType(final int type) {
@@ -74,7 +74,7 @@ public abstract class AncestorSearch {
    * @param c JD
    * @return a newly created instance
    * @see ASTNode#getNodeType() */
-  public static <N extends ASTNode> AncestorSearch forClass(final Class<N> c) {
+  public static <N extends ASTNode> searchAncestors forClass(final Class<N> c) {
     return new ByNodeClass(c);
   }
 
@@ -83,7 +83,7 @@ public abstract class AncestorSearch {
    * @param type JD
    * @return a newly created instance
    * @see ASTNode#getNodeType() */
-  public static AncestorSearch forType(final int type) {
+  public static searchAncestors forType(final int type) {
     return new ByNodeType(type);
   }
 
