@@ -23,7 +23,6 @@ public enum sideEffects {
   private static final int[] alwaysFree = { //
       BOOLEAN_LITERAL, //
       CHARACTER_LITERAL, //
-      CAST_EXPRESSION, //
       EMPTY_STATEMENT, //
       FIELD_ACCESS, //
       NULL_LITERAL, //
@@ -51,7 +50,7 @@ public enum sideEffects {
       case ARRAY_ACCESS:
         return free(((ArrayAccess) x).getArray(), ((ArrayAccess) x).getIndex());
       case CAST_EXPRESSION:
-        return free(step.expression((CastExpression) x));
+        return free(step.expression(x));
       case INSTANCEOF_EXPRESSION:
         return free(step.left((InstanceofExpression) x));
       case PREFIX_EXPRESSION:
