@@ -26,6 +26,36 @@ public enum extract {
     return hop.operands(flatten.of(x));
   }
 
+  public static List<Annotation> annotations(final BodyDeclaration d) {
+    final ArrayList<Annotation> $ = new ArrayList<>();
+    for (final IExtendedModifier ¢ : step.modifiers(d)) {
+      final Annotation a = az.annotation(¢);
+      if (a != null)
+        $.add(a);
+    }
+    return $;
+  }
+
+  public static List<Annotation> annotations(final SingleVariableDeclaration d) {
+    final ArrayList<Annotation> $ = new ArrayList<>();
+    for (final IExtendedModifier ¢ : step.modifiers(d)) {
+      final Annotation a = az.annotation(¢);
+      if (a != null)
+        $.add(a);
+    }
+    return $;
+  }
+
+  public static List<Annotation> annotations(final VariableDeclarationStatement s) {
+    final ArrayList<Annotation> $ = new ArrayList<>();
+    for (final IExtendedModifier ¢ : step.modifiers(s)) {
+      final Annotation a = az.annotation(¢);
+      if (a != null)
+        $.add(a);
+    }
+    return $;
+  }
+
   public static List<InfixExpression.Operator> allOperators(final InfixExpression x) {
     assert x != null;
     final List<InfixExpression.Operator> $ = new ArrayList<>();
