@@ -1624,6 +1624,17 @@ import il.org.spartan.refactoring.utils.*;
         .to("\"ab\" +((!a ? \"b\" : \"racadabr\")+ \"a\")")//
         .to("\"ab\" +(!a ? \"b\" : \"racadabr\")+ \"a\"").to(null);
   }
+  
+  @Test public void issue110_6() {
+    trimming("receiver ==null ? \"Use \" + \"x\" : \"Use \" + receiver")//
+      .to("\"Use \"+(receiver==null ? \"x\" : receiver)").to(null);
+  }
+  
+  @Test public void issue110_7() {
+    trimming("receiver ==null ? \"Use x\" : \"Use \" + receiver")//
+      .to("\"Use \"+(receiver==null ? \"x\" : \"\"+receiver)").to(null);
+  }
+
 
   @Test public void issue37Simplified() {
     trimming("" + //
