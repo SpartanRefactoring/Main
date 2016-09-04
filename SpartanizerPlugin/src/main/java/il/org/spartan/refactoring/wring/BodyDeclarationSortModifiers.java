@@ -40,7 +40,7 @@ public abstract class BodyDeclarationSortModifiers<N extends BodyDeclaration> //
 
   static Comparator<IExtendedModifier> comp = (final IExtendedModifier m1, final IExtendedModifier m2) -> {
     return m1.isAnnotation() && m2.isAnnotation() ? 0
-        : m1.isAnnotation() && m2.isModifier() ? -1 : m2.isAnnotation() && m2.isModifier() ? 1 : Modifiers.gt("" + m1, "" + m2);
+        : m1.isAnnotation() && m2.isModifier() ? -1 : m2.isAnnotation() && m1.isModifier() ? 1 : Modifiers.gt("" + m1, "" + m2);
   };
 
   private static boolean Sorted(final List<IExtendedModifier> ms) {
