@@ -11,7 +11,7 @@ public enum Modifiers {
   DEFAULT, //
   STATIC, //
   FINAL, //
-  TRANSIENT, // TODO: Yossi, MLU :)
+  TRANSIENT, //
   VOLATILE, //
   SYNCHRONIZED, //
   NATIVE, //
