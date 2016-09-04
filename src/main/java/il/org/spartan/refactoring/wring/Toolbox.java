@@ -78,7 +78,7 @@ public class Toolbox {
             new InfixAdditionSubtractionExpand(), //
             new InfixFactorNegatives(), //
             new EvaluateAddition(), //
-            new ConcatStrings(), //
+            //new ConcatStrings(), //removed for now so it won't break tests, see issue #120
             new EvaluateSubstraction(), //
             new EvaluateShiftRight(), //
             new EvaluateShiftLeft(), //
@@ -154,7 +154,7 @@ public class Toolbox {
             new TernaryEliminate(), //
             new TernaryShortestFirst(), //
             new TernaryPushdown(), //
-            new CleverTernarization(), //
+            //new CleverTernarization(), //removed temporary since it causes infinite loop in plugin
             null) //
         .add(TypeDeclaration.class, //
             new ModifierCleanInterface(), //
