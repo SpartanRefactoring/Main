@@ -1,5 +1,4 @@
 package il.org.spartan.refactoring.annotation;
-
 import static java.lang.System.*;
 
 import java.util.*;
@@ -335,7 +334,7 @@ public class EnvironmentCodeExamples {
     Integer o = func(x, "Alex&Dan", new Complex());
   }
 
-  public static class EX8 {
+  public static class EX8 { // Arrays
     class Arr {
       String[] arr;
 
@@ -445,6 +444,45 @@ public class EnvironmentCodeExamples {
           @OutOfOrderFlatENV({ "s", "e" }) final int a;
         }
       }
+
+      void h() {
+        try {
+          class C {
+          }
+          final C c = null;
+        } catch (final NullPointerException e) {
+          @OutOfOrderFlatENV({ "e" }) final int a;
+        }
+      }
+    }
+  }
+
+  static public class EX12 { // Lambda use
+    public static void main(final String args[]) {
+      final EX12 tester = new EX12();
+      // with type declaration
+      final MathOperation addition = (@OutOfOrderFlatENV({ "tester" }) final int a, @OutOfOrderFlatENV({ "a", "tester" }) final int b) -> a + b;
+      // with out type declaration
+      @OutOfOrderFlatENV({ "addition", "tester" }) final MathOperation subtraction = (a, b) -> a - b;
+      // with return statement along with curly braces
+      final MathOperation multiplication = (final int a, final int b) -> {
+        @OutOfOrderFlatENV({ "a", "b", "tester" }) final int z;
+        return a * b;
+      };
+      // without return statement and without curly braces
+      final MathOperation division = (final int a, final int b) -> a / b;
+      // with parenthesis
+      final GreetingService greetService1 = message -> System.out.println("Hello " + message);
+      // without parenthesis
+      final GreetingService greetService2 = (message) -> System.out.println("Hello " + message);
+    }
+
+    interface MathOperation {
+      @OutOfOrderFlatENV({}) int operation(int a, int b);
+    }
+
+    interface GreetingService {
+      void sayMessage(String message);
     }
   }
 

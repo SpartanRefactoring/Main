@@ -124,7 +124,7 @@ import org.eclipse.jdt.core.dom.*;
 
   /** TODO: document properly, but essentially is a dictionary with a parent.
    * Insertions go the current node, searches start at the current note and
-   * deleegate to the parent unless it is null. */
+   * Delegate to the parent unless it is null. */
   /* Nested environment which has it's own Map of names 'flat', and an instance
    * to the parent scope 'nest'. */
   final class Nested implements Environment {
