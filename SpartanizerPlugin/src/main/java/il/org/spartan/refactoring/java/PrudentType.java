@@ -42,7 +42,7 @@ public enum PrudentType {
   VOID("void", "nothing at all"),
   // Doubtful types, from four fold uncertainty down to bilalteral
   // schizophrenia" .
-  ALPHANUMERIC("String|double|float|long|int|char|short|byte", "only in binary plus: f()+g(), not 2 + f(), nor f() + null"), //
+  ALPHANUMERIC("String|double|float|long|int|char|short|byte", "only in binary plus: f()+g(), 2 + f(), nor f() + null"), //
   NUMERIC("double|float|long|int|char|short|byte", "must be either f()*g(), 2L*f(), 2.*a(), not 2 %a(), nor 2"), //
   BOOLEANINTEGRAL("boolean|long|int|char|short|byte", "only in x^y,x&y,x|y"), //
   INTEGRAL("long|int|char|short|byte", "must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() "), //
@@ -50,10 +50,10 @@ public enum PrudentType {
   NULL("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"), BYTE("byte", "must be byte: (byte)1, nothing else"), //
   SHORT("short", "must be short: (short)15, nothing else"), //
   CHAR("char", "must be char: 'a', (char)97, nothing else"), //
-  INT("int", "must be int: 2, 2*(int)f(), 2%(int)f(), 'a'+2 , no 2*f()"), //
+  INT("int", "must be int: 2, 2*(int)f(), 2%(int)f(), 'a'*2 , no 2*f()"), //
   LONG("long", "must be long: 2L, 2*(long)f(), 2%(long)f(), no 2*f()"), //
-  FLOAT("float", "must be float: 2f, 2.3f+1, 2F+f()"), //
-  DOUBLE("double", "must be double: 2.0, 2.0*a()+g(), no 2%a(), no 2*f()"), //
+  FLOAT("float", "must be float: 2f, 2.3f+1, 2F-f()"), //
+  DOUBLE("double", "must be double: 2.0, 2.0*a()-g(), no 2%a(), no 2*f()"), //
   BOOLEAN("boolean", "must be boolean: !f(), f() || g() "), //
   STRING("String", "must be string: \"\"+a, a.toString(), f()+null, not f()+g()"),//
   ;
@@ -314,8 +314,8 @@ public enum PrudentType {
    *         {@link #ALPHANUMERIC}, in case it cannot decide */
   private PrudentType underPlus(final PrudentType k) {
     // addition with NULL or String must be a String
-    // not String, null or numeric, so we can't determine anything
-    return in(STRING, this, k) || in(NULL, this, k) ? STRING : !isNumeric() && !k.isNumeric() ? ALPHANUMERIC : underNumericOnlyOperator(k);
+    // unless both operands are numric, the result may be a String
+    return in(STRING, this, k) || in(NULL, this, k) ? STRING : !isNumeric() || !k.isNumeric() ? ALPHANUMERIC : underNumericOnlyOperator(k);
   }
 
   /** @return one of {@link #INT}, {@link #LONG}, {@link #INTEGRAL},

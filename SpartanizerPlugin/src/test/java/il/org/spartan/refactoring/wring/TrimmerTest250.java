@@ -722,7 +722,7 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue70_11() {
-    trimming("(double)f + (int)g").to("1.*f + (int)g");
+    trimming("(double)f + (int)g").to("(int)g+(double)f").to("(int)g + 1.*f").to("1.*f + (int)g").to(null);
   }
 
   @Test public void issue70_12() {
