@@ -68,44 +68,6 @@ public interface wizard {
                                             : o == RIGHT_SHIFT_UNSIGNED_ASSIGN ? RIGHT_SHIFT_UNSIGNED : null;
   }
 
-  // TODO: Alex: please convert this code into table driven. It is much easier
-  // to maintain. The table is already in this file.
-  static Assignment.Operator InfixToAssignment(final InfixExpression.Operator o) {
-    return o == PLUS ? Assignment.Operator.PLUS_ASSIGN
-        : o == MINUS ? MINUS_ASSIGN
-            : o == TIMES ? TIMES_ASSIGN
-                : o == DIVIDE ? DIVIDE_ASSIGN
-                    : o == AND ? BIT_AND_ASSIGN
-                        : o == OR ? BIT_OR_ASSIGN
-                            : o == XOR ? BIT_XOR_ASSIGN
-                                : o == REMAINDER ? REMAINDER_ASSIGN
-                                    : o == LEFT_SHIFT ? LEFT_SHIFT_ASSIGN
-                                        : o == RIGHT_SHIFT_SIGNED ? RIGHT_SHIFT_SIGNED_ASSIGN
-                                            : o == RIGHT_SHIFT_UNSIGNED ? RIGHT_SHIFT_UNSIGNED_ASSIGN : null;
-  }
-
-  /** Compute the "de Morgan" conjugate of an operator.
-   * @param o must be either {@link Operator#CONDITIONAL_AND} or
-   *        {@link Operator#CONDITIONAL_OR}
-   * @return {@link Operator#CONDITIONAL_AND} if the parameter is
-   *         {@link Operator#CONDITIONAL_OR} , or
-   *         {@link Operator#CONDITIONAL_OR} if the parameter is
-   *         {@link Operator#CONDITIONAL_AND}
-   * @see wizard#deMorgan(InfixExpression) */
-  static Operator deMorgan(final Operator o) {
-    assert iz.deMorgan(o);
-    return o.equals(CONDITIONAL_AND) ? CONDITIONAL_OR : CONDITIONAL_AND;
-  }
-
-  /** Parenthesize an expression (if necessary).
-   * @param x JD
-   * @return a
-   *         {@link il.org.spartan.refactoring.assemble.duplicate#duplicate(Expression)}
-   *         of the parameter wrapped in parenthesis. */
-  static Expression parenthesize(final Expression x) {
-    return iz.noParenthesisRequired(x) ? duplicate.of(x) : make.parethesized(x);
-  }
-
   /** Obtain a condensed textual representation of an {@link ASTNode}
    * @param ¢ JD
    * @return textual representation of the parameter, */
@@ -180,6 +142,19 @@ public interface wizard {
     return wizard.deMorgan(x.getOperator());
   }
 
+  /** Compute the "de Morgan" conjugate of an operator.
+   * @param o must be either {@link Operator#CONDITIONAL_AND} or
+   *        {@link Operator#CONDITIONAL_OR}
+   * @return {@link Operator#CONDITIONAL_AND} if the parameter is
+   *         {@link Operator#CONDITIONAL_OR} , or
+   *         {@link Operator#CONDITIONAL_OR} if the parameter is
+   *         {@link Operator#CONDITIONAL_AND}
+   * @see wizard#deMorgan(InfixExpression) */
+  static Operator deMorgan(final Operator o) {
+    assert iz.deMorgan(o);
+    return o.equals(CONDITIONAL_AND) ? CONDITIONAL_OR : CONDITIONAL_AND;
+  }
+
   /** Find the first matching expression to the given boolean (b).
    * @param b JD,
    * @param xs JD
@@ -194,6 +169,22 @@ public interface wizard {
 
   static boolean incompatible(final Assignment a1, final Assignment a2) {
     return hasNull(a1, a2) || !compatibleOps(a1.getOperator(), a2.getOperator()) || !wizard.same(step.left(a1), step.left(a2));
+  }
+
+  // TODO: Alex: please convert this code into table driven. It is much easier
+  // to maintain. The table is already in this file.
+  static Assignment.Operator InfixToAssignment(final InfixExpression.Operator o) {
+    return o == PLUS ? Assignment.Operator.PLUS_ASSIGN
+        : o == MINUS ? MINUS_ASSIGN
+            : o == TIMES ? TIMES_ASSIGN
+                : o == DIVIDE ? DIVIDE_ASSIGN
+                    : o == AND ? BIT_AND_ASSIGN
+                        : o == OR ? BIT_OR_ASSIGN
+                            : o == XOR ? BIT_XOR_ASSIGN
+                                : o == REMAINDER ? REMAINDER_ASSIGN
+                                    : o == LEFT_SHIFT ? LEFT_SHIFT_ASSIGN
+                                        : o == RIGHT_SHIFT_SIGNED ? RIGHT_SHIFT_SIGNED_ASSIGN
+                                            : o == RIGHT_SHIFT_UNSIGNED ? RIGHT_SHIFT_UNSIGNED_ASSIGN : null;
   }
 
   /** Determine whether an InfixExpression.Operator is a comparison operator or
@@ -234,6 +225,15 @@ public interface wizard {
 
   static boolean nonAssociative(final InfixExpression x) {
     return x != null && in(x.getOperator(), MINUS, DIVIDE, REMAINDER, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED);
+  }
+
+  /** Parenthesize an expression (if necessary).
+   * @param x JD
+   * @return a
+   *         {@link il.org.spartan.refactoring.assemble.duplicate#duplicate(Expression)}
+   *         of the parameter wrapped in parenthesis. */
+  static Expression parenthesize(final Expression x) {
+    return iz.noParenthesisRequired(x) ? duplicate.of(x) : make.parethesized(x);
   }
 
   static ASTParser parser(final int kind) {

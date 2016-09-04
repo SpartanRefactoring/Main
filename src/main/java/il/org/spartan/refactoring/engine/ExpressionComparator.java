@@ -46,6 +46,10 @@ public enum ExpressionComparator implements Comparator<Expression> {
           && ($ = alphabeticalCompare(e1, e2)) == 0 ? 0 : $;
     }
   };
+  static class Int {
+    int inner = 0;
+  }
+
   private static specificity specificity = new specificity();
   /** Threshold for comparing nodes; a difference in the number of nodes between
    * two nodes is considered zero, if it is the less than this value, */
@@ -98,21 +102,12 @@ public enum ExpressionComparator implements Comparator<Expression> {
     );
   }
 
-  static class Int {
-    int inner = 0;
-  }
-
   /** Counts the number of statements in a tree rooted at a given node
    * @param n JD
    * @return Number of abstract syntax tree nodes under the parameter. */
   public static int lineCount(final ASTNode n) {
     final Int $ = new Int();
     n.accept(new ASTVisitor() {
-      @Override public void preVisit(final ASTNode child) {
-        if (Statement.class.isAssignableFrom(child.getClass()))
-          f($, child);
-      }
-
       void f(final Int $, final ASTNode ¢) {
         if (iz.is(¢, BLOCK)) {
           if (extract.statements(¢).size() > 1)
@@ -132,6 +127,11 @@ public enum ExpressionComparator implements Comparator<Expression> {
           if (step.elze(az.ifStatement(¢)) != null)
             ++$.inner;
         }
+      }
+
+      @Override public void preVisit(final ASTNode child) {
+        if (Statement.class.isAssignableFrom(child.getClass()))
+          f($, child);
       }
     });
     return $.inner;

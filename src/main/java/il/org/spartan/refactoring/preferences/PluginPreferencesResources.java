@@ -22,6 +22,26 @@ public class PluginPreferencesResources {
     Ternarization(Kind.Ternarization.class), //
     UnusedArguments(Kind.UnusedArguments.class),//
     ;
+    private static WringGroup find(final Class<? extends Kind> c) {
+      for (final WringGroup $ : WringGroup.values())
+        if ($.clazz.isAssignableFrom(c))
+          return $;
+      return null;
+    }
+
+    public static WringGroup find(final Kind ¢) {
+      return find(¢.getClass());
+    }
+
+    private static Object getLabel(final Class<? extends Kind> c) {
+      try {
+        return c.getField("label").get(null);
+      } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
+        e.printStackTrace();
+        return null;
+      }
+    }
+
     static IPreferenceStore store() {
       return Plugin.plugin().getPreferenceStore();
     }
@@ -36,28 +56,8 @@ public class PluginPreferencesResources {
       label = "" + getLabel(clazz);
     }
 
-    private static Object getLabel(final Class<? extends Kind> c) {
-      try {
-        return c.getField("label").get(null);
-      } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
-        e.printStackTrace();
-        return null;
-      }
-    }
-
     public boolean isEnabled() {
       return Plugin.plugin() == null || "on".equals(store().getString(id));
-    }
-
-    public static WringGroup find(final Kind ¢) {
-      return find(¢.getClass());
-    }
-
-    private static WringGroup find(final Class<? extends Kind> c) {
-      for (final WringGroup $ : WringGroup.values())
-        if ($.clazz.isAssignableFrom(c))
-          return $;
-      return null;
     }
   }
 

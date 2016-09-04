@@ -12,11 +12,11 @@ public final class VariableRenameUnderscoreToDoubleUnderscore<N extends Variable
     return "_".equals("" + n.getName());
   }
 
-  @Override SimpleName replacement(final N n) {
-    return n.getAST().newSimpleName("__");
-  }
-
   @Override String description(@SuppressWarnings("unused") final N __) {
     return "Use double underscore instead a single underscore";
+  }
+
+  @Override SimpleName replacement(final N n) {
+    return n.getAST().newSimpleName("__");
   }
 }

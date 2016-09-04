@@ -78,7 +78,8 @@ public class Toolbox {
             new InfixAdditionSubtractionExpand(), //
             new InfixFactorNegatives(), //
             new EvaluateAddition(), //
-            //new ConcatStrings(), //removed for now so it won't break tests, see issue #120
+            // new ConcatStrings(), //removed for now so it won't break tests,
+            // see issue #120
             new EvaluateSubstraction(), //
             new EvaluateShiftRight(), //
             new EvaluateShiftLeft(), //
@@ -154,7 +155,8 @@ public class Toolbox {
             new TernaryEliminate(), //
             new TernaryShortestFirst(), //
             new TernaryPushdown(), //
-            //new CleverTernarization(), //removed temporary since it causes infinite loop in plugin
+            // new CleverTernarization(), //removed temporary since it causes
+            // infinite loop in plugin
             null) //
         .add(TypeDeclaration.class, //
             new ModifierCleanInterface(), //
@@ -184,7 +186,7 @@ public class Toolbox {
             null) //
         .add(AnnotationTypeMemberDeclaration.class, new BodyDeclarationSortModifiers.ofAnnotationTypeMember(), null) //
         .add(AnnotationTypeDeclaration.class, new BodyDeclarationSortModifiers.ofAnnotation(), null) //
-        //.add(Initializer, new ModifierSort.ofInitializer(), null) //
+        // .add(Initializer, new ModifierSort.ofInitializer(), null) //
         .seal();
   }
 

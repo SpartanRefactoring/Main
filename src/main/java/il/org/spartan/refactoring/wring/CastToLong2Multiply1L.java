@@ -13,6 +13,16 @@ import il.org.spartan.refactoring.ast.*;
  * @author Dan Greenstein
  * @since 2016 */
 public final class CastToLong2Multiply1L extends Wring.ReplaceCurrentNode<CastExpression> implements Kind.NoImpact {
+  private static NumberLiteral literal(final Expression x) {
+    final NumberLiteral $ = x.getAST().newNumberLiteral();
+    $.setToken("1L");
+    return $;
+  }
+
+  private static InfixExpression replacement(final Expression $) {
+    return subject.pair(literal($), $).to(TIMES);
+  }
+
   @Override String description(final CastExpression x) {
     return "Use 1L*" + step.expression(x) + " instead of (long)" + step.expression(x);
   }
@@ -23,15 +33,5 @@ public final class CastToLong2Multiply1L extends Wring.ReplaceCurrentNode<CastEx
     ).when(//
         step.type(x).isPrimitiveType() && "long".equals("" + step.type(x)) //
     );
-  }
-
-  private static InfixExpression replacement(final Expression $) {
-    return subject.pair(literal($), $).to(TIMES);
-  }
-
-  private static NumberLiteral literal(final Expression x) {
-    final NumberLiteral $ = x.getAST().newNumberLiteral();
-    $.setToken("1L");
-    return $;
   }
 }
