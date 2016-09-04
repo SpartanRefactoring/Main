@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 
 public interface hop {
   static CompilationUnit compilationUnit(final ASTNode ¢) {
-    return (CompilationUnit) AncestorSearch.forType(COMPILATION_UNIT).from(¢);
+    return (CompilationUnit) searchAncestors.forType(COMPILATION_UNIT).from(¢);
   }
 
   /** @param ¢ JD
