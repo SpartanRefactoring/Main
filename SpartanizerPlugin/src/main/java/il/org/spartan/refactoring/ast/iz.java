@@ -33,6 +33,14 @@ public enum iz {
   public static boolean annotation(final IExtendedModifier ¢) {
     return  ¢ instanceof Annotation;
   }
+  
+  public static boolean modifier(final ASTNode ¢) {
+    return is(¢, MODIFIER);
+  }
+  
+  /*public static boolean modifier(final IExtendedModifier ¢) {
+    return  ¢ instanceof Annotation;
+  }*/
 
   public static boolean anonymousClassDeclaration(final ASTNode ¢) {
     return is(¢, ANONYMOUS_CLASS_DECLARATION);

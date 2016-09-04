@@ -55,6 +55,36 @@ public enum extract {
     }
     return $;
   }
+  
+  public static List<Modifier> modifiers(final BodyDeclaration d) {
+    final ArrayList<Modifier> $ = new ArrayList<>();
+    for (final IExtendedModifier ¢ : step.modifiers(d)) {
+      final Modifier a = az.modifier((ASTNode) ¢);
+      if (a != null)
+        $.add(a);
+    }
+    return $;
+  }
+
+  public static List<Modifier> modifiers(final SingleVariableDeclaration d) {
+    final ArrayList<Modifier> $ = new ArrayList<>();
+    for (final IExtendedModifier ¢ : step.modifiers(d)) {
+      final Modifier a = az.modifier((ASTNode) ¢);
+      if (a != null)
+        $.add(a);
+    }
+    return $;
+  }
+
+  public static List<Modifier> modifiers(final VariableDeclarationStatement s) {
+    final ArrayList<Modifier> $ = new ArrayList<>();
+    for (final IExtendedModifier ¢ : step.modifiers(s)) {
+      final Modifier a = az.modifier((ASTNode) ¢);
+      if (a != null)
+        $.add(a);
+    }
+    return $;
+  }
 
   public static List<InfixExpression.Operator> allOperators(final InfixExpression x) {
     assert x != null;
