@@ -139,7 +139,7 @@ public enum PrudentType {
   }
 
   private static PrudentType prudentType(final MethodInvocation i) {
-    return "toString".equals(i.getName() + "") ? STRING : NOTHING;
+    return "toString".equals(i.getName() + "") && i.arguments().isEmpty() ? STRING : NOTHING;
   }
 
   private static PrudentType prudentType(final NumberLiteral l) {
