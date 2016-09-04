@@ -30,6 +30,10 @@ public enum iz {
     return ¢ != null && ¢ instanceof AbstractTypeDeclaration;
   }
 
+  public static boolean annotation(final IExtendedModifier ¢) {
+    return  ¢ instanceof Annotation;
+  }
+
   public static boolean anonymousClassDeclaration(final ASTNode ¢) {
     return is(¢, ANONYMOUS_CLASS_DECLARATION);
   }
@@ -592,6 +596,14 @@ public enum iz {
     return n != null && n.getNodeType() == STRING_LITERAL;
   }
 
+  /** Determine whether a node is the <code><b>this</b></code> keyword
+   * @param n JD
+   * @return <code><b>true</b></code> <i>iff</i> is the <code><b>this</b></code>
+   *         keyword */
+  public static boolean thisLiteral(final ASTNode n) {
+    return is(n, THIS_EXPRESSION);
+  }
+
   /** Determine whether a node is <code><b>this</b></code> or
    * <code><b>null</b></code>
    * @param x JD
@@ -599,14 +611,6 @@ public enum iz {
    *         statement */
   public static boolean thisOrNull(final Expression x) {
     return iz.oneOf(x, NULL_LITERAL, THIS_EXPRESSION);
-  }
-
-  /** Determine whether a node is the <code><b>this</b></code> keyword
-   * @param n JD
-   * @return <code><b>true</b></code> <i>iff</i> is the <code><b>this</b></code>
-   *         keyword */
-  public static boolean thisLiteral(final ASTNode n) {
-    return is(n, THIS_EXPRESSION);
   }
 
   /** Determine whether a given {@link Statement} is an {@link EmptyStatement}
