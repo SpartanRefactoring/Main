@@ -1596,8 +1596,6 @@ import il.org.spartan.refactoring.utils.*;
     ;
   }
 
- 
-
   @Test public void issue37Simplified() {
     trimming("" + //
         "    int a = 3;\n" + //
@@ -1962,7 +1960,7 @@ import il.org.spartan.refactoring.utils.*;
         .to("for (int i = 0; i < 100;  ++i) b[i] = f;");
   }
 
-  @Test public void issue54ForPlainUseInCondition() {
+  @Ignore @Test public void issue54ForPlainUseInCondition() {
     trimming("int a  = f(); for (int i = 0; a < 100;  ++i) b[i] = 3;")//
         .to(null);
   }
@@ -1972,7 +1970,7 @@ import il.org.spartan.refactoring.utils.*;
         .to("for (int i = 0; f < 100;  ++i) b[i] = 3;");
   }
 
-  @Test public void issue54ForPlainUseInInitializer() {
+  @Ignore @Test public void issue54ForPlainUseInInitializer() {
     trimming("int a  = f(); for (int i = a; i < 100; i++) b[i] = 3;")//
         .to(" for (int i = f(); i < 100; i++) b[i] = 3;");
   }
@@ -1982,7 +1980,7 @@ import il.org.spartan.refactoring.utils.*;
         .to(" for (int i = f; i < 100; i *= f) b[i] = 3;");
   }
 
-  @Test public void issue54ForPlainUseInUpdaters() {
+  @Ignore @Test public void issue54ForPlainUseInUpdaters() {
     trimming("int a  = f(); for (int i = 0; i < 100; i *= a) b[i] = 3;")//
         .to(null);
   }
@@ -2111,7 +2109,7 @@ import il.org.spartan.refactoring.utils.*;
   @Test public void issue74d() {
     trimming("int[] a = new int[] {2,3};").to(null);
   }
-  
+
   @Test public void issue110_1() {
     trimming("polite ? \"Eat your meal.\" :  \"Eat your meal, please\"") //
         .to("\"Eat your meal\" + (polite ? \".\" : \", please\")");
@@ -2140,48 +2138,48 @@ import il.org.spartan.refactoring.utils.*;
         .to("\"ab\" +((!a ? \"b\" : \"racadabr\")+ \"a\")")//
         .to("\"ab\" +(!a ? \"b\" : \"racadabr\")+ \"a\"").to(null);
   }
-  
+
   @Test public void issue110_6() {
     trimming("receiver ==null ? \"Use \" + \"x\" : \"Use \" + receiver")//
-      .to("\"Use \"+(receiver==null ? \"x\" : receiver)").to(null);
+        .to("\"Use \"+(receiver==null ? \"x\" : receiver)").to(null);
   }
-  
+
   @Test public void issue110_7() {
     trimming("receiver ==null ? \"Use x\" : \"Use \" + receiver")//
-      .to("\"Use \"+(receiver==null ? \"x\" : \"\"+receiver)").to(null);
+        .to("\"Use \"+(receiver==null ? \"x\" : \"\"+receiver)").to(null);
   }
-  
+
   @Test public void issue110_8() {
     trimming("receiver ==null ? \"Use\" : receiver + \"Use\"")//
-      .to("(receiver==null ? \"\" : receiver+\"\") + \"Use\"").to(null);
+        .to("(receiver==null ? \"\" : receiver+\"\") + \"Use\"").to(null);
   }
 
   @Test public void issue110_9() {
     trimming("receiver ==null ? \"user a\" : receiver + \"something a\"")//
-      .to("(receiver==null ? \"user\" : receiver+\"something\") + \" a\"").to(null);
+        .to("(receiver==null ? \"user\" : receiver+\"something\") + \" a\"").to(null);
   }
-  
+
   @Test public void issue110_10() {
     trimming("receiver ==null ? \"Something Use\" : \"Something\" + receiver + \"Use\"")//
-      .to("\"Something\"+ (receiver==null ? \" Use\" : \"\"+receiver + \"Use\")")//
-      .to("\"Something\"+ ((receiver==null ? \" \" : \"\"+receiver+\"\") + \"Use\")");
+        .to("\"Something\"+ (receiver==null ? \" Use\" : \"\"+receiver + \"Use\")")//
+        .to("\"Something\"+ ((receiver==null ? \" \" : \"\"+receiver+\"\") + \"Use\")");
   }
 
   @Test public void issue120_1() {
     trimming("\"a\"+\"b\"").to("\"ab\"");
   }
-  
+
   @Test public void issue120_2() {
     trimming("\"abc\"+\"de\"+\"fgh\"").to("\"abcdefgh\"");
   }
-  
+
   @Test public void issue120_3() {
     trimming("\"abc\"+a.toString()+\"de\"+\"fgh\"").to("\"abc\"+a.toString()+\"defgh\"");
   }
-  
+
   @Test public void issue120_4() {
     trimming("c.toString()+\"abc\"+a.toString()+\"de\"+\"fgh\"") //
-    .to("c.toString()+\"abc\"+a.toString()+\"defgh\"");
+        .to("c.toString()+\"abc\"+a.toString()+\"defgh\"");
   }
 
   @Test public void linearTransformation() {
@@ -4132,5 +4130,4 @@ import il.org.spartan.refactoring.utils.*;
   @Test public void xorSortClassConstantsAtEnd() {
     trimming("f(a,b,c,d) ^ BOB").to(null);
   }
-  
 }
