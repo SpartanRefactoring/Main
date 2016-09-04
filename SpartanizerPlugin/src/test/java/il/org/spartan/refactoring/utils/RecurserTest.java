@@ -1,5 +1,6 @@
 package il.org.spartan.refactoring.utils;
 
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import java.util.function.*;
@@ -7,74 +8,46 @@ import java.util.function.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.engine.*;
 
 /** @author Dor Ma'ayan
  * @since 2016 */
 public class RecurserTest {
-  private static boolean barrier() {
-    return true;
+
+  @Test public void issue101_1(){
+    Expression simple_exp = into.i("3+4");
+    Recurser<Integer> recurse = new Recurser<Integer>(simple_exp,0);
+    final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
+   assertEquals(3,(int)recurse.preVisit(accum));
+  }
+  
+  @Test @Ignore("Under checking") public void issue101_2(){
+    Expression simple_exp = into.i("3+4");
+    Recurser<Integer> recurse = new Recurser<Integer>(simple_exp,0);
+    final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
+   assertEquals(3,(int)recurse.postVisit(accum));
+  }
+  
+  @Test  public void issue101_3(){
+    Expression simple_exp = into.i("5*6+43*2");
+    Recurser<Integer> recurse = new Recurser<Integer>(simple_exp,0);
+    final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
+   assertEquals(7,(int)recurse.preVisit(accum));
+  }
+  
+  @Test public void issue101_4(){
+    Expression simple_exp = into.i("3+4*4+6*7+8");
+    Recurser<Integer> recurse = new Recurser<Integer>(simple_exp,0);
+    final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
+   assertEquals(11,(int)recurse.preVisit(accum));
+  }
+  
+  @Test public void issue101_5(){
+    Expression simple_exp = into.e("3");
+    Recurser<Integer> recurse = new Recurser<Integer>(simple_exp,0);
+    final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
+   assertEquals(1,(int)recurse.preVisit(accum));
   }
 
-  private static ASTNode makeCaseNode() {
-    return mock(SwitchCase.class);
-  }
-
-  final ASTNode ourCase = makeCaseNode();
-
-  @Test(expected = NullPointerException.class) public void explainAPI_briefly() {
-    final Integer i = recurse(null, 0).preVisit((r) -> (1 + r.getCurrent().hashCode())//
-    );
-    assert barrier() : "Hold the stpartanization horses from inlining";
-    assert i != 0 : "wow, we really got unlucky; run again";
-  }
-
-  @Test public void explainAPI_differently() {
-    final Integer i = recurse(makeCaseNode(), Integer.valueOf(0))//
-        .preVisit(//
-            (r) -> (2 + r.hashCode())//
-    );
-    assert barrier() : "Hold the stpartanization horses from inlining";
-    assert i != 0 : "wow, we really got unlucky; run again";
-  }
-
-  @Test public void explainAPI_sensibly() {
-    @SuppressWarnings("boxing") final Integer i = recurse(ourCase, 0)//
-        .preVisit(//
-            (x) -> (2 + x.hashCode())//
-    );
-    assert i != 0 : "wow, we really got unlucky; run again";
-  }
-
-  @SuppressWarnings("boxing") @Test public void explainAPI_shortly() {
-    final Integer i = recurse(ourCase, 0).preVisit(//
-        (r) -> (2 + r.hashCode())//
-    );
-    assert barrier() : "Hold the stpartanization horses from inlining";
-    assert i != 0 : "wow, we really got unlucky; run again";
-  }
-
-  @Test public void explainAPI_Slowly() {
-    final ASTNode n = makeCaseNode();
-    assert barrier() : "Hold the stpartanization horses from inlining";
-    final Recurser<Integer> r = recurse(n, Integer.valueOf(0));
-    assert barrier() : "Hold the stpartanization horses from inlining";
-    final Function<Recurser<Integer>, Integer> random = (x) -> (2 + x.hashCode());
-    assert barrier() : "Hold the stpartanization horses from inlining";
-    final Integer i = r.preVisit(random);
-    assert barrier() : "Hold the stpartanization horses from inlining";
-    assert i != 0 : "wow, we really got unlucky; run again";
-  }
-
-  /** This is where you place the {@link Test} test methods that work. They
-   * should be never {@link Ignored} when pushed.
-   * @author Yossi Gil */
-  // TODO: Dor, import here the standard header of test classes
-  public <T> Recurser<T> recurse(final ASTNode root) {
-    return new Recurser<>(root);
-  }
-
-  public <T> Recurser<T> recurse(final ASTNode n, final T t) {
-    return new Recurser<>(n, t);
-  }
 }
