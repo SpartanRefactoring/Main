@@ -14,16 +14,22 @@ import il.org.spartan.refactoring.ast.*;
  * @since 2016 */
 public abstract class ModifierSort<N extends BodyDeclaration> //
     extends Wring.ReplaceCurrentNode<N> implements Kind.Canonicalization {
-  public static final class ofEnum extends ModifierSort<EnumDeclaration> {
-  }
+  //public static final class ofAbstructType extends ModifierSort<M extends AbstractTypeDeclaration> {
+    public static final class ofAnnotation extends ModifierSort<AnnotationTypeDeclaration> {
+    }
+    public static final class ofEnum extends ModifierSort<EnumDeclaration> {
+    }
+    public static final class ofType extends ModifierSort<TypeDeclaration> {
+    }
+  //}
 
   public static final class ofEnumConstant extends ModifierSort<EnumConstantDeclaration> {
   }
 
-  public static final class ofAnnotation extends ModifierSort<AnnotationTypeDeclaration> {
+  public static final class ofAnnotationTypeMember extends ModifierSort<AnnotationTypeMemberDeclaration> {
   }
 
-  public static final class ofType extends ModifierSort<TypeDeclaration> {
+  public static final class ofInitializer extends ModifierSort<Initializer> {
   }
 
   public static final class ofField extends ModifierSort<FieldDeclaration> {
@@ -36,39 +42,30 @@ public abstract class ModifierSort<N extends BodyDeclaration> //
     return "Sort Modifiers as defined at Modifier.class";
   }
 
-  private boolean notSorted(final List<Modifier> modifierList) {
-    return true;
+  private static boolean Sorted(final List<IExtendedModifier> ms) {
+    List<IExtendedModifier> ¢ = new ArrayList<>(ms);
+    Collections.sort(¢, comp);
+    return ms.equals(¢);
   }
   
-  @Override boolean scopeIncludes(final N n)  {
-    return notSorted(extract.modifiers(n));
-  }
+  /*@Override boolean scopeIncludes(final N n)  {
+    return notSorted(step.modifiers(n));
+  }*/
   
+  static Comparator<IExtendedModifier> comp = (IExtendedModifier m1, IExtendedModifier m2) -> {
+    return  m1.isAnnotation() && m2.isAnnotation() ? 0 :
+            m1.isAnnotation() && m2.isModifier() ? -1 :
+            m2.isAnnotation() && m2.isModifier() ? 1 :
+                Modifiers.gt(("" + m1), ("" + m2));
+  };
   @Override N replacement(final N $) {
-    final N $1 = ($);
-    final List<IExtendedModifier> original = step.modifiers($1);
-    final List<IExtendedModifier> toSort = new ArrayList<>(original);
-    original.clear();
-    for (int iter = 1; iter < toSort.size(); ++iter)
-      for (int inner = 0; inner < toSort.size() - iter; ++inner)
-        if (compare(toSort.get(inner), toSort.get(inner + 1)))
-          bubble(toSort, inner);
-    original.addAll(toSort);
-    return $1;
-  }
-
-  static boolean compare(final IExtendedModifier m1, final IExtendedModifier m2) {
-    return Modifiers.gt(("" + m1), ("" + m2));
-  }
-
-  /** One bubble swap for the bubble sort implementation in go().
-   * @param unsorted list to perform one bubble swap on.
-   * @param index the index to swap with 'index + 1' TODO: you don't want to
-   *        bother with sorting. See this one:
-   *        http://stackoverflow.com/questions/16252269/how-to-sort-a-list-arraylist-in-java */
-  private static void bubble(final List<IExtendedModifier> unsorted, final int index) {
-    final IExtendedModifier tmp = unsorted.get(index);
-    unsorted.set(index, unsorted.get(index + 1));
-    unsorted.set(index + 1, tmp);
+    return Sorted(step.modifiers($)) ? null : go(duplicate.of($));
+  }  
+  N go(final N $) {
+    List<IExtendedModifier> ms = new ArrayList<>(step.modifiers($));
+    Collections.sort(ms, comp);
+    step.modifiers($).clear();
+    step.modifiers($).addAll(ms);
+    return $;
   }
 }
