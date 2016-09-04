@@ -10,7 +10,7 @@ import il.org.spartan.*;
 import il.org.spartan.refactoring.engine.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@SuppressWarnings({ "javadoc", "static-method" }) //
+@SuppressWarnings({ "javadoc", "static-method", "unused" }) //
 public class PrudentTypeTest {
   @Ignore public static class Pending {
     // class for Pending s that don't currently pass
@@ -214,7 +214,7 @@ public class PrudentTypeTest {
     @Test public void literals16() {
       azzert.that(prudent(into.e("true")), is(BOOLEAN));
     }
-
+    
     // s for casting expression
     @Test public void cast01() {
       azzert.that(prudent(into.e("(List)f()")), is(BAPTIZED));
@@ -390,8 +390,37 @@ public class PrudentTypeTest {
     @Test public void methods3() {
       azzert.that(prudent(into.e("toString()")), is(STRING));
     }
-
-    // basic s for Pre/in/postfix expression
+    
+    @Test public void methods4() {
+      azzert.that(prudent(into.e("toString(x,y)")), is(NOTHING));
+    }
+    
+    //basic tests for assignments
+    @Test public void assingment1(){
+      azzert.that(prudent(into.e("x = 2")), is(NUMERIC));
+    }
+    
+    @Test public void assingment2(){
+      azzert.that(prudent(into.e("x = \"a string\"")), is(STRING));
+    }
+    
+    @Test public void assingment3(){
+      azzert.that(prudent(into.e("x = true")), is(BOOLEAN));
+    }
+    
+    @Test public void assingment4(){
+      azzert.that(prudent(into.e("x = new Float()")), is(NUMERIC));
+    }
+    
+    @Test public void assingment5(){
+      azzert.that(prudent(into.e("x = new String()")), is(STRING));
+    }
+    
+    @Test public void assingment6(){
+      azzert.that(prudent(into.e("x = new Object()")), is(NONNULL));
+    }
+    
+    // basic tests for pre/in/postfix expression
     @Test public void basicExpressions01() {
       azzert.that(prudent(into.e("2 + (2.0)*1L")), is(DOUBLE));
     }
@@ -532,11 +561,11 @@ public class PrudentTypeTest {
       azzert.that(axiom(true), is(BOOLEAN));
     }
 
-    @SuppressWarnings("unused") @Test public void axiomBoolean2() {
+   @Test public void axiomBoolean2() {
       azzert.that(axiom(true || b1 && b2), is(BOOLEAN));
     }
 
-    @SuppressWarnings("unused") @Test public void axiomBoolean3() {
+    @Test public void axiomBoolean3() {
       azzert.that(axiom(5 > 6 && 8 != 14), is(BOOLEAN));
     }
 
@@ -614,6 +643,53 @@ public class PrudentTypeTest {
 
     @Test public void axiomExpression15() {
       azzert.that(axiom((float) 1 + (char) 1), is(FLOAT));
+    }
+    
+    @Test public void axiomAssignment1(){
+      int x;
+      azzert.that(axiom(x = 2), is(INT));
+    }
+    
+    @Test public void axiomAssignment2(){
+      byte x;
+      azzert.that(axiom(x = 2), is(BYTE));
+    }
+    
+    @Test public void axiomAssignment3(){
+      char x;
+      azzert.that(axiom(x = 2), is(CHAR));
+    }
+    
+    @Test public void axiomAssignment4(){
+      short x;
+      azzert.that(axiom(x = 2), is(SHORT));
+    }
+    
+    @Test public void axiomAssignment5(){
+      long x;
+      azzert.that(axiom(x = 2), is(LONG));
+    }
+    
+    @Test public void axiomAssignment6(){
+      double x;
+      azzert.that(axiom(x = 2), is(DOUBLE));
+    }
+    
+    @Test public void axiomAssignment7(){
+      String x;
+      azzert.that(axiom(x = "abs"), is(STRING));
+    }
+    
+    @Test public void axiomAssignment8(){
+      double x;
+      int y;
+      azzert.that(axiom(x = y = 2), is(DOUBLE));
+    }
+    
+    @Test public void axiomAssignment9(){
+      double x;
+      int y;
+      azzert.that(axiom(y = (int)(x = 2)), is(INT));
     }
 
     @Test public void makeSureIUnderstandSemanticsOfShift() {

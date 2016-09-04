@@ -123,13 +123,23 @@ public enum PrudentType {
         return prudentType((MethodInvocation) x);
       case CONDITIONAL_EXPRESSION:
         return prudentType((ConditionalExpression) x, lisp.first(ts), lisp.second(ts));
+      case ASSIGNMENT:
+        return prudentType((Assignment) x,lisp.first(ts));
       default:
         return NOTHING;
     }
   }
 
+  private static PrudentType prudentType(Assignment x, PrudentType t) {
+    PrudentType ¢ = t != null ? t : prudent(x.getLeftHandSide());
+    if (!¢.isNoInfo()){
+      return ¢;
+    }
+    return prudent(x.getRightHandSide()).isNumeric() ? NUMERIC : prudent(x.getRightHandSide());
+  }
+
   private static PrudentType prudentType(final MethodInvocation i) {
-    return "toString".equals(i.getName() + "") ? STRING : NOTHING;
+    return "toString".equals(i.getName() + "") && i.arguments().isEmpty() ? STRING : NOTHING;
   }
 
   private static PrudentType prudentType(final NumberLiteral l) {
