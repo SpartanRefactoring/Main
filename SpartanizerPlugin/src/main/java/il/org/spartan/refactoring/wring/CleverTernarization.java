@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.utils.*;
 
 /** convert
  *
@@ -56,8 +57,28 @@ public final class CleverTernarization extends Wring.ReplaceCurrentNode<Conditio
   
   
   private static Expression simplify(StringLiteral then,InfixExpression elze, Expression condition){
+    String thenStr = then.getLiteralValue();
     assert elze.getOperator()==wizard.PLUS2;
     final List<Expression> elzeOperands = extract.allOperands(elze);
+    if(elzeOperands.get(0).getNodeType()==ASTNode.STRING_LITERAL){
+      String elzeStr = ((StringLiteral)elzeOperands.get(0)).getLiteralValue();
+      int commonPrefixIndex = findCommonPrefix(thenStr,elzeStr);
+      if(commonPrefixIndex!=0){
+          final StringLiteral prefix = condition.getAST().newStringLiteral();
+          prefix.setLiteralValue(thenStr.substring(0, commonPrefixIndex));
+          final StringLiteral thenPost = condition.getAST().newStringLiteral();
+          thenPost.setLiteralValue(thenStr.length() == commonPrefixIndex ? //
+              "" : thenStr.substring(commonPrefixIndex));
+          final StringLiteral elzePost = condition.getAST().newStringLiteral();
+          elzePost.setLiteralValue(elzeStr.length() == commonPrefixIndex ? //
+              "" : elzeStr.substring(commonPrefixIndex));
+          lisp.chop(elzeOperands);
+          elzeOperands.add(0,elzePost);
+          return subject.pair(prefix, subject.pair(thenPost, //
+              subject.operands(elzeOperands).to(wizard.PLUS2)).toCondition(condition)).to(wizard.PLUS2);
+      }
+        
+    }
     return null;
   }
   
