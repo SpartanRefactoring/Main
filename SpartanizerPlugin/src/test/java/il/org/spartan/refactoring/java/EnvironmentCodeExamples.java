@@ -551,7 +551,7 @@ public class EnvironmentCodeExamples {
     class Onoes{
       int x;
       public Onoes(int y) {
-        int x=y;
+        x=y;
       }
       int giveMeANumber() {return 0;};
     }
