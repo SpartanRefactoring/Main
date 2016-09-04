@@ -9,6 +9,7 @@ import il.org.spartan.refactoring.annotations.*;
 
 @Ignore("This should never be furn") @SuppressWarnings("all") //
 public class EnvironmentCodeExamples {
+  /*
   void EX1() {
     
     @NestedENV({}) 
@@ -28,16 +29,19 @@ public class EnvironmentCodeExamples {
     @NestedENV({@Id(name="EX1.s", clazz=String.class),@Id(name="EX1.a", clazz=int.class)}) 
     final int b = 0;
     
-    @Begin class A {/**/}
+    @Begin class A {//
+    }
     ++a;
-    @End({@Id(name="EX1.a", clazz=int.class)}) class B {/**/}
+    @End({@Id(name="EX1.a", clazz=int.class)}) class B {//
+    }
     
     @InOrderFlatENV({@Id(name="s", clazz=String.class),@Id(name="a", clazz=int.class),@Id(name="b", clazz=int.class)}) 
     @NestedENV({@Id(name="EX1.s", clazz=String.class),@Id(name="EX1.a", clazz=int.class),@Id(name="EX1.b", clazz=int.class)}) 
     @OutOfOrderFlatENV(@Id(name="b", clazz=int.class),@Id(name="a", clazz=int.class),{@Id(name="s", clazz=String.class)}) 
     final int c = 0;
   }
-
+*/
+/*  
   {
     @Begin class A {//
     }
@@ -113,7 +117,8 @@ public class EnvironmentCodeExamples {
       }
       x = y = 0;
       @End({@Id(name="EX3.x", clazz=int.class),@Id(name="EX3.y", clazz=int.class)}) 
-      class B {/**/}
+      class B {//
+      }
       @Begin class C {//
       }
       y = 1;
@@ -266,43 +271,44 @@ public class EnvironmentCodeExamples {
 
             @OutOfOrderFlatENV({ "x", "a_x", "b_x", "c_x", "d_x" }) void d_func() {
               @Begin class opening {
-                /**/}
+              }
               ++a_x;
               ++b_x;
               ++c_x;
               ++d_x;
-              @End({ "a_x", "b_x", "c_x", "d_x" }) class closing {
-                /**/}
+              @End({ "a_x", "b_x", "c_x", "d_x" }) class closing {//
+                }
             }
           }
 
           @InOrderFlatENV({ "x", "a_x", "b_x", "c_x" }) @OutOfOrderFlatENV({ "c_x", "b_x", "a_x", "x" }) void c_func() {
             @Begin class opening {
-              /**/}
+              //
+            }
             ++a_x;
             ++b_x;
             ++c_x;
             @End({ "a_x", "b_x", "c_x" }) class closing {
-              /**/}
+              }
           }
         }
 
         @OutOfOrderFlatENV({ "x", "a_x", "b_x" }) void b_func() {
-          @Begin class opening {
-            /**/}
+          @Begin class opening {//
+          }
           ++a_x;
           ++b_x;
-          @End({ "a_x", "b_x" }) class closing {
-            /**/}
+          @End({ "a_x", "b_x" }) class closing {//
+          }
         }
       }
 
       @OutOfOrderFlatENV({ "x", "a_x", "b_x" }) void a_func() {
-        @Begin class opening {
-          /**/}
+        @Begin class opening {//
+        }
         ++a_x;
-        @End({ "a_x" }) class closing {
-          /**/}
+        @End({ "a_x" }) class closing {//
+          }
       }
     }
   }
@@ -317,14 +323,14 @@ public class EnvironmentCodeExamples {
 
         @NestedENV({ "EX6.Outer.x#int", "EX6.Outer.Inner.outer#Outer" }) @OutOfOrderFlatENV({ "x", "outer" }) void func(final Inner p) {
           @Begin class m {
-            /**/}
+            }
           // working on the current instance
           x = 0;
           x = 1;
           // working on another instance
           p.outer.x = 2;
           @End({ "x" }) class n {
-            /**/}
+            }
         }
       }
     }
@@ -339,12 +345,12 @@ public class EnvironmentCodeExamples {
         @NestedENV({ "EX6.Outer2.x#int", "EX6.Outer2.Inner2.x#int", "EX6.Outer2.Inner2.outer2#Outer2" }) @OutOfOrderFlatENV({ "x",
             "outer2" }) void func(final Inner2 p) {
           @Begin class A {
-            /**/}
+            }
           x = 0;
           Outer2.this.x = 1;
           p.outer2.x = 2;
           @End({ "x" }) class B {
-            /**/}
+            }
         }
       }
     }
@@ -372,10 +378,10 @@ public class EnvironmentCodeExamples {
 
       @NestedENV({ "EX8.Arr.arr#String[]" }) @OutOfOrderFlatENV({ "arr" }) void foo() {
         @Begin class m {
-          /**/}
+          }
         arr[2] = "$$$";
         @End({ "arr" }) class n {
-          /**/}
+          }
       }
     }
   }
@@ -387,11 +393,11 @@ public class EnvironmentCodeExamples {
 
       @InOrderFlatENV({ "arrayList", "currentSize" }) public SOList(final Type[] newArray) {
         @Begin class opening {
-          /**/}
+          }
         this.arrayList = newArray;
         this.currentSize = arrayList.length;
         @End({ "arrayList", "currentSize" }) class closing {
-          /**/}
+          }
       }
 
       @Override public Iterator<Type> iterator() {
@@ -521,7 +527,7 @@ public class EnvironmentCodeExamples {
   // for the end
   public static class EX99 { // for_testing_the_use_of_names
     class Oompa_Loompa {
-      Oompa_Loompa Oompa_Loompa; /* A */
+      Oompa_Loompa Oompa_Loompa; //A
 
       <Oompa_Loompa> Oompa_Loompa() {
       }
@@ -537,9 +543,9 @@ public class EnvironmentCodeExamples {
       Oompa_Loompa Oompa_Loompa(final Oompa_Loompa l) {
         l: for (;;)
           for (;;) {
-            /* D */
-            /* C */
-            /* B */
+            // D
+            // C
+            // B
             if (new Oompa_Loompa(l) {
               @Override Oompa_Loompa Oompa_Loompa(final Oompa_Loompa l) {
                 return l != null ? super.Oompa_Loompa(l) : Oompa_Loompa.this.Oompa_Loompa(l);
@@ -551,5 +557,6 @@ public class EnvironmentCodeExamples {
         return l;
       }
     }
-  }
+  }*/
 }
+  
