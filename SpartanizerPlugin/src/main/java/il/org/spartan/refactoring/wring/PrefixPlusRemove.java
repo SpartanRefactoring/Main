@@ -16,8 +16,8 @@ import il.org.spartan.refactoring.wring.Wring.*;
  * @author Matteo Orru'
  * @since 2016 */
 public class PrefixPlusRemove extends ReplaceCurrentNode<PrefixExpression> implements Kind.NoImpact {
-  @Override ASTNode replacement(final PrefixExpression x) {
-    return x.getOperator() != PLUS ? null : plant(duplicate.of(heart(x.getOperand()))).into(x.getParent());
+  @Override String description(final PrefixExpression x) {
+    return "Remove unary + in " + x;
   }
 
   private Expression heart(final Expression x) {
@@ -27,7 +27,7 @@ public class PrefixPlusRemove extends ReplaceCurrentNode<PrefixExpression> imple
     return p == null || p.getOperator() != PLUS ? x : heart(p.getOperand());
   }
 
-  @Override String description(final PrefixExpression x) {
-    return "Remove unary + in " + x;
+  @Override ASTNode replacement(final PrefixExpression x) {
+    return x.getOperator() != PLUS ? null : plant(duplicate.of(heart(x.getOperand()))).into(x.getParent());
   }
 }

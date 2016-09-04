@@ -13,6 +13,18 @@ import il.org.spartan.refactoring.ast.*;
  * @since 2015-07-17 */
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public class sideEffectsTest {
+  @Test public void castExpression1() {
+    azzert.nay(sideEffects.free(e("(A) f()")));
+  }
+
+  @Test public void castExpression2() {
+    azzert.nay(sideEffects.free(e("(A) i++")));
+  }
+
+  @Test public void castExpression3() {
+    azzert.nay(sideEffects.free(e("(A) (j++*i++)")));
+  }
+
   @Test public void sideEffectArray1() {
     azzert.that(sideEffects.free(e("new a[3]")), is(true));
   }
@@ -49,18 +61,6 @@ public class sideEffectsTest {
     azzert.that(sideEffects.free(e("f() + 2")), is(false));
     azzert.that(sideEffects.free(e("2 + f() + 2")), is(false));
     azzert.that(sideEffects.free(e("3 + true + f() + 2")), is(false));
-  }
-
-  @Test public void castExpression1() {
-    azzert.nay(sideEffects.free(e("(A) f()")));
-  }
-
-  @Test public void castExpression2() {
-    azzert.nay(sideEffects.free(e("(A) i++")));
-  }
-
-  @Test public void castExpression3() {
-    azzert.nay(sideEffects.free(e("(A) (j++*i++)")));
   }
 
   @Test public void sideEffectFreeExists() {

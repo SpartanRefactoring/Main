@@ -10,10 +10,6 @@ import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.utils.*;
 
 public class FactorsReorganizer {
-  public static Expression simplify(final InfixExpression x) {
-    return build(new FactorsCollector(x));
-  }
-
   private static Expression build(final FactorsCollector c) {
     return build(c.multipliers(), c.dividers());
   }
@@ -52,5 +48,9 @@ public class FactorsReorganizer {
       default:
         return subject.operands(xs).to(TIMES);
     }
+  }
+
+  public static Expression simplify(final InfixExpression x) {
+    return build(new FactorsCollector(x));
   }
 }

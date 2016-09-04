@@ -28,8 +28,8 @@ import il.org.spartan.refactoring.ast.*;
 public class BodyDeclarationRemoveModifiers<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> implements Kind.SyntacticBaggage {
   // @formatter:off
     public static class OfAnnotation extends BodyDeclarationRemoveModifiers<AnnotationTypeDeclaration> { /* empty */ }
-    public static class OfEnumConstant extends BodyDeclarationRemoveModifiers<EnumConstantDeclaration> { /* empty */ }
     public static class OfEnum extends BodyDeclarationRemoveModifiers<TypeDeclaration> { /* empty */ }
+    public static class OfEnumConstant extends BodyDeclarationRemoveModifiers<EnumConstantDeclaration> { /* empty */ }
     public static class OfField extends BodyDeclarationRemoveModifiers<FieldDeclaration> { /* empty */ }
     public static class OfMethod extends BodyDeclarationRemoveModifiers<MethodDeclaration> { /* empty */ }
     public static class OfType extends BodyDeclarationRemoveModifiers<TypeDeclaration> { /* empty */ }

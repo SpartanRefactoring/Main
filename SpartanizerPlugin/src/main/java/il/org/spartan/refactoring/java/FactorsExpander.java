@@ -17,10 +17,6 @@ import il.org.spartan.refactoring.utils.*;
  * @author Niv Shalmon
  * @since 2016-08 */
 public class FactorsExpander {
-  public static Expression simplify(final InfixExpression x) {
-    return base(new FactorsCollector(x));
-  }
-
   /** @see #recurse(InfixExpression, List) */
   private static InfixExpression appendDivide(final InfixExpression $, final Factor ¢) {
     return ¢.divider() ? subject.append($, ¢.expression) : subject.pair($, ¢.expression).to(TIMES);
@@ -30,18 +26,6 @@ public class FactorsExpander {
   private static InfixExpression appendTimes(final InfixExpression $, final Factor f) {
     final Expression ¢ = duplicate.of(f.expression);
     return f.multiplier() ? subject.append($, ¢) : subject.pair($, ¢).to(DIVIDE);
-  }
-
-  private static Expression base(final List<Factor> fs) {
-    assert fs != null;
-    assert !fs.isEmpty();
-    final Factor first = lisp.first(fs);
-    assert first != null;
-    final Factor second = lisp.second(fs);
-    assert second != null;
-    final Expression $ = base(first, second);
-    assert $ != null;
-    return step($, lisp.chop(lisp.chop(fs)));
   }
 
   private static InfixExpression base(final Factor t1, final Factor t2) {
@@ -59,6 +43,18 @@ public class FactorsExpander {
 
   private static Expression base(final FactorsCollector c) {
     return base(c.all());
+  }
+
+  private static Expression base(final List<Factor> fs) {
+    assert fs != null;
+    assert !fs.isEmpty();
+    final Factor first = lisp.first(fs);
+    assert first != null;
+    final Factor second = lisp.second(fs);
+    assert second != null;
+    final Expression $ = base(first, second);
+    assert $ != null;
+    return step($, lisp.chop(lisp.chop(fs)));
   }
 
   /** @param $ The accumulator, to which one more {@link Factor} should be added
@@ -87,6 +83,10 @@ public class FactorsExpander {
     final Factor first = lisp.first(fs);
     assert first != null;
     return recurse(o == TIMES ? appendTimes($, first) : appendDivide($, first), lisp.chop(fs));
+  }
+
+  public static Expression simplify(final InfixExpression x) {
+    return base(new FactorsCollector(x));
   }
 
   private static Expression step(final Expression $, final List<Factor> ¢) {
