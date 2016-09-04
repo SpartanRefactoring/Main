@@ -556,17 +556,20 @@ public class EnvironmentCodeExamples {
   static public class EX13{
     class Onoes{
       int x;
+      public Onoes(int y) {
+      x=y;
+      }
       int giveMeANumber() {return 0;};
     }
     
-    /*Onoes foo(int n,int y){
+    Onoes foo(int n,int y){
       return new Onoes(y){
         @NestedENV({@Id(name="EX13.foo.n",clazz=int.class),@Id(name="EX13.foo.y",clazz=int.class),@Id(name="EX13.foo.__anon__Onoes__0.x",clazz=int.class)}) 
         @Override int giveMeANumber(){
           return n*x;
         }
-      }
-    }*/
+      };
+    }
   }
 
   static public class EX14 {
