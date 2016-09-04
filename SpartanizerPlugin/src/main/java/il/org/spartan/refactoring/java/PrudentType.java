@@ -131,11 +131,8 @@ public enum PrudentType {
   }
 
   private static PrudentType prudentType(Assignment x, PrudentType t) {
-    PrudentType ¢ = t != null ? t : prudent(x.getLeftHandSide());
-    if (!¢.isNoInfo()){
-      return ¢;
-    }
-    return prudent(x.getRightHandSide()).isNumeric() ? NUMERIC : prudent(x.getRightHandSide());
+    PrudentType $ = t != null ? t : prudent(x.getLeftHandSide());
+    return !$.isNoInfo() ? $ : prudent(x.getRightHandSide()).isNumeric() ? NUMERIC : prudent(x.getRightHandSide());
   }
 
   private static PrudentType prudentType(final MethodInvocation i) {
