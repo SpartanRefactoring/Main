@@ -74,8 +74,25 @@ public class Recurser<T> {
     this.current = f.apply(this);
     return this.current;
   }
+  
+  public void postVisit(final Consumer<Recurser<T>> f) {
+    final List<ASTNode> childrenList = getChildren(this.root);
+    if (childrenList == null || childrenList.isEmpty()) {
+      f.accept(this);
+      return;
+    }
+    final List<Recurser<T>> recurserList = new ArrayList<>();
+    for (final ASTNode child : childrenList)
+      recurserList.add(new Recurser<T>(child));
+    int index = 0;
+    for (final Recurser<T> rec : recurserList) {
+      rec.from(index == 0 ? current : recurserList.get(index - 1).getCurrent()).postVisit(f);
+      index++;
+    }
+    this.current = index == 0 ? current : recurserList.get(index - 1).getCurrent();
+    f.accept(this);
+  }
 
-  /** T is the type of accumulator that is passed to each function, */
   public T preVisit(final Function<Recurser<T>, T> f) {
     this.current = f.apply(this);
     final List<ASTNode> childrenList = getChildren(this.root);
@@ -90,5 +107,21 @@ public class Recurser<T> {
       ++index;
     }
     return recurserList.isEmpty() ? this.current : recurserList.get(index - 1).getCurrent();
+  }
+  
+  public void preVisit(final Consumer<Recurser<T>> f) {
+    f.accept(this);
+    final List<ASTNode> childrenList = getChildren(this.root);
+    if (childrenList == null || childrenList.isEmpty())
+      return ;
+    final List<Recurser<T>> recurserList = new ArrayList<>();
+    for (final ASTNode child : childrenList)
+      recurserList.add(new Recurser<T>(child));
+    int index = 0;
+    for (final Recurser<T> rec : recurserList) {
+      rec.from(index == 0 ? current : recurserList.get(index - 1).getCurrent()).preVisit(f);
+      ++index;
+    }
+    return;
   }
 }

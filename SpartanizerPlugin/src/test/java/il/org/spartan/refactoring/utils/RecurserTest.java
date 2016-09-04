@@ -46,6 +46,7 @@ public class RecurserTest {
     final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
     assertEquals(11, (int) recurse.postVisit(accum));
   }
+  
   /* @Test @Ignore("under working") public void issue101_(){ Expression
    * simple_exp = into.i("3+4*4+6*7+8"); Recurser<Integer> recurse = new
    * Recurser<Integer>(simple_exp,0); //Ignore final Consumer<Recurser<Integer>>
