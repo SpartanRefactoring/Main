@@ -31,13 +31,13 @@ import il.org.spartan.utils.*;
   }
 
   IJavaProject javaProject;
-
   IPackageFragmentRoot srcRoot;
   IPackageFragment pack;
   boolean optDoNotOverwrite = false, optIndividualStatistics = false, optVerbose = false;
   boolean optStatsLines = false, optStatsChanges = false;
   int optRounds = 20;
   String optPath;
+
   @Override public Object start(final IApplicationContext arg0) {
     if (parseArguments(as.list((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS))))
       return IApplication.EXIT_OK;

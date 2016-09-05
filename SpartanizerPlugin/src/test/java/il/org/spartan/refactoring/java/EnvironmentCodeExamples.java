@@ -17,7 +17,6 @@ public class EnvironmentCodeExamples {
     @End({ @Id(name = "EX2.x", clazz = int.class) }) class B {//
     }
   }
-
   {
     EX5.x = 0;
   }
@@ -253,7 +252,6 @@ public class EnvironmentCodeExamples {
   public static class EX2 { // initializator
     @NestedENV({}) @OutOfOrderFlatENV({}) static int x;
     @NestedENV({ @Id(name = "EX2.x", clazz = int.class) }) @OutOfOrderFlatENV({ @Id(name = "x", clazz = int.class) }) int y;
-
     {
       @Begin class A {//
       }
@@ -272,10 +270,11 @@ public class EnvironmentCodeExamples {
 
     @OutOfOrderFlatENV({ @Id(name = "x", clazz = int.class), @Id(name = "y", clazz = int.class) }) static class C1 {
       @NestedENV({ @Id(name = "EX2.C1.x", clazz = int.class) }) @OutOfOrderFlatENV({ @Id(name = "x", clazz = int.class) }) public static int y; // no
-                                                                                                                                                @InOrderFlatENV({ @Id(name = "x", clazz = int.class), @Id(name = "y", clazz = int.class), @Id(name = "c1", clazz = C1.class) }) @NestedENV({
+      @InOrderFlatENV({ @Id(name = "x", clazz = int.class), @Id(name = "y", clazz = int.class), @Id(name = "c1", clazz = C1.class) }) @NestedENV({
           @Id(name = "EX2.C1.x", clazz = int.class), @Id(name = "EX2.C1.y", clazz = int.class),
           @Id(name = "EX2.C1.c1", clazz = C1.class) }) @OutOfOrderFlatENV({ @Id(name = "c1", clazz = C1.class), @Id(name = "y", clazz = int.class),
               @Id(name = "x", clazz = int.class) }) public static int x;
+
       public static void change_x() {
         @Begin class A {//
         }
@@ -293,9 +292,9 @@ public class EnvironmentCodeExamples {
       }
 
       // 'y'
-                                                                                                                                                // cause
-                                                                                                                                                // static
-                                                                                                                                                // class
+      // cause
+      // static
+      // class
       C1 c1;
     }
   }
@@ -318,7 +317,6 @@ public class EnvironmentCodeExamples {
     }
 
     @NestedENV({}) @OutOfOrderFlatENV({}) int x, y;
-
     @NestedENV({ @Id(name = "EX3.x", clazz = int.class), @Id(name = "EX3.y", clazz = int.class) }) @InOrderFlatENV({
         @Id(name = "x", clazz = int.class), @Id(name = "EX3.y", clazz = int.class) }) @OutOfOrderFlatENV({ @Id(name = "y", clazz = int.class),
             @Id(name = "x", clazz = int.class) }) int q; // no xsy
@@ -561,7 +559,6 @@ public class EnvironmentCodeExamples {
     }
 
     Integer x = Integer.valueOf(1);
-
     Integer o = func(x, "Alex&Dan", new Complex());
 
     class Complex {

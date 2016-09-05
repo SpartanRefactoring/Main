@@ -25,9 +25,9 @@ final class LocalInliner {
   }
 
   final SimpleName name;
-
   final ASTRewrite rewriter;
   final TextEditGroup editGroup;
+
   LocalInliner(final SimpleName n) {
     this(n, null, null);
   }

@@ -13,11 +13,11 @@ import org.eclipse.jdt.core.dom.*;
   static final Environment EMPTY = new Environment() {
     /* Empty */
   };
-
   /** Initializer for EMPTY */
   static final Set<Entry<String, Information>> emptyEntries = Collections.unmodifiableSet(new HashSet<>());
   /** Initializer for EMPTY */
   static final Set<String> emptySet = Collections.unmodifiableSet(new HashSet<>());
+
   /** @return set of entries defined in the node, including all hiding. */
   static Set<Entry<String, Information>> declares(final ASTNode n) {
     return Collections.unmodifiableSet(new HashSet<>());
@@ -138,7 +138,7 @@ import org.eclipse.jdt.core.dom.*;
     public final PrudentType prudentType;
 
     // For now, nothing is known, we only maintain lists
-    Information() {
+    public Information() {
       blockScope = self = null;
       prudentType = null;
       hiding = null;
