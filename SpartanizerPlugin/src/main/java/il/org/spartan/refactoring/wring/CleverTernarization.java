@@ -40,16 +40,26 @@ import il.org.spartan.refactoring.utils.*;
  * @author Niv Shalmon
  * @since 2016-09-1 */
 public final class CleverTernarization extends Wring.ReplaceCurrentNode<ConditionalExpression> implements Kind.Ternarization {
-  private static int findCommonPrefix(final String str1, final String str2) {
-    final char[] str1Array = str1.toCharArray();
-    final char[] str2Array = str2.toCharArray();
+  private static int firstDifference(final String s1, final String s2) {
+    return firstDifferentWLOG(shorter(s1, s2), longer(s1, s2));
+  }
+
+  private static int firstDifferentWLOG(final String shorter, final String longer) {
     int $ = 0;
-    for (; $ < str1Array.length && $ < str2Array.length; ++$)
-      if (str1Array[$] != str2Array[$])
+    for (; $ < shorter.length(); ++$)
+      if (shorter.charAt($) != longer.charAt($))
         break;
     return $;
   }
 
+  private static String shorter(final String s1, final String s2) {
+    return s1.length() < s2.length() ? s1 : s2;
+  }
+
+  private static String longer(final String s1, final String s2) {
+    return s1 == shorter(s1, s2) ? s1 : s2;
+  }
+// TODO: Niv. Maybe you can do this with the shorter/longer method?
   private static int findCommonSuffix(final String str1, final String str2) {
     int i = 0;
     String sub = "";
@@ -108,7 +118,7 @@ public final class CleverTernarization extends Wring.ReplaceCurrentNode<Conditio
     final List<Expression> elzeOperands = extract.allOperands(elze);
     if (elzeOperands.get(0).getNodeType() == ASTNode.STRING_LITERAL) {
       final String elzeStr = ((StringLiteral) elzeOperands.get(0)).getLiteralValue();
-      final int commonPrefixIndex = findCommonPrefix(thenStr, elzeStr);
+      final int commonPrefixIndex = firstDifference(thenStr, elzeStr);
       if (commonPrefixIndex != 0) {
         final StringLiteral prefix = getPrefix(thenStr, commonPrefixIndex, condition);
         final StringLiteral thenPost = getSuffix(thenStr, commonPrefixIndex, condition);
@@ -139,7 +149,7 @@ public final class CleverTernarization extends Wring.ReplaceCurrentNode<Conditio
   private static Expression simplify(final StringLiteral then, final StringLiteral elze, final Expression condition) {
     final String thenStr = then.getLiteralValue();
     final String elzeStr = elze.getLiteralValue();
-    final int commonPrefixIndex = findCommonPrefix(thenStr, elzeStr);
+    final int commonPrefixIndex = firstDifference(thenStr, elzeStr);
     if (commonPrefixIndex != 0)
       return replacementPrefix(thenStr, elzeStr, commonPrefixIndex, condition);
     final int commonSuffixLength = findCommonSuffix(thenStr, elzeStr);
