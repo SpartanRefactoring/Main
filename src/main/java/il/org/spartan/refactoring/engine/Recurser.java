@@ -76,7 +76,7 @@ public class Recurser<T> {
     int index = 0;
     for (final Recurser<T> rec : recurserList) {
       rec.from(index == 0 ? current : recurserList.get(index - 1).getCurrent()).postVisit(f);
-      index++;
+      ++index;
     }
     this.current = index == 0 ? current : recurserList.get(index - 1).getCurrent();
     f.accept(this);
@@ -84,21 +84,18 @@ public class Recurser<T> {
 
   public T postVisit(final Function<Recurser<T>, T> f) {
     final List<ASTNode> childrenList = getChildren(this.root);
-    if (childrenList == null || childrenList.isEmpty()) {
-      this.current = f.apply(this);
-      return this.current;
-    }
+    if (childrenList == null || childrenList.isEmpty())
+      return this.current = f.apply(this);
     final List<Recurser<T>> recurserList = new ArrayList<>();
     for (final ASTNode child : childrenList)
       recurserList.add(new Recurser<T>(child));
     int index = 0;
     for (final Recurser<T> rec : recurserList) {
       this.current = rec.from(index == 0 ? current : recurserList.get(index - 1).getCurrent()).postVisit(f);
-      index++;
+      ++index;
     }
     this.current = index == 0 ? current : recurserList.get(index - 1).getCurrent();
-    this.current = f.apply(this);
-    return this.current;
+    return this.current = f.apply(this);
   }
 
   public void preVisit(final Consumer<Recurser<T>> f) {
@@ -111,7 +108,6 @@ public class Recurser<T> {
       recurserList.add(new Recurser<T>(child));
     for (final Recurser<T> rec : recurserList)
       rec.preVisit(f);
-    return;
   }
 
   public T preVisit(final Function<Recurser<T>, T> f) {
