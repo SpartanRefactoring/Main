@@ -32,6 +32,22 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     return !iz.simpleName($) && ((InfixExpression) $).getOperator() == TIMES;
   }
 
+  @Override public String description() {
+    return "a*b + a*c => a * (b + c)";
+  }
+
+  @Override String description(final InfixExpression x) {
+    return "Apply the distributive rule to " + x;
+  }
+
+  @Override ASTNode replacement(final InfixExpression x) {
+    return x.getOperator() != PLUS ? null : replacement(extract.allOperands(x));
+  }
+
+  @Override boolean scopeIncludes(final InfixExpression $) {
+    return $ != null && iz.infixPlus($) && IsSimpleMultiplication(step.left($)) && IsSimpleMultiplication(step.right($)); // super.scopeIncludes($);
+  }
+
   private void addCommon(final Expression op, final List<Expression> common) {
     addNewInList(op, common);
   }
@@ -43,14 +59,6 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
   private void addNewInList(final Expression item, final List<Expression> xs) {
     if (!isIn(item, xs))
       xs.add(item);
-  }
-
-  @Override public String description() {
-    return "a*b + a*c => a * (b + c)";
-  }
-
-  @Override String description(final InfixExpression x) {
-    return "Apply the distributive rule to " + x;
   }
 
   @SuppressWarnings("static-method") private boolean isIn(final Expression op, final List<Expression> allOperands) {
@@ -69,10 +77,6 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     final List<Expression> $ = new ArrayList<>(xs);
     $.remove($.get(0));// remove first
     return $;
-  }
-
-  @Override ASTNode replacement(final InfixExpression x) {
-    return x.getOperator() != PLUS ? null : replacement(extract.allOperands(x));
   }
 
   private ASTNode replacement(final InfixExpression e1, final InfixExpression e2) {
@@ -147,9 +151,5 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
       multiplication = (multiplication == null ? subject.pair(common.get(i), common.get(i + 1)) : subject.pair(multiplication, different.get(i + 1)))
           .to(Operator.TIMES);
     return subject.pair(multiplication, addition).to(Operator.TIMES);
-  }
-
-  @Override boolean scopeIncludes(final InfixExpression $) {
-    return $ != null && iz.infixPlus($) && IsSimpleMultiplication(step.left($)) && IsSimpleMultiplication(step.right($)); // super.scopeIncludes($);
   }
 }

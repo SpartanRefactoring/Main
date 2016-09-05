@@ -15,15 +15,6 @@ import il.org.spartan.refactoring.ast.*;
  * @since 2015-07-21 */
 public enum duplicate {
   ;
-  static List<Expression> adjust(final Operator o, final List<Expression> xs) {
-    if (o != wizard.MINUS2)
-      return xs;
-    final List<Expression> $ = new ArrayList<>();
-    for (final Expression e : xs)
-      $.add(subject.operand(e).to(wizard.MINUS1));
-    return $;
-  }
-
   /** Duplicate all {@link ASTNode} objects found in a given list into another
    * list.
    * @param from JD
@@ -53,5 +44,14 @@ public enum duplicate {
    * @return a duplicate of the parameter, downcasted to the returned type. */
   @SuppressWarnings("unchecked") public static <¢ extends ASTNode> ¢ of(final ¢ ¢) {
     return (¢) copySubtree(¢.getAST(), ¢);
+  }
+
+  static List<Expression> adjust(final Operator o, final List<Expression> xs) {
+    if (o != wizard.MINUS2)
+      return xs;
+    final List<Expression> $ = new ArrayList<>();
+    for (final Expression e : xs)
+      $.add(subject.operand(e).to(wizard.MINUS1));
+    return $;
   }
 }

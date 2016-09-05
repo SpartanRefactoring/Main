@@ -37,14 +37,14 @@ import il.org.spartan.refactoring.engine.*;
     final Expression simple_exp = into.i("3+4*4+6*7+8");
     final Recurser<Integer> recurse = new Recurser<>(simple_exp, 0);
     final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
-    assertEquals(9, (int) recurse.preVisit(accum));
+    assertEquals(11, (int) recurse.preVisit(accum));
   }
 
   @Test public void issue101_5() {
     final Expression simple_exp = into.i("3+4*4+6*7+8");
     final Recurser<Integer> recurse = new Recurser<>(simple_exp, 0);
     final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
-    assertEquals(9, (int) recurse.postVisit(accum));
+    assertEquals(11, (int) recurse.postVisit(accum));
   }
 
   @Test public void issue101_6() {
@@ -111,7 +111,14 @@ import il.org.spartan.refactoring.engine.*;
     assertEquals("99", simple_exp.toString());
   }
 
-  @Test @Ignore("Seems like working value/refrence problem") public void issue101_199() {
+  @Test public void issue101_14() {
+    final Expression simple_exp = into.i("3+(4*5)+6");
+    final Recurser<Integer> recurse = new Recurser<>(simple_exp, 0);
+    final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
+    assertEquals(7, (int) recurse.postVisit(accum));
+  }
+
+  @Test public void issue101_15() {
     final Expression simple_exp = into.e("56+87");
     final Recurser<Integer> recurse = new Recurser<>(simple_exp, 0);
     final Consumer<Recurser<Integer>> changeToken = (x) -> {
@@ -119,6 +126,50 @@ import il.org.spartan.refactoring.engine.*;
         ((NumberLiteral) x.getRoot()).setToken("99");
     };
     recurse.preVisit(changeToken);
-    assertEquals("99+99", simple_exp.toString());
+    assertEquals("99 + 99", simple_exp.toString());
+  }
+
+  @Test public void issue101_16() {
+    final Expression simple_exp = into.e("b==true ? 67 : 7");
+    final Recurser<Integer> recurse = new Recurser<>(simple_exp, 0);
+    final Consumer<Recurser<Integer>> changeToken = (x) -> {
+      if (x.getRoot().getNodeType() == ASTNode.NUMBER_LITERAL)//
+        ((NumberLiteral) x.getRoot()).setToken("56");
+    };
+    recurse.preVisit(changeToken);
+    assertEquals("b == true ? 56 : 56", simple_exp.toString());
+  }
+
+  @Test public void issue101_17() {
+    final Expression simple_exp = into.e("b==true ? 67 : 7");
+    final Recurser<Integer> recurse = new Recurser<>(simple_exp, 0);
+    final Consumer<Recurser<Integer>> changeToken = (x) -> {
+      if (x.getRoot().getNodeType() == ASTNode.BOOLEAN_LITERAL)//
+        ((BooleanLiteral) x.getRoot()).setBooleanValue(false);
+    };
+    recurse.preVisit(changeToken);
+    assertEquals("b == false ? 67 : 7", simple_exp.toString());
+  }
+
+  @Test public void issue101_18() {
+    final Expression simple_exp = into.e("b==true ? 67 : 7");
+    final Recurser<Integer> recurse = new Recurser<>(simple_exp, 0);
+    final Consumer<Recurser<Integer>> changeToken = (x) -> {
+      if (x.getRoot().getNodeType() == ASTNode.BOOLEAN_LITERAL)//
+        ((BooleanLiteral) x.getRoot()).setBooleanValue(false);
+    };
+    recurse.postVisit(changeToken);
+    assertEquals("b == false ? 67 : 7", simple_exp.toString());
+  }
+
+  @Test public void issue101_19() {
+    final Expression simple_exp = into.e("56+87*234+21l");
+    final Recurser<Integer> recurse = new Recurser<>(simple_exp, 0);
+    final Consumer<Recurser<Integer>> changeToken = (x) -> {
+      if (x.getRoot().getNodeType() == ASTNode.NUMBER_LITERAL)//
+        ((NumberLiteral) x.getRoot()).setToken("99");
+    };
+    recurse.preVisit(changeToken);
+    assertEquals("99 + 99 * 99 + 99", simple_exp.toString());
   }
 }

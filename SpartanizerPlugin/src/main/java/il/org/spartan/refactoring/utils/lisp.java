@@ -44,6 +44,14 @@ public interface lisp {
     return ts == null || ts.isEmpty() ? null : ts.get(ts.size() - 1);
   }
 
+  static char last(final String s) {
+    return last(s, 0);
+  }
+
+  static char last(final String s, final int i) {
+    return s.charAt(s.length() - i - 1);
+  }
+
   /** Retrieve next item in a list
    * @param i an index of specific item in a list
    * @param ts the indexed list
