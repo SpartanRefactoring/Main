@@ -67,7 +67,7 @@ public class EnvironmentTest {
   @Test public void define_0() {
     final String code = "";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, Information>> $ = Environment.defines(u);
+    final Set<Entry<String, Information>> $ = Environment.declares(u);
     azzert.that($.contains("a"), is(false));
     azzert.that($.isEmpty(), is(true));
   }
@@ -75,14 +75,14 @@ public class EnvironmentTest {
   @Ignore public void define_1() {
     final String code = "int a = 0;";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, Information>> $ = Environment.defines(u);
+    final Set<Entry<String, Information>> $ = Environment.declares(u);
     azzert.that($.contains("a"), is(true));
   }
 
   @Ignore public void define_10() {
     final String code = "int a = 0;";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, Information>> $ = Environment.defines(u);
+    final Set<Entry<String, Information>> $ = Environment.declares(u);
     azzert.that($.contains("a"), is(true));
   }
 
@@ -90,7 +90,7 @@ public class EnvironmentTest {
     final String code = "int a = 0;\n" + //
         "int b;";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, Information>> $ = Environment.defines(u);
+    final Set<Entry<String, Information>> $ = Environment.declares(u);
     azzert.that($.contains("a"), is(true));
     azzert.that($.contains("b"), is(true));
   }
@@ -98,14 +98,14 @@ public class EnvironmentTest {
   @Ignore public void define_3() {
     final String code = "public void f(int a){}";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, Information>> $ = Environment.defines(u);
+    final Set<Entry<String, Information>> $ = Environment.declares(u);
     azzert.that($.contains("a"), is(true));
   }
 
   @Ignore public void define_4() {
     final String code = "public void f(int a){String b}";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, Information>> $ = Environment.defines(u);
+    final Set<Entry<String, Information>> $ = Environment.declares(u);
     azzert.that($.contains("a"), is(true));
     azzert.that($.contains("b"), is(true));
   }
@@ -113,7 +113,7 @@ public class EnvironmentTest {
   @Ignore public void define_5() {
     final String code = "a = 0;";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, Information>> $ = Environment.defines(u);
+    final Set<Entry<String, Information>> $ = Environment.declares(u);
     azzert.that($.contains("a"), is(false));
   }
 
@@ -121,7 +121,7 @@ public class EnvironmentTest {
     final String code = "int a = 0;\n" + //
         "b = 5";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, Information>> $ = Environment.defines(u);
+    final Set<Entry<String, Information>> $ = Environment.declares(u);
     azzert.that($.contains("a"), is(true));
     azzert.that($.contains("b"), is(false));
   }
@@ -133,7 +133,7 @@ public class EnvironmentTest {
         "void func(MyClass my, int b) {String s = 4;\n" + "not_in_env++;}\n" + //
         "}}";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, Information>> $ = Environment.defines(u);
+    final Set<Entry<String, Information>> $ = Environment.declares(u);
     azzert.that($.contains("a"), is(true));
     azzert.that($.contains("b"), is(true));
     azzert.that($.contains("my"), is(true));
@@ -143,19 +143,19 @@ public class EnvironmentTest {
   @Ignore public void define_8() {
     final String code = "int a = 0;";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, Information>> $ = Environment.defines(u);
+    final Set<Entry<String, Information>> $ = Environment.declares(u);
     azzert.that($.contains("a"), is(true));
   }
 
   @Ignore public void define_9() {
     final String code = "int a = 0;";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, Information>> $ = Environment.defines(u);
+    final Set<Entry<String, Information>> $ = Environment.declares(u);
     azzert.that($.contains("a"), is(true));
   }
 
   @Test public void defineTestMethodDefinition() {
-    Environment.defines(makeAST.COMPILATION_UNIT.from(new Document("int x = 5;").get()));
+    Environment.declares(makeAST.COMPILATION_UNIT.from(new Document("int x = 5;").get()));
   }
 
   @Test public void DoesntHaveFalseResult() {
