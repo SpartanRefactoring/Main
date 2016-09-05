@@ -32,10 +32,6 @@ public enum minus {
     return $;
   }
 
-  private static int level(final PrefixExpression ¢) {
-    return az.bit(¢.getOperator() == wizard.MINUS1) + level(¢.getOperand());
-  }
-
   public static Expression peel(final Expression $) {
     return iz.is($, PREFIX_EXPRESSION) ? peel((PrefixExpression) $)
         : iz.is($, PARENTHESIZED_EXPRESSION) ? peel(core($)) //
@@ -48,18 +44,22 @@ public enum minus {
     return lisp.out(x.getOperator(), TIMES, DIVIDE) ? x : subject.operands(peel(hop.operands(x))).to(x.getOperator());
   }
 
-  private static List<Expression> peel(final List<Expression> xs) {
-    final List<Expression> $ = new ArrayList<>();
-    for (final Expression e : xs)
-      $.add(peel(e));
-    return $;
-  }
-
   public static Expression peel(final NumberLiteral $) {
     return !$.getToken().startsWith("-") && !$.getToken().startsWith("+") ? $ : $.getAST().newNumberLiteral($.getToken().substring(1));
   }
 
   public static Expression peel(final PrefixExpression $) {
     return lisp.out($.getOperator(), wizard.MINUS1, wizard.PLUS1) ? $ : peel($.getOperand());
+  }
+
+  private static int level(final PrefixExpression ¢) {
+    return az.bit(¢.getOperator() == wizard.MINUS1) + level(¢.getOperand());
+  }
+
+  private static List<Expression> peel(final List<Expression> xs) {
+    final List<Expression> $ = new ArrayList<>();
+    for (final Expression e : xs)
+      $.add(peel(e));
+    return $;
   }
 }

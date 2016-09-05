@@ -26,15 +26,6 @@ import il.org.spartan.refactoring.ast.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 public class BodyDeclarationRemoveModifiers<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> implements Kind.SyntacticBaggage {
-  // @formatter:off
-    public static class OfAnnotation extends BodyDeclarationRemoveModifiers<AnnotationTypeDeclaration> { /* empty */ }
-    public static class OfEnum extends BodyDeclarationRemoveModifiers<TypeDeclaration> { /* empty */ }
-    public static class OfEnumConstant extends BodyDeclarationRemoveModifiers<EnumConstantDeclaration> { /* empty */ }
-    public static class OfField extends BodyDeclarationRemoveModifiers<FieldDeclaration> { /* empty */ }
-    public static class OfMethod extends BodyDeclarationRemoveModifiers<MethodDeclaration> { /* empty */ }
-    public static class OfType extends BodyDeclarationRemoveModifiers<TypeDeclaration> { /* empty */ }
-    // @formatter:on
-
   private static Set<Modifier> matches(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ps) {
     final Set<Modifier> $ = new LinkedHashSet<>();
     for (final IExtendedModifier m : modifiers(¢))
@@ -125,4 +116,18 @@ public class BodyDeclarationRemoveModifiers<N extends BodyDeclaration> extends W
     final Set<Predicate<Modifier>> ps = redundancies(¢);
     return !ps.isEmpty() && !matchess(¢, ps).isEmpty();
   }
+
+  // @formatter:off
+  public static class OfAnnotation extends BodyDeclarationRemoveModifiers<AnnotationTypeDeclaration> { /* empty */ }
+
+  public static class OfEnum extends BodyDeclarationRemoveModifiers<TypeDeclaration> { /* empty */ }
+
+  public static class OfEnumConstant extends BodyDeclarationRemoveModifiers<EnumConstantDeclaration> { /* empty */ }
+
+  public static class OfField extends BodyDeclarationRemoveModifiers<FieldDeclaration> { /* empty */ }
+
+  public static class OfMethod extends BodyDeclarationRemoveModifiers<MethodDeclaration> { /* empty */ }
+
+  public static class OfType extends BodyDeclarationRemoveModifiers<TypeDeclaration> { /* empty */ }
+  // @formatter:on
 }

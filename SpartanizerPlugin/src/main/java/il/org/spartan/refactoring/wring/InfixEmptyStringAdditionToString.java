@@ -10,13 +10,13 @@ import il.org.spartan.refactoring.java.*;
  * @since 2016-08-29 */
 public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<InfixExpression>
     implements il.org.spartan.refactoring.wring.Kind.NoImpact {
-  private static String descriptionAux(final Expression x) {
-    return x != null ? "Use " + x : "Use the variable alone";
-  }
-
   @SuppressWarnings("unused") static boolean validTypes(final Expression x, final Expression ¢1, final Expression ¢2) {
     return !stringType.isNot(¢2) && ¢1 instanceof StringLiteral && "\"\"".equals(((StringLiteral) ¢1).getEscapedValue())
         || ¢2 instanceof StringLiteral && "\"\"".equals(((StringLiteral) ¢2).getEscapedValue()) && !stringType.isNot(¢1);
+  }
+
+  private static String descriptionAux(final Expression x) {
+    return x != null ? "Use " + x : "Use the variable alone";
   }
 
   @Override public String description() {
