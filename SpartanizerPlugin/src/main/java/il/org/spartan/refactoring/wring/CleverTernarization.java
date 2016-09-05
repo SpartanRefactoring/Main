@@ -108,7 +108,7 @@ public final class CleverTernarization extends Wring.ReplaceCurrentNode<Conditio
   }
 
   private static String shorter(final String s1, final String s2) {
-    return s1.length() < s2.length() ? s1 : s2;
+    return s1.length() <= s2.length() ? s1 : s2;
   }
 
   private static Expression simplify(final InfixExpression then, final InfixExpression elze, final Expression condition) {
