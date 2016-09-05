@@ -17,8 +17,13 @@ public class Recurser<T> {
     if (n == null)
       return new ArrayList<>();
     final InfixExpression ¢ = az.infixExpression(n);
-    if (¢ != null)
-      return new ArrayList<>(extract.allOperands(¢));
+    if (¢ != null) {
+      List<ASTNode> $ = new ArrayList<>();
+      $.add(step.right(¢));
+      $.add(step.left(¢));
+      $.addAll(step.extendedOperands(¢));
+      return $;
+    }
     final List<ASTNode> $ = new ArrayList<>();
     try {
       @SuppressWarnings("rawtypes") final List lst = n.structuralPropertiesForType();
