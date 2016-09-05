@@ -538,11 +538,11 @@ public class EnvironmentCodeExamples {
       };
     }
 
-    Onoes foo(final int n, final int y) {
+    Onoes foo(final int i, final int y) {
       return new Onoes(y) {
         @NestedENV({ @Id(name = "EX13.foo.n", clazz = int.class), @Id(name = "EX13.foo.y", clazz = int.class),
             @Id(name = "EX13.foo.__anon__Onoes__0.x", clazz = int.class) }) @Override int giveMeANumber() {
-          return n * x;
+          return i * x;
         }
       };
     }
