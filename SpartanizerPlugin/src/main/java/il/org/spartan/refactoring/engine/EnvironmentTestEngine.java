@@ -51,21 +51,21 @@ public class EnvironmentTestEngine {
     return $;
   }
 
-  private final CompilationUnit cUnit;
+  private final ASTNode n;
   
   Set<Entry<String, Environment.Information>> testNestedENV;
   Set<Entry<String, Environment.Information>> testFlatENV;
   Set<Entry<String, Environment.Information>> testBeginEnd;
 
   EnvironmentTestEngine(final CompilationUnit $) {
-    cUnit = $;
+    n = $;
     testNestedENV = generateSet();
     testFlatENV = generateSet();
     testBeginEnd = generateSet();
   }
 
   EnvironmentTestEngine(final String ¢) {
-    cUnit = getCompilationUnit(¢);
+    n = getCompilationUnit(¢);
     testNestedENV = generateSet();
     testFlatENV = generateSet();
     testBeginEnd = generateSet();
@@ -76,7 +76,7 @@ public class EnvironmentTestEngine {
     NESTED,
     BEGINEND
   }
-  /*
+  
   void addValuesToSets(List<MemberValuePair> ps, AnnotationType t){
     switch (t){
       case FLAT:
@@ -85,7 +85,7 @@ public class EnvironmentTestEngine {
         Entry e = Map.new Entry<>();
         testFlatENV.add(e);
     }
-  }*/
+  }
   
   /*
    * define: outer annotation = OutOfOrderNestedENV, InOrderFlatENV, Begin, End.
@@ -103,7 +103,7 @@ public class EnvironmentTestEngine {
    *  TODO: internal node parsing. Think about Nested parsing.
    */
   public void runTest() {
-    cUnit.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor() {
       void addAnnotations(final List<Annotation> as) {
         for (final Annotation ¢ : as)
           dispatch(¢);
