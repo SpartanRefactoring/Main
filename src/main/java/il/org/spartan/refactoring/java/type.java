@@ -42,7 +42,6 @@ public interface type {
   public enum PsuedoPrimitive implements type{
     // Those anonymous characters that known little or nothing about themselves
     NOTHING("none", "when nothing can be said, e.g., f(f(),f(f(f()),f()))"), //
-    NONNULL("!null", "e.g., new Object() and that's about it"), //
     BAPTIZED("!double&!long&!int", "an object of some type, for which we have a name only"), //
     VOID("void", "nothing at all"),
     // Doubtful types, from four fold uncertainty down to bilalteral
@@ -105,7 +104,7 @@ public interface type {
       return STRING;
     }
 
-    private static PsuedoPrimitive conditionalWithNoInfo(final PsuedoPrimitive t) {
+    private static type conditionalWithNoInfo(final PsuedoPrimitive t) {
       switch (t) {
         case BYTE:
         case SHORT:
@@ -133,7 +132,7 @@ public interface type {
      * @return The most specific Type information that can be deduced about the
      *         expression, or {@link #NOTHING} if it cannot decide. Will never
      *         return null */
-    private static PsuedoPrimitive prudent(final Expression x) {
+    private static type prudent(final Expression x) {
       return prudent(x, null, null);
     }
     
@@ -149,7 +148,7 @@ public interface type {
      * be used if the size of the list doesn't match that of
      * extract.allOperands().
      * @param ts list of types of operands. Must be at least of size 2 */
-    static PsuedoPrimitive prudent(final Expression x, final List<PsuedoPrimitive> ts) {
+    static type prudent(final Expression x, final List<PsuedoPrimitive> ts) {
       assert ts.size() >= 2;
       switch (x.getNodeType()) {
         case NULL_LITERAL:
@@ -188,7 +187,7 @@ public interface type {
     /** A version of {@link #prudent(Expression)} that receives the operand's type
      * for a single operand expression. The call kind(e,null) is equivalent to
      * kind(e) */
-    static PsuedoPrimitive prudent(final Expression x, final PsuedoPrimitive t) {
+    static type prudent(final Expression x, final PsuedoPrimitive t) {
       return prudent(x, t, null);
     }
 
@@ -199,29 +198,29 @@ public interface type {
      *        the then expression of the conditional, or null if unknown
      * @param t2 the type of the left hand operand of the expression, the type of
      *        the else expression of the conditional, or null if unknown */
-    static PsuedoPrimitive prudent(final Expression x, final PsuedoPrimitive t1, final PsuedoPrimitive t2) {
+    static type prudent(final Expression x, final PsuedoPrimitive t1, final PsuedoPrimitive t2) {
       final List<PsuedoPrimitive> ¢ = new ArrayList<>();
       ¢.add(t1);
       ¢.add(t2);
       return prudent(x, ¢);
     }
 
-    private static PsuedoPrimitive prudentType(final Assignment x, final PsuedoPrimitive t) {
-      final PsuedoPrimitive $ = t != null ? t : prudent(x.getLeftHandSide());
-      return !$.isNoInfo() ? $ : prudent(x.getRightHandSide()).isNumeric() ? NUMERIC : prudent(x.getRightHandSide());
+    private static type prudentType(final Assignment x, final PsuedoPrimitive t) {
+      final type $ = t != null ? t : prudent(x.getLeftHandSide());
+      return !$.asPrudentType().isNoInfo() ? $ : prudent(x.getRightHandSide()).asPrudentType().isNumeric() ? NUMERIC : prudent(x.getRightHandSide());
     }
 
-    private static PsuedoPrimitive prudentType(final CastExpression x) {
-      return typeSwitch("" + step.type(x), BAPTIZED);
+    private static type prudentType(final CastExpression x) {
+      return typeSwitch(step.type(x));
     }
 
-    private static PsuedoPrimitive prudentType(final ClassInstanceCreation c) {
-      return typeSwitch("" + c.getType(), NONNULL);
+    private static type prudentType(final ClassInstanceCreation c) {
+      return typeSwitch(c.getType());
     }
 
-    private static PsuedoPrimitive prudentType(final ConditionalExpression x, final PsuedoPrimitive t1, final PsuedoPrimitive t2) {
-      final PsuedoPrimitive $ = t1 != null ? t1 : prudent(x.getThenExpression());
-      final PsuedoPrimitive ¢2 = t2 != null ? t2 : prudent(x.getElseExpression());
+    private static type prudentType(final ConditionalExpression x, final PsuedoPrimitive t1, final PsuedoPrimitive t2) {
+      final PsuedoPrimitive $ = t1 != null ? t1 : prudent(x.getThenExpression()).asPrudentType();
+      final PsuedoPrimitive ¢2 = t2 != null ? t2 : prudent(x.getElseExpression()).asPrudentType();
       // If we don't know much about one operand but do know enough about the
       // other, we can still learn something
       return $ == ¢2 ? $
@@ -231,17 +230,17 @@ public interface type {
                       : NOTHING; //
     }
 
-    private static PsuedoPrimitive prudentType(final InfixExpression x, final List<PsuedoPrimitive> ts) {
+    private static type prudentType(final InfixExpression x, final List<PsuedoPrimitive> ts) {
       final InfixExpression.Operator o = x.getOperator();
       final List<Expression> es = extract.allOperands(x);
       assert es.size() >= 2;
       final List<PsuedoPrimitive> ¢ = new ArrayList<>();
       if (ts.size() != es.size())
         for (int i = 0; i < es.size(); ++i)
-          ¢.add(i, prudent(es.get(i)));
+          ¢.add(i, prudent(es.get(i)).asPrudentType());
       else
         for (int i = 0; i < ts.size(); ++i)
-          ¢.add(i, ts.get(i) != null ? ts.get(i) : prudent(es.get(i)));
+          ¢.add(i, ts.get(i) != null ? ts.get(i) : prudent(es.get(i)).asPrudentType());
       PsuedoPrimitive $ = lisp.first(¢).underBinaryOperator(o, lisp.second(¢));
       lisp.chop(lisp.chop(¢));
       while (!¢.isEmpty()) {
@@ -251,12 +250,11 @@ public interface type {
       return $;
     }
 
-    private static PsuedoPrimitive prudentType(final MethodInvocation i) {
+    private static type prudentType(final MethodInvocation i) {
       return "toString".equals(i.getName() + "") && i.arguments().isEmpty() ? STRING : NOTHING;
     }
 
-    private static PsuedoPrimitive prudentType(final NumberLiteral l) {
-      // TODO: Dor use TypeLiteral instead.
+    private static type prudentType(final NumberLiteral l) {
       final String ¢ = l.getToken();
       return ¢.matches("[0-9]+") ? INT
           : ¢.matches("[0-9]+[l,L]") ? LONG
@@ -264,21 +262,24 @@ public interface type {
                   : ¢.matches("[0-9]+\\.[0-9]*[d,D]?") || ¢.matches("[0-9]+[d,D]") ? DOUBLE : NUMERIC;
     }
 
-    private static PsuedoPrimitive prudentType(final ParenthesizedExpression x, final PsuedoPrimitive t) {
+    private static type prudentType(final ParenthesizedExpression x, final PsuedoPrimitive t) {
       return t != null ? t : prudent(extract.core(x));
     }
 
-    private static PsuedoPrimitive prudentType(final PostfixExpression x, final PsuedoPrimitive t1) {
-      return (t1 != null ? t1 : prudent(x.getOperand())).asNumeric(); // see
+    private static type prudentType(final PostfixExpression x, final PsuedoPrimitive t1) {
+      return (t1 != null ? t1 : prudent(x.getOperand())).asPrudentType().asNumeric(); // see
                                                                       // testInDecreamentSemantics
     }
 
-    private static PsuedoPrimitive prudentType(final PrefixExpression x, final PsuedoPrimitive t1) {
-      return (t1 != null ? t1 : prudent(x.getOperand())).under(x.getOperator());
+    private static type prudentType(final PrefixExpression x, final PsuedoPrimitive t1) {
+      return (t1 != null ? t1 : prudent(x.getOperand())).asPrudentType().under(x.getOperator());
     }
 
-    private static PsuedoPrimitive typeSwitch(final String s, final PsuedoPrimitive $) {
-      switch (s) {
+    /**@param t JD
+     * @return the type that represents t
+     */
+    private static type typeSwitch(final Type t) {
+      switch ("" + t) {
         case "byte":
         case "Byte":
           return BYTE;
@@ -306,7 +307,7 @@ public interface type {
         case "String":
           return STRING;
         default:
-          return $;
+          return type.baptize("" + t);
       }
     }
 
@@ -375,7 +376,7 @@ public interface type {
      *         {@link #NONNULL}, {@link #VOID}, {@link #NULL} or false
      *         otherwise */
     private boolean isNoInfo() {
-      return in(this, NOTHING, BAPTIZED, NONNULL, VOID, NULL);
+      return in(this, NOTHING, BAPTIZED, VOID, NULL);
     }
 
     /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
@@ -488,7 +489,7 @@ public interface type {
    return false;
  }
  
- static type Baptize(String name){
+ static type baptize(String name){
    if (dictionary.containsKey(name))
      return dictionary.get(name);
    return store(name,new type() {
@@ -500,5 +501,5 @@ public interface type {
    dictionary.put(s, $);
    return $;
  }
-
+ 
 }
