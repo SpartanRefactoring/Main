@@ -6,23 +6,26 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 
 public class EnvironmentTestEngine {
-  EnvironmentTestEngine() {
+  //s = "il.org.spartan.refactoring.java.EnvironmentCodeExamples.java"
+  static CompilationUnit getCompilationUnit(String from) {
     IJavaProject javaProject = getJavaProject("spartenRefactoring");
     IType iType;
+    CompilationUnit $ = null;
     try {
-      iType = javaProject.findType("il.org.spartan.refactoring.java.EnvironmentCodeExamples.java");
+      iType = javaProject.findType(from);
       ICompilationUnit iCompilationUnit = iType.getCompilationUnit();
 
       @SuppressWarnings("deprecation")
-      ASTParser parser = ASTParser.newParser(AST.JLS3); 
+      final ASTParser parser = ASTParser.newParser(AST.JLS3); 
       parser.setKind(ASTParser.K_COMPILATION_UNIT);
       parser.setSource(iCompilationUnit);
-      parser.setResolveBindings(true);
-      CompilationUnit cUnit = (CompilationUnit) parser.createAST(null);
+      parser.setResolveBindings(true); // we need bindings later on
+      $ = (CompilationUnit) parser.createAST(null);
       
     } catch (JavaModelException e) {
       e.printStackTrace();
     }
+    return $;
   }
   
   private static IJavaProject getJavaProject(String projectName) {
