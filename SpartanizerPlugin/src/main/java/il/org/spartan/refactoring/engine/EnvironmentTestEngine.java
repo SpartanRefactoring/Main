@@ -11,6 +11,7 @@ import il.org.spartan.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.java.Environment.*;
+import il.org.spartan.refactoring.utils.*;;
 
 public class EnvironmentTestEngine {
   static Set<Entry<String, Environment.Information>> generateSet() {
@@ -51,13 +52,13 @@ public class EnvironmentTestEngine {
     return $;
   }
 
-  private final CompilationUnit cUnit;
+  private final ASTNode cUnit;
   
   Set<Entry<String, Environment.Information>> testNestedENV;
   Set<Entry<String, Environment.Information>> testFlatENV;
   Set<Entry<String, Environment.Information>> testBeginEnd;
 
-  EnvironmentTestEngine(final CompilationUnit $) {
+  EnvironmentTestEngine(final ASTNode $) {
     cUnit = $;
     testNestedENV = generateSet();
     testFlatENV = generateSet();
@@ -76,16 +77,24 @@ public class EnvironmentTestEngine {
     NESTED,
     BEGINEND
   }
-  /*
-  void addValuesToSets(List<MemberValuePair> ps, AnnotationType t){
+  
+  private void addValueToBeginEnd(List<MemberValuePair> ps) {}
+  
+  private void addValueToNested(List<MemberValuePair> ps) {}
+  //TODO: Information should be instantiated with Type
+  private void addValueToFlat(List<MemberValuePair> ps) {
+    testFlatENV.add(new MyEntry<>(wizard.asString(ps.get(0).getValue()), new Information()));
+  }
+  
+  void addValueToSetsDispatch(List<MemberValuePair> ps, AnnotationType t){
     switch (t){
-      case FLAT:
-        String fgdfgs = wizard.asString(ps.get(0).getValue());
-        Information fgdhd = new Information();
-        Entry e = Map.new Entry<>();
-        testFlatENV.add(e);
+      case FLAT : addValueToFlat(ps); break;
+      case NESTED : addValueToNested(ps); break;
+      case BEGINEND : addValueToBeginEnd(ps); break;
+      default:
+        break;
     }
-  }*/
+  }
   
   /*
    * define: outer annotation = OutOfOrderNestedENV, InOrderFlatENV, Begin, End.
@@ -137,8 +146,8 @@ public class EnvironmentTestEngine {
               testFlatENV.addAll();
             }
             return true;
-          }*/
-
+          }
+*/
           private boolean isNameId(Name ¢){
             return "Id".equals(wizard.asString(¢));
           }
