@@ -217,6 +217,10 @@ public enum step {
     return ¢ == null ? null : extract.core(¢.getOperand());
   }
 
+  public static Assignment.Operator operator(final Assignment a) {
+    return a == null ? null : a.getOperator();
+  }
+
   public static InfixExpression.Operator operator(final InfixExpression x) {
     return x == null ? null : x.getOperator();
   }
@@ -227,10 +231,6 @@ public enum step {
 
   public static PrefixExpression.Operator operator(final PrefixExpression x) {
     return x == null ? null : x.getOperator();
-  }
-
-  public static Assignment.Operator operator(final Assignment a) {
-    return a == null ? null : a.getOperator();
   }
 
   /** Expose the list of parameters in a {@link MethodDeclaration}

@@ -14,12 +14,25 @@ import il.org.spartan.refactoring.wring.Wring.*;
  * @author Alex Kopzon
  * @since 2016 */
 public final class AssignmentOpSelf extends ReplaceCurrentNode<Assignment> implements Kind.Abbreviation {
-  @Override String description(final Assignment a) {
-    return "Replace x = x " + step.operator(a) + "a; to x " + step.operator(a) + "= a;";
+  private static boolean asLeft(final Expression ¢, final Expression left) {
+    return wizard.same(¢, left);
   }
 
-  @Override ASTNode replacement(final Assignment a) {
-    return !iz.isOpAssign(a) || !iz.infixExpression(step.right(a)) ? null : replace(a);
+  private static List<Expression> associativeReplace(final List<Expression> xs, final Expression left) {
+    final List<Expression> $ = new ArrayList<>(xs);
+    for (final Expression ¢ : xs)
+      if (asLeft(¢, left)) {
+        $.remove(¢);
+        break;
+      }
+    return $;
+  }
+
+  private static List<Expression> nonAssociativeReplace(final List<Expression> xs, final Expression left) {
+    final List<Expression> $ = new ArrayList<>(xs);
+    if (asLeft(xs.get(0), left))
+      $.remove(0);
+    return $;
   }
 
   private static ASTNode replace(final Assignment a) {
@@ -35,24 +48,11 @@ public final class AssignmentOpSelf extends ReplaceCurrentNode<Assignment> imple
     return $.size() == es.size() ? null : $.size() == 1 ? duplicate.of(lisp.first($)) : subject.operands($).to(o);
   }
 
-  private static List<Expression> nonAssociativeReplace(final List<Expression> xs, final Expression left) {
-    final List<Expression> $ = new ArrayList<>(xs);
-    if (asLeft(xs.get(0), left))
-      $.remove(0);
-    return $;
+  @Override String description(final Assignment a) {
+    return "Replace x = x " + step.operator(a) + "a; to x " + step.operator(a) + "= a;";
   }
 
-  private static List<Expression> associativeReplace(final List<Expression> xs, final Expression left) {
-    final List<Expression> $ = new ArrayList<>(xs);
-    for (final Expression ¢ : xs)
-      if (asLeft(¢, left)) {
-        $.remove(¢);
-        break;
-      }
-    return $;
-  }
-
-  private static boolean asLeft(final Expression ¢, final Expression left) {
-    return wizard.same(¢, left);
+  @Override ASTNode replacement(final Assignment a) {
+    return !iz.isOpAssign(a) || !iz.infixExpression(step.right(a)) ? null : replace(a);
   }
 }

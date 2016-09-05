@@ -13,6 +13,14 @@ import il.org.spartan.refactoring.utils.*;
 
 public enum minus {
   ;
+  public static int level(final Expression ¢) {
+    return iz.is(¢, PREFIX_EXPRESSION) ? level((PrefixExpression) ¢)
+        : iz.is(¢, PARENTHESIZED_EXPRESSION) ? level(core(¢)) //
+            : iz.is(¢, INFIX_EXPRESSION) ? level((InfixExpression) ¢) //
+                : iz.is(¢, NUMBER_LITERAL) ? az.bit(az.numberLiteral(¢).getToken().startsWith("-")) //
+                    : 0;
+  }
+
   public static int level(final InfixExpression x) {
     return lisp.out(x.getOperator(), TIMES, DIVIDE) ? 0 : level(hop.operands(x));
   }
@@ -24,12 +32,8 @@ public enum minus {
     return $;
   }
 
-  public static int level(final Expression ¢) {
-    return iz.is(¢, PREFIX_EXPRESSION) ? level((PrefixExpression) ¢)
-        : iz.is(¢, PARENTHESIZED_EXPRESSION) ? level(core(¢)) //
-            : iz.is(¢, INFIX_EXPRESSION) ? level((InfixExpression) ¢) //
-                : iz.is(¢, NUMBER_LITERAL) ? az.bit(az.numberLiteral(¢).getToken().startsWith("-")) //
-                    : 0;
+  private static int level(final PrefixExpression ¢) {
+    return az.bit(¢.getOperator() == wizard.MINUS1) + level(¢.getOperand());
   }
 
   public static Expression peel(final Expression $) {
@@ -38,14 +42,6 @@ public enum minus {
             : iz.is($, INFIX_EXPRESSION) ? peel((InfixExpression) $) //
                 : iz.is($, NUMBER_LITERAL) ? peel((NumberLiteral) $) //
                     : $;
-  }
-
-  public static Expression peel(final NumberLiteral $) {
-    return !$.getToken().startsWith("-") && !$.getToken().startsWith("+") ? $ : $.getAST().newNumberLiteral($.getToken().substring(1));
-  }
-
-  public static Expression peel(final PrefixExpression $) {
-    return lisp.out($.getOperator(), wizard.MINUS1, wizard.PLUS1) ? $ : peel($.getOperand());
   }
 
   public static Expression peel(final InfixExpression x) {
@@ -59,7 +55,11 @@ public enum minus {
     return $;
   }
 
-  private static int level(final PrefixExpression ¢) {
-    return az.bit(¢.getOperator() == wizard.MINUS1) + level(¢.getOperand());
+  public static Expression peel(final NumberLiteral $) {
+    return !$.getToken().startsWith("-") && !$.getToken().startsWith("+") ? $ : $.getAST().newNumberLiteral($.getToken().substring(1));
+  }
+
+  public static Expression peel(final PrefixExpression $) {
+    return lisp.out($.getOperator(), wizard.MINUS1, wizard.PLUS1) ? $ : peel($.getOperand());
   }
 }

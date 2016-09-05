@@ -20,27 +20,6 @@ import il.org.spartan.refactoring.engine.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public class EvaluateRemainder extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
-  @Override public String description() {
-    return "Evaluate remainder of numbers";
-  }
-
-  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
-    return "Evaluate remainder of numbers";
-  }
-
-  @Override ASTNode replacement(final InfixExpression x) {
-    if (x.getOperator() != REMAINDER)
-      return null;
-    switch (EvaluateAux.getEvaluatedType(x)) {
-      case INT:
-        return replacementInt(extract.allOperands(x), x);
-      case LONG:
-        return replacementLong(extract.allOperands(x), x);
-      default:
-        return null;
-    }
-  }
-
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
     if (xs.isEmpty() || !EvaluateAux.isCompitable(xs.get(0)))
       return null;
@@ -69,5 +48,26 @@ public class EvaluateRemainder extends Wring.ReplaceCurrentNode<InfixExpression>
       ++index;
     }
     return x.getAST().newNumberLiteral(Long.toString(remainder) + "L");
+  }
+
+  @Override public String description() {
+    return "Evaluate remainder of numbers";
+  }
+
+  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
+    return "Evaluate remainder of numbers";
+  }
+
+  @Override ASTNode replacement(final InfixExpression x) {
+    if (x.getOperator() != REMAINDER)
+      return null;
+    switch (EvaluateAux.getEvaluatedType(x)) {
+      case INT:
+        return replacementInt(extract.allOperands(x), x);
+      case LONG:
+        return replacementLong(extract.allOperands(x), x);
+      default:
+        return null;
+    }
   }
 }

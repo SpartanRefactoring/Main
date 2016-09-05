@@ -72,6 +72,15 @@ public class AtomicConversionsTest {
     azzert.aye(atomic.isLong(i % l));
   }
 
+  @Test public void preIncrement() {
+    azzert.that(PrudentType.axiom(++d), is(PrudentType.DOUBLE));
+    azzert.that(PrudentType.axiom(++f), is(PrudentType.FLOAT));
+    azzert.that(PrudentType.axiom(++b), is(PrudentType.BYTE));
+    azzert.that(PrudentType.axiom(++c), is(PrudentType.CHAR));
+    azzert.that(PrudentType.axiom(++s), is(PrudentType.SHORT));
+    azzert.that(PrudentType.axiom(++i), is(PrudentType.INT));
+  }
+
   @Test public void shift2() {
     azzert.aye(atomic.isByte(b));
     azzert.nay(atomic.isByte(b << l));
@@ -138,14 +147,5 @@ public class AtomicConversionsTest {
     azzert.aye(atomic.isLong(l << s));
     azzert.aye(atomic.isLong(l << i));
     azzert.aye(atomic.isLong(l << l));
-  }
-
-  @Test public void preIncrement() {
-    azzert.that(PrudentType.axiom(++d), is(PrudentType.DOUBLE));
-    azzert.that(PrudentType.axiom(++f), is(PrudentType.FLOAT));
-    azzert.that(PrudentType.axiom(++b), is(PrudentType.BYTE));
-    azzert.that(PrudentType.axiom(++c), is(PrudentType.CHAR));
-    azzert.that(PrudentType.axiom(++s), is(PrudentType.SHORT));
-    azzert.that(PrudentType.axiom(++i), is(PrudentType.INT));
   }
 }
