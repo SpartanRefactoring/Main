@@ -6,8 +6,6 @@ import static il.org.spartan.refactoring.engine.ExpressionComparator.*;
 import static il.org.spartan.refactoring.engine.into.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
-import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.apply;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.junit.*;
@@ -1596,32 +1594,27 @@ import il.org.spartan.refactoring.utils.*;
     ;
   }
 
- 
   @Test public void issue110_01() {
     trimming("polite ? \"Eat your meal.\" :  \"Eat your meal, please\"") //
         .to("\"Eat your meal\" + (polite ? \".\" : \", please\")");
   }
 
-  
   @Test public void issue110_02() {
     trimming("polite ? \"Eat your meal.\" :  \"Eat your meal\"") //
         .to("\"Eat your meal\" + (polite ? \".\" : \"\")");
   }
 
-  
   @Test public void issue110_03() {
     trimming("polite ? \"thanks for the meal\" :  \"I hated the meal\"") //
         .to("!polite ? \"I hated the meal\": \"thanks for the meal\"") //
         .to("(!polite ? \"I hated\" : \"thanks for\" )+ \" the meal\"");
   }
 
- 
   @Test public void issue110_04() {
     trimming("polite ? \"thanks.\" :  \"I hated the meal.\"") //
         .to("(polite ? \"thanks\" :\"I hated the meal\")+ \".\"");
   }
 
-  
   @Test public void issue110_05() {
     trimming("a ? \"abracadabra\" : \"abba\"") //
         .to("!a ? \"abba\" : \"abracadabra\"")//
@@ -1630,47 +1623,42 @@ import il.org.spartan.refactoring.utils.*;
         .to("\"ab\" +(!a ? \"b\" : \"racadabr\")+ \"a\"").to(null);
   }
 
-  
   @Test public void issue110_06() {
     trimming("receiver ==null ? \"Use \" + \"x\" : \"Use \" + receiver")//
         .to("\"Use \"+(receiver==null ? \"x\" : receiver)").to(null);
   }
 
- 
   @Test public void issue110_07() {
     trimming("receiver ==null ? \"Use x\" : \"Use \" + receiver")//
         .to("\"Use \"+(receiver==null ? \"x\" : \"\"+receiver)").to(null);
   }
 
-  
   @Test public void issue110_08() {
     trimming("receiver ==null ? \"Use\" : receiver + \"Use\"")//
         .to("(receiver==null ? \"\" : receiver+\"\") + \"Use\"").to(null);
   }
 
-  
   @Test public void issue110_09() {
     trimming("receiver ==null ? \"user a\" : receiver + \"something a\"")//
         .to("(receiver==null ? \"user\" : receiver+\"something\") + \" a\"").to(null);
   }
 
- 
   @Test public void issue110_10() {
     trimming("receiver ==null ? \"Something Use\" : \"Something\" + receiver + \"Use\"")//
         .to("\"Something\"+ (receiver==null ? \" Use\" : \"\"+receiver + \"Use\")")//
         .to("\"Something\"+ ((receiver==null ? \" \" : \"\"+receiver+\"\") + \"Use\")");
   }
-  
+
   @Test public void issue110_11() {
     trimming("f() ? \"first\" + d() + \"second\" : \"first\" + g() + \"third\"")//
         .to("\"first\" + (f() ? \"\" + d()  + \"second\" : \"\" + g()  + \"third\")");
   }
-  
+
   @Test public void issue110_12() {
     trimming("f() ? \"first\" + d() + \"second\" : \"third\" + g() + \"second\"")//
         .to("(f() ? \"first\" +  d() + \"\": \"third\" + g()+\"\") + \"second\"");
-  } 
-  
+  }
+
   @Test public void issue110_13() {
     trimming("f() ? \"first is:\" + d() + \"second\" : \"first are:\" + g() + \"and second\"")//
         .to("\"first \" + (f() ? \"is:\" + d() + \"second\": \"are:\" + g() + \"and second\")")//

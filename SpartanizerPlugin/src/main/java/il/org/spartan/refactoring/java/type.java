@@ -29,17 +29,14 @@ import il.org.spartan.refactoring.utils.*;
  * assert k != null : //
  * "Implementation of Kind is buggy";
  * </pre>
- * 
- * 
+ *
  * @author Niv Shalmon
- * @since 2016-06-05
- */
+ * @since 2016-06-05 */
 public interface type {
-  
   /** A dictionary containing all baptized types we encountered */
-  static Map<String,type> dictionary = new HashMap<>();
-  
-  public enum PsuedoPrimitive implements type{
+  static Map<String, type> dictionary = new HashMap<>();
+
+  public enum PsuedoPrimitive implements type {
     // Those anonymous characters that known little or nothing about themselves
     NOTHING("none", "when nothing can be said, e.g., f(f(),f(f(f()),f()))"), //
     BAPTIZED("!double&!long&!int", "an object of some type, for which we have a name only"), //
@@ -51,7 +48,7 @@ public interface type {
     BOOLEANINTEGRAL("boolean|long|int|char|short|byte", "only in x^y,x&y,x|y"), //
     INTEGRAL("long|int|char|short|byte", "must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() "), //
     // Certain types
-    NULL("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"),//
+    NULL("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"), //
     BYTE("byte", "must be byte: (byte)1, nothing else"), //
     SHORT("short", "must be short: (short)15, nothing else"), //
     CHAR("char", "must be char: 'a', (char)97, nothing else"), //
@@ -66,7 +63,8 @@ public interface type {
       return BOOLEAN;
     }
 
-    // from here on is the axiom method used for testing of PrudentType. see issue
+    // from here on is the axiom method used for testing of PrudentType. see
+    // issue
     // #105 for more details
     @SuppressWarnings("unused") static PsuedoPrimitive axiom(final byte x) {
       return BYTE;
@@ -128,20 +126,20 @@ public interface type {
       }
     }
 
-    /**@param x JD
+    /** @param x JD
      * @return The most specific Type information that can be deduced about the
      *         expression, or {@link #NOTHING} if it cannot decide. Will never
      *         return null */
     private static type prudent(final Expression x) {
       return prudent(x, null, null);
     }
-    
-    @Override public PsuedoPrimitive asPrudentType(){
+
+    @Override public PsuedoPrimitive asPrudentType() {
       return this;
     }
 
-    /** A version of {@link #prudent(Expression)} that receives the a list of the
-     * operands' type for all operands of an expression. To be used for
+    /** A version of {@link #prudent(Expression)} that receives the a list of
+     * the operands' type for all operands of an expression. To be used for
      * InfixExpression that has extended operand. The order of the type's should
      * much the order of the operands returned by extract.allOperands(), and for
      * any operand whose type is unknown, there should be a null. The list won't
@@ -184,20 +182,20 @@ public interface type {
       }
     }
 
-    /** A version of {@link #prudent(Expression)} that receives the operand's type
-     * for a single operand expression. The call kind(e,null) is equivalent to
-     * kind(e) */
+    /** A version of {@link #prudent(Expression)} that receives the operand's
+     * type for a single operand expression. The call kind(e,null) is equivalent
+     * to kind(e) */
     static type prudent(final Expression x, final PsuedoPrimitive t) {
       return prudent(x, t, null);
     }
 
-    /** A version of {@link #prudent(Expression)} that receives the operands' type
-     * for a two operand expression. The call kind(e,null,null) is equivalent to
-     * kind(e)
-     * @param t1 the type of the left hand operand of the expression, the type of
-     *        the then expression of the conditional, or null if unknown
-     * @param t2 the type of the left hand operand of the expression, the type of
-     *        the else expression of the conditional, or null if unknown */
+    /** A version of {@link #prudent(Expression)} that receives the operands'
+     * type for a two operand expression. The call kind(e,null,null) is
+     * equivalent to kind(e)
+     * @param t1 the type of the left hand operand of the expression, the type
+     *        of the then expression of the conditional, or null if unknown
+     * @param t2 the type of the left hand operand of the expression, the type
+     *        of the else expression of the conditional, or null if unknown */
     static type prudent(final Expression x, final PsuedoPrimitive t1, final PsuedoPrimitive t2) {
       final List<PsuedoPrimitive> ¢ = new ArrayList<>();
       ¢.add(t1);
@@ -268,16 +266,15 @@ public interface type {
 
     private static type prudentType(final PostfixExpression x, final PsuedoPrimitive t1) {
       return (t1 != null ? t1 : prudent(x.getOperand())).asPrudentType().asNumeric(); // see
-                                                                      // testInDecreamentSemantics
+      // testInDecreamentSemantics
     }
 
     private static type prudentType(final PrefixExpression x, final PsuedoPrimitive t1) {
       return (t1 != null ? t1 : prudent(x.getOperand())).asPrudentType().under(x.getOperator());
     }
 
-    /**@param t JD
-     * @return the type that represents t
-     */
+    /** @param t JD
+     * @return the type that represents t */
     private static type typeSwitch(final Type t) {
       switch ("" + t) {
         case "byte":
@@ -325,22 +322,23 @@ public interface type {
       return isIntegral() ? this : INTEGRAL;
     }
 
-    /** @return one of {@link #INT}, {@link #LONG}, or {@link #INTEGRAL}, in case
-     *         it cannot decide */
+    /** @return one of {@link #INT}, {@link #LONG}, or {@link #INTEGRAL}, in
+     *         case it cannot decide */
     private PsuedoPrimitive asIntegralUnderOperation() {
       return isIntUnderOperation() ? INT : asIntegral();
     }
 
-    /** @return one of {@link #INT}, {@link #LONG},, {@link #CHAR}, {@link BYTE},
-     *         {@link SHORT}, {@link FLOAT}, {@link #DOUBLE}, {@link #INTEGRAL} or
-     *         {@link #NUMERIC}, in case no further information is available */
+    /** @return one of {@link #INT}, {@link #LONG},, {@link #CHAR},
+     *         {@link BYTE}, {@link SHORT}, {@link FLOAT}, {@link #DOUBLE},
+     *         {@link #INTEGRAL} or {@link #NUMERIC}, in case no further
+     *         information is available */
     private PsuedoPrimitive asNumeric() {
       return isNumeric() ? this : NUMERIC;
     }
 
     /** @return one of {@link #INT}, {@link #LONG}, {@link #FLOAT},
-     *         {@link #DOUBLE}, {@link #INTEGRAL} or {@link #NUMERIC}, in case no
-     *         further information is available */
+     *         {@link #DOUBLE}, {@link #INTEGRAL} or {@link #NUMERIC}, in case
+     *         no further information is available */
     private PsuedoPrimitive asNumericUnderOperation() {
       return !isNumeric() ? NUMERIC : isIntUnderOperation() ? INT : this;
     }
@@ -366,8 +364,8 @@ public interface type {
 
     /** used to determine whether an integral type behaves as itself under
      * operations or as an INT.
-     * @return true if one of {@link #CHAR}, {@link BYTE}, {@link SHORT} or false
-     *         otherwise. */
+     * @return true if one of {@link #CHAR}, {@link BYTE}, {@link SHORT} or
+     *         false otherwise. */
     private boolean isIntUnderOperation() {
       return in(this, CHAR, BYTE, SHORT);
     }
@@ -391,13 +389,14 @@ public interface type {
      *         it cannot decide */
     private PsuedoPrimitive under(final PrefixExpression.Operator o) {
       assert o != null;
-      return o == NOT ? BOOLEAN : in(o, DECREMENT, INCREMENT) ? asNumeric() : o != COMPLEMENT ? asNumericUnderOperation() : asIntegralUnderOperation();
+      return o == NOT ? BOOLEAN
+          : in(o, DECREMENT, INCREMENT) ? asNumeric() : o != COMPLEMENT ? asNumericUnderOperation() : asIntegralUnderOperation();
     }
 
     /** @return one of {@link #BOOLEAN} , {@link #INT} , {@link #LONG} ,
      *         {@link #DOUBLE} , {@link #STRING} , {@link #INTEGRAL} ,
-     *         {@link BOOLEANINTEGRAL} {@link #NUMERIC} , or {@link #ALPHANUMERIC}
-     *         , in case it cannot decide */
+     *         {@link BOOLEANINTEGRAL} {@link #NUMERIC} , or
+     *         {@link #ALPHANUMERIC} , in case it cannot decide */
     private PsuedoPrimitive underBinaryOperator(final InfixExpression.Operator o, final PsuedoPrimitive k) {
       if (o == wizard.PLUS2)
         return underPlus(k);
@@ -471,35 +470,36 @@ public interface type {
       return in(STRING, this, k) || in(NULL, this, k) ? STRING : !isNumeric() || !k.isNumeric() ? ALPHANUMERIC : underNumericOnlyOperator(k);
     }
   }
-  
-  /**@param e JD
+
+  /** @param e JD
    * @return The most specific Type information that can be deduced about the
    *         expression, or {@link #NOTHING} if it cannot decide. Will never
    *         return null */
-  //TODO: synthetic-access since this is incomplete. Should not happen once get is done 
-  @SuppressWarnings("synthetic-access") static type get(Expression e){
+  // TODO: synthetic-access since this is incomplete. Should not happen once get
+  // is done
+  @SuppressWarnings("synthetic-access") static type get(final Expression e) {
     return PsuedoPrimitive.prudent(e);
   }
-  
- default PsuedoPrimitive asPrudentType(){
-   return PsuedoPrimitive.BAPTIZED;
- }
- 
- @SuppressWarnings("unused") default boolean canBe(PsuedoPrimitive e){
-   return false;
- }
- 
- static type baptize(String name){
-   if (dictionary.containsKey(name))
-     return dictionary.get(name);
-   return store(name,new type() {
-     //TODO: override implementation of type's function's if neccecary. Using default function may have made this obsolete.
-   });
- }
- 
- static type store(String s,type $){
-   dictionary.put(s, $);
-   return $;
- }
- 
+
+  default PsuedoPrimitive asPrudentType() {
+    return PsuedoPrimitive.BAPTIZED;
+  }
+
+  @SuppressWarnings("unused") default boolean canBe(final PsuedoPrimitive e) {
+    return false;
+  }
+
+  static type baptize(final String name) {
+    if (dictionary.containsKey(name))
+      return dictionary.get(name);
+    return store(name, new type() {
+      // TODO: override implementation of type's function's if neccecary. Using
+      // default function may have made this obsolete.
+    });
+  }
+
+  static type store(final String s, final type $) {
+    dictionary.put(s, $);
+    return $;
+  }
 }
