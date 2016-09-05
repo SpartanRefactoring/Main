@@ -1,9 +1,9 @@
-package il.org.spartan.refactoring.wring;
+package il.org.spartan.fun.Dr.Seuss;
 
 interface Cat {
-  interface With {
-    interface A {
-      interface Hat {
+  interface in {
+    interface the {
+      interface hat {
       }
     }
   }
