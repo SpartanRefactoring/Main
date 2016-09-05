@@ -40,9 +40,9 @@ public class EnvironmentCodeExamples {
       // class
       C1 c1;
     }
+
     @NestedENV({}) @OutOfOrderFlatENV({}) static int x;
     @NestedENV({ @Id(name = "EX02.x", clazz = int.class) }) @OutOfOrderFlatENV({ @Id(name = "x", clazz = int.class) }) int y;
-
     {
       @Begin class A {//
       }
@@ -59,6 +59,7 @@ public class EnvironmentCodeExamples {
       }
     }
   }
+
   public static class EX03 { // hiding
     @NestedENV({ @Id(name = "EX03.x", clazz = int.class), @Id(name = "EX03.y", clazz = int.class) }) @OutOfOrderFlatENV({
         @Id(name = "x", clazz = int.class), @Id(name = "y", clazz = int.class) }) static class x_hiding {
@@ -82,8 +83,8 @@ public class EnvironmentCodeExamples {
           }
         }
       }
-      @OutOfOrderFlatENV({ @Id(name = "x", clazz = int.class), @Id(name = "y", clazz = int.class) }) public static int x;
 
+      @OutOfOrderFlatENV({ @Id(name = "x", clazz = int.class), @Id(name = "y", clazz = int.class) }) public static int x;
       @NestedENV({ @Id(name = "EX03.x", clazz = int.class), @Id(name = "EX03.y", clazz = int.class),
           @Id(name = "EX03.x_hiding.x", clazz = int.class) }) @OutOfOrderFlatENV({ @Id(name = "x", clazz = int.class),
               @Id(name = "y", clazz = int.class) }) y_hiding xsy;
@@ -109,8 +110,8 @@ public class EnvironmentCodeExamples {
           @Id(name = "func.X.xsy.y", clazz = int.class) }) class QQ {//
       }
     }
-    @NestedENV({}) @OutOfOrderFlatENV({}) int x, y; // no xsy
 
+    @NestedENV({}) @OutOfOrderFlatENV({}) int x, y; // no xsy
     @NestedENV({ @Id(name = "EX03.x", clazz = int.class), @Id(name = "EX03.y", clazz = int.class) }) @InOrderFlatENV({
         @Id(name = "x", clazz = int.class), @Id(name = "EX03.y", clazz = int.class) }) @OutOfOrderFlatENV({ @Id(name = "y", clazz = int.class),
             @Id(name = "x", clazz = int.class) }) int q;
@@ -363,8 +364,8 @@ public class EnvironmentCodeExamples {
           @Id(name = "n3", clazz = Complex.class) }) final int q;
       return n1;
     }
-    Integer x = Integer.valueOf(1);
 
+    Integer x = Integer.valueOf(1);
     Integer o = func(x, "Alex&Dan", new Complex());
   }
 
@@ -372,7 +373,8 @@ public class EnvironmentCodeExamples {
     class Arr {
       String[] arr;
 
-      @NestedENV({ @Id(name = "EX08.Arr.arr", clazz = String[].class) }) @OutOfOrderFlatENV({ @Id(name = "arr", clazz = String[].class) }) void foo() {
+      @NestedENV({ @Id(name = "EX08.Arr.arr", clazz = String[].class) }) @OutOfOrderFlatENV({
+          @Id(name = "arr", clazz = String[].class) }) void foo() {
         @Begin class m {
         }
         arr[2] = "$$$";
@@ -381,10 +383,8 @@ public class EnvironmentCodeExamples {
       }
     }
   }
-  
   // Some errors with this test, and the desired outcome is yet to be
   // determined.
-
 
   /* public static class EX09 { // template public class SOList<Type> implements
    * Iterable<Type> { private class __template__0 {} private final Type[]
@@ -427,7 +427,6 @@ public class EnvironmentCodeExamples {
    * clazz=SOList.__template__0.class),@Id(name="currentSize",
    * clazz=int.class)}) final int q; // currentIndex // shouldn't be //
    * recognized return $; } } } */
-
   public static class EX10 {
     @InOrderFlatENV({}) class forTest {
       int x;
@@ -637,7 +636,6 @@ public class EnvironmentCodeExamples {
     @End({ @Id(name = "EX02.x", clazz = int.class) }) class B {//
     }
   }
-
   {
     EX05.x = 0;
   }
