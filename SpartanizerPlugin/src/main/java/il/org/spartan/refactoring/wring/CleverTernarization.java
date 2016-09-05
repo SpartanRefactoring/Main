@@ -59,7 +59,8 @@ public final class CleverTernarization extends Wring.ReplaceCurrentNode<Conditio
   private static String longer(final String s1, final String s2) {
     return s1 == shorter(s1, s2) ? s1 : s2;
   }
-// TODO: Niv. Maybe you can do this with the shorter/longer method?
+
+  // TODO: Niv. Maybe you can do this with the shorter/longer method?
   private static int findCommonSuffix(final String str1, final String str2) {
     int i = 0;
     String sub = "";

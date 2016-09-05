@@ -4,5 +4,6 @@ package il.org.spartan.refactoring.annotations;
  * @year 2016 */
 public @interface Id {
   String name();
+
   Class<?> clazz();
 }
