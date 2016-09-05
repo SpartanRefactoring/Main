@@ -10,32 +10,42 @@ import il.org.spartan.refactoring.ast.*;
 /** @author Dor Ma'ayan
  * @since 2016 */
 public class Recurser<T> {
-  /** Get a list of the direct children of a ASTNode
+  /** Get a list of the direct fhildren of a ASTNode
    * @param n an ASTNode
    * @return a list of n's children */
-  private static List<ASTNode> getChildren(final ASTNode n) {
+  @SuppressWarnings("unchecked") private static List<ASTNode> getChildren(final ASTNode n) {
     if (n == null)
       return new ArrayList<>();
     final InfixExpression ¢ = az.infixExpression(n);
     if (¢ != null) {
-      List<ASTNode> $ = new ArrayList<>();
-      $.add(step.right(¢));
+      // We must have this weird special case of adding right before left
+      // for some mysterious reason.
+      final List<ASTNode> $ = new ArrayList<>();
       $.add(step.left(¢));
+      $.add(step.right(¢));
       $.addAll(step.extendedOperands(¢));
-      return $;
     }
-    final List<ASTNode> $ = new ArrayList<>();
     try {
+      final List<ASTNode> $ = new ArrayList<>();
+      // TODO: Dor, try to use for each loop here
+      //
+      // TODO: Dor, can you add a function to {@link step} so that marching
+      // over the list could be done in a type safe manner, and all that {@link
+      // SuppressWarnings} silincing of <code>"rawtypes"</code> is restricted
+      // to one Fluent API class, {@link step} which is a bit dirty?
+      //
+      // TODO: Dor, add functions az.astNode(Object ¢) and iz.astNode(Object ¢)
+      // see these fluent API classes for how it is done.
       @SuppressWarnings("rawtypes") final List lst = n.structuralPropertiesForType();
-      // TODO: Dor, why don't you do a for each here?
       for (int i = 0; i < lst.size(); ++i) {
         final Object child = n.getStructuralProperty((StructuralPropertyDescriptor) lst.get(i));
         if (child instanceof ASTNode)
           $.add((ASTNode) child);
       }
       return $;
-    } catch (final NullPointerException x) {
-      throw new RuntimeException("bug", x);
+    } catch (final NullPointerException e) {
+      assert e != null;
+      return null;
     }
   }
 
@@ -78,7 +88,7 @@ public class Recurser<T> {
     int index = 0;
     for (final Recurser<T> rec : recurserList) {
       rec.from(index == 0 ? current : recurserList.get(index - 1).getCurrent()).postVisit(f);
-      index++;
+      ++index;
     }
     this.current = index == 0 ? current : recurserList.get(index - 1).getCurrent();
     f.accept(this);

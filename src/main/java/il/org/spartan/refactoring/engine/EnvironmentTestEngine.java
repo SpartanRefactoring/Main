@@ -55,20 +55,22 @@ public class EnvironmentTestEngine {
     return $;
   }
 
-  private final ASTNode cUnit;
+  private final ASTNode n;
+
   Set<Entry<String, Environment.Information>> testNestedENV;
   Set<Entry<String, Environment.Information>> testFlatENV;
   Set<Entry<String, Environment.Information>> testBeginEnd;
 
-  EnvironmentTestEngine(final ASTNode $) {
-    cUnit = $;
+
+  EnvironmentTestEngine(final CompilationUnit $) {
+    n = $;
     testNestedENV = generateSet();
     testFlatENV = generateSet();
     testBeginEnd = generateSet();
   }
 
   EnvironmentTestEngine(final String ¢) {
-    cUnit = getCompilationUnit(¢);
+    n = getCompilationUnit(¢);
     testNestedENV = generateSet();
     testFlatENV = generateSet();
     testBeginEnd = generateSet();
@@ -81,6 +83,7 @@ public class EnvironmentTestEngine {
   private void addValueToFlat(final List<MemberValuePair> ps) {
     testFlatENV.add(new MyEntry<>(wizard.asString(ps.get(0).getValue()), new Information()));
   }
+
 
   private void addValueToNested(final List<MemberValuePair> ps) {
   }
@@ -100,6 +103,7 @@ public class EnvironmentTestEngine {
         break;
     }
   }
+ 
 
   /** Compares output Set (testFlatENV) with provided set, that will be the
    * result of the flat version of defines.
@@ -118,7 +122,6 @@ public class EnvironmentTestEngine {
     // Check that each member of $ is contained in FlatENV, and that the size is
     // equal.
     // azzert.fail Otherwise.
-    return;
   }
 
   /** Compares output Set (testNestedENV) with provided Set, that will be the
@@ -154,13 +157,13 @@ public class EnvironmentTestEngine {
    *
    * TODO: internal node parsing. Think about Nested parsing. */
   public void runTest() {
-    cUnit.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor() {
       void addAnnotations(final List<Annotation> as) {
         for (final Annotation ¢ : as)
           dispatch(¢);
       }
 
-      private void beginEndHandler(final Annotation a) {
+      void beginEndHandler(final Annotation a) {
       }
 
       void dispatch(final Annotation a) {
@@ -192,7 +195,7 @@ public class EnvironmentTestEngine {
         });
       }
 
-      private void nestedHandler(final Annotation a) {
+      void nestedHandler(final Annotation a) {
       }
 
       @Override public boolean visit(final MethodDeclaration d) {
