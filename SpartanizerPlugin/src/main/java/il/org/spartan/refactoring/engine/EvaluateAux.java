@@ -8,10 +8,6 @@ import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.java.*;
 
 public class EvaluateAux {
-  public enum Type {
-    INT, LONG, DOUBLE, BAD
-  }
-
   public static double extractDouble(final Expression x) {
     if (!isLong(x))
       return !(x instanceof PrefixExpression) ? Double.parseDouble(((NumberLiteral) x).getToken())
@@ -96,5 +92,9 @@ public class EvaluateAux {
 
   public static boolean isNumber(final Expression x) {
     return isInt(x) || isDouble(x) || isMinusDouble(x) || isMinusInt(x) || isLong(x) || isMinusLong(x);
+  }
+
+  public enum Type {
+    INT, LONG, DOUBLE, BAD
   }
 }

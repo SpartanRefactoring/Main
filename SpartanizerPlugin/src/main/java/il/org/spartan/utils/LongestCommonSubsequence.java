@@ -24,6 +24,11 @@ public class LongestCommonSubsequence {
       Arrays.fill(length[i] = new int[bs.length], -1);
   }
 
+  /** @return A value between 0 and 1 */
+  public double similarity() {
+    return 2. * length() / (as.length + bs.length);
+  }
+
   private int compute(final int i, final int j) {
     return i < 0 || j < 0 ? 0 : threeWayDynamicProgramingStep(i, j);
   }
@@ -45,11 +50,6 @@ public class LongestCommonSubsequence {
 
   private int obtainLength(final int i, final int j) {
     return length[i][j] != -1 ? length[i][j] : (length[i][j] = compute(i, j));
-  }
-
-  /** @return A value between 0 and 1 */
-  public double similarity() {
-    return 2. * length() / (as.length + bs.length);
   }
 
   private int threeWayDynamicProgramingStep(final int i, final int j) {

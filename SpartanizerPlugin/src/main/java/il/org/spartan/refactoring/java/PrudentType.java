@@ -12,9 +12,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.utils.*;
 
-/**
- * <p>
- * Tells how much we know about the type of of a variable, function, or
+/** Tells how much we know about the type of of a variable, function, or
  * expression. This should be conservative approximation to the real type of the
  * entity, what a rational, but prudent programmer would case about the type
  * <p>
@@ -34,7 +32,7 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @author Niv Shalmon
  * @since 2016-08-XX */
-public enum PrudentType{
+public enum PrudentType {
   // Those anonymous characters that known little or nothing about themselves
   NOTHING("none", "when nothing can be said, e.g., f(f(),f(f(f()),f()))"), //
   NONNULL("!null", "e.g., new Object() and that's about it"), //
@@ -47,7 +45,7 @@ public enum PrudentType{
   BOOLEANINTEGRAL("boolean|long|int|char|short|byte", "only in x^y,x&y,x|y"), //
   INTEGRAL("long|int|char|short|byte", "must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() "), //
   // Certain types
-  NULL("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"),//
+  NULL("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"), //
   BYTE("byte", "must be byte: (byte)1, nothing else"), //
   SHORT("short", "must be short: (short)15, nothing else"), //
   CHAR("char", "must be char: 'a', (char)97, nothing else"), //
@@ -58,6 +56,14 @@ public enum PrudentType{
   BOOLEAN("boolean", "must be boolean: !f(), f() || g() "), //
   STRING("String", "must be string: \"\"+a, a.toString(), f()+null, not f()+g()"),//
   ;
+  /** @param x JD
+   * @return The most specific Type information that can be deduced about the
+   *         expression, or {@link #NOTHING} if it cannot decide. Will never
+   *         return null */
+  public static PrudentType prudent(final Expression x) {
+    return prudent(x, null, null);
+  }
+
   @SuppressWarnings("unused") static PrudentType axiom(final boolean x) {
     return BOOLEAN;
   }
@@ -100,7 +106,7 @@ public enum PrudentType{
     return STRING;
   }
 
-  private static PrudentType conditionalWithNoInfo(final PrudentType t) {
+  static PrudentType conditionalWithNoInfo(final PrudentType t) {
     switch (t) {
       case BYTE:
       case SHORT:
@@ -124,14 +130,6 @@ public enum PrudentType{
     }
   }
 
-  /**@param x JD
-   * @return The most specific Type information that can be deduced about the
-   *         expression, or {@link #NOTHING} if it cannot decide. Will never
-   *         return null */
-  public static PrudentType prudent(final Expression x) {
-    return prudent(x, null, null);
-  }
-  
   /** A version of {@link #prudent(Expression)} that receives the a list of the
    * operands' type for all operands of an expression. To be used for
    * InfixExpression that has extended operand. The order of the type's should
@@ -309,6 +307,32 @@ public enum PrudentType{
     this.description = description;
   }
 
+  public final String fullName() {
+    return this + "=" + name + " (" + description + ")";
+  }
+
+  /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
+   *         {@link BYTE}, {@link SHORT}, {@link FLOAT}, {@link #DOUBLE},
+   *         {@link #INTEGRAL} or {@link #NUMERIC}, {@link #STRING},
+   *         {@link #ALPHANUMERIC} or false otherwise */
+  public boolean isAlphaNumeric() {
+    return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC, STRING, ALPHANUMERIC);
+  }
+
+  /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
+   *         {@link BYTE}, {@link SHORT}, {@link #INTEGRAL} or false
+   *         otherwise */
+  public boolean isIntegral() {
+    return in(this, LONG, INT, CHAR, BYTE, SHORT, INTEGRAL);
+  }
+
+  /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
+   *         {@link BYTE}, {@link SHORT}, {@link FLOAT}, {@link #DOUBLE},
+   *         {@link #INTEGRAL}, {@link #NUMERIC} or false otherwise */
+  public boolean isNumeric() {
+    return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC);
+  }
+
   /** @return one of {@link #INT}, {@link #LONG}, {@link #CHAR}, {@link BYTE},
    *         {@link SHORT} or {@link #INTEGRAL}, in case it cannot decide */
   private PrudentType asIntegral() {
@@ -335,25 +359,6 @@ public enum PrudentType{
     return !isNumeric() ? NUMERIC : isIntUnderOperation() ? INT : this;
   }
 
-  public final String fullName() {
-    return this + "=" + name + " (" + description + ")";
-  }
-
-  /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
-   *         {@link BYTE}, {@link SHORT}, {@link FLOAT}, {@link #DOUBLE},
-   *         {@link #INTEGRAL} or {@link #NUMERIC}, {@link #STRING},
-   *         {@link #ALPHANUMERIC} or false otherwise */
-  public boolean isAlphaNumeric() {
-    return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC, STRING, ALPHANUMERIC);
-  }
-
-  /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
-   *         {@link BYTE}, {@link SHORT}, {@link #INTEGRAL} or false
-   *         otherwise */
-  public boolean isIntegral() {
-    return in(this, LONG, INT, CHAR, BYTE, SHORT, INTEGRAL);
-  }
-
   /** used to determine whether an integral type behaves as itself under
    * operations or as an INT.
    * @return true if one of {@link #CHAR}, {@link BYTE}, {@link SHORT} or false
@@ -367,13 +372,6 @@ public enum PrudentType{
    *         otherwise */
   private boolean isNoInfo() {
     return in(this, NOTHING, BAPTIZED, NONNULL, VOID, NULL);
-  }
-
-  /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
-   *         {@link BYTE}, {@link SHORT}, {@link FLOAT}, {@link #DOUBLE},
-   *         {@link #INTEGRAL}, {@link #NUMERIC} or false otherwise */
-  public boolean isNumeric() {
-    return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC);
   }
 
   /** @return one of {@link #BOOLEAN} , {@link #INT} , {@link #LONG} ,
