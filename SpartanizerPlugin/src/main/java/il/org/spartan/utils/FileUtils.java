@@ -28,17 +28,6 @@ public class FileUtils {
     return $;
   }
 
-  private static void iterateFiles(final File dir, final List<String> files) {
-    if (dir == null)
-      return;
-    for (final File f : dir.listFiles()) {
-      if (f.isDirectory())
-        iterateFiles(f, files);
-      if (f.isFile() && f.getName().endsWith(".java"))
-        files.add(f.getAbsolutePath());
-    }
-  }
-
   /** Converts the entire contents of a file into a {@link String}
    * @param f JD
    * @return a string representing the contents of a file.
@@ -52,10 +41,6 @@ public class FileUtils {
         $.append(line).append(ls);
     }
     return "" + $;
-  }
-
-  private static String read(final Path p) throws IOException {
-    return new String(Files.readAllBytes(p), StandardCharsets.UTF_8);
   }
 
   /** Returns the contents of a source file
@@ -74,5 +59,20 @@ public class FileUtils {
       p.write(text);
       p.flush();
     }
+  }
+
+  private static void iterateFiles(final File dir, final List<String> files) {
+    if (dir == null)
+      return;
+    for (final File f : dir.listFiles()) {
+      if (f.isDirectory())
+        iterateFiles(f, files);
+      if (f.isFile() && f.getName().endsWith(".java"))
+        files.add(f.getAbsolutePath());
+    }
+  }
+
+  private static String read(final Path p) throws IOException {
+    return new String(Files.readAllBytes(p), StandardCharsets.UTF_8);
   }
 }

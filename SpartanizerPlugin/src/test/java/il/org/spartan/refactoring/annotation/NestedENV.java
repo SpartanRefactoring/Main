@@ -1,5 +1,12 @@
 package il.org.spartan.refactoring.annotation;
 
+/** @TODO: real documentation here.
+ * @author Alex Kopakzon
+ * @since 2016 */
+public @interface NestedENV {
+  String[] value();
+}
+
 @Entries({ //
     @Entry(name = "int", clazz = int.class), //
     @Entry(name = "void", clazz = void.class), //
@@ -17,13 +24,6 @@ package il.org.spartan.refactoring.annotation;
   Class<?> clazz();
 
   String name();
-}
-
-/** @TODO: real documentation here.
- * @author Alex Kopakzon
- * @since 2016 */
-public @interface NestedENV {
-  String[] value();
 }
 
 @Entry(name = "int", clazz = int.class) class STAM {

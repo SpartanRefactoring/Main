@@ -17,6 +17,10 @@ import il.org.spartan.refactoring.utils.*;
  * @author Niv Shalmon
  * @since 2016-08 */
 public class FactorsExpander {
+  public static Expression simplify(final InfixExpression x) {
+    return base(new FactorsCollector(x));
+  }
+
   /** @see #recurse(InfixExpression, List) */
   private static InfixExpression appendDivide(final InfixExpression $, final Factor ¢) {
     return ¢.divider() ? subject.append($, ¢.expression) : subject.pair($, ¢.expression).to(TIMES);
@@ -83,10 +87,6 @@ public class FactorsExpander {
     final Factor first = lisp.first(fs);
     assert first != null;
     return recurse(o == TIMES ? appendTimes($, first) : appendDivide($, first), lisp.chop(fs));
-  }
-
-  public static Expression simplify(final InfixExpression x) {
-    return base(new FactorsCollector(x));
   }
 
   private static Expression step(final Expression $, final List<Factor> ¢) {

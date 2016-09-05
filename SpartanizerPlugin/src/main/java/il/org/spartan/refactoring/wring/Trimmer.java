@@ -14,14 +14,71 @@ import il.org.spartan.refactoring.spartanizations.*;
 /** @author Yossi Gil
  * @since 2015/07/10 */
 public final class Trimmer extends Spartanization {
+  /** Apply trimming repeatedly, until no more changes
+   * @param from what to process
+   * @return trimmed text */
+  public static String fixedPoint(final String from) {
+    final Trimmer trimmer = new Trimmer();
+    final Document $ = new Document(from);
+    for (;;) {
+      final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from($.get());
+      final ASTRewrite r = trimmer.createRewrite(u, null);
+      final TextEdit e = r.rewriteAST($, null);
+      try {
+        e.apply($);
+      } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException x) {
+        x.printStackTrace();
+      }
+      if (!e.hasChildren())
+        return $.get();
+    }
+  }
+
+  static boolean prune(final Rewrite r, final List<Rewrite> rs) {
+    if (r != null) {
+      r.pruneIncluders(rs);
+      rs.add(r);
+    }
+    return true;
+  }
+
+  /** Instantiates this class */
+  public Trimmer() {
+    super("Trimmer");
+    Toolbox.generate();
+  }
+
+  @Override protected ASTVisitor collect(final List<Rewrite> $) {
+    return new DispatchingVisitor() {
+      @Override <N extends ASTNode> boolean go(final N n) {
+        final Wring<N> w = Toolbox.instance().find(n);
+        return w == null || w.nonEligible(n) || prune(w.make(n, exclude), $);
+      }
+    };
+  }
+
+  @Override protected void fillRewrite(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
+    u.accept(new DispatchingVisitor() {
+      @Override <N extends ASTNode> boolean go(final N n) {
+        if (!inRange(m, n))
+          return true;
+        final Wring<N> w = Toolbox.instance().find(n);
+        if (w != null) {
+          final Rewrite make = w.make(n, exclude);
+          if (make != null)
+            make.go(r, null);
+        }
+        return true;
+      }
+    });
+  }
+
+  @SuppressWarnings("static-method") ExclusionManager makeExcluder() {
+    return new ExclusionManager();
+  }
+
   abstract class DispatchingVisitor extends ASTVisitor {
     final ExclusionManager exclude = makeExcluder();
-
-    private boolean cautiousGo(final ASTNode n) {
-      return !exclude.isExcluded(n) && go(n);
-    }
-
-    abstract <N extends ASTNode> boolean go(final N n);
 
     @Override public final boolean visit(final Assignment ¢) {
       return cautiousGo(¢);
@@ -94,68 +151,11 @@ public final class Trimmer extends Spartanization {
     @Override public final boolean visit(final VariableDeclarationFragment ¢) {
       return cautiousGo(¢);
     }
-  }
 
-  /** Apply trimming repeatedly, until no more changes
-   * @param from what to process
-   * @return trimmed text */
-  public static String fixedPoint(final String from) {
-    final Trimmer trimmer = new Trimmer();
-    final Document $ = new Document(from);
-    for (;;) {
-      final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from($.get());
-      final ASTRewrite r = trimmer.createRewrite(u, null);
-      final TextEdit e = r.rewriteAST($, null);
-      try {
-        e.apply($);
-      } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException x) {
-        x.printStackTrace();
-      }
-      if (!e.hasChildren())
-        return $.get();
+    abstract <N extends ASTNode> boolean go(final N n);
+
+    private boolean cautiousGo(final ASTNode n) {
+      return !exclude.isExcluded(n) && go(n);
     }
-  }
-
-  static boolean prune(final Rewrite r, final List<Rewrite> rs) {
-    if (r != null) {
-      r.pruneIncluders(rs);
-      rs.add(r);
-    }
-    return true;
-  }
-
-  /** Instantiates this class */
-  public Trimmer() {
-    super("Trimmer");
-    Toolbox.generate();
-  }
-
-  @Override protected ASTVisitor collect(final List<Rewrite> $) {
-    return new DispatchingVisitor() {
-      @Override <N extends ASTNode> boolean go(final N n) {
-        final Wring<N> w = Toolbox.instance().find(n);
-        return w == null || w.nonEligible(n) || prune(w.make(n, exclude), $);
-      }
-    };
-  }
-
-  @Override protected void fillRewrite(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
-    u.accept(new DispatchingVisitor() {
-      @Override <N extends ASTNode> boolean go(final N n) {
-        if (!inRange(m, n))
-          return true;
-        final Wring<N> w = Toolbox.instance().find(n);
-        if (w != null) {
-          final Rewrite make = w.make(n, exclude);
-          if (make != null)
-            make.go(r, null);
-        }
-        return true;
-      }
-    });
-  }
-
-  @SuppressWarnings("static-method") ExclusionManager makeExcluder() {
-    return new ExclusionManager();
   }
 }

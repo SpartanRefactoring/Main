@@ -17,6 +17,26 @@ import il.org.spartan.*;
 public class Plugin extends AbstractUIPlugin implements IStartup {
   private static Plugin plugin;
 
+  /** logs an error in the plugin
+   * @param t an error */
+  public static void log(final Throwable t) {
+    plugin.getLog().log(new Status(IStatus.ERROR, "il.org.spartan.refactoring", 0, t.getMessage(), t));
+  }
+
+  public static AbstractUIPlugin plugin() {
+    return plugin;
+  }
+
+  public static void refreshAllProjects() {
+    for (final IProject p : ResourcesPlugin.getWorkspace().getRoot().getProjects())
+      try {
+        if (p.isOpen())
+          p.build(IncrementalProjectBuilder.FULL_BUILD, null);
+      } catch (final CoreException e) {
+        log(e);
+      }
+  }
+
   /** Add nature to one project */
   private static void addNature(final IProject p) throws CoreException {
     final IProjectDescription d = p.getDescription();
@@ -36,26 +56,6 @@ public class Plugin extends AbstractUIPlugin implements IStartup {
         } catch (final CoreException e) {
           log(e);
         }
-  }
-
-  /** logs an error in the plugin
-   * @param t an error */
-  public static void log(final Throwable t) {
-    plugin.getLog().log(new Status(IStatus.ERROR, "il.org.spartan.refactoring", 0, t.getMessage(), t));
-  }
-
-  public static AbstractUIPlugin plugin() {
-    return plugin;
-  }
-
-  public static void refreshAllProjects() {
-    for (final IProject p : ResourcesPlugin.getWorkspace().getRoot().getProjects())
-      try {
-        if (p.isOpen())
-          p.build(IncrementalProjectBuilder.FULL_BUILD, null);
-      } catch (final CoreException e) {
-        log(e);
-      }
   }
 
   private static void startSpartan() {

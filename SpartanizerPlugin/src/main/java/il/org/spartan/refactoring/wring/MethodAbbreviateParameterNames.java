@@ -42,19 +42,6 @@ import il.org.spartan.refactoring.engine.*;
     return "" + d.getName();
   }
 
-  private List<SingleVariableDeclaration> find(final List<SingleVariableDeclaration> ds) {
-    final List<SingleVariableDeclaration> $ = new ArrayList<>();
-    for (final SingleVariableDeclaration d : ds)
-      if (suitable(d))
-        $.add(d);
-    return !$.isEmpty() ? $ : null;
-  }
-
-  private boolean isShort(final SingleVariableDeclaration d) {
-    final String n = spartan.shorten(d.getType());
-    return n != null && (n + pluralVariadic(d)).equals(d.getName().getIdentifier());
-  }
-
   @Override Rewrite make(final MethodDeclaration d, final ExclusionManager exclude) {
     if (d.isConstructor())
       return null;
@@ -75,6 +62,19 @@ import il.org.spartan.refactoring.engine.*;
           rename(key, renameMap.get(key), d, r, g);
       }
     };
+  }
+
+  private List<SingleVariableDeclaration> find(final List<SingleVariableDeclaration> ds) {
+    final List<SingleVariableDeclaration> $ = new ArrayList<>();
+    for (final SingleVariableDeclaration d : ds)
+      if (suitable(d))
+        $.add(d);
+    return !$.isEmpty() ? $ : null;
+  }
+
+  private boolean isShort(final SingleVariableDeclaration d) {
+    final String n = spartan.shorten(d.getType());
+    return n != null && (n + pluralVariadic(d)).equals(d.getName().getIdentifier());
   }
 
   @SuppressWarnings("static-method") private String pluralVariadic(final SingleVariableDeclaration d) {
