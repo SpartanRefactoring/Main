@@ -71,6 +71,35 @@ public interface lisp {
     return ts.get(i < 1 ? 0 : i - 1);
   }
 
+  /** Replace the element of a specific index in a list
+   * @param ts the indexed list
+   * @param element the element to be added to the list
+   * @param index the index that should be replaced
+   * @return the list after the replacement */
+  static <T> List<T> replace(final List<T> ts, final T element, final int index) {
+    if (index >= 0 && index < ts.size()) {
+      ts.remove(index);
+      ts.add(index, element);
+    }
+    return ts;
+  }
+
+  /** Replace the first element of a in a list
+   * @param ts the indexed list
+   * @param element the element to be added to the list
+   * @return the list after the replacement */
+  static <T> List<T> replaceFirst(final List<T> ts, final T element) {
+    return replace(ts, element, 0);
+  }
+
+  /** Replace the last element of a in a list
+   * @param ts the indexed list
+   * @param element the element to be added to the list
+   * @return the list after the replacement */
+  static <T> List<T> replaceLast(final List<T> ts, final T element) {
+    return replace(ts, element, ts.size() - 1);
+  }
+
   static <T> Iterable<T> rest(final Iterable<T> ts) {
     return () -> {
       return new Iterator<T>() {

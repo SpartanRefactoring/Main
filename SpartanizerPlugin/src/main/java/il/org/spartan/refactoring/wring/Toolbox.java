@@ -155,8 +155,7 @@ public class Toolbox {
             new TernaryEliminate(), //
             new TernaryShortestFirst(), //
             new TernaryPushdown(), //
-            // new CleverTernarization(), //removed temporary since it causes
-            // infinite loop in plugin
+            new CleverTernarization(),
             null) //
         .add(TypeDeclaration.class, //
             new ModifierCleanInterface(), //
