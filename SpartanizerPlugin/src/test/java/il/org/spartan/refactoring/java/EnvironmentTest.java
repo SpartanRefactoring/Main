@@ -11,6 +11,7 @@ import org.eclipse.jface.text.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.refactoring.annotations.*;
 import il.org.spartan.refactoring.engine.*;
 
 @SuppressWarnings("static-method") //
@@ -402,5 +403,74 @@ public class EnvironmentTest {
   
 //============================TestEngine Test================================
   
+  @Ignore public void EngineTestFlatUnordered01(){
+    ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("@OutOfOrderFlatENV({ @Id(name = \"s\", clazz = String.class) }) void foo()"));
+    EnvironmentTestEngine e = new EnvironmentTestEngine($);
+    
+    e.compareFlatOutOfOrder()
+  }
   
+  @Ignore public void EngineTestFlatUnordered01(){
+    ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("@OutOfOrderFlatENV({ @Id(name = "+
+                                                           "\"s\", clazz = String.class) })"+
+                                                           "void foo()"));
+    EnvironmentTestEngine e = new EnvironmentTestEngine($);
+    
+    e.compareFlatOutOfOrder()
+  }
+  
+  @Ignore public void EngineTestFlatUnordered02(){
+    ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("@OutOfOrderFlatENV({ @Id(name = "+
+                                                           "\"a\", clazz = String.class) })"+
+                                                           "void foo()"));
+    EnvironmentTestEngine e = new EnvironmentTestEngine($);
+    
+    e.compareFlatOutOfOrder()
+  }
+  
+  @Ignore public void EngineTestFlatUnordered03(){
+    ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("@OutOfOrderFlatENV({ @Id(name = "+
+                                                           "\"s\", clazz = String.class) })"+
+                                                           "void foo()"));
+    EnvironmentTestEngine e = new EnvironmentTestEngine($);
+    
+    e.compareFlatOutOfOrder()
+  }
+  
+  @Ignore public void EngineTestFlatUnordered04(){
+    ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("@OutOfOrderFlatENV({ @Id(name = "+
+                                                           "\"s\", clazz = String.class) })"+
+                                                           "void foo()"));
+    EnvironmentTestEngine e = new EnvironmentTestEngine($);
+    
+    e.compareFlatOutOfOrder()
+  }
+  
+  @Ignore public void EngineTestFlatUnordered05(){
+    ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("@OutOfOrderFlatENV({ @Id(name = "+
+                                                           "\"s\", clazz = String.class) })"+
+                                                           "void foo()"));
+    EnvironmentTestEngine e = new EnvironmentTestEngine($);
+    
+    e.compareFlatOutOfOrder()
+  }
+  
+  @Ignore public void EngineTestFlatUnordered06(){
+    ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("@OutOfOrderFlatENV({ @Id(name = "+
+                                                           "\"s\", clazz = String.class) })"+
+                                                           "void foo()"));
+    EnvironmentTestEngine e = new EnvironmentTestEngine($);
+    
+    e.compareFlatOutOfOrder()
+  }
+  
+  @Ignore public void EngineTestFlatUnordered07(){
+    ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("@OutOfOrderFlatENV({ @Id(name = "+
+                                                           "\"s\", clazz = String.class) })"+
+                                                           "void foo()"));
+    EnvironmentTestEngine e = new EnvironmentTestEngine($);
+    
+    e.compareFlatOutOfOrder()
+  }
+
 }
