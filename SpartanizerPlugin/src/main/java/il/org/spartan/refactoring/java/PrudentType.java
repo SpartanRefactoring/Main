@@ -12,7 +12,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.utils.*;
 
-/** TODO: Niv Issue*94
+/**
  * <p>
  * Tells how much we know about the type of of a variable, function, or
  * expression. This should be conservative approximation to the real type of the
@@ -34,7 +34,7 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @author Niv Shalmon
  * @since 2016-08-XX */
-public enum PrudentType {
+public enum PrudentType{
   // Those anonymous characters that known little or nothing about themselves
   NOTHING("none", "when nothing can be said, e.g., f(f(),f(f(f()),f()))"), //
   NONNULL("!null", "e.g., new Object() and that's about it"), //
@@ -47,7 +47,8 @@ public enum PrudentType {
   BOOLEANINTEGRAL("boolean|long|int|char|short|byte", "only in x^y,x&y,x|y"), //
   INTEGRAL("long|int|char|short|byte", "must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() "), //
   // Certain types
-  NULL("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"), BYTE("byte", "must be byte: (byte)1, nothing else"), //
+  NULL("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"),//
+  BYTE("byte", "must be byte: (byte)1, nothing else"), //
   SHORT("short", "must be short: (short)15, nothing else"), //
   CHAR("char", "must be char: 'a', (char)97, nothing else"), //
   INT("int", "must be int: 2, 2*(int)f(), 2%(int)f(), 'a'*2 , no 2*f()"), //
@@ -123,14 +124,14 @@ public enum PrudentType {
     }
   }
 
-  /** @param x JD
+  /**@param x JD
    * @return The most specific Type information that can be deduced about the
    *         expression, or {@link #NOTHING} if it cannot decide. Will never
    *         return null */
   public static PrudentType prudent(final Expression x) {
     return prudent(x, null, null);
   }
-
+  
   /** A version of {@link #prudent(Expression)} that receives the a list of the
    * operands' type for all operands of an expression. To be used for
    * InfixExpression that has extended operand. The order of the type's should
