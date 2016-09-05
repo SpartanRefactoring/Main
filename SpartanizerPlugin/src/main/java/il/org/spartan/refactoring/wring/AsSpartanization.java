@@ -26,13 +26,6 @@ public final class AsSpartanization extends Spartanization {
 
   @Override protected ASTVisitor collect(final List<Rewrite> $) {
     return new ASTVisitor() {
-      <N extends ASTNode> boolean process(final N n) {
-        if (!inner.scopeIncludes(n) || inner.nonEligible(n))
-          return true;
-        $.add(inner.make(n));
-        return true;
-      }
-
       @Override public boolean visit(final Block it) {
         return process(it);
       }
@@ -56,17 +49,18 @@ public final class AsSpartanization extends Spartanization {
       @Override public boolean visit(final VariableDeclarationFragment it) {
         return process(it);
       }
+
+      <N extends ASTNode> boolean process(final N n) {
+        if (!inner.scopeIncludes(n) || inner.nonEligible(n))
+          return true;
+        $.add(inner.make(n));
+        return true;
+      }
     };
   }
 
   @Override protected void fillRewrite(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
     u.accept(new ASTVisitor() {
-      <N extends ASTNode> boolean go(final N n) {
-        if (inRange(m, n))
-          inner.make(n).go(r, null);
-        return true;
-      }
-
       @Override public boolean visit(final Block e) {
         return go(e);
       }
@@ -89,6 +83,12 @@ public final class AsSpartanization extends Spartanization {
 
       @Override public boolean visit(final VariableDeclarationFragment f) {
         return go(f);
+      }
+
+      <N extends ASTNode> boolean go(final N n) {
+        if (inRange(m, n))
+          inner.make(n).go(r, null);
+        return true;
       }
     });
   }

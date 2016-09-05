@@ -37,26 +37,6 @@ import il.org.spartan.refactoring.engine.*;
  * @author Yossi Gil
  * @since 2015-09-05 */
 public final class IfBarFooElseBazFoo extends Wring<IfStatement> implements Kind.Ternarization {
-  private class DefinitionsCollector extends ASTVisitor {
-    private boolean notAllDefined;
-    private final Statement[] l;
-
-    public DefinitionsCollector(final List<Statement> l) {
-      notAllDefined = false;
-      this.l = l.toArray(new Statement[l.size()]);
-    }
-
-    public boolean notAllDefined() {
-      return notAllDefined;
-    }
-
-    @Override public boolean visit(final SimpleName n) {
-      if (!Collect.declarationsOf(n).in(l).isEmpty())
-        notAllDefined = true;
-      return false;
-    }
-  }
-
   private static List<Statement> commmonSuffix(final List<Statement> ss1, final List<Statement> ss2) {
     final List<Statement> $ = new ArrayList<>();
     while (!ss1.isEmpty() && !ss2.isEmpty()) {
@@ -116,5 +96,25 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> implements Kind
 
   @Override Rewrite make(final IfStatement s, final ExclusionManager exclude) {
     return super.make(s, exclude);
+  }
+
+  private class DefinitionsCollector extends ASTVisitor {
+    private boolean notAllDefined;
+    private final Statement[] l;
+
+    public DefinitionsCollector(final List<Statement> l) {
+      notAllDefined = false;
+      this.l = l.toArray(new Statement[l.size()]);
+    }
+
+    public boolean notAllDefined() {
+      return notAllDefined;
+    }
+
+    @Override public boolean visit(final SimpleName n) {
+      if (!Collect.declarationsOf(n).in(l).isEmpty())
+        notAllDefined = true;
+      return false;
+    }
   }
 }

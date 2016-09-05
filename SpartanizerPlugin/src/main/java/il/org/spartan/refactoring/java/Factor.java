@@ -23,6 +23,10 @@ class Factor {
     this.expression = expression;
   }
 
+  public boolean multiplier() {
+    return !divider;
+  }
+
   // doesn't work for division, need to figure out why
   Expression asExpression() {
     if (!divider)
@@ -36,9 +40,5 @@ class Factor {
 
   boolean divider() {
     return divider;
-  }
-
-  public boolean multiplier() {
-    return !divider;
   }
 }
