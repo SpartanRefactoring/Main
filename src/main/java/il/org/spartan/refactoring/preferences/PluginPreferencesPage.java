@@ -13,8 +13,8 @@ import il.org.spartan.refactoring.wring.*;
 
 public class PluginPreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
   public static final String WRING_COMBO_OPTIONS[][] = { { "Enabled", "on" }, { "Disabled", "off" } };
-
   private final SpartanPropertyListener listener;
+
   public PluginPreferencesPage() {
     super(GRID);
     listener = new SpartanPropertyListener();

@@ -64,7 +64,7 @@ public final class CleverTernarization extends Wring.ReplaceCurrentNode<Conditio
     assert s1.length() <= s2.length();
     int $ = 0;
     for (; $ < s1.length(); ++$)
-      if (lisp.last(s1, $) != lisp.last(s2, $)) 
+      if (lisp.last(s1, $) != lisp.last(s2, $))
         break;
     return $;
   }

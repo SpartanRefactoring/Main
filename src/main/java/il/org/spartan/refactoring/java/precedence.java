@@ -17,7 +17,6 @@ import il.org.spartan.refactoring.utils.*;
 public enum precedence {
   ;
   public final static int UNDEFINED = -1;
-
   private static final ChainStringToIntegerMap of = new ChainStringToIntegerMap()//
       .putOn(1, "[]", ".", "() invoke", "++ post", "-- post", "MethodInvocation", "PostfixExpression", "ArrayAccess", "FieldAccess", "QualifiedName") //
       .putOn(2, "++ pre", "-- pre", "+ unary", "- unary", "!", "~", "PrefixExpression") //
@@ -39,6 +38,7 @@ public enum precedence {
           "&=", "^=", "|=", // assignment, bitwise
           "<<=", ">>=", ">>>="// assignment, shift
   );
+
   /** Compare precedence of two expressions.
    * @param host JD
    * @param e2 JD

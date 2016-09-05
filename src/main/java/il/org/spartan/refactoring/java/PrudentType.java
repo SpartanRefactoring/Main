@@ -12,9 +12,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.utils.*;
 
-/** TODO: Niv Issue*94
- * <p>
- * Tells how much we know about the type of of a variable, function, or
+/** Tells how much we know about the type of of a variable, function, or
  * expression. This should be conservative approximation to the real type of the
  * entity, what a rational, but prudent programmer would case about the type
  * <p>
@@ -47,7 +45,8 @@ public enum PrudentType {
   BOOLEANINTEGRAL("boolean|long|int|char|short|byte", "only in x^y,x&y,x|y"), //
   INTEGRAL("long|int|char|short|byte", "must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() "), //
   // Certain types
-  NULL("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"), BYTE("byte", "must be byte: (byte)1, nothing else"), //
+  NULL("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"), //
+  BYTE("byte", "must be byte: (byte)1, nothing else"), //
   SHORT("short", "must be short: (short)15, nothing else"), //
   CHAR("char", "must be char: 'a', (char)97, nothing else"), //
   INT("int", "must be int: 2, 2*(int)f(), 2%(int)f(), 'a'*2 , no 2*f()"), //
@@ -105,6 +104,30 @@ public enum PrudentType {
 
   @SuppressWarnings("unused") static PrudentType axiom(final String x) {
     return STRING;
+  }
+
+  static PrudentType conditionalWithNoInfo(final PrudentType t) {
+    switch (t) {
+      case BYTE:
+      case SHORT:
+      case CHAR:
+      case INT:
+      case INTEGRAL:
+      case LONG:
+      case FLOAT:
+      case NUMERIC:
+        return NUMERIC;
+      case DOUBLE:
+        return DOUBLE;
+      case STRING:
+        return STRING;
+      case BOOLEAN:
+        return BOOLEAN;
+      case BOOLEANINTEGRAL:
+        return BOOLEANINTEGRAL;
+      default:
+        return NOTHING;
+    }
   }
 
   /** A version of {@link #prudent(Expression)} that receives the a list of the
@@ -170,30 +193,6 @@ public enum PrudentType {
     ¢.add(t1);
     ¢.add(t2);
     return prudent(x, ¢);
-  }
-
-  private static PrudentType conditionalWithNoInfo(final PrudentType t) {
-    switch (t) {
-      case BYTE:
-      case SHORT:
-      case CHAR:
-      case INT:
-      case INTEGRAL:
-      case LONG:
-      case FLOAT:
-      case NUMERIC:
-        return NUMERIC;
-      case DOUBLE:
-        return DOUBLE;
-      case STRING:
-        return STRING;
-      case BOOLEAN:
-        return BOOLEAN;
-      case BOOLEANINTEGRAL:
-        return BOOLEANINTEGRAL;
-      default:
-        return NOTHING;
-    }
   }
 
   private static PrudentType prudentType(final Assignment x, final PrudentType t) {

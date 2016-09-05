@@ -44,11 +44,11 @@ public interface lisp {
     return ts == null || ts.isEmpty() ? null : ts.get(ts.size() - 1);
   }
 
-  static char last(String s) {
+  static char last(final String s) {
     return last(s, 0);
   }
 
-  static char last(String s, int i) {
+  static char last(final String s, final int i) {
     return s.charAt(s.length() - i - 1);
   }
 

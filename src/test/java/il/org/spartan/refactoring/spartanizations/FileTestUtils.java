@@ -15,10 +15,8 @@ import il.org.spartan.refactoring.engine.*;
   /** A String determines whereas we are at the IN or OUT side of the test See
    * TestCases test files for reference. */
   final static String testKeyword = "<Test Result>";
-
   /** Suffix for test files. */
   protected final static String testSuffix = ".test";
-
   /** Folder in which all test cases are found */
   public static final File location = new File("src/test/resources");
 
@@ -45,6 +43,7 @@ import il.org.spartan.refactoring.engine.*;
   protected static File makeInFile(final File f) {
     return createTempFile(deleteTestKeyword(makeAST.stringBuilder(f)), TestDirection.In, f);
   }
+
   /** Makes an Output file out of a Test file */
   protected static File makeOutFile(final File f) {
     final StringBuilder $ = makeAST.stringBuilder(f);
@@ -52,6 +51,7 @@ import il.org.spartan.refactoring.engine.*;
       $.delete(0, $.indexOf(testKeyword) + testKeyword.length() + ($.indexOf("\r\n") > 0 ? 2 : 1));
     return createTempFile($, TestDirection.Out, f);
   }
+
   /** Creates a temporary file - including lazy deletion.
    * @param b
    * @param d
