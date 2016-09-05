@@ -7,7 +7,6 @@ import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.java.Environment.*;
@@ -37,19 +36,19 @@ public class EnvironmentTestEngine {
     return $;
   }
 
+  static Set<Entry<String, Environment.Information>> listToSet(final List<Annotation> as) {
+    final Set<Entry<String, Environment.Information>> $ = Collections.unmodifiableSet(new HashSet<>());
+    for (final Annotation ¢ : as) {
+    }
+    return $;
+  }
+
   private static IJavaProject getJavaProject(final String projectName) {
     final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
     if (project == null)
       return null;
     final IJavaProject $ = JavaCore.create(project);
     return $ != null && $.exists() ? $ : null;
-  }
-
-  static Set<Entry<String, Environment.Information>> listToSet(final List<Annotation> as) {
-    final Set<Entry<String, Environment.Information>> $ = Collections.unmodifiableSet(new HashSet<>());
-    for (final Annotation ¢ : as) {
-    }
-    return $;
   }
 
   private final ASTNode cUnit;
@@ -72,10 +71,8 @@ public class EnvironmentTestEngine {
     testBeginEnd = generateSet();
   }
 
-  enum AnnotationType{
-    FLAT,
-    NESTED,
-    BEGINEND
+  enum AnnotationType {
+    FLAT, NESTED, BEGINEND
   }
   
   private void addValueToBeginEnd(List<MemberValuePair> ps) {}
@@ -113,6 +110,14 @@ public class EnvironmentTestEngine {
    */
   public void runTest() {
     cUnit.accept(new ASTVisitor() {
+      @Override public boolean visit(final MethodDeclaration d) {
+        /* Set<Entry<String, Information>> useCheckSet = Environment.uses(d);
+         * Set<Entry<String, Information>> declareCheckSet =
+         * Environment.declares(d); */
+        addAnnotations(extract.annotations(d));
+        return true;
+      }
+
       void addAnnotations(final List<Annotation> as) {
         for (final Annotation ¢ : as)
           dispatch(¢);
@@ -131,8 +136,8 @@ public class EnvironmentTestEngine {
         flatHandler(az.singleMemberAnnotation(¢));
       }
 
-      void flatHandler(SingleMemberAnnotation $) {
-        if($ == null)
+      void flatHandler(final SingleMemberAnnotation $) {
+        if ($ == null)
           return;
         $.accept(new ASTVisitor() {
           @SuppressWarnings("unchecked") 
@@ -151,66 +156,56 @@ public class EnvironmentTestEngine {
           private boolean isNameId(Name ¢){
             return "Id".equals(wizard.asString(¢));
           }
-          
         });
       }
 
       private void nestedHandler(final Annotation a) {
       }
-      
-      private void beginEndHandler(final Annotation a) {
-      }
 
-      @Override public boolean visit(final MethodDeclaration d) {
-        /* Set<Entry<String, Information>> useCheckSet = Environment.uses(d);
-         * Set<Entry<String, Information>> declareCheckSet =
-         * Environment.declares(d); */
-        addAnnotations(extract.annotations(d));
-        return true;
+      private void beginEndHandler(final Annotation a) {
       }
     });
   }
-  /**
-   * Compares flat output Set (flat) with provided Set, that will be the result of the flat version of defines.
-   * @param $
-   */
-  void compareFlatOutOfOrder(Set<Entry<String, Information>> $){
-    //Check that each member of $ is contained in FlatENV, and that the size is equal. 
-    //azzert.fail Otherwise.
+
+  /** Compares flat output Set (flat) with provided Set, that will be the result
+   * of the flat version of defines.
+   * @param $ */
+  void compareFlatOutOfOrder(final Set<Entry<String, Information>> $) {
+    // Check that each member of $ is contained in FlatENV, and that the size is
+    // equal.
+    // azzert.fail Otherwise.
     return;
   }
-  
-  /**
-   * Compares output Set (testFlatENV) with provided set, that will be the result of the flat version of defines.
-   * @param $
-   */
-  void compareFlatInOrder(Set<Entry<String, Information>> $){
-    //Go over both sets in serial manner, and make sure every two members are equal.
-    //Also, check size, to avoid the case Set A is contained in B.
-    //azzert.fail Otherwise.
-  }  
-  
-  /**
-   * Compares output Set (testNestedENV) with provided Set, that will be the result of Nested version of Defines.
-   * @param $
-   */
-  void compareNested(Set<Entry<String, Information>> $){
-    //Go over both sets in serial manner, and make sure every two members are equal.
-    //Also, check size, to avoid the case Set A is contained in B.
-    //azzert.fail Otherwise.
+
+  /** Compares output Set (testFlatENV) with provided set, that will be the
+   * result of the flat version of defines.
+   * @param $ */
+  void compareFlatInOrder(final Set<Entry<String, Information>> $) {
+    // Go over both sets in serial manner, and make sure every two members are
+    // equal.
+    // Also, check size, to avoid the case Set A is contained in B.
+    // azzert.fail Otherwise.
   }
-  /**
-   * Compares output Set (testBeginEnd) with provided Set, that will be the result of Nested version of uses.
-   * @param $
-   */
-  void compareUses(Set<Entry<String, Information>> $){
-    //Go over both sets in serial manner, and make sure every two members are equal.
-    //Also, check size, to avoid the case Set A is contained in B.
-    //azzert.fail Otherwise.
+
+  /** Compares output Set (testNestedENV) with provided Set, that will be the
+   * result of Nested version of Defines.
+   * @param $ */
+  void compareNested(final Set<Entry<String, Information>> $) {
+    // Go over both sets in serial manner, and make sure every two members are
+    // equal.
+    // Also, check size, to avoid the case Set A is contained in B.
+    // azzert.fail Otherwise.
   }
-  
-  
-  
+
+  /** Compares output Set (testBeginEnd) with provided Set, that will be the
+   * result of Nested version of uses.
+   * @param $ */
+  void compareUses(final Set<Entry<String, Information>> $) {
+    // Go over both sets in serial manner, and make sure every two members are
+    // equal.
+    // Also, check size, to avoid the case Set A is contained in B.
+    // azzert.fail Otherwise.
+  }
 }
 // Don't delete yet:
 /* IWorkspace workspace = ResourcesPlugin.getWorkspace(); IWorkspaceRoot root =

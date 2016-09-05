@@ -14,19 +14,8 @@ import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.java.*;
 
 public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpression> implements Kind.DistributiveRefactoring {
-  private static int findSingleDifference(final List<Expression> es1, final List<Expression> es2) {
-    int $ = -1;
-    for (int i = 0; i < es1.size(); ++i)
-      if (!wizard.same(es1.get(i), es2.get(i))) {
-        if ($ >= 0)
-          return -1;
-        $ = i;
-      }
-    return $;
-  }
-
-  @SuppressWarnings("unchecked") private static <T extends Expression> T p(final ASTNode n, final T $) {
-    return !precedence.is.legal(precedence.of(n)) || precedence.of(n) >= precedence.of($) ? $ : (T) wizard.parenthesize($);
+  public static Expression right(final Assignment a1) {
+    return a1.getRightHandSide();
   }
 
   static Expression pushdown(final ConditionalExpression x) {
@@ -41,6 +30,21 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
     return a1.getOperator() != a2.getOperator() || !wizard.same(step.left(a1), step.left(a2)) ? null
         : plant(subject.pair(step.left(a1), subject.pair(right(a1), right(a2)).toCondition(x.getExpression())).to(a1.getOperator()))
             .into(x.getParent());
+  }
+
+  private static int findSingleDifference(final List<Expression> es1, final List<Expression> es2) {
+    int $ = -1;
+    for (int i = 0; i < es1.size(); ++i)
+      if (!wizard.same(es1.get(i), es2.get(i))) {
+        if ($ >= 0)
+          return -1;
+        $ = i;
+      }
+    return $;
+  }
+
+  @SuppressWarnings("unchecked") private static <T extends Expression> T p(final ASTNode n, final T $) {
+    return !precedence.is.legal(precedence.of(n)) || precedence.of(n) >= precedence.of($) ? $ : (T) wizard.parenthesize($);
   }
 
   private static Expression pushdown(final ConditionalExpression x, final ClassInstanceCreation e1, final ClassInstanceCreation e2) {
@@ -144,10 +148,6 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
     arguments($).remove(i);
     arguments($).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(x.getExpression()));
     return $;
-  }
-
-  public static Expression right(final Assignment a1) {
-    return a1.getRightHandSide();
   }
 
   @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {

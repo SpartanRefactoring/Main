@@ -20,36 +20,6 @@ import il.org.spartan.refactoring.engine.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class TrimmerTest250 {
-  // @formatter:off
-  enum A { a1() {{ f(); }
-      public void f() {
-        g();
-      }
-       void g() {
-        h();
-      }
-       void h() {
-        i();
-      }
-       void i() {
-        f();
-      }
-    }, a2() {{ f(); }
-      void f() {
-        g();
-      }
-      void g() {
-        h();
-      }
-      void h() {
-        i();
-      }
-      public void i() {
-        f();
-      }
-    }
-  }
-
   @Test public void issue103_AND1() {
     trimming("a=a&5;").to("a&=5;");
   }
@@ -258,54 +228,52 @@ public class TrimmerTest250 {
     trimming("z=foo(x=(y=y*u),17)").to("z=foo(x=(y*=u),17)");
   }
 
-  @Test public void issue111a_1(){
+  @Test public void issue111a_1() {
     trimming("public class A {" + //
         "static public int a;" + //
         "}") //
-    .to("public class A {" + //
-        "public static int a;" + //
-        "}");
+            .to("public class A {" + //
+                "public static int a;" + //
+                "}");
   }
 
-  @Test public void issue111b_1(){
-
+  @Test public void issue111b_1() {
     trimming("public class A {" + //
         "static final public int a;" + //
         "}") //
-    .to("public class A {" + //
-        "public static final int a;" + //
-        "}");
+            .to("public class A {" + //
+                "public static final int a;" + //
+                "}");
   }
 
   @Ignore public void issue111c() {
     trimming("protected public void func();").to("public protected void func();");
   }
 
-  @Test public void issue111c_2(){ //not working cause method sorting is not integrated yet
+  @Test public void issue111c_2() { // not working cause method sorting is not
+                                    // integrated yet
     trimming("public class A{" + //
         "synchronized public void fun(final int a) {}" + //
         "final private String s = \"Alex\";" + //
-      "}")
-    .to("public class A{" + //
-        "public synchronized void fun(final int a) {}" + //
-        "private final String s = \"Alex\";" + //
-      "}").to(null); //
+        "}").to("public class A{" + //
+            "public synchronized void fun(final int a) {}" + //
+            "private final String s = \"Alex\";" + //
+            "}").to(null); //
   }
 
   @Ignore public void issue111d() {
     trimming("protected public class A{}").to("public protected class A{}");
   }
 
-  @Test public void issue111d_1(){
-    trimming("abstract class A {}")
-    .to(null);
+  @Test public void issue111d_1() {
+    trimming("abstract class A {}").to(null);
   }
 
   @Test public void issue111e() {
     trimming("protected public class A{volatile static int a;}") //
-    .to("public protected class A{volatile static int a;}") //
-    .to("public protected class A{static volatile int a;}") //
-    .to(null);
+        .to("public protected class A{volatile static int a;}") //
+        .to("public protected class A{static volatile int a;}") //
+        .to(null);
   }
 
   @Test public void issue111g() {
@@ -314,8 +282,8 @@ public class TrimmerTest250 {
         "}").to("protected public public enum Level { " + //
             "HIGH, MEDIUM, LOW" + //
             "}").to("public public protected enum Level { \n" + //
-            "HIGH, MEDIUM, LOW\n" + //
-            "}");
+                "HIGH, MEDIUM, LOW\n" + //
+                "}");
   }
 
   @Ignore public void issue111h() {
@@ -326,24 +294,20 @@ public class TrimmerTest250 {
     trimming("protected public int a;").to("public protected int a;");
   }
 
-  @Ignore public void issue111q(){
-    trimming("protected public int a;")
-    .to("public protected int a;");
+  @Ignore public void issue111q() {
+    trimming("protected public int a;").to("public protected int a;");
   }
 
-  @Ignore public void issue111w(){
-    trimming("protected public int a;")
-    .to("public protected int a;");
+  @Ignore public void issue111w() {
+    trimming("protected public int a;").to("public protected int a;");
   }
 
-  @Ignore public void issue111y(){
-    trimming("synchronized volatile public int a;")
-    .to("public volatile synchronized int a;");
+  @Ignore public void issue111y() {
+    trimming("synchronized volatile public int a;").to("public volatile synchronized int a;");
   }
 
-  @Ignore public void issue111z(){
-    trimming("volatile private int a;")
-    .to("private volatile int a;");
+  @Ignore public void issue111z() {
+    trimming("volatile private int a;").to("private volatile int a;");
   }
 
   @Test public void issue31a() {
@@ -1208,6 +1172,36 @@ public class TrimmerTest250 {
 
   @Test public void trimmerBugXORCompiling() {
     trimming("j = j ^ k").to("j ^= k");
+  }
+
+  // @formatter:off
+  enum A { a1() {{ f(); }
+      public void f() {
+        g();
+      }
+       void g() {
+        h();
+      }
+       void h() {
+        i();
+      }
+       void i() {
+        f();
+      }
+    }, a2() {{ f(); }
+      public void i() {
+        f();
+      }
+      void f() {
+        g();
+      }
+      void g() {
+        h();
+      }
+      void h() {
+        i();
+      }
+    }
   }
 
  // @formatter:on

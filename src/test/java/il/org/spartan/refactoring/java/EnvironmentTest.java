@@ -398,9 +398,5 @@ public class EnvironmentTest {
   @Ignore public void useTestWithUsesOnly5() {
     azzert.that(Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("x.foo()").get())).contains("x"), is(true));
   }
-  
-  
-//============================TestEngine Test================================
-  
-  
+  // ============================TestEngine Test================================
 }
