@@ -1596,32 +1596,32 @@ import il.org.spartan.refactoring.utils.*;
     ;
   }
 
-  //@Ignore("temporary removed until endless loop in plugin is solved")
+ 
   @Test public void issue110_01() {
     trimming("polite ? \"Eat your meal.\" :  \"Eat your meal, please\"") //
         .to("\"Eat your meal\" + (polite ? \".\" : \", please\")");
   }
 
-  //@Ignore("temporary removed until endless loop in plugin is solved") 
+  
   @Test public void issue110_02() {
     trimming("polite ? \"Eat your meal.\" :  \"Eat your meal\"") //
         .to("\"Eat your meal\" + (polite ? \".\" : \"\")");
   }
 
-  //@Ignore("temporary removed until endless loop in plugin is solved") 
+  
   @Test public void issue110_03() {
     trimming("polite ? \"thanks for the meal\" :  \"I hated the meal\"") //
         .to("!polite ? \"I hated the meal\": \"thanks for the meal\"") //
         .to("(!polite ? \"I hated\" : \"thanks for\" )+ \" the meal\"");
   }
 
-  //@Ignore("temporary removed until endless loop in plugin is solved")
+ 
   @Test public void issue110_04() {
     trimming("polite ? \"thanks.\" :  \"I hated the meal.\"") //
         .to("(polite ? \"thanks\" :\"I hated the meal\")+ \".\"");
   }
 
-  //@Ignore("temporary removed until endless loop in plugin is solved") 
+  
   @Test public void issue110_05() {
     trimming("a ? \"abracadabra\" : \"abba\"") //
         .to("!a ? \"abba\" : \"abracadabra\"")//
@@ -1630,35 +1630,51 @@ import il.org.spartan.refactoring.utils.*;
         .to("\"ab\" +(!a ? \"b\" : \"racadabr\")+ \"a\"").to(null);
   }
 
-  //@Ignore("temporary removed until endless loop in plugin is solved") 
+  
   @Test public void issue110_06() {
     trimming("receiver ==null ? \"Use \" + \"x\" : \"Use \" + receiver")//
         .to("\"Use \"+(receiver==null ? \"x\" : receiver)").to(null);
   }
 
-  //@Ignore("temporary removed until endless loop in plugin is solved")
+ 
   @Test public void issue110_07() {
     trimming("receiver ==null ? \"Use x\" : \"Use \" + receiver")//
         .to("\"Use \"+(receiver==null ? \"x\" : \"\"+receiver)").to(null);
   }
 
-  //@Ignore("temporary removed until endless loop in plugin is solved") 
+  
   @Test public void issue110_08() {
     trimming("receiver ==null ? \"Use\" : receiver + \"Use\"")//
         .to("(receiver==null ? \"\" : receiver+\"\") + \"Use\"").to(null);
   }
 
-  //@Ignore("temporary removed until endless loop in plugin is solved") 
+  
   @Test public void issue110_09() {
     trimming("receiver ==null ? \"user a\" : receiver + \"something a\"")//
         .to("(receiver==null ? \"user\" : receiver+\"something\") + \" a\"").to(null);
   }
 
-  //@Ignore("temporary removed until endless loop in plugin is solved")
+ 
   @Test public void issue110_10() {
     trimming("receiver ==null ? \"Something Use\" : \"Something\" + receiver + \"Use\"")//
         .to("\"Something\"+ (receiver==null ? \" Use\" : \"\"+receiver + \"Use\")")//
         .to("\"Something\"+ ((receiver==null ? \" \" : \"\"+receiver+\"\") + \"Use\")");
+  }
+  
+  @Test public void issue110_11() {
+    trimming("f() ? \"first\" + d() + \"second\" : \"first\" + g() + \"third\"")//
+        .to("\"first\" + (f() ? \"\" + d()  + \"second\" : \"\" + g()  + \"third\")");
+  }
+  
+  @Test public void issue110_12() {
+    trimming("f() ? \"first\" + d() + \"second\" : \"third\" + g() + \"second\"")//
+        .to("(f() ? \"first\" +  d() + \"\": \"third\" + g()+\"\") + \"second\"");
+  } 
+  
+  @Test public void issue110_13() {
+    trimming("f() ? \"first is:\" + d() + \"second\" : \"first are:\" + g() + \"and second\"")//
+        .to("\"first \" + (f() ? \"is:\" + d() + \"second\": \"are:\" + g() + \"and second\")")//
+        .to("\"first \" + ((f() ? \"is:\" + d() + \"\": \"are:\" + g() + \"and \") + \"second\")");
   }
 
   @Ignore("Cocnat String currently not in toolbox, see issue #120") @Test public void issue120_1() {
