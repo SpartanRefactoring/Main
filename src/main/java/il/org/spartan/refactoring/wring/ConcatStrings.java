@@ -27,8 +27,8 @@ public class ConcatStrings extends Wring.ReplaceCurrentNode<InfixExpression> imp
     return "Concat the strings to a one string";
   }
 
-  @Override String description(final InfixExpression n) {
-    return "Concat the strings to a one string";
+  @SuppressWarnings("unused") @Override String description(final InfixExpression n) {
+    return "Concat the string literals to a single string";
   }
 
   @Override ASTNode replacement(final InfixExpression n) {

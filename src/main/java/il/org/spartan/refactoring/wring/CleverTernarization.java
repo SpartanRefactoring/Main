@@ -52,26 +52,6 @@ public final class CleverTernarization extends Wring.ReplaceCurrentNode<Conditio
     return $;
   }
 
-  private static String shorter(final String s1, final String s2) {
-    return s1.length() < s2.length() ? s1 : s2;
-  }
-
-  private static String longer(final String s1, final String s2) {
-    return s1 == shorter(s1, s2) ? s1 : s2;
-  }
-
-  // TODO: Niv. Maybe you can do this with the shorter/longer method?
-  private static int findCommonSuffix(final String str1, final String str2) {
-    int i = 0;
-    String sub = "";
-    for (; i < Math.max(str1.length(), str2.length()); ++i) {
-      sub = str2.substring(i);
-      if (str1.endsWith(sub))
-        break;
-    }
-    return i == Math.max(str1.length(), str2.length()) ? 0 : sub.length();
-  }
-
   /** @param s JD
    * @param i the length of the prefix
    * @param n an ASTNode to create the StringLiteral from
@@ -88,6 +68,22 @@ public final class CleverTernarization extends Wring.ReplaceCurrentNode<Conditio
    *         the i'th character of s */
   private static StringLiteral getSuffix(final String s, final int i, final ASTNode n) {
     return makeStringLiteral(s.length() == i ? "" : s.substring(i), n);
+  }
+
+  private static int lastDifference(final String s1, final String s2) {
+    return lastDifferentWLOG(shorter(s1, s2), longer(s1, s2));
+  }
+
+  private static int lastDifferentWLOG(final String shorter, final String longer) {
+    int $ = 0;
+    for (; $ < shorter.length(); ++$)
+      if (shorter.charAt(shorter.length() - 1 - $) != longer.charAt(longer.length() - 1 - $))
+        break;
+    return $;
+  }
+
+  private static String longer(final String s1, final String s2) {
+    return s1 == shorter(s1, s2) ? s2 : s1;
   }
 
   private static StringLiteral makeStringLiteral(final String s, final ASTNode n) {
@@ -108,9 +104,12 @@ public final class CleverTernarization extends Wring.ReplaceCurrentNode<Conditio
     final StringLiteral suffix = getSuffix(thenStr, thenStr.length() - commonSuffixLength, condition);
     final StringLiteral thenPre = getPrefix(thenStr, thenStr.length() - commonSuffixLength, condition);
     final StringLiteral elzePre = getPrefix(elzeStr, elzeStr.length() - commonSuffixLength, condition);
-    final ParenthesizedExpression pe = condition.getAST().newParenthesizedExpression();
-    pe.setExpression(subject.pair(thenPre, elzePre).toCondition(condition));
-    return subject.pair(pe, suffix).to(wizard.PLUS2);
+    return subject.pair(subject.operand(subject.pair(thenPre, elzePre).toCondition(condition)).parenthesis()//
+        , suffix).to(wizard.PLUS2);
+  }
+
+  private static String shorter(final String s1, final String s2) {
+    return s1.length() < s2.length() ? s1 : s2;
   }
 
   private static Expression simplify(final StringLiteral then, final InfixExpression elze, final Expression condition) {
@@ -124,24 +123,21 @@ public final class CleverTernarization extends Wring.ReplaceCurrentNode<Conditio
         final StringLiteral prefix = getPrefix(thenStr, commonPrefixIndex, condition);
         final StringLiteral thenPost = getSuffix(thenStr, commonPrefixIndex, condition);
         final StringLiteral elzePost = getSuffix(elzeStr, commonPrefixIndex, condition);
-        lisp.chop(elzeOperands);
-        elzeOperands.add(0, elzePost);
+        lisp.replaceFirst(elzeOperands, elzePost);
         return subject.pair(prefix, subject.pair(thenPost, //
             subject.operands(elzeOperands).to(wizard.PLUS2)).toCondition(condition)).to(wizard.PLUS2);
       }
     }
     if (elzeOperands.get(elzeOperands.size() - 1).getNodeType() == ASTNode.STRING_LITERAL) {
       final String elzeStr = ((StringLiteral) elzeOperands.get(elzeOperands.size() - 1)).getLiteralValue();
-      final int commonSuffixIndex = findCommonSuffix(thenStr, elzeStr);
+      final int commonSuffixIndex = lastDifference(thenStr, elzeStr);
       if (commonSuffixIndex != 0) {
         final StringLiteral suffix = getSuffix(thenStr, thenStr.length() - commonSuffixIndex, condition);
         final StringLiteral thenPre = getPrefix(thenStr, thenStr.length() - commonSuffixIndex, condition);
         final StringLiteral elzePre = getPrefix(elzeStr, elzeStr.length() - commonSuffixIndex, condition);
-        elzeOperands.remove(elzeOperands.size() - 1);
-        elzeOperands.add(elzeOperands.size(), elzePre);
-        final ParenthesizedExpression pe = condition.getAST().newParenthesizedExpression();
-        pe.setExpression(subject.pair(thenPre, subject.operands(elzeOperands).to(wizard.PLUS2)).toCondition(condition));
-        return subject.pair(pe, suffix).to(wizard.PLUS2);
+        lisp.replaceLast(elzeOperands, elzePre);
+        return subject.pair(subject.operand(subject.pair(thenPre, subject.operands(elzeOperands).to(wizard.PLUS2))//
+            .toCondition(condition)).parenthesis(), suffix).to(wizard.PLUS2);
       }
     }
     return null;
@@ -153,7 +149,7 @@ public final class CleverTernarization extends Wring.ReplaceCurrentNode<Conditio
     final int commonPrefixIndex = firstDifference(thenStr, elzeStr);
     if (commonPrefixIndex != 0)
       return replacementPrefix(thenStr, elzeStr, commonPrefixIndex, condition);
-    final int commonSuffixLength = findCommonSuffix(thenStr, elzeStr);
+    final int commonSuffixLength = lastDifference(thenStr, elzeStr);
     return commonSuffixLength == 0 ? null : replacementSuffix(thenStr, elzeStr, commonSuffixLength, condition);
   }
 
