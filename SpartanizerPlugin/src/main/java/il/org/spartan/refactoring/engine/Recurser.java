@@ -5,32 +5,35 @@ import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.ast.*;
-
 /** @author Dor Ma'ayan
  * @since 2016 */
 public class Recurser<T> {
-  /** Get a list of the direct children of a ASTNode
+  /** Get a list of the direct fhildren of a ASTNode
    * @param n an ASTNode
    * @return a list of n's children */
-  private static List<ASTNode> getChildren(final ASTNode n) {
+  @SuppressWarnings("unchecked") private static List<ASTNode> getChildren(final ASTNode n) {
     if (n == null)
       return new ArrayList<>();
-    final InfixExpression ¢ = az.infixExpression(n);
-    if (¢ != null)
-      return new ArrayList<>(extract.allOperands(¢));
+    
+    if (n instanceof InfixExpression) {
+      final List<ASTNode> $ = new ArrayList<>();
+      $.add(((InfixExpression)n).getRightOperand());
+      $.add(((InfixExpression)n).getLeftOperand());
+      $.addAll(((InfixExpression)n).extendedOperands());
+      return $;
+    }
     final List<ASTNode> $ = new ArrayList<>();
     try {
       @SuppressWarnings("rawtypes") final List lst = n.structuralPropertiesForType();
-      // TODO: Dor, why don't you do a for each here?
       for (int i = 0; i < lst.size(); ++i) {
         final Object child = n.getStructuralProperty((StructuralPropertyDescriptor) lst.get(i));
         if (child instanceof ASTNode)
           $.add((ASTNode) child);
       }
       return $;
-    } catch (final NullPointerException x) {
-      throw new RuntimeException("bug", x);
+    } catch (final NullPointerException e) {
+      assert e != null;
+      return null;
     }
   }
 
@@ -40,7 +43,7 @@ public class Recurser<T> {
   public Recurser(final ASTNode root) {
     this(root, null);
   }
-
+  
   public Recurser(final ASTNode root, final T current) {
     this.root = root;
     this.current = current;
@@ -81,18 +84,21 @@ public class Recurser<T> {
 
   public T postVisit(final Function<Recurser<T>, T> f) {
     final List<ASTNode> childrenList = getChildren(this.root);
-    if (childrenList == null || childrenList.isEmpty())
-      return this.current = f.apply(this);
+    if (childrenList == null || childrenList.isEmpty()) {
+      this.current = f.apply(this);
+      return this.current;
+    }
     final List<Recurser<T>> recurserList = new ArrayList<>();
     for (final ASTNode child : childrenList)
       recurserList.add(new Recurser<T>(child));
     int index = 0;
     for (final Recurser<T> rec : recurserList) {
       this.current = rec.from(index == 0 ? current : recurserList.get(index - 1).getCurrent()).postVisit(f);
-      ++index;
+      index++;
     }
     this.current = index == 0 ? current : recurserList.get(index - 1).getCurrent();
-    return this.current = f.apply(this);
+    this.current = f.apply(this);
+    return this.current;
   }
 
   public void preVisit(final Consumer<Recurser<T>> f) {
@@ -105,6 +111,7 @@ public class Recurser<T> {
       recurserList.add(new Recurser<T>(child));
     for (final Recurser<T> rec : recurserList)
       rec.preVisit(f);
+    return;
   }
 
   public T preVisit(final Function<Recurser<T>, T> f) {
@@ -122,4 +129,5 @@ public class Recurser<T> {
     }
     return recurserList.isEmpty() ? this.current : recurserList.get(index - 1).getCurrent();
   }
+
 }
