@@ -50,44 +50,48 @@ public class EnvironmentTestEngine {
   }
 
   private final CompilationUnit cUnit;
+  
+  Set<Entry<String, Environment.Information>> testNestedENV;
+  Set<Entry<String, Environment.Information>> testFlatENV;
+  Set<Entry<String, Environment.Information>> testBeginEnd;
 
   EnvironmentTestEngine(final CompilationUnit $) {
     cUnit = $;
+    testNestedENV = generateSet();
+    testFlatENV = generateSet();
+    testBeginEnd = generateSet();
   }
 
   EnvironmentTestEngine(final String ¢) {
     cUnit = getCompilationUnit(¢);
+    testNestedENV = generateSet();
+    testFlatENV = generateSet();
+    testBeginEnd = generateSet();
   }
 
   public void runTest() {
-    // Set<Entry<String, Information>> testNestedENV = generateSet();
-    // Set<Entry<String, Information>> testFlatENV = generateSet();
-    // Set<Entry<String, Information>> testBeginEnd = generateSet();
     cUnit.accept(new ASTVisitor() {
       void addAnnotations(final List<Annotation> as) {
         for (final Annotation ¢ : as)
           dispatch(¢);
       }
 
-      boolean beginEndHendler(final Annotation a) {
-        return true;
-      }
-
       void dispatch(final Annotation a) {
         if (a.getTypeName() + "" == "@nestedENV")
-          nestedHendler(a);
+          nestedHandler(a);
         else if (a.getTypeName() + "" == "@flatENV")
-          flatHendler(a);
+          flatHandler(a);
         else if (a.getTypeName() + "" == "@BegingEndENV")
-          beginEndHendler(a);
+          beginEndHandler(a);
       }
 
-      boolean flatHendler(final Annotation a) {
-        return true;
+      void flatHandler(final Annotation a) {
       }
 
-      boolean nestedHendler(final Annotation a) {
-        return true;
+      void nestedHandler(final Annotation a) {
+      }
+      
+      void beginEndHandler(final Annotation a) {
       }
 
       @Override public boolean visit(final MethodDeclaration d) {
