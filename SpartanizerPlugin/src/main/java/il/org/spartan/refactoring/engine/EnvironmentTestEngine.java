@@ -18,7 +18,7 @@ public class EnvironmentTestEngine {
     @SuppressWarnings("deprecation")
     ASTParser parser = ASTParser.newParser(AST.JLS3); 
     parser.setKind(ASTParser.K_COMPILATION_UNIT);
-    parser.setSource(unit);
+    //parser.setSource(unit);
     parser.setResolveBindings(true);
     CompilationUnit cUnit = (CompilationUnit) parser.createAST(null);
   }
