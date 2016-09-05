@@ -94,19 +94,35 @@ public final class CleverTernarization extends Wring.ReplaceCurrentNode<Conditio
   }
 
   private static Expression replacementPrefix(final String thenStr, final String elzeStr, final int commonPrefixIndex, final Expression condition) {
-    final StringLiteral prefix = getPrefix(thenStr, commonPrefixIndex, condition);
-    final StringLiteral thenPost = getSuffix(thenStr, commonPrefixIndex, condition);
-    final StringLiteral elzePost = getSuffix(elzeStr, commonPrefixIndex, condition);
-    return subject.pair(prefix, subject.pair(thenPost, //
-        elzePost).toCondition(condition)).to(wizard.PLUS2);
+    return subject.pair(getPrefix(thenStr, commonPrefixIndex, condition), subject.pair(getSuffix(thenStr, commonPrefixIndex, condition), //
+        getSuffix(elzeStr, commonPrefixIndex, condition)).toCondition(condition)).to(wizard.PLUS2);
   }
 
   private static Expression replacementSuffix(final String thenStr, final String elzeStr, final int commonSuffixLength, final Expression condition) {
-    final StringLiteral suffix = getSuffix(thenStr, thenStr.length() - commonSuffixLength, condition);
-    final StringLiteral thenPre = getPrefix(thenStr, thenStr.length() - commonSuffixLength, condition);
-    final StringLiteral elzePre = getPrefix(elzeStr, elzeStr.length() - commonSuffixLength, condition);
-    return subject.pair(subject.operand(subject.pair(thenPre, elzePre).toCondition(condition)).parenthesis()//
-        , suffix).to(wizard.PLUS2);
+    return subject.pair(
+        subject.operand(subject.pair(getPrefix(thenStr, thenStr.length() - commonSuffixLength, condition)//
+            , getPrefix(elzeStr, elzeStr.length() - commonSuffixLength, condition)).toCondition(condition)).parenthesis()//
+        , getSuffix(thenStr, thenStr.length() - commonSuffixLength, condition)).to(wizard.PLUS2);
+  }
+
+  private static InfixExpression replacePrefix(final InfixExpression e, final int i) {
+    assert e.getOperator() == wizard.PLUS2;
+    final List<Expression> es = extract.allOperands(e);
+    assert lisp.first(es).getNodeType() == ASTNode.STRING_LITERAL;
+    final StringLiteral l = (StringLiteral) lisp.first(es);
+    final StringLiteral suffix = getSuffix(l.getLiteralValue(), i, e);
+    lisp.replaceFirst(es, suffix);
+    return subject.operands(es).to(wizard.PLUS2);
+  }
+
+  private static InfixExpression replaceSuffix(final InfixExpression e, final int i) {
+    assert e.getOperator() == wizard.PLUS2;
+    final List<Expression> es = extract.allOperands(e);
+    assert lisp.last(es).getNodeType() == ASTNode.STRING_LITERAL;
+    final StringLiteral l = (StringLiteral) lisp.last(es);
+    final StringLiteral prefix = getPrefix(l.getLiteralValue(), l.getLiteralValue().length() - i, e);
+    lisp.replaceLast(es, prefix);
+    return subject.operands(es).to(wizard.PLUS2);
   }
 
   private static String shorter(final String s1, final String s2) {
@@ -126,25 +142,22 @@ public final class CleverTernarization extends Wring.ReplaceCurrentNode<Conditio
     if (elzeOperands.get(0).getNodeType() == ASTNode.STRING_LITERAL) {
       final String elzeStr = ((StringLiteral) elzeOperands.get(0)).getLiteralValue();
       final int commonPrefixIndex = firstDifference(thenStr, elzeStr);
-      if (commonPrefixIndex != 0) {
-        final StringLiteral prefix = getPrefix(thenStr, commonPrefixIndex, condition);
-        final StringLiteral thenPost = getSuffix(thenStr, commonPrefixIndex, condition);
-        final StringLiteral elzePost = getSuffix(elzeStr, commonPrefixIndex, condition);
-        lisp.replaceFirst(elzeOperands, elzePost);
-        return subject.pair(prefix, subject.pair(thenPost, //
-            subject.operands(elzeOperands).to(wizard.PLUS2)).toCondition(condition)).to(wizard.PLUS2);
-      }
+      if (commonPrefixIndex != 0)
+        return subject.pair(getPrefix(thenStr, commonPrefixIndex, condition), subject.pair(getSuffix(thenStr, commonPrefixIndex, condition), //
+            replacePrefix(elze, commonPrefixIndex)).toCondition(condition)).to(wizard.PLUS2);
     }
     if (elzeOperands.get(elzeOperands.size() - 1).getNodeType() == ASTNode.STRING_LITERAL) {
       final String elzeStr = ((StringLiteral) elzeOperands.get(elzeOperands.size() - 1)).getLiteralValue();
       final int commonSuffixIndex = lastDifference(thenStr, elzeStr);
       if (commonSuffixIndex != 0) {
-        final StringLiteral suffix = getSuffix(thenStr, thenStr.length() - commonSuffixIndex, condition);
-        final StringLiteral thenPre = getPrefix(thenStr, thenStr.length() - commonSuffixIndex, condition);
         final StringLiteral elzePre = getPrefix(elzeStr, elzeStr.length() - commonSuffixIndex, condition);
         lisp.replaceLast(elzeOperands, elzePre);
-        return subject.pair(subject.operand(subject.pair(thenPre, subject.operands(elzeOperands).to(wizard.PLUS2))//
-            .toCondition(condition)).parenthesis(), suffix).to(wizard.PLUS2);
+        return subject
+            .pair(subject.operand(subject
+                .pair(getPrefix(thenStr, thenStr.length() - commonSuffixIndex, condition)//
+                    , replaceSuffix(elze, commonSuffixIndex))//
+                .toCondition(condition)).parenthesis(), getSuffix(thenStr, thenStr.length() - commonSuffixIndex, condition))//
+            .to(wizard.PLUS2);
       }
     }
     return null;
@@ -165,36 +178,29 @@ public final class CleverTernarization extends Wring.ReplaceCurrentNode<Conditio
     final List<Expression> thenOperands = extract.allOperands(then);
     assert elze.getOperator() == wizard.PLUS2;
     final List<Expression> elzeOperands = extract.allOperands(elze);
-    if (elzeOperands.get(0).getNodeType() == ASTNode.STRING_LITERAL && thenOperands.get(0).getNodeType() == ASTNode.STRING_LITERAL) {
-      final String thenStr = ((StringLiteral) thenOperands.get(0)).getLiteralValue();
-      final String elzeStr = ((StringLiteral) elzeOperands.get(0)).getLiteralValue();
+    if (lisp.first(thenOperands).getNodeType() == ASTNode.STRING_LITERAL && lisp.first(elzeOperands).getNodeType() == ASTNode.STRING_LITERAL) {
+      final String thenStr = ((StringLiteral) lisp.first(thenOperands)).getLiteralValue();
+      final String elzeStr = ((StringLiteral) lisp.first(elzeOperands)).getLiteralValue();
       final int commonPrefixIndex = firstDifference(thenStr, elzeStr);
-      if (commonPrefixIndex != 0) {
-        final StringLiteral prefix = getPrefix(thenStr, commonPrefixIndex, condition);
-        final StringLiteral thenPost = getSuffix(thenStr, commonPrefixIndex, condition);
-        final StringLiteral elzePost = getSuffix(elzeStr, commonPrefixIndex, condition);
-        lisp.replaceFirst(thenOperands, thenPost);
-        lisp.replaceFirst(elzeOperands, elzePost);
-        return subject.pair(prefix, subject.pair(subject.operands(thenOperands).to(wizard.PLUS2), //
-            subject.operands(elzeOperands).to(wizard.PLUS2)).toCondition(condition)).to(wizard.PLUS2);
-      }
+      if (commonPrefixIndex != 0)
+        return subject.pair(getPrefix(thenStr, commonPrefixIndex, condition),
+            subject
+                .pair(//
+                    replacePrefix(then, commonPrefixIndex), replacePrefix(elze, commonPrefixIndex))//
+                .toCondition(condition))
+            .to(wizard.PLUS2);
     }
-    if (elzeOperands.get(elzeOperands.size() - 1).getNodeType() == ASTNode.STRING_LITERAL
-        && thenOperands.get(thenOperands.size() - 1).getNodeType() == ASTNode.STRING_LITERAL) {
-      final String thenStr = ((StringLiteral) thenOperands.get(elzeOperands.size() - 1)).getLiteralValue();
-      final String elzeStr = ((StringLiteral) elzeOperands.get(elzeOperands.size() - 1)).getLiteralValue();
+    if (lisp.last(thenOperands).getNodeType() == ASTNode.STRING_LITERAL && lisp.last(elzeOperands).getNodeType() == ASTNode.STRING_LITERAL) {
+      final String thenStr = ((StringLiteral) lisp.last(thenOperands)).getLiteralValue();
+      final String elzeStr = ((StringLiteral) lisp.last(thenOperands)).getLiteralValue();
       final int commonSuffixIndex = lastDifference(thenStr, elzeStr);
-      if (commonSuffixIndex != 0) {
-        final StringLiteral suffix = getSuffix(thenStr, thenStr.length() - commonSuffixIndex, condition);
-        final StringLiteral thenPre = getPrefix(thenStr, thenStr.length() - commonSuffixIndex, condition);
-        final StringLiteral elzePre = getPrefix(elzeStr, elzeStr.length() - commonSuffixIndex, condition);
-        lisp.replaceLast(thenOperands, thenPre);
-        lisp.replaceLast(elzeOperands, elzePre);
-        return subject.pair(subject.operand(subject
-            .pair(subject.operands(thenOperands).to(wizard.PLUS2)//
-                , subject.operands(elzeOperands).to(wizard.PLUS2))//
-            .toCondition(condition)).parenthesis(), suffix).to(wizard.PLUS2);
-      }
+      if (commonSuffixIndex != 0)
+        return subject
+            .pair(subject.operand(subject
+                .pair(replaceSuffix(then, commonSuffixIndex)//
+                    , replaceSuffix(elze, commonSuffixIndex))//
+                .toCondition(condition)).parenthesis(), getSuffix(thenStr, thenStr.length() - commonSuffixIndex, condition))
+            .to(wizard.PLUS2);
     }
     return null;
   }

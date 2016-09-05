@@ -40,6 +40,10 @@ public interface lisp {
     return false;
   }
 
+  static <T> T last(final List<T> ts) {
+    return ts == null || ts.isEmpty() ? null : ts.get(ts.size() - 1);
+  }
+
   /** Retrieve next item in a list
    * @param i an index of specific item in a list
    * @param ts the indexed list
@@ -77,7 +81,7 @@ public interface lisp {
    * @param index the index that should be replaced
    * @return the list after the replacement */
   static <T> List<T> replace(final List<T> ts, final T element, final int index) {
-    if (index >= 0 && index < ts.size()) {
+    if (ts != null && index >= 0 && index < ts.size()) {
       ts.remove(index);
       ts.add(index, element);
     }
