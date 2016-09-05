@@ -46,7 +46,8 @@ import il.org.spartan.refactoring.engine.*;
     final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
     assertEquals(11, (int) recurse.postVisit(accum));
   }
-// TODO: Dor. Spartanize like black soup... That is, change all
+
+  // TODO: Dor. Spartanize like black soup... That is, change all
   // simple_exp to '¢' symbol, on linux I gut it by ctrl-shfit-u, followed by
   // A2, followed by an enter. That's the way to do enter unicode
   @Test public void issue101_6() {

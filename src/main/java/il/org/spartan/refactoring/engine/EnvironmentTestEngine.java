@@ -56,11 +56,9 @@ public class EnvironmentTestEngine {
   }
 
   private final ASTNode n;
-
   Set<Entry<String, Environment.Information>> testNestedENV;
   Set<Entry<String, Environment.Information>> testFlatENV;
   Set<Entry<String, Environment.Information>> testBeginEnd;
-
 
   EnvironmentTestEngine(final CompilationUnit $) {
     n = $;
@@ -84,7 +82,6 @@ public class EnvironmentTestEngine {
     testFlatENV.add(new MyEntry<>(wizard.asString(ps.get(0).getValue()), new Information()));
   }
 
-
   private void addValueToNested(final List<MemberValuePair> ps) {
   }
 
@@ -103,7 +100,6 @@ public class EnvironmentTestEngine {
         break;
     }
   }
- 
 
   /** Compares output Set (testFlatENV) with provided set, that will be the
    * result of the flat version of defines.
@@ -183,15 +179,10 @@ public class EnvironmentTestEngine {
         if ($ == null)
           return;
         $.accept(new ASTVisitor() {
-          /*
-          @Override public boolean visit(NormalAnnotation ¢){
-            if (isNameId(¢.getTypeName())) {
-              
-              testFlatENV.addAll();
-            }
-            return true;
-          }
-*/
+          /* @Override public boolean visit(NormalAnnotation ¢){ if
+           * (isNameId(¢.getTypeName())) {
+           * 
+           * testFlatENV.addAll(); } return true; } */
         });
       }
 
