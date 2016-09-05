@@ -5,6 +5,7 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 
 public class EnvironmentTestEngine {
+  /*
   IWorkspace workspace = ResourcesPlugin.getWorkspace();
   IWorkspaceRoot root = workspace.getRoot();
   // Get all projects in the workspace
@@ -21,4 +22,5 @@ public class EnvironmentTestEngine {
   parser.setSource(unit);
   parser.setResolveBindings(true);
   CompilationUnit cUnit = parser.createAST(null);
+  */
 }
