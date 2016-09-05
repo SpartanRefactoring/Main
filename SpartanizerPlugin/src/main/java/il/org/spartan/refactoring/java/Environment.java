@@ -190,10 +190,16 @@ import org.eclipse.jdt.core.dom.*;
     public final PrudentType prudentType;
 
     // For now, nothing is known, we only maintain lists
-    Information() {
+    public Information() {
       blockScope = self = null;
       prudentType = null;
       hiding = null;
+    }
+    
+    public Information(PrudentType t){
+      blockScope=self=null;
+      hiding=null;
+      prudentType=t;
     }
 
 
