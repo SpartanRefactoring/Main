@@ -67,7 +67,7 @@ public class EnvironmentTest {
   @Test public void define_0() {
     final String code = "";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, EnvironmentElementInformation>> $ = Environment.declares(u);
+    final Set<Entry<String, Information>> $ = Environment.declares(u);
     azzert.that($.contains("a"), is(false));
     azzert.that($.isEmpty(), is(true));
   }
@@ -75,14 +75,14 @@ public class EnvironmentTest {
   @Ignore public void define_1() {
     final String code = "int a = 0;";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, EnvironmentElementInformation>> $ = Environment.declares(u);
+    final Set<Entry<String, Information>> $ = Environment.declares(u);
     azzert.that($.contains("a"), is(true));
   }
 
   @Ignore public void define_10() {
     final String code = "int a = 0;";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, EnvironmentElementInformation>> $ = Environment.declares(u);
+    final Set<Entry<String, Information>> $ = Environment.declares(u);
     azzert.that($.contains("a"), is(true));
   }
 
@@ -90,7 +90,7 @@ public class EnvironmentTest {
     final String code = "int a = 0;\n" + //
         "int b;";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, EnvironmentElementInformation>> $ = Environment.declares(u);
+    final Set<Entry<String, Information>> $ = Environment.declares(u);
     azzert.that($.contains("a"), is(true));
     azzert.that($.contains("b"), is(true));
   }
@@ -98,14 +98,14 @@ public class EnvironmentTest {
   @Ignore public void define_3() {
     final String code = "public void f(int a){}";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, EnvironmentElementInformation>> $ = Environment.declares(u);
+    final Set<Entry<String, Information>> $ = Environment.declares(u);
     azzert.that($.contains("a"), is(true));
   }
 
   @Ignore public void define_4() {
     final String code = "public void f(int a){String b}";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, EnvironmentElementInformation>> $ = Environment.declares(u);
+    final Set<Entry<String, Information>> $ = Environment.declares(u);
     azzert.that($.contains("a"), is(true));
     azzert.that($.contains("b"), is(true));
   }
@@ -113,7 +113,7 @@ public class EnvironmentTest {
   @Ignore public void define_5() {
     final String code = "a = 0;";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, EnvironmentElementInformation>> $ = Environment.declares(u);
+    final Set<Entry<String, Information>> $ = Environment.declares(u);
     azzert.that($.contains("a"), is(false));
   }
 
@@ -121,7 +121,7 @@ public class EnvironmentTest {
     final String code = "int a = 0;\n" + //
         "b = 5";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, EnvironmentElementInformation>> $ = Environment.declares(u);
+    final Set<Entry<String, Information>> $ = Environment.declares(u);
     azzert.that($.contains("a"), is(true));
     azzert.that($.contains("b"), is(false));
   }
@@ -133,7 +133,7 @@ public class EnvironmentTest {
         "void func(MyClass my, int b) {String s = 4;\n" + "not_in_env++;}\n" + //
         "}}";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, EnvironmentElementInformation>> $ = Environment.declares(u);
+    final Set<Entry<String, Information>> $ = Environment.declares(u);
     azzert.that($.contains("a"), is(true));
     azzert.that($.contains("b"), is(true));
     azzert.that($.contains("my"), is(true));
@@ -143,14 +143,14 @@ public class EnvironmentTest {
   @Ignore public void define_8() {
     final String code = "int a = 0;";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, EnvironmentElementInformation>> $ = Environment.declares(u);
+    final Set<Entry<String, Information>> $ = Environment.declares(u);
     azzert.that($.contains("a"), is(true));
   }
 
   @Ignore public void define_9() {
     final String code = "int a = 0;";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, EnvironmentElementInformation>> $ = Environment.declares(u);
+    final Set<Entry<String, Information>> $ = Environment.declares(u);
     azzert.that($.contains("a"), is(true));
   }
 
@@ -163,7 +163,7 @@ public class EnvironmentTest {
   }
 
   @Test public void empty() {
-    e0.put("Alex", new EnvironmentElementInformation());
+    e0.put("Alex", new Information());
     azzert.that(e0.empty(), is(false));
   }
   // DONE
@@ -178,13 +178,13 @@ public class EnvironmentTest {
   }
 
   @Test public void emptyTestFlatEmptyNestNot() {
-    ee0.put("Alex", new EnvironmentElementInformation());
+    ee0.put("Alex", new Information());
     azzert.that(ee1.empty(), is(false));
   }
 
   @Test public void emptyTestNeitherEmpty() {
-    ee0.put("Yossi", new EnvironmentElementInformation());
-    ee1.put("Gill", new EnvironmentElementInformation());
+    ee0.put("Yossi", new Information());
+    ee1.put("Gill", new Information());
     azzert.that(ee1.empty(), is(false));
   }
   // DONE
@@ -221,12 +221,12 @@ public class EnvironmentTest {
    * Information()); e5.put("Alex", new Information()); } */
 
   @Test public void emptyTestNestEmptyFlatNot() {
-    ee1.put("Dan", new EnvironmentElementInformation());
+    ee1.put("Dan", new Information());
     azzert.that(ee1.empty(), is(false));
   }
 
   @Test public void get() {
-    e0.put("Alex", new EnvironmentElementInformation());
+    e0.put("Alex", new Information());
     assert e0.get("Alex") != null;
   }
 
@@ -241,12 +241,12 @@ public class EnvironmentTest {
   }
 
   @Test public void has() {
-    e0.put("Alex", new EnvironmentElementInformation());
+    e0.put("Alex", new Information());
     azzert.that(e0.has("Alex"), is(true));
   }
 
   @Test public void hasInBoth() {
-    e1.put("Yossi", new EnvironmentElementInformation());
+    e1.put("Yossi", new Information());
     azzert.that(e1.has("Yossi"), is(true));
   }
 
@@ -270,16 +270,16 @@ public class EnvironmentTest {
   }
 
   @Before public void init_one_level() {
-    e0.put("Alex", new EnvironmentElementInformation());
-    e0.put("Dan", new EnvironmentElementInformation());
-    e0.put("Yossi", new EnvironmentElementInformation());
-    e1.put("Kopzon", new EnvironmentElementInformation());
-    e1.put("Greenstein", new EnvironmentElementInformation());
-    e1.put("Gill", new EnvironmentElementInformation());
+    e0.put("Alex", new Information());
+    e0.put("Dan", new Information());
+    e0.put("Yossi", new Information());
+    e1.put("Kopzon", new Information());
+    e1.put("Greenstein", new Information());
+    e1.put("Gill", new Information());
   }
 
   @Test public void names() {
-    e0.put("Alex", new EnvironmentElementInformation());
+    e0.put("Alex", new Information());
     azzert.that(e0.names().contains("Alex"), is(true));
   }
 
@@ -298,20 +298,20 @@ public class EnvironmentTest {
   }
 
   @Test public void put() {
-    assert e0.put("Alex", new EnvironmentElementInformation()) == null;
+    assert e0.put("Alex", new Information()) == null;
   }
 
   @Test public void putOne() {
-    assert e1.put("Kopzon1", new EnvironmentElementInformation()) == null;
+    assert e1.put("Kopzon1", new Information()) == null;
   }
 
   @Test public void putOneAndHide() {
-    assert e1.put("Alex", new EnvironmentElementInformation()) != null;
+    assert e1.put("Alex", new Information()) != null;
   }
 
   @SuppressWarnings("unused") @Test public void putTest() {
     try {
-      e0.nest().put("Dan", new EnvironmentElementInformation());
+      e0.nest().put("Dan", new Information());
     } catch (final IllegalArgumentException e) {
       /**/}
   }
@@ -322,20 +322,20 @@ public class EnvironmentTest {
   }
 
   @Ignore public void useTestUsesAndDefinitions() {
-    final Set<Map.Entry<String, EnvironmentElementInformation>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int i = 3; x.foo()").get()));
+    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int i = 3; x.foo()").get()));
     azzert.that($.contains("x"), is(true));
     azzert.that($.contains("i"), is(true));
   }
 
   @Ignore public void useTestUsesAndDefinitions2() {
-    final Set<Map.Entry<String, EnvironmentElementInformation>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("" + "for(int i = 0; i < 10; ++i)" + //
+    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("" + "for(int i = 0; i < 10; ++i)" + //
         "x+=i").get()));
     azzert.that($.contains("x"), is(true));
     azzert.that($.contains("i"), is(true));
   }
 
   @Ignore public void useTestUsesAndDefinitions3() {
-    final Set<Map.Entry<String, EnvironmentElementInformation>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("x=3; try{y=13; foo(x,y);}" + //
+    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("x=3; try{y=13; foo(x,y);}" + //
         "catch(final UnsupportedOperationException e)" + //
         "{z=3;}").get()));
     azzert.that($.contains("x"), is(true));
@@ -349,21 +349,21 @@ public class EnvironmentTest {
   }
 
   @Ignore public void useTestWithDefinitionsOnly2() {
-    final Set<Map.Entry<String, EnvironmentElementInformation>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int x = 5,y=3,z;").get()));
+    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int x = 5,y=3,z;").get()));
     azzert.that($.contains("x"), is(true));
     azzert.that($.contains("y"), is(true));
     azzert.that($.contains("z"), is(true));
   }
 
   @Ignore public void useTestWithDefinitionsOnly3() {
-    final Set<Map.Entry<String, EnvironmentElementInformation>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int x = y = z =5;").get()));
+    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int x = y = z =5;").get()));
     azzert.that($.contains("x"), is(true));
     azzert.that($.contains("y"), is(true));
     azzert.that($.contains("z"), is(true));
   }
 
   @Ignore public void useTestWithDefinitionsOnly4() {
-    final Set<Map.Entry<String, EnvironmentElementInformation>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int x = y = z =5; double k;").get()));
+    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int x = y = z =5; double k;").get()));
     azzert.that($.contains("x"), is(true));
     azzert.that($.contains("y"), is(true));
     azzert.that($.contains("z"), is(true));
@@ -372,7 +372,7 @@ public class EnvironmentTest {
 
   // Simple uses.
   @Ignore public void useTestWithUsesOnly() {
-    final Set<Map.Entry<String, EnvironmentElementInformation>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("x=5; y=3.5").get()));
+    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("x=5; y=3.5").get()));
     azzert.that($.contains("x"), is(true));
     azzert.that($.contains("y"), is(true));
   }
@@ -382,13 +382,13 @@ public class EnvironmentTest {
   }
 
   @Ignore public void useTestWithUsesOnly3() {
-    final Set<Map.Entry<String, EnvironmentElementInformation>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("foo(x,y)").get()));
+    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("foo(x,y)").get()));
     azzert.that($.contains("x"), is(true));
     azzert.that($.contains("y"), is(true));
   }
 
   @Ignore public void useTestWithUsesOnly4() {
-    final Set<Map.Entry<String, EnvironmentElementInformation>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("foo(goo(q,x),hoo(x,y,z))").get()));
+    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("foo(goo(q,x),hoo(x,y,z))").get()));
     azzert.that($.contains("q"), is(true));
     azzert.that($.contains("x"), is(true));
     azzert.that($.contains("y"), is(true));
