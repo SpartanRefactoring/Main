@@ -4,6 +4,7 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.java.type.*;
 import static il.org.spartan.refactoring.java.type.PsuedoPrimitive.*;
 
+import org.hamcrest.core.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -52,7 +53,7 @@ public class typeTest {
     }
 
     @Test public void assingment6() {
-      azzert.that(get(into.e("x = new Object()")), is(NONNULL));
+      azzert.that(get(into.e("x = new Object()")), is(baptize("Object")));
     }
 
     @Test public void axiomAssignment1() {
@@ -338,7 +339,7 @@ public class typeTest {
 
     // s for casting expression
     @Test public void cast01() {
-      azzert.that(get(into.e("(List)f()")), is(BAPTIZED));
+      azzert.that(get(into.e("(List)f()")), is(baptize("List")));
     }
 
     @Test public void cast02() {
@@ -478,13 +479,14 @@ public class typeTest {
       azzert.that(get(into.e("f() ? \"a\" : h()")), is(STRING));
     }
 
-    // s for constructors
+    // tests for constructors
     @Test public void constructors01() {
-      azzert.that(get(into.e("new List<Integer>()")), is(NONNULL));
+      azzert.that(get(into.e("new List<Integer>()")), is(baptize("List<Integer>")));
+      azzert.assertNotEquals(get(into.e("new List<Integer>()")), baptize("List"));
     }
 
     @Test public void constructors02() {
-      azzert.that(get(into.e("new Object()")), is(NONNULL));
+      azzert.that(get(into.e("new Object()")), is(baptize("Object")));
     }
 
     @Test public void constructors03() {
