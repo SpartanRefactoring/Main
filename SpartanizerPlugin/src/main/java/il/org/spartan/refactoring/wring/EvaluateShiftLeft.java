@@ -21,23 +21,6 @@ import il.org.spartan.refactoring.engine.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public class EvaluateShiftLeft extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
-  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
-    return "Evaluate substraction of numbers";
-  }
-
-  @Override ASTNode replacement(final InfixExpression x) {
-    if (x.getOperator() != LEFT_SHIFT)
-      return null;
-    switch (EvaluateAux.getEvaluatedTypeForShift(x)) {
-      case INT:
-        return replacementInt(extract.allOperands(x), x);
-      case LONG:
-        return replacementLong(extract.allOperands(x), x);
-      default:
-        return null;
-    }
-  }
-
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
     if (xs.isEmpty() && !EvaluateAux.isCompitable(xs.get(0)))
       return null;
@@ -74,5 +57,22 @@ public class EvaluateShiftLeft extends Wring.ReplaceCurrentNode<InfixExpression>
       ++index;
     }
     return x.getAST().newNumberLiteral(Long.toString(shifted) + "L");
+  }
+
+  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
+    return "Evaluate substraction of numbers";
+  }
+
+  @Override ASTNode replacement(final InfixExpression x) {
+    if (x.getOperator() != LEFT_SHIFT)
+      return null;
+    switch (EvaluateAux.getEvaluatedTypeForShift(x)) {
+      case INT:
+        return replacementInt(extract.allOperands(x), x);
+      case LONG:
+        return replacementLong(extract.allOperands(x), x);
+      default:
+        return null;
+    }
   }
 }

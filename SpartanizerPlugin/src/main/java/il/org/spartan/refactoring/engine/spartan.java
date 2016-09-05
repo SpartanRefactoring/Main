@@ -34,6 +34,18 @@ public interface spartan {
     return shorten(t.getName());
   }
 
+  static String shorten(final org.eclipse.jdt.core.dom.Type t) {
+    return t instanceof NameQualifiedType ? shorten((NameQualifiedType) t)
+        : t instanceof PrimitiveType ? shorten((PrimitiveType) t)
+            : t instanceof QualifiedType ? shorten((QualifiedType) t)
+                : t instanceof SimpleType ? shorten((SimpleType) t)
+                    : t instanceof WildcardType ? shortName((WildcardType) t)
+                        : t instanceof ArrayType ? shorten((ArrayType) t)
+                            : t instanceof IntersectionType ? shorten((IntersectionType) t) //
+                                : t instanceof ParameterizedType ? shorten((ParameterizedType) t)//
+                                    : t instanceof UnionType ? shortName((UnionType) t) : null;
+  }
+
   static String shorten(final ParameterizedType t) {
     switch ("" + t.getType()) {
       case "Collection":
@@ -67,18 +79,6 @@ public interface spartan {
   // here. How about "Expression"? "Example"?
   static String shorten(final String s) {
     return new JavaTypeNameParser(s).shortName();
-  }
-
-  static String shorten(final org.eclipse.jdt.core.dom.Type t) {
-    return t instanceof NameQualifiedType ? shorten((NameQualifiedType) t)
-        : t instanceof PrimitiveType ? shorten((PrimitiveType) t)
-            : t instanceof QualifiedType ? shorten((QualifiedType) t)
-                : t instanceof SimpleType ? shorten((SimpleType) t)
-                    : t instanceof WildcardType ? shortName((WildcardType) t)
-                        : t instanceof ArrayType ? shorten((ArrayType) t)
-                            : t instanceof IntersectionType ? shorten((IntersectionType) t) //
-                                : t instanceof ParameterizedType ? shorten((ParameterizedType) t)//
-                                    : t instanceof UnionType ? shortName((UnionType) t) : null;
   }
 
   static String shortName(@SuppressWarnings("unused") final UnionType __) {

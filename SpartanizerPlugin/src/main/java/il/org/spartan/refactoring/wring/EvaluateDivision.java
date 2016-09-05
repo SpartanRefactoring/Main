@@ -22,6 +22,51 @@ import il.org.spartan.refactoring.engine.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public class EvaluateDivision extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
+  private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
+    if (xs.isEmpty() || !EvaluateAux.isCompitable(xs.get(0)))
+      return null;
+    double divide = EvaluateAux.extractDouble(xs.get(0));
+    int index = 0;
+    for (final Expression ¢ : xs) {
+      if (!EvaluateAux.isCompitable(¢))
+        return null;
+      if (index != 0)
+        divide /= EvaluateAux.extractDouble(¢);
+      ++index;
+    }
+    return x.getAST().newNumberLiteral(Double.toString(divide));
+  }
+
+  private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
+    if (xs.isEmpty() || !EvaluateAux.isCompitable(xs.get(0)))
+      return null;
+    int divide = EvaluateAux.extractInt(xs.get(0));
+    int index = 0;
+    for (final Expression ¢ : xs) {
+      if (!EvaluateAux.isCompitable(¢))
+        return null;
+      if (index != 0)
+        divide /= EvaluateAux.extractInt(¢);
+      ++index;
+    }
+    return x.getAST().newNumberLiteral(Integer.toString(divide));
+  }
+
+  private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
+    if (xs.isEmpty() || !EvaluateAux.isCompitable(xs.get(0)))
+      return null;
+    long divide = EvaluateAux.extractLong(xs.get(0));
+    int index = 0;
+    for (final Expression ¢ : xs) {
+      if (!EvaluateAux.isCompitable(¢))
+        return null;
+      if (index != 0)
+        divide /= EvaluateAux.extractLong(¢);
+      ++index;
+    }
+    return x.getAST().newNumberLiteral(Long.toString(divide) + "L");
+  }
+
   @Override public String description() {
     return "Evaluate division of numbers";
   }
@@ -43,50 +88,5 @@ public class EvaluateDivision extends Wring.ReplaceCurrentNode<InfixExpression> 
       default:
         return null;
     }
-  }
-
-  private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !EvaluateAux.isCompitable(xs.get(0)))
-      return null;
-    int divide = EvaluateAux.extractInt(xs.get(0));
-    int index = 0;
-    for (final Expression ¢ : xs) {
-      if (!EvaluateAux.isCompitable(¢))
-        return null;
-      if (index != 0)
-        divide /= EvaluateAux.extractInt(¢);
-      ++index;
-    }
-    return x.getAST().newNumberLiteral(Integer.toString(divide));
-  }
-
-  private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !EvaluateAux.isCompitable(xs.get(0)))
-      return null;
-    double divide = EvaluateAux.extractDouble(xs.get(0));
-    int index = 0;
-    for (final Expression ¢ : xs) {
-      if (!EvaluateAux.isCompitable(¢))
-        return null;
-      if (index != 0)
-        divide /= EvaluateAux.extractDouble(¢);
-      ++index;
-    }
-    return x.getAST().newNumberLiteral(Double.toString(divide));
-  }
-
-  private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !EvaluateAux.isCompitable(xs.get(0)))
-      return null;
-    long divide = EvaluateAux.extractLong(xs.get(0));
-    int index = 0;
-    for (final Expression ¢ : xs) {
-      if (!EvaluateAux.isCompitable(¢))
-        return null;
-      if (index != 0)
-        divide /= EvaluateAux.extractLong(¢);
-      ++index;
-    }
-    return x.getAST().newNumberLiteral(Long.toString(divide) + "L");
   }
 }

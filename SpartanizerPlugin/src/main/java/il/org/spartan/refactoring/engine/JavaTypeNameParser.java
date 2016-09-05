@@ -72,6 +72,10 @@ import java.util.regex.*;
     return typeName.substring(lastNameIndex());
   }
 
+  private String lastNameCharIndex(final int i) {
+    return lastName().length() < i + 1 ? "" : String.valueOf(Character.toLowerCase(lastName().charAt(i)));
+  }
+
   int lastNameIndex() {
     if (isUpper(typeName.length() - 1))
       return typeName.length() - 1;
@@ -92,10 +96,6 @@ import java.util.regex.*;
    * @return type's short name */
   public String shortName() {
     return "e".equals(lastNameCharIndex(0)) && "x".equals(lastNameCharIndex(1)) ? "x" : lastNameCharIndex(0);
-  }
-
-  private String lastNameCharIndex(final int i) {
-    return lastName().length() < i + 1 ? "" : String.valueOf(Character.toLowerCase(lastName().charAt(i)));
   }
 
   private String toSingular(final String s) {

@@ -61,6 +61,10 @@ public class Range {
     return from >= r.from && to <= r.to;
   }
 
+  public boolean isEmpty() {
+    return size() <= 0;
+  }
+
   /** Merge with another record
    * @param r JD
    * @return A newly created range representing the merge. */
@@ -95,9 +99,5 @@ public class Range {
 
   @Override public String toString() {
     return String.format("[%d, %d]", box.it(from), box.it(to));
-  }
-
-  public boolean isEmpty() {
-    return size() <= 0;
   }
 }

@@ -27,14 +27,10 @@ public enum az {
     return !iz.infixExpression(¢) || !iz.deMorgan(infixExpression(¢).getOperator()) ? null : infixExpression(¢);
   }
 
-  public static Annotation annotation(IExtendedModifier ¢) {
+  public static Annotation annotation(final IExtendedModifier ¢) {
     return !iz.annotation(¢) ? null : (Annotation) ¢;
   }
 
-  public static Modifier modifier(ASTNode ¢) {
-    return !iz.modifier(¢) ? null : (Modifier) ¢;
-  }
-  
   /** Convert, is possible, an {@link ASTNode} to an {@link Assignment}
    * @param $ JD
    * @return argument, but down-casted to a {@link Assignment}, or
@@ -144,6 +140,10 @@ public enum az {
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static MethodInvocation methodInvocation(final Expression ¢) {
     return !(¢ instanceof MethodInvocation) ? null : (MethodInvocation) ¢;
+  }
+
+  public static Modifier modifier(final ASTNode ¢) {
+    return !iz.modifier(¢) ? null : (Modifier) ¢;
   }
 
   /** Convert an {@link Expression} into a {@link PrefixExpression} whose

@@ -5,11 +5,24 @@ import static il.org.spartan.Utils.*;
 import java.util.*;
 
 public interface lisp {
+  /** Converts a boolean into a bit value
+   * @param $ JD
+   * @return 1 if the parameter is <code><b>true</b></code>, 0 if it is
+   *         <code><b>false</b></code> */
+  static int bit(final boolean $) {
+    return $ ? 1 : 0;
+  }
+
   static <T> List<T> chop(final List<T> ts) {
     if (ts.isEmpty())
       return null;
     ts.remove(0);
     return ts;
+  }
+
+  static <T> List<T> cons(final T first, final List<T> rest) {
+    rest.add(0, first);
+    return rest;
   }
 
   static <T> T first(final List<T> ts) {
@@ -83,18 +96,5 @@ public interface lisp {
 
   static <T> T second(final List<T> ts) {
     return ts == null || ts.size() < 2 ? null : ts.get(1);
-  }
-
-  /** Converts a boolean into a bit value
-   * @param $ JD
-   * @return 1 if the parameter is <code><b>true</b></code>, 0 if it is
-   *         <code><b>false</b></code> */
-  static int bit(final boolean $) {
-    return $ ? 1 : 0;
-  }
-
-  static <T> List<T> cons(final T first, final List<T> rest) {
-    rest.add(0, first);
-    return rest;
   }
 }

@@ -14,19 +14,19 @@ import il.org.spartan.refactoring.wring.Wring.*;
  * @author Alex Kopzon
  * @since 2016 */
 public final class AssignmentToPosrfixIncrement extends ReplaceCurrentNode<Assignment> implements Kind.SyntacticBaggage {
-  @Override String description(final Assignment a) {
-    return "Replace " + a + " to " + a.getRightHandSide() + (isIncrement(a) ? "++" : "--");
-  }
-
-  @Override ASTNode replacement(final Assignment a) {
-    return !iz.isOpPlusAssign(a) && !iz.isOpMinusAssign(a) || !iz.literal1(a.getRightHandSide()) ? null : replace(a);
+  private static boolean isIncrement(final Assignment a) {
+    return a.getOperator() == Assignment.Operator.PLUS_ASSIGN;
   }
 
   private static ASTNode replace(final Assignment a) {
     return subject.operand(a.getLeftHandSide()).to(isIncrement(a) ? INCREMENT : DECREMENT);
   }
 
-  private static boolean isIncrement(final Assignment a) {
-    return a.getOperator() == Assignment.Operator.PLUS_ASSIGN;
+  @Override String description(final Assignment a) {
+    return "Replace " + a + " to " + a.getRightHandSide() + (isIncrement(a) ? "++" : "--");
+  }
+
+  @Override ASTNode replacement(final Assignment a) {
+    return !iz.isOpPlusAssign(a) && !iz.isOpMinusAssign(a) || !iz.literal1(a.getRightHandSide()) ? null : replace(a);
   }
 }
