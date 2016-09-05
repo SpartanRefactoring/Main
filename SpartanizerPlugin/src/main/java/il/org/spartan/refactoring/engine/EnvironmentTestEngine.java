@@ -180,6 +180,15 @@ public class EnvironmentTestEngine {
         if ($ == null)
           return;
         $.accept(new ASTVisitor() {
+          /*
+          @Override public boolean visit(NormalAnnotation ¢){
+            if (isNameId(¢.getTypeName())) {
+              
+              testFlatENV.addAll();
+            }
+            return true;
+          }
+*/
         });
       }
 
@@ -196,13 +205,3 @@ public class EnvironmentTestEngine {
     });
   }
 }
-// Don't delete yet:
-/* IWorkspace workspace = ResourcesPlugin.getWorkspace(); IWorkspaceRoot root =
- * workspace.getRoot(); // Get all projects in the workspace IProject[] projects
- * = root.getProjects(); */
-/* IPackageFragment[] packages = javaProject.getPackageFragments(); for
- * (IPackageFragment mypackage : packages) { if (mypackage.getKind() ==
- * IPackageFragmentRoot.K_SOURCE) { for (ICompilationUnit unit :
- * mypackage.getCompilationUnits()) {
- *
- * } } } */
