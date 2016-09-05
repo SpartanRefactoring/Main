@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** convert
@@ -112,6 +113,12 @@ public final class CleverTernarization extends Wring.ReplaceCurrentNode<Conditio
     return s1.length() < s2.length() ? s1 : s2;
   }
 
+  private static Expression simplify(final InfixExpression then, final InfixExpression elze, final Expression condition) {
+    if (!stringType.isNot(then) && !stringType.isNot(elze))
+      return simplifyStrings(then, elze, condition);
+    return null;
+  }
+
   private static Expression simplify(final StringLiteral then, final InfixExpression elze, final Expression condition) {
     final String thenStr = then.getLiteralValue();
     assert elze.getOperator() == wizard.PLUS2;
@@ -153,6 +160,45 @@ public final class CleverTernarization extends Wring.ReplaceCurrentNode<Conditio
     return commonSuffixLength == 0 ? null : replacementSuffix(thenStr, elzeStr, commonSuffixLength, condition);
   }
 
+  private static Expression simplifyStrings(final InfixExpression then, final InfixExpression elze, final Expression condition) {
+    assert then.getOperator() == wizard.PLUS2;
+    final List<Expression> thenOperands = extract.allOperands(then);
+    assert elze.getOperator() == wizard.PLUS2;
+    final List<Expression> elzeOperands = extract.allOperands(elze);
+    if (elzeOperands.get(0).getNodeType() == ASTNode.STRING_LITERAL && thenOperands.get(0).getNodeType() == ASTNode.STRING_LITERAL) {
+      final String thenStr = ((StringLiteral) thenOperands.get(0)).getLiteralValue();
+      final String elzeStr = ((StringLiteral) elzeOperands.get(0)).getLiteralValue();
+      final int commonPrefixIndex = firstDifference(thenStr, elzeStr);
+      if (commonPrefixIndex != 0) {
+        final StringLiteral prefix = getPrefix(thenStr, commonPrefixIndex, condition);
+        final StringLiteral thenPost = getSuffix(thenStr, commonPrefixIndex, condition);
+        final StringLiteral elzePost = getSuffix(elzeStr, commonPrefixIndex, condition);
+        lisp.replaceFirst(thenOperands, thenPost);
+        lisp.replaceFirst(elzeOperands, elzePost);
+        return subject.pair(prefix, subject.pair(subject.operands(thenOperands).to(wizard.PLUS2), //
+            subject.operands(elzeOperands).to(wizard.PLUS2)).toCondition(condition)).to(wizard.PLUS2);
+      }
+    }
+    if (elzeOperands.get(elzeOperands.size() - 1).getNodeType() == ASTNode.STRING_LITERAL
+        && thenOperands.get(thenOperands.size() - 1).getNodeType() == ASTNode.STRING_LITERAL) {
+      final String thenStr = ((StringLiteral) thenOperands.get(elzeOperands.size() - 1)).getLiteralValue();
+      final String elzeStr = ((StringLiteral) elzeOperands.get(elzeOperands.size() - 1)).getLiteralValue();
+      final int commonSuffixIndex = lastDifference(thenStr, elzeStr);
+      if (commonSuffixIndex != 0) {
+        final StringLiteral suffix = getSuffix(thenStr, thenStr.length() - commonSuffixIndex, condition);
+        final StringLiteral thenPre = getPrefix(thenStr, thenStr.length() - commonSuffixIndex, condition);
+        final StringLiteral elzePre = getPrefix(elzeStr, elzeStr.length() - commonSuffixIndex, condition);
+        lisp.replaceLast(thenOperands, thenPre);
+        lisp.replaceLast(elzeOperands, elzePre);
+        return subject.pair(subject.operand(subject
+            .pair(subject.operands(thenOperands).to(wizard.PLUS2)//
+                , subject.operands(elzeOperands).to(wizard.PLUS2))//
+            .toCondition(condition)).parenthesis(), suffix).to(wizard.PLUS2);
+      }
+    }
+    return null;
+  }
+
   @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Replace ternarization with more clever one";
   }
@@ -168,6 +214,8 @@ public final class CleverTernarization extends Wring.ReplaceCurrentNode<Conditio
     if (then.getNodeType() == ASTNode.INFIX_EXPRESSION && elze.getNodeType() == ASTNode.STRING_LITERAL)
       return simplify((StringLiteral) elze, (InfixExpression) then, //
           subject.operand(condition).to(PrefixExpression.Operator.NOT));
+    if (then.getNodeType() == ASTNode.INFIX_EXPRESSION && elze.getNodeType() == ASTNode.INFIX_EXPRESSION)
+      return simplify((InfixExpression) then, (InfixExpression) elze, condition);
     return null;
   }
 }
