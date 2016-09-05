@@ -155,8 +155,7 @@ public class Toolbox {
             new TernaryEliminate(), //
             new TernaryShortestFirst(), //
             new TernaryPushdown(), //
-            new CleverTernarization(),
-            null) //
+            new CleverTernarization(), null) //
         .add(TypeDeclaration.class, //
             new ModifierCleanInterface(), //
             new BodyDeclarationSortModifiers.ofType(), //

@@ -380,40 +380,40 @@ public class EnvironmentCodeExamples {
   /* public static class EX9 { // template public class SOList<Type> implements
    * Iterable<Type> { private class __template__0 {} private final Type[]
    * arrayList;
-   * 
+   *
    * @OutOfOrderFlatENV({@Id(name="arrayList", clazz=__template__0.class)}) int
    * currentSize;
-   * 
+   *
    * @InOrderFlatENV({@Id(name="arrayList",
    * clazz=__template__0.class),@Id(name="currentSize", clazz=int.class)})
    * public SOList(final Type[] newArray) {
-   * 
+   *
    * @Begin class opening { } this.arrayList = newArray; this.currentSize =
    * arrayList.length;
-   * 
+   *
    * @End({@Id(name="EX9.SOList.arrayList",
    * clazz=SOList.__template__0.class),@Id(name="EX9.SOList.currentSize",
    * clazz=int.class)}) class closing {} }
-   * 
+   *
    * @Override public Iterator<Type> iterator() { final Iterator<Type> $ = new
    * Iterator<Type>() {
-   * 
+   *
    * @InOrderFlatENV({@Id(name="arrayList",
    * clazz=SOList.__template__0.class),@Id(name="currentSize",
    * clazz=int.class),@Id(name="$",
    * clazz=Iterator<SOList.__template__0>.class)}) @OutOfOrderFlatENV({ "it",
    * "currentSize", "arrayList" }) int currentIndex = 0;
-   * 
+   *
    * @Override public boolean hasNext() { return currentIndex < currentSize &&
    * arrayList[currentIndex] != null; }
-   * 
+   *
    * @Override public Type next() { return arrayList[currentIndex++]; }
-   * 
+   *
    * @Override public void remove() { throw new UnsupportedOperationException();
    * }
-   * 
+   *
    * };
-   * 
+   *
    * @OutOfOrderFlatENV({@Id(name="arrayList",
    * clazz=SOList.__template__0.class),@Id(name="currentSize",
    * clazz=int.class)}) final int q; // currentIndex // shouldn't be //
