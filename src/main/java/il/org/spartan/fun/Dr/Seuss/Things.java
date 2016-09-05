@@ -21,7 +21,7 @@ public class Things {
     nothing(o1, o2);
   }
 
-  private static void nothing(Object...os) {
+  private static void nothing(final Object... os) {
     /* Intentionally empty */
   }
 
@@ -48,7 +48,7 @@ public class Things {
 
   private static void nPattern4() {
     for (int i = 0; i <= things.length; ++i) {
-      final int f = i -1;
+      final int f = i - 1;
       final int t = i;
       final Thing first = idiomatic.eval(() -> things[f]).unless(i == 0);
       final Thing second = idiomatic.eval(() -> things[t]).unless(i == things.length);

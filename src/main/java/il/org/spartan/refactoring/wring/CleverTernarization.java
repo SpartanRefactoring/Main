@@ -9,38 +9,20 @@ import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.utils.*;
 
-/** convert
- *
- * <pre>
- * polite ? "Eat your meal." : "Eat your meal, please"
- * </pre>
- *
- * <pre>
- * polite ? "thanks for the meal" : "I hated the meal"
- * </pre>
- *
- * <pre>
- * a ? "abracadabra" : "abba"
- * </pre>
- *
- * into
- *
- * <pre>
- * "Eat your meal" + (polite ? "." : ", please")
- * </pre>
- *
- * <pre>
- * (polite ? "thanks for" : "I hated") + "the meal"
- * </pre>
- *
- * <pre>
- * "ab" + (a ? "racadabr" : "b") + "a"
- * </pre>
- *
+/** convert <code>polite?"Eat your meal.":"Eat your meal, please"
+ * </code>, <code>polite?"thanks for the meal":"I hated the meal"</code>, and
+ * <code>a?"abracadabra":"abba"</code> into
+ * <code>"Eat your meal"+(polite?".":", please")</code>,
+ * <code>(polite?"thanks for":"I hated")+"the meal"</code>, and,
+ * <code>"ab"+(a?"racadabr":"b")+"a"</code>
  * @author Dor Ma'ayan
  * @author Niv Shalmon
  * @since 2016-09-1 */
 public final class CleverTernarization extends Wring.ReplaceCurrentNode<ConditionalExpression> implements Kind.Ternarization {
+  static String longer(final String s1, final String s2) {
+    return s1 == shorter(s1, s2) ? s2 : s1;
+  }
+
   private static int firstDifference(final String s1, final String s2) {
     return firstDifferentWLOG(shorter(s1, s2), longer(s1, s2));
   }
@@ -71,20 +53,20 @@ public final class CleverTernarization extends Wring.ReplaceCurrentNode<Conditio
     return makeStringLiteral(s.length() == i ? "" : s.substring(i), n);
   }
 
+  // TODO: Niv/Dor: check to see if this makes any sense and is correct in any
+  // way, see if you can apply this simplification to the dual
+  // function
+  // TODO: Yossi: the swap nano
   private static int lastDifference(final String s1, final String s2) {
-    return lastDifferentWLOG(shorter(s1, s2), longer(s1, s2));
-  }
-
-  private static int lastDifferentWLOG(final String shorter, final String longer) {
+    // TODO: Matteo/Ori: the WLOG nano, abbreviated.
+    if (s1 != shorter(s1, s2))
+      return lastDifference(s2, s1);
+    assert s1.length() <= s2.length();
     int $ = 0;
-    for (; $ < shorter.length(); ++$)
-      if (shorter.charAt(shorter.length() - 1 - $) != longer.charAt(longer.length() - 1 - $))
+    for (; $ < s1.length(); ++$)
+      if (lisp.last(s1, $) != lisp.last(s2, $)) 
         break;
     return $;
-  }
-
-  private static String longer(final String s1, final String s2) {
-    return s1 == shorter(s1, s2) ? s2 : s1;
   }
 
   private static StringLiteral makeStringLiteral(final String s, final ASTNode n) {

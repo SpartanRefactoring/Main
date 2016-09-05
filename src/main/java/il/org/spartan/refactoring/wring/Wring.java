@@ -24,6 +24,48 @@ import il.org.spartan.refactoring.engine.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-07-09 */
 public abstract class Wring<N extends ASTNode> implements Kind {
+  abstract String description(N n);
+
+  /** Determine whether the parameter is "eligible" for application of this
+   * instance. The parameter must be within the scope of the current instance.
+   * @param n JD
+   * @return <code><b>true</b></code> <i>iff</i> the argument is eligible for
+   *         the simplification offered by this object. */
+  boolean eligible(@SuppressWarnings("unused") final N __) {
+    return true;
+  }
+
+  Rewrite make(final N n) {
+    return make(n, null);
+  }
+
+  Rewrite make(final N n, final ExclusionManager m) {
+    return m != null && m.isExcluded(n) ? null : make(n);
+  }
+
+  /** Determines whether this {@link Wring} object is not applicable for a given
+   * {@link PrefixExpression} is within the "scope" of this . Note that a
+   * {@link Wring} is applicable in principle to an object, but that actual
+   * application will be vacuous.
+   * @param e JD
+   * @return <code><b>true</b></code> <i>iff</i> the argument is noneligible for
+   *         the simplification offered by this object.
+   * @see #eligible(InfixExpression) */
+  final boolean nonEligible(final N n) {
+    return !eligible(n);
+  }
+
+  /** Determines whether this {@link Wring} object is applicable for a given
+   * {@link InfixExpression} is within the "scope" of this . Note that it could
+   * be the case that a {@link Wring} is applicable in principle to an object,
+   * but that actual application will be vacuous.
+   * @param n JD
+   * @return <code><b>true</b></code> <i>iff</i> the argument is within the
+   *         scope of this object @ */
+  boolean scopeIncludes(final N n) {
+    return make(n, null) != null;
+  }
+
   static abstract class AbstractSorting extends ReplaceCurrentNode<InfixExpression> {
     @Override final String description(final InfixExpression x) {
       return "Reorder operands of " + x.getOperator();
@@ -233,14 +275,6 @@ public abstract class Wring<N extends ASTNode> implements Kind {
       return hasAnnotation(step.modifiers(s));
     }
 
-    private static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final List<VariableDeclarationFragment> fs) {
-      final List<VariableDeclarationFragment> $ = new ArrayList<>();
-      for (final VariableDeclarationFragment brother : fs)
-        if (brother != null && brother != f && brother.getInitializer() != null)
-          $.add(duplicate.of(brother));
-      return $;
-    }
-
     static int removalSaving(final VariableDeclarationFragment f) {
       final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
       final int $ = size(parent);
@@ -262,6 +296,14 @@ public abstract class Wring<N extends ASTNode> implements Kind {
       r.remove(parent.fragments().size() > 1 ? f : parent, g);
     }
 
+    private static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final List<VariableDeclarationFragment> fs) {
+      final List<VariableDeclarationFragment> $ = new ArrayList<>();
+      for (final VariableDeclarationFragment brother : fs)
+        if (brother != null && brother != f && brother.getInitializer() != null)
+          $.add(duplicate.of(brother));
+      return $;
+    }
+
     abstract ASTRewrite go(ASTRewrite r, VariableDeclarationFragment f, SimpleName n, Expression initializer, Statement nextStatement,
         TextEditGroup g);
 
@@ -278,47 +320,5 @@ public abstract class Wring<N extends ASTNode> implements Kind {
         exclude.exclude(f.getParent());
       return $;
     }
-  }
-
-  abstract String description(N n);
-
-  /** Determine whether the parameter is "eligible" for application of this
-   * instance. The parameter must be within the scope of the current instance.
-   * @param n JD
-   * @return <code><b>true</b></code> <i>iff</i> the argument is eligible for
-   *         the simplification offered by this object. */
-  boolean eligible(@SuppressWarnings("unused") final N __) {
-    return true;
-  }
-
-  Rewrite make(final N n) {
-    return make(n, null);
-  }
-
-  Rewrite make(final N n, final ExclusionManager m) {
-    return m != null && m.isExcluded(n) ? null : make(n);
-  }
-
-  /** Determines whether this {@link Wring} object is not applicable for a given
-   * {@link PrefixExpression} is within the "scope" of this . Note that a
-   * {@link Wring} is applicable in principle to an object, but that actual
-   * application will be vacuous.
-   * @param e JD
-   * @return <code><b>true</b></code> <i>iff</i> the argument is noneligible for
-   *         the simplification offered by this object.
-   * @see #eligible(InfixExpression) */
-  final boolean nonEligible(final N n) {
-    return !eligible(n);
-  }
-
-  /** Determines whether this {@link Wring} object is applicable for a given
-   * {@link InfixExpression} is within the "scope" of this . Note that it could
-   * be the case that a {@link Wring} is applicable in principle to an object,
-   * but that actual application will be vacuous.
-   * @param n JD
-   * @return <code><b>true</b></code> <i>iff</i> the argument is within the
-   *         scope of this object @ */
-  boolean scopeIncludes(final N n) {
-    return make(n, null) != null;
   }
 }

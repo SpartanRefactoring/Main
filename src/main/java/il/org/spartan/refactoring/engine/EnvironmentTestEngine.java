@@ -34,19 +34,19 @@ public class EnvironmentTestEngine {
     return $;
   }
 
+  static Set<Entry<String, Environment.Information>> listToSet(final List<Annotation> as) {
+    final Set<Entry<String, Environment.Information>> $ = Collections.unmodifiableSet(new HashSet<>());
+    for (final Annotation ¢ : as) {
+    }
+    return $;
+  }
+
   private static IJavaProject getJavaProject(final String projectName) {
     final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
     if (project == null)
       return null;
     final IJavaProject $ = JavaCore.create(project);
     return $ != null && $.exists() ? $ : null;
-  }
-
-  static Set<Entry<String, Environment.Information>> listToSet(final List<Annotation> as) {
-    final Set<Entry<String, Environment.Information>> $ = Collections.unmodifiableSet(new HashSet<>());
-    for (final Annotation ¢ : as) {
-    }
-    return $;
   }
 
   private final CompilationUnit cUnit;
@@ -64,6 +64,14 @@ public class EnvironmentTestEngine {
     // Set<Entry<String, Information>> testFlatENV = generateSet();
     // Set<Entry<String, Information>> testBeginEnd = generateSet();
     cUnit.accept(new ASTVisitor() {
+      @Override public boolean visit(final MethodDeclaration d) {
+        /* Set<Entry<String, Information>> useCheckSet = Environment.uses(d);
+         * Set<Entry<String, Information>> declareCheckSet =
+         * Environment.declares(d); */
+        addAnnotations(extract.annotations(d));
+        return true;
+      }
+
       void addAnnotations(final List<Annotation> as) {
         for (final Annotation ¢ : as)
           dispatch(¢);
@@ -87,14 +95,6 @@ public class EnvironmentTestEngine {
       }
 
       boolean nestedHendler(final Annotation a) {
-        return true;
-      }
-
-      @Override public boolean visit(final MethodDeclaration d) {
-        /* Set<Entry<String, Information>> useCheckSet = Environment.uses(d);
-         * Set<Entry<String, Information>> declareCheckSet =
-         * Environment.declares(d); */
-        addAnnotations(extract.annotations(d));
         return true;
       }
     });
