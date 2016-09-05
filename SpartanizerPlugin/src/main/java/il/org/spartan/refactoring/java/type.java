@@ -133,7 +133,7 @@ public interface type {
      * @return The most specific Type information that can be deduced about the
      *         expression, or {@link #NOTHING} if it cannot decide. Will never
      *         return null */
-    public static PsuedoPrimitive prudent(final Expression x) {
+    private static PsuedoPrimitive prudent(final Expression x) {
       return prudent(x, null, null);
     }
     
@@ -475,7 +475,8 @@ public interface type {
    * @return The most specific Type information that can be deduced about the
    *         expression, or {@link #NOTHING} if it cannot decide. Will never
    *         return null */
-  static type get(Expression e){
+  //TODO: synthetic-access since this is incomplete. Should not happen once get is done 
+  @SuppressWarnings("synthetic-access") static type get(Expression e){
     return PsuedoPrimitive.prudent(e);
   }
   
