@@ -26,7 +26,7 @@ public enum az {
   public static InfixExpression andOrOr(final Expression ¢) {
     return !iz.infixExpression(¢) || !iz.deMorgan(infixExpression(¢).getOperator()) ? null : infixExpression(¢);
   }
-
+  
   public static Annotation annotation(final IExtendedModifier ¢) {
     return !iz.annotation(¢) ? null : (Annotation) ¢;
   }
@@ -144,6 +144,14 @@ public enum az {
 
   public static Modifier modifier(final ASTNode ¢) {
     return !iz.modifier(¢) ? null : (Modifier) ¢;
+  }
+
+  /** Down-cast, if possible, to {@link NormalAnnotation}
+   * @param ¢ JD
+   * @return parameter down-casted to the returned type, or
+   *         <code><b>null</b></code> if no such down-casting is possible. */
+  public static NormalAnnotation normalAnnotation(Annotation ¢) {
+    return !(¢ instanceof NormalAnnotation) ?  null : (NormalAnnotation) ¢;
   }
 
   /** Convert an {@link Expression} into a {@link PrefixExpression} whose
