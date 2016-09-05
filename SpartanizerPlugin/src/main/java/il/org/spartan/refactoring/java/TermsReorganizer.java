@@ -9,16 +9,12 @@ import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.utils.*;
 
 public class TermsReorganizer {
-  public static Expression simplify(final InfixExpression x) {
-    return build(new TermsCollector(x));
+  private static Expression build(final List<Expression> plus, final List<Expression> minus) {
+    return buildMinus(buildPlus(plus), minus);
   }
 
   private static Expression build(final TermsCollector c) {
     return build(c.plus(), c.minus());
-  }
-
-  private static Expression build(final List<Expression> plus, final List<Expression> minus) {
-    return buildMinus(buildPlus(plus), minus);
   }
 
   private static Expression buildMinus(final Expression first, final List<Expression> rest) {
@@ -50,5 +46,9 @@ public class TermsReorganizer {
       default:
         return subject.operands(xs).to(wizard.PLUS2);
     }
+  }
+
+  public static Expression simplify(final InfixExpression x) {
+    return build(new TermsCollector(x));
   }
 }

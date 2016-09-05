@@ -7,24 +7,20 @@ import il.org.spartan.refactoring.ast.*;
 
 // TOOD: Who wrote this class?
 class Factor {
-  private final boolean divider;
-  public final Expression expression;
-
-  Factor(final boolean divide, final Expression expression) {
-    divider = divide;
-    this.expression = expression;
+  static Factor divide(final Expression x) {
+    return new Factor(true, x);
   }
 
   static Factor times(final Expression x) {
     return new Factor(false, x);
   }
 
-  static Factor divide(final Expression x) {
-    return new Factor(true, x);
-  }
+  private final boolean divider;
+  public final Expression expression;
 
-  boolean divider() {
-    return divider;
+  Factor(final boolean divide, final Expression expression) {
+    divider = divide;
+    this.expression = expression;
   }
 
   // doesn't work for division, need to figure out why
@@ -36,6 +32,10 @@ class Factor {
     $.setLeftOperand(expression.getAST().newNumberLiteral("1"));
     $.setRightOperand(!iz.infixExpression(expression) ? duplicate.of(expression) : make.parethesized(duplicate.of(expression)));
     return $;
+  }
+
+  boolean divider() {
+    return divider;
   }
 
   public boolean multiplier() {

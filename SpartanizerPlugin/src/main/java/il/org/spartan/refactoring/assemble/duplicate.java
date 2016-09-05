@@ -15,6 +15,15 @@ import il.org.spartan.refactoring.ast.*;
  * @since 2015-07-21 */
 public enum duplicate {
   ;
+  static List<Expression> adjust(final Operator o, final List<Expression> xs) {
+    if (o != wizard.MINUS2)
+      return xs;
+    final List<Expression> $ = new ArrayList<>();
+    for (final Expression e : xs)
+      $.add(subject.operand(e).to(wizard.MINUS1));
+    return $;
+  }
+
   /** Duplicate all {@link ASTNode} objects found in a given list into another
    * list.
    * @param from JD
@@ -37,15 +46,6 @@ public enum duplicate {
         to.add(duplicate.of((Modifier) m));
       else if (m.isAnnotation())
         to.add(duplicate.of((Annotation) m));
-  }
-
-  static List<Expression> adjust(final Operator o, final List<Expression> xs) {
-    if (o != wizard.MINUS2)
-      return xs;
-    final List<Expression> $ = new ArrayList<>();
-    for (final Expression e : xs)
-      $.add(subject.operand(e).to(wizard.MINUS1));
-    return $;
   }
 
   /** Make a duplicate, suitable for tree rewrite, of the parameter

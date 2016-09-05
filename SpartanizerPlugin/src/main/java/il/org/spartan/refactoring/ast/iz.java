@@ -31,17 +31,11 @@ public enum iz {
   }
 
   public static boolean annotation(final IExtendedModifier ¢) {
-    return  ¢ instanceof Annotation;
+    return ¢ instanceof Annotation;
   }
-  
-  public static boolean modifier(final ASTNode ¢) {
-    return is(¢, MODIFIER);
-  }
-  
-  /*public static boolean modifier(final IExtendedModifier ¢) {
-    return  ¢ instanceof Annotation;
-  }*/
 
+  /* public static boolean modifier(final IExtendedModifier ¢) { return ¢
+   * instanceof Annotation; } */
   public static boolean anonymousClassDeclaration(final ASTNode ¢) {
     return is(¢, ANONYMOUS_CLASS_DECLARATION);
   }
@@ -60,6 +54,22 @@ public enum iz {
    *         statement */
   public static boolean block(final ASTNode n) {
     return is(n, BLOCK);
+  }
+
+  /** Determine whether the curly brackets of an {@link IfStatement} are
+   * vacuous.
+   * @param s JD
+   * @return <code><b>true</b></code> <i>iff</i> the curly brackets are
+   *         essential */
+  static boolean blockEssential(final IfStatement s) {
+    if (s == null)
+      return false;
+    final Block b = az.block(step.parent(s));
+    if (b == null)
+      return false;
+    final IfStatement parent = az.ifStatement(step.parent(b));
+    return parent != null && (step.elze(parent) == null || wizard.recursiveElze(s) == null)
+        && (step.elze(parent) != null || wizard.recursiveElze(s) != null || blockRequiredInReplacement(parent, s));
   }
 
   /** @param s JD
@@ -297,6 +307,10 @@ public enum iz {
     return ¢ != null && lisp.intIsIn(¢.getNodeType(), types);
   }
 
+  private static boolean is(final ASTNode n, final int type) {
+    return n != null && type == n.getNodeType();
+  }
+
   /** Determine whether a declaration is final or not
    * @param ¢ JD
    * @return true if declaration is final */
@@ -328,6 +342,17 @@ public enum iz {
    * @return true if the given node is a method invocation or false otherwise */
   public static boolean isMethodInvocation(final ASTNode ¢) {
     return is(¢, METHOD_INVOCATION);
+  }
+
+  static boolean isNumberLiteral(final ASTNode ¢) {
+    return is(¢, NUMBER_LITERAL);
+  }
+
+  private static boolean isOneOf(final int i, final int... is) {
+    for (final int j : is)
+      if (i == j)
+        return true;
+    return false;
   }
 
   /** @param a the assignment who'¢ operator we want to check
@@ -384,9 +409,30 @@ public enum iz {
     return n != null && lisp.intIsIn(n.getNodeType(), NULL_LITERAL, CHARACTER_LITERAL, NUMBER_LITERAL, STRING_LITERAL, BOOLEAN_LITERAL);
   }
 
+  static boolean literal(final ASTNode ¢, final boolean b) {
+    return literal(az.booleanLiteral(¢), b);
+  }
+
   public static boolean literal(final ASTNode ¢, final double d) {
     final NumberLiteral ¢1 = az.numberLiteral(¢);
     return ¢1 != null && literal(¢1.getToken(), d);
+  }
+
+  static boolean literal(final ASTNode ¢, final int i) {
+    final NumberLiteral ¢1 = az.numberLiteral(¢);
+    return ¢1 != null && literal(¢1.getToken(), i);
+  }
+
+  static boolean literal(final ASTNode ¢, final long l) {
+    return literal(az.numberLiteral(¢).getToken(), l);
+  }
+
+  static boolean literal(final ASTNode ¢, final String s) {
+    return literal(az.stringLiteral(¢), s);
+  }
+
+  static boolean literal(final BooleanLiteral ¢, final boolean b) {
+    return ¢ != null && ¢.booleanValue() == b;
   }
 
   /** @param s JD
@@ -404,6 +450,26 @@ public enum iz {
     } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
       return false;
     }
+  }
+
+  static boolean literal(final String token, final int i) {
+    try {
+      return Integer.parseInt(token) == i;
+    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
+      return false;
+    }
+  }
+
+  static boolean literal(final String token, final long l) {
+    try {
+      return Long.parseLong(token) == l;
+    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
+      return false;
+    }
+  }
+
+  static boolean literal(final StringLiteral ¢, final String s) {
+    return ¢ != null && ¢.equals(s);
   }
 
   /** @param ¢ JD
@@ -450,6 +516,10 @@ public enum iz {
    *         invocation. */
   public static boolean methodInvocation(final ASTNode n) {
     return is(n, METHOD_INVOCATION);
+  }
+
+  public static boolean modifier(final ASTNode ¢) {
+    return is(¢, MODIFIER);
   }
 
   public static boolean negative(final Expression x) {
@@ -652,77 +722,5 @@ public enum iz {
    *         declaration statement. */
   public static boolean variableDeclarationStatement(final ASTNode n) {
     return is(n, VARIABLE_DECLARATION_STATEMENT);
-  }
-
-  /** Determine whether the curly brackets of an {@link IfStatement} are
-   * vacuous.
-   * @param s JD
-   * @return <code><b>true</b></code> <i>iff</i> the curly brackets are
-   *         essential */
-  static boolean blockEssential(final IfStatement s) {
-    if (s == null)
-      return false;
-    final Block b = az.block(step.parent(s));
-    if (b == null)
-      return false;
-    final IfStatement parent = az.ifStatement(step.parent(b));
-    return parent != null && (step.elze(parent) == null || wizard.recursiveElze(s) == null)
-        && (step.elze(parent) != null || wizard.recursiveElze(s) != null || blockRequiredInReplacement(parent, s));
-  }
-
-  static boolean isNumberLiteral(final ASTNode ¢) {
-    return is(¢, NUMBER_LITERAL);
-  }
-
-  static boolean literal(final ASTNode ¢, final boolean b) {
-    return literal(az.booleanLiteral(¢), b);
-  }
-
-  static boolean literal(final ASTNode ¢, final int i) {
-    final NumberLiteral ¢1 = az.numberLiteral(¢);
-    return ¢1 != null && literal(¢1.getToken(), i);
-  }
-
-  static boolean literal(final ASTNode ¢, final long l) {
-    return literal(az.numberLiteral(¢).getToken(), l);
-  }
-
-  static boolean literal(final ASTNode ¢, final String s) {
-    return literal(az.stringLiteral(¢), s);
-  }
-
-  static boolean literal(final BooleanLiteral ¢, final boolean b) {
-    return ¢ != null && ¢.booleanValue() == b;
-  }
-
-  static boolean literal(final String token, final int i) {
-    try {
-      return Integer.parseInt(token) == i;
-    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
-      return false;
-    }
-  }
-
-  static boolean literal(final String token, final long l) {
-    try {
-      return Long.parseLong(token) == l;
-    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
-      return false;
-    }
-  }
-
-  static boolean literal(final StringLiteral ¢, final String s) {
-    return ¢ != null && ¢.equals(s);
-  }
-
-  private static boolean is(final ASTNode n, final int type) {
-    return n != null && type == n.getNodeType();
-  }
-
-  private static boolean isOneOf(final int i, final int... is) {
-    for (final int j : is)
-      if (i == j)
-        return true;
-    return false;
   }
 }

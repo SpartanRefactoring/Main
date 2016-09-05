@@ -11,22 +11,6 @@ import il.org.spartan.refactoring.java.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class sideEffectsTest {
-  @Test public void freeFunctionCall() {
-    azzert.nay(sideEffects.free(e("f()")));
-  }
-
-  @Test public void freeFunctionCalla() {
-    azzert.nay(sideEffects.free(e("i =f()")));
-  }
-
-  @Test public void seriesA01() {
-    azzert.aye(sideEffects.free(e("a")));
-  }
-
-  @Test public void seriesA02() {
-    azzert.aye(sideEffects.free(e("this.a")));
-  }
-
   @Test public void deterministicArray1() {
     azzert.nay(sideEffects.deterministic(e("new a[3]")));
   }
@@ -41,5 +25,21 @@ public class sideEffectsTest {
 
   @Test public void deterministicArray4() {
     azzert.nay(sideEffects.deterministic(e("new int[f()]")));
+  }
+
+  @Test public void freeFunctionCall() {
+    azzert.nay(sideEffects.free(e("f()")));
+  }
+
+  @Test public void freeFunctionCalla() {
+    azzert.nay(sideEffects.free(e("i =f()")));
+  }
+
+  @Test public void seriesA01() {
+    azzert.aye(sideEffects.free(e("a")));
+  }
+
+  @Test public void seriesA02() {
+    azzert.aye(sideEffects.free(e("this.a")));
   }
 }

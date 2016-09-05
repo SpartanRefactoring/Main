@@ -13,42 +13,16 @@ import il.org.spartan.refactoring.wring.*;
 
 public enum make {
   ;
-  /** @param ¢ JD
-   * @return parameter, but logically negated and simplified */
-  public static Expression notOf(final Expression ¢) {
-    final PrefixExpression $ = subject.operand(¢).to(NOT);
-    final Expression $$ = PrefixNotPushdown.simplifyNot($);
-    return $$ == null ? $ : $$;
-  }
+  public static class ASTHolder {
+    private final AST ast;
 
-  /** @param ¢ the expression to return in the return statement
-   * @return new return statement */
-  public static ThrowStatement throwOf(final Expression ¢) {
-    return subject.operand(¢).toThrow();
-  }
+    public ASTHolder(final AST ast) {
+      this.ast = ast;
+    }
 
-  static Expression minusOf(final Expression x) {
-    return literal0(x) ? x : subject.operand(x).to(wizard.MINUS1);
-  }
-
-  /** Create a new {@link SimpleName} instance at the AST of the parameter
-   * @param n JD
-   * @param newName the name that the returned value shall bear
-   * @return a new {@link SimpleName} instance at the AST of the parameter */
-  public static SimpleName newSimpleName(final ASTNode n, final String newName) {
-    return n.getAST().newSimpleName(newName);
-  }
-
-  public static ParenthesizedExpression parethesized(final Expression x) {
-    final ParenthesizedExpression $ = x.getAST().newParenthesizedExpression();
-    $.setExpression(step.parent(x) == null ? x : duplicate.of(x));
-    return $;
-  }
-
-  static NumberLiteral newLiteral(final ASTNode n, final String token) {
-    final NumberLiteral $ = n.getAST().newNumberLiteral();
-    $.setToken(token);
-    return $;
+    public NumberLiteral literal(final int i) {
+      return ast.newNumberLiteral(i + "");
+    }
   }
 
   /** Swap the order of the left and right operands to an expression, changing
@@ -63,23 +37,9 @@ public enum make {
     return subject.pair(step.right(¢), step.left(¢)).to(wizard.conjugate(¢.getOperator()));
   }
 
-  static Expression minus(final Expression x, final NumberLiteral l) {
-    return l == null ? minusOf(x) //
-        : newLiteral(l, literal0(l) ? "0" : signAdjust(l.getToken())) //
-    ;
-  }
-
-  private static String signAdjust(final String token) {
-    return token.startsWith("-") ? token.substring(1) //
-        : "-" + token.substring(token.startsWith("+") ? 1 : 0);
-  }
-
-  static List<Expression> minus(final List<Expression> xs) {
-    final List<Expression> $ = new ArrayList<>();
-    $.add(lisp.first(xs));
-    for (final Expression e : lisp.rest(xs))
-      $.add(minusOf(e));
-    return $;
+  public static ASTHolder from(final Expression x) {
+    assert x != null;
+    return new make.ASTHolder(x.getAST());
   }
 
   public static IfStatement ifWithoutElse(final Statement s, final InfixExpression condition) {
@@ -98,20 +58,60 @@ public enum make {
                 : x;
   }
 
-  public static ASTHolder from(final Expression x) {
-    assert x != null;
-    return new make.ASTHolder(x.getAST());
+  static Expression minus(final Expression x, final NumberLiteral l) {
+    return l == null ? minusOf(x) //
+        : newLiteral(l, literal0(l) ? "0" : signAdjust(l.getToken())) //
+    ;
   }
 
-  public static class ASTHolder {
-    private final AST ast;
+  static List<Expression> minus(final List<Expression> xs) {
+    final List<Expression> $ = new ArrayList<>();
+    $.add(lisp.first(xs));
+    for (final Expression e : lisp.rest(xs))
+      $.add(minusOf(e));
+    return $;
+  }
 
-    public ASTHolder(final AST ast) {
-      this.ast = ast;
-    }
+  static Expression minusOf(final Expression x) {
+    return literal0(x) ? x : subject.operand(x).to(wizard.MINUS1);
+  }
 
-    public NumberLiteral literal(final int i) {
-      return ast.newNumberLiteral(i + "");
-    }
+  static NumberLiteral newLiteral(final ASTNode n, final String token) {
+    final NumberLiteral $ = n.getAST().newNumberLiteral();
+    $.setToken(token);
+    return $;
+  }
+
+  /** Create a new {@link SimpleName} instance at the AST of the parameter
+   * @param n JD
+   * @param newName the name that the returned value shall bear
+   * @return a new {@link SimpleName} instance at the AST of the parameter */
+  public static SimpleName newSimpleName(final ASTNode n, final String newName) {
+    return n.getAST().newSimpleName(newName);
+  }
+
+  /** @param ¢ JD
+   * @return parameter, but logically negated and simplified */
+  public static Expression notOf(final Expression ¢) {
+    final PrefixExpression $ = subject.operand(¢).to(NOT);
+    final Expression $$ = PrefixNotPushdown.simplifyNot($);
+    return $$ == null ? $ : $$;
+  }
+
+  public static ParenthesizedExpression parethesized(final Expression x) {
+    final ParenthesizedExpression $ = x.getAST().newParenthesizedExpression();
+    $.setExpression(step.parent(x) == null ? x : duplicate.of(x));
+    return $;
+  }
+
+  private static String signAdjust(final String token) {
+    return token.startsWith("-") ? token.substring(1) //
+        : "-" + token.substring(token.startsWith("+") ? 1 : 0);
+  }
+
+  /** @param ¢ the expression to return in the return statement
+   * @return new return statement */
+  public static ThrowStatement throwOf(final Expression ¢) {
+    return subject.operand(¢).toThrow();
   }
 }

@@ -1,10 +1,10 @@
 package il.org.spartan.refactoring.java;
 
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.ast.step.*;
+import static il.org.spartan.refactoring.java.PrudentType.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
-import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.java.PrudentType.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -25,7 +25,7 @@ public enum stringType {
     for (ASTNode context = parent(x); context != null; context = parent(context))
       switch (context.getNodeType()) {
         case INFIX_EXPRESSION:
-          if (((InfixExpression)context).getOperator().equals(PLUS))
+          if (((InfixExpression) context).getOperator().equals(PLUS))
             continue;
           return true;
         case ARRAY_ACCESS:
@@ -39,5 +39,4 @@ public enum stringType {
       }
     return false;
   }
-
 }

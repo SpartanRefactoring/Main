@@ -44,6 +44,10 @@ public class Plugin extends AbstractUIPlugin implements IStartup {
     plugin.getLog().log(new Status(IStatus.ERROR, "il.org.spartan.refactoring", 0, t.getMessage(), t));
   }
 
+  public static AbstractUIPlugin plugin() {
+    return plugin;
+  }
+
   public static void refreshAllProjects() {
     for (final IProject p : ResourcesPlugin.getWorkspace().getRoot().getProjects())
       try {
@@ -78,9 +82,5 @@ public class Plugin extends AbstractUIPlugin implements IStartup {
   @Override public void stop(final BundleContext c) throws Exception {
     plugin = null;
     super.stop(c);
-  }
-
-  public static AbstractUIPlugin plugin() {
-    return plugin;
   }
 }
