@@ -56,20 +56,18 @@ public class EnvironmentTestEngine {
   }
 
   private final ASTNode n;
-
   Set<Entry<String, Environment.Information>> testNestedENV;
   Set<Entry<String, Environment.Information>> testFlatENV;
   Set<Entry<String, Environment.Information>> testBeginEnd;
 
-
-  EnvironmentTestEngine(final CompilationUnit $) {
+  public EnvironmentTestEngine(final ASTNode $) {
     n = $;
     testNestedENV = generateSet();
     testFlatENV = generateSet();
     testBeginEnd = generateSet();
   }
 
-  EnvironmentTestEngine(final String ¢) {
+  public EnvironmentTestEngine(final String ¢) {
     n = getCompilationUnit(¢);
     testNestedENV = generateSet();
     testFlatENV = generateSet();
@@ -81,9 +79,8 @@ public class EnvironmentTestEngine {
 
   // TODO: Information should be instantiated with Type
   private void addValueToFlat(final List<MemberValuePair> ps) {
-    testFlatENV.add(new MyEntry<>(wizard.asString(ps.get(0).getValue()), new Information()));
+    testFlatENV.add(new MapEntry<>(wizard.asString(ps.get(0).getValue()), new Information()));
   }
-
 
   private void addValueToNested(final List<MemberValuePair> ps) {
   }
@@ -103,12 +100,11 @@ public class EnvironmentTestEngine {
         break;
     }
   }
- 
 
   /** Compares output Set (testFlatENV) with provided set, that will be the
    * result of the flat version of defines.
    * @param $ */
-  void compareFlatInOrder(final Set<Entry<String, Information>> $) {
+  public void compareFlatInOrder(final Set<Entry<String, Information>> $) {
     // Go over both sets in serial manner, and make sure every two members are
     // equal.
     // Also, check size, to avoid the case Set A is contained in B.
@@ -118,7 +114,7 @@ public class EnvironmentTestEngine {
   /** Compares flat output Set (flat) with provided Set, that will be the result
    * of the flat version of defines.
    * @param $ */
-  void compareFlatOutOfOrder(final Set<Entry<String, Information>> $) {
+  public void compareFlatOutOfOrder(final Set<Entry<String, Information>> $) {
     // Check that each member of $ is contained in FlatENV, and that the size is
     // equal.
     // azzert.fail Otherwise.
@@ -127,7 +123,7 @@ public class EnvironmentTestEngine {
   /** Compares output Set (testNestedENV) with provided Set, that will be the
    * result of Nested version of Defines.
    * @param $ */
-  void compareNested(final Set<Entry<String, Information>> $) {
+  public void compareNested(final Set<Entry<String, Information>> $) {
     // Go over both sets in serial manner, and make sure every two members are
     // equal.
     // Also, check size, to avoid the case Set A is contained in B.
@@ -137,7 +133,7 @@ public class EnvironmentTestEngine {
   /** Compares output Set (testBeginEnd) with provided Set, that will be the
    * result of Nested version of uses.
    * @param $ */
-  void compareUses(final Set<Entry<String, Information>> $) {
+  public void compareUses(final Set<Entry<String, Information>> $) {
     // Go over both sets in serial manner, and make sure every two members are
     // equal.
     // Also, check size, to avoid the case Set A is contained in B.
@@ -183,15 +179,10 @@ public class EnvironmentTestEngine {
         if ($ == null)
           return;
         $.accept(new ASTVisitor() {
-          /*
-          @Override public boolean visit(NormalAnnotation ¢){
-            if (isNameId(¢.getTypeName())) {
-              
-              testFlatENV.addAll();
-            }
-            return true;
-          }
-*/
+          /* @Override public boolean visit(NormalAnnotation ¢){ if
+           * (isNameId(¢.getTypeName())) {
+           * 
+           * testFlatENV.addAll(); } return true; } */
         });
       }
 
