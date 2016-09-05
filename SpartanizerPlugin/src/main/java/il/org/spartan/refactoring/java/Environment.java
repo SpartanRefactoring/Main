@@ -71,7 +71,7 @@ import org.eclipse.jdt.core.dom.*;
   static final Set<String> emptySet = Collections.unmodifiableSet(new HashSet<>());
 
   /** @return set of entries defined in the node, including all hiding. */
-  static Set<Entry<String, Information>> defines(final ASTNode n) {
+  static Set<Entry<String, Information>> declares(final ASTNode n) {
     return Collections.unmodifiableSet(new HashSet<>());
   }
 
@@ -172,27 +172,5 @@ import org.eclipse.jdt.core.dom.*;
   /* Used when new block (scope) is opened. */
   default Environment spawn() {
     return new Nested(this);
-  }
-}
-
-/** Mumbo jumbo of stuff we will do later. Document it, but do not maintaing it
- * for now, this class is intentionally package level, and intenrationally
- * defined locall. For now, cients should not be messing with it */
-class Information {
-  /** The containing block, whose death marks the death of this entry; not sure,
-   * but I think this entry can be shared by many nodes at the same leve */
-  public final ASTNode blockScope;
-  /** What do we know about an entry hidden by this one */
-  public final Information hiding;
-  /** The node at which this entry was created */
-  public final ASTNode self;
-  /** What do we know about the type of this definition */
-  public final PrudentType prudentType;
-
-  // For now, nothing is known, we only maintain lists
-  Information() {
-    blockScope = self = null;
-    prudentType = null;
-    hiding = null;
   }
 }
