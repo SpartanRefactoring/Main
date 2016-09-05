@@ -71,14 +71,33 @@ public class EnvironmentTestEngine {
     testBeginEnd = generateSet();
   }
 
+  enum AnnotationType{
+    FLAT,
+    NESTED,
+    BEGINEND
+  }
   /*
+  void addValuesToSets(List<MemberValuePair> ps, AnnotationType t){
+    switch (t){
+      case FLAT:
+        String fgdfgs = wizard.asString(ps.get(0).getValue());
+        Information fgdhd = new Information();
+        Entry e = Map.new Entry<>();
+        testFlatENV.add(e);
+    }
+  }*/
+  
+  /*
+   * define: outer annotation = OutOfOrderNestedENV, InOrderFlatENV, Begin, End.
+   * define: inner annotation = Id.
    * ASTVisitor that goes over the ASTNodes in which annotations can be defined, and checks if the annotations are
    * of the kind that interests us. 
-   * An array of @Id annotations is defined inside of each annotation of interest. 
+   * An array of inner annotations is defined inside of each outer annotation of interest. 
    * I think it will be less error prone and more scalable to implement another, 
-   * internal, ASTVisitor that will go over each ID node, 
+   * internal, ASTVisitor that will go over each inner annotation node, 
    * and send everything to an outside function to add to the Sets as required. 
-   * That means that each node of interest will be visited twice (or more), but that should not cause worry,
+   * That means that each inner annotation will be visited twice from the same outer annotation,
+   * but that should not cause worry,
    * since the outside visitor will do nothing.
    * 
    *  TODO: internal node parsing. Think about Nested parsing.
@@ -100,27 +119,30 @@ public class EnvironmentTestEngine {
       }
 
       void flatHandler(final Annotation ¢) {
-        flatHandler(az.normalAnnotation(¢));
+        flatHandler(az.singleMemberAnnotation(¢));
       }
 
-      void flatHandler(NormalAnnotation $) {
+      void flatHandler(SingleMemberAnnotation $) {
         if($ == null)
           return;
         $.accept(new ASTVisitor() {
-          @SuppressWarnings("unchecked") List<MemberValuePair> values(NormalAnnotation $) {
+          @SuppressWarnings("unchecked") 
+          List<MemberValuePair> values(NormalAnnotation $) {
             return $.values();
           }
           /*
           @Override public boolean visit(NormalAnnotation ¢){
-            if (isNameId(¢.getTypeName()))
-              return true;
+            if (isNameId(¢.getTypeName())) {
+              
+              testFlatENV.addAll();
+            }
             return true;
-          }
+          }*/
 
           private boolean isNameId(Name ¢){
             return "Id".equals(wizard.asString(¢));
           }
-          */
+          
         });
       }
 
