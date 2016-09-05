@@ -27,66 +27,71 @@ import il.org.spartan.refactoring.ast.*;
  * @since 2015-07-29 */
 public class BodyDeclarationRemoveModifiers<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> implements Kind.SyntacticBaggage {
   private static Set<Modifier> matches(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ps) {
-      final Set<Modifier> $ = new LinkedHashSet<>();
-      for (final IExtendedModifier m : modifiers(¢))
-        if (test(m, ps))
-          $.add((Modifier) m);
+    final Set<Modifier> $ = new LinkedHashSet<>();
+    for (final IExtendedModifier m : modifiers(¢))
+      if (test(m, ps))
+        $.add((Modifier) m);
+    return $;
+  }
+
+  private static Set<Modifier> matches(final List<IExtendedModifier> ms, final Set<Predicate<Modifier>> ps) {
+    final Set<Modifier> $ = new LinkedHashSet<>();
+    for (final IExtendedModifier m : ms)
+      if (test(m, ps))
+        $.add((Modifier) m);
+    return $;
+  }
+
+  private static Set<Modifier> matchess(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ps) {
+    return matches(modifiers(¢), ps);
+  }
+
+  private static BodyDeclaration prune(final BodyDeclaration $, final Set<Predicate<Modifier>> ps) {
+    for (final Iterator<IExtendedModifier> ¢ = modifiers($).iterator(); ¢.hasNext();)
+      if (test(¢.next(), ps))
+        ¢.remove();
+    return $;
+  }
+
+  private static Set<Predicate<Modifier>> redundancies(final BodyDeclaration ¢) {
+    final Set<Predicate<Modifier>> $ = new LinkedHashSet<>();
+    if (modifiers(¢).isEmpty())
       return $;
+    if (iz.enumDeclaration(¢))
+      $.add(Modifier::isStatic);
+    if (iz.isInterface(¢) || ¢ instanceof AnnotationTypeDeclaration) {
+      $.add(Modifier::isStatic);
+      $.add(Modifier::isAbstract);
     }
-    private static Set<Modifier> matches(final List<IExtendedModifier> ms, final Set<Predicate<Modifier>> ps) {
-      final Set<Modifier> $ = new LinkedHashSet<>();
-      for (final IExtendedModifier m : ms)
-        if (test(m, ps))
-          $.add((Modifier) m);
+    if (iz.isMethodDeclaration(¢) && (iz.isPrivate(¢) || iz.isStatic(¢)))
+      $.add(Modifier::isFinal);
+    final ASTNode container = hop.containerType(¢);
+    if (container == null)
       return $;
-    }
-    private static Set<Modifier> matchess(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ps) {
-      return matches(modifiers(¢), ps);
-    }
-    private static BodyDeclaration prune(final BodyDeclaration $, final Set<Predicate<Modifier>> ps) {
-      for (final Iterator<IExtendedModifier> ¢ = modifiers($).iterator(); ¢.hasNext();)
-        if (test(¢.next(), ps))
-          ¢.remove();
-      return $;
-    }
-    private static Set<Predicate<Modifier>> redundancies(final BodyDeclaration ¢) {
-      final Set<Predicate<Modifier>> $ = new LinkedHashSet<>();
-      if (modifiers(¢).isEmpty())
-        return $;
-      if (iz.enumDeclaration(¢))
-        $.add(Modifier::isStatic);
-      if (iz.isInterface(¢) || ¢ instanceof AnnotationTypeDeclaration) {
-        $.add(Modifier::isStatic);
+    if (iz.abstractTypeDeclaration(container) && iz.isFinal(az.abstractTypeDeclaration(container)) && iz.isMethodDeclaration(¢))
+      $.add(Modifier::isFinal);
+    if (iz.isInterface(container)) {
+      $.add(Modifier::isPublic);
+      $.add(Modifier::isPrivate);
+      $.add(Modifier::isProtected);
+      if (iz.isMethodDeclaration(¢))
         $.add(Modifier::isAbstract);
-      }
-      if (iz.isMethodDeclaration(¢) && (iz.isPrivate(¢) || iz.isStatic(¢)))
-        $.add(Modifier::isFinal);
-      final ASTNode container = hop.containerType(¢);
-      if (container == null)
-        return $;
-      if (iz.abstractTypeDeclaration(container) && iz.isFinal(az.abstractTypeDeclaration(container)) && iz.isMethodDeclaration(¢))
-        $.add(Modifier::isFinal);
-      if (iz.isInterface(container)) {
-        $.add(Modifier::isPublic);
-        $.add(Modifier::isPrivate);
-        $.add(Modifier::isProtected);
-        if (iz.isMethodDeclaration(¢))
-          $.add(Modifier::isAbstract);
-      }
-      if (iz.enumDeclaration(container))
-        $.add(Modifier::isProtected);
-      if (iz.anonymousClassDeclaration(container)) {
-        $.add(Modifier::isPrivate);
-        if (iz.isMethodDeclaration(¢))
-          $.add(Modifier::isFinal);
-        if (iz.enumConstantDeclaration(hop.containerType(container)))
-          $.add(Modifier::isProtected);
-      }
-      return $;
     }
-    private static Set<Modifier> redundants(final BodyDeclaration ¢) {
-      return matches(¢, redundancies(¢));
+    if (iz.enumDeclaration(container))
+      $.add(Modifier::isProtected);
+    if (iz.anonymousClassDeclaration(container)) {
+      $.add(Modifier::isPrivate);
+      if (iz.isMethodDeclaration(¢))
+        $.add(Modifier::isFinal);
+      if (iz.enumConstantDeclaration(hop.containerType(container)))
+        $.add(Modifier::isProtected);
     }
+    return $;
+  }
+
+  private static Set<Modifier> redundants(final BodyDeclaration ¢) {
+    return matches(¢, redundancies(¢));
+  }
 
   private static boolean test(final IExtendedModifier m, final Set<Predicate<Modifier>> ps) {
     return m instanceof Modifier && test((Modifier) m, ps);

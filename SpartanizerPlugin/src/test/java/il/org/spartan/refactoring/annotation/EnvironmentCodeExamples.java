@@ -15,7 +15,6 @@ public class EnvironmentCodeExamples {
     @End("x") class B {//
     }
   }
-
   {
     EX5.x = 0;
   }
@@ -137,7 +136,6 @@ public class EnvironmentCodeExamples {
 
   public static class EX2 { // initializator
     @NestedENV({}) @OutOfOrderFlatENV({}) static int x;
-
     @NestedENV({ "EX2.x#int" }) @OutOfOrderFlatENV({ "x" }) int y;
     {
       @Begin class A {//
@@ -146,6 +144,7 @@ public class EnvironmentCodeExamples {
       @End("x") class B {//
       }
     }
+
     EX2() {
       @Begin class A {//
       }
@@ -199,9 +198,9 @@ public class EnvironmentCodeExamples {
     }
 
     @NestedENV({}) @OutOfOrderFlatENV({}) int x, y;
-
     @NestedENV({ "EX3.x", "EX3.y" }) @InOrderFlatENV({ "x", "y" }) @OutOfOrderFlatENV({ "y", "x" }) int q; // no
                                                                                                            // xsy
+
     EX3() {
       @Begin class A {//
       }
@@ -218,8 +217,8 @@ public class EnvironmentCodeExamples {
 
     @NestedENV({ "EX3.x", "EX3.y" }) @OutOfOrderFlatENV({ "x", "y" }) static class x_hiding {
       @OutOfOrderFlatENV({}) public static int x;
-
       @NestedENV({ "EX3.x_hiding.x#int" }) @OutOfOrderFlatENV({ "x" }) y_hiding xsy;
+
       x_hiding() {
         x = 2;
         xsy = new y_hiding();
@@ -425,8 +424,8 @@ public class EnvironmentCodeExamples {
     }
 
     Integer x = Integer.valueOf(1);
-
     Integer o = func(x, "Alex&Dan", new Complex());
+
     class Complex {
       int r;
       int i;
@@ -446,6 +445,7 @@ public class EnvironmentCodeExamples {
       }
     }
   }
+
   public static class EX9 { // template
     public class SOList<Type> implements Iterable<Type> {
       private final Type[] arrayList;

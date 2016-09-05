@@ -448,16 +448,16 @@ interface type {
     // unless both operands are numeric, the result may be a String
     return in(STRING, this, k) || in(NULL, this, k) ? STRING : !isNumeric() || !k.isNumeric() ? ALPHANUMERIC : underNumericOnlyOperator(k);
   }
-    public static class NotImplementedException extends RuntimeException {
-      private static final long serialVersionUID = 1L;
 
-      public NotImplementedException(final String message) {
-        super(message);
-      }
+  public static class NotImplementedException extends RuntimeException {
+    private static final long serialVersionUID = 1L;
+
+    public NotImplementedException(final String message) {
+      super(message);
     }
+  }
 
   interface Primitive extends type {
-
     /** Primitive types known for certain
      * @author Yossi Gil
      * @since 2016 */
@@ -504,7 +504,7 @@ interface type {
         throw new NotImplementedException("code of this function was not implemented yet");
       }
 
-      @Override public boolean canB(Certain ¢) {
+      @Override public boolean canB(final Certain ¢) {
         assert ¢ != null;
         return false;
       }
@@ -529,15 +529,15 @@ interface type {
         throw new NotImplementedException("code of this function was not implemented yet");
       }
 
-      @Override public type under(Operator o) {
+      @Override public type under(final Operator o) {
         throw new NotImplementedException("code of this function was not implemented yet; arge = " + o);
       }
 
-      @Override public type underBinaryOperator(org.eclipse.jdt.core.dom.InfixExpression.Operator o, type k) {
+      @Override public type underBinaryOperator(final org.eclipse.jdt.core.dom.InfixExpression.Operator o, final type k) {
         throw new NotImplementedException("code of this function was not implemented yet");
       }
 
-      @Override public type underBitwiseOperation(type k) {
+      @Override public type underBitwiseOperation(final type k) {
         throw new NotImplementedException("code of this function was not implemented yet k=" + k);
       }
 
@@ -545,15 +545,15 @@ interface type {
         throw new NotImplementedException("code of this function was not implemented yet");
       }
 
-      @Override public type underIntegersOnlyOperator(type k) {
+      @Override public type underIntegersOnlyOperator(final type k) {
         throw new NotImplementedException("code of this function was not implemented yet k =" + k);
       }
 
-      @Override public type underNumericOnlyOperator(type k) {
+      @Override public type underNumericOnlyOperator(final type k) {
         throw new NotImplementedException("code of this function was not implemented yet; k = " + k);
       }
 
-      @Override public type underPlus(type k) {
+      @Override public type underPlus(final type k) {
         throw new NotImplementedException("code of this function was not implemented yet; k = " + k);
       }
     }
@@ -622,12 +622,12 @@ interface type {
         throw new NotImplementedException("code of this function was not implemented yet");
       }
 
-      @Override public boolean canB(Certain ¢) {
+      @Override public boolean canB(final Certain ¢) {
         throw new NotImplementedException("code of this function was not implemented yet; ¢=" + ¢);
       }
 
       @Override public String description() {
-        return this.description;
+        return description;
       }
 
       @Override public boolean isAlphaNumeric() {
@@ -650,15 +650,15 @@ interface type {
         throw new NotImplementedException("code of this function was not implemented yet");
       }
 
-      @Override public type under(Operator o) {
+      @Override public type under(final Operator o) {
         throw new NotImplementedException("code of this function was not implemented yet; ¢=" + o);
       }
 
-      @Override public type underBinaryOperator(InfixExpression.Operator o, type k) {
+      @Override public type underBinaryOperator(final InfixExpression.Operator o, final type k) {
         throw new NotImplementedException("code of this function was not implemented yet; ¢=" + k + " o =" + o);
       }
 
-      @Override public type underBitwiseOperation(type k) {
+      @Override public type underBitwiseOperation(final type k) {
         throw new NotImplementedException("code of this function was not implemented yet; ¢=" + k);
       }
 
@@ -666,15 +666,15 @@ interface type {
         throw new NotImplementedException("code of this function was not implemented yet");
       }
 
-      @Override public type underIntegersOnlyOperator(type k) {
+      @Override public type underIntegersOnlyOperator(final type k) {
         throw new NotImplementedException("code of this function was not implemented yet; ¢=" + k);
       }
 
-      @Override public type underNumericOnlyOperator(type k) {
+      @Override public type underNumericOnlyOperator(final type k) {
         throw new NotImplementedException("code of this function was not implemented yet; ¢=" + k);
       }
 
-      @Override public type underPlus(type k) {
+      @Override public type underPlus(final type k) {
         throw new NotImplementedException("code of this function was not implemented yet; ¢=" + k);
       }
     }

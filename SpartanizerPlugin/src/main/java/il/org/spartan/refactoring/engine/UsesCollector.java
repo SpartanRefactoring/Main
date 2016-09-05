@@ -124,8 +124,8 @@ class UnsafeUsesCollector extends UsesCollector {
 
 class UsesCollector extends HidingDepth {
   private final List<SimpleName> result;
-
   private final SimpleName focus;
+
   UsesCollector(final List<SimpleName> result, final SimpleName focus) {
     this.result = result;
     this.focus = focus;
