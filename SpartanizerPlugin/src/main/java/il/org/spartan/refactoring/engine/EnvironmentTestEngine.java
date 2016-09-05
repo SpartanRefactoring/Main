@@ -11,7 +11,7 @@ import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.java.*;
 
 public class EnvironmentTestEngine {
-  static Set<Entry<String, Information>> generateSet() {
+  static Set<Entry<String, Environment.Information>> generateSet() {
     return Collections.unmodifiableSet(new HashSet<>());
   }
 
@@ -42,8 +42,8 @@ public class EnvironmentTestEngine {
     return $ != null && $.exists() ? $ : null;
   }
 
-  static Set<Entry<String, Information>> listToSet(final List<Annotation> as) {
-    final Set<Entry<String, Information>> $ = Collections.unmodifiableSet(new HashSet<>());
+  static Set<Entry<String, Environment.Information>> listToSet(final List<Annotation> as) {
+    final Set<Entry<String, Environment.Information>> $ = Collections.unmodifiableSet(new HashSet<>());
     for (final Annotation ¢ : as) {
     }
     return $;
