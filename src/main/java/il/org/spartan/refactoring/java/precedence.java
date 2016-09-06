@@ -16,7 +16,7 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2015-07-14 */
 public enum precedence {
   ;
-  public final static int UNDEFINED = -1;
+  public static final int UNDEFINED = -1;
   private static final ChainStringToIntegerMap of = new ChainStringToIntegerMap()//
       .putOn(1, "[]", ".", "() invoke", "++ post", "-- post", "MethodInvocation", "PostfixExpression", "ArrayAccess", "FieldAccess", "QualifiedName") //
       .putOn(2, "++ pre", "-- pre", "+ unary", "- unary", "!", "~", "PrefixExpression") //

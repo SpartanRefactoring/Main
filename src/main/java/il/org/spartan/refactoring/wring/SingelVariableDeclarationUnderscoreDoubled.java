@@ -13,8 +13,7 @@ import il.org.spartan.refactoring.wring.Wring.*;
  * @since 2016-05-08 */
 @SuppressWarnings({ "javadoc", "unused", "hiding", "unchecked" }) public final class SingelVariableDeclarationUnderscoreDoubled
     extends ReplaceCurrentNodeExclude<SingleVariableDeclaration> implements Kind.UnusedArguments {
-  // true iff renaming annotated variables only
-  final static boolean BY_ANNOTATION = true;
+  static final boolean BY_ANNOTATION = true;
 
   public static boolean isUsed(final MethodDeclaration d, final SimpleName n) {
     final IsUsed u = new IsUsed(n);

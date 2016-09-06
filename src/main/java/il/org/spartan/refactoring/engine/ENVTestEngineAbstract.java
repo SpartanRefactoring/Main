@@ -74,10 +74,11 @@ public abstract class ENVTestEngineAbstract {
     handler(az.singleMemberAnnotation(¢));
   }
 
-  /** Parse the outer annotation to get the inner ones. Add to the flat Set.
-   * Compare uses() and declares() output to the flat Set.
-   * @param $ JD */
-  abstract protected void handler(final SingleMemberAnnotation $);
+  /**
+   * Parse the outer annotation to get the inner ones. Add to the flat Set. Compare uses() and declares() output to the flat Set.
+   * @param $  JD 
+   */
+  protected abstract void handler(final SingleMemberAnnotation $);
 
   /* define: outer annotation = OutOfOrderNestedENV, InOrderFlatENV, Begin, End.
    * define: inner annotation = Id. ASTVisitor that goes over the ASTNodes in

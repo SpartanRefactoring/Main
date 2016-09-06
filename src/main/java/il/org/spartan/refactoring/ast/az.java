@@ -249,6 +249,6 @@ public enum az {
    *         {@link ASTNode}, or <code><b>null</b></code>
    *         if no such down-cast is possible.. */
   public static ASTNode astNode(final Object ¢) {
-    return iz.astNode(¢) ? (ASTNode) ¢ : null;
+    return !iz.astNode(¢)?null:(ASTNode)¢;
   }
 }

@@ -37,9 +37,8 @@ interface type {
    *         expression from it's structure, or {@link #NOTHING} if it cannot
    *         decide. Will never return null */
   static type prudent(final Expression x) {
-    if (getType(x) != null){
+    if (getType(x) != null)
       return getType(x);
-    }
     switch (x.getNodeType()) {
       case NULL_LITERAL:
         return NULL;
@@ -208,25 +207,24 @@ interface type {
     }
   }
 
-  /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
-   *         {@link BYTE}, {@link SHORT}, {@link FLOAT}, {@link #DOUBLE},
-   *         {@link #INTEGRAL} or {@link #NUMERIC}, {@link #STRING},
-   *         {@link #ALPHANUMERIC} or false otherwise */
-  public default boolean isAlphaNumeric() {
+  /**
+   * @return  true if one of  {@link #INT} ,  {@link #LONG} ,  {@link #CHAR} , {@link BYTE} ,  {@link SHORT} ,  {@link FLOAT} ,  {@link #DOUBLE} , {@link #INTEGRAL}  or  {@link #NUMERIC} ,  {@link #STRING} , {@link #ALPHANUMERIC}  or false otherwise 
+   */
+  default boolean isAlphaNumeric() {
     return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC, STRING, ALPHANUMERIC);
   }
 
-  /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
-   *         {@link BYTE}, {@link SHORT}, {@link #INTEGRAL} or false
-   *         otherwise */
-  public default boolean isIntegral() {
+  /**
+   * @return  true if one of  {@link #INT} ,  {@link #LONG} ,  {@link #CHAR} , {@link BYTE} ,  {@link SHORT} ,  {@link #INTEGRAL}  or false otherwise 
+   */
+  default boolean isIntegral() {
     return in(this, LONG, INT, CHAR, BYTE, SHORT, INTEGRAL);
   }
 
-  /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
-   *         {@link BYTE}, {@link SHORT}, {@link FLOAT}, {@link #DOUBLE},
-   *         {@link #INTEGRAL}, {@link #NUMERIC} or false otherwise */
-  public default boolean isNumeric() {
+  /**
+   * @return  true if one of  {@link #INT} ,  {@link #LONG} ,  {@link #CHAR} , {@link BYTE} ,  {@link SHORT} ,  {@link FLOAT} ,  {@link #DOUBLE} , {@link #INTEGRAL} ,  {@link #NUMERIC}  or false otherwise 
+   */
+  default boolean isNumeric() {
     return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC);
   }
 
