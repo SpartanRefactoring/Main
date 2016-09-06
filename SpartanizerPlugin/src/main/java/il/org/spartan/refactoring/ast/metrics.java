@@ -1,5 +1,6 @@
 package il.org.spartan.refactoring.ast;
 
+import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -49,8 +50,8 @@ public interface metrics {
     final Recurser<Integer> recurse = new Recurser<>(n, 0);
     final Function<Recurser<Integer>, Integer> counter = (x) -> { //
       if(!Recurser.getChildren(x.getRoot()).isEmpty()) //
-          return x.getCurrent()+1;
-      return x.getCurrent();
+          return x.getCurrent()+1; //
+      return x.getCurrent(); //
     };
     return recurse.preVisit(counter);
   }
@@ -71,7 +72,18 @@ public interface metrics {
 
   /** @param n JD
    * @return The total number of distinct kind of nodes in the AST */
-  static int dexterity(final ASTNode n) {
-    return 0;
+  @SuppressWarnings("boxing") static int dexterity(final ASTNode n) {
+    if(n==null)
+      return 0;
+    final Recurser<Integer> recurse = new Recurser<>(n, 0);
+    Set<Integer> nodesTypeSet = new HashSet<>(); 
+    final Function<Recurser<Integer>, Integer> counter = (x) -> { //
+      if(!nodesTypeSet.contains(x.getRoot().getNodeType())){ //
+        nodesTypeSet.add(x.getRoot().getNodeType());   //
+        return x.getCurrent()+1; //
+      }
+      return x.getCurrent();
+    };
+    return recurse.preVisit(counter);
   }
 }
