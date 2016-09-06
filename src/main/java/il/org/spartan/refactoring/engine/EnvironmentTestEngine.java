@@ -104,19 +104,6 @@ public class EnvironmentTestEngine {
     }
   }
 
-  class X {
-    int a = a() / b();
-    int b = 2 * a + b();
-
-    int a() {
-      return a + b + 2 * a();
-    }
-
-    int b() {
-      return b() + b * a();
-    }
-  }
-
   /** Compares output Set (testFlatENV) with provided set, that will be the
    * result of the flat version of defines.
    * @param $ */
@@ -197,7 +184,10 @@ public class EnvironmentTestEngine {
       void flatHandler(final Annotation ¢) {
         flatHandler(az.singleMemberAnnotation(¢));
       }
-
+      
+      boolean isNameId(Name n1) {
+        return "@Id".equals("" + n1);
+      }
       /** Parse the outer annotation to get the inner ones. Add to the flat Set.
        * Compare uses() and declares() output to the flat Set.
        * @param $ JD */
@@ -205,10 +195,16 @@ public class EnvironmentTestEngine {
         if ($ == null)
           return;
         $.accept(new ASTVisitor() {
-          /* @Override public boolean visit(NormalAnnotation ¢){ if
-           * (isNameId(¢.getTypeName())) {
-           *
-           * testFlatENV.addAll(); } return true; } */
+           @Override public boolean visit(NormalAnnotation ¢){
+             if (isNameId(¢.getTypeName()))
+              addValueToSetsDispatch(values(¢), AnnotationType.FLAT);
+           return true;
+           }
+
+          @SuppressWarnings("unchecked")
+          List<MemberValuePair> values(NormalAnnotation ¢) {
+            return ¢.values();
+          }
         });
       }
 
@@ -228,17 +224,5 @@ public class EnvironmentTestEngine {
         return true;
       }
     });
-  }
-}
-
-class A {
-  B a() {
-    return null;
-  }
-}
-
-class B {
-  A b() {
-    return null;
   }
 }
