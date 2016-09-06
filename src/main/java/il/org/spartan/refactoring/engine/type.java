@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.engine;
 
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.refactoring.engine.type.Odd.Types.*;
 import static il.org.spartan.refactoring.engine.type.Primitive.Certain.*;
 import static il.org.spartan.refactoring.engine.type.Primitive.Uncertain.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
@@ -29,48 +30,6 @@ interface type {
    *         return null */
   public static type prudent(final Expression x) {
     return prudent(x, null, null);
-  }
-
-  @SuppressWarnings("unused") static Primitive.Certain axiom(final boolean x) {
-    return Primitive.Certain.BOOLEAN;
-  }
-
-  // from here on is the axiom method used for testing of Doubt. see issue
-  // #105 for more details
-  @SuppressWarnings("unused") static Primitive.Certain axiom(final byte x) {
-    return BYTE;
-  }
-
-  @SuppressWarnings("unused") static Primitive.Certain axiom(final char x) {
-    return CHAR;
-  }
-
-  @SuppressWarnings("unused") static Primitive.Certain axiom(final double x) {
-    return DOUBLE;
-  }
-
-  @SuppressWarnings("unused") static Primitive.Certain axiom(final float x) {
-    return FLOAT;
-  }
-
-  @SuppressWarnings("unused") static Primitive.Certain axiom(final int x) {
-    return INT;
-  }
-
-  @SuppressWarnings("unused") static Primitive.Certain axiom(final long x) {
-    return LONG;
-  }
-
-  @SuppressWarnings("unused") static Primitive.Certain axiom(final Object o) {
-    return OBJECT;
-  }
-
-  @SuppressWarnings("unused") static Primitive.Certain axiom(final short x) {
-    return SHORT;
-  }
-
-  @SuppressWarnings("unused") static type.Primitive.Certain axiom(final String x) {
-    return STRING;
   }
 
   static type baptize(final String name) {
@@ -449,12 +408,73 @@ interface type {
     return in(STRING, this, k) || in(NULL, this, k) ? STRING : !isNumeric() || !k.isNumeric() ? ALPHANUMERIC : underNumericOnlyOperator(k);
   }
 
+  @SuppressWarnings("unused") interface Axiom {
+    static type.Primitive.Certain type(final boolean x) {
+      return type.Primitive.Certain.BOOLEAN;
+    }
+
+    // from here on is the axiom method used for testing of Doubt. see issue
+    // #105 for more details
+    static type.Primitive.Certain type(final byte x) {
+      return BYTE;
+    }
+
+    static type.Primitive.Certain type(final char x) {
+      return CHAR;
+    }
+
+    static type.Primitive.Certain type(final double x) {
+      return DOUBLE;
+    }
+
+    static type.Primitive.Certain type(final float x) {
+      return FLOAT;
+    }
+
+    static type.Primitive.Certain type(final int x) {
+      return INT;
+    }
+
+    static type.Primitive.Certain type(final long x) {
+      return LONG;
+    }
+
+    static type.Odd type(final Object o) {
+      return OBJECT;
+    }
+
+    static type.Primitive.Certain type(final short x) {
+      return SHORT;
+    }
+
+    static type.Primitive.Certain type(final String x) {
+      return STRING;
+    }
+  }
+
   public static class NotImplementedException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
     public NotImplementedException(final String message) {
       super(message);
     }
+  }
+
+  interface Odd extends type {
+    /** TODO: Not sure we need all these {@link type.Odd.Types} values. */
+    enum Types implements Odd {
+      OBJECT("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"), //
+      NULL("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"), //
+      VOID("void", "nothing at all"),//
+      ;
+      final String description;
+      final String name;
+
+      Types(final String name, final String description) {
+        this.name = name;
+        this.description = description;
+      }
+    };
   }
 
   interface Primitive extends type {
@@ -469,12 +489,8 @@ interface type {
       FLOAT("float", "must be float: 2f, 2.3f+1, 2F-f()"), //
       INT("int", "must be int: 2, 2*(int)f(), 2%(int)f(), 'a'*2 , no 2*f()"), //
       LONG("long", "must be long: 2L, 2*(long)f(), 2%(long)f(), no 2*f()"), //
-      NULL("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"), //
-      // TODO: the next line is a bug; let's see if our tests will catch it.
-      OBJECT("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"), //
       SHORT("short", "must be short: (short)15, nothing else"), //
       STRING("String", "must be string: \"\"+a, a.toString(), f()+null, not f()+g()"), //
-      VOID("void", "nothing at all"),//
       ;
       final String description;
       final String name;
@@ -628,10 +644,6 @@ interface type {
 
       @Override public String description() {
         return description;
-      }
-
-      @Override public boolean isAlphaNumeric() {
-        throw new NotImplementedException("code of this function was not implemented yet");
       }
 
       @Override public boolean isIntegral() {
