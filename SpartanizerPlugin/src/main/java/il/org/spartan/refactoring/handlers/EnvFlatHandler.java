@@ -5,6 +5,7 @@ import java.util.Map.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.java.Environment.*;
@@ -26,10 +27,14 @@ public class EnvFlatHandler extends ENVTestEngineAbstract {
     return Environment.uses(d);
   }
 
+  @Override protected void handler(final Annotation $){
+    handler(az.singleMemberAnnotation($));
+  }
+  
   /** Parse the outer annotation to get the inner ones. Add to the flat Set.
    * Compare uses() and declares() output to the flat Set.
    * @param $ JD */
-  @Override protected void handler(final SingleMemberAnnotation a) {
+  void handler(final SingleMemberAnnotation a) {
     assert a != null && !"@OutOfOrderflatENV".equals(a.getTypeName() + "");
     if (!"OutOfOrderflatENV".equals(a.getTypeName() + ""))
       return;
