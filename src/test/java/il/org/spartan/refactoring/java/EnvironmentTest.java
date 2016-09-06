@@ -605,7 +605,7 @@ public class EnvironmentTest {
     s.add(new MapEntry<>("EX.s", new Information()));
     s.add(new MapEntry<>("EX.ss",new Information()));
     s.add(new MapEntry<>("EX.C1.i", new Information()));
-    e.compareFlatInOrder(s);
+    e.compareNested(s);
   }
   
   @Ignore public void EngineTestNested02(){
@@ -619,7 +619,7 @@ public class EnvironmentTest {
     s.add(new MapEntry<>("EX.s", new Information()));
     s.add(new MapEntry<>("EX.ss",new Information()));
     s.add(new MapEntry<>("EX.C1.s", new Information()));
-    e.compareFlatInOrder(s);
+    e.compareNested(s);
   }
   
   
