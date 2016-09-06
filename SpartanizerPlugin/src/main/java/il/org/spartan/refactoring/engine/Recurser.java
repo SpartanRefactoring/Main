@@ -13,7 +13,7 @@ public class Recurser<T> {
   /** Get a list of the direct children of a ASTNode
    * @param n an ASTNode
    * @return a list of n's children */
-  private static List<ASTNode> getChildren(final ASTNode n) {
+  public static List<ASTNode> getChildren(final ASTNode n) {
     if (n == null)
       return new ArrayList<>();
     final InfixExpression ¢ = az.infixExpression(n);
