@@ -1,12 +1,14 @@
 package il.org.spartan.refactoring.engine;
 
+import static il.org.spartan.azzert.*;
+
+import java.io.*;
 import java.util.*;
 import java.util.Map.*;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.java.Environment.*;
@@ -23,38 +25,18 @@ public class EnvironmentTestEngine {
 
   /** @param from - file path
    * @return CompilationUnit of the code written in the file specified. */
-  // s = "il.org.spartan.refactoring.java.EnvironmentCodeExamples.java"
-  static CompilationUnit getCompilationUnit(final String from) {
-    final IJavaProject javaProject = getJavaProject("spartenRefactoring");
-    IType iType;
-    CompilationUnit $ = null;
-    // use MakeAST
-    try {
-      iType = javaProject.findType(from);
-      final ICompilationUnit iCompilationUnit = iType.getCompilationUnit();
-      final ASTParser parser = ASTParser.newParser(AST.JLS8);
-      parser.setKind(ASTParser.K_COMPILATION_UNIT);
-      parser.setSource(iCompilationUnit);
-      parser.setResolveBindings(true); // we need bindings later on
-      $ = (CompilationUnit) parser.createAST(null);
-    } catch (final JavaModelException e) {
-      e.printStackTrace();
-    }
-    return $;
-  }
-
-  private static IJavaProject getJavaProject(final String projectName) {
-    final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
-    if (project == null)
-      return null;
-    final IJavaProject $ = JavaCore.create(project);
-    return $ != null && $.exists() ? $ : null;
-  }
-
-  static Set<Entry<String, Environment.Information>> listToSet(final List<Annotation> as) {
-    final Set<Entry<String, Environment.Information>> $ = Collections.unmodifiableSet(new HashSet<>());
-    for (final Annotation ¢ : as) {
-    }
+  static ASTNode getCompilationUnit(final String from){
+    final String ROOT = "./src/test/resources/";
+    File f = new File(ROOT + from);
+    
+    azzert.notNull(ROOT);
+    azzert.notNull(from);
+    azzert.notNull(f);
+    azzert.aye(f.exists());
+    ASTNode $ = makeAST.COMPILATION_UNIT.from(f);
+    azzert.notNull($);
+    azzert.that($, instanceOf(CompilationUnit.class));
+    
     return $;
   }
 
@@ -228,17 +210,5 @@ public class EnvironmentTestEngine {
         return true;
       }
     });
-  }
-}
-
-class A {
-  B a() {
-    return null;
-  }
-}
-
-class B {
-  A b() {
-    return null;
   }
 }
