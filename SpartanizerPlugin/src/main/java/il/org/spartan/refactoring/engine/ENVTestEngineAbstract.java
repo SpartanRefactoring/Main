@@ -52,8 +52,7 @@ public abstract class ENVTestEngineAbstract {
 
   abstract protected void annotationToSet(final List<MemberValuePair> ps);
 
-  /** Compares output Set (testFlatENV) with provided set, that will be the
-   * result of the flat version of defines.
+  /** Compares the set from the annotation with the set that the checked function generates.
    * @param $ */
   // Go over both sets in serial manner, and make sure every two members are
   // equal.
@@ -61,8 +60,7 @@ public abstract class ENVTestEngineAbstract {
   // azzert.fail Otherwise.
   abstract protected void compareInOrder(final Set<Entry<String, Information>> $);
 
-  /** Compares flat output Set (flat) with provided Set, that will be the result
-   * of the flat version of defines.
+  /** Compares the set from the annotation with the set that the checked function generates.
    * @param $ */
   // Check that each member of $ is contained in FlatENV, and that the size is
   // equal.
