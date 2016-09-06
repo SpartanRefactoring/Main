@@ -1,4 +1,5 @@
 package il.org.spartan.refactoring.engine;
+
 import il.org.spartan.as;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.engine.type.Odd.Types.*;
@@ -22,13 +23,55 @@ import il.org.spartan.refactoring.utils.*;
 interface type {
   /** All type that were ever born */
   static Map<String, type> types = new LinkedHashMap<>();
+  static String propertyName = "spartan type";
 
+  /** @param n JD
+   * @return the type information stored inside the node n, or null if there is
+   *         none */
+  static type getType(ASTNode n) {
+    return (type) n.getProperty(propertyName);
+  }
+ 
   /** @param x JD
    * @return The most specific Type information that can be deduced about the
-   *         expression, or {@link #NOTHING} if it cannot decide. Will never
-   *         return null */
-   static type prudent(final Expression x) {
-    return prudent(x, null, null);
+   *         expression from it's structure, or {@link #NOTHING} if it cannot
+   *         decide. Will never return null */
+  static type prudent(final Expression x) {
+    if (getType(x) != null){
+      return getType(x);
+    }
+    switch (x.getNodeType()) {
+      case NULL_LITERAL:
+        return NULL;
+      case CHARACTER_LITERAL:
+        return CHAR;
+      case STRING_LITERAL:
+        return STRING;
+      case BOOLEAN_LITERAL:
+        return BOOLEAN;
+      case NUMBER_LITERAL:
+        return prudent((NumberLiteral) x);
+      case CAST_EXPRESSION:
+        return prudent((CastExpression) x);
+      case PREFIX_EXPRESSION:
+        return prudent((PrefixExpression) x);
+      case INFIX_EXPRESSION:
+        return prudent((InfixExpression) x);
+      case POSTFIX_EXPRESSION:
+        return prudent((PostfixExpression) x);
+      case PARENTHESIZED_EXPRESSION:
+        return prudent((ParenthesizedExpression) x);
+      case CLASS_INSTANCE_CREATION:
+        return prudent((ClassInstanceCreation) x);
+      case METHOD_INVOCATION:
+        return prudent((MethodInvocation) x);
+      case CONDITIONAL_EXPRESSION:
+        return prudent((ConditionalExpression) x);
+      case ASSIGNMENT:
+        return prudent((Assignment) x);
+      default:
+        return NOTHING;
+    }
   }
 
   static type baptize(final String name) {
@@ -68,112 +111,40 @@ interface type {
     return types.containsKey(name);
   }
 
-  static type prudent(final Assignment x, final type t) {
-    final type $ = t != null ? t : prudent(x.getLeftHandSide());
+  static type prudent(final Assignment x) {
+    final type $ = prudent(x.getLeftHandSide());
     return !$.isNoInfo() ? $ : prudent(x.getRightHandSide()).isNumeric() ? NUMERIC : prudent(x.getRightHandSide());
   }
 
   static type prudent(final CastExpression x) {
-    return typeSwitch("" + step.type(x), BAPTIZED);
+    return typeSwitch("" + step.type(x));
   }
 
   static type prudent(final ClassInstanceCreation c) {
-    return typeSwitch("" + c.getType(), NONNULL);
+    return typeSwitch("" + c.getType());
   }
 
-  static type prudent(final ConditionalExpression x, final type t1, final type t2) {
-    final type $ = t1 != null ? t1 : prudent(x.getThenExpression());
-    final type ¢2 = t2 != null ? t2 : prudent(x.getElseExpression());
+  static type prudent(final ConditionalExpression x) {
+    final type $ = prudent(x.getThenExpression());
+    final type ¢ = prudent(x.getElseExpression());
     // If we don't know much about one operand but do know enough about the
     // other, we can still learn something
-    return $ == ¢2 ? $
-        : $.isNoInfo() || ¢2.isNoInfo() ? conditionalWithNoInfo($.isNoInfo() ? ¢2 : $) //
-            : $.isIntegral() && ¢2.isIntegral() ? $.underIntegersOnlyOperator(¢2) //
-                : $.isNumeric() && ¢2.isNumeric() ? $.underNumericOnlyOperator(¢2)//
+    return $ == ¢ ? $
+        : $.isNoInfo() || ¢.isNoInfo() ? conditionalWithNoInfo($.isNoInfo() ? ¢ : $) //
+            : $.isIntegral() && ¢.isIntegral() ? $.underIntegersOnlyOperator(¢) //
+                : $.isNumeric() && ¢.isNumeric() ? $.underNumericOnlyOperator(¢)//
                     : NOTHING; //
   }
 
-  /** A version of {@link #prudent(Expression)} that receives the a list of the
-   * operands' type for all operands of an expression. To be used for
-   * InfixExpression that has extended operand. The order of the type's should
-   * much the order of the operands returned by extract.allOperands(), and for
-   * any operand whose type is unknown, there should be a null. The list won't
-   * be used if the size of the list doesn't match that of
-   * extract.allOperands().
-   * @param ts list of types of operands. Must be at least of size 2 */
-  static type prudent(final Expression x, final List<type> ts) {
-    assert ts.size() >= 2;
-    switch (x.getNodeType()) {
-      case NULL_LITERAL:
-        return NULL;
-      case CHARACTER_LITERAL:
-        return CHAR;
-      case STRING_LITERAL:
-        return STRING;
-      case BOOLEAN_LITERAL:
-        return BOOLEAN;
-      case NUMBER_LITERAL:
-        return prudent((NumberLiteral) x);
-      case CAST_EXPRESSION:
-        return prudent((CastExpression) x);
-      case PREFIX_EXPRESSION:
-        return prudent((PrefixExpression) x, lisp.first(ts));
-      case INFIX_EXPRESSION:
-        return prudent((InfixExpression) x, ts);
-      case POSTFIX_EXPRESSION:
-        return prudent((PostfixExpression) x, lisp.first(ts));
-      case PARENTHESIZED_EXPRESSION:
-        return prudent((ParenthesizedExpression) x, lisp.first(ts));
-      case CLASS_INSTANCE_CREATION:
-        return prudent((ClassInstanceCreation) x);
-      case METHOD_INVOCATION:
-        return prudent((MethodInvocation) x);
-      case CONDITIONAL_EXPRESSION:
-        return prudent((ConditionalExpression) x, lisp.first(ts), lisp.second(ts));
-      case ASSIGNMENT:
-        return prudent((Assignment) x, lisp.first(ts));
-      default:
-        return NOTHING;
-    }
-  }
-
-  /** A version of {@link #prudent(Expression)} that receives the operand's type
-   * for a single operand expression. The call kind(e,null) is equivalent to
-   * kind(e) */
-  static type prudent(final Expression x, final type t) {
-    return prudent(x, t, null);
-  }
-
-  /** A version of {@link #prudent(Expression)} that receives the operands' type
-   * for a two operand expression. The call kind(e,null,null) is equivalent to
-   * kind(e)
-   * @param t1 the type of the left hand operand of the expression, the type of
-   *        the then expression of the conditional, or null if unknown
-   * @param t2 the type of the left hand operand of the expression, the type of
-   *        the else expression of the conditional, or null if unknown */
-  static type prudent(final Expression x, final type t1, final type t2) {
-    final List<type> ¢ = new ArrayList<>();
-    ¢.add(t1);
-    ¢.add(t2);
-    return prudent(x, ¢);
-  }
-
-  static type prudent(final InfixExpression x, final List<type> ts) {
+  static type prudent(final InfixExpression x) {
     final InfixExpression.Operator o = x.getOperator();
     final List<Expression> es = extract.allOperands(x);
     assert es.size() >= 2;
-    final List<type> ¢ = new ArrayList<>();
-    if (ts.size() != es.size())
-      for (int i = 0; i < es.size(); ++i)
-        ¢.add(i, prudent(es.get(i)));
-    else
-      for (int i = 0; i < ts.size(); ++i)
-        ¢.add(i, ts.get(i) != null ? ts.get(i) : prudent(es.get(i)));
-    type $ = lisp.first(¢).underBinaryOperator(o, lisp.second(¢));
-    lisp.chop(lisp.chop(¢));
-    while (!¢.isEmpty()) {
-      $ = $.underBinaryOperator(o, lisp.first(¢));
-      lisp.chop(¢);
+    type $ = prudent(lisp.first(es)).underBinaryOperator(o, prudent(lisp.second(es)));
+    lisp.chop(lisp.chop(es));
+    while (!es.isEmpty()) {
+      $ = $.underBinaryOperator(o, prudent(lisp.first(es)));
+      lisp.chop(es);
     }
     return $;
   }
@@ -192,20 +163,19 @@ interface type {
                 : ¢.matches("[0-9]+\\.[0-9]*[d,D]?") || ¢.matches("[0-9]+[d,D]") ? DOUBLE : NUMERIC;
   }
 
-  static type prudent(final ParenthesizedExpression x, final type t) {
-    return t != null ? t : prudent(extract.core(x));
+  static type prudent(final ParenthesizedExpression x) {
+    return prudent(extract.core(x));
   }
 
-  static type prudent(final PostfixExpression x, final type t1) {
-    return (t1 != null ? t1 : prudent(x.getOperand())).asNumeric(); // see
-                                                                    // testInDecreamentSemantics
+  static type prudent(final PostfixExpression x) {
+    return prudent(x.getOperand()).asNumeric(); // see testInDecreamentSemantics
   }
 
-  static type prudent(final PrefixExpression x, final type t1) {
-    return (t1 != null ? t1 : prudent(x.getOperand())).under(x.getOperator());
+  static type prudent(final PrefixExpression x) {
+    return prudent(x.getOperand()).under(x.getOperator());
   }
 
-  static type typeSwitch(final String s, final type $) {
+  static type typeSwitch(final String s) {
     switch (s) {
       case "byte":
       case "Byte":
@@ -234,7 +204,7 @@ interface type {
       case "String":
         return STRING;
       default:
-        return $;
+        return baptize(s, s); // TODO: what should be the description here?
     }
   }
 
@@ -316,7 +286,7 @@ interface type {
    *         {@link #NONNULL}, {@link #VOID}, {@link #NULL} or false
    *         otherwise */
   default boolean isNoInfo() {
-    return in(this, NOTHING, BAPTIZED, NONNULL, VOID, NULL);
+    return in(this, NOTHING, NULL);
   }
 
   default type join() {
@@ -414,8 +384,11 @@ interface type {
     return in(STRING, this, k) || in(NULL, this, k) ? STRING : !isNumeric() || !k.isNumeric() ? ALPHANUMERIC : underNumericOnlyOperator(k);
   }
 
-  /** Please doc
-   * @author Niv TODO: was that you?
+  /** An interface with one method- axiom, overloaded for many different
+   * parameter types. Can be used to find the type of an expression thats known
+   * at compile time by using overloading. Only use for testing, mainly for
+   * testing of type.
+   * @author Shalmon Niv
    * @year 2016 */
   @SuppressWarnings("unused") interface Axiom {
     static type.Primitive.Certain type(final boolean x) {
@@ -463,17 +436,15 @@ interface type {
 
   /** Types we do not full understand yet.
    * @author Yossi Gil
+   * @author Shalmon Niv
    * @year 2016 */
   interface Odd extends type {
     // Those anonymous characters that known little or nothing about
     // themselves
     /** TODO: Not sure we need all these {@link type.Odd.Types} values. */
     enum Types implements Odd {
-      BAPTIZED("!double&!long&!int", "an object of some type, for which we have a name only"), //
       OBJECT("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"), //
       NULL("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"), //
-      NONNULL("!null", "e.g., new Object() and that's about it"), //
-      VOID("void", "nothing at all"), //
       NOTHING("none", "when nothing can be said, e.g., f(f(),f(f(f()),f()))"), //
       ;
       private final String description;
@@ -564,7 +535,7 @@ interface type {
       ALPHANUMERIC("String|double|float|long|int|char|short|byte", "only in binary plus: f()+g(), 2 + f(), nor f() + null"), //
       BOOLEANINTEGRAL(as.list(BOOLEAN, BYTE, SHORT, CHAR, INT, LONG), "only in x^y,x&y,x|y"), //
       INTEGER(as.list(INT, LONG), "must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() "), //
-      INTEGRAL(as.list(BYTE, CHAR, SHORT, INT, LONG),"must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() "), //
+      INTEGRAL(as.list(BYTE, CHAR, SHORT, INT, LONG), "must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() "), //
       NUMERIC("double|float|long|int|char|short|byte", "must be either f()*g(), 2L*f(), 2.*a(), not 2 %a(), nor 2"), //
       ;
       final String description;
