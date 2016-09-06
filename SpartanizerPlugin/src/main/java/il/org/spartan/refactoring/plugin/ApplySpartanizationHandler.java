@@ -1,4 +1,4 @@
-package il.org.spartan.refactoring.handlers;
+package il.org.spartan.refactoring.plugin;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.core.runtime.*;
@@ -7,6 +7,7 @@ import org.eclipse.jface.text.*;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.ui.*;
 
+import il.org.spartan.refactoring.handlers.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.wring.*;
 import il.org.spartan.utils.*;
