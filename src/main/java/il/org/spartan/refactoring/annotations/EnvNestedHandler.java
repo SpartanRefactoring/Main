@@ -1,38 +1,46 @@
-package il.org.spartan.refactoring.handlers;
+package il.org.spartan.refactoring.annotations;
 
 import java.util.*;
 import java.util.Map.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.java.Environment.*;
 
-/*
- * Implements the handler of flatEnv outer annotation.
- */
-public class EnvFlatHandler extends ENVTestEngineAbstract {
-  Set<Entry<String, Environment.Information>> testSet;
-
-  public EnvFlatHandler(final ASTNode $) {
+public class EnvNestedHandler extends ENVTestEngineAbstract {
+  public EnvNestedHandler(final ASTNode $) {
     n = $;
     testSet = generateSet();
   }
 
-  public EnvFlatHandler(final String ¢) {
+  public EnvNestedHandler(final String ¢) {
     n = getCompilationUnit(¢);
     testSet = generateSet();
   }
 
-  @Override protected Set<Entry<String, Information>> buildEnvironmentSet(final BodyDeclaration d) {
-    return Environment.uses(d);
+  /* TODO Update EnvironmentCodeExamples - currently NestedENV does not
+   * represent the expected results of neither Environment.uses or
+   * Environment.declares. Should be the expected result of
+   * Environment.declares.
+   *
+   * @see
+   * il.org.spartan.refactoring.engine.ENVTestEngineAbstract#buildEnvironmentSet
+   * (org.eclipse.jdt.core.dom.BodyDeclaration) */
+  @Override protected Set<Entry<String, Information>> buildEnvironmentSet(final BodyDeclaration $) {
+    return Environment.declares($);
+  }
+
+  @Override protected void handler(final Annotation ¢) {
+    handler(az.singleMemberAnnotation(¢));
   }
 
   /** Parse the outer annotation to get the inner ones. Add to the flat Set.
    * Compare uses() and declares() output to the flat Set.
    * @param $ JD */
-  @Override protected void handler(final SingleMemberAnnotation a) {
+  void handler(final SingleMemberAnnotation a) {
     assert a != null && !"@OutOfOrderflatENV".equals(a.getTypeName() + "");
     if (!"OutOfOrderflatENV".equals(a.getTypeName() + ""))
       return;
@@ -45,7 +53,7 @@ public class EnvFlatHandler extends ENVTestEngineAbstract {
       // runs on the Ids
       @Override public boolean visit(final NormalAnnotation ¢) {
         if (isNameId(¢.getTypeName()))
-          addTestSet(values(¢));
+          addValueToSet(values(¢));
         return true;
       }
     });

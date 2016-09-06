@@ -25,9 +25,9 @@ public enum make {
     return subject.pair(step.right(¢), step.left(¢)).to(wizard.conjugate(¢.getOperator()));
   }
 
-  public static ASTHolder from(final Expression x) {
-    assert x != null;
-    return new make.ASTHolder(x.getAST());
+  public static ASTHolder from(final ASTNode ¢) {
+    assert ¢ != null;
+    return new make.ASTHolder(¢.getAST());
   }
 
   public static IfStatement ifWithoutElse(final Statement s, final InfixExpression condition) {
@@ -103,11 +103,21 @@ public enum make {
         : "-" + token.substring(token.startsWith("+") ? 1 : 0);
   }
 
+  public static StringLiteral makeStringLiteral(final ASTNode ¢) {
+    return make.from(¢).literal("");
+  }
+
   public static class ASTHolder {
     private final AST ast;
 
     public ASTHolder(final AST ast) {
       this.ast = ast;
+    }
+
+    public StringLiteral literal(final String s) {
+      final StringLiteral $ = ast.newStringLiteral();
+      $.setLiteralValue(s);
+      return $;
     }
 
     public NumberLiteral literal(final int i) {

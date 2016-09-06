@@ -20,8 +20,11 @@ public final class ToStringToEmptyStringAddition extends Wring.ReplaceCurrentNod
     if (!"toString".equals(step.name(i).getIdentifier()) || !i.arguments().isEmpty())
       return null;
     final Expression receiver = step.receiver(i);
-    return receiver == null ? null
-        : !(i.getParent() instanceof MethodInvocation) ? subject.pair(receiver, i.getAST().newStringLiteral()).to(InfixExpression.Operator.PLUS)
-            : parethesized(subject.pair(receiver, i.getAST().newStringLiteral()).to(InfixExpression.Operator.PLUS));
+    return receiver == null ? null : !(i.getParent() instanceof MethodInvocation) ? subject.pair(receiver, //
+        il.org.spartan.refactoring.assemble.make.makeStringLiteral(i)//
+    ).to(InfixExpression.Operator.PLUS)
+        : parethesized(subject.pair(//
+            receiver, //
+            il.org.spartan.refactoring.assemble.make.makeStringLiteral(i)).to(InfixExpression.Operator.PLUS));
   }
 }

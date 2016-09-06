@@ -1,4 +1,4 @@
-package il.org.spartan.refactoring.handlers;
+package il.org.spartan.refactoring.plugin;
 
 import static il.org.spartan.Utils.*;
 
@@ -7,8 +7,6 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.ui.handlers.*;
-
-import il.org.spartan.refactoring.plugin.*;
 
 /** A command handler which toggles the spartanization nature
  * @see org.eclipse.core.commands.IHandler
