@@ -1,4 +1,4 @@
-package il.org.spartan.refactoring.preferences;
+package il.org.spartan.refactoring.plugin;
 
 import java.util.*;
 import java.util.List;

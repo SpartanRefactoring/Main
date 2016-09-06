@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.plugin.PluginPreferencesResources.*;
 
 public interface Kind {
   String description();

@@ -1,4 +1,4 @@
-package il.org.spartan.refactoring.builder;
+package il.org.spartan.refactoring.plugin;
 
 import static il.org.spartan.Utils.*;
 
