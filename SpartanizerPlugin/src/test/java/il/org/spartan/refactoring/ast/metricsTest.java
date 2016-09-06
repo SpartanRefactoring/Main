@@ -48,9 +48,7 @@ public class metricsTest {
 
   @Test public void issue128_8() {
     final Expression ¢ = into.e("a==4 ? 34 : 56+34+99");
-    final Recurser<Integer> recurse = new Recurser<>(¢, 0);
-    final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
-    assertEquals(9, (int) recurse.preVisit(accum));
+    assertEquals(9, metrics.nodes(¢));
   }
 
   @Test public void issue128_9() {
@@ -58,29 +56,49 @@ public class metricsTest {
     assertEquals(10,metrics.nodes(¢));
   }
 
-  @Test public void issue129_9() {
+  @Test public void issue129_10() {
     final Expression ¢ = into.e("g(false)||a(h())");
     assertEquals(5, metrics.nodes(¢));
   }
   
-  @Test public void issue128_10() {
+  @Test public void issue128_11() {
     final Expression ¢ = into.i("3+4");
     assertEquals(1, metrics.internals(¢));
   }
   
-  @Test public void issue128_11() {
+  @Test public void issue128_12() {
     final Expression ¢ = into.i("3+4");
     assertEquals(2, metrics.leaves(¢));
   }
   
-  @Test public void issue128_12() {
+  @Test public void issue128_13() {
     final Expression ¢ = into.e("a==4 ? 34 : 56");
     assertEquals(2, metrics.internals(¢));
   }
   
-  @Test public void issue128_13() {
+  @Test public void issue128_14() {
     final Expression ¢ = into.e("a==4 ? 34 : 56");
     assertEquals(4, metrics.leaves(¢));
+  }
+  
+  @Test public void issue128_15() {
+    final Expression ¢ = into.e("1+2");
+    assertEquals(2, metrics.dexterity(¢));
+  }
+  
+  @Test public void issue128_16() {
+    final Expression ¢ = into.e("a+2");
+    assertEquals(3, metrics.dexterity(¢));
+  }
+  
+  @Test public void issue128_17() {
+    final Expression ¢ = into.e("g(false)||a(h())");
+    assertEquals(3, metrics.dexterity(¢));
+  }
+  
+  @Test public void issue128_18() {
+    final Expression ¢ = into.e("a==4 ? (34++) : 56+34+99");
+    assertEquals(5, metrics.dexterity(¢));
   }
 
 }
