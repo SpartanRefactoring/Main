@@ -277,9 +277,7 @@ public class subject {
      * @param operands a list of expression, these are the operands */
     public Several(final List<Expression> operands) {
       super(lisp.first(operands));
-      this.operands = new ArrayList<>();
-      for (final Expression e : operands)
-        this.operands.add(claim(e));
+      this.operands = new ArrayList<>(operands);
     }
 
     /** Create an infix expression from the given operator and the operands

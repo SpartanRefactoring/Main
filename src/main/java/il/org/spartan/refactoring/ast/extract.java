@@ -388,7 +388,7 @@ public enum extract {
   public static List<Statement> statements(final ASTNode n) {
     final List<Statement> $ = new ArrayList<>();
     return n == null || !(n instanceof Statement) ? $ : //
-        extract.statementsinto((Statement) n, $);
+        extract.statementsInto((Statement) n, $);
   }
 
   /** @param n a node to extract an expression from
@@ -422,18 +422,18 @@ public enum extract {
     return null;
   }
 
-  private static List<Statement> statementsinto(final Block b, final List<Statement> $) {
+  private static List<Statement> statementsInto(final Block b, final List<Statement> $) {
     for (final Statement s : step.statements(b))
-      extract.statementsinto(s, $);
+      extract.statementsInto(s, $);
     return $;
   }
 
-  private static List<Statement> statementsinto(final Statement ¢, final List<Statement> $) {
+  private static List<Statement> statementsInto(final Statement ¢, final List<Statement> $) {
     switch (¢.getNodeType()) {
       case EMPTY_STATEMENT:
         return $;
       case BLOCK:
-        return extract.statementsinto((Block) ¢, $);
+        return extract.statementsInto((Block) ¢, $);
       default:
         $.add(¢);
         return $;
