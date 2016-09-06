@@ -11,8 +11,7 @@ import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.java.Environment.*;
 
 public class EnvNestedHandler extends ENVTestEngineAbstract {
-  Set<Entry<String, Environment.Information>> testSet;
-
+  
   public EnvNestedHandler(final ASTNode $) {
     n = $;
     testSet = generateSet();
@@ -27,7 +26,7 @@ public class EnvNestedHandler extends ENVTestEngineAbstract {
    * represent the expected results of neither Environment.uses or
    * Environment.declares. Should be the expected result of
    * Environment.declares.
-   *
+   * 
    * @see
    * il.org.spartan.refactoring.engine.ENVTestEngineAbstract#buildEnvironmentSet
    * (org.eclipse.jdt.core.dom.BodyDeclaration) */
