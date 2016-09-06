@@ -16,7 +16,7 @@ import il.org.spartan.refactoring.wring.Wring.*;
  * @author Ori Roth
  * @since 2016/05/08 */
 public final class StringEqualsConstant extends ReplaceCurrentNode<MethodInvocation> implements Kind.Canonicalization {
-  final static List<String> mns = as.list("equals", "equalsIgnoreCase");
+  static final List<String> mns = as.list("equals", "equalsIgnoreCase");
 
   private static ASTNode replacement(final SimpleName n, final Expression ¢, final Expression x) {
     final MethodInvocation $ = n.getAST().newMethodInvocation();
