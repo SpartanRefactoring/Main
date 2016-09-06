@@ -24,30 +24,6 @@ public class EnvFlatHandler extends ENVTestEngineAbstract {
     testSet = generateSet();
   }
 
-  // TODO: Information should be instantiated with PrudentType
-  @Override protected void annotationToSet(final List<MemberValuePair> ps) {
-    testSet.add(new MapEntry<>(wizard.asString(ps.get(0).getValue()), new Information()));
-  }
-
-  /** Compares output Set (testFlatENV) with provided set, that will be the
-   * result of the flat version of defines.
-   * @param $ */
-  @Override protected void compareInOrder(final Set<Entry<String, Information>> $) {
-    // Go over both sets in serial manner, and make sure every two members are
-    // equal.
-    // Also, check size, to avoid the case Set A is contained in B.
-    // azzert.fail Otherwise.
-  }
-
-  /** Compares flat output Set (flat) with provided Set, that will be the result
-   * of the flat version of defines.
-   * @param $ */
-  @Override protected void compareOutOfOrder(final Set<Entry<String, Information>> $) {
-    // Check that each member of $ is contained in FlatENV, and that the size is
-    // equal.
-    // azzert.fail Otherwise.
-  }
-
   /** Parse the outer annotation to get the inner ones. Add to the flat Set.
    * Compare uses() and declares() output to the flat Set.
    * @param $ JD */
