@@ -241,4 +241,14 @@ public enum az {
   public static VariableDeclarationExpression variableDeclarationExpression(final Expression ¢) {
     return ¢.getNodeType() != VARIABLE_DECLARATION_EXPRESSION ? null : (VariableDeclarationExpression) ¢;
   }
+  
+  /** Convert, if possible, an {@link Object} to a
+   * {@link ASTNode}
+   * @param ¢ JD
+   * @return argument, but down-casted to a
+   *         {@link ASTNode}, or <code><b>null</b></code>
+   *         if no such down-cast is possible.. */
+  public static ASTNode astNode(final Object ¢) {
+    return iz.astNode(¢) ? (ASTNode) ¢ : null;
+  }
 }
