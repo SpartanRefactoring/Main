@@ -47,6 +47,6 @@ public final class IfReturnNoElseReturn extends Wring.ReplaceToNextStatement<IfS
   }
 
   @Override boolean claims(final IfStatement s) {
-    return Is.vacuousElse(s) && extract.returnStatement(then(s)) != null && extract.nextReturn(s) != null;
+    return iz . vacuousElse(s) && extract.returnStatement(then(s)) != null && extract.nextReturn(s) != null;
   }
 }

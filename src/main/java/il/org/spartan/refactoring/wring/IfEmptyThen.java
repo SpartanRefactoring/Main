@@ -32,6 +32,6 @@ public final class IfEmptyThen extends Wring.ReplaceCurrentNode<IfStatement> imp
   }
 
   @Override boolean claims(final IfStatement s) {
-    return s != null && Is.vacuousThen(s) && !Is.vacuousElse(s);
+    return s != null && iz.vacuousThen(s) && !iz.vacuousElse(s);
   }
 }

@@ -81,7 +81,7 @@ public class Toolbox {
             null)
         .add(MethodDeclaration.class, //
             new MethodRenameReturnToDollar(), //
-            new BodeDeclarationRemoveModifiers.OfMethod(), //
+            new BodyDeclarationRemoveModifiers.OfMethod(), //
             null)
         .add(MethodInvocation.class, //
             new StringEqualsConstant(), //

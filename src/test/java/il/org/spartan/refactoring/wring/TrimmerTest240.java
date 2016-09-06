@@ -1,5 +1,6 @@
 package il.org.spartan.refactoring.wring;
-
+import il.org.spartan.refactoring.engine.*;
+import il.org.spartan.refactoring.engine.makeAST;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.engine.ExpressionComparator.*;
@@ -4033,9 +4034,9 @@ public class TrimmerTest240 {
 
   @Test public void twoOpportunityExample() {
     that(TrimmerTestsUtils.countOpportunities(new Trimmer(),
-        (CompilationUnit) MakeAST.COMPILATION_UNIT.from(Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
+        (CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
     that(TrimmerTestsUtils.countOpportunities(new Trimmer(),
-        (CompilationUnit) MakeAST.COMPILATION_UNIT.from(Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
+        (CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
   }
 
   @Test public void useOutcontextToManageStringAmbiguity() {

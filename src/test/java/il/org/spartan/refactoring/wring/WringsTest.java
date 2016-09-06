@@ -1,5 +1,4 @@
 package il.org.spartan.refactoring.wring;
-
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.ast.step.*;
 import static il.org.spartan.refactoring.engine.into.*;
@@ -27,7 +26,7 @@ public class WringsTest {
   @Test public void countInEnhancedFor() throws IllegalArgumentException, MalformedTreeException {
     final String input = "int f() { for (int a: as) return a; }";
     final Document d = Wrap.A_CLASS_MEMBER_OF_SOME_SORT.intoDocument(input);
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(d);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(d);
     final MethodDeclaration m = extract.firstMethodDeclaration(u);
     azzert.that(m, iz(input));
     final Block b = m.getBody();
@@ -88,7 +87,7 @@ public class WringsTest {
   @Test public void renameInEnhancedFor() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = "int f() { for (int a: as) return a; }";
     final Document d = Wrap.A_CLASS_MEMBER_OF_SOME_SORT.intoDocument(input);
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(d);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(d);
     final MethodDeclaration m = extract.firstMethodDeclaration(u);
     azzert.that(m, iz(input));
     final Block b = m.getBody();
@@ -108,7 +107,7 @@ public class WringsTest {
   @Test public void renameintoDoWhile() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = "void f() { int b = 3; do ; while(b != 0); }";
     final Document d = Wrap.A_CLASS_MEMBER_OF_SOME_SORT.intoDocument(input);
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(d);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(d);
     final MethodDeclaration m = extract.firstMethodDeclaration(u);
     azzert.that(m, iz(input));
     final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(m);

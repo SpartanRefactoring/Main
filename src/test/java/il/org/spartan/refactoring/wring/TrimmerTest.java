@@ -1,6 +1,8 @@
 package il.org.spartan.refactoring.wring;
-
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.refactoring.ast.step.*;
+import static il.org.spartan.refactoring.ast.hop.*;
+import static il.org.spartan.refactoring.ast.extract.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.engine.ExpressionComparator.*;
 import static il.org.spartan.refactoring.engine.into.*;
@@ -18,6 +20,10 @@ import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.engine.*;
+import static il.org.spartan.refactoring.ast.step.*;
+import static il.org.spartan.refactoring.ast.hop.*;
+import static il.org.spartan.refactoring.ast.extract.*;
 
 /** * Unit tests for the nesting class Unit test for the containing class. Note
  * our naming convention: a) test methods do not use the redundant "test"
@@ -287,14 +293,14 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test public void bugIntroducingMISSINGWord2() {
     trimming(
-        "name.endsWith(testSuffix) &&  MakeAST.stringBuilder(f).indexOf(testKeyword) == -1? objects(s, name, makeInFile(f)) : !name.endsWith(\".in\") ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), s, f)")
-            .to("name.endsWith(testSuffix)&&MakeAST.stringBuilder(f).indexOf(testKeyword)==-1?objects(s,name,makeInFile(f)):name.endsWith(\".in\")&&!dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),s,f):null");
+        "name.endsWith(testSuffix) &&  makeAST.stringBuilder(f).indexOf(testKeyword) == -1? objects(s, name, makeInFile(f)) : !name.endsWith(\".in\") ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), s, f)")
+            .to("name.endsWith(testSuffix)&&makeAST.stringBuilder(f).indexOf(testKeyword)==-1?objects(s,name,makeInFile(f)):name.endsWith(\".in\")&&!dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),s,f):null");
   }
 
   @Test public void bugIntroducingMISSINGWord2a() {
     trimming(
-        "name.endsWith(testSuffix) &&  MakeAST.stringBuilder(f).indexOf(testKeyword) == -1? objects(s, name, makeInFile(f)) : !name.endsWith(\".in\") ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), s, f)")
-            .to("name.endsWith(testSuffix)&&MakeAST.stringBuilder(f).indexOf(testKeyword)==-1?objects(s,name,makeInFile(f)):name.endsWith(\".in\")&&!dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),s,f):null");
+        "name.endsWith(testSuffix) &&  makeAST.stringBuilder(f).indexOf(testKeyword) == -1? objects(s, name, makeInFile(f)) : !name.endsWith(\".in\") ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), s, f)")
+            .to("name.endsWith(testSuffix)&&makeAST.stringBuilder(f).indexOf(testKeyword)==-1?objects(s,name,makeInFile(f)):name.endsWith(\".in\")&&!dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),s,f):null");
   }
 
   @Test public void bugIntroducingMISSINGWord2b() {
@@ -335,8 +341,8 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test public void bugIntroducingMISSINGWord3() {
     trimming(
-        "name.endsWith(testSuffix) && -1 == MakeAST.stringBuilder(f).indexOf(testKeyword) ? objects(s, name, makeInFile(f)) : !name.endsWith(x) ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(3, 56), s, f)")
-            .to("name.endsWith(testSuffix)&&MakeAST.stringBuilder(f).indexOf(testKeyword)==-1?objects(s,name,makeInFile(f)):name.endsWith(x)&&!dotOutExists(d,name)?objects(name.replaceAll(3,56),s,f):null");
+        "name.endsWith(testSuffix) && -1 == makeAST.stringBuilder(f).indexOf(testKeyword) ? objects(s, name, makeInFile(f)) : !name.endsWith(x) ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(3, 56), s, f)")
+            .to("name.endsWith(testSuffix)&&makeAST.stringBuilder(f).indexOf(testKeyword)==-1?objects(s,name,makeInFile(f)):name.endsWith(x)&&!dotOutExists(d,name)?objects(name.replaceAll(3,56),s,f):null");
   }
 
   @Test public void bugIntroducingMISSINGWord3a() {
@@ -346,8 +352,8 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test public void bugIntroducingMISSINGWordTry1() {
     trimming(
-        "name.endsWith(testSuffix) && -1 == MakeAST.stringBuilder(f).indexOf(testKeyword) ? objects(s, name, makeInFile(f)) : !name.endsWith(\".in\") ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), s, f)")
-            .to("name.endsWith(testSuffix) && MakeAST.stringBuilder(f).indexOf(testKeyword)==-1?objects(s,name,makeInFile(f)):name.endsWith(\".in\")&&!dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),s,f):null");
+        "name.endsWith(testSuffix) && -1 == makeAST.stringBuilder(f).indexOf(testKeyword) ? objects(s, name, makeInFile(f)) : !name.endsWith(\".in\") ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), s, f)")
+            .to("name.endsWith(testSuffix) && makeAST.stringBuilder(f).indexOf(testKeyword)==-1?objects(s,name,makeInFile(f)):name.endsWith(\".in\")&&!dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),s,f):null");
   }
 
   @Test public void bugIntroducingMISSINGWordTry2() {
@@ -4111,9 +4117,9 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test public void twoOpportunityExample() {
     azzert.that(TrimmerTestsUtils.countOpportunities(new Trimmer(),
-        (CompilationUnit) MakeAST.COMPILATION_UNIT.from(Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
+        (CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
     azzert.that(TrimmerTestsUtils.countOpportunities(new Trimmer(),
-        (CompilationUnit) MakeAST.COMPILATION_UNIT.from(Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
+        (CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
   }
 
   @Test public void unsafeBlockSimlify() {

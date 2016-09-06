@@ -92,7 +92,7 @@ public enum Wrap {
     int i = 0;
     for (final Wrap w : Wrap.WRAPS) {
       final String on = w.on(codeFragment);
-      final ASTNode n = MakeAST.COMPILATION_UNIT.from(on);
+      final ASTNode n = makeAST.COMPILATION_UNIT.from(on);
       $.append("\n\nAttempt #" + ++i + " (of " + Wrap.WRAPS.length + "): is it a " + w + "? Let's see:\n");
       $.append("\n\t What I tried as input was (essentially) this literal ```" + essence(on)).append("'''\n");
       $.append("\n\t Alas, what the parser gave me was (essentially) ```" + w.intoCompilationUnit(codeFragment) + "'''\n");

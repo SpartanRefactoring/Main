@@ -72,7 +72,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
     }
 
     IExtendedModifier firstThat(final N n, final Predicate<Modifier> f) {
-      for (final IExtendedModifier $ : expose.modifiers(n))
+      for (final IExtendedModifier $ : step.modifiers(n))
         if ($.isModifier() && f.test((Modifier) $))
           return $;
       return null;
@@ -97,7 +97,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
     }
 
     private N go(final N $) {
-      for (final Iterator<IExtendedModifier> ¢ = expose.modifiers($).iterator(); ¢.hasNext();)
+      for (final Iterator<IExtendedModifier> ¢ = step.modifiers($).iterator(); ¢.hasNext();)
         if (redundant(¢.next()))
           ¢.remove();
       return $;

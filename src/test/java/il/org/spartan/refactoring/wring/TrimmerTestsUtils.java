@@ -119,8 +119,8 @@ public class TrimmerTestsUtils {
         final String peeled = w.off(unpeeled);
         if (peeled.equals(get()))
           azzert.that("No trimming of " + get(), peeled, is(not(get())));
-        if (Funcs.gist(peeled).equals(Funcs.gist(get())))
-          azzert.that("Trimming of " + get() + "is just reformatting", Funcs.gist(get()), is(not(Funcs.gist(peeled))));
+        if (tide.clean (peeled).equals(tide.clean (get())))
+          azzert.that("Trimming of " + get() + "is just reformatting", tide.clean (get()), is(not(tide.clean (peeled))));
         assertSimilar("Attempting " ,expected, peeled);
       }
       return new Operand(expected);
@@ -194,7 +194,7 @@ public class TrimmerTestsUtils {
   }
 
   static String apply(final Trimmer t, final String from) {
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     azzert.notNull(u);
     final Document d = new Document(from);
     azzert.notNull(d);
@@ -204,7 +204,7 @@ public class TrimmerTestsUtils {
   }
 
   static String apply(final Wring<? extends ASTNode> ns, final String from) {
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     azzert.notNull(u);
     final Document d = new Document(from);
     azzert.notNull(d);
@@ -219,8 +219,8 @@ public class TrimmerTestsUtils {
     final String peeled = wrapper.off(unpeeled);
     if (peeled.equals(from))
       azzert.that("No similification of " + from, peeled, is(not(from)));
-    if (Funcs.gist(peeled).equals(Funcs.gist(from)))
-      azzert.that("Simpification of " + from + " is just reformatting", Funcs.gist(from), is(not(Funcs.gist(peeled))));
+    if (tide.clean (peeled).equals(tide.clean (from)))
+      azzert.that("Simpification of " + from + " is just reformatting", tide.clean (from), is(not(tide.clean (peeled))));
     assertSimilar(expected, peeled);
   }
 

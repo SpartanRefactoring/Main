@@ -19,7 +19,7 @@ import il.org.spartan.refactoring.java.*;
  * @since 2015-07-17 */
 public final class InfixAdditionSort extends Wring.InfixSorting implements Kind.Canonicalization {
   @Override boolean canMake(final InfixExpression e) {
-    return Is.notString(e) && super.canMake(e);
+    return iz . notString(e) && super.canMake(e);
   }
 
   @Override Expression replacement(final InfixExpression x) {

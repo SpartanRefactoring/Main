@@ -38,6 +38,6 @@ public final class InfixComparisonSpecific extends Wring.ReplaceCurrentNode<Infi
   }
 
   @Override public boolean claims(final InfixExpression e) {
-    return !e.hasExtendedOperands() && Is.comparison(e) && (Specificity.defined(left(e)) || Specificity.defined(right(e)));
+    return !e.hasExtendedOperands() && iz . comparison(e) && (Specificity.defined(left(e)) || Specificity.defined(right(e)));
   }
 }

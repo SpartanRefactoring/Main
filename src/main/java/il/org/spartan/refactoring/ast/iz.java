@@ -259,7 +259,7 @@ public enum iz {
   }
 
   public static int index(final int i, final int... is) {
-    for (int $ = 0; $ < is.length; ++$)
+    for (int $ = 0; $ < iz . length; ++$)
       if (is[$] == i)
         return $;
     return -1;

@@ -20,7 +20,7 @@ import il.org.spartan.refactoring.utils.*;
  * simple to that by hard coding constants.
  * <p>
  * This type should never be <code><b>null</b></code>. Don't bother to check
- * that it is. We want a {@link NullPointerException} thrown if this is the
+ * that it iz .  We want a {@link NullPointerException} thrown if this is the
  * case. or, you may as well write
  *
  * <pre>

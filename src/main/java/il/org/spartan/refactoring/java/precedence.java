@@ -63,7 +63,7 @@ public enum precedence {
    * @return <code><b>true</b></code> <i>iff</i> the parameter a legal
    *         precedence of Java. */
   public static boolean known(final ASTNode n) {
-    return is.legal(precedence.of(n));
+    return iz . legal(precedence.of(n));
   }
 
   /** Determine the precedence of an arbitrary {@link ASTNode}

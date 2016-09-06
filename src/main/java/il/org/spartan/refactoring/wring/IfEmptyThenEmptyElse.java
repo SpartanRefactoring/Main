@@ -33,6 +33,6 @@ public final class IfEmptyThenEmptyElse extends Wring<IfStatement> implements Ki
   }
 
   @Override boolean claims(final IfStatement s) {
-    return s != null && Is.vacuousThen(s) && Is.vacuousElse(s);
+    return s != null && iz . vacuousThen(s) && iz . vacuousElse(s);
   }
 }
