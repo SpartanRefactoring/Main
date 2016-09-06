@@ -108,11 +108,11 @@ public final class CleverStringTernarization extends Wring.ReplaceCurrentNode<Co
   }
 
   private static String shorter(final String s1, final String s2) {
-    return s1.length() > s2.length()?s2:s1;
+    return s1.length() > s2.length() ? s2 : s1;
   }
 
   private static Expression simplify(final InfixExpression then, final InfixExpression elze, final Expression condition) {
-    return stringType.isNot(then) || stringType.isNot(elze)?null:simplifyStrings(then,elze,condition);
+    return stringType.isNot(then) || stringType.isNot(elze) ? null : simplifyStrings(then, elze, condition);
   }
 
   private static Expression simplify(final StringLiteral then, final InfixExpression elze, final Expression condition) {

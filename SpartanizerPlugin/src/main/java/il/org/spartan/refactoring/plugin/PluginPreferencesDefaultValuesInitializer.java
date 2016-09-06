@@ -6,6 +6,8 @@ import static il.org.spartan.refactoring.plugin.PluginPreferencesResources.Wring
 import org.eclipse.core.runtime.preferences.*;
 import org.eclipse.jface.preference.*;
 
+import il.org.spartan.refactoring.plugin.PluginPreferencesResources.*;
+
 /** This class is called by Eclipse when the plugin is first loaded and has no
  * default preference values. These are set by the values specified here.
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>

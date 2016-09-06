@@ -1,30 +1,27 @@
 package il.org.spartan.refactoring.utils;
 
-import java.util.Map;
+import java.util.*;
 
 public final class MapEntry<K, V> implements Map.Entry<K, V> {
-    private final K key;
-    private V value;
+  private final K key;
+  private V value;
 
-    public MapEntry(K key, V value) {
-        this.key = key;
-        this.value = value;
-    }
+  public MapEntry(final K key, final V value) {
+    this.key = key;
+    this.value = value;
+  }
 
-    @Override
-    public K getKey() {
-        return key;
-    }
+  @Override public K getKey() {
+    return key;
+  }
 
-    @Override
-    public V getValue() {
-        return value;
-    }
+  @Override public V getValue() {
+    return value;
+  }
 
-    @Override
-    public V setValue(V value) {
-        V $ = this.value;
-        this.value = value;
-        return $;
-    }
+  @Override public V setValue(final V value) {
+    final V $ = this.value;
+    this.value = value;
+    return $;
+  }
 }

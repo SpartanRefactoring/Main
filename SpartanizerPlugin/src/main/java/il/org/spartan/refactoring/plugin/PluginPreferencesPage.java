@@ -7,6 +7,7 @@ import org.eclipse.jface.preference.*;
 import org.eclipse.jface.util.*;
 import org.eclipse.ui.*;
 
+import il.org.spartan.refactoring.plugin.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.wring.*;
 
 public class PluginPreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {

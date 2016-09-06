@@ -74,7 +74,7 @@ import org.junit.*;
         ((NumberLiteral) x.getRoot()).setToken("99");
     };
     recurse.preVisit(changeToken);
-    assertEquals("99", (¢ + ""));
+    assertEquals("99", ¢ + "");
   }
 
   @Test public void issue101_10() {
@@ -106,7 +106,7 @@ import org.junit.*;
         ((NumberLiteral) x.getRoot()).setToken("99");
     };
     recurse.postVisit(changeToken);
-    assertEquals("99", (¢ + ""));
+    assertEquals("99", ¢ + "");
   }
 
   @Test public void issue101_14() {
@@ -124,7 +124,7 @@ import org.junit.*;
         ((NumberLiteral) x.getRoot()).setToken("99");
     };
     recurse.preVisit(changeToken);
-    assertEquals("99 + 99", (¢ + ""));
+    assertEquals("99 + 99", ¢ + "");
   }
 
   @Test public void issue101_16() {
@@ -135,7 +135,7 @@ import org.junit.*;
         ((NumberLiteral) x.getRoot()).setToken("56");
     };
     recurse.preVisit(changeToken);
-    assertEquals("b == true ? 56 : 56", (¢ + ""));
+    assertEquals("b == true ? 56 : 56", ¢ + "");
   }
 
   @Test public void issue101_17() {
@@ -146,7 +146,7 @@ import org.junit.*;
         ((BooleanLiteral) x.getRoot()).setBooleanValue(false);
     };
     recurse.preVisit(changeToken);
-    assertEquals("b == false ? 67 : 7", (¢ + ""));
+    assertEquals("b == false ? 67 : 7", ¢ + "");
   }
 
   @Test public void issue101_18() {
@@ -157,7 +157,7 @@ import org.junit.*;
         ((BooleanLiteral) x.getRoot()).setBooleanValue(false);
     };
     recurse.postVisit(changeToken);
-    assertEquals("b == false ? 67 : 7", (¢ + ""));
+    assertEquals("b == false ? 67 : 7", ¢ + "");
   }
 
   @Test public void issue101_19() {
@@ -168,6 +168,6 @@ import org.junit.*;
         ((NumberLiteral) x.getRoot()).setToken("99");
     };
     recurse.preVisit(changeToken);
-    assertEquals("99 + 99 * 99 + 99", (¢ + ""));
+    assertEquals("99 + 99 * 99 + 99", ¢ + "");
   }
 }
