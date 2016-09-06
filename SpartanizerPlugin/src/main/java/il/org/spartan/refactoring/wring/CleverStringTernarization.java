@@ -18,7 +18,7 @@ import il.org.spartan.refactoring.utils.*;
  * @author Dor Ma'ayan
  * @author Niv Shalmon
  * @since 2016-09-1 */
-public final class CleverTernarization extends Wring.ReplaceCurrentNode<ConditionalExpression> implements Kind.Ternarization {
+public final class CleverStringTernarization extends Wring.ReplaceCurrentNode<ConditionalExpression> implements Kind.Ternarization {
   static String longer(final String s1, final String s2) {
     return s1 == shorter(s1, s2) ? s2 : s1;
   }

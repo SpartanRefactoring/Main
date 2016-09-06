@@ -24,25 +24,10 @@ public class Recurser<T> {
       $.add(step.left(¢));
       $.add(step.right(¢));
       $.addAll(step.extendedOperands(¢));
+      return $;
     }
     try {
-      final List<ASTNode> $ = new ArrayList<>();
-      // TODO: Dor, try to use for each loop here
-      //
-      // TODO: Dor, can you add a function to {@link step} so that marching
-      // over the list could be done in a type safe manner, and all that {@link
-      // SuppressWarnings} silincing of <code>"rawtypes"</code> is restricted
-      // to one Fluent API class, {@link step} which is a bit dirty?
-      //
-      // TODO: Dor, add functions az.astNode(Object ¢) and iz.astNode(Object ¢)
-      // see these fluent API classes for how it is done.
-      @SuppressWarnings("rawtypes") final List lst = n.structuralPropertiesForType();
-      for (int i = 0; i < lst.size(); ++i) {
-        final Object child = n.getStructuralProperty((StructuralPropertyDescriptor) lst.get(i));
-        if (child instanceof ASTNode)
-          $.add((ASTNode) child);
-      }
-      return $;
+      return step.marchingList(n);
     } catch (final NullPointerException e) {
       assert e != null;
       return null;
