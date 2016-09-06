@@ -169,6 +169,5 @@ import org.junit.*;
     };
     recurse.preVisit(changeToken);
     assertEquals("99 + 99 * 99 + 99", (¢ + ""));
-    int a=0;
   }
 }

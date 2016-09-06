@@ -31,28 +31,27 @@ public class ConcatStrings extends Wring.ReplaceCurrentNode<InfixExpression> imp
     return "Concat the string literals to a single string";
   }
 
-  @Override ASTNode replacement(final InfixExpression n) {
-    if (n.getOperator() != wizard.PLUS2)
+  @Override ASTNode replacement(final InfixExpression x) {
+    if (x.getOperator() != wizard.PLUS2)
       return null;
-    final List<Expression> operands = extract.allOperands(n);
+    final List<Expression> operands = extract.allOperands(x);
     assert operands.size() >= 2;
     boolean isChanged = false;
     int i = 0;
     while (i < operands.size() - 1)
-      if (operands.get(i).getNodeType() == ASTNode.STRING_LITERAL && //
-          operands.get(i + 1).getNodeType() == ASTNode.STRING_LITERAL) {
+      if (operands.get(i).getNodeType() != ASTNode.STRING_LITERAL || operands.get(i + 1).getNodeType() != ASTNode.STRING_LITERAL)
+        ++i;
+      else {
         isChanged = true;
-        final StringLiteral l = n.getAST().newStringLiteral();
-        l.setLiteralValue(((StringLiteral) operands.get(i)).getLiteralValue() //
-            + ((StringLiteral) operands.get(i + 1)).getLiteralValue());
+        final StringLiteral l = x.getAST().newStringLiteral();
+        l.setLiteralValue(((StringLiteral) operands.get(i)).getLiteralValue() + ((StringLiteral) operands.get(i + 1)).getLiteralValue());
         operands.remove(i);
         operands.remove(i);
         operands.add(i, l);
-      } else
-        i++;
+      }
     if (!isChanged)
       return null;
-    assert operands.size() >= 1;
-    return operands.size() > 1 ? subject.operands(operands).to(wizard.PLUS2) : operands.get(0);
+    assert !operands.isEmpty();
+    return operands.size() <= 1 ? operands.get(0) : subject.operands(operands).to(wizard.PLUS2);
   }
 }
