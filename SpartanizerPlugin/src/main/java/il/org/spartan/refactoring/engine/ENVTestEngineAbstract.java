@@ -25,19 +25,22 @@ public abstract class ENVTestEngineAbstract {
 
   /** @param from - file path
    * @return CompilationUnit of the code written in the file specified. */
-  protected static ASTNode getCompilationUnit(final String from){
+  protected static ASTNode getCompilationUnit(final String from) {
     final String ROOT = "./src/test/resources/";
-    File f = new File(ROOT + from);
-    
+    final File f = new File(ROOT + from);
     azzert.notNull(ROOT);
     azzert.notNull(from);
     azzert.notNull(f);
     azzert.aye(f.exists());
-    ASTNode $ = makeAST.COMPILATION_UNIT.from(f);
+    final ASTNode $ = makeAST.COMPILATION_UNIT.from(f);
     azzert.notNull($);
     azzert.that($, instanceOf(CompilationUnit.class));
-    
     return $;
+  }
+
+  public static boolean isNameId(final Name n1) {
+    assert(!"Id".equals("" + n1)); //debug
+    return "@Id".equals("" + n1);
   }
 
   protected ASTNode n = null;
@@ -47,44 +50,35 @@ public abstract class ENVTestEngineAbstract {
   public void addValueToSet(final List<MemberValuePair> ps) {
     testSet.add(new MapEntry<>(wizard.asString(ps.get(0).getValue()), new Information()));
   }
-  
-  public static boolean isNameId(Name n1) {
-    return "@Id".equals("" + n1);
-  }
 
-  /** Compares output Set (testFlatENV) with provided set, that will be the
-   * result of the flat version of defines.
+  /** Compares the set from the annotation with the set that the checked function generates.
    * @param $ */
   // Go over both sets in serial manner, and make sure every two members are
   // equal.
   // Also, check size, to avoid the case Set A is contained in B.
   // azzert.fail Otherwise.
+  protected void compareInOrder(final Set<Entry<String, Information>> $) {
+  }
 
-  abstract protected void compareInOrder(final Set<Entry<String, Information>> $);
-
-  /** Compares flat output Set (flat) with provided Set, that will be the result
-   * of the flat version of defines.
+  /** Compares the set from the annotation with the set that the checked function generates.
    * @param $ */
   // Check that each member of $ is contained in FlatENV, and that the size is
   // equal.
   // azzert.fail Otherwise.
+  protected void compareOutOfOrder(final Set<Entry<String, Information>> $) {
+  }
 
-  abstract protected void compareOutOfOrder(final Set<Entry<String, Information>> $);
-
-  abstract protected void annotationToSet(final List<MemberValuePair> ps);
-
-  /**
-   * Cast
+  /** Cast
    * @param ¢ JD */
   void handler(final Annotation ¢) {
     handler(az.singleMemberAnnotation(¢));
   }
-  
+
   /** Parse the outer annotation to get the inner ones. Add to the flat Set.
    * Compare uses() and declares() output to the flat Set.
    * @param $ JD */
-  protected abstract void handler(final SingleMemberAnnotation $);
-  
+  abstract protected void handler(final SingleMemberAnnotation $);
+
   /* define: outer annotation = OutOfOrderNestedENV, InOrderFlatENV, Begin, End.
    * define: inner annotation = Id. ASTVisitor that goes over the ASTNodes in
    * which annotations can be defined, and checks if the annotations are of the
@@ -105,7 +99,7 @@ public abstract class ENVTestEngineAbstract {
         for (final Annotation ¢ : as)
           handler(¢);
       }
-      
+
       /** TODO: only MothodDeclaration is implemented. Should implement all
        * nodes which can have annotations. */
       @Override public boolean visit(final MethodDeclaration d) {
