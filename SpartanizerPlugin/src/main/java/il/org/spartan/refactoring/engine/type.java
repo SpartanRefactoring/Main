@@ -452,14 +452,6 @@ interface type {
     }
   }
 
-  public static class NotImplementedException extends RuntimeException {
-    private static final long serialVersionUID = 1L;
-
-    public NotImplementedException(final String message) {
-      super(message);
-    }
-  }
-
   interface Odd extends type {
     /** TODO: Not sure we need all these {@link type.Odd.Types} values. */
     enum Types implements Odd {
