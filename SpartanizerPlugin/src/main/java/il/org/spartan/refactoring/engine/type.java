@@ -101,6 +101,31 @@ interface type {
     return types.containsKey(name);
   }
 
+  static type prudent(final Assignment x, final type t) {
+    final type $ = t != null ? t : prudent(x.getLeftHandSide());
+    return !$.isNoInfo() ? $ : prudent(x.getRightHandSide()).isNumeric() ? NUMERIC : prudent(x.getRightHandSide());
+  }
+
+  static type prudent(final CastExpression x) {
+    return typeSwitch("" + step.type(x), BAPTIZED);
+  }
+
+  static type prudent(final ClassInstanceCreation c) {
+    return typeSwitch("" + c.getType(), NONNULL);
+  }
+
+  static type prudent(final ConditionalExpression x, final type t1, final type t2) {
+    final type $ = t1 != null ? t1 : prudent(x.getThenExpression());
+    final type ¢2 = t2 != null ? t2 : prudent(x.getElseExpression());
+    // If we don't know much about one operand but do know enough about the
+    // other, we can still learn something
+    return $ == ¢2 ? $
+        : $.isNoInfo() || ¢2.isNoInfo() ? conditionalWithNoInfo($.isNoInfo() ? ¢2 : $) //
+            : $.isIntegral() && ¢2.isIntegral() ? $.underIntegersOnlyOperator(¢2) //
+                : $.isNumeric() && ¢2.isNumeric() ? $.underNumericOnlyOperator(¢2)//
+                    : NOTHING; //
+  }
+
   /** A version of {@link #prudent(Expression)} that receives the a list of the
    * operands' type for all operands of an expression. To be used for
    * InfixExpression that has extended operand. The order of the type's should
@@ -121,25 +146,25 @@ interface type {
       case BOOLEAN_LITERAL:
         return BOOLEAN;
       case NUMBER_LITERAL:
-        return pruent((NumberLiteral) x);
+        return prudent((NumberLiteral) x);
       case CAST_EXPRESSION:
-        return pruent((CastExpression) x);
+        return prudent((CastExpression) x);
       case PREFIX_EXPRESSION:
-        return pruent((PrefixExpression) x, lisp.first(ts));
+        return prudent((PrefixExpression) x, lisp.first(ts));
       case INFIX_EXPRESSION:
-        return pruent((InfixExpression) x, ts);
+        return prudent((InfixExpression) x, ts);
       case POSTFIX_EXPRESSION:
-        return pruent((PostfixExpression) x, lisp.first(ts));
+        return prudent((PostfixExpression) x, lisp.first(ts));
       case PARENTHESIZED_EXPRESSION:
-        return pruent((ParenthesizedExpression) x, lisp.first(ts));
+        return prudent((ParenthesizedExpression) x, lisp.first(ts));
       case CLASS_INSTANCE_CREATION:
-        return pruent((ClassInstanceCreation) x);
+        return prudent((ClassInstanceCreation) x);
       case METHOD_INVOCATION:
-        return pruent((MethodInvocation) x);
+        return prudent((MethodInvocation) x);
       case CONDITIONAL_EXPRESSION:
-        return pruent((ConditionalExpression) x, lisp.first(ts), lisp.second(ts));
+        return prudent((ConditionalExpression) x, lisp.first(ts), lisp.second(ts));
       case ASSIGNMENT:
-        return pruent((Assignment) x, lisp.first(ts));
+        return prudent((Assignment) x, lisp.first(ts));
       default:
         return NOTHING;
     }
@@ -166,32 +191,7 @@ interface type {
     return prudent(x, ¢);
   }
 
-  static type pruent(final Assignment x, final type t) {
-    final type $ = t != null ? t : prudent(x.getLeftHandSide());
-    return !$.isNoInfo() ? $ : prudent(x.getRightHandSide()).isNumeric() ? NUMERIC : prudent(x.getRightHandSide());
-  }
-
-  static type pruent(final CastExpression x) {
-    return typeSwitch("" + step.type(x), BAPTIZED);
-  }
-
-  static type pruent(final ClassInstanceCreation c) {
-    return typeSwitch("" + c.getType(), NONNULL);
-  }
-
-  static type pruent(final ConditionalExpression x, final type t1, final type t2) {
-    final type $ = t1 != null ? t1 : prudent(x.getThenExpression());
-    final type ¢2 = t2 != null ? t2 : prudent(x.getElseExpression());
-    // If we don't know much about one operand but do know enough about the
-    // other, we can still learn something
-    return $ == ¢2 ? $
-        : $.isNoInfo() || ¢2.isNoInfo() ? conditionalWithNoInfo($.isNoInfo() ? ¢2 : $) //
-            : $.isIntegral() && ¢2.isIntegral() ? $.underIntegersOnlyOperator(¢2) //
-                : $.isNumeric() && ¢2.isNumeric() ? $.underNumericOnlyOperator(¢2)//
-                    : NOTHING; //
-  }
-
-  static type pruent(final InfixExpression x, final List<type> ts) {
+  static type prudent(final InfixExpression x, final List<type> ts) {
     final InfixExpression.Operator o = x.getOperator();
     final List<Expression> es = extract.allOperands(x);
     assert es.size() >= 2;
@@ -211,11 +211,11 @@ interface type {
     return $;
   }
 
-  static type pruent(final MethodInvocation i) {
+  static type prudent(final MethodInvocation i) {
     return "toString".equals(i.getName() + "") && i.arguments().isEmpty() ? STRING : NOTHING;
   }
 
-  static type pruent(final NumberLiteral l) {
+  static type prudent(final NumberLiteral l) {
     // TODO: Dor use TypeLiteral instead. It is thoroughly tested and very
     // accurate.
     final String ¢ = l.getToken();
@@ -225,16 +225,16 @@ interface type {
                 : ¢.matches("[0-9]+\\.[0-9]*[d,D]?") || ¢.matches("[0-9]+[d,D]") ? DOUBLE : NUMERIC;
   }
 
-  static type pruent(final ParenthesizedExpression x, final type t) {
+  static type prudent(final ParenthesizedExpression x, final type t) {
     return t != null ? t : prudent(extract.core(x));
   }
 
-  static type pruent(final PostfixExpression x, final type t1) {
+  static type prudent(final PostfixExpression x, final type t1) {
     return (t1 != null ? t1 : prudent(x.getOperand())).asNumeric(); // see
                                                                     // testInDecreamentSemantics
   }
 
-  static type pruent(final PrefixExpression x, final type t1) {
+  static type prudent(final PrefixExpression x, final type t1) {
     return (t1 != null ? t1 : prudent(x.getOperand())).under(x.getOperator());
   }
 
@@ -582,20 +582,20 @@ interface type {
      * @author Niv Shalmon
      * @since 2016-08-XX */
     public enum Uncertain implements type.Primitive {
-      // Those anonymous characters that known little or nothing about
-      // themselves
-      NOTHING("none", "when nothing can be said, e.g., f(f(),f(f(f()),f()))"), //
-      NONNULL("!null", "e.g., new Object() and that's about it"), //
-      BAPTIZED("!double&!long&!int", "an object of some type, for which we have a name only"), //
       // Doubtful types, from four fold uncertainty down to bilalteral
       // schizophrenia" .
       ALPHANUMERIC("String|double|float|long|int|char|short|byte", "only in binary plus: f()+g(), 2 + f(), nor f() + null"), //
-      NUMERIC("double|float|long|int|char|short|byte", "must be either f()*g(), 2L*f(), 2.*a(), not 2 %a(), nor 2"), //
+      BAPTIZED("!double&!long&!int", "an object of some type, for which we have a name only"), //
       BOOLEANINTEGRAL("boolean|long|int|char|short|byte", "only in x^y,x&y,x|y"), //
       INTEGRAL("long|int|char|short|byte", "must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() "), //
+      NONNULL("!null", "e.g., new Object() and that's about it"), //
+      // Those anonymous characters that known little or nothing about
+      // themselves
+      NOTHING("none", "when nothing can be said, e.g., f(f(),f(f(f()),f()))"), //
+      NUMERIC("double|float|long|int|char|short|byte", "must be either f()*g(), 2L*f(), 2.*a(), not 2 %a(), nor 2"), //
       ;
-      final String name;
       final String description;
+      final String name;
 
       Uncertain(final String name, final String description) {
         this.name = name;
