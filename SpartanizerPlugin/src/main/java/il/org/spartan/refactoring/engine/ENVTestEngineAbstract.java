@@ -11,7 +11,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.java.*;
-import il.org.spartan.refactoring.java.PrudentType;
 import il.org.spartan.refactoring.java.Environment.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -51,9 +50,7 @@ public abstract class ENVTestEngineAbstract {
   protected ASTNode n = null;
   protected Set<Entry<String, Environment.Information>> testSet;
 
-  /*
-   *Add new Entry to testSet from the inner annotation. 
-   */
+  /* Add new Entry to testSet from the inner annotation. */
   public void addTestSet(final List<MemberValuePair> ps) {
     testSet.add(new MapEntry<>(wizard.asString(ps.get(0).getValue()), new Information(PrudentType.valueOf(wizard.asString(ps.get(1).getValue())))));
   }
@@ -105,8 +102,8 @@ public abstract class ENVTestEngineAbstract {
    * worry, since the outside visitor will do nothing. */
   public void runTest() {
     n.accept(new ASTVisitor() {
-      /** Iterate over outer annotations of the current declaration and dispatch them
-       * to handlers. otherwise */
+      /** Iterate over outer annotations of the current declaration and dispatch
+       * them to handlers. otherwise */
       void checkAnnotations(final List<Annotation> as) {
         for (final Annotation ¢ : as)
           handler(¢);
