@@ -6,6 +6,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
+import il.org.spartan.refactoring.engine.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
@@ -44,7 +45,7 @@ public class JavaTypeNameParserTest {
   }
 
   @Test public void infixExpression() {
-    azzert.that(new JavaTypeNameParser("InfixExpression").shortName(), is("e"));
+    azzert.that(new JavaTypeNameParser("InfixExpression").shortName(), is("x"));
   }
 
   @Test public void jUnit() {

@@ -1,37 +1,37 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.idiomatic.*;
-import static il.org.spartan.refactoring.utils.extract.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.assemble.*;
+import il.org.spartan.refactoring.ast.*;
 
 /** Replace <code>(double)X</code> by <code>1.*X</code>
  * @author Alex Kopzon
  * @author Dan Greenstein
  * @since 2016 */
 public final class CastToDouble2Multiply1 extends Wring.ReplaceCurrentNode<CastExpression> implements Kind.NoImpact {
-  @Override String description(final CastExpression e) {
-    return "Use 1.*" + expression(e) + " instead of (double)" + expression(e);
-  }
-
-  @Override ASTNode replacement(final CastExpression e) {
-    return eval(//
-        () -> replacement(expression(e))//
-    ).when(//
-        type(e).isPrimitiveType() && "double".equals("" + type(e)) //
-    );
+  private static NumberLiteral literal(final Expression x) {
+    final NumberLiteral $ = x.getAST().newNumberLiteral();
+    $.setToken("1.");
+    return $;
   }
 
   private static InfixExpression replacement(final Expression $) {
     return subject.pair(literal($), $).to(TIMES);
   }
 
-  private static NumberLiteral literal(final Expression e) {
-    final NumberLiteral $ = e.getAST().newNumberLiteral();
-    $.setToken("1.");
-    return $;
+  @Override String description(final CastExpression x) {
+    return "Use 1.*" + step.expression(x) + " instead of (double)" + step.expression(x);
+  }
+
+  @Override ASTNode replacement(final CastExpression x) {
+    return eval(//
+        () -> replacement(step.expression(x))//
+    ).when(//
+        step.type(x).isPrimitiveType() && "double".equals("" + step.type(x)) //
+    );
   }
 }

@@ -1,9 +1,7 @@
 package il.org.spartan.refactoring.wring;
-
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.Into.*;
-import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.ast.step.*;
+import static il.org.spartan.refactoring.engine.into.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -15,6 +13,10 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
+import il.org.spartan.refactoring.assemble.*;
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.engine.*;
+import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -23,31 +25,32 @@ import il.org.spartan.refactoring.utils.*;
 public class WringsTest {
   @Test public void countInEnhancedFor() throws IllegalArgumentException, MalformedTreeException {
     final String input = "int f() { for (int a: as) return a; }";
-    final Document d = GuessedContext.method_or_class_member_of_some_sort.intoDocument(input);
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(d);
+    final Document d = Wrap.A_CLASS_MEMBER_OF_SOME_SORT.intoDocument(input);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(d);
     final MethodDeclaration m = extract.firstMethodDeclaration(u);
     azzert.that(m, iz(input));
     final Block b = m.getBody();
-    final EnhancedForStatement s = (EnhancedForStatement) first(statements(b));
+    final EnhancedForStatement s = (EnhancedForStatement) lisp.first(statements(b));
     final SingleVariableDeclaration p = s.getParameter();
-    azzert.notNull(p);
+    assert p != null;
     final SimpleName a = p.getName();
+    assert a != null;
     azzert.that(a, iz("a"));
     azzert.that(Collect.usesOf(a).in(m).size(), is(2));
   }
 
   @Test public void inlineExpressionWithSideEffect() {
-    final Expression e = Into.e("f()");
-    azzert.that(Is.sideEffectFree(e), is(false));
+    final Expression e = into.e("f()");
+    azzert.that(sideEffects.free(e), is(false));
     final String input = "int a = f(); return a += 2 * a;";
-    final CompilationUnit u = GuessedContext.statement_or_something_that_may_occur_in_a_method.intoCompilationUnit(input);
+    final CompilationUnit u = Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD.intoCompilationUnit(input);
     final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
     azzert.that(f, iz("a=f()"));
     final SimpleName n = f.getName();
     azzert.that(n, iz("a"));
     final Expression initializer = f.getInitializer();
     azzert.that(initializer, iz("f()"));
-    azzert.that(Is.sideEffectFree(initializer), is(false));
+    azzert.that(sideEffects.free(initializer), is(false));
     final ASTNode parent = f.getParent();
     azzert.that(parent, iz("int a = f();"));
     final ASTNode block = parent.getParent();
@@ -57,11 +60,12 @@ public class WringsTest {
     final Assignment a = (Assignment) returnStatement.getExpression();
     final Operator o = a.getOperator();
     azzert.that(o, iz("+="));
-    final InfixExpression alternateInitializer = subject.pair(left(a), right(a)).to(Wring.VariableDeclarationFragementAndStatement.asInfix(o));
+    final InfixExpression alternateInitializer = subject.pair(step.left(a), step.right(a))
+        .to(Wring.VariableDeclarationFragementAndStatement.asInfix(o));
     azzert.that(alternateInitializer, iz("a + 2 * a"));
-    azzert.that(Is.sideEffectFree(initializer), is(false));
+    azzert.that(sideEffects.free(initializer), is(false));
     azzert.that(Collect.usesOf(n).in(alternateInitializer).size(), is(2));
-    azzert.that(new LocalInliner(n).byValue(initializer).canInlineInto(alternateInitializer), is(false));
+    azzert.that(new LocalInliner(n).byValue(initializer).canInlineinto(alternateInitializer), is(false));
   }
 
   @Test public void mixedLiteralKindEmptyList() {
@@ -82,38 +86,38 @@ public class WringsTest {
 
   @Test public void renameInEnhancedFor() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = "int f() { for (int a: as) return a; }";
-    final Document d = GuessedContext.method_or_class_member_of_some_sort.intoDocument(input);
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(d);
+    final Document d = Wrap.A_CLASS_MEMBER_OF_SOME_SORT.intoDocument(input);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(d);
     final MethodDeclaration m = extract.firstMethodDeclaration(u);
     azzert.that(m, iz(input));
     final Block b = m.getBody();
-    final EnhancedForStatement s = (EnhancedForStatement) first(statements(b));
+    final EnhancedForStatement s = (EnhancedForStatement) lisp.first(statements(b));
     final SingleVariableDeclaration p = s.getParameter();
-    azzert.notNull(p);
+    assert p != null;
     final SimpleName n = p.getName();
     final ASTRewrite r = ASTRewrite.create(b.getAST());
     Wrings.rename(n, n.getAST().newSimpleName("$"), m, r, null);
     final TextEdit e = r.rewriteAST(d, null);
     e.apply(d);
-    final String output = GuessedContext.method_or_class_member_of_some_sort.off(d.get());
+    final String output = Wrap.A_CLASS_MEMBER_OF_SOME_SORT.off(d.get());
     azzert.notNull(output);
     azzert.that(output, iz(" int f() {for(int $:as)return $;}"));
   }
 
-  @Test public void renameIntoDoWhile() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
+  @Test public void renameintoDoWhile() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = "void f() { int b = 3; do ; while(b != 0); }";
-    final Document d = GuessedContext.method_or_class_member_of_some_sort.intoDocument(input);
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(d);
+    final Document d = Wrap.A_CLASS_MEMBER_OF_SOME_SORT.intoDocument(input);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(d);
     final MethodDeclaration m = extract.firstMethodDeclaration(u);
     azzert.that(m, iz(input));
     final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(m);
-    azzert.notNull(f);
+    assert f != null;
     final SimpleName b = f.getName();
     azzert.that(Collect.usesOf(b).in(m).size(), is(2));
     final ASTRewrite r = ASTRewrite.create(b.getAST());
     Wrings.rename(b, b.getAST().newSimpleName("c"), m, r, null);
     final TextEdit e = r.rewriteAST(d, null);
     e.apply(d);
-    azzert.that(GuessedContext.method_or_class_member_of_some_sort.off(d.get()), iz("void f() { int c = 3; do ; while(c != 0); }"));
+    azzert.that(Wrap.A_CLASS_MEMBER_OF_SOME_SORT.off(d.get()), iz("void f() { int c = 3; do ; while(c != 0); }"));
   }
 }

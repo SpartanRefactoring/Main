@@ -1,7 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.ast.step.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 
 import java.util.*;
@@ -10,7 +9,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.engine.*;
 
 /** abbreviates the name of a method parameter that is a viable candidate for
  * abbreviation (meaning that its name is suitable for renaming, and isn't the
@@ -44,11 +44,11 @@ public final class SingleVariableDeclarationAbbreviation extends Wring<SingleVar
   }
 
   private static boolean suitable(final SingleVariableDeclaration d) {
-    return new JavaTypeNameParser(d.getType().toString()).isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
+    return new JavaTypeNameParser("" + d.getType()).isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
   }
 
   @Override String description(final SingleVariableDeclaration d) {
-    return d.getName().toString();
+    return "" + d.getName();
   }
 
   @Override Rewrite make(final SingleVariableDeclaration d, final ExclusionManager exclude) {
@@ -68,14 +68,14 @@ public final class SingleVariableDeclarationAbbreviation extends Wring<SingleVar
         final Javadoc j = m.getJavadoc();
         if (j == null)
           return;
-        final List<TagElement> ts = expose.tags(j);
+        final List<TagElement> ts = step.tags(j);
         if (ts == null)
           return;
         for (final TagElement t : ts) {
           if (!TagElement.TAG_PARAM.equals(t.getTagName()))
             continue;
           for (final Object o : t.fragments())
-            if (o instanceof SimpleName && same((SimpleName) o, oldName)) {
+            if (o instanceof SimpleName && wizard.same((SimpleName) o, oldName)) {
               r.replace((SimpleName) o, d.getAST().newSimpleName(newName), g);
               return;
             }

@@ -1,16 +1,8 @@
 package il.org.spartan.refactoring.wring;
 
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.plugin.PluginPreferencesResources.*;
 
 public interface Kind {
-  interface Sorting extends Structural {
-    static final String label = "Sorting";
-
-    @Override default String description() {
-      return label;
-    }
-  }
-
   String description();
 
   /** Returns the preference group to which the wring belongs to. This method
@@ -79,6 +71,14 @@ public interface Kind {
 
   interface ScopeReduction extends Structural { // S6
     static final String label = "Scope reduction";
+
+    @Override default String description() {
+      return label;
+    }
+  }
+
+  interface Sorting extends Structural {
+    static final String label = "Sorting";
 
     @Override default String description() {
       return label;

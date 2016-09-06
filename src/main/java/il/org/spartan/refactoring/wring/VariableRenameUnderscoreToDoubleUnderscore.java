@@ -9,14 +9,14 @@ import org.eclipse.jdt.core.dom.*;
 public final class VariableRenameUnderscoreToDoubleUnderscore<N extends VariableDeclaration> //
     extends VariableChangeName<N> implements Kind.UnusedArguments {
   @Override boolean change(final N n) {
-    return "_".equals(n.getName().toString());
-  }
-
-  @Override SimpleName replacement(final N n) {
-    return n.getAST().newSimpleName("__");
+    return "_".equals("" + n.getName());
   }
 
   @Override String description(@SuppressWarnings("unused") final N __) {
     return "Use double underscore instead a single underscore";
+  }
+
+  @Override SimpleName replacement(final N n) {
+    return n.getAST().newSimpleName("__");
   }
 }

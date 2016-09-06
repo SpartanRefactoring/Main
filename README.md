@@ -1,4 +1,4 @@
-# Spartan Refactoring [![Build Status](https://travis-ci.org/SpartanRefactoring/spartan-refactoring.svg?branch=more-stable)](https://travis-ci.org/SpartanRefactoring/spartan-refactoring)
+# Spartan Refactoring [![Build Status](https://travis-ci.org/SpartanRefactoring/spartan-refactoring.svg?branch=master)](https://travis-ci.org/SpartanRefactoring/spartan-refactoring)
 Spartan Refactoring is a plugin for Eclipse that automatically applies the
 principles of *[Spartan Programming]* to your Java code. Simply put, it reviews
 your code, provides suggestions and applies them in order to make your code

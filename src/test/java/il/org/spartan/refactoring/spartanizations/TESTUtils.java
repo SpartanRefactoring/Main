@@ -8,6 +8,8 @@ import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.utils.*;
 import il.org.spartan.refactoring.wring.*;
 
@@ -18,32 +20,8 @@ public enum TESTUtils {
   ;
   static final String WHITES = "(?m)\\s+";
 
-  public static String apply(final Trimmer t, final String from) {
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
-    azzert.notNull(u);
-    final Document d = new Document(from);
-    azzert.notNull(d);
-    return TESTUtils.rewrite(t, u, d).get();
-  }
-
-  public static void assertNoChange(final GuessedContext w, final String input) {
-    assertSimilar(w, input, GuessedContext.expression_or_something_that_may_be_passed_as_argument
-        .off(apply(new Trimmer(), GuessedContext.expression_or_something_that_may_be_passed_as_argument.on(input))));
-  }
-
-  static void assertNoOpportunity(final Spartanization s, final String from) {
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
-    azzert.that(u.toString(), trimming.countOpportunities(s, u), is(0));
-  }
-
-  static void assertNotEvenSimilar(final String expected, final String actual) {
-    azzert.that(Funcs.gist(actual), is(Funcs.gist(expected)));
-  }
-
-  static void assertOneOpportunity(final Spartanization s, final String from) {
-    final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(from);
-    azzert.notNull(u);
-    azzert.that(trimming.countOpportunities(s, u), greaterThanOrEqualTo(1));
+  public static void assertNoChange(final String input) {
+    assertSimilar(input, Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT.off(apply(new Trimmer(), Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT.on(input))));
   }
 
   /** A test to check that the actual output is similar to the actual value.
@@ -72,9 +50,9 @@ public enum TESTUtils {
   /** A test to check that the actual output is similar to the actual value.
    * @param expected JD
    * @param actual JD */
-  public static void assertSimilarString(final String message, final String expected, final String actual) {
+  public static void assertSimilar(final String message, final String expected, final String actual) {
     if (!expected.equals(actual))
-      azzert.that(message, GuessedContext.essence(actual), is(GuessedContext.essence(expected)));
+      azzert.that(message, Wrap.essence(actual), is(Wrap.essence(expected)));
   }
 
   /** Convert a given {@link String} into an {@link Statement}, or fail the
@@ -83,7 +61,7 @@ public enum TESTUtils {
    * @return an {@link Statement} data structure representing the parameter. */
   public static Statement asSingle(final String statement) {
     azzert.notNull(statement);
-    final ASTNode n = MakeAST.STATEMENTS.from(statement);
+    final ASTNode n = makeAST.STATEMENTS.from(statement);
     azzert.notNull(n);
     return extract.singleStatement(n);
   }
@@ -95,5 +73,28 @@ public enum TESTUtils {
     } catch (MalformedTreeException | BadLocationException e) {
       throw new AssertionError(e);
     }
+  }
+
+  static String apply(final Trimmer t, final String from) {
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
+    azzert.notNull(u);
+    final Document d = new Document(from);
+    azzert.notNull(d);
+    return TESTUtils.rewrite(t, u, d).get();
+  }
+
+  static void assertNoOpportunity(final Spartanization s, final String from) {
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
+    azzert.that("" + u, TrimmerTestsUtils.countOpportunities(s, u), is(0));
+  }
+
+  static void assertNotEvenSimilar(final String expected, final String actual) {
+    azzert.that(tide.clean(actual), is(tide.clean(expected)));
+  }
+
+  static void assertOneOpportunity(final Spartanization s, final String from) {
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
+    azzert.notNull(u);
+    azzert.that(TrimmerTestsUtils.countOpportunities(s, u), greaterThanOrEqualTo(1));
   }
 }

@@ -1,12 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.assemble.*;
+import il.org.spartan.refactoring.ast.*;
 
 /** convert
  *
@@ -33,11 +32,11 @@ public final class DeclarationInitializerReturnVariable extends Wring.VariableDe
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || hasAnnotation(f) || initializer instanceof ArrayInitializer)
       return null;
-    final ReturnStatement s = asReturnStatement(nextStatement);
+    final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null)
       return null;
-    final Expression returnValue = extract.expression(s);
-    if (returnValue == null || !same(n, returnValue))
+    final Expression returnValue = step.expression(s);
+    if (returnValue == null || !wizard.same(n, returnValue))
       return null;
     eliminate(f, r, g);
     r.replace(s, subject.operand(initializer).toReturn(), g);

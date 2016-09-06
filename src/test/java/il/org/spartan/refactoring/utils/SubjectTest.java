@@ -1,9 +1,7 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.Into.*;
-import static il.org.spartan.refactoring.utils.Restructure.*;
+import static il.org.spartan.refactoring.engine.into.*;
 
 import java.util.*;
 
@@ -11,7 +9,11 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.refactoring.utils.subject.*;
+import il.org.spartan.refactoring.assemble.*;
+import il.org.spartan.refactoring.assemble.subject.*;
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.engine.*;
+import il.org.spartan.refactoring.java.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) public class SubjectTest {
   @Test public void assignment() {
@@ -22,13 +24,13 @@ import il.org.spartan.refactoring.utils.subject.*;
 
   @Test public void conditionalExtract() {
     final Pair pair = subject.pair(e("a-B"), e("(c-d)"));
-    azzert.notNull(pair);
+    assert pair != null;
     azzert.that(pair.toCondition(e("(x)")), iz("x ? a-B : c-d"));
   }
 
   @Test public void conditionalSimple() {
     final Pair pair = subject.pair(e("a-B"), e("(c-d)"));
-    azzert.notNull(pair);
+    assert pair != null;
     azzert.that(pair.toCondition(e("x")), iz("x ? a-B : c-d"));
   }
 
@@ -105,25 +107,25 @@ import il.org.spartan.refactoring.utils.subject.*;
   @Test public void refitPreservesOrder() {
     final InfixExpression e = i("1 + 2 * 3");
     final List<Expression> operands = new ArrayList<>();
-    operands.add(duplicate(e("3*4")));
-    operands.add(duplicate(e("5")));
+    operands.add(duplicate.of(e("3*4")));
+    operands.add(duplicate.of(e("5")));
     final InfixExpression refit = subject.operands(operands).to(e.getOperator());
     azzert.that(refit, is(not(e)));
-    azzert.that(refit.toString(), is("3 * 4 + 5"));
+    azzert.that("" + refit, is("3 * 4 + 5"));
   }
 
-  @Test public void refitWithSort() {
+  @Test @Ignore public void refitWithSort() {
     final InfixExpression e = i("1 + 2 * 3");
-    final List<Expression> operands = extract.operands(flatten(e));
+    final List<Expression> operands = hop.operands(flatten.of(e));
     azzert.that(operands.size(), is(2));
-    azzert.that(operands.get(0).toString(), is("1"));
-    azzert.that(operands.get(1).toString(), is("2 * 3"));
-    azzert.aye(ExpressionComparator.ADDITION.sort(operands));
-    azzert.that(operands.get(0).toString(), is("2 * 3"));
-    azzert.that(operands.get(1).toString(), is("1"));
+    azzert.that("" + operands.get(0), is("1"));
+    azzert.that("" + operands.get(1), is("2 * 3"));
+    assert ExpressionComparator.ADDITION.sort(operands);
+    azzert.that("" + operands.get(0), is("2 * 3"));
+    azzert.that("" + operands.get(1), is("1"));
     final InfixExpression refit = subject.operands(operands).to(e.getOperator());
     azzert.that(refit, is(not(e)));
-    azzert.that(refit.toString(), is("2 * 3 + 1"));
+    azzert.that("" + refit, is("2 * 3 + 1"));
   }
 
   @Test public void remainderDoesntAssociate() {
@@ -131,11 +133,11 @@ import il.org.spartan.refactoring.utils.subject.*;
   }
 
   @Test public void subjectOperands() {
-    final Expression e = Into.e("2 + a < b");
-    azzert.aye(Is.notString(e));
+    final Expression e = into.e("2 + a < b");
+    assert stringType.isNot(e);
     final InfixExpression plus = extract.firstPlus(e);
-    azzert.aye(Is.notString(plus));
-    final List<Expression> operands = extract.operands(flatten(plus));
+    assert stringType.isNot(plus);
+    final List<Expression> operands = hop.operands(flatten.of(plus));
     azzert.that(operands.size(), is(2));
     final boolean b = ExpressionComparator.ADDITION.sort(operands);
     azzert.that(b, is(true));
@@ -143,28 +145,28 @@ import il.org.spartan.refactoring.utils.subject.*;
   }
 
   @Test public void subjectOperandsDoesNotIntroduceList() {
-    final List<Expression> operands = extract.operands(Funcs.duplicate(i("a*b")));
+    final List<Expression> operands = hop.operands(duplicate.of(i("a*b")));
     azzert.that(operands.size(), is(2));
     final InfixExpression e = i("1+2");
     final InfixExpression refit = subject.operands(operands).to(e.getOperator());
     azzert.that(refit.hasExtendedOperands(), is(false));
-    azzert.that(refit.toString(), is("a + b"));
+    azzert.that("" + refit, is("a + b"));
   }
 
   @Test public void subjectOperandsIsCorrect() {
-    azzert.that(subject.operands(extract.operands(Funcs.duplicate(i("a*b*c")))).to(i("1+2+3").getOperator()).toString(), is("a + b + c"));
+    azzert.that("" + subject.operands(hop.operands(duplicate.of(i("a*b*c")))).to(i("1+2+3").getOperator()), is("a + b + c"));
   }
 
   @Test public void subjectOperandsNotNull() {
-    azzert.notNull(subject.operands(extract.operands(Funcs.duplicate(i("a+b+c")))).to(i("1+2+3").getOperator()));
+    assert subject.operands(hop.operands(duplicate.of(i("a+b+c")))).to(i("1+2+3").getOperator()) != null;
   }
 
   @Test public void subjectOperandsWithParenthesis() {
-    final Expression e = Into.e("(2 + a) * b");
-    azzert.aye(Is.notString(e));
+    final Expression e = into.e("(2 + a) * b");
+    assert stringType.isNot(e);
     final InfixExpression plus = extract.firstPlus(e);
-    azzert.aye(Is.notString(plus));
-    final List<Expression> operands = extract.operands(flatten(plus));
+    assert stringType.isNot(plus);
+    final List<Expression> operands = hop.operands(flatten.of(plus));
     azzert.that(operands.size(), is(2));
     final boolean b = ExpressionComparator.ADDITION.sort(operands);
     azzert.that(b, is(true));

@@ -1,18 +1,19 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.Into.*;
-import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.ast.step.*;
+import static il.org.spartan.refactoring.engine.into.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.refactoring.utils.Collect.*;
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.engine.*;
+import il.org.spartan.refactoring.engine.Collect.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) public class SearchTest {
-  private final SimpleName n = asSimpleName(e("n"));
+  private final SimpleName n = az.simpleName(e("n"));
 
   @Test public void awful() {
     azzert.that(searcher().in(d("Object n() {\n" + //
@@ -318,7 +319,7 @@ import il.org.spartan.refactoring.utils.Collect.*;
   @Test public void forEnhancedAsParemeter() {
     final Statement s = s("for (int a: as) return a; ");
     final Block b = (Block) s;
-    final EnhancedForStatement s2 = (EnhancedForStatement) first(statements(b));
+    final EnhancedForStatement s2 = (EnhancedForStatement) lisp.first(statements(b));
     final SimpleName a = s2.getParameter().getName();
     azzert.that(a, iz("a"));
     azzert.that(Collect.usesOf(a).in(s).size(), is(2));
@@ -413,20 +414,12 @@ import il.org.spartan.refactoring.utils.Collect.*;
     azzert.that(Collect.forAllOccurencesExcludingDefinitions(n).in(s("--n;")).size(), is(0));
   }
 
-  private int nCount(final String statement) {
-    return searcher().in(s(statement)).size();
-  }
-
   @Test public void plusPlus() {
     azzert.that(Collect.forAllOccurencesExcludingDefinitions(n).in(s("n++;")).size(), is(0));
   }
 
   @Test public void plusPlusPre() {
     azzert.that(Collect.forAllOccurencesExcludingDefinitions(n).in(s("++n;")).size(), is(0));
-  }
-
-  private Collector searcher() {
-    return Collect.usesOf(n);
   }
 
   @Test public void superMethodInocation() {
@@ -453,5 +446,13 @@ import il.org.spartan.refactoring.utils.Collect.*;
 
   @Test public void vanillaShortVersion() {
     azzert.that(nCount("b = n;"), is(1));
+  }
+
+  private int nCount(final String statement) {
+    return searcher().in(s(statement)).size();
+  }
+
+  private Collector searcher() {
+    return Collect.usesOf(n);
   }
 }

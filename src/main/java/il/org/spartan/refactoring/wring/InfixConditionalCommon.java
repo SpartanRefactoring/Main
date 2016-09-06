@@ -1,8 +1,7 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.extract.*;
+import static il.org.spartan.refactoring.ast.extract.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
@@ -10,6 +9,9 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
+import il.org.spartan.refactoring.assemble.*;
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** convert
@@ -27,10 +29,10 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-07-20 */
 public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
-  private static Expression chopHead(final InfixExpression e) {
-    final List<Expression> es = extract.allOperands(e);
+  private static Expression chopHead(final InfixExpression x) {
+    final List<Expression> es = extract.allOperands(x);
     es.remove(0);
-    return es.size() < 2 ? duplicate(first(es)) : subject.operands(es).to(e.getOperator());
+    return es.size() < 2 ? duplicate.of(lisp.first(es)) : subject.operands(es).to(x.getOperator());
   }
 
   private static Operator conjugate(final Operator o) {
@@ -44,19 +46,19 @@ public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<Infix
     return "Factor out common logical component of ||";
   }
 
-  @Override Expression replacement(final InfixExpression e) {
-    final Operator o = e.getOperator();
+  @Override Expression replacement(final InfixExpression x) {
+    final Operator o = x.getOperator();
     if (!in(o, CONDITIONAL_AND, CONDITIONAL_OR))
       return null;
     final Operator conjugate = conjugate(o);
-    final InfixExpression left = asInfixExpression(core(left(e)));
+    final InfixExpression left = az.infixExpression(core(step.left(x)));
     if (left == null || left.getOperator() != conjugate)
       return null;
-    final InfixExpression right = asInfixExpression(core(right(e)));
+    final InfixExpression right = az.infixExpression(core(step.right(x)));
     if (right == null || right.getOperator() != conjugate)
       return null;
-    final Expression leftLeft = left(left);
-    return !Is.sideEffectFree(leftLeft) || !same(leftLeft, left(right)) ? null
+    final Expression leftLeft = step.left(left);
+    return !sideEffects.free(leftLeft) || !wizard.same(leftLeft, step.left(right)) ? null
         : subject.pair(leftLeft, subject.pair(chopHead(left), chopHead(right)).to(o)).to(conjugate);
   }
 }

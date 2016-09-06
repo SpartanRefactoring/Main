@@ -1,15 +1,14 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.extract.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.assemble.*;
+import il.org.spartan.refactoring.ast.*;
 
 /** convert
  *
@@ -27,21 +26,21 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-08-28 */
 public final class PrefixIncrementDecrementReturn extends Wring.ReplaceToNextStatement<PrefixExpression> implements Kind.Canonicalization {
-  @Override String description(final PrefixExpression e) {
-    return "Consolidate " + e + " with subsequent 'return' of " + operand(e);
+  @Override String description(final PrefixExpression x) {
+    return "Consolidate " + x + " with subsequent 'return' of " + step.operand(x);
   }
 
-  @Override ASTRewrite go(final ASTRewrite r, final PrefixExpression e, final Statement nextStatement, final TextEditGroup g) {
-    if (!in(e.getOperator(), INCREMENT, DECREMENT))
+  @Override ASTRewrite go(final ASTRewrite r, final PrefixExpression x, final Statement nextStatement, final TextEditGroup g) {
+    if (!in(x.getOperator(), INCREMENT, DECREMENT))
       return null;
-    final Statement parent = asStatement(e.getParent());
+    final Statement parent = az.asStatement(x.getParent());
     if (parent == null || parent instanceof ForStatement)
       return null;
-    final ReturnStatement s = asReturnStatement(nextStatement);
-    if (s == null || !same(operand(e), expression(s)))
+    final ReturnStatement s = az.returnStatement(nextStatement);
+    if (s == null || !wizard.same(step.operand(x), step.expression(s)))
       return null;
     r.remove(parent, g);
-    r.replace(s, subject.operand(e).toReturn(), g);
+    r.replace(s, subject.operand(x).toReturn(), g);
     return r;
   }
 }

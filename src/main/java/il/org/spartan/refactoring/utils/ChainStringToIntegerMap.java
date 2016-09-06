@@ -3,7 +3,7 @@ package il.org.spartan.refactoring.utils;
 import java.util.*;
 import java.util.Map.*;
 
-class ChainStringToIntegerMap {
+public class ChainStringToIntegerMap {
   public Map<String, Integer> inner = new HashMap<>();
 
   public boolean containsKey(final String key) {
@@ -11,7 +11,7 @@ class ChainStringToIntegerMap {
   }
 
   public boolean containsValue(final int value) {
-    return inner.containsValue(new Integer(value));
+    return inner.containsValue(Integer.valueOf(value));
   }
 
   public Set<Entry<String, Integer>> entrySet() {
@@ -32,7 +32,7 @@ class ChainStringToIntegerMap {
 
   public ChainStringToIntegerMap put(final String key, final int value) {
     assert !inner.containsKey(key);
-    inner.put(key, new Integer(value));
+    inner.put(key, Integer.valueOf(value));
     return this;
   }
 

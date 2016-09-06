@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
@@ -9,7 +8,8 @@ import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.assemble.*;
+import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.wring.LocalInliner.*;
 
 /** convert
@@ -37,17 +37,17 @@ public final class DeclarationInitialiazelUpdateAssignment extends Wring.Variabl
     if (initializer == null)
       return null;
     final Assignment a = extract.assignment(nextStatement);
-    if (a == null || !same(n, left(a)) || doesUseForbiddenSiblings(f, right(a)))
+    if (a == null || !wizard.same(n, step.left(a)) || doesUseForbiddenSiblings(f, step.right(a)))
       return null;
     final Operator o = a.getOperator();
     if (o == ASSIGN)
       return null;
-    final InfixExpression newInitializer = subject.pair(left(a), right(a)).to(asInfix(o));
+    final InfixExpression newInitializer = subject.pair(step.left(a), step.right(a)).to(asInfix(o));
     final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
-    if (!i.canInlineInto(newInitializer) || i.replacedSize(newInitializer) - size(nextStatement, initializer) > 0)
+    if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - size(nextStatement, initializer) > 0)
       return null;
     r.replace(initializer, newInitializer, g);
-    i.inlineInto(newInitializer);
+    i.inlineinto(newInitializer);
     r.remove(nextStatement, g);
     return r;
   }

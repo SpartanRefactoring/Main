@@ -4,7 +4,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.engine.*;
 
 /** A {@link Wring} to eliminate degenerate if statements such as
  *
@@ -32,6 +33,6 @@ public final class IfEmptyThenEmptyElse extends Wring<IfStatement> implements Ki
   }
 
   @Override boolean claims(final IfStatement s) {
-    return s != null && Is.vacuousThen(s) && Is.vacuousElse(s);
+    return s != null && iz . vacuousThen(s) && iz . vacuousElse(s);
   }
 }

@@ -1,12 +1,14 @@
 package il.org.spartan.refactoring.utils;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.utils.Into.*;
+import static il.org.spartan.refactoring.engine.into.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.spartanizations.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) public class ExtractTest {
@@ -16,19 +18,19 @@ import il.org.spartan.refactoring.spartanizations.*;
   }
 
   @Test public void firstMethdoDeclaration() {
-    azzert.that(extract.firstMethodDeclaration(GuessedContext.method_or_class_member_of_some_sort.intoCompilationUnit("int f() { return a; }")), iz("int f() { return a; }"));
+    azzert.that(extract.firstMethodDeclaration(Wrap.A_CLASS_MEMBER_OF_SOME_SORT.intoCompilationUnit("int f() { return a; }")), iz("int f() { return a; }"));
   }
 
   @Test public void operandsCount() {
-    azzert.that(extract.operands(i("a+b+c+(d+e)+f")).size(), is(5));
+    azzert.that(hop.operands(i("a+b+c+(d+e)+f")).size(), is(5));
   }
 
   @Test public void operandsOfNullIsNull() {
-    azzert.that(extract.operands(null), is(nullValue()));
+    azzert.that(hop.operands(null), is(nullValue()));
   }
 
   @Test public void plus() {
-    azzert.that(extract.firstPlus(Into.e("a + 2 < b")), iz("a+2"));
+    azzert.that(extract.firstPlus(into.e("a + 2 < b")), iz("a+2"));
   }
 
   @Test public void prefixToPostfixDecrement() {
@@ -38,6 +40,6 @@ import il.org.spartan.refactoring.spartanizations.*;
     azzert.that(s, iz("{" + from + "}"));
     final PostfixExpression e = extract.findFirstPostfix(s);
     azzert.notNull(e);
-    azzert.that(e.toString(), is("i--"));
+    azzert.that("" + e, is("i--"));
   }
 }

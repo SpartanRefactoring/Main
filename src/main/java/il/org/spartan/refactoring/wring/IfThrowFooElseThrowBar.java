@@ -1,10 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
-
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.assemble.*;
+import il.org.spartan.refactoring.ast.*;
 
 /** convert
  *
@@ -30,9 +29,9 @@ public final class IfThrowFooElseThrowBar extends Wring.ReplaceCurrentNode<IfSta
 
   @Override Statement replacement(final IfStatement s) {
     final Expression condition = s.getExpression();
-    final Expression then = extract.throwExpression(then(s));
-    final Expression elze = extract.throwExpression(elze(s));
-    return then == null || elze == null ? null : makeThrowStatement(subject.pair(then, elze).toCondition(condition));
+    final Expression then = extract.throwExpression(step.then(s));
+    final Expression elze = extract.throwExpression(step.elze(s));
+    return then == null || elze == null ? null : make.throwOf(subject.pair(then, elze).toCondition(condition));
   }
 
   @Override boolean claims(final IfStatement s) {

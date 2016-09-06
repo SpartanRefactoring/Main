@@ -6,7 +6,7 @@
          name="Spartanization Suggestions"
          point="org.eclipse.core.resources.builders">
       <builder hasNature="true">
-         <run class="il.org.spartan.refactoring.builder.Builder"/> 
+         <run class="il.org.spartan.refactoring.plugin.Builder"/> 
       </builder>
    </extension>
    <extension
@@ -14,7 +14,7 @@
          name="Spartanization Nature"
          point="org.eclipse.core.resources.natures">
       <runtime>
-         <run class="il.org.spartan.refactoring.builder.Nature"/> 
+         <run class="il.org.spartan.refactoring.plugin.Nature"/> 
       </runtime>
       <builder id="il.org.spartan.refactoring.BuilderID"/> 
    </extension>
@@ -27,7 +27,7 @@
      </application>
    </extension>
       <extension point="org.eclipse.ui.startup">
-     <startup class="il.org.spartan.refactoring.builder.Plugin"/>
+     <startup class="il.org.spartan.refactoring.plugin.Plugin"/>
    </extension>
 
 <extension
@@ -39,7 +39,7 @@
    <extension point="org.eclipse.ui.ide.markerResolution">
       <markerResolutionGenerator 
                markerType="il.org.spartan.refactoring.spartanizationSuggestion"
-         class="il.org.spartan.refactoring.builder.QuickFixer"/>
+         class="il.org.spartan.refactoring.plugin.QuickFixer"/>
    </extension>
    <extension point="org.eclipse.ui.editors.annotationTypes">
      <type markerType="il.org.spartan.refactoring.spartanizationSuggestion" 
@@ -121,15 +121,15 @@
    </extension>
    <extension point="org.eclipse.ui.handlers">
       <handler
-            class="il.org.spartan.refactoring.handlers.ToggleSpartanizationHandler"
+            class="il.org.spartan.refactoring.plugin.ToggleSpartanizationHandler"
             commandId="il.org.spartan.commands.ToggleCommand">
       </handler>
       <handler
-            class="il.org.spartan.refactoring.handlers.CleanupHandler"
+            class="il.org.spartan.refactoring.plugin.CleanupHandler"
             commandId="il.org.spartan.refactoring.commands.Cleanup">
       </handler>
       <handler
-            class="il.org.spartan.refactoring.handlers.ApplySpartanizationHandler"
+            class="il.org.spartan.refactoring.plugin.ApplySpartanizationHandler"
             commandId="il.org.spartan.refactoring.commands.ApplySpartanization">
       </handler>
    </extension>
@@ -289,7 +289,7 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            class="il.org.spartan.refactoring.preferences.PluginPreferencesPage"
+            class="il.org.spartan.refactoring.plugin.PluginPreferencesPage"
             id="il.org.spartan.refactoring.preferences.PluginPreferencesPage"
             name="Spartanization"
             category="org.eclipse.jdt.ui.preferences.JavaBasePreferencePage">
@@ -301,9 +301,9 @@
    </extension>
    <extension
 	         point="org.eclipse.core.runtime.preferences">
-	         <scope name="PluginPreferencesPage" class="il.org.spartan.refactoring.preferences.PluginPreferencesPage"/>
+	         <scope name="PluginPreferencesPage" class="il.org.spartan.refactoring.plugin.PluginPreferencesPage"/>
 	      <initializer
-	            class="il.org.spartan.refactoring.preferences.PluginPreferencesDefaultValuesInitializer">
+	            class="il.org.spartan.refactoring.plugin.PluginPreferencesDefaultValuesInitializer">
 	      </initializer>
 	</extension>
 </plugin>

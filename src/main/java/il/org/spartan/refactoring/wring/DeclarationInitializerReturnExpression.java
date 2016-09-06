@@ -1,12 +1,12 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.wring.LocalInliner.*;
 
 /** convert
@@ -33,18 +33,18 @@ public final class DeclarationInitializerReturnExpression extends Wring.Variable
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || hasAnnotation(f))
       return null;
-    final ReturnStatement s = asReturnStatement(nextStatement);
+    final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null)
       return null;
     final Expression newReturnValue = s.getExpression();
     if (newReturnValue == null)
       return null;
     final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
-    if (same(n, newReturnValue) || !i.canSafelyInlineInto(newReturnValue)
+    if (wizard.same(n, newReturnValue) || !i.canSafelyInlineinto(newReturnValue)
         || i.replacedSize(newReturnValue) - eliminationSaving(f) - size(newReturnValue) > 0)
       return null;
     r.replace(s.getExpression(), newReturnValue, g);
-    i.inlineInto(newReturnValue);
+    i.inlineinto(newReturnValue);
     eliminate(f, r, g);
     return r;
   }

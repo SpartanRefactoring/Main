@@ -24,71 +24,9 @@ import il.org.spartan.*;
  * @author Yossi Gil
  * @since 2015-09-23. */
 public class FilesGenerator {
-  /** An internal (yet <code><b>public</b></code>) <code><b>class</b></code>
-   * which <code><b>implements</b></code> the {@link Iterable}
-   * <code><b>interface</b></code>.
-   * @author Yossi Gil
-   * @since 2015-09-23. */
-  public class From implements Iterable<File> {
-    private class FilesIterator implements Iterator<File> {
-      private File next = null;
-      private final Stack<Iterator<File>> stack = new Stack<>();
-
-      public FilesIterator(final Iterator<File> i) {
-        stack.push(i);
-      }
-
-      @Override public boolean hasNext() {
-        for (;;) {
-          if (stack.isEmpty())
-            return false;
-          final Iterator<File> currentIterator = stack.peek();
-          if (currentIterator == null || !currentIterator.hasNext()) {
-            stack.pop();
-            continue;
-          }
-          next = currentIterator.next();
-          if (next.isDirectory()) {
-            stack.push(directoryIterator(next));
-            continue;
-          }
-          if (ofInterest())
-            return true;
-        }
-      }
-
-      @Override public File next() {
-        return next;
-      }
-
-      private boolean ofInterest() {
-        for (final String extension : extensions)
-          if (next.getName().endsWith(extension))
-            return true;
-        return false;
-      }
-
-      @Override public void remove() {
-        throw new UnsupportedOperationException();
-      }
-    }
-
-    final Iterable<File> from;
-
-    From(final Iterable<File> from) {
-      this.from = from;
-    }
-
-    @Override public Iterator<File> iterator() {
-      return new FilesIterator(from.iterator());
-    }
-  }
-
-  private static Iterable<File> asFiles(final Iterable<String> fileNames) {
-    final List<File> $ = new ArrayList<>();
-    for (final String fileName : fileNames)
-      $.add(new File(fileName));
-    return $;
+  public static void main(final String[] args) {
+    for (final File f : new FilesGenerator(".java").from("."))
+      System.out.println(f);
   }
 
   /** @param directory should be a directory, but we still need to account for
@@ -98,7 +36,7 @@ public class FilesGenerator {
       return null;
     final Iterator<String> generator = as.list(directory.list()).iterator();
     return new Iterator<File>() {
-      private File next;
+      File next;
 
       @Override public boolean hasNext() {
         for (;;) {
@@ -122,9 +60,11 @@ public class FilesGenerator {
     };
   }
 
-  public static void main(final String[] args) {
-    for (final File f : new FilesGenerator(".java").from("."))
-      System.out.println(f);
+  private static Iterable<File> asFiles(final Iterable<String> fileNames) {
+    final List<File> $ = new ArrayList<>();
+    for (final String fileName : fileNames)
+      $.add(new File(fileName));
+    return $;
   }
 
   /** Which extensions we search for */
@@ -160,5 +100,65 @@ public class FilesGenerator {
    *         {@link Iterable} <code><b>interface</b></code> */
   public From from(final String... from) {
     return from(as.iterable(from));
+  }
+
+  /** An internal (yet <code><b>public</b></code>) <code><b>class</b></code>
+   * which <code><b>implements</b></code> the {@link Iterable}
+   * <code><b>interface</b></code>.
+   * @author Yossi Gil
+   * @since 2015-09-23. */
+  public class From implements Iterable<File> {
+    final Iterable<File> from;
+
+    From(final Iterable<File> from) {
+      this.from = from;
+    }
+
+    @Override public Iterator<File> iterator() {
+      return new FilesIterator(from.iterator());
+    }
+
+    private class FilesIterator implements Iterator<File> {
+      private File next = null;
+      private final Stack<Iterator<File>> stack = new Stack<>();
+
+      public FilesIterator(final Iterator<File> i) {
+        stack.push(i);
+      }
+
+      @Override public boolean hasNext() {
+        for (;;) {
+          if (stack.isEmpty())
+            return false;
+          final Iterator<File> currentIterator = stack.peek();
+          if (currentIterator == null || !currentIterator.hasNext()) {
+            stack.pop();
+            continue;
+          }
+          next = currentIterator.next();
+          if (next.isDirectory()) {
+            stack.push(directoryIterator(next));
+            continue;
+          }
+          if (ofInterest())
+            return true;
+        }
+      }
+
+      @Override public File next() {
+        return next;
+      }
+
+      @Override public void remove() {
+        throw new UnsupportedOperationException();
+      }
+
+      private boolean ofInterest() {
+        for (final String extension : extensions)
+          if (next.getName().endsWith(extension))
+            return true;
+        return false;
+      }
+    }
   }
 }

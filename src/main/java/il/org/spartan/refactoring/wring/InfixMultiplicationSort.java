@@ -8,7 +8,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.engine.*;
 
 /** sorts the arguments of a {@link Operator#PLUS} expression. Extra care is
  * taken to leave intact the use of {@link Operator#PLUS} for the concatenation
@@ -20,7 +20,7 @@ public final class InfixMultiplicationSort extends Wring.InfixSorting implements
     return in(e.getOperator(), TIMES);
   }
 
-  @Override boolean sort(final List<Expression> es) {
-    return ExpressionComparator.MULTIPLICATION.sort(es);
+  @Override boolean sort(final List<Expression> xs) {
+    return ExpressionComparator.MULTIPLICATION.sort(xs);
   }
 }

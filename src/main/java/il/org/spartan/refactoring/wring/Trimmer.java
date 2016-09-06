@@ -8,8 +8,8 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.spartanizations.*;
-import il.org.spartan.refactoring.utils.*;
 
 /** @author Yossi Gil
  * @since 2015/07/10 */
@@ -21,7 +21,7 @@ public final class Trimmer extends Spartanization {
     final Trimmer trimmer = new Trimmer();
     final Document $ = new Document(from);
     for (;;) {
-      final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from($.get());
+      final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from($.get());
       final ASTRewrite r = trimmer.createRewrite(u, null);
       final TextEdit e = r.rewriteAST($, null);
       try {
@@ -61,13 +61,13 @@ public final class Trimmer extends Spartanization {
   @Override protected ASTVisitor collect(final List<Rewrite> $) {
     return new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
-        final Wring<N> w = toolbox.find(n);
+        final Wring<N> w = Toolbox.instance().find(n);
         return w == null || w.cantMake(n) || prune(w.make(n, exclude), $);
       }
     };
   }
 
-  @Override protected final void fillRewrite(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
+  @Override protected void fillRewrite(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
     u.accept(new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
         if (!inRange(m, n))
@@ -102,11 +102,15 @@ public final class Trimmer extends Spartanization {
       return cautiousGo(¢);
     }
 
-    @Override public final boolean visit(final ConditionalExpression e) {
-      return cautiousGo(e);
+    @Override public final boolean visit(final ConditionalExpression x) {
+      return cautiousGo(x);
     }
 
     @Override public final boolean visit(final EnumDeclaration ¢) {
+      return cautiousGo(¢);
+    }
+
+    @Override public final boolean visit(final FieldDeclaration ¢) {
       return cautiousGo(¢);
     }
 
@@ -115,10 +119,6 @@ public final class Trimmer extends Spartanization {
     }
 
     @Override public final boolean visit(final InfixExpression ¢) {
-      return cautiousGo(¢);
-    }
-
-    @Override public final boolean visit(final FieldDeclaration ¢) {
       return cautiousGo(¢);
     }
 

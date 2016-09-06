@@ -10,8 +10,13 @@ import org.eclipse.jdt.core.dom.*;
  * @since 2015-08-22 */
 public class Toolbox {
   /** The default instance of this class */
-  public static Toolbox defaultInstance() {
-    return fullSuite;
+  static Toolbox instance;
+
+  private static <N extends ASTNode> Wring<N> find(final N n, final List<Wring<N>> ws) {
+    for (final Wring<N> $ : ws)
+      if ($.claims(n))
+        return $;
+    return null;
   }
 
   /** Initialize this class's default instance object */
@@ -50,7 +55,7 @@ public class Toolbox {
             null)
         .add(MethodDeclaration.class, //
             new MethodRenameReturnToDollar(), //
-            new BodeDeclarationRemoveModifiers.OfMethod(), //
+            new BodyDeclarationRemoveModifiers.OfMethod(), //
             null)
         .add(MethodInvocation.class, //
             new StringEqualsConstant(), //

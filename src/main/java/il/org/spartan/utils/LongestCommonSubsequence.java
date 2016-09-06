@@ -4,6 +4,7 @@ import static il.org.spartan.Utils.*;
 
 import java.util.*;
 
+import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** Utility class for computing the "Longest Common Subsequence" of two strings.
@@ -16,11 +17,16 @@ public class LongestCommonSubsequence {
   private final int[][] length;
 
   public LongestCommonSubsequence(final String a, final String b) {
-    as = Funcs.gist(a).toCharArray();
-    bs = Funcs.gist(b).toCharArray();
+    as = tide.clean(a).toCharArray();
+    bs = tide.clean(b).toCharArray();
     length = new int[as.length][];
     for (int i = 0; i < as.length; ++i)
       Arrays.fill(length[i] = new int[bs.length], -1);
+  }
+
+  /** @return A value between 0 and 1 */
+  public double similarity() {
+    return 2. * length() / (as.length + bs.length);
   }
 
   private int compute(final int i, final int j) {
@@ -46,12 +52,7 @@ public class LongestCommonSubsequence {
     return length[i][j] != -1 ? length[i][j] : (length[i][j] = compute(i, j));
   }
 
-  /** @return A value between 0 and 1 */
-  public double similarity() {
-    return 2. * length() / (as.length + bs.length);
-  }
-
   private int threeWayDynamicProgramingStep(final int i, final int j) {
-    return max(length(i - 1, j), length(i, j - 1), length(i - 1, j - 1) + As.bit(as[i] == bs[j]));
+    return max(length(i - 1, j), length(i, j - 1), length(i - 1, j - 1) + az.bit(as[i] == bs[j]));
   }
 }

@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 
 import java.util.*;
@@ -9,7 +8,39 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.utils.*;
+
+/** @author Artium Nihamkin (original)
+ * @author Boris van Sosin <tt><boris.van.sosin [at] gmail.com></tt> (v2)
+ * @author Yossi Gil (v3)
+ * @since 2013/01/01 */
+public final class MethodRenameReturnToDollar extends Wring<MethodDeclaration> implements Kind.Dollarization {
+  @Override String description(final MethodDeclaration d) {
+    return "" + d.getName();
+  }
+
+  @Override Rewrite make(final MethodDeclaration d, final ExclusionManager exclude) {
+    final Type t = d.getReturnType2();
+    if (t instanceof PrimitiveType && ((PrimitiveType) t).getPrimitiveTypeCode() == PrimitiveType.VOID)
+      return null;
+    final SimpleName n = new Conservative(d).selectReturnVariable();
+    if (n == null)
+      return null;
+    if (exclude != null)
+      exclude.exclude(d);
+    return new Rewrite("Rename variable " + n + " to $ (main variable returned by " + description(d) + ")", d) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+        rename(n, $(), d, r, g);
+      }
+
+      SimpleName $() {
+        return d.getAST().newSimpleName("$");
+      }
+    };
+  }
+}
 
 abstract class AbstractRenamePolicy {
   private static boolean hasDollar(final List<SimpleName> ns) {
@@ -27,7 +58,7 @@ abstract class AbstractRenamePolicy {
       // Empty returns stop the search. Something wrong is going on.
       if (r.getExpression() == null)
         return null;
-      if (Is.literal(r))
+      if (iz.literal(r))
         i.remove();
     }
     return $;
@@ -100,43 +131,13 @@ class Conservative extends AbstractRenamePolicy {
     for (final Iterator<SimpleName> i = localVariables.iterator(); i.hasNext();)
       if (unused(i.next()))
         i.remove();
-    return first(localVariables);
+    return lisp.first(localVariables);
   }
 
   private boolean unused(final SimpleName n) {
     for (final ReturnStatement s : returnStatements)
-      if (same(n, s.getExpression()))
+      if (wizard.same(n, s.getExpression()))
         return false;
     return true;
-  }
-}
-
-/** @author Artium Nihamkin (original)
- * @author Boris van Sosin <tt><boris.van.sosin [at] gmail.com></tt> (v2)
- * @author Yossi Gil (v3)
- * @since 2013/01/01 */
-public final class MethodRenameReturnToDollar extends Wring<MethodDeclaration> implements Kind.Dollarization {
-  @Override String description(final MethodDeclaration d) {
-    return d.getName().toString();
-  }
-
-  @Override Rewrite make(final MethodDeclaration d, final ExclusionManager exclude) {
-    final Type t = d.getReturnType2();
-    if (t instanceof PrimitiveType && ((PrimitiveType) t).getPrimitiveTypeCode() == PrimitiveType.VOID)
-      return null;
-    final SimpleName n = new Conservative(d).selectReturnVariable();
-    if (n == null)
-      return null;
-    if (exclude != null)
-      exclude.exclude(d);
-    return new Rewrite("Rename variable " + n + " to $ (main variable returned by " + description(d) + ")", d) {
-      SimpleName $() {
-        return d.getAST().newSimpleName("$");
-      }
-
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        rename(n, $(), d, r, g);
-      }
-    };
   }
 }

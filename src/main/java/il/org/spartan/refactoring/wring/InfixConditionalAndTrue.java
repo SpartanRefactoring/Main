@@ -2,7 +2,7 @@ package il.org.spartan.refactoring.wring;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.ast.*;
 
 /** convert
  *
@@ -23,11 +23,11 @@ public final class InfixConditionalAndTrue extends Wring.ReplaceCurrentNode<Infi
     return "Remove 'true' argument to '&&'";
   }
 
-  @Override Expression replacement(final InfixExpression e) {
-    return Wrings.eliminateLiteral(e, true);
+  @Override Expression replacement(final InfixExpression x) {
+    return Wrings.eliminateLiteral(x, true);
   }
 
   @Override boolean claims(final InfixExpression e) {
-    return Is.conditionalAnd(e) && Have.trueLiteral(extract.allOperands(e));
+    return iz . conditionalAnd(e) && have.trueLiteral(extract.allOperands(e));
   }
 }

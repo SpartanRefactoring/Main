@@ -1,20 +1,20 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.ast.step.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
-import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.assemble.*;
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.engine.*;
 
 /** A wring is a transformation that works on an AstNode. Such a transformation
  * make a single simplification of the tree. A wring is so small that it is
@@ -72,7 +72,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
     }
 
     IExtendedModifier firstThat(final N n, final Predicate<Modifier> f) {
-      for (final IExtendedModifier $ : expose.modifiers(n))
+      for (final IExtendedModifier $ : step.modifiers(n))
         if ($.isModifier() && f.test((Modifier) $))
           return $;
       return null;
@@ -97,7 +97,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
     }
 
     private N go(final N $) {
-      for (final Iterator<IExtendedModifier> ¢ = expose.modifiers($).iterator(); ¢.hasNext();)
+      for (final Iterator<IExtendedModifier> ¢ = step.modifiers($).iterator(); ¢.hasNext();)
         if (redundant(¢.next()))
           ¢.remove();
       return $;
@@ -109,8 +109,8 @@ public abstract class Wring<N extends ASTNode> implements Kind {
   }
 
   static abstract class AbstractSorting extends ReplaceCurrentNode<InfixExpression> {
-    @Override final String description(final InfixExpression e) {
-      return "Reorder operands of " + e.getOperator();
+    @Override final String description(final InfixExpression x) {
+      return "Reorder operands of " + x.getOperator();
     }
 
     abstract boolean sort(List<Expression> operands);
@@ -122,9 +122,9 @@ public abstract class Wring<N extends ASTNode> implements Kind {
       return !Wrings.mixedLiteralKind(es) && sort(es);
     }
 
-    @Override Expression replacement(final InfixExpression e) {
-      final List<Expression> operands = extract.allOperands(e);
-      return !sort(operands) ? null : subject.operands(operands).to(e.getOperator());
+    @Override Expression replacement(final InfixExpression x) {
+      final List<Expression> operands = extract.allOperands(x);
+      return !sort(operands) ? null : subject.operands(operands).to(x.getOperator());
     }
   }
 
@@ -135,13 +135,13 @@ public abstract class Wring<N extends ASTNode> implements Kind {
       return !Wrings.mixedLiteralKind(es) && sort(es);
     }
 
-    @Override Expression replacement(final InfixExpression e) {
-      final List<Expression> operands = extract.allOperands(e);
+    @Override Expression replacement(final InfixExpression x) {
+      final List<Expression> operands = extract.allOperands(x);
       final Expression first = operands.remove(0);
       if (!sort(operands))
         return null;
       operands.add(0, first);
-      return subject.operands(operands).to(e.getOperator());
+      return subject.operands(operands).to(x.getOperator());
     }
   }
 
@@ -245,7 +245,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
 
     static Expression assignmentAsExpression(final Assignment a) {
       final Operator o = a.getOperator();
-      return o == ASSIGN ? duplicate(right(a)) : subject.pair(left(a), right(a)).to(asInfix(o));
+      return o == ASSIGN ? duplicate.of(step.right(a)) : subject.pair(step.left(a), step.right(a)).to(asInfix(o));
     }
 
     static boolean doesUseForbiddenSiblings(final VariableDeclarationFragment f, final ASTNode... ns) {
@@ -269,7 +269,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
         r.remove(parent, g);
         return;
       }
-      final VariableDeclarationStatement newParent = duplicate(parent);
+      final VariableDeclarationStatement newParent = duplicate.of(parent);
       fragments(newParent).clear();
       fragments(newParent).addAll(live);
       r.replace(parent, newParent, g);
@@ -281,7 +281,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
       final int $ = size(parent);
       if (live.isEmpty())
         return $;
-      final VariableDeclarationStatement newParent = duplicate(parent);
+      final VariableDeclarationStatement newParent = duplicate.of(parent);
       fragments(newParent).clear();
       fragments(newParent).addAll(live);
       return $ - size(newParent);
@@ -314,7 +314,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
     }
 
     static boolean hasAnnotation(final VariableDeclarationStatement s) {
-      return hasAnnotation(expose.modifiers(s));
+      return hasAnnotation(step.modifiers(s));
     }
 
     static int removalSaving(final VariableDeclarationFragment f) {
@@ -322,7 +322,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
       final int $ = size(parent);
       if (parent.fragments().size() <= 1)
         return $;
-      final VariableDeclarationStatement newParent = duplicate(parent);
+      final VariableDeclarationStatement newParent = duplicate.of(parent);
       newParent.fragments().remove(parent.fragments().indexOf(f));
       return $ - size(newParent);
     }
@@ -342,7 +342,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
       final List<VariableDeclarationFragment> $ = new ArrayList<>();
       for (final VariableDeclarationFragment brother : fs)
         if (brother != null && brother != f && brother.getInitializer() != null)
-          $.add(duplicate(brother));
+          $.add(duplicate.of(brother));
       return $;
     }
 
@@ -350,7 +350,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
         TextEditGroup g);
 
     @Override final ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
-      if (!Is.variableDeclarationStatement(f.getParent()))
+      if (!iz.variableDeclarationStatement(f.getParent()))
         return null;
       final SimpleName n = f.getName();
       return n == null ? null : go(r, f, n, f.getInitializer(), nextStatement, g);

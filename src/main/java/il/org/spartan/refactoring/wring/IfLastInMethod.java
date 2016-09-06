@@ -1,14 +1,15 @@
 package il.org.spartan.refactoring.wring;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.ast.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.assemble.*;
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.engine.*;
 
 /** convert
  *
@@ -37,14 +38,14 @@ public final class IfLastInMethod extends Wring<IfStatement> implements Kind.Can
   }
 
   @Override Rewrite make(final IfStatement s) {
-    if (Is.vacuousThen(s) || !Is.vacuousElse(s) || extract.statements(then(s)).size() < 2)
+    if (iz.vacuousThen(s) || !iz.vacuousElse(s) || extract.statements(step.then(s)).size() < 2)
       return null;
-    final Block b = asBlock(s.getParent());
+    final Block b = az.block(s.getParent());
     return b == null || !lastIn(s, statements(b)) || !(b.getParent() instanceof MethodDeclaration) ? null : new Rewrite(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Wrings.insertAfter(s, extract.statements(then(s)), r, g);
-        final IfStatement newIf = duplicate(s);
-        newIf.setExpression(duplicate(logicalNot(s.getExpression())));
+        Wrings.insertAfter(s, extract.statements(step.then(s)), r, g);
+        final IfStatement newIf = duplicate.of(s);
+        newIf.setExpression(duplicate.of(make.notOf(s.getExpression())));
         newIf.setThenStatement(s.getAST().newReturnStatement());
         newIf.setElseStatement(null);
         r.replace(s, newIf, g);

@@ -1,12 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.assemble.*;
+import il.org.spartan.refactoring.ast.*;
 
 /** convert
  *
@@ -35,9 +34,9 @@ public final class IfThrowNoElseThrow extends Wring.ReplaceToNextStatement<IfSta
   }
 
   @Override ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
-    if (!Is.vacuousElse(s))
+    if (!iz.vacuousElse(s))
       return null;
-    final Expression e1 = getThrowExpression(then(s));
+    final Expression e1 = getThrowExpression(step.then(s));
     if (e1 == null)
       return null;
     final Expression e2 = getThrowExpression(nextStatement);

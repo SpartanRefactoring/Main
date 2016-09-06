@@ -1,13 +1,14 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.assemble.*;
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.engine.*;
 
 /** convert
  *
@@ -28,10 +29,10 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2015-09-01 */
 public final class IfThenIfThenNoElseNoElse extends Wring<IfStatement> implements Kind.DistributiveRefactoring {
   static void collapse(final IfStatement s, final ASTRewrite r, final TextEditGroup g) {
-    final IfStatement then = asIfStatement(extract.singleThen(s));
+    final IfStatement then = az.ifStatement(extract.singleThen(s));
     final InfixExpression e = subject.pair(s.getExpression(), then.getExpression()).to(CONDITIONAL_AND);
     r.replace(s.getExpression(), e, g);
-    r.replace(then, duplicate(then(then)), g);
+    r.replace(then, duplicate.of(step.then(then)), g);
   }
 
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
@@ -43,10 +44,10 @@ public final class IfThenIfThenNoElseNoElse extends Wring<IfStatement> implement
   }
 
   @Override Rewrite make(final IfStatement s, final ExclusionManager exclude) {
-    if (!Is.vacuousElse(s))
+    if (!iz.vacuousElse(s))
       return null;
-    final IfStatement then = asIfStatement(extract.singleThen(s));
-    if (then == null || !Is.vacuousElse(then))
+    final IfStatement then = az.ifStatement(extract.singleThen(s));
+    if (then == null || !iz.vacuousElse(then))
       return null;
     if (exclude != null)
       exclude.exclude(then);

@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
@@ -9,7 +8,7 @@ import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.wring.LocalInliner.*;
 
 /** convert
@@ -36,21 +35,21 @@ public final class DeclarationInitializerReturnUpdateAssignment extends Wring.Va
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || hasAnnotation(f))
       return null;
-    final ReturnStatement s = asReturnStatement(nextStatement);
+    final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null)
       return null;
-    final Assignment a = asAssignment(extract.expression(s));
-    if (a == null || !same(n, left(a)))
+    final Assignment a = az.assignment(step.expression(s));
+    if (a == null || !wizard.same(n, step.left(a)))
       return null;
     final Operator o = a.getOperator();
     if (o == ASSIGN)
       return null;
     final Expression newReturnValue = assignmentAsExpression(a);
     final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
-    if (!i.canInlineInto(newReturnValue) || i.replacedSize(newReturnValue) - eliminationSaving(f) - size(newReturnValue) > 0)
+    if (!i.canInlineinto(newReturnValue) || i.replacedSize(newReturnValue) - eliminationSaving(f) - size(newReturnValue) > 0)
       return null;
     r.replace(a, newReturnValue, g);
-    i.inlineInto(newReturnValue);
+    i.inlineinto(newReturnValue);
     eliminate(f, r, g);
     return r;
   }

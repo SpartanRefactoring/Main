@@ -1,12 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.assemble.*;
+import il.org.spartan.refactoring.ast.*;
 
 /** convert
  *
@@ -24,9 +23,9 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-08-07 */
 public final class DeclarationAssignment extends Wring.VariableDeclarationFragementAndStatement implements Kind.Canonicalization {
-  private static VariableDeclarationFragment makeVariableDeclarationFragement(final VariableDeclarationFragment f, final Expression e) {
-    final VariableDeclarationFragment $ = duplicate(f);
-    $.setInitializer(duplicate(e));
+  private static VariableDeclarationFragment makeVariableDeclarationFragement(final VariableDeclarationFragment f, final Expression x) {
+    final VariableDeclarationFragment $ = duplicate.of(f);
+    $.setInitializer(duplicate.of(x));
     return $;
   }
 
@@ -39,9 +38,9 @@ public final class DeclarationAssignment extends Wring.VariableDeclarationFragem
     if (initializer != null)
       return null;
     final Assignment a = extract.assignment(nextStatement);
-    if (a == null || !same(n, left(a)) || doesUseForbiddenSiblings(f, right(a)))
+    if (a == null || !wizard.same(n, step.left(a)) || doesUseForbiddenSiblings(f, step.right(a)))
       return null;
-    r.replace(f, makeVariableDeclarationFragement(f, right(a)), g);
+    r.replace(f, makeVariableDeclarationFragement(f, step.right(a)), g);
     r.remove(extract.statement(a), g);
     return r;
   }

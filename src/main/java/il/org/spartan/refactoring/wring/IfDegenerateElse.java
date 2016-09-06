@@ -1,10 +1,9 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
-
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.assemble.*;
+import il.org.spartan.refactoring.ast.*;
 
 /** /** convert
  *
@@ -26,7 +25,7 @@ import il.org.spartan.refactoring.utils.*;
  * @since 2015-08-01 */
 public final class IfDegenerateElse extends Wring.ReplaceCurrentNode<IfStatement> implements Kind.Canonicalization {
   static boolean degenerateElse(final IfStatement s) {
-    return elze(s) != null && Is.vacuousElse(s);
+    return step.elze(s) != null && iz.vacuousElse(s);
   }
 
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
@@ -34,9 +33,9 @@ public final class IfDegenerateElse extends Wring.ReplaceCurrentNode<IfStatement
   }
 
   @Override Statement replacement(final IfStatement s) {
-    final IfStatement $ = duplicate(s);
+    final IfStatement $ = duplicate.of(s);
     $.setElseStatement(null);
-    return !Is.blockRequiredInReplacement(s, $) ? $ : subject.statement($).toBlock();
+    return !iz.blockRequiredInReplacement(s, $) ? $ : subject.statement($).toBlock();
   }
 
   @Override boolean claims(final IfStatement s) {

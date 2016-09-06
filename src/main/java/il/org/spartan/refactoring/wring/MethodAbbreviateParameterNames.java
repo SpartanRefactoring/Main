@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.ast.step.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 
 import java.util.*;
@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.engine.*;
 
 /** abbreviates the names of variables that have a generic variation. The
  * abbreviated name is the first character in the last word of the variable's
@@ -39,20 +39,7 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Override String description(final MethodDeclaration d) {
-    return d.getName().toString();
-  }
-
-  private List<SingleVariableDeclaration> find(final List<SingleVariableDeclaration> ds) {
-    final List<SingleVariableDeclaration> $ = new ArrayList<>();
-    for (final SingleVariableDeclaration d : ds)
-      if (suitable(d))
-        $.add(d);
-    return $.size() != 0 ? $ : null;
-  }
-
-  private boolean isShort(final SingleVariableDeclaration d) {
-    final String n = spartan.shorten(d.getType());
-    return n != null && (n + pluralVariadic(d)).equals(d.getName().getIdentifier());
+    return "" + d.getName();
   }
 
   @Override Rewrite make(final MethodDeclaration d, final ExclusionManager exclude) {
@@ -69,7 +56,7 @@ import il.org.spartan.refactoring.utils.*;
       return null;
     if (exclude != null)
       exclude.exclude(d);
-    return new Rewrite("Abbreviate parameters in method " + d.getName().toString(), d) {
+    return new Rewrite("Abbreviate parameters in method " + "" + d.getName(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         for (final SimpleName key : renameMap.keySet())
           rename(key, renameMap.get(key), d, r, g);
@@ -77,11 +64,24 @@ import il.org.spartan.refactoring.utils.*;
     };
   }
 
+  private List<SingleVariableDeclaration> find(final List<SingleVariableDeclaration> ds) {
+    final List<SingleVariableDeclaration> $ = new ArrayList<>();
+    for (final SingleVariableDeclaration d : ds)
+      if (suitable(d))
+        $.add(d);
+    return !$.isEmpty() ? $ : null;
+  }
+
+  private boolean isShort(final SingleVariableDeclaration d) {
+    final String n = spartan.shorten(d.getType());
+    return n != null && (n + pluralVariadic(d)).equals(d.getName().getIdentifier());
+  }
+
   @SuppressWarnings("static-method") private String pluralVariadic(final SingleVariableDeclaration d) {
     return d.isVarargs() ? "s" : "";
   }
 
   private boolean suitable(final SingleVariableDeclaration d) {
-    return new JavaTypeNameParser(d.getType().toString()).isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
+    return new JavaTypeNameParser("" + d.getType()).isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
   }
 }

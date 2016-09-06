@@ -1,12 +1,12 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.extract.*;
+import static il.org.spartan.refactoring.ast.extract.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.assemble.*;
+import il.org.spartan.refactoring.ast.*;
 
 /** <pre>
  * a ? b : c
@@ -58,8 +58,8 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-07-20 */
 public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<ConditionalExpression> implements Kind.NoImpact {
-  private static boolean isTernaryOfBooleanLitreral(final ConditionalExpression e) {
-    return e != null && Have.booleanLiteral(core(e.getThenExpression()), core(e.getElseExpression()));
+  private static boolean isTernaryOfBooleanLitreral(final ConditionalExpression x) {
+    return x != null && have.booleanLiteral(core(x.getThenExpression()), core(x.getElseExpression()));
   }
 
   /** Consider an expression
@@ -99,23 +99,23 @@ public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<Condit
    * </pre>
    * </ol>
   */
-  private static Expression simplifyTernary(final ConditionalExpression e) {
-    return simplifyTernary(core(e.getThenExpression()), core(e.getElseExpression()), duplicate(e.getExpression()));
+  private static Expression simplifyTernary(final ConditionalExpression x) {
+    return simplifyTernary(core(x.getThenExpression()), core(x.getElseExpression()), duplicate.of(x.getExpression()));
   }
 
   private static Expression simplifyTernary(final Expression then, final Expression elze, final Expression main) {
-    final boolean takeThen = !Is.booleanLiteral(then);
+    final boolean takeThen = !iz.booleanLiteral(then);
     final Expression other = takeThen ? then : elze;
-    final boolean literal = asBooleanLiteral(takeThen ? elze : then).booleanValue();
-    return subject.pair(literal != takeThen ? main : logicalNot(main), other).to(literal ? CONDITIONAL_OR : CONDITIONAL_AND);
+    final boolean literal = az.booleanLiteral(takeThen ? elze : then).booleanValue();
+    return subject.pair(literal != takeThen ? main : make.notOf(main), other).to(literal ? CONDITIONAL_OR : CONDITIONAL_AND);
   }
 
   @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Convert conditional expression into logical expression";
   }
 
-  @Override Expression replacement(final ConditionalExpression e) {
-    return simplifyTernary(e);
+  @Override Expression replacement(final ConditionalExpression x) {
+    return simplifyTernary(x);
   }
 
   @Override boolean claims(final ConditionalExpression e) {

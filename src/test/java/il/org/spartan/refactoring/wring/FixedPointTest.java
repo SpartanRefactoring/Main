@@ -7,7 +7,6 @@ import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -19,11 +18,11 @@ import il.org.spartan.refactoring.utils.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) public class FixedPointTest {
   private static void assertConvertsTo(final String from, final String expected) {
-    assertWrappedTranslation(from, expected, GuessedContext.statement_or_something_that_may_occur_in_a_method);
+    assertWrappedTranslation(from, expected, Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD);
   }
 
   private static void assertSimplifiesTo(final String from, final String expected) {
-    assertWrappedTranslation(from, expected, GuessedContext.expression_or_something_that_may_be_passed_as_argument);
+    assertWrappedTranslation(from, expected, Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT);
   }
 
   private static void assertWrappedTranslation(final String from, final String expected, final GuessedContext w) {
@@ -35,9 +34,9 @@ import il.org.spartan.refactoring.utils.*;
     final String peeled = w.off(unpeeled);
     if (peeled.equals(from))
       assertNotEquals("No similification of " + from, from, peeled);
-    if (Funcs.gist(peeled).equals(Funcs.gist(from)))
-      assertNotEquals("Simpification of " + from + "is just reformatting", Funcs.gist(peeled), Funcs.gist(from));
-    assertSimilar(w, expected, peeled);
+    if (tide.clean(peeled).equals(tide.clean(from)))
+      assertNotEquals("Simpification of " + from + "is just reformatting", tide.clean(peeled), tide.clean(from));
+    assertSimilar(expected, peeled);
   }
 
 
@@ -88,17 +87,17 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test public void hasNullsTest() {
     final Object a = null;
-    azzert.aye(hasNull(a));
-    azzert.nay(hasNull(new Object()));
-    azzert.aye(hasNull(new Object(), null));
-    azzert.nay(hasNull(new Object(), new Object()));
-    azzert.nay(hasNull(new Object(), new Object()));
-    azzert.nay(hasNull(new Object(), new Object(), new Object()));
-    azzert.nay(hasNull(new Object(), new Object(), new Object(), new Object()));
-    azzert.aye(hasNull(null, new Object(), new Object(), new Object(), new Object()));
-    azzert.aye(hasNull(new Object(), new Object(), null, new Object(), new Object()));
-    azzert.aye(hasNull(new Object(), new Object(), new Object(), null, new Object()));
-    azzert.aye(hasNull(new Object(), new Object(), new Object(), new Object(), null));
+    assert hasNull(a);
+    assert !hasNull(new Object());
+    assert hasNull(new Object(), null);
+    assert !hasNull(new Object(), new Object());
+    assert !hasNull(new Object(), new Object());
+    assert !hasNull(new Object(), new Object(), new Object());
+    assert !hasNull(new Object(), new Object(), new Object(), new Object());
+    assert hasNull(null, new Object(), new Object(), new Object(), new Object());
+    assert hasNull(new Object(), new Object(), null, new Object(), new Object());
+    assert hasNull(new Object(), new Object(), new Object(), null, new Object());
+    assert hasNull(new Object(), new Object(), new Object(), new Object(), null);
   }
 
   @Test(timeout = 2000) public void inlineInitializers() {
@@ -122,7 +121,7 @@ import il.org.spartan.refactoring.utils.*;
             "    a = 31 * a;\n" + //
             "    return a;\n" + //
             "", //
-        "return 3 * 31;");
+        "return 93;");
   }
 
   @Test public void issue43() {
@@ -140,53 +139,53 @@ import il.org.spartan.refactoring.utils.*;
   @Test(timeout = 2000) public void multipleIfDeclarationAssignment() {
     assertConvertsTo(//
         "int a, b;a = 3;b = 5;if (a == 4)  if (b == 3) b = 2;else b = a;else if (b == 3) b = 2;else b = a*a;", //
-        "int b = 3==4? 5==3 ? 2 :3:5!=3?3*3:2;");
+        "int b = 3==4? 5==3 ? 2 :3:5==3?2:9;");
   }
 
   @Test(timeout = 2000) public void multipleInline() {
-    assertConvertsTo("int b=5,a = 2,c=4; return 3 * a * b * c; ", "return 2*3*4*5;");
+    assertConvertsTo("int b=5,a = 2,c=4; return 3 * a * b * c; ", "return 120;");
   }
 
   @Test(timeout = 2000) public void shortestIfBranchFirst02() {
     assertConvertsTo(
         "" //
             + "if (!s.equals(0xDEAD)) { "//
-            + " int res=0;"//
+            + " int $=0;"//
             + " for (int i=0;i<s.length();++i)     "//
             + "   if (s.charAt(i)=='a')      "//
-            + "     res += 2;"//
+            + "     $ += 2;"//
             + "   else "//
             + "  if (s.charAt(i)=='d')      "//
-            + "       res -= 1;"//
-            + "  return res;"//
+            + "       $ -= 1;"//
+            + "  return $;"//
             + "} else {    "//
             + " return 8;"//
             + "}",
         "" //
             + " if (s.equals(0xDEAD)) \n" + //
             "    return 8;" + //
-            "   int res = 0;\n" + //
+            "   int $ = 0;\n" + //
             "   for (int i = 0;i < s.length();++i)\n" + //
             "     if (s.charAt(i) == 'a')\n" + //
-            "       res += 2;\n" + //
+            "       $ += 2;\n" + //
             "      else " + //
             "       if (s.charAt(i) == 'd')\n" + //
-            "        res -= 1;\n" + //
-            "  return res;\n" //
+            "        --$;\n" + //
+            "  return $;\n" //
     );
   }
 
   @Test(timeout = 2000) public void shortestIfBranchFirst03a() {
     assertConvertsTo(
         "  if ('a' == s.charAt(i))\n" + //
-            "          res += 2;\n" + //
+            "          $ += 2;\n" + //
             "        else if ('d' == s.charAt(i))\n" + //
-            "          res -= 1;\n" + //
+            "          $ -= 1;\n" + //
             "", //
         "  if (s.charAt(i) == 'a')\n" + //
-            "          res += 2;\n" + //
+            "          $ += 2;\n" + //
             "        else if (s.charAt(i) == 'd')\n" + //
-            "          res -= 1;\n" + //
+            "          --$;\n" + //
             "");
   }
 
@@ -215,7 +214,7 @@ import il.org.spartan.refactoring.utils.*;
             + "      return b;\n" //
             + "    }\n" //
             + "    ;", //
-        "return 0>0?6:9*9;");
+        "return 0>0?6:81;");
   }
 
   @Test(timeout = 2000) public void shortestIfBranchFirst14() {
@@ -238,7 +237,7 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test(timeout = 2000) public void shortestOperand04() {
     assertConvertsTo("return (1 + 2 < 3 & 7 + 4 > 2 + 1 || 6 - 7 < 2 + 1);", //
-        "return(1+2<3&4+7>1+2||6-7<1+2);");
+        "return(3<3&11>3||-1<3);");
   }
 
   @Test(timeout = 2000) public void shortestOperand07() {
@@ -261,19 +260,19 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Test(timeout = 2000) public void sortAddition5() {
-    assertSimplifiesTo("1 + 2  + 3 + a < 3 -4", "a + 1 + 2 + 3 < 3-4");
+    assertSimplifiesTo("1 + 2  + 3 + a < 3 -4", "a + 1 + 2 + 3 < -1");
   }
 
   @Test(timeout = 2000) public void ternarize01() {
     assertConvertsTo(
         //
-        "String res = s;if (s.equals(532)==true)    res = s + 0xABBA;else    res = SPAM;System.out.println(res);",
+        "String $ = s;if (s.equals(532)==true)    $ = s + 0xABBA;else    $ = SPAM;System.out.println($);",
         "System.out.println((!s.equals(532)?SPAM:s+0xABBA));");
   }
 
   @Test(timeout = 2000) public void ternarize02() {
     assertConvertsTo(//
-        "String res = s;if (s.equals(532)==true)    res = s + 0xABBA;System.out.println(res);", //
+        "String $ = s;if (s.equals(532)==true)    $ = s + 0xABBA;System.out.println($);", //
         "System.out.println((!s.equals(532)?s:s+0xABBA));");
   }
 
@@ -284,39 +283,38 @@ import il.org.spartan.refactoring.utils.*;
   }
 
   @Test(timeout = 2000) public void ternarize04() {
-    assertConvertsTo(
-        "  int res = 0;if (s.equals(532))    res += 6;else    res += 9;/*if (s.equals(532))    res += 6;else    res += 9;*/   return res;",
+    assertConvertsTo("  int $ = 0;if (s.equals(532))    $ += 6;else    $ += 9;/*if (s.equals(532))    $ += 6;else    $ += 9;*/   return $;",
         "return (s.equals(532)?6:9);");
   }
 
   @Test(timeout = 2000) public void ternarize06() {
     assertConvertsTo(//
-        "String res;res = s;if (s.equals(532)==true)    res = s + 0xABBA;System.out.println(res);", //
+        "String $;$ = s;if (s.equals(532)==true)    $ = s + 0xABBA;System.out.println($);", //
         "System.out.println((!s.equals(532)?s:s+0xABBA));");
   }
 
   @Test public void ternarize07a() {
     assertConvertsTo(
         "" //
-            + "String res;" //
-            + "res = s;   " //
-            + "if (res==true)    " //
-            + "  res = s + 0xABBA;   " //
-            + "System.out.println(res); " //
+            + "String $;" //
+            + "$ = s;   " //
+            + "if ($==true)    " //
+            + "  $ = s + 0xABBA;   " //
+            + "System.out.println($); " //
             + "" //
         , "System.out.println((!s?s:s+0xABBA));" //
     );
   }
 
   @Test(timeout = 2000) public void ternarize11() {
-    assertConvertsTo("String res = s, foo = \"bar\";if (s.equals(532)==true)    res = s + 0xABBA;System.out.println(res);",
+    assertConvertsTo("String $ = s, foo = \"bar\";if (s.equals(532)==true)    $ = s + 0xABBA;System.out.println($);",
         "System.out.println((!s.equals(532)?s:s+0xABBA));");
   }
 
   @Test public void ternarize15() {
     assertConvertsTo(
-        "  String res = mode, foo = \"Not in test mode\";int k;k = 1984;if (mode.equals(f())==true)    foo = test-bob;foo = \"sponge-bob\";",
-        "String res=mode,foo=\"Not in test mode\";int k=1984;if(mode.equals(f()))foo=test-bob;foo=\"sponge-bob\";");
+        "  String $ = mode, foo = \"Not in test mode\";int k;k = 1984;if (mode.equals(f())==true)    foo = test-bob;foo = \"sponge-bob\";",
+        "String $=mode,foo=\"Not in test mode\";int k=1984;if(mode.equals(f()))foo=test-bob;foo=\"sponge-bob\";");
   }
 
   @Test(timeout = 2000) public void ternarize17() {
@@ -337,12 +335,12 @@ import il.org.spartan.refactoring.utils.*;
   @Test(timeout = 2000) public void ternarize18() {
     assertConvertsTo(//
         "    String s = X;\n" + //
-            "    String res = s;\n" + //
+            "    String $ = s;\n" + //
             "    int a = 0;\n" + //
-            "    if (s.equals(res))\n" + //
-            "      System.out.println(tH3 + res);\n" + //
+            "    if (s.equals($))\n" + //
+            "      System.out.println(tH3 + $);\n" + //
             "    else\n" + //
-            "      System.out.println(h2A+ res + a + s);",
+            "      System.out.println(h2A+ $ + a + s);",
         "System.out.println(X.equals(X)?tH3+X:h2A+X+X);");
   }
 
@@ -361,7 +359,7 @@ import il.org.spartan.refactoring.utils.*;
   @Test(timeout = 2000) public void ternarize40() {
     assertConvertsTo(//
         "int a, b, c;a = 3;b = 5;if (a == 4)     while (b == 3)     c = a;else    while (b == 3)     c = a*a;", //
-        "int c;if(3==4)while(5==3)c=3;else while(5==3)c=3*3;");
+        "int c;if(3==4)while(5==3)c=3;else while(5==3)c=9;");
   }
 
   @Test public void ternarize49a() {

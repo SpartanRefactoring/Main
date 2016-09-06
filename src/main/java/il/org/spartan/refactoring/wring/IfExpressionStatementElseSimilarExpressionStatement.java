@@ -1,11 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.wring.TernaryPushdown.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.assemble.*;
+import il.org.spartan.refactoring.ast.*;
 
 /** convert
  *
@@ -31,10 +31,10 @@ public final class IfExpressionStatementElseSimilarExpressionStatement extends W
   }
 
   @Override Statement replacement(final IfStatement s) {
-    final Expression then = extract.expression(extract.expressionStatement(then(s)));
+    final Expression then = step.expression(extract.expressionStatement(step.then(s)));
     if (then == null)
       return null;
-    final Expression elze = extract.expression(extract.expressionStatement(elze(s)));
+    final Expression elze = step.expression(extract.expressionStatement(step.elze(s)));
     if (elze == null)
       return null;
     final Expression e = pushdown(subject.pair(then, elze).toCondition(s.getExpression()));

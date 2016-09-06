@@ -1,11 +1,10 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.Plant.*;
+import static il.org.spartan.refactoring.assemble.plant.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.ast.*;
 
 /** A {@link Wring} to eliminate a ternary in which both branches are identical
  * @author Yossi Gil
@@ -15,8 +14,8 @@ public final class TernaryEliminate extends Wring.ReplaceCurrentNode<Conditional
     return "Eliminate conditional exprssion with identical branches";
   }
 
-  @Override Expression replacement(final ConditionalExpression e) {
-    return plant(extract.core(e.getThenExpression())).into(e.getParent());
+  @Override Expression replacement(final ConditionalExpression x) {
+    return plant(extract.core(x.getThenExpression())).into(x.getParent());
   }
 
   @Override boolean claims(final ConditionalExpression e) {

@@ -8,7 +8,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.engine.*;
 
 /** sorts the arguments of a {@link Operator#DIVIDE} expression.
  * @author Yossi Gil
@@ -18,7 +18,7 @@ public final class InfixDivisonSort extends Wring.InfixSortingOfCDR implements K
     return in(e.getOperator(), DIVIDE);
   }
 
-  @Override boolean sort(final List<Expression> es) {
-    return ExpressionComparator.MULTIPLICATION.sort(es);
+  @Override boolean sort(final List<Expression> xs) {
+    return ExpressionComparator.MULTIPLICATION.sort(xs);
   }
 }

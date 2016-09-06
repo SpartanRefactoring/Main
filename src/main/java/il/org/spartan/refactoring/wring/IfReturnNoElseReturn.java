@@ -1,12 +1,11 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.assemble.*;
+import il.org.spartan.refactoring.ast.*;
 
 /** convert
  *
@@ -32,9 +31,9 @@ public final class IfReturnNoElseReturn extends Wring.ReplaceToNextStatement<IfS
   }
 
   @Override ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
-    if (!Is.vacuousElse(s))
+    if (!iz.vacuousElse(s))
       return null;
-    final ReturnStatement r1 = extract.returnStatement(then(s));
+    final ReturnStatement r1 = extract.returnStatement(step.then(s));
     if (r1 == null)
       return null;
     final Expression e1 = extract.core(r1.getExpression());
@@ -48,6 +47,6 @@ public final class IfReturnNoElseReturn extends Wring.ReplaceToNextStatement<IfS
   }
 
   @Override boolean claims(final IfStatement s) {
-    return Is.vacuousElse(s) && extract.returnStatement(then(s)) != null && extract.nextReturn(s) != null;
+    return iz . vacuousElse(s) && extract.returnStatement(then(s)) != null && extract.nextReturn(s) != null;
   }
 }

@@ -1,14 +1,14 @@
 package il.org.spartan.refactoring.spartanizations;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.utils.Into.*;
+import static il.org.spartan.refactoring.engine.into.*;
 import static org.hamcrest.collection.IsEmptyCollection.*;
 
 import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.ast.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //

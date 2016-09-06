@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 
 import java.util.*;
@@ -9,6 +8,9 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.refactoring.assemble.*;
+import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** convert
@@ -39,9 +41,9 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements 
   private static List<Statement> commonPrefix(final List<Statement> ss1, final List<Statement> ss2) {
     final List<Statement> $ = new ArrayList<>();
     while (!ss1.isEmpty() && !ss2.isEmpty()) {
-      final Statement s1 = first(ss1);
-      final Statement s2 = first(ss2);
-      if (!same(s1, s2))
+      final Statement s1 = lisp.first(ss1);
+      final Statement s2 = lisp.first(ss2);
+      if (!wizard.same(s1, s2))
         break;
       $.add(s1);
       ss1.remove(0);
@@ -55,17 +57,17 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements 
   }
 
   @Override Rewrite make(final IfStatement s) {
-    final List<Statement> then = extract.statements(then(s));
+    final List<Statement> then = extract.statements(step.then(s));
     if (then.isEmpty())
       return null;
-    final List<Statement> elze = extract.statements(elze(s));
+    final List<Statement> elze = extract.statements(step.elze(s));
     if (elze.isEmpty())
       return null;
     final List<Statement> commonPrefix = commonPrefix(then, elze);
     return commonPrefix.isEmpty() ? null : new Rewrite(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final IfStatement newIf = replacement();
-        if (!Is.block(s.getParent())) {
+        if (!iz.block(s.getParent())) {
           if (newIf != null)
             commonPrefix.add(newIf);
           r.replace(s, subject.ss(commonPrefix).toBlock(), g);

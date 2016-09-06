@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
 import static il.org.spartan.refactoring.wring.Wrings.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -8,7 +7,8 @@ import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.assemble.*;
+import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.wring.LocalInliner.*;
 
 /** convert
@@ -36,23 +36,23 @@ public final class DeclarationInitializerIfUpdateAssignment extends Wring.Variab
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
       return null;
-    final IfStatement s = asIfStatement(nextStatement);
-    if (s == null || !Is.vacuousElse(s))
+    final IfStatement s = az.ifStatement(nextStatement);
+    if (s == null || !iz.vacuousElse(s))
       return null;
     s.setElseStatement(null);
     final Expression condition = s.getExpression();
-    final Assignment a = extract.assignment(then(s));
-    if (a == null || !same(left(a), n) || doesUseForbiddenSiblings(f, condition, right(a)))
+    final Assignment a = extract.assignment(step.then(s));
+    if (a == null || !wizard.same(step.left(a), n) || doesUseForbiddenSiblings(f, condition, step.right(a)))
       return null;
     final Operator o = a.getOperator();
     if (o == Assignment.Operator.ASSIGN)
       return null;
     final ConditionalExpression newInitializer = subject.pair(assignmentAsExpression(a), initializer).toCondition(condition);
     final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
-    if (!i.canInlineInto(newInitializer) || i.replacedSize(newInitializer) - size(nextStatement, initializer) > 0)
+    if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - size(nextStatement, initializer) > 0)
       return null;
     r.replace(initializer, newInitializer, g);
-    i.inlineInto(then(newInitializer), newInitializer.getExpression());
+    i.inlineinto(step.then(newInitializer), newInitializer.getExpression());
     r.remove(nextStatement, g);
     return r;
   }

@@ -1,14 +1,14 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.Restructure.*;
-import static il.org.spartan.refactoring.utils.expose.*;
+import static il.org.spartan.refactoring.ast.step.*;
 
 import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.refactoring.assemble.*;
+import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** convert
@@ -46,16 +46,23 @@ public final class BlockSimplify extends Wring.ReplaceCurrentNode<Block> impleme
     return new Predicate<List<Statement>>() {
       final Set<String> dictionary = new HashSet<>();
 
+      @Override public boolean test(final List<Statement> ¢¢) {
+        for (final Statement ¢ : ¢¢)
+          if (¢(¢))
+            return true;
+        return false;
+      }
+
       boolean ¢(final CatchClause c) {
         return ¢(c.getException());
       }
 
       boolean ¢(final ForStatement ¢) {
-        return ¢(expose.initializers(¢));
+        return ¢(step.initializers(¢));
       }
 
-      boolean ¢(final List<Expression> es) {
-        for (final Expression e : es)
+      boolean ¢(final List<Expression> xs) {
+        for (final Expression e : xs)
           if (e instanceof VariableDeclarationExpression && ¢((VariableDeclarationExpression) e))
             return true;
         return false;
@@ -83,11 +90,11 @@ public final class BlockSimplify extends Wring.ReplaceCurrentNode<Block> impleme
       }
 
       boolean ¢(final TryStatement s) {
-        return ¢¢¢(expose.resources(s)) || ¢¢(expose.catchClauses(s));
+        return ¢¢¢(step.resources(s)) || ¢¢(step.catchClauses(s));
       }
 
       boolean ¢(final VariableDeclarationExpression ¢) {
-        return ¢¢¢¢(expose.fragments(¢));
+        return ¢¢¢¢(step.fragments(¢));
       }
 
       boolean ¢(final VariableDeclarationFragment f) {
@@ -105,8 +112,8 @@ public final class BlockSimplify extends Wring.ReplaceCurrentNode<Block> impleme
         return false;
       }
 
-      boolean ¢¢¢(final List<VariableDeclarationExpression> es) {
-        for (final VariableDeclarationExpression e : es)
+      boolean ¢¢¢(final List<VariableDeclarationExpression> xs) {
+        for (final VariableDeclarationExpression e : xs)
           if (¢(e))
             return true;
         return false;
@@ -118,14 +125,19 @@ public final class BlockSimplify extends Wring.ReplaceCurrentNode<Block> impleme
             return true;
         return false;
       }
-
-      @Override public boolean test(final List<Statement> ¢¢) {
-        for (final Statement ¢ : ¢¢)
-          if (¢(¢))
-            return true;
-        return false;
-      }
     }.test(ss);
+  }
+
+  static Statement reorganizeNestedStatement(final Statement s) {
+    final List<Statement> ss = extract.statements(s);
+    switch (ss.size()) {
+      case 0:
+        return s.getAST().newEmptyStatement();
+      case 1:
+        return duplicate.of(lisp.first(ss));
+      default:
+        return reorganizeStatement(s);
+    }
   }
 
   private static boolean identical(final List<Statement> os1, final List<Statement> os2) {
@@ -137,22 +149,10 @@ public final class BlockSimplify extends Wring.ReplaceCurrentNode<Block> impleme
     return true;
   }
 
-  static Statement reorganizeNestedStatement(final Statement s) {
-    final List<Statement> ss = extract.statements(s);
-    switch (ss.size()) {
-      case 0:
-        return s.getAST().newEmptyStatement();
-      case 1:
-        return duplicate(first(ss));
-      default:
-        return reorganizeStatement(s);
-    }
-  }
-
   private static Block reorganizeStatement(final Statement s) {
     final List<Statement> ss = extract.statements(s);
     final Block $ = s.getAST().newBlock();
-    duplicateInto(ss, statements($));
+    duplicate.into(ss, statements($));
     return $;
   }
 
@@ -171,10 +171,10 @@ public final class BlockSimplify extends Wring.ReplaceCurrentNode<Block> impleme
       case 0:
         return b.getAST().newEmptyStatement();
       case 1:
-        final Statement s = first(ss);
-        if (Is.blockEssential(s))
+        final Statement s = lisp.first(ss);
+        if (iz.blockEssential(s))
           return subject.statement(s).toBlock();
-        return duplicate(s);
+        return duplicate.of(s);
       default:
         return reorganizeNestedStatement(b);
     }

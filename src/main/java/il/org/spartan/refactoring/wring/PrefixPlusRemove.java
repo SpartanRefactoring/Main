@@ -1,14 +1,13 @@
 package il.org.spartan.refactoring.wring;
 
-import static il.org.spartan.refactoring.utils.Funcs.*;
-import static il.org.spartan.refactoring.utils.Plant.*;
-import static il.org.spartan.refactoring.utils.extract.*;
+import static il.org.spartan.refactoring.assemble.plant.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.utils.*;
+import il.org.spartan.refactoring.assemble.*;
+import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.wring.Wring.*;
 
 /** Replace <code>int i = +0</code> with <code>int i = 0</code>,
@@ -17,18 +16,18 @@ import il.org.spartan.refactoring.wring.Wring.*;
  * @author Matteo Orru'
  * @since 2016 */
 public class PrefixPlusRemove extends ReplaceCurrentNode<PrefixExpression> implements Kind.NoImpact {
-  @Override ASTNode replacement(final PrefixExpression e) {
-    return e.getOperator() != PLUS ? null : plant(duplicate(heart(e.getOperand()))).into(e.getParent());
+  @Override String description(final PrefixExpression x) {
+    return "Remove unary + in " + x;
   }
 
-  private Expression heart(final Expression e) {
-    if (Is.is(e, PARENTHESIZED_EXPRESSION))
-      return heart(expression(e));
-    final PrefixExpression p = asPrefixExpression(e);
-    return p == null || p.getOperator() != PLUS ? e : heart(p.getOperand());
+  @Override ASTNode replacement(final PrefixExpression x) {
+    return x.getOperator() != PLUS ? null : plant(duplicate.of(heart(x.getOperand()))).into(x.getParent());
   }
 
-  @Override String description(final PrefixExpression e) {
-    return "Remove unary + in " + e;
+  private Expression heart(final Expression x) {
+    if (iz.is(x, PARENTHESIZED_EXPRESSION))
+      return heart(step.expression(x));
+    final PrefixExpression p = az.prefixExpression(x);
+    return p == null || p.getOperator() != PLUS ? x : heart(p.getOperand());
   }
 }
