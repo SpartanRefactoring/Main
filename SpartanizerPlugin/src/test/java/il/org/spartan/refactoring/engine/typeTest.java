@@ -4,6 +4,7 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.engine.type.*;
 import static il.org.spartan.refactoring.engine.type.Primitive.Certain.*;
 import static il.org.spartan.refactoring.engine.type.Primitive.Uncertain.*;
+import static il.org.spartan.refactoring.engine.type.Prudent.*;
 import static il.org.spartan.refactoring.engine.type.Odd.Types.*;
 
 import org.junit.*;
