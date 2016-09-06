@@ -166,7 +166,10 @@ public class EnvironmentTestEngine {
       void flatHandler(final Annotation ¢) {
         flatHandler(az.singleMemberAnnotation(¢));
       }
-
+      
+      boolean isNameId(Name n1) {
+        return "@Id".equals("" + n1);
+      }
       /** Parse the outer annotation to get the inner ones. Add to the flat Set.
        * Compare uses() and declares() output to the flat Set.
        * @param $ JD */
@@ -174,10 +177,16 @@ public class EnvironmentTestEngine {
         if ($ == null)
           return;
         $.accept(new ASTVisitor() {
-          /* @Override public boolean visit(NormalAnnotation ¢){ if
-           * (isNameId(¢.getTypeName())) {
-           *
-           * testFlatENV.addAll(); } return true; } */
+           @Override public boolean visit(NormalAnnotation ¢){
+             if (isNameId(¢.getTypeName()))
+              addValueToSetsDispatch(values(¢), AnnotationType.FLAT);
+           return true;
+           }
+
+          @SuppressWarnings("unchecked")
+          List<MemberValuePair> values(NormalAnnotation ¢) {
+            return ¢.values();
+          }
         });
       }
 
