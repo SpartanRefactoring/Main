@@ -1,4 +1,4 @@
-package il.org.spartan.refactoring.handlers;
+package il.org.spartan.refactoring.plugin;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.core.runtime.*;

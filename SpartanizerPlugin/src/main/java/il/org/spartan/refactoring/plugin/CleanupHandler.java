@@ -1,6 +1,6 @@
-package il.org.spartan.refactoring.handlers;
+package il.org.spartan.refactoring.plugin;
 
-import static il.org.spartan.refactoring.handlers.ApplySpartanizationHandler.*;
+import static il.org.spartan.refactoring.plugin.ApplySpartanizationHandler.*;
 import static il.org.spartan.refactoring.spartanizations.DialogBoxes.*;
 
 import java.lang.reflect.*;
