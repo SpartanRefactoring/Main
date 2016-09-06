@@ -87,34 +87,32 @@ public final class CleverStringTernarization extends Wring.ReplaceCurrentNode<Co
         , getSuffix(thenStr, thenStr.length() - commonSuffixLength, condition)).to(wizard.PLUS2);
   }
 
-  private static InfixExpression replacePrefix(final InfixExpression e, final int i) {
-    assert e.getOperator() == wizard.PLUS2;
-    final List<Expression> es = extract.allOperands(e);
+  private static InfixExpression replacePrefix(final InfixExpression x, final int i) {
+    assert x.getOperator() == wizard.PLUS2;
+    final List<Expression> es = extract.allOperands(x);
     assert lisp.first(es).getNodeType() == ASTNode.STRING_LITERAL;
     final StringLiteral l = (StringLiteral) lisp.first(es);
-    final StringLiteral suffix = getSuffix(l.getLiteralValue(), i, e);
+    final StringLiteral suffix = getSuffix(l.getLiteralValue(), i, x);
     lisp.replaceFirst(es, suffix);
     return subject.operands(es).to(wizard.PLUS2);
   }
 
-  private static InfixExpression replaceSuffix(final InfixExpression e, final int i) {
-    assert e.getOperator() == wizard.PLUS2;
-    final List<Expression> es = extract.allOperands(e);
+  private static InfixExpression replaceSuffix(final InfixExpression x, final int i) {
+    assert x.getOperator() == wizard.PLUS2;
+    final List<Expression> es = extract.allOperands(x);
     assert lisp.last(es).getNodeType() == ASTNode.STRING_LITERAL;
     final StringLiteral l = (StringLiteral) lisp.last(es);
-    final StringLiteral prefix = getPrefix(l.getLiteralValue(), l.getLiteralValue().length() - i, e);
+    final StringLiteral prefix = getPrefix(l.getLiteralValue(), l.getLiteralValue().length() - i, x);
     lisp.replaceLast(es, prefix);
     return subject.operands(es).to(wizard.PLUS2);
   }
 
   private static String shorter(final String s1, final String s2) {
-    return s1.length() <= s2.length() ? s1 : s2;
+    return s1.length() > s2.length()?s2:s1;
   }
 
   private static Expression simplify(final InfixExpression then, final InfixExpression elze, final Expression condition) {
-    if (!stringType.isNot(then) && !stringType.isNot(elze))
-      return simplifyStrings(then, elze, condition);
-    return null;
+    return stringType.isNot(then) || stringType.isNot(elze)?null:simplifyStrings(then,elze,condition);
   }
 
   private static Expression simplify(final StringLiteral then, final InfixExpression elze, final Expression condition) {
