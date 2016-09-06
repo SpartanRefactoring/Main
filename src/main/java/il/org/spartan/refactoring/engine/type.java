@@ -21,6 +21,7 @@ import il.org.spartan.refactoring.utils.*;
  * @author Niv Shalmon
  * @since 2016 */
 interface type {
+  /** An interface with one method- type, overloaded for many different
    * parameter types. Can be used to find the type of an expression thats known
    * at compile time by using overloading. Only use for testing, mainly for
    * testing of type.
