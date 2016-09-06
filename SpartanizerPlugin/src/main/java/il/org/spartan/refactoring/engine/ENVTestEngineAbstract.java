@@ -15,10 +15,6 @@ import il.org.spartan.refactoring.java.Environment.*;
 import il.org.spartan.refactoring.utils.*;
 
 public abstract class ENVTestEngineAbstract {
-  enum AnnotationType {
-    FLAT, NESTED, BEGINEND
-  }
-
   protected static Set<Entry<String, Environment.Information>> generateSet() {
     return Collections.unmodifiableSet(new HashSet<>());
   }
@@ -39,9 +35,11 @@ public abstract class ENVTestEngineAbstract {
   }
 
   public static boolean isNameId(final Name n1) {
-    assert(!"Id".equals("" + n1)); //debug
-    return "@Id".equals("" + n1);
+    assert !"@Id".equals("" + n1); // debug
+    return "Id".equals("" + n1);
   }
+
+  protected boolean foundTestedAnnotation = false;
 
   protected ASTNode n = null;
   Set<Entry<String, Environment.Information>> testSet;
@@ -51,7 +49,10 @@ public abstract class ENVTestEngineAbstract {
     testSet.add(new MapEntry<>(wizard.asString(ps.get(0).getValue()), new Information()));
   }
 
-  /** Compares the set from the annotation with the set that the checked function generates.
+  abstract protected Set<Entry<String, Information>> buildEnvironmentSet(BodyDeclaration d);
+
+  /** Compares the set from the annotation with the set that the checked
+   * function generates.
    * @param $ */
   // Go over both sets in serial manner, and make sure every two members are
   // equal.
@@ -60,7 +61,8 @@ public abstract class ENVTestEngineAbstract {
   protected void compareInOrder(final Set<Entry<String, Information>> $) {
   }
 
-  /** Compares the set from the annotation with the set that the checked function generates.
+  /** Compares the set from the annotation with the set that the checked
+   * function generates.
    * @param $ */
   // Check that each member of $ is contained in FlatENV, and that the size is
   // equal.
@@ -96,7 +98,7 @@ public abstract class ENVTestEngineAbstract {
     n.accept(new ASTVisitor() {
       /** Iterate over annotations of the current declaration and dispatch them
        * to handlers. otherwise */
-      void testAnnotations(final List<Annotation> as) {
+      void checkAnnotations(final List<Annotation> as) {
         for (final Annotation ¢ : as)
           handler(¢);
       }
@@ -104,8 +106,16 @@ public abstract class ENVTestEngineAbstract {
       /** TODO: only MothodDeclaration is implemented. Should implement all
        * nodes which can have annotations. */
       @Override public boolean visit(final MethodDeclaration d) {
-        testAnnotations(extract.annotations(d));
-        testSet.clear();
+        checkAnnotations(extract.annotations(d));
+        if (foundTestedAnnotation) {
+          // TODO: abstract function to determine if to use uses() or
+          // declares().
+          final Set<Entry<String, Information>> enviromentSet = buildEnvironmentSet(d);
+          compareOutOfOrder(enviromentSet);
+          compareInOrder(enviromentSet);
+          foundTestedAnnotation = false;
+          testSet.clear();
+        }
         return true;
       }
     });
