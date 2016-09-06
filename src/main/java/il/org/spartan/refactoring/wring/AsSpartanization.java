@@ -26,6 +26,13 @@ public final class AsSpartanization extends Spartanization {
 
   @Override protected ASTVisitor collect(final List<Rewrite> $) {
     return new ASTVisitor() {
+      <N extends ASTNode> boolean process(final N n) {
+        if (!inner.claims(n) || inner.cantMake(n))
+          return true;
+        $.add(inner.make(n));
+        return true;
+      }
+
       @Override public boolean visit(final Block it) {
         return process(it);
       }

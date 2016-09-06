@@ -118,7 +118,7 @@ public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<Condit
     return simplifyTernary(x);
   }
 
-  @Override boolean scopeIncludes(final ConditionalExpression x) {
-    return isTernaryOfBooleanLitreral(x);
+  @Override boolean claims(final ConditionalExpression e) {
+    return isTernaryOfBooleanLitreral(e);
   }
 }

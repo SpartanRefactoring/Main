@@ -18,11 +18,11 @@ import il.org.spartan.refactoring.utils.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) public class FixedPointTest {
   private static void assertConvertsTo(final String from, final String expected) {
-    assertWrappedTranslation(from, expected, Wrap.Statement);
+    assertWrappedTranslation(from, expected, Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD);
   }
 
   private static void assertSimplifiesTo(final String from, final String expected) {
-    assertWrappedTranslation(from, expected, Wrap.Expression);
+    assertWrappedTranslation(from, expected, Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT);
   }
 
   private static void assertWrappedTranslation(final String from, final String expected, final Wrap w) {

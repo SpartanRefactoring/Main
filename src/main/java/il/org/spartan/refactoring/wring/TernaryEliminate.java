@@ -18,7 +18,7 @@ public final class TernaryEliminate extends Wring.ReplaceCurrentNode<Conditional
     return plant(extract.core(x.getThenExpression())).into(x.getParent());
   }
 
-  @Override boolean scopeIncludes(final ConditionalExpression x) {
-    return x != null && wizard.same(x.getThenExpression(), x.getElseExpression());
+  @Override boolean claims(final ConditionalExpression e) {
+    return e != null && same(e.getThenExpression(), e.getElseExpression());
   }
 }

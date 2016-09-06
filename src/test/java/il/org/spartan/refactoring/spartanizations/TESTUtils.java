@@ -19,7 +19,7 @@ import il.org.spartan.refactoring.wring.*;
   static final String WHITES = "(?m)\\s+";
 
   public static void assertNoChange(final String input) {
-    assertSimilar(input, Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on(input))));
+    assertSimilar(input, Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT.off(apply(new Trimmer(), Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT.on(input))));
   }
 
   /** A test to check that the actual output is similar to the actual value.
@@ -32,9 +32,9 @@ import il.org.spartan.refactoring.wring.*;
   /** A test to check that the actual output is similar to the actual value.
    * @param expected JD
    * @param actual JD */
-  public static void assertSimilar(final String expected, final String actual) {
+  public static void assertSimilar(final String message, final String expected, final String actual) {
     if (!expected.equals(actual))
-      azzert.that(Wrap.essence(actual), is(Wrap.essence(expected)));
+      azzert.that(message, Wrap.essence(actual), is(Wrap.essence(expected)));
   }
 
   /** Convert a given {@link String} into an {@link Statement}, or fail the

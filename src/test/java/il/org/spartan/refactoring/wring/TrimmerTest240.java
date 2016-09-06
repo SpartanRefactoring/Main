@@ -32,7 +32,7 @@ public class TrimmerTest240 {
   @Test public void actualExampleForSortAdditionInContext() {
     final String from = "2 + a < b";
     final String expected = "a + 2 < b";
-    final Wrap w = Wrap.Expression;
+    final Wrap w = Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT;
     final String wrap = w.on(from);
     that(w.off(wrap), is(from));
     final Trimmer t = new Trimmer();
@@ -1414,15 +1414,15 @@ public class TrimmerTest240 {
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
     that(s, instanceOf(InfixMultiplicationSort.class));
     that(s, notNullValue());
-    that(s.scopeIncludes(e), is(true));
-    final Expression e1 = step.left(e);
-    final Expression e2 = step.right(e);
+    that(s.claims(e), is(true));
+    final Expression e1 = left(e);
+    final Expression e2 = right(e);
     that(has.nulls(e1, e2), is(false));
     final boolean tokenWiseGreater = nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD;
     that(tokenWiseGreater, is(true));
     that(ExpressionComparator.moreArguments(e1, e2), is(true));
     that(ExpressionComparator.longerFirst(e), is(true));
-    that(s.eligible(e), is(true));
+    that(s.canMake(e), is(true));
     final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) s).replacement(e);
     that(replacement, notNullValue());
     that("" + replacement, is("f(a,b,c) * f(a,b,c,d,e)"));
@@ -1435,15 +1435,15 @@ public class TrimmerTest240 {
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
     that(s, instanceOf(InfixMultiplicationSort.class));
     that(s, notNullValue());
-    that(s.scopeIncludes(e), is(true));
-    final Expression e1 = step.left(e);
-    final Expression e2 = step.right(e);
+    that(s.claims(e), is(true));
+    final Expression e1 = left(e);
+    final Expression e2 = right(e);
     that(has.nulls(e1, e2), is(false));
     final boolean tokenWiseGreater = nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD;
     that(tokenWiseGreater, is(false));
     that(ExpressionComparator.moreArguments(e1, e2), is(true));
     that(ExpressionComparator.longerFirst(e), is(true));
-    that(s.eligible(e), is(true));
+    that(s.canMake(e), is(true));
     final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) s).replacement(e);
     that(replacement, notNullValue());
     that("" + replacement, is("f(a,b,c) * f(a,b,c,d)"));
@@ -2342,8 +2342,8 @@ public class TrimmerTest240 {
     that(parent, notNullValue());
     that(parent, iz(from));
     that(parent, is(not(instanceOf(Expression.class))));
-    that(new PostfixToPrefix().scopeIncludes(e), is(true));
-    that(new PostfixToPrefix().eligible(e), is(true));
+    that(new PostfixToPrefix().claims(e), is(true));
+    that(new PostfixToPrefix().canMake(e), is(true));
     final Expression r = new PostfixToPrefix().replacement(e);
     that(r, iz("--i"));
     trimming(from).to("for(int i=0;i<100;--i)--i;");
@@ -2870,8 +2870,8 @@ public class TrimmerTest240 {
     final InfixExpression e = i("null != a");
     final Wring<InfixExpression> w = Toolbox.instance.find(e);
     that(w, notNullValue());
-    that(w.scopeIncludes(e), is(true));
-    that(w.eligible(e), is(true));
+    that(w.claims(e), is(true));
+    that(w.canMake(e), is(true));
     final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) w).replacement(e);
     that(replacement, notNullValue());
     that("" + replacement, is("a != null"));
@@ -3049,8 +3049,8 @@ public class TrimmerTest240 {
   }
 
   @Test public void shortestIfBranchFirst02c() {
-    final CompilationUnit u = Wrap.Statement.intoCompilationUnit("" + //
-        "      int $ = 0;\n" + //
+    final CompilationUnit u = Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD.intoCompilationUnit("" + //
+        "      int res = 0;\n" + //
         "      for (int i = 0;i < s.length();++i)\n" + //
         "       if (s.charAt(i) == 'a')\n" + //
         "          $ += 2;\n" + //
@@ -3208,16 +3208,16 @@ public class TrimmerTest240 {
   }
 
   @Test public void simplifyBlockComplexSingleton() {
-    assertSimplifiesTo("{;{{;;return b; }}}", "return b;", new BlockSimplify(), Wrap.Statement);
+    assertSimplifiesTo("{;{{;;return b; }}}", "return b;", new BlockSimplify(), Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD);
   }
 
   @Test public void simplifyBlockDeeplyNestedReturn() {
-    assertSimplifiesTo("{{{;return c;};;};}", "return c;", new BlockSimplify(), Wrap.Statement);
+    assertSimplifiesTo("{{{;return c;};;};}", "return c;", new BlockSimplify(), Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD);
   }
 
   /* Begin of already good tests */
   @Test public void simplifyBlockEmpty() {
-    assertSimplifiesTo("{;;}", "", new BlockSimplify(), Wrap.Statement);
+    assertSimplifiesTo("{;;}", "", new BlockSimplify(), Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD);
   }
 
   @Test public void simplifyBlockExpressionVsExpression() {
@@ -3229,7 +3229,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void simplifyBlockThreeStatements() {
-    assertSimplifiesTo("{i++;{{;;return b; }}j++;}", "i++;return b;j++;", new BlockSimplify(), Wrap.Statement);
+    assertSimplifiesTo("{i++;{{;;return b; }}j++;}", "i++;return b;j++;", new BlockSimplify(), Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD);
   }
 
   @Test public void simplifyLogicalNegationNested() {
@@ -4023,7 +4023,7 @@ public class TrimmerTest240 {
   }
 
   @Test public void testPeel() {
-    that(Wrap.Expression.off(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge")),
+    that(Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT.off(Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT.on("on * notion * of * no * nothion != the * plain + kludge")),
         is("on * notion * of * no * nothion != the * plain + kludge"));
   }
 
@@ -4033,9 +4033,9 @@ public class TrimmerTest240 {
 
   @Test public void twoOpportunityExample() {
     that(TrimmerTestsUtils.countOpportunities(new Trimmer(),
-        (CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
+        (CompilationUnit) MakeAST.COMPILATION_UNIT.from(Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
     that(TrimmerTestsUtils.countOpportunities(new Trimmer(),
-        (CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
+        (CompilationUnit) MakeAST.COMPILATION_UNIT.from(Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
   }
 
   @Test public void useOutcontextToManageStringAmbiguity() {

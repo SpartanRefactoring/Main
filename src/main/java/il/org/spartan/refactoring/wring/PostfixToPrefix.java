@@ -26,15 +26,18 @@ public final class PostfixToPrefix extends Wring.ReplaceCurrentNode<PostfixExpre
         && searchAncestors.forType(ASTNode.VARIABLE_DECLARATION_EXPRESSION).from(x) == null;
   }
 
-  @Override String description(final PostfixExpression x) {
-    return "Convert post-" + description(x.getOperator()) + " of " + step.operand(x) + " to pre-" + description(x.getOperator());
+  @Override protected boolean canMake(final PostfixExpression e) {
+    return !(e.getParent() instanceof Expression) //
+        && AncestorSearch.forType(ASTNode.VARIABLE_DECLARATION_STATEMENT).from(e) == null //
+        && AncestorSearch.forType(ASTNode.SINGLE_VARIABLE_DECLARATION).from(e) == null //
+        && AncestorSearch.forType(ASTNode.VARIABLE_DECLARATION_EXPRESSION).from(e) == null;
   }
 
   @Override PrefixExpression replacement(final PostfixExpression x) {
     return subject.operand(step.operand(x)).to(pre2post(x.getOperator()));
   }
 
-  @Override boolean scopeIncludes(@SuppressWarnings("unused") final PostfixExpression __) {
+  @Override boolean claims(@SuppressWarnings("unused") final PostfixExpression __) {
     return true;
   }
 }

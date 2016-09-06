@@ -28,7 +28,7 @@ import il.org.spartan.*;
         + " /* empty */"//
         + "} else {\n"//
         + " throw new Exception();\n"//
-        + "}"), is(Wrap.Statement));
+        + "}"), is(Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD));
   }
 
   @Test public void essenceTest() {
@@ -36,23 +36,23 @@ import il.org.spartan.*;
   }
 
   @Test public void expression() {
-    azzert.that(Wrap.Expression.off(Wrap.Expression.on("a+b")), is("a+b"));
+    azzert.that(Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT.off(Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT.on("a+b")), is("a+b"));
   }
 
   @Test public void findAddition() {
-    azzert.that(Wrap.find("a+b"), is(Wrap.Expression));
+    azzert.that(Wrap.find("a+b"), is(Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT));
   }
 
   @Test public void findDivision() {
-    azzert.that(Wrap.find("a/b"), is(Wrap.Expression));
+    azzert.that(Wrap.find("a/b"), is(Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT));
   }
 
   @Test public void findDivisionOfExpressions() {
-    azzert.that(Wrap.find("(a+b)/++b"), is(Wrap.Expression));
+    azzert.that(Wrap.find("(a+b)/++b"), is(Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT));
   }
 
   @Test public void findEmptyBlock() {
-    azzert.that(Wrap.find("{}"), is(Wrap.Statement));
+    azzert.that(Wrap.find("{}"), is(Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD));
   }
 
   @Test(expected = AssertionError.class) public void findError() {
@@ -60,27 +60,27 @@ import il.org.spartan.*;
   }
 
   @Test public void findExpression() {
-    azzert.that(Wrap.find("i++"), is(Wrap.Expression));
+    azzert.that(Wrap.find("i++"), is(Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT));
   }
 
   @Test public void findMethod() {
-    azzert.that(Wrap.find("f() { a(); b();}"), is(Wrap.Method));
+    azzert.that(Wrap.find("f() { a(); b();}"), is(Wrap.A_CLASS_MEMBER_OF_SOME_SORT));
   }
 
   @Test public void findStatement() {
-    azzert.that(Wrap.find("for(;;);"), is(Wrap.Statement));
+    azzert.that(Wrap.find("for(;;);"), is(Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD));
   }
 
   @Test public void findTwoStatements() {
-    azzert.that(Wrap.find("a(); b();"), is(Wrap.Statement));
+    azzert.that(Wrap.find("a(); b();"), is(Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD));
   }
 
   @Test public void intMethod() {
-    azzert.that(Wrap.find("int f() { int s = 0; for (int i = 0; i < 10; ++i) s += i; return s;}"), is(Wrap.Method));
+    azzert.that(Wrap.find("int f() { int s = 0; for (int i = 0; i < 10; ++i) s += i; return s;}"), is(Wrap.A_CLASS_MEMBER_OF_SOME_SORT));
   }
 
   @Test public void intoCompilationUnit() {
-    final Wrap w = Wrap.Expression;
+    final Wrap w = Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT;
     final String codeFragment = "a + b * c";
     final CompilationUnit u = w.intoCompilationUnit(codeFragment);
     azzert.notNull(u);
@@ -88,7 +88,7 @@ import il.org.spartan.*;
   }
 
   @Test public void intoDocument() {
-    final Wrap w = Wrap.Expression;
+    final Wrap w = Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT;
     final String codeFragment = "a + b * c";
     final Document d = w.intoDocument(codeFragment);
     azzert.notNull(d);
@@ -96,11 +96,11 @@ import il.org.spartan.*;
   }
 
   @Test public void method() {
-    azzert.that(Wrap.Method.off(Wrap.Method.on("int f() { return a; }")), is("int f() { return a; }"));
+    azzert.that(Wrap.A_CLASS_MEMBER_OF_SOME_SORT.off(Wrap.A_CLASS_MEMBER_OF_SOME_SORT.on("int f() { return a; }")), is("int f() { return a; }"));
   }
 
   @Test public void offDivision() {
-    azzert.that("a/b", is(Wrap.Expression.off(Wrap.Expression.on("a/b"))));
+    azzert.that("a/b", is(Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT.off(Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT.on("a/b"))));
   }
 
   @Test public void removeComments() {
@@ -109,7 +109,7 @@ import il.org.spartan.*;
   }
 
   @Test public void statement() {
-    azzert.that(Wrap.Statement.off(Wrap.Statement.on("int a;")), is("int a;"));
+    azzert.that(Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD.off(Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD.on("int a;")), is("int a;"));
   }
 
   private void similar(final String s1, final String s2) {

@@ -54,9 +54,7 @@ public final class InfixComparisonBooleanLiteral extends Wring.ReplaceCurrentNod
     return "Eliminate redundant comparison with '" + literal(x) + "'";
   }
 
-  @Override Expression replacement(final InfixExpression x) {
-    final BooleanLiteral literal = literal(x);
-    final Expression nonliteral = core(nonLiteral(x));
-    return plant(!negating(x, literal) ? nonliteral : make.notOf(nonliteral)).into(x.getParent());
+  @Override public boolean claims(final InfixExpression e) {
+    return !e.hasExtendedOperands() && in(e.getOperator(), EQUALS, NOT_EQUALS) && (literalOnLeft(e) || literalOnRight(e));
   }
 }

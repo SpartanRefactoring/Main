@@ -385,4 +385,68 @@ public class subject {
       return toIf(make.notOf(condition));
     }
   }
+
+  /** Create a new Operand
+   * @param inner the expression of the operand
+   * @return the new operand */
+  public static Operand operand(final Expression inner) {
+    return new Operand(inner);
+  }
+
+  /** Create an instance of several operands together here we get the
+   * expressions in separate and not as a list
+   * @param e JD
+   * @return a new instance using the given expressions */
+  public static Several operands(final Expression... e) {
+    return new Several(as.list(e));
+  }
+
+  /** Create an instance of several operands together here we get the
+   * expressions as a list
+   * @param es a list of expressions
+   * @return a new Several instance using the given list of expressions */
+  public static Several operands(final List<Expression> es) {
+    assert es != null;
+    return new Several(es); // Pun intended
+  }
+
+  /** Create an instance of 2 expressions together
+   * @param left the left expression
+   * @param right the right expression
+   * @return a new instance of the class pair */
+  public static Pair pair(final Expression left, final Expression right) {
+    return new Pair(left, right);
+  }
+
+  /** Create an instance of 2 statements together
+   * @param s1 the first statement
+   * @param s2 the second statement
+   * @return a new instance of the class StatementPair */
+  public static StatementPair pair(final Statement s1, final Statement s2) {
+    return new StatementPair(s1, s2);
+  }
+
+  /** Create an instance of several statements together here we get the
+   * statements as a list
+   * @param ss a list of statements
+   * @return a new instance using the given statements */
+  public static SeveralStatements ss(final List<Statement> ss) {
+    return new SeveralStatements(ss);
+  }
+
+  /** Create an instance of several statements together here we get only one
+   * statement
+   * @param s JD
+   * @return a new instance using the given statement */
+  public static SeveralStatements statement(final Statement s) {
+    return statements(s);
+  }
+
+  /** Create an instance of several statements together here we get the
+   * statements in separate and not as a list
+   * @param ss JD
+   * @return a new instance using the given statements */
+  public static SeveralStatements statements(final Statement... ss) {
+    return ss(as.list(ss));
+  }
 }

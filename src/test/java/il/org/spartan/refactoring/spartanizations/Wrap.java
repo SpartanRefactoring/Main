@@ -15,31 +15,43 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-07-16 */
 public enum Wrap {
-  OUTER("package p; // BEGIN PACKAGE \n", "\n// END PACKAGE\n"),
-  /** Algorithm for wrapping/unwrapping a method */
-  Method("" + //
-      "package p;\n" + //
-      "public class C {\n" + //
-      "", "" + //
-          "} // END p\n" + //
-          ""), //
-  /** Algorithm for wrapping/unwrapping a statement */
-  Statement("" + Method.before + //
-      "public void m(){\n" + //
-      "", "" + //
-          "} // END m \n" + //
-          "" + Method.after + //
-          ""), //
-  /** Algorithm for wrapping/unwrapping an expression */
-  Expression(//
-      Statement.before //
-          + "   while (", //
-      ");\n" //
-          + Statement.after //
+  FULL_COMILATION_UNIT(//
+      "// BEGIN Compilation unit", //
+      "\n// END compilation unit" //
+  ), OUTER_TYPE_IN_SOME_COMILATION_UNIT(//
+      FULL_COMILATION_UNIT.before + //
+          "\n\t package p; // BEGIN Outer type in a compilation unit\n"//
+      , //
+      "\n\t // END outer type in a compilation unit\n" + //
+          FULL_COMILATION_UNIT.after //
+  ), A_CLASS_MEMBER_OF_SOME_SORT( //
+      OUTER_TYPE_IN_SOME_COMILATION_UNIT.before + //
+          "\n\t\t public class C {// BEGIN Class C\n" //
+      , //
+      "\n\t\t } // END class C\n" + //
+          OUTER_TYPE_IN_SOME_COMILATION_UNIT.after //
+  ), STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD(//
+      A_CLASS_MEMBER_OF_SOME_SORT.before + //
+          "\n\t\t\t Object m() { // BEGIN Public function m\n" //
+      , //
+      "\n\t\t\t } // END public function \n" + //
+          A_CLASS_MEMBER_OF_SOME_SORT.after //
+  ), EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT(//
+      STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD.before + //
+          "\n\t\t\t\t if (foo("//
+      , //
+      ",0)) return g();\n" //
+          + STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD.after //
   ), //
   //
   ;
-  public static final Wrap[] WRAPS = new Wrap[] { Statement, Expression, Method, OUTER };
+  public static final Wrap[] WRAPS = new Wrap[] { //
+      FULL_COMILATION_UNIT,
+      OUTER_TYPE_IN_SOME_COMILATION_UNIT, //
+      A_CLASS_MEMBER_OF_SOME_SORT, //
+      STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD, //
+      EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT,//
+  };
 
   public static String essence(final String codeFragment) {
     return tide.clean(removeComments(codeFragment));
@@ -53,7 +65,19 @@ public enum Wrap {
     for (final Wrap $ : WRAPS)
       if ($.contains("" + $.intoCompilationUnit(codeFragment), codeFragment))
         return $;
-    azzert.fail("Cannot parse '\n" + codeFragment + "\n********* I tried the following options:" + options(codeFragment));
+    azzert.fail("שימ לב!\n" + //
+        "Nota!\n" + //
+        "Either I am buggy, or this must be a problem of incorrect Java code you placed\n" + //
+        "at a string literal somewhere \n " + //
+        "\t\t =>  In *your* _אצלך_ @Test related Java code  <== \n" + //
+        "To fix this problem, copy this trace window (try right clicking _here_). Then,\n" + //
+        "paste the trace to examine it with some text editor. I printed  below my attempts\n" + //
+        "of making sense of this code. It may have something you (or I) did wrong, but:\n" + //
+        "It sure does not look like a correct Java code to me.\n" + //
+        "\n" + //
+        "Here are the attempts I made at literal ```" + codeFragment + "''':,\n" + //
+        "\n" + //
+        options(codeFragment));
     throw new RuntimeException();
   }
 
@@ -68,14 +92,11 @@ public enum Wrap {
     int i = 0;
     for (final Wrap w : Wrap.WRAPS) {
       final String on = w.on(codeFragment);
-      final ASTNode n = makeAST.COMPILATION_UNIT.from(on);
-      $.append("\n* Attempt ").append(++i).append(": ").append(w);
-      $.append("\n* I = <").append(essence(on)).append(">;");
-      $.append("\n* O = <").append(essence("" + n)).append(">;");
-      $.append("\n**** PARSED=\n").append("" + w.intoCompilationUnit(codeFragment));
-      $.append("\n* AST=").append(essence("" + n.getAST()));
-      $.append("\n**** INPUT=\n").append(on);
-      $.append("\n**** OUTPUT=\n").append("" + n);
+      final ASTNode n = MakeAST.COMPILATION_UNIT.from(on);
+      $.append("\n\nAttempt #" + ++i + " (of " + Wrap.WRAPS.length + "): is it a " + w + "? Let's see:\n");
+      $.append("\n\t What I tried as input was (essentially) this literal ```" + essence(on)).append("'''\n");
+      $.append("\n\t Alas, what the parser gave me was (essentially) ```" + w.intoCompilationUnit(codeFragment) + "'''\n");
+      $.append("\n\t This might be another variant, who knows?  ```" + n + "'''\n");
     }
     return "" + $;
   }

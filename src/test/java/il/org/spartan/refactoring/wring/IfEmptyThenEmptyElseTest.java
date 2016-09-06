@@ -22,7 +22,7 @@ public class IfEmptyThenEmptyElseTest {
   private static final IfEmptyThenEmptyElse WRING = new IfEmptyThenEmptyElse();
 
   @Test public void eligible() {
-    assert WRING.eligible(IF);
+    azzert.aye(WRING.canMake(IF));
   }
 
   @Test public void emptyElse() {
@@ -42,7 +42,7 @@ public class IfEmptyThenEmptyElseTest {
   }
 
   @Test public void runGo() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
-    final String input = Wrap.Statement.on(INPUT + "");
+    final String input = Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD.on(INPUT + "");
     final Document d = new Document(input);
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(d.get());
     final IfStatement s = extract.firstIfStatement(u);
@@ -58,6 +58,6 @@ public class IfEmptyThenEmptyElseTest {
   }
 
   @Test public void scopeIncludes() {
-    assert WRING.scopeIncludes(IF);
+    azzert.aye(WRING.claims(IF));
   }
 }

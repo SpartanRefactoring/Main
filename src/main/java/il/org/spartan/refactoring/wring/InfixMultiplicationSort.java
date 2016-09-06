@@ -16,8 +16,8 @@ import il.org.spartan.refactoring.engine.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class InfixMultiplicationSort extends Wring.InfixSorting implements Kind.Sorting {
-  @Override boolean scopeIncludes(final InfixExpression x) {
-    return in(x.getOperator(), TIMES);
+  @Override boolean claims(final InfixExpression e) {
+    return in(e.getOperator(), TIMES);
   }
 
   @Override boolean sort(final List<Expression> xs) {

@@ -158,7 +158,7 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
     return pushdown(x);
   }
 
-  @Override boolean scopeIncludes(final ConditionalExpression x) {
-    return pushdown(x) != null;
+  @Override boolean claims(final ConditionalExpression e) {
+    return pushdown(e) != null;
   }
 }

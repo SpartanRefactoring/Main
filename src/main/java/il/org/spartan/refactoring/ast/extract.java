@@ -21,9 +21,8 @@ public enum extract {
   /** Retrieve all operands, including parenthesized ones, under an expression
    * @param x JD
    * @return a {@link List} of all operands to the parameter */
-  public static List<Expression> allOperands(final InfixExpression x) {
-    assert x != null;
-    return hop.operands(flatten.of(x));
+  public static List<Expression> allOperands(final InfixExpression e) {
+    return e == null ? null : extract.operands(flatten(e));
   }
 
   public static List<InfixExpression.Operator> allOperators(final InfixExpression x) {

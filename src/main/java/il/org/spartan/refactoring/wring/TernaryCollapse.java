@@ -54,7 +54,7 @@ public final class TernaryCollapse extends Wring.ReplaceCurrentNode<ConditionalE
     return collapse(x);
   }
 
-  @Override boolean scopeIncludes(final ConditionalExpression x) {
-    return collapse(x) != null;
+  @Override boolean claims(final ConditionalExpression e) {
+    return collapse(e) != null;
   }
 }

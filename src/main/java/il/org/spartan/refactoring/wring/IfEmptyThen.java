@@ -31,7 +31,7 @@ public final class IfEmptyThen extends Wring.ReplaceCurrentNode<IfStatement> imp
     return !iz.blockRequiredInReplacement(s, $) ? $ : subject.statement($).toBlock();
   }
 
-  @Override boolean scopeIncludes(final IfStatement s) {
-    return s != null && iz.vacuousThen(s) && !iz.vacuousElse(s);
+  @Override boolean claims(final IfStatement s) {
+    return s != null && Is.vacuousThen(s) && !Is.vacuousElse(s);
   }
 }

@@ -14,8 +14,8 @@ import il.org.spartan.refactoring.engine.*;
  * @author Yossi Gil
  * @since 2015-09-05 */
 public final class InfixDivisonSort extends Wring.InfixSortingOfCDR implements Kind.Sorting {
-  @Override boolean scopeIncludes(final InfixExpression x) {
-    return in(x.getOperator(), DIVIDE);
+  @Override boolean claims(final InfixExpression e) {
+    return in(e.getOperator(), DIVIDE);
   }
 
   @Override boolean sort(final List<Expression> xs) {
