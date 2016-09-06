@@ -9,6 +9,9 @@ import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.java.Environment.*;
 
+/*
+ * Implements the handler of flatEnv outer annotation.
+ */
 public class EnvFlatHandler extends ENVTestEngineAbstract {
   Set<Entry<String, Environment.Information>> testSet;
 
@@ -42,7 +45,7 @@ public class EnvFlatHandler extends ENVTestEngineAbstract {
       // runs on the Ids
       @Override public boolean visit(final NormalAnnotation ¢) {
         if (isNameId(¢.getTypeName()))
-          addValueToSet(values(¢));
+          addTestSet(values(¢));
         return true;
       }
     });
