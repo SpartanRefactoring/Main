@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.java.*;
+import il.org.spartan.refactoring.java.PrudentType;
 import il.org.spartan.refactoring.java.Environment.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -43,9 +44,11 @@ public abstract class ENVTestEngineAbstract {
   protected ASTNode n = null;
   Set<Entry<String, Environment.Information>> testSet;
 
-  // TODO: Information should be instantiated with PrudentType
-  public void addValueToSet(final List<MemberValuePair> ps) {
-    testSet.add(new MapEntry<>(wizard.asString(ps.get(0).getValue()), new Information()));
+  /*
+   *Add new Entry to testSet from the inner annotation. 
+   */
+  public void addTestSet(final List<MemberValuePair> ps) {
+    testSet.add(new MapEntry<>(wizard.asString(ps.get(0).getValue()), new Information(PrudentType.valueOf(wizard.asString(ps.get(1).getValue())))));
   }
 
   abstract protected Set<Entry<String, Information>> buildEnvironmentSet(BodyDeclaration d);
@@ -85,7 +88,7 @@ public abstract class ENVTestEngineAbstract {
    * which annotations can be defined, and checks if the annotations are of the
    * kind that interests us. An array of inner annotations is defined inside of
    * each outer annotation of interest. I think it will be less error prone and
-   * more scalable to implement another, internal, ASTVisitor that will go over
+   * more scalable to implement another, internal, ASTVisitor that goes over
    * each inner annotation node, and send everything to an outside function to
    * add to the Sets as required. That means that each inner annotation will be
    * visited twice from the same outer annotation, but that should not cause
@@ -94,7 +97,7 @@ public abstract class ENVTestEngineAbstract {
    * TODO: internal node parsing. Think about Nested parsing. */
   public void runTest() {
     n.accept(new ASTVisitor() {
-      /** Iterate over annotations of the current declaration and dispatch them
+      /** Iterate over outer annotations of the current declaration and dispatch them
        * to handlers. otherwise */
       void checkAnnotations(final List<Annotation> as) {
         for (final Annotation ¢ : as)

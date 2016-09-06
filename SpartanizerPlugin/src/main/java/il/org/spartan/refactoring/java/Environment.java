@@ -143,6 +143,12 @@ import org.eclipse.jdt.core.dom.*;
       prudentType = null;
       hiding = null;
     }
+    
+    public Information(PrudentType t) {
+      blockScope = self = null;
+      prudentType = t;
+      hiding = null;
+    }
   }
 
   /** TODO: document properly, but essentially is a dictionary with a parent.
