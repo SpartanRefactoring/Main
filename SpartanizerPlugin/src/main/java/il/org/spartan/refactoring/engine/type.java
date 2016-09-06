@@ -408,6 +408,9 @@ interface type {
     return in(STRING, this, k) || in(NULL, this, k) ? STRING : !isNumeric() || !k.isNumeric() ? ALPHANUMERIC : underNumericOnlyOperator(k);
   }
 
+  /** Please doc
+   * @author Niv TODO: was that you?
+   * @year 2016 */
   @SuppressWarnings("unused") interface Axiom {
     static type.Primitive.Certain type(final boolean x) {
       return type.Primitive.Certain.BOOLEAN;
@@ -499,77 +502,9 @@ interface type {
         this.description = description;
       }
 
-      @Override public type asIntegral() {
-        throw new NotImplementedException("code of this function was not implemented yet");
-      }
-
-      @Override public type asIntegralUnderOperation() {
-        throw new NotImplementedException("code of this function was not implemented yet");
-      }
-
-      @Override public type asNumeric() {
-        throw new NotImplementedException("code of this function was not implemented yet");
-      }
-
-      @Override public type asNumericUnderOperation() {
-        throw new NotImplementedException("code of this function was not implemented yet");
-      }
-
-      @Override public Certain asPrimitiveCertain() {
-        throw new NotImplementedException("code of this function was not implemented yet");
-      }
-
       @Override public boolean canB(final Certain ¢) {
         assert ¢ != null;
         return false;
-      }
-
-      @Override public boolean isAlphaNumeric() {
-        throw new NotImplementedException("code of this function was not implemented yet");
-      }
-
-      @Override public boolean isIntegral() {
-        throw new NotImplementedException("code of this function was not implemented yet");
-      }
-
-      @Override public boolean isIntUnderOperation() {
-        throw new NotImplementedException("code of this function was not implemented yet");
-      }
-
-      @Override public boolean isNoInfo() {
-        throw new NotImplementedException("code of this function was not implemented yet");
-      }
-
-      @Override public boolean isNumeric() {
-        throw new NotImplementedException("code of this function was not implemented yet");
-      }
-
-      @Override public type under(final Operator o) {
-        throw new NotImplementedException("code of this function was not implemented yet; arge = " + o);
-      }
-
-      @Override public type underBinaryOperator(final org.eclipse.jdt.core.dom.InfixExpression.Operator o, final type k) {
-        throw new NotImplementedException("code of this function was not implemented yet");
-      }
-
-      @Override public type underBitwiseOperation(final type k) {
-        throw new NotImplementedException("code of this function was not implemented yet k=" + k);
-      }
-
-      @Override public type underBitwiseOperationNoInfo() {
-        throw new NotImplementedException("code of this function was not implemented yet");
-      }
-
-      @Override public type underIntegersOnlyOperator(final type k) {
-        throw new NotImplementedException("code of this function was not implemented yet k =" + k);
-      }
-
-      @Override public type underNumericOnlyOperator(final type k) {
-        throw new NotImplementedException("code of this function was not implemented yet; k = " + k);
-      }
-
-      @Override public type underPlus(final type k) {
-        throw new NotImplementedException("code of this function was not implemented yet; k = " + k);
       }
     }
 
