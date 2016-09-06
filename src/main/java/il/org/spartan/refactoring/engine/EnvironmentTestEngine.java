@@ -25,18 +25,16 @@ public class EnvironmentTestEngine {
 
   /** @param from - file path
    * @return CompilationUnit of the code written in the file specified. */
-  static ASTNode getCompilationUnit(final String from){
+  static ASTNode getCompilationUnit(final String from) {
     final String ROOT = "./src/test/resources/";
-    File f = new File(ROOT + from);
-    
+    final File f = new File(ROOT + from);
     azzert.notNull(ROOT);
     azzert.notNull(from);
     azzert.notNull(f);
     azzert.aye(f.exists());
-    ASTNode $ = makeAST.COMPILATION_UNIT.from(f);
+    final ASTNode $ = makeAST.COMPILATION_UNIT.from(f);
     azzert.notNull($);
     azzert.that($, instanceOf(CompilationUnit.class));
-    
     return $;
   }
 
@@ -166,10 +164,11 @@ public class EnvironmentTestEngine {
       void flatHandler(final Annotation ¢) {
         flatHandler(az.singleMemberAnnotation(¢));
       }
-      
-      boolean isNameId(Name n1) {
+
+      boolean isNameId(final Name n1) {
         return "@Id".equals("" + n1);
       }
+
       /** Parse the outer annotation to get the inner ones. Add to the flat Set.
        * Compare uses() and declares() output to the flat Set.
        * @param $ JD */
@@ -177,14 +176,13 @@ public class EnvironmentTestEngine {
         if ($ == null)
           return;
         $.accept(new ASTVisitor() {
-           @Override public boolean visit(NormalAnnotation ¢){
-             if (isNameId(¢.getTypeName()))
+          @Override public boolean visit(final NormalAnnotation ¢) {
+            if (isNameId(¢.getTypeName()))
               addValueToSetsDispatch(values(¢), AnnotationType.FLAT);
-           return true;
-           }
+            return true;
+          }
 
-          @SuppressWarnings("unchecked")
-          List<MemberValuePair> values(NormalAnnotation ¢) {
+          @SuppressWarnings("unchecked") List<MemberValuePair> values(final NormalAnnotation ¢) {
             return ¢.values();
           }
         });

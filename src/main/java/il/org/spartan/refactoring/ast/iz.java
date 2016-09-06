@@ -26,9 +26,10 @@ public enum iz {
     return (Modifier.FINAL & s.getModifiers()) != 0;
   }
 
-  public static boolean astNode(final Object ¢){
-    return ¢!=null && ¢ instanceof ASTNode;
+  public static boolean astNode(final Object ¢) {
+    return ¢ != null && ¢ instanceof ASTNode;
   }
+
   public static boolean abstractTypeDeclaration(final ASTNode ¢) {
     return ¢ != null && ¢ instanceof AbstractTypeDeclaration;
   }

@@ -40,7 +40,6 @@ public abstract class ENVTestEngineAbstract {
   }
 
   protected boolean foundTestedAnnotation = false;
-
   protected ASTNode n = null;
   Set<Entry<String, Environment.Information>> testSet;
 
@@ -76,10 +75,9 @@ public abstract class ENVTestEngineAbstract {
     handler(az.singleMemberAnnotation(¢));
   }
 
-  /**
-   * Parse the outer annotation to get the inner ones. Add to the flat Set. Compare uses() and declares() output to the flat Set.
-   * @param $  JD 
-   */
+  /** Parse the outer annotation to get the inner ones. Add to the flat Set.
+   * Compare uses() and declares() output to the flat Set.
+   * @param $ JD */
   protected abstract void handler(final SingleMemberAnnotation $);
 
   /* define: outer annotation = OutOfOrderNestedENV, InOrderFlatENV, Begin, End.

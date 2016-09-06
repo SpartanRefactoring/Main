@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.engine;
 
-import il.org.spartan.as;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.engine.type.Odd.Types.*;
 import static il.org.spartan.refactoring.engine.type.Primitive.Certain.*;
@@ -13,6 +12,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -28,10 +28,10 @@ interface type {
   /** @param n JD
    * @return the type information stored inside the node n, or null if there is
    *         none */
-  static type getType(ASTNode n) {
+  static type getType(final ASTNode n) {
     return (type) n.getProperty(propertyName);
   }
- 
+
   /** @param x JD
    * @return The most specific Type information that can be deduced about the
    *         expression from it's structure, or {@link #NOTHING} if it cannot
@@ -207,23 +207,24 @@ interface type {
     }
   }
 
-  /**
-   * @return  true if one of  {@link #INT} ,  {@link #LONG} ,  {@link #CHAR} , {@link BYTE} ,  {@link SHORT} ,  {@link FLOAT} ,  {@link #DOUBLE} , {@link #INTEGRAL}  or  {@link #NUMERIC} ,  {@link #STRING} , {@link #ALPHANUMERIC}  or false otherwise 
-   */
+  /** @return true if one of {@link #INT} , {@link #LONG} , {@link #CHAR} ,
+   *         {@link BYTE} , {@link SHORT} , {@link FLOAT} , {@link #DOUBLE} ,
+   *         {@link #INTEGRAL} or {@link #NUMERIC} , {@link #STRING} ,
+   *         {@link #ALPHANUMERIC} or false otherwise */
   default boolean isAlphaNumeric() {
     return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC, STRING, ALPHANUMERIC);
   }
 
-  /**
-   * @return  true if one of  {@link #INT} ,  {@link #LONG} ,  {@link #CHAR} , {@link BYTE} ,  {@link SHORT} ,  {@link #INTEGRAL}  or false otherwise 
-   */
+  /** @return true if one of {@link #INT} , {@link #LONG} , {@link #CHAR} ,
+   *         {@link BYTE} , {@link SHORT} , {@link #INTEGRAL} or false
+   *         otherwise */
   default boolean isIntegral() {
     return in(this, LONG, INT, CHAR, BYTE, SHORT, INTEGRAL);
   }
 
-  /**
-   * @return  true if one of  {@link #INT} ,  {@link #LONG} ,  {@link #CHAR} , {@link BYTE} ,  {@link SHORT} ,  {@link FLOAT} ,  {@link #DOUBLE} , {@link #INTEGRAL} ,  {@link #NUMERIC}  or false otherwise 
-   */
+  /** @return true if one of {@link #INT} , {@link #LONG} , {@link #CHAR} ,
+   *         {@link BYTE} , {@link SHORT} , {@link FLOAT} , {@link #DOUBLE} ,
+   *         {@link #INTEGRAL} , {@link #NUMERIC} or false otherwise */
   default boolean isNumeric() {
     return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC);
   }
