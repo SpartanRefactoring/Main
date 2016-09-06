@@ -2,14 +2,15 @@ package il.org.spartan.refactoring.engine;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.engine.type.*;
+import static il.org.spartan.refactoring.engine.type.Odd.Types.*;
 import static il.org.spartan.refactoring.engine.type.Primitive.Certain.*;
 import static il.org.spartan.refactoring.engine.type.Primitive.Uncertain.*;
-import static il.org.spartan.refactoring.engine.type.Odd.Types.*;
 
 import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
+import il.org.spartan.refactoring.engine.type.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "static-method", "unused" }) //
@@ -20,6 +21,16 @@ public class typeTest {
 
   //@Ignore ("type not implemented yet")
   public static class Working {
+    private static final int _33 = 3;
+    private static final int _32 = 3;
+    private static final long _2L = 2l;
+    private static final int _15 = 1;
+    private static final int _14 = 1;
+    private static final int _13 = 1;
+    private static final int _12 = 1;
+    private static final long _1L = 1L;
+    private static final int _1 = 1;
+    private static final int _3 = 3;
     /** Make sure the compiler cannot optimize this out */
     private final byte b = (byte) (hashCode() ^ 0xDEADdeaf);
     private final boolean b1 = b > (byte) hashCode();
@@ -130,7 +141,7 @@ public class typeTest {
     }
 
     @Test public void axiomExpression1() {
-      azzert.that(Axiom.type(3 / 2. + 7), is(DOUBLE));
+      azzert.that(Axiom.type(_3 / 2. + 7), is(DOUBLE));
     }
 
     @Test public void axiomExpression10() {
@@ -142,7 +153,7 @@ public class typeTest {
     }
 
     @Test public void axiomExpression12() {
-      azzert.that(Axiom.type(1 * (float) 1 / 1L), is(FLOAT));
+      azzert.that(Axiom.type(_1 * (float) 1 / 1L), is(FLOAT));
     }
 
     @Test public void axiomExpression13() {
@@ -150,15 +161,15 @@ public class typeTest {
     }
 
     @Test public void axiomExpression14() {
-      azzert.that(Axiom.type((float) 1 + 1 * 1L), is(FLOAT));
+      azzert.that(Axiom.type(_14 * _1L + (float) _15), is(FLOAT));
     }
 
     @Test public void axiomExpression15() {
-      azzert.that(Axiom.type((float) 1 + (char) 1), is(FLOAT));
+      azzert.that(Axiom.type((float) _12 + (char) _13), is(FLOAT));
     }
 
     @Test public void axiomExpression2() {
-      azzert.that(Axiom.type(3 / 2l + 7), is(LONG));
+      azzert.that(Axiom.type(3 / _2L + 7), is(LONG));
     }
 
     @Test public void axiomExpression3() {
@@ -174,11 +185,11 @@ public class typeTest {
     }
 
     @Test public void axiomExpression6() {
-      azzert.that(Axiom.type((2 * 3 / 4 + 1. - 5) % 4), is(DOUBLE));
+      azzert.that(Axiom.type((2 * _32 / 4 + 1. - 5) % 4), is(DOUBLE));
     }
 
     @Test public void axiomExpression7() {
-      azzert.that(Axiom.type((2 * 3 / 4 + 1 - 5) % 4), is(INT));
+      azzert.that(Axiom.type((2 * _33 / 4 + 1 - 5) % 4), is(INT));
     }
 
     @Test public void axiomExpression8() {
