@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.java.Environment.*;
-import il.org.spartan.refactoring.utils.*;;
+import il.org.spartan.refactoring.utils.*;
 
 public class EnvironmentTestEngine {
   enum AnnotationType {
@@ -20,15 +20,15 @@ public class EnvironmentTestEngine {
   static Set<Entry<String, Environment.Information>> generateSet() {
     return Collections.unmodifiableSet(new HashSet<>());
   }
-  /**
-   * @param from - file path
-   * @return CompilationUnit of the code written in the file specified.
-   */
+
+  /** @param from - file path
+   * @return CompilationUnit of the code written in the file specified. */
   // s = "il.org.spartan.refactoring.java.EnvironmentCodeExamples.java"
   static CompilationUnit getCompilationUnit(final String from) {
     final IJavaProject javaProject = getJavaProject("spartenRefactoring");
     IType iType;
     CompilationUnit $ = null;
+    // use MakeAST
     try {
       iType = javaProject.findType(from);
       final ICompilationUnit iCompilationUnit = iType.getCompilationUnit();
@@ -104,6 +104,19 @@ public class EnvironmentTestEngine {
     }
   }
 
+  class X {
+    int a = a() / b();
+    int b = 2 * a + b();
+
+    int a() {
+      return a + b + 2 * a();
+    }
+
+    int b() {
+      return b() + b * a();
+    }
+  }
+
   /** Compares output Set (testFlatENV) with provided set, that will be the
    * result of the flat version of defines.
    * @param $ */
@@ -157,10 +170,8 @@ public class EnvironmentTestEngine {
    * TODO: internal node parsing. Think about Nested parsing. */
   public void runTest() {
     n.accept(new ASTVisitor() {
-      /**
-      * Iterate over annotations of the current declaration and dispatch them to handlers.  
-      * otherwise
-      */
+      /** Iterate over annotations of the current declaration and dispatch them
+       * to handlers. otherwise */
       void checkAnnotations(final List<Annotation> as) {
         for (final Annotation ¢ : as)
           dispatch(¢);
@@ -168,12 +179,10 @@ public class EnvironmentTestEngine {
 
       void beginEndHandler(final Annotation a) {
       }
-      
-      /**
-       * Call the corresponding handler according to the annotation sort.
-       * TODO: only flat is implemented (partially)
-       * @param a JD
-       */
+
+      /** Call the corresponding handler according to the annotation sort. TODO:
+       * only flat is implemented (partially)
+       * @param a JD */
       void dispatch(final Annotation a) {
         if (a.getTypeName() + "" == "nestedENV")
           nestedHandler(a);
@@ -182,21 +191,16 @@ public class EnvironmentTestEngine {
         else if (a.getTypeName() + "" == "BegingEndENV")
           beginEndHandler(a);
       }
-      
-      /**
-       * TODO: May be redundant wrapper.
-       * @param ¢ JD
-       */
+
+      /** TODO: May be redundant wrapper.
+       * @param ¢ JD */
       void flatHandler(final Annotation ¢) {
         flatHandler(az.singleMemberAnnotation(¢));
       }
-      
-      /**
-       * Parse the outer annotation to get the inner ones.
-       * Add to the flat Set.
+
+      /** Parse the outer annotation to get the inner ones. Add to the flat Set.
        * Compare uses() and declares() output to the flat Set.
-       * @param $ JD
-       */
+       * @param $ JD */
       void flatHandler(final SingleMemberAnnotation $) {
         if ($ == null)
           return;
@@ -210,10 +214,9 @@ public class EnvironmentTestEngine {
 
       void nestedHandler(final Annotation a) {
       }
-      /**
-       * TODO: only MothodDeclaration is implemented. Should implement all nodes 
-       * which can have annotations.
-       */
+
+      /** TODO: only MothodDeclaration is implemented. Should implement all
+       * nodes which can have annotations. */
       @Override public boolean visit(final MethodDeclaration d) {
         checkAnnotations(extract.annotations(d));
         /** Set<Entry<String, Information>> useSet = Environment.uses(d);
@@ -225,5 +228,17 @@ public class EnvironmentTestEngine {
         return true;
       }
     });
+  }
+}
+
+class A {
+  B a() {
+    return null;
+  }
+}
+
+class B {
+  A b() {
+    return null;
   }
 }

@@ -27,7 +27,7 @@ interface type {
    * @return The most specific Type information that can be deduced about the
    *         expression, or {@link #NOTHING} if it cannot decide. Will never
    *         return null */
-  public static type prudent(final Expression x) {
+   static type prudent(final Expression x) {
     return prudent(x, null, null);
   }
 
