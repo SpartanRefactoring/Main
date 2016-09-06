@@ -35,7 +35,8 @@ public abstract class ENVTestEngineAbstract {
   }
 
   public static boolean isNameId(final Name n1) {
-    assert !"@Id".equals("" + n1); // debug
+    assert !"@Id".equals("" + n1); // To find the bug, if it appears as @Id, and
+                                   // not Id.
     return "Id".equals("" + n1);
   }
 
@@ -44,6 +45,7 @@ public abstract class ENVTestEngineAbstract {
   Set<Entry<String, Environment.Information>> testSet;
 
   // TODO: Information should be instantiated with PrudentType
+  //In the future, we would like to instantiate it with hiding, parent ASTNode info, etc.
   public void addValueToSet(final List<MemberValuePair> ps) {
     testSet.add(new MapEntry<>(wizard.asString(ps.get(0).getValue()), new Information()));
   }
@@ -57,28 +59,25 @@ public abstract class ENVTestEngineAbstract {
   // equal.
   // Also, check size, to avoid the case Set A is contained in B.
   // azzert.fail Otherwise.
+  //
+  // TODO Implement method. Currently awaits Yossi's advice regarding
+  // LinkedHashSet unmodifiable issue.
   protected void compareInOrder(final Set<Entry<String, Information>> $) {
   }
 
   /** Compares the set from the annotation with the set that the checked
    * function generates.
    * @param $ */
-  // Check that each member of $ is contained in FlatENV, and that the size is
-  // equal.
-  // azzert.fail Otherwise.
   protected void compareOutOfOrder(final Set<Entry<String, Information>> $) {
-  }
-
-  /** Cast
-   * @param ¢ JD */
-  void handler(final Annotation ¢) {
-    handler(az.singleMemberAnnotation(¢));
+    if (testSet.size() != $.size() || !$.containsAll(testSet))
+      azzert.fail("Set"
+          + (testSet.size() != $.size() ? " Comparison failed, Sets are of different siz" : "s are of equal size but contain different valu") + "es");
   }
 
   /** Parse the outer annotation to get the inner ones. Add to the flat Set.
    * Compare uses() and declares() output to the flat Set.
    * @param $ JD */
-  protected abstract void handler(final SingleMemberAnnotation $);
+  abstract protected void handler(final Annotation ¢);
 
   /* define: outer annotation = OutOfOrderNestedENV, InOrderFlatENV, Begin, End.
    * define: inner annotation = Id. ASTVisitor that goes over the ASTNodes in
@@ -101,20 +100,55 @@ public abstract class ENVTestEngineAbstract {
           handler(¢);
       }
 
-      /** TODO: only MothodDeclaration is implemented. Should implement all
-       * nodes which can have annotations. */
-      @Override public boolean visit(final MethodDeclaration d) {
-        checkAnnotations(extract.annotations(d));
-        if (foundTestedAnnotation) {
-          // TODO: abstract function to determine if to use uses() or
-          // declares().
-          final Set<Entry<String, Information>> enviromentSet = buildEnvironmentSet(d);
-          compareOutOfOrder(enviromentSet);
-          compareInOrder(enviromentSet);
-          foundTestedAnnotation = false;
-          testSet.clear();
-        }
+      @Override public boolean visit(final AnnotationTypeDeclaration $) {
+        visitNodesWithPotentialAnnotations($);
         return true;
+      }
+
+      @Override public boolean visit(final AnnotationTypeMemberDeclaration $) {
+        visitNodesWithPotentialAnnotations($);
+        return true;
+      }
+
+      @Override public boolean visit(final EnumConstantDeclaration $) {
+        visitNodesWithPotentialAnnotations($);
+        return true;
+      }
+
+      @Override public boolean visit(final EnumDeclaration $) {
+        visitNodesWithPotentialAnnotations($);
+        return true;
+      }
+
+      @Override public boolean visit(final FieldDeclaration $) {
+        visitNodesWithPotentialAnnotations($);
+        return true;
+      }
+
+      @Override public boolean visit(final Initializer $) {
+        visitNodesWithPotentialAnnotations($);
+        return true;
+      }
+
+      @Override public boolean visit(final MethodDeclaration $) {
+        visitNodesWithPotentialAnnotations($);
+        return true;
+      }
+
+      @Override public boolean visit(final TypeDeclaration $) {
+        visitNodesWithPotentialAnnotations($);
+        return true;
+      }
+
+      void visitNodesWithPotentialAnnotations(final BodyDeclaration $) {
+        checkAnnotations(extract.annotations($));
+        if (!foundTestedAnnotation)
+          return;
+        final Set<Entry<String, Information>> enviromentSet = buildEnvironmentSet($);
+        compareOutOfOrder(enviromentSet);
+        compareInOrder(enviromentSet);
+        foundTestedAnnotation = false;
+        testSet.clear();
       }
     });
   }
