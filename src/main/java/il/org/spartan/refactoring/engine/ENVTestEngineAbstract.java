@@ -48,7 +48,7 @@ public abstract class ENVTestEngineAbstract {
 
   protected boolean foundTestedAnnotation = false; //Global flag, used to determine when to run the test on a node with potential annotations.
   protected ASTNode n = null;
-  Set<Entry<String, Environment.Information>> testSet;
+  protected Set<Entry<String, Environment.Information>> testSet;
 
   // TODO: Information should be instantiated with PrudentType
   //In the future, we would like to instantiate it with hiding, parent ASTNode info, etc.
@@ -77,6 +77,8 @@ public abstract class ENVTestEngineAbstract {
    * @param $ */
   //TODO once the method is determined to be working, change to visibility to protected.
   public void compareOutOfOrder(final Set<Entry<String, Information>> $) {
+    azzert.aye(testSet != null);
+    azzert.aye($ != null);
     if (testSet.size() != $.size() || !$.containsAll(testSet))
       azzert.fail("Set"
           + (testSet.size() != $.size() ? " Comparison failed, Sets are of different siz" : "s are of equal size but contain different valu") + "es");

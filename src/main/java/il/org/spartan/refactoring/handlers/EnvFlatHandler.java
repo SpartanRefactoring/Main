@@ -5,22 +5,24 @@ import java.util.Map.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.java.Environment.*;
 
 public class EnvFlatHandler extends ENVTestEngineAbstract {
-  Set<Entry<String, Environment.Information>> testSet;
 
   public EnvFlatHandler(final ASTNode $) {
     n = $;
     testSet = generateSet();
+    azzert.nay(testSet == null);
   }
 
   public EnvFlatHandler(final String ¢) {
     n = getCompilationUnit(¢);
     testSet = generateSet();
+    azzert.nay(testSet == null);
   }
 
   /* TODO Update EnvironmentCodeExamples - currently NestedENV does not
