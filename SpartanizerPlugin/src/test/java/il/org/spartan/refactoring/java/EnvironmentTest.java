@@ -408,6 +408,9 @@ public class EnvironmentTest {
   
   private Set<Entry<String, Information>> s = Collections.unmodifiableSet(new HashSet<>());
   
+  
+  //Test flat out of order.
+  
   @Ignore public void EngineTestFlatUnordered01(){
     ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("@OutOfOrderFlatENV({ @Id(name = \"s\", clazz = String.class) }) void foo()"));
     EnvironmentTestEngine e = new EnvironmentTestEngine($);
@@ -417,7 +420,7 @@ public class EnvironmentTest {
   
   @Ignore public void EngineTestFlatUnordered02(){
     ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("@OutOfOrderFlatENV({ @Id(name = "+
-                                                           "\"s\", clazz = String.class) })"+
+                                                           "\"a\", clazz = int.class) })"+
                                                            "void foo()"));
     EnvironmentTestEngine e = new EnvironmentTestEngine($);
     s.add(new MapEntry<>("a",new Information()));
@@ -433,7 +436,6 @@ public class EnvironmentTest {
                                                            "\"k\", clazz = int.class) }) \n" +
                                                            "void f();"));
     EnvironmentTestEngine e = new EnvironmentTestEngine($);
-    s.add(new MapEntry<>("a",new Information()));
     s.add(new MapEntry<>("k", new Information()));
     e.compareFlatOutOfOrder(s);
   }
@@ -447,7 +449,6 @@ public class EnvironmentTest {
                                                            "  \"a\", clazz = String.class) }) \n" + 
                                                            "void f();"));
     EnvironmentTestEngine e = new EnvironmentTestEngine($);
-    s.add(new MapEntry<>("s",new Information()));
     s.add(new MapEntry<>("a", new Information()));
     e.compareFlatOutOfOrder(s);
   }
@@ -477,7 +478,150 @@ public class EnvironmentTest {
     s.add(new MapEntry<>("s",new Information()));
     e.compareFlatOutOfOrder(s);
   }
+  
+  @Ignore public void EngineTestFlatUnordered07(){
+    ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("@OutOfOrderFlatENV({ @Id(name = "+
+                                                           "\"s\", clazz = String.class), " + 
+                                                           "@Id(name = \"ss\", clazz = String.class)})"+
+                                                           "void foo();\n"));    
+    EnvironmentTestEngine e = new EnvironmentTestEngine($);
+    
+    s.add(new MapEntry<>("s",new Information()));
+    s.add(new MapEntry<>("ss", new Information()));
+    e.compareFlatOutOfOrder(s);
+  } 
+  
+  @Ignore public void EngineTestFlatUnordered08(){
+    ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("@OutOfOrderFlatENV({ @Id(name = "+
+                                                           "\"s\", clazz = String.class), " + 
+                                                           "@Id(name = \"ss\", clazz = String.class),"+
+                                                           "@Id(name = \"i\", clazz = i.class)})"+
+                                                           "void foo();\n"));    
+    EnvironmentTestEngine e = new EnvironmentTestEngine($);
+    
+    s.add(new MapEntry<>("s",new Information()));
+    s.add(new MapEntry<>("ss", new Information()));
+    s.add(new MapEntry<>("i", new Information()));
+    e.compareFlatOutOfOrder(s);
+  }
+  
+  @Ignore public void EngineTestFlatUnordered09(){
+    ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("@OutOfOrderFlatENV({ @Id(name = "+
+                                                           "\"s\", clazz = String.class), " + 
+                                                           "@Id(name = \"s\", clazz = String.class),"+
+                                                           "@Id(name = \"i\", clazz = i.class)})"+
+                                                           "void foo();\n"));    
+    EnvironmentTestEngine e = new EnvironmentTestEngine($);
+    
+    s.add(new MapEntry<>("s",new Information()));
+    s.add(new MapEntry<>("i", new Information()));
+    e.compareFlatOutOfOrder(s);
+  }
+  
+  @Ignore public void EngineTestFlatUnordered10(){
+    ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("@OutOfOrderFlatENV({ @Id(name = "+
+                                                           "\"s\", clazz = String.class), " + 
+                                                           "@Id(name = \"ss\", clazz = String.class),"+
+                                                           "@Id(name = \"i\", clazz = i.class)})"+
+                                                           "void f();\n" + 
+                                                           "@OutOfOrderFlatENV({ @Id(name = "+
+                                                           "\"x\", clazz = int.class), " + 
+                                                           "@Id(name = \"y\", clazz = double.class)"+
+                                                           "void g();\n"));    
+    EnvironmentTestEngine e = new EnvironmentTestEngine($);
+    
+    s.add(new MapEntry<>("x",new Information()));
+    s.add(new MapEntry<>("y", new Information()));
+    e.compareFlatOutOfOrder(s);
+  }
+  
+  @Ignore public void EngineTestFlatUnordered11(){
+    ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("@OutOfOrderFlatENV({ @Id(name = "+
+                                                           "\"x\", clazz = String.class), " + 
+                                                           "@Id(name = \"y\", clazz = String.class),"+
+                                                           "@Id(name = \"z\", clazz = i.class)})"+
+                                                           "void f();\n" + 
+                                                           "@OutOfOrderFlatENV({ @Id(name = "+
+                                                           "\"x\", clazz = int.class), " + 
+                                                           "@Id(name = \"y\", clazz = double.class)"+
+                                                           "void g();\n"));    
+    EnvironmentTestEngine e = new EnvironmentTestEngine($);
+    
+    s.add(new MapEntry<>("x",new Information()));
+    s.add(new MapEntry<>("y", new Information()));
+    e.compareFlatOutOfOrder(s);
+  }
 
-  // ============================TestEngine Test================================
+  @Ignore public void EngineTestFlatUnordered12(){
+    ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("@OutOfOrderFlatENV({ @Id(name = "+
+                                                           "\"s\", clazz = String.class), " + 
+                                                           "@Id(name = \"ss\", clazz = String.class),"+
+                                                           "@Id(name = \"i\", clazz = i.class)})"+
+                                                           "void foo();\n"));    
+    EnvironmentTestEngine e = new EnvironmentTestEngine($);
+    
+    s.add(new MapEntry<>("i", new Information()));
+    s.add(new MapEntry<>("s",new Information()));
+    s.add(new MapEntry<>("ss", new Information()));
+    e.compareFlatOutOfOrder(s);
+  }
+  
+  //Throw an error about a name appearing twice, meaning that the test file itself is buggy.
+  @SuppressWarnings("unused") @Ignore public void EngineTestFlatUnordered13(){
+    ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("@OutOfOrderFlatENV({ @Id(name = "+
+                                                           "\"s\", clazz = String.class), " + 
+                                                           "@Id(name = \"ss\", clazz = String.class),"+
+                                                           "@Id(name = \"s\", clazz = i.class)})"+
+                                                           "void foo();\n"));    
+    try{
+      EnvironmentTestEngine e = new EnvironmentTestEngine($);
+      azzert.fail();
+    }catch(Exception __){/**/}
+  }
+  
+  //Handler for out of order and in order should be the same. Comparison function should be different.
+  @Ignore public void EngineTestFlatOrdered01(){
+    ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("@OutOfOrderFlatENV({ @Id(name = "+
+                                                           "\"s\", clazz = String.class), " + 
+                                                           "@Id(name = \"ss\", clazz = String.class),"+
+                                                           "@Id(name = \"i\", clazz = i.class)})"+
+                                                           "void foo();\n"));    
+    EnvironmentTestEngine e = new EnvironmentTestEngine($);
+    
+    s.add(new MapEntry<>("s", new Information()));
+    s.add(new MapEntry<>("ss",new Information()));
+    s.add(new MapEntry<>("i", new Information()));
+    e.compareFlatInOrder(s);
+  }
+  
+  @Ignore public void EngineTestNested01(){
+    ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("@NestedENV({ @Id(name = "+
+                                                           "\"EX.s\", clazz = String.class), " + 
+                                                           "@Id(name = \"EX.ss\", clazz = String.class),"+
+                                                           "@Id(name = \"EX.C1.i\", clazz = i.class)})"+
+                                                           "void foo();\n"));    
+    EnvironmentTestEngine e = new EnvironmentTestEngine($);
+    
+    s.add(new MapEntry<>("EX.s", new Information()));
+    s.add(new MapEntry<>("EX.ss",new Information()));
+    s.add(new MapEntry<>("EX.C1.i", new Information()));
+    e.compareFlatInOrder(s);
+  }
+  
+  @Ignore public void EngineTestNested02(){
+    ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("@NestedENV({ @Id(name = "+
+                                                           "\"EX.s\", clazz = String.class), " + 
+                                                           "@Id(name = \"EX.s\", clazz = String.class),"+
+                                                           "@Id(name = \"EX.C1.s\", clazz = i.class)})"+
+                                                           "void foo();\n"));    
+    EnvironmentTestEngine e = new EnvironmentTestEngine($);
+    
+    s.add(new MapEntry<>("EX.s", new Information()));
+    s.add(new MapEntry<>("EX.ss",new Information()));
+    s.add(new MapEntry<>("EX.C1.s", new Information()));
+    e.compareFlatInOrder(s);
+  }
+  
+  
 
 }
