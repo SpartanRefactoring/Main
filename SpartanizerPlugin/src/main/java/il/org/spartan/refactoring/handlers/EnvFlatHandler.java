@@ -6,14 +6,14 @@ import java.util.Map.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.refactoring.ast.*;
+import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.java.Environment.*;
 import il.org.spartan.refactoring.utils.*;
-import il.org.spartan.refactoring.engine.*;
 
-public class EnvFlatHandler extends ENVTestEngineAbstract{
+public class EnvFlatHandler extends ENVTestEngineAbstract {
   Set<Entry<String, Environment.Information>> testSet;
-  
+
   public EnvFlatHandler(final ASTNode $) {
     n = $;
     testSet = generateSet();
@@ -23,11 +23,11 @@ public class EnvFlatHandler extends ENVTestEngineAbstract{
     n = getCompilationUnit(¢);
     testSet = generateSet();
   }
+
   // TODO: Information should be instantiated with PrudentType
   @Override protected void annotationToSet(final List<MemberValuePair> ps) {
     testSet.add(new MapEntry<>(wizard.asString(ps.get(0).getValue()), new Information()));
   }
-
 
   /** Compares output Set (testFlatENV) with provided set, that will be the
    * result of the flat version of defines.
@@ -47,7 +47,7 @@ public class EnvFlatHandler extends ENVTestEngineAbstract{
     // equal.
     // azzert.fail Otherwise.
   }
-  
+
   /** Parse the outer annotation to get the inner ones. Add to the flat Set.
    * Compare uses() and declares() output to the flat Set.
    * @param $ JD */
@@ -55,18 +55,18 @@ public class EnvFlatHandler extends ENVTestEngineAbstract{
     if (a == null)
       return;
     a.accept(new ASTVisitor() {
-       @Override public boolean visit(NormalAnnotation ¢){
-         /** Set<Entry<String, Information>> useSet = Environment.uses(getDefinition(a));
-          * Set<Entry<String, Information>> declareSet = Environment.declares(getDefinition(a));
-          * TODO: Run the code above and compare to the corresponding testSets */
-         if (isNameId(¢.getTypeName()))
-          addValueToSet(values(¢));
-       return true;
-       }
-
-      @SuppressWarnings("unchecked")
-      List<MemberValuePair> values(NormalAnnotation ¢) {
+      @SuppressWarnings("unchecked") List<MemberValuePair> values(final NormalAnnotation ¢) {
         return ¢.values();
+      }
+
+      @Override public boolean visit(final NormalAnnotation ¢) {
+        /** Set<Entry<String, Information>> useSet =
+         * Environment.uses(getDefinition(a)); Set<Entry<String, Information>>
+         * declareSet = Environment.declares(getDefinition(a)); TODO: Run the
+         * code above and compare to the corresponding testSets */
+        if (isNameId(¢.getTypeName()))
+          addValueToSet(values(¢));
+        return true;
       }
     });
   }
