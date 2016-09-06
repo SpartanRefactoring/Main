@@ -306,9 +306,7 @@ public class subject {
      * @param inner a list of statements */
     public SeveralStatements(final List<Statement> inner) {
       super(lisp.first(inner));
-      this.inner = new ArrayList<>();
-      for (final Statement s : inner)
-        this.inner.add(claim(s));
+      this.inner = new ArrayList<>(inner);
     }
 
     /** Transform the inner into a block
