@@ -11,8 +11,7 @@ import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.java.Environment.*;
 
 public class EnvNestedHandler extends ENVTestEngineAbstract {
-  Set<Entry<String, Environment.Information>> testSet;
-
+  
   public EnvNestedHandler(final ASTNode $) {
     n = $;
     testSet = generateSet();
