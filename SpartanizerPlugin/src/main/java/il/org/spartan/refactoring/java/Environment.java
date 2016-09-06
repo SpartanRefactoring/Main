@@ -8,6 +8,87 @@ import org.eclipse.jdt.core.dom.*;
 /** Interface to Environment. Holds all the names defined till current PC. In
  * other words the 'names Environment' at every point of the program flow. */
 @SuppressWarnings({ "unused" }) public interface Environment {
+  /** Mumbo jumbo of stuff we will do later. Document it, but do not maintaing
+   * it for now, this class is intentionally package level, and intenrationally
+   * defined locall. For now, cients should not be messing with it */
+  static class Information {
+    /** The containing block, whose death marks the death of this entry; not
+     * sure, but I think this entry can be shared by many nodes at the same
+     * leve */
+    public final ASTNode blockScope;
+    /** What do we know about an entry hidden by this one */
+    public final Information hiding;
+    /** The node at which this entry was created */
+    public final ASTNode self;
+    /** What do we know about the type of this definition */
+    public final PrudentType prudentType;
+
+    // For now, nothing is known, we only maintain lists
+    public Information() {
+      blockScope = self = null;
+      prudentType = null;
+      hiding = null;
+    }
+
+    public Information(final PrudentType t) {
+      blockScope = self = null;
+      prudentType = t;
+      hiding = null;
+    }
+  }
+
+  /** TODO: document properly, but essentially is a dictionary with a parent.
+   * Insertions go the current node, searches start at the current note and
+   * Delegate to the parent unless it is null. */
+  /* Nested environment which has it's own Map of names 'flat', and an instance
+   * to the parent scope 'nest'. */
+  final class Nested implements Environment {
+    public final Map<String, Information> flat = new LinkedHashMap<>();
+    public final Environment nest;
+
+    Nested(final Environment parent) {
+      nest = parent;
+    }
+
+    /* @return true iff Env is empty. */
+    @Override public boolean empty() {
+      return flat.isEmpty() && nest.empty();
+    }
+
+    /* @return Map entries used in the current scope. */
+    @Override public Set<Map.Entry<String, Information>> entries() {
+      return flat.entrySet();
+    }
+
+    /* @return The information about the name in current Env. */
+    @Override public Information get(final String name) {
+      final Information $ = flat.get(name);
+      return $ != null ? $ : nest.get(name);
+    }
+
+    /* Check whether the Env already has the name. */
+    @Override public boolean has(final String name) {
+      return flat.containsKey(name) || nest.has(name);
+    }
+
+    /* @return Names used in current scope. */
+    @Override public Set<String> names() {
+      return flat.keySet();
+    }
+
+    /* One step up in the Env tree. Funny but it even sounds like next(). */
+    @Override public Environment nest() {
+      return nest;
+    }
+
+    /** Add name to the current scope in the Env. */
+    @Override public Information put(final String name, final Information value) {
+      flat.put(name, value);
+      assert !flat.isEmpty();
+      return hiding(name);
+    }
+  }
+
   /** The Environment structure is in some like a Linked list, where EMPTY is
    * like the NULL at the end. */
   static final Environment EMPTY = new Environment() {
@@ -120,86 +201,5 @@ import org.eclipse.jdt.core.dom.*;
   /* Used when new block (scope) is opened. */
   default Environment spawn() {
     return new Nested(this);
-  }
-
-  /** Mumbo jumbo of stuff we will do later. Document it, but do not maintaing
-   * it for now, this class is intentionally package level, and intenrationally
-   * defined locall. For now, cients should not be messing with it */
-  static class Information {
-    /** The containing block, whose death marks the death of this entry; not
-     * sure, but I think this entry can be shared by many nodes at the same
-     * leve */
-    public final ASTNode blockScope;
-    /** What do we know about an entry hidden by this one */
-    public final Information hiding;
-    /** The node at which this entry was created */
-    public final ASTNode self;
-    /** What do we know about the type of this definition */
-    public final PrudentType prudentType;
-
-    // For now, nothing is known, we only maintain lists
-    public Information() {
-      blockScope = self = null;
-      prudentType = null;
-      hiding = null;
-    }
-    
-    public Information(PrudentType t) {
-      blockScope = self = null;
-      prudentType = t;
-      hiding = null;
-    }
-  }
-
-  /** TODO: document properly, but essentially is a dictionary with a parent.
-   * Insertions go the current node, searches start at the current note and
-   * Delegate to the parent unless it is null. */
-  /* Nested environment which has it's own Map of names 'flat', and an instance
-   * to the parent scope 'nest'. */
-  final class Nested implements Environment {
-    public final Map<String, Information> flat = new LinkedHashMap<>();
-    public final Environment nest;
-
-    Nested(final Environment parent) {
-      nest = parent;
-    }
-
-    /* @return true iff Env is empty. */
-    @Override public boolean empty() {
-      return flat.isEmpty() && nest.empty();
-    }
-
-    /* @return Map entries used in the current scope. */
-    @Override public Set<Map.Entry<String, Information>> entries() {
-      return flat.entrySet();
-    }
-
-    /* @return The information about the name in current Env. */
-    @Override public Information get(final String name) {
-      final Information $ = flat.get(name);
-      return $ != null ? $ : nest.get(name);
-    }
-
-    /* Check whether the Env already has the name. */
-    @Override public boolean has(final String name) {
-      return flat.containsKey(name) || nest.has(name);
-    }
-
-    /* @return Names used in current scope. */
-    @Override public Set<String> names() {
-      return flat.keySet();
-    }
-
-    /* One step up in the Env tree. Funny but it even sounds like next(). */
-    @Override public Environment nest() {
-      return nest;
-    }
-
-    /** Add name to the current scope in the Env. */
-    @Override public Information put(final String name, final Information value) {
-      flat.put(name, value);
-      assert !flat.isEmpty();
-      return hiding(name);
-    }
   }
 }
