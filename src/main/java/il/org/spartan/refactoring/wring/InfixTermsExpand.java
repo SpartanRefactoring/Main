@@ -2,22 +2,21 @@ package il.org.spartan.refactoring.wring;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.refactoring.ast.*;
-import il.org.spartan.refactoring.java.*;
+import il.org.spartan.refactoring.utils.*;
 
 /** expand additive terms, e.g., convert <code>a-(b+c)</code> to /**
  * code>a-b-c</code>
  * @author Yossi Gil
  * @since 2016 */
-public final class InfixAdditionSubtractionExpand extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.Canonicalization {
-  @Override String description(final InfixExpression x) {
-    return "Expand additive terms in " + x;
+public final class InfixTermsExpand extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.Canonicalization {
+  @Override Expression replacement(final InfixExpression e) {
+    if (TermsCollector.isLeafTerm(e))
+      return null;
+    final Expression $ = TermsExpander.simplify(e);
+    return !Funcs.same($, e) ? $ : null;
   }
 
-  @Override Expression replacement(final InfixExpression x) {
-    if (TermsCollector.isLeafTerm(x))
-      return null;
-    final Expression $ = TermsExpander.simplify(x);
-    return !wizard.same($, x) ? $ : null;
+  @Override String description(final InfixExpression e) {
+    return "Expand additive terms in " + e;
   }
 }

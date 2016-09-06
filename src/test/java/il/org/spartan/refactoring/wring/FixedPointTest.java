@@ -18,11 +18,11 @@ import il.org.spartan.refactoring.utils.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) public class FixedPointTest {
   private static void assertConvertsTo(final String from, final String expected) {
-    assertWrappedTranslation(from, expected, Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD);
+    assertWrappedTranslation(from, expected, GuessedContext.statement_or_something_that_may_occur_in_a_method);
   }
 
   private static void assertSimplifiesTo(final String from, final String expected) {
-    assertWrappedTranslation(from, expected, Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT);
+    assertWrappedTranslation(from, expected, GuessedContext.expression_or_something_that_may_be_passed_as_argument);
   }
 
   private static void assertWrappedTranslation(final String from, final String expected, final GuessedContext w) {
@@ -34,9 +34,9 @@ import il.org.spartan.refactoring.utils.*;
     final String peeled = w.off(unpeeled);
     if (peeled.equals(from))
       assertNotEquals("No similification of " + from, from, peeled);
-    if (tide.clean(peeled).equals(tide.clean(from)))
-      assertNotEquals("Simpification of " + from + "is just reformatting", tide.clean(peeled), tide.clean(from));
-    assertSimilar(expected, peeled);
+    if (Funcs.gist(peeled).equals(Funcs.gist(from)))
+      assertNotEquals("Simpification of " + from + "is just reformatting", Funcs.gist(peeled), Funcs.gist(from));
+    assertSimilar(w, expected, peeled);
   }
 
 

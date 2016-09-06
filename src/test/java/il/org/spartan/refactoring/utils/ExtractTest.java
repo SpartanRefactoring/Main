@@ -18,7 +18,7 @@ import il.org.spartan.refactoring.spartanizations.*;
   }
 
   @Test public void firstMethdoDeclaration() {
-    azzert.that(extract.firstMethodDeclaration(Wrap.A_CLASS_MEMBER_OF_SOME_SORT.intoCompilationUnit("int f() { return a; }")), iz("int f() { return a; }"));
+    azzert.that(extract.firstMethodDeclaration(GuessedContext.method_or_class_member_of_some_sort.intoCompilationUnit("int f() { return a; }")), iz("int f() { return a; }"));
   }
 
   @Test public void operandsCount() {

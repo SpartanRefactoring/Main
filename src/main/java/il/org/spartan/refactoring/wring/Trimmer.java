@@ -61,7 +61,7 @@ public final class Trimmer extends Spartanization {
   @Override protected ASTVisitor collect(final List<Rewrite> $) {
     return new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
-        final Wring<N> w = Toolbox.instance().find(n);
+        final Wring<N> w = toolbox.find(n);
         return w == null || w.cantMake(n) || prune(w.make(n, exclude), $);
       }
     };

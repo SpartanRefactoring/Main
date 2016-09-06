@@ -18,8 +18,8 @@ import il.org.spartan.refactoring.spartanizations.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class OccurrencesTest {
   private final String from = "int a = 2,b; if (a+b) a =3;";
-  private final String wrap = Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD.on(from);
-  private final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
+  private final String wrap = GuessedContext.statement_or_something_that_may_occur_in_a_method.on(from);
+  private final CompilationUnit u = (CompilationUnit) MakeAST.COMPILATION_UNIT.from(wrap);
   private final SimpleName a = extract.firstVariableDeclarationFragment(u).getName();
   private final VariableDeclarationStatement ab = (VariableDeclarationStatement) a.getParent().getParent();
   private final SimpleName b = ((VariableDeclarationFragment) ab.fragments().get(1)).getName();

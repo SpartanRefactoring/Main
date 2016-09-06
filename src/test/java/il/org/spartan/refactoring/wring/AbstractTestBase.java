@@ -30,6 +30,6 @@ public class AbstractTestBase {
 
   @Test public void peelableinput() {
     if (input != null)
-      assertEquals(input, Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD.off(Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD.on(input)));
+      assertEquals(input, GuessedContext.statement_or_something_that_may_occur_in_a_method.off(GuessedContext.statement_or_something_that_may_occur_in_a_method.on(input)));
   }
 }

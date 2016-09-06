@@ -24,10 +24,6 @@ public class TrimmerWithToolbox {
     return new ToolboxApplication(codeFragment);
   }
 
-  static boolean eq(final String s1, final String s2) {
-    return s1 == s2 || (s1 == null ? s2 == null : s1.equals(s2) || s2 != null && s2.equals(s1));
-  }
-
   public class ToolboxApplication {
     public final String codeFragment;
     public final GuessedContext guessedContext;

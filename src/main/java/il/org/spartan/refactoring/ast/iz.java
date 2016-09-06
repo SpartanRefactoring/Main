@@ -727,4 +727,76 @@ public enum iz {
         return true;
     return false;
   }
+
+  private static boolean nonAssociative(final InfixExpression e) {
+    return e != null && in(e.getOperator(), MINUS, DIVIDE, REMAINDER);
+  }
+
+  private static boolean notStringUp(final Expression e) {
+    for (ASTNode context = e.getParent(); context != null; context = context.getParent())
+      switch (context.getNodeType()) {
+        case INFIX_EXPRESSION:
+          if (asInfixExpression(context).getOperator().equals(PLUS))
+            continue;
+          return true;
+        case ARRAY_ACCESS:
+        case PREFIX_EXPRESSION:
+        case POSTFIX_EXPRESSION:
+          return true;
+        case PARENTHESIZED_EXPRESSION:
+          continue;
+        default:
+          return false;
+      }
+    return false;
+  }
+
+  private static boolean sideEffectsFree(final Expression... es) {
+    for (final Expression e : es)
+      if (!sideEffectFree(e))
+        return false;
+    return true;
+  }
+
+  private static boolean sideEffectsFree(final List<?> os) {
+    for (final Object o : os)
+      if (o == null || !sideEffectFree(Funcs.asExpression((ASTNode) o)))
+        return false;
+    return true;
+  }
+
+  public static boolean infixPlus(final Expression e) {
+    return operator(asInfixExpression(e)) == PLUS2;
+  }
+
+  public static boolean infixMinus(final Expression e) {
+    return operator(asInfixExpression(e)) == MINUS2;
+  }
+
+  /** Checks if expression is simple.
+   * @param e an expression
+   * @return true iff argument is simple */
+  public static boolean isSimple(final Expression e) {
+    return is(e, //
+        BOOLEAN_LITERAL, //
+        CHARACTER_LITERAL, //
+        NULL_LITERAL, //
+        NUMBER_LITERAL, //
+        QUALIFIED_NAME, //
+        SIMPLE_NAME, //
+        STRING_LITERAL, //
+        THIS_EXPRESSION, //
+        PREFIX_EXPRESSION, //
+        POSTFIX_EXPRESSION, //
+        TYPE_LITERAL //
+    );
+  }
+
+  static boolean associative(ASTNode n) {
+    return associative(asInfixExpression(n));
+  }
+
+  static boolean associative(final InfixExpression e) {
+    return e == null || !in(e.getOperator(),MINUS,DIVIDE,REMAINDER);
+  }
 }

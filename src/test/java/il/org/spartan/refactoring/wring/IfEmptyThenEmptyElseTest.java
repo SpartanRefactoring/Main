@@ -42,7 +42,7 @@ public class IfEmptyThenEmptyElseTest {
   }
 
   @Test public void runGo() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
-    final String input = Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD.on(INPUT + "");
+    final String input = GuessedContext.statement_or_something_that_may_occur_in_a_method.on(INPUT + "");
     final Document d = new Document(input);
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(d.get());
     final IfStatement s = extract.firstIfStatement(u);

@@ -1,4 +1,6 @@
 package il.org.spartan.refactoring.wring;
+
+import static il.org.spartan.refactoring.spartanizations.GuessedContext.*;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.ast.step.*;
 import static il.org.spartan.refactoring.ast.hop.*;
@@ -7,8 +9,11 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.refactoring.engine.ExpressionComparator.*;
 import static il.org.spartan.refactoring.engine.into.*;
 import static il.org.spartan.refactoring.spartanizations.TESTUtils.*;
-import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
-import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.apply;
+import static il.org.spartan.refactoring.utils.ExpressionComparator.*;
+import static il.org.spartan.refactoring.utils.Funcs.*;
+import static il.org.spartan.refactoring.utils.Into.*;
+
+import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
@@ -40,7 +45,7 @@ import static il.org.spartan.refactoring.ast.extract.*;
   @Test public void actualExampleForSortAdditionInContext() {
     final String from = "2 + a < b";
     final String expected = "a + 2 < b";
-    final Wrap w = Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT;
+    final GuessedContext w = GuessedContext.expression_or_something_that_may_be_passed_as_argument;
     final String wrap = w.on(from);
     azzert.that(from, is(w.off(wrap)));
     final Trimmer t = new Trimmer();
@@ -299,15 +304,15 @@ import static il.org.spartan.refactoring.ast.extract.*;
   }
 
   @Test public void bugIntroducingMISSINGWord2() {
-    trimming(
-        "name.endsWith(testSuffix) &&  makeAST.stringBuilder(f).indexOf(testKeyword) == -1? objects(s, name, makeInFile(f)) : !name.endsWith(\".in\") ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), s, f)")
-            .to("name.endsWith(testSuffix)&&makeAST.stringBuilder(f).indexOf(testKeyword)==-1?objects(s,name,makeInFile(f)):name.endsWith(\".in\")&&!dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),s,f):null");
+    trimming
+        .of("name.endsWith(testSuffix) &&  MakeAST.stringBuilder(f).indexOf(testKeyword) == -1? objects(s, name, makeInFile(f)) : !name.endsWith(\".in\") ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), s, f)")
+        .to("name.endsWith(testSuffix)&&MakeAST.stringBuilder(f).indexOf(testKeyword)==-1?objects(s,name,makeInFile(f)):name.endsWith(\".in\")&&!dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),s,f):null");
   }
 
   @Test public void bugIntroducingMISSINGWord2a() {
-    trimming(
-        "name.endsWith(testSuffix) &&  makeAST.stringBuilder(f).indexOf(testKeyword) == -1? objects(s, name, makeInFile(f)) : !name.endsWith(\".in\") ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), s, f)")
-            .to("name.endsWith(testSuffix)&&makeAST.stringBuilder(f).indexOf(testKeyword)==-1?objects(s,name,makeInFile(f)):name.endsWith(\".in\")&&!dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),s,f):null");
+    trimming
+        .of("name.endsWith(testSuffix) &&  MakeAST.stringBuilder(f).indexOf(testKeyword) == -1? objects(s, name, makeInFile(f)) : !name.endsWith(\".in\") ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), s, f)")
+        .to("name.endsWith(testSuffix)&&MakeAST.stringBuilder(f).indexOf(testKeyword)==-1?objects(s,name,makeInFile(f)):name.endsWith(\".in\")&&!dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),s,f):null");
   }
 
   @Test public void bugIntroducingMISSINGWord2b() {
@@ -347,9 +352,9 @@ import static il.org.spartan.refactoring.ast.extract.*;
   }
 
   @Test public void bugIntroducingMISSINGWord3() {
-    trimming(
-        "name.endsWith(testSuffix) && -1 == makeAST.stringBuilder(f).indexOf(testKeyword) ? objects(s, name, makeInFile(f)) : !name.endsWith(x) ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(3, 56), s, f)")
-            .to("name.endsWith(testSuffix)&&makeAST.stringBuilder(f).indexOf(testKeyword)==-1?objects(s,name,makeInFile(f)):name.endsWith(x)&&!dotOutExists(d,name)?objects(name.replaceAll(3,56),s,f):null");
+    trimming
+        .of("name.endsWith(testSuffix) && -1 == MakeAST.stringBuilder(f).indexOf(testKeyword) ? objects(s, name, makeInFile(f)) : !name.endsWith(x) ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(3, 56), s, f)")
+        .to("name.endsWith(testSuffix)&&MakeAST.stringBuilder(f).indexOf(testKeyword)==-1?objects(s,name,makeInFile(f)):name.endsWith(x)&&!dotOutExists(d,name)?objects(name.replaceAll(3,56),s,f):null");
   }
 
   @Test public void bugIntroducingMISSINGWord3a() {
@@ -358,9 +363,9 @@ import static il.org.spartan.refactoring.ast.extract.*;
   }
 
   @Test public void bugIntroducingMISSINGWordTry1() {
-    trimming(
-        "name.endsWith(testSuffix) && -1 == makeAST.stringBuilder(f).indexOf(testKeyword) ? objects(s, name, makeInFile(f)) : !name.endsWith(\".in\") ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), s, f)")
-            .to("name.endsWith(testSuffix) && makeAST.stringBuilder(f).indexOf(testKeyword)==-1?objects(s,name,makeInFile(f)):name.endsWith(\".in\")&&!dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),s,f):null");
+    trimming
+        .of("name.endsWith(testSuffix) && -1 == MakeAST.stringBuilder(f).indexOf(testKeyword) ? objects(s, name, makeInFile(f)) : !name.endsWith(\".in\") ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), s, f)")
+        .to("name.endsWith(testSuffix) && MakeAST.stringBuilder(f).indexOf(testKeyword)==-1?objects(s,name,makeInFile(f)):name.endsWith(\".in\")&&!dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),s,f):null");
   }
 
   @Test public void bugIntroducingMISSINGWordTry2() {
@@ -393,24 +398,24 @@ import static il.org.spartan.refactoring.ast.extract.*;
     trimming.of("int a = 2, b = 11; a = 3 * a * b; ")//
         .to("int a=2;a=3*a*11;")//
         .to("int a=3*2*11;")//
-        .to("int a=66;");
-    trimming("int a = 2, b=1; a += b; ").to("int a=2;a+=1;").to("int a=2+1;");
-    trimming("int a = 2,b=1; if (b) a = 3; ").to("int a=2;if(1)a=3;").to("int a=1?3:2;");
-    trimming("int a = 2, b = 1; return a + 3 * b; ").to("int b=1;return 2+3*b;");
-    trimming("int a =2,b=2; if (x) a = 2*a;").to("int a=x?2*2:2, b=2;");
-    trimming("int a = 2, b; a = 3 * a * b; ").to("int a = 2, b; a *= 3 * b; ").to(null);
-    trimming("int a = 2, b; a += b; ").to(null);
-    trimming("int a =2,b; if (x) a = 2*a;").to("int a=x?2*2:2, b;");
-    trimming("int a = 2, b; return a + 3 * b; ").to("return 2 + 3*b;");
-    trimming("int a =2; if (x) a = 3*a;").to("int a=x?3*2:2;");
-    trimming("int a = 2; return 3 * a * a; ").to("return 3 * 2 * 2;");
-    trimming("int a = 2; return 3 * a * b; ").to("return 3 * 2 * b;");
-    trimming("int a = 2; return a; ").to("return 2;");
-    trimming("int a,b=2; a = b;").to("int a;a=2;").to("int a=2;");
-    trimming("int a,b; a = 3;").to("int a = 3, b;");
-    trimming("int a; if (x) a = 3; else a++;").to("int a;if(x)a=3;else++a;");
-    trimming("int b=5,a = 2,c=4; return 3 * a * b * c; ").to("int a=2,c=4;return 3*a*5*c;");
-    trimming("int b=5,a = 2,c; return 3 * a * b * c; ").to("int a = 2; return 3 * a * 5 * c;");
+        .to("int a=2*3* 11;");
+    trimming.of("int a = 2, b=1; a += b; ").to("int a=2;a+=1;").to("int a=2+1;");
+    trimming.of("int a = 2,b=1; if (b) a = 3; ").to("int a=2;if(1)a=3;").to("int a=1?3:2;");
+    trimming.of("int a = 2, b = 1; return a + 3 * b; ").to("int b=1;return 2+3*b;");
+    trimming.of("int a =2,b=2; if (x) a = 2*a;").to("int a=x?2*2:2, b=2;");
+    trimming.of("int a = 2, b; a = 3 * a * b; ").stays();
+    trimming.of("int a = 2, b; a += b; ").stays();
+    trimming.of("int a =2,b; if (x) a = 2*a;").to("int a=x?2*2:2, b;");
+    trimming.of("int a = 2, b; return a + 3 * b; ").to("return 2 + 3*b;");
+    trimming.of("int a =2; if (x) a = 3*a;").to("int a=x?3*2:2;");
+    trimming.of("int a = 2; return 3 * a * a; ").to("return 3 * 2 * 2;");
+    trimming.of("int a = 2; return 3 * a * b; ").to("return 3 * 2 * b;");
+    trimming.of("int a = 2; return a; ").to("return 2;");
+    trimming.of("int a,b=2; a = b;").to("int a;a=2;").to("int a=2;");
+    trimming.of("int a,b; a = 3;").to("int a = 3, b;");
+    trimming.of("int a; if (x) a = 3; else a++;").to("int a;if(x)a=3;else++a;");
+    trimming.of("int b=5,a = 2,c=4; return 3 * a * b * c; ").to("int a=2,c=4;return 3*a*5*c;");
+    trimming.of("int b=5,a = 2,c; return 3 * a * b * c; ").to("int a = 2; return 3 * a * 5 * c;");
   }
 
   @Test public void canonicalFragementExamplesWithExraFragmentsX() {
@@ -419,8 +424,8 @@ import static il.org.spartan.refactoring.ast.extract.*;
 
   @Test public void chainComparison() {
     final InfixExpression e = i("a == true == b == c");
-    azzert.that("" + step.right(e), is("c"));
-    trimming("a == true == b == c").to("a == b == c");
+    azzert.that(right(e).toString(), is("c"));
+    trimming.of("a == true == b == c").to("a == b == c");
   }
 
   @Test public void chainCOmparisonTrueLast() {
@@ -609,7 +614,7 @@ import static il.org.spartan.refactoring.ast.extract.*;
   }
 
   @Test public void comparison01() {
-    trimming("1+2+3<3").to("6<3").to(null);
+    trimming.of("1+2+3<3").stays();
   }
 
   @Test public void comparison02() {
@@ -621,7 +626,7 @@ import static il.org.spartan.refactoring.ast.extract.*;
   }
 
   @Test public void comparison04() {
-    trimming("6-7<2+1").to("-1<3");
+    trimming.of("6-7<2+1").to("6-7<1+2");
   }
 
   @Test public void comparison05() {
@@ -637,7 +642,11 @@ import static il.org.spartan.refactoring.ast.extract.*;
   }
 
   @Test public void comparison09() {
-    trimming("1+2<3&7+4>2+1").to("3<3&11>3");
+    trimming.of("1+2<3&7+4>2+1").to("1+2<3&4+7>1+2");
+  }
+
+  @Test public void comparison10() {
+    trimming.of("1+2+3<3-4").stays();
   }
 
   @Test public void comparison11() {
@@ -645,7 +654,7 @@ import static il.org.spartan.refactoring.ast.extract.*;
   }
 
   @Test public void comparison12() {
-    trimming("1+2<3&7+4>2+1||6-7<2+1").to("3<3&11>3||-1<3").to(null);
+    trimming.of("1+2<3&7+4>2+1||6-7<2+1").to("1+2<3&4+7>1+2||6-7<1+2");
   }
 
   @Test public void comparison13() {
@@ -657,7 +666,7 @@ import static il.org.spartan.refactoring.ast.extract.*;
   }
 
   @Test public void compreaeExpressionToExpression() {
-    trimming("6 - 7 < 2 + 1   ").to("-1<3");
+    trimming.of("6 - 7 < 2 + 1   ").to("6 -7 < 1 + 2");
   }
 
   @Test public void correctSubstitutionInIfAssignment() {
@@ -851,8 +860,7 @@ import static il.org.spartan.refactoring.ast.extract.*;
   }
 
   @Test public void donotSorMixedTypes() {
-    trimming("if (2 * 3.1415 * 180 > a || t.concat(sS) ==1922 && t.length() > 3)    return c > 5;") //
-        .to("if (1130.94> a || t.concat(sS) ==1922 && t.length() > 3)    return c > 5;");
+    trimming.of("if (2 * 3.1415 * 180 > a || t.concat(sS) ==1922 && t.length() > 3)    return c > 5;").stays();
   }
 
   @Test public void dontELiminateCatchBlock() {
@@ -932,26 +940,7 @@ import static il.org.spartan.refactoring.ast.extract.*;
         + "       if (s.charAt(i) == 'd')\n" + //
         "          res -= 1;\n" + //
         "      return res;\n" + //
-        " if (b) i = 3;")//
-            .to("" + //
-                "      for (int i = 0;i < s.length();++i)\n" + //
-                "       if (s.charAt(i) == 'a')\n" + //
-                "          res += 2;\n" + //
-                "        else "//
-                + "       if (s.charAt(i) == 'd')\n" + //
-                "          res--;\n" + //
-                "      return res;\n" + //
-                " if (b) i = 3;")//
-            .to("" + //
-                "      for (int i = 0;i < s.length();++i)\n" + //
-                "       if (s.charAt(i) == 'a')\n" + //
-                "          res += 2;\n" + //
-                "        else "//
-                + "       if (s.charAt(i) == 'd')\n" + //
-                "          --res;\n" + //
-                "      return res;\n" + //
-                " if (b) i = 3;")//
-            .to(null);
+        " if (b) i = 3;").stays();
   }
 
   @Ignore @Test public void forwardDeclaration1() {
@@ -1381,8 +1370,8 @@ import static il.org.spartan.refactoring.ast.extract.*;
   }
 
   /** START OF STABLING TESTS */
-  @Test public void inlineintoInstanceCreation() {
-    trimming("" //
+  @Test public void inlineIntoInstanceCreation() {
+    trimming.of("" //
         + "public Statement methodBlock(FrameworkMethod m) {\n" //
         + "  final Statement statement = methodBlock(m);\n" //
         + "  return new Statement() {\n" //
@@ -1400,8 +1389,8 @@ import static il.org.spartan.refactoring.ast.extract.*;
         + "}").stays();
   }
 
-  @Test public void inlineintoNextStatementWithSideEffects() {
-    trimming("int a = f(); if (a) g(a); else h(u(a));").to(null);
+  @Test public void inlineIntoNextStatementWithSideEffects() {
+    trimming.of("int a = f(); if (a) g(a); else h(u(a));").stays();
   }
 
   @Ignore @Test public void inlineSingleUse01() {
@@ -1493,8 +1482,8 @@ import static il.org.spartan.refactoring.ast.extract.*;
         .stays();
   }
 
-  @Test public void inlineSingleVariableintoPlusPlus() {
-    trimming("int $ = 0;  if (a)  ++$;  else --$;").to(null);
+  @Test public void inlineSingleVariableIntoPlusPlus() {
+    trimming.of("int $ = 0;  if (a)  ++$;  else --$;").stays();
   }
 
   @Test public void inliningWithVariableAssignedTo() {
@@ -1505,9 +1494,9 @@ import static il.org.spartan.refactoring.ast.extract.*;
 
   @Test public void isGreaterTrue() {
     final InfixExpression e = i("f(a,b,c,d,e) * f(a,b,c)");
-    azzert.that("" + step.right(e), is("f(a,b,c)"));
-    azzert.that("" + step.left(e), is("f(a,b,c,d,e)"));
-    final Wring<InfixExpression> s = Toolbox.instance.find(e);
+    azzert.that(right(e).toString(), is("f(a,b,c)"));
+    azzert.that(left(e).toString(), is("f(a,b,c,d,e)"));
+    final Wring<InfixExpression> s = Toolbox.defaultInstance().find(e);
     azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     azzert.notNull(s);
     azzert.aye(s.claims(e));
@@ -1526,9 +1515,9 @@ import static il.org.spartan.refactoring.ast.extract.*;
 
   @Test public void isGreaterTrueButAlmostNot() {
     final InfixExpression e = i("f(a,b,c,d) * f(a,b,c)");
-    azzert.that("" + step.right(e), is("f(a,b,c)"));
-    azzert.that("" + step.left(e), is("f(a,b,c,d)"));
-    final Wring<InfixExpression> s = Toolbox.instance.find(e);
+    azzert.that(right(e).toString(), is("f(a,b,c)"));
+    azzert.that(left(e).toString(), is("f(a,b,c,d)"));
+    final Wring<InfixExpression> s = Toolbox.defaultInstance().find(e);
     azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     azzert.notNull(s);
     azzert.aye(s.claims(e));
@@ -1604,8 +1593,8 @@ import static il.org.spartan.refactoring.ast.extract.*;
   }
 
   @Test public void issue06I() {
-    trimming("41 * - 19")//
-        .to("-779 ") //
+    trimming.of("41 * - 19")//
+        .to("-41 * 19 ") //
     ;
   }
 
@@ -1973,12 +1962,7 @@ import static il.org.spartan.refactoring.ast.extract.*;
             + "static void f() {}\n "//
             + "public final static int i = 3; "//
             + "}")
-                .to(//
-                    "abstract class A {\n"//
-                        + "static void f() {}\n "//
-                        + "public static final int i = 3; "//
-                        + "}")
-                .to(null);
+        .stays();
   }
 
   @Test public void issue52o() {
@@ -1986,20 +1970,17 @@ import static il.org.spartan.refactoring.ast.extract.*;
         "final class A {\n"//
             + "static void f() {}\n "//
             + "public final static int i = 3; "//
-            + "}")//
-                .to(//
-                    "final class A {\n"//
-                        + "static void f() {}\n "//
-                        + "public static final int i = 3; "//
-                        + "}")//
-                .to(null);
+            + "}")
+        .stays();
   }
 
   @Test public void issue52p() {
-    trimming(//
-        "enum A {a1, a2; static enum B {b1, b2; static class C { static enum D {c1, c2}}}")//
-            .to("enum A {a1, a2; enum B {b1, b2; static class C { static enum D {c1, c2}}}")//
-            .to("enum A {a1, a2; enum B {b1, b2; static class C { enum D {c1, c2}}}");
+    trimming
+        .of(//
+            "enum A {a1, a2; static enum B {b1, b2; static class C { static enum D {c1, c2}}}")//
+        .to("enum A {a1, a2; enum B {b1, b2; static class C { static enum D {c1, c2}}}")//
+        .to("enum A {a1, a2; enum B {b1, b2; static class C { enum D {c1, c2}}}")//
+    ;
   }
 
   @Test public void issue53() {
@@ -2070,9 +2051,8 @@ import static il.org.spartan.refactoring.ast.extract.*;
   }
 
   @Test public void issue54ForPlain() {
-    trimming("int a  = f(); for (int i = 0; i < 100;  ++i) b[i] = a;")//
-        .to("for (int i = 0; i < 100;  ++i) b[i] = f();")//
-        .to(null);
+    trimming.of("int a  = f(); for (int i = 0; i < 100;  ++i) b[i] = a;")//
+        .stays();
   }
 
   @Test public void issue54ForPlainNonSideEffect() {
@@ -2080,9 +2060,9 @@ import static il.org.spartan.refactoring.ast.extract.*;
         .to("for (int i = 0; i < 100;  ++i) b[i] = f;");
   }
 
-  @Ignore @Test public void issue54ForPlainUseInCondition() {
-    trimming("int a  = f(); for (int i = 0; a < 100;  ++i) b[i] = 3;")//
-        .to(null);
+  @Test public void issue54ForPlainUseInCondition() {
+    trimming.of("int a  = f(); for (int i = 0; a < 100;  ++i) b[i] = 3;")//
+        .stays();
   }
 
   @Test public void issue54ForPlainUseInConditionNonSideEffect() {
@@ -2090,8 +2070,8 @@ import static il.org.spartan.refactoring.ast.extract.*;
         .to("for (int i = 0; f < 100;  ++i) b[i] = 3;");
   }
 
-  @Ignore @Test public void issue54ForPlainUseInInitializer() {
-    trimming("int a  = f(); for (int i = a; i < 100; i++) b[i] = 3;")//
+  @Test public void issue54ForPlainUseInInitializer() {
+    trimming.of("int a  = f(); for (int i = a; i < 100; i++) b[i] = 3;")//
         .to(" for (int i = f(); i < 100; i++) b[i] = 3;");
   }
 
@@ -2100,9 +2080,9 @@ import static il.org.spartan.refactoring.ast.extract.*;
         .to(" for (int i = f; i < 100; i *= f) b[i] = 3;");
   }
 
-  @Ignore @Test public void issue54ForPlainUseInUpdaters() {
-    trimming("int a  = f(); for (int i = 0; i < 100; i *= a) b[i] = 3;")//
-        .to(null);
+  @Test public void issue54ForPlainUseInUpdaters() {
+    trimming.of("int a  = f(); for (int i = 0; i < 100; i *= a) b[i] = 3;")//
+        .stays();
   }
 
   @Test public void issue54ForPlainUseInUpdatersNonSideEffect() {
@@ -2126,60 +2106,47 @@ import static il.org.spartan.refactoring.ast.extract.*;
   }
 
   @Test public void issue57a() {
-    trimming("void m(List<Expression>... expressions) { }").to("void m(List<Expression>... xss) {}");
+    trimming.of("void m(List<Expression>... expressions) { }").to("void m(List<Expression>... ess) {}");
   }
 
   @Test public void issue57b() {
-    trimming("void m(Expression... expression) { }").to("void m(Expression... xs) {}");
+    trimming.of("void m(Expression... expression) { }").to("void m(Expression... es) {}");
   }
 
   @Test public void issue58a() {
-    trimming("X f(List<List<Expression>> expressions){}").to("X f(List<List<Expression>> xss){}");
+    trimming.of("X f(List<List<Expression>> expressions){}").to("X f(List<List<Expression>> ess){}");
   }
 
   @Test public void issue58b() {
-    trimming("X f(List<Expression>[] expressions){}").to("X f(List<Expression>[] xss){}");
+    trimming.of("X f(List<Expression>[] expressions){}").to("X f(List<Expression>[] ess){}");
   }
 
   @Test public void issue58c() {
-    trimming("X f(List<Expression>[] expressions){}").to("X f(List<Expression>[] xss){}");
+    trimming.of("X f(List<Expression>[] expressions){}").to("X f(List<Expression>[] ess){}");
   }
 
   @Test public void issue58d() {
-    trimming("X f(List<Expression>... expressions){}").to("X f(List<Expression>... xss){}");
+    trimming.of("X f(List<Expression>... expressions){}").to("X f(List<Expression>... ess){}");
   }
 
   @Test public void issue58e() {
-    trimming("X f(Expression[]... expressions){}").to("X f(Expression[]... xss){}");
+    trimming.of("X f(Expression[]... expressions){}").to("X f(Expression[]... ess){}");
   }
 
   @Test public void issue58f() {
-    trimming("X f(Expression[][]... expressions){}").to("X f(Expression[][]... xsss){}");
+    trimming.of("X f(Expression[][]... expressions){}").to("X f(Expression[][]... esss){}");
   }
 
   @Test public void issue58g() {
-    trimming("X f(List<Expression[][]>... expressions){}").to("X f(List<Expression[][]>... xssss){}");
+    trimming.of("X f(List<Expression[][]>... expressions){}").to("X f(List<Expression[][]>... essss){}");
   }
 
   @Test public void issue62a() {
-    trimming("int f(int i) { for(;;++i) if(false) break; return i; }")//
-        .to("int f(int i) { for(;;++i){} return i; }")//
-        .to(null);
+    trimming.of("int f(int i) { for(;;++i) if(false) break; return i; }").stays();
   }
 
-  @Ignore public void issue62b() {
-    trimming("int f(int i) { for(;i<100;i=i+1) if(false) break; return i; }")//
-        .to("int f(int i) { for(;i<100;i+=1) if(false) break; return i; }")//
-        .to("int f(int i) { for(;i<100;i++) if(false) break; return i; }")//
-        .to("int f(int i) { for(;i<100;++i) if(false) break; return i; }")//
-        .to("int f(int i) { for(;i<100;++i){} return i; }").to(null);
-  }
-
-  @Test public void issue62b_1() {
-    trimming("int f(int i) { for(;i<100;i=i+1) if(false) break; return i; }")//
-        .to("int f(int i) { for(;i<100;i+=1){} return i; }")//
-        .to("int f(int i) { for(;i<100;i++){} return i; }")//
-        .to("int f(int i) { for(;i<100;++i){} return i; }").to(null);//
+  @Test public void issue62b() {
+    trimming.of("int f(int i) { for(;i<100;i=i+1) if(false) break; return i; }").stays();
   }
 
   @Test public void issue62c() {
@@ -2214,22 +2181,6 @@ import static il.org.spartan.refactoring.ast.extract.*;
     trimming.of("void foo(Integer integer, ASTNode astn) {}").to("void foo(Integer i, ASTNode astn) {}");
   }
 
-  @Test @Ignore("Under Construction") public void issue74a() {
-    trimming("int[] a = new int[] {,}").to("int[] a = new int[] {}");
-  }
-
-  @Test @Ignore("Under Construction") public void issue74b() {
-    trimming("int[] a = new int[] {2,3,}").to("int[] a = new int[] {2,3}");
-  }
-
-  @Test @Ignore("Under Construction") public void issue74c() {
-    trimming("a = new int[]{2,3,}").to("a = new int[] {2,3}");
-  }
-
-  @Test public void issue74d() {
-    trimming("int[] a = new int[] {2,3};").to(null);
-  }
-
   @Test public void linearTransformation() {
     trimming.of("plain * the + kludge").to("the*plain+kludge");
   }
@@ -2255,8 +2206,9 @@ import static il.org.spartan.refactoring.ast.extract.*;
   }
 
   @Test public void massiveInlining() {
-    trimming("int a,b,c;String t = zE4;if (2 * 3.1415 * 180 > a || t.concat(sS) ==1922 && t.length() > 3)    return c > 5;")//
-        .to("int a,b,c;if(2 * 3.1415 * 180>a||zE4.concat(sS)==1922&&zE4.length()>3)return c>5;");
+    trimming.of("int a,b,c;String t = zE4;if (2 * 3.1415 * 180 > a || t.concat(sS) ==1922 && t.length() > 3)    return c > 5;")//
+        .to("int a,b,c;if(2*3.1415*180>a||zE4.concat(sS)==1922&&zE4.length()>3)return c>5;") //
+        .stays();
   }
 
   @Test public void methodWithLastIf() {
@@ -2342,6 +2294,10 @@ import static il.org.spartan.refactoring.ast.extract.*;
     trimming.of("on*of*no*notion*notion").to("no*of*on*notion*notion");
   }
 
+  @Test public void noChangeA() {
+    trimming.of("true").stays();
+  }
+
   @Test public void noChange0() {
     trimming.of("kludge + the * plain ").stays();
   }
@@ -2354,28 +2310,24 @@ import static il.org.spartan.refactoring.ast.extract.*;
     trimming.of("plain + kludge").stays();
   }
 
-  @Test public void noChangeA() {
-    trimming("true").to(null);
+  @Test public void noinliningIntoSynchronizedStatement() {
+    trimming.of("int a  = f(); synchronized(this) { int b = a; }")//
+        .stays();
   }
 
-  @Test public void noinliningintoSynchronizedStatement() {
-    trimming("int a  = f(); synchronized(this) { int b = a; }")//
-        .to(null);
+  @Test public void noinliningIntoSynchronizedStatementEvenWithoutSideEffect() {
+    trimming.of("int a  = f; synchronized(this) { int b = a; }")//
+        .stays();
   }
 
-  @Test public void noinliningintoSynchronizedStatementEvenWithoutSideEffect() {
-    trimming("int a  = f; synchronized(this) { int b = a; }")//
-        .to(null);
+  @Test public void noinliningIntoTryStatement() {
+    trimming.of("int a  = f(); try { int b = a; } catch (Exception E) {}")//
+        .stays();
   }
 
-  @Test public void noinliningintoTryStatement() {
-    trimming("int a  = f(); try { int b = a; } catch (Exception E) {}")//
-        .to(null);
-  }
-
-  @Test public void noinliningintoTryStatementEvenWithoutSideEffect() {
-    trimming("int a  = f; try { int b = a; } catch (Exception E) {}")//
-        .to(null);
+  @Test public void noinliningIntoTryStatementEvenWithoutSideEffect() {
+    trimming.of("int a  = f; try { int b = a; } catch (Exception E) {}")//
+        .stays();
   }
 
   @Test public void notOfAnd() {
@@ -2629,7 +2581,7 @@ import static il.org.spartan.refactoring.ast.extract.*;
   }
 
   @Test public void paramAbbreviateCollision() {
-    trimming("void m(Expression exp, Expression expresssion) { }").to("void m(Expression x, Expression expresssion) { }");
+    trimming.of("void m(Expression exp, Expression expresssion) { }").to("void m(Expression e, Expression expresssion) { }");
   }
 
   @Test public void paramAbbreviateConflictingWithLocal1() {
@@ -3006,29 +2958,32 @@ import static il.org.spartan.refactoring.ast.extract.*;
     trimming.of("a ? y.f(b) :y.f(b)").to("y.f(b)");
   }
 
-  @Test public void pushdownTernaryintoConstructor1Div1Location() {
-    trimming("a.equal(b) ? new S(new Integer(4)) : new S(new Ineger(3))").to("new S(a.equal(b)? new Integer(4): new Ineger(3))");
+  @Test public void pushdownTernaryIntoConstructor1Div1Location() {
+    trimming.of("a.equal(b) ? new S(new Integer(4)) : new S(new Ineger(3))").to("new S(a.equal(b)? new Integer(4): new Ineger(3))");
   }
 
-  @Test public void pushdownTernaryintoConstructor1Div3() {
-    trimming("a.equal(b) ? new S(new Integer(4),a,b) : new S(new Ineger(3),a,b)").to("new S(a.equal(b)? new Integer(4): new Ineger(3), a, b)");
+  @Test public void pushdownTernaryIntoConstructor1Div3() {
+    trimming.of("a.equal(b) ? new S(new Integer(4),a,b) : new S(new Ineger(3),a,b)")
+        .to("new S(a.equal(b)? new Integer(4): new Ineger(3), a, b)");
   }
 
-  @Test public void pushdownTernaryintoConstructor2Div3() {
-    trimming("a.equal(b) ? new S(a,new Integer(4),b) : new S(a, new Ineger(3), b)").to("new S(a,a.equal(b)? new Integer(4): new Ineger(3),b)");
+  @Test public void pushdownTernaryIntoConstructor2Div3() {
+    trimming.of("a.equal(b) ? new S(a,new Integer(4),b) : new S(a, new Ineger(3), b)")
+        .to("new S(a,a.equal(b)? new Integer(4): new Ineger(3),b)");
   }
 
-  @Test public void pushdownTernaryintoConstructor3Div3() {
-    trimming("a.equal(b) ? new S(a,b,new Integer(4)) : new S(a,b,new Ineger(3))").to("new S(a, b, a.equal(b)? new Integer(4): new Ineger(3))");
+  @Test public void pushdownTernaryIntoConstructor3Div3() {
+    trimming.of("a.equal(b) ? new S(a,b,new Integer(4)) : new S(a,b,new Ineger(3))")
+        .to("new S(a, b, a.equal(b)? new Integer(4): new Ineger(3))");
   }
 
-  @Test public void pushdownTernaryintoConstructorNotSameArity() {
-    trimming("a ? new S(a,new Integer(4),b) : new S(new Ineger(3))").to(
+  @Test public void pushdownTernaryIntoConstructorNotSameArity() {
+    trimming.of("a ? new S(a,new Integer(4),b) : new S(new Ineger(3))").to(
         "!a?new S(new Ineger(3)):new S(a,new Integer(4),b)                                                                                                                  ");
   }
 
-  @Test public void pushdownTernaryintoPrintln() {
-    trimming("    if (s.equals(t))\n"//
+  @Test public void pushdownTernaryIntoPrintln() {
+    trimming.of("    if (s.equals(t))\n"//
         + "      S.out.println(Hey + res);\n"//
         + "    else\n"//
         + "      S.out.println(Ho + x + a);").to("S.out.println(s.equals(t)?Hey+res:Ho+x+a);");
@@ -3491,12 +3446,11 @@ import static il.org.spartan.refactoring.ast.extract.*;
         "       if (s.charAt(i) == 'd')\n" + //
         "          --res;\n" + //
         "      return res;\n" + //
-        "")//
-            .to(null);
+        "").stays();
   }
 
   @Test public void shortestIfBranchFirst02c() {
-    final CompilationUnit u = Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD.intoCompilationUnit("" + //
+    final CompilationUnit u = GuessedContext.statement_or_something_that_may_occur_in_a_method.intoCompilationUnit("" + //
         "      int res = 0;\n" + //
         "      for (int i = 0;i < s.length();++i)\n" + //
         "       if (s.charAt(i) == 'a')\n" + //
@@ -3541,7 +3495,7 @@ import static il.org.spartan.refactoring.ast.extract.*;
   }
 
   @Test public void shortestOperand02() {
-    trimming("k = k + 4;if (2 * 6 + 4 == k) return true;").to("k += 4;if (12 + 4 == k) return true;");
+    trimming.of("k = k + 4;if (2 * 6 + 4 == k) return true;").stays();
   }
 
   @Test public void shortestOperand05() {
@@ -3681,19 +3635,19 @@ import static il.org.spartan.refactoring.ast.extract.*;
   }
 
   @Test public void simplifyBlockComplexSingleton() {
-    assertSimplifiesTo("{;{{;;return b; }}}", "return b;", new BlockSimplify(), Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD);
+    assertSimplifiesTo("{;{{;;return b; }}}", "return b;", new BlockSimplify(), GuessedContext.statement_or_something_that_may_occur_in_a_method);
   }
 
   @Test public void simplifyBlockDeeplyNestedReturn() {
-    assertSimplifiesTo("{{{;return c;};;};}", "return c;", new BlockSimplify(), Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD);
+    assertSimplifiesTo("{{{;return c;};;};}", "return c;", new BlockSimplify(), GuessedContext.statement_or_something_that_may_occur_in_a_method);
   }
 
   @Test public void simplifyBlockEmpty() {
-    assertSimplifiesTo("{;;}", "", new BlockSimplify(), Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD);
+    assertSimplifiesTo("{;;}", "", new BlockSimplify(), GuessedContext.statement_or_something_that_may_occur_in_a_method);
   }
 
   @Test public void simplifyBlockExpressionVsExpression() {
-    trimming("6 - 7 < a * 3").to("-1 < 3 * a");
+    trimming.of("6 - 7 < a * 3").to("6 - 7 < 3 * a");
   }
 
   @Test public void simplifyBlockLiteralVsLiteral() {
@@ -3701,7 +3655,8 @@ import static il.org.spartan.refactoring.ast.extract.*;
   }
 
   @Test public void simplifyBlockThreeStatements() {
-    assertSimplifiesTo("{i++;{{;;return b; }}j++;}", "i++;return b;j++;", new BlockSimplify(), Wrap.STATEMENT_OR_SOMETHING_THAT_MAY_APPEAR_IN_A_METHOD);
+    assertSimplifiesTo("{i++;{{;;return b; }}j++;}", "i++;return b;j++;", new BlockSimplify(),
+        GuessedContext.statement_or_something_that_may_occur_in_a_method);
   }
 
   @Test public void simplifyLogicalNegationNested() {
@@ -3765,11 +3720,11 @@ import static il.org.spartan.refactoring.ast.extract.*;
   }
 
   @Test public void sortAddition2() {
-    trimming("1 + 2 < 3 & 7 + 4 > 2 + 1 || 6 - 7 < 2 + 1").to("3 <3&11>3||-1<3");
+    trimming.of("1 + 2 < 3 & 7 + 4 > 2 + 1 || 6 - 7 < 2 + 1").to("1+2 <3&4+7>1+2||6-7<1+2");
   }
 
   @Test public void sortAddition3() {
-    trimming("6 - 7 < 1 + 2").to("-1<3").to(null);
+    trimming.of("6 - 7 < 1 + 2").stays();
   }
 
   @Test public void sortAddition4() {
@@ -3785,11 +3740,11 @@ import static il.org.spartan.refactoring.ast.extract.*;
   }
 
   @Test public void sortAdditionThreeOperands1() {
-    trimming("1.0+2222+3").to("2226.0").to(null);
+    trimming.of("1.0+2222+3").stays();
   }
 
   @Test public void sortAdditionThreeOperands2() {
-    trimming("1.0+1+124+1").to("127.0");
+    trimming.of("1.0+1+124+1").stays();
   }
 
   @Test public void sortAdditionThreeOperands3() {
@@ -3801,11 +3756,11 @@ import static il.org.spartan.refactoring.ast.extract.*;
   }
 
   @Test public void sortAdditionTwoOperands0CheckThatWeSortByLength_a() {
-    trimming("1111+211").to("1322");
+    trimming.of("1111+211").to("211+1111");
   }
 
   @Test public void sortAdditionTwoOperands0CheckThatWeSortByLength_b() {
-    trimming("211+1111").to("1322").to(null);
+    trimming.of("211+1111").stays();
   }
 
   @Test public void sortAdditionTwoOperands1() {
@@ -3813,15 +3768,15 @@ import static il.org.spartan.refactoring.ast.extract.*;
   }
 
   @Test public void sortAdditionTwoOperands2() {
-    trimming("2.0+1").to("3.0");
+    trimming.of("2.0+1").to("1+2.0");
   }
 
   @Test public void sortAdditionTwoOperands3() {
-    trimming("1+2L").to("3L");
+    trimming.of("1+2L").stays();
   }
 
   @Test public void sortAdditionTwoOperands4() {
-    trimming("2L+1").to("3L");
+    trimming.of("2L+1").to("1+2L");
   }
 
   @Test public void sortAdditionUncertain() {
@@ -3837,7 +3792,7 @@ import static il.org.spartan.refactoring.ast.extract.*;
   }
 
   @Test public void sortDivision() {
-    trimming("2.1/34.2/1.0").to("0.06140350877192982");
+    trimming.of("2.1/34.2/1.0").to("2.1/1.0/34.2");
   }
 
   @Test public void sortDivisionLetters() {
@@ -3845,7 +3800,7 @@ import static il.org.spartan.refactoring.ast.extract.*;
   }
 
   @Test public void sortDivisionNo() {
-    trimming("2.1/3").to("0.7000000000000001");
+    trimming.of("2.1/3").stays();
   }
 
   @Ignore("bug") @Test public void sortSubstraction() {
@@ -3853,11 +3808,11 @@ import static il.org.spartan.refactoring.ast.extract.*;
   }
 
   @Test public void sortThreeOperands1() {
-    trimming("1.0*2222*3").to("6666.0");
+    trimming.of("1.0*2222*3").stays();
   }
 
   @Test public void sortThreeOperands2() {
-    trimming("1.0*11*124").to("1364.0");
+    trimming.of("1.0*11*124").stays();
   }
 
   @Test public void sortThreeOperands3() {
@@ -3869,11 +3824,11 @@ import static il.org.spartan.refactoring.ast.extract.*;
   }
 
   @Test public void sortTwoOperands0CheckThatWeSortByLength_a() {
-    trimming("1111*211").to("234421");
+    trimming.of("1111*211").to("211*1111");
   }
 
   @Test public void sortTwoOperands0CheckThatWeSortByLength_b() {
-    trimming("211*1111").to("234421");
+    trimming.of("211*1111").stays();
   }
 
   @Test public void sortTwoOperands1() {
@@ -3881,15 +3836,15 @@ import static il.org.spartan.refactoring.ast.extract.*;
   }
 
   @Test public void sortTwoOperands2() {
-    trimming("2.0*2").to("4.0");
+    trimming.of("2.0*2").to("2*2.0");
   }
 
   @Test public void sortTwoOperands3() {
-    trimming("2*3L").to("6L");
+    trimming.of("2*3L").stays();
   }
 
   @Test public void sortTwoOperands4() {
-    trimming("2L*1L").to("2L");
+    trimming.of("2L*1L").to("1L*2L");
   }
 
   @Test public void synchronizedBraces() {
@@ -4081,9 +4036,9 @@ import static il.org.spartan.refactoring.ast.extract.*;
         .to("int a=3,b;b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}") //
         .to("int a=3,b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}") //
         .to("int b=5;if(3==4)if(b==3)b=2;else{b=3;b=3;}else if(b==3)b=2;else{b=3*3;b=3;}") //
-        .to("int b=5;if(3==4)if(b==3)b=2;else{b=b=3;}else if(b==3)b=2;else{b=9;b=3;}")//
-        .to("int b=5;if(3==4)b=b==3?2:(b=3);else if(b==3)b=2;else{b=9;b=3;}")//
-        .to(null);
+        .to("int b=5;if(3==4)if(b==3)b=2;else{b=b=3;}else if(b==3)b=2;else{b=3*3;b=3;}")//
+        .to("int b=5;if(3==4)b=b==3?2:(b=3);else if(b==3)b=2;else{b=3*3;b=3;}")//
+        .stays();
   }
 
   @Test public void ternarize45() {
@@ -4135,8 +4090,8 @@ import static il.org.spartan.refactoring.ast.extract.*;
         .to("if(target==0){p.f(X);p.v(0);p.f(q+target);p.v(100*q / target); } f();");
   }
 
-  @Test public void ternarizeintoSuperMethodInvocation() {
-    trimming("a ? super.f(a, b, c) : super.f(a, x, c)").to("super.f(a, a ? b : x, c)");
+  @Test public void ternarizeIntoSuperMethodInvocation() {
+    trimming.of("a ? super.f(a, b, c) : super.f(a, x, c)").to("super.f(a, a ? b : x, c)");
   }
 
   @Test public void ternaryPushdownOfReciever() {
@@ -4144,7 +4099,9 @@ import static il.org.spartan.refactoring.ast.extract.*;
   }
 
   @Test public void testPeel() {
-    azzert.that(Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT.off(Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT.on("on * notion * of * no * nothion != the * plain + kludge")),
+    azzert.that(
+        GuessedContext.expression_or_something_that_may_be_passed_as_argument
+            .off(GuessedContext.expression_or_something_that_may_be_passed_as_argument.on("on * notion * of * no * nothion != the * plain + kludge")),
         is("on * notion * of * no * nothion != the * plain + kludge"));
   }
 
@@ -4153,10 +4110,16 @@ import static il.org.spartan.refactoring.ast.extract.*;
   }
 
   @Test public void twoOpportunityExample() {
-    azzert.that(TrimmerTestsUtils.countOpportunities(new Trimmer(),
-        (CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
-    azzert.that(TrimmerTestsUtils.countOpportunities(new Trimmer(),
-        (CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.EXPRESSION_IE_SOMETHING_THAT_MAY_SERVE_AS_ARGUMENT.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
+    azzert.that(
+        trimming.countOpportunities(new Trimmer(),
+            (CompilationUnit) MakeAST.COMPILATION_UNIT.from(
+                GuessedContext.expression_or_something_that_may_be_passed_as_argument.on("on * notion * of * no * nothion != the * plain + kludge"))),
+        is(2));
+    azzert.that(
+        trimming.countOpportunities(new Trimmer(),
+            (CompilationUnit) MakeAST.COMPILATION_UNIT.from(
+                GuessedContext.expression_or_something_that_may_be_passed_as_argument.on("on * notion * of * no * nothion != the * plain + kludge"))),
+        is(2));
   }
 
   @Test public void unsafeBlockSimlify() {

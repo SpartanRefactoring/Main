@@ -47,7 +47,7 @@ public enum into {
    *         parameter. */
   public static MethodDeclaration d(final String methodDelclaration) {
     azzert.notNull(methodDelclaration);
-    return extract.firstMethodDeclaration(Wrap.A_CLASS_MEMBER_OF_SOME_SORT.intoCompilationUnit(methodDelclaration));
+    return extract.firstMethodDeclaration(GuessedContext.method_or_class_member_of_some_sort.intoCompilationUnit(methodDelclaration));
   }
 
   /** Convert a given {@link String} into an {@link Expression}, or fail the
