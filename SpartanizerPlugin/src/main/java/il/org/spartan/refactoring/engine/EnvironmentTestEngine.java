@@ -29,7 +29,7 @@ public class EnvironmentTestEngine {
     try {
       iType = javaProject.findType(from);
       final ICompilationUnit iCompilationUnit = iType.getCompilationUnit();
-      @SuppressWarnings("deprecation") final ASTParser parser = ASTParser.newParser(AST.JLS3);
+      final ASTParser parser = ASTParser.newParser(AST.JLS8);
       parser.setKind(ASTParser.K_COMPILATION_UNIT);
       parser.setSource(iCompilationUnit);
       parser.setResolveBindings(true); // we need bindings later on
@@ -181,7 +181,7 @@ public class EnvironmentTestEngine {
         $.accept(new ASTVisitor() {
           /* @Override public boolean visit(NormalAnnotation ¢){ if
            * (isNameId(¢.getTypeName())) {
-           * 
+           *
            * testFlatENV.addAll(); } return true; } */
         });
       }
