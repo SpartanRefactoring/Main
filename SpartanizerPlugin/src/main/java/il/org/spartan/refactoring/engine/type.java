@@ -38,12 +38,12 @@ interface type {
 
   static type baptize(final String name, final String description) {
     return have(name) ? bring(name) : new type() {
-      @Override public String name() {
-        return name;
-      }
-
       @Override public String description() {
         return description;
+      }
+
+      @Override public String name() {
+        return name;
       }
     }.join();
   }
@@ -60,7 +60,8 @@ interface type {
   }
 
   // TODO: Matteo. Nano-pattern of values: not implemented
-  static type get() {
+  // TODO: Dor, please implement yet
+  static type get(Expression ¢) {
     throw new NotImplementedException("code of this function was not implemented yet");
   }
 
