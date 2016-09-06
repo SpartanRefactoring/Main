@@ -452,6 +452,9 @@ interface type {
     }
   }
 
+  /** Types we do not full understand yet.
+   * @author Yossi Gil
+   * @year 2016 */
   interface Odd extends type {
     /** TODO: Not sure we need all these {@link type.Odd.Types} values. */
     enum Types implements Odd {
@@ -466,11 +469,15 @@ interface type {
         this.name = name;
         this.description = description;
       }
-    };
+    }
   }
 
+  /** Primitive type or a set of primitive types
+   * @author Yossi Gil
+   * @year 2016 */
   interface Primitive extends type {
-    /** Primitive types known for certain
+    /** Primitive types known for certain. {@link String} is also considered
+     * {@link Primitive.Certain}
      * @author Yossi Gil
      * @since 2016 */
     public enum Certain implements type.Primitive {
