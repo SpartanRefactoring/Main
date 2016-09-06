@@ -16,7 +16,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.refactoring.assemble.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.engine.*;
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.plugin.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** A {@link Wring} to convert an expression such as
