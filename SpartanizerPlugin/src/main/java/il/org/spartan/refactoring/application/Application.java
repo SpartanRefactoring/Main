@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.files.*;
 import il.org.spartan.refactoring.handlers.*;
+import il.org.spartan.refactoring.plugin.*;
 import il.org.spartan.utils.*;
 
 /** An {@link IApplication} extension entry point, allowing execution of this
