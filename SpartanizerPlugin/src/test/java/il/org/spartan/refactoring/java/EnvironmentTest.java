@@ -12,11 +12,25 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.refactoring.engine.*;
-import il.org.spartan.refactoring.java.Environment.*;
 import il.org.spartan.refactoring.utils.*;
 
 @SuppressWarnings("static-method") //
 public class EnvironmentTest {
+  
+  
+  //The difficulties of Environment - A Yossi example.
+  class A {
+    B a() {
+      return null;
+    }
+  }
+
+  class B {
+    A b() {
+      return null;
+    }
+  }
+  
   Environment e0 = Environment.genesis();
   Environment e1 = e0.spawn();
   // =================== Empty Tests - Require Genesis ===================
