@@ -277,7 +277,9 @@ public class subject {
      * @param operands a list of expression, these are the operands */
     public Several(final List<Expression> operands) {
       super(lisp.first(operands));
-      this.operands = new ArrayList<>(operands);
+      this.operands = new ArrayList<>();
+      for (final Expression e : operands)
+        this.operands.add(claim(e));
     }
 
     /** Create an infix expression from the given operator and the operands
@@ -304,7 +306,9 @@ public class subject {
      * @param inner a list of statements */
     public SeveralStatements(final List<Statement> inner) {
       super(lisp.first(inner));
-      this.inner = new ArrayList<>(inner);
+      this.inner = new ArrayList<>();
+      for (final Statement s : inner)
+        this.inner.add(claim(s));
     }
 
     /** Transform the inner into a block
