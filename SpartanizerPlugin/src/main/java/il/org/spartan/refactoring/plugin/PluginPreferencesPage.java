@@ -1,14 +1,13 @@
-package il.org.spartan.refactoring.preferences;
+package il.org.spartan.refactoring.plugin;
 
-import static il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
-import static il.org.spartan.refactoring.preferences.PluginPreferencesResources.WringGroup.*;
+import static il.org.spartan.refactoring.plugin.PluginPreferencesResources.*;
+import static il.org.spartan.refactoring.plugin.PluginPreferencesResources.WringGroup.*;
 
 import org.eclipse.jface.preference.*;
 import org.eclipse.jface.util.*;
 import org.eclipse.ui.*;
 
-import il.org.spartan.refactoring.builder.*;
-import il.org.spartan.refactoring.preferences.PluginPreferencesResources.*;
+import il.org.spartan.refactoring.plugin.PluginPreferencesResources.*;
 import il.org.spartan.refactoring.wring.*;
 
 public class PluginPreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
