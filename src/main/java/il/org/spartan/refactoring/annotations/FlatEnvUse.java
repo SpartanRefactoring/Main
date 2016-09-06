@@ -1,5 +1,5 @@
 package il.org.spartan.refactoring.annotations;
 
-public @interface InOrderFlatENV {
+public @interface FlatEnvUse {
   Id[] value();
 }
