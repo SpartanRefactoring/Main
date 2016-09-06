@@ -12,6 +12,7 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.refactoring.engine.*;
+import il.org.spartan.refactoring.java.Environment.*;
 import il.org.spartan.refactoring.utils.*;
 
 @SuppressWarnings("static-method") //
