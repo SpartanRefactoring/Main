@@ -35,14 +35,14 @@ interface type {
   /**Stores the type property t in the node n
    * @param n JD
    * @param t JD
-   * @return the node n after t was stored in it
+   * @return the type t that was stored
    */
   static type storeType(ASTNode n,type t){
    n.setProperty(propertyName, t);
    return t;
   }
  
-  /** @param x JD
+  /**@param x JD
    * @return The most specific Type information that can be deduced about the
    *         expression from it's structure, or {@link #NOTHING} if it cannot
    *         decide. Will never return null */
@@ -50,6 +50,8 @@ interface type {
     return getType(x) != null ? getType(x) : storeType(x, doPrudent(x));
   }
   
+  /**calls the relevant version of prudent based on x's dynamic type
+   * an auxiliary method for prudent(Expression), should not be called directly*/
   static type doPrudent(Expression x){
     switch (x.getNodeType()) {
       case NULL_LITERAL:
