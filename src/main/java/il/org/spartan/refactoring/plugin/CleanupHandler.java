@@ -13,7 +13,6 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
 
-import il.org.spartan.refactoring.plugin.*;
 import il.org.spartan.refactoring.spartanizations.*;
 
 /** A handler for {@link Spartanizations}. This handler executes all safe

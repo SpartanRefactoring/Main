@@ -13,7 +13,6 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.annotations.*;
 import il.org.spartan.refactoring.engine.*;
-import il.org.spartan.refactoring.handlers.*;
 import il.org.spartan.refactoring.java.Environment.*;
 import il.org.spartan.refactoring.utils.*;
 
