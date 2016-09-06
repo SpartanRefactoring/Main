@@ -114,8 +114,8 @@ public enum make {
       this.ast = ast;
     }
 
-    public StringLiteral literal(String s) {
-      StringLiteral $ = ast.newStringLiteral();
+    public StringLiteral literal(final String s) {
+      final StringLiteral $ = ast.newStringLiteral();
       $.setLiteralValue(s);
       return $;
     }
