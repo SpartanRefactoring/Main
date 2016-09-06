@@ -1,4 +1,4 @@
-package il.org.spartan.refactoring.handlers;
+package il.org.spartan.refactoring.annotations;
 
 import java.util.*;
 import java.util.Map.*;
@@ -10,15 +10,14 @@ import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.java.Environment.*;
 
-public class EnvFlatHandler extends ENVTestEngineAbstract {
-  Set<Entry<String, Environment.Information>> testSet;
-
-  public EnvFlatHandler(final ASTNode $) {
+public class EnvNestedHandler extends ENVTestEngineAbstract {
+  
+  public EnvNestedHandler(final ASTNode $) {
     n = $;
     testSet = generateSet();
   }
 
-  public EnvFlatHandler(final String ¢) {
+  public EnvNestedHandler(final String ¢) {
     n = getCompilationUnit(¢);
     testSet = generateSet();
   }
@@ -27,7 +26,7 @@ public class EnvFlatHandler extends ENVTestEngineAbstract {
    * represent the expected results of neither Environment.uses or
    * Environment.declares. Should be the expected result of
    * Environment.declares.
-   *
+   * 
    * @see
    * il.org.spartan.refactoring.engine.ENVTestEngineAbstract#buildEnvironmentSet
    * (org.eclipse.jdt.core.dom.BodyDeclaration) */
