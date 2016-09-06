@@ -1,6 +1,5 @@
 package il.org.spartan.refactoring.engine;
 
-import il.org.spartan.as;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.engine.type.Odd.Types.*;
 import static il.org.spartan.refactoring.engine.type.Primitive.Certain.*;
@@ -13,6 +12,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.utils.*;
 
@@ -21,383 +21,6 @@ import il.org.spartan.refactoring.utils.*;
  * @author Niv Shalmon
  * @since 2016 */
 interface type {
-  /** All type that were ever born */
-  static Map<String, type> types = new LinkedHashMap<>();
-  static String propertyName = "spartan type";
-
-  /** @param n JD
-   * @return the type information stored inside the node n, or null if there is
-   *         none */
-  static type getType(ASTNode n) {
-    return (type) n.getProperty(propertyName);
-  }
-  
-  /**Stores the type property t in the node n
-   * @param n JD
-   * @param t JD
-   * @return the type t that was stored
-   */
-  static type storeType(ASTNode n,type t){
-   n.setProperty(propertyName, t);
-   return t;
-  }
- 
-  /**@param x JD
-   * @return The most specific Type information that can be deduced about the
-   *         expression from it's structure, or {@link #NOTHING} if it cannot
-   *         decide. Will never return null */
-  static type prudent(final Expression x) {
-    return getType(x) != null ? getType(x) : storeType(x, doPrudent(x));
-  }
-  
-  /**calls the relevant version of prudent based on x's dynamic type
-   * an auxiliary method for prudent(Expression), should not be called directly*/
-  static type doPrudent(Expression x){
-    switch (x.getNodeType()) {
-      case NULL_LITERAL:
-        return NULL;
-      case CHARACTER_LITERAL:
-        return CHAR;
-      case STRING_LITERAL:
-        return STRING;
-      case BOOLEAN_LITERAL:
-        return BOOLEAN;
-      case NUMBER_LITERAL:
-        return prudent((NumberLiteral) x);
-      case CAST_EXPRESSION:
-        return prudent((CastExpression) x);
-      case PREFIX_EXPRESSION:
-        return prudent((PrefixExpression) x);
-      case INFIX_EXPRESSION:
-        return prudent((InfixExpression) x);
-      case POSTFIX_EXPRESSION:
-        return prudent((PostfixExpression) x);
-      case PARENTHESIZED_EXPRESSION:
-        return prudent((ParenthesizedExpression) x);
-      case CLASS_INSTANCE_CREATION:
-        return prudent((ClassInstanceCreation) x);
-      case METHOD_INVOCATION:
-        return prudent((MethodInvocation) x);
-      case CONDITIONAL_EXPRESSION:
-        return prudent((ConditionalExpression) x);
-      case ASSIGNMENT:
-        return prudent((Assignment) x);
-      default:
-        return NOTHING;
-    }
-  }
-
-  static type baptize(final String name) {
-    return baptize(name, "anonymously born");
-  }
-
-  static type baptize(final String name, final String description) {
-    return have(name) ? bring(name) : new type() {
-      @Override public String description() {
-        return description;
-      }
-
-      @Override public String key() {
-        return name;
-      }
-    }.join();
-  }
-
-  static type bring(final String name) {
-    return types.get(name);
-  }
-
-  static type conditionalWithNoInfo(final type t) {
-    return in(t, BYTE, SHORT, CHAR, INT, INTEGRAL, LONG, FLOAT, NUMERIC) //
-        ? NUMERIC //
-        : !in(t, DOUBLE, STRING, BOOLEAN, BOOLEAN) //
-            ? NOTHING : t;
-  }
-
-  // TODO: Matteo. Nano-pattern of values: not implemented
-  // TODO: Dor, please implement yet
-  static type get(final Expression ¢) {
-    throw new NotImplementedException("code of this function was not implemented yet. Arg=" + ¢);
-  }
-
-  static boolean have(final String name) {
-    return types.containsKey(name);
-  }
-
-  static type prudent(final Assignment x) {
-    final type $ = prudent(x.getLeftHandSide());
-    return !$.isNoInfo() ? $ : prudent(x.getRightHandSide()).isNumeric() ? NUMERIC : prudent(x.getRightHandSide());
-  }
-
-  static type prudent(final CastExpression x) {
-    return typeSwitch("" + step.type(x));
-  }
-
-  static type prudent(final ClassInstanceCreation c) {
-    return typeSwitch("" + c.getType());
-  }
-
-  static type prudent(final ConditionalExpression x) {
-    final type $ = prudent(x.getThenExpression());
-    final type ¢ = prudent(x.getElseExpression());
-    // If we don't know much about one operand but do know enough about the
-    // other, we can still learn something
-    return $ == ¢ ? $
-        : $.isNoInfo() || ¢.isNoInfo() ? conditionalWithNoInfo($.isNoInfo() ? ¢ : $) //
-            : $.isIntegral() && ¢.isIntegral() ? $.underIntegersOnlyOperator(¢) //
-                : $.isNumeric() && ¢.isNumeric() ? $.underNumericOnlyOperator(¢)//
-                    : NOTHING; //
-  }
-
-  static type prudent(final InfixExpression x) {
-    final InfixExpression.Operator o = x.getOperator();
-    final List<Expression> es = extract.allOperands(x);
-    assert es.size() >= 2;
-    type $ = prudent(lisp.first(es)).underBinaryOperator(o, prudent(lisp.second(es)));
-    lisp.chop(lisp.chop(es));
-    while (!es.isEmpty()) {
-      $ = $.underBinaryOperator(o, prudent(lisp.first(es)));
-      lisp.chop(es);
-    }
-    return $;
-  }
-
-  static type prudent(final MethodInvocation i) {
-    return "toString".equals(i.getName() + "") && i.arguments().isEmpty() ? STRING : NOTHING;
-  }
-
-  static type prudent(final NumberLiteral l) {
-    // TODO: Dor use TypeLiteral instead. It is thoroughly tested and very
-    // accurate.
-    final String ¢ = l.getToken();
-    return ¢.matches("[0-9]+") ? INT
-        : ¢.matches("[0-9]+[l,L]") ? LONG
-            : ¢.matches("[0-9]+\\.[0-9]*[f,F]") || ¢.matches("[0-9]+[f,F]") ? FLOAT
-                : ¢.matches("[0-9]+\\.[0-9]*[d,D]?") || ¢.matches("[0-9]+[d,D]") ? DOUBLE : NUMERIC;
-  }
-
-  static type prudent(final ParenthesizedExpression x) {
-    return prudent(extract.core(x));
-  }
-
-  static type prudent(final PostfixExpression x) {
-    return prudent(x.getOperand()).asNumeric(); // see testInDecreamentSemantics
-  }
-
-  static type prudent(final PrefixExpression x) {
-    return prudent(x.getOperand()).under(x.getOperator());
-  }
-
-  static type typeSwitch(final String s) {
-    switch (s) {
-      case "byte":
-      case "Byte":
-        return BYTE;
-      case "short":
-      case "Short":
-        return SHORT;
-      case "char":
-      case "Character":
-        return CHAR;
-      case "int":
-      case "Integer":
-        return INT;
-      case "long":
-      case "Long":
-        return LONG;
-      case "float":
-      case "Float":
-        return FLOAT;
-      case "double":
-      case "Double":
-        return DOUBLE;
-      case "boolean":
-      case "Boolean":
-        return BOOLEAN;
-      case "String":
-        return STRING;
-      default:
-        return baptize(s, s); // TODO: what should be the description here?
-    }
-  }
-
-  /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
-   *         {@link BYTE}, {@link SHORT}, {@link FLOAT}, {@link #DOUBLE},
-   *         {@link #INTEGRAL} or {@link #NUMERIC}, {@link #STRING},
-   *         {@link #ALPHANUMERIC} or false otherwise */
-  public default boolean isAlphaNumeric() {
-    return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC, STRING, ALPHANUMERIC);
-  }
-
-  /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
-   *         {@link BYTE}, {@link SHORT}, {@link #INTEGRAL} or false
-   *         otherwise */
-  public default boolean isIntegral() {
-    return in(this, LONG, INT, CHAR, BYTE, SHORT, INTEGRAL);
-  }
-
-  /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
-   *         {@link BYTE}, {@link SHORT}, {@link FLOAT}, {@link #DOUBLE},
-   *         {@link #INTEGRAL}, {@link #NUMERIC} or false otherwise */
-  public default boolean isNumeric() {
-    return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC);
-  }
-
-  /** @return one of {@link #INT}, {@link #LONG}, {@link #CHAR}, {@link BYTE},
-   *         {@link SHORT} or {@link #INTEGRAL}, in case it cannot decide */
-  default type asIntegral() {
-    return isIntegral() ? this : INTEGRAL;
-  }
-
-  /** @return one of {@link #INT}, {@link #LONG}, or {@link #INTEGRAL}, in case
-   *         it cannot decide */
-  default type asIntegralUnderOperation() {
-    return isIntUnderOperation() ? INT : asIntegral();
-  }
-
-  /** @return one of {@link #INT}, {@link #LONG},, {@link #CHAR}, {@link BYTE},
-   *         {@link SHORT}, {@link FLOAT}, {@link #DOUBLE}, {@link #INTEGRAL} or
-   *         {@link #NUMERIC}, in case no further information is available */
-  default type asNumeric() {
-    return isNumeric() ? this : NUMERIC;
-  }
-
-  /** @return one of {@link #INT}, {@link #LONG}, {@link #FLOAT},
-   *         {@link #DOUBLE}, {@link #INTEGRAL} or {@link #NUMERIC}, in case no
-   *         further information is available */
-  default type asNumericUnderOperation() {
-    return !isNumeric() ? NUMERIC : isIntUnderOperation() ? INT : this;
-  }
-
-  default Primitive.Certain asPrimitiveCertain() {
-    return null;
-  }
-
-  default type asPrimitiveUncertain() {
-    return null;
-  }
-
-  default boolean canB(@SuppressWarnings("unused") final Primitive.Certain __) {
-    return false;
-  }
-
-  String description();
-
-  default String fullName() {
-    return this + "=" + key() + " (" + description() + ")";
-  }
-
-  /** used to determine whether an integral type behaves as itself under
-   * operations or as an INT.
-   * @return true if one of {@link #CHAR}, {@link BYTE}, {@link SHORT} or false
-   *         otherwise. */
-  default boolean isIntUnderOperation() {
-    return in(this, CHAR, BYTE, SHORT);
-  }
-
-  /** @return true if one of {@link #NOTHING}, {@link #BAPTIZED},
-   *         {@link #NONNULL}, {@link #VOID}, {@link #NULL} or false
-   *         otherwise */
-  default boolean isNoInfo() {
-    return in(this, NOTHING, NULL);
-  }
-
-  default type join() {
-    assert !types.containsKey(key());
-    types.put(key(), this);
-    return this;
-  }
-
-  /** @return the formal name of this type, the key under which it is stored in
-   *         {@link #types}, e.g., "Object", "int", "String", etc. */
-  String key();
-
-  /** @return one of {@link #BOOLEAN} , {@link #INT} , {@link #LONG} ,
-   *         {@link #DOUBLE} , {@link #INTEGRAL} or {@link #NUMERIC} , in case
-   *         it cannot decide */
-  default type under(final PrefixExpression.Operator o) {
-    assert o != null;
-    return o == NOT ? BOOLEAN : in(o, DECREMENT, INCREMENT) ? asNumeric() : o != COMPLEMENT ? asNumericUnderOperation() : asIntegralUnderOperation();
-  }
-
-  /** @return one of {@link #BOOLEAN} , {@link #INT} , {@link #LONG} ,
-   *         {@link #DOUBLE} , {@link #STRING} , {@link #INTEGRAL} ,
-   *         {@link BOOLEANINTEGRAL} {@link #NUMERIC} , or {@link #ALPHANUMERIC}
-   *         , in case it cannot decide */
-  default type underBinaryOperator(final InfixExpression.Operator o, final type k) {
-    if (o == wizard.PLUS2)
-      return underPlus(k);
-    if (wizard.isComparison(o))
-      return BOOLEAN;
-    if (wizard.isBitwiseOperator(o))
-      return underBitwiseOperation(k);
-    if (o == REMAINDER)
-      return underIntegersOnlyOperator(k);
-    if (in(o, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED))
-      return asIntegralUnderOperation();
-    if (!in(o, TIMES, DIVIDE, wizard.MINUS2))
-      throw new IllegalArgumentException("o=" + o + " k=" + k.fullName() + "this=" + this);
-    return underNumericOnlyOperator(k);
-  }
-
-  /** @return one of {@link #BOOLEAN}, {@link #INT}, {@link #LONG},
-   *         {@link #INTEGRAL} or {@link BOOLEANINTEGRAL}, in case it cannot
-   *         decide */
-  default type underBitwiseOperation(final type k) {
-    return k == this ? k
-        : isIntegral() && k.isIntegral() ? underIntegersOnlyOperator(k)
-            : isNoInfo() ? k.underBitwiseOperationNoInfo() //
-                : k.isNoInfo() ? underBitwiseOperationNoInfo() //
-                    : BOOLEANINTEGRAL;
-  }
-
-  /** @return one of {@link #BOOLEAN}, {@link #INT}, {@link #LONG},
-   *         {@link #INTEGRAL} or {@link BOOLEANINTEGRAL}, in case it cannot
-   *         decide */
-  default type underBitwiseOperationNoInfo() {
-    return this == BOOLEAN ? BOOLEAN : !isIntegral() ? BOOLEANINTEGRAL : this == LONG ? LONG : INTEGRAL;
-  }
-
-  default type underIntegersOnlyOperator(final type k) {
-    final type ¢1 = asIntegralUnderOperation();
-    final type ¢2 = k.asIntegralUnderOperation();
-    return in(LONG, ¢1, ¢2) ? LONG : !in(INTEGRAL, ¢1, ¢2) ? INT : INTEGRAL;
-  }
-
-  /** @return one of {@link #INT}, {@link #LONG}, {@link #INTEGRAL},
-   *         {@link #DOUBLE}, or {@link #NUMERIC}, in case it cannot decide */
-  default type underNumericOnlyOperator(final type k) {
-    if (!isNumeric())
-      return asNumericUnderOperation().underNumericOnlyOperator(k);
-    assert k != null;
-    assert this != ALPHANUMERIC : "Don't confuse " + NUMERIC + " with " + ALPHANUMERIC;
-    assert isNumeric() : this + ": is for some reason not numeric ";
-    final type $ = k.asNumericUnderOperation();
-    assert $ != null;
-    assert $.isNumeric() : this + ": is for some reason not numeric ";
-    // Double contaminates Numeric
-    // Numeric contaminates Float
-    // FLOAT contaminates Integral
-    // LONG contaminates INTEGRAL
-    // INTEGRAL contaminates INT
-    // Everything else is INT after an operation
-    return in(DOUBLE, $, this) ? DOUBLE
-        : in(NUMERIC, $, this) ? NUMERIC //
-            : in(FLOAT, $, this) ? FLOAT //
-                : in(LONG, $, this) ? LONG : //
-                    !in(INTEGRAL, $, this) ? INT : INTEGRAL;
-  }
-
-  /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE},
-   *         {@link #STRING}, {@link #INTEGRAL}, {@link #NUMERIC} or
-   *         {@link #ALPHANUMERIC}, in case it cannot decide */
-  default type underPlus(final type k) {
-    // addition with NULL or String must be a String
-    // unless both operands are numeric, the result may be a String
-    return in(STRING, this, k) || in(NULL, this, k) ? STRING : !isNumeric() || !k.isNumeric() ? ALPHANUMERIC : underNumericOnlyOperator(k);
-  }
-
-  /** An interface with one method- axiom, overloaded for many different
    * parameter types. Can be used to find the type of an expression thats known
    * at compile time by using overloading. Only use for testing, mainly for
    * testing of type.
@@ -571,5 +194,386 @@ interface type {
         return key;
       }
     }
+  }
+
+  enum Prudent {
+    ;
+    
+    /** calls the relevant version of prudent based on x's dynamic type an
+     * auxiliary method for prudent(Expression), should not be called
+     * directly */
+    private static type doPrudent(final Expression x) {
+      switch (x.getNodeType()) {
+        case NULL_LITERAL:
+          return NULL;
+        case CHARACTER_LITERAL:
+          return CHAR;
+        case STRING_LITERAL:
+          return STRING;
+        case BOOLEAN_LITERAL:
+          return BOOLEAN;
+        case NUMBER_LITERAL:
+          return prudent((NumberLiteral) x);
+        case CAST_EXPRESSION:
+          return prudent((CastExpression) x);
+        case PREFIX_EXPRESSION:
+          return prudent((PrefixExpression) x);
+        case INFIX_EXPRESSION:
+          return prudent((InfixExpression) x);
+        case POSTFIX_EXPRESSION:
+          return prudent((PostfixExpression) x);
+        case PARENTHESIZED_EXPRESSION:
+          return prudent((ParenthesizedExpression) x);
+        case CLASS_INSTANCE_CREATION:
+          return prudent((ClassInstanceCreation) x);
+        case METHOD_INVOCATION:
+          return prudent((MethodInvocation) x);
+        case CONDITIONAL_EXPRESSION:
+          return prudent((ConditionalExpression) x);
+        case ASSIGNMENT:
+          return prudent((Assignment) x);
+        default:
+          return NOTHING;
+      }
+    }
+
+    /** @param n JD
+     * @return the type information stored inside the node n, or null if there
+     *         is none */
+    private static type getType(final ASTNode n) {
+      return (type) n.getProperty(propertyName);
+    }
+
+    private static type prudent(final Assignment x) {
+      final type $ = prudent(x.getLeftHandSide());
+      return !$.isNoInfo() ? $ : prudent(x.getRightHandSide()).isNumeric() ? NUMERIC : prudent(x.getRightHandSide());
+    }
+
+    private static type prudent(final CastExpression x) {
+      return typeSwitch("" + step.type(x));
+    }
+
+    private static type prudent(final ClassInstanceCreation c) {
+      return typeSwitch("" + c.getType());
+    }
+
+    private static type prudent(final ConditionalExpression x) {
+      final type $ = prudent(x.getThenExpression());
+      final type ¢ = prudent(x.getElseExpression());
+      // If we don't know much about one operand but do know enough about the
+      // other, we can still learn something
+      return $ == ¢ ? $
+          : $.isNoInfo() || ¢.isNoInfo() ? conditionalWithNoInfo($.isNoInfo() ? ¢ : $) //
+              : $.isIntegral() && ¢.isIntegral() ? $.underIntegersOnlyOperator(¢) //
+                  : $.isNumeric() && ¢.isNumeric() ? $.underNumericOnlyOperator(¢)//
+                      : NOTHING; //
+    }
+
+    /** @param x JD
+     * @return The most specific Type information that can be deduced about the
+     *         expression from it's structure, or {@link #NOTHING} if it cannot
+     *         decide. Will never return null */
+    static type prudent(final Expression x) {
+      return getType(x) != null ? getType(x) : storeType(x, Prudent.doPrudent(x));
+    }
+
+    private static type prudent(final InfixExpression x) {
+      final InfixExpression.Operator o = x.getOperator();
+      final List<Expression> es = extract.allOperands(x);
+      assert es.size() >= 2;
+      type $ = prudent(lisp.first(es)).underBinaryOperator(o, prudent(lisp.second(es)));
+      lisp.chop(lisp.chop(es));
+      while (!es.isEmpty()) {
+        $ = $.underBinaryOperator(o, prudent(lisp.first(es)));
+        lisp.chop(es);
+      }
+      return $;
+    }
+
+    private static type prudent(final MethodInvocation i) {
+      return "toString".equals(i.getName() + "") && i.arguments().isEmpty() ? STRING : NOTHING;
+    }
+
+    private static type prudent(final NumberLiteral l) {
+      // TODO: Dor use TypeLiteral instead. It is thoroughly tested and very
+      // accurate.
+      final String ¢ = l.getToken();
+      return ¢.matches("[0-9]+") ? INT
+          : ¢.matches("[0-9]+[l,L]") ? LONG
+              : ¢.matches("[0-9]+\\.[0-9]*[f,F]") || ¢.matches("[0-9]+[f,F]") ? FLOAT
+                  : ¢.matches("[0-9]+\\.[0-9]*[d,D]?") || ¢.matches("[0-9]+[d,D]") ? DOUBLE : NUMERIC;
+    }
+
+    private static type prudent(final ParenthesizedExpression x) {
+      return prudent(extract.core(x));
+    }
+
+    private static type prudent(final PostfixExpression x) {
+      return prudent(x.getOperand()).asNumeric(); // see
+                                                  // testInDecreamentSemantics
+    }
+
+    private static type prudent(final PrefixExpression x) {
+      return prudent(x.getOperand()).under(x.getOperator());
+    }
+
+    /** Stores the type property t in the node n
+     * @param n JD
+     * @param t JD
+     * @return the type t that was stored */
+    private static type storeType(final ASTNode n, final type t) {
+      n.setProperty(propertyName, t);
+      return t;
+    }
+
+    private static type typeSwitch(final String s) {
+      switch (s) {
+        case "byte":
+        case "Byte":
+          return BYTE;
+        case "short":
+        case "Short":
+          return SHORT;
+        case "char":
+        case "Character":
+          return CHAR;
+        case "int":
+        case "Integer":
+          return INT;
+        case "long":
+        case "Long":
+          return LONG;
+        case "float":
+        case "Float":
+          return FLOAT;
+        case "double":
+        case "Double":
+          return DOUBLE;
+        case "boolean":
+        case "Boolean":
+          return BOOLEAN;
+        case "String":
+          return STRING;
+        default:
+          return baptize(s, s); // TODO: what should be the description here?
+      }
+    }
+  }
+
+  /** All type that were ever born */
+  static Map<String, type> types = new LinkedHashMap<>();
+  static String propertyName = "spartan type";
+
+  static type baptize(final String name) {
+    return baptize(name, "anonymously born");
+  }
+
+  static type baptize(final String name, final String description) {
+    return have(name) ? bring(name) : new type() {
+      @Override public String description() {
+        return description;
+      }
+
+      @Override public String key() {
+        return name;
+      }
+    }.join();
+  }
+
+  static type bring(final String name) {
+    return types.get(name);
+  }
+
+  static type conditionalWithNoInfo(final type t) {
+    return in(t, BYTE, SHORT, CHAR, INT, INTEGRAL, LONG, FLOAT, NUMERIC) //
+        ? NUMERIC //
+        : !in(t, DOUBLE, STRING, BOOLEAN, BOOLEAN) //
+            ? NOTHING : t;
+  }
+
+  // TODO: Matteo. Nano-pattern of values: not implemented
+  // TODO: Dor, please implement yet
+  static type get(final Expression ¢) {
+    throw new NotImplementedException("code of this function was not implemented yet. Arg=" + ¢);
+  }
+
+  static boolean have(final String name) {
+    return types.containsKey(name);
+  }
+
+  /** @return one of {@link #INT}, {@link #LONG}, {@link #CHAR}, {@link BYTE},
+   *         {@link SHORT} or {@link #INTEGRAL}, in case it cannot decide */
+  default type asIntegral() {
+    return isIntegral() ? this : INTEGRAL;
+  }
+
+  /** @return one of {@link #INT}, {@link #LONG}, or {@link #INTEGRAL}, in case
+   *         it cannot decide */
+  default type asIntegralUnderOperation() {
+    return isIntUnderOperation() ? INT : asIntegral();
+  }
+
+  /** @return one of {@link #INT}, {@link #LONG},, {@link #CHAR}, {@link BYTE},
+   *         {@link SHORT}, {@link FLOAT}, {@link #DOUBLE}, {@link #INTEGRAL} or
+   *         {@link #NUMERIC}, in case no further information is available */
+  default type asNumeric() {
+    return isNumeric() ? this : NUMERIC;
+  }
+
+  /** @return one of {@link #INT}, {@link #LONG}, {@link #FLOAT},
+   *         {@link #DOUBLE}, {@link #INTEGRAL} or {@link #NUMERIC}, in case no
+   *         further information is available */
+  default type asNumericUnderOperation() {
+    return !isNumeric() ? NUMERIC : isIntUnderOperation() ? INT : this;
+  }
+
+  default Primitive.Certain asPrimitiveCertain() {
+    return null;
+  }
+
+  default type asPrimitiveUncertain() {
+    return null;
+  }
+
+  default boolean canB(@SuppressWarnings("unused") final Primitive.Certain __) {
+    return false;
+  }
+
+  String description();
+
+  default String fullName() {
+    return this + "=" + key() + " (" + description() + ")";
+  }
+
+  /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
+   *         {@link BYTE}, {@link SHORT}, {@link FLOAT}, {@link #DOUBLE},
+   *         {@link #INTEGRAL} or {@link #NUMERIC}, {@link #STRING},
+   *         {@link #ALPHANUMERIC} or false otherwise */
+  public default boolean isAlphaNumeric() {
+    return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC, STRING, ALPHANUMERIC);
+  }
+
+  /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
+   *         {@link BYTE}, {@link SHORT}, {@link #INTEGRAL} or false
+   *         otherwise */
+  public default boolean isIntegral() {
+    return in(this, LONG, INT, CHAR, BYTE, SHORT, INTEGRAL);
+  }
+
+  /** used to determine whether an integral type behaves as itself under
+   * operations or as an INT.
+   * @return true if one of {@link #CHAR}, {@link BYTE}, {@link SHORT} or false
+   *         otherwise. */
+  default boolean isIntUnderOperation() {
+    return in(this, CHAR, BYTE, SHORT);
+  }
+
+  /** @return true if one of {@link #NOTHING}, {@link #BAPTIZED},
+   *         {@link #NONNULL}, {@link #VOID}, {@link #NULL} or false
+   *         otherwise */
+  default boolean isNoInfo() {
+    return in(this, NOTHING, NULL);
+  }
+
+  /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
+   *         {@link BYTE}, {@link SHORT}, {@link FLOAT}, {@link #DOUBLE},
+   *         {@link #INTEGRAL}, {@link #NUMERIC} or false otherwise */
+  public default boolean isNumeric() {
+    return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC);
+  }
+
+  default type join() {
+    assert !types.containsKey(key());
+    types.put(key(), this);
+    return this;
+  }
+
+  /** @return the formal name of this type, the key under which it is stored in
+   *         {@link #types}, e.g., "Object", "int", "String", etc. */
+  String key();
+
+  /** @return one of {@link #BOOLEAN} , {@link #INT} , {@link #LONG} ,
+   *         {@link #DOUBLE} , {@link #INTEGRAL} or {@link #NUMERIC} , in case
+   *         it cannot decide */
+  default type under(final PrefixExpression.Operator o) {
+    assert o != null;
+    return o == NOT ? BOOLEAN : in(o, DECREMENT, INCREMENT) ? asNumeric() : o != COMPLEMENT ? asNumericUnderOperation() : asIntegralUnderOperation();
+  }
+
+  /** @return one of {@link #BOOLEAN} , {@link #INT} , {@link #LONG} ,
+   *         {@link #DOUBLE} , {@link #STRING} , {@link #INTEGRAL} ,
+   *         {@link BOOLEANINTEGRAL} {@link #NUMERIC} , or {@link #ALPHANUMERIC}
+   *         , in case it cannot decide */
+  default type underBinaryOperator(final InfixExpression.Operator o, final type k) {
+    if (o == wizard.PLUS2)
+      return underPlus(k);
+    if (wizard.isComparison(o))
+      return BOOLEAN;
+    if (wizard.isBitwiseOperator(o))
+      return underBitwiseOperation(k);
+    if (o == REMAINDER)
+      return underIntegersOnlyOperator(k);
+    if (in(o, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED))
+      return asIntegralUnderOperation();
+    if (!in(o, TIMES, DIVIDE, wizard.MINUS2))
+      throw new IllegalArgumentException("o=" + o + " k=" + k.fullName() + "this=" + this);
+    return underNumericOnlyOperator(k);
+  }
+
+  /** @return one of {@link #BOOLEAN}, {@link #INT}, {@link #LONG},
+   *         {@link #INTEGRAL} or {@link BOOLEANINTEGRAL}, in case it cannot
+   *         decide */
+  default type underBitwiseOperation(final type k) {
+    return k == this ? k
+        : isIntegral() && k.isIntegral() ? underIntegersOnlyOperator(k)
+            : isNoInfo() ? k.underBitwiseOperationNoInfo() //
+                : k.isNoInfo() ? underBitwiseOperationNoInfo() //
+                    : BOOLEANINTEGRAL;
+  }
+
+  /** @return one of {@link #BOOLEAN}, {@link #INT}, {@link #LONG},
+   *         {@link #INTEGRAL} or {@link BOOLEANINTEGRAL}, in case it cannot
+   *         decide */
+  default type underBitwiseOperationNoInfo() {
+    return this == BOOLEAN ? BOOLEAN : !isIntegral() ? BOOLEANINTEGRAL : this == LONG ? LONG : INTEGRAL;
+  }
+
+  default type underIntegersOnlyOperator(final type k) {
+    final type ¢1 = asIntegralUnderOperation();
+    final type ¢2 = k.asIntegralUnderOperation();
+    return in(LONG, ¢1, ¢2) ? LONG : !in(INTEGRAL, ¢1, ¢2) ? INT : INTEGRAL;
+  }
+
+  /** @return one of {@link #INT}, {@link #LONG}, {@link #INTEGRAL},
+   *         {@link #DOUBLE}, or {@link #NUMERIC}, in case it cannot decide */
+  default type underNumericOnlyOperator(final type k) {
+    if (!isNumeric())
+      return asNumericUnderOperation().underNumericOnlyOperator(k);
+    assert k != null;
+    assert this != ALPHANUMERIC : "Don't confuse " + NUMERIC + " with " + ALPHANUMERIC;
+    assert isNumeric() : this + ": is for some reason not numeric ";
+    final type $ = k.asNumericUnderOperation();
+    assert $ != null;
+    assert $.isNumeric() : this + ": is for some reason not numeric ";
+    // Double contaminates Numeric
+    // Numeric contaminates Float
+    // FLOAT contaminates Integral
+    // LONG contaminates INTEGRAL
+    // INTEGRAL contaminates INT
+    // Everything else is INT after an operation
+    return in(DOUBLE, $, this) ? DOUBLE
+        : in(NUMERIC, $, this) ? NUMERIC //
+            : in(FLOAT, $, this) ? FLOAT //
+                : in(LONG, $, this) ? LONG : //
+                    !in(INTEGRAL, $, this) ? INT : INTEGRAL;
+  }
+
+  /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE},
+   *         {@link #STRING}, {@link #INTEGRAL}, {@link #NUMERIC} or
+   *         {@link #ALPHANUMERIC}, in case it cannot decide */
+  default type underPlus(final type k) {
+    // addition with NULL or String must be a String
+    // unless both operands are numeric, the result may be a String
+    return in(STRING, this, k) || in(NULL, this, k) ? STRING : !isNumeric() || !k.isNumeric() ? ALPHANUMERIC : underNumericOnlyOperator(k);
   }
 } // end of interface type
