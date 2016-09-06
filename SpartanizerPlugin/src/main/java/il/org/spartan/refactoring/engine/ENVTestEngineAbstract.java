@@ -39,6 +39,7 @@ public abstract class ENVTestEngineAbstract {
   }
 
   public static boolean isNameId(final Name n1) {
+    assert(!"Id".equals("" + n1)); //debug
     return "@Id".equals("" + n1);
   }
 
@@ -50,22 +51,22 @@ public abstract class ENVTestEngineAbstract {
     testSet.add(new MapEntry<>(wizard.asString(ps.get(0).getValue()), new Information()));
   }
 
-  abstract protected void annotationToSet(final List<MemberValuePair> ps);
-
   /** Compares the set from the annotation with the set that the checked function generates.
    * @param $ */
   // Go over both sets in serial manner, and make sure every two members are
   // equal.
   // Also, check size, to avoid the case Set A is contained in B.
   // azzert.fail Otherwise.
-  abstract protected void compareInOrder(final Set<Entry<String, Information>> $);
+  protected void compareInOrder(final Set<Entry<String, Information>> $) {
+  }
 
   /** Compares the set from the annotation with the set that the checked function generates.
    * @param $ */
   // Check that each member of $ is contained in FlatENV, and that the size is
   // equal.
   // azzert.fail Otherwise.
-  abstract protected void compareOutOfOrder(final Set<Entry<String, Information>> $);
+  protected void compareOutOfOrder(final Set<Entry<String, Information>> $) {
+  }
 
   /** Cast
    * @param ¢ JD */
@@ -76,7 +77,7 @@ public abstract class ENVTestEngineAbstract {
   /** Parse the outer annotation to get the inner ones. Add to the flat Set.
    * Compare uses() and declares() output to the flat Set.
    * @param $ JD */
-  protected abstract void handler(final SingleMemberAnnotation $);
+  abstract protected void handler(final SingleMemberAnnotation $);
 
   /* define: outer annotation = OutOfOrderNestedENV, InOrderFlatENV, Begin, End.
    * define: inner annotation = Id. ASTVisitor that goes over the ASTNodes in
