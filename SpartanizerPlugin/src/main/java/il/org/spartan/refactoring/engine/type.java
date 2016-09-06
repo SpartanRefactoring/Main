@@ -1,5 +1,5 @@
 package il.org.spartan.refactoring.engine;
-
+import il.org.spartan.as;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.engine.type.Odd.Types.*;
 import static il.org.spartan.refactoring.engine.type.Primitive.Certain.*;
@@ -11,7 +11,6 @@ import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.PrefixExpression.*;
 
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.utils.*;
@@ -42,7 +41,7 @@ interface type {
         return description;
       }
 
-      @Override public String name() {
+      @Override public String key() {
         return name;
       }
     }.join();
@@ -61,8 +60,8 @@ interface type {
 
   // TODO: Matteo. Nano-pattern of values: not implemented
   // TODO: Dor, please implement yet
-  static type get(Expression ¢) {
-    throw new NotImplementedException("code of this function was not implemented yet");
+  static type get(final Expression ¢) {
+    throw new NotImplementedException("code of this function was not implemented yet. Arg=" + ¢);
   }
 
   static boolean have(final String name) {
@@ -299,12 +298,10 @@ interface type {
     return false;
   }
 
-  default String description() {
-    return "No description currently available";
-  }
+  String description();
 
   default String fullName() {
-    return this + "=" + name() + " (" + description() + ")";
+    return this + "=" + key() + " (" + description() + ")";
   }
 
   /** used to determine whether an integral type behaves as itself under
@@ -323,14 +320,14 @@ interface type {
   }
 
   default type join() {
-    assert !types.containsKey(name());
-    types.put(name(), this);
+    assert !types.containsKey(key());
+    types.put(key(), this);
     return this;
   }
 
-  /** @return the name of this type, i.e., the key under which it is stored in
-   *         {@link #types} */
-  String name();
+  /** @return the formal name of this type, the key under which it is stored in
+   *         {@link #types}, e.g., "Object", "int", "String", etc. */
+  String key();
 
   /** @return one of {@link #BOOLEAN} , {@link #INT} , {@link #LONG} ,
    *         {@link #DOUBLE} , {@link #INTEGRAL} or {@link #NUMERIC} , in case
@@ -468,18 +465,32 @@ interface type {
    * @author Yossi Gil
    * @year 2016 */
   interface Odd extends type {
+    // Those anonymous characters that known little or nothing about
+    // themselves
     /** TODO: Not sure we need all these {@link type.Odd.Types} values. */
     enum Types implements Odd {
+      BAPTIZED("!double&!long&!int", "an object of some type, for which we have a name only"), //
       OBJECT("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"), //
       NULL("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"), //
-      VOID("void", "nothing at all"),//
+      NONNULL("!null", "e.g., new Object() and that's about it"), //
+      VOID("void", "nothing at all"), //
+      NOTHING("none", "when nothing can be said, e.g., f(f(),f(f(f()),f()))"), //
       ;
-      final String description;
-      final String name;
+      private final String description;
+      private final String key;
 
-      Types(final String name, final String description) {
-        this.name = name;
+      private Types(final String description, final String key) {
         this.description = description;
+        this.key = key;
+      }
+
+      @Override public String description() {
+        key();
+        return description;
+      }
+
+      @Override public String key() {
+        return key;
       }
     }
   }
@@ -504,16 +515,23 @@ interface type {
       STRING("String", "must be string: \"\"+a, a.toString(), f()+null, not f()+g()"), //
       ;
       final String description;
-      final String name;
+      final String key;
 
-      Certain(final String name, final String description) {
-        this.name = name;
+      Certain(final String key, final String description) {
+        this.key = key;
         this.description = description;
       }
 
       @Override public boolean canB(final Certain ¢) {
-        assert ¢ != null;
-        return false;
+        return ¢ == this;
+      }
+
+      @Override public String description() {
+        return description;
+      }
+
+      @Override public String key() {
+        return key;
       }
     }
 
@@ -541,28 +559,32 @@ interface type {
      * @author Niv Shalmon
      * @since 2016-08-XX */
     public enum Uncertain implements type.Primitive {
-      // Doubtful types, from four fold uncertainty down to bilalteral
+      // Doubtful types, from four fold uncertainty down to bilateral
       // schizophrenia" .
       ALPHANUMERIC("String|double|float|long|int|char|short|byte", "only in binary plus: f()+g(), 2 + f(), nor f() + null"), //
-      BAPTIZED("!double&!long&!int", "an object of some type, for which we have a name only"), //
-      BOOLEANINTEGRAL("boolean|long|int|char|short|byte", "only in x^y,x&y,x|y"), //
-      INTEGRAL("long|int|char|short|byte", "must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() "), //
-      NONNULL("!null", "e.g., new Object() and that's about it"), //
-      // Those anonymous characters that known little or nothing about
-      // themselves
-      NOTHING("none", "when nothing can be said, e.g., f(f(),f(f(f()),f()))"), //
+      BOOLEANINTEGRAL(as.list(BOOLEAN, BYTE, SHORT, CHAR, INT, LONG), "only in x^y,x&y,x|y"), //
+      INTEGER(as.list(INT, LONG), "must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() "), //
+      INTEGRAL(as.list(BYTE, CHAR, SHORT, INT, LONG),"must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() "), //
       NUMERIC("double|float|long|int|char|short|byte", "must be either f()*g(), 2L*f(), 2.*a(), not 2 %a(), nor 2"), //
       ;
       final String description;
-      final String name;
+      final String key;
 
-      Uncertain(final String name, final String description) {
-        this.name = name;
+      private Uncertain(final Iterable<? extends type> ts, final String description) {
+        this(ts + "", description);
+      }
+
+      private Uncertain(final String key, final String description) {
+        this.key = key;
         this.description = description;
       }
 
       @Override public String description() {
         return description;
+      }
+
+      @Override public String key() {
+        return key;
       }
     }
   }
