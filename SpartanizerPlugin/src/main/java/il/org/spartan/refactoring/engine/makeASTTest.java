@@ -7,11 +7,12 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+
 // Todo: move me to the test folder
 public class makeASTTest {
   private static final String HELLO_JAVA = "Hello.java";
   public static final String ROOT = "./src/test/resources/";
-  File f = new File(ROOT + HELLO_JAVA);
+  private File f = new File(ROOT + HELLO_JAVA);
 
   @Test public void test() {
     azzert.notNull(ROOT);
