@@ -23,14 +23,22 @@ public class EnvFlatHandler extends ENVTestEngineAbstract {
     testSet = generateSet();
   }
 
-  @Override protected Set<Entry<String, Information>> buildEnvironmentSet(final BodyDeclaration d) {
-    return Environment.uses(d);
+  /* TODO Update EnvironmentCodeExamples - currently NestedENV does not
+   * represent the expected results of neither Environment.uses or
+   * Environment.declares. Should be the expected result of
+   * Environment.declares.
+   *
+   * @see
+   * il.org.spartan.refactoring.engine.ENVTestEngineAbstract#buildEnvironmentSet
+   * (org.eclipse.jdt.core.dom.BodyDeclaration) */
+  @Override protected Set<Entry<String, Information>> buildEnvironmentSet(final BodyDeclaration $) {
+    return Environment.declares($);
   }
 
-  @Override protected void handler(final Annotation $){
-    handler(az.singleMemberAnnotation($));
+  @Override protected void handler(final Annotation ¢) {
+    handler(az.singleMemberAnnotation(¢));
   }
-  
+
   /** Parse the outer annotation to get the inner ones. Add to the flat Set.
    * Compare uses() and declares() output to the flat Set.
    * @param $ JD */
