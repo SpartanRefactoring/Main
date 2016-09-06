@@ -19,6 +19,7 @@ import org.eclipse.ui.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.handlers.*;
+import il.org.spartan.refactoring.plugin.*;
 
 /** the base class for all Spartanization Refactoring classes, contains common
  * functionality
