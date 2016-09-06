@@ -10,10 +10,10 @@ import il.org.spartan.refactoring.ast.*;
 /** @author Dor Ma'ayan
  * @since 2016 */
 public class Recurser<T> {
-  /** Get a list of the direct fhildren of a ASTNode
+  /** Get a list of the direct children of a ASTNode
    * @param n an ASTNode
    * @return a list of n's children */
-  @SuppressWarnings("unchecked") private static List<ASTNode> getChildren(final ASTNode n) {
+  private static List<ASTNode> getChildren(final ASTNode n) {
     if (n == null)
       return new ArrayList<>();
     final InfixExpression ¢ = az.infixExpression(n);
