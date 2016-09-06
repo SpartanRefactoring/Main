@@ -17,7 +17,7 @@ public enum step {
   @SuppressWarnings("unchecked") public static List<Expression> arguments(final ClassInstanceCreation ¢) {
     return ¢.arguments();
   }
-  
+
   /** Expose the list of arguments in a {@link MethodInvocation}
    * @param ¢ JD
    * @return reference to the list of arguments in the argument */
@@ -53,11 +53,11 @@ public enum step {
   @SuppressWarnings("unchecked") public static List<CatchClause> catchClauses(final TryStatement ¢) {
     return ¢.catchClauses();
   }
-  
+
   @SuppressWarnings("rawtypes") public static List<ASTNode> marchingList(final ASTNode ¢) {
     final List<ASTNode> $ = new ArrayList<>();
     final List lst = ¢.structuralPropertiesForType();
-    for (Object s : lst){
+    for (final Object s : lst) {
       final Object child = ¢.getStructuralProperty((StructuralPropertyDescriptor) s);
       if (iz.astNode(child))
         $.add(az.astNode(child));

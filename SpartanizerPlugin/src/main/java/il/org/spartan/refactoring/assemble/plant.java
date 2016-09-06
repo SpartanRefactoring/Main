@@ -16,18 +16,14 @@ import il.org.spartan.refactoring.java.*;
  * @author Yossi Gil
  * @since 2015-08-20 */
 public interface plant {
-  /**
-   * Factory method recording the expression that might be wrapped.
-   * @param inner  JD 
-   */
+  /** Factory method recording the expression that might be wrapped.
+   * @param inner JD */
   static PlantingExpression plant(final Expression inner) {
     return new PlantingExpression(inner);
   }
 
-  /**
-   * Factory method recording the statement might be wrapped.
-   * @param inner  JD 
-   */
+  /** Factory method recording the statement might be wrapped.
+   * @param inner JD */
   static PlantingStatement plant(final Statement inner) {
     return new PlantingStatement(inner);
   }
