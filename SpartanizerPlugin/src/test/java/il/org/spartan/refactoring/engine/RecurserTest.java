@@ -7,8 +7,6 @@ import java.util.function.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-import il.org.spartan.refactoring.engine.*;
-
 /** @author Dor Ma'ayan
  * @since 2016 */
 @SuppressWarnings({ "static-method", "javadoc", "boxing" }) public class RecurserTest {
