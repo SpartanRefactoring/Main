@@ -20,7 +20,10 @@ public class EnvironmentTestEngine {
   static Set<Entry<String, Environment.Information>> generateSet() {
     return Collections.unmodifiableSet(new HashSet<>());
   }
-
+  /**
+   * @param from - file path
+   * @return CompilationUnit of the code written in the file specified.
+   */
   // s = "il.org.spartan.refactoring.java.EnvironmentCodeExamples.java"
   static CompilationUnit getCompilationUnit(final String from) {
     final IJavaProject javaProject = getJavaProject("spartenRefactoring");
@@ -77,7 +80,7 @@ public class EnvironmentTestEngine {
   private void addValueToBeginEnd(final List<MemberValuePair> ps) {
   }
 
-  // TODO: Information should be instantiated with Type
+  // TODO: Information should be instantiated with PrudentType
   private void addValueToFlat(final List<MemberValuePair> ps) {
     testFlatENV.add(new MapEntry<>(wizard.asString(ps.get(0).getValue()), new Information()));
   }
@@ -154,14 +157,23 @@ public class EnvironmentTestEngine {
    * TODO: internal node parsing. Think about Nested parsing. */
   public void runTest() {
     n.accept(new ASTVisitor() {
-      void addAnnotations(final List<Annotation> as) {
+      /**
+      * Iterate over annotations of the current declaration and dispatch them to handlers.  
+      * otherwise
+      */
+      void checkAnnotations(final List<Annotation> as) {
         for (final Annotation ¢ : as)
           dispatch(¢);
       }
 
       void beginEndHandler(final Annotation a) {
       }
-
+      
+      /**
+       * Call the corresponding handler according to the annotation sort.
+       * TODO: only flat is implemented (partially)
+       * @param a JD
+       */
       void dispatch(final Annotation a) {
         if (a.getTypeName() + "" == "nestedENV")
           nestedHandler(a);
@@ -170,11 +182,21 @@ public class EnvironmentTestEngine {
         else if (a.getTypeName() + "" == "BegingEndENV")
           beginEndHandler(a);
       }
-
+      
+      /**
+       * TODO: May be redundant wrapper.
+       * @param ¢ JD
+       */
       void flatHandler(final Annotation ¢) {
         flatHandler(az.singleMemberAnnotation(¢));
       }
-
+      
+      /**
+       * Parse the outer annotation to get the inner ones.
+       * Add to the flat Set.
+       * Compare uses() and declares() output to the flat Set.
+       * @param $ JD
+       */
       void flatHandler(final SingleMemberAnnotation $) {
         if ($ == null)
           return;
@@ -188,12 +210,18 @@ public class EnvironmentTestEngine {
 
       void nestedHandler(final Annotation a) {
       }
-
+      /**
+       * TODO: only MothodDeclaration is implemented. Should implement all nodes 
+       * which can have annotations.
+       */
       @Override public boolean visit(final MethodDeclaration d) {
-        /* Set<Entry<String, Information>> useCheckSet = Environment.uses(d);
-         * Set<Entry<String, Information>> declareCheckSet =
-         * Environment.declares(d); */
-        addAnnotations(extract.annotations(d));
+        checkAnnotations(extract.annotations(d));
+        /** Set<Entry<String, Information>> useSet = Environment.uses(d);
+         * Set<Entry<String, Information>> declareSet = Environment.declares(d);
+         * TODO: Run the code above and compare to the corresponding testSets */
+        testNestedENV.clear();
+        testFlatENV.clear();
+        testBeginEnd.clear();
         return true;
       }
     });
