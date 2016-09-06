@@ -60,7 +60,7 @@ public class typeTest {
 
     @Test public void axiomAssignment1() {
       int x;
-      azzert.that(Axiom.axiom(x = 2), is(INT));
+      azzert.that(Axiom.type(x = 2), is(INT));
     }
 
     @Test public void axiomAssignment2() {
@@ -70,39 +70,39 @@ public class typeTest {
 
     @Test public void axiomAssignment3() {
       char x;
-      azzert.that(Axiom.axiom(x = 2), is(CHAR));
+      azzert.that(Axiom.type(x = 2), is(CHAR));
     }
 
     @Test public void axiomAssignment4() {
       short x;
-      azzert.that(Axiom.axiom(x = 2), is(SHORT));
+      azzert.that(Axiom.type(x = 2), is(SHORT));
     }
 
     @Test public void axiomAssignment5() {
       long x;
-      azzert.that(Axiom.axiom(x = 2), is(LONG));
+      azzert.that(Axiom.type(x = 2), is(LONG));
     }
 
     @Test public void axiomAssignment6() {
       double x;
-      azzert.that(Axiom.axiom(x = 2), is(DOUBLE));
+      azzert.that(Axiom.type(x = 2), is(DOUBLE));
     }
 
     @Test public void axiomAssignment7() {
       String x;
-      azzert.that(Axiom.axiom(x = "abs"), is(STRING));
+      azzert.that(Axiom.type(x = "abs"), is(STRING));
     }
 
     @Test public void axiomAssignment8() {
       double x;
       int y;
-      azzert.that(Axiom.axiom(x = y = 2), is(DOUBLE));
+      azzert.that(Axiom.type(x = y = 2), is(DOUBLE));
     }
 
     @Test public void axiomAssignment9() {
       double x;
       int y;
-      azzert.that(Axiom.axiom(y = (int) (x = 2)), is(INT));
+      azzert.that(Axiom.type(y = (int) (x = 2)), is(INT));
     }
 
     @Test public void axiomBoolean1() {
@@ -123,107 +123,107 @@ public class typeTest {
 
     // s for the axiom methods
     @Test public void axiomChar1() {
-      azzert.that(Axiom.axiom('a'), is(CHAR));
+      azzert.that(Axiom.type('a'), is(CHAR));
     }
 
     @Test public void axiomDouble() {
-      azzert.that(Axiom.axiom(7.), is(DOUBLE));
+      azzert.that(Axiom.type(7.), is(DOUBLE));
     }
 
     @Test public void axiomExpression1() {
-      azzert.that(Axiom.axiom(3 / 2. + 7), is(DOUBLE));
+      azzert.that(Axiom.type(3 / 2. + 7), is(DOUBLE));
     }
 
     @Test public void axiomExpression10() {
-      azzert.that(Axiom.axiom(9f / 9), is(FLOAT));
+      azzert.that(Axiom.type(9f / 9), is(FLOAT));
     }
 
     @Test public void axiomExpression11() {
-      azzert.that(Axiom.axiom((float) 1 / (int) 1L), is(FLOAT));
+      azzert.that(Axiom.type((float) 1 / (int) 1L), is(FLOAT));
     }
 
     @Test public void axiomExpression12() {
-      azzert.that(Axiom.axiom(1 * (float) 1 / 1L), is(FLOAT));
+      azzert.that(Axiom.type(1 * (float) 1 / 1L), is(FLOAT));
     }
 
     @Test public void axiomExpression13() {
-      azzert.that(Axiom.axiom((float) 1 / (short) 1), is(FLOAT));
+      azzert.that(Axiom.type((float) 1 / (short) 1), is(FLOAT));
     }
 
     @Test public void axiomExpression14() {
-      azzert.that(Axiom.axiom((float) 1 + 1 * 1L), is(FLOAT));
+      azzert.that(Axiom.type((float) 1 + 1 * 1L), is(FLOAT));
     }
 
     @Test public void axiomExpression15() {
-      azzert.that(Axiom.axiom((float) 1 + (char) 1), is(FLOAT));
+      azzert.that(Axiom.type((float) 1 + (char) 1), is(FLOAT));
     }
 
     @Test public void axiomExpression2() {
-      azzert.that(Axiom.axiom(3 / 2l + 7), is(LONG));
+      azzert.that(Axiom.type(3 / 2l + 7), is(LONG));
     }
 
     @Test public void axiomExpression3() {
-      azzert.that(Axiom.axiom(67 >> 2l), is(INT));
+      azzert.that(Axiom.type(67 >> 2l), is(INT));
     }
 
     @Test public void axiomExpression4() {
-      azzert.that(Axiom.axiom(67L >> 2l), is(LONG));
+      azzert.that(Axiom.type(67L >> 2l), is(LONG));
     }
 
     @Test public void axiomExpression5() {
-      azzert.that(Axiom.axiom(2 * 3 / 4 + 1. - 5), is(DOUBLE));
+      azzert.that(Axiom.type(2 * 3 / 4 + 1. - 5), is(DOUBLE));
     }
 
     @Test public void axiomExpression6() {
-      azzert.that(Axiom.axiom((2 * 3 / 4 + 1. - 5) % 4), is(DOUBLE));
+      azzert.that(Axiom.type((2 * 3 / 4 + 1. - 5) % 4), is(DOUBLE));
     }
 
     @Test public void axiomExpression7() {
-      azzert.that(Axiom.axiom((2 * 3 / 4 + 1 - 5) % 4), is(INT));
+      azzert.that(Axiom.type((2 * 3 / 4 + 1 - 5) % 4), is(INT));
     }
 
     @Test public void axiomExpression8() {
-      azzert.that(Axiom.axiom((2 * 3 / 4 + 1L - 5) % 4), is(LONG));
+      azzert.that(Axiom.type((2 * 3 / 4 + 1L - 5) % 4), is(LONG));
     }
 
     @Test public void axiomExpression9() {
-      azzert.that(Axiom.axiom(-1.0 / 2 * 3 / 4 * 5 * 6 / 7 / 8 / 9), is(DOUBLE));
+      azzert.that(Axiom.type(-1.0 / 2 * 3 / 4 * 5 * 6 / 7 / 8 / 9), is(DOUBLE));
     }
 
     @Test public void axiomFloat() {
-      azzert.that(Axiom.axiom(7f), is(FLOAT));
+      azzert.that(Axiom.type(7f), is(FLOAT));
     }
 
     @Test public void axiomInt1() {
-      azzert.that(Axiom.axiom(7), is(INT));
+      azzert.that(Axiom.type(7), is(INT));
     }
 
     @Test public void axiomInt2() {
-      azzert.that(Axiom.axiom(4 + 'a'), is(INT));
+      azzert.that(Axiom.type(4 + 'a'), is(INT));
     }
 
     @Test public void axiomLong() {
-      azzert.that(Axiom.axiom(7l), is(LONG));
+      azzert.that(Axiom.type(7l), is(LONG));
     }
 
     @Test public void axiomShort() {
-      azzert.that(Axiom.axiom((short) 3), is(SHORT));
+      azzert.that(Axiom.type((short) 3), is(SHORT));
     }
 
     @Test public void axiomString1() {
-      azzert.that(Axiom.axiom("string"), is(STRING));
+      azzert.that(Axiom.type("string"), is(STRING));
     }
 
     @Test public void axiomString2() {
-      azzert.that(Axiom.axiom("string" + 9.0), is(STRING));
+      azzert.that(Axiom.type("string" + 9.0), is(STRING));
     }
 
     @Test public void axiomString3() {
-      azzert.that(Axiom.axiom("string" + 'd'), is(STRING));
+      azzert.that(Axiom.type("string" + 'd'), is(STRING));
     }
 
     @Test public void axiomString4() {
-      azzert.that(Axiom.axiom(Integer.toString(15)), is(STRING));
+      azzert.that(Axiom.type(Integer.toString(15)), is(STRING));
     }
 
     // basic tests for pre/in/postfix expression
@@ -324,11 +324,11 @@ public class typeTest {
     }
 
     @Test public void BitwiseOperationsSemantics01() {
-      azzert.that(Axiom.axiom(c1 | c2), is(INT));
+      azzert.that(Axiom.type(c1 | c2), is(INT));
     }
 
     @Test public void BitwiseOperationsSemantics02() {
-      azzert.that(Axiom.axiom(b & c1), is(INT));
+      azzert.that(Axiom.type(b & c1), is(INT));
     }
 
     @Test public void BitwiseOperationsSemantics03() {
@@ -504,23 +504,23 @@ public class typeTest {
     }
 
     @Test public void InDecreamentSemantics01() {
-      azzert.that(Axiom.axiom(i++), is(INT));
+      azzert.that(Axiom.type(i++), is(INT));
     }
 
     @Test public void InDecreamentSemantics02() {
-      azzert.that(Axiom.axiom(l--), is(LONG));
+      azzert.that(Axiom.type(l--), is(LONG));
     }
 
     @Test public void inDecreamentSemantics03() {
-      azzert.that(Axiom.axiom(++s), is(SHORT));
+      azzert.that(Axiom.type(++s), is(SHORT));
     }
 
     @Test public void InDecreamentSemantics04() {
-      azzert.that(Axiom.axiom(d++), is(DOUBLE));
+      azzert.that(Axiom.type(d++), is(DOUBLE));
     }
 
     @Test public void InDecreamentSemantics05() {
-      azzert.that(Axiom.axiom(--f), is(FLOAT));
+      azzert.that(Axiom.type(--f), is(FLOAT));
     }
 
     @Test public void InDecreamentSemantics06() {
@@ -530,7 +530,7 @@ public class typeTest {
 
     @Test public void InDecreamentSemantics07() {
       char x = 0;
-      azzert.that(Axiom.axiom(--x), is(CHAR));
+      azzert.that(Axiom.type(--x), is(CHAR));
     }
 
     // tests for recognition of literals
@@ -599,7 +599,7 @@ public class typeTest {
     }
 
     @Test public void makeSureIUnderstandSemanticsOfShift() {
-      azzert.that(Axiom.axiom((short) 1 << 1L), is(INT));
+      azzert.that(Axiom.type((short) 1 << 1L), is(INT));
     }
 
     // s for method calls. currently only toString()
@@ -620,41 +620,41 @@ public class typeTest {
     }
 
     @Test public void OnaryPlusMinusSemantics01() {
-      azzert.that(Axiom.axiom(+i), is(INT));
+      azzert.that(Axiom.type(+i), is(INT));
     }
 
     @Test public void OnaryPlusMinusSemantics02() {
-      azzert.that(Axiom.axiom(-l), is(LONG));
+      azzert.that(Axiom.type(-l), is(LONG));
     }
 
     @Test public void OnaryPlusMinusSemantics03() {
       final short x = 0;
-      azzert.that(Axiom.axiom(+x), is(INT));
+      azzert.that(Axiom.type(+x), is(INT));
     }
 
     @Test public void OnaryPlusMinusSemantics04() {
-      azzert.that(Axiom.axiom(+d), is(DOUBLE));
+      azzert.that(Axiom.type(+d), is(DOUBLE));
     }
 
     @Test public void OnaryPlusMinusSemantics05() {
-      azzert.that(Axiom.axiom(-f), is(FLOAT));
+      azzert.that(Axiom.type(-f), is(FLOAT));
     }
 
     @Test public void OnaryPlusMinusSemantics06() {
-      azzert.that(Axiom.axiom(+b), is(INT));
+      azzert.that(Axiom.type(+b), is(INT));
     }
 
     @Test public void OnaryPlusMinusSemantics07() {
-      azzert.that(Axiom.axiom(-b), is(INT));
+      azzert.that(Axiom.type(-b), is(INT));
     }
 
     @Test public void OnaryPlusMinusSemantics08() {
       final char x = 0;
-      azzert.that(Axiom.axiom(-x), is(INT));
+      azzert.that(Axiom.type(-x), is(INT));
     }
 
     @Test public void OnaryPlusMinusSemantics09() {
-      azzert.that(Axiom.axiom(-c1), is(INT));
+      azzert.that(Axiom.type(-c1), is(INT));
     }
     
      @Test public void under01() {
