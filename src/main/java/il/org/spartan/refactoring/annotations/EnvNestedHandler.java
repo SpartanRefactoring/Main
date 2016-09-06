@@ -53,7 +53,7 @@ public class EnvNestedHandler extends ENVTestEngineAbstract {
       // runs on the Ids
       @Override public boolean visit(final NormalAnnotation ¢) {
         if (isNameId(¢.getTypeName()))
-          addValueToSet(values(¢));
+          addTestSet(values(¢));
         return true;
       }
     });
