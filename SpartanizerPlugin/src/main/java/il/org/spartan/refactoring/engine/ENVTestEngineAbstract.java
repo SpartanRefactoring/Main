@@ -15,7 +15,6 @@ import il.org.spartan.refactoring.java.Environment.*;
 import il.org.spartan.refactoring.utils.*;
 
 public abstract class ENVTestEngineAbstract {
-
   protected static Set<Entry<String, Environment.Information>> generateSet() {
     return new HashSet<>();
   }
@@ -35,23 +34,25 @@ public abstract class ENVTestEngineAbstract {
     return $;
   }
 
-  /**
-   * Determines that we have got to the correct Annotation
+  /** Determines that we have got to the correct Annotation
    * @param n1
-   * @return
-   */
+   * @return */
   public static boolean isNameId(final Name n1) {
     assert !"@Id".equals("" + n1); // To find the bug, if it appears as @Id, and
                                    // not Id.
     return "Id".equals("" + n1);
   }
 
-  protected boolean foundTestedAnnotation = false; //Global flag, used to determine when to run the test on a node with potential annotations.
+  protected boolean foundTestedAnnotation = false; // Global flag, used to
+                                                   // determine when to run the
+                                                   // test on a node with
+                                                   // potential annotations.
   protected ASTNode n = null;
   protected Set<Entry<String, Environment.Information>> testSet;
 
   // TODO: Information should be instantiated with PrudentType
-  //In the future, we would like to instantiate it with hiding, parent ASTNode info, etc.
+  // In the future, we would like to instantiate it with hiding, parent ASTNode
+  // info, etc.
   public void addValueToSet(final List<MemberValuePair> ps) {
     testSet.add(new MapEntry<>(wizard.asString(ps.get(0).getValue()), new Information()));
   }
@@ -68,14 +69,16 @@ public abstract class ENVTestEngineAbstract {
   //
   // TODO Implement method. Currently awaits Yossi's advice regarding
   // LinkedHashSet unmodifiable issue.
-  //TODO once the method is determined to be working, change to visibility to protected.
+  // TODO once the method is determined to be working, change to visibility to
+  // protected.
   public void compareInOrder(final Set<Entry<String, Information>> $) {
   }
 
   /** Compares the set from the annotation with the set that the checked
    * function generates.
    * @param $ */
-  //TODO once the method is determined to be working, change to visibility to protected.
+  // TODO once the method is determined to be working, change to visibility to
+  // protected.
   public void compareOutOfOrder(final Set<Entry<String, Information>> $) {
     azzert.aye(testSet != null);
     azzert.aye($ != null);
@@ -98,8 +101,7 @@ public abstract class ENVTestEngineAbstract {
    * each inner annotation node, and send everything to an outside function to
    * add to the Sets as required. That means that each inner annotation will be
    * visited twice from the same outer annotation, but that should not cause
-   * worry, since the outside visitor will do nothing.
-   */
+   * worry, since the outside visitor will do nothing. */
   public void runTest() {
     n.accept(new ASTVisitor() {
       /** Iterate over annotations of the current declaration and dispatch them
