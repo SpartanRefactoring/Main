@@ -86,19 +86,6 @@ public class EnvironmentTestEngine {
     }
   }
 
-  class X {
-    int a = a() / b();
-    int b = 2 * a + b();
-
-    int a() {
-      return a + b + 2 * a();
-    }
-
-    int b() {
-      return b() + b * a();
-    }
-  }
-
   /** Compares output Set (testFlatENV) with provided set, that will be the
    * result of the flat version of defines.
    * @param $ */
