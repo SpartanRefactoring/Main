@@ -42,9 +42,9 @@ import il.org.spartan.refactoring.wring.*;
    * @param statement a {@link String} that represents a Java statement
    * @return an {@link Statement} data structure representing the parameter. */
   public static Statement asSingle(final String statement) {
-    azzert.notNull(statement);
+   assert null !=(statement);
     final ASTNode n = makeAST.STATEMENTS.from(statement);
-    azzert.notNull(n);
+   assert null !=(n);
     return extract.singleStatement(n);
   }
 
@@ -59,9 +59,9 @@ import il.org.spartan.refactoring.wring.*;
 
   static String apply(final Trimmer t, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
-    azzert.notNull(u);
+   assert null !=(u);
     final Document d = new Document(from);
-    azzert.notNull(d);
+   assert null !=(d);
     return TESTUtils.rewrite(t, u, d).get();
   }
 
@@ -76,7 +76,7 @@ import il.org.spartan.refactoring.wring.*;
 
   static void assertOneOpportunity(final Spartanization s, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
-    azzert.notNull(u);
+   assert null !=(u);
     azzert.that(TrimmerTestsUtils.countOpportunities(s, u), greaterThanOrEqualTo(1));
   }
 }

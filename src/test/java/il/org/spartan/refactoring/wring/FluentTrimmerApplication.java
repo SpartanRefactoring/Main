@@ -50,7 +50,7 @@ public class FluentTrimmerApplication extends Trimmer.With {
     } catch (MalformedTreeException | BadLocationException x) {
       throw new AssertionError("BUG", x);
     }
-    azzert.notNull(undoEdit);
+    assert null != ( undoEdit);
   }
 
   /** creates an ASTRewrite which contains the changes
@@ -156,9 +156,9 @@ public class FluentTrimmerApplication extends Trimmer.With {
 
   <N extends ASTNode> N findNode(final Class<N> clazz) {
     final GuessedContext guessContext = GuessedContext.find(codeFragment);
-    azzert.notNull(guessContext);
+    assert null != ( guessContext);
     final N $ = firstInstance(clazz);
-    azzert.notNull($);
+    assert null != ( $);
     return $;
   }
 

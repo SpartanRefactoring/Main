@@ -24,7 +24,7 @@ import il.org.spartan.refactoring.spartanizations.*;
  * @author Yossi Gil
  * @year 2016 */
 public interface trim {
-  public static int countOpportunities(final Spartanization s, final CompilationUnit u) {
+  static int countOpportunities(final Spartanization s, final CompilationUnit u) {
     return s.findOpportunities(u).size();
   }
 

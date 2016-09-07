@@ -12,7 +12,7 @@ public class Out {
     System.out.print(s);
   }
   public static void out(final String name, final Object a) {
-    System.out.printf(a == null ? "No %s\n" : "%s = %s\n", name, a);
+    System.out.printf((a == null ? "No" : "%s =") + " %s\n", name, a);
   }
   public static void out(final String name, final int a) {
     System.out.printf("%s = %d\n", name, (a));
@@ -31,7 +31,7 @@ public class Out {
   }
   public static void out(final String name, final Collection<Object> a) {
     assert name != null;
-    if (a == null || a.size() <= 0)
+    if (a == null || a.isEmpty())
       System.out.printf("No %s\n", name);
     else if (a.size() == 1)
       System.out.printf("Only 1 %s: %s\n", name, a.iterator().next());

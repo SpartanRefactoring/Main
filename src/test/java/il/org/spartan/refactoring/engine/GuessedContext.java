@@ -150,7 +150,7 @@ public enum GuessedContext {
     final String off = off(wrap);
     final String essence = essence(inner);
     final String essence2 = essence(off);
-    azzert.notNull(essence2);
+   assert essence2 != null;
     return essence2.contains(essence);
   }
 
