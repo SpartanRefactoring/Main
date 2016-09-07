@@ -100,8 +100,8 @@ import org.eclipse.jdt.core.dom.*;
   static final Set<String> emptySet = Collections.unmodifiableSet(new HashSet<>());
 
   /** @return set of entries defined in the node, including all hiding. */
-  static Set<Entry<String, Information>> declares(final ASTNode n) {
-    return Collections.unmodifiableSet(new HashSet<>());
+  static LinkedHashSet<Entry<String, Information>> declares(final ASTNode n) {
+    return new LinkedHashSet<>();
   }
 
   /** Spawns the first Nested Env. Should be used when the first block is
@@ -112,8 +112,8 @@ import org.eclipse.jdt.core.dom.*;
 
   /** @return set of entries used in a given node. this includes the list of
    *         entries that were defined in the node */
-  static Set<Entry<String, Information>> uses(final ASTNode n) {
-    return Collections.unmodifiableSet(new HashSet<>());
+  static LinkedHashSet<Entry<String, Information>> uses(final ASTNode n) {
+    return new LinkedHashSet<>();
   }
 
   /** Return true iff Env doesn't have the name. */
