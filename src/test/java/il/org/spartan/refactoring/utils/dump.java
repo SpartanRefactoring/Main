@@ -94,13 +94,13 @@ public class dump {
       if (m.getParameterTypes().length != 0)
         continue;
       String name = m.getName();
-      if (name.equals("getClass") || name.equals("toString"))
+      if ("getClass".equals(name) || "toString".equals(name))
         continue;
       if (name.matches("^get[A-Z].*$"))
         name = name.replaceFirst("^get", "");
       else if (name.matches("^is[A-Z].*$"))
         name = name.replaceFirst("^is", "");
-      else if (name.equals("size"))
+      else if ("size".equals(name))
         name = "size";
       else if (!name.matches("^to[A-Z].*$"))
         continue;
