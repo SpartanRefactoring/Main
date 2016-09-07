@@ -42,9 +42,9 @@ import il.org.spartan.refactoring.wring.*;
    * @param statement a {@link String} that represents a Java statement
    * @return an {@link Statement} data structure representing the parameter. */
   public static Statement asSingle(final String statement) {
-   assert null !=(statement);
+   assert statement != null;
     final ASTNode n = makeAST.STATEMENTS.from(statement);
-   assert null !=(n);
+   assert n != null;
     return extract.singleStatement(n);
   }
 
