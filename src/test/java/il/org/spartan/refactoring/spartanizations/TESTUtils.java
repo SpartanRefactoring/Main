@@ -59,9 +59,9 @@ import il.org.spartan.refactoring.wring.*;
 
   static String apply(final Trimmer t, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
-    assert null != u;
+    assert u != null;
     final Document d = new Document(from);
-    assert null != d;
+    assert d != null;
     return TESTUtils.rewrite(t, u, d).get();
   }
 
@@ -76,7 +76,7 @@ import il.org.spartan.refactoring.wring.*;
 
   static void assertOneOpportunity(final Spartanization s, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
-    assert null != u;
+   assert u != null;
     azzert.that(TrimmerTestsUtils.countOpportunities(s, u), greaterThanOrEqualTo(1));
   }
 }
