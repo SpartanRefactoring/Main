@@ -4,6 +4,7 @@ import static il.org.spartan.refactoring.wring.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
+// TODO: Niv, see if you can activate the tests here and resolve #97
 /** @author Stav Namir
  * @since 2016-08-29 */
 @SuppressWarnings("static-method") @Ignore("Issue #97 : under construction") public class TestIssue97 {
