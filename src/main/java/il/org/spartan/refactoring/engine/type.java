@@ -2,6 +2,7 @@ package il.org.spartan.refactoring.engine;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.refactoring.ast.step.*;
+import static il.org.spartan.refactoring.engine.type.*;
 import static il.org.spartan.refactoring.engine.type.Odd.Types.*;
 import static il.org.spartan.refactoring.engine.type.Primitive.Certain.*;
 import static il.org.spartan.refactoring.engine.type.Primitive.Uncertain.*;
@@ -355,7 +356,7 @@ public interface type {
        *         {@link #DOUBLE} , {@link #INTEGRAL} or {@link #NUMERIC} , in
        *         case it cannot decide */
       default implementation above(final PrefixExpression.Operator o) {
-        return o == NOT ? BOOLEAN : o != COMPLEMENT?asNumeric():asIntegral();
+        return o == NOT ? BOOLEAN : o != COMPLEMENT ? asNumeric() : asIntegral();
       }
 
       default implementation aboveBinaryOperator(final InfixExpression.Operator o) {
@@ -420,7 +421,6 @@ public interface type {
         inner.types.put(key(), this);
         return this;
       }
-
 
       /** To be used to determine the type of the result of o being used on the
        * caller
@@ -579,7 +579,7 @@ public interface type {
         return isIntegral() ? INTEGRAL //
             : isNumeric() ? NUMERIC //
                 : isAlphaNumeric() ? ALPHANUMERIC //
-                    : this != BOOLEAN?null:BOOLEANINTEGRAL;
+                    : this != BOOLEAN ? null : BOOLEANINTEGRAL;
       }
 
       @Override public boolean canB(final Certain ¢) {

@@ -33,6 +33,6 @@ public class InfixEmptyStringAdditionReorder extends Wring.ReplaceCurrentNode<In
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
-    return  !isEmptyStringLiteral(step.left(x)) || !iz.infixPlus(x) ? null : replace(x);
+    return !isEmptyStringLiteral(step.left(x)) || !iz.infixPlus(x) ? null : replace(x);
   }
 }

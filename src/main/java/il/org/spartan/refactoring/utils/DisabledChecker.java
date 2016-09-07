@@ -86,7 +86,7 @@ public class DisabledChecker {
       final Javadoc j = d.getJavadoc();
       if (j == null)
         return true;
-      String s = j.toString();
+      final String s = j.toString();
       if (s.contains(dsi))
         dns.add(d);
       else if (s.contains(esi))

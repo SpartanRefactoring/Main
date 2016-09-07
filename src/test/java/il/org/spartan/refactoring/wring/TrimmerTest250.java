@@ -596,7 +596,7 @@ public class TrimmerTest250 {
   @Test public void issue116_01() {
     trimming("\"\" + x").to("x + \"\"");
   }
-  
+
   @Test public void issue116_02() {
     trimming("\"\" + x.foo()").to("x.foo() + \"\"");
   }
