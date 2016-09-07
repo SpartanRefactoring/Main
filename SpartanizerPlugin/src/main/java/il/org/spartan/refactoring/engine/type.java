@@ -151,12 +151,6 @@ public interface type {
         return in(this, NOTHING, NULL);
       }
 
-      default implementation join() {
-        assert !types.containsKey(key());
-        types.put(key(), this);
-        return this;
-      }
-
       /** To be used to determine the type of the result of o being used on the
        * caller
        * @return one of {@link #BOOLEAN} , {@link #INT} , {@link #LONG} ,
@@ -245,9 +239,15 @@ public interface type {
         // unless both operands are numeric, the result may be a String
         return in(STRING, this, k) || in(NULL, this, k) ? STRING : !isNumeric() || !k.isNumeric() ? ALPHANUMERIC : underNumericOnlyOperator(k);
       }
+    
+      @SuppressWarnings("synthetic-access") default implementation join() {
+        assert !have(key());
+        inner.types.put(key(), this);
+        return this;
+      }
     }
 
-    static implementation conditionalWithNoInfo(final implementation t) {
+    private static implementation conditionalWithNoInfo(final implementation t) {
       return in(t, BYTE, SHORT, CHAR, INT, INTEGRAL, LONG, FLOAT, NUMERIC) //
           ? NUMERIC //
           : !in(t, DOUBLE, STRING, BOOLEAN, BOOLEAN) //
@@ -296,7 +296,7 @@ public interface type {
      * @return The most specific Type information that can be deduced about the
      *         expression from it's structure, or {@link #NOTHING} if it cannot
      *         decide. Will never return null */
-    static implementation lookDown(final Expression x) {
+    private static implementation lookDown(final Expression x) {
       if (hasType(x))
         return getType(x);
       switch (x.getNodeType()) {
@@ -435,6 +435,10 @@ public interface type {
           return baptize(s);
       }
     }
+
+    private static String propertyName = "spartan type";
+    /** All type that were ever born */
+    private static Map<String, implementation> types = new LinkedHashMap<>();
   }
 
   /** Types we do not full understand yet.
@@ -572,10 +576,6 @@ public interface type {
     }
   }
 
-  /** All type that were ever born */
-  static Map<String, implementation> types = new LinkedHashMap<>();
-  static String propertyName = "spartan type";
-
   static implementation baptize(final String name) {
     return baptize(name, "anonymously born");
   }
@@ -592,8 +592,8 @@ public interface type {
     }.join();
   }
 
-  static implementation bring(final String name) {
-    return types.get(name);
+  @SuppressWarnings("synthetic-access") static implementation bring(final String name) {
+    return inner.types.get(name);
   }
 
   // TODO: Matteo. Nano-pattern of values: not implemented
@@ -602,8 +602,8 @@ public interface type {
     return inner.setType(¢, inner.lookUp(¢, inner.lookDown(¢)));
   }
 
-  static boolean have(final String name) {
-    return types.containsKey(name);
+  @SuppressWarnings("synthetic-access") static boolean have(final String name) {
+    return inner.types.containsKey(name);
   }
 
   default Primitive.Certain asPrimitiveCertain() {
