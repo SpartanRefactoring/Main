@@ -32,7 +32,7 @@ public class EnvNestedHandler extends ENVTestEngineAbstract {
    * il.org.spartan.refactoring.engine.ENVTestEngineAbstract#buildEnvironmentSet
    * (org.eclipse.jdt.core.dom.BodyDeclaration) */
   @Override protected LinkedHashSet<Entry<String, Information>> buildEnvironmentSet(final BodyDeclaration $) {
-    return Environment.declares($);
+    return null;
   }
 
   @Override protected void handler(final Annotation ¢) {
@@ -43,8 +43,7 @@ public class EnvNestedHandler extends ENVTestEngineAbstract {
    * Compare uses() and declares() output to the flat Set.
    * @param $ JD */
   void handler(final SingleMemberAnnotation a) {
-    assert a != null && !"@OutOfOrderflatENV".equals(a.getTypeName() + "");
-    if (!"OutOfOrderflatENV".equals(a.getTypeName() + ""))
+    if (a == null || !"OutOfOrderflatENV".equals(a.getTypeName() + ""))
       return;
     foundTestedAnnotation = true;
     a.accept(new ASTVisitor() {

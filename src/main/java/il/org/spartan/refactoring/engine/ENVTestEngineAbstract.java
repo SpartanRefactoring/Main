@@ -93,16 +93,15 @@ public abstract class ENVTestEngineAbstract {
     Iterator<Entry<String, Information>> j = $.iterator();
     boolean flag = true;
     while (i.hasNext()) {
-      if (!i.equals(j)) {
-        if (!j.hasNext()) {
-          flag = false;
+      Entry<String,Information> testEntry = i.next();
+      flag = false;
+      while (j.hasNext()) {
+        Entry<String,Information> comparedEntry = j.next();
+        if (comparedEntry.equals(testEntry)) {
+          flag = true;
           break;
         }
-        j.next();
-        continue;
       }
-      i.next();
-      j.next();
     }
     azzert.aye(flag);
   }
