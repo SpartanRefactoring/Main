@@ -12,17 +12,6 @@ import il.org.spartan.refactoring.engine.*;
  * @author Dor Ma'ayan
  * @since 2016-09-06 */
 public interface metrics {
-  /** @param n JD
-   * @return The total number of charcters in the compressed printout */
-  static int length(final ASTNode n) {
-    return 0;
-  }
-
-  /** @param n JD
-   * @return The total number of idetifiers that where mentioned in the AST */
-  static int identifiers(final ASTNode n) {
-    return 0;
-  }
 
   /** @param n JD
    * @return The total number of nodes in the AST */
@@ -50,14 +39,8 @@ public interface metrics {
 
   /** @param n JD
    * @return The total number of leaves in the AST */
-  static int leaves(final ASTNode n) {
+ static int leaves(final ASTNode n) {
     return nodes(n) - internals(n);
-  }
-
-  /** @param n JD
-   * @return The total number of distinct identifiers in the AST */
-  static int flowerishness(final ASTNode n) {
-    return 0;
   }
 
   /** @param n JD
