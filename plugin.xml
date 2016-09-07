@@ -1,149 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.2"?>
 <plugin>
-   <extension
-         id="il.org.spartan.refactoring.BuilderID"
-         name="Spartanization Suggestions"
+   <extension id="il.org.spartan.plugin.BuilderID"
+         name="Compute spartanization suggestions"
          point="org.eclipse.core.resources.builders">
-      <builder hasNature="true">
-         <run class="il.org.spartan.refactoring.plugin.Builder"/> 
+      <builder hasNature="true" isConfigurable="true">
+         <run class="il.org.spartan.plugin.Builder"/> 
       </builder>
    </extension>
-   <extension
-         id="il.org.spartan.refactoring.NatureID"
-         name="Spartanization Nature"
+   <extension id="il.org.spartan.plugin.NatureID"
+         name="Spartanizable"
          point="org.eclipse.core.resources.natures">
       <runtime>
-         <run class="il.org.spartan.refactoring.plugin.Nature"/> 
+         <run class="il.org.spartan.plugin.Nature"/> 
       </runtime>
-      <builder id="il.org.spartan.refactoring.BuilderID"/> 
+      <builder id="il.org.spartan.plugin.BuilderID"/> 
    </extension>
-     <extension
-     id="il.org.spartan.refactoring.application"
-     name="Spartan Refactoring Application"
-     point="org.eclipse.core.runtime.applications">
-     <application>
-     <run class="il.org.spartan.refactoring.application.Application"></run>
-     </application>
-   </extension>
-      <extension point="org.eclipse.ui.startup">
-     <startup class="il.org.spartan.refactoring.plugin.Plugin"/>
+     <extension point="org.eclipse.ui.startup">
+     <startup class="il.org.spartan.plugin.Plugin"/>
    </extension>
 
 <extension
-    id="il.org.spartan.refactoring.spartanizationSuggestion"
-    name="Spartanization Suggestion"
+    id="il.org.spartan.plugin.SpartanizationSuggestion"
+    name="Spartanization suggestion"
     point="org.eclipse.core.resources.markers">
-  <super type="org.eclipse.core.resources.problemmarker" />
+  <super type="il.org.spartan.plugin.SpartanizationSuggestion" />
 </extension>
    <extension point="org.eclipse.ui.ide.markerResolution">
       <markerResolutionGenerator 
-               markerType="il.org.spartan.refactoring.spartanizationSuggestion"
-         class="il.org.spartan.refactoring.plugin.QuickFixer"/>
+               markerType="il.org.spartan.plugin.SpartanizationSuggestion"
+         class="il.org.spartan.plugin.QuickFixer"/>
    </extension>
    <extension point="org.eclipse.ui.editors.annotationTypes">
-     <type markerType="il.org.spartan.refactoring.spartanizationSuggestion" 
-       name="il.org.spartan.refactoring.spartanizationMarker" />
+     <type markerType="il.org.spartan.plugin.SpartanizationSuggestion" 
+       name="il.org.spartan.plugin.spartanizationMarker" />
    </extension>
    <extension point="org.eclipse.ui.editors.markerAnnotationSpecification">
    <specification
-         annotationType="il.org.spartan.refactoring.spartanizationMarker"
-         colorPreferenceKey="il.org.spartan.refactoring.spartanizationMarker.color"
+         annotationType="il.org.spartan.plugin.spartanizationMarker"
+         colorPreferenceKey="il.org.spartan.plugin.spartanizationMarker.color"
          colorPreferenceValue="0,0,180"
          contributesToHeader="false"
          includeOnPreferencePage="true"
          label="Spartanization Suggestion"
-         overviewRulerPreferenceKey="il.org.spartan.refactoring.spartanizationMarker.overview"
+         overviewRulerPreferenceKey="il.org.spartan.plugin.spartanizationMarker.overview"
          overviewRulerPreferenceValue="true"
          presentationLayer="0"
-         textPreferenceKey="il.org.spartan.refactoring.spartanizationMarker.text"
+         textPreferenceKey="il.org.spartan.plugin.spartanizationMarker.text"
          textPreferenceValue="true"
          textStylePreferenceValue="PROBLEM_UNDERLINE"
-         verticalRulerPreferenceKey="il.org.spartan.refactoring.spartanizationMarker.ruler"
+         verticalRulerPreferenceKey="il.org.spartan.plugin.spartanizationMarker.ruler"
          verticalRulerPreferenceValue="true">
    </specification>
 </extension>
    <extension point="org.eclipse.ui.commands">
-      <category id="il.org.spartan.commands.category" name="Spartanization Category"/>
       <command
-            categoryId="il.org.spartan.commands.category"
-            id="il.org.spartan.commands.ToggleCommand"
-            name="Toggle Automatic Spartanization Suggestion">
+            name="Spartanize project"
+            id="il.org.spartan.plugin.commands.SpartanizeAll"
+            description="Repeatedly spartanize all Java files in this project"
+            />
+<command
+            id="il.org.spartan.plugin.commands.Toggle"
+            defaultHandler="il.org.spartan.plugin.Toggle"
+            description="Toggle spartanization suggestions"
+            name="Toggle">
             <state
-           		class="org.eclipse.ui.handlers.RegistryToggleState:true"
-           		id="org.eclipse.ui.commands.toggleState">
+              class="org.eclipse.ui.handlers.RegistryToggleState:true"
+              id="org.eclipse.ui.commands.toggleState">
             </state>
       </command>
-      <category
-            id="il.org.spartan.refactoring.category"
-            name="Spartan Refactoring">
-      </category>
-      <command
-            categoryId="il.org.spartan.refactoring.category"
-            id="il.org.spartan.refactoring.commands.ShortestOperand"
-            name="Shortest operand first">
-      </command>
-      <command
-            categoryId="il.org.spartan.refactoring.category"
-            id="il.org.spartan.refactoring.commands.ExtractMethod"
-            name="Extract statements to new method">
-      </command>
-      <command
-            categoryId="il.org.spartan.refactoring.category"
-            id="il.org.spartan.refactoring.commands.ForwardDeclaraion"
-            name="Forward declaration">
-      </command>
-      <command
-            categoryId="il.org.spartan.refactoring.category"
-            id="il.org.spartan.refactoring.commands.InlineSingleUse"
-            name="Inline single use">
-      </command>
-      <command
-            categoryId="il.org.spartan.refactoring.category"
-            id="il.org.spartan.refactoring.commands.RedundantEquality"
-            name="Redandant equality">
-      </command>
-      <command
-            categoryId="il.org.spartan.refactoring.category"
-            id="il.org.spartan.refactoring.commands.ShortestBranchFirst"
-            name="Shortest branch first">
-      </command>
-      <command
-            categoryId="il.org.spartan.refactoring.category"
-            id="il.org.spartan.refactoring.commands.Cleanup"
-            name="Spartanize entire project">
-      </command>
-      <command
-            categoryId="il.org.spartan.refactoring.category"
-            id="il.org.spartan.refactoring.commands.ApplySpartanization"
-            name="Spartanize active window">
-      </command>
+            <command
+            name="Spartanize active window"
+            defaultHandler="il.org.spartan.plugin.SpartanizeCurrent"
+            description="Repeatedly spartanize active window"
+            id="il.org.spartan.plugin.commands.SpartanizeCurrent"
+            />
    </extension>
    <extension point="org.eclipse.ui.handlers">
-      <handler
-            class="il.org.spartan.refactoring.plugin.ToggleSpartanizationHandler"
-            commandId="il.org.spartan.commands.ToggleCommand">
-      </handler>
-      <handler
-            class="il.org.spartan.refactoring.plugin.CleanupHandler"
-            commandId="il.org.spartan.refactoring.commands.Cleanup">
-      </handler>
-      <handler
-            class="il.org.spartan.refactoring.plugin.ApplySpartanizationHandler"
-            commandId="il.org.spartan.refactoring.commands.ApplySpartanization">
-      </handler>
+      <handler class="il.org.spartan.plugin.Toggle" commandId="il.org.spartan.plugin.commands.Toggle"/>
+      <handler class="il.org.spartan.plugin.SpartanizeAll" commandId="il.org.spartan.plugin.commands.Toggle"/>
+      <handler class="il.org.spartan.plugin.SpartanizeCurrent" commandId="il.org.spartan.plugin.commands.Toggle"/>
    </extension>
-   <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
-         <toolbar
-               id="il.org.spartan.refactoring.toolbars.spartanToolbar">
+   <extension point="org.eclipse.ui.menus">
+      <menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar id="il.org.spartan.plugin.toolbars.spartanToolbar">
             <command
-                  commandId="il.org.spartan.refactoring.commands.ApplySpartanization"
+                  commandId="il.org.spartan.plugin.commands.SpartanizeCurrent"
                   icon="src/main/icons/spartan-warrior.gif"
                   tooltip="Spartanize this file"
-                  id="il.org.spartan.refactoring.toolbars.ApplySpartanization">
+                  id="il.org.spartan.plugin.toolbars.SpartanizeCurrent">
             </command>
          </toolbar>
       </menuContribution>
@@ -156,9 +101,9 @@
                label="Spartanization"
                mnemonic="S">
             <command
-                  commandId="il.org.spartan.commands.ToggleCommand"
-                  id="il.org.spartan.menus.toggleCommand"
-                  label="Enable Spartanization Suggestions"
+                  commandId="il.org.spartan.plugin.commands.Toggle"
+                  id="il.org.spartan.menus.Toggle"
+                  label="Enable spartan suggestions"
                   style="toggle"
                   mnemonic="S">
             </command>
@@ -175,50 +120,16 @@
       </menuContribution>
       <menuContribution
             locationURI="menu:org.eclipse.ui.main.menu?before=navigate">
-         <menu
-               id="org.eclipse.jdt.ui.refactoring.menu"
-               label="Refactor">
-            <menu
-                  label="Spartanization">
-
+         <menu id="org.eclipse.jdt.ui.refactoring.menu" label="Refactor">
+              <menu label="Spartanization">
                <command
-                     commandId="il.org.spartan.refactoring.commands.ShortestOperand"
-                     id="il.org.spartan.menus.ShortestOperandCommand"
+                     commandId="il.org.spartan.plugin.commands.SpartanizeCurrent"
+                     id="il.org.spartan.menus.SpartanizeCurrent"
                      style="push">
                </command>
                <command
-                     commandId="il.org.spartan.refactoring.commands.ExtractMethod"
-                     id="il.org.spartan.menus.ExtractMethodCommand"
-                     style="push">
-               </command>
-               <command
-                     commandId="il.org.spartan.refactoring.commands.ForwardDeclaraion"
-                     id="il.org.spartan.menus.ForwardDeclarationCommand"
-                     style="push">
-               </command>
-               <command
-                     commandId="il.org.spartan.refactoring.commands.InlineSingleUse"
-                     id="il.org.spartan.menus.InlineSingleUseCommand"
-                     style="push">
-               </command>
-               <command
-                     commandId="il.org.spartan.refactoring.commands.RedundantEquality"
-                     id="il.org.spartan.menus.RedundantEqualityCommand"
-                     style="push">
-               </command>
-               <command
-                     commandId="il.org.spartan.refactoring.commands.ShortestBranchFirst"
-                     id="il.org.spartan.menus.ShortestBranchFirstCommand"
-                     style="push">
-               </command>
-               <command
-                     commandId="il.org.spartan.refactoring.commands.Cleanup"
-                     id="il.org.spartan.menus.CleanupCommand"
-                     style="push">
-               </command>
-               <command
-                     commandId="il.org.spartan.refactoring.commands.ApplySpartanization"
-                     id="il.org.spartan.refactoring.menus.ApplySpartanizationCommand"
+                     commandId="il.org.spartan.plugin.commands.SpartanizeAll"
+                     id="il.org.spartan.plugin.menus.SpartanizeAll"
                      style="push">
                </command>
             </menu>
@@ -227,38 +138,8 @@
       <menuContribution
             allPopups="true"
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
-         <menu
-               id="org.eclipse.jdt.ui.refactoring.menu2"
-               label="Spartanization">
-          <command
-                  commandId="il.org.spartan.refactoring.commands.ShortestOperand"
-                  style="push">
-            </command>
-            <command
-                  commandId="il.org.spartan.refactoring.commands.ExtractMethod"
-                  style="push">
-            </command>
-            <command
-                  commandId="il.org.spartan.refactoring.commands.ForwardDeclaraion"
-                  style="push">
-            </command>
-            <command
-                  commandId="il.org.spartan.refactoring.commands.InlineSingleUse"
-                  style="push">
-            </command>
-            <command
-                  commandId="il.org.spartan.refactoring.commands.RedundantEquality"
-                  style="push">
-            </command>
-            <command
-                  commandId="il.org.spartan.refactoring.commands.ShortestBranchFirst"
-                  style="push">
-            </command>
-            <command
-                     commandId="il.org.spartan.refactoring.commands.Cleanup"
-                     style="push">
-            </command>
-
+         <menu id="org.eclipse.jdt.ui.refactoring.menu2" label="Spartanization">
+            <command commandId="il.org.spartan.plugin.commands.SpartanizeCurrent" style="push"/>
             <visibleWhen>
                <and>
                   <with
@@ -289,8 +170,8 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            class="il.org.spartan.refactoring.plugin.PluginPreferencesPage"
-            id="il.org.spartan.refactoring.preferences.PluginPreferencesPage"
+            class="il.org.spartan.plugin.PreferencesPage"
+            id="il.org.spartan.plugin.PluginPreferencesPage"
             name="Spartanization"
             category="org.eclipse.jdt.ui.preferences.JavaBasePreferencePage">
       </page>
@@ -300,10 +181,10 @@
          point="org.eclipse.core.resources.markers">
    </extension>
    <extension
-	         point="org.eclipse.core.runtime.preferences">
-	         <scope name="PluginPreferencesPage" class="il.org.spartan.refactoring.plugin.PluginPreferencesPage"/>
-	      <initializer
-	            class="il.org.spartan.refactoring.plugin.PluginPreferencesDefaultValuesInitializer">
-	      </initializer>
-	</extension>
+           point="org.eclipse.core.runtime.preferences">
+           <scope name="PluginPreferencesPage" class="il.org.spartan.plugin.PreferencesPage"/>
+        <initializer
+              class="il.org.spartan.plugin.PreferencesDefaultValuesInitializer">
+        </initializer>
+  </extension>
 </plugin>
