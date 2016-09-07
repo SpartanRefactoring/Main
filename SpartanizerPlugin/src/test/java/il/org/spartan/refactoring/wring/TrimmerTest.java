@@ -4129,13 +4129,13 @@ import il.org.spartan.refactoring.utils.*;
         + "  String source = \"10\";\n" //
         + "  {\n" //
         + "    BigFraction c = properFormat.parse(source);\n" //
-        + "   assert null !=(c);\n" //
+        + "   assert c != null;\n" //
         + "    azzert.assertEquals(BigInteger.TEN, c.getNumerator());\n" //
         + "    azzert.assertEquals(BigInteger.ONE, c.getDenominator());\n" //
         + "  }\n" //
         + "  {\n" //
         + "    BigFraction c = improperFormat.parse(source);\n" //
-        + "   assert null !=(c);\n" //
+        + "   assert c != null;\n" //
         + "    azzert.assertEquals(BigInteger.TEN, c.getNumerator());\n" //
         + "    azzert.assertEquals(BigInteger.ONE, c.getDenominator());\n" //
         + "  }\n" //
