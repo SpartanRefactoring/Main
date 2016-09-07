@@ -179,17 +179,16 @@ public class BlockSimplifyTest {
         + "     X.parse(s);\n" //
         + "    Y(q, c.g());\n" //
         + "  }\n" //
-
-        + "}").to(""  //
-        + "public void f() {\n" //
-        + "  int s = 10;\n" //
-        + "  g.parse(s);\n" //
-        + "  Y(q, c.g());\n" //
-        + "  X.parse(s);\n" //
-        + "  Y(q, c.g());\n" //
-        + "}\n" //
-        ).to(null);
-
+        + "}")
+            .to("" //
+                + "public void f() {\n" //
+                + "  int s = 10;\n" //
+                + "  g.parse(s);\n" //
+                + "  Y(q, c.g());\n" //
+                + "  X.parse(s);\n" //
+                + "  Y(q, c.g());\n" //
+                + "}\n" //
+            ).to(null);
   }
 
   @Test public void seriesA10() {
@@ -204,17 +203,15 @@ public class BlockSimplifyTest {
         + "    X.parse(s);\n" //
         + "    Y(q, c.g());\n" //
         + "  }\n" //
-        + "}").to(""  //
-        + "public void f() {\n" //
-        + "  int s = 10;\n" //
-        + "  g.parse(s);\n" //
-        + "  Y(q, c.g());\n" //
-        + "  X.parse(s);\n" //
-        + "  Y(q, c.g());\n" //
-        + "}\n" //
-        ).to(null);
-    
-    
-    
+        + "}")
+            .to("" //
+                + "public void f() {\n" //
+                + "  int s = 10;\n" //
+                + "  g.parse(s);\n" //
+                + "  Y(q, c.g());\n" //
+                + "  X.parse(s);\n" //
+                + "  Y(q, c.g());\n" //
+                + "}\n" //
+            ).to(null);
   }
 }

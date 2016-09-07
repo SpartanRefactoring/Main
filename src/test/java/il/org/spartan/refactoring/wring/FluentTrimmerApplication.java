@@ -21,7 +21,6 @@ public class FluentTrimmerApplication extends Trimmer.With {
   public final TextEdit textEdit;
   public final UndoEdit undoEdit;
 
-
   public FluentTrimmerApplication(final Trimmer t, final String codeFragment) {
     t.super();
     this.codeFragment = codeFragment;
@@ -35,7 +34,7 @@ public class FluentTrimmerApplication extends Trimmer.With {
     assert wrappedFragment != null;
     document = new Document(wrappedFragment);
     assert document != null;
-    dump.data(document,"This is the document");
+    dump.data(document, "This is the document");
     dump.data(document.get(), "and this is its content");
     compilationUnit = guessedContext.intoCompilationUnit(document.get());
     assert compilationUnit != null;
@@ -50,7 +49,7 @@ public class FluentTrimmerApplication extends Trimmer.With {
     } catch (MalformedTreeException | BadLocationException x) {
       throw new AssertionError("BUG", x);
     }
-    assert null != ( undoEdit);
+    assert null != undoEdit;
   }
 
   /** creates an ASTRewrite which contains the changes
@@ -69,7 +68,7 @@ public class FluentTrimmerApplication extends Trimmer.With {
 
   public FluentTrimmerApplication gives(final String expected) {
     if (aboutTheSame(expected, codeFragment) != null) {
-    dump.data(this);
+      dump.data(this);
       azzert.fail(//
           "no CHNAGE\n" //
               + "I guessed the context of " + guessedContext //
@@ -83,8 +82,8 @@ public class FluentTrimmerApplication extends Trimmer.With {
     }
     if (common(codeFragment) != null) {
       dump.data(codeFragment);
-      dump.data(this.compilationUnit);
-      dump.data(this.document);
+      dump.data(compilationUnit);
+      dump.data(document);
       azzert.fail(//
           "no CHNAGE\n" //
               + "\n Guessing the context of " + guessedContext //
@@ -156,9 +155,9 @@ public class FluentTrimmerApplication extends Trimmer.With {
 
   <N extends ASTNode> N findNode(final Class<N> clazz) {
     final GuessedContext guessContext = GuessedContext.find(codeFragment);
-    assert null != ( guessContext);
+    assert null != guessContext;
     final N $ = firstInstance(clazz);
-    assert null != ( $);
+    assert null != $;
     return $;
   }
 

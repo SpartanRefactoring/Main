@@ -25,12 +25,12 @@ public abstract class ENVTestEngineAbstract {
   public static ASTNode getCompilationUnit(final String from) {
     final String ROOT = "./src/test/resources/";
     final File f = new File(ROOT + from);
-   assert ROOT != null;
-   assert from != null;
-   assert f != null;
+    assert ROOT != null;
+    assert from != null;
+    assert f != null;
     azzert.aye(f.exists());
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(f);
-   assert $ != null;
+    assert $ != null;
     azzert.that($, instanceOf(CompilationUnit.class));
     return $;
   }
@@ -104,10 +104,9 @@ public abstract class ENVTestEngineAbstract {
     azzert.aye(($.isEmpty() && testSet.isEmpty()) || !$.containsAll(testSet));
   }
 
-  /**
-   * Parse the outer annotation to get the inner ones. Add to the flat Set. Compare uses() and declares() output to the flat Set.
-   * @param $  JD 
-   */
+  /** Parse the outer annotation to get the inner ones. Add to the flat Set.
+   * Compare uses() and declares() output to the flat Set.
+   * @param $ JD */
   protected abstract void handler(final Annotation ¢);
 
   /* define: outer annotation = OutOfOrderNestedENV, InOrderFlatENV, Begin, End.

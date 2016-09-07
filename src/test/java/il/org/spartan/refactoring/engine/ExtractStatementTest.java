@@ -46,11 +46,11 @@ public class ExtractStatementTest {
   }
 
   @Test public void isNotNullOfNull() {
-   assert extract.statements(null) != null;
+    assert extract.statements(null) != null;
   }
 
   @Test public void isNotNullOfValidStatement() {
-   assert extract.statements(s("{}")) != null;
+    assert extract.statements(s("{}")) != null;
   }
 
   @Test public void manyEmptyStatementInBlockIsEmpty() {
