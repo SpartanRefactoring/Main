@@ -625,6 +625,22 @@ public class typeTest {
       azzert.that(get(e.getLeftOperand()), is(NUMERIC));
       azzert.that(get(e.getRightOperand()), is(FLOAT));
     }
+    
+    @Test public void context20() {
+      final ForStatement fs = extract.firstForStatement(into.s("for(;x;) somthing();"));
+      azzert.that(get(fs.getExpression()), is(BOOLEAN));
+    }
+    
+    @Test public void context21() {
+      final WhileStatement ws = extract.firstWhileStatement(into.s("while(x) somthing();"));
+      azzert.that(get(ws.getExpression()), is(BOOLEAN));
+    }
+    
+    @Test public void context22() {
+      final AssertStatement as = extract.firstAssertStatement(into.s("assert x;"));
+      azzert.that(get(as.getExpression()), is(BOOLEAN));
+    }
+    
     // tests using old version of prudent that is now removed
     // should be possible to recreate them using mock
     // @Test public void under01() {
