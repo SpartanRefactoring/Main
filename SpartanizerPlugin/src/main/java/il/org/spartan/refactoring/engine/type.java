@@ -81,23 +81,13 @@ public interface type {
        *         {@link #DOUBLE} , {@link #INTEGRAL} or {@link #NUMERIC} , in
        *         case it cannot decide */
       default implementation above(final PrefixExpression.Operator o) {
-        if (o == NOT)
-          return BOOLEAN;
-        if (o == COMPLEMENT)
-          return asIntegral();
-        return asNumeric();
+        return o == NOT ? BOOLEAN : o == COMPLEMENT ? asIntegral() : asNumeric();
       }
 
       default implementation aboveBinaryOperator(final InfixExpression.Operator o) {
-        if (in(o, EQUALS, NOT_EQUALS))
-          return this;
-        if (o == wizard.PLUS2)
-          return asAlphaNumeric();
-        if (wizard.isBitwiseOperator(o))
-          return asBooleanIntegral();
-        if (wizard.isShift(o))
-          return asIntegral();
-        return asNumeric();
+        return in(o, EQUALS, NOT_EQUALS) ? this
+            : o == wizard.PLUS2 ? asAlphaNumeric()
+                : wizard.isBitwiseOperator(o) ? asBooleanIntegral() : wizard.isShift(o) ? asIntegral() : asNumeric();
       }
 
       default implementation asAlphaNumeric() {
@@ -239,7 +229,7 @@ public interface type {
         // unless both operands are numeric, the result may be a String
         return in(STRING, this, k) || in(NULL, this, k) ? STRING : !isNumeric() || !k.isNumeric() ? ALPHANUMERIC : underNumericOnlyOperator(k);
       }
-    
+
       @SuppressWarnings("synthetic-access") default implementation join() {
         assert !have(key());
         inner.types.put(key(), this);
@@ -613,13 +603,13 @@ public interface type {
   default Primitive.Certain asPrimitiveCertain() {
     return null;
   }
-  
-  /**@return true if either a Primitive.Certain, Primitive.Odd.NULL or a baptized type
-   */
-  default boolean isCertain(){
+
+  /** @return true if either a Primitive.Certain, Primitive.Odd.NULL or a
+   *         baptized type */
+  default boolean isCertain() {
     return this == NULL || have(key()) || asPrimitiveCertain() != null;
   }
-  
+
   default type.Primitive.Uncertain asPrimitiveUncertain() {
     return null;
   }
