@@ -14,11 +14,13 @@ public class EnvNestedHandler extends ENVTestEngineAbstract {
   public EnvNestedHandler(final ASTNode $) {
     n = $;
     testSet = generateSet();
+    runTest();
   }
 
   public EnvNestedHandler(final String ¢) {
     n = getCompilationUnit(¢);
     testSet = generateSet();
+    runTest();
   }
 
   /* TODO Update EnvironmentCodeExamples - currently NestedENV does not
@@ -29,7 +31,7 @@ public class EnvNestedHandler extends ENVTestEngineAbstract {
    * @see
    * il.org.spartan.refactoring.engine.ENVTestEngineAbstract#buildEnvironmentSet
    * (org.eclipse.jdt.core.dom.BodyDeclaration) */
-  @Override protected Set<Entry<String, Information>> buildEnvironmentSet(final BodyDeclaration $) {
+  @Override protected LinkedHashSet<Entry<String, Information>> buildEnvironmentSet(final BodyDeclaration $) {
     return Environment.declares($);
   }
 

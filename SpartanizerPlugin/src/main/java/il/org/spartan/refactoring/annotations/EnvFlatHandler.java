@@ -20,12 +20,14 @@ public class EnvFlatHandler extends ENVTestEngineAbstract {
     n = $;
     testSet = generateSet();
     azzert.nay(testSet == null);
+    runTest();
   }
 
   public EnvFlatHandler(final String ¢) {
     n = getCompilationUnit(¢);
     testSet = generateSet();
     azzert.nay(testSet == null);
+    runTest();
   }
 
   /* TODO Update EnvironmentCodeExamples - currently NestedENV does not
@@ -36,8 +38,8 @@ public class EnvFlatHandler extends ENVTestEngineAbstract {
    * @see
    * il.org.spartan.refactoring.engine.ENVTestEngineAbstract#buildEnvironmentSet
    * (org.eclipse.jdt.core.dom.BodyDeclaration) */
-  @Override protected Set<Entry<String, Information>> buildEnvironmentSet(final BodyDeclaration $) {
-    return Environment.declares($);
+  @Override protected LinkedHashSet<Entry<String, Information>> buildEnvironmentSet(final BodyDeclaration $) {
+    return null;
   }
 
   @Override protected void handler(final Annotation ¢) {
@@ -49,7 +51,7 @@ public class EnvFlatHandler extends ENVTestEngineAbstract {
    * @param $ JD */
   void handler(final SingleMemberAnnotation a) {
     assert a != null && !"@OutOfOrderflatENV".equals(a.getTypeName() + "");
-    if (!"OutOfOrderflatENV".equals(a.getTypeName() + ""))
+    if (!"OutOfOrderFlatENV".equals(a.getTypeName() + ""))
       return;
     foundTestedAnnotation = true;
     a.accept(new ASTVisitor() {
