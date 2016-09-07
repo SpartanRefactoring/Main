@@ -12,10 +12,10 @@ import org.eclipse.jdt.core.dom.*;
 public class DisabledChecker {
   /** Disable spartanization identifier, used by the programmer to indicate a
    * method/class not to be spartanized */
-  public final static String dsi = "@DisableSpartan";
+  public final static String dsis[] = { "@DisableSpartan", "Hedonistic", "[[hedoni]]", "[[hedonisti]]", "[[hedon]]", "[[hedo]]" };
   /** Enable spartanization identifier, used by the programmer to indicate a
    * method/class to be spartanized */
-  public final static String esi = "@EnableSpartan";
+  public final static String esis[] = { "@EnableSpartan", "Spartan", "[[spartan]]", "[[sparta]]" };
   final Set<ASTNode> dns;
   final Set<ASTNode> ens;
 
@@ -87,10 +87,16 @@ public class DisabledChecker {
       if (j == null)
         return true;
       final String s = j.toString();
-      if (s.contains(dsi))
-        dns.add(d);
-      else if (s.contains(esi))
-        ens.add(d);
+      for (String dsi : dsis)
+        if (s.contains(dsi)) {
+          dns.add(d);
+          return true;
+        }
+      for (String esi : esis)
+        if (s.contains(esi)) {
+          ens.add(d);
+          return true;
+        }
       return true;
     }
   }
