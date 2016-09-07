@@ -21,7 +21,7 @@ public abstract class ENVTestEngineAbstract {
 
   /** @param from - file path
    * @return CompilationUnit of the code written in the file specified. */
-  protected static ASTNode getCompilationUnit(final String from) {
+  public static ASTNode getCompilationUnit(final String from) {
     final String ROOT = "./src/test/resources/";
     final File f = new File(ROOT + from);
     azzert.notNull(ROOT);
@@ -52,7 +52,7 @@ public abstract class ENVTestEngineAbstract {
 
   /* Add new Entry to testSet from the inner annotation. */
   public void addTestSet(final List<MemberValuePair> ps) {
-    testSet.add(new MapEntry<>(wizard.asString(ps.get(0).getValue()), new Information(PrudentType.valueOf(wizard.asString(ps.get(1).getValue())))));
+    testSet.add(new MapEntry<>(wizard.asString(ps.get(0).getValue()), new Information(PrudentType.axiom(wizard.asString(ps.get(1).getValue())))));
   }
 
   abstract protected Set<Entry<String, Information>> buildEnvironmentSet(BodyDeclaration $);
@@ -69,7 +69,10 @@ public abstract class ENVTestEngineAbstract {
   // LinkedHashSet unmodifiable issue.
   // TODO once the method is determined to be working, change to visibility to
   // protected.
-  public void compareInOrder(final Set<Entry<String, Information>> $) {
+  public boolean compareInOrder(final Set<Entry<String, Information>> $) {
+    azzert.aye(testSet != null);
+    azzert.aye($ != null);
+    return testSet.size() != $.size() || !$.containsAll(testSet) || false;
   }
 
   /** Compares the set from the annotation with the set that the checked
@@ -77,12 +80,11 @@ public abstract class ENVTestEngineAbstract {
    * @param $ */
   // TODO once the method is determined to be working, change to visibility to
   // protected.
-  public void compareOutOfOrder(final Set<Entry<String, Information>> $) {
+  public boolean compareOutOfOrder(final Set<Entry<String, Information>> $) {
     azzert.aye(testSet != null);
     azzert.aye($ != null);
-    if (testSet.size() != $.size() || !$.containsAll(testSet))
-      azzert.fail("Set"
-          + (testSet.size() != $.size() ? " Comparison failed, Sets are of different siz" : "s are of equal size but contain different valu") + "es");
+    //azzert.fail("Set" + (testSet.size() != $.size() ? " Comparison failed, Sets are of different siz" : "s are of equal size but contain different valu") + "es");
+    return testSet.size() != $.size() || !$.containsAll(testSet) || false;
   }
 
   /** Parse the outer annotation to get the inner ones. Add to the flat Set.
