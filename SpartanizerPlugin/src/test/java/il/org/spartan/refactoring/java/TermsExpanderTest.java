@@ -100,4 +100,26 @@ import il.org.spartan.*;
   @Test public void test22() {
     azzert.that(TermsExpander.simplify(i("-a-b")), iz("-a-b"));
   }
+  
+  String complexStringCase = "\"Completed in \" + (1 + i) + \" passes.\" +" +
+      "\"Total changes: \" + (initialCount - finalCount)";
+
+  @Ignore("issue 129")
+  @Test public void test23(){
+    azzert.that(TermsExpander.simplify(i(complexStringCase)), iz(complexStringCase));
+  }
+  
+  @Ignore("issue 129")
+  @Test public void test24(){
+    azzert.that(TermsExpander.simplify(i("\"\" + (x-y)")), iz("\"\" + (x-y)"));
+  }
+  
+  @Ignore("issue 129")
+  @Test public void test25(){
+    azzert.that(TermsExpander.simplify(i("\"\" + (x+y)")), iz("\"\" + (x+y)"));
+  }
+  
+  @Test public void test26(){
+    azzert.that(TermsExpander.simplify(i("\"\" + x + y")), iz("\"\" + x + y"));
+  }
 }
