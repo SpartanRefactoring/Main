@@ -5,9 +5,6 @@ import static il.org.spartan.refactoring.ast.step.*;
 import static il.org.spartan.refactoring.engine.type.Odd.Types.*;
 import static il.org.spartan.refactoring.engine.type.Primitive.Certain.*;
 import static il.org.spartan.refactoring.engine.type.Primitive.Uncertain.*;
-import static il.org.spartan.refactoring.engine.type.inner.*; // cleanup removes
-                                                              // this, but this
-                                                              // is necessary
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
@@ -141,6 +138,12 @@ public interface type {
         return in(this, NOTHING, NULL);
       }
 
+      @SuppressWarnings("synthetic-access") default implementation join() {
+        assert !have(key());
+        inner.types.put(key(), this);
+        return this;
+      }
+
       /** To be used to determine the type of the result of o being used on the
        * caller
        * @return one of {@link #BOOLEAN} , {@link #INT} , {@link #LONG} ,
@@ -229,13 +232,20 @@ public interface type {
         // unless both operands are numeric, the result may be a String
         return in(STRING, this, k) || in(NULL, this, k) ? STRING : !isNumeric() || !k.isNumeric() ? ALPHANUMERIC : underNumericOnlyOperator(k);
       }
+<<<<<<< HEAD
 
       @SuppressWarnings("synthetic-access") default implementation join() {
         assert !have(key());
         inner.types.put(key(), this);
         return this;
       }
+=======
+>>>>>>> 2de7d949de4ec7b502f09e188d747c81b459385a
     }
+
+    private static String propertyName = "spartan type";
+    /** All type that were ever born */
+    private static Map<String, implementation> types = new LinkedHashMap<>();
 
     private static implementation conditionalWithNoInfo(final implementation t) {
       return in(t, BYTE, SHORT, CHAR, INT, INTEGRAL, LONG, FLOAT, NUMERIC) //
@@ -430,17 +440,13 @@ public interface type {
           return baptize(s);
       }
     }
-
-    private static String propertyName = "spartan type";
-    /** All type that were ever born */
-    private static Map<String, implementation> types = new LinkedHashMap<>();
   }
 
   /** Types we do not full understand yet.
    * @author Yossi Gil
    * @author Shalmon Niv
    * @year 2016 */
-  interface Odd extends implementation {
+  interface Odd extends inner.implementation {
     // Those anonymous characters that known little or nothing about
     // themselves
     /** TODO: Not sure we need all these {@link type.Odd.Types} values. */
@@ -470,7 +476,7 @@ public interface type {
   /** Primitive type or a set of primitive types
    * @author Yossi Gil
    * @year 2016 */
-  interface Primitive extends implementation {
+  interface Primitive extends inner.implementation {
     /** Primitive types known for certain. {@link String} is also considered
      * {@link Primitive.Certain}
      * @author Yossi Gil
@@ -543,21 +549,18 @@ public interface type {
     public enum Uncertain implements type.Primitive {
       // Doubtful types, from four fold uncertainty down to bilateral
       // schizophrenia" .
-      ALPHANUMERIC("String|double|float|long|int|char|short|byte", "only in binary plus: f()+g(), 2 + f(), nor f() + null"), //
+      ALPHANUMERIC(as.list(BOOLEAN, BYTE, SHORT, CHAR, INT, LONG, FLOAT, DOUBLE, STRING), "only in binary plus: f()+g(), 2 + f(), nor f() + null"), //
       BOOLEANINTEGRAL(as.list(BOOLEAN, BYTE, SHORT, CHAR, INT, LONG), "only in x^y,x&y,x|y"), //
       INTEGER(as.list(INT, LONG), "must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() "), //
       INTEGRAL(as.list(BYTE, CHAR, SHORT, INT, LONG), "must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() "), //
-      NUMERIC("double|float|long|int|char|short|byte", "must be either f()*g(), 2L*f(), 2.*a(), not 2 %a(), nor 2"), //
+      NUMERIC(as.list(BOOLEAN, BYTE, SHORT, CHAR, INT, LONG, FLOAT, DOUBLE, STRING), "must be either f()*g(), 2L*f(), 2.*a(), not 2 %a(), nor 2"), //
       ;
       final String description;
-      final String key;
+      final List<Certain> represents;
 
-      private Uncertain(final Iterable<? extends type> ts, final String description) {
-        this(ts + "", description);
-      }
-
-      private Uncertain(final String key, final String description) {
-        this.key = key;
+      private Uncertain(final Iterable<? extends Certain> ts, final String description) {
+        represents = new ArrayList<>();
+        add(represents, ts);
         this.description = description;
       }
 
@@ -566,17 +569,23 @@ public interface type {
       }
 
       @Override public String key() {
-        return key;
+        return "" + represents;
+      }
+
+      /** @return A list of all Primitive.Certain types that an expression of
+       *         this type can be */
+      public List<Certain> possibleTypes() {
+        return represents;
       }
     }
   }
 
-  static implementation baptize(final String name) {
+  static inner.implementation baptize(final String name) {
     return baptize(name, "anonymously born");
   }
 
-  static implementation baptize(final String name, final String description) {
-    return have(name) ? bring(name) : new implementation() {
+  static inner.implementation baptize(final String name, final String description) {
+    return have(name) ? bring(name) : new inner.implementation() {
       @Override public String description() {
         return description;
       }
@@ -587,7 +596,7 @@ public interface type {
     }.join();
   }
 
-  @SuppressWarnings("synthetic-access") static implementation bring(final String name) {
+  @SuppressWarnings("synthetic-access") static inner.implementation bring(final String name) {
     return inner.types.get(name);
   }
 
@@ -604,12 +613,15 @@ public interface type {
     return null;
   }
 
+<<<<<<< HEAD
   /** @return true if either a Primitive.Certain, Primitive.Odd.NULL or a
    *         baptized type */
   default boolean isCertain() {
     return this == NULL || have(key()) || asPrimitiveCertain() != null;
   }
 
+=======
+>>>>>>> 2de7d949de4ec7b502f09e188d747c81b459385a
   default type.Primitive.Uncertain asPrimitiveUncertain() {
     return null;
   }
@@ -630,6 +642,12 @@ public interface type {
    *         {@link #ALPHANUMERIC} or false otherwise */
   default boolean isAlphaNumeric() {
     return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC, STRING, ALPHANUMERIC);
+  }
+
+  /** @return true if either a Primitive.Certain, Primitive.Odd.NULL or a
+   *         baptized type */
+  default boolean isCertain() {
+    return this == NULL || have(key()) || asPrimitiveCertain() != null;
   }
 
   /** @return true if one of {@link #INT} , {@link #LONG} , {@link #CHAR} ,
