@@ -8,6 +8,7 @@ import static il.org.spartan.refactoring.engine.type.Primitive.Uncertain.*;
 import static il.org.spartan.refactoring.engine.type.inner.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.internal.core.dom.rewrite.ASTRewriteFormatter.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -672,9 +673,59 @@ public class typeTest {
    
     //tests for deducing type from context
     @Test public void context01(){
-      IfStatement s = extract.firstIfStatement(into.s("{if(f()) return x; return y;}"));
-      azzert.that(get(s.getExpression()), is(BOOLEAN));
+      IfStatement is = extract.firstIfStatement(into.s("{if(f()) return x; return y;}"));
+      azzert.that(get(is.getExpression()), is(BOOLEAN));
     }
+    
+    @Test public void context02(){
+      PrefixExpression e = az.prefixExpression(into.e("++x"));
+      azzert.that(get(e.getOperand()), is(NUMERIC));
+    }
+    
+    @Test public void context03(){
+      PrefixExpression e = az.prefixExpression(into.e("--x"));
+      azzert.that(get(e.getOperand()), is(NUMERIC));
+    }
+    
+    @Test public void context04(){
+      PrefixExpression e = az.prefixExpression(into.e("-x"));
+      azzert.that(get(e.getOperand()), is(NUMERIC));
+    }
+    
+    @Test public void context05(){
+      PrefixExpression e = az.prefixExpression(into.e("!x"));
+      azzert.that(get(e.getOperand()), is(BOOLEAN));
+    }
+    
+    @Test public void context06(){
+      PrefixExpression e = az.prefixExpression(into.e("~x"));
+      azzert.that(get(e.getOperand()), is(INTEGRAL));
+    }
+    
+    @Test public void context07(){
+      PrefixExpression e = az.prefixExpression(into.e("+x"));
+      azzert.that(get(e.getOperand()), is(NUMERIC));
+    }
+    
+    @Test public void context08(){
+      PostfixExpression e = az.postfixExpression(into.e("x++"));
+      azzert.that(get(e.getOperand()), is(NUMERIC));
+    }
+    
+    @Test public void context09(){
+      PostfixExpression e = az.postfixExpression(into.e("x--"));
+      azzert.that(get(e.getOperand()), is(NUMERIC));
+    }
+    
+    @Test public void context10(){
+      ArrayAccess a = (ArrayAccess) into.e("arr[x]");
+      azzert.that(get(a.getIndex()), is(INTEGRAL));
+    }
+    
+    @Test public void context11(){
+      ArrayAccess a = (ArrayAccess) into.e("arr[((x))]");
+      azzert.that(get(a.getIndex()), is(INTEGRAL));
+    } 
     
     // tests using old version of prudent that is now removed
     // should be possible to recreate them using mock
