@@ -2,3 +2,6 @@
 *~
 *.swp
 /target/
+*.log
+*.class
+*.pdf
