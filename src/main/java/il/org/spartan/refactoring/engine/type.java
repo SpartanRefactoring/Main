@@ -1,6 +1,7 @@
 package il.org.spartan.refactoring.engine;
 
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.refactoring.ast.step.*;
 import static il.org.spartan.refactoring.engine.type.Odd.Types.*;
 import static il.org.spartan.refactoring.engine.type.Primitive.Certain.*;
 import static il.org.spartan.refactoring.engine.type.Primitive.Uncertain.*;
@@ -167,6 +168,29 @@ public interface type {
     }
 
     private static implementation lookUp(final Expression e, final implementation i) {
+      for (ASTNode context = parent(e); context != null; context = parent(context))
+        switch (context.getNodeType()) {
+          case INFIX_EXPRESSION:
+            return i; /*only the direct operands can learn from infix expression, and that
+                      is handled by lookDown(InfixExpression)*/
+          case ARRAY_ACCESS:
+            return i.asIntegral();
+          case PREFIX_EXPRESSION:
+            PrefixExpression.Operator o = az.prefixExpression(context).getOperator();
+            if (o == NOT)
+              return BOOLEAN;
+            if (o == COMPLEMENT)
+              return i.asIntegral();
+            return i.asNumeric();
+          case POSTFIX_EXPRESSION:
+            return i.asNumeric();
+          case PARENTHESIZED_EXPRESSION:
+            continue;
+          case IF_STATEMENT:
+            return BOOLEAN;
+          default:
+            return i;
+        }
       return i;
     }
 
@@ -361,8 +385,8 @@ public interface type {
 
   // TODO: Matteo. Nano-pattern of values: not implemented
   // TODO: Dor, please implement yet
-  static type get(final Expression ¢) {
-    throw new NotImplementedException("code of this function was not implemented yet. Arg=" + ¢);
+  @SuppressWarnings("synthetic-access") static type get(final Expression ¢) {
+    return inner.setType(¢,inner.lookUp(¢,inner.lookDown(¢)));
   }
 
   static boolean have(final String name) {
