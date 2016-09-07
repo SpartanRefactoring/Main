@@ -1666,6 +1666,12 @@ import il.org.spartan.refactoring.utils.*;
         .to("\"first \" + (f() ? \"is:\" + d() + \"second\": \"are:\" + g() + \"and second\")")//
         .to("\"first \" + ((f() ? \"is:\" + d() + \"\": \"are:\" + g() + \"and \") + \"second\")");
   }
+  
+  @Test public void issue110_14() {
+    trimming("x == null ? \"Use isEmpty()\" : \"Use \" + x + \".isEmpty()\"")//
+        .to("\"Use \" + (x==null ? \"isEmpty()\" : \"\"+ x +  \".isEmpty()\")")//
+        .to("\"Use \" + ((x==null ? \"\" : \"\"+ x +  \".\")+\"isEmpty()\")");
+  }
 
   @Ignore("Cocnat String currently not in toolbox, see issue #120") @Test public void issue120_1() {
     trimming("\"a\"+\"b\"").to("\"ab\"");
