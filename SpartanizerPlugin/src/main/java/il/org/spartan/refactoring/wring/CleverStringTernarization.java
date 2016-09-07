@@ -28,16 +28,16 @@ public final class CleverStringTernarization extends Wring.ReplaceCurrentNode<Co
   }
 
   private static int firstDifference(final String s1, final String s2) {
-    return firstDifferentWLOG(shorter(s1, s2), longer(s1, s2));
-  }
-
-  private static int firstDifferentWLOG(final String shorter, final String longer) {
+    if (s1 != shorter(s1 , s2))
+      return firstDifference(s2, s1);
+    assert s1.length() <= s2.length();
     int $ = 0;
-    for (; $ < shorter.length(); ++$)
-      if (shorter.charAt($) != longer.charAt($))
+    for (; $ < s1.length(); ++$)
+      if (first(s1,$) != first(s2,$))
         break;
     return $;
   }
+
 
   /** @param s JD
    * @param i the length of the prefix
@@ -57,9 +57,6 @@ public final class CleverStringTernarization extends Wring.ReplaceCurrentNode<Co
     return make.from(n).literal(s.length() == i ? "" : s.substring(i));
   }
 
-  // TODO: Niv/Dor: check to see if this makes any sense and is correct in any
-  // way, see if you can apply this simplification to the dual
-  // function
   // TODO: Yossi: the swap nano
   private static int lastDifference(final String s1, final String s2) {
     // TODO: Matteo/Ori: the WLOG nano, abbreviated.
@@ -198,18 +195,16 @@ public final class CleverStringTernarization extends Wring.ReplaceCurrentNode<Co
     return replacement(expression(x), then(x), elze(x));
   }
 
-  // TODO: Niv - use function is() to simplify the code
-  // TODO: Niv - use class az to simplify the code
-  public Expression replacement(final Expression condition, final Expression then, final Expression elze) {
-    if (then.getNodeType() == STRING_LITERAL && elze.getNodeType() == STRING_LITERAL)
-      return simplify((StringLiteral) then, (StringLiteral) elze, condition);
-    if (then.getNodeType() == STRING_LITERAL && elze.getNodeType() == INFIX_EXPRESSION)
-      return simplify((StringLiteral) then, (InfixExpression) elze, condition);
-    if (then.getNodeType() == INFIX_EXPRESSION && elze.getNodeType() == STRING_LITERAL)
-      return simplify((StringLiteral) elze, (InfixExpression) then, //
+  public static Expression replacement(final Expression condition, final Expression then, final Expression elze) {
+    if (iz.is(then, STRING_LITERAL) && iz.is(elze, STRING_LITERAL))
+      return simplify(az.stringLiteral(then), az.stringLiteral(elze), condition);
+    if (iz.is(then, STRING_LITERAL) && iz.is(elze, INFIX_EXPRESSION))
+      return simplify(az.stringLiteral(then), az.infixExpression(elze), condition);
+    if (iz.is(then, INFIX_EXPRESSION) && iz.is(elze, STRING_LITERAL))
+      return simplify(az.stringLiteral(elze), az.infixExpression(then), //
           subject.operand(condition).to(PrefixExpression.Operator.NOT));
-    if (then.getNodeType() == INFIX_EXPRESSION && elze.getNodeType() == INFIX_EXPRESSION)
-      return simplify((InfixExpression) then, (InfixExpression) elze, condition);
+    if (iz.is(then, INFIX_EXPRESSION) && iz.is(elze, INFIX_EXPRESSION))
+      return simplify(az.infixExpression(then), az.infixExpression(elze), condition);
     return null;
   }
 }
