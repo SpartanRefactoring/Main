@@ -12,8 +12,16 @@ public class Toolbox {
   /** The default instance of this class */
   static Toolbox instance;
 
+  /** Make a {@link Toolbox} for a specific kind of wrings
+   * @param clazz JD
+   * @param w JS
+   * @return a new instance containing only the wrings passed as parameter */
+  @SafeVarargs public static <N extends ASTNode> Toolbox make(final Class<N> clazz, final Wring<N>... ws) {
+    return new Maker().add(clazz, ws);
+  }
+
   /** Initialize this class' internal instance object */
-  public static void generate() {
+  public static void refresh() {
     instance = new Maker()//
         .add(Assignment.class, //
             new AssignmentAndAssignment(), //
@@ -155,7 +163,7 @@ public class Toolbox {
         .seal();
   }
 
-  public static Toolbox instance() {
+  public static Toolbox defaultInstance() {
     return instance;
   }
 

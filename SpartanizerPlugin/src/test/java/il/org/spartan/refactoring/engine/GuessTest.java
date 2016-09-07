@@ -1,7 +1,7 @@
 package il.org.spartan.refactoring.engine;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.refactoring.spartanizations.GuessedContext.*;
+import static il.org.spartan.refactoring.engine.GuessedContext.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
@@ -24,12 +24,12 @@ public class GuessTest {
   }
 
   @Test public void dealWithComment() {
-    azzert.that(GuessedContext.find(""//
+    azzert.that(find(""//
         + "if (b) {\n"//
         + " /* empty */"//
         + "} else {\n"//
         + " throw new Exception();\n"//
-        + "}"), is(GuessedContext.statement_or_something_that_may_occur_in_a_method));
+        + "}"), is(statement_or_something_that_may_occur_in_a_method));
   }
 
   @Test public void essenceTest() {
@@ -37,7 +37,9 @@ public class GuessTest {
   }
 
   @Test public void expression() {
-    azzert.that(GuessedContext.expression_or_something_that_may_be_passed_as_argument.off(GuessedContext.expression_or_something_that_may_be_passed_as_argument.on("a+b")), is("a+b"));
+    azzert.that(
+        expression_or_something_that_may_be_passed_as_argument.off(GuessedContext.expression_or_something_that_may_be_passed_as_argument.on("a+b")),
+        is("a+b"));
   }
 
   @Test public void findAddition() {
@@ -77,7 +79,8 @@ public class GuessTest {
   }
 
   @Test public void intMethod() {
-    azzert.that(GuessedContext.find("int f() { int s = 0; for (int i = 0; i < 10; ++i) s += i; return s;}"), is(GuessedContext.method_or_class_member_of_some_sort));
+    azzert.that(GuessedContext.find("int f() { int s = 0; for (int i = 0; i < 10; ++i) s += i; return s;}"),
+        is(GuessedContext.method_or_class_member_of_some_sort));
   }
 
   @Test public void intoCompilationUnit() {
@@ -97,11 +100,14 @@ public class GuessTest {
   }
 
   @Test public void method() {
-    azzert.that(GuessedContext.method_or_class_member_of_some_sort.off(GuessedContext.method_or_class_member_of_some_sort.on("int f() { return a; }")), is("int f() { return a; }"));
+    azzert.that(
+        GuessedContext.method_or_class_member_of_some_sort.off(GuessedContext.method_or_class_member_of_some_sort.on("int f() { return a; }")),
+        is("int f() { return a; }"));
   }
 
   @Test public void offDivision() {
-    azzert.that("a/b", is(GuessedContext.expression_or_something_that_may_be_passed_as_argument.off(GuessedContext.expression_or_something_that_may_be_passed_as_argument.on("a/b"))));
+    azzert.that("a/b", is(GuessedContext.expression_or_something_that_may_be_passed_as_argument
+        .off(GuessedContext.expression_or_something_that_may_be_passed_as_argument.on("a/b"))));
   }
 
   @Test public void removeComments() {
@@ -114,6 +120,7 @@ public class GuessTest {
   }
 
   @Test public void statement() {
-    azzert.that(GuessedContext.statement_or_something_that_may_occur_in_a_method.off(GuessedContext.statement_or_something_that_may_occur_in_a_method.on("int a;")), is("int a;"));
+    azzert.that(GuessedContext.statement_or_something_that_may_occur_in_a_method
+        .off(GuessedContext.statement_or_something_that_may_occur_in_a_method.on("int a;")), is("int a;"));
   }
 }

@@ -83,7 +83,7 @@ public enum GuessedContext {
       not_statment_may_occur_in_static_initializer_block, };
 
   public static String essence(final String codeFragment) {
-    return Funcs.gist(removeComments(codeFragment));
+    return tide.clean(removeComments(codeFragment));
   }
 
   /** Finds the most appropriate Guess for a given code fragment
@@ -120,7 +120,7 @@ public enum GuessedContext {
       $.append("\n\t Let's see...");
       $.append("\n\t\t What I tried as input was (essentially) this literal:");
       $.append("\n\t```" + essence(on) + "'''");
-      CompilationUnit u = w.intoCompilationUnit(codeFragment);
+      final CompilationUnit u = w.intoCompilationUnit(codeFragment);
       $.append("\n\t\t Alas, what the parser generated " + u.getProblems().length //
           + " on (essentially) this bit of code");
       $.append("\n\t\t\t```" + essence("" + u) + "'''");
@@ -187,6 +187,5 @@ public enum GuessedContext {
 
   public void stays() {
     // TODO Auto-generated method stub
-    
   }
 }
