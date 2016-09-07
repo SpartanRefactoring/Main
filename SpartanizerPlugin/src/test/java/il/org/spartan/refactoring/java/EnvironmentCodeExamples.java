@@ -50,16 +50,14 @@ public class EnvironmentCodeExamples {/*
       @End({ @Id(name = "EX02.C1.x", clazz = "int") }) class B {//
       }
     }
-
-    EX02() {
-      @Begin class A {//
-      }
-      x = 1;
-      @End({ @Id(name = "EX02.x", clazz = "int") }) class B {//
-      }
-    }
-  }
 */
+  
+    static class EX02 {
+      int x = 1;
+      @FlatEnvUse({@Id(name = "x", clazz = "int") }) int y;
+    }
+  //}
+
   /*
   public static class EX03 { // hiding
     @NestedENV({ @Id(name = "EX03.x", clazz = "int"), @Id(name = "EX03.y", clazz = "int") }) @FlatEnvUse({
