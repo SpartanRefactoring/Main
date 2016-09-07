@@ -355,7 +355,7 @@ public interface type {
        *         {@link #DOUBLE} , {@link #INTEGRAL} or {@link #NUMERIC} , in
        *         case it cannot decide */
       default implementation above(final PrefixExpression.Operator o) {
-        return o == NOT ? BOOLEAN : o == COMPLEMENT ? asIntegral() : asNumeric();
+        return o == NOT ? BOOLEAN : o != COMPLEMENT?asNumeric():asIntegral();
       }
 
       default implementation aboveBinaryOperator(final InfixExpression.Operator o) {
