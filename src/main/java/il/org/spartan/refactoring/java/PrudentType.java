@@ -94,7 +94,7 @@ public enum PrudentType {
     return LONG;
   }
 
-  @SuppressWarnings("unused") static PrudentType axiom(final Object o) {
+  @SuppressWarnings("unused") public static PrudentType axiom(final Object o) {
     return NOTHING;
   }
 
