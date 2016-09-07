@@ -34,7 +34,7 @@ public class DisabledChecker {
     while (p != null) {
       if (dns.contains(p))
         return true;
-      else if (ens.contains(p))
+      if (ens.contains(p))
         return false;
       p = p.getParent();
     }
