@@ -3,6 +3,7 @@ package il.org.spartan.refactoring.engine;
 import static il.org.spartan.azzert.*;
 
 import java.io.*;
+import java.lang.reflect.*;
 import java.util.*;
 import java.util.Map.*;
 
@@ -15,8 +16,8 @@ import il.org.spartan.refactoring.java.Environment.*;
 import il.org.spartan.refactoring.utils.*;
 
 public abstract class ENVTestEngineAbstract {
-  protected static Set<Entry<String, Environment.Information>> generateSet() {
-    return new HashSet<>();
+  protected static LinkedHashSet<Entry<String, Environment.Information>> generateSet() {
+    return new LinkedHashSet<>();
   }
 
   /** @param from - file path
@@ -69,11 +70,27 @@ public abstract class ENVTestEngineAbstract {
   // LinkedHashSet unmodifiable issue.
   // TODO once the method is determined to be working, change to visibility to
   // protected.
+
+  @SuppressWarnings("null")
   public void compareInOrder(final LinkedHashSet<Entry<String, Information>> $) {
     azzert.aye(testSet != null);
     azzert.aye($ != null);
-    if(!compareLinkedHashSetsInOrder(testSet,$))
-      azzert.fail("Set" + (testSet.size() != $.size() ? " Comparison failed, Sets are of different siz" : "s are of equal size but contain different valu") + "es");
+    Iterator<Entry<String, Information>> i = testSet.iterator();
+    Iterator<Entry<String, Information>> j = $.iterator();
+    boolean flag = true;
+    while (i.hasNext()) {
+      if (!i.equals(j)) {
+        if (!j.hasNext()) {
+          flag = false;
+          break;
+        }
+        j.next();
+        continue;
+      }
+      i.next();
+      j.next();
+    }
+    azzert.aye(flag);
   }
   
   /** Compares the set from the annotation with the set that the checked
@@ -84,23 +101,8 @@ public abstract class ENVTestEngineAbstract {
   @SuppressWarnings("null") public void compareOutOfOrder(final LinkedHashSet<Entry<String, Information>> $) {
     azzert.aye(testSet != null);
     azzert.aye($ != null);
-    if(!compareLinkedHashSetsInOrder(testSet,$))
-      azzert.fail("Set" + (testSet.size() != $.size() ? " Comparison failed, Sets are of different siz" : "s are of equal size but contain different valu") + "es");
-  }
-  
-  public static boolean compareLinkedHashSetsInOrder(final LinkedHashSet<Entry<String, Information>> s1, final LinkedHashSet<Entry<String, Information>> s2){
-    Iterator<Entry<String,Information>> iter1 = s1.iterator();
-    Iterator<Entry<String,Information>> iter2 = s2.iterator();
-    if(s1.size() != s2.size()){
-      return false;
-    }
-    while(iter1.hasNext()){
-      Entry<String,Information> e1 = iter1.next();
-      Entry<String,Information> e2 = iter2.next();
-      if(!e1.equals(e2))
-        return false;
-    }
-    return true;
+    if(!$.containsAll(testSet))
+      azzert.fail("Some of the annotations are not contained in the result.");
   }
 
   /** Parse the outer annotation to get the inner ones. Add to the flat Set.
@@ -172,11 +174,10 @@ public abstract class ENVTestEngineAbstract {
         if (!foundTestedAnnotation)
           return;
         final LinkedHashSet<Entry<String, Information>> enviromentSet = buildEnvironmentSet($);
-        if(enviromentSet != null){
-          compareOutOfOrder(enviromentSet);
-          compareInOrder(enviromentSet);
-          testSet.clear();
-        }
+        if (enviromentSet == null)
+          return;
+        compareOutOfOrder(enviromentSet);
+        compareInOrder(enviromentSet);
         foundTestedAnnotation = false;
       }
     });

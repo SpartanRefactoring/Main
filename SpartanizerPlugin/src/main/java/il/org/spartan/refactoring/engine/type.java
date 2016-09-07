@@ -5,6 +5,9 @@ import static il.org.spartan.refactoring.ast.step.*;
 import static il.org.spartan.refactoring.engine.type.Odd.Types.*;
 import static il.org.spartan.refactoring.engine.type.Primitive.Certain.*;
 import static il.org.spartan.refactoring.engine.type.Primitive.Uncertain.*;
+import static il.org.spartan.refactoring.engine.type.inner.*; // cleanup removes
+                                                              // this, but this
+                                                              // is necessary
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
@@ -15,7 +18,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.refactoring.ast.*;
-import il.org.spartan.refactoring.engine.type.inner.*;
 import il.org.spartan.refactoring.utils.*;
 
 /** @author Yossi Gil
@@ -23,17 +25,87 @@ import il.org.spartan.refactoring.utils.*;
  * @author Niv Shalmon
  * @since 2016 */
 public interface type {
-  /** All type that were ever born */
-  static Map<String, implementation> types = new LinkedHashMap<>();
-  static String propertyName = "spartan type";
+  /** An interface with one method- type, overloaded for many different
+   * parameter types. Can be used to find the type of an expression thats known
+   * at compile time by using overloading. Only use for testing, mainly for
+   * testing of type.
+   * @author Shalmon Niv
+   * @year 2016 */
+  @SuppressWarnings("unused") interface Axiom {
+    static type.Primitive.Certain type(final boolean x) {
+      return type.Primitive.Certain.BOOLEAN;
+    }
+
+    static type.Primitive.Certain type(final byte x) {
+      return BYTE;
+    }
+
+    static type.Primitive.Certain type(final char x) {
+      return CHAR;
+    }
+
+    static type.Primitive.Certain type(final double x) {
+      return DOUBLE;
+    }
+
+    static type.Primitive.Certain type(final float x) {
+      return FLOAT;
+    }
+
+    static type.Primitive.Certain type(final int x) {
+      return INT;
+    }
+
+    static type.Primitive.Certain type(final long x) {
+      return LONG;
+    }
+
+    static type type(final Object o) {
+      return baptize("Object");
+    }
+
+    static type.Primitive.Certain type(final short x) {
+      return SHORT;
+    }
+
+    static type.Primitive.Certain type(final String x) {
+      return STRING;
+    }
+  }
 
   static class inner {
     // an interface for inner methods that shouldn't be public
     private interface implementation extends type {
-      default implementation join() {
-        assert !types.containsKey(key());
-        types.put(key(), this);
-        return this;
+      /** To be used to determine the type of something that o was used on
+       * @return one of {@link #BOOLEAN} , {@link #INT} , {@link #LONG} ,
+       *         {@link #DOUBLE} , {@link #INTEGRAL} or {@link #NUMERIC} , in
+       *         case it cannot decide */
+      default implementation above(final PrefixExpression.Operator o) {
+        if (o == NOT)
+          return BOOLEAN;
+        if (o == COMPLEMENT)
+          return asIntegral();
+        return asNumeric();
+      }
+
+      default implementation aboveBinaryOperator(final InfixExpression.Operator o) {
+        if (in(o, EQUALS, NOT_EQUALS))
+          return this;
+        if (o == wizard.PLUS2)
+          return asAlphaNumeric();
+        if (wizard.isBitwiseOperator(o))
+          return asBooleanIntegral();
+        if (wizard.isShift(o))
+          return asIntegral();
+        return asNumeric();
+      }
+
+      default implementation asAlphaNumeric() {
+        return isAlphaNumeric() ? this : ALPHANUMERIC;
+      }
+
+      default implementation asBooleanIntegral() {
+        return isIntegral() || this == BOOLEAN ? this : BOOLEANINTEGRAL;
       }
 
       /** @return one of {@link #INT}, {@link #LONG}, {@link #CHAR},
@@ -79,7 +151,9 @@ public interface type {
         return in(this, NOTHING, NULL);
       }
 
-      /** @return one of {@link #BOOLEAN} , {@link #INT} , {@link #LONG} ,
+      /** To be used to determine the type of the result of o being used on the
+       * caller
+       * @return one of {@link #BOOLEAN} , {@link #INT} , {@link #LONG} ,
        *         {@link #DOUBLE} , {@link #INTEGRAL} or {@link #NUMERIC} , in
        *         case it cannot decide */
       default implementation under(final PrefixExpression.Operator o) {
@@ -165,33 +239,19 @@ public interface type {
         // unless both operands are numeric, the result may be a String
         return in(STRING, this, k) || in(NULL, this, k) ? STRING : !isNumeric() || !k.isNumeric() ? ALPHANUMERIC : underNumericOnlyOperator(k);
       }
+    
+      @SuppressWarnings("synthetic-access") default implementation join() {
+        assert !have(key());
+        inner.types.put(key(), this);
+        return this;
+      }
     }
 
-    private static implementation lookUp(final Expression e, final implementation i) {
-      for (ASTNode context = parent(e); context != null; context = parent(context))
-        switch (context.getNodeType()) {
-          case INFIX_EXPRESSION:
-            return i; /*only the direct operands can learn from infix expression, and that
-                      is handled by lookDown(InfixExpression)*/
-          case ARRAY_ACCESS:
-            return i.asIntegral();
-          case PREFIX_EXPRESSION:
-            PrefixExpression.Operator o = az.prefixExpression(context).getOperator();
-            if (o == NOT)
-              return BOOLEAN;
-            if (o == COMPLEMENT)
-              return i.asIntegral();
-            return i.asNumeric();
-          case POSTFIX_EXPRESSION:
-            return i.asNumeric();
-          case PARENTHESIZED_EXPRESSION:
-            continue;
-          case IF_STATEMENT:
-            return BOOLEAN;
-          default:
-            return i;
-        }
-      return i;
+    private static implementation conditionalWithNoInfo(final implementation t) {
+      return in(t, BYTE, SHORT, CHAR, INT, INTEGRAL, LONG, FLOAT, NUMERIC) //
+          ? NUMERIC //
+          : !in(t, DOUBLE, STRING, BOOLEAN, BOOLEAN) //
+              ? NOTHING : t;
     }
 
     /** @param n JD/
@@ -201,26 +261,42 @@ public interface type {
       return (implementation) n.getProperty(propertyName);
     }
 
-    /** sets the type property in the ASTNode
-     * @param n JD
-     * @param t the node's type property
-     * @return the type property t */
-    private static implementation setType(final ASTNode n, final implementation t) {
-      n.setProperty(propertyName, t);
-      return t;
-    }
-
     /** @param n JD
      * @return true if n has a type property and false otherwise */
     private static boolean hasType(final ASTNode n) {
       return getType(n) != null;
     }
 
+    private static implementation lookDown(final Assignment x) {
+      final implementation $ = lookDown(x.getLeftHandSide());
+      return !$.isNoInfo() ? $ : lookDown(x.getRightHandSide()).isNumeric() ? NUMERIC : lookDown(x.getRightHandSide());
+    }
+
+    private static implementation lookDown(final CastExpression x) {
+      return typeSwitch("" + step.type(x));
+    }
+
+    private static implementation lookDown(final ClassInstanceCreation c) {
+      return typeSwitch("" + c.getType());
+    }
+
+    private static implementation lookDown(final ConditionalExpression x) {
+      final implementation $ = lookDown(x.getThenExpression());
+      final implementation ¢ = lookDown(x.getElseExpression());
+      // If we don't know much about one operand but do know enough about the
+      // other, we can still learn something
+      return $ == ¢ ? $
+          : $.isNoInfo() || ¢.isNoInfo() ? conditionalWithNoInfo($.isNoInfo() ? ¢ : $) //
+              : $.isIntegral() && ¢.isIntegral() ? $.underIntegersOnlyOperator(¢) //
+                  : $.isNumeric() && ¢.isNumeric() ? $.underNumericOnlyOperator(¢)//
+                      : NOTHING; //
+    }
+
     /** @param x JD
      * @return The most specific Type information that can be deduced about the
      *         expression from it's structure, or {@link #NOTHING} if it cannot
      *         decide. Will never return null */
-    static implementation lookDown(final Expression x) {
+    private static implementation lookDown(final Expression x) {
       if (hasType(x))
         return getType(x);
       switch (x.getNodeType()) {
@@ -255,31 +331,6 @@ public interface type {
         default:
           return NOTHING;
       }
-    }
-
-    private static implementation lookDown(final Assignment x) {
-      final implementation $ = lookDown(x.getLeftHandSide());
-      return !$.isNoInfo() ? $ : lookDown(x.getRightHandSide()).isNumeric() ? NUMERIC : lookDown(x.getRightHandSide());
-    }
-
-    private static implementation lookDown(final CastExpression x) {
-      return typeSwitch("" + step.type(x));
-    }
-
-    private static implementation lookDown(final ClassInstanceCreation c) {
-      return typeSwitch("" + c.getType());
-    }
-
-    private static implementation lookDown(final ConditionalExpression x) {
-      final implementation $ = lookDown(x.getThenExpression());
-      final implementation ¢ = lookDown(x.getElseExpression());
-      // If we don't know much about one operand but do know enough about the
-      // other, we can still learn something
-      return $ == ¢ ? $
-          : $.isNoInfo() || ¢.isNoInfo() ? conditionalWithNoInfo($.isNoInfo() ? ¢ : $) //
-              : $.isIntegral() && ¢.isIntegral() ? $.underIntegersOnlyOperator(¢) //
-                  : $.isNumeric() && ¢.isNumeric() ? $.underNumericOnlyOperator(¢)//
-                      : NOTHING; //
     }
 
     private static implementation lookDown(final InfixExpression x) {
@@ -322,6 +373,41 @@ public interface type {
       return lookDown(x.getOperand()).under(x.getOperator());
     }
 
+    private static implementation lookUp(final Expression e, final implementation i) {
+      if (i.isCertain())
+        return i;
+      for (ASTNode context = parent(e); context != null; context = parent(context))
+        switch (context.getNodeType()) {
+          case INFIX_EXPRESSION:
+            return i.aboveBinaryOperator(az.infixExpression(context).getOperator());
+          case ARRAY_ACCESS:
+            return i.asIntegral();
+          case PREFIX_EXPRESSION:
+            return i.above(az.prefixExpression(context).getOperator());
+          case POSTFIX_EXPRESSION:
+            return i.asNumeric();
+          case PARENTHESIZED_EXPRESSION:
+            continue;
+          case IF_STATEMENT:
+          case ASSERT_STATEMENT:
+          case FOR_STATEMENT:
+          case WHILE_STATEMENT:
+            return BOOLEAN;
+          default:
+            return i;
+        }
+      return i;
+    }
+
+    /** sets the type property in the ASTNode
+     * @param n JD
+     * @param t the node's type property
+     * @return the type property t */
+    private static implementation setType(final ASTNode n, final implementation t) {
+      n.setProperty(propertyName, t);
+      return t;
+    }
+
     private static implementation typeSwitch(final String s) {
       switch (s) {
         case "byte":
@@ -355,134 +441,9 @@ public interface type {
       }
     }
 
-    static implementation conditionalWithNoInfo(final implementation t) {
-      return in(t, BYTE, SHORT, CHAR, INT, INTEGRAL, LONG, FLOAT, NUMERIC) //
-          ? NUMERIC //
-          : !in(t, DOUBLE, STRING, BOOLEAN, BOOLEAN) //
-              ? NOTHING : t;
-    }
-  }
-
-  static implementation baptize(final String name) {
-    return baptize(name, "anonymously born");
-  }
-
-  static implementation baptize(final String name, final String description) {
-    return have(name) ? bring(name) : new implementation() {
-      @Override public String description() {
-        return description;
-      }
-
-      @Override public String key() {
-        return name;
-      }
-    }.join();
-  }
-
-  static implementation bring(final String name) {
-    return types.get(name);
-  }
-
-  // TODO: Matteo. Nano-pattern of values: not implemented
-  // TODO: Dor, please implement yet
-  @SuppressWarnings("synthetic-access") static type get(final Expression ¢) {
-    return inner.setType(¢,inner.lookUp(¢,inner.lookDown(¢)));
-  }
-
-  static boolean have(final String name) {
-    return types.containsKey(name);
-  }
-
-  /** @return true if one of {@link #INT} , {@link #LONG} , {@link #CHAR} ,
-   *         {@link BYTE} , {@link SHORT} , {@link FLOAT} , {@link #DOUBLE} ,
-   *         {@link #INTEGRAL} or {@link #NUMERIC} , {@link #STRING} ,
-   *         {@link #ALPHANUMERIC} or false otherwise */
-  default boolean isAlphaNumeric() {
-    return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC, STRING, ALPHANUMERIC);
-  }
-
-  /** @return true if one of {@link #INT} , {@link #LONG} , {@link #CHAR} ,
-   *         {@link BYTE} , {@link SHORT} , {@link #INTEGRAL} or false
-   *         otherwise */
-  default boolean isIntegral() {
-    return in(this, LONG, INT, CHAR, BYTE, SHORT, INTEGRAL);
-  }
-
-  /** @return true if one of {@link #INT} , {@link #LONG} , {@link #CHAR} ,
-   *         {@link BYTE} , {@link SHORT} , {@link FLOAT} , {@link #DOUBLE} ,
-   *         {@link #INTEGRAL} , {@link #NUMERIC} or false otherwise */
-  default boolean isNumeric() {
-    return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC);
-  }
-
-  default Primitive.Certain asPrimitiveCertain() {
-    return null;
-  }
-
-  default type.Primitive.Uncertain asPrimitiveUncertain() {
-    return null;
-  }
-
-  default boolean canB(@SuppressWarnings("unused") final Primitive.Certain __) {
-    return false;
-  }
-
-  String description();
-
-  default String fullName() {
-    return this + "=" + key() + " (" + description() + ")";
-  }
-
-  /** @return the formal name of this type, the key under which it is stored in
-   *         {@link #types}, e.g., "Object", "int", "String", etc. */
-  String key();
-
-  /** An interface with one method- type, overloaded for many different
-   * parameter types. Can be used to find the type of an expression thats known
-   * at compile time by using overloading. Only use for testing, mainly for
-   * testing of type.
-   * @author Shalmon Niv
-   * @year 2016 */
-  @SuppressWarnings("unused") interface Axiom {
-    static type.Primitive.Certain type(final boolean x) {
-      return type.Primitive.Certain.BOOLEAN;
-    }
-
-    static type.Primitive.Certain type(final byte x) {
-      return BYTE;
-    }
-
-    static type.Primitive.Certain type(final char x) {
-      return CHAR;
-    }
-
-    static type.Primitive.Certain type(final double x) {
-      return DOUBLE;
-    }
-
-    static type.Primitive.Certain type(final float x) {
-      return FLOAT;
-    }
-
-    static type.Primitive.Certain type(final int x) {
-      return INT;
-    }
-
-    static type.Primitive.Certain type(final long x) {
-      return LONG;
-    }
-
-    static type type(final Object o) {
-      return baptize("Object");
-    }
-
-    static type.Primitive.Certain type(final short x) {
-      return SHORT;
-    }
-
-    static type.Primitive.Certain type(final String x) {
-      return STRING;
-    }
+    private static String propertyName = "spartan type";
+    /** All type that were ever born */
+    private static Map<String, implementation> types = new LinkedHashMap<>();
   }
 
   /** Types we do not full understand yet.
@@ -543,6 +504,17 @@ public interface type {
         this.description = description;
       }
 
+      @Override public type.Primitive.Certain asPrimitiveCertain() {
+        return this;
+      }
+
+      @Override public type.Primitive.Uncertain asPrimitiveUncertain() {
+        return isIntegral() ? INTEGRAL //
+            : isNumeric() ? NUMERIC //
+                : isAlphaNumeric() ? ALPHANUMERIC //
+                    : this == BOOLEAN ? BOOLEANINTEGRAL : null;
+      }
+
       @Override public boolean canB(final Certain ¢) {
         return ¢ == this;
       }
@@ -554,20 +526,9 @@ public interface type {
       @Override public String key() {
         return key;
       }
-
-      @Override public type.Primitive.Certain asPrimitiveCertain() {
-        return this;
-      }
-
-      @Override public type.Primitive.Uncertain asPrimitiveUncertain() {
-        return isIntegral() ? INTEGRAL //
-            : isNumeric() ? NUMERIC //
-                : isAlphaNumeric() ? ALPHANUMERIC //
-                    : this == BOOLEAN ? BOOLEANINTEGRAL : null;
-      }
     }
 
-    /**<p>
+    /** <p>
      * Tells how much we know about the type of of a variable, function, or
      * expression. This should be conservative approximation to the real type of
      * the entity, what a rational, but prudent programmer would case about the
@@ -619,4 +580,83 @@ public interface type {
       }
     }
   }
+
+  static implementation baptize(final String name) {
+    return baptize(name, "anonymously born");
+  }
+
+  static implementation baptize(final String name, final String description) {
+    return have(name) ? bring(name) : new implementation() {
+      @Override public String description() {
+        return description;
+      }
+
+      @Override public String key() {
+        return name;
+      }
+    }.join();
+  }
+
+  @SuppressWarnings("synthetic-access") static implementation bring(final String name) {
+    return inner.types.get(name);
+  }
+
+  // TODO: Matteo. Nano-pattern of values: not implemented
+  @SuppressWarnings("synthetic-access") static type get(final Expression ¢) {
+    return inner.setType(¢, inner.lookUp(¢, inner.lookDown(¢)));
+  }
+
+  @SuppressWarnings("synthetic-access") static boolean have(final String name) {
+    return inner.types.containsKey(name);
+  }
+
+  default Primitive.Certain asPrimitiveCertain() {
+    return null;
+  }
+  
+  /**@return true if either a Primitive.Certain, Primitive.Odd.NULL or a baptized type
+   */
+  default boolean isCertain(){
+    return this == NULL || have(key()) || asPrimitiveCertain() != null;
+  }
+  
+  default type.Primitive.Uncertain asPrimitiveUncertain() {
+    return null;
+  }
+
+  default boolean canB(@SuppressWarnings("unused") final Primitive.Certain __) {
+    return false;
+  }
+
+  String description();
+
+  default String fullName() {
+    return this + "=" + key() + " (" + description() + ")";
+  }
+
+  /** @return true if one of {@link #INT} , {@link #LONG} , {@link #CHAR} ,
+   *         {@link BYTE} , {@link SHORT} , {@link FLOAT} , {@link #DOUBLE} ,
+   *         {@link #INTEGRAL} or {@link #NUMERIC} , {@link #STRING} ,
+   *         {@link #ALPHANUMERIC} or false otherwise */
+  default boolean isAlphaNumeric() {
+    return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC, STRING, ALPHANUMERIC);
+  }
+
+  /** @return true if one of {@link #INT} , {@link #LONG} , {@link #CHAR} ,
+   *         {@link BYTE} , {@link SHORT} , {@link #INTEGRAL} or false
+   *         otherwise */
+  default boolean isIntegral() {
+    return in(this, LONG, INT, CHAR, BYTE, SHORT, INTEGRAL);
+  }
+
+  /** @return true if one of {@link #INT} , {@link #LONG} , {@link #CHAR} ,
+   *         {@link BYTE} , {@link SHORT} , {@link FLOAT} , {@link #DOUBLE} ,
+   *         {@link #INTEGRAL} , {@link #NUMERIC} or false otherwise */
+  default boolean isNumeric() {
+    return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC);
+  }
+
+  /** @return the formal name of this type, the key under which it is stored in
+   *         {@link #types}, e.g., "Object", "int", "String", etc. */
+  String key();
 } // end of interface type

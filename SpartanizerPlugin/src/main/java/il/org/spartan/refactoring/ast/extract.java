@@ -160,7 +160,64 @@ public enum extract {
     });
     return $.get();
   }
+  
+  /** Search for an {@link ForStatement} in the tree rooted at an
+   * {@link ASTNode}.
+   * @param n JD
+   * @return first {@link ForStatement} found in an {@link ASTNode n}, or
+   *         <code><b>null</b> if there is no such statement. */
+  public static ForStatement firstForStatement(final ASTNode n) {
+    if (n == null)
+      return null;
+    final Wrapper<ForStatement> $ = new Wrapper<>();
+    n.accept(new ASTVisitor() {
+      @Override public boolean visit(final ForStatement s) {
+        if ($.get() == null)
+          $.set(s);
+        return false;
+      }
+    });
+    return $.get();
+  }
 
+  /** Search for an {@link WhileStatement} in the tree rooted at an
+   * {@link ASTNode}.
+   * @param n JD
+   * @return first {@link WhileStatement} found in an {@link ASTNode n}, or
+   *         <code><b>null</b> if there is no such statement. */
+  public static WhileStatement firstWhileStatement(final ASTNode n) {
+    if (n == null)
+      return null;
+    final Wrapper<WhileStatement> $ = new Wrapper<>();
+    n.accept(new ASTVisitor() {
+      @Override public boolean visit(final WhileStatement s) {
+        if ($.get() == null)
+          $.set(s);
+        return false;
+      }
+    });
+    return $.get();
+  }
+  
+  /** Search for an {@link AssertStatement} in the tree rooted at an
+   * {@link ASTNode}.
+   * @param n JD
+   * @return first {@link AssertStatement} found in an {@link ASTNode n}, or
+   *         <code><b>null</b> if there is no such statement. */
+  public static AssertStatement firstAssertStatement(final ASTNode n) {
+    if (n == null)
+      return null;
+    final Wrapper<AssertStatement> $ = new Wrapper<>();
+    n.accept(new ASTVisitor() {
+      @Override public boolean visit(final AssertStatement s) {
+        if ($.get() == null)
+          $.set(s);
+        return false;
+      }
+    });
+    return $.get();
+  }
+  
   /** Search for an {@link MethodDeclaration} in the tree rooted at an
    * {@link ASTNode}.
    * @param n JD
