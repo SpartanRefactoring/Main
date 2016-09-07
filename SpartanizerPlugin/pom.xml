@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>il.org.spartan</groupId>
   <artifactId>il.org.spartan.spartanizer</artifactId>
-  <version>2.4.0</version>
+  <version>2.5.0</version>
   <packaging>eclipse-plugin</packaging>
 
   <properties>

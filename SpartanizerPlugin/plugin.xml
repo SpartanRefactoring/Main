@@ -5,7 +5,9 @@
          id="il.org.spartan.plugin.BuilderID"
          name="Spartanization Suggestions"
          point="org.eclipse.core.resources.builders">
-      <builder hasNature="true">
+      <builder
+            hasNature="true"
+            isConfigurable="true">
          <run class="il.org.spartan.plugin.Builder"/> 
       </builder>
    </extension>
@@ -34,7 +36,7 @@
     id="il.org.spartan.plugin.spartanizationSuggestion"
     name="Spartanization Suggestion"
     point="org.eclipse.core.resources.markers">
-  <super type="org.eclipse.core.resources.problemmarker" />
+  <super type="il.org.spartan.plugin.spartanizationSuggestion" />
 </extension>
    <extension point="org.eclipse.ui.ide.markerResolution">
       <markerResolutionGenerator 
@@ -64,23 +66,25 @@
    </specification>
 </extension>
    <extension point="org.eclipse.ui.commands">
-      <category id="il.org.spartan.plugin" name="Spartanization Category"/>
       <command
-            categoryId="il.org.spartan.plugin"
-            id="il.org.spartan.commands.ToggleCommand"
-            name="Toggle Automatic Spartanization Suggestion">
+            defaultHandler="il.org.spartan.plugin.Toggle"
+            description="Toggle spartanization suggestions"
+            id="il.org.spartan.plugin.Toggle"
+            name="Toggle">
             <state
               class="org.eclipse.ui.handlers.RegistryToggleState:true"
               id="org.eclipse.ui.commands.toggleState">
             </state>
       </command>
       <command
-            id="il.org.spartan.plugin.commands.Cleanup"
-            categoryId="il.org.spartan.plugin"
-            name="Spartanize entire project">
+            description="Spartanize all Java files in this project"
+            id="il.org.spartan.plugin.SpartanizeAll"
+            name="Spartanize project">
       </command>
       <command
-            id="il.org.spartan.plugin.commands.ApplySpartanization"
+            defaultHandler="il.org.spartan.plugin.SpartanizeCurrent"
+            description="Repeatedly spartanize active window"
+            id="il.org.spartan.plugin.SpartanizeCurrent"
             name="Spartanize active window">
             categoryId="il.org.spartan.plugin"
       </command>
@@ -91,12 +95,12 @@
             commandId="il.org.spartan.plugin.Toggle">
       </handler>
       <handler
-            class="il.org.spartan.plugin.Cleanup"
+            class="il.org.spartan.plugin.SpartanizeAll"
             commandId="il.org.spartan.plugin.Cleanup">
       </handler>
       <handler
-            class="il.org.spartan.plugin.SpartanizeProject"
-            commandId="il.org.spartan.plugin.ApplySpartanization">
+            class="il.org.spartan.plugin.SpartanizeCurrent"
+            commandId="il.org.spartan.plugin.SpartanizeProject">
       </handler>
    </extension>
    <extension
@@ -106,10 +110,10 @@
          <toolbar
                id="il.org.spartan.plugin.toolbars.spartanToolbar">
             <command
-                  commandId="il.org.spartan.plugin.ApplySpartanization"
+                  commandId="il.org.spartan.plugin.SpartanizeProject"
                   icon="src/main/icons/spartan-warrior.gif"
                   tooltip="Spartanize this file"
-                  id="il.org.spartan.plugin.toolbars.ApplySpartanization">
+                  id="il.org.spartan.plugin.toolbars.SpartanizeProject">
             </command>
          </toolbar>
       </menuContribution>
@@ -146,45 +150,14 @@
                label="Refactor">
             <menu
                   label="Spartanization">
-
-               <command
-                     commandId="il.org.spartan.plugin.ShortestOperand"
-                     id="il.org.spartan.menus.ShortestOperandCommand"
-                     style="push">
-               </command>
-               <command
-                     commandId="il.org.spartan.plugin.ExtractMethod"
-                     id="il.org.spartan.menus.ExtractMethodCommand"
-                     style="push">
-               </command>
-               <command
-                     commandId="il.org.spartan.plugin.ForwardDeclaraion"
-                     id="il.org.spartan.menus.ForwardDeclarationCommand"
-                     style="push">
-               </command>
-               <command
-                     commandId="il.org.spartan.plugin.InlineSingleUse"
-                     id="il.org.spartan.menus.InlineSingleUseCommand"
-                     style="push">
-               </command>
-               <command
-                     commandId="il.org.spartan.plugin.RedundantEquality"
-                     id="il.org.spartan.menus.RedundantEqualityCommand"
-                     style="push">
-               </command>
-               <command
-                     commandId="il.org.spartan.plugin.ShortestBranchFirst"
-                     id="il.org.spartan.menus.ShortestBranchFirstCommand"
-                     style="push">
-               </command>
                <command
                      commandId="il.org.spartan.plugin.Cleanup"
                      id="il.org.spartan.menus.CleanupCommand"
                      style="push">
                </command>
                <command
-                     commandId="il.org.spartan.plugin.ApplySpartanization"
-                     id="il.org.spartan.plugin.menus.ApplySpartanizationCommand"
+                     commandId="il.org.spartan.plugin.SpartanizeProject"
+                     id="il.org.spartan.plugin.menus.SpartanizeProjectCommand"
                      style="push">
                </command>
             </menu>
