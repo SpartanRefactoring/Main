@@ -18,6 +18,7 @@ import il.org.spartan.refactoring.java.Environment.*;
 import il.org.spartan.refactoring.utils.*;
 
 @SuppressWarnings("static-method") //
+@Ignore
 public class EnvironmentTest {
   // The difficulties of Environment - A Yossi example.
   class A {
