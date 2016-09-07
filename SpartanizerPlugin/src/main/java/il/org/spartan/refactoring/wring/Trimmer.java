@@ -21,23 +21,6 @@ public class Trimmer extends Spartanization {
     return new Trimmer().fixed(from);
   }
 
-  String fixed(final String from) {
-    final Document $ = new Document(from);
-    for (;;) {
-      final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from($.get());
-      final ASTRewrite r = createRewrite(u, null);
-      final TextEdit e = r.rewriteAST($, null);
-      try {
-        e.apply($);
-      } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException x) {
-        x.printStackTrace();
-        throw new AssertionError(x);
-      }
-      if (!e.hasChildren())
-        return $.get();
-    }
-  }
-
   static boolean prune(final Rewrite r, final List<Rewrite> rs) {
     if (r != null) {
       r.pruneIncluders(rs);
@@ -45,7 +28,6 @@ public class Trimmer extends Spartanization {
     }
     return true;
   }
-
   public final Toolbox toolbox;
 
   /** Instantiates this class */
@@ -62,6 +44,18 @@ public class Trimmer extends Spartanization {
     Toolbox.refresh();
     return new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
+        final Wring<N> w = Toolbox.defaultInstance().find(n);
+        return w == null || w.nonEligible(n) || prune(w.make(n, exclude), $);
+      }
+    };
+  }
+
+  @Override protected ASTVisitor collect(final List<Rewrite> $, final CompilationUnit u) {
+    final DisabledChecker dc = new DisabledChecker(u);
+    return new DispatchingVisitor() {
+      @Override <N extends ASTNode> boolean go(final N n) {
+        if (dc.check(n))
+          return false;
         final Wring<N> w = Toolbox.defaultInstance().find(n);
         return w == null || w.nonEligible(n) || prune(w.make(n, exclude), $);
       }
@@ -85,6 +79,23 @@ public class Trimmer extends Spartanization {
         return true;
       }
     });
+  }
+
+  String fixed(final String from) {
+    final Document $ = new Document(from);
+    for (;;) {
+      final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from($.get());
+      final ASTRewrite r = createRewrite(u, null);
+      final TextEdit e = r.rewriteAST($, null);
+      try {
+        e.apply($);
+      } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException x) {
+        x.printStackTrace();
+        throw new AssertionError(x);
+      }
+      if (!e.hasChildren())
+        return $.get();
+    }
   }
 
   @SuppressWarnings("static-method") ExclusionManager makeExcluder() {
