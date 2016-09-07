@@ -1,0 +1,5 @@
+projectKey=sonar:spartanizer
+serverUrl=http://localhost:9000
+dashboardUrl=http://localhost:9000/dashboard/index/sonar:spartanizer
+ceTaskId=AVcDvRjbzMsj_rmEmCUD
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AVcDvRjbzMsj_rmEmCUD
