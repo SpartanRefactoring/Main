@@ -5,7 +5,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.ltk.core.refactoring.*;
 import org.junit.*;
 
-import il.org.spartan.*;
 import il.org.spartan.refactoring.spartanizations.*;
 
 /** Fluent API for testing:
@@ -86,8 +85,7 @@ public interface trim {
    * @author Yossi Gil
    * @year 2016 */
   @SuppressWarnings("static-method") //
-  @Ignore
-  public static class TEST {
+  @Ignore public static class TEST {
     @Test public void trimming_of_gives() {
       trim.of("a +=1;").gives("a++;");
     }

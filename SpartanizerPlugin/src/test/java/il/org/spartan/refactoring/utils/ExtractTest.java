@@ -36,10 +36,10 @@ import il.org.spartan.refactoring.spartanizations.*;
   @Test public void prefixToPostfixDecrement() {
     final String from = "for (int i = 0; i < 100;  i--)  i--;";
     final Statement s = s(from);
-   assert s != null;
+    assert s != null;
     azzert.that(s, iz("{" + from + "}"));
     final PostfixExpression e = extract.findFirstPostfix(s);
-   assert e != null;
+    assert e != null;
     azzert.that("" + e, is("i--"));
   }
 }

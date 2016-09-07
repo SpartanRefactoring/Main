@@ -48,18 +48,23 @@ public class GuessedContextTest {
   @Test public void findDivision() {
     azzert.that(GuessedContext.find("a/b"), is(EXPRESSION_LOOK_ALIKE));
   }
+
   @Test public void findDivisionOfExpressions() {
     azzert.that(find("(a+b)/++b"), is(EXPRESSION_LOOK_ALIKE));
   }
+
   @Test public void findEmptyBlock() {
     azzert.that(find("{}"), is(STATEMENTS_LOOK_ALIKE));
   }
+
   @Test(expected = AssertionError.class) public void findError() {
     azzert.that(find("}} f() { a();} b();}"), is(nullValue()));
   }
+
   @Test public void findExpression() {
     azzert.that(find("i++"), is(EXPRESSION_LOOK_ALIKE));
   }
+
   @Test public void findLiteral0() {
     azzert.that(find("true"), is(EXPRESSION_LOOK_ALIKE));
   }
@@ -117,15 +122,15 @@ public class GuessedContextTest {
     final GuessedContext w = EXPRESSION_LOOK_ALIKE;
     final String codeFragment = "a + b * c";
     final CompilationUnit u = w.intoCompilationUnit(codeFragment);
-   assert u != null;
-    azzert.that(w.off((u + "")), containsString(codeFragment));
+    assert u != null;
+    azzert.that(w.off(u + ""), containsString(codeFragment));
   }
 
   @Test public void intoDocument() {
     final GuessedContext w = EXPRESSION_LOOK_ALIKE;
     final String codeFragment = "a + b * c";
     final Document d = w.intoDocument(codeFragment);
-   assert d != null;
+    assert d != null;
     azzert.that(w.off(d.get()), containsString(codeFragment));
   }
 

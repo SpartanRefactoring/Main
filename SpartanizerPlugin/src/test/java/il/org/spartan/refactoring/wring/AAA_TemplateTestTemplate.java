@@ -1,7 +1,5 @@
 package il.org.spartan.refactoring.wring;
 
-import static org.junit.Assert.*;
-
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -20,6 +18,7 @@ public class AAA_TemplateTestTemplate {
   @Test public void aaaaa1() {
     assert new Object() != null;
   }
+
   /** if fails, enable assertions (flag '-va') to the JVM */
   @Test(expected = AssertionError.class) //
   public void aaaaa2() {

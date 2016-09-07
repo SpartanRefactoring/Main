@@ -34,7 +34,7 @@ import il.org.spartan.*;
   }
 
   @Test public void hasConstructor() {
-   assert null !=(new LiteralParser("a"));
+    assert null != new LiteralParser("a");
   }
 
   @Test public void hasKind() {
