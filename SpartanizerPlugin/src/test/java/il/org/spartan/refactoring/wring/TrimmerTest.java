@@ -1632,7 +1632,8 @@ import il.org.spartan.refactoring.utils.*;
 
   @Test public void issue110_07() {
     trimming("receiver ==null ? \"Use x\" : \"Use \" + receiver")//
-        .to("\"Use \"+(receiver==null ? \"x\" : \"\"+receiver)").to(null);
+        .to("\"Use \"+(receiver==null ? \"x\" : \"\"+receiver)")
+        .to("\"Use \"+(receiver==null ? \"x\" : receiver+\"\")").to(null);
   }
 
   @Test public void issue110_08() {
