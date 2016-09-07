@@ -48,9 +48,12 @@ public final class Trimmer extends Spartanization {
     Toolbox.generate();
   }
 
-  @Override protected ASTVisitor collect(final List<Rewrite> $) {
+  @Override protected ASTVisitor collect(final List<Rewrite> $, final CompilationUnit u) {
+    final DisabledChecker dc = new DisabledChecker(u);
     return new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
+        if (dc.check(n))
+          return false;
         final Wring<N> w = Toolbox.instance().find(n);
         return w == null || w.nonEligible(n) || prune(w.make(n, exclude), $);
       }
@@ -58,8 +61,11 @@ public final class Trimmer extends Spartanization {
   }
 
   @Override protected void fillRewrite(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
+    final DisabledChecker dc = new DisabledChecker(u);
     u.accept(new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
+        if (dc.check(n))
+          return false;
         if (!inRange(m, n))
           return true;
         final Wring<N> w = Toolbox.instance().find(n);
@@ -156,6 +162,82 @@ public final class Trimmer extends Spartanization {
 
     private boolean cautiousGo(final ASTNode n) {
       return !exclude.isExcluded(n) && go(n);
+    }
+  }
+
+  /**
+   * Determines whether an {@link ASTNode} is spartanization disabled. In the
+   * current implementation, only instances of {@link BodyDeclaration} may be
+   * disabled, and only via their {@link Javadoc} comment
+   *
+   * @author Ori Roth
+   * @since 2016/05/13
+   */
+  public class DisabledChecker {
+    final Set<ASTNode> dns;
+    /**
+     * Disable spartanization identifier, used by the programmer to indicate a
+     * method/class/code line not to be spartanized
+     */
+    public final static String dsi = "@DisableSpartan";
+
+    protected DisabledChecker(final CompilationUnit u) {
+      dns = new HashSet<>();
+      if (u == null)
+        return;
+      u.accept(new BodyDeclarationVisitor(dns));
+    }
+    /**
+     * @param n node
+     * @return true iff spartanization is disabled for n
+     */
+    public boolean check(final ASTNode n) {
+      ASTNode p = n;
+      while (p != null) {
+        if (dns.contains(p))
+          return true;
+        p = p.getParent();
+      }
+      return false;
+    }
+
+    private class BodyDeclarationVisitor extends ASTVisitor {
+      @SuppressWarnings("hiding") Set<ASTNode> dns;
+
+      BodyDeclarationVisitor(final Set<ASTNode> dns) {
+        this.dns = dns;
+      }
+      @Override public boolean visit(final AnnotationTypeDeclaration d) {
+        return go(d);
+      }
+      @Override public boolean visit(final EnumDeclaration d) {
+        return go(d);
+      }
+      @Override public boolean visit(final TypeDeclaration d) {
+        return go(d);
+      }
+      @Override public boolean visit(final AnnotationTypeMemberDeclaration d) {
+        return go(d);
+      }
+      @Override public boolean visit(final EnumConstantDeclaration d) {
+        return go(d);
+      }
+      @Override public boolean visit(final FieldDeclaration d) {
+        return go(d);
+      }
+      @Override public boolean visit(final Initializer i) {
+        return go(i);
+      }
+      @Override public boolean visit(final MethodDeclaration d) {
+        return go(d);
+      }
+      private boolean go(final BodyDeclaration d) {
+        final Javadoc j = d.getJavadoc();
+        if (j == null || !j.toString().contains(dsi))
+          return true;
+        dns.add(d);
+        return false;
+      }
     }
   }
 }
