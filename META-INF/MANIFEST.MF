@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Spartan Refactoring
 Bundle-SymbolicName: il.org.spartan.plugin;singleton:=true
-Bundle-Version: 2.4.0
+Bundle-Version: 2.5.0
 Bundle-Activator: il.org.spartan.plugin.Plugin
 Bundle-Vendor: Technion--Israel Institute of Technology
 Require-Bundle: org.eclipse.ui,
