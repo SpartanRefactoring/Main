@@ -51,11 +51,10 @@ public class Trimmer extends Spartanization {
   }
 
   @Override protected ASTVisitor collect(final List<Rewrite> $, final CompilationUnit u) {
-    final DisabledChecker dc = new DisabledChecker(u);
+    // TODO: Ori Roth, I cannot get this to run. final DisabledChecker dc = new DisabledChecker(u);
     return new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
-        if (dc.check(n))
-          return false;
+        // if (dc.check(n)) return false;
         final Wring<N> w = Toolbox.defaultInstance().find(n);
         return w == null || w.nonEligible(n) || prune(w.make(n, exclude), $);
       }
@@ -66,8 +65,8 @@ public class Trimmer extends Spartanization {
     Toolbox.refresh();
     u.accept(new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
-        if (dc.check(n))
-          return false;
+        // if (dc.check(n))
+          // return false;
         if (!inRange(m, n))
           return true;
         final Wring<N> w = Toolbox.defaultInstance().find(n);
