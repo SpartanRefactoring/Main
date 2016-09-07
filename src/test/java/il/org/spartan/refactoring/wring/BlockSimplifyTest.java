@@ -14,13 +14,13 @@ public class BlockSimplifyTest {
         + "  String source = \"10\";\n" //
         + "  {\n" //
         + "    BigFraction c = properFormat.parse(source);\n" //
-        + "   assert null !=(c);\n" //
+        + "   assert c != null;\n" //
         + "    azzert.assertEquals(BigInteger.TEN, c.getNumerator());\n" //
         + "    azzert.assertEquals(BigInteger.ONE, c.getDenominator());\n" //
         + "  }\n" //
         + "  {\n" //
         + "    BigFraction c = improperFormat.parse(source);\n" //
-        + "   assert null !=(c);\n" //
+        + "   assert c != null;\n" //
         + "    azzert.assertEquals(BigInteger.TEN, c.getNumerator());\n" //
         + "    azzert.assertEquals(BigInteger.ONE, c.getDenominator());\n" //
         + "  }\n" //
@@ -33,13 +33,13 @@ public class BlockSimplifyTest {
         + "  String source = \"10\";\n" //
         + "  {\n" //
         + "    BigFraction c = properFormat.parse(source);\n" //
-        + "   assert null !=(c);\n" //
+        + "   assert c != null;\n" //
         + "    azzert.assertEquals(BigInteger.TEN, c.getNumerator());\n" //
         + "    azzert.assertEquals(BigInteger.ONE, c.getDenominator());\n" //
         + "  }\n" //
         + "  {\n" //
         + "    BigFraction c = improperFormat.parse(source);\n" //
-        + "   assert null !=(c);\n" //
+        + "   assert c != null;\n" //
         + "    azzert.assertEquals(BigInteger.TEN, c.getNumerator());\n" //
         + "    azzert.assertEquals(BigInteger.ONE, c.getDenominator());\n" //
         + "  }\n" //
@@ -52,13 +52,13 @@ public class BlockSimplifyTest {
         + "  string s = \"10\";\n" //
         + "  {\n" //
         + "    f c = properformat.parse(s);\n" //
-        + "   assert null !=(c);\n" //
+        + "   assert c != null;\n" //
         + "    azzert.assertequals(biginteger.ten, c.getnumerator());\n" //
         + "    azzert.assertequals(biginteger.one, c.getdenominator());\n" //
         + "  }\n" //
         + "  {\n" //
         + "    f c = improperformat.parse(s);\n" //
-        + "   assert null !=(c);\n" //
+        + "   assert c != null;\n" //
         + "    azzert.assertequals(biginteger.ten, c.getnumerator());\n" //
         + "    azzert.assertequals(biginteger.one, c.getdenominator());\n" //
         + "  }\n" //
@@ -172,14 +172,24 @@ public class BlockSimplifyTest {
         + "public void f() {\n" //
         + "  int s = 10;\n" //
         + "  {\n" //
-        + "    f c = g.parse(s);\n" //
+        + "     g.parse(s);\n" //
         + "    Y(q, c.g());\n" //
         + "  }\n" //
         + "  {\n" //
-        + "    f c = X.parse(s);\n" //
+        + "     X.parse(s);\n" //
         + "    Y(q, c.g());\n" //
         + "  }\n" //
-        + "}").to(null);
+
+        + "}").to(""  //
+        + "public void f() {\n" //
+        + "  int s = 10;\n" //
+        + "  g.parse(s);\n" //
+        + "  Y(q, c.g());\n" //
+        + "  X.parse(s);\n" //
+        + "  Y(q, c.g());\n" //
+        + "}\n" //
+        ).to(null);
+
   }
 
   @Test public void seriesA10() {
@@ -187,13 +197,24 @@ public class BlockSimplifyTest {
         + "public void f() {\n" //
         + "  int s = 10;\n" //
         + "  {\n" //
-        + "    f c = g.parse(s);\n" //
+        + "    g.parse(s);\n" //
         + "    Y(q, c.g());\n" //
         + "  }\n" //
         + "  {\n" //
-        + "    f c = X.parse(s);\n" //
+        + "    X.parse(s);\n" //
         + "    Y(q, c.g());\n" //
         + "  }\n" //
-        + "}").to(null);
+        + "}").to(""  //
+        + "public void f() {\n" //
+        + "  int s = 10;\n" //
+        + "  g.parse(s);\n" //
+        + "  Y(q, c.g());\n" //
+        + "  X.parse(s);\n" //
+        + "  Y(q, c.g());\n" //
+        + "}\n" //
+        ).to(null);
+    
+    
+    
   }
 }
