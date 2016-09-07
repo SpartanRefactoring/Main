@@ -14,31 +14,31 @@ import il.org.spartan.refactoring.utils.*;
  * @author Yossi Gil
  * @since 2015-07-16 */
 public enum GuessedContext {
-  full_compilation_unit(//
+  COMPILATION_UNIT_LOOK_ALIKE(//
       "/* BEGIN Compilation unit */\n", //
       "\n /* END compilation unit */\n"//
-  ), outer_type_in_a_packaged_compilation_unit(//
-      full_compilation_unit.before + //
+  ), OUTER_TYPE_LOOKALIKE(//
+      COMPILATION_UNIT_LOOK_ALIKE.before + //
           "\n\t package p; /* BEGIN Outer type in a compilation unit */\n"//
       , //
       "\n\t /* END outer type in a compilation unit */\n" + //
-          full_compilation_unit.after //
-  ), method_or_class_member_of_some_sort( //
-      outer_type_in_a_packaged_compilation_unit.before + //
+          COMPILATION_UNIT_LOOK_ALIKE.after //
+  ), METHOD_LOOKALIKE( //
+      OUTER_TYPE_LOOKALIKE.before + //
           "\n\t\t public class C {/* BEGIN Class C*/\n" //
       , //
       "\n\t\t } /* END class C */\n" + //
-          outer_type_in_a_packaged_compilation_unit.after //
-  ), statement_or_something_that_may_occur_in_a_method(//
-      method_or_class_member_of_some_sort.before //
+          OUTER_TYPE_LOOKALIKE.after //
+  ), STATEMENTS_LOOK_ALIKE(//
+      METHOD_LOOKALIKE.before //
           + "\n\t\t\t public Object m() { /* BEGIN Public function m */\n" //
-          + "\n\t\t\t\t while (f()) {"//
-          + "\n\t\t\t\t g();"//
+          + "\n\t\t\t\t while (f4324()) {"//
+          + "\n\t\t\t\t g3423436();"//
       ,
       "" //
-          + "\n\t\t\t\t h();"//
+          + "\n\t\t\t\t h6463634();"//
           + "\n\t\t\t\t} " //
-          + "\n\t\t\t\t\t switch(f()) {" //
+          + "\n\t\t\t\t\t switch(f4324()) {" //
           + "case 1:\n" //
           + "return afasdf;\n" //
           + "case 2:\n" //
@@ -46,39 +46,39 @@ public enum GuessedContext {
           + "return asdf431;\n" + "default:\n" //
           + "f(); break; \n" //
           + "} \n" //
-          + "return super.z();\n" //
+          + "return super.z123();\n" //
           + "} \n" //
           + "\n\t\t\t\t\t if (s()) return f31284sb;  " //
           + "\n\t\t\t\t\t z31284sb++;  " //
           + "\n\t\t\t } /* END public function */\n" //
-          + method_or_class_member_of_some_sort.after //
-  ), not_statment_may_occur_in_initializer_block(//
-      method_or_class_member_of_some_sort.before + //
-          "\n\t\t\t { /* BEGIN Instance initializer block */\n" //
-      , //
-      "\n\t\t\t } /* END instance initializer block */\n" + //
-          method_or_class_member_of_some_sort.after //
-  ), not_statment_may_occur_in_static_initializer_block(//
-      method_or_class_member_of_some_sort.before + //
-          "\n\t\t\t static{ /* BEGIN Instance initializer block */\n" //
-      , //
-      "\n\t\t\t } /* END instance initializer block */\n" + //
-          method_or_class_member_of_some_sort.after //
-  ), expression_or_something_that_may_be_passed_as_argument(//
-      statement_or_something_that_may_occur_in_a_method.before + //
+          + METHOD_LOOKALIKE.after //
+  ), EXPRESSION_LOOK_ALIKE(//
+      STATEMENTS_LOOK_ALIKE.before + //
           "\n\t\t\t\t if (foo("//
       , //
       ",0)) return g();\n" //
-          + statement_or_something_that_may_occur_in_a_method.after //
+          + STATEMENTS_LOOK_ALIKE.after //
+  ), not_statment_may_occur_in_initializer_block(//
+      METHOD_LOOKALIKE.before + //
+          "\n\t\t\t { /* BEGIN Instance initializer block */\n" //
+      , //
+      "\n\t\t\t } /* END instance initializer block */\n" + //
+          METHOD_LOOKALIKE.after //
+  ), not_statment_may_occur_in_static_initializer_block(//
+      METHOD_LOOKALIKE.before + //
+          "\n\t\t\t static{ /* BEGIN Instance initializer block */\n" //
+      , //
+      "\n\t\t\t } /* END instance initializer block */\n" + //
+          METHOD_LOOKALIKE.after //
   ), //
   //
   ;
   public static final GuessedContext[] AlternativeContextToConsiderInOrder = new GuessedContext[] { //
-      full_compilation_unit, //
-      outer_type_in_a_packaged_compilation_unit, //
-      statement_or_something_that_may_occur_in_a_method, //
-      method_or_class_member_of_some_sort, //
-      expression_or_something_that_may_be_passed_as_argument, //
+      COMPILATION_UNIT_LOOK_ALIKE, //
+      OUTER_TYPE_LOOKALIKE, //
+      STATEMENTS_LOOK_ALIKE, //
+      METHOD_LOOKALIKE, //
+      EXPRESSION_LOOK_ALIKE, //
       not_statment_may_occur_in_initializer_block, //
       not_statment_may_occur_in_static_initializer_block, };
 

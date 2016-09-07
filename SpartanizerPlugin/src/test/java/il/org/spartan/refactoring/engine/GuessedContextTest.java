@@ -10,7 +10,7 @@ import org.junit.*;
 import il.org.spartan.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class GuessTest {
+public class GuessedContextTest {
   @Test public void dealWithBothKindsOfComment() {
     similar(
         ""//
@@ -29,7 +29,7 @@ public class GuessTest {
         + " /* empty */"//
         + "} else {\n"//
         + " throw new Exception();\n"//
-        + "}"), is(statement_or_something_that_may_occur_in_a_method));
+        + "}"), is(STATEMENTS_LOOK_ALIKE));
   }
 
   @Test public void essenceTest() {
@@ -37,54 +37,83 @@ public class GuessTest {
   }
 
   @Test public void expression() {
-    azzert.that(
-        expression_or_something_that_may_be_passed_as_argument.off(GuessedContext.expression_or_something_that_may_be_passed_as_argument.on("a+b")),
-        is("a+b"));
+    azzert.that(EXPRESSION_LOOK_ALIKE.off(EXPRESSION_LOOK_ALIKE.on("a+b")), is("a+b"));
   }
 
   @Test public void findAddition() {
-    azzert.that(GuessedContext.find("a+b"), is(GuessedContext.expression_or_something_that_may_be_passed_as_argument));
+    azzert.that(find("a+b"), is(EXPRESSION_LOOK_ALIKE));
   }
 
   @Test public void findDivision() {
-    azzert.that(GuessedContext.find("a/b"), is(GuessedContext.expression_or_something_that_may_be_passed_as_argument));
+    azzert.that(GuessedContext.find("a/b"), is(EXPRESSION_LOOK_ALIKE));
   }
-
   @Test public void findDivisionOfExpressions() {
-    azzert.that(GuessedContext.find("(a+b)/++b"), is(GuessedContext.expression_or_something_that_may_be_passed_as_argument));
+    azzert.that(find("(a+b)/++b"), is(EXPRESSION_LOOK_ALIKE));
   }
-
   @Test public void findEmptyBlock() {
-    azzert.that(GuessedContext.find("{}"), is(GuessedContext.statement_or_something_that_may_occur_in_a_method));
+    azzert.that(find("{}"), is(STATEMENTS_LOOK_ALIKE));
   }
-
   @Test(expected = AssertionError.class) public void findError() {
-    azzert.that(GuessedContext.find("}} f() { a();} b();}"), is(nullValue()));
+    azzert.that(find("}} f() { a();} b();}"), is(nullValue()));
+  }
+  @Test public void findExpression() {
+    azzert.that(find("i++"), is(EXPRESSION_LOOK_ALIKE));
+  }
+  @Test public void findLiteral0() {
+    azzert.that(find("true"), is(EXPRESSION_LOOK_ALIKE));
   }
 
-  @Test public void findExpression() {
-    azzert.that(GuessedContext.find("i++"), is(GuessedContext.expression_or_something_that_may_be_passed_as_argument));
+  @Test public void findLiteral1() {
+    azzert.that(find("1"), is(EXPRESSION_LOOK_ALIKE));
+  }
+
+  @Test public void findLiteral2() {
+    azzert.that(find("-0"), is(EXPRESSION_LOOK_ALIKE));
+  }
+
+  @Test public void findLiteral3() {
+    azzert.that(find("\"\""), is(EXPRESSION_LOOK_ALIKE));
+  }
+
+  @Test public void findLiteral4() {
+    azzert.that(find("'\"'"), is(EXPRESSION_LOOK_ALIKE));
   }
 
   @Test public void findMethod() {
-    azzert.that(GuessedContext.find("f() { a(); b();}"), is(GuessedContext.method_or_class_member_of_some_sort));
+    azzert.that(find("f() { a(); b();}"), //
+        is(METHOD_LOOKALIKE));
+  }
+
+  @Test public void findPlusPlus() {
+    azzert.that(find("a++"), is(EXPRESSION_LOOK_ALIKE));
   }
 
   @Test public void findStatement() {
-    azzert.that(GuessedContext.find("for(;;);"), is(GuessedContext.statement_or_something_that_may_occur_in_a_method));
+    azzert.that(find("for(;;);"), is(STATEMENTS_LOOK_ALIKE));
   }
 
   @Test public void findTwoStatements() {
-    azzert.that(GuessedContext.find("a(); b();"), is(GuessedContext.statement_or_something_that_may_occur_in_a_method));
+    azzert.that(find("a(); b();"), is(STATEMENTS_LOOK_ALIKE));
+  }
+
+  @Test public void findVariable() {
+    azzert.that(find("i"), is(EXPRESSION_LOOK_ALIKE));
   }
 
   @Test public void intMethod() {
-    azzert.that(GuessedContext.find("int f() { int s = 0; for (int i = 0; i < 10; ++i) s += i; return s;}"),
-        is(GuessedContext.method_or_class_member_of_some_sort));
+    azzert.that(find("int f() { int s = 0; for (int i = 0; i < 10; ++i) s += i; return s;}"), is(METHOD_LOOKALIKE));
+  }
+
+  @Test public void intMethod0() {
+    azzert.that(find("int f() { return s;}"), is(METHOD_LOOKALIKE));
+  }
+
+  @Test public void intMethod1() {
+    azzert.that(find("void f(){}"), is(METHOD_LOOKALIKE));
   }
 
   @Test public void intoCompilationUnit() {
-    final GuessedContext w = GuessedContext.expression_or_something_that_may_be_passed_as_argument;
+    final GuessedContext w = EXPRESSION_LOOK_ALIKE;
     final String codeFragment = "a + b * c";
     final CompilationUnit u = w.intoCompilationUnit(codeFragment);
     azzert.notNull(u);
@@ -92,7 +121,7 @@ public class GuessTest {
   }
 
   @Test public void intoDocument() {
-    final GuessedContext w = GuessedContext.expression_or_something_that_may_be_passed_as_argument;
+    final GuessedContext w = EXPRESSION_LOOK_ALIKE;
     final String codeFragment = "a + b * c";
     final Document d = w.intoDocument(codeFragment);
     azzert.notNull(d);
@@ -100,27 +129,29 @@ public class GuessTest {
   }
 
   @Test public void method() {
-    azzert.that(
-        GuessedContext.method_or_class_member_of_some_sort.off(GuessedContext.method_or_class_member_of_some_sort.on("int f() { return a; }")),
-        is("int f() { return a; }"));
+    azzert.that(METHOD_LOOKALIKE.off(METHOD_LOOKALIKE.on("int f() { return a; }")), is("int f() { return a; }"));
   }
 
   @Test public void offDivision() {
-    azzert.that("a/b", is(GuessedContext.expression_or_something_that_may_be_passed_as_argument
-        .off(GuessedContext.expression_or_something_that_may_be_passed_as_argument.on("a/b"))));
+    azzert.that("a/b", is(EXPRESSION_LOOK_ALIKE.off(EXPRESSION_LOOK_ALIKE.on("a/b"))));
   }
 
-  @Test public void removeComments() {
-    similar(GuessedContext.removeComments("" + "if (b) {\n" + " /* empty */" + "} else {\n" + " throw new Exception();\n" + "}"),
+  @Test public void removeCommentsTest() {
+    similar(removeComments(//
+        "" //
+            + "if (b) {\n" //
+            + " /* empty */" //
+            + "} else {\n" //
+            + " throw new Exception();\n" //
+            + "}"),
         "if (b) {} else { throw new Exception(); }");
+  }
+
+  @Test public void statement() {
+    azzert.that(STATEMENTS_LOOK_ALIKE.off(STATEMENTS_LOOK_ALIKE.on("int a;")), is("int a;"));
   }
 
   private void similar(final String s1, final String s2) {
     azzert.that(essence(s2), is(essence(s1)));
-  }
-
-  @Test public void statement() {
-    azzert.that(GuessedContext.statement_or_something_that_may_occur_in_a_method
-        .off(GuessedContext.statement_or_something_that_may_occur_in_a_method.on("int a;")), is("int a;"));
   }
 }
