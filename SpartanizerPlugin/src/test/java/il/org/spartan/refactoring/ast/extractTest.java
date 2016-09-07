@@ -35,11 +35,12 @@ public class extractTest {
 
   @Test public void prefixToPostfixDecrement() {
     final String from = "for (int i = 0; i < 100;  i--)  i--;";
+    assert from != null;
     final Statement s = s(from);
-    azzert.notNull(from, s);
+   assert null !=(s);
     azzert.that(s, iz("{" + from + "}"));
     final PostfixExpression e = extract.findFirstPostfix(s);
-    azzert.notNull(e);
+   assert null !=(e);
     azzert.that("" + e, is("i--"));
   }
 }

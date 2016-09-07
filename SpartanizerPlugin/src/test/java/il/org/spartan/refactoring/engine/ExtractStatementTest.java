@@ -46,11 +46,11 @@ public class ExtractStatementTest {
   }
 
   @Test public void isNotNullOfNull() {
-    azzert.notNull(extract.statements(null));
+   assert extract.statements(null) != null;
   }
 
   @Test public void isNotNullOfValidStatement() {
-    azzert.notNull(extract.statements(s("{}")));
+   assert extract.statements(s("{}")) != null;
   }
 
   @Test public void manyEmptyStatementInBlockIsEmpty() {

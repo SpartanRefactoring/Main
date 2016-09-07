@@ -22,9 +22,9 @@ import il.org.spartan.refactoring.java.*;
   @Test public void plantintoNull() {
     final String s = "a?b:c";
     final Expression e = e(s);
-    azzert.notNull(e);
+   assert null !=(e);
     final Expression e1 = plant(e).into(null);
-    azzert.notNull(e1);
+   assert null !=(e1);
     azzert.that(e1, iz(s));
   }
 

@@ -123,7 +123,7 @@ public enum Wrap {
     final String off = off(wrap);
     final String essence = essence(inner);
     final String essence2 = essence(off);
-    azzert.notNull(essence2);
+   assert null !=(essence2);
     return essence2.contains(essence);
   }
 }
