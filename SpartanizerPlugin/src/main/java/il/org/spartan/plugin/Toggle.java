@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.plugin;
+package il.org.spartan.plugin;
 
 import static il.org.spartan.Utils.*;
 
@@ -14,7 +14,7 @@ import org.eclipse.ui.handlers.*;
  * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2013/07/01 */
-public class ToggleSpartanizationHandler extends AbstractHandler {
+public class Toggle extends AbstractHandler {
   private static void disableNature(final IProject p) throws CoreException {
     final IProjectDescription description = p.getDescription();
     final String[] natures = description.getNatureIds();

@@ -13,10 +13,10 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.plugin.PreferencesResources.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.plugin.PluginPreferencesResources.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** A {@link Wring} to convert an expression such as
