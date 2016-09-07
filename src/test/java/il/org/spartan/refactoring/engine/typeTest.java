@@ -334,6 +334,13 @@ public class typeTest {
     @Test public void basicExpressions28() {
       azzert.that(get(into.e("1+2f+3l+f()")), is(ALPHANUMERIC));
     }
+    
+    @Test public void basticExpression29() {
+      InfixExpression e = az.infixExpression(into.e("null+3"));
+      azzert.that(get(e.getLeftOperand()), is(NULL));
+      azzert.that(get(e.getRightOperand()), is(INT));
+      azzert.that(get(e), is(STRING));
+    }
 
     @Test public void BitwiseOperationsSemantics01() {
       azzert.that(Axiom.type(c1 | c2), is(INT));
