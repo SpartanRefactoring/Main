@@ -157,7 +157,7 @@ import il.org.spartan.refactoring.plugin.*;
    *         spartanization opportunity */
   public final List<Rewrite> findOpportunities(final CompilationUnit u) {
     final List<Rewrite> $ = new ArrayList<>();
-    u.accept(collect($));
+    u.accept(collect($, u));
     return $;
   }
 
@@ -290,7 +290,7 @@ import il.org.spartan.refactoring.plugin.*;
     return name;
   }
 
-  protected abstract ASTVisitor collect(final List<Rewrite> $);
+  protected abstract ASTVisitor collect(final List<Rewrite> $, final CompilationUnit u);
 
   protected abstract void fillRewrite(ASTRewrite r, CompilationUnit u, IMarker m);
 
