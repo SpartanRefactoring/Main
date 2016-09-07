@@ -160,7 +160,7 @@ public enum extract {
     });
     return $.get();
   }
-  
+
   /** Search for an {@link ForStatement} in the tree rooted at an
    * {@link ASTNode}.
    * @param n JD
@@ -198,7 +198,7 @@ public enum extract {
     });
     return $.get();
   }
-  
+
   /** Search for an {@link AssertStatement} in the tree rooted at an
    * {@link ASTNode}.
    * @param n JD
@@ -217,7 +217,7 @@ public enum extract {
     });
     return $.get();
   }
-  
+
   /** Search for an {@link MethodDeclaration} in the tree rooted at an
    * {@link ASTNode}.
    * @param n JD

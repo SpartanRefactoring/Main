@@ -8,12 +8,9 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.engine.*;
-import il.org.spartan.refactoring.java.*;
 import il.org.spartan.refactoring.java.Environment.*;
 
-/*
- * Implements the handler of flatEnv outer annotation.
- */
+/* Implements the handler of flatEnv outer annotation. */
 public class EnvFlatHandler extends ENVTestEngineAbstract {
   public EnvFlatHandler(final ASTNode $) {
     n = $;

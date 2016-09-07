@@ -28,16 +28,15 @@ public final class CleverStringTernarization extends Wring.ReplaceCurrentNode<Co
   }
 
   private static int firstDifference(final String s1, final String s2) {
-    if (s1 != shorter(s1 , s2))
+    if (s1 != shorter(s1, s2))
       return firstDifference(s2, s1);
     assert s1.length() <= s2.length();
     int $ = 0;
     for (; $ < s1.length(); ++$)
-      if (first(s1,$) != first(s2,$))
+      if (first(s1, $) != first(s2, $))
         break;
     return $;
   }
-
 
   /** @param s JD
    * @param i the length of the prefix

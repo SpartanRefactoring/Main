@@ -28,7 +28,7 @@ public interface lisp {
   static <T> T first(final List<T> ts) {
     return ts == null || ts.isEmpty() ? null : ts.get(0);
   }
-  
+
   static char first(final String s) {
     return last(s, 0);
   }

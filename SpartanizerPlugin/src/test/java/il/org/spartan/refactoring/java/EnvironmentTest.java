@@ -12,14 +12,12 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.refactoring.annotations.*;
-import il.org.spartan.refactoring.ast.*;
 import il.org.spartan.refactoring.engine.*;
 import il.org.spartan.refactoring.java.Environment.*;
 import il.org.spartan.refactoring.utils.*;
 
 @SuppressWarnings("static-method") //
-@Ignore
-public class EnvironmentTest {
+@Ignore public class EnvironmentTest {
   // The difficulties of Environment - A Yossi example.
   class A {
     B a() {
@@ -421,38 +419,40 @@ public class EnvironmentTest {
   @Before public void initTestEngineTest() {
     s = new LinkedHashSet<>();
   }
+
   private LinkedHashSet<Entry<String, Information>> s;
-
   // Test flat out of order.
-
 
   @Test public void EngineTestFlatUnordered000() {
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("@OutOfOrderFlatENV({}) int x;"));
     final EnvFlatHandler e = new EnvFlatHandler($);
-    //e.runTest();
+    // e.runTest();
     e.compareOutOfOrder(s);
   }
-  
+
   @Test public void EngineTestFlatUnordered001() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A { String s; @OutOfOrderFlatENV({ @Id(name = \"str\", clazz = \"String\") }) int x;}"));
+    final ASTNode $ = makeAST.COMPILATION_UNIT
+        .from(new Document("class A { String s; @OutOfOrderFlatENV({ @Id(name = \"str\", clazz = \"String\") }) int x;}"));
     final EnvFlatHandler e = new EnvFlatHandler($);
-    //e.runTest();
+    // e.runTest();
     s.add(new MapEntry<>("str", new Information(PrudentType.axiom("String"))));
     e.compareOutOfOrder(s);
   }
-  
+
   @Test public void EngineTestFlatUnordered01() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@OutOfOrderFlatENV({ @Id(name = \"str\", clazz = \"String\") }) void foo()}"));
+    final ASTNode $ = makeAST.COMPILATION_UNIT
+        .from(new Document("class A {@OutOfOrderFlatENV({ @Id(name = \"str\", clazz = \"String\") }) void foo()}"));
     final EnvFlatHandler e = new EnvFlatHandler($);
-    //ENVTestEngineAbstract.getCompilationUnit("/il.org.spartan.refactoring/src/test/java/il/org/spartan/refactoring/java/EnvironmentCodeExamples.java");
-    //ENVTestEngineAbstract.getCompilationUnit("il.org.spartan.refactoring.java.EnvironmentCodeExamples.java");
-    //e.runTest();
+    // ENVTestEngineAbstract.getCompilationUnit("/il.org.spartan.refactoring/src/test/java/il/org/spartan/refactoring/java/EnvironmentCodeExamples.java");
+    // ENVTestEngineAbstract.getCompilationUnit("il.org.spartan.refactoring.java.EnvironmentCodeExamples.java");
+    // e.runTest();
     s.add(new MapEntry<>("str", new Information(PrudentType.axiom("String"))));
     e.compareOutOfOrder(s);
   }
 
   @Test public void EngineTestFlatUnordered02() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@OutOfOrderFlatENV({ @Id(name = " + "\"a\", clazz = \"int\") })" + "void foo()}"));
+    final ASTNode $ = makeAST.COMPILATION_UNIT
+        .from(new Document("class A {@OutOfOrderFlatENV({ @Id(name = " + "\"a\", clazz = \"int\") })" + "void foo()}"));
     final EnvFlatHandler e = new EnvFlatHandler($);
     s.add(new MapEntry<>("a", new Information(PrudentType.axiom("int"))));
     e.compareOutOfOrder(s);
@@ -491,8 +491,8 @@ public class EnvironmentTest {
   }
 
   @Test public void EngineTestFlatUnordered07() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document(
-        "class A {@OutOfOrderFlatENV({ @Id(name = " + "\"s\", clazz = String.class), " + "@Id(name = \"ss\", clazz = String.class)})" + "void foo();\n}"));
+    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@OutOfOrderFlatENV({ @Id(name = " + "\"s\", clazz = String.class), "
+        + "@Id(name = \"ss\", clazz = String.class)})" + "void foo();\n}"));
     final EnvFlatHandler e = new EnvFlatHandler($);
     s.add(new MapEntry<>("s", new Information(PrudentType.axiom("String"))));
     s.add(new MapEntry<>("ss", new Information(PrudentType.axiom("String"))));
@@ -591,6 +591,4 @@ public class EnvironmentTest {
     s.add(new MapEntry<>("EX.C1.s", new Information(PrudentType.axiom("String"))));
     e.compareOutOfOrder(s);
   }
-  
-  
 }
