@@ -58,8 +58,8 @@ public class Trimmer extends Spartanization {
     this.toolbox = toolbox;
   }
 
-  @Override protected ASTVisitor collect(final List<Rewrite> $, final CompilationUnit u) {
-    final DisabledChecker dc = new DisabledChecker(u);
+  @Override protected ASTVisitor collect(final List<Rewrite> $) {
+    Toolbox.refresh();
     return new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
         final Wring<N> w = Toolbox.defaultInstance().find(n);
