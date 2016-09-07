@@ -13,21 +13,25 @@ import il.org.spartan.refactoring.spartanizations.*;
 
 /** @author Yossi Gil
  * @since 2015/07/10 */
-public final class Trimmer extends Spartanization {
+public class Trimmer extends Spartanization {
   /** Apply trimming repeatedly, until no more changes
    * @param from what to process
    * @return trimmed text */
   public static String fixedPoint(final String from) {
-    final Trimmer trimmer = new Trimmer();
+    return new Trimmer().fixed(from);
+  }
+
+  String fixed(final String from) {
     final Document $ = new Document(from);
     for (;;) {
       final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from($.get());
-      final ASTRewrite r = trimmer.createRewrite(u, null);
+      final ASTRewrite r = createRewrite(u, null);
       final TextEdit e = r.rewriteAST($, null);
       try {
         e.apply($);
       } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException x) {
         x.printStackTrace();
+        throw new AssertionError(x);
       }
       if (!e.hasChildren())
         return $.get();
@@ -42,33 +46,37 @@ public final class Trimmer extends Spartanization {
     return true;
   }
 
+  public final Toolbox toolbox;
+
   /** Instantiates this class */
   public Trimmer() {
+    this(Toolbox.defaultInstance());
+  }
+
+  public Trimmer(final Toolbox toolbox) {
     super("Trimmer");
-    Toolbox.generate();
+    this.toolbox = toolbox;
   }
 
   @Override protected ASTVisitor collect(final List<Rewrite> $, final CompilationUnit u) {
     final DisabledChecker dc = new DisabledChecker(u);
     return new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
-        if (dc.check(n))
-          return false;
-        final Wring<N> w = Toolbox.instance().find(n);
+        final Wring<N> w = Toolbox.defaultInstance().find(n);
         return w == null || w.nonEligible(n) || prune(w.make(n, exclude), $);
       }
     };
   }
 
   @Override protected void fillRewrite(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
-    final DisabledChecker dc = new DisabledChecker(u);
+    Toolbox.refresh();
     u.accept(new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
         if (dc.check(n))
           return false;
         if (!inRange(m, n))
           return true;
-        final Wring<N> w = Toolbox.instance().find(n);
+        final Wring<N> w = Toolbox.defaultInstance().find(n);
         if (w != null) {
           final Rewrite make = w.make(n, exclude);
           if (make != null)
@@ -81,6 +89,12 @@ public final class Trimmer extends Spartanization {
 
   @SuppressWarnings("static-method") ExclusionManager makeExcluder() {
     return new ExclusionManager();
+  }
+
+  public class With {
+    public Trimmer trimmer() {
+      return Trimmer.this;
+    }
   }
 
   abstract class DispatchingVisitor extends ASTVisitor {
@@ -98,8 +112,8 @@ public final class Trimmer extends Spartanization {
       return cautiousGo(¢);
     }
 
-    @Override public final boolean visit(final ConditionalExpression x) {
-      return cautiousGo(x);
+    @Override public final boolean visit(final ConditionalExpression e) {
+      return cautiousGo(e);
     }
 
     @Override public final boolean visit(final EnumDeclaration ¢) {
