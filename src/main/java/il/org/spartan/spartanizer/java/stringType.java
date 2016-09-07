@@ -12,17 +12,17 @@ import org.eclipse.jdt.core.dom.*;
  * @since 2016 */
 public enum stringType {
   ;
-  /** @param x JD
+  /** @param e JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an expression
    *         whose type is provably not of type {@link String}, in the sense
    *         used in applying the <code>+</code> operator to concatenate
    *         strings. concatenation. */
-  public static boolean isNot(final Expression x) {
-    return stringType.isNotFromContext(x) || !in(prudent(x), STRING, ALPHANUMERIC);
+  public static boolean isNot(final Expression e) {
+    return stringType.isNotFromContext(e) || !in(prudent(e), STRING, ALPHANUMERIC);
   }
 
-  private static boolean isNotFromContext(final Expression x) {
-    for (ASTNode context = parent(x); context != null; context = parent(context))
+  private static boolean isNotFromContext(final Expression e) {
+    for (ASTNode context = parent(e); context != null; context = parent(context))
       switch (context.getNodeType()) {
         case INFIX_EXPRESSION:
           if (((InfixExpression) context).getOperator().equals(PLUS))

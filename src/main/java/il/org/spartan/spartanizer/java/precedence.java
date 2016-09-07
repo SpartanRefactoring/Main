@@ -74,18 +74,18 @@ public enum precedence {
   }
 
   /** Determine the precedence of the operator present on an {@link Expression}
-   * @param x JD
+   * @param e JD
    * @return precedence of the parameter */
-  public static int of(final Expression x) {
-    if (x == null)
+  public static int of(final Expression e) {
+    if (e == null)
       return UNDEFINED;
-    switch (x.getNodeType()) {
+    switch (e.getNodeType()) {
       case INFIX_EXPRESSION:
-        return of((InfixExpression) x);
+        return of((InfixExpression) e);
       case ASSIGNMENT:
-        return of((Assignment) x);
+        return of((Assignment) e);
       default:
-        return of(x.getClass().getSimpleName());
+        return of(e.getClass().getSimpleName());
     }
   }
 
@@ -108,11 +108,11 @@ public enum precedence {
   /** Determine whether an expression has the same precedence as that of a given
    * operator.
    * @param o JD
-   * @param x JD
+   * @param e JD
    * @return <code><b>true</b></code> <i>iff</i> the precedence of the two
    *         parameters is the same. */
-  public static boolean same(final InfixExpression.Operator o, final Expression x) {
-    return precedence.of(o) == precedence.of(x);
+  public static boolean same(final InfixExpression.Operator o, final Expression e) {
+    return precedence.of(o) == precedence.of(e);
   }
 
   private static int of(final Assignment a) {
@@ -127,8 +127,8 @@ public enum precedence {
     return of("" + o);
   }
 
-  private static int of(final InfixExpression x) {
-    return of(x.getOperator());
+  private static int of(final InfixExpression e) {
+    return of(e.getOperator());
   }
 
   private static int of(final String key) {

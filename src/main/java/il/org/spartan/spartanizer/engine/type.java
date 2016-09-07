@@ -155,11 +155,11 @@ public interface type {
     /** All type that were ever born */
     private static Map<String, implementation> types = new LinkedHashMap<>();
 
-    private static implementation conditionalWithNoInfo(final implementation t) {
-      return in(t, BYTE, SHORT, CHAR, INT, INTEGRAL, LONG, FLOAT, NUMERIC) //
+    private static implementation conditionalWithNoInfo(final implementation i) {
+      return in(i, BYTE, SHORT, CHAR, INT, INTEGRAL, LONG, FLOAT, NUMERIC) //
           ? NUMERIC //
-          : !in(t, DOUBLE, STRING, BOOLEAN, BOOLEAN) //
-              ? NOTHING : t;
+          : !in(i, DOUBLE, STRING, BOOLEAN, BOOLEAN) //
+              ? NOTHING : i;
     }
 
     /** @param n JD/
@@ -180,17 +180,17 @@ public interface type {
       return !$.isNoInfo() ? $ : lookDown(x.getRightHandSide()).isNumeric() ? NUMERIC : lookDown(x.getRightHandSide());
     }
 
-    private static implementation lookDown(final CastExpression x) {
-      return typeSwitch("" + step.type(x));
+    private static implementation lookDown(final CastExpression e) {
+      return typeSwitch("" + step.type(e));
     }
 
     private static implementation lookDown(final ClassInstanceCreation c) {
       return typeSwitch("" + c.getType());
     }
 
-    private static implementation lookDown(final ConditionalExpression x) {
-      final implementation $ = lookDown(x.getThenExpression());
-      final implementation ¢ = lookDown(x.getElseExpression());
+    private static implementation lookDown(final ConditionalExpression e) {
+      final implementation $ = lookDown(e.getThenExpression());
+      final implementation ¢ = lookDown(e.getElseExpression());
       // If we don't know much about one operand but do know enough about the
       // other, we can still learn something
       return $ == ¢ ? $
@@ -200,14 +200,14 @@ public interface type {
                       : NOTHING; //
     }
 
-    /** @param x JD
+    /** @param e JD
      * @return The most specific Type information that can be deduced about the
      *         expression from it's structure, or {@link #NOTHING} if it cannot
      *         decide. Will never return null */
-    private static implementation lookDown(final Expression x) {
-      if (hasType(x))
-        return getType(x);
-      switch (x.getNodeType()) {
+    private static implementation lookDown(final Expression e) {
+      if (hasType(e))
+        return getType(e);
+      switch (e.getNodeType()) {
         case NULL_LITERAL:
           return NULL;
         case CHARACTER_LITERAL:
@@ -217,33 +217,33 @@ public interface type {
         case BOOLEAN_LITERAL:
           return BOOLEAN;
         case NUMBER_LITERAL:
-          return lookDown((NumberLiteral) x);
+          return lookDown((NumberLiteral) e);
         case CAST_EXPRESSION:
-          return lookDown((CastExpression) x);
+          return lookDown((CastExpression) e);
         case PREFIX_EXPRESSION:
-          return lookDown((PrefixExpression) x);
+          return lookDown((PrefixExpression) e);
         case INFIX_EXPRESSION:
-          return lookDown((InfixExpression) x);
+          return lookDown((InfixExpression) e);
         case POSTFIX_EXPRESSION:
-          return lookDown((PostfixExpression) x);
+          return lookDown((PostfixExpression) e);
         case PARENTHESIZED_EXPRESSION:
-          return lookDown((ParenthesizedExpression) x);
+          return lookDown((ParenthesizedExpression) e);
         case CLASS_INSTANCE_CREATION:
-          return lookDown((ClassInstanceCreation) x);
+          return lookDown((ClassInstanceCreation) e);
         case METHOD_INVOCATION:
-          return lookDown((MethodInvocation) x);
+          return lookDown((MethodInvocation) e);
         case CONDITIONAL_EXPRESSION:
-          return lookDown((ConditionalExpression) x);
+          return lookDown((ConditionalExpression) e);
         case ASSIGNMENT:
-          return lookDown((Assignment) x);
+          return lookDown((Assignment) e);
         default:
           return NOTHING;
       }
     }
 
-    private static implementation lookDown(final InfixExpression x) {
-      final InfixExpression.Operator o = x.getOperator();
-      final List<Expression> es = extract.allOperands(x);
+    private static implementation lookDown(final InfixExpression e) {
+      final InfixExpression.Operator o = e.getOperator();
+      final List<Expression> es = extract.allOperands(e);
       assert es.size() >= 2;
       implementation $ = lookDown(lisp.first(es)).underBinaryOperator(o, lookDown(lisp.second(es)));
       lisp.chop(lisp.chop(es));
@@ -268,52 +268,51 @@ public interface type {
                   : ¢.matches("[0-9]+\\.[0-9]*[d,D]?") || ¢.matches("[0-9]+[d,D]") ? DOUBLE : NUMERIC;
     }
 
-    private static implementation lookDown(final ParenthesizedExpression x) {
-      return lookDown(extract.core(x));
+    private static implementation lookDown(final ParenthesizedExpression e) {
+      return lookDown(extract.core(e));
     }
 
-    private static implementation lookDown(final PostfixExpression x) {
-      return lookDown(x.getOperand()).asNumeric(); // see
+    private static implementation lookDown(final PostfixExpression e) {
+      return lookDown(e.getOperand()).asNumeric(); // see
                                                    // testInDecreamentSemantics
     }
 
-    private static implementation lookDown(final PrefixExpression x) {
-      return lookDown(x.getOperand()).under(x.getOperator());
+    private static implementation lookDown(final PrefixExpression e) {
+      return lookDown(e.getOperand()).under(e.getOperator());
     }
 
     private static implementation lookUp(final Expression e, final implementation i) {
       if (i.isCertain())
         return i;
-      for (ASTNode context = parent(e); context != null; context = parent(context))
-        switch (context.getNodeType()) {
-          case INFIX_EXPRESSION:
-            return i.aboveBinaryOperator(az.infixExpression(context).getOperator());
-          case ARRAY_ACCESS:
-            return i.asIntegral();
-          case PREFIX_EXPRESSION:
-            return i.above(az.prefixExpression(context).getOperator());
-          case POSTFIX_EXPRESSION:
-            return i.asNumeric();
-          case PARENTHESIZED_EXPRESSION:
-            continue;
-          case IF_STATEMENT:
-          case ASSERT_STATEMENT:
-          case FOR_STATEMENT:
-          case WHILE_STATEMENT:
-            return BOOLEAN;
-          default:
-            return i;
-        }
+      for (ASTNode context = parent(e); context != null; context = parent(context)) switch (context.getNodeType()) {
+        case INFIX_EXPRESSION:
+          return i.aboveBinaryOperator(az.infixExpression(context).getOperator());
+        case ARRAY_ACCESS:
+          return i.asIntegral();
+        case PREFIX_EXPRESSION:
+          return i.above(az.prefixExpression(context).getOperator());
+        case POSTFIX_EXPRESSION:
+          return i.asNumeric();
+        case IF_STATEMENT:
+        case ASSERT_STATEMENT:
+        case FOR_STATEMENT:
+        case WHILE_STATEMENT:
+          return BOOLEAN;
+        case PARENTHESIZED_EXPRESSION:
+          continue;
+        default:
+          return i;
+      }
       return i;
     }
 
     /** sets the type property in the ASTNode
      * @param n JD
-     * @param t the node's type property
+     * @param i the node's type property
      * @return the type property t */
-    private static implementation setType(final ASTNode n, final implementation t) {
-      n.setProperty(propertyName, t);
-      return t;
+    private static implementation setType(final ASTNode n, final implementation i) {
+      n.setProperty(propertyName, i);
+      return i;
     }
 
     private static implementation typeSwitch(final String s) {

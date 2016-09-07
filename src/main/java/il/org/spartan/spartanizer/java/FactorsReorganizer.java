@@ -10,8 +10,8 @@ import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.utils.*;
 
 public class FactorsReorganizer {
-  public static Expression simplify(final InfixExpression x) {
-    return build(new FactorsCollector(x));
+  public static Expression simplify(final InfixExpression e) {
+    return build(new FactorsCollector(e));
   }
 
   private static Expression build(final FactorsCollector c) {
@@ -31,26 +31,26 @@ public class FactorsReorganizer {
     return subject.operands(rest).to(DIVIDE);
   }
 
-  private static Expression buildDividers(final List<Expression> xs) {
-    final Expression one = lisp.first(xs).getAST().newNumberLiteral("1");
-    final Expression $ = subject.pair(one, lisp.first(xs)).to(DIVIDE);
-    if (xs.size() == 1)
+  private static Expression buildDividers(final List<Expression> es) {
+    final Expression one = lisp.first(es).getAST().newNumberLiteral("1");
+    final Expression $ = subject.pair(one, lisp.first(es)).to(DIVIDE);
+    if (es.size() == 1)
       return $;
-    xs.remove(0);
-    xs.add(0, $);
-    return subject.operands(xs).to(DIVIDE);
+    es.remove(0);
+    es.add(0, $);
+    return subject.operands(es).to(DIVIDE);
   }
 
-  private static Expression buildMultipliers(final List<Expression> xs) {
-    switch (xs.size()) {
+  private static Expression buildMultipliers(final List<Expression> es) {
+    switch (es.size()) {
       case 0:
         return null;
       case 1:
-        return lisp.first(xs);
+        return lisp.first(es);
       case 2:
-        return subject.pair(lisp.first(xs), lisp.second(xs)).to(TIMES);
+        return subject.pair(lisp.first(es), lisp.second(es)).to(TIMES);
       default:
-        return subject.operands(xs).to(TIMES);
+        return subject.operands(es).to(TIMES);
     }
   }
 }

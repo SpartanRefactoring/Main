@@ -23,7 +23,7 @@ public class InfixEmptyString extends ReplaceCurrentNode<InfixExpression> {
     return "Remove \"\" from \"\" + X if X is a String";
   }
 
-  @Override ASTNode replacement(final InfixExpression x) {
-    return Wrings.eliminateLiteral(x, true);
+  @Override ASTNode replacement(final InfixExpression e) {
+    return Wrings.eliminateLiteral(e, true);
   }
 }

@@ -19,19 +19,19 @@ public final class PostfixToPrefix extends Wring.ReplaceCurrentNode<PostfixExpre
     return o == PostfixExpression.Operator.DECREMENT ? PrefixExpression.Operator.DECREMENT : PrefixExpression.Operator.INCREMENT;
   }
 
-  @Override protected boolean eligible(final PostfixExpression x) {
-    return !(x.getParent() instanceof Expression) //
-        && searchAncestors.forType(ASTNode.VARIABLE_DECLARATION_STATEMENT).from(x) == null //
-        && searchAncestors.forType(ASTNode.SINGLE_VARIABLE_DECLARATION).from(x) == null //
-        && searchAncestors.forType(ASTNode.VARIABLE_DECLARATION_EXPRESSION).from(x) == null;
+  @Override protected boolean eligible(final PostfixExpression e) {
+    return !(e.getParent() instanceof Expression) //
+        && searchAncestors.forType(ASTNode.VARIABLE_DECLARATION_STATEMENT).from(e) == null //
+        && searchAncestors.forType(ASTNode.SINGLE_VARIABLE_DECLARATION).from(e) == null //
+        && searchAncestors.forType(ASTNode.VARIABLE_DECLARATION_EXPRESSION).from(e) == null;
   }
 
-  @Override String description(final PostfixExpression x) {
-    return "Convert post-" + description(x.getOperator()) + " of " + step.operand(x) + " to pre-" + description(x.getOperator());
+  @Override String description(final PostfixExpression e) {
+    return "Convert post-" + description(e.getOperator()) + " of " + step.operand(e) + " to pre-" + description(e.getOperator());
   }
 
-  @Override PrefixExpression replacement(final PostfixExpression x) {
-    return subject.operand(step.operand(x)).to(pre2post(x.getOperator()));
+  @Override PrefixExpression replacement(final PostfixExpression e) {
+    return subject.operand(step.operand(e)).to(pre2post(e.getOperator()));
   }
 
   @Override boolean scopeIncludes(@SuppressWarnings("unused") final PostfixExpression __) {
