@@ -23,7 +23,7 @@ import il.org.spartan.refactoring.spartanizations.*;
 /** ??
  * @author Yossi Gil
  * @year 2016 */
-public interface trimming {
+public interface trim {
   public static int countOpportunities(final Spartanization s, final CompilationUnit u) {
     return s.findOpportunities(u).size();
   }
@@ -39,8 +39,8 @@ public interface trimming {
 
   /** Starting point of fluent API for @Testing:
    * <code>trimming.repeatedly.of("a+(b-c)").gives("a+b-c")</code>, or <br/>
-   * <code>trimming // See {@link trimming} <br/>
-   * .repeatedly //  See {@link trimming.repeatedely} <br/>
+   * <code>trimming // See {@link trim} <br/>
+   * .repeatedly //  See {@link trim.repeatedely} <br/>
    * .withWring(new InfixTermsExpand() // See {@link #withWring(Wring)} <br/>
    * .of("a+(b-c)") //  See {@link #of(String)} <br/>
    * .gives("a+b-c")</code> */
@@ -88,11 +88,11 @@ public interface trimming {
   @SuppressWarnings("static-method") //
   public static class TEST {
     @Test public void trimming_of_gives() {
-      trimming.of("a +=1;").gives("a++;");
+      trim.of("a +=1;").gives("a++;");
     }
 
     @Test public void trimming_of_gives_gives_gives_stays() {
-      trimming//
+      trim//
           .of("int b = 3; int a = b; return  a;")//
           .gives("int b = 3; int a = b; return  a;")//
           .gives("int a = 3; return  a;")//
@@ -101,15 +101,15 @@ public interface trimming {
     }
 
     @Test public void trimming_of_gives_stays() {
-      trimming.of("a +=1;").gives("a++;").stays();
+      trim.of("a +=1;").gives("a++;").stays();
     }
 
     @Test public void trimming_of_stays() {
-      trimming.of("a").stays();
+      trim.of("a").stays();
     }
 
     @Test public void trimming_repeatedly_of_gives() {
-      trimming.repeatedly//
+      trim.repeatedly//
           .of("int b = 3; int a = b; return  a;")//
           .gives("return 3;");
     }
