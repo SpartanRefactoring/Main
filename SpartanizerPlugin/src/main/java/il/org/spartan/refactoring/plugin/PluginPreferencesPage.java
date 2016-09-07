@@ -45,7 +45,7 @@ public class PluginPreferencesPage extends FieldEditorPreferencePage implements 
   static class SpartanPropertyListener implements IPropertyChangeListener {
     @Override public void propertyChange(@SuppressWarnings("unused") final PropertyChangeEvent __) {
       // Recreate the toolbox's internal instance, adding only enabled wrings
-      Toolbox.generate();
+      Toolbox.refresh();
       try {
         Plugin.refreshAllProjects();
       } catch (final Exception e) {

@@ -15,7 +15,6 @@ import il.org.spartan.refactoring.java.Environment.*;
  * Implements the handler of flatEnv outer annotation.
  */
 public class EnvFlatHandler extends ENVTestEngineAbstract {
-
   public EnvFlatHandler(final ASTNode $) {
     n = $;
     testSet = generateSet();
