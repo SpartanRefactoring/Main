@@ -37,10 +37,10 @@ public class extractTest {
     final String from = "for (int i = 0; i < 100;  i--)  i--;";
     assert from != null;
     final Statement s = s(from);
-   assert null !=(s);
+    assert null != s;
     azzert.that(s, iz("{" + from + "}"));
     final PostfixExpression e = extract.findFirstPostfix(s);
-   assert null !=(e);
+    assert null != e;
     azzert.that("" + e, is("i--"));
   }
 }

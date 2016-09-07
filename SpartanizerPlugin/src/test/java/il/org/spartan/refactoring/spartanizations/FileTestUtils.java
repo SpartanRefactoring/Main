@@ -12,9 +12,8 @@ import il.org.spartan.refactoring.engine.*;
  * @since 2014/05/24
  * @author Yossi GIl */
 @SuppressWarnings({ "unused" }) public abstract class FileTestUtils {
-  /**
-   * A String determines whereas we are at the IN or OUT side of the test See TestCases test files for reference. 
-   */
+  /** A String determines whereas we are at the IN or OUT side of the test See
+   * TestCases test files for reference. */
   static final String testKeyword = "<Test Result>";
   /** Suffix for test files. */
   protected static final String testSuffix = ".test";
@@ -68,9 +67,9 @@ import il.org.spartan.refactoring.engine.*;
 
   static Spartanization makeSpartanizationObject(final String folderForClass) {
     final Class<?> c = asClass(folderForClass);
-   assert null !=(c);
+    assert null != c;
     final Object $ = getInstance(c);
-   assert null !=($);
+    assert null != $;
     return (Spartanization) $;
   }
 
@@ -171,11 +170,11 @@ import il.org.spartan.refactoring.engine.*;
   public static abstract class Traverse extends FileTestUtils {
     /** @return a collection of all test cases generated in the traversal */
     public final Collection<Object[]> go() {
-     assert location != null;
-     assert location.listFiles() != null;
+      assert location != null;
+      assert location.listFiles() != null;
       final List<Object[]> $ = new ArrayList<>();
       for (final File f : location.listFiles()) {
-       assert f != null;
+        assert f != null;
         go($, f);
       }
       return $;

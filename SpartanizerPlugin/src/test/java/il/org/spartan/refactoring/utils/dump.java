@@ -1,6 +1,6 @@
 package il.org.spartan.refactoring.utils;
-import static il.org.spartan.refactoring.utils.Out.*;
 
+import static il.org.spartan.refactoring.utils.Out.*;
 
 import java.lang.management.*;
 import java.lang.reflect.*;
@@ -17,7 +17,7 @@ public class dump {
     out("Simple Name", c.getSimpleName());
     out("Canonical Name", c.getCanonicalName());
     out("Name", c.getName());
-    out("toString", (c + ""));
+    out("toString", c + "");
     out("super class", c.getSuperclass());
     out("generic super class", c.getGenericSuperclass());
     out("class", c.getClass());

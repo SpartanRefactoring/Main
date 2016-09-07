@@ -202,7 +202,6 @@ import il.org.spartan.refactoring.plugin.*;
    *         spartanization */
   public IMarkerResolution getFixWithPreview(final String s) {
     return new IMarkerResolution() {
-
       @Override public void run(final IMarker m) {
         setMarker(m);
         try {
@@ -212,13 +211,13 @@ import il.org.spartan.refactoring.plugin.*;
           e.printStackTrace();
         }
       }
+
       /** a quickfix which opens a refactoring wizard with the spartanization
        * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
        *         (v2) */
       @Override public String getLabel() {
         return "Show spartanization preview";
       }
-
     };
   }
 
