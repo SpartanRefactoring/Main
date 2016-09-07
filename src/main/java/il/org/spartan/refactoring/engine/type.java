@@ -389,6 +389,9 @@ public interface type {
           case PARENTHESIZED_EXPRESSION:
             continue;
           case IF_STATEMENT:
+          case ASSERT_STATEMENT:
+          case FOR_STATEMENT:
+          case WHILE_STATEMENT:
             return BOOLEAN;
           default:
             return i;
@@ -599,7 +602,6 @@ public interface type {
   }
 
   // TODO: Matteo. Nano-pattern of values: not implemented
-  // TODO: Dor, please implement yet
   @SuppressWarnings("synthetic-access") static type get(final Expression ¢) {
     return inner.setType(¢, inner.lookUp(¢, inner.lookDown(¢)));
   }
