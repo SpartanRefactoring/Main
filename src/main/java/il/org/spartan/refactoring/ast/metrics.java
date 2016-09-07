@@ -16,25 +16,15 @@ public interface metrics {
   /** @param n JD
    * @return The total number of nodes in the AST */
   @SuppressWarnings("boxing") static int nodes(final ASTNode n) {
-    if (n == null)
-      return 0;
-    final Recurser<Integer> recurse = new Recurser<>(n, 0);
-    final Function<Recurser<Integer>, Integer> counter = (x) -> (1 + x.getCurrent());
-    return recurse.preVisit(counter);
+    return n == null ? 0 : (new Recurser<>(n, 0)).preVisit((x) -> (1 + x.getCurrent()));
   }
 
   /** @param n JD
    * @return The total number of internal nodes in the AST */
   @SuppressWarnings("boxing") static int internals(final ASTNode n) {
-    if (n == null)
-      return 0;
-    final Recurser<Integer> recurse = new Recurser<>(n, 0);
-    final Function<Recurser<Integer>, Integer> counter = (x) -> { //
-      if (!Recurser.getChildren(x.getRoot()).isEmpty()) //
-        return x.getCurrent() + 1; //
-      return x.getCurrent(); //
-    };
-    return recurse.preVisit(counter);
+    return n == null ? 0 : (new Recurser<>(n, 0)).preVisit((x) -> {
+      return Recurser.getChildren(x.getRoot()).isEmpty()?x.getCurrent():x.getCurrent() + 1;
+    });
   }
 
   /** @param n JD
