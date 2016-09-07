@@ -5,10 +5,8 @@ import static il.org.spartan.refactoring.engine.type.*;
 import static il.org.spartan.refactoring.engine.type.Odd.Types.*;
 import static il.org.spartan.refactoring.engine.type.Primitive.Certain.*;
 import static il.org.spartan.refactoring.engine.type.Primitive.Uncertain.*;
-import static il.org.spartan.refactoring.engine.type.inner.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.internal.core.dom.rewrite.ASTRewriteFormatter.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -517,6 +515,243 @@ public class typeTest {
       azzert.that(get(into.e("new Double()")), is(DOUBLE));
     }
 
+    // tests for deducing type from context
+    @Test public void context01() {
+      final IfStatement is = extract.firstIfStatement(into.s("{if(f()) return x; return y;}"));
+      azzert.that(get(is.getExpression()), is(BOOLEAN));
+    }
+
+    @Test public void context02() {
+      final PrefixExpression e = az.prefixExpression(into.e("++x"));
+      azzert.that(get(e.getOperand()), is(NUMERIC));
+    }
+
+    @Test public void context03() {
+      final PrefixExpression e = az.prefixExpression(into.e("--x"));
+      azzert.that(get(e.getOperand()), is(NUMERIC));
+    }
+
+    @Test public void context04() {
+      final PrefixExpression e = az.prefixExpression(into.e("-x"));
+      azzert.that(get(e.getOperand()), is(NUMERIC));
+    }
+
+    @Test public void context05() {
+      final PrefixExpression e = az.prefixExpression(into.e("!x"));
+      azzert.that(get(e.getOperand()), is(BOOLEAN));
+    }
+
+    @Test public void context06() {
+      final PrefixExpression e = az.prefixExpression(into.e("~x"));
+      azzert.that(get(e.getOperand()), is(INTEGRAL));
+    }
+
+    @Test public void context07() {
+      final PrefixExpression e = az.prefixExpression(into.e("+x"));
+      azzert.that(get(e.getOperand()), is(NUMERIC));
+    }
+
+    @Test public void context08() {
+      final PostfixExpression e = az.postfixExpression(into.e("x++"));
+      azzert.that(get(e.getOperand()), is(NUMERIC));
+    }
+
+    @Test public void context09() {
+      final PostfixExpression e = az.postfixExpression(into.e("x--"));
+      azzert.that(get(e.getOperand()), is(NUMERIC));
+    }
+
+    @Test public void context10() {
+      final ArrayAccess a = (ArrayAccess) into.e("arr[x]");
+      azzert.that(get(a.getIndex()), is(INTEGRAL));
+    }
+
+    @Test public void context11() {
+      final ArrayAccess a = (ArrayAccess) into.e("arr[((x))]");
+      azzert.that(get(a.getIndex()), is(INTEGRAL));
+    }
+
+    @Test public void context12() {
+      final InfixExpression e = az.infixExpression(into.e("x < 7"));
+      azzert.that(get(e.getLeftOperand()), is(NUMERIC));
+      azzert.that(get(e.getRightOperand()), is(INT));
+    }
+
+    @Test public void context13() {
+      final InfixExpression e = az.infixExpression(into.e("x == (byte)7"));
+      azzert.that(get(e.getLeftOperand()), is(NOTHING));
+      azzert.that(get(e.getRightOperand()), is(BYTE));
+    }
+
+    @Test public void context14() {
+      final InfixExpression e = az.infixExpression(into.e("x != 'c'"));
+      azzert.that(get(e.getLeftOperand()), is(NOTHING));
+      azzert.that(get(e.getRightOperand()), is(CHAR));
+    }
+
+    @Test public void context15() {
+      final InfixExpression e = az.infixExpression(into.e("y > 7.3"));
+      azzert.that(get(e.getLeftOperand()), is(NUMERIC));
+      azzert.that(get(e.getRightOperand()), is(DOUBLE));
+    }
+
+    @Test public void context16() {
+      final InfixExpression e = az.infixExpression(into.e("x | 7l"));
+      azzert.that(get(e.getLeftOperand()), is(BOOLEANINTEGRAL));
+      azzert.that(get(e.getRightOperand()), is(LONG));
+    }
+
+    @Test public void context17() {
+      final InfixExpression e = az.infixExpression(into.e("x & y"));
+      azzert.that(get(e.getLeftOperand()), is(BOOLEANINTEGRAL));
+      azzert.that(get(e.getRightOperand()), is(BOOLEANINTEGRAL));
+    }
+
+    @Test public void context18() {
+      final InfixExpression e = az.infixExpression(into.e("x + \"y\""));
+      azzert.that(get(e.getLeftOperand()), is(ALPHANUMERIC));
+      azzert.that(get(e.getRightOperand()), is(STRING));
+    }
+
+    @Test public void context19() {
+      final InfixExpression e = az.infixExpression(into.e("x - 9f"));
+      azzert.that(get(e.getLeftOperand()), is(NUMERIC));
+      azzert.that(get(e.getRightOperand()), is(FLOAT));
+    }
+    // tests using old version of prudent that is now removed
+    // should be possible to recreate them using mock
+    // @Test public void under01() {
+    // azzert.that(prudent(into.e("+2"), INT), is(INT));
+    // }
+    //
+    // @Test public void under02() {
+    // azzert.that(prudent(into.e("~2"), ALPHANUMERIC), is(INTEGRAL));
+    // }
+    //
+    // @Test public void under03() {
+    // azzert.that(prudent(into.e("++x"), DOUBLE), is(DOUBLE));
+    // }
+    //
+    // @Test public void under04() {
+    // azzert.that(prudent(into.e("!x"), NOTHING), is(BOOLEAN));
+    // }
+    //
+    // @Test public void under05() {
+    // azzert.that(prudent(into.e("~'x'"), CHAR), is(INT));
+    // }
+    //
+    // @Test public void under06() {
+    // azzert.that(prudent(into.e("x+y"), NOTHING, NOTHING), is(ALPHANUMERIC));
+    // }
+    //
+    // @Test public void under07() {
+    // azzert.that(prudent(into.e("x+y"), INT, DOUBLE), is(DOUBLE));
+    // }
+    //
+    // @Test public void under08() {
+    // azzert.that(prudent(into.e("x+y"), INT, INT), is(INT));
+    // }
+    //
+    // @Test public void under09() {
+    // azzert.that(prudent(into.e("x+y"), STRING, STRING), is(STRING));
+    // }
+    //
+    // @Test public void under10() {
+    // azzert.that(prudent(into.e("x+y"), STRING, NULL), is(STRING));
+    // }
+    //
+    // @Test public void under11() {
+    // azzert.that(prudent(into.e("x+y"), NUMERIC, NULL), is(STRING));
+    // }
+    //
+    // @Test public void under12() {
+    // azzert.that(prudent(into.e("x+y"), LONG, INT), is(LONG));
+    // }
+    //
+    // @Test public void under13() {
+    // azzert.that(prudent(into.e("x+y"), LONG, INTEGRAL), is(LONG));
+    // }
+    //
+    // @Test public void under14() {
+    // azzert.that(prudent(into.e("x+y"), LONG, NUMERIC), is(NUMERIC));
+    // }
+    //
+    // @Test public void under15() {
+    // azzert.that(prudent(into.e("x+y"), INT, INTEGRAL), is(INTEGRAL));
+    // }
+    //
+    // @Test public void under16() {
+    // azzert.that(prudent(into.e("x&y"), INT, INT), is(INT));
+    // }
+    //
+    // @Test public void under17() {
+    // azzert.that(prudent(into.e("x|y"), INT, LONG), is(LONG));
+    // }
+    //
+    // @Test public void under18() {
+    // azzert.that(prudent(into.e("x<<y"), INTEGRAL, LONG), is(INTEGRAL));
+    // }
+    //
+    // @Test public void under19() {
+    // azzert.that(prudent(into.e("x%y"), NUMERIC, NOTHING), is(INTEGRAL));
+    // }
+    //
+    // @Test public void under20() {
+    // azzert.that(prudent(into.e("x>>y"), LONG, INTEGRAL), is(LONG));
+    // }
+    //
+    // @Test public void under21() {
+    // azzert.that(prudent(into.e("x^y"), NOTHING, INTEGRAL), is(INTEGRAL));
+    // }
+    //
+    // @Test public void under22() {
+    // azzert.that(prudent(into.e("x>y"), INT, INTEGRAL), is(BOOLEAN));
+    // }
+    //
+    // @Test public void under23() {
+    // azzert.that(prudent(into.e("x==y"), NOTHING, INTEGRAL), is(BOOLEAN));
+    // }
+    //
+    // @Test public void under24() {
+    // azzert.that(prudent(into.e("x!=y"), NUMERIC, NULL), is(BOOLEAN));
+    // }
+    //
+    // @Test public void under25() {
+    // azzert.that(prudent(into.e("x&&y"), BOOLEAN, BOOLEAN), is(BOOLEAN));
+    // }
+    //
+    // @Test public void under26() {
+    // azzert.that(prudent(into.e("x*y"), DOUBLE, NUMERIC), is(DOUBLE));
+    // }
+    //
+    // @Test public void under27() {
+    // azzert.that(prudent(into.e("x/y"), DOUBLE, INTEGRAL), is(DOUBLE));
+    // }
+    //
+    // @Test public void under28() {
+    // azzert.that(prudent(into.e("x-y"), INTEGRAL, LONG), is(LONG));
+    // }
+    //
+    // @Test public void under29() {
+    // azzert.that(prudent(into.e("x+y"), CHAR, CHAR), is(INT));
+    // }
+    //
+    // @Test public void under30() {
+    // azzert.that(prudent(into.e("x-y"), CHAR, INT), is(INT));
+    // }
+    //
+    // @Test public void under31() {
+    // azzert.that(prudent(into.e("x^y"), BOOLEAN, BOOLEAN), is(BOOLEAN));
+    // }
+    //
+    // @Test public void under32() {
+    // azzert.that(prudent(into.e("x+y"), INT, ALPHANUMERIC), is(ALPHANUMERIC));
+    // }
+    //
+    // @Test public void under33() {
+    // azzert.that(prudent(into.e("x+y"), INTEGRAL, NOTHING), is(ALPHANUMERIC));
+    // }
+
     @Test public void InDecreamentSemantics01() {
       azzert.that(Axiom.type(i++), is(INT));
     }
@@ -670,195 +905,5 @@ public class typeTest {
     @Test public void OnaryPlusMinusSemantics09() {
       azzert.that(Axiom.type(-c1), is(INT));
     }
-   
-    //tests for deducing type from context
-    @Test public void context01(){
-      IfStatement is = extract.firstIfStatement(into.s("{if(f()) return x; return y;}"));
-      azzert.that(get(is.getExpression()), is(BOOLEAN));
-    }
-    
-    @Test public void context02(){
-      PrefixExpression e = az.prefixExpression(into.e("++x"));
-      azzert.that(get(e.getOperand()), is(NUMERIC));
-    }
-    
-    @Test public void context03(){
-      PrefixExpression e = az.prefixExpression(into.e("--x"));
-      azzert.that(get(e.getOperand()), is(NUMERIC));
-    }
-    
-    @Test public void context04(){
-      PrefixExpression e = az.prefixExpression(into.e("-x"));
-      azzert.that(get(e.getOperand()), is(NUMERIC));
-    }
-    
-    @Test public void context05(){
-      PrefixExpression e = az.prefixExpression(into.e("!x"));
-      azzert.that(get(e.getOperand()), is(BOOLEAN));
-    }
-    
-    @Test public void context06(){
-      PrefixExpression e = az.prefixExpression(into.e("~x"));
-      azzert.that(get(e.getOperand()), is(INTEGRAL));
-    }
-    
-    @Test public void context07(){
-      PrefixExpression e = az.prefixExpression(into.e("+x"));
-      azzert.that(get(e.getOperand()), is(NUMERIC));
-    }
-    
-    @Test public void context08(){
-      PostfixExpression e = az.postfixExpression(into.e("x++"));
-      azzert.that(get(e.getOperand()), is(NUMERIC));
-    }
-    
-    @Test public void context09(){
-      PostfixExpression e = az.postfixExpression(into.e("x--"));
-      azzert.that(get(e.getOperand()), is(NUMERIC));
-    }
-    
-    @Test public void context10(){
-      ArrayAccess a = (ArrayAccess) into.e("arr[x]");
-      azzert.that(get(a.getIndex()), is(INTEGRAL));
-    }
-    
-    @Test public void context11(){
-      ArrayAccess a = (ArrayAccess) into.e("arr[((x))]");
-      azzert.that(get(a.getIndex()), is(INTEGRAL));
-    } 
-    
-    // tests using old version of prudent that is now removed
-    // should be possible to recreate them using mock
-    // @Test public void under01() {
-    // azzert.that(prudent(into.e("+2"), INT), is(INT));
-    // }
-    //
-    // @Test public void under02() {
-    // azzert.that(prudent(into.e("~2"), ALPHANUMERIC), is(INTEGRAL));
-    // }
-    //
-    // @Test public void under03() {
-    // azzert.that(prudent(into.e("++x"), DOUBLE), is(DOUBLE));
-    // }
-    //
-    // @Test public void under04() {
-    // azzert.that(prudent(into.e("!x"), NOTHING), is(BOOLEAN));
-    // }
-    //
-    // @Test public void under05() {
-    // azzert.that(prudent(into.e("~'x'"), CHAR), is(INT));
-    // }
-    //
-    // @Test public void under06() {
-    // azzert.that(prudent(into.e("x+y"), NOTHING, NOTHING), is(ALPHANUMERIC));
-    // }
-    //
-    // @Test public void under07() {
-    // azzert.that(prudent(into.e("x+y"), INT, DOUBLE), is(DOUBLE));
-    // }
-    //
-    // @Test public void under08() {
-    // azzert.that(prudent(into.e("x+y"), INT, INT), is(INT));
-    // }
-    //
-    // @Test public void under09() {
-    // azzert.that(prudent(into.e("x+y"), STRING, STRING), is(STRING));
-    // }
-    //
-    // @Test public void under10() {
-    // azzert.that(prudent(into.e("x+y"), STRING, NULL), is(STRING));
-    // }
-    //
-    // @Test public void under11() {
-    // azzert.that(prudent(into.e("x+y"), NUMERIC, NULL), is(STRING));
-    // }
-    //
-    // @Test public void under12() {
-    // azzert.that(prudent(into.e("x+y"), LONG, INT), is(LONG));
-    // }
-    //
-    // @Test public void under13() {
-    // azzert.that(prudent(into.e("x+y"), LONG, INTEGRAL), is(LONG));
-    // }
-    //
-    // @Test public void under14() {
-    // azzert.that(prudent(into.e("x+y"), LONG, NUMERIC), is(NUMERIC));
-    // }
-    //
-    // @Test public void under15() {
-    // azzert.that(prudent(into.e("x+y"), INT, INTEGRAL), is(INTEGRAL));
-    // }
-    //
-    // @Test public void under16() {
-    // azzert.that(prudent(into.e("x&y"), INT, INT), is(INT));
-    // }
-    //
-    // @Test public void under17() {
-    // azzert.that(prudent(into.e("x|y"), INT, LONG), is(LONG));
-    // }
-    //
-    // @Test public void under18() {
-    // azzert.that(prudent(into.e("x<<y"), INTEGRAL, LONG), is(INTEGRAL));
-    // }
-    //
-    // @Test public void under19() {
-    // azzert.that(prudent(into.e("x%y"), NUMERIC, NOTHING), is(INTEGRAL));
-    // }
-    //
-    // @Test public void under20() {
-    // azzert.that(prudent(into.e("x>>y"), LONG, INTEGRAL), is(LONG));
-    // }
-    //
-    // @Test public void under21() {
-    // azzert.that(prudent(into.e("x^y"), NOTHING, INTEGRAL), is(INTEGRAL));
-    // }
-    //
-    // @Test public void under22() {
-    // azzert.that(prudent(into.e("x>y"), INT, INTEGRAL), is(BOOLEAN));
-    // }
-    //
-    // @Test public void under23() {
-    // azzert.that(prudent(into.e("x==y"), NOTHING, INTEGRAL), is(BOOLEAN));
-    // }
-    //
-    // @Test public void under24() {
-    // azzert.that(prudent(into.e("x!=y"), NUMERIC, NULL), is(BOOLEAN));
-    // }
-    //
-    // @Test public void under25() {
-    // azzert.that(prudent(into.e("x&&y"), BOOLEAN, BOOLEAN), is(BOOLEAN));
-    // }
-    //
-    // @Test public void under26() {
-    // azzert.that(prudent(into.e("x*y"), DOUBLE, NUMERIC), is(DOUBLE));
-    // }
-    //
-    // @Test public void under27() {
-    // azzert.that(prudent(into.e("x/y"), DOUBLE, INTEGRAL), is(DOUBLE));
-    // }
-    //
-    // @Test public void under28() {
-    // azzert.that(prudent(into.e("x-y"), INTEGRAL, LONG), is(LONG));
-    // }
-    //
-    // @Test public void under29() {
-    // azzert.that(prudent(into.e("x+y"), CHAR, CHAR), is(INT));
-    // }
-    //
-    // @Test public void under30() {
-    // azzert.that(prudent(into.e("x-y"), CHAR, INT), is(INT));
-    // }
-    //
-    // @Test public void under31() {
-    // azzert.that(prudent(into.e("x^y"), BOOLEAN, BOOLEAN), is(BOOLEAN));
-    // }
-    //
-    // @Test public void under32() {
-    // azzert.that(prudent(into.e("x+y"), INT, ALPHANUMERIC), is(ALPHANUMERIC));
-    // }
-    //
-    // @Test public void under33() {
-    // azzert.that(prudent(into.e("x+y"), INTEGRAL, NOTHING), is(ALPHANUMERIC));
-    // }
   }
 }
