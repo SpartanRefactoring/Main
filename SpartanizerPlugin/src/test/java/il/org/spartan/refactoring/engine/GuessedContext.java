@@ -92,7 +92,7 @@ public enum GuessedContext {
    *         parsed appropriately. */
   public static GuessedContext find(final String codeFragment) {
     for (final GuessedContext $ : AlternativeContextToConsiderInOrder)
-      if ($.contains($.intoCompilationUnit(codeFragment).toString(), codeFragment))
+      if ($.contains(($.intoCompilationUnit(codeFragment) + ""), codeFragment))
         return $;
     azzert.fail("שימ לב!\n" + //
         "Nota!\n" + //
