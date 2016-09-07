@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.2"?>
 <plugin>
-   <extension
-         id="il.org.spartan.plugin.BuilderID"
-         name="Spartanization Suggestions"
+   <extension id="il.org.spartan.plugin.BuilderID"
+         name="Compute spartanization suggestions"
          point="org.eclipse.core.resources.builders">
-      <builder
-            hasNature="true"
-            isConfigurable="true">
+      <builder hasNature="true" isConfigurable="true">
          <run class="il.org.spartan.plugin.Builder"/> 
       </builder>
    </extension>
-   <extension
-         id="il.org.spartan.plugin.NatureID"
-         name="Spartanization Nature"
+   <extension id="il.org.spartan.plugin.NatureID"
+         name="Spartanizable"
          point="org.eclipse.core.resources.natures">
       <runtime>
          <run class="il.org.spartan.plugin.Nature"/> 
@@ -33,18 +29,18 @@
    </extension>
 
 <extension
-    id="il.org.spartan.plugin.spartanizationSuggestion"
-    name="Spartanization Suggestion"
+    id="il.org.spartan.plugin.SpartanizationSuggestion"
+    name="Spartanization suggestion"
     point="org.eclipse.core.resources.markers">
-  <super type="il.org.spartan.plugin.spartanizationSuggestion" />
+  <super type="il.org.spartan.plugin.SpartanizationSuggestion" />
 </extension>
    <extension point="org.eclipse.ui.ide.markerResolution">
       <markerResolutionGenerator 
-               markerType="il.org.spartan.plugin.spartanizationSuggestion"
+               markerType="il.org.spartan.plugin.SpartanizationSuggestion"
          class="il.org.spartan.plugin.QuickFixer"/>
    </extension>
    <extension point="org.eclipse.ui.editors.annotationTypes">
-     <type markerType="il.org.spartan.plugin.spartanizationSuggestion" 
+     <type markerType="il.org.spartan.plugin.SpartanizationSuggestion" 
        name="il.org.spartan.plugin.spartanizationMarker" />
    </extension>
    <extension point="org.eclipse.ui.editors.markerAnnotationSpecification">
@@ -67,53 +63,40 @@
 </extension>
    <extension point="org.eclipse.ui.commands">
       <command
+            name="Spartanize project"
+            id="il.org.spartan.plugin.commands.SpartanizeAll"
+            description="Repeatedly spartanize all Java files in this project"
+            />
+<command
+            id="il.org.spartan.plugin.commands.Toggle"
             defaultHandler="il.org.spartan.plugin.Toggle"
             description="Toggle spartanization suggestions"
-            id="il.org.spartan.plugin.Toggle"
             name="Toggle">
             <state
               class="org.eclipse.ui.handlers.RegistryToggleState:true"
               id="org.eclipse.ui.commands.toggleState">
             </state>
       </command>
-      <command
-            description="Spartanize all Java files in this project"
-            id="il.org.spartan.plugin.SpartanizeAll"
-            name="Spartanize project">
-      </command>
-      <command
+            <command
+            name="Spartanize active window"
             defaultHandler="il.org.spartan.plugin.SpartanizeCurrent"
             description="Repeatedly spartanize active window"
-            id="il.org.spartan.plugin.SpartanizeCurrent"
-            name="Spartanize active window">
-            categoryId="il.org.spartan.plugin"
-      </command>
+            id="il.org.spartan.plugin.commands.SpartanizeCurrent"
+            />
    </extension>
    <extension point="org.eclipse.ui.handlers">
-      <handler
-            class="il.org.spartan.plugin.Toggle"
-            commandId="il.org.spartan.plugin.Toggle">
-      </handler>
-      <handler
-            class="il.org.spartan.plugin.SpartanizeAll"
-            commandId="il.org.spartan.plugin.Cleanup">
-      </handler>
-      <handler
-            class="il.org.spartan.plugin.SpartanizeCurrent"
-            commandId="il.org.spartan.plugin.SpartanizeProject">
-      </handler>
+      <handler class="il.org.spartan.plugin.Toggle" commandId="il.org.spartan.plugin.commands.Toggle"/>
+      <handler class="il.org.spartan.plugin.SpartanizeAll" commandId="il.org.spartan.plugin.commands.Toggle"/>
+      <handler class="il.org.spartan.plugin.SpartanizeCurrent" commandId="il.org.spartan.plugin.commands.Toggle"/>
    </extension>
-   <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
-         <toolbar
-               id="il.org.spartan.plugin.toolbars.spartanToolbar">
+   <extension point="org.eclipse.ui.menus">
+      <menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar id="il.org.spartan.plugin.toolbars.spartanToolbar">
             <command
-                  commandId="il.org.spartan.plugin.SpartanizeProject"
+                  commandId="il.org.spartan.plugin.commands.SpartanizeCurrent"
                   icon="src/main/icons/spartan-warrior.gif"
                   tooltip="Spartanize this file"
-                  id="il.org.spartan.plugin.toolbars.SpartanizeProject">
+                  id="il.org.spartan.plugin.toolbars.SpartanizeCurrent">
             </command>
          </toolbar>
       </menuContribution>
@@ -126,7 +109,7 @@
                label="Spartanization"
                mnemonic="S">
             <command
-                  commandId="il.org.spartan.plugin.Toggle"
+                  commandId="il.org.spartan.plugin.commands.Toggle"
                   id="il.org.spartan.menus.Toggle"
                   label="Enable spartan suggestions"
                   style="toggle"
@@ -145,19 +128,16 @@
       </menuContribution>
       <menuContribution
             locationURI="menu:org.eclipse.ui.main.menu?before=navigate">
-         <menu
-               id="org.eclipse.jdt.ui.refactoring.menu"
-               label="Refactor">
-            <menu
-                  label="Spartanization">
+         <menu id="org.eclipse.jdt.ui.refactoring.menu" label="Refactor">
+              <menu label="Spartanization">
                <command
-                     commandId="il.org.spartan.plugin.Cleanup"
-                     id="il.org.spartan.menus.CleanupCommand"
+                     commandId="il.org.spartan.plugin.commands.SpartanizeCurrent"
+                     id="il.org.spartan.menus.SpartanizeCurrent"
                      style="push">
                </command>
                <command
-                     commandId="il.org.spartan.plugin.SpartanizeProject"
-                     id="il.org.spartan.plugin.menus.SpartanizeProjectCommand"
+                     commandId="il.org.spartan.plugin.commands.SpartanizeAll"
+                     id="il.org.spartan.plugin.menus.SpartanizeAll"
                      style="push">
                </command>
             </menu>
@@ -166,15 +146,8 @@
       <menuContribution
             allPopups="true"
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
-         <menu
-               id="org.eclipse.jdt.ui.refactoring.menu2"
-               label="Spartanization">
-  
-            <command
-                     commandId="il.org.spartan.plugin.Cleanup"
-                     style="push">
-            </command>
-
+         <menu id="org.eclipse.jdt.ui.refactoring.menu2" label="Spartanization">
+            <command commandId="il.org.spartan.plugin.commands.SpartanizeCurrent" style="push"/>
             <visibleWhen>
                <and>
                   <with
