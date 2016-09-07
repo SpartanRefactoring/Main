@@ -28,6 +28,14 @@ public interface lisp {
   static <T> T first(final List<T> ts) {
     return ts == null || ts.isEmpty() ? null : ts.get(0);
   }
+  
+  static char first(final String s) {
+    return last(s, 0);
+  }
+
+  static char first(final String s, final int i) {
+    return s.charAt(i);
+  }
 
   /** Determine if an integer can be found in a list of values
    * @param candidate what to search for
