@@ -214,6 +214,16 @@ public interface wizard {
         NOT_EQUALS, CONDITIONAL_OR, CONDITIONAL_AND);
   }
 
+  /** Determine whether an InfixExpression.Operator is a shift operator or not
+   * @param o JD
+   * @return true if one of {@link #InfixExpression.Operator.LEFT_SHIFT},
+   *         {@link #InfixExpression.Operator.RIGHT_SHIFT_SIGNED},
+   *         {@link #InfixExpression.Operator.RIGHT_SHIFT_UNSIGNED} and false
+   *         otherwise */
+  static boolean isShift(final InfixExpression.Operator o) {
+    return in(o, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED);
+  }
+
   /** Determine whether a node is an infix expression whose operator is
    * non-associative.
    * @param n JD
