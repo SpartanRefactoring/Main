@@ -41,6 +41,7 @@ public class Toolbox {
             new InfixComparisonSizeToZero(), //
             new InfixSubtractionZero(), //
             new InfixAdditionSubtractionExpand(), //
+            new InfixEmptyStringAdditionReorder(), //
             new InfixFactorNegatives(), //
             new EvaluateAddition(), //
             // new ConcatStrings(), //removed for now so it won't break tests,
@@ -68,7 +69,8 @@ public class Toolbox {
             null)
         .add(MethodInvocation.class, //
             new StringEqualsConstant(), //
-            new BooleanConstants(), new ToStringToEmptyStringAddition(), //
+            new BooleanConstants(), //
+            new ToStringToEmptyStringAddition(), //
             null)
         .add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //
