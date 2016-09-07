@@ -92,4 +92,12 @@ import il.org.spartan.*;
   @Test public void test20() {
     azzert.that(TermsReorganizer.simplify(i("a-b*c")), iz("a - b*c"));
   }
+  
+  @Test public void test21() {
+    azzert.that(TermsReorganizer.simplify(i("f() + \"abc\"")), iz("f() + \"abc\""));
+  }
+  
+  @Test public void test22() {
+    azzert.that(TermsReorganizer.simplify(i("x + \"abc\" + y")), iz("x + \"abc\" + y"));
+  }
 }
