@@ -17,7 +17,7 @@ public class dump {
     out("Simple Name", c.getSimpleName());
     out("Canonical Name", c.getCanonicalName());
     out("Name", c.getName());
-    out("toString", c.toString());
+    out("toString", (c + ""));
     out("super class", c.getSuperclass());
     out("generic super class", c.getGenericSuperclass());
     out("class", c.getClass());
@@ -87,7 +87,7 @@ public class dump {
       return;
     }
     final Class<?> c = o.getClass();
-    out("\n\n--BEGIN " + c.getSimpleName() + " object: " + o.toString() + "\n");
+    out("\n\n--BEGIN " + c.getSimpleName() + " object: " + o + "" + "\n");
     out("Class canonical name", c.getCanonicalName());
     out("Class name", c.getName());
     for (final Method m : c.getMethods()) {

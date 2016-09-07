@@ -117,7 +117,7 @@ public class GuessedContextTest {
     final String codeFragment = "a + b * c";
     final CompilationUnit u = w.intoCompilationUnit(codeFragment);
     azzert.notNull(u);
-    azzert.that(w.off(u.toString()), containsString(codeFragment));
+    azzert.that(w.off((u + "")), containsString(codeFragment));
   }
 
   @Test public void intoDocument() {
