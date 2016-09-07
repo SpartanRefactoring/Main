@@ -20,19 +20,19 @@ import il.org.spartan.spartanizer.ast.*;
  * @author Dan Greenstein
  * @since 2016 */
 public class InfixEmptyStringAdditionReorder extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.Canonicalization {
-  private static boolean isEmptyStringLiteral(final Expression x) {
-    return wizard.same(x, x.getAST().newStringLiteral());
+  private static boolean isEmptyStringLiteral(final Expression e) {
+    return wizard.same(e, e.getAST().newStringLiteral());
   }
 
-  private static InfixExpression replace(final InfixExpression x) {
-    return subject.pair(duplicate.of(step.right(x)), duplicate.of(step.left(x))).to(wizard.PLUS2);
+  private static InfixExpression replace(final InfixExpression e) {
+    return subject.pair(duplicate.of(step.right(e)), duplicate.of(step.left(e))).to(wizard.PLUS2);
   }
 
-  @SuppressWarnings("unused") @Override String description(final InfixExpression x) {
+  @SuppressWarnings("unused") @Override String description(final InfixExpression e) {
     return "Switches the empty string in empty string addition from the left operand to the right";
   }
 
-  @Override ASTNode replacement(final InfixExpression x) {
-    return !isEmptyStringLiteral(step.left(x)) || !iz.infixPlus(x) ? null : replace(x);
+  @Override ASTNode replacement(final InfixExpression e) {
+    return !isEmptyStringLiteral(step.left(e)) || !iz.infixPlus(e) ? null : replace(e);
   }
 }

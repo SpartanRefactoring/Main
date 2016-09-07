@@ -50,33 +50,33 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Matteo Orrù
  * @since 2016 */
 public final class InfixZeroAddition extends Wring<InfixExpression> {
-  private static List<Expression> gather(final Expression x, final List<Expression> $) {
-    if (x instanceof InfixExpression)
-      return gather(az.infixExpression(x), $);
-    $.add(x);
+  private static List<Expression> gather(final Expression e, final List<Expression> $) {
+    if (e instanceof InfixExpression)
+      return gather(az.infixExpression(e), $);
+    $.add(e);
     return $;
   }
 
-  private static List<Expression> gather(final InfixExpression x) {
-    return gather(x, new ArrayList<Expression>());
+  private static List<Expression> gather(final InfixExpression e) {
+    return gather(e, new ArrayList<Expression>());
   }
 
-  private static List<Expression> gather(final InfixExpression x, final List<Expression> $) {
-    if (x == null)
+  private static List<Expression> gather(final InfixExpression e, final List<Expression> $) {
+    if (e == null)
       return $;
-    if (!in(x.getOperator(), PLUS, MINUS)) {
-      $.add(x);
+    if (!in(e.getOperator(), PLUS, MINUS)) {
+      $.add(e);
       return $;
     }
-    gather(core(step.left(x)), $);
-    gather(core(step.right(x)), $);
-    if (x.hasExtendedOperands())
-      gather(extendedOperands(x), $);
+    gather(core(step.left(e)), $);
+    gather(core(step.right(e)), $);
+    if (e.hasExtendedOperands())
+      gather(extendedOperands(e), $);
     return $;
   }
 
-  private static List<Expression> gather(final List<Expression> xs, final List<Expression> $) {
-    for (final Expression e : xs)
+  private static List<Expression> gather(final List<Expression> es, final List<Expression> $) {
+    for (final Expression e : es)
       gather(e, $);
     return $;
   }
@@ -90,20 +90,20 @@ public final class InfixZeroAddition extends Wring<InfixExpression> {
     return WringGroup.Abbreviation;
   }
 
-  @Override String description(final InfixExpression x) {
-    return "remove 0 in X + 0 expressions from " + x;
+  @Override String description(final InfixExpression e) {
+    return "remove 0 in X + 0 expressions from " + e;
   }
 
-  @Override Rewrite make(final InfixExpression x, final ExclusionManager exclude) {
-    final List<Expression> es = gather(x);
+  @Override Rewrite make(final InfixExpression e, final ExclusionManager exclude) {
+    final List<Expression> es = gather(e);
     if (es.size() < 2)
       return null;
     final int n = minus.level(es);
     if (n == 0 || n == 1 && minus.level(lisp.first(es)) == 1)
       return null;
     if (exclude != null)
-      exclude.exclude(x);
-    return new Rewrite(description(x), x) {
+      exclude.exclude(e);
+    return new Rewrite(description(e), e) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Expression first = n % 2 == 0 ? null : es.get(0);
         for (final Expression ¢ : es)

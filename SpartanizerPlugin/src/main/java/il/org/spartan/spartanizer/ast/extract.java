@@ -19,17 +19,17 @@ import il.org.spartan.spartanizer.utils.*;
 public enum extract {
   ;
   /** Retrieve all operands, including parenthesized ones, under an expression
-   * @param x JD
+   * @param e JD
    * @return a {@link List} of all operands to the parameter */
-  public static List<Expression> allOperands(final InfixExpression x) {
-    assert x != null;
-    return hop.operands(flatten.of(x));
+  public static List<Expression> allOperands(final InfixExpression e) {
+    assert e != null;
+    return hop.operands(flatten.of(e));
   }
 
-  public static List<InfixExpression.Operator> allOperators(final InfixExpression x) {
-    assert x != null;
+  public static List<InfixExpression.Operator> allOperators(final InfixExpression e) {
+    assert e != null;
     final List<InfixExpression.Operator> $ = new ArrayList<>();
-    findOperators(x, $);
+    findOperators(e, $);
     return $;
   }
 
@@ -133,9 +133,9 @@ public enum extract {
   public static PostfixExpression findFirstPostfix(final ASTNode n) {
     final Wrapper<PostfixExpression> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final PostfixExpression x) {
+      @Override public boolean visit(final PostfixExpression e) {
         if ($.get() == null)
-          $.set(x);
+          $.set(e);
         return false;
       }
     });
@@ -244,12 +244,12 @@ public enum extract {
   public static InfixExpression firstPlus(final ASTNode n) {
     final Wrapper<InfixExpression> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final InfixExpression x) {
+      @Override public boolean visit(final InfixExpression e) {
         if ($.get() != null)
           return false;
-        if (x.getOperator() != InfixExpression.Operator.PLUS)
+        if (e.getOperator() != InfixExpression.Operator.PLUS)
           return true;
-        $.set(x);
+        $.set(e);
         return false;
       }
     });
@@ -464,12 +464,12 @@ public enum extract {
     return az.throwStatement(extract.singleStatement(n));
   }
 
-  private static void findOperators(final InfixExpression x, final List<InfixExpression.Operator> $) {
-    if (x == null)
+  private static void findOperators(final InfixExpression e, final List<InfixExpression.Operator> $) {
+    if (e == null)
       return;
-    $.add(x.getOperator());
-    findOperators(az.infixExpression(x.getLeftOperand()), $);
-    findOperators(az.infixExpression(x.getRightOperand()), $);
+    $.add(e.getOperator());
+    findOperators(az.infixExpression(e.getLeftOperand()), $);
+    findOperators(az.infixExpression(e.getRightOperand()), $);
   }
 
   private static Statement next(final Statement s, final List<Statement> ss) {

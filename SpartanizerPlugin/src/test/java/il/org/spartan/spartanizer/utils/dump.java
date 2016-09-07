@@ -65,10 +65,10 @@ public class dump {
     out("---------------------------\n");
   }
 
-  public static void go(final Object os[], final String... ss) {
+  public static void go(final Object o[], final String... ss) {
     for (final String s : ss)
       out(s);
-    out("elements", os);
+    out("elements", o);
   }
 
   public static <T> void go(final List<T> ts, final String... ss) {

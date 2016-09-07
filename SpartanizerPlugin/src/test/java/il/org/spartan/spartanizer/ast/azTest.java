@@ -22,7 +22,7 @@ public class azTest {
   @Test public void asComparisonTypicalExpression() {
     final InfixExpression i = mock(InfixExpression.class);
     doReturn(GREATER).when(i).getOperator();
-    assert null != az.comparison(i);
+    assert az.comparison(i) != null;
   }
 
   @Test public void asComparisonTypicalExpressionFalse() {
@@ -46,6 +46,6 @@ public class azTest {
   @Test public void asComparisonTypicalInfixIsNotNull() {
     final InfixExpression e = mock(InfixExpression.class);
     doReturn(GREATER).when(e).getOperator();
-    assert null != az.comparison(e);
+    assert az.comparison(e) != null;
   }
 }

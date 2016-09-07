@@ -16,11 +16,11 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class InfixSubtractionSort extends Wring.InfixSortingOfCDR implements Kind.Sorting {
-  @Override boolean scopeIncludes(final InfixExpression x) {
-    return in(x.getOperator(), MINUS);
+  @Override boolean scopeIncludes(final InfixExpression e) {
+    return in(e.getOperator(), MINUS);
   }
 
-  @Override boolean sort(final List<Expression> xs) {
-    return ExpressionComparator.ADDITION.sort(xs);
+  @Override boolean sort(final List<Expression> es) {
+    return ExpressionComparator.ADDITION.sort(es);
   }
 }

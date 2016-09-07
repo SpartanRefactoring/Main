@@ -16,18 +16,18 @@ import il.org.spartan.spartanizer.wring.Wring.*;
  * @author Matteo Orru'
  * @since 2016 */
 public class PrefixPlusRemove extends ReplaceCurrentNode<PrefixExpression> implements Kind.NoImpact {
-  @Override String description(final PrefixExpression x) {
-    return "Remove unary + in " + x;
+  @Override String description(final PrefixExpression e) {
+    return "Remove unary + in " + e;
   }
 
-  @Override ASTNode replacement(final PrefixExpression x) {
-    return x.getOperator() != PLUS ? null : plant(duplicate.of(heart(x.getOperand()))).into(x.getParent());
+  @Override ASTNode replacement(final PrefixExpression e) {
+    return e.getOperator() != PLUS ? null : plant(duplicate.of(heart(e.getOperand()))).into(e.getParent());
   }
 
-  private Expression heart(final Expression x) {
-    if (iz.is(x, PARENTHESIZED_EXPRESSION))
-      return heart(step.expression(x));
-    final PrefixExpression p = az.prefixExpression(x);
-    return p == null || p.getOperator() != PLUS ? x : heart(p.getOperand());
+  private Expression heart(final Expression e) {
+    if (iz.is(e, PARENTHESIZED_EXPRESSION))
+      return heart(step.expression(e));
+    final PrefixExpression p = az.prefixExpression(e);
+    return p == null || p.getOperator() != PLUS ? e : heart(p.getOperand());
   }
 }

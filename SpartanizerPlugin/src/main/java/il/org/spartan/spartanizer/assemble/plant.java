@@ -54,9 +54,9 @@ public interface plant {
       return precedence.greater(host, inner) || precedence.equal(host, inner) && !wizard.nonAssociative(host);
     }
 
-    private ParenthesizedExpression parenthesize(final Expression x) {
+    private ParenthesizedExpression parenthesize(final Expression e) {
       final ParenthesizedExpression $ = inner.getAST().newParenthesizedExpression();
-      $.setExpression(duplicate.of(x));
+      $.setExpression(duplicate.of(e));
       return $;
     }
   }

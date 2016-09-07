@@ -20,34 +20,34 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public class EvaluateRemainder extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
-  private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !EvaluateAux.isCompitable(xs.get(0)))
+  private static ASTNode replacementInt(final List<Expression> es, final InfixExpression e) {
+    if (es.isEmpty() || !EvaluateAux.isCompitable(es.get(0)))
       return null;
-    int remainder = EvaluateAux.extractInt(xs.get(0));
+    int remainder = EvaluateAux.extractInt(es.get(0));
     int index = 0;
-    for (final Expression ¢ : xs) {
+    for (final Expression ¢ : es) {
       if (!EvaluateAux.isCompitable(¢))
         return null;
       if (index != 0)
         remainder %= EvaluateAux.extractInt(¢);
       ++index;
     }
-    return x.getAST().newNumberLiteral(Integer.toString(remainder));
+    return e.getAST().newNumberLiteral(Integer.toString(remainder));
   }
 
-  private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !EvaluateAux.isCompitable(xs.get(0)))
+  private static ASTNode replacementLong(final List<Expression> es, final InfixExpression e) {
+    if (es.isEmpty() || !EvaluateAux.isCompitable(es.get(0)))
       return null;
-    long remainder = EvaluateAux.extractLong(xs.get(0));
+    long remainder = EvaluateAux.extractLong(es.get(0));
     int index = 0;
-    for (final Expression ¢ : xs) {
+    for (final Expression ¢ : es) {
       if (!EvaluateAux.isCompitable(¢))
         return null;
       if (index != 0)
         remainder %= EvaluateAux.extractLong(¢);
       ++index;
     }
-    return x.getAST().newNumberLiteral(Long.toString(remainder) + "L");
+    return e.getAST().newNumberLiteral(Long.toString(remainder) + "L");
   }
 
   @Override public String description() {
@@ -58,14 +58,14 @@ public class EvaluateRemainder extends Wring.ReplaceCurrentNode<InfixExpression>
     return "Evaluate remainder of numbers";
   }
 
-  @Override ASTNode replacement(final InfixExpression x) {
-    if (x.getOperator() != REMAINDER)
+  @Override ASTNode replacement(final InfixExpression e) {
+    if (e.getOperator() != REMAINDER)
       return null;
-    switch (EvaluateAux.getEvaluatedType(x)) {
+    switch (EvaluateAux.getEvaluatedType(e)) {
       case INT:
-        return replacementInt(extract.allOperands(x), x);
+        return replacementInt(extract.allOperands(e), e);
       case LONG:
-        return replacementLong(extract.allOperands(x), x);
+        return replacementLong(extract.allOperands(e), e);
       default:
         return null;
     }

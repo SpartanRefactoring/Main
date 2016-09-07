@@ -70,14 +70,14 @@ import il.org.spartan.spartanizer.engine.*;
   @Test public void returnStatementsExists() {
     final MethodDeclaration d = into.d("int f() { return a; }");
     final List<ReturnStatement> a = new MethodExplorer(d).returnStatements();
-    assert null != a;
+    assert a != null;
     azzert.that(a.size(), is(1));
   }
 
   @Test public void returnStatementsExistsNestedType() {
     final MethodDeclaration d = into.d("int f() { class B {}; return a; }");
     final List<ReturnStatement> a = new MethodExplorer(d).returnStatements();
-    assert null != a;
+    assert a != null;
     azzert.that(a.size(), is(1));
   }
 
@@ -89,14 +89,14 @@ import il.org.spartan.spartanizer.engine.*;
         "    return new B().g();\n" + //
         "  }"); //
     final List<ReturnStatement> a = new MethodExplorer(d).returnStatements();
-    assert null != a;
+    assert a != null;
     azzert.that(a.size(), is(2));
   }
 
   @Test public void returnStatementsExistsNestedTypeWithReturn() {
     final MethodDeclaration d = into.d("int f() { class B {int g() { return c; } }; return a; }");
     final List<ReturnStatement> a = new MethodExplorer(d).returnStatements();
-    assert null != a;
+    assert a != null;
     azzert.that(a.size(), is(1));
   }
 
@@ -112,14 +112,14 @@ import il.org.spartan.spartanizer.engine.*;
         "    return new B().g();\n" + //
         "  }"); //
     final List<ReturnStatement> a = new MethodExplorer(d).returnStatements();
-    assert null != a;
+    assert a != null;
     azzert.that(a.size(), is(2));
   }
 
   @Test public void returnStatementsTwoReturns() {
     final MethodDeclaration d = into.d("int f() { if (b) ; else return c; return a; }");
     final List<ReturnStatement> a = new MethodExplorer(d).returnStatements();
-    assert null != a;
+    assert a != null;
     azzert.that(a.size(), is(2));
   }
 
