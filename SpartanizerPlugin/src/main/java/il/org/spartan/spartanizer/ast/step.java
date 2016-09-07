@@ -115,8 +115,8 @@ public enum step {
     return extract.core($.getExpression());
   }
 
-  public static Expression expression(final ConditionalExpression x) {
-    return extract.core(x.getExpression());
+  public static Expression expression(final ConditionalExpression e) {
+    return extract.core(e.getExpression());
   }
 
   public static Expression expression(final DoStatement $) {
@@ -232,16 +232,16 @@ public enum step {
     return a == null ? null : a.getOperator();
   }
 
-  public static InfixExpression.Operator operator(final InfixExpression x) {
-    return x == null ? null : x.getOperator();
+  public static InfixExpression.Operator operator(final InfixExpression e) {
+    return e == null ? null : e.getOperator();
   }
 
-  public static PostfixExpression.Operator operator(final PostfixExpression x) {
-    return x == null ? null : x.getOperator();
+  public static PostfixExpression.Operator operator(final PostfixExpression e) {
+    return e == null ? null : e.getOperator();
   }
 
-  public static PrefixExpression.Operator operator(final PrefixExpression x) {
-    return x == null ? null : x.getOperator();
+  public static PrefixExpression.Operator operator(final PrefixExpression e) {
+    return e == null ? null : e.getOperator();
   }
 
   /** Expose the list of parameters in a {@link MethodDeclaration}
@@ -316,8 +316,8 @@ public enum step {
     return ¢.getThenStatement();
   }
 
-  public static Type type(final CastExpression x) {
-    return x.getType();
+  public static Type type(final CastExpression e) {
+    return e.getType();
   }
 
   @SuppressWarnings("unchecked") public static List<ParameterizedType> typeArguments(final ParameterizedType ¢) {

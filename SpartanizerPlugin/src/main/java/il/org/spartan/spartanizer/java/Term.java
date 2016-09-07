@@ -5,12 +5,12 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.*;
 
 class Term {
-  static Term minus(final Expression x) {
-    return new Term(true, x);
+  static Term minus(final Expression e) {
+    return new Term(true, e);
   }
 
-  static Term plus(final Expression x) {
-    return new Term(false, x);
+  static Term plus(final Expression e) {
+    return new Term(false, e);
   }
 
   private final boolean negative;

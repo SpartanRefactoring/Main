@@ -30,8 +30,8 @@ public final class AsSpartanization extends Spartanization {
         return process(it);
       }
 
-      @Override public boolean visit(final ConditionalExpression x) {
-        return process(x);
+      @Override public boolean visit(final ConditionalExpression e) {
+        return process(e);
       }
 
       @Override public boolean visit(final IfStatement it) {
@@ -65,20 +65,20 @@ public final class AsSpartanization extends Spartanization {
         return go(e);
       }
 
-      @Override public boolean visit(final ConditionalExpression x) {
-        return go(x);
+      @Override public boolean visit(final ConditionalExpression e) {
+        return go(e);
       }
 
       @Override public boolean visit(final IfStatement s) {
         return go(s);
       }
 
-      @Override public boolean visit(final InfixExpression x) {
-        return go(x);
+      @Override public boolean visit(final InfixExpression e) {
+        return go(e);
       }
 
-      @Override public boolean visit(final PrefixExpression x) {
-        return go(x);
+      @Override public boolean visit(final PrefixExpression e) {
+        return go(e);
       }
 
       @Override public boolean visit(final VariableDeclarationFragment f) {

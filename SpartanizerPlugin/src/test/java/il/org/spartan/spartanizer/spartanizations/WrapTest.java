@@ -83,7 +83,7 @@ import il.org.spartan.*;
     final Wrap w = Wrap.Expression;
     final String codeFragment = "a + b * c";
     final CompilationUnit u = w.intoCompilationUnit(codeFragment);
-    assert null != u;
+    assert u != null;
     azzert.that(w.off("" + u), containsString(codeFragment));
   }
 
@@ -91,7 +91,7 @@ import il.org.spartan.*;
     final Wrap w = Wrap.Expression;
     final String codeFragment = "a + b * c";
     final Document d = w.intoDocument(codeFragment);
-    assert null != d;
+    assert d != null;
     azzert.that(w.off(d.get()), containsString(codeFragment));
   }
 

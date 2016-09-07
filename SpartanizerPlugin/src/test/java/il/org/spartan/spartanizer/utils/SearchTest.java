@@ -251,7 +251,7 @@ import il.org.spartan.spartanizer.engine.Collect.*;
     final MethodDeclaration d = d(input);
     azzert.that(d, iz(input));
     final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(d);
-    assert null != f;
+    assert f != null;
     final SimpleName b = f.getName();
     azzert.that(b, iz("b"));
     azzert.that(Collect.usesOf(b).in(d).size(), is(2));
@@ -262,7 +262,7 @@ import il.org.spartan.spartanizer.engine.Collect.*;
     final MethodDeclaration d = d(input);
     azzert.that(d, iz(input));
     final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(d);
-    assert null != f;
+    assert f != null;
     final SimpleName b = f.getName();
     azzert.that(b, iz("b"));
     azzert.that(Collect.usesOf(b).in(d).size(), is(1));
@@ -440,7 +440,7 @@ import il.org.spartan.spartanizer.engine.Collect.*;
 
   @Test public void vanilla() {
     final Collector findUses = searcher();
-    assert null != findUses;
+    assert findUses != null;
     azzert.that(findUses.in(s("b = n;")).size(), is(1));
   }
 

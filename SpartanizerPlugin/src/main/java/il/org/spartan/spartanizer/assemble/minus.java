@@ -21,13 +21,13 @@ public enum minus {
                     : 0;
   }
 
-  public static int level(final InfixExpression x) {
-    return lisp.out(x.getOperator(), TIMES, DIVIDE) ? 0 : level(hop.operands(x));
+  public static int level(final InfixExpression e) {
+    return lisp.out(e.getOperator(), TIMES, DIVIDE) ? 0 : level(hop.operands(e));
   }
 
-  public static int level(final List<Expression> xs) {
+  public static int level(final List<Expression> es) {
     int $ = 0;
-    for (final Expression e : xs)
+    for (final Expression e : es)
       $ += minus.level(e);
     return $;
   }
@@ -40,8 +40,8 @@ public enum minus {
                     : $;
   }
 
-  public static Expression peel(final InfixExpression x) {
-    return lisp.out(x.getOperator(), TIMES, DIVIDE) ? x : subject.operands(peel(hop.operands(x))).to(x.getOperator());
+  public static Expression peel(final InfixExpression e) {
+    return lisp.out(e.getOperator(), TIMES, DIVIDE) ? e : subject.operands(peel(hop.operands(e))).to(e.getOperator());
   }
 
   public static Expression peel(final NumberLiteral $) {
@@ -56,9 +56,9 @@ public enum minus {
     return az.bit(¢.getOperator() == wizard.MINUS1) + level(¢.getOperand());
   }
 
-  private static List<Expression> peel(final List<Expression> xs) {
+  private static List<Expression> peel(final List<Expression> es) {
     final List<Expression> $ = new ArrayList<>();
-    for (final Expression e : xs)
+    for (final Expression e : es)
       $.add(peel(e));
     return $;
   }

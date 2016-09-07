@@ -16,12 +16,12 @@ public class makeASTTest {
   private final File f = new File(ROOT + HELLO_JAVA);
 
   @Test public void test() {
-    assert null != ROOT;
-    assert null != f;
+    assert ROOT != null;
+    assert f != null;
     azzert.aye(f.exists());
     azzert.aye(f.exists());
     final ASTNode ast = makeAST.COMPILATION_UNIT.from(f);
-    assert null != ast;
+    assert ast != null;
     azzert.that(ast, instanceOf(CompilationUnit.class));
   }
 }

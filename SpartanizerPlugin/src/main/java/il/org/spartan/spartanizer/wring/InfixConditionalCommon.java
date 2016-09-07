@@ -29,10 +29,10 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Yossi Gil
  * @since 2015-07-20 */
 public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
-  private static Expression chopHead(final InfixExpression x) {
-    final List<Expression> es = extract.allOperands(x);
+  private static Expression chopHead(final InfixExpression e) {
+    final List<Expression> es = extract.allOperands(e);
     es.remove(0);
-    return es.size() < 2 ? duplicate.of(lisp.first(es)) : subject.operands(es).to(x.getOperator());
+    return es.size() < 2 ? duplicate.of(lisp.first(es)) : subject.operands(es).to(e.getOperator());
   }
 
   private static Operator conjugate(final Operator o) {
@@ -46,15 +46,15 @@ public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<Infix
     return "Factor out common logical component of ||";
   }
 
-  @Override Expression replacement(final InfixExpression x) {
-    final Operator o = x.getOperator();
+  @Override Expression replacement(final InfixExpression e) {
+    final Operator o = e.getOperator();
     if (!in(o, CONDITIONAL_AND, CONDITIONAL_OR))
       return null;
     final Operator conjugate = conjugate(o);
-    final InfixExpression left = az.infixExpression(core(step.left(x)));
+    final InfixExpression left = az.infixExpression(core(step.left(e)));
     if (left == null || left.getOperator() != conjugate)
       return null;
-    final InfixExpression right = az.infixExpression(core(step.right(x)));
+    final InfixExpression right = az.infixExpression(core(step.right(e)));
     if (right == null || right.getOperator() != conjugate)
       return null;
     final Expression leftLeft = step.left(left);

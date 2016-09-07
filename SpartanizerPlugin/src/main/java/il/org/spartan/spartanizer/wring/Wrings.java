@@ -41,16 +41,16 @@ public enum Wrings {
     return (IfStatement) lisp.first(statements(b));
   }
 
-  static Expression eliminateLiteral(final InfixExpression x, final boolean b) {
-    final List<Expression> operands = extract.allOperands(x);
+  static Expression eliminateLiteral(final InfixExpression e, final boolean b) {
+    final List<Expression> operands = extract.allOperands(e);
     wizard.removeAll(b, operands);
     switch (operands.size()) {
       case 0:
-        return x.getAST().newBooleanLiteral(b);
+        return e.getAST().newBooleanLiteral(b);
       case 1:
         return duplicate.of(operands.get(0));
       default:
-        return subject.operands(operands).to(x.getOperator());
+        return subject.operands(operands).to(e.getOperator());
     }
   }
 
@@ -97,11 +97,11 @@ public enum Wrings {
     return rankElse > rankThen || rankThen == rankElse && !Wrings.thenIsShorter(s) ? $ : main;
   }
 
-  static boolean mixedLiteralKind(final List<Expression> xs) {
-    if (xs.size() <= 2)
+  static boolean mixedLiteralKind(final List<Expression> es) {
+    if (es.size() <= 2)
       return false;
     int previousKind = -1;
-    for (final Expression e : xs)
+    for (final Expression e : es)
       if (e instanceof NumberLiteral || e instanceof CharacterLiteral) {
         final int currentKind = new LiteralParser("" + e).type().ordinal();
         assert currentKind >= 0;

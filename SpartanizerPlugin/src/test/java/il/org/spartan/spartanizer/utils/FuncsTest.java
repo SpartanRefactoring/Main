@@ -69,7 +69,7 @@ public class FuncsTest {
   }
 
   @Test public void findFirstType() {
-    assert null != t("int _;");
+    assert t("int _;") != null;
   }
 
   @Test public void isDeMorganAND() {

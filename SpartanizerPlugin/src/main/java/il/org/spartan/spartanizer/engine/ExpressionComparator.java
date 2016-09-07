@@ -94,11 +94,11 @@ public enum ExpressionComparator implements Comparator<Expression> {
   }
 
   /** Compare the length of the left and right arguments of an infix expression
-   * @param x JD
+   * @param e JD
    * @return <code><b>true</b></code> <i>iff</i> if the left operand of the
    *         parameter is is longer than the second argument */
-  public static boolean longerFirst(final InfixExpression x) {
-    return isLonger(step.left(x), step.right(x));
+  public static boolean longerFirst(final InfixExpression e) {
+    return isLonger(step.left(e), step.right(e));
   }
 
   /** Compare method invocations by the number of arguments
@@ -179,21 +179,21 @@ public enum ExpressionComparator implements Comparator<Expression> {
   }
 
   /** Sorts the {@link Expression} list
-   * @param xs an {@link Expression} list to sort
+   * @param es an {@link Expression} list to sort
    * @return True if the list was modified */
-  public boolean sort(final List<Expression> xs) {
+  public boolean sort(final List<Expression> es) {
     boolean $ = false;
     // Bubble sort
-    for (int i = 0, size = xs.size(); i < size; ++i)
+    for (int i = 0, size = es.size(); i < size; ++i)
       for (int j = 0; j < size - 1; ++j) {
-        final Expression e0 = xs.get(j);
-        final Expression e1 = xs.get(j + 1);
+        final Expression e0 = es.get(j);
+        final Expression e1 = es.get(j + 1);
         if (iz.negative(e0) || iz.negative(e1) || compare(e0, e1) <= 0)
           continue;
-        xs.remove(j);
-        xs.remove(j);
-        xs.add(j, e0);
-        xs.add(j, e1);
+        es.remove(j);
+        es.remove(j);
+        es.add(j, e0);
+        es.add(j, e1);
         $ = true;
       }
     return $;
