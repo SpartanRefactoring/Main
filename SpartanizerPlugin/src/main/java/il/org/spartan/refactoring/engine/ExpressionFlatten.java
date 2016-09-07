@@ -86,6 +86,6 @@ public class ExpressionFlatten {
   }
 
   @Test public void rightOperandNotNull() {
-    assert step.left(i("1+2")) != null;
+    assert step.right(i("1+2")) != null;
   }
 }
