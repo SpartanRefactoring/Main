@@ -86,6 +86,7 @@ public interface trim {
    * @author Yossi Gil
    * @year 2016 */
   @SuppressWarnings("static-method") //
+  @Ignore
   public static class TEST {
     @Test public void trimming_of_gives() {
       trim.of("a +=1;").gives("a++;");
