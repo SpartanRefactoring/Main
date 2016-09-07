@@ -40,13 +40,11 @@ public interface metrics {
       return 0;
     final Recurser<Integer> recurse = new Recurser<>(n, 0);
     final Set<Integer> nodesTypeSet = new HashSet<>();
-    final Function<Recurser<Integer>, Integer> counter = (x) -> { //
-      if (!nodesTypeSet.contains(x.getRoot().getNodeType())) { //
-        nodesTypeSet.add(x.getRoot().getNodeType()); //
-        return x.getCurrent() + 1; //
-      }
-      return x.getCurrent();
-    };
-    return recurse.preVisit(counter);
+    return recurse.preVisit((x) -> {
+      if (nodesTypeSet.contains(x.getRoot().getNodeType()))
+        return x.getCurrent();
+      nodesTypeSet.add(x.getRoot().getNodeType());
+      return x.getCurrent() + 1;
+    });
   }
 }
