@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.wring;
 
-import il.org.spartan.spartanizer.plugin.PluginPreferencesResources.*;
+import il.org.spartan.plugin.PreferencesResources.*;
 
 public interface Kind {
   String description();

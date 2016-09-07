@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.wring;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.plugin.PluginPreferencesResources.*;
+import il.org.spartan.plugin.PreferencesResources.*;
 import il.org.spartan.spartanizer.wring.Wring.*;
 
 /** A {@link Wring} to remove the empty String "" in String conversion

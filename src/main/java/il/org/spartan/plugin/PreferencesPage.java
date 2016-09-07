@@ -1,20 +1,20 @@
-package il.org.spartan.spartanizer.plugin;
+package il.org.spartan.plugin;
 
-import static il.org.spartan.spartanizer.plugin.PluginPreferencesResources.*;
-import static il.org.spartan.spartanizer.plugin.PluginPreferencesResources.WringGroup.*;
+import static il.org.spartan.plugin.PreferencesResources.*;
+import static il.org.spartan.plugin.PreferencesResources.WringGroup.*;
 
 import org.eclipse.jface.preference.*;
 import org.eclipse.jface.util.*;
 import org.eclipse.ui.*;
 
-import il.org.spartan.spartanizer.plugin.PluginPreferencesResources.*;
+import il.org.spartan.plugin.PreferencesResources.*;
 import il.org.spartan.spartanizer.wring.*;
 
-public class PluginPreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
+public class PreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
   public static final String WRING_COMBO_OPTIONS[][] = { { "Enabled", "on" }, { "Disabled", "off" } };
   private final SpartanPropertyListener listener;
 
-  public PluginPreferencesPage() {
+  public PreferencesPage() {
     super(GRID);
     listener = new SpartanPropertyListener();
   }
@@ -23,7 +23,7 @@ public class PluginPreferencesPage extends FieldEditorPreferencePage implements 
   @Override public void createFieldEditors() {
     // Add the startup behavior combo box
     addField(new ComboFieldEditor(PLUGIN_STARTUP_BEHAVIOR_ID, PLUGIN_STARTUP_BEHAVIOR_TEXT,
-        PluginPreferencesResources.PLUGIN_STARTUP_BEHAVIOR_OPTIONS, getFieldEditorParent()));
+        PreferencesResources.PLUGIN_STARTUP_BEHAVIOR_OPTIONS, getFieldEditorParent()));
     // Add the enabled for new projects checkbox
     addField(new BooleanFieldEditor(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT, getFieldEditorParent()));
     // Create and fill the "enabled spartanizations" group box

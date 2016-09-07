@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.plugin;
+package il.org.spartan.plugin;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.core.runtime.*;
@@ -16,7 +16,7 @@ import il.org.spartan.utils.*;
  * static methods to spartanize only specific compulation units.
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code>
  * @since 2015/08/01 */
-public class ApplySpartanizationHandler extends BaseHandler {
+public class SpartanizeProject extends BaseHandler {
   static final Spartanization[] safeSpartanizations = { //
       new Trimmer() };
 
@@ -46,7 +46,7 @@ public class ApplySpartanizationHandler extends BaseHandler {
   }
 
   /** Instantiates this class */
-  public ApplySpartanizationHandler() {
+  public SpartanizeProject() {
     super(null);
   }
 
