@@ -418,12 +418,48 @@ public class EnvironmentTest {
 
   // ============================TestEngine Test================================
   @Before public void initTestEngineTest() {
-    s = new HashSet<>();
+    s = new LinkedHashSet<>();
   }
-  private Set<Entry<String, Information>> s;
+  private LinkedHashSet<Entry<String, Information>> s;
 
   // Test flat out of order.
-
+  @Test public void LinkedHashSetOrderedComparison01(){
+    LinkedHashSet<Entry<String,Information>> s1 = new LinkedHashSet<>();
+    LinkedHashSet<Entry<String,Information>> s2 = new LinkedHashSet<>();
+    Entry<String,Information> e11 = new MapEntry<>("First",new Information());
+    Entry<String,Information> e2 = new MapEntry<>("Second",new Information());
+    s1.add(e11);
+    s1.add(e2);
+    s2.add(e2);
+    s2.add(e11);
+    azzert.nay(ENVTestEngineAbstract.compareLinkedHashSetsInOrder(s1,s2));
+  }
+  
+  @Test public void LinkedHashSetOrderedComparison02(){
+    LinkedHashSet<Entry<String,Information>> s1 = new LinkedHashSet<>();
+    LinkedHashSet<Entry<String,Information>> s2 = new LinkedHashSet<>();
+    Entry<String,Information> e11 = new MapEntry<>("First",new Information());
+    Entry<String,Information> e2 = new MapEntry<>("Second",new Information());
+    s1.add(e11);
+    s1.add(e2);
+    s2.add(e11);
+    s2.add(e2);
+    azzert.aye(ENVTestEngineAbstract.compareLinkedHashSetsInOrder(s1,s2));
+  }
+  
+  @Test public void LinkedHashSetOrderedComparison03(){
+    LinkedHashSet<Entry<String,Information>> s1 = new LinkedHashSet<>();
+    LinkedHashSet<Entry<String,Information>> s2 = new LinkedHashSet<>();
+    Entry<String,Information> e11 = new MapEntry<>("First",new Information());
+    Entry<String,Information> e2 = new MapEntry<>("Second",new Information());
+    Entry<String,Information> e3 = new MapEntry<>("Third",new Information());
+    s1.add(e11);
+    s1.add(e2);
+    s2.add(e11);
+    s2.add(e2);
+    s2.add(e3);
+    azzert.nay(ENVTestEngineAbstract.compareLinkedHashSetsInOrder(s1,s2));
+  }
 
   @Test public void EngineTestFlatUnordered000() {
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("@OutOfOrderFlatENV({}) int x;"));
@@ -443,8 +479,7 @@ public class EnvironmentTest {
   @Test public void EngineTestFlatUnordered01() {
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("@OutOfOrderFlatENV({ @Id(name = \"str\", clazz = \"String\") }) void foo()"));
     final EnvFlatHandler e = new EnvFlatHandler($);
-    //ENVTestEngineAbstract.getCompilationUnit("/il.org.spartan.refactoring/src/test/java/il/org/spartan/refactoring/java/EnvironmentCodeExamples.java");
-    //ENVTestEngineAbstract.getCompilationUnit("il.org.spartan.refactoring.java.EnvironmentCodeExamples.java");
+    ENVTestEngineAbstract.getCompilationUnit("EnvironmentCodeExamples.java");
     e.runTest();
     s.add(new MapEntry<>("str", new Information(PrudentType.axiom("String"))));
     e.compareOutOfOrder(s);
