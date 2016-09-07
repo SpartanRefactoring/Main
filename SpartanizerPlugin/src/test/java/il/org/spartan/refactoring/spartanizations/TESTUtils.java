@@ -76,7 +76,7 @@ import il.org.spartan.refactoring.wring.*;
 
   static void assertOneOpportunity(final Spartanization s, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
-   assert u != null;
+    assert u != null;
     azzert.that(TrimmerTestsUtils.countOpportunities(s, u), greaterThanOrEqualTo(1));
   }
 }

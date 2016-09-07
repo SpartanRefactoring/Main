@@ -3,7 +3,6 @@ package il.org.spartan.refactoring.engine;
 import static il.org.spartan.azzert.*;
 
 import java.io.*;
-import java.lang.reflect.*;
 import java.util.*;
 import java.util.Map.*;
 
@@ -25,12 +24,12 @@ public abstract class ENVTestEngineAbstract {
   public static ASTNode getCompilationUnit(final String from) {
     final String ROOT = "./src/test/resources/";
     final File f = new File(ROOT + from);
-   assert ROOT != null;
-   assert from != null;
-   assert f != null;
+    assert ROOT != null;
+    assert from != null;
+    assert f != null;
     azzert.aye(f.exists());
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(f);
-   assert $ != null;
+    assert $ != null;
     azzert.that($, instanceOf(CompilationUnit.class));
     return $;
   }
@@ -70,12 +69,11 @@ public abstract class ENVTestEngineAbstract {
   // LinkedHashSet unmodifiable issue.
   // TODO once the method is determined to be working, change to visibility to
   // protected.
-  @SuppressWarnings("null")
-  public void compareInOrder(final LinkedHashSet<Entry<String, Information>> $) {
+  @SuppressWarnings("null") public void compareInOrder(final LinkedHashSet<Entry<String, Information>> $) {
     azzert.aye(testSet != null);
     azzert.aye($ != null);
-    Iterator<Entry<String, Information>> i = testSet.iterator();
-    Iterator<Entry<String, Information>> j = $.iterator();
+    final Iterator<Entry<String, Information>> i = testSet.iterator();
+    final Iterator<Entry<String, Information>> j = $.iterator();
     boolean flag = true;
     while (i.hasNext()) {
       if (!i.equals(j)) {
@@ -100,14 +98,15 @@ public abstract class ENVTestEngineAbstract {
   public void compareOutOfOrder(final LinkedHashSet<Entry<String, Information>> $) {
     azzert.aye(testSet != null);
     azzert.aye($ != null);
-    //azzert.fail("Set" + (testSet.size() != $.size() ? " Comparison failed, Sets are of different siz" : "s are of equal size but contain different valu") + "es");
-    azzert.aye(($.isEmpty() && testSet.isEmpty()) || !$.containsAll(testSet));
+    // azzert.fail("Set" + (testSet.size() != $.size() ? " Comparison failed,
+    // Sets are of different siz" : "s are of equal size but contain different
+    // valu") + "es");
+    azzert.aye($.isEmpty() && testSet.isEmpty() || !$.containsAll(testSet));
   }
 
-  /**
-   * Parse the outer annotation to get the inner ones. Add to the flat Set. Compare uses() and declares() output to the flat Set.
-   * @param $  JD 
-   */
+  /** Parse the outer annotation to get the inner ones. Add to the flat Set.
+   * Compare uses() and declares() output to the flat Set.
+   * @param $ JD */
   protected abstract void handler(final Annotation ¢);
 
   /* define: outer annotation = OutOfOrderNestedENV, InOrderFlatENV, Begin, End.
