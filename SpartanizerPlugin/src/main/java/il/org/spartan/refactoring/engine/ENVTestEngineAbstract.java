@@ -3,6 +3,7 @@ package il.org.spartan.refactoring.engine;
 import static il.org.spartan.azzert.*;
 
 import java.io.*;
+import java.lang.reflect.*;
 import java.util.*;
 import java.util.Map.*;
 
@@ -15,8 +16,8 @@ import il.org.spartan.refactoring.java.Environment.*;
 import il.org.spartan.refactoring.utils.*;
 
 public abstract class ENVTestEngineAbstract {
-  protected static Set<Entry<String, Environment.Information>> generateSet() {
-    return new HashSet<>();
+  protected static LinkedHashSet<Entry<String, Environment.Information>> generateSet() {
+    return new LinkedHashSet<>();
   }
 
   /** @param from - file path
@@ -48,14 +49,14 @@ public abstract class ENVTestEngineAbstract {
                                                    // test on a node with
                                                    // potential annotations.
   protected ASTNode n = null;
-  protected Set<Entry<String, Environment.Information>> testSet;
+  protected LinkedHashSet<Entry<String, Environment.Information>> testSet;
 
   /* Add new Entry to testSet from the inner annotation. */
   public void addTestSet(final List<MemberValuePair> ps) {
     testSet.add(new MapEntry<>(wizard.asString(ps.get(0).getValue()), new Information(PrudentType.axiom(wizard.asString(ps.get(1).getValue())))));
   }
 
-  abstract protected Set<Entry<String, Information>> buildEnvironmentSet(BodyDeclaration $);
+  abstract protected LinkedHashSet<Entry<String, Information>> buildEnvironmentSet(BodyDeclaration $);
 
   /** Compares the set from the annotation with the set that the checked
    * function generates.
@@ -69,10 +70,26 @@ public abstract class ENVTestEngineAbstract {
   // LinkedHashSet unmodifiable issue.
   // TODO once the method is determined to be working, change to visibility to
   // protected.
-  public boolean compareInOrder(final Set<Entry<String, Information>> $) {
+  @SuppressWarnings("null")
+  public void compareInOrder(final LinkedHashSet<Entry<String, Information>> $) {
     azzert.aye(testSet != null);
     azzert.aye($ != null);
-    return testSet.size() != $.size() || !$.containsAll(testSet) || false;
+    Iterator<Entry<String, Information>> i = testSet.iterator();
+    Iterator<Entry<String, Information>> j = $.iterator();
+    boolean flag = true;
+    while (i.hasNext()) {
+      if (!i.equals(j)) {
+        if (!j.hasNext()) {
+          flag = false;
+          break;
+        }
+        j.next();
+        continue;
+      }
+      i.next();
+      j.next();
+    }
+    azzert.aye(flag);
   }
 
   /** Compares the set from the annotation with the set that the checked
@@ -80,11 +97,11 @@ public abstract class ENVTestEngineAbstract {
    * @param $ */
   // TODO once the method is determined to be working, change to visibility to
   // protected.
-  public boolean compareOutOfOrder(final Set<Entry<String, Information>> $) {
+  public void compareOutOfOrder(final LinkedHashSet<Entry<String, Information>> $) {
     azzert.aye(testSet != null);
     azzert.aye($ != null);
     //azzert.fail("Set" + (testSet.size() != $.size() ? " Comparison failed, Sets are of different siz" : "s are of equal size but contain different valu") + "es");
-    return testSet.size() != $.size() || !$.containsAll(testSet) || false;
+    azzert.aye(($.isEmpty() && testSet.isEmpty()) || !$.containsAll(testSet));
   }
 
   /** Parse the outer annotation to get the inner ones. Add to the flat Set.
@@ -155,7 +172,9 @@ public abstract class ENVTestEngineAbstract {
         checkAnnotations(extract.annotations($));
         if (!foundTestedAnnotation)
           return;
-        final Set<Entry<String, Information>> enviromentSet = buildEnvironmentSet($);
+        final LinkedHashSet<Entry<String, Information>> enviromentSet = buildEnvironmentSet($);
+        if (enviromentSet == null)
+          return;
         compareOutOfOrder(enviromentSet);
         compareInOrder(enviromentSet);
         foundTestedAnnotation = false;
