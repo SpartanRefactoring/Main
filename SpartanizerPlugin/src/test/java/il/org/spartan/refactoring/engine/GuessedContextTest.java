@@ -10,6 +10,7 @@ import org.junit.*;
 import il.org.spartan.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) //
+@Ignore //
 public class GuessedContextTest {
   @Test public void dealWithBothKindsOfComment() {
     similar(
