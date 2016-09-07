@@ -374,6 +374,8 @@ public interface type {
     }
 
     private static implementation lookUp(final Expression e, final implementation i) {
+      if (i.isCertain())
+        return i;
       for (ASTNode context = parent(e); context != null; context = parent(context))
         switch (context.getNodeType()) {
           case INFIX_EXPRESSION:
@@ -609,7 +611,13 @@ public interface type {
   default Primitive.Certain asPrimitiveCertain() {
     return null;
   }
-
+  
+  /**@return true if either a Primitive.Certain, Primitive.Odd.NULL or a baptized type
+   */
+  default boolean isCertain(){
+    return this == NULL || have(key()) || asPrimitiveCertain() != null;
+  }
+  
   default type.Primitive.Uncertain asPrimitiveUncertain() {
     return null;
   }
