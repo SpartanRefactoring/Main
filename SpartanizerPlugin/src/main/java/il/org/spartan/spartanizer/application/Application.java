@@ -55,11 +55,11 @@ import il.org.spartan.utils.*;
         u = openCompilationUnit(f);
         final FileStats s = new FileStats(f);
         for (int i = 0; i < optRounds; ++i) {
-          final int n = Cleanup.countSuggestions(u);
+          final int n = SpartanizeAll.countSuggestions(u);
           if (n == 0)
             break;
           s.addRoundStat(n);
-          SpartanizeProject.apply(u);
+          SpartanizeCurrent.apply(u);
         }
         FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
         if (optVerbose)

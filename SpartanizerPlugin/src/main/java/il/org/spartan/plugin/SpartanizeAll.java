@@ -1,6 +1,6 @@
 package il.org.spartan.plugin;
 
-import static il.org.spartan.plugin.SpartanizeProject.*;
+import static il.org.spartan.plugin.SpartanizeCurrent.*;
 import static il.org.spartan.spartanizer.spartanizations.DialogBoxes.*;
 
 import java.lang.reflect.*;
@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
  * Spartanizations on all java files in the current project.
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code>
  * @since 2015/08/01 */
-public class Cleanup extends BaseHandler {
+public class SpartanizeAll extends BaseHandler {
   static final int MAX_PASSES = 20;
 
   /** Returns the number of Spartanizaion suggestions for this compilation unit
@@ -27,7 +27,7 @@ public class Cleanup extends BaseHandler {
    * @return number of suggesions available for the compilation unit */
   public static int countSuggestions(final ICompilationUnit u) {
     int $ = 0;
-    for (final Spartanization s : SpartanizeProject.safeSpartanizations) {
+    for (final Spartanization s : SpartanizeCurrent.safeSpartanizations) {
       s.setMarker(null);
       s.setCompilationUnit(u);
       $ += s.countSuggestions();
@@ -45,7 +45,7 @@ public class Cleanup extends BaseHandler {
   }
 
   /** Instantiates this class */
-  public Cleanup() {
+  public SpartanizeAll() {
     super(null);
   }
 

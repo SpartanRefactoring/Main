@@ -16,7 +16,7 @@ import il.org.spartan.utils.*;
  * static methods to spartanize only specific compilation units.
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code>
  * @since 2015/08/01 */
-public class SpartanizeProject extends BaseHandler {
+public class SpartanizeCurrent extends BaseHandler {
   static final Spartanization[] safeSpartanizations = { //
       new Trimmer() };
 
@@ -46,7 +46,7 @@ public class SpartanizeProject extends BaseHandler {
   }
 
   /** Instantiates this class */
-  public SpartanizeProject() {
+  public SpartanizeCurrent() {
     super(null);
   }
 
