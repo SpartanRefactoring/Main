@@ -35,6 +35,45 @@ import org.eclipse.jdt.core.dom.*;
       prudentType = t;
       hiding = null;
     }
+
+    @Override public boolean equals(final Object obj) {
+      if (this == obj)
+        return true;
+      if (obj == null)
+        return false;
+      if (getClass() != obj.getClass())
+        return false;
+      final Information other = (Information) obj;
+      if (blockScope == null) {
+        if (other.blockScope != null)
+          return false;
+      } else if (!blockScope.equals(other.blockScope))
+        return false;
+      if (hiding == null) {
+        if (other.hiding != null)
+          return false;
+      } else if (!hiding.equals(other.hiding))
+        return false;
+      /* if (prudentType != other.prudentType) //TODO how to correctly compare
+       * prudentType - best case scenario - contains(). return false; */
+      if (self == null) {
+        if (other.self != null)
+          return false;
+      } else if (!self.equals(other.self))
+        return false;
+      return true;
+    }
+
+    @Override public int hashCode() {
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + (blockScope == null ? 0 : blockScope.hashCode());
+      result = prime * result + (hiding == null ? 0 : hiding.hashCode());
+      // result = prime * result + ((prudentType == null) ? 0 :
+      // prudentType.hashCode());
+      result = prime * result + (self == null ? 0 : self.hashCode());
+      return result;
+    }
   }
 
   /** TODO: document properly, but essentially is a dictionary with a parent.
