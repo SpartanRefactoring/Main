@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.plugin;
+package il.org.spartan.plugin;
 
 import java.util.*;
 import java.util.List;

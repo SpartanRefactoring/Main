@@ -1,10 +1,10 @@
-package il.org.spartan.spartanizer.plugin;
+package il.org.spartan.plugin;
 
 import org.eclipse.jface.preference.*;
 
 import il.org.spartan.spartanizer.wring.*;
 
-public class PluginPreferencesResources {
+public class PreferencesResources {
   /** Page description **/
   public static final String PAGE_DESCRIPTION = "Preferences for the Spartan Refactoring plug-in";
   /** General preferences **/

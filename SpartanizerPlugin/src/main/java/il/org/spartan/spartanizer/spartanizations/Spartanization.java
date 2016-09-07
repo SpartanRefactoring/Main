@@ -17,8 +17,8 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
 import il.org.spartan.*;
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.plugin.*;
 
 /** the base class for all Spartanization Refactoring classes, contains common
  * functionality

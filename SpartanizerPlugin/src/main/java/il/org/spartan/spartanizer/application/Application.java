@@ -11,7 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.files.*;
-import il.org.spartan.spartanizer.plugin.*;
+import il.org.spartan.plugin.*;
 import il.org.spartan.utils.*;
 
 /** An {@link IApplication} extension entry point, allowing execution of this
@@ -55,11 +55,11 @@ import il.org.spartan.utils.*;
         u = openCompilationUnit(f);
         final FileStats s = new FileStats(f);
         for (int i = 0; i < optRounds; ++i) {
-          final int n = CleanupHandler.countSuggestions(u);
+          final int n = Cleanup.countSuggestions(u);
           if (n == 0)
             break;
           s.addRoundStat(n);
-          ApplySpartanizationHandler.apply(u);
+          SpartanizeProject.apply(u);
         }
         FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
         if (optVerbose)
