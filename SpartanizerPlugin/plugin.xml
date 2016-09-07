@@ -16,15 +16,7 @@
       </runtime>
       <builder id="il.org.spartan.plugin.BuilderID"/> 
    </extension>
-     <extension
-     id="il.org.spartan.plugin.application"
-     name="Spartan Refactoring Application"
-     point="org.eclipse.core.runtime.applications">
-     <application>
-     <run class="il.org.spartan.spartanizer.application.Application"></run>
-     </application>
-   </extension>
-      <extension point="org.eclipse.ui.startup">
+     <extension point="org.eclipse.ui.startup">
      <startup class="il.org.spartan.plugin.Plugin"/>
    </extension>
 
