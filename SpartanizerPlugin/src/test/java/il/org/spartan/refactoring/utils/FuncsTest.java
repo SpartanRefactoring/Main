@@ -33,7 +33,7 @@ public class FuncsTest {
   @Test public void asComparisonTypicalExpression() {
     final InfixExpression i = mock(InfixExpression.class);
     doReturn(GREATER).when(i).getOperator();
-    azzert.notNull(az.comparison(i));
+   assert az.comparison(i) != null;
   }
 
   @Test public void asComparisonTypicalExpressionFalse() {
@@ -57,7 +57,7 @@ public class FuncsTest {
   @Test public void asComparisonTypicalInfixIsNotNull() {
     final InfixExpression e = mock(InfixExpression.class);
     doReturn(GREATER).when(e).getOperator();
-    azzert.notNull(az.comparison(e));
+   assert az.comparison(e) != null;
   }
 
   @Test public void chainComparison() {
@@ -69,7 +69,7 @@ public class FuncsTest {
   }
 
   @Test public void findFirstType() {
-    azzert.notNull(t("int _;"));
+   assert null !=(t("int _;"));
   }
 
   @Test public void isDeMorganAND() {

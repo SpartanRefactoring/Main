@@ -17,7 +17,7 @@ public class intoTest {
   }
 
   @Test public void dNotNull() {
-    azzert.notNull(into.d("int f() { return a; }"));
+   assert null !=(into.d("int f() { return a; }"));
   }
 
   @Test(expected = AssertionError.class) public void dOnNull() {
@@ -25,6 +25,6 @@ public class intoTest {
   }
 
   @Test public void findFirstType() {
-    azzert.notNull(t("int _;"));
+   assert null !=(t("int _;"));
   }
 }

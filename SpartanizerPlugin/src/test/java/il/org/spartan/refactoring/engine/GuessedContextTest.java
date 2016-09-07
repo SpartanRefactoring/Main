@@ -116,7 +116,7 @@ public class GuessedContextTest {
     final GuessedContext w = EXPRESSION_LOOK_ALIKE;
     final String codeFragment = "a + b * c";
     final CompilationUnit u = w.intoCompilationUnit(codeFragment);
-    azzert.notNull(u);
+   assert u != null;
     azzert.that(w.off((u + "")), containsString(codeFragment));
   }
 
@@ -124,7 +124,7 @@ public class GuessedContextTest {
     final GuessedContext w = EXPRESSION_LOOK_ALIKE;
     final String codeFragment = "a + b * c";
     final Document d = w.intoDocument(codeFragment);
-    azzert.notNull(d);
+   assert d != null;
     azzert.that(w.off(d.get()), containsString(codeFragment));
   }
 

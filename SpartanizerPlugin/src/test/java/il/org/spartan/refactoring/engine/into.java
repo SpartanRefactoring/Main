@@ -32,7 +32,8 @@ public enum into {
    * @return an {@link Statement} data structure representing the parameter. */
   public static ConditionalExpression c(final String conditionalExpression) {
     final Expression $ = e(conditionalExpression);
-    azzert.notNull(conditionalExpression, $);
+   assert null !=(conditionalExpression);
+   assert null !=($);
     azzert.that(conditionalExpression, $, instanceOf(ConditionalExpression.class));
     return (ConditionalExpression) $;
   }
@@ -46,7 +47,7 @@ public enum into {
    * @return an {@link MethodDeclaration} data structure representing the
    *         parameter. */
   public static MethodDeclaration d(final String methodDelclaration) {
-    azzert.notNull(methodDelclaration);
+   assert null !=(methodDelclaration);
     return extract.firstMethodDeclaration(Wrap.Method.intoCompilationUnit(methodDelclaration));
   }
 
@@ -95,9 +96,10 @@ public enum into {
    * @param statement a {@link String} that represents a Java statement
    * @return an {@link Statement} data structure representing the parameter. */
   public static Statement s(final String statement) {
-    azzert.notNull(statement);
+   assert null !=(statement);
     final ASTNode n = makeAST.STATEMENTS.from(statement);
-    azzert.notNull(statement, n);
+   assert null !=(statement);
+   assert null !=(n);
     azzert.that(statement, n, instanceOf(Statement.class));
     return (Statement) n;
   }

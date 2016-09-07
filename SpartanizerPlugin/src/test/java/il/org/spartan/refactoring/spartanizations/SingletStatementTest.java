@@ -21,7 +21,7 @@ public class SingletStatementTest {
   }
 
   @Test public void deeplyNestedOneInCurlyIsNull() {
-    azzert.notNull(extract.singleStatement(s("{{{{a();}}}}")));
+   assert null !=(extract.singleStatement(s("{{{{a();}}}}")));
   }
 
   @Test public void emptyBlockIsNull() {
@@ -57,29 +57,29 @@ public class SingletStatementTest {
   }
 
   @Test public void oneInCurlyIsNotNull() {
-    azzert.notNull(extract.singleStatement(s("{a();}")));
+   assert null !=(extract.singleStatement(s("{a();}")));
   }
 
   @Test public void oneIsNotNull() {
-    azzert.notNull(extract.singleStatement(s("{a();}")));
+   assert null !=(extract.singleStatement(s("{a();}")));
   }
 
   @Test public void peelIf() {
     final ASTNode n = makeAST.STATEMENTS.from("{if (a) return b; else return c;}");
-    azzert.notNull(n);
+   assert null !=(n);
     final List<Statement> ss = extract.statements(n);
-    azzert.notNull(ss);
+   assert null !=(ss);
     azzert.that(ss.size(), is(1));
-    azzert.notNull(extract.singleStatement(n));
+   assert null !=(extract.singleStatement(n));
   }
 
   @Test public void peelIPlusPlus() {
     final ASTNode n = makeAST.STATEMENTS.from("{i++;}");
-    azzert.notNull(n);
+   assert null !=(n);
     final List<Statement> ss = extract.statements(n);
-    azzert.notNull(ss);
+   assert null !=(ss);
     azzert.that(ss.size(), is(1));
-    azzert.notNull(extract.singleStatement(n));
+   assert null !=(extract.singleStatement(n));
   }
 
   @Test public void twoFunctionCallsNullValue() {

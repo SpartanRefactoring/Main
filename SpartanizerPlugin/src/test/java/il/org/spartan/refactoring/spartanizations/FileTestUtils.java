@@ -12,11 +12,12 @@ import il.org.spartan.refactoring.engine.*;
  * @since 2014/05/24
  * @author Yossi GIl */
 @SuppressWarnings({ "unused" }) public abstract class FileTestUtils {
-  /** A String determines whereas we are at the IN or OUT side of the test See
-   * TestCases test files for reference. */
-  final static String testKeyword = "<Test Result>";
+  /**
+   * A String determines whereas we are at the IN or OUT side of the test See TestCases test files for reference. 
+   */
+  static final String testKeyword = "<Test Result>";
   /** Suffix for test files. */
-  protected final static String testSuffix = ".test";
+  protected static final String testSuffix = ".test";
   /** Folder in which all test cases are found */
   public static final File location = new File("src/test/resources");
 
@@ -67,9 +68,9 @@ import il.org.spartan.refactoring.engine.*;
 
   static Spartanization makeSpartanizationObject(final String folderForClass) {
     final Class<?> c = asClass(folderForClass);
-    azzert.notNull(c);
+   assert null !=(c);
     final Object $ = getInstance(c);
-    azzert.notNull($);
+   assert null !=($);
     return (Spartanization) $;
   }
 
@@ -170,11 +171,11 @@ import il.org.spartan.refactoring.engine.*;
   public static abstract class Traverse extends FileTestUtils {
     /** @return a collection of all test cases generated in the traversal */
     public final Collection<Object[]> go() {
-      azzert.notNull(location);
-      azzert.notNull(location.listFiles());
+     assert location != null;
+     assert location.listFiles() != null;
       final List<Object[]> $ = new ArrayList<>();
       for (final File f : location.listFiles()) {
-        azzert.notNull(f);
+       assert f != null;
         go($, f);
       }
       return $;
