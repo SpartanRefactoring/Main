@@ -593,6 +593,32 @@ public class TrimmerTest250 {
         .to("switch(x + \"\"){ case \"1\": return; case \"2\": return; default: return; }");
   }
 
+  @Test public void issue116_01() {
+    trimming("\"\" + x").to("x + \"\"");
+  }
+  
+  @Test public void issue116_02() {
+    trimming("\"\" + x.foo()").to("x.foo() + \"\"");
+  }
+
+  @Test public void issue116_03() {
+    trimming("\"\" + (Integer)(\"\" + x).length()").to("(Integer)(\"\" + x).length() + \"\"").to("(Integer)(x +\"\").length() + \"\"");
+  }
+
+  @Test public void issue116_04() {
+    trimming("String s = \"\" + x.foo();").to("String s = x.foo() + \"\";");
+  }
+
+  @Test public void issue116_05() {
+    trimming("\"\" + foo(x.toString())").to("foo(x.toString()) + \"\"").to("foo((x + \"\")) + \"\"");
+  }
+
+  @Test public void issue116_06() {
+    trimming("\"\" + ((Integer)5).toString().indexOf(\"5\").toString().length()")
+        .to("((Integer)5).toString().indexOf(\"5\").toString().length() + \"\"").to("(((Integer)5).toString().indexOf(\"5\") + \"\").length() + \"\"")
+        .to("(((Integer)5+ \"\").indexOf(\"5\") + \"\").length() + \"\"");
+  }
+
   @Test public void issue54_05() {
     trimming("x.toString(5)").to(null);
   }
