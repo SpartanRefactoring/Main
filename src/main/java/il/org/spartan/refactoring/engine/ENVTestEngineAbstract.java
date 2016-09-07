@@ -22,7 +22,7 @@ public abstract class ENVTestEngineAbstract {
   /** @param from - file path
    * @return CompilationUnit of the code written in the file specified. */
   public static ASTNode getCompilationUnit(final String from) {
-    final String ROOT = "./src/test/resources/";
+    final String ROOT = "./src/test/java/il/org/spartan/refactoring/java/";
     final File f = new File(ROOT + from);
     azzert.notNull(ROOT);
     azzert.notNull(from);
@@ -48,14 +48,14 @@ public abstract class ENVTestEngineAbstract {
                                                    // test on a node with
                                                    // potential annotations.
   protected ASTNode n = null;
-  protected Set<Entry<String, Environment.Information>> testSet;
+  protected LinkedHashSet<Entry<String, Environment.Information>> testSet;
 
   /* Add new Entry to testSet from the inner annotation. */
   public void addTestSet(final List<MemberValuePair> ps) {
     testSet.add(new MapEntry<>(wizard.asString(ps.get(0).getValue()), new Information(PrudentType.axiom(wizard.asString(ps.get(1).getValue())))));
   }
 
-  abstract protected Set<Entry<String, Information>> buildEnvironmentSet(BodyDeclaration $);
+  abstract protected LinkedHashSet<Entry<String, Information>> buildEnvironmentSet(BodyDeclaration $);
 
   /** Compares the set from the annotation with the set that the checked
    * function generates.
@@ -69,22 +69,38 @@ public abstract class ENVTestEngineAbstract {
   // LinkedHashSet unmodifiable issue.
   // TODO once the method is determined to be working, change to visibility to
   // protected.
-  public boolean compareInOrder(final Set<Entry<String, Information>> $) {
+  public void compareInOrder(final LinkedHashSet<Entry<String, Information>> $) {
     azzert.aye(testSet != null);
     azzert.aye($ != null);
-    return testSet.size() != $.size() || !$.containsAll(testSet) || false;
+    if(!compareLinkedHashSetsInOrder(testSet,$))
+      azzert.fail("Set" + (testSet.size() != $.size() ? " Comparison failed, Sets are of different siz" : "s are of equal size but contain different valu") + "es");
   }
-
+  
   /** Compares the set from the annotation with the set that the checked
    * function generates.
    * @param $ */
   // TODO once the method is determined to be working, change to visibility to
   // protected.
-  public boolean compareOutOfOrder(final Set<Entry<String, Information>> $) {
+  @SuppressWarnings("null") public void compareOutOfOrder(final LinkedHashSet<Entry<String, Information>> $) {
     azzert.aye(testSet != null);
     azzert.aye($ != null);
-    //azzert.fail("Set" + (testSet.size() != $.size() ? " Comparison failed, Sets are of different siz" : "s are of equal size but contain different valu") + "es");
-    return testSet.size() != $.size() || !$.containsAll(testSet) || false;
+    if(!compareLinkedHashSetsInOrder(testSet,$))
+      azzert.fail("Set" + (testSet.size() != $.size() ? " Comparison failed, Sets are of different siz" : "s are of equal size but contain different valu") + "es");
+  }
+  
+  public static boolean compareLinkedHashSetsInOrder(final LinkedHashSet<Entry<String, Information>> s1, final LinkedHashSet<Entry<String, Information>> s2){
+    Iterator<Entry<String,Information>> iter1 = s1.iterator();
+    Iterator<Entry<String,Information>> iter2 = s2.iterator();
+    if(s1.size() != s2.size()){
+      return false;
+    }
+    while(iter1.hasNext()){
+      Entry<String,Information> e1 = iter1.next();
+      Entry<String,Information> e2 = iter2.next();
+      if(!e1.equals(e2))
+        return false;
+    }
+    return true;
   }
 
   /** Parse the outer annotation to get the inner ones. Add to the flat Set.
@@ -155,11 +171,13 @@ public abstract class ENVTestEngineAbstract {
         checkAnnotations(extract.annotations($));
         if (!foundTestedAnnotation)
           return;
-        final Set<Entry<String, Information>> enviromentSet = buildEnvironmentSet($);
-        compareOutOfOrder(enviromentSet);
-        compareInOrder(enviromentSet);
+        final LinkedHashSet<Entry<String, Information>> enviromentSet = buildEnvironmentSet($);
+        if(enviromentSet != null){
+          compareOutOfOrder(enviromentSet);
+          compareInOrder(enviromentSet);
+          testSet.clear();
+        }
         foundTestedAnnotation = false;
-        testSet.clear();
       }
     });
   }

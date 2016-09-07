@@ -56,8 +56,8 @@ import org.eclipse.jdt.core.dom.*;
     }
 
     /* @return Map entries used in the current scope. */
-    @Override public Set<Map.Entry<String, Information>> entries() {
-      return flat.entrySet();
+    @Override public LinkedHashSet<Map.Entry<String, Information>> entries() {
+      return new LinkedHashSet<>(flat.entrySet());
     }
 
     /* @return The information about the name in current Env. */
@@ -72,8 +72,8 @@ import org.eclipse.jdt.core.dom.*;
     }
 
     /* @return Names used in current scope. */
-    @Override public Set<String> names() {
-      return flat.keySet();
+    @Override public LinkedHashSet<String> names() {
+      return new LinkedHashSet<>(flat.keySet());
     }
 
     /* One step up in the Env tree. Funny but it even sounds like next(). */
@@ -95,13 +95,13 @@ import org.eclipse.jdt.core.dom.*;
     /* Empty */
   };
   /** Initializer for EMPTY */
-  static final Set<Entry<String, Information>> emptyEntries = Collections.unmodifiableSet(new HashSet<>());
+  static final LinkedHashSet<Entry<String, Information>> emptyEntries = new LinkedHashSet<>();
   /** Initializer for EMPTY */
-  static final Set<String> emptySet = Collections.unmodifiableSet(new HashSet<>());
+  static final LinkedHashSet<String> emptySet = new LinkedHashSet<>();
 
   /** @return set of entries defined in the node, including all hiding. */
-  static Set<Entry<String, Information>> declares(final ASTNode n) {
-    return Collections.unmodifiableSet(new HashSet<>());
+  static LinkedHashSet<Entry<String, Information>> declares(final ASTNode n) {
+    return new LinkedHashSet<>();
   }
 
   /** Spawns the first Nested Env. Should be used when the first block is
@@ -112,8 +112,8 @@ import org.eclipse.jdt.core.dom.*;
 
   /** @return set of entries used in a given node. this includes the list of
    *         entries that were defined in the node */
-  static Set<Entry<String, Information>> uses(final ASTNode n) {
-    return Collections.unmodifiableSet(new HashSet<>());
+  static LinkedHashSet<Entry<String, Information>> uses(final ASTNode n) {
+    return new LinkedHashSet<>();
   }
 
   /** Return true iff Env doesn't have the name. */
@@ -126,12 +126,12 @@ import org.eclipse.jdt.core.dom.*;
     return true;
   }
 
-  default Set<Entry<String, Information>> entries() {
+  default LinkedHashSet<Entry<String, Information>> entries() {
     return emptyEntries;
   }
 
-  default Set<Entry<String, Information>> fullEntries() {
-    final Set<Entry<String, Information>> $ = new HashSet<>(entries());
+  default LinkedHashSet<Entry<String, Information>> fullEntries() {
+    final LinkedHashSet<Entry<String, Information>> $ = new LinkedHashSet<>(entries());
     if (nest() != null)
       $.addAll(nest().fullEntries());
     return $;
@@ -145,8 +145,8 @@ import org.eclipse.jdt.core.dom.*;
   }
 
   /** @return all the full names of the Env. */
-  default Set<String> fullNames() {
-    final Set<String> $ = new HashSet<>(names());
+  default LinkedHashSet<String> fullNames() {
+    final LinkedHashSet<String> $ = new LinkedHashSet<>(names());
     if (nest() != null)
       $.addAll(nest().fullNames());
     return $;
