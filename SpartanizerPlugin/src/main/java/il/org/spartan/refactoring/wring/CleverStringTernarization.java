@@ -106,11 +106,11 @@ public final class CleverStringTernarization extends Wring.ReplaceCurrentNode<Co
     return s1.length() > s2.length() ? s2 : s1;
   }
 
-  private static Expression simplify(final InfixExpression then, final InfixExpression elze, final Expression condition) {
+  private static Expression simplify(final Expression condition, final InfixExpression then, final InfixExpression elze) {
     return stringType.isNot(then) || stringType.isNot(elze) ? null : simplifyStrings(then, elze, condition);
   }
 
-  private static Expression simplify(final StringLiteral then, final InfixExpression elze, final Expression condition) {
+  private static Expression simplify(final Expression condition, final StringLiteral then, final InfixExpression elze) {
     final String thenStr = then.getLiteralValue();
     assert elze.getOperator() == PLUS2;
     final List<Expression> elzeOperands = extract.allOperands(elze);
@@ -142,7 +142,7 @@ public final class CleverStringTernarization extends Wring.ReplaceCurrentNode<Co
     return first(elzeOperands);
   }
 
-  private static Expression simplify(final StringLiteral then, final StringLiteral elze, final Expression condition) {
+  private static Expression simplify(final Expression condition, final StringLiteral then, final StringLiteral elze) {
     return simplify(condition, then.getLiteralValue(), elze.getLiteralValue());
   }
 
@@ -197,14 +197,14 @@ public final class CleverStringTernarization extends Wring.ReplaceCurrentNode<Co
 
   public static Expression replacement(final Expression condition, final Expression then, final Expression elze) {
     if (iz.is(then, STRING_LITERAL) && iz.is(elze, STRING_LITERAL))
-      return simplify(az.stringLiteral(then), az.stringLiteral(elze), condition);
+      return simplify(condition, az.stringLiteral(then), az.stringLiteral(elze));
     if (iz.is(then, STRING_LITERAL) && iz.is(elze, INFIX_EXPRESSION))
-      return simplify(az.stringLiteral(then), az.infixExpression(elze), condition);
+      return simplify(condition, az.stringLiteral(then), az.infixExpression(elze));
     if (iz.is(then, INFIX_EXPRESSION) && iz.is(elze, STRING_LITERAL))
-      return simplify(az.stringLiteral(elze), az.infixExpression(then), //
-          subject.operand(condition).to(PrefixExpression.Operator.NOT));
+      return simplify(subject.operand(condition).to(PrefixExpression.Operator.NOT), az.stringLiteral(elze), //
+          az.infixExpression(then));
     if (iz.is(then, INFIX_EXPRESSION) && iz.is(elze, INFIX_EXPRESSION))
-      return simplify(az.infixExpression(then), az.infixExpression(elze), condition);
+      return simplify(condition, az.infixExpression(then), az.infixExpression(elze));
     return null;
   }
 }
