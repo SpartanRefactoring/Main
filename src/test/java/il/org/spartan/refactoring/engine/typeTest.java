@@ -5,6 +5,7 @@ import static il.org.spartan.refactoring.engine.type.*;
 import static il.org.spartan.refactoring.engine.type.Odd.Types.*;
 import static il.org.spartan.refactoring.engine.type.Primitive.Certain.*;
 import static il.org.spartan.refactoring.engine.type.Primitive.Uncertain.*;
+import static il.org.spartan.refactoring.engine.type.inner.*;
 
 import org.junit.*;
 import org.junit.runners.*;
@@ -45,27 +46,27 @@ public class typeTest {
 
     // basic tests for assignments
     @Test public void assingment1() {
-      azzert.that(prudent(into.e("x = 2")), is(NUMERIC));
+      azzert.that(lookDown(into.e("x = 2")), is(NUMERIC));
     }
 
     @Test public void assingment2() {
-      azzert.that(prudent(into.e("x = \"a string\"")), is(STRING));
+      azzert.that(lookDown(into.e("x = \"a string\"")), is(STRING));
     }
 
     @Test public void assingment3() {
-      azzert.that(prudent(into.e("x = true")), is(BOOLEAN));
+      azzert.that(lookDown(into.e("x = true")), is(BOOLEAN));
     }
 
     @Test public void assingment4() {
-      azzert.that(prudent(into.e("x = new Float()")), is(NUMERIC));
+      azzert.that(lookDown(into.e("x = new Float()")), is(NUMERIC));
     }
 
     @Test public void assingment5() {
-      azzert.that(prudent(into.e("x = new String()")), is(STRING));
+      azzert.that(lookDown(into.e("x = new String()")), is(STRING));
     }
 
     @Test public void assingment6() {
-      azzert.that(prudent(into.e("x = new Object()")), is(baptize("Object")));
+      azzert.that(lookDown(into.e("x = new Object()")), is(baptize("Object")));
     }
 
     @Test public void axiomAssignment1() {
@@ -238,99 +239,99 @@ public class typeTest {
 
     // basic tests for pre/in/postfix expression
     @Test public void basicExpressions01() {
-      azzert.that(prudent(into.e("2 + (2.0)*1L")), is(DOUBLE));
+      azzert.that(lookDown(into.e("2 + (2.0)*1L")), is(DOUBLE));
     }
 
     @Test public void basicExpressions02() {
-      azzert.that(prudent(into.e("(int)(2 + (2.0)*1L)")), is(INT));
+      azzert.that(lookDown(into.e("(int)(2 + (2.0)*1L)")), is(INT));
     }
 
     @Test public void basicExpressions03() {
-      azzert.that(prudent(into.e("(int)(2 + (2.0)*1L)==9.0")), is(BOOLEAN));
+      azzert.that(lookDown(into.e("(int)(2 + (2.0)*1L)==9.0")), is(BOOLEAN));
     }
 
     @Test public void basicExpressions04() {
-      azzert.that(prudent(into.e("9*3.0-f()")), is(DOUBLE));
+      azzert.that(lookDown(into.e("9*3.0-f()")), is(DOUBLE));
     }
 
     @Test public void basicExpressions05() {
-      azzert.that(prudent(into.e("g()+f()")), is(ALPHANUMERIC));
+      azzert.that(lookDown(into.e("g()+f()")), is(ALPHANUMERIC));
     }
 
     @Test public void basicExpressions06() {
-      azzert.that(prudent(into.e("f(g()+h(),f(2))")), is(NOTHING));
+      azzert.that(lookDown(into.e("f(g()+h(),f(2))")), is(NOTHING));
     }
 
     @Test public void basicExpressions07() {
-      azzert.that(prudent(into.e("f()+null")), is(STRING));
+      azzert.that(lookDown(into.e("f()+null")), is(STRING));
     }
 
     @Test public void basicExpressions08() {
-      azzert.that(prudent(into.e("2+f()")), is(ALPHANUMERIC));
+      azzert.that(lookDown(into.e("2+f()")), is(ALPHANUMERIC));
     }
 
     @Test public void basicExpressions09() {
-      azzert.that(prudent(into.e("2%f()")), is(INTEGRAL));
+      azzert.that(lookDown(into.e("2%f()")), is(INTEGRAL));
     }
 
     @Test public void basicExpressions10() {
-      azzert.that(prudent(into.e("2<<f()")), is(INT));
+      azzert.that(lookDown(into.e("2<<f()")), is(INT));
     }
 
     @Test public void basicExpressions11() {
-      azzert.that(prudent(into.e("f()<<2")), is(INTEGRAL));
+      azzert.that(lookDown(into.e("f()<<2")), is(INTEGRAL));
     }
 
     @Test public void basicExpressions12() {
-      azzert.that(prudent(into.e("f()||g()")), is(BOOLEAN));
+      azzert.that(lookDown(into.e("f()||g()")), is(BOOLEAN));
     }
 
     @Test public void basicExpressions13() {
-      azzert.that(prudent(into.e("x++")), is(NUMERIC));
+      azzert.that(lookDown(into.e("x++")), is(NUMERIC));
     }
 
     @Test public void basicExpressions18() {
-      azzert.that(prudent(into.e("((short)1)+((short)2)")), is(INT));
+      azzert.that(lookDown(into.e("((short)1)+((short)2)")), is(INT));
     }
 
     @Test public void basicExpressions19() {
-      azzert.that(prudent(into.e("((byte)1)+((byte)2)")), is(INT));
+      azzert.that(lookDown(into.e("((byte)1)+((byte)2)")), is(INT));
     }
 
     @Test public void basicExpressions20() {
-      azzert.that(prudent(into.e("1f + 1")), is(FLOAT));
+      azzert.that(lookDown(into.e("1f + 1")), is(FLOAT));
     }
 
     @Test public void basicExpressions21() {
-      azzert.that(prudent(into.e("1f + 1l")), is(FLOAT));
+      azzert.that(lookDown(into.e("1f + 1l")), is(FLOAT));
     }
 
     @Test public void basicExpressions22() {
-      azzert.that(prudent(into.e("1F + 'a'")), is(FLOAT));
+      azzert.that(lookDown(into.e("1F + 'a'")), is(FLOAT));
     }
 
     @Test public void basicExpressions23() {
-      azzert.that(prudent(into.e("1f + 1.")), is(DOUBLE));
+      azzert.that(lookDown(into.e("1f + 1.")), is(DOUBLE));
     }
 
     @Test public void basicExpressions24() {
-      azzert.that(prudent(into.e("1f / f()")), is(NUMERIC));
+      azzert.that(lookDown(into.e("1f / f()")), is(NUMERIC));
     }
 
     @Test public void basicExpressions25() {
-      azzert.that(prudent(into.e("1+2+3l")), is(LONG));
+      azzert.that(lookDown(into.e("1+2+3l")), is(LONG));
     }
 
     @Test public void basicExpressions26() {
-      azzert.that(prudent(into.e("1+2f+3l-5-4d")), is(DOUBLE));
+      azzert.that(lookDown(into.e("1+2f+3l-5-4d")), is(DOUBLE));
     }
 
     @Test public void basicExpressions27() {
-      azzert.that(prudent(into.e("1+2f+3l+f()-5-4d")), is(DOUBLE));
+      azzert.that(lookDown(into.e("1+2f+3l+f()-5-4d")), is(DOUBLE));
     }
 
     @Test public void basicExpressions28() {
-      azzert.that(prudent(into.e("1+2f+3l+f()")), is(ALPHANUMERIC));
+      azzert.that(lookDown(into.e("1+2f+3l+f()")), is(ALPHANUMERIC));
     }
 
     @Test public void BitwiseOperationsSemantics01() {
@@ -351,166 +352,166 @@ public class typeTest {
 
     // s for casting expression
     @Test public void cast01() {
-      azzert.that(prudent(into.e("(List)f()")), is(baptize("List")));
+      azzert.that(lookDown(into.e("(List)f()")), is(baptize("List")));
     }
 
     @Test public void cast02() {
-      azzert.that(prudent(into.e("(char)x")), is(CHAR));
+      azzert.that(lookDown(into.e("(char)x")), is(CHAR));
     }
 
     @Test public void cast03() {
-      azzert.that(prudent(into.e("(Character)x")), is(CHAR));
+      azzert.that(lookDown(into.e("(Character)x")), is(CHAR));
     }
 
     @Test public void cast04() {
-      azzert.that(prudent(into.e("(int)x")), is(INT));
+      azzert.that(lookDown(into.e("(int)x")), is(INT));
     }
 
     @Test public void cast05() {
-      azzert.that(prudent(into.e("(Integer)x")), is(INT));
+      azzert.that(lookDown(into.e("(Integer)x")), is(INT));
     }
 
     @Test public void cast06() {
-      azzert.that(prudent(into.e("(long)x")), is(LONG));
+      azzert.that(lookDown(into.e("(long)x")), is(LONG));
     }
 
     @Test public void cast07() {
-      azzert.that(prudent(into.e("(Long)x")), is(LONG));
+      azzert.that(lookDown(into.e("(Long)x")), is(LONG));
     }
 
     @Test public void cast08() {
-      azzert.that(prudent(into.e("(double)x")), is(DOUBLE));
+      azzert.that(lookDown(into.e("(double)x")), is(DOUBLE));
     }
 
     @Test public void cast09() {
-      azzert.that(prudent(into.e("(Double)x")), is(DOUBLE));
+      azzert.that(lookDown(into.e("(Double)x")), is(DOUBLE));
     }
 
     @Test public void cast10() {
-      azzert.that(prudent(into.e("(boolean)x")), is(BOOLEAN));
+      azzert.that(lookDown(into.e("(boolean)x")), is(BOOLEAN));
     }
 
     @Test public void cast11() {
-      azzert.that(prudent(into.e("(Boolean)x")), is(BOOLEAN));
+      azzert.that(lookDown(into.e("(Boolean)x")), is(BOOLEAN));
     }
 
     @Test public void cast12() {
-      azzert.that(prudent(into.e("(String)x")), is(STRING));
+      azzert.that(lookDown(into.e("(String)x")), is(STRING));
     }
 
     @Test public void cast13() {
-      azzert.that(prudent(into.e("(byte)1")), is(BYTE));
+      azzert.that(lookDown(into.e("(byte)1")), is(BYTE));
     }
 
     @Test public void cast14() {
-      azzert.that(prudent(into.e("(Byte)1")), is(BYTE));
+      azzert.that(lookDown(into.e("(Byte)1")), is(BYTE));
     }
 
     @Test public void cast15() {
-      azzert.that(prudent(into.e("(short)1")), is(SHORT));
+      azzert.that(lookDown(into.e("(short)1")), is(SHORT));
     }
 
     @Test public void cast16() {
-      azzert.that(prudent(into.e("(Short)1")), is(SHORT));
+      azzert.that(lookDown(into.e("(Short)1")), is(SHORT));
     }
 
     @Test public void cast17() {
-      azzert.that(prudent(into.e("(float)1")), is(FLOAT));
+      azzert.that(lookDown(into.e("(float)1")), is(FLOAT));
     }
 
     @Test public void cast18() {
-      azzert.that(prudent(into.e("(Float)1")), is(FLOAT));
+      azzert.that(lookDown(into.e("(Float)1")), is(FLOAT));
     }
 
     @Test public void cast19() {
-      azzert.that(prudent(into.e("(float)1d")), is(FLOAT));
+      azzert.that(lookDown(into.e("(float)1d")), is(FLOAT));
     }
 
     // s for conditionals
     @Test public void conditional01() {
-      azzert.that(prudent(into.e("f() ? 3 : 7")), is(INT));
+      azzert.that(lookDown(into.e("f() ? 3 : 7")), is(INT));
     }
 
     @Test public void conditional02() {
-      azzert.that(prudent(into.e("f() ? 3L : 7")), is(LONG));
+      azzert.that(lookDown(into.e("f() ? 3L : 7")), is(LONG));
     }
 
     @Test public void conditional03() {
-      azzert.that(prudent(into.e("f() ? 3L : 7.")), is(DOUBLE));
+      azzert.that(lookDown(into.e("f() ? 3L : 7.")), is(DOUBLE));
     }
 
     @Test public void conditional04() {
-      azzert.that(prudent(into.e("f() ? 3L : 7.")), is(DOUBLE));
+      azzert.that(lookDown(into.e("f() ? 3L : 7.")), is(DOUBLE));
     }
 
     @Test public void conditional05() {
-      azzert.that(prudent(into.e("f() ? 'a' : 7.")), is(DOUBLE));
+      azzert.that(lookDown(into.e("f() ? 'a' : 7.")), is(DOUBLE));
     }
 
     @Test public void conditional06() {
-      azzert.that(prudent(into.e("f() ? 'a' : 'b'")), is(CHAR));
+      azzert.that(lookDown(into.e("f() ? 'a' : 'b'")), is(CHAR));
     }
 
     @Test public void conditional07() {
-      azzert.that(prudent(into.e("f() ? \"abc\" : \"def\"")), is(STRING));
+      azzert.that(lookDown(into.e("f() ? \"abc\" : \"def\"")), is(STRING));
     }
 
     @Test public void conditional08() {
-      azzert.that(prudent(into.e("f() ? true : false")), is(BOOLEAN));
+      azzert.that(lookDown(into.e("f() ? true : false")), is(BOOLEAN));
     }
 
     @Test public void conditional09() {
-      azzert.that(prudent(into.e("f() ? f() : false")), is(BOOLEAN));
+      azzert.that(lookDown(into.e("f() ? f() : false")), is(BOOLEAN));
     }
 
     @Test public void conditional10() {
-      azzert.that(prudent(into.e("f() ? f() : 2")), is(NUMERIC));
+      azzert.that(lookDown(into.e("f() ? f() : 2")), is(NUMERIC));
     }
 
     @Test public void conditional11() {
-      azzert.that(prudent(into.e("f() ? f() : 2l")), is(NUMERIC));
+      azzert.that(lookDown(into.e("f() ? f() : 2l")), is(NUMERIC));
     }
 
     @Test public void conditional12() {
-      azzert.that(prudent(into.e("f() ? 2. : g()")), is(DOUBLE));
+      azzert.that(lookDown(into.e("f() ? 2. : g()")), is(DOUBLE));
     }
 
     @Test public void conditional13() {
-      azzert.that(prudent(into.e("f() ? 2 : 2%f()")), is(INTEGRAL));
+      azzert.that(lookDown(into.e("f() ? 2 : 2%f()")), is(INTEGRAL));
     }
 
     @Test public void conditional14() {
-      azzert.that(prudent(into.e("f() ? x : 'a'")), is(NUMERIC));
+      azzert.that(lookDown(into.e("f() ? x : 'a'")), is(NUMERIC));
     }
 
     @Test public void conditional15() {
-      azzert.that(prudent(into.e("f() ? x : g()")), is(NOTHING));
+      azzert.that(lookDown(into.e("f() ? x : g()")), is(NOTHING));
     }
 
     @Test public void conditional16() {
-      azzert.that(prudent(into.e("f() ? \"a\" : h()")), is(STRING));
+      azzert.that(lookDown(into.e("f() ? \"a\" : h()")), is(STRING));
     }
 
     // tests for constructors
     @Test public void constructors01() {
-      azzert.that(prudent(into.e("new List<Integer>()")), is(baptize("List<Integer>")));
-      azzert.assertNotEquals(prudent(into.e("new List<Integer>()")), baptize("List"));
+      azzert.that(lookDown(into.e("new List<Integer>()")), is(baptize("List<Integer>")));
+      azzert.assertNotEquals(lookDown(into.e("new List<Integer>()")), baptize("List"));
     }
 
     @Test public void constructors02() {
-      azzert.that(prudent(into.e("new Object()")), is(baptize("Object")));
+      azzert.that(lookDown(into.e("new Object()")), is(baptize("Object")));
     }
 
     @Test public void constructors03() {
-      azzert.that(prudent(into.e("new String(\"hello\")")), is(STRING));
+      azzert.that(lookDown(into.e("new String(\"hello\")")), is(STRING));
     }
 
     @Test public void constructors04() {
-      azzert.that(prudent(into.e("new Byte()")), is(BYTE));
+      azzert.that(lookDown(into.e("new Byte()")), is(BYTE));
     }
 
     @Test public void constructors05() {
-      azzert.that(prudent(into.e("new Double()")), is(DOUBLE));
+      azzert.that(lookDown(into.e("new Double()")), is(DOUBLE));
     }
 
     @Test public void InDecreamentSemantics01() {
@@ -545,67 +546,67 @@ public class typeTest {
 
     // tests for recognition of literals
     @Test public void literal01() {
-      azzert.that(prudent(into.e("3")), is(INT));
+      azzert.that(lookDown(into.e("3")), is(INT));
     }
 
     @Test public void literal02() {
-      azzert.that(prudent(into.e("3l")), is(LONG));
+      azzert.that(lookDown(into.e("3l")), is(LONG));
     }
 
     @Test public void literal03() {
-      azzert.that(prudent(into.e("3L")), is(LONG));
+      azzert.that(lookDown(into.e("3L")), is(LONG));
     }
 
     @Test public void literal04() {
-      azzert.that(prudent(into.e("3d")), is(DOUBLE));
+      azzert.that(lookDown(into.e("3d")), is(DOUBLE));
     }
 
     @Test public void literal05() {
-      azzert.that(prudent(into.e("3D")), is(DOUBLE));
+      azzert.that(lookDown(into.e("3D")), is(DOUBLE));
     }
 
     @Test public void literal06() {
-      azzert.that(prudent(into.e("3.0d")), is(DOUBLE));
+      azzert.that(lookDown(into.e("3.0d")), is(DOUBLE));
     }
 
     @Test public void literal07() {
-      azzert.that(prudent(into.e("3.02D")), is(DOUBLE));
+      azzert.that(lookDown(into.e("3.02D")), is(DOUBLE));
     }
 
     @Test public void Literal08() {
-      azzert.that(prudent(into.e("3.098")), is(DOUBLE));
+      azzert.that(lookDown(into.e("3.098")), is(DOUBLE));
     }
 
     @Test public void literal09() {
-      azzert.that(prudent(into.e("3f")), is(FLOAT));
+      azzert.that(lookDown(into.e("3f")), is(FLOAT));
     }
 
     @Test public void literal10() {
-      azzert.that(prudent(into.e("3.f")), is(FLOAT));
+      azzert.that(lookDown(into.e("3.f")), is(FLOAT));
     }
 
     @Test public void literal11() {
-      azzert.that(prudent(into.e("3.0f")), is(FLOAT));
+      azzert.that(lookDown(into.e("3.0f")), is(FLOAT));
     }
 
     @Test public void literals12() {
-      azzert.that(prudent(into.e("null")), is(NULL));
+      azzert.that(lookDown(into.e("null")), is(NULL));
     }
 
     @Test public void literals13() {
-      azzert.that(prudent(into.e("(((null)))")), is(NULL));
+      azzert.that(lookDown(into.e("(((null)))")), is(NULL));
     }
 
     @Test public void literals14() {
-      azzert.that(prudent(into.e("\"a string\"")), is(STRING));
+      azzert.that(lookDown(into.e("\"a string\"")), is(STRING));
     }
 
     @Test public void literals15() {
-      azzert.that(prudent(into.e("'a'")), is(CHAR));
+      azzert.that(lookDown(into.e("'a'")), is(CHAR));
     }
 
     @Test public void literals16() {
-      azzert.that(prudent(into.e("true")), is(BOOLEAN));
+      azzert.that(lookDown(into.e("true")), is(BOOLEAN));
     }
 
     @Test public void makeSureIUnderstandSemanticsOfShift() {
@@ -614,19 +615,19 @@ public class typeTest {
 
     // s for method calls. currently only toString()
     @Test public void methods1() {
-      azzert.that(prudent(into.e("a.toString()")), is(STRING));
+      azzert.that(lookDown(into.e("a.toString()")), is(STRING));
     }
 
     @Test public void methods2() {
-      azzert.that(prudent(into.e("a.fo()")), is(NOTHING));
+      azzert.that(lookDown(into.e("a.fo()")), is(NOTHING));
     }
 
     @Test public void methods3() {
-      azzert.that(prudent(into.e("toString()")), is(STRING));
+      azzert.that(lookDown(into.e("toString()")), is(STRING));
     }
 
     @Test public void methods4() {
-      azzert.that(prudent(into.e("toString(x,y)")), is(NOTHING));
+      azzert.that(lookDown(into.e("toString(x,y)")), is(NOTHING));
     }
 
     @Test public void OnaryPlusMinusSemantics01() {
