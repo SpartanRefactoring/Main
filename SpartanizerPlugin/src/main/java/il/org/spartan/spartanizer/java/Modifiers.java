@@ -19,7 +19,7 @@ public enum Modifiers {
   ;
   public static Modifiers find(final String modifier) {
     for (final Modifiers $ : Modifiers.values())
-      if (modifier.equals(("" + $).toLowerCase()))
+      if (modifier.equals(($ + "").toLowerCase()))
         return $;
     return null;
   }

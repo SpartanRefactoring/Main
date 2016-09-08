@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2013/01/01 */
 public final class MethodRenameReturnToDollar extends Wring<MethodDeclaration> implements Kind.Dollarization {
   @Override String description(final MethodDeclaration d) {
-    return "" + d.getName();
+    return d.getName() + "";
   }
 
   @Override Rewrite make(final MethodDeclaration d, final ExclusionManager exclude) {

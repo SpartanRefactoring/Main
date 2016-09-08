@@ -37,7 +37,7 @@ public final class StringEqualsConstant extends ReplaceCurrentNode<MethodInvocat
    * eclipse.jdt.core.dom.ASTNode) */
   @Override ASTNode replacement(final MethodInvocation i) {
     final SimpleName n = step.name(i);
-    if (!mns.contains("" + n))
+    if (!mns.contains(n + ""))
       return null;
     final Expression ¢ = lisp.onlyOne(arguments(i));
     if (¢ == null || !(¢ instanceof StringLiteral))

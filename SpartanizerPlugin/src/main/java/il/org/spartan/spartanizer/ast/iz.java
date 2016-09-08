@@ -468,11 +468,11 @@ public enum iz {
 
   /** Determine whether an {@link Expression} is so basic that it never needs to
    * be placed in parenthesis.
-   * @param e JD
+   * @param x JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is so basic that
    *         it never needs to be placed in parenthesis. */
-  public static boolean noParenthesisRequired(final Expression e) {
-    return in(e.getClass(), //
+  public static boolean noParenthesisRequired(final Expression x) {
+    return in(x.getClass(), //
         BooleanLiteral.class, //
         CharacterLiteral.class, //
         ClassInstanceCreation.class, //
@@ -502,11 +502,11 @@ public enum iz {
 
   /** Determine whether a node is <code><b>this</b></code> or
    * <code><b>null</b></code>
-   * @param e JD
+   * @param x JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a block
    *         statement */
-  public static boolean numericLiteral(final Expression e) {
-    return iz.oneOf(e, CHARACTER_LITERAL, NUMBER_LITERAL);
+  public static boolean numericLiteral(final Expression x) {
+    return iz.oneOf(x, CHARACTER_LITERAL, NUMBER_LITERAL);
   }
 
   /** Determine whether the type of an {@link ASTNode} node is one of given list
