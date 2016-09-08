@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.engine;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.spartanizer.ast.step.*;
+import static il.org.spartan.spartanizer.engine.type.*;
 import static il.org.spartan.spartanizer.engine.type.Odd.Types.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Uncertain.*;
@@ -283,25 +284,26 @@ public interface type {
     private static implementation lookUp(final Expression e, final implementation i) {
       if (i.isCertain())
         return i;
-      for (ASTNode context = parent(e); context != null; context = parent(context)) switch (context.getNodeType()) {
-        case INFIX_EXPRESSION:
-          return i.aboveBinaryOperator(az.infixExpression(context).getOperator());
-        case ARRAY_ACCESS:
-          return i.asIntegral();
-        case PREFIX_EXPRESSION:
-          return i.above(az.prefixExpression(context).getOperator());
-        case POSTFIX_EXPRESSION:
-          return i.asNumeric();
-        case IF_STATEMENT:
-        case ASSERT_STATEMENT:
-        case FOR_STATEMENT:
-        case WHILE_STATEMENT:
-          return BOOLEAN;
-        case PARENTHESIZED_EXPRESSION:
-          continue;
-        default:
-          return i;
-      }
+      for (ASTNode context = parent(e); context != null; context = parent(context))
+        switch (context.getNodeType()) {
+          case INFIX_EXPRESSION:
+            return i.aboveBinaryOperator(az.infixExpression(context).getOperator());
+          case ARRAY_ACCESS:
+            return i.asIntegral();
+          case PREFIX_EXPRESSION:
+            return i.above(az.prefixExpression(context).getOperator());
+          case POSTFIX_EXPRESSION:
+            return i.asNumeric();
+          case IF_STATEMENT:
+          case ASSERT_STATEMENT:
+          case FOR_STATEMENT:
+          case WHILE_STATEMENT:
+            return BOOLEAN;
+          case PARENTHESIZED_EXPRESSION:
+            continue;
+          default:
+            return i;
+        }
       return i;
     }
 

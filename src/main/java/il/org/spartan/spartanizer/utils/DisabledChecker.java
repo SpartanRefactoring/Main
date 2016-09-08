@@ -87,12 +87,12 @@ public class DisabledChecker {
       if (j == null)
         return true;
       final String s = j.toString();
-      for (String dsi : dsis)
+      for (final String dsi : dsis)
         if (s.contains(dsi)) {
           dns.add(d);
           return true;
         }
-      for (String esi : esis)
+      for (final String esi : esis)
         if (s.contains(esi)) {
           ens.add(d);
           return true;
