@@ -27,7 +27,6 @@ import il.org.spartan.spartanizer.engine.*;
  * </code>
  * @author Dor Ma'ayan
  * @since 2016-09-07 */
-// TODO: Dor Ma'ayan this needs spartanization
 public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonicalization {
   @Override public String description() {
     return "Convert the return inside the loop to break";
@@ -45,6 +44,7 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
     return r1 != null && r2 != null && (r1.getExpression() + "").equals(r2.getExpression() + "");
   }
 
+  // TODO: Dor Ma'ayan this needs spartanization
   @SuppressWarnings("all") @Override Rewrite make(final Block n) {
     final List<Statement> statementList = n.statements();
     final ForStatement forStatement = (ForStatement) statementList.get(0);
@@ -81,6 +81,7 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
   // can you assume it is an if without checking for it, and if you checked
   // already, why do you check again?
   private Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
+    // TODO: Dor Ma'ayan this needs spartanization
     final Statement $ = az.ifStatement(s).getThenStatement();
     final Statement elze = az.ifStatement(s).getElseStatement();
     if (az.ifStatement($) != null)
@@ -95,6 +96,7 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
   }
 
   private Statement handleIf(final ReturnStatement nextReturn, final Block b) {
+    // TODO: Dor Ma'ayan this needs spartanization
     if (b == null)
       return null;
     for (final Statement $ : step.statements(b)) {
@@ -107,7 +109,9 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
   }
 
   @Override boolean scopeIncludes(final Block b) {
-    final List<Statement> statementList = step.statements(b);
-    return b != null && statementList.size() > 1 && statementList.get(0) instanceof ForStatement && statementList.get(1) instanceof ReturnStatement;
+    // TODO: Niv: Use lisp.first and lisp.second, in fact, if second returns
+    // null, you do not have to do anything.
+    final List<Statement> ss = step.statements(b);
+    return b != null && ss.size() > 1 && ss.get(0) instanceof ForStatement && ss.get(1) instanceof ReturnStatement;
   }
 }
