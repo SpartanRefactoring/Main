@@ -27,7 +27,7 @@ import il.org.spartan.spartanizer.utils.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) public class TrimmerTest {
   @Test public void actualExampleForSortAddition() {
-    trimming("1 + b.statements().indexOf(declarationStmt)").to(null);
+    trimming("1 + b.statements().indexOf(declarationStmt)").stays();
   }
 
   @Test public void actualExampleForSortAdditionInContext() {
@@ -50,8 +50,8 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void andWithCLASS_CONSTANT() {
-    trimming("(x >> 18) & MASK_BITS").to(null);
-    trimming("(x >> 18) & MASK_6BITS").to(null);
+    trimming("(x >> 18) & MASK_BITS").stays();
+    trimming("(x >> 18) & MASK_6BITS").stays();
   }
 
   @Test public void assignmentAssignmentChain1() {
@@ -77,19 +77,19 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void assignmentAssignmentNew() {
-    trimming("a = new B(); b= new B();").to(null);
+    trimming("a = new B(); b= new B();").stays();
   }
 
   @Test public void assignmentAssignmentNewArray() {
-    trimming("a = new A[3]; b= new A[3];").to(null);
+    trimming("a = new A[3]; b= new A[3];").stays();
   }
 
   @Test public void assignmentAssignmentNull() {
-    trimming("c = a = null; b = null;").to(null);
+    trimming("c = a = null; b = null;").stays();
   }
 
   @Test public void assignmentAssignmentSideEffect() {
-    trimming("a = f(); b= f();").to(null);
+    trimming("a = f(); b= f();").stays();
   }
 
   @Test public void assignmentAssignmentVanilla() {
@@ -125,7 +125,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void assignmentReturniNo() {
-    trimming("b = a = 3; return a;").to(null);
+    trimming("b = a = 3; return a;").stays();
   }
 
   @Test public void blockSimplifyVanilla() {
@@ -384,8 +384,8 @@ import il.org.spartan.spartanizer.utils.*;
     trimming("int a = 2,b=1; if (b) a = 3; ").to("int a=2;if(1)a=3;").to("int a=1?3:2;");
     trimming("int a = 2, b = 1; return a + 3 * b; ").to("int b=1;return 2+3*b;");
     trimming("int a =2,b=2; if (x) a = 2*a;").to("int a=x?2*2:2, b=2;");
-    trimming("int a = 2, b; a = 3 * a * b; ").to("int a = 2, b; a *= 3 * b; ").to(null);
-    trimming("int a = 2, b; a += b; ").to(null);
+    trimming("int a = 2, b; a = 3 * a * b; ").to("int a = 2, b; a *= 3 * b; ").stays();
+    trimming("int a = 2, b; a += b; ").stays();
     trimming("int a =2,b; if (x) a = 2*a;").to("int a=x?2*2:2, b;");
     trimming("int a = 2, b; return a + 3 * b; ").to("return 2 + 3*b;");
     trimming("int a =2; if (x) a = 3*a;").to("int a=x?3*2:2;");
@@ -595,15 +595,15 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void comparison01() {
-    trimming("1+2+3<3").to("6<3").to(null);
+    trimming("1+2+3<3").to("6<3").stays();
   }
 
   @Test public void comparison02() {
-    trimming("f(2)<a").to(null);
+    trimming("f(2)<a").stays();
   }
 
   @Test public void comparison03() {
-    trimming("this==null").to(null);
+    trimming("this==null").stays();
   }
 
   @Test public void comparison04() {
@@ -611,15 +611,15 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void comparison05() {
-    trimming("a==11").to(null);
+    trimming("a==11").stays();
   }
 
   @Test public void comparison06() {
-    trimming("1<102333").to(null);
+    trimming("1<102333").stays();
   }
 
   @Test public void comparison08() {
-    trimming("a==this").to(null);
+    trimming("a==this").stays();
   }
 
   @Test public void comparison09() {
@@ -631,11 +631,11 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void comparison12() {
-    trimming("1+2<3&7+4>2+1||6-7<2+1").to("3<3&11>3||-1<3").to(null);
+    trimming("1+2<3&7+4>2+1||6-7<2+1").to("3<3&11>3||-1<3").stays();
   }
 
   @Test public void comparison13() {
-    trimming("13455643294<22").to(null);
+    trimming("13455643294<22").stays();
   }
 
   @Test public void comparisonWithCharacterConstant() {
@@ -652,19 +652,19 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void declarationAssignmentUpdateWithIncrement() {
-    trimming("int a=0; a+=++a;").to(null);
+    trimming("int a=0; a+=++a;").stays();
   }
 
   @Test public void declarationAssignmentUpdateWithPostIncrement() {
-    trimming("int a=0; a+=a++;").to(null);
+    trimming("int a=0; a+=a++;").stays();
   }
 
   @Test public void declarationAssignmentWithIncrement() {
-    trimming("int a=0; a=++a;").to(null);
+    trimming("int a=0; a=++a;").stays();
   }
 
   @Test public void declarationAssignmentWithPostIncrement() {
-    trimming("int a=0; a=a++;").to(null);
+    trimming("int a=0; a=a++;").stays();
   }
 
   @Test public void declarationIfAssignment() {
@@ -702,7 +702,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void declarationIfUsesLaterVariable1() {
-    trimming("int a=0, b=0;if (b==3)   a=4; f();").to(null);
+    trimming("int a=0, b=0;if (b==3)   a=4; f();").stays();
   }
 
   @Test public void declarationInitializeRightShift() {
@@ -744,7 +744,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void declarationInitializeUpdateAssignmentIncrementTwice() {
-    trimming("int a = ++i;a += a + j;").to(null);
+    trimming("int a = ++i;a += a + j;").stays();
   }
 
   @Test public void declarationInitializeUpdateAssignmentWithReuse() {
@@ -788,7 +788,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void declarationUpdateReturnNone() {
-    trimming("int a = f(); return a += 2 * a;").to(null);
+    trimming("int a = f(); return a += 2 * a;").stays();
   }
 
   @Test public void declarationUpdateReturnTwice() {
@@ -802,26 +802,26 @@ import il.org.spartan.spartanizer.utils.*;
   @Test public void doNotConsolidateNewArrayActual() {
     trimming("" + //
         "occupied = new boolean[capacity];\n" + //
-        "placeholder = new boolean[capacity];").to(null);
+        "placeholder = new boolean[capacity];").stays();
   }
 
   @Test public void doNotConsolidateNewArraySimplifiedl() {
     trimming("" + //
         "a = new int[1];\n" + //
-        "b = new int[1];").to(null);
+        "b = new int[1];").stays();
   }
 
   @Test public void doNotConsolidatePlainNew() {
     trimming("" + //
         "a = new A();\n" + //
-        "b = new B();").to(null);
+        "b = new B();").stays();
   }
 
   @Ignore("bug") public void doNotInlineDeclarationWithAnnotationSimplified() {
     trimming("" + //
         "    @SuppressWarnings() int $ = (Class<T>) findClass(className);\n" + //
         "    return $;\n" + //
-        "  }").to(null);
+        "  }").stays();
   }
 
   @Test public void doNotInlineWithDeclaration() {
@@ -829,7 +829,7 @@ import il.org.spartan.spartanizer.utils.*;
         "    nonnull(className);\n" + //
         "    @SuppressWarnings(\"unchecked\") final Class<T> $ = (Class<T>) findClass(className);\n" + //
         "    return $;\n" + //
-        "  }").to(null);
+        "  }").stays();
   }
 
   @Test public void doNotIntroduceDoubleNegation() {
@@ -842,11 +842,11 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void dontELiminateCatchBlock() {
-    trimming("try { f(); } catch (Exception e) { } finally {}").to(null);
+    trimming("try { f(); } catch (Exception e) { } finally {}").stays();
   }
 
   @Test public void dontELiminateSwitch() {
-    trimming("switch (a) { default: }").to(null);
+    trimming("switch (a) { default: }").stays();
   }
 
   @Test public void dontSimplifyCatchBlock() {
@@ -882,11 +882,11 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void emptyIsNotChangedExpression() {
-    trimming("").to(null);
+    trimming("").stays();
   }
 
   @Test public void emptyIsNotChangedStatement() {
-    trimming("").to(null);
+    trimming("").stays();
   }
 
   @Test public void emptyThen1() {
@@ -937,7 +937,7 @@ import il.org.spartan.spartanizer.utils.*;
                 "          --res;\n" + //
                 "      return res;\n" + //
                 " if (b) i = 3;")//
-            .to(null);
+       .stays();
   }
 
   @Ignore @Test public void forwardDeclaration1() {
@@ -1137,23 +1137,23 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void ifPlusPlusPostExpression() {
-    trimming("x? a++:b++").to(null);
+    trimming("x? a++:b++").stays();
   }
 
   @Test public void ifPlusPlusPre() {
-    trimming("if (x) ++a; else ++b;").to(null);
+    trimming("if (x) ++a; else ++b;").stays();
   }
 
   @Test public void ifPlusPlusPreExpression() {
-    trimming("x? ++a:++b").to(null);
+    trimming("x? ++a:++b").stays();
   }
 
   @Test public void ifSequencerNoElseSequencer0() {
-    trimming("if (a) return; break;").to(null);
+    trimming("if (a) return; break;").stays();
   }
 
   @Test public void ifSequencerNoElseSequencer01() {
-    trimming("if (a) throw e; break;").to(null);
+    trimming("if (a) throw e; break;").stays();
   }
 
   @Test public void ifSequencerNoElseSequencer02() {
@@ -1161,7 +1161,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void ifSequencerNoElseSequencer03() {
-    trimming("if (a) continue; break;").to(null);
+    trimming("if (a) continue; break;").stays();
   }
 
   @Test public void ifSequencerNoElseSequencer04() {
@@ -1169,11 +1169,11 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void ifSequencerNoElseSequencer05() {
-    trimming("if (a) {x(); return;} continue;").to(null);
+    trimming("if (a) {x(); return;} continue;").stays();
   }
 
   @Test public void ifSequencerNoElseSequencer06() {
-    trimming("if (a) throw e; break;").to(null);
+    trimming("if (a) throw e; break;").stays();
   }
 
   @Test public void ifSequencerNoElseSequencer07() {
@@ -1181,7 +1181,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void ifSequencerNoElseSequencer08() {
-    trimming("if (a) throw e; continue;").to(null);
+    trimming("if (a) throw e; continue;").stays();
   }
 
   @Test public void ifSequencerNoElseSequencer09() {
@@ -1255,7 +1255,7 @@ import il.org.spartan.spartanizer.utils.*;
   @Test public void infiniteLoopBug1() {
     trimming("static boolean hasAnnotation(final VariableDeclarationFragment f) {\n" + //
         "      return hasAnnotation((VariableDeclarationStatement) f.getParent());\n" + //
-        "    }").to(null);
+        "    }").stays();
   }
 
   @Test public void infiniteLoopBug2() {
@@ -1333,7 +1333,7 @@ import il.org.spartan.spartanizer.utils.*;
         + "  int[][] int1 = {{1, 2, 3}, {4, 5, 6}};\n" //
         + "  int[][] int2 = {{1, 2, 3}, {4, 5, 6}};\n" //
         + "  assertArrayEquals(int1, int2);\n" //
-        + "}").to(null);
+        + "}").stays();
   }
 
   @Test public void inlineArrayInitialization2() {
@@ -1344,7 +1344,7 @@ import il.org.spartan.spartanizer.utils.*;
         + "    regress.addData(d[0], d[1]);\n" //
         + "  final double[] $ = { regress.getSlope(), regress.getIntercept() };\n" //
         + "  return $;\n" //
-        + "}").to(null);
+        + "}").stays();
   }
 
   @Test public void inlineInitializers() {
@@ -1376,11 +1376,11 @@ import il.org.spartan.spartanizer.utils.*;
         + "       }\n" //
         + "     }\n" //
         + "   };\n" //
-        + "}").to(null);
+        + "}").stays();
   }
 
   @Test public void inlineintoNextStatementWithSideEffects() {
-    trimming("int a = f(); if (a) g(a); else h(u(a));").to(null);
+    trimming("int a = f(); if (a) g(a); else h(u(a));").stays();
   }
 
   @Ignore @Test public void inlineSingleUse01() {
@@ -1411,31 +1411,31 @@ import il.org.spartan.spartanizer.utils.*;
   @Ignore @Test public void inlineSingleUse06() {
     trimming(
         "   final Collection<Integer> outdated = new ArrayList<>();     int x = 6, y = 7;     S.out.println(x+y);     final Collection<Integer> coes = new ArrayList<>();     for (final Integer pi : coes)      if (pi.intValue() < x - y)       outdated.add(pi);     for (final Integer pi : outdated)      coes.remove(pi);     S.out.println(coes.size()); ")
-            .to(null);
+       .stays();
   }
 
   @Test public void inlineSingleUse07() {
     trimming(
         "   final Collection<Integer> outdated = new ArrayList<>();     int x = 6, y = 7;     S.out.println(x+y);     final Collection<Integer> coes = new ArrayList<>();     for (final Integer pi : coes)      if (pi.intValue() < x - y)       outdated.add(pi);     S.out.println(coes.size()); ")
-            .to(null);
+       .stays();
   }
 
   @Ignore @Test public void inlineSingleUse08() {
     trimming(
         "   final Collection<Integer> outdated = new ArrayList<>();     int x = 6, y = 7;     S.out.println(x+y);     final Collection<Integer> coes = new ArrayList<>();     for (final Integer pi : coes)      if (pi.intValue() < x - y)       outdated.add(pi);     S.out.println(coes.size());     S.out.println(outdated.size()); ")
-            .to(null);
+       .stays();
   }
 
   @Ignore @Test public void inlineSingleUse09() {
     trimming(
         " final A a = new D().new A(V){\nABRA\n{\nCADABRA\n{V;);   assertEquals(5, a.new Context().lineCount());   final PureIterable&lt;Mutant&gt; ms = a.generateMutants();   assertEquals(2, count(ms));   final PureIterator&lt;Mutant&gt; i = ms.iterator();    azzert.aye(i.hasNext());   assertEquals(V;{\nABRA\nABRA\n{\nCADABRA\n{\nV;, i.next().text);    azzert.aye(i.hasNext());   assertEquals(V;{\nABRA\n{\nCADABRA\nCADABRA\n{\nV;, i.next().text);    azzert.nay(i.hasNext());  ")
-            .to(null);
+       .stays();
   }
 
   @Ignore @Test public void inlineSingleUse10() {
     trimming(
         "      final A a = new A(\"{\nABRA\n{\nCADABRA\n{\");        assertEquals(5, a.new Context().lineCount());        final PureIterable<Mutant> ms = a.mutantsGenerator();        assertEquals(2, count(ms));        final PureIterator<Mutant> i = ms.iterator();         azzert.aye(i.hasNext());        assertEquals(\"{\nABRA\nABRA\n{\nCADABRA\n{\n\", i.next().text);         azzert.aye(i.hasNext());        assertEquals(\"{\nABRA\n{\nCADABRA\nCADABRA\n{\n\", i.next().text);         azzert.nay(i.hasNext());")
-            .to(null);
+       .stays();
   }
 
   @Test public void inlineSingleUseKillingVariable() {
@@ -1469,11 +1469,11 @@ import il.org.spartan.spartanizer.utils.*;
 
   @Test public void inlineSingleUseWithAssignment() {
     trimming("int a = 2; while (true) if (f()) f(a); else a = 2;")//
-        .to(null);
+   .stays();
   }
 
   @Test public void inlineSingleVariableintoPlusPlus() {
-    trimming("int $ = 0;  if (a)  ++$;  else --$;").to(null);
+    trimming("int $ = 0;  if (a)  ++$;  else --$;").stays();
   }
 
   @Test public void inliningWithVariableAssignedTo() {
@@ -1508,8 +1508,8 @@ import il.org.spartan.spartanizer.utils.*;
     azzert.that("" + step.right(e), is("f(a,b,c)"));
     azzert.that("" + step.left(e), is("f(a,b,c,d)"));
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
-    azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     assert s != null;
+    azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     assert s.scopeIncludes(e);
     final Expression e1 = step.left(e);
     final Expression e2 = step.right(e);
@@ -1531,7 +1531,7 @@ import il.org.spartan.spartanizer.utils.*;
   @Ignore("bug") @Test public void issue06A() {
     trimming("x/a*-b/-c*- - - d / d")//
         .to("-x/a * b/ c * d/d")//
-        .to(null);
+   .stays();
   }
 
   @Test public void issue06B() {
@@ -1545,35 +1545,35 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Ignore("bug") @Test public void issue06C2() {
-    trimming("-a * b/ c * d/d").to(null);
+    trimming("-a * b/ c * d/d").stays();
   }
 
   @Ignore("bug") @Test public void issue06C3() {
-    trimming("-a * b/ c * d").to(null);
+    trimming("-a * b/ c * d").stays();
   }
 
   @Test public void issue06C4() {
-    trimming("-a * b/ c ").to(null);
+    trimming("-a * b/ c ").stays();
   }
 
   @Test public void issue06D() {
-    trimming("a*b*c*d*-e").to("-a*b*c*d*e").to(null);
+    trimming("a*b*c*d*-e").to("-a*b*c*d*e").stays();
   }
 
   @Test public void issue06E() {
-    trimming("-a*b*c*d*f*g*h*i*j*k").to(null);
+    trimming("-a*b*c*d*f*g*h*i*j*k").stays();
   }
 
   @Test public void issue06F() {
     trimming("x*a*-b*-c*- - - d * d")//
         .to("-x*a*b*c*d*d")//
-        .to(null);
+   .stays();
   }
 
   @Test public void issue06G() {
     trimming("x*a*-b*-c*- - - d / d")//
         .to("-x*a*b*c*d/d")//
-        .to(null);
+   .stays();
   }
 
   @Test public void issue06H() {
@@ -1621,27 +1621,27 @@ import il.org.spartan.spartanizer.utils.*;
         .to("!a ? \"abba\" : \"abracadabra\"")//
         .to("\"ab\" +(!a ? \"ba\" : \"racadabra\")")//
         .to("\"ab\" +((!a ? \"b\" : \"racadabr\")+ \"a\")")//
-        .to("\"ab\" +(!a ? \"b\" : \"racadabr\")+ \"a\"").to(null);
+        .to("\"ab\" +(!a ? \"b\" : \"racadabr\")+ \"a\"").stays();
   }
 
   @Test public void issue110_06() {
     trimming("receiver ==null ? \"Use \" + \"x\" : \"Use \" + receiver")//
-        .to("\"Use \"+(receiver==null ? \"x\" : receiver)").to(null);
+        .to("\"Use \"+(receiver==null ? \"x\" : receiver)").stays();
   }
 
   @Test public void issue110_07() {
     trimming("receiver ==null ? \"Use x\" : \"Use \" + receiver")//
-        .to("\"Use \"+(receiver==null ? \"x\" : \"\"+receiver)").to("\"Use \"+(receiver==null ? \"x\" : receiver+\"\")").to(null);
+        .to("\"Use \"+(receiver==null ? \"x\" : \"\"+receiver)").to("\"Use \"+(receiver==null ? \"x\" : receiver+\"\")").stays();
   }
 
   @Test public void issue110_08() {
     trimming("receiver ==null ? \"Use\" : receiver + \"Use\"")//
-        .to("(receiver==null ? \"\" : receiver+\"\") + \"Use\"").to(null);
+        .to("(receiver==null ? \"\" : receiver+\"\") + \"Use\"").stays();
   }
 
   @Test public void issue110_09() {
     trimming("receiver ==null ? \"user a\" : receiver + \"something a\"")//
-        .to("(receiver==null ? \"user\" : receiver+\"something\") + \" a\"").to(null);
+        .to("(receiver==null ? \"user\" : receiver+\"something\") + \" a\"").stays();
   }
 
   @Test public void issue110_10() {
@@ -1711,14 +1711,14 @@ import il.org.spartan.spartanizer.utils.*;
     trimming("    return o == null ? null\n" + //
         "        : o == CONDITIONAL_AND ? CONDITIONAL_OR \n" + //
         "            : o == CONDITIONAL_OR ? CONDITIONAL_AND \n" + //
-        "                : null;").to(null);
+        "                : null;").stays();
   }
 
   @Test public void issue38Simplfiied() {
     trimming(//
         "         o == CONDITIONAL_AND ? CONDITIONAL_OR \n" + //
             "            : o == CONDITIONAL_OR ? CONDITIONAL_AND \n" + //
-            "                : null").to(null);
+            "                : null").stays();
   }
 
   @Test public void issue39base() {
@@ -1728,7 +1728,7 @@ import il.org.spartan.spartanizer.utils.*;
         "        return false;\n" + //
         "} else if (!name.equals(other.name))\n" + //
         "    return false;\n" + //
-        "return true;").to(null); //
+        "return true;").stays(); //
   }
 
   public void issue39baseDual() {
@@ -1773,7 +1773,7 @@ import il.org.spartan.spartanizer.utils.*;
         "} else if (argumentTypes.length < parameterTypes.length - 1) {\n" + //
         "    return false;\n" + //
         "}" + //
-        "").to(null);
+        "").stays();
   }
 
   @Test public void issue41FunctionCall() {
@@ -1860,7 +1860,7 @@ import il.org.spartan.spartanizer.utils.*;
 
   @Test public void issue52c() {
     trimming("interface a"//
-        + "{}").to(null);
+        + "{}").stays();
   }
 
   @Test public void issue52d() {
@@ -1939,11 +1939,11 @@ import il.org.spartan.spartanizer.utils.*;
   @Test public void issue52k() {
     trimming("public class ClassTest {\n"//
         + "public  ClassTest(){}\n"//
-        + "}").to(null);
+        + "}").stays();
   }
 
   @Test public void issue52l() {
-    trimming("abstract class A { final void f() { }}").to(null);
+    trimming("abstract class A { final void f() { }}").stays();
   }
 
   @Test public void issue52n() {
@@ -1957,7 +1957,7 @@ import il.org.spartan.spartanizer.utils.*;
                         + "static void f() {}\n "//
                         + "public static final int i = 3; "//
                         + "}")
-                .to(null);
+           .stays();
   }
 
   @Test public void issue52o() {
@@ -1971,7 +1971,7 @@ import il.org.spartan.spartanizer.utils.*;
                         + "static void f() {}\n "//
                         + "public static final int i = 3; "//
                         + "}")//
-                .to(null);
+           .stays();
   }
 
   @Test public void issue52p() {
@@ -2019,12 +2019,12 @@ import il.org.spartan.spartanizer.utils.*;
   @Test public void issue54DoWithBlock() {
     trimming( //
         "int a  = f(); do { b[i] = a;  ++i; } while (b[i] != a);")//
-            .to(null);
+       .stays();
   }
 
   @Test public void issue54doWithoutBlock() {
     trimming("int a  = f(); do b[i] = a; while (b[i] != a);")//
-        .to(null);
+   .stays();
   }
 
   @Test public void issue54ForEnhanced() {
@@ -2045,7 +2045,7 @@ import il.org.spartan.spartanizer.utils.*;
   @Test public void issue54ForPlain() {
     trimming("int a  = f(); for (int i = 0; i < 100;  ++i) b[i] = a;")//
         .to("for (int i = 0; i < 100;  ++i) b[i] = f();")//
-        .to(null);
+   .stays();
   }
 
   @Test public void issue54ForPlainNonSideEffect() {
@@ -2055,7 +2055,7 @@ import il.org.spartan.spartanizer.utils.*;
 
   @Ignore @Test public void issue54ForPlainUseInCondition() {
     trimming("int a  = f(); for (int i = 0; a < 100;  ++i) b[i] = 3;")//
-        .to(null);
+   .stays();
   }
 
   @Test public void issue54ForPlainUseInConditionNonSideEffect() {
@@ -2075,7 +2075,7 @@ import il.org.spartan.spartanizer.utils.*;
 
   @Ignore @Test public void issue54ForPlainUseInUpdaters() {
     trimming("int a  = f(); for (int i = 0; i < 100; i *= a) b[i] = 3;")//
-        .to(null);
+   .stays();
   }
 
   @Test public void issue54ForPlainUseInUpdatersNonSideEffect() {
@@ -2085,7 +2085,7 @@ import il.org.spartan.spartanizer.utils.*;
 
   @Test public void issue54While() {
     trimming("int a  = f(); while (c) b[i] = a;")//
-        .to(null);
+   .stays();
   }
 
   @Test public void issue54WhileNonSideEffect() {
@@ -2137,7 +2137,7 @@ import il.org.spartan.spartanizer.utils.*;
   @Test public void issue62a() {
     trimming("int f(int i) { for(;;++i) if(false) break; return i; }")//
         .to("int f(int i) { for(;;++i){} return i; }")//
-        .to(null);
+   .stays();
   }
 
   @Ignore public void issue62b() {
@@ -2145,18 +2145,18 @@ import il.org.spartan.spartanizer.utils.*;
         .to("int f(int i) { for(;i<100;i+=1) if(false) break; return i; }")//
         .to("int f(int i) { for(;i<100;i++) if(false) break; return i; }")//
         .to("int f(int i) { for(;i<100;++i) if(false) break; return i; }")//
-        .to("int f(int i) { for(;i<100;++i){} return i; }").to(null);
+        .to("int f(int i) { for(;i<100;++i){} return i; }").stays();
   }
 
   @Test public void issue62b_1() {
     trimming("int f(int i) { for(;i<100;i=i+1) if(false) break; return i; }")//
         .to("int f(int i) { for(;i<100;i+=1){} return i; }")//
         .to("int f(int i) { for(;i<100;i++){} return i; }")//
-        .to("int f(int i) { for(;i<100;++i){} return i; }").to(null);//
+        .to("int f(int i) { for(;i<100;++i){} return i; }").stays();//
   }
 
   @Test public void issue62c() {
-    trimming("int f(int i) { while(++i > 999) if(i>99) break; return i;}").to(null);
+    trimming("int f(int i) { while(++i > 999) if(i>99) break; return i;}").stays();
   }
 
   @Test public void issue64a() {
@@ -2164,7 +2164,7 @@ import il.org.spartan.spartanizer.utils.*;
         "    final int a = f();\n" + //
         "    new Object() {\n" + //
         "      @Override public int hashCode() { return a; }\n" + //
-        "    };" + "}").to(null);
+        "    };" + "}").stays();
   }
 
   @Test public void issue64b() {
@@ -2172,7 +2172,7 @@ import il.org.spartan.spartanizer.utils.*;
         "    final int a = 3;\n" + //
         "    new Object() {\n" + //
         "      @Override public int hashCode() { return a; }\n" + //
-        "    };" + "}").to(null);
+        "    };" + "}").stays();
   }
 
   @Test public void issue73a() {
@@ -2200,7 +2200,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void issue74d() {
-    trimming("int[] a = new int[] {2,3};").to(null);
+    trimming("int[] a = new int[] {2,3};").stays();
   }
 
   @Test public void linearTransformation() {
@@ -2208,23 +2208,23 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void literalVsLiteral() {
-    trimming("1 < 102333").to(null);
+    trimming("1 < 102333").stays();
   }
 
   @Test public void longChainComparison() {
-    trimming("a == b == c == d").to(null);
+    trimming("a == b == c == d").stays();
   }
 
   @Test public void longChainParenthesisComparison() {
-    trimming("(a == b == c) == d").to(null);
+    trimming("(a == b == c) == d").stays();
   }
 
   @Test public void longChainParenthesisNotComparison() {
-    trimming("(a == b == c) != d").to(null);
+    trimming("(a == b == c) != d").stays();
   }
 
   @Test public void longerChainParenthesisComparison() {
-    trimming("(a == b == c == d == e) == d").to(null);
+    trimming("(a == b == c == d == e) == d").stays();
   }
 
   @Test public void massiveInlining() {
@@ -2309,46 +2309,46 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void noChange() {
-    trimming("12").to(null);
-    trimming("true").to(null);
-    trimming("null").to(null);
+    trimming("12").stays();
+    trimming("true").stays();
+    trimming("null").stays();
     trimming("on*of*no*notion*notion").to("no*of*on*notion*notion");
   }
 
   @Test public void noChange0() {
-    trimming("kludge + the * plain ").to(null);
+    trimming("kludge + the * plain ").stays();
   }
 
   @Test public void noChange1() {
-    trimming("the * plain").to(null);
+    trimming("the * plain").stays();
   }
 
   @Test public void noChange2() {
-    trimming("plain + kludge").to(null);
+    trimming("plain + kludge").stays();
   }
 
   @Test public void noChangeA() {
-    trimming("true").to(null);
+    trimming("true").stays();
   }
 
   @Test public void noinliningintoSynchronizedStatement() {
     trimming("int a  = f(); synchronized(this) { int b = a; }")//
-        .to(null);
+   .stays();
   }
 
   @Test public void noinliningintoSynchronizedStatementEvenWithoutSideEffect() {
     trimming("int a  = f; synchronized(this) { int b = a; }")//
-        .to(null);
+   .stays();
   }
 
   @Test public void noinliningintoTryStatement() {
     trimming("int a  = f(); try { int b = a; } catch (Exception E) {}")//
-        .to(null);
+   .stays();
   }
 
   @Test public void noinliningintoTryStatementEvenWithoutSideEffect() {
     trimming("int a  = f; try { int b = a; } catch (Exception E) {}")//
-        .to(null);
+   .stays();
   }
 
   @Test public void notOfAnd() {
@@ -2372,11 +2372,11 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void orFalseANDOf3WithoutBoolean() {
-    trimming("a && b && false").to(null);
+    trimming("a && b && false").stays();
   }
 
   @Test public void orFalseANDOf3WithoutBooleanA() {
-    trimming("x && a && b").to(null);
+    trimming("x && a && b").stays();
   }
 
   @Test public void orFalseANDOf3WithTrue() {
@@ -2388,11 +2388,11 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void orFalseANDOf4WithoutBoolean() {
-    trimming("a && b && c && false").to(null);
+    trimming("a && b && c && false").stays();
   }
 
   @Test public void orFalseANDOf4WithoutBooleanA() {
-    trimming("x && a && b && c").to(null);
+    trimming("x && a && b && c").stays();
   }
 
   @Test public void orFalseANDOf4WithTrue() {
@@ -2404,11 +2404,11 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void orFalseANDOf5WithoutBoolean() {
-    trimming("false && a && b && c && d").to(null);
+    trimming("false && a && b && c && d").stays();
   }
 
   @Test public void orFalseANDOf5WithoutBooleanA() {
-    trimming("x && a && b && c && d").to(null);
+    trimming("x && a && b && c && d").stays();
   }
 
   @Test public void orFalseANDOf5WithTrue() {
@@ -2420,15 +2420,15 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void orFalseANDOf6WithoutBoolean() {
-    trimming("a && b && c && false && d && e").to(null);
+    trimming("a && b && c && false && d && e").stays();
   }
 
   @Test public void orFalseANDOf6WithoutBooleanA() {
-    trimming("x && a && b && c && d && e").to(null);
+    trimming("x && a && b && c && d && e").stays();
   }
 
   @Test public void orFalseANDOf6WithoutBooleanWithParenthesis() {
-    trimming("(x && (a && b)) && (c && (d && e))").to(null);
+    trimming("(x && (a && b)) && (c && (d && e))").stays();
   }
 
   @Test public void orFalseANDOf6WithTrue() {
@@ -2448,11 +2448,11 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void orFalseANDOf7WithoutBooleanAndMultipleFalseValue() {
-    trimming("(a && (b && false)) && (c && (d && (e && (false && false))))").to(null);
+    trimming("(a && (b && false)) && (c && (d && (e && (false && false))))").stays();
   }
 
   @Test public void orFalseANDOf7WithoutBooleanWithParenthesis() {
-    trimming("(a && b) && (c && (d && (e && false)))").to(null);
+    trimming("(a && b) && (c && (d && (e && false)))").stays();
   }
 
   @Test public void orFalseANDOf7WithTrueWithParenthesis() {
@@ -2460,11 +2460,11 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void orFalseANDWithFalse() {
-    trimming("b && a").to(null);
+    trimming("b && a").stays();
   }
 
   @Test public void orFalseANDWithoutBoolean() {
-    trimming("b && a").to(null);
+    trimming("b && a").stays();
   }
 
   @Test public void orFalseANDWithTrue() {
@@ -2476,7 +2476,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void orFalseORFalseWithSomething() {
-    trimming("true || a").to(null);
+    trimming("true || a").stays();
   }
 
   @Test public void orFalseORFalseWithSomethingB() {
@@ -2492,11 +2492,11 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void orFalseOROf3WithoutBoolean() {
-    trimming("a || b").to(null);
+    trimming("a || b").stays();
   }
 
   @Test public void orFalseOROf3WithoutBooleanA() {
-    trimming("x || a || b").to(null);
+    trimming("x || a || b").stays();
   }
 
   @Test public void orFalseOROf4WithFalse() {
@@ -2508,11 +2508,11 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void orFalseOROf4WithoutBoolean() {
-    trimming("a || b || c").to(null);
+    trimming("a || b || c").stays();
   }
 
   @Test public void orFalseOROf4WithoutBooleanA() {
-    trimming("x || a || b || c").to(null);
+    trimming("x || a || b || c").stays();
   }
 
   @Test public void orFalseOROf5WithFalse() {
@@ -2524,11 +2524,11 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void orFalseOROf5WithoutBoolean() {
-    trimming("a || b || c || d").to(null);
+    trimming("a || b || c || d").stays();
   }
 
   @Test public void orFalseOROf5WithoutBooleanA() {
-    trimming("x || a || b || c || d").to(null);
+    trimming("x || a || b || c || d").stays();
   }
 
   @Test public void orFalseOROf6WithFalse() {
@@ -2544,19 +2544,19 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void orFalseOROf6WithoutBoolean() {
-    trimming("a || b || c || d || e").to(null);
+    trimming("a || b || c || d || e").stays();
   }
 
   @Test public void orFalseOROf6WithoutBooleanA() {
-    trimming("x || a || b || c || d || e").to(null);
+    trimming("x || a || b || c || d || e").stays();
   }
 
   @Test public void orFalseOROf6WithoutBooleanWithParenthesis() {
-    trimming("(a || b) || (c || (d || e))").to(null);
+    trimming("(a || b) || (c || (d || e))").stays();
   }
 
   @Test public void orFalseOROf6WithoutBooleanWithParenthesisA() {
-    trimming("x || (a || b) || (c || (d || e))").to(null);
+    trimming("x || (a || b) || (c || (d || e))").stays();
   }
 
   @Test public void orFalseOROf6WithTwoFalse() {
@@ -2568,15 +2568,15 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void orFalseORSomethingWithTrue() {
-    trimming("a || true").to(null);
+    trimming("a || true").stays();
   }
 
   @Test public void orFalseORWithoutBoolean() {
-    trimming("b || a").to(null);
+    trimming("b || a").stays();
   }
 
   @Test public void orFalseProductIsNotANDDivOR() {
-    trimming("2*a").to(null);
+    trimming("2*a").stays();
   }
 
   @Test public void orFalseTrueAndTrueA() {
@@ -2635,7 +2635,7 @@ import il.org.spartan.spartanizer.utils.*;
 
   @Test public void paramAbbreviateConflictingWithMethodName() {
     trimming("void m(BitmapManipulator bitmapManipulator) {" + //
-        "bitmapManipulator.x().y();").to(null);
+        "bitmapManipulator.x().y();").stays();
   }
 
   @Test public void paramAbbreviateMultiple() {
@@ -2669,15 +2669,15 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void postDecremntInFunctionCall() {
-    trimming("f(a++, i--, b++, ++b);").to(null);
+    trimming("f(a++, i--, b++, ++b);").stays();
   }
 
   @Test public void postfixToPrefixAvoidChangeOnLoopCondition() {
-    trimming("for (int s = i; ++i; ++s);").to(null);
+    trimming("for (int s = i; ++i; ++s);").stays();
   }
 
   @Test public void postfixToPrefixAvoidChangeOnLoopInitializer() {
-    trimming("for (int s = i++; i < 10; ++s);").to(null);
+    trimming("for (int s = i++; i < 10; ++s);").stays();
   }
 
   @Test public void postfixToPrefixAvoidChangeOnVariableDeclaration() {
@@ -2688,7 +2688,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void postIncrementInFunctionCall() {
-    trimming("f(i++);").to(null);
+    trimming("f(i++);").stays();
   }
 
   @Test public void postIncrementReturn() {
@@ -2782,7 +2782,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void pushdownNotActualExample() {
-    trimming("!inRange(m, e)").to(null);
+    trimming("!inRange(m, e)").stays();
   }
 
   @Test public void pushdownNotDoubleNot() {
@@ -2798,11 +2798,11 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void pushdownNotEND() {
-    trimming("a&&b").to(null);
+    trimming("a&&b").stays();
   }
 
   @Test public void pushdownNotMultiplication() {
-    trimming("a*b").to(null);
+    trimming("a*b").stays();
   }
 
   @Test public void pushdownNotNotOfAND() {
@@ -2870,23 +2870,23 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void pushdownNotOR() {
-    trimming("a||b").to(null);
+    trimming("a||b").stays();
   }
 
   @Test public void pushdownNotSimpleNot() {
-    trimming("!a").to(null);
+    trimming("!a").stays();
   }
 
   @Test public void pushdownNotSimpleNotOfFunction() {
-    trimming("!f(a)").to(null);
+    trimming("!f(a)").stays();
   }
 
   @Test public void pushdownNotSummation() {
-    trimming("a+b").to(null);
+    trimming("a+b").stays();
   }
 
   @Test public void pushdownTernaryActualExample() {
-    trimming("next < values().length").to(null);
+    trimming("next < values().length").stays();
   }
 
   @Test public void pushdownTernaryActualExample2() {
@@ -2930,7 +2930,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void pushdownTernaryAMethodCallDistinctReceiver() {
-    trimming("a ? x.f(c) : y.f(d)").to(null);
+    trimming("a ? x.f(c) : y.f(d)").stays();
   }
 
   @Test public void pushdownTernaryDifferentTargetFieldRefernce() {
@@ -2938,7 +2938,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void pushdownTernaryFieldReferneceShort() {
-    trimming("a ? R.b.c : R.b.d").to(null);
+    trimming("a ? R.b.c : R.b.d").stays();
   }
 
   @Test public void pushdownTernaryFunctionCall() {
@@ -3015,43 +3015,43 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void pushdownTernaryNoBoolean() {
-    trimming("a?b:c").to(null);
+    trimming("a?b:c").stays();
   }
 
   @Test public void pushdownTernaryNoReceiverReceiver() {
-    trimming("a < b ? f() : a.f()").to(null);
+    trimming("a < b ? f() : a.f()").stays();
   }
 
   @Test public void pushdownTernaryNotOnMINUS() {
-    trimming("a ? -c :-d").to(null);
+    trimming("a ? -c :-d").stays();
   }
 
   @Test public void pushdownTernaryNotOnMINUSMINUS1() {
-    trimming("a ? --c :--d").to(null);
+    trimming("a ? --c :--d").stays();
   }
 
   @Test public void pushdownTernaryNotOnMINUSMINUS2() {
-    trimming("a ? c-- :d--").to(null);
+    trimming("a ? c-- :d--").stays();
   }
 
   @Test public void pushdownTernaryNotOnNOT() {
-    trimming("a ? !c :!d").to(null);
+    trimming("a ? !c :!d").stays();
   }
 
   @Test public void pushdownTernaryNotOnPLUS() {
-    trimming("a ? +x : +y").to("a ? x : y").to(null);
+    trimming("a ? +x : +y").to("a ? x : y").stays();
   }
 
   @Test public void pushdownTernaryNotOnPLUSPLUS() {
-    trimming("a ? x++ :y++").to(null);
+    trimming("a ? x++ :y++").stays();
   }
 
   @Test public void pushdownTernaryNotSameFunctionInvocation() {
-    trimming("a?b(x):d(x)").to(null);
+    trimming("a?b(x):d(x)").stays();
   }
 
   @Test public void pushdownTernaryNotSameFunctionInvocation2() {
-    trimming("a?x.f(x):x.d(x)").to(null);
+    trimming("a?x.f(x):x.d(x)").stays();
   }
 
   @Test public void pushdownTernaryOnMethodCall() {
@@ -3083,11 +3083,11 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void pushdownTernaryToClasConstrctorTwoDifferenes() {
-    trimming("a ? new B(a,b,c) : new B(a,x,y)").to(null);
+    trimming("a ? new B(a,b,c) : new B(a,x,y)").stays();
   }
 
   @Test public void pushdownTernaryToClassConstrctorNotSameNumberOfArgument() {
-    trimming("a ? new B(a,b) : new B(a,b,c)").to(null);
+    trimming("a ? new B(a,b) : new B(a,b,c)").stays();
   }
 
   @Test public void pushdownTernaryTX() {
@@ -3121,7 +3121,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Ignore @Test public void reanmeReturnVariableToDollar04() {
-    trimming("int res = 0;   String $ = blah + known;   y(res + $.length());   return res + $.length();").to(null);
+    trimming("int res = 0;   String $ = blah + known;   y(res + $.length());   return res + $.length();").stays();
   }
 
   @Ignore @Test public void reanmeReturnVariableToDollar05() {
@@ -3151,7 +3151,7 @@ import il.org.spartan.spartanizer.utils.*;
   @Ignore @Test public void reanmeReturnVariableToDollar09() {
     trimming(
         " public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass res = new BlahClass(6);   if (res.j == 0)    return null;   S.out.println(res.j);   return null;")
-            .to(null);
+       .stays();
   }
 
   @Ignore @Test public void reanmeReturnVariableToDollar10() {
@@ -3161,7 +3161,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Ignore @Test public void reanmeReturnVariableToDollar11() {
-    trimming("").to(null);
+    trimming("").stays();
   }
 
   @Test public void redundantButNecessaryBrackets1() {
@@ -3180,7 +3180,7 @@ import il.org.spartan.spartanizer.utils.*;
         + "  System.out.println('!');\n" //
         + "  System.out.println('!');\n" //
         + "  eDA.addElement(v);\n" //
-        + "}").to(null);
+        + "}").stays();
   }
 
   @Test public void redundantButNecessaryBrackets2() {
@@ -3197,7 +3197,7 @@ import il.org.spartan.spartanizer.utils.*;
         + "  System.out.println('!');\n" //
         + "  System.out.println('!');\n" //
         + "  eDA.addElement(v);\n" //
-        + "}").to(null);
+        + "}").stays();
   }
 
   @Test public void redundantButNecessaryBrackets3() {
@@ -3221,7 +3221,7 @@ import il.org.spartan.spartanizer.utils.*;
         + "  print4('$');\n" //
         + "  print4('$');\n" //
         + "  print4('$');\n" //
-        + "}").to(null);
+        + "}").stays();
   }
 
   @Test public void removeSuper() {
@@ -3229,7 +3229,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void removeSuperWithArgument() {
-    trimming("class T { T() { super(a); a();}}").to(null);
+    trimming("class T { T() { super(a); a();}}").stays();
   }
 
   @Test public void removeSuperWithStatemen() {
@@ -3291,7 +3291,7 @@ import il.org.spartan.spartanizer.utils.*;
         + "  int y;\n" //
         + "  x = 0;\n" //
         + "  y = 0;\n" //
-        + "}").to(null);
+        + "}").stays();
   }
 
   @Test public void sequencerFirstInElse() {
@@ -3299,15 +3299,15 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void shorterChainParenthesisComparison() {
-    trimming("a == b == c").to(null);
+    trimming("a == b == c").stays();
   }
 
   @Test public void shorterChainParenthesisComparisonLast() {
-    trimming("b == a * b * c * d * e * f * g * h == a").to(null);
+    trimming("b == a * b * c * d * e * f * g * h == a").stays();
   }
 
   @Test public void shortestBranchIfWithComplexNestedIf3() {
-    trimming("if (a) {f(); g(); h();} else if (a) ++i; else ++j;").to(null);
+    trimming("if (a) {f(); g(); h();} else if (a) ++i; else ++j;").stays();
   }
 
   @Test public void shortestBranchIfWithComplexNestedIf4() {
@@ -3353,22 +3353,22 @@ import il.org.spartan.spartanizer.utils.*;
   @Test public void shortestFirstAlignment() {
     trimming("n.isSimpleName() ? (SimpleName) n //\n" + //
         "            : n.isQualifiedName() ? ((QualifiedName) n).getName() //\n" + //
-        "                : null").to(null);//
+        "                : null").stays();//
   }
 
   @Test public void shortestFirstAlignmentShortened() {
     trimming("n.isF() ? (SimpleName) n \n" + //
         "            : n.isG() ? ((QualifiedName) n).getName() \n" + //
-        "                : null").to(null);//
+        "                : null").stays();//
   }
 
   @Test public void shortestFirstAlignmentShortenedFurther() {
     trimming("n.isF() ? (A) n : n.isG() ? ((B) n).f() \n" + //
-        "                : null").to(null);//
+        "                : null").stays();//
   }
 
   @Test public void shortestFirstAlignmentShortenedFurtherAndFurther() {
-    trimming("n.isF() ? (A) n : n.isG() ? (B) n :  null").to(null);//
+    trimming("n.isF() ? (A) n : n.isG() ? (B) n :  null").stays();//
   }
 
   @Test public void shortestIfBranchFirst01() {
@@ -3459,7 +3459,7 @@ import il.org.spartan.spartanizer.utils.*;
         "          --res;\n" + //
         "      return res;\n" + //
         "")//
-            .to(null);
+       .stays();
   }
 
   @Test public void shortestIfBranchFirst02c() {
@@ -3504,7 +3504,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void shortestOperand01() {
-    trimming("x + y > z").to(null);
+    trimming("x + y > z").stays();
   }
 
   @Test public void shortestOperand02() {
@@ -3565,11 +3565,11 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void shortestOperand22() {
-    trimming("return f(a,b,c,d,e) + f(a,b,c,d) + f(a,b,c) + f(a,b) + f(a) + f();").to(null);
+    trimming("return f(a,b,c,d,e) + f(a,b,c,d) + f(a,b,c) + f(a,b) + f(a) + f();").stays();
   }
 
   @Test public void shortestOperand23() {
-    trimming("return f() + \".\";     }").to(null);
+    trimming("return f() + \".\";     }").stays();
   }
 
   @Test public void shortestOperand24() {
@@ -3581,7 +3581,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void shortestOperand27() {
-    trimming("return f(a,b,c,d) + f(a,b,c) + f();     } ").to(null);
+    trimming("return f(a,b,c,d) + f(a,b,c) + f();     } ").stays();
   }
 
   @Test public void shortestOperand28() {
@@ -3597,23 +3597,23 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void shortestOperand31() {
-    trimming("return f(a,b,c,d) | \".\";     }").to(null);
+    trimming("return f(a,b,c,d) | \".\";     }").stays();
   }
 
   @Test public void shortestOperand32() {
-    trimming("return f(a,b,c,d) && f();     }").to(null);
+    trimming("return f(a,b,c,d) && f();     }").stays();
   }
 
   @Test public void shortestOperand33() {
-    trimming("return f(a,b,c,d) || f();     }").to(null);
+    trimming("return f(a,b,c,d) || f();     }").stays();
   }
 
   @Test public void shortestOperand34() {
-    trimming("return f(a,b,c,d) + someVar; ").to(null);
+    trimming("return f(a,b,c,d) + someVar; ").stays();
   }
 
   @Test public void shortestOperand37() {
-    trimming("return sansJavaExtension(f) + n + \".\"+ extension(f);").to(null);
+    trimming("return sansJavaExtension(f) + n + \".\"+ extension(f);").stays();
   }
 
   @Test public void simpleBooleanMethod() {
@@ -3735,7 +3735,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void sortAddition3() {
-    trimming("6 - 7 < 1 + 2").to("-1<3").to(null);
+    trimming("6 - 7 < 1 + 2").to("-1<3").stays();
   }
 
   @Test public void sortAddition4() {
@@ -3751,7 +3751,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void sortAdditionThreeOperands1() {
-    trimming("1.0+2222+3").to("2226.0").to(null);
+    trimming("1.0+2222+3").to("2226.0").stays();
   }
 
   @Test public void sortAdditionThreeOperands2() {
@@ -3759,11 +3759,11 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void sortAdditionThreeOperands3() {
-    trimming("1+2F+33+142+1").to(null);
+    trimming("1+2F+33+142+1").stays();
   }
 
   @Test public void sortAdditionThreeOperands4() {
-    trimming("1+2+'a'").to(null);
+    trimming("1+2+'a'").stays();
   }
 
   @Test public void sortAdditionTwoOperands0CheckThatWeSortByLength_a() {
@@ -3771,11 +3771,11 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void sortAdditionTwoOperands0CheckThatWeSortByLength_b() {
-    trimming("211+1111").to("1322").to(null);
+    trimming("211+1111").to("1322").stays();
   }
 
   @Test public void sortAdditionTwoOperands1() {
-    trimming("1+2F").to(null);
+    trimming("1+2F").stays();
   }
 
   @Test public void sortAdditionTwoOperands2() {
@@ -3791,7 +3791,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void sortAdditionUncertain() {
-    trimming("1+a").to(null);
+    trimming("1+a").stays();
   }
 
   @Test public void sortAdditionVariableClassConstantAndLiteral() {
@@ -3827,11 +3827,11 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void sortThreeOperands3() {
-    trimming("2*2F*33*142").to(null);
+    trimming("2*2F*33*142").stays();
   }
 
   @Test public void sortThreeOperands4() {
-    trimming("2*3*'a'").to(null);
+    trimming("2*3*'a'").stays();
   }
 
   @Test public void sortTwoOperands0CheckThatWeSortByLength_a() {
@@ -3843,7 +3843,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void sortTwoOperands1() {
-    trimming("1F*2F").to(null);
+    trimming("1F*2F").stays();
   }
 
   @Test public void sortTwoOperands2() {
@@ -3863,7 +3863,7 @@ import il.org.spartan.spartanizer.utils.*;
         + "    synchronized (variables) {\n" //
         + "      for (final String key : variables.keySet())\n"//
         + "        $.variables.put(key, variables.get(key));\n" //
-        + "    }").to(null);
+        + "    }").stays();
   }
 
   @Test public void ternarize05() {
@@ -3980,7 +3980,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void ternarize16() {
-    trimming("String res = m;  int num1, num2, num3;  if (m.equals(f()))   num2 = 2; ").to(null);
+    trimming("String res = m;  int num1, num2, num3;  if (m.equals(f()))   num2 = 2; ").stays();
   }
 
   @Test public void ternarize16a() {
@@ -3995,7 +3995,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void ternarize21() {
-    trimming("if (s.equals(532)){    S.out.println(gG);    S.out.l(kKz);} f(); ").to(null);
+    trimming("if (s.equals(532)){    S.out.println(gG);    S.out.l(kKz);} f(); ").stays();
   }
 
   @Test public void ternarize21a() {
@@ -4007,18 +4007,18 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void ternarize22() {
-    trimming("int a=0;   if (s.equals(532)){    S.console();    a=3;} f(); ").to(null);
+    trimming("int a=0;   if (s.equals(532)){    S.console();    a=3;} f(); ").stays();
   }
 
   @Test public void ternarize26() {
-    trimming("int a=0;   if (s.equals(532)){    a+=2;   a-=2; } f(); ").to(null);
+    trimming("int a=0;   if (s.equals(532)){    a+=2;   a-=2; } f(); ").stays();
   }
 
   @Test public void ternarize33() {
     trimming("int a, b=0;   if (b==3){    a=4; } ")//
         .to("int a;if(0==3){a=4;}") //
         .to("int a;if(0==3)a=4;") //
-        .to(null);
+   .stays();
   }
 
   @Test public void ternarize35() {
@@ -4031,7 +4031,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void ternarize38() {
-    trimming("int a, b=0;if (b==3){    a+=2+r();a-=6;} f();").to(null);
+    trimming("int a, b=0;if (b==3){    a+=2+r();a-=6;} f();").stays();
   }
 
   @Test public void ternarize41() {
@@ -4046,7 +4046,7 @@ import il.org.spartan.spartanizer.utils.*;
         .to("int b=5;if(3==4)if(b==3)b=2;else{b=3;b=3;}else if(b==3)b=2;else{b=3*3;b=3;}") //
         .to("int b=5;if(3==4)if(b==3)b=2;else{b=b=3;}else if(b==3)b=2;else{b=9;b=3;}")//
         .to("int b=5;if(3==4)b=b==3?2:(b=3);else if(b==3)b=2;else{b=9;b=3;}")//
-        .to(null);
+   .stays();
   }
 
   @Test public void ternarize45() {
@@ -4072,12 +4072,12 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void ternarize49() {
-    trimming("if (s.equals(532)){ S.out.println(gG); S.out.l(kKz); } f();").to(null);
+    trimming("if (s.equals(532)){ S.out.println(gG); S.out.l(kKz); } f();").stays();
   }
 
   @Test public void ternarize52() {
     trimming("int a=0,b = 0,c,d = 0,e = 0;if (a < b) {c = d;c = e;} f();")//
-        .to(null);
+   .stays();
   }
 
   @Test public void ternarize54() {
@@ -4137,7 +4137,7 @@ import il.org.spartan.spartanizer.utils.*;
         + "    azzert.assertEquals(BigInteger.TEN, c.getNumerator());\n" //
         + "    azzert.assertEquals(BigInteger.ONE, c.getDenominator());\n" //
         + "  }\n" //
-        + "}").to(null);
+        + "}").stays();
   }
 
   @Test public void useOutcontextToManageStringAmbiguity() {
@@ -4145,11 +4145,11 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void vanillaShortestFirstConditionalNoChange() {
-    trimming("literal ? CONDITIONAL_OR : CONDITIONAL_AND").to(null);
+    trimming("literal ? CONDITIONAL_OR : CONDITIONAL_AND").stays();
   }
 
   @Test public void xorSortClassConstantsAtEnd() {
-    trimming("f(a,b,c,d) ^ BOB").to(null);
+    trimming("f(a,b,c,d) ^ BOB").stays();
   }
 
   @Test public void issue131_1() {

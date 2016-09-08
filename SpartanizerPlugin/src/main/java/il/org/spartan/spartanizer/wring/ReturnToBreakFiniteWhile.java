@@ -99,6 +99,6 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Canon
 
   @Override boolean scopeIncludes(final Block b) {
     final List<Statement> ss = step.statements(b);
-    return b != null && ss.size() > 1 && ss.get(0) instanceof WhileStatement && ss.get(1) instanceof ReturnStatement;
+    return ss.size() > 1 && ss.get(0) instanceof WhileStatement && ss.get(1) instanceof ReturnStatement;
   }
 }

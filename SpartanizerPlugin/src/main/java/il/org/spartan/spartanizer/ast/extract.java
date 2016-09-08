@@ -71,6 +71,9 @@ public enum extract {
   public static ReturnStatement asReturn(final ASTNode ¢) {
     return asReturn(singleStatement(¢));
   }
+  public static ReturnStatement asReturn(final Statement ¢) {
+    return az.returnStatement(¢);
+  }
 
   /** @param n a statement or block to extract the assignment from
    * @return null if the block contains more than one statement or if the
