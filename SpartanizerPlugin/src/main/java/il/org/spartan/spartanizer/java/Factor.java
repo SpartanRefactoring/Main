@@ -5,7 +5,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 
-// TOOD: Who wrote this class?
+// TOOD Niv: Who wrote this class?
 class Factor {
   static Factor divide(final Expression x) {
     return new Factor(true, x);
