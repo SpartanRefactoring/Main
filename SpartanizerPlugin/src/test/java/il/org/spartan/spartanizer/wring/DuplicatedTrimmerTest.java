@@ -6,8 +6,6 @@ import static il.org.spartan.spartanizer.engine.ExpressionComparator.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 import static il.org.spartan.spartanizer.spartanizations.TESTUtils.*;
 import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.*;
-import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.apply;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.junit.*;
@@ -25,7 +23,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Yossi Gil
  * @since 2014-07-10 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@SuppressWarnings({ "static-method", "javadoc" }) public class ValidTrimmerTest {
+@SuppressWarnings({ "static-method", "javadoc" }) public class DuplicatedTrimmerTest {
   @Test public void actualExampleForSortAddition() {
     trimming("1 + b.statements().indexOf(declarationStmt)").to(null);
   }
@@ -369,34 +367,6 @@ import il.org.spartan.spartanizer.utils.*;
     trimming("int a = 2; a = 3 * a; ").to("int a = 3 * 2;");
     trimming("int a = 2; return 3 * a; ").to("return 3 * 2;");
     trimming("int a = 2; return a; ").to("return 2;");
-  }
-
-  @Test public void canonicalFragementExamplesWithExraFragments() {
-    trimming("int a = 2; a = 3 * a * b; ").to("int a = 3 * 2 * b;");
-    trimming("int a = 2; a = 3 * a; ").to("int a = 3 * 2;");
-    trimming("int a = 2; a += 3; ").to("int a = 2 + 3;");
-    trimming("int a = 2; a += b; ").to("int a = 2 + b;");
-    trimming("int a = 2, b = 11; a = 3 * a * b; ")//
-        .to("int a=2;a=3*a*11;")//
-        .to("int a=3*2*11;")//
-        .to("int a=66;");
-    trimming("int a = 2, b=1; a += b; ").to("int a=2;a+=1;").to("int a=2+1;");
-    trimming("int a = 2,b=1; if (b) a = 3; ").to("int a=2;if(1)a=3;").to("int a=1?3:2;");
-    trimming("int a = 2, b = 1; return a + 3 * b; ").to("int b=1;return 2+3*b;");
-    trimming("int a =2,b=2; if (x) a = 2*a;").to("int a=x?2*2:2, b=2;");
-    trimming("int a = 2, b; a = 3 * a * b; ").to("int a = 2, b; a *= 3 * b; ").to(null);
-    trimming("int a = 2, b; a += b; ").to(null);
-    trimming("int a =2,b; if (x) a = 2*a;").to("int a=x?2*2:2, b;");
-    trimming("int a = 2, b; return a + 3 * b; ").to("return 2 + 3*b;");
-    trimming("int a =2; if (x) a = 3*a;").to("int a=x?3*2:2;");
-    trimming("int a = 2; return 3 * a * a; ").to("return 3 * 2 * 2;");
-    trimming("int a = 2; return 3 * a * b; ").to("return 3 * 2 * b;");
-    trimming("int a = 2; return a; ").to("return 2;");
-    trimming("int a,b=2; a = b;").to("int a;a=2;").to("int a=2;");
-    trimming("int a,b; a = 3;").to("int a = 3, b;");
-    trimming("int a; if (x) a = 3; else a++;").to("int a;if(x)a=3;else++a;");
-    trimming("int b=5,a = 2,c=4; return 3 * a * b * c; ").to("int a=2,c=4;return 3*a*5*c;");
-    trimming("int b=5,a = 2,c; return 3 * a * b * c; ").to("int a = 2; return 3 * a * 5 * c;");
   }
 
   @Test public void canonicalFragementExamplesWithExraFragmentsX() {
@@ -838,10 +808,6 @@ import il.org.spartan.spartanizer.utils.*;
     trimming("try { f(); } catch (Exception e) { } finally {}").to(null);
   }
 
-  @Test public void dontELiminateSwitch() {
-    trimming("switch (a) { default: }").to(null);
-  }
-
   @Test public void dontSimplifyCatchBlock() {
     trimming("try { {} ; {} } catch (Exception e) {{} ; {}  } finally {{} ; {}}")//
         .to(" try {}          catch (Exception e) {}          finally {}");
@@ -931,53 +897,6 @@ import il.org.spartan.spartanizer.utils.*;
                 "      return res;\n" + //
                 " if (b) i = 3;")//
             .to(null);
-  }
-
-  @Test public void IfBarFooElseBazFooExtractDefinedSuffix() {
-    trimming("" //
-        + "public static void f() {\n" //
-        + "  int i = 0;\n" //
-        + "  if (f()) {\n" //
-        + "    i += 1;\n" //
-        + "    System.out.println('!');\n" //
-        + "    System.out.println('!');\n" //
-        + "    ++i;\n" //
-        + "  } else {\n" //
-        + "    i += 2;\n" //
-        + "    System.out.println('@');\n" //
-        + "    System.out.println('@');\n" //
-        + "    ++i;\n" //
-        + "  }\n" //
-        + "}")
-            .to("" //
-                + "public static void f() {\n" //
-                + "  int i = 0;\n" //
-                + "  if (f()) {\n" //
-                + "    i += 1;\n" //
-                + "    System.out.println('!');\n" //
-                + "    System.out.println('!');\n" //
-                + "  } else {\n" //
-                + "    i += 2;\n" //
-                + "    System.out.println('@');\n" //
-                + "    System.out.println('@');\n" //
-                + "  }\n" //
-                + "  ++i;" //
-                + "}");
-  }
-
-  @Test public void IfBarFooElseBazFooExtractUndefinedSuffix() {
-    trimming("" //
-        + "public final static final void f() {\n" //
-        + "  if (tr()) {\n" //
-        + "    int i = 0;\n" //
-        + "    System.out.println(i + 0);\n" //
-        + "    ++i;\n" //
-        + "  } else {\n" //
-        + "    int i = 1;\n" //
-        + "    System.out.println(i * 1);\n" //
-        + "    ++i;\n" //
-        + "  }\n" //
-        + "}");
   }
 
   @Test public void ifBugSecondTry() {
@@ -1250,26 +1169,6 @@ import il.org.spartan.spartanizer.utils.*;
                 "");
   }
 
-  @Test public void inlineArrayInitialization1() {
-    trimming("" //
-        + "public void multiDimensionalIntArraysAreEqual() {\n" //
-        + "  int[][] int1 = {{1, 2, 3}, {4, 5, 6}};\n" //
-        + "  int[][] int2 = {{1, 2, 3}, {4, 5, 6}};\n" //
-        + "  assertArrayEquals(int1, int2);\n" //
-        + "}").to(null);
-  }
-
-  @Test public void inlineArrayInitialization2() {
-    trimming("" //
-        + "public double[] solve() {\n" //
-        + "  final SimpleRegression regress = new SimpleRegression(true);\n" //
-        + "  for (double[] d : points)\n" //
-        + "    regress.addData(d[0], d[1]);\n" //
-        + "  final double[] $ = { regress.getSlope(), regress.getIntercept() };\n" //
-        + "  return $;\n" //
-        + "}").to(null);
-  }
-
   @Test public void inlineInitializers() {
     trimming("int b,a = 2; return 3 * a * b; ").to("return 3*2*b;");
   }
@@ -1280,26 +1179,6 @@ import il.org.spartan.spartanizer.utils.*;
 
   @Test public void inlineInitializersSecondStep() {
     trimming("int a = 2; return 3*a*4;").to("return 3 * 2 * 4;");
-  }
-
-  /** START OF STABLING TESTS */
-  @Test public void inlineintoInstanceCreation() {
-    trimming("" //
-        + "public Statement methodBlock(FrameworkMethod m) {\n" //
-        + "  final Statement statement = methodBlock(m);\n" //
-        + "  return new Statement() {\n" //
-        + "     public void evaluate() throws Throwable {\n" //
-        + "       try {\n" //
-        + "         statement.evaluate();\n" //
-        + "         handleDataPointSuccess();\n" //
-        + "       } catch (AssumptionViolatedException e) {\n" //
-        + "         handleAssumptionViolation(e);\n" //
-        + "       } catch (Throwable e) {\n" //
-        + "         reportParameterizedError(e, complete.getArgumentStrings(nullsOk()));\n" //
-        + "       }\n" //
-        + "     }\n" //
-        + "   };\n" //
-        + "}").to(null);
   }
 
   @Test public void inlineintoNextStatementWithSideEffects() {
@@ -1408,10 +1287,6 @@ import il.org.spartan.spartanizer.utils.*;
         .to("d*x/a*b/c/d");
   }
 
-  @Test public void issue06C1() {
-    trimming("a*-b/-c*- - - d / d").to("-a * b/ c * d/d");
-  }
-
   @Test public void issue06C4() {
     trimming("-a * b/ c ").to(null);
   }
@@ -1453,83 +1328,6 @@ import il.org.spartan.spartanizer.utils.*;
         .to("-41*a*19")//
         .to("-41*19*a") //
     ;
-  }
-
-  @Test public void issue110_01() {
-    trimming("polite ? \"Eat your meal.\" :  \"Eat your meal, please\"") //
-        .to("\"Eat your meal\" + (polite ? \".\" : \", please\")");
-  }
-
-  @Test public void issue110_02() {
-    trimming("polite ? \"Eat your meal.\" :  \"Eat your meal\"") //
-        .to("\"Eat your meal\" + (polite ? \".\" : \"\")");
-  }
-
-  @Test public void issue110_03() {
-    trimming("polite ? \"thanks for the meal\" :  \"I hated the meal\"") //
-        .to("!polite ? \"I hated the meal\": \"thanks for the meal\"") //
-        .to("(!polite ? \"I hated\" : \"thanks for\" )+ \" the meal\"");
-  }
-
-  @Test public void issue110_04() {
-    trimming("polite ? \"thanks.\" :  \"I hated the meal.\"") //
-        .to("(polite ? \"thanks\" :\"I hated the meal\")+ \".\"");
-  }
-
-  @Test public void issue110_05() {
-    trimming("a ? \"abracadabra\" : \"abba\"") //
-        .to("!a ? \"abba\" : \"abracadabra\"")//
-        .to("\"ab\" +(!a ? \"ba\" : \"racadabra\")")//
-        .to("\"ab\" +((!a ? \"b\" : \"racadabr\")+ \"a\")")//
-        .to("\"ab\" +(!a ? \"b\" : \"racadabr\")+ \"a\"").to(null);
-  }
-
-  @Test public void issue110_06() {
-    trimming("receiver ==null ? \"Use \" + \"x\" : \"Use \" + receiver")//
-        .to("\"Use \"+(receiver==null ? \"x\" : receiver)").to(null);
-  }
-
-  @Test public void issue110_07() {
-    trimming("receiver ==null ? \"Use x\" : \"Use \" + receiver")//
-        .to("\"Use \"+(receiver==null ? \"x\" : \"\"+receiver)").to("\"Use \"+(receiver==null ? \"x\" : receiver+\"\")").to(null);
-  }
-
-  @Test public void issue110_08() {
-    trimming("receiver ==null ? \"Use\" : receiver + \"Use\"")//
-        .to("(receiver==null ? \"\" : receiver+\"\") + \"Use\"").to(null);
-  }
-
-  @Test public void issue110_09() {
-    trimming("receiver ==null ? \"user a\" : receiver + \"something a\"")//
-        .to("(receiver==null ? \"user\" : receiver+\"something\") + \" a\"").to(null);
-  }
-
-  @Test public void issue110_10() {
-    trimming("receiver ==null ? \"Something Use\" : \"Something\" + receiver + \"Use\"")//
-        .to("\"Something\"+ (receiver==null ? \" Use\" : \"\"+receiver + \"Use\")")//
-        .to("\"Something\"+ ((receiver==null ? \" \" : \"\"+receiver+\"\") + \"Use\")");
-  }
-
-  @Test public void issue110_11() {
-    trimming("f() ? \"first\" + d() + \"second\" : \"first\" + g() + \"third\"")//
-        .to("\"first\" + (f() ? \"\" + d()  + \"second\" : \"\" + g()  + \"third\")");
-  }
-
-  @Test public void issue110_12() {
-    trimming("f() ? \"first\" + d() + \"second\" : \"third\" + g() + \"second\"")//
-        .to("(f() ? \"first\" +  d() + \"\": \"third\" + g()+\"\") + \"second\"");
-  }
-
-  @Test public void issue110_13() {
-    trimming("f() ? \"first is:\" + d() + \"second\" : \"first are:\" + g() + \"and second\"")//
-        .to("\"first \" + (f() ? \"is:\" + d() + \"second\": \"are:\" + g() + \"and second\")")//
-        .to("\"first \" + ((f() ? \"is:\" + d() + \"\": \"are:\" + g() + \"and \") + \"second\")");
-  }
-
-  @Test public void issue110_14() {
-    trimming("x == null ? \"Use isEmpty()\" : \"Use \" + x + \".isEmpty()\"")//
-        .to("\"Use \" + (x==null ? \"isEmpty()\" : \"\"+ x +  \".isEmpty()\")")//
-        .to("\"Use \" + ((x==null ? \"\" : \"\"+ x +  \".\")+\"isEmpty()\")");
   }
 
   @Test public void issue37Simplified() {
@@ -1662,16 +1460,6 @@ import il.org.spartan.spartanizer.utils.*;
         .to("int f(){int $=0;for(int i:X)$+=f(i);return $;}");
   }
 
-  @Test public void issue51g() {
-    trimming("abstract abstract interface a"//
-        + "{}").to("interface a {}");
-  }
-
-  @Test public void issue52a() {
-    trimming("abstract abstract interface a"//
-        + "{}").to("interface a {}");
-  }
-
   @Test public void issue52A() {
     trimming( //
         "void m() { return; }").to( //
@@ -1682,11 +1470,6 @@ import il.org.spartan.spartanizer.utils.*;
     trimming( //
         "void m() { return a; }").to( //
             "");
-  }
-
-  @Test public void issue52b() {
-    trimming("abstract interface a"//
-        + "{}").to("interface a {}");
   }
 
   @Test public void issue52B1() {
@@ -1701,141 +1484,11 @@ import il.org.spartan.spartanizer.utils.*;
             "void m() { if (a) ++i; else { f(); ; }}");
   }
 
-  @Test public void issue52c() {
-    trimming("interface a"//
-        + "{}").to(null);
-  }
-
-  @Test public void issue52d() {
-    trimming(//
-        "public interface A {\n"//
-            + "public abstract void add();\n"//
-            + "abstract void remove()\n; "//
-            + "static final void remove()\n; "//
-            + "}"//
-    ).to("" + "public interface A {\n"//
-        + "void add();\n"//
-        + "void remove()\n; "//
-        + "static void remove()\n; "//
-        + "}"//
-    );
-  }
-
-  @Test public void issue52e() {
-    trimming(//
-        "public interface A {\n"//
-            + "static void remove()\n; "//
-            + "public static int i = 3\n; "//
-            + "}").to( //
-                "public interface A {\n"//
-                    + "static void remove()\n; "//
-                    + "static int i = 3\n; "//
-                    + "}");
-  }
-
-  @Test public void issue52f() {
-    trimming(//
-        "public interface A {\n"//
-            + "static void remove()\n; "//
-            + "public static int i\n; "//
-            + "}").to( //
-                "public interface A {\n"//
-                    + "static void remove()\n; "//
-                    + "static int i\n; "//
-                    + "}");
-  }
-
-  @Test public void issue52g() {
-    trimming("final class ClassTest {\n"//
-        + "final void remove();\n"//
-        + "}")
-            .to("final class ClassTest {\n"//
-                + "void remove();\n "//
-                + "}");
-  }
-
-  @Test public void issue52h() {
-    trimming("final class ClassTest {\n"//
-        + "public final void remove();\n"//
-        + "}"//
-    ).to(//
-        "final class ClassTest {\n"//
-            + "public void remove();\n "//
-            + "}");
-  }
-
-  @Test public void issue52i() {
-    trimming("public class ClassTest {\n"//
-        + "static enum Day {\n"//
-        + "SUNDAY, MONDAY\n"//
-        + "SUNDAY, MONDAY\n"//
-        + "}");
-  }
-
-  @Test public void issue52j() {
-    trimming("public class ClassTest {\n"//
-        + "private static enum Day {\n"//
-        + "SUNDAY, MONDAY\n"//
-        + "}");
-  }
-
-  @Test public void issue52k() {
-    trimming("public class ClassTest {\n"//
-        + "public  ClassTest(){}\n"//
-        + "}").to(null);
-  }
-
-  @Test public void issue52l() {
-    trimming("abstract class A { final void f() { }}").to(null);
-  }
-
-  @Test public void issue52n() {
-    trimming(//
-        "abstract class A {\n"//
-            + "static void f() {}\n "//
-            + "public final static int i = 3; "//
-            + "}")
-                .to(//
-                    "abstract class A {\n"//
-                        + "static void f() {}\n "//
-                        + "public static final int i = 3; "//
-                        + "}")
-                .to(null);
-  }
-
-  @Test public void issue52o() {
-    trimming(//
-        "final class A {\n"//
-            + "static void f() {}\n "//
-            + "public final static int i = 3; "//
-            + "}")//
-                .to(//
-                    "final class A {\n"//
-                        + "static void f() {}\n "//
-                        + "public static final int i = 3; "//
-                        + "}")//
-                .to(null);
-  }
-
-  @Test public void issue52p() {
-    trimming(//
-        "enum A {a1, a2; static enum B {b1, b2; static class C { static enum D {c1, c2}}}")//
-            .to("enum A {a1, a2; enum B {b1, b2; static class C { static enum D {c1, c2}}}")//
-            .to("enum A {a1, a2; enum B {b1, b2; static class C { enum D {c1, c2}}}");
-  }
-
   @Test public void issue53() {
     trimming( //
         "int[] is = f(); for (int i: is) f(i);")//
             .to( //
                 "for (int i: f()) f(i);");
-  }
-
-  @Test public void issue53a() {
-    trimming( //
-        "int f() { int x = 0; for (int i = 0; i < 10; ++i) x += i; return x;}")//
-            .to( //
-                "int f() { int $ = 0; for (int i = 0; i < 10; ++i) $ += i; return $;}");
   }
 
   @Test public void issue54DoNonSideEffect() {
@@ -1883,12 +1536,6 @@ import il.org.spartan.spartanizer.utils.*;
   @Test public void issue54ForEnhancedNonSideEffectWithBody() {
     trimming("int a  = f; for (int i: j) b[i] = a;")//
         .to(" for(int i:j)b[i]=f; ");
-  }
-
-  @Test public void issue54ForPlain() {
-    trimming("int a  = f(); for (int i = 0; i < 100;  ++i) b[i] = a;")//
-        .to("for (int i = 0; i < 100;  ++i) b[i] = f();")//
-        .to(null);
   }
 
   @Test public void issue54ForPlainNonSideEffect() {
@@ -1968,13 +1615,6 @@ import il.org.spartan.spartanizer.utils.*;
         .to(null);
   }
 
-  @Test public void issue62b_1() {
-    trimming("int f(int i) { for(;i<100;i=i+1) if(false) break; return i; }")//
-        .to("int f(int i) { for(;i<100;i+=1){} return i; }")//
-        .to("int f(int i) { for(;i<100;i++){} return i; }")//
-        .to("int f(int i) { for(;i<100;++i){} return i; }").to(null);//
-  }
-
   @Test public void issue62c() {
     trimming("int f(int i) { while(++i > 999) if(i>99) break; return i;}").to(null);
   }
@@ -2005,10 +1645,6 @@ import il.org.spartan.spartanizer.utils.*;
 
   @Test public void issue73c() {
     trimming("void foo(Integer integer, ASTNode astn) {}").to("void foo(Integer i, ASTNode astn) {}");
-  }
-
-  @Test public void issue74d() {
-    trimming("int[] a = new int[] {2,3};").to(null);
   }
 
   @Test public void linearTransformation() {
@@ -2116,13 +1752,6 @@ import il.org.spartan.spartanizer.utils.*;
     trimming("int b=3==4?5==3?2:3:5==3?2:3*3;").to("int b=3==4?5==3?2:3:5!=3?3*3:2;");
   }
 
-  @Test public void noChange() {
-    trimming("12").to(null);
-    trimming("true").to(null);
-    trimming("null").to(null);
-    trimming("on*of*no*notion*notion").to("no*of*on*notion*notion");
-  }
-
   @Test public void noChange0() {
     trimming("kludge + the * plain ").to(null);
   }
@@ -2133,10 +1762,6 @@ import il.org.spartan.spartanizer.utils.*;
 
   @Test public void noChange2() {
     trimming("plain + kludge").to(null);
-  }
-
-  @Test public void noChangeA() {
-    trimming("true").to(null);
   }
 
   @Test public void noinliningintoSynchronizedStatement() {
@@ -2910,66 +2535,6 @@ import il.org.spartan.spartanizer.utils.*;
     trimming("a ? b : true").to("!a || b");
   }
 
-  @Test public void redundantButNecessaryBrackets1() {
-    trimming("" //
-        + "if (windowSize != INFINITE_WINDOW) {\n" //
-        + "  if (getN() == windowSize)\n" //
-        + "    eDA.addElementRolling(v);\n" //
-        + "  else if (getN() < windowSize)\n" //
-        + "    eDA.addElement(v);\n" //
-        + "} else {\n" //
-        + "  System.out.println('!');\n" //
-        + "  System.out.println('!');\n" //
-        + "  System.out.println('!');\n" //
-        + "  System.out.println('!');\n" //
-        + "  System.out.println('!');\n" //
-        + "  System.out.println('!');\n" //
-        + "  System.out.println('!');\n" //
-        + "  eDA.addElement(v);\n" //
-        + "}").to(null);
-  }
-
-  @Test public void redundantButNecessaryBrackets2() {
-    trimming("" //
-        + "if (windowSize != INFINITE_WINDOW) {\n" //
-        + "  if (getN() == windowSize)\n" //
-        + "    eDA.addElementRolling(v);\n" //
-        + "} else {\n" //
-        + "  System.out.println('!');\n" //
-        + "  System.out.println('!');\n" //
-        + "  System.out.println('!');\n" //
-        + "  System.out.println('!');\n" //
-        + "  System.out.println('!');\n" //
-        + "  System.out.println('!');\n" //
-        + "  System.out.println('!');\n" //
-        + "  eDA.addElement(v);\n" //
-        + "}").to(null);
-  }
-
-  @Test public void redundantButNecessaryBrackets3() {
-    trimming("" //
-        + "if (b1)\n" //
-        + "  if (b2)\n" //
-        + "    print1('!');\n" //
-        + "  else {\n" //
-        + "    if (b3)\n" //
-        + "      print3('#');\n" //
-        + "  }\n" //
-        + "else {\n" //
-        + "  print4('$');\n" //
-        + "  print4('$');\n" //
-        + "  print4('$');\n" //
-        + "  print4('$');\n" //
-        + "  print4('$');\n" //
-        + "  print4('$');\n" //
-        + "  print4('$');\n" //
-        + "  print4('$');\n" //
-        + "  print4('$');\n" //
-        + "  print4('$');\n" //
-        + "  print4('$');\n" //
-        + "}").to(null);
-  }
-
   @Test public void removeSuper() {
     trimming("class T {T(){super();}}").to("class T { T() { }}");
   }
@@ -3243,15 +2808,6 @@ import il.org.spartan.spartanizer.utils.*;
     trimming("x + y > z").to(null);
   }
 
-  @Test public void shortestOperand02() {
-    trimming("k = k + 4;if (2 * 6 + 4 == k) return true;").to("k += 4;if (12 + 4 == k) return true;");
-  }
-
-  @Test public void shortestOperand05() {
-    trimming("    W s = new W(\"bob\");\n" + //
-        "    return s.l(hZ).l(\"-ba\").toString() == \"bob-ha-banai\";").to("return(new W(\"bob\")).l(hZ).l(\"-ba\").toString()==\"bob-ha-banai\";");
-  }
-
   @Test public void shortestOperand10() {
     trimming("return b == true;").to("return b;");
   }
@@ -3357,22 +2913,6 @@ import il.org.spartan.spartanizer.utils.*;
     trimming("{;}").to("/* empty */    ");
   }
 
-  @Test public void simplifyBlockComplexEmpty0A() {
-    trimming("{}").to("/* empty */");
-  }
-
-  @Test public void simplifyBlockComplexEmpty0B() {
-    trimming("{;}").to("/* empty */");
-  }
-
-  @Test public void simplifyBlockComplexEmpty0C() {
-    trimming("{{;}}").to("/* empty */");
-  }
-
-  @Test public void simplifyBlockComplexEmpty0D() {
-    trimming("{;;;{;;;}{;}}").to("/* empty */    ");
-  }
-
   @Test public void simplifyBlockComplexEmpty1() {
     trimming("{;;{;{{}}}{}{};}").to("/* empty */ ");
   }
@@ -3456,10 +2996,6 @@ import il.org.spartan.spartanizer.utils.*;
 
   @Test public void simplifyLogicalNegationOfOr() {
     trimming("!(f() || f(5))").to("!f() && !f(5)");
-  }
-
-  @Test public void sortAddition1() {
-    trimming("1 + 2 - 3 - 4 + 5 / 6 - 7 + 8 * 9  + A> k + 4").to("8*9+1+2-3-4+5 / 6-7+A>k+4");
   }
 
   @Test public void sortAddition2() {
@@ -3550,40 +3086,12 @@ import il.org.spartan.spartanizer.utils.*;
     trimming("1.0*2222*3").to("6666.0");
   }
 
-  @Test public void sortThreeOperands2() {
-    trimming("1.0*11*124").to("1364.0");
-  }
-
-  @Test public void sortThreeOperands3() {
-    trimming("2*2F*33*142").to(null);
-  }
-
-  @Test public void sortThreeOperands4() {
-    trimming("2*3*'a'").to(null);
-  }
-
   @Test public void sortTwoOperands0CheckThatWeSortByLength_a() {
     trimming("1111*211").to("234421");
   }
 
   @Test public void sortTwoOperands0CheckThatWeSortByLength_b() {
     trimming("211*1111").to("234421");
-  }
-
-  @Test public void sortTwoOperands1() {
-    trimming("1F*2F").to(null);
-  }
-
-  @Test public void sortTwoOperands2() {
-    trimming("2.0*2").to("4.0");
-  }
-
-  @Test public void sortTwoOperands3() {
-    trimming("2*3L").to("6L");
-  }
-
-  @Test public void sortTwoOperands4() {
-    trimming("2L*1L").to("2L");
   }
 
   @Test public void synchronizedBraces() {
@@ -3849,25 +3357,6 @@ import il.org.spartan.spartanizer.utils.*;
         (CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
   }
 
-  @Test public void unsafeBlockSimlify() {
-    trimming("" //
-        + "public void testParseInteger() {\n" //
-        + "  String source = \"10\";\n" //
-        + "  {\n" //
-        + "    BigFraction c = properFormat.parse(source);\n" //
-        + "   assert c != null;\n" //
-        + "    azzert.assertEquals(BigInteger.TEN, c.getNumerator());\n" //
-        + "    azzert.assertEquals(BigInteger.ONE, c.getDenominator());\n" //
-        + "  }\n" //
-        + "  {\n" //
-        + "    BigFraction c = improperFormat.parse(source);\n" //
-        + "   assert c != null;\n" //
-        + "    azzert.assertEquals(BigInteger.TEN, c.getNumerator());\n" //
-        + "    azzert.assertEquals(BigInteger.ONE, c.getDenominator());\n" //
-        + "  }\n" //
-        + "}").to(null);
-  }
-
   @Test public void useOutcontextToManageStringAmbiguity() {
     trimming("1+2+s<3").to("s+1+2<3");
   }
@@ -3880,225 +3369,189 @@ import il.org.spartan.spartanizer.utils.*;
     trimming("f(a,b,c,d) ^ BOB").to(null);
   }
 
-  @Test public void issue131_1() {
-    trimming("for(int i=4 ; i<s.length() ; ++i){i+=9;i++;return xxx;}return xxx;")
-        .to("for(int i=4 ; i<s.length() ; ++i){i+=9;++i;break;}return xxx;");
+  @Ignore @Test public void forwardDeclaration1() {
+    trimming("/*    * This is a comment    */      int i = 6;   int j = 2;   int k = i+2;   S.out.println(i-j+k); ")
+        .to(" /*    * This is a comment    */      int j = 2;   int i = 6;   int k = i+2;   S.out.println(i-j+k); ");
   }
 
-  @Test public void issue131_2() {
-    trimming("for(int i=4 ; i<s.length() ; ++i){i+=9;return xxx;}return xxx;").to("for(int i=4 ; i<s.length() ; ++i){i+=9;break;}return xxx;");
+  @Ignore @Test public void forwardDeclaration2() {
+    trimming("/*    * This is a comment    */      int i = 6, h = 7;   int j = 2;   int k = i+2;   S.out.println(i-j+k); ")
+        .to(" /*    * This is a comment    */      int h = 7;   int j = 2;   int i = 6;   int k = i+2;   S.out.println(i-j+k); ");
   }
 
-  @Test public void issue131_3() {
-    trimming("for(int i=4 ; i<s.length() ; ++i)return xxx;return xxx;").to("for(int i=4 ; i<s.length() ; ++i)break;return xxx;");
+  @Ignore @Test public void forwardDeclaration3() {
+    trimming("/*    * This is a comment    */      int i = 6;   int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m);   y(i);   y(i+m); ")
+        .to(" /*    * This is a comment    */      int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m);   int i = 6;   y(i);   y(i+m); ");
   }
 
-  @Test public void issue131_4() {
-    trimming("for(int i=4 ; i<s.length() ; ++i)if(t=4)return xxx;return xxx;").to("for(int i=4 ; i<s.length() ; ++i)if(t=4)break;return xxx;");
+  @Ignore @Test public void forwardDeclaration4() {
+    trimming(
+        " /*    * This is a comment    */      int i = 6;   int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m);   final BlahClass bc = new BlahClass(i);   y(i+m+bc.j);    private static class BlahClass {   public BlahClass(int i) {    j = 2*i;      public final int j; ")
+            .to(" /*    * This is a comment    */      int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m);   int i = 6;   final BlahClass bc = new BlahClass(i);   y(i+m+bc.j);    private static class BlahClass {   public BlahClass(int i) {    j = 2*i;      public final int j; ");
   }
 
-  @Test public void issue131_5() {
-    trimming("while(i>5){i+=9;i++;return xxx;}return xxx;").to("while(i>5){i+=9;++i;break;}return xxx;");
+  @Ignore @Test public void forwardDeclaration5() {
+    trimming("/*    * This is a comment    */      int i = y(0);   int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m + i);   y(i+m); ")
+        .to(" /*    * This is a comment    */      int j = 3;   int k = j+2;   int i = y(0);   int m = k + j -19;   y(m*2 - k/m + i);   y(i+m); ");
   }
 
-  @Test public void issue131_6() {
-    trimming("while(i>5){i+=9;return xxx;}return xxx;").to("while(i>5){i+=9;break;}return xxx;");
+  @Ignore @Test public void forwardDeclaration6() {
+    trimming(
+        " /*    * This is a comment    */      int i = y(0);   int h = 8;   int j = 3;   int k = j+2 + y(i);   int m = k + j -19;   y(m*2 - k/m + i);   y(i+m); ")
+            .to(" /*    * This is a comment    */      int h = 8;   int i = y(0);   int j = 3;   int k = j+2 + y(i);   int m = k + j -19;   y(m*2 - k/m + i);   y(i+m); ");
   }
 
-  @Test public void issue131_7() {
-    trimming("while(i>5)return xxx;return xxx;").to("while(i>5)break;return xxx;");
+  @Ignore @Test public void forwardDeclaration7() {
+    trimming(
+        "  j = 2*i;   }      public final int j;    private BlahClass yada6() {   final BlahClass res = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     res = new BlahClass(8);     S.out.println(res.j);     doStuff(res);        private void doStuff(BlahClass res2) {     S.out.println(res2.j);        private BlahClass res;   S.out.println(res.j);   return res; ")
+            .to("  j = 2*i;   }      public final int j;    private BlahClass yada6() {   final Runnable r = new Runnable() {        @Override    public void run() {     res = new BlahClass(8);     S.out.println(res.j);     doStuff(res);        private void doStuff(BlahClass res2) {     S.out.println(res2.j);        private BlahClass res;   final BlahClass res = new BlahClass(6);   S.out.println(res.j);   return res; ");
   }
 
-  @Test public void issue131_8() {
-    trimming("while(i>5)if(t=4)return xxx;return xxx;").to("while(i>5)if(t=4)break;return xxx;");
-  }
-
-  @Test public void annotationDoNotRemoveSingleMemberNotCalledValue() {
-    trimming("@SuppressWarnings(sky = \"blue\") void m() {}").to(null);
-  }
-
-  @Test public void annotationDoNotRemoveValueAndSomethingElse() {
-    trimming("@SuppressWarnings(value = \"something\", x = 2) void m() {}").to(null);
-  }
-
-  @Test public void annotationRemoveEmptyParentheses() {
-    trimming("@Override() void m() {}").to("@Override void m() {}");
-  }
-
-  @Test public void annotationRemoveValueFromMultipleAnnotations() {
-    trimming("@SuppressWarnings(value = \"javadoc\") @TargetApi(value = 23) void m() {}") //
-        .to("@SuppressWarnings(\"javadoc\") @TargetApi(23) void m() {}");
-  }
-
-  @Test public void annotationRemoveValueMemberArrayValue() {
-    trimming("@SuppressWarnings(value = { \"something\", \"something else\" }) void m() {}") //
-        .to("@SuppressWarnings({ \"something\", \"something else\" }) void m() {}");
-  }
-
-  @Test public void annotationRemoveValueMemberSingleValue() {
-    trimming("@SuppressWarnings(value = \"something\") void m() {}") //
-        .to("@SuppressWarnings(\"something\") void m() {}");
-  }
-
-  @Test public void booleanChangeValueOfToConstant() {
-    trimming("Boolean b = Boolean.valueOf(true);").to("Boolean b = Boolean.TRUE;");
-    trimming("Boolean b = Boolean.valueOf(false);").to("Boolean b = Boolean.FALSE;");
-  }
-
-  @Test public void booleanChangeValueOfToConstantNotConstant() {
-    trimming("Boolean.valueOf(expected);").to(null); // from junit source
-  }
-
-  @Test public void doNotInlineDeclarationWithAnnotationSimplified() {
+  @Ignore @Test public void inline00() {
     trimming("" + //
-        "    @SuppressWarnings int $ = (Class<T>) findClass(className);\n" + //
-        "    return $;\n" + //
-        "  }").to(null);
+        "  Object a() { " + //
+        "    class a {\n" + //
+        "      a a;\n" + //
+        "      Object a() {\n" + //
+        "        return a;\n" + // /
+        "      }" + //
+        "    }\n" + //
+        "    final Object a = new Object();\n" + //
+        "    if (a instanceof a)\n" + //
+        "      new Object();  \n" + //
+        "    final Object a = new Object();\n" + //
+        "    if (a instanceof a)\n" + //
+        "      new Object();" + //
+        "}\n" + //
+        "").to(//
+            "  Object a() { " + //
+                "    class a {\n" + //
+                "      Object a() {\n" + //
+                "        return a;\n" + // /
+                "    }\n" + //
+                "    final Object a = new Object();\n" + //
+                "    if (a instanceof a)\n" + //
+                "      new Object();  \n" + //
+                "    final Object a = new Object();\n" + //
+                "    if (a instanceof a)\n" + //
+                "      new Object();" + //
+                "}\n" + //
+                "");
   }
 
-  @Test public void issue21a() {
-    trimming("a.equals(\"a\")").to("\"a\".equals(a)");
+  @Ignore @Test public void inlineSingleUse01() {
+    trimming("/*    * This is a comment    */      int i = y(0);   int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m + i); ")
+        .to(" /*    * This is a comment    */      int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m + (y(0))); ");
   }
 
-  @Test public void issue21b() {
-    trimming("a.equals(\"ab\")").to("\"ab\".equals(a)");
+  @Ignore @Test public void inlineSingleUse02() {
+    trimming("/*    * This is a comment    */      int i = 5,j=3;   int k = j+2;   int m = k + j -19 +i;   y(k); ")
+        .to(" /*    * This is a comment    */      int j=3;   int k = j+2;   int m = k + j -19 +(5);   y(k); ");
   }
 
-  @Test public void issue21d() {
-    trimming("a.equalsIgnoreCase(\"a\")").to("\"a\".equalsIgnoreCase(a)");
+  @Ignore @Test public void inlineSingleUse03() {
+    trimming("/*    * This is a comment    */      int i = 5;   int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m + i); ")
+        .to(" /*    * This is a comment    */      int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m + (5)); ");
   }
 
-  @Test public void issue21e() {
-    trimming("a.equalsIgnoreCase(\"ab\")").to("\"ab\".equalsIgnoreCase(a)");
+  @Ignore @Test public void inlineSingleUse04() {
+    trimming("int x = 6;   final BlahClass b = new BlahClass(x);   int y = 2+b.j;   y(y-b.j);   y(y*2); ")
+        .to(" final BlahClass b = new BlahClass((6));   int y = 2+b.j;   y(y-b.j);   y(y*2); ");
   }
 
-  @Test public void issue51() {
-    trimming("int f() { int x = 0; for (int i = 0; i < 10; ++i) x += i; return x;}")//
-        .to("int f() { int $ = 0; for (int i = 0; i < 10; ++i) $ += i; return $;}");
+  @Ignore @Test public void inlineSingleUse05() {
+    trimming("int x = 6;   final BlahClass b = new BlahClass(x);   int y = 2+b.j;   y(y+x);   y(y*x); ")
+        .to(" int x = 6;   int y = 2+(new BlahClass(x)).j;   y(y+x);   y(y*x); ");
   }
 
-  @Test public void issue64c() {
-    trimming("void f(int x) {" + //
-        "    ++x;\n" + //
-        "    final int a = x;\n" + //
-        "    new Object() {\n" + //
-        "      @Override public int hashCode() { return a; }\n" + //
-        "    };" + "}").to(null);
+  @Ignore @Test public void inlineSingleUse06() {
+    trimming(
+        "   final Collection<Integer> outdated = new ArrayList<>();     int x = 6, y = 7;     S.out.println(x+y);     final Collection<Integer> coes = new ArrayList<>();     for (final Integer pi : coes)      if (pi.intValue() < x - y)       outdated.add(pi);     for (final Integer pi : outdated)      coes.remove(pi);     S.out.println(coes.size()); ")
+            .to(null);
   }
 
-  @Test public void removeSuperWithReceiver() {
-    trimming("class X{X(Y o){o.super();}}").to(null);
+  @Ignore @Test public void inlineSingleUse08() {
+    trimming(
+        "   final Collection<Integer> outdated = new ArrayList<>();     int x = 6, y = 7;     S.out.println(x+y);     final Collection<Integer> coes = new ArrayList<>();     for (final Integer pi : coes)      if (pi.intValue() < x - y)       outdated.add(pi);     S.out.println(coes.size());     S.out.println(outdated.size()); ")
+            .to(null);
   }
 
-  @Test public void renameUnusedVariableToDoubleUnderscore1() {
-    trimming("void f(int x) {System.out.println(x);}").to(null);
+  @Ignore @Test public void inlineSingleUse09() {
+    trimming(
+        " final A a = new D().new A(V){\nABRA\n{\nCADABRA\n{V;);   assertEquals(5, a.new Context().lineCount());   final PureIterable&lt;Mutant&gt; ms = a.generateMutants();   assertEquals(2, count(ms));   final PureIterator&lt;Mutant&gt; i = ms.iterator();    azzert.aye(i.hasNext());   assertEquals(V;{\nABRA\nABRA\n{\nCADABRA\n{\nV;, i.next().text);    azzert.aye(i.hasNext());   assertEquals(V;{\nABRA\n{\nCADABRA\nCADABRA\n{\nV;, i.next().text);    azzert.nay(i.hasNext());  ")
+            .to(null);
   }
 
-  @Test public void renameUnusedVariableToDoubleUnderscore2() {
-    trimming("void f(int x) {}").to(null);
+  @Ignore @Test public void inlineSingleUse10() {
+    trimming(
+        "      final A a = new A(\"{\nABRA\n{\nCADABRA\n{\");        assertEquals(5, a.new Context().lineCount());        final PureIterable<Mutant> ms = a.mutantsGenerator();        assertEquals(2, count(ms));        final PureIterator<Mutant> i = ms.iterator();         azzert.aye(i.hasNext());        assertEquals(\"{\nABRA\nABRA\n{\nCADABRA\n{\n\", i.next().text);         azzert.aye(i.hasNext());        assertEquals(\"{\nABRA\n{\nCADABRA\nCADABRA\n{\n\", i.next().text);         azzert.nay(i.hasNext());")
+            .to(null);
   }
 
-  @Test public void renameUnusedVariableToDoubleUnderscore3() {
-    trimming("void f(@SuppressWarnings({\"unused\"}) int x) {}").to("void f(@SuppressWarnings({\"unused\"}) int __) {}");
+  @Ignore @Test public void reanmeReturnVariableToDollar01() {
+    trimming(
+        " public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass res = new BlahClass(6);   S.out.println(res.j);   return res; ")
+            .to(" public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   S.out.println($.j);   return $; ");
   }
 
-  @Test public void renameUnusedVariableToDoubleUnderscore4() {
-    trimming("void f(int x, @SuppressWarnings(\"unused\") int y) {}").to("void f(int x, @SuppressWarnings(\"unused\") int __) {}");
+  @Ignore @Test public void reanmeReturnVariableToDollar02() {
+    trimming(
+        " int res = blah.length();   if (blah.contains(0xDEAD))    return res * 2;   if (res % 2 ==0)    return ++res;   if (blah.startsWith(\"y\")) {    return y(res);   int x = res + 6;   if (x>1)    return res + x;   res -= 1;   return res; ")
+            .to(" int $ = blah.length();   if (blah.contains(0xDEAD))    return $ * 2;   if ($ % 2 ==0)    return ++$;   if (blah.startsWith(\"y\")) {    return y($);   int x = $ + 6;   if (x>1)    return $ + x;   $ -= 1;   return $; ");
   }
 
-  @Test public void renameVariableUnderscore1() {
-    trimming("void f(int _) {System.out.println(_);}").to("void f(int __) {System.out.println(__);}");
+  @Ignore @Test public void reanmeReturnVariableToDollar03() {
+    trimming(
+        " public BlahClass(int i) {    j = 2*i;      public final int j;   public int yada7(final String blah) {   final BlahClass res = new BlahClass(blah.length());   if (blah.contains(0xDEAD))    return res.j;   int x = blah.length()/2;   if (x==3)    return x;   x = y(res.j - x);   return x; ")
+            .to(" public BlahClass(int i) {    j = 2*i;      public final int j;   public int yada7(final String blah) {   final BlahClass res = new BlahClass(blah.length());   if (blah.contains(0xDEAD))    return res.j;   int $ = blah.length()/2;   if ($==3)    return $;   $ = y(res.j - $);   return $; ");
+  }
+
+  @Ignore @Test public void reanmeReturnVariableToDollar04() {
+    trimming("int res = 0;   String $ = blah + known;   y(res + $.length());   return res + $.length();").to(null);
+  }
+
+  @Ignore @Test public void reanmeReturnVariableToDollar05() {
+    trimming(
+        "  j = 2*i;   }      public final int j;    public BlahClass yada6() {   final BlahClass res = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     final BlahClass res2 = new BlahClass(res.j);     S.out.println(res2.j);     doStuff(res2);        private void doStuff(final BlahClass res) {     S.out.println(res.j);   S.out.println(res.j);   return res; ")
+            .to("  j = 2*i;   }      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     final BlahClass res2 = new BlahClass($.j);     S.out.println(res2.j);     doStuff(res2);        private void doStuff(final BlahClass res) {     S.out.println(res.j);   S.out.println($.j);   return $; ");
+  }
+
+  @Ignore @Test public void reanmeReturnVariableToDollar06() {
+    trimming(
+        "  j = 2*i;   }      public final int j;    public void yada6() {   final BlahClass res = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     final BlahClass res2 = new BlahClass(res.j);     S.out.println(res2.j);     doStuff(res2);        private int doStuff(final BlahClass r) {     final BlahClass res = new BlahClass(r.j);     return res.j + 1;   S.out.println(res.j); ")
+            .to("  j = 2*i;   }      public final int j;    public void yada6() {   final BlahClass res = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     final BlahClass res2 = new BlahClass(res.j);     S.out.println(res2.j);     doStuff(res2);        private int doStuff(final BlahClass r) {     final BlahClass $ = new BlahClass(r.j);     return $.j + 1;   S.out.println(res.j); ");
+  }
+
+  @Ignore @Test public void reanmeReturnVariableToDollar07() {
+    trimming(
+        "  j = 2*i;   }      public final int j;    public BlahClass yada6() {   final BlahClass res = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     res = new BlahClass(8);     S.out.println(res.j);     doStuff(res);        private void doStuff(BlahClass res2) {     S.out.println(res2.j);        private BlahClass res;   S.out.println(res.j);   return res; ")
+            .to("  j = 2*i;   }      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     res = new BlahClass(8);     S.out.println(res.j);     doStuff(res);        private void doStuff(BlahClass res2) {     S.out.println(res2.j);        private BlahClass res;   S.out.println($.j);   return $; ");
+  }
+
+  @Ignore @Test public void reanmeReturnVariableToDollar08() {
+    trimming(
+        " public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass res = new BlahClass(6);   if (res.j == 0)    return null;   S.out.println(res.j);   return res; ")
+            .to(" public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   if ($.j == 0)    return null;   S.out.println($.j);   return $; ");
+  }
+
+  @Ignore @Test public void reanmeReturnVariableToDollar09() {
+    trimming(
+        " public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass res = new BlahClass(6);   if (res.j == 0)    return null;   S.out.println(res.j);   return null;")
+            .to(null);
+  }
+
+  @Ignore @Test public void reanmeReturnVariableToDollar10() {
+    trimming(
+        "@Override public IMarkerResolution[] getResolutions(final IMarker m) {   try {    final Spartanization s = All.get((String) m.getAttribute(Builder.SPARTANIZATION_TYPE_KEY)); ")
+            .to("@Override public IMarkerResolution[] getResolutions(final IMarker m) {   try {    final Spartanization $ = All.get((String) m.getAttribute(Builder.SPARTANIZATION_TYPE_KEY)); ");
+  }
+
+  @Ignore @Test public void reanmeReturnVariableToDollar11() {
+    trimming("").to(null);
   }
 
   // TODO Ori: add binding in tests
   @Ignore @Test public void replaceClassInstanceCreationWithFactoryInfixExpression() {
     trimming("Integer x = new Integer(1 + 9);").to("Integer x = Integer.valueOf(1 + 9);");
-  }
-
-  // TODO Ori: add binding in tests
-  @Ignore @Test public void replaceClassInstanceCreationWithFactoryInvokeMethode() {
-    trimming("String x = new String(f());").to("String x = String.valueOf(f());");
-  }
-
-  // TODO Ori: add binding for tests
-  @Ignore @Test public void SwitchFewCasesReplaceWithIf1() {
-    trimming("" //
-        + " int x;\n" //
-        + " switch (x) {\n" //
-        + " case 1:\n"//
-        + "   System.out.println(\"1\");\n" //
-        + "   break;\n" //
-        + " default:\n"//
-        + "   System.out.println(\"error\");\n" //
-        + "   break;\n" //
-        + " }\n")
-            .to("" //
-                + " int x;\n" //
-                + " if (x == 1) {\n" //
-                + "   System.out.println(\"1\");\n" //
-                + "   return 2;\n" //
-                + " } else\n"//
-                + "   System.out.println(\"3\");\n");
-  }
-
-  @Test public void switchSimplifyCaseAfterDefault() {
-    trimming("" //
-        + "switch (n.getNodeType()) {\n" //
-        + "default:\n" //
-        + "  return -1;\n" //
-        + "case BREAK_STATEMENT:\n" //
-        + "  return 0;\n" //
-        + "case CONTINUE_STATEMENT:\n" //
-        + "  return 1;\n" //
-        + "case RETURN_STATEMENT:\n" //
-        + "  return 2;\n" //
-        + "case THROW_STATEMENT:\n" //
-        + "  return 3;\n" //
-        + "}").to(null);
-  }
-
-  @Test public void switchSimplifyCaseAfterDefault1() {
-    trimming("" //
-        + "switch (n.getNodeType()) {" //
-        + "  default:" //
-        + "    return -1;" //
-        + "  case BREAK_STATEMENT:" //
-        + "    return 0;" //
-        + "  case CONTINUE_STATEMENT:" //
-        + "    return 1;" //
-        + "  case RETURN_STATEMENT:" //
-        + "    return 2;" //
-        + "  case THROW_STATEMENT:" //
-        + "    return 3;" //
-        + "  }").to(null);
-  }
-
-  @Test public void switchSimplifyWithDefault2() {
-    trimming("" + "switch (a) {\n" //
-        + "case \"-N\":" //
-        + "  optDoNotOverwrite = true;" //
-        + "  break;" //
-        + "case \"-E\":" //
-        + "  optIndividualStatistics = true;" //
-        + "  break;" //
-        + "case \"-V\":" //
-        + "  optVerbose = true;" //
-        + "  break;" //
-        + "case \"-l\":" //
-        + "  optStatsLines = true;" //
-        + "  break;" //
-        + "case \"-r\":" //
-        + "  optStatsChanges = true;" //
-        + "  break;" //
-        + "default:" //
-        + "  if (!a.startsWith(\"-\"))" //
-        + "    optPath = a;" //
-        + "  try {" //
-        + "    if (a.startsWith(\"-C\"))" //
-        + "      optRounds = Integer.parseUnsignedInt(a.substring(2));" //
-        + "  } catch (final NumberFormatException e) {" //
-        + "    throw e;" //
-        + "  }" //
-        + "}").to(null);
   }
 }

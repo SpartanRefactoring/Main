@@ -1,23 +1,8 @@
 package il.org.spartan.spartanizer.wring;
 
-import static il.org.spartan.Utils.*;
-import static il.org.spartan.azzert.*;
-import static il.org.spartan.spartanizer.engine.ExpressionComparator.*;
-import static il.org.spartan.spartanizer.engine.into.*;
-import static il.org.spartan.spartanizer.spartanizations.TESTUtils.*;
 import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.*;
-import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.apply;
-
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.junit.*;
 import org.junit.runners.*;
-
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.spartanizations.*;
-import il.org.spartan.spartanizer.utils.*;
 
 /** * Unit tests for the nesting class Unit test for the containing class. Note
  * our naming convention: a) test methods do not use the redundant "test"
@@ -302,49 +287,11 @@ import il.org.spartan.spartanizer.utils.*;
     trimming("switch (a) { default: }").to(null);
   }
 
-  @Test public void DUPLICATED_forwardDeclaration1() {
-    trimming("/*    * This is a comment    */      int i = 6;   int j = 2;   int k = i+2;   S.out.println(i-j+k); ")
-        .to(" /*    * This is a comment    */      int j = 2;   int i = 6;   int k = i+2;   S.out.println(i-j+k); ");
-  }
-
-  @Test public void DUPLICATED_forwardDeclaration2() {
-    trimming("/*    * This is a comment    */      int i = 6, h = 7;   int j = 2;   int k = i+2;   S.out.println(i-j+k); ")
-        .to(" /*    * This is a comment    */      int h = 7;   int j = 2;   int i = 6;   int k = i+2;   S.out.println(i-j+k); ");
-  }
-
-  @Test public void DUPLICATED_forwardDeclaration3() {
-    trimming("/*    * This is a comment    */      int i = 6;   int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m);   y(i);   y(i+m); ")
-        .to(" /*    * This is a comment    */      int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m);   int i = 6;   y(i);   y(i+m); ");
-  }
-
-  @Test public void DUPLICATED_forwardDeclaration4() {
-    trimming(
-        " /*    * This is a comment    */      int i = 6;   int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m);   final BlahClass bc = new BlahClass(i);   y(i+m+bc.j);    private static class BlahClass {   public BlahClass(int i) {    j = 2*i;      public final int j; ")
-            .to(" /*    * This is a comment    */      int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m);   int i = 6;   final BlahClass bc = new BlahClass(i);   y(i+m+bc.j);    private static class BlahClass {   public BlahClass(int i) {    j = 2*i;      public final int j; ");
-  }
-
-  @Test public void DUPLICATED_forwardDeclaration5() {
-    trimming("/*    * This is a comment    */      int i = y(0);   int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m + i);   y(i+m); ")
-        .to(" /*    * This is a comment    */      int j = 3;   int k = j+2;   int i = y(0);   int m = k + j -19;   y(m*2 - k/m + i);   y(i+m); ");
-  }
-
-  @Test public void DUPLICATED_forwardDeclaration6() {
-    trimming(
-        " /*    * This is a comment    */      int i = y(0);   int h = 8;   int j = 3;   int k = j+2 + y(i);   int m = k + j -19;   y(m*2 - k/m + i);   y(i+m); ")
-            .to(" /*    * This is a comment    */      int h = 8;   int i = y(0);   int j = 3;   int k = j+2 + y(i);   int m = k + j -19;   y(m*2 - k/m + i);   y(i+m); ");
-  }
-
-  @Test public void DUPLICATED_forwardDeclaration7() {
-    trimming(
-        "  j = 2*i;   }      public final int j;    private BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     $ = new BlahClass(8);     S.out.println($.j);     doStuff($);        private void doStuff(BlahClass res2) {     S.out.println(res2.j);        private BlahClass $;   S.out.println($.j);   return $; ")
-            .to("  j = 2*i;   }      public final int j;    private BlahClass yada6() {   final Runnable r = new Runnable() {        @Override    public void run() {     $ = new BlahClass(8);     S.out.println($.j);     doStuff($);        private void doStuff(BlahClass res2) {     S.out.println(res2.j);        private BlahClass $;   final BlahClass $ = new BlahClass(6);   S.out.println($.j);   return $; ");
-  }
-
-  @Test public void ifDoNotRemoveBracesWithVariableDeclarationStatement() {
+  @Test   public void ifDoNotRemoveBracesWithVariableDeclarationStatement() {
     trimming("if(a) { int i = 3; }").to(null);
   }
 
-  @Test public void ifDoNotRemoveBracesWithVariableDeclarationStatement2() {
+  @Test   public void ifDoNotRemoveBracesWithVariableDeclarationStatement2() {
     trimming("if(a) { Object o; }").to(null);
   }
 
@@ -373,150 +320,7 @@ import il.org.spartan.spartanizer.utils.*;
         + "  }\n");
   }
 
-  @Test public void DUPLICATED_inline00() {
-    trimming("" + //
-        "  Object a() { " + //
-        "    class a {\n" + //
-        "      a a;\n" + //
-        "      Object a() {\n" + //
-        "        return a;\n" + // /
-        "      }" + //
-        "    }\n" + //
-        "    final Object a = new Object();\n" + //
-        "    if (a instanceof a)\n" + //
-        "      new Object();  \n" + //
-        "    final Object a = new Object();\n" + //
-        "    if (a instanceof a)\n" + //
-        "      new Object();" + //
-        "}\n" + //
-        "").to(//
-            "  Object a() { " + //
-                "    class a {\n" + //
-                "      Object a() {\n" + //
-                "        return a;\n" + // /
-                "    }\n" + //
-                "    final Object a = new Object();\n" + //
-                "    if (a instanceof a)\n" + //
-                "      new Object();  \n" + //
-                "    final Object a = new Object();\n" + //
-                "    if (a instanceof a)\n" + //
-                "      new Object();" + //
-                "}\n" + //
-                "");
-  }
-
-  @Test public void DUPLICATED_inlineSingleUse01() {
-    trimming("/*    * This is a comment    */      int i = y(0);   int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m + i); ")
-        .to(" /*    * This is a comment    */      int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m + (y(0))); ");
-  }
-
-  @Test public void DUPLICATED_inlineSingleUse02() {
-    trimming("/*    * This is a comment    */      int i = 5,j=3;   int k = j+2;   int m = k + j -19 +i;   y(k); ")
-        .to(" /*    * This is a comment    */      int j=3;   int k = j+2;   int m = k + j -19 +(5);   y(k); ");
-  }
-
-  @Test public void DUPLICATED_inlineSingleUse03() {
-    trimming("/*    * This is a comment    */      int i = 5;   int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m + i); ")
-        .to(" /*    * This is a comment    */      int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m + (5)); ");
-  }
-
-  @Test public void DUPLICATED_inlineSingleUse04() {
-    trimming("int x = 6;   final BlahClass b = new BlahClass(x);   int y = 2+b.j;   y(y-b.j);   y(y*2); ")
-        .to(" final BlahClass b = new BlahClass((6));   int y = 2+b.j;   y(y-b.j);   y(y*2); ");
-  }
-
-  @Test public void DUPLICATED_inlineSingleUse05() {
-    trimming("int x = 6;   final BlahClass b = new BlahClass(x);   int y = 2+b.j;   y(y+x);   y(y*x); ")
-        .to(" int x = 6;   int y = 2+(new BlahClass(x)).j;   y(y+x);   y(y*x); ");
-  }
-
-  @Test public void DUPLICATED_inlineSingleUse06() {
-    trimming(
-        "   final Collection<Integer> outdated = new ArrayList<>();     int x = 6, y = 7;     S.out.println(x+y);     final Collection<Integer> coes = new ArrayList<>();     for (final Integer pi : coes)      if (pi.intValue() < x - y)       outdated.add(pi);     for (final Integer pi : outdated)      coes.remove(pi);     S.out.println(coes.size()); ")
-            .to(null);
-  }
-
-  @Test public void DUPLICATED_inlineSingleUse08() {
-    trimming(
-        "   final Collection<Integer> outdated = new ArrayList<>();     int x = 6, y = 7;     S.out.println(x+y);     final Collection<Integer> coes = new ArrayList<>();     for (final Integer pi : coes)      if (pi.intValue() < x - y)       outdated.add(pi);     S.out.println(coes.size());     S.out.println(outdated.size()); ")
-            .to(null);
-  }
-
-  @Test public void DUPLICATED_inlineSingleUse09() {
-    trimming(
-        " final A a = new D().new A(V){\nABRA\n{\nCADABRA\n{V;);   assertEquals(5, a.new Context().lineCount());   final PureIterable&lt;Mutant&gt; ms = a.generateMutants();   assertEquals(2, count(ms));   final PureIterator&lt;Mutant&gt; i = ms.iterator();   assertTrue(i.hasNext());   assertEquals(V;{\nABRA\nABRA\n{\nCADABRA\n{\nV;, i.next().text);   assertTrue(i.hasNext());   assertEquals(V;{\nABRA\n{\nCADABRA\nCADABRA\n{\nV;, i.next().text);   assertFalse(i.hasNext());  ")
-            .to(null);
-  }
-
-  @Test public void DUPLICATED_inlineSingleUse10() {
-    trimming(
-        "      final A a = new A(\"{\nABRA\n{\nCADABRA\n{\");        assertEquals(5, a.new Context().lineCount());        final PureIterable<Mutant> ms = a.mutantsGenerator();        assertEquals(2, count(ms));        final PureIterator<Mutant> i = ms.iterator();        assertTrue(i.hasNext());        assertEquals(\"{\nABRA\nABRA\n{\nCADABRA\n{\n\", i.next().text);        assertTrue(i.hasNext());        assertEquals(\"{\nABRA\n{\nCADABRA\nCADABRA\n{\n\", i.next().text);        assertFalse(i.hasNext());")
-            .to(null);
-  }
-
-  @Test public void DUPLICATED_reanmeReturnVariableToDollar01() {
-    trimming(
-        " public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   S.out.println($.j);   return $; ")
-            .to(" public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   S.out.println($.j);   return $; ");
-  }
-
-  @Test public void DUPLICATED_reanmeReturnVariableToDollar02() {
-    trimming(
-        " int $ = blah.length();   if (blah.contains(0xDEAD))    return $ * 2;   if ($ % 2 ==0)    return ++$;   if (blah.startsWith(\"y\")) {    return y($);   int x = $ + 6;   if (x>1)    return $ + x;   $ -= 1;   return $; ")
-            .to(" int $ = blah.length();   if (blah.contains(0xDEAD))    return $ * 2;   if ($ % 2 ==0)    return ++$;   if (blah.startsWith(\"y\")) {    return y($);   int x = $ + 6;   if (x>1)    return $ + x;   $ -= 1;   return $; ");
-  }
-
-  @Test public void DUPLICATED_reanmeReturnVariableToDollar03() {
-    trimming(
-        " public BlahClass(int i) {    j = 2*i;      public final int j;   public int yada7(final String blah) {   final BlahClass $ = new BlahClass(blah.length());   if (blah.contains(0xDEAD))    return $.j;   int x = blah.length()/2;   if (x==3)    return x;   x = y($.j - x);   return x; ")
-            .to(" public BlahClass(int i) {    j = 2*i;      public final int j;   public int yada7(final String blah) {   final BlahClass $ = new BlahClass(blah.length());   if (blah.contains(0xDEAD))    return $.j;   int $ = blah.length()/2;   if ($==3)    return $;   $ = y($.j - $);   return $; ");
-  }
-
-  @Test public void DUPLICATED_reanmeReturnVariableToDollar04() {
-    trimming("int $ = 0;   String $ = blah + known;   y($ + $.length());   return $ + $.length();").to(null);
-  }
-
-  @Test public void DUPLICATED_reanmeReturnVariableToDollar05() {
-    trimming(
-        "  j = 2*i;   }      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     final BlahClass res2 = new BlahClass($.j);     S.out.println(res2.j);     doStuff(res2);        private void doStuff(final BlahClass $) {     S.out.println($.j);   S.out.println($.j);   return $; ")
-            .to("  j = 2*i;   }      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     final BlahClass res2 = new BlahClass($.j);     S.out.println(res2.j);     doStuff(res2);        private void doStuff(final BlahClass $) {     S.out.println($.j);   S.out.println($.j);   return $; ");
-  }
-
-  @Test public void DUPLICATED_reanmeReturnVariableToDollar06() {
-    trimming(
-        "  j = 2*i;   }      public final int j;    public void yada6() {   final BlahClass $ = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     final BlahClass res2 = new BlahClass($.j);     S.out.println(res2.j);     doStuff(res2);        private int doStuff(final BlahClass r) {     final BlahClass $ = new BlahClass(r.j);     return $.j + 1;   S.out.println($.j); ")
-            .to("  j = 2*i;   }      public final int j;    public void yada6() {   final BlahClass $ = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     final BlahClass res2 = new BlahClass($.j);     S.out.println(res2.j);     doStuff(res2);        private int doStuff(final BlahClass r) {     final BlahClass $ = new BlahClass(r.j);     return $.j + 1;   S.out.println($.j); ");
-  }
-
-  @Test public void DUPLICATED_reanmeReturnVariableToDollar07() {
-    trimming(
-        "  j = 2*i;   }      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     $ = new BlahClass(8);     S.out.println($.j);     doStuff($);        private void doStuff(BlahClass res2) {     S.out.println(res2.j);        private BlahClass $;   S.out.println($.j);   return $; ")
-            .to("  j = 2*i;   }      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     $ = new BlahClass(8);     S.out.println($.j);     doStuff($);        private void doStuff(BlahClass res2) {     S.out.println(res2.j);        private BlahClass $;   S.out.println($.j);   return $; ");
-  }
-
-  @Test public void DUPLICATED_reanmeReturnVariableToDollar08() {
-    trimming(
-        " public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   if ($.j == 0)    return null;   S.out.println($.j);   return $; ")
-            .to(" public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   if ($.j == 0)    return null;   S.out.println($.j);   return $; ");
-  }
-
-  @Test public void DUPLICATED_reanmeReturnVariableToDollar09() {
-    trimming(
-        " public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   if ($.j == 0)    return null;   S.out.println($.j);   return null;")
-            .to(null);
-  }
-
-  @Test public void DUPLICATED_reanmeReturnVariableToDollar10() {
-    trimming(
-        "@Override public IMarkerResolution[] getResolutions(final IMarker m) {   try {    final Spartanization s = All.get((String) m.getAttribute(Builder.SPARTANIZATION_TYPE_KEY)); ")
-            .to("@Override public IMarkerResolution[] getResolutions(final IMarker m) {   try {    final Spartanization $ = All.get((String) m.getAttribute(Builder.SPARTANIZATION_TYPE_KEY)); ");
-  }
-
-  @Test public void DUPLICATED_reanmeReturnVariableToDollar11() {
-    trimming("").to(null);
-  }
-
-  @Test public void renameVariableUnderscore2() {
+  @Test   public void renameVariableUnderscore2() {
     trimming("class A {int _; int f(int _) {return _;}}").to("class A {int __; int f(int __) {return __;}}");
   }
 
@@ -524,24 +328,24 @@ import il.org.spartan.spartanizer.utils.*;
     trimming("Character x = new Character(new Character(f()));").to("Character x = Character.valueOf(Character.valueOf(f()));");
   }
 
-  @Test public void shortestOperand05() {
+  @Test   public void shortestOperand05() {
     trimming("    final W s = new W(\"bob\");\n" + //
         "    return s.l(hZ).l(\"-ba\").toString() == \"bob-ha-banai\";").to("return(new W(\"bob\")).l(hZ).l(\"-ba\").toString()==\"bob-ha-banai\";");
   }
 
-  @Test public void stringFromBuilderAddParenthesis() {
+  @Test   public void stringFromBuilderAddParenthesis() {
     trimming("new StringBuilder(f()).append(1+1).toString()").to("\"\" + f() + (1+1)");
   }
 
-  @Test public void stringFromBuilderGeneral() {
+  @Test   public void stringFromBuilderGeneral() {
     trimming("new StringBuilder(myName).append(\"\'s grade is \").append(100).toString()").to("myName + \"\'s grade is \" + 100");
   }
 
-  @Test public void stringFromBuilderNoStringComponents() {
+  @Test   public void stringFromBuilderNoStringComponents() {
     trimming("new StringBuilder(0).append(1).toString()").to("\"\" + 0 + 1");
   }
 
-  @Test public void switchBrakesToReturnCaseWithoutSequencer() {
+  @Test   public void switchBrakesToReturnCaseWithoutSequencer() {
     trimming("" //
         + " switch (x) {\n" //
         + "     case 1:\n"//
@@ -568,7 +372,7 @@ import il.org.spartan.spartanizer.utils.*;
                 + " return 2;\n");
   }
 
-  @Test public void switchBrakesToReturnDefaultWithSequencer() {
+  @Test   public void switchBrakesToReturnDefaultWithSequencer() {
     trimming("" //
         + " switch (x) {\n" //
         + "     case 1:\n"//
@@ -598,7 +402,7 @@ import il.org.spartan.spartanizer.utils.*;
                 + " }");
   }
 
-  @Test public void switchBreakesToReturnAllCases() {
+  @Test   public void switchBreakesToReturnAllCases() {
     trimming("" //
         + " switch (x) {\n" //
         + "     case 1:\n"//
@@ -625,7 +429,7 @@ import il.org.spartan.spartanizer.utils.*;
                 + " return 3;");
   }
 
-  @Test public void switchSimplifiyNoSequencer() {
+  @Test   public void switchSimplifiyNoSequencer() {
     trimming("" //
         + "switch(x) {\n" //
         + "case 1:\n" //
@@ -644,7 +448,7 @@ import il.org.spartan.spartanizer.utils.*;
                 + "}");
   }
 
-  @Test public void switchSimplifyCaseAfterDefault2() {
+  @Test   public void switchSimplifyCaseAfterDefault2() {
     trimming("" //
         + "switch (e.getNodeType()) {\n" //
         + "default:\n" //
@@ -667,7 +471,7 @@ import il.org.spartan.spartanizer.utils.*;
                 + "}");
   }
 
-  @Test public void switchSimplifyCaseAfterefault3() {
+  @Test   public void switchSimplifyCaseAfterefault3() {
     trimming("" //
         + "switch (totalNegation) {\n" //
         + "default:\n" //
@@ -690,7 +494,7 @@ import il.org.spartan.spartanizer.utils.*;
                 + "}");
   }
 
-  @Test public void switchSimplifyCasesMergeWithDefault() {
+  @Test   public void switchSimplifyCasesMergeWithDefault() {
     trimming("" //
         + "switch (n.getNodeType()) {\n" //
         + "default:\n" //
@@ -717,7 +521,7 @@ import il.org.spartan.spartanizer.utils.*;
                 + "}");
   }
 
-  @Test public void switchSimplifyNoDefault() {
+  @Test   public void switchSimplifyNoDefault() {
     trimming("" //
         + "switch (x) {" //
         + "  case 1:" //
@@ -742,7 +546,7 @@ import il.org.spartan.spartanizer.utils.*;
                 + "  }");
   }
 
-  @Test public void switchSimplifyParenthesizedCases() {
+  @Test   public void switchSimplifyParenthesizedCases() {
     trimming("" //
         + "switch (checkMatrix(A)) {\n" //
         + "  case -1: {\n" //
@@ -798,7 +602,7 @@ import il.org.spartan.spartanizer.utils.*;
     // }
   }
 
-  @Test public void switchSimplifyWithDefault() {
+  @Test   public void switchSimplifyWithDefault() {
     trimming("" + "switch (internalDelta.getKind()) {" //
         + "case IResourceDelta.ADDED:" //
         + "case IResourceDelta.CHANGED:" //
@@ -813,7 +617,7 @@ import il.org.spartan.spartanizer.utils.*;
         + "}").to(null);
   }
 
-  @Test public void switchSimplifyWithDefault1() {
+  @Test   public void switchSimplifyWithDefault1() {
     trimming("" //
         + "switch (x) {" //
         + "  case 1:" //
