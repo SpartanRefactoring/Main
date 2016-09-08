@@ -25,11 +25,7 @@ public final class MapEntry<K, V> implements Map.Entry<K, V> {
   }
 
   @Override public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + (key == null ? 0 : key.hashCode());
-    result = prime * result + (value == null ? 0 : value.hashCode());
-    return result;
+    return (value == null ? 0 : value.hashCode()) + 31 * ((key == null ? 0 : key.hashCode()) + 31);
   }
 
   @Override public V setValue(final V value) {

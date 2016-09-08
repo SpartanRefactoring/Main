@@ -30,15 +30,15 @@ public class ExpressionFlatten {
 
   @Test public void flattenIsSame() {
     final InfixExpression e = i("1+2");
-    azzert.that("" + flatten.of(e), is("" + e));
+    azzert.that(flatten.of(e) + "", is(e + ""));
   }
 
   @Test public void flattenLeftArgument() {
-    azzert.that("" + step.left(flatten.of(i("1+2"))), is("1"));
+    azzert.that(step.left(flatten.of(i("1+2"))) + "", is("1"));
   }
 
   @Test public void flattenOfDeepParenthesisIsCorrect() {
-    azzert.that("" + flatten.of(i("(((1+2)))+(((3 + (4+5))))")), is("1 + 2 + 3+ 4+ 5"));
+    azzert.that(flatten.of(i("(((1+2)))+(((3 + (4+5))))")) + "", is("1 + 2 + 3+ 4+ 5"));
   }
 
   @Test public void flattenOfDeepParenthesisSize() {
@@ -46,7 +46,7 @@ public class ExpressionFlatten {
   }
 
   @Test public void flattenOfDeepParenthesOtherOperatorsisIsCorrect() {
-    azzert.that("" + flatten.of(i("(((1+2)))+(((3 + (4*5))))")), is("1 + 2 + 3+ 4 * 5"));
+    azzert.that(flatten.of(i("(((1+2)))+(((3 + (4*5))))")) + "", is("1 + 2 + 3+ 4 * 5"));
   }
 
   @Test public void flattenOfParenthesis() {
@@ -78,7 +78,7 @@ public class ExpressionFlatten {
   }
 
   @Test public void leftOperandIsOne() {
-    azzert.that("" + step.left(i("1+2")), is("1"));
+    azzert.that(step.left(i("1+2")) + "", is("1"));
   }
 
   @Test public void leftOperandNotNull() {
