@@ -25,7 +25,7 @@ public interface spartan {
   }
 
   static String shorten(final Name n) {
-    return n instanceof SimpleName ? shorten("" + n) //
+    return n instanceof SimpleName ? shorten(n + "") //
         : n instanceof QualifiedName ? shorten(((QualifiedName) n).getName()) //
             : null;
   }
@@ -47,7 +47,7 @@ public interface spartan {
   }
 
   static String shorten(final ParameterizedType t) {
-    switch ("" + t.getType()) {
+    switch (t.getType() + "") {
       case "Collection":
       case "Iterable":
       case "List":
@@ -63,7 +63,7 @@ public interface spartan {
   }
 
   static String shorten(final PrimitiveType t) {
-    return ("" + t.getPrimitiveTypeCode()).substring(0, 1);
+    return (t.getPrimitiveTypeCode() + "").substring(0, 1);
   }
 
   static String shorten(final QualifiedType t) {

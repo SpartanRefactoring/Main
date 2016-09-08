@@ -52,35 +52,35 @@ public class EvaluateSubstraction extends Wring.ReplaceCurrentNode<InfixExpressi
     return x.getAST().newNumberLiteral(Integer.toString(sub));
   }
 
-  private static ASTNode replacementLong(final List<Expression> es, final InfixExpression e) {
-    if (es.isEmpty() && !EvaluateAux.isCompitable(es.get(0)))
+  private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
+    if (xs.isEmpty() && !EvaluateAux.isCompitable(xs.get(0)))
       return null;
-    long sub = EvaluateAux.extractLong(es.get(0));
+    long sub = EvaluateAux.extractLong(xs.get(0));
     int index = 0;
-    for (final Expression ¢ : es) {
+    for (final Expression ¢ : xs) {
       if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isNumber(¢))
         return null;
       if (index != 0)
         sub -= EvaluateAux.extractLong(¢);
       ++index;
     }
-    return e.getAST().newNumberLiteral(Long.toString(sub) + "L");
+    return x.getAST().newNumberLiteral(Long.toString(sub) + "L");
   }
 
   @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Evaluate substraction of numbers";
   }
 
-  @Override ASTNode replacement(final InfixExpression e) {
-    if (e.getOperator() != MINUS)
+  @Override ASTNode replacement(final InfixExpression x) {
+    if (x.getOperator() != MINUS)
       return null;
-    switch (EvaluateAux.getEvaluatedType(e)) {
+    switch (EvaluateAux.getEvaluatedType(x)) {
       case INT:
-        return replacementInt(extract.allOperands(e), e);
+        return replacementInt(extract.allOperands(x), x);
       case DOUBLE:
-        return replacementDouble(extract.allOperands(e), e);
+        return replacementDouble(extract.allOperands(x), x);
       case LONG:
-        return replacementLong(extract.allOperands(e), e);
+        return replacementLong(extract.allOperands(x), x);
       default:
         return null;
     }

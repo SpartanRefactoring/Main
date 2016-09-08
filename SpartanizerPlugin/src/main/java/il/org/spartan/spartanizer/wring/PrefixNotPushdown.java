@@ -44,16 +44,16 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
     return $;
   }
 
-  static Expression perhapsNotOfLiteral(final Expression e) {
-    return !iz.booleanLiteral(e) ? null : notOfLiteral(az.booleanLiteral(e));
+  static Expression perhapsNotOfLiteral(final Expression x) {
+    return !iz.booleanLiteral(x) ? null : notOfLiteral(az.booleanLiteral(x));
   }
 
-  static Expression pushdownNot(final Expression e) {
+  static Expression pushdownNot(final Expression x) {
     Expression $;
-    return ($ = perhapsNotOfLiteral(e)) != null//
-        || ($ = perhapsDoubleNegation(e)) != null//
-        || ($ = perhapsDeMorgan(e)) != null//
-        || ($ = perhapsComparison(e)) != null //
+    return ($ = perhapsNotOfLiteral(x)) != null//
+        || ($ = perhapsDoubleNegation(x)) != null//
+        || ($ = perhapsDeMorgan(x)) != null//
+        || ($ = perhapsComparison(x)) != null //
             ? $ : null;
   }
 
@@ -88,25 +88,25 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
     return perhapsDeMorgan(az.andOrOr(e));
   }
 
-  private static Expression perhapsDeMorgan(final InfixExpression e) {
-    return e == null ? null : applyDeMorgan(e);
+  private static Expression perhapsDeMorgan(final InfixExpression x) {
+    return x == null ? null : applyDeMorgan(x);
   }
 
-  private static Expression perhapsDoubleNegation(final Expression e) {
-    return perhapsDoubleNegation(az.not(e));
+  private static Expression perhapsDoubleNegation(final Expression x) {
+    return perhapsDoubleNegation(az.not(x));
   }
 
-  private static Expression perhapsDoubleNegation(final PrefixExpression e) {
-    return e == null ? null : tryToSimplify(step.operand(e));
+  private static Expression perhapsDoubleNegation(final PrefixExpression x) {
+    return x == null ? null : tryToSimplify(step.operand(x));
   }
 
-  private static Expression pushdownNot(final PrefixExpression e) {
-    return e == null ? null : pushdownNot(step.operand(e));
+  private static Expression pushdownNot(final PrefixExpression x) {
+    return x == null ? null : pushdownNot(step.operand(x));
   }
 
-  private static Expression tryToSimplify(final Expression e) {
-    final Expression $ = pushdownNot(az.not(e));
-    return $ != null ? $ : e;
+  private static Expression tryToSimplify(final Expression x) {
+    final Expression $ = pushdownNot(az.not(x));
+    return $ != null ? $ : x;
   }
 
   @Override public boolean scopeIncludes(final PrefixExpression e) {

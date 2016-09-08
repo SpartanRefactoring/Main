@@ -95,18 +95,18 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
         || isNumber(¢2) && iz.methodInvocation(¢1);
   }
 
-  @Override String description(final InfixExpression e) {
-    final Expression right = step.right(e);
-    final Expression left = step.left(e);
+  @Override String description(final InfixExpression x) {
+    final Expression right = step.right(x);
+    final Expression left = step.left(x);
     return description(left instanceof MethodInvocation ? left : right);
   }
 
-  @Override ASTNode replacement(final InfixExpression e) {
-    final Operator o = e.getOperator();
+  @Override ASTNode replacement(final InfixExpression x) {
+    final Operator o = x.getOperator();
     if (!iz.comparison(o))
       return null;
-    final Expression right = step.right(e);
-    final Expression left = step.left(e);
+    final Expression right = step.right(x);
+    final Expression left = step.left(x);
     return !validTypes(right, left) ? null
         : iz.methodInvocation(left) ? //
             replacement(o, az.methodInvocation(left), right) //

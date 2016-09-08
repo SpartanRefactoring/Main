@@ -37,34 +37,34 @@ public class EvaluateDivision extends Wring.ReplaceCurrentNode<InfixExpression> 
     return e.getAST().newNumberLiteral(Double.toString(divide));
   }
 
-  private static ASTNode replacementInt(final List<Expression> es, final InfixExpression e) {
-    if (es.isEmpty() || !EvaluateAux.isCompitable(es.get(0)))
+  private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
+    if (xs.isEmpty() || !EvaluateAux.isCompitable(xs.get(0)))
       return null;
-    int divide = EvaluateAux.extractInt(es.get(0));
+    int divide = EvaluateAux.extractInt(xs.get(0));
     int index = 0;
-    for (final Expression ¢ : es) {
+    for (final Expression ¢ : xs) {
       if (!EvaluateAux.isCompitable(¢))
         return null;
       if (index != 0)
         divide /= EvaluateAux.extractInt(¢);
       ++index;
     }
-    return e.getAST().newNumberLiteral(Integer.toString(divide));
+    return x.getAST().newNumberLiteral(Integer.toString(divide));
   }
 
-  private static ASTNode replacementLong(final List<Expression> es, final InfixExpression e) {
-    if (es.isEmpty() || !EvaluateAux.isCompitable(es.get(0)))
+  private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
+    if (xs.isEmpty() || !EvaluateAux.isCompitable(xs.get(0)))
       return null;
-    long divide = EvaluateAux.extractLong(es.get(0));
+    long divide = EvaluateAux.extractLong(xs.get(0));
     int index = 0;
-    for (final Expression ¢ : es) {
+    for (final Expression ¢ : xs) {
       if (!EvaluateAux.isCompitable(¢))
         return null;
       if (index != 0)
         divide /= EvaluateAux.extractLong(¢);
       ++index;
     }
-    return e.getAST().newNumberLiteral(Long.toString(divide) + "L");
+    return x.getAST().newNumberLiteral(Long.toString(divide) + "L");
   }
 
   @Override public String description() {
@@ -75,16 +75,16 @@ public class EvaluateDivision extends Wring.ReplaceCurrentNode<InfixExpression> 
     return "Evaluate division of numbers";
   }
 
-  @Override ASTNode replacement(final InfixExpression e) {
-    if (e.getOperator() != DIVIDE)
+  @Override ASTNode replacement(final InfixExpression x) {
+    if (x.getOperator() != DIVIDE)
       return null;
-    switch (EvaluateAux.getEvaluatedType(e)) {
+    switch (EvaluateAux.getEvaluatedType(x)) {
       case INT:
-        return replacementInt(extract.allOperands(e), e);
+        return replacementInt(extract.allOperands(x), x);
       case DOUBLE:
-        return replacementDouble(extract.allOperands(e), e);
+        return replacementDouble(extract.allOperands(x), x);
       case LONG:
-        return replacementLong(extract.allOperands(e), e);
+        return replacementLong(extract.allOperands(x), x);
       default:
         return null;
     }
