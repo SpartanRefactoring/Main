@@ -48,7 +48,7 @@ import org.eclipse.jdt.core.dom.*;
       return eq(blockScope, i.blockScope) && eq(hiding, i.hiding) && eq(prudentType, i.prudentType) && eq(self, i.self);
     }
 
-    public static boolean eq(Object o1, Object o2) {
+    public static boolean eq(final Object o1, final Object o2) {
       return o1 == o2 || o1 == null && o2 == null || o2.equals(o1);
     }
 
